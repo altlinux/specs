@@ -3,6 +3,7 @@ BuildRequires: gcc4.9-c++
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/xprop /usr/bin/xvfb-run libgif-devel pkgconfig(xproto) pkgconfig(xrender) unzip xorg-xproto-devel zlib-devel
 # END SourceDeps(oneline)
+BuildRequires: zip unzip
 BuildRequires: ca-certificates-java
 %def_enable accessibility
 %def_disable jvmjardir
@@ -15,7 +16,6 @@ BuildRequires(pre): browser-plugins-npapi-devel
 BuildRequires(pre): rpm-build-java
 %set_compress_method none
 BuildRequires: /proc
-BuildRequires: jpackage-1.6.0-compat
 %define fedora 15
 #and If gcjbootstrap is 1 IcedTea is bootstrapped against
 # java-1.6.0-sun-devel.  If gcjbootstrap is 0 IcedTea is built against
@@ -110,7 +110,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt1
+Release: alt2
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -457,6 +457,7 @@ export CFLAGS="$CFLAGS -mieee"
   --with-jaf-drop-zip=%{SOURCE8} \
   --with-jaxp-drop-zip=%{SOURCE7} --with-jaxws-drop-zip=%{SOURCE9} \
   --with-abs-install-dir=%{_jvmdir}/%{sdkdir}
+
 %if %{gcjbootstrap}
 make MEMORY_LIMIT=-J-Xmx512m stamps/patch-ecj.stamp
 %endif
@@ -466,6 +467,12 @@ patch -l -p0 < %{PATCH3}
 patch -l -p0 < %{PATCH4}
 
 patch -l -p0 < %{PATCH34}
+
+# hack for glibc 2.27 - no more -lnsl
+#java/hpi/hpi_common.gmk
+pushd openjdk/jdk/make
+sed -i -e s,-lnsl,, `find . \( -name Makefile -or -name hpi_common.gmk \)`
+popd
 
 
 make MEMORY_LIMIT=-J-Xmx512m REQUIRED_ALSA_VERSION=1 DISABLE_HOTSPOT_OS_VERSION_CHECK=1
@@ -1018,6 +1025,9 @@ done
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Apr 05 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.41-alt2
+- fixed build
+
 * Mon Nov 27 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.41-alt1
 - added headless package
 - changed version to match other jvms
