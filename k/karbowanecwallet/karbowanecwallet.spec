@@ -1,5 +1,5 @@
 Name:		karbowanecwallet
-Version:	1.2.2
+Version:	1.2.3
 Release:	alt1
 Summary:	Karbowanec KRB wallet
 Url:		http://karbowanec.com
@@ -52,6 +52,9 @@ convert -resize 16x16 %SOURCE3 %buildroot%_miconsdir/karbowanec.png
 %_liconsdir/karbowanec.png
 
 %changelog
+* Thu Apr 05 2018 Motsyo Gennadi <drool@altlinux.ru> 1.2.3-alt1
+- 1.2.3
+
 * Sat Mar 31 2018 Motsyo Gennadi <drool@altlinux.ru> 1.2.2-alt1
 - 1.2.2
 
