@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.27
+Version: 0.28
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -7,6 +7,7 @@ Group: Development/Java
 License: GPL2+ or Apache
 Url: http://www.sisyphus.ru/packages/viy/srpms
 
+BuildArch: noarch
 BuildPreReq: rpm-build-java /proc
 
 Requires: docbook-style-xsl
@@ -22,6 +23,9 @@ Requires: zip
 
 Requires: java-devel java
 Requires: java-javadoc
+
+# kill me after java 1.6.0 fixed
+#Provides: jpackage-1.6.0-compat = %version
 
 %description
 JPackage compatibility package. The main goal is to provide all nessssary 
@@ -53,7 +57,6 @@ Requires(pre): java-devel = 1.6.0 java = 1.6.0
 Conflicts: java-devel > 1.6.99 java > 1.6.99 java-headless > 1.6.99
 
 Requires: jpackage-generic-compat
-Obsoletes: jpackage-1.6.0-core < %version-%release
 
 %description -n jpackage-1.6.0-compat
 JPackage compatibility package. the main goal is to provide all nessssary symlinks,
@@ -90,17 +93,15 @@ Provides: jpackage-core = %version-%release
 #Provides: jpackage-1.6-compat = %version-%release
 #Provides: jpackage-1.7-compat = %version-%release
 Provides: jpackage-compat = %version-%release
-# arch dependent - fake provides
-Provides: jpackage-for-%_target_cpu
-%ifnarch %ix86 x86_64 
-Provides: jpackage-1.5.0-compat = %version-%release
-Provides: jpackage-1.6.0-compat = %version-%release
-%endif
 Obsoletes: jpackage-1.4-compat < %version
 Obsoletes: jpackage-1.5-compat < %version
 Obsoletes: jpackage-1.6-compat < %version
 Obsoletes: jpackage-1.6-core < %version
 Obsoletes: jpackage-1.7-compat < %version
+Obsoletes: jpackage-1.5.0-compat < %version
+Obsoletes: jpackage-1.6.0-core < %version
+Obsoletes: jpackage-1.6.0-compat < %version
+Obsoletes: jpackage-1.7.0-compat < %version
 
 %description -n jpackage-1.8-compat
 JPackage compatibility package. the main goal is to provide all nessssary symlinks,
@@ -115,15 +116,15 @@ Provides JPackage build environment with java-1.8.0.
 install -d $RPM_BUILD_ROOT%_javadir
 
 %files
-%ifarch %ix86 x86_64
 #files -n jpackage-1.5.0-compat
 #files -n jpackage-1.6.0-compat
-%endif
-
-%files -n jpackage-1.7.0-compat
+#files -n jpackage-1.7.0-compat
 %files -n jpackage-1.8-compat
 
 %changelog
+* Thu Apr 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
+- made noarch; removed java7 environment
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
 - removed java 5/6 support
 
