@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Version: 6.01
-Release: alt1
+Release: alt2
 
 Summary: Perl extension for SHA-1/224/256/384/512
 License: Perl
@@ -13,7 +13,7 @@ URL: %CPAN %module
 Source0: http://www.cpan.org/authors/id/M/MS/MSHELOR/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: libcxx-devel perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
 
 %description
 
@@ -39,6 +39,9 @@ module can handle all types of input, including partial-byte data.
 %_man1dir/*
 
 %changelog
+* Thu Apr 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.01-alt2
+- drop excessive libcxx-devel buildreq
+
 * Tue Dec 26 2017 Igor Vlasenko <viy@altlinux.ru> 6.01-alt1
 - automated CPAN update
 
