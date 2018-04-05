@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-System-Command
-Version: 1.118
+Version: 1.119
 Release: alt1
 
 Summary: System::Command - Object for running system commands
@@ -9,7 +9,7 @@ Group: Development/Perl
 
 Url: %CPAN System-Command
 # Cloned from git://github.com/book/System-Command.git
-Source: http://www.cpan.org/authors/id/B/BO/BOOK/System-Command-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BO/BOOK/System-Command-%{version}.tar.gz
 
 BuildRequires: perl-devel perl-Module-Build
 BuildArch: noarch
@@ -18,7 +18,7 @@ BuildArch: noarch
 %summary
 
 %prep
-%setup -q -n System-Command-%version
+%setup -q -n System-Command-%{version}
 
 %build
 %perl_vendor_build
@@ -31,6 +31,9 @@ BuildArch: noarch
 %doc Changes README
 
 %changelog
+* Thu Apr 05 2018 Igor Vlasenko <viy@altlinux.ru> 1.119-alt1
+- automated CPAN update
+
 * Sun Jun 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.118-alt1
 - automated CPAN update
 
