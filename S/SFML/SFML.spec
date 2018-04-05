@@ -2,7 +2,7 @@
 
 Name: SFML
 Version: 2.4.2
-Release: alt1
+Release: alt2
 
 Summary: Simple and Fast Multimedia Library
 License: zlib
@@ -99,6 +99,9 @@ popd
 %_libdir/libsfml-*.so
 
 %changelog
+* Thu Apr 05 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt2
+- rebuilt with gcc7 especially for extreme-tuxracer
+
 * Sun Mar 26 2017 Nazarov Denis <nenderus@altlinux.org> 2.4.2-alt1
 - Version 2.4.2
 
