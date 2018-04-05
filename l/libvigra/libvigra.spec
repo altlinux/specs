@@ -3,8 +3,8 @@
 %def_with hdf5
 
 Name: lib%_name
-Version: 1.11.0
-Release: alt2
+Version: 1.11.1
+Release: alt1
 
 Summary: Generic Programming for Computer Vision
 License: MIT
@@ -12,7 +12,7 @@ Group: System/Libraries
 Url: http://ukoethe.github.io/%_name
 
 # VCS https://github.com/ukoethe/%name/
-Source: https://github.com/ukoethe/%_name/releases/download/Version-1-11-0/%_name-%version-src.tar.gz
+Source: https://github.com/ukoethe/%_name/releases/download/Version-1-11-1/%_name-%version-src.tar.gz
 # partially deimproved FindOpenEXR
 Patch: vigra-1.11.0-alt-findexr.patch
 
@@ -93,6 +93,9 @@ sed -i 's,-ftemplate-depth=900,,' CMakeLists.txt
 
 
 %changelog
+* Thu Apr 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.11.1-alt1
+- 1.11.1
+
 * Sat Aug 26 2017 Michael Shigorin <mike@altlinux.org> 1.11.0-alt2
 - introduce hdf5 knob (on by default)
 - E2K: avoid libgomp and lcc-unsupported -ftemplate-depth
