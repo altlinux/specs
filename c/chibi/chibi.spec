@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -8,7 +11,7 @@
 %define libname lib%{upstream_name_scheme}%{major}
 
 Name:		chibi
-Version:	0.7.3
+Version:	0.8
 Release:	alt1_1
 Summary:	A small-footprint library for use as a C Extension Language
 Source0:	https://github.com/ashinn/%{upstream_name_scheme}/archive/%{version}.tar.gz
@@ -58,10 +61,11 @@ make	PREFIX=%{_prefix} LIBDIR=%{_libdir} SOLIBDIR=%{_libdir} \
 	BINMODDIR=%{_libdir}/%{name} DESTDIR=%{buildroot} install
 
 %files
-%doc AUTHORS COPYING README
+%doc AUTHORS COPYING README.md
 %{_mandir}/man1/%{name}-*.1*
 %{_bindir}/%{name}-*
 %{_bindir}/snow-%{name}
+%{_bindir}/snow-%{name}.*
 %{_libdir}/%{name}
 %{_datadir}/%{name}
 
@@ -75,6 +79,9 @@ make	PREFIX=%{_prefix} LIBDIR=%{_libdir} SOLIBDIR=%{_libdir} \
 
 
 %changelog
+* Thu Apr 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_1
+- update by mgaimport
+
 * Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.3-alt1_1
 - new version
 
