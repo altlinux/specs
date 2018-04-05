@@ -1,5 +1,6 @@
+%define soversion 5
 Name: oniguruma
-Version: 6.7.1
+Version: 6.8.1
 Release: alt1%ubt
 Summary: Regular expressions library
 
@@ -20,15 +21,27 @@ The characteristics of this library is that different character encoding
 for every regular expression object can be specified.
 (supported APIs: GNU regex, POSIX and Oniguruma native)
 
-%package devel
+%package -n lib%name%soversion
+Summary: Regular expressions library
+Group: System/Libraries
+
+%description -n lib%name%soversion
+Oniguruma is a regular expressions library.
+The characteristics of this library is that different character encoding
+for every regular expression object can be specified.
+(supported APIs: GNU regex, POSIX and Oniguruma native)
+
+%package -n lib%name-devel
 Summary: Development files for %name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: lib%name%soversion = %EVR
 Provides: libOniGuruma-devel = %EVR
+Provides: %name-devel = %EVR
+Obsoletes: %name-devel
 Obsoletes: libOniGuruma-devel
 
-%description devel
-The %name-devel package contains libraries and header files for
+%description -n lib%name-devel
+The lib%name-devel package contains libraries and header files for
 developing applications that use %name.
 
 %prep
@@ -67,11 +80,11 @@ find $RPM_BUILD_ROOT -name '*.la' \
 %check
 %__make check
 
-%files
+%files -n lib%name%soversion
 %doc	AUTHORS COPYING HISTORY README index.html
-%_libdir/libonig.so.4*
+%_libdir/libonig.so.%{soversion}*
 
-%files devel
+%files -n lib%name-devel
 %doc	doc/API doc/FAQ doc/RE
 %_bindir/onig-config
 %_libdir/libonig.so
@@ -79,6 +92,10 @@ find $RPM_BUILD_ROOT -name '*.la' \
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Thu Apr 05 2018 Anton Farygin <rider@altlinux.ru> 6.8.1-alt1%ubt
+- new version
+- the library package was renamed for compatability with ALT Linux shared policy
+
 * Mon Jan 29 2018 Anton Farygin <rider@altlinux.ru> 6.7.1-alt1%ubt
 - new version
 

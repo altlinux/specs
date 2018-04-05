@@ -1,26 +1,26 @@
 # seafile-server hungs with it, see http://bugs.etersoft.ru/show_bug.cgi?id=11271
 
 Name: libevhtp
-Version: 1.2.13
-Release: alt1
+Version: 1.2.16
+Release: alt1%ubt
 
 Summary: Libevhtp was created as a replacement API for Libevent's current HTTP API
 License: BSD
 Group: System/Libraries
 
 Url: https://github.com/criticalstack/libevhtp
-
 # Source-git: https://github.com/criticalstack/libevhtp.git
 Source: %name-%version.tar
+
 
 # Automatically added by buildreq on Sat Mar 16 2013 (-bi)
 # optimized out: cmake cmake-modules libcom_err-devel libkrb5-devel libstdc++-devel pkg-config python-base
 BuildRequires: ccmake gcc-c++ glibc-devel libevent-devel libssl-devel
 
 # need for build with external liboniguruma
-BuildRequires: oniguruma-devel >= 5.9.2
-
+BuildRequires: liboniguruma-devel >= 6.8.1
 BuildRequires: libjemalloc-devel
+BuildRequires(pre): rpm-build-ubt
 
 %description
 Libevhtp was created as a replacement API for Libevent's
@@ -44,8 +44,6 @@ developing applications that use %name.
 %prep
 %setup
 %__subst "s|PREFIX}/lib|PREFIX}/\${LIB_DESTINATION}|g" CMakeLists.txt
-# sure to use external
-rm -rf oniguruma
 
 %build
 %cmake_insource -DEVHTP_BUILD_SHARED:STRING=ON -DEVHTP_USE_JEMALLOC:STRING=ON
@@ -53,13 +51,8 @@ rm -rf oniguruma
 %install
 %makeinstall_std
 
-# TODO: send patch to fix it
-ln -s libevhtp.so.%version %buildroot%_libdir/libevhtp.so.1
-rm -f %buildroot%_libdir/libevhtp.so
-ln -s libevhtp.so.1 %buildroot%_libdir/libevhtp.so
-
 %files
-%_libdir/libevhtp.so.1
+%_libdir/libevhtp.so.0
 %_libdir/libevhtp.so.1.*
 
 %files devel
@@ -69,6 +62,12 @@ ln -s libevhtp.so.1 %buildroot%_libdir/libevhtp.so
 %_pkgconfigdir/evhtp.pc
 
 %changelog
+* Fri Apr 06 2018 Anton Farygin <rider@altlinux.ru> 1.2.16-alt1%ubt
+- 1.2.16
+- build with liboniguruma 6.8.1
+- soname changed to 0 by upstream
+- added %%ubt tag for facilitate backporting to stable branches
+
 * Thu Nov 16 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.13-alt1
 - new version 1.2.13 (with rpmrb script)
 
