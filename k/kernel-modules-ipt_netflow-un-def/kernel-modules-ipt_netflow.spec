@@ -1,7 +1,7 @@
 %define module_name	ipt_netflow
-%define module_version	2.2
+%define module_version	2.3
 
-%define module_release alt2
+%define module_release alt1
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel
