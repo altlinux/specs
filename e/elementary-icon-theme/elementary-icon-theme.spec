@@ -1,7 +1,8 @@
 %define _name elementaryicons
-%define ver_major 3
+%define ver_major 4
+
 Name: elementary-icon-theme
-Version: %ver_major.2.2
+Version: %ver_major.3.1
 Release: alt1
 
 Summary: simple and appealing Tango-styled icon theme
@@ -9,19 +10,14 @@ Group: Graphical desktop/Other
 License: GPLv3+
 Url: https://launchpad.net/elementaryicons
 
-Source: https://launchpad.net/%_name/%{ver_major}.x/%version/+download/%name-%version.tar.xz
-
-Packager: Igor Zubkov <icesik@altlinux.org>
+# VCS:https://github.com/elementary/icons.git
+Source: https://launchpad.net/%_name/%{ver_major}.x/%version/+download/elementary-icon-theme-%version.tar.xz
 
 BuildArch: noarch
 
-#Build-Depends: debhelper (>= 7.0.50~),
-#               icon-naming-utils
+Requires: icon-theme-hicolor
 
-#Depends: ${misc:Depends},
-#         gnome-icon-theme-full,
-#         hicolor-icon-theme
-#Suggests: notify-osd-icons-elementary
+BuildRequires: cmake
 
 %description
 The official elementary icons are designed to be simple and appealing.
@@ -33,19 +29,20 @@ theme.
 %setup
 
 %build
+%cmake
+%cmake_build
 
 %install
-mkdir -p %buildroot%_datadir/icons/elementary/
-cp -pr * %buildroot%_datadir/icons/elementary/
+%cmakeinstall_std
 
 %files
-%doc AUTHORS CONTRIBUTORS
 %_datadir/icons/elementary
-%exclude %_datadir/icons/elementary/AUTHORS
-%exclude %_datadir/icons/elementary/CONTRIBUTORS
-%exclude %_datadir/icons/elementary/COPYING
+%doc AUTHORS CONTRIBUTORS README*
 
 %changelog
+* Thu Apr 05 2018 Yuri N. Sedunov <aris@altlinux.org> 4.3.1-alt1
+- 4.3.1
+
 * Thu Sep 10 2015 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
 - 3.2.2
 
