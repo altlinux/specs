@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.1.4
-Release: alt1.1
+Version: 2.2.2
+Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
@@ -104,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 5 2018 Vladimir Didenko <cow@altlinux.ru> 2.2.2-alt1
+- 2.2.2
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.1.4-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
