@@ -2,7 +2,7 @@
 
 Name: extreme-tuxracer
 Version: 0.7.4
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: High speed arctic racing game based on Tux Racer
@@ -54,6 +54,9 @@ This package provides noarch data needed for Extreme Tux Racer to work.
 %_datadir/doc/%_name/
 
 %changelog
+* Thu Apr 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1:0.7.4-alt2
+- rebuilt with gcc7
+
 * Fri Feb 03 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.7.4-alt1
 - 0.7.4 (new url)
 - updated buildreqs
