@@ -1,8 +1,8 @@
 %global _unpacked_files_terminate_build 1
 
 Name:    googler
-Version: 3.3
-Release: alt3
+Version: 3.5
+Release: alt1
 
 Summary: Google Search, Google Site Search, Google News from the terminal
 License: GPL-3.0
@@ -38,6 +38,9 @@ install -Dm 644 auto-completion/fish/googler.fish %buildroot%_datadir/fish/vendo
 %_docdir/%name/*
 
 %changelog
+* Fri Mar 23 2018 Mikhail Gordeev <obirvalger@altlinux.org> 3.5-alt1
+- new version 3.5
+
 * Mon Oct 02 2017 Mikhail Gordeev <obirvalger@altlinux.org> 3.3-alt3
 - Fix path to zsh completion
 
