@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.602
+Version: 0.603
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -79,6 +79,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Fri Apr 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.603-alt1
+- new version
+
 * Wed Apr 04 2018 Igor Vlasenko <viy@altlinux.ru> 0.602-alt1
 - better GB_ARCH support
 
