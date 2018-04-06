@@ -1,11 +1,11 @@
 Name: shiboken
 Version: 1.2.2
-Release: alt2.git20140422
+Release: alt3.git20140422
+
 Summary: Generates bindings for C++ libraries using CPython source code
 License: GPLv2, LGPLv2.1
 Group: Development/KDE and QT
 Url: http://www.pyside.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # git://gitorious.org/pyside/shiboken.git
 Source: %name-%version.tar
@@ -69,7 +69,7 @@ pushd BUILD
 
 cmake \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-%ifarch x86_64
+%if "%_lib" == "lib64"
 	-DLIB_SUFFIX:STRING=64 \
 %endif
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
@@ -111,6 +111,9 @@ popd
 %python_sitelibdir/*
 
 %changelog
+* Fri Apr 06 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.2-alt3.git20140422
+- fix packaging on 64bit arches other than x86_64
+
 * Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt2.git20140422
 - Fixed build with gcc6
 
