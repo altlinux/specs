@@ -1,6 +1,6 @@
 Name:     genspec
 Version:  1.2.15
-Release:  alt1
+Release:  alt2
 
 Summary:  Script for generation RPM spec file from template
 License:  GPLv3+
@@ -32,6 +32,9 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Fri Apr 06 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.15-alt2
+- (ALT #34778) Add build requires to setuptools in python3* templates
+
 * Mon Jan 08 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.15-alt1
 - Add readline
 - Create golang-bin spectemplate
