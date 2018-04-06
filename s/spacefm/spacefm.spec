@@ -1,16 +1,18 @@
+%define gtkver 2
+
 Name: spacefm
-Version: 1.0.0
-Release: alt1
+Version: 1.0.6
+Release: alt1%ubt
 Summary: Multi-panel tabbed file and desktop manager
 License: GPLv3+ and LGPLv3+
 Group: File tools
 Url: http://ignorantguru.github.io/spacefm
-Source0: https://github.com/IgnorantGuru/%name/archive/%version.tar.gz#/%name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: %name.conf
+Source2: session
 
-# Automatically added by buildreq on Thu Apr 30 2015 (-bi)
-# optimized out: elfutils fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libopencore-amrnb0 libopencore-amrwb0 libpango-devel libwayland-client libwayland-server perl-Encode perl-XML-Parser pkg-config python-base xorg-xproto-devel
-BuildRequires: intltool libffmpegthumbnailer-devel libgtk+2-devel libudev-devel
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: intltool libgtk+%gtkver-devel libudev-devel
 
 # Mount without root requirement.
 Requires: udisks2
@@ -28,26 +30,34 @@ alike for its stability, speed, convenience and flexibility.
 %autoreconf
 %configure \
   --with-preferable-sudo=%_bindir/xdg-su \
-  --htmldir=%_docdir/%name-%version
+  --htmldir=%_docdir/%name-%version \
+  --disable-video-thumbnails \
+  --with-%gtkver
 %make_build
 
 %install
 make DESTDIR=%buildroot install
 install -Dp -m 0644 %SOURCE1 %buildroot/%_sysconfdir/%name/%name.conf
+install -Dp -m 0644 %SOURCE2 %buildroot/%_sysconfdir/xdg/%name/session
 
-%find_lang %{name}
+%find_lang %name
 
-%files -f %{name}.lang
+%files -f %name.lang
 %doc AUTHORS COPYING COPYING-LGPL ChangeLog README
-%dir %_sysconfdir/%name
+%_sysconfdir/%name/
+%_sysconfdir/xdg/%name/
 %_bindir/*
+%exclude %_bindir/%name-installer
 %config(noreplace) %_sysconfdir/%name/%name.conf
 %_datadir/%name/
 %_desktopdir/*.desktop
-%_datadir/icons/hicolor/*/apps/%{name}*.png
-%_datadir/icons/Faenza/
+%_iconsdir/hicolor/*/apps/%{name}*.png
+%_iconsdir/Faenza/
 %_datadir/mime/packages/%name-mime.xml
 
 %changelog
+* Fri Apr 06 2018 Anton Midyukov <antohami@altlinux.org> 1.0.6-alt1%ubt
+- New version 1.0.6 (Closes: 34754)
+
 * Thu Apr 30 2015 Motsyo Gennadi <drool@altlinux.ru> 1.0.0-alt1
 - build for ALT Linux
