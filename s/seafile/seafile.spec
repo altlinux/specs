@@ -1,6 +1,6 @@
 # Wait: https://github.com/haiwen/seafile/issues/1842
 Name: seafile
-Version: 6.1.6
+Version: 6.1.7
 Release: alt1
 
 Summary: Full-fledged cloud storage platform
@@ -40,9 +40,6 @@ BuildRequires: libcurl-devel >= 7.17
 
 # server requires
 BuildRequires: libzdb-devel >= 2.12
-
-# build with compat version
-BuildRequires: libevhtp-seafile-devel = 1.2.9
 
 Requires: ccnet >= %version
 
@@ -92,8 +89,6 @@ cp %SOURCE1 .
 
 %build
 %autoreconf
-# hack for build with compat libevhtp-seafile = 1.2.9
-export CPPFLAGS="$CPPFLAGS -I%_includedir/libevhtp-seafile/"
 %configure --enable-client \
            --enable-python --enable-fuse \
            --disable-static
@@ -119,6 +114,10 @@ export CPPFLAGS="$CPPFLAGS -I%_includedir/libevhtp-seafile/"
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Fri Apr 06 2018 Vitaly Lipatov <lav@altlinux.ru> 6.1.7-alt1
+- new version 6.1.7 (with rpmrb script)
+- drop obsoleted buildreq libevhtp-seafile-devel (used in seafile-server only)
+
 * Tue Mar 13 2018 Vitaly Lipatov <lav@altlinux.ru> 6.1.6-alt1
 - new version 6.1.6 (with rpmrb script)
 
