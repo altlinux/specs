@@ -15,12 +15,11 @@ BuildRequires: ca-certificates-java
 BuildRequires: unzip gcc-c++ libstdc++-devel-static
 BuildRequires: libXext-devel libXrender-devel libfreetype-devel libkrb5-devel
 BuildRequires(pre): browser-plugins-npapi-devel lsb-release
-BuildRequires(pre): rpm-build-java
-BuildRequires: pkgconfig(gtk+-2.0) ant1.9-nodeps
+BuildRequires(pre): rpm-macros-java
+BuildRequires: pkgconfig(gtk+-2.0)
 %set_compress_method none
 %define with_systemtap 0
 BuildRequires: /proc
-BuildRequires: jpackage-compat
 %define power64 ppc64
 # %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define release 2.5.5.0
@@ -208,7 +207,7 @@ BuildRequires: jpackage-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt5_2.5.5.0jpp7
+Release: alt6_2.5.5.0jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -456,7 +455,7 @@ Group:   Development/Java
 Requires: liblcms2 >= 2.5
 Requires: libjpeg
 # Require /etc/pki/java/cacerts.
-Requires: ca-certificates
+Requires: ca-certificates-java
 # Require jpackage-utils for ant.
 Requires: jpackage-utils >= 1.7.3-1jpp.2
 # Require zoneinfo data provided by tzdata-java subpackage.
@@ -1329,6 +1328,9 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Fri Apr 06 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt6_2.5.5.0jpp7
+- Requires: ca-certificates-java
+
 * Mon Nov 27 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt5_2.5.5.0jpp7
 - removed obsolete exports in jvmjardir
 - removed obsolete security policy alternatives in _jvmprivdir
