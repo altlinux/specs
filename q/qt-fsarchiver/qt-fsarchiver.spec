@@ -5,7 +5,7 @@
 
 Summary: GUI for Filesystem Archiver for Linux
 Name: qt-fsarchiver
-Version: 0.8.1.%subver
+Version: 0.8.4.%subver
 Release: alt1
 Url: http://www.fsarchiver.org
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
@@ -36,7 +36,7 @@ BuildRequires(pre): rpm-macros-qt5
 # Automatically added by buildreq on Sat May 14 2016
 # optimized out: gcc-c++ libGL-devel libcom_err-devel libgpg-error libgpg-error-devel libqt5-core libqt5-gui libqt5-widgets libqt5-xml libstdc++-devel python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-script-devel qt5-tools qt5-webchannel-devel
 BuildRequires: qt5-connectivity-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-sensors-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webengine-devel
-BuildRequires: qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel
+BuildRequires: qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel liblz4-devel libzstd-devel
 
 BuildRequires: bzlib-devel libattr-devel libblkid-devel libe2fs-devel libgcrypt-devel liblzma-devel liblzo2-devel libuuid-devel python-module-junos-eznc python3-module-zope zlib-devel
 
@@ -103,7 +103,7 @@ fsarchiver  - системный инструментарий, позволяя�
 %setup -n %sname
 #%%patch2 -p2
 %patch -p1
-%patch1 -p1
+#%%patch1 -p1
 %patch3 -p1
 %patch4 -p1
 
@@ -131,7 +131,7 @@ INSTALL_ROOT=%buildroot %makeinstall_std
 mkdir -p %buildroot%_datadir/qt5/translations
 cp translations/%{sname}*.qm %buildroot%_datadir/qt5/translations
 install -d -m755 %buildroot%_liconsdir/
-install -pD -m640 src/images/harddrive.png %buildroot%_liconsdir/%sname.png
+install -pD -m640 src/images/harddrive1.png %buildroot%_liconsdir/%sname.png
 
 install -d -m 755 %buildroot%_bindir/
 
@@ -159,6 +159,9 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%sname.desktop
 %_datadir/polkit-1/actions/org.project.pkexec.run-%sname.policy
 
 %changelog
+* Fri Apr 06 2018 Hihin Ruslan <ruslandh@altlinux.ru> 0.8.4.0-alt1
+- Version 0.8.4-0
+
 * Mon Feb 06 2017 Hihin Ruslan <ruslandh@altlinux.ru> 0.8.1.0-alt1
 - Version 0.8.1-0
 
