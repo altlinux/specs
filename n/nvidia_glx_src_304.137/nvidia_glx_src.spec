@@ -14,7 +14,7 @@
 %define nv_version 304
 %define nv_release 137
 %define nv_minor %nil
-%define pkg_rel alt139%ubt
+%define pkg_rel alt140%ubt
 %def_enable kernelsource
 %def_disable package_wfb
 
@@ -83,6 +83,7 @@ Source100: nvidia_create_xinf
 
 Patch1: disable-mtrr.patch
 Patch2: buildfix_kernel_4.14.patch
+Patch3: buildfix_kernel_4.15.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
@@ -160,6 +161,7 @@ cd %tbname-%tbver%dirsuffix
 pushd kernel/
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 rm -rf precompiled
 popd
 
@@ -285,6 +287,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 06 2018 Sergey V Turchin <zerg@altlinux.org> 304.137-alt140%ubt
+- add fix against 4.16 kernel
+
 * Thu Dec 14 2017 Sergey V Turchin <zerg@altlinux.org> 304.137-alt139%ubt
 - add fix against 4.14 kernel
 
