@@ -50,7 +50,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           ant%major_version
 Version:        1.9.6
-Release:        alt4_3jpp8
+Release:        alt5_3jpp8
 Epoch:          0
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
@@ -78,8 +78,8 @@ BuildRequires:  xml-commons-apis
 # Theoretically Ant might be usable with just JRE, but typical Ant
 # workflow requires full JDK, so we recommend it here.
 
-Requires:       xerces-j2
-Requires:       xml-commons-apis
+#Requires:       xerces-j2
+#Requires:       xml-commons-apis
 
 Requires:       %{name}-lib = %{epoch}:%{version}
 
@@ -703,6 +703,9 @@ sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 # -----------------------------------------------------------------------------
 
 %changelog
+* Fri Apr 06 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt5_3jpp8
+- dropped extra requires on xerces-j2 and xml-commons-apis
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt4_3jpp8
 - add_maven_depmap is deprecated, using mvn_artifact/mvn_install
 
