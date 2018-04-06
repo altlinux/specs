@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	4.14
-%define kernel_sublevel .32
+%define kernel_base_version	4.16
+%define kernel_sublevel .0
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -20,7 +20,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define nprocs 12
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	6
+%define kgcc_version	7
 
 # Enable/disable SGML docs formatting
 %if "%sub_flavour" == "def"
@@ -605,46 +605,19 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %files -n kernel-modules-v4l-%flavour
 %modules_dir/kernel/drivers/media/
 %dir %modules_dir/kernel/drivers/staging/media
-%modules_dir/kernel/drivers/staging/media/lirc/
 
 %files -n kernel-modules-staging-%flavour
 %modules_dir/kernel/drivers/staging/
-%exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Tue Apr 03 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.0-alt1
+- v4.16.0
+
 * Sun Apr 01 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.32-alt1
 - v4.14.32  (Fixes: CVE-2017-8824)
 
-* Thu Mar 29 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.31-alt1
-- v4.14.31
-
-* Sun Mar 25 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.30-alt1
-- v4.14.30
-
-* Thu Mar 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.29-alt1
-- v4.14.29
-
-* Mon Mar 19 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.28-alt1
-- v4.14.28  (Fixes: CVE-2018-1000004)
-
-* Mon Mar 12 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.26-alt1
-- v4.14.26
-
-* Tue Mar 06 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.24-alt1
-- v4.14.24
-
-* Wed Feb 28 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.23-alt1
-- v4.14.23
-
-* Tue Feb 27 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.22-alt1
-- v4.14.22
-
-* Mon Feb 26 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.21-alt1
-- v4.14.21
-
-* Mon Feb 19 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.20-alt1
-- v4.14.20  (Fixes: CVE-2017-16995, CVE-2017-16996, CVE-2017-5715, CVE-2017-5754,
-  CVE-2017-8824)
+* Mon Feb 19 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.15.4-alt1
+- v4.15.4
 
 * Mon Feb 05 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.17-alt1
 - v4.14.17
