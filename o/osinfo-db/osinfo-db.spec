@@ -1,7 +1,7 @@
 
 Summary: osinfo database files
 Name: osinfo-db
-Version: 20170813
+Version: 20180325
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
@@ -26,6 +26,9 @@ osinfo-db-import --root %buildroot --system %SOURCE0
 %_datadir/osinfo/*
 
 %changelog
+* Fri Apr 06 2018 Alexey Shabalin <shaba@altlinux.ru> 20180325-alt1
+- 20180325
+
 * Wed Oct 11 2017 Alexey Shabalin <shaba@altlinux.ru> 20170813-alt1
 - 20170813
 
