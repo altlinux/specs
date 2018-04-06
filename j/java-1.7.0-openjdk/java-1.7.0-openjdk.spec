@@ -207,7 +207,7 @@ BuildRequires: /proc
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt6_2.5.5.0jpp7
+Release: alt7_2.5.5.0jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -350,9 +350,10 @@ BuildRequires: libpng-devel
 BuildRequires: wget
 BuildRequires: xsltproc libxslt
 BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
-BuildRequires: ant1.9
+BuildRequires: ant1.9-nodeps
 BuildRequires: libXinerama-devel
-BuildRequires: rhino
+#BuildRequires: rhino
+Source3: rhino.jar
 BuildRequires: zip
 BuildRequires: fontconfig
 BuildRequires: fonts-type1-xorg
@@ -672,7 +673,7 @@ mkdir -p rhino/{old,new}
 
 # Extract rhino.jar contents and rewrite
 (cd rhino/old 
- jar xf /usr/share/java/rhino.jar
+ jar xf %{_sourcedir}/rhino.jar
 )
 
 java -cp rewriter com.redhat.rewriter.ClassRewriter \
@@ -1328,6 +1329,9 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Fri Apr 06 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt7_2.5.5.0jpp7
+- use ant1.9-nodeps
+
 * Fri Apr 06 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt6_2.5.5.0jpp7
 - Requires: ca-certificates-java
 
