@@ -4,7 +4,7 @@
 Name: jq
 %define lname lib%name
 Version: 1.5
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Command-line JSON processor
 Group: Development/Other
 Source: %name-%version.tar
@@ -13,7 +13,7 @@ Url: http://stedolan.github.io/jq/
 License: BSD-style
 Requires: %lname = %EVR
 
-BuildRequires: flex  oniguruma-devel
+BuildRequires: flex  liboniguruma-devel
 BuildRequires: %{?!_disable_check:/proc valgrind ruby-tools}
 BuildRequires(pre):rpm-build-ubt
 
@@ -88,6 +88,9 @@ cat ./test-suite.log
 %endif
 
 %changelog
+* Thu Apr 05 2018 Anton Farygin <rider@altlinux.ru> 1.5-alt2%ubt
+- rebuilt for new liboniguruma
+
 * Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 1.5-alt1%ubt
 - new version with security fixes (CVE-2015-8863)
 
