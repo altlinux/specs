@@ -1,6 +1,6 @@
 Name: pyside-qt4
 Version: 1.2.2
-Release: alt2.git20140501
+Release: alt3.git20140501
 Summary: Python bindings for the Qt cross-platform application and UI framework
 License: LGPLv2.1
 Group: Development/Tools
@@ -93,7 +93,7 @@ export PATH=$PATH:%_qt4dir/bin
 %add_optflags -I%_includedir/shiboken
 cmake \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-%ifarch x86_64
+%if "%_lib" == "lib64"
 	-DLIB_SUFFIX:STRING=64 \
 %endif
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
@@ -136,6 +136,9 @@ popd
 %python_sitelibdir/*
 
 %changelog
+* Fri Apr 06 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.2-alt3.git20140501
+- fix packaging on 64bit arches other than x86_64
+
 * Tue Dec 08 2015 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt2.git20140501
 - Exclude ENABLE_VERSION_SUFFIX to prevent difference between
   /usr/include/PySide-1.2/QtGui and /usr/include/PySide/QtGui
