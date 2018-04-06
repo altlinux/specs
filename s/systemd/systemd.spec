@@ -52,13 +52,9 @@
 %endif
 
 Name: systemd
-# Epoch 1 is when systemd and journalctl are split.
-# (Without it, we cannot specify the conflicts correctly
-# for pkgs both from p7/t7 and Sisyphus
-# so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 238
-Release: alt5
+Release: alt6
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -187,17 +183,11 @@ Requires: util-linux >= 2.27.1
 
 
 # Requires: selinux-policy >= 3.8.5
-PreReq: libsystemd-shared = %EVR
 PreReq: %name-utils = %EVR
 PreReq: %name-services = %EVR
 PreReq: pam_%name = %EVR
-PreReq: journalctl = %EVR
 
 Requires: libnss-myhostname = %EVR
-
-# /*bin/journalctl is in a subpackage.
-# We want to be able to install a new journalctl and use the old (stable) systemd.
-Conflicts: journalctl < %EVR
 
 # Copy from SysVinit
 PreReq: coreutils
@@ -207,8 +197,6 @@ Requires: sysvinit-utils
 Obsoletes: systemd-units < 0:43-alt1
 Provides: systemd-units = %EVR
 Provides: syslogd-daemon
-Provides: /sbin/systemctl
-Provides: /bin/systemctl
 
 %description
 systemd is a system and session manager for Linux, compatible with
@@ -219,17 +207,6 @@ Linux cgroups, supports snapshotting and restoring of the system
 state, maintains mount and automount points and implements an
 elaborate transactional dependency-based service control logic. It can
 work as a drop-in replacement for sysvinit.
-
-%package -n libsystemd-shared
-Group: System/Libraries
-Summary: Private Systemd Shared Library
-Conflicts: systemd-services < %EVR
-Conflicts: systemd < %EVR
-Conflicts: journalctl < %EVR
-
-%description -n libsystemd-shared
-The libsystemd-shared private library for link as many binaries as possible with it,
-to save storage space.
 
 %package -n libsystemd
 Group: System/Libraries
@@ -370,8 +347,13 @@ Drop-in replacement for the System V init tools of systemd.
 %package utils
 Group: System/Configuration/Boot and Init
 Summary: systemd utils
-PreReq: libsystemd-shared = %EVR
-Conflicts: %name < %EVR
+Provides: /sbin/systemctl
+Provides: /bin/systemctl
+Provides: /bin/journalctl
+Provides: /sbin/journalctl
+Provides: journalctl = %EVR
+Obsoletes: journalctl < %EVR
+Obsoletes: libsystemd-shared < %EVR
 
 %description utils
 This package contains utils from systemd:
@@ -380,6 +362,8 @@ This package contains utils from systemd:
  - systemd-sysctl
  - systemd-tmpfiles
  - systemd-firstboot
+ - systemctl
+ - journalctl
 
 %package services
 Group: System/Configuration/Boot and Init
@@ -387,7 +371,6 @@ Summary: systemd services
 Conflicts: %name < %EVR
 Requires: pam_%name = %EVR
 Requires: %name-utils = %EVR
-Requires: libsystemd-shared = %EVR
 Requires: dbus >= %dbus_ver
 Conflicts: service <= 0.5.25-alt1
 Conflicts: chkconfig <= 1.3.59-alt3
@@ -459,23 +442,6 @@ Obsoletes: systemd-journal-gateway < %EVR
 %description journal-remote
 This service provides access to the journal via HTTP and JSON.
 
-%package -n journalctl
-Group: System/Configuration/Boot and Init
-Summary: Tool to query the journal from systemd.
-Provides: /bin/journalctl
-Provides: /sbin/journalctl
-PreReq: libsystemd-shared = %EVR
-# File conflict with the releases before splitting out journalctl.
-# 0:208-alt3 was the first release when the pkg was split in Sisyphus.
-# The split pkgs for p7/t7 have lesser releases, so they couldn't coexist
-# with newer journalctl due to this conflict. But Epoch helps us:
-# there will be split pkgs for p7/t7 with Epoch 1, and hecne
-# this conflict declaration won't apply!
-Conflicts: %name < 0:208-alt3
-
-%description -n journalctl
-Tool to query the journal from systemd.
-
 %package coredump
 Group: System/Servers
 Summary: systemd-coredump and coredumpctl utils
@@ -511,8 +477,7 @@ Group: Shells
 BuildArch: noarch
 Requires: bash-completion
 Requires: %name = %EVR
-# Not to loose it on upgrades after the split.
-Requires: bash-completion-journalctl = %EVR
+Obsoletes: bash-completion-journalctl < %EVR
 
 %description -n bash-completion-%name
 Bash completion for %name.
@@ -522,34 +487,10 @@ Summary: Zsh completion for systemd utils
 Group: Shells
 BuildArch: noarch
 Requires: %name = %EVR
-Requires: zsh-completion-journalctl = %EVR
+Obsoletes: zsh-completion-journalctl < %EVR
 
 %description -n zsh-completion-%name
 Zsh completion for %name.
-
-%package -n bash-completion-journalctl
-Summary: Bash completion for journalctl from systemd
-Group: Shells
-BuildArch: noarch
-Requires: bash-completion
-Requires: journalctl = %EVR
-Conflicts: journalctl < %EVR
-# File conflict with the releases before splitting out journalctl.
-# 0:208-alt3 was the first release when the pkg was split in Sisyphus.
-Conflicts: bash-completion-%name < 0:208-alt3
-
-%description -n bash-completion-journalctl
-Bash completion for journalctl from systemd.
-
-%package -n zsh-completion-journalctl
-Summary: Zsh completion for journalctl from systemd
-Group: Shells
-BuildArch: noarch
-Requires: journalctl = %EVR
-Conflicts: zsh-completion-%name < 1:214-alt14
-
-%description -n zsh-completion-journalctl
-Zsh completion for journalctl from systemd
 
 %package -n udev
 Group: System/Configuration/Hardware
@@ -561,7 +502,6 @@ PreReq: udev-hwdb = %EVR
 PreReq: systemd-utils = %EVR
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
-Conflicts: systemd < %EVR
 Conflicts: util-linux <= 2.22-alt2
 Conflicts: DeviceKit
 
@@ -601,7 +541,6 @@ Summary: Hardware database for udev
 Group: System/Configuration/Hardware
 License: GPLv2+
 Provides: %_sysconfdir/udev/hwdb.d /lib/udev/hwdb.d
-Conflicts: udev < %EVR
 BuildArch: noarch
 
 %description -n udev-hwdb
@@ -1248,8 +1187,6 @@ fi
 %config(noreplace) %_sysconfdir/systemd/user.conf
 %_datadir/dbus-1/system.d/org.freedesktop.systemd1.conf
 
-/sbin/systemctl
-/bin/systemctl
 %_rpmlibdir/systemd.filetrigger
 /sbin/systemd
 /sbin/systemd-ask-password
@@ -1351,7 +1288,6 @@ fi
 
 %_man1dir/bootctl.*
 %_man1dir/busctl.*
-%_man1dir/systemctl.*
 %_mandir/*/systemd-ask-password*
 %_man1dir/systemd-cat.*
 %_man1dir/systemd-cgls.*
@@ -1468,13 +1404,8 @@ fi
 %exclude %_bindir/kernel-install
 %exclude %_man8dir/kernel-install.*
 
-%files -n libsystemd-shared
-/lib/systemd/libsystemd-shared-%version.so
-
 %files -n libsystemd
-/%_lib/*.so.*
-%exclude /%_lib/*udev*.so.*
-%exclude /%_lib/libnss*
+/%_lib/libsystemd.so.*
 
 %files -n libsystemd-devel
 /%_lib/*.so
@@ -1527,6 +1458,15 @@ fi
 
 %files utils
 %dir /lib/systemd
+/lib/systemd/libsystemd-shared-%version.so
+
+/sbin/systemctl
+/bin/systemctl
+%_man1dir/systemctl.*
+
+/bin/journalctl
+/sbin/journalctl
+%_man1dir/journalctl.*
 
 /bin/systemd-escape
 %_mandir/*/*escape*
@@ -1768,23 +1708,10 @@ fi
 %files -n bash-completion-%name
 %_sysconfdir/bash_completion.d/*
 %exclude %_sysconfdir/bash_completion.d/udevadm
-%exclude %_sysconfdir/bash_completion.d/journalctl
 
 %files -n zsh-completion-%name
 %_datadir/zsh/site-functions/*
 %exclude %_datadir/zsh/site-functions/_udevadm
-%exclude %_datadir/zsh/site-functions/_journalctl
-
-%files -n journalctl
-/bin/journalctl
-/sbin/journalctl
-%_man1dir/journalctl.*
-
-%files -n bash-completion-journalctl
-%_sysconfdir/bash_completion.d/journalctl
-
-%files -n zsh-completion-journalctl
-%_datadir/zsh/site-functions/_journalctl
 
 %files -n bash-completion-udev
 %_sysconfdir/bash_completion.d/udevadm
@@ -1857,6 +1784,18 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Fri Apr 06 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt6
+- move to systemd-utils package:
+  + systemctl
+  + journalctl
+  + libsystemd-shared
+- drop packages:
+  + journalctl
+  + libsystemd-shared
+  + bash-completion-journalctl
+  + zsh-completion-journalctl
+- clenup Conflicts
+
 * Tue Apr 03 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt5
 - drop Conflicts in udev-rules (fixed update from p8)
 

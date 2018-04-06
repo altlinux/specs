@@ -2,7 +2,7 @@
 Name: udev-rule-generator
 Epoch: 2
 Version: 1
-Release: alt1
+Release: alt2
 Summary: Common package for udev rule generator
 Url: https://packages.altlinux.org/en/Sisyphus/srpms/%name
 Group: System/Configuration/Hardware
@@ -64,21 +64,14 @@ install -p -m755 write_cd_rules %buildroot/lib/udev/
 install -p -m644 75-cd-aliases-generator.rules %buildroot/lib/udev/rules.d/
 ln -s /dev/null %buildroot%_sysconfdir/udev/rules.d/80-net-setup-link.rules
 
-%post
-if [ $1 -eq 1 ]; then
-    chkconfig --add udevd-final
-fi
-
 %preun
-if [ $1 -eq 0 ]; then
-    chkconfig --del udevd-final
-fi
+%preun_service udevd-final
 
 %post cdrom
-chkconfig udevd-final on  >/dev/null 2>&1
+%post_service udevd-final
 
 %post net
-chkconfig udevd-final on  >/dev/null 2>&1
+%post_service udevd-final
 
 %files
 /lib/udev/rule_generator.functions
@@ -98,6 +91,9 @@ chkconfig udevd-final on  >/dev/null 2>&1
 
 
 %changelog
+* Fri Apr 06 2018 Alexey Shabalin <shaba@altlinux.ru> 2:1-alt2
+- update post and preun scripts
+
 * Sat Mar 31 2018 Alexey Shabalin <shaba@altlinux.ru> 2:1-alt1
 - Initial build
 
