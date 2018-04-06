@@ -3,7 +3,7 @@
 
 Name:          qoauth
 Version:       1.0.1
-Release:       alt3
+Release:       alt4
 
 Group:         Graphical desktop/KDE
 Summary:       Qt-based C++ library for OAuth authorization scheme
@@ -44,9 +44,8 @@ based on %{name} .
 
 
 %prep
-%setup -q
-#sed -i -e '/^ *docs \\$/d' \
-#       -e "s|\(\$\${INSTALL_PREFIX}\)/lib.*|%{_libdir}|" src/src.pro
+%setup
+sed -i '/^[[:blank:]]\+target\.path.\+\/lib$/ s,/lib$,/%_lib,' src/src.pro
 sed -i -e 's|/lib|/%{_lib}|g' src/pcfile.sh
 find -type f -name \*.pro | \
 while read f
@@ -57,7 +56,6 @@ qmake-qt4 qoauth.pro
 
 %build
 %make_build
-
 
 %install
 %make install INSTALL="install -p" INSTALL_ROOT=%{buildroot}
@@ -84,6 +82,9 @@ make check || :
 %_datadir/qt4/mkspecs/features/oauth.prf
 
 %changelog
+* Fri Apr 06 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.1-alt4
+- fixed packages on 64bit arches other than x86_64
+
 * Wed Jul 24 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt3
 - fix requires
 
