@@ -1,6 +1,6 @@
 Name:           x2goclient
 Version:        4.1.1.1
-Release:        alt1
+Release:        alt2
 Summary:        X2Go Client application (Qt4)
 
 Group:          Communications
@@ -31,7 +31,8 @@ BuildRequires:  perl-Proc-Simple
 BuildRequires:  perl-Term-ReadPassword
 BuildRequires:  zlib-devel
 Requires:       icon-theme-hicolor
-Requires:       nx
+Requires:       nx-libs >= 3.5.0.31
+Requires:       nxproxy >= 3.5.0.31
 # For GSSAPI authenticated connections
 Requires:       openssh-clients
 # For local folder sharing and printing
@@ -39,13 +40,13 @@ Requires:       openssh-server
 
 %description
 X2Go is a server-based computing environment with
-    - session resuming
-    - low bandwidth support
-    - session brokerage support
-    - client-side mass storage mounting support
-    - client-side printing support
-    - audio support
-    - authentication by smartcard and USB stick
+- session resuming
+- low bandwidth support
+- session brokerage support
+- client-side mass storage mounting support
+- client-side printing support
+- audio support
+- authentication by smartcard and USB stick
 
 X2Go Client is a graphical client (Qt4) for the X2Go system.
 You can use it to connect to running sessions and start new sessions.
@@ -55,7 +56,7 @@ You can use it to connect to running sessions and start new sessions.
 Summary:        X2Go Client (Qt4) as browser plugin
 Group:          Communications
 Requires:       browser-plugins-npapi
-Requires:       nx
+Requires:       nx-libs
 # For GSSAPI authenticated connections
 Requires:       openssh-clients
 # For local folder sharing and printing
@@ -142,6 +143,9 @@ ln -s ../../x2go/x2goplugin-apache.conf %buildroot%_sysconfdir/httpd/conf.d/x2go
 %_datadir/x2go/
 
 %changelog
+* Tue Apr 10 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.1.1-alt2
+- Use nx-libs.
+
 * Thu Feb 22 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.1.1-alt1
 - New version.
 - Return to old nx.
