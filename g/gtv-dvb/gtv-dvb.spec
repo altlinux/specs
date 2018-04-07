@@ -1,8 +1,8 @@
 Name: gtv-dvb
-Version: 1.1.9
+Version: 2.0
 Release: alt1%ubt
 
-Summary: DVB player
+Summary: Media Player & Digital TV
 
 License: LGPLv2
 Group: Video
@@ -13,7 +13,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Buildrequires(pre): rpm-build-ubt
 BuildRequires: pkgconfig(gtk+-3.0) pkgconfig(gstreamer-1.0) pkgconfig(gstreamer-plugins-base-1.0) pkgconfig(gstreamer-plugins-bad-1.0) 
-Requires: v4l-utils
+Requires: v4l-utils gst-libav
 
 %description
 DVB-T/T2, DVB-S/S2, DVB-C, ATSC, DTMB
@@ -36,6 +36,9 @@ Audio & Video & Digital TV - Gstreamer 1.0
 %doc README.md LICENSE
 
 %changelog
+* Sat Apr 07 2018 Anton Midyukov <antohami@altlinux.org> 2.0-alt1%ubt
+- new version 2.0
+
 * Fri Mar 30 2018 Anton Midyukov <antohami@altlinux.org> 1.1.9-alt1%ubt
 - ubt release
 
