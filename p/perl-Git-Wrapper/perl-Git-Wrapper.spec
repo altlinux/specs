@@ -3,7 +3,7 @@
 %define real_name Git-Wrapper
 
 Name: perl-Git-Wrapper
-Version: 0.047
+Version: 0.048
 Release: alt1
 
 Summary: Wrap git command-line interface
@@ -44,5 +44,8 @@ CLI-style --options as Git does.
 %perl_vendor_privlib/Git/Wrapper*
 
 %changelog
+* Sat Apr 07 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.048-alt1
+- New version
+
 * Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.047-alt1
 - Initial build for ALT Linux Sisyphus
