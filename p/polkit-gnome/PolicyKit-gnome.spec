@@ -1,9 +1,11 @@
+%def_enable snapshot
+
 %define _libexecdir %_prefix/libexec/polkit-1
 %define oldname PolicyKit-gnome
 
 Name: polkit-gnome
-Version: 0.105
-Release: alt1
+Version: 0.106
+Release: alt0.1
 
 Summary: polkit integration tool for the GNOME 3 desktop
 License: GPLv2+
@@ -17,8 +19,14 @@ Provides: %oldname = %version-%release
 Obsoletes: %oldname < %version
 Obsoletes: lib%name
 
+%if_disabled snapshot
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%version/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
+Patch: %name-0.106-alt-desktop.patch
 
+BuildRequires(pre): rpm-build-xdg
 BuildRequires: gnome-common intltool libpolkit-devel libgtk+3-devel libcairo-gobject-devel
 
 %description
@@ -27,23 +35,30 @@ look and feel of the GNOME desktop.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
 %configure  \
 	--disable-static
-%make
+%make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name-1
 
 %files -f %name-1.lang
 %doc README AUTHORS NEWS HACKING
 %_libexecdir/%name-authentication-agent-1
+%_xdgconfigdir/autostart/%name-authentication-agent-1.desktop
 
 %changelog
+* Sat Apr 07 2018 Yuri N. Sedunov <aris@altlinux.org> 0.106-alt0.1
+- updated to 0.105-66-ga0763a2
+- restored /etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
+  for DEs that do not provide its own polkit-agent
+
 * Tue Oct 02 2012 Yuri N. Sedunov <aris@altlinux.org> 0.105-alt1
 - updated to 0.105
 - removed harmful for gnome-3.6 /etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
