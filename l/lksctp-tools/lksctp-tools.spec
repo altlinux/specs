@@ -1,7 +1,7 @@
 Name: lksctp-tools
 Summary: Linux Kernel SCTP tools
 Version: 1.0.17
-Release: alt1
+Release: alt2
 License: GPL2
 Group: System/Kernel and hardware
 BuildRequires: glibc-devel-static
@@ -63,12 +63,17 @@ mkdir -p %buildroot
 %_man7dir/*
 %_includedir/netinet/sctp.h
 %_datadir/lksctp-tools
+%_pkgconfigdir/*.pc
 
 %files -n liblksctp-devel-static
 %_libdir/*.a
 %_libdir/lksctp-tools/*.a
 
 %changelog
+* Sat Apr 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.17-alt2
+- NMU: fixed warning: Installed (but unpackaged) file(s) found:
+- /usr/lib64/pkgconfig/libsctp.pc
+
 * Tue May 10 2016 Cronbuild Service <cronbuild@altlinux.org> 1.0.17-alt1
 - new version 1.0.17
 
