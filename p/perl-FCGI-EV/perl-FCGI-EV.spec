@@ -3,7 +3,7 @@
 %define real_name FCGI-EV
 
 Name: perl-FCGI-EV
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary:  Perl FastCGI protocol implementation for use in EV-based applications
@@ -46,6 +46,9 @@ in EV-based applications.
 %perl_vendor_privlib/FCGI/EV*
 
 %changelog
+* Sat Apr 07 2018 Nikolay A. Fetisov <naf@altlinux.org> 2.0.1-alt1
+- New version
+
 * Sun Mar 20 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.0-alt1
 - New version
 
