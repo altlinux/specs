@@ -9,7 +9,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.0
-Release: alt1.%orelease
+Release: alt2.%orelease
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -555,6 +555,9 @@ hardlink -c %buildroot%firmware_dir
 
 
 %changelog
+* Sat Apr  7 2018 Vitaly Chikunov <vt@altlinux.org> 3.10.0-alt2.693.17.1.vz7.45.7
+- Build with fixes.
+
 * Thu Apr  5 2018 Vitaly Chikunov <vt@altlinux.org> 3.10.0-alt1.693.17.1.vz7.45.7
 - Second build (3.10.0-alt1.693.17.1.vz7.45.7)
 
