@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Role-ModuleMetadata
 
 Name: perl-Dist-Zilla-Role-ModuleMetadata
-Version: 0.004
-Release: alt2
+Version: 0.005
+Release: alt1
 
 Summary: a role for plugins that use Module::Metadata
 
@@ -44,6 +44,9 @@ Module::Metadata and the information that it provides.
 %perl_vendor_privlib/Dist/Zilla/Role/ModuleMetadata*
 
 %changelog
+* Sat Apr 07 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.005-alt1
+- New version
+
 * Sun Aug 14 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.004-alt2
 - Bumping release to override autoimports package
 
