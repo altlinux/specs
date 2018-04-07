@@ -207,7 +207,7 @@ BuildRequires: /proc
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt7_2.5.5.0jpp7
+Release: alt8_2.5.5.0jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -454,11 +454,11 @@ Summary: The OpenJDK runtime environment without audio and video support
 Group:   Development/Java
 
 Requires: liblcms2 >= 2.5
-Requires: libjpeg
+#Requires: libjpeg
 # Require /etc/pki/java/cacerts.
 Requires: ca-certificates-java
 # Require jpackage-utils for ant.
-Requires: jpackage-utils >= 1.7.3-1jpp.2
+# Requires: jpackage-utils >= 1.7.3-1jpp.2
 # Require zoneinfo data provided by tzdata-java subpackage.
 Requires: tzdata-java
 # Post requires alternatives to install tool alternatives.
@@ -1007,7 +1007,7 @@ do
 done
 
 sed -i 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*policytool.desktop
-sed -i 's,^Categories=.*,Categories=Development;Profiling;System;Monitor;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*jconsole.desktop
+sed -i 's,^Categories=.*,Categories=Development;Profiling;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*jconsole.desktop
 
 ##### javadoc Alt specific #####
 echo java-javadoc >java-javadoc-buildreq-substitute
@@ -1329,6 +1329,9 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Fri Apr 06 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt8_2.5.5.0jpp7
+- desktop files cleanup, fixes for bootstrap
+
 * Fri Apr 06 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt7_2.5.5.0jpp7
 - use ant1.9-nodeps
 
