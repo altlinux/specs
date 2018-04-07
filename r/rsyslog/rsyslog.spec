@@ -10,15 +10,17 @@
 %def_enable elasticsearch
 %def_enable libsystemd
 %def_enable libcurl
+%def_disable mmkubernetes
 
 Name: rsyslog
-Version: 8.32.0
+Version: 8.34.0
 Release: alt1%ubt
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: GPLv3+ ASL2.0
 Group: System/Kernel and hardware
 Url: http://www.rsyslog.com
+# https://github.com/rsyslog/rsyslog.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
@@ -47,6 +49,8 @@ BuildRequires: liblognorm-devel >= 2.0.3
 %{?_enable_omhiredis:BuildRequires: libhiredis-devel >= 0.10.1}
 %{?_enable_libsystemd:BuildRequires: libsystemd-devel >= 209}
 %{?_enable_libcurl:BuildRequires: libcurl-devel}
+%{?_enable_mmkubernetes:BuildRequires: libcurl-devel}
+
 BuildRequires: iproute2
 BuildRequires: /usr/bin/rst2man
 BuildRequires: /usr/bin/lsb_release
@@ -390,6 +394,7 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-usertools \
 	--enable-generate-man-pages \
 	%{subst_enable libcurl} \
+	%{subst_enable mmkubernetes} \
 	%{subst_enable libsystemd} \
 	--with-systemdsystemunitdir=%_unitdir
 
@@ -561,6 +566,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/mmsnmptrapd.so
 
 %changelog
+* Sat Apr 07 2018 Alexey Shabalin <shaba@altlinux.ru> 8.34.0-alt1%ubt
+- 8.34.0
+
 * Tue Jan 09 2018 Alexey Shabalin <shaba@altlinux.ru> 8.32.0-alt1%ubt
 - 8.32.0
 
