@@ -13,7 +13,7 @@ BuildRequires: ca-certificates-java
 BuildRequires: gcc-c++ libstdc++-devel-static 
 BuildRequires: libXext-devel libXrender-devel
 BuildRequires(pre): browser-plugins-npapi-devel
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 %set_compress_method none
 BuildRequires: /proc
 %define fedora 15
@@ -110,7 +110,7 @@ BuildRequires: /proc
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt2
+Release: alt3
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -206,7 +206,6 @@ BuildRequires: wget
 BuildRequires: xsltproc libxslt
 BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 BuildRequires: mercurial
-BuildRequires: ant1.9
 BuildRequires: ant1.9-nodeps
 BuildRequires: libXinerama-devel
 BuildRequires: rhino
@@ -308,7 +307,7 @@ Requires: libjpeg
 # Require /etc/pki/java/cacerts.
 %if 0%{?fedora} > 9
 # Require /etc/pki/java/cacerts.
-Requires: ca-certificates
+Requires: ca-certificates-java
 %else
 # Require /etc/pki/tls/certs/ca-bundle.crt instead of generating
 # cacerts.
@@ -709,7 +708,7 @@ install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/javadocdir_ja
 EOF
 
 sed -i 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/policytool.desktop
-sed -i 's,^Categories=.*,Categories=Development;Profiling;System;Monitor;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/jconsole.desktop
+sed -i 's,^Categories=.*,Categories=Development;Profiling;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/jconsole.desktop
 
 # HACK around find-requires
 %define __find_requires    $RPM_BUILD_ROOT/.find-requires
@@ -1025,6 +1024,9 @@ done
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Apr 06 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.41-alt3
+- updated BR:, cleaned up desktop file, Requires: ca_sertificates-java
+
 * Thu Apr 05 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.41-alt2
 - fixed build
 
