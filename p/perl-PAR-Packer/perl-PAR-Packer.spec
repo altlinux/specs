@@ -3,8 +3,8 @@
 %define real_name PAR-Packer
 
 Name: perl-PAR-Packer
-Version: 1.041
-Release: alt4
+Version: 1.043
+Release: alt1
 
 Summary: Perl module to generate stand-alone executables and ".par" archives
 
@@ -69,5 +69,8 @@ mv -- %buildroot%_bindir/pp %buildroot%_bindir/par-pp
 
 
 %changelog
+* Sat Apr 07 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.043-alt1
+- New version
+
 * Fri Mar 09 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.041-alt4
 - Initial build for ALT Linux Sisyphus
