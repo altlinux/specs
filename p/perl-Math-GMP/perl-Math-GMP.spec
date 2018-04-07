@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Math-GMP
 Name: perl-%dist
-Version: 2.17
+Version: 2.18
 Release: alt1
 
 Summary: High speed arbitrary size integer math
@@ -12,7 +12,7 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
-BuildRequires: libgmp-devel perl-devel perl(Devel/CheckLib.pm)
+BuildRequires: libgmp-devel perl-devel perl(Devel/CheckLib.pm) perl(Alien/Base/Wrapper.pm) perl(Alien/GMP.pm) perl(Alien/Role/Alt.pm) perl(Class/Method/Modifiers.pm)
 
 %description
 Math::GMP was designed to be a drop-in replacement both for Math::BigInt
@@ -35,6 +35,9 @@ Perl functions.  This can result in speed improvements.
 %perl_vendor_autolib/Math
 
 %changelog
+* Sat Apr 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.18-alt1
+- automated CPAN update
+
 * Thu Apr 05 2018 Igor Vlasenko <viy@altlinux.ru> 2.17-alt1
 - automated CPAN update
 
