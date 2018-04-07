@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Clone-Choose
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Storable.pm) perl(Test/More.pm)
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Storable.pm) perl(Test/More.pm) perl(Module/Runtime.pm) perl(Test/Without/Module.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.008
-Release: alt2
+Version: 0.009
+Release: alt1
 Summary: Choose appropriate clone utility
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/release/Clone-Choose
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/H/HE/HERMES/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HE/HERMES/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -41,6 +41,9 @@ particular one.
 %perl_vendor_privlib/C*
 
 %changelog
+* Sat Apr 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1
+- automated CPAN update
+
 * Fri Nov 24 2017 Igor Vlasenko <viy@altlinux.ru> 0.008-alt2
 - to Sisyphus as perl-Hash-Merge dep
 
