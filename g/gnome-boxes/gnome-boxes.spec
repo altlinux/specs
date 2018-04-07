@@ -1,10 +1,12 @@
+%def_enable snapshot
+
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.27
+%define ver_major 3.28
 %def_disable ovirt
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.92
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
@@ -13,8 +15,11 @@ Group: Emulators
 License: LGPLv2+
 Url: https://wiki.gnome.org/Apps/Boxes
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source2: libgd.tar
+%else
+Source: %name-%version.tar
+%endif
 
 # From configure.ac
 %define govirt_ver 0.3.4
@@ -120,6 +125,9 @@ the functionality of the Boxes.
 
 
 %changelog
+* Sat Apr 07 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- updated to v3.28.0-10-ga1f74a0
+
 * Sun Mar 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.27.92-alt1
 - 3.27.92
 
