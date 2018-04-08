@@ -2,8 +2,8 @@
 %global altname2 guitarix2
 
 Name: guitarix
-Version: 0.35.5
-Release: alt1.1
+Version: 0.36.1
+Release: alt1
 Summary: Mono amplifier to JACK
 Group: Sound
 License: GPLv2+
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
-BuildRequires: faust
+BuildRequires: faust-devel
 BuildRequires: libfftw3-devel
 BuildRequires: pkgconfig(gtk+-2.0)
 BuildRequires: libgtkmm2-devel
@@ -146,12 +146,12 @@ rm -fr src/zita-convolver src/zita-resampler
 
 %build
 ./waf -vv configure --prefix=%prefix --libdir=%_libdir \
-      --cxxflags="-std=c++0x -fomit-frame-pointer -ftree-loop-linear \
+      --cxxflags="-std=c++0x -fomit-frame-pointer \
       -ffinite-math-only -fno-math-errno -fno-signed-zeros -fstrength-reduce \
 %ifarch %ix86 x86_64
       -msse \
 %endif
-%optflags" \
+      %optflags" \
       --shared-lib --lib-dev \
       --ladspadir=%_libdir/ladspa --lv2dir=%_libdir/lv2 \
       --glade-support --glade-catalog-dir=%_datadir/glade/catalogs \
@@ -211,6 +211,9 @@ ln -s %_libdir/libgxw.so.0.1 %buildroot%_libdir/libgxw.so
 %_libdir/lv2/*
 
 %changelog
+* Sun Apr 08 2018 Anton Midyukov <antohami@altlinux.org> 0.36.1-alt1
+- new version 0.36.1
+
 * Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.35.5-alt1.1
 - NMU: rebuild with new lv2
 
