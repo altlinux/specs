@@ -1,6 +1,6 @@
 Name: firmware-linux
-Version: 20180319
-Release: alt3
+Version: 20180329
+Release: alt1
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -58,6 +58,22 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun Apr 08 2018 L.A. Kostis <lakostis@altlinux.ru> 20180329-alt1
+- configuration changes:
+  +  fix cronbuild
+- upstream changes (GIT 8c1e439):
+  + amdgpu: update vce firmware for Polaris (thx Alex Deucher)
+  + Add firmware file for Intel Bluetooth,9560 (thx Amit K Bag)
+  + Add firmware file for Intel Bluetooth,9260 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth,8265 (thx Amit K Bag)
+  + Update firmware patch for Intel Bluetooth 8260 (thx Amit K Bag)
+  + nfp: update Agilio SmartNIC firmware to rev 2.0.7 (thx Edwin Peer)
+  + cxgb4: update firmware to revision 1.18.9.0 (thx Ganesh Goudar)
+  + intel: Update Geminilake audio firmware (thx Sanyog Kale)
+  + intel: Update Kabylake audio firmware (thx Sanyog Kale)
+  + intel: Update Broxton audio firmware (thx Sanyog Kale)
+  + intel: Update Skylake audio firmware (thx Sanyog Kale)
+
 * Tue Mar 27 2018 L.A. Kostis <lakostis@altlinux.ru> 20180319-alt3
 - Fixed obsoleted fw list (tnx to mike@ and vseleznv@).
 
