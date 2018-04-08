@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.603
+Version: 0.604
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -79,6 +79,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Mon Apr 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.604-alt1
+- added autorepo-health-find-intersections
+
 * Fri Apr 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.603-alt1
 - new version
 
