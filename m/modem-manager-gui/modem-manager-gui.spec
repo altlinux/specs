@@ -2,7 +2,7 @@ Name:          modem-manager-gui
 Summary:       Graphical interface for ModemManager
 Summary(de):   Grafische Oberfläche für ModemManager
 Summary(ru):   Графический интерфейс для ModemManager
-Version:       0.0.19
+Version:       0.0.19.1
 Release:       alt1
 
 Group:	       System/Configuration/Networking	
@@ -101,6 +101,9 @@ mv %buildroot%_datadir/metainfo/%name.appdata.xml %buildroot%_datadir/appdata
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Apr 09 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.19.1-alt1
+- New version.
+
 * Mon Mar 19 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.19-alt1
 - New version.
 
