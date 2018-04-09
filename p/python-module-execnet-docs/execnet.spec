@@ -9,11 +9,11 @@ a minimal and fast API targetting the following uses: \
 * write and deploy hybrid multi-process applications \
 * write scripts to administer multiple hosts
 
-Name: %fname
+Name: %fname-docs
 Version: 1.2.0
 Release: alt2
 
-%if ""==""
+%if "-docs"==""
 Summary: Rapid multi-Python deployment
 Group: Development/Python
 %else
@@ -44,7 +44,7 @@ BuildArch: noarch
 # depends from rlcompleter2
 %endif
 
-%if ""!=""
+%if "-docs"!=""
 Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
 %endif
@@ -57,7 +57,7 @@ BuildRequires: python-module-alabaster python-module-docutils python-module-html
 
 %description
 %descr
-%if ""!=""
+%if "-docs"!=""
 
 This package contains documentation for %oname.
 
@@ -73,7 +73,7 @@ This package contains pickles for %oname.
 
 %prep
 %setup
-%if ""!=""
+%if "-docs"!=""
 %prepare_sphinx .
 ln -s ../objects.inv doc/
 %endif
@@ -82,7 +82,7 @@ ln -s ../objects.inv doc/
 %python_build
 
 %install
-%if ""==""
+%if "-docs"==""
 %python_install
 %else
 export PYTHONPATH=%buildroot%python_sitelibdir
@@ -92,7 +92,7 @@ mkdir -p %buildroot%python_sitelibdir/%oname
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
-%if ""==""
+%if "-docs"==""
 
 %files
 %doc CHANGELOG *.txt

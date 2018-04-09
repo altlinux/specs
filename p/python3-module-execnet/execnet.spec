@@ -1,5 +1,5 @@
 %define oname execnet
-%define fname python-module-%oname
+%define fname python3-module-%oname
 %define descr \
 execnet provides carefully tested means to ad-hoc interact with Python \
 interpreters across version, platform and network barriers. It provides \
@@ -15,7 +15,7 @@ Release: alt2
 
 %if ""==""
 Summary: Rapid multi-Python deployment
-Group: Development/Python
+Group: Development/Python3
 %else
 Summary: Documentation for %oname
 Group: Development/Documentation
@@ -26,21 +26,21 @@ Url: https://pypi.python.org/pypi/execnet/
 Source: %name-%version.tar
 BuildArch: noarch
 
-%py_provides %oname
-%add_python_req_skip win32event win32evtlogutil win32service
-%add_python_req_skip win32serviceutil register
-%if ""=="3"
+%py3_provides %oname
+%add_python3_req_skip win32event win32evtlogutil win32service
+%add_python3_req_skip win32serviceutil register
+%if "3"=="3"
 # hasn't got version for Python3
-%add_python_req_skip rlcompleter2
+%add_python3_req_skip rlcompleter2
 %endif
-%filter_from_provides /^python(execnet.script.shell)/d
+%filter_from_provides /^python3(execnet.script.shell)/d
 # IndexError: list index out of range
-%filter_from_provides /^python(execnet.script.socketserverservice)/d
+%filter_from_provides /^python3(execnet.script.socketserverservice)/d
 # No module named 'win32serviceutil'
-%filter_from_provides /^python(execnet.script.quitserver)/d
+%filter_from_provides /^python3(execnet.script.quitserver)/d
 # No module named 'execnet.quitserver'
-%if ""=="3"
-%filter_from_provides /^python(execnet.script.xx)/d
+%if "3"=="3"
+%filter_from_provides /^python3(execnet.script.xx)/d
 # depends from rlcompleter2
 %endif
 
@@ -49,8 +49,8 @@ Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
 %endif
 
-BuildRequires(pre): rpm-macros-sphinx rpm-build-python
-BuildRequires: python-module-setuptools_scm
+BuildRequires(pre): rpm-macros-sphinx rpm-build-python3
+BuildRequires: python3-module-setuptools_scm
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-setuptools rpm-build-python3 time
@@ -63,7 +63,7 @@ This package contains documentation for %oname.
 
 %package -n %fname-pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description -n %fname-pickles
 %descr
@@ -79,25 +79,25 @@ ln -s ../objects.inv doc/
 %endif
 
 %build
-%python_build
+%python3_build
 
 %install
 %if ""==""
-%python_install
+%python3_install
 %else
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C doc pickle
 %make -C doc html
-mkdir -p %buildroot%python_sitelibdir/%oname
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+mkdir -p %buildroot%python3_sitelibdir/%oname
+cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %if ""==""
 
 %files
 %doc CHANGELOG *.txt
-%python_sitelibdir/%oname
-%python_sitelibdir/*.egg-info*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/*.egg-info*
 
 %else
 
@@ -105,7 +105,7 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %doc doc/_build/html/*
 
 %files -n %fname-pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 %endif
 
 %changelog
