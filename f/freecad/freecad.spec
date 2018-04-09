@@ -1,8 +1,13 @@
+%def_with qt4
+%def_with bundled_libs
 %define oname freecad
 %define ldir %_libdir/%oname
+%ifndef build_parallel_jobs
+%define build_parallel_jobs 7
+%endif
 
 Name:    freecad
-Version: 0.16
+Version: 0.17
 Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
@@ -13,27 +18,69 @@ Url:     http://free-cad.sourceforge.net/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Source2: freecad.desktop
+Source3: freecad.appdata.xml
+Source4: freecad.1
+Source5: freecad.sharedmimeinfo
 
-Patch1: %name-fix-circular-cmake-call.patch
-Patch2: %name-fix-ImageConv-build.patch
+%if_without bundled_libs
+Patch1: %name-remove-3rdParty.patch
+Patch2: %name-build-with-external-smesh.patch
+%endif
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
-Requires:  lib%name = %EVR
 
-BuildPreReq: libGConf-devel pyside-tools
-BuildPreReq: python-devel cmake swig gcc-fortran libf2c-ng-devel chrpath
-BuildPreReq: boost-devel libqt4-devel libcoin3d-devel libSoQt-devel zlib-devel
-BuildPreReq: libopencv2-devel libxerces-c-devel gcc-c++ boost-filesystem-devel
-BuildPreReq: java-devel-default qt4-designer boost-program_options-devel
-BuildPreReq: boost-signals-devel libXxf86misc-devel libqt4-sql-sqlite
-BuildPreReq: libopencascade-devel libgts-devel libGL-devel libGLU-devel
-BuildPreReq: libode-devel phonon-devel libann-devel qt4-assistant
-BuildPreReq: doxygen graphviz libqt4-help eigen3
-BuildPreReq: python-module-pivy libnumpy-devel libqt4-assistant-devel
-BuildPreReq: boost-interprocess-devel libshiboken-devel shiboken
-BuildPreReq: libpyside-qt4-devel boost-python-devel
+BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-xdg
+%if_with qt4
+BuildRequires(pre): libqt4-devel
+BuildRequires: libqt4-sql-sqlite
+BuildRequires: qt4-designer
+BuildRequires: qt4-assistant
+BuildRequires: libqt4-help
+BuildRequires: libqt4-assistant-devel
+BuildRequires: libpyside-qt4-devel
+%define qmake %qmake_qt4
+%define qtbindir %_qt4dir/bin
+%else
+BuildRequires(pre): qt5-base-devel
+BuildRequires: qt5-sql-sqlite3
+BuildRequires: qt5-designer
+BuildRequires: qt5-assistant
+# TODO BuildRequires: libpyside-qt5-devel
+# TODO phonon-devel
+# TODO libvtk6.2-devel
+%define qmake %qmake_qt5
+%define qtbindir %_qt5_bindir
+%endif
+BuildRequires: pyside-tools
+BuildRequires: python-devel swig gcc-fortran libf2c-ng-devel chrpath
+BuildRequires: boost-devel
+BuildRequires: boost-polygon-devel
+BuildRequires: boost-geometry-devel
+BuildRequires: libcoin3d-devel
+#BuildRequires: libSoQt-devel
+BuildRequires: zlib-devel
+BuildRequires: libopencv2-devel libxerces-c-devel gcc-c++ boost-filesystem-devel
+BuildRequires: java-devel-default boost-program_options-devel
+BuildRequires: boost-signals-devel libXxf86misc-devel
+BuildRequires: libopencascade-devel libgts-devel libGL-devel libGLU-devel
+BuildRequires: libode-devel phonon-devel libann-devel
+BuildRequires: doxygen graphviz
+BuildRequires: eigen3
+BuildRequires: python-module-pivy libnumpy-devel
+BuildRequires: boost-interprocess-devel libshiboken-devel shiboken
+BuildRequires: boost-python-devel
 BuildRequires: gdb
+BuildRequires: libvtk6.2-devel vtk6.2-examples vtk6.2-python
+BuildRequires: libhdf5-devel libhdf5-mpi-devel
+BuildRequires: libmed-devel libspnav-devel
+BuildRequires: python-module-matplotlib
+BuildRequires: libkdtree++-devel
+%if_without bundled_libs
+BuildRequires: libsmesh-devel libnetgen-devel
+%endif
 #BuildRequires: texlive-extra-utils
 
 %py_requires pivy PySide
@@ -52,45 +99,6 @@ FreeCAD features tools similar to Catia, SolidWorks or Solid Edge, and therefore
 also falls into the category of MCAD, PLM, CAx and CAE. It will be a feature
 based parametric modeler with a modular software architecture which makes it
 easy to provide additional functionality without modifying the core system.
-
-%package thumbnailer
-Summary: Thumbnailer utility for FreeCAD
-Group: Graphics
-Provides:  free-cad-thumbnailer = %version-%release
-Obsoletes: free-cad-thumbnailer < %version-%release
-Requires: %name = %EVR
-
-%description thumbnailer
-FreeCAD will be a general purpose 3D CAD modeler. FreeCAD is aimed directly at
-mechanical engineering and product design but also fits in a wider range of uses
-around engineering, such as architecture or other engineering specialties.
-
-FreeCAD features tools similar to Catia, SolidWorks or Solid Edge, and therefore
-also falls into the category of MCAD, PLM, CAx and CAE. It will be a feature
-based parametric modeler with a modular software architecture which makes it
-easy to provide additional functionality without modifying the core system.
-
-This package contains thumbnailer utility for FreeCAD.
-
-%package qt4-designer-plugin
-Summary: FreeCAD plugin for Qt4
-Group: Development/KDE and QT
-Provides:  free-cad-qt4-designer-plugin = %version-%release
-Obsoletes: free-cad-qt4-designer-plugin < %version-%release
-Requires: %name = %EVR
-Requires: qt4-designer
-
-%description qt4-designer-plugin
-FreeCAD will be a general purpose 3D CAD modeler. FreeCAD is aimed directly at
-mechanical engineering and product design but also fits in a wider range of uses
-around engineering, such as architecture or other engineering specialties.
-
-FreeCAD features tools similar to Catia, SolidWorks or Solid Edge, and therefore
-also falls into the category of MCAD, PLM, CAx and CAE. It will be a feature
-based parametric modeler with a modular software architecture which makes it
-easy to provide additional functionality without modifying the core system.
-
-This package contains FreeCAD plugin for Qt4 Designer.
 
 %package docs
 Summary: Documentation for FreeCAD
@@ -112,189 +120,101 @@ easy to provide additional functionality without modifying the core system.
 
 This package contains documentation for FreeCAD.
 
-%package -n lib%name
-Summary: Shared libraries of FreeCAD
-Group: System/Libraries
-Provides:  libfree-cad = %version-%release
-Obsoletes: libfree-cad < %version-%release
-Requires: %name = %EVR
-
-%description -n lib%name
-FreeCAD will be a general purpose 3D CAD modeler. FreeCAD is aimed directly at
-mechanical engineering and product design but also fits in a wider range of uses
-around engineering, such as architecture or other engineering specialties.
-
-FreeCAD features tools similar to Catia, SolidWorks or Solid Edge, and therefore
-also falls into the category of MCAD, PLM, CAx and CAE. It will be a feature
-based parametric modeler with a modular software architecture which makes it
-easy to provide additional functionality without modifying the core system.
-
-This package contains shared libraries FreeCAD.
-
-%package -n lib%name-devel
-Summary: Development files of FreeCAD
-Group: Development/C++
-Provides:  libfree-cad-devel = %version-%release
-Obsoletes: libfree-cad-devel < %version-%release
-Requires: lib%name = %EVR
-Requires: libopencascade-devel
-
-%description -n lib%name-devel
-FreeCAD will be a general purpose 3D CAD modeler. FreeCAD is aimed directly at
-mechanical engineering and product design but also fits in a wider range of uses
-around engineering, such as architecture or other engineering specialties.
-
-FreeCAD features tools similar to Catia, SolidWorks or Solid Edge, and therefore
-also falls into the category of MCAD, PLM, CAx and CAE. It will be a feature
-based parametric modeler with a modular software architecture which makes it
-easy to provide additional functionality without modifying the core system.
-
-This package contains development files of FreeCAD.
-
 %prep
 %setup
+%if_without bundled_libs
+# Removed bundled libraries
 %patch1 -p1
 %patch2 -p1
-sed -i 's|@LIBDIR@|%_libdir|g' CMakeLists.txt \
-	src/3rdParty/salomesmesh/CMakeLists.txt
-ln -s FindOpenCasCade.cmake cMake/FindOCE.cmake
+rm -rf src/3rdParty
+%endif
 
 %build
-export PATH=$PATH:%_qt4dir/bin
+export PATH=$PATH:%qtbindir
 %add_optflags -Wl,-rpath,%ldir/lib
 %cmake_insource \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_DATADIR=%ldir \
 	-DCMAKE_INSTALL_DOCDIR=%ldir/doc \
 	-DCMAKE_INSTALL_LIBDIR=%ldir/lib \
+	-DOPENMPI_INCLUDE_DIRS=%_libdir/openmpi/include \
+%if_without bundled_libs
+	-DFREECAD_USE_EXTERNAL_SMESH=ON \
+	-DSMESH_DIR=%_libdir \
+	-DSMESH_INCLUDE_DIR=%_includedir/smesh \
+	-DSMESH_VERSION_MAJOR=7 \
+%endif
 	-DFREECAD_USE_EXTERNAL_PIVY=ON 
 
-%make_build
-
-optiSed() {
-	sed -i 's|^\(CC.*\)|\1 -g|' Makefile
-	sed -i 's|^\(CXX.*\)|\1 -g|g' Makefile
-}
-
-pushd src/Tools/plugins/widget
-%qmake_qt4 -Wall -d plugin.pro
-optiSed
-%make_build
-popd
-pushd src/Tools/ImageTools/ImageConv
-%qmake_qt4 -Wall -d ImageConv.pro
-optiSed
-%make_build
-popd
-pushd src/Gui/iisTaskPanel
-%qmake_qt4 -Wall -d taskpanel.pro
-optiSed
-%make_build
-popd
+export NPROCS=%build_parallel_jobs
+%make_build VERBOSE=1
 
 %install
 %makeinstall_std
 
 # binaries
-install -d %buildroot%ldir/bin
-if [ -d %buildroot%_bindir ] ; then
-mv -v %buildroot%_bindir/* %buildroot%ldir/bin
-fi
-pushd %buildroot%ldir/bin
-for i in $(ls); do
-	ln -s %ldir/bin/$i %buildroot%_bindir/
-done
-ln -s FreeCAD %buildroot%_bindir/%oname
-ln -s FreeCADCmd %buildroot%_bindir/%{oname}cmd
-popd
-
-# libraries
-install -d %buildroot%_libdir
-install -p -m755 package/debian/mime/%oname-thumbnailer \
-	src/Tools/ImageTools/ImageConv/ImageConv \
-	%buildroot%_bindir
-cp -P src/Gui/iisTaskPanel/lib/* %buildroot%_libdir/
-
-# qt4 designer
-install -d %buildroot%_qt4dir/plugins/designer
-install -p -m644 src/Tools/plugins/widget/*.so \
-	%buildroot%_qt4dir/plugins/designer
+mkdir -p %buildroot%ldir/bin
+mv %buildroot%_bindir/* %buildroot%ldir/bin
+ln -s ../%_lib/%name/bin/FreeCAD %buildroot%_bindir/freecad
+ln -s ../%_lib/%name/bin/FreeCADCmd %buildroot%_bindir/freecadcmd
 
 # desktop files
-install -d %buildroot%_sysconfdir/gconf/schemas
-install -p -m755 package/debian/mime/*.schemas \
-	%buildroot%_sysconfdir/gconf/schemas
-install -d %buildroot%_desktopdir
-install -p -m644 package/debian/*.desktop %buildroot%_desktopdir
-install -d %buildroot%_niconsdir
-install -p -m644 src/Gui/Icons/freecad.xpm %buildroot%_niconsdir
-install -d %buildroot%_xdgdatadir/mime/packages
-install -p -m644 package/debian/%oname.sharedmimeinfo \
-	%buildroot%_xdgdatadir/mime/packages/%oname.xml
+install -Dm0644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
 
-# docs
-install -d %buildroot%_man1dir
-install -p -m644 package/debian/*.1 package/debian/mime/*.1 \
-	%buildroot%_man1dir
+# icons
+for size in 16 32 48 64
+do
+  install -Dm0644 %buildroot%ldir/%name-icon-${size}.png %buildroot%_iconsdir/hicolor/${size}x${size}/apps/%name.png
+done
+install -Dm0644 %buildroot%ldir/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+install -Dm0644 %buildroot%ldir/%name.xpm %buildroot%_pixmapsdir/%name.xpm
+
+# appdata
+install -Dm0644 %SOURCE3 %buildroot%_datadir/appdata/%name.appdata.xml
+
+# manpage
+install -Dm0644 %SOURCE4 %buildroot%_man1dir/%name.1
+
+# mimetype
+install -Dm0644 %SOURCE5 %buildroot%_xdgdatadir/mime/packages/%name.xml
 
 # stuff
 cp -af %buildroot%_prefix/Mod/* %buildroot%ldir/Mod
 rm -rf %buildroot%_prefix/Mod
-
-# cleanup
-rm -f %buildroot%_libdir/libiistaskpanel.so
+cp -af %buildroot%_prefix/Ext/ %buildroot%ldir/Ext
+rm -rf %buildroot%_prefix/Ext
 
 # l10n
 %find_lang --with-kde %name
 
-%post
-%gconf2_install %oname
-
-%preun
-if [ $1 = 0 ]; then
-  %gconf2_uninstall %oname
-fi
-
 %files -f %name.lang
-%doc ChangeLog.txt copying.lib package/debian/changelog
+%doc ChangeLog.txt COPYING README.md
 %doc %ldir/License.txt
 %dir %ldir
 %_bindir/*
 %ldir/bin
+%ldir/lib
 %ldir/Gui
+%ldir/Ext
 %ldir/Mod
 %ldir/examples
 %ldir/*.png
 %ldir/*.svg
 %ldir/*.xpm
-%exclude %_bindir/freecad-thumbnailer
 %_desktopdir/*
-%_niconsdir/*
+%_iconsdir/hicolor/*/apps/%name.*
 %_man1dir/*
-%exclude %_man1dir/freecad-thumbnailer.1*
 %_xdgdatadir/mime/packages/*
-#python_sitelibdir/*
-%config %_sysconfdir/gconf/schemas/*
-
-%files thumbnailer
-%_bindir/freecad-thumbnailer
-%_man1dir/freecad-thumbnailer.1*
-
-%files -n lib%name
-%_libdir/*.so.*
-%ldir/lib
-
-#files -n lib%name-devel
-#_libdir/*.so
-#ldir/include
+%_datadir/appdata/*.appdata.xml
+%_pixmapsdir/%name.xpm
 
 %files docs
 %ldir/doc
 
-%files qt4-designer-plugin
-%_qt4dir/plugins/designer/*.so
-
 %changelog
+* Mon Apr 09 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.17-alt1
+- New version (ALT #34781).
+
 * Mon Apr 11 2016 Andrey Cherepanov <cas@altlinux.org> 1:0.16-alt1
 - New version
 - Add boost-python-devel to build requirements
