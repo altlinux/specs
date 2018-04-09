@@ -55,7 +55,7 @@
 
 Name: pve-%rname
 Version: 2.11.1
-Release: alt4%ubt
+Release: alt5%ubt
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
 Group: Emulators
@@ -105,6 +105,9 @@ Patch36: 0027-adding-old-vma-files.patch
 Patch37: 0028-vma-add-throttling-options-to-drive-mapping-fifo-pro.patch
 Patch38: 0029-qemu-img-dd-add-isize-parameter.patch
 Patch39: 0030-qemu-img-dd-add-n-skip_create.patch
+Patch42: 0031-vma-add-cache-option-to-device-map.patch
+Patch43: 0032-rbd-fix-cache-mode-behavior.patch
+Patch44: 0033-vma-remove-forced-NO_FLUSH-option.patch
 Patch40: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
 Patch41: 0002-ratelimit-don-t-align-wait-time-with-slices.patch
 
@@ -317,6 +320,9 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch37 -p1
 %patch38 -p1
 %patch39 -p1
+%patch42 -p1
+%patch43 -p1
+%patch44 -p1
 %patch40 -p1
 %patch41 -p1
 
@@ -492,6 +498,9 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Mon Apr 09 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.1-alt5%ubt
+- 2.11.1-5
+
 * Fri Mar 23 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.1-alt4%ubt
 - 2.11.1-4
 
