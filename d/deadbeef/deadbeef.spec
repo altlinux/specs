@@ -2,7 +2,7 @@
 %define gtkver 3
 Name:		deadbeef
 Version:	0.7.1
-Release:	alt3.20160419.1.1
+Release:	alt4
 Summary:	DeaDBeeF is an audio player
 Url:		http://deadbeef.sf.net
 #https://github.com/Alexey-Yakovenko/deadbeef
@@ -17,6 +17,7 @@ Patch4:		deadbeef-0.5.1-fr-fix-build.patch
 Patch5:		deadbeef-0.5.1-using-tt.patch
 Patch6:		deadbeef-0.5.4-alt-categories-desktop-file.patch
 Patch7:		deadbeef-0.5.6-alt-gdk-threads.patch
+Patch8:		deadbeef-0.7.1-arm.patch
 
 BuildRequires: /usr/bin/yasm gcc-c++ intltool glib2-devel libX11-devel libatk-devel libcairo-devel libcddb-devel libcdio-devel libcdparanoia-devel libcurl-devel libfaad-devel libflac-devel libgdk-pixbuf-devel libgtk+2-devel libjpeg-devel libmad-devel libmpg123-devel libogg-devel libpango-devel libpng-devel libsndfile-devel libvorbis-devel libwavpack-devel perl(Exporter.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(IPC/Open2.pm) perl(IPC/Open3.pm) perl(Locale/Country.pm) perl(Locale/Language.pm) perl(base.pm) pkgconfig(alsa) pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gtk+-3.0) pkgconfig(imlib2) pkgconfig(jansson) pkgconfig(libavcodec) pkgconfig(libavformat) pkgconfig(libavutil) pkgconfig(libpulse-simple) pkgconfig(libzip) pkgconfig(samplerate) swig zlib-devel
 
@@ -486,6 +487,7 @@ SC68 player (Atari ST SNDH YM2149)
 #patch5 -p2
 %patch6 -p2
 #patch7 -p2
+%patch8 -p1
 
 sed -i '/m4/ d' Makefile.am
 
@@ -660,6 +662,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Mon Apr 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.1-alt4
+- fixed build on arm
+
 * Sun Jan 14 2018 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt3.20160419.1.1
 - rebuild against libcdio.so.18
 
