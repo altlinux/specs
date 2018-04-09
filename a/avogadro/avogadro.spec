@@ -1,4 +1,6 @@
 
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
+
 %define sover 1
 %define sover_oq 0
 %define libname libavogadro%sover
@@ -6,7 +8,7 @@
 
 Name: avogadro
 Version: 1.2.0
-Release: alt2%ubt
+Release: alt3%ubt
 
 Group: Sciences/Chemistry
 Summary: An advanced molecular editor for chemical purposes
@@ -14,7 +16,7 @@ Url: http://avogadro.openmolecules.net/
 License: GPLv2
 Packager: Sergey V Turchin <zerg@altlinux.org>
 
-Requires: %libname = %version-%release
+Requires: python-module-sip = %sipver2
 
 Source: %name-%version.tar
 # FC
@@ -36,9 +38,10 @@ Patch102: avogadro-1.1.1-alt-fix-gcc6-version.patch
 # Automatically added by buildreq on Tue Feb 08 2011 (-bi)
 #BuildRequires: boost-devel-headers boost-python-devel cmake docbook-utils eigen2 gcc-c++ libXScrnSaver-devel libXau-devel libXcomposite-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libglew-devel libnumpy-devel libopenbabel-devel libqt3-devel libxkbfile-devel openbabel python-module-numpy-testing python-module-sip-devel python-modules-ctypes qt4-designer rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): python-module-sip-devel
 BuildRequires: boost-devel-headers boost-python-devel cmake docbook-utils docbook-utils-print eigen3 gcc-c++
 BuildRequires: libGLEW-devel libnumpy-devel libopenbabel-devel libqt4-devel
-BuildRequires: openbabel libopenbabel-devel python-module-numpy-testing python-module-sip-devel python-modules-ctypes zlib-devel
+BuildRequires: openbabel libopenbabel-devel python-module-numpy-testing python-modules-ctypes zlib-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -142,6 +145,9 @@ sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMake
 %_datadir/qt4/mkspecs/features/%name.prf
 
 %changelog
+* Mon Apr 09 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt3%ubt
+- depend on current python-module-sip virsion (ALT#34779)
+
 * Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt2%ubt
 - build with eigen3
 
