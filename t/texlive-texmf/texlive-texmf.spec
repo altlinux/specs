@@ -83,7 +83,7 @@ BuildRequires: perl(Tk/ItemStyle.pm) perl(Tk/NoteBook.pm) perl(Tk/PNG.pm) perl(T
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt7_2
+Release:	alt8_2
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -2936,6 +2936,7 @@ pushd %{buildroot}%{texmfbindir}
 	ln -sf %{texmfdistdir}/scripts/latex2man/latex2man latex2man
 	ln -sf %{texmfdistdir}/scripts/latexdiff/latexdiff.pl latexdiff
 	ln -sf %{texmfdistdir}/scripts/latexdiff/latexdiff-vc.pl latexdiff-vc
+	ln -sf %{texmfdistdir}/scripts/latexmk/latexmk.pl latexmk
 	ln -sf %{texmfdistdir}/scripts/latexdiff/latexrevise.pl latexrevise
 	ln -sf %{texmfdistdir}/scripts/listings-ext/listings-ext.sh listings-ext.sh
 	ln -sf %{texmfdistdir}/scripts/glossaries/makeglossaries makeglossaries
@@ -3118,6 +3119,9 @@ EOF
 
 
 %changelog
+* Tue Apr 10 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt8_2
+- added latexmk symlink (closes: #34785)
+
 * Mon Mar 12 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt7_2
 - rebuild with rpm-build-tex 0.4.1
 
