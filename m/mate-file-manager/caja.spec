@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-file-manager
-Version: 1.20.1
+Version: 1.20.2
 Release: alt1
 Epoch: 1
 Summary: File manager for MATE
@@ -37,6 +37,7 @@ This package provides the libraries used by caja extensions.
 Group: Graphical desktop/MATE
 Summary:  Mate-file-manager schemas
 License:  LGPLv2+
+BuildArch: noarch
 
 %description schemas
 This package provides the gsettings schemas for caja.
@@ -98,6 +99,9 @@ mkdir -p %buildroot%_libdir/caja/extensions-2.0
 %_datadir/gtk-doc/html/libcaja-extension
 
 %changelog
+* Mon Apr 09 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
+- 1.20.2
+
 * Tue Mar 27 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.1-alt1
 - 1.20.1
 
