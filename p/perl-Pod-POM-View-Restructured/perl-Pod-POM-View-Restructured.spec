@@ -6,14 +6,14 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Pod/POM.pm) perl(base.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.03
-Release: alt2
+Version: 1.000001
+Release: alt1
 Summary: View for Pod::POM that outputs reStructuredText
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/A/AL/ALEXM/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AL/ALEXM/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -45,6 +45,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Mon Apr 09 2018 Igor Vlasenko <viy@altlinux.ru> 1.000001-alt1
+- automated CPAN update
+
 * Fri May 12 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2
 - to Sisyphus
 
