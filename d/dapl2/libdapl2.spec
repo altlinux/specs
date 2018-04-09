@@ -5,7 +5,7 @@ Name: dapl2
 %define lname lib%name
 %define oldlname libdapl
 Version: 2.0.30
-Release: alt2.1
+Release: alt3
 Summary: A Library for userspace access to RDMA devices using OS Agnostic DAT APIs
 Group: System/Libraries
 License: %gpl2only, %bsdstyle, CPL
@@ -109,6 +109,9 @@ mv %buildroot%_sysconfdir/dat.conf \
 
 
 %changelog
+* Mon Apr 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.30-alt3
+- fixed build on aarch64
+
 * Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.30-alt2.1
 - Fixed build with glibc 2.16
 
