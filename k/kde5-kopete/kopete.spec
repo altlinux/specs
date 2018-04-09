@@ -13,26 +13,25 @@
 %add_findreq_skiplist %_K5bin/winpopup-*.sh
 %add_findreq_skiplist %_K5data/kopete_skype/call_*
 
-%define gnr_sover 5
-%define libkopete_oscar libkopete_oscar%gnr_sover
-%define libkopete_videodevice libkopete_videodevice%gnr_sover
-%define lcl_sover 0
-%define libkopetestatusmenu libkopetestatusmenu%lcl_sover
-%define liboscar liboscar%lcl_sover
-%define libkopeteaddaccountwizard libkopeteaddaccountwizard%lcl_sover
-%define libkopeteprivacy libkopeteprivacy%lcl_sover
-%define libkopete_otr_shared libkopete_otr_shared%lcl_sover
-%define libqgroupwise libqgroupwise%lcl_sover
-%define libkopete libkopete%lcl_sover
-%define libkyahoo libkyahoo%lcl_sover
-%define libkopetecontactlist libkopetecontactlist%lcl_sover
-%define libkopeteidentity libkopeteidentity%lcl_sover
-%define libkopetechatwindow_shared libkopetechatwindow_shared%lcl_sover
-%define libqgroupwise libqgroupwise%lcl_sover
+%define sover 0
+%define libkopete_oscar libkopete_oscar%sover
+%define libkopete_videodevice libkopete_videodevice%sover
+%define libkopetestatusmenu libkopetestatusmenu%sover
+%define liboscar liboscar%sover
+%define libkopeteaddaccountwizard libkopeteaddaccountwizard%sover
+%define libkopeteprivacy libkopeteprivacy%sover
+%define libkopete_otr_shared libkopete_otr_shared%sover
+%define libqgroupwise libqgroupwise%sover
+%define libkopete libkopete%sover
+%define libkyahoo libkyahoo%sover
+%define libkopetecontactlist libkopetecontactlist%sover
+%define libkopeteidentity libkopeteidentity%sover
+%define libkopetechatwindow_shared libkopetechatwindow_shared%sover
+%define libqgroupwise libqgroupwise%sover
 
 Name: kde5-kopete
-Version: 18.03.80
-Release: alt3%ubt
+Version: 18.03.90
+Release: alt1%ubt
 %K5init
 
 Group: Networking/Instant messaging
@@ -50,6 +49,7 @@ Source: %rname-%version.tar
 # ALT
 Patch100: alt-mobile.patch
 Patch101: alt-soversion.patch
+Patch102: alt-install.patch
 
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: rpm-macros-browser-plugins
@@ -212,6 +212,7 @@ based on %name.
 %patch100 -p1
 %endif
 %patch101 -p1
+%patch102 -p1
 
 # avoid conflicts with KDE4
 find -type f -name CMakeLists.txt | \
@@ -251,7 +252,7 @@ done
 %_K5plug/chattexteditpart.so
 %_K5plug/kcm_kopete_*
 %_K5plug/kopete_*
-#%_K5plug/accessible/chatwindowaccessiblewidgetfactory.so
+%_K5plug/accessible/chatwindowaccessiblewidgetfactory.so
 #%browser_plugins_path/skypebuttons.so
 %_K5conf_up/kopete-*
 %_K5xdgapp/*kopete*.desktop
@@ -267,38 +268,53 @@ done
 #%_K5data/kopeterichtexteditpart/
 %_K5xmlgui/kopete*/
 
-%files -n %libkopete_oscar
-%_K5lib/libkopete_oscar.so.*
-%files -n %libkopete_videodevice
-%_K5lib/libkopete_videodevice.so.*
 %if_enabled kopete_irc
 %files -n %libkirc
 %_K5lib/libkirc.so.*
+%_K5lib/libkirc.so.%sover
 %files -n %libkirc_client
 %_K5lib/libkirc_client.so.*
+%_K5lib/libkirc_client.so.%sover
 %endif
+%files -n %libkopete_oscar
+%_K5lib/libkopete_oscar.so.*
+%_K5lib/libkopete_oscar.so.%sover
+%files -n %libkopete_videodevice
+%_K5lib/libkopete_videodevice.so.*
+%_K5lib/libkopete_videodevice.so.%sover
 %files -n %libkyahoo
 %_K5lib/libkyahoo.so.*
+%_K5lib/libkyahoo.so.%sover
 %files -n %libkopeteaddaccountwizard
 %_K5lib/libkopeteaddaccountwizard.so.*
+%_K5lib/libkopeteaddaccountwizard.so.%sover
 %files -n %libkopete
 %_K5lib/libkopete.so.*
+%_K5lib/libkopete.so.%sover
 %files -n %libkopeteprivacy
 %_K5lib/libkopeteprivacy.so.*
+%_K5lib/libkopeteprivacy.so.%sover
 %files -n %libkopetechatwindow_shared
 %_K5lib/libkopetechatwindow_shared.so.*
+%_K5lib/libkopetechatwindow_shared.so.%sover
 %files -n %libkopete_otr_shared
 %_K5lib/libkopete_otr_shared.so.*
+%_K5lib/libkopete_otr_shared.so.%sover
 %files -n %liboscar
 %_K5lib/liboscar.so.*
+%_K5lib/liboscar.so.%sover
 %files -n %libkopeteidentity
 %_K5lib/libkopeteidentity.so.*
+%_K5lib/libkopeteidentity.so.%sover
 %files -n %libkopetestatusmenu
 %_K5lib/libkopetestatusmenu.so.*
+%_K5lib/libkopetestatusmenu.so.%sover
 %files -n %libkopetecontactlist
 %_K5lib/libkopetecontactlist.so.*
+%_K5lib/libkopetecontactlist.so.%sover
 %files -n %libqgroupwise
 %_K5lib/libqgroupwise.so.*
+%_K5lib/libqgroupwise.so.%sover
 
 %files devel
 %_K5link/*.so
@@ -306,6 +322,9 @@ done
 %_K5dbus_iface/*
 
 %changelog
+* Mon Apr 09 2018 Sergey V Turchin <zerg@altlinux.org> 18.03.90-alt1%ubt
+- new beta
+
 * Fri Mar 30 2018 Sergey V Turchin <zerg@altlinux.org> 18.03.80-alt3%ubt
 - fix build requires
 
