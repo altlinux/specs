@@ -10,7 +10,7 @@
 %define sover 4.4
 Name: %oname%sover
 Version: %major.%minor.%bugfix
-Release: alt4.qa1.1
+Release: alt5
 
 Group: System/Libraries
 Summary: Game programming library
@@ -34,22 +34,12 @@ BuildPreReq: libXrender-devel libXrandr-devel libXt-devel libXv-devel
 BuildPreReq: libXxf86misc-devel libICE-devel
 BuildPreReq: libpng-devel zlib-devel libogg-devel libvorbis-devel
 BuildPreReq: libXxf86vm-devel
-%ifarch %ix86 x86_64
-BuildRequires: svgalib-devel
-%endif
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
 %package -n lib%name
 Group: System/Libraries
 Summary: Game programming library
-
-%package -n lib%name-svgalib
-Group: System/Libraries
-Summary: svgalib plugins for lib%name
-Requires: lib%name = %version-%release
-Provides: lib%oname-svgalib = %version-%release
-Conflicts: lib%oname-svgalib < %version-%release
 
 %package -n lib%oname-devel
 Group: Development/C
@@ -63,9 +53,6 @@ Allegro is a library of functions for use in computer games.
 
 %description -n lib%name
 Allegro is a library of functions for use in computer games.
-
-%description -n lib%name-svgalib
-svgalib plugins for lib%name
 
 %description -n lib%oname-devel
 Allegro is a library of functions for use in computer games.
@@ -86,12 +73,10 @@ cmake \
 	-DCMAKE_C_FLAGS:STRING="$FLAGS" \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 	-DWANT_LINUX_CONSOLE:BOOL=ON \
-%ifnarch %ix86 x86_64
 	-DWANT_LINUX_VGA:BOOL=OFF \
-%endif
 	-DDOCDIR:STRING=share/doc \
 	-DINFODIR:STRING=share/info \
-%ifarch x86_64
+%if "%_lib" == "lib64"
 	-DLIB_SUFFIX:STRING=64 \
 %endif
 	..
@@ -125,11 +110,6 @@ gzip CHANGES
 %_sysconfdir/allegrorc
 %_datadir/allegro
 
-%ifarch %ix86 x86_64
-%files -n lib%name-svgalib
-%_libdir/allegro/%major.%minor.%bugfix/alleg-svgalib.so
-%endif
-
 %files -n lib%oname-devel
 %doc docs/txt/*
 %_bindir/*
@@ -139,6 +119,9 @@ gzip CHANGES
 %_pkgconfigdir/*
 
 %changelog
+* Mon Apr 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.4.2-alt5
+- drop svgalib plugin
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 4.4.2-alt4.qa1.1
 - NMU: added BR: texinfo
 
