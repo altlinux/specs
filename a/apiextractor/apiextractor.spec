@@ -1,11 +1,10 @@
 Name: apiextractor
 Version: 0.10.11
-Release: alt1.git20130522
+Release: alt2.git20130522
 Summary: Development of bindings of Qt-based libraries for high level languages
 License: GPLv2
 Group: Development/KDE and QT
 Url: http://www.pyside.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # git://gitorious.org/pyside/apiextractor.git
 Source: %name-%version.tar
@@ -87,7 +86,7 @@ FLAGS="$(pkg-config phonon --cflags)"
 %add_optflags $FLAGS
 cmake \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-%ifarch x86_64
+%if "%_lib" == "lib64"
 	-DLIB_SUFFIX:STRING=64 \
 %endif
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
@@ -121,6 +120,9 @@ popd
 %doc doc/html/*
 
 %changelog
+* Mon Apr 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.10.11-alt2.git20130522
+- fix packaging on 64bit arches other than x86_64
+
 * Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.11-alt1.git20130522
 - New snapshot
 
