@@ -11,7 +11,7 @@ a minimal and fast API targetting the following uses: \
 
 Name: %fname-docs
 Version: 1.2.0
-Release: alt2
+Release: alt3
 
 %if "-docs"==""
 Summary: Rapid multi-Python deployment
@@ -33,14 +33,14 @@ BuildArch: noarch
 # hasn't got version for Python3
 %add_python_req_skip rlcompleter2
 %endif
-%filter_from_provides /^python(execnet.script.shell)/d
+%filter_from_provides /^python(execnet\.script\.shell)/d
 # IndexError: list index out of range
-%filter_from_provides /^python(execnet.script.socketserverservice)/d
+%filter_from_provides /^python(execnet\.script\.socketserverservice)/d
 # No module named 'win32serviceutil'
-%filter_from_provides /^python(execnet.script.quitserver)/d
+%filter_from_provides /^python(execnet\.script\.quitserver)/d
 # No module named 'execnet.quitserver'
 %if ""=="3"
-%filter_from_provides /^python(execnet.script.xx)/d
+%filter_from_provides /^python(execnet\.script\.xx)/d
 # depends from rlcompleter2
 %endif
 
@@ -109,6 +109,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Apr 09 2018 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt3
+- Fix regular expressions in provides' filters.
+
 * Thu Mar 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt2
 - Tranfer package to subst-packaging system.
 
