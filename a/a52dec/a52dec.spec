@@ -4,19 +4,16 @@
 
 Name: a52dec
 Version: 0.7.4
-Release: alt7.1
+Release: alt8
 
 Summary: Library for decoding ATSC A/52 streams
 Group: Sound
 License: GPL
 Url: http://%_name.sourceforge.net
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
 
 Source: %url/files/%name-%version.tar.gz
 Patch: a52dec-0.7.4-alt-DSO.patch
 Requires: %_name = %version-%release
-
-BuildPreReq: libtool_1.5
 
 %if_enabled static
 BuildRequires: glibc-devel-static
@@ -61,7 +58,6 @@ Static version of %_name libraries.
 %patch -p2
 
 %build
-%set_libtool_version 1.5
 %add_optflags %optflags_shared
 
 %autoreconf
@@ -96,6 +92,9 @@ rm -f %buildroot%_libdir/*.la
 %endif
 
 %changelog
+* Mon Apr 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.4-alt8
+- drop pointless libtool_1.5 BR
+
 * Mon Jul 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.4-alt7.1
 - Fixed build
 
