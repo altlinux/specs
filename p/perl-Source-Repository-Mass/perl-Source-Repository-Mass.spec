@@ -1,7 +1,7 @@
 %define module Source-Repository-Mass
 
 Name: perl-%module
-Version: 0.414
+Version: 0.415
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ Conflicts: perl-Source-Repository < 0.391
 %perl_vendor_privlib/Source*
 
 %changelog
+* Tue Apr 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.415-alt1
+- new version
+
 * Fri Apr 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.414-alt1
 - support for new SuSE dir layout
 
