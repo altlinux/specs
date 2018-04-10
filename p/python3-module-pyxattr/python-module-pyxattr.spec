@@ -1,5 +1,5 @@
 %define oname pyxattr
-%define fname python-module-%oname
+%define fname python3-module-%oname
 %define descr \
 This is the pyxattr module, a Python extension module which gives access \
 to the extended attributes for filesystem objects available in some \
@@ -11,7 +11,7 @@ Release: alt4
 
 %if ""==""
 Summary: A python module for accessing filesystem Extended Attributes
-Group: Development/Python
+Group: Development/Python3
 %else
 Summary: Documentation for %oname
 Group: Development/Documentation
@@ -22,8 +22,8 @@ Url: http://pyxattr.sourceforge.net/
 # https://github.com/iustin/pyxattr.git
 Source: %name-%version.tar
 
-BuildPreReq: libattr-devel python-module-sphinx-devel python-devel
-BuildRequires(pre): rpm-build-python
+BuildPreReq: libattr-devel python-module-sphinx-devel python3-devel
+BuildRequires(pre): rpm-build-python3
 
 %if ""!=""
 Conflicts: %fname < %EVR
@@ -46,26 +46,26 @@ ln -s ../objects.inv doc/
 
 %build
 %if ""==""
-%python_build
+%python3_build
 %else
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make doc
 %endif
 
 %install
-%python_install
+%python3_install
 
 %if ""==""
 
 %files
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %doc NEWS README
 
 %else
 
 %files
 %doc doc/*
-%python_sitelibdir/*.egg-info*
+%python3_sitelibdir/*.egg-info*
 
 %endif
 
