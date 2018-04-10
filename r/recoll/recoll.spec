@@ -6,8 +6,8 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.23.7
-Release: alt2
+Version: 1.24.0
+Release: alt1
 
 Summary: A personal full text search package
 License: %gpl2plus
@@ -139,6 +139,9 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 #  ("small recoll integration and extension hacks")
 
 %changelog
+* Tue Apr 10 2018 Michael Shigorin <mike@altlinux.org> 1.24.0-alt1
+- new version (watch file uupdate)
+
 * Wed Jan 10 2018 Michael Shigorin <mike@altlinux.org> 1.23.7-alt2
 - fix build with webkit disabled: both patches already in release
 
