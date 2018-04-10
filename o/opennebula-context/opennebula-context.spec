@@ -1,18 +1,22 @@
 
 Name: opennebula-context
 Summary: OpenNebula Contextualization Package
-Version: 5.4.1
+Version: 5.4.2.1
 Release: alt1%ubt
 License: Apache
 Group: System/Servers
 Url: http://opennebula.org
+# https://github.com/OpenNebula/addon-context-linux.git
 Source0: %name-%version.tar
 BuildArch: noarch
 
 Provides: one-context = %EVR
 Conflicts: cloud-init udev-rule-generator-net udev-rule-generator-cdrom
 
-Requires: util-linux bind-utils cloud-utils-growpart ruby ruby-json-pure open-vm-tools qemu-guest-agent
+Requires: util-linux bind-utils cloud-utils-growpart 
+Requires: ruby ruby-json-pure 
+Requires: open-vm-tools qemu-guest-agent
+Requires: sudo
 
 BuildRequires(pre): rpm-build-ubt rpm-build-ruby
 
@@ -38,16 +42,22 @@ To get support check the OpenNebula web page:
 %build
 %install
 
-install -p -D -m 755 src/etc/one-context.d/loc-05-grow-rootfs##one \
+install -p -D -m 755 src/etc/one-context.d/loc-05-grow-rootfs \
 			%buildroot%_sysconfdir/one-context.d/loc-05-grow-rootfs
-install -p -D -m 755 src/etc/one-context.d/loc-10-network##arch \
+install -p -D -m 755 src/etc/one-context.d/loc-10-network##arch.one \
 			%buildroot%_sysconfdir/one-context.d/loc-10-network
 install -p -D -m 755 src/etc/one-context.d/loc-10-network-pci##one \
 			%buildroot%_sysconfdir/one-context.d/loc-10-network-pci
 #install -p -D -m 755 src/etc/one-context.d/loc-11-dns##one \
 #			%buildroot%_sysconfdir/one-context.d/loc-11-dns
+install -p -D -m 755 src/etc/one-context.d/loc-12-firewall##apk \
+            %buildroot%_sysconfdir/one-context.d/loc-12-firewall
 install -p -D -m 755 src/etc/one-context.d/loc-14-mount-swap##one \
 			%buildroot%_sysconfdir/one-context.d/loc-14-mount-swap
+install -p -D -m 755 src/etc/one-context.d/loc-15-ip_forward##apk \
+            %buildroot%_sysconfdir/one-context.d/loc-15-ip_forward
+install -p -D -m 755 src/etc/one-context.d/loc-15-keepalived##apk \
+            %buildroot%_sysconfdir/one-context.d/loc-15-keepalived
 install -p -D -m 755 src/etc/one-context.d/loc-16-gen-env \
 			%buildroot%_sysconfdir/one-context.d/loc-16-gen-env
 install -p -D -m 755 src/etc/one-context.d/loc-20-set-username-password \
@@ -58,7 +68,7 @@ install -p -D -m 755 src/etc/one-context.d/loc-23-selinux-ssh##rpm \
 			%buildroot%_sysconfdir/one-context.d/loc-23-selinux-ssh
 install -p -D -m 755 src/etc/one-context.d/net-11-fix-loopback##one \
 			%buildroot%_sysconfdir/one-context.d/net-11-fix-loopback
-install -p -D -m 755 src/etc/one-context.d/net-15-hostname##one \
+install -p -D -m 755 src/etc/one-context.d/net-15-hostname \
 			%buildroot%_sysconfdir/one-context.d/net-15-hostname
 install -p -D -m 755 src/etc/one-context.d/net-97-start-script \
 			%buildroot%_sysconfdir/one-context.d/net-97-start-script
@@ -81,7 +91,7 @@ install -p -D -m 644 src/usr/lib/systemd/system/one-context-reconfigure-delayed.
 			%buildroot%_unitdir/one-context-reconfigure-delayed.service
 install -p -D -m 644 src/usr/lib/systemd/system/one-context-reconfigure.service##systemd.one \
 			%buildroot%_unitdir/one-context-reconfigure.service
-install -p -D -m 644 src/usr/lib/systemd/system/one-context.service##systemd.one \
+install -p -D -m 644 src/usr/lib/systemd/system/one-context.service##arch.one \
 			%buildroot%_unitdir/one-context.service
 
 
@@ -105,5 +115,8 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 %_unitdir/*
 
 %changelog
+* Tue Apr 10 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.2.1-alt1%ubt
+- 5.4.2.1
+
 * Thu Sep 28 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.1-alt1%ubt
 - Initial build
