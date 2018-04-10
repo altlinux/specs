@@ -1,5 +1,5 @@
 Name: installer-feature-vmservices
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1%ubt
 
 Summary: Setup virtual machine services
@@ -28,5 +28,8 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Apr 10 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt1%ubt
+- fix setup services
+
 * Tue Apr 10 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt1%ubt
 - initial build
