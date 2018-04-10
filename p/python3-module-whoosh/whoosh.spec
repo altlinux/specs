@@ -1,5 +1,5 @@
 %define oname whoosh
-%define fname python-module-%oname
+%define fname python3-module-%oname
 %define descr \
 Whoosh is a fast, featureful full-text indexing and searching library \
 implemented in pure Python. Programmers can use it to easily add search \
@@ -12,7 +12,7 @@ Release: alt2.hg20150805
 
 %if ""==""
 Summary: Fast pure-Python indexing and search library
-Group: Development/Python
+Group: Development/Python3
 %else
 Summary: Documentation for %oname
 Group: Development/Documentation
@@ -23,22 +23,22 @@ URL: https://bitbucket.org/mchaput/whoosh/wiki/Home
 # hg clone https://bitbucket.org/mchaput/whoosh
 Source: %oname-%version.tar
 
-BuildRequires(pre): rpm-build-python rpm-macros-sphinx
+BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
-Buildrequires: python-module-sphinx-pickles python-module-setuptools time
+Buildrequires: python-module-sphinx-pickles python3-module-setuptools time
 
 BuildArch: noarch
 
-%if ""=="3"
+%if "3"=="3"
 %add_python3_req_skip google
 %add_python3_req_skip google.appengine.api
 %add_python3_req_skip google.appengine.ext
 %add_python3_req_skip whoosh.automata.fst
-%filter_from_provides /^python(whoosh.automata.nfa)/d
+%filter_from_provides /^python3(whoosh.automata.nfa)/d
 # ImportError: No module named 'whoosh.automata.fst'
-%filter_from_provides /^python(whoosh.filedb.gae)/d
+%filter_from_provides /^python3(whoosh.filedb.gae)/d
 # ImportError: No module named 'google'
-%filter_from_provides /^python(whoosh.support.bench)/d
+%filter_from_provides /^python3(whoosh.support.bench)/d
 # ImportError: cannot import name 'find_object'
 %endif
 
@@ -55,7 +55,7 @@ This package contains documentation for %oname.
 
 %package -n %fname-pickles
 Summary: Pickles for whoosh
-Group: Development/Python
+Group: Development/Python3
 
 %description -n %fname-pickles
 %descr
@@ -66,9 +66,9 @@ This package contains pickles for %oname.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %fname = %version-%release
-%if ""=="3"
+%if "3"=="3"
 %py3_requires nose
 %endif
 
@@ -88,7 +88,7 @@ ln -s ../objects.inv docs/source/
 
 %build
 %if ""==""
-%python_build
+%python3_build
 %else
 mkdir docs/source/_static
 %generate_pickles docs/source docs/source %oname
@@ -97,22 +97,22 @@ sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
 
 %install
 %if ""!=""
-mkdir -p %buildroot%python_sitelibdir/%oname/
-cp -fR pickle %buildroot%python_sitelibdir/%oname/
+mkdir -p %buildroot%python3_sitelibdir/%oname/
+cp -fR pickle %buildroot%python3_sitelibdir/%oname/
 %else
-%python_install
-cp -fR src/whoosh/query src/whoosh/matching %buildroot%python_sitelibdir/%oname/
+%python3_install
+cp -fR src/whoosh/query src/whoosh/matching %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %if ""==""
 %files
 %doc *.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/util/testing.py*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/util/testing.py*
 
 %files tests
 %doc tests
-%python_sitelibdir/%oname/util/testing.py*
+%python3_sitelibdir/%oname/util/testing.py*
 
 %else
 
@@ -120,7 +120,7 @@ cp -fR src/whoosh/query src/whoosh/matching %buildroot%python_sitelibdir/%oname/
 %doc html/*
 
 %files -n %fname-pickles
-%python_sitelibdir/%oname/pickle
+%python3_sitelibdir/%oname/pickle
 %endif
 
 %changelog
