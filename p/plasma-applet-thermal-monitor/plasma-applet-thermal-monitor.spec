@@ -1,5 +1,5 @@
 Name: plasma-applet-thermal-monitor
-Version: 1.2.8
+Version: 1.2.9
 Release: alt1
 %K5init altplace
 
@@ -33,6 +33,9 @@ sensors.
 %_K5srv/plasma-applet-org.kde.thermalMonitor.desktop
 
 %changelog
+* Tue Apr 10 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.9-alt1
+- New version.
+
 * Mon Aug 21 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.8-alt1
 - New version
 
