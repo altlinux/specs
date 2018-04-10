@@ -1,5 +1,5 @@
 Name: libgsm
-Version: 1.0.16
+Version: 1.0.17
 Release: alt1
 
 Summary: GSM audio encoding/decoding library
@@ -45,8 +45,9 @@ GSM Audio Encoding/decoding static library.
 
 %prep
 %setup -n gsm-1.0-pl13
+sed -i 's/^\(CCFLAGS[[:space:]]*=[[:space:]]*\)-c -O2\(.*\)/\1 $(OPTFLAGS) \2/' Makefile
 %patch1 -p1
-%patch2 -p1
+#patch2 -p1
 
 %build
 %make_build SLIB=%_lib OPTFLAGS='%optflags -D_REENTRANT'
@@ -76,6 +77,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir make tst addtst SLIB=%_lib
 %_man3dir/*
 
 %changelog
+* Tue Apr 10 2018 Denis Smirnov <mithraen@altlinux.ru> 1.0.17-alt1
+- 1.0.17
+
 * Mon Mar 27 2017 Denis Smirnov <mithraen@altlinux.ru> 1.0.16-alt1
 - 1.0.16
 
