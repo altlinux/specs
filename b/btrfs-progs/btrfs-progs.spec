@@ -1,5 +1,5 @@
 Name: btrfs-progs
-Version: 4.15.1
+Version: 4.16
 Release: alt1%ubt
 
 Summary: Utilities for managing the Btrfs filesystem
@@ -54,7 +54,7 @@ btrfs filesystem-specific programs.
 %build
 autoreconf -fisv
 automake --add-missing ||:
-%configure
+%configure --disable-python 
 %make_build
 
 %install
@@ -76,6 +76,10 @@ ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so
 %_includedir/btrfs
 
 %changelog
+* Tue Apr 10 2018 Anton Farygin <rider@altlinux.ru> 4.16-alt1%ubt
+- 4.16
+- new feature - python bindings was temporary disabled (for sisyphus migration to python 3.6)
+ 
 * Thu Feb 22 2018 Anton Farygin <rider@altlinux.ru> 4.15.1-alt1%ubt
 - new version
 
