@@ -1,6 +1,6 @@
 Name: tzdata
 Version: 2018d
-Release: alt1
+Release: alt2
 
 Summary: Timezone data
 # tzdata itself is Public Domain, but tzupdate is GPLv2+,
@@ -72,6 +72,9 @@ make -k check_tables
 %srcdir/
 
 %changelog
+* Thu Apr 06 2018 Maxim Voronov <mvoronov@altlinux.org> 2018d-alt2
+- tzupdate: create /etc/localtime as a symlink if it does not exist.
+
 * Thu Mar 22 2018 Dmitry V. Levin <ldv@altlinux.org> 2018d-alt1
 - 2018c -> 2018d.
 
