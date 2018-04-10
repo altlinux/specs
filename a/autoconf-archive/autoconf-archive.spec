@@ -1,12 +1,13 @@
 Name: autoconf-archive
-Version: 2017.09.28
+Version: 2018.03.13
 Release: alt1
 Summary: The Autoconf Macro Archive
 
 Group: Development/Other
 License: GPLv3+ with exceptions
 URL: http://www.gnu.org/software/autoconf-archive/
-Source: ftp://ftp.gnu.org/gnu/autoconf-archive/%name-%version.tar
+# git://git.sv.gnu.org/autoconf-archive.git 
+Source: %name-%version.tar
 Source2: AUTHORS
 Patch: %name-%version-%release.patch
 BuildArch: noarch
@@ -54,6 +55,9 @@ rm -rf %buildroot%_datadir/%name
 %_infodir/autoconf-archive.info*
 
 %changelog
+* Tue Apr 10 2018 Alexey Shabalin <shaba@altlinux.ru> 2018.03.13-alt1
+- 2018.03.13
+
 * Fri Nov 10 2017 Alexey Shabalin <shaba@altlinux.ru> 2017.09.28-alt1
 - 2017.09.28
 
