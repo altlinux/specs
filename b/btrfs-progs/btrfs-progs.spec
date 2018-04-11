@@ -1,6 +1,6 @@
 Name: btrfs-progs
 Version: 4.16
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -58,7 +58,7 @@ automake --add-missing ||:
 %make_build
 
 %install
-%makeinstall bindir=%buildroot/sbin libdir=%buildroot/%_lib incdir=%buildroot/%_includedir/btrfs
+%makeinstall bindir=%buildroot/sbin libdir=%buildroot/%_lib incdir=%buildroot/%_includedir/
 mkdir -p %buildroot%_libdir
 LIBNAME=`basename \`ls $RPM_BUILD_ROOT/%{_lib}/libbtrfs.so.*.*\``
 ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so 
@@ -73,9 +73,12 @@ ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so
 
 %files -n libbtrfs-devel
 %_libdir/*.so
-%_includedir/btrfs
+%_includedir/*
 
 %changelog
+* Wed Apr 11 2018 Anton Farygin <rider@altlinux.ru> 4.16-alt2%ubt
+- Fix up headers location (closes: #34792)
+
 * Tue Apr 10 2018 Anton Farygin <rider@altlinux.ru> 4.16-alt1%ubt
 - 4.16
 - new feature - python bindings was temporary disabled (for sisyphus migration to python 3.6)
