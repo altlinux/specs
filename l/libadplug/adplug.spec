@@ -3,7 +3,7 @@
 
 Name: lib%origname
 Version: 2.2.1
-Release: alt1.1.1
+Release: alt2
 Summary: AdLib sound player library
 Url: http://adplug.sourceforge.net/
 License: LGPL
@@ -70,6 +70,7 @@ linking applications based on AdPlug.
 %setup -n %origname-%version
 
 %build
+%add_optflags -fsigned-char
 %configure --sharedstatedir=%_datadir
 %make_build
 
@@ -100,6 +101,9 @@ cp -a %dbver %buildroot%_datadir/%origname
 %endif
 
 %changelog
+* Wed Apr 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.1-alt2
+- fixed build on arm arches
+
 * Sat Dec 05 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1.1.1
 - NMU: added BR: texinfo
 
