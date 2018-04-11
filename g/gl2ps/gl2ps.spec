@@ -1,11 +1,10 @@
 Name: gl2ps
 Version: 1.3.8
-Release: alt1
+Release: alt2
 Summary: OpenGL to PostScript printing library
 License: LGPLv2+
 Group: Graphics
 Url: http://geuz.org/gl2ps/#tth_sEc5
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
@@ -79,7 +78,7 @@ cmake \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-%ifarch x86_64
+%if "%_lib" == "lib64"
 	-DLIB_SUFFIX:STRING=64 \
 %endif
 	.
@@ -101,6 +100,9 @@ cmake \
 %_docdir/%name
 
 %changelog
+* Wed Apr 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.8-alt2
+- fixed packaging on 64bit arches other than x86_64
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.8-alt1
 - Version 1.3.8
 
