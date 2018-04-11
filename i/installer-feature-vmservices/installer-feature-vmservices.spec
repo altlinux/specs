@@ -1,5 +1,5 @@
 Name: installer-feature-vmservices
-Version: 0.1.4
+Version: 0.2.0
 Release: alt1%ubt
 
 Summary: Setup virtual machine services
@@ -28,6 +28,9 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Apr 11 2018 Sergey V Turchin <zerg@altlinux.org> 0.2.0-alt1%ubt
+- detect Hyper-V
+
 * Wed Apr 11 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.4-alt1%ubt
 - force switch services
 
