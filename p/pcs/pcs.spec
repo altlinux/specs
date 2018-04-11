@@ -1,7 +1,7 @@
 %define pyagentx_version 0.4.pcs.1
 
 Name: 	  pcs
-Version:  0.9.163
+Version:  0.9.164
 Release:  alt1
 Epoch:    1
 
@@ -135,6 +135,9 @@ rm -rf %buildroot/%ruby_sitelibdir/pcsd/*{.service,.logrotate,debian,orig}*
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Tue Apr 10 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.9.164-alt1
+- New version.
+
 * Wed Mar 14 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.9.163-alt1
 - New version.
 
