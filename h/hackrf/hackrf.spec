@@ -1,5 +1,5 @@
 Name: hackrf
-Version: 2015.07.2
+Version: 2018.01.1
 Release: alt1
 Summary: HackRF Utilities
 
@@ -10,10 +10,11 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildRequires (pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: libusb-devel
 BuildRequires: udev-rules
+BuildRequires: pkgconfig(fftw3f)
 
 %description
 Hardware designs and software for HackRF, a project to produce a low cost, open
@@ -87,5 +88,8 @@ popd
 %doc doc/*
 
 %changelog
+* Wed Apr 11 2018 Anton Midyukov <antohami@altlinux.org> 2018.01.1-alt1
+- new version 2018.01.1
+
 * Wed Oct 18 2017 Anton Midyukov <antohami@altlinux.org> 2015.07.2-alt1
 - Initial build for ALT Sisyphus.
