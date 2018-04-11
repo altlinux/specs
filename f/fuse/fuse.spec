@@ -1,6 +1,6 @@
 Name: fuse
 Version: 2.9.7
-Release: alt2
+Release: alt3
 
 Summary: a tool for creating virtual filesystems
 License: GPL
@@ -11,6 +11,7 @@ Url: https://github.com/libfuse/
 Source: %name-%version.tar
 
 Patch0: %name.Makefile.patch
+Patch1: 914871b.patch
 Patch2: %name.link.patch
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -54,6 +55,7 @@ This package contains development headers.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 %patch2 -p0
 
 %build
@@ -97,6 +99,9 @@ rm -f %buildroot%_sysconfdir/udev/rules.d/*
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Apr 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.9.7-alt3
+- pick mainline 914871b, fixes build on aarch64
+
 * Tue Jul 25 2017 Denis Smirnov <mithraen@altlinux.ru> 2.9.7-alt2
 - split fuse-common to separate package (for fuse3 compatibility)
 
