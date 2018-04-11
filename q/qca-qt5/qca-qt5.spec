@@ -9,7 +9,7 @@ Name: qca-qt5
 %define minor 1
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt3%ubt
+Release: alt3%ubt.1
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
@@ -275,6 +275,9 @@ done
 #%_qt5_headerdir/Qca-qt5/QtCrypto
 
 %changelog
+* Wed Apr 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.3-alt3%ubt.1
+- (NMU) rebuilt with new libbotan.
+
 * Tue Mar 27 2018 Sergey V Turchin <zerg@altlinux.org> 2.1.3-alt3%ubt
 - build botan plugin only on i86
 

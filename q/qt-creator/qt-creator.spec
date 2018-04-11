@@ -6,8 +6,8 @@
 %add_findreq_skiplist %_datadir/qtcreator/templates/wizards/classes/python/file.py
 
 Name:    qt-creator
-Version: 4.4.1
-Release: alt2
+Version: 4.6.0
+Release: alt1
 Summary: Cross-platform IDE for Qt
 
 Group:   Development/Tools
@@ -27,7 +27,7 @@ Requires: %name-data = %version-%release
 Provides: qtcreator = %version-%release
 
 BuildRequires(pre): qt5-base-devel >= 5.5.0
-BuildRequires: gcc-c++ 
+BuildRequires: gcc-c++
 BuildRequires: qt5-designer >= 5.5.0
 BuildRequires: qt5-script-devel >= 5.5.0
 BuildRequires: qt5-webkit-devel >= 5.5.0
@@ -36,8 +36,8 @@ BuildRequires: qt5-xmlpatterns-devel >= 5.5.0
 BuildRequires: qt5-tools-devel >= 5.5.0
 BuildRequires: libbotan-devel
 %if_with ClangCodeModel
-BuildRequires: llvm4.0-devel
-BuildRequires: clang4.0-devel
+BuildRequires: llvm-devel
+BuildRequires: clang-devel
 %endif
 
 Requires: qt5-quickcontrols
@@ -101,8 +101,7 @@ export PATH="%{_qt5_bindir}:$PATH"
 %if_with ClangCodeModel
 export LLVM_INSTALL_DIR="%_prefix"
 %endif
-%qmake_qt5 -r IDE_LIBRARY_BASENAME=%_lib USE_SYSTEM_BOTAN=1 CONFIG+=disable_rpath
-NPROCS=1
+%qmake_qt5 -r IDE_LIBRARY_BASENAME=%_lib USE_SYSTEM_BOTAN=1 CONFIG+=disable_rpath QMAKE_STRIP=
 %make_build
 %make_build qch_docs
 
@@ -158,6 +157,11 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %endif
 
 %changelog
+* Tue Apr 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.0-alt1
+- Updated to upstream version 4.6.0.
+- Added debuginfo (Closes: #34153).
+- Enabled parallel build.
+
 * Sat Oct 14 2017 Andrey Cherepanov <cas@altlinux.org> 4.4.1-alt2
 - Package ClangCodeModel (ALT #33943)
 
