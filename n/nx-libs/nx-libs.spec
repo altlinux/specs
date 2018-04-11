@@ -1,6 +1,6 @@
 Name:    nx-libs
-Version: 3.5.0.31
-Release: alt4
+Version: 3.5.2.31
+Release: alt2
 Summary: NX X11 protocol compression libraries
 
 Group:   System/Libraries
@@ -10,6 +10,7 @@ URL:     http://x2go.org/
 # Source0-url: https://github.com/ArcticaProject/nx-libs/archive/redist-server/%version.tar.gz
 Source0: %name-%version.tar
 Source1: Makefile.alt
+Source2: patches.etersoft.tar
 
 BuildRequires: gcc-c++
 BuildRequires: fontconfig-devel
@@ -26,6 +27,7 @@ BuildRequires: libXpm-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libXt-devel
 BuildRequires: libXtst-devel
+BuildRequires: libXmu-devel
 BuildRequires: libexpat-devel
 BuildRequires: libfontenc-devel
 BuildRequires: libfreetype-devel
@@ -52,6 +54,7 @@ nxagent/x2goagent.
 Summary: Header files for development with nx
 Group: Development/C
 Requires: %name = %version-%release
+Provides: nx-devel = %EVR
 
 %description devel
 Header files for development with nx-libs
@@ -104,6 +107,13 @@ cat debian/patches/series | while read patchfile;do
 	test -e debian/patches/$patchfile && patch -p1 < debian/patches/$patchfile
 done
 
+tar -xf %SOURCE2
+# Apply etersoft patches
+for patchfile in $(ls patches.etersoft/*.patch); do
+	test -e $patchfile && patch -p0 < $patchfile
+done
+
+
 # Install into /usr
 sed -i -e 's,/usr/local,/usr,' nx-X11/config/cf/site.def
 # Use rpm optflags
@@ -135,6 +145,7 @@ find -type f -name '*.[hc]' | xargs chmod -x
 %__subst "s:\$(NLSSUBDIR):nls:" nx-X11/Imakefile
 
 cp %SOURCE1 nx-X11
+
 
 %build
 export CFLAGS="%optflags"
@@ -322,6 +333,12 @@ cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps
 %_datadir/nx/VERSION.nxproxy
 
 %changelog
+* Mon Apr 09 2018 Pavel Vainerman <pv@altlinux.ru> 3.5.2.31-alt2
+- update build require
+
+* Mon Apr 09 2018 Pavel Vainerman <pv@altlinux.ru> 3.5.2.31-alt1
+- added (public) etersoft patches 
+
 * Mon Apr 09 2018 Pavel Vainerman <pv@altlinux.ru> 3.5.0.31-alt4
 - minor fixes
 
