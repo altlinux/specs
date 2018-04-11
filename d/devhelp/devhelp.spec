@@ -3,7 +3,7 @@
 %define xdg_name org.gnome.Devhelp
 
 Name: devhelp
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Developer's help program
@@ -142,6 +142,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Sun Apr 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
+- 3.28.1
+
 * Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

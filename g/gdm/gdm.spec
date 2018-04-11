@@ -24,7 +24,7 @@
 %def_enable user_display_server
 
 Name: gdm
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -68,6 +68,7 @@ PreReq: %_rpmlibdir/update-dconf-database.filetrigger
 Requires: %name-libs = %version-%release
 Requires: %name-data = %version-%release
 Requires: gnome-shell >= %shell_ver
+Requires: accountsservice >= %accountsservice_ver
 Requires: coreutils xinitrc iso-codes lsb-release shadow-utils
 # since 3.11.92
 Requires: caribou
@@ -306,6 +307,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
+- 3.28.1
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

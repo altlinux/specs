@@ -22,7 +22,7 @@
 %def_disable debug
 
 Name: glib2
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -420,6 +420,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Sat Apr 07 2018 Yuri N. Sedunov <aris@altlinux.org> 2.56.1-alt1
+- 2.56.1
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 2.56.0-alt1
 - 2.56.0
 

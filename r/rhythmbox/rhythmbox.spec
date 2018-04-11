@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 3.4
 %define rev %nil
@@ -15,7 +15,7 @@
 
 Name: rhythmbox
 Version: %ver_major.2
-Release: alt1%rev
+Release: alt2%rev
 
 Summary: Music Management Application
 License: GPL
@@ -379,7 +379,7 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %_datadir/icons/hicolor/*/*/*
 %_man1dir/*
 %config %_datadir/glib-2.0/schemas/org.gnome.rhythmbox.gschema.xml
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %dir %pkgdocdir
 %doc %pkgdocdir/AUTHORS
 %doc %pkgdocdir/DOCUMENTERS
@@ -480,14 +480,17 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 
 %files plugins
 
-#%%if_enabled gtk_doc
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/rhythmbox/
-#%%endif
+%endif
 
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Mon Apr 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt2
+- updated to v3.4.2-87-g2af0203
+
 * Sun Oct 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

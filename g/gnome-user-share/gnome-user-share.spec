@@ -1,10 +1,10 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.27
+%define ver_major 3.28
 %define httpd /usr/sbin/httpd2
 %define modules_path %_sysconfdir/httpd2/modules
 
 Name: gnome-user-share
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome user file sharing
@@ -66,6 +66,9 @@ mDNSResolver running.
 %exclude %_libdir/nautilus/extensions-3.0/*.la
 
 %changelog
+* Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Feb 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.27.90-alt1
 - 3.27.90
 

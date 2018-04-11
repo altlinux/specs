@@ -9,12 +9,13 @@
 %def_with flatpak
 %def_with docs
 %def_with autotools
+%def_with jedi
 # can't be enabled now
 %def_without autotools_templates
 
 Name: gnome-builder
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: Builder - Develop software for GNOME
 License: LGPLv2+
@@ -50,21 +51,21 @@ Source: %name-%version.tar
 AutoReqProv: nopython
 %define __python %nil
 %add_python3_path %_libdir/%name/plugins
-
 %add_findreq_skiplist %_datadir/%name/plugins/*_templates/resources/*/*.py
 
 PreReq: %name-data = %version-%release
-Requires: meson
+
 %{?_with_autotools:Requires: automake autoconf libtool}
+Requires: meson git indent xmllint
 Requires: devhelp uncrustify ctags
 Requires: libpeas-python3-loader
-Requires: git
-Requires: indent xmllint
+#%%{?_with_jedi:Requires: python3-module-jedi}
 
-BuildRequires: /proc meson gcc-c++ flex mm-common yelp-tools gtk-doc
+BuildRequires(pre): meson
+BuildRequires: /proc gcc-c++ flex mm-common yelp-tools gtk-doc
 BuildRequires: ctags
 BuildRequires: libappstream-glib-devel desktop-file-utils
-BuildRequires: clang-devel libgtk+3-devel >= %gtk_ver
+BuildRequires: llvm-devel clang-devel libgtk+3-devel >= %gtk_ver
 BuildRequires: libgtksourceview3-devel >= %gtksourceview_ver
 BuildRequires: libgit2-glib-devel >= %git2_ver libdevhelp-devel >= %devhelp_ver
 BuildRequires: libpcre-devel libgjs-devel >= %gjs_ver libwebkit2gtk-devel
@@ -101,12 +102,12 @@ This package provides noarch data needed for Gnome Builder to work.
 %setup
 
 %build
-%meson -Denable-static=false \
-	%{?_with_sysprof:-Dwith-sysprof=true} \
-	%{?_with_docs:-Dwith-docs=true} \
-	%{?_without_flatpak:-Dwith-flatpak=false} \
-	%{?_with_autotools:-Dwith-autotools=true} \
-	%{?_with_autotools_templates:-Dwith-autotools_templates=true}
+%meson \
+	%{?_with_sysprof:-Dwith_sysprof=true} \
+	%{?_with_docs:-Dwith_docs=true} \
+	%{?_without_flatpak:-Dwith_flatpak=false} \
+	%{?_with_autotools:-Dwith_autotools=true} \
+	%{?_with_autotools_templates:-Dwith_autotools_templates=true}
 %meson_build
 
 %install
@@ -115,8 +116,6 @@ This package provides noarch data needed for Gnome Builder to work.
 
 %files -f %name.lang
 %_bindir/%name
-#%_bindir/%name-cli
-#%_libexecdir/%name-worker
 %dir %_libdir/%name
 %_libdir/%name/libide-%api_ver.so
 %{?_enable_idemm:%_libdir/%name/libidemm-%api_ver.so.*}
@@ -206,12 +205,15 @@ This package provides noarch data needed for Gnome Builder to work.
 %_iconsdir/hicolor/*/*/*.*
 %_datadir/metainfo/%xdg_name.appdata.xml
 
-#%files -n libide-devel-doc
-#%{?_with_docs:%_datadir/gtk-doc/html/libide/}
-#%doc %_defaultdocdir/%name/
-
+%if_with docs
+%_datadir/gtk-doc/html/libide/
+%_defaultdocdir/%name/
+%endif
 
 %changelog
+* Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
+- 3.28.1
+
 * Tue Mar 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1.1
 - rebuilt against libclang.so.6
 
