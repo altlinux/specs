@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: liblo
-Version: 0.28
+Version: 0.29
 Release: alt1
 
 Summary: Open Source implementation of the Open Sound Control protocol
@@ -12,7 +12,6 @@ Packager: Eugene Ostapets <eostapets@altlinux.ru>
 
 Source: %url/%name-%version.tar.gz
 
-# Automatically added by buildreq on Mon Dec 04 2006
 BuildRequires: doxygen gcc-c++
 
 %description
@@ -57,6 +56,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %doc examples/*.c
 
 %changelog
+* Wed Apr 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.29-alt1
+- New version.
+
 * Sun Jul 12 2015 Andrey Cherepanov <cas@altlinux.org> 0.28-alt1
 - New version
 
