@@ -5,7 +5,7 @@
 Summary:	Mozilla LDAP C SDK
 Name:		mozldap
 Version:	6.0.7
-Release:	alt3
+Release:	alt3.1
 License:	MPL/GPL/LGPL
 URL:		https://wiki.mozilla.org/LDAP_C_SDK
 Group:		System/Libraries
@@ -14,6 +14,7 @@ Packager:	Alexey Gladkov <legion@altlinux.ru>
 Source0:	mozldap.tar
 Source2:	fix_headers.sh
 
+Patch1:     mozldap-6.0.7-fix_brackets_for_perl5.26.patch
 Patch2:		ldapcsdk-5.1.7-alt-rpath-link.patch
 Patch3:		mozldap-alt-allow-x86_64-host-build.patch
 Patch5:		mozldap-alt-pc-fix.patch
@@ -57,6 +58,7 @@ Header and Library files for doing development with the Mozilla LDAP C SDK
 %setup -q -n %name-%version -c
 cd mozldap
 
+%patch1 -p2
 %patch2 -p0 -b .fix2
 %patch3 -p0 -b .fix3
 %patch5 -p0 -b .fix5
@@ -179,6 +181,9 @@ done
 %_datadir/%name
 
 %changelog
+* Wed Apr 11 2018 Grigory Ustinov <grenka@altlinux.org> 6.0.7-alt3.1
+- NMU: Add patch for building with perl 5.26.
+
 * Fri Oct 18 2013 Alexey Gladkov <legion@altlinux.ru> 6.0.7-alt3
 - Rebuilt with libsasl2.
 
