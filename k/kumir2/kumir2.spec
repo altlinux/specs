@@ -1,6 +1,6 @@
 Name: kumir2
 Version: 2.1.0
-Release: alt4
+Release: alt5
 
 Summary: New version of Kumir - simple programming language and IDE for teaching programming
 Summary(ru_RU.UTF-8): Новая версия системы Кумир - простого учебного языка программирования и среды разработки
@@ -39,8 +39,9 @@ ALT Linux включает также поддержку исполнителя,
 радиоуправляемого робота.
 
 %prep
-%setup -q
+%setup
 sed -i "s/^Categories=.*$/Categories=Education;Qt;ComputerScience;/" *.desktop
+sed -i '/CMAKE_SYSTEM_PROCESSOR.\+MATCHES.\+/ s,x86_64,(aarch64|x86_64),' CMakeLists.txt
 
 %patch1 -p1
 
@@ -65,6 +66,9 @@ cd build
 %_iconsdir/*/*/*/*
 
 %changelog
+* Wed Apr 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.0-alt5
+- fixed packaging on aarch64
+
 * Wed Jan 27 2016 Dmitry Derjavin <dd@altlinux.org> 2.1.0-alt4
 - using system boost;
 - URL fixed;
