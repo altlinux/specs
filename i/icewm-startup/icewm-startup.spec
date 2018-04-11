@@ -3,7 +3,7 @@
 %def_without desklaunch
 %def_without kde3kdesktop
 Name: icewm-startup
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: simple pluggable IceWM autostart manager
@@ -228,6 +228,18 @@ ivman plug-in for simple pluggable IceWM autostart manager.
 %description -l ru_RU.UTF-8 ivman
 ivman plug-in для менеджера автозапуска программ IceWM.
 
+%package spacefm
+Group: Graphical desktop/Icewm
+Summary: spacefm autostart at IceWM startup
+Summary(ru_RU.UTF-8): автозапуск spacefm при старте IceWM
+Requires: %name spacefm
+AutoReq: no
+
+%description spacefm
+spacefm plug-in for simple pluggable IceWM autostart manager.
+%description -l ru_RU.UTF-8 spacefm
+spacefm plug-in для менеджера автозапуска программ IceWM.
+
 %package update-menus
 Group: Graphical desktop/Icewm
 Summary: autoupdate of user menu at IceWM startup
@@ -410,6 +422,7 @@ echo 'mount-tray&'> %buildroot/%icewmconfdir/startup.d/mount-tray
 echo 'ivman&'> %buildroot/%icewmconfdir/startup.d/ivman
 echo 'apt-indicator&'> %buildroot/%icewmconfdir/startup.d/apt-indicator
 echo "/usr/libexec/notification-daemon&" > %buildroot/%icewmconfdir/startup.d/notification-daemon
+echo "spacefm --desktop&" > %buildroot/%icewmconfdir/startup.d/spacefm
 
 cat <<EOF > %buildroot/%icewmconfdir/startup.d/020-idesk
 #!/bin/sh
@@ -564,6 +577,9 @@ fi
 %files ivman
 %config %icewmconfdir/startup.d/ivman
 
+%files spacefm
+%config %icewmconfdir/startup.d/spacefm
+
 %if_with kde3kdesktop
 %files kdesktop
 %config %icewmconfdir/startup.d/kdesktop
@@ -603,6 +619,9 @@ fi
 %config %icewmconfdir/shutdown.d/000-simple-sound
 
 %changelog
+* Wed Apr 11 2018 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- added spacefm (closes: 34794)
+
 * Thu Sep 21 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - removed kdesktop
 
