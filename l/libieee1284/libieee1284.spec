@@ -1,6 +1,6 @@
 Name: libieee1284
 Version: 0.2.11
-Release: alt2.qa2
+Release: alt3
 
 Summary: A library for interfacing IEEE 1284-compatible devices
 
@@ -33,6 +33,7 @@ libieee1284.
 %setup
 
 %build
+%autoreconf
 %configure --disable-static --without-python
 %make_build
 # xmlto requires big tetex
@@ -56,6 +57,9 @@ ln -s -f /usr/share/license/GPL-2 COPYING
 %_man3dir/*
 
 %changelog
+* Wed Apr 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.11-alt3
+- fixed build on arm arches
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.11-alt2.qa2
 - NMU: rebuilt for debuginfo.
 
