@@ -1,7 +1,7 @@
 Summary: Firejail graphical user interface
 Name: firetools
-Version: 0.9.50
-Release: alt2
+Version: 0.9.52
+Release: alt1
 License: GPLv2+
 Group: Development/Tools
 Source: %name-%version.tar
@@ -44,6 +44,9 @@ Control Groups.
 %_pixmapsdir/*.png
 
 %changelog
+* Wed Apr 11 2018 Anton Midyukov <antohami@altlinux.org> 0.9.52-alt1
+- new version 0.9.52
+
 * Sat Nov 04 2017 Anton Midyukov <antohami@altlinux.org> 0.9.50-alt2
 - Fix build error (Closes: 34129). Thanks Michael A. Kangin
 
