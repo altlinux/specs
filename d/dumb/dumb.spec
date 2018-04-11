@@ -1,6 +1,6 @@
 Name: dumb
 Version: 0.9.3
-Release: alt4
+Release: alt5
 Summary: IT, XM, S3M and MOD player library
 Group: System/Libraries
 License: zlib
@@ -39,8 +39,8 @@ applications which use dumb.
 cp %SOURCE2 .
 
 %build
-#touch INSTALL NEWS README AUTHORS ChangeLog COPYING
-#autoreconf
+touch INSTALL NEWS README AUTHORS ChangeLog COPYING
+%autoreconf
 %configure
 make
 
@@ -64,6 +64,9 @@ ln -s  libaldmb-%version.so %buildroot%_libdir/libaldmb.so.1
 %_libdir/libaldmb.so
 
 %changelog
+* Wed Apr 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.3-alt5
+- fixed build on aarch64
+
 * Fri Jan 12 2018 Fr. Br. George <george@altlinux.ru> 0.9.3-alt4
 - Fix build
 
