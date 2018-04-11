@@ -1,5 +1,5 @@
 Name: dynamips
-Version: 0.2.17
+Version: 0.2.18
 Release: alt1
 
 Summary: Cisco 7200 Simulator
@@ -52,6 +52,9 @@ rm -fR %buildroot%_docdir/%name
 %dir %_localstatedir/%name/labs
 
 %changelog
+* Wed Apr 11 2018 Anton Midyukov <antohami@altlinux.org> 0.2.18-alt1
+- new version 0.2.18
+
 * Wed Jan 24 2018 Anton Midyukov <antohami@altlinux.org> 0.2.17-alt1
 - 0.2.17
 
