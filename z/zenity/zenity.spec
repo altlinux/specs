@@ -3,7 +3,7 @@
 %def_enable webkitgtk
 
 Name: zenity
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME port of dialog(1)
@@ -54,6 +54,9 @@ a cooler name.
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
+- 3.28.1
+
 * Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: gobject-introspection
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Introspection system for GObject-based libraries
@@ -28,7 +28,7 @@ AutoReqProv: nopython
 %add_python3_path %_libdir/%name/giscanner
 %add_python3_req_skip distutils.msvccompiler
 
-BuildPreReq: libgio-devel >= 2.56.0
+BuildPreReq: libgio-devel >= 2.56.1
 BuildRequires: flex gtk-doc libcairo-devel libcairo-gobject-devel libffi-devel
 BuildRequires: rpm-build-python3 python3-devel rpm-build-gir
 %{?_enable_doctool:BuildRequires: python3-module-mako}
@@ -133,6 +133,9 @@ gobject-introspection.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Apr 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1.56.1-alt1
+- 1.56.1
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 1.56.0-alt1
 - 1.56.0 with python3
 

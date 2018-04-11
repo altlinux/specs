@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.28
@@ -6,7 +6,7 @@
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
@@ -125,6 +125,9 @@ the functionality of the Boxes.
 
 
 %changelog
+* Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
+- 3.28.2
+
 * Sat Apr 07 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - updated to v3.28.0-10-ga1f74a0
 

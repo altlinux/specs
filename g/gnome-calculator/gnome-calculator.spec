@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -21,8 +21,8 @@ Source: %name-%version.tar
 Obsoletes: gcalctool <= 6.6.2
 Provides: gcalctool = 6.6.2
 
+BuildRequires(pre): meson
 BuildPreReq: rpm-build-licenses rpm-build-gnome
-
 BuildPreReq: yelp-tools libappstream-glib-devel
 BuildPreReq: libgtk+3-devel >= 3.20.0
 BuildRequires: libgio-devel >= 2.48.0 libxml2-devel vala-tools >= 0.24
@@ -43,20 +43,17 @@ A single graphics driver for GTK included with this package.
 find ./ -name "*.stamp" -delete
 
 %build
-%autoreconf
-%configure --disable-static \
-    --disable-schemas-compile
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
 
 %files -f %name.lang
 %_bindir/*
 %_libexecdir/%name-search-provider
-%_libdir/%name/libcalculator.so
 %_datadir/dbus-1/services/org.gnome.Calculator.SearchProvider.service
 %_datadir/gnome-shell/search-providers/%xdg_name-search-provider.ini
 %_desktopdir/%xdg_name.desktop
@@ -67,9 +64,11 @@ find ./ -name "*.stamp" -delete
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc NEWS
 
-%exclude %_libdir/%name/*.la
 
 %changelog
+* Mon Apr 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
+- 3.28.1
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

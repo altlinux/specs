@@ -5,7 +5,7 @@
 %def_enable lzma
 
 Name: yelp
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Lightweight help browser for GNOME
@@ -105,6 +105,7 @@ Yelp.
 %_datadir/%name/
 %_datadir/yelp-xsl/xslt/common/domains/yelp.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.yelp.gschema.xml
+%_datadir/metainfo/%name.appdata.xml
 %doc AUTHORS README NEWS TODO
 
 %files -n lib%name
@@ -120,6 +121,9 @@ Yelp.
 %_datadir/gtk-doc/html/lib%name/
 
 %changelog
+* Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
+- 3.28.1
+
 * Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

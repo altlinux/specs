@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A chess game for GNOME
@@ -49,9 +49,6 @@ A chess game which supports several chess engines, with 2D and optionally
 
 %files -f gnome-%_name.lang
 %_bindir/%__name
-%_bindir/test-chess-game
-%_bindir/test-chess-pgn
-%_libdir/libgnome-libchess.so
 %_desktopdir/%__name.desktop
 %_datadir/%__name
 %_iconsdir/hicolor/*x*/apps/%__name.png
@@ -62,6 +59,9 @@ A chess game which supports several chess engines, with 2D and optionally
 %_datadir/metainfo/%__name.appdata.xml
 
 %changelog
+* Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
+- 3.28.1
+
 * Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

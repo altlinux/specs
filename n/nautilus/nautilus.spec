@@ -11,7 +11,7 @@
 %def_enable docs
 
 Name: nautilus
-Version: %ver_major.0.1
+Version: %ver_major.1
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -155,7 +155,7 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 #%_sysconfdir/xdg/autostart/nautilus-autostart.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager1.service
-%_datadir/gnome-shell/search-providers/nautilus-search-provider.ini
+%_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_iconsdir/hicolor/*x*/apps/%xdg_name.png
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.nautilus.gschema.xml
@@ -189,6 +189,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Mon Apr 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
+- 3.28.1
+
 * Thu Mar 15 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0.1-alt1
 - 3.28.0.1
 

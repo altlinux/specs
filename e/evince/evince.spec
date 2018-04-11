@@ -12,7 +12,7 @@
 %def_disable debug
 
 Name: evince
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: A document viewer
@@ -212,6 +212,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
+- 3.28.2
+
 * Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 
