@@ -1,5 +1,5 @@
 Name: gtv-dvb
-Version: 2.0
+Version: 2.1
 Release: alt1%ubt
 
 Summary: Media Player & Digital TV
@@ -36,6 +36,9 @@ Audio & Video & Digital TV - Gstreamer 1.0
 %doc README.md LICENSE
 
 %changelog
+* Wed Apr 11 2018 Anton Midyukov <antohami@altlinux.org> 2.1-alt1%ubt
+- new version 2.1
+
 * Sat Apr 07 2018 Anton Midyukov <antohami@altlinux.org> 2.0-alt1%ubt
 - new version 2.0
 
