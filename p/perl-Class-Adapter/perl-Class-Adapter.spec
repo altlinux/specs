@@ -1,6 +1,6 @@
 %define m_distro Class-Adapter
 Name: perl-Class-Adapter
-Version: 1.08
+Version: 1.09
 Release: alt1
 Summary: Class::Adapter - Perl implementation of the "Adapter" Design Pattern
 
@@ -28,9 +28,12 @@ BuildRequires: perl-devel
 
 %files
 %perl_vendor_privlib/Class/Adapter*
-%doc Changes README 
+%doc Changes README
 
 %changelog
+* Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
+- automated CPAN update
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
 - automated CPAN update
 
