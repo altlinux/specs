@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Crypt-Random-Source
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: Get weak or strong random data from pluggable sources
@@ -50,6 +50,9 @@ None.
 %perl_vendor_privlib/Crypt/Random/Source.pm
 
 %changelog
+* Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Mon Apr 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
