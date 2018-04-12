@@ -1,16 +1,20 @@
 %ifarch %ix86
 %define platform x86-linux-gcc
 %else
+%ifarch x86_64
+%define platform x86_64-linux-gcc
+%else
 %ifarch arm
 %define platform armv5te-linux-gcc
 %else
 %ifarch armh
 %define platform armv7-linux-gcc
 %else
-%ifarch e2k
-%define platform generic-gnu
+%ifarch aarch64
+%define platform arm64-linux-gcc
 %else
-%define platform %_arch-linux-gcc
+%define platform generic-gnu
+%endif
 %endif
 %endif
 %endif
@@ -18,7 +22,7 @@
 
 Name: libvpx4
 Version: 1.6.1
-Release: alt2
+Release: alt3
 Summary: VP8 video codec
 Group: Video
 License: BSD
@@ -50,7 +54,7 @@ develop programs which make use of %name
 %setup
 %patch -p1
 %ifarch armh
-sed -i -e 's,softfp,hard,' build/make/configure.sh
+sed -i -e 's,softfp,hard,' -e 's,arm-none-linux-gnueabi-,,' build/make/configure.sh
 %endif
 
 %build
@@ -87,6 +91,9 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Apr 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.1-alt3
+- fixed build on aarch64
+
 * Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 1.6.1-alt2
 - enabled spatial svc
 - enabled vp9 encoder/decoder
