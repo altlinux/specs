@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:       rpm-helper
 Version:    0.24.17
-Release:    alt1_4
+Release:    alt2_4
 Summary:    Mageia helper scripts for rpm scriptlets
 License:    GPL
 Group:      System/Base
@@ -13,9 +13,10 @@ BuildArch:  noarch
 Patch0:     %{name}-altlinux-adaptation.patch
 Patch1:     rpm-helper.macros.in.alt-remove-unsupported.patch
 
+Requires:   rpm-macros-%name = %EVR
+
 %description
 Helper scripts for rpm installation.
-
 For compatibility with Mandriva, Mageia, ROSA.
 
 %package -n rpm-macros-%name
@@ -56,6 +57,9 @@ rm -rf %buildroot%{_localstatedir}/lib/%{name}/systemd-migration
 %{_rpmmacrosdir}/%{name}
 
 %changelog
+* Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.24.17-alt2_4
+- updated internal Requires.
+
 * Wed Apr 11 2018 Igor Vlasenko <viy@altlinux.ru> 0.24.17-alt1_4
 - port for Sisyphus
 
