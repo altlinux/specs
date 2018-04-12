@@ -4,6 +4,7 @@ BuildRequires: gcc4.9-c++
 BuildRequires: /usr/bin/xprop /usr/bin/xvfb-run libgif-devel pkgconfig(xproto) pkgconfig(xrender) unzip xorg-xproto-devel zlib-devel
 # END SourceDeps(oneline)
 BuildRequires: zip unzip
+BuildRequires: docbook-style-xsl
 BuildRequires: ca-certificates-java
 %def_enable accessibility
 %def_disable jvmjardir
@@ -110,7 +111,7 @@ BuildRequires: /proc
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt3
+Release: alt4
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -1024,6 +1025,9 @@ done
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Apr 13 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.41-alt4
+- added BR: docbook-style-xsl
+
 * Fri Apr 06 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.41-alt3
 - updated BR:, cleaned up desktop file, Requires: ca_sertificates-java
 
