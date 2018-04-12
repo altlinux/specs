@@ -1,7 +1,7 @@
 Name: libyuv
 Summary: YUV conversion and scaling functionality library
 Version: 0.0.1433
-Release: alt1
+Release: alt2
 License: BSD
 Group: Development/C
 Url: http://code.google.com/p/libyuv/
@@ -9,6 +9,7 @@ Url: http://code.google.com/p/libyuv/
 # http://files.freeswitch.org/repo/deb/debian/pool/main/liby/libyuv/
 Source0: %name-%version.tar
 Patch0: libyuv-alt-buildfix.patch
+Patch1: libyuv-alt-neon64.patch
 BuildRequires: libgtest-devel gcc-c++
 BuildRequires: libjpeg-devel cmake
 
@@ -31,6 +32,7 @@ Additional header files for development with %name.
 %prep
 %setup
 %patch0 -p2
+%patch1 -p2
 
 %build
 %ifarch %ix86
@@ -53,6 +55,9 @@ Additional header files for development with %name.
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Thu Apr 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.1433-alt2
+- fixed build on aarch64
+
 * Sat Feb 20 2016 Anton Farygin <rider@altlinux.ru> 0.0.1433-alt1
 - build new version from Freeswitch fork
 
