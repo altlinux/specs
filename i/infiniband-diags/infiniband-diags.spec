@@ -1,27 +1,26 @@
+%def_disable static
+
 Summary: OpenFabrics InfiniBand Diagnostic Tools
-
 Name: infiniband-diags
-Version: 1.5.7
-Release: alt2
+Version: 2.0.0
+Release: alt1
+License: GPLv2 or BSD
+Group: System/Base
+Url: https://github.com/linux-rdma/infiniband-diags
 
+# https://github.com/linux-rdma/infiniband-diags.git
+Source: %name-%version.tar
+Packager: Timur Aitov <timonbl4@altlinux.org>
+
+BuildRequires: rdma-core-devel
+BuildRequires: libopensm-devel
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: /usr/bin/rst2man.py
+Requires: lib%name = %version-%release
 # old names
 Provides: openib-diags = %version
 Obsoletes: openib-diags
 
-License: GPL/BSD
-
-Group: System/Base
-
-# git://git.openfabrics.org/~sashak/management.git
-Source: %name-%version.tar.gz
-Packager: Timur Aitov <timonbl4@altlinux.org>
-
-Url: http://openib.org/
-
-BuildPreReq: libibmad-devel >= 1.3.6
-BuildPreReq: libopensm-devel >= 3.3.7
-Requires: lib%name = %version-%release
-Requires: libibmad >= 1.3.6 libopensm >= 3.3.7
 
 %description
 This package provides IB diagnostic programs and scripts needed to
@@ -30,6 +29,8 @@ diagnose an IB subnet.
 %package -n lib%name
 Summary: Shared libraries for IB diagnostic programs
 Group: System/Libraries
+Provides: libibmad = %version-%release
+Obsoletes: libibmad < %version-%release
 
 %description -n lib%name
 This package contains shared libraries for IB diagnostic programs.
@@ -38,7 +39,8 @@ This package contains shared libraries for IB diagnostic programs.
 Summary: Development files for IB diagnostic programs
 Group: Development/C
 Requires: lib%name = %version-%release
-Requires: libibcommon-devel >= 1.2.0
+Provides: libibmad-devel = %version-%release
+Obsoletes: libibmad-devel < %version-%release
 
 %description -n lib%name-devel
 This package contains development files for IB diagnostic programs.
@@ -47,9 +49,20 @@ This package contains development files for IB diagnostic programs.
 Summary: Static library for IB diagnostic programs
 Group: Development/C
 Requires: lib%name-devel = %version-%release
+Provides: libibmad-static = %version-%release
+Obsoletes: libibmad-static < %version-%release
 
 %description -n lib%name-devel-static
 This package contains static library for IB diagnostic programs.
+
+%package compat
+Group: System/Base
+Summary: OpenFabrics Alliance InfiniBand Diagnostic Tools
+
+%description compat
+Deprecated scripts and utilities which provide duplicated functionality, most
+often at a reduced performance.  These are maintained for the time being for
+compatibility reasons.
 
 %prep
 %setup
@@ -57,19 +70,92 @@ This package contains static library for IB diagnostic programs.
 %build
 ./autogen.sh
 %configure  \
+    --enable-compat-utils \
+    %{subst_enable static} \
     --with-perl-installdir=%perl_vendor_privlib
+
 #sed -i -e '1a\echo=echo' libtool
 %make_build
 bzip2 --best --keep --force ChangeLog
 
 %install
 %makeinstall_std
+chmod 644 %buildroot%_sysconfdir/infiniband-diags/ibdiag.conf
 
 %files
 %doc README ChangeLog.*
 %perl_vendor_privlib/*.pm
-%_sbindir/*
-%_man8dir/*
+
+# C programs here
+%_sbindir/ibaddr
+%_man8dir/ibaddr.*
+%_sbindir/ibnetdiscover
+%_man8dir/ibnetdiscover.*
+%_sbindir/ibping
+%_man8dir/ibping.*
+%_sbindir/ibportstate
+%_man8dir/ibportstate.*
+%_sbindir/ibroute
+%_man8dir/ibroute.*
+%_sbindir/ibstat
+%_man8dir/ibstat.*
+%_sbindir/ibsysstat
+%_man8dir/ibsysstat.*
+%_sbindir/ibtracert
+%_man8dir/ibtracert.*
+%_sbindir/perfquery
+%_man8dir/perfquery.*
+%_sbindir/sminfo
+%_man8dir/sminfo.*
+%_sbindir/smpdump
+%_man8dir/smpdump.*
+%_sbindir/smpquery
+%_man8dir/smpquery.*
+%_sbindir/saquery
+%_man8dir/saquery.*
+%_sbindir/vendstat
+%_man8dir/vendstat.*
+%_sbindir/iblinkinfo
+%_man8dir/iblinkinfo.*
+%_sbindir/ibqueryerrors
+%_man8dir/ibqueryerrors.*
+%_sbindir/ibcacheedit
+%_man8dir/ibcacheedit.*
+%_sbindir/ibccquery
+%_man8dir/ibccquery.*
+%_sbindir/ibccconfig
+%_man8dir/ibccconfig.*
+%_sbindir/dump_fts
+%_man8dir/dump_fts.*
+# scripts here
+%_sbindir/ibhosts
+%_man8dir/ibhosts.*
+%_sbindir/ibswitches
+%_man8dir/ibswitches.*
+%_sbindir/ibnodes
+%_man8dir/ibnodes.*
+%_sbindir/ibrouters
+%_man8dir/ibrouters.*
+%_sbindir/ibfindnodesusing.pl
+%_man8dir/ibfindnodesusing.*
+%_sbindir/ibidsverify.pl
+%_man8dir/ibidsverify.*
+%_sbindir/check_lft_balance.pl
+%_man8dir/check_lft_balance.*
+%_sbindir/dump_lfts.sh
+%_man8dir/dump_lfts.*
+%_sbindir/dump_mfts.sh
+%_man8dir/dump_mfts.*
+%_sbindir/ibclearerrors
+%_man8dir/ibclearerrors.*
+%_sbindir/ibclearcounters
+%_man8dir/ibclearcounters.*
+%_sbindir/ibstatus
+%_man8dir/ibstatus.*
+# and the rest
+%_man8dir/infiniband-diags.*
+%config(noreplace) %_sysconfdir/infiniband-diags/error_thresholds
+%config(noreplace) %_sysconfdir/infiniband-diags/ibdiag.conf
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -79,10 +165,53 @@ bzip2 --best --keep --force ChangeLog
 %_includedir/infiniband/*
 %_man3dir/*
 
+%if_enabled static
 %files -n lib%name-devel-static
 %_libdir/*.a
+%endif
+
+%files compat
+%_sbindir/ibcheckerrs
+%_man8dir/ibcheckerrs.*
+%_sbindir/ibchecknet
+%_man8dir/ibchecknet.*
+%_sbindir/ibchecknode
+%_man8dir/ibchecknode.*
+%_sbindir/ibcheckport
+%_man8dir/ibcheckport.*
+%_sbindir/ibcheckportwidth
+%_man8dir/ibcheckportwidth.*
+%_sbindir/ibcheckportstate
+%_man8dir/ibcheckportstate.*
+%_sbindir/ibcheckwidth
+%_man8dir/ibcheckwidth.*
+%_sbindir/ibcheckstate
+%_man8dir/ibcheckstate.*
+%_sbindir/ibcheckerrors
+%_man8dir/ibcheckerrors.*
+%_sbindir/ibdatacounts
+%_man8dir/ibdatacounts.*
+%_sbindir/ibdatacounters
+%_man8dir/ibdatacounters.*
+%_sbindir/ibdiscover.pl
+%_man8dir/ibdiscover.*
+%_sbindir/ibswportwatch.pl
+%_man8dir/ibswportwatch.*
+%_sbindir/ibqueryerrors.pl
+%_sbindir/iblinkinfo.pl
+%_sbindir/ibprintca.pl
+%_man8dir/ibprintca.*
+%_sbindir/ibprintswitch.pl
+%_man8dir/ibprintswitch.*
+%_sbindir/ibprintrt.pl
+%_man8dir/ibprintrt.*
+%_sbindir/set_nodedesc.sh
 
 %changelog
+* Thu Apr 12 2018 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+- disable build static libs
+
 * Thu Mar 24 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.7-alt2
 - Rebuilt for debuginfo
 
