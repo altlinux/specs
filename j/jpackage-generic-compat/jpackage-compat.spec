@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.28
+Version: 0.29
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -8,8 +8,8 @@ License: GPL2+ or Apache
 Url: http://www.sisyphus.ru/packages/viy/srpms
 
 BuildArch: noarch
-BuildPreReq: rpm-build-java /proc
 
+# TODO: test && drop the req?
 Requires: docbook-style-xsl
 
 # sun java requires it
@@ -23,9 +23,6 @@ Requires: zip
 
 Requires: java-devel java
 Requires: java-javadoc
-
-# kill me after java 1.6.0 fixed
-#Provides: jpackage-1.6.0-compat = %version
 
 %description
 JPackage compatibility package. The main goal is to provide all nessssary 
@@ -113,7 +110,7 @@ Provides JPackage build environment with java-1.8.0.
 %build
 
 %install
-install -d $RPM_BUILD_ROOT%_javadir
+install -d $RPM_BUILD_ROOT%_datadir
 
 %files
 #files -n jpackage-1.5.0-compat
@@ -122,6 +119,9 @@ install -d $RPM_BUILD_ROOT%_javadir
 %files -n jpackage-1.8-compat
 
 %changelog
+* Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- cleaned up BuildRequires.
+
 * Thu Apr 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - made noarch; removed java7 environment
 
