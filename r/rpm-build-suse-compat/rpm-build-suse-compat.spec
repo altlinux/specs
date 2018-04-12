@@ -1,6 +1,6 @@
 %define module suse-compat
 Name:		rpm-build-suse-compat
-Version:	0.03
+Version:	0.031
 Release:	alt1
 Summary:	Compatibility environment to build SuSE rpms
 License:	GPL2+
@@ -11,6 +11,7 @@ Patch:		update-desktop-files-alt-%version.patch
 
 BuildArch:	noarch
 Requires:	rpm-macros-suse-compat = %version-%release
+Requires:	rpm-macros-generic-compat
 
 %description
 %summary
@@ -46,6 +47,9 @@ done
 %_rpmmacrosdir/%{module}*
 
 %changelog
+* Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.031-alt1
+- added Requires: rpm-macros-generic-compat
+
 * Sun Oct 30 2016 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
 - added %%__cmake
 
