@@ -1,16 +1,16 @@
 %ifarch %ix86
 %define platform x86-linux-gcc
 %else
+%ifarch x86_64
+%define platform x86_64-linux-gcc
+%else
 %ifarch arm
 %define platform armv5te-linux-gcc
 %else
 %ifarch armh
 %define platform armv7-linux-gcc
 %else
-%ifarch e2k
 %define platform generic-gnu
-%else
-%define platform %_arch-linux-gcc
 %endif
 %endif
 %endif
@@ -18,7 +18,7 @@
 
 Name: libvpx3
 Version: 1.5.0
-Release: alt3
+Release: alt4
 Summary: VP8 video codec
 Group: Video
 License: BSD
@@ -41,7 +41,7 @@ on which the Theora codec was based
 %setup
 %patch -p1
 %ifarch armh
-sed -i -e 's,softfp,hard,' build/make/configure.sh
+sed -i -e 's,softfp,hard,' -e 's,arm-none-linux-gnueabi-,,' build/make/configure.sh
 %endif
 
 %build
@@ -67,6 +67,9 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_libdir/*.so.*
 
 %changelog
+* Thu Apr 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0-alt4
+- fixed build on aarch64
+
 * Tue Oct 03 2017 Anton Farygin <rider@altlinux.ru> 1.5.0-alt3
 - disabled devel package
 
