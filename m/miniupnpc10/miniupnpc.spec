@@ -3,7 +3,7 @@
 
 Name: %pkgname%soversion
 Version: 1.9
-Release: alt3
+Release: alt4
 
 Summary: UPnP client library
 License: BSD
@@ -32,10 +32,6 @@ to dialog with Internet Gateway Devices.
 %setup -n %pkgname-%version
 
 %build
-%define lib_suffix %nil
-%ifarch x86_64
-%define lib_suffix 64
-%endif
 
 %__mkdir_p %_target_platform
 pushd %_target_platform
@@ -45,7 +41,9 @@ cmake .. \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_BUILD_TYPE:STRING='Release' \
 	-DUPNPC_BUILD_STATIC:BOOL=FALSE \
-	-DLIB_SUFFIX=%lib_suffix
+%if "%_lib" == "lib64"
+	-DLIB_SUFFIX=64
+%endif
 
 popd
 
@@ -62,6 +60,9 @@ popd
 %_libdir/lib%pkgname.so.*
 
 %changelog
+* Thu Apr 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.9-alt4
+- fixed packaging on 64bit arches other than x86_64
+
 * Wed Jul 13 2016 Nazarov Denis <nenderus@altlinux.org> 1.9-alt3
 - Build as legacy library
 
