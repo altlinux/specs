@@ -1,20 +1,24 @@
 %ifarch %ix86
 %define platform x86-linux-gcc
 %else
+%ifarch x86_64
+%define platform x86_64-linux-gcc
+%else
 %ifarch arm
 %define platform armv5te-linux-gcc
 %else
 %ifarch armh
 %define platform armv7-linux-gcc
 %else
-%define platform %_arch-linux-gcc
+%define platform generic-gnu
+%endif
 %endif
 %endif
 %endif
 
 Name: libvpx
 Version: 1.3.0
-Release: alt2
+Release: alt3
 Summary: VP8 video codec
 Group: Video
 License: BSD
@@ -65,6 +69,9 @@ sed -i '/AVX/d' vp9/vp9_common.mk
 %_libdir/*.so.*
 
 %changelog
+* Thu Apr 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt3
+- fixed build on aarch64
+
 * Wed Mar 09 2016 Anton Farygin <rider@altlinux.ru> 1.3.0-alt2
 - removed devel package
 - fixed build with gcc5
