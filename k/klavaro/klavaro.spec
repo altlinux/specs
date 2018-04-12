@@ -1,6 +1,6 @@
 Name: klavaro
 Version: 3.03
-Release: alt1
+Release: alt2
 
 Summary: Yet another touch typing tutor
 License: GPLv3+
@@ -22,12 +22,14 @@ subst 's#/usr/share/icons/hicolor/24x24/apps/klavaro.png#klavaro#' data/klavaro.
 subst 's/Education/Education;Science;ComputerScience/' data/klavaro.desktop.in
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+export DATADIRNAME=share
 %autoreconf
 %configure --disable-shared
 %make_build
 
 %install
-%makeinstall_std DATADIRNAME=share
+%makeinstall_std DATADIRNAME=share appdatadir=%_datadir/metainfo
 
 %find_lang %name
 
@@ -37,12 +39,16 @@ subst 's/Education/Education;Science;ComputerScience/' data/klavaro.desktop.in
 %_desktopdir/%name.desktop
 %_man1dir/%name.1*
 %_iconsdir/hicolor/*/apps/%name.png
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 
 %exclude %_libdir/libgtkdataboks.a
 
 
 %changelog
+* Thu Apr 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.03-alt2
+- fixed PACKAGE_LOCALE_DIR (ALT #34798)
+- fixed appdatadir
+
 * Mon Jul 10 2017 Yuri N. Sedunov <aris@altlinux.org> 3.03-alt1
 - 3.03
 
