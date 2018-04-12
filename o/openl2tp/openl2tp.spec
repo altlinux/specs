@@ -1,6 +1,6 @@
 Name: openl2tp
 Version: 1.8
-Release: alt5
+Release: alt6
 
 Summary: L2TP (RFC2661) server/client
 License: GPL
@@ -38,10 +38,10 @@ or applications that use the OpenL2TP APIs.
 
 %build
 %add_optflags -Wno-strict-aliasing -Wno-unused-but-set-variable
-%make_build OPT_CFLAGS='%optflags'
+make OPT_CFLAGS='%optflags' SYS_LIBDIR=%_libdir
 
 %install
-%makeinstall_std
+%makeinstall_std SYS_LIBDIR=%_libdir
 
 install -pD -m755 %SOURCE2 %buildroot%_initdir/%name
 install -pD -m644 %SOURCE1 %buildroot%_unitdir/%name.service
@@ -80,6 +80,9 @@ cp -f etc/sysconfig/openl2tpd %buildroot%_sysconfdir/sysconfig/openl2tpd
 %{_libdir}/openl2tp/event_sock.h
 
 %changelog
+* Thu Apr 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8-alt6
+- fixed packaging on 64bit arches other than x86_64
+
 * Mon Feb 02 2015 Andriy Stepanov <stanv@altlinux.ru> 1.8-alt5
 - fix segfault at cleanup stage
 
