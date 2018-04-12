@@ -8,7 +8,7 @@
 
 Name: plasma5-desktop
 Version: 5.12.4
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -210,6 +210,9 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Thu Apr 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt2%ubt
+- add Falkon to favorite menu apps
+
 * Wed Mar 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt1%ubt
 - new version
 
