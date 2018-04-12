@@ -1,7 +1,7 @@
 Name:		uchardet
 Summary:	Universal charset detection
 Version:	0.0.1
-Release:	alt1.qa1
+Release:	alt2
 Group:		Development/Tools
 License:	MPLv1.1
 Url:		http://code.google.com/p/uchardet/
@@ -49,15 +49,13 @@ Static library to build statically linked applications that lib%name
 %build
 cmake 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
+	-DCMAKE_INSTALL_LIBDIR=%_libdir \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_C_FLAGS:STRING="%optflags"
 %make_build
 
 %install
 make install DESTDIR=%buildroot
-%ifarch x86_64
-mv %buildroot/usr/lib %buildroot/usr/lib64
-%endif
 
 %files
 %doc COPYING AUTHORS
@@ -76,6 +74,9 @@ mv %buildroot/usr/lib %buildroot/usr/lib64
 %_libdir/lib%name.a
 
 %changelog
+* Thu Apr 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.1-alt2
+- fixed packaging on 64bit arches other than x86_64
+
 * Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.0.1-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
