@@ -1,5 +1,5 @@
 Name: libbotan
-Version: 1.10.9
+Version: 1.10.17
 Release: alt1
 
 Summary: A C++ Crypto Library
@@ -68,6 +68,10 @@ cp -rp readme.txt doc/examples %buildroot%_defaultdocdir/botan-%version/
 %doc %_defaultdocdir/botan-%version
 
 %changelog
+* Tue Apr 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10.17-alt1
+- Updated to upstream version 1.10.17.
+- Fixed pkg-config file.
+
 * Mon Dec 28 2015 Andrey Cherepanov <cas@altlinux.org> 1.10.9-alt1
 - New version
 - Rebuilt for gcc5 C++11 ABI
