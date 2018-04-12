@@ -6,7 +6,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Storable.pm) perl(Test/More.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.009
+Version: 0.010
 Release: alt1
 Summary: Choose appropriate clone utility
 Group: Development/Perl
@@ -41,6 +41,9 @@ particular one.
 %perl_vendor_privlib/C*
 
 %changelog
+* Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
+- automated CPAN update
+
 * Sat Apr 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1
 - automated CPAN update
 
