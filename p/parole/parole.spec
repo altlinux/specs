@@ -1,5 +1,5 @@
 Name: parole
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 %def_enable clutter
@@ -80,6 +80,9 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Apr 12 2018 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt1
+- Updated to 1.0.1.
+
 * Fri Mar 02 2018 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
 - Updated to 1.0.0.
 
