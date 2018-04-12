@@ -1,6 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+BuildRequires: docbook-style-xsl
 BuildRequires: ca-certificates-java
 # ALT arm fix by Gleb Fotengauer-Malinovskiy <glebfm@altlinux.org>
 %ifarch %{arm}
@@ -207,7 +208,7 @@ BuildRequires: /proc
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt8_2.5.5.0jpp7
+Release: alt9_2.5.5.0jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -1329,6 +1330,9 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Fri Apr 13 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt9_2.5.5.0jpp7
+- added BR: docbook-style-xsl
+
 * Fri Apr 06 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt8_2.5.5.0jpp7
 - desktop files cleanup, fixes for bootstrap
 
