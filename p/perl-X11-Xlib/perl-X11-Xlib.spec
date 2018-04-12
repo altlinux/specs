@@ -1,5 +1,5 @@
 Name: perl-X11-Xlib
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: Low-level access to the X11 library
@@ -31,6 +31,9 @@ xvfb-run -a make test
 %doc Changes README
 
 %changelog
+* Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- automated CPAN update
+
 * Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 
