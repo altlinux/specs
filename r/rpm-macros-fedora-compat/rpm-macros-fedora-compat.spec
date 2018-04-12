@@ -1,7 +1,7 @@
 %define module fedora-compat
 Name: rpm-macros-%module
 Summary: Fedora compatibility set of macro
-Version: 0.13
+Version: 0.14
 Release: alt1
 License: GPL
 Group: System/Base
@@ -10,6 +10,7 @@ Packager: Igor Vlasenko <viy@altlinux.ru>
 
 Source: %name-%version.tar
 Patch: macros.systemd-alt.patch
+Requires: rpm-macros-generic-compat
 Requires: rpm-macros-kde-common-devel
 #set separately in Fedora2ALT
 #Requires: rpm-build-kf5
@@ -30,6 +31,9 @@ done
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- Requires: rpm-macros-generic-compat
+
 * Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - initial kf5 support
 
