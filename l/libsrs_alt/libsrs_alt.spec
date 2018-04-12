@@ -1,6 +1,6 @@
 Name: libsrs_alt
 Version: 1.0
-Release: alt4
+Release: alt5
 
 Summary: Implementation of the SRS specification
 License: GPLv2
@@ -30,6 +30,7 @@ Development files for libsrs_alt library.
 %setup
 
 %build
+%autoreconf
 %configure --with-base64compat --disable-static
 %make_build srs_LDFLAGS="-lsrs_alt -Lsrc/" test_LDFLAGS="-lsrs_alt -Lsrc/"
 
@@ -47,6 +48,9 @@ Development files for libsrs_alt library.
 %_includedir/*
 
 %changelog
+* Thu Apr 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0-alt5
+- reconfigured  and rebuilt
+
 * Tue May 10 2011 Victor Forsiuk <force@altlinux.org> 1.0-alt4
 - Rebuilt for debuginfo.
 
