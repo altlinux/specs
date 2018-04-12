@@ -6,7 +6,7 @@
 %define libktcore libktcore%sover
 
 Name: kde5-%rname
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1%ubt
 %K5init
 
@@ -58,6 +58,9 @@ in the application launcher (which will open Dolphin with the `gdrive:/` URL) or
 %endif
 
 %changelog
+* Thu Apr 12 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt1%ubt
+- new version
+
 * Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1%ubt
 - new version
 
