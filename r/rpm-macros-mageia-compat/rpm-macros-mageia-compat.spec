@@ -1,7 +1,7 @@
 %define module mageia-compat
 Name: rpm-macros-%module
 Summary: Mageia compatibility set of macro
-Version: 0.051
+Version: 0.052
 Release: alt1
 License: GPL
 Group: System/Base
@@ -9,7 +9,7 @@ BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 Source: %name-%version.tar
-#Requires: rpm-macros-kde-common-devel
+Requires: rpm-macros-generic-compat
 Patch: mageia-compat.patch
 
 %description
@@ -29,6 +29,9 @@ done
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.052-alt1
+- added Requires: rpm-macros-generic-compat
+
 * Mon Apr 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.051-alt1
 - added %%arch_tagged
 
