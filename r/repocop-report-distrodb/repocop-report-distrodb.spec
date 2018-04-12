@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.423
+Version: 0.424
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.424-alt1
+- added themes
+
 * Sat Mar 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.423-alt1
 - docuwiki support
 
