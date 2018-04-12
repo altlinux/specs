@@ -3,7 +3,7 @@
 
 Name: mbedtls
 Version: 2.8.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Light-weight cryptographic and SSL/TLS library
 License: Apache
@@ -12,6 +12,8 @@ Group: System/Libraries
 Url: https://tls.mbed.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 Source: https://tls.mbed.org/download/%name-%version-apache.tgz
+
+Patch0: %name-threading-alt.patch
 
 BuildRequires(pre): rpm-build-ubt
 
@@ -64,6 +66,7 @@ Cryptographic utilities based on mbed TLS
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %__mkdir_p %_target_platform
@@ -113,6 +116,9 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Thu Apr 12 2018 Nazarov Denis <nenderus@altlinux.org> 2.8.0-alt2%ubt
+- Build with with MBEDTLS_THREADING_PTHREAD and MBEDTLS_THREADING_C enabled
+
 * Mon Mar 26 2018 Nazarov Denis <nenderus@altlinux.org> 2.8.0-alt1%ubt
 - Version 2.8.0
 
