@@ -6,7 +6,7 @@
 %define libkdeconnectinterfaces libkdeconnectinterfaces%sover
 
 Name: kde5-connect
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1%ubt
 %K5init
 
@@ -20,7 +20,6 @@ Provides: kde-connect = %version kdeconnect-kde = %version
 Requires: /usr/bin/sshfs qca-qt5-ossl
 
 Source: %rname-%version.tar
-Patch1: alt-kf5-req-ver.patch
 
 # Automatically added by buildreq on Fri Feb 05 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ gtk-update-icon-cache libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbusmenu-qt52 libgpg-error libjson-c libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libxcbutil-keysyms libxkbfile-devel pkg-config python-base python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs xorg-inputproto-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -32,6 +31,7 @@ BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcode
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel
 BuildRequires: kf5-kservice-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
+BuildRequires: kf5-kdoctools-devel
 
 %description
 KDE Connect adds communication between KDE and your smartphone.
@@ -79,7 +79,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build \
@@ -122,6 +121,9 @@ KF5 library
 %_K5lib/libkdeconnectinterfaces.so.*
 
 %changelog
+* Thu Apr 12 2018 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt1%ubt
+- new version
+
 * Wed Jan 24 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1%ubt
 - new version
 
