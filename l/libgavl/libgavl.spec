@@ -8,7 +8,7 @@
 %define bname gavl
 Name: lib%bname
 Version: 1.4.0
-Release: alt2
+Release: alt3
 Summary: Library for handling uncompressed audio- and video data
 License: %gpl2plus
 Group: System/Libraries
@@ -93,7 +93,7 @@ This package contains API Reference for develop with %name.
 
 
 %build
-%ifarch %arm aarch64 e2k
+%ifarch %arm aarch64 %e2k
 export LIBS="-lm"
 %endif
 %define _optlevel 3
@@ -147,6 +147,9 @@ install -m 0644 AUTHORS README TODO %buildroot%_docdir/%name-%version/
 
 
 %changelog
+* Thu Apr 12 2018 Michael Shigorin <mike@altlinux.org> 1.4.0-alt3
+- updated for all of %%e2k
+
 * Wed Apr 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.0-alt2
 - ditto for arm
 
