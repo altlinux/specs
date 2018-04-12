@@ -1,8 +1,8 @@
 
 %define rname amarok
 Name: kde4-%rname
-Version: 2.8.90
-Release: alt3%ubt
+Version: 2.9.0
+Release: alt1%ubt
 
 Summary: Amarok is a music player for KDE.
 License: GPLv2
@@ -22,8 +22,7 @@ Patch21: flac_mimetype_bnc671581.diff
 # ALT
 Patch100: alt-fix-compile.patch
 Patch101: alt-disable-analizer.patch
-Patch102: alt-find-taglib.patch
-Patch103: alt-ffmpeg3.patch
+Patch102: alt-ffmpeg3.patch
 
 # Automatically added by buildreq on Thu Nov 19 2009 (-bi)
 #BuildRequires: dbus-tools-gui doxygen gcc-c++ git-core glibc-devel-static groff-ps kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libcurl-devel libgcrypt-devel libgio-devel libgpod-devel libgtk+2-common-devel liblastfm-devel libloudmouth-devel libmtp-devel libncursesw-devel libqca2-devel libqt3-devel libtag-devel libtag-extras-devel libxkbfile-devel libxml2-devel qtscriptbindings rpm-build-ruby tetex-latex time xorg-xf86vidmodeproto-devel
@@ -64,8 +63,7 @@ amaroK - передовой аудио плеер. Превосходная по
 %ifarch %arm
 %patch101 -p1
 %endif
-%patch102 -p1
-%patch103 -p1
+#%patch102 -p1
 
 %build
 %K4cmake \
@@ -98,8 +96,8 @@ fi
 %_kde4_bindir/amarokmp3tunesharmonydaemon
 %_kde4_bindir/amarokpkg
 %_kde4_bindir/amzdownloader
-%_kde4_xdg_apps/amarok.desktop
-%_kde4_xdg_apps/amarok_containers.desktop
+%_kde4_xdg_apps/org.kde.amarok.desktop
+%_kde4_xdg_apps/org.kde.amarok_containers.desktop
 %_kde4_xdg_apps/amzdownloader.desktop
 %_kde4_iconsdir/hicolor/*/apps/amarok.*
 %else
@@ -109,8 +107,8 @@ fi
 %_K4bindir/amarokmp3tunesharmonydaemon
 %_K4bindir/amarokpkg
 %_K4bindir/amzdownloader
-%_K4xdg_apps/amarok.desktop
-%_K4xdg_apps/amarok_containers.desktop
+%_K4xdg_apps/org.kde.amarok.desktop
+%_K4xdg_apps/org.kde.amarok_containers.desktop
 %_K4xdg_apps/amzdownloader.desktop
 %_K4iconsdir/hicolor/*/apps/amarok.*
 %endif
@@ -164,6 +162,9 @@ fi
 
 
 %changelog
+* Thu Apr 12 2018 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt1%ubt
+- new version
+
 * Tue Jun 20 2017 Sergey V Turchin <zerg@altlinux.org> 2.8.90-alt3%ubt
 - fix to build with ffmpeg
 
