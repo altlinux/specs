@@ -1,7 +1,7 @@
 %define  pkgname mail
  
 Name: 	 ruby-%pkgname
-Version: 2.6.6
+Version: 2.7.0
 Release: alt1
  
 Summary: A really Ruby Mail handler
@@ -60,6 +60,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Nov 01 2017 Andrey Cherepanov <cas@altlinux.org> 2.7.0-alt1
+- New version
+
 * Sat Jun 10 2017 Andrey Cherepanov <cas@altlinux.org> 2.6.6-alt1
 - New version
 
