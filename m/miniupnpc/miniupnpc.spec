@@ -2,7 +2,7 @@
 
 Name: miniupnpc
 Version: 2.0
-Release: alt1
+Release: alt2
 
 Summary: UPnP client library
 License: BSD
@@ -39,10 +39,6 @@ developing applications that use %name.
 %setup
 
 %build
-%define lib_suffix %nil
-%ifarch x86_64
-%define lib_suffix 64
-%endif
 
 %__mkdir_p %_target_platform
 pushd %_target_platform
@@ -52,7 +48,9 @@ cmake .. \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_BUILD_TYPE:STRING='Release' \
 	-DUPNPC_BUILD_STATIC:BOOL=FALSE \
-	-DLIB_SUFFIX=%lib_suffix
+%if "%_lib" == "lib64"
+	-DLIB_SUFFIX=64
+%endif
 
 popd
 
@@ -74,6 +72,9 @@ popd
 %_man3dir/%name.3.*
 
 %changelog
+* Thu Apr 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0-alt2
+- fixed packaging on 64bit arches other than x86_64
+
 * Wed Jul 13 2016 Nazarov Denis <nenderus@altlinux.org> 2.0-alt1
 - Version 2.0
 
