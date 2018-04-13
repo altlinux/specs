@@ -5,7 +5,7 @@
 %def_with cheese
 
 Name: gnome-contacts
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Contacts manager for GNOME
@@ -65,6 +65,9 @@ BuildRequires: libfolks-vala
 %doc AUTHORS NEWS README*
 
 %changelog
+* Fri Apr 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
+- 3.28.1
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 
