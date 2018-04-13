@@ -4,7 +4,7 @@
 
 Summary: A set of tools to gather troubleshooting information from a system
 Name: sos
-Version: 3.4
+Version: 3.5
 Release: alt1%ubt
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
@@ -53,6 +53,9 @@ rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
 %doc %_defaultdocdir/sos/html
 
 %changelog
+* Fri Apr 13 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt1%ubt
+- Update to latest release
+
 * Fri Apr 14 2017 Evgeny Sinelnikov <sin@altlinux.ru> 3.4-alt1%ubt
 - Update to latest release with unified build tag (aka ubt macros)
 
