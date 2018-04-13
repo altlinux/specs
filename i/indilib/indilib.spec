@@ -2,8 +2,8 @@
 
 
 Name: indilib
-Version: 1.5.0
-Release: alt3%ubt
+Version: 1.6.2
+Release: alt1%ubt
 
 %add_verify_elf_skiplist %_libdir/libindidriver.so.%version
 %add_verify_elf_skiplist %_libdir/libindimain.so.%version
@@ -18,7 +18,8 @@ Provides: %shortname = %version-%release
 Conflicts: kde4edu-kstars < 4.1.60
 Conflicts: kdeedu-kstars <= 3.5.10-alt2
 
-Source: http://nchc.dl.sourceforge.net/sourceforge/indi/lib%{shortname}_%version.tar.gz
+# http://nchc.dl.sourceforge.net/sourceforge/indi/
+Source: lib%{shortname}_%version.tar
 
 # Automatically added by buildreq on Wed Oct 05 2011 (-bi)
 # optimized out: cmake-modules elfutils libstdc++-devel pkg-config zlib-devel
@@ -116,6 +117,9 @@ chmod -x drivers/telescope/lx200fs2.{h,cpp}
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Fri Apr 13 2018 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt1%ubt
+- new version
+
 * Wed Oct 25 2017 Sergey V Turchin <zerg@altlinux.org> 1.5.0-alt3%ubt
 - move data to common subpackage
 
