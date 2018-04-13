@@ -2,7 +2,7 @@
 
 Name: alterator-bind
 Version: 0.9.5
-Release: alt1
+Release: alt1.1.1
 
 Source:%name-%version.tar
 
@@ -23,7 +23,12 @@ Conflicts: alterator-fbi < 5.25-alt2
 
 BuildPreReq: alterator >= 5.0
 BuildRequires: alterator-fbi
+
+%ifarch %e2k
+BuildRequires: guile20-devel libguile20-devel
+%else
 BuildRequires: guile22-devel
+%endif
 
 %description
 alterator module to create and manage dynamic dns
@@ -50,6 +55,9 @@ alterator module to create and manage dynamic dns
 %_libexecdir/alterator/hooks/dhcp.d/*
 
 %changelog
+* Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.5-alt1.1.1
+- NMU: Replace BuildRequires for guile on e2k arch.
+
 * Fri Nov 17 2017 Mikhail Efremov <sem@altlinux.org> 0.9.5-alt1
 - Change for guile22.
 - Fix ddns with unchrooted bind (closes: #34212).

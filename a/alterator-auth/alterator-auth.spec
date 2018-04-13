@@ -2,7 +2,7 @@
 
 Name: alterator-auth
 Version: 0.35
-Release: alt1
+Release: alt1.1.1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d
 
@@ -28,7 +28,12 @@ Provides: alterator-nsswitch = %version
 Obsoletes: alterator-nsswitch
 
 BuildPreReq: alterator >= 5.0 alterator-lookout
+
+%ifarch %e2k
+BuildRequires: guile20-devel libguile20-devel
+%else
 BuildRequires: guile22-devel
+%endif
 
 %description
 Alterator module for system wide auth settings
@@ -109,6 +114,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 0.35-alt1.1.1
+- NMU: Replace BuildRequires for guile on e2k arch.
+
 * Wed May 17 2017 Andrey Cherepanov <cas@altlinux.org> 0.35-alt1
 - Remove gvfs-shares from task-auth-* metapackages (ALT #33481)
 - Hide non-existing services list (ALT #33371)

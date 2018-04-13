@@ -1,6 +1,6 @@
 Name: alterator-net-bond
 Version: 1.1.0
-Release: alt1
+Release: alt1.1.1
 
 Source:%name-%version.tar
 
@@ -16,7 +16,12 @@ Requires: etcnet
 
 BuildPreReq: alterator >= 5.0
 BuildRequires: alterator-fbi
+
+%ifarch %e2k
+BuildRequires: guile20-devel libguile20-devel
+%else
 BuildRequires: guile22-devel
+%endif
 
 %define _unpackaged_files_terminate_build 1
 
@@ -39,6 +44,9 @@ alterator module for bonding network interfaces
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1.1.1
+- NMU: Replace BuildRequires for guile on e2k arch.
+
 * Tue Apr 18 2017 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
 - Changes for guile22.
 - Add Qt UI.

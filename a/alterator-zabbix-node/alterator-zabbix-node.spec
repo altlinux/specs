@@ -1,6 +1,6 @@
 Name: alterator-zabbix-node
 Version: 1.3.3
-Release: alt1
+Release: alt1.1.1
 
 Summary: Deployment tool for a Zabbix node
 License: GPL
@@ -11,7 +11,12 @@ Source: %name-%version.tar.gz
 BuildPreReq: help2man alterator-service-functions alterator-php-functions
 BuildPreReq: alterator >= 5.0
 BuildRequires: alterator-fbi
+
+%ifarch %e2k
+BuildRequires: guile20-devel libguile20-devel
+%else
 BuildRequires: guile22-devel
+%endif
 
 Requires:  zabbix-phpfrontend-php5 zabbix-phpfrontend-engine zabbix-agent
 Requires: alterator-service-functions >= 2.0.0-alt1
@@ -85,6 +90,9 @@ IVK ChainMail configuration files for Zabbix agent
 %_sysconfdir/zabbix/zabbix_agentd.conf.d/Chainmail.conf
 
 %changelog
+* Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.3-alt1.1.1
+- NMU: Replace BuildRequires for guile on e2k arch.
+
 * Mon Jun 05 2017 Mikhail Efremov <sem@altlinux.org> 1.3.3-alt1
 - Update spec for guile22.
 - Don't allow some symbols in hostname.

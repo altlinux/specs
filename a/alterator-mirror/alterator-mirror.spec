@@ -2,7 +2,7 @@
 
 Name: alterator-mirror
 Version: 0.4.4
-Release: alt1
+Release: alt1.1.1
 
 Source:%name-%version.tar
 
@@ -18,7 +18,12 @@ Requires: alterator-l10n >= 2.4-alt9 altlinux-repos
 
 BuildPreReq: alterator >= 5.0
 BuildRequires: alterator-fbi
+
+%ifarch %e2k
+BuildRequires: guile20-devel libguile20-devel
+%else
 BuildRequires: guile22-devel
+%endif
 
 Conflicts: alterator-fbi < 5.17-alt4
 Conflicts: apt-conf-sisyphus < 5.0-alt3
@@ -53,6 +58,9 @@ install -Dpm640 %name.logrotate %buildroot%_sysconfdir/logrotate.d/%name
 %attr(700,root,adm) %_logdir/%name
 
 %changelog
+* Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 0.4.4-alt1.1.1
+- NMU: Replace BuildRequires for guile on e2k arch.
+
 * Tue Oct 31 2017 Mikhail Efremov <sem@altlinux.org> 0.4.4-alt1
 - Use _unpackaged_files_terminate_build.
 - Changes for guile22.
