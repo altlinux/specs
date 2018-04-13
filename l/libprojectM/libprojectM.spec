@@ -2,7 +2,7 @@
 
 Name: lib%oname
 Version: 2.1.0
-Release: alt10
+Release: alt11
 
 License: LGPLv2.1
 Group: System/Libraries
@@ -16,6 +16,7 @@ Source0: http://freefr.dl.sourceforge.net/project/projectm/2.0.1/%oname-complete
 Patch1: %name-complete-2.1.0-doxy.patch
 Patch2: %name-complete-2.1.0-link.patch
 Patch3: %name-%version-alt-gcc6.patch
+Patch4: %name-lib64.patch
 
 Requires: fonts-ttf-dejavu
 
@@ -73,7 +74,9 @@ libvisual compatible applications.
 Summary: Header files for projectM library
 Group: Development/C
 Requires: %name = %version-%release
+%ifnarch %arm
 Requires: %name-qt = %version-%release
+%endif
 
 %description devel
 Header files for projectM library.
@@ -91,27 +94,20 @@ Static projectM library.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p2
+%patch4 -p2
 
 %build
-cmake \
-	-DCMAKE_INSTALL_PREFIX=%prefix \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_C_FLAGS:STRING="%optflags" \
-	-DUSE_FBO:STRING=FALSE \
-	-DLIB_INSTALL_DIR:STRING=%_libdir \
-%ifarch x86_64
-	-DLIB_SUFFIX=64 \
+%cmake -DUSE_FBO:STRING=FALSE \
+%ifarch %arm
+-DINCLUDE-PROJECTM-QT:STRING=FALSE \
+-DINCLUDE-PROJECTM-PULSEAUDIO:STRING=FALSE
 %endif
+%cmake_build
 
-%make_build
 cd docs && doxygen %oname.dox
 
 %install
-%make DESTDIR=%buildroot install
-
-%ifarch x86_64
-mv %buildroot%_prefix/lib/* %buildroot%_libdir/
-%endif
+%cmakeinstall_std
 
 rm -f %buildroot/%_libdir/libprojectM.a
 rm -f %buildroot/%_datadir/%oname/fonts/*.ttf
@@ -130,6 +126,7 @@ ln -s /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf %buildroot/%_datadir/%oname
 %dir %_datadir/%oname/shaders/
 %_datadir/%oname/shaders/*
 
+%ifnarch %arm
 %files qt
 %_libdir/libprojectM-qt.so.*
 
@@ -137,6 +134,7 @@ ln -s /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf %buildroot/%_datadir/%oname
 %_bindir/*-pulseaudio
 %_desktopdir/*-pulseaudio.desktop
 %_pixmapsdir/prjm16-transparent.svg
+%endif
 
 %files -n %oname-test
 %_bindir/*-test*
@@ -147,16 +145,18 @@ ln -s /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf %buildroot/%_datadir/%oname
 
 %files devel
 %_includedir/%name/
-%_includedir/%name-qt/
 %_libdir/libprojectM.so
-%_libdir/libprojectM-qt.so
 %_pkgconfigdir/libprojectM.pc
+%ifnarch %arm
+%_includedir/%name-qt/
+%_libdir/libprojectM-qt.so
 %_pkgconfigdir/libprojectM-qt.pc
-
-#%files static
-#%_libdir/libprojectM.a
+%endif
 
 %changelog
+* Wed Apr 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.0-alt11
+- fixed packaging on 64bit arches other than x86_64
+
 * Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt10
 - Fixed build with gcc-6
 
