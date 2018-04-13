@@ -1,6 +1,6 @@
 Name: alterator-net-pptp
 Version: 0.10.4
-Release: alt1
+Release: alt1.1.1
 
 Url: http://www.altlinux.org/Alterator
 Source: %name-%version.tar
@@ -20,7 +20,13 @@ Conflicts: alterator-lookout < 1.6-alt8
 
 BuildPreReq: alterator >= 5.0
 
-BuildRequires: guile22-devel rpm-build >= 4.0.4-alt103
+
+%ifarch %e2k
+BuildRequires: guile20-devel libguile20-devel
+%else
+BuildRequires: guile22-devel
+%endif
+BuildRequires: rpm-build >= 4.0.4-alt103
 BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
 
 %description
@@ -47,6 +53,9 @@ Alterator module to configure PPTP connections
 # - cleanup PPTP-over-PPP hasty fix
 
 %changelog
+* Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 0.10.4-alt1.1.1
+- NMU: Replace BuildRequires for guile on e2k arch.
+
 * Mon Jul 17 2017 Paul Wolneykien <manowar@altlinux.org> 0.10.4-alt1
 - Use typed parameters (closes: #33657).
 - Build with guile2.0.

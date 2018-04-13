@@ -1,6 +1,6 @@
 Name: alterator-logs
 Version: 0.9.1
-Release: alt1
+Release: alt1.1.1
 
 Packager: Stanislav Ievlev <inger@altlinux.ru>
 
@@ -21,7 +21,13 @@ Conflicts: alterator-fbi < 5.20-alt3
 Conflicts: alterator-lookout < 2.1-alt1
 
 BuildPreReq: alterator >= 4.10-alt6
-BuildRequires: guile22-devel alterator-fbi
+
+%ifarch %e2k
+BuildRequires: guile20-devel libguile20-devel
+%else
+BuildRequires: guile22-devel
+%endif
+BuildRequires: alterator-fbi
 
 %description
 System logs alterator module
@@ -45,6 +51,9 @@ System logs alterator module
 touch /var/log/journald
 
 %changelog
+* Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.1-alt1.1.1
+- NMU: Replace BuildRequires for guile on e2k arch.
+
 * Fri May 12 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9.1-alt1
 - possibility to pass desktop file names with path blocked
 

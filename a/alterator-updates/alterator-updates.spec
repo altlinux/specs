@@ -1,6 +1,6 @@
 Name: alterator-updates
 Version: 0.2.2
-Release: alt1
+Release: alt1.1.1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -17,7 +17,13 @@ Requires: altlinux-repos
 Conflicts: alterator-lookout < 1.6-alt6
 Conflicts: alterator-fbi < 5.18-alt1
 
-BuildRequires: guile22-devel rpm-build >= 4.0.4-alt103
+
+%ifarch %e2k
+BuildRequires: guile20-devel libguile20-devel
+%else
+BuildRequires: guile22-devel
+%endif
+BuildRequires: rpm-build >= 4.0.4-alt103
 BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
 
 
@@ -42,6 +48,9 @@ Module to configure automatic, schedule-based system updates.
 %_alterator_datadir/applications/*
 
 %changelog
+* Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 0.2.2-alt1.1.1
+- NMU: Replace BuildRequires for guile on e2k arch.
+
 * Fri May 19 2017 Paul Wolneykien <manowar@altlinux.org> 0.2.2-alt1
 - Enable and start crond when a new schedule is written (closes: 33450).
 

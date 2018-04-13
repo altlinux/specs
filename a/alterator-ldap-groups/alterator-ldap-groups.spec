@@ -2,7 +2,7 @@
 
 Name: alterator-ldap-groups
 Version: 0.6.6
-Release: alt2
+Release: alt2.1.1
 
 Source: %name-%version.tar
 
@@ -24,7 +24,13 @@ Conflicts: netcmdplus < 0.1.1
 Obsoletes: alterator-ldap-groups-school-server < %version
 Provides:  alterator-ldap-groups-school-server = %version-%release
 
-BuildRequires: guile22-devel rpm-build >= 4.0.4-alt103
+
+%ifarch %e2k
+BuildRequires: guile20-devel libguile20-devel
+%else
+BuildRequires: guile22-devel
+%endif
+BuildRequires: rpm-build >= 4.0.4-alt103
 BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
 
 %description
@@ -50,6 +56,9 @@ Alterator module for LDAP groups administration
 %_hooksdir/91-ldap-groups
 
 %changelog
+* Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.6-alt2.1.1
+- NMU: Replace BuildRequires for guile on e2k arch.
+
 * Thu Aug 31 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.6-alt2
 - Fix: Output "(Active Directory)" comment when an AD source
   is selected.
