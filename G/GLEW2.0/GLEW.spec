@@ -2,7 +2,7 @@
 
 Name: GLEW2.0
 Version: 2.0.0
-Release: alt2
+Release: alt3
 
 Summary: The OpenGL Extension Wrangler library
 License: BSD, MIT
@@ -43,7 +43,7 @@ operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solari
 %make_build
 
 %install
-%makeinstall_std BINDIR=%_bindir LIBLIR=%_libdir INCDIR=%_includedir/GL PKGDIR=%_pkgconfigdir
+%makeinstall_std BINDIR=%_bindir LIBDIR=%_libdir INCDIR=%_includedir/GL PKGDIR=%_pkgconfigdir
 
 %files -n lib%name
 %doc doc/*
@@ -51,6 +51,9 @@ operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solari
 %_libdir/libGLEW.so.%soversion.*
 
 %changelog
+* Fri Apr 13 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.0-alt3
+- fixed build on aarch64
+
 * Thu Aug 03 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt2
 - Build as legacy Library
 
