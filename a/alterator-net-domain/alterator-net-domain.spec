@@ -1,6 +1,6 @@
 Name:    alterator-net-domain
 Version: 0.7.0
-Release: alt6
+Release: alt6.1.1
 Source:  %name-%version.tar
 
 Summary: Alterator module to provision system network domain
@@ -13,7 +13,13 @@ Conflicts: ldap-user-tools < 0.8.1
 Conflicts: alterator-lookout < 1.6-alt6
 Conflicts: alterator-fbi < 5.9-alt2
 
-BuildRequires: guile22-devel rpm-build >= 4.0.4-alt103
+
+%ifarch %e2k
+BuildRequires: guile20-devel libguile20-devel
+%else
+BuildRequires: guile22-devel
+%endif
+BuildRequires: rpm-build >= 4.0.4-alt103
 BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
 
 %description
@@ -39,6 +45,9 @@ and FreeIPA domain.
 %_bindir/*-sh-functions
 
 %changelog
+* Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt6.1.1
+- NMU: Replace BuildRequires for guile on e2k arch.
+
 * Mon May 22 2017 Paul Wolneykien <manowar@altlinux.org> 0.7.0-alt6
 - Fixed: Cleanup smb.conf before activating ALT Domain.
 - Fix: Stop extra services for the simple DNS mode.
