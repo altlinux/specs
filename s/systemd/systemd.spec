@@ -54,7 +54,7 @@
 Name: systemd
 Epoch: 1
 Version: 238
-Release: alt6
+Release: alt7
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1784,6 +1784,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Fri Apr 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt7
+- merge with v238-stable branch
+
 * Fri Apr 06 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt6
 - move to systemd-utils package:
   + systemctl
