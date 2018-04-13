@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt11%ubt
+Release: alt12%ubt
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
 Url: http://sourceforge.net/projects/krb5ticketwatch
 License: %gpl2plus
@@ -58,6 +58,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Fri Apr 13 2018 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt12%ubt
+- change system tray icon
+
 * Tue Oct 24 2017 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt11%ubt
 - don't raise password dialog window
 
