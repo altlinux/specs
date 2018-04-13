@@ -2,7 +2,7 @@
 %define rname amarok
 Name: kde4-%rname
 Version: 2.9.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Amarok is a music player for KDE.
 License: GPLv2
@@ -162,6 +162,9 @@ fi
 
 
 %changelog
+* Fri Apr 13 2018 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt2%ubt
+- gix to build with gcc5
+
 * Thu Apr 12 2018 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt1%ubt
 - new version
 
