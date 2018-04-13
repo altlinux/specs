@@ -1,6 +1,6 @@
 Name: dolphin-emu
 Version: 5.0
-Release: alt4%ubt
+Release: alt5%ubt
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -92,6 +92,9 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Fri Apr 13 2018 Nazarov Denis <nenderus@altlinux.org> 5.0-alt5%ubt
+- Rebuilt with new mbedTLS
+
 * Wed Jun 07 2017 Nazarov Denis <nenderus@altlinux.org> 5.0-alt4%ubt
 - Rebuilt with ffmpeg instead libav
 - Add gcc fix patch
