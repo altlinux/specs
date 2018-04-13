@@ -1,6 +1,6 @@
 Name: lldpd
-Version: 0.9.9
-Release: alt2%ubt
+Version: 1.0.1
+Release: alt1%ubt
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
 Group: Networking/Other
@@ -164,6 +164,9 @@ fi
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Fri Apr 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt1%ubt
+- 1.0.1
+
 * Sat Mar 24 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.9-alt2%ubt
 - add tmpfiles for chroot dir
 - move chroot dir from /var/lib/lldpd to /var/ran/lldpd
