@@ -1,6 +1,6 @@
 Name:    shc
 Version: 3.9.6
-Release: alt1
+Release: alt2
 Summary: Shell Script Compiler
 
 Group:   System/Libraries
@@ -9,6 +9,7 @@ URL:     https://github.com/neurobin/shc
 
 # Source0-url: https://github.com/neurobin/shc/archive/3.9.6.tar.gz
 Source0: %name-%version.tar
+Patch1: compatibility.patch
 
 BuildRequires: gcc
 
@@ -19,9 +20,10 @@ The generated source code is then compiled and linked to produce a stripped bina
 
 %prep
 %setup -q
+%patch1 -p0
 
 %build
-# %%autoreconf
+%autoreconf || :
 %configure
 %make_build
 
@@ -34,6 +36,9 @@ The generated source code is then compiled and linked to produce a stripped bina
 %_man1dir/*
 
 %changelog
+* Fri Apr 13 2018 Pavel Vainerman <pv@altlinux.ru> 3.9.6-alt2
+- added compatibility.patch 
+
 * Fri Apr 06 2018 Pavel Vainerman <pv@altlinux.ru> 3.9.6-alt1
 - new version (3.9.6) with rpmgs script
 
