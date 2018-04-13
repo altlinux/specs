@@ -18,7 +18,7 @@
 %define nv_version 390
 %define nv_release 48
 %define nv_minor %nil
-%define pkg_rel alt181%ubt
+%define pkg_rel alt182%ubt
 %def_enable kernelsource
 %def_disable glvnd
 %def_enable package_egl_wayland
@@ -87,6 +87,7 @@ Source100: nvidia_create_xinf
 
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
+Patch3: buildfix_kernel_4.16.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
@@ -154,6 +155,7 @@ cd %tbname-%tbver%dirsuffix
 pushd kernel
 #%patch1 -p1
 %patch2 -p1
+%patch3 -p1
 rm -rf precompiled
 popd
 
@@ -337,6 +339,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 13 2018 Sergey V Turchin <zerg@altlinux.org> 390.48-alt182%ubt
+- add fix against 4.16 kernel
+
 * Mon Apr 02 2018 Sergey V Turchin <zerg@altlinux.org> 390.48-alt181%ubt
 - new version
 
