@@ -2,14 +2,12 @@
 
 Name: directfb
 Version: 1.1.0
-Release: alt4.1.qa2
+Release: alt5
 
 Summary: %realname - drivers and binaries
 License: LGPL
 Group: System/Libraries
 Url: http://www.directfb.org
-
-Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source: %realname-%version.tar.gz
 
@@ -27,6 +25,7 @@ Patch5: %realname-alt-libadd-fix.patch
 # http://mail.directfb.org/pipermail/directfb-dev/2011-February/006048.html
 # http://mail.directfb.org/pipermail/directfb-dev/2011-February/006049.html
 Patch6: directfb-1.1.0-libpng15.patch
+Patch7: directfb-1.1.0-nocruft.patch
 
 # Automatically added by buildreq on Sun Dec 14 2008
 BuildRequires: gcc-c++ glibc-devel-static libX11-devel libXext-devel libfreetype-devel libjpeg-devel libpng-devel libsysfs-devel man
@@ -74,6 +73,7 @@ Static libraries for devel %realname applications
 %patch4 -p1 -b .fix4
 %patch5 -p1 -b .fix5
 %patch6 -p1
+%patch7 -p2
 
 %build
 %autoreconf
@@ -125,6 +125,9 @@ find \
 %files -n lib%name-devel-static -f %name-static.files
 
 %changelog
+* Mon Apr 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.0-alt5
+- fixed build on aarch64
+
 * Thu Aug 15 2013 Michael Shigorin <mike@altlinux.org> 1.1.0-alt4.1.qa2
 - NMU: fixed License: (closes: #6703)
 
