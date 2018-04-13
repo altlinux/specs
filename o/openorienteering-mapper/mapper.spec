@@ -2,7 +2,7 @@
 
 Name: openorienteering-mapper
 Version: 0.8.1
-Release: alt1
+Release: alt2%ubt
 
 Summary: OpenOrienteering Mapper program for orienteering mapmaking
 License: GPLv3
@@ -12,6 +12,7 @@ Url: http://www.openorienteering.org/apps/mapper/
 #Source: https://github.com/OpenOrienteering/mapper.git
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: ccmake
 BuildRequires: doxygen
 BuildRequires: gdal
@@ -28,7 +29,9 @@ BuildRequires: sqlite3
 BuildRequires: libproj-nad
 BuildRequires: ctest
 
+#brings gdal libs and licensing information for help menu
 Requires: gdal
+#provides owner for %%_iconsdir/hicolor subtree
 Requires: icon-theme-hicolor
 
 %description
@@ -76,6 +79,9 @@ popd
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Apr 13 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.8.1-alt2%ubt
+- Rebuild with ubt
+
 * Thu Mar 22 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.8.1-alt1
 - Update upstream to 0.8.1
 
