@@ -12,8 +12,8 @@
 %define api_ver 2
 
 Name: mutter
-Version: %ver_major.0
-Release: alt3
+Version: %ver_major.1
+Release: alt1
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
@@ -27,8 +27,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-Patch: mutter-3.26.0-startup-notification.patch
-
 %set_typelibdir %_libdir/%name
 %set_girdir %_libdir/%name
 
@@ -40,7 +38,7 @@ Patch: mutter-3.26.0-startup-notification.patch
 
 %define gtk_ver 3.20.0
 %define gi_ver 0.9.5
-%define glib_ver 2.53.2
+%define glib_ver 2.56.0
 %define pango_ver 1.2.0
 %define cairo_ver 1.10.0
 %define Xi_ver 1.6.0
@@ -77,7 +75,6 @@ BuildRequires: libwacom-devel
 %{?_enable_remote_desktop:BuildRequires: pipewire-libs-devel >= %pipewire_ver}
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel >= %gudev_ver
-# with GLESv3 headers
 BuildRequires: libGL-devel libGLES-devel
 
 %description
@@ -132,10 +129,10 @@ environment.
 
 %prep
 %setup
-#%%patch -p1
 [ ! -d m4 ] && mkdir m4
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 export ac_cv_path_CVT=%_bindir/cvt
 %autoreconf
 DATADIRNAME=share %configure \
@@ -192,6 +189,9 @@ DATADIRNAME=share %configure \
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Sat Apr 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1:3.28.1-alt1
+- 3.28.1
+
 * Tue Apr 03 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:3.28.0-alt3
 - add explicit BR to libGL-devel
 

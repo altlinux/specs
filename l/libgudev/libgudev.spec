@@ -7,13 +7,12 @@
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
-# https://github.com/martinpitt/umockdev/issues/69
-%def_disable umockdev
-%def_disable check
+%def_enable umockdev
+%def_enable check
 
 Name: lib%_name
 Version: %ver_major
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: UDev GObject bindings
@@ -29,10 +28,12 @@ Source: %name-%version.tar
 
 %define udev_ver 199
 %define glib_ver 2.30
+# https://github.com/martinpitt/umockdev/issues/69
+%define umockdev_ver 0.11.2
 
 BuildRequires: libudev-devel >= %udev_ver
 BuildRequires: libgio-devel >= %glib_ver
-%{?_enable_umockdev:BuildRequires: libumockdev-devel}
+%{?_enable_umockdev:BuildRequires: libumockdev-devel >= %umockdev_ver}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 BuildRequires: intltool
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -125,6 +126,9 @@ GObject introspection devel data for %name.
 
 
 %changelog
+* Sat Apr 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1:232-alt3
+- required umockdev >= 0.11.2 for check
+
 * Fri Feb 02 2018 Yuri N. Sedunov <aris@altlinux.org> 1:232-alt2
 - updated to 232-4-gbf8664a (fixed BGO ##792845, 787314)
 - disabled check while umockdev not fixed for systemd-237
