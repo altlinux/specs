@@ -1,29 +1,28 @@
-%def_enable shared
-%def_enable static
-
+%def_disable static
 %define Name OpenSM
-%define oname opensm
-Name: opensm2
+%define _libexecdir /usr/libexec
+
+Name: opensm
 %define lname lib%name
 Summary: InfiniBand subnet manager and administration
-Version: 3.3.7
-Release: alt2
+Version: 3.3.20
+Release: alt1
 License: %gpl2only
 Group: Networking/Other
 URL: http://openib.org
-# git://git.openfabrics.org/~sashak/management.git
-Source0: %name-%version.tar.gz
-Source1: %oname.init
-Requires: libibumad >= 1.1.7
-Requires: %lname = %version-%release
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-Provides: %oname = %version-%release
-Obsoletes: %oname < %version-%release
-Conflicts: %oname < %version-%release
-Conflicts: %oname > %version-%release
+# git://git.openfabrics.org/~halr/opensm.git
+Source0: %name-%version.tar
+Source1: %name.init
+Source2: %name.service
+Source3: %name.launch
+Patch: %name-%version.patch
+
+Requires: lib%name = %version-%release
+Provides: %{name}2 = %version-%release
+Obsoletes: %{name}2 < %version-%release
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: flex libibumad-devel >= 1.2.0
+BuildRequires: flex rdma-core-devel 
 
 %description
 %Name provides an implementation of an InfiniBand Subnet Manager and
@@ -31,56 +30,49 @@ Administration. Such a software entity is required to run for in order
 to initialize the InfiniBand hardware (at least one per each InfiniBand
 subnet).
 
-
-%package -n %lname
+%package -n lib%name
 Summary: Libraries from the %name package
 Group: System/Libraries
-Provides: lib%oname = %version-%release
-Obsoletes: lib%oname < %version-%release
-Conflicts: lib%oname < %version-%release
-Conflicts: lib%oname > %version-%release
+Provides: lib%{name}2 = %version-%release
+Obsoletes: lib%{name}2 < %version-%release
 
-%description -n %lname
+%description -n lib%name
 Shared libraries that are part of the %name package but are also used
 by other applications. If you don't need %name itself installed, these
 libraries can be installed to satisfy dependencies of other
 applications.
 
 
-%package -n lib%oname-devel
+%package -n lib%name-devel
 Summary: Development files for %Name
 Group: Development/C
-Requires: %lname%{?_disable_shared:-devel-static} = %version-%release
+Requires: lib%name = %version-%release
 Requires: libibumad-devel
-Provides: %name-devel = %version-%release
-Obsoletes: %name-devel
-Obsoletes: lib%oname-devel < %version-%release
-Conflicts: lib%oname-devel < %version-%release
-Conflicts: lib%oname-devel > %version-%release
+Provides: lib%{name}2-devel = %version-%release
+Obsoletes: lib%{name}2-devel < %version-%release
 
-%description -n lib%oname-devel
+%description -n lib%name-devel
 Development files for %Name.
 
-
-%if_enabled static
-%package -n lib%oname-devel-static
+%package -n lib%name-devel-static
 Summary: Static %Name libraries
 Group: Development/C
-Requires: lib%oname-devel = %version-%release libibumad-devel-static
+Requires: lib%name-devel = %version-%release libibumad-devel-static
 
-%description -n lib%oname-devel-static
+%description -n lib%name-devel-static
 Static %Name libraries.
-%endif
-
 
 %prep
 %setup
-
+%patch -p1
 
 %build
 ./autogen.sh
 %add_optflags %optflags_shared
-%configure %{subst_enable shared} %{subst_enable static}
+%configure \
+    %{subst_enable static} \
+    --with-opensm-conf-sub-dir=rdma
+
 %make_build
 
 rm -f $(find ./ -name 'libosmvendor.la*')
@@ -88,49 +80,60 @@ rm -f $(find ./ -name 'libosmvendor.la*')
 rm -f $(find ./ -name 'libopensm.la*')
 %make_build ADD_VENDOR="-L$PWD/libvendor -losmvendor -L$PWD/libvendor/.libs"
 
+cd opensm
+./opensm -c ../opensm-%version.conf
+
 %install
 %make_install DESTDIR=%buildroot install
-install -D -m 0755 %SOURCE1 %buildroot/%_initdir/%oname
-install -d -m 0755 %buildroot%_sysconfdir/sysconfig
-cat > %buildroot/%_sysconfdir/sysconfig/%oname <<__CONF__
+mkdir -p %buildroot{%_cachedir/%name,%_initdir,%_sysconfdir/{rdma,sysconfig},%_logrotatedir}
+install -D -m644 opensm-%version.conf %buildroot%_sysconfdir/rdma/opensm.conf
+install -D -m 0755 %SOURCE1 %buildroot%_initdir/%name
+install -D -m 0644 %SOURCE2 %buildroot%_unitdir/%name.service
+install -D -m 0755 %SOURCE3 %buildroot%_libexecdir/%name-launch
+install -D -m 0644 scripts/opensm.logrotate %buildroot%_logrotatedir/opensm
+cat > %buildroot/%_sysconfdir/sysconfig/%name <<__CONF__
 OSM_ARGS=
 OSM_HOSTS=
 __CONF__
 
 
 %post 
-%post_service %oname
+%post_service %name
 
 %preun
-%preun_service %oname
+%preun_service %name
 
 
 %files
 %doc AUTHORS COPYING README
-%config(noreplace) %_sysconfdir/sysconfig/%oname
-%_initdir/*
+%doc doc/*.txt
+%config(noreplace) %_sysconfdir/sysconfig/%name
+%config(noreplace) %_sysconfdir/rdma/opensm.conf
+%config(noreplace) %_logrotatedir/opensm
+%_initdir/%name
+%_unitdir/%name.service
+%_libexecdir/%name-launch
 %_sbindir/*
 %_man8dir/*
+%dir %_cachedir/%name
 
-
-%if_enabled shared
-%files -n %lname
+%files -n lib%name
 %_libdir/*.so.*
-%endif
 
-
-%files -n lib%oname-devel
+%files -n lib%name-devel
 %_includedir/infiniband/*
-%{?_enable_shared:%_libdir/*.so}
-
+%_libdir/*.so
 
 %if_enabled static
-%files -n lib%oname-devel-static
+%files -n lib%name-devel-static
 %_libdir/*.a
 %endif
 
-
 %changelog
+* Thu Apr 12 2018 Alexey Shabalin <shaba@altlinux.ru> 3.3.20-alt1
+- 3.3.20
+- disable static build
+
 * Thu Mar 24 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.7-alt2
 - Rebuilt for debuginfo
 

@@ -1,4 +1,4 @@
-%define udapl 1
+#define udapl 1
 #define static 1
 %define thread 1
 
@@ -40,7 +40,7 @@ Name: openmpi-compat
 #pkgname
 
 Version: 1.6.4
-Release: alt4
+Release: alt5
 
 %define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -79,7 +79,7 @@ BuildPreReq: glibc-pthread
 
 Requires: libibverbs >= 1.1.2
 BuildPreReq: /proc flex gcc-c++ gcc-fortran
-BuildPreReq: libibverbs-devel
+BuildPreReq: rdma-core-devel
 BuildPreReq: valgrind-devel libiberty-devel
 
 %package -n openmpi-lib-compat
@@ -112,7 +112,7 @@ Group: Development/Other
 
 Requires: %name = %version-%release
 Requires: gcc-c++ gcc-fortran
-Requires: libibverbs-devel libibumad-devel
+Requires: rdma-core-devel
 
 Obsoletes: openmpi-devel < %version-%release
 
@@ -126,7 +126,7 @@ Group: Development/Other
 
 Requires: %name-devel = %version-%release
 Requires: gcc-c++ gcc-fortran
-Requires: libibverbs-devel libibumad-devel 
+Requires: rdma-core-devel
 
 Obsoletes: openmpi-vt < %version-%release
 
@@ -160,10 +160,10 @@ Provides links to OpenMPI v.1 debuginfo
 Sonames has been changed in later versions of OpenMPI
 
 %description devel
-Package for development with Open MPI 
+Package for development with Open MPI
 
 %description devel-vt
-Package for development with Open MPI and VampirTrace 
+Package for development with Open MPI and VampirTrace
 
 %prep
 %setup -q -n openmpi-%version
@@ -387,6 +387,10 @@ ln -fs ../../%name/lib/libmpi.so.1 %buildroot%_libexecdir/debug%_libdir/openmpi/
 %endif
 
 %changelog
+* Thu Apr 12 2018 Alexey Shabalin <shaba@altlinux.ru> 1.6.4-alt5
+- rebuild with rdma-core-devel
+- build without udapl support
+
 * Thu Feb 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.4-alt4
 - Rebuilt with new toolchain.
 

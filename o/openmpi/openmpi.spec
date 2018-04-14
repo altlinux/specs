@@ -1,4 +1,4 @@
-%define udapl 1
+#define udapl 1
 #define static 1
 %define thread 1
 
@@ -40,7 +40,7 @@ Name: openmpi
 #pkgname
 
 Version: 2.0.1
-Release: alt3
+Release: alt4
 
 %define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -79,7 +79,7 @@ BuildPreReq: glibc-pthread
 
 Requires: libibverbs >= 1.1.2
 BuildPreReq: /proc flex gcc-c++ gcc-fortran
-BuildPreReq: libibverbs-devel
+BuildPreReq: rdma-core-devel
 BuildPreReq: valgrind-devel libiberty-devel
 BuildRequires: libnuma-devel
 BuildRequires: libtorque-devel
@@ -90,16 +90,13 @@ Group: Development/Other
 
 Requires: %name = %version-%release
 Requires: gcc-c++ gcc-fortran
-Requires: libibverbs-devel libibumad-devel
+Requires: rdma-core-devel
 Requires: libnuma-devel
 
 %ifdef udapl
 Requires: libdapl-devel
 %endif
 
-Requires: %name-devel = %version-%release
-Requires: gcc-c++ gcc-fortran
-Requires: libibverbs-devel libibumad-devel 
 
 %ifdef examples
 %package %name-examples
@@ -326,6 +323,10 @@ EOF
 %endif
 
 %changelog
+* Sat Apr 14 2018 Alexey Shabalin <shaba@altlinux.ru> 2.0.1-alt4
+- rebuild with rdma-core-devel
+- build without udapl support
+
 * Thu Sep 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt3
 - Updated pkg-config files.
 
