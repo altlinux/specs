@@ -8,7 +8,7 @@
 %def_disable gtk_doc
 
 Name: %{_name}2
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -19,8 +19,7 @@ Url: http://geoclue.freedesktop.org/
 Source: http://www.freedesktop.org/software/%_name/releases/%ver_major/%_name-%version.tar.xz
 
 %define glib_ver 2.34
-%define mm_ver 1.0
-%define geoip_ver 1.5.1
+%define mm_ver 1.6
 %define soup_ver 2.42
 
 BuildRequires: intltool yelp-tools gtk-doc libgio-devel >= %glib_ver
@@ -178,6 +177,9 @@ mkdir -p %buildroot%_localstatedir/%_name
 
 
 %changelog
+* Sat Apr 14 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.8-alt1
+- 2.4.8
+
 * Wed May 31 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.7-alt1
 - 2.4.7
 

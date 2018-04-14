@@ -7,8 +7,8 @@
 %def_enable gtk_doc
 
 Name: gnome-shell
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -31,7 +31,7 @@ AutoReqProv: nopython
 %define session_ver 3.26
 %define clutter_ver 1.21.5
 %define gjs_ver 1.47.0
-%define mutter_ver 3.27.91
+%define mutter_ver %ver_major.1
 %define gtk_ver 3.16.0
 %define gio_ver 2.56.0
 %define gstreamer_ver 1.0
@@ -238,6 +238,9 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %endif
 
 %changelog
+* Sat Apr 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
+- updated to 3.28.1-5-g69afe77
+
 * Thu Mar 22 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt2
 - update to 3.28.0-12-g526834e
 
