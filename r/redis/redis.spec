@@ -1,5 +1,5 @@
 Name: redis
-Version: 4.0.8
+Version: 4.0.9
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -65,6 +65,11 @@ sed -e 's|\$(CCOPT) \$(DEBUG) \$(OBJ)|\$(OBJ) \$(CCOPT) \$(DEBUG)|g' -i src/Make
 
 %build
 %make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}"
+
+%ifndef __BTE
+    # make check needs network
+    make test
+%endif
 
 %install
 %makeinstall_std PREFIX=%buildroot%prefix
@@ -139,6 +144,9 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 
 %changelog
+* Sat Apr 14 2018 Nikolay A. Fetisov <naf@altlinux.org> 4.0.9-alt1
+- New version
+
 * Fri Mar 02 2018 Nikolay A. Fetisov <naf@altlinux.org> 4.0.8-alt1
 - New version
 
