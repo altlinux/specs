@@ -1,6 +1,6 @@
 Name: lxqt-panel
 Version: 0.12.0
-Release: alt4
+Release: alt5
 
 Summary: Desktop panel
 License: LGPL
@@ -73,14 +73,17 @@ This package provides the development files for %name.
 %_includedir/*/*.h
 
 %changelog
+* Sat Apr 14 2018 Anton Midyukov <antohami@altlinux.org> 0.12.0-alt5
+- replaced qupzilla to falkon in initial settings
+
 * Tue Mar 06 2018 Anton Midyukov <antohami@altlinux.org> 0.12.0-alt4
 - rebuild with libpulseaudio (Closes: 34612)
 
 * Sat Feb 24 2018 Anton Midyukov <antohami@altlinux.org> 0.12.0-alt3
-- fix initial settigs (replace applet clock to worldclock)
+- fix initial settings (replace applet clock to worldclock)
 
 * Sun Feb 18 2018 Anton Midyukov <antohami@altlinux.org> 0.12.0-alt2
-- fix initial settigs
+- fix initial settings
 
 * Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
 - 0.12.0
