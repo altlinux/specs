@@ -1,8 +1,8 @@
 %define  pkgname oj
  
 Name: 	 ruby-%pkgname
-Version: 3.5.0
-Release: alt1.2
+Version: 3.5.1
+Release: alt1
  
 Summary: A fast JSON parser and Object marshaller as a Ruby gem
 License: MIT/Ruby
@@ -58,6 +58,12 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Sat Apr 14 2018 Andrey Cherepanov <cas@altlinux.org> 3.5.1-alt1
+- New version.
+
+* Mon Apr 09 2018 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1.1.M80P.1
+- Backport new version to p8 branch.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1.2
 - Rebuild with Ruby 2.5.1
 
@@ -85,8 +91,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 * Sat Sep 23 2017 Andrey Cherepanov <cas@altlinux.org> 3.3.6-alt1
 - New version
 
+* Wed Sep 20 2017 Andrey Cherepanov <cas@altlinux.org> 3.3.5-alt0.M80P.2
+Rebuild with Ruby 2.4.2
+
 * Sat Sep 09 2017 Andrey Cherepanov <cas@altlinux.org> 3.3.5-alt1.1
 - Rebuild with Ruby 2.4.1
+
+* Mon Aug 14 2017 Andrey Cherepanov <cas@altlinux.org> 3.3.5-alt0.M80P.1
+- Backport new version to p8 branch
+- Drop obsoleted patch
 
 * Mon Aug 14 2017 Andrey Cherepanov <cas@altlinux.org> 3.3.5-alt1
 - New version
@@ -114,6 +127,10 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 * Mon Jun 19 2017 Andrey Cherepanov <cas@altlinux.org> 3.1.4-alt1
 - New version
+
+* Fri Jun 16 2017 Andrey Cherepanov <cas@altlinux.org> 3.1.3-alt0.M80P.1
+- Backport new version to p8 branch
+- Fix build with old Ruby
 
 * Wed Jun 14 2017 Andrey Cherepanov <cas@altlinux.org> 3.1.3-alt1
 - New version
