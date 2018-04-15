@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion gl%{version}-android-2.1_r1
 Name:          android-opengl-api
 Version:       1.1
-Release:       alt1_13jpp8
+Release:       alt1_14jpp8
 Summary:       Google Android Java ME Library (Khronos)
 License:       ASL 2.0
 # While the EULA for the Android SDK restricts distribution of those binaries, the source code 
@@ -63,12 +63,15 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_14jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_13jpp8
 - fc27 update
 
