@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apache-poi
 Version:       3.15
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       The Java API for Microsoft Documents
 # ASLv2 + GPLv3 src/resources/scratchpad/org/apache/poi/hdgf/chunks_parse_cmds.tbl
 # https://bugzilla.redhat.com/show_bug.cgi?id=1146670#c13
@@ -190,12 +190,15 @@ ant -propertyfile build.properties test || :
 
 %files -f .mfiles
 %doc KEYS
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
  
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.15-alt1_2jpp8
+- java update
+
 * Mon Nov 20 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.15-alt1_1jpp8
 - new version
 
