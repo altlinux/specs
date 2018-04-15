@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           antlr32
 Version:        3.2
-Release:        alt1_17jpp8
+Release:        alt1_19jpp8
 Summary:        ANother Tool for Language Recognition
 
 License:        BSD
@@ -38,8 +38,13 @@ Patch0:         java8-compat.patch
 # Generate OSGi metadata
 Patch1:         osgi-manifest.patch
 
+# Patch to use exec maven plugin as alternative to unavailable antlr2 maven plugin
+Patch2:         antlr2-usage.patch
+
 BuildRequires:  maven-local
-BuildRequires:  antlr-maven-plugin
+BuildRequires:  ant-antlr
+BuildRequires:  exec-maven-plugin
+BuildRequires:  maven-plugin-build-helper
 BuildRequires:  maven-plugin-bundle
 BuildRequires:  maven-plugin-plugin
 BuildRequires:  stringtemplate >= 3.2
@@ -95,6 +100,7 @@ BuildArch: noarch
 
 %patch0 -b .orig
 %patch1 -b .orig
+%patch2 -b .orig
 
 # remove pre-built artifacts
 find -type f -a -name *.jar -delete
@@ -161,6 +167,9 @@ cp -p %{SOURCE6} %{SOURCE7} .m2/org/antlr/antlr3-maven-plugin/%{bootstrap_versio
 %doc tool/LICENSE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_19jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_17jpp8
 - fc27 update
 
