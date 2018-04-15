@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -15,15 +15,15 @@ Requires: alterator >= 4.7-alt5
 Requires: alterator-l10n >= 2.9-alt10
 Requires: alterator-sh-functions >= 0.6-alt1
 Requires: alterator-hw-functions >= 0.7.6-alt1
-Requires: grub2-pc > 2.00-alt20
+Requires: grub-pc > 2.00-alt20
 Conflicts: guile-evms < 0.4-alt13
 
 BuildPreReq: alterator >= 4.7-alt5
-BuildRequires: grub2 >= 2.00-alt7
+BuildRequires: grub >= 2.00-alt7
 BuildRequires: libdevmapper-devel
 
 %ifarch x86_64
-Requires: grub2-efi >= 2.00-alt12
+Requires: grub-efi >= 2.00-alt12
 %endif
 
 %description
@@ -47,6 +47,11 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Wed Mar 21 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.12-alt1
+- added display of the default username (closes: #33098, #34249)
+- disabled web-ui (until solved #34208)
+- update requires (grub2 -> grub)
+
 * Fri Jun 10 2016 Michael Shigorin <mike@altlinux.org> 0.11-alt1
 - added test to exclude hybrid installation media
   (usually USB Flash drive with ISO written onto it)

@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.38
+Version: 2.9.39
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -114,6 +114,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Dec 04 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.9.39-alt1
+- Update Russian translations and help for alterator-grub
+
 * Wed Oct 18 2017 Andrey Cherepanov <cas@altlinux.org> 2.9.38-alt1
 - Update timezones localization from tzdata-2017b
 
