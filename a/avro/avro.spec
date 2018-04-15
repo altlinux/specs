@@ -1,8 +1,6 @@
-BuildRequires: apache-parent
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/asciidoc /usr/bin/source-highlight boost-devel boost-filesystem-devel boost-program_options-devel gcc-c++ pkgconfig(liblzma) zlib-devel
+BuildRequires: /usr/bin/asciidoc /usr/bin/source-highlight boost-devel boost-filesystem-devel boost-program_options-devel gcc-c++ pkgconfig(liblzma) rpm-build-java zlib-devel
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             avro
 Version:          1.7.6
-Release:          alt2_2jpp8
+Release:          alt2_5jpp8
 Summary:          Data serialization system
 License:          ASL 2.0
 URL:              http://avro.apache.org
@@ -27,6 +25,7 @@ BuildArch:        noarch
 BuildRequires:    maven-local
 BuildRequires:    mvn(com.thoughtworks.paranamer:paranamer)
 BuildRequires:    mvn(io.netty:netty:3)
+BuildRequires:    mvn(org.apache:apache:pom:)
 BuildRequires:    mvn(org.apache.hadoop:hadoop-client)
 BuildRequires:    mvn(org.apache.maven:maven-project)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
@@ -184,46 +183,50 @@ done
 
 %build
 
-%mvn_build -sf -- -Dhadoop.version=2 -P hadoop2 -Dcheckstyle.skip=true
+# per FIXME comment in avro build.sh, enforcer is broken so define avro.version here
+%mvn_build -sf -- -Dhadoop.version=2 -P hadoop2 -Dcheckstyle.skip=true -Davro.version=%{version}
 
 %install
 %mvn_install
 
 %files -f .mfiles-avro
 %doc README.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files compiler -f .mfiles-avro-compiler
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files ipc -f .mfiles-avro-ipc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files mapred -f .mfiles-avro-mapred
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files maven-plugin -f .mfiles-avro-maven-plugin
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files parent -f .mfiles-avro-parent
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files protobuf -f .mfiles-avro-protobuf
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files thrift -f .mfiles-avro-thrift
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files toplevel -f .mfiles-avro-toplevel
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files trevni -f .mfiles-trevni
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt2_5jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt2_2jpp8
 - added BR: apache-parent for javapackages 5
 
