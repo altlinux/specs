@@ -1,11 +1,10 @@
-BuildRequires: maven-assembly-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -15,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apiviz
 Version:          1.3.2
-Release:          alt2_13jpp8
+Release:          alt2_16jpp8
 Summary:          APIviz is a JavaDoc doclet to generate class and package diagrams
 Group:            Development/Other
 License:          LGPLv2+
@@ -30,6 +29,7 @@ BuildArch:        noarch
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    maven-antrun-plugin
+BuildRequires:    maven-assembly-plugin
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -63,11 +63,8 @@ This package contains the API documentation for %{name}.
 %setup -q -n apiviz-%{namedversion}
 %patch0 -p1
 
-%if 0%{?fedora} >= 21
+%if 0%{?fedora} || 0%{?rhel} > 7
 %patch1 -p1
-%endif
-
-%if 0%{?fedora} >= 26
 %patch2 -p0
 %endif
 
@@ -95,6 +92,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 %doc LICENSE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt2_16jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt2_13jpp8
 - added BR: maven-assembly-plugin for javapackages 5
 
