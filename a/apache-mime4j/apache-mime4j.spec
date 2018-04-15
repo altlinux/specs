@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-mime4j
 Version:        0.7.2
-Release:        alt3_16jpp8
+Release:        alt3_17jpp8
 Summary:        Apache JAMES Mime4j
 License:        ASL 2.0
 URL:            http://james.apache.org/mime4j
@@ -64,12 +64,15 @@ done
 
 %files -f .mfiles
 %doc RELEASE_NOTES.txt
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.7.2-alt3_17jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.7.2-alt3_16jpp8
 - fc27 update
 
