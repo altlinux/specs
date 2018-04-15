@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jacknativeclient
 Version:        0
-Release:        alt2_0.14.20120218gitjpp8
+Release:        alt2_0.15.20120218gitjpp8
 Summary:        Java bindings for JACK clients
 
 License:        LGPLv3+
@@ -21,7 +21,7 @@ URL:            https://github.com/%{user}/%{name}/
 Source0:        https://github.com/%{user}/%{name}/tarball/%{gittag}/%{user}-%{name}-%{gittag}.tar.gz
 
 BuildRequires:  ant
-BuildRequires:  gcc-common
+BuildRequires:  gcc
 BuildRequires:  libjack-devel
 BuildRequires:  java-devel
 BuildRequires:  java-javadoc
@@ -85,7 +85,7 @@ cp -a api %{buildroot}%{_javadocdir}/%{name}
 
 %files
 %doc README
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{_libdir}/%{name}/
 %{_jnidir}/%{name}.jar
 
@@ -93,6 +93,9 @@ cp -a api %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}/
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.15.20120218gitjpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.14.20120218gitjpp8
 - fc27 update
 
