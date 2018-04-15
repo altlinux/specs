@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		jaxodraw
 Version:	%{major}.%{minor}
-Release:	alt1_19jpp8
+Release:	alt1_20jpp8
 Summary:	A Java program for drawing Feynman diagrams
 Group:		Engineering
 License:	GPLv2+
@@ -61,7 +61,7 @@ Summary:	LaTeX style file axodraw4j.sty for documents generated with jaxodraw
 Group:		Engineering
 License:	LPPL
 # In order to compile documents one needs a LaTeX compiler
-Requires:	/usr/bin/latex texlive-latex-recommended
+Requires:	tex(latex)
 
 %description latex
 This package contains the LaTeX style file that is needed for EPS export
@@ -157,6 +157,9 @@ EOF
 %{_datadir}/texmf/tex/latex/axodraw4j/
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_20jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_19jpp8
 - fc27 update
 
