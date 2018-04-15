@@ -1,33 +1,20 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: gcc-c++
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# fedora __isa_bits tmp hack
-%ifarch x86_64
-%define __isa_bits 64
-%else
-%define __isa_bits 32
-%endif
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global debug_package %{nil}
 
 # rpmbuild < 4.6 support
-%if ! 0%{?__isa_bits}
-%ifarch x86_64 ia64 ppc64 sparc64 s390x alpha ppc64le aarch64
-%global __isa_bits 64
-%else
-%global __isa_bits 32
-%endif
-%endif
 
 Name:          leveldbjni
 Version:       1.8
-Release:       alt1_17jpp8
+Release:       alt2_17jpp8
 Summary:       A Java Native Interface to LevelDB
 License:       BSD
 URL:           https://github.com/fusesource/leveldbjni/
@@ -144,12 +131,15 @@ export JAVA_HOME=%{_jvmdir}/java LEVELDB_HOME=%{_prefix} SNAPPY_HOME=%{_prefix}
 
 %files  -f .mfiles
 %doc changelog.md readme.md releasing.md
-%doc license.txt
+%doc --no-dereference license.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc license.txt
+%doc --no-dereference license.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.8-alt2_17jpp8
+- regenerated to fix __isa_bits definition
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_17jpp8
 - fc27 update
 
