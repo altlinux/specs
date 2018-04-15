@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          aries-util
 Version:       1.1.1
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Apache Aries Util
 License:       ASL 2.0
 URL:           http://aries.apache.org/
@@ -122,12 +122,15 @@ find . -name  "*.jar" -print ! -type d -delete
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_3jpp8
 - fc27 update
 
