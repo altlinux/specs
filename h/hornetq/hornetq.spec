@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
 BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -12,12 +12,6 @@ BuildRequires: jpackage-generic-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# fedora __isa_bits tmp hack
-%ifarch x86_64
-%define __isa_bits 64
-%else
-%define __isa_bits 32
-%endif
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -37,7 +31,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          hornetq
 Version:       2.4.7
-Release:       alt2_6jpp8
+Release:       alt3_6jpp8
 Summary:       High performance messaging system
 License:       ASL 2.0
 URL:           http://hornetq.jboss.org/
@@ -347,6 +341,9 @@ cp -L hornetq-native/bin/libHornetQAIO.so %{buildroot}/%{_libdir}/libHornetQAIO.
 %doc LICENSE.txt NOTICE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.4.7-alt3_6jpp8
+- fixed __isa_bits definition
+
 * Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.7-alt2_6jpp8
 - fixed build with new netty
 
