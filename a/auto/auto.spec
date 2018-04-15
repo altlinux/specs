@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          auto
 Version:       1.1
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       A collection of source code generators for Java
 License:       ASL 2.0
 URL:           https://github.com/google/auto
@@ -124,28 +124,31 @@ done
 %files -f .mfiles-%{name}-parent
 %dir %{_javadir}/%{name}
 %doc README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files common -f .mfiles-%{name}-common
 %doc common/README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files factory -f .mfiles-%{name}-factory
 %doc factory/README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files service -f .mfiles-%{name}-service
 %doc service/README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files value -f .mfiles-%{name}-value
 %doc value/README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_5jpp8
 - fc27 update
 
