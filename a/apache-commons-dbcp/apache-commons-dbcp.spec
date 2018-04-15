@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          1.4
-Release:          alt2_22jpp8
+Release:          alt2_23jpp8
 Summary:          Apache Commons DataBase Pooling Package
 Group:            Development/Other
 License:          ASL 2.0
@@ -75,6 +75,9 @@ iconv -f iso8859-1 -t utf-8 RELEASE-NOTES.txt > RELEASE-NOTES.txt.conv && mv -f 
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_23jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_22jpp8
 - fc27 update
 
