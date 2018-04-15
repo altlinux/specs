@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		jglobus
 Version:	2.1.0
-Release:	alt1_7jpp8
+Release:	alt1_8jpp8
 Summary:	Globus Java client libraries
 
 #		Everything is Apache 2.0 except for one file that is MIT:
@@ -185,12 +185,12 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files parent -f .mfiles-parent 
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files ssl-proxies -f .mfiles-ssl-proxies
 %dir %{_javadir}/%{name}
 %doc README.textile
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files jsse -f .mfiles-jsse
 
@@ -214,6 +214,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_7jpp8
 - fc27 update
 
