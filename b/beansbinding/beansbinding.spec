@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           beansbinding
 Version:        1.2.1
-Release:        alt1_17jpp8
+Release:        alt1_18jpp8
 Summary:        Beans Binding (JSR 295) reference implementation
 
 Group:          Development/Other
@@ -22,6 +22,7 @@ BuildRequires:  ant-junit
 BuildRequires:  java-devel
 
 Requires:       java >= 1.6.0
+Requires:       javapackages-tools
 
 BuildArch:      noarch
 Source44: import.info
@@ -65,6 +66,9 @@ cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_18jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_17jpp8
 - fc27 update
 
