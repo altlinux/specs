@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-james-project
 Version:        1.8.1
-Release:        alt1_15jpp8
+Release:        alt1_16jpp8
 Summary:        Main project POM files and resources
 License:        ASL 2.0
 URL:            http://james.apache.org/
@@ -42,9 +42,12 @@ Main project POM files and resources for Apache James project.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_16jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_15jpp8
 - fc27 update
 
