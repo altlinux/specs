@@ -21,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           aqute-bnd
 Version:        3.5.0
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        BND Tool
 License:        ASL 2.0
 URL:            http://bnd.bndtools.org/
@@ -218,7 +218,7 @@ mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{_bindir}/bnd
 %if %{with ant_tasks}
 %config(noreplace) %{_sysconfdir}/ant.d/*
@@ -226,16 +226,19 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %config(noreplace,missingok) /etc/java/%{name}.conf
 
 %files -n aqute-bndlib -f .mfiles-bndlib
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %if %{with maven_plugin}
 %files -n bnd-maven-plugin -f .mfiles-maven
 %endif
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.5.0-alt1_2jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.5.0-alt1_1jpp8
 - new version
 
