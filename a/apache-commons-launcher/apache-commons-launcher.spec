@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apache-%{short_name}
 Version:       1.1
-Release:       alt3_20.20100521svn936225jpp8
+Release:       alt3_21.20100521svn936225jpp8
 Summary:       A cross platform Java application launcher
 License:       ASL 2.0
 URL:           http://commons.apache.org/launcher/
@@ -103,13 +103,16 @@ rm src/java/LauncherBootstrap.java
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 %doc README.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt3_21.20100521svn936225jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt3_20.20100521svn936225jpp8
 - fc27 update
 
