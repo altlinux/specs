@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             ant-%{base_name}
 Version:          1.3
-Release:          alt1_8jpp8
+Release:          alt1_9jpp8
 Summary:          Provide antunit ant task
 License:          ASL 2.0
 URL:              http://ant.apache.org/antlibs/%{base_name}/
@@ -68,15 +68,18 @@ echo "ant/%{name}" > %{buildroot}%{_sysconfdir}/ant.d/%{base_name}
 
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 %doc CONTRIBUTORS README README.html WHATSNEW
 %config(noreplace) %{_sysconfdir}/ant.d/%{base_name}
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_8jpp8
 - fc27 update
 
