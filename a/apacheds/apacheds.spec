@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apacheds
 Version:       2.0.0
-Release:       alt1_0.5.M21jpp8
+Release:       alt1_0.6.M21jpp8
 Summary:       Apache Directory Server
 License:       ASL 2.0
 Url:           http://directory.apache.org/
@@ -265,39 +265,42 @@ sed -i '/ConcurrentJunitRunner/d' $(find */src/test/java -name "*.java")
 
 %files -f .mfiles-%{name}-parent
 %doc README.txt
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files core -f .mfiles-core
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files http-integration -f .mfiles-%{name}-http-integration
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files i18n -f .mfiles-i18n
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files kerberos -f .mfiles-kerberos
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files osgi -f .mfiles-osgi
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files protocols -f .mfiles-protocols
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files server -f .mfiles-server
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files service -f .mfiles-service
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files wrapper -f .mfiles-%{name}-wrapper
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_0.6.M21jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_0.5.M21jpp8
 - fc27 update
 
