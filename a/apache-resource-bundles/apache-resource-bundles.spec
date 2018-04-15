@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-resource-bundles
 Version:        2
-Release:        alt4_19jpp8
+Release:        alt4_20jpp8
 Summary:        Apache Resource Bundles
 License:        ASL 2.0
 URL:            http://repo1.maven.org/maven2/org/apache/apache-resource-bundles/
@@ -80,6 +80,9 @@ popd
 %files -f .mfiles
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:2-alt4_20jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:2-alt4_19jpp8
 - fc27 update
 
