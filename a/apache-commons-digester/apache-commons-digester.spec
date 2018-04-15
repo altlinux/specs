@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apache-%{short_name}
 Version:       2.1
-Release:       alt3_9jpp8
+Release:       alt3_10jpp8
 Summary:       XML to Java object mapping module
 License:       ASL 2.0
 URL:           http://commons.apache.org/digester/
@@ -60,6 +60,9 @@ This package contains the %{summary}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt3_10jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt3_9jpp8
 - fc27 update
 
