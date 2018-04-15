@@ -1,33 +1,31 @@
-%define soname      1
+Name:		burp
+Version:	2.1.32
+Release:	alt1
 
-Name: burp
-Version: 2.1.24
-Release: alt1
+Summary:	Burp is a network-based backup and restore program
+License:	GPL
+Group:		Archiving/Backup
+Url:		https://burp.grke.org/
 
-Summary: Backup and Restore
+# https://github.com/grke/burp.git master
+Source:		%{name}-%{version}.tar
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+BuildRequires:  libtool
+BuildRequires:  librsync-devel
+BuildRequires:  zlib-devel
+BuildRequires:  openssl-devel
+BuildRequires:  libncurses-devel
+BuildRequires:  libacl-devel
+BuildRequires:  libuthash-devel
+BuildRequires:  libyajl-devel
 
-# Source-url: https://github.com/grke/burp/archive/%version.tar.gz
-Source: %name-%version.tar
-
-Url: http://burp.grke.org
-Group: File tools
-License: Affero GNU General Public License version 3 (AGPL v3)
-
-# Automatically added by buildreq on Wed Aug 10 2016
-# optimized out: glibc-devel-static gnu-config libcom_err-devel libkrb5-devel libncurses-devel libstdc++-devel libtinfo-devel perl pkg-config python-base python-modules python3 python3-base
-BuildRequires: gcc-c++ libacl-devel librsync-devel libssl-devel libuthash-devel  zlib-devel
-
-BuildPreReq: libncurses-devel
-
-# %_localstatedir
 BuildRequires: rpm-macros-intro-conflicts
 
+
 %description
-Burp is a backup and restore program. It uses librsync in order to save on the
-amount of space that is used by each backup. It also uses VSS (Volume Shadow
-Copy Service) to make snapshots when backing up Windows computers.
+Burp is a network backup and restore program, using client and server.
+It uses librsync in order to save network traffic and to save on the
+amount of space that is used by each backup.
 
 %prep
 %setup
@@ -43,30 +41,42 @@ Copy Service) to make snapshots when backing up Windows computers.
 
 %install
 %makeinstall_std install-all
-
+mkdir -p %{buildroot}%{_initrddir}
+install -p -m 0755 rhel/SOURCES/burp.init %{buildroot}%{_initrddir}/burp-server
+mkdir -p %{buildroot}%{_unitdir}
+install -p -m 0644 rhel/SOURCES/burp.service %{buildroot}%{_unitdir}/burp-server.service
+%__subst "s|daemon|start_daemon|g" %buildroot%_initdir/burp-server
+%__subst "s|killproc|stop_daemon|g" %buildroot%_initdir/burp-server
+%__subst "s|password|#password|g" %{buildroot}%_sysconfdir/burp/clientconfdir/testclient
 
 %files
-#doc CHANGELOG CONTRIBUTORS LICENSE README* TODO
 %doc %_docdir/%name/
-%dir %_sysconfdir/burp/
-%config(noreplace) %_sysconfdir/burp/burp-server.conf
-%config(noreplace) %_sysconfdir/burp/burp.conf
-%config(noreplace) %_sysconfdir/burp/CA.cnf
+%dir %_sysconfdir/burp
+%config(noreplace) %_sysconfdir/burp/*.c*nf
+%dir %_sysconfdir/burp/CA-client
 %dir %_sysconfdir/burp/clientconfdir/
-%config %_sysconfdir/burp/clientconfdir/testclient
+%config(noreplace) %_sysconfdir/burp/clientconfdir/testclient
 %dir %_sysconfdir/burp/clientconfdir/incexc
-%config %_sysconfdir/burp/clientconfdir/incexc/example
+%config(noreplace) %_sysconfdir/burp/clientconfdir/incexc/example
+%{_initrddir}/burp-server
+%{_unitdir}/burp-*.*
 %dir %_datadir/%name/
 %_datadir/%name/scripts/
 %_bindir/vss_strip
-%_sbindir/burp
-%_sbindir/burp_ca
-%_sbindir/bedup
-%_sbindir/bsigs
-%_sbindir/bsparse
+%_sbindir/*
 %_man8dir/*
 
+%post
+%post_service burp-server
+
+%preun
+%preun_service burp-server
+
 %changelog
+* Sun Apr 15 2018 Vitaly Chikunov <vt@altlinux.org> 2.1.32-alt1
+- Respec for 2.1.32
+- Install init scripts
+
 * Tue Dec 05 2017 Vitaly Lipatov <lav@altlinux.ru> 2.1.24-alt1
 - new version 2.1.24 (with rpmrb script)
 
