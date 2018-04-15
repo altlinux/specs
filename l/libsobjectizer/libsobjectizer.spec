@@ -1,6 +1,6 @@
 Name: libsobjectizer
 Version: 5.5.22
-Release: alt1
+Release: alt2
 
 Summary: SObjectizer is an in-process message dispatching framework with implementation of Actor Model (C++)
 
@@ -57,14 +57,20 @@ rm -r %buildroot%_libdir/*.a
 ln -s libso.%version.so %buildroot%_libdir/libso.so
 
 %files
-%_libdir/*so.*
+%_libdir/libso.%{version}.so
 %_docdir/%name/
 
 %files devel
 %_includedir/so_5/
 %_libdir/*.so
+%_libdir/cmake/sobjectizer/*.cmake
+
 
 %changelog
+* Sun Apr 15 2018 Pavel Vainerman <pv@altlinux.ru> 5.5.22-alt2
+- fixed packae so-lib
+- added cmake configs for devel package
+
 * Sat Apr 14 2018 Pavel Vainerman <pv@altlinux.ru> 5.5.22-alt1
 - new version (5.5.22) with rpmgs script
 
