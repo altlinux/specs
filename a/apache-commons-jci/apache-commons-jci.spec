@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apache-commons-jci
 Version:       1.1
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Commons Java Compiler Interface
 License:       ASL 2.0
 URL:           http://commons.apache.org/jci/
@@ -153,14 +153,14 @@ find . -name "*.jar" -delete
 %files -f .mfiles-%{short_name}
 %dir %{_javadir}/%{short_name}
 %doc README.txt TODO.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files core -f .mfiles-%{short_name}-core
 
 %files fam -f .mfiles-%{short_name}-fam
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files eclipse -f .mfiles-%{short_name}-eclipse
 
@@ -171,6 +171,9 @@ find . -name "*.jar" -delete
 %files rhino -f .mfiles-%{short_name}-rhino
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_5jpp8
 - fc27 update
 
