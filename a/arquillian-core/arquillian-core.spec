@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          arquillian-core
 Version:       1.1.11
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Java Testing Platform for the JVM Member
 # No license header report @ https://github.com/arquillian/arquillian-core/issues/101
 License:       ASL 2.0
@@ -375,24 +375,24 @@ rm -r testng/core/src/test/* testng/container/src/test/*
 
 %files api -f .mfiles-%{name}-api
 %doc README.asciidoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files impl-base -f .mfiles-%{name}-impl-base
 %files spi -f .mfiles-%{name}-spi
 %files parent -f .mfiles-%{name}-parent
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files -n arquillian-bom -f .mfiles-arquillian-bom
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files -n arquillian-build -f .mfiles-arquillian-build
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files -n arquillian-config-api -f .mfiles-arquillian-config-api
 %files -n arquillian-config-impl-base -f .mfiles-arquillian-config-impl-base
 %files -n arquillian-config-spi -f .mfiles-arquillian-config-spi
 %files -n arquillian-config-parent -f .mfiles-arquillian-config-parent
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files -n arquillian-container-impl-base -f .mfiles-arquillian-container-impl-base
 %files -n arquillian-container-spi -f .mfiles-arquillian-container-spi
@@ -400,45 +400,48 @@ rm -r testng/core/src/test/* testng/container/src/test/*
 %files -n arquillian-container-test-impl-base -f .mfiles-arquillian-container-test-impl-base
 %files -n arquillian-container-test-spi -f .mfiles-arquillian-container-test-spi
 %files -n arquillian-container-parent -f .mfiles-arquillian-container-parent
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files -n arquillian-junit-container -f .mfiles-arquillian-junit-container
 %files -n arquillian-junit-core -f .mfiles-arquillian-junit-core
 %files -n arquillian-junit-standalone -f .mfiles-arquillian-junit-standalone
 %files -n arquillian-junit-parent -f .mfiles-arquillian-junit-parent
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files -n arquillian-parent -f .mfiles-arquillian-parent
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files -n arquillian-protocol-jmx -f .mfiles-arquillian-protocol-jmx
 %files -n arquillian-protocol-servlet -f .mfiles-arquillian-protocol-servlet
 %files -n arquillian-protocol-parent -f .mfiles-arquillian-protocol-parent
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files -n arquillian-test-api -f .mfiles-arquillian-test-api
 %files -n arquillian-test-impl-base -f .mfiles-arquillian-test-impl-base
 %files -n arquillian-test-spi -f .mfiles-arquillian-test-spi
 %files -n arquillian-test-parent -f .mfiles-arquillian-test-parent
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files -n arquillian-testenricher-cdi -f .mfiles-arquillian-testenricher-cdi
 %files -n arquillian-testenricher-ejb -f .mfiles-arquillian-testenricher-ejb
 %files -n arquillian-testenricher-initialcontext -f .mfiles-arquillian-testenricher-initialcontext
 %files -n arquillian-testenricher-resource -f .mfiles-arquillian-testenricher-resource
 %files -n arquillian-testenricher-parent -f .mfiles-arquillian-testenricher-parent
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files -n arquillian-testng-container -f .mfiles-arquillian-testng-container
 %files -n arquillian-testng-core -f .mfiles-arquillian-testng-core
 %files -n arquillian-testng-standalone -f .mfiles-arquillian-testng-standalone
 %files -n arquillian-testng-parent -f .mfiles-arquillian-testng-parent
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.11-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.11-alt1_7jpp8
 - fc27 update
 
