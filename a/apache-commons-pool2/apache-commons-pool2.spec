@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          apache-commons-pool2
 Version:       2.4.2
-Release:       alt3_4jpp8
+Release:       alt3_5jpp8
 Summary:       Apache Commons Object Pooling Library 2.x series
 License:       ASL 2.0
 URL:           http://commons.apache.org/proper/commons-pool/
@@ -49,19 +49,22 @@ This package contains javadoc for %{name}.
 
 %build
 
-%mvn_build -- -Dmaven.test.skip.exec=true
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
 %doc README.txt RELEASE-NOTES.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt3_5jpp8
+- java update
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt3_4jpp8
 - fixed build
 
