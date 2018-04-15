@@ -1,8 +1,7 @@
 Epoch: 0
 Group: Graphics
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -14,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           batik
 Version:        1.9
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Scalable Vector Graphics for Java
 License:        ASL 2.0 and W3C
 URL:            https://xmlgraphics.apache.org/batik/
@@ -255,7 +254,7 @@ touch $RPM_BUILD_ROOT/etc/ttf2svg.conf
 
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 %doc CHANGES MAINTAIN README
 
 %files css -f .mfiles-css
@@ -281,13 +280,16 @@ touch $RPM_BUILD_ROOT/etc/ttf2svg.conf
 %config(noreplace,missingok) /etc/slideshow.conf
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files demo
 %{_datadir}/%{name}
 
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_6jpp8
+- java update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_5jpp8
 - new jpp release
 
