@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           assertj-core
 Version:        3.8.0
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        Library of assertions similar to fest-assert
 License:        ASL 2.0
 URL:            http://joel-costigliola.github.io/assertj/
@@ -75,13 +75,16 @@ rm -r src/test/java/org/assertj/core/internal/{Paths*.java,paths}
 
 %files -f .mfiles
 %doc README.md CONTRIBUTING.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc CONTRIBUTING.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.8.0-alt1_2jpp8
+- java update
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 3.8.0-alt1_1jpp8
 - new version
 
