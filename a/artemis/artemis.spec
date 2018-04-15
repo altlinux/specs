@@ -1,16 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
 BuildRequires: java-devel-default rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# fedora __isa_bits tmp hack
-%ifarch x86_64
-%define __isa_bits 64
-%else
-%define __isa_bits 32
-%endif
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # empty debuginfo
@@ -18,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          artemis
 Version:       1.4.0
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Java high performance, clustered, asynchronous messaging system
 License:       ASL 2.0
 URL:           https://activemq.apache.org/artemis/
@@ -427,13 +421,13 @@ mkdir -p %{buildroot}%{_libdir}/%{name}
 install -pm 755 artemis-native/bin/libartemis-native-%{__isa_bits}.so %{buildroot}%{_libdir}/%{name}/libartemis-native.so
 
 %files boot -f .mfiles-artemis-boot
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files cli -f .mfiles-artemis-cli
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files commons -f .mfiles-artemis-commons
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files core-client -f .mfiles-artemis-core-client
 %doc README.md
@@ -447,10 +441,10 @@ install -pm 755 artemis-native/bin/libartemis-native-%{__isa_bits}.so %{buildroo
 
 %files native -f .mfiles-artemis-native
 %{_libdir}/%{name}
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files protocols -f .mfiles-artemis-protocols
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files amqp-protocol -f .mfiles-artemis-amqp-protocol
 %files hornetq-protocol -f .mfiles-artemis-hornetq-protocol
@@ -461,7 +455,7 @@ install -pm 755 artemis-native/bin/libartemis-native-%{__isa_bits}.so %{buildroo
 %files ra -f .mfiles-artemis-ra
 %files rest -f .mfiles-artemis-rest
 %files selector -f .mfiles-artemis-selector
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files server -f .mfiles-artemis-server
 %files server-osgi -f .mfiles-artemis-server-osgi
@@ -470,16 +464,19 @@ install -pm 755 artemis-native/bin/libartemis-native-%{__isa_bits}.so %{buildroo
 
 %files spring-integration -f .mfiles-artemis-spring-integration
 %files pom -f .mfiles-artemis-pom
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files doc
 %doc docs/*
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_8jpp8
+- regenerated to fix __isa_bits definition
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_7jpp8
 - fixed build with netty
 
