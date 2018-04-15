@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           antlrworks
 Version:        1.5.2
-Release:        alt1_7jpp8
+Release:        alt1_9jpp8
 Summary:        Grammar development environment for ANTLR v3 grammars
 
 Group:          Development/Java
@@ -102,6 +102,9 @@ appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}
 
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_7jpp8
 - fc27 update
 
