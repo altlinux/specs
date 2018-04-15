@@ -20,7 +20,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apache-commons-vfs
 Version:       2.1
-Release:       alt1_11jpp8
+Release:       alt1_12jpp8
 Summary:       Commons Virtual File System
 License:       ASL 2.0
 Url:           http://commons.apache.org/vfs/
@@ -174,19 +174,22 @@ install -p -m 644 commons-vfs %{buildroot}%{_sysconfdir}/ant.d/commons-vfs
 
 %files -f .mfiles-commons-vfs2
 %doc README.txt RELEASE-NOTES.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files examples -f .mfiles-commons-vfs2-examples
 %files project -f .mfiles-commons-vfs2-project
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files ant
 %config %{_sysconfdir}/ant.d/commons-vfs
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_12jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_11jpp8
 - fc27 update
 
