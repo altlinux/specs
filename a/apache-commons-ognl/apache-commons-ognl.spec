@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apache-%{short_name}
 Version:       3.0.2
-Release:       alt2_13.20120313svn1102435jpp8
+Release:       alt2_14.20120313svn1102435jpp8
 Summary:       Object Graph Navigation Library 
 License:       ASL 2.0
 URL:           http://commons.apache.org/ognl/
@@ -65,12 +65,15 @@ rm -r src/test/java/org/apache/commons/ognl/test/ArithmeticAndLogicalOperatorsTe
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt2_14.20120313svn1102435jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt2_13.20120313svn1102435jpp8
 - fc27 update
 
