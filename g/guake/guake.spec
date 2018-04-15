@@ -1,5 +1,5 @@
 Name:    guake
-Version: 3.0.5
+Version: 3.2.0
 Release: alt1
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
@@ -25,9 +25,7 @@ Requires: notification-daemon
 
 Patch1: guake-alt-fix-ru-l10n.patch
 Patch2: guake-alt-fix-sitelibdir-path.patch
-Patch3: guake-alt-fix-schemas-path.patch
-Patch4: guake-alt-disable-debug-in-dbus-fail.patch
-Patch5: guake-alt-add-glade-l10n.patch
+Patch3: guake-alt-add-glade-l10n.patch
 
 BuildRequires: desktop-file-utils
 
@@ -40,8 +38,6 @@ just need to press a key to invoke him, and press again to hide.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
 export PBR_VERSION="%version"
@@ -49,12 +45,8 @@ export PBR_VERSION="%version"
 
 %install
 export PBR_VERSION="%version"
-%makeinstall INSTALL_ROOT=%buildroot PREFIX=%buildroot%_prefix
-
-# Install glade files and pixmaps
-mkdir -p %buildroot%python3_sitelibdir/%name/data/pixmaps
-cp -a guake/data/*.glade %buildroot%python3_sitelibdir/%name/data/
-cp -a guake/data/pixmaps/*.png %buildroot%python3_sitelibdir/%name/data/pixmaps/
+%makeinstall_std prefix=%_prefix
+install -Dm0644 guake/data/autostart-guake.desktop %buildroot%_sysconfdir/xdg/autostart/guake.desktop
 
 # Remove compiled gscheme
 rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
@@ -64,6 +56,8 @@ rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %files -f %name.lang
 %doc COPYING NEWS.rst README.rst
 %attr(755,root,root) %_bindir/%name
+%_sysconfdir/xdg/autostart/guake.desktop
+%_datadir/%name
 %python3_sitelibdir/%name
 %python3_sitelibdir/Guake*.egg-info
 %_pixmapsdir/%name.png
@@ -71,6 +65,12 @@ rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_datadir/glib-2.0/schemas/org.guake.gschema.xml
 
 %changelog
+* Sun Apr 15 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.0-alt1
+- New version.
+
+* Thu Apr 12 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+- New version.
+
 * Tue Mar 27 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.5-alt1
 - New version.
 
