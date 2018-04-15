@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global bundle org.apache.aries.blueprint.cm
 Name:          aries-blueprint-cm
 Version:       1.0.8
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Apache Aries Blueprint CM
 License:       ASL 2.0
 URL:           http://aries.apache.org/
@@ -87,12 +86,15 @@ This package contains javadoc for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_4jpp8
+- java update
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_3jpp8
 - new version
 
