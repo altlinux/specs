@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           beust-jcommander
 Version:        1.71
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Java framework for parsing command line parameters
 License:        ASL 2.0
 URL:            http://jcommander.org/
@@ -60,6 +60,9 @@ sed -i 's/@VERSION@/%{version}/g' pom.xml
 %doc license.txt notice.md
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.71-alt1_3jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.71-alt1_2jpp8
 - new version
 
