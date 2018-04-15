@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          javapoet
 Version:       1.7.0
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       A Java API for generating .java source files
 License:       ASL 2.0
 URL:           https://github.com/square/javapoet
@@ -58,12 +58,15 @@ This package contains javadoc for %{name}.
 
 %files -f .mfiles
 %doc CHANGELOG.md README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_4jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_3jpp8
 - new version
 
