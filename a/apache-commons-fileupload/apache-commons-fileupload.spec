@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-commons-fileupload
 Version:        1.3.3
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        API to work with HTML file upload
 License:        ASL 2.0
 URL:            http://commons.apache.org/fileupload/
@@ -84,14 +84,17 @@ rm -r src/main/java/org/apache/commons/fileupload/portlet
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 # -----------------------------------------------------------------------------
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.3.3-alt1_3jpp8
+- java update
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.3.3-alt1_2jpp8
 - new version
 
