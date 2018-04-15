@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          HdrHistogram
 Version:       2.1.9
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       A High Dynamic Range (HDR) Histogram
 License:       BSD and CC0
 URL:           http://hdrhistogram.github.io/%{name}/
@@ -65,12 +65,15 @@ find  -name "*.jar"  -print -delete
 %files -f .mfiles
 %{_bindir}/HistogramLogProcessor
 %doc README.md
-%doc COPYING.txt LICENSE.txt
+%doc --no-dereference COPYING.txt LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc COPYING.txt LICENSE.txt
+%doc --no-dereference COPYING.txt LICENSE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.9-alt1_4jpp8
+- java update
+
 * Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.9-alt1_3jpp8
 - new version
 
