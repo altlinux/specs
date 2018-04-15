@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global githash 9883b981ab5103cc6944fbf8f3b973994777350f
 Name:          aws-sdk-java
 Version:       1.11.3
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       AWS SDK for Java
 # Some source files are without license headers
 # reported @ https://github.com/aws/aws-sdk-java/issues/719
@@ -840,7 +840,7 @@ done
 %files applicationautoscaling -f .mfiles-aws-java-sdk-applicationautoscaling
 %files autoscaling -f .mfiles-aws-java-sdk-autoscaling
 %files bom -f .mfiles-aws-java-sdk-bom
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files cloudformation -f .mfiles-aws-java-sdk-cloudformation
 %doc src/samples/AwsCloudFormation
@@ -862,7 +862,7 @@ done
 %files config -f .mfiles-aws-java-sdk-config
 %files core -f .mfiles-aws-java-sdk-core
 %doc README.md
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files datapipeline -f .mfiles-aws-java-sdk-datapipeline
 %files devicefarm -f .mfiles-aws-java-sdk-devicefarm
@@ -904,7 +904,7 @@ done
 %files marketplacemeteringservice -f .mfiles-aws-java-sdk-marketplacemeteringservice
 %files opsworks -f .mfiles-aws-java-sdk-opsworks
 %files pom -f .mfiles-aws-java-sdk-pom
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files rds -f .mfiles-aws-java-sdk-rds
 %files redshift -f .mfiles-aws-java-sdk-redshift
@@ -934,9 +934,12 @@ done
 %files workspaces -f .mfiles-aws-java-sdk-workspaces
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.11.3-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.11.3-alt1_4jpp8
 - fc27 update
 
