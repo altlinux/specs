@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          1.5
-Release:          alt1_1jpp8
+Release:          alt1_2jpp8
 Summary:          Apache Commons Email Package
 License:          ASL 2.0
 URL:              http://commons.apache.org/proper/%{short_name}/
@@ -65,13 +65,16 @@ sed -i -e '/<script>/s/</&lt;/' src/main/java/org/apache/commons/mail/ImageHtmlE
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 %doc RELEASE-NOTES.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_2jpp8
+- java update
+
 * Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_1jpp8
 - new version
 
