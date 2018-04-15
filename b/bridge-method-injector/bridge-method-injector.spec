@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           bridge-method-injector
 Version:        1.14
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        Evolve Java classes without breaking compatibility
 # License is specified in pom file
 License:        MIT
@@ -82,6 +82,9 @@ cp %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_7jpp8
 - fc27 update
 
