@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    bindex
 Version: 2.2
-Release: alt3_17.svn96jpp8
+Release: alt3_18.svn96jpp8
 Summary: Bundle Manifest Header Mapper
 
 Group:   Development/Other
@@ -40,6 +40,7 @@ BuildRequires: junit
 BuildRequires: kxml
 BuildRequires: xpp3
 
+Requires: javapackages-tools
 Source44: import.info
 
 %description
@@ -71,10 +72,13 @@ install -m 644 %{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 %files
 %doc README
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %{_javadir}/*
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_18.svn96jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_17.svn96jpp8
 - fc27 update
 
