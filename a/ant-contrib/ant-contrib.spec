@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Collection of tasks for Ant
 Name:           ant-contrib
 Version:        1.0
-Release:        alt5_0.31.b3jpp8
+Release:        alt5_0.32.b3jpp8
 License:        ASL 2.0 and ASL 1.1
 URL:            http://ant-contrib.sourceforge.net/
 Source0:        https://downloads.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-src.tar.bz2
@@ -27,7 +27,7 @@ BuildRequires:  xerces-j2
 BuildRequires:  bcel
 BuildRequires:  java-devel
 BuildRequires:  apache-ivy
-BuildRequires:  jakarta-commons-httpclient
+BuildRequires:  apache-commons-httpclient
 BuildRequires:  apache-commons-logging
 BuildRequires:  apache-commons-parent
 Requires:       junit
@@ -88,6 +88,9 @@ echo "ant-contrib/ant-contrib" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/ant-contrib
 %doc target/docs/LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.32.b3jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.31.b3jpp8
 - fc27 update
 
