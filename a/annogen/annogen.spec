@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          annogen 
 Version:       0.1.0
-Release:       alt1_16jpp8
+Release:       alt1_17jpp8
 Summary:       Java framework for JSR-175 annotations 
 License:       ASL 2.0
 URL:           https://github.com/codehaus/annogen
@@ -79,12 +79,15 @@ ant docs
 
 %files -f .mfiles
 %doc examples/
-%doc license/LICENSE.txt license/NOTICE.txt
+%doc --no-dereference license/LICENSE.txt license/NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc license/LICENSE.txt license/NOTICE.txt
+%doc --no-dereference license/LICENSE.txt license/NOTICE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.1.0-alt1_17jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.1.0-alt1_16jpp8
 - fc27 update
 
