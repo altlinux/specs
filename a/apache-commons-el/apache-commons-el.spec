@@ -1,7 +1,6 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
@@ -17,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        1.0
-Release:        alt1_38jpp8
+Release:        alt1_40jpp8
 Summary:        The Apache Commons Extension Language
 License:        ASL 1.1
 URL:            http://commons.apache.org/%{base_name}
@@ -28,10 +27,11 @@ Patch0:         %{short_name}-%{version}-license.patch
 Patch1:         %{short_name}-eclipse-manifest.patch
 Patch2:         %{short_name}-enum.patch
 BuildRequires:  ant
-BuildRequires:  javapackages-local
-BuildRequires:  tomcat-jsp-2.3-api
-BuildRequires:  tomcat-servlet-3.1-api
 BuildRequires:  junit
+BuildRequires:  javapackages-local
+BuildRequires:  apache-commons-logging
+BuildRequires:  glassfish-jsp-api
+BuildRequires:  glassfish-servlet-api
 Source44: import.info
 Obsoletes: jakarta-%{short_name} < 1:%{version}-%{release}
 Conflicts: jakarta-%{short_name} < 1:%{version}-%{release}
@@ -62,8 +62,8 @@ find . -type f -name "*.jar" -exec rm -f {} \;
 cat > build.properties <<EOBP
 build.compiler=modern
 junit.jar=$(build-classpath junit)
-servlet-api.jar=$(build-classpath tomcat-servlet-3.1-api)
-jsp-api.jar=$(build-classpath tomcat-jsp-2.3-api)
+servlet-api.jar=$(build-classpath glassfish-servlet-api)
+jsp-api.jar=$(build-classpath glassfish-jsp-api)
 servletapi.build.notrequired=true
 jspapi.build.notrequired=true
 EOBP
@@ -81,31 +81,24 @@ export OPT_JAR_LIST=:
 
 
 %install
-# jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 dist/%{short_name}.jar %{buildroot}%{_javadir}/%{name}.jar
-ln -sf %{name}.jar %{buildroot}%{_javadir}/%{short_name}.jar
+%mvn_artifact %{SOURCE1} dist/%{short_name}.jar
+%mvn_alias "commons-el:commons-el" "org.apache.commons:commons-el"
+%mvn_file : %{name} %{short_name}
+%mvn_install -J dist/docs/api
 
-# pom
-install -pD -T -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
-%add_maven_depmap JPP-%{short_name}.pom %{short_name}.jar -a "org.apache.commons:commons-el"
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
 %files -f .mfiles
-%doc LICENSE.txt STATUS.html
-%{_javadir}/%{name}.jar
-%{_javadir}/%{short_name}.jar
-%{_mavenpomdir}/JPP-%{short_name}.pom
+%doc --no-dereference LICENSE.txt
+%doc STATUS.html
 
-%files javadoc
-%doc LICENSE.txt
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc --no-dereference LICENSE.txt
 
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_40jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_38jpp8
 - fc27 update
 
