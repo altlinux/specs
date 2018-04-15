@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          axis2
 Version:       1.6.1
-Release:       alt2_20jpp8
+Release:       alt2_21jpp8
 Summary:       Java-based Web Services / SOAP / WSDL engine
 License:       ASL 2.0
 URL:           http://axis.apache.org/axis2/java/core/
@@ -144,12 +144,15 @@ dos2unix NOTICE.txt
 
 %files -f .mfiles
 %doc README.txt release-notes.html
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt2_21jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt2_20jpp8
 - fc27 update
 
