@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
-BuildRequires: gcc-c++ rpm-build-java
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jpathwatch
 Version:          0.95
-Release:          alt1_12jpp8
+Release:          alt1_15jpp8
 Summary:          Java library for monitoring directories for changes
 License:          GPLv2
 # http://jpathwatch.wordpress.com/
@@ -24,6 +24,7 @@ Source1:          https://repo1.maven.org/maven2/net/sf/%{name}/%{name}/%{versio
 Patch0:           %{name}-fsf-address.patch
 
 BuildRequires:    ant
+BuildRequires:    gcc-c++
 BuildRequires:    javapackages-local
 
 # can't debug .so in jars
@@ -86,6 +87,9 @@ find %{name}-java/src -name '*.java' | xargs javadoc -Xdoclint:none -classpath d
 %doc LICENSE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.95-alt1_15jpp8
+- regenerated to fix __isa_bits definition
+
 * Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.95-alt1_12jpp8
 - fc update
 
