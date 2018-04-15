@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          aesh
 Version:       0.66.8
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Another Extendable SHell
 License:       ASL 2.0
 URL:           http://aeshell.github.io/
@@ -53,12 +53,15 @@ rm src/test/java/org/jboss/aesh/parser/ParserTest.java
 
 %files -f .mfiles
 %doc README.asciidoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.66.8-alt1_5jpp8
+- java update
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.66.8-alt1_4jpp8
 - fc update
 
