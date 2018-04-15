@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global oname json
 Name:          android-json-org-java
 Version:       6.0.1
-Release:       alt1_0.3.r22jpp8
+Release:       alt1_0.4.r22jpp8
 Summary:       Androids rewrite of the evil licensed Json.org
 License:       ASL 2.0
 URL:           https://android.googlesource.com/platform/libcore/+/master/json
@@ -71,12 +71,15 @@ rm -rf MODULE_LICENSE_BSD_LIKE
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_0.4.r22jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_0.3.r22jpp8
 - fc27 update
 
