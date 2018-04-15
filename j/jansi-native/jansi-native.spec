@@ -1,16 +1,10 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# fedora __isa_bits tmp hack
-%ifarch x86_64
-%define __isa_bits 64
-%else
-%define __isa_bits 32
-%endif
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global bits %{__isa_bits}
@@ -18,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jansi-native
 Version:        1.7
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Jansi Native implements the JNI Libraries used by the Jansi project
 Group:          Development/Other
 License:        ASL 2.0
@@ -59,12 +53,15 @@ This package contains the API documentation for %{name}.
 
 %files -f .mfiles
 %doc readme.md changelog.md
-%doc license.txt
+%doc --no-dereference license.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc license.txt
+%doc --no-dereference license.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_5jpp8
+- regenerated to fix __isa_bits definition
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_3jpp8
 - new version
 
