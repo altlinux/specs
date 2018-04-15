@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-logging-parent
 Version:        1
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 License:        ASL 2.0
 Summary:        Parent pom for Apache Logging Services projects
 URL:            https://logging.apache.org/
@@ -34,9 +34,12 @@ Parent pom for Apache Logging Services projects.
 
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1-alt1_3jpp8
+- java update
+
 * Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 1-alt1_2jpp8
 - new version
 
