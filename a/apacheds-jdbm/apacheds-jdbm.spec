@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?reltag}
 Name:          apacheds-jdbm
 Version:       2.0.0
-Release:       alt1_0.7.M3jpp8
+Release:       alt1_0.8.M3jpp8
 Summary:       ApacheDS specific JDBM Implementation
 # This package is a fork of http://jdbm.sourceforge.net/ the original/more files
 # are under BSD license.
@@ -105,18 +105,21 @@ sed -i 's/\r//' LICENSE*
 %mvn_install
 
 %files -n %{name}1 -f .mfiles-%{name}1
-%doc LICENSE*
+%doc --no-dereference LICENSE*
 
 %files -n %{name}2 -f .mfiles-%{name}2
-%doc LICENSE*
+%doc --no-dereference LICENSE*
 
 %files -n %{name}-parent -f .mfiles-%{name}-parent
-%doc LICENSE*
+%doc --no-dereference LICENSE*
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE*
+%doc --no-dereference LICENSE*
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_0.8.M3jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_0.7.M3jpp8
 - fc27 update
 
