@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          1.5
-Release:          alt1_13jpp8
+Release:          alt1_14jpp8
 Summary:          Apache Commons DbUtils Package
 License:          ASL 2.0
 URL:              http://commons.apache.org/dbutils/
@@ -61,6 +61,9 @@ sed -i 's/\r//' *.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_14jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_13jpp8
 - fc27 update
 
