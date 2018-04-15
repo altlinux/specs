@@ -25,7 +25,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          bookkeeper
 Version:       4.3.2
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Replicated log service
 License:       ASL 2.0
 URL:           http://bookkeeper.apache.org/
@@ -331,7 +331,7 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %files -n libhedwig
 %{_libdir}/libhedwig*.so.*
 %doc hedwig-client/src/main/cpp/README
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files -n libhedwig-devel
 %{_includedir}/hedwig-*/
@@ -344,28 +344,31 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %endif
 
 %files parent -f .mfiles-%{name}
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files codahale-metrics-provider -f .mfiles-codahale-metrics-provider
 
 %files hedwig-client -f .mfiles-hedwig-client
 %files hedwig-client-jms -f .mfiles-hedwig-client-jms
 %files hedwig-protocol -f .mfiles-hedwig-protocol
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files hedwig-server -f .mfiles-hedwig-server
 %files server -f .mfiles-%{name}-server
 
 %files stats-api -f .mfiles-%{name}-stats-api
 %doc CHANGES.txt README
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files stats-providers -f .mfiles-%{name}-stats-providers
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1_4jpp8
 - fc27 update
 
