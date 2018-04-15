@@ -11,37 +11,37 @@ BuildRequires: jpackage-generic-compat
 Summary:        An open source data binding framework for Java
 Name:           castor
 Version:        1.3.3
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 # Older source files are BSD licensed and newer ones are ASL licensed
 License:        BSD and ASL 2.0
-URL:            http://castor.codehaus.org
+URL:            http://castor-data-binding.github.io/castor/
 # Hash sum of source will not match upstream because bundled jars have been removed
 Source0:        http://dist.codehaus.org/castor/%{version}/castor-%{version}-src.tgz
 Patch0:         castor-1.3.2-fix-unmappable-chars.patch
 
 BuildArch:      noarch
 BuildRequires:  maven-local
-BuildRequires:  maven-enforcer-plugin
-BuildRequires:  maven-gpg-plugin
-BuildRequires:  maven-source-plugin
-BuildRequires:  codehaus-parent
-BuildRequires:  apache-commons-cli
-BuildRequires:  apache-commons-lang
-BuildRequires:  apache-commons-logging
-BuildRequires:  regexp
-BuildRequires:  ldapjdk
-BuildRequires:  jakarta-oro
-BuildRequires:  bea-stax
-BuildRequires:  velocity
-BuildRequires:  multithreadedtc
-BuildRequires:  easymock3
-BuildRequires:  mockito
-BuildRequires:  javacc-maven-plugin
-BuildRequires:  castor-maven-plugin
-BuildRequires:  geronimo-jpa
-BuildRequires:  geronimo-jta
-BuildRequires:  springframework-context
-BuildRequires:  springframework-test
+BuildRequires:  mvn(ant:ant)
+BuildRequires:  mvn(commons-cli:commons-cli)
+BuildRequires:  mvn(commons-collections:commons-collections)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(edu.umd.cs:multithreadedtc)
+BuildRequires:  mvn(jakarta-regexp:jakarta-regexp)
+BuildRequires:  mvn(javax.inject:javax.inject)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(ldapsdk:ldapsdk)
+BuildRequires:  mvn(log4j:log4j:1.2.16)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.codehaus.castor:castor-xml)
+BuildRequires:  mvn(org.codehaus:codehaus-parent:pom:)
+BuildRequires:  mvn(org.codehaus.mojo:castor-maven-plugin)
+BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(org.springframework:spring-context)
+BuildRequires:  mvn(org.springframework:spring-test)
+BuildRequires:  mvn(oro:oro)
+BuildRequires:  mvn(velocity:velocity)
+BuildRequires:  mvn(xmlunit:xmlunit)
 Obsoletes:      castor-demo < 1.3.2
 Obsoletes:      castor-test < 1.3.2
 Obsoletes:      castor-xml < 1.3.2
@@ -91,8 +91,9 @@ sed -i 's@cglib-nodep@cglib@g' pom.xml cpa/pom.xml
 # Fix dep on mtc
 sed -i 's@edu.umd.cs.mtc@edu.umd.cs@g' pom.xml xml/pom.xml
 
-# Fix dep on ant
-sed -i 's@groupId>ant<@groupId>org.apache.ant<@g' pom.xml xml/pom.xml
+# These APIs are provided by modern JREs
+%pom_remove_dep "javax.xml.stream:stax-api" . xml
+%pom_remove_dep "stax:stax" . xml
 
 %build
 %mvn_build -- -Dgpg.skip=true -Dmaven.test.skip=true
@@ -108,6 +109,9 @@ sed -i 's@groupId>ant<@groupId>org.apache.ant<@g' pom.xml xml/pom.xml
 %doc src/doc/license.txt src/doc/new-license.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3.3-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.3-alt1_6jpp8
 - fc27 update
 
