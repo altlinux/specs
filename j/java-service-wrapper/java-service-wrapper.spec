@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat rpm-macros-java
 BuildRequires: gcc-c++ rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -11,12 +11,6 @@ BuildRequires: jpackage-generic-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# fedora __isa_bits tmp hack
-%ifarch x86_64
-%define __isa_bits 64
-%else
-%define __isa_bits 32
-%endif
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -26,13 +20,6 @@ BuildRequires: jpackage-generic-compat
 %global pname yaja-wrapper
 
 # rpmbuild < 4.6 support
-%if ! 0%{?__isa_bits}
-%ifarch x86_64 ia64 ppc64 sparc64 s390x alpha ppc64le aarch64
-%global __isa_bits 64
-%else
-%global __isa_bits 32
-%endif
-%endif
 
 %global __provides_exclude_from ^%{_libdir}/%{name}/.*\.so$
 
@@ -44,7 +31,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           java-service-wrapper
 Version:        3.2.5
-Release:        alt1_27jpp8
+Release:        alt1_31jpp8
 Summary:        Java service wrapper
 License:        MIT
 URL:            https://bitbucket.org/ivertex/yaja-wrapper
@@ -64,10 +51,11 @@ Patch2:         %{name}-3.2.4-docbuild.patch
 # Use strcpy instead sprintf to copy C string
 # Forwarded upstream: https://bitbucket.org/ivertex/yaja-wrapper/issue/6
 Patch3:         %{name}-3.2.5-rhbz1037144.patch
-Patch99:	ppc64le-support.patch
+Patch98:        Use-RPM_OPT_FLAGS-on-s390x.patch
+Patch99:        ppc64le-support.patch
 BuildRequires:  ant
 BuildRequires:  javapackages-local
-BuildRequires:  gcc-common
+BuildRequires:  gcc
 Source44: import.info
 
 %description
@@ -90,6 +78,7 @@ install -pm 644 %{SOURCE1} doc/template.init
 sed -e 's|@LIBPATH@|%{_libdir}/%{name}|' %{PATCH1} | patch -p1 -F 0
 %patch2 -p0
 %patch3
+%patch98 -p1
 %patch99 -p1
 %if %{with docs}
 mkdir tools ; cd tools
@@ -128,12 +117,15 @@ install -pm 755 lib/libwrapper.so $RPM_BUILD_ROOT%{_libdir}/%{name}
 %doc AboutThisRepository.txt doc/
 %{_sbindir}/java-service-wrapper
 %{_libdir}/%{name}/
-%doc doc/license.txt
+%doc --no-dereference doc/license.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc doc/license.txt
+%doc --no-dereference doc/license.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.5-alt1_31jpp8
+- regenerated to fix __isa_bits definition
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.5-alt1_27jpp8
 - fc27 update
 
