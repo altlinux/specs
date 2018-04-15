@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:    appframework
 Version: 1.03
-Release: alt2_18jpp8
+Release: alt2_19jpp8
 Summary: Swing Application Framework
 License: LGPLv2+
 URL:     https://appframework.dev.java.net/
@@ -25,6 +25,7 @@ BuildRequires: java-devel >= 1.6.0
 BuildRequires: swing-layout >= 1.0.3
 
 Requires: java >= 1.6.0
+Requires: javapackages-tools
 
 Requires: swing-layout >= 1.0.3
 
@@ -73,6 +74,9 @@ cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_19jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_18jpp8
 - fc27 update
 
