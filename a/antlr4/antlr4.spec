@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           antlr4
 Version:        4.5.2
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Java parser generator
 # C# runtime is MIT-licensed, but currently it is not used in this package
 License:        BSD
@@ -103,14 +103,17 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 
 %files runtime -f .mfiles-antlr4-runtime
 %doc CHANGES.txt README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files maven-plugin -f .mfiles-antlr4-maven-plugin
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 4.5.2-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 4.5.2-alt1_3jpp8
 - fc27 update
 
