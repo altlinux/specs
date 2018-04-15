@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 Summary:          Bouncy Castle Cryptography APIs for Java
 Name:             bouncycastle
 Version:          1.58
-Release:          alt1_1jpp8
+Release:          alt1_3jpp8
 License:          MIT
 URL:              http://www.bouncycastle.org
 
@@ -38,6 +38,8 @@ BuildRequires:    ant-junit
 BuildRequires:    javamail
 BuildRequires:    javapackages-local
 
+Requires(post):   javapackages-tools
+Requires(postun): javapackages-tools
 
 Provides:         bcprov = %{version}-%{release}
 Source44: import.info
@@ -173,7 +175,7 @@ touch $RPM_BUILD_ROOT%{_sysconfdir}/java/security/security.d/2000-%{classname}
 } || :
 
 %postun
-if [ $1 -eq 0 ] ; then
+if [ "$1" -eq 0 ] ; then
 
   {
     # Rebuild the list of security providers in classpath.security
@@ -199,26 +201,29 @@ if [ $1 -eq 0 ] ; then
 fi
 
 %files -f .mfiles-bcprov
-%doc build/artifacts/jdk1.5/bcprov-jdk15on-*/LICENSE.html
+%doc --no-dereference build/artifacts/jdk1.5/bcprov-jdk15on-*/LICENSE.html
 %doc docs/ core/docs/ *.html
 %{_sysconfdir}/java/security/security.d/2000-%{classname}
 
 %files pkix -f .mfiles-bcpkix
-%doc build/artifacts/jdk1.5/bcpkix-jdk15on-*/LICENSE.html
+%doc --no-dereference build/artifacts/jdk1.5/bcpkix-jdk15on-*/LICENSE.html
 
 %files pg -f .mfiles-bcpg
-%doc build/artifacts/jdk1.5/bcpg-jdk15on-*/LICENSE.html
+%doc --no-dereference build/artifacts/jdk1.5/bcpg-jdk15on-*/LICENSE.html
 
 %files mail -f .mfiles-bcmail
-%doc build/artifacts/jdk1.5/bcmail-jdk15on-*/LICENSE.html
+%doc --no-dereference build/artifacts/jdk1.5/bcmail-jdk15on-*/LICENSE.html
 
 %files tls -f .mfiles-bctls
-%doc build/artifacts/jdk1.5/bctls-jdk15on-*/LICENSE.html
+%doc --no-dereference build/artifacts/jdk1.5/bctls-jdk15on-*/LICENSE.html
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.html
+%doc --no-dereference LICENSE.html
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.58-alt1_3jpp8
+- java update
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.58-alt1_1jpp8
 - new version
 
