@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          ws-xmlschema
 Version:       2.2.1
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Apache XMLSchema
 License:       ASL 2.0
 URL:           http://ws.apache.org/xmlschema/
@@ -77,17 +77,20 @@ rm RELEASE-NOTE.txt.orig
 
 %files -f .mfiles-xmlschema-core
 %doc README.txt RELEASE-NOTE.txt
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files parent -f .mfiles-xmlschema
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files walker -f .mfiles-xmlschema-walker
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_3jpp8
 - fc27 update
 
