@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           sonar-plugins-parent
 Version:        16
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Sonar Plugins Parent POM
 
 License:        LGPLv3+
@@ -48,6 +48,9 @@ Sonar Plugins Parent POM.
 %files -f .mfiles
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 16-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 16-alt1_6jpp8
 - fc27 update
 
