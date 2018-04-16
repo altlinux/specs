@@ -1,6 +1,6 @@
 Name: ncurses
 Version: 5.9
-Release: alt10
+Release: alt11
 
 %define rootdatadir /lib
 
@@ -21,9 +21,6 @@ Patch: ncurses-alt.patch
 Obsoletes: ncurses3
 Requires: termutils-devel = %version-%release
 
-# Automatically added by buildreq on Thu Nov 12 2009
-BuildRequires: libgpm-devel gcc-c++
-
 #build parameters
 %def_with utf8
 %def_with shared
@@ -34,6 +31,13 @@ BuildRequires: libgpm-devel gcc-c++
 %def_with gpm
 %def_without ada
 %def_without libtool
+
+# Automatically added by buildreq on Thu Nov 12 2009
+BuildRequires: gcc-c++
+
+%if_with gpm
+BuildRequires: libgpm-devel gcc-c++
+%endif
 
 %package -n terminfo
 Summary: Descriptions of common terminal types
@@ -477,7 +481,7 @@ done
 # Relocate libtinfo from %_libdir/ to /lib/.
 for f in %buildroot%_libdir/libtinfo*.so; do
 	t=$(readlink "$f")
-	ln -snf ../../%_lib/"$t" "$f"
+	ln -snf "$(relative /%_lib/"$t" %_libdir/)" "$f"
 done
 mkdir -p %buildroot/%_lib
 mv %buildroot%_libdir/libtinfo*.so.* %buildroot/%_lib/
@@ -674,6 +678,9 @@ done
 %endif # with_utf8
 
 %changelog
+* Mon Apr 16 2018 Fr. Br. George <george@altlinux.ru> 5.9-alt11
+- Fix relative path linking
+
 * Tue Oct 24 2017 Dmitry V. Levin <ldv@altlinux.org> 5.9-alt10
 - libncurses: compressed NEWS file.
 
