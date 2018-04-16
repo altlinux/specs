@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: libfonts
 Version: 1.1.3
-Release: alt1_20jpp8
+Release: alt1_21jpp8
 Summary: TrueType Font Layouting
 License: LGPLv2 and UCD
 Group: System/Libraries
@@ -70,6 +70,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_21jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_20jpp8
 - fc27 update
 
