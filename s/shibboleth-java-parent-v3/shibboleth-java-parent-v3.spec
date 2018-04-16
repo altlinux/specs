@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          shibboleth-java-parent-v3
 Version:       8
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Shibboleth Project V3 Super POM
 License:       ASL 2.0
 URL:           http://shibboleth.net/
@@ -51,9 +51,12 @@ etc. that are common across all Shibboleth V3 projects.
 
 %files -f .mfiles
 %doc resources/doc/RELEASE-NOTES.txt
-%doc resources/doc/LICENSE.txt
+%doc --no-dereference resources/doc/LICENSE.txt
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 8-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 8-alt1_4jpp8
 - fc27 update
 
