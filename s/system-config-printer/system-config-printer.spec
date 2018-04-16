@@ -1,29 +1,32 @@
-Summary: A printer administration tool
-Name: system-config-printer
-Version: 1.5.9
+Name:    system-config-printer
+Version: 1.5.11
 Release: alt1
+
+Summary: A printer administration tool
+Group:   System/Configuration/Printing
 License: GPLv2+
-Url: http://cyberelk.net/tim/software/system-config-printer/
-Group: System/Configuration/Printing
+Url:     http://cyberelk.net/tim/software/system-config-printer/
+# Git:   https://github.com/zdohnal/system-config-printer
 
-Source: system-config-printer-%version.tar
+Source: %name-%version.tar
+Patch:  %name-%version-%release.patch
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: desktop-file-utils
 BuildRequires: gettext-devel
 BuildRequires: cups-devel
 BuildRequires: glib2-devel
 BuildRequires: intltool
-BuildRequires: libusb-devel, libudev-devel
+BuildRequires: libusb-devel
+BuildRequires: libudev-devel
 BuildRequires: xmlto
 BuildRequires: python3-module-cups 
-BuildRequires(pre): rpm-build-python3
 
 Requires: python3-module-cupshelpers = %version-%release
 Requires: python3-module-cups >= 1.9.61-alt1
 
 %filter_from_requires /PackageKit/d
-
 %add_python3_path /usr/share/system-config-printer
 
 %description
@@ -39,7 +42,6 @@ Requires: system-config-printer = %version-%release
 The udev rules and helper programs for automatically configuring USB
 printers.
 
-
 %package -n python3-module-cupshelpers
 Summary: Python module to configure a CUPS print server
 Group: System/Configuration/Printing
@@ -51,22 +53,22 @@ Python module to configure a CUPS print server
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 ./bootstrap
-%configure --with-udev-rules --with-polkit-1
+%configure --with-udev-rules \
+           --with-polkit-1
 
 %install
 %makeinstall_std udevrulesdir=/lib/udev/rules.d \
 		 udevhelperdir=/lib/udev
-
-mkdir -p %buildroot/etc/tmpfiles.d/
-install -m0644 tmpfiles.conf %buildroot/etc/tmpfiles.d/system-config-printer.conf
-
+install -Dm0644 tmpfiles.conf %buildroot/etc/tmpfiles.d/system-config-printer.conf
+mv %buildroot%_datadir/{metainfo,appdata}
 %find_lang system-config-printer
 
 %post
-/bin/rm -f /var/cache/foomatic/foomatic.pickle
+/bin/rm -f /var/cache/foomatic/foomatic.pickle ||:
 exit 0
 
 %files udev
@@ -92,6 +94,9 @@ exit 0
 %python3_sitelibdir_noarch/cupshelpers-*
 
 %changelog
+* Sat Apr 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.5.11-alt1
+- New version (ALT #34774).
+
 * Sun Jan 22 2017 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt1
 - new version
 - complete Russian translations
