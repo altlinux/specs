@@ -11,7 +11,7 @@ a minimal and fast API targetting the following uses: \
 
 Name: %fname
 Version: 1.2.0
-Release: alt3
+Release: alt4
 
 %if ""==""
 Summary: Rapid multi-Python deployment
@@ -26,6 +26,7 @@ Url: https://pypi.python.org/pypi/execnet/
 Source: %name-%version.tar
 BuildArch: noarch
 
+%if ""==""
 %py3_provides %oname
 %add_python3_req_skip win32event win32evtlogutil win32service
 %add_python3_req_skip win32serviceutil register
@@ -42,6 +43,7 @@ BuildArch: noarch
 %if "3"=="3"
 %filter_from_provides /^python3(execnet\.script\.xx)/d
 # depends from rlcompleter2
+%endif
 %endif
 
 %if ""!=""
@@ -109,6 +111,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Apr 16 2018 Stanislav Levin <slev@altlinux.org> 1.2.0-alt4
+- fix wrong Provides of pythonX.X(execnet) by docs packages
+
 * Mon Apr 09 2018 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt3
 - Fix regular expressions in provides' filters.
 
