@@ -1,5 +1,5 @@
 Name:		sway
-Version:	0.14.0
+Version:	0.15.2
 Release:	alt1
 
 Summary:	i3wm drop-in replacement for Wayland
@@ -8,10 +8,9 @@ Url:		http://swaywm.org/
 License:	MIT
 Group:		Graphical desktop/Other
 
-#		packaged from git release tag
-Source:		%name-%version.tar
-Source1:	README.ALT
-Source2:	pam
+# https://github.com/swaywm/sway
+# git://git.altlinux.org/gears/s/sway.git
+Source:		%name-%version-%release.tar
 
 PreReq:		/etc/tcb
 BuildRequires(pre): rpm-macros-cmake
@@ -42,9 +41,7 @@ supports most of i3's features, and a few extras.
 This package contains data files.
 
 %prep
-%setup
-cp %SOURCE1 .
-cp %SOURCE2 .
+%setup -n %name-%version-%release
 
 %build
 %cmake \
@@ -55,7 +52,8 @@ cp %SOURCE2 .
 
 %install
 %cmakeinstall_std
-install -pm2640 -D pam %buildroot%_sysconfdir/pam.d/swaylock
+install -pm2640 -D alt/pam %buildroot%_sysconfdir/pam.d/swaylock
+install -pm0755 -D alt/startsway %buildroot%_bindir/
 
 %post
 /sbin/setcap cap_sys_ptrace,cap_sys_tty_config=eip %_bindir/%name
@@ -63,7 +61,7 @@ install -pm2640 -D pam %buildroot%_sysconfdir/pam.d/swaylock
 %files
 %doc LICENSE
 %doc README.md
-%doc README.ALT
+%doc alt/README.ALT
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/security.d
 %attr(0640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/swaylock
@@ -71,6 +69,7 @@ install -pm2640 -D pam %buildroot%_sysconfdir/pam.d/swaylock
 %config(noreplace) %_sysconfdir/%name/security.d/00-defaults
 %_bindir/sway
 %attr(2711,root,chkpwd) %_bindir/swaylock
+%_bindir/startsway
 %_bindir/swaybar
 %_bindir/swaybg
 %_bindir/swaygrab
@@ -81,10 +80,14 @@ install -pm2640 -D pam %buildroot%_sysconfdir/pam.d/swaylock
 %_datadir/wayland-sessions/sway.desktop
 
 %files data
-%dir %_datadir/%name
-%_datadir/%name/*
+%dir %_datadir/backgrounds/%name
+%_datadir/backgrounds/%name/*
 
 %changelog
+* Mon Apr 16 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.15.2-alt1
+- 0.15.2
+- added startsway script
+
 * Mon Jul 31 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.14.0-alt1
 - 0.14.0
 - fixed capabilities setting
