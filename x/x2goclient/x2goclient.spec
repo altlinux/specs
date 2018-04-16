@@ -1,7 +1,7 @@
 Name:           x2goclient
 Version:        4.1.1.1
-Release:        alt2
-Summary:        X2Go Client application (Qt4)
+Release:        alt3
+Summary:        X2Go Client application (Qt)
 
 Group:          Communications
 License:        GPLv2+
@@ -13,6 +13,7 @@ Patch0:         x2goclient-krb5.patch
 # ensure RPM_LD_FLAGS/RPM_OPT_FLAGS are used
 # https://bugzilla.redhat.com/show_bug.cgi?id=1306463
 Patch2:         x2goclient-optflags.patch
+Patch3:  	x2goclient-alt-startkde.patch
 
 BuildRequires(pre): rpm-build-apache2
 BuildRequires:  gcc-c++
@@ -22,8 +23,7 @@ BuildRequires:  libssh-devel
 BuildRequires:  libXpm-devel
 BuildRequires:  man
 BuildRequires:  libldap-devel
-BuildRequires:  qt4-devel
-BuildRequires:  qtbrowserplugin-static
+BuildRequires:  qt5-base-devel qt5-svg-devel qt5-x11extras-devel qt5-tools
 BuildRequires:  libX11-devel
 BuildRequires:  libssl-devel
 BuildRequires:  perl-base
@@ -48,12 +48,12 @@ X2Go is a server-based computing environment with
 - audio support
 - authentication by smartcard and USB stick
 
-X2Go Client is a graphical client (Qt4) for the X2Go system.
+X2Go Client is a graphical client (Qt) for the X2Go system.
 You can use it to connect to running sessions and start new sessions.
 
 
 %package -n x2goplugin
-Summary:        X2Go Client (Qt4) as browser plugin
+Summary:        X2Go Client (Qt) as browser plugin
 Group:          Communications
 Requires:       browser-plugins-npapi
 Requires:       nx-libs
@@ -72,7 +72,7 @@ X2Go is a server-based computing environment with
 - audio support
 - authentication by smartcard and USB stick
 
-X2Go Client is a graphical client (qt4) for the X2Go system.
+X2Go Client is a graphical client (Qt) for the X2Go system.
 You can use it to connect to running sessions and start new sessions.
 
 This package provides X2Go Client as QtBrowser-based Mozilla plugin.
@@ -101,21 +101,24 @@ the X2Go Plugin via an Apache webserver.
 %setup -q
 %patch0 -p1
 %patch2 -p1
+%patch3 -p1
 # Fix up install issues
 sed -i -e 's/-o root -g root//' Makefile
 sed -i -e '/^MOZPLUGDIR=/s/lib/%{_lib}/' Makefile
 # Use system qtbrowserplugin
 sed -i -e '/CFGPLUGIN/aTEMPLATE=lib' x2goclient.pro
 sed -i -e '/^LIBS /s/$/ -ldl/' x2goclient.pro
-sed -i -e 's/include.*qtbrowserplugin.pri)/LIBS += -lqtbrowserplugin/' x2goclient.pro
-find -name qtbrowserplugin\* -delete
+for f in Makefile config_linux_plugin.sh config_linux_static_plugin.sh config_linux.sh ; do
+    sed -i 's|-qt4|-qt5|g' $f
+    sed -i 's|X2GO_CLIENT_TARGET=plugin|X2GO_CLIENT_TARGET=""|g' $f
+done
 
 %build
-export PATH=%{_qt4_bindir}:$PATH
+export PATH=%{_qt5_bindir}:$PATH
 %make_build
 
 %install
-%makeinstall_std PREFIX=%_prefix
+%make_install DESTDIR=%buildroot PREFIX=%_prefix install_client install_man install_pluginprovider
 desktop-file-validate %buildroot%_desktopdir/%name.desktop
 
 mkdir -p %buildroot%_sysconfdir/httpd/conf.d
@@ -129,9 +132,9 @@ ln -s ../../x2go/x2goplugin-apache.conf %buildroot%_sysconfdir/httpd/conf.d/x2go
 %_datadir/%name/
 %_man1dir/%name.1*
 
-%files -n x2goplugin
-%doc AUTHORS COPYING LICENSE 
-%_libdir/mozilla/plugins/libx2goplugin.so
+#%files -n x2goplugin
+#%doc AUTHORS COPYING LICENSE 
+#%_libdir/mozilla/plugins/libx2goplugin.so
 
 %files -n x2goplugin-provider
 %doc AUTHORS COPYING LICENSE 
@@ -143,6 +146,10 @@ ln -s ../../x2go/x2goplugin-apache.conf %buildroot%_sysconfdir/httpd/conf.d/x2go
 %_datadir/x2go/
 
 %changelog
+* Mon Apr 16 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.1.1-alt3
+- Build with Qt5 (thanks zerg@ for the patch).
+- Use startkde5 instead of startkde.
+
 * Tue Apr 10 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.1.1-alt2
 - Use nx-libs.
 
