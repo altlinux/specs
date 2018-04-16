@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sblim-cim-client2
 Version:        2.2.5
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        Java CIM Client library
 
 Group:          Development/Other
@@ -125,6 +125,9 @@ cp -pr %{archive_folder}/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_7jpp8
 - fc27 update
 
