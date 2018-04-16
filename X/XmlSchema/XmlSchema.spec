@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           XmlSchema
 Version:        1.4.7
-Release:        alt1_15jpp8
+Release:        alt1_16jpp8
 Summary:        Lightweight schema object model
 License:        ASL 2.0
 URL:            http://ws.apache.org/commons/XmlSchema
@@ -77,6 +77,9 @@ dos2unix LICENSE-2.0.txt README.txt RELEASE-NOTE.txt
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt1_16jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt1_15jpp8
 - fc27 update
 
