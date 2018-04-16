@@ -1,6 +1,6 @@
 Name: ncurses
-Version: 5.9
-Release: alt11
+Version: 6.1.20180407
+Release: alt1
 
 %define rootdatadir /lib
 
@@ -339,7 +339,8 @@ pushd build-classic
 	%{subst_with libtool} \
 	%{subst_with gpm} \
 	--without-dlsym \
-	--with-termlib \
+	--with-termlib=tinfo \
+	--with-ticlib=tic \
 	--with-ospeed="unsigned int" \
 	--with-terminfo-dirs="%rootdatadir/terminfo:%_datadir/terminfo" \
 	--disable-termcap \
@@ -355,6 +356,7 @@ pushd build-classic
 	--disable-root-environ \
 	--disable-home-terminfo \
 	--with-chtype=long \
+	--with-abi-version=5 \
 	#
 
 popd # build-classic
@@ -391,11 +393,12 @@ pushd build-utf8
 	--disable-home-terminfo \
 	--with-chtype=long \
 	--enable-widec \
+	--with-abi-version=5 \
 	#
 # Workaround for utf8, rename libtinfow to libtinfo, addon for ncurses-*-alt-utf8-fix.patch
 # will be removed when Thomas finish termlib=name feature
-    find -type f -name Makefile -print0 |
-	xargs -r0 subst s,tinfow,tinfo,g
+#    find -type f -name Makefile -print0 |
+#	xargs -r0 subst s,tinfow,tinfo,g
 
 popd # build-utf8
 %endif # with_utf8
@@ -678,6 +681,9 @@ done
 %endif # with_utf8
 
 %changelog
+* Mon Apr 16 2018 Fr. Br. George <george@altlinux.ru> 6.1.20180407-alt1
+- Major version update
+
 * Mon Apr 16 2018 Fr. Br. George <george@altlinux.ru> 5.9-alt11
 - Fix relative path linking
 
