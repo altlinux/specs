@@ -1,11 +1,10 @@
-BuildRequires: apache-parent
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -20,16 +19,14 @@ BuildRequires: jpackage-generic-compat
 
 %if 0%{?fedora}
 # lucene:4.2.1
-#def_with lucene4
 %bcond_with lucene4
 # https://bugzilla.redhat.com/show_bug.cgi?id=1213455
-#def_with postgis
 %bcond_with postgis
 %endif
 
 Name:          querydsl3
 Version:       3.7.2
-Release:       alt2_6jpp8
+Release:       alt2_9jpp8
 Summary:       Type safe queries for Java
 License:       ASL 2.0
 URL:           http://www.querydsl.com
@@ -53,6 +50,7 @@ BuildRequires: mvn(javax.jdo:jdo2-api)
 BuildRequires: mvn(javax.validation:validation-api)
 BuildRequires: mvn(joda-time:joda-time)
 BuildRequires: mvn(org.apache.ant:ant)
+BuildRequires: mvn(org.apache:apache:pom:)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 # lucene3 :3.6.2
 BuildRequires: mvn(org.apache.lucene:lucene-core:3)
@@ -402,7 +400,7 @@ rm -r querydsl-sql/src/main/java/com/mysema/query/sql/spatial/PGgeometryConverte
 
 %files -f .mfiles-querydsl-core
 %doc README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files apt -f .mfiles-querydsl-apt
 %files codegen -f .mfiles-querydsl-codegen
@@ -429,7 +427,7 @@ rm -r querydsl-sql/src/main/java/com/mysema/query/sql/spatial/PGgeometryConverte
 %doc querydsl-mongodb/README.md
 
 %files root -f .mfiles-querydsl-root
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %if 0
 %files scala -f .mfiles-querydsl-scala
@@ -444,9 +442,12 @@ rm -r querydsl-sql/src/main/java/com/mysema/query/sql/spatial/PGgeometryConverte
 %files sql-spring -f .mfiles-querydsl-sql-spring
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 3.7.2-alt2_9jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 3.7.2-alt2_6jpp8
 - added BR: apache-parent for javapackages 5
 
