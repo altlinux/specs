@@ -1,6 +1,6 @@
 Name: libstfl0
 Version: 0.24
-Release: alt4.2.3
+Release: alt5
 
 %define oname stfl
 
@@ -40,7 +40,7 @@ Headers for building software that uses %name
 
 %package -n perl-%oname
 Group: Terminals
-Requires: perl swig
+Requires: perl swig libstfl0
 Summary: Perl binding to stfl
 
 %description -n perl-%oname
@@ -48,7 +48,7 @@ Perl binding to stfl
 
 %package -n python-module-%oname
 Group: Terminals
-Requires: python swig
+Requires: python swig libstfl0
 Summary: Python binding to stfl
 #%%setup_python_module %%oname
 
@@ -57,7 +57,7 @@ Python binding to stfl
 
 %package -n ruby-%oname
 Group: Terminals
-Requires: swig ruby
+Requires: swig ruby libstfl0
 Summary: Ruby binding to stfl
 
 %description -n ruby-%oname
@@ -101,6 +101,9 @@ rm %buildroot%_libdir/*.a
 %ruby_sitearchdir/stfl.so
 
 %changelog
+* Mon Apr 16 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.24-alt5
+- added explicit dependency on libstfl0 to perl-, python- and ruby- subpackages
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.24-alt4.2.3
 - Rebuild with Ruby 2.5.1
 
