@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %global githash 6f4d22725ef28f09bfd5422939b83e1865b5daef
 Name:          proxytoys
 Version:       1.0
-Release:       alt1_10jpp8
+Release:       alt1_11jpp8
 Summary:       An implementation neutral API for creation of dynamic proxies
 License:       BSD
 Url:           http://proxytoys.github.io/
@@ -133,18 +133,21 @@ find -name '*.jar' -print -delete
 %mvn_install
 
 %files -f .mfiles-%{name}
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files example-code -f .mfiles-%{name}-example-code
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files parent -f .mfiles-%{name}-parent
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_11jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_10jpp8
 - fc27 update
 
