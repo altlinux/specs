@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global oname spring-hateoas
 Name:          springframework-hateoas
 Version:       0.16.0
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Representations for hyper-text driven REST web services
 License:       ASL 2.0
 URL:           http://github.com/SpringSource/spring-hateoas
@@ -129,12 +129,15 @@ rm -r src/main/java/org/springframework/hateoas/alps/Alps.java \
 
 %files -f .mfiles
 %doc changelog.txt readme.md
-%doc license.txt notice.txt 
+%doc --no-dereference license.txt notice.txt 
 
 %files javadoc -f .mfiles-javadoc
-%doc license.txt notice.txt
+%doc --no-dereference license.txt notice.txt
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_7jpp8
 - fc27 update
 
