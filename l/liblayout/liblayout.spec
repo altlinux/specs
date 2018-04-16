@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: liblayout
 Version: 0.2.10
-Release: alt1_14jpp8
+Release: alt1_15jpp8
 Summary: CSS based layouting framework
 License: LGPLv2+ and UCD
 Group: System/Libraries
@@ -67,6 +67,9 @@ cp -rp build/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.10-alt1_15jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.10-alt1_14jpp8
 - fc27 update
 
