@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		truecommons-parent
 Version:	67
-Release:	alt1_10jpp8
+Release:	alt1_11jpp8
 Summary:	Parent Pom for OSS Projects
 
 License:	ASL 2.0
@@ -42,6 +42,9 @@ cp %{SOURCE0} pom.xml
 %files -f .mfiles
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 67-alt1_11jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 67-alt1_10jpp8
 - fc27 update
 
