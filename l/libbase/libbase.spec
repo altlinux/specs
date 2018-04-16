@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: libbase
 Version: 1.1.3
-Release: alt1_17jpp8
+Release: alt1_18jpp8
 Summary: JFree Base Services
 License: LGPLv2
 Group: System/Libraries
@@ -66,6 +66,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_18jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_17jpp8
 - fc27 update
 
