@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           svgsalamander
 Version:        1.1.1
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        An SVG engine for Java
 
 Group:          Development/Other
@@ -81,6 +81,9 @@ popd
 %doc www/license/*
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_3jpp8
 - fc27 update
 
