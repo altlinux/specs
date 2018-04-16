@@ -1,5 +1,5 @@
 Name: xfce4-verve-plugin
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Command line plugin for Xfce Desktop
@@ -21,6 +21,8 @@ BuildPreReq: libxfce4panel-devel libxfce4ui-devel libexo-devel
 BuildRequires: intltool libdbus-glib-devel libpcre-devel libxml2-devel perl-XML-Parser
 
 Requires: xfce4-panel >= 4.8
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 The Verve panel plugin is a comfortable command line (or smartbookmark)
@@ -57,6 +59,9 @@ plugin for the Xfce panel. It supports several nice features, such as:
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Apr 16 2018 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt1
+- Updated to 1.1.1.
+
 * Mon Jul 13 2015 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
 - Don't package *.la file.
 - Description updated.
