@@ -9,7 +9,7 @@
 
 Name: mono
 Version: 5.10.0.157
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -672,9 +672,7 @@ ln -s mcs %buildroot%_bindir/gmcs
 %_libdir/*profiler*.so*
 %_libdir/*profiler*.a
 %_libdir/libikvm-native.a
-%ifarch %ix86 x86_64 armh
 %_libdir/libmono-btls-shared.so*
-%endif
 %_monodir/4.0/Mono.Posix.dll
 %_monodir/4.0/mscorlib.dll
 
@@ -760,11 +758,9 @@ ln -s mcs %buildroot%_bindir/gmcs
 %exclude %_monogacdir/System.Runtime.Caching/*
 %exclude %_monogacdir/System.Xaml/*
 %exclude %_sysconfdir/mono/4.0/Browsers/Compat.browser
-%ifarch %ix86 x86_64 armh
 %dir %_monodir/gac/Mono.Btls.Interface
 %_monodir/gac/Mono.Btls.Interface/*
 %_monodir/4.5/Mono.Btls.Interface.dll
-%endif
 %dll_so Microsoft.CodeAnalysis
 %dll_so Microsoft.CodeAnalysis.CSharp
 %dll_so System.Collections.Immutable
@@ -1125,6 +1121,9 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt3%ubt
+- Fixed build on some architectures.
+
 * Fri Apr 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt2%ubt
 - Updated interpackage dependencies.
 
