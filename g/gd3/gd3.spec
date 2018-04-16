@@ -1,47 +1,60 @@
-Name: gd2
-Version: 2.0.35
-Release: alt7%ubt
+%define _unpackaged_files_terminate_build 1
 
+%def_disable static
+
+Name: gd3
+Version: 2.2.5
+Release: alt1%ubt
 Summary: A graphics library for drawing image files in various formats
 License: BSD-style
 Group: Graphics
-Url: http://www.libgd.org/Main_Page
+Url: https://libgd.github.io/
 
-%define srcname gd-%version
-# http://www.libgd.org/releases/gd-%version.tar.bz2
-Source: %srcname.tar
+# https://github.com/libgd/libgd.git
+Source: %name-%version.tar
 
-Patch: %name-%version-alt.patch
+Patch1: gd-2.2.5-upstream.patch
 
 BuildRequires(pre): rpm-build-ubt
-# Automatically added by buildreq on Mon Mar 26 2007
-BuildRequires: fontconfig-devel libXpm-devel libfreetype-devel libjpeg-devel libpng-devel
 
-%def_disable static
+BuildRequires: fontconfig-devel libXpm-devel libfreetype-devel libjpeg-devel libpng-devel
+BuildRequires: libwebp-devel zlib-devel libtiff-devel
+
+# needed for tests
+BuildRequires: fonts-ttf-dejavu
 
 %package -n lib%name
 Summary: A graphics library for drawing image files in various formats
 Group: System/Libraries
 
-%if 0
 %package -n lib%name-devel
 Summary: Development library and header files for lib%name
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Conflicts: libgd-devel < 2.0.4
+Provides:  libgd2-devel = %EVR
+Conflicts: libgd2-devel < %EVR
+Obsoletes: libgd2-devel
 
+%if_enabled static
 %package -n lib%name-devel-static
 Summary: Development static library for lib%name
 Group: Development/C
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 Conflicts: libgd-devel-static < 2.0.4
+Provides:  libgd2-devel-static = %EVR
+Conflicts: libgd2-devel-static < %EVR
+Obsoletes: libgd2-devel-static
+%endif
 
 %package utils
 Summary: Utilities for drawing image files in various formats
 Group: Graphics
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Conflicts: gd-utils < 2.0.4
-%endif
+Provides:  libgd2-utils = %EVR
+Conflicts: libgd2-utils < %EVR
+Obsoletes: libgd2-utils
 
 %description
 Gd is a graphics library.  It allows your code to quickly draw images
@@ -70,7 +83,6 @@ as a jpeg, png or wbmp file.  Gd is particularly useful in web applications,
 where jpeg, png or wbmp files are commonly used as inline images.  Note,
 however, that Gd is not a paint program.
 
-%if 0
 %description -n lib%name-devel
 Gd is a graphics library for drawing image files in various formats.  Gd
 allows your code to quickly draw images (lines, arcs, text, multiple colors,
@@ -79,6 +91,7 @@ as a jpeg, png or wbmp file.  Gd is particularly useful in web applications,
 where jpeg, png or wbmp files are commonly used as inline images.  Note,
 however, that Gd is not a paint program.
 
+%if_enabled static
 %description -n lib%name-devel-static
 Gd is a graphics library for drawing image files in various formats.  Gd
 allows your code to quickly draw images (lines, arcs, text, multiple colors,
@@ -86,6 +99,7 @@ cutting and pasting from other images, flood fills) and write out the result
 as a jpeg, png or wbmp file.  Gd is particularly useful in web applications,
 where jpeg, png or wbmp files are commonly used as inline images.  Note,
 however, that Gd is not a paint program.
+%endif
 
 %description utils
 Gd is a graphics library.  It allows your code to quickly draw images
@@ -105,11 +119,10 @@ It is not necessary or desirable for Gd to become a kitchen-sink
 graphics package, but version %version does include most frequently
 requested features, including both truecolor and palette images,
 resampling (smooth resizing of truecolor images) and so forth.
-%endif
 
 %prep
-%setup -n %srcname
-%patch -p1
+%setup
+%patch1 -p1
 
 %build
 %autoreconf
@@ -119,27 +132,26 @@ resampling (smooth resizing of truecolor images) and so forth.
 %install
 %makeinstall_std
 
-%define docdir %_docdir/%srcname
-rm -rf %buildroot%docdir
-mkdir -p %buildroot%docdir
-cp -a index.html COPYING %buildroot%docdir/
-
 %check
+%ifarch %ix86
+# Tests are known to be buggy on x86 32bit due to rounding issues. See:
+# https://github.com/libgd/libgd/issues/359
+# https://github.com/libgd/libgd/issues/242
+%make_build -k check ||:
+%else
 %make_build -k check
+%endif
 
 %files -n lib%name
+%doc COPYING
 %_libdir/*.so.*
-%dir %docdir
-%docdir/COPYING
 
-%if 0
 %files -n lib%name-devel
+%doc README.md
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
 %_bindir/gdlib-config
-%dir %docdir
-%docdir/index.html
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -149,11 +161,10 @@ cp -a index.html COPYING %buildroot%docdir/
 %files utils
 %_bindir/*
 %exclude %_bindir/gdlib-config
-%endif
 
 %changelog
-* Wed Apr 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.35-alt7%ubt
-- Rebuilt as legacy library.
+* Tue Apr 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.5-alt1%ubt
+- Updated to upstream version 2.2.5.
 
 * Thu Apr 18 2013 Vladimir Lettiev <crux@altlinux.ru> 2.0.35-alt6
 - Fixed gdImageFill stack overflow comparison (libGD #177)

@@ -1,35 +1,37 @@
 Name: rpm-macros-erlang
-Version: 0.7.0
-Release: alt1
+Version: 0.8.0
+Release: alt1%ubt
 Summary: RPM helper macros to rebuild erlang packages
 License: %gpl3plus
 Group: Development/Erlang
-Source0: erlang.rpm.macros
-Source1: erlang.rpm.env
 BuildArch: noarch
-Requires: rpm >= 4.0.4-alt78
-Conflicts: rpm-build-erlang < 0.6.2-alt2
-Packager: Led <led@altlinux.ru>
 AutoReq: no
 
+Source0: erlang.rpm.macros
+Source1: erlang.rpm.env
+
 BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-ubt
+
+Requires: rpm >= 4.0.4-alt78
+Conflicts: rpm-build-erlang < 0.6.2-alt2
 
 %description
 These helper macros provide possibility to rebuild erlang modules by
 some Alt Linux Team Policy compatible way.
-
 
 %install
 install -d -m 0755 %buildroot%_rpmmacrosdir
 install -m 0644 %SOURCE0 %buildroot%_rpmmacrosdir/erlang
 install -m 0644 %SOURCE1 %buildroot%_rpmmacrosdir/erlang.env
 
-
 %files
 %_rpmmacrosdir/*
 
-
 %changelog
+* Fri Apr 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.0-alt1%ubt
+- Added macros for rebar.
+
 * Fri Feb 27 2009 Led <led@altlinux.ru> 0.7.0-alt1
 - added macros for native and debug modules dirs
 

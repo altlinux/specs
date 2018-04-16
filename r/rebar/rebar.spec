@@ -1,23 +1,25 @@
 %def_disable debug
 
-%define gitdate 20111225
 Name: rebar
-Version: 2.git%gitdate
-Release: alt1.1
+Epoch:   1
+Version: 2.6.4
+Release: alt1%ubt
 Summary: A sophisticated build-tool for Erlang projects that follows OTP principles.
 License: %asl
 Group: Development/Erlang
-URL: https://github.com/basho/rebar
-Source: %name-%version.tar
-Patch0: %name-add-ignore-cmd-list.patch
-Patch1: %name-default-jobs-1.patch
-Patch2: %name-add_patha.patch
 BuildArch: noarch
-Requires: erlang-otp erlang-visual erlang-common_test
-Packager: Sergey Shilov <hsv@altlinux.org>
+URL: https://github.com/rebar/rebar
+
+# https://github.com/rebar/rebar.git
+Source: %name-%version.tar
+
+Patch1: rebar-fedora-try-shell-variable-VSN-first.patch
 
 BuildRequires(pre): rpm-build-erlang rpm-build-licenses
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: erlang-devel erlang-otp-devel erlang-visual-devel erlang-common_test-devel
+
+Requires: erlang-otp erlang-visual erlang-common_test
 
 %description
 rebar is an Erlang build tool that makes it easy to compile and
@@ -30,27 +32,24 @@ configuration work. rebar also provides dependency management, enabling
 application writers to easily re-use common libraries from a variety of
 locations (git, hg, etc).
 
-
 %prep
-%setup -n  %name-%version
-%patch0 -p1
+%setup
 %patch1 -p1
-%patch2 -p1
-
 
 %build
 ./bootstrap
 
 %install
-%__mkdir_p %buildroot/%_bindir
-%__install -m755 rebar %buildroot/%_bindir
-
+mkdir -p %buildroot%_bindir
+install -m755 rebar %buildroot%_bindir
 
 %files
 %_bindir/*
 
-
 %changelog
+* Fri Apr 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.6.4-alt1%ubt
+- Updated to upstream version 2.6.4.
+
 * Mon Oct 23 2017 Denis Medvedev <nbr@altlinux.org> 2.git20111225-alt1.1
 - just a rebuild for OTP 19.
 
