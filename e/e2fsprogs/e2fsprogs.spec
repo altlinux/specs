@@ -1,5 +1,5 @@
 Name: e2fsprogs
-Version: 1.43.7
+Version: 1.44.1.0.10.d5bd
 Release: alt1
 
 Summary: The filesystem utilities for the ext2/ext3 filesystems
@@ -274,7 +274,7 @@ for i in ext2 ext3 ext4 ext4dev; do
 done
 
 # Prepare docs.
-xz -9 RELEASE-NOTES
+for f in doc/RelNotes/v*.txt; do cat "$f"; echo; done |xz -9 > RELEASE-NOTES.xz
 chmod -R a+rX,go-w %buildroot%_mandir
 
 %find_lang %name
@@ -388,6 +388,9 @@ mv tests/m_no_opt/expect.1{.ext2,}
 %endif # libuuid
 
 %changelog
+* Mon Apr 16 2018 Dmitry V. Levin <ldv@altlinux.org> 1.44.1.0.10.d5bd-alt1
+- v1.43.7 -> v1.44.1-10-gd5bd126.
+
 * Sun Nov 26 2017 Dmitry V. Levin <ldv@altlinux.org> 1.43.7-alt1
 - v1.43.4-36-ge251f35 -> v1.43.7.
 
