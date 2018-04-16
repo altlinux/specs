@@ -1,7 +1,7 @@
 %define lib_name libalkimia5
 
 Name:    libalkimia
-Version: 7.0.1
+Version: 7.0.2
 Release: alt1
 
 Summary: Financial library
@@ -52,6 +52,9 @@ Headers and other files for develop with %name.
 %_libdir/cmake/LibAlkimia*
 
 %changelog
+* Mon Apr 16 2018 Andrey Cherepanov <cas@altlinux.org> 7.0.2-alt1
+- New version.
+
 * Mon Mar 19 2018 Andrey Cherepanov <cas@altlinux.org> 7.0.1-alt1
 - New version.
 
