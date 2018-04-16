@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          thredds
 Version:       4.6.2
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Thematic Realtime Environmental Distributed Data Services (TDS)
 # GPLv3: opendap/src/main/java/opendap/dap/parsers/DapParser.java
 # LGPLv3: opendap/src/main/java/opendap/servlet/AsciiWriter.java
@@ -238,43 +238,46 @@ sed -i '/org.apache.http.annotation/d' \
 
 %files -f .mfiles-%{name}-parent
 %doc README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files -n netcdf-java -f .mfiles-cdm
 %doc cdm/CHANGES.txt
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files bufr -f .mfiles-bufr
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files clcommon -f .mfiles-clcommon
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files dap -f .mfiles-dap
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files grib -f .mfiles-grib
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files httpservices -f .mfiles-httpservices
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files netcdf -f .mfiles-netcdf4
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files tdcommon -f .mfiles-tdcommon
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files tdm -f .mfiles-tdm
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files -n java-udunits -f .mfiles-udunits
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 4.6.2-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 4.6.2-alt1_6jpp8
 - fc27 update
 
