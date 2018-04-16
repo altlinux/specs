@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global oname redis
 Name:          redis-protocol
 Version:       0.7
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Java client and server implementation of Redis
 License:       ASL 2.0
 URL:           http://github.com/spullara/redis-protocol
@@ -70,12 +70,15 @@ sed -i 's/\r//' LICENSE
 
 %files -f .mfiles
 %doc README
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_5jpp8
 - fc27 update
 
