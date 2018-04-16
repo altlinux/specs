@@ -1,6 +1,6 @@
 Name: pinta
 Version: 1.6
-Release: alt2
+Release: alt3
 
 Summary: An easy to use drawing and image editing program
 
@@ -21,10 +21,16 @@ ExclusiveArch: %ix86 x86_64 ppc ppc64 ia64 %arm sparcv9 alpha s390x
 
 
 # Manually:
+BuildRequires(pre): rpm-build-mono
 BuildRequires: glib2-devel intltool monodevelop libgtk-sharp2-devel
 
 Requires: icon-theme-hicolor
 
+# Interfaces of slightly older versions are required, upstream corrects it by modifying 'Requires'
+%define __find_provides sh -c '/usr/lib/rpm/find-provides | sort | uniq'
+%define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | \
+	sed -e "/mono\(Mono.Cairo\) = 2.0/d" | \
+	sed -e "/mono\(Mono.Posix\) = 2.0/d"'
 
 %description
 Pinta is an image drawing/editing program.
@@ -56,6 +62,9 @@ It's goal is to provide a simplified alternative to GIMP for casual users.
 %_pixmapsdir/%{name}*
 
 %changelog
+* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6-alt3
+- (NMU) rebuilt to regenerate package dependencies.
+
 * Tue Sep 12 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.6-alt2
 - rebuild with mono5
 
