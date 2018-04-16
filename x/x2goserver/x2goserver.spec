@@ -3,7 +3,7 @@
 
 Name:    x2goserver
 Version: 4.1.0.0
-Release: alt1
+Release: alt2
 Summary: X2Go Server
 
 Group:   System/Servers
@@ -16,6 +16,7 @@ Source1: x2goserver.init
 
 Patch1:  %name-fix-autoreq.patch
 Patch2:  %name-alt-Xsession.patch
+Patch3:  alt-startkde.patch
 
 BuildRequires(pre): rpm-build-perl
 BuildRequires: desktop-file-utils
@@ -214,6 +215,7 @@ X2Go session login automagically.
 %setup -q
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # Set path
 find -type f | xargs sed -i -r -e '/^LIBDIR=/s,/lib/,/%{_lib}/,'
@@ -405,6 +407,9 @@ exit 0
 %_datadir/x2go/versions/VERSION.x2goserver-xsession
 
 %changelog
+* Mon Apr 16 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.0.0-alt2
+- Correct run KDE5 session (thanks zerg@ for the patch).
+
 * Thu Apr 12 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.0.0-alt1
 - New version.
 - Use nx-libs >= 3.5.2.31.
