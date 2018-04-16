@@ -23,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          springframework-amqp
 Version:       1.3.9
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Support for Spring programming model with AMQP
 License:       ASL 2.0
 URL:           http://projects.spring.io/spring-amqp/
@@ -190,12 +190,15 @@ opts="-f"
 
 %files -f .mfiles
 %doc src/dist/README.md
-%doc src/dist/apache-license.txt src/dist/notice.txt
+%doc --no-dereference src/dist/apache-license.txt src/dist/notice.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc src/dist/apache-license.txt src/dist/notice.txt
+%doc --no-dereference src/dist/apache-license.txt src/dist/notice.txt
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.9-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.9-alt1_7jpp8
 - fc27 update
 
