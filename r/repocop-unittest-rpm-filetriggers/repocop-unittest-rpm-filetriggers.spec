@@ -1,6 +1,6 @@
 Name: repocop-unittest-rpm-filetriggers
-Version: 0.23
-Release: alt3
+Version: 0.24
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -16,7 +16,7 @@ Provides:  repocop-unittest-altdesktop = 0.09
 Obsoletes: repocop-unittest-altdesktop < 0.09
 Conflicts: repocop-unittest-freedesktop-mime-test >= 0.04
 Obsoletes: repocop-unittest-freedesktop-mime-test < 0.04
-Requires: perl-RPM-Source-Editor >= 0.73
+Requires: perl-RPM-Source-Editor >= 0.9200
 
 Source: %name-%version.tar
 
@@ -42,6 +42,9 @@ install -m 644 *.pl %buildroot%_datadir/repocop/fixscripts/
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
+- maintainance release
+
 * Thu May 31 2012 Igor Vlasenko <viy@altlinux.ru> 0.23-alt3
 - bugfixes
 
