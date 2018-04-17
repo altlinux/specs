@@ -3,7 +3,7 @@
 
 Name: zygrib
 Version: 8.0.1
-Release: alt1
+Release: alt2
 
 Summary: Visualisation of meteo data from files in GRIB formats
 
@@ -57,10 +57,7 @@ rm -rf data/fonts
 sed 's|cd ..QWTDIR./src|# cd \$(QWTDIR)/src|' -i Makefile
 %endif
 
-%if "%(getconf LONG_BIT)" == "32"
 sed -i "s|^CFLAGS= -O3 -g -m64 .*$|CFLAGS= -O3 -g \$(INC) \$(DEFS)|" src/g2clib/makefile
-%endif
-
 sed -i "s|QMAKE=/usr/bin/qmake|QMAKE=%_qt5_qmake|" Makefile
 
 %build
@@ -114,6 +111,9 @@ fi
 %_datadir/%binname
 
 %changelog
+* Tue Apr 17 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.0.1-alt2
+- fix build on arm
+
 * Wed Nov 30 2016 Sergey Y. Afonin <asy@altlinux.ru> 8.0.1-alt1
 - New version (switched to QT5; added GRIB v2 support)
 
