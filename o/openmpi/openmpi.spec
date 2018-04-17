@@ -40,7 +40,7 @@ Name: openmpi
 #pkgname
 
 Version: 2.0.1
-Release: alt4
+Release: alt5
 
 %define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -81,8 +81,10 @@ Requires: libibverbs >= 1.1.2
 BuildPreReq: /proc flex gcc-c++ gcc-fortran
 BuildPreReq: rdma-core-devel
 BuildPreReq: valgrind-devel libiberty-devel
+%ifnarch %arm
 BuildRequires: libnuma-devel
 BuildRequires: libtorque-devel
+%endif
 
 %package devel
 Summary: Development part of %name
@@ -91,7 +93,9 @@ Group: Development/Other
 Requires: %name = %version-%release
 Requires: gcc-c++ gcc-fortran
 Requires: rdma-core-devel
+%ifnarch %arm
 Requires: libnuma-devel
+%endif
 
 %ifdef udapl
 Requires: libdapl-devel
@@ -146,7 +150,11 @@ function buildIt() {
 			--prefix=%mpi_prefix \
 			--with-ft=cr \
 			--with-verbs \
+%ifarch %arm
+			--without-tm \
+%else
 			--with-tm \
+%endif
 			--sysconfdir=%mpi_sysconfdir \
 			--bindir=%mpi_prefix/bin \
 			--libdir=%mpi_prefix/lib \
@@ -323,6 +331,9 @@ EOF
 %endif
 
 %changelog
+* Tue Apr 17 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.1-alt5
+- fixed build on arm
+
 * Sat Apr 14 2018 Alexey Shabalin <shaba@altlinux.ru> 2.0.1-alt4
 - rebuild with rdma-core-devel
 - build without udapl support
