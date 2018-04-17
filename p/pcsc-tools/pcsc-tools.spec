@@ -1,6 +1,5 @@
-
 Name:           pcsc-tools
-Version:        1.5.2
+Version:        1.5.3
 Release:        alt1
 Summary:        Tools to be used with smart cards and PC/SC
 
@@ -59,6 +58,9 @@ desktop-file-install --mode=644 \
 %doc %_man1dir/gscriptor.*
 
 %changelog
+* Tue Apr 17 2018 Andrey Cherepanov <cas@altlinux.org> 1.5.3-alt1
+- New version.
+
 * Mon Mar 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt1
 - New version.
 
