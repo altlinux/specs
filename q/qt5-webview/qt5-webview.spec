@@ -1,8 +1,8 @@
 %define qt_module qtwebview
 
 Name: qt5-webview
-Version: 5.9.4
-Release: alt3%ubt
+Version: 5.9.5
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt Web View
@@ -68,6 +68,9 @@ syncqt.pl-qt5 -version %version -private
 %_pkgconfigdir/Qt?WebView.pc
 
 %changelog
+* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+- new version
+
 * Thu Feb 15 2018 Oleg Solovyov <mcpain@altlinux.org> 5.9.4-alt3%ubt
 - restore dir & move to libqt5-webview
 

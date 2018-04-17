@@ -1,3 +1,12 @@
+%define IF_ver_gt() %if "%(rpmvercmp '%1' '%2')" > "0"
+%define IF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
+%define IF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
+%define IF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
+%define IF_ver_eq() %if "%(rpmvercmp '%1' '%2')" == "0"
+%define IF_ver_not_gt() %if "%(rpmvercmp '%1' '%2')" <= "0"
+%define IF_ver_not_gteq() %if "%(rpmvercmp '%1' '%2')" < "0"
+%define IF_ver_not_lt() %if "%(rpmvercmp '%2' '%1')" <= "0"
+%define IF_ver_not_lteq() %if "%(rpmvercmp '%2' '%1')" < "0"
 %define IF_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 
 %global qt_module qtwebengine
@@ -15,7 +24,7 @@
 
 Name: qt5-webengine
 Version: 5.10.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -29,13 +38,15 @@ Patch2:  qtwebengine-opensource-src-5.6.0-no-icudtl-dat.patch
 Patch3:  qtwebengine-opensource-src-5.9.0-fix-extractcflag.patch
 Patch4:  qtwebengine-everywhere-src-5.10.0-system-nspr-prtime.patch
 Patch5:  qtwebengine-everywhere-src-5.10.0-system-icu-utf.patch
-Patch6:  qtwebengine-everywhere-src-5.10.0-no-sse2.patch
+Patch6:  qtwebengine-everywhere-src-5.10.1-no-sse2.patch
 Patch7:  qtwebengine-opensource-src-5.9.2-arm-fpu-fix.patch
 Patch8: qtwebengine-opensource-src-5.9.0-openmax-dl-neon.patch
 Patch9: qtwebengine-opensource-src-5.9.0-webrtc-neon-detect.patch
 Patch10: qtwebengine-everywhere-src-5.10.0-gn-bootstrap-verbose.patch
 Patch11: qtwebengine-everywhere-src-5.10.0-icu59.patch
 Patch12: qtwebengine-everywhere-src-5.10.0-no-aspirational-scripts.patch
+Patch13: qtwebengine-everywhere-src-5.10.1-security-5.9.5.patch
+Patch14: qtwebengine-everywhere-src-5.10.1-CVE-2018-6033.patch
 # ALT
 Patch100: alt-pepflashplayer.patch
 Patch101: alt-codecs.patch
@@ -120,6 +131,12 @@ Requires: qt5-quickcontrols2
 %summary
 
 %prep
+%define icu_ver %{get_version libicu-devel}
+%IF_ver_gteq %icu_ver 5.9
+%def_enable system_icu
+%else
+%def_disable system_icu
+%endif
 %setup -n %qt_module-opensource-src-%version
 mv .gear/chromium src/3rdparty/
 ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
@@ -127,14 +144,20 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%if_enabled system_icu
 %patch5 -p1
+%endif
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%if_enabled system_icu
 %patch11 -p1
+%endif
 %patch12 -p1
+%patch13 -p1
+%patch14 -p1
 #
 %patch100 -p1
 %patch101 -p1
@@ -219,9 +242,12 @@ mkdir -p %_target_platform
 pushd %_target_platform
 %_qt5_qmake \
     QMAKE_CXXFLAGS="$CXXFLAGS" \
-    CONFIG+="webcore_debug v8base_debug force_debug_info pulseaudio system-icu system-opus system-webp proprietary-codecs %qt_ffmpeg_type" \
+    CONFIG+="webcore_debug v8base_debug force_debug_info pulseaudio system-opus system-webp proprietary-codecs %qt_ffmpeg_type" \
     WEBENGINE_CONFIG+=" use_proprietary_codecs use_spellchecker" \
+%if_enabled system_icu
+    CONFIG+="system-icu" \
     QMAKE_EXTRA_ARGS+="-system-webengine-icu" \
+%endif
 %if %is_ffmpeg
     QMAKE_EXTRA_ARGS+="-system-webengine-ffmpeg" \
 %endif
@@ -235,6 +261,12 @@ popd
 %install
 %install_qt5 -C %_target_platform
 %make INSTALL_ROOT=%buildroot install_docs -C %_target_platform ||:
+
+%if_disabled system_icu
+install -m 0644 \
+    src/3rdparty/chromium/third_party/icu/common/icudtl.dat \
+    %buildroot/%_qt5_datadir/resources/
+%endif
 
 # fix cmake dependencies
 %IF_ver_not_eq %_qt5_version %version
@@ -263,6 +295,9 @@ done
 %dir %_qt5_translationdir/qtwebengine_locales/
 %dir %_qt5_datadir/resources/
 %_qt5_datadir/resources/qtwebengine*.pak
+%if_disabled system_icu
+%_qt5_datadir/resources/*icu*
+%endif
 
 %files -n libqt5-webengine
 %_qt5_libdir/libQt?WebEngine.so.*
@@ -296,6 +331,13 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.1-alt2%ubt
+- rebuild with new Qt
+- sync FC patches
+
+* Fri Feb 16 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.1-alt1%ubt.1
+- don't use old system icu
+
 * Wed Feb 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.1-alt1%ubt
 - new version
 

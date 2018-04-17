@@ -3,7 +3,7 @@
 %def_disable bootstrap
 
 Name: qt5-xmlpatterns
-Version: 5.9.4
+Version: 5.9.5
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -103,6 +103,15 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+- new version
+
+* Wed Mar 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt.2
+- build docs
+
+* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt.1
+- don't build docs
+
 * Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
 - new version
 
