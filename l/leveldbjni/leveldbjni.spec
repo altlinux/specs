@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          leveldbjni
 Version:       1.8
-Release:       alt2_17jpp8
+Release:       alt3_17jpp8
 Summary:       A Java Native Interface to LevelDB
 License:       BSD
 URL:           https://github.com/fusesource/leveldbjni/
@@ -115,6 +115,9 @@ rm -r %{name}/src/test/java/org/fusesource/%{name}/test/DBTest.java
     <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
   </archive> 
 </configuration>'
+# e2k support: force autogen
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-hawtjni-plugin']/pom:configuration" "<skipAutogen>false</skipAutogen>" %{name}-linux64
+rm -f leveldbjni/src/main/native-package/configure
 
 %build
 
@@ -137,6 +140,9 @@ export JAVA_HOME=%{_jvmdir}/java LEVELDB_HOME=%{_prefix} SNAPPY_HOME=%{_prefix}
 %doc --no-dereference license.txt
 
 %changelog
+* Tue Apr 17 2018 Igor Vlasenko <viy@altlinux.ru> 1.8-alt3_17jpp8
+- e2k support
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.8-alt2_17jpp8
 - regenerated to fix __isa_bits definition
 
