@@ -4,12 +4,12 @@
 #define _binaries_in_noarch_packages_terminate_build 0
 
 %define target arm-none-eabi
-%define pkg_version 2.4.0
+%define pkg_version 3.0.0
 %define _libexecdir /usr/libexec
 %add_verify_elf_skiplist %_libexecdir/%target/lib/*
 
 Name: arm-none-eabi-newlib
-Version: 2.4.0
+Version: %pkg_version
 Release: alt1
 Summary: C library intended for use on %target embedded systems
 Group: Development/Tools
@@ -21,6 +21,8 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source:  %name-%version.tar
 Source1: README.alt
 Source2: NEWLIB-LICENSING
+Patch0: ftbfs.patch
+Patch1: ftbfs2.patch
 
 BuildRequires: %target-binutils %target-gcc %target-gcc-c++ texinfo
 BuildArch: noarch
@@ -32,6 +34,8 @@ that make them easily usable on embedded products.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 
 %build
 rm -rf build-{newlib,nano}
@@ -56,8 +60,7 @@ export CFLAGS="-g -O2 -ffunction-sections -fdata-sections"
     --disable-newlib-supplied-syscalls \
     --with-float=soft
 
-#make_build
-make
+%make_build
 
 popd
 pushd build-nano
@@ -79,8 +82,7 @@ export CFLAGS="-g -Os -ffunction-sections -fdata-sections"
     --enable-newlib-global-atexit \
     --enable-newlib-nano-formatted-io
 
-#make_build
-make
+%make_build
 
 popd
 
@@ -117,5 +119,8 @@ rm -rf $NANO_ROOT
 %_libexecdir/%target/lib/*
 
 %changelog
+* Wed Apr 18 2018 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt1
+- New version 3.0.0
+
 * Fri Jun 30 2017 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - Initial build for ALT Sisyphus.
