@@ -1,6 +1,6 @@
 %define module suse-compat
 Name:		rpm-build-suse-compat
-Version:	0.031
+Version:	0.032
 Release:	alt1
 Summary:	Compatibility environment to build SuSE rpms
 License:	GPL2+
@@ -33,7 +33,7 @@ mkdir -p %buildroot%_rpmlibdir
 install -m0755 update-desktop-files/suse_update_desktop_file.sh update-desktop-files/map-desktop-category.sh %buildroot%_rpmlibdir/
 
 install -m0644 -D update-desktop-files/macro %buildroot%_rpmmacrosdir/%module-update-desktop-files
-#install -D -m644 %module -p %buildroot%_rpmmacrosdir/%module-base
+install -D -m644 %module -p %buildroot%_rpmmacrosdir/%module-base
 for ext in cmake; do
     install -D -m644 macros.$ext -p %buildroot%_rpmmacrosdir/%module-$ext
 done
@@ -47,6 +47,9 @@ done
 %_rpmmacrosdir/%{module}*
 
 %changelog
+* Tue Apr 17 2018 Igor Vlasenko <viy@altlinux.ru> 0.032-alt1
+- added %%lang_package
+
 * Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.031-alt1
 - added Requires: rpm-macros-generic-compat
 
