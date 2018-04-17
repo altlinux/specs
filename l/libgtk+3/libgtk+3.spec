@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gtk+
 %define ver_major 3.22
@@ -22,8 +22,8 @@
 %def_disable debug
 
 Name: libgtk+3
-Version: %ver_major.29
-Release: alt2
+Version: %ver_major.30
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -53,7 +53,7 @@ Patch1: gtk+-3.22.29-alt-build.patch
 %define colord_ver 0.1.9
 %define cups_ver 1.6
 %define wayland_ver 1.10.0
-%define wayland_protocols_ver 1.9
+%define wayland_protocols_ver 1.12
 %define epoxy_ver 1.0
 %define cloudproviders_ver 0.2.5
 
@@ -80,7 +80,7 @@ BuildRequires: gtk-doc >= %gtk_doc_ver
 BuildRequires: libcups-devel >= %cups_ver
 BuildRequires: libepoxy-devel >= %epoxy_ver
 BuildRequires: docbook-utils zlib-devel
-
+BuildRequires: sassc
 BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-devel
 BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
 BuildRequires: libXrender-devel libXt-devel
@@ -252,6 +252,7 @@ the functionality of the installed GTK+3 packages.
 %build
 %{?_disable_static:export lt_cv_prog_cc_static_works=no}
 %{?_enable_static:export lt_cv_prog_cc_static_works=yes}
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
     %{subst_enable static} \
@@ -456,6 +457,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Tue Apr 17 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.30-alt1
+- 3.22.30
+
 * Sat Mar 17 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.29-alt2
 - updated to 3.22.29-17-g7fd9f2d
 - temporarily disabled buggy cloudproviders support
