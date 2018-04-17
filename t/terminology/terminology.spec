@@ -1,8 +1,8 @@
-%def_disable snapshot
-%define ver_major 1.1
+%def_enable snapshot
+%define ver_major 1.2
 
 Name: terminology
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: EFL terminal emulator
@@ -11,9 +11,10 @@ Group: Terminals
 Url: http://www.enlightenment.org/p.php?p=about/terminology
 
 %if_disabled snapshot
-#Source: http://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
-Source: https://fau.re/terminology/%name-%version.tar.xz
+Source: https://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
+#Source: https://fau.re/terminology/%name-%version.tar.xz
 %else
+#VCS: https://git.enlightenment.org/apps/terminology.git
 Source: %name-%version.tar
 %endif
 Patch: %name-1.0.0-alt-default_font.patch
@@ -21,10 +22,10 @@ Patch: %name-1.0.0-alt-default_font.patch
 Requires: fonts-bitmap-terminus
 Provides: xvt
 
-BuildRequires: intltool
-Conflicts: libelementary < 1.8.0
+BuildRequires(pre): meson
+Conflicts: libelementary < 1.20.0
 BuildRequires: efl-libs-devel
-BuildRequires: libelementary-devel >= 1.8.0
+BuildRequires: libelementary-devel >= 1.20.0
 
 %description
 An EFL terminal emulator with some extra bells and whistles. It's brand
@@ -37,13 +38,11 @@ considering it's young age, it does a lot.
 %patch -b .def_font
 
 %build
-%autoreconf
-%configure
-
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 # alternatives
 mkdir -p %buildroot%_altdir
@@ -55,14 +54,17 @@ EOF
 
 %files -f %name.lang
 %_bindir/*
-%_datadir/applications/*
+%_desktopdir/*
 %_datadir/%name/
 %_altdir/%name
 %_iconsdir/%name.png
 %_man1dir/%name.1*
-%doc AUTHORS ChangeLog COPYING README
+%doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Tue Apr 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Wed Sep 06 2017 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
