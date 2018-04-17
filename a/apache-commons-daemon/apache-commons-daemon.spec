@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        1.0.15
-Release:        alt1_17jpp8
+Release:        alt2_17jpp8
 Summary:        Defines API to support an alternative invocation mechanism
 License:        ASL 2.0
 Group:          System/Base
@@ -32,6 +32,7 @@ BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  xmlto
 BuildRequires:  gcc
 Source44: import.info
+Patch33: apache-commons-daemon-e2k.patch
 
 
 %description
@@ -70,6 +71,7 @@ BuildArch:      noarch
 rm -rf src/samples/build/
 
 chmod 644 src/samples/*
+%patch33 -p1
 cd src/native/unix
 xmlto man man/jsvc.1.xml
 
@@ -114,6 +116,9 @@ install -Dpm 644 src/native/unix/jsvc.1 $RPM_BUILD_ROOT%{_mandir}/man1/jsvc.1
 
 
 %changelog
+* Tue Apr 17 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.15-alt2_17jpp8
+- e2k support
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.15-alt1_17jpp8
 - java update
 
