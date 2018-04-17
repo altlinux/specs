@@ -10,7 +10,7 @@
 
 Name: lib%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Javascript Bindings for GNOME
 Group: System/Libraries
@@ -117,6 +117,9 @@ cp %SOURCE1 m4/
 
 
 %changelog
+* Mon Apr 16 2018 Yuri N. Sedunov <aris@altlinux.org> 1.52.1-alt2
+- rebuilt with libmozjs52-52.7.3
+
 * Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 1.52.1-alt1
 - 1.52.1
 

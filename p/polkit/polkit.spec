@@ -3,7 +3,7 @@
 
 Name: polkit
 Version: 0.114
-Release: alt1
+Release: alt2
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -139,6 +139,9 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Mon Apr 16 2018 Yuri N. Sedunov <aris@altlinux.org> 0.114-alt2
+- rebuilt with libmozjs52-52.7.3
+
 * Tue Apr 03 2018 Yuri N. Sedunov <aris@altlinux.org> 0.114-alt1
 - 0.114 (ported to mozjs52)
 
