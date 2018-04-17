@@ -4,7 +4,7 @@
 
 Name: freerdp
 Version: 2.0.0
-Release: alt1.git20170724%ubt
+Release: alt1.git20180411%ubt
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -13,7 +13,6 @@ URL: http://www.freerdp.com
 Packager: Mikhail Kolchin <mvk@altlinux.org>
 
 Source: %name-%version.tar
-Patch: Fix-gstreamer-1.0-detection.patch
 
 Requires: xfreerdp = %EVR
 Requires: wlfreerdp = %EVR
@@ -173,7 +172,6 @@ the RDP protocol.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %cmake \
@@ -292,6 +290,10 @@ ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Tue Apr 17 2018 Pavel Nakonechnyi <zorg@altlinux.org> 2.0.0-alt1.git20180411%ubt
+- Third release candidate for 2.0.0
+- Fix gstreamer-1.0 detection is not needed now
+
 * Tue Sep 26 2017 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1.git20170724%ubt
 - Fix gstreamer-1.0 detection
 - increase release number for allow backport to p8
