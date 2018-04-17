@@ -1,5 +1,5 @@
 Name: installer-feature-desktop-etcissue
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1%ubt
 
 Summary: Setup /etc/issue
@@ -28,5 +28,8 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt1%ubt
+- fix check /etc/issue presence
+
 * Mon Apr 16 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt1%ubt
 - initial build
