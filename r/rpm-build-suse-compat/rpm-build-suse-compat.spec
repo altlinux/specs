@@ -1,6 +1,6 @@
 %define module suse-compat
 Name:		rpm-build-suse-compat
-Version:	0.032
+Version:	0.033
 Release:	alt1
 Summary:	Compatibility environment to build SuSE rpms
 License:	GPL2+
@@ -47,6 +47,9 @@ done
 %_rpmmacrosdir/%{module}*
 
 %changelog
+* Tue Apr 17 2018 Igor Vlasenko <viy@altlinux.ru> 0.033-alt1
+- new version
+
 * Tue Apr 17 2018 Igor Vlasenko <viy@altlinux.ru> 0.032-alt1
 - added %%lang_package
 
