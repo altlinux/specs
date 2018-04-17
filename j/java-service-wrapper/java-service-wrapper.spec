@@ -31,7 +31,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           java-service-wrapper
 Version:        3.2.5
-Release:        alt1_31jpp8
+Release:        alt2_31jpp8
 Summary:        Java service wrapper
 License:        MIT
 URL:            https://bitbucket.org/ivertex/yaja-wrapper
@@ -88,6 +88,10 @@ cd ..
 %endif
 (cd src/c; cp Makefile-linux-ppc64le-64.make Makefile-linux-aarch64-64.make)
 (cd src/c; cp Makefile-linux-arm-32.make Makefile-linux-aarch32-32.make)
+# e2k support
+(cd src/c; cp Makefile-linux-ppc64le-64.make Makefile-linux-e2k-64.make)
+# e2k: lcc is not --pedantic
+perl -i -npe 's,--pedantic,,' src/c/Makefile-linux-*
 # -Wl,as-needed
 perl -i -npe 's,(\$[({]COMPILE[)}](?: -pthread)?) -lm(.*)$,$1$2 -lm,' src/c/Makefile-linux-*
 
@@ -123,6 +127,9 @@ install -pm 755 lib/libwrapper.so $RPM_BUILD_ROOT%{_libdir}/%{name}
 %doc --no-dereference doc/license.txt
 
 %changelog
+* Tue Apr 17 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.5-alt2_31jpp8
+- e2k support
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.5-alt1_31jpp8
 - regenerated to fix __isa_bits definition
 
