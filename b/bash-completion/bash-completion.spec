@@ -4,7 +4,7 @@ Name: bash-completion
 Epoch: 1
 # actualy it is version 1.3-109-g0f39d41
 Version: 1.99
-Release: alt7
+Release: alt8
 
 Summary: bash-completion offers programmable completion for bash
 License: GPL2
@@ -61,8 +61,12 @@ install -p -m755 %SOURCE1 %buildroot%_rpmlibdir/
 %_datadir/%name
 %exclude %_datadir/%name/completions/rtcwake
 %exclude %_datadir/%name/completions/mount
+%exclude %_datadir/%name//completions/rfkill
 
 %changelog
+* Tue Apr 17 2018 Alexey Gladkov <legion@altlinux.ru> 1:1.99-alt8
+- exclude `rfkill` file conflicting with bash-completion-util-linux.
+
 * Tue Aug 16 2016 Alexey Gladkov <legion@altlinux.ru> 1:1.99-alt7
 - exclude `mount` file conflicting with bash-completion-util-linux.
 
