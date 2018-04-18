@@ -2,7 +2,7 @@
 
 Name: kde5-%origname
 Version: 5.0.0
-Release: alt1
+Release: alt2%ubt
 
 Summary: A powerful batch renamer for KDE5
 Group: File tools
@@ -11,7 +11,7 @@ Url: https://userbase.kde.org/KRename
 
 Source: %origname-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: kf5-kcompletion-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kcrash-devel
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
@@ -46,6 +46,9 @@ It can also change access and modification dates, permissions, and file ownershi
 %_K5srv/*
 
 %changelog
+* Wed Apr 18 2018 Oleg Solovyov <mcpain@altlinux.org> 5.0.0-alt2%ubt
+- add %%ubt tag for backporting
+
 * Mon Apr 16 2018 Oleg Solovyov <mcpain@altlinux.org> 5.0.0-alt1
 - initial build for ALT
 
