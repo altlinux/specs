@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jackcess-encrypt
 Version:       2.1.1
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Java implementation of the encryption service for MS Access
 License:       ASL 2.0
 URL:           http://jackcessencrypt.sourceforge.net/
@@ -122,12 +122,15 @@ rm -r src/test/java/com/healthmarketscience/jackcess/CryptCodecProviderTest.java
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_4jpp8
 - fc27 update
 
