@@ -5,7 +5,7 @@
 
 Name: audit
 Version: 2.8.3
-Release: alt1%ubt
+Release: alt2%ubt
 
 Packager: Anton Farygin <rider@altlinux.com>
 
@@ -131,9 +131,16 @@ install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.
 
 %post
 %post_service %{name}d
+if [ $1 -gt 1 ]; then
+       systemctl is-enabled --quiet %{name}d && \
+       service %{name}d stop && service %{name}d start ||:
+fi
 
 %preun
 %preun_service %{name}d
+if [ $1 -eq 0 ]; then
+	service %{name}d stop ||:
+fi
 
 %files
 %doc README ChangeLog contrib rules
@@ -203,6 +210,9 @@ install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.
 %endif
 
 %changelog
+* Wed Apr 18 2018 Stanislav Levin <slev@altlinux.org> 2.8.3-alt2%ubt
+- Make it possible not to limit the restart of a crashed plugin
+
 * Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 2.8.3-alt1%ubt
 - new version
 
