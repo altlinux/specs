@@ -1,5 +1,5 @@
 Name: timeshift
-Version: 18.2
+Version: 18.4
 Summary: System restore tool for Linux
 Release: alt1
 License: GPLv3
@@ -39,5 +39,8 @@ rm -f %buildroot%_bindir/%name-uninstall
 %_datadir/polkit-1/actions/in.teejeetech.pkexec.timeshift.policy
 
 %changelog
+* Wed Apr 18 2018 Mikhail Savostyanov <mik@altlinux.org> 18.4-alt1
+- New version 18.4
+
 * Fri Feb 9 2018 Mikhail Savostyanov <mik@altlinux.org> 18.2-alt1
 - initial build for ALT
