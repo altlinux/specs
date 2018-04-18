@@ -42,7 +42,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		javahelp2
 Version:	2.0.05
-Release:	alt3_21jpp8
+Release:	alt3_22jpp8
 Summary:	JavaHelp is a full-featured, platform-independent, extensible help system 
 License:	GPLv2 with exceptions
 Url:		https://javahelp.java.net/
@@ -130,6 +130,9 @@ touch $RPM_BUILD_ROOT/etc/jhsearch.conf
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.05-alt3_22jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.05-alt3_21jpp8
 - fc27 update
 
