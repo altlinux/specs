@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jffi
 Version:        1.2.12
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        Java Foreign Function Interface
 
 License:        LGPLv3+ or ASL 2.0
@@ -23,7 +23,7 @@ Patch0:         jffi-fix-dependencies-in-build-xml.patch
 Patch1:         jffi-add-built-jar-to-test-classpath.patch
 Patch2:         jffi-fix-compilation-flags.patch
 
-BuildRequires:  gcc-common
+BuildRequires:  gcc
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -117,6 +117,9 @@ ant -Duse.system.libffi=1 test
 %doc COPYING.GPL COPYING.LESSER LICENSE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt1_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt1_8jpp8
 - fc27 update
 
