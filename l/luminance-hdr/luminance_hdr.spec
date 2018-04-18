@@ -2,7 +2,7 @@
 %define _name luminance
 Name: %_name-hdr
 Version: 2.5.1
-Release: alt2
+Release: alt3
 
 Summary: A graphical tool for creating and processing HDR images
 Group: Graphics
@@ -63,6 +63,9 @@ provide a workflow for HDR imaging.
 %doc AUTHORS Changelog README* TODO BUGS
 
 %changelog
+* Wed Apr 18 2018 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt3
+- rebuilt with boost-1.66
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt2
 - rebuild against libgsl.so.23/boost-65
 

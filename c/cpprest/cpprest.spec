@@ -6,7 +6,7 @@
 
 Name: cpprest
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: C++ REST library
 Group: System/Libraries
@@ -92,6 +92,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make -C BUILD test
 %doc README.md
 
 %changelog
+* Wed Apr 18 2018 Yuri N. Sedunov <aris@altlinux.org> 2.10.2-alt2
+- rebuilt with boost-1.66
+
 * Wed Feb 07 2018 Yuri N. Sedunov <aris@altlinux.org> 2.10.2-alt1
 - 2.10.2
 

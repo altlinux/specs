@@ -1,6 +1,6 @@
 Name: mp3diags
 Version: 1.2.03
-Release: alt1
+Release: alt2
 
 Summary: Finds problems in MP3 files and helps the user fix many of them
 License: GPLv2+
@@ -23,6 +23,7 @@ a file renamer.
 %setup -n MP3Diags-%version
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 qmake-qt4
 %make_build
 
@@ -41,6 +42,9 @@ install -pD -m644 desktop/MP3Diags48.png %buildroot%_liconsdir/mp3diags.png
 %_liconsdir/*
 
 %changelog
+* Wed Apr 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.03-alt2
+- rebuilt with boost-1.66
+
 * Sat Jul 30 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.03-alt1
 - 1.2.03
 
