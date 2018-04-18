@@ -15,7 +15,7 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 
 Summary: Color daemon
@@ -111,6 +111,7 @@ This may be useful for CMYK soft-proofing or for extra device support.
 %package tests
 Summary: Tests for the Colord
 Group: Development/Other
+BuildArch: noarch
 Requires: lib%name = %version-%release
 
 %description tests
@@ -132,14 +133,14 @@ This package provides Colord reference manual
 %build
 %meson \
 	%{?_disable_reverse:-Denable-reverse=false} \
-	%{?_enable_vala:-Denable-vala=true} \
-	-Dwith-daemon-user=%colord_user \
-	%{?_enable_print_profiles:-Denable-print-profiles=true} \
-	%{?_disable_bash_completion:-Denable-bash-completion=false} \
-	%{?_enable_installed_tests:-Denable-installed-tests=true} \
-	%{?_enable_libcolordcompat:-Denable-libcolordcompat=true} \
-	%{?_disable_systemd:-Denable-systemd=false} \
-	%{?_disable_docs:-Denable-docs=false}
+	%{?_enable_vala:-Dvapi=true} \
+	-Ddaemon_user=%colord_user \
+	%{?_enable_print_profiles:-Dprint_profiles=true} \
+	%{?_disable_bash_completion:-Dbash_completion=false} \
+	%{?_enable_installed_tests:-Dinstalled_tests=true} \
+	%{?_enable_libcolordcompat:-Dlibcolordcompat=true} \
+	%{?_disable_systemd:-Dsystemd=false} \
+	%{?_disable_docs:-Ddocs=false}
 %meson_build
 
 %install
@@ -305,6 +306,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %endif
 
 %changelog
+* Wed Apr 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.3-alt1
+- 1.4.3
+
 * Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
 - 1.4.2
 
