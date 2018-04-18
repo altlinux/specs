@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          java-libpst
 Version:       0.8.1
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       A pure Java library for the reading of Outlook PST and OST files
 # see https://github.com/rjohnsondev/java-libpst/issues/23
 License:       ASL 2.0 and LGPLv3
@@ -52,12 +52,15 @@ sed -i 's/\r//' LICENSE.*.txt README.txt
 
 %files -f .mfiles
 %doc README.md README.txt
-%doc LICENSE.APACHE-2.0.txt LICENSE.LGPL.txt
+%doc --no-dereference LICENSE.APACHE-2.0.txt LICENSE.LGPL.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.APACHE-2.0.txt LICENSE.LGPL.txt
+%doc --no-dereference LICENSE.APACHE-2.0.txt LICENSE.LGPL.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_8jpp8
 - fc27 update
 
