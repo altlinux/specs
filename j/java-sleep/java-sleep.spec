@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		java-sleep
 Version:	2.1
-Release:	alt1_13jpp8
+Release:	alt1_14jpp8
 Summary:	Multi-paradigm scripting language for Java
 
 Group:		Development/Other
@@ -99,6 +99,9 @@ java -jar sleep.jar runtests.sl
 
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_14jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_13jpp8
 - fc27 update
 
