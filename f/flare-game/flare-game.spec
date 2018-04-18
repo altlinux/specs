@@ -1,7 +1,7 @@
 %define _name flare
 
 Name: %_name-game
-Version: 1.0
+Version: 1.03
 Release: alt1
 
 Summary: Fantasy action RPG using the FLARE engine
@@ -17,7 +17,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-licenses rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
 
-Requires: %_name-engine >= 1.0-alt1
+Requires: %_name-engine >= %version
 
 Obsoletes: flare < %version-%release
 Provides: flare = %version-%release
@@ -49,8 +49,12 @@ cd -
 
 %files -f %_name.lang
 %_datadir/%_name/*
+%_datadir/appdata/*.xml
 
 %changelog
+* Wed Apr 18 2018 Mikhail Efremov <sem@altlinux.org> 1.03-alt1
+- Updated to 1.03.
+
 * Wed Mar 14 2018 Mikhail Efremov <sem@altlinux.org> 1.0-alt1
 - Updated description.
 - Updated URL.

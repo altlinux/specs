@@ -1,7 +1,7 @@
 %define _name flare
 
 Name: %_name-engine
-Version: 1.0
+Version: 1.03
 Release: alt1
 
 Summary: A simple game engine for single-player 2D action RPGs
@@ -50,6 +50,14 @@ cd -
 %_man6dir/*
 
 %changelog
+* Wed Apr 18 2018 Mikhail Efremov <sem@altlinux.org> 1.03-alt1
+- Patches from upstream:
+   - Fix crash when teleporting to map hero_pos with a summoned
+     creature.
+   - Fix regression where book text would be cut off when justify
+     != left.
+- Updated to 1.03.
+
 * Wed Mar 14 2018 Mikhail Efremov <sem@altlinux.org> 1.0-alt1
 - Updated URL.
 - Patch from upstream:
