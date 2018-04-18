@@ -24,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jbosh
 Version:       0.8.0
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       XEP-0124: Bidirectional-streams Over Synchronous HTTP (BOSH)
 License:       ASL 2.0
 URL:           https://github.com/igniterealtime/jbosh
@@ -126,12 +126,15 @@ opts="-f"
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_5jpp8
 - fc27 update
 
