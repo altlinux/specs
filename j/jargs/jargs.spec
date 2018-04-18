@@ -1,7 +1,7 @@
-BuildRequires: javapackages-local
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,10 +9,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jargs
 Version:        1.0
-Release:        alt2_18jpp8
+Release:        alt2_21jpp8
 Summary:        Java command line option parsing suite
 
-Group:          Development/Other
 License:        BSD
 URL:            http://jargs.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
@@ -20,15 +19,15 @@ Source1:        https://repository.jboss.org/nexus/content/repositories/thirdpar
 BuildArch:      noarch
 
 BuildRequires:  java-devel
-BuildRequires:  jpackage-utils
+BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  junit
 Source44: import.info
 
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -47,32 +46,28 @@ find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 
 
 %build
-ant runtimejar javadoc
+%ant runtimejar javadoc
 
 
 %install
-# jar
-mkdir -p %{buildroot}%{_javadir}
-cp -p lib/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
-# javadoc
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr doc/* %{buildroot}%{_javadocdir}/%{name}
-# pom
-mkdir -p %{buildroot}%{_mavenpomdir}
-cp -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{name}:%{name}"
+%mvn_artifact %{SOURCE1} lib/%{name}.jar
+%mvn_alias net.sf:%{name} %{name}:%{name}
+%mvn_install -J doc
 
 
 %files -f .mfiles
-%doc README LICENCE TODO doc/CHANGES 
+%doc README TODO doc/CHANGES
+%doc --no-dereference LICENCE
 
 
-%files javadoc
-%doc LICENCE
-%{_javadocdir}/%{name}/
+%files javadoc -f .mfiles-javadoc
+%doc --no-dereference LICENCE
 
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_21jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_18jpp8
 - added BR: javapackages-local for javapackages 5
 
