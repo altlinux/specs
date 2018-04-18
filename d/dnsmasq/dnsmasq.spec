@@ -1,9 +1,9 @@
 %def_with libidn2
 
 Name: dnsmasq
-Version: 2.78
+Version: 2.79
 
-Release: alt2
+Release: alt1
 Summary: A lightweight caching nameserver
 License: %gpl2plus
 Group: System/Servers
@@ -136,6 +136,9 @@ fi
 %_man1dir/dhcp_*
 
 %changelog
+* Wed Apr 18 2018 Mikhail Efremov <sem@altlinux.org> 2.79-alt1
+- Updated to 2.79.
+
 * Mon Jan 22 2018 Mikhail Efremov <sem@altlinux.org> 2.78-alt2
 - Build with libidn2 instead of libidn.
 
