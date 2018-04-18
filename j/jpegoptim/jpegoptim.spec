@@ -1,5 +1,5 @@
 Name: jpegoptim
-Version: 1.4.5
+Version: 1.4.6
 Release: alt1
 
 Summary: Utility to optimize jpeg files
@@ -20,6 +20,7 @@ maximum quality factor.
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 libtoolize -i
 %configure
 %make_build
@@ -32,6 +33,9 @@ libtoolize -i
 %_man1dir/*
 
 %changelog
+* Wed Apr 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.6-alt1
+- 1.4.6
+
 * Tue Apr 03 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt1
 - 1.4.5
 
