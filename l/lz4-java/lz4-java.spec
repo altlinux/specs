@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          lz4-java
 Version:       1.3.0
-Release:       alt1_8jpp8
+Release:       alt2_8jpp8
 Summary:       LZ4 compression for Java
 # GPL: src/xxhash/bench.c
 # src/lz4/programs
@@ -113,7 +113,7 @@ bnd wrap -p lz4.bnd -o dist/lz4-%{version}.jar --version %{version} dist/lz4.jar
 %mvn_artifact dist/lz4-%{version}.pom dist/lz4-%{version}.jar
 %mvn_install -J build/docs
 
-%ifnarch %{arm} aarch64 ppc64
+%ifnarch %{arm} %{e2k} aarch64 ppc64
 # FIXME - tests fail on aarch64 for unknown reason.
 # On armhfp tests are skipped due to poor JVM performance ("Execution
 # time total: 3 hours 37 minutes 14 seconds" ... waste of time)
@@ -123,12 +123,15 @@ ant %build_opts test
 
 %files -f .mfiles
 %doc CHANGES.md README.md
-%doc LICENSE.txt LICENSE.xxhash lz4_LICENSE
+%doc --no-dereference LICENSE.txt LICENSE.xxhash lz4_LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed Apr 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_8jpp8
+- e2k support
+
 * Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_8jpp8
 - new version
 
