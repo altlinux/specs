@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jackcess
 Version:       2.1.3
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Java library for reading from and writing to MS Access databases
 License:       ASL 2.0
 URL:           http://jackcess.sourceforge.net/
@@ -69,12 +69,15 @@ find . -name "*.jar" -print -delete
 
 %files -f .mfiles
 %doc TODO.txt
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.3-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.3-alt1_5jpp8
 - fc27 update
 
