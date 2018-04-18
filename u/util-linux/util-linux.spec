@@ -3,7 +3,7 @@
 ### Header
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.30.2
+Version: 2.32
 Release: alt1
 License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
 Group: System/Base
@@ -83,9 +83,6 @@ Requires: libmount = %version-%release
 
 # 151635 - makeing /var/log/lastlog
 Patch5: util-linux-ng-2.21-login-lastlog.patch
-
-# move /var/lib/lastdate -> /var/lib/hwclock/lastdate
-Patch13: util-linux-2.25.2-alt-hwclock-badyear.patch
 
 # Owl
 Patch41: util-linux-2.29.0-owl-write.patch
@@ -290,6 +287,14 @@ JAZ, ZIP or USB disk) to be ejected under software control.   The  command
 can  also control some multi-disc CD-ROM changers, the auto-eject feature
 supported by some devices, and close the disc tray of some  CD-ROM drives.
 
+%package -n rfkill
+Summary: A tool to use /dev/rfkill
+Group: Networking/Other
+
+%description -n rfkill
+rfkill is a small tool to query the state of the rfkill switches,
+buttons and subsystem interfaces.
+
 %package -n libblkid
 Summary: Dynamic block device id library
 Group: System/Libraries
@@ -445,7 +450,6 @@ Bash completion for %name.
 cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 
 %patch5 -p1
-%patch13 -p1
 
 %patch41 -p1 -b .write
 
@@ -470,6 +474,7 @@ cp -- %SOURCE7 rpm/
 export SUID_CFLAGS="-fpie"
 export SUID_LDFLAGS="-pie"
 export HAS_GTKDOC=1
+export runstatedir="%_runtimedir"
 
 po/update-potfiles
 autopoint --force
@@ -549,7 +554,7 @@ klcc -Wall -Wextra -Werror nologin.c -o nologin
 # cal: broken.
 # mount, swapon: required real root and ignored in hasher.
 # ipcs/limits*: failed in hasher.
-rm -rf tests/ts/{cal,fincore,login,look,ipcs/limits*,libmount/{lock,utils},misc/ionice,more/regexp}
+rm -rf tests/ts/{cal,fincore,login,look,ipcs/limits*,libmount/{lock,utils},misc/{setarch,ionice},more/regexp}
 LANG=C %make check-local-tests
 
 %install
@@ -709,7 +714,7 @@ done > setarch.files
 
 	# sbindir
 	ls -1 %buildroot/%_sbindir |
-		egrep -v '(fdisk|hwclock|uuidd)' |
+		egrep -v '(fdisk|hwclock|uuidd|rfkill)' |
     		sed -e 's|^\(.*\)$|%%_sbindir/\1|g'
 
 	# man1dir
@@ -725,7 +730,7 @@ done > setarch.files
 	# man8dir
 	ls -1 %buildroot%_man8dir |
 		egrep -v "^($exclude_archs)\.8*\$" |
-		egrep -v '(mount|^swapo|losetup|lsblk|clock|getty|fdisk|part|uuidd)' |
+		egrep -v '(mount|^swapo|losetup|lsblk|clock|getty|fdisk|part|uuidd|rfkill)' |
 		sed -e 's|^\(.*\)$|%%_man8dir/\1*|g'
 
 	# unitdir
@@ -846,6 +851,10 @@ fi
 %_bindir/look
 %_man1dir/look.*
 
+%files -n rfkill
+%_sbindir/rfkill
+%_man8dir/rfkill.*
+
 %if_enabled login
 %files -n login
 /bin/login
@@ -950,6 +959,10 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Thu Mar 29 2018 Alexey Gladkov <legion@altlinux.ru> 2.32-alt1
+- New version (2.32).
+- New subpackage rfkill.
+
 * Mon Oct 16 2017 Alexey Gladkov <legion@altlinux.ru> 2.30.2-alt1
 - New version (2.30.2).
 
