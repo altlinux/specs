@@ -1,3 +1,5 @@
+%def_with libdpdk
+%def_with libgps
 %def_enable apache
 %def_enable bind
 %def_enable cgi
@@ -27,7 +29,7 @@
 
 Name: collectd
 Version: 5.8.0
-Release: alt1
+Release: alt2
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -41,7 +43,7 @@ Patch0: %name-%version-alt.patch
 # Automatically added by buildreq on Thu May 14 2009 (-bi)
 #BuildRequires: flex gcc-c++ iptables-devel libMySQL-devel libcurl-devel libdbi-devel libesmtp-devel libgcrypt-devel libnet-snmp-devel libnetlink-devel libnotify-devel liboping-devel libpcap-devel librrd-devel libsensors-devel libvirt-devel libxfs-devel libxml2-devel libxmms-devel nut-devel perl-devel perl-threads perl-Regexp-Common postgresql-devel
 BuildRequires: flex gcc-c++ iptables-devel libgcrypt-devel libpcap-devel libxfs-devel
-BuildRequires: libstatgrab-devel dpdk-devel libgps-devel
+BuildRequires: libstatgrab-devel
 BuildRequires(pre):rpm-build-ubt
 
 %if_enabled perl
@@ -111,6 +113,8 @@ This package pulls in plugins which might be useful at a cluster
 Summary: Meta package for %name plugins
 Group: Monitoring
 BuildArch: noarch
+%{?_with_libdpdk:Requires: %name-dpdk}
+%{?_with_libgps:Requires: %name-gps}
 %{?_enable_apache:Requires: %name-apache}
 %{?_enable_bind:Requires: %name-bind}
 %{?_enable_cgi:Requires: %name-cgi}
@@ -136,6 +140,26 @@ BuildArch: noarch
 %description full
 This package pulls in all the different plugins and might
 come handy if you don't mind extra dependencies on the system
+
+%if_with libdpdk
+%package dpdk
+Summary: DPDK support module for collectd
+Group: Monitoring
+BuildRequires: dpdk-devel
+
+%description dpdk
+This plugin provides DPDK support for collectd
+%endif
+
+%if_with libgps
+%package gps
+Summary: GPS support module for collectd
+Group: Monitoring
+BuildRequires: libgps-devel
+
+%description gps
+This plugin provides GPS support for collectd
+%endif
 
 %if_enabled apache
 %package apache
@@ -478,6 +502,8 @@ mkdir libltdl
 	--disable-java \
 	--without-java \
 	--disable-debug \
+	%{subst_with libdpdk} \
+	%{subst_with libgps} \
 	%{subst_enable apache} \
 	%{subst_enable curl} \
 	%{subst_enable dbi} \
@@ -588,6 +614,8 @@ service %name condrestart ||:
 %dir %_localstatedir/%name/
 %dir %_libdir/%name/
 %_libdir/%name/*.so
+%{?_with_libdpdk:%exclude %_libdir/%name/dpdk*.so}
+%{?_with_libgps:%exclude %_libdir/%name/gps.so}
 %{?_enable_apache:%exclude %_libdir/%name/apache.so}
 %{?_enable_bind:%exclude %_libdir/%name/bind.so}
 %{?_enable_curl:%exclude %_libdir/%name/curl.so}
@@ -626,6 +654,16 @@ service %name condrestart ||:
 %dir %perl_vendor_privlib/Collectd
 %perl_vendor_privlib/*.pm
 %perl_vendor_privlib/*/*.pm
+%endif
+
+%if_with libdpdk
+%files dpdk
+%_libdir/%name/dpdk*.so
+%endif
+
+%if_with libgps
+%files gps
+%_libdir/%name/gps.so
 %endif
 
 %if_enabled apache
@@ -772,6 +810,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Wed Apr 18 2018 Michael Shigorin <mike@altlinux.org> 5.8.0-alt2
+- add the missing libdpdk, libgps knobs
+
 * Tue Apr 3 2018 Mikhail Savostyanov <mik@altlinux.ru> 5.8.0-alt1
 - New version 5.8.0
 
