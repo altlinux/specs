@@ -36,7 +36,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javasqlite
 Version:        20150419
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        SQLite Java Wrapper/JDBC Driver
 
 License:        BSD
@@ -147,16 +147,19 @@ done
 
 %files
 %doc ChangeLog
-%doc license.terms
+%doc --no-dereference license.terms
 %dir %{_libdir}/%{name}/
 %{_libdir}/%{name}/sqlite.jar
 %{_libdir}/%{name}/libsqlite_jni.so
 
 %files javadoc
-%doc license.terms
+%doc --no-dereference license.terms
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 20150419-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 20150419-alt1_6jpp8
 - fc27 update
 
