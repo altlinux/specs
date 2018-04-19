@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jetty8
 Version:        8.1.17
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        Java Webserver and Servlet Container
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
 # some MIT-licensed code (from Utf8Appendable) is used too
@@ -230,7 +230,7 @@ rm -Rf LICENSE-CONTRIBUTOR/
 
 %files -f .mfiles-jetty-project
 %{!?_licensedir:%global license %%doc}
-%doc NOTICE.txt README.txt VERSION.txt LICENSE*
+%doc --no-dereference NOTICE.txt README.txt VERSION.txt LICENSE*
 
 %files rewrite -f .mfiles-jetty-rewrite
 %files client -f .mfiles-jetty-client
@@ -239,7 +239,7 @@ rm -Rf LICENSE-CONTRIBUTOR/
 %files websocket -f .mfiles-jetty-websocket
 %files webapp -f .mfiles-jetty-webapp
 %files util -f .mfiles-jetty-util
-%doc NOTICE.txt LICENSE*
+%doc --no-dereference NOTICE.txt LICENSE*
 %files servlet -f .mfiles-jetty-servlet
 %files servlets -f .mfiles-jetty-servlets
 %files server -f .mfiles-jetty-server
@@ -250,9 +250,12 @@ rm -Rf LICENSE-CONTRIBUTOR/
 %files continuation -f .mfiles-jetty-continuation
 
 %files javadoc -f .mfiles-javadoc
-%doc NOTICE.txt LICENSE*
+%doc --no-dereference NOTICE.txt LICENSE*
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 8.1.17-alt1_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 8.1.17-alt1_8jpp8
 - fc27 update
 
