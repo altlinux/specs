@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           options
 Version:        1.2
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Summary:        Library for managing sets of JVM properties to configure an app or library
 License:        ASL 2.0
 URL:            https://github.com/headius/%{name}
@@ -50,6 +50,9 @@ cp %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_10jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_9jpp8
 - fc27 update
 
