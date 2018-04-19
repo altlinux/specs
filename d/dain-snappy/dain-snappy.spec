@@ -19,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           dain-snappy
 Version:        0.4
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Snappy compression library
 License:        ASL 2.0 and BSD
 URL:            https://github.com/dain/snappy
@@ -76,12 +76,15 @@ sed -i /@Test/d $(find -name SnappyTest.java)
 
 %files -f .mfiles
 %doc README.md
-%doc license.txt notice.md
+%doc --no-dereference license.txt notice.md
 
 %files javadoc -f .mfiles-javadoc
-%doc license.txt notice.md
+%doc --no-dereference license.txt notice.md
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_4jpp8
 - fc27 update
 
