@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          struts
 Version:       1.3.10
-Release:       alt4_20jpp8
+Release:       alt4_21jpp8
 Summary:       Web application framework
 License:       ASL 2.0
 URL:           http://struts.apache.org/
@@ -131,12 +131,15 @@ cd src
 rm -rf $RPM_BUILD_ROOT/var/lib/tomcat?/webapps/struts-documentation/download.cgi
 
 %files -f src/.mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f src/.mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_21jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_20jpp8
 - fc27 update
 
