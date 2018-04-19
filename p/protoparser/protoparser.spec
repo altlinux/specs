@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          protoparser
 Version:       3.1.5
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java parser for .proto schema declarations
 # Source files without license headers https://github.com/square/protoparser/issues/105
 License:       ASL 2.0
@@ -55,12 +55,15 @@ find ./ -name "*.java" -exec sed -i "s/org.fest.assertions/org.assertj.core/g" {
 
 %files -f .mfiles
 %doc CHANGELOG.md CONTRIBUTING.md README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.5-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.5-alt1_3jpp8
 - fc27 update
 
