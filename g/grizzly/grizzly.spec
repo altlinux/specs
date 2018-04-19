@@ -2,11 +2,11 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: perl(IO/Socket.pm)
+BuildRequires: perl(IO/Socket.pm) rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -23,15 +23,13 @@ BuildRequires: jpackage-generic-compat
 
 # Conditionals to help breaking grizzly <-> jersey dependency cycle
 %if 0%{?fedora}
-#def_with jersey
 %bcond_with jersey
-#def_with jaxws
 %bcond_with jaxws
 %endif
 
 Name:          grizzly
 Version:       2.3.24
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Java NIO Server Framework
 # see Grizzly_THIRDPARTYLICENSEREADME.txt
 License:       (CDDL or GPLv2 with exceptions) and BSD and ASL 2.0 and Public Domain
@@ -204,15 +202,18 @@ done
 
 %files -f .mfiles
 %{_javadir}/%{name}/%{name}.jar
-%doc LICENSE.txt Grizzly_THIRDPARTYLICENSEREADME.txt
+%doc --no-dereference LICENSE.txt Grizzly_THIRDPARTYLICENSEREADME.txt
 
 %files samples -f .mfiles-samples
-%doc LICENSE.txt Grizzly_THIRDPARTYLICENSEREADME.txt
+%doc --no-dereference LICENSE.txt Grizzly_THIRDPARTYLICENSEREADME.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt Grizzly_THIRDPARTYLICENSEREADME.txt
+%doc --no-dereference LICENSE.txt Grizzly_THIRDPARTYLICENSEREADME.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.3.24-alt1_5jpp8
+- java update
+
 * Tue Oct 31 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.3.24-alt1_4jpp8
 - new jpp release
 
