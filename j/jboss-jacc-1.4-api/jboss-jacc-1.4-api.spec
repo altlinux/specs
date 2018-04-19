@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jboss-jacc-1.4-api
 Version:        1.0.2
-Release:        alt2_13jpp8
+Release:        alt2_14jpp8
 Summary:        JBoss JACC 1.4 API
 License:        CDDL or GPLv2 with exceptions
 URL:            http://www.jboss.org
@@ -62,6 +62,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE README
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_14jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_13jpp8
 - fc27 update
 
