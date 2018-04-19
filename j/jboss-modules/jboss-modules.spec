@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-modules
 Version:          1.5.2
-Release:          alt2_3jpp8
+Release:          alt2_4jpp8
 Summary:          A Modular Classloading System
 # XPP3 License: src/main/java/org/jboss/modules/xml/MXParser.java
 #  src/main/java/org/jboss/modules/xml/XmlPullParser.java
@@ -73,12 +73,15 @@ rm src/test/java/org/jboss/modules/MavenResourceTest.java \
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE.txt XPP3-LICENSE.txt
+%doc --no-dereference LICENSE.txt XPP3-LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt XPP3-LICENSE.txt
+%doc --no-dereference LICENSE.txt XPP3-LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt2_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt2_3jpp8
 - fc27 update
 
