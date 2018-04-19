@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          ironjacamar
 Version:       1.3.4
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Java Connector Architecture 1.7 implementation
 License:       LGPLv2+
 URL:           http://www.ironjacamar.org/
@@ -50,6 +50,7 @@ BuildRequires: mvn(org.jgroups:jgroups)
 BuildRequires: mvn(org.picketbox:picketbox)
 
 # Runtime dependecies
+Requires:      javapackages-tools
 Requires:      mvn(javax.validation:validation-api)
 Requires:      mvn(org.jboss:jandex)
 Requires:      mvn(org.jboss:jboss-transaction-spi)
@@ -142,13 +143,16 @@ cp -rp target/docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc
 %{_javadocdir}/%{name}
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt1_4jpp8
 - fc27 update
 
