@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-perl rpm-build-python rpm-macros-fedora-compat rpm-macros-java
-BuildRequires: /usr/bin/bundle /usr/bin/cabal /usr/bin/haxe /usr/bin/mcs /usr/bin/npm /usr/bin/perl /usr/bin/php /usr/bin/phpunit /usr/bin/ruby /usr/bin/runhaskell /usr/bin/trial gcc-c++ perl(Encode.pm) perl(HTTP/Request.pm) perl(IO/Select.pm) perl(IO/Socket/INET.pm) perl(IO/Socket/SSL.pm) perl(IO/Socket/UNIX.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Time/HiRes.pm) perl(base.pm) perl(overload.pm) perl-podlators pkgconfig(Qt5Core) pkgconfig(Qt5Network) pkgconfig(mono) rpm-build-java
+BuildRequires(pre): rpm-build-perl rpm-build-php7 rpm-build-python rpm-macros-fedora-compat rpm-macros-java
+BuildRequires: /usr/bin/perl /usr/bin/php /usr/bin/phpunit /usr/bin/ruby /usr/bin/runhaskell /usr/bin/trial gcc-c++ perl(Encode.pm) perl(HTTP/Request.pm) perl(IO/Select.pm) perl(IO/Socket/INET.pm) perl(IO/Socket/SSL.pm) perl(IO/Socket/UNIX.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Time/HiRes.pm) perl(base.pm) perl(overload.pm) perl-podlators pkgconfig(Qt5Core) pkgconfig(Qt5Network) pkgconfig(mono) rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: mono-web javapackages-local
 BuildRequires: chrpath
@@ -9,9 +9,6 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global php_extdir  %(php-config --extension-dir 2>/dev/null || echo "undefined")
-
-
-%global __provides_exclude_from ^(%{python_sitelibdir}/.*\\.so|%{php_extdir}/.*\\.so)$
 
 %global have_mongrel 0
 
@@ -60,7 +57,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    thrift
 Version: 0.10.0
-Release: alt1_4jpp8
+Release: alt1_9jpp8
 Summary: Software framework for cross-language services development
 
 # Parts of the source are used under the BSD and zlib licenses, but
@@ -88,6 +85,8 @@ Patch1: fb303-%{version}-buildxml.patch
 Patch2: configure-java-prefix.patch
 # fix for ppc64le builds not linking to /usr/lib64 directory
 Patch3: fix-ppc64le-builds.patch
+# fix for s390x build; incorporates fix for THRIFT-4177 with some code from THRIFT-4136
+Patch4: THRIFT-4177.patch
 
 Group: Development/Other
 
@@ -108,8 +107,8 @@ BuildRequires: libevent-devel
 BuildRequires: libstdc++-devel
 BuildRequires: libtool
 BuildRequires: libssl-devel
-BuildRequires: libqt4-declarative libqt4-devel qt4-designer
-BuildRequires: texlive-latex-recommended texlive-base-bin texlive-generic-recommended
+BuildRequires: libqt4-declarative libqt4-devel qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools
+BuildRequires: texlive-texmf
 BuildRequires: zlib-devel
 
 %if 0%{?want_golang} > 0
@@ -129,7 +128,7 @@ Python, %{?php_langname}and other languages.
 Group: Development/C++
 Summary: Development files for %{name}
 Requires: %{name} = %{version}-%{release}
-Requires: pkg-config
+Requires: pkgconfig
 Requires: boost-devel-headers boost-python-headers
 
 %description devel
@@ -235,6 +234,7 @@ BuildRequires: httpcomponents-client
 BuildRequires: httpcomponents-core
 BuildRequires: java-devel
 BuildRequires: javapackages-tools
+BuildRequires: javapackages-local
 BuildRequires: junit
 BuildRequires: log4j
 BuildRequires: slf4j
@@ -323,6 +323,7 @@ The fb303-java package contains Java bindings for fb303.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %{?!el5:sed -i -e 's/^AC_PROG_LIBTOOL/LT_INIT/g' configure.ac}
 
@@ -353,7 +354,7 @@ sed -i 's|ANT_VALID=.*|ANT_VALID=1|' contrib/fb303/aclocal/ax_javac_and_java.m4
 %build
 export PY_PREFIX=%{_prefix}
 export PERL_PREFIX=%{_prefix}
-export PHP_PREFIX=%{php_extdir}
+export PHP_PREFIX=%{php7_extdir}
 export JAVA_PREFIX=%{_javadir}
 export RUBY_PREFIX=%{_prefix}
 export GLIB_LIBS=$(pkg-config --libs glib-2.0)
@@ -446,7 +447,7 @@ mv %{buildroot}/usr/lib/perl5/* %{buildroot}/%{perl_vendor_privlib}
 
 # Move arch-independent php files into the appropriate place
 mkdir -p %{buildroot}/%{_datadir}/php/
-mv %{buildroot}/%{php_extdir}/Thrift %{buildroot}/%{_datadir}/php/
+mv %{buildroot}/%{php7_extdir}/Thrift %{buildroot}/%{_datadir}/php/
 %endif # want_php
 
 # Fix permissions on Thread.h
@@ -469,7 +470,7 @@ install -pm 644 %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP-libfb303.pom
 # Ensure all python scripts are executable
 find %{buildroot} -name \*.py -exec grep -q /usr/bin/env {} \; -print | xargs -r chmod 755
 # kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
 done
 
@@ -554,6 +555,9 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 %endif
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt1_9jpp8
+- e2k support; java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt1_4jpp8
 - new version
 
