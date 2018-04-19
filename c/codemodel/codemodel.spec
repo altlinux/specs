@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:         codemodel
 Version:      2.6
-Release:      alt2_22jpp8
+Release:      alt2_23jpp8
 Summary:      Java library for code generators
 License:      CDDL-1.1 or GPLv2 with exceptions
 URL:          http://codemodel.java.net
@@ -64,12 +64,15 @@ find . -name '*.jar' -print -delete
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.html
+%doc --no-dereference LICENSE.html
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.html
+%doc --no-dereference LICENSE.html
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_23jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_22jpp8
 - new fc release
 
