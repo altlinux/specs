@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        3.2.2
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Provides new interfaces, implementations and utilities for Java Collections
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}/
@@ -101,6 +101,9 @@ ant tf.javadoc -Dtf.build.docs=target/site/apidocs/
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.2.2-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.2-alt1_6jpp8
 - fc27 update
 
