@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          shrinkwrap-descriptors
 Version:       2.0.0
-Release:       alt3_0.19.alpha9jpp8
+Release:       alt3_0.20.alpha9jpp8
 Summary:       ShrinkWrap sub-project for creating Archive Descriptors
 # Some file are without license headers
 # reported @ https://github.com/shrinkwrap/descriptors/issues/106
@@ -246,7 +246,7 @@ export JAVA5_HOME=%{_jvmdir}/java
 %mvn_install
 
 %files -f .mfiles-%{name}-api-base
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files ant -f .mfiles-%{name}-ant
 %files api-javaee -f .mfiles-%{name}-api-javaee
@@ -255,17 +255,17 @@ export JAVA5_HOME=%{_jvmdir}/java
 %files api-misc -f .mfiles-%{name}-api-misc
 
 %files bom -f .mfiles-%{name}-bom
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files build-resources -f .mfiles-%{name}-build-resources
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files depchain -f .mfiles-%{name}-depchain
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files gen -f .mfiles-%{name}-gen
 %doc gen/readme.txt
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files impl-base -f .mfiles-%{name}-impl-base
 %files impl-javaee -f .mfiles-%{name}-impl-javaee
@@ -276,17 +276,20 @@ export JAVA5_HOME=%{_jvmdir}/java
 %files metadata-parser-test -f .mfiles-%{name}-metadata-parser-test
 
 %files parent -f .mfiles-%{name}-parent
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files spi -f .mfiles-%{name}-spi
 
 %files test-util -f .mfiles-%{name}-test-util
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_0.20.alpha9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_0.19.alpha9jpp8
 - fc27 update
 
