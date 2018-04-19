@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global majorversion 5
 Name:          hibernate-validator
 Version:       5.2.4
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Bean Validation 1.1 (JSR 349) Reference Implementation
 License:       ASL 2.0
 URL:           http://www.hibernate.org/subprojects/validator.html
@@ -162,25 +162,28 @@ rm engine/src/main/java/org/hibernate/validator/internal/engine/valuehandling/Ja
 
 %files -f .mfiles-%{name}
 %doc CONTRIBUTING.md README.md changelog.txt
-%doc copyright.txt license.txt
+%doc --no-dereference copyright.txt license.txt
 
 %files annotation-processor -f .mfiles-%{name}-annotation-processor
-%doc copyright.txt license.txt
+%doc --no-dereference copyright.txt license.txt
 
 %files cdi -f .mfiles-%{name}-cdi
 %files parent -f .mfiles-%{name}-parent
-%doc copyright.txt license.txt
+%doc --no-dereference copyright.txt license.txt
 
 %files performance -f .mfiles-%{name}-performance
-%doc copyright.txt license.txt
+%doc --no-dereference copyright.txt license.txt
 
 %files test-utils -f .mfiles-%{name}-test-utils
-%doc copyright.txt license.txt
+%doc --no-dereference copyright.txt license.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc copyright.txt license.txt
+%doc --no-dereference copyright.txt license.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 5.2.4-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.2.4-alt1_3jpp8
 - fc27 update
 
