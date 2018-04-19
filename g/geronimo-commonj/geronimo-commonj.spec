@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %global spec_name geronimo-commonj_%{spec_ver}_spec
 Name:    geronimo-commonj
 Version: 1.1.0
-Release: alt2_15jpp8
+Release: alt2_16jpp8
 Summary: CommonJ Specification
 License: ASL 2.0
 URL:     http://geronimo.apache.org/
@@ -51,12 +51,15 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_16jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_15jpp8
 - fc27 update
 
