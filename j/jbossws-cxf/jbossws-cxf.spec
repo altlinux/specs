@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jbossws-cxf
 Version:          5.1.5
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          JBoss Web Services CXF stack
 License:          LGPLv2+
 URL:              http://jbossws.jboss.org/
@@ -138,6 +137,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt1_4jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt1_3jpp8
 - new version
 
