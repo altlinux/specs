@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define pkg_name geronimo-jaspic_%{api_version}_spec
 Name:          geronimo-jaspic-spec
 Version:       1.1
-Release:       alt3_15jpp8
+Release:       alt3_16jpp8
 Summary:       Java Authentication SPI for Containers
 License:       ASL 2.0 and W3C
 URL:           http://geronimo.apache.org/
@@ -76,6 +76,9 @@ ln -sf ../%{name}.jar %{buildroot}%{_javadir}/javax.security.auth.message/
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_16jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_15jpp8
 - fc27 update
 
