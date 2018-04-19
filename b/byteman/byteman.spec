@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             byteman
 Version:          3.0.6
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          Java agent-based bytecode injection tool
 License:          LGPLv2+
 URL:              http://www.jboss.org/byteman
@@ -144,15 +144,18 @@ ln -s %{_javadir}/byteman/byteman.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman.j
 %{apphomedir}/*
 %{_bindir}/*
 %doc README docs/ProgrammersGuide.pdf
-%doc docs/copyright.txt
+%doc --no-dereference docs/copyright.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc docs/copyright.txt
+%doc --no-dereference docs/copyright.txt
 
 %files rulecheck-maven-plugin -f .mfiles-rulecheck-maven-plugin
-%doc docs/copyright.txt
+%doc --no-dereference docs/copyright.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.6-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.6-alt1_4jpp8
 - fc27 update
 
