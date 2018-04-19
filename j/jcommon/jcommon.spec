@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: jcommon
 Version: 1.0.23
-Release: alt1_6jpp8
+Release: alt1_7jpp8
 Summary: JFree Java utility classes
 License: LGPLv2+
 Group: System/Libraries
@@ -78,6 +78,9 @@ MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0.23-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0.23-alt1_6jpp8
 - fc27 update
 
