@@ -28,7 +28,7 @@ BuildRequires: jpackage-generic-compat
 Name:          springframework-data-mongodb
 # Newer release require springframework >= 4.0.7.RELEASE
 Version:       1.5.2
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       MongoDB support for Spring Data
 License:       ASL 2.0
 URL:           http://projects.spring.io/spring-data-mongodb/
@@ -206,18 +206,21 @@ opts="-f"
 
 %files -f .mfiles-%{oname}
 %doc CONTRIBUTING.MD README.md changelog.txt
-%doc license.txt notice.txt
+%doc --no-dereference license.txt notice.txt
 
 %files log4j -f .mfiles-%{oname}-log4j
 %doc %{oname}-log4j/README.md
 
 %files parent -f .mfiles-%{oname}-parent
-%doc license.txt notice.txt
+%doc --no-dereference license.txt notice.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc license.txt notice.txt
+%doc --no-dereference license.txt notice.txt
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_7jpp8
 - fc27 update
 
