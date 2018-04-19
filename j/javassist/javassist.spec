@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javassist
 Version:        3.18.1
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        The Java Programming Assistant provides simple Java bytecode manipulation
 Group:          Development/Other
 License:        MPLv1.1 or LGPLv2+ or ASL 2.0
@@ -75,6 +75,9 @@ mkdir runtest
 %doc License.html
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.18.1-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.18.1-alt1_7jpp8
 - fc27 update
 
