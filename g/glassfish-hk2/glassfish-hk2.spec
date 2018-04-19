@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          glassfish-hk2
 Version:       2.4.0
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       Hundred Kilobytes Kernel
 License:       CDDL or GPLv2 with exceptions
 URL:           http://hk2.java.net/
@@ -527,96 +527,99 @@ sed -i 's/\r//' LICENSE.txt
 
 %files -f .mfiles-%{name}
 %doc README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files api -f .mfiles-api
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files class-model -f .mfiles-class-model
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files configuration -f .mfiles-configuration
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files core -f .mfiles-core
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files dependency-verifier -f .mfiles-dependency-verifier
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files dependency-visualizer -f .mfiles-dependency-visualizer
 %doc dependency-visualizer/README
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files extras -f .mfiles-extras
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files guice-bridge -f .mfiles-guice-bridge
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files hk2 -f .mfiles-hk2
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files inhabitant-generator -f .mfiles-inhabitant-generator
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files jmx -f .mfiles-jmx
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files locator -f .mfiles-locator
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files locator-extras -f .mfiles-locator-extras
 %doc hk2-testing/hk2-locator-extras/README.txt
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files locator-no-proxies -f .mfiles-locator-no-proxies
 %doc hk2-testing/hk2-locator-no-proxies/README.txt
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files locator-no-proxies2 -f .mfiles-locator-no-proxies2
 %doc hk2-testing/hk2-locator-no-proxies2/README.txt
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files maven -f .mfiles-maven
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files maven-plugins -f .mfiles-maven-plugins
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files metadata-generator -f .mfiles-metadata-generator
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files osgi -f .mfiles-osgi
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files osgi-resource-locator -f .mfiles-osgi-resource-locator
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files runlevel -f .mfiles-runlevel
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files runlevel-extras -f .mfiles-runlevel-extras
 %doc hk2-testing/hk2-runlevel-extras/README.txt
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files spring-bridge -f .mfiles-spring-bridge
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files testing -f .mfiles-testing
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files testng -f .mfiles-testng
 %doc hk2-testing/hk2-testng/README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files utils -f .mfiles-utils
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_8jpp8
 - fc27 update
 
