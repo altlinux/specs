@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          fastutil
 Version:       7.0.7
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Fast & compact type-specific collections for Java
 # LGPL (v2.1 or later):
 # src/it/unimi/dsi/fastutil/io/InspectableFileCachedInputStream.java
@@ -32,7 +32,7 @@ BuildRequires: emma
 BuildRequires: java-javadoc
 BuildRequires: javapackages-local
 # Required for generate source code
-BuildRequires: gcc-common
+BuildRequires: gcc
 
 BuildArch:     noarch
 Source44: import.info
@@ -87,12 +87,15 @@ ant -Djar.base=%{_javadir}/emma junit
 
 %files -f .mfiles
 %doc CHANGES README.md
-%doc LICENSE-2.0
+%doc --no-dereference LICENSE-2.0
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-2.0
+%doc --no-dereference LICENSE-2.0
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 7.0.7-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 7.0.7-alt1_4jpp8
 - fc27 update
 
