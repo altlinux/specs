@@ -1,8 +1,7 @@
-BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-toplink-essentials
 Version:       2.0.46
-Release:       alt3_12jpp8
+Release:       alt3_14jpp8
 Summary:       Glassfish JPA Toplink Essentials
 License:       CDDL or GPLv2 with exceptions
 URL:           http://glassfish.java.net/javaee5/persistence/
@@ -30,6 +29,7 @@ Patch3:        glassfish-persistence-2.0.41-use_system_antlr.patch
 
 BuildRequires: java-devel
 BuildRequires: jpackage-utils
+BuildRequires: javapackages-local
 
 BuildRequires: ant
 BuildRequires: antlr-tool
@@ -102,16 +102,19 @@ mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -pr glassfish/entity-persistence/build/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
 %files -f .mfiles
-%doc glassfish/bootstrap/legal/*
+%doc --no-dereference glassfish/bootstrap/legal/*
 
 %files javadoc
 %{_javadocdir}/%{name}
-%doc glassfish/bootstrap/legal/3RD-PARTY-LICENSE*.txt
-%doc glassfish/bootstrap/legal/CDDL*.txt
-%doc glassfish/bootstrap/legal/COPYRIGHT
-%doc glassfish/bootstrap/legal/LICENSE.txt
+%doc --no-dereference glassfish/bootstrap/legal/3RD-PARTY-LICENSE*.txt
+%doc --no-dereference glassfish/bootstrap/legal/CDDL*.txt
+%doc --no-dereference glassfish/bootstrap/legal/COPYRIGHT
+%doc --no-dereference glassfish/bootstrap/legal/LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.46-alt3_14jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.46-alt3_12jpp8
 - added BR: javapackages-local for javapackages 5
 
