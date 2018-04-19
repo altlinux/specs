@@ -2,7 +2,7 @@
 %define module Async-Interrupt
 
 Name: perl-%module
-Version: 1.22
+Version: 1.24
 Release: alt1
 Epoch: 1
 
@@ -16,7 +16,7 @@ Url: %CPAN %module
 Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
-BuildRequires: perl-common-sense perl-devel
+BuildRequires: perl-common-sense perl-devel perl(Canary/Stability.pm)
 
 %description
 This module implements asynchronous notifications that enable you to signal
@@ -38,6 +38,9 @@ without using a single syscall.
 %perl_vendor_autolib/Async
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.24-alt1
+- automated CPAN update
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.22-alt1
 - automated CPAN update
 
