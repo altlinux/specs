@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             fusesource-pom
 Version:          1.11
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          Parent POM for FuseSource Maven projects
 License:          ASL 2.0
 URL:              http://fusesource.com/
@@ -40,9 +40,12 @@ cp -p %{SOURCE1} LICENSE
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.11-alt1_3jpp8
+- java update
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.11-alt1_2jpp8
 - new version
 
