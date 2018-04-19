@@ -5,10 +5,11 @@
 
 %def_enable gtk_doc
 %def_enable introspection
+%def_with tests_package
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GStreamer-%api_ver RTSP server library
 Group: System/Libraries
@@ -23,7 +24,7 @@ Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 Requires: gst-plugins-base%api_ver >= %gst_ver gst-plugins-good%api_ver gst-plugins-bad%api_ver
 
 BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: gstreamer gstreamer%api_ver-devel >= %gst_ver
+BuildPreReq: gstreamer%api_ver-devel >= %gst_ver
 BuildPreReq: gst-plugins%api_ver-devel >= %gst_ver gst-plugins-good%api_ver gst-plugins-bad%api_ver-devel
 BuildRequires: gtk-doc
 BuildRequires: gobject-introspection-devel gst-plugins%api_ver-gir-devel
@@ -67,6 +68,15 @@ Requires: %name-devel = %version-%release
 %description gir-devel
 GObject introspection devel data for the GStreamer RTSP server library.
 
+%package tests
+Summary: Tests programms from %name package
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the GStreamer-based RTSP server library.
+
 %prep
 %setup -n %_name-%version
 
@@ -81,6 +91,15 @@ GObject introspection devel data for the GStreamer RTSP server library.
 
 %install
 %makeinstall_std
+
+%if_with tests_package
+mkdir -p %buildroot%_bindir
+pushd examples/.libs
+for f in test-*; do
+    install -pm755 $f %buildroot%_bindir/gst-rtsp-$f
+done
+popd
+%endif
 
 %files
 %_libdir/libgstrtspserver-%api_ver.so.*
@@ -103,8 +122,15 @@ GObject introspection devel data for the GStreamer RTSP server library.
 %files gir-devel
 %_girdir/GstRtspServer-%api_ver.gir
 
+%if_with tests_package
+%files tests
+%_bindir/*-test-*
+%endif
 
 %changelog
+* Thu Apr 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt2
+- new optional -tests subpackage (ALT #34828)
+
 * Tue Mar 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
 - 1.14.0
 
