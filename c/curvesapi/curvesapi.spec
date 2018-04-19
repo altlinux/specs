@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global githash 25f63a4a5a98a4bc82bb0e155cdf4d28e0c9e8a7
 Name:          curvesapi
 Version:       1.04
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java implementation of various mathematical curves
 # Fork of https://sourceforge.net/projects/curves/
 License:       BSD
@@ -58,12 +58,15 @@ done
 
 %files -f .mfiles
 %doc README.md readme.txt release-notes.txt scshot.png demo
-%doc license.txt
+%doc --no-dereference license.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc license.txt
+%doc --no-dereference license.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1_3jpp8
 - fc27 update
 
