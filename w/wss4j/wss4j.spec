@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          wss4j
 Version:       2.1.5
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Apache WS-Security implementation
 License:       ASL 2.0
 URL:           http://ws.apache.org/wss4j/
@@ -103,12 +103,15 @@ rm ws-security-stax/src/test/java/org/apache/wss4j/stax/test/AttachmentTest.java
 
 %files -f .mfiles
 %doc ChangeLog.txt README.txt
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.1.5-alt1_5jpp8
+- java update
+
 * Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1.5-alt1_4jpp8
 - fixed build with new checkstyle
 
