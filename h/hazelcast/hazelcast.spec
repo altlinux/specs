@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          hazelcast
 Version:       3.2.2
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       Hazelcast CE In-Memory DataGrid
 License:       ASL 2.0
 URL:           http://www.hazelcast.com/
@@ -207,32 +207,35 @@ rm -rf hazelcast*/src/test/java/*
 %files -f .mfiles-%{name}
 %dir %{_javadir}/%{name}
 %doc README.md
-%doc license.txt notice.txt
+%doc --no-dereference license.txt notice.txt
 
 %files client -f .mfiles-%{name}-client
-%doc license.txt notice.txt
+%doc --no-dereference license.txt notice.txt
 
 %files cloud -f .mfiles-%{name}-cloud
-%doc license.txt notice.txt
+%doc --no-dereference license.txt notice.txt
 
 %files hibernate -f .mfiles-%{name}-hibernate
-%doc license.txt notice.txt
+%doc --no-dereference license.txt notice.txt
 
 %files ra -f .mfiles-%{name}-ra
-%doc license.txt notice.txt
+%doc --no-dereference license.txt notice.txt
 
 %if 0
 %files spring -f .mfiles-%{name}-spring
-%doc license.txt notice.txt
+%doc --no-dereference license.txt notice.txt
 %endif
 
 %files wm -f .mfiles-%{name}-wm
-%doc license.txt notice.txt
+%doc --no-dereference license.txt notice.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc license.txt notice.txt
+%doc --no-dereference license.txt notice.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.2-alt1_9jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.2-alt1_8jpp8
 - new version
 
