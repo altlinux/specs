@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          swagger-core
 Version:       1.5.10
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java implementation of Swagger
 # Source files without license headers https://github.com/swagger-api/swagger-core/issues/1882
 License:       ASL 2.0
@@ -199,7 +199,7 @@ rm modules/swagger-jaxrs/src/test/java/io/swagger/functional/test/ApiListingReso
 %doc README.md
 
 %files annotations -f .mfiles-swagger-annotations
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files hibernate-validations -f .mfiles-swagger-hibernate-validations
 %files jaxrs -f .mfiles-swagger-jaxrs
@@ -208,14 +208,17 @@ rm modules/swagger-jaxrs/src/test/java/io/swagger/functional/test/ApiListingReso
 %files models -f .mfiles-swagger-models
 %files mule -f .mfiles-swagger-mule
 %files project -f .mfiles-swagger-project
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files servlet -f .mfiles-swagger-servlet
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.10-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.10-alt1_3jpp8
 - fc27 update
 
