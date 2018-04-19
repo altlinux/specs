@@ -24,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          tika
 Version:       1.12
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       A content analysis toolkit
 License:       ASL 2.0
 Url:           http://tika.apache.org/
@@ -355,7 +355,7 @@ rm -r %{name}-parsers/src/test/java/org/apache/tika/parser/microsoft/ooxml/OOXML
 
 %files -f .mfiles-%{name}-core
 %doc CHANGES.txt HEADER.txt KEYS README.md
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %if %{without tika_parsers}
 %if %{without tika_app}
@@ -373,18 +373,21 @@ rm -r %{name}-parsers/src/test/java/org/apache/tika/parser/microsoft/ooxml/OOXML
 %endif
 
 %files parent -f .mfiles-%{name}-parent
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files pom -f .mfiles-%{name}
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files serialization -f .mfiles-%{name}-serialization
 %files translate -f .mfiles-%{name}-translate
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_4jpp8
 - fc27 update
 
