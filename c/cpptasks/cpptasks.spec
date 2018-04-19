@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		cpptasks
 Version:	1.0b5
-Release:	alt2_19jpp8
+Release:	alt2_20jpp8
 Summary:	Compile and link task for ant
 
 License:	ASL 2.0
@@ -77,14 +77,17 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/
 echo "ant/%{name}" > $RPM_BUILD_ROOT/%{_sysconfdir}/ant.d/%{name}
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 %doc README.fedora
 %{_sysconfdir}/ant.d/%{name}
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_20jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_19jpp8
 - fc27 update
 
