@@ -1,7 +1,7 @@
 %define module Source-Package
 
 Name: perl-%module
-Version: 0.170
+Version: 0.171
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -33,6 +33,9 @@ Conflicts: perl-Source-Repository < 0.388
 %perl_vendor_privlib/Source*
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.171-alt1
+- new version
+
 * Thu Mar 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.170-alt1
 - suse version comparator for watch.altlinux.org
 
