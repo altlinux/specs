@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           sonar-update-center
 Version:        1.12.1
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Summary:        Sonar Update Center
 License:        LGPLv3+
 URL:            http://www.sonarqube.org
@@ -85,6 +85,9 @@ find -name '*.jar' -delete
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_10jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_9jpp8
 - fc27 update
 
