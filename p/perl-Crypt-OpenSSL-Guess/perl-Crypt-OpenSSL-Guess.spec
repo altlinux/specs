@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(Module/Build/Tiny.pm) perl(Symbol.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
 %define module_name Crypt-OpenSSL-Guess
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.01
+Version: 0.11
 Release: alt1
 Summary: Guess OpenSSL include path
 Group: Development/Perl
 License: perl
 URL: https://github.com/akiym/Crypt-OpenSSL-Guess
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/A/AK/AKIYM/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AK/AKIYM/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -40,6 +40,9 @@ Original code is taken from `inc/Module/Install/PRIVATE/Net/SSLeay.pm' by the Ne
 %perl_vendor_privlib/C*
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Sat Apr 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.01-alt1
 - new version
 
