@@ -20,7 +20,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          vorbis-java
 Version:       0.8
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Ogg and Vorbis toolkit for Java
 License:       ASL 2.0
 URL:           https://github.com/Gagravarr/VorbisJava
@@ -95,20 +95,23 @@ find . -name "*.jar" -delete
 
 %files -f .mfiles-%{name}
 %doc CHANGES.txt README.txt TODO.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %if %{without tika}
 %files tika -f .mfiles-%{name}-tika
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 %endif
 
 %files tools -f .mfiles-%{name}-tools
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_3jpp8
 - fc27 update
 
