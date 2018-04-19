@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           junitperf
 Version:        1.9.1
-Release:        alt1_19jpp8
+Release:        alt1_20jpp8
 Summary:        JUnit extension for performance and scalability testing
 License:        BSD
 Source0:        http://www.clarkware.com/software/junitperf-1.9.1.zip
@@ -113,6 +113,9 @@ cp -pr samples %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt1_20jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt1_19jpp8
 - fc27 update
 
