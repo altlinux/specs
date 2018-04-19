@@ -1,6 +1,6 @@
 Name: psi
-Version: 0.16
-Release: alt1.git1.ccc24db
+Version: 1.3
+Release: alt1
 Group: Networking/Instant messaging
 Summary: Psi Jabber client
 Summary(ru_RU.UTF-8): Jabber клиент Psi
@@ -9,18 +9,23 @@ Url: http://psi-im.org/
 Source: %name-%version-%release.tar
 Source1: iris.tar
 Source2: libpsi.tar
+Source3: http-parser.tar
+Source4: qhttp.tar
 Patch0: %name-%version-%release.patch
 Patch1: psi-0.14-alt-glibc-2.16.patch
 
 #BuildRequires: unzip
 Requires: sound_handler ca-certificates
 # Automatically added by buildreq on Tue Nov 25 2008
-BuildRequires: gcc-c++ libXScrnSaver-devel libaspell-devel libcom_err-devel libqt4-devel libqca2-devel
-BuildRequires: libidn-devel
+BuildRequires(pre): rpm-macros-qt5
+BuildRequires: gcc-c++ libXScrnSaver-devel libaspell-devel libcom_err-devel libqca-qt5-devel
+BuildRequires: libidn-devel zlib-devel
+BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-tools qt5-x11extras-devel
 
 Conflicts: qssl < 2.0 psi0.11
 Obsoletes: psi0.11
-Requires: libqt4-core >= %{get_version libqt4-core} sox qca2-ossl qca2-gnupg
+Requires: qt5-base-common >= %_qt5_version
+Requires: sox qca-qt5-ossl qca-qt5-gnupg
 
 %description 
 Psi is a Jabber Instant Messaging client based on Qt.  Jabber supports
@@ -38,10 +43,12 @@ AIM.  Psi поддерживает такие возможности Jabber, к�
 т.д.
 
 %prep
-%setup -q -n %name-%version-%release -a1 -a2
+%setup -q -n %name-%version-%release -a1 -a2 -a3 -a4
 %patch0 -p1
 %patch1 -p0
 mv libpsi src/
+mv qhttp 3rdparty/
+mv http-parser 3rdparty/
 mkdir -p lang/
 
 %build
@@ -49,12 +56,11 @@ mkdir -p lang/
     --prefix=%prefix \
     --bindir=%_bindir \
     --datadir=%_datadir \
-    --qtdir=%_qt4dir \
-	--with-qca-inc=%_includedir/qt4/ \
-	--with-qca-lib=%_libdir
+    --release \
+    --qtselect=5
 %make
 
-lrelease-qt4 psi_ru.ts
+lrelease-qt5 psi_ru.ts
 
 %install
 %makeinstall INSTALL_ROOT=%buildroot
@@ -75,6 +81,11 @@ rm -Rf %buildroot%_datadir/psi/{README,COPYING,certs}
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Thu Apr 19 2018 Oleg Solovyov <mcpain@altlinux.org> 1.3-alt1
+- Updated to version 1.3
+- Updated Russian translation from upstream
+- Built using Qt5
+
 * Fri Dec 18 2015 Mikhail Efremov <sem@altlinux.org> 0.16-alt1.git1.ccc24db
 - Drop history dialog patch.
 - Updated to current git.
