@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           dcm4che-test
 Version:        2.6
-Release:        alt3_0.14.20110530svn15516jpp8
+Release:        alt3_0.15.20110530svn15516jpp8
 Summary:        Test images for dcm4che2
 License:        MPLv1.1 or GPLv2 or LGPLv2
 URL:            http://www.dcm4che.org/confluence/display/proj/The+Project
@@ -53,6 +53,9 @@ rm -rf target/site/apidocs/javadoc.sh
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.6-alt3_0.15.20110530svn15516jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.6-alt3_0.14.20110530svn15516jpp8
 - fc27 update
 
