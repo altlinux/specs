@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          cxf-xjc-utils
 Version:       3.0.5
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Apache CXF XJC-Utils
 License:       ASL 2.0
 URL:           http://cxf.apache.org/xjc-utils.html
@@ -89,6 +89,9 @@ rm -r javadoc/src/test/java/*
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.5-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.5-alt1_3jpp8
 - fc27 update
 
