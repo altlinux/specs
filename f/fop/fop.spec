@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 Name:           fop
 Summary:        XSL-driven print formatter
 Version:        2.0
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 # ASL 1.1:
 # several files in src/java/org/apache/fop/render/awt/viewer/resources/
 # rest is ASL 2.0
@@ -41,7 +41,7 @@ Requires:       avalon-framework >= 4.1.4
 Requires:       batik >= 1.7
 Requires:       xalan-j2 >= 2.7.0
 Requires:       xml-commons-apis >= 1.3.04
-Requires:       jakarta-commons-httpclient
+Requires:       apache-commons-httpclient
 Requires:       apache-commons-io >= 1.2
 Requires:       apache-commons-logging >= 1.0.4
 Requires:       fontbox
@@ -152,6 +152,9 @@ ln -s fop %buildroot%_bindir/xmlgraphics-fop
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_8jpp8
 - fc27 update
 
