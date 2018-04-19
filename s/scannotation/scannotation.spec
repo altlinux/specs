@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          scannotation
 Version:       1.0.3
-Release:       alt2_0.15.r12jpp8
+Release:       alt2_0.16.r12jpp8
 Summary:       A Java annotation scanner
 License:       ASL 2.0
 URL:           http://scannotation.sourceforge.net
@@ -73,12 +73,15 @@ cp -p %SOURCE1 .
 %mvn_install
 
 %files -f .mfiles
-%doc License.txt
+%doc --no-dereference License.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc License.txt
+%doc --no-dereference License.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_0.16.r12jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_0.15.r12jpp8
 - fc27 update
 
