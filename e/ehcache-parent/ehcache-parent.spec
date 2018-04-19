@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          ehcache-parent
 Version:       2.3
-Release:       alt2_14jpp8
+Release:       alt2_15jpp8
 Summary:       Ehcache Parent
 License:       ASL 2.0
 URL:           http://www.terracotta.org/
@@ -37,6 +37,9 @@ Ehcache is a widely used, pure Java, in-process, distributed cache.
 %files -f .mfiles
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt2_15jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt2_14jpp8
 - fc27 update
 
