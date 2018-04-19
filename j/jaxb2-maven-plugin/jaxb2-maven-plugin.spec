@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jaxb2-maven-plugin
 Version:       1.6
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       JAXB-2 Maven Plugin
 License:       ASL 2.0
 Url:           http://www.mojohaus.org/jaxb2-maven-plugin/
@@ -85,12 +85,15 @@ sed -i 's/\r//' LICENSE.txt
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_6jpp8
 - fc27 update
 
