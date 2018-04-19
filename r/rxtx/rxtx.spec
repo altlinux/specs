@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 Summary:	Parallel communication for the Java Development Toolkit
 Name:		rxtx
 Version:	%{upver}
-Release:	alt3_0.19.20100211jpp8
+Release:	alt3_0.20.20100211jpp8
 License:	LGPLv2+
 URL:		http://rxtx.qbang.org/
 # The source for this package was pulled from upstream's vcs.  Use the
@@ -90,11 +90,14 @@ find %{buildroot} -name '*.la' -exec rm {} \;
 %mvn_install
 
 %files -f .mfiles
-%doc COPYING
+%doc --no-dereference COPYING
 %doc AUTHORS ChangeLog README TODO README.distro
 %{jni}
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_0.20.20100211jpp8
+- java update
+
 * Mon Nov 06 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_0.19.20100211jpp8
 - fixed bad_elf_symbols inl/inw (Patch33)
 
