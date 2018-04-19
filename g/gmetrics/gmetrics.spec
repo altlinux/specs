@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          gmetrics
 Version:       0.7
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Groovy library that provides reports and metrics for Groovy code
 License:       ASL 2.0
 Url:           http://gmetrics.sourceforge.net/
@@ -96,12 +96,15 @@ done
 
 %files -f .mfiles
 %doc CHANGELOG.txt README.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_3jpp8
 - fc27 update
 
