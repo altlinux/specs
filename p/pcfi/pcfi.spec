@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           pcfi
 Version:        2010.08.09
-Release:        alt2_12.20111103gitbd245c9jpp8
+Release:        alt2_13.20111103gitbd245c9jpp8
 Summary:        PDF Core Font Information
 
 Group:          Publishing
@@ -52,6 +52,9 @@ cp %SOURCE1 .
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt2_13.20111103gitbd245c9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt2_12.20111103gitbd245c9jpp8
 - fc27 update
 
