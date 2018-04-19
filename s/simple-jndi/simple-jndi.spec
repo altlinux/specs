@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          simple-jndi
 Version:       0.11.4.1
-Release:       alt2_12jpp8
+Release:       alt2_13jpp8
 Summary:       A JNDI implementation
 License:       BSD
 Url:           https://github.com/hen/osjava
@@ -78,12 +78,15 @@ rm -r src/test/org/osjava/sj/memory/SharedMemoryTest.java
 %mvn_install -J dist/docs/api
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.11.4.1-alt2_13jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.11.4.1-alt2_12jpp8
 - fc27 update
 
