@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global checkout 20130104cvs
 Name:           rachota
 Version:        2.3
-Release:        alt1_13.20130104cvsjpp8
+Release:        alt1_14.20130104cvsjpp8
 Summary:        Straightforward timetracking
 
 Group:          Development/Java
@@ -94,6 +94,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_14.20130104cvsjpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_13.20130104cvsjpp8
 - fc27 update
 
