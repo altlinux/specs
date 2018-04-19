@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:       dbus-java
 Version:    2.7
-Release:    alt2_26jpp8
+Release:    alt2_27jpp8
 Summary:    Java implementation of the DBus protocol
 License:    AFL or LGPLv2
 URL:        http://freedesktop.org/wiki/Software/DBusBindings
@@ -31,25 +31,26 @@ Patch3:     utf-8-encoding.patch
 Patch4:     version-less-jars.patch
 
 BuildRequires:  javapackages-local
+BuildRequires:  texlive-collection-basic
+BuildRequires:  texlive-collection-basic
 BuildRequires:  texlive-base
-BuildRequires:  texlive-latex-base
-BuildRequires:  texlive-base
-BuildRequires:  texlive-latex-base
-BuildRequires:  texlive-fonts-extra
-BuildRequires:  texlive-latex-recommended
-BuildRequires:  texlive-latex-base
-BuildRequires:  texlive-base-bin
-BuildRequires:  texlive-base-bin
-BuildRequires:  texlive-generic-recommended
-BuildRequires:  tex4ht
-BuildRequires:  texlive-base-bin
+BuildRequires:  texlive-collection-basic
+BuildRequires:  texlive-collection-fontsextra
+BuildRequires:  texlive texlive-collection-basic
+BuildRequires:  texlive texlive-collection-basic
+BuildRequires:  texlive texlive-collection-basic
+BuildRequires:  texlive texlive-collection-basic texlive-dist
+BuildRequires:  texlive-dist
+BuildRequires:  texlive texlive-collection-basic texlive-dist
+BuildRequires:  texlive texlive-collection-basic
 BuildRequires:  docbook-utils
 BuildRequires:  gettext gettext-tools
 BuildRequires:  libmatthew-java
 BuildRequires:  docbook2X
-BuildRequires:  texlive-latex-recommended
+BuildRequires:  tex(fullpage.sty)
 
 Requires:   java >= 1.6.0
+Requires:   javapackages-tools
 Requires:   libmatthew-java
 Source44: import.info
 
@@ -147,14 +148,17 @@ make install \
 %doc %{_mandir}/man1/DBusViewer.1*
 %doc %{_mandir}/man1/ListDBus.1*
 %doc AUTHORS INSTALL README
-%doc COPYING
+%doc --no-dereference COPYING
 
 %files javadoc
 %{_javadocdir}/%{name}
-%doc COPYING
+%doc --no-dereference COPYING
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_27jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_26jpp8
 - fc27 update
 
