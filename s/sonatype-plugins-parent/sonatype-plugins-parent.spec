@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sonatype-plugins-parent
 Version:        8
-Release:        alt2_11jpp8
+Release:        alt2_12jpp8
 Summary:        Sonatype Plugins Parent POM
 BuildArch:      noarch
 Group:          Development/Other
@@ -42,6 +42,9 @@ cd ./plugins-parent
 %doc LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 8-alt2_12jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 8-alt2_11jpp8
 - fc27 update
 
