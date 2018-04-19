@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          plexus-pom
 Version:       5.0
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Root Plexus Projects POM
 Group:         Development/Other
 License:       ASL 2.0
@@ -42,9 +42,12 @@ cp -p %{SOURCE1} LICENSE
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 5.0-alt1_2jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 5.0-alt1_1jpp8
 - new version
 
