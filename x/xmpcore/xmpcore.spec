@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          xmpcore
 Version:       5.1.2
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       Java XMP Library
 License:       BSD
 URL:           http://www.adobe.com/devnet/xmp.html
@@ -58,12 +58,15 @@ sed -i 's/\r//' BSD-License.txt
 %mvn_install
 
 %files -f .mfiles
-%doc BSD-License.txt
+%doc --no-dereference BSD-License.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc BSD-License.txt
+%doc --no-dereference BSD-License.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt1_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt1_8jpp8
 - fc27 update
 
