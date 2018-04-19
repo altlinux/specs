@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           spin
 Version:        1.5
-Release:        alt2_16jpp8
+Release:        alt2_17jpp8
 Summary:        A transparent threading solution for non-freezing Swing applications
 License:        LGPLv2
 Group:          Development/Java
@@ -63,6 +63,9 @@ rm -rf lib
 %doc license.txt
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_17jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_16jpp8
 - fc27 update
 
