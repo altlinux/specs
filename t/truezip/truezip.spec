@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
+BuildRequires: rpm-build-java zip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          truezip
 Version:       7.7.9
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Java based VFS for treating archive files as virtual directories
 
 License:       EPL
@@ -267,7 +267,7 @@ cp -p %{SOURCE1} .
 
 %files parent -f .mfiles-%{name}
 %files javadoc -f .mfiles-javadoc
-%doc epl-v10.html
+%doc --no-dereference epl-v10.html
 %files driver-parent -f .mfiles-%{name}-driver
 %files driver-file -f .mfiles-%{name}-driver-file
 %files driver-http -f .mfiles-%{name}-driver-http
@@ -279,12 +279,15 @@ cp -p %{SOURCE1} .
 %files extension-pace -f .mfiles-%{name}-extension-pace
 %files file -f .mfiles-%{name}-file
 %files kernel -f .mfiles-%{name}-kernel
-%doc epl-v10.html
+%doc --no-dereference epl-v10.html
 %files path -f .mfiles-%{name}-path
 %files samples -f .mfiles-%{name}-samples
 %files swing -f .mfiles-%{name}-swing
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 7.7.9-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 7.7.9-alt1_5jpp8
 - fc27 update
 
