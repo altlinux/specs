@@ -2,7 +2,7 @@
 
 Name: openorienteering-mapper
 Version: 0.8.1
-Release: alt2%ubt
+Release: alt3%ubt
 
 Summary: OpenOrienteering Mapper program for orienteering mapmaking
 License: GPLv3
@@ -33,6 +33,7 @@ BuildRequires: ctest
 Requires: gdal
 #provides owner for %%_iconsdir/hicolor subtree
 Requires: icon-theme-hicolor
+Requires: qt5-assistant
 
 %description
  OpenOrienteering Mapper is an orienteering mapmaking program and provides a
@@ -54,9 +55,12 @@ are happy about feedback to the program.
 cp doc/licensing/fedora-licensing.cmake doc/licensing/altlinux-licensing.cmake
 sed -i 's|doc/gdal-libs|gdal|g' doc/licensing/altlinux-licensing.cmake
 
+#fix qt assistant search by default paths
+sed -i 's|"assistant"|"assistant-qt5"|g' src/gui/util_gui.cpp
+
 %build
 %cmake
-%cmake_build # VERBOSE=1
+%cmake_build
 
 %install
 %cmakeinstall_std
@@ -79,6 +83,9 @@ popd
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Apr 19 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.8.1-alt3%ubt
+- Fix Qt Assistant search by default paths
+
 * Fri Apr 13 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.8.1-alt2%ubt
 - Rebuild with ubt
 
