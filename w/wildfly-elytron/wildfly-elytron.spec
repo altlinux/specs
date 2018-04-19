@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          wildfly-elytron
 Version:       1.0.2
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Security, Authentication, and Authorization SPIs for the WildFly project
 # LGPLv2: ./src/main/java/org/wildfly/security/permission/PermissionActions.java
 # most of the code in ./src/main/java/org/wildfly/security/manager/
@@ -73,12 +73,15 @@ This package contains javadoc for %{name}.
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_4jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_3jpp8
 - new version
 
