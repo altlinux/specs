@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		jpf
 Version:	1.5.1
-Release:	alt2_17jpp8
+Release:	alt2_18jpp8
 Summary:	Java Plug-in Framework
 License:	LGPLv2
 URL:		http://jpf.sourceforge.net/
@@ -85,6 +85,9 @@ mkdir -p %{buildroot}%{_mavenpomdir}/jpf
 %doc license.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2_18jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2_17jpp8
 - fc27 update
 
