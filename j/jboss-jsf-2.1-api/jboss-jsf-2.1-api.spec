@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    jboss-jsf-2.1-api
 Version: 2.0.2
-Release: alt3_14jpp8
+Release: alt3_15jpp8
 Summary: JavaServer Faces 2.1 API
 License: CDDL or GPLv2 with exceptions
 URL:     http://www.jboss.org
@@ -67,14 +67,17 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt3_15jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt3_14jpp8
 - fc27 update
 
