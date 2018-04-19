@@ -27,7 +27,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          springframework-batch
 Version:       2.2.7
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Tools for enterprise batch or bulk processing
 License:       ASL 2.0
 URL:           http://www.springsource.org/spring-batch
@@ -284,12 +284,15 @@ sed -i 's|${basedir}/target/generated-resources|${basedir}/target/generated-reso
 
 %files -f .mfiles
 %doc README.md
-%doc license.txt notice.txt
+%doc --no-dereference license.txt notice.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc license.txt notice.txt
+%doc --no-dereference license.txt notice.txt
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt1_5jpp8
 - fc27 update
 
