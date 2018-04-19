@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             guessencoding
 Version:          1.4
-Release:          alt2_14jpp8
+Release:          alt2_15jpp8
 Summary:          Guess encoding of files and return configured reader
 Group:            Development/Other
 License:          ASL 2.0
@@ -78,6 +78,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_15jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_14jpp8
 - fc27 update
 
