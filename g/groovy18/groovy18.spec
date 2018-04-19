@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           groovy18
 Version:        1.8.9
-Release:        alt1_30jpp8
+Release:        alt1_31jpp8
 Summary:        Dynamic language for the Java Platform
 
 # Some of the files are licensed under BSD and CPL terms, but the CPL has been superceded
@@ -207,17 +207,20 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %{_bindir}/*
 %config(noreplace) %{_sysconfdir}/%{name}-starter.conf
 %doc README.md
-%doc LICENSE.txt LICENSE-2.0.txt NOTICE.txt cpl-v10.txt epl-v10.txt
+%doc --no-dereference LICENSE.txt LICENSE-2.0.txt NOTICE.txt cpl-v10.txt epl-v10.txt
 %config(noreplace,missingok) /etc/%{name}.conf
 
 %files lib -f .mfiles-%{name}-lib
-%doc LICENSE.txt LICENSE-2.0.txt NOTICE.txt cpl-v10.txt epl-v10.txt
+%doc --no-dereference LICENSE.txt LICENSE-2.0.txt NOTICE.txt cpl-v10.txt epl-v10.txt
 
 %files javadoc
 %{_javadocdir}/%{name}
-%doc LICENSE.txt LICENSE-2.0.txt NOTICE.txt cpl-v10.txt epl-v10.txt
+%doc --no-dereference LICENSE.txt LICENSE-2.0.txt NOTICE.txt cpl-v10.txt epl-v10.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.9-alt1_31jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.9-alt1_30jpp8
 - fc27 update
 
