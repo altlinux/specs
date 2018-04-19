@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          ldaptive
 Version:       1.1.0
-Release:       alt1_2jpp8
+Release:       alt1_4jpp8
 Summary:       LDAP library for Java
 License:       ASL 2.0 or LGPLv3
 URL:           http://www.ldaptive.org/
@@ -105,19 +105,22 @@ cp -p distribution/NOTICE .
 
 %files -f .mfiles-%{name}
 %doc README.md
-%doc LICENSE* NOTICE
+%doc --no-dereference LICENSE* NOTICE
 
 %files beans -f .mfiles-%{name}-beans
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE* NOTICE
+%doc --no-dereference LICENSE* NOTICE
 
 %files json -f .mfiles-%{name}-json
 %files parent -f .mfiles-%{name}-parent
-%doc LICENSE* NOTICE
+%doc --no-dereference LICENSE* NOTICE
 
 %files templates -f .mfiles-%{name}-templates
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_4jpp8
+- java update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_2jpp8
 - new jpp release
 
