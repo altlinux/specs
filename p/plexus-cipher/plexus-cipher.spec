@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plexus-cipher
 Version:        1.7
-Release:        alt3_13jpp8
+Release:        alt3_14jpp8
 Summary:        Plexus Cipher: encryption/decryption Component
 License:        ASL 2.0
 # project moved to GitHub and it looks like there is no official website anymore
@@ -68,6 +68,9 @@ API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.7-alt3_14jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.7-alt3_13jpp8
 - fc27 update
 
