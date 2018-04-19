@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-remoting-jmx
 Version:       2.0.1
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       JMX via JBoss Remoting
 License:       LGPLv2+
 URL:           http://www.jboss.org/
@@ -59,12 +59,15 @@ This package contains the API documentation for %{name}.
 
 %files -f .mfiles
 %doc README
-%doc COPYING.txt
+%doc --no-dereference COPYING.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc COPYING.txt
+%doc --no-dereference COPYING.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_4jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_3jpp8
 - new version
 
