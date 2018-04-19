@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           plexus-active-collections
 Version:        1.0
-Release:        alt2_0.22.beta2jpp8
+Release:        alt2_0.23.beta2jpp8
 Summary:        Plexus Container-Backed Active Collections
 
 License:        ASL 2.0
@@ -61,6 +61,9 @@ cp %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.23.beta2jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.22.beta2jpp8
 - fc27 update
 
