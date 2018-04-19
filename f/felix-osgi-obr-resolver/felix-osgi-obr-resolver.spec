@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             felix-osgi-obr-resolver
 Version:          1.8.0
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          Apache Felix Resolver
 License:          ASL 2.0
 URL:              http://felix.apache.org/documentation/subprojects/apache-felix-osgi-bundle-repository.html
@@ -54,13 +54,16 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc NOTICE DEPENDENCIES
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_4jpp8
 - fc27 update
 
