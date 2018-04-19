@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %def_with plugin
 
 Name: perl-JavaScript-Beautifier
-Version: 0.21
+Version: 0.23
 Release: alt1
 
 Summary: JavaScript::Beautifier - Beautify Javascript (beautifier for javascript)
@@ -31,15 +32,20 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
+%doc README.md LICENSE Changes
 %_bindir/js_beautify.pl
 %_man1dir/js_beautify.*
 %perl_vendor_privlib/JavaScript/Beautifier*
+%perl_vendor_privlib/JavaScript/Packer1.pm
 %if_with plugin
 %perl_vendor_privlib/Code/TidyAll/Plugin/JSBeautifier*
 %endif
-%doc Changes README
+%doc Changes
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - automated CPAN update
 
