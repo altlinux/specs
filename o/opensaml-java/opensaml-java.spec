@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          opensaml-java
 Version:       3.1.1
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java OpenSAML library
 
 # Only these files are without license headers:
@@ -271,6 +271,9 @@ EOF
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.1.1-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.1.1-alt1_3jpp8
 - fc27 update
 
