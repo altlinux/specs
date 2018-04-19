@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          shrinkwrap-resolver
 Version:       2.2.2
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Java API to obtain Maven artifacts
 # Some file are without license headers
 # reported @ https://issues.jboss.org/projects/SHRINKRES/issues/SHRINKRES-242
@@ -239,23 +239,23 @@ rm -r impl-maven-archive/src/test/java/org/jboss/shrinkwrap/resolver/impl/maven/
 
 %files api -f .mfiles-%{name}-api
 %doc README.asciidoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files api-gradle-embedded-archive -f .mfiles-%{name}-api-gradle-embedded-archive
 %files api-maven -f .mfiles-%{name}-api-maven
 %files api-maven-archive -f .mfiles-%{name}-api-maven-archive
 
 %files bom -f .mfiles-%{name}-bom
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files build-resources -f .mfiles-%{name}-build-resources
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files depchain -f .mfiles-%{name}-depchain
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files gradle-depchain -f .mfiles-%{name}-gradle-depchain
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files impl-gradle-embedded-archive -f .mfiles-%{name}-impl-gradle-embedded-archive
 %files impl-maven -f .mfiles-%{name}-impl-maven
@@ -263,16 +263,19 @@ rm -r impl-maven-archive/src/test/java/org/jboss/shrinkwrap/resolver/impl/maven/
 %files maven-plugin -f .mfiles-%{name}-maven-plugin
 
 %files parent -f .mfiles-%{name}-parent
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files spi -f .mfiles-%{name}-spi
 %files spi-maven -f .mfiles-%{name}-spi-maven
 %files spi-maven-archive -f .mfiles-%{name}-spi-maven-archive
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt1_4jpp8
 - fc27 update
 
