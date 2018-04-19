@@ -1,5 +1,5 @@
 Name: 	 ruby-domain_name
-Version: 0.5.20170404 
+Version: 0.5.20180417
 Release: alt1
 
 Summary: Domain Name manipulation library for Ruby
@@ -52,5 +52,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Apr 19 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.20180417-alt1
+- New version.
+
 * Mon Sep 11 2017 Andrey Cherepanov <cas@altlinux.org> 0.5.20170404-alt1
 - Initial build for Sisyphus.
