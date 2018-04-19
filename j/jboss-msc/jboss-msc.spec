@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-msc
 Version:          1.2.6
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          JBoss Modular Service Container
 # Not available license file https://issues.jboss.org/browse/MSC-153
 License:          LGPLv2+
@@ -66,6 +66,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt1_3jpp8
 - fc27 update
 
