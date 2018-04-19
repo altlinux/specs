@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 %bcond_with jetty
 Name:          jersey
 Version:       2.23.2
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       JAX-RS (JSR 311) production quality Reference Implementation
 # One file in jersey-core/ is under ASL 2.0 license
 License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
@@ -400,15 +400,18 @@ sed -i "s|Xmx1024m|Xmx512m|" pom.xml
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE.html LICENSE.txt LICENSE-2.0.txt etc/config/copyright.txt
+%doc --no-dereference LICENSE.html LICENSE.txt LICENSE-2.0.txt etc/config/copyright.txt
 
 %files test-framework -f .mfiles-test-framework
-%doc LICENSE.html LICENSE.txt etc/config/copyright.txt
+%doc --no-dereference LICENSE.html LICENSE.txt etc/config/copyright.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.html LICENSE.txt LICENSE-2.0.txt etc/config/copyright.txt
+%doc --no-dereference LICENSE.html LICENSE.txt LICENSE-2.0.txt etc/config/copyright.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.23.2-alt1_4jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 2.23.2-alt1_3jpp8
 - new version
 
