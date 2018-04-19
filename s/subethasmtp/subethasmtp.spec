@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global githash db8a995386c9808c893384023eee78e087ad9ad7
 Name:          subethasmtp
 Version:       3.1.7
-Release:       alt1_11jpp8
+Release:       alt1_12jpp8
 Summary:       A SMTP mail server for Java
 # BSD: src/main/java/org/subethamail/smtp/util/Base64.java
 License:       ASL 2.0 and BSD
@@ -94,12 +94,15 @@ sed -i.java8 "s|MDC.setContextMap(parentLoggingMdcContext);|MDC.setContextMap((M
 
 %files -f .mfiles
 %doc README.html
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.7-alt1_12jpp8
+- java update
+
 * Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.7-alt1_11jpp8
 - new version
 
