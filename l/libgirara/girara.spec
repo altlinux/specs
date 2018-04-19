@@ -3,7 +3,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lib%_name
-Version: 0.2.8
+Version: 0.2.9
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
@@ -13,9 +13,9 @@ URL: http://pwmt.org/projects/girara
 # https://git.pwmt.org/pwmt/girara.git
 Source: %name-%version.tar
 
-Patch: %_name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses meson
 
 BuildRequires: libgtk+3-devel >= 3.4 libnotify-devel
 BuildRequires: intltool
@@ -39,11 +39,14 @@ developing applications that use %name.
 %patch -p1
 
 %build
-export CFLAGS="%optflags"
-%make_build VERBOSE=1 PREFIX=%prefix LIBDIR=%_libdir
+%meson \
+	-Denable-notify=true \
+	-Denable-json=false
+
+%meson_build -v
 
 %install
-%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir
+%meson_install
 %find_lang %name-gtk3-%_soname
 
 %files -f %name-gtk3-%_soname.lang
@@ -56,9 +59,10 @@ export CFLAGS="%optflags"
 %_libdir/*.so
 %_libdir/pkgconfig/*.pc
 
-%exclude %_libdir/*.a
-
 %changelog
+* Wed Apr 18 2018 Mikhail Efremov <sem@altlinux.org> 0.2.9-alt1
+- Updated to 0.2.9.
+
 * Mon Jan 15 2018 Mikhail Efremov <sem@altlinux.org> 0.2.8-alt1
 - Updated to 0.2.8.
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura
-Version: 0.3.8
+Version: 0.3.9
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -12,7 +12,7 @@ Url: https://zathura.pwmt.org/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses meson
 BuildRequires: libgirara-devel >= 0.2.0-alt1
 BuildRequires: intltool libgtk+3-devel libsqlite3-devel python3-module-docutils libmagic-devel zlib-devel
 # For man pages
@@ -42,11 +42,12 @@ developing applications that use %name.
 %patch -p1
 
 %build
-export CFLAGS="%optflags"
-%make VERBOSE=1 LIBDIR=%_libdir SFLAGS='' RSTTOMAN=/usr/bin/rst2man.py
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir RSTTOMAN=/usr/bin/rst2man.py
+%meson_install
+#  Create directory for plugins
 mkdir -p %buildroot%_libdir/zathura
 %find_lang %name
 
@@ -55,7 +56,8 @@ mkdir -p %buildroot%_libdir/zathura
 %_bindir/%name
 %dir %_libdir/%name
 %_desktopdir/*
-%_datadir/metainfo/%name.appdata.xml
+%_iconsdir/*/*/*
+%_datadir/metainfo/*.xml
 %_man1dir/*
 %_man5dir/*
 %_datadir/dbus-1/interfaces/org.pwmt.*
@@ -65,6 +67,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Apr 18 2018 Mikhail Efremov <sem@altlinux.org> 0.3.9-alt1
+- Updated to 0.3.9.
+
 * Mon Jan 15 2018 Mikhail Efremov <sem@altlinux.org> 0.3.8-alt1
 - Fixed appdata location.
 - Updated to 0.3.8.

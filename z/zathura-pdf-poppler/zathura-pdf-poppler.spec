@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura-pdf-poppler
-Version: 0.2.8
+Version: 0.2.9
 Release: alt1
 
 Summary: PDF support for zathura (poppler)
@@ -11,9 +11,9 @@ Group: Office
 URL: http://pwmt.org/projects/zathura/plugins/zathura-pdf-poppler
 # https://git.pwmt.org/pwmt/zathura-pdf-poppler.git
 Source: %name-%version.tar
-#Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses meson
 
 BuildRequires: libgirara-devel zathura-devel
 BuildRequires: intltool libpoppler-glib-devel libcairo-devel
@@ -26,14 +26,14 @@ the poppler rendering engine.
 
 %prep
 %setup
-#patch -p1
+%patch -p1
 
 %build
-export CFLAGS="%optflags"
-%make_build VERBOSE=1 PREFIX=%prefix LIBDIR=%_libdir
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -43,6 +43,9 @@ export CFLAGS="%optflags"
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Apr 19 2018 Mikhail Efremov <sem@altlinux.org> 0.2.9-alt1
+- Updated to 0.2.9.
+
 * Mon Jan 15 2018 Mikhail Efremov <sem@altlinux.org> 0.2.8-alt1
 - Fixed appdata location.
 - Updated to 0.2.8.
