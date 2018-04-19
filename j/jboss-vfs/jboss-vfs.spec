@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-vfs
 Version:          3.2.12
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          JBoss Virtual File System
 License:          ASL 2.0
 URL:              https://github.com/jbossas/jboss-vfs/
@@ -61,12 +61,15 @@ find . -name "*.zip" -type f -print -delete
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.2.12-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.12-alt1_3jpp8
 - fc27 update
 
