@@ -1,6 +1,6 @@
 Name: linphone
 Version: 3.12.0
-Release: alt1
+Release: alt2
 License: GPLv2+
 Url: http://www.linphone.org/
 
@@ -12,12 +12,11 @@ Packager: Alexei Takaseev <taf@altlinux.ru>
 Source0: %name-%version.tar
 #Patch0: %name-%version-%release.patch
 BuildPreReq: libortp-devel >= 0.16
-BuildRequires: gcc-c++
-BuildRequires: doxygen intltool libexosip2-devel libglade-devel libgsm-devel
-BuildRequires: libnotify-devel libssl-devel libbelle-sip-devel
-BuildRequires: libmediastreamer-devel libreadline-devel libspeex-devel
-BuildRequires: libSDL-devel libosip2-devel >= 3.5.0 libncurses-devel
-BuildRequires: libxml2-devel libsqlite3-devel
+
+BuildRequires: doxygen gcc-c++ intltool libbelle-sip-devel libgtk+2-devel
+BuildRequires: libmediastreamer-devel libnotify-devel libreadline-devel
+BuildRequires: libspeex-devel libsqlite3-devel libudev-devel libxml2-devel
+BuildRequires: python3-base sgmltools-lite libSDL-devel libncurses-devel
 
 Requires: %name-gui = %version-%release
 Requires: %name-cli = %version-%release
@@ -88,8 +87,9 @@ This package contains development files for %name.
 %build
 %configure --enable-external-ortp \
  --enable-external-mediastreamer \
+ --enable-ipv6 \
  --enable-notify \
- --enable-ssl \
+ --enable-dtls \
  --disable-static
 
 %make_build
@@ -147,6 +147,9 @@ This package contains development files for %name.
 
 
 %changelog
+* Thu Apr 19 2018 Alexei Takaseev <taf@altlinux.org> 3.12.0-alt2
+- Build with --enable-dtls and --enable-ipv6 (Fix: ALT#33915)
+
 * Tue Jul 25 2017 Alexei Takaseev <taf@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
