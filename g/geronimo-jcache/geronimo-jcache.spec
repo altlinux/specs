@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          geronimo-jcache
 Version:       1.0
-Release:       alt1_0.4.alpha.1jpp8
+Release:       alt1_0.5.alpha.1jpp8
 Summary:       Apache Geronimo JCache Spec 1.0
 License:       ASL 2.0
 URL:           http://geronimo.apache.org/
@@ -58,12 +58,15 @@ This package contains javadoc for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.5.alpha.1jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.4.alpha.1jpp8
 - fc27 update
 
