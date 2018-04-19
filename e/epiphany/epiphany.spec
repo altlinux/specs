@@ -9,7 +9,7 @@
 %def_disable libhttpseverywhere
 
 Name: epiphany
-Version: %ver_major.1
+Version: %ver_major.1.1
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -113,6 +113,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Thu Apr 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1.1-alt1
+- 3.28.1.1
+
 * Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 
