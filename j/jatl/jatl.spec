@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jatl
 Version:       0.2.2
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       Java Anti-Template Language
 License:       ASL 2.0
 # https://github.com/agentgt
@@ -61,12 +61,15 @@ This package contains javadoc for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc COPYING
+%doc --no-dereference COPYING
 
 %files javadoc -f .mfiles-javadoc
-%doc COPYING
+%doc --no-dereference COPYING
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_13jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_12jpp8
 - fc27 update
 
