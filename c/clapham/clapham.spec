@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           clapham
 Version:        0.1.003
-Release:        alt1_15jpp8
+Release:        alt1_16jpp8
 Summary:        Railroad diagram generator for computer languages
 URL:            http://clapham.hydromatic.net/
 License:        GPLv2
@@ -97,6 +97,9 @@ cp -a doc/api %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.003-alt1_16jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.003-alt1_15jpp8
 - fc27 update
 
