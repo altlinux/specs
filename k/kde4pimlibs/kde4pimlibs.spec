@@ -7,7 +7,7 @@
 %define rname kdepimlibs
 Name: kde4pimlibs
 Version: 4.14.11
-Release: alt8
+Release: alt9%ubt
 
 Group: System/Libraries
 Summary: K Desktop Environment 4 - PIM Libraries
@@ -28,10 +28,12 @@ Source: %rname-%version.tar
 Patch10: kdepimlibs-4.14.0-alt-test-akonadi-resources.patch
 Patch11: kdepimlibs-4.14.0-alt-warn-akonadi-old-log.patch
 Patch12: kdepimlibs-4.4.2-alt-nepomuk-only-warn.patch
+Patch13: alt-libical.patch
 
-BuildRequires(pre): akonadi-devel kde4libs-devel
+BuildRequires(pre): akonadi-devel kde4libs-devel rpm-build-ubt
 BuildRequires: boost-devel bzlib-devel gcc-c++ shared-mime-info xsltproc libxslt-devel
 BuildRequires: libgpg-error-devel libgpgme-devel libassuan-devel libpth-devel libicu-devel
+BuildRequires: libical-glib-devel
 BuildRequires: libldap-devel libstrigi-devel prison-devel qjson-devel
 BuildRequires: libgpgme-devel libsasl2-devel libical-devel >= %ical_req
 #BuildRequires: libsoprano-devel soprano-backend-redland soprano shared-desktop-ontologies-devel
@@ -304,6 +306,7 @@ Requires: %name-common = %version-%release
 %patch10 -p1
 %patch11 -p1
 #%patch12 -p1
+%patch13 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -416,6 +419,9 @@ mkdir -p %buildroot/%_datadir/akonadi/agents/
 %_K4libdir/libsyndication.so.*
 
 %changelog
+* Thu Apr 19 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.11-alt9%ubt
+- build with new gpgme
+
 * Fri Mar 11 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.11-alt8
 - update from 4.14 branch
 
