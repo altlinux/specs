@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           derby
 Version:        10.13.1.1
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Relational database implemented entirely in Java
 
 License:        ASL 2.0
@@ -33,7 +33,7 @@ BuildRequires:  json_simple
 BuildRequires:  lucene4
 BuildRequires:  junit
 BuildRequires:  ant
-BuildRequires:  journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
+BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-stateless systemd-sysvinit systemd-utils
 Requires(pre):  shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
 
 BuildArch:      noarch
@@ -152,15 +152,18 @@ exit 0
 %doc db-%{name}-%{version}-src/README
 %{_unitdir}/%{name}.service
 %attr(755,derby,derby) %{_sharedstatedir}/%{name}
-%doc db-derby-%{version}-src/LICENSE
-%doc db-derby-%{version}-src/NOTICE
+%doc --no-dereference db-derby-%{version}-src/LICENSE
+%doc --no-dereference db-derby-%{version}-src/NOTICE
 %config(noreplace,missingok) /etc/%{name}.conf
 
 %files javadoc -f db-derby-%{version}-src/.mfiles-javadoc
-%doc db-derby-%{version}-src/LICENSE
-%doc db-derby-%{version}-src/NOTICE
+%doc --no-dereference db-derby-%{version}-src/LICENSE
+%doc --no-dereference db-derby-%{version}-src/NOTICE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:10.13.1.1-alt1_3jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:10.13.1.1-alt1_2jpp8
 - new version
 
