@@ -1,11 +1,10 @@
-%filter_from_requires /.usr.lib.*jffi/d
-
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /.usr.lib.*jffi/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -18,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jruby
 Version:        1.7.22
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Pure Java implementation of the Ruby interpreter
 # (CPL or GPLv2+ or LGPLv2+) - JRuby itself
 # BSD - some files under lib/ruby/shared
@@ -242,6 +241,7 @@ EOF
 # own the JRuby specific files under RubyGems dir
 %{rubygems_dir}/rubygems/defaults/jruby.rb
 # exclude bundled gems
+#%exclude %{jruby_vendordir}/ruby/1.9/json*
 #%exclude %{jruby_vendordir}/ruby/1.9/rdoc*
 #%exclude %{jruby_vendordir}/ruby/1.9/rake*
 #%exclude %{jruby_vendordir}/ruby/gems
@@ -256,6 +256,9 @@ EOF
 %doc COPYING LICENSE.RUBY LEGAL
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.22-alt1_6jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.22-alt1_5jpp8
 - fixed build
 
