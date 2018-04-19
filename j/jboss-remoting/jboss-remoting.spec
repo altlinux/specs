@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-remoting
 Version:          4.0.21
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          JBoss Remoting
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossremoting
@@ -63,12 +63,15 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc COPYING.txt
+%doc --no-dereference COPYING.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc COPYING.txt
+%doc --no-dereference COPYING.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:4.0.21-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.0.21-alt1_3jpp8
 - fc27 update
 
