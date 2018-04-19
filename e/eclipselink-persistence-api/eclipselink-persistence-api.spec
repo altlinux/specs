@@ -15,7 +15,7 @@ BuildRequires: rpm-build-java-osgi
 %global api_version 2.1
 Name:          eclipselink-persistence-api
 Version:       2.1.0
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       JPA 2.1 Spec OSGi Bundle
 License:       EPL and ASL 2.0
 URL:           http://www.eclipse.org/eclipselink/
@@ -73,12 +73,15 @@ done
 
 %files -f .mfiles
 %doc about.html changes readme.html changes readme.txt
-%doc license.html
+%doc --no-dereference license.html
 
 %files javadoc -f .mfiles-javadoc
-%doc license.html readme.txt
+%doc --no-dereference license.html readme.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_4jpp8
 - fc27 update
 
