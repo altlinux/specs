@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jxmpp
 Version:       0.4.2
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       An Open Source XMPP Java base-library
 License:       ASL 2.0
 URL:           https://github.com/igniterealtime/jxmpp
@@ -153,22 +153,25 @@ done
 %mvn_install
 
 %files core -f .mfiles-%{name}-core
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files jid -f .mfiles-%{name}-jid
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files stringprep-libidn -f .mfiles-%{name}-stringprep-libidn
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files util-cache -f .mfiles-%{name}-util-cache
 %doc README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_5jpp8
 - fc27 update
 
