@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %global githash cb6709646eed97c271d73f50ad750cc43c8e052a
 Name:             paranamer
 Version:          2.8
-Release:          alt1_5jpp8
+Release:          alt1_6jpp8
 Summary:          Library for accessing non-private method parameter names at run-time
 License:          BSD
 URL:              https://github.com/paul-hammant/paranamer
@@ -125,28 +125,31 @@ rm -r %{name}/src/test/com/thoughtworks/paranamer/BytecodeReadingParanamerTestCa
 
 %files -f .mfiles-%{name}
 %doc README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files ant -f .mfiles-%{name}-ant
 
 %files generator -f .mfiles-%{name}-generator
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files integration-tests -f .mfiles-%{name}-integration-tests
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files it-011 -f .mfiles-%{name}-it-011
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files maven-plugin -f .mfiles-%{name}-maven-plugin
 
 %files parent -f .mfiles-%{name}-parent
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.8-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.8-alt1_5jpp8
 - fc27 update
 
