@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           vecmath1.2
 Version:        1.14
-Release:        alt1_17jpp8
+Release:        alt1_18jpp8
 Summary:        Free version of vecmath from the Java3D 1.2 specification
 Group:          System/Libraries
 License:        MIT
@@ -75,6 +75,9 @@ cp -r docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_18jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_17jpp8
 - fc27 update
 
