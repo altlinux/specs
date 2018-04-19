@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-logging-tools1
 Version:          1.2.1
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          JBoss Logging I18n Annotation Processor
 # ASL 2.0: ./annotations/src/main/java/org/jboss/logging/annotations/*.java
 # Source files without license headers https://issues.jboss.org/browse/LOGTOOL-113
@@ -70,12 +70,15 @@ cp -p processor/src/main/resources/META-INF/LICENSE.txt LICENSE-LGPL.txt
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-ASL.txt LICENSE-LGPL.txt
+%doc --no-dereference LICENSE-ASL.txt LICENSE-LGPL.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-ASL.txt LICENSE-LGPL.txt
+%doc --no-dereference LICENSE-ASL.txt LICENSE-LGPL.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_3jpp8
 - fc27 update
 
