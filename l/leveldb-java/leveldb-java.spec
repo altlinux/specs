@@ -21,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 %endif
 Name:          leveldb-java
 Version:       0.7
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Port of LevelDB to Java
 License:       ASL 2.0
 URL:           https://github.com/dain/leveldb
@@ -106,14 +106,17 @@ args=$args" -j"
 %files  -f .mfiles
 %dir %{_javadir}/%{name}
 %doc README.md
-%doc license.txt notice.md
+%doc --no-dereference license.txt notice.md
 
 %if %{without javadoc}
 %files javadoc -f .mfiles-javadoc
-%doc license.txt notice.md
+%doc --no-dereference license.txt notice.md
 %endif
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_7jpp8
 - fc27 update
 
