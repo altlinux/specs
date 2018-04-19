@@ -2,8 +2,8 @@
 %def_without bootstrap
 %define dist Math-BigInt-FastCalc
 Name: perl-%dist
-Version: 0.5006
-Release: alt2
+Version: 0.5007
+Release: alt1
 
 Summary: XS implementation of arbitrary size integer math
 License: GPL or Artistic
@@ -41,6 +41,9 @@ some of the Calc functions in XS.
 %perl_vendor_autolib/Math
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.5007-alt1
+- automated CPAN update
+
 * Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.5006-alt2
 - unbootstrap
 
