@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: sac
 Version: 1.3
-Release: alt3_27jpp8
+Release: alt3_28jpp8
 Summary: Java standard interface for CSS parser
 License: W3C
 #Original source: http://www.w3.org/2002/06/%{name}java-%{version}.zip
@@ -58,12 +58,15 @@ jar ufm build/lib/sac.jar %{SOURCE2}
 %mvn_install -J build/api
 
 %files -f .mfiles
-%doc COPYRIGHT.html
+%doc --no-dereference COPYRIGHT.html
 
 %files javadoc -f .mfiles-javadoc
-%doc COPYRIGHT.html
+%doc --no-dereference COPYRIGHT.html
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_28jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_27jpp8
 - fc27 update
 
