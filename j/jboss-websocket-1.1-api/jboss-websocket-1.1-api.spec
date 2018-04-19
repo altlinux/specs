@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-websocket-1.1-api
 Version:          1.1.1
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          JSR-356: Java WebSocket 1.1 API
 License:          CDDL or GPLv2 with exceptions
 Url:              https://github.com/jboss/jboss-websocket-api_spec
@@ -50,12 +50,15 @@ This package contains the API documentation for %{name}.
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE README
+%doc --no-dereference LICENSE README
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE README
+%doc --no-dereference LICENSE README
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_3jpp8
 - fc27 update
 
