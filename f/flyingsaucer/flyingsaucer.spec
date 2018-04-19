@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          flyingsaucer
 Version:       8
-Release:       alt1_15jpp8
+Release:       alt1_16jpp8
 Summary:       XML/XHTML and CSS 2.1 renderer in pure Java
 # licensed under CC-BY-SA: demos/svg/xhtml/dat/*.svg
 License:       LGPLv2+ and CC-BY-SA
@@ -139,19 +139,22 @@ install -pm 644 build/svg.jar %{buildroot}%{_javadir}/%{name}/
 %{_javadir}/%{name}/core-renderer-minimal.jar
 %{_javadir}/%{name}/xhtmlrenderer.jar
 %doc README
-%doc LICENSE*
+%doc --no-dereference LICENSE*
 
 %files demos
 %{_javadir}/%{name}/aboutbox.jar
 %{_javadir}/%{name}/browser.jar
 %{_javadir}/%{name}/docbook.jar
 %{_javadir}/%{name}/svg.jar
-%doc LICENSE*
+%doc --no-dereference LICENSE*
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE*
+%doc --no-dereference LICENSE*
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 8-alt1_16jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 8-alt1_15jpp8
 - fc27 update
 
