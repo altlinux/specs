@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-transaction-api
 Version:       1.2
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Java JTA 1.2 API Design Specification
 License:       CDDL or GPLv2 with exceptions
 URL:           https://java.net/projects/jta-spec/
@@ -60,12 +60,15 @@ sed -i 's/\r//' LICENSE.txt
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_4jpp8
 - fc27 update
 
