@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           portecle
 Version:        1.10
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Multipurpose keystore and certificate tool
 
 License:        GPLv2+
@@ -75,9 +75,8 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/portecle
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%name.conf`
 touch $RPM_BUILD_ROOT/etc/java/%name.conf
 
-
 %files
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %doc README.txt NEWS.txt doc/
 %{_bindir}/portecle
 %{_javadir}/portecle.jar
@@ -88,6 +87,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_3jpp8
 - fc27 update
 
