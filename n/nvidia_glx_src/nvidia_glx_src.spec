@@ -15,18 +15,12 @@
 %define libnvidia_egl_wayland libnvidia-egl-wayland%nvidia_egl_wayland_sover
 
 Name: nvidia_glx_src
-Version: 390.25
-Release: alt3%ubt
+Version: 390.48
+Release: alt1%ubt
 
 Source0: null
 Source201: ftp://download.nvidia.com/XFree86/Linux-x86/%version/NVIDIA-Linux-x86-%version.run
 Source202: ftp://download.nvidia.com/XFree86/Linux-x86_64/%version/NVIDIA-Linux-x86_64-%version-no-compat32.run
-
-Source2: nvidia.xinf
-Source100: nvidia_create_xinf
-
-Patch1: alt-fix-build-kernel.patch
-Patch2: alt-ignore-dma-remap.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
@@ -115,8 +109,6 @@ sh %SOURCE201 -x
 cd %tbname-%version%dirsuffix
 
 pushd kernel
-#%patch1 -p1
-%patch2 -p1
 rm -rf precompiled
 popd
 
@@ -163,6 +155,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %_sysconfdir/OpenCL/vendors/nvidia.icd
 
 %changelog
+* Thu Apr 19 2018 Sergey V Turchin <zerg@altlinux.org> 390.48-alt1%ubt
+- new version
+
 * Wed Feb 21 2018 Oleg Solovyov <mcpain@altlinux.org> 390.25-alt3%ubt
 - require libnvidia-ml
 
