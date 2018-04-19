@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jdeparser
 Version:          2.0.0
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          Source generator library for Java
 License:          ASL 2.0
 URL:              https://github.com/jdeparser/jdeparser2
@@ -53,12 +53,15 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_3jpp8
 - fc27 update
 
