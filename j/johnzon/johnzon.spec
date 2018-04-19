@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          johnzon
 Version:       0.9.4
-Release:       alt1_3jpp8
+Release:       alt1_5jpp8
 Summary:       Implementation of JSR-353
 License:       ASL 2.0
 URL:           http://johnzon.apache.org/
@@ -190,24 +190,27 @@ asciidoctor MATURITY.adoc
 
 %files -f .mfiles-johnzon-core
 %doc MATURITY.html
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files jaxrs -f .mfiles-johnzon-jaxrs
 %files jsonb -f .mfiles-johnzon-jsonb
 %files jsonb-api -f .mfiles-jsonb-api
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files mapper -f .mfiles-johnzon-mapper
 %files maven-plugin -f .mfiles-johnzon-maven-plugin
 %files parent -f .mfiles-johnzon
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files websocket -f .mfiles-johnzon-websocket
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt1_5jpp8
+- java update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt1_3jpp8
 - new jpp release
 
