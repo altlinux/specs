@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          tuscany-parent
 Version:       2
-Release:       alt1_15jpp8
+Release:       alt1_16jpp8
 Summary:       Apache Tuscany Project Parent
 License:       ASL 2.0
 Url:           http://tuscany.apache.org/
@@ -47,9 +47,12 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 2-alt1_16jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2-alt1_15jpp8
 - fc27 update
 
