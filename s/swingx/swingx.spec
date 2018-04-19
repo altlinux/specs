@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           swingx
 Version:        1.6.5.1
-Release:        alt2_8jpp8
+Release:        alt2_9jpp8
 Summary:        A collection of Swing components
 License:        LGPLv2
 Group:          Development/Other
@@ -40,6 +40,8 @@ BuildRequires:      mvn(org.mockito:mockito-core)
 BuildRequires:      java-devel >= 1.6.0
 BuildRequires:      jpackage-utils
 
+Requires:           java >= 1.6.0
+Requires:           jpackage-utils
 Source44: import.info
 
 %description
@@ -96,6 +98,9 @@ find . -name "*.dll" -exec rm -f {} \;
 
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.6.5.1-alt2_9jpp8
+- java update
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.5.1-alt2_8jpp8
 - fixed build
 
