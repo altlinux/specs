@@ -1,9 +1,16 @@
+%define pIF_ver_gt() %if "%(rpmvercmp '%1' '%2')" > "0"
+%define pIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
+%define pIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
+%define pIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
+
 %def_disable libcap
 %def_enable qt5
+%def_disable tqt
+%def_disable fltk
 
 Name: pinentry
-Version: 1.0.0
-Release: alt2%ubt
+Version: 1.1.0
+Release: alt1%ubt
 
 Group: File tools
 Summary: Simple PIN or passphrase entry dialog
@@ -23,9 +30,14 @@ Patch10: alt-mask-xprop.patch
 
 
 BuildRequires(pre): rpm-build-ubt
-# due to qt macros
 %if_enabled qt5
 BuildRequires(pre): qt5-base-devel
+%endif
+%if_enabled tqt
+BuildRequires: libtqt3-devel
+%endif
+%if_enabled libfltk-devel
+BuildRequires: libfltk-devel
 %endif
 BuildRequires(pre): libqt4-devel
 %if_enabled libcap
@@ -128,11 +140,13 @@ pushd gui-qt5
     --disable-rpath \
     --disable-pinentry-curses \
     --disable-pinentry-tty \
-    --disable-pinentry-gtk2 \
+    --enable-pinentry-gtk2 \
+    %{?_enable_tqt:--enable-pinentry-tqt} \
+    %{?_enable_fltk:--enable-pinentry-fltk} \
+    --enable-pinentry-gnome3 \
     --enable-pinentry-qt \
     --enable-pinentry-qt5 \
     --enable-pinentry-qt-clipboard \
-    --disable-pinentry-gnome3 \
     --enable-libsecret \
     %{?_enable_libcap:--with-libcap}%{!?_enable_libcap:--without-libcap} \
     #
@@ -144,11 +158,13 @@ pushd gui-qt4
     --disable-rpath \
     --disable-pinentry-curses \
     --disable-pinentry-tty \
-    --enable-pinentry-gtk2 \
+    --disable-pinentry-gtk2 \
+    --disable-pinentry-tqt \
+    --disable-pinentry-fltk \
+    --disable-pinentry-gnome3 \
     --enable-pinentry-qt \
     --disable-pinentry-qt5 \
     --enable-pinentry-qt-clipboard \
-    --enable-pinentry-gnome3 \
     --enable-libsecret \
     %{?_enable_libcap:--with-libcap}%{!?_enable_libcap:--without-libcap} \
     #
@@ -161,8 +177,10 @@ pushd tui
     --enable-pinentry-curses \
     --enable-pinentry-tty \
     --disable-pinentry-gtk2 \
-    --disable-pinentry-qt \
+    --disable-pinentry-tqt \
+    --disable-pinentry-fltk \
     --disable-pinentry-gnome3 \
+    --disable-pinentry-qt \
     --disable-libsecret \
     %{?_enable_libcap:--with-libcap}%{!?_enable_libcap:--without-libcap} \
     #
@@ -210,6 +228,9 @@ install -p -m0755 -D pinentry-wrapper %buildroot/%_bindir/pinentry
 %_infodir/*.info*
 
 %changelog
+* Thu Apr 19 2018 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1%ubt
+- new version
+
 * Thu Dec 07 2017 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt2%ubt
 - fix detect pinentry-qt5 (ALT#34290)
 
