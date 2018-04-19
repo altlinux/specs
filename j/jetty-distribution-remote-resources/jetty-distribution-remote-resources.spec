@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jetty-distribution-remote-resources
 Version:        1.1
-Release:        alt3_13jpp8
+Release:        alt3_14jpp8
 Summary:        Jetty toolchain artifact for distribution remote resources
 
 License:        ASL 2.0 or EPL
@@ -43,6 +43,9 @@ Jetty toolchain artifact for distribution remote distribution resources
 %doc src/main/resources/LICENSE*
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_14jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_13jpp8
 - fc27 update
 
