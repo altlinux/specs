@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           gnu-regexp
 Version:        1.1.4
-Release:        alt1_24jpp8
+Release:        alt1_25jpp8
 Summary:        Java NFA regular expression engine implementation
 # GPLv2+: gnu/regexp/util/Egrep.java
 #         gnu/regexp/util/Grep.java
@@ -134,6 +134,9 @@ cp -rp build/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_25jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_24jpp8
 - fc27 update
 
