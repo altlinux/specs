@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jetty-test-helper
 Version:        3.1
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 # header-template.txt documents dual licensing
 License:        ASL 2.0 or EPL
 Summary:        Jetty toolchain test helper
@@ -58,12 +58,15 @@ cp %{SOURCE1} .
 
 
 %files -f .mfiles
-%doc LICENSE-eplv10-aslv20.html
+%doc --no-dereference LICENSE-eplv10-aslv20.html
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-eplv10-aslv20.html
+%doc --no-dereference LICENSE-eplv10-aslv20.html
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_5jpp8
+- java update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_4jpp8
 - new version
 
