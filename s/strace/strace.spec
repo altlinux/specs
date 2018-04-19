@@ -1,5 +1,5 @@
 Name: strace
-Version: 4.22
+Version: 4.22.0.55.2e51
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -13,10 +13,8 @@ Source: %name-%version-%release.tar
 # due to use of deprecated -k option
 Conflicts: rpm-utils <= 0:0.9.11-alt1
 
-%ifarch %ix86 x86_64
-# for experimental -k option
-BuildRequires: libunwind-devel binutils-devel
-%endif
+# for -k option
+BuildRequires: libdw-devel binutils-devel
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 
@@ -80,7 +78,9 @@ export SLEEP_A_BIT='sleep 0.5' VERBOSE=1
 %make_build -k check -C build VERBOSE=1
 
 echo 'BEGIN OF TEST SUITE INFORMATION'
-tail -n 99999 -- build/tests*/test-suite.log build/tests*/ksysent.log
+tail -n 99999 -- build/tests*/test-suite*.log build/tests*/ksysent.log
+find build/tests* -type f -name '*.log' -print0 |
+	xargs -r0 grep -H '^KERNEL BUG:' -- ||:
 echo 'END OF TEST SUITE INFORMATION'
 
 %files
@@ -93,6 +93,10 @@ echo 'END OF TEST SUITE INFORMATION'
 %_bindir/strace-graph
 
 %changelog
+* Thu Apr 12 2018 Dmitry V. Levin <ldv@altlinux.org> 4.22.0.55.2e51-alt1
+- v4.22 -> v4.22-55-g2e5167c.
+- Use libdw-based unwinder for stack tracing.
+
 * Thu Apr 05 2018 Dmitry V. Levin <ldv@altlinux.org> 4.22-alt1
 - v4.21 -> v4.22.
 
