@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          javawriter
 Version:       2.5.1
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       A Java API for generating .java source files
 License:       ASL 2.0
 URL:           https://github.com/square/javapoet
@@ -57,12 +57,15 @@ This package contains javadoc for %{name}.
 
 %files -f .mfiles
 %doc CHANGELOG.md CONTRIBUTING.md README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_5jpp8
 - fc27 update
 
