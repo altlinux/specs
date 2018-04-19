@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -25,7 +25,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          wildfly-core
 Version:       2.2.0
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       The core run-time of WildFly
 
 # ASL 2.0: ./controller/src/main/java/org/jboss/as/controller/remote/CompletedFuture.java
@@ -210,15 +210,18 @@ rm target/site/apidocs/javadoc.sh
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files feature-pack -f .mfiles-core-feature-pack
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_8jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_7jpp8
 - new version
 
