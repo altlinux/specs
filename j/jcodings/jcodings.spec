@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jcodings
 Version:        1.0.9
-Release:        alt2_12jpp8
+Release:        alt2_13jpp8
 Summary:        Java-based codings helper classes for Joni and JRuby
 
 Group:          Development/Other
@@ -52,6 +52,9 @@ echo "See %{url} for more info about the %{name} project." > README.txt
 %doc README.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt2_13jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt2_12jpp8
 - fc27 update
 
