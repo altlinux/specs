@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plantuml
 Version:        8033
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Program to generate UML diagram from a text description
 
 License:        LGPLv3+
@@ -73,13 +73,16 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %files -f .mfiles
 %{_bindir}/plantuml
 %doc README
-%doc COPYING
+%doc --no-dereference COPYING
 %config(noreplace,missingok) /etc/java/%{name}.conf
 
 %files javadoc -f .mfiles-javadoc
-%doc COPYING
+%doc --no-dereference COPYING
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 8033-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 8033-alt1_6jpp8
 - fc27 update
 
