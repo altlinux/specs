@@ -1,8 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/desktop-file-install
+BuildRequires: /usr/bin/desktop-file-install rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
@@ -15,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           groovy
 Version:        2.4.8
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Dynamic language for the Java Platform
 
 # Some of the files are licensed under BSD and CPL terms, but the CPL has been superceded
@@ -401,6 +400,9 @@ touch $RPM_BUILD_ROOT/etc/groovy-starter.conf
 %files xml -f .mfiles-xml
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.4.8-alt1_5jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.4.8-alt1_4jpp8
 - new version
 
