@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-%{realname}
 Version:          1.0.0
-Release:          alt2_13jpp8
+Release:          alt2_14jpp8
 Summary:          JBoss httpserver
 Group:            Development/Other
 License:          GPLv2 and GPLv2 with exceptions
@@ -67,6 +67,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_14jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_13jpp8
 - fc27 update
 
