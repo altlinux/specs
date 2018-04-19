@@ -1,5 +1,5 @@
 Name: kexec-tools
-Version: 2.0.16
+Version: 2.0.17
 Release: alt1
 
 Summary: Load one kernel from another
@@ -20,7 +20,7 @@ crash dumps.  But other uses may be imagined.
 %package -n kexec-static
 Summary: Statically linked kexec binary
 Group: System/Kernel and hardware
- 
+
 %description -n kexec-static
 /sbin/kexec is a user space utiltity for loading another kernel
 and asking the currently running kernel to do something with it.
@@ -57,6 +57,9 @@ install -pm0644 -D kexec/kexec.8 %buildroot%_man8dir/kexec.8
 %endif
 
 %changelog
+* Thu Apr 19 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.17-alt1
+- 2.0.17 released
+
 * Mon Nov 20 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.16-alt1
 - 2.0.16 released
 
