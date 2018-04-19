@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             geronimo-ejb
 Version:          1.0
-Release:          alt4_18jpp8
+Release:          alt4_19jpp8
 Summary:          Java EE: EJB API v3.1
 Group:            Development/Other
 License:          ASL 2.0
@@ -75,6 +75,9 @@ sed -i 's/\r//' LICENSE
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_19jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_18jpp8
 - fc27 update
 
