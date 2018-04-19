@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           easymock
 Version:        3.5
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        Easy mock objects
 License:        ASL 2.0
 URL:            http://www.easymock.org
@@ -101,13 +101,16 @@ rm core/src/test/java/org/easymock/tests2/ClassExtensionHelperTest.java
 
 
 %files -f .mfiles
-%doc core/LICENSE.txt
+%doc --no-dereference core/LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc core/LICENSE.txt
+%doc --no-dereference core/LICENSE.txt
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.5-alt1_2jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.5-alt1_1jpp8
 - new version
 
