@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: rngom
 Version: 201103
-Release: alt2_0.15.20120119svnjpp8
+Release: alt2_0.16.20120119svnjpp8
 Summary: Java library for parsing RELAX NG grammars
 License: MIT
 URL: https://java.net/projects/rngom
@@ -66,12 +66,15 @@ This package contains javadoc for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc licenceheader.txt
+%doc --no-dereference licenceheader.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc licenceheader.txt
+%doc --no-dereference licenceheader.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:201103-alt2_0.16.20120119svnjpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:201103-alt2_0.15.20120119svnjpp8
 - fc27 update
 
