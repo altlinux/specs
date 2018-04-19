@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-servlet-3.1-api
 Version:          1.0.0
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          Java Servlet 3.1 API
 License:          (CDDL or GPLv2 with exceptions) and ASL 2.0
 Url:              http://www.jboss.org
@@ -53,12 +53,15 @@ cp %{SOURCE2} .
 
 %files -f .mfiles
 %doc README
-%doc LICENSE cddl.txt LICENSE-2.0.txt
+%doc --no-dereference LICENSE cddl.txt LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE cddl.txt LICENSE-2.0.txt
+%doc --no-dereference LICENSE cddl.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_3jpp8
 - fc27 update
 
