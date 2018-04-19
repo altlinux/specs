@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           checkstyle
 Version:        8.0
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Java source code checker
 URL:            http://checkstyle.sourceforge.net/
 # src/checkstyle/com/puppycrawl/tools/checkstyle/grammars/java.g is GPLv2+
@@ -159,7 +159,7 @@ if [ -x %{_bindir}/install-catalog -a -d %{_sysconfdir}/sgml ]; then
 fi
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %{_datadir}/xml/%{name}
 %{_bindir}/%{name}
@@ -167,10 +167,13 @@ fi
 %config(noreplace,missingok) /etc/java/checkstyle.conf
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:8.0-alt1_3jpp8
+- java update
+
 * Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 0:8.0-alt1_2jpp8
 - new version
 
