@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          concurrentlinkedhashmap-lru
 Version:       1.4.2
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       A ConcurrentLinkedHashMap for Java
 License:       ASL 2.0
 Url:           https://github.com/ben-manes/concurrentlinkedhashmap
@@ -100,12 +100,15 @@ sed -i "s|ConcurrentHashMapV8|java.util.concurrent.ConcurrentHashMap|" \
 
 %files -f .mfiles
 %doc README
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_5jpp8
 - fc27 update
 
