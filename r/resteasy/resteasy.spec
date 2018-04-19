@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           resteasy
 Version:        3.0.19
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Framework for RESTful Web services and Java applications
 License:        ASL 2.0 and CDDL
 URL:            http://resteasy.jboss.org/
@@ -385,7 +385,7 @@ done
 
 %files
 %doc README.md jaxrs/README.html
-%doc jaxrs/License.html
+%doc --no-dereference jaxrs/License.html
 
 %files core -f .mfiles-core
 %{_javadir}/%{name}/resteasy-jaxrs-jandex.jar
@@ -447,9 +447,12 @@ done
 %{_javadir}/%{name}/resteasy-jaxrs-testsuite-jandex.jar
 
 %files javadoc -f .mfiles-javadoc
-%doc jaxrs/License.html
+%doc --no-dereference jaxrs/License.html
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.19-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.19-alt1_6jpp8
 - fc27 update
 
