@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:    python-module-%modulename
-Version: 6.5.0.2017.5
+Version: 6.7.0
 Release: alt1
 
 Summary: VMware vSphere API Python Bindings
@@ -73,5 +73,8 @@ popd
 %endif
 
 %changelog
+* Thu Apr 19 2018 Andrey Cherepanov <cas@altlinux.org> 6.7.0-alt1
+- New version.
+
 * Wed Dec 13 2017 Andrey Cherepanov <cas@altlinux.org> 6.5.0.2017.5-alt1
 - Initial build for Sisyphus
