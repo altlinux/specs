@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-dtd-parser
 Version:       1.2
-Release:       alt2_0.16.20120120svnjpp8
+Release:       alt2_0.17.20120120svnjpp8
 Summary:       Library for parsing XML DTDs
 License:       CDDL-1.1 and GPLv2 with exceptions
 Url:           http://java.net/projects/dtd-parser
@@ -47,12 +47,15 @@ This package contains javadoc for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_0.17.20120120svnjpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_0.16.20120120svnjpp8
 - new fc release
 
