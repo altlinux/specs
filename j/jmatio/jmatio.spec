@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jmatio
 Version:       1.1
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Java Matlab IO library
 License:       BSD
 URL:           https://sourceforge.net/projects/jmatio/
@@ -56,12 +56,15 @@ done
 
 %files -f .mfiles
 %doc README.md README_old.txt
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_7jpp8
 - fc27 update
 
