@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %global _version %( echo %{version} | tr . _ )
 Name:          codegen
 Version:       0.6.8
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Java/Scala Code generation tool
 License:       ASL 2.0
 URL:           http://www.querydsl.com
@@ -95,12 +95,15 @@ sed -i.ecj4.6 "s|Map<String, Object> settings|Map<String, String> settings|" \
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.8-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.8-alt1_4jpp8
 - fc27 update
 
