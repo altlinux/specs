@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          velocity-tools
 Version:       2.0
-Release:       alt2_17jpp8
+Release:       alt2_18jpp8
 Summary:       Collection of useful tools for Velocity template engine
 License:       ASL 2.0
 Url:           http://velocity.apache.org/tools/releases/2.0/
@@ -115,12 +115,15 @@ sed -i 's/\r//' LICENSE NOTICE WHY_THREE_JARS.txt
 
 %files -f .mfiles
 %doc CONTRIBUTORS README.txt STATUS WHY_THREE_JARS.txt
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_18jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_17jpp8
 - fc27 update
 
