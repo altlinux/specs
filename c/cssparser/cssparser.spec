@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          cssparser
 Version:       0.9.20
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       CSS Parser
 License:       ASL 2.0
 URL:           http://cssparser.sourceforge.net/
@@ -59,12 +59,15 @@ rm src/test/java/com/steadystate/css/parser/SACParserCSS3Test.java
 
 %files -f .mfiles
 %doc doc/license.html doc/readme.html
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.9.20-alt1_4jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.9.20-alt1_3jpp8
 - new version
 
