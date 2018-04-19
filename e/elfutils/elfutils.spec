@@ -1,6 +1,6 @@
 Name: elfutils
 Version: 0.170
-Release: alt5
+Release: alt6
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
@@ -259,6 +259,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Apr 19 2018 Dmitry V. Levin <ldv@altlinux.org> 0.170-alt6
+- Backported a few upstream commits.
+
 * Fri Mar 30 2018 Dmitry V. Levin <ldv@altlinux.org> 0.170-alt5
 - Moved libebl.h from libdw-devel-static to libasm-devel.
 
