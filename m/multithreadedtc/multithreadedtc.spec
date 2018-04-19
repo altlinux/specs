@@ -1,9 +1,8 @@
-BuildRequires: javapackages-local
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %global project_name MultithreadedTC
 Name:           multithreadedtc
 Version:        1.01
-Release:        alt4_21jpp8
+Release:        alt4_23jpp8
 Summary:        A framework for testing concurrent Java application
 License:        BSD 
 URL:            http://www.cs.umd.edu/projects/PL/multithreadedtc
@@ -25,6 +24,7 @@ BuildArch: noarch
 
 BuildRequires: java-devel >= 1.6.0
 BuildRequires: jpackage-utils
+BuildRequires: javapackages-local
 BuildRequires: ant >= 0:1.6
 BuildRequires: ant-junit
 BuildRequires: junit
@@ -94,6 +94,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.01-alt4_23jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.01-alt4_21jpp8
 - added BR: javapackages-local for javapackages 5
 
