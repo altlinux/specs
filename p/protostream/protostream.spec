@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             protostream
 Version:          3.0.4
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          Infinispan ProtoStream
 License:          ASL 2.0 and BSD
 Url:              http://infinispan.org/
@@ -102,12 +102,15 @@ rm core/src/test/java/org/infinispan/protostream/impl/parser/impl/DescriptorsTes
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE PROTOPARSER_LICENSE.txt
+%doc --no-dereference LICENSE PROTOPARSER_LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE PROTOPARSER_LICENSE.txt
+%doc --no-dereference LICENSE PROTOPARSER_LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt1_5jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt1_4jpp8
 - new version
 
