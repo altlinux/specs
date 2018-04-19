@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %global master_version 3
 Name:          tiles
 Version:       2.2.2
-Release:       alt3_17jpp8
+Release:       alt3_18jpp8
 Summary:       Java templating framework for web application user interfaces
 License:       ASL 2.0
 Url:           http://tiles.apache.org/
@@ -43,7 +43,7 @@ BuildRequires: mvn(org.mvel:mvel2)
 BuildRequires: mvn(org.slf4j:jcl-over-slf4j)
 BuildRequires: mvn(org.slf4j:slf4j-jdk14)
 BuildRequires: slf4j
-BuildRequires: tomcat-lib
+BuildRequires: tomcat-el-3.0-api tomcat-jsp-2.3-api tomcat-lib tomcat-servlet-3.1-api
 
 # test deps
 %if 0
@@ -163,12 +163,15 @@ cd src
 
 %files -f src/.mfiles
 %dir %{_javadir}/%{name}
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f src/.mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt3_18jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt3_17jpp8
 - fc27 update
 
