@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           findbugs-bcel
 Version:        6.0
-Release:        alt1_0.10.20140707svn1547656jpp8
+Release:        alt1_0.11.20140707svn1547656jpp8
 Summary:        Byte Code Engineering Library for FindBugs
 
 License:        ASL 2.0
@@ -91,6 +91,9 @@ fi ||:
 %{_javadocdir}/findbugs-bcel*
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 6.0-alt1_0.11.20140707svn1547656jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 6.0-alt1_0.10.20140707svn1547656jpp8
 - fc27 update
 
