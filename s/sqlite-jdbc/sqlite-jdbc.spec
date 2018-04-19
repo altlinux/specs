@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
+BuildRequires: rpm-build-java zip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define power64 ppc64
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 #%% global githash
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          sqlite-jdbc
 Version:       3.15.1
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       SQLite JDBC library
 
 # ASL 2.0:
@@ -54,7 +54,7 @@ URL:           https://github.com/xerial/sqlite-jdbc
 Source0:       https://github.com/xerial/sqlite-jdbc/archive/%{version}/%{name}-%{version}.tar.gz
 Patch0:        %{name}-3.15.1-build.patch
 
-BuildRequires: gcc-common
+BuildRequires: gcc
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
@@ -177,12 +177,15 @@ LDFLAGS="${LDFLAGS:-%__global_ldflags}"; export LDFLAGS;
 
 %files -f .mfiles
 %doc CHANGELOG README.md Usage.md
-%doc LICENSE* NOTICE
+%doc --no-dereference LICENSE* NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE* NOTICE
+%doc --no-dereference LICENSE* NOTICE
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 3.15.1-alt1_6jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 3.15.1-alt1_5jpp8
 - new version
 
