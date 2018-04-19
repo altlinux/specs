@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           javaewah
 Version:        1.1.6
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        A word-aligned compressed variant of the Java bitset class
 
 License:        ASL 2.0
@@ -64,12 +64,15 @@ API documentation for %{name}.
 
 %files -f .mfiles
 %doc CHANGELOG README.md
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_3jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_2jpp8
 - fc27 update
 
