@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          rome
 Version:       1.7.0
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       RSS and Atom Utilities
 License:       ASL 2.0
 URL:           http://rometools.github.io/rome/
@@ -182,16 +182,19 @@ rm %{name}-modules/src/test/java/com/rometools/modules/cc/types/LicenseTest.java
 #%%license LICENSE
 
 %files propono -f .mfiles-%{name}-propono
-%doc %{name}-propono/NOTICE
+%doc --no-dereference %{name}-propono/NOTICE
 
 %files utils -f .mfiles-%{name}-utils
 %doc README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_3jpp8
 - fc27 update
 
