@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-jsp-2.2-api
 Version:          1.0.1
-Release:          alt5_16jpp8
+Release:          alt5_17jpp8
 Summary:          JavaServer(TM) Pages 2.2 API
 License:          CDDL or GPLv2 with exceptions
 URL:              http://www.jboss.org/
@@ -58,13 +58,16 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_17jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_16jpp8
 - fc27 update
 
