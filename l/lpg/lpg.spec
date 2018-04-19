@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:      lpg
 Version:   %{_version}
-Release:   alt1_24jpp8
+Release:   alt1_25jpp8
 Summary:   LALR Parser Generator
 # although the text of the licence isn't distributed with some of the source,
 # the author has exlicitly stated that everything is covered under the EPL
@@ -146,6 +146,9 @@ install -pD -T lpg-generator-cpp/bin/%{name}-linux_x86 \
 %doc lpg-java-runtime/Eclipse*.htm
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_25jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_24jpp8
 - fc27 update
 
