@@ -24,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netty
 Version:        4.1.13
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        An asynchronous event-driven network application framework and tools for Java
 License:        ASL 2.0
 URL:            https://netty.io/
@@ -207,6 +207,9 @@ export CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS"
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 4.1.13-alt1_2jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 4.1.13-alt1_1jpp8
 - new version
 
