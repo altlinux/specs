@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           cglib
 Version:        3.2.4
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Code Generation Library for Java
 License:        ASL 2.0 and BSD
 Url:            https://github.com/cglib/cglib
@@ -75,12 +75,15 @@ Documentation for the cglib code generation library.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.2.4-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.4-alt1_6jpp8
 - fc27 update
 
