@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           geronimo-parent-poms
 Version:        1.6
-Release:        alt3_24jpp8
+Release:        alt3_25jpp8
 Summary:        Parent POM files for geronimo-specs
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/
@@ -48,6 +48,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.6-alt3_25jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt3_24jpp8
 - fc27 update
 
