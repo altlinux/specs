@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          ezmorph
 Version:       1.0.6
-Release:       alt1_16jpp8
+Release:       alt1_17jpp8
 Summary:       Object transformation library for Java
 License:       ASL 2.0
 URL:           http://ezmorph.sourceforge.net/
@@ -65,12 +65,15 @@ cp -p %{SOURCE1} .
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0.6-alt1_17jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0.6-alt1_16jpp8
 - fc27 update
 
