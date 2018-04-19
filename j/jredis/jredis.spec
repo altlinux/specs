@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 Name:          jredis
 # This release is compatible with newer Redis release
 Version:       2.0.0
-Release:       alt1_0.4.a.0jpp8
+Release:       alt1_0.5.a.0jpp8
 Summary:       Java Client and Connectors for Redis
 License:       ASL 2.0
 # https://code.google.com/p/jredis/
@@ -104,26 +104,29 @@ find . -name "*.jar" -delete
 
 %files -f .mfiles-%{name}
 %doc documentation/design/*
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files core -f .mfiles-%{name}-core
 %doc core/README
-%doc core/LICENSE core/NOTICE
+%doc --no-dereference core/LICENSE core/NOTICE
 
 %files core-api -f .mfiles-%{name}-core-api
 %doc README RELEASE-NOTES.txt
-%doc core/api/LICENSE core/api/NOTICE
+%doc --no-dereference core/api/LICENSE core/api/NOTICE
 
 %files core-bench -f .mfiles-%{name}-core-bench
-%doc core/bench/LICENSE core/bench/NOTICE
+%doc --no-dereference core/bench/LICENSE core/bench/NOTICE
 
 %files core-ri -f .mfiles-%{name}-core-ri
-%doc core/ri/LICENSE core/ri/NOTICE
+%doc --no-dereference core/ri/LICENSE core/ri/NOTICE
  
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_0.5.a.0jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_0.4.a.0jpp8
 - fc27 update
 
