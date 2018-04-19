@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          dnsjava
 Version:       2.1.3
-Release:       alt1_13jpp8
+Release:       alt1_14jpp8
 Summary:       Java DNS implementation
 License:       BSD and MIT
 URL:           http://www.dnsjava.org/
@@ -92,13 +92,16 @@ ant -Dj2se.javadoc=%{_javadocdir}/java run_tests
 %endif
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changelog README USAGE examples.html *.java
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_14jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_13jpp8
 - fc27 update
 
