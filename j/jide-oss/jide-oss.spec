@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jide-oss
 Version:        2.7.6
-Release:        alt1_16.1340svnjpp8
+Release:        alt1_17.1340svnjpp8
 Summary:        Swing component library built on top of Java/Swing
 License:        GPLv2 with exceptions
 URL:            https://jide-oss.dev.java.net/
@@ -98,16 +98,19 @@ sed -i.javac "s|1.5|1.6|" build.properties
 %mvn_install -J javadoc
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files doc
 %doc docs/JIDE_Common_Layer_Developer_Guide.pdf
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_17.1340svnjpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_16.1340svnjpp8
 - fc27 update
 
