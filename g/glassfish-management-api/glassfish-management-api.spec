@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          glassfish-management-api
 Version:       3.2.1
-Release:       alt1_0.5.b002jpp8
+Release:       alt1_0.6.b002jpp8
 Summary:       GlassFish Common APIs
 License:       CDDL or GPLv2 with exceptions
 URL:           http://java.net/projects/gmbal/pages/Home
@@ -88,12 +88,15 @@ sed -i 's/\r//' LICENSE.txt
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_0.6.b002jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_0.5.b002jpp8
 - fc27 update
 
