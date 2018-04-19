@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          shrinkwrap
 Version:       1.2.3
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       A simple mechanism to assemble Java archives
 # Some file are without license headers
 # reported @ https://issues.jboss.org/browse/SHRINKWRAP-501
@@ -157,7 +157,7 @@ rm LICENSE.orig
 %mvn_install
 
 %files -f .mfiles-%{name}-api
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files api-nio2 -f .mfiles-%{name}-api-nio2
 %files impl-base -f .mfiles-%{name}-impl-base
@@ -165,24 +165,27 @@ rm LICENSE.orig
 %files spi -f .mfiles-%{name}-spi
 
 %files bom -f .mfiles-%{name}-bom
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files build-resources -f .mfiles-%{name}-build-resources
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files depchain -f .mfiles-%{name}-depchain
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files depchain-java7 -f .mfiles-%{name}-depchain-java7
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files parent -f .mfiles-%{name}-parent
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_4jpp8
 - fc27 update
 
