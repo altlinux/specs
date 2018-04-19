@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Alien-GMP
 # BEGIN SourceDeps(oneline):
 BuildRequires: libgmp-devel perl(Alien/Base.pm) perl(Alien/Build.pm) perl(Alien/Build/MM.pm) perl(Alien/Role/Alt.pm) perl(ExtUtils/CBuilder.pm) perl(ExtUtils/MakeMaker.pm) perl(Pod/Wordlist.pm) perl(Role/Tiny/With.pm) perl(Test/Alien.pm) perl(Test/Spelling.pm) perl(Test2/V0.pm) perl(parent.pm) perl(Devel/CheckLib.pm) perl(Class/Method/Modifiers.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.08
-Release: alt2
+Version: 1.10
+Release: alt1
 Summary: Build and install the GNU Multiple Precision library.
 Group: Development/Perl
 License: lgpl
 URL: https://metacpan.org/release/Alien-GMP
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PL/PLICEASE/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PL/PLICEASE/%{module_name}-%{version}.tar.gz
 
 %description
 From summary: %summary
@@ -34,6 +34,9 @@ From summary: %summary
 %perl_vendor_autolib/share/dist/A*
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
+- automated CPAN update
+
 * Mon Apr 09 2018 Igor Vlasenko <viy@altlinux.ru> 1.08-alt2
 - to Sisyphus as perl-Math-GMP dependency
 
