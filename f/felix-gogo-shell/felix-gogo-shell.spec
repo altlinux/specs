@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           felix-gogo-shell
 Version:        1.0.0
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Community OSGi R4 Service Platform Implementation - Basic Commands
 License:        ASL 2.0
 URL:            http://felix.apache.org/documentation/subprojects/apache-felix-gogo.html
@@ -60,12 +60,15 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_3jpp8
+- java update
+
 * Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_2jpp8
 - new version
 
