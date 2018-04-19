@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           os-maven-plugin
 Version:        1.2.3
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        Maven plugin for generating platform-dependent properties
 License:        ASL 2.0
 URL:            https://github.com/trustin/os-maven-plugin/
@@ -79,6 +79,9 @@ find -name plugin.xml -delete
 %doc LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_8jpp8
 - fc27 update
 
