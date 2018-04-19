@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jaxb2-common-basics
 Version:       0.9.5
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       JAXB2 Basics
 License:       BSD
 Url:           https://github.com/highsource/jaxb2-basics
@@ -86,12 +86,15 @@ find -name "*.jar" -print -delete
 
 %files -f .mfiles
 %doc README.md TODO.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt1_4jpp8
 - fc27 update
 
