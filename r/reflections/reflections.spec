@@ -10,12 +10,13 @@ BuildRequires: jpackage-generic-compat
 
 Name:          reflections
 Version:       0.9.10
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Java run-time meta-data analysis
 License:       WTFPL
 URL:           https://github.com/ronmamo/reflections
 Source0:       https://github.com/ronmamo/reflections/archive/%{githash}/%{name}-%{githash}.tar.gz
 
+BuildRequires: java-atk-wrapper
 BuildRequires: maven-local
 BuildRequires: mvn(com.google.code.findbugs:annotations)
 BuildRequires: mvn(com.google.code.gson:gson)
@@ -82,12 +83,15 @@ find -name "*.jar" -print -delete
 
 %files -f .mfiles
 %doc README.md
-%doc COPYING.txt
+%doc --no-dereference COPYING.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc COPYING.txt
+%doc --no-dereference COPYING.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.10-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.10-alt1_4jpp8
 - fc27 update
 
