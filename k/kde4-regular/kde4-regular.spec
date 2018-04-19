@@ -1,6 +1,6 @@
 Name:    kde4-regular
 Version: 4.14
-Release: alt8%ubt
+Release: alt9%ubt
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -57,7 +57,7 @@ Requires: kde4-krusader
 Requires: kde4-synaptiks
 Requires: kde4-soundkonverter
 #Requires: kde4-digikam kde4-digikam-image-plugins kde4-digikam-utils kde4-digikam-i18n
-Requires: kde4-kipi-plugins-core
+#Requires: kde4-kipi-plugins-core
 #Requires: kdenlive
 Requires: skanlite
 Requires: kde4plasma-addon-yawp
@@ -82,6 +82,9 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Thu Apr 19 2018 Sergey V Turchin <zerg@altlinux.org> 4.14-alt9%ubt
+- exclude kde4-kipi-plugins
+
 * Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 4.14-alt8%ubt
 - exclude rekonq
 
