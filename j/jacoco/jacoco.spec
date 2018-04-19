@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:      jacoco
 Version:   0.7.8
-Release:   alt1_4jpp8
+Release:   alt1_5jpp8
 Summary:   Java Code Coverage for Eclipse 
 Group:     System/Libraries
 License:   EPL
@@ -132,6 +132,9 @@ echo %{name} %{name}/org.jacoco.ant objectweb-asm/asm-debug-all > %{buildroot}%{
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.8-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.8-alt1_4jpp8
 - fc27 update
 
