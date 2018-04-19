@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           cargo-parent
 Version:        4.13
-Release:        alt1_10jpp8
+Release:        alt1_11jpp8
 Summary:        Parent pom file for cargo.codehaus.org project
 License:        ASL 2.0
 URL:            http://cargo.codehaus.org/
@@ -44,9 +44,12 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 4.13-alt1_11jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 4.13-alt1_10jpp8
 - fc27 update
 
