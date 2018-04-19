@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          junit-addons
 Version:       1.4
-Release:       alt3_15jpp8
+Release:       alt3_16jpp8
 Summary:       JUnitX helper classes for JUnit
 License:       ASL 1.1
 Url:           http://sourceforge.net/projects/junit-addons/
@@ -114,12 +114,15 @@ export OPT_JAR_LIST=:
 
 %files -f .mfiles
 %doc README WHATSNEW
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_16jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_15jpp8
 - fc27 update
 
