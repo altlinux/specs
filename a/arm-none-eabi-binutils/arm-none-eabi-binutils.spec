@@ -3,7 +3,7 @@
 %define _libexecdir /usr/libexec
 
 Name: arm-none-eabi-binutils
-Version: 2.27
+Version: 2.30
 Release: alt1
 Summary: GNU Binutils for cross-compilation for %target target
 Group: Development/Tools
@@ -82,5 +82,8 @@ rm -r %buildroot%_infodir
 %_man1dir/%target-*.1.*
 
 %changelog
+* Tue Apr 17 2018 Anton Midyukov <antohami@altlinux.org> 2.30-alt1
+- New version 2.30
+
 * Fri Jun 30 2017 Anton Midyukov <antohami@altlinux.org> 2.27-alt1
 - Initial build for ALT Sisyphus.

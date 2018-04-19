@@ -1,16 +1,16 @@
 %global processor_arch arm
 %global target         %processor_arch-none-eabi
-%global gcc_ver        6.3.0
-%global gcc_short_ver  6.3
+%global gcc_ver        7.3.1
+%global gcc_short_ver  7.3
 %define _libexecdir /usr/libexec
 
 # we need newlib to compile complete gcc, but we need gcc to compile newlib,
 # so compile minimal gcc first
-%def_without bootstrap
+%def_with bootstrap
 
 Name: arm-none-eabi-gcc
-Version: 6.3.0
-Release: alt3
+Version: %gcc_ver
+Release: alt1
 Summary: GNU GCC for cross-compilation for %target target
 Group: Development/Tools
 
@@ -33,10 +33,10 @@ Source: %name-%version.tar
 
 Source1: README.alt
 Source2: bootstrapexplain
-Patch1: enable-with-multilib-list-for-arm.patch
 
-BuildRequires: gcc-c++ %target-binutils >= 2.21, zlib-devel libgmp-devel libmpc-devel autogen rpm-build-python
-
+#BuildRequires: rpm-build-python
+BuildRequires: gcc-c++ flex zlib-devel libgmp-devel libmpc-devel autogen 
+BuildRequires: %target-binutils >= 2.21
 %if_with bootstrap
 
 %else
@@ -67,7 +67,6 @@ compile c++ code for the %target platform, instead of for the native
 
 %prep
 %setup
-%patch1 -p2 -b .arm
 
 contrib/gcc_update --touch
 cp -a %SOURCE1 .
@@ -83,8 +82,8 @@ CC="gcc ${RPM_OPT_FLAGS}  -fno-stack-protector" \
 ../configure \
             --prefix=%_libexecdir \
             --bindir=%_bindir \
-	        --libexecdir=%_libexecdir \
-	        --libdir=%_libexecdir \
+            --libexecdir=%_libexecdir \
+            --libdir=%_libexecdir \
             --mandir=%_mandir \
             --infodir=%_infodir \
             --target=%target \
@@ -93,7 +92,7 @@ CC="gcc ${RPM_OPT_FLAGS}  -fno-stack-protector" \
             --enable-interwork \
             --enable-multilib \
             --with-python-dir=%target/share/gcc-%version/python \
-            --with-multilib-list=armv6-m,armv7-m,armv7e-m,armv7-r \
+            --with-multilib-list=rmprofile \
             --enable-plugins \
             --disable-decimal-float \
             --disable-libffi \
@@ -134,8 +133,8 @@ CC="gcc ${RPM_OPT_FLAGS}  -fno-stack-protector " \
 ../configure \
             --prefix=%_libexecdir \
             --bindir=%_bindir \
-	        --libexecdir=%_libexecdir \
-	        --libdir=%_libexecdir \
+            --libexecdir=%_libexecdir \
+            --libdir=%_libexecdir \
             --mandir=%_mandir \
             --infodir=%_infodir \
             --target=%target \
@@ -144,7 +143,7 @@ CC="gcc ${RPM_OPT_FLAGS}  -fno-stack-protector " \
             --enable-interwork \
             --enable-multilib \
             --with-python-dir=%target/share/gcc-%version/python \
-            --with-multilib-list=armv6-m,armv7-m,armv7e-m,armv7-r \
+            --with-multilib-list=rmprofile \
             --enable-plugins \
             --disable-decimal-float \
             --disable-libffi \
@@ -198,11 +197,11 @@ pushd gcc-nano-%target
 popd
 pushd %buildroot
 for i in libstdc++.a libsupc++.a ; do
-	find . -name "$i" | while read line ; do
-		R=`echo $line | sed "s/\.a/_nano\.a/g"`
-		echo "%buildroot/$line -> %buildroot-non-nano/$R"
-		cp $line %buildroot-non-nano/$R
-	done
+    find . -name "$i" | while read line ; do
+        R=`echo $line | sed "s/\.a/_nano\.a/g"`
+        echo "%buildroot/$line -> %buildroot-non-nano/$R"
+        cp $line %buildroot-non-nano/$R
+    done
 done
 popd
 
@@ -276,6 +275,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 16 2018 Anton Midyukov <antohami@altlinux.org> 7.3.1-alt1
+- New version 7.3.1 (bootstrap build)
+
 * Sun Jul 02 2017 Anton Midyukov <antohami@altlinux.org> 6.3.0-alt3
 - Replace if_without to if_with
 - Added requires arm-none-eabi-newlib.
