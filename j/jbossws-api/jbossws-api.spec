@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jbossws-api
 Version:          1.0.3
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          JBossWS API
 # https://issues.jboss.org/browse/JBWS-4001
 License:          LGPLv2+
@@ -62,6 +62,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_3jpp8
 - fc27 update
 
