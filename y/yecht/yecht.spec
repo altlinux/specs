@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:     yecht
 Version:  1.0
-Release:  alt1_6jpp8
+Release:  alt1_7jpp8
 Summary:  A YAML processor based on Syck
 License:  MIT
 URL:      http://github.com/%{cluster}/%{name}
@@ -58,6 +58,9 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_6jpp8
 - fc27 update
 
