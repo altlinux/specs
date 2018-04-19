@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             snappy-java
 Version:          1.1.2.4
-Release:          alt2_8jpp8
+Release:          alt2_9jpp8
 Summary:          Fast compressor/decompresser
 License:          ASL 2.0
 URL:              http://xerial.org/snappy-java/
@@ -98,7 +98,6 @@ cp %{SOURCE1} pom.xml
          <include name="**/OSInfo.java"/>
        </javac>
        <exec executable="make" failonerror="true">
-        <arg line="%{?_smp_mflags}"/>
        </exec>
       </target>
     </configuration>
@@ -159,12 +158,15 @@ export CXXFLAGS
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.2.4-alt2_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.2.4-alt2_8jpp8
 - fc27 update
 
