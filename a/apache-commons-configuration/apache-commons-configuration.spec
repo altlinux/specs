@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        1.10
-Release:        alt1_10jpp8
+Release:        alt1_11jpp8
 Summary:        Commons Configuration Package
 
 License:        ASL 2.0
@@ -90,6 +90,9 @@ sed -i 's/\r//' LICENSE.txt NOTICE.txt
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_11jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_10jpp8
 - fc27 update
 
