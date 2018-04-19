@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global oname base64
 Name:          java-base64
 Version:       2.3.8
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       Java class for encoding and decoding Base64 notation
 # pom file license comment
 # I have released this software into the Public Domain. That
@@ -79,6 +79,9 @@ sed -i "s|<version>2.3.9-SNAPSHOT</version>|<version>%{version}</version>|" pom.
 %{_javadocdir}/%{oname}
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.8-alt1_13jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.8-alt1_12jpp8
 - fc27 update
 
