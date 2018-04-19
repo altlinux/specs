@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jpfcodegen
 Version:        0.4
-Release:        alt1_13jpp8
+Release:        alt1_14jpp8
 Summary:        A tool for generating classes from JPF plug-ins
 
 Group:          Development/Java
@@ -80,6 +80,9 @@ cp -r javadoc ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_14jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_13jpp8
 - fc27 update
 
