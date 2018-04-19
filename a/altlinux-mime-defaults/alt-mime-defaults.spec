@@ -1,5 +1,5 @@
 Name: altlinux-mime-defaults
-Version: 0.431
+Version: 0.432
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -45,6 +45,9 @@ touch %buildroot/%_desktopdir/defaults.list
 %_datadir/mate/applications/defaults.list
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.432-alt1
+- updated mime defaults for FALCON (closes: #34824)
+
 * Tue Mar 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.431-alt1
 - updated mime defaults for new GNOME
 
