@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             rmic-maven-plugin
 Version:          1.2.1
-Release:          alt1_15jpp8
+Release:          alt1_16jpp8
 Summary:          Uses the java rmic compiler to generate classes used in remote method invocation
 License:          MIT
 URL:              http://mojo.codehaus.org/%{name}
@@ -65,6 +65,9 @@ sed -i -e "s|groupId>plexus|groupId>org.codehaus.plexus|g" pom.xml
 %doc License.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_16jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_15jpp8
 - fc27 update
 
