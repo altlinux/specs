@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name: pentaho-libxml
 Version: 1.1.3
-Release: alt1_16jpp8
+Release: alt1_17jpp8
 Summary: Namespace aware SAX-Parser utility library
 License: LGPLv2
 Group: System/Libraries
@@ -70,6 +70,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{origname}
 %{_javadocdir}/%{origname}
 
 %changelog
+* Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_17jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_16jpp8
 - fc27 update
 
