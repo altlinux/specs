@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sbinary
 Version:        %{sbinary_version}
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        Library for describing binary formats for Scala types
 
 License:        MIT
@@ -36,7 +36,8 @@ BuildRequires:	mvn(org.beanshell:bsh)
 BuildRequires:	mvn(xml-resolver:xml-resolver)
 BuildRequires:	mvn(org.freemarker:freemarker)
 BuildRequires:	maven-local
-BuildRequires:	maven-local
+BuildRequires:	javapackages-tools
+Requires:	javapackages-tools
 Requires:       scala
 Source44: import.info
 
@@ -154,6 +155,9 @@ cp -rp core/target/scala-%{scala_version}/api/* %{buildroot}/%{_javadocdir}/%{na
 %doc LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_7jpp8
 - fc27 update
 
