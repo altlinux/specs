@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           osgi-compendium
 Version:        6.0.0
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Interfaces and Classes for use in compiling OSGi bundles
 License:        ASL 2.0
 URL:            http://www.osgi.org
@@ -87,14 +87,17 @@ mv META-INF/maven/org.osgi/osgi.cmpn/pom.xml .
 
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc about.html
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt1_5jpp8
+- java update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt1_4jpp8
 - new jpp release
 
