@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jdeparser1
 Version:          1.0.0
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          Source generator library for Java
 # MIT: src/main/java/org/jboss/jdeparser/JSynchronized.java
 License:          (CDDL or GPLv2 with exceptions) and MIT
@@ -53,12 +53,15 @@ This package contains the API documentation for %{name}.
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE-original.html
+%doc --no-dereference LICENSE-original.html
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-original.html
+%doc --no-dereference LICENSE-original.html
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_4jpp8
 - fc27 update
 
