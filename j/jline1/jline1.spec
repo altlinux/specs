@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jline1
 Version:        1.0
-Release:        alt3_15jpp8
+Release:        alt3_16jpp8
 Summary:        Java library for reading and editing user input in console applications
 License:        BSD
 URL:            http://jline.sourceforge.net/
@@ -127,6 +127,9 @@ mv tmp/* .
 %doc LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_16jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_15jpp8
 - fc27 update
 
