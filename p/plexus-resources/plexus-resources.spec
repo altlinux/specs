@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           plexus-resources
 Version:        1.0
-Release:        alt7_0.22.a7jpp8
+Release:        alt7_0.23.a7jpp8
 Summary:        Plexus Resource Manager
 License:        MIT
 URL:            https://github.com/codehaus-plexus/plexus-resources
@@ -63,6 +63,9 @@ cp -p %{SOURCE45} target/classes/META-INF/plexus/components.xml
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.23.a7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.22.a7jpp8
 - fc27 update
 
