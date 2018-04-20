@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jFormatString
 Version:        0
-Release:        alt1_0.27.20131227gitf159b88jpp8
+Release:        alt1_0.28.20131227gitf159b88jpp8
 Summary:        Java format string compile-time checker
 
 License:        GPLv2 with exceptions
@@ -95,6 +95,9 @@ cp -rp docs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}*
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.28.20131227gitf159b88jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.27.20131227gitf159b88jpp8
 - fc27 update
 
