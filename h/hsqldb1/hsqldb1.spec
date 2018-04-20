@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %global majorversion 1
 Name:          hsqldb1
 Version:       1.8.1.3
-Release:       alt1_13jpp8
+Release:       alt1_14jpp8
 Summary:       HyperSQL Database Engine
 License:       BSD
 URL:           http://hsqldb.sourceforge.net/
@@ -88,12 +88,15 @@ popd
 %mvn_install -J doc/src
 
 %files -f .mfiles
-%doc doc/hsqldb_lic.txt
+%doc --no-dereference doc/hsqldb_lic.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc doc/hsqldb_lic.txt
+%doc --no-dereference doc/hsqldb_lic.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.1.3-alt1_14jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.1.3-alt1_13jpp8
 - fc27 update
 
