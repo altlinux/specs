@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          hibernate-search
 Version:       5.5.4
-Release:       alt3_2jpp8
+Release:       alt4_2jpp8
 Summary:       Hibernate Search
 License:       LGPLv2+
 URL:           http://hibernate.org/search/
@@ -28,13 +28,14 @@ BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(log4j:log4j:12)
 BuildRequires: mvn(org.apache.avro:avro)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.lucene:lucene-analyzers-common)
-BuildRequires: mvn(org.apache.lucene:lucene-analyzers-phonetic)
-BuildRequires: mvn(org.apache.lucene:lucene-backward-codecs)
-BuildRequires: mvn(org.apache.lucene:lucene-core) >= 5.3.1
-BuildRequires: mvn(org.apache.lucene:lucene-facet)
-BuildRequires: mvn(org.apache.lucene:lucene-misc)
-BuildRequires: mvn(org.apache.lucene:lucene-queryparser)
+BuildRequires: mvn(org.apache.lucene:lucene-analyzers-common:5.5.0)
+BuildRequires: mvn(org.apache.lucene:lucene-analyzers-phonetic:5.5.0)
+BuildRequires: mvn(org.apache.lucene:lucene-backward-codecs:5.5.0)
+BuildRequires: mvn(org.apache.lucene:lucene-core:5.5.0) >= 5.3.1
+BuildRequires: mvn(org.apache.lucene:lucene-facet:5.5.0)
+BuildRequires: mvn(org.apache.lucene:lucene-misc:5.5.0)
+BuildRequires: mvn(org.apache.lucene:lucene-queryparser:5.5.0)
+#BuildRequires: mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires: mvn(org.apache.pdfbox:pdfbox)
@@ -120,6 +121,7 @@ rm -rf orm/src/test/resources/org/hibernate/search/test/bridge/tika/
 %pom_remove_dep -r :unitils-easymock
 
 %pom_change_dep :checkstyle:5.7 :checkstyle:7.7 build-config/pom.xml
+sed -i 's,luceneVersion>5.3.1</luceneVersion,luceneVersion>5.5.0</luceneVersion,' pom.xml
 
 %mvn_alias :hibernate-search-orm :hibernate-search
 
@@ -138,6 +140,9 @@ rm -rf orm/src/test/resources/org/hibernate/search/test/bridge/tika/
 %doc lgpl.txt
 
 %changelog
+* Fri Apr 20 2018 Igor Vlasenko <viy@altlinux.ru> 5.5.4-alt4_2jpp8
+- fixed build using lucene5
+
 * Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 5.5.4-alt3_2jpp8
 - fixed build with new checkstyle
 
