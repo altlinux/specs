@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jandex
 Version:          2.0.2
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          Java Annotation Indexer
 License:          ASL 2.0
 URL:              https://github.com/wildfly/jandex
@@ -57,12 +57,15 @@ rm src/test/java/org/jboss/jandex/test/TypeAnnotationTestCase.java
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1_3jpp8
 - fc27 update
 
