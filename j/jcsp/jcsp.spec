@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          jcsp
 Version:       1.1
-Release:       alt1_0.7.rc5jpp8
+Release:       alt1_0.8.rc5jpp8
 Summary:       Communicating Sequential Processes for Java (JCSP)
 License:       LGPLv2+
 URL:           https://github.com/codehaus/jcsp
@@ -111,12 +111,15 @@ rm -r src/org/jcsp/win32 \
 
 %files -f .mfiles
 %doc README.txt
-%doc LICENCE.txt
+%doc --no-dereference LICENCE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENCE.txt
+%doc --no-dereference LICENCE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_0.8.rc5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_0.7.rc5jpp8
 - fc27 update
 
