@@ -50,7 +50,7 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.7.6
+Version: 4.7.7
 Release: alt1%ubt
 
 Group:   System/Servers
@@ -1373,6 +1373,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Apr 19 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.7.7-alt1%ubt
+- Update to first spring release of Samba 4.7
+
 * Fri Mar 23 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.7.6-alt1%ubt
 - Update to latest winter release of Samba 4.7
 
