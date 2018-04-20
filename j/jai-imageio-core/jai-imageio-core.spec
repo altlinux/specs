@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		jai-imageio-core
 Version:	1.2
-Release:	alt1_0.21.20100217cvsjpp8
+Release:	alt1_0.22.20100217cvsjpp8
 Summary:	Core Java Advanced Imaging Image I/O Tools API
 
 License:	BSD
@@ -103,6 +103,9 @@ ant -DBUILD_TARGET=linux-i586 jar-opt docs-jcp
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_0.22.20100217cvsjpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_0.21.20100217cvsjpp8
 - fc27 update
 
