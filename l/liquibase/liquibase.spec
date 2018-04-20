@@ -1,23 +1,27 @@
 Group: Databases
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: liquibase
 Summary: Database Refactoring Tool
 Version: 3.5.3
-Release: alt1_1jpp8
+Release: alt1_4jpp8
 License: ASL 2.0
 URL: http://www.liquibase.org
 
 Source0: https://github.com/liquibase/liquibase/archive/%{name}-parent-%{version}.tar.gz
 
+# See https://liquibase.jira.com/browse/CORE-2933
+Patch0: liquibase-javacc.patch
+
 BuildRequires: felix-framework
 BuildRequires: felix-osgi-core
 BuildRequires: java-devel >= 1.6.0
-BuildRequires: maven-local
+BuildRequires: javapackages-tools
 BuildRequires: maven-local
 BuildRequires: mvn(commons-cli:commons-cli)
 BuildRequires: mvn(javax.enterprise:cdi-api)
@@ -44,6 +48,7 @@ BuildRequires: mvn(org.yaml:snakeyaml)
 
 BuildArch:     noarch
 
+Requires: javapackages-tools
 Requires: mvn(org.yaml:snakeyaml) >= 0:1.13
 Source44: import.info
 
@@ -81,7 +86,7 @@ Group: Development/Java
 Summary: Maven plugin for %{name}
 BuildRequires: mvn(org.apache.maven:maven-project)
 BuildRequires: mvn(org.apache.maven:maven-core)
-Requires: %{name} = %{version}
+Requires: %{name} = %{version}-%{release}
 Requires: maven
 
 %description maven-plugin
@@ -89,6 +94,7 @@ Requires: maven
 
 %prep
 %setup -q -n %{name}-%{name}-parent-%{version}
+%patch0 -p1
 
 find -name "*.bat" -print -delete
 find -name "*.class" -print -delete
@@ -161,7 +167,7 @@ rm %{name}-core/src/main/resources/META-INF/MANIFEST.MF
 %install
 %mvn_install
 %jpackage_script liquibase.integration.commandline.Main "" "" %{name}/%{name}-core %{name} true
-%__mkdir_p %{buildroot}%{_mandir}/man1
+mkdir -p %{buildroot}%{_mandir}/man1
 install -pm 0644 %{name}-rpm/src/main/resources/%{name}.1 %{buildroot}%{_mandir}/man1/
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
@@ -170,23 +176,26 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 %files -f .mfiles-%{name}-core
 %doc changelog.txt %{name}-core/DEV_NOTES.txt
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %doc %{_mandir}/man1/%{name}.1*
 %{_bindir}/%{name}
 %config(noreplace,missingok) /etc/java/%{name}.conf
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files parent -f .mfiles-%{name}-parent
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files cdi -f .mfiles-%{name}-cdi
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files maven-plugin -f .mfiles-%{name}-maven-plugin
 
 %changelog
+* Fri Apr 20 2018 Igor Vlasenko <viy@altlinux.ru> 3.5.3-alt1_4jpp8
+- java update
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.5.3-alt1_1jpp8
 - new version
 
