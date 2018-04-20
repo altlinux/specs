@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global oname javax.ws.rs-api
 Name:          glassfish-jax-rs-api
 Version:       2.0.1
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       JAX-RS API Specification (JSR 339)
 License:       CDDL or GPLv2 with exceptions
 URL:           http://jax-rs-spec.java.net/
@@ -36,28 +36,28 @@ BuildRequires: spec-version-maven-plugin
 # kpathsea: Running mktexfmt pdflatex.fmt
 # I can't find the format file `pdflatex.fmt'!
 # make: *** [spec.pdf] Error 1
-BuildRequires: texlive-base
+BuildRequires: texlive-collection-basic
 BuildRequires: texlive-base
 BuildRequires: texlive-bibtex-bin
-BuildRequires: texlive-latex-base
-BuildRequires: texlive-courier
-BuildRequires: texlive-base-bin
-BuildRequires: texlive-fancyhdr
-BuildRequires: texlive-float
-BuildRequires: texlive-framed
-BuildRequires: texlive-graphics
-BuildRequires: texlive-fonts-recommended
-BuildRequires: texlive-hyperref
-BuildRequires: texlive-ifxetex
-BuildRequires: texlive-latex-bin-bin
-BuildRequires: texlive-latexconfig
-BuildRequires: texlive-moreverb
-BuildRequires: texlive-oberdiek
-BuildRequires: texlive-generic-recommended
-BuildRequires: texlive-psnfss
-BuildRequires: texlive-base-bin
-BuildRequires: texlive-times
-BuildRequires: texlive-tools
+BuildRequires: texlive-collection-basic
+BuildRequires: texlive-collection-basic
+BuildRequires: texlive texlive-collection-basic texlive-context texlive-dist
+BuildRequires: texlive-collection-basic
+BuildRequires: texlive-collection-basic
+BuildRequires: texlive-dist
+BuildRequires: texlive-collection-basic
+BuildRequires: texlive-collection-basic
+BuildRequires: texlive-collection-basic
+BuildRequires: texlive-collection-basic
+BuildRequires: texlive texlive-collection-basic
+BuildRequires: texlive-collection-basic
+BuildRequires: texlive-dist
+BuildRequires: texlive-collection-basic
+BuildRequires: texlive-dist
+BuildRequires: texlive-collection-basic
+BuildRequires: texlive texlive-collection-basic
+BuildRequires: texlive-collection-basic
+BuildRequires: texlive-collection-basic
 %endif
 
 BuildArch:     noarch
@@ -130,18 +130,21 @@ cd src/jax-rs-api
 )
 
 %files -f src/jax-rs-api/.mfiles
-%doc copyright.txt
+%doc --no-dereference copyright.txt
 
 %files javadoc -f src/jax-rs-api/.mfiles-javadoc
-%doc copyright.txt
+%doc --no-dereference copyright.txt
 
 %if 0
 %files manual
 %doc spec/spec.pdf src/examples
-%doc copyright.txt
+%doc --no-dereference copyright.txt
 %endif
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_5jpp8
 - fc27 update
 
