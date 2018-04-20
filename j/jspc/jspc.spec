@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jspc
 Version:       2.0
-Release:       alt1_0.21.alpha.3jpp8
+Release:       alt1_0.22.alpha.3jpp8
 Summary:       Compile JSPs under Maven
 Group:         Development/Other
 License:       ASL 2.0
@@ -180,6 +180,9 @@ jar uf  %{name}-maven-plugin/target/%{name}-maven-plugin-2.0-alpha-3.jar META-IN
 %doc LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_0.22.alpha.3jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_0.21.alpha.3jpp8
 - fc27 update
 
