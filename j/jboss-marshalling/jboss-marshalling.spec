@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-marshalling
 Version:          1.4.11
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          JBoss Marshalling
 # LGPLv2 ./serial/src/main/java/org/jboss/marshalling/serial/UnknownDescriptor.java
 License:          ASL 2.0 and LGPLv2+
@@ -79,14 +79,17 @@ fi
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files osgi -f .mfiles-osgi
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.11-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.11-alt1_3jpp8
 - fc27 update
 
