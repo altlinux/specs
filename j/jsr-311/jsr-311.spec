@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jsr-311
 Version:       1.1.1
-Release:       alt2_15jpp8
+Release:       alt2_16jpp8
 Summary:       JAX-RS: Java API for RESTful Web Services
 License:       CDDL-1.0
 URL:           http://jsr311.java.net
@@ -58,6 +58,9 @@ This package contains javadoc for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_16jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_15jpp8
 - new fc release
 
