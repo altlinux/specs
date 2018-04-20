@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          picocontainer
 Version:       2.15
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Java library implementing the Dependency Injection pattern
 License:       BSD
 Url:           http://picocontainer.codehaus.org/
@@ -161,12 +161,15 @@ sed -i 's/\r//' %{buildroot}%{_javadocdir}/%{name}/stylesheet.css
 %files -f .mfiles
 %dir %{_javadir}/%{name}
 %doc README.txt
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.15-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.15-alt1_7jpp8
 - fc27 update
 
