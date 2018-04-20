@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: libgsf
-Version: %ver_major.42
+Version: %ver_major.43
 Release: alt1
 
 Summary: GNOME Structured file library
@@ -55,7 +55,6 @@ Requires: %name-devel = %version-%release
 
 %description gir-devel
 GObject introspection devel data for the GNOME Structured file library.
-
 
 %package devel-doc
 Summary: Development documentation for gsf
@@ -145,6 +144,9 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
 
 
 %changelog
+* Fri Apr 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.43-alt1
+- 1.14.43
+
 * Sat Nov 11 2017 Yuri N. Sedunov <aris@altlinux.org> 1.14.42-alt1
 - 1.14.42
 
