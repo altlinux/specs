@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global scala_short_version 2.10
 Name:          parboiled
 Version:       1.1.6
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       Java/Scala library providing parsing of input text based on PEGs
 License:       ASL 2.0
 URL:           http://parboiled.org/
@@ -155,15 +155,18 @@ sed -i "s|@VERSION@|%{version}|" pom.xml
 
 %files -f .mfiles
 %doc CHANGELOG README.markdown
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files scala -f .mfiles-scala
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_13jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_12jpp8
 - fc27 update
 
