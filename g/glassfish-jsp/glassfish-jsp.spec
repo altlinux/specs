@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:       glassfish-jsp
 Version:    2.3.3
-Release:    alt1_0.11.b02jpp8
+Release:    alt1_0.12.b02jpp8
 Summary:    Glassfish J2EE JSP API implementation
 License:    (CDDL-1.1 or GPLv2 with exceptions) and ASL 2.0
 URL:        http://glassfish.org
@@ -103,13 +103,16 @@ popd
 
 %files -f .mfiles
 %{_javadir}/javax.servlet.jsp
-%doc LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
+%doc --no-dereference LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
+%doc --no-dereference LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_0.12.b02jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_0.11.b02jpp8
 - new fc release
 
