@@ -1,14 +1,13 @@
 Summary: STM32 microcontrolles programmer and debuger, using STLINKv1/v2
 Name: stlink
 Version: 2018.04.18
-Release: alt1
+Release: alt2
 License: Other
 Group: Development/Other
 URL: https://github.com/texane/stlink.git
 Source0: %name-master.zip
 
-# Automatically added by buildreq on Wed Apr 18 2018
-BuildRequires: cmake git-core libgtk+3-devel libusb-devel-static python3-dev python3-module-mpl_toolkits python3-module-yieldfrom ruby-stdlibs selinux-policy unzip
+BuildRequires: cmake libgtk+3-devel libusb-devel unzip
 
 %description
 First, you have to know there are several boards supported by the software.
@@ -41,15 +40,10 @@ Development files for libstlink
 %setup -q -n %name-master
 
 %build
-%make_build CMAKEFLAGS="-DCMAKE_INSTALL_PREFIX:PATH=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir"
+%make_build CMAKEFLAGS="-DCMAKE_INSTALL_PREFIX:PATH=%prefix -DLIB_INSTALL_DIR=%_libdir"
 
 %install
-pushd build/Release
-%makeinstall DESTDIR=%buildroot
-%ifarch x86_64
-	%__mv %buildroot/usr/lib %buildroot%_libdir
-%endif
-popd
+%makeinstall DESTDIR=%buildroot -C build/Release
 
 %files
 %doc ChangeLog.md LICENSE README.md
@@ -76,6 +70,10 @@ popd
 %_pkgconfigdir/*
 
 %changelog
+* Fri Apr 20 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2018.04.18-alt2
+- fix insane BRs
+- fix packaging on 64bit arches other than x86_64
+
 * Wed Apr 18 2018 Grigory Milev <week@altlinux.ru> 2018.04.18-alt1
 - Updated to latest git version
 - devide package to libs, main tools and devel packages
