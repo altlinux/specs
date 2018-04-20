@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           picketbox-commons
 Version:        1.0.0
-Release:        alt2_15jpp8
+Release:        alt2_16jpp8
 Summary:        Common classes for security projects
 License:        LGPLv2+
 URL:            http://www.jboss.org/picketbox
@@ -51,6 +51,9 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_16jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_15jpp8
 - fc27 update
 
