@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-fastinfoset
 Version:       1.2.13
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Fast Infoset
 License:       ASL 2.0
 URL:           https://fi.java.net
@@ -86,12 +86,15 @@ cp %{SOURCE1} .
 %mvn_install
 
 %files -f .mfiles
-%doc copyright.txt LICENSE-2.0.txt
+%doc --no-dereference copyright.txt LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc copyright.txt LICENSE-2.0.txt
+%doc --no-dereference copyright.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.13-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.13-alt1_7jpp8
 - fc27 update
 
