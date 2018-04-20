@@ -1,7 +1,7 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        XML Pull Parser
 Name:           xpp3
 Version:        1.1.4
-Release:        alt1_17.cjpp8
+Release:        alt1_18.cjpp8
 License:        ASL 1.1
 URL:            http://www.extreme.indiana.edu/xgws/xsoap/xpp/mxp1/index.html
 Source0:        http://www.extreme.indiana.edu/dist/java-repository/xpp3/distributions/xpp3-%{oversion}_src.tgz
@@ -89,16 +89,19 @@ ln -s xpp3_min.jar %buildroot%_javadir/xpp3-minimal.jar
 
 %files -f .mfiles
 %doc README.html doc/*.txt doc/*.html
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files minimal -f .mfiles-minimal
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %_javadir/xpp3-minimal.jar
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Apr 20 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.1.4-alt1_18.cjpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.1.4-alt1_17.cjpp8
 - new fc release
 
