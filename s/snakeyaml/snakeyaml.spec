@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             snakeyaml
 Version:          1.17
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          YAML parser and emitter for the Java programming language
 License:          ASL 2.0
 URL:              https://bitbucket.org/asomov/%{name}/
@@ -118,6 +118,9 @@ rm -r src/test/java/org/yaml/snakeyaml/issues/issue9
 %doc LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_4jpp8
 - fc27 update
 
