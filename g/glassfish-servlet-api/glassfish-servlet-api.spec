@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           glassfish-servlet-api
 Version:        3.1.0
-Release:        alt3_13jpp8
+Release:        alt3_14jpp8
 Summary:        Java Servlet API
 License:        (CDDL or GPLv2 with exceptions) and ASL 2.0
 URL:            http://servlet-spec.java.net
@@ -63,13 +63,16 @@ cp -p src/main/resources/META-INF/README .
 
 %files -f .mfiles
 %doc README
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc README
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt3_14jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt3_13jpp8
 - fc27 update
 
