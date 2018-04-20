@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          pegdown
 Version:       1.4.2
-Release:       alt1_11jpp8
+Release:       alt1_12jpp8
 Summary:       Java library for Markdown processing
 License:       ASL 2.0
 URL:           http://pegdown.org
@@ -115,12 +115,15 @@ rm -r src/test/scala/*
 
 %files -f .mfiles
 %doc CHANGELOG README.markdown
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_12jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_11jpp8
 - fc27 update
 
