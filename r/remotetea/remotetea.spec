@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          remotetea
 Version:       1.1.3
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java implementation of Sun's ONC/RPC Remote Procedure Protocol
 # GPL with exceptions: src/org/acplt/oncrpc/apps/jrpcgen/JrpcgenSHA.java original
 # Incorrect Free Software Foundation address https://github.com/remotetea/remotetea/issues/2
@@ -95,15 +95,18 @@ cp -p information/src/main/resources/META-INF/readme.html .
 
 %files -f .mfiles
 %doc changelog.html docstyle.css readme.html
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files maven-plugin -f .mfiles-maven-plugin
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_3jpp8
 - fc27 update
 
