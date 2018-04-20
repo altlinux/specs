@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jetty-artifact-remote-resources
 Version:        1.0
-Release:        alt3_16jpp8
+Release:        alt3_17jpp8
 Summary:        Jetty toolchain artifact remote resources
 
 License:        ASL 2.0 or EPL
@@ -43,6 +43,9 @@ cp -p %{SOURCE2} %{SOURCE3} .
 %doc LICENSE-2.0.txt epl-v10.html
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_17jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_16jpp8
 - fc27 update
 
