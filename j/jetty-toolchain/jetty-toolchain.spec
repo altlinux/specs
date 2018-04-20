@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jetty-toolchain
 Version:        1.4
-Release:        alt3_15jpp8
+Release:        alt3_16jpp8
 Summary:        Jetty Toolchain main POM file
 
 License:        ASL 2.0 or EPL
@@ -45,6 +45,9 @@ pushd %{name}
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_16jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_15jpp8
 - fc27 update
 
