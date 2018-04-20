@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jvnet-parent
 Version:        4
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Summary:        Java.net parent POM file
 
 Group:          Development/Other
@@ -44,6 +44,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 4-alt1_10jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 4-alt1_9jpp8
 - fc27 update
 
