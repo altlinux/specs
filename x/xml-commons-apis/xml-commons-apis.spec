@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          xml-commons-apis
 Version:       1.4.01
-Release:       alt3_24jpp8
+Release:       alt3_25jpp8
 Summary:       APIs for DOM, SAX, and JAXP
 License:       ASL 2.0 and W3C and Public Domain
 URL:           http://xml.apache.org/commons/
@@ -117,6 +117,9 @@ rm -rf build/docs/javadoc
 %{_javadocdir}/*
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.01-alt3_25jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.01-alt3_24jpp8
 - fc27 update
 
