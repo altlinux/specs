@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          xmlbeans-maven-plugin
 Version:       2.3.3
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       Maven XML Beans Plugin
 License:       ASL 2.0
 Url:           http://mojo.codehaus.org/xmlbeans-maven-plugin/
@@ -79,12 +79,15 @@ rm -r pom.xml.orig
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_8jpp8
 - fc27 update
 
