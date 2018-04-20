@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jasypt
 Version:       1.9.2
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Java Simplified Encryption
 License:       ASL 2.0
 Url:           http://www.jasypt.org/
@@ -91,12 +91,15 @@ This package contains javadoc for %{name}.
 
 %files -f .mfiles
 %doc ChangeLog.txt README.txt RELEASING.txt USAGE.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1_7jpp8
 - fc27 update
 
