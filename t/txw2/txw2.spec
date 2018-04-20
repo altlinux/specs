@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: txw2
 Version: 20110809
-Release: alt2_17jpp8
+Release: alt2_18jpp8
 Summary: Typed XML writer for Java
 License: CDDL-1.1 and GPLv2 with exceptions
 URL: https://txw.dev.java.net
@@ -66,6 +66,9 @@ This package contains the API documentation for %{name}.
 %doc license.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 20110809-alt2_18jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 20110809-alt2_17jpp8
 - new fc release
 
