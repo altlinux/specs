@@ -1,8 +1,8 @@
 %define qt_module qtgamepad
 
 Name: qt5-gamepad
-Version: 5.9.4
-Release: alt3%ubt
+Version: 5.9.5
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: A Qt 5 module that adds support for getting events from gamepad devices on multiple platforms.
@@ -12,9 +12,9 @@ License: LGPLv2 / GPLv3
 Source: %qt_module-opensource-src-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: gcc-c++ glibc-devel 
+BuildRequires: qt5-base-devel qt5-base-devel-static qt5-declarative-devel
+BuildRequires: glibc-devel
 BuildRequires: libudev-devel libSDL2-devel
-BuildRequires: qt5-base-devel qt5-base-devel-static
 
 %description
 %summary
@@ -58,6 +58,7 @@ syncqt.pl-qt5 -version %version -private
 %files -n libqt5-gamepad
 %_qt5_libdir/libQt5Gamepad.so.*
 %_qt5_plugindir/gamepads/*
+%_qt5_qmldir/QtGamepad/
 
 %files devel
 %_qt5_libdir/libQt*.so
@@ -70,6 +71,9 @@ syncqt.pl-qt5 -version %version -private
 %_pkgconfigdir/Qt?Gamepad.pc
 
 %changelog
+* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+- new version
+
 * Thu Feb 15 2018 Oleg Solovyov <mcpain@altlinux.org> 5.9.4-alt3%ubt
 - restore dir
 

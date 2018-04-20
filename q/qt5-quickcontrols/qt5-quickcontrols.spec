@@ -1,7 +1,7 @@
 %global qt_module qtquickcontrols
 
 Name: qt5-quickcontrols
-Version: 5.9.4
+Version: 5.9.5
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -63,6 +63,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/qtquick*s/
 
 %changelog
+* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+- new version
+
 * Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
 - new version
 

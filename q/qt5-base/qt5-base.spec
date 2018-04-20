@@ -1,3 +1,13 @@
+%define IF_ver_gt() %if "%(rpmvercmp '%1' '%2')" > "0"
+%define IF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
+%define IF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
+%define IF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
+%define IF_ver_eq() %if "%(rpmvercmp '%1' '%2')" == "0"
+%define IF_ver_not_gt() %if "%(rpmvercmp '%1' '%2')" <= "0"
+%define IF_ver_not_gteq() %if "%(rpmvercmp '%1' '%2')" < "0"
+%define IF_ver_not_lt() %if "%(rpmvercmp '%2' '%1')" <= "0"
+%define IF_ver_not_lteq() %if "%(rpmvercmp '%2' '%1')" < "0"
+%define IF_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 
 #def_enable qtchooser
 %def_disable bootstrap
@@ -21,7 +31,7 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.9.4
+Version: 5.9.5
 Release: alt1%ubt
 %define libname  lib%gname
 
@@ -349,6 +359,13 @@ Requires: %name-common = %EVR
 EGL integration library for the Qt%major toolkit
 
 %prep
+%define icu_ver %{get_version libicu-devel}
+%IF_ver_gteq %icu_ver 5.9
+%def_enable system_icu
+%else
+%def_disable system_icu
+%endif
+
 %setup -n %rname-opensource-src-%version
 %patch1 -p1
 %patch2 -p1
@@ -422,7 +439,13 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -fontconfig \
     -glib \
     -gtk \
+%if_enabled system_icu
     -icu \
+    -no-iconv \
+%else
+    -no-icu \
+    -iconv \
+%endif
     -openssl \
     -nomake examples \
     -nomake tests \
@@ -513,7 +536,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.9.4
+Version: 5.9.5
 __EOF__
 
 # rpm macros
@@ -772,6 +795,16 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+- new version
+
+* Wed Mar 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt.2
+- build docs
+
+* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt.1
+- use iconv with icu < 60
+- don't build docs
+
 * Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
 - new version
 
