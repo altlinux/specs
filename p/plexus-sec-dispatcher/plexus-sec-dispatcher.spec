@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plexus-sec-dispatcher
 Version:        1.4
-Release:        alt4_23jpp8
+Release:        alt4_24jpp8
 Summary:        Plexus Security Dispatcher Component
 License:        ASL 2.0
 URL:            https://github.com/codehaus-plexus/plexus-sec-dispatcher
@@ -58,6 +58,9 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.4-alt4_24jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt4_23jpp8
 - fc27 update
 
