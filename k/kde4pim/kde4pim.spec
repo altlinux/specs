@@ -19,7 +19,7 @@
 %define bugfix 10
 Name: kde4pim
 Version: %major.%minor.%bugfix
-Release: alt6
+Release: alt7%ubt
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -70,7 +70,7 @@ Patch104: kdepim-4.7.2-alt-migration.patch
 
 # Automatically added by buildreq on Tue Feb 09 2010
 #BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libassuan-devel libgpgme-devel libindicate-qt-devel libxkbfile-devel soprano soprano-backend-redland xorg-xf86vidmodeproto-devel xsltproc
-BuildRequires(pre): kde4libs-devel libassuan-devel
+BuildRequires(pre): kde4libs-devel libassuan-devel rpm-build-ubt
 BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel prison-devel qjson-devel
 #BuildRequires: soprano soprano-backend-redland
 BuildRequires: xsltproc grantlee-devel libsasl2-devel
@@ -1746,6 +1746,9 @@ fi
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Apr 20 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.10-alt7%ubt
+- rebuild with new gpgme
+
 * Fri Mar 11 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.10-alt6
 - update from 4.14 branch
 
