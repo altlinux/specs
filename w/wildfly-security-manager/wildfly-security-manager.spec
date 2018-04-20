@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             wildfly-security-manager
 Version:          1.1.2
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          WildFly Security Manager
 # Not available license file https://github.com/wildfly-security/security-manager/issues/9
 # ASL 2.0: ./src/main/java/org/wildfly/security/ParametricPrivilegedExceptionAction.java
@@ -63,6 +63,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_3jpp8
 - fc27 update
 
