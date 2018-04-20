@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           findbugs
 Version:        3.0.1
-Release:        alt1_12jpp8
+Release:        alt1_13jpp8
 Summary:        Find bugs in Java code
 
 License:        LGPLv2+
@@ -70,8 +70,9 @@ BuildRequires:  junit
 BuildRequires:  objectweb-asm
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
-BuildRequires:  /usr/bin/latex texlive-latex-recommended
-BuildRequires:  texlive-publishers
+BuildRequires:  tex(latex)
+BuildRequires:  texlive-collection-basic
+BuildRequires:  tex(pdftex.def)
 
 # Add temporary dependency on javapackages-local, for %%add_maven_depmap macro
 # See https://lists.fedoraproject.org/archives/list/java-devel@lists.fedoraproject.org/thread/R3KZ7VI5DPCMCELFIVJQ4AXB2WQED35C/
@@ -249,6 +250,9 @@ fi ||:
 %{_javadir}/findbugs-tools.jar
 
 %changelog
+* Fri Apr 20 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_13jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_12jpp8
 - fc27 update
 
