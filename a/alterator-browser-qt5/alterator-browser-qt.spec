@@ -11,7 +11,7 @@
 
 Name: %bin_name
 Version: 3.0.2
-Release: alt1%ubt
+Release: alt2%ubt
 
 Source:%name-%version.tar
 
@@ -22,6 +22,7 @@ Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 PreReq(post,preun): alternatives >= 0.2
 Requires: qt5-translations
+Requires: qt5-virtualkeyboard
 Requires: /usr/bin/xdg-open
 Requires: alterator-browser-gui-common
 Requires: alterator-common >= 2.9-alt0.14
@@ -82,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Fri Apr 20 2018 Sergey V Turchin <zerg at altlinux dot org> 3.0.2-alt2%ubt
+- require virtualkeyboard module
+
 * Thu Mar 29 2018 Sergey V Turchin <zerg at altlinux dot org> 3.0.2-alt1%ubt
 - startup animation small improvement
 
