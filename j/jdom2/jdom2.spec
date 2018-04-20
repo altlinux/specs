@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jdom2
 Version:       2.0.6
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       Java manipulation of XML made easy
 License:       ASL 1.1 or BSD
 URL:           http://www.jdom.org/
@@ -91,12 +91,15 @@ mv build/package/jdom-%{version}.bar build/package/jdom-%{version}.jar
 
 %files -f .mfiles
 %doc CHANGES.txt COMMITTERS.txt README.txt TODO.txt
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_8jpp8
 - fc27 update
 
