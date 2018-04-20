@@ -20,7 +20,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          rxjava
 Version:       1.1.8
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Reactive Extensions for the JVM
 License:       ASL 2.0
 URL:           https://github.com/ReactiveX/RxJava
@@ -129,12 +129,15 @@ opts="-f"
 
 %files -f .mfiles
 %doc CHANGES.md README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.8-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.8-alt1_3jpp8
 - fc27 update
 
