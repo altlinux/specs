@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          replacer
 Version:       1.6
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Replacer Maven Mojo
 License:       MIT
 URL:           https://github.com/beiliubei/maven-replacer-plugin
@@ -67,12 +67,15 @@ sed -i.hamcrest '/startsWith/d' src/test/java/com/google/code/maven_replacer_plu
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_5jpp8
 - fc27 update
 
