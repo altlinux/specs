@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          uima-addons
 Version:       2.3.1
-Release:       alt1_9jpp8
+Release:       alt1_10jpp8
 Summary:       Apache UIMA Addons components
 License:       ASL 2.0
 URL:           http://uima.apache.org/sandbox.html
@@ -161,12 +161,15 @@ sed -i "s|<version>1.2.14</version>|<version>1.2.17</version>|" BSFAnnotator/pom
 %files -f .mfiles
 %dir %{_javadir}/%{name}
 %doc RELEASE_NOTES.html
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_10jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_9jpp8
 - fc27 update
 
