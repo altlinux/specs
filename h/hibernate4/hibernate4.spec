@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          hibernate4
 Version:       4.3.11
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Relational persistence and query service
 # Incorrect Free Software Foundation address https://hibernate.atlassian.net/browse/HHH-10961
 License:       LGPLv2+ and ASL 2.0
@@ -439,7 +439,7 @@ sed -i.jandex1.2.2 "s|classDotName, superName, access_flag, interfaces, map|clas
 
 %files core -f .mfiles-hibernate-core
 %doc changelog.txt README.md
-%doc lgpl.txt LICENSE-2.0.txt
+%doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
 %files c3p0 -f .mfiles-hibernate-c3p0
 %files ehcache -f .mfiles-hibernate-ehcache
@@ -450,15 +450,18 @@ sed -i.jandex1.2.2 "s|classDotName, superName, access_flag, interfaces, map|clas
 %files osgi -f .mfiles-hibernate-osgi
 
 %files parent -f .mfiles-hibernate-parent
-%doc lgpl.txt LICENSE-2.0.txt
+%doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
 %files proxool -f .mfiles-hibernate-proxool
 %files testing -f .mfiles-hibernate-testing
 
 %files javadoc -f .mfiles-javadoc
-%doc lgpl.txt LICENSE-2.0.txt
+%doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 4.3.11-alt1_6jpp8
+- java update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 4.3.11-alt1_5jpp8
 - new jpp release
 
