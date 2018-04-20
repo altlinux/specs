@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jandex-maven-plugin
 Version:       1.0.4
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Jandex wrapper for Maven
 License:       GPLv3+
 URL:           https://github.com/wildfly/jandex-maven-plugin
@@ -50,12 +50,15 @@ This package contains javadoc for %{name}.
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_4jpp8
 - fc27 update
 
