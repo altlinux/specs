@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global oname javax.annotation-api
 Name:          glassfish-annotation-api
 Version:       1.2
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       Common Annotations API Specification (JSR 250)
 License:       CDDL or GPLv2 with exceptions
 # http://jcp.org/en/jsr/detail?id=250
@@ -62,12 +62,15 @@ cp -p target/classes/META-INF/LICENSE.txt .
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_13jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_12jpp8
 - fc27 update
 
