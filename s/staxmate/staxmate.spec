@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          staxmate
 Version:       2.3.0
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Light-weight Java framework for streaming XML processing
 License:       BSD
 URL:           https://github.com/FasterXML/StaxMate
@@ -69,12 +69,15 @@ find . -name '*.class' -delete
 
 %files -f .mfiles
 %doc README.md release-notes/*
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_5jpp8
 - fc27 update
 
