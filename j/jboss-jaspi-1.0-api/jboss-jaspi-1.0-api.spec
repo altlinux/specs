@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-jaspi-1.0-api
 Version:          1.0.1
-Release:          alt2_14jpp8
+Release:          alt2_15jpp8
 Summary:          JBoss Java Authentication SPI for Containers 1.0 API
 License:          CDDL or GPLv2 with exceptions
 URL:              http://www.jboss.org
@@ -73,12 +73,15 @@ done
 %files -f .mfiles
 %dir %{_javadir}/%{name}
 %doc README
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_15jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_14jpp8
 - fc27 update
 
