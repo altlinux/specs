@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global oname jaxb-api
 Name:          glassfish-jaxb-api
 Version:       2.2.12
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Java Architecture for XML Binding
 License:       CDDL or GPLv2 with exception
 URL:           http://jaxb.java.net/
@@ -87,6 +87,9 @@ mv %{buildroot}%{_javadocdir}/%{name} \
 %{_javadocdir}/%{oname}
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.12-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.12-alt1_7jpp8
 - fc27 update
 
