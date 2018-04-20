@@ -51,7 +51,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xstream
 Version:        1.4.9
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Java XML serialization library
 License:        BSD
 URL:            http://x-stream.github.io/
@@ -223,6 +223,9 @@ find . -name "*.jar" -print -delete
 %doc LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.4.9-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4.9-alt1_6jpp8
 - fc27 update
 
