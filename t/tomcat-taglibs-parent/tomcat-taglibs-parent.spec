@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           tomcat-taglibs-parent
 Version:        3
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Apache Taglibs Parent
 
 Group:          Development/Other
@@ -39,6 +39,9 @@ cp -p %{SOURCE0} .
 %dir %{_mavenpomdir}/%{name}
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3-alt1_6jpp8
 - fc27 update
 
