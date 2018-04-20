@@ -30,7 +30,7 @@
 %define libqgroupwise libqgroupwise%sover
 
 Name: kde5-kopete
-Version: 18.03.90
+Version: 18.04.0
 Release: alt1%ubt
 %K5init
 
@@ -322,6 +322,9 @@ done
 %_K5dbus_iface/*
 
 %changelog
+* Fri Apr 20 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.0-alt1%ubt
+- new version
+
 * Mon Apr 09 2018 Sergey V Turchin <zerg@altlinux.org> 18.03.90-alt1%ubt
 - new beta
 
