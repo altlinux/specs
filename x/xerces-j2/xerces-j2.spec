@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          xerces-j2
 Version:       2.11.0
-Release:       alt3_30jpp8
+Release:       alt3_31jpp8
 Summary:       Java XML parser
 License:       ASL 2.0
 URL:           http://xerces.apache.org/xerces2-j/
@@ -210,6 +210,9 @@ ln -sf %{name}.jar %{_javadir}/jaxp_parser_impl.jar
 %{_datadir}/%{name}
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt3_31jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt3_30jpp8
 - fc27 update
 
