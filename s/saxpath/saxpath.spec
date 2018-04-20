@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:       saxpath
 Version:    1.0
-Release:    alt4_15jpp8
+Release:    alt4_16jpp8
 Summary:    Simple API for XPath
 License:    Saxpath
 URL:        http://sourceforge.net/projects/saxpath/
@@ -78,6 +78,9 @@ ant test
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_16jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_15jpp8
 - fc27 update
 
