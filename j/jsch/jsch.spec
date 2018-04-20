@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jsch
 Version:        0.1.54
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Pure Java implementation of SSH2
 Group:          Development/Other
 License:        BSD
@@ -78,12 +78,15 @@ zip target/%{name}-%{version}.jar plugin.properties
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.1.54-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.1.54-alt1_5jpp8
 - fc27 update
 
