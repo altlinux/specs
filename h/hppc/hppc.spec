@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          hppc
 Version:       0.7.1
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       High Performance Primitive Collections for Java
 License:       ASL 2.0
 URL:           http://labs.carrotsearch.com/hppc.html
@@ -100,15 +100,18 @@ done
 
 %files -f .mfiles
 %doc CHANGES.txt README.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files templateprocessor -f .mfiles-%{name}-templateprocessor
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_5jpp8
 - fc27 update
 
