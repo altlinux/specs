@@ -1,8 +1,8 @@
-%define gitrev 201ea87
+%define gitrev 4b7a47a
 
 Name: gost-crypto-gui
 Version: 0.3
-Release: alt0.4.a.git%gitrev
+Release: alt0.5.a.git%gitrev
 Summary: A PyQt GUI for performing cryptographic operations over files using GOST algorithms
 
 License: MIT
@@ -72,6 +72,9 @@ rm -f %buildroot%_iconsdir/gost-crypto-gui.png
 %_iconsdir/*.png
 
 %changelog
+* Fri Apr 20 2018 Andrey Cherepanov <cas@altlinux.org> 0.3-alt0.5.a.git4b7a47a
+- New version (ALT #34836).
+
 * Sun Sep 24 2017 Andrey Cherepanov <cas@altlinux.org> 0.3-alt0.4.a.git201ea87
 - Rename to gost-crypto-gui as original upstream name
 
