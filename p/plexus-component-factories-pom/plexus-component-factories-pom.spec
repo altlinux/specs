@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		plexus-component-factories-pom
 Version:	1.0
-Release:	alt1_0.14.alpha11jpp8
+Release:	alt1_0.15.alpha11jpp8
 Summary:	Plexus Component Factories POM
 BuildArch:	noarch
 Group:		Development/Other
@@ -46,6 +46,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.15.alpha11jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.14.alpha11jpp8
 - fc27 update
 
