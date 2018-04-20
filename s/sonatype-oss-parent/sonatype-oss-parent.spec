@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           sonatype-oss-parent
 Version:        7
-Release:        alt1_13jpp8
+Release:        alt1_14jpp8
 Summary:        Sonatype OSS Parent
 
 License:        ASL 2.0
@@ -42,6 +42,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 7-alt1_14jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 7-alt1_13jpp8
 - fc27 update
 
