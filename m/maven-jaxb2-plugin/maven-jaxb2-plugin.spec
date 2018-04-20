@@ -1,14 +1,15 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          maven-jaxb2-plugin
 Version:       0.13.0
-Release:       alt1_2jpp8
+Release:       alt1_5jpp8
 Summary:       Provides the capability to generate java sources from schemas
 License:       BSD and ASL 2.0
 URL:           http://java.net/projects/maven-jaxb2-plugin/pages/Home
@@ -74,6 +75,11 @@ The API documentation of %{name}.
 
 %build
 
+# rename java files with everything commented out, helpmojo can't handle those:
+(cd plugin-core/src/main/java/org/jvnet/jaxb2/maven2/resolver/tools/;
+ mv DelegatingReaderWrapper.java DelegatingReaderWrapper.java_
+ mv DelegatingInputStreamWrapper.java DelegatingInputStreamWrapper.java_
+)
 %mvn_build
 
 %install
@@ -81,12 +87,15 @@ The API documentation of %{name}.
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Fri Apr 20 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.13.0-alt1_5jpp8
+- java update
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.13.0-alt1_2jpp8
 - new version
 
