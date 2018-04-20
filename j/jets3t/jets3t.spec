@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jets3t
 Version:       0.9.3
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Java interface to Amazon S3 and CloudFront services
 # nuvola theme is under LGPL 2.1
 # src/org/jets3t/gui/TableSorter.java BSD
@@ -235,7 +235,7 @@ cp -pr servlets %{buildroot}%{_datadir}/%{name}/
 %files -f .mfiles
 %dir %{_javadir}/%{name}
 %doc README.markdown RELEASE_NOTES.markdown
-%doc LICENSE-2.0.txt NOTICE.txt
+%doc --no-dereference LICENSE-2.0.txt NOTICE.txt
 
 %files app
 %dir %{_sysconfdir}/%{name}
@@ -253,12 +253,15 @@ cp -pr servlets %{buildroot}%{_datadir}/%{name}/
 %{_datadir}/%{name}/resources/*
 %{_datadir}/%{name}/servlets/*
 %{_mandir}/man1/*
-%doc LICENSE-2.0.txt NOTICE.txt
+%doc --no-dereference LICENSE-2.0.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-2.0.txt NOTICE.txt
+%doc --no-dereference LICENSE-2.0.txt NOTICE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.9.3-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.9.3-alt1_7jpp8
 - fc27 update
 
