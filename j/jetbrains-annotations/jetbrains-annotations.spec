@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %global oname annotations
 Name:          jetbrains-annotations
 Version:       15.0
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       IntelliJ IDEA Annotations
 License:       ASL 2.0
 URL:           http://www.jetbrains.org
@@ -68,12 +68,15 @@ sed -i 's/\r//' LICENSE.txt
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:15.0-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:15.0-alt1_5jpp8
 - fc27 update
 
