@@ -28,7 +28,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          infinispan
 Version:       8.2.4
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Data grid platform
 License:       ASL 2.0 and LGPLv2+ and Public Domain
 URL:           http://infinispan.org/
@@ -286,12 +286,15 @@ done
 
 %files -f .mfiles
 %doc README.md README-i18n.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 8.2.4-alt1_5jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 8.2.4-alt1_4jpp8
 - fixed build with new lucene
 
