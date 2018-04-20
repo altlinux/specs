@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          randomizedtesting
 Version:       2.3.1
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Java Testing Framework
 License:       ASL 2.0
 URL:           http://labs.carrotsearch.com/randomizedtesting.html
@@ -185,16 +185,19 @@ rm -r randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestCla
 
 %files
 %doc CHANGES.txt CONTRIBUTING.txt README.txt
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files junit4-ant -f .mfiles-junit4-ant
 %files junit4-maven-plugin -f .mfiles-junit4-maven-plugin
 %files runner -f .mfiles-%{name}-runner
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_4jpp8
 - fc27 update
 
