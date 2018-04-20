@@ -1,6 +1,6 @@
-BuildRequires: javapackages-local jboss-parent maven-compiler-plugin maven-release-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-specs-parent
 Version:          1.0.0
-Release:          alt3_0.14.Beta2jpp8
+Release:          alt3_0.17.Beta2jpp8
 Summary:          JBoss Specification API Parent POM
 Group:            Development/Other
 # The license is not included because it's not a part of this tag. License file
@@ -26,6 +26,10 @@ Url:              http://www.jboss.org/
 # tar czf jboss-specs-parent-1.0.0.Beta2-src-svn.tar.gz jboss-specs-parent-1.0.0.Beta2
 Source0:          %{name}-%{namedversion}-src-svn.tar.gz
 
+BuildRequires:    javapackages-local
+BuildRequires:    jboss-parent
+BuildRequires:    maven-compiler-plugin
+BuildRequires:    maven-release-plugin
 BuildRequires:    jpackage-utils
 
 Requires:         jboss-parent
@@ -52,6 +56,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.jboss-%{name}.pom
 %files -f .mfiles
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_0.17.Beta2jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_0.14.Beta2jpp8
 - added BR: javapackages-local for javapackages 5
 
