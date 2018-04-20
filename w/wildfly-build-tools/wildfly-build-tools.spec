@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          wildfly-build-tools
 Version:       1.1.6
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Wildfly build and provisioning tools
 License:       ASL 2.0
 URL:           https://github.com/wildfly/wildfly-build-tools
@@ -107,20 +107,23 @@ This package contains javadoc for %{name}.
 %mvn_install
 
 %files -f .mfiles-wildfly-build-tools-parent
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files -n wildfly-feature-pack-build-maven-plugin -f .mfiles-wildfly-feature-pack-build-maven-plugin
 
 %files -n wildfly-server-provisioning -f .mfiles-wildfly-server-provisioning
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files -n wildfly-server-provisioning-maven-plugin -f .mfiles-wildfly-server-provisioning-maven-plugin
 %files -n wildfly-server-provisioning-standalone -f .mfiles-wildfly-server-provisioning-standalone
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_4jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_3jpp8
 - new version
 
