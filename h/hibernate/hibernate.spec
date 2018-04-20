@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -29,7 +29,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          hibernate
 Version:       5.0.10
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Relational persistence and query service
 License:       LGPLv2+ and ASL 2.0
 URL:           http://www.hibernate.org/
@@ -460,7 +460,7 @@ done
 
 %files core -f .mfiles-hibernate-core
 %doc changelog.txt README.md migration-guide.adoc
-%doc lgpl.txt LICENSE-2.0.txt
+%doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
 %files c3p0 -f .mfiles-hibernate-c3p0
 %files ehcache -f .mfiles-hibernate-ehcache
@@ -475,21 +475,24 @@ done
 %doc hibernate-osgi/README.md
 
 %files parent -f .mfiles-hibernate-parent
-%doc lgpl.txt LICENSE-2.0.txt
+%doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
 %files proxool -f .mfiles-hibernate-proxool
 
 %if %{with spatial}
 %files spatial -f .mfiles-hibernate-spatial
-%doc hibernate-spatial/COPYRIGHT
+%doc --no-dereference hibernate-spatial/COPYRIGHT
 %endif
 
 %files testing -f .mfiles-hibernate-testing
 
 %files javadoc -f .mfiles-javadoc
-%doc lgpl.txt LICENSE-2.0.txt
+%doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.10-alt1_4jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 5.0.10-alt1_3jpp8
 - new version
 
