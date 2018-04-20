@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           joda-convert
 Version:        1.9.2
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        Java library for conversion to and from standard string formats
 License:        ASL 2.0
 URL:            https://github.com/JodaOrg/joda-convert/
@@ -54,6 +54,9 @@ sed -i s/\r// *.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1_2jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1_1jpp8
 - new version
 
