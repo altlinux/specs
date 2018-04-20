@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:       glassfish-jsp-api
 Version:    2.3.2
-Release:    alt1_0.8.b01jpp8
+Release:    alt1_0.9.b01jpp8
 Summary:    Glassfish J2EE JSP API specification
 
 License:    (CDDL-1.1 or GPLv2 with exceptions) and ASL 2.0
@@ -71,13 +71,16 @@ sed -i "/<bundle.symbolicName>/s/-api//" pom.xml
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
+%doc --no-dereference LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
+%doc --no-dereference LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_0.9.b01jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_0.8.b01jpp8
 - new fc release
 
