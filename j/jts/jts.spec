@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jts
 Version:       1.14
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java Topology Suite
 License:       LGPLv2+
 URL:           http://sourceforge.net/projects/jts-topo-suite
@@ -157,19 +157,22 @@ done
 
 %files -f .mfiles-%{name}-core
 %doc README.txt doc/JTS_Version_History.html
-%doc doc/LICENSE.txt
+%doc --no-dereference doc/LICENSE.txt
 
 %files app -f .mfiles-%{name}-app
 %files example -f .mfiles-%{name}-example
 %files io -f .mfiles-%{name}-io
 
 %files parent -f .mfiles-%{name}-parent
-%doc doc/LICENSE.txt
+%doc --no-dereference doc/LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc doc/LICENSE.txt
+%doc --no-dereference doc/LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_3jpp8
 - fc27 update
 
