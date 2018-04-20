@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             joda-time
 Version:          2.9.9
-Release:          alt1_1.tzdata2017bjpp8
+Release:          alt1_2.tzdata2017bjpp8
 Summary:          Java date and time API
 
 License:          ASL 2.0
@@ -81,6 +81,9 @@ tar -xzf %{SOURCE1} -C src/main/java/org/joda/time/tz/src/
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.9.9-alt1_2.tzdata2017bjpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.9.9-alt1_1.tzdata2017bjpp8
 - new version
 
