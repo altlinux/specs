@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %def_disable static
 %def_without bootstrap
 %def_with ldap
@@ -5,7 +6,7 @@
 
 Name: audit
 Version: 2.8.3
-Release: alt2%ubt
+Release: alt3%ubt
 
 Packager: Anton Farygin <rider@altlinux.com>
 
@@ -82,6 +83,10 @@ and libauparse can be used by python.
 %prep
 %setup
 %patch -p1
+sed -i 's@/etc/init.d/auditd restart@/etc/init.d/auditd stop\nservice auditd start@' \
+	init.d/auditd.restart
+sed -i 's@RETVAL=1@&\nstart-stop-daemon -p "/var/run/auditd.pid" -u root -K -n auditd -t >/dev/null \&\& \\@' \
+	init.d/auditd.condrestart
 
 %build
 %autoreconf
@@ -132,8 +137,7 @@ install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.
 %post
 %post_service %{name}d
 if [ $1 -gt 1 ]; then
-       systemctl is-enabled --quiet %{name}d && \
-       service %{name}d stop && service %{name}d start ||:
+       service %{name}d condrestart ||:
 fi
 
 %preun
@@ -173,6 +177,7 @@ fi
 %_man8dir/*
 %_man7dir/*
 
+%exclude %_sysconfdir/sysconfig/%{name}d
 %attr(700,root,root) %dir %_sysconfdir/%name
 %config(noreplace) %attr(600,root,root) %_sysconfdir/%name/auditd.conf
 %config(noreplace) %attr(600,root,root) %_sysconfdir/%name/audit-stop.rules
@@ -203,6 +208,7 @@ fi
 %_includedir/*
 %_pkgconfigdir/*
 %_man3dir/*
+%_aclocaldir/%name.m4
 
 %if_without bootstrap
 %files -n python-module-%name
@@ -210,6 +216,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 20 2018 Stanislav Levin <slev@altlinux.org> 2.8.3-alt3%ubt
+- Fix dependency to systemd in post script
+
 * Wed Apr 18 2018 Stanislav Levin <slev@altlinux.org> 2.8.3-alt2%ubt
 - Make it possible not to limit the restart of a crashed plugin
 
