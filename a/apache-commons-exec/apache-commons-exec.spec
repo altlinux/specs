@@ -1,6 +1,8 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /bin/ping
 BuildRequires: /proc
@@ -12,8 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-commons-exec
 Version:        1.3
-Release:        alt1_7jpp8
-Group: Development/Java
+Release:        alt1_8jpp8
 Summary:        Java library to reliably execute external processes from within the JVM
 License:        ASL 2.0
 URL:            http://commons.apache.org/exec/
@@ -65,7 +66,7 @@ find -name Exec57Test.java -delete
 
 
 %build
-%mvn_build  -- -Dmaven.test.failure.ignore=true
+%mvn_build -- -Dmaven.test.failure.ignore=true 
 
 
 %install
@@ -81,6 +82,9 @@ find -name Exec57Test.java -delete
 
 
 %changelog
+* Fri Apr 20 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt1_8jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt1_7jpp8
 - fixed build
 
