@@ -1,4 +1,5 @@
 %define _kde_alternate_placement 1
+%def_enable alternate_placement
 
 %def_disable qalculate
 %if_enabled kde_mobile
@@ -25,7 +26,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt9
+Release: alt10%ubt
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -122,7 +123,7 @@ Patch1053: kdebase-workspace-4.11.5-alt-oxygen-decoration-color-selinux.patch
 Patch1054: alt-dont-save-session.patch
 Patch1055: kdebase-workspace-4.11.22-alt-fix-FTBFS.patch
 
-BuildRequires(pre): kde4libs-devel rpm-build-python
+BuildRequires(pre): kde4libs-devel rpm-build-python rpm-build-ubt
 BuildRequires(pre): NetworkManager-devel
 BuildRequires(pre): libpolkit-devel
 BuildRequires: bzlib-devel gcc-c++ libXft-devel libGLES-devel
@@ -193,7 +194,7 @@ Summary: Core files for %name package
 Group: Graphical desktop/KDE
 Requires: design-graphics >= 12.0.0
 Requires: %name-common = %version-%release
-%ifdef _kde_alternate_placement
+%if_enabled alternate_placement
 %else
 Provides: kdebase-wm = %version-%release
 Obsoletes: kdebase-wm < %version-%release
@@ -664,7 +665,7 @@ mkdir -p %buildroot/%_localstatedir/kdm4/faces
 
 mkdir -p %buildroot/%_sysconfdir/alternatives/packages.d/
 # install kdm alternatives
-%ifdef _kde_alternate_placement
+%if_enabled alternate_placement
 mv %buildroot/%_kde4_bindir/kdm %buildroot/%_K4exec/kdm
 mv %buildroot/%_kde4_bindir/kdmctl %buildroot/%_K4exec/kdmctl
 %else
@@ -772,7 +773,7 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %config(noreplace) %_sysconfdir/ksysguarddrc4
 %endif
 #%config(noreplace) %_sysconfdir/systemsettingsrc
-%ifdef _kde_alternate_placement
+%if_enabled alternate_placement
 %_bindir/startkde4
 %_kde4_bindir/*
 %if_enabled desktop
@@ -849,7 +850,7 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %exclude %_K4xdg_apps/kdm.desktop
 %endif
 %_K4cfg/*
-%ifdef _kde_alternate_placement
+%if_enabled alternate_placement
 %if_enabled desktop
 %_K4doc/en/*
 %exclude %_K4doc/en/kdm
@@ -871,7 +872,7 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %endif
 %python_sitelibdir/*
 %_kde4_iconsdir/oxygen/*/*/*
-%ifdef _kde_alternate_placement
+%if_enabled alternate_placement
 %_kde4_iconsdir/hicolor/*/*/*
 %else
 %_K4iconsdir/hicolor/*/*/*
@@ -884,7 +885,7 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 
 %files wallpapers
 %_K4wall/*
-#%ifdef _kde_alternate_placement
+#%if_enabled alternate_placement
 #%exclude %_K4wall/default_blue*
 #%endif
 %endif
@@ -972,6 +973,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Apr 20 2018 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt10%ubt
+- fix to build with new gcc
+
 * Tue Nov 07 2017 Oleg Solovyov <mcpain@altlinux.org> 4.11.22-alt9
 - fix FTBFS
 
