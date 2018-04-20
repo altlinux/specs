@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jul-to-slf4j-stub
 Version:          1.0.1
-Release:          alt1_5jpp8
+Release:          alt1_6jpp8
 Summary:          JUL log records SLF4J bridge
 License:          LGPLv2+ and MIT
 URL:              http://www.jboss.org/
@@ -58,6 +58,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_5jpp8
 - fc27 update
 
