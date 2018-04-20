@@ -5,8 +5,6 @@
 %define libgpgmepp libgpgmepp%gpgmepp_sover
 %define qgpgme_sover 7
 %define libqgpgme libqgpgme%qgpgme_sover
-%define gpgme_pthread_sover 11
-%define libgpgme_pthread libgpgme-pthread%gpgme_pthread_sover
 
 %define min_gnupg_version 1.9.6
 %define gpg_bin_path %_bindir/gpg2
@@ -17,7 +15,7 @@
 
 Name: gpgme
 Version: 1.9.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -80,7 +78,7 @@ Requires: %name-common >= %EVR
 %package -n lib%name
 Summary: GnuPG Made Easy!
 Group: System/Libraries
-Requires: %libgpgme %libgpgme_pthread
+Requires: %libgpgme
 Provides: libgpgme1 = %version-%release
 Obsoletes: libgpgme1 < %version-%release
 
@@ -224,6 +222,12 @@ export PATH=$PWD/tmp_bin:$PATH
 %_libdir/libqgpgme.so.%qgpgme_sover.*
 
 %changelog
+* Fri Apr 20 2018 Sergey V Turchin <zerg@altlinux.org> 1.9.0-alt2%ubt
+- fix requires
+
+* Sat Oct 21 2017 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt0.M80P.1
+- Backport new version to p8 branch
+
 * Wed Apr 26 2017 Sergey V Turchin <zerg@altlinux.org> 1.9.0-alt1%ubt
 - new version
 
