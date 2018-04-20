@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          geolatte-geom
 Version:       0.14
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       A geometry model for Java that conforms to the Simple Features For SQL
 License:       LGPLv3+
 URL:           http://www.geolatte.org/
@@ -61,12 +61,15 @@ This package contains javadoc for %{name}.
 
 %files -f .mfiles
 %doc README.md
-%doc copyright-template.vml
+%doc --no-dereference copyright-template.vml
 
 %files javadoc -f .mfiles-javadoc
-%doc copyright-template.vml
+%doc --no-dereference copyright-template.vml
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_6jpp8
 - fc27 update
 
