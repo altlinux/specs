@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          java-xmlbuilder
 Version:       1.1
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       XML Builder Java library for creating XML documents
 License:       ASL 2.0
 Url:           https://github.com/jmurty/java-xmlbuilder
@@ -64,12 +64,15 @@ sed -i 's/\r//' LICENSE-2.0.txt
 
 %files -f .mfiles
 %doc CHANGES.md README.md
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_5jpp8
 - fc27 update
 
