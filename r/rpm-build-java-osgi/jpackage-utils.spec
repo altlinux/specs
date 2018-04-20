@@ -37,7 +37,7 @@
 
 Name:           rpm-build-java-osgi
 Version:        5.0.0
-Release:        alt44
+Release:        alt45
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -540,6 +540,9 @@ rm -f /etc/maven/maven2-depmap.xml
 %endif
 
 %changelog
+* Fri Apr 20 2018 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt45
+- bugfix release
+
 * Mon Nov 06 2017 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt44
 - dropped rpm-build-java-maven-fragments
 - renamed to rpm-build-java-osgi
