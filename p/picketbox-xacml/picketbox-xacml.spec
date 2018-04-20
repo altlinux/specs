@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 Name:          picketbox-xacml
 # Newer release are available here https://github.com/picketbox/security-xacml/tags
 Version:       2.0.8
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       JBoss XACML
 # BSD: most of the code in ./jboss-sunxacml
 # see ./jboss-sunxacml/src/main/java/org/jboss/security/xacml/sunxacml/AbstractPolicy.java as example
@@ -70,12 +70,15 @@ rm .classpath
 %mvn_install
 
 %files -f .mfiles
-%doc JBossORG-EULA.txt 
+%doc --no-dereference JBossORG-EULA.txt 
 
 %files javadoc -f .mfiles-javadoc
-%doc JBossORG-EULA.txt sunxacml-license.txt
+%doc --no-dereference JBossORG-EULA.txt sunxacml-license.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.8-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.8-alt1_3jpp8
 - fc27 update
 
