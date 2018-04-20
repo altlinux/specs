@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jetty-build-support
 Version:        1.4
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Jetty build support files
 # licensing bug upstream
 # https://bugs.eclipse.org/bugs/show_bug.cgi?id=362646
@@ -60,6 +60,9 @@ BuildArch: noarch
 %doc jetty-distribution-remote-resources/src/main/resources/*
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_3jpp8
 - fc27 update
 
