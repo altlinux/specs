@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-jaxrpc-api
 Version:       1.1.1
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       The Java API for XML-Based RPC (JAX-RPC)
 License:       CDDL or GPLv2 with exceptions
 URL:           https://metro.java.net/
@@ -70,12 +70,15 @@ sed -i 's/\r//' LICENSE.txt
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_5jpp8
 - fc27 update
 
