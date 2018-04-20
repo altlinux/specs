@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           json_simple
 Version:        1.1.1
-Release:        alt2_15jpp8
+Release:        alt2_16jpp8
 Summary:        Simple Java toolkit for JSON
 License:        ASL 2.0
 URL:            http://code.google.com/p/json-simple/
@@ -71,6 +71,9 @@ find . -type f -exec sed -i 's/\r//' {} \;
 %doc LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_16jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_15jpp8
 - fc27 update
 
