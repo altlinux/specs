@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             staxmapper
 Version:          1.2.0
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          StAX Mapper
 License:          LGPLv2+
 URL:              https://github.com/jbossas/staxmapper
@@ -51,6 +51,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_3jpp8
 - fc27 update
 
