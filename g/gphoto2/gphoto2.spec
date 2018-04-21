@@ -1,5 +1,5 @@
 Name: gphoto2
-Version: 2.5.15
+Version: 2.5.17
 Release: alt1
 
 Group: Graphics
@@ -54,6 +54,9 @@ gPhoto - универсальный комплект программ и биб�
 %_datadir/doc/%name
 
 %changelog
+* Sat Apr 21 2018 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.17-alt1
+- 2.5.17
+
 * Sun Mar 11 2018 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.15-alt1
 - 2.5.15
 
