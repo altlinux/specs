@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 3.19.0
+Version: 3.21.0
 Release: alt1
 
 Summary: A e-book library management application
@@ -168,6 +168,9 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 
 
 %changelog
+* Sat Apr 21 2018 Vitaly Lipatov <lav@altlinux.ru> 3.21.0-alt1
+- new version 3.21.0 (with rpmrb script)
+
 * Tue Mar 20 2018 Vitaly Lipatov <lav@altlinux.ru> 3.19.0-alt1
 - new version 3.19.0 (with rpmrb script)
 
