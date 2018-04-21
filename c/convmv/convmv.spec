@@ -1,5 +1,5 @@
 Name: convmv
-Version: 2.04
+Version: 2.05
 Release: alt1
 
 Summary: convmv converts file names from one encoding to another
@@ -43,6 +43,9 @@ convmv перекодирует названия файлов (не содерж
 %_mandir/man1/*
 
 %changelog
+* Sat Apr 21 2018 Vitaly Lipatov <lav@altlinux.ru> 2.05-alt1
+- new version 2.05 (with rpmrb script)
+
 * Wed Feb 07 2018 Vitaly Lipatov <lav@altlinux.ru> 2.04-alt1
 - new version 2.04 (with rpmrb script)
 
