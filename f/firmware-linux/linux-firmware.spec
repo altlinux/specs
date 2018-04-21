@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180329
+Version: 20180409
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,13 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sat Apr 21 2018 Cronbuild Service <cronbuild@altlinux.org> 20180409-alt1
+- upstream changes (GIT b562d2f):
+  + update wil6210 firmware to 5.2.0.18 (thx Maya Erez)
+  + rsi: update firmware images for Redpine 9113 chipset (thx Amitkumar Karwar)
+  + iwlwifi: update firmwares for 3160, 3168 and 7265 (thx Luca Coelho)
+  + iwlwifi: add some new FW versions and update older ones (thx Luca Coelho)
+
 * Sun Apr 08 2018 L.A. Kostis <lakostis@altlinux.ru> 20180329-alt1
 - configuration changes:
   +  fix cronbuild
