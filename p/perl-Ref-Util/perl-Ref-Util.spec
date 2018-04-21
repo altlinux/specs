@@ -3,7 +3,7 @@
 %define real_name Ref-Util
 
 Name: perl-Ref-Util
-Version: 0.203
+Version: 0.204
 Release: alt1
 
 Summary: Perl utility functions for checking references
@@ -43,6 +43,9 @@ references in a faster and smarter way.
 %perl_vendor_privlib/Ref*
 
 %changelog
+* Sat Apr 21 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.204-alt1
+- New version
+
 * Sat Jun 10 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.203-alt1
 - New version
 
