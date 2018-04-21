@@ -1,6 +1,6 @@
 Name: shotcut
 Version: 18.04
-Release: alt1
+Release: alt2
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платфоорменный видеоредактор
 License: GPL-3.0+
@@ -9,14 +9,42 @@ Url: http://www.shotcut.org/
 Packager: Anton Midyukov <antohami@altlinux.org>
 # Source-url: https://github.com/mltframework/shotcut/archive/v%version.tar.gz
 Source: %name-%version.tar
+# https://forum.shotcut.org/t/appdata-xml-file-for-gnome-software-center/2742
+Source1: %name.appdata.xml
 Patch: shotcut-18.01-nicepath.patch
 Patch1: shotcut-18.01-desktop.patch
 
-BuildRequires: gcc-c++ qt5-base-devel >= 5.5.0 qt5-multimedia-devel qt5-quick1-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel libmlt-devel libmlt++-devel qt5-tools ImageMagick-tools libX11-devel
+BuildRequires: gcc-c++
+BuildRequires: desktop-file-utils
+BuildRequires: libappstream-glib
+BuildRequires: pkgconfig(Qt5Concurrent)
+BuildRequires: pkgconfig(Qt5Core) >= 5.9.1
+BuildRequires: pkgconfig(Qt5Gui)
+BuildRequires: pkgconfig(Qt5Multimedia)
+BuildRequires: pkgconfig(Qt5Network)
+BuildRequires: pkgconfig(Qt5OpenGL)
+BuildRequires: pkgconfig(Qt5PrintSupport)
+BuildRequires: pkgconfig(Qt5Quick)
+BuildRequires: pkgconfig(Qt5WebKitWidgets)
+BuildRequires: pkgconfig(Qt5WebSockets)
+BuildRequires: pkgconfig(Qt5X11Extras)
+BuildRequires: pkgconfig(Qt5Xml)
+BuildRequires: qt5-linguist
+BuildRequires: pkgconfig(mlt++)
+BuildRequires: pkgconfig(mlt-framework)
+BuildRequires: libx264-devel
+BuildRequires: ImageMagick-tools
+
+#BuildRequires: gcc-c++ qt5-base-devel >= 5.5.0 qt5-multimedia-devel qt5-quick1-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel libmlt-devel libmlt++-devel qt5-tools ImageMagick-tools libX11-devel
 
 Requires: %name-data = %version
-# https://bugzilla.altlinux.org/show_bug.cgi?id=34444
-Requires: libSDL2 ffmpeg ffprobe ffplay mlt-utils
+Requires: mlt-utils
+Requires: gst-plugins-bad1.0
+Requires: frei0r-plugins
+Requires: ladspa_sdk
+Requires: lame
+Requires: ffmpeg ffprobe ffplay
+Requires: libSDL2
 
 %description
 These are all currently implemented features:
@@ -76,6 +104,9 @@ Data files for %name
 %patch -p2
 %patch1 -p2
 
+# Postmortem debugging tools for MinGW.
+rm -rf drmingw
+
 %build
 lrelease-qt5 translations/*.ts
 %qmake_qt5 PREFIX=%buildroot%_prefix
@@ -86,6 +117,8 @@ lrelease-qt5 translations/*.ts
 install -d -m0755 %buildroot/%_datadir/%name/translations
 cp -a translations/*.qm %buildroot/%_datadir/%name/translations/
 install -Dp -m0644 snap/gui/shotcut.desktop %buildroot%_desktopdir/%name.desktop
+install -Dm644 %SOURCE1 %buildroot/%_datadir/appdata/%name.appdata.xml
+chmod a+x %buildroot/%_datadir/shotcut/qml/export-edl/rebuild.sh
 
 for i in 16 32 48; do
     mkdir -p %buildroot/%_iconsdir/hicolor/"$i"x"$i"/apps
@@ -93,18 +126,33 @@ for i in 16 32 48; do
     %buildroot/%_iconsdir/hicolor/"$i"x"$i"/apps/%name.png
 done
 
+# fixes E: script-without-shebang
+chmod a-x %buildroot%_datadir/%name/qml/filters/webvfx_ruttetraizer/ruttetraizer.html
+chmod a-x %buildroot%_datadir/%name/qml/filters/webvfx_ruttetraizer/three.js
+
+# fixes E: wrong-script-end-of-line-encoding
+sed -i 's/\r$//' src/mvcp/{qconsole.h,qconsole.cpp}
+
+# fixes W: spurious-executable-perm
+chmod a-x src/mvcp/{qconsole.cpp,qconsole.h}
+
 %files
 %_bindir/%name
-
-%files data
-%doc COPYING README.md
-%_datadir/%name
 %_desktopdir/%name.desktop
+%doc COPYING README.md
+%_datadir/appdata/%name.appdata.xml
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
 
+%files data
+%_datadir/%name
+
 %changelog
+* Fri Apr 20 2018 Anton Midyukov <antohami@altlinux.org> 18.04-alt2
+- Update buildrequires and requires
+- Added shotcut.appdata.xml
+
 * Sat Apr 07 2018 Cronbuild Service <cronbuild@altlinux.org> 18.04-alt1
 - repocop cronbuild 20180407. At your service.
 
