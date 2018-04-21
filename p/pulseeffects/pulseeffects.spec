@@ -4,7 +4,7 @@
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 3.2.1
+Version: 3.2.2
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -60,14 +60,15 @@ effects for Pulseaudio applications.
 #%_bindir/%{name}_calibration
 %python3_sitelibdir_noarch/*
 %_desktopdir/%xdg_name.desktop
-%_datadir/glib-2.0/schemas/com.github.wwmm.%name.gschema.xml
-%_datadir/glib-2.0/schemas/com.github.wwmm.%name.sinkinputs.gschema.xml
-%_datadir/glib-2.0/schemas/com.github.wwmm.%name.sourceoutputs.gschema.xml
+%_datadir/glib-2.0/schemas/com.github.wwmm.%name.*gschema.xml
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc README*
 
 %changelog
+* Sat Apr 21 2018 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
+- 3.2.2
+
 * Fri Mar 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
 - 3.2.1
 
