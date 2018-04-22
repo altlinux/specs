@@ -1,7 +1,7 @@
 %define module Source-Shared-FindLocalMirror
 
 Name: perl-%module
-Version: 0.002
+Version: 0.003
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -34,6 +34,9 @@ BuildRequires: perl-devel perl(Module/Build/Tiny.pm) perl(Source/Shared/CLI.pm)
 %perl_vendor_privlib/S*
 
 %changelog
+* Sun Apr 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.003-alt1
+- new version
+
 * Sat Apr 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.002-alt1
 - added script/altlinux-find-local-mirror
 
