@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jlatexmath
 Version:        1.0.3
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Java API to display mathematical formulas written in LaTeX
 
 Group:          Development/Other
@@ -98,6 +98,9 @@ cp -rp doc/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.3-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.3-alt1_6jpp8
 - fc27 update
 
