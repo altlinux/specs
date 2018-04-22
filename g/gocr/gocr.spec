@@ -1,5 +1,5 @@
 Name: gocr
-Version: 0.50
+Version: 0.51
 Release: alt1
 
 Summary: GOCR/JOCR is an optical character recognition program
@@ -58,6 +58,9 @@ rm -f %buildroot%_bindir/%name.tcl
 %_man1dir/gocr.1*
 
 %changelog
+* Sat Apr 21 2018 Vitaly Lipatov <lav@altlinux.ru> 0.51-alt1
+- new version 0.51 (with rpmrb script)
+
 * Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 0.50-alt1
 - new version (0.50) with rpmgs script
 
