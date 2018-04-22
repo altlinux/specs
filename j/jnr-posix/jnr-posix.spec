@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jnr-posix
 Version:        3.0.41
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Java Posix layer
 License:        CPL or GPLv2+ or LGPLv2+
 URL:            http://github.com/jnr/jnr-posix
@@ -58,13 +58,16 @@ ln -s %name/%name.jar %buildroot%_javadir/%name.jar
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %_javadir/%name.jar
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.41-alt1_3jpp8
+- java update
+
 * Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.41-alt1_2jpp8
 - new version
 
