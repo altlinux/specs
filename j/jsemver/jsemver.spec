@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jsemver
 Version:        0.9.0
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        A Java implementation of the Semantic Versioning Specification
 
 License:        MIT
@@ -53,13 +53,16 @@ find -name \*.class -delete
 %dir %{_mavenpomdir}/%{name}
 %doc CHANGELOG.md
 %doc README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1_6jpp8
 - fc27 update
 
