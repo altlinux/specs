@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-annotations-1.1-api
 Version:       1.0.1
-Release:       alt2_0.14.20120212git76e1a2jpp8
+Release:       alt2_0.15.20120212git76e1a2jpp8
 Summary:       Common Annotations 1.1 API
 License:       CDDL or GPLv2 with exceptions
 URL:           http://www.jboss.org
@@ -53,14 +53,17 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_0.15.20120212git76e1a2jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_0.14.20120212git76e1a2jpp8
 - fc27 update
 
