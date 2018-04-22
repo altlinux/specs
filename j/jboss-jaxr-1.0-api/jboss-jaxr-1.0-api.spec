@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 %global oname jboss-jaxr-api_1.0_spec
 Name:          jboss-jaxr-1.0-api
 Version:       1.0.2
-Release:       alt2_12jpp8
+Release:       alt2_13jpp8
 Summary:       Java API for XML Registries 1.0 (JAXR)
 License:       CDDL or GPLv2 with exceptions
 URL:           http://www.jboss.org/
@@ -58,12 +58,15 @@ This package contains javadoc for %{name}.
 
 %files -f .mfiles
 %doc README
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_13jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_12jpp8
 - fc27 update
 
