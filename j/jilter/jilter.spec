@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jilter
 Version:        1.2
-Release:        alt1_13jpp8
+Release:        alt1_14jpp8
 Summary:        Sendmail milter protocol for Java
 
 Group:          Development/Other
@@ -78,6 +78,9 @@ cp -rp build/doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_14jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_13jpp8
 - fc27 update
 
