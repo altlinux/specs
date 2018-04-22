@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jaxws-undertow-httpspi
 Version:       1.0.1
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Undertow to JAXWS 2.2 HTTP SPI bridge
 # Missing license file: 
 # https://github.com/jbossws/jaxws-undertow-httpspi/issues/1
@@ -61,6 +61,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_5jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_4jpp8
 - new version
 
