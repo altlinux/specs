@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-jaxws-2.2-api
 Version:          2.0.3
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          Java API for XML-Based Web Services 2.2
 License:          CDDL or GPLv2 with exceptions
 URL:              http://www.jboss.org/
@@ -53,14 +53,17 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc src/main/resources/LICENSE.txt
+%doc --no-dereference src/main/resources/LICENSE.txt
 %doc src/main/resources/NOTE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc src/main/resources/LICENSE.txt
+%doc --no-dereference src/main/resources/LICENSE.txt
 %doc src/main/resources/NOTE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1_3jpp8
 - fc27 update
 
