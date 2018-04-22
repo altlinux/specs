@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          lettuce
 Version:       2.3.3
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Scalable Java Redis client
 License:       ASL 2.0
 # Newer release available @ https://github.com/mp911de/lettuce
@@ -57,12 +57,15 @@ find . -name "*.jar" -print -delete
 
 %files -f .mfiles
 %doc README
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_4jpp8
 - fc27 update
 
