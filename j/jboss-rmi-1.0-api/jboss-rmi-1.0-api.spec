@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-rmi-1.0-api
 Version:       1.0.4
-Release:       alt3_17jpp8
+Release:       alt3_18jpp8
 Summary:       Java Remote Method Invocation 1.0 API
 License:       GPLv2 with exceptions
 URL:           http://www.jboss.org
@@ -65,12 +65,15 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc src/main/resources/LICENSE
+%doc --no-dereference src/main/resources/LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc src/main/resources/LICENSE
+%doc --no-dereference src/main/resources/LICENSE
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt3_18jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt3_17jpp8
 - fc27 update
 
