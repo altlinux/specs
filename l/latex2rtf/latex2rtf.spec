@@ -1,5 +1,5 @@
 Name: latex2rtf
-Version: 2.3.16
+Version: 2.3.17
 Release: alt1
 
 Summary: Convert a LaTeX file to an RTF file
@@ -43,6 +43,9 @@ chmod 755 %buildroot%_bindir/latex2png
 %_man1dir/*
 
 %changelog
+* Sun Apr 22 2018 Vitaly Lipatov <lav@altlinux.ru> 2.3.17-alt1
+- new version 2.3.17 (with rpmrb script)
+
 * Tue May 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.16-alt1
 - NMU: new version 2.3.16
 
