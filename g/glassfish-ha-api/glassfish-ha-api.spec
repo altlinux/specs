@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-ha-api
 Version:       3.1.9
-Release:       alt1_10jpp8
+Release:       alt1_11jpp8
 Summary:       High Availability APIs and SPI
 License:       CDDL or GPLv2 with exceptions
 URL:           http://glassfish.java.net/
@@ -71,12 +71,15 @@ sed -i 's/\r//' LICENSE.txt
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.9-alt1_11jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.9-alt1_10jpp8
 - fc27 update
 
