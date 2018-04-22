@@ -2,6 +2,7 @@ Epoch: 0
 Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: zip
 # END SourceDeps(oneline)
 %filter_from_requires /.etc.java.jing-trang.conf/d
 %filter_from_requires /^.usr.bin.run/d
@@ -21,7 +22,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jing-trang
 Version:        20151127
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Schema validation and conversion based on RELAX NG
 
 License:        BSD
@@ -41,7 +42,7 @@ BuildRequires:  ant-trax
 %else
 BuildRequires:  ant >= 1.8.2
 %endif
-BuildRequires:  bsh-utils
+BuildRequires:  bsh
 BuildRequires:  isorelax
 BuildRequires:  java-devel-openjdk >= 1.6.0
 BuildRequires:  java-javadoc
@@ -167,17 +168,17 @@ install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 %{_javadir}/jing.jar
 
 %files -n jing-javadoc
-%doc jing-%{version}/_licenses/*
+%doc --no-dereference jing-%{version}/_licenses/*
 %{_javadocdir}/jing/
 
 %files -n trang
-%doc trang-%{version}/copying.txt
+%doc --no-dereference trang-%{version}/copying.txt
 %doc trang-%{version}/*.html
 %{_bindir}/trang
 %{_javadir}/trang.jar
 
 %files -n dtdinst
-%doc dtdinst-%{version}/copying.txt
+%doc --no-dereference dtdinst-%{version}/copying.txt
 %doc dtdinst-%{version}/*.html
 %doc dtdinst-%{version}/*.rng
 %doc dtdinst-%{version}/*.xsl
@@ -189,6 +190,9 @@ install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:20151127-alt1_3jpp8
+- java update
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0:20151127-alt1_2jpp8
 - new version
 
