@@ -1,5 +1,5 @@
 Name: 	 chef-zero
-Version: 14.0.2
+Version: 14.0.5
 Release: alt1
  
 Summary: Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes
@@ -60,6 +60,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Sun Apr 22 2018 Andrey Cherepanov <cas@altlinux.org> 14.0.5-alt1
+- New version.
+
 * Fri Mar 16 2018 Andrey Cherepanov <cas@altlinux.org> 14.0.2-alt1
 - New version.
 
