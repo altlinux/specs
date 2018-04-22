@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jinput
 Version:        2.0.7
-Release:        alt2_11.20170607git.294629ajpp8
+Release:        alt2_12.20170607git.294629ajpp8
 Summary:        Java Game Controller API
 
 License:        BSD
@@ -37,7 +37,7 @@ Patch5:         006_jinput_java5.patch
 Patch6:         007_jinput_linux_4.5.patch
 
 BuildRequires:  ant
-BuildRequires:  gcc-common
+BuildRequires:  gcc
 BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  java-javadoc >= 1:1.6.0
 BuildRequires:  javapackages-local
@@ -150,6 +150,9 @@ ant versiontest
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt2_12.20170607git.294629ajpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt2_11.20170607git.294629ajpp8
 - new fc release
 
