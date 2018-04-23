@@ -1,6 +1,6 @@
 Name: profile-sync-daemon
 Version: 6.33
-Release: alt1
+Release: alt2
 Summary: Offload browser profiles to RAM for speed a wear reduction
 Summary(ru_RU.UTF-8): Выгружает профиль браузера в ОЗУ для ускорения его работы
 License: MIT
@@ -9,6 +9,8 @@ Url: https://github.com/graysky2/profile-sync-daemon
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+Patch: fix_syntax.patch
+
 BuildArch: noarch
 %add_findreq_skiplist %_bindir/%name
 
@@ -34,6 +36,7 @@ systemctl --user enable psd psd-resync.timer && systemctl --user start psd psd-r
 
 %prep
 %setup
+%patch -p1
 
 sed -i '/Wants=psd-resync.service/d' init/psd.service
 sed -i '/\[Timer\]/a OnStartupSec=10s' init/psd-resync.timer
@@ -66,6 +69,9 @@ echo 'systemctl --user enable psd psd-resync.timer && systemctl --user start psd
 %_libexecdir/systemd/user/psd*.*
 
 %changelog
+* Mon Apr 23 2018 Anton Midyukov <antohami@altlinux.org> 6.33-alt2
+- fix bash syntax error (Closes: 33902)
+
 * Sun Mar 04 2018 Cronbuild Service <cronbuild@altlinux.org> 6.33-alt1
 - new version 6.33
 
