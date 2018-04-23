@@ -14,8 +14,8 @@
 %add_python_req_skip _gpgme
 
 Name: gpgme
-Version: 1.9.0
-Release: alt2%ubt
+Version: 1.11.1
+Release: alt1%ubt
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -29,7 +29,6 @@ Requires: %gpg_bin_path
 Source: gpgme-%version.tar
 # FC
 Patch1: 0001-fix-stupid-ax_python_devel.patch
-Patch2: 0001-qt-pass-fmt-to-gpgrt_asprintf.patch
 # ALT
 Patch11: gpgme-1.4.3-alt-version-script.patch
 Patch12: gpgme-1.3.0-alt-gpgme-config-assuan.patch
@@ -145,7 +144,6 @@ GPGME-based statically linked applications.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -183,6 +181,7 @@ export PATH=$PWD/tmp_bin:$PATH
 
 %files
 %_bindir/gpgme-tool
+%_bindir/gpgme-json
 
 %files common
 %doc AUTHORS NEWS README THANKS
@@ -222,6 +221,9 @@ export PATH=$PWD/tmp_bin:$PATH
 %_libdir/libqgpgme.so.%qgpgme_sover.*
 
 %changelog
+* Fri Apr 20 2018 Sergey V Turchin <zerg@altlinux.org> 1.11.1-alt1%ubt
+- new version
+
 * Fri Apr 20 2018 Sergey V Turchin <zerg@altlinux.org> 1.9.0-alt2%ubt
 - fix requires
 
