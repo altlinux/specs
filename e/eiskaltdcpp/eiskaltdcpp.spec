@@ -1,30 +1,27 @@
 Name: eiskaltdcpp
-Version: 2.2.8
-Release: alt1.qa3
+Version: 2.2.10
+Release: alt1
+
 Summary: EiskaltDC++ - Direct Connect client
+
 License: GPLv3
 Group: Networking/File transfer
 Url: http://code.google.com/p/eiskaltdc/
-Packager: Aeliya Grevnyov <gray_graff@altlinux.org>
 
 Source: %name-%version.tar
-#Patch: eiskaltdcpp-2.2.5-alt-DSO.patch
-#Patch1: eiskaltdcpp-2.2.7-alt-boost-1.52.0.patch
 
-BuildRequires: cmake gcc-c++ libqt4-devel bzlib-devel libaspell-devel lua5.1-devel
-BuildRequires: libgtk+2-devel libglade-devel glib2-devel libpango-devel libnotify-devel 
-BuildRequires: boost-devel boost-signals-devel boost-interprocess-devel
-BuildRequires: phonon-devel libssl-devel libidn-devel libpcrecpp-devel
-BuildRequires: aspell perl-JSON-RPC perl-Term-ShellUI
+BuildRequires: boost-interprocess-devel bzlib-devel cmake gcc-c++ libaspell-devel libgtk+2-devel
+BuildRequires: libidn-devel liblua5.1-devel libnotify-devel libpcrecpp-devel qt5-phonon-devel
+BuildRequires: qt5-tools-devel qt5-multimedia-devel qt5-script-devel
+BuildRequires: libssl-devel perl-JSON-RPC perl-Term-ShellUI
 
 %add_findreq_skiplist *xmms2_audacious2.ru_RU.UTF-8.php
 %add_findreq_skiplist *commands.ru_RU.UTF-8.php
 
 %description
-EiskaltDC++ is a cross-platform program that uses the Direct Connect and ADC protocol. 
-It is compatible with other DC clients, such as the original DC from Neomodus, DC++ and derivatives. 
-EiskaltDC++ also interoperates with all common DC hub software. 
-
+EiskaltDC++ is a cross-platform program that uses the Direct Connect and ADC protocol.
+It is compatible with other DC clients, such as the original DC from Neomodus, DC++ and derivatives.
+EiskaltDC++ also interoperates with all common DC hub software.
 
 %package common
 Group: Networking/File transfer
@@ -89,46 +86,41 @@ command line interface for XML-RPC Daemon
 
 %prep
 %setup
-#%%patch -p2
-#%%patch1 -p2
 
 %build
 %add_optflags -fno-strict-aliasing $(pkg-config libpcre --cflags)
-mkdir -p BUILD
-pushd BUILD
-cmake .. \
- -DCMAKE_BUILD_TYPE=Release \
- -DCMAKE_SKIP_RPATH:BOOL=yes \
- -DCMAKE_C_FLAGS:STRING="%optflags" \
- -DCMAKE_CXX_FLAGS:STRING="%optflags" \
- -DCMAKE_INSTALL_PREFIX=%prefix \
- -DLIB_DESTINATION=%_lib \
+%cmake_insource \
+-DCMAKE_BUILD_TYPE=Release \
+-DCMAKE_SKIP_RPATH:BOOL=yes \
+-DCMAKE_C_FLAGS:STRING="%optflags" \
+-DCMAKE_CXX_FLAGS:STRING="%optflags" \
+-DCMAKE_INSTALL_PREFIX=%prefix \
+-DLIB_DESTINATION=%_lib \
 %if %_lib == lib64
- -DLIBDIR=lib64 \
+-DLIBDIR=lib64 \
 %endif
- -DUSE_ASPELL=ON \
- -DUSE_QT=ON \
- -DUSE_QT_QML=ON \
- -DFREE_SPACE_BAR_C=ON \
- -DUSE_MINIUPNP=ON \
- -DLOCAL_MINIUPNP=ON \
- -DUSE_GTK=ON \
- -DDBUS_NOTIFY=ON \
- -DUSE_JS=ON \
- -DLUA_SCRIPT=ON \
- -DWITH_LUASCRIPTS=ON \
- -DWITH_SOUNDS=ON \
- -DUSE_QT_SQLITE=ON \
- -DNO_UI_DAEMON=ON \
- -DJSONRPC_DAEMON=ON \
- -DUSE_CLI_JSONRPC=ON \
- -DPCRE_INCLUDE_DIR=$(pkg-config libpcre --variable=includedir) \
- -DPERL_REGEX=ON
-popd
-%make_build -C BUILD VERBOSE=1
+-DUSE_ASPELL=ON \
+-DFREE_SPACE_BAR_C=ON \
+-DUSE_MINIUPNP=ON \
+-DLOCAL_MINIUPNP=ON \
+-DUSE_GTK=ON \
+-DDBUS_NOTIFY=ON \
+-DUSE_JS=ON \
+-DLUA_SCRIPT=ON \
+-DWITH_LUASCRIPTS=ON \
+-DWITH_SOUNDS=ON \
+-DUSE_QT_SQLITE=ON \
+-DNO_UI_DAEMON=ON \
+-DJSONRPC_DAEMON=ON \
+-DUSE_CLI_JSONRPC=ON \
+-DPCRE_INCLUDE_DIR=$(pkg-config libpcre --variable=includedir) \
+-DPERL_REGEX=ON \
+-DUSE_QT=OFF \
+-DUSE_QT5=ON
+%make_build
 
 %install
-%makeinstall -C BUILD DESTDIR="%buildroot/"
+%makeinstall_std
 %find_lang %name-gtk
 %find_lang lib%name
 
@@ -176,6 +168,10 @@ popd
 %_datadir/%name/cli
 
 %changelog
+* Mon Apr 23 2018 Grigory Ustinov <grenka@altlinux.org> 2.2.10-alt1
+- Build new version.
+- Transfer to qt5 (Closes: #34636).
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.8-alt1.qa3
 - NMU: rebuild with new lua 5.1
 
