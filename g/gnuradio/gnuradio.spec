@@ -1,11 +1,11 @@
 %def_enable docs
-%def_disable tests
+%def_enable tests
 
 %define _libexec %prefix/libexec
 
 Name: gnuradio
-Version: 3.7.11
-Release: alt5
+Version: 3.7.12.0
+Release: alt1
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
@@ -13,13 +13,40 @@ Url: http://www.gnuradio.org
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+Patch: fix-gnuradio-qtgui.pc.patch
 
 BuildPreReq: cmake rpm-macros-cmake rpm-build-python rpm-build-gir
-BuildRequires: gcc-c++ boost-program_options-devel boost-filesystem-devel pkgconfig(sdl) pkgconfig(alsa) pkgconfig(codec2) pkgconfig(gsl) libgsm-devel pkgconfig(jack) pkgconfig(portaudio-2.0) libqt4-devel libqwt-devel pkgconfig(libusb-1.0) pkgconfig(comedilib) pkgconfig(fftw3f) pkgconfig(thrift) libzeromq-cpp-devel pkgconfig(volk) swig pkgconfig(uhd)
-BuildRequires: python-devel python-module-lxml python-module-numpy python-module-Cheetah python-module-pygtk python-module-PyQt4 python-module-wx
+BuildRequires: gcc-c++
+BuildRequires: boost-filesystem-devel
+BuildRequires: boost-interprocess-devel
+BuildRequires: boost-program_options-devel
+BuildRequires: libgsm-devel
+BuildRequires: libqt4-devel
+BuildRequires: libqwt-devel
+BuildRequires: libzeromq-cpp-devel
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(codec2)
+BuildRequires: pkgconfig(comedilib)
+BuildRequires: pkgconfig(fftw3f)
+BuildRequires: pkgconfig(gsl)
+BuildRequires: pkgconfig(jack)
+BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: pkgconfig(portaudio-2.0)
+BuildRequires: pkgconfig(sdl)
+BuildRequires: pkgconfig(thrift)
+BuildRequires: pkgconfig(uhd)
+BuildRequires: pkgconfig(volk)
+BuildRequires: python-devel
+BuildRequires: python-module-Cheetah
+BuildRequires: python-module-lxml
+BuildRequires: python-module-numpy
+BuildRequires: python-module-pygtk
+BuildRequires: python-module-PyQt4
+BuildRequires: python-module-wx
+BuildRequires: swig
 
 %if_enabled tests
-BuildRequires: cppunit-devel
+BuildRequires: pkgconfig(cppunit)
 %endif #tests
 %if_enabled docs
 BuildRequires: doxygen python-module-sphinx
@@ -79,6 +106,7 @@ GNU Radio Headers.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake  -DENABLE_INTERNAL_VOLK=OFF \
@@ -162,6 +190,9 @@ rm -f %buildroot%_datadir/%name/examples/fcd/fcd_nfm_rx
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Apr 23 2018 Anton Midyukov <antohami@altlinux.org> 3.7.12.0-alt1
+- new version 3.7.12.0
+
 * Fri Mar 30 2018 Anton Midyukov <antohami@altlinux.org> 3.7.11-alt5
 - fix buildrequires
 
