@@ -1,7 +1,7 @@
 
 Name: poppler-data
-Version: 0.4.7
-Release: alt1
+Version: 0.4.8
+Release: alt1%ubt
 
 Group: Publishing
 Summary: Common data for poppler
@@ -12,6 +12,8 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Patch1: alt-pkgconfig.patch
+
+BuildRequires(pre): rpm-build-ubt
 
 %description
 This package consists of encoding files for use with poppler.  The
@@ -42,6 +44,9 @@ rm -rf poppler-data.pc
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Mon Apr 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.4.8-alt1%ubt
+- new version
+
 * Fri Nov 14 2014 Sergey V Turchin <zerg@altlinux.org> 0.4.7-alt1
 - new version
 
