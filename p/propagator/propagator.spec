@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20171208
+Version: 20180423
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,28 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Mon Apr 23 2018 Leonid Krivoshein <klark@altlinux.org> 20180423-alt1
+- New udev control logic imported from make-initrd scripts.
+- Udev-trigger replaced to udev-settle() in hardware wait loops.
+- All udev control code moved from init.c to new udev.c module.
+- Lazy initialization mode support added for work in cooperate
+  with make-initrd: this is experimental future, turned off by
+  default, and also required patched make-initrd-propagator.
+- disk.c, cdrom.c: 15 attempts with udev-settle() calls.
+- network.c: bridge up algorithm reviewed, fixed memory leaks.
+- network.c: 15 attempts to select and wait network interface;
+- probing.c, probing.h, dhcp.c: small fixes, now black list used.
+- modules_descr.h, stage1.c: deprecated header, unused code removed.
+- dhcp.c: fix potentially destructive typo (closes: #34322),
+  thanks to Arseny Maslennikov <arseny@altlinux.org>.
+- Workaround race conditions during disks detection (closes: #30315).
+- Workaround race conditions during bridging up network interfaces,
+  see: https://bugzilla.altlinux.org/show_bug.cgi?id=34347 and
+  https://lists.altlinux.org/pipermail/sysadmins/2018-April/date.html
+  (about "No network Devices found" error message).
+- Multiple small code improvements, fixes for avoid memory leaks
+  and suppress compiler warnings.
+
 * Fri Dec 08 2017 Mikhail Efremov <sem@altlinux.org> 20171208-alt1
 - probing.c: added support for MMC devices when boot in LiveCD-mode
   (by Leonid Krivoshein).
