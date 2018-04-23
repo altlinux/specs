@@ -1,14 +1,14 @@
 Name: btpd
-Version: 0.13
-Release: alt2.qa2
+Version: 0.16.0.16.gita7fb9a8
+Release: alt1
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
 Summary: Bittorrent download daemon.
 License: Non-ad BSD license
 Group: Networking/File transfer
 
+Url: https://github.com/btpd/btpd
 Source: %name-%version.tar.gz
-Patch: btpd-0.13-glibc-2.17.patch
 
 Requires: libssl
 
@@ -19,10 +19,10 @@ BuildRequires: libssl-devel
 Btpd is a bittorrent client consisting of a daemon and client commands.
 
 %prep
-%setup -q
-%patch -p2
+%setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -30,15 +30,15 @@ Btpd is a bittorrent client consisting of a daemon and client commands.
 %makeinstall
 
 %files
+%doc README CHANGES
 %_bindir/*
-%_mandir/man1/*
-%_datadir/doc/%name-%version/*
-# The package does not own its own docdir subdirectory.
-# The line below is added by repocop to fix this bug in a straightforward way. 
-# Another way is to rewrite the spec to use relative doc paths.
-%dir %_docdir/btpd-%version 
+%_man1dir/*
 
 %changelog
+* Mon Apr 23 2018 Grigory Ustinov <grenka@altlinux.org> 0.16.0.16.gita7fb9a8-alt1
+- Build new version.
+- Add url tag (Closes: #19030).
+
 * Wed Mar 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt2.qa2
 - Fixed build with glibc 2.17
 
