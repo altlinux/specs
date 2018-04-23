@@ -1,6 +1,5 @@
-%set_verify_elf_method unresolved=relaxed
 Name: volk
-Version: 1.3
+Version: 1.4
 Release: alt1
 Summary: Vector-Optimized Library of Kernels
 License: GPLv3
@@ -15,25 +14,26 @@ VOLK:
 - is a free library, currently offered under the GPLv3 license;
 - provides an abstraction of optimized math routines targetting several SIMD processors.
 
-%package -n lib%{name}
+%package -n lib%name
 Group: Development/C++
 Summary: Vector-Optimized Library of Kernels
-BuildRequires: gcc-c++ cmake liborc-devel python-module-cheetah
-BuildRequires: boost-filesystem-devel boost-program_options-devel boost-signals-devel boost-math-devel
-BuildRequires: boost-mpi-devel boost-intrusive-devel boost-wave-devel boost-graph-parallel-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake
+BuildRequires: liborc-devel orc
+BuildRequires: boost-filesystem-devel
 
-%description -n lib%{name}
+%description -n lib%name
 VOLK:
 - is the Vector-Optimized Library of Kernels;
 - is a free library, currently offered under the GPLv3 license;
 - provides an abstraction of optimized math routines targetting several SIMD processors.
 
-%package -n lib%{name}-devel
+%package -n lib%name-devel
 Summary: Vector-Optimized Library of Kernels
 Group: Development/C++
-Requires: lib%{name} = %version-%release
+Requires: lib%name = %version-%release
 
-%description -n lib%{name}-devel
+%description -n lib%name-devel
 VOLK:
 - is the Vector-Optimized Library of Kernels;
 - is a free library, currently offered under the GPLv3 license;
@@ -42,6 +42,8 @@ VOLK:
 %package -n python-module-%name
 Summary: The Python bindings for VOLK
 Group: Development/Python
+BuildRequires: python-module-six
+BuildRequires: python-module-mako
 Requires: lib%name = %version
 
 %description -n python-module-%name
@@ -57,18 +59,14 @@ Python module for VOLK.
 %install
 %cmakeinstall_std
 
-#mkdir -p %buildroot%_datadir/%name
-#mv %buildroot/usr/lib/cmake %buildroot%_datadir/%name
-
-
 %files
 %_bindir/*
-%doc
+%doc COPYING README.md
 
-%files -n lib%{name}
-%_libdir/lib%{name}.so.*
+%files -n lib%name
+%_libdir/lib%name.so.*
 
-%files -n lib%{name}-devel
+%files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
@@ -78,6 +76,9 @@ Python module for VOLK.
 %python_sitelibdir/*
 
 %changelog
+* Sun Apr 22 2018 Anton Midyukov <antohami@altlinux.org> 1.4-alt1
+- new version 1.4
+
 * Fri Aug 11 2017 Anton Midyukov <antohami@altlinux.org> 1.3-alt1
 - New version 1.3
 
