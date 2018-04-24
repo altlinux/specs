@@ -2,7 +2,7 @@
 
 Name: kf5-kirigami
 Version: 5.44.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: System/Libraries
@@ -83,6 +83,9 @@ KF5 library
 %_K5lib/libKF5Kirigami2.so.*
 
 %changelog
+* Tue Apr 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt2%ubt
+- update from 5.45
+
 * Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
 - new version
 
