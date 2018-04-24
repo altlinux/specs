@@ -1,6 +1,6 @@
 Name: gnu-efi
 Version: 3.0.8
-Release: alt1
+Release: alt1%ubt
 Epoch: 1
 Summary: Building EFI applications using the GNU toolchain
 # Intel and HP's BSD-like license, except setjmp code coming from GRUB
@@ -11,6 +11,7 @@ Url: http://gnu-efi.sourceforge.net/
 # git https://git.code.sf.net/p/gnu-efi/code
 Source: %name-%version.tar
 ExclusiveArch: %ix86 x86_64 aarch64
+BuildRequires(pre): rpm-build-ubt
 Conflicts: gnu-efi-3.0r gnu-efi-3.0u gnu-efi-3.0.5
 %define efidir altlinux
 
@@ -49,6 +50,9 @@ setarch linux32 -B make PREFIX=%prefix LIBDIR=%_prefix/lib INSTALLROOT=%buildroo
 %_includedir/efi
 
 %changelog
+* Tue Apr 24 2018 Anton Farygin <rider@altlinux.ru> 1:3.0.8-alt1%ubt
+- added %%ubt
+
 * Wed Mar 28 2018 Anton Farygin <rider@altlinux.ru> 1:3.0.8-alt1
 - 3.0.8
 
