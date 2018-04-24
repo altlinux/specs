@@ -6,7 +6,7 @@
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt3%ubt
+Release: alt4%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -28,7 +28,7 @@ BuildRequires: flex fontconfig-devel gcc-c++ libicu-devel libjpeg-devel libpng-d
 BuildRequires: libsqlite3-devel libudev-devel libwebp-devel libxslt-devel libpcre-devel gperf
 BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0)
 # pkgconfig(gstreamer-1.0) pkgconfig(gstreamer-plugins-base-1.0) pkgconfig(gstreamer-app-1.0)
-BuildRequires: libXcomposite-devel libXext-devel libXrender-devel
+BuildRequires: libXcomposite-devel libXext-devel libXrender-devel libdrm-devel
 # libGL-devel
 BuildRequires: python-module-distribute python-module-simplejson python-module-json rpm-build-python
 BuildRequires: rpm-build-ruby
@@ -126,6 +126,7 @@ cmake \
     -DENABLE_TOOLS=OFF \
     -DCMAKE_C_FLAGS_RELEASE:STRING="%optflags -DNDEBUG" \
     -DCMAKE_CXX_FLAGS_RELEASE:STRING="%optflags -DNDEBUG" \
+    -DUSE_LD_GOLD=OFF \
     \
     -DUSE_GSTREAMER=OFF \
     -DUSE_QT_MULTIMEDIA=OFF \
@@ -137,10 +138,10 @@ cmake \
     -DENABLE_INSPECTOR_UI=OFF \
     -DENABLE_LINK_PREFETCH=OFF \
     \
-%ifnarch %arm %ix86 x86_64
+%ifnarch %arm aarch64 %ix86 x86_64
     -DENABLE_JIT=OFF \
 %endif
-%ifnarch %arm %ix86 x86_64
+%ifnarch %arm aarch64 %ix86 x86_64
     -DUSE_SYSTEM_MALLOC=ON \
 %endif
 %if_disabled bootstrap
@@ -192,6 +193,9 @@ done
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Tue Apr 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt4%ubt
+- fix build options for aarch64
+
 * Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt3%ubt
 - rebuild with new Qt
 
