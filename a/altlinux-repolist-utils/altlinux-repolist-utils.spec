@@ -1,5 +1,5 @@
 Name: altlinux-repolist-utils
-Version: 0.001
+Version: 0.002
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -27,10 +27,13 @@ mkdir -p %buildroot%perl_vendor_privlib/ALTLinux/
 install -m 644 *.pm %buildroot%perl_vendor_privlib/ALTLinux/
 
 %files
-#doc README
+%doc README
 %_bindir/*
 %perl_vendor_privlib/ALTLinux/*.pm
 
 %changelog
+* Tue Apr 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.002-alt1
+- new version
+
 * Sat Apr 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.001-alt1
 - new version
