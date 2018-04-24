@@ -1,3 +1,4 @@
+BuildRequires: mvn(com.centerkey.utils:BareBonesBrowserLaunch)
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
@@ -26,7 +27,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:   hadoop
 Version: 2.7.3
-Release: alt1_6jpp8
+Release: alt2_6jpp8
 Summary: A software platform for processing vast amounts of data
 # The BSD license file is missing
 # https://issues.apache.org/jira/browse/HADOOP-9849
@@ -187,7 +188,7 @@ BuildRequires: servlet3
 BuildRequires: slf4j
 BuildRequires: libsnappy-devel
 BuildRequires: snappy-java
-BuildRequires: journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-stateless systemd-utils
+BuildRequires: journalctl libsystemd-devel libudev-devel systemd systemd-utils
 BuildRequires: tomcat
 BuildRequires: tomcat-el-3.0-api
 BuildRequires: tomcat
@@ -1136,6 +1137,9 @@ fi
 %attr(6010,root,yarn) %{_bindir}/container-executor
 
 %changelog
+* Tue Apr 24 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt2_6jpp8
+- fixes for e2k
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt1_6jpp8
 - fixed build
 
