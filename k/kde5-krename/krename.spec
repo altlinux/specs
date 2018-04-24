@@ -1,15 +1,17 @@
-%define origname krename
+%define rname krename
 
-Name: kde5-%origname
+Name: kde5-%rname
 Version: 5.0.0
-Release: alt2%ubt
+Release: alt3%ubt
+%K5init
 
 Summary: A powerful batch renamer for KDE5
 Group: File tools
 License: GPL
 Url: https://userbase.kde.org/KRename
 
-Source: %origname-%version.tar
+Source: %rname-%version.tar
+Patch1: alt-startupinfo-labels-color.patch
 
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++
@@ -30,22 +32,27 @@ filenames, finding and replacing parts of the filename, and many more.
 It can also change access and modification dates, permissions, and file ownership.
 
 %prep
-%setup -n %origname-%version
+%setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
 
 %install
 %K5install
-%find_lang --all-name --with-kde %origname
+%find_lang --all-name --with-kde %rname
 
-%files -f %origname.lang
-%_K5bin/%origname
+%files -f %rname.lang
+%_K5bin/%rname
 %_K5xdgapp/*.desktop
 %_K5icon/*/*/apps/*.png
 %_K5srv/*
 
 %changelog
+* Tue Apr 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt3%ubt
+- add fix against KDEBUG-391291
+- fix startup info page labels color
+
 * Wed Apr 18 2018 Oleg Solovyov <mcpain@altlinux.org> 5.0.0-alt2%ubt
 - add %%ubt tag for backporting
 
