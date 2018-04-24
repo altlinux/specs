@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -23,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          rabbitmq-java-client
 Version:       3.6.5
-Release:       alt1_1jpp8
+Release:       alt1_4jpp8
 Summary:       Java Advanced Message Queue Protocol client library
 License:       ASL 2.0 and GPLv2+ and MPLv1.1
 URL:           http://www.rabbitmq.com/java-client.html
@@ -40,11 +40,11 @@ BuildRequires: texi2html
 BuildRequires: %{_bindir}/pdflatex
 %endif
 
-%if 0%{?fedora}
+%if 0
 # for tests execution
 BuildRequires:  rabbitmq-server
 BuildRequires:  coreutils
-BuildRequires:  procps sysvinit-utils
+BuildRequires:  procps
 
 Requires:       rabbitmq-server
 Requires:       activemq
@@ -139,17 +139,20 @@ export RABBITMQ_MNESIA_BASE=.
 
 
 %files -f .mfiles
-%doc LICENSE*
+%doc --no-dereference LICENSE*
 %doc README*
 
 %files doc
 %doc doc/*
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE*
+%doc --no-dereference LICENSE*
 
 
 %changelog
+* Tue Apr 24 2018 Igor Vlasenko <viy@altlinux.ru> 3.6.5-alt1_4jpp8
+- fixes for e2k
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 3.6.5-alt1_1jpp8
 - new version
 
