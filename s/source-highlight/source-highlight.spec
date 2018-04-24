@@ -1,6 +1,6 @@
 Name: source-highlight
 Version: 3.1.8
-Release: alt4%ubt
+Release: alt5%ubt
 
 Summary: syntax highlighting for source documents
 License: GPL
@@ -39,7 +39,7 @@ used by other C++ programs to get source code highlighting capabilities.
 Summary: Header files for libsource-highlight library
 License: GPL
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 This is a development package for lib%name. It includes
@@ -91,6 +91,9 @@ BuildArch: noarch
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Tue Apr 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.8-alt5%ubt
+- Rebuilt with new boost.
+
 * Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.8-alt4%ubt
 - NMU: rebuild with TeXLive instead of TeTeX
 
