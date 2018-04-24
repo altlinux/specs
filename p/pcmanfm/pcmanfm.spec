@@ -1,7 +1,7 @@
 %define gtkver 2
 
 Name: pcmanfm
-Version: 1.2.5
+Version: 1.3.0
 Release: alt1
 
 Summary: PCMan File Manager
@@ -71,6 +71,9 @@ ln -s %name %buildroot%_bindir/pcmanfm2
 %_includedir/*
 
 %changelog
+* Tue Apr 24 2018 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
+- new version 1.3.0
+
 * Tue Dec 13 2016 Anton Midyukov <antohami@altlinux.org> 1.2.5-alt1
 - new version 1.2.5
 

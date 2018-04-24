@@ -2,7 +2,7 @@
 %define gtkver 2
 
 Name: libfm
-Version: 1.2.5
+Version: 1.3.0
 Release: alt1
 
 Summary: Core library of PCManFM file manager
@@ -114,6 +114,9 @@ rm -f %buildroot%_libdir/%name/modules/*.la
 %_man1dir/lxshortcut.1*
 
 %changelog
+* Tue Apr 24 2018 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
+- new version 1.3.0
+
 * Tue Dec 13 2016 Anton Midyukov <antohami@altlinux.org> 1.2.5-alt1
 - new version 1.2.5
 
