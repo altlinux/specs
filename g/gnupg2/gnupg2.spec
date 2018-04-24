@@ -2,8 +2,8 @@
 %define _localstatedir /var
 
 Name: gnupg2
-Version: 2.1.23
-Release: alt6%ubt
+Version: 2.2.6
+Release: alt1%ubt
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -42,6 +42,7 @@ Patch13: gnupg-2.1.10-secmem.patch
 Patch14: gnupg-2.1.1-ocsp-keyusage.patch
 Patch15: gnupg-2.1.1-fips-algo.patch
 Patch16: gnupg-2.1.21-large-rsa.patch
+Patch17: gnupg-2.2.0-file-is-digest.patch
 # ALT
 Patch101: alt-xloadimage.patch
 Patch102: alt-agent-fix-password-request.patch
@@ -74,6 +75,7 @@ functionality up into several modules.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 %patch101 -p1
 #%patch102 -p1
 %patch103 -p1
@@ -138,6 +140,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Tue Apr 24 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.6-alt1%ubt
+- new version
+
 * Thu Jan 18 2018 Ivan Zakharyaschev <imz@altlinux.org> 2.1.23-alt6%ubt
 - Conflicts: pinentry < 0.9.2 (due to passing OPTION
   allow-external-password-cache).
