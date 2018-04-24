@@ -1,6 +1,6 @@
 Name: refind
 Version: 0.11.2
-Release: alt1
+Release: alt1%ubt
 
 Summary: EFI boot manager software
 License: GPLv3
@@ -18,6 +18,7 @@ BuildRequires: gnu-efi >= 3.0.6-alt1
 BuildRequires: unzip
 BuildRequires: rpm-macros-uefi
 BuildRequires: pesign >= 0.109-alt4
+BuildRequires(pre): rpm-build-ubt
 Requires: efibootmgr
 Obsoletes: refind-signed
 
@@ -77,6 +78,9 @@ install -pDm644 %SOURCE4 %buildroot%refind_data/icons/os_altlinux.png
 %refind_data
 
 %changelog
+* Tue Apr 24 2018 Anton Farygin <rider@altlinux.ru> 0.11.2-alt1%ubt
+- added %%ubt
+
 * Sun Nov 26 2017 Anton Farygin <rider@altlinux.ru> 0.11.2-alt1
 - 0.11.2
 - icons converted to png (refind default format)
