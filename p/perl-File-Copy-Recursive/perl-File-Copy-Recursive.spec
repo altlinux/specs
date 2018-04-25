@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-Copy-Recursive
 Name: perl-%dist
-Version: 0.40
+Version: 0.44
 Release: alt1
 
 Summary: Perl extension for recursively copying files and directories
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/D/DM/DMUEY/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 15 2011
-BuildRequires: perl-devel perl(Test/Deep.pm) perl(Test/Exception.pm) perl(Test/File.pm) perl(Test/Warn.pm) perl(File/Slurp.pm) perl(Path/Iter.pm) perl(Path/Tiny.pm)
+BuildRequires: perl-devel perl(Test/Deep.pm) perl(Test/Exception.pm) perl(Test/File.pm) perl(Test/Warn.pm) perl(File/Slurp.pm) perl(Path/Iter.pm) perl(Path/Tiny.pm) perl(Test/Fatal.pm) perl(Test/Warnings.pm)
 
 %description
 This module copies and moves directories recursively (or single files,
@@ -31,10 +31,13 @@ or directory's mode.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README README.md
 %perl_vendor_privlib/File
 
 %changelog
+* Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
+- automated CPAN update
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
 - automated CPAN update
 
