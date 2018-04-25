@@ -28,7 +28,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt2
+Release: alt3
 License: GPL
 
 Group: System/Base
@@ -55,7 +55,9 @@ BuildRequires: libreadline-devel libtinfo-devel libudev-devel CUnit-devel
 # libudev-devel >= 205 required for udev-systemd-background-jobs
 BuildRequires: libudev-devel >= 205
 BuildRequires: systemd-devel
+%if_enabled thin
 BuildRequires: thin-provisioning-tools >= 0.7.0
+%endif
 %else
 BuildRequires: libudev-devel
 %endif
@@ -236,6 +238,10 @@ logical volumes, physical volumes, and volume groups.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+# as of lcc-1.21.24
+sed -i '/-Wmissing-parameter-type/d' make.tmpl.in
+%endif
 
 %build
 %autoreconf
@@ -586,6 +592,10 @@ __EOF__
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 25 2018 Michael Shigorin <mike@altlinux.org> 2.02.177-alt3
+- fix thin knob (was ignored when systemd is enabled)
+- E2K: avoid lcc-unsupported option
+
 * Sun Jan 28 2018 Alexey Shabalin <shaba@altlinux.ru> 2.02.177-alt2
 - BOOTSTRAP: introduce systemd, thin knobs (on by default)
   + conditionally loosen BR: libudev-devel as 205+ isn't
