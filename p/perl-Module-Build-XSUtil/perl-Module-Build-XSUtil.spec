@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Module-Build-XSUtil
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Config.pm) perl(Devel/CheckCompiler.pm) perl(Devel/PPPort.pm) perl(Exporter.pm) perl(ExtUtils/CBuilder.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(parent.pm) perl(File/Copy/Recursive.pm) perl(Cwd/Guard.pm) perl(Capture/Tiny.pm) perl(Module/Build/Tiny.pm)
+BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Config.pm) perl(Devel/CheckCompiler.pm) perl(Devel/PPPort.pm) perl(Exporter.pm) perl(ExtUtils/CBuilder.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(parent.pm) perl(File/Copy/Recursive.pm) perl(Cwd/Guard.pm) perl(Capture/Tiny.pm) perl(Module/Build/Tiny.pm) perl(File/Copy/Recursive/Reduced.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.18
-Release: alt1.1
+Version: 0.19
+Release: alt1
 Summary: A Module::Build class for building XS modules
 Group: Development/Perl
 License: perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/M*
 
 %changelog
+* Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1.1
 - automated CPAN update
 
