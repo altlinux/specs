@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 5.0.0
-Release: alt3%ubt
+Release: alt4%ubt
 %K5init
 
 Summary: A powerful batch renamer for KDE5
@@ -40,15 +40,19 @@ It can also change access and modification dates, permissions, and file ownershi
 
 %install
 %K5install
-%find_lang --all-name --with-kde %rname
+%K5install_move data locale
+%find_lang --with-kde %rname
 
 %files -f %rname.lang
 %_K5bin/%rname
 %_K5xdgapp/*.desktop
-%_K5icon/*/*/apps/*.png
-%_K5srv/*
+%_K5icon/*/*/apps/*.*
+%_K5srv/ServiceMenus/*.desktop
 
 %changelog
+* Wed Apr 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt4%ubt
+- fix conflict with kde4-krename
+
 * Tue Apr 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt3%ubt
 - add fix against KDEBUG-391291
 - fix startup info page labels color
