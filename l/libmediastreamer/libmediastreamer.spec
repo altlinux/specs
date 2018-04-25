@@ -2,14 +2,12 @@
 
 Name: libmediastreamer
 Version: 2.16.1
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Audio/Video real-time streaming
 License: GPLv2+
 Url: http://www.linphone.org/eng/documentation/dev/mediastreamer2.html
-
-Packager: Alexei Takaseev <taf@altlinux.ru>
 
 Requires: %name-common = %version-%release
 
@@ -20,7 +18,8 @@ BuildRequires: intltool doxygen gcc5-c++ gcc5 libSDL-devel libX11-devel libalsa-
 BuildRequires: libavcodec-devel libpulseaudio-devel libspeex-devel libspeexdsp-devel
 BuildRequires: libswscale-devel libtheora-devel libv4l-devel libgsm-devel
 BuildRequires: libXv-devel libjack-devel libsamplerate-devel libglew-devel
-BuildRequires: libvpx-devel libortp-devel >= 0.17 vim-common
+BuildRequires: libvpx-devel libortp-devel >= 0.17 vim-common libzrtp-devel
+BuildRequires: libsrtp-devel
 
 %description
 Mediastreamer2 is a GPL licensed library to make audio and video
@@ -64,6 +63,8 @@ export CXX="g++-%{_gcc_version}"
     --datadir=%_datadir/mediastreamer \
     --disable-static \
     --disable-documentation \
+    --with-srtp \
+    --enable-zrtp \
     --enable-shared
 %make_build CFLAGS="%optflags" CXXFLAGS="%optflags"
 
@@ -91,6 +92,9 @@ mkdir -p %buildroot/%_libdir/mediastreamer/plugins
 %_includedir/*
 
 %changelog
+* Wed Apr 25 2018 Alexei Takaseev <taf@altlinux.org> 2.16.1-alt3
+- Build with libzrtp and libsrtp
+
 * Tue Mar 13 2018 Alexei Takaseev <taf@altlinux.org> 2.16.1-alt2
 - Build with gcc5
 
