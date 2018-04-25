@@ -1,19 +1,19 @@
-%define module_name String-Compare-ConstantTime
 %define _unpackaged_files_terminate_build 1
+%define module_name String-Compare-ConstantTime
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(XSLoader.pm) perl(base.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.312
-Release: alt2.1
+Version: 0.320
+Release: alt1
 Summary: Timing side-channel protected string compare
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/F/FR/FRACTAL/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/F/FR/FRACTAL/%{module_name}-%{version}.tar.gz
 
 %description
 This module provides one function, `equals' (not exported by default).
@@ -34,6 +34,9 @@ You should pass this function two strings of the same length. Just like perl's `
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.320-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.312-alt2.1
 - rebuild with new perl 5.26.1
 
