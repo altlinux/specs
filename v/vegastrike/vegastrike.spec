@@ -6,7 +6,7 @@ BuildRequires: boost-python-devel
 %define _localstatedir %{_var}
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt6_31.r1
+Release:        alt7_31.r1
 Summary:        3D OpenGL spaceflight simulator
 Group:          Games/Other
 License:        GPLv2+
@@ -130,6 +130,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Wed Apr 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.1-alt7_31.r1
+- (NMU) Rebuilt with new boost.
+
 * Wed Jan 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.1-alt6_31.r1
 - Fixed build with new compiler flags.
 
