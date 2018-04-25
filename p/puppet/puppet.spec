@@ -1,8 +1,8 @@
 %define confdir ext/redhat
 
 Name:    puppet
-Version: 5.5.0
-Release: alt1
+Version: 5.5.1
+Release: alt2
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
@@ -107,6 +107,10 @@ install -Dp -m0644 conf/fileserver.conf %buildroot%_sysconfdir/puppet/fileserver
 install -d %buildroot%_datadir/%name
 cp -a ext/ %buildroot%_datadir/%name
 
+# Create other configuration directories
+mkdir -p %buildroot%_sysconfdir/puppet/ssl/{public_keys,certificate_requests,certs,ca/requests,ca/private,ca/signed,private,private_keys}
+mkdir -p %buildroot%_sysconfdir/puppet/{code,modules,environments/production/manifests}
+
 # Setup tmpfiles.d config
 mkdir -p %buildroot%_sysconfdir/tmpfiles.d
 echo "D /var/run/%name 0755 _%name %name -" > \
@@ -129,8 +133,15 @@ rm -f %buildroot%_datadir/%name/ext/{build_defaults.yaml,project_data.yaml}
 # remove obsoleted checks
 rm -rf %buildroot%_datadir/%name/ext/nagios
 
-# Add missing directories
-install -d %buildroot%_localstatedir/puppet/ssl/private_keys
+# Add puppetdb example configuration to puppet.conf
+cat >> %buildroot%_sysconfdir/puppet/puppet.conf << END.
+# Example of puppetdb integration
+#[master]
+#storeconfigs = true
+#storeconfigs_backend = puppetdb
+#report = true
+#reports = puppetdb
+END.
 
 %pre
 %_sbindir/groupadd -r -f puppet
@@ -154,8 +165,24 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %_unitdir/puppetagent.service
 %config(noreplace) %_sysconfdir/tmpfiles.d/%name.conf
 %dir %_sysconfdir/puppet
+%attr(0771,_puppet,puppet) %dir %_sysconfdir/puppet/ssl
+%attr(0755,_puppet,puppet) %dir %_sysconfdir/puppet/ssl/public_keys
+%attr(0755,_puppet,puppet) %dir %_sysconfdir/puppet/ssl/certificate_requests
+%attr(0755,_puppet,puppet) %dir %_sysconfdir/puppet/ssl/certs
+%attr(0755,_puppet,puppet) %dir %_sysconfdir/puppet/ssl/ca
+%attr(0755,_puppet,puppet) %dir %_sysconfdir/puppet/ssl/ca/requests
+%attr(0750,_puppet,puppet) %dir %_sysconfdir/puppet/ssl/ca/private
+%attr(0755,_puppet,puppet) %dir %_sysconfdir/puppet/ssl/ca/signed
+%attr(0750,_puppet,puppet) %dir %_sysconfdir/puppet/ssl/private
+%attr(0750,_puppet,puppet) %dir %_sysconfdir/puppet/ssl/private_keys
+%dir %_sysconfdir/puppet/environments
+%dir %_sysconfdir/puppet/environments/production
+%dir %_sysconfdir/puppet/environments/production/manifests
+%dir %_sysconfdir/puppet/code
+%dir %_sysconfdir/puppet/modules
 %config(noreplace) %_sysconfdir/puppet/puppet.conf
 %config(noreplace) %_sysconfdir/puppet/auth.conf
+%config(noreplace) %_sysconfdir/puppet/hiera.yaml
 %config(noreplace) %_sysconfdir/sysconfig/puppet
 %config(noreplace) %_sysconfdir/logrotate.d/puppet
 %_bindir/puppet
@@ -165,8 +192,7 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %_man8dir/*
 %_man5dir/puppet.conf.5*
 %attr(1770,_puppet,puppet) %dir %_localstatedir/puppet
-%_localstatedir/puppet/*
-%attr(1770,_puppet,puppet) %dir %_localstatedir/puppet/ssl/private_keys
+%_localstatedir/puppet/
 %attr(1770,_puppet,puppet) %dir %_logdir/puppet
 %attr(1770,_puppet,puppet) %dir %_var/run/puppet
 
@@ -177,6 +203,13 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Wed Apr 25 2018 Andrey Cherepanov <cas@altlinux.org> 5.5.1-alt2
+- Create and package all configuration directories.
+- Add puppetdb example configuration to puppet.conf.
+
+* Thu Apr 19 2018 Andrey Cherepanov <cas@altlinux.org> 5.5.1-alt1
+- New version.
+
 * Wed Apr 04 2018 Andrey Cherepanov <cas@altlinux.org> 5.5.0-alt1
 - New version.
 
