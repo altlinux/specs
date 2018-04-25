@@ -2,7 +2,7 @@
 %define module Test-Base
 
 Name: perl-%module
-Version: 0.88
+Version: 0.89
 Release: alt1
 
 Summary: Data driven testing framework for perl
@@ -10,7 +10,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/I/IN/INGY/Test-Base-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/I/IN/INGY/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +26,7 @@ Test::Base gives you a way to write your own test framework base class that is
 trivial.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,9 +35,13 @@ trivial.
 %perl_vendor_install
 
 %files
+%doc Changes LICENSE README
 %perl_vendor_privlib/Test/
 
 %changelog
+* Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.89-alt1
+- automated CPAN update
+
 * Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.88-alt1
 - automated CPAN update
 
