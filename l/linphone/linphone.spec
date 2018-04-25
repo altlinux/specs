@@ -1,6 +1,6 @@
 Name: linphone
 Version: 3.12.0
-Release: alt2
+Release: alt3
 License: GPLv2+
 Url: http://www.linphone.org/
 
@@ -17,6 +17,7 @@ BuildRequires: doxygen gcc-c++ intltool libbelle-sip-devel libgtk+2-devel
 BuildRequires: libmediastreamer-devel libnotify-devel libreadline-devel
 BuildRequires: libspeex-devel libsqlite3-devel libudev-devel libxml2-devel
 BuildRequires: python3-base sgmltools-lite libSDL-devel libncurses-devel
+BuildRequires: libzrtp-devel libsrtp-devel
 
 Requires: %name-gui = %version-%release
 Requires: %name-cli = %version-%release
@@ -90,6 +91,7 @@ This package contains development files for %name.
  --enable-ipv6 \
  --enable-notify \
  --enable-dtls \
+ --enable-zrtp \
  --disable-static
 
 %make_build
@@ -147,6 +149,9 @@ This package contains development files for %name.
 
 
 %changelog
+* Wed Apr 25 2018 Alexei Takaseev <taf@altlinux.org> 3.12.0-alt3
+- Build with zrtp support
+
 * Thu Apr 19 2018 Alexei Takaseev <taf@altlinux.org> 3.12.0-alt2
 - Build with --enable-dtls and --enable-ipv6 (Fix: ALT#33915)
 
