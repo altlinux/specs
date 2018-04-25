@@ -1,5 +1,5 @@
 Name: perl-Git-Repository
-Version: 1.321
+Version: 1.322
 Release: alt1
 
 Summary: Git::Repository - Perl interface to Git repositories
@@ -32,6 +32,9 @@ git config --global user.name "Hasher Bot"
 %doc Changes README
 
 %changelog
+* Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.322-alt1
+- automated CPAN update
+
 * Sun Oct 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.321-alt1
 - automated CPAN update
 
