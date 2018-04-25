@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.11.2
+Version: 0.1.12
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -12,8 +12,10 @@ BuildArch: noarch
 Requires: file >= 4.26-alt11
 Conflicts: rpm-build < 4.0.4-alt100.91
 # Since the .so handling code in python3.req.py with the help of
-# objdump is borrowed from rpm-build, we borrow the dependency, too:
-Requires: binutils >= 1:2.20.51.0.7
+# objdump is borrowed from rpm-build, we borrow the dependency, too
+# (in the form of a Conflicts not to encumber python3 users' envinronment;
+# anyway, if the user is able to compile an .so, he would have got binutils):
+Conflicts: binutils < 1:2.20.51.0.7
 
 # We want that the following directory gets detected as a dep of the built python3 pkgs;
 # this happens automatically of the packages that owns it is installed.
@@ -33,31 +35,31 @@ These helper macros provide possibility to build python3 modules.
 %setup
 
 %install
-install -pD -m644 python3 %buildroot%_rpmmacrosdir/python3
-install -pD -m644 python3.env %buildroot%_rpmmacrosdir/python3.env
-install -pD -m644 python3.buildreq %buildroot%_sysconfdir/buildreqs/files/ignore.d/%name
-install -pD -m755 python3.prov %buildroot%_rpmlibdir/python3.prov
-install -pD -m755 python3.prov.py %buildroot%_rpmlibdir/python3.prov.py
-install -pD -m755 python3.prov.files %buildroot%_rpmlibdir/python3.prov.files
-install -pD -m755 python3.req %buildroot%_rpmlibdir/python3.req
-install -pD -m755 python3.req.py %buildroot%_rpmlibdir/python3.req.py
-install -pD -m755 python3.req.constraint.py %buildroot%_rpmlibdir/python3.req.constraint.py
-install -pD -m755 python3.req.files %buildroot%_rpmlibdir/python3.req.files
-install -pD -m755 python3.compileall.py %buildroot%_rpmlibdir/python3.compileall.py
-install -pD -m755 brp-bytecompile_python3 %buildroot%_rpmlibdir/brp.d/096-bytecompile_python3.brp
+install -pD -m0644 python3 -t %buildroot%_rpmmacrosdir/
+install -pD -m0644 python3.env -t %buildroot%_rpmmacrosdir/
+install -pD -m0644 python3.buildreq -T %buildroot%_sysconfdir/buildreqs/files/ignore.d/%name
+install -pD -m0755 python3.prov -t %buildroot%_rpmlibdir/
+install -pD -m0755 python3.prov.py -t %buildroot%_rpmlibdir/
+install -pD -m0755 python3.prov.files -t %buildroot%_rpmlibdir/
+install -pD -m0755 python3.req -t %buildroot%_rpmlibdir/
+install -pD -m0755 python3.req.py -t %buildroot%_rpmlibdir/
+install -pD -m0755 python3.req.constraint.py -t %buildroot%_rpmlibdir/
+install -pD -m0755 python3.req.files -t %buildroot%_rpmlibdir/
+install -pD -m0755 python3.compileall.py -t %buildroot%_rpmlibdir/
+install -pD -m0755 brp-bytecompile_python3 -T %buildroot%_rpmlibdir/brp.d/096-bytecompile_python3.brp
 # It's like brp.d/128-hardlink_pyo_pyc.brp from rpm-build (but for python3-3.5):
-install -pD -m755 brp-hardlink_opt_pyc %buildroot%_rpmlibdir/brp.d/128-hardlink_opt_pyc.brp
-install -pD -m755 brp-fix_python3_site-packages_location %buildroot%_rpmlibdir/brp.d/000-fix_python3_site-packages_location.brp
-#install -pd -m755 %buildroot%python_tooldir/rpm-build
-#install -pD -m644 bdist_altrpm.py %buildroot%_libdir/python%__python_version/distutils/command/bdist_altrpm.py
-#install -pD -m755 tools/*py %buildroot%python_tooldir/rpm-build
-#install -pd -m755 %buildroot%python_tooldir/rpm-build/find
-#install -pD -m644 tools/find/*py %buildroot%python_tooldir/rpm-build/find
-#install -pd -m755 %buildroot%_bindir
+install -pD -m0755 brp-hardlink_opt_pyc -T %buildroot%_rpmlibdir/brp.d/128-hardlink_opt_pyc.brp
+install -pD -m0755 brp-fix_python3_site-packages_location -T %buildroot%_rpmlibdir/brp.d/000-fix_python3_site-packages_location.brp
+#install -pd -m0755 %buildroot%python_tooldir/rpm-build
+#install -pD -m0644 bdist_altrpm.py -t %buildroot%_libdir/python%__python_version/distutils/command/
+#install -pD -m0755 tools/*py -t %buildroot%python_tooldir/rpm-build
+#install -pd -m0755 %buildroot%python_tooldir/rpm-build/find
+#install -pD -m0644 tools/find/*py -t %buildroot%python_tooldir/rpm-build/find
+#install -pd -m0755 %buildroot%_bindir
 
-#ln -s `relative %buildroot%python_tooldir/rpm-build/imalyzer.py %buildroot%_bindir/` %buildroot%_bindir/imalyzer
-#ln -s `relative %buildroot%python_tooldir/rpm-build/requires.py %buildroot%_bindir/` %buildroot%_bindir/py_requires
-#ln -s `relative %buildroot%python_tooldir/rpm-build/provides.py %buildroot%_bindir/` %buildroot%_bindir/py_provides
+#ln -s --relative %buildroot%python_tooldir/rpm-build/imalyzer.py -T %buildroot%_bindir/imalyzer
+#ln -s --relative %buildroot%python_tooldir/rpm-build/requires.py -T %buildroot%_bindir/py_requires
+#ln -s --relative %buildroot%python_tooldir/rpm-build/provides.py -T %buildroot%_bindir/py_provides
 
 #unset RPM_PYTHON
 
@@ -85,6 +87,14 @@ popd
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Wed Apr 25 2018 Ivan Zakharyaschev <imz@altlinux.org> 0.1.12-alt1
+- python3.prov.py & %%py3_provides: rm old-style provs. (It's the final 3rd
+  stage of the cosmetic renaming started in 0.1.10-alt1. It's possible if
+  no-one requires the old-style python3.3(*) names anymore.)
+- Do not depend on binutils, express the dependency in the form of a
+  Conflicts. (Not to encumber python3 users' environment. Anyway, if
+  the user is able to compile an .so, he would have got binutils.)
+
 * Fri Mar 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.11.2-alt1
 - Update find-provides and find-requires scripts to work with python3
   dynamically linked to python library.
