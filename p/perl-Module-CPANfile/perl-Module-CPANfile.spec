@@ -1,20 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm)
+BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(File/pushd.pm)
 # END SourceDeps(oneline)
-%define module_version 1.1002
 %define module_name Module-CPANfile
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.1002
+Version: 1.1003
 Release: alt1
 Summary: Parse cpanfile
 Group: Development/Perl
 License: perl
 URL: https://github.com/miyagawa/cpanfile
 
-Source: http://www.cpan.org/authors/id/M/MI/MIYAGAWA/Module-CPANfile-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MI/MIYAGAWA/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -29,7 +28,7 @@ Requires: %{?epoch:%epoch:}%name = %version-%release
 scripts for %module_name
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -47,6 +46,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.1003-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.1002-alt1
 - automated CPAN update
 
