@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Task-Weaken
-Version: 1.05
+Version: 1.06
 Release: alt1
 
 Summary: Ensure that a platform has weaken support
@@ -49,6 +49,9 @@ Task::Weaken - Ensure that a platform has weaken support
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
+- automated CPAN update
+
 * Tue Dec 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
 - automated CPAN update
 
