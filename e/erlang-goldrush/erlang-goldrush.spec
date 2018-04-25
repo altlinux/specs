@@ -1,39 +1,37 @@
 %global realname goldrush
-%global upstream DeadZen
-# Technically, we're noarch; but erlang whose directories we install into is not.
-%global debug_package %nil
-%global _erllibdir /usr/lib/erlang/lib/
 
-Name: erlang-goldrush
-Version: 0.1.8
-Release: alt1
+Name: erlang-%realname
+Version: 0.1.9
+Release: alt1%ubt
 Summary: Small, fast event processing and monitoring for Erlang/OTP applications
 License: MIT
-Group: Development/Erlang 
-Url: https://github.com/%upstream/%realname
-Packager: Denis Medvedev <nbr@altlinux.org>
-
-Source: erlang-%realname-%version.tar.gz
-BuildRequires: rebar
-BuildPreReq: erlang-devel erlang-otp-devel
+Group: Development/Erlang
 BuildArch: noarch
+Url: https://github.com/DeadZen/goldrush
+
+# https://github.com/DeadZen/goldrush.git
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-erlang
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: erlang-devel erlang-otp-devel
+BuildRequires: rebar
 
 %description
 A small Erlang app that provides fast event stream processing.
 
 %prep
-%setup -n erlang-%realname-%version
+%setup
 
 %build
-rebar compile
-rebar doc
+%rebar_compile
+%rebar_doc
 
 %install
-mkdir -p %buildroot%_erllibdir/%realname-%version/ebin
-install -p -m 644 ebin/%realname.app ebin/*.beam %buildroot%_erllibdir/%realname-%version/ebin
+%rebar_install %realname
 
 %check
-rebar eunit -C rebar.test.config
+%rebar_eunit -C rebar.test.config
 
 %files
 %doc LICENSE
@@ -41,5 +39,8 @@ rebar eunit -C rebar.test.config
 %_erllibdir/%realname-%version
 
 %changelog
+* Fri Apr 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.9-alt1%ubt
+- Updated to upstream version 0.1.9.
+
 * Fri Apr 08 2016 Denis Medvedev <nbr@altlinux.org> 0.1.8-alt1
 - Initial Sisyphus release.

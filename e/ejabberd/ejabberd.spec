@@ -1,26 +1,84 @@
-%def_enable pam
-%def_enable extra
-%def_enable captcha
+%define _unpackaged_files_terminate_build 1
+
 %def_disable hipe
+%def_enable stun
+%def_enable sip
+%def_enable mysql
+%def_enable pgsql
+%def_enable sqlite
+%def_enable pam
+%def_enable zlib
+%def_enable riak
+%def_enable iconv
+%def_enable tools
 
 Name: ejabberd
-Version: 2.1.13
-Release: alt1
-
+Version: 18.03
+Release: alt1%ubt
 Summary: Fault-tolerant distributed Jabber server written in Erlang
 License: GPL2
 Group: System/Servers
+BuildArch: noarch
 Url: http://www.process-one.net/en/ejabberd/
+
+# https://github.com/processone/ejabberd.git
+Source: %name-%version.tar
+
+Source1: %name-%version-alt.tar
+
+# Use ejabberd as an example for PAM service name
+Patch1: ejabberd-fedora-fix-PAM-service-example-name-to-match-actual-one.patch
+Patch4: ejabberd-fedora-enable-systemd-notification-if-available.patch
+
+Patch10: ejabberd-alt-deps.patch
+Patch11: ejabberd-alt-version.patch
+
+BuildRequires(pre): jabber-common >= 0.2
+BuildRequires(pre): rpm-build-erlang
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: erlang-devel erlang-otp-devel libcom_err-devel libexpat-devel libssl-devel zlib-devel
+BuildRequires: rebar
+BuildRequires: erlang-lager
+BuildRequires: erlang-p1_utils
+BuildRequires: erlang-cache_tab
+BuildRequires: erlang-fast_tls
+BuildRequires: erlang-stringprep
+BuildRequires: erlang-fast_xml
+BuildRequires: erlang-xmpp
+BuildRequires: erlang-fast_yaml
+BuildRequires: erlang-jiffy
+BuildRequires: erlang-p1_oauth2
+BuildRequires: erlang-jose
+BuildRequires: erlang-eimp
+BuildRequires: erlang-sd_notify
+%{?_enable_stun:BuildRequires: erlang-stun}
+%{?_enable_sip:BuildRequires: erlang-esip}
+%{?_enable_mysql:BuildRequires: erlang-p1_mysql}
+%{?_enable_pgsql:BuildRequires: erlang-p1_pgsql}
+%{?_enable_sqlite:BuildRequires: erlang-sqlite3 libsqlite3-devel}
+%{?_enable_pam:BuildRequires: erlang-epam}
+%{?_enable_zlib:BuildRequires: erlang-ezlib}
+%{?_enable_riak:BuildRequires: erlang-riak_client}
+%{?_enable_iconv:BuildRequires: erlang-iconv}
+%{?_enable_tools:BuildRequires: erlang-luerl erlang-meck}
 
 Requires: erlang
 Requires: jabber-common >= 0.2
 Requires: su
 
-BuildRequires(pre): jabber-common >= 0.2
-BuildRequires: erlang-devel erlang-otp-devel libcom_err-devel libexpat-devel libssl-devel zlib-devel
-%{?_enable_pam:BuildRequires: libpam-devel}
+Provides: %name-pam = %EVR
+Obsoletes: %name-pam
 
-Source: %name-%version-%release.tar
+%add_erlang_req_modules_skiplist Elixir.Ejabberd.Config
+%add_erlang_req_modules_skiplist Elixir.Ejabberd.Config.Store
+%add_erlang_req_modules_skiplist Elixir.Ejabberd.ConfigUtil
+%add_erlang_req_modules_skiplist Elixir.Kernel.ParallelCompiler
+%add_erlang_req_modules_skiplist Elixir.Logger
+%add_erlang_req_modules_skiplist Elixir.Logger.Config
+%add_erlang_req_modules_skiplist Elixir.Logger.Utils
+%add_erlang_req_modules_skiplist eredis
+%add_erlang_req_modules_skiplist eredis_sub
+%add_erlang_req_modules_skiplist riak_object
 
 %description
 ejabberd is a Free and Open Source distributed fault-tolerant Jabber
@@ -46,63 +104,69 @@ The main features of ejabberd is:
 * Support for JEP-0039 (Statistics Gathering).
 * Support for xml:lang
 
-%if_enabled captcha
-%package captcha
-Summary: captcha script for ejabberd
-Group: System/Servers
-Requires: %name = %version-%release
-Requires: ImageMagick-tools
-
-%description captcha
-This package contains a shell script for creating captcha files.
-%endif
-
-
-%if_enabled pam
-%package pam
-Summary: PAM auth support for jabberd
-Group: System/Servers
-Requires: %name = %version-%release
-
-%description pam
-This package contains a privileged helper employed by %name
-to perform PAM authentication of local users as jabber users.
-
-No user-side registration is then possible, and plaintext auth
-isn't accepted (basically you want to configure SSL).
-%endif
-
-%if_enabled extra
-%package extra
-Summary: Additional modules for ejabberd
-Group: System/Servers
-Requires: %name = %version-%release
-
-%description extra
-This package contains a set of optional modules that extend ejabberd functionality.
-Currently there are: mod_asterisk and mod_rest.
-%endif
-
 %prep
-%setup
+%setup -a 1
+%patch1 -p1
+%patch4 -p1
+%patch10 -p1
+%patch11 -p1
+
+# Upstream seems to import erlang-xmpp and erlang-fast_xml in a way that isn't compatible with them
+# being system libraries. We need to patch the include statements to fix this.
+# https://github.com/processone/ejabberd/pull/1446/
+find . -name "*.hrl" | xargs sed -i \
+    "s/include(\"fxml.hrl/include_lib(\"fast_xml\/include\/fxml.hrl/"
+find . -name "*.erl" | xargs sed -i "s/include(\"jid.hrl/include_lib(\"xmpp\/include\/jid.hrl/"
+find . -name "*.hrl" | xargs sed -i "s/include(\"ns.hrl/include_lib(\"xmpp\/include\/ns.hrl/"
+find . -name "*.erl" | xargs sed -i "s/include(\"xmpp.hrl/include_lib(\"xmpp\/include\/xmpp.hrl/"
+find . -name "*.hrl" | xargs sed -i \
+    "s/include(\"xmpp_codec.hrl/include_lib(\"xmpp\/include\/xmpp_codec.hrl/"
+
+# A few dependencies are configured to be found in the deps folder instead of in system libs
+# https://github.com/processone/ejabberd/issues/1850
+perl -p -i -e "s|deps/p1_utils/include|$(rpm -ql erlang-p1_utils | grep -E '/include$' )|g" rebar.config
+perl -p -i -e "s|deps/fast_xml/include|$(rpm -ql erlang-fast_xml | grep -E '/include$' )|g" rebar.config
+perl -p -i -e "s|deps/xmpp/include|$(rpm -ql erlang-xmpp | grep -E '/include$' )|g"   rebar.config
+
+sed -i -e "s:@version@:%version:g" configure.ac
 
 %build
-cd src
-%configure --enable-odbc %{subst_enable pam} %{subst_enable hipe}
+%autoreconf
+%configure \
+	--datarootdir=%_datadir \
+	--libdir=%_erllibdir \
+	--localstatedir=%_var \
+	--enable-system-deps \
+	--enable-odbc \
+	%{subst_enable hipe} \
+	%{subst_enable stun} \
+	%{subst_enable sip} \
+	%{subst_enable mysql} \
+	%{subst_enable pgsql} \
+	%{subst_enable sqlite} \
+	%{subst_enable pam} \
+	%{subst_enable zlib} \
+	%{subst_enable riak} \
+	%{subst_enable iconv} \
+	%{subst_enable tools}
+
 #--enable-user=ejabberd
-# SMP-unaware
-make
+
+%rebar_compile
 
 %install
-%makeinstall -C src DESTDIR=%buildroot
-(cd altlinux && find . -type f |cpio -pumd %buildroot)
-grep -A1 -B1 '^%%%%%% ' src/mod_passrecover.erl >mod_passrecover.txt
+%makeinstall DESTDIR=%buildroot
+
+rm -rf %buildroot%_defaultdocdir/%name
+
+(cd %name-%version-alt && find . -type f |cpio -pumd %buildroot)
+
 mkdir -p %buildroot%_localstatedir/ejabberd %buildroot%_logdir/ejabberd \
 	%buildroot%_sysconfdir/sysconfig/ %buildroot%_lockdir/ejabberd
 mv %buildroot%_sysconfdir/%name/ejabberdctl.cfg %buildroot%_sysconfdir/sysconfig/ejabberd
 
-mkdir -p %buildroot%_datadir/doc
-ln -s %name-%version %buildroot%_datadir/doc/%name
+install -p -m 0644 sql/mysql.sql %buildroot%_erllibdir/%name-%version/priv/sql/
+install -p -m 0644 sql/pg.sql    %buildroot%_erllibdir/%name-%version/priv/sql/
 
 %pre
 %_sbindir/groupadd -r -f ejabberd &>/dev/null
@@ -117,62 +181,37 @@ ln -s %name-%version %buildroot%_datadir/doc/%name
 %preun_service %name
 
 %files
-%doc COPYING README doc/* examples src/odbc/*.sql mod_passrecover.txt
-%_datadir/doc/%name
+%doc COPYING README examples
 
 %dir %_sysconfdir/ejabberd
 %config(noreplace) %_sysconfdir/ejabberd/inetrc
-%attr(640,root,ejabberd) %config(noreplace) %_sysconfdir/ejabberd/ejabberd.cfg
+%attr(640,root,ejabberd) %config(noreplace) %_sysconfdir/ejabberd/ejabberd.yml
 %attr(0640,root,ejabberd) %config(noreplace) %_sysconfdir/sysconfig/ejabberd
 %attr(0640,root,root) %config %_sysconfdir/logrotate.d/ejabberd
+%config(noreplace) %_sysconfdir/pam.d/ejabberd
+%config(noreplace) %_sysconfdir/pam.d/ejabberdctl
 
 %_initdir/ejabberd
+%_unitdir/%name.service
 %attr(0755,root,ejabberd) %_sbindir/ejabberdctl
 
-%_libdir/ejabberd
+%_datadir/polkit-1/actions/ejabberdctl.policy
+%_datadir/polkit-1/rules.d/51-ejabberdctl.rules
+
+%_erllibdir/%name-%version
 
 %_jabber_server_dir/ejabberd
 
 %_man8dir/*
 
-%dir %_lockdir/%name
-
 %attr(1770,root,ejabberd) %dir %_localstatedir/ejabberd
 %attr(1770,root,ejabberd) %dir %_logdir/ejabberd
 %attr(1770,root,ejabberd) %dir %_lockdir/ejabberd
 
-%exclude %_sysconfdir/pam.d/ejabberd
-%exclude %_libdir/ejabberd/priv/bin/captcha.sh
-
-%if_enabled pam
-%exclude %_libdir/ejabberd/ebin/epam.beam
-%exclude %_libdir/ejabberd/priv/bin/epam
-%endif
-
-%if_enabled extra
-%exclude %_libdir/ejabberd/ebin/mod_asterisk.beam
-%exclude %_libdir/ejabberd/ebin/mod_rest.beam
-%endif
-
-%if_enabled captcha
-%files captcha
-%attr(4710,root,ejabberd) %_libdir/ejabberd/priv/bin/captcha.sh
-%endif
-
-%if_enabled pam
-%files pam
-%_sysconfdir/pam.d/ejabberd
-%_libdir/ejabberd/ebin/epam.beam
-%attr(4710,root,ejabberd) %_libdir/ejabberd/priv/bin/epam
-%endif
-
-%if_enabled extra
-%files extra
-%_libdir/ejabberd/ebin/mod_asterisk.beam
-%_libdir/ejabberd/ebin/mod_rest.beam
-%endif
-
 %changelog
+* Fri Apr 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 18.03-alt1%ubt
+- Updated to upstream version 18.03.
+
 * Wed Apr 06 2016 Denis Medvedev <nbr@altlinux.org> 2.1.13-alt1
 - 2.1.13
 

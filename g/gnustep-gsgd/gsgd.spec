@@ -2,7 +2,7 @@
 
 Name: gnustep-gsgd
 Version: r31302
-Release: alt4.git20100910
+Release: alt4.git20100910.1
 Summary: Objc interface to libgd library
 License: LGPLv3
 Group: Graphical desktop/GNUstep
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
-BuildPreReq: gnustep-base-devel libgd2-devel
+BuildPreReq: gnustep-base-devel libgd3-devel
 
 %description
 gsgd is an Objc interface to libgd library. libgd is a library to create
@@ -73,6 +73,9 @@ This package contains development files of gsgd.
 %_libdir/*.so
 
 %changelog
+* Mon Apr 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> r31302-alt4.git20100910.1
+- (NMU) rebuilt with new libgd.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31302-alt4.git20100910
 - Built with clang
 
