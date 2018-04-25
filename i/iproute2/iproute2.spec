@@ -1,5 +1,8 @@
+%def_with libatm
+%def_with selinux
+
 Name: iproute2
-Version: 4.15.0
+Version: 4.16.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
@@ -14,7 +17,9 @@ Provides: iproute = %version-%release
 Obsoletes: iproute < %version
 
 # Automatically added by buildreq on Wed Nov 15 2017
-BuildRequires: flex libatm-devel libdb4-devel libelf-devel libiptables-devel libmnl-devel libselinux-devel
+BuildRequires: flex libdb4-devel libelf-devel libiptables-devel libmnl-devel
+%{?_with_libatm:BuildRequires: libatm-devel}
+%{?_with_selinux:BuildRequires: libselinux-devel}
 
 %description
 The iproute package contains networking utilities (ip and rtmon, for
@@ -115,6 +120,12 @@ done
 %_man3dir/*
 
 %changelog
+* Wed Apr 25 2018 Dmitry V. Levin <ldv@altlinux.org> 4.16.0-alt1
+- 4.15.0 -> 4.16.0.
+
+* Wed Apr 25 2018 Michael Shigorin <mike@altlinux.org> 4.15.0-alt2
+- added selinux, bootstrap knobs (on by default).
+
 * Mon Jan 29 2018 Dmitry V. Levin <ldv@altlinux.org> 4.15.0-alt1
 - 4.14.1 -> 4.15.0.
 
