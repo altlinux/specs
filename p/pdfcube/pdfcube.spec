@@ -1,15 +1,13 @@
 Name:           pdfcube
 Version:        0.0.5
-Release: 	alt3.svn20120708.qa2
+Release:        alt4.svn20120708
 Summary:        PDF presentation viewer with a spinning cube
-
-
 Group:          Office
 License:        GPL
 URL:            http://code.100allora.it/pdfcube
+
 # http://code.100allora.it/svn/pdfcube/trunk/
-Source0:        %name-%version.tar.gz
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Source:        %name-%version.tar
 
 BuildRequires: boost-program_options-devel gcc-c++ libGLUT-devel
 BuildRequires: libgtkglext-devel libpoppler-glib-devel
@@ -39,6 +37,9 @@ rm -f m4/l*
 %_bindir/pdfcube
 
 %changelog
+* Wed Apr 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.5-alt4.svn20120708
+- Rebuilt with new boost.
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.5-alt3.svn20120708.qa2
 - NMU: rebuilt with boost 1.57.0 -> 1.58.0.
 
