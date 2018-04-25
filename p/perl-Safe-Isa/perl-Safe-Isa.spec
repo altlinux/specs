@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,7 +7,7 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Safe-Isa
-Version:        1.000008
+Version:        1.000009
 Release:        alt1
 Summary:        Call isa, can, does and DOES safely on things that may not be objects
 License:        GPL+ or Artistic
@@ -53,6 +54,9 @@ make test
 %{perl_vendor_privlib}/Safe/
 
 %changelog
+* Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.000009-alt1
+- automated CPAN update
+
 * Thu Oct 12 2017 Igor Vlasenko <viy@altlinux.ru> 1.000008-alt1
 - automated CPAN update
 
