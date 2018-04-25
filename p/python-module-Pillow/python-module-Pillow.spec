@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 4.3.0
+Version: 5.1.0
 Release: alt1
 
 Summary: Python Imaging Library (Fork)
@@ -41,7 +41,7 @@ Provides: python-module-imaging = %EVR
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: elfutils fontconfig libX11-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-markupsafe python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer python3-module-sphinx_rtd_theme tcl-devel xorg-xproto-devel xz
-BuildRequires: libfreetype-devel libjpeg-devel liblcms2-devel libtiff-devel libwebp-devel python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest python-modules-tkinter python3-devel python3-module-html5lib python3-module-jinja2-tests python3-module-nose python3-module-pytest python3-module-sphinx python3-module-sphinx-better-theme python3-modules-tkinter rpm-build-python3 time tk-devel zlib-devel
+BuildRequires: libfreetype-devel libjpeg-devel liblcms2-devel libtiff-devel libwebp-devel python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest python-modules-tkinter python3-devel python3-module-html5lib python3-module-jinja2-tests python3-module-nose python3-module-pytest python3-module-sphinx python3-module-sphinx-better-theme python3-modules-tkinter rpm-build-python3 time tk-devel zlib-devel libimagequant-devel
 
 # optimized out: -=FIXES: python3(sphinx_rtd_theme)
 BuildRequires: python2.7(sphinx_rtd_theme)
@@ -128,20 +128,20 @@ export LC_ALL=en_US.UTF-8
 pushd ../python3
 %python3_install
 install -d %buildroot%__python3_includedir
-install -p -m644 libImaging/*.h \
+install -p -m644 src/libImaging/*.h \
 	%buildroot%__python3_includedir
 popd
 install -m 644 %SOURCE1 %buildroot%python3_sitelibdir/
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
+#pushd %buildroot%_bindir
+#for i in $(ls); do
+#	mv $i $i.py3
+#done
+#popd
 %endif
 
 %python_install
 install -d %buildroot%python_includedir
-install -p -m644 libImaging/*.h %buildroot%python_includedir/
+install -p -m644 src/libImaging/*.h %buildroot%python_includedir/
 install -m 644 %SOURCE1 %buildroot%python_sitelibdir/
 
 export LC_ALL=en_US.UTF-8
@@ -166,10 +166,10 @@ popd
 
 %files
 %doc *.rst docs/COPYING LICENSE *.md
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
+#_bindir/*
+#if_with python3
+#exclude %_bindir/*.py3
+#endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 
@@ -185,7 +185,7 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %doc *.rst docs/COPYING LICENSE *.md
-%_bindir/*.py3
+#_bindir/*.py3
 %python3_sitelibdir/*
 
 %files -n python3-module-%oname-devel
@@ -194,6 +194,10 @@ popd
 %endif
 
 %changelog
+* Tue Apr 24 2018 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt1
+- new version 5.1.0 (with rpmrb script)
+- build with libeimagequant support
+
 * Wed Oct 04 2017 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt1
 - switch to build from tarball
 - new version (4.3.0) with rpmgs script
