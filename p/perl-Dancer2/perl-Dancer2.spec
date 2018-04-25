@@ -1,7 +1,7 @@
 %global oname Dancer2
 
 Name: perl-Dancer2
-Version: 0.205002
+Version: 0.206000
 Release: alt1
 
 Summary: Lightweight yet powerful web application framework
@@ -11,18 +11,16 @@ License: perl
 Url: %CPAN %oname
 # https://cpan.metacpan.org/authors/id/C/CR/CROMEDOME/Dancer2-%version.tar.gz
 Source: %oname-%version.tar
-Patch1: %oname-0.205001-alt-downgrade-reqs.patch
 
 BuildArch: noarch
 BuildRequires: perl(Import/Into.pm) perl(Capture/Tiny.pm) perl(YAML.pm) perl(Pod/Usage.pm) perl(Template/Tiny.pm) perl(Encode.pm) perl(HTTP/Headers.pm) perl(Config/Any.pm) perl(Plack/Request.pm) perl(Module/Build.pm) perl-devel perl(HTTP/Body.pm) perl(MooX/Types/MooseLike.pm) perl(URI/Escape.pm) perl(Role/Tiny.pm) perl(Test/MockTime.pm) perl(Test/Fatal.pm) perl(URI.pm) perl-libwww perl(Pod/Simple.pm) perl(Test/TCP.pm) perl(Digest/SHA.pm) perl(parent.pm) perl(HTTP/Request/Common.pm) perl(Hash/Merge/Simple.pm) perl(Moo/Role.pm) perl(Test/Script.pm) perl(YAML/Any.pm) perl(HTTP/Server/Simple/PSGI.pm) perl(Class/Load.pm) perl(Moo.pm) perl(Template.pm) perl(MIME/Types.pm) perl(HTTP/Date.pm) perl(JSON.pm) perl(Return/MultiLevel.pm) perl(App/Cmd/Setup.pm) perl(Safe/Isa.pm) perl(Plack/Middleware/FixMissingBodyInRedirect.pm) perl(Plack/Middleware/RemoveRedundantBody.pm) perl(Test/Memory/Cycle.pm) perl(File/ShareDir/Install.pm) perl(HTTP/Headers/Fast.pm)
-BuildRequires: perl(Type/Library.pm) perl(Ref/Util.pm) perl(Attribute/Handlers.pm)
+BuildRequires: perl(Type/Library.pm) perl(Ref/Util.pm) perl(Attribute/Handlers.pm) perl(File/Share.pm)
 
 %description
 %summary
 
 %prep
 %setup -q -n %oname-%version
-%patch1 -p2
 
 %build
 %perl_vendor_build --install_path bindoc=%_man1dir
@@ -31,6 +29,7 @@ BuildRequires: perl(Type/Library.pm) perl(Ref/Util.pm) perl(Attribute/Handlers.p
 %perl_vendor_install
 
 %files
+%doc AUTHORS LICENSE Changes GitGuide.md examples
 %_bindir/dancer2
 %_man1dir/dancer2.*
 %perl_vendor_privlib/Dancer2*
@@ -38,6 +37,9 @@ BuildRequires: perl(Type/Library.pm) perl(Ref/Util.pm) perl(Attribute/Handlers.p
 %doc AUTHORS Changes LICENSE *.md
 
 %changelog
+* Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.206000-alt1
+- automated CPAN update
+
 * Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.205002-alt1
 - automated CPAN update
 
