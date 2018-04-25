@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-Test-NoTabs
-Version:	2.00
-Release:	alt1_3
+Version:	2.02
+Release:	alt1
 Summary:	Check the presence of tabs in your project
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-NoTabs/
-Source0:	http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Test-NoTabs-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-NoTabs-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	coreutils
@@ -65,6 +66,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1
+- automated CPAN update
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1_3
 - update to new release by fcimport
 
