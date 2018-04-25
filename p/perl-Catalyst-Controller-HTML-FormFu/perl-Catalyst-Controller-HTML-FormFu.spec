@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -7,13 +8,13 @@ BuildRequires: perl(Locale/Maketext.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Catalyst-Controller-HTML-FormFu
-Version:        2.02
-Release:        alt1_2
+Version:        2.04
+Release:        alt1
 Summary:        HTML::FormFu controller for Catalyst
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/Catalyst-Controller-HTML-FormFu/
-Source0:        http://search.cpan.org/CPAN/authors/id/N/NI/NIGELM/Catalyst-Controller-HTML-FormFu-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/N/NI/NIGELM/Catalyst-Controller-HTML-FormFu-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  coreutils
@@ -100,6 +101,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1
+- automated CPAN update
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1_2
 - update to new release by fcimport
 
