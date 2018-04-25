@@ -1,4 +1,4 @@
-%define		svn 8982
+%define		svn 8992
 
 %define		rel alt1
 
@@ -9,7 +9,7 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV (QT4
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	18.3
+Version:	18.4.0
 Release:	%rel.%svn
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
@@ -135,6 +135,9 @@ export OPTFLAGS="%optflags"
 %endif
 
 %changelog
+* Wed Apr 25 2018 Motsyo Gennadi <drool@altlinux.ru> 18.4.0-alt1.8992
+- 18.4.0 (svn8992)
+
 * Sat Apr 21 2018 Motsyo Gennadi <drool@altlinux.ru> 18.3-alt1.8982
 - 18.3 version (svn8982)
 
