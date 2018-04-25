@@ -1,6 +1,6 @@
 Name: mongo
-Version: 3.6.3
-Release: alt2
+Version: 3.6.4
+Release: alt1
 Summary: mongo client shell and tools
 License: AGPL 3.0
 Url: http://www.mongodb.org
@@ -181,6 +181,9 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Wed Apr 25 2018 Vladimir Didenko <cow@altlinux.org> 3.6.4-alt1
+- 3.6.4
+
 * Wed Mar 28 2018 Vladimir Didenko <cow@altlinux.org> 3.6.3-alt2
 - fix build (use different python cheetah package)
 
