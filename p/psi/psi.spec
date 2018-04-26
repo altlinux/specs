@@ -1,6 +1,6 @@
 Name: psi
 Version: 1.3
-Release: alt1
+Release: alt2
 Group: Networking/Instant messaging
 Summary: Psi Jabber client
 Summary(ru_RU.UTF-8): Jabber клиент Psi
@@ -11,6 +11,7 @@ Source1: iris.tar
 Source2: libpsi.tar
 Source3: http-parser.tar
 Source4: qhttp.tar
+Source5: plugins.tar
 Patch0: %name-%version-%release.patch
 Patch1: psi-0.14-alt-glibc-2.16.patch
 
@@ -18,9 +19,11 @@ Patch1: psi-0.14-alt-glibc-2.16.patch
 Requires: sound_handler ca-certificates
 # Automatically added by buildreq on Tue Nov 25 2008
 BuildRequires(pre): rpm-macros-qt5
-BuildRequires: gcc-c++ libXScrnSaver-devel libaspell-devel libcom_err-devel libqca-qt5-devel
+BuildRequires: cmake gcc-c++ libXScrnSaver-devel libaspell-devel libcom_err-devel libqca-qt5-devel
+BuildREquires: libotr-devel libhunspell-devel
+BuildRequires: libtidy-devel >= 1.2.0
 BuildRequires: libidn-devel zlib-devel
-BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-tools qt5-x11extras-devel
+BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-svg-devel qt5-tools qt5-webkit-devel qt5-x11extras-devel
 
 Conflicts: qssl < 2.0 psi0.11
 Obsoletes: psi0.11
@@ -42,33 +45,182 @@ AIM.  Psi поддерживает такие возможности Jabber, к�
 информации (через SSL и GnuPG), работу через HTTP(S) прокси-сервер и
 т.д.
 
+%package plugins
+Summary: Plugins pack for %name
+Group: Networking/Instant messaging
+Requires: %name = %version-%release
+
+%description plugins
+This package contains stable plugins for %name.
+List of plugins included:
+
+* Attention Plugin
+  This plugin is designed to send and receive special messages such as
+  Attentions.
+
+* Autoreply Plugin
+  This plugin acts as an auto-answering machine.
+
+* Birthday Reminder Plugin
+  This plugin is designed to show reminders of upcoming birthdays.
+
+* Chess Plugin
+  This plugin allows you to play chess with your friends.
+  The plugin is compatible with a similar plugin for Tkabber.
+
+* Cleaner Plugin
+  This plugin is designed to clear the avatar cache, saved local copies
+  of vCards and history logs.
+
+* Client Switcher Plugin
+  This plugin is intended to spoof version of the Jabber client, the
+  name and type of operating system. It is possible to manually specify
+  the version of the client and the operating system or choose from a
+  predefined list.
+
+* Conference Logger Plugin
+  This plugin is designed to save conference logs in which the Psi+
+  user sits.
+
+* Content Downloader Plugin
+  This plugin can currently be used to download and install roster
+  iconsets and emoticons.
+
+* Enum Messages Plugin
+  The plugin is designed to enumerate messages, adding the messages
+  numbers in chat logs and notification of missed messages. Supports
+  per contact on / off message enumeration via the buttons on the chats
+  toolbar.
+
+* Extended Menu Plugin
+  This plugin adds roster submenu 'Extended Actions' to contact's
+  context menu. At the moment we have the following items: 'Copy JID',
+  'Copy the nickname', 'Copy the status message' and 'Ping'.
+
+* Extended Options Plugin
+  This plugin is designed to allow easy configuration of some advanced
+  options in Psi+. This plugin gives you access to advanced application
+  options, which do not have a graphical user interface.
+
+* GnuPG Plugin
+  GnuPG Key Manager can create, remove, export and import GnuPG keys.
+  It can do only the base operations but I hope it will be enough for your needs
+
+* Gomoku Game Plugin
+  This plugin allows you to play gomoku with your friends.
+  For sending commands, normal messages are used, so this plugin will always
+  work wherever you are able to log in.To invite a friend for a game, you can
+  use contact menu item or the button on the toolbar in a chat window.
+
+* History Keeper Plugin
+  This plugin is designed to remove the history of selected contacts
+  when the Psi+ is closed.
+
+* HTTP Upload Plugin
+  This plugin allows uploading images and other files via XEP-0363.
+
+* ICQ Must Die Plugin
+  This plugin is designed to help you transfer as many contacts as
+  possible from ICQ to Jabber.
+
+* Image Plugin
+  This plugin is designed to send images to roster contacts.
+
+* Image Preview Plugin
+  This plugin shows the preview image for an image URL.
+
+* Juick Plugin
+  This plugin is designed to work efficiently and comfortably with the
+  Juick microblogging service.
+
+* Off-the-Record Messaging Plugin
+  a cryptographic protocol that provides strong encryption for instant
+  messaging conversations. OTR uses a combination of the AES
+  symmetric-key algorithm, the Diffie-Hellman key exchange, and the SHA-1
+  hash function. In addition to authentication and encryption, OTR
+  provides perfect forward secrecy and malleable encryption.
+
+* PEP Change Notify Plugin
+  The plugin is designed to display popup notifications on change of
+  moods, activities and tunes at the contacts of the roster. In the
+  settings you can choose which ones to include notification of events,
+  specify the time within which a notice will appear, as well as play a
+  sound specify.
+
+* Qip X-statuses Plugin
+  This plugin is designed to display X-statuses of contacts using the
+  QIP Infium jabber client.
+
+* Screenshot Plugin
+  This plugin allows you to make a snapshot (screenshot) of the screen,
+  edit the visible aria to make a screenshot and save the image to a
+  local drive or upload to HTTP/FTP server.
+
+* Skins Plugin
+  This plugin is designed to create, store and apply skins to Psi+.
+
+* Stop Spam Plugin
+  This plugin is designed to block spam messages and other unwanted
+  information from Psi+ users.
+
+* Storage Notes Plugin
+  This plugin is an implementation of XEP-0049: Private XML Storage.
+  The plugin is fully compatible with notes saved using Miranda IM.
+  The plugin is designed to keep notes on the jabber server with the
+  ability to access them from anywhere using Psi+ or Miranda IM.
+
+* Translate Plugin
+  This plugin allows you to convert selected text into another language.
+
+* Video Status Changer Plugin
+  This plugin is designed to set the custom status when you see the
+  video in selected video player. Communication with players made by
+  D-Bus.
+
+* Watcher Plugin
+  This plugin is designed to monitor the status of specific roster contacts,
+  as well as for substitution of standard sounds of incoming messages.
+  On the first tab set up a list of contacts for the status of
+  which is monitored. When the status of such contacts changes a popup window
+  will be shown and when the status changes to online a custom sound
+  can be played.
+  On the second tab is configured list of items, the messages
+  are being monitored. Each element can contain a regular expression to
+  check for matches with JID, from which the message arrives, a list of
+  regular expressions to check for matches with the text of an incoming message,
+  the path to sound file which will be played in case of coincidence,
+  as well as the setting, whether the sound is played always, even if the
+  global sounds off.
+
+Plugins without description yet:
+* Jabber Disk Plugin
+* Message Filter Plugin
+
 %prep
-%setup -q -n %name-%version-%release -a1 -a2 -a3 -a4
+%setup -q -n %name-%version-%release -a1 -a2 -a3 -a4 -a5
 %patch0 -p1
 %patch1 -p0
 mv libpsi src/
 mv qhttp 3rdparty/
 mv http-parser 3rdparty/
+rm -rf src/plugins/deprecated/
+mv -f plugins/* src/plugins/
 mkdir -p lang/
 
 %build
-./configure \
-    --prefix=%prefix \
-    --bindir=%_bindir \
-    --datadir=%_datadir \
-    --release \
-    --qtselect=5
-%make
+%cmake \
+    -DBUILD_PLUGINS="ALL" \
+    -DENABLE_PLUGINS=ON \
+    -DBUILD_DEV_PLUGINS=ON
+#
+%cmake_build
 
 lrelease-qt5 psi_ru.ts
 
 %install
-%makeinstall INSTALL_ROOT=%buildroot
-rm -f %buildroot%_bindir/psi.debug
-
+%cmakeinstall_std
+mv %buildroot/%_libdir/%name{-plus,}/
 install -Dm644 psi_ru.qm %buildroot%_datadir/psi/lang/psi_ru.qm
-
-rm -Rf %buildroot%_datadir/psi/{README,COPYING,certs}
 
 %files
 %defattr(0644,root,root,0755)
@@ -77,10 +229,46 @@ rm -Rf %buildroot%_datadir/psi/{README,COPYING,certs}
 %dir %_datadir/psi
 %_datadir/psi/*
 %_datadir/applications/%name.desktop
+%_pixmapsdir/%name.png
 
-%_iconsdir/hicolor/*/*/*.png
+%files plugins
+%_libdir/%name/plugins/libattentionplugin.so
+%_libdir/%name/plugins/libautoreplyplugin.so
+%_libdir/%name/plugins/libbirthdayreminderplugin.so
+%_libdir/%name/plugins/libchessplugin.so
+%_libdir/%name/plugins/libcleanerplugin.so
+%_libdir/%name/plugins/libclientswitcherplugin.so
+%_libdir/%name/plugins/libconferenceloggerplugin.so
+%_libdir/%name/plugins/libcontentdownloaderplugin.so
+%_libdir/%name/plugins/libenummessagesplugin.so
+%_libdir/%name/plugins/libextendedmenuplugin.so
+%_libdir/%name/plugins/libextendedoptionsplugin.so
+%_libdir/%name/plugins/libgnupgplugin.so
+%_libdir/%name/plugins/libgomokugameplugin.so
+%_libdir/%name/plugins/libhistorykeeperplugin.so
+%_libdir/%name/plugins/libhttpuploadplugin.so
+%_libdir/%name/plugins/libicqdieplugin.so
+%_libdir/%name/plugins/libimageplugin.so
+%_libdir/%name/plugins/libimagepreviewplugin.so
+%_libdir/%name/plugins/libjabberdiskplugin.so
+%_libdir/%name/plugins/libjuickplugin.so
+%_libdir/%name/plugins/libmessagefilterplugin.so
+%_libdir/%name/plugins/libotrplugin.so
+%_libdir/%name/plugins/libpepchangenotifyplugin.so
+%_libdir/%name/plugins/libqipxstatusesplugin.so
+%_libdir/%name/plugins/libscreenshotplugin.so
+%_libdir/%name/plugins/libskinsplugin.so
+%_libdir/%name/plugins/libstopspamplugin.so
+%_libdir/%name/plugins/libstoragenotesplugin.so
+%_libdir/%name/plugins/libtranslateplugin.so
+%_libdir/%name/plugins/libvideostatusplugin.so
+%_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Wed Apr 25 2018 Oleg Solovyov <mcpain@altlinux.org> 1.3-alt2
+- Built plugins
+- Used CMake to build
+
 * Thu Apr 19 2018 Oleg Solovyov <mcpain@altlinux.org> 1.3-alt1
 - Updated to version 1.3
 - Updated Russian translation from upstream
