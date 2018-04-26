@@ -2,13 +2,13 @@
 %def_enable mpv
 
 %define rname smplayer
-%define svn 8910
+%define svn 8992
 %define xde kde5
 %define XDE KDE5
 %define xapp kf5
 Name: %xde-%rname
-Version: 18.2.0.%svn
-Release: alt2%ubt
+Version: 18.4.0.%svn
+Release: alt1%ubt
 
 %define qt_bin_dir %_qt5_bindir
 %define configure_qmake %qmake_qt5
@@ -171,6 +171,9 @@ done
 
 
 %changelog
+* Thu Apr 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.4.0.8992-alt1%ubt
+- new version
+
 * Tue Feb 06 2018 Sergey V Turchin <zerg@altlinux.org> 18.2.0.8910-alt2%ubt
 - fix noarch packages
 
