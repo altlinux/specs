@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.1
-Release: alt10
+Release: alt11
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -167,6 +167,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Apr 26 2018 Paul Wolneykien <manowar@altlinux.org> 5.1-alt11
+- Fix: Check that the system was booted with systemd (closes: #34844).
+
 * Tue Mar 13 2018 Paul Wolneykien <manowar@altlinux.org> 5.1-alt10
 - Update libguile-vhttpd dependency: require >= 0.7.8-alt1.
 
