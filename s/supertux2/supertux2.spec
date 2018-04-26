@@ -1,6 +1,6 @@
 Name: supertux2
 Version: 0.5.1
-Release: alt2
+Release: alt3
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
 License: GPLv3
@@ -90,6 +90,9 @@ rm -rf %buildroot/%_docdir/supertux2/
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Fri Apr 27 2018 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt3
+- rebuilt with boost 1.66
+
 * Wed Aug 30 2017 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt2
 - rebuilt with boost-1.65.0
 
