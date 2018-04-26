@@ -1,17 +1,25 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: scourge
 Version: 0.21.1
 Summary: Rogue-like RPG
 Summary(de): Rogue-artiges Rollenspiel
 Group: Games/Adventure
-Release: alt4.svn3264
+Release: alt5.svn3264
 License: GPL2
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-URL: http://scourgeweb.org
-Source: http://internap.dl.sourceforge.net/sourceforge/scourge/scourge-%{version}.src.tar.gz
-Source1: http://internap.dl.sourceforge.net/sourceforge/scourge/scourge-%{version}.data.tar.gz
-Requires: %name-data = %version-%release
+URL: https://sourceforge.net/projects/scourge/
 
-BuildRequires: gcc4.3-c++ libGL-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libX11-devel libfreetype-devel zlib-devel
+Source: scourge-%{version}.src.tar
+Source1: scourge-%{version}.data.tar
+Patch1: scourge-0.21.1-alt-build.patch
+
+BuildRequires: gcc-c++ libGL-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libX11-devel libfreetype-devel zlib-devel
+
+Requires: %name-data = %EVR
+
+# data contains some scripts, ignore them
+%add_findreq_skiplist  %_datadir/%name/*
+%add_findprov_skiplist %_datadir/%name/*
 
 %description
 S.C.O.U.R.G.E. is a rogue-like game in the fine tradition of NetHack and Moria It sports 
@@ -30,44 +38,40 @@ stets althergebrachte isometrische Spiele wie Exult oder Woodward geschätzt.
 %package data
 Summary: Data for %name
 Group: Games/Adventure
-Requires: %name = %version-%release
 BuildArch: noarch
 
 %description data
 Data for %name
 
 %prep
-rm -fr scourge_data
-%__tar xzf %SOURCE1
+tar xf %SOURCE1
 %setup -q -n %name
+%patch1 -p2
 
 %build
 %autoreconf
 %configure --with-data-dir=%_datadir/%name
 
-make
+%make
 
 %install
 %makeinstall
 
-%__mkdir_p %buildroot%_datadir/%name
-%__mkdir_p %buildroot%_datadir/pixmaps
-%__mkdir_p %buildroot%_datadir/applications
-%__mkdir_p %buildroot%_miconsdir
-%__mkdir_p %buildroot%_liconsdir
-%__mkdir_p %buildroot%_niconsdir
+mkdir -p %buildroot%_datadir/%name
+mkdir -p %buildroot%_datadir/pixmaps
+mkdir -p %buildroot%_datadir/applications
+mkdir -p %buildroot%_miconsdir
+mkdir -p %buildroot%_liconsdir
+mkdir -p %buildroot%_niconsdir
 
-%__install -p -m 644 assets/%name.png %buildroot%_liconsdir/%name.png
-#__install -p -m 644 %SOURCE5 %buildroot%_niconsdir/%name.png
-#__install -p -m 644 %SOURCE6 %buildroot%_miconsdir/%name.png
+install -p -m 644 assets/%name.png %buildroot%_liconsdir/%name.png
 
 # install menu
-%__install -p -m 644 assets/%name.desktop %buildroot%_datadir/applications
-%__install -p -m 644 assets/%name.png %buildroot%_datadir/pixmaps
+install -p -m 644 assets/%name.desktop %buildroot%_datadir/applications
+install -p -m 644 assets/%name.png %buildroot%_datadir/pixmaps
 
 #install data
-%__cp -aRf ../scourge_data/* %buildroot%_datadir/%name
-
+cp -aRf ../scourge_data/* %buildroot%_datadir/%name
 
 %find_lang --with-gnome %name
 
@@ -84,6 +88,9 @@ make
 %_datadir/%name
 
 %changelog
+* Thu Apr 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.21.1-alt5.svn3264
+- Fixed build.
+
 * Wed Mar 30 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 0.21.1-alt4.svn3264
 - Add xlib-devel to BuildRequires
 
