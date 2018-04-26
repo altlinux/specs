@@ -1,6 +1,6 @@
 Name: xmoto
 Version: 0.5.11
-Release: alt1.r3421.1
+Release: alt2.r3421
 
 Summary: A challenging 2D motocross platform game.
 License: GPL
@@ -8,7 +8,9 @@ Group: Games/Arcade
 Packager: Denis Pynkin <dans@altlinux.ru>
 
 Url: http://xmoto.tuxfamily.org
-Source: %name-%version-src.tar.gz
+Source: %name-%version-src.tar
+
+Patch1: xmoto-0.5.11-alt-build.patch
 
 BuildRequires: gcc-c++ libSDL-devel libSDL_mixer-devel libjpeg-devel
 BuildRequires: lua-devel libode-devel libpng-devel libstdc++-devel
@@ -26,24 +28,20 @@ XMoto is a challenging 2D motocross platform game, where physics play an all imp
 
 %prep
 %setup -q
+%patch1 -p3
 
 %build
-
-#sed -i "s@/mang@/man6@g" Makefile.in
-
-%__autoreconf -fisv
-
 export LDFLAGS="-L%_x11libdir"
+%autoreconf
 %configure --bindir=%_gamesbindir \
 		--with-enable-zoom=1 \
 		--with-enable-www=1 \
 		--with-renderer-openGl=1
 
-%define __nprocs 1
-%make_build
+%make
 
 %install
-%make_install DESTDIR="%buildroot" install
+%makeinstall_std
 
 mkdir -p %buildroot%_datadir/applications
 cp extra/xmoto.desktop %buildroot%_datadir/applications
@@ -70,6 +68,9 @@ ln -s %_ttffontsdir/dejavu/DejaVuSansMono.ttf %buildroot%_datadir/%name/Textures
 [ -L %_datadir/%name/Textures/Fonts/DejaVuSansMono.ttf ] || ln -s %_ttffontsdir/dejavu/DejaVuSansMono.ttf %_datadir/%name/Textures/Fonts/
 
 %changelog
+* Thu Apr 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.11-alt2.r3421
+- Fixed build with new toolchain.
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.11-alt1.r3421.1
 - rebuild with new lua 5.3
 
