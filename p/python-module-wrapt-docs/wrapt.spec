@@ -5,11 +5,11 @@ The aim of the wrapt module is to provide a transparent object proxy for \
 Python, which can be used as the basis for the construction of function \
 wrappers and decorator functions.
 
-Name: %fname
+Name: %fname-docs
 Version: 1.10.11
 Release: alt1
 
-%if ""==""
+%if "-docs"==""
 Summary: A Python module for decorators, wrappers and monkey patching
 Group: Development/Python
 %else
@@ -31,7 +31,7 @@ BuildRequires: python2.7(sphinx_rtd_theme)
 
 %py_provides %oname
 
-%if ""!=""
+%if "-docs"!=""
 Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
 BuildArch: noarch
@@ -40,7 +40,7 @@ BuildArch: noarch
 %description
 %descr
 
-%if ""!=""
+%if "-docs"!=""
 This package contains documentation for %oname.
 
 %package -n %fname-pickles
@@ -55,13 +55,13 @@ This package contains pickles for %oname.
 
 %prep
 %setup
-%if ""!=""
+%if "-docs"!=""
 %prepare_sphinx .
 ln -s ../objects.inv docs/
 %endif
 
 %build
-%if ""==""
+%if "-docs"==""
 %add_optflags -fno-strict-aliasing
 %python_build
 %else
@@ -70,14 +70,14 @@ ln -s ../objects.inv docs/
 %endif
 
 %install
-%if ""==""
+%if "-docs"==""
 %python_install
 %else
 mkdir -p %buildroot%python_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
-%if ""==""
+%if "-docs"==""
 %check
 export PYTHONPATH=%buildroot%python_sitelibdir
 py.test
