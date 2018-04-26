@@ -12,7 +12,7 @@
 
 Name: zarafa
 Version: 7.1.15
-Release: alt17%ubt
+Release: alt18%ubt
 License: AGPLv3
 Group: Networking/Mail
 Summary: Server program for the Zarafa Collaboration Platform
@@ -30,6 +30,7 @@ Patch6: zarafa-7.1.14-wrong-assert.patch
 Patch7: zarafa-7.1.15-make_pair.patch
 Patch8: zarafa-7.1.15-gcc6.patch
 Patch9: zarafa-7.1.15-xlocale.patch
+Patch10: zarafa-7.1.17-alt-gcc7.patch
 
 BuildRequires(pre): rpm-build-php5 rpm-build-ubt
 BuildRequires(pre): rpm-build-apache2
@@ -267,6 +268,7 @@ modern web browser.
 %patch7 -p2
 %patch8 -p2
 %patch9 -p1
+%patch10 -p2
 
 %build
 %add_optflags -fPIC -L%_libdir -Wno-narrowing
@@ -695,6 +697,9 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
+* Thu Apr 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 7.1.15-alt18%ubt
+- Fixed build with new toolchain.
+
 * Wed Jan 31 2018 Anton Farygin <rider@altlinux.ru> 7.1.15-alt17%ubt
 - rebuild with php-5.6.33
 
