@@ -1,7 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+
 Summary: Gearman provides a generic application framework to farm out work to other machines.
 Name: gearmand
-Version: 1.1.17
-Release: alt1.1
+Version: 1.1.18
+Release: alt1
 License: BSD
 Group: Development/C
 URL: http://gearman.org
@@ -20,7 +22,7 @@ BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme
 %package devel
 Summary:        Gearmand development files
 Group:          Development/C++
-Requires:       %name = %version
+Requires:       %name = %EVR
 
 %description devel
 This package contains necessary header files for Gearman development.
@@ -34,7 +36,10 @@ sed -i -e 's:git describe --always:echo %version:' \
 
 %build
 %autoreconf
-%configure --enable-ssl
+%configure \
+	--enable-ssl \
+	--disable-static \
+	--localstatedir=%_var
 
 # first build docs
 pushd docs
@@ -44,10 +49,7 @@ popd
 %make_build
 
 %install
-mkdir %buildroot
-%make install DESTDIR=%buildroot
-
-rm -f %buildroot%_libdir/libgearman.a
+%makeinstall_std
 
 %files
 %doc ChangeLog README.md COPYING
@@ -66,6 +68,9 @@ rm -f %buildroot%_libdir/libgearman.a
 %_man3dir/*
 
 %changelog
+* Thu Apr 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.18-alt1
+- Updated to upstream version 1.1.18.
+
 * Mon Sep 18 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.17-alt1.1
 - Rebuild with libhiredis 1.13.3
 
