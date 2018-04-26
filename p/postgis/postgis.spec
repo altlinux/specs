@@ -1,7 +1,7 @@
 %define pg_ver 10
 
 Name: postgis
-Version: 2.4.3
+Version: 2.4.4
 Release: alt1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL
@@ -112,6 +112,9 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_includedir/liblwgeom_topo.h
 
 %changelog
+* Mon Apr 16 2018 Andrey Cherepanov <cas@altlinux.org> 2.4.4-alt1
+- New version.
+
 * Wed Mar 21 2018 Andrey Cherepanov <cas@altlinux.org> 2.4.3-alt1
 - New version.
 - Build from upstream tarball.
