@@ -1,16 +1,16 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: zoom
 Version: 1.0.5
-Release: alt2.1
-
+Release: alt3
 Summary: Z-Machine: it plays text adventure games written in ZCode
 License: GPL
 Group: Games/Other
 Url: http://www.logicalshift.demon.co.uk/unix/zoom/
-Packager: Alex V. Myltsev <avm@altlinux.ru>
 
-Source: %url/%name-%version.tar.gz
+Source: %name-%version.tar
 
-BuildPreReq: fontconfig-devel zlib-devel libpng-devel t1lib-devel libXt-devel libXrender-devel libXft-devel libXext-devel
+BuildRequires: fontconfig-devel zlib-devel libpng-devel t1lib-devel libXt-devel libXrender-devel libXft-devel libXext-devel
 
 %description
 zoom is an interpreter for playing all of Infocom's text adventures and
@@ -18,9 +18,10 @@ newer games using the same format.
 
 zoom has a fast interpreter core behind an X11 interface.
 %prep
-%setup -n %name-%version
+%setup
 
 %build
+%add_optflags -fgnu89-inline
 %configure --with-x
 %make
 
@@ -37,6 +38,9 @@ rm manual/Makefile*
 %doc README THANKS TODO manual
 
 %changelog
+* Thu Apr 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.5-alt3
+- Fixed build with new toolchain.
+
 * Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt2.1
 - Rebuilt with libpng15
 
