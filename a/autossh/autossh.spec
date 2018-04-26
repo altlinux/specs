@@ -1,5 +1,5 @@
 Name: autossh
-Version: 1.4c
+Version: 1.4f
 Release: alt1
 
 Summary: Automatically restart SSH sessions and tunnels
@@ -41,6 +41,9 @@ install -pD -m644 autossh.1 %buildroot%_man1dir/autossh.1
 %_man1dir/*
 
 %changelog
+* Thu Apr 26 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4f-alt1
+- Updated to 1.4f.
+
 * Fri Nov 25 2011 Dmitry V. Levin <ldv@altlinux.org> 1.4c-alt1
 - Updated to 1.4c.
 
