@@ -1,5 +1,5 @@
 Name: hasher-rich-chroot
-Version: 0.01
+Version: 0.02
 Release: alt1
 
 Summary: hasher chroot environment for productive work 
@@ -12,6 +12,11 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 Requires: mc vim-console less unzip elfutils rpm-utils
+# Andrew Savchenko:
+#Лично мне приходится на все системы, где я работаю, ставить
+#terminfo-extra, т.к. я использую screen-256color-bce-s; даже внутрь
+#хешерницы, т.к. иначе hsh-shell не работает нормально.
+Requires: terminfo-extra
 
 %description
 This package contains utilities that configure
@@ -54,6 +59,9 @@ install -m 755 hsh-*  %buildroot%_bindir/
 %_bindir/hsh-install-rich-chroot
 
 %changelog
+* Fri Apr 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
+- added terminfo-extra for screen
+
 * Wed May 21 2014 Igor Vlasenko <viy@altlinux.ru> 0.01-alt1
 - initial release
 
@@ -107,136 +115,4 @@ install -m 755 hsh-*  %buildroot%_bindir/
 
 * Mon Jan 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
 - new version
-
-* Fri Dec 30 2011 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1
-- new version
-
-* Thu Nov 03 2011 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1
-- new utils:
-	girar-print-build-commit
-	girar-nmu-filter-name
-
-* Thu Sep 29 2011 Igor Vlasenko <viy@altlinux.ru> 0.97-alt1
-- new version
-
-* Wed May 25 2011 Igor Vlasenko <viy@altlinux.ru> 0.96-alt6
-- girar-nmu-sort-transaction: updated man page (thanks to aris@).
-
-* Tue May 24 2011 Igor Vlasenko <viy@altlinux.ru> 0.96-alt5
-- bugfix release
-
-* Mon May 23 2011 Igor Vlasenko <viy@altlinux.ru> 0.96-alt4
-- bugfix release
-
-* Sat May 21 2011 Igor Vlasenko <viy@altlinux.ru> 0.96-alt3
-- fixes in girar-nmu-helper-push-build
-
-* Mon Apr 11 2011 Igor Vlasenko <viy@altlinux.ru> 0.96-alt2
-- bugfix release
-
-* Mon Apr 11 2011 Igor Vlasenko <viy@altlinux.ru> 0.96-alt0.M51.1
-- backport
-
-* Mon Apr 11 2011 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1
-- new version
-
-* Fri Jan 14 2011 Igor Vlasenko <viy@altlinux.ru> 0.95-alt0.M51.1
-- M51 backport
-
-* Fri Jan 14 2011 Igor Vlasenko <viy@altlinux.ru> 0.95-alt1
-- bugfix release
-
-* Mon Nov 29 2010 Igor Vlasenko <viy@altlinux.ru> 0.94-alt0.M51.1
-- M51 backport
-
-* Mon Nov 29 2010 Igor Vlasenko <viy@altlinux.ru> 0.94-alt1
-- Release Candidate 4
-
-* Fri Nov 26 2010 Igor Vlasenko <viy@altlinux.ru> 0.93-alt0.M51.1
-- M51 backport
-
-* Fri Nov 26 2010 Igor Vlasenko <viy@altlinux.ru> 0.93-alt1
-- Release Candidate 3
-
-* Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 0.92-alt0.M51.1
-- M51 backport
-
-* Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 0.92-alt1
-- Release Candidate 2
-
-* Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.91-alt0.M51.1
-- M51 backport
-
-* Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1
-- girar-nmu-local-build: added -f option.
-- safe girar-clone-build-commit.
-
-* Sat Nov 20 2010 Igor Vlasenko <viy@altlinux.ru> 0.90-alt0.M51.1
-- M51 backport
-
-* Sat Nov 20 2010 Igor Vlasenko <viy@altlinux.ru> 0.90-alt1
-- RC1
-
-* Thu Nov 18 2010 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
-- girar-fetch-build-commit, man pages, etc.
-
-* Tue Nov 16 2010 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
-- use remote git clone when possible; new options, etc.
-
-* Mon Nov 15 2010 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
-- refined documentation
-
-* Fri Nov 12 2010 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
-- implemented cycle breaking
-
-* Tue Nov 09 2010 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
-- sort: preliminary support of breaking cycles
-
-* Fri Nov 05 2010 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
-- sort: support of transaction subset
-
-* Thu Nov 04 2010 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
-- print separate cycle components
-
-* Thu Nov 04 2010 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
-- bugfix release
-
-* Thu Nov 04 2010 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
-- bugfix release
-
-* Wed Nov 03 2010 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
-- bugfix release
-
-* Wed Nov 03 2010 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
-- added bunch of helper utilities
-
-* Tue Nov 02 2010 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
-- fix in sort utility
-
-* Mon Oct 25 2010 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
-- bugfix (thanks to @mithraen)
-
-* Thu Oct 21 2010 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
-- added --ignore-extra-rpms option
-
-* Sat Oct 16 2010 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
-- added rpm-sign-no-passphrase
-
-* Tue Oct 05 2010 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
-- fix in rpm-sign-gpg-agent
-
-* Tue Sep 14 2010 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
-- added rpm-sign-gpg-agent
-
-* Mon Sep 13 2010 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
-- girar-nmu -> girar-nmu-prepare
-
-* Mon Sep 13 2010 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
-- added utilities to sort packages in transaction
-
-* Thu Jul 15 2010 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
-- added girar-nmu-git-commit-push-build utility
-
-* Wed Jun 30 2010 Igor Vlasenko <viy@altlinux.ru> 0.01-alt1
-- first prerelease w/o documentation
 
