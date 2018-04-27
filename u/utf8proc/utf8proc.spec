@@ -1,5 +1,5 @@
 Name: utf8proc
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Library for processing UTF-8 encoded Unicode strings
@@ -65,5 +65,8 @@ rm %buildroot%_libdir/libutf8proc.a
 %_libdir/*.so
 
 %changelog
+* Fri Apr 27 2018 Michael Shigorin <mike@altlinux.org> 2.1.1-alt1
+- 2.1.1: fixes a serious composition bug, thanks upstream for heads-up
+
 * Tue Oct 24 2017 Michael Shigorin <mike@altlinux.org> 2.1.0-alt1
 - initial build for ALT Linux Sisyphus (based on fedora spec)
