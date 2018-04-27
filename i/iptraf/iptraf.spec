@@ -1,6 +1,6 @@
 Name: iptraf
 Version: 3.0.0
-Release: alt4.1
+Release: alt4.2
 
 License: GPL
 Url: http://iptraf.seul.org/
@@ -66,6 +66,9 @@ IPTraf это консольная графическая программа для сбора сетевой статистики в Linux
 %_docdir/%name/*
 
 %changelog
+* Fri Apr 27 2018 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt4.2
+- Fix typo in changelog (Closes: #18924).
+
 * Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt4.1
 - Fixed build with glibc 2.16
 
@@ -73,7 +76,7 @@ IPTraf это консольная графическая программа для сбора сетевой статистики в Linux
 - fix spec
 
 * Wed Feb 18 2009 Hihin Ruslan <ruslandh@altlinux.ru> 3.0.0-alt3
-- Fix type interfases
+- Fix type interfaces
 
 * Fri Dec 26 2008 Hihin Ruslan <ruslandh@altlinux.ru> 3.0.0-alt2
 - Picked up from orphaned
