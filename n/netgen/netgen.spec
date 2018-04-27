@@ -8,7 +8,7 @@
 %define oname netgen
 Name: %oname
 Version: 6.1
-Release: alt1.dev.git20150306.qa4
+Release: alt1.dev.git20150306.qa5
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPL
 Group: Graphics
@@ -24,7 +24,7 @@ BuildRequires(pre): rpm-build-tcl
 BuildRequires: %mpiimpl-devel libjpeg-devel libavcodec-devel tcl-devel tk-devel
 BuildRequires: tcl-togl-devel libGL-devel libGLU-devel libparmetis-devel
 BuildRequires: libavformat-devel libswscale-devel bzlib-devel zlib-devel
-BuildRequires: libopencascade-devel
+BuildRequires: OCE-devel
 BuildRequires: libXmu-devel chrpath
 %if_with python2
 BuildRequires: python-devel boost-python-devel
@@ -440,6 +440,9 @@ done
 %endif
 
 %changelog
+* Fri Apr 27 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.1-alt1.dev.git20150306.qa5
+- Rebuilt against OCE
+
 * Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1-alt1.dev.git20150306.qa4
 - Fixed build.
 
