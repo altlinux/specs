@@ -1,23 +1,21 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: cgal
-Version: 4.10
-Release: alt2%ubt
+Version: 4.12
+Release: alt1%ubt
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
 Group: Sciences/Mathematics
 Url: http://www.cgal.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: CGAL-%version.tar.gz
-# https://gforge.inria.fr/frs/download.php/file/34700/CGAL-4.6-doc_html.tar.gz
-Source1: CGAL-%version-doc_html.tar.gz
+Source: CGAL-%version.tar
+Source1: CGAL-%version-doc_html.tar
+
 # https://gforge.inria.fr/frs/download.php/32357/cgal_manual.pdf
 Source2: cgal_manual.pdf
-Source4: cmk.txt
 Source5: %name.pc
 
-Patch1: %name-%version-alt-build.patch
-
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ gcc-fortran cmake qt5-base-devel qt5-svg-devel
@@ -45,7 +43,7 @@ This Package contains shared libraries of CGAL.
 %package -n lib%name-qt5
 Summary: Shared libraries of CGAL (Qt5 interface)
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-qt5
 The goal of the CGAL Open Source Project is to provide easy access to
@@ -57,7 +55,7 @@ This Package contains shared libraries of CGAL (Qt5 interface).
 %package -n lib%name-devel
 Summary: Development files of CGAL
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 The goal of the CGAL Open Source Project is to provide easy access to
@@ -69,8 +67,8 @@ This Package contains developemnt files of CGAL.
 %package -n lib%name-qt5-devel
 Summary: Development files of CGAL (Qt5 interface)
 Group: Development/C++
-Requires: lib%name-devel = %version-%release
-Requires: lib%name-qt5 = %version-%release
+Requires: lib%name-devel = %EVR
+Requires: lib%name-qt5 = %EVR
 
 %description -n lib%name-qt5-devel
 The goal of the CGAL Open Source Project is to provide easy access to
@@ -93,28 +91,27 @@ Thid package contains development documentation for CGAL.
 
 %prep
 %setup
-%patch1 -p2
-install -p -m644 %SOURCE1 %SOURCE2 %SOURCE4 ./
-mv cmk.txt CMakeCache.txt
 
 install -p -m644 %SOURCE5 .
 sed -i 's|@VERSION@|%version|g' %name.pc
 sed -i 's|@LIBDIR@|%_libdir|g' %name.pc
 
 %build
-cmake -D CMAKE_INSTALL_PREFIX=%prefix .
-%make_build VERBOSE=1
-#make_build -C demo
-#make -C examples
+%cmake \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DCGAL_INSTALL_DOC_DIR=%_defaultdocdir/%name \
+	-DWITH_demos:BOOL=false \
+	-DWITH_examples:BOOL=false
 
+%cmake_build VERBOSE=1
 
 %install
-install -d %buildroot%_docdir/%name
-%makeinstall_std
+%cmakeinstall_std
 
-cp -fR doc_html %buildroot%_docdir/%name
 install -d %buildroot%_docdir/%name
+cp -fR doc_html %buildroot%_docdir/%name
 install -p -m644 %SOURCE2 %buildroot/%_docdir/%name
+cp -fR examples %buildroot%_docdir/%name
 
 pushd %buildroot%_docdir/%name
 tar -xf %SOURCE1
@@ -138,17 +135,19 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %_includedir/*
 %_libdir/*.so
 %exclude %_libdir/*_Qt?.so
-%_libdir/CGAL
+%_libdir/cmake/CGAL
 %_pkgconfigdir/*
 
 %files -n lib%name-qt5-devel
 %_libdir/*_Qt5.so
 
 %files devel-doc
-%doc AUTHORS CHANGES* LICENSE* README examples
 %doc %_docdir/%{name}*
 
 %changelog
+* Fri Apr 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.12-alt1%ubt
+- Updated to upstream version 4.12.
+
 * Tue Sep 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.10-alt2%ubt
 - Rebuilt with boost 1.65.0.
 - Added %%ubt to release.
