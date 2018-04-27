@@ -1,7 +1,6 @@
-
 Name: shorewall
 Version: 4.4.23.3
-Release: alt3
+Release: alt3.1
 Summary: Shoreline Firewall is an iptables-based firewall for Linux systems.
 License: GPLv2
 Group: Security/Networking
@@ -68,6 +67,9 @@ mv -f %buildroot%_datadir/%name/Shorewall %buildroot%perl_vendor_privlib/
 %_man8dir/*
 
 %changelog
+* Fri Apr 27 2018 Grigory Ustinov <grenka@altlinux.org> 4.4.23.3-alt3.1
+- Rebuilt for e2k.
+
 * Wed Oct 05 2011 Alexey Shabalin <shaba@altlinux.ru> 4.4.23.3-alt3
 - only root have access to config files
 

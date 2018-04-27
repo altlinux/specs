@@ -1,7 +1,6 @@
-
 Name: shorewall6
 Version: 4.4.23.3
-Release: alt3
+Release: alt3.1
 Summary: Shoreline Firewall 6 is an ip6tables-based firewall for Linux systems.
 License: GPLv2
 Group: Security/Networking
@@ -56,6 +55,9 @@ install -m 0644 %SOURCE4 README.ALT.RU.UTF8
 %_man8dir/*
 
 %changelog
+* Fri Apr 27 2018 Grigory Ustinov <grenka@altlinux.org> 4.4.23.3-alt3.1
+- Rebuilt for e2k.
+
 * Wed Oct 05 2011 Alexey Shabalin <shaba@altlinux.ru> 4.4.23.3-alt3
 - only root have access to config files
 
