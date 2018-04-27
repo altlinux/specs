@@ -1,10 +1,10 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.1
-%define major 3.5
+%define major 3.6
 
 Name: wine
-Version: %major.0
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -468,6 +468,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Wed Apr 25 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.6.1-alt1
+- new version 3.6.1 (with rpmrb script)
+- fix missed wined3d-csmt.dll (ALT bug 34777)
+
 * Sat Mar 31 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.5.0-alt1
 - new version 3.5.0 (with rpmrb script)
 
