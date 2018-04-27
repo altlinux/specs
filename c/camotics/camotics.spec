@@ -1,6 +1,6 @@
 Name: camotics
 Version: 1.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Open-Source Simulation and Computer Aided Machining - A 3-axis CNC GCode simulator
 
@@ -91,6 +91,9 @@ done
 %_datadir/%name
 
 %changelog
+* Fri Apr 27 2018 Anton Midyukov <antohami@altlinux.org> 1.1.1-alt1.1
+- Rebuilt with boost 1.66
+
 * Sun Jul 30 2017 Anton Midyukov <antohami@altlinux.org> 1.1.1-alt1
 - New version 1.1.1
 - Fix desktop categories.
