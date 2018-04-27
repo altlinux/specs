@@ -1,7 +1,7 @@
 %def_disable zeitgeist
 
 Name: qt5-phonon
-Version: 4.9.1
+Version: 4.10.1
 Release: alt1%ubt
 
 Group: Graphical desktop/KDE
@@ -19,7 +19,7 @@ Patch101: alt-fix-install.patch
 Patch102: alt-fix-qt-visibility-test.patch
 
 BuildRequires(pre): qt5-base-devel rpm-build-ubt
-BuildRequires: qt5-tools-devel qt5-quick1-devel
+BuildRequires: qt5-tools-devel qt5-declarative-devel
 BuildRequires: libEGL-devel libGL-devel
 BuildRequires: automoc cmake extra-cmake-modules
 BuildRequires: libalsa-devel libpulseaudio-devel
@@ -98,6 +98,9 @@ mkdir -p %buildroot/%_qt5_plugindir/phonon4qt5_backend
 %_datadir/dbus-1/interfaces/org.kde.Phonon4Qt5.AudioOutput.xml
 
 %changelog
+* Fri Apr 27 2018 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1%ubt
+- new version
+
 * Wed Apr 05 2017 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1%ubt
 - new version
 
