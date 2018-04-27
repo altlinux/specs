@@ -1,5 +1,5 @@
 Name: efivar
-Version: 34
+Version: 35
 Release: alt1%ubt
 Summary: Tools to manage UEFI variables
 License: LGPLv2.1
@@ -57,6 +57,9 @@ make libdir=%_libdir bindir=%_bindir CFLAGS="$RPM_OPT_FLAGS -flto" LDFLAGS="$RPM
 %_libdir/*.so.*
 
 %changelog
+* Fri Apr 27 2018 Anton Farygin <rider@altlinux.ru> 35-alt1%ubt
+- new version
+
 * Mon Feb 26 2018 Anton Farygin <rider@altlinux.ru> 34-alt1%ubt
 - new version
 

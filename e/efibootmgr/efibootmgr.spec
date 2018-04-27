@@ -1,5 +1,5 @@
 Name: efibootmgr
-Version: 15
+Version: 16
 Release: alt1%ubt
 
 Summary: EFI Boot Manager
@@ -34,6 +34,9 @@ http://developer.intel.com/technology/efi/efi.htm and http://uefi.org/.
 %_man8dir/*.*
 
 %changelog
+* Fri Apr 27 2018 Anton Farygin <rider@altlinux.ru> 16-alt1%ubt
+- 15 -> 16
+
 * Tue Jun 20 2017 Anton Farygin <rider@altlinux.ru> 15-alt1%ubt
 - new version from new upstream
 
