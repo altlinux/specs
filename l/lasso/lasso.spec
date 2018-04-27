@@ -8,7 +8,7 @@
 Summary: Liberty Alliance Single Sign On
 Name: 	 lasso
 Version: 2.5.1
-Release: alt2
+Release: alt2.1
 License: GPLv2+
 Group:   System/Libraries
 Url: 	 http://lasso.entrouvert.org/
@@ -130,6 +130,7 @@ library.
 %patch3 -p1
 
 %build
+cp -at . -- /usr/share/gnu-config/config.{sub,guess}
 %add_optflags -fPIC
 ./autogen.sh
 %configure \
@@ -233,6 +234,9 @@ make check
 %endif
 
 %changelog
+* Fri Apr 27 2018 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt2.1
+- NMU: e2k support
+
 * Thu Mar 01 2018 Alexey Shabalin <shaba@altlinux.ru> 2.5.1-alt2
 - Rebuild with libxmlsec1-1.2.25
 
