@@ -1,0 +1,118 @@
+#based on fedora spec
+Name: pybind11
+Version: 2.2.2
+Release: alt1%ubt
+
+Summary: Seamless operability between C++11 and Python
+License: BSD-style
+Group: Development/Other
+Url: https://github.com/pybind/pybind11
+
+Source0: %name-%version.tar
+
+# Apply fedora patches 
+# Little-endian fix
+Patch0:  pybind11-2.2.2-endian.patch
+# Don't use pip to get path to headers
+Patch1:  pybind11-2.2.2-nopip.patch
+
+BuildRequires(pre): rpm-build-ubt
+# Automatically added by buildreq on Thu May 10 2018
+BuildRequires: boost-devel-headers
+BuildRequires: catch-devel
+BuildRequires: ccmake
+BuildRequires: eigen3
+BuildRequires: gcc-c++
+BuildRequires: python-module-scipy
+BuildRequires: python3-dev
+BuildRequires: python3-module-pytest
+
+# These are only needed for the checks
+BuildRequires: python-module-pytest
+BuildRequires: python-module-numpy
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-scipy
+BuildRequires: eigen3-devel
+BuildRequires: ctest
+
+%package devel
+Summary: %summary
+Group: Development/Other
+# For dir ownership
+Requires: cmake
+
+%package -n python-module-%name
+Summary: %summary
+Group: Development/Python
+Requires: %name-devel = %version-%release
+
+%package -n python3-module-%name
+Summary: %summary
+Group: Development/Python3
+Requires: %name-devel = %version-%release
+
+%define base_description \
+pybind11 is a lightweight header-only library that exposes C++ types in Python and vice versa, mainly to create Python bindings of existing C++ code. Tutorial and reference documentation is provided at http://pybind11.readthedocs.org/en/master
+
+%description
+%base_description
+
+%description devel
+%base_description
+
+This package contains the development headers for pybind11.
+
+%description -n python-module-%name
+%base_description
+
+This package contains the Python 2 files.
+
+%description -n python3-module-%name
+%base_description
+
+This package contains the Python 3 files.
+
+%prep
+%setup
+%patch0 -p1
+%patch1 -p1
+
+%build
+for py in python python3; do
+    mkdir $py
+    cd $py
+    %cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%_bindir/$py ../..
+    %cmake_build
+    cd ..
+done
+%python_build_debug
+%python3_build_debug
+
+%install
+%makeinstall_std -C python/BUILD
+# Force install to arch-ful directories instead.
+PYBIND11_USE_CMAKE=true %python_install "--install-purelib" "%python_sitelibdir"
+PYBIND11_USE_CMAKE=true %python3_install "--install-purelib" "%python3_sitelibdir"
+
+rm -rf %buildroot%_includedir/python*
+
+%check
+make -C python/BUILD/tests check -j$NPROCS
+make -C python3/BUILD/tests check -j$NPROCS
+
+%files devel
+%doc README.md CONTRIBUTING.md LICENSE ISSUE_TEMPLATE.md docs/*
+%_includedir/%name
+%_datadir/cmake/%name
+
+%files -n python-module-%name
+%python_sitelibdir/%name
+%python_sitelibdir/%name-%version-*.egg-info
+
+%files -n python3-module-%name
+%python3_sitelibdir/%name
+%python3_sitelibdir/%name-%version-*.egg-info
+
+%changelog
+* Sat Apr 28 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.2.2-alt1%ubt
+- Initial build
