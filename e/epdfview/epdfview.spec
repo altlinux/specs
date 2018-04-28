@@ -1,13 +1,13 @@
 Summary:        A lightweight PDF viewer for GNOME
 Name:           epdfview
 Version:        0.1.8
-Release:        alt5
+Release:        alt6
 URL:            http://trac.emma-soft.com/epdfview/
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 License:	GPL v2+
 Group:		Office
 
-BuildRequires:	libpoppler-glib-devel cups-devel gtk+-devel libgtk+2-devel gcc4.7-c++ libkrb5-devel
+BuildRequires:	libpoppler-glib-devel cups-devel gtk+-devel libgtk+2-devel gcc-c++ libkrb5-devel
 Source:		%name-%version.tar
 Patch0:		%name-locale.patch
 Patch1:		%name-0.1.8-alt3-color-fix.patch
@@ -64,6 +64,9 @@ sed -i -e 's,Icon=icon_epdfview-48,Icon=%name,' %buildroot%_desktopdir/%name.des
 %_liconsdir/%name.png
 
 %changelog
+* Sat Apr 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.8-alt6
+- NMU: rebuilt with new toolchain.
+
 * Tue Jul 08 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.1.8-alt5
 - Add buildreq
 
