@@ -17,7 +17,7 @@
 
 Name: sssd
 Version: 1.16.1
-Release: alt3%ubt
+Release: alt5%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -98,7 +98,9 @@ BuildRequires: systemd-devel libsystemd-daemon-devel libsystemd-journal-devel li
 %else
 BuildRequires: libsystemd-devel
 %endif
+%ifnarch %e2k
 BuildRequires: selinux-policy-targeted
+%endif
 BuildRequires: cifs-utils-devel
 BuildRequires: libsasl2-devel
 %if_branch_eq N.M80P
@@ -835,6 +837,12 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %nfsidmapdir/sss.so
 
 %changelog
+* Fri Apr 20 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt5%ubt
+- Set ownership of sssd.ldb even if local provider is not used
+
+* Fri Apr 06 2018 Evgeny Sinelikov <sin@altlinux.org> 1.16.1-alt4%ubt
+- Build for e2k without selinux-policy-targeted
+
 * Tue Mar 27 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.16.1-alt3%ubt
 - libnfsidmap soname bump
 
