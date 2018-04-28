@@ -17,8 +17,8 @@
 %endif
 
 Name: ceph
-Version: 12.2.4
-Release: alt1%ubt.1
+Version: 12.2.5
+Release: alt1%ubt
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -76,6 +76,10 @@ BuildRequires: python-sphinx-objects.inv python-module-sphinx
 BuildRequires: libsystemd-devel
 %{?_with_system_rocksdb:BuildRequires: librocksdb-devel}
 %{?_with_system_lua:BuildRequires: liblua5-devel >= 5.3  liblua5-devel-static >= 5.3}
+%ifnarch %arm
+BuildRequires: rdma-core-devel
+%endif
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -597,8 +601,10 @@ cmake .. \
 %else
     -DWITH_BOOST_CONTEXT=OFF \
 %endif
-    -DWITH_MANPAGE=ON \
-    -DWITH_RDMA=OFF
+%ifnarch %{arm}
+   -DWITH_RDMA=OFF \
+%endif
+   -DWITH_MANPAGE=ON
 
 #%if_with system_lua
 #    -DWITH_SYSTEM_LUA=ON \
@@ -1244,6 +1250,10 @@ fi
 %endif
 
 %changelog
+* Sat Apr 28 2018 Alexey Shabalin <shaba@altlinux.ru> 12.2.5-alt1%ubt
+- 12.2.5
+- build with rdma support
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 12.2.4-alt1%ubt.1
 - (NMU) Rebuilt with python-3.6.4.
 
