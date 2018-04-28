@@ -13,7 +13,7 @@ BuildRequires(pre): rpm-build-python
 
 Name:           ttname
 Version:        1
-Release:        alt1_11
+Release:        alt2_11
 Summary:        CLI font metadata editor
 BuildArch:      noarch
 
@@ -24,6 +24,8 @@ Source0:        https://files.pythonhosted.org/packages/source/t/%{name}/%{name}
 Patch0:         0001-fix-output-with-unicode-characters.patch
 Patch1:         0002-cope-with-fonttools-3.1.0.patch
 Patch2:         0003-deal-better-with-stdout-as-output.patch
+
+Patch10:        ttname-alt-build.patch
 
 BuildRequires:  python-devel python-module-setuptools
 
@@ -51,6 +53,8 @@ TrueType and OpenType fonts.
 %patch1 -p1 -b .fonttools25
 %patch2 -p1 -b .stdout
 
+%patch10 -p2
+
 %build
 %{__python} setup.py build
 
@@ -68,6 +72,9 @@ nosetests -vx
 %doc LICENSE
 
 %changelog
+* Sat Apr 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1-alt2_11
+- Fixed build.
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1-alt1_11
 - update to new release by fcimport
 
