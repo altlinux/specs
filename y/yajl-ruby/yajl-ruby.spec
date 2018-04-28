@@ -3,8 +3,8 @@
 %define pkgname yajl-ruby
 
 Name: %pkgname
-Version: 1.3.1
-Release: alt1.2
+Version: 1.4.0
+Release: alt1
 
 Summary: YAJL C Bindings for Ruby
 Group: Development/Ruby
@@ -53,6 +53,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sat Apr 28 2018 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt1
+- New version.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1.2
 - Rebuild with Ruby 2.5.1
 
