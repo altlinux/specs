@@ -1,8 +1,11 @@
+%define _unpackaged_files_terminate_build 1
+
 %define lib_name libpfs
 %def_without octave
+%def_without opencv
 
 Name: pfstools
-Version: 2.0.6
+Version: 2.1.0
 Release: alt1
 
 Summary: High Dynamic Range (HDR) Images and Video manipulation tools
@@ -10,9 +13,16 @@ License: GPLv2+
 Group: Graphics
 
 Url: http://pfstools.sourceforge.net/
-Source: http://downloads.sourceforge.net/pfstools/pfstools-%version.tar.gz
+Source: %name-%version.tar
 
-BuildRequires: gcc-c++ libImageMagick-devel libfftw3-devel libfreeglut-devel libgeos-devel libhdf5-devel libjpeg-devel liblapack-devel libncurses-devel libnetpbm-devel libreadline-devel openexr-devel cmake libgsl-devel libexif-devel libopencv-devel libgomp6-devel libtbb-devel
+BuildRequires: gcc-c++ libImageMagick-devel libfftw3-devel libfreeglut-devel libgeos-devel
+BuildRequires: libjpeg-devel liblapack-devel libncurses-devel libnetpbm-devel
+BuildRequires: libreadline-devel openexr-devel cmake libgsl-devel libexif-devel
+BuildRequires: libgomp-devel libtbb-devel zlib-devel
+
+%if_with opencv
+BuildRequires: libopencv-devel-static
+%endif
 
 %if_with octave
 BuildRequires: octave-devel
@@ -21,7 +31,7 @@ BuildRequires: octave-devel
 # Optimized out build requirements we want to add as safety belt
 # (so pfstools build will not fail if due to changes in other packages
 # deps listed below packages will not be pulled for build)
-BuildRequires: libqt4-core libqt4-devel libqt4-gui libtiff-devel
+BuildRequires: qt5-base-devel libtiff-devel
 BuildRequires: gcc-fortran
 BuildRequires(pre): rpm-macros-cmake
 
@@ -68,17 +78,18 @@ channels or luminance channels in pfs stream using Octave.
 %setup
 
 %build
-export CFLAGS="$(pkg-config hdf5-seq --cflags)"
-export CXXFLAGS="$CFLAGS"
-%cmake -DBUILD_SHARED_LIBS=ON -DLIB_DIR=%{_lib}
-%make -C BUILD
+%cmake \
+	-DBUILD_SHARED_LIBS=ON
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmakeinstall_std
 
 %files
 %_bindir/pfsabsolute
+%if_with opencv
 %_bindir/pfsalign
+%endif
 %_bindir/pfscolortransform
 %_bindir/pfshdrcalibrate
 %_bindir/pfsinhdrgen
@@ -129,10 +140,15 @@ export CXXFLAGS="$CFLAGS"
 %_bindir/pfsv
 %_bindir/jpeg2hdrgen
 
+%_bindir/pfsinyuv
+%_bindir/pfsoutyuv
+
 %_datadir/pfstools
 
 %_man1dir/pfsabsolute.*
+%if_with opencv
 %_man1dir/pfsalign.*
+%endif
 %_man1dir/pfscolortransform.*
 %_man1dir/pfshdrcalibrate.*
 %_man1dir/pfsinhdrgen.*
@@ -183,6 +199,9 @@ export CXXFLAGS="$CFLAGS"
 %_man1dir/pfsglview.*
 %_man1dir/pfsview.*
 
+%_man1dir/pfsinyuv.*
+%_man1dir/pfsoutyuv.*
+
 %files -n %lib_name
 %_libdir/*.so.*
 
@@ -204,6 +223,9 @@ export CXXFLAGS="$CFLAGS"
 %endif
 
 %changelog
+* Sat Apr 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt1
+- Updated to upstream version 2.1.0.
+
 * Fri Aug 18 2017 Anton Farygin <rider@altlinux.ru> 2.0.6-alt1
 - new version
 
