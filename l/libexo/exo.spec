@@ -2,7 +2,7 @@
 
 Name: lib%_name
 Version: 0.10.7
-Release: alt1
+Release: alt2
 
 Summary: Extension library to Xfce
 Summary (ru_RU.UTF-8): Библиотека расширений Xfce
@@ -26,6 +26,8 @@ Requires: libgtk+2-common
 
 # There is no longer python bindings for exo.
 Conflicts: python-module-exo < 0.7.0
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Libexo is an extension library to Xfce, developed by os-cillation.
@@ -109,6 +111,10 @@ make check
 %_datadir/gtk-doc/html/%{_name}*
 
 %changelog
+* Sat Apr 28 2018 Mikhail Efremov <sem@altlinux.org> 0.10.7-alt2
+- Added helper New Moon Web browser (by Anton Midyukov)
+    (closes: #34637).
+
 * Mon Sep 14 2015 Mikhail Efremov <sem@altlinux.org> 0.10.7-alt1
 - Updated to 0.10.7.
 
