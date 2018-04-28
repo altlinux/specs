@@ -1,15 +1,13 @@
 Name: tree
 Version: 1.0.0
-Release: alt4.qa1
+Release: alt5
 Epoch: 1
 
 Summary: A utility which displays a tree view of the contents of directories
 Group: File tools
 License: GPL
 URL: www.altlinux.org
-Source: %name-%version.tar.bz2
-
-Packager: Stanislav Ievlev <inger@altlinux.ru>
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Tue Mar 30 2004
 BuildRequires: help2man
@@ -29,13 +27,16 @@ specified directories in a tree-like format.
 %make_build
 
 %install
-%make_install DESTDIR=$RPM_BUILD_ROOT install
+%makeinstall_std
 
 %files
 %_bindir/*
 %_mandir/man?/*
 
 %changelog
+* Sat Apr 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.0.0-alt5
+- Fixed build with new toolchain.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.0.0-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
