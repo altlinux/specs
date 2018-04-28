@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        65.0.3325.181
+Version:        66.0.3359.117
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -74,8 +74,7 @@ Patch019: 0019-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-only.patch
 Patch020: 0020-ALT-allow-_FORTIFY_SOURCE-for-clang.patch
 Patch021: 0021-FEDORA-Fix-gcc-round.patch
 Patch022: 0022-FEDORA-Fix-memcpy.patch
-Patch023: 0023-GENTOO-Fix-build-with-glibc-2.27.patch
-Patch024: 0024-GENTOO-Add-missing-stdint-include.patch
+Patch023: 0023-GENTOO-chromium-ffmpeg-r1.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -228,7 +227,6 @@ tar -xf %SOURCE1
 %patch021 -p1
 %patch022 -p1
 %patch023 -p1
-%patch024 -p1
 ### Finish apply patches
 
 # Enable support for the Widevine CDM plugin
@@ -236,6 +234,13 @@ tar -xf %SOURCE1
 # (Version string doesn't seem to matter so let's go with "Pinkie Pie")
 sed '14i#define WIDEVINE_CDM_VERSION_STRING "Pinkie Pie"' -i third_party/widevine/cdm/stub/widevine_cdm_version.h
 echo > "third_party/adobe/flash/flapper_version.h"
+
+# lost sources
+for f in .rpm/blinkpy-common/*.py; do
+	t="third_party/blink/tools/blinkpy/common/${f##*/}"
+	[ -f "$t" ] || install -D "$f" "$t"
+done
+touch third_party/blink/tools/blinkpy/__init__.py
 
 # No cheats inside!
 sed -i \
@@ -468,6 +473,44 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Thu Apr 19 2018 Alexey Gladkov <legion@altlinux.ru> 66.0.3359.117-alt1
+- New version (66.0.3359.117).
+- Security fixes:
+  - CVE-2018-6085: Use after free in Disk Cache.
+  - CVE-2018-6086: Use after free in Disk Cache.
+  - CVE-2018-6087: Use after free in WebAssembly.
+  - CVE-2018-6088: Use after free in PDFium.
+  - CVE-2018-6089: Same origin policy bypass in Service Worker.
+  - CVE-2018-6090: Heap buffer overflow in Skia.
+  - CVE-2018-6091: Incorrect handling of plug-ins by Service Worker.
+  - CVE-2018-6092: Integer overflow in WebAssembly.
+  - CVE-2018-6093: Same origin bypass in Service Worker.
+  - CVE-2018-6094: Exploit hardening regression in Oilpan.
+  - CVE-2018-6095: Lack of meaningful user interaction requirement before file upload.
+  - CVE-2018-6096: Fullscreen UI spoof.
+  - CVE-2018-6097: Fullscreen UI spoof.
+  - CVE-2018-6098: URL spoof in Omnibox.
+  - CVE-2018-6099: CORS bypass in ServiceWorker.
+  - CVE-2018-6100: URL spoof in Omnibox.
+  - CVE-2018-6101: Insufficient protection of remote debugging prototol in DevTools .
+  - CVE-2018-6102: URL spoof in Omnibox.
+  - CVE-2018-6103: UI spoof in Permissions.
+  - CVE-2018-6104: URL spoof in Omnibox.
+  - CVE-2018-6105: URL spoof in Omnibox.
+  - CVE-2018-6106: Incorrect handling of promises in V8.
+  - CVE-2018-6107: URL spoof in Omnibox.
+  - CVE-2018-6108: URL spoof in Omnibox.
+  - CVE-2018-6109: Incorrect handling of files by FileAPI.
+  - CVE-2018-6110: Incorrect handling of plaintext files via file:// .
+  - CVE-2018-6111: Heap-use-after-free in DevTools.
+  - CVE-2018-6112: Incorrect URL handling in DevTools.
+  - CVE-2018-6113: URL spoof in Navigation.
+  - CVE-2018-6114: CSP bypass.
+  - CVE-2018-6115: SmartScreen bypass in downloads.
+  - CVE-2018-6116: Incorrect low memory handling in WebAssembly.
+  - CVE-2018-6117: Confusing autofill settings.
+  - CVE-2018-6084: Incorrect use of Distributed Objects in Google Software Updater on MacOS.
+
 * Fri Mar 30 2018 Alexey Gladkov <legion@altlinux.ru> 65.0.3325.181-alt1
 - New version (65.0.3325.181).
 
