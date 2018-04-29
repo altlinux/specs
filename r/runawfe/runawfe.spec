@@ -1,6 +1,6 @@
 Name: runawfe
 Version: 4.3.0
-Release: alt8
+Release: alt9
 
 Summary: Runawfe
 
@@ -359,6 +359,9 @@ useradd -d %runadir -r -s %_sbindir/%name %runauser >/dev/null 2>&1 || :
 %attr(755,root,root) %_bindir/runawfe-notifier
 
 %changelog
+* Sun Apr 29 2018 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt9
+- Some fixes 
+
 * Mon Mar 05 2018 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt8
 - Updated to 4.3.0 code and wildfly
 
