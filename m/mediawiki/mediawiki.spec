@@ -1,8 +1,8 @@
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.29
+%define major 1.30
 
 Name: mediawiki
-Version: %major.2
+Version: %major.0
 Release: alt2
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
@@ -37,7 +37,7 @@ BuildPreReq: apache2-devel
 Requires: %name-common = %version-%release
 Requires: %name-apache2 %name-mysql
 
-Requires: php5-dom ImageMagick
+Requires: php7-dom php7-fileinfo php7-mbstring ImageMagick
 
 %description
 MediaWiki is the software used for Wikipedia and the other Wikimedia
@@ -60,7 +60,7 @@ If you wish pure %name, install only %name-common package.
 Summary: Common files for %name
 Group: Networking/WWW
 PreReq: webserver-common
-Requires: php-engine >= 5.5.9
+Requires: php7-libs >= 7.0
 Requires: diffutils
 
 AutoProv:no
@@ -126,7 +126,7 @@ Requires: %name-common = %version-%release
 Requires: apache2-common >= 2.2.0
 Requires: %_initdir/%apache2_dname
 Requires: apache2-httpd-prefork
-Requires: apache2-mod_php5 >= 5
+Requires: apache2-mod_php7 >= 7
 
 %description -n %name-apache2
 Install this package, if you wish to run %name under apache2 webserver
@@ -136,7 +136,7 @@ Install this package, if you wish to run %name under apache2 webserver
 Summary: Virtual package for mysql requires for %name
 Group: Networking/WWW
 Requires: %name-common = %version-%release
-Requires: php5-mysql mysql-server >= 5.0.3
+Requires: php7-mysqli
 
 %description -n %name-mysql
 Install this package, if you wish to run %name with MySQL database
@@ -146,7 +146,7 @@ Install this package, if you wish to run %name with MySQL database
 Summary: Virtual package for postgresql requires for %name
 Group: Networking/WWW
 Requires: %name-common = %version-%release
-Requires: php5-pgsql postgresql-server >= 8.1
+Requires: php7-pgsql
 
 %description -n %name-postgresql
 Install this package, if you wish to run %name with PostgreSQL database
@@ -308,6 +308,12 @@ exit 0
 
 
 %changelog
+* Sun Apr 29 2018 Vitaly Lipatov <lav@altlinux.ru> 1.30.0-alt2
+- switch to php7 using
+
+* Wed Mar 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.30.0-alt1
+- new version 1.30.0 (with rpmrb script)
+
 * Thu Mar 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.29.2-alt2
 - NMU: added conflict with mediawiki-extensions-PdfHandler
   (included in 1.29) (closes: #34708)
