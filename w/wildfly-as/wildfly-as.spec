@@ -1,6 +1,6 @@
 Name: wildfly-as
 Version: 10.1.0
-Release: alt2
+Release: alt3
 
 Summary: wildfly-as - Wildfly Application Server
 
@@ -15,7 +15,7 @@ Source2: wildfly-as.service
 Packager: Konstantinov Aleksey <kana@altlinux.org>
 
 #PreReq:
-Requires: java >= 1.8
+Requires: java-devel >= 1.8
 AutoReq: yes, nomingw, nomingw32
 Requires(post): %post_service
 Requires(preun): %preun_service
@@ -107,6 +107,9 @@ useradd -d %wildflydir -r -s /bin/nologin %wildflyuser >/dev/null 2>&1 || :
 %attr(644,root,root) /lib/systemd/system/wildfly-as.service
 
 %changelog
+* Sun Apr 29 2018 Konstantinov Aleksey <kana@altlinux.org> 10.1.0-alt3
+- java-devel as requirements
+
 * Mon Mar 05 2018 Konstantinov Aleksey <kana@altlinux.org> 10.1.0-alt2
 - 10.0.0 
 
