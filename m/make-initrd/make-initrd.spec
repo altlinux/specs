@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.0.7
+Version: 2.0.8
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -17,9 +17,10 @@ BuildRequires: bzlib-devel
 BuildRequires: liblzma-devel
 BuildRequires: libzstd-devel
 
+Provides: make-initrd(crc32c) = 1
+
 Provides: mkinitrd = 2:%version-%release
 Provides: make-initrd2 = %version-%release
-
 Obsoletes: make-initrd2
 
 Requires: sh libshell make sed module-init-tools coreutils findutils grep glibc-utils
@@ -34,7 +35,8 @@ Requires: libkmod >= 8-alt1
 # ipconfig -q: kinit-utils-1.5.15-alt3
 # run-init -e: kinit-utils-1.5.17-alt2
 # ipconfig -D: kinit-utils-1.5.25-alt2
-Requires: kinit-utils >= 1.5.25-alt2
+# halt, replace, showenv moved from kinit-utils-1.5.25-alt5
+Requires: kinit-utils >= 1.5.25-alt5
 
 # Move /dev from initrd to the real system.
 # 167: udevadm info --run
@@ -196,10 +198,39 @@ fi
 %files mdadm
 %_datadir/%myname/features/mdadm
 
+%ifarch %ix86 x86_64
 %files ucode
 %_datadir/%myname/features/ucode
+%endif
 
 %changelog
+* Sun Apr 29 2018 Alexey Gladkov <legion@altlinux.ru> 2.0.8-alt1
+- Add wrapper to read modalias with and without new line at the end.
+- Add new way to add kernel modules into initramfs.
+- Add new way how to put programs into initrd.
+- Add hidden ext4 dependency (ALT#34865).
+- Output information about image size.
+- Require kinit-utils >= 1.5.25-alt5 (ALT#34457).
+- Runtime changes:
+  + Add timeout after all events to avoid race conditions.
+  + Allow parameter to have more than one name in /proc/cmdline.
+  + Load kernel parameters from all system configuration files.
+- LUKS feature changes:
+  + Make luks-dev an array.
+- Ucode feature changes:
+  + Add optional dependency to compress feature.
+- Utilities:
+  + depinfo: Add softdeps to dependencies.
+- Command arguments:
+  + make-initrd: Check for unknown features in config.
+  + bug-report: Improve bug report creation.
+  + bug-report: Add kernel modules dependencies.
+- New:
+  + Add modules-filesystem feature.
+  + Add modules-network feature.
+- Old:
+  + Remove lxc feature.
+
 * Fri Jan 12 2018 Alexey Gladkov <legion@altlinux.ru> 2.0.7-alt1
 - Add initrd-extract to split initramfs.
 - Add feature to save information about generated initramfs.
