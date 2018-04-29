@@ -2,7 +2,7 @@
 
 Name: pcmanfm
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: PCMan File Manager
 License: GPL
@@ -20,6 +20,9 @@ BuildRequires: libfm-devel >= 1.2.0
 BuildRequires: libgio-devel
 
 BuildRequires: libdbus-glib-devel libstartup-notification-devel libgamin-devel intltool libmenu-cache-devel menu-cache
+
+# See bug 34867
+Requires: menu-cache lxde-freedesktop-menu
 
 %description
 Features:
@@ -71,6 +74,9 @@ ln -s %name %buildroot%_bindir/pcmanfm2
 %_includedir/*
 
 %changelog
+* Sun Apr 29 2018 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt2
+- Added missing requires: menu-cache, lxde-freedesktop-menu (Closes: 34867)
+
 * Tue Apr 24 2018 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - new version 1.3.0
 
