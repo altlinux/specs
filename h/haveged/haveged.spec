@@ -1,11 +1,12 @@
 Name: haveged
 Version: 1.9.2
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: System/Kernel and hardware
 Summary: Feed entropy into random pool
 Url: http://www.issihosts.com/haveged/
 Source0: http://www.issihosts.com/haveged/haveged-%version.tar.gz
+Source1: haveged.service
 
 %description
 The haveged daemon feeds the linux entropy pool with random
@@ -39,8 +40,13 @@ make check
 mkdir -p %buildroot%_initdir
 ln -s rc.d/init.d %buildroot/etc/init.d
 %makeinstall
-#install -D -m0755 init.d/haveged %buildroot%_initdir/%name
-#install -D -m0644 init.d/havege.service  %buildroot%_unitdir/%name.service
+install -pm0644 -D %SOURCE1 %buildroot%_unitdir/haveged.service
+
+%post
+%post_service haveged
+
+%preun
+%preun_service haveged
 
 %files
 %doc README
@@ -48,7 +54,7 @@ ln -s rc.d/init.d %buildroot/etc/init.d
 %_sbindir/haveged
 %_initdir/%name
 %_libdir/*.so.*
-#_unitdir/haveged.service
+%_unitdir/haveged.service
 
 %files devel
 %_man3dir/libhavege.3*
@@ -58,6 +64,9 @@ ln -s rc.d/init.d %buildroot/etc/init.d
 %_libdir/*.so
 
 %changelog
+* Mon Apr 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.9.2-alt2
+- add systemd unit file
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 1.9.2-alt1
 - Autobuild version bump to 1.9.2
 
