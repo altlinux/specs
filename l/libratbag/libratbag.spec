@@ -1,9 +1,9 @@
-%define git 3bc3da9
+%define git 7fe4d6f
 %def_enable tests
 
 Name: libratbag
 Version: 0.9.901
-Release: alt0.1
+Release: alt0.2
 Summary: Programmable input device library
 Group: System/Libraries
 License: MIT
@@ -57,6 +57,7 @@ Mice configuration tools using libratbag.
 %package data
 Summary: Libratbag mice configuration data
 Group: System/Configuration/Hardware
+BuildArch: noarch
 
 %description data
 Libratbag mice configuration data.
@@ -110,6 +111,10 @@ subst 's,@UPSTREAM_GIT_SHA1@,%git,' meson.build
 %_datadir/libratbag
 
 %changelog
+* Mon Apr 30 2018 L.A. Kostis <lakostis@altlinux.ru> 0.9.901-alt0.2
+- GIT 7fe4d6f.
+- build -data as noarch.
+
 * Thu Jan 04 2018 L.A. Kostis <lakostis@altlinux.ru> 0.9.901-alt0.1
 - Updated to v0.9.901.
 - Added SteelSeries Rival 95 mice (very similar to Rival 310 but without any LEDs).

@@ -1,8 +1,8 @@
-%define git d243325
+%define git 5f6ed20
 
 Name: piper
 Version: 0.2.900
-Release: alt0.2.git%git
+Release: alt0.3.git%git
 Summary: GTK+ application to configure gaming mice using ratbagd
 Group: System/Configuration/Hardware
 License: GPL2
@@ -44,6 +44,9 @@ get to see a pretty mouse trap).
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Mon Apr 30 2018 L.A. Kostis <lakostis@altlinux.ru> 0.2.900-alt0.3.git5f6ed20
+- GIT 5f6ed20.
+
 * Thu Jan 04 2018 L.A. Kostis <lakostis@altlinux.ru> 0.2.900-alt0.2.gitd243325
 - GIT d243325.
 
