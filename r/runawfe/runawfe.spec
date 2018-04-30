@@ -1,6 +1,6 @@
 Name: runawfe
 Version: 4.3.0
-Release: alt9
+Release: alt10
 
 Summary: Runawfe
 
@@ -78,7 +78,7 @@ web interface with tasklist, form player, graphical process designer, bots and m
 
 %package server
 Summary: Runawfe server
-Requires: wildfly-as >= 10.1.0-alt1
+Requires: wildfly-as >= 10.1.0-alt1 gksu
 License: LGPL
 Group: Office
 Url: http://sourceforge.net/projects/runawfe/
@@ -359,6 +359,9 @@ useradd -d %runadir -r -s %_sbindir/%name %runauser >/dev/null 2>&1 || :
 %attr(755,root,root) %_bindir/runawfe-notifier
 
 %changelog
+* Mon Apr 30 2018 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt10
+- Added dependency
+
 * Sun Apr 29 2018 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt9
 - Some fixes 
 
