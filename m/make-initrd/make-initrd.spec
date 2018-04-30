@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.0.8
+Version: 2.0.9
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -204,6 +204,13 @@ fi
 %endif
 
 %changelog
+* Mon Apr 30 2018 Alexey Gladkov <legion@altlinux.ru> 2.0.9-alt1
+- Ucode feature changes:
+  + Allow specify cpu vendor, cpu family and put all microcode
+    into image
+- Utilities:
+  + depinfo: Fix firmware showing
+
 * Sun Apr 29 2018 Alexey Gladkov <legion@altlinux.ru> 2.0.8-alt1
 - Add wrapper to read modalias with and without new line at the end.
 - Add new way to add kernel modules into initramfs.
