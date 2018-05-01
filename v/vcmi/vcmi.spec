@@ -1,8 +1,6 @@
-%set_verify_elf_method unresolved=relaxed
-
 Name: vcmi
 Version: 0.99
-Release: alt2
+Release: alt3
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
 Summary(ru_RU.UTF-8): Open-source движок для игры HMM3:WoG
@@ -11,10 +9,34 @@ Group: Games/Strategy
 URL: http://wiki.vcmi.eu/index.php?title=Main_Page
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
-Patch: remove_avconv_requires.patch
-BuildPreReq: cmake rpm-macros-cmake gcc-c++
-
-BuildRequires: doxygen boost-devel boost-filesystem-devel boost-locale-devel boost-program_options-devel boost-asio-devel boost-interprocess-devel gcc-c++ libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libminizip-devel pkgconfig(libavcodec) pkgconfig(libavdevice) pkgconfig(libavformat) pkgconfig(libavutil) pkgconfig(libpostproc) pkgconfig(libswscale) pkgconfig(libavresample) qt5-base-devel zlib-devel
+Patch1: vcmi-boost-1.66.patch
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++
+BuildRequires: doxygen
+BuildRequires: boost-devel
+BuildRequires: boost-filesystem-devel
+BuildRequires: boost-locale-devel
+BuildRequires: boost-program_options-devel
+BuildRequires: boost-asio-devel
+BuildRequires: boost-interprocess-devel
+BuildRequires: pkgconfig(libavcodec)
+BuildRequires: pkgconfig(libavdevice)
+BuildRequires: pkgconfig(libavformat)
+BuildRequires: pkgconfig(libavutil)
+BuildRequires: pkgconfig(libpostproc)
+BuildRequires: pkgconfig(libswscale)
+BuildRequires: pkgconfig(libavresample)
+BuildRequires: pkgconfig(libswresample)
+BuildRequires: pkgconfig(libavfilter)
+BuildRequires: pkgconfig(fuzzylite)
+BuildRequires: pkgconfig(minizip)
+BuildRequires: pkgconfig(Qt5Network)
+BuildRequires: pkgconfig(Qt5Widgets)
+BuildRequires: pkgconfig(sdl2)
+BuildRequires: pkgconfig(SDL2_image)
+BuildRequires: pkgconfig(SDL2_mixer)
+BuildRequires: pkgconfig(SDL2_ttf)
+BuildRequires: pkgconfig(zlib)
 
 Requires: ffmpeg
 
@@ -49,31 +71,34 @@ VCMI это фанатский проект с открытым исходным
 
 %prep
 %setup -q
-%patch -p1
+%patch1 -p1
+    
+%cmake -DLIB_DIR=%_lib/%name \
+       -DCMAKE_INSTALL_LIBDIR=%_lib \
+       -DCMAKE_SKIP_RPATH=OFF \
+       -DENABLE_SDL2=ON
 
-%cmake_insource \
-	-DCMAKE_SKIP_RPATH=OFF \
-	-DENABLE_SDL2=ON \
-	-DENABLE_TEST=0
-	
-%make_build
+%cmake_build
 
 %install
-%makeinstall_std
-mv %buildroot/%_libdir/%name/libvcmi.so %buildroot/%_libdir/
+%cmakeinstall_std
+mv %buildroot/%_libdir/%name/libvcmi.so %buildroot/%_libdir/libvcmi.so
+rm -f %buildroot%_libdir/*.a
 
 %files
-%doc AUTHORS ChangeLog README.linux
-%_bindir/*
-%_libdir/libvcmi.so
-%_libdir/%name
-%_datadir/%name
-%_desktopdir/*
-%_datadir/icons/*/*/apps/*
-%exclude %_libdir/*.a
-%exclude %_includedir/fl
+%doc README.md README.linux AUTHORS ChangeLog
+%_bindir/%{name}*
+%_datadir/%name/
+%_desktopdir/*.desktop
+%_iconsdir/hicolor/*/apps/*.png
+%_libdir/lib%name.so
+%_libdir/%name/
 
 %changelog
+* Tue May 01 2018 Anton Midyukov <antohami@altlinux.org> 0.99-alt3
+- Rebuilt with boost 1.66
+- Update buildrequires
+
 * Wed Jun 07 2017 Anton Midyukov <antohami@altlinux.org> 0.99-alt2
 - Rebuild with ffmpeg.
 
