@@ -1,8 +1,8 @@
 %define upstreamname lxterminal
-%define gtkver 2
+%define gtkver 3
 Name: lxde-lxterminal
 Version: 0.3.1
-Release: alt2
+Release: alt3
 
 Summary: Desktop-independent VTE-based terminal emulator for LXDE
 License: GPLv2+
@@ -14,7 +14,12 @@ Packager: LXDE Development Team <lxde at packages.altlinux.org>
 Source: %name-%version.tar
 Patch: lxterminal-0-1-11-f10-true.patch
 
-BuildPreReq: libgtk+%gtkver-devel docbook-dtds docbook-style-xsl xsltproc libvte-devel intltool desktop-file-utils pkgconfig(glib-2.0) pkgconfig(x11) ImageMagick-tools
+BuildRequires: libgtk+%gtkver-devel docbook-dtds docbook-style-xsl xsltproc intltool desktop-file-utils pkgconfig(glib-2.0) pkgconfig(x11) ImageMagick-tools
+%if %gtkver==3
+BuildRequires: libvte3-devel
+%else
+BuildRequires: libvte-devel
+%endif
 
 %description
 %summary  without any unnecessary dependency (All instances share the same
@@ -26,9 +31,10 @@ process to reduce memory usage)
 
 %build
 %autoreconf
-    %configure --enable-man \ 
+%configure \
+    --enable-man \
 %if %gtkver==3
-               --enable-gtk3
+    --enable-gtk3
 %endif
 
 %make_build
@@ -56,6 +62,9 @@ done
 %_iconsdir/hicolor/*/apps/%upstreamname.png
 
 %changelog
+* Tue May 01 2018 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt3
+- rebuilt with gtk3, vte3
+
 * Thu Mar 22 2018 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt2
 - Fix buildrequires
 
