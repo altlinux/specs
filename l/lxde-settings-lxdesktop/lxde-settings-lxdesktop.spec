@@ -3,7 +3,7 @@
 %define theme_fullname lxde-settings-%theme_name
 Name: %theme_fullname
 Version: 0.3
-Release: alt4
+Release: alt5
 Packager: LXDE Development Team <lxde at packages.altlinux.org>
 BuildArch: noarch
 
@@ -52,6 +52,9 @@ cp -r * %buildroot%_datadir/%theme_fullname
 %_sysconfdir/X11/profile.d/*.sh
 
 %changelog
+* Tue May 01 2018 Anton Midyukov <antohami@altlinux.org> 0.3-alt5
+- fix settings panel-plugin launchbar
+
 * Wed Apr 04 2018 Anton Midyukov <antohami@altlinux.org> 0.3-alt4
 - fix integration with file-roller
 
