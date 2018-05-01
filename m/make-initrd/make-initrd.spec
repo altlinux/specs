@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.0.9
+Version: 2.0.10
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -11,6 +11,7 @@ Group: System/Base
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
 BuildRequires: help2man
+BuildRequires: shellcheck
 BuildRequires: libkmod-devel
 BuildRequires: zlib-devel
 BuildRequires: bzlib-devel
@@ -151,6 +152,9 @@ CPU microcode autoloading module for %name
 %install
 %make_install DESTDIR=%buildroot install
 
+%check
+%make verify
+
 %triggerin -- %name < 0.8.1-alt1
 c="%_sysconfdir/initrd.mk"
 if [ -s "$c" ] && ! grep -qs '^AUTODETECT[[:space:]]*=[[:space:]]*all[[:space:]]*' "$c"; then
@@ -204,6 +208,18 @@ fi
 %endif
 
 %changelog
+* Tue May 01 2018 Alexey Gladkov <legion@altlinux.ru> 2.0.10-alt1
+- Runtime changes:
+  + Fix printf format string
+- New feature:
+  + Add modules-nfs feature that contains a set of NFS modules
+  + Add modules-virtio feature that contains a set of virtio modules
+- Ucode feature changes:
+  + Fix syntax error
+- New:
+  + build: Add shell scripts verification using shellcheck
+  + build: Move common targets on top level
+
 * Mon Apr 30 2018 Alexey Gladkov <legion@altlinux.ru> 2.0.9-alt1
 - Ucode feature changes:
   + Allow specify cpu vendor, cpu family and put all microcode
