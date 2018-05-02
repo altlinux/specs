@@ -1,9 +1,10 @@
+%set_verify_elf_method unresolved=relaxed
+
 # TODO:fix build Python bindings
-%def_disable python
-%define  git_rev 509ce16
+%def_enable python
 
 Name: 	 gnucash
-Version: 2.6.20
+Version: 3.1
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
@@ -16,33 +17,48 @@ Url: 	 http://www.gnucash.org
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:  %name-%version.tar
+Source1: gtest.tar
 Source5: %name-README.RU
 Source7: conv_gnucash2.sh
 
+Patch: %name-%version-%release.patch
+Patch1: %name-alt-check-supported-gwenhywfar-version.patch
+Patch2: %name-alt-fix-rpath.patch
+
 AutoReq: yes, noperl
 
-BuildRequires: doxygen graphviz guile18-devel intltool libglade-devel
-BuildRequires: libgnomeoffice-devel libgnomeui-devel libgtkhtml3-devel
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++
+BuildRequires: libgtk+3-devel
+BuildRequires: doxygen graphviz guile22-devel intltool libglade-devel
+BuildRequires: libgwenhywfar-devel libgwenhywfar-gtk3
 BuildRequires: libofx-devel libreadline-devel slib-guile
-BuildRequires: libGConf-devel
+BuildRequires: libdconf-devel
 BuildRequires: libdbi-devel
 BuildRequires: libdbi-drivers-devel
 BuildRequires: libdbi-drivers-dbd-sqlite
 BuildRequires: libdbi-drivers-dbd-mysql
 BuildRequires: libdbi-drivers-dbd-pgsql
-#if_disabled goffice_internal
-BuildPreReq: libgnomeoffice-devel
-#endif
 BuildRequires: swig
+BuildRequires: libexpat-devel
+BuildRequires: libpixman-devel
+BuildRequires: libdrm-devel
+BuildRequires: xsltproc
 BuildRequires: zlib-devel
 BuildRequires: libxslt-devel
+BuildRequires: boost-locale-devel boost-filesystem-devel
 BuildRequires: aqbanking-devel
-BuildRequires: libwebkitgtk2-devel
+BuildRequires: libgmock-devel libgtest-devel
+BuildRequires: libwebkit2gtk-devel
 %if_enabled python
 BuildRequires: python-devel
 %endif
+BuildRequires: perl-podlators
+BuildRequires: perl-Date-Manip
 
-Requires: lib%name = %version-%release
+Requires: %{name}-program = %EVR
+Requires: %{name}-quotes = %EVR
+Requires: %{name}-docs
 Requires: slib-guile
 Requires: dconf
 
@@ -60,6 +76,18 @@ GnuCash -- это личный финансовый менеджер. Книга
 даже курсы валют. Интерфейс программы разработан простым и
 лёгким в использовании, но в то же время применяется
 принцип двойной записи для обеспечения сведения баланса.
+
+%package program
+Summary: Program of GnuCash
+Summary(ru_RU.UTF8): GnuCash (программа)
+Group: Office
+Requires: lib%name = %EVR
+
+%description program
+Executable files of GnuCash without documentation.
+
+%description program -l ru_RU.UTF8
+Исполняемые файлы GnuCash без документации.
 
 %package -n lib%name-devel
 Group: Development/C
@@ -82,7 +110,6 @@ Group: System/Libraries
 %description -n lib%name
 This package provides libraries to use gnucash.
 
-
 %description -n lib%name -l ru_RU.UTF8
 Пакет предоставляет библиотеки, используемые gnucash.
 
@@ -93,42 +120,29 @@ Requires: %name
 Requires: perl-Date-Manip perl-Finance-Quote
 
 %description quotes
-Virtula package that install needed perl modules for quote's online
+Virtual package that install needed perl modules for quote's online
 fetch and update.
 
 %prep
 %setup -q
+%patch -p1
+%patch1 -p1
+%patch2 -p1
+tar xf %SOURCE1
 
 %build
-%autoreconf
-%add_optflags -Wno-error=deprecated-declarations -Wno-format-truncation
-
-%if_enabled python
-sed -i 's|get_python_lib(0|get_python_lib(1|g' configure
-export PYTHON=/usr/bin/python
-%endif
-
-# Print fake revision to build from VCS
-echo -e '#!/bin/sh\ntest $1 = "-r" && echo "%git_rev"\ntest $1 = "-t" && echo "git"\nexit 0' > util/gnc-vcs-info
-
-%configure \
-	   --enable-ofx \
-	   --enable-aqbanking \
-	   --with-html-engine=webkit \
-	   --enable-locale-specific-tax \
-	   --enable-dbi \
-%if_enabled python
-	   --enable-python \
-%endif
-	   --disable-static
-
-%make_build
-#ifdef python
-#  PYTHON_CPPFLAGS="$(pkg-config python --cflags)"
-#endif
+%cmake \
+       -DCMAKE_SKIP_RPATH=OFF \
+       -DCMAKE_SKIP_INSTALL_RPATH=OFF \
+       -DCMAKE_INSTALL_RPATH:DIR=%_libdir/%name \
+       -DGMOCK_ROOT=`pwd`/gtest/googlemock \
+       -DGTEST_ROOT=`pwd`/gtest/googletest
+%cmake_build VERBOSE=1
 
 %install
-%makeinstall_std
+%cmakeinstall_std
+
+mv %buildroot%_libdir/lib* %buildroot%_libdir/gnucash/
 
 rm -rf %buildroot%_bindir/gnucash-valgrind \
        %buildroot%_libexecdir/%name/src/
@@ -137,35 +151,33 @@ rm -rf %buildroot%_bindir/gnucash-valgrind \
 
 install -m755 %SOURCE7 %buildroot%_bindir/conv_gnucash2.sh
 
-tar cfj ChangeLog.tar.bz2 ChangeLog*
+tar cfJ ChangeLog.tar.xz ChangeLog{,.????}
 
 rm -f %buildroot%_datadir/gnucash/gnome \
       %buildroot%_bindir/gnc-test-env \
-      %buildroot%_bindir/gnc-fq-update
+      %buildroot%_bindir/gnc-fq-update \
+      %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
+
+%files
 
 %files -n lib%name-devel
-%doc ChangeLog.*
 %_includedir/%name/
 
 %files -n lib%name
-%_libdir/lib*.so.*
 %dir %_libdir/%name/
-%_libdir/%name/lib*so*.0
-%_libdir/%name/*.la
-%_libdir/*.so
-%_libdir/%name/*.so
+%_libdir/%name/lib*.so
 
 # hbci отдельно
 #%exclude %_libdir/%name/libgncmod-hbci*
 
-%files -f %name.lang
-%doc AUTHORS ChangeLog.tar.bz2 HACKING NEWS README*
+%files program -f %name.lang
+%doc AUTHORS ChangeLog.tar.xz HACKING NEWS README*
 %doc doc/README.* doc/guile-hackers.txt
 %doc %_defaultdocdir/%name/
 %_bindir/*
 %config %_sysconfdir/%name
+%_libdir/%name/scm
 %_desktopdir/%name.desktop
-%_libexecdir/%name/overrides/
 %_datadir/%name/
 %doc %_man1dir/*
 %_iconsdir/hicolor/*/apps/*.png
@@ -179,6 +191,14 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Mon May 21 2018 Andrey Cherepanov <cas@altlinux.org> 3.1-alt1
+- New version.
+- Make subpackage gnucash for program files without documentation. gnucash
+  is now the metapackage and it requires gnucash-docs (ALT #21478).
+
+* Mon Apr 02 2018 Andrey Cherepanov <cas@altlinux.org> 3.0-alt1
+- New version.
+
 * Mon Apr 02 2018 Andrey Cherepanov <cas@altlinux.org> 2.6.20-alt1
 - New version.
 
