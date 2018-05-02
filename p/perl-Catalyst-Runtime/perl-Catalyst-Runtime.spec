@@ -7,11 +7,11 @@ BuildRequires: perl(Catalyst/Helper.pm) perl(Class/Accessor.pm) perl(Class/MOP/O
 # END SourceDeps(oneline)
 Name:           perl-Catalyst-Runtime
 Summary:        Catalyst Framework Runtime
-Version:        5.90117
+Version:        5.90118
 Release:        alt1
 License:        GPL+ or Artistic
 Group:          Development/Perl
-Source0:        http://www.cpan.org/authors/id/J/JJ/JJNAPIORK/Catalyst-Runtime-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/H/HA/HAARG/Catalyst-Runtime-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/Catalyst-Runtime/
 BuildArch:      noarch
 
@@ -177,7 +177,7 @@ make test
 make clean
 
 %files
-%doc Changes README.mkdn
+%doc Changes README
 %{perl_vendor_privlib}/*
 
 %files scripts
@@ -185,6 +185,9 @@ make clean
 %{_mandir}/man1/*
 
 %changelog
+* Wed May 02 2018 Igor Vlasenko <viy@altlinux.ru> 5.90118-alt1
+- automated CPAN update
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 5.90117-alt1
 - automated CPAN update
 
