@@ -1,23 +1,22 @@
+%define _unpackaged_files_terminate_build 1
 %filter_from_requires /^perl.Module.Compile.Ext.pm./d
-%define module_version 0.35
 %define module_name Module-Compile
 %filter_from_requires /^perl.Module.Compile.Ext.pm./d
 %filter_from_requires /^perl.Module.Compile.Ext.pm./d
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Carp.pm) perl(Data/Dumper.pm) perl(Digest/SHA1.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Path.pm) perl(Filter/Util/Call.pm) perl(LWP/Simple.pm) perl(MIME/Base64.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/Pod.pm) perl(Text/Diff.pm) perl(YAML.pm) perl(base.pm) perl(overload.pm)
+BuildRequires: perl(Carp.pm) perl(Data/Dumper.pm) perl(Digest/SHA1.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Path.pm) perl(Filter/Util/Call.pm) perl(LWP/Simple.pm) perl(MIME/Base64.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/Pod.pm) perl(Text/Diff.pm) perl(YAML.pm) perl(base.pm) perl(overload.pm) perl(Capture/Tiny.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.35
-Release: alt2
+Version: 0.37
+Release: alt1
 Summary: Perl Module Compilation
 Group: Development/Perl
 License: perl
 URL: https://github.com/ingydotnet/module-compile-pm
 
-Source0: http://cpan.org.ua/authors/id/I/IN/INGY/%{module_name}-%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/I/IN/INGY/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -33,7 +32,7 @@ loading a `.pm' file.
 
 
 %prep
-%setup -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -46,6 +45,9 @@ loading a `.pm' file.
 %perl_vendor_privlib/M*
 
 %changelog
+* Wed May 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
+- automated CPAN update
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0.35-alt2
 - to Sisyphus as perl-PDL dep
 
