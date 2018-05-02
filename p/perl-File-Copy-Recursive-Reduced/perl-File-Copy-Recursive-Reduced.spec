@@ -6,14 +6,14 @@ BuildRequires: perl(Capture/Tiny.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Copy.
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.003
-Release: alt2
+Version: 0.006
+Release: alt1
 Summary: Recursive copying of files and directories within Perl 5 toolchain
 Group: Development/Perl
 License: perl
 URL: http://thenceforward.net/perl/modules/File-Copy-Recursive-Reduced/
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/J/JK/JKEENAN/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JK/JKEENAN/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -37,6 +37,9 @@ described as being part of the Perl toolchain.
 %perl_vendor_privlib/F*
 
 %changelog
+* Wed May 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1
+- automated CPAN update
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.003-alt2
 - to Sisyphus as perl-Module-Build-XSUtil dep
 
