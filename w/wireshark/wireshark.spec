@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.5.1
+Version: 2.6.0
 Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -248,10 +248,10 @@ _EOF_
 %_datadir/%name
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
-%dir %_libdir/%name/plugins/2.5/
+%dir %_libdir/%name/plugins/2.6/
 %dir %_libdir/%name/extcap
 %_libdir/%name/extcap/*
-%_libdir/%name/plugins/2.5/*
+%_libdir/%name/plugins/2.6/*
 %_libdir/lib%name.so.*
 %_libdir/libwsutil.so.*
 %_libdir/libwscodecs.so.*
@@ -287,6 +287,9 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Wed May 02 2018 Anton Farygin <rider@altlinux.ru> 2.6.0-alt1%ubt
+- 2.6.0
+
 * Tue Apr 03 2018 Anton Farygin <rider@altlinux.ru> 2.5.1-alt1%ubt
 - 2.5.1
 
