@@ -1,6 +1,6 @@
 Name:           nftables
 Epoch:          1
-Version:        0.8.3
+Version:        0.8.4
 Release:        alt1
 Summary:        nftables is the project that aims to replace the existing {ip,ip6,arp,eb}tables framework
 Group:          System/Libraries
@@ -28,7 +28,7 @@ This library is currently used by nftables.
 %make_build
 
 %check
-#make check
+make check
 
 %install
 %makeinstall_std
@@ -37,15 +37,19 @@ mkdir -p %buildroot%_sysconfdir/nftables
 cp files/examples/* %buildroot%_sysconfdir/nftables/
 
 %files
-%doc COPYING TODO
+%doc COPYING
 #%%doc %_docdir/%name
 %dir %_sysconfdir/nftables
 %attr(644,root,root) %config %_sysconfdir/nftables/*
+%_libdir/lib%name.so.*
 %_sbindir/*
 %_man8dir/*
 
 
 %changelog
+* Wed May 02 2018 Alexei Takaseev <taf@altlinux.org> 1:0.8.4-alt1
+- Version 0.8.4
+
 * Sun Mar 04 2018 Alexei Takaseev <taf@altlinux.org> 1:0.8.3-alt1
 - Version 0.8.3
 - Remove dblatex from BR

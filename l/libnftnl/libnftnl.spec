@@ -1,5 +1,5 @@
 Name:           libnftnl
-Version:        1.0.9
+Version:        1.1.0
 Release:        alt1
 Summary:        Netfilter nf_tables infrastructure library
 Group:          System/Libraries
@@ -75,6 +75,9 @@ cp examples/.libs/* %buildroot%_sbindir/
 %_sbindir/*
 
 %changelog
+* Wed May 02 2018 Alexei Takaseev <taf@altlinux.org> 1.1.0-alt1
+- Version 1.1.0
+
 * Tue Jan 09 2018 Alexei Takaseev <taf@altlinux.org> 1.0.9-alt1
 - Version 1.0.9
 
