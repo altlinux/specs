@@ -6,14 +6,14 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IO/File.pm) p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.01
-Release: alt2
+Version: 1.02
+Release: alt1
 Summary: A pure perl BibTeX parser
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/B/BO/BORISV/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BO/BORISV/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/B*
 
 %changelog
+* Wed May 02 2018 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
+- automated CPAN update
+
 * Sat Jan 06 2018 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2
 - to Sisyphus as texlive dep
 
