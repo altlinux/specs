@@ -1,21 +1,22 @@
+%define _unpackaged_files_terminate_build 1
 %define module Crypt-OpenSSL-RSA
 
 Name: perl-%module
-Version: 0.28
-Release: alt4.1.1.1.1
+Version: 0.30
+Release: alt1
 
 Summary: RSA encoding and decoding, using the openSSL libraries
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: %module-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TODDR/%{module}-%{version}.tar.gz
 
 # Not autodetectable (required inside eval)
 Requires: perl-Crypt-OpenSSL-Bignum
 
 # Automatically added by buildreq on Sun Oct 09 2011
-BuildRequires: libssl-devel perl-Crypt-OpenSSL-Bignum perl-Crypt-OpenSSL-Random perl-devel
+BuildRequires: libssl-devel perl-Crypt-OpenSSL-Bignum perl-Crypt-OpenSSL-Random perl-devel perl(Crypt/OpenSSL/Guess.pm)
 
 %description
 Crypt::OpenSSL::RSA provides the ability to RSA encrypt strings which
@@ -23,7 +24,7 @@ are somewhat shorter than the block size of a key. It also allows for
 decryption, signatures and signature verification.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -32,11 +33,14 @@ decryption, signatures and signature verification.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README README.md
 %perl_vendor_archlib/Crypt
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Wed May 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt4.1.1.1.1
 - rebuild with new perl 5.26.1
 
