@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(ExtUtils/MakeM
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.1003
+Version: 1.1004
 Release: alt1
 Summary: Parse cpanfile
 Group: Development/Perl
@@ -46,6 +46,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Wed May 02 2018 Igor Vlasenko <viy@altlinux.ru> 1.1004-alt1
+- automated CPAN update
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.1003-alt1
 - automated CPAN update
 
