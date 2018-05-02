@@ -13,7 +13,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        52.7.3
+Version:        52.7.4
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -137,13 +137,6 @@ tar -xf %SOURCE2
 
 cp -f %SOURCE4 .mozconfig
 
-%ifnarch %{ix86} x86_64 armh
-echo "ac_add_options --disable-methodjit" >> .mozconfig
-echo "ac_add_options --disable-monoic" >> .mozconfig
-echo "ac_add_options --disable-polyic" >> .mozconfig
-echo "ac_add_options --disable-tracejit" >> .mozconfig
-%endif
-
 %build
 cd mozilla
 
@@ -166,6 +159,9 @@ MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fPIC -Wl,-z,relro -Wl,-z,now"
 
 # add -fno-delete-null-pointer-checks and -fno-inline-small-functions for gcc6
 MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-delete-null-pointer-checks -fno-inline-small-functions"
+%ifarch armh
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-schedule-insns"
+%endif
 
 # Mozilla builds with -Wall with exception of a few warnings which show up
 # everywhere in the code; so, don't override that.
@@ -199,11 +195,9 @@ export SHELL=/bin/sh
 # On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
 # however builds tend to fail on other arches when building in parallel.
 MOZ_SMP_FLAGS=-j1
-%ifarch %{ix86} x86_64
-[ "${NPROCS:+0}" -ge 2 ] && MOZ_SMP_FLAGS=-j2
-[ "${NPROCS:+0}" -ge 4 ] && MOZ_SMP_FLAGS=-j4
-[ "${NPROCS:+0}" -ge 6 ] && MOZ_SMP_FLAGS=-j6
-%endif
+[ "%__nprocs" -ge 2 ] && MOZ_SMP_FLAGS=-j2
+[ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
+[ "%__nprocs" -ge 6 ] && MOZ_SMP_FLAGS=-j6
 
 make -f client.mk \
 	MAKENSISU= \
@@ -328,6 +322,9 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Wed May 02 2018 Andrey Cherepanov <cas@altlinux.org> 52.7.4-alt1
+- New ESR version (52.7.4).
+
 * Mon Mar 26 2018 Andrey Cherepanov <cas@altlinux.org> 52.7.3-alt1
 - New ESR version (52.7.3)
 - Fixes:
