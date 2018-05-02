@@ -2,7 +2,7 @@
 
 Name: make-initrd
 Version: 2.0.10
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -11,7 +11,6 @@ Group: System/Base
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
 BuildRequires: help2man
-BuildRequires: shellcheck
 BuildRequires: libkmod-devel
 BuildRequires: zlib-devel
 BuildRequires: bzlib-devel
@@ -152,9 +151,6 @@ CPU microcode autoloading module for %name
 %install
 %make_install DESTDIR=%buildroot install
 
-%check
-%make verify
-
 %triggerin -- %name < 0.8.1-alt1
 c="%_sysconfdir/initrd.mk"
 if [ -s "$c" ] && ! grep -qs '^AUTODETECT[[:space:]]*=[[:space:]]*all[[:space:]]*' "$c"; then
@@ -208,6 +204,9 @@ fi
 %endif
 
 %changelog
+* Wed May 02 2018 Alexey Gladkov <legion@altlinux.ru> 2.0.10-alt2
+- Remove build dependence, which was too heavy for not primary platforms.
+
 * Tue May 01 2018 Alexey Gladkov <legion@altlinux.ru> 2.0.10-alt1
 - Runtime changes:
   + Fix printf format string
