@@ -10,14 +10,14 @@ BuildRequires: perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(Test/More.pm
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    1.293
+Release:    alt1
 
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Summary:    Read simple configuration file formats
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/ConfigReader/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/B/BD/BDFOY/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Test/Output.pm)
 BuildRequires: perl(Test/Warn.pm)
@@ -42,7 +42,7 @@ The configuration file format
     line, including any other whitespace.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %__perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -55,11 +55,14 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes README.pod LICENSE META.yml
+%doc Changes README.pod LICENSE META.yml examples
 %{perl_vendor_privlib}/*
 
 
 %changelog
+* Wed May 02 2018 Igor Vlasenko <viy@altlinux.ru> 1.293-alt1
+- automated CPAN update
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.291-alt1_1
 - update by mgaimport
 
