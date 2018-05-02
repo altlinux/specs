@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Statistics-Descriptive
 Name: perl-%dist
-Version: 3.0612
+Version: 3.0613
 Release: alt1
 
 Summary: Basic descriptive statistical functions
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SH/SHLOMIF/Statistics-Descriptive-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -20,7 +20,7 @@ BuildRequires: perl-Module-Build perl-Test-Pod perl(List/MoreUtils.pm)
 This Perl module provides basic functions used in descriptive statistics.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -29,10 +29,13 @@ This Perl module provides basic functions used in descriptive statistics.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README UserSurvey.txt examples
 %perl_vendor_privlib/Statistics
 
 %changelog
+* Wed May 02 2018 Igor Vlasenko <viy@altlinux.ru> 3.0613-alt1
+- automated CPAN update
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 3.0612-alt1
 - automated CPAN update
 
