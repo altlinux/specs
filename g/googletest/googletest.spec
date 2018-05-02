@@ -2,22 +2,22 @@
 
 Name: googletest
 Version: 1.8.0
-Release: alt3
+Release: alt4%ubt
 
 Summary: Google's framework for writing C++ tests
 License: BSD
 Group: Development/C++
 
-Url: https://github.com/%name/googletest
+Url: https://github.com/google/%name
 
-# https://github.com/google/%name/archive/release-%version.tar.gz
-Source: %name-release-%version.tar.gz
+Source: https://github.com/google/%name/archive/release-%version/%name-release-%version.tar.gz
 Patch0: %name-soname-alt.patch
 Patch1: %name-lib64-alt.patch
 
-# Automatically added by buildreq on Thu Apr 06 2017 (-bi)
-# optimized out: cmake-modules elfutils libstdc++-devel perl python-base
-BuildRequires: cmake gcc-c++
+BuildPreReq: rpm-build-ubt
+
+BuildRequires: cmake
+BuildRequires: gcc-c++
 
 %description
 Google's framework for writing C++ tests on a variety of platforms
@@ -30,8 +30,8 @@ running the tests, and XML test report generation.
 %package -n libgtest%sover
 Summary: Google's framework for writing C++ tests
 Group: Development/C++
-Provides: libgtest = %EVR
-Obsoletes: libgtest
+Provides: libgtest
+Obsoletes: libgtest <= 1.7.0 
 
 %description -n libgtest%sover
 Google's framework for writing C++ tests on a variety of platforms
@@ -51,9 +51,8 @@ Development environment for gtest
 %package -n libgmock%sover
 Summary: Google C++ Mocking Framework
 Group: Development/C++
-Requires: libgtest%sover = %EVR
-Provides: libgmock = %EVR
-Obsoletes: libgmock
+Provides: libgmock
+Obsoletes: libgmock <= 1.7.0
 
 %description -n libgmock%sover
 Google's framework for writing and using C++ mock classes on a variety
@@ -65,7 +64,6 @@ system and write better tests.
 %package -n libgmock-devel
 Summary: Development environment for gmock
 Group: Development/C++
-Requires: libgtest-devel = %EVR
 
 %description -n libgmock-devel
 Development environment for gmock
@@ -127,8 +125,14 @@ popd
 %_includedir/gmock
 
 %changelog
+* Wed May 02 2018 Nazarov Denis <nenderus@altlinux.org> 1.8.0-alt4%ubt
+- Change URL (ALT #34874)
+
 * Thu Apr 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.0-alt3
 - fix packaging on 64bit arches other than x86_64
+
+* Tue Apr 18 2017 Nazarov Denis <nenderus@altlinux.org> 1.8.0-alt1.M80P.1
+- Build for branch p8
 
 * Thu Apr 06 2017 Nazarov Denis <nenderus@altlinux.org> 1.8.0-alt2
 - Add soname
