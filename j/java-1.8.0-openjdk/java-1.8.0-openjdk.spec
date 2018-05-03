@@ -1,3 +1,7 @@
+BuildRequires: docbook-style-xsl
+%ifarch %e2k
+%def_with e2k_lcc_wrapper
+%endif
 %filter_from_requires /.usr.bin.java/d
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
@@ -16,13 +20,13 @@ BuildRequires: ca-certificates-java
 BuildRequires: unzip gcc-c++ libstdc++-devel-static
 BuildRequires: libXext-devel libXrender-devel libfreetype-devel libkrb5-devel
 BuildRequires(pre): browser-plugins-npapi-devel lsb-release
-BuildRequires(pre): rpm-build-java
-BuildRequires: pkgconfig(gtk+-2.0) ant-nodeps
+BuildRequires(pre): rpm-macros-java
+BuildRequires: pkgconfig(gtk+-2.0)
 %set_compress_method none
 %define with_systemtap 0
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+#BuildRequires: jpackage-generic-compat
 %define power64 ppc64
 # %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define release 1.b01
@@ -82,7 +86,7 @@ BuildRequires: jpackage-generic-compat
 %global ppc64le         ppc64le
 %global ppc64be         ppc64 ppc64p7
 %global multilib_arches %{power64} sparc64 x86_64
-%global jit_arches      %{ix86} x86_64 sparcv9 sparc64 %{aarch64} %{power64}
+%global jit_arches      %{ix86} x86_64 sparcv9 sparc64 %{aarch64} %{power64} %e2k
 
 %ifnarch %{jit_arches}
 # Disable hardened build on non-jit arches. Work-around for RHBZ#1290936.
@@ -157,6 +161,9 @@ BuildRequires: jpackage-generic-compat
 %global archinstall sparcv9
 %endif
 %ifnarch %{jit_arches}
+%global archinstall %{_arch}
+%endif
+%ifarch e2k
 %global archinstall %{_arch}
 %endif
 
@@ -234,7 +241,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt3_1.b01jpp8
+Release: alt4_1.b01jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -257,6 +264,7 @@ URL:      http://openjdk.java.net/
 # VERSION=aarch64-jdk8u71-b15 FILE_NAME_ROOT=${VERSION}
 # REPO_ROOT=<path to checked-out repository> generate_source_tarball.sh
 Source0:  %{revision}.tar.xz
+Source111: lcc-mk-wrapper.sh
 
 # Custom README for -src subpackage
 Source2:  README.src
@@ -381,11 +389,19 @@ BuildRequires: pkgconfig
 BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 #BuildRequires: redhat-lsb
 BuildRequires: zip
+%ifarch %e2k
+BuildRequires: java-1.8.0-openjdk-devel
+%else
 BuildRequires: java-1.7.0-openjdk-devel
+%endif
 # Zero-assembler build requirement.
 %ifnarch %{jit_arches}
 BuildRequires: libffi-devel
 %endif
+%ifarch %e2k
+BuildRequires: libffi-devel
+%endif
+
 BuildRequires: tzdata-java >= 2015d
 
 # cacerts build requirement.
@@ -450,6 +466,7 @@ Provides: /usr/lib/jvm/java/jre/lib/%archinstall/client/libjvm.so(SUNWprivate_1.
 %endif
 Patch33: java-1.8.0-openjdk-alt-no-Werror.patch
 Patch34: java-1.8.0-openjdk-alt-link.patch
+Patch35: java-1.8.0-openjdk-e2k-lcc-support.patch
 
 %description
 The OpenJDK runtime environment.
@@ -466,7 +483,7 @@ Requires: ca-certificates
 # Require zoneinfo data provided by tzdata-java subpackage.
 Requires: tzdata-java >= 2015d
 # libsctp.so.1 is being `dlopen`ed on demand
-Requires: lksctp-tools
+Requires: liblksctp
 # tool to copy jdk's configs - should be Recommends only, but then only dnf/yum eforce it, not rpm transaction and so no configs are persisted when pure rpm -u is run. I t may be consiedered as regression
 #Requires:	copy-jdk-configs >= 1.1-3
 # Post requires alternatives to install tool alternatives.
@@ -628,8 +645,10 @@ cp %{SOURCE2} .
 #
 # the configure macro will do this too, but it also passes a few flags not
 # supported by openjdk configure script
+%ifnarch %e2k
 cp %{SOURCE100} openjdk/common/autoconf/build-aux/
 cp %{SOURCE101} openjdk/common/autoconf/build-aux/
+%endif
 
 # OpenJDK patches
 
@@ -716,6 +735,7 @@ sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' jdk8
 sed -i -e /BASIC_REMOVE_SYMBOLIC_LINKS/d jdk8/common/autoconf/toolchain.m4
 %patch33 -p1
 %patch34 -p1
+%patch35 -p0
 
 sed -i -e 's, -m32, -m32 %optflags_shared -fpic -D_BLA_BLA_BLA1,' openjdk/hotspot/make/linux/makefiles/gcc.make
 
@@ -764,6 +784,13 @@ fi
 
 mkdir -p %{buildoutputdir}
 pushd %{buildoutputdir}
+
+%if_with e2k_lcc_wrapper
+SAVEPATH=$PATH
+LCC_WRAPPER_DIR=%_builddir/lcc-wrapper
+sh %{SOURCE111} $LCC_WRAPPER_DIR
+PATH=$LCC_WRAPPER_DIR:$PATH
+%endif
 
 bash ../../configure \
 %ifnarch %{jit_arches}
@@ -834,6 +861,7 @@ install -m 644 %{SOURCE11} $JAVA_HOME/jre/lib/security/
 $JAVA_HOME/bin/javac -d . %{SOURCE13}
 $JAVA_HOME/bin/java TestCryptoLevel
 
+%ifnarch %e2k
 # Check debug symbols are present and can identify code
 SERVER_JVM="$JAVA_HOME/jre/lib/%{archinstall}/server/libjvm.so"
 if [ -f "$SERVER_JVM" ] ; then
@@ -847,6 +875,7 @@ ZERO_JVM="$JAVA_HOME/jre/lib/%{archinstall}/zero/libjvm.so"
 if [ -f "$ZERO_JVM" ] ; then
   nm -aCl "$ZERO_JVM" | grep javaCalls.cpp
 fi
+%endif
 
 # Check src.zip has all sources. See RHBZ#1130490
 jar -tf $JAVA_HOME/src.zip | grep 'sun.misc.Unsafe'
@@ -1089,8 +1118,8 @@ do
     touch %buildroot"$rpm_404_ghost"
 done
 
-%__subst 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*policytool.desktop
-%__subst 's,^Categories=.*,Categories=Development;Profiling;System;Monitor;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*jconsole.desktop
+sed -i 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*policytool.desktop
+sed -i 's,^Categories=.*,Categories=Development;Profiling;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*jconsole.desktop
 
 ##### javadoc Alt specific #####
 echo java-javadoc >java-javadoc-buildreq-substitute
@@ -1421,6 +1450,9 @@ fi
 %endif
 
 %changelog
+* Thu May 03 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.144-alt4_1.b01jpp8
+- merged e2k support
+
 * Mon Nov 27 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.144-alt3_1.b01jpp8
 - removed obsolete exports in jvmjardir
 - removed obsolete security policy alternatives in _jvmprivdir
