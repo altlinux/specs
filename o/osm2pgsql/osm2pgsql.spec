@@ -1,7 +1,7 @@
 Summary: Imports map data from www.OpenStreetMap.org to a PostgresSQL database
 Name: osm2pgsql
 Group: Databases
-Version: 0.94.0
+Version: 0.96.0
 Release: alt1
 
 License: GPLv2+
@@ -46,6 +46,9 @@ geospatial analysis.
 %_man1dir/%name.*
 
 %changelog
+* Thu May 03 2018 Andrey Cherepanov <cas@altlinux.org> 0.96.0-alt1
+- New version.
+
 * Sat Oct 07 2017 Andrey Cherepanov <cas@altlinux.org> 0.94.0-alt1
 - New version
 
