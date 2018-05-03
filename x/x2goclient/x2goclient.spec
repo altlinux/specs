@@ -1,12 +1,13 @@
 Name:           x2goclient
 Version:        4.1.1.1
-Release:        alt3
+Release:        alt5
 Summary:        X2Go Client application (Qt)
 
 Group:          Communications
 License:        GPLv2+
 URL:            http://www.x2go.org
 Source0:        %name-%version.tar
+Source1:        x2goclient_ru.ts
 # Drop clumsy attempt at Kerberos delegation
 # http://bugs.x2go.org/cgi-bin/bugreport.cgi?bug=731
 Patch0:         x2goclient-krb5.patch
@@ -102,6 +103,8 @@ the X2Go Plugin via an Apache webserver.
 %patch0 -p1
 %patch2 -p1
 %patch3 -p1
+# update russian translations
+cat %SOURCE1 >res/i18n/x2goclient_ru.ts
 # Fix up install issues
 sed -i -e 's/-o root -g root//' Makefile
 sed -i -e '/^MOZPLUGDIR=/s/lib/%{_lib}/' Makefile
@@ -146,6 +149,9 @@ ln -s ../../x2go/x2goplugin-apache.conf %buildroot%_sysconfdir/httpd/conf.d/x2go
 %_datadir/x2go/
 
 %changelog
+* Wed Apr 25 2018 Sergey V Turchin <zerg@altlinux.org> 4.1.1.1-alt5
+- Update russian translation.
+
 * Mon Apr 16 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.1.1-alt3
 - Build with Qt5 (thanks zerg@ for the patch).
 - Use startkde5 instead of startkde.
