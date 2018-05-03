@@ -15,7 +15,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.4.5
+Version: 2.4.6
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -338,6 +338,9 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Thu May 03 2018 Nikolay A. Fetisov <naf@altlinux.org> 2.4.6-alt1
+- New version
+
 * Sun Mar 11 2018 Nikolay A. Fetisov <naf@altlinux.org> 2.4.5-alt1
 - New version
 - Updating patch for PKCS11 PIN prompt bug
