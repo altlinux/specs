@@ -1,21 +1,20 @@
-Name: ccache
-Version: 3.3.3
-Release: alt1
+%define _unpackaged_files_terminate_build 1
 
+Name: ccache
+Version: 3.4.2
+Release: alt1
 Summary: Compiler cache
 License: GPLv3+
 Group: Development/Tools
 Url: http://ccache.samba.org/
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
-
-Packager: Andrey Rahmatullin <wrar@altlinux.org>
+Patch1: ccache-fedora-rounding.patch
 
 Provides: ccache3 = %version-%release
 Obsoletes: ccache3
 
-BuildPreReq: asciidoc-a2x zlib-devel
+BuildRequires: asciidoc-a2x zlib-devel
 
 %description
 ccache is a compiler cache. It acts as a caching pre-processor to
@@ -25,11 +24,11 @@ a 5 to 10 times speedup in common compilations.
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
 rm -rfv zlib/
-%autoreconf
 
 %build
+%autoreconf
 %configure --enable-dev
 %make_build all docs
 
@@ -42,12 +41,15 @@ cat > %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name << EOF
 EOF
 
 %files
-%doc *.txt *.html
-%_mandir/man1/ccache.1*
+%doc LICENSE.adoc README.md GPL-3.0.txt doc
+%_man1dir/ccache.1*
 %_bindir/ccache
 %_sysconfdir/buildreqs/packages/ignore.d/*
 
 %changelog
+* Thu May 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.2-alt1
+- Updated to upstream version 3.4.2.
+
 * Wed Nov 30 2016 Evgeny Sinelnikov <sin@altlinux.ru> 3.3.3-alt1
 - Detects usage of `.incbin` assembler directives in the source code
   and avoids caching such compilations.
