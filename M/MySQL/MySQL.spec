@@ -1,15 +1,15 @@
-Name: MySQL
-Version: 5.5.57
-Release: alt1
 
 %def_without debug
-%def_without libs
-%def_without devel
+%def_with libs
+%def_with devel
 %def_disable static
-%define mysql_version %version
 %define mysqld_user mysql
 %define _libexecdir %_sbindir
 %define ROOT %_localstatedir/mysql
+
+Name: MySQL
+Version: 5.7.21
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -18,7 +18,8 @@ License: GPL / LGPL
 Url: http://www.mysql.com/
 Packager: MySQL Development Team <mysql@packages.altlinux.org>
 
-Source: mysql-%mysql_version.tar
+Source: %name-%version.tar
+Source99: boost.tar
 Source1: mysqld.init
 Source2: mysql.logrotate
 Source3: safe_mysqld
@@ -32,33 +33,51 @@ Source10: mysqld.sysconfig
 Source14: README.ALT-ru_RU.UTF-8
 Source15: alt-mysql_install_db.sh
 Source16: mysql.control
-Source17: libmysql.version
+Source17: mysqld-chroot.control
+
+Source20: mysql.tmpfiles.d
+Source21: mysqld.service
+Source22: mysqld.service.d-user
+
+Source25: client.cnf
+Source26: server.cnf
+Source27: mysql-clients.cnf
+Source28: server-chroot.cnf
+Source29: server-no-chroot.cnf
+Source30: client-server-chroot.cnf
+Source31: client-server-no-chroot.cnf
+
+Patch0: %name-%version-%release.patch
 
 # ALTLinux
-Patch1: mysql-5.5.28-alt-chroot.patch
+Patch1: mysql-5.7.21-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
-Patch4: mysql-5.5.25-alt-client.patch
-Patch5: mysql-5.5.28-alt-load_defaults.patch
+Patch4: mysql-5.7.21-alt-client.patch
+Patch5: mysql-5.7.21-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
-Patch7: mysql-5.5.25-alt-mysql_config-libs.patch
+Patch7: mysql-5.7.21-alt-mysql_config-libs.patch
 Patch8: mysql-5.5.43-alt-aarch64-lib64.patch
-Patch9: mysql-5.5.57-alt-bugfix.patch
+Patch9: mysql-5.7.21-alt-disable-run-libmysql_api_test.patch
 
-# Fedora
-Patch100: mysql-versioning.patch
-Patch101: mysql-dubious-exports.patch
-Patch102: mysql-strmov.patch
-Patch103: mysql-stack-guard.patch
-Patch104: mysql-va-list.patch
-Patch105: mysql-string-overflow.patch
+# Patches taken from boost 1.59
+Patch115: boost-1.58.0-pool.patch
+Patch125: boost-1.57.0-mpl-print.patch
+Patch136: boost-1.57.0-spirit-unused_typedef.patch
+Patch145: boost-1.54.0-locale-unused_typedef.patch
+Patch170: boost-1.59.0-log.patch
+Patch180: boost-1.59-python-make_setter.patch
+Patch181: boost-1.59-test-fenv.patch
+
 
 # Automatically added by buildreq on Wed Mar 16 2011 (-bi)
-BuildRequires: chrooted gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel
+BuildRequires: chrooted gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam0-devel libevent-devel
+BuildRequires: libaio-devel libjemalloc-devel libwrap-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
+BuildRequires: liblz4-devel zlib-devel
 BuildRequires: cmake control
+BuildRequires: libsystemd-devel
 
-%define soname 18
+%define soname 20
 
-%if_with libs
 %package -n libmysqlclient%soname
 Summary: Shared libraries for MySQL
 Summary(ru_RU.UTF-8): Динамические библиотеки для MySQL
@@ -66,10 +85,8 @@ License: LGPL
 Group: System/Libraries
 Provides: libMySQL = %version
 Obsoletes: libMySQL < %version
-Conflicts: libmariadb < 5.6
 
-%if_with devel
-%package -n libmysqlclient-devel
+%package -n libmysqlclient%soname-devel
 Summary: Development header files and libraries for MySQL
 Summary(ru_RU.UTF-8): Интерфейс прикладного уровня для разработки программ с MySQL
 License: LGPL
@@ -81,8 +98,7 @@ Provides: libMySQL-devel = %version
 Obsoletes: libMySQL-devel < %version
 Conflicts: libmariadb-devel
 
-%if_enabled static
-%package -n libmysqlclient-devel-static
+%package -n libmysqlclient%soname-devel-static
 Summary: Development static libraries for MySQL
 Summary(ru_RU.UTF-8): Интерфейс прикладного уровня для разработки программ с MySQL
 License: LGPL
@@ -91,9 +107,6 @@ Requires: libmysqlclient-devel = %version-%release
 Provides: libMySQL-devel-static = %version
 Obsoletes: libMySQL-devel-static < %version
 Conflicts: libmariadb-devel-static
-%endif
-%endif
-%endif
 
 %package client
 Summary: MySQL Client
@@ -111,7 +124,7 @@ Group: Databases
 PreReq: MySQL-client = %version-%release
 PreReq: shadow-utils, coreutils, glibc-locales
 Requires(post,preun): chkconfig, chrooted, coreutils, findutils, grep, sed
-Provides: mysql-server = %version MySQL = %version mysql = %version
+Provides: mysql-server = %version MySQL = %version mysql = %version community-mysql = %version
 Obsoletes: mysql-server < %version MySQL < %version mysql < %version
 
 %package server-perl
@@ -122,15 +135,6 @@ Group: Databases
 Requires: MySQL-server = %version-%release, perl-DBD-mysql
 BuildArch: noarch
 
-%package bench
-Summary: MySQL Benchmarks
-Summary(ru_RU.UTF-8): Тесты производительности для MySQL
-License: GPL
-Group: Databases
-Requires: MySQL-client = %version-%release, perl-DBD-mysql
-Provides: mysql-bench = %version
-Obsoletes: mysql-bench < %version
-BuildArch: noarch
 
 %define see_base For a description of MySQL see the base MySQL RPM or %url
 %define see_base_ru Подробное описание смотрите в пакете MySQL или на %url
@@ -220,7 +224,6 @@ MySQL ведется на основе программного кода, кот
 Данная версия MySQL собрана с поддержкой транзакций и расширенной поддержкой
 различных текстовых кодировок. См. документацию для более подробной информации.
 
-%if_with libs
 %description -n libmysqlclient%soname
 This package contains the shared libraries (*.so*) which certain
 languages and applications need to dynamically load and use MySQL.
@@ -230,36 +233,31 @@ languages and applications need to dynamically load and use MySQL.
 требуемые для работы большинства клиентских приложений, взаимодействующих
 с СУБД MySQL.
 
-%if_with devel
-%description -n libmysqlclient-devel
+%description -n libmysqlclient%soname-devel
 This package contains the development header files and libraries
 necessary to develop MySQL client applications.
 
 %see_base
 
-%description -n libmysqlclient-devel -l ru_RU.UTF-8
+%description -n libmysqlclient%soname-devel -l ru_RU.UTF-8
 Этот пакет содержит файлы заголовков и библиотеки интерфейса
 прикладного уровня, необходимые для разработки клиентских
 приложений, взаимодействующих с SQL-сервером MySQL.
 
 %see_base_ru
 
-%if_enabled static
-%description -n libmysqlclient-devel-static
+%description -n libmysqlclient%soname-devel-static
 This package contains the development libraries for static linking
 necessary to develop MySQL client applications.
 
 %see_base
 
-%description -n libmysqlclient-devel-static -l ru_RU.UTF-8
+%description -n libmysqlclient%soname-devel-static -l ru_RU.UTF-8
 Этот пакет содержит статические библиотеки интерфейса прикладного уровня,
 необходимые для разработки клиентских приложений,
 взаимодействующих с SQL-сервером MySQL.
 
 %see_base_ru
-%endif
-%endif
-%endif
 
 %description client
 This package contains the standard MySQL clients.
@@ -271,92 +269,96 @@ This package contains the standard MySQL clients.
 
 %see_base_ru
 
-%description bench
-This package contains MySQL benchmark scripts and data.
-
-%see_base
-
-%description bench -l ru_RU.UTF-8
-Этот пакет содержит данные и утилиты для тестирования
-производительности SQL-сервера MySQL.
-
-%see_base_ru
-
 %prep
-%setup -n mysql-%mysql_version
+%setup -a99
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch4 -p1
 %patch5 -p1
 %patch7 -p1
 %patch8 -p1
-pushd ..
 %patch9 -p1
+
+# Patch Boost
+pushd boost/boost_1_59_0
+%patch115 -p0
+%patch125 -p1
+%patch136 -p1
+%patch145 -p1
+%patch170 -p2
+%patch180 -p2
+%patch181 -p2
 popd
 
-%patch100 -p1
-%patch101 -p1
-%patch102 -p1
-%patch103 -p1
-%patch104 -p1
-%patch105 -p1
 
 # Replace that horror.
-sed 's,@datadir@,%_datadir,g' <%SOURCE15 >scripts/mysql_install_db.sh
+#sed 's,@datadir@,%_datadir,g' <%%SOURCE15 >scripts/mysql_install_db.sh
 
+# with patch4
 # Prepare commands list for completion in mysql client.
-sed -ne 's/^\(  { "[A-Z][^"]*"\).*/\1, 0, 0, 0, "" },/pg' <sql/lex.h >client/mysql_symbols.inc
-
-# Not needed with 5.5 but doesn't hurt anyways
-chmod -R a-s,go-w sql-bench
-
-# upstream has fallen down badly on symbol versioning, do it ourselves (c) fedora
-cp %SOURCE17 libmysql/libmysql.version
+sed -n 's/^\([[:space:]]*{[[:space:]]*SYM.*(\)\("[&<=>|!A-Z][^"]*"\).*/{\2,0, 0, 0, ""},/p' <sql/lex.h >client/mysql_symbols.inc
 
 %build
-# Force HAVE_ERRNO_AS_DEFINE defined to wrong expansion
-# of bits/errno.h's definition of errno in my_sys.h
-%{!?_with_debug:%add_optflags %optflags_notraceback}
-%add_optflags -D_FILE_OFFSET_BITS=64 -DHAVE_ERRNO_AS_DEFINE -DONE_THREAD
-export CXXFLAGS="%optflags -felide-constructors -fno-exceptions -fno-rtti"
 
-# Precache these values to enable /proc-less build.
-export \
-	FIND_PROC='/bin/ps p $$PID | grep mysqld >/dev/null' \
-	CHECK_PID='/bin/kill -0 $$PID >/dev/null 2>/dev/null' \
-	#
-
-cmake \
+%cmake \
+	-DBUILD_CONFIG=mysql_release \
+	-DFEATURE_SET="community" \
+	-DINSTALL_LAYOUT=RPM \
 	-DCMAKE_VERBOSE_MAKEFILE=ON \
-	-DCMAKE_INSTALL_PREFIX=%_prefix \
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
+	-DCMAKE_C_FLAGS:STRING="$CFLAGS" \
+	-DCMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
+	-DCMAKE_INSTALL_PREFIX="%_prefix" \
+	-DSYSCONFDIR="%_sysconfdir" \
+	-DSYSCONF2DIR="%_sysconfdir/my.cnf.d" \
+	-DINSTALL_INCLUDEDIR=include/mysql \
+	-DINSTALL_INFODIR=share/info \
+	-DINSTALL_LIBDIR="%_lib" \
+	-DINSTALL_MANDIR=share/man \
+	-DINSTALL_MYSQLSHAREDIR=share/mysql \
+	-DINSTALL_MYSQLTESTDIR=share/mysql-test \
+	-DINSTALL_PLUGINDIR="%_lib/mysql/plugin" \
+	-DINSTALL_SBINDIR=sbin \
+	-DINSTALL_SCRIPTDIR=sbin \
+	-DINSTALL_SUPPORTFILESDIR=share/mysql \
+	-DINSTALL_MYSQLDATADIR="%ROOT" \
+	-DINSTALL_MYSQLKEYRINGDIR="/var/lib/mysql-keyring" \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DMYSQL_UNIX_ADDR="%ROOT/mysql.sock" \
 	-DMYSQL_DATADIR="%ROOT" \
-	-DINSTALL_SECURE_FILE_PRIVDIR="" \
 	-DMYSQL_USER=mysql \
-	-DINSTALL_LAYOUT=RPM \
+	-DWITH_SSL=system \
+	-DWITH_ZLIB=system \
+	-DWITH_LZ4=system \
+	-DWITH_LIBEVENT=system \
+	-DWITH_EDITLINE=system \
+	-DWITH_PIC=ON \
+	-DWITH_EXTRA_CHARSETS=all \
 	-DWITH_ARCHIVE_STORAGE_ENGINE=ON \
 	-DWITH_BLACKHOLE_STORAGE_ENGINE=ON \
-	-DWITH_EXTRA_CHARSETS=all \
 	-DWITH_INNOBASE_STORAGE_ENGINE=ON \
 	-DWITH_PARTITION_STORAGE_ENGINE=ON \
 	-DWITH_FEDERATED_STORAGE_ENGINE=ON \
+	-DWITHOUT_EXAMPLE_STORAGE_ENGINE=ON \
+	-DENABLED_LOCAL_INFILE=ON \
 	-DWITH_READLINE=OFF \
-	-DWITH_SSL=system \
-	-DINSTALL_SCRIPTDIR=sbin \
+	-DWITH_SYSTEMD=ON \
+	-DCMAKE_C_FLAGS="%optflags" \
+	-DCMAKE_CXX_FLAGS="%optflags" \
+	-DWITH_BOOST=../boost/boost_1_59_0 \
 	-DCOMPILATION_COMMENT="(%distribution)" \
 	-DMYSQL_SERVER_SUFFIX="-%release"
 
-%make_build
+%cmake_build
 
 %install
-mkdir -p %buildroot{%_bindir,%_sbindir,%_includedir,%_mandir,%_infodir,%_datadir/sql-bench,/var/log/mysql}
+mkdir -p %buildroot{%_bindir,%_sbindir,%_includedir,%_mandir,%_datadir,/var/log/mysql}
 mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%_libdir/mysql/plugin/,dev,log,tmp,/var/{nis,yp/binding},db/mysql,usr/share/mysql/charsets}
 touch %buildroot%ROOT{%_sysconfdir/{hosts,services,{host,nsswitch,resolv}.conf},/dev/urandom,/var/nis/NIS_COLD_START}
 
-%makeinstall_std
+%cmakeinstall_std
 
-# Moved to extra and C
-install -pD -m755 extra/my_print_defaults %buildroot%_bindir/my_print_defaults
 
 # Install various helper scripts.
 install -pD -m755 %SOURCE1 %buildroot%_initdir/mysqld
@@ -371,15 +373,33 @@ install -pD -m750 %SOURCE7 %buildroot%_sysconfdir/chroot.d/mysql.conf
 install -pD -m750 %SOURCE8 %buildroot%_sysconfdir/chroot.d/mysql.all
 install -pD -m750 %SOURCE9 %buildroot%_sbindir/mysql_migrate
 install -pD -m644 %SOURCE10 %buildroot%_sysconfdir/sysconfig/mysqld
-install -pD -m755 %SOURCE16 %buildroot%_sysconfdir/control.d/facilities/mysqld
+install -pD -m755 %SOURCE16 %buildroot%_controldir/mysqld
+install -pD -m755 %SOURCE17 %buildroot%_controldir/mysqld-chroot
 
 # Backwards compatibility symlinks (ALT #14863)
-mkdir -p %buildroot%_bindir
+#mkdir -p %buildroot%_bindir
 ln -snf ../sbin/safe_mysqld %buildroot%_bindir/mysqld_safe
 
+#mv %buildroot%_bindir/mysql_install_db %buildroot%_sbindir/mysql_install_db
+# delete deprecated
+rm -f %buildroot%_bindir/mysql_install_db
+
 # Install configuration files.
-install -pD -m644 /dev/null %buildroot%_sysconfdir/my.cnf
-install -pD -m600 %SOURCE5 %buildroot%ROOT/my.cnf
+install -pD -m644 %SOURCE5 %buildroot%_sysconfdir/my.cnf
+install -pD -m644 %SOURCE25 %buildroot%_sysconfdir/my.cnf.d/client.cnf
+install -pD -m644 %SOURCE26 %buildroot%_sysconfdir/my.cnf.d/server.cnf
+install -pD -m644 %SOURCE27 %buildroot%_sysconfdir/my.cnf.d/mysql-clients.cnf
+install -pD -m644 %SOURCE28 %buildroot%_sysconfdir/my.cnf.server/server-chroot.cnf
+install -pD -m644 %SOURCE29 %buildroot%_sysconfdir/my.cnf.server/server-no-chroot.cnf
+install -pD -m644 %SOURCE30 %buildroot%_sysconfdir/my.cnf.server/client-server-chroot.cnf
+install -pD -m644 %SOURCE31 %buildroot%_sysconfdir/my.cnf.server/client-server-no-chroot.cnf
+
+install -pD -m644 %SOURCE20 %buildroot%_tmpfilesdir/mysql.conf
+install -pD -m644 %SOURCE21 %buildroot%_unitdir/mysqld.service
+install -pD -m644 %SOURCE22 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/user.conf
+
+#install -pD -m644 /dev/null %buildroot%_sysconfdir/my.cnf
+#install -pD -m600 %SOURCE5 %buildroot%ROOT/my.cnf
 
 # Fix libmysqlclient_r symlinks
 (
@@ -393,11 +413,6 @@ install -pD -m600 %SOURCE5 %buildroot%ROOT/my.cnf
 	done
 )
 
-# FIXME! bdb might work on x86/Linux and amd64/Linux
-%ifarch %ix86
-sed -i 's,^skip\-bdb,#skip-bdb,' %buildroot%ROOT/my.cnf
-%endif
-
 # Populate chroot with data to some extent.
 install -pD -m644 %buildroot%_datadir/mysql/charsets/* \
 		     %buildroot%ROOT%_datadir/mysql/charsets
@@ -409,35 +424,32 @@ install -pD -m644 %buildroot%_datadir/mysql/charsets/* \
 	done
 )
 
-# Fix \r.
-r="$(echo -ne \\r)"
-grep -lZ "$r\$" %buildroot%_datadir/sql-bench/innotest* |
-	xargs -r0 sed -i "s/$r//g" --
-
-# Fix perl autodetection.
-grep -EZl '^[[:space:]]*use the ' %buildroot%_bindir/* |
-	xargs -r0 subst -p 's/\([[:space:]]*\)\(use the \)/\1then \2/g'
-
-subst -p 's/\(BUGmysql="\)\([^"]*\)"/\1\2,mysql@packages.altlinux.org"/g' %buildroot%_bindir/mysqlbug
 
 mkdir -p %buildroot%_docdir/MySQL-%version
-install -p -m644 README %SOURCE14 support-files/*.cnf %buildroot%_docdir/MySQL-%version
+install -p -m644 README %SOURCE14 %buildroot%_docdir/MySQL-%version
 
 rm -f %buildroot%_bindir/safe_mysqld
 rm -f %buildroot%_datadir/mysql/mysql{-*.spec,-log-rotate,.server}
 
-install -p -m644 Docs/ChangeLog %buildroot%_docdir/MySQL-%version/
-bzip2 -f9 %buildroot%_docdir/MySQL-%version/ChangeLog
-
 touch %buildroot%ROOT/log/queries
 touch %buildroot%_logdir/mysql/info
 
+install -p -m 0750 -d %buildroot%_localstatedir/mysql-files
+install -p -m 0700 -d %buildroot%_localstatedir/mysql-keyring
+
+# not needed in rpm package
 rm -rf %buildroot%_datadir/mysql-test
 rm -f %buildroot%_libdir/mysql/plugin/*.la
 rmdir %buildroot%_libdir/mysql/plugin/debug
+rm -f %buildroot%_bindir/mysql_embedded
+rm -f %buildroot%_libdir/mysql/*.a
+rm -f %buildroot%_datadir/mysql/magic
+rm -f %buildroot%_datadir/mysql/mysqld_multi.server
 
 # broken manpages referencing missing paths
 rm -f %buildroot%_man1dir/mysql{_client_,}test_embedded.1
+rm -fr %buildroot/usr/share/info
+
 
 %define get_datadir \
 DATADIR=`/usr/bin/my_print_defaults mysqld |sed -ne 's/^--datadir=\\(.*\\)/\\1/pg' |tail -1` \
@@ -455,7 +467,8 @@ if [ ! -e %ROOT/my.cnf -a -f /etc/my.cnf -a ! -L /etc/my.cnf -a ! -e /etc/my.cnf
 fi
 
 %pre_control mysqld
-:
+%pre_control mysqld-chroot
+
 
 %post server
 if [ -f /etc/my.cnf.rename -a ! -L /etc/my.cnf.rename -a ! -e /etc/my.cnf ]; then
@@ -483,6 +496,7 @@ rm -rf %ROOT/dev
 %_sysconfdir/chroot.d/mysql.all force
 
 %post_control -s local mysqld
+%post_control -s enabled mysqld-chroot
 
 # see also http://dev.mysql.com/doc/refman/5.5/en/upgrading.html
 %get_datadir
@@ -508,6 +522,19 @@ if [ -n "$NEED_RESTART" ]; then
 	%_initdir/mysqld start ||:
 else
 	%post_service mysqld
+fi
+
+%triggerin server -- MySQL-server < 5.7.21-alt1
+#if pre 5.7.21 installation of server have never been run, we should
+#remove empty /var/lib/mysql/db/mysql dir to enable --initialize sequence
+%get_datadir
+# look for empty dir 
+if [ "$(ls -A %ROOT$DATADIR/mysql)" ]; then
+#     echo "Database dir is not Empty"
+     echo "%ROOT$DATADIR/mysql"
+else
+#    echo "Database dir is Empty, removing"
+    rmdir %ROOT$DATADIR/mysql ||:
 fi
 
 %triggerpostun server -- MySQL-server < 5.5.28-alt1
@@ -550,50 +577,47 @@ fi
 %_libdir/*.so.*
 
 %if_with devel
-%files -n libmysqlclient-devel
+%files -n libmysqlclient%soname-devel
 %_bindir/mysql_config
 %_libdir/*.so
 %_includedir/*
 %_aclocaldir/mysql.m4
-%_man1dir/mysql_config.1*
+%_pkgconfigdir/*.pc
 
 %if_enabled static
-%files -n libmysqlclient-devel-static
+%files -n libmysqlclient%soname-devel-static
 %_libdir/*.a
 %_libdir/mysql
+%_pkgconfigdir/*.pc
 %endif
 %endif
 %endif
 
 %files client
+%dir %_sysconfdir/my.cnf.d
+%config(noreplace) %_sysconfdir/my.cnf.d/client.cnf
+%config(noreplace) %_sysconfdir/my.cnf.d/mysql-clients.cnf
 %_bindir/innochecksum
-%_bindir/msql2mysql
 %_bindir/my_print_defaults
 %_bindir/mysql
 %_bindir/mysql_client_test
 %_bindir/mysqladmin
 %_bindir/mysqlbinlog
-%_bindir/mysqlbug
 %_bindir/mysqlcheck
 %_bindir/mysqldump
 %_bindir/mysqlimport
+%_bindir/mysqlpump
 %_bindir/mysqlshow
 %_bindir/mysqltest
 %_bindir/mysqlslap
-%_bindir/mysql_waitpid
 %_bindir/perror
 %_bindir/replace
 %_bindir/resolve*
+%_bindir/lz4_decompress
+%_bindir/zlib_decompress
 %_mandir/man?/*
-%exclude %_man1dir/mysql_config.1*
 
 %files server-perl
-%_bindir/mysql_convert_table_format
-%_bindir/mysql_find_rows
-%_bindir/mysql_setpermission
-%_bindir/mysql_zap
-%_bindir/mysqlhotcopy
-%_bindir/mysqlaccess
 %_bindir/mysqldumpslow
 
 %files server
@@ -602,27 +626,30 @@ fi
 %config(noreplace) %_sysconfdir/logrotate.d/*
 %config(noreplace) %_sysconfdir/control.d/facilities/*
 %config %_sysconfdir/chroot.d/*
-%ghost %config(noreplace,missingok) %_sysconfdir/my.cnf
+%config(noreplace) %_sysconfdir/my.cnf
+%config(noreplace) %_sysconfdir/my.cnf.d/server.cnf
+%config(noreplace) %_sysconfdir/my.cnf.server/*.cnf
+%_tmpfilesdir/mysql.conf
+%_unitdir/mysqld.service
+%config(noreplace) %_sysconfdir/systemd/system/mysqld.service.d/user.conf
+
 %_bindir/*isam*
-%_bindir/mysql_fix_extensions
 %_bindir/mysql_secure_installation
+%_bindir/mysql_ssl_rsa_setup
 %_bindir/mysql_tzinfo_to_sql
 %_bindir/mysql_upgrade
-%_bindir/mysqld_multi
 %_bindir/mysqld_safe
 %_bindir/mysql_plugin
-%_bindir/mysqlaccess.conf
 %_sbindir/*
 %_libdir/mysql/plugin
 %_datadir/mysql
 %attr(750,root,adm) %dir /var/log/mysql
 %ghost %verify(not md5 mtime size) /var/log/mysql/*
+%attr(0770,root,mysql) %dir %_localstatedir/mysql-files
+%attr(0700,mysql,mysql) %dir %_localstatedir/mysql-keyring
 %dir %_docdir/MySQL-%version
-%_docdir/MySQL-%version/ChangeLog*
-%_docdir/MySQL-%version/README
-%_docdir/MySQL-%version/README.*
-%_docdir/MySQL-%version/*.cnf
-%attr(600,root,root) %config(noreplace,missingok) %ROOT/my.cnf
+%_docdir/MySQL-%version/README*
+# %attr(600,root,root) %config(noreplace,missingok) %ROOT/my.cnf
 %attr(3771,root,mysql) %dir %ROOT
 %attr(710,root,mysql) %dir %ROOT/%_lib
 %attr(710,root,mysql) %dir %ROOT/%_libdir
@@ -643,15 +670,20 @@ fi
 %dir %ROOT%_datadir
 %ROOT%_datadir/mysql
 %attr(3770,root,mysql) %dir %ROOT/db
-%attr(750,mysql,mysql) %dir %ROOT/db/*
+%attr(750,mysql,mysql) %ghost %ROOT/db/*
 %attr(3770,root,mysql) %dir %ROOT/log
 %attr(660,mysql,mysql) %ghost %verify(not md5 mtime size) %ROOT/log/*
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
-%files bench
-%_datadir/sql-bench
-
 %changelog
+* Fri Mar 23 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt2
+- 5.7.21
+- update chroot patch
+
+* Thu Feb 15 2018 Alexey Shabalin <shaba@altlinux.ru> 5.7.21-alt1
+- 5.7.21
+- sync patches, configs, scripts with mariadb
+
 * Mon Jul 24 2017 Denis Medvedev <nbr@altlinux.org> 5.5.57-alt1
 - 5.5.57 (Fixes: CVE-2017-3653, CVE-2017-3651, CVE-2017-3652, CVE-2017-3648, CVE-2017-3641, CVE-2017-3636, CVE-2017-3635)
 - Fixes various memory and pointer mishandlings.
@@ -660,7 +692,7 @@ fi
 - 5.5.54 (Fixes: CVE-2017-3318, CVE-2017-3317, CVE-2017-3313, CVE-2017-3312, CVE-2017-3291, CVE-2017-3265, CVE-2017-3258, CVE-2017-3244, CVE-2017-3243, CVE-2017-3238)
 
 * Thu Nov 17 2016 Anton Farygin <rider@altlinux.ru> 5.5.53-alt2
-- disabled secure_file_priv in default cofiguration because still used 
+- disabled secure_file_priv in default cofiguration because still used
   chrooted environment (/var/lib/mysql) (closes: #32758)
 
 * Wed Nov 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.5.53-alt1
