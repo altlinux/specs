@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_disable debug
 %def_enable apps
 %def_disable openmp
@@ -35,9 +37,9 @@
 %define Name OpenCV
 %define sover 3.4
 Name: lib%bname%sover
-Version: 3.4.0
-Release: alt3
 Epoch: 1
+Version: 3.4.1
+Release: alt1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -51,16 +53,17 @@ Source1: %bname-contrib-%version.tar
 Source2: %bname-xfeatures2d-boostdesc-%version.tar
 Source3: %bname-xfeatures2d-vgg-%version.tar
 
-BuildPreReq: chrpath libcvmser
+Patch1: %bname-alt-build.patch
+
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
-BuildPreReq: cmake libnumpy-devel eigen3 doxygen zlib-devel
-BuildPreReq: libucil-devel libv4l-devel libtbb-devel bzlib-devel
-BuildPreReq: pkgconfig(glproto) pkgconfig(dri2proto) pkgconfig(xext)
-BuildPreReq: pkgconfig(xdamage) pkgconfig(xxf86vm)
-BuildPreReq: libGLU-devel libXau-devel libXdmcp-devel libgtkglext-devel
-BuildPreReq: python-module-sphinx-devel python-module-Pygments
-BuildPreReq: texlive-latex-base
+BuildRequires: cmake libnumpy-devel eigen3 doxygen python2.7(bs4) zlib-devel
+BuildRequires: libucil-devel libv4l-devel libtbb-devel bzlib-devel
+BuildRequires: pkgconfig(glproto) pkgconfig(dri2proto) pkgconfig(xext)
+BuildRequires: pkgconfig(xdamage) pkgconfig(xxf86vm)
+BuildRequires: libGLU-devel libXau-devel libXdmcp-devel libgtkglext-devel
+BuildRequires: python-module-sphinx-devel python-module-Pygments
+BuildRequires: texlive-latex-base
 BuildRequires: libprotobuf-devel protobuf-compiler libwebp-devel
 BuildRequires: ceres-solver-devel libgflags-devel libglog-devel
 %{?_enable_openmp:BuildRequires: libgomp-devel}
@@ -225,15 +228,13 @@ This package contains %Name examples.
 
 %prep
 %setup -b 1 -b 2 -b 3
+%patch1 -p1
 
 rm -fR 3rdparty/{ffmpeg,lib,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protobuf,libwebp}
 
 mkdir -pv BUILD/downloads/xfeatures2d
 cp %_builddir/%bname-xfeatures2d-boostdesc-%version/* BUILD/downloads/xfeatures2d/
 cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
-
-%prepare_sphinx .
-cp doc/opencv-logo2.png ./
 
 %build
 %cmake \
@@ -265,23 +266,20 @@ cp doc/opencv-logo2.png ./
 	-DOPENCV_EXTRA_MODULES_PATH=%_builddir/%bname-contrib-%version/modules \
 	%{?_with_openni: -DWITH_OPENNI=ON } \
 	%{?_with_gdcm: -DWITH_GDCM=ON} \
+	-DBUILD_DOCS:BOOL=ON \
+	-DOPENCV_DOC_INSTALL_PATH=%_docdir/%name/ \
 
 # https://github.com/opencv/opencv/issues/10474
 %cmake_build VERBOSE=1 opencv_dnn
 %cmake_build VERBOSE=1
+%cmake_build VERBOSE=1 opencv_docs
 
 %install
-%cmakeinstall_std
-
-install -d %buildroot%_docdir/%name
-mv %buildroot%_datadir/%Name/doc/* %buildroot%_docdir/%name/
-
-cp -fR samples/python* %buildroot%_datadir/%Name/samples/
+%cmakeinstall_std install_docs
 
 %files
 %doc README.md
 %_libdir/*.so.*
-# %dir %_datadir/%bname
 %dir %_datadir/%Name
 %_datadir/%Name/haarcascades
 %_datadir/%Name/lbpcascades
@@ -306,11 +304,12 @@ cp -fR samples/python* %buildroot%_datadir/%Name/samples/
 %python_sitelibdir/*
 
 %files examples
-# %dir %_datadir/%bname
-%dir %_datadir/%Name
-%_datadir/*/samples
+%_datadir/%Name/samples
 
 %changelog
+* Thu May 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.1-alt1
+- Updated to upstream version 3.4.1.
+
 * Fri Feb 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.0-alt3
 - Updated static libraries location.
 
