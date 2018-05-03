@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libfreetype
-Version: 2.9
+Version: 2.9.1
 Release: alt1%ubt
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
@@ -18,8 +18,6 @@ Source2: http://download.savannah.gnu.org/releases/freetype/freetype-doc-%versio
 Source1: http://download.savannah.gnu.org/releases/freetype/ft2demos-%version.tar.bz2
 Source3: ftconfig.h
 
-Patch1: freetype-2.8-alt-export-compat-symbols.patch
-Patch2: freetype-2.6.2-alt-freetype-config.patch
 Patch3: freetype-2.4.10-alt-fttrigon.patch
 Patch6: ft2demos-2.6.2-alt-snprintf.patch
 Patch11: freetype-2.4.10-rh-enable-subpixel-rendering.patch
@@ -82,8 +80,6 @@ This package contains collection of FreeType demonstration programs.
 %setup -n freetype-%version -a1 -b2
 ln -s ft2demos-%version ft2demos
 
-%patch1 -p1
-#patch2 -p1
 %patch3 -p1
 %patch6 -p1
 
@@ -94,6 +90,7 @@ ln -s ft2demos-%version ft2demos
 %build
 %add_optflags -fno-strict-aliasing %(getconf LFS_CFLAGS)
 %configure \
+	--enable-freetype-config \
 	%{subst_enable static}
 
 # get rid of RPATH
@@ -105,8 +102,8 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' builds/unix/libtool
 %install
 %make DESTDIR=%buildroot install
 
-for f in ft2demos-%version/bin/ft*; do
-	builds/unix/libtool --mode=install install -m755 $f %buildroot%_bindir/
+for f in ft2demos-%version/bin/.libs/ft*; do
+	install -pD -m755 $f %buildroot%_bindir/${f##*/}
 done
 
 wordsize=$(echo -e '#include <bits/wordsize.h>\n__WORDSIZE' | cpp -P | sed '/^$/d')
@@ -154,6 +151,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Thu May 03 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt1%ubt
+- 2.9.1
+
 * Mon Jan 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.9-alt1%ubt
 - 2.9
 

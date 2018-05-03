@@ -10,7 +10,7 @@
 
 Name: Inventor
 Version: 2.1.5
-Release: alt4
+Release: alt5
 
 Summary: SGI Open Inventor (TM)
 
@@ -32,6 +32,8 @@ Patch4: Inventor-2.1.5-alt-DSO.diff
 Patch5: Inventor-2.1.5-abs-c++17.patch
 # aarch64
 Patch6: Inventor-2.1.5-64bit.patch
+# freetype 2.9
+Patch7: Inventor-2.1.5-debian-freetype.patch
 
 %define hackcxxflags -O2 -fno-strict-aliasing
 
@@ -149,6 +151,7 @@ find -name CVS | xargs rm -rf
 %patch4 -p2
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 sed -i \
 -e 's,^IVPREFIX =.*$,IVPREFIX = %prefix,' \
@@ -336,6 +339,9 @@ popd > /dev/null
 %endif
 
 %changelog
+* Thu Jul 05 2018 Michael Shigorin <mike@altlinux.org> 2.1.5-alt5
+- rebuilt against current freetype (using debian patch)
+
 * Wed Jun 20 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.5-alt4
 - cleanup spec
 - fix build with std::abs (C++17)
