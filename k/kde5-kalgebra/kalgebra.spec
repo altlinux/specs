@@ -2,13 +2,15 @@
 
 Name: kde5-%rname
 Version: 17.12.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Education
 Summary: Graph Calculator
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Requires: kf5-kirigami
 
 Source: %rname-%version.tar
 
@@ -53,6 +55,9 @@ however, one does not need to know MathML to use KAlgebra.
 %_K5icon/*/*/apps/*algebra.*
 
 %changelog
+* Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt2%ubt
+- fix requires
+
 * Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 
