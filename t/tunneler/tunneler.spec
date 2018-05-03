@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define fedora 23
 Name:           tunneler
 Version:        1.1.1
-Release:        alt2_17
+Release:        alt3_17
 Summary:        Clone of legendary Tunneler game
 
 Group:          Games/Other
@@ -34,6 +34,7 @@ actually have some searching to do.
 
 
 %build
+%add_optflags -fgnu89-inline
 autoreconf -i
 %configure
 make %{?_smp_mflags}
@@ -58,6 +59,9 @@ desktop-file-install %{SOURCE2} \
 
 
 %changelog
+* Thu May 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt3_17
+- Fixed build with new toolchain.
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_17
 - update to new release by fcimport
 
