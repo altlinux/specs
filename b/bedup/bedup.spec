@@ -1,6 +1,6 @@
 Name: bedup
 Version: 0.10.1
-Release: alt1
+Release: alt1.1
 
 Summary: Deduplication for Btrfs
 
@@ -43,6 +43,9 @@ so that scans are incremental and low-impact.
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.1-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Aug 09 2016 Vitaly Lipatov <lav@altlinux.ru> 0.10.1-alt1
 - build new bugfix version
 

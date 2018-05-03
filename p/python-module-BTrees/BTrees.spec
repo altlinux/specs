@@ -2,10 +2,11 @@
 %define oname BTrees
 
 %def_with check
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 4.4.1
-Release: alt1%ubt
+Release: alt1%ubt.1
 
 Summary: Scalable persistent object containers
 License: ZPLv2.1
@@ -24,20 +25,28 @@ BuildRequires: python-module-objects.inv
 BuildRequires: python-module-repoze.sphinx.autointerface
 BuildRequires: python-module-persistent
 BuildRequires: python-module-setuptools
+%if_without bootstrap
 BuildRequires: python-module-ZODB
+%endif
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-persistent
+%if_without bootstrap
 BuildRequires: python3-module-ZODB
+%endif
 
 %if_with check
 BuildRequires: python-module-tox
 BuildRequires: python-module-virtualenv
 BuildRequires: python-module-transaction
+%if_without bootstrap
 BuildRequires: python-module-ZODB-tests
+%endif
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-virtualenv
 BuildRequires: python3-module-transaction
+%if_without bootstrap
 BuildRequires: python3-module-ZODB-tests
+%endif
 %endif
 
 %py_requires zope.interface
@@ -114,11 +123,11 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %check
 export PIP_INDEX_URL=http://host.invalid./
 export PYTHONPATH=%python_sitelibdir_noarch:%python_sitelibdir
-TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py27 -v
+TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py%{python_version_nodots python} -v
 
 pushd ../python3
 export PYTHONPATH=%python3_sitelibdir_noarch:%python3_sitelibdir
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py35 -v
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -v
 popd
 
 %files
@@ -141,6 +150,9 @@ popd
 %python3_sitelibdir/*/tests
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1-alt1%ubt.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Feb 09 2018 Stanislav Levin <slev@altlinux.org> 4.4.1-alt1%ubt
 - v4.4.0 -> v4.4.1
 

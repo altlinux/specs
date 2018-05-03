@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt1
+Release: alt1.1
 Summary: Software library for X-Ray data analysis
 License: MIT
 Group: Development/Python
@@ -136,5 +136,8 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.1-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Nov 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.1-alt1
 - Initial build for ALT.

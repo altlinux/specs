@@ -2,7 +2,7 @@
 
 Name: lib%_name
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: A library for password generation and password quality checking
 License: BSD or GPL+
@@ -119,6 +119,9 @@ ln -sf ../../%_lib/%name.so.1 %buildroot%_libdir/%name.so
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Mar 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue May 30 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 

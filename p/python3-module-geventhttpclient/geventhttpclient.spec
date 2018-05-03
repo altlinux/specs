@@ -1,7 +1,7 @@
 %define oname geventhttpclient
 Name: python3-module-%oname
 Version: 1.1.0
-Release: alt1.1
+Release: alt1.1.1
 Summary: http client library for gevent
 License: MIT
 Group: Development/Python3
@@ -43,6 +43,9 @@ find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.0-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

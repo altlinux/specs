@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.2.1
-Release: alt1
+Release: alt1.1
 Summary: Zope Container
 License: ZPL
 Group: Development/Python
@@ -178,6 +178,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.1-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Mar 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.1-alt1
 - Updated to upstream version 4.2.1.
 

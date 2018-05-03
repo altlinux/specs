@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt1
+Release: alt1.1
 Summary: Image IO for fable
 License: MIT
 Group: Development/Python
@@ -134,5 +134,8 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.0-alt1
 - Initial build for ALT.

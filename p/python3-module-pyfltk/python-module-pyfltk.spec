@@ -5,7 +5,7 @@
 
 Name: python3-module-%mname
 Version: 1.3.3.1
-Release: alt1.1.qa1
+Release: alt1.1.qa1.1
 
 Summary: Python 3 bindings for FLTK library
 
@@ -55,6 +55,9 @@ popd
 %doc CHANGES README TODO
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.3.1-alt1.1.qa1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Apr 27 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.3.3.1-alt1.1.qa1
 - Rebuilt with libfltk13-1.3.3-alt1.
 

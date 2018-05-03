@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3.1
-Release: alt4
+Release: alt4.1
 Summary: Mixing Twisted and ZODB
 License: ZPL
 Group: Development/Python
@@ -131,6 +131,9 @@ rm -f %buildroot%python3_sitelibdir/*/__init__.py
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.1-alt4.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Aug 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.1-alt4
 - Rebuilt with new Twist.
 

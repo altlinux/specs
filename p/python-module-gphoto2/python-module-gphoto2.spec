@@ -2,7 +2,7 @@
 
 Name: python-module-%modname
 Version: 1.8.2
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings to GPhoto libraries
 Group: Development/Python
@@ -67,6 +67,9 @@ popd
 
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Jan 16 2018 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
 - 1.8.2
 

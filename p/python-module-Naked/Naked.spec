@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.1.31
-Release: alt1
+Release: alt1.1
 Summary: A command line application framework
 License: MIT
 Group: Development/Python
@@ -177,6 +177,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.1.31-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Aug 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.1.31-alt1
 - Updated to upstream version 0.1.31.
 - Returned to upstream version naming.

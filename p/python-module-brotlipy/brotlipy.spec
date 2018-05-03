@@ -2,7 +2,7 @@
 
 Name: python-module-%modname
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: Library contains Python bindings for the reference Brotli
 License: MIT
@@ -91,5 +91,8 @@ popd
 
 
 %changelog
+* Mon Apr 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.0-alt2
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Mar 30 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.7.0-alt1
 - Version 0.7.0

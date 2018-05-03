@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1%ubt
 
 Summary: Python Bindings for GSSAPI (RFC 2743/2744 and extensions)
@@ -123,6 +123,9 @@ popd
 %exclude %python3_sitelibdir/%mname/tests/
 
 %changelog
+* Wed Apr 11 2018 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1%ubt
+- 1.4.1 -> 1.5.0
+
 * Fri Mar 30 2018 Stanislav Levin <slev@altlinux.org> 1.4.1-alt1%ubt
 - 1.3.0 -> 1.4.1
 

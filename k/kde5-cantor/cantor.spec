@@ -13,7 +13,7 @@
 
 Name: kde5-%rname
 Version: 17.12.3
-Release: alt1%ubt
+Release: alt1%ubt.1
 %K5init
 
 Group: Education
@@ -140,6 +140,9 @@ KF5 library
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 17.12.3-alt1%ubt.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 

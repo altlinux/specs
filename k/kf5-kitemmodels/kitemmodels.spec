@@ -5,7 +5,7 @@
 
 Name: kf5-%rname
 Version: 5.44.0
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -120,6 +120,9 @@ KF5 library
 %_K5lib/libKF5ItemModels.so.*
 
 %changelog
+* Mon Apr 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.44.0-alt3%ubt
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Mar 26 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt2%ubt
 - build python bindings
 

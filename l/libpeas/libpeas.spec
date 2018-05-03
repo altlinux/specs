@@ -12,7 +12,7 @@
 
 Name: libpeas
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
@@ -200,6 +200,9 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.22.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Sun Sep 10 2017 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
 - 1.22.0
 

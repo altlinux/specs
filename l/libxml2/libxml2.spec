@@ -1,6 +1,6 @@
 Name: libxml2
 Version: 2.9.4.0.12.e905
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: The library for manipulating XML files
@@ -248,6 +248,9 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %doc %_datadir/gtk-doc/html/libxml2/
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.9.4.0.12.e905-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Mar 03 2017 Dmitry V. Levin <ldv@altlinux.org> 1:2.9.4.0.12.e905-alt1
 - v2.9.3-5-g65112cb -> v2.9.4-12-ge905f08
   (fixes: CVE-2016-1833, CVE-2016-1834, CVE-2016-1835, CVE-2016-1836,

@@ -2,7 +2,7 @@
 
 Name: python-module-blist
 Version: 1.3.6
-Release: alt1.1.1
+Release: alt1.1.1.1
 Summary: A list-like type with better asymptotic performance and similar performance on small lists
 License: BSD
 Group: Development/Python
@@ -67,6 +67,9 @@ python setup.py test
 python3 setup.py test
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.6-alt1.1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.6-alt1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

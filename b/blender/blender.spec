@@ -1,6 +1,6 @@
 Name: blender
 Version: 2.78c
-Release: alt1
+Release: alt1.1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPLv2
@@ -160,6 +160,9 @@ install -d release/plugins/include
 %files i18n -f %name.lang
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.78c-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Jun 13 2017 Anton Farygin <rider@altlinux.ru> 2.78c-alt1
 - Updated to 2.78c.
 

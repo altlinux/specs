@@ -13,7 +13,7 @@ Group: System/Libraries
 
 Name:           libpreludedb
 Version:        4.0.0
-Release:        alt1_1
+Release:        alt1_1.1
 Summary:        Framework for easy access to the IDMEF database
 # Prelude is GPL-2.0+
 # libmissing is LGPL-2.1+
@@ -241,6 +241,9 @@ chmod +x %{buildroot}%{_datadir}/%{name}/classic/mysql2sqlite.sh
 %doc ChangeLog README NEWS
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0-alt1_1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt1_1
 - new version
 

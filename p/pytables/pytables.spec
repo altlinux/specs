@@ -6,7 +6,7 @@
 
 Name: py%oname
 Version: 3.4.2
-Release: alt1
+Release: alt1.1
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -348,6 +348,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.2-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Aug 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.2-alt1
 - Updated to upstream release version 3.4.2.
 

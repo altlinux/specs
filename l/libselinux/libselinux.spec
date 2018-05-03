@@ -4,7 +4,7 @@
 Name: libselinux
 Epoch: 1
 Version: 2.5
-Release: alt4
+Release: alt4.1
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
@@ -149,6 +149,9 @@ fi
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.5-alt4.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Sep 26 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:2.5-alt4
 - Rebuild with fixed trouble in swig for import python modules
 

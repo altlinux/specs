@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.3
+Release: alt1.3.1
 Summary: Python bindings for sigprocmask(2) and signalfd(2)
 License: MIT
 Group: Development/Python
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt1.3.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt1.3
 - Fixed build.
 

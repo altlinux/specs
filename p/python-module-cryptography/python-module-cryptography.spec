@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 2.2.2
-Release: alt1
+Release: alt1.1
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
@@ -104,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Fri Apr 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.2-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Apr 5 2018 Vladimir Didenko <cow@altlinux.ru> 2.2.2-alt1
 - 2.2.2
 

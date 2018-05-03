@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.3
-Release: alt1.git20120906.1.1
+Release: alt1.git20120906.1.1.1
 Summary: Python3 port of py-bcrypt
 License: BSD
 Group: Sciences/Mathematics
@@ -42,6 +42,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3-alt1.git20120906.1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3-alt1.git20120906.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

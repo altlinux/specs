@@ -7,7 +7,7 @@ BuildRequires: gcc-c++ pkgconfig(cairo) pkgconfig(gtk+-2.0) zlib-devel
 Name:           adonthell
 Summary:        A 2D graphical RPG game
 Version:        0.3.6
-Release:        alt1_6
+Release:        alt1_6.1
 License:        GPLv2+
 URL:            http://adonthell.nongnu.org/
 Source0:        http://savannah.nongnu.org/download/%{name}/%{name}-src-%{version}.tar.gz
@@ -55,7 +55,7 @@ sed -i 's|^CFLAGS|^#CFLAGS|g' configure
 sed -i "s|ac_precious_vars='build_alias|'ac_precious_vars=build_alias|g" configure
 %build
 %configure --enable-doc
-%make_build PY_LIBS=-lpython3.5m
+%make_build PY_LIBS="$(python3-config --libs)"
 
 
 %install
@@ -73,6 +73,9 @@ sed -i "s|ac_precious_vars='build_alias|'ac_precious_vars=build_alias|g" configu
 
 
 %changelog
+* Fri Mar 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.6-alt1_6.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Sun Nov 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.6-alt1_6
 - new version
 

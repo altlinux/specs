@@ -5,7 +5,7 @@
 
 Name: python-module-%modname
 Version: 0.28.1
-Release: alt1
+Release: alt1.1
 
 Summary: C-extensions for Python
 Group: Development/Python
@@ -18,7 +18,7 @@ Provides: %modname = %version-%release
 Conflicts: python-module-Cython0.18
 
 %if_with  python3
-%add_python3_req_skip IPython
+%add_python3_req_skip IPython IPython.core IPython.core.magic IPython.utils IPython.utils.text
 %endif
 
 %add_python_req_skip IPython
@@ -91,7 +91,7 @@ Group: Development/Python3
 # since 0.20.1
 %py3_provides cython
 Conflicts: python3-module-Cython0.18
-BuildRequires: rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 
 %description -n python3-module-%modname
@@ -223,6 +223,9 @@ mv %buildroot/%_bindir/cygdb %buildroot/%_bindir/cygdb3
 %endif
 
 %changelog
+* Mon Mar 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.28.1-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Mar 19 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.1-alt1
 - 0.28.1
 

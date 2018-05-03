@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.3
-Release: alt1
+Release: alt1.1
 
 Summary: POSIX.1e ACLs for python
 License: LGPLv2.1+
@@ -87,6 +87,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.3-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Feb 02 2017 Vitaly Lipatov <lav@altlinux.ru> 0.5.3-alt1
 - new version 0.5.3 (with rpmrb script)
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.7.9
-Release: alt1
+Release: alt1.1
 Summary: Fiona reads and writes spatial data files
 License: BSD
 Group: Development/Python
@@ -167,6 +167,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.9-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Aug 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.9-alt1
 - Updated to upstream version 1.7.9.
 

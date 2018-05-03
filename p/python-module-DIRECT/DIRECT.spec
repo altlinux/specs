@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt2.1.2
+Release: alt2.1.2.1
 
 Summary: Python wrapper to the DIRECT algorithm
 License: MIT
@@ -139,6 +139,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt2.1.2.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Jun 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt2.1.2
 - Updated build dependencies
 

@@ -13,7 +13,7 @@ BuildRequires: /usr/bin/castxml /usr/bin/openssl gcc-c++ java-devel-default libl
 
 Name:		gdcm
 Version:	2.6.5
-Release:	alt1_19
+Release:	alt1_19.1
 Summary:	Grassroots DiCoM is a C++ library to parse DICOM medical files
 Group:		System/Libraries
 License:	BSD
@@ -301,6 +301,9 @@ make test -C %{_target_platform} || exit 0
 %{python3_sitelibdir}/*
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.5-alt1_19.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Jan 30 2018 Igor Vlasenko <viy@altlinux.ru> 2.6.5-alt1_19
 - new version
 

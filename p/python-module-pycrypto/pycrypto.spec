@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.7
-Release: alt3.a1.git20140620.1.1
+Release: alt3.a1.git20140620.1.1.1
 Summary: Cryptographic modules for Python
 License: Public domain
 Group: Development/Python
@@ -158,6 +158,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7-alt3.a1.git20140620.1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.7-alt3.a1.git20140620.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

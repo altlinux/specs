@@ -1,6 +1,6 @@
 Name: ledger
 Version: 3.1.aed3709
-Release: alt1.1
+Release: alt2
 
 Summary: Ledger is a highly flexible, double-entry accounting system
 
@@ -12,6 +12,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/ledger/ledger/archive/v%version.tar.gz
 Source: %name-%version.tar
+
+Patch1: ledger-upstream-boost.patch
 
 Requires: libledger = %version-%release
 
@@ -97,6 +99,7 @@ This package contains emacs libraries to ease use of ledger.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %cmake -DUSE_PYTHON=yes
@@ -127,6 +130,9 @@ This package contains emacs libraries to ease use of ledger.
 #%_emacslispdir/*
 
 %changelog
+* Mon Apr 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.aed3709-alt2
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Feb 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.aed3709-alt1.1
 - Rebuilt with libicuuc.so.56.
 

@@ -1,6 +1,6 @@
 Name: pdb-clone
 Version: 1.10
-Release: alt1.1
+Release: alt1.1.1
 License: GPL
 Summary: A clone of pdb, fast and with the remote debugging and attach features
 Source: %name.%version.tar.gz
@@ -84,6 +84,9 @@ PYTHONPATH=`pwd`/build/lib.linux-%_arch-%_python3_version python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10-alt1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.10-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.12
-Release: alt1
+Release: alt1.1
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
@@ -126,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.12-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Apr 20 2016 Alexey Shabalin <shaba@altlinux.ru> 1.0.12-alt1
 - 1.0.12
 

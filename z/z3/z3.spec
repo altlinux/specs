@@ -2,7 +2,7 @@
 
 Name: z3
 Version: 4.5.0
-Release: alt1
+Release: alt1.1
 Summary: High-performance theorem prover
 License: MIT
 Group: Sciences/Mathematics
@@ -160,6 +160,9 @@ python3 build/python3/example.py
 %endif
 
 %changelog
+* Mon Mar 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Oct 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.0-alt1
 - Updated to upstream version 4.5.0.
 

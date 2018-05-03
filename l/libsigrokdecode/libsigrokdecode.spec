@@ -1,6 +1,6 @@
 Name: libsigrokdecode
 Version: 0.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: sigrok -- signal analysis software suite
 License: GPLv3
@@ -61,5 +61,8 @@ make check
 %_pkgconfigdir/libsigrokdecode.pc
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Jun 19 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.0-alt1
 - initial

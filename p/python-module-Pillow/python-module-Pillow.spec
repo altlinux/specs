@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 5.1.0
-Release: alt1
+Release: alt2
 
 Summary: Python Imaging Library (Fork)
 
@@ -194,6 +194,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.0-alt2
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Apr 24 2018 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt1
 - new version 5.1.0 (with rpmrb script)
 - build with libeimagequant support

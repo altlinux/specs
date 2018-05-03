@@ -6,7 +6,7 @@ BuildRequires: unzip
 
 Name: python-module-%oname
 Version: 2.0.8
-Release: alt1
+Release: alt1.1
 Summary: GMP/MPIR, MPFR, and MPC interface
 License: LGPL
 Group: Development/Python
@@ -135,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.8-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.8-alt1
 - automated PyPI update
 

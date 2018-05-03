@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.11.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for libparted
 
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.11.1-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.11.1-alt1
 - Updated to upstream version 3.11.1.
 

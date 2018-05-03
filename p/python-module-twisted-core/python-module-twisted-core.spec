@@ -7,7 +7,7 @@
 %define prefx3 python3-module-twisted
 Name: %prefx-core
 Version: %major.0
-Release: alt2
+Release: alt2.1
 %setup_python_module twisted-core
 Summary: An asynchronous networking framework written in Python
 
@@ -968,6 +968,9 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 17.5.0-alt2.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Aug 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 17.5.0-alt2
 - Enabled python-3 build.
 - Cleaned up the spec.

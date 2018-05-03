@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt2
+Release: alt2.1
 Summary: Implementations of a fast Elliptic-curve Diffie-Hellman primitive
 License: BSD
 Group: Development/Python
@@ -130,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3-alt2.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Mar 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3-alt2
 - Cleaned up spec and fixed tests.
 

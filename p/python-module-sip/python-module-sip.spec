@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.19.7
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings generator for C++ class libraries
 
@@ -147,6 +147,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.19.7-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Feb 14 2018 Vitaly Lipatov <lav@altlinux.ru> 4.19.7-alt1
 - new version 4.19.7 (with rpmrb script)
 

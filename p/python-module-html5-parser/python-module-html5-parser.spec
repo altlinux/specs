@@ -4,7 +4,7 @@
 %define modulename bleach
 Name: python-module-html5-parser
 Version: 0.4.4
-Release: alt1
+Release: alt1.1
 
 Summary: Fast C based HTML 5 parsing for python
 
@@ -79,6 +79,9 @@ popd
 
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.4-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Sun Oct 01 2017 Vitaly Lipatov <lav@altlinux.ru> 0.4.4-alt1
 - initial build for ALT Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name:          python-module-%oname
 Version:       1.9.73
-Release:       alt2
+Release:       alt2.1
 %setup_python_module %oname
 
 Group:         Development/Python
@@ -92,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.73-alt2.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Nov 28 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.9.73-alt2
 - release bump for separate build into p8
 

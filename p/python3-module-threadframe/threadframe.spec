@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.2
-Release: alt2.1
+Release: alt2.1.1
 Summary: Advanced thread debugging extension
 License: Python
 Group: Development/Python3
@@ -35,6 +35,9 @@ Obtaining tracebacks on other threads than the current thread.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2-alt2.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2-alt2.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

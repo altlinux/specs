@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Version: 3.0.0
-Release: alt2%ubt
+Release: alt3%ubt
 
 Summary: An object-oriented API to access LDAP directory servers from Python programs
 License: Python-style
@@ -14,6 +14,7 @@ Url: https://www.python-ldap.org
 # Source-git: https://github.com/python-ldap/python-ldap
 
 Source: %name-%version.tar
+Patch1: %mname-%version-alt-tests.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
@@ -67,6 +68,8 @@ stuff (e.g. processing LDIF, LDAPURLs, LDAPv3 sub-schema, etc.).
 
 %prep
 %setup
+%patch1 -p2
+
 rm -rf ../python3
 cp -a . ../python3
 
@@ -120,6 +123,9 @@ popd
 %python3_sitelibdir/python_ldap-%{version}*-*.egg-info
 
 %changelog
+* Wed Apr 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt3%ubt
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 29 2018 Stanislav Levin <slev@altlinux.org> 3.0.0-alt2%ubt
 - 3.0.0b4 -> 3.0.0
 

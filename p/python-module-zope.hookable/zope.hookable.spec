@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.4
-Release: alt1.1.1.1
+Release: alt1.1.1.1.1
 Summary: Hookable object support
 License: ZPLv2.1
 Group: Development/Python
@@ -184,6 +184,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.4-alt1.1.1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Mar 18 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt1.1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

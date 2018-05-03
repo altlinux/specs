@@ -5,7 +5,7 @@
 
 Name: python-module-%_name
 Version: 3.22.0
-Release: alt1.%rel
+Release: alt1.%rel.1
 
 Summary: Another Python SQLite Wrapper
 License: zlib/libpng License
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.22.0-alt1.r1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Mar 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1.r1
 - 3.22.0
 

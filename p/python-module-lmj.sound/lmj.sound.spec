@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt2.git20131028.1
+Release: alt2.git20131028.1.1
 Summary: An assemblage of code for manipulating sound data
 License: MIT
 Group: Development/Python
@@ -143,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.4-alt2.git20131028.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.4-alt2.git20131028.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

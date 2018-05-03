@@ -8,7 +8,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.8.0
-Release: alt1
+Release: alt1.1
 Summary: Statistical computations and models for use with SciPy
 License: BSD
 Group: Development/Python
@@ -113,8 +113,10 @@ This package contains documentation for %oname.
 cp -fR . ../python3
 %endif
 
+%if_with doc
 %prepare_sphinx docs
 ln -s ../objects.inv docs/source/
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -197,6 +199,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.8.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Mar 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.8.0-alt1
 - Updated to upstream version 0.8.0.
 - Disabled docs generation.

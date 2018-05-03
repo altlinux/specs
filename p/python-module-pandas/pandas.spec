@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.22.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python Data Analysis Library
 License: BSD
@@ -16,6 +16,7 @@ Url: http://pandas.pydata.org/
 # https://github.com/pandas-dev/pandas.git
 Source: %name-%version.tar
 Patch1: %oname-alt-docs.patch
+Patch2: %oname-alt-static-variables.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires(pre): rpm-build-python
@@ -29,7 +30,10 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel python3-module-Cython python3-module-notebook python3-module-numpy-testing
 BuildRequires: xvfb-run python3(nbsphinx)
-BuildRequires: python3(scipy) python3(xlrd) python3(tables.tests) python3(openpyxl)
+BuildRequires: python3(scipy) python3(xlrd) python3(tables.tests)
+%if_enabled check
+BuildRequires: python3(openpyxl)
+%endif
 %endif
 
 %setup_python_module %oname
@@ -100,6 +104,7 @@ This package contains tests for pandas.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 # fix version info
 sed -i \
@@ -185,6 +190,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.22.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Mar 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.22.0-alt1
 - Updated to upstream version 0.22.0.
 - Updated runtime dependencies of python-3 package.

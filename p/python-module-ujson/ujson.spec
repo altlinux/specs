@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.35
-Release: alt1
+Release: alt1.1
 Summary: Ultra fast JSON encoder and decoder for Python
 License: BSD
 Group: Development/Python
@@ -61,6 +61,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.35-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.35-alt1
 - automated PyPI update
 

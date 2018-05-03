@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt1.dev0.git20150414.1.1.1
+Release: alt1.dev0.git20150414.1.1.1.1
 Summary: Fork of Python 3 pickle module
 License: ZPL
 Group: Development/Python
@@ -131,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.1-alt1.dev0.git20150414.1.1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6.1-alt1.dev0.git20150414.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

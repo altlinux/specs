@@ -13,7 +13,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt7
+Release: alt7.1
 
 Summary: Matlab(TM) style python plotting package
 
@@ -798,6 +798,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt7.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Jan 29 2018 Stanislav Levin <slev@altlinux.org> 2.0.0-alt7
 - Fix Requires of python3-module-matplotlib
   (mpl_toolkits is needed for namespace package import)

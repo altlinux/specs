@@ -6,7 +6,7 @@
 Summary: Easy SNMP is a fork of the official Net-SNMP Python Bindings
 Name: python-module-%oname
 Version: 0.2.5
-Release: alt1%ubt.1
+Release: alt1%ubt.1.1
 Url: https://github.com/kamakazikamikaze/easysnmp
 Source: %oname-%version.tar.gz
 License: BSD
@@ -96,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.5-alt1%ubt.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.5-alt1%ubt.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

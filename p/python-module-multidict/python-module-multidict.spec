@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 3.1.3
-Release: alt1.1
+Release: alt1.1.1
 Summary: Multidicts are useful for working with HTTP headers, URL query args etc
 
 License: ASL 2.0
@@ -45,6 +45,9 @@ rm -f multidict/_istr.cpython-35m-x86_64-linux-gnu.so
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.3-alt1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.1.3-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

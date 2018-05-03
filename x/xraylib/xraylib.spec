@@ -2,7 +2,7 @@
 
 Name: xraylib
 Version: 3.1.0
-Release: alt1.git20141114.1
+Release: alt1.git20141114.1.1
 Summary: X-ray matter interaction cross sections for X-ray fluorescence applications
 License: BSD
 Group: Sciences/Physics
@@ -144,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.0-alt1.git20141114.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.1.0-alt1.git20141114.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

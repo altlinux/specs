@@ -28,7 +28,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt3
+Release: alt4
 License: GPL
 
 Group: System/Base
@@ -592,6 +592,9 @@ __EOF__
 %python3_sitelibdir/*
 
 %changelog
+* Sat Apr 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.02.177-alt4
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Apr 25 2018 Michael Shigorin <mike@altlinux.org> 2.02.177-alt3
 - fix thin knob (was ignored when systemd is enabled)
 - E2K: avoid lcc-unsupported option

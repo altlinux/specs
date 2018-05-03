@@ -36,7 +36,7 @@
 
 Name: boost%namesuff
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt4.1
+Release: alt4.1.1
 Epoch: 1
 
 Summary: Boost libraries
@@ -1738,6 +1738,9 @@ done
 
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.58.0-alt4.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Jan 23 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.58.0-alt4.1
 - Rebuilt as compat package without development files.
 

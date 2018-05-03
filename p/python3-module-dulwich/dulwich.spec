@@ -2,7 +2,7 @@
 %define oname dulwich
 Name: python3-module-%oname
 Version: 0.16.3
-Release: alt1
+Release: alt1.1
 Summary: Python Git Library
 License: GPLv2+
 Group: Development/Python3
@@ -64,6 +64,9 @@ popd
 %python3_sitelibdir/*/tests
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.16.3-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Jan 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.16.3-alt1
 - automated PyPI update
 

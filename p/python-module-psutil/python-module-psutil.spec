@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 5.3.1
-Release: alt1
+Release: alt1.1
 
 Summary: A process utilities module for Python
 
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3.1-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Oct 03 2017 Vitaly Lipatov <lav@altlinux.ru> 5.3.1-alt1
 - new version 5.3.1 (with rpmrb script)
 

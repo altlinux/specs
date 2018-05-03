@@ -17,7 +17,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt1
+Release: alt1.1
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -503,6 +503,9 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.13.0.1-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Jun 21 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0.1-alt1
 - Rebased on 4.13.0.1.
 - Disabled signature checking.

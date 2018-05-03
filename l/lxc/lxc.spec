@@ -29,7 +29,7 @@
 
 Name: lxc
 Version: 2.1.0
-Release: alt1
+Release: alt1.1
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -185,6 +185,9 @@ mkdir -p %buildroot%_cachedir/%name
 
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Sep 06 2017 Denis Pynkin <dans@altlinux.org> 2.1.0-alt1
 - Version updated
 - New script 'lxc-update-config' can be used to upgrade existing

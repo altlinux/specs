@@ -1,6 +1,6 @@
 Name:           onboard
 Version:        1.4.1
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Simple on-screen Keyboard
 License:        GPLv3
@@ -90,6 +90,9 @@ rm -rf %buildroot%_iconsdir/ubuntu-mono-*
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.1-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 23 2017 Andrey Cherepanov <cas@altlinux.org> 1.4.1-alt1
 - New version
 

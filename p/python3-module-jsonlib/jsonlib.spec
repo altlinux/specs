@@ -1,7 +1,7 @@
 %define oname jsonlib
 Name: python3-module-%oname
 Version: 1.6.1
-Release: alt1.1.1.1
+Release: alt1.1.1.1.1
 Summary: JSON serializer/deserializer for Python
 License: GPL
 Group: Development/Python3
@@ -38,6 +38,9 @@ JSON that conforms strictly to RFC 4627.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.1-alt1.1.1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.6.1-alt1.1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

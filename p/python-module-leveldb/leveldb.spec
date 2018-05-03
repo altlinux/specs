@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.193
-Release: alt2
+Release: alt2.1
 Summary: Python bindings for leveldb database library
 License: BSD
 Group: Development/Python
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.193-alt2.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Feb 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.193-alt2
 - fix build on aarch64
 

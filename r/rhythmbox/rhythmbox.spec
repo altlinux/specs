@@ -15,7 +15,7 @@
 
 Name: rhythmbox
 Version: %ver_major.2
-Release: alt2%rev
+Release: alt2%rev.1
 
 Summary: Music Management Application
 License: GPL
@@ -69,10 +69,11 @@ Provides: python%__python3_version(rhythmdb)
 Provides: python3(rb)
 Provides: python3(rhythmdb)
 
-BuildRequires: rpm-build-python3 python3-module-pygobject3-devel
+BuildRequires: python3-module-pygobject3-devel
 
 BuildRequires(Pre): browser-plugins-npapi-devel
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: intltool >= 0.40
 BuildRequires: gtk-doc yelp-tools gnome-common desktop-file-utils
@@ -488,6 +489,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Thu Apr 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.2-alt2.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Apr 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt2
 - updated to v3.4.2-87-g2af0203
 

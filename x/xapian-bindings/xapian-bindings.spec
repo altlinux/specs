@@ -5,7 +5,7 @@
 
 Name: xapian-bindings
 Version: 1.4.5
-Release: alt1
+Release: alt1.1
 
 Summary: Xapian search engine bindings
 License: GPL
@@ -141,6 +141,9 @@ rm -rf %buildroot%_defaultdocdir/%name/
 # - package docs/examples properly
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.5-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.5-alt1
 - Updated to latest stable upstream version 1.4.5.
 - Enabled building bindings for python-3.

@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.11.0
-Release: alt1.1
+Release: alt1.1.1
 Summary: Yet another URL library http://yarl.readthedocs.io
 License: ASL 2.0
 Group: Development/Python
@@ -39,6 +39,9 @@ The module provides handy URL class for url parsing and changing.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.11.0-alt1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

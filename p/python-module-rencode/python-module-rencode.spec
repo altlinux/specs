@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.5
-Release: alt1
+Release: alt1.1
 
 Summary: The rencode module is similar to bencode from the BitTorrent project
 
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.5-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Feb 10 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.5-alt1
 - new version 1.0.5 (with rpmrb script)
 

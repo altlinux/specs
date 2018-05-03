@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.2.4.2
-Release: alt1.1
+Release: alt1.1.1
 
 %setup_python_module %oname
 
@@ -116,12 +116,12 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %check
 export PIP_INDEX_URL=http://host.invalid./
 export PYTHONPATH=%python_sitelibdir:%python_sitelibdir_noarch
-TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py27-pure-cffi -v
+TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py%{python_version_nodots python}-pure-cffi -v
 
 %if_with python3
 pushd ../python3
 export PYTHONPATH=%python3_sitelibdir:%python3_sitelibdir_noarch
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py35 -v
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -v
 popd
 %endif
 
@@ -151,6 +151,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.4.2-alt1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.4.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
