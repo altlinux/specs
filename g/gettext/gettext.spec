@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.19.8.1
-Release: alt4
+Release: alt5
 
 %define libintl libintl3
 
@@ -33,9 +33,10 @@ Obsoletes: %name-base
 %def_disable static
 %def_without included_gettext
 %def_without java
+%def_with emacs
 
 %{?_with_included_gettext:Requires: %libintl = %version-%release}
-BuildPreReq: emacs-nox gcc-c++ makeinfo xz %{?_with_java:jdkgcj /proc}
+BuildPreReq: gcc-c++ makeinfo xz %{?_with_java:jdkgcj /proc} %{?_with_emacs:emacs-nox}
 # Needed for the --color option of the various programs.
 # Otherwise, embedded versions are used, which is forbidden by policy.
 BuildRequires: glib2-devel libcroco-devel libncurses-devel libunistring-devel libxml2-devel
@@ -213,6 +214,7 @@ export ac_cv_prog_STRIP=:
 	--without-included-regex \
 	--disable-csharp \
 	--without-cvs --without-git \
+	%{subst_with emacs} \
 	%{subst_enable static} \
 	%{?_with_included_gettext:--with-included-gettext} \
 	#
@@ -299,8 +301,10 @@ mkdir -p %buildroot%_docdir
 %_datadir/gettext-*/
 %{?_with_java:%exclude %_datadir/gettext/libintl.jar}
 %_datadir/aclocal/*
+%if_with emacs
 %_datadir/emacs/site-lisp/*.el*
 %config(noreplace) %_sysconfdir/emacs/site-start.d/*.el
+%endif
 %dir %docdir
 %docdir/FAQ.html
 %docdir/tutorial.html
@@ -332,6 +336,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Thu May 03 2018 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt5
+- spec: added emacs knob (enabled by default; by mike@).
+
 * Tue Apr 03 2018 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt4
 - Fixed build with new perl.
 
