@@ -1,19 +1,18 @@
 Name: cvsgraph
 Version: 1.7.0
-Release: alt1.1
-
-Packager: Victor Forsyuk <force@altlinux.org>
+Release: alt2
 
 Summary: Create graphs of branches and revisions for files in a CVS repository
 License: GPLv2+
 Group: System/Servers
-
 URL: http://www.akhphd.au.dk/~bertho/cvsgraph
-Source: %url/release/%name-%version.tar.gz
-Patch: cvsgraph-1.7.0-alt-DSO.patch
 
-# Automatically added by buildreq on Thu May 22 2008
-BuildRequires: flex libfreetype-devel libgd2-devel
+# %url/release/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: cvsgraph-1.7.0-alt-DSO.patch
+Patch1: cvsgraph-1.7.0-alt-pkgconfig.patch
+
+BuildRequires: flex libfreetype-devel libgd3-devel
 
 Requires: fonts-ttf-vera
 
@@ -24,10 +23,12 @@ branches of a file in a CVS/RCS repository.
 %prep
 %setup
 %patch -p2
+%patch1 -p2
 
 %__subst 's@bitstream-vera@ttf/TrueType-vera@g' cvsgraph.conf
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -44,6 +45,9 @@ install -Dpm644 cvsgraph.conf.5 %buildroot%_man5dir/cvsgraph.conf.5
 %_man5dir/*
 
 %changelog
+* Thu May 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.0-alt2
+- Fixed build.
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.1
 - Fixed build
 
