@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.13
-Release:	alt3.1
+Release:	alt4
 #Url:		http://etcnet.org/
 Url:		https://www.altlinux.org/Etcnet
 
@@ -28,7 +28,7 @@ Inspired by the limitations of traditional network configuration subsystems,
 management, removable devices, full iproute2 command set, interface
 dependencies resolution, QoS and firewall configuration frameworks.
 /etc/net provides support for the following interface types: Ethernet, WiFi
-(WEP), IPv4/IPv6 tunnels, PSK IPSec tunnels, VLAN, PLIP, Ethernet bonding and
+(WEP), IPv4/IPv6 tunnels, VTI tunnels, VLAN, PLIP, Ethernet bonding and
 bridging, traffic equalizer, Pent@NET, Pent@VALUE, SkyStar-2, TUN/TAP,
 OpenVPN TUN/TAP, OpenSSH TUN/TAP, usbnet and PPP. Due to its modular structure,
 support for new interface types can be added without overall design changes.
@@ -141,6 +141,9 @@ fi
 %files full
 
 %changelog
+* Thu May 03 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.13-alt4
+- vti support added
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.13-alt3.1
 - NMU: added URL
 
