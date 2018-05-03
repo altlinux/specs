@@ -1,6 +1,6 @@
 Name:    cloud-init
 Version: 0.7.9
-Release: alt2.git.5beecd
+Release: alt3.git.5beecd
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -26,7 +26,7 @@ BuildArch: noarch
 BuildRequires: /proc
 
 BuildRequires: python-devel python-module-distribute python-module-nose python-module-mocker
-BuildRequires: python-module-yaml python-module-cheetah python-module-oauth
+BuildRequires: python-module-yaml python2.7(Cheetah) python-module-oauth
 BuildRequires: systemd-devel
 # For tests
 BuildRequires: python-modules-json python-module-requests python-module-jsonpatch python-module-configobj python-module-mock python-module-oauthlib
@@ -115,6 +115,9 @@ make unittest noseopts=" -I test_cloudstack.py -I test_handler_apt_source_v3.py"
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Thu May 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.9-alt3.git.5beecd
+- Updated build dependencies.
+
 * Tue Mar 21 2017 Alexey Shabalin <shaba@altlinux.ru> 0.7.9-alt2.git.5beecd
 - update ALTLinux etcnet support
 
