@@ -1,6 +1,6 @@
 Name: xorg-installers
 Version: 7.8
-Release: alt5
+Release: alt6
 
 Summary: Set of various Xorg-related installers
 License: MIT/X11
@@ -31,7 +31,7 @@ Graphical applications for Xorg
 %package -n xorg-drv-video
 Summary: video drivers for X Window System
 Group: System/X11
-%ifarch e2k
+%ifarch %e2k
 Requires: xorg-drv-radeon
 #Requires: xorg-drv-siliconmotion
 %else
@@ -72,6 +72,9 @@ X proto header files
 %files -n xorg-proto-devel
 
 %changelog
+* Thu May 03 2018 Michael Shigorin <mike@altlinux.org> 7.8-alt6
+- support e2kv4 through %%e2k
+
 * Mon Oct 23 2017 Mikhail Efremov <sem@altlinux.org> 7.8-alt5
 - xorg-drv-video: Add amdgpu.
 
