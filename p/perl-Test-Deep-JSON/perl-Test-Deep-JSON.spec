@@ -3,7 +3,7 @@
 %define real_name Test-Deep-JSON
 
 Name: perl-Test-Deep-JSON
-Version: 0.04
+Version: 0.05
 Release: alt1
 
 Summary: Perl module to compare JSON with Test::Deep
@@ -21,9 +21,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Nov 12 2017
-# optimized out: perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-ExtUtils-Config perl-ExtUtils-Helpers perl-ExtUtils-InstallPaths perl-JSON-PP perl-JSON-XS perl-Parse-CPAN-Meta perl-Term-ANSIColor perl-Types-Serialiser perl-common-sense perl-devel perl-threads python-base python-modules python3 python3-base
-BuildRequires: perl-Exporter-Lite perl-JSON perl-Module-Build-Tiny perl-Test-Deep
+# Automatically added by buildreq on Thu May 03 2018
+# optimized out: perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Cpanel-JSON-XS perl-Encode perl-ExtUtils-Config perl-ExtUtils-Helpers perl-ExtUtils-InstallPaths perl-JSON-PP perl-Parse-CPAN-Meta perl-Term-ANSIColor perl-devel perl-parent perl-threads python-base python-modules python3 python3-base python3-module-mpl_toolkits python3-module-zope ruby
+BuildRequires: perl-Exporter-Lite perl-JSON-MaybeXS perl-Module-Build-Tiny perl-Test-Deep
 
 %description
 Perl module Test::Deep::JSON provides provides json($expected)
@@ -44,6 +44,9 @@ and matches (by cmp_deeply) with $expected.
 %perl_vendor_privlib/Test/Deep/JSON*
 
 %changelog
+* Thu May 03 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.05-alt1
+- New version
+
 * Sun Nov 12 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.04-alt1
 - New version
 
