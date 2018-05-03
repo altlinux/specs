@@ -1,8 +1,9 @@
 
+%def_disable gpgutils
 %define _localstatedir /var
 
 Name: gnupg2
-Version: 2.2.6
+Version: 2.2.7
 Release: alt1%ubt
 
 Group: Text tools
@@ -128,8 +129,10 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %files -f %name.lang
 %config %_sysconfdir/profile.d/gnupg-agent.sh
 %_bindir/*
+%if_disabled gpgutils
 %exclude %_bindir/gpg-zip
 %exclude %_bindir/gpgsplit
+%endif
 %_sbindir/*
 %_libexecdir/gnupg/
 /usr/lib/systemd/user/*.*
@@ -140,6 +143,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.7-alt1%ubt
+- new version
+
 * Tue Apr 24 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.6-alt1%ubt
 - new version
 
