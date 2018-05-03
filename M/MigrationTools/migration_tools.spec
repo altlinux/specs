@@ -1,12 +1,12 @@
 Name: MigrationTools
 Version: 46
-Release: alt2
+Release: alt2.1
 
 # Define Migration Tools number
 %define OpenLDAP_ver 2.1.30
 
 Summary: Set of scripts for migration of a nis domain to a ldap annuary
-Summary(ru_RU.KOI8-R): Набор скриптов, необходимый для миграции от nis к ldap
+Summary(ru_RU.UTF-8): п²п╟п╠п╬я─ я│п╨я─п╦п©я┌п╬п╡, п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╧ п╢п╩я▐ п╪п╦пЁя─п╟я├п╦п╦ п╬я┌ nis п╨ ldap
 
 License: BSD redistributable
 Group: System/Servers
@@ -37,9 +37,12 @@ aliases, hosts, netgroups, networks, protocols, RPCs, and services from
 existing nameservices (flat files, NIS, and NetInfo) to LDAP.
 Tools to load flat files (/etc) into LDAP as per RFC 2307.
 
-%description -l ru_RU.KOI8-R
-MigrationTools это набор скриптов, написанных на Perl, для миграции пользователей, групп, алиасов, имен хостов, сетевых групп, сетей, протоколов, RPC и сервисов из существующего пространства имен (файлы, NIS и NetInfo) в LDAP.
-Скрипты закгрузки файлов (/etc) написаны согласно RFC 2307.
+%description -l ru_RU.UTF-8
+MigrationTools - я█я┌п╬ п╫п╟п╠п╬я─ я│п╨я─п╦п©я┌п╬п╡, п╫п╟п©п╦я│п╟п╫п╫я▀я┘ п╫п╟ Perl, п╢п╩я▐ п╪п╦пЁя─п╟я├п╦п╦ 
+п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╧, пЁя─я┐п©п©, п╟п╩п╦п╟я│п╬п╡, п╦п╪п╣п╫ я┘п╬я│я┌п╬п╡, я│п╣я┌п╣п╡я▀я┘ пЁя─я┐п©п©, я│п╣я┌п╣п╧, п©я─п╬я┌п╬п╨п╬п╩п╬п╡, 
+RPC п╦ я│п╣я─п╡п╦я│п╬п╡ п╦п╥ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╣пЁп╬ п©я─п╬я│я┌я─п╟п╫я│я┌п╡п╟ п╦п╪п╣п╫ (я└п╟п╧п╩я▀, NIS п╦ NetInfo) п╡ 
+LDAP.
+п║п╨я─п╦п©я┌я▀ п╥п╟пЁя─я┐п╥п╨п╦ я└п╟п╧п╩п╬п╡ (/etc) п╫п╟п©п╦я│п╟п╫я▀ я│п╬пЁп╩п╟я│п╫п╬ RFC 2307.
 
 %prep
 %setup -q
@@ -78,6 +81,11 @@ install -p -m644 %SOURCE1 TOOLS.migration
 %doc README TOOLS.migration
 
 %changelog
+* Thu May 03 2018 Grigory Ustinov <grenka@altlinux.org> 46-alt2.1
+- NMU:
+  + Transfer description translation to UTF-8.
+  + Fix misprint in Russian package description (Closes: #11828).
+
 * Fri Jan 14 2005 Serge A. Volkov <vserge at altlinux.ru> 46-alt2
 - Fix Sisyphus unmet: /usr/bin/sh
 - Spec cleanup 
