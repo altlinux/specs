@@ -1,8 +1,8 @@
 %define RELEASE altlinux
 %global soversion 1
 Name: fwupdate
-Version: 10
-Release: alt3
+Version: 11
+Release: alt1%ubt
 Summary: Tools to manage UEFI firmware updates
 License: GPLv2+
 Url: https://github.com/rhinstaller/fwupdate
@@ -14,12 +14,14 @@ BuildRequires: elfutils libpopt-devel gettext pkgconfig
 BuildRequires: systemd
 BuildRequires: pesign
 BuildRequires: rpm-macros-uefi
+BuildRequires(pre): rpm-build-ubt
 %ifarch x86_64
 BuildRequires: libsmbios-devel
 %endif
 ExclusiveArch: x86_64 aarch64
 Source0: %name-%version.tar
 Source1: %name-install
+Patch0: %name-%version-alt.patch
 
 %ifarch x86_64
 %global efiarch x64
@@ -72,6 +74,7 @@ UEFI binaries used by libfwupdate.
 
 %prep
 %setup
+%patch0 -p1
 mkdir build-%efiarch
 %ifarch x86_64
 mkdir build-%efialtarch
@@ -158,6 +161,9 @@ mv %buildroot/boot/efi/EFI/%efidir/fwup* %buildroot/%_libdir/efi/fw/
 %_libdir/efi/fw/fw*
 
 %changelog
+* Fri Apr 27 2018 Anton Farygin <rider@altlinux.ru> 11-alt1%ubt
+- new version
+
 * Wed Mar 28 2018 Anton Farygin <rider@altlinux.ru> 10-alt3
 - rebuilt with new gnu-efi
 - small improvement of the installation script
