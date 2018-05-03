@@ -1,14 +1,14 @@
 Name: chroma
 Version: 1.15
-Release: alt1
+Release: alt2
 Group: Games/Puzzles
 License: GPLv2
 Source: %name-%version.tar.bz2
 Summary: An abstract colourful puzzle game
 Url: http://www.level7.org.uk/chroma/
-Packager: Fr. Br. George <george@altlinux.ru>
 
 Requires: %name-data
+
 # Automatically added by buildreq on Tue Sep 06 2011
 # optimized out: fontconfig libSDL-devel libtinfo-devel
 BuildRequires: ImageMagick-tools libSDL_image-devel libfreetype-devel libncurses-devel zlib-devel
@@ -28,6 +28,7 @@ It features:
 Group: Games/Puzzles
 License: GPLv2
 Summary: Data files for %name abstract colourful puzzle game
+
 %description data
 %summary
 
@@ -35,6 +36,7 @@ Summary: Data files for %name abstract colourful puzzle game
 %setup
 
 %build
+%add_optflags -fgnu89-inline
 %autoreconf
 %configure
 %make_build
@@ -70,6 +72,9 @@ install -D %name.desktop %buildroot/%_desktopdir/%name.desktop
 %_datadir/%name
 
 %changelog
+* Thu May 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.15-alt2
+- Fixed build with new toolchain.
+
 * Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 1.15-alt1
 - Autobuild version bump to 1.15
 
