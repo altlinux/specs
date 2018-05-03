@@ -1,5 +1,5 @@
 Name: virtualgl
-Version: 2.5.2
+Version: 2.5.90
 Release: alt1%ubt
 
 %define vgl_name vgl
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 Source1: vglserver
 Source2: README.ALT-ru_RU.UTF-8
 
-Patch1: %name-2.5.2-alt-remove-solaris-stuff.patch
+Patch1: %name-2.5.90-alt-remove-solaris-stuff.patch
 Patch2: %name-2.5.2-alt-xauth.patch
 Patch3: %name-2.5.2-alt-nettest.patch
 Patch4: %name-2.5.2-alt-fix-linkage.patch
@@ -27,6 +27,7 @@ Patch6: %name-2.5.2-alt-system-glx.patch
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake
 BuildRequires: gcc-c++ 
+BuildRequires: libXtst-devel
 BuildRequires: libXv-devel
 BuildRequires: libfltk-devel
 BuildRequires: libssl-devel
@@ -82,7 +83,8 @@ rm doc/LICENSE-*.txt
 	-DVGL_FAKELIBDIR:PATH=%_libdir/%vgl_name \
 	-DTJPEG_INCLUDE_DIR=/usr/include \
 	-DTJPEG_LIBRARY:PATH=turbojpeg \
-	-DVGL_DOCDIR=%_defaultdocdir/%name-%version \
+	-DCMAKE_INSTALL_DOCDIR=%_defaultdocdir/%name-%version \
+	-DX11_XTest_INCLUDE_PATH=%_includedir \
 	-DVGL_BUILDSTATIC=OFF \
 	-DVGL_USESSL=ON \
 	-DVGL_SYSTEMGLX=1 \
@@ -115,8 +117,6 @@ mv %buildroot%_bindir/.vglrun.vars64 %buildroot%_libexecdir/vglrun.vars64
 %else 
 mv %buildroot%_bindir/.vglrun.vars32 %buildroot%_libexecdir/vglrun.vars32
 %endif
-
-mv %buildroot%_defaultdocdir/VirtualGL/* %buildroot%_defaultdocdir/%name-%version
 popd
 
 %pre
@@ -141,5 +141,36 @@ chmod 2755 %_localstatedir/%vgl_name
 %_includedir/*.h
 
 %changelog
+* Thu May 03 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.5.90-alt1%ubt
+- new version build
+- restore previous package spec changelog
+
 * Wed Apr 25 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.5.2-alt1%ubt
 - new version build from Git src tree with updated ALTLinux patches
+
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3-alt1.1
+- Rebuilt with updatet libfltk
+
+* Mon Dec 26 2011 Dmitry Derjavin <dd@altlinux.org> 2.3-alt1
+- [2.3] (closes: 26707)
+
+* Thu Nov 17 2011 Ivan A. Melnikov <iv@altlinux.org> 2.2.90-alt5
+- use system fltk.
+
+* Thu Nov 17 2011 Dmitry Derjavin <dd@altlinux.org> 2.2.90-alt4
+- rrfaker linkage fixed, thanks to iv@;
+- minor cleanup.
+
+* Thu Nov 17 2011 Dmitry Derjavin <dd@altlinux.org> 2.2.90-alt3
+- minor patch for vglconnect to fit our paths changes;
+- README update.
+
+* Wed Nov 16 2011 Dmitry Derjavin <dd@altlinux.org> 2.2.90-alt2
+- vglserver_config and vglgenkey moved to documentation -> utils;
+- vglserver added to run 3D-enabled X-server from inittab;
+- vglrun patched to interact with vglserver smoothly;
+- ALT cpecific README added.
+
+* Mon Nov 14 2011 Dmitry Derjavin <dd@altlinux.org> 2.2.90-alt1
+- Initial ALT Linux build.
+
