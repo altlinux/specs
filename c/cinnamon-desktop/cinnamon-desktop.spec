@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
@@ -8,7 +8,7 @@
 %def_enable introspection
 
 Name: cinnamon-desktop
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library with common API for various Cinnamon modules
@@ -36,6 +36,7 @@ BuildPreReq: yelp-tools itstool
 BuildPreReq: gtk-doc >= 1.4
 BuildPreReq: gnome-common >= 2.8.0
 BuildPreReq: gsettings-desktop-schemas-devel >= 3.5.91
+BuildRequires: meson
 BuildRequires: iso-codes-devel
 BuildRequires: libSM-devel libXrandr-devel libXext-devel xkeyboard-config-devel libxkbfile-devel
 BuildRequires: hwdatabase >= 0.3.31-alt1
@@ -113,17 +114,11 @@ GObject introspection devel data for the %name library
 [ ! -d m4 ] && mkdir m4
 
 %build
-%autoreconf
-%configure \
-    %{subst_enable static} \
-    %{?_enable_gtk_doc:--enable-gtk-doc} \
-    --with-gnome-distributor=%gnome_distributor \
-    --with-pnp-ids-path=%_datadir/misc/pnp.ids
-
-%make_build
+%meson -Dpnp-ids-path=/usr/share/hwdata/pnp.ids -Ddeprecation-flags=false
+%meson_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%meson_install
 
 %find_lang --with-gnome --output=%name.lang %name fdl gpl lgpl
 
@@ -155,6 +150,9 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Sat Apr 28 2018 Vladimir Didenko <cow@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Wed Nov 22 2017 Vladimir Didenko <cow@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

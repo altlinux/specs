@@ -1,4 +1,4 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3.0
 %def_enable introspection
 
@@ -110,6 +110,9 @@ GObject introspection devel data for the Cinnamon Desktop Menu Library
 
 
 %changelog
+* Sat Apr 28 2018 Vladimir Didenko <cow@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Fri Oct 27 2017 Vladimir Didenko <cow@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

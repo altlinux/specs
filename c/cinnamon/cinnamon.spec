@@ -1,5 +1,5 @@
 Name: cinnamon
-Version: 3.6.7
+Version: 3.8.1
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -14,6 +14,10 @@ Source2: org.%name.settings-users.policy
 Source3: polkit-%name-authentication-agent-1.desktop
 
 Patch: %name-%version-%release.patch
+
+# use python3
+AutoReqProv: nopython
+%define __python %nil
 
 %define clutter_ver 1.7.5
 %define gtk_ver 3.0.0
@@ -46,13 +50,12 @@ Requires: mintlocale
 Requires: gstreamer1.0
 
 # needed for settings (python.req ignores /usr/share/cinnamon-settings/cinnamon-settings.py)
-Requires: python-module-dbus
-Requires: python-module-pygnome-gconf
-Requires: python-modules-json
-Requires: python-module-lxml
+Requires: python3-module-dbus
+Requires: python3-module-lxml
+Requires: python3-module-pygobject3
 Requires: polkit-gnome
 Requires: typelib(Keybinder) >= 3.0
-Requires: python-module-PAM
+Requires: python3-module-PAM
 Requires: xapps-utils
 # required by keyboard applet
 Requires: libxapps-gir
@@ -101,7 +104,8 @@ experience.
 Summary: Arch independent files for Cinnamon
 Group: Graphical desktop/GNOME
 BuildArch: noarch
-Provides: python2.7(cme)
+Provides: python3(cme)
+Provides: python3(Spices)
 
 %description data
 This package provides noarch data needed for Cinnamon to work.
@@ -165,6 +169,13 @@ install -m 0755 -d $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions/
 install -D -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions/
 install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 
+# Clean-up requires
+# Python 2 is not needed anymore
+%filter_from_requires /python-modules/d
+%filter_from_requires /python2.7[(]gi[)]/d
+%filter_from_requires /python2.7[(]xml[)]/d
+
+%filter_from_requires /python3[(]gi.repository.Gtk[)]/d
 %filter_from_requires /typelib[(]CDesktopEnums.MediaKeyType[)]/d
 %filter_from_requires /python3[(]JsonSettingsWidgets[)]/d
 
@@ -184,6 +195,8 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %exclude %_datadir/xsessions/*.desktop
 %_datadir/cinnamon/
 %_datadir/polkit-1/actions/org.cinnamon.settings-users.policy
+%_datadir/polkit-1/actions/org.cinnamon.schema-install.policy
+%_datadir/polkit-1/actions/org.cinnamon.schema-remove.policy
 %_datadir/icons/hicolor/*/actions/*.svg
 %_datadir/icons/hicolor/*/apps/*.svg
 %_datadir/icons/hicolor/*/categories/*.svg
@@ -203,6 +216,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Fri May 4 2018 Vladimir Didenko <cow@altlinux.org> 3.8.1-alt1
+- 3.8.1-8-g19ec2b0
+
 * Tue Dec 26 2017 Vladimir Didenko <cow@altlinux.org> 3.6.7-alt1
 - 3.6.7
 

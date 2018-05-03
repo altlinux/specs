@@ -1,8 +1,8 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cinnamon Screensaver
@@ -118,6 +118,9 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %_datadir/gir-1.0/*
 
 %changelog
+* Thu May 3 2018 Vladimir Didenko <cow@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Wed Nov 22 2017 Vladimir Didenko <cow@altlinux.org> 3.6.1-alt1
 - 3.6.1
 
