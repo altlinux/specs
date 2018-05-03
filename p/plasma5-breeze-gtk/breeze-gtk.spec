@@ -1,8 +1,8 @@
 %define rname breeze-gtk
 
 Name: plasma5-%rname
-Version: 5.12.4
-Release: alt2%ubt
+Version: 5.12.5
+Release: alt1%ubt
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -58,6 +58,9 @@ Provides: gtk3-theme-breeze = %version-%release
 %_datadir/themes/Breeze*
 
 %changelog
+* Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt1%ubt
+- new version
+
 * Fri Mar 30 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt2%ubt
 - don't apply GTK2 progressbar style (ALT#34492)
 
