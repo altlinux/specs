@@ -10,7 +10,7 @@
 
 Name: libnice
 Version: %ver_major.14
-Release: alt1
+Release: alt1.1
 
 Summary: Connectivity Establishment standard (ICE) library
 Group: System/Libraries
@@ -162,6 +162,9 @@ for Gstreamer (1.0 API version)
 
 
 %changelog
+* Fri May 04 2018 Grigory Ustinov <grenka@altlinux.org> 0.1.14-alt1.1
+- NMU: Rebuilt for e2k.
+
 * Mon Apr 17 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.14-alt1
 - 0.1.14
 
