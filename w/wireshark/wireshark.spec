@@ -6,7 +6,7 @@
 
 Name: wireshark
 Version: 2.6.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -232,6 +232,8 @@ _EOF_
 %_bindir/text2pcap
 %_bindir/reordercap
 %_man1dir/capinfos.*
+%_man1dir/captype.*
+%_man1dir/ciscodump.*
 %_man1dir/udpdump.*
 %_man1dir/sshdump.*
 %_man1dir/randpkt.*
@@ -287,6 +289,9 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 2.6.0-alt2%ubt
+- patch for wireshark #14638 l16mono.so issue is applied
+
 * Wed May 02 2018 Anton Farygin <rider@altlinux.ru> 2.6.0-alt1%ubt
 - 2.6.0
 
