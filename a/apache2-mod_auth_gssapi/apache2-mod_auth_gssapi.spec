@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define modname mod_auth_gssapi
+%def_with check
 
 Name: apache2-%modname
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1%ubt
 
 Summary: A GSSAPI Authentication module for Apache2
@@ -22,8 +23,9 @@ BuildRequires: libssl-devel
 BuildRequires: libkrb5-devel >= 1.15
 BuildRequires: libaprutil1-devel
 BuildRequires: gssntlmssp-devel
-#for tests
 BuildRequires: flex
+
+%if_with check
 BuildRequires: words
 BuildRequires: krb5-kdc
 BuildRequires: socket_wrapper
@@ -32,10 +34,8 @@ BuildRequires: openssl
 BuildRequires: apache2-httpd-prefork
 BuildRequires: apache2-mod_cache_disk
 BuildRequires: apache2-suexec
-BuildRequires: python-module-kerberos >= 1.2.5
-BuildRequires: python-module-requests-kerberos >= 0.11.0
-BuildRequires: python-module-gssapi >= 1.2.2
-#
+BuildRequires: python-module-requests-gssapi
+%endif
 
 Provides: %modname = %EVR
 
@@ -70,6 +70,9 @@ echo "LoadModule auth_gssapi_module modules/mod_auth_gssapi.so" > %buildroot%apa
 %config(noreplace) %apache2_mods_available/auth_gssapi.load
 
 %changelog
+* Fri May 04 2018 Stanislav Levin <slev@altlinux.org> 1.6.1-alt1%ubt
+- 1.6.0 -> 1.6.1
+
 * Tue Nov 14 2017 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1%ubt
 - 1.4.1 -> 1.6.0
 
