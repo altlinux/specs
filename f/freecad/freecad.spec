@@ -8,7 +8,7 @@
 
 Name:    freecad
 Version: 0.17
-Release: alt1
+Release: alt2
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
@@ -65,7 +65,7 @@ BuildRequires: zlib-devel
 BuildRequires: libopencv2-devel libxerces-c-devel gcc-c++ boost-filesystem-devel
 BuildRequires: java-devel-default boost-program_options-devel
 BuildRequires: boost-signals-devel libXxf86misc-devel
-BuildRequires: libopencascade-devel libgts-devel libGL-devel libGLU-devel
+BuildRequires: OCE-devel libgts-devel libGL-devel libGLU-devel
 BuildRequires: libode-devel phonon-devel libann-devel
 BuildRequires: doxygen graphviz
 BuildRequires: eigen3
@@ -212,6 +212,9 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/doc
 
 %changelog
+* Fri May 04 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.17-alt2
+- Build with OCE instead of opencascade
+
 * Mon Apr 09 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.17-alt1
 - New version (ALT #34781).
 
