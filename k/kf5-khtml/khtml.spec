@@ -1,7 +1,7 @@
 %define rname khtml
 
 Name: kf5-%rname
-Version: 5.44.0
+Version: 5.45.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -85,6 +85,9 @@ KF5 library
 #%_K5xmlgui/khtml/
 
 %changelog
+* Fri May 04 2018 Sergey V Turchin <zerg@altlinux.org> 5.45.0-alt1%ubt
+- new version
+
 * Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
 - new version
 

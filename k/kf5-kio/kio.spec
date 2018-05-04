@@ -1,7 +1,7 @@
 %define rname kio
 
 Name: kf5-%rname
-Version: 5.44.0
+Version: 5.45.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -112,18 +112,18 @@ KF5 library
 %_bindir/*5
 %_K5bin/*
 %_K5exec/*
-%_K5libexecdir/kauth/*
+#%_K5libexecdir/kauth/*
 %_K5plug/kf5/*
 %_K5data/kcookiejar/
 %_K5notif/*
 %_K5plug/*.so
 %_K5xdgapp/*.desktop
 %_K5srv/*
-%config(noreplace) %_K5conf_dbus_sysd/*.conf
+#%config(noreplace) %_K5conf_dbus_sysd/*.conf
 %_K5dbus_srv/*.service
 %_datadir/dbus-1/services/*.service
-%_K5dbus_sys_srv/*.service
-%_datadir/polkit-1/actions/*.policy
+#%_K5dbus_sys_srv/*.service
+#%_datadir/polkit-1/actions/*.policy
 
 %files devel
 %_K5inc/kio_version.h
@@ -147,6 +147,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Fri May 04 2018 Sergey V Turchin <zerg@altlinux.org> 5.45.0-alt1%ubt
+- new version
+
 * Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
 - new version
 
