@@ -1,6 +1,6 @@
 Name: uudeview
 Version: 0.5.20
-Release: alt8.qa1
+Release: alt9
 
 Summary: smart uuenc/xxenc/base64 encoder/decoder
 License: GPL
@@ -10,8 +10,15 @@ Url: http://www.fpx.de/fp/Software/UUDeview
 Source0: %name-%version.tar
 Source1: %name-library.pdf
 
-# Automatically added by buildreq on Tue Mar 16 2004
-BuildRequires: sendmail-common tcl-devel tetex-core tetex-dvips tetex-latex tk-devel transfig
+# Debian and Fedora patches
+Patch1: uudeview-debian-patches.patch
+Patch2: uudeview-format-security.patch
+Patch3: matherr.patch
+
+Patch4: uudeview-alt-latex.patch
+
+BuildRequires: sendmail-common tcl-devel tk-devel transfig
+BuildRequires: texlive texlive-collection-basic texlive-dist
 
 Summary(ru_RU.UTF-8): быстрый кодер/декодер uuenc/xxenc/base64
 
@@ -64,6 +71,11 @@ Group: Development/C
 
 %prep
 %setup
+%patch1 -p2
+%patch2 -p1
+%patch3 -p2
+%patch4 -p2
+
 install -pDm0644 %SOURCE1 doc/library.pdf
 
 %build
@@ -73,6 +85,8 @@ install -pDm0644 %SOURCE1 doc/library.pdf
 make -C doc ps 
 
 %install
+sed -i -e "s,xdeview.1,xdeview.1 uuwish.1,g" Makefile
+
 mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_man1dir
 mkdir -p %buildroot%_datadir/doc/%name-%version
@@ -91,6 +105,7 @@ mkdir -p %buildroot%_datadir/doc/%name-%version
 %_bindir/uuwish
 %_bindir/xdeview
 %_man1dir/xdeview*
+%_man1dir/uuwish*
 
 %files -n libuu
 %_libdir/libuu.so.*
@@ -103,6 +118,9 @@ mkdir -p %buildroot%_datadir/doc/%name-%version
 %doc doc/library.ps doc/library.dvi doc/library.ltx doc/library.pdf
 
 %changelog
+* Sat Apr 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.20-alt9
+- NMU: fixed build.
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.5.20-alt8.qa1
 - NMU: rebuild against Tcl/Tk 8.6
 
