@@ -2,9 +2,12 @@
 
 %def_disable static
 
+# p8 support uses this macro
+%define ver_lteq() "%(rpmvercmp '%2' '%1')" >= "0"
+
 Name: gd3
 Version: 2.2.5
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: A graphics library for drawing image files in various formats
 License: BSD-style
 Group: Graphics
@@ -32,9 +35,13 @@ Summary: Development library and header files for lib%name
 Group: Development/C
 Requires: lib%name = %EVR
 Conflicts: libgd-devel < 2.0.4
+%if %ver_lteq %ubt_id M80P
+Conflicts: libgd2-devel
+%else
 Provides:  libgd2-devel = %EVR
 Conflicts: libgd2-devel < %EVR
 Obsoletes: libgd2-devel
+%endif
 
 %if_enabled static
 %package -n lib%name-devel-static
@@ -42,9 +49,13 @@ Summary: Development static library for lib%name
 Group: Development/C
 Requires: lib%name-devel = %EVR
 Conflicts: libgd-devel-static < 2.0.4
+%if %ver_lteq %ubt_id M80P
+Conflicts: libgd2-devel-static
+%else
 Provides:  libgd2-devel-static = %EVR
 Conflicts: libgd2-devel-static < %EVR
 Obsoletes: libgd2-devel-static
+%endif
 %endif
 
 %package utils
@@ -52,9 +63,13 @@ Summary: Utilities for drawing image files in various formats
 Group: Graphics
 Requires: lib%name = %EVR
 Conflicts: gd-utils < 2.0.4
+%if %ver_lteq %ubt_id M80P
+Conflicts: libgd2-utils
+%else
 Provides:  libgd2-utils = %EVR
 Conflicts: libgd2-utils < %EVR
 Obsoletes: libgd2-utils
+%endif
 
 %description
 Gd is a graphics library.  It allows your code to quickly draw images
@@ -163,6 +178,9 @@ resampling (smooth resizing of truecolor images) and so forth.
 %exclude %_bindir/gdlib-config
 
 %changelog
+* Fri May 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.5-alt2%ubt
+- Updated provides/conflicts/obsoletes.
+
 * Tue Apr 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.5-alt1%ubt
 - Updated to upstream version 2.2.5.
 
