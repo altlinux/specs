@@ -5,11 +5,11 @@ This is the pyxattr module, a Python extension module which gives access \
 to the extended attributes for filesystem objects available in some \
 operating systems.
 
-Name: %fname
+Name: %fname-docs
 Version: 0.5.3
 Release: alt4
 
-%if ""==""
+%if "-docs"==""
 Summary: A python module for accessing filesystem Extended Attributes
 Group: Development/Python
 %else
@@ -25,27 +25,27 @@ Source: %name-%version.tar
 BuildPreReq: libattr-devel python-module-sphinx-devel python-devel
 BuildRequires(pre): rpm-build-python
 
-%if ""!=""
+%if "-docs"!=""
 Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
 %endif
 
 %description
 %descr
-%if ""!=""
+%if "-docs"!=""
 
 This package contains documentation for %oname.
 %endif
 
 %prep
 %setup
-%if ""!=""
+%if "-docs"!=""
 %prepare_sphinx .
 ln -s ../objects.inv doc/
 %endif
 
 %build
-%if ""==""
+%if "-docs"==""
 %python_build
 %else
 export PYTHONPATH=%buildroot%python_sitelibdir
@@ -55,7 +55,7 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %install
 %python_install
 
-%if ""==""
+%if "-docs"==""
 
 %files
 %python_sitelibdir/*
