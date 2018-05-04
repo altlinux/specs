@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.11.2
-Release: alt9
+Release: alt10
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -103,6 +103,9 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Fri May 04 2018 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt10
+    * pppoe: fixed invalid behaviour after changing pado-delay
+
 * Wed Apr 04 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.11.2-alt9
 - build fixed for kernels 4.15+ (upstream cherry-pick)
 
