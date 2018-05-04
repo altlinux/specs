@@ -1,7 +1,7 @@
 %define rname user-manager
 
 Name: plasma5-%rname
-Version: 5.12.4
+Version: 5.12.5
 Release: alt1%ubt
 %K5init altplace
 
@@ -52,6 +52,9 @@ Add, remove or edit system users.
 %_K5data/user-manager/
 
 %changelog
+* Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt1%ubt
+- new version
+
 * Wed Mar 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt1%ubt
 - new version
 
