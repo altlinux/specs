@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,9 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Sat Apr 28 2018 Maxim Voronov <mvoronov@altlinux.org> 1.2.3-alt1
+- set locale for localectl
+
 * Tue Sep 24 2013 Michael Shigorin <mike@altlinux.org> 1.2.2-alt1
 - added Kazah XKB setup, thanks Baurzhan Muftakhidinov (see #28991)
 
