@@ -1,5 +1,5 @@
 Name: unbound
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 License: BSD
 Url: http://unbound.net/
@@ -195,6 +195,9 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Fri May 04 2018 Alexei Takaseev <taf@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Fri Mar 23 2018 Alexei Takaseev <taf@altlinux.org> 1.7.0-alt1
 - 1.7.0
 - New version (closes: #34122)
