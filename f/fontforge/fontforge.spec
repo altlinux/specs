@@ -4,7 +4,7 @@
 
 Name: fontforge
 Version: 20170731
-Release: alt1
+Release: alt1.1
 Summary: FontForge -- font editor
 
 License: BSD
@@ -135,6 +135,9 @@ sed -ri 's/^(runpath_var).*$/\1=/' libtool
 
 
 %changelog
+* Fri May 04 2018 Grigory Ustinov <grenka@altlinux.org> 20170731-alt1.1
+- NMU: Rebuilt for e2k.
+
 * Sun Aug 06 2017 Vitaly Lipatov <lav@altlinux.ru> 20170731-alt1
 - new version (20170731) with rpmgs script
 
