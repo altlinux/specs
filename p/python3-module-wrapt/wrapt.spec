@@ -1,5 +1,5 @@
 %define oname wrapt
-%define fname python-module-%oname
+%define fname python3-module-%oname
 %define descr \
 The aim of the wrapt module is to provide a transparent object proxy for \
 Python, which can be used as the basis for the construction of function \
@@ -11,7 +11,7 @@ Release: alt1
 
 %if ""==""
 Summary: A Python module for decorators, wrappers and monkey patching
-Group: Development/Python
+Group: Development/Python3
 %else
 Summary: Documentation for %oname
 Group: Development/Documentation
@@ -22,14 +22,14 @@ Url: https://pypi.python.org/pypi/wrapt/
 # https://github.com/GrahamDumpleton/wrapt.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python rpm-macros-sphinx
+BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pluggy python-module-py python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools xz
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-tox python3-devel python3-module-tox rpm-build-python3 time python3-module-pytest
 # optimized out: -=FIXES: python2.7(sphinx_rtd_theme)
 BuildRequires: python2.7(sphinx_rtd_theme)
 
-%py_provides %oname
+%py3_provides %oname
 
 %if ""!=""
 Conflicts: %fname < %EVR
@@ -45,7 +45,7 @@ This package contains documentation for %oname.
 
 %package -n %fname-pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description -n %fname-pickles
 %descr
@@ -63,7 +63,7 @@ ln -s ../objects.inv docs/
 %build
 %if ""==""
 %add_optflags -fno-strict-aliasing
-%python_build
+%python3_build
 %else
 %make -C docs pickle
 %make -C docs html
@@ -71,20 +71,20 @@ ln -s ../objects.inv docs/
 
 %install
 %if ""==""
-%python_install
+%python3_install
 %else
-mkdir -p %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+mkdir -p %buildroot%python3_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %if ""==""
 %check
-export PYTHONPATH=%buildroot%python_sitelibdir
-py.test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test3
 
 %files
 %doc README.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %else
 
@@ -92,7 +92,7 @@ py.test
 %doc docs/_build/html blog
 
 %files -n %fname-pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %endif
 
