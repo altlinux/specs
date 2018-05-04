@@ -1,32 +1,27 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pycmd
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 1.1
-Release: alt1.hg20140627.1.1
+Version: 1.2
+Release: alt1%ubt
+
 Summary: Command line tools for helping with Python development
 License: MIT
 Group: Development/Python
-Url: http://pylib.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-BuildArch: noarch
+Url: https://pypi.python.org/pypi/pycmd
 
-# hg clone https://bitbucket.org/hpk42/pycmd
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
-#BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
-Conflicts: py
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+# pycmd was separated from pylib at that point
+Conflicts: py < 1.4.0
+BuildArch: noarch
 
 %description
 Collection of command line tools for dealing with python files
@@ -43,51 +38,46 @@ Collection of command line tools for dealing with python files
 %prep
 %setup
 
-%if_with python3
 cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+	../python3/%oname/*.py
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
+
 pushd %buildroot%_bindir
 for i in $(ls); do
 	mv $i $i.py3
 done
 popd
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-	%buildroot%python3_sitelibdir/%oname/*.py
-%endif
 
 %python_install
 
 %files
-%doc AUTHORS CHANGELOG LICENSE *.txt
+%doc CHANGELOG LICENSE *.txt
 %_bindir/*
-%if_with python3
 %exclude %_bindir/*.py3
-%endif
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS CHANGELOG LICENSE *.txt
+%doc CHANGELOG LICENSE *.txt
 %_bindir/*.py3
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Fri Apr 13 2018 Stanislav Levin <slev@altlinux.org> 1.2-alt1%ubt
+- 1.1 -> 1.2
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt1.hg20140627.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
