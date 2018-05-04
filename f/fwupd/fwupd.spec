@@ -13,12 +13,13 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.0.6
-Release: alt1
+Version: 1.0.7
+Release: alt1%ubt
 License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://github.com/hughsie/fwupd
 Source0: %name-%version.tar
+BuildRequires(pre):rpm-build-ubt
 
 BuildRequires: docbook-utils
 BuildRequires: gettext
@@ -172,6 +173,8 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/polkit-1/rules.d/org.freedesktop.fwupd.rules
 %_datadir/dbus-1/system-services/org.freedesktop.fwupd.service
 %_datadir/metainfo/org.freedesktop.fwupd.metainfo.xml
+%_datadir/metainfo/org.freedesktop.fwupd.remotes.lvfs.metainfo.xml
+%_datadir/metainfo/org.freedesktop.fwupd.remotes.lvfs-testing.metainfo.xml
 %_datadir/fwupd/firmware-packager
 %_datadir/bash-completion/completions/fwupdmgr
 %_unitdir/fwupd-offline-update.service
@@ -236,6 +239,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 1.0.7-alt1%ubt
+- 1.0.7
+
 * Thu Mar 22 2018 Anton Farygin <rider@altlinux.ru> 1.0.6-alt1
 - new version
 - temporarily disabled check section due to impossible testing of the thunderbolt interface in the hasher environment
