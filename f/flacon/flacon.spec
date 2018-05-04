@@ -1,5 +1,5 @@
 Name: flacon
-Version: 4.0.0
+Version: 4.1.0
 Release: alt1%ubt
 
 Summary: Audio File Encoder
@@ -67,6 +67,9 @@ popd
 %_man1dir/%name.1.*
 
 %changelog
+* Fri May 04 2018 Nazarov Denis <nenderus@altlinux.org> 4.1.0-alt1%ubt
+- Version 4.1.0
+
 * Fri Jan 05 2018 Nazarov Denis <nenderus@altlinux.org> 4.0.0-alt1%ubt
 - Version 4.0.0
 
