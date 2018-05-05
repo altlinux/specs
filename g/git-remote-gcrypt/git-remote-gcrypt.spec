@@ -1,6 +1,6 @@
 Name: git-remote-gcrypt
 Version: 1.0.3
-Release: alt1
+Release: alt2
 
 Summary: A git remote helper for GPG-encrypted remotes
 License: GPLv2+
@@ -42,6 +42,9 @@ install -m 644 git-remote-gcrypt.1.gz %buildroot%_man1dir
 %_man1dir/git-remote-gcrypt*
 
 %changelog
+* Sat May 05 2018 Pavel Nakonechnyi <zorg@altlinux.org> 1.0.3-alt2
+- fix temporary directory creation
+
 * Sat Apr 21 2018 Pavel Nakonechnyi <zorg@altlinux.org> 1.0.3-alt1
 - updated to 1.0.3 upstream version
 
