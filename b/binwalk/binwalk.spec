@@ -1,6 +1,6 @@
 Name: binwalk
 Version: 2.1.1
-Release: alt1
+Release: alt2.git298cc28d
 
 Summary: Firmware Analysis Tool
 
@@ -61,6 +61,9 @@ firmware headers, kernels, bootloaders, filesystems, etc.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sat May 05 2018 Pavel Nakonechnyi <zorg@altlinux.org> 2.1.1-alt2.git298cc28d
+- new Git version based on 298cc28d493df7fa71236aac4f2b71d79763a435
+
 * Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
 - new version 2.1.1 (with rpmrb script)
 
