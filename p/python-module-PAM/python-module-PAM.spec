@@ -1,55 +1,86 @@
+%define oname pam
+%def_with python3
+
 Summary:	PAM bindings for Python
 Name:		python-module-PAM
-Version:	0.5.0
-Release:	alt2
-License:	LGPLv2
+Version:	1.8.3
+Release:	alt1
+License:	%mit
 Group:		Development/Python
-# Note that the upstream site is dead.
-Source0:	%{name}-%{version}.tar.gz
-Url:		http://www.pangalactic.org/PyPAM
 
-Patch0:		%{name}-dlopen.patch
-Patch1:		%{name}-0.5.0-dealloc.patch
-Patch2:		%{name}-0.5.0-nofree.patch
-Patch3:		%{name}-0.5.0-memory-errors.patch
-Patch4:		%{name}-0.5.0-return-value.patch
+Source0:	python-%{oname}-%{version}.tar
+Url:		https://github.com/FirefighterBlu3/python-pam
 
-BuildRequires:	python-devel
-BuildRequires:	pam-devel
-Requires:	python
+BuildArch: noarch
 
-Obsoletes:	python-module-pam
+BuildRequires(pre): rpm-build-licenses
+BuildPreReq: rpm-build-python
+BuildRequires: python-devel python-module-distribute python-module-pip
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-distribute python3-module-pip
+%endif
+
+%setup_python_module %oname
 
 %description
 PAM (Pluggable Authentication Module) bindings for Python.
 
+%if_with python3
+%package -n python3-module-PAM
+Summary: PAM bindings for Python (Python 3)
+Group: Development/Python3
+
+%description -n python3-module-PAM
+PAM (Pluggable Authentication Module) bindings for Python 3.
+%endif
+
+
 %prep
-%setup -q
-%patch0 -p1 -b .dlopen
-%patch1 -p1 -b .dealloc
-%patch2 -p1 -b .nofree
-%patch3 -p1 -b .memory
-%patch4 -p1 -b .retval
-# remove prebuild rpm and others binaries
-rm -rf build dist
+%setup -n python-%oname-%version
+
+%if_with python3
+rm -rf ../python3
+cp -a . ../python3
+%endif
 
 %build
-CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing" %{__python} setup.py build
+%python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
-%{__python} setup.py install --root=$RPM_BUILD_ROOT
-# Make sure we don't include binary files in the docs
-chmod 644 examples/pamtest.py
-rm -f examples/pamexample
+%python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
-%defattr(-, root, root, -)
-%{python_sitelibdir}/PAMmodule.so
-%{python_sitelibdir}/*.egg-info
-%doc AUTHORS NEWS README ChangeLog COPYING INSTALL 
-%doc examples
+%doc LICENSE README.md
+%python_sitelibdir/%{oname}*
+%python_sitelibdir/*.egg-info
+
+%if_with python3
+%files -n python3-module-PAM
+%python3_sitelibdir/%{oname}*
+%python3_sitelibdir/__pycache__/*
+%python3_sitelibdir/*.egg-*
+%endif
 
 %changelog
+* Fri May 04 2018 Vladimir Didenko <cow@altlinux.org> 1.8.3-alt1
+- New version (switch to fork from David Ford)
+- Add Python 3 package
+- Make package noarch
+
 * Fri Mar 01 2013 Pavel Shilovsky <piastry@altlinux.org> 0.5.0-alt2
 - Rename package to python-module-PAM
 

@@ -1,14 +1,13 @@
 %define api_ver 3.0
-%define ver_major 3.6
+%define ver_major 3.8
 
 %def_enable exempi
-%def_disable packagekit
 %def_enable tracker
 %def_enable introspection
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.5
+Version: %ver_major.1
 Release: alt1
 
 Summary: default file manager for Cinnamon
@@ -64,10 +63,10 @@ BuildPreReq: libxml2-devel >= %libxml2_ver
 BuildPreReq: intltool >= 0.40.1
 BuildPreReq: libexif-devel >= %exif_ver
 BuildPreReq: libnotify-devel >= %notify_ver
+BuildRequires: meson
 BuildRequires: libX11-devel xorg-xproto-devel
 BuildRequires: docbook-utils gtk-doc
 BuildRequires: python3-module-polib python3-module-pygobject3
-BuildRequires: autoconf-archive
 BuildRequires: libxapps-devel >= 1.0.4
 %{?_enable_exempi:BuildPreReq: libexempi-devel >= %exempi_ver}
 %{?_enable_tracker:BuildPreReq: tracker-devel >= %tracker_ver}
@@ -136,28 +135,11 @@ rm -f data/*.desktop
 subst 's@\.\/@xvfb-run -a ./@' eel/check-eel src/check-nemo
 
 %build
-%autoreconf
-%configure \
-    --disable-update-mimedb \
-    --disable-schemas-compile \
-    %{subst_enable packagekit}
-
-%make_build
-
-%if 0
-%check
-for d in eel src; do
-pushd $d
-make check
-popd
-done
-%endif
+%meson -D deprecated_warnings=false -D gtk_doc=false
+%meson_build
 
 %install
-%make_install install DESTDIR=%buildroot
-mkdir -p %buildroot%_libdir/%name-%api_ver/components
-mkdir -p %buildroot%_libdir/%name/extensions-%api_ver
-bzip2 -9fk NEWS
+%meson_install
 
 # The license
 ln -sf %_licensedir/LGPL-2 COPYING
@@ -167,8 +149,6 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %_bindir/*
 %_libexecdir/nemo-convert-metadata
 %_libexecdir/nemo-extensions-list
-%dir %_libdir/%name-%api_ver
-%dir %_libdir/%name-%api_ver/components
 %_datadir/mime/packages/nemo.xml
 %_datadir/applications/*.desktop
 %_datadir/%name
@@ -176,6 +156,7 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %_iconsdir/hicolor/*/apps/*.svg
 %_iconsdir/hicolor/*/actions/*.svg
 %_iconsdir/hicolor/*/actions/*.png
+%_iconsdir/hicolor/*/places/*.svg
 %_iconsdir/hicolor/*/status/*.png
 %_datadir/dbus-1/services/nemo.FileManager1.service
 %_datadir/dbus-1/services/nemo.service
@@ -186,11 +167,10 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %config %_datadir/glib-2.0/schemas/org.nemo.gschema.xml
 # docs
 %doc --no-dereference COPYING
-%doc AUTHORS NEWS.bz2 README.md THANKS
+%doc AUTHORS NEWS README.md THANKS
 %_man1dir/*
 
 %files -n lib%name
-%dir %_libdir/%name/extensions-%api_ver
 %_libdir/libnemo-extension.so.*
 
 %files -n lib%name-devel
@@ -211,6 +191,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Thu May 3 2018 Vladimir Didenko <cow@altlinux.org> 3.8.1-alt1
+- 3.8.1-4-gb35c12b
+
 * Wed Dec 27 2017 Vladimir Didenko <cow@altlinux.org> 3.6.5-alt1
 - 3.6.5
 

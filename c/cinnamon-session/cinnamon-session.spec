@@ -1,14 +1,13 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define _libexecdir %_prefix/libexec
-%def_enable systemd
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
-Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 License: GPLv2+
+Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 Group: Graphical desktop/GNOME
 URL: https://github.com/linuxmint/cinnamon-session
 Packager: Vladimir Didenko <cow@altlinux.org>
@@ -31,7 +30,6 @@ Patch: %name-%version-%release.patch
 %define dbus_glib_ver 0.76
 %define polkit_ver 0.91
 %define upower_ver 0.9
-%define systemd_ver 40
 
 PreReq: xinitrc libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-cinnamon
@@ -52,13 +50,16 @@ BuildPreReq: libgio-devel glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libdbus-glib-devel >= %dbus_glib_ver
 BuildPreReq: libupower-devel >= %upower_ver
+BuildRequires: meson
 BuildRequires: libpangox-compat-devel librsvg-devel libjson-glib-devel
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXrender-devel libXt-devel
 BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite-devel libGL-devel
 BuildRequires: GConf browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-devel
 BuildRequires: libcanberra-devel
 BuildRequires: libcinnamon-desktop-devel
-%{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel libpolkit-devel}
+BuildRequires: xmlto
+BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel libpolkit-devel
+BuildRequires: libxapps-devel
 
 %description
 Cinnamon is a Linux desktop which provides advanced innovative features
@@ -76,16 +77,12 @@ This package provides the Cinnamon session manager.
 [ ! -d m4 ] && mkdir m4
 
 %build
-%autoreconf
-%configure PATH=$PATH:/sbin \
-    %{subst_enable systemd} \
-    --enable-ipv6 \
-    --disable-schemas-compile
+%meson -Dwith-gconf=false --libexecdir=%_libexecdir
+%meson_build
 
-%make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%meson_install
 
 install -pD -m655 %SOURCE1 %buildroot%_datadir/%name/sessions/%{_name}.session
 install -pD -m655 %SOURCE2 %buildroot%_datadir/%name/sessions/%{_name}2d.session
@@ -104,9 +101,6 @@ install -pD -m655 %SOURCE9 %buildroot%_datadir/xsessions
 rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 
 %find_lang --with-gnome --output=%name.lang %name-3.0
-
-%check
-%make check
 
 %files -f %name.lang
 %_bindir/*
@@ -127,6 +121,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Fri May 4 2018 Vladimir Didenko <cow@altlinux.org> 3.8.1-alt1
+- 3.8.1-2-g995980f
+
 * Fri Oct 27 2017 Vladimir Didenko <cow@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

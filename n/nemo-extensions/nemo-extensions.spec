@@ -1,8 +1,8 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 3.6.2
-Release: alt2
+Version: 3.8.0
+Release: alt1
 Summary: Extensions for Nemo
 
 License: %gpl2plus and %lgpl2only
@@ -297,6 +297,9 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_bindir/nemo-compare-preferences
 
 %changelog
+* Thu May 3 2018 Vladimir Didenko <cow@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Mon Mar 19 2018 Vladimir Didenko <cow@altlinux.org> 3.6.2-alt2
 - Switch to vte3 package for nemo-terminal
 

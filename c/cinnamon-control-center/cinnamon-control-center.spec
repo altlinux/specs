@@ -1,4 +1,4 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 1.0
 
 %def_disable debug
@@ -9,7 +9,7 @@
 %def_enable onlineaccounts
 
 Name: cinnamon-control-center
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cinnamon Control Center
@@ -160,6 +160,7 @@ you'll want to install this package.
 %_datadir/desktop-directories/*
 %_iconsdir/hicolor/*/*/*
 %_datadir/polkit-1/rules.d/cinnamon-control-center.rules
+%_datadir/polkit-1/actions/org.cinnamon.controlcenter.datetime.policy
 %doc AUTHORS NEWS README
 
 %files devel
@@ -170,6 +171,9 @@ you'll want to install this package.
 
 
 %changelog
+* Thu May 3 2018 Vladimir Didenko <cow@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Thu Nov 23 2017 Vladimir Didenko <cow@altlinux.org> 3.6.5-alt1
 - 3.6.5-2-g3b28266
 

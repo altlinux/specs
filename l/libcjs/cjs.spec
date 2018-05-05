@@ -1,9 +1,9 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define _name cjs
 %define api_ver 1.0
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Javascript Bindings for Cinnamon
@@ -25,7 +25,7 @@ BuildRequires: gcc-c++ libcairo-devel
 BuildRequires: glib2-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libdbus-glib-devel libreadline-devel libcairo-gobject-devel
 BuildRequires: gnome-common
-BuildRequires: libmozjs38-devel
+BuildRequires: libmozjs52-devel
 
 # for check
 BuildRequires: /proc dbus-tools-gui
@@ -81,6 +81,9 @@ cp %SOURCE1 m4/
 %doc examples/*
 
 %changelog
+* Thu May 3 2018 Vladimir Didenko <cow@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Wed Nov 22 2017 Vladimir Didenko <cow@altlinux.org> 3.6.1-alt1
 - 3.6.1
 

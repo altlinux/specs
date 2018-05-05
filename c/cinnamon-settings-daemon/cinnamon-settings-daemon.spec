@@ -1,4 +1,4 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
@@ -107,7 +107,6 @@ developing applications that use %name.
 %_iconsdir/hicolor/*/*/*.svg
 %_sysconfdir/dbus-1/system.d/org.cinnamon.SettingsDaemon.DateTimeMechanism.conf
 %config %_datadir/glib-2.0/schemas/*
-%_man1dir/%{name}*
 %_datadir/polkit-1/actions/org.cinnamon.settings-daemon.plugins.power.policy
 %_datadir/polkit-1/actions/org.cinnamon.settingsdaemon.datetimemechanism.policy
 %_datadir/dbus-1/system-services/org.cinnamon.SettingsDaemon.DateTimeMechanism.service
@@ -122,6 +121,9 @@ developing applications that use %name.
 %_pkgconfigdir/*
 
 %changelog
+* Thu May 3 2018 Vladimir Didenko <cow@altlinux.org> 3.8.0-alt1
+- 3.8.0-1-ga0f6553
+
 * Wed Dec 27 2017 Vladimir Didenko <cow@altlinux.org> 3.6.2-alt1
 - 3.6.2-18-g1577a80
 
