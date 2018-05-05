@@ -1,6 +1,6 @@
 Name: shotcut
 Version: 18.04
-Release: alt2
+Release: alt3
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платфоорменный видеоредактор
 License: GPL-3.0+
@@ -45,6 +45,10 @@ Requires: ladspa_sdk
 Requires: lame
 Requires: ffmpeg ffprobe ffplay
 Requires: libSDL2
+# see bug 34876
+Requires: qt5-quickcontrols
+# see bug 34877
+Requires: qt5-graphicaleffects
 
 %description
 These are all currently implemented features:
@@ -149,6 +153,10 @@ chmod a-x src/mvcp/{qconsole.cpp,qconsole.h}
 %_datadir/%name
 
 %changelog
+* Sat May 05 2018 Anton Midyukov <antohami@altlinux.org> 18.04-alt3
+- Added missing requires qt5-quickcontrols
+- Added missing requires qt5-graphicaleffects
+
 * Fri Apr 20 2018 Anton Midyukov <antohami@altlinux.org> 18.04-alt2
 - Update buildrequires and requires
 - Added shotcut.appdata.xml
