@@ -1,4 +1,4 @@
-%define mainline_ver 4.3.8
+%define mainline_ver 4.4.1
 
 Name: eid-mw
 Version: %mainline_ver
@@ -179,6 +179,9 @@ fi
 %_libdir/libeidviewer.so
 
 %changelog
+* Sat May 05 2018 Pavel Nakonechnyi <zorg@altlinux.org> 4.4.1-alt1
+- updated to version 4.4.1
+
 * Sun Apr 08 2018 Pavel Nakonechnyi <zorg@altlinux.org> 4.3.8-alt1
 - updated to version 4.3.8
 
