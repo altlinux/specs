@@ -4,28 +4,6 @@
 # {{{ macros define
 %def_enable user_static
 
-%def_with alpha
-%def_with aarch64
-%def_with arm
-%def_with cris
-%def_with x86
-%def_with m68k
-%def_with microblaze
-%def_with mips
-%def_with ppc
-%def_with sh4
-%def_with sparc
-%def_with s390x
-%def_with lm32
-%def_with xtensa
-%def_with moxie
-%def_with tilegx
-%def_with tricore
-%def_with unicore32
-%def_with or1k
-%def_with nios2
-
-%def_disable werror
 %def_enable sdl
 %def_enable curses
 %def_enable bluez
@@ -43,6 +21,7 @@
 %def_enable smartcard
 %def_enable libusb
 %def_enable usb_redir
+%def_enable vhost_crypto
 %def_enable vhost_net
 %def_enable vhost_scsi
 %def_enable vhost_vsock
@@ -55,7 +34,7 @@
 %def_enable libnfs
 %def_enable seccomp
 %def_enable glusterfs
-%def_disable gtk
+%def_enable gtk
 %def_disable gtk_gl
 %def_enable gnutls
 %def_enable nettle
@@ -79,6 +58,7 @@
 %def_enable bzip2
 %def_disable xen
 %def_enable mpath
+%def_enable libxml2
 
 %define power64 ppc64 ppc64p7 ppc64le
 %define mips32 mips mipsel mipsr6 mipsr6el
@@ -120,115 +100,19 @@
 %global _libexecdir /usr/libexec
 %global _localstatedir /var
 
-%global target_list_system %nil
-%global target_list_user %nil
-
-%if_with alpha
-%global target_list_system %target_list_system alpha-softmmu
-%global target_list_user %target_list_user alpha-linux-user
-%endif
-
-%if_with aarch64
-%global target_list_system %target_list_system aarch64-softmmu
-%global target_list_user %target_list_user aarch64-linux-user
-%endif
-
-%if_with arm
-%global target_list_system %target_list_system arm-softmmu
-%global target_list_user %target_list_user arm-linux-user armeb-linux-user
-%endif
-
-%if_with cris
-%global target_list_system %target_list_system cris-softmmu
-%global target_list_user %target_list_user cris-linux-user
-%endif
-
-%if_with x86
-%global target_list_system %target_list_system i386-softmmu x86_64-softmmu
-%global target_list_user %target_list_user i386-linux-user x86_64-linux-user
-%endif
-
-%if_with m68k
-%global target_list_system %target_list_system m68k-softmmu
-%global target_list_user %target_list_user m68k-linux-user
-%endif
-
-%if_with microblaze
-%global target_list_system %target_list_system microblaze-softmmu microblazeel-softmmu
-%global target_list_user %target_list_user microblaze-linux-user microblazeel-linux-user
-%endif
-
-%if_with mips
-%global target_list_system %target_list_system mips-softmmu mipsel-softmmu mips64-softmmu mips64el-softmmu
-%global target_list_user %target_list_user mips-linux-user mipsel-linux-user mips64-linux-user mips64el-linux-user mipsn32-linux-user mipsn32el-linux-user
-%endif
-
-%if_with ppc
-%global target_list_system %target_list_system ppc-softmmu ppcemb-softmmu ppc64-softmmu
-%global target_list_user %target_list_user ppc-linux-user ppc64-linux-user ppc64le-linux-user ppc64abi32-linux-user
-%endif
-
-%if_with sh4
-%global target_list_system %target_list_system sh4-softmmu sh4eb-softmmu
-%global target_list_user %target_list_user sh4-linux-user sh4eb-linux-user
-%endif
-
-%if_with sparc
-%global target_list_system %target_list_system sparc-softmmu sparc64-softmmu
-%global target_list_user %target_list_user sparc-linux-user sparc64-linux-user sparc32plus-linux-user
-%endif
-
-%if_with s390x
-%global target_list_system %target_list_system s390x-softmmu
-%global target_list_user %target_list_user s390x-linux-user
-%endif
-
-%if_with lm32
-%global target_list_system %target_list_system lm32-softmmu
-%endif
-
-%if_with unicore32
-%global target_list_system %target_list_system unicore32-softmmu
-%endif
-
-%if_with xtensa
-%global target_list_system %target_list_system xtensa-softmmu xtensaeb-softmmu
-%endif
-
-%if_with moxie
-%global target_list_system %target_list_system moxie-softmmu
-%endif
-
-%if_with tricore
-%global target_list_system %target_list_system tricore-softmmu
-%endif
-
-%if_with tilegx
-%global target_list_user %target_list_user tilegx-linux-user
-%endif
-
-%if_with or1k
-%global target_list_system %target_list_system or1k-softmmu
-%global target_list_user %target_list_user or1k-linux-user
-%endif
-
-%if_with nios2
-%global target_list_system %target_list_system nios2-softmmu
-%global target_list_user %target_list_user nios2-linux-user
-%endif
 # }}}
 
 Name: qemu
-Version: 2.11.1
+Version: 2.12.0
 Release: alt1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
 Group: Emulators
-Url: http://www.nongnu.org/qemu/
+Url: https://www.qemu.org
+# git://git.qemu.org/qemu.git
 Source0: %name-%version.tar
 Source100: keycodemapdb-%name-%version.tar
-Source1: qemu.binfmt
 Source2: qemu-kvm.control.in
 Source4: qemu-kvm.rules
 # qemu-kvm back compat wrapper
@@ -259,13 +143,14 @@ BuildRequires: libxfs-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.4.2
 BuildRequires: libpixman-devel >= 0.21.8
+BuildRequires: python3
 # Upstream disables iasl for big endian and QEMU checks for this.
 %ifnarch s390 s390x ppc ppc64
 BuildRequires: iasl
 %endif
 BuildRequires: libpcre-devel-static
 %{?_enable_sdl:BuildRequires: libSDL2-devel}
-%{?_enable_curses:BuildRequires: libncurses-devel}
+%{?_enable_curses:BuildRequires: libncursesw-devel}
 %{?_enable_bluez:BuildRequires: libbluez-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
 %{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
@@ -279,14 +164,14 @@ BuildRequires: libpcre-devel-static
 BuildRequires: libuuid-devel
 %{?_enable_smartcard:BuildRequires: libcacard-devel >= 2.5.0}
 %{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.5}
-%{?_enable_opengl:BuildRequires: libX11-devel libepoxy-devel libdrm-devel libgbm-devel}
-%{?_enable_guest_agent:BuildRequires: glib2-devel >= 2.38 python-base}
+%{?_enable_opengl:BuildRequires: libepoxy-devel libdrm-devel libgbm-devel}
+%{?_enable_guest_agent:BuildRequires: glib2-devel >= 2.38}
 %{?_enable_rbd:BuildRequires: ceph-devel}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.9.0}
 %{?_enable_libnfs:BuildRequires: libnfs-devel >= 1.9.3}
 %{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.2.3}
 %{?_enable_glusterfs:BuildRequires: pkgconfig(glusterfs-api)}
-%{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.0.0 pkgconfig(vte-2.90) >= 0.32.0}
+%{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.0.0 libvte3-devel >= 0.32.0}
 %{?_enable_gnutls:BuildRequires: libgnutls-devel >= 2.9.10}
 %{?_enable_nettle:BuildRequires: libnettle-devel}
 %{?_enable_gcrypt:BuildRequires: libgcrypt-devel}
@@ -294,7 +179,7 @@ BuildRequires: libtasn1-devel
 %{?_enable_virglrenderer:BuildRequires: pkgconfig(virglrenderer)}
 %{?_enable_libssh2:BuildRequires: libssh2-devel >= 1.2.8}
 %{?_enable_libusb:BuildRequires: libusb-devel >= 1.0.13}
-%{?_enable_rdma:BuildRequires: librdmacm-devel libibverbs-devel}
+%{?_enable_rdma:BuildRequires: rdma-core-devel}
 %{?_enable_numa:BuildRequires: libnuma-devel}
 %{?_enable_tcmalloc:BuildRequires: libgperftools-devel}
 %{?_enable_jemalloc:BuildRequires: libjemalloc-devel}
@@ -304,26 +189,22 @@ BuildRequires: libtasn1-devel
 %{?_enable_xen:BuildRequires: libxen-devel}
 %{?_enable_vxhs:BuildRequires: libvxhs-devel}
 %{?_enable_mpath:BuildRequires: libudev-devel libmultipath-devel}
+%{?_enable_libxml2:BuildRequires: libxml2-devel}
 
-
-%if_enabled rbd
-%global requires_all_block_modules   \
+%global requires_all_modules         \
 Requires: %name-block-curl = %EVR    \
 Requires: %name-block-dmg = %EVR     \
 Requires: %name-block-gluster = %EVR \
 Requires: %name-block-iscsi = %EVR   \
 Requires: %name-block-nfs = %EVR     \
 Requires: %name-block-rbd = %EVR     \
-Requires: %name-block-ssh = %EVR
-%else
-%global requires_all_block_modules   \
-Requires: %name-block-curl = %EVR    \
-Requires: %name-block-dmg = %EVR     \
-Requires: %name-block-gluster = %EVR \
-Requires: %name-block-iscsi = %EVR   \
-Requires: %name-block-nfs = %EVR     \
-Requires: %name-block-ssh = %EVR
-%endif
+Requires: %name-audio-alsa = %EVR    \
+Requires: %name-audio-oss = %EVR     \
+Requires: %name-audio-pa = %EVR      \
+Requires: %name-audio-sdl = %EVR     \
+Requires: %name-ui-curses = %EVR     \
+Requires: %name-ui-gtk = %EVR        \
+Requires: %name-ui-sdl = %EVR 
 
 %description
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -358,29 +239,31 @@ This package contains common files for qemu.
 %package system
 Summary: QEMU CPU Emulator - full system emulation
 Group: Emulators
+BuildArch: noarch
 Requires: %name-common = %EVR
 Requires: %name-tools = %EVR
 Conflicts: %name-img < %EVR
 
-%{?_with_alpha:Requires: %name-system-alpha = %EVR}
-%{?_with_arm:Requires: %name-system-arm = %EVR}
-%{?_with_cris:Requires: %name-system-cris = %EVR}
-%{?_with_lm32:Requires: %name-system-lm32 = %EVR}
-%{?_with_m68k:Requires: %name-system-m68k = %EVR}
-%{?_with_microblaze:Requires: %name-system-microblaze = %EVR}
-%{?_with_mips:Requires: %name-system-mips = %EVR}
-%{?_with_or1k:Requires: %name-system-or1k = %EVR}
-%{?_with_ppc:Requires: %name-system-ppc = %EVR}
-%{?_with_s390x:Requires: %name-system-s390x = %EVR}
-%{?_with_sh4:Requires: %name-system-sh4 = %EVR}
-%{?_with_sparc:Requires: %name-system-sparc = %EVR}
-%{?_with_unicore32:Requires: %name-system-unicore32 = %EVR}
-%{?_with_x86:Requires: %name-system-x86 = %EVR}
-%{?_with_xtensa:Requires: %name-system-xtensa = %EVR}
-%{?_with_moxie:Requires: %name-system-moxie = %EVR}
-%{?_with_aarch64:Requires: %name-system-aarch64 = %EVR}
-%{?_with_tricore:Requires: %name-system-tricore = %EVR}
-%{?_with_nios2:Requires: %name-system-nios2 = %EVR}
+Requires: %name-system-aarch64 = %EVR
+Requires: %name-system-alpha = %EVR
+Requires: %name-system-arm = %EVR
+Requires: %name-system-cris = %EVR
+Requires: %name-system-lm32 = %EVR
+Requires: %name-system-m68k = %EVR
+Requires: %name-system-microblaze = %EVR
+Requires: %name-system-mips = %EVR
+Requires: %name-system-moxie = %EVR
+Requires: %name-system-nios2 = %EVR
+Requires: %name-system-or1k = %EVR
+Requires: %name-system-ppc = %EVR
+Requires: %name-system-riscv = %EVR
+Requires: %name-system-s390x = %EVR
+Requires: %name-system-sh4 = %EVR
+Requires: %name-system-sparc = %EVR
+Requires: %name-system-tricore = %EVR
+Requires: %name-system-unicore32 = %EVR
+Requires: %name-system-x86 = %EVR
+Requires: %name-system-xtensa = %EVR
 
 %description system
 Full system emulation.  In this mode, QEMU emulates a full system
@@ -553,6 +436,55 @@ This package provides the additional SSH block driver for QEMU.
 Install this package if you want to access remote disks using
 the Secure Shell (SSH) protocol.
 
+%package  audio-alsa
+Summary: QEMU ALSA audio driver
+Group: Emulators
+Requires: %name-common = %EVR
+%description audio-alsa
+This package provides the additional ALSA audio driver for QEMU.
+
+%package  audio-oss
+Summary: QEMU OSS audio driver
+Group: Emulators
+Requires: %name-common = %EVR
+%description audio-oss
+This package provides the additional OSS audio driver for QEMU.
+
+%package  audio-pa
+Summary: QEMU PulseAudio audio driver
+Group: Emulators
+Requires: %name-common = %EVR
+%description audio-pa
+This package provides the additional PulseAudi audio driver for QEMU.
+
+%package  audio-sdl
+Summary: QEMU SDL audio driver
+Group: Emulators
+Requires: %name-common = %EVR
+%description audio-sdl
+This package provides the additional SDL audio driver for QEMU.
+
+%package  ui-curses
+Summary: QEMU curses UI driver
+Group: Emulators
+Requires: %name-common = %EVR
+%description ui-curses
+This package provides the additional curses UI for QEMU.
+
+%package  ui-gtk
+Summary: QEMU GTK UI driver
+Group: Emulators
+Requires: %name-common = %EVR
+%description ui-gtk
+This package provides the additional GTK UI for QEMU.
+
+%package  ui-sdl
+Summary: QEMU SDL UI driver
+Group: Emulators
+Requires: %name-common = %EVR
+%description ui-sdl
+This package provides the additional SDL UI for QEMU.
+
 %package guest-agent
 Summary: QEMU guest agent
 Group: Emulators
@@ -599,7 +531,7 @@ Summary: QEMU system emulator for x86
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-x86-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 
 %description system-x86
 QEMU is a generic and open source processor emulator which achieves a good
@@ -635,7 +567,7 @@ Summary: QEMU system emulator for Alpha
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-alpha-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-alpha
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -658,7 +590,7 @@ Summary: QEMU system emulator for ARM
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-arm-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-arm
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -681,7 +613,7 @@ Summary: QEMU system emulator for MIPS
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-mips-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-mips
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -704,7 +636,7 @@ Summary: QEMU system emulator for CRIS
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-cris-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-cris
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -722,12 +654,28 @@ emulation speed by using dynamic translation.
 
 This package provides the system emulator for CRIS boards.
 
+%package system-hppa
+Summary: QEMU system emulator for HPPA
+Group: Emulators
+BuildArch: noarch
+Requires: %name-system-cris-core = %EVR
+%requires_all_modules
+%description system-hppa
+This package provides the QEMU system emulator for HPPA.
+
+%package system-hppa-core
+Summary: QEMU system emulator for hppa
+Group: Emulators
+Requires: %name-common = %EVR
+%description system-hppa-core
+This package provides the QEMU system emulator for HPPA.
+
 %package system-lm32
 Summary: QEMU system emulator for LatticeMico32
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-lm32-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-lm32
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -750,7 +698,7 @@ Summary: QEMU system emulator for ColdFire (m68k)
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-m68k-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-m68k
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -773,7 +721,7 @@ Summary: QEMU system emulator for Microblaze
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-microblaze-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-microblaze
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -796,7 +744,7 @@ Summary: QEMU system emulator for OpenRisc32
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-or1k-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-or1k
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -819,7 +767,7 @@ Summary: QEMU system emulator for S390
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-s390x-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-s390x
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -842,7 +790,7 @@ Summary: QEMU system emulator for SH4
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-sh4-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-sh4
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -865,7 +813,7 @@ Summary: QEMU system emulator for SPARC
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-sparc-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-sparc
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -890,7 +838,7 @@ Summary: QEMU system emulator for PPC
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-ppc-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-ppc
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -912,12 +860,27 @@ emulation speed by using dynamic translation.
 
 This package provides the system emulator for PPC and PPC64 systems.
 
+%package system-riscv
+Summary: QEMU system emulator for RISC-V
+Group: Emulators
+BuildArch: noarch
+Requires: %name-system-riscv-core = %EVR
+%description system-riscv
+This package provides the QEMU system emulator for RISC-V systems.
+%package system-riscv-core
+
+Summary: QEMU system emulator for RISC-V
+Group: Emulators
+Requires: %name-common = %EVR
+%description system-riscv-core
+This package provides the QEMU system emulator for RISC-V systems.
+
 %package system-xtensa
 Summary: QEMU system emulator for Xtensa
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-xtensa-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-xtensa
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -940,7 +903,7 @@ Summary: QEMU system emulator for Unicore32
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-unicore32-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-unicore32
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -963,7 +926,7 @@ Summary: QEMU system emulator for Moxie
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-moxie-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-moxie
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -986,7 +949,7 @@ Summary: QEMU system emulator for AArch64
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-aarch64-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-aarch64
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -1010,7 +973,7 @@ Summary: QEMU system emulator for tricore
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-tricore-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-tricore
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -1033,7 +996,7 @@ Summary: QEMU system emulator for nios2
 Group: Emulators
 BuildArch: noarch
 Requires: %name-system-nios2-core = %EVR
-%requires_all_block_modules
+%requires_all_modules
 %description system-nios2
 QEMU is a generic and open source processor emulator which achieves a good
 emulation speed by using dynamic translation.
@@ -1069,30 +1032,38 @@ export CFLAGS="%optflags"
 export extraldflags="-Wl,--build-id"
 export buildldflags="VL_LDFLAGS=-Wl,--build-id"
 
-%if_enabled user_static
+run_configure() {
 # non-GNU configure
 ./configure \
-	--disable-git-update \
-	--target-list='%target_list_user' \
-	--prefix=%prefix \
-	--sysconfdir=%_sysconfdir \
-	--libdir=%_libdir \
-	--mandir=%_mandir \
-	--libexecdir=%_libexecdir \
-	--localstatedir=%_localstatedir \
-%ifnarch aarch64
-	--extra-ldflags="$extraldflags -Wl,-z,relro -Wl,-z,now" \
-%else
-	--extra-ldflags="$extraldflags" \
+    --disable-git-update \
+    --prefix=%prefix \
+    --sysconfdir=%_sysconfdir \
+    --libdir=%_libdir \
+    --mandir=%_mandir \
+    --libexecdir=%_libexecdir \
+    --localstatedir=%_localstatedir \
+    --with-pkgversion=%name-%version-%release \
+%ifarch s390 %mips64
+    --enable-tcg-interpreter \
 %endif
+    --extra-ldflags="$extraldflags -Wl,-z,relro -Wl,-z,now" \
+    --extra-cflags="%optflags" \
+    --disable-werror \
+    --disable-debug-tcg \
+    --disable-sparse \
+    --disable-strip \
+    --enable-kvm \
+    --python=/usr/bin/python3 \
+     "$@"
+}
+
+%if_enabled user_static
+# non-GNU configure
+run_configure \
 	--disable-pie \
-	--disable-werror \
 	--static \
-	--enable-kvm \
-	--disable-debug-tcg \
-	--disable-sparse \
-	--disable-strip \
 	--disable-system \
+    --enable-linux-user \
 	--disable-xfsctl \
 	--disable-smartcard \
 	--disable-usb-redir \
@@ -1102,6 +1073,7 @@ export buildldflags="VL_LDFLAGS=-Wl,--build-id"
 	--disable-rbd \
 	--disable-libnfs \
 	--disable-glusterfs \
+    --disable-libxml2 \
 	--disable-libssh2 \
 	--disable-gnutls \
 	--disable-nettle \
@@ -1146,23 +1118,12 @@ find -regex '.*linux-user/qemu.*' -perm 755 -exec mv '{}' '{}'.static ';'
 %endif
 
 # non-GNU configure
-./configure \
-	--disable-git-update \
-	--target-list='%target_list_system %target_list_user' \
-	--prefix=%prefix \
-	--sysconfdir=%_sysconfdir \
-	--libdir=%_libdir \
-	--mandir=%_mandir \
-	--libexecdir=%_libexecdir \
-	--localstatedir=%_localstatedir \
-%ifnarch aarch64
-	--extra-ldflags="$extraldflags -pie -Wl,-z,relro -Wl,-z,now" \
-%else
-	--extra-ldflags="$extraldflags" \
-%endif
-	--with-pkgversion=%name-%version-%release \
-	%{subst_enable werror} \
-	%{?_enable_sdl:--enable-sdl --with-sdlabi=2.0} \
+run_configure \
+    --enable-system \
+    --enable-linux-user \
+    --enable-pie \
+    --enable-modules \
+    %{?_enable_sdl:--enable-sdl --with-sdlabi=2.0} \
 	%{?_disable_curses:--disable-curses} \
 	%{subst_enable bluez} \
 	%{subst_enable vnc} \
@@ -1176,18 +1137,14 @@ find -regex '.*linux-user/qemu.*' -perm 755 -exec mv '{}' '{}'.static ';'
 	%{?_disable_aio:--disable-linux-aio} \
 	%{?_disable_blobs: --disable-blobs} \
 	%{subst_enable spice} \
-	--disable-debug-tcg \
-	--disable-sparse \
-	--disable-strip \
 	--audio-drv-list="%audio_drv_list" \
-	--disable-xen \
 	--disable-brlapi \
 	--enable-curl \
 	--enable-fdt \
-	--enable-kvm \
 	%{subst_enable virglrenderer} \
 	%{subst_enable tpm} \
 	%{subst_enable xen} \
+    %{?_enable_vhost_crypto:--enable-vhost-crypto} \
 	%{?_enable_vhost_net:--enable-vhost-net} \
 	%{?_enable_vhost_scsi:--enable-vhost-scsi } \
 	%{?_enable_vhost_vsock:--enable-vhost-vsock} \
@@ -1200,6 +1157,7 @@ find -regex '.*linux-user/qemu.*' -perm 755 -exec mv '{}' '{}'.static ';'
 	%{subst_enable rbd} \
 	%{subst_enable libnfs} \
 	%{subst_enable glusterfs} \
+    %{subst_enable libxml2} \
 	%{subst_enable libssh2} \
 	%{?_enable_live_block_migration:--enable-live-block-migration} \
 	%{subst_enable rdma} \
@@ -1216,8 +1174,7 @@ find -regex '.*linux-user/qemu.*' -perm 755 -exec mv '{}' '{}'.static ';'
 	%{subst_enable bzip2} \
 	%{?_disable_guest_agent:--disable-guest-agent} \
 	%{subst_enable tools} \
-	--enable-pie \
-	--enable-modules
+    --disable-xen
 
 %make_build V=1 $buildldflags
 
@@ -1304,61 +1261,17 @@ done
 ln -r -s %buildroot%_datadir/seabios/{bios,bios-256k}.bin %buildroot%_datadir/%name/
 
 mkdir -p %buildroot%_binfmtdir
-for i in dummy \
-%ifnarch %ix86 x86_64
-    qemu-i386 \
-%endif
-%ifnarch alpha
-    qemu-alpha \
-%endif
-%ifnarch %arm
-    qemu-arm \
-%endif
-    qemu-armeb \
-    qemu-cris \
-    qemu-microblaze qemu-microblazeel \
-%ifnarch mips64
-    qemu-mips64 \
-%ifnarch mips
-    qemu-mips \
-%endif
-%endif
-%ifnarch mips64el
-    qemu-mips64el \
-%ifnarch mipsel
-    qemu-mipsel \
-%endif
-%endif
-%ifnarch m68k
-    qemu-m68k \
-%endif
-%ifnarch ppc %power64
-    qemu-ppc qemu-ppc64abi32 qemu-ppc64le qemu-ppc64 \
-%endif
-%ifnarch sparc sparc64
-    qemu-sparc qemu-sparc32plus qemu-sparc64 \
-%endif
-%ifnarch s390 s390x
-    qemu-s390x \
-%endif
-%ifnarch sh4
-    qemu-sh4 \
-%endif
-    qemu-sh4eb \
-; do
-  test $i = dummy && continue
-
-  grep /$i:\$ %SOURCE1 > %buildroot%_binfmtdir/$i-dynamic.conf
-  chmod 644 %buildroot%_binfmtdir/$i-dynamic.conf
+./scripts/qemu-binfmt-conf.sh --systemd ALL --exportdir %buildroot%_binfmtdir --qemu-path %_bindir
+for i in %buildroot%_binfmtdir/*; do
+    mv $i $(echo $i | sed 's/.conf/-dynamic.conf/')
+done
 
 %if user_static
-  grep /$i:\$ %SOURCE1 | tr -d '\n' > %buildroot%_binfmtdir/$i-static.conf
-  echo "F" >> %buildroot%_binfmtdir/$i-static.conf
-  perl -i -p -e "s/$i:F/$i-static:F/" %buildroot%_binfmtdir/$i-static.conf
-  chmod 644 %buildroot%_binfmtdir/$i-static.conf
+for regularfmt in %buildroot%_binfmtdir/*; do
+    staticfmt="$(echo $regularfmt | sed 's/-dynamic/-static/g')"
+    cat $regularfmt | tr -d '\n' | sed "s/:$/-static:F/" > $staticfmt
+done
 %endif
-
-done < %SOURCE1
 
 %check
 # Disabled on aarch64 where it fails with several errors.  Will
@@ -1478,6 +1391,36 @@ fi
 %files block-ssh
 %_libdir/qemu/block-ssh.so
 
+%if_enabled alsa
+%files audio-alsa
+%_libdir/qemu/audio-alsa.so
+%endif
+%if_enabled oss
+%files audio-oss
+%_libdir/qemu/audio-oss.so
+%endif
+%if_enabled pulseaudio
+%files audio-pa
+%_libdir/qemu/audio-pa.so
+%endif
+%if_enabled sdl
+%files audio-sdl
+%_libdir/qemu/audio-sdl.so
+%endif
+
+%if_enabled curses
+%files ui-curses
+%_libdir/qemu/ui-curses.so
+%endif
+%if_enabled gtk
+%files ui-gtk
+%_libdir/qemu/ui-gtk.so
+%endif
+%if_enabled sdl
+%files ui-sdl
+%_libdir/qemu/ui-sdl.so
+%endif
+
 %files guest-agent
 %_bindir/qemu-ga
 %_man8dir/qemu-ga.8*
@@ -1517,7 +1460,6 @@ fi
 
 %_man1dir/qemu-kvm.1*
 
-%_datadir/%name/acpi-dsdt.aml
 %_datadir/%name/bios.bin
 %_datadir/%name/bios-256k.bin
 %_datadir/%name/sgabios.bin
@@ -1526,57 +1468,54 @@ fi
 %_datadir/%name/multiboot.bin
 %_datadir/%name/kvmvapic.bin
 
-%if_with alpha
 %files system-alpha
 %files system-alpha-core
 %_bindir/qemu-system-alpha
 %_man1dir/qemu-system-alpha.1*
 %_datadir/%name/palcode-clipper
-%endif
-%if_with arm
+
 %files system-arm
 %files system-arm-core
 %_bindir/qemu-system-arm
 %_man1dir/qemu-system-arm.1*
-%endif
-%if_with mips
+
 %files system-mips
 %files system-mips-core
 %_bindir/qemu-system-mips*
 %_man1dir/qemu-system-mips*
-%endif
-%if_with cris
+
 %files system-cris
 %files system-cris-core
 %_bindir/qemu-system-cris
 %_man1dir/qemu-system-cris.1*
-%endif
-%if_with lm32
+
+%files system-hppa
+%files system-hppa-core
+%_bindir/qemu-system-hppa
+%_man1dir/qemu-system-hppa.1*
+%_datadir/%name/hppa-firmware.img
+
 %files system-lm32
 %files system-lm32-core
 %_bindir/qemu-system-lm32
 %_man1dir/qemu-system-lm32.1*
-%endif
-%if_with m68k
+
 %files system-m68k
 %files system-m68k-core
 %_bindir/qemu-system-m68k
 %_man1dir/qemu-system-m68k.1*
-%endif
-%if_with microblaze
+
 %files system-microblaze
 %files system-microblaze-core
 %_bindir/qemu-system-microblaze*
 %_man1dir/qemu-system-microblaze*
 %_datadir/%name/petalogix*.dtb
-%endif
-%if_with or1k
+
 %files system-or1k
 %files system-or1k-core
 %_bindir/qemu-system-or1k
 %_man1dir/qemu-system-or1k.1*
-%endif
-%if_with s390x
+
 %files system-s390x
 %files system-s390x-core
 %_bindir/qemu-system-s390x
@@ -1586,14 +1525,12 @@ fi
 %ifarch s390x
 %_sysconfdir/sysctl.d/50-kvm-s390x.conf
 %endif
-%endif
-%if_with sh4
+
 %files system-sh4
 %files system-sh4-core
 %_bindir/qemu-system-sh4*
 %_man1dir/qemu-system-sh*
-%endif
-%if_with sparc
+
 %files system-sparc
 %files system-sparc-core
 %_bindir/qemu-system-sparc*
@@ -1601,62 +1538,76 @@ fi
 %_datadir/%name/QEMU,tcx.bin
 %_datadir/%name/QEMU,cgthree.bin
 %_datadir/%name/openbios-sparc*
-%endif
-%if_with ppc
+
 %files system-ppc
 %files system-ppc-core
 %_bindir/qemu-system-ppc*
 %_man1dir/qemu-system-ppc*
 %_datadir/%name/bamboo.dtb
+%_datadir/%name/canyonlands.dtb
 %_datadir/%name/ppc_rom.bin
 %_datadir/%name/qemu_vga.ndrv
 %_datadir/%name/skiboot.lid
 %_datadir/%name/spapr-rtas.bin
 %_datadir/%name/u-boot.e500
+%_datadir/%name/u-boot-sam460-20100605.bin
 %_datadir/%name/openbios-ppc
 %_datadir/%name/slof.bin
 %ifarch %power64
 %_sysconfdir/security/limits.d/95-kvm-ppc64-memlock.conf
 %endif
-%endif
-%if_with unicore32
+
+%files system-riscv
+%files system-riscv-core
+%_bindir/qemu-system-riscv32
+%_bindir/qemu-system-riscv64
+%_man1dir/qemu-system-riscv*
+
 %files system-unicore32
 %files system-unicore32-core
 %_bindir/qemu-system-unicore32
 %_man1dir/qemu-system-unicore32.1*
-%endif
-%if_with xtensa
+
 %files system-xtensa
 %files system-xtensa-core
 %_bindir/qemu-system-xtensa*
 %_man1dir/qemu-system-xtensa*
-%endif
-%if_with moxie
+
 %files system-moxie
 %files system-moxie-core
 %_bindir/qemu-system-moxie
 %_man1dir/qemu-system-moxie.1*
-%endif
-%if_with aarch64
+
 %files system-aarch64
 %files system-aarch64-core
 %_bindir/qemu-system-aarch64
 %_man1dir/qemu-system-aarch64.1*
-%endif
-%if_with tricore
+
 %files system-tricore
 %files system-tricore-core
 %_bindir/qemu-system-tricore
 %_man1dir/qemu-system-tricore.1*
-%endif
-%if_with nios2
+
 %files system-nios2
 %files system-nios2-core
 %_bindir/qemu-system-nios2
 %_man1dir/qemu-system-nios2.1*
-%endif
 
 %changelog
+* Fri Apr 27 2018 Alexey Shabalin <shaba@altlinux.ru> 2.12.0-alt1
+- 2.12.0
+- use python3 for build
+- generate binfmt configs with qemu-binfmt-conf.sh
+- build all supported arch targets (riscv too)
+- new packages:
+  + qemu-audio-alsa
+  + qemu-audio-oss
+  + qemu-audio-pa
+  + qemu-audio-sdl
+  + qemu-ui-curses
+  + qemu-ui-gtk
+  + qemu-ui-sdl
+
 * Fri Feb 16 2018 Alexey Shabalin <shaba@altlinux.ru> 2.11.1-alt1
 - 2.11.1
 - This update contains new functionality needed to enable mitigations
