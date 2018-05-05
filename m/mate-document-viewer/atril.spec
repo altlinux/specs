@@ -1,9 +1,12 @@
+%def_enable epub
+%def_enable xps
+
 %define rname atril
 %define _libexecdir %_prefix/libexec
 
 Name: mate-document-viewer
 Version: 1.20.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Document viewer
 License: GPLv2+ and LGPLv2+ and MIT
@@ -17,14 +20,22 @@ Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
 
 BuildRequires: mate-common
-BuildRequires: gcc-c++ gtk-doc intltool itstool libdjvu-devel libgail3-devel libgxps-devel libkpathsea-devel
-BuildRequires: libpoppler-glib-devel libsecret-devel libspectre-devel libtiff-devel libwebkit2gtk-devel
+BuildRequires: gcc-c++ gtk-doc intltool itstool libdjvu-devel libgail3-devel libkpathsea-devel
+BuildRequires: libpoppler-glib-devel libsecret-devel libspectre-devel libtiff-devel
 BuildRequires: libxml2-devel mate-file-manager-devel yelp-tools
+
+%if_enabled xps
+BuildRequires: libgxps-devel libgxps-gir-devel
+%endif
+
+%if_enabled epub
+BuildRequires: libwebkit2gtk-devel
+%endif
 
 %description
 Mate-document-viewer is simple document viewer.
 It can display and print Portable Document Format (PDF),
-PostScript (PS), Encapsulated PostScript (EPS), DVI, DJVU, epub and XPS files.
+PostScript (PS), Encapsulated PostScript (EPS), DVI, DJVU%{?_enable_epub:, epub}%{?_enable_xps: and XPS} files.
 When supported by the document format, mate-document-viewer
 allows searching for text, copying text to the clipboard,
 hypertext navigation, table-of-contents bookmarks and editing of forms.
@@ -110,8 +121,8 @@ caja file manager.
 	--enable-djvu \
 	--disable-t1lib \
 	--enable-pixbuf \
-	--enable-xps \
-	--enable-epub
+	%{subst_enable xps} \
+	%{subst_enable epub}
 
 %make_build
 
@@ -143,8 +154,10 @@ find %buildroot%_libdir -name \*.la -delete
 %exclude %_libdir/atril/3/backends/dvidocument.atril-backend
 %exclude %_libdir/atril/3/backends/libdjvudocument.so
 %exclude %_libdir/atril/3/backends/djvudocument.atril-backend
+%if_enabled xps
 %exclude %_libdir/atril/3/backends/libxpsdocument.so*
 %exclude %_libdir/atril/3/backends/xpsdocument.atril-backend
+%endif
 %exclude %_libdir/atril/3/backends/libpixbufdocument.so*
 %exclude %_libdir/atril/3/backends/pixbufdocument.atril-backend
 
@@ -156,9 +169,11 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/atril/3/backends/libdjvudocument.so
 %_libdir/atril/3/backends/djvudocument.atril-backend
 
+%if_enabled xps
 %files xps
 %_libdir/atril/3/backends/libxpsdocument.so*
 %_libdir/atril/3/backends/xpsdocument.atril-backend
+%endif
 
 %files pixbuf
 %_libdir/atril/3/backends/libpixbufdocument.so*
@@ -178,7 +193,13 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/Atril*.gir
 %_datadir/gtk-doc/html/*
 
+# TODO:
+# -default subpackage to pull in backend deps
+
 %changelog
+* Sat May 05 2018 Michael Shigorin <mike@altlinux.org> 1:1.20.1-alt2
+- introduce epub, xps knobs (on by default)
+
 * Tue Mar 27 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.1-alt1
 - 1.20.1
 
