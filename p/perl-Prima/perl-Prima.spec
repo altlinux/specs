@@ -38,7 +38,7 @@ BuildRequires: /usr/bin/xvfb-run perl(AnyEvent.pm) perl(AnyEvent/Socket.pm) perl
 
 Name:           perl-Prima
 Version:        1.52
-Release:        alt3_3
+Release:        alt4_3
 Summary:        Perl graphic toolkit
 # img/codec_jpeg.c:     EXIF parser is based on io-jpeg.c from gdk-pixbuf
 #                       (LGPLv2+)
@@ -201,6 +201,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 %{perl_vendor_archlib}/Prima/Test.*
 
 %changelog
+* Sun May 06 2018 Michael Shigorin <mike@altlinux.org> 1.52-alt4_3
+- rebuild for e2kv4
+
 * Sun Dec 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.52-alt3_3
 - rebuild with perl 5.26
 
