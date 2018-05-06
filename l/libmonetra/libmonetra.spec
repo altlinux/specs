@@ -6,15 +6,14 @@
 
 Summary:	Library to allow credit card processing through MCVE
 Name:		libmonetra
-Version:	7.7.0
-Release:	alt1_8
+Version:	7.14.0
+Release:	alt1_1
 Group:		System/Libraries
-License:	BSD
-URL:		http://www.mainstreetsoftworks.com/
-Source0:	ftp://ftp.mcve.com/pub/libmonetra/%{name}-%{version}.tar.gz
-Patch0:		libmonetra-7.7.0-lib64.diff
-Patch1:		libmonetra-7.7.0-openssl11.patch
+License:	GPLv2+
+URL:		https://www.monetra.com/
+Source0:	https://www.monetra.com/downloads/%{name}-%{version}.tar.gz
 BuildRequires:	pkgconfig(openssl)
+BuildRequires:	pkgconfig(krb5)
 Source44: import.info
 
 %description
@@ -43,23 +42,19 @@ This package contains the static %{name} library and its header
 files.
 
 %prep
-
 %setup -q
-%patch0 -p1
-%patch1 -p1
+
 
 %build
 export WANT_AUTOCONF_2_5=1
 rm -f configure
 libtoolize --copy --force; aclocal; autoconf; automake --add-missing --copy
 
-%configure
-
-%make
+%configure --enable-deprecated
+%make_build
 
 %install
 %makeinstall_std
-
 
 %files -n %{libname}
 %doc AUTHORS ChangeLog LICENSE README
@@ -76,6 +71,9 @@ libtoolize --copy --force; aclocal; autoconf; automake --add-missing --copy
 
 
 %changelog
+* Sun May 06 2018 Igor Vlasenko <viy@altlinux.ru> 7.14.0-alt1_1
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 7.7.0-alt1_8
 - new version
 
