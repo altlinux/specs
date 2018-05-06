@@ -4,11 +4,11 @@
 %define cpro_arch ia32
 %endif
 
-%define rev 1143028
+%define rev 51687e2
 
 Name:    token-manager
 Version: 0.12
-Release: alt3.git%rev
+Release: alt4.git%rev
 Summary: Certificate manager for CryptoPro CSP
 
 License: MIT
@@ -49,6 +49,9 @@ install -Dm 0644 cpconfig-%cpro_arch %buildroot%_sysconfdir/security/console.app
 %config(noreplace) %_sysconfdir/security/console.apps/cpconfig-%cpro_arch
 
 %changelog
+* Sun May 06 2018 Andrey Cherepanov <cas@altlinux.org> 0.12-alt4.git51687e2
+- New version.
+
 * Sun Sep 24 2017 Andrey Cherepanov <cas@altlinux.org> 0.12-alt3.git1143028
 - Add project URL
 
