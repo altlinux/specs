@@ -4,12 +4,12 @@
 
 Name: libnotify
 Version: %ver_major.7
-Release: alt1.1
+Release: alt1.2
 
 Summary: Desktop notification library
 Group: System/Libraries
 License: LGPLv2.1+
-Url: http://live.gnome.org/libnotify
+Url: http://www.gnome.org
 
 # git://git.gnome.org/libnotify
 Source: %name-%version.tar
@@ -125,7 +125,14 @@ the command line.
 %_girdir/Notify-%ver_major.gir
 %endif
 
+# TODO:
+# - upstream git has some patches upon 0.7.7
+
 %changelog
+* Sun May 06 2018 Michael Shigorin <mike@altlinux.org> 0.7.7-alt1.2
+- rebuilt for e2kv4
+- updated Url:
+
 * Mon Jan 16 2017 Michael Shigorin <mike@altlinux.org> 0.7.7-alt1.1
 - moved BR: libgtk+3 under check knob
 
