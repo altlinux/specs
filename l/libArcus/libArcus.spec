@@ -1,9 +1,9 @@
 Name: libArcus
-Version: 3.2.1
-Release: alt1%ubt.1
+Version: 3.3.0
+Release: alt1%ubt
 
 Summary: Communication library between internal components for Ultimaker software
-License: LGPL-3.0
+License: LGPLv3+
 Group: Development/Other
 Url: https://github.com/Ultimaker/libArcus
 
@@ -37,13 +37,10 @@ Communication library between internal components for Ultimaker software
 
 %prep
 %setup
-# Move stuff to lib64 on 64 arches
-# TODO propose a change to honor -DLIB_SUFFIX=64
-sed -i 's|DESTINATION lib|DESTINATION %_lib|g' CMakeLists.txt
-#sed -i 's|PYTHON_SITE_PACKAGES_DIR lib|PYTHON_SITE_PACKAGES_DIR %_lib|g' CMakeLists.txt
 
 %build
-%cmake 
+%cmake -DBUILD_EXAMPLES:BOOL=OFF \
+       -DCMAKE_SKIP_RPATH:BOOL=ON
 %cmake_build
 
 %install
@@ -62,6 +59,9 @@ sed -i 's|DESTINATION lib|DESTINATION %_lib|g' CMakeLists.txt
 %python3_sitelibdir/*
 
 %changelog
+* Sun May 06 2018 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1%ubt
+- New version 3.3.0
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.1-alt1%ubt.1
 - (NMU) Rebuilt with python-3.6.4.
 
