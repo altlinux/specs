@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180409
+Version: 20180430
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,16 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun May 06 2018 Cronbuild Service <cronbuild@altlinux.org> 20180430-alt1
+- upstream changes (GIT 397a604):
+  + qed: Add firmware 8.33.12.0 (thx Rasesh Mody)
+  + Add firmware file for Intel Bluetooth,9560 (thx Amit K Bag)
+  + Add firmware file for Intel Bluetooth,9260 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth,8265 (thx Amit K Bag)
+  + cxgb4: update firmware to revision 1.19.1.0 (thx Ganesh Goudar)
+  + nfp: add symlink for mixed mode Agilio CX 2x25GbE cards (thx Louis Peens)
+  + nfp: update Agilio SmartNIC flower firmware to rev 5701 (thx Louis Peens)
+
 * Sat Apr 21 2018 Cronbuild Service <cronbuild@altlinux.org> 20180409-alt1
 - upstream changes (GIT b562d2f):
   + update wil6210 firmware to 5.2.0.18 (thx Maya Erez)
