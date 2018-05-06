@@ -2,7 +2,7 @@
 %define dist IO-Tty
 Name: perl-%dist
 Version: 1.12
-Release: alt1.1.1.1.1
+Release: alt2
 
 Summary: interface to pseudo tty's
 License: GPL or Artistic
@@ -39,6 +39,9 @@ IO::Tty and IO::Pty provide an interface to pseudo tty's
 %perl_vendor_autolib/IO
 
 %changelog
+* Sun May 06 2018 Michael Shigorin <mike@altlinux.org> 1.12-alt2
+- rebuilt for e2kv4
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1.1.1.1.1
 - rebuild with new perl 5.26.1
 
