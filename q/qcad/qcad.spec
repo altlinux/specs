@@ -1,5 +1,7 @@
+%def_with debug
+
 Name: 	 qcad
-Version: 3.20.0.0
+Version: 3.20.1.3
 Release: alt1
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
@@ -13,6 +15,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0: qcad-%version.tar
 Source1: qcad.desktop
+Source2: qcad
 Patch:   %name-%version-%release.patch
 
 BuildRequires: gcc-c++ qt5-base-devel python
@@ -49,6 +52,9 @@ QCad это профессиональная CAD система. С QCad вы м
 %prep
 %setup -q
 %patch -p1
+%if_with debug
+echo 'DEFINES -= QT_NO_DEBUG_OUTPUT' >> shared.pri
+%endif
 %qmake_qt5
 #lupdate-qt5 %name.pro
 
@@ -60,7 +66,7 @@ if [ ! -e src/3rdparty/qt-labs-qtscriptgenerator-%_qt5_version ] ; then
 fi
 
 %build
-export NPROCS=1
+#export NPROCS=1
 %make_build
 
 %install
@@ -69,14 +75,7 @@ export NPROCS=1
 install -Dm755 release/qcad-bin %buildroot%_libdir/%name/qcad-bin
 
 # Make executable wrapper
-install -d %buildroot%_bindir
-cat > %buildroot%_bindir/%name << WRAPPER.
-#!/bin/sh
-
-cd %_libdir/%name
-./qcad-bin
-WRAPPER.
-chmod +x %buildroot%_bindir/%name
+install -Dm0755 %SOURCE2 %buildroot%_bindir/qcad
 
 # Libraries
 install -d %buildroot%_libdir
@@ -122,6 +121,13 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sat May 05 2018 Andrey Cherepanov <cas@altlinux.org> 3.20.1.3-alt1
+- New version.
+- Fix open file from command line (ALT #34807).
+
+* Sat Apr 14 2018 Andrey Cherepanov <cas@altlinux.org> 3.20.1.0-alt1
+- New version.
+
 * Thu Apr 12 2018 Andrey Cherepanov <cas@altlinux.org> 3.20.0.0-alt1
 - New version.
 
