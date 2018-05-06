@@ -6,8 +6,8 @@
 
 Summary: Direct concurrent to the UPnP IGD specification
 Name: libnatpmp
-Version: 20140401
-Release: alt1_4
+Version: 20150609
+Release: alt1_1
 License: LGPLv2+
 Group: System/Libraries
 URL: http://miniupnp.free.fr/
@@ -45,7 +45,7 @@ to install libnatpmp-devel.
 %setup -q
 
 %build
-%make LDFLAGS="" CFLAGS="%optflags -fPIC"
+%make_build LDFLAGS="" CFLAGS="%optflags -fPIC"
 
 %install
 make install INSTALLPREFIX=%{buildroot}%{_prefix} INSTALLDIRLIB=%{buildroot}%{_libdir}
@@ -64,6 +64,9 @@ rm -f %{buildroot}%{_libdir}/*.a
 
 
 %changelog
+* Sun May 06 2018 Igor Vlasenko <viy@altlinux.ru> 20150609-alt1_1
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 20140401-alt1_4
 - new version
 
