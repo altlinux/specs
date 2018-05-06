@@ -5,8 +5,8 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name: mythes-lv
 Summary: Latvian mythes dictionaries
-Version: 0.9.4
-Release: alt1_11
+Version: 1.3.0
+Release: alt1_1
 Source: http://dict.dv.lv/download/lv_LV-%{version}.oxt
 Group: Text tools
 URL: http://dict.dv.lv/
@@ -45,6 +45,9 @@ cp -p th_lv_LV_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 
 
 %changelog
+* Sun May 06 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_1
+- update by mgaimport
+
 * Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt1_11
 - new version
 
