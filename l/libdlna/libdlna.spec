@@ -1,21 +1,21 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define major   0
-%define libname libdlna%{major}
+%define major     0
+%define libname   libdlna%{major}
 %define develname libdlna-devel
 
-Summary: Implementation of DLNA (Digital Living Network Alliance)
-Name: libdlna
-Version: 0.2.4
-Release: alt1_9
-Source0: http://libdlna.geexbox.org/releases/%{name}-%{version}.tar.bz2
-Patch0: libdlna-0.2.4-mga-ffmpeg-2.4.patch
+Summary:        Implementation of DLNA (Digital Living Network Alliance)
+Name:           libdlna
+Version:        0.2.4
+Release:        alt1_10
+License:        LGPLv2+
+Group:          System/Libraries
+Url:            http://libdlna.geexbox.org/
+Source0:        http://libdlna.geexbox.org/releases/%{name}-%{version}.tar.bz2
+Patch0:         libdlna-0.2.4-mga-ffmpeg-2.4.patch
 # Patch from ArchLinux: https://git.archlinux.org/svntogit/community.git/tree/trunk?h=packages/libdlna
-Patch1: libdlna-ffmpeg3.patch
-License: LGPLv2+
-Group: System/Libraries
-Url: http://libdlna.geexbox.org/
-BuildRequires: libavcodec-devel libavdevice-devel libavfilter-devel libavformat-devel libavresample-devel libavutil-devel libpostproc-devel libswresample-devel libswscale-devel
+Patch1:         libdlna-ffmpeg3.patch
+BuildRequires:  libavcodec-devel libavdevice-devel libavfilter-devel libavformat-devel libavresample-devel libavutil-devel libpostproc-devel libswresample-devel libswscale-devel
 Source44: import.info
 
 %description
@@ -38,7 +38,6 @@ Group:          Development/C
 Requires:       %{libname} >= %{version}
 Provides:       %{name}-devel = %{version}-%{release}
 Obsoletes:      %name-devel < %{version}-%{release}
-Obsoletes:	%{_lib}dlna0-devel
 
 %description -n %{develname}
 Libraries and includes files for developing programs based on %name.
@@ -70,6 +69,9 @@ make
 
 
 %changelog
+* Sun May 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt1_10
+- update by mgaimport
+
 * Mon Apr 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt1_9
 - new version
 
