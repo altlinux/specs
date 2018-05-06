@@ -6,7 +6,7 @@
 
 Name: libvalhalla
 Version: 2.0.0
-Release: alt1_14
+Release: alt1_15
 URL: http://libvalhalla.geexbox.org/
 Source:	http://libvalhalla.geexbox.org/releases/%{name}-%{version}.tar.bz2
 # commit 1093 from upstream (http://hg.geexbox.org/libvalhalla)
@@ -39,11 +39,11 @@ Patch13: libvalhalla-2.0.0-ffmpeg-2.4.patch
 License: LGPLv2+
 Summary: A media scanner
 Group: System/Libraries
-BuildRequires: libsqlite3-devel
+BuildRequires: pkgconfig(sqlite3)
 BuildRequires: libavcodec-devel libavdevice-devel libavfilter-devel libavformat-devel libavresample-devel libavutil-devel libpostproc-devel libswresample-devel libswscale-devel
-BuildRequires: libcurl-devel
-BuildRequires: libxml2-devel
-BuildRequires: libexif-devel
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(libexif)
 BuildRequires: gcrypt-utils libgcrypt-devel
 Source44: import.info
 
@@ -119,7 +119,7 @@ export
 	--disable-static \
 	--enable-pic \
 	--enable-shared || cat config.log
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -139,6 +139,9 @@ export
 
 
 %changelog
+* Sun May 06 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_15
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_14
 - new version
 
