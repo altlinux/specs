@@ -30,13 +30,13 @@ BuildRequires: /proc
 # https://github.com/jackpal/gateway
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          5795ac81146e01d3fab7bcf21c043c3d6a32b006
+%global commit          cbcf4e3f3baee7952fc386c8b2534af4d267c875
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        1.0.4
-Release:        alt1_0.4.git%{shortcommit}
+Release:        alt1_0.5.git%{shortcommit}
 Summary:        Discovering the address of a LAN gateway in go
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -171,6 +171,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %endif
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_0.5.gitcbcf4e3
+- update to new release by fcimport
+
 * Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_0.4.git5795ac8
 - fc update
 
