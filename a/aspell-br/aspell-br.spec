@@ -6,14 +6,14 @@ Summary: Breton dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 0.50
-Release: alt2_23
+Release: alt2_24
 License: GPLv2
 Group: Text tools
 URL: http://aspell.net/
 Source: ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell-%{lang}-%{version}-%{langrelease}.tar.bz2
 Patch0: aspell-br-0.50-conf.patch
-Buildrequires: aspell >= 0.60
-Requires: aspell >= 0.60
+Buildrequires: aspell libaspell
+Requires: aspell libaspell
 
 %define debug_package %{nil}
 Source44: import.info
@@ -38,6 +38,9 @@ make install DESTDIR="$RPM_BUILD_ROOT"
 %{_datadir}/aspell/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_24
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_23
 - update to new release by fcimport
 
