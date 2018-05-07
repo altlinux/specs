@@ -1,7 +1,7 @@
 Summary: The EXTLINUX bootloader, for booting the local system.
 Name: extlinux
 Version: 6.03
-Release: alt1
+Release: alt2
 License: GPL2
 Group: System/Base
 Url: http://www.syslinux.org/wiki/index.php/The_Syslinux_Project
@@ -15,7 +15,7 @@ Source4: extlinux.filetrigger
 
 BuildRequires: libe2fs-devel libuuid-devel nasm
 
-Requires: libshell util-linux parted
+Requires: libshell util-linux
 
 Conflicts: syslinux-extlinux
 Obsoletes: syslinux4-extlinux
@@ -100,6 +100,9 @@ ln -s ../boot/extlinux/extlinux.conf.d .
 %doc sample
 
 %changelog
+* Mon May 07 2018 Alexey Gladkov <legion@altlinux.ru> 6.03-alt2
+- Remove parted from specfile.
+
 * Tue Dec 26 2017 Alexey Gladkov <legion@altlinux.ru> 6.03-alt1
 - New release (6.03).
 
