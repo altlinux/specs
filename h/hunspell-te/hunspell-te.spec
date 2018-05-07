@@ -4,7 +4,7 @@ Group: Text tools
 Name: hunspell-te
 Summary: Telugu hunspell dictionaries
 Version: 1.0.0
-Release: alt1_8
+Release: alt1_9
 #Epoch:   1
 ##Upstream is unresponsive so unable to verify license version
 License:        GPL+
@@ -30,11 +30,14 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p te_IN/*.dic te_IN/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
 %files 
-%doc te_IN/COPYING te_IN/Copyright
+%doc --no-dereference te_IN/COPYING te_IN/Copyright
 %doc te_IN/README
 %{_datadir}/myspell/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_9
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_8
 - update to new release by fcimport
 
