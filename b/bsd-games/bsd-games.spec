@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Ick!  This is only a temporary hack until I have more time
@@ -11,7 +8,7 @@ BuildRequires: gcc-c++
 Summary: Collection of text-based games
 Name: bsd-games
 Version: 2.17
-Release: alt2_55
+Release: alt2_58
 License: BSD and BSD with advertising
 Group: Games/Other
 URL: ftp://metalab.unc.edu/pub/Linux/games/
@@ -46,7 +43,7 @@ Patch20: bsd-games-2.17-backgammonrecursion.patch
 Patch21: bsd-games-2.17-huntversion.patch
 Patch22: bsd-games-2.17-getrandom.patch
 Patch23: bsd-games-2.17-printf.patch
-BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel words flex flex bison
+BuildRequires: gcc gcc-c++ libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel words flex flex bison
 Requires(pre): shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
 Source44: import.info
 
@@ -211,6 +208,9 @@ exit 0
 %doc AUTHORS COPYING ChangeLog ChangeLog.0 THANKS YEAR2000 README.hunt trek/USD.doc/trek.me
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.17-alt2_58
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.17-alt2_55
 - update to new release by fcimport
 
