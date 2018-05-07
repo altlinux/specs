@@ -1,33 +1,24 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN/Meta/Requirements.pm) perl(DBD/Pg.pm) perl-podlators
+BuildRequires: perl(DBD/Pg.pm) perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Sub/Identify.pm)
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# DDS plugin requires Data::Dump::Streamer which does not work with perl-5.22.
-# bug #1231285, CPAN RT#105466.
-%bcond_with dds
-
 Name:           perl-Devel-REPL
 Version:        1.003028
-Release:        alt2_3
+Release:        alt2_7
 Summary:        Modern perl interactive shell
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            http://search.cpan.org/dist/Devel-REPL/
 Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Devel-REPL-%{version}.tar.gz
 BuildArch:      noarch
 # Build
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
-# XXX: BuildRequires:  perl(CPAN::Meta::Requirements)
+BuildRequires:  perl
+BuildRequires:  perl(CPAN/Meta/Requirements.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Module/Metadata.pm)
 BuildRequires:  perl(strict.pm)
@@ -36,9 +27,7 @@ BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(App/Nopaste.pm)
 BuildRequires:  perl(B/Concise.pm)
 BuildRequires:  perl(B/Keywords.pm)
-%if %{with dds}
 BuildRequires:  perl(Data/Dump/Streamer.pm)
-%endif
 BuildRequires:  perl(Data/Dumper/Concise.pm)
 BuildRequires:  perl(Devel/Peek.pm)
 BuildRequires:  perl(File/HomeDir.pm)
@@ -66,14 +55,24 @@ BuildRequires:  perl(blib.pm)
 BuildRequires:  perl(if.pm)
 BuildRequires:  perl(Test/Fatal.pm)
 BuildRequires:  perl(Test/More.pm)
+Requires:       perl(Moose.pm) >= 0.930
 Requires:       perl(Moose/Meta/Role.pm)
-Requires:       perl(MooseX/Getopt.pm)
-Requires:       perl(MooseX/Object/Pluggable.pm)
-%filter_from_requires /^perl\\(Data.Dump.Streamer.pm\\)$/d
+Requires:       perl(MooseX/Getopt.pm) >= 0.180
+Requires:       perl(MooseX/Object/Pluggable.pm) >= 0.000.900
+# Require plugins used by default, see Devel::REPL::Profile::Minimal
+Requires:       perl(Devel/REPL/Plugin/Commands.pm)
+Requires:       perl(Devel/REPL/Plugin/DDS.pm)
+Requires:       perl(Devel/REPL/Plugin/History.pm)
+Requires:       perl(Devel/REPL/Plugin/LexEnv.pm)
+Requires:       perl(Devel/REPL/Plugin/MultiLine/PPI.pm)
+Requires:       perl(Devel/REPL/Plugin/Packages.pm)
 
 
 
+# Remove under-specified dependencies
 
+Source44: import.info
+%filter_from_requires /^perl(\(Data.Dump.Streamer\|Moose\)\\)$/d
 
 %description
 This is an interactive shell for Perl, commonly known as a REPL - Read,
@@ -87,9 +86,7 @@ are available:
     CompletionDriver::INC
     CompletionDriver::Keywords
     DDC
-%if %{with dds}
     DDS
-%endif
     Interrupt
     LexEnv
     MultiLine::PPI
@@ -107,7 +104,7 @@ Requires:       %{name} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description Plugin-Completion
 This Perl interactive shell plugin provides extensible tab completion. By
-default, the Completion plugin explicitly does not use the Gnu readline or
+default, the Completion plugin explicitly does not use the GNU Readline or
 Term::ReadLine::Perl fallback file name completion.
 
 %package Plugin-CompletionDriver-INC
@@ -135,7 +132,6 @@ Requires:       %{name} = %{?epoch:%{epoch}:}%{version}-%{release}
 %description Plugin-DDC
 This Perl interactive shell plugin formats results with Data::Dumper::Concise.
 
-%if %{with dds}
 %package Plugin-DDS
 Group: Development/Perl
 Summary:        Devel-REPL plugin for formatting results with Data::Dump::Streamer
@@ -144,7 +140,6 @@ Requires:       perl(Data/Dump/Streamer.pm) >= 2.390
 
 %description Plugin-DDS
 This Perl interactive shell plugin formats results with Data::Dump::Streamer.
-%endif
 
 %package Plugin-Interrupt
 Group: Development/Perl
@@ -154,7 +149,7 @@ Requires:       %{name} = %{?epoch:%{epoch}:}%{version}-%{release}
 %description Plugin-Interrupt
 By default Devel::REPL exits on SIGINT (usually Ctrl-C). If you load this
 module, SIGINT will be trapped and used to kill long-running commands
-(statements) and also to kill the line being edited (like eg. BASH do).
+(statements) and also to kill the line being edited (like e.g. BASH do).
 (You can still use Ctrl-D to exit.)
 
 %package Plugin-LexEnv
@@ -207,7 +202,7 @@ Module::Refresh module.
 %setup -q -n Devel-REPL-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -218,7 +213,7 @@ make pure_install DESTDIR=%{buildroot}
 make test
 
 %files
-%doc LICENCE
+%doc --no-dereference LICENCE
 %doc Changes CONTRIBUTING README examples
 %{_bindir}/*
 %{perl_vendor_privlib}/*
@@ -268,10 +263,8 @@ make test
 %files Plugin-DDC
 %{perl_vendor_privlib}/Devel/REPL/Plugin/DDC.pm
 
-%if %{with dds}
 %files Plugin-DDS
 %{perl_vendor_privlib}/Devel/REPL/Plugin/DDS.pm
-%endif
 
 %files Plugin-Interrupt
 %{perl_vendor_privlib}/Devel/REPL/Plugin/Interrupt.pm
@@ -293,6 +286,9 @@ make test
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.003028-alt2_7
+- update to new release by fcimport
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 1.003028-alt2_3
 - to Sisyphus as perl-PDL dep
 
