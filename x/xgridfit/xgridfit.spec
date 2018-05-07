@@ -16,7 +16,7 @@ Requires: python-module-libxml2
 
 Name:    xgridfit
 Version: 2.3
-Release: alt1_4
+Release: alt1_6
 Summary: Font hinting tool
 
 # This is where we drop fontforge
@@ -32,7 +32,7 @@ BuildArch: noarch
 
 BuildRequires:   python-devel
 
-Requires:        %{_bindir}/xsltproc fontforge libfontforge, libxml2-python
+Requires:        %{_bindir}/xsltproc fontforge libfontforge, python-module-libxml2
 Requires(post):  %{_bindir}/xmlcatalog
 Requires(preun): %{_bindir}/xmlcatalog
 Source44: import.info
@@ -102,6 +102,9 @@ xmlcatalog --noout --del \
 %doc docs/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_6
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_4
 - update to new release by fcimport
 
