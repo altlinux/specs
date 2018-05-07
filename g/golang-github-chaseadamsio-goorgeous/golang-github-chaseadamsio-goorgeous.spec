@@ -36,7 +36,7 @@ BuildRequires: /proc
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        2.0.0
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Org to HTML Parser written in Go
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -99,6 +99,10 @@ providing packages with %{import_path} prefix.
 
 %prep
 %setup -q -n %{repo}-%{commit}
+# Blackfriday removed the footnotes features.
+# We need to remove such feature from goorgeous upstream as well
+# Until then, we skip this feature test
+sed -i '431s/Errorf/Skipf/' goorgeous_test.go
 
 %build
 %install
@@ -178,6 +182,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %endif
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_3
+- update to new release by fcimport
+
 * Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_1
 - fc update
 
