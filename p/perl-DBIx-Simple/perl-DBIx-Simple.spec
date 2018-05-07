@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -9,14 +8,15 @@ BuildRequires: perl(DBIx/XHTML_Table.pm) perl(SQL/Abstract.pm) perl(Text/Table.p
 Name:           perl-DBIx-Simple
 Summary:        Easy-to-use OO interface to DBI
 Version:        1.37
-Release:        alt1
+Release:        alt1_2
 License:        Public Domain
-Source0:        http://www.cpan.org/authors/id/J/JU/JUERD/DBIx-Simple-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/J/JU/JUERD/DBIx-Simple-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/DBIx-Simple/
 BuildArch:      noarch
 
-BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time
 BuildRequires:  perl(base.pm)
@@ -50,7 +50,7 @@ database module.
 %setup -q -n DBIx-Simple-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -65,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.37-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.37-alt1
 - automated CPAN update
 
