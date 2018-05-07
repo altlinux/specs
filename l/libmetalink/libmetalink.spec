@@ -6,7 +6,7 @@ BuildRequires: libxml2-devel
 %define _localstatedir %{_var}
 Name:		libmetalink
 Version:	0.1.3
-Release:	alt1_4
+Release:	alt1_6
 Summary:	Metalink library written in C
 Group:		System/Libraries
 License:	MIT
@@ -42,9 +42,11 @@ make check
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name *.la -exec rm {} \;
 
+
+
 %files
 %{!?_licensedir:%global license %%doc}
-%doc COPYING
+%doc --no-dereference COPYING
 %doc README 
 %{_libdir}/libmetalink.so.*
 
@@ -62,6 +64,9 @@ find $RPM_BUILD_ROOT -name *.la -exec rm {} \;
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt1_6
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt1_4
 - update to new release by fcimport
 
