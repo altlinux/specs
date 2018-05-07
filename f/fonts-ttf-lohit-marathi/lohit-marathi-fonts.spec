@@ -8,7 +8,7 @@ Group: System/Fonts/True type
 
 Name:           fonts-ttf-lohit-marathi
 Version:        2.94.2
-Release:        alt1_2
+Release:        alt1_4
 Summary:        Free truetype font for Marathi language
 
 License:        OFL
@@ -18,7 +18,6 @@ BuildArch:      noarch
 BuildRequires:  fontforge libfontforge
 BuildRequires:  fontpackages-devel
 BuildRequires:  python3-devel
-BuildRequires:  python-tools-2to3 python-tools-i18n python-tools-idle python-tools-pynche python-tools-smtpd
 Source44: import.info
 
 %description
@@ -85,12 +84,16 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc ChangeLog COPYRIGHT AUTHORS README test-marathi.txt
-%doc OFL.txt
+%doc --no-dereference OFL.txt
 %{_datadir}/metainfo/%{metainfo}.xml
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.94.2-alt1_4
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.94.2-alt1_2
 - update to new release by fcimport
 
