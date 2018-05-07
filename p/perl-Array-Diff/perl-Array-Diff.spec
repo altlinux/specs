@@ -9,7 +9,7 @@ BuildRequires: perl(CPAN.pm) perl(Filter/Util/Call.pm) perl(JSON.pm) perl(LWP/Si
 
 Name:           perl-Array-Diff
 Version:        0.07
-Release:        alt2_25
+Release:        alt2_26
 # Because 0.07 compares newer than 0.05002 in Perl world
 # but not in RPM world :-(
 Epoch:          1
@@ -69,7 +69,7 @@ If you need more complex array tools, check Array::Compare.
 %patch0 -p1
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -82,7 +82,7 @@ make test
 
 %files
 %if 0%{?_licensedir:1}
-%doc LICENSE
+%doc --no-dereference LICENSE
 %else
 %doc LICENSE
 %endif
@@ -91,6 +91,9 @@ make test
 %{perl_vendor_privlib}/Array/Diff.pm
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.07-alt2_26
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.07-alt2_25
 - update to new release by fcimport
 
