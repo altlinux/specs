@@ -19,7 +19,7 @@ BuildRequires: python-modules-xml python-devel
 
 Name:           openni
 Version:        1.5.7.10
-Release:        alt2_11
+Release:        alt2_13
 Summary:        Library for human-machine Natural Interaction
 
 Group:          System/Libraries
@@ -178,11 +178,12 @@ sed -e 's![@]prefix[@]!%{_prefix}!g' \
     %{SOURCE1} > %{buildroot}%{_libdir}/pkgconfig/libopenni.pc
 
 # touching all ghosts; hack for rpm 4.0.4
-for rpm_404_ghost in %{_var}/lib/ni/modules.xml
+for rpm404_ghost in %{_var}/lib/ni/modules.xml
 do
-    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
-    touch %buildroot"$rpm_404_ghost"
+    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+    touch %buildroot"$rpm404_ghost"
 done
+
 
 
 
@@ -230,6 +231,9 @@ fi
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.7.10-alt2_13
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.7.10-alt2_11
 - update to new release by fcimport
 
