@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -10,7 +10,7 @@ Name:             xskat
 # Upstream License requires to alter the version number
 # for re-distribution
 Version:          %{upstream_version}.0
-Release:          alt2_18
+Release:          alt2_20
 # https://fedoraproject.org/wiki/Licensing/XSkat_License
 License:          XSkat
 Group:            Games/Other
@@ -22,7 +22,7 @@ Requires:         fonts-bitmap-misc
 BuildRequires:    xorg-cf-files gccmakedep imake
 BuildRequires:    libX11-devel
 BuildRequires:    desktop-file-utils
-BuildRequires:    ImageMagick
+BuildRequires:    ImageMagick-tools
 Source44: import.info
 
 
@@ -116,6 +116,9 @@ EOF
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_20
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_18
 - update to new release by fcimport
 
