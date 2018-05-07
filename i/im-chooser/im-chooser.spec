@@ -14,7 +14,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate glib
 
 Name:		im-chooser
 Version:	1.7.1
-Release:	alt1_1
+Release:	alt1_4
 License:	GPLv2+ and LGPLv2+
 URL:		http://pagure.io/im-chooser/
 %{?_with_gtk2:BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel}
@@ -24,6 +24,7 @@ BuildRequires:	libSM-devel imsettings-devel >= 1.3.0
 BuildRequires:	libxfce4util-devel
 %endif
 BuildRequires:	desktop-file-utils intltool gettext gettext-tools
+BuildRequires:	gcc
 
 Source0:	http://releases.pagure.org/%{name}/%{name}-%{version}.tar.bz2
 
@@ -71,6 +72,7 @@ This package contains the XFCE settings panel for im-chooser.
 %prep
 %setup -q
 
+
 %build
 %configure
 %make_build
@@ -111,7 +113,8 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/applications/im-chooser-panel.desktop
 %{_mandir}/man1/im-chooser.1*
 
 %files	common -f %{name}.lang
-%doc AUTHORS COPYING ChangeLog README
+%doc AUTHORS ChangeLog README
+%doc --no-dereference COPYING
 %{_libdir}/libimchooseui.so.*
 %{_datadir}/icons/hicolor/*/apps/im-chooser.png
 %dir %{_datadir}/imchooseui
@@ -124,6 +127,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/applications/im-chooser-panel.desktop
 %endif
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt1_4
+- update to new release by fcimport
+
 * Mon Nov 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt1_1
 - new version by request of oddity@
 
