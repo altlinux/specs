@@ -6,20 +6,6 @@ BuildRequires: rpm-build-golang
 BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# If any of the following macros should be set otherwise,
-# you can wrap any of them with the following conditions:
-# - %%if 0%%{centos} == 7
-# - %%if 0%%{?rhel} == 7
-# - %%if 0%%{?fedora} == 23
-# Or just test for particular distribution:
-# - %%if 0%%{centos}
-# - %%if 0%%{?rhel}
-# - %%if 0%%{?fedora}
-#
-# Be aware, on centos, both %%rhel and %%centos are set. If you want to test
-# rhel specific macros, you can use %%if 0%%{?rhel} && 0%%{?centos} == 0 condition.
-# (Don't forget to replace double percentage symbol with single one in order to apply a condition)
-
 # Generate devel rpm
 %global with_devel 1
 # Build project from bundled dependencies
@@ -45,17 +31,17 @@ BuildRequires: /proc
 # https://github.com/gdamore/tcell
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          d55f61ca940a4876e2e7156cd08e3ff9edc58fca
+%global commit          061d51a604c546b48e92253cb65190d76cecf4c6
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global commitdate      20170807
+%global commitdate      20171124
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        0
-Release:        alt1_0.2.%{commitdate}git%{shortcommit}
+Version:        1.0.0
+Release:        alt1_1
 Summary:        An alternate terminal package
 License:        ASL 2.0
 URL:            https://%{provider_prefix}
-Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{shortcommit}.tar.gz
+Source0:        https://%{provider_prefix}/archive/v%{version}/%{repo}-%{version}.tar.gz
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
 ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 aarch64 %{arm}}
@@ -63,15 +49,15 @@ ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 aarch64 %
 BuildRequires:  %{?go_compiler:compiler(go-compiler)}%{!?go_compiler:golang}
 
 
-
 %global _description \
 Package tcell provides a cell based view for text terminals, like xterm. It was \
 inspired by termbox, but differs from termbox in some important ways. It also \
 adds substantial functionality beyond termbox.
 Source44: import.info
-%description %{_description}
+%description 
 
 %if 0%{?with_devel}
+%{_description}
 %package devel
 Group: Development/Other
 Summary:       %{summary}
@@ -139,9 +125,17 @@ providing packages with %{import_path} prefix.
 %endif
 
 %prep
-%setup -q -n %{repo}-%{commit}
+%setup -q -n %{repo}-%{version}
 
 %build
+mkdir -p src/%{provider}.%{provider_tld}/%{project}/
+ln -s $(pwd) src/%{provider}.%{provider_tld}/%{project}/%{repo}
+export GOPATH=$(pwd):%{go_path}
+
+for f in boxes mouse unicode; do
+    %gobuild -o bin/${f} _demos/${f}.go
+done
+
 %install
 # source codes for building projects
 %if 0%{?with_devel}
@@ -206,17 +200,20 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %if 0%{?with_devel}
 %files devel -f devel.file-list
 %doc --no-dereference LICENSE
-%doc AUTHORS README.md TERMINALS.md
+%doc AUTHORS README.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
 %doc --no-dereference LICENSE
-%doc AUTHORS README.md TERMINALS.md
+%doc AUTHORS README.md
 %endif
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_1
+- update to new release by fcimport
+
 * Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.2.20170807gitd55f61c
 - fc update
 
