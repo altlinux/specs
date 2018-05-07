@@ -12,12 +12,12 @@ BuildRequires: gcc-c++
 #
 # Spec file for Fedora modified by Eric Smith <brouhaha@fedoraproject.org>
 
-%global patchlevel bld126
+%global patchlevel bld133
 
 Name:           asl
 URL:            http://john.ccac.rwth-aachen.de:8000/as/index.html
 Version:        1.42
-Release:        alt2_0.35.%{patchlevel}
+Release:        alt2_0.37.%{patchlevel}
 Group:          Development/Other
 License:        GPLv2+
 Summary:        Macro Assembler AS
@@ -27,7 +27,7 @@ Patch1:         asl-sysdefs.h.patch
 Patch2:         asl-install.sh.patch
 Patch3:         asl-Makefile-DESTDIR.patch
 BuildRequires:  tex(latex)
-%if 0%{?fedora} > 18 || 0%{?rhel} > 6
+%if 0%{?fedora} > 18 || 0%{?rhel} > 7
 BuildRequires:  tex(german.sty)
 %endif
 Source44: import.info
@@ -47,9 +47,15 @@ used in workstations and PCs in the target list.
 %setup -q -n asl-current
 
 %patch0 -p0 -b .m-def
-%patch1 -p0 -b .sysdefs
+%patch1 -p1 -b .sysdefs
 %patch2 -p1 -b .install
 %patch3 -p1 -b .destdir
+
+# German documentation can't be built on EL7 because there is no
+# tex(german.sty).
+%if 0%{?rhel} != 0 && 0%{?rhel} <= 7
+sed -i '/doc_DE/d' Makefile
+%endif
 
 %build
 # make seems to have problems with %{_smp_mflags}
@@ -64,12 +70,19 @@ make test
 make install DESTDIR=$RPM_BUILD_ROOT
 
 # convert doc files from ISO-8859-1 to UTF-8 encoding
-for f in changelog doc/as-EN.txt doc/as-DE.txt
+%if 0%{?rhel} != 0 && 0%{?rhel} <= 7
+%global change_encoding_files changelog doc/as-EN.txt
+%else
+%global change_encoding_files changelog doc/as-EN.txt doc/as-DE.txt
+%endif
+
+for f in %{change_encoding_files}
 do
   iconv -fiso88591 -tutf8 $f >$f.new
   touch -r $f $f.new
   mv $f.new $f
 done
+
 
 %files
 %{_bindir}/asl
@@ -90,9 +103,14 @@ done
 %doc --no-dereference COPYING
 %doc README README.LANGS TODO BENCHES changelog
 %doc doc/as-EN.html doc/as-EN.txt doc/as-EN.ps doc/as-EN.pdf doc/as-EN.dvi
+%if 0%{?rhel} == 0 || 0%{?rhel} > 7
 %lang(de) %doc doc/as-DE.html doc/as-DE.txt doc/as-DE.ps doc/as-DE.pdf doc/as-DE.dvi
+%endif
 
 %changelog -n asl
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.37.bld133
+- update to new release by fcimport
+
 * Tue Mar 13 2018 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.35.bld126
 - fixed build
 
