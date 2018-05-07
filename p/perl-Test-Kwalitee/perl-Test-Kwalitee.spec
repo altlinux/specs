@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -8,16 +7,16 @@ BuildRequires: perl(CPAN/Meta/Requirements.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-Kwalitee
 Version:	1.27
-Release:	alt1.1
+Release:	alt1.1_2
 Summary:	Test the Kwalitee of a distribution before you release it
 License:	GPL+ or Artistic
 URL:		http://metacpan.org/module/Test::Kwalitee
-Source0:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Kwalitee-%{version}.tar.gz
+Source0:	http://cpan.metacpan.org/authors/id/E/ET/ETHER/Test-Kwalitee-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	coreutils
-BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module
 BuildRequires:	perl(Cwd.pm)
@@ -51,7 +50,7 @@ computer science).
 %setup -q -n Test-Kwalitee-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PERLLOCAL=1 NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PERLLOCAL=1 NO_PACKLIST=1
 %make_build
 
 %install
@@ -62,13 +61,16 @@ make install DESTDIR=%{buildroot}
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes CONTRIBUTING README
 %{_bindir}/kwalitee-metrics
 %{perl_vendor_privlib}/Test/
 %{_mandir}/man1/kwalitee-metrics.1*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1.1_2
+- update to new release by fcimport
+
 * Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1.1
 - automated CPAN update
 
