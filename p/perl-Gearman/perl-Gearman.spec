@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -9,14 +8,14 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Gearman
 Version:        2.004.014
-Release:        alt1
+Release:        alt1_1
 Summary:        Perl interface for Gearman distributed job system
 License:        GPL+ or Artistic
 URL:            http://danga.com/gearman/
-Source0:        http://www.cpan.org/authors/id/P/PA/PALIK/Gearman-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/P/PA/PALIK/Gearman-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -61,7 +60,7 @@ Requires:       perl(version.pm) >= 0.770
 # Remove under-specifed dependencies
 
 Source44: import.info
-%filter_from_requires /^perl\\(version.pm\\)$/d
+%filter_from_requires /^perl(version\\)$/d
 
 %description
 Gearman provides a generic application framework to farm out work to other
@@ -73,7 +72,7 @@ between languages.
 %setup -q -n Gearman-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -88,6 +87,9 @@ make test
 %{perl_vendor_privlib}/Gearman
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.004.014-alt1_1
+- update to new release by fcimport
+
 * Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.004.014-alt1
 - automated CPAN update
 
