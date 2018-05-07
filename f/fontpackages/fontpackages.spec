@@ -1,3 +1,4 @@
+Group: System/Configuration/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 # END SourceDeps(oneline)
@@ -14,10 +15,9 @@ BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 
 Name:    fontpackages
 Version: 1.44
-Release: alt5_19
+Release: alt5_21
 Summary: Common directory and macro definitions used by font packages
 
-Group:     System/Configuration/Other
 # Mostly means the scriptlets inserted via this package do not change the
 # license of the packages they're inserted in
 License:   LGPLv3+
@@ -64,12 +64,8 @@ Summary: Tools used to check fonts and font packages
 
 Requires: fontconfig fontforge libfontforge
 Requires: curl, make, mutt
-%if 0%{?fedora} >= 22
 Requires: dnf-command(repoquery)
 Requires: createrepo_c
-%else
-Requires: yum-utils
-%endif
 
 # repo-font-audit script need to run fedoradev-pkgowners command
 # which is available on Fedora only and not on RHEL.
@@ -134,7 +130,7 @@ EOF
 rm -rf %buildroot%{spectemplatedir}
 
 %files devel
-%doc license.txt
+%doc --no-dereference license.txt
 %doc readme.txt
 %{_rpmmacrosdir}/macros*
 %dir %{ftcgtemplatedir}
@@ -142,6 +138,9 @@ rm -rf %buildroot%{spectemplatedir}
 %{ftcgtemplatedir}/*txt
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.44-alt5_21
+- update to new release by fcimport
+
 * Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.44-alt5_19
 - cleaned up dependencies (closes: #33161)
 
