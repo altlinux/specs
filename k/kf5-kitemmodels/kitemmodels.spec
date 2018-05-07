@@ -4,8 +4,8 @@
 %define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 
 Name: kf5-%rname
-Version: 5.44.0
-Release: alt3%ubt
+Version: 5.45.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -120,6 +120,9 @@ KF5 library
 %_K5lib/libKF5ItemModels.so.*
 
 %changelog
+* Fri May 04 2018 Sergey V Turchin <zerg@altlinux.org> 5.45.0-alt1%ubt
+- new version
+
 * Mon Apr 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.44.0-alt3%ubt
 - (NMU) Rebuilt with python-3.6.4.
 

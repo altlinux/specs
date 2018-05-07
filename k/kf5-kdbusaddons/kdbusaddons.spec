@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: kf5-%rname
-Version: 5.44.0
-Release: alt1%ubt.1
+Version: 5.45.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -134,6 +134,9 @@ Sip files for python3-module-%rname
 %endif
 
 %changelog
+* Fri May 04 2018 Sergey V Turchin <zerg@altlinux.org> 5.45.0-alt1%ubt
+- new version
+
 * Thu Apr 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.44.0-alt1%ubt.1
 - (NMU) Rebuilt with python-3.6.4.
 

@@ -1,8 +1,8 @@
 %define rname kdoctools
 
 Name: kf5-%rname
-Version: 5.44.0
-Release: alt2%ubt
+Version: 5.45.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -92,6 +92,9 @@ KF5 library
 %_K5lib/libKF5DocTools.so.*
 
 %changelog
+* Fri May 04 2018 Sergey V Turchin <zerg@altlinux.org> 5.45.0-alt1%ubt
+- new version
+
 * Thu Mar 29 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt2%ubt
 - update fdl-notice.docbook russian translation
 
