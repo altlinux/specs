@@ -23,7 +23,7 @@ It can be safely uninstalled.
 
 Name:      fonts-ttf-mgopen
 Version:   0.%{upstream_date}
-Release:   alt3_27
+Release:   alt3_29
 Summary:   Truetype greek fonts
 
 License:   MgOpen
@@ -81,6 +81,7 @@ which is based on the design of Times Roman.
 %files -n fonts-ttf-mgopen-canonica
 %{_fontconfig_templatedir}/%{fontconf}-canonica.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-canonica.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/MgOpenCanonica*.ttf
 %{_datadir}/appdata/%{fontname}-canonica.metainfo.xml
 
@@ -97,6 +98,7 @@ typeface, which is  based on the design of Optima.
 %files -n fonts-ttf-mgopen-cosmetica
 %{_fontconfig_templatedir}/%{fontconf}-cosmetica.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-cosmetica.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/MgOpenCosmetica*.ttf
 %{_datadir}/appdata/%{fontname}-cosmetica.metainfo.xml
 
@@ -113,6 +115,7 @@ which is based on the design of VAG rounded.
 %files -n fonts-ttf-mgopen-modata
 %{_fontconfig_templatedir}/%{fontconf}-modata.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-modata.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/MgOpenModata*.ttf
 %{_datadir}/appdata/%{fontname}-modata.metainfo.xml
 
@@ -129,6 +132,7 @@ typeface which is based on the design of Helvetica.
 %files -n fonts-ttf-mgopen-moderna
 %{_fontconfig_templatedir}/%{fontconf}-moderna.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-moderna.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/MgOpenModerna*.ttf
 %{_datadir}/appdata/%{fontname}-moderna.metainfo.xml
 
@@ -216,6 +220,9 @@ fi
 %files compat
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.20050515-alt3_29
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050515-alt3_27
 - update to new release by fcimport
 
