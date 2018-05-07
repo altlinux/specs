@@ -11,7 +11,7 @@ Group: System/Fonts/True type
 Name:    fonts-ttf-google-android-emoji
 # No sane versionning upstream, use git clone timestamp
 Version: 1.01
-Release: alt1_0.8.%{checkout}
+Release: alt1_0.11.%{checkout}
 Summary: Android Emoji font released by Google
 
 License:   ASL 2.0
@@ -22,6 +22,7 @@ Source2:   AndroidEmoji.metainfo.xml
 
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
+BuildRequires: libappstream-glib
 Source44: import.info
 
 
@@ -30,6 +31,9 @@ The Android Emoji typeface contains a number of pictographs and smileys,
 popularly used in instant messages and chat forums.  The style of the
 typeface is playful.  It is taken from Google's Android Jelly Bean
 mobile phone operating system.
+
+This font hasna.'t been updated since 2012.  You may well be better served
+by its replacement, google-noto-emoji-fonts.
 
 
 %prep
@@ -42,8 +46,8 @@ mobile phone operating system.
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p AndroidEmoji.ttf %{buildroot}%{_fontdir}
-install -m 0755 -d %{buildroot}%{_datadir}/appdata
-install -m 0644 -p %{SOURCE2} %{buildroot}%{_datadir}/appdata
+install -m 0755 -d %{buildroot}%{_datadir}/metainfo
+install -m 0644 -p %{SOURCE2} %{buildroot}%{_datadir}/metainfo
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -80,14 +84,21 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
+%check
+appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/AndroidEmoji.metainfo.xml
+
+
 %files
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc README.txt NOTICE
-%{_datadir}/appdata/AndroidEmoji.metainfo.xml
+%{_datadir}/metainfo/AndroidEmoji.metainfo.xml
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_0.11.20120228git
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_0.8.20120228git
 - update to new release by fcimport
 
