@@ -3,8 +3,8 @@
 %define _localstatedir %{_var}
 Summary:  Thai language support routines
 Name: libthai
-Version: 0.1.25
-Release: alt1_4
+Version: 0.1.27
+Release: alt1_2
 License: LGPLv2+
 Group: System/Libraries
 Source: ftp://linux.thai.net/pub/thailinux/software/libthai/libthai-%{version}.tar.xz
@@ -25,7 +25,7 @@ output methods as well as basic character and string supports.
 Summary:  Thai language support routines
 Group: Development/Other
 Requires: %{name} = %{version}-%{release}
-Requires: pkg-config
+Requires: pkgconfig
 
 %description devel
 The libthai-devel package includes the header files and developer docs 
@@ -66,6 +66,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.27-alt1_2
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.25-alt1_4
 - update to new release by fcimport
 
