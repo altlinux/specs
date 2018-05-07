@@ -7,15 +7,16 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:       perl-Time-Warp 
 Version:    0.52
-Release:    alt1_8.1
+Release:    alt1_10
 License:    GPL+ or Artistic 
 Summary:    Control over the flow of time
 Source:     http://search.cpan.org/CPAN/authors/id/S/SZ/SZABGAB/Time-Warp-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/Time-Warp
 BuildRequires:  findutils
-BuildRequires:  perl-devel
+BuildRequires:  gcc
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
 BuildRequires:  perl(DynaLoader.pm)
@@ -38,12 +39,12 @@ over the measurement of time.
 %setup -q -n Time-Warp-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
 %make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name '*.bs' -a -size 0 -exec rm -f {} +
+find %{buildroot} -type f -name '*.bs' -a -size 0 -delete
 # %{_fixperms} %{buildroot}/*
 
 %check
@@ -54,6 +55,9 @@ make test
 %{perl_vendor_archlib}/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1_10
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1_8.1
 - rebuild with new perl 5.26.1
 
