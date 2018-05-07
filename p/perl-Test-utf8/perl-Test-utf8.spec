@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
@@ -6,14 +7,16 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.
 %define _localstatedir %{_var}
 Name:           perl-Test-utf8
 Version:        1.01
-Release:        alt1_9
+Release:        alt1_11
 Summary:        Handy utf8 tests
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            http://search.cpan.org/dist/Test-utf8/
 Source0:        http://www.cpan.org/authors/id/M/MA/MARKF/Test-utf8-%{version}.tar.gz
 # Do not require author's dependencies
 Patch0:         Test-utf8-1.01-Drop-useless-build-time-dependencies.patch
+# Until the POD has changed, there is no point in regenerating README. This
+# saves from a dependency on Module::Install::ReadmeFromPod.
+Patch1:         Test-utf8-1.01-Do-no-regenerate-README.patch
 BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
@@ -21,7 +24,6 @@ BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(inc/Module/Install.pm)
 BuildRequires:  perl(Module/Install/Metadata.pm)
-BuildRequires:  perl(Module/Install/ReadmeFromPod.pm)
 BuildRequires:  perl(Module/Install/WriteAll.pm)
 BuildRequires:  sed
 # Module Runtime
@@ -47,12 +49,13 @@ strings in Perl.
 %prep
 %setup -q -n Test-utf8-%{version}
 %patch0 -p1
+%patch1 -p1
 # Remove bundled modules
 rm -rf ./inc/*
 sed -i -e '/^inc\//d' MANIFEST
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -67,6 +70,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_11
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_9
 - update to new release by fcimport
 
