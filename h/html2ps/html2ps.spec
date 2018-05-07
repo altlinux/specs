@@ -3,12 +3,29 @@ Group: Publishing
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 %filter_from_requires /perl(www.pl/d
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Enable ImageMagick for converting images other than EPS and XBM
+%if 0%{?rhel}
+%bcond_with html2ps_enables_ImageMagick
+%else
+%bcond_without html2ps_enables_ImageMagick
+%endif
+# Otherwise handle JPEG images with djpeg
+%bcond_without html2ps_enables_djpeg
+# Otherwise handle images with netpbm
+%bcond_without html2ps_enables_netpbm
+
 %define my_subversion b7
 Name:           html2ps
 Version:        1.0
-Release:        alt2_0.27.%{my_subversion}
+Release:        alt2_0.29.%{my_subversion}
 Summary:        HTML to PostScript converter
 License:        GPLv2+
 URL:            http://user.it.uu.se/~jan/%{name}.html
@@ -37,9 +54,22 @@ Requires:       %{_bindir}/paperconf
 Requires:       perl(HTTP/Cookies.pm)
 Requires:       perl(HTTP/Request.pm)
 Requires:       perl(LWP/UserAgent.pm)
-Requires:       /usr/bin/dvips texlive-generic-recommended
-Requires:       /usr/bin/tex texlive-generic-recommended
+Requires:       tex(dvips)
+Requires:       tex(tex)
+
+# Remove ImageMagick dependency if the feature is disabled
+%if %{without html2ps_enables_ImageMagick}
+
+%if %{with html2ps_enables_djpeg}
+# libjpeg-turbo-utils for djpeg
+Requires:       libjpeg-utils
+%endif
+%if %{with html2ps_enables_netpbm}
+Requires:       netpbm
+%endif
+%endif
 Source44: import.info
+%filter_from_requires /^perl(Image.Magick.pm)/d
 
 %description
 An HTML to PostScript converter written in Perl.
@@ -81,6 +111,17 @@ patch -p1 < debian/patches/01_manpages.dpatch
 %patch4 -p1
 
 %build
+# Change default configuration
+sed -i \
+    -e 's/ImageMagick: [01]/ImageMagick: %{with html2ps_enables_ImageMagick}/' \
+    -e 's/PerlMagick: [01]/PerlMagick: %{with html2ps_enables_ImageMagick}/' \
+    debian/config/html2psrc
+%if %{without html2ps_enables_ImageMagick}
+sed -i \
+    -e '/package {/ a \ \ \ \ djpeg: %{with html2ps_enables_djpeg};' \
+    -e '/package {/ a \ \ \ \ netpbm: %{with html2ps_enables_netpbm};' \
+    debian/config/html2psrc
+%endif
 
 
 %install
@@ -105,7 +146,7 @@ desktop-file-install \
 
 
 %files
-%doc COPYING
+%doc --no-dereference COPYING
 %doc README sample html2ps.html
 %config(noreplace) %{_sysconfdir}/html2psrc
 %{_bindir}/html2ps
@@ -113,12 +154,15 @@ desktop-file-install \
 %{_mandir}/man5/html2psrc.5*
 
 %files -n xhtml2ps
-%doc contrib/xhtml2ps/LICENSE
+%doc --no-dereference contrib/xhtml2ps/LICENSE
 %doc contrib/xhtml2ps/README
 %{_bindir}/xhtml2ps
 %{_datadir}/applications/*xhtml2ps.desktop
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.29.b7
+- update to new release by fcimport
+
 * Sun Oct 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.27.b7
 - update to new release by fcimport
 
