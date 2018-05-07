@@ -11,7 +11,7 @@ BuildRequires: boost-devel boost-filesystem-devel boost-signals-devel libpng-dev
 %define _localstatedir %{_var}
 Name:			springlobby
 Version:		0.195
-Release:		alt1_13
+Release:		alt1_15
 Summary:		A lobby client for the spring RTS game engine
 
 # License clarification: http://springlobby.info/issues/show/810
@@ -26,7 +26,7 @@ BuildRequires:	desktop-file-utils gettext gettext-tools
 BuildRequires:	libopenal-devel libopenal1, libcurl-devel
 BuildRequires:	libalure-devel
 BuildRequires:	dumb-devel
-BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel
 
 # There are other "lobbies" for spring, make a virtual-provides
 Provides:		spring-lobby = %{version}-%{release}
@@ -107,6 +107,9 @@ EOF
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.195-alt1_15
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.195-alt1_13
 - update to new release by fcimport
 
