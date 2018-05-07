@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname oflb-dignas-handwriting-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -6,11 +7,11 @@
 
 Name:           fonts-ttf-oflb-dignas-handwriting
 Version:        20031109
-Release:        alt3_13
+Release:        alt3_15
 Summary:        Handwriting font
 
-Group:          System/Fonts/True type
 License:        OFL
+# Upstream is dead and there is no download link available
 URL:            http://openfontlibrary.org/media/files/phranzysko/407
 Source0:        http://openfontlibrary.org/people/phranzysko/phranzysko_-_Digna_s_Handwriting.ttf
 Source1:        %{oldname}-fontconfig.conf
@@ -33,8 +34,6 @@ cp %{SOURCE0} .
 
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -48,7 +47,7 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
 
 # Add AppStream metadata
 install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+        %{buildroot}%{_datadir}/metainfo/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -84,14 +83,19 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 20031109-alt3_15
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20031109-alt3_13
 - update to new release by fcimport
 
