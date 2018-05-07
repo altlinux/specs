@@ -8,13 +8,13 @@ BuildRequires: gcc-c++
 %global project_name FcitxQt5
 
 Name:           fcitx-qt5
-Version:        1.1.1
-Release:        alt1_2
+Version:        1.2.2
+Release:        alt1_4
 Summary:        Fcitx IM module for Qt5
 
 # The entire source code is GPLv2+ except
-# platforminputcontext/keyserver_x11.h which is LGPLv2+
-License:        GPLv2+ and LGPLv2+
+# platforminputcontext/ which is BSD
+License:        GPLv2+ and BSD
 URL:            https://github.com/fcitx/fcitx-qt5
 Source0:        http://download.fcitx-im.org/%{name}/%{name}-%{version}.tar.xz
 
@@ -23,12 +23,17 @@ BuildRequires:  fcitx-devel
 BuildRequires:  qt5-base-devel
 BuildRequires:  libxkbcommon-devel
 BuildRequires:  extra-cmake-modules
-# The author requests that fcitx-qt5 should be rebuilt for each minor version of qt5
+BuildRequires:  gettext-tools libasprintf-devel
+# The author requests that fcitx-qt5 should be rebuilt for each minor version
+# of qt5. qt5-qtbase-private-devel is not actually required for build, but
+# left for Qt maintainer to tract this case.
 BuildRequires:  qt5-base-devel
+
 
 
 Source44: import.info
 %add_findprov_skiplist %{_qt5_plugindir}/platforminputcontexts/libfcitxplatforminputcontextplugin.so
+%add_findprov_skiplist %{_libdir}/fcitx/qt/libfcitx-quickphrase-editor5.so
 
 %description
 This package provides Fcitx Qt5 input context.
@@ -55,12 +60,14 @@ popd
 
 %install
 make install/fast DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p" -C build
+%find_lang %{name}
 
-%files
+%files -f %{name}.lang
 %doc README
-%doc COPYING
+%doc --no-dereference COPYING COPYING.BSD
 %{_libdir}/fcitx/libexec/%{name}-gui-wrapper
 %{_libdir}/lib%{project_name}*.so.*
+%{_libdir}/fcitx/qt/
 %{_qt5_plugindir}/platforminputcontexts/libfcitxplatforminputcontextplugin.so
 
 %files devel
@@ -70,6 +77,9 @@ make install/fast DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p" -C build
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_4
+- update to new release by fcimport
+
 * Fri Oct 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_2
 - update to new release by fcimport
 
