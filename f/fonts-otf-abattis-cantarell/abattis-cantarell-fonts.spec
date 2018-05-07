@@ -1,57 +1,52 @@
+Group: System/Fonts/True type
 %define oldname abattis-cantarell-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global actualname cantarell
-
-%global fontname abattis-%{actualname}
-%global fontconf 31-cantarell.conf
-
-%global archivename1 Cantarell-Bold
-%global archivename2 Cantarell-Regular
+%global fontname cantarell
+%global fontconf 31-%{fontname}.conf
 
 Name: fonts-otf-abattis-cantarell
-Version: 0.0.25
-Release: alt1_3
-Summary: Cantarell, a Humanist sans-serif font family
+Version: 0.101
+Release: alt1_1
+Summary: Humanist sans serif font
 
-Group: System/Fonts/True type
 License: OFL
 URL: https://git.gnome.org/browse/cantarell-fonts/
-Source0: http://download.gnome.org/sources/%{actualname}-fonts/0.0/%{actualname}-fonts-%{version}.tar.xz
-Source1: %{fontname}.metainfo.xml
+Source0: http://download.gnome.org/sources/cantarell-fonts/0.101/cantarell-fonts-%{version}.tar.xz
+Source1: cantarell-fontconfig.conf
 
 BuildArch: noarch
+
 BuildRequires: fontpackages-devel
-BuildRequires: fontforge libfontforge
+BuildRequires: gettext gettext-tools
+BuildRequires: libappstream-glib-devel libappstream-glib-gir-devel
+BuildRequires: meson
 Source44: import.info
 
+
 %description
-Cantarell is a set of fonts designed by Dave Crossland.
-It is a sans-serif humanist typeface family.
+The Cantarell font family is a contemporary Humanist sans serif
+designed for on-screen reading. The fonts were originally designed
+by Dave Crossland.
 
 %prep
-%setup -q -n %{actualname}-fonts-%{version}
+%setup -q -n cantarell-fonts-%{version}
 
-# Force regeneration
-rm otf/*.otf
 
 %build
-%configure --enable-source-rebuild
-%make_build
+%meson
+%meson_build
 
 %install
-install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p otf/*.otf %{buildroot}%{_fontdir}
+%meson_install
+
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
-install -m 0644 -p fontconfig/%{fontconf} \
+
+install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
-
-# Add AppStream metadata
-install -Dm 0644 -p %{SOURCE1} \
-       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -87,15 +82,23 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+%check
+appstream-util validate-relax --nonet \
+        %{buildroot}%{_datadir}/metainfo/org.gnome.cantarell.metainfo.xml
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.otf
-%doc COPYING
-%doc NEWS README
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%doc --no-dereference COPYING
+%doc NEWS README.md
+%{_datadir}/metainfo/org.gnome.cantarell.metainfo.xml
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.101-alt1_1
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.25-alt1_3
 - update to new release by fcimport
 
