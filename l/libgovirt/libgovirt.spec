@@ -1,5 +1,5 @@
 %add_optflags %optflags_shared
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # -*- rpm-spec -*-
@@ -13,7 +13,7 @@
 Summary: A GObject library for interacting with oVirt REST API
 Name: libgovirt
 Version: 0.3.4
-Release: alt1_4%{?extra_release}
+Release: alt1_7%{?extra_release}
 License: LGPLv2+
 Group: Development/Other
 Source0: http://ftp.gnome.org/pub/GNOME/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
@@ -30,7 +30,7 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: glib-networking
 BuildRequires: dconf libdconf
 #needed for GPG signature checek
-BuildRequires: dirmngr gnupg2
+BuildRequires: gnupg2
 Source44: import.info
 
 %description
@@ -42,7 +42,7 @@ parameters needed to make a SPICE/VNC connection to them.
 Summary: Libraries, includes, etc. to compile with the libgovirt library
 Group: Development/Other
 Requires: %{name} = %{version}-%{release}
-Requires: pkg-config
+Requires: pkgconfig
 Requires: libgio
 
 %description devel
@@ -64,16 +64,18 @@ gpgv2 --quiet --keyring %{SOURCE2} %{SOURCE1} %{SOURCE0}
 %endif
 
 %configure %{gir_arg}
-%__make %{?_smp_mflags} V=1
+make %{?_smp_mflags} V=1
 
 %install
-%__make install DESTDIR=%{buildroot}
+make install DESTDIR=%{buildroot}
 rm -f %{buildroot}%{_libdir}/*.a
 rm -f %{buildroot}%{_libdir}/*.la
 %find_lang %{name} --with-gnome
 
 %check
 make check
+
+
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING MAINTAINERS README
@@ -93,6 +95,9 @@ make check
 %endif
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.4-alt1_7
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.4-alt1_4
 - update to new release by fcimport
 
