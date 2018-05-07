@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libGL-devel libSDL-devel li
 %define _localstatedir %{_var}
 Name:           vavoom
 Version:        1.33
-Release:        alt2_23
+Release:        alt2_25
 Summary:        Enhanced Doom, Heretic, Hexen and Strife source port - meta package
 Source0:        http://downloads.sourceforge.net/vavoom/%{name}-%{version}.tar.bz2
 Source1:        doom.autodlrc
@@ -49,7 +49,7 @@ BuildRequires:  libSDL_mixer-devel libSDL_net-devel libpng-devel libjpeg-devel
 BuildRequires:  libvorbis-devel libmikmod-devel libflac++-devel libflac-devel libopenal-devel libopenal1
 BuildRequires:  libGLU-devel libwxGTK-contrib-gizmos-devel libwxGTK-contrib-ogl-devel libwxGTK-contrib-stc-devel libwxGTK-devel desktop-file-utils ctest cmake
 BuildRequires:  libappstream-glib
-Requires:       vavoom = %{version}-%{release}
+Requires:       %{name}-engine = %{version}-%{release}
 Requires:       %{name}-doom-shareware = %{version}-%{release}
 Requires:       %{name}-heretic-shareware = %{version}-%{release}
 Requires:       %{name}-hexen-demo = %{version}-%{release}
@@ -80,7 +80,7 @@ to play these classics under Linux.
 Group: Games/Other
 Summary:        Doom shareware installer
 BuildArch:      noarch
-Requires:       vavoom = %{version}-%{release}
+Requires:       %{name}-engine = %{version}-%{release}
 Requires:       autodownloader unzip
 
 %description doom-shareware
@@ -98,7 +98,7 @@ offer to download and install the Doom shareware datafiles for you.
 Group: Games/Other
 Summary:        Heretic shareware installer
 BuildArch:      noarch
-Requires:       vavoom = %{version}-%{release}
+Requires:       %{name}-engine = %{version}-%{release}
 Requires:       autodownloader unzip
 
 %description heretic-shareware
@@ -117,7 +117,7 @@ datafiles for you.
 Group: Games/Other
 Summary:        Hexen demo installer
 BuildArch:      noarch
-Requires:       vavoom = %{version}-%{release}
+Requires:       %{name}-engine = %{version}-%{release}
 Requires:       autodownloader unzip
 
 %description hexen-demo
@@ -136,7 +136,7 @@ datafiles for you.
 Group: Games/Other
 Summary:        Strife demo installer
 BuildArch:      noarch
-Requires:       vavoom = %{version}-%{release}
+Requires:       %{name}-engine = %{version}-%{release}
 Requires:       autodownloader unzip
 
 %description strife-demo
@@ -225,13 +225,12 @@ install -p -m 644 %{SOURCE20} %{SOURCE21} \
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man6
 install -p -m 644 %{SOURCE22} $RPM_BUILD_ROOT%{_mandir}/man6
 
-
 %files
 # no files, meta-package
 
 %files engine
 %doc docs/*.log docs/vavoom.txt
-%doc docs/gnu.txt
+%doc --no-dereference docs/gnu.txt
 %{_bindir}/*
 %{_mandir}/man6/%{name}.6*
 %dir %{_datadir}/%{name}
@@ -262,6 +261,9 @@ install -p -m 644 %{SOURCE22} $RPM_BUILD_ROOT%{_mandir}/man6
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.33-alt2_25
+- update to new release by fcimport
+
 * Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 1.33-alt2_23
 - fixed build
 
