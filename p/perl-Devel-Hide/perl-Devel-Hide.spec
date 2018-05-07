@@ -1,23 +1,44 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(File/Temp.pm) perl(Module/CoreList.pm) perl-podlators
+BuildRequires: perl(Module/CoreList.pm) perl-podlators
 # END SourceDeps(oneline)
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Run optional tests
+%bcond_without perl_Devel_Hide_enables_optional_test
+
 Name:           perl-Devel-Hide
 Version:        0.0009
-Release:        alt1_12
+Release:        alt1_14
 Summary:        Forces the unavailability of specified Perl modules (for testing)
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/Devel-Hide/
 Source0:        http://www.cpan.org/authors/id/F/FE/FERREIRA/Devel-Hide-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  findutils
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Run-time:
+# File::Temp not used on perl >= 5.008
+BuildRequires:  perl(lib.pm)
+# Module::CoreList is used from a private subroutine that is never called
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Tests:
 BuildRequires:  perl(Test/More.pm)
+%if %{with perl_Devel_Hide_enables_optional_test}
+# Optional tests:
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
+%endif
 Source44: import.info
 
 %description
@@ -29,13 +50,13 @@ installed or not).
 %setup -q -n Devel-Hide-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
+find $RPM_BUILD_ROOT -type f -name .packlist -delete
 
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
@@ -47,6 +68,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.0009-alt1_14
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.0009-alt1_12
 - update to new release by fcimport
 
