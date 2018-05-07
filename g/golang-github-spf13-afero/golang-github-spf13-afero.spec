@@ -44,11 +44,11 @@ BuildRequires: /proc
 # https://github.com/spf13/afero
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          bb8f1927f2a9d3ab41c9340aa034f6b803f4359c
+%global commit          63644898a8da0bc22138abf860edaf5277b6102e
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        1.0.2
+Version:        1.1.0
 Release:        alt1_1
 Summary:        A FileSystem Abstraction System for Go
 License:        ASL2.0
@@ -191,6 +191,9 @@ export GOPATH=%{buildroot}/%{go_path}:$(pwd)/Godeps/_workspace:%{go_path}
 %endif
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_1
+- update to new release by fcimport
+
 * Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1
 - fc update
 
