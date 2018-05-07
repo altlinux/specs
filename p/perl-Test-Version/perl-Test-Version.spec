@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,24 +5,21 @@ BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# noarch, but to avoid debug* files interfering with manifest test:
-%global debug_package %{nil}
-
 Name:		perl-Test-Version
 Version:	2.09
-Release:	alt1
+Release:	alt1_1
 Summary:	Check to see that versions in modules are sane
 License:	Artistic 2.0
 URL:		http://search.cpan.org/dist/Test-Version/
-Source0:	http://www.cpan.org/authors/id/P/PL/PLICEASE/Test-Version-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/P/PL/PLICEASE/Test-Version-%{version}.tar.gz
 BuildArch:	noarch
 # ===================================================================
 # Module build requirements
 # ===================================================================
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # ===================================================================
 # Module requirements
@@ -43,7 +39,10 @@ BuildRequires:	perl(warnings.pm)
 # ===================================================================
 BuildRequires:	perl(blib.pm)
 BuildRequires:	perl(CPAN/Meta.pm)
+BuildRequires:	perl(Cwd.pm)
+BuildRequires:	perl(File/Find.pm)
 BuildRequires:	perl(File/Spec.pm)
+BuildRequires:	perl(File/Temp.pm)
 BuildRequires:	perl(IO/Handle.pm)
 BuildRequires:	perl(IPC/Open3.pm)
 BuildRequires:	perl(Test/Exception.pm)
@@ -56,23 +55,21 @@ BuildRequires:	perl(Test/Tester.pm)
 # their author/release tests.
 # ===================================================================
 %if 0%{!?perl_bootstrap:1}
-BuildRequires:	perl(English.pm)
 BuildRequires:	perl(Pod/Coverage/TrustPod.pm)
 BuildRequires:	perl(Test/CPAN/Changes.pm)
 BuildRequires:	perl(Test/CPAN/Meta/JSON.pm)
-BuildRequires:	perl(Test/DistManifest.pm)
 BuildRequires:	perl(Test/EOL.pm)
 BuildRequires:	perl(Test/MinimumVersion.pm)
-BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/Perl/Critic.pm)
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
 BuildRequires:	perl(Test/Portability/Files.pm)
 %endif
-Source44: import.info
 # ===================================================================
 # Runtime requirements
 # ===================================================================
+Requires:	perl(Test/More.pm) >= 0.960
+Source44: import.info
 
 %description
 This module's goal is to be a one stop shop for checking to see that your
@@ -82,13 +79,13 @@ versions across your dist are sane.
 %setup -q -n Test-Version-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name .packlist -delete
-# %{_fixperms} %{buildroot}
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
@@ -97,11 +94,14 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %endif
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes CONTRIBUTING README
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1_1
+- update to new release by fcimport
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1
 - automated CPAN update
 
