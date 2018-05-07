@@ -6,7 +6,7 @@ BuildRequires: perl(Benchmark.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(IO/
 %define _localstatedir %{_var}
 Name:       perl-CSS-Minifier-XS
 Version:    0.09
-Release:    alt4_12.1
+Release:    alt4_14
 # lib/CSS/Minifier/XS.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic
 Group:      Development/Other
@@ -14,6 +14,8 @@ Summary:    XS based CSS minifier
 Source:     http://search.cpan.org/CPAN/authors/id/G/GT/GTERMARS/CSS-Minifier-XS-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/CSS-Minifier-XS
 
+BuildRequires: findutils
+BuildRequires: gcc
 BuildRequires: perl-devel
 BuildRequires: rpm-build-perl
 BuildRequires: perl(CSS/Minifier.pm)
@@ -38,7 +40,7 @@ in XS and not just pure Perl.
 %setup -q -n CSS-Minifier-XS-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
 %make_build
 
 %install
@@ -58,6 +60,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt4_14
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt4_12.1
 - rebuild with new perl 5.26.1
 
