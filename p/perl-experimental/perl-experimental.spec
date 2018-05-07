@@ -1,35 +1,32 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Module/Build/Tiny.pm) perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-experimental
 Version:        0.019
-Release:        alt1
+Release:        alt1_2
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            http://search.cpan.org/dist/experimental/
 Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/experimental-%{version}.tar.gz
-# Replace Build.PL to not require Module::Build::Tiny because experimental is
-# a core dual-lived module and Module::Build::Tiny is not.
-Source1:        Makefile.PL
 BuildArch:      noarch
-BuildRequires:  coreutils
-BuildRequires:  findutils
-BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 # Run-time:
 BuildRequires:  perl(Carp.pm)
+# feature is highly recommended on perl >= 5.10
 BuildRequires:  perl(feature.pm)
-BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(version.pm)
-BuildRequires:  perl(warnings.pm)
 # Tests:
 BuildRequires:  perl(Test/More.pm)
+# feature is highly recommended on perl >= 5.10
+Requires:       perl(feature.pm)
 Source44: import.info
 
 %description
@@ -38,26 +35,27 @@ experimental features.
 
 %prep
 %setup -q -n experimental-%{version}
-cp %{SOURCE1} .
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.019-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.019-alt1
 - automated CPAN update
 
