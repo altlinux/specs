@@ -7,7 +7,7 @@ Group: System/Fonts/True type
 
 Name:      fonts-ttf-gnu-freefont
 Version:   20120503
-Release:   alt1_16
+Release:   alt1_18
 Summary:   Free UCS Outline Fonts
 
 # Standard font exception
@@ -27,7 +27,7 @@ Patch0:    gnu-free-fonts-devanagari-rendering.patch
 BuildArch: noarch
 BuildRequires: fontpackages-devel fontforge libfontforge
 # following is needed as we are calling /usr/bin/2to3
-BuildRequires: python-tools-2to3 python3-tools
+BuildRequires: /usr/bin/2to3
 
 %global common_desc \
 Gnu FreeFont is a free family of scalable outline fonts, suitable for general \
@@ -205,6 +205,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 20120503-alt1_18
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 20120503-alt1_16
 - update to new release by fcimport
 
