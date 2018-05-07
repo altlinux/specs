@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Unicode/UCD.pm) perl-podlators
@@ -7,12 +8,12 @@ BuildRequires: perl-Encode-devel
 %define _localstatedir %{_var}
 Name:           perl-Encode-EUCJPASCII
 Version:        0.03
-Release:        alt8_20
+Release:        alt8_23
 Summary:        EucJP-ascii - An eucJP-open mapping
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            http://search.cpan.org/dist/Encode-EUCJPASCII/
 Source0:        http://www.cpan.org/modules/by-module/Encode/Encode-EUCJPASCII-%{version}.tar.gz
+BuildRequires:  gcc
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
@@ -22,9 +23,8 @@ BuildRequires:  perl(XSLoader.pm)
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Encode/CJKConstants.pm)
 BuildRequires:  perl(Encode/JP/JIS7.pm)
-%if 0%{?el6}
 BuildRequires:  perl-devel
-%else
+%if !0%{?el6}
 BuildRequires:  perl-Encode-devel
 BuildRequires:  rpm-build-perl
 %endif
@@ -59,6 +59,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto/
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.03-alt8_23
+- update to new release by fcimport
+
 * Sun Jan 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.03-alt8_20
 - to Sisyphus as biber dependency
 
