@@ -6,7 +6,7 @@ Group: Development/Other
 
 Name:           amqp
 Version:        1.0
-Release:        alt1_7.%{date}svn%{revision}
+Release:        alt1_8.%{date}svn%{revision}
 # increase Epoch to 1 cause of modified Release logic
 Epoch:          1
 Summary:        The AMQP specification
@@ -49,16 +49,19 @@ install -d -m0755 %{buildroot}%{_datadir}/%{name}
 install -p -m0644 *.xml *.dtd %{buildroot}%{_datadir}/%{name}
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc NOTICE MOVED_FILE
 %doc *.html
 
 %files devel
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{_datadir}/%{name}/
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_8.20150701svn1688630
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_7.20150701svn1688630
 - update to new release by fcimport
 
