@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/splint gcc-c++ pkgconfig(glib-2.0)
+BuildRequires: /usr/bin/splint gcc-c++ libqb-devel pkgconfig(glib-2.0) python-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 # fedora bcond_with macro
@@ -13,27 +13,21 @@ BuildRequires: /usr/bin/splint gcc-c++ pkgconfig(glib-2.0)
 %bcond_without check
 
 Name:           libqb
-Version:        1.0.2
-Release:        alt1_11
+Version:        1.0.3
+Release:        alt1_4
 Summary:        An IPC library for high performance servers
 
 Group:          System/Libraries
 License:        LGPLv2+
 URL:            https://github.com/ClusterLabs/libqb
 Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{version}/%{name}-%{version}.tar.xz
-Patch0:         01-Med-qblog.h-better-explanation-behaviour-of-QB_LOG_I.patch
-Patch1:         02-build-configure-run-attribute-section-test-through-r.patch
-Patch2:         03-tests-new-sort-of-tests-dubbed-functional-cover-link.patch
-Patch3:         04-Med-add-extra-run-time-client-libqb-checks-that-logg.patch
-Patch4:         05-High-bare-fix-for-libqb-logging-not-working-with-ld..patch
-Patch5:         06-Low-fix-internal-object-symbol-s-leak-expose-run-tim.patch
 
-BuildRequires:  autoconf automake libtool doxygen procps sysvinit-utils libcheck-devel
+BuildRequires:  autoconf automake libtool doxygen procps libcheck-devel
 # https://fedoraproject.org/wiki/Packaging:C_and_C%2B%2B#BuildRequires_and_Requires
-BuildRequires:  gcc-common
-# git-style patch application
-BuildRequires: git
+BuildRequires:  gcc
 Source44: import.info
+# git-style patch application
+#BuildRequires: git  # for when patches around
 
 %description
 libqb provides high-performance, reusable features for client-server
@@ -41,16 +35,8 @@ architecture, such as logging, tracing, inter-process communication (IPC),
 and polling.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-
-## Make sure the timestamps are correct
-#find . -exec touch \{\} \;
+%setup
+#autosetup -p1 -S git_am  # for when patches around
 
 %build
 ./autogen.sh
@@ -63,7 +49,7 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 rm -rf $RPM_BUILD_ROOT/%{_docdir}/*
 
 %files
-%doc COPYING
+%doc --no-dereference COPYING
 %{_sbindir}/qb-blackbox
 %{_libdir}/libqb.so.*
 %{_mandir}/man8/qb-blackbox.8*
@@ -71,7 +57,8 @@ rm -rf $RPM_BUILD_ROOT/%{_docdir}/*
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/Other
-Requires:       %{name} = %{version}-%{release} pkg-config
+Requires:       %{name} = %{version}-%{release}
+Requires:       pkgconfig
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -79,13 +66,16 @@ developing applications that use %{name}.
 
 %files          devel
 %doc README.markdown
-%doc COPYING
+%doc --no-dereference COPYING
 %{_includedir}/qb/
 %{_libdir}/libqb.so
 %{_libdir}/pkgconfig/libqb.pc
 %{_mandir}/man3/qb*3*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_4
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_11
 - update to new release by fcimport
 
