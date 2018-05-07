@@ -14,7 +14,7 @@ BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/mkfontdir /usr/bin/mk
 %{archivename} provides a collection of free scalable Thai fonts.
 
 Name:      fonts-ttf-thai-scalable
-Version:   0.6.4
+Version:   0.6.5
 Release:   alt1_1
 Summary:   Thai TrueType fonts
 License:   GPLv2+ and Bitstream Vera
@@ -80,6 +80,7 @@ This package provides the Garuda family of Thai fonts.
 %files -n fonts-ttf-thai-scalable-garuda
 %{_fontconfig_templatedir}/%{fontconf}-garuda.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-garuda.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Garuda*.ttf
 %{_datadir}/appdata/%{fontname}-garuda.metainfo.xml
 
@@ -97,6 +98,7 @@ This package provides the Kinnari family of Thai fonts.
 %files -n fonts-ttf-thai-scalable-kinnari
 %{_fontconfig_templatedir}/%{fontconf}-kinnari.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-kinnari.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Kinnari*.ttf
 %{_datadir}/appdata/%{fontname}-kinnari.metainfo.xml
 
@@ -112,6 +114,7 @@ Requires:       %{name}-common = %{version}-%{release}
 This package provides the Loma family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-loma
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Loma*.ttf
 %{_datadir}/appdata/%{fontname}-loma.metainfo.xml
 
@@ -127,6 +130,7 @@ Requires:       %{name}-common = %{version}-%{release}
 This package provides the Norasi family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-norasi
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Norasi*.ttf
 %{_datadir}/appdata/%{fontname}-norasi.metainfo.xml
 
@@ -142,6 +146,7 @@ Requires:       %{name}-common = %{version}-%{release}
 This package provides the Purisa family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-purisa
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Purisa*.ttf
 %{_datadir}/appdata/%{fontname}-purisa.metainfo.xml
 
@@ -157,6 +162,7 @@ Requires:       %{name}-common = %{version}-%{release}
 This package provides the Sawasdee family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-sawasdee
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Sawasdee*.ttf
 %{_datadir}/appdata/%{fontname}-sawasdee.metainfo.xml
 
@@ -172,6 +178,7 @@ Requires:       %{name}-common = %{version}-%{release}
 This package provides the TlwgMono family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-tlwgmono
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/TlwgMono*.ttf
 %{_datadir}/appdata/%{fontname}-tlwgmono.metainfo.xml
 
@@ -187,6 +194,7 @@ Requires:       %{name}-common = %{version}-%{release}
 This package provides the TlwgTypewriter family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-tlwgtypewriter
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/TlwgTypewriter*.ttf
 %{_datadir}/appdata/%{fontname}-tlwgtypewriter.metainfo.xml
 
@@ -202,6 +210,7 @@ Requires:       %{name}-common = %{version}-%{release}
 This package provides the TlwgTypist family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-tlwgtypist
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/TlwgTypist*.ttf
 %{_datadir}/appdata/%{fontname}-tlwgtpist.metainfo.xml
 
@@ -217,6 +226,7 @@ Requires:       %{name}-common = %{version}-%{release}
 This package provides the TlwgTypo family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-tlwgtypo
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/TlwgTypo*.ttf
 %{_datadir}/appdata/%{fontname}-tlwgtypo.metainfo.xml
 
@@ -234,6 +244,7 @@ This package provides the Umpush family of Thai fonts.
 %files -n fonts-ttf-thai-scalable-umpush
 %{_fontconfig_templatedir}/%{fontconf}-umpush.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-umpush.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Umpush*.ttf
 %{_datadir}/appdata/%{fontname}-umpush.metainfo.xml
 
@@ -250,6 +261,7 @@ This package provides the Laksaman family of Thai fonts.
 %files -n fonts-ttf-thai-scalable-laksaman
 %{_fontconfig_templatedir}/%{fontconf}-laksaman.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-laksaman.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Laksaman*.ttf
 %{_datadir}/appdata/%{fontname}-laksaman.metainfo.xml
 
@@ -264,6 +276,7 @@ Requires:       %{name}-common = %{version}-%{release}
 This package provides the Waree family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-waree
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Waree*.ttf
 %{_datadir}/appdata/%{fontname}-waree.metainfo.xml
 
@@ -285,9 +298,9 @@ make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 # remove upstream font config
 # fontconfig's 65-nonlatin.conf covers 65-ttf-thai-tlwg.conf
-rm %{buildroot}%{_sysconfdir}/fonts/conf.avail/64-15-laksaman.conf
-rm %{buildroot}%{_sysconfdir}/fonts/conf.avail/64-*-tlwg*.conf
-rm %{buildroot}%{_sysconfdir}/fonts/conf.avail/89-tlwg*-synthetic.conf
+rm %{buildroot}%{_datadir}/fontconfig/conf.avail/64-15-laksaman.conf
+rm %{buildroot}%{_datadir}/fontconfig/conf.avail/64-*-tlwg*.conf
+rm %{buildroot}%{_datadir}/fontconfig/conf.avail/89-tlwg*-synthetic.conf
 
 # split up 90-ttf-thai-tlwg-synthetic.conf
 install -m 0644 -p %{SOURCE1} \
@@ -374,6 +387,9 @@ fi
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.5-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt1_1
 - update to new release by fcimport
 
