@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
@@ -5,30 +6,23 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize pkgconfig(
 %define _localstatedir %{_var}
 Name:           gweled
 Version:        0.9.1
-Release:        alt2_17.20130730git819bed
+Release:        alt2_19.20130730git819bed
 
 Summary:        Swapping gem game
 
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://launchpad.net/gweled
-#Source0:        http://launchpad.net/gweled/trunk/0.9/+download/gweled-%{version}.tar.gz
+#Source0:        http://launchpad.net/gweled/trunk/0.9/+download/gweled-%%{version}.tar.gz
 #Fork using sdl_mixer rather than libcanberra or mikmod
 #https://github.com/Marisa-Chan/gweled-sdl_mixer.git
 Source0:	gweled-sdl_mixer-819bed.tar.gz
-#Patch0:         %{name}-Makefile.patch
-#Patch1:         %{name}-Sample_Free.patch
-#Patch2:         %{name}-ppc.diff
-#Patch3:         %{name}-mikmod-disable-disk-writers.diff
-# patch4 and 5 taken from Ubuntu; https://bugs.launchpad.net/ubuntu/+source/gweled/+bug/90499
-#Patch4:         %{name}-disable-music.diff
-#Patch5:         %{name}-xdg_pref.diff
+Patch0:		gweled-fix-librsvg-segfault-v2.patch
 
 BuildRequires:  libgnomeui-devel >= 2.0.0
 BuildRequires:  librsvg-devel librsvg-gir-devel
 BuildRequires:  libcroco-devel >= 0.3.0
 BuildRequires:  desktop-file-utils
-BuildRequires:	intltool libtool-common
+BuildRequires:	intltool libtool
 BuildRequires:	libSDL_mixer-devel
 Requires:	icon-theme-hicolor
 Source44: import.info
@@ -42,15 +36,7 @@ ends when there are no possible moves left.
 
 %prep
 %setup -qn gweled-sdl_mixer-819bed
-#%patch0  -p0 -b .patch0
-#%patch1  -p0 -b .patch1
-# the next two were extracted from the debian package; I asked upstream to 
-# apply them, but got no reply
-# http://ftp.debian.org/debian/pool/main/g/gweled/gweled_0.7-2.diff.gz
-#%patch2  -p0 -b .patch2
-#%patch3  -p1 -b .patch3
-#%patch4  -p1 -b .patch4
-#%patch5  -p1 -b .patch5
+%patch0 -p0
 
 %build
 
@@ -71,10 +57,6 @@ desktop-file-install --delete-original \
   --add-category LogicGame                    \
   --remove-category Application                        \
   ${RPM_BUILD_ROOT}%{_datadir}/applications/%{name}.desktop
-#mkdir $RPM_BUILD_ROOT%{_localstatedir}/lib/
-#mv $RPM_BUILD_ROOT%{_localstatedir}/games/ $RPM_BUILD_ROOT%{_localstatedir}/lib/
-# gweled.timed.scores not shipped in 0.7, but needed
-#cp -p $RPM_BUILD_ROOT%{_localstatedir}/lib/games/gweled.easy.scores $RPM_BUILD_ROOT%{_localstatedir}/lib/games/gweled.timed.scores
 
 # Register as an application to be visible in the software center
 #
@@ -112,8 +94,11 @@ EOF
 
 %find_lang %{name}
 
+
+
 %files -f %{name}.lang
-%doc AUTHORS COPYING NEWS
+%doc --no-dereference COPYING
+%doc AUTHORS NEWS
 %attr(2711,root,games) %{_bindir}/%{name}
 %config(noreplace) %attr(0664,games,games) %{_localstatedir}/lib/games/*
 %{_datadir}/appdata/%{name}.appdata.xml
@@ -124,6 +109,9 @@ EOF
 %{_datadir}/sounds/%{name}/
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_19.20130730git819bed
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_17.20130730git819bed
 - update to new release by fcimport
 
