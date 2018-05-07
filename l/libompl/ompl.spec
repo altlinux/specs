@@ -1,23 +1,21 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/curl /usr/bin/wget gcc-c++
+BuildRequires: /usr/bin/R gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname ompl
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libompl
-Version:        1.0.0
-Release:        alt1_17
+Version:        1.3.2
+Release:        alt1_2
 Summary:        The Open Motion Planning Library
 
 Group:          System/Libraries
 License:        BSD
 URL:            http://ompl.kavrakilab.org/
 Source0:        https://bitbucket.org/%{oldname}/%{oldname}/downloads/%{oldname}-%{version}-Source.tar.gz
-# https://bitbucket.org/ompl/ompl/issues/206/cannot-compile-as-c-11
-Patch0:         ompl-1.0.0-cxx11.patch
-BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires:  ctest cmake
 BuildRequires:  doxygen
 BuildRequires:  libflann-devel
@@ -49,7 +47,6 @@ developing applications that use %{oldname}.
 
 %prep
 %setup -q -n %{oldname}-%{version}-Source
-%patch0 -p1
 # Get rid of bundled odeint
 rm -rf src/external/omplext_odeint/
 
@@ -72,8 +69,6 @@ rm -f doc/html/installdox
 
 %install
 make -C build install DESTDIR=%{buildroot}
-mkdir -p %{buildroot}%{_datadir}/cmake/Modules
-cp %{buildroot}%{_datadir}/ompl/ompl-config.cmake %{buildroot}%{_datadir}/cmake/Modules/FindOMPL.cmake
 
 rm -f %{buildroot}%{_datadir}/%{oldname}/demos/*.py
 rm -rf %{buildroot}%{_includedir}/%{oldname}/CMakeFiles
@@ -94,9 +89,12 @@ make -C build test || exit 0
 %{_includedir}/%{oldname}
 %{_datadir}/%{oldname}
 %{_libdir}/pkgconfig/*.pc
-%{_datadir}/cmake/Modules/FindOMPL.cmake
+%{_libdir}/cmake/%{oldname}
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.2-alt1_2
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_17
 - update to new release by fcimport
 
