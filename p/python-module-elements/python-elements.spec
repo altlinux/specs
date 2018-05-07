@@ -22,7 +22,7 @@ BuildRequires: swig
 
 Name:           python-module-elements
 Version:        0.13
-Release:        alt1_15.%{svndate}svn
+Release:        alt1_17.%{svndate}svn
 Summary:        A 2D Physics API for Python
 
 Group:          Development/Other
@@ -42,8 +42,9 @@ teaching & learning tools.\
 Source44: import.info
 
 
-%description %_description
+%description 
 
+%_description
 %prep
 %setup -n %{oldname}-%{version} -q
 
@@ -65,6 +66,9 @@ sed -i elements/elements.py -e 1d
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_17.20100110svn
+- update to new release by fcimport
+
 * Sat Oct 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_15.20100110svn
 - applied repocop patch
 
