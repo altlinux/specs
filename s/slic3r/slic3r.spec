@@ -1,15 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools gcc-c++ perl(Class/Accessor.pm) perl(Encode.pm) perl(ExtUtils/CppGuess.pm) perl(IO/All.pm) perl(Math/Trig.pm) perl(OpenGL.pm) perl(PDF/API2.pm) perl(WebService/Prowl.pm) perl(XML/SAX/Base.pm) perl-podlators
+BuildRequires: /usr/bin/desktop-file-install perl(Class/Accessor.pm) perl(Encode.pm) perl(ExtUtils/CppGuess.pm) perl(IO/All.pm) perl(Math/Trig.pm) perl(OpenGL.pm) perl(PDF/API2.pm) perl(WebService/Prowl.pm) perl(XML/SAX/Base.pm) perl-podlators
 # END SourceDeps(oneline)
 %set_perl_req_method relaxed
 
-%define fedora 26
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           slic3r
 Version:        1.2.9
-Release:        alt1_15.1
+Release:        alt1_18
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -44,10 +44,12 @@ Patch8:         %{name}-opengl070.patch
 Source1:        %{name}.desktop
 Source2:        %{name}.appdata.xml
 
+BuildRequires:  gcc-c++
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Class/XSAccessor.pm)
 BuildRequires:  perl(Encode/Locale.pm)
+BuildRequires:  perl(ExtUtils/CBuilder.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(ExtUtils/ParseXS.pm)
 BuildRequires:  perl(ExtUtils/Typemaps/Default.pm)
@@ -77,11 +79,11 @@ BuildRequires:  perl(XML/SAX.pm)
 BuildRequires:  perl(XML/SAX/ExpatXS.pm)
 
 BuildRequires:  libadmesh-devel >= 0.98.1
-BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  libpoly2tri-devel
 #BuildRequires:  polyclipping-devel >= 6.2.0
-BuildRequires:  ImageMagick
+BuildRequires:  ImageMagick-tools
 
 Requires:       perl(XML/SAX.pm)
 Requires:       libadmesh >= 0.98.1
@@ -116,7 +118,7 @@ rm -rf xs/src/boost
 
 %build
 cd xs
-perl ./Build.PL --install_path bindoc=%_man1dir installdirs=vendor optimize="$RPM_OPT_FLAGS"
+perl ./Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
 ./Build
 cd -
 # Building non XS part only runs test, so skip it and run it in tests
@@ -186,6 +188,9 @@ SLIC3R_NO_AUTO=1 perl Build.PL installdirs=vendor
 %{_datadir}/%{name}
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.9-alt1_18
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.9-alt1_15.1
 - rebuild with new perl 5.26.1
 
