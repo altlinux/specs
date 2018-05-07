@@ -1,6 +1,6 @@
 Name:		etcnet
-Version:	0.9.13
-Release:	alt4
+Version:	0.9.14
+Release:	alt1
 #Url:		http://etcnet.org/
 Url:		https://www.altlinux.org/Etcnet
 
@@ -28,7 +28,7 @@ Inspired by the limitations of traditional network configuration subsystems,
 management, removable devices, full iproute2 command set, interface
 dependencies resolution, QoS and firewall configuration frameworks.
 /etc/net provides support for the following interface types: Ethernet, WiFi
-(WEP), IPv4/IPv6 tunnels, VTI tunnels, VLAN, PLIP, Ethernet bonding and
+(WEP), IPv4/IPv6 tunnels, VTI tunnels, WireGuard VPN, VLAN, PLIP, Ethernet bonding and
 bridging, traffic equalizer, Pent@NET, Pent@VALUE, SkyStar-2, TUN/TAP,
 OpenVPN TUN/TAP, OpenSSH TUN/TAP, usbnet and PPP. Due to its modular structure,
 support for new interface types can be added without overall design changes.
@@ -39,7 +39,7 @@ Group:		System/Configuration/Networking
 Requires:	%name = %version-%release, wireless-tools
 Requires:	dhcpcd >= 1.3.22pl4-alt3, iptables, iptables-ipv6, ebtables, ipset >= 4.1-alt2
 Requires:	ethtool >= 0:3-alt4, ifplugd >= 0.28-alt2
-Requires:	hotplug, ncpfs, ppp, vlan-utils, openvpn
+Requires:	hotplug, ncpfs, ppp, vlan-utils, openvpn, wireguard-tools
 Requires:	pptp-client, wpa_supplicant, avahi-autoipd, rp-pppoe-base >= 3.6-alt2
 
 %description full
@@ -141,6 +141,9 @@ fi
 %files full
 
 %changelog
+* Mon May 07 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.14-alt1
+- wireguard support added
+
 * Thu May 03 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.13-alt4
 - vti support added
 
