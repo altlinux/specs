@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/valgrind bzlib-devel gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           advancecomp
-Version:        1.23
-Release:        alt1_3
+Version:        2.1
+Release:        alt1_4
 Summary:        Recompression utilities for .PNG, .MNG and .ZIP files
 License:        GPLv3
 URL:            http://www.advancemame.it/
@@ -39,13 +39,19 @@ files
 make install DESTDIR=%{buildroot}
 
 %files
-%doc COPYING
+%doc --no-dereference COPYING
 %doc AUTHORS HISTORY README
-%doc doc/{adv*,authors,history,readme}.txt
+%doc doc/adv*.txt
+%doc doc/authors.txt
+%doc doc/history.txt
+%doc doc/readme.txt
 %{_bindir}/*
 %{_mandir}/man1/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_4
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1_3
 - update to new release by fcimport
 
