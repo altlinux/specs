@@ -1,3 +1,4 @@
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global gnulib_ver 20140202
@@ -5,12 +6,13 @@
 Summary: A pipeline manipulation library
 Name: libpipeline
 Version: 1.5.0
-Release: alt1_1
+Release: alt1_3
 License: GPLv3+
 Group: Development/Other
 URL: http://libpipeline.nongnu.org/
 Source: http://download.savannah.gnu.org/releases/libpipeline/libpipeline-%{version}.tar.gz
 
+BuildRequires: gcc
 BuildRequires: libtool, libcheck-devel
 
 # FPC exception for gnulib - copylib - https://fedorahosted.org/fpc/ticket/174
@@ -28,7 +30,7 @@ and execve(2).
 Summary: Header files and libraries for pipeline manipulation library
 Group: Development/Other
 Requires: %{name} = %{version}-%{release}
-Requires: pkg-config
+Requires: pkgconfig
 
 %description devel
 libpipeline-devel contains the header files and libraries needed
@@ -50,7 +52,7 @@ rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 
 %files
 %{!?_licensedir:%global license %%doc}
-%doc COPYING
+%doc --no-dereference COPYING
 %doc README ChangeLog NEWS
 %{_libdir}/libpipeline.so.*
 
@@ -61,6 +63,9 @@ rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 %{_mandir}/man3/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_3
+- update to new release by fcimport
+
 * Sun Nov 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - new version
 
