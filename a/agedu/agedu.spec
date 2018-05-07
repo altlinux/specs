@@ -1,16 +1,21 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/halibut
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global rel r9153
+%global rel 20171202.8a8299e
 
-Name:		agedu
-Version:	0
-Release:	alt2_13.%{rel}
-Summary:	An utility for tracking down wasted disk space
-Group:		System/Base
-License:	MIT
-URL:		http://www.chiark.greenend.org.uk/~sgtatham/agedu/
+Name:           agedu
+Version:        0
+Release:        alt2_15.%{rel}
+Summary:        An utility for tracking down wasted disk space
+Group:          System/Base
+License:        MIT
+URL:            http://www.chiark.greenend.org.uk/~sgtatham/agedu/
 # Upstream tarball is regenerated nightly, so md5sums will differ.
-Source0:	http://www.chiark.greenend.org.uk/~sgtatham/agedu/agedu-%{rel}.tar.gz
+Source0:        http://www.chiark.greenend.org.uk/~sgtatham/agedu/agedu-%{rel}.tar.gz
+
+BuildRequires:  gcc
 Source44: import.info
 
 %description
@@ -31,6 +36,7 @@ files and directories.
 make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 
+
 %files
 %doc LICENCE TODO
 %{_bindir}/%{name}
@@ -38,6 +44,9 @@ make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt2_15.20171202.8a8299e
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt2_13.r9153
 - update to new release by fcimport
 
