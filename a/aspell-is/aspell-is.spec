@@ -7,13 +7,13 @@ Summary: Icelandic dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 0.51.1
-Release: alt2_19
+Release: alt2_20
 License: GPLv2+
 Group: Text tools
 URL: http://aspell.net/
 Source: ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell-%{lang}-%{version}-%{langrelease}.tar.bz2
-Buildrequires: aspell >= %{aspellrelease}
-Requires: aspell >= %{aspellrelease}
+Buildrequires: aspell libaspell
+Requires: aspell libaspell
 
 %define debug_package %{nil}
 Source44: import.info
@@ -40,6 +40,9 @@ mv $RPM_BUILD_ROOT/%{_libdir}/aspell/*slenska.alias $RPM_BUILD_ROOT/%{_libdir}/a
 %{_datadir}/aspell/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.51.1-alt2_20
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.51.1-alt2_19
 - update to new release by fcimport
 
