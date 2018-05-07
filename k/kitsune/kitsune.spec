@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           kitsune
 Version:        2.0
-Release:        alt3_22
+Release:        alt3_24
 Summary:        Program to solve mathematical problems
 
 Group:          Games/Other
@@ -16,7 +16,7 @@ Source0:        http://%{name}.tuxfamily.org/%{name}/%{name}%{version}/%{name}%{
 Source1:        %{name}.desktop
 Source2:        http://%{name}.tuxfamily.org/download.php?url=icons/%{name}-icones.tar.gz
 
-BuildRequires:  libqt4-declarative libqt4-devel qt4-designer
+BuildRequires:  libqt4-declarative libqt4-devel qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools
 BuildRequires:  desktop-file-utils
 Source44: import.info
 
@@ -72,6 +72,9 @@ desktop-file-install \
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_24
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_22
 - update to new release by fcimport
 
