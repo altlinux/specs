@@ -1,21 +1,21 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global gittag v2.15
 %global gitowner axel-download-accelerator
 
-Name: axel
-Version: 2.15
-Release: alt1_1
-Summary: Light command line download accelerator for Linux and Unix
+Name:       axel
+Version:    2.16
+Release:    alt1_1
+Summary:    Light command line download accelerator for Linux and Unix
 
-Group: Networking/WWW
-License: GPLv2+
-URL: https://github.com/%{gitowner}/%{name}
-Source0: https://github.com/%{gitowner}/%{name}/archive/%{gittag}/%{name}-%{version}.tar.gz
+Group:      Networking/WWW
+License:    GPLv2+
+URL:        https://github.com/%{gitowner}/%{name}
+Source0:    https://github.com/%{gitowner}/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
 BuildRequires: gettext-tools libasprintf-devel
 BuildRequires: pkgconfig(libssl)
 BuildRequires: autoconf
 BuildRequires: automake
+BuildRequires: gcc
 Source44: import.info
 
 %description
@@ -35,8 +35,7 @@ be useful as a wget clone on byte-critical systems.
 
 
 %install
-make install \
-DESTDIR=%{buildroot}
+%makeinstall_std \
 
 install -m 755 -p src/%{name} %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_sysconfdir}
@@ -48,12 +47,15 @@ install -m 644 -p -T doc/axelrc.example %{buildroot}%{_sysconfdir}/axelrc
 %files -f %{name}.lang
 %{_bindir}/%{name}
 %doc ChangeLog CREDITS AUTHORS README.md doc/API
-%doc COPYING
+%doc --no-dereference COPYING
 %config(noreplace) %{_sysconfdir}/axelrc
 %{_mandir}/man1/axel.1*
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.16-alt1_1
+- update to new release by fcimport
+
 * Sun Nov 26 2017 Igor Vlasenko <viy@altlinux.ru> 2.15-alt1_1
 - new version
 
