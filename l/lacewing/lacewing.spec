@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           lacewing
 Version:        1.10
-Release:        alt2_29
+Release:        alt2_31
 Summary:        Arcade-style shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -71,6 +71,7 @@ install -p -m 644 %{SOURCE3} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
 
 
+
 %files
 %doc readme.txt licence.txt
 %{_bindir}/lacewing
@@ -84,6 +85,9 @@ install -p -m 644 %{SOURCE3} \
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_31
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_29
 - update to new release by fcimport
 
