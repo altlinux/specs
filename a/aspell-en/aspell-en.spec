@@ -6,14 +6,14 @@
 Summary: English dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
-Version: 2017.08.24
+Version: 2018.04.16
 Release: alt1_1
 License: MIT and BSD
 Group: Text tools
 URL: http://aspell.net/
 Source: ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell%{aspellversion}-%{lang}-%{version}-%{langrelease}.tar.bz2
-Buildrequires: aspell >= 0.60
-Requires: aspell >= 0.60
+Buildrequires: aspell libaspell
+Requires: aspell libaspell
 Obsoletes: aspell-en-gb <= 0.33.7.1
 Obsoletes: aspell-en-ca <= 0.33.7.1
 
@@ -40,6 +40,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2018.04.16-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2017.08.24-alt1_1
 - update to new release by fcimport
 
