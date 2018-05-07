@@ -1,13 +1,13 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: freexl-devel gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:      freexl
-Version:   1.0.4
+Version:   1.0.5
 Release:   alt1_1
 Summary:   Library to extract data from within an Excel spreadsheet 
-Group:     System/Libraries
 License:   MPLv1.1 or GPLv2+ or LGPLv2+
 URL:       http://www.gaia-gis.it/FreeXL
 Source0:   http://www.gaia-gis.it/gaia-sins/%{name}-sources/%{name}-%{version}.tar.gz
@@ -26,10 +26,10 @@ Design goals:
     * completely ignore any GUI-related oddity
 
 %package devel
+Group: Development/Other
 Summary:  Development Libraries for FreeXL
-Group:    Development/Other
 Requires: %{name} = %{version}-%{release}
-Requires: pkg-config
+Requires: pkgconfig
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -83,6 +83,9 @@ rm -f %{buildroot}%{_libdir}/lib%{name}.la
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_1
+- update to new release by fcimport
+
 * Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_1
 - update to new version by fcimport
 
