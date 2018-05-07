@@ -2,10 +2,10 @@
 %define _localstatedir %{_var}
 Name:           ascii
 Version:        3.18
-Release:        alt1_2
+Release:        alt1_4
 URL:            http://www.catb.org/~esr/ascii/
 Source0:        http://www.catb.org/~esr/ascii/ascii-3.18.tar.gz
-BuildRequires:  xmlto
+BuildRequires:  xmlto, gcc
 
 License:        GPLv2
 Group:          Text tools
@@ -38,6 +38,9 @@ cp ascii.1 $RPM_BUILD_ROOT%{_mandir}/man1/
 %doc README COPYING
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 3.18-alt1_4
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.18-alt1_2
 - update to new release by fcimport
 
