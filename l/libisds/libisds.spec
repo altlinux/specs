@@ -7,14 +7,14 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libisds
 Version:        0.10.7
-Release:        alt1_2
+Release:        alt1_4
 Summary:        Library for accessing the Czech Data Boxes
 License:        LGPLv3
 URL:            http://xpisar.wz.cz/%{name}/
 Source0:        %{url}dist/%{name}-%{version}.tar.xz
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  gcc-common
+BuildRequires:  gcc
 BuildRequires:  libxml2-devel
 BuildRequires:  libcurl-devel
 BuildRequires:  gcrypt-utils libgcrypt-devel
@@ -36,7 +36,7 @@ Data Box Information System) SOAPa..services as defined in Czech ISDS Act
 Group: Development/C
 Summary:        Development files for %{name}
 Requires:       %{name} = %{version}-%{release}
-Requires:       pkg-config
+Requires:       pkgconfig
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -65,8 +65,10 @@ mv doc specification
 # Remove multilib unsafe files
 rm -rf client/.deps client/Makefile{,.in}
 
+
+
 %files -f %{name}.lang
-%doc COPYING
+%doc --no-dereference COPYING
 %doc README AUTHORS NEWS TODO
 %{_libdir}/*.so.*
 
@@ -77,6 +79,9 @@ rm -rf client/.deps client/Makefile{,.in}
 %doc client specification
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.10.7-alt1_4
+- update to new release by fcimport
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.7-alt1_2
 - new version
 
