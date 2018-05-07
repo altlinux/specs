@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ libSDL-devel perl(FileHandle.pm) perl(SDL/Rect.pm) perl(SDL/Surface.pm)
+BuildRequires: /usr/bin/desktop-file-install libSDL-devel perl(FileHandle.pm) perl(SDL/Rect.pm) perl(SDL/Surface.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           nazghul
 Version:        0.7.1
-Release:        alt2_19.20120228gitb0a402a
+Release:        alt2_21.20120228gitb0a402a
 Summary:        A computer role-playing game (CRPG) engine
 
 License:        GPLv2+
@@ -26,7 +26,7 @@ Patch1:         nazghul-format-security.patch
 Patch2:         nazghul-armbuild.patch
 
 # For building from a CVS snapshot
-BuildRequires:  automake-common, autoconf-common
+BuildRequires:  automake, autoconf, gcc-c++
 BuildRequires:  libSDL_image-devel, libSDL_mixer-devel, desktop-file-utils
 BuildRequires:  libpng-devel, xcftools
 Source44: import.info
@@ -144,6 +144,9 @@ EOF
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_21.20120228gitb0a402a
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_19.20120228gitb0a402a
 - update to new release by fcimport
 
