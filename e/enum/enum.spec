@@ -2,13 +2,15 @@
 %define _localstatedir %{_var}
 Name: enum
 Version: 1.1
-Release: alt1_11
+Release: alt1_13
 Summary: Seq- and jot-like enumerator
 
 Group:   System/Base
 License: BSD
 URL:     https://fedorahosted.org/enum
 Source0: https://fedorahosted.org/releases/e/n/enum/%{name}-%{version}.tar.bz2
+
+BuildRequires: gcc
 Source44: import.info
 
 %description
@@ -33,6 +35,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %check
 make check
 
+
 %files
 %doc COPYING ChangeLog
 %_mandir/man1/enum.1*
@@ -40,6 +43,9 @@ make check
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_13
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_11
 - update to new release by fcimport
 
