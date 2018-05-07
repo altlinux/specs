@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name: inksmoto
 Version: 0.7.0
-Release: alt2_16
+Release: alt2_18
 Summary: The new xmoto level editor for Inkscape
 
 Group: Games/Other
@@ -43,6 +43,9 @@ cp -pr inksmoto %{buildroot}%{_datadir}/inkscape/extensions/
 %doc AUTHORS COPYING INSTALL README
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_18
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_16
 - update to new release by fcimport
 
