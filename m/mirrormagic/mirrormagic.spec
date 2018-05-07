@@ -4,8 +4,8 @@ BuildRequires: /usr/bin/desktop-file-install
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           mirrormagic
-Version:        2.0.2
-Release:        alt5_23
+Version:        3.0.0
+Release:        alt1_1
 Summary:        Puzzle game where you steer a beam of light using mirrors
 Group:          Games/Other
 License:        GPL+
@@ -14,15 +14,9 @@ Source0:        http://www.artsoft.org/RELEASES/unix/%{name}/%{name}-%{version}.
 Source1:        %{name}.desktop
 Source2:        %{name}.png
 Source3:        %{name}.appdata.xml
-Patch0:         %{name}-%{version}-fixes.patch
-Patch1:         %{name}-%{version}-64bit.patch
-Patch2:         %{name}-%{version}-fs-toggle.patch
-Patch3:         %{name}-%{version}-highscore.patch
-Patch4:         %{name}-%{version}-yesno.patch
-Patch5:         %{name}-%{version}-format-security.patch
-Patch6:         %{name}-%{version}-fix-inline-use.patch
-BuildRequires:  libSDL_image-devel libSDL_mixer-devel desktop-file-utils
-BuildRequires:  libappstream-glib
+Patch0:         %{name}-%{version}-yesno.patch
+BuildRequires:  libSDL2_image-devel libSDL2_mixer-devel libSDL2_net-devel
+BuildRequires:  libappstream-glib desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -37,17 +31,11 @@ familiar from the games "Deflektor" and "Mindbender".
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
 
 
 %build
-%make_build RO_GAME_DIR=%{_datadir}/%{name} \
-  OPTIONS="$RPM_OPT_FLAGS -DUSE_USERDATADIR_FOR_COMMONDATA" sdl
+%make_build PROGBASE=%{name} RO_GAME_DIR=%{_datadir}/%{name} \
+  OPTIONS="$RPM_OPT_FLAGS -DUSE_USERDATADIR_FOR_COMMONDATA" sdl2
 
 
 %install
@@ -66,8 +54,9 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/appdata
 appstream-util validate-relax --nonet \
   $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
+
 %files
-%doc CHANGES COPYING README
+%doc --no-dereference COPYING
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/appdata/%{name}.appdata.xml
@@ -76,6 +65,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt5_23
 - update to new release by fcimport
 
