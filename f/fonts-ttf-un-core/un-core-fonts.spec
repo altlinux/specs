@@ -5,7 +5,7 @@ Group: System/Fonts/True type
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.0.2
 %global fontname un-core
-%global fontconf 65-1-%{fontname}
+%global fontconf 67-%{fontname}
 
 %global alphatag    080608
 %global archivename un-fonts-core-%{version}-%{alphatag}
@@ -38,7 +38,7 @@ Core e..i'.: \
 
 Name:           fonts-ttf-un-core
 Version:        1.0.2
-Release:        alt3_0.30.%{alphatag}
+Release:        alt3_0.31.%{alphatag}
 Summary:        Un Core family of Korean TrueType fonts
 Summary(ko):    한글 은글꼴 Core 모음
 
@@ -82,12 +82,12 @@ Requires:       %{name}-common = %{version}-%{release} \
 \
 \
 
-%un_subpkg batang UnBatang 은바탕 bold
-%un_subpkg dinaru UnDinaru 은디나루 bold light
-%un_subpkg dotum UnDotum 은돋음 bold
-%un_subpkg graphic UnGraphic 은그래픽 bold
-%un_subpkg gungseo UnGungseo 은궁서
-%un_subpkg pilgi UnPilgi 은필기 bold
+%un_subpkg batang UnBatang i'.e..i.. bold
+%un_subpkg dinaru UnDinaru i'.e..e.'e.. bold light
+%un_subpkg dotum UnDotum i'.e..i'. bold
+%un_subpkg graphic UnGraphic i'.e..e.'i.. bold
+%un_subpkg gungseo UnGungseo i'.e..i.'
+%un_subpkg pilgi UnPilgi i'.i..e.. bold
 
 
 %description
@@ -160,12 +160,14 @@ This package includes UnPilgi, a script font.
 %files -n fonts-ttf-un-core-batang
 %{_fontconfig_templatedir}/%{fontconf}-batang.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-batang.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/UnBatang.ttf
 %{_fontbasedir}/*/%{_fontstem}/UnBatangBold.ttf
 %{_datadir}/appdata/%{fontname}-batang.metainfo.xml
 %files -n fonts-ttf-un-core-dinaru
 %{_fontconfig_templatedir}/%{fontconf}-dinaru.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-dinaru.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/UnDinaru.ttf
 %{_fontbasedir}/*/%{_fontstem}/UnDinaruLight.ttf
 %{_fontbasedir}/*/%{_fontstem}/UnDinaruBold.ttf
@@ -173,23 +175,27 @@ This package includes UnPilgi, a script font.
 %files -n fonts-ttf-un-core-dotum
 %{_fontconfig_templatedir}/%{fontconf}-dotum.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-dotum.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/UnDotum.ttf
 %{_fontbasedir}/*/%{_fontstem}/UnDotumBold.ttf
 %{_datadir}/appdata/%{fontname}-dotum.metainfo.xml
 %files -n fonts-ttf-un-core-graphic
 %{_fontconfig_templatedir}/%{fontconf}-graphic.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-graphic.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/UnGraphic.ttf
 %{_fontbasedir}/*/%{_fontstem}/UnGraphicBold.ttf
 %{_datadir}/appdata/%{fontname}-graphic.metainfo.xml
 %files -n fonts-ttf-un-core-gungseo
 %{_fontconfig_templatedir}/%{fontconf}-gungseo.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-gungseo.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/UnGungseo.ttf
 %{_datadir}/appdata/%{fontname}-gungseo.metainfo.xml
 %files -n fonts-ttf-un-core-pilgi
 %{_fontconfig_templatedir}/%{fontconf}-pilgi.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-pilgi.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/UnPilgi.ttf
 %{_fontbasedir}/*/%{_fontstem}/UnPilgiBold.ttf
 %{_datadir}/appdata/%{fontname}-pilgi.metainfo.xml
@@ -282,10 +288,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %files -n fonts-ttf-un-core-common
-%doc COPYING README
+%doc README
+%doc --no-dereference COPYING
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.31.080608
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.30.080608
 - update to new release by fcimport
 
