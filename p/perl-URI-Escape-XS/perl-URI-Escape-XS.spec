@@ -7,13 +7,14 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-URI-Escape-XS
 Version:        0.14
-Release:        alt1_5.1
+Release:        alt1_7
 Summary:        Drop-In replacement for URI::Escape
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/URI-Escape-XS/
 Source0:        http://www.cpan.org/authors/id/D/DA/DANKOGAI/URI-Escape-XS-%{version}.tar.gz
 
+BuildRequires:  gcc
 BuildRequires:  perl-devel
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -38,7 +39,7 @@ uses XS, it is really fast except for uri_escape("noop").
 %setup -q -n URI-Escape-XS-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS" NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS" NO_PACKLIST=1
 %make_build
 
 %install
@@ -54,6 +55,9 @@ make test
 %{perl_vendor_archlib}/URI*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_7
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_5.1
 - rebuild with new perl 5.26.1
 
