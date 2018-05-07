@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: pkgconfig(tevent)
+# END SourceDeps(oneline)
 Group: Development/C
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -6,7 +9,7 @@ Group: Development/C
 
 Name:           libverto
 Version:        0.3.0
-Release:        alt1_1
+Release:        alt1_5
 Summary:        Main loop abstraction library
 
 License:        MIT
@@ -15,18 +18,21 @@ Source0:        %{homepage}/releases/download/%{version}/%{name}-%{version}.tar.
 
 Patch0: Work-around-libev-not-being-c89-compliant.patch
 
-BuildRequires:  autoconf-common
-BuildRequires:  automake-common
-BuildRequires:  libtool-common
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
 
 BuildRequires:  glib2-devel libgio libgio-devel
 BuildRequires:  libevent-devel
-BuildRequires:  libtevent-devel
+# BuildRequires:  libtevent-devel
 %if !0%{?rhel}
 BuildRequires:  libev-devel
 %endif
 
 BuildRequires:  git
+
+Obsoletes:      libverto-tevent < 0.3.0-2
+Obsoletes:      libverto-tevent-devel < 0.3.0-2
 Source44: import.info
 
 %description
@@ -46,7 +52,7 @@ glib will support signal in the future.
 Group: Development/C
 Summary:        Development files for %{name}
 Requires:       %{name} = %{version}-%{release}
-Requires:       pkg-config
+Requires:       pkgconfig
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -89,26 +95,25 @@ Requires:       %{name}-libevent = %{version}-%{release}
 The %{name}-libevent-devel package contains libraries and header files for
 developing applications that use %{name}-libevent.
 
-%package        tevent
-Group: Development/C
-Summary:        tevent module for %{name}
-Requires:       %{name} = %{version}-%{release}
-Provides:       %{name}-module-base = %{version}-%{release}
+# %package        tevent
+# Summary:        tevent module for %{name}
+# Requires:       %{name}%{?_isa} = %{version}-%{release}
+# Provides:       %{name}-module-base = %{version}-%{release}
 
-%description    tevent
-Module for %{name} which provides integration with tevent.
+# %description    tevent
+# Module for %{name} which provides integration with tevent.
 
-This package provides %{name}-module-base since it supports io, timeout
-and signal.
+# This package provides %{name}-module-base since it supports io, timeout
+# and signal.
 
-%package        tevent-devel
-Group: Development/C
-Summary:        Development files for %{name}-tevent
-Requires:       %{name}-tevent = %{version}-%{release}
+# %package        tevent-devel
+# Summary:        Development files for %{name}-tevent
+# Requires:       %{name}-tevent%{?_isa} = %{version}-%{release}
+# Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
 
-%description    tevent-devel
-The %{name}-tevent-devel package contains libraries and header files for
-developing applications that use %{name}-tevent.
+# %description    tevent-devel
+# The %{name}-tevent-devel package contains libraries and header files for
+# developing applications that use %{name}-tevent.
 
 %if !0%{?rhel}
 %package        libev
@@ -149,9 +154,17 @@ autoreconf -fiv
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
+
+
+
+#ldconfig_scriptlets tevent
+%if !0%{?rhel}
+
+%endif
+
 %files
 %{!?_licensedir:%global license %%doc}
-%doc COPYING
+%doc --no-dereference COPYING
 %doc AUTHORS ChangeLog NEWS README
 %{_libdir}/%{name}.so.*
 
@@ -177,13 +190,13 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/%{name}-libevent.so
 %{_libdir}/pkgconfig/%{name}-libevent.pc
 
-%files tevent
-%{_libdir}/%{name}-tevent.so.*
+# %files tevent
+# %{_libdir}/%{name}-tevent.so.*
 
-%files tevent-devel
-%{_includedir}/verto-tevent.h
-%{_libdir}/%{name}-tevent.so
-%{_libdir}/pkgconfig/%{name}-tevent.pc
+# %files tevent-devel
+# %{_includedir}/verto-tevent.h
+# %{_libdir}/%{name}-tevent.so
+# %{_libdir}/pkgconfig/%{name}-tevent.pc
 
 %if !0%{?rhel}
 %files libev
@@ -196,6 +209,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %endif
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_5
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_1
 - update to new release by fcimport
 
