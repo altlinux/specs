@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl unzip
+BuildRequires: /usr/bin/perl
 # END SourceDeps(oneline)
 %define oldname japanese-bitmap-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -24,11 +24,12 @@ BuildRequires: /usr/bin/perl unzip
 
 Name:           fonts-bitmap-japanese
 Version:        0.20080710
-Release:        alt2_19
+Release:        alt2_21
 License:        Public Domain and BSD and mplus
 Group:          System/Fonts/True type
 BuildArch:      noarch
-BuildRequires:  bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils gawk fontpackages-devel
+BuildRequires:  bdftopcf mkfontdir mkfontscale xorg-font-utils mkfontdir gawk fontpackages-devel
+BuildRequires:	gcc
 
 ## files in ttfonts-ja
 Source2:        FAPIcidfmap.ja
@@ -329,10 +330,10 @@ install -m 0755 -d $RPM_BUILD_ROOT%{cataloguedir}
 ln -sf %{_fontdir} $RPM_BUILD_ROOT%{cataloguedir}/%{fontname}
 
 # touching all ghosts; hack for rpm 4.0.4
-for rpm_404_ghost in %{_fontdir}/encodings.dir
+for rpm404_ghost in %{_fontdir}/encodings.dir
 do
-    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
-    touch %buildroot"$rpm_404_ghost"
+    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+    touch %buildroot"$rpm404_ghost"
 done
 sed -i -e s,%{_datadir}/fonts/,%{_datadir}/fonts/ttf/,g %buildroot/usr/share/ghostscript/conf.d/*
 # lowercase to befriend repocop tests
@@ -375,10 +376,12 @@ fi
 
 
 %files
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.pcf.gz
 
 %doc doc.orig readme.kaname_bdf
-%doc fonts-ja/COPYRIGHT* fonts-ja/README* fonts-ja/LICENSE* fonts-ja/ALLFONTS.txt
+%doc fonts-ja/README* fonts-ja/ALLFONTS.txt
+%doc --no-dereference fonts-ja/COPYRIGHT* fonts-ja/LICENSE*
 %verify(not md5 size mtime) %{_fontbasedir}/*/%{_fontstem}/fonts.alias
 %verify(not md5 size mtime) %{_fontbasedir}/*/%{_fontstem}/fonts.dir
 %ghost %verify(not md5 size mtime) %{_fontbasedir}/*/%{_fontstem}/encodings.dir
@@ -388,6 +391,9 @@ fi
 %{cataloguedir}/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.20080710-alt2_21
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.20080710-alt2_19
 - update to new release by fcimport
 
