@@ -4,6 +4,7 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ texinfo
 # END SourceDeps(oneline)
 Summary(ru_RU.UTF-8): Менеджер сессий для сервера JACK
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
@@ -11,7 +12,7 @@ Summary(ru_RU.UTF-8): Менеджер сессий для сервера JACK
 Summary:      LASH Audio Session Handler
 Name:         lash
 Version:      0.5.4
-Release:      alt1_32
+Release:      alt1_34
 License:      GPLv2+
 Group:        System/Libraries
 URL:          http://www.nongnu.org/lash/
@@ -57,11 +58,11 @@ Provides: lash-devel = %EVR
 %description -n liblash-devel
 Development files for the LASH library.
 
-%package -n liblash
+%package        -n liblash
 Group: System/Libraries
 Summary:        Shared libraries for using %{name}
 
-%description -n liblash
+%description    -n liblash
 The %{name}-libs package contains lash shared libraries.
 
 %package -n python-module-lash
@@ -82,7 +83,7 @@ LASH.
 %patch3 -p1 -b .texi2html
 
 # Hack to build against newer swig
-%if 0%{?rhel}
+%if 0%{?rhel} && 0%{?rhel} <= 7
 sed -i 's|1.3.31|2.0.0|g' configure*
 %else
 sed -i 's|1.3.31|3.0.0|g' configure*
@@ -169,6 +170,9 @@ fi
 %{python_sitelibdir}/lash.py*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.5.4-alt1_34
+- update to new release by fcimport
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.5.4-alt1_32
 - picked up from orphaned
 - reverted to last stable version 0.5.4
