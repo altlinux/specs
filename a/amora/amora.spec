@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:           amora
 Version:        1.1
-Release:        alt2_19
+Release:        alt2_21
 Summary:        A mobile remote assistant
 
 Group:          Communications
@@ -13,6 +13,7 @@ Patch0:         amora-aarch64.patch
 
 BuildRequires:  libbluez-devel
 BuildRequires:  libdbus-devel
+BuildRequires:  gcc
 BuildRequires:  imlib2-devel
 BuildRequires:  libX11-devel
 BuildRequires:  libXi-devel
@@ -44,16 +45,20 @@ http://code.google.com/p/amora/
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
 
 %files
-%doc README COPYING
+%doc README
+%doc --no-dereference COPYING
 %{_bindir}/amorad
 %{_mandir}/man7/amora.7*
 %{_mandir}/man8/amorad.8*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_21
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_19
 - update to new release by fcimport
 
