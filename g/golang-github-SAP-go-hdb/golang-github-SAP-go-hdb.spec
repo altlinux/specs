@@ -48,8 +48,8 @@ BuildRequires: /proc
 %global import_path     %{provider_prefix}
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        0.9.5
-Release:        alt1_2
+Version:        0.11.0
+Release:        alt1_1
 Summary:        SAP HANA Database Client for Go (Golang)
 License:        ASL 2.0
 URL:            https://%{provider_prefix}
@@ -113,7 +113,6 @@ providing packages with %{import_path} prefix.
 
 %prep
 %setup -q -n %{repo}-%{version}
-chmod 0644 README.md NOTICE
 
 %build
 %install
@@ -194,6 +193,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %endif
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.11.0-alt1_1
+- update to new release by fcimport
+
 * Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt1_2
 - fc update
 
