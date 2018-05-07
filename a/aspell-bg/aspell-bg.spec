@@ -6,13 +6,13 @@ Summary: Bulgarian dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 4.1
-Release: alt2_16
+Release: alt2_17
 License: GPLv2
 Group: Text tools
 URL: http://aspell.net/
 Source:   http://prdownloads.sourceforge.net/bgoffice/aspell6-%{lang}-%{version}-%{langrelease}.tar.bz2
-Buildrequires: aspell >= 0.60
-Requires: aspell >= 0.60
+Buildrequires: aspell libaspell
+Requires: aspell libaspell
 
 %define debug_package %{nil}
 Source44: import.info
@@ -39,6 +39,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 4.1-alt2_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.1-alt2_16
 - update to new release by fcimport
 
