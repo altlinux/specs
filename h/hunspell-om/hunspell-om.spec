@@ -8,7 +8,7 @@ Name: hunspell-om
 Summary: Oromo hunspell dictionaries
 #Epoch: 1
 Version: 0.04
-Release: alt2_12
+Release: alt2_13
 Source: http://borel.slu.edu/obair/%{name}-%{version}.oxt
 URL: http://borel.slu.edu/crubadan/apps.html
 License: LGPLv3+
@@ -41,6 +41,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_13
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_12
 - update to new release by fcimport
 
