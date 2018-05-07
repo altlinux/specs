@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-Map
 Version:        0.65
-Release:        alt1.1
+Release:        alt1.1_3
 Summary:        Memory mapping made simple and safe
 License:        GPL+ or Artistic
 
@@ -15,9 +15,10 @@ URL:            http://search.cpan.org/dist/File-Map/
 Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/File-Map-%{version}.tar.gz
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  perl-devel >= 0:5.008
+BuildRequires:  perl-devel >= 5.008
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl(ExtUtils/CBuilder.pm)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -59,7 +60,7 @@ chmod -x examples/fastsearch.pl
 
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor optimize="$RPM_OPT_FLAGS"
+/usr/bin/perl Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
 ./Build
 
 
@@ -76,13 +77,16 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes examples README
 %{perl_vendor_archlib}/auto/*
 %{perl_vendor_archlib}/File*
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1.1_3
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1.1
 - rebuild with new perl 5.26.1
 
