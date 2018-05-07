@@ -4,8 +4,8 @@
 %def_enable introspection
 
 Name: xviewer
-Version: 1.6.1
-Release: alt2
+Version: 1.8.0
+Release: alt1
 
 Summary: Fast and functional image viewer.
 License: %gpl2plus
@@ -22,7 +22,7 @@ BuildRequires: gnome-common intltool yelp-tools
 BuildRequires: gtk-doc
 BuildPreReq: libgtk+3-devel >= 3.14.0
 BuildPreReq: libgio-devel >= 2.38.0
-BuildPreReq: libgnome-desktop3-devel >= 2.91.91
+BuildPreReq: libcinnamon-desktop-devel >= 3.8.0
 BuildPreReq: gnome-icon-theme >= 2.19.1
 BuildPreReq: shared-mime-info >= 0.60
 BuildPreReq: libexempi-devel >= 1.99.5
@@ -123,6 +123,9 @@ the functionality of the Xviewer GUI.
 %exclude %_libdir/%name/lib%name.la
 
 %changelog
+* Tue May 8 2018 Vladimir Didenko <cow@altlinux.org> 1.8.0-alt1
+- New version
+
 * Mon Mar 5 2018 Vladimir Didenko <cow@altlinux.org> 1.6.1-alt2
 - Fix build with new libgnome-desktop3
 
