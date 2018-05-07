@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(PadWalker.pm) perl(Prima/Application.pm) perl(Prima/Buttons.pm) perl(Prima/Edit.pm) perl(Prima/Label.pm) perl(Prima/MsgBox.pm) perl(Prima/PodView.pm) perl(Prima/Utils.pm) perl(threads.pm) perl(threads/shared.pm) perl-podlators
@@ -30,13 +31,13 @@ BuildRequires: gcc-c++
 
 Name:           perl-PDL
 %global cpan_version 2.018
-Version:        2.18.0
-Release:        alt1_4.1
+Version:        2.019
+Release:        alt1
 Summary:        The Perl Data Language
 Group:          Development/Other
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
-Source0:        http://search.cpan.org/CPAN/authors/id/C/CH/CHM/PDL-%{cpan_version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/C/CH/CHM/PDL-%{version}.tar.gz
 # Uncomment to enable PDL::IO::Browser
 # Patch0:         perl-PDL-2.4.10-settings.patch
 Patch1:         perl-PDL-2.8.0-hdf.patch
@@ -191,7 +192,7 @@ turns perl into a free, array-oriented, numerical language similar to
 such commercial packages as IDL and MatLab.
 
 %prep
-%setup -q -n PDL-%{cpan_version}
+%setup -q -n PDL-%{version}
 # Uncomment to enable PDL::IO::Browser
 # %%patch0 -p1 -b .settings
 %patch1 -p1 -b .hdf
@@ -235,7 +236,7 @@ export PERL5LIB=`pwd`/blib/lib
 make test
 
 %files
-%doc COPYING Changes INTERNATIONALIZATION Known_problems README TODO
+%doc COPYING Changes INTERNATIONALIZATION Known_problems README TODO Bugs.pod Changes_CVS Doc Example
 %{_bindir}/*
 %{perl_vendor_archlib}/Inline/*
 %{perl_vendor_archlib}/PDL*
@@ -243,6 +244,9 @@ make test
 %{_mandir}/man1/*.1*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.019-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.18.0-alt1_4.1
 - rebuild with new perl 5.26.1
 
