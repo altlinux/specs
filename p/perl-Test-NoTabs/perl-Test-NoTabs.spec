@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -8,17 +7,17 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-NoTabs
 Version:	2.02
-Release:	alt1
+Release:	alt1_1
 Summary:	Check the presence of tabs in your project
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-NoTabs/
-Source0:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-NoTabs-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Test-NoTabs-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:	perl(File/Find.pm)
@@ -45,7 +44,7 @@ modules, etc.) for the presence of tabs.
 %setup -q -n Test-NoTabs-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -58,7 +57,7 @@ make test
 
 %files
 %if 0%{?_licensedir:1}
-%doc LICENSE
+%doc --no-dereference LICENSE
 %else
 %doc LICENSE
 %endif
@@ -66,6 +65,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1_1
+- update to new release by fcimport
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1
 - automated CPAN update
 
