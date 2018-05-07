@@ -50,23 +50,19 @@ BuildRequires: /proc
 # https://github.com/denisenkom/go-mssqldb
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          b2a6258bbf0940987a033700a03ebf43373f35c0
+%global commit          94099f01fe83bbe7ae8fb453e4fd3d208456da19
 %global commitdate      20180314
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.1.%{commitdate}git%{shortcommit}
+Release:        alt1_0.2.%{commitdate}git%{shortcommit}
 Summary:        Microsoft SQL server driver for Go (golang)
 # Detected licences
 # - BSD (3 clause) at 'LICENSE.txt'
 License:        BSD
 URL:            https://%{provider_prefix}
 Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{shortcommit}.tar.gz
-
-# Fix test failures on Go 1.10
-# https://github.com/denisenkom/go-mssqldb/pull/345
-Patch0:         go-mssqldb-b2a6258-go1.10-testfix.patch
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
 ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 aarch64 %{arm}}
@@ -128,7 +124,6 @@ providing packages with %{import_path} prefix.
 
 %prep
 %setup -q -n %{repo}-%{commit}
-%patch0 -p1
 
 %build
 %install
@@ -207,6 +202,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %endif
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.2.20180314git94099f0
+- update to new release by fcimport
+
 * Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20180314gitb2a6258
 - fc update
 
