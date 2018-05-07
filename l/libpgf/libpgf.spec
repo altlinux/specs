@@ -1,15 +1,15 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/dot gcc-c++
+BuildRequires: /usr/bin/dot
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libpgf
 Version:        6.14.12
-Release:        alt1_8
+Release:        alt1_10
 Summary:        PGF (Progressive Graphics File) library
 
-Group:          System/Libraries
 License:        LGPLv2+
 URL:            http://www.libpgf.org
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.tar.gz
@@ -21,7 +21,8 @@ Patch147: libpgf-r147.patch
 Patch148: libpgf-r148.patch
 
 BuildRequires:  doxygen
-BuildRequires:  libtool-common
+BuildRequires:  gcc-c++
+BuildRequires:  libtool
 Source44: import.info
 
 %description
@@ -61,18 +62,22 @@ export CFLAGS="%{optflags} -DLIBPGF_DISABLE_OPENMP"
 export CXXFLAGS="%{optflags} -DLIBPGF_DISABLE_OPENMP"
 
 %configure --disable-static
+
 %make_build
 
 
 %install
-make install DESTDIR=%{buildroot}
+%makeinstall_std
 
 # unpackaged files
 rm -fv %{buildroot}%{_libdir}/libpgf.la
 
 
+
+
 %files
-%doc COPYING README
+%doc README
+%doc --no-dereference COPYING
 %{_libdir}/libpgf.so.6*
 
 %files devel
@@ -84,6 +89,9 @@ rm -fv %{buildroot}%{_libdir}/libpgf.la
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 6.14.12-alt1_10
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 6.14.12-alt1_8
 - update to new release by fcimport
 
