@@ -25,18 +25,18 @@ BuildRequires: /proc
 
 %global provider        github
 %global provider_tld    com
-%global project         zillode
+%global project         Zillode
 %global repo            notify
-# https://github.com/zillode/notify
+# https://github.com/Zillode/notify
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          a8abcfb1ce88ee8d79a300ed65d94b8fb616ddb3
+%global commit          a4d89c12bcfbda5640050eb549079dad19f7741c
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global commitdate      20180204
+%global commitdate      20180313
 
-Name:           golang-%{provider}-%{project}-%{repo}
+Name:           golang-%{provider}-zillode-%{repo}
 Version:        0
-Release:        alt1_0.8.%{commitdate}.git%{shortcommit}
+Release:        alt1_0.9.%{commitdate}.git%{shortcommit}
 Summary:        File system event notification library on steroids
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -175,6 +175,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.9.20180313.gita4d89c1
+- update to new release by fcimport
+
 * Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.8.20180204.gita8abcfb
 - fc update
 
