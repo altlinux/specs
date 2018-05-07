@@ -11,7 +11,7 @@ BuildRequires: /proc
 %global   import_path     dbus
 
 Name:           golang-deepin-%{repo}
-Version:        3.1.11
+Version:        3.1.13
 Release:        alt1_1
 Summary:        Golang DBus factory for Deepin Desktop Environment
 License:        GPLv3+
@@ -61,6 +61,9 @@ building other packages which use import path with
 %{go_path}/src/dbus/
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.13-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.11-alt1_1
 - update to new release by fcimport
 
