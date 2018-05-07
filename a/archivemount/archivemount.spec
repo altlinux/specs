@@ -1,8 +1,8 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          archivemount
-Version:       0.8.7
-Release:       alt1_5
+Version:       0.8.12
+Release:       alt1_1
 Summary:       FUSE based filesystem for mounting compressed archives
 
 Group:         System/Libraries
@@ -39,6 +39,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_bindir}/archivemount
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.12-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.7-alt1_5
 - update to new release by fcimport
 
