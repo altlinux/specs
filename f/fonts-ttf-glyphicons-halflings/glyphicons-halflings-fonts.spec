@@ -11,7 +11,7 @@ Group: System/Fonts/True type
 Name:           fonts-ttf-glyphicons-halflings
 Epoch:          1
 Version:        3.1.0
-Release:        alt1_7.%{checkout}
+Release:        alt1_8.%{checkout}
 Summary:        Precisely prepared monochromatic icons and symbols
 
 License:        MIT
@@ -46,6 +46,9 @@ install -m 0644 -p %{SOURCE0} %{buildroot}%{_fontdir}
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.1.0-alt1_8.20140211git728067b
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.1.0-alt1_7.20140211git728067b
 - update to new release by fcimport
 
