@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -9,12 +8,13 @@ BuildRequires: perl(Sub/Uplevel.pm) perl-podlators
 Name:           perl-Scope-Upper
 Summary:        Act on upper scopes
 Version:        0.30
-Release:        alt1.1.1
+Release:        alt1.1.1_3
 License:        GPL+ or Artistic
-Source0:        http://www.cpan.org/authors/id/V/VP/VPIT/Scope-Upper-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/V/VP/VPIT/Scope-Upper-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/Scope-Upper
 # Build
 BuildRequires:  findutils
+BuildRequires:  gcc
 BuildRequires:  perl-devel
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -28,6 +28,7 @@ BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(XSLoader.pm)
 # Tests only
+BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(feature.pm)
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(POSIX.pm)
@@ -57,7 +58,7 @@ sed -i -e '1s,^#!.*perl,%(perl -MConfig -e 'print $Config{startperl}'),' \
     samples/*
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
 %make_build
 
 %install
@@ -74,6 +75,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1.1.1_3
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1.1.1
 - rebuild with new perl 5.26.1
 
