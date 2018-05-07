@@ -1,6 +1,6 @@
 Name: netpolice
 Version: 1.02
-Release: alt3
+Release: alt3.1
 Packager: Anton Pischulin <letanton@altlinux.ru>
 
 Summary: Netpolice is content filtering system
@@ -12,8 +12,6 @@ Source0: readme
 
 %description
 Netpolice is content filtering system.
-
-Requires: %name = %version-%release
 
 %package -n %name-main
 Summary: netpolice meta package
@@ -36,6 +34,9 @@ install -pD -m644 %SOURCE0 %buildroot%_docdir/%name/%name
 %doc %_docdir/%name/%name
 
 %changelog
+* Mon May 07 2018 Grigory Ustinov <grenka@altlinux.org> 1.02-alt3.1
+- NMU: Fix description (Closes: #26373).
+
 * Mon Dec 07 2015 Andrey Cherepanov <cas@altlinux.org> 1.02-alt3
 - Rebuild with new version if c-icap
 
