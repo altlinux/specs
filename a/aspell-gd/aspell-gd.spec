@@ -8,13 +8,13 @@ Summary: Gaelic dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 51
 Version: 0.1.1
-Release: alt2_17
+Release: alt2_18
 License: GPLv2+
 Group: Text tools
 URL: http://aspell.net/
 Source: ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell%{aspellversion}-%{lang}-%{version}-%{langrelease}.tar.bz2
-Buildrequires: aspell >= 0.60
-Requires: aspell >= 0.60
+Buildrequires: aspell libaspell
+Requires: aspell libaspell
 
 %define debug_package %{nil}
 Source44: import.info
@@ -38,6 +38,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.1.1-alt2_18
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.1.1-alt2_17
 - update to new release by fcimport
 
