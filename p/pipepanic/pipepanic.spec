@@ -1,4 +1,6 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 %define fedora 27
@@ -6,10 +8,9 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name: pipepanic
 Version: 0.1.3
-Release: alt4_22
+Release: alt4_24
 Summary: A pipe connecting game
 
-Group: Games/Other
 License: GPLv2+
 URL: http://www.users.waitrose.com/~thunor/pipepanic/
 Source0: http://www.users.waitrose.com/~thunor/pipepanic/dload/%{name}-%{version}-source.tar.gz
@@ -23,6 +24,7 @@ Patch1: pipepanic-0.1.3-window-title.patch
 # Fix wrong score with long pipes (BZ #847344)
 Patch2: pipepanic-0.1.3-score.patch
 
+BuildRequires: gcc
 BuildRequires: libSDL-devel
 BuildRequires: desktop-file-utils
 BuildRequires: ImageMagick-tools
@@ -50,11 +52,12 @@ sed -i 's:/opt/QtPalmtop/share/pipepanic/:%{_datadir}/%{name}/:' main.h
 
 
 %build
-%make_build CFLAGS="$RPM_OPT_FLAGS"
+%make_build \
+  CFLAGS="%{optflags}" \
+  LDFLAGS="%{__global_ldflags}"
 
 
 %install
-
 # Install binary
 mkdir -p %{buildroot}%{_bindir}
 install -m 755 pipepanic %{buildroot}%{_bindir}
@@ -79,9 +82,6 @@ install -m 644 PipepanicIcon64.png %{buildroot}%{_datadir}/icons/hicolor/64x64/a
 # Install desktop file
 mkdir -p %{buildroot}%{_datadir}/applications
 desktop-file-install \
-%if 0%{?fedora} && 0%{?fedora} < 19
-           \
-%endif
   --dir %{buildroot}%{_datadir}/applications \
   %{SOURCE1}
 
@@ -98,10 +98,14 @@ desktop-file-install \
 %else
 %{_datadir}/applications/%{name}.desktop
 %endif
-%doc AUTHORS ChangeLog COPYING COPYING-ARTWORK README
+%doc AUTHORS ChangeLog README
+%doc --no-dereference COPYING COPYING-ARTWORK
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt4_24
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt4_22
 - update to new release by fcimport
 
