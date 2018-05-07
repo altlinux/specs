@@ -1,6 +1,6 @@
 Name: perl
-Version: 5.26.1
-Release: alt4
+Version: 5.26.2
+Release: alt1
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -40,7 +40,7 @@ Patch21: perl-5.24.3-alt-solovyov.patch
 
 # cpan update patches here. use format below:
 #Patch50: cpan-update-Socket-2.013-to-Socket-2.016.diff
-Patch51: cpan-update-Test-Simple-1.302073-to-Test-Simple-1.302120.patch
+Patch51: cpan-update-Test-Simple-1.302073-to-Test-Simple-1.302133.patch
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
 # BeginPatches(fedora)[shift=300]: -----------------------
@@ -55,11 +55,6 @@ Patch326:        perl-5.18.2-Destroy-GDBM-NDBM-ODBM-SDBM-_File-objects-only-from
 # Make File::Glob more resistant against degenerative matching, RT#131211,
 # in upstream after 5.27.0
 Patch331:        perl-5.27.0-perl-131211-fixup-File-Glob-degenerate-matching.patch
-
-# Fix cloning :via handles on thread creation, RT#131221,
-# in upstream after 5.27.0
-Patch334:        perl-5.27.0-perl-131221-improve-duplication-of-via-handles.patch
-Patch335:        perl-5.27.0-perl-131221-sv_dup-sv_dup_inc-are-only-available-und.patch
 
 # Fix glob UTF-8 flag on a glob reassignment, RT#131263,
 # in upstream after 5.27.0
@@ -80,8 +75,8 @@ Patch346:        perl-5.26.0-t-op-hash.t-fixup-intermittently-failing-test.patch
 
 # Parse caret variables with subscripts as normal variables inside ${...}
 # escaping, RT#131664, in upstream after 5.27.1
-Patch347:        perl-5.27.1-Parse-caret-vars-with-subscripts-the-same-as-normal-.patch
-Patch348:        perl-5.27.1-add-an-additional-test-for-whitespace-tolerance-in-c.patch
+Patch347:        perl-5.26.2-RC1-Parse-caret-vars-with-subscripts-the-same-as-normal-.patch
+Patch348:        perl-5.26.2-RC1-add-an-additional-test-for-whitespace-tolerance-in-c.patch
 
 # Do not display too many bytes when reporting malformed UTF-8 character,
 # in upstream after 5.27.1
@@ -108,6 +103,83 @@ Patch356:        perl-5.27.2-EU-Constant-avoid-uninit-warning.patch
 
 # Fix unreliable Time-HiRes tests, CPAN RT#122819, in Time-HiRes-1.9746
 Patch358:        perl-5.26.0-Time-HiRes-Fix-unreliable-t-usleep.t-and-t-utime.t.patch
+
+# Fix Term::ReadLine not to create spurious &STDERR files, RT#132008,
+# in upstream after 5.27.3
+Patch361:        perl-5.27.3-perl-132008-try-to-prevent-the-similar-mistakes-in-t.patch
+
+# Fix an overflow when parsing a character range with no preceding character,
+# RT#132245, in upstream after 5.27.5
+Patch364:        perl-5.26.1-perl-132245-don-t-try-to-process-a-char-range-with-n.patch
+
+# Fix walking symbol table for ISA in Carp, in upstream after 5.27.5
+Patch365:        perl-5.27.5-Carp-Don-t-choke-on-ISA-constant.patch
+
+# Fix handling file names with null bytes in stat and lstat functions,
+# RT#131895, in upstream after 5.27.5
+Patch366:        perl-5.26.1-perl-131895-fail-stat-on-names-with-0-embedded.patch
+
+# Fix a crash when untying an object witout a stash, in upstream after 5.27.5
+Patch367:        perl-5.27.5-Avoid-a-segfault-when-untying-an-object.patch
+
+# Fix deparsing of transliterations with unprintable characters, RT#132405,
+# in upstream after 5.27.5
+Patch368:        perl-5.26.1-Fix-deparsing-of-transliterations-with-unprintable-c.patch
+
+# Fix error reporting on do() on a directory, RT#125774,
+# in upstream after 5.27.5
+Patch369:        perl-5.26.1-fix-do-dir-returning-no.patch
+
+# Fix stack manipulation when a lexical subroutine is defined in a do block in
+# a member of an iteration list, RT#132442, in upstream after 5.27.5
+Patch370:        perl-5.27.5-perl-132442-Fix-stack-with-do-my-sub-l-1.patch
+
+# Fix setting $! when statting a closed filehandle, RT#108288,
+# in upstream after 5.27.5
+Patch371:        perl-5.26.1-set-when-statting-a-closed-filehandle.patch
+
+# Fix tainting of s/// with overloaded replacement, RT#115266,
+# in upstream after 5.27.5
+Patch372:        perl-5.27.5-fix-tainting-of-s-with-overloaded-replacement.patch
+
+# Expand system() arguments before a fork, RT#121105,
+# in upstream after 5.27.6
+Patch373:        perl-5.26.2-RC1-perform-system-arg-processing-before-fork.patch
+# in upstream after 5.27.7
+Patch374:        perl-5.27.7-preserve-numericness-of-system-args-on-Win32.patch
+Patch375:        perl-5.27.7-Reenable-numeric-first-argument-of-system-on-VMS.patch
+
+# Avoid undefined behavior when copying memory in Glob and pp_caller,
+# RT#131746, in upstream after 5.27.3
+Patch376:        perl-5.26.1-perl-131746-avoid-undefined-behaviour-in-Copy-etc.patch
+Patch377:        perl-5.27.3-avoid-the-address-of-.-will-always-evaluate-as-.-war.patch
+
+# Conditionalize a fix for an old and long fixed bug
+# in libcrypt / glibc, rhbz#1536752
+Patch378:        perl-5.26.1-guard_old_libcrypt_fix.patch
+
+# Link XS modules to pthread library to fix linking with -z defs,
+# <https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/message/3RHZEHLRUHJFF2XGHI5RB6YPDNLDR4HG/>
+Patch379:        perl-5.27.8-hints-linux-Add-lphtread-to-lddlflags.patch
+
+# Fix parsing braced subscript after parentheses, RT#8045,
+# in upstream after 5.27.7
+Patch380:        perl-5.26.1-fix-parsing-of-braced-subscript-after-parens.patch
+
+# Do not clobber file bytes in :encoding layer, RT#132833,
+# in upstream after 5.27.8
+Patch381:        perl-5.27.8-don-t-clobber-file-bytes-in-encoding-layer.patch
+
+# Fix line numbers in multi-line s///, RT#131930, in upstream after 5.27.9
+Patch382:        perl-5.27.9-fix-line-numbers-in-multi-line-s.patch
+
+# Fix parsing extended bracketed character classes, RT#132167,
+# in upstream after 5.27.10
+Patch383:        perl-5.27.10-PATCH-perl-132167-Parse-error-in-regex_sets.patch
+
+# Fix a possibly unitialized memory read in the Perl parser, RT#133074,
+# in upstream after 5.27.10
+Patch384:        perl-5.27.10-PATCH-perl-133074-5.26.1-some-coverity-fixes.patch
 # EndPatches(fedora): --------------------------------------
 
 # there's a problem with strict.pm
@@ -278,8 +350,6 @@ equivalent text will have identical binary representations.
 %patch322 -p1
 %patch326 -p1
 %patch331 -p1
-%patch334 -p1
-%patch335 -p1
 %patch336 -p1
 %patch338 -p1
 %patch343 -p1
@@ -294,6 +364,28 @@ equivalent text will have identical binary representations.
 %patch355 -p1
 %patch356 -p1
 %patch358 -p1
+%patch361 -p1
+%patch364 -p1
+%patch365 -p1
+%patch366 -p1
+%patch367 -p1
+%patch368 -p1
+%patch369 -p1
+%patch370 -p1
+%patch371 -p1
+%patch372 -p1
+%patch373 -p1
+%patch374 -p1
+%patch375 -p1
+%patch376 -p1
+%patch377 -p1
+%patch378 -p1
+%patch379 -p1
+%patch380 -p1
+%patch381 -p1
+%patch382 -p1
+%patch383 -p1
+%patch384 -p1
 # EndPatches(fedora): --------------------------------------
 
 # .orig files can break some test
@@ -350,6 +442,16 @@ make
 
 %check
 export LD_LIBRARY_PATH=$PWD LD_BIND_NOW=1 PERL_DL_NONLAZY=1
+# for perl 5.26.2; hack around t/porting/regen.t
+%global build_privlib     %buildroot%{_prefix}/share/perl5
+%global build_archlib     %buildroot%{_libdir}/perl5
+%global build_bindir      %buildroot%{_bindir}
+%global new_perl LD_PRELOAD="%{build_archlib}/CORE/libperl.so" LD_LIBRARY_PATH="%{build_archlib}/CORE" PERL5LIB="%{build_archlib}:%{build_privlib}" %{build_bindir}/perl
+%new_perl -I/lib regen/lib_cleanup.pl
+pushd t
+%new_perl -I../lib porting/customized.t --regen
+popd
+# end hack
 make test
 
 %install
@@ -827,6 +929,7 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%privlib/Test2/Event/Subtest.pm
 %dir	%privlib/Test2/Event/TAP
 	%privlib/Test2/Event/TAP/Version.pm
+	%privlib/Test2/Event/V2.pm
 	%privlib/Test2/Event/Waiting.pm
 	%privlib/Test2/EventFacet.pm
 %dir	%privlib/Test2/EventFacet
@@ -835,10 +938,12 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%privlib/Test2/EventFacet/Assert.pm
 	%privlib/Test2/EventFacet/Control.pm
 	%privlib/Test2/EventFacet/Error.pm
+	%privlib/Test2/EventFacet/Hub.pm
 	%privlib/Test2/EventFacet/Info.pm
 	%privlib/Test2/EventFacet/Meta.pm
 	%privlib/Test2/EventFacet/Parent.pm
 	%privlib/Test2/EventFacet/Plan.pm
+	%privlib/Test2/EventFacet/Render.pm
 	%privlib/Test2/EventFacet/Trace.pm
 	%privlib/Test2/Formatter.pm
 %dir	%privlib/Test2/Formatter
@@ -949,6 +1054,9 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%autolib/Unicode
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.26.2-alt1
+- 5.26.1 -> 5.26.2
+
 * Thu Feb 01 2018 Dmitry V. Levin <ldv@altlinux.org> 1:5.26.1-alt4
 - Rebuilt with new glibc (without -lnsl).
 
