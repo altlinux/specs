@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libGL-devel zlib-devel
 
 Name:           frogatto
 Version:        1.3.3
-Release:        alt2_9
+Release:        alt2_10
 Summary:        An old-school 2D platform game
 
 # Artwork and music not released under an open license
@@ -45,7 +45,7 @@ BuildRequires:  libGLU-devel
 BuildRequires:  libGLEW-devel
 BuildRequires:  libpng-devel
 BuildRequires:  ccache
-BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires:  perl-podlators
 BuildRequires:  libicns-utils
 BuildRequires:  desktop-file-utils 
@@ -153,6 +153,9 @@ pod2man --section=6 \
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt2_10
+- update to new release by fcimport
+
 * Mon Oct 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt2_9
 - update to new release by fcimport
 
