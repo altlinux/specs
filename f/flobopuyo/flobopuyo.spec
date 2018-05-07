@@ -1,12 +1,13 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           flobopuyo
 Version:        0.20
-Release:        alt4_23
+Release:        alt4_25
 Summary:        2-player falling bubbles game
 
 License:        GPLv2+
@@ -31,6 +32,7 @@ Patch3:         %{name}-0.20-set_window_title.patch
 # Patch taken from Debian
 Patch4:         %{name}-0.20-fix_typo.patch
 
+BuildRequires:  gcc-c++
 BuildRequires:  flex 
 BuildRequires:  bison 
 BuildRequires:  libSDL_mixer-devel 
@@ -64,7 +66,8 @@ rm data/sfx/._bi
 
 
 %build
-export CFLAGS="$RPM_OPT_FLAGS"
+export CFLAGS="%{optflags}"
+export LDFLAGS="%{__global_ldflags}"
 %make_build PREFIX=%{_prefix}
 
 
@@ -99,6 +102,9 @@ install -p -m 644 icon_128x128x32.png \
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.20-alt4_25
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.20-alt4_23
 - update to new release by fcimport
 
