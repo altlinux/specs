@@ -1,13 +1,14 @@
-Group: Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libdb4-devel
+BuildRequires: libdb4-devel
 # END SourceDeps(oneline)
+Group: Other
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global snapshot 0
 
 Name:           libpinyin
-Version:        2.1.0
+Version:        2.2.0
 Release:        alt1_1
 Summary:        Library to deal with pinyin
 
@@ -15,9 +16,10 @@ License:        GPLv3+
 URL:            https://github.com/libpinyin/libpinyin
 Source0:        http://downloads.sourceforge.net/libpinyin/libpinyin/%{name}-%{version}.tar.gz
 %if %snapshot
-Patch0:         libpinyin-2.1.x-head.patch
+Patch0:         libpinyin-2.2.x-head.patch
 %endif
 
+BuildRequires:  gcc-c++
 BuildRequires:  libkyotocabinet-devel glib2-devel libgio libgio-devel
 Requires:       %{name}-data = %{version}-%{release}
 Source44: import.info
@@ -113,6 +115,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/libzhuyin*.so.*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_1
+- update to new release by fcimport
+
 * Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_1
 - update to new version by fcimport
 
