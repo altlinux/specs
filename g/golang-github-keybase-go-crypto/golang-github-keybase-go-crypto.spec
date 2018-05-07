@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # If any of the following macros should be set otherwise,
@@ -26,7 +27,7 @@ BuildRequires: rpm-build-golang
 # Build with debug info rpm
 %global with_debug 0
 # Run tests in check section
-%global with_check 0
+%global with_check 1
 # Generate unit-test rpm
 %global with_unit_test 1
 
@@ -44,8 +45,8 @@ BuildRequires: rpm-build-golang
 # https://github.com/keybase/go-crypto
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          433e2f3d43ef1bd31387582a899389b2fbe2005e
-%global commitdate      20170628
+%global commit          8bab6ce2ea76875dcf28c287110f9cdf17fee30c
+%global commitdate      20180130
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 Name:           golang-%{provider}-%{project}-%{repo}
@@ -57,6 +58,10 @@ Summary:        Supplementary Go cryptography libraries (Keybase fork)
 License:        BSD
 URL:            https://%{provider_prefix}
 Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{shortcommit}.tar.gz
+
+# Fix tests for Go 1.10
+# https://github.com/keybase/go-crypto/pull/63
+Patch0:         go-crypto-8bab6ce-go1.10-fixtests.patch
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
 ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 aarch64 %{arm}}
@@ -139,8 +144,10 @@ Summary:         Unit tests for %{name} package
 # test subpackage tests code from devel subpackage
 
 %if 0%{?with_check} && ! 0%{?with_bundled}
+BuildRequires: golang(golang.org/x/crypto/openpgp/armor)
 %endif
 
+Requires:      golang(golang.org/x/crypto/openpgp/armor)
 
 %description unit-test-devel
 %{summary}
@@ -151,6 +158,7 @@ providing packages with %{import_path} prefix.
 
 %prep
 %setup -q -n %{repo}-%{commit}
+%patch0 -p1
 
 %build
 %install
@@ -237,7 +245,8 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %gotest %{import_path}/scrypt
 %gotest %{import_path}/sha3
 %gotest %{import_path}/ssh
-%gotest %{import_path}/ssh/agent
+# The agent client test is unusable in mock.
+%gotest '-short' %{import_path}/ssh/agent
 %gotest %{import_path}/ssh/terminal
 %gotest %{import_path}/ssh/test
 %gotest %{import_path}/tea
@@ -252,18 +261,21 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README PATENTS AUTHORS CONTRIBUTING.md CONTRIBUTORS
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README PATENTS AUTHORS CONTRIBUTING.md CONTRIBUTORS
 %endif
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20180130git8bab6ce
+- update to new release by fcimport
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20170628git433e2f3
 - new version
 
