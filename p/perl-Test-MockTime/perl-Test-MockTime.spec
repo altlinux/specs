@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,13 +7,15 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-MockTime
 Version:        0.17
-Release:        alt1
+Release:        alt1_1
 Summary:        Replaces actual time with simulated time
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            http://search.cpan.org/dist/Test-MockTime/
 Source0:        http://www.cpan.org/authors/id/D/DD/DDICK/Test-MockTime-%{version}.tar.gz
 BuildArch:      noarch
+
+BuildRequires:  %{__perl}
+
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
@@ -43,21 +46,24 @@ calls to gmtime,time or localtime.
 chmod -x lib/Test/MockTime.pm t/test.t
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-%make_build
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
+make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
-make test
+%{__make} test
 
 %files
-%doc Changes README
+%doc Changes
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_1
+- update to new release by fcimport
+
 * Sun Apr 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
