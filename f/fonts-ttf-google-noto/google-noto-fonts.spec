@@ -16,7 +16,7 @@ in Unicode.\
 
 Name:           fonts-ttf-google-noto
 Version:        20161022
-Release:        alt2_5
+Release:        alt2_7
 Summary:        Hinted and Non Hinted OpenType fonts for Unicode scripts
 Group:          System/Fonts/True type
 License:        OFL
@@ -120,7 +120,7 @@ Source94:       66-%{fontconf}-sans-rejang.conf
 Source95:       66-%{fontconf}-sans-runic.conf
 Source96:       66-%{fontconf}-sans-samaritan.conf
 Source97:       66-%{fontconf}-sans-saurashtra.conf
-Source98:       66-%{fontconf}-sans-sinhala.conf
+Source98:       65-%{fontconf}-sans-sinhala.conf
 Source99:       66-%{fontconf}-sans-sundanese.conf
 Source100:      66-%{fontconf}-sans-syloti-nagri.conf
 Source101:      66-%{fontconf}-sans-syriac-eastern.conf
@@ -1664,8 +1664,8 @@ Noto font Sans Sinhala.
 %files -n fonts-ttf-google-noto-sans-sinhala
 %dir %{_fontdir}
 %{_fontdir}/NotoSansSinhala-*.*tf
-%{_fontconfig_templatedir}/66-%{fontconf}-sans-sinhala.conf
-%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-sinhala.conf
+%{_fontconfig_templatedir}/65-%{fontconf}-sans-sinhala.conf
+%config(noreplace) %{_fontconfig_confdir}/65-%{fontconf}-sans-sinhala.conf
 %{_datadir}/appdata/%{fontname}-sans-sinhala.metainfo.xml
 
 
@@ -2512,6 +2512,9 @@ done
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 20161022-alt2_7
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 20161022-alt2_5
 - update to new release by fcimport
 
