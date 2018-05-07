@@ -1,21 +1,29 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Run optional test
+%{bcond_without perl_Data_Float_enabled_optional_test}
+
 Name:           perl-Data-Float
 Version:        0.013
-Release:        alt1
+Release:        alt1_2
 Summary:        Details of the floating point data type
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            http://search.cpan.org/dist/Data-Float/
 Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Data-Float-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -27,11 +35,14 @@ BuildRequires:  perl(integer.pm)
 BuildRequires:  perl(parent.pm)
 # Tests:
 BuildRequires:  perl(Test/More.pm)
+%if %{with perl_Data_Float_enabled_optional_test}
 # Optional tests:
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
+%endif
 Requires:       perl(constant.pm)
 Requires:       perl(integer.pm)
+Source44: import.info
 
 %description
 This module is about the native floating point numerical data type. A floating
@@ -44,7 +55,7 @@ floating point values at a low level.
 %setup -q -n Data-Float-%{version}
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -59,6 +70,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1_2
+- update to new release by fcimport
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1
 - automated CPAN update
 
