@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 
 Summary: An Atari ST emulator suitable for playing games
 Name: hatari
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 License: GPLv2+
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -79,12 +79,12 @@ built-in debugger which can (optionally) embed the Hatari emulator window.
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+#patch0 -p1
+#patch1 -p1
+#patch2 -p1
+#patch3 -p1
+#patch4 -p1
+#patch5 -p1
 
 # Remove shebang from non executable scripts
 for pyfile in dialogs.py hatari.py uihelpers.py config.py
@@ -185,6 +185,9 @@ install -p -m 644 gpl.txt %buildroot%_pkgdocdir
 %exclude %_datadir/%name/hconsole/release-notes.txt
 
 %changelog
+* Mon May 07 2018 Ilya Mashkin <oddity@altlinux.ru> 2.1.0-alt1
+- 2.1.0
+
 * Tue Jul 25 2017 Ilya Mashkin <oddity@altlinux.ru> 2.0.0-alt1
 - 2.0.0
 
