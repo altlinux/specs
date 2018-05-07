@@ -1,19 +1,19 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/python /usr/bin/time gcc-c++
+BuildRequires: /usr/bin/python /usr/bin/time
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		coan
 Version:	6.0.1
-Release:	alt1_13
+Release:	alt1_15
 Summary:	A command line tool for simplifying the pre-processor conditionals in source code
 Group:		Development/Other
 License:	BSD
 URL:		http://coan2.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/coan2/%{name}-%{version}.tar.gz
-BuildRequires:  gcc-c++-common
+BuildRequires:  gcc-c++
 BuildRequires:	python
 # For pod2man:
 BuildRequires:  perl-podlators
@@ -75,6 +75,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 %{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_15
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_13
 - update to new release by fcimport
 
