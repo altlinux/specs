@@ -1,9 +1,7 @@
-BuildRequires: apache-parent
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          pdfbox
 Version:       1.8.13
-Release:       alt2_1jpp8
+Release:       alt2_4jpp8
 Summary:       Java library for working with PDF documents
 License:       ASL 2.0
 URL:           http://pdfbox.apache.org/
@@ -32,6 +30,7 @@ Patch6:        pdfbox-1.8.12-examples-use-system-bitstream-vera-sans-fonts.patch
 
 Patch7:        pdfbox-1.8.13-preflight-syncmetadata.patch
 
+BuildRequires: apache-parent
 BuildRequires: fonts-ttf-vera
 BuildRequires: fontconfig
 BuildRequires: icc-profiles-openicc
@@ -237,29 +236,32 @@ sed -i -e /filtering/d examples/pom.xml
 
 %files -n fontbox -f .mfiles-fontbox
 %doc fontbox/README.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files -n jempbox -f .mfiles-jempbox
 %doc jempbox/README.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files parent -f .mfiles-%{name}-parent
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files reactor -f .mfiles-%{name}-reactor
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files -n preflight -f .mfiles-preflight
 %doc preflight/README.txt
 
 %files -n xmpbox -f .mfiles-xmpbox
 %doc xmpbox/README.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.8.13-alt2_4jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.8.13-alt2_1jpp8
 - added BR: apache-parent for javapackages 5
 
