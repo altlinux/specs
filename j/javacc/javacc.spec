@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
@@ -44,7 +43,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javacc
 Version:        7.0.2
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Epoch:          0
 Summary:        A parser/scanner generator for java
 License:        BSD
@@ -120,7 +119,7 @@ ln -s %{_bindir}/javacc %{buildroot}%{_bindir}/javacc.sh
 %jpackage_script jjtree '' '' javacc jjtree true
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README
 %{_bindir}/javacc
 %{_bindir}/javacc.sh
@@ -134,9 +133,12 @@ ln -s %{_bindir}/javacc %{buildroot}%{_bindir}/javacc.sh
 %doc examples
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:7.0.2-alt1_4jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:7.0.2-alt1_3jpp8
 - new version
 
