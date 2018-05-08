@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Name:           maven-resolver
 Epoch:          1
 Version:        1.1.0
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 License:        ASL 2.0
 Summary:        Apache Maven Artifact Resolver library
 URL:            http://maven.apache.org/resolver/
@@ -49,6 +49,7 @@ artifact transports and artifact resolution.
 Group: Development/Java
 Summary:   Maven Artifact Resolver API
 Obsoletes: aether-api < 1:1.0.3
+Obsoletes: aether-ant-tasks < 1:1.0.1-9
 Provides:  aether-api = %{epoch}:%{version}-%{release}
 
 %description api
@@ -191,10 +192,10 @@ done
 
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files api -f .mfiles-%{name}-api
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 %files spi -f .mfiles-%{name}-spi
 %files util -f .mfiles-%{name}-util
 %files impl -f .mfiles-%{name}-impl
@@ -206,9 +207,12 @@ done
 %files transport-wagon -f .mfiles-%{name}-transport-wagon
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.1.0-alt1_2jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.1.0-alt1_1jpp8
 - new version
 
