@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -17,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:              httpcomponents-client
 Summary:           HTTP agent implementation based on httpcomponents HttpCore
-Version:           4.5.3
+Version:           4.5.5
 Release:           alt1_4jpp8
 License:           ASL 2.0
 URL:               http://hc.apache.org/
@@ -91,6 +92,9 @@ BuildArch: noarch
 %pom_remove_plugin :apache-rat-plugin
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-javadoc-plugin
+
+# Fails due to strict crypto policy - uses DSA in test data
+rm httpclient/src/test/java/org/apache/http/conn/ssl/TestSSLSocketFactory.java
 
 # Don't compile/run httpclient-cache tests - they are incompatible with EasyMock 3.3
 %pom_remove_plugin org.apache.maven.plugins:maven-jar-plugin httpclient-cache
@@ -188,7 +192,7 @@ rm -r httpclient-cache/src/*/java/org/apache/http/impl/client/cache/ehcache
 %build
 %mvn_file ":{*}" httpcomponents/@1
 
-%mvn_build -- -Dmaven.test.skip.exec=true
+%mvn_build
 
 %install
 %mvn_install
@@ -203,6 +207,9 @@ rm -r httpclient-cache/src/*/java/org/apache/http/impl/client/cache/ehcache
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 4.5.5-alt1_4jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 4.5.3-alt1_4jpp8
 - new version
 
