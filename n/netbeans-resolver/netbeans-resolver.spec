@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    netbeans-resolver
 Version: 6.7.1
-Release: alt1_14jpp8
+Release: alt1_16jpp8
 Summary: Resolver subproject of xml-commons patched for NetBeans
 
 Group:   Development/Other
@@ -79,6 +79,9 @@ cp -rp build/apidocs/resolver %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.resolver.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_16jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_14jpp8
 - fc27 update
 
