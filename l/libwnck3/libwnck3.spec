@@ -8,7 +8,7 @@
 
 Name: %{_name}3
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: libwnck is a Window Navigator Construction Kit
 License: %lgpl2plus
@@ -130,6 +130,9 @@ libraries and objects.
 %endif
 
 %changelog
+* Fri May 04 2018 Grigory Ustinov <grenka@altlinux.org> 3.24.1-alt1.1
+- NMU: Rebuilt for e2k.
+
 * Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
 - 3.24.1
 

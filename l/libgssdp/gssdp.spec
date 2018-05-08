@@ -7,7 +7,7 @@
 
 Name: lib%_name
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: Resource discovery and announcement over SSDP
 Group: System/Libraries
@@ -102,6 +102,9 @@ GObject introspection devel data for the GSSDP library
 
 
 %changelog
+* Fri May 04 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1.1
+- NMU: Rebuilt for e2k.
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 

@@ -3,7 +3,7 @@
 
 Name: lasem
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: C/Gobject based SVG/Mathml renderer and editor - tools
 License: GPL
@@ -111,6 +111,9 @@ applications.
 %_datadir/gtk-doc/html/%name-%api_ver/
 
 %changelog
+* Fri May 04 2018 Grigory Ustinov <grenka@altlinux.org> 0.4.3-alt1.1
+- NMU: Rebuilt for e2k.
+
 * Sun Feb 15 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
 - 0.4.3
 
