@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnome-keyring
-Version: %ver_major.0.2
+Version: %ver_major.2
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
@@ -127,6 +127,9 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 
 
 %changelog
+* Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
+- 3.28.2
+
 * Sun Mar 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0.2-alt1
 - 3.28.0.2
 

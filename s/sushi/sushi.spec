@@ -1,11 +1,12 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.24
+%define ver_major 3.28
 %define api_ver 1.0
 %define gst_api_ver 1.0
 %def_enable introspection
+%define lo_bin %_bindir/libreoffice6.0
 
 Name: sushi
-Version: %ver_major.0
+Version: %ver_major.3
 Release: alt1
 
 Summary: A quick previewer for Nautilus
@@ -19,7 +20,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define clutter_ver 1.11.4
 
 Requires: gst-plugins-base%gst_api_ver
-#Requires: unoconv
+Requires: %lo_bin
 
 BuildRequires: intltool
 BuildRequires: libgtksourceview3-devel libgjs-devel libharfbuzz-devel
@@ -73,6 +74,8 @@ GObject introspection devel data for the Sushi library.
 
 %prep
 %setup
+#src/libsushi/sushi-pdf-loader.c:  libreoffice_path[0] = "/usr/bin/libreoffice";
+sed -i 's|\/usr\/bin\/libreoffice|%lo_bin|' src/libsushi/sushi-pdf-loader.c
 
 %build
 %configure --disable-static
@@ -96,6 +99,9 @@ GObject introspection devel data for the Sushi library.
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
+- 3.28.3
+
 * Sat Apr 29 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

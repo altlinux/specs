@@ -11,7 +11,7 @@
 %def_disable debug
 
 Name: libsoup
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -228,6 +228,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 2.62.2-alt1
+- 2.62.2
+
 * Mon Apr 09 2018 Yuri N. Sedunov <aris@altlinux.org> 2.62.1-alt1
 - 2.62.1
 

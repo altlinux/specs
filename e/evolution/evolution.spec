@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %set_verify_elf_method unresolved=relaxed
 # Some plugins/extensions link with others, resulting in multiple rpath entries
 %set_verify_elf_method rpath=relaxed
@@ -21,8 +21,8 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
 License: GPLv2+
@@ -45,7 +45,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.28.1
+%define eds_ver 3.28.2
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define libsoup_ver 2.42.0
@@ -265,6 +265,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
+- 3.28.2
+
 * Thu Apr 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt2
 - updated to 3.28.1-9-gd59f43c (fixed BGO #1560312/ALT #34800)
 
