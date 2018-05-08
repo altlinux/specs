@@ -1,6 +1,6 @@
 Name: pyside-qt4-py3
 Version: 1.2.2
-Release: alt2.git20140501.1.1
+Release: alt3.git20140501
 Summary: Python bindings for the Qt cross-platform application and UI framework (Python 3)
 License: LGPLv2.1
 Group: Development/Tools
@@ -102,7 +102,7 @@ export PATH=$PATH:%_qt4dir/bin
 %add_optflags -I%_includedir/shiboken
 cmake \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-%ifarch x86_64
+%if "%_lib" == "lib64"
 	-DLIB_SUFFIX:STRING=64 \
 %endif
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
@@ -145,6 +145,9 @@ cmake \
 %python3_sitelibdir/*
 
 %changelog
+* Tue May 08 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.2-alt3.git20140501
+- fixed packaging on 64bit arches other than x86_64
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt2.git20140501.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
