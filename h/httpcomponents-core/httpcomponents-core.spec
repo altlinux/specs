@@ -9,8 +9,8 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           httpcomponents-core
 Summary:        Set of low level Java HTTP transport components for HTTP services
-Version:        4.4.8
-Release:        alt1_1jpp8
+Version:        4.4.9
+Release:        alt1_4jpp8
 License:        ASL 2.0
 URL:            http://hc.apache.org/
 Source0:        http://www.apache.org/dist/httpcomponents/httpcore/source/httpcomponents-core-%{version}-src.tar.gz
@@ -59,6 +59,13 @@ BuildArch: noarch
 # very performant arch, lets make it 2 s
 sed -i '/Thread.sleep/s/100/2000/' httpcore-nio/src/test/java/org/apache/http/nio/integration/TestHttpAsyncHandlers.java
 
+# The following tests use DSA key, which is rejected by Fedora's security policy
+# https://issues.apache.org/jira/browse/HTTPCORE-519
+rm httpcore/src/test/java/org/apache/http/ssl/TestSSLContextBuilder.java
+rm httpcore-nio/src/test/java/org/apache/http/nio/integration/TestCustomSSL.java
+rm httpcore-nio/src/test/java/org/apache/http/nio/integration/TestHttpAsyncHandlers.java
+rm httpcore-nio/src/test/java/org/apache/http/nio/integration/TestHttpAsyncHandlersPipelining.java
+
 %pom_remove_plugin :maven-checkstyle-plugin
 %pom_remove_plugin :apache-rat-plugin
 %pom_remove_plugin :maven-source-plugin
@@ -104,6 +111,9 @@ done
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 4.4.9-alt1_4jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 4.4.8-alt1_1jpp8
 - new version
 
