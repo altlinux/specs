@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
@@ -8,11 +9,10 @@ BuildRequires: jpackage-generic-compat
 %global shortname common
 
 Name:           jgoodies-common
-Version:        1.8.0
-Release:        alt1_6jpp8
+Version:        1.8.1
+Release:        alt1_1jpp8
 Summary:        Common library shared by JGoodies libraries and applications
 
-Group:          Development/Other
 License:        BSD
 URL:            http://www.jgoodies.com/
 Source0:        http://www.jgoodies.com/download/libraries/%{shortname}/%{name}-%(tr "." "_" <<<%{version}).zip
@@ -75,13 +75,16 @@ done
 
 %files -f .mfiles
 %doc README.html RELEASE-NOTES.txt
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 
 %files javadoc -f .mfiles-javadoc
 
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_1jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_6jpp8
 - fc27 update
 
