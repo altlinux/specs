@@ -1,20 +1,19 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             maven-checkstyle-plugin
-Version:          2.13
-Release:          alt2_6jpp8
+Version:          3.0.0
+Release:          alt1_1jpp8
 Summary:          Plugin that generates a report regarding the code style used by the developers
 License:          ASL 2.0
-URL:              http://maven.apache.org/plugins/%{name}
+URL:              https://maven.apache.org/plugins/%{name}
 
-Source0:          http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:          https://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 Patch1:           0001-Port-to-doxia-1.7.patch
 
@@ -22,7 +21,7 @@ BuildArch:        noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-collections:commons-collections)
-BuildRequires:  mvn(com.puppycrawl.tools:checkstyle:7)
+BuildRequires:  mvn(com.puppycrawl.tools:checkstyle)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-decoration-model)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-integration-tools)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
@@ -62,13 +61,14 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
-
 %patch1 -p1
 
 %pom_remove_plugin :apache-rat-plugin
 
-
-sed -i -e 's,checkstyleVersion>5.7</checkstyleVersion,checkstyleVersion>7.7</checkstyleVersion,' pom.xml
+# Remove build-helper java version parsing for animal sniffer
+# Remove animal-sniffer because it's an upstream quality check not needed to be redone here
+%pom_remove_plugin :build-helper-maven-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
 
 %build
 %mvn_build -f -- -DmavenVersion=3.2.1
@@ -83,6 +83,9 @@ sed -i -e 's,checkstyleVersion>5.7</checkstyleVersion,checkstyleVersion>7.7</che
 %doc LICENSE NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_1jpp8
+- java update
+
 * Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 2.13-alt2_6jpp8
 - fixed build with new checkstyle
 
