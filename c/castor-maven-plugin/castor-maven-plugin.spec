@@ -1,7 +1,6 @@
-BuildRequires: maven-project
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             castor-maven-plugin
 Version:          2.5
-Release:          alt3_4jpp8
+Release:          alt3_7jpp8
 Summary:          Maven plugin for Castor XML's code generator
 License:          ASL 2.0
 URL:              http://www.mojohaus.org/castor-maven-plugin/
@@ -19,13 +18,23 @@ Patch0:           duplicate-descriptors.patch
 
 BuildArch:        noarch
 
-BuildRequires:    java-devel
 BuildRequires:    maven-local
-BuildRequires:    maven-plugin-plugin
-BuildRequires:    maven-plugin-testing-harness
-BuildRequires:    maven-source-plugin
-BuildRequires:    mojo-parent
-BuildRequires:    castor >= 1.3.2
+BuildRequires:    mvn(commons-io:commons-io)
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.apache.maven:maven-compat)
+BuildRequires:    mvn(org.apache.maven:maven-core)
+BuildRequires:    mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:    mvn(org.apache.maven:maven-project)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:    mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:    mvn(org.apache.maven.shared:maven-plugin-testing-harness)
+BuildRequires:    mvn(org.codehaus.castor:castor-codegen) >= 1.3.2
+BuildRequires:    mvn(org.codehaus.castor:castor-xml-schema) >= 1.3.2
+BuildRequires:    mvn(org.codehaus.mojo:mojo-parent:pom:)
+BuildRequires:    mvn(org.codehaus.plexus:plexus-compiler-api)
+BuildRequires:    mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:    mvn(velocity:velocity)
 Source44: import.info
 
 %description
@@ -56,9 +65,7 @@ sed -i 's/\r/\n/g' src/main/java/org/codehaus/mojo/castor/ConvertDTD2XSDMojo.jav
 # Missing dep on maven core/compat
 %pom_add_dep org.apache.maven:maven-core
 %pom_add_dep org.apache.maven:maven-compat
-
-# viy fix
-%pom_add_dep junit:junit:4.12:test
+%pom_add_dep junit:junit::test
 
 %build
 %mvn_build -- -Denforcer.skip=true
@@ -67,12 +74,15 @@ sed -i 's/\r/\n/g' src/main/java/org/codehaus/mojo/castor/ConvertDTD2XSDMojo.jav
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.TXT
+%doc --no-dereference LICENSE.TXT
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.TXT
+%doc --no-dereference LICENSE.TXT
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2.5-alt3_7jpp8
+- java update
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.5-alt3_4jpp8
 - fixed build with new maven-reporting-impl
 
