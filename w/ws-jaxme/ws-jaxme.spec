@@ -49,7 +49,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           ws-jaxme
 Version:        0.5.2
-Release:        alt5_22jpp8
+Release:        alt5_23jpp8
 Epoch:          0
 Summary:        Open source implementation of JAXB
 License:        ASL 2.0
@@ -81,7 +81,7 @@ BuildArch:      noarch
 BuildRequires:  javapackages-local
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-apache-resolver
-BuildRequires:  antlr-tool
+BuildRequires:  antlr
 BuildRequires:  apache-commons-codec
 BuildRequires:  junit
 %if %{with hsqldb}
@@ -92,7 +92,7 @@ BuildRequires:  xalan-j2
 BuildRequires:  xerces-j2
 BuildRequires:  docbook-style-xsl
 BuildRequires:  docbook-dtds
-Requires:       antlr-tool
+Requires:       antlr
 Requires:       apache-commons-codec
 Requires:       junit
 %if %{with hsqldb}
@@ -179,16 +179,19 @@ done
 %mvn_install -J build/docs/src/documentation/content/apidocs
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files manual
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 %doc build/docs/src/documentation/content/manual
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt5_23jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt5_22jpp8
 - fc27 update
 
