@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           velocity
 Version:        1.7
-Release:        alt3_21jpp8
+Release:        alt3_22jpp8
 Epoch:          1
 Summary:        Java-based template engine
 License:        ASL 2.0
@@ -37,7 +37,7 @@ Patch7:         velocity-1.7-osgi.patch
 
 BuildRequires:  javapackages-local
 BuildRequires:  ant
-BuildRequires:  antlr-tool
+BuildRequires:  antlr
 BuildRequires:  junit
 BuildRequires:  ant-junit
 %if %{with hsqldb}
@@ -198,20 +198,23 @@ cp -pr examples test %{buildroot}%{_datadir}/%{name}
 
 %files -f .mfiles
 %doc README.txt
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files manual
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 %doc docs/*
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files demo
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 %{_datadir}/%{name}
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt3_22jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt3_21jpp8
 - fc27 update
 
