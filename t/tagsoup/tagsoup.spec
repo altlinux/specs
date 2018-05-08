@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           tagsoup
 Version:        1.2.1
-Release:        alt2_14jpp8
+Release:        alt2_15jpp8
 Epoch:          0
 Summary:        A SAX-compliant HTML parser written in Java 
 # AFL/GPLv2+ license for src/java/org/ccil/cowan/tagsoup/PYXScanner.java is
@@ -104,12 +104,15 @@ install -m 644 %{name}.1 %{buildroot}%{_mandir}/man1/
 %files -f .mfiles
 %{_mandir}/man1/%{name}.1*
 %doc CHANGES README TODO %{name}.txt
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt2_15jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt2_14jpp8
 - fc27 update
 
