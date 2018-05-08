@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Name:           avalon-framework
 Epoch:          0
 Version:        4.3
-Release:        alt4_18jpp8
+Release:        alt4_19jpp8
 Summary:        Java components interfaces
 License:        ASL 2.0
 URL:            http://avalon.apache.org/
@@ -83,14 +83,17 @@ done
 %mvn_install
 
 %files -f .mfiles
-%doc avalon-framework-api-4.3/LICENSE.txt
-%doc avalon-framework-api-4.3/NOTICE.txt
+%doc --no-dereference avalon-framework-api-4.3/LICENSE.txt
+%doc --no-dereference avalon-framework-api-4.3/NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc avalon-framework-api-4.3/LICENSE.txt
-%doc avalon-framework-api-4.3/NOTICE.txt
+%doc --no-dereference avalon-framework-api-4.3/LICENSE.txt
+%doc --no-dereference avalon-framework-api-4.3/NOTICE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:4.3-alt4_19jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.3-alt4_18jpp8
 - fc27 update
 
