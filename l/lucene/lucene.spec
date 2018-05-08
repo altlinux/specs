@@ -19,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
 Version:        6.1.0
-Release:        alt1_4jpp8
+Release:        alt1_7jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -28,6 +28,9 @@ Source0:        http://www.apache.org/dist/lucene/solr/%{version}/solr-%{version
 
 Patch0:         0001-Disable-ivy-settings.patch
 Patch1:         0002-Dependency-generation.patch
+# CVE-2017-12629 - https://bugzilla.redhat.com/show_bug.cgi?id=1501529
+# Backport of lucene part of https://github.com/apache/lucene-solr/commit/926cc4d65b6d2cc40ff07f76d50ddeda947e3cc4
+Patch2:         0001-SOLR-11477-Disallow-resolving-of-external-entities-i.patch
 
 BuildRequires:  ant
 BuildRequires:  ivy-local
@@ -85,6 +88,48 @@ Summary:      Lucene Common Analyzers
 %description analysis
 Lucene Common Analyzers.
 
+%package analyzers-smartcn
+Group: Development/Java
+Summary:      Smart Chinese Analyzer
+
+%description analyzers-smartcn
+Lucene Smart Chinese Analyzer.
+
+%package grouping
+Group: Development/Java
+Summary:      Lucene Grouping Module
+
+%description grouping
+Lucene Grouping Module.
+
+%package highlighter
+Group: Development/Java
+Summary:      Lucene Highlighter Module
+
+%description highlighter
+Lucene Highlighter Module.
+
+%package join
+Group: Development/Java
+Summary:      Lucene Join Module
+
+%description join
+Lucene Join Module.
+
+%package memory
+Group: Development/Java
+Summary:      Lucene Memory Module
+
+%description memory
+High-performance single-document index to compare against Query.
+
+%package misc
+Group: Development/Java
+Summary:      Miscellaneous Lucene extensions
+
+%description misc
+Miscellaneous Lucene extensions.
+
 %package queries
 Group: Development/Java
 Summary:      Lucene Queries Module
@@ -98,13 +143,6 @@ Summary:      Lucene QueryParsers Module
 
 %description queryparser
 Lucene QueryParsers Module.
-
-%package analyzers-smartcn
-Group: Development/Java
-Summary:      Smart Chinese Analyzer
-
-%description analyzers-smartcn
-Lucene Smart Chinese Analyzer.
 
 %package sandbox
 Group: Development/Java
@@ -149,40 +187,12 @@ Summary:      Lucene Replicator Module
 %description replicator
 Lucene Replicator Module.
 
-%package grouping
-Group: Development/Java
-Summary:      Lucene Grouping Module
-
-%description grouping
-Lucene Grouping Module.
-
-%package highlighter
-Group: Development/Java
-Summary:      Lucene Highlighter Module
-
-%description highlighter
-Lucene Highlighter Module.
-
-%package misc
-Group: Development/Java
-Summary:      Miscellaneous Lucene extensions
-
-%description misc
-Miscellaneous Lucene extensions.
-
 %package test-framework
 Group: Development/Java
 Summary:      Apache Lucene Java Test Framework
 
 %description test-framework
 Apache Lucene Java Test Framework.
-
-%package memory
-Group: Development/Java
-Summary:      Lucene Memory Module
-
-%description memory
-High-performance single-document index to compare against Query.
 
 %package expressions
 Group: Development/Java
@@ -205,13 +215,6 @@ Summary:      Lucene Classification Module
 
 %description classification
 Lucene Classification Module.
-
-%package join
-Group: Development/Java
-Summary:      Lucene Join Module
-
-%description join
-Lucene Join Module.
 
 %package suggest
 Group: Development/Java
@@ -316,6 +319,7 @@ BuildArch: noarch
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 rm -rf solr
 
@@ -401,11 +405,6 @@ pushd lucene
 %pom_disable_module demo
 %pom_disable_module expressions
 %pom_disable_module facet
-%pom_disable_module grouping
-%pom_disable_module highlighter
-%pom_disable_module join
-%pom_disable_module memory
-%pom_disable_module misc
 %pom_disable_module replicator
 %pom_disable_module spatial
 %pom_disable_module spatial-extras
@@ -418,7 +417,6 @@ pushd lucene
 %pom_disable_module phonetic analysis
 %pom_disable_module stempel analysis
 %pom_disable_module uima analysis
-
 popd
 
 %mvn_package :lucene-parent __noinstall
@@ -437,12 +435,17 @@ popd
 
 %files -f .mfiles-%{name}-core
 %doc CHANGES.txt README.txt MIGRATE.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files analysis -f .mfiles-%{name}-analysis
+%files analyzers-smartcn -f .mfiles-%{name}-analyzers-smartcn
+%files grouping -f .mfiles-%{name}-grouping
+%files highlighter -f .mfiles-%{name}-highlighter
+%files join -f .mfiles-%{name}-join
+%files memory -f .mfiles-%{name}-memory
+%files misc -f .mfiles-%{name}-misc
 %files queries -f .mfiles-%{name}-queries
 %files queryparser -f .mfiles-%{name}-queryparser
-%files analyzers-smartcn -f .mfiles-%{name}-analyzers-smartcn
 %files sandbox -f .mfiles-%{name}-sandbox
 %if %{without jp_minimal}
 %files parent -f .mfiles-%{name}-parent
@@ -450,15 +453,10 @@ popd
 %files benchmark -f .mfiles-%{name}-benchmark
 %files backward-codecs -f .mfiles-%{name}-backward-codecs
 %files replicator -f .mfiles-%{name}-replicator
-%files grouping -f .mfiles-%{name}-grouping
-%files highlighter -f .mfiles-%{name}-highlighter
-%files misc -f .mfiles-%{name}-misc
 %files test-framework -f .mfiles-%{name}-test-framework
-%files memory -f .mfiles-%{name}-memory
 %files expressions -f .mfiles-%{name}-expressions
 %files demo -f .mfiles-%{name}-demo
 %files classification -f .mfiles-%{name}-classification
-%files join -f .mfiles-%{name}-join
 %files suggest -f .mfiles-%{name}-suggest
 %files facet -f .mfiles-%{name}-facet
 %files spatial -f .mfiles-%{name}-spatial
@@ -474,9 +472,12 @@ popd
 %endif
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:6.1.0-alt1_7jpp8
+- java update
+
 * Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 0:6.1.0-alt1_4jpp8
 - new version
 
