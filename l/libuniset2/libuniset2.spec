@@ -18,7 +18,7 @@
 
 Name: libuniset2
 Version: 2.7
-Release: alt6
+Release: alt7
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -312,16 +312,6 @@ Requires: %name-extension-common-devel = %version-%release
 Libraries needed to develop for uniset MQTT extension
 %endif
 
-
-%package extension-smplus
-Group: Development/C++
-Summary: libUniSet2 SharedMemoryPlus extension ('all in one')
-Requires: %name-extension-common = %version-%release
-
-%description extension-smplus
-SharedMemoryPlus extension ('all in one') for libuniset
-
-
 %prep
 %setup
 
@@ -519,6 +509,11 @@ rm -f %buildroot%_libdir/*.la
 # history of current unpublished changes
 
 %changelog
+* Tue May 08 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt7
+- (http): added support "CORS" (Access-Control-Allow-Origin)
+- (logdb): added --logdb-httpserver-reply-addr host:port
+- minor fixes in LogSession
+
 * Tue Apr 03 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt6
 - new minor release
 
