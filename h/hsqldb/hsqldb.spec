@@ -7,11 +7,9 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global pomversion 2.3.0
-
 Name:           hsqldb
-Version:        2.3.4
-Release:        alt1_4jpp8
+Version:        2.4.0
+Release:        alt1_3jpp8
 Epoch:          1
 Summary:        HyperSQL Database Engine
 License:        BSD
@@ -20,11 +18,11 @@ URL:            http://hsqldb.sourceforge.net/
 BuildArch:      noarch
 
 Source0:        http://downloads.sourceforge.net/hsqldb/%{name}-%{version}.zip
-Source1:        %{name}-1.8.0-standard.cfg
-Source2:        %{name}-1.8.0-standard-server.properties
-Source3:        %{name}-1.8.0-standard-webserver.properties
-Source4:        %{name}-1.8.0-standard-sqltool.rc
-Source5:        http://www.hsqldb.org/repos/org/hsqldb/hsqldb/%{pomversion}/hsqldb-%{pomversion}.pom
+Source1:        %{name}.cfg
+Source2:        %{name}-server.properties
+Source3:        %{name}-webserver.properties
+Source4:        %{name}-sqltool.rc
+Source5:        http://www.hsqldb.org/repos/org/hsqldb/hsqldb/%{version}/hsqldb-%{version}.pom
 # Custom systemd files - talking with upstream about incorporating them, see
 # http://sourceforge.net/projects/hsqldb/forums/forum/73673/topic/5367103
 Source6:        %{name}.systemd
@@ -33,9 +31,9 @@ Source8:        %{name}-post
 Source9:        %{name}-stop
 
 # Javadoc fails to create since apidocs folder is deleted and not recreated
-Patch0:         %{name}-apidocs.patch
+Patch0:         0001-Fix-javadoc-build.patch
 # Package org.hsqldb.cmdline was only compiled with java 1.5
-Patch1:         %{name}-cmdline.patch
+Patch1:         0002-Build-cmdline-classes.patch
 
 BuildRequires:  ant
 BuildRequires:  javapackages-local
@@ -99,6 +97,9 @@ Demonstrations and samples for %{name}.
 %prep
 %setup -q -n %{name}-%{version}/%{name}
 
+%patch0 -p1
+%patch1 -p1
+
 # set right permissions
 find . -name "*.sh" -exec chmod 755 \{\} \;
 
@@ -118,9 +119,6 @@ chmod -R go=u-w *
 sed -i -e 's/doc-src/doc/g' build/build.xml
 sed -i -e 's|doc/apidocs|%{_javadocdir}/%{name}|g' index.html
 
-%patch0 -p1
-%patch1 -p1
-
 %build
 pushd build
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
@@ -128,11 +126,10 @@ ant hsqldb javadoc -Dservletapi.lib=$(build-classpath glassfish-servlet-api)
 popd
 
 %install
-# jar
-install -d -m 755 %{buildroot}%{_javadir}
-install -m 644 lib/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
-# bin
-install -d -m 755 %{buildroot}%{_bindir}
+%mvn_file :%{name} %{name}
+%mvn_artifact %{SOURCE5} lib/%{name}.jar
+%mvn_install -J doc/apidocs
+
 # systemd
 install -d -m 755 %{buildroot}%{_unitdir}
 install -d -m 755 %{buildroot}%{_prefix}/lib/%{name}
@@ -150,18 +147,11 @@ install -m 644 %{SOURCE3} %{buildroot}%{_localstatedir}/lib/%{name}/webserver.pr
 install -m 600 %{SOURCE4} %{buildroot}%{_localstatedir}/lib/%{name}/sqltool.rc
 # lib
 install -d -m 755 %{buildroot}%{_localstatedir}/lib/%{name}/lib
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}
-mv doc/apidocs %{buildroot}%{_javadocdir}/%{name}
 # data
 install -d -m 755 %{buildroot}%{_localstatedir}/lib/%{name}/data
 # manual
 install -d -m 755 %{buildroot}%{_docdir}/%{name}
 cp -r doc index.html %{buildroot}%{_docdir}/%{name}
-
-# Maven metadata
-install -pD -T -m 644 %{SOURCE5} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
 
 pushd %{buildroot}%{_localstatedir}/lib/%{name}/lib
     # build-classpath can not be used as the jar is not
@@ -212,6 +202,9 @@ install -m 755 %{SOURCE45} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %files demo
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt1_3jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.3.4-alt1_4jpp8
 - fc27 update
 
