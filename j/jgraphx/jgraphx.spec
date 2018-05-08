@@ -12,14 +12,14 @@ BuildRequires: jpackage-generic-compat
 %{?scl:%scl_package jgraphx}
 %{!?scl:%global pkg_name %{name}}
 
-%if 0%{?rhel}
+%if 0%{?rhel} && 0%{?rhel} <= 7
 # Use java common's requires/provides generator
 %{?java_common_find_provides_and_requires}
 %endif
 
 Name:           %{?scl_prefix}jgraphx
 Version:        3.6.0.0
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Java Graph Drawing Component
 
 Group:          Development/Other
@@ -67,7 +67,7 @@ ant build maven-jar
 
 #Convert to OSGi bundle
 pushd lib
-%if 0%{?fedora} >= 23
+%if 0%{?fedora} >= 23 || 0%{?rhel} > 7
   bnd wrap --output %{pkg_name}.bar --properties %{SOURCE1} \
            --version %{version} %{pkg_name}.jar
 %else
@@ -85,20 +85,23 @@ popd
 
 %files -f .mfiles
 %dir %{_javadir}/%{pkg_name}
-%if 0%{?rhel} <= 6
+%if 0%{?rhel} <= 6 || 0%{?rhel} > 7
   %doc license.txt
 %else
-  %doc license.txt
+  %doc --no-dereference license.txt
 %endif
 
 %files javadoc -f .mfiles-javadoc
-%if 0%{?rhel} <= 6
+%if 0%{?rhel} <= 6 || 0%{?rhel} > 7
   %doc license.txt
 %else
-  %doc license.txt
+  %doc --no-dereference license.txt
 %endif
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3.6.0.0-alt1_5jpp8
+- java update
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 3.6.0.0-alt1_3jpp8
 - new version
 
