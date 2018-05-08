@@ -10,7 +10,7 @@
 
 Name: p11-kit
 Version: 0.23.9
-Release: alt4
+Release: alt5
 
 Summary: Utilities for PKCS#11 modules
 Group: Security/Networking
@@ -143,7 +143,7 @@ install -p -m755 %SOURCE1 %buildroot/%_libexecdir/%name/
 # alternatives
 mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/libnssckbi-%name <<EOF
-%_libdir/libnssckbi.so	%_libdir/pkcs11/p11-kit-trust.so 30
+%_libdir/libnssckbi.so	%_libdir/pkcs11/p11-kit-trust.so	30
 EOF
 
 %check
@@ -229,6 +229,9 @@ rm -r -- "$TEST_DIR"
 %files checkinstall
 
 %changelog
+* Tue May 08 2018 Mikhail Efremov <sem@altlinux.org> 0.23.9-alt5
+- Fix alternatives file.
+
 * Wed Apr 04 2018 Michael Shigorin <mike@altlinux.org> 0.23.9-alt4
 - Fix doc knob.
 
