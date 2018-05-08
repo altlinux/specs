@@ -39,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xmlunit
 Version:        1.6
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Epoch:          0
 Summary:        Provides classes to do asserts on xml
 License:        BSD
@@ -114,6 +114,9 @@ ant
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_6jpp8
 - fc27 update
 
