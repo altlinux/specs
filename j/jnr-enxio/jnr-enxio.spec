@@ -8,13 +8,17 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jnr-enxio
 Version:        0.16
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Unix sockets for Java
 # src/main/java/jnr/enxio/channels/PollSelectionKey.java is LGPLv3
 # rest of the source code is ASL 2.0
 License:        ASL 2.0 and LGPLv3
 URL:            https://github.com/jnr/%{name}/
 Source0:        https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
+
+# Avoid split-package situation, this patch submitted upstream here: https://github.com/jnr/jnr-enxio/pull/26
+Patch0: add-abstract-impls-from-unixsocket.patch
+
 BuildArch:      noarch
 
 BuildRequires:  maven-local
@@ -39,6 +43,7 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+%patch0 -p1
 
 find ./ -name '*.jar' -delete
 find ./ -name '*.class' -delete
@@ -53,12 +58,15 @@ find ./ -name '*.class' -delete
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_3jpp8
+- java update
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_2jpp8
 - new version
 
