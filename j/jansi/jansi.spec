@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             jansi
 Version:          1.16
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          Jansi is a java library for generating and interpreting ANSI escape sequences
 License:          ASL 2.0
 URL:              http://jansi.fusesource.org/
@@ -72,13 +72,16 @@ popd
 %mvn_install
 
 %files -f .mfiles
-%doc license.txt
+%doc --no-dereference license.txt
 %doc readme.md changelog.md
 
 %files javadoc -f .mfiles-javadoc
-%doc license.txt
+%doc --no-dereference license.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.16-alt1_3jpp8
+- java update
+
 * Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.16-alt1_2jpp8
 - new version
 
