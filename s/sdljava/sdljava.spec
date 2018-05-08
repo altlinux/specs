@@ -1,7 +1,6 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: ruby-stdlibs zlib-devel
 BuildRequires: bsh
@@ -18,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sdljava
 Version:        0.9.1
-Release:        alt2_38jpp8
+Release:        alt2_40jpp8
 Summary:        Java binding to the SDL API
 License:        LGPLv2+
 URL:            http://sdljava.sourceforge.net/
@@ -30,6 +29,7 @@ Patch0:         sdljava-0.9.1-regen.patch
 Patch1:         sdljava-0.9.1-ftgl213.patch
 Patch2:         sdljava-0.9.1-ruby19.patch
 
+BuildRequires:  gcc-c++
 BuildRequires:  libftgl-devel
 BuildRequires:  libGLEW-devel
 BuildRequires:  libSDL-devel
@@ -41,7 +41,7 @@ BuildRequires:  libSDL_ttf-devel
 BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  swig
-BuildRequires:  bsh-utils
+BuildRequires:  bsh
 BuildRequires:  jdom
 BuildRequires:  xml-commons-apis
 
@@ -49,7 +49,8 @@ BuildRequires:  jruby
 BuildRequires:  %{_bindir}/ruby
 
 Requires:       java
-Requires:       bsh-utils
+Requires:       javapackages-tools
+Requires:       bsh
 Requires:       jdom
 Source44: import.info
 
@@ -231,6 +232,9 @@ ln -s ../../fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf \
 
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_40jpp8
+- java update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_38jpp8
 - new jpp release
 
