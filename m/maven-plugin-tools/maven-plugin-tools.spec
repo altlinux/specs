@@ -8,8 +8,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-plugin-tools
-Version:        3.5
-Release:        alt1_4jpp8
+Version:        3.5.1
+Release:        alt1_1jpp8
 Epoch:          0
 Summary:        Maven Plugin Tools
 License:        ASL 2.0
@@ -288,6 +288,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.5.1-alt1_1jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.5-alt1_4jpp8
 - fc27 update
 
