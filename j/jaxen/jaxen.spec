@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Name:           jaxen
 Epoch:          0
 Version:        1.1.6
-Release:        alt1_12jpp8
+Release:        alt1_14jpp8
 Summary:        An XPath engine written in Java
 License:        BSD
 URL:            http://jaxen.codehaus.org/
@@ -79,6 +79,9 @@ cp -pr src/java/samples/* %{buildroot}%{_datadir}/%{name}/samples
 %{_datadir}/%{name}
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.1.6-alt1_14jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.6-alt1_12jpp8
 - fc27 update
 
