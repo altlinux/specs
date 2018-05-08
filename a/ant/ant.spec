@@ -52,7 +52,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           ant
 Version:        1.10.1
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Epoch:          0
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
@@ -562,7 +562,7 @@ sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 
 %files
 %doc KEYS README WHATSNEW
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 %config(noreplace) %{_sysconfdir}/%{name}.conf
 %attr(0755,root,root) %{_bindir}/ant
 %attr(0755,root,root) %{_bindir}/antRun
@@ -675,18 +675,21 @@ sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 %config(noreplace) %{_sysconfdir}/%{name}.d/xz
 
 %files manual
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 %doc --no-dereference manual/*
 
 %if %with javadoc
 %files javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 %{_javadocdir}/%{name}
 %endif
 
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.10.1-alt1_9jpp8
+- java update
+
 * Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.10.1-alt1_8jpp8
 - fc update
 
