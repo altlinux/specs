@@ -21,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          log4j12
 Version:       1.2.17
-Release:       alt1_20jpp8
+Release:       alt1_21jpp8
 Summary:       Java logging package
 License:       ASL 2.0
 URL:           http://logging.apache.org/log4j/1.2/
@@ -46,7 +46,6 @@ BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
 BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires: mvn(oro:oro)
-BuildRequires: xmvn
 
 Obsoletes:     log4j <= 0:1.2.17-14
 Source44: import.info
@@ -192,12 +191,15 @@ fi
 %if %{with dtd}
 %{_datadir}/sgml/log4j
 %endif
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.17-alt1_21jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.17-alt1_20jpp8
 - fc27 update
 
