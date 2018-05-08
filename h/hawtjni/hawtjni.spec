@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             hawtjni
 Version:          1.15
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          Code generator that produces the JNI code
 License:          ASL 2.0 and EPL and BSD
 URL:              http://hawtjni.fusesource.org/
@@ -107,6 +107,9 @@ popd
 %files -n maven-hawtjni-plugin -f .mfiles-maven-plugin
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_3jpp8
+- java update
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_2jpp8
 - new version
 
