@@ -1,6 +1,5 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -9,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           xmlgraphics-commons
 Version:        2.0.1
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Epoch:          0
 Summary:        XML Graphics Commons
 
@@ -25,9 +24,7 @@ BuildRequires:  ant-junit >= 0:1.6
 BuildRequires:  junit
 BuildRequires:  apache-commons-io >= 1.3.1
 BuildRequires:  apache-commons-logging >= 1.0.4
-Requires:       java
-Requires:       apache-commons-io >= 1.3.1
-Requires:       apache-commons-logging >= 1.0.4
+BuildRequires:  apache-parent
 Source44: import.info
 
 %description
@@ -66,23 +63,23 @@ popd
 ant package javadocs
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -Dpm 0644 build/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -pm 644 %{name}.pom $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
+%mvn_file : %{name}
+%mvn_artifact %{name}.pom build/%{name}-%{version}.jar
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install -J build/javadocs
 
 %files -f .mfiles
-%doc LICENSE NOTICE README
+%doc --no-dereference LICENSE NOTICE
+%doc README
 
-%files javadoc
-%doc LICENSE NOTICE
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc --no-dereference LICENSE NOTICE
 
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt1_4jpp8
 - fc27 update
 
