@@ -5,11 +5,11 @@
 
 Name: doc-gnu-%LANG
 Version: 1.0
-Release: alt2.qa4
+Release: alt3
 
 Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 
-Summary: Manuals and other non-technical ducuments in %longLANG from GNU Project
+Summary: Manuals and other non-technical documents in %longLANG from GNU Project
 Group: Books/Computer books
 
 Source0: %name-philosophy.tar.bz2
@@ -140,6 +140,9 @@ EOF
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Tue May 08 2018 Grigory Ustinov <grenka@altlinux.org> 1.0-alt3
+- NMU: fix summary (Closes: #22172).
+
 * Sun Apr 10 2011 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2.qa4
 - NMU: second cleanup of .desktop files
 
