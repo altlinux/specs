@@ -1,20 +1,20 @@
-%def_disable docs
+%define rname gegl
+%define api_ver 0.4
 
-Name: libgegl
-Version: 0.2.0
-Release: alt5
+Name: lib%rname
+Version: %api_ver.0
+Release: alt1
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
 Group: System/Libraries
 Url: http://www.gimp.org
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: gegl-%version.tar
-Patch: gegl-%version-%release.patch
+Source: %rname-%version.tar
 
-BuildRequires: asciidoc gcc-c++ graphviz glib2-devel gtk-doc intltool libSDL-devel libavformat-devel libbabl-devel libjpeg-devel libopenraw-devel
-BuildRequires: librsvg-devel libspiro-devel openexr-devel python-modules-encodings ruby w3m liblua5-devel libgtk+2-devel enscript
-BuildRequires: libexiv2-devel libjasper-devel libpng-devel liblensfun-devel
+BuildRequires: asciidoc enscript gcc-c++ graphviz gtk-doc libSDL-devel libavformat-devel libbabl-devel libexiv2-devel
+BuildRequires: libgexiv2-devel libgomp-devel libgtk+3-devel libjasper-devel libjpeg-devel libjson-glib-devel
+BuildRequires: libpoly2tri-c-devel libraw-devel librsvg-devel libspiro-devel libsuitesparse-devel libswscale-devel
+BuildRequires: libtiff-devel libv4l-devel libwebp-devel openexr-devel ruby vala-tools gobject-introspection-devel w3m
 
 %description
 GEGL (Generic Graphics Library) is a graph based image processing framework.
@@ -31,37 +31,71 @@ Requires: %name = %version-%release
 This package contains the libraries and header files needed for
 developing with %name.
 
+%package gir
+Summary: GObject introspection data for the GEGL
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description gir
+GObject introspection data for the GEGL library.
+
+%package gir-devel
+Summary: GObject introspection devel data for the GEGL
+Group: Development/Other
+BuildArch: noarch
+Requires: %name-devel = %version-%release
+Requires: %name-gir = %version-%release
+
+%description gir-devel
+GObject introspection devel data for the GEGL library.
+
+
 %prep
-%setup -q -n gegl-%version
-%patch -p1
+%setup -n %rname-%version
 
 %build
 %autoreconf
 %configure \
-	%{subst_enable docs} \
-	--disable-static
+	--with-libavformat \
+	--disable-static \
+	--disable-docs \
+	--disable-gtk-doc
 %make_build
 
 %install
 %make DESTDIR=%buildroot install
 
-%find_lang gegl-0.2
+%find_lang %rname-%api_ver
 
-%files -f gegl-0.2.lang
-%_bindir/gegl
-%_libdir/*.so.*
-%dir %_libdir/gegl-0.2
-%_libdir/gegl-0.2/*.so
+%files -f %rname-%api_ver.lang
+%_bindir/%rname
+#_bindir/%rname-imgcmp
+#_bindir/gcut
+%_libdir/%name-%api_ver.so.*
+%_libdir/%name-sc-%api_ver.so
+%_libdir/%name-npd-%api_ver.so
+%dir %_libdir/%rname-%api_ver
+%_libdir/%rname-%api_ver/*.so
+%_libdir/%rname-%api_ver/grey2.json
 
 %files devel
-%_includedir/gegl-0.2
-%_libdir/*.so
-%_pkgconfigdir/*.pc
-%if_enabled docs
-%_datadir/gtk-doc/html/gegl
-%endif
+%_includedir/%rname-%api_ver
+%_libdir/%name-%api_ver.so
+%_pkgconfigdir/%rname-%api_ver.pc
+%_pkgconfigdir/%rname-sc-%api_ver.pc
+%_vapidir/%rname-%api_ver.deps
+%_vapidir/%rname-%api_ver.vapi
+
+%files gir
+%_typelibdir/Gegl-%api_ver.typelib
+
+%files gir-devel
+%_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Tue May 08 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.0-alt1
+- 0.4.0
+
 * Mon Jun 05 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.2.0-alt5
 - rebuild with ffmpeg 3.3.1
 

@@ -1,8 +1,9 @@
-%define ver_major 2.8
+%define ver_major 2.10
 %define oldver 2.0
+%define _libexecdir %_prefix/libexec
 
 Name: gimp
-Version: %ver_major.22
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNU Image Manipulation Program
@@ -15,17 +16,17 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Obsoletes: gimp2 < %version-%release
 Provides: gimp2 = %version-%release
 Conflicts: gimp2-perl create-resources <= 0.1.3-alt1
-Requires: lib%name = %version-%release libgegl >= 0.2.0
-Requires: icc-profiles
+Requires: lib%name = %version-%release
+Requires: icc-profiles mypaint-brushes
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: bzlib-devel gcc-c++ gtk-doc iso-codes-devel intltool libXmu-devel libXpm-devel libalsa-devel libart_lgpl-devel
-BuildRequires: libexif-devel libexpat-devel libfreetype-devel libgtkhtml2-devel libjpeg-devel liblcms2-devel libmng-devel
-BuildRequires: libpng-devel librsvg-devel libtiff-devel libwmf-devel perl-XML-Parser xml-utils xsltproc libpoppler-glib-devel
-BuildRequires: libcurl-devel libdbus-glib-devel gvfs-devel libXext-devel python-dev python-module-pygtk-devel libgio-devel
-BuildRequires: libwebkitgtk2-devel libbabl-devel libgegl-devel libjasper-devel libgudev-devel libXcursor-devel libgs-devel
+BuildRequires: bzlib-devel gcc-c++ gtk-doc gvfs intltool libXcursor-devel libXmu-devel libXpm-devel libalsa-devel libexpat-devel
+BuildRequires: libgegl-devel libgexiv2-devel libgs-devel libgudev-devel liblcms2-devel liblzma-devel libmng-devel libmypaint-devel
+BuildRequires: libopenjpeg2.0-devel libpoppler-glib-devel librsvg-devel libtiff-devel libwebkitgtk2-devel libwebp-devel libwmf-devel
+BuildRequires: openexr-devel python-module-pycairo-devel python-module-pygtk-devel xdg-utils pkgconfig(mypaint-brushes-1.0)
+BuildRequires: libpng-devel iso-codes-devel
 
 %description
 The GIMP (GNU Image Manipulation Program) is a powerful image
@@ -64,14 +65,15 @@ Development libraries and header files for writing GIMP plugins and extensions.
 %setup -q
 %patch -p1
 
+sed -i 's|gegl-0.3|gegl-0.4|' gimp.pc.in
+
 %build
 gtkdocize
 %autoreconf
 %configure \
-	--with-gimpdir=".config/%name-%ver_major" \
+	--with-gimpdir=%name \
 	--enable-gtk-doc \
 	--disable-gimp-console \
-	--with-poppler \
 	--enable-python
 
 %make_build
@@ -91,15 +93,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %config %_sysconfdir/%name/%oldver/*
 %_bindir/%name
 %_bindir/%name-*
-%dir %_libdir/%name
-%dir %_libdir/%name/%oldver
-%_libdir/%name/%oldver/modules
-%_libdir/%name/%oldver/plug-ins
-%_libdir/%name/%oldver/environ
-%_libdir/%name/%oldver/interpreters
-%_libdir/%name/%oldver/python
+%_libdir/%name
 %_datadir/%name
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/*.xml
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/%name.desktop
 %_man1dir/*
@@ -112,11 +108,15 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/gtk-doc/html/*
 %_includedir/*
 %_bindir/gimptool*
+%_libexecdir/gimp-debug-tool-2.0
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_datadir/aclocal/*
 
 %changelog
+* Tue May 08 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.10.0-alt1
+- 2.10.0
+
 * Mon May 29 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.8.22-alt1
 - 2.8.22
 
