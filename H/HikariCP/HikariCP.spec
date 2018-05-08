@@ -1,16 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          HikariCP
 # Latest release use hibernate-core >= 5.0.9.Final and javassist >= 3.20.0-GA
-Version:       2.4.0
-Release:       alt2_2jpp8
+Version:       2.4.3
+Release:       alt1_1jpp8
 Summary:       JDBC Connection Pool
 # Source files without license headers https://github.com/brettwooldridge/HikariCP/issues/665
 License:       ASL 2.0
@@ -18,17 +17,17 @@ URL:           http://brettwooldridge.github.io/HikariCP/
 Source0:       https://github.com/brettwooldridge/HikariCP/archive/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
-%if %{?fedora} < 24
-BuildRequires: mvn(com.codahale.metrics:metrics-core)
-BuildRequires: mvn(com.codahale.metrics:metrics-healthchecks)
-%else
+BuildRequires: mvn(com.sun:tools)
 BuildRequires: mvn(io.dropwizard.metrics:metrics-core)
 BuildRequires: mvn(io.dropwizard.metrics:metrics-healthchecks)
-%endif
 BuildRequires: mvn(javax.inject:javax.inject)
 BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.commons:commons-csv)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.felix:org.apache.felix.framework)
+BuildRequires: mvn(org.apache.logging.log4j:log4j-slf4j-impl)
+BuildRequires: mvn(org.apache.logging.log4j:log4j-api)
+BuildRequires: mvn(org.apache.logging.log4j:log4j-core)
 BuildRequires: mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires: mvn(org.hibernate:hibernate-core)
 BuildRequires: mvn(org.javassist:javassist)
@@ -61,10 +60,6 @@ This package contains javadoc for %{name}.
 %pom_remove_plugin :maven-source-plugin
 %pom_xpath_remove "pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:executions"
 
-%if %{?fedora} < 24
-%pom_change_dep -r io.dropwizard.metrics: com.codahale.metrics:
-%endif
-
 # org.ops4j.pax.exam:pax-exam-container-native:4.5.0
 # org.ops4j.pax.exam:pax-exam-junit4:4.5.0
 # org.ops4j.pax.exam:pax-exam-link-mvn:4.5.0
@@ -82,19 +77,22 @@ rm -r src/test/java/com/zaxxer/hikari/osgi
 
 %build
 
-%mvn_build -- -Dmaven.test.skip.exec=true
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
 %doc CHANGES  README.md TODO.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2.4.3-alt1_1jpp8
+- java update
+
 * Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt2_2jpp8
 - fixed build
 
