@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           hamcrest
 Version:        1.3
-Release:        alt3_22jpp8
+Release:        alt3_23jpp8
 Epoch:          0
 Summary:        Library of matchers for building test expressions
 License:        BSD
@@ -166,15 +166,18 @@ cp -pr %{name}-examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
 %files -f .mfiles
 
 %files core -f .mfiles-core
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files demo
 %{_datadir}/%{name}
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_23jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_22jpp8
 - fc27 update
 
