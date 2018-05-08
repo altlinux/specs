@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jzlib
 Version:        1.1.3
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Epoch:          0
 Summary:        Re-implementation of zlib in pure Java
 License:        BSD
@@ -20,6 +20,7 @@ Source0:        https://github.com/ymnk/jzlib/archive/%{version}.tar.gz
 Patch0:         jzlib-javadoc-fixes.patch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 Source44: import.info
 
 %description
@@ -49,6 +50,10 @@ Requires:       %{name} = %{epoch}:%{version}-%{release}
 %setup -q
 %patch0
 
+# Make into OSGi bundle
+%pom_xpath_inject "pom:project" "<packaging>bundle</packaging>"
+%pom_add_plugin "org.apache.felix:maven-bundle-plugin" . "<extensions>true</extensions>"
+
 %mvn_file : %{name}
 
 %build
@@ -71,6 +76,9 @@ cp -pr example/* %{buildroot}%{_datadir}/%{name}
 %doc %{_datadir}/%{name}
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_6jpp8
 - fc27 update
 
