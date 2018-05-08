@@ -4,18 +4,15 @@
 
 Name: python-module-%oname
 Version: 1.1.7
-Release: alt1.1.1.1
+Release: alt2
 Summary: Python Software for Convex Optimization
 License: GPL v3 or higher/GPL v2 of higher
 Group: Development/Python
 Url: http://cvxopt.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 %setup_python_module %oname
 # disable requirements on commertial software
 %add_python_req_skip mosekarr pymosek mosek
-
-Patch100: python-module-cvxopt-1.1.5-alt3-armh.patch
 
 BuildRequires(pre): rpm-build-python
 #BuildPreReq: python-devel liblapack-devel libgsl-devel
@@ -26,7 +23,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: elfutils fontconfig libopenblas-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python3 python3-base t1lib tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended
-BuildRequires: dvipng libdsdp-devel libfftw3-devel libglpk-devel libgsl-devel liblapack-devel python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-devel rpm-build-python3 time
+BuildRequires: dvipng libfftw3-devel libglpk-devel libgsl-devel liblapack-devel python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-devel rpm-build-python3 time
 
 #BuildRequires: python3-devel
 %endif
@@ -112,9 +109,7 @@ This package contains pickles for CVXOPT.
 
 %prep
 %setup
-%ifarch %arm
-%patch100 -p2
-%endif
+sed -i 's,^BUILD_DSDP.\+$,BUILD_DSDP = 0,' setup.py
 
 %if_with python3
 rm -rf ../python3
@@ -124,7 +119,7 @@ cp -a . ../python3
 %prepare_sphinx doc/source
 
 %build
-%ifarch x86_64
+%if "%_lib" == "lib64"
 sed -i 's|@64@|64|g' setup.py
 %else
 sed -i 's|@64@||g' setup.py
@@ -134,7 +129,7 @@ sed -i 's|@64@||g' setup.py
 
 %if_with python3
 pushd ../python3
-%ifarch x86_64
+%if "%_lib" == "lib64"
 sed -i 's|@64@|64|g' setup.py
 %else
 sed -i 's|@64@||g' setup.py
@@ -185,6 +180,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue May 08 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.7-alt2
+- fixed packaging on 64bit arches other than x86_64
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.7-alt1.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
