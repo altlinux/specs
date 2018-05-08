@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Name:           avalon-logkit
 Epoch:          0
 Version:        2.1
-Release:        alt2_28jpp8
+Release:        alt2_29jpp8
 Summary:        Java logging toolkit
 License:        ASL 2.0
 URL:            http://avalon.apache.org/
@@ -83,12 +83,15 @@ rm -rf src/java/org/apache/log/output/lf5
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_29jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_28jpp8
 - fc27 update
 
