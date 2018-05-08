@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-plugin-testing
 Version:        3.3.0
-Release:        alt1_10jpp8
+Release:        alt1_12jpp8
 Summary:        Maven Plugin Testing
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugin-testing/
@@ -104,6 +104,9 @@ rm maven-plugin-testing-tools/src/test/java/org/apache/maven/shared/test/plugin/
 %doc LICENSE NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_12jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_10jpp8
 - fc27 update
 
