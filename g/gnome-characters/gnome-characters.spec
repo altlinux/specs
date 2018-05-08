@@ -6,7 +6,7 @@
 %def_without included_libunistring
 
 Name: gnome-characters
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Character map application for GNOME
@@ -79,6 +79,9 @@ characters.
 
 
 %changelog
+* Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
+- 3.28.2
+
 * Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

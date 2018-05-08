@@ -19,7 +19,7 @@
 %def_disable gigacage
 
 Name: libwebkitgtk4
-Version: 2.20.1
+Version: 2.20.2
 Release: alt1
 
 Summary: Web browser engine
@@ -310,6 +310,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 2.20.2-alt1
+- 2.20.2 (fixed CVE-2018-4200)
+
 * Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 2.20.1-alt1
 - 2.20.1
 
