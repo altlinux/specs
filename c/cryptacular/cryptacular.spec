@@ -1,7 +1,6 @@
-BuildRequires: maven-assembly-plugin
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          cryptacular
 Version:       1.1.0
-Release:       alt2_2jpp8
+Release:       alt2_5jpp8
 Summary:       Java Library that complement to the Bouncy Castle crypto API
 # See https://github.com/vt-middleware/cryptacular/issues/25
 License:       ASL 2.0 or LGPLv3
@@ -18,6 +17,7 @@ Source0:       https://github.com/vt-middleware/cryptacular/archive/v%{version}.
 
 BuildRequires: maven-local
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
 BuildRequires: mvn(org.bouncycastle:bcprov-jdk15on)
 BuildRequires: mvn(org.testng:testng)
@@ -60,12 +60,15 @@ This package contains javadoc for %{name}.
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE LICENSE-apache2 LICENSE-lgpl NOTICE
+%doc --no-dereference LICENSE LICENSE-apache2 LICENSE-lgpl NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE LICENSE-apache2 LICENSE-lgpl NOTICE
+%doc --no-dereference LICENSE LICENSE-apache2 LICENSE-lgpl NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_5jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_2jpp8
 - added BR: maven-assembly-plugin for javapackages 5
 
