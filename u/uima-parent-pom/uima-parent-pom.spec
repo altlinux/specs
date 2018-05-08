@@ -1,7 +1,6 @@
-BuildRequires: apache-parent
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          uima-parent-pom
 Version:       10
-Release:       alt2_3jpp8
+Release:       alt2_6jpp8
 Summary:       Apache UIMA Parent POM
 License:       ASL 2.0
 URL:           http://uima.apache.org/
@@ -17,6 +16,7 @@ Source0:       https://github.com/apache/uima-build/archive/parent-pom-%{version
 # uima-parent-pom package don't include the license file
 # reported @ https://issues.apache.org/jira/browse/UIMA-3575
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
+Patch0:        apache-parent-pom-18.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(ant-contrib:ant-contrib)
@@ -26,6 +26,7 @@ BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires: mvn(org.apache:apache:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -42,6 +43,7 @@ This package provides Parent for Apache UIMA Projects.
 
 %prep
 %setup -q -n uima-build-parent-pom-%{version}
+%patch0 -p1
 
 %pom_xpath_remove pom:Embed-Dependency
 %pom_xpath_remove pom:Embed-Directory
@@ -76,9 +78,12 @@ sed -i 's/\r//' LICENSE-2.0.txt README.txt
 
 %files -f .mfiles
 %doc README.txt
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 10-alt2_6jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 10-alt2_3jpp8
 - added BR: apache-parent for javapackages 5
 
