@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xml-security
 Version:        2.0.6
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Epoch:          0
 Summary:        Implementation of W3C security standards for XML
 License:        ASL 2.0
@@ -136,16 +136,19 @@ install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
 cp -pr samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files demo
 %{_datadir}/%{name}
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.6-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.6-alt1_4jpp8
 - fc27 update
 
