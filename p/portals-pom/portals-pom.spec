@@ -1,7 +1,6 @@
-BuildRequires: apache-parent
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          portals-pom
 Version:       1.3
-Release:       alt3_14jpp8
+Release:       alt3_17jpp8
 Summary:       Apache Portals parent pom
 License:       ASL 2.0
 Url:           http://portals.apache.org/
@@ -18,6 +17,7 @@ Url:           http://portals.apache.org/
 Source0:       %{name}-%{version}-src-svn.tar.gz
 BuildRequires: maven-local
 BuildRequires: maven-install-plugin
+BuildRequires: maven-plugins-pom
 BuildArch:     noarch
 Source44: import.info
 
@@ -48,9 +48,12 @@ done
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.3-alt3_17jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt3_14jpp8
 - added BR: apache-parent for javapackages 5
 
