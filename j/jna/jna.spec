@@ -8,8 +8,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jna
-Version:        4.5.0
-Release:        alt1_1jpp8
+Version:        4.5.1
+Release:        alt1_3jpp8
 Summary:        Pure Java access to native libraries
 # Most of code is dual-licensed under either LGPL 2.1 only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
@@ -34,11 +34,13 @@ Patch3:         0004-Fix-javadoc-build.patch
 # Avoid generating duplicate manifest entry
 # See https://bugzilla.redhat.com/show_bug.cgi?id=1469022
 Patch4:         0005-Fix-duplicate-manifest-entry.patch
+# We don't want newly added warnings to break our build
+Patch5:         0006-Remove-Werror.patch
 
 # We manually require libffi because find-requires doesn't work
 # inside jars.
 Requires:       libffi6
-BuildRequires:  gcc-common
+BuildRequires:  gcc
 BuildRequires:  javapackages-local
 BuildRequires:  libffi-devel
 BuildRequires:  ant
@@ -84,6 +86,7 @@ cp %{SOURCE1} .
 %patch2 -p1 -b .tests-headless
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 chmod -Rf a+rX,u+w,g-w,o-w .
 sed -i 's|@LIBDIR@|%{_libdir}/%{name}|' src/com/sun/jna/Native.java
@@ -127,16 +130,19 @@ install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
 %files -f .mfiles
 %doc OTHERS README.md CHANGES.md TODO
-%doc LICENSE LGPL2.1 AL2.0
+%doc --no-dereference LICENSE LGPL2.1 AL2.0
 %{_libdir}/%{name}
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE LGPL2.1 AL2.0
+%doc --no-dereference LICENSE LGPL2.1 AL2.0
 
 %files contrib -f .mfiles-contrib
 
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt1_3jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 4.5.0-alt1_1jpp8
 - new version
 
