@@ -1,24 +1,36 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: /usr/bin/desktop-file-install unzip
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global         gituser         syvaidya
+%global         gitname         openstego
+# Release 0.7.2 - 2017-12-17
+%global         commit          321eb6f0b374fcbfbfb50c1ba74d049a809e7ed2
+%global         shortcommit     %(c=%{commit}; echo ${c:0:7})
+
 Name:           OpenStego
-Version:        0.5.2
-Release:        alt2_14jpp8
+Version:        0.7.2
+Release:        alt1_1jpp8
 Summary:        Free Steganography solution
 Summary(fr):    Solution libre pour la steganographie
 
 License:        GPLv2
+#               https://github.com/syvaidya/openstego/releases 
 URL:            http://openstego.sourceforge.net/index.html
-Source0:        http://downloads.sourceforge.net/project/openstego/openstego/openstego-%{version}/openstego-src-%{version}.zip
+# Source0:      http://downloads.sourceforge.net/project/openstego/openstego/openstego-%{version}/openstego-src-%{version}.zip
+Source0:        https://github.com/%{gituser}/%{gitname}/archive/%{gitname}-%{version}.tar.gz
 Source1:        openstego.desktop
+# Patch the ant build script to build only the binary package out of java sources
+Patch0:         %{name}-antbuild.patch
 
 BuildArch:      noarch
 
+BuildRequires:  java-devel
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
 BuildRequires:  desktop-file-utils
@@ -52,7 +64,8 @@ Documentation javadoc générée pour Openstego
 
 
 %prep
-%setup -q -n openstego-src-%{version}
+%setup -q -n %{gitname}-%{gitname}-%{version}
+%patch0 -p 1 -b .antbuild
 find . -name *.class -delete
 find . -name *.jar -delete
 # Delete file for Windows :
@@ -70,14 +83,14 @@ mkdir -p %{buildroot}%{_javadocdir}/openstego
 cp -p ./lib/openstego.jar %{buildroot}%{_javadir}/openstego.jar
 cp -p ./src/image/ImagesVectorSource.svg %{buildroot}%{_datadir}/pixmaps/openstego.svg
 cp -pr ./doc/api/* %{buildroot}%{_javadocdir}/openstego
-%jpackage_script net.sourceforge.openstego.OpenStego "" "" openstego.jar openstego true
+%jpackage_script com.openstego.desktop.OpenStego "" "" openstego.jar openstego true
 # Install openstego.desktop :
 desktop-file-install                       \
 --dir=%{buildroot}%{_datadir}/applications \
 %{SOURCE1}
 
-mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/OpenStego.conf`
-touch $RPM_BUILD_ROOT/etc/java/OpenStego.conf
+mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%name.conf`
+touch $RPM_BUILD_ROOT/etc/java/%name.conf
 
 
 %files
@@ -86,7 +99,7 @@ touch $RPM_BUILD_ROOT/etc/java/OpenStego.conf
 %{_javadir}/openstego.jar
 %{_datadir}/pixmaps/openstego.svg
 %{_datadir}/applications/openstego.desktop
-%config(noreplace,missingok) /etc/java/OpenStego.conf
+%config(noreplace,missingok) /etc/java/%name.conf
 
 %files javadoc
 %doc LICENSE
@@ -94,6 +107,9 @@ touch $RPM_BUILD_ROOT/etc/java/OpenStego.conf
 
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt1_1jpp8
+- java update
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt2_14jpp8
 - new version
 
