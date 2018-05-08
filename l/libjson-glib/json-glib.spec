@@ -8,7 +8,7 @@
 
 Name: lib%_name
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: GLib-based JSON manipulation library
 Group: System/Libraries
@@ -116,6 +116,9 @@ the functionality of the installed %_name library.
 %_datadir/installed-tests/%_name-%api_ver/
 
 %changelog
+* Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1.1
+- rebuilt for e2kv4
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
 - 1.4.2
 

@@ -4,7 +4,7 @@
 
 Name: gtkspell3
 Version: 3.0.9
-Release: alt1
+Release: alt1.1
 
 Summary: On-the-fly spell checking for GtkTextView widgets, GTK+3 version
 License: GPLv2+
@@ -129,6 +129,9 @@ sed -i 's,GTK_SPELL_CFLAGS,GTK_SPELL3_CFLAGS,' \
 %endif
 
 %changelog
+* Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.9-alt1.1
+- rebuilt for e2kv4
+
 * Thu Jan 05 2017 Vitaly Lipatov <lav@altlinux.ru> 3.0.9-alt1
 - 3.0.9 (ALT bug #32524)
 - fix doc subpackage name

@@ -10,7 +10,7 @@
 
 Name: abiword
 Version: %ver_major.2
-Release: alt3
+Release: alt3.1
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -192,6 +192,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python_sitelibdir/gi/overrides/*
 
 %changelog
+* Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt3.1
+- rebuilt for e2kv4
+
 * Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt3
 - rebuilt against libical.so.3
 
