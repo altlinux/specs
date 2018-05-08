@@ -1,8 +1,8 @@
 Name: installer-feature-tune-logindefs
 Version: 0.2
-Release: alt1
+Release: alt1.1
 
-Summary: Set UID_MIN and GID_MIN to 10000
+Summary: Set UID_MIN and GID_MIN to 5000
 License: GPL
 Group: System/Configuration/Other
 Url: http://www.altlinux.org/Installer/beans
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue May 08 2018 Grigory Ustinov <grenka@altlinux.org> 0.2-alt1.1
+- NMU: Fix description (Closes: #19698).
+
 * Mon Apr 20 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt1
 - GID_MIN downgraded to 5000 to avoid conflict with Samba mappings 
 
