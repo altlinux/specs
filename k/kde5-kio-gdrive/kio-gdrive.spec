@@ -6,16 +6,17 @@
 %define libktcore libktcore%sover
 
 Name: kde5-%rname
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1%ubt
 %K5init
 
 Group:     Networking/File transfer
 Summary:   KIO-client for Google Drive
-License:   GPLv2
+License:   GPLv2 / GPLv3
 URL:       https://quickgit.kde.org/?p=kio-gdrive.git
 
 Source: %rname-%version.tar
+Source10: kio5_gdrive_ru.po
 
 BuildRequires(pre): rpm-build-kf5
 
@@ -38,6 +39,7 @@ in the application launcher (which will open Dolphin with the `gdrive:/` URL) or
 
 %prep
 %setup -q -n %rname-%version
+cat %SOURCE10 >po/ru/kio5_gdrive.po
 
 %build
 %K5build
@@ -58,6 +60,9 @@ in the application launcher (which will open Dolphin with the `gdrive:/` URL) or
 %endif
 
 %changelog
+* Tue May 08 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.3-alt1%ubt
+- new version
+
 * Thu Apr 12 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt1%ubt
 - new version
 
