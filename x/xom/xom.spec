@@ -46,7 +46,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        XML Object Model
 Name:           xom
 Version:        1.2.10
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Epoch:          1
 License:        LGPLv2
 URL:            http://www.xom.nu
@@ -57,7 +57,7 @@ Patch0:         %{name}-build.patch
 
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  javapackages-local
-BuildRequires:  maven-local
+BuildRequires:  javapackages-tools
 BuildRequires:  jarjar
 BuildRequires:  jaxen
 BuildRequires:  junit
@@ -207,6 +207,9 @@ ln -s xom/xom.pom %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_datadir}/%{name}/xom-samples.jar
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.2.10-alt1_10jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.2.10-alt1_9jpp8
 - fc27 update
 
