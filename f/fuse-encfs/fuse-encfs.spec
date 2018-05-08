@@ -6,7 +6,7 @@
 Name: fuse-encfs
 Summary: Encrypted pass-thru filesystem for Linux
 Version: 1.9.4
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Kernel and hardware
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -75,6 +75,9 @@ cd build
 %endif
 
 %changelog
+* Tue May 08 2018 Anton Farygin <rider@altlinux.ru> 1.9.4-alt2
+- rebuilt for libtinyxml2-6.2
+
 * Sun Feb 11 2018 Denis Smirnov <mithraen@altlinux.ru> 1.9.4-alt1
 - 1.9.4
 
