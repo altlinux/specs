@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jnr-unixsocket
 Version:        0.18
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Unix sockets for Java
 License:        ASL 2.0
 URL:            https://github.com/jnr/%{name}/
@@ -17,13 +17,15 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.github.jnr:jnr-constants)
-BuildRequires:  mvn(com.github.jnr:jnr-enxio)
+BuildRequires:  mvn(com.github.jnr:jnr-enxio) >= 0.16
 BuildRequires:  mvn(com.github.jnr:jnr-ffi)
 BuildRequires:  mvn(com.github.jnr:jnr-posix)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+
+Requires:  mvn(com.github.jnr:jnr-enxio) >= 0.16
 Source44: import.info
 
 %description
@@ -53,6 +55,9 @@ This package contains the API documentation for %{name}.
 %pom_remove_plugin :maven-assembly-plugin
 %pom_remove_plugin :exec-maven-plugin
 
+# Remove enxio classes to avoid split-package problems, see https://github.com/jnr/jnr-unixsocket/pull/41
+rm -r src/main/java/jnr/enxio
+
 # Fix jar plugin usage
 %pom_xpath_remove "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions"
 
@@ -67,13 +72,16 @@ find ./ -name '*.class' -delete
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_5jpp8
+- java update
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_3jpp8
 - new version
 
