@@ -1,7 +1,6 @@
-BuildRequires: maven-file-management
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 Summary:	The Most Powerful Multi-Pass Java Preprocessor
 Name:		java-comment-preprocessor
 Version:	6.0.1
-Release:	alt2_5jpp8
+Release:	alt2_8jpp8
 License:	ASL 2.0
 
 URL:		https://github.com/raydac/java-comment-preprocessor
@@ -22,6 +21,7 @@ BuildArch:		noarch
 BuildRequires:	maven-local
 BuildRequires:	maven-plugin-plugin
 BuildRequires:	maven-source-plugin
+BuildRequires:	maven-file-management
 BuildRequires:	exec-maven-plugin
 # Test requirements
 BuildRequires:	maven-plugin-testing-harness
@@ -63,13 +63,16 @@ find -name "*.jar" -or -name "*.class" | xargs rm -f
 %mvn_install
 
 %files -f .mfiles
-%doc texts/LICENSE-2.0.txt
+%doc --no-dereference texts/LICENSE-2.0.txt
 %doc texts/readme.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc texts/LICENSE-2.0.txt
+%doc --no-dereference texts/LICENSE-2.0.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt2_8jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt2_5jpp8
 - added BR: maven-file-management for javapackages 5
 
