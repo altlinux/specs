@@ -21,14 +21,14 @@ BuildRequires: jpackage-generic-compat
 %global site_name maven-bundle-plugin
 
 Name:           maven-plugin-bundle
-Version:        3.3.0
-Release:        alt1_2jpp8
+Version:        3.5.0
+Release:        alt1_1jpp8
 Summary:        Maven Bundle Plugin
 License:        ASL 2.0
 URL:            http://felix.apache.org
 BuildArch:      noarch
 
-Source0:        http://archive.apache.org/dist/felix/%{site_name}-%{version}-source-release.tar.gz
+Source0:        http://repo2.maven.org/maven2/org/apache/felix/{%site_name}/%{version}/%{site_name}-%{version}-source-release.tar.gz
 
 # Needs polishing to be sent upstream
 Patch0:         0001-Port-to-current-maven-dependency-tree.patch
@@ -129,6 +129,9 @@ rm -f src/main/java/org/apache/felix/bundleplugin/baseline/BaselineReport.java
 %doc LICENSE NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3.5.0-alt1_1jpp8
+- java update
+
 * Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_2jpp8
 - new version
 
