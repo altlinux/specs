@@ -6,7 +6,7 @@
 
 Name: libgxps
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: GObject based library for handling and rendering XPS documents
 Group: System/Libraries
@@ -118,6 +118,9 @@ This package contains development documentation for %name
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1.1
+- rebuilt for e2kv4
+
 * Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 
