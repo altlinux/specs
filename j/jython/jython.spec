@@ -14,16 +14,14 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global cpython_version    2.7
 %global scm_tag            v2.7.1
 
 # Turn off the brp-python-bytecompile script
 # We generate JVM bytecode instead
-%global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
 
 Name:                      jython
 Version:                   2.7.1
-Release:                   alt1_3jpp8
+Release:                   alt1_5jpp8
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
@@ -46,7 +44,6 @@ Patch4:                    jython-fix-multiprocessing.patch
 # Fix tty detection
 Patch5:                    jython-fix-tty-detection.patch
 
-Requires:                  python >= %{cpython_version}
 Requires:                  antlr32-java
 Requires:                  apache-commons-compress
 Requires:                  bouncycastle
@@ -70,7 +67,6 @@ BuildRequires:             javapackages-local
 BuildRequires:             ant
 BuildRequires:             ant-junit
 BuildRequires:             glassfish-servlet-api
-BuildRequires:             python >= %{cpython_version}
 BuildRequires:             antlr32-tool
 BuildRequires:             apache-commons-compress
 BuildRequires:             bouncycastle
@@ -231,7 +227,7 @@ fi || :
 
 %files -f .mfiles
 %doc ACKNOWLEDGMENTS NEWS README.txt
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %attr(0755,root,root) %{_bindir}/%{name}
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/bin
@@ -247,14 +243,17 @@ fi || :
 %{_datadir}/jython/cachedir
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %{_datadir}/%{name}/Doc
 
 %files demo
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %{_datadir}/%{name}/Demo
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt1_5jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt1_3jpp8
 - new version
 
