@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: libcap-ng
-Version: 0.7.8
-Release: alt1.1
+Version: 0.7.9
+Release: alt1
 
 Summary: An alternate posix capabilities library
 License: LGPLv2+
@@ -125,7 +125,6 @@ rm -f %buildroot%python_sitelibdir/*.{a,la}
 pushd ../python3
 %make install DESTDIR=$PWD/buildroot
 install -d %buildroot%python3_sitelibdir
-mv buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir/
 rm -f %buildroot%python3_sitelibdir/*.{a,la}
 popd
 %endif
@@ -157,6 +156,9 @@ popd
 %endif
 
 %changelog
+* Tue May 08 2018 Anton Farygin <rider@altlinux.ru> 0.7.9-alt1
+- new version
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.8-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
