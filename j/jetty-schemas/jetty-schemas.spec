@@ -6,16 +6,15 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global reltag b07
 Name:       jetty-schemas
-Version:    4.0.0
-Release:    alt1_3.b07jpp8
+Version:    4.0.1
+Release:    alt1_2jpp8
 Summary:    XML Schemas for Jetty
 License:    CDDL-1.1 or GPLv2 with exceptions
 URL:        http://www.eclipse.org/jetty/
 BuildArch:  noarch
 
-Source0:    https://github.com/eclipse/jetty.toolchain/archive/%{name}-%{version}-%{reltag}.tar.gz
+Source0:    https://github.com/eclipse/jetty.toolchain/archive/%{name}-%{version}.tar.gz
 Source1:    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
 
 BuildRequires:  maven-local
@@ -27,7 +26,7 @@ Source44: import.info
 %{summary}.
 
 %prep
-%setup -q -n jetty.toolchain-%{name}-%{version}-%{reltag}/%{name}
+%setup -q -n jetty.toolchain-%{name}-%{version}/%{name}
 cp %SOURCE1 .
 
 %pom_remove_plugin :maven-source-plugin
@@ -39,9 +38,12 @@ cp %SOURCE1 .
 %mvn_install
 
 %files -f .mfiles
-%doc CDDL+GPL_1_1.html
+%doc --no-dereference CDDL+GPL_1_1.html
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 4.0.1-alt1_2jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt1_3.b07jpp8
 - new version
 
