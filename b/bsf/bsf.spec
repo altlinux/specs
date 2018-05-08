@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Name:           bsf
 Epoch:          1
 Version:        2.4.0
-Release:        alt3_27jpp8
+Release:        alt3_28jpp8
 Summary:        Bean Scripting Framework
 License:        ASL 2.0
 URL:            http://commons.apache.org/bsf/
@@ -83,13 +83,16 @@ ant jar javadocs
 %mvn_install -J build/javadocs
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 %doc AUTHORS.txt CHANGES.txt README.txt TODO.txt RELEASE-NOTE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt3_28jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt3_27jpp8
 - fc27 update
 
