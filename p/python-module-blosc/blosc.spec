@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.5.1
-Release: alt1.1.1
+Release: alt2
 Summary: A Python wrapper for the extremely fast Blosc compression library
 License: MIT / BSD
 Group: Development/Python
@@ -12,6 +12,7 @@ Url: http://python-blosc.blosc.org/
 
 # https://github.com/Blosc/python-blosc.git
 Source: %name-%version.tar
+Patch0: %name-%version-arm.patch
 Patch1: %oname-%version-alt-docs.patch
 
 BuildRequires(pre): rpm-macros-sphinx
@@ -116,7 +117,9 @@ This package contains tests for %oname.
 
 %prep
 %setup
-
+%ifnarch %ix86 x86_64
+%patch0 -p1
+%endif
 %if_with python3
 cp -fR . ../python3
 %endif
@@ -186,6 +189,9 @@ nosetests3 -v --with-doctest %oname
 %endif
 
 %changelog
+* Tue May 08 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.1-alt2
+- fixed build on non-x86
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.1-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
