@@ -1,8 +1,8 @@
-BuildRequires: javapackages-local
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: subversion
 BuildRequires: /proc
@@ -48,13 +48,12 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-#def_with bootstrap
 %bcond_with bootstrap
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 Name:           xmlbeans
 Version:        2.6.0
-Release:        alt2_13jpp8
+Release:        alt2_16jpp8
 Summary:        XML-Java binding tool
 URL:            http://xmlbeans.apache.org/
 Source0:        http://www.apache.org/dist/xmlbeans/source/%{name}-%{version}-src.tgz
@@ -78,6 +77,8 @@ BuildRequires:  xmlbeans
 %endif
 BuildRequires:  java-devel
 BuildRequires:  jpackage-utils >= 0:1.5
+# add_maven_depmap macro is now located in javapackages-local
+BuildRequires:  javapackages-local
 BuildRequires:  ant >= 0:1.6 ant-junit ant-contrib junit
 BuildRequires:  xml-commons-resolver >= 0:1.1
 BuildRequires:  bea-stax-api
@@ -206,13 +207,13 @@ cp -pr build/docs/* README.txt $RPM_BUILD_ROOT%{_docdir}/%{name}
 %files -f .mfiles
 %dir %{_docdir}/%{name}
 %doc %{_docdir}/%{name}/README.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc
 %dir %{_docdir}/%{name}
 %doc %{_docdir}/%{name}/README.txt
 %doc %{_javadocdir}/%{name}
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files manual
 %{_docdir}/%{name}
@@ -222,6 +223,9 @@ cp -pr build/docs/* README.txt $RPM_BUILD_ROOT%{_docdir}/%{name}
 
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt2_16jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt2_13jpp8
 - added BR: javapackages-local for javapackages 5
 
