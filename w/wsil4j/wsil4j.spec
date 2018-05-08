@@ -1,7 +1,6 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
+BuildRequires: rpm-build-java zip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		wsil4j
 Version:	1.0
-Release:	alt2_15jpp8
+Release:	alt2_17jpp8
 Summary:	Web Services Inspection Language for Java API
 
 License:	ASL 1.1
@@ -22,7 +21,6 @@ Source1:	%{name}-MANIFEST.MF
 Source2:	%{name}-%{version}.pom
 BuildArch:	noarch
 
-BuildRequires:	zip
 BuildRequires:	ant
 BuildRequires:	uddi4j
 BuildRequires:	wsdl4j
@@ -49,11 +47,11 @@ This package contains the API documentation for %{name}.
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
-ln -s %{_javadir}/uddi4j.jar
-ln -s %{_javadir}/wsdl4j.jar
+# Disable java 8 doclinting
+sed -i -e '/<javadoc/aadditionalparam="-Xdoclint:none"' build.xml
 
 %build
-ant -lib ./ compile javadocs
+ant -DCLASS_PATH=$(build-classpath uddi4j wsdl4j) compile javadocs
 
 %install
 # inject OSGi manifest
@@ -67,14 +65,17 @@ zip -u build/lib/%{name}.jar META-INF/MANIFEST.MF
 %mvn_install -J build/javadocs
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc docs
 %doc README.htm
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_17jpp8
+- java update
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_15jpp8
 - fc27 update
 
