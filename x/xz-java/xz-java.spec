@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xz-java
-Version:        1.6
-Release:        alt1_4jpp8
+Version:        1.8
+Release:        alt1_2jpp8
 Summary:        Java implementation of XZ data compression
 License:        Public Domain
 URL:            http://tukaani.org/xz/java.html
@@ -54,12 +54,16 @@ ant maven
 %mvn_install -J build/doc
 
 %files -f .mfiles
-%doc COPYING README THANKS
+%doc README THANKS
+%doc --no-dereference COPYING
 
 %files javadoc -f .mfiles-javadoc
-%doc COPYING
+%doc --no-dereference COPYING
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_2jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_4jpp8
 - fc27 update
 
