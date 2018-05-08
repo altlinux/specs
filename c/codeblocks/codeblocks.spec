@@ -1,6 +1,6 @@
 Name: codeblocks
 Version: 17.12
-Release: alt1
+Release: alt2
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -17,6 +17,10 @@ Source4: %name.po
 #Source5: %%name-default.conf
 
 Patch1: codeblocks-ebuild.conf.patch
+
+# should be checked in next release
+Patch2: %name-%version-FortranProject_autotools_build.patch
+Patch3: %name-%version-FortranProject_fix_build_gcc7_failed.patch
 
 BuildPreReq: wxGTK-devel >= 2.8.12 gcc-c++ libgtk+2-devel zip sed grep coreutils bzip2 gettext-tools boost-devel libgamin-devel rpm-build-licenses libhunspell-devel wxGTK-contrib-gizmos-devel
 Requires: automake >= 1.7 wxGTK >= 2.8.12 gcc gcc-c++ gdb xterm
@@ -68,6 +72,8 @@ cp %SOURCE3 src/mime/
 cp %SOURCE4 .
 
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 # Script update_revision.sh generates file revision.m4 that contains info about svn revision.
 # It takes data from .svn directory. Since we haven't this directory in %%SOURCE0, we should remove
@@ -106,6 +112,8 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_xdgmimedir/packages/%name.xml
 %_man1dir/*
 %exclude %_man1dir/codesnippets.1.xz
+%exclude %_datadir/%name/images/16x16/fproject*
+%exclude %_datadir/%name/images/fproject*
 
 %dir %_datadir/%name
 %dir %_datadir/%name/locale/ru_RU
@@ -187,6 +195,7 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_datadir/%name/envvars.zip
 %_datadir/%name/exporter.zip
 %_datadir/%name/FileManager.zip
+%_datadir/%name/FortranProject.zip
 %_datadir/%name/help_plugin.zip
 %_datadir/%name/HexEditor.zip
 %_datadir/%name/headerfixup.zip
@@ -212,6 +221,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 
 %_datadir/%name/images/codesnippets
 %_datadir/%name/images/DoxyBlocks
+%_datadir/%name/images/fortranproject
+%_datadir/%name/images/16x16/fproject*
+%_datadir/%name/images/fproject*
 %_datadir/%name/images/ThreadSearch
 %_datadir/%name/images/wxsmith
 %_datadir/%name/lib_finder
@@ -234,6 +246,7 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/%name/plugins/libenvvars.*
 %_libdir/%name/plugins/libexporter.*
 %_libdir/%name/plugins/libFileManager.*
+%_libdir/%name/plugins/libFortranProject.*
 %_libdir/%name/plugins/libhelp_plugin.*
 %_libdir/%name/plugins/libHexEditor.*
 %_libdir/%name/plugins/libheaderfixup.*
@@ -268,6 +281,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Tue May 08 2018 Grigory Ustinov <grenka@altlinux.org> 17.12-alt2
+- Add patches for fix FortranProject plugin (Closes: #34891).
+
 * Mon Jan 22 2018 Grigory Ustinov <grenka@altlinux.org> 17.12-alt1
 - Build new version (Closes: #34437).
 - Removed default config from /etc/skel, because it's not good idea
