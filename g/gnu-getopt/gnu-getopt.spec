@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           gnu-getopt
 Version:        1.0.14
-Release:        alt1_12jpp8
+Release:        alt1_13jpp8
 Epoch:          0
 Summary:        Java getopt implementation
 License:        LGPLv2+
@@ -107,6 +107,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt1_13jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt1_12jpp8
 - fc27 update
 
