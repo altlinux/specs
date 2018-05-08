@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jakarta-oro
 Version:        2.0.8
-Release:        alt2_22jpp8
+Release:        alt2_23jpp8
 Epoch:          0
 Summary:        Full regular expressions API
 License:        ASL 1.1
@@ -95,12 +95,15 @@ ant -Dfinal.name=%{base_name} jar javadocs
 
 %files -f .mfiles
 %doc COMPILE ISSUES README TODO CHANGES CONTRIBUTORS STYLE
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_23jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_22jpp8
 - fc27 update
 
