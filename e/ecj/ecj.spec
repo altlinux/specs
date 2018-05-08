@@ -9,26 +9,31 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Epoch: 1
 
-%global qualifier R-4.7.1-201709061700
+%global qualifier M-4.7.3aRC2-201803300640
 
 Summary: Eclipse Compiler for Java
 Name: ecj
-Version: 4.7.1
+Version: 4.7.3a
 Release: alt1_1jpp8
 URL: http://www.eclipse.org
 License: EPL
 
-Source0: http://download.eclipse.org/eclipse/downloads/drops4/%{qualifier}/ecjsrc-%{version}.jar
+Source0: http://download.eclipse.org/eclipse/downloads/drops4/%{qualifier}/ecjsrc-%{version}RC2.jar
 Source1: ecj.sh.in
 Source3: https://repo1.maven.org/maven2/org/eclipse/jdt/core/compiler/ecj/%{version}/ecj-%{version}.pom
 # Extracted from https://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/%%{qualifier}/ecj-%%{version}.jar
 Source4: MANIFEST.MF
+# Java API stubs for newer JDKs
+Source5: java10api.jar
 
 # Always generate debug info when building RPMs (Andrew Haley)
 Patch0: %{name}-rpmdebuginfo.patch
 
 # Fix build with lambda syntax, ebz#520940
 Patch1: java8.patch
+
+# Include java API stubs in build
+Patch2: javaAPI.patch
 
 BuildArch: noarch
 
@@ -55,6 +60,7 @@ the JDT Core batch compiler.
 %setup -q -c
 %patch0 -p1
 %patch1 -p3
+%patch2 -b .orig
 
 sed -i -e 's|debuglevel=\"lines,source\"|debug=\"yes\"|g' build.xml
 sed -i -e "s/Xlint:none/Xlint:none -encoding cp1252/g" build.xml
@@ -74,6 +80,10 @@ rm -f org/eclipse/jdt/core/JDTCompilerAdapter.java
 %mvn_alias org.eclipse.jdt.core.compiler:ecj \
   org.eclipse.tycho:org.eclipse.jdt.core org.eclipse.tycho:org.eclipse.jdt.compiler.apt \
   org.eclipse.jdt:core org.eclipse.jdt:ecj
+
+# Make Java API stubs available for other packages
+%mvn_artifact "org.eclipse:java10api:jar:10" %{SOURCE5}
+%mvn_alias "org.eclipse:java10api:jar:10" "org.eclipse:java9api:jar:9"
 %patch33 -p1
 
 # Use ECJ for GCJ's bytecode compiler
@@ -88,7 +98,7 @@ rm -rf eclipse-gcj
 #patch55 -p1
 
 %build
-ant 
+ant -Djavaapi=%{SOURCE5}
 
 %install
 %mvn_artifact pom.xml ecj.jar
@@ -107,6 +117,9 @@ install -m 644 -p ecj.1 $RPM_BUILD_ROOT%{_mandir}/man1/ecj.1
 %{_mandir}/man1/ecj*
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:4.7.3a-alt1_1jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.7.1-alt1_1jpp8
 - new version
 
