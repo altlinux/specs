@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-enforcer
 Version:        1.4.1
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Maven Enforcer
 License:        ASL 2.0
 URL:            http://maven.apache.org/enforcer
@@ -79,6 +79,13 @@ This component contains the standard Enforcer Rules.
 %setup -q -n enforcer-%{version}
 %patch0 -p1
 
+# Avoid dependency cycle
+%pom_xpath_inject pom:build/pom:pluginManagement/pom:plugins "
+    <plugin>
+      <artifactId>maven-enforcer-plugin</artifactId>
+      <version>SYSTEM</version>
+    </plugin>"
+
 # Replace plexus-maven-plugin with plexus-component-metadata
 sed -e "s|<artifactId>plexus-maven-plugin</artifactId>|<artifactId>plexus-component-metadata</artifactId>|" \
     -e "s|<goal>descriptor</goal>|<goal>generate-metadata</goal>|" \
@@ -104,6 +111,9 @@ sed -e "s|<artifactId>plexus-maven-plugin</artifactId>|<artifactId>plexus-compon
 %doc LICENSE NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.4.1-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4.1-alt1_6jpp8
 - fc27 update
 
