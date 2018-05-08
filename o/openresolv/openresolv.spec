@@ -2,7 +2,7 @@
 
 Name: openresolv
 Version: 3.9.0
-Release: alt1
+Release: alt2
 
 Summary: A framework for managing DNS information 
 License: %bsdstyle
@@ -18,7 +18,7 @@ BuildRequires(pre): rpm-build-licenses
 
 Requires: filesystem >= 2.3.5
 
-%def_without pdnsd
+%def_with pdnsd
 
 %description
 resolvconf is the middleman between the network
@@ -120,6 +120,9 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 %endif
 
 %changelog
+* Tue May 08 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.9.0-alt2
+- Rebuilt with pdnsd subscriber subpackage.
+
 * Mon Jan 09 2017 Mikhail Efremov <sem@altlinux.org> 3.9.0-alt1
 - Updated to 3.9.0.
 
