@@ -7,19 +7,19 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackson-annotations
-Version:       2.7.6
-Release:       alt1_4jpp8
+Version:       2.9.4
+Release:       alt1_2jpp8
 Summary:       Core annotations for Jackson data processor 
 License:       ASL 2.0
-URL:           http://wiki.fasterxml.com/JacksonHome
+URL:           https://github.com/FasterXML/jackson-annotations/
 Source0:       https://github.com/FasterXML/jackson-annotations/archive/%{name}-%{version}.tar.gz
 
-BuildRequires: maven-local
-BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.fasterxml.jackson:jackson-parent:pom:)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 
-BuildArch:     noarch
+BuildArch:      noarch
 Source44: import.info
 
 %description
@@ -28,11 +28,11 @@ used by Jackson data-binding package.
 
 %package javadoc
 Group: Development/Java
-Summary:       Javadoc for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
@@ -43,7 +43,6 @@ sed -i 's/\r//' LICENSE
 %mvn_file : %{name}
 
 %build
-
 %mvn_build
 
 %install
@@ -51,12 +50,15 @@ sed -i 's/\r//' LICENSE
 
 %files -f .mfiles
 %doc README.md release-notes/*
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_2jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_4jpp8
 - fc27 update
 
