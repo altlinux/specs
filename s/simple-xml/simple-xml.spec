@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,14 +10,15 @@ BuildRequires: jpackage-generic-compat
 Name:          simple-xml
 Summary:       An XML serialization framework for Java
 Version:       2.7.1
-Release:       alt1_9jpp8
+Release:       alt1_12jpp8
 License:       ASL 2.0
 Url:           http://simple.sourceforge.net/
 Source0:       http://downloads.sourceforge.net/simple/%{name}-%{version}.tar.gz
 Source1:       http://repo1.maven.org/maven2/org/simpleframework/%{name}/%{version}/%{name}-%{version}.pom
 
 BuildRequires: java-devel
-BuildRequires: maven-local
+BuildRequires: javapackages-local
+BuildRequires: javapackages-tools
 BuildRequires: ant
 BuildRequires: ant-junit
 BuildRequires: bea-stax
@@ -27,6 +29,7 @@ BuildRequires: xpp3
 Requires:      bea-stax
 Requires:      xpp3
 
+Requires:      javapackages-tools
 BuildArch:     noarch
 Source44: import.info
 
@@ -72,13 +75,16 @@ mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -pr javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc
 %{_javadocdir}/%{name}
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt1_12jpp8
+- java update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt1_9jpp8
 - new jpp release
 
