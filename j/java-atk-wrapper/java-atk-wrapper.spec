@@ -11,10 +11,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:       java-atk-wrapper
 Version:    %{major_version}.%{minor_version}
-Release:    alt1_3jpp8
+Release:    alt1_6jpp8
 Summary:    Java ATK Wrapper
 
-Group:      Development/Java
+Group:      Development/Other
 License:    LGPLv2+
 URL:        http://git.gnome.org/browse/java-atk-wrapper
 Source0:    http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{major_version}/%{name}-%{version}.tar.xz
@@ -59,7 +59,7 @@ rm wrapper/org/GNOME/Accessibility/AtkWrapper.java
 
 %build
 %configure
-make -j2
+%make_build
 cp %{SOURCE1} .
 
 %install
@@ -86,6 +86,9 @@ ln -s %{_libdir}/%{name}/libatk-wrapper.so.%{libver} \
 
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt1_6jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt1_3jpp8
 - fixed build
 
