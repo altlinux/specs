@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 Name:           regexp
 Epoch:          1
 Version:        1.5
-Release:        alt1_25jpp8
+Release:        alt1_26jpp8
 Summary:        Simple regular expressions API
 License:        ASL 2.0
 URL:            http://jakarta.apache.org/%{name}/
@@ -86,6 +86,9 @@ mkdir lib
 %doc LICENSE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_26jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_25jpp8
 - fc27 update
 
