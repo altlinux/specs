@@ -1,4 +1,3 @@
-BuildRequires: javapackages-local
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -23,7 +22,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           scala
 Version:        2.10.6
-Release:        alt2_3jpp8
+Release:        alt2_8jpp8
 Summary:        A hybrid functional/object-oriented language for the JVM
 BuildArch:      noarch
 # License was confirmed to be standard BSD by fedora-legal
@@ -47,7 +46,7 @@ Source3:        scala.gitinfo
 Source4:        http://www.scala-lang.org/files/archive/scala-2.10.4.tgz
 %endif
 
-# Source0:        http://www.scala-lang.org/downloads/distrib/files/scala-sources-%{fullversion}.tgz
+# Source0:        http://www.scala-lang.org/downloads/distrib/files/scala-sources-%%{fullversion}.tgz
 # Change the default classpath (SCALA_HOME)
 Patch1:         scala-2.10.0-tooltemplate.patch
 # Use system jline2 instead of bundled jline2
@@ -76,11 +75,9 @@ BuildRequires:  ant
 BuildRequires:  ant-junit
 BuildRequires:  ant-contrib
 BuildRequires:  jline >= 2.10
-BuildRequires:  javapackages-tools
 BuildRequires:  aqute-bnd
 BuildRequires:  junit
-BuildRequires:  felix-framework
-BuildRequires:  jpackage-utils
+BuildRequires:  javapackages-local
 
 %if !(0%{?bootstrap_build})
 BuildRequires:  scala
@@ -272,9 +269,14 @@ for prog in scaladoc fsc scala scalac scalap; do
         install -p -m 755 build/pack/bin/$prog $RPM_BUILD_ROOT%{_bindir}
 done
 
-install -p -m 755 -d $RPM_BUILD_ROOT%{_javadir}/scala
 install -p -m 755 -d $RPM_BUILD_ROOT%{scaladir}/lib
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+
+# Add symlinks in lib directory
+%mvn_file ':{*}:jar:' %{name}/@1 %{scaladir}/lib/@1
+# Add compat symlinks to POMs because climbing-nemesis uses the old JPP naming convention
+%mvn_file ':{*}:pom:' %{name}/@1 JPP.%{name}-@1
+
+%mvn_package :scala-swing swing
 
 # XXX: add scala-partest when it works again
 for libname in scala-compiler \
@@ -282,16 +284,15 @@ for libname in scala-compiler \
     scala-reflect \
     scalap \
     scala-swing ; do
-        install -m 644 build/pack/lib/$libname.jar $RPM_BUILD_ROOT%{_javadir}/scala/
-        ln -s $(abs2rel %{_javadir}/scala/$libname.jar %{scaladir}/lib) $RPM_BUILD_ROOT%{scaladir}/lib
         sed -i "s|@VERSION@|%{fullversion}|" src/build/maven/$libname-pom.xml
         sed -i "s|@RELEASE_REPOSITORY@|%{release_repository}|" src/build/maven/$libname-pom.xml
         sed -i "s|@SNAPSHOT_REPOSITORY@|%{snapshot_repository}|" src/build/maven/$libname-pom.xml
-        install -pm 644 src/build/maven/$libname-pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-$libname.pom
-%add_maven_depmap JPP.%{name}-$libname.pom %{name}/$libname.jar
+        %mvn_artifact src/build/maven/$libname-pom.xml build/pack/lib/$libname.jar
 done
 ln -s $(abs2rel %{jline2_jar} %{scaladir}/lib) $RPM_BUILD_ROOT%{scaladir}/lib
 ln -s $(abs2rel %{jansi_jar} %{scaladir}/lib) $RPM_BUILD_ROOT%{scaladir}/lib
+
+%mvn_install
 
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/ant.d
 install -p -m 644 %{SOURCE24} $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/scala
@@ -313,27 +314,16 @@ install -p -m 644 build/scaladoc/manual/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man
 
 %files -f .mfiles
 %{_bindir}/*
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/%{name}-compiler.jar
-%{_javadir}/%{name}/%{name}-library.jar
-%{_javadir}/%{name}/%{name}-reflect.jar
-%{_javadir}/%{name}/scalap.jar
 %dir %{_datadir}/%{name}
+%dir %{_datadir}/%{name}/lib
 %{_datadir}/%{name}/lib/j*.jar
-%{_datadir}/%{name}/lib/%{name}-compiler.jar
-%{_datadir}/%{name}/lib/%{name}-library.jar
-%{_datadir}/%{name}/lib/%{name}-reflect.jar
-%{_datadir}/%{name}/lib/scalap.jar
 %{_datadir}/mime-info/*
 %{_datadir}/mime/packages/*
 %{_mandir}/man1/*
 %doc docs/LICENSE
 %dir %_datadir/scala/lib
 
-%files swing
-%{_datadir}/%{name}/lib/%{name}-swing.jar
-%{_javadir}/%{name}/%{name}-swing.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-swing.pom
+%files swing -f .mfiles-swing
 %doc docs/LICENSE
 
 %files -n ant-scala
@@ -358,6 +348,9 @@ install -p -m 644 build/scaladoc/manual/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man
 %endif
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2.10.6-alt2_8jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.10.6-alt2_3jpp8
 - added BR: javapackages-local for javapackages 5
 
