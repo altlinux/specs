@@ -1,7 +1,7 @@
 %define oname shiboken
 Name: %oname-py3
 Version: 1.2.2
-Release: alt3.git20140422.2.1
+Release: alt4.git20140422
 Summary: Generates bindings for C++ libraries using CPython source code (Python 3)
 License: GPLv2, LGPLv2.1
 Group: Development/KDE and QT
@@ -80,7 +80,7 @@ pushd BUILD
 
 cmake \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-%ifarch x86_64
+%if "%_lib" == "lib64"
 	-DLIB_SUFFIX:STRING=64 \
 %endif
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
@@ -124,6 +124,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Tue May 08 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.2-alt4.git20140422
+- fixed packaging on 64bit arches other than x86_64
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt3.git20140422.2.1
 - (NMU) Rebuilt with python-3.6.4.
 
