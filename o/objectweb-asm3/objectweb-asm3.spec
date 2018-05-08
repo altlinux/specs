@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           objectweb-asm3
 Version:        3.3.1
-Release:        alt1_15jpp8
+Release:        alt1_18jpp8
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
 URL:            http://asm.ow2.org/
@@ -68,7 +68,7 @@ for m in asm asm-analysis asm-commons asm-tree asm-util asm-xml asm-all; do
 done
 
 # Fix inter-module dependecies in POMs for shaded artifacts
-%if 0%{?fedora} > 0
+%if 0%{?fedora} > 0 || 0%{?rhel} > 7
 pushd output/dist/lib
 for m in asm-analysis asm-commons asm-util; do
     %pom_remove_dep :asm-tree ${m}-distroshaded-%{version}.pom
@@ -94,7 +94,7 @@ done
 %mvn_artifact output/dist/lib/asm-parent-%{version}.pom
 
 for m in asm asm-analysis asm-commons asm-tree asm-util asm-xml asm-all; do
-%if 0%{?fedora} > 0
+%if 0%{?fedora} > 0 || 0%{?rhel} > 7
     %mvn_artifact output/dist/lib/${m}-distroshaded-%{version}.pom \
                   output/dist/lib/${m}-distroshaded-%{version}.jar
 %endif
@@ -118,6 +118,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc LICENSE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3.3.1-alt1_18jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.3.1-alt1_15jpp8
 - fc27 update
 
