@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 %bcond_without jna
 
 Name:           bcel
-Version:        6.1
+Version:        6.2
 Release:        alt1_2jpp8
 Epoch:          1
 Summary:        Byte Code Engineering Library
@@ -27,7 +27,6 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 %if %{with jna}
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.java.dev.jna:jna)
@@ -65,23 +64,8 @@ This package provides %{summary}.
 
 %pom_remove_plugin :maven-source-plugin
 
-%pom_xpath_set /pom:project/pom:packaging bundle
-%pom_add_plugin org.apache.felix:maven-bundle-plugin '
-<extensions>true</extensions>
-<configuration>
-  <instructions>
-    <_nouses>true</_nouses>
-    <Export-Package>org.apache.bcel.*</Export-Package>
-  </instructions>
-</configuration>
-'
-
 %mvn_alias : bcel: apache:
 %mvn_file : %{name}
-
-# different path in test
-sed -i '\|lib/dt\.jar|s|javaHome|javaHome.substring(0, javaHome.length() - 4)|' \
-        src/test/java/org/apache/bcel/PerformanceTest.java
 
 %build
 %if %{without jna}
@@ -95,12 +79,15 @@ sed -i '\|lib/dt\.jar|s|javaHome|javaHome.substring(0, javaHome.length() - 4)|' 
 
 %files -f .mfiles
 %doc RELEASE-NOTES.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:6.2-alt1_2jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:6.1-alt1_2jpp8
 - new version
 
