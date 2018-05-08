@@ -43,7 +43,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xalan-j2
 Version:        2.7.1
-Release:        alt4_33jpp8
+Release:        alt4_34jpp8
 Epoch:          0
 Summary:        Java XSLT processor
 # src/org/apache/xpath/domapi/XPathStylesheetDOM3Exception.java is W3C
@@ -214,24 +214,27 @@ mv %{_javadir}/jaxp_transform_impl.jar{,.tmp} || :
 mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 %doc KEYS readme.html
 
 %files xsltc -f .mfiles-xsltc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files manual
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 %doc --no-dereference build/docs/*
 
 %files javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 %doc %{_javadocdir}/%{name}
 
 %files demo
 %{_datadir}/%{name}
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt4_34jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt4_33jpp8
 - fc27 update
 
