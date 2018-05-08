@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-jaxws
 Version:       2.2.10
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       JAX-WS Reference Implementation (RI) Project
 # ASL 2.0
 # tools/wscompile/src/com/sun/tools/ws/ant/AnnotationProcessingTask.java
@@ -238,18 +238,21 @@ find -name ClientProxyTest.java -delete
 
 %files -f .mfiles
 %doc README.md
-%doc CDDL+GPLv2.html CDDL-1.0-license.txt
+%doc --no-dereference CDDL+GPLv2.html CDDL-1.0-license.txt
 
 %files tools  -f .mfiles-tools
 %doc CDDL+GPLv2.html CDDL-1.0-license.txt
 
 %files transports  -f .mfiles-transports
-%doc CDDL+GPLv2.html CDDL-1.0-license.txt
+%doc --no-dereference CDDL+GPLv2.html CDDL-1.0-license.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc CDDL+GPLv2.html CDDL-1.0-license.txt
+%doc --no-dereference CDDL+GPLv2.html CDDL-1.0-license.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.2.10-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.2.10-alt1_7jpp8
 - fc27 update
 
