@@ -1,5 +1,6 @@
+%define soname 6
 Name: tinyxml2
-Version: 5.0.1
+Version: 6.2.0
 Release: alt1
 Summary: Simple, small, efficient, C++ XML parser
 License: zlib
@@ -15,18 +16,18 @@ BuildPreReq: doxygen
 TinyXML-2 is a simple, small, efficient, C++ XML parser that can be
 easily integrating into other programs.
 
-%package -n lib%name
+%package -n lib%name.%soname
 Summary: Simple, small, efficient, C++ XML parser
 Group: System/Libraries
 
-%description -n lib%name
+%description -n lib%name.%soname
 TinyXML-2 is a simple, small, efficient, C++ XML parser that can be
 easily integrating into other programs.
 
 %package -n lib%name-devel
 Summary: Development files of TinyXML-2
 Group: Development/C++
-Requires: lib%name = %EVR
+Requires: lib%name.%soname = %EVR
 
 %description -n lib%name-devel
 TinyXML-2 is a simple, small, efficient, C++ XML parser that can be
@@ -67,19 +68,24 @@ doxygen dox
 %install
 %makeinstall_std
 
-%files -n lib%name
+%files -n lib%name.%soname
 %doc readme.md
-%_libdir/*.so.*
+%_libdir/*.so.%{soname}*
 
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
+%_libdir/cmake/tinyxml2
 
 %files -n lib%name-devel-doc
 %doc docs/*
 
 %changelog
+* Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 6.2.0-alt1
+- 6.2.0
+- package with shared library renamed for policy
+
 * Mon Oct 09 2017 Anton Farygin <rider@altlinux.ru> 5.0.1-alt1
 - new version
 
