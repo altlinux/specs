@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.40
+Version: 2.9.41
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -114,6 +114,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Jun 01 2018 Andrey Cherepanov <cas@altlinux.org> 2.9.41-alt1
+- Update translations for alterator-auth 0.36.
+
 * Wed May 16 2018 Grigory Ustinov <grenka@altlinux.org> 2.9.40-alt1
 - Fix translation of reset button (Closes: #16762).
 
