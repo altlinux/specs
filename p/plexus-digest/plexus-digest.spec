@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plexus-digest
 Version:        1.1
-Release:        alt2_23jpp8
+Release:        alt2_24jpp8
 Epoch:          0
 Summary:        Plexus Digest / Hashcode Components
 License:        ASL 2.0
@@ -65,6 +65,9 @@ Javadoc for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_24jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_23jpp8
 - fc27 update
 
