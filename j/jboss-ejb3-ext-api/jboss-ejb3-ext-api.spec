@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-ejb3-ext-api
 Version:          2.2.0
-Release:          alt1_3jpp8
+Release:          alt1_5jpp8
 Summary:          JBoss EJB 3 Extension API
 License:          LGPLv3+
 URL:              http://www.jboss.org/ejb3
@@ -50,12 +50,15 @@ This package contains the API documentation for %{name}.
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_3jpp8
 - fc27 update
 
