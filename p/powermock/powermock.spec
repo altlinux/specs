@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           powermock
 Version:        1.6.5
-Release:        alt1_7jpp8
+Release:        alt1_9jpp8
 Summary:        A Java mocking framework
 
 # Note: api-mockito subpackage is ASL 2.0 and MIT, the rest is ASL 2.0
@@ -209,20 +209,23 @@ sed -i '/shouldLoadClassAndOverrideMethodGreaterThanJvmLimit/i@org.junit.Ignore'
 
 %files common
 %dir %{_javadir}/%{name}
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %files reflect -f .mfiles-reflect
 %files core -f .mfiles-core
 %files junit4 -f .mfiles-junit4
 %files api-support -f .mfiles-api-support
 %files api-mockito -f .mfiles-api-mockito
-%doc api/mockito2/src/main/java/org/powermock/api/mockito/repackaged/Mockito-LICENSE.txt
+%doc --no-dereference api/mockito2/src/main/java/org/powermock/api/mockito/repackaged/Mockito-LICENSE.txt
 %files api-easymock -f .mfiles-api-easymock
 %files testng -f .mfiles-testng
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt1_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt1_7jpp8
 - fc27 update
 
