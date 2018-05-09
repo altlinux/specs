@@ -1,9 +1,8 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
 BuildRequires: waf
 # END SourceDeps(oneline)
-Group: System/Libraries
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -13,7 +12,7 @@ Group: System/Libraries
 
 Name:           lv2
 Version:        1.14.0
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Audio Plugin Standard
 
 # lv2specgen template.html is CC-AT-SA
@@ -23,7 +22,7 @@ Source:         http://lv2plug.in/spec/lv2-%{version}.tar.bz2
 
 BuildRequires:  doxygen graphviz libgraphviz python-module-rdflib
 BuildRequires:  libsndfile-devel
-BuildRequires:  gcc-common
+BuildRequires:  gcc
 BuildRequires:  python-module-Pygments
 BuildRequires:  python-devel
 
@@ -90,6 +89,7 @@ sed -i '1s|^#!.*|#!%{__python}|' lv2specgen/lv2specgen.py
 
 %build
 export CFLAGS="%{optflags}"
+export LDFLAGS="%{__global_ldflags}"
 ./waf configure -vv --prefix=%{_prefix} --libdir=%{_libdir} --debug \
   --docs --docdir=%{_docdir}/%{name} --lv2dir=%{_libdir}/lv2
 ./waf -vv %{?_smp_mflags}
@@ -131,6 +131,9 @@ done
 %{_docdir}/%{name}/
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.14.0-alt1_5
+- update to new release by fcimport
+
 * Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.14.0-alt1_4
 - update to new release by fcimport
 
