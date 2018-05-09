@@ -1,7 +1,7 @@
-BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,13 +9,14 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jtoaster
 Version:       1.0.5
-Release:       alt2_7jpp8
+Release:       alt2_10jpp8
 Summary:       Java utility class for swing applications
 License:       ASL 2.0
 URL:           http://jtoaster.sourceforge.net/
 Source0:       http://downloads.sourceforge.net/project/jtoaster/%{name}/1.0/%{name}-%{version}.jar
 Source1:       %{name}-template.pom
 BuildRequires: java-devel
+BuildRequires: javapackages-local
 BuildRequires: jpackage-utils
 
 Requires:      java
@@ -70,13 +71,16 @@ cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}/
 
 %files -f .mfiles
 %doc README com
-%doc apache2.0_license.txt
+%doc --no-dereference apache2.0_license.txt
 
 %files javadoc
 %{_javadocdir}/%{name}
-%doc apache2.0_license.txt
+%doc --no-dereference apache2.0_license.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt2_10jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt2_7jpp8
 - added BR: javapackages-local for javapackages 5
 
