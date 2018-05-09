@@ -9,7 +9,7 @@
 %def_enable dbus
 
 Name: fluidsynth
-Version: 1.1.10
+Version: 1.1.11
 Release: alt1
 
 Summary: Software real-time synthesizer
@@ -186,6 +186,9 @@ cp -r BUILD/doc/api/html ./
 %endif
 
 %changelog
+* Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 1.1.11-alt1
+- 1.1.11
+
 * Mon Feb 26 2018 Yuri N. Sedunov <aris@altlinux.org> 1.1.10-alt1
 - 1.1.10
 
