@@ -41,7 +41,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.0
-Release:        alt5_0.19.a2.2jpp8
+Release:        alt5_0.20.a2.2jpp8
 Epoch:          0
 Summary:        Plexus Ant component factory
 # Email from copyright holder confirms license.
@@ -103,6 +103,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.20.a2.2jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.19.a2.2jpp8
 - fc27 update
 
