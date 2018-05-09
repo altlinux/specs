@@ -4,7 +4,7 @@
 %define m_name		Test::Manifest
 %define m_author_id	BDFOY
 Name: perl-%module
-Version: 2.02
+Version: 2.021
 Release: alt1
 
 Summary: Interact with a t/test_manifest file
@@ -12,7 +12,7 @@ Group: Development/Perl
 License: Artistic
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/B/BD/BDFOY/Test-Manifest-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BD/BDFOY/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +25,7 @@ want to run and the order in which you want to run them. It constructs the
 right value for MakeMaker to do the right thing.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,11 +34,15 @@ right value for MakeMaker to do the right thing.
 %perl_vendor_install
 
 %files
+%doc LICENSE README.pod Changes examples
 %perl_vendor_privlib/Test
 #%perl_vendor_man3dir/*
 %doc Changes
 
 %changelog
+* Wed May 09 2018 Igor Vlasenko <viy@altlinux.ru> 2.021-alt1
+- automated CPAN update
+
 * Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1
 - automated CPAN update
 
