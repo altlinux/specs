@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: pentaho-reporting-flow-engine
 Version: 0.9.4
-Release: alt1_14jpp8
+Release: alt1_15jpp8
 Summary: Pentaho Flow Reporting Engine
 License: LGPLv2+
 Epoch: 1
@@ -65,6 +65,9 @@ cp -rp build/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.9.4-alt1_15jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.9.4-alt1_14jpp8
 - fc27 update
 
