@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-ivy
 Version:        2.4.0
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Summary:        Java-based dependency manager
 
 License:        ASL 2.0
@@ -44,7 +44,7 @@ BuildRequires:  apache-commons-lang
 BuildRequires:  bouncycastle
 BuildRequires:  bouncycastle-pg
 %endif
-BuildRequires:  jakarta-commons-httpclient
+BuildRequires:  apache-commons-httpclient
 BuildRequires:  jsch
 BuildRequires:  jakarta-oro
 BuildRequires:  apache-commons-parent
@@ -126,8 +126,10 @@ sed -i /ivy:publish/s/local/xmvn/ build.xml
 # girar noarch diff
 sed -i -e s,yyyyMMddHHmmss,yyyyMMddHH, build.xml
 
+
 %build
 %ant -Divy.mode=local -Dtarget.ivy.bundle.version=%{version} -Dtarget.ivy.bundle.version.qualifier= -Dtarget.ivy.version=%{version} jar javadoc publish-local
+
 
 %install
 %mvn_install -J build/doc/reports/api
@@ -138,12 +140,15 @@ echo "apache-ivy/ivy" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 %files -f .mfiles
 %{_sysconfdir}/ant.d/%{name}
 %doc README
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed May 09 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt1_10jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt1_9jpp8
 - new fc release
 
