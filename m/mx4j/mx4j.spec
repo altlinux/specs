@@ -1,12 +1,13 @@
-BuildRequires: javapackages-local
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: docbook-dtds
 %define _without_tests 1
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -39,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           mx4j
 Version:        3.0.1
-Release:        alt4_22jpp8
+Release:        alt4_28jpp8
 Epoch:          1
 Summary:        Open source implementation of JMX Java API
 License:        ASL 1.1
@@ -65,7 +66,8 @@ Patch3:         mx4j-docbook.patch
 Patch5:         mx4j-caucho-build.patch
 Patch6:         mx4j-no-iiop.patch
 URL:            http://mx4j.sourceforge.net/
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils > 0:1.6
+BuildRequires:  javapackages-local
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-apache-resolver
 BuildRequires:  javamail >= 0:1.2
@@ -74,7 +76,6 @@ BuildRequires:  apache-commons-logging >= 0:1.0.1
 BuildRequires:  xml-commons-apis
 BuildRequires:  bcel >= 0:5.0
 BuildRequires:  coreutils
-BuildRequires:  axis >= 0:1.1
 BuildRequires:  wsdl4j
 BuildRequires:  apache-commons-discovery
 BuildRequires:  docbook-dtds >= 0:1.0
@@ -89,7 +90,6 @@ Requires:       log4j >= 0:1.2.7
 Requires:       apache-commons-logging >= 0:1.0.1
 Requires:       xml-commons-apis
 Requires:       bcel >= 0:5.0
-Requires:       axis >= 0:1.1
 Requires:       xml-commons-resolver
 Requires:       xml-commons
 Source44: import.info
@@ -101,6 +101,7 @@ Java(TM) Management Extensions (JMX).
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -143,15 +144,18 @@ pushd lib
    ln -sf $(build-classpath commons-logging) .
    ln -sf $(build-classpath log4j) .
    ln -sf $(build-classpath bcel) .
-   ln -sf $(build-classpath axis/axis) .
-   ln -sf $(build-classpath axis/jaxrpc) .
-   ln -sf $(build-classpath axis/saaj) .
    ln -sf $(build-classpath wsdl4j) .
    ln -sf $(build-classpath commons-discovery) .
    ln -sf $(build-classpath servlet25) servlet.jar
    ln -sf $(build-classpath javamail/mail) .
    ln -sf $(build-classpath xml-commons-resolver) .
 popd
+
+# Don't build bits that require Axis 1.x since it is insecure and unmaintained upstream
+#rm src/tools/mx4j/tools/remote/resolver/soap/SOAPResolver.java
+find src/tools/mx4j/tools/remote/soap -type f -delete
+find src/tools/mx4j/tools/remote/provider/soap -type f -delete
+find src/tools/mx4j/tools/remote/resolver/soap -type f -delete
 
 %build
 
@@ -215,6 +219,9 @@ rm -f %{_javadir}/%{name}.jar
 %doc dist/docs/*
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt4_28jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt4_22jpp8
 - added BR: javapackages-local for javapackages 5
 
