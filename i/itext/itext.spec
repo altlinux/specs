@@ -1,11 +1,11 @@
-BuildRequires: javapackages-local
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools
+BuildRequires: /usr/bin/desktop-file-install rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global alternate_name iText
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 Summary:          A Free Java-PDF library
 Name:             itext
 Version:          2.1.7
-Release:          alt3_36jpp8
+Release:          alt3_39jpp8
 #src/toolbox/com/lowagie/toolbox/Versions.java is MPLv1.1 or MIT
 #src/toolbox/com/lowagie/toolbox/plugins/XML2Bookmarks.java is MPLv1.1 or LGPLv2+
 #src/rups/com/lowagie/rups/Rups.java is LGPLv2+
@@ -85,10 +85,14 @@ BuildRequires:    bouncycastle-mail >= 1.52
 BuildRequires:    bouncycastle-pkix >= 1.52
 BuildRequires:    desktop-file-utils
 BuildRequires:    dom4j
-BuildRequires:    ImageMagick
+BuildRequires:    ImageMagick-tools
 BuildRequires:    pdf-renderer
 BuildRequires:    java-devel >= 1.7
 BuildRequires:    jpackage-utils
+%if 0%{?fedora} >= 27 || 0%{?rhel} > 7
+# pom_* macros are now located in javapackages-local
+BuildRequires:    javapackages-local
+%endif
 
 BuildArch:        noarch
 
@@ -298,22 +302,31 @@ cp -pr JPP-%{name}-rups.pom $RPM_BUILD_ROOT%{_mavenpomdir}
 %add_maven_depmap JPP-%{name}-rups.pom %{name}-rups.jar  -f rups
 
 %files
-%doc build/bin/com/lowagie/text/{apache_license,lgpl,misc_licenses,MPL-1.1}.txt
+%doc --no-dereference build/bin/com/lowagie/text/apache_license.txt
+%doc --no-dereference build/bin/com/lowagie/text/lgpl.txt
+%doc --no-dereference build/bin/com/lowagie/text/misc_licenses.txt
+%doc --no-dereference build/bin/com/lowagie/text/MPL-1.1.txt
 
 %files core -f .mfiles
-%doc build/bin/com/lowagie/text/{apache_license,lgpl,misc_licenses,MPL-1.1}.txt
+%doc --no-dereference build/bin/com/lowagie/text/apache_license.txt
+%doc --no-dereference build/bin/com/lowagie/text/lgpl.txt
+%doc --no-dereference build/bin/com/lowagie/text/misc_licenses.txt
+%doc --no-dereference build/bin/com/lowagie/text/MPL-1.1.txt
 
 %files rtf -f .mfiles-rtf
-%doc build/bin/com/lowagie/text/{lgpl,misc_licenses,MPL-1.1}.txt
+%doc --no-dereference build/bin/com/lowagie/text/lgpl.txt
+%doc --no-dereference build/bin/com/lowagie/text/misc_licenses.txt
+%doc --no-dereference build/bin/com/lowagie/text/MPL-1.1.txt
 
 %files rups -f .mfiles-rups
-%doc src/rups/com/lowagie/rups/view/icons/copyright_notice.txt
+%doc --no-dereference src/rups/com/lowagie/rups/view/icons/copyright_notice.txt
 %{_bindir}/%{name}-rups
 %{_datadir}/applications/%{name}-rups.desktop
 %{_datadir}/icons/hicolor/128x128/apps/%{name}-rups.png
 
 %files toolbox 
-%doc build/bin/com/lowagie/text/{misc_licenses,MPL-1.1}.txt
+%doc --no-dereference build/bin/com/lowagie/text/misc_licenses.txt
+%doc --no-dereference build/bin/com/lowagie/text/MPL-1.1.txt
 %doc src/toolbox/com/lowagie/toolbox/tools.txt
 %{_javadir}/%{name}-toolbox.jar
 %{_bindir}/%{name}-toolbox
@@ -322,11 +335,17 @@ cp -pr JPP-%{name}-rups.pom $RPM_BUILD_ROOT%{_mavenpomdir}
 
 %files javadoc
 %{_javadocdir}/%{name}
-%doc build/bin/com/lowagie/text/{apache_license,lgpl,misc_licenses,MPL-1.1}.txt
+%doc --no-dereference build/bin/com/lowagie/text/apache_license.txt
+%doc --no-dereference build/bin/com/lowagie/text/lgpl.txt
+%doc --no-dereference build/bin/com/lowagie/text/misc_licenses.txt
+%doc --no-dereference build/bin/com/lowagie/text/MPL-1.1.txt
 
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt3_39jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt3_36jpp8
 - added BR: javapackages-local for javapackages 5
 
