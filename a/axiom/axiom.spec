@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           axiom
 Version:        1.2.12
-Release:        alt1_17jpp8
+Release:        alt1_19jpp8
 Epoch:          2
 Summary:        Axis Object Model
 License:        ASL 2.0
@@ -16,23 +16,21 @@ Url:            http://ws.apache.org/commons/axiom/
 # svn export http://svn.apache.org/repos/asf/webservices/commons/tags/axiom/1.2.12/ axiom-1.2.12
 # tar caf axiom-1.2.12.tar.xz axiom-1.2.12
 Source0:        %{name}-%{version}.tar.xz
-# This patch makes several build changes:
-# 1) Remove deps on a JAF implementation -- this is built into openjdk 7
-# 2) Use the javamail and stax implementations already in Fedora
-# 3) Remove maven plugins not present in Fedora, which do not impact the build process
-# 4) Remove modules which require additional dependencies not yet in Fedora
-Patch0:         axiom-build-fixes.patch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(javax.mail:mail)
 BuildRequires:  mvn(jaxen:jaxen)
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
-BuildRequires:  mvn(stax:stax-api)
-BuildRequires:  /usr/bin/perl
+BuildRequires:  mvn(org.codehaus.woodstox:stax2-api)
+BuildRequires:  mvn(org.codehaus.woodstox:wstx-asl)
+BuildRequires:  mvn(org.osgi:org.osgi.core)
+BuildRequires:  mvn(xalan:xalan)
+BuildRequires:  mvn(xerces:xercesImpl)
+BuildRequires:  mvn(xmlunit:xmlunit)
 
 BuildArch:      noarch
 Source44: import.info
@@ -57,32 +55,57 @@ BuildArch: noarch
 
 %prep
 %setup -q
-%patch0 -p1
-rm -rf modules/axiom-jaxen-testsuite/src/main/
 
 # fix eol
-/usr/bin/perl -pi -e 's/\r$//g' README.txt NOTICE RELEASE-NOTE.txt
+sed -i 's/\r//' README.txt NOTICE RELEASE-NOTE.txt
 
-%pom_remove_dep :axiom-testutils modules/axiom-api
-
-%pom_remove_plugin :build-helper-maven-plugin
+# Disable plugins not needed for RPM builds
+%pom_remove_plugin -r :maven-javadoc-plugin
 %pom_remove_plugin -r :maven-source-plugin
+%pom_remove_plugin -r :apache-rat-plugin
+%pom_remove_plugin -r :gmaven-plugin
+%pom_remove_plugin -r :maven-scr-plugin
+
+# Don't build and attach manuals due to unavailable plugin "com.agilejava.docbkx:docbkx-maven-plugin"
+%pom_remove_plugin :docbkx-maven-plugin
+%pom_remove_plugin :build-helper-maven-plugin
+
+# Don't build fat-jar
+%pom_remove_plugin :maven-assembly-plugin
+
+# Mordern JREs supply these APIs
+%pom_remove_dep :geronimo-activation_1.1_spec modules/axiom-{dom,parent,api,testutils,impl}
+%pom_remove_dep :geronimo-stax-api_1.0_spec modules/axiom-{dom,tests,parent,api,testutils,impl}
+%pom_remove_plugin :maven-dependency-plugin modules/axiom-api
+
+# Fix dep on mail API
+%pom_change_dep :geronimo-javamail_1.4_spec javax.mail:mail:1.4 modules/axiom-{dom,parent,api,impl}
+
+# Disable OSGi test suites due to unavailable deps
+%pom_disable_module modules/axiom-osgi
+%pom_disable_module modules/axiom-integration
+
+# Don't ship tests
+%mvn_package ":axiom-{testutils,jaxen-testsuite,testsuite,tests}" __noinstall
 
 %build
-# Skipping tests for now due to many extra deps
-%mvn_build -f
+# Skipping tests for now due to unexplained failures
+%mvn_build -- -DskipTests
 
 %install
 %mvn_install
 
 %files -f .mfiles
 %doc *.txt
-%doc NOTICE
+%doc --no-dereference NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc NOTICE
+%doc --no-dereference NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2:1.2.12-alt1_19jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2:1.2.12-alt1_17jpp8
 - fc27 update
 
