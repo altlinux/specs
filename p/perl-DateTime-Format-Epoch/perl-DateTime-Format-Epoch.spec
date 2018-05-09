@@ -7,38 +7,43 @@ BuildRequires: perl(Module/Build.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Epoch
 Version:        0.16
-Release:        alt1_7
+Release:        alt1_9
 Summary:        Convert DateTimes to/from epoch seconds
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/DateTime-Format-Epoch/
 Source0:        http://www.cpan.org/modules/by-module/DateTime/DateTime-Format-Epoch-%{version}.tar.gz
 BuildArch:      noarch
 # Build
+BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  sed
-BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  sed
 # Runtime
 BuildRequires:  perl(DateTime.pm)
 BuildRequires:  perl(DateTime/LeapSecond.pm)
 BuildRequires:  perl(Math/BigInt.pm)
+BuildRequires:  perl(Math/BigInt/GMP.pm)
 BuildRequires:  perl(Params/Validate.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(vars.pm)
 BuildRequires:  perl(warnings.pm)
-# Tests only
+# Test Suite
 BuildRequires:  perl(Test/More.pm)
-# Optional tests only
+# Optional Tests
 BuildRequires:  perl(Test/Pod.pm)
+# Dependencies
 Requires:       perl(DateTime.pm) >= 0.310
 Requires:       perl(Math/BigInt.pm) >= 1.660
+Requires:       perl(Math/BigInt/GMP.pm)
 
+# Filter under-specified dependencies
 
 
 Source44: import.info
-%filter_from_requires /^perl\\(Math.BigInt.pm\\)$/d
-%filter_from_requires /^perl\\(DateTime.pm\\)/d
+%filter_from_requires /^perl(Math.BigInt\\)$/d
+%filter_from_requires /^perl(DateTime.pm)/d
 
 %description
 This module can convert a DateTime object (or any object that can be
@@ -50,22 +55,25 @@ epoch. It can also do the reverse.
 find -type f -print0 | xargs -0 sed -i 's/\r$//'
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=true
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=true NO_PERLLOCAL=true
 %make_build
 
 %install
-make pure_install DESTDIR=%{buildroot}
-# %{_fixperms} %{buildroot}/*
+make install DESTDIR=%{buildroot}
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README TODO
-%{perl_vendor_privlib}/*
+%{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_9
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_7
 - update to new release by fcimport
 
