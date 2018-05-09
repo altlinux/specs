@@ -1,6 +1,6 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           slf4j
 Version:        1.7.25
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Epoch:          0
 Summary:        Simple Logging Facade for Java
 # the log4j-over-slf4j and jcl-over-slf4j submodules are ASL 2.0, rest is MIT
@@ -48,6 +48,7 @@ License:        MIT and ASL 2.0
 URL:            http://www.slf4j.org/
 Source0:        http://www.slf4j.org/dist/%{name}-%{version}.tar.gz
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Patch0:         0001-Disallow-EventData-deserialization-by-default.patch
 BuildArch:      noarch
 
 BuildRequires:  maven-local
@@ -147,6 +148,7 @@ SLF4J Source JARs.
 
 %prep
 %setup -q
+%patch0 -p1
 find . -name "*.jar" | xargs rm
 cp -p %{SOURCE1} APACHE-LICENSE
 
@@ -214,7 +216,7 @@ rm -rf target/site/{.htaccess,apidocs}
 cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 
 %files -f .mfiles
-%doc LICENSE.txt APACHE-LICENSE
+%doc --no-dereference LICENSE.txt APACHE-LICENSE
 
 %files jdk14 -f .mfiles-%{name}-jdk14
 %files log4j12 -f .mfiles-%{name}-log4j12
@@ -225,16 +227,19 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 %files -n jul-to-slf4j -f .mfiles-jul-to-slf4j
 
 %files sources -f .mfiles-sources
-%doc LICENSE.txt APACHE-LICENSE
+%doc --no-dereference LICENSE.txt APACHE-LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt APACHE-LICENSE
+%doc --no-dereference LICENSE.txt APACHE-LICENSE
 
 %files manual
-%doc LICENSE.txt APACHE-LICENSE
+%doc --no-dereference LICENSE.txt APACHE-LICENSE
 %{_defaultdocdir}/%{name}-manual
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.25-alt1_4jpp8
+- java update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.25-alt1_2jpp8
 - new jpp release
 
