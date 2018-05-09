@@ -1,12 +1,12 @@
 %global import_path golang.org/x/crypto
 
-%global commit 558b6879de74bc843225cde5686419267ff707ca
+%global commit 21052ae46654ecf18dfdba0f7c12701a1e2b3164
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-golang-x-crypto
 Version: 0
-Release: alt9.git%abbrev
+Release: alt11.git%abbrev
 Summary: Supplementary Go cryptography libraries
 License: MIT
 Group: Development/Other
@@ -30,7 +30,7 @@ Group: Development/Other
 Requires: golang
 Provides: golang(%import_path) = %version-%release
 
-Requires: golang(golang.org/x/sys)
+Requires: golang(golang.org/x/sys/unix)
 
 %description devel
 Supplementary Go cryptography libraries
@@ -55,6 +55,12 @@ export GOPATH="%go_path"
 %go_path/src/*
 
 %changelog
+* Wed May 09 2018 Denis Pynkin <dans@altlinux.org> 0-alt11.git21052ae4
+-Update
+
+* Fri Feb 02 2018 Denis Pynkin <dans@altlinux.org> 0-alt10.git1875d0a7
+- Update
+
 * Sat Jul 29 2017 Denis Pynkin <dans@altlinux.org> 0-alt9.git558b6879
 - Update
 
