@@ -1,7 +1,7 @@
 ##nQ SPEC file for Perl module autobox
 
 Name: perl-autobox
-Version: 2.86
+Version: 3.0.1
 Release: alt1
 
 Summary: Perl interface to call methods on native types
@@ -19,9 +19,9 @@ Patch0: %real_name-%version-%release.patch
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sun Apr 22 2018
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 perl perl-CPAN-Meta-Requirements perl-Encode perl-IPC-System-Simple perl-JSON-PP perl-Parse-CPAN-Meta perl-Pod-Escapes perl-Pod-Simple perl-devel perl-parent python-base python-modules python3 python3-base python3-module-mpl_toolkits python3-module-zope ruby
-BuildRequires: perl-CPAN-Meta perl-Scope-Guard perl-Test-Pod
+# Automatically added by buildreq on Wed May 09 2018
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 perl perl-CPAN-Meta-Requirements perl-Encode perl-IPC-System-Simple perl-JSON-PP perl-Parse-CPAN-Meta perl-Pod-Escapes perl-Pod-Simple perl-Try-Tiny perl-devel perl-parent python-base python-modules python3 python3-base python3-module-mpl_toolkits python3-module-zope ruby
+BuildRequires: perl-CPAN-Meta perl-Scope-Guard perl-Test-Fatal perl-Test-Pod
 
 BuildRequires: perl-IPC-System-Simple
 
@@ -55,6 +55,9 @@ can be overridden or countermanded in a nested scope.
 %perl_vendor_autolib/autobox*
 
 %changelog
+* Wed May 09 2018 Nikolay A. Fetisov <naf@altlinux.org> 3.0.1-alt1
+- New version
+
 * Sat Apr 21 2018 Nikolay A. Fetisov <naf@altlinux.org> 2.86-alt1
 - New version
 
