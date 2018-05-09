@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          uimaj
 Version:       2.8.1
-Release:       alt1_5jpp8
+Release:       alt1_7jpp8
 Summary:       Apache UIMA is an implementation of the OASIS-UIMA specifications
 License:       ASL 2.0
 URL:           http://uima.apache.org/
@@ -17,19 +17,14 @@ Patch0:        uimaj-2.8.1-jackson2.7.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(ant-contrib:ant-contrib)
-BuildRequires: mvn(axis:axis)
-BuildRequires: mvn(axis:axis-jaxrpc)
 BuildRequires: mvn(com.fasterxml.jackson.core:jackson-core)
 BuildRequires: mvn(commons-io:commons-io)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(log4j:log4j:1.2.17)
-BuildRequires: mvn(org.apache.commons:commons-logging)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven:maven-core)
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
 BuildRequires: mvn(org.apache.maven:maven-project)
 BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires: mvn(org.apache.ant:ant-apache-regexp)
 BuildRequires: mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
@@ -106,12 +101,9 @@ find .  -name "*.cmd" -delete
 %pom_remove_dep org.apache.uima:%{name}-examples
 %pom_disable_module ../%{name}-examples aggregate-%{name}
 
-# [ERROR] uimaj-adapter-soap/src/main/java/org/apache/uima/adapter/soap/BinaryDeserializer.java
-# cannot access org.apache.commons.logging.Log
-%pom_add_dep org.apache.commons:commons-logging %{name}-adapter-soap
-
-# Use system jvm apis
-%pom_remove_dep org.apache.geronimo.specs:geronimo-activation_1.0.2_spec %{name}-adapter-soap
+# Disable SOAP module which relies upon the ancient and obsolete axis library
+%pom_disable_module ../%{name}-adapter-soap aggregate-%{name}
+%pom_remove_dep org.apache.uima:%{name}-adapter-soap
 
 # Unavailable deps org.apache.uima:uima-docbook-olink:zip:olink:1-SNAPSHOT
 %pom_disable_module ../aggregate-%{name}-docbooks aggregate-%{name}
@@ -136,7 +128,6 @@ sed -i 's/\r//' NOTICE README
 %mvn_package :jcasgen-maven-plugin jcasgen-maven-plugin
 
 %build
-
 %mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
@@ -144,18 +135,21 @@ sed -i 's/\r//' NOTICE README
 
 %files -f .mfiles
 %doc README RELEASE_NOTES.html
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files -n jcasgen-maven-plugin -f .mfiles-jcasgen-maven-plugin
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files -n uima-pear-maven-plugin -f .mfiles-uima-pear-maven-plugin
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt1_5jpp8
 - fc27 update
 
