@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools rpm-build-java
+BuildRequires: /usr/bin/desktop-file-install rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -48,7 +48,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bsh
 Version:        2.0
-Release:        alt1_8.b6jpp8
+Release:        alt1_9.b6jpp8
 Epoch:          0
 Summary:        Lightweight Scripting for Java
 URL:            http://www.beanshell.org/
@@ -66,7 +66,7 @@ BuildRequires:  junit
 BuildRequires:  javacc
 BuildRequires:  glassfish-servlet-api
 %if %{with desktop}
-BuildRequires:  ImageMagick
+BuildRequires:  ImageMagick-tools
 BuildRequires:  desktop-file-utils
 %endif
 
@@ -172,7 +172,7 @@ mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 %doc README.md src/Changes.html src/CodeMap.html docs/faq/faq.html
 %attr(0755,root,root) %{_bindir}/%{name}*
 %if %{with desktop}
@@ -186,12 +186,15 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc docs/manual/html
 %doc docs/manual/images/*.jpg
 %doc docs/manual/images/*.gif
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_9.b6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_8.b6jpp8
 - fc27 update
 
