@@ -36,7 +36,7 @@ BuildRequires: libvorbis-devel
 #define wesdesktopsuffix %nil
 
 Name: wesnoth%wessuffix
-Version: 1.13.10
+Version: 1.14.0
 Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
@@ -220,7 +220,7 @@ This package contains python interface to Battle for Wesnoth.
 
 %prep
 %setup -n wesnoth-%version
-%patch -p1
+#patch -p1
 %patch1 -p1
 
 %build
@@ -298,11 +298,10 @@ cmake . \
 %make_build VERBOSE=1
 %endif # scons
 
-for s in 96 72 48 36 32 24 22 16; do
-    convert -depth 8 -resize ${s}x$s icons/wesnoth-{icon,$s}.png
-#    convert -depth 8 -resize ${s}x$s icons/{map-editor-icon-Mac,wesnoth_editor-$s}.png
-done
-bzip2 --keep --best --force changelog
+#for s in 96 72 48 36 32 24 22 16; do
+#    convert -depth 8 -resize ${s}x$s icons/wesnoth-{icon,$s}.png
+#done
+bzip2 --keep --best --force changelog*
 
 %install
 
@@ -318,7 +317,6 @@ bzip2 --keep --best --force changelog
 %if_with install_using_scons
 # scons install
 scons install install-pytools destdir=$RPM_BUILD_ROOT
-rm %buildroot%{_datadir}/icons/wesnoth-icon.png
 rm %buildroot%_desktopdir/wesnoth.desktop
 rm -rf %buildroot/usr/lib/python/site-packages/%name
 rm -rf %buildroot%{python3_sitelibdir_noarch}/%{name}
@@ -346,10 +344,10 @@ for i in wesnoth wesnoth_addon_manager \
  ; do
 	 mv %buildroot%_bindir/$i %buildroot%_bindir/${i}%wessuffix
 done
-cp icons/wesnoth{,%wessuffix}.desktop
+cp packaging/wesnoth{,%wessuffix}.desktop
 find %buildroot%_mandir -name wesnoth.6 -execdir mv {} wesnoth%wessuffix.6 \;
 find %buildroot%_mandir -name wesnothd.6 -execdir mv {} wesnothd%wessuffix.6 \;
-sed -i -e 's,Exec=wesnoth,Exec=wesnoth%wessuffix,;s,^\(Name.*\),\1 (%wesdesktopsuffix),' icons/wesnoth*%{wessuffix}.desktop
+sed -i -e 's,Exec=wesnoth,Exec=wesnoth%wessuffix,;s,^\(Name.*\),\1 (%wesdesktopsuffix),' packaging/wesnoth*%{wessuffix}.desktop
 %endif
 
 #if with install_using_manual || with install_using_scons
@@ -357,9 +355,8 @@ sed -i -e 's,Exec=wesnoth,Exec=wesnoth%wessuffix,;s,^\(Name.*\),\1 (%wesdesktops
 desktop-file-install --dir %buildroot%_desktopdir \
                      --mode="0644" \
                      --remove-key="Version" \
-                     icons/wesnoth%wessuffix.desktop
-mkdir -p %buildroot%{_datadir}/pixmaps
-cp icons/wesnoth-icon.png %buildroot%{_datadir}/pixmaps
+                     packaging/wesnoth%wessuffix.desktop
+#mkdir -p %buildroot%{_datadir}/pixmaps
 mkdir -p %buildroot%_docdir/
 cp -a doc/manual %buildroot%_docdir/%name
 %endif
@@ -413,19 +410,21 @@ mv %buildroot%_datadir/%name/data/tools/wesnoth %buildroot%python_sitelibdir_noa
 mkdir -p %buildroot%_docdir/%name-%version/manual
 mv %buildroot%_docdir/%name/* %buildroot%_docdir/%name-%version/manual/
 install -m 0644 README.md copyright changelog.* %buildroot%_docdir/%name-%version/
-install -d -m 0755 %buildroot%_iconsdir/hicolor/64x64/apps
-mv %buildroot{%_pixmapsdir/wesnoth-icon,%_iconsdir/hicolor/64x64/apps/%name}.png
-#install -D -m 0644 {icons/wesnoth-icon-Mac,%buildroot%_iconsdir/hicolor/128x128/apps/%name}.png
 %if_enabled editor
 for s in 48 32 16; do
     install -D -m 0644 utils/umc_dev/org.wesnoth/icons/wesnoth_editor-icon_$s.png %buildroot%_iconsdir/hicolor/${s}x$s/apps/wesnoth_editor%{wessuffix}.png
 done
 %endif
-for s in 32 16; do
-    install -D -m 0644 utils/umc_dev/org.wesnoth/icons/wesnoth-icon_$s.png %buildroot%_iconsdir/hicolor/${s}x$s/apps/%name.png
+
+mkdir -p packaging/icons/hicolor/48x48/apps/
+for s in 48; do convert -depth 8 -resize ${s}x$s packaging/icons/hicolor/{64x64,${s}x${s}}/apps/wesnoth-icon.png
 done
-install -D -m 0644 icons/wesnoth-48.png %buildroot%_iconsdir/hicolor/48x48/apps/wesnoth%{wessuffix}.png
-#install -D -m 0644 utils/umc_dev/org.wesnoth/icons/wesnoth-icon.png %buildroot%_iconsdir/hicolor/64x64/apps/wesnoth%{wessuffix}.png
+# remove wesnoth-icon
+rm -rf %buildroot%_iconsdir/hicolor/
+for s in 16 32 48 64 128 256; do 
+    install -D -m 0644 packaging/icons/hicolor/${s}x${s}/apps/wesnoth-icon.png \
+    %buildroot%_iconsdir/hicolor/${s}x$s/apps/%{name}-icon.png
+done
 
 mkdir -p %buildroot%_initdir/ %buildroot%_sysconfdir/sysconfig/
 cat > %buildroot%_sysconfdir/sysconfig/wesnoth%wessuffix <<'EOF'
@@ -593,7 +592,7 @@ ln -s %_datadir/fonts/ttf/sazanami/gothic/sazanami-gothic.ttf %buildroot%_datadi
 ln -s %_datadir/fonts/ttf/wqy-zenhei/wqy-zenhei.ttc %buildroot%_datadir/%name/fonts/wqy-zenhei.ttc
 
 
-sed -i 's/wesnoth-icon/wesnoth%wessuffix/' %buildroot%_desktopdir/%name.desktop
+sed -i 's/wesnoth-icon/wesnoth%{wessuffix}-icon/' %buildroot%_desktopdir/%name.desktop
 
 %if_disabled tools
 rm -rf %buildroot%_bindir/wesnoth_addon_manager \
@@ -620,7 +619,8 @@ rm -rf %buildroot%_bindir/wesnoth_addon_manager \
 
 %files data -f %name.lang
 %_desktopdir/%name.desktop
-%_iconsdir/hicolor/*/apps/%name.png
+%_datadir/metainfo/%{name}.appdata.xml
+%_iconsdir/hicolor/*/apps/%{name}-icon.png
 %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/README.md
 %doc %_docdir/%name-%version/copyright
@@ -710,6 +710,9 @@ rm -rf %buildroot%_bindir/wesnoth_addon_manager \
 %endif
 
 %changelog
+* Wed May 09 2018 Igor Vlasenko <viy@altlinux.ru> 1.14.0-alt1
+- 1.14 release (closes: #34875)
+
 * Wed Dec 06 2017 Igor Vlasenko <viy@altlinux.ru> 1.13.10-alt1
 - 1.14 Beta 2
 
