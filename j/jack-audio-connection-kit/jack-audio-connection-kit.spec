@@ -1,7 +1,7 @@
 Summary: The Jack Audio Connection Kit
 Name: jack-audio-connection-kit
-Version: 1.9.10
-Release: alt2
+Version: 1.9.12
+Release: alt1
 Epoch: 1
 License: GPLv2 and GPLv2+ and LGPLv2+
 Group: Sound
@@ -10,13 +10,10 @@ URL: http://www.jackaudio.org
 Provides: jackd = %epoch:%version-%release
 Obsoletes: jackd < %epoch:%version
 
-Source0: https://dl.dropboxusercontent.com/u/28869550/jack-1.9.10.tar.bz2
+Source0: https://github.com/jackaudio/jack2/releases/download/v%version/jack2-%version.tar.gz
 Source2: %name-script.pa
 Source3: %name-limits.conf
 Patch0: jack-realtime-compat.patch
-Patch1: jack-1.9.10-alt-doxygen-path.patch
-Patch2: jack-1.9.10-gcc5.patch
-Patch3: jack-1.9.10-gcc6.patch
 
 BuildRequires: doxygen gcc-c++ libalsa-devel libcelt-devel libdbus-devel libexpat-devel libffado-devel libfreebob-devel
 BuildRequires: libncurses-devel libreadline-devel libsamplerate-devel libsndfile-devel python-modules-compiler
@@ -63,15 +60,12 @@ Obsoletes: jackit-utils < %epoch:%version
 Utilities that control and interact with the JACK server-jackd
 
 %prep
-%setup -q -n jack-%version
+%setup -q -n jack2-%version
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 ./waf configure --prefix=%_prefix --libdir=/%_libdir --doxygen --firewire --freebob --alsa --dbus --classic
-[ -n "$NPROCS" ] || NPROCS=%__nprocs; ./waf build -j$NPROCS
+./waf build -j${NPROCS:-%__nprocs}
 
 %install
 ./waf --destdir=%buildroot install
@@ -137,6 +131,9 @@ export RPM_FILES_TO_LD_PRELOAD_jack=%_libdir/jack/*.so
 %_man1dir/jackrec.1*
 
 %changelog
+* Mon May 07 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.9.12-alt1
+- Updated to 1.9.12.
+
 * Tue Jan 17 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.9.10-alt2
 - Fixed build with gcc6.
 
