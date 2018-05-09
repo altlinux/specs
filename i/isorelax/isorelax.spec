@@ -45,7 +45,7 @@ URL:            http://iso-relax.sourceforge.net/
 Epoch:          2
 Version:        0
 # I can't use %%{cvstag} as dashes aren't allowed in Release tags
-Release:        alt1_0.22.release20050331jpp8
+Release:        alt1_0.23.release20050331jpp8
 License:        MIT and ASL 1.1
 BuildArch:      noarch
 
@@ -98,12 +98,15 @@ ant release
 %mvn_install -J apidocs
 
 %files -f .mfiles
-%doc license.txt
+%doc --no-dereference license.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc license.txt
+%doc --no-dereference license.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.23.release20050331jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.22.release20050331jpp8
 - fc27 update
 
