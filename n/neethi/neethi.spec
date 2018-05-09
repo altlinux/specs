@@ -1,8 +1,6 @@
-BuildRequires: apache-parent
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          neethi
 Version:       3.0.1
-Release:       alt2_13jpp8
+Release:       alt2_15jpp8
 Summary:       Web Services Policy framework
 License:       ASL 2.0
 URL:           http://ws.apache.org/neethi/
@@ -20,6 +18,7 @@ BuildArch:     noarch
 BuildRequires: maven-local
 BuildRequires: wsdl4j
 BuildRequires: axiom
+BuildRequires: apache-parent
 BuildRequires: maven-plugin-bundle
 BuildRequires: maven-source-plugin
 Requires:      axiom
@@ -62,12 +61,15 @@ API documentation for %{name}.
 
 %files -f .mfiles
 %doc README.txt RELEASE-NOTE.txt
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt2_15jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt2_13jpp8
 - added BR: apache-parent for javapackages 5
 
