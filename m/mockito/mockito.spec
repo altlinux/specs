@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           mockito
 Version:        1.10.19
-Release:        alt1_13jpp8
+Release:        alt1_15jpp8
 Summary:        A Java mocking framework
 
 License:        MIT
@@ -95,12 +95,15 @@ sed -i -e "s|@version@|%{version}|g" maven/%{name}-core.pom
 %mvn_install -J target/javadoc
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.10.19-alt1_15jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.10.19-alt1_13jpp8
 - fc27 update
 
