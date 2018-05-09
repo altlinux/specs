@@ -1,8 +1,8 @@
-BuildRequires: javapackages-local
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jexcelapi
 Version:        2.6.12
-Release:        alt4_12jpp8
+Release:        alt4_15jpp8
 Summary:        A Java API to read, write and modify Excel spreadsheets
 License:        LGPLv3
 URL:            http://www.andykhan.com/jexcelapi
@@ -24,6 +24,7 @@ Requires:       jpackage-utils
 
 BuildRequires:  jpackage-utils >= 0:1.7.3
 BuildRequires:  java-devel >= 1.5.0
+BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  jflex
 BuildRequires:  findutils
@@ -114,6 +115,9 @@ cp -r docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.6.12-alt4_15jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.6.12-alt4_12jpp8
 - added BR: javapackages-local for javapackages 5
 
