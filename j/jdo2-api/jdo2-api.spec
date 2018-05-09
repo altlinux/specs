@@ -1,7 +1,7 @@
-BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jdo2-api
 Version:       2.2
-Release:       alt3_13jpp8
+Release:       alt3_16jpp8
 Summary:       Implementation of JSR 243: Java Data Objects 2.0
 License:       ASL 2.0
 Url:           http://db.apache.org/jdo/
@@ -22,6 +22,7 @@ Source2:       http://repo1.maven.org/maven2/javax/jdo/jdo2-api/2.2/jdo2-api-2.2
 Patch0:        jdo2-api-2.2-pom.patch
 BuildRequires: jpackage-utils
 BuildRequires: java-devel
+BuildRequires: javapackages-local
 
 BuildRequires: ant
 BuildRequires: geronimo-jpa
@@ -74,13 +75,16 @@ mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -pr  dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
 %files -f %{name}-%{version}/.mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc
 %{_javadocdir}/%{name}
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_16jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_13jpp8
 - added BR: javapackages-local for javapackages 5
 
