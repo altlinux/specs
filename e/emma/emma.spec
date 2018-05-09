@@ -42,7 +42,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Code Coverage Tool
 Name:           emma
 Version:        %{shortver}.5312
-Release:        alt2_19jpp8
+Release:        alt2_20jpp8
 Epoch:          0
 License:        CPL
 URL:            http://emma.sourceforge.net/
@@ -67,7 +67,7 @@ Patch4:         %{name}-timestamp.patch
 # the patch against HEAD to apply to this version -- overholt
 # http://sourceforge.net/tracker/index.php?func=detail&aid=2119913&group_id=108932&atid=651897
 Patch5:         %{name}-%{version}-64_bit_fix.patch
-Requires:       xerces-j2
+Requires:       jaxp_parser_impl
 BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  java-devel >= 1.6
 BuildRequires:  jpackage-utils >= 0:1.7.5
@@ -128,6 +128,9 @@ ant -Dbuild.compiler=modern build javadoc
 %doc cpl-v10.html
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5312-alt2_20jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5312-alt2_19jpp8
 - fc27 update
 
