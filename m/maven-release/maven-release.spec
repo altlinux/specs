@@ -1,16 +1,15 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat jaxen
+BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-release
 Version:        2.2.1
-Release:        alt7_17jpp8
+Release:        alt7_19jpp8
 Summary:        Release a project updating the POM and tagging in the SCM
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-release-plugin/
@@ -29,6 +28,7 @@ Patch4:         %{name}-MNG-3954.patch
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-cli:commons-cli)
 BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(jaxen:jaxen)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
@@ -128,6 +128,9 @@ EOT
 %doc LICENSE NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt7_19jpp8
+- java update
+
 * Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt7_17jpp8
 - fixed build with jdom
 
