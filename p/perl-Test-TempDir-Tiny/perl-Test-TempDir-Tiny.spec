@@ -3,8 +3,8 @@
 %define real_name Test-TempDir-Tiny
 
 Name: perl-Test-TempDir-Tiny
-Version: 0.016
-Release: alt2
+Version: 0.017
+Release: alt1
 
 Summary: Perl module to keep test directories if tests fail
 
@@ -39,5 +39,8 @@ temporary directories that stick around if tests fail.
 %perl_vendor_privlib/Test/TempDir/Tiny*
 
 %changelog
+* Wed May 09 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.017-alt1
+- New version
+
 * Sun Mar 19 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.016-alt2
 - Initial build for ALT Linux Sisyphus
