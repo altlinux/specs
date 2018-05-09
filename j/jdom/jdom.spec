@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jdom
 Version:        1.1.3
-Release:        alt3_14jpp8
+Release:        alt3_15jpp8
 Epoch:          0
 Summary:        Java alternative to DOM and SAX
 License:        ASL 1.1
@@ -107,17 +107,20 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
 cp -pr samples $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %doc CHANGES.txt COMMITTERS.txt README.txt TODO.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files demo
 %{_datadir}/%{name}
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt3_15jpp8
+- java update
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt3_14jpp8
 - fc27 update
 
