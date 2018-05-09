@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           gpars
 Version:        1.2.1
-Release:        alt1_9jpp8
+Release:        alt1_11jpp8
 Summary:        Groovy Parallel Systems
 License:        ASL 2.0 and Public Domain
 URL:            http://gpars.codehaus.org
@@ -21,7 +21,7 @@ Source2:        generate-tarball.sh
 
 Patch0:         0001-JSR-166.patch
 Patch1:         0002-Enable-XMvn-local-mode.patch
-Patch2:         0001-Port-build-script-to-current-gradle.patch
+Patch2:         0003-Port-build-script-to-current-gradle.patch
 Patch3:         gpars-1.2.1-port-to-netty-3.10.6.patch
 
 BuildRequires:  gradle-local >= 2.1
@@ -63,9 +63,12 @@ rm -rf src/main/groovy/groovyx/gpars/extra166y/
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_11jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_9jpp8
 - new release
 
