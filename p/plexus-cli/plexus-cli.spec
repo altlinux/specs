@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plexus-cli
 Version:        1.6
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Epoch:          0
 Summary:        Command Line Interface facilitator for Plexus
 License:        ASL 2.0
@@ -56,12 +56,15 @@ cp -p %{SOURCE1} .
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_5jpp8
 - fc27 update
 
