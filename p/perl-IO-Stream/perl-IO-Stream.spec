@@ -3,8 +3,8 @@
 %define real_name IO-Stream
 
 Name: perl-IO-Stream
-Version: 2.0.2
-Release: alt2
+Version: 2.0.3
+Release: alt1
 
 Summary:  Perl module for non-blocking I/O streams based on EV
 
@@ -64,6 +64,9 @@ rm -f -- t/err-rw.t t/timeout-write-slowclient.t
 %endif
 
 %changelog
+* Wed May 09 2018 Nikolay A. Fetisov <naf@altlinux.org> 2.0.3-alt1
+- New version
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2
 - removed Noop* example plugins as Data::Alias is no more in 5.24
 
