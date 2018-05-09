@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Extract class/interface/method definitions from sources
 Name:           qdox
 Version:        2.0
-Release:        alt1_0.11.M7jpp8
+Release:        alt1_0.12.M7jpp8
 Epoch:          1
 License:        ASL 2.0
 URL:            https://github.com/paul-hammant/qdox
@@ -84,6 +84,9 @@ jar ufm target/%{name}-%{version}*.jar %{SOURCE1}
 %doc LICENSE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.0-alt1_0.12.M7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.0-alt1_0.11.M7jpp8
 - fc27 update
 
