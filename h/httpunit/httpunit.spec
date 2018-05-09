@@ -1,7 +1,7 @@
-BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -39,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           httpunit
 Version:        1.7
-Release:        alt6_21jpp8
+Release:        alt6_24jpp8
 Epoch:          0
 Summary:        Automated web site testing toolkit
 License:        MIT and ASL 2.0
@@ -66,6 +66,7 @@ BuildRequires:  tomcat-servlet-3.1-api
 BuildRequires:  javamail >= 0:1.3
 BuildRequires:  rhino
 BuildRequires:  java-devel >= 1.6.0
+BuildRequires:  javapackages-local
 
 Requires:       junit >= 0:3.8
 Requires:       tomcat-servlet-3.1-api
@@ -97,6 +98,7 @@ Javadoc for %{name}
 Group: Development/Java
 Summary:        Documentation for %{name}
 Requires:       %{name}-javadoc
+BuildArch: noarch
 
 %description    doc
 Documentation for %{name}
@@ -173,6 +175,9 @@ popd
 %doc --no-dereference doc/*
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt6_24jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt6_21jpp8
 - added BR: javapackages-local for javapackages 5
 
