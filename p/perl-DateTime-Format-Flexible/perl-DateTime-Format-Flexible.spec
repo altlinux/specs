@@ -1,21 +1,29 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators perl(Test/NoWarnings.pm) perl(Test/Exception.pm)
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Execute extra test
+%bcond_with perl_DateTime_Format_Flexible_enables_extra_test
+
 Name:       perl-DateTime-Format-Flexible
 Version:    0.30
-Release:    alt1
+Release:    alt1_1
 License:    GPL+ or Artistic
 Summary:    Flexibly parse strings and turn them into DateTime objects
-Source0:     http://www.cpan.org/authors/id/T/TH/THINC/DateTime-Format-Flexible-%{version}.tar.gz
+Source:     http://search.cpan.org/CPAN/authors/id/T/TH/THINC/DateTime-Format-Flexible-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/DateTime-Format-Flexible/
 BuildArch:  noarch
-BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
 BuildRequires:  perl(base.pm)
@@ -31,11 +39,15 @@ BuildRequires:  perl(warnings.pm)
 # Tests:
 BuildRequires:  perl(File/Spec/Functions.pm)
 BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/MockTime.pm)
 BuildRequires:  perl(Test/More.pm)
-# Optional tests:
+BuildRequires:  perl(Test/NoWarnings.pm)
+%if %{with perl_DateTime_Format_Flexible_enables_extra_test}
+# Extra tests:
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
+%endif
 Source44: import.info
 
 %description
@@ -50,7 +62,7 @@ it into a DateTime object.
 %setup -q -n DateTime-Format-Flexible-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -58,14 +70,22 @@ make pure_install DESTDIR=%{buildroot}
 # %{_fixperms} %{buildroot}/*
 
 %check
-TEST_POD=1 make test
+%if %{with perl_DateTime_Format_Flexible_enables_extra_test}
+export TEST_POD=1
+%else
+export TEST_POD=0
+%endif
+make test
 
 %files
-%doc LICENSE example
+%doc --no-dereference LICENSE
 %doc Changes example/ README TODO
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1_1
+- update to new release by fcimport
+
 * Sun Mar 11 2018 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
 - automated CPAN update
 
