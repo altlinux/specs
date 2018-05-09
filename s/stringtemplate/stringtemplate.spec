@@ -1,6 +1,6 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -10,20 +10,19 @@ BuildRequires: jpackage-generic-compat
 Summary: A Java template engine
 Name: stringtemplate
 Version: 3.2.1
-Release: alt2_15jpp8
+Release: alt2_17jpp8
 URL: http://www.stringtemplate.org/
 Source0: http://www.stringtemplate.org/download/stringtemplate-%{version}.tar.gz
 # Build jUnit tests + make the antlr2 generated code before preparing sources
 Patch0: stringtemplate-3.1-build-junit.patch
 License: BSD
-Group: Development/Other
-BuildArch: noarch
-BuildRequires: ant-antlr ant-junit
-BuildRequires: antlr-tool
-# Standard deps
-BuildRequires: java-devel >= 1.6.0
+
+BuildRequires: ant
+BuildRequires: ant-antlr
+BuildRequires: ant-junit
 BuildRequires: javapackages-local
-Requires: antlr-tool
+
+BuildArch: noarch
 Source44: import.info
 
 %description
@@ -34,8 +33,8 @@ is particularly good at multi-targeted code generators,
 multiple site skins, and internationalization/localization.
 
 %package        javadoc
+Group: Development/Java
 Summary:        API documentation for %{name}
-Group:          Development/Java
 Requires:       java-javadoc
 BuildArch: noarch
 
@@ -52,21 +51,22 @@ ant jar
 ant javadocs -Dpackages= -Djavadocs.additionalparam="-Xdoclint:none"
 
 %install
-install -D build/stringtemplate.jar $RPM_BUILD_ROOT%{_datadir}/java/stringtemplate.jar
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pR docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -Dpm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom stringtemplate.jar
+%mvn_artifact pom.xml build/%{name}.jar
+%mvn_file : %{name}
+%mvn_install -J docs/api/
 
 %files -f .mfiles
-%doc LICENSE.txt README.txt
+%doc --no-dereference LICENSE.txt
+%doc README.txt
 
 %files javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt2_17jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt2_15jpp8
 - new fc release
 
