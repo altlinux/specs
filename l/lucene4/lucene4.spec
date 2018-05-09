@@ -39,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        High-performance, full-featured text search engine
 Name:           lucene4
 Version:        4.10.4
-Release:        alt1_10jpp8
+Release:        alt1_12jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -53,6 +53,8 @@ Patch1:         0001-dependency-generation.patch
 
 # Build fix for morfologik-stemming 2.x
 Patch2:         lucene-4.10.4-morfologik-stemming.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1501841
+Patch3:         0001-SOLR-11477-Disallow-resolving-of-external-entities-i.patch
 
 BuildRequires:  git
 BuildRequires:  subversion subversion-server-common
@@ -120,6 +122,7 @@ tar xf %{SOURCE1}
 pushd lucene
 %patch0 -p1
 %patch1 -p1
+%patch3 -p1
 
 # remove all binary libs
 find . -name "*.jar" -delete
@@ -188,12 +191,15 @@ mv lucene/build/poms/pom.xml .
 
 %files -f .mfiles
 %doc CHANGES.txt README.txt MIGRATE.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:4.10.4-alt1_12jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.10.4-alt1_10jpp8
 - fc27 update
 
