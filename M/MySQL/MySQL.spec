@@ -1,4 +1,3 @@
-
 %def_without debug
 %def_with libs
 %def_with devel
@@ -9,7 +8,7 @@
 
 Name: MySQL
 Version: 5.7.21
-Release: alt2
+Release: alt3%ubt
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -47,7 +46,7 @@ Source29: server-no-chroot.cnf
 Source30: client-server-chroot.cnf
 Source31: client-server-no-chroot.cnf
 
-Patch0: %name-%version-%release.patch
+Patch0: mysql-%version.patch
 
 # ALTLinux
 Patch1: mysql-5.7.21-alt-chroot.patch
@@ -68,7 +67,7 @@ Patch170: boost-1.59.0-log.patch
 Patch180: boost-1.59-python-make_setter.patch
 Patch181: boost-1.59-test-fenv.patch
 
-
+BuildRequires(pre): rpm-build-ubt
 # Automatically added by buildreq on Wed Mar 16 2011 (-bi)
 BuildRequires: chrooted gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam0-devel libevent-devel
 BuildRequires: libaio-devel libjemalloc-devel libwrap-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
@@ -291,10 +290,6 @@ pushd boost/boost_1_59_0
 %patch181 -p2
 popd
 
-
-# Replace that horror.
-#sed 's,@datadir@,%_datadir,g' <%%SOURCE15 >scripts/mysql_install_db.sh
-
 # with patch4
 # Prepare commands list for completion in mysql client.
 sed -n 's/^\([[:space:]]*{[[:space:]]*SYM.*(\)\("[&<=>|!A-Z][^"]*"\).*/{\2,0, 0, 0, ""},/p' <sql/lex.h >client/mysql_symbols.inc
@@ -377,10 +372,8 @@ install -pD -m755 %SOURCE16 %buildroot%_controldir/mysqld
 install -pD -m755 %SOURCE17 %buildroot%_controldir/mysqld-chroot
 
 # Backwards compatibility symlinks (ALT #14863)
-#mkdir -p %buildroot%_bindir
 ln -snf ../sbin/safe_mysqld %buildroot%_bindir/mysqld_safe
 
-#mv %buildroot%_bindir/mysql_install_db %buildroot%_sbindir/mysql_install_db
 # delete deprecated
 rm -f %buildroot%_bindir/mysql_install_db
 
@@ -397,9 +390,6 @@ install -pD -m644 %SOURCE31 %buildroot%_sysconfdir/my.cnf.server/client-server-n
 install -pD -m644 %SOURCE20 %buildroot%_tmpfilesdir/mysql.conf
 install -pD -m644 %SOURCE21 %buildroot%_unitdir/mysqld.service
 install -pD -m644 %SOURCE22 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/user.conf
-
-#install -pD -m644 /dev/null %buildroot%_sysconfdir/my.cnf
-#install -pD -m600 %SOURCE5 %buildroot%ROOT/my.cnf
 
 # Fix libmysqlclient_r symlinks
 (
@@ -468,7 +458,6 @@ fi
 
 %pre_control mysqld
 %pre_control mysqld-chroot
-
 
 %post server
 if [ -f /etc/my.cnf.rename -a ! -L /etc/my.cnf.rename -a ! -e /etc/my.cnf ]; then
@@ -649,7 +638,6 @@ fi
 %attr(0700,mysql,mysql) %dir %_localstatedir/mysql-keyring
 %dir %_docdir/MySQL-%version
 %_docdir/MySQL-%version/README*
-# %attr(600,root,root) %config(noreplace,missingok) %ROOT/my.cnf
 %attr(3771,root,mysql) %dir %ROOT
 %attr(710,root,mysql) %dir %ROOT/%_lib
 %attr(710,root,mysql) %dir %ROOT/%_libdir
@@ -676,6 +664,9 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Wed May 09 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt3%ubt
+- rebuild with ubt
+
 * Fri Mar 23 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt2
 - 5.7.21
 - update chroot patch
@@ -867,7 +858,7 @@ fi
 - Bugfix build.
 - Remove deprecated %%post_ldconfig/%%postun_ldconfig.
 - Added patches:
-  + mysql-5.0.68-BUG#37027: expire_logs_days and missing 
+  + mysql-5.0.68-BUG#37027: expire_logs_days and missing
     binlogs cause a crash !
 
 * Tue Nov 11 2008 L.A. Kostis <lakostis@altlinux.ru> 5.0.67-alt1
@@ -876,7 +867,7 @@ fi
 - Applied patches from Debian unstable/Ubuntu intrepid:
   + mysqlhotcopy-invalid-dbtable.patch: fix broken security fix.
   + upstream_bug_23921: Fixes random build failures.
-  + scripts__mysql_config__libs: Removes unnecessary library dependencies. 
+  + scripts__mysql_config__libs: Removes unnecessary library dependencies.
 - Applied patch from Gentoo:
   + ltmain.patch: fix build with recent automake.
 
@@ -907,8 +898,8 @@ fi
 - 5.0.51.
 - Security fixes:
   + CVE-2007-5969 (RENAME TABLE System Table Overwrite Vulnerability)
-  + CVE-2007-6303 CVE-2007-6304 
-    (Server Privilege Escalation And Denial Of Service Vulnerabilities) 
+  + CVE-2007-6303 CVE-2007-6304
+    (Server Privilege Escalation And Denial Of Service Vulnerabilities)
 - Update html documentation to 9232 revision.
 
 * Thu Aug 09 2007 L.A. Kostis <lakostis@altlinux.ru> 5.0.46-alt2
@@ -955,11 +946,11 @@ fi
 * Thu Nov 02 2006 L.A. Kostis <lakostis@altlinux.ru> 5.0.27-alt1
 - 5.0.27 release;
 - Added patches:
-  + db-4.1.24-disable-pthreadsmutexes.patch: fix NPTL issues 
-    (found in Mandriva package); 
-  + mysql-5.0.15-disable-pthreadsmutexes.patch: fix NPTL issues 
+  + db-4.1.24-disable-pthreadsmutexes.patch: fix NPTL issues
     (found in Mandriva package);
-  + mysql-5.0.27-alt-username-length.patch: add custom username-length 
+  + mysql-5.0.15-disable-pthreadsmutexes.patch: fix NPTL issues
+    (found in Mandriva package);
+  + mysql-5.0.27-alt-username-length.patch: add custom username-length
     (5.0 backport of BUG#16553) and README.ALT-ru_RU.UTF-8 about incompatible
     changes introduced by this patch;
 - Add html documentation from http://dev.mysql.com/docs.
@@ -969,7 +960,7 @@ fi
   http://bugs.mysql.com/bug.php?id=21543 for details).
 
 * Wed Aug 09 2006 LAKostis <lakostis at altlinux.org> 5.0.24-alt1
-- 5.0.24 release. 
+- 5.0.24 release.
 
 * Thu Jun 01 2006 LAKostis <lakostis at altlinux.ru> 5.0.22-alt1
 - 5.0.22.
@@ -998,7 +989,7 @@ fi
 - Added patches:
   + BUG#15719 fix (see #9348 for details);
   + BUG#17667 (aka CVE-2006-0903) fix;
-  
+
 * Thu Feb 23 2006 LAKostis <lakostis at altlinux.ru> 5.0.18-alt1.4
 - fix #9135;
 - fix debug switch.
@@ -1042,7 +1033,7 @@ fi
 
 * Sat Sep 17 2005 LAKostis <lakostis at altlinux.ru> 4.1.14-alt0.3
 - 4.1.14;
-- FIXME - need rework chroot patch for proper charset handling; 
+- FIXME - need rework chroot patch for proper charset handling;
 - add isam support for old db installs.
 - add x86_64 patches from RH and Annvix;
 - add non-chroot build switch;
@@ -1113,7 +1104,7 @@ fi
 - load_defaults: do not process untrusted files if executed by root.
 
 * Mon Mar 10 2003 Dmitry V. Levin <ldv@altlinux.org> 3.23.55-alt2
-- Packaged %ROOT/my.cnf, owned by root and available to root only,
+- Packaged %%ROOT/my.cnf, owned by root and available to root only,
   to avoid mysql->root possible privilege escalation described by
   Gufino in his Bugtraq posting:
   http://www.securityfocus.com/archive/1/314391
@@ -1147,7 +1138,7 @@ fi
 * Mon Sep 16 2002 Dmitry V. Levin <ldv@altlinux.org> 3.23.52-alt1
 - 3.23.52
 - Ensure tzset(3) is called before chroot(2).
-- Removed %_sysconfdir/localtime from %ROOT chroot.
+- Removed %%_sysconfdir/localtime from %%ROOT chroot.
 - Use subst instead of perl for text substitution.
 - Linked with readline-4.3.
 - Built with gcc-3.2.
@@ -1173,7 +1164,7 @@ fi
 - Added my_dir.h to libMySQL-devel (#0000701).
 
 * Thu Feb 21 2002 Dmitry V. Levin <ldv@alt-linux.org> 3.23.49-alt2
-- Added %ROOT/dev removal from existing configurations.
+- Added %%ROOT/dev removal from existing configurations.
 - Dropped mysql.chroot.log script (unneeded anymore).
 
 * Wed Feb 20 2002 Dmitry V. Levin <ldv@alt-linux.org> 3.23.49-alt1
@@ -1211,7 +1202,7 @@ fi
 
 * Fri Apr 27 2001 Dmitry V. Levin <ldv@altlinux.ru> 3.23.33-ipl8mdk
 - Fixed mysqld_wrapper to handle server shutdown correctly.
-- Relocated mysql_install_db from %_bindir to %_sbindir/
+- Relocated mysql_install_db from %%_bindir to %%_sbindir/
 - Updated mysql_install_db to work with chrooted environments.
 
 * Thu Apr 26 2001 Dmitry V. Levin <ldv@altlinux.ru> 3.23.33-ipl7mdk
@@ -1233,7 +1224,7 @@ fi
 
 * Tue Feb 27 2001 Dmitry V. Levin <ldv@fandra.org> 3.23.33-ipl3mdk
 - Fixed dependencies for server subpackage (added PreReqs).
-- Moved %_bindir/my_print_defaults utility back to client subpackage.
+- Moved %%_bindir/my_print_defaults utility back to client subpackage.
 - Moved texinfo documentation back to client subpackage.
 - Fixed %%post/%%preun scripts for proper texinfo documentation (un)installation.
 
