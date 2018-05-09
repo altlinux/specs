@@ -1,7 +1,7 @@
 # since 3.21.90 (libmutter-clutter-1.0.so private library)
 %set_verify_elf_method unresolved=relaxed
 
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.28
 %define xdg_name org.gnome.mutter
@@ -12,7 +12,7 @@
 %define api_ver 2
 
 Name: mutter
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Epoch: 1
 
@@ -189,6 +189,9 @@ DATADIRNAME=share %configure \
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Wed May 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1:3.28.2-alt1
+- 3.28.2
+
 * Sat Apr 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1:3.28.1-alt1
 - 3.28.1
 
