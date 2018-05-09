@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             jtidy
 Version:          1.0
-Release:          alt3_0.25.20100930svn1125jpp8
+Release:          alt3_0.26.20100930svn1125jpp8
 Epoch:            3
 Summary:          HTML syntax checker and pretty printer
 License:          zlib
@@ -69,15 +69,18 @@ EOF
 
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %attr(755, root, root) %{_bindir}/*
 %config(noreplace) %{_sysconfdir}/ant.d/%{name}
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3:1.0-alt3_0.26.20100930svn1125jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3:1.0-alt3_0.25.20100930svn1125jpp8
 - fc27 update
 
