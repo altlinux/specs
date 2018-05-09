@@ -11,9 +11,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           javamail
 Version:        1.5.2
-Release:        alt1_5jpp8
+Release:        alt1_7jpp8
 Summary:        Java Mail API
-License:        CDDL or GPLv2 with exceptions
+License:        CDDL-1.0 or GPLv2 with exceptions
 URL:            http://www.oracle.com/technetwork/java/javamail
 BuildArch:      noarch
 
@@ -99,6 +99,9 @@ ln -sf ../%{name}/javax.mail.jar %{buildroot}%{_javadir}/javax.mail/
 %doc mail/src/main/resources/META-INF/LICENSE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_5jpp8
 - fc27 update
 
