@@ -7,24 +7,34 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           perl-ExtUtils-CppGuess
 Version:        0.12
-Release:        alt1
+Release:        alt1_3
 Summary:        Guess C++ compiler and flags
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/ExtUtils-CppGuess/
 Source0:        http://www.cpan.org/authors/id/E/ET/ETJ/ExtUtils-CppGuess-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  findutils
+BuildRequires:  gcc-c++
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(Capture/Tiny.pm)
+BuildRequires:  perl(Config.pm)
 BuildRequires:  perl(Cwd.pm)
+BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(ExtUtils/CBuilder.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(ExtUtils/Manifest.pm)
 BuildRequires:  perl(Fatal.pm)
+BuildRequires:  perl(File/Basename.pm)
 BuildRequires:  perl(File/Path.pm)
 BuildRequires:  perl(File/Spec/Functions.pm)
 BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(warnings.pm)
+BuildRequires:  perl(XSLoader.pm)
 Source44: import.info
 
 %description
@@ -35,15 +45,12 @@ compatible with the C compiler that your perl was built with.
 %setup -q -n ExtUtils-CppGuess-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-
+find %{buildroot} -type f -name '*.bs' -size 0 -delete
 # %{_fixperms} %{buildroot}/*
 
 %check
@@ -54,6 +61,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_3
+- update to new release by fcimport
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated CPAN update
 
