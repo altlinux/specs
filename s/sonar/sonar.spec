@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           sonar
 Version:        3.2
-Release:        alt2_10jpp8
+Release:        alt2_13jpp8
 Summary:        An open platform to manage code quality
 License:        LGPLv3+
 URL:            http://www.sonarqube.org
@@ -21,6 +22,7 @@ Patch0:         0001-Remove-oracle-DB-support.patch
 Patch1:         0002-Port-to-guava-18.patch
 Patch2:         0003-Never-thrown-exception.patch
 Patch3:         0004-Port-maven-plugin-to-current-maven-dependency-tree.patch
+Patch4:         0005-Fix-case-sensitivity-typo.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(ch.qos.logback:logback-classic)
@@ -35,7 +37,7 @@ BuildRequires:  mvn(commons-dbcp:commons-dbcp)
 BuildRequires:  mvn(commons-httpclient:commons-httpclient)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(commons-lang:commons-lang)
-BuildRequires:  mvn(com.puppycrawl.tools:checkstyle:7)
+BuildRequires:  mvn(com.puppycrawl.tools:checkstyle)
 BuildRequires:  mvn(com.thoughtworks.xstream:xstream)
 BuildRequires:  mvn(javax.persistence:persistence-api)
 BuildRequires:  mvn(javax.servlet:servlet-api)
@@ -281,6 +283,7 @@ tests.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p0
 
 find . -name "*.bat" -delete
 find . -name "*.class" -delete
@@ -350,9 +353,6 @@ rm -r plugins/sonar-squid-java-plugin/test-resources/ sonar-duplications/src/tes
 %pom_change_dep -r :hibernate-ehcache ::3
 %pom_change_dep -r :hibernate-entitymanager ::3
 
-%pom_change_dep -r :checkstyle ::7
-
-
 %mvn_package :%{name}
 %mvn_package :%{name}-core
 
@@ -392,6 +392,9 @@ rm -r plugins/sonar-squid-java-plugin/test-resources/ sonar-duplications/src/tes
 %files jacoco-plugin -f .mfiles-%{name}-jacoco-plugin
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3.2-alt2_13jpp8
+- java update
+
 * Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 3.2-alt2_10jpp8
 - fixed build with new checkstyle
 
