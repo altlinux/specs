@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jdepend
 Version:        2.9.1
-Release:        alt3_17jpp8
+Release:        alt3_18jpp8
 Epoch:          0
 Summary:        Java Design Quality Metrics
 License:        BSD
@@ -98,15 +98,18 @@ cp -pr sample $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 %files -f .mfiles
 %doc README docs
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files demo
 %{_datadir}/%{name}
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt3_18jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt3_17jpp8
 - fc27 update
 
