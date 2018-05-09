@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          springframework
 Version:       3.2.18
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Spring Java Application Framework
 Epoch:         0
 License:       ASL 2.0
@@ -590,16 +590,16 @@ done
 
 %files -f .mfiles-%{name}
 %doc README.md
-%doc license.txt  notice.txt
+%doc --no-dereference license.txt  notice.txt
 %files javadoc -f .mfiles-javadoc
-%doc license.txt  notice.txt
+%doc --no-dereference license.txt  notice.txt
 %files aop -f .mfiles-spring-aop
 %files beans -f .mfiles-spring-beans
 %files context -f .mfiles-spring-context
 %files context-support -f .mfiles-spring-context-support
 %files expression -f .mfiles-spring-expression
 %files instrument -f .mfiles-spring-instrument
-%doc license.txt  notice.txt
+%doc --no-dereference license.txt  notice.txt
 #%%files instrument-tomcat -f .mfiles-spring-instrument-tomcat
 #%%license license.txt  notice.txt
 %files jdbc -f .mfiles-spring-jdbc
@@ -617,6 +617,9 @@ done
 
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.2.18-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.18-alt1_3jpp8
 - fc27 update
 
