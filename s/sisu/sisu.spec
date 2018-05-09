@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 Name:           sisu
 Epoch:          2
 Version:        0.3.3
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Eclipse dependency injection framework
 License:        EPL
 URL:            http://eclipse.org/sisu
@@ -111,6 +111,9 @@ cp %{SOURCE102} sisu-plexus/pom.xml
 
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2:0.3.3-alt1_3jpp8
+- java update
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 2:0.3.3-alt1_2jpp8
 - new version
 
