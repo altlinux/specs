@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        0.5
-Release:        alt3_18jpp8
+Release:        alt3_19jpp8
 Epoch:          2
 Summary:        Apache Commons Discovery
 License:        ASL 2.0
@@ -64,6 +64,9 @@ BuildArch: noarch
 
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_19jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_18jpp8
 - fc27 update
 
