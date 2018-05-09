@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           buildnumber-maven-plugin
 Version:        1.3
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 Summary:        Build Number Maven Plugin
 License:        MIT and ASL 2.0
 URL:            http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-%{version}
@@ -94,6 +94,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_10jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_8jpp8
 - fc27 update
 
