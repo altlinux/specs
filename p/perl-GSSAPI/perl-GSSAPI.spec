@@ -12,12 +12,14 @@ BuildRequires: perl-podlators
 
 Name:           perl-GSSAPI
 Version:        0.28
-Release:        alt5_21.1
+Release:        alt5_23
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/GSSAPI/
 Source0:        http://www.cpan.org/authors/id/A/AG/AGROLMS/GSSAPI-%{version}.tar.gz
+BuildRequires:  findutils
+BuildRequires:  gcc
 BuildRequires:  libkrb5-devel
 BuildRequires:  which
 %{?_with_testsuite:BuildRequires: perl(constant.pm)}
@@ -25,6 +27,7 @@ BuildRequires:  which
 %{?_with_testsuite:BuildRequires: perl(Exporter.pm)}
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 %{?_with_testsuite:BuildRequires: perl(ExtUtils/testlib.pm)}
 BuildRequires:  perl(Getopt/Long.pm)
@@ -43,14 +46,12 @@ distribution from MIT.
 chmod -c a-x examples/*.pl
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
 %make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
+find %{buildroot} -type f -name '*.bs' -empty -delete
 # %{_fixperms} %{buildroot}/*
 
 %check
@@ -63,6 +64,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/GSSAPI*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.28-alt5_23
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt5_21.1
 - rebuild with new perl 5.26.1
 
