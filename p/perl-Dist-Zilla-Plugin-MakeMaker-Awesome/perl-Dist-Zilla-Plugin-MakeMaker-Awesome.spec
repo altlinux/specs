@@ -3,7 +3,7 @@
 %define real_name Dist-Zilla-Plugin-MakeMaker-Awesome
 
 Name: perl-Dist-Zilla-Plugin-MakeMaker-Awesome
-Version: 0.41
+Version: 0.42
 Release: alt1
 
 Summary: a more awesome MakeMaker plugin for Dist::Zilla
@@ -50,6 +50,9 @@ we add additional customization hooks by subclassing it.
 %perl_vendor_privlib/Dist/Zilla/Plugin/MakeMaker/Awesome*
 
 %changelog
+* Wed May 09 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.42-alt1
+- New version
+
 * Sun Mar 04 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.41-alt1
 - New version
 
