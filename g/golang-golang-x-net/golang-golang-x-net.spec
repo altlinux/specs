@@ -1,12 +1,12 @@
 %global import_path golang.org/x/net
 
-%global commit f5079bd7f6f74e23c4d65efa0f4ce14cbd6a3c0f
+%global commit f73e4c9ed3b7ebdd5f699a16a880c2b1994e50dd
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-golang-x-net
 Version: 0
-Release: alt4.git%abbrev
+Release: alt6.git%abbrev
 Summary: Go supplementary network libraries
 License: MIT
 Group: Development/Other
@@ -49,10 +49,16 @@ export GOPATH="%go_path"
 %golang_install
 
 %files devel
-%doc AUTHORS README LICENSE PATENTS
+%doc AUTHORS README.md LICENSE PATENTS
 %go_path/src/*
 
 %changelog
+* Wed May 09 2018 Denis Pynkin <dans@altlinux.org> 0-alt6.gitf73e4c9e
+- Update
+
+* Fri Feb 02 2018 Denis Pynkin <dans@altlinux.org> 0-alt5.gitb417086c
+- Update
+
 * Sat Jul 29 2017 Denis Pynkin <dans@altlinux.org> 0-alt4.gitf5079bd7
 - Update
 
