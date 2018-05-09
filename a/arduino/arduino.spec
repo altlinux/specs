@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 Name:		arduino
 Epoch:		1
 Version:	1.8.5
-Release:	alt2_1jpp8
+Release:	alt2_3jpp8
 Summary:	An IDE for Arduino-compatible electronics prototyping platforms
 Group:		Development/Java
 License:	GPLv2+ and LGPLv2+ and CC-BY-SA
@@ -47,7 +47,7 @@ BuildRequires:	jmdns jsemver apache-commons-net apache-commons-codec git
 BuildRequires:	apache-commons-compress apache-commons-exec apache-commons-lang3
 BuildRequires:	apache-commons-logging jsch guava jackson-annotations jssc
 BuildRequires:	bouncycastle-pg jackson-databind jackson-module-mrbean
-BuildRequires:	jakarta-commons-httpclient objectweb-asm
+BuildRequires:	apache-commons-httpclient objectweb-asm
 BuildRequires:	rsyntaxtextarea batik xml-commons-apis xmlgraphics-commons
 Requires:	java >= 1.8.0
 Requires:	fonts-type1-xorg ecj jna zenity polkit ecj jna
@@ -55,7 +55,7 @@ Requires:	jmdns jsemver apache-commons-net apache-commons-codec git
 Requires:	apache-commons-compress apache-commons-exec apache-commons-lang3
 Requires:	apache-commons-logging jsch guava jackson-annotations jssc
 Requires:	bouncycastle-pg jackson-databind jackson-module-mrbean
-Requires:	jakarta-commons-httpclient objectweb-asm astyle libserialport
+Requires:	apache-commons-httpclient objectweb-asm astyle libastyle libserialport
 Requires:	rsyntaxtextarea batik xml-commons-apis xmlgraphics-commons
 Requires:	%{name}-core = %{epoch}:%{version}-%{release}
 Requires:   arduino-listSerialPortsC
@@ -284,7 +284,7 @@ fi
 %{_docdir}/%{name}/
 
 %files -n %{name}-core
-%doc license.txt
+%doc --no-dereference license.txt
 %doc README.md
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}/boards.txt
@@ -301,6 +301,9 @@ fi
 %{_datadir}/%{name}/arduino-builder
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.8.5-alt2_3jpp8
+- java update
+
 * Sun Nov 26 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.8.5-alt2_1jpp8
 - fixed load of liblistSerialsj
 
