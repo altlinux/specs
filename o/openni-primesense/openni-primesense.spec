@@ -1,6 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global commit 60170bfe8de166b2947ea2d604506f0bdfa0565c
@@ -18,7 +19,7 @@ BuildRequires: gcc-c++
 
 Name:           openni-primesense
 Version:        5.1.6.6
-Release:        alt2_9%{?gitrev}
+Release:        alt2_11%{?gitrev}
 Summary:        PrimeSensor/Kinect Modules for OpenNI
 Group:          System/Libraries
 License:        ASL 2.0
@@ -92,6 +93,7 @@ rm $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/55-primesense-usb.rules
 install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/55-primesense-usb.rules
 
 
+
 %post
 if [ $1 == 1 ]; then
   niReg -r %{_libdir}/libXnDeviceSensorV2.so
@@ -115,6 +117,9 @@ fi
 %{_bindir}/XnSensorServer
 
 %changelog
+* Wed May 09 2018 Igor Vlasenko <viy@altlinux.ru> 5.1.6.6-alt2_11
+- fixed build - added BR: /proc
+
 * Wed Jan 31 2018 Igor Vlasenko <viy@altlinux.ru> 5.1.6.6-alt2_9
 - to Sisyphus as opencv dependency
 
