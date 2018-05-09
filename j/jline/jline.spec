@@ -2,6 +2,7 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             jline
 Version:          2.13
-Release:          alt1_10jpp8
+Release:          alt1_11jpp8
 Summary:          JLine is a Java library for handling console input
 License:          BSD
 URL:              https://github.com/jline/jline2
@@ -88,6 +89,9 @@ find -name TerminalFactoryTest.java -delete
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed May 09 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.13-alt1_11jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.13-alt1_10jpp8
 - fixed build
 
