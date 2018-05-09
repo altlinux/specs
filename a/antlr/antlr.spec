@@ -22,7 +22,7 @@ BuildRequires: jpackage-generic-compat
 Summary:       ANother Tool for Language Recognition
 Name:          antlr
 Version:       2.7.7
-Release:       alt12_52jpp8
+Release:       alt12_53jpp8
 Epoch:         0
 License:       ANTLR-PD
 URL:           http://www.antlr2.org/
@@ -36,7 +36,7 @@ Patch2:        antlr-examples-license.patch
 
 %ifarch %{mono_arches}
 %if ! 0%{?rhel} >= 6
-BuildRequires: mono-core mono-devel
+BuildRequires: mono-core mono-data mono-devel mono-extras mono-web
 BuildRequires: mono-winforms
 %endif
 %endif
@@ -197,39 +197,42 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 
 
 %files tool -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %{_bindir}/antlr
 
 # this is actually a development package for the C++ target
 # as we ship only a static library, it doesn't make sense
 # to have a separate -devel package for the headers
 %files C++
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %{_includedir}/%{name}
 %{_libdir}/libantlr.a
 %{_bindir}/antlr-config
 
 %if %{with doxygen}
 %files C++-doc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %doc lib/cpp/gen_doc/html/
 %endif
 
 %files manual
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %doc doc/*
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %if %{with python}
 %files -n python-module-antlr
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %{python_sitelibdir_noarch}/antlr/*
 %{python_sitelibdir_noarch}/antlr-*
 %endif
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt12_53jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt12_52jpp8
 - new fc release
 
