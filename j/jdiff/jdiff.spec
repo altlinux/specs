@@ -1,8 +1,8 @@
-BuildRequires: javapackages-local
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jdiff
 Version:       1.1.1
-Release:       alt3_12jpp8
+Release:       alt3_15jpp8
 Summary:       An HTML Report of API Differences
 License:       GPL+ and LGPLv2+
 URL:           http://javadiff.sourceforge.net/
@@ -29,6 +29,7 @@ Source2:       jdiff-script
 Patch0:        jdiff-java8.patch
 
 BuildRequires: java-devel
+BuildRequires: javapackages-local
 BuildRequires: jpackage-utils
 
 BuildRequires: ant
@@ -111,14 +112,17 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %{_bindir}/%{name}
 %{_javadir}/ant%{name}.jar
 %doc README.txt doc/jdiff.html doc/CHANGES.txt doc/KNOWN_LIMITATIONS.txt doc/TODO doc/dev_notes.txt
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %config(noreplace,missingok) /etc/java/%{name}.conf
 
 %files javadoc
 %{_javadocdir}/%{name}
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt3_15jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt3_12jpp8
 - added BR: javapackages-local for javapackages 5
 
