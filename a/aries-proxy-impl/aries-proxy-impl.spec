@@ -1,16 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat felix-osgi-compendium
+BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global bundle org.apache.aries.proxy.impl
 Name:          aries-proxy-impl
 Version:       1.0.5
-Release:       alt2_2jpp8
+Release:       alt2_5jpp8
 Summary:       Apache Aries Proxy Service
 License:       ASL 2.0
 URL:           http://aries.apache.org/
@@ -24,6 +23,8 @@ BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.eclipse.osgi:org.eclipse.osgi)
 BuildRequires: mvn(org.ow2.asm:asm-debug-all)
 BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.osgi:org.osgi.compendium)
+BuildRequires: mvn(org.eclipse:osgi)
 
 Obsoletes:     aries-proxy < %{version}
 Provides:      aries-proxy = %{version}-%{release}
@@ -95,12 +96,15 @@ sed -i '/delete dir/d' pom.xml
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt2_5jpp8
+- java update
+
 * Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt2_2jpp8
 - fixed build with new felix-utils
 
