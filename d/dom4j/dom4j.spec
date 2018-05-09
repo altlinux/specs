@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           dom4j
 Version:        2.0.0
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Epoch:          0
 Summary:        Open Source XML framework for Java
 License:        BSD
@@ -107,13 +107,16 @@ export LANG=en_US.ISO8859-1
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_4jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_3jpp8
 - new fc release
 
