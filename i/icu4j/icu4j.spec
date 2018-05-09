@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           icu4j
 Version:        59.1
-Release:        alt2_2jpp8
+Release:        alt2_3jpp8
 Epoch:          1
 Summary:        International Components for Unicode for Java
 License:        MIT and EPL
@@ -98,7 +98,7 @@ rm main/tests/charset/src/com/ibm/icu/dev/test/charset/TestConversion.java
 export JAVA_HOME=%{_jvmdir}/java/
 mkdir -p ~/.ant/lib
 ant -Divy.mode=local -Doffline=true -Dicu4j.api.doc.jdk.link=%{_javadocdir}/java \
-  all
+  all check
 
 %mvn_artifact pom.xml icu4j.jar
 
@@ -110,7 +110,7 @@ install -m 644 icu4j-charset.jar   %{buildroot}%{_javadir}/icu4j/
 install -m 644 icu4j-localespi.jar %{buildroot}%{_javadir}/icu4j/
 
 %files -f .mfiles
-%doc main/shared/licenses/*
+%doc --no-dereference main/shared/licenses/*
 %doc readme.html APIChangeReport.html
 
 %files charset
@@ -120,9 +120,12 @@ install -m 644 icu4j-localespi.jar %{buildroot}%{_javadir}/icu4j/
 %{_javadir}/icu4j/icu4j-localespi.jar
 
 %files javadoc -f .mfiles-javadoc
-%doc main/shared/licenses/*
+%doc --no-dereference main/shared/licenses/*
 
 %changelog
+* Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:59.1-alt2_3jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1:59.1-alt2_2jpp8
 - fixed build
 
