@@ -1,24 +1,24 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ libalsa-devel libglvnd-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/xmlto gcc-c++ libalsa-devel libglvnd-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           milkytracker
-Version:        1.0.0
-Release:        alt1_3
+Version:        1.02.00
+Release:        alt1_1
 Summary:        Module tracker software for creating music
 
 Group:          Sound
 License:        GPLv3+
 URL:            http://www.milkytracker.org/
 Source0:        https://github.com/milkytracker/MilkyTracker/archive/v%{version}.tar.gz
-Patch0:         milkytracker-1.0.0-rtmidi-name.patch
-Patch1:         milkytracker-1.0.0-sdlmain.patch
+Patch0:         milkytracker-1.0.0-sdlmain.patch
 
 BuildRequires:  libSDL2-devel
 BuildRequires:  ctest cmake
 BuildRequires:  desktop-file-utils
+BuildRequires:  libappstream-glib
 BuildRequires:  librtmidi-devel
 BuildRequires:  zlib-devel
 BuildRequires:  zziplib-devel
@@ -35,7 +35,6 @@ Its goal is to be free replacement for the popular Fasttracker II software.
 find . -regex '.*\.\(cpp\|h\|inl\)' -print0 | xargs -0 chmod 644
 
 %patch0 -p1
-%patch1 -p1
 
 %build
 mkdir build
@@ -48,6 +47,11 @@ cd build
 make install DESTDIR=%{buildroot}
 cd ..
 
+# move the documentation directory (version 1.01.00 started installing
+# it as MilkyTracker instead of milkytracker and we want to keep the
+# name in sync with the package name)
+mv -v %{buildroot}%{_docdir}/MilkyTracker %{buildroot}%{_docdir}/%{name}
+
 # copy the icon
 mkdir -p %{buildroot}%{_datadir}/pixmaps
 cp -p resources/pictures/carton.png %{buildroot}%{_datadir}/pixmaps/milkytracker.png
@@ -56,15 +60,23 @@ cp -p resources/pictures/carton.png %{buildroot}%{_datadir}/pixmaps/milkytracker
 desktop-file-install \
   --dir=%{buildroot}%{_datadir}/applications/ resources/milkytracker.desktop
 
+# copy the appdata file
+install -v -D -m 644 resources/milkytracker.appdata %{buildroot}%{_datadir}/metainfo/%{name}.appdata.xml
+appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata.xml
+
 
 %files
 %{_bindir}/milkytracker
 %{_datadir}/applications/%{name}.desktop
+%{_datadir}/metainfo/%{name}.appdata.xml
 %{_datadir}/pixmaps/milkytracker.png
 %{_datadir}/%{name}
 %{_docdir}/%{name}
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.02.00-alt1_1
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_3
 - update to new release by fcimport
 
