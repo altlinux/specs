@@ -1,9 +1,10 @@
 %define ver_major 1.5
 %def_enable x11
 %def_enable egl
+%def_enable check
 
 Name: libepoxy
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Direct Rendering Manager runtime library
@@ -11,7 +12,8 @@ Group: System/Libraries
 License: MIT
 Url: http://github.com/anholt/libepoxy
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %url/releases/download/%version/%name-%version.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildRequires: python3 libGL-devel
 %{?_enable_x11:BuildRequires: libX11-devel xorg-util-macros}
@@ -57,6 +59,9 @@ developing applications that use %name
 %doc ChangeLog
 
 %changelog
+* Wed May 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Wed Feb 28 2018 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
