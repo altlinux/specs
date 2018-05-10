@@ -1,10 +1,10 @@
 %define gst_api_ver 1.0
-%define gst_ver 1.12
+%define gst_ver 1.14
 %define gtk_ver 3.18
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 3.2.2
+Version: 3.2.3
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -21,7 +21,8 @@ Requires: pulseaudio-daemon dconf
 Requires: gst-plugins-good%gst_api_ver >= %gst_ver
 Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
 Requires: ladspa-swh-plugins ladspa-rubberband
-#Requires: liblilv calf-plugins zam-plugins
+#Requires: calf-plugins
+#Requires: liblilv zam-plugins
 
 # for CubicSpline
 Requires: python3-module-scipy >= 0.19
@@ -66,6 +67,9 @@ effects for Pulseaudio applications.
 %doc README*
 
 %changelog
+* Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.2.3-alt1
+- 3.2.3
+
 * Sat Apr 21 2018 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
 - 3.2.2
 
