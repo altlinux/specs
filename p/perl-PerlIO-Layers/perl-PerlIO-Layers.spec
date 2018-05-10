@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-PerlIO-Layers
 Version:        0.011
-Release:        alt1_12.1
+Release:        alt1_14
 Summary:        Querying your file handle capabilities
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -15,6 +15,7 @@ Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/PerlIO-Layers-%{versio
 BuildRequires:  perl-devel
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl(ExtUtils/CBuilder.pm)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -44,7 +45,7 @@ file handle properties concerning these layers.
 %setup -q -n PerlIO-Layers-%{version}
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor optimize="$RPM_OPT_FLAGS"
+perl Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
 ./Build
 
 %install
@@ -61,6 +62,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/PerlIO*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_14
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_12.1
 - rebuild with new perl 5.26.1
 
