@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/dot /usr/bin/doxygen /usr/bin/xmlto boost-devel-headers gcc-c++
+BuildRequires: /usr/bin/dot /usr/bin/doxygen /usr/bin/xmlto boost-devel-headers
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
@@ -10,7 +10,7 @@ Name:           libpqxx
 Summary:        C++ client API for PostgreSQL
 Epoch:          1
 Version:        4.0.1
-Release:        alt2_10
+Release:        alt2_13
 
 License:        BSD
 URL:            http://pqxx.org/
@@ -20,7 +20,8 @@ Source1:        http://pqxx.org/download/software/libpqxx/libpqxx-%{version}.tar
 Patch3:         libpqxx-2.6.8-multilib.patch
 Patch4:         libpqxx_configure.patch
 
-BuildRequires:  libecpg6-devel libpq5-devel postgresql10-devel
+BuildRequires:  gcc-c++
+BuildRequires:  libecpg-devel libpq-devel postgresql-devel
 BuildRequires:  python
 Source44: import.info
 
@@ -55,24 +56,28 @@ chmod -x COPYING
 
 
 %build
-%configure --enable-shared --disable-static
+%configure \
+  --enable-shared --disable-static
 
 %make_build
 
 
 %install
-make install DESTDIR=%{buildroot}
+%makeinstall_std
 
 rm -fv %{buildroot}%{_libdir}/lib*.la
 
 
 %check 
 # FIXME: most/all fail, need already-running postgresql instance?
-make %{?_smp_mflags} check ||:
+%make_build check ||:
+
+
 
 
 %files
-%doc AUTHORS ChangeLog COPYING NEWS README VERSION
+%doc AUTHORS ChangeLog NEWS README VERSION
+%doc --no-dereference COPYING
 %{_libdir}/libpqxx-4.0.so
 
 %files devel
@@ -87,6 +92,9 @@ make %{?_smp_mflags} check ||:
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:4.0.1-alt2_13
+- update to new release by fcimport
+
 * Wed Jan 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.0.1-alt2_10
 - Updated build dependencies.
 
