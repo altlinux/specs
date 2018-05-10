@@ -12,7 +12,7 @@
 
 Name: prometheus-%oname
 Version: 0.10.0
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Prometheus snmp exporter
 
 Group: Development/Other
@@ -83,5 +83,8 @@ install -m0755 .gopath/src/%import_path/generator/generator %buildroot%_bindir/%
 %config(noreplace) %_sysconfdir/prometheus/snmp.yml
 
 %changelog
+* Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt2%ubt
+- fix typo in option
+
 * Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt1%ubt
 - Initial build for ALT.
