@@ -1,14 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %define fedora 27
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sbt
-%define version 0.13.1
 # doing a bootstrap build from public sbt binaries
 # bootstrap exception is here:  https://fedorahosted.org/fpc/ticket/389
 # meeting minutes with vote are here:  http://meetbot.fedoraproject.org/fedora-meeting-1/2014-02-13/fpc.2014-02-13-17.00.html
@@ -17,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 # build non-bootstrap packages with tests, cross-referenced sources, etc
 %global do_proper 0
-%global pkg_rel 8
+%global pkg_rel 9
 %global scala_version 2.10.6
 %global scala_short_version 2.10
 %global sbt_bootstrap_version 0.13.1
@@ -60,7 +61,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		sbt
 Version:	%{sbt_version}
-Release:	alt4_8.1jpp8
+Release:	alt4_9.1jpp8
 Summary:	The simple build tool for Scala and Java projects
 
 BuildArch:	noarch
@@ -334,7 +335,8 @@ BuildRequires:	mvn(org.fusesource.jansi:jansi)
 BuildRequires:	jline2
 BuildRequires:	proguard
 
-BuildRequires:	maven-local
+BuildRequires:	javapackages-tools
+Requires:	javapackages-tools
 
 BuildRequires:	mvn(oro:oro)
 BuildRequires:	mvn(com.jcraft:jsch)
@@ -444,7 +446,7 @@ sed -i -e 's/0.13.0/%{sbt_bootstrap_version}/g' project/build.properties
 ./climbing-nemesis.py org.scala-lang scala-reflect %{ivy_local_dir} --version %{scala_version}
 
 # fake on F19
-%if 0%{?fedora} >= 21
+%if 0%{?fedora} >= 21 || 0%{?rhel} > 7
 ./climbing-nemesis.py jline jline %{ivy_local_dir} --version 2.11
 ./climbing-nemesis.py org.fusesource.jansi jansi %{ivy_local_dir} --version 1.11
 ./climbing-nemesis.py org.fusesource.jansi jansi-native %{ivy_local_dir} --version 1.7
@@ -743,6 +745,9 @@ done
 %doc README.md LICENSE NOTICE
 
 %changelog
+* Thu May 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt4_9.1jpp8
+- java update
+
 * Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt4_8.1jpp8
 - build with new scala
 
