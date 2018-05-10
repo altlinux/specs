@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Lexical-Var
 Version:        0.009
-Release:        alt2_13.1
+Release:        alt2_16
 Summary:        Static variables without name space pollution
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -14,9 +14,13 @@ URL:            http://search.cpan.org/dist/Lexical-Var/
 Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-Var-%{version}.tar.gz
 # Update code to work with Perl 5.21.x (CPAN RT#101058)
 Patch0:         Lexical-Var-0.009-Fix-RT-101058.patch
-BuildRequires:  perl-devel >= 0:5.006
+BuildRequires:  coreutils
+BuildRequires:  findutils
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
+BuildRequires:  perl
+BuildRequires:  perl(ExtUtils/CBuilder.pm)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -24,7 +28,6 @@ BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(Lexical/SealRequireHints.pm)
 BuildRequires:  perl(XSLoader.pm)
 # Tests
-#BuildRequires:  perl(ExtUtils::CBuilder) >= 0.15
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
@@ -43,13 +46,13 @@ infrastructure for modules that manage name spaces.
 %patch0 -p1
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor optimize="$RPM_OPT_FLAGS"
+perl Build.PL --installdirs=vendor --optimize="$RPM_OPT_FLAGS"
 ./Build
 
 %install
-./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
-find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
-# %{_fixperms} $RPM_BUILD_ROOT/*
+./Build install --destdir=$RPM_BUILD_ROOT --create_packlist=0
+find $RPM_BUILD_ROOT -type f -name '*.bs' -empty -delete
+# %{_fixperms} $RPM_BUILD_ROOT
 
 %check
 ./Build test
@@ -60,6 +63,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_16
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_13.1
 - rebuild with new perl 5.26.1
 
