@@ -11,7 +11,7 @@
 
 Name: libical
 Version: 3.0.3
-Release: alt2
+Release: alt2.1
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -186,6 +186,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 
 
 %changelog
+* Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt2.1
+- rebuilt for e2kv4
+
 * Tue Mar 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt2
 - fixed buildreqs
 
