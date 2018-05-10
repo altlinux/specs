@@ -7,7 +7,7 @@ wrappers and decorator functions.
 
 Name: %fname
 Version: 1.10.11
-Release: alt1
+Release: alt2
 
 %if ""==""
 Summary: A Python module for decorators, wrappers and monkey patching
@@ -29,12 +29,13 @@ BuildRequires: python-module-alabaster python-module-docutils python-module-html
 # optimized out: -=FIXES: python2.7(sphinx_rtd_theme)
 BuildRequires: python2.7(sphinx_rtd_theme)
 
-%py_provides %oname
 
 %if ""!=""
 Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
 BuildArch: noarch
+%else
+%py_provides %oname
 %endif
 
 %description
@@ -97,6 +98,9 @@ py.test
 %endif
 
 %changelog
+* Thu May 10 2018 Grigory Ustinov <grenka@altlinux.org> 1.10.11-alt2
+- Fix provides for docs part.
+
 * Thu Apr 26 2018 Grigory Ustinov <grenka@altlinux.org> 1.10.11-alt1
 - Build new version.
 - Tranfer package to subst-packaging system.
