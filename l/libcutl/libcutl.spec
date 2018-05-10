@@ -1,6 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 %define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -9,7 +10,7 @@ BuildRequires: gcc-c++
 
 Name:           libcutl
 Version:        %{base_version}.0
-Release:        alt1_10
+Release:        alt1_13
 Summary:        C++ utility library from Code Synthesis
 
 Group:          System/Libraries
@@ -21,14 +22,22 @@ Patch0:         libcutl_no_boost_license.patch
 # Set BuildRoot for compatibility with EPEL <= 5
 # See: http://fedoraproject.org/wiki/EPEL:Packaging#BuildRoot_tag
 
-# If building on Fedora or RHEL 6/7
-%if 0%{?rhel}%{?fedora} >= 6
+%if 0%{?fedora} && 0%{?fedora} < 28
 # Use the system Boost instead of the internal one
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
-%else
+#global external_boost --with-external-boost
+#BuildRequires: boost-devel
+%endif
+
 # Otherwise, on RHEL 5 use the EPEL Boost 1.41 instead of the internal one
+%if 0%{?rhel} == 5
+%global external_boost --with-external-boost
 BuildRequires: boost141-devel
 %endif
+
+%if !0%{?external_boost}
+Provides: bundled(boost) = 1.54
+%endif
+
 # Uses pkgconfig
 BuildRequires: libexpat-devel
 Source44: import.info
@@ -51,14 +60,22 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
+
+%if 0%{?external_boost:1}
 %patch0
-#rm -r cutl/details/boost cutl/details/expat
+rm -rv cutl/details/boost
+%endif
+rm -rv cutl/details/expat
 
 
 %build
 # Use the system Boost and expat libraries
-#confopts="--disable-static --with-external-boost --with-external-expat"
-confopts="--disable-static --with-external-expat"
+confopts="--disable-static --with-external-expat %{?external_boost}"
+# If building on RHEL 5
+%if 0%{?rhel} == 5
+# Use the EPEL Boost 1.41 instead of the standard system one
+confopts="$confopts CPPFLAGS=-I%{_includedir}/boost141 LDFLAGS=-L%{_libdir}/boost141"
+%endif
 %configure $confopts
 %make_build
 
@@ -86,6 +103,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_13
+- update to new release by fcimport
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_10
 - fixed build
 
