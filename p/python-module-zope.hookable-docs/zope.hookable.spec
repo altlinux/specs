@@ -10,11 +10,11 @@ it hookable. Later, someone can modify what it does by calling its \
 sethook method and changing its implementation.  All users of the \
 function, including those that imported it, will see the change.
 
-Name: %fname
+Name: %fname-docs
 Version: 4.0.4
 Release: alt2
 
-%if ""==""
+%if "-docs"==""
 Summary: Hookable object support
 Group: Development/Python
 %else
@@ -34,7 +34,7 @@ BuildRequires(pre): rpm-build-python rpm-macros-sphinx
 # optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-devel python3-module-setuptools rpm-build-python3 time
 
-%if ""!=""
+%if "-docs"!=""
 Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
 BuildArch: noarch
@@ -43,7 +43,7 @@ BuildArch: noarch
 %description
 %descr
 
-%if ""!=""
+%if "-docs"!=""
 This package contains documentation for %oname.
 
 %package -n %fname-pickles
@@ -69,13 +69,13 @@ This package contains tests for zope.hookable.
 
 %prep
 %setup
-%if ""!=""
+%if "-docs"!=""
 %prepare_sphinx .
 ln -s ../objects.inv docs/
 %endif
 
 %build
-%if ""==""
+%if "-docs"==""
 %python_build
 %else
 export PYTHONPATH=$PWD/src
@@ -84,14 +84,14 @@ export PYTHONPATH=$PWD/src
 %endif
 
 %install
-%if ""==""
+%if "-docs"==""
 %python_install
 %else
 install -d %buildroot%python_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
-%if ""==""
+%if "-docs"==""
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
