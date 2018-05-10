@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Data/Show.pm) perl(IO/Prompter.pm) perl(Smart/Comments.pm) perl(charnames.pm) perl-podlators
@@ -7,7 +6,7 @@ BuildRequires: perl(Data/Show.pm) perl(IO/Prompter.pm) perl(Smart/Comments.pm) p
 %define _localstatedir %{_var}
 Name:		perl-Regexp-Grammars
 Version:	1.048
-Release:	alt1
+Release:	alt1_2
 Summary:	Add grammatical parsing features to perl regular expressions
 License:	GPL+ or Artistic
 Group:		Development/Other
@@ -43,7 +42,7 @@ regular expressions in perl 5.10.
 %setup -q -n Regexp-Grammars-%{version}
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -59,6 +58,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/Regexp/
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.048-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.048-alt1
 - automated CPAN update
 
