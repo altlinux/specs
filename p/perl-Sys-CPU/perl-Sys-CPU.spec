@@ -8,7 +8,7 @@ BuildRequires: /proc
 %define _localstatedir %{_var}
 Name:           perl-Sys-CPU
 Version:        0.61
-Release:        alt5_13.1
+Release:        alt5_15
 Summary:        Getting CPU information
 
 # Some code was copied from Unix::Processors, which is LGPLv3 or Artistic 2.0
@@ -21,6 +21,9 @@ Source0:        http://search.cpan.org/CPAN/authors/id/M/MZ/MZSANFORD/Sys-CPU-%{
 Patch0:         Sys-CPU-0.61-Add-support-for-cpu_type-on-ARM-and-AArch64-Linux-pl.patch
 # Accept undefined cpu_clock on ARM and AArch64, bug #1093266, CPAN RT#95400
 Patch1:         Sys-CPU-0.61-cpu_clock-can-be-undefined-on-an-ARM.patch
+BuildRequires:  findutils
+BuildRequires:  gcc
+BuildRequires:  sed
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Config.pm)
@@ -43,7 +46,7 @@ Currently only number of CPU's supported.
 sed -i 's/\r//' Changes README
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %check
@@ -62,6 +65,9 @@ find %{buildroot} -type f -name CPU.bs -exec rm -f {} ';'
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.61-alt5_15
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.61-alt5_13.1
 - rebuild with new perl 5.26.1
 
