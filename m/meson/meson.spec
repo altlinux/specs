@@ -1,16 +1,23 @@
+%def_enable snapshot
+
 %define libname mesonbuild
 %def_disable check
 
 Name: meson
 Version: 0.46.0
-Release: alt1
+Release: alt2
 
 Summary: High productivity build system
 Group: Development/Python3
 License: ASL 2.0
 Url: http://mesonbuild.com/
 
+%if_disabled snapshot
 Source: https://github.com/mesonbuild/meson/archive/%version/%name-%version.tar.gz
+%else
+Source: %name-%version.tar
+%endif
+
 Source1: %name.macros
 Source2: %name.env
 
@@ -82,6 +89,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 
 %changelog
+* Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt2
+- updated to 0.46.0-33-gd1e8ae1
+
 * Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt1
 - 0.46.0
 

@@ -2,11 +2,12 @@
 %define api_ver 0.1
 %def_enable introspection
 %def_enable man
+%def_enable check
 %def_enable test
 
 Name: libgxps
 Version: %ver_major.0
-Release: alt1.1
+Release: alt2
 
 Summary: GObject based library for handling and rendering XPS documents
 Group: System/Libraries
@@ -15,7 +16,8 @@ Url: http://live.gnome.org/libgxps
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-BuildRequires: meson gtk-doc gnome-common
+BuildRequires(pre): meson
+BuildRequires: gtk-doc
 BuildRequires: libgio-devel libcairo-devel libcairo-gobject-devel libfreetype-devel
 BuildRequires: libarchive-devel libjpeg-devel libtiff-devel libpng-devel liblcms2-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -76,9 +78,9 @@ This package contains development documentation for %name
 
 %build
 %meson \
-	%{?_enable_introspection:-Denable-introspection=true=yes} \
+	%{?_disable_introspection:-Ddisable-introspection=true} \
 	%{?_enable_man:-Denable-man=true} \
-	%{?_enable_test:-Denable-test=true} \
+	%{?_disable_test:-Denable-test=false} \
 	-Denable-gtk-doc=true
 
 %meson_build
@@ -118,6 +120,9 @@ This package contains development documentation for %name
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt2
+- fixed meson options
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1.1
 - rebuilt for e2kv4
 
