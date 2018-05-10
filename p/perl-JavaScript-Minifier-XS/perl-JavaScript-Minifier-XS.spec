@@ -6,14 +6,18 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-JavaScript-Minifier-XS
 Version:        0.11
-Release:        alt3_9.1
+Release:        alt3_12
 Summary:        XS based JavaScript minifier
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/JavaScript-Minifier-XS/
 Source0:        http://search.cpan.org/CPAN/authors/id/G/GT/GTERMARS/JavaScript-Minifier-XS-%{version}.tar.gz
+BuildRequires:  findutils
+BuildRequires:  gcc
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
+BuildRequires:  perl(ExtUtils/CBuilder.pm)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -42,12 +46,12 @@ files without breaking the JavaScript.
 %setup -q -n JavaScript-Minifier-XS-%{version}
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor optimize="$RPM_OPT_FLAGS"
+perl Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
 ./Build
 
 %install
 ./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
-find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
+find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -59,6 +63,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/JavaScript*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt3_12
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt3_9.1
 - rebuild with new perl 5.26.1
 
