@@ -7,7 +7,7 @@ BuildRequires: libirman-devel
 Name:           libirman
 Epoch:          1
 Version:        0.5.2
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Library for IRMAN hardware
 
 Group:          System/Libraries
@@ -20,7 +20,7 @@ License:        GPLv2+ and LGPLv2+
 URL:            http://sourceforge.net/projects/libirman/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 
-BuildRequires:  autoconf-common, automake-common, libtool-common
+BuildRequires:  autoconf, automake, libtool
 BuildRequires:  liblirc-devel >= 0.9.4
 Source44: import.info
 
@@ -92,6 +92,9 @@ rm  $RPM_BUILD_ROOT%{_docdir}/libirman/TECHNICAL
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.5.2-alt1_7
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.5.2-alt1_6
 - update to new release by fcimport
 
