@@ -1,13 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname vsqlite++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:        libvsqlite++
 Version:    0.3.13
-Release:    alt1_19
+Release:    alt1_21
 Summary:    Well designed C++ sqlite 3.x wrapper library
 
 Group:      Development/Other
@@ -15,9 +12,11 @@ License:    BSD
 URL:        http://vsqlite.virtuosic-bytes.com
 Source0:    http://evilissimo.fedorapeople.org/releases/vsqlite--/%{version}/%{oldname}-%{version}.tar.gz
 
-BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires:  gcc-c++
+BuildRequires:  gcc
+BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires:  libsqlite3-devel
-BuildRequires:  libtool-common
+BuildRequires:  libtool
 BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
 Source44: import.info
@@ -82,6 +81,9 @@ make DESTDIR=%{buildroot} install
 %{_libdir}/libvsqlitepp.so.*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.13-alt1_21
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.13-alt1_19
 - update to new release by fcimport
 
