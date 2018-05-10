@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:      liborigin
 Version:   20080225
-Release:   alt1_21
+Release:   alt1_23
 Summary:   Library for reading OriginLab OPJ project files
 
 License:   GPLv2
@@ -18,6 +18,7 @@ Source:    http://master.dl.sourceforge.net/project/liborigin/liborigin/2008/%{n
 Patch0:    %{name}-%{version}-gcc.patch
 Patch1:    %{name}-%{version}-cxx11.patch
 
+BuildRequires: gcc-c++
 BuildRequires: ctest cmake
 Source44: import.info
 
@@ -41,7 +42,7 @@ you will need to install %{name}-devel.
 
 %build
 
-# fix for hardcoded path of %{_libdir}
+# fix for hardcoded path of %%{_libdir}
 sed -i "s|install(TARGETS origin DESTINATION lib)|install(TARGETS origin DESTINATION %{_lib})|" CMakeLists.txt
 
 %{fedora_cmake}
@@ -67,6 +68,9 @@ chmod 0644 ws4.opj
 %{_libdir}/%{name}.so
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 20080225-alt1_23
+- update to new release by fcimport
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 20080225-alt1_21
 - fixed build
 
