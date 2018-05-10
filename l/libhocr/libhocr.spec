@@ -18,7 +18,7 @@ BuildRequires: chrpath
 
 Name:		libhocr
 Version:	0.10.17
-Release:	alt2_28
+Release:	alt2_30
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
@@ -40,7 +40,7 @@ BuildRequires:	swig, python-devel gtk-builder-convert gtk-demo libgail-devel lib
 # Fix #925761
 # Upstream use very old autoconf, breaks aarm64 builds
 # So we use autoreconf
-BuildRequires:	autoconf-common, automake-common, libtool-common
+BuildRequires:	autoconf, automake, libtool
 Source44: import.info
 
 %description
@@ -56,7 +56,7 @@ Group:		Development/Other
 Requires:	%{name} = %{version}-%{release}
 Requires:	gtk-builder-convert gtk-demo
 # We ship *.pc files (requires the -devel of contained libs)
-Requires:	pkg-config
+Requires:	pkgconfig
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -117,7 +117,7 @@ done
 # Ref: https://fedoraproject.org/wiki/PackagingDrafts/MultilibTricks#Timestamps
 make install	\
 	DESTDIR=%{buildroot}		\
-	INSTALL="%{__install} -p"	\
+	INSTALL="install -p"	\
 	hocrdocdir=%{hocrdocdir}	\
 	examples_binding_dir=%{hocrdocdir}/examples/bindings
 
@@ -142,7 +142,7 @@ desktop-file-install \
 
 cat hocr-gtk.lang sane-pygtk.lang > %{name}.lang
 # kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
 done
 
@@ -184,6 +184,9 @@ done
 
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_30
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_28
 - update to new release by fcimport
 
