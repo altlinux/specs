@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define _name geoclue
 %define __name org.freedesktop.GeoClue2
 %define ver_major 2.4
@@ -8,7 +10,7 @@
 %def_disable gtk_doc
 
 Name: %{_name}2
-Version: %ver_major.8
+Version: %ver_major.10
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -16,12 +18,18 @@ Group: System/Libraries
 License: LGPLv2
 Url: http://geoclue.freedesktop.org/
 
+%if_disabled snapshot
 Source: http://www.freedesktop.org/software/%_name/releases/%ver_major/%_name-%version.tar.xz
+%else
+#VCS: git://anongit.freedesktop.org/geoclue
+Source: %_name-%version.tar
+%endif
 
 %define glib_ver 2.34
 %define mm_ver 1.6
 %define soup_ver 2.42
 
+BuildRequires(pre): rpm-build-xdg
 BuildRequires: intltool yelp-tools gtk-doc libgio-devel >= %glib_ver
 BuildRequires: libjson-glib-devel libsoup-devel >= %soup_ver
 BuildRequires: libdbus-devel libavahi-glib-devel libnotify-devel systemd-devel
@@ -174,9 +182,12 @@ mkdir -p %buildroot%_localstatedir/%_name
 %files demo
 %_libexecdir/%_name-%api_ver/demos/
 %_datadir/applications/*.desktop
-
+%_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.10-alt1
+- 2.4.10
+
 * Sat Apr 14 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.8-alt1
 - 2.4.8
 
