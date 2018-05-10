@@ -3,11 +3,16 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora}
+%global with_python2 1
+%endif
+
 Name:           libvoikko
 Version:        3.8
-Release:        alt1_6
+Release:        alt1_8
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
 Group:          System/Libraries
@@ -18,7 +23,9 @@ Source0:        http://www.puimula.org/voikko-sources/%{name}/%{name}-%{version}
 # The usual format of test release URLs
 #Source0:        http://www.puimula.org/htp/testing/%%{name}-%%{version}rc1.tar.gz
 
+%if 0%{?with_python2}
 BuildRequires:  python-devel
+%endif
 # Require the Finnish morphology because Finnish is currently the only language
 # supported by libvoikko in Fedora.
 Requires:       malaga-suomi-voikko
@@ -40,7 +47,7 @@ Hunspell.
 Summary:        Development files for %{name}
 Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
-Requires:       pkg-config
+Requires:       pkgconfig
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -56,6 +63,7 @@ This package contains voikkospell and voikkohyphenate, small command line
 tools for testing libvoikko. These tools may also be useful for shell
 scripts.
 
+%if 0%{?with_python2}
 %package -n python-module-libvoikko
 Summary:        Python interface to %{name}
 Group:          Development/Other
@@ -68,7 +76,7 @@ BuildArch:      noarch
 Python interface to libvoikko, library of Finnish language tools.
 This module can be used to perform various natural language analysis
 tasks on Finnish text.
-
+%endif
 
 %prep
 %setup -q
@@ -89,10 +97,11 @@ make install INSTALL="install -p" DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 # Remove static archive
 find $RPM_BUILD_ROOT -name '*.a' -exec rm -f {} ';'
+%if 0%{?with_python2}
 # Install the Python interface
 install -d $RPM_BUILD_ROOT%{python_sitelibdir_noarch}
 install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
-
+%endif
 
 %files
 %doc ChangeLog COPYING README
@@ -111,10 +120,15 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/libvoikko.pc
 
+%if 0%{?with_python2}
 %files -n python-module-libvoikko
 %{python_sitelibdir_noarch}/%{name}.py*
+%endif
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1_8
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1_6
 - update to new release by fcimport
 
