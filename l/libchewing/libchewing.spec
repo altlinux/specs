@@ -12,7 +12,7 @@ BuildRequires: perl(FileHandle.pm) perl(Text/Wrap.pm) texinfo
 
 Name:           libchewing
 Version:        0.5.1
-Release:        alt1_5
+Release:        alt1_8
 Summary:        Intelligent phonetic input method library for Traditional Chinese
 Summary(zh_TW): %{name_zh_TW}
 
@@ -64,6 +64,11 @@ Group:          Development/Other
 BuildRequires:  python-devel
 Requires:       %{name} = %{version}-%{release}
 Requires:       python
+%{?python_provide:%python_provide python2-%{name}}
+# Remove before F30
+Provides: %{name}-python = %{version}-%{release}
+Provides: %{name}-python = %{version}-%{release}
+Obsoletes: %{name}-python < %{version}-%{release}
 
 %description -n python-module-chewing
 Python binding of libchewing.
@@ -110,6 +115,9 @@ rm -f %{buildroot}/%{_infodir}/dir
 %{libchewing_python_dir}
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_8
+- update to new release by fcimport
+
 * Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_5
 - update to new version by fcimport
 
