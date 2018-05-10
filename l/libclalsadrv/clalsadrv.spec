@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname clalsadrv
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -9,7 +6,7 @@ BuildRequires: gcc-c++
 Summary:       ALSA driver C++ Library
 Name:          libclalsadrv
 Version:       2.0.0
-Release:       alt1_15
+Release:       alt1_17
 License:       GPLv2+
 Group:         System/Libraries
 URL:           http://kokkinizita.linuxaudio.org/
@@ -18,6 +15,7 @@ Source0:       http://kokkinizita.linuxaudio.org/linuxaudio/downloads/%{oldname}
 Obsoletes:     alsadrv <= 0.0.2
 Provides:      alsadrv > 0.0.2
 BuildRequires: libalsa-devel
+BuildRequires: gcc-c++
 Source44: import.info
 Provides: clalsadrv = %{version}-%{release}
 
@@ -44,7 +42,7 @@ tools.
 cd libs
 sed -i -e "s|/sbin/ldconfig|# /sbin/ldconfig|g" \
        -e "s|-O2|%{optflags}|g" Makefile
-%make_build LIBDIR=%{_lib}
+%make_build LDFLAGS="$RPM_LD_FLAGS" LIBDIR=%{_lib}
 
 %install
 mkdir -p %{buildroot}%{_libdir}
@@ -53,8 +51,10 @@ cd libs
 make PREFIX=%{buildroot}%{_prefix} LIBDIR=%{_lib} install
 ln -s lib%{oldname}.so.2.0.0 %{buildroot}%{_libdir}/lib%{oldname}.so.2
 
+
 %files
-%doc AUTHORS COPYING
+%doc AUTHORS
+%doc --no-dereference COPYING
 %{_libdir}/lib%{oldname}.so.*
 
 %files devel
@@ -62,6 +62,9 @@ ln -s lib%{oldname}.so.2.0.0 %{buildroot}%{_libdir}/lib%{oldname}.so.2
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_15
 - update to new release by fcimport
 
