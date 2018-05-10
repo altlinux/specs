@@ -2,7 +2,7 @@
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 Name:		tini
-Version:	0.17.0
+Version:	0.18.0
 Release:	alt1
 Summary:	A tiny but valid init for containers
 
@@ -43,6 +43,9 @@ cp -a -- tini-static    %buildroot/%_bindir/tini
 %_bindir/tini
 
 %changelog
+* Thu May 10 2018 Vladimir Didenko <cow@altlinux.org> 0.18.0-alt1
+- New version
+
 * Thu Mar 22 2018 Vladimir Didenko <cow@altlinux.org> 0.17.0-alt1
 - New version
 
