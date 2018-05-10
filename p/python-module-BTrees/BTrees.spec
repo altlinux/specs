@@ -2,11 +2,11 @@
 %define oname BTrees
 
 %def_with check
-%def_with bootstrap
+%def_without bootstrap
 
 Name: python-module-%oname
 Version: 4.4.1
-Release: alt1%ubt.1
+Release: alt2%ubt
 
 Summary: Scalable persistent object containers
 License: ZPLv2.1
@@ -150,6 +150,9 @@ popd
 %python3_sitelibdir/*/tests
 
 %changelog
+* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1-alt2%ubt
+- (NMU) Rebuilt without bootstrap.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1-alt1%ubt.1
 - (NMU) Rebuilt with python-3.6.4.
 
