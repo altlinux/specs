@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -8,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Safe-Isa
 Version:        1.000010
-Release:        alt1
+Release:        alt1_1
 Summary:        Call isa, can, does and DOES safely on things that may not be objects
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Safe-Isa/
-Source0:        http://www.cpan.org/authors/id/E/ET/ETHER/Safe-Isa-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Safe-Isa-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  coreutils
@@ -27,6 +26,7 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
 # Test Suite
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(UNIVERSAL.pm)
 Source44: import.info
 # Dependencies
 
@@ -38,7 +38,7 @@ may not be objects, without the risk of crashing.
 %setup -q -n Safe-Isa-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/Safe/
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.000010-alt1_1
+- update to new release by fcimport
+
 * Wed May 02 2018 Igor Vlasenko <viy@altlinux.ru> 1.000010-alt1
 - automated CPAN update
 
