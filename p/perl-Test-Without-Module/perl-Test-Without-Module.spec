@@ -7,20 +7,27 @@ BuildRequires: perl(Pod/Markdown.pm) perl(Pod/Readme.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-Without-Module
 Version:        0.20
-Release:        alt1_3
+Release:        alt1_5
 Summary:        Test fallback behavior in absence of modules
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/Test-Without-Module/
 Source0:        http://www.cpan.org/modules/by-module/Test/Test-Without-Module-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  findutils
 BuildRequires:  rpm-build-perl
-BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl-devel
+BuildRequires:  sed
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(File/Slurp.pm)
-BuildRequires:  perl(File/Spec.pm)
+# Run-time:
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
+# Tests:
+BuildRequires:  perl(Data/Dumper.pm)
+BuildRequires:  perl(File/Find.pm)
+BuildRequires:  perl(Symbol.pm)
 BuildRequires:  perl(Test/More.pm)
-BuildRequires:  perl(Test/Pod.pm)
 
 
 Source44: import.info
@@ -36,7 +43,7 @@ find . -type f -exec chmod 644 {} \;
 sed -i -e 's/\r//' README Changes
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -51,6 +58,9 @@ make test
 %{perl_vendor_privlib}/Test*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_5
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_3
 - update to new release by fcimport
 
