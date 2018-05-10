@@ -1,8 +1,8 @@
 %define _name etr
 
 Name: extreme-tuxracer
-Version: 0.7.4
-Release: alt2
+Version: 0.7.5
+Release: alt1
 Epoch: 1
 
 Summary: High speed arctic racing game based on Tux Racer
@@ -10,12 +10,12 @@ Group: Games/Arcade
 License: GPL
 Url: https://sourceforge.net/projects/extremetuxracer/
 
-Source: https://downloads.sourceforge.net/extremetuxracer/etr-0.7.4.tar.xz
+Source: https://downloads.sourceforge.net/extremetuxracer/etr-%version.tar.xz
 
 Obsoletes: %name <= 0.35
 Requires: %name-data = %EVR
 
-# Automatically added by buildreq on Fri Feb 03 2017
+BuildRequires: libappstream-glib-devel
 BuildRequires: gcc-c++ libGLU-devel libSFML-devel
 
 %description
@@ -52,8 +52,12 @@ This package provides noarch data needed for Extreme Tux Racer to work.
 %_pixmapsdir/*
 %_datadir/%_name/
 %_datadir/doc/%_name/
+%_datadir/appdata/etr.appdata.xml
 
 %changelog
+* Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 1:0.7.5-alt1
+- 0.7.5
+
 * Thu Apr 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1:0.7.4-alt2
 - rebuilt with gcc7
 
