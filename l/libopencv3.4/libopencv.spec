@@ -39,7 +39,7 @@
 Name: lib%bname%sover
 Epoch: 1
 Version: 3.4.1
-Release: alt1
+Release: alt1.1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -307,6 +307,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %_datadir/%Name/samples
 
 %changelog
+* Thu May 10 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.4.1-alt1.1
+- NMU: rebuild with gdcm 2.8.4
+
 * Thu May 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.1-alt1
 - Updated to upstream version 3.4.1.
 

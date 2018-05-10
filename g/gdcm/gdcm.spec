@@ -1,21 +1,15 @@
-BuildRequires: xsltproc
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: /usr/bin/castxml /usr/bin/openssl gcc-c++ java-devel-default liblcms2-devel libpng-devel libqt4-devel libtiff-devel pkgconfig(gtk+-2.0) rpm-build-java rpm-build-perl texlive-latex-base zlib-devel
+BuildRequires: /usr/bin/castxml /usr/bin/latex /usr/bin/openssl java-devel-default libcurl-devel libqt4-devel rpm-build-java rpm-build-perl zlib-devel
 # END SourceDeps(oneline)
+BuildRequires: xsltproc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# we don't want to provide private python extension libs
-%{echo 
-
-
-}
-
 Name:		gdcm
-Version:	2.6.5
-Release:	alt1_19.1
+Version:	2.8.4
+Release:	alt1_7
 Summary:	Grassroots DiCoM is a C++ library to parse DICOM medical files
-Group:		System/Libraries
 License:	BSD
 URL:		http://gdcm.sourceforge.net/wiki/index.php/Main_Page
 Source0:	http://sourceforge.net/projects/gdcm/files/gdcm%%202.x/GDCM%%20%{version}/%{name}-%{version}.tar.bz2
@@ -28,7 +22,8 @@ Patch3:	gdcm-2.4.0-no-versioned-dir.patch
 #Patch4: gdcm-0005-support-vtk6.patch
 Patch5: gdcm-2.4.0-find-python27.patch
 Patch6: gdcm-2.6-fix-cmake-config-paths.patch
-Patch7: 0001-adapt-to-poppler-0.58.patch
+Patch7: gdcm-2.8.4-fix-manpage-gen.patch
+Patch8: gdcm-2.8.4-fix-poppler.patch
 
 BuildRequires:	libCharLS-devel >= 1.0
 BuildRequires:	ctest cmake
@@ -42,9 +37,8 @@ BuildRequires:	libgl2ps-devel
 BuildRequires:	libogg-devel
 BuildRequires:	libtheora-devel
 BuildRequires:	libuuid-devel
-#BuildRequires:	mesa-libOSMesa-devel
 BuildRequires:	libssl-devel
-BuildRequires:	libopenjpeg-devel
+BuildRequires:  pkgconfig(libopenjp2)
 #BuildRequires:	/usr/bin/pdflatex
 BuildRequires:	libpoppler-devel
 BuildRequires:	python-devel
@@ -52,10 +46,10 @@ BuildRequires:	python3-devel
 BuildRequires:	swig
 BuildRequires:	libjson-c-devel
 BuildRequires:	libxml2-devel
-Source44: import.info
-%add_findprov_skiplist %{python_sitelibdir}/.*\.so$
 #BuildRequires:	texlive-ec
 #BuildRequires:	vtk-devel
+BuildRequires: gcc gcc-c++
+Source44: import.info
 
 
 %description
@@ -69,8 +63,8 @@ It also provides PS 3.15 certificates and password based mechanism to
 anonymize and de-identify DICOM datasets.
 
 %package	doc
+Group: Documentation
 Summary:	Includes html documentation for gdcm
-Group:		Documentation
 BuildArch:	noarch
 
 %description doc
@@ -78,8 +72,8 @@ You should install the gdcm-doc package if you would like to
 access upstream documentation for gdcm.
 
 %package	applications
+Group: Development/Tools
 Summary:	Includes command line programs for GDCM
-Group:		Development/Tools
 Requires:	%{name} = %{version}-%{release}
 
 %description applications
@@ -88,8 +82,8 @@ use command line programs part of GDCM. Includes tools to convert,
 anonymize, manipulate, concatenate, and view DICOM files.
 
 %package	devel
+Group: Development/Other
 Summary:	Libraries and headers for GDCM
-Group:		Development/Other
 Requires:	%{name} = %{version}-%{release}
 Requires:	%{name}-applications = %{version}-%{release}
 
@@ -98,21 +92,21 @@ You should install the gdcm-devel package if you would like to
 compile applications based on gdcm
 
 %package	examples
+Group: Development/Other
 Summary:	CSharp, C++, Java, PHP and Python example programs for GDCM
-Group:		Development/Other
 Requires:	%{name} = %{version}-%{release}
 
 %description examples
 GDCM examples
 
 %package	-n python-module-gdcm
+Group: Development/Other
+Summary:	Python binding for GDCM
 %{?python_provide:%python_provide python2-gdcm}
 # Remove before F30
 Provides: %{name}-python = %{version}-%{release}
 Provides: %{name}-python = %{version}-%{release}
 Obsoletes: %{name}-python < %{version}-%{release}
-Summary:	Python binding for GDCM
-Group:		Development/Other
 Requires:	%{name} = %{version}-%{release}
 
 %description -n python-module-gdcm
@@ -120,8 +114,9 @@ You should install the gdcm-python package if you would like to
 used this library with python
 
 %package -n python3-module-gdcm
+Group: Development/Other
 Summary:	Python binding for GDCM
-Group:		Development/Other
+%{?python_provide:%python_provide python2-gdcm}
 Requires:	%{name} = %{version}-%{release}
 
 %description -n python3-module-gdcm
@@ -136,6 +131,7 @@ used this library with python
 %patch3 -p 1
 %patch6 -p 1
 %patch7 -p 1
+%patch8 -p 1
 
 # Fix cmake command
 sed -i.backup 's/add_dependency/add_dependencies/' Utilities/doxygen/CMakeLists.txt
@@ -295,12 +291,18 @@ make test -C %{_target_platform} || exit 0
 %{_datadir}/%{name}/Examples/
 
 %files -n python-module-gdcm
-%{python_sitelibdir}/*
+%{python_sitelibdir}/%{name}*.py*
+%{python_sitelibdir}/_%{name}swig.so
 
 %files -n python3-module-gdcm
-%{python3_sitelibdir}/*
+%{python3_sitelibdir}/%{name}*.py
+%{python3_sitelibdir}/_%{name}swig.so
+%{python3_sitelibdir}/__pycache__/%{name}*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.8.4-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.5-alt1_19.1
 - (NMU) Rebuilt with python-3.6.4.
 
