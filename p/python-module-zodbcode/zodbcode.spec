@@ -4,21 +4,20 @@
 
 Name: python-module-%oname
 Version: 3.4.0
-Release: alt3.1
+Release: alt4
 Summary: Allows Python code to live in the ZODB
 License: ZPLv2.1
 Group: Development/Python
+BuildArch: noarch
 Url: http://pypi.python.org/pypi/zodbcode/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python-tools-2to3
 %endif
 
 %py_requires ZODB3 zope.interface
@@ -107,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.0-alt4
+- Rebuilt to regenerate dependencies.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.4.0-alt3.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

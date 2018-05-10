@@ -1,15 +1,15 @@
 %define oname ZODB3
+
 Name: python-module-%oname
 Version: 3.11.0
-Release: alt1.1
+Release: alt2
 Summary: Zope Object Database: object database and persistence
 License: ZPL
 Group: Development/Python
+BuildArch: noarch
 Url: http://pypi.python.org/pypi/ZODB3/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python-devel python-module-setuptools
@@ -95,14 +95,10 @@ popd
 %doc *.txt
 %python3_sitelibdir/*
 
-#files tests
-#python_sitelibdir/*/tests
-#python_sitelibdir/*/*/*test*
-
-#files docs
-#doc doc/*
-
 %changelog
+* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.11.0-alt2
+- Rebuilt to regenerate dependencies.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.11.0-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
