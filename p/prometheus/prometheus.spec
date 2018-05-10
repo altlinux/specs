@@ -10,7 +10,7 @@
 
 Name: prometheus
 Version: 2.2.1
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Prometheus monitoring system and time series database
 
 Group: Development/Other
@@ -28,6 +28,8 @@ BuildRequires(pre): rpm-build-golang rpm-build-ubt
 BuildRequires: promu
 BuildRequires: /proc
 
+Requires: %name-common = %EVR
+
 %description
 Prometheus is an open-source systems monitoring and alerting toolkit.
 
@@ -40,6 +42,17 @@ Prometheus's main features are:
  - pushing time series is supported via an intermediary gateway
  - targets are discovered via service discovery or static configuration
  - multiple modes of graphing and dashboarding support
+ - support for hierarchical and horizontal federation
+
+%package common
+Summary: Common package for Prometheus
+Group: Development/Other
+BuildArch: noarch
+
+%description common
+Prometheus is an open-source systems monitoring and alerting toolkit.
+
+This package contains the common files and settings for Prometheus.
 
 %prep
 %setup -q
@@ -67,7 +80,7 @@ install -m0755 %SOURCE3 %buildroot%_initdir/%name
 install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 install -m0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
 
-%pre
+%pre common
 %_sbindir/groupadd -r -f %name > /dev/null 2>&1 ||:
 %_sbindir/useradd -r -g %name -d %_localstatedir/%name -s /dev/null -c "Prometheus services" %name > /dev/null 2>&1 ||:
 
@@ -82,16 +95,21 @@ install -m0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
 %_bindir/*
 %_unitdir/%name.service
 %_initdir/%name
-%_tmpfilesdir/%name.conf
 %config(noreplace) %_sysconfdir/sysconfig/%name
-%dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/*
 %dir %_datadir/%name
 %_datadir/%name/*
-%dir %_localstatedir/%name
+
+%files common
+%dir %_sysconfdir/%name
+%_tmpfilesdir/%name.conf
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 2.2.1-alt2%ubt
+- move adduser, tmpfiles and /etc/prometheus to prometheus-common package
+- update systemd unit
+
 * Tue May 08 2018 Alexey Shabalin <shaba@altlinux.ru> 2.2.1-alt1%ubt
 - Initial build for ALT.
 
