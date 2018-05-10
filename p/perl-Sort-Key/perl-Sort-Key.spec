@@ -6,16 +6,17 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Sort-Key
 Version:        1.33
-Release:        alt1.1_9.1
+Release:        alt1.1_11
 Summary:        Fastest way to sort anything in Perl
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/Sort-Key/
 Source0:        http://www.cpan.org/authors/id/S/SA/SALVA/Sort-Key-%{version}.tar.gz
 # Build
-BuildRequires:  perl-devel
+BuildRequires:  gcc
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Runtime
 BuildRequires:  perl(Carp.pm)
@@ -40,7 +41,7 @@ calculated key value.
 %setup -q -n Sort-Key-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
 %make_build
 
 %install
@@ -56,6 +57,9 @@ make test
 %{perl_vendor_archlib}/Sort*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1.1_11
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1.1_9.1
 - rebuild with new perl 5.26.1
 
