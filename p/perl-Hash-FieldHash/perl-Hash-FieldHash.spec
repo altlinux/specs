@@ -6,7 +6,7 @@ BuildRequires: perl(Hash/Util/FieldHash/Compat.pm) perl(Mouse.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Hash-FieldHash
 Version:        0.15
-Release:        alt1_5.1
+Release:        alt1_7
 Summary:        Lightweight field hash implementation
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -16,11 +16,11 @@ Patch0:         Hash-FieldHash-0.15-Fix-building-on-Perl-without-dot-in-INC.patc
 # Module Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  gcc-common
-BuildRequires:  perl-devel
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(Devel/PPPort.pm)
+BuildRequires:  perl(ExtUtils/CBuilder.pm)
 BuildRequires:  perl(ExtUtils/ParseXS.pm)
 BuildRequires:  perl(File/Basename.pm)
 BuildRequires:  perl(File/Spec.pm)
@@ -60,10 +60,12 @@ out technique.
 
 %prep
 %setup -q -n Hash-FieldHash-%{version}
+
+# Fix building on Perl without '.' in @INC
 %patch0 -p1
 
 %build
-RELEASE_TESTING=1 perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor --optimize="%{optflags}"
+RELEASE_TESTING=1 perl Build.PL --installdirs=vendor --optimize="%{optflags}"
 ./Build
 
 %install
@@ -76,7 +78,7 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 
 %files
 %if 0%{?_licensedir:1}
-%doc LICENSE
+%doc --no-dereference LICENSE
 %else
 %doc LICENSE
 %endif
@@ -85,6 +87,9 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 %{perl_vendor_archlib}/Hash/
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_7
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_5.1
 - rebuild with new perl 5.26.1
 
