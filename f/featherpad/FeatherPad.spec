@@ -1,8 +1,9 @@
 Name: featherpad
 Version: 0.8
-Release: alt1
+Release: alt1.1
 Summary: A lightweight Qt5 plain-text editor for Linux
 Group: Editors
+Url: https://github.com/tsujan/FeatherPad
 License: GPLv3+
 Source: V%version.tar.gz
 
@@ -52,6 +53,9 @@ done
 %_iconsdir/*/*/*/*
 
 %changelog
+* Thu May 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1.1
+- NMU: added Url
+
 * Mon May 07 2018 Fr. Br. George <george@altlinux.ru> 0.8-alt1
 - Autobuild version bump to 0.8
 
