@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-List-MoreUtils-XS
 Version:	0.428
-Release:	alt1
+Release:	alt1_2
 Summary:	Provide compiled List::MoreUtils functions
 # Code from List-MoreUtils < 0.417 is GPL+ or Artistic
 # Anything after that is ASL 2.0
@@ -15,8 +15,8 @@ Summary:	Provide compiled List::MoreUtils functions
 # determine the license of any particular chunk of code
 License:	(GPL+ or Artistic) and ASL 2.0
 URL:		http://search.cpan.org/dist/List-MoreUtils-XS/
-Source0:	http://www.cpan.org/authors/id/R/RE/REHSACK/List-MoreUtils-XS-%{version}.tar.gz
-Patch0:		List-MoreUtils-XS-0.421-unbundle.patch
+Source0:	http://search.cpan.org/CPAN/authors/id/R/RE/REHSACK/List-MoreUtils-XS-%{version}.tar.gz
+Patch0:		List-MoreUtils-XS-0.428-unbundle.patch
 # Module Build
 BuildRequires:	coreutils
 BuildRequires:	findutils
@@ -77,12 +77,15 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 make test
 
 %files
-%doc ARTISTIC-1.0 GPL-1 LICENSE
+%doc --no-dereference ARTISTIC-1.0 GPL-1 LICENSE
 %doc Changes MAINTAINER.md README.md
 %{perl_vendor_archlib}/auto/List/
 %{perl_vendor_archlib}/List/
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.428-alt1_2
+- update to new release by fcimport
+
 * Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.428-alt1
 - automated CPAN update
 
