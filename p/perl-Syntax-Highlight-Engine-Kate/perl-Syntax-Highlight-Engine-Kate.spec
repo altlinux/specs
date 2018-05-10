@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: gcc-c++ perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Path/Tiny.pm) perl(YAML/Tiny.pm) perl-podlators
@@ -7,7 +6,7 @@ BuildRequires: gcc-c++ perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Modu
 %define _localstatedir %{_var}
 Name:           perl-Syntax-Highlight-Engine-Kate
 Version:        0.14
-Release:        alt1
+Release:        alt1_2
 Summary:        Port to Perl of the syntax highlight engine of the Kate text editor
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -63,12 +62,11 @@ rm -rf ./inc
 sed -i '/^inc\//d' MANIFEST
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} +
 # %{_fixperms} %{buildroot}/*
 
 %check
@@ -79,6 +77,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_2
+- update to new release by fcimport
+
 * Tue Jan 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
