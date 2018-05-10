@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/PerlTidy.pm) perl(Test/Pod.pm) perl-podlators
@@ -7,7 +6,7 @@ BuildRequires: perl(Test/PerlTidy.pm) perl(Test/Pod.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Log-Contextual
 Version:        0.008001
-Release:        alt1
+Release:        alt1_2
 Summary:        Simple logging interface with a contextual log
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -15,8 +14,8 @@ URL:            http://search.cpan.org/dist/Log-Contextual/
 Source0:        http://www.cpan.org/authors/id/F/FR/FREW/Log-Contextual-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  findutils
-BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -47,8 +46,8 @@ Requires:       perl(Moo.pm) >= 1.003.0
 
 
 Source44: import.info
-%filter_from_requires /^perl\\(Exporter.Declare.pm\\)\\s*$/d
-%filter_from_requires /^perl\\(Moo.pm\\)\\s*$/d
+%filter_from_requires /^perl(Exporter.Declare\\)\\s*$/d
+%filter_from_requires /^perl(Moo\\)\\s*$/d
 
 %description
 This module is a simple interface to extensible logging. It is bundled with
@@ -60,23 +59,25 @@ not overly complicated, try Log::Dispatchouli.
 %setup -q -n Log-Contextual-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -delete
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.008001-alt1_2
+- update to new release by fcimport
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.008001-alt1
 - automated CPAN update
 
