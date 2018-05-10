@@ -1,5 +1,5 @@
 %define oname zope.hookable
-%define fname python-module-%oname
+%define fname python3-module-%oname
 %define descr \
 Support the efficient creation of hookable objects, which are callable \
 objects that are meant to be replaced by other callables, at least \
@@ -16,7 +16,7 @@ Release: alt2
 
 %if ""==""
 Summary: Hookable object support
-Group: Development/Python
+Group: Development/Python3
 %else
 Summary: Documentation for %oname
 Group: Development/Documentation
@@ -26,9 +26,9 @@ License: ZPLv2.1
 Url: http://pypi.python.org/pypi/zope.hookable/
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python rpm-macros-sphinx
+BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx
 
-%py_requires zope
+%py3_requires zope
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
@@ -59,7 +59,7 @@ This package contains pickles for zope.hookable.
 Summary: Tests for zope.hookable
 Group: Development/Python
 Requires: %name = %version-%release
-%py_requires zope.testing
+%py3_requires zope.testing
 
 %description -n %fname-tests
 %descr
@@ -76,7 +76,7 @@ ln -s ../objects.inv docs/
 
 %build
 %if ""==""
-%python_build
+%python3_build
 %else
 export PYTHONPATH=$PWD/src
 %make -C docs pickle
@@ -85,20 +85,20 @@ export PYTHONPATH=$PWD/src
 
 %install
 %if ""==""
-%python_install
+%python3_install
 %else
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %if ""==""
 %files
 %doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/*/tests
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/*/tests
 
 %files -n %fname-tests
-%python_sitelibdir/*/*/tests
+%python3_sitelibdir/*/*/tests
 
 %else
 
@@ -106,7 +106,7 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %doc docs/_build/html/*
 
 %files -n %fname-pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %endif
 
