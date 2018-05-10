@@ -1,20 +1,18 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(Catalyst/Engine/HTTP.pm) perl(Catalyst/Helper.pm) perl(Catalyst/Model/DBIC/Schema.pm) perl(Catalyst/Runtime.pm) perl(Catalyst/Test.pm) perl(Catalyst/View/TT.pm) perl(Catalyst/View/TT/Alloy.pm) perl(DBD/SQLite.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Schema.pm) perl(Pod/Usage.pm) perl(Try/Tiny.pm) perl(inc/Module/Install.pm) perl-podlators perl(Test/RequiresInternet.pm)
+BuildRequires: perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(Catalyst/Engine/HTTP.pm) perl(Catalyst/Helper.pm) perl(Catalyst/Model/DBIC/Schema.pm) perl(Catalyst/Runtime.pm) perl(Catalyst/Test.pm) perl(Catalyst/View/TT.pm) perl(Catalyst/View/TT/Alloy.pm) perl(DBD/SQLite.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Schema.pm) perl(Pod/Usage.pm) perl(inc/Module/Install.pm) perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Encode/JP.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-HTML-FormFu
 Version:        2.06
-Release:        alt1
+Release:        alt1_1
 Summary:        HTML Form Creation, Rendering and Validation Framework
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/HTML-FormFu/
-Source0:        http://www.cpan.org/authors/id/C/CF/CFRANKS/HTML-FormFu-%{version}.tar.gz
-Patch0:         HTML-FormFu-2.06-mxcheck-disable.patch
+Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFRANKS/HTML-FormFu-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -51,6 +49,7 @@ BuildRequires:  perl(HTML/Scrubber.pm)
 BuildRequires:  perl(HTML/TokeParser/Simple.pm)
 BuildRequires:  perl(HTTP/Headers.pm)
 BuildRequires:  perl(IO/File.pm)
+BuildRequires:  perl(JSON/MaybeXS.pm)
 BuildRequires:  perl(List/MoreUtils.pm)
 BuildRequires:  perl(Locale/Maketext.pm)
 BuildRequires:  perl(Module/Pluggable.pm)
@@ -73,6 +72,7 @@ BuildRequires:  perl(Template.pm)
 BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/Memory/Cycle.pm)
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Test/RequiresInternet.pm)
 BuildRequires:  perl(YAML/XS.pm)
 BuildRequires:  sed
 Requires:       perl(Captcha/reCAPTCHA.pm) >= 0.930
@@ -104,13 +104,12 @@ anything else you might want to do (as long as it involves forms).
 
 %prep
 %setup -q -n HTML-FormFu-%{version}
-%patch0 -p1
 
 find examples -type f | xargs chmod 644
 find examples -type f | xargs sed -i -e 's/\r//'
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -129,6 +128,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1_1
+- update to new release by fcimport
+
 * Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1
 - automated CPAN update
 
