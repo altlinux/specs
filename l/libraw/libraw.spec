@@ -1,8 +1,10 @@
 %def_disable snapshot
 %define _name LibRaw
+# demosaic pack version
+%define dmp_ver 0.18.8
 
 Name: libraw
-Version: 0.18.8
+Version: 0.18.11
 Release: alt1
 
 Summary: library for reading RAW files obtained from digital photo cameras
@@ -16,8 +18,8 @@ Source: %url/data/%_name-%version.tar.gz
 # VCS: https://github.com/LibRaw/LibRaw.git
 Source: %_name-%version.tar
 %endif
-Source1: %url/data/%_name-demosaic-pack-GPL2-%version.tar.gz
-Source2: %url/data/%_name-demosaic-pack-GPL3-%version.tar.gz
+Source1: %url/data/%_name-demosaic-pack-GPL2-%dmp_ver.tar.gz
+Source2: %url/data/%_name-demosaic-pack-GPL3-%dmp_ver.tar.gz
 
 BuildRequires: gcc-c++ libjasper-devel liblcms2-devel libjpeg-devel libgomp-devel
 
@@ -94,6 +96,9 @@ This package contains static library.
 %_libdir/libraw_r.a
 
 %changelog
+* Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18.11-alt1
+- 0.18.11
+
 * Mon Feb 26 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18.8-alt1
 - 0.18.8
 
