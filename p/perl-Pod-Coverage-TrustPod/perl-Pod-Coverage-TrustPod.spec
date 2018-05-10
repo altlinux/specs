@@ -7,15 +7,17 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Pod-Coverage-TrustPod
 Version:        0.100005
-Release:        alt1
+Release:        alt1_1
 Summary:        Allow a module's pod to contain Pod::Coverage hints
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Pod-Coverage-TrustPod/
-Source0:        http://www.cpan.org/authors/id/R/RJ/RJBS/Pod-Coverage-TrustPod-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/R/RJ/RJBS/Pod-Coverage-TrustPod-%{version}.tar.gz
 BuildArch:      noarch
 # Build:
-BuildRequires:  perl-devel
+BuildRequires:  coreutils
+BuildRequires:  findutils
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
 BuildRequires:  perl(base.pm)
@@ -26,6 +28,7 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
 # Tests:
 BuildRequires:  perl(Carp/Heavy.pm)
+BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(Test/More.pm)
 Source44: import.info
@@ -40,23 +43,26 @@ symbol names trusted.
 %setup -q -n Pod-Coverage-TrustPod-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-# %{_fixperms} %{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/Pod/
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.100005-alt1_1
+- update to new release by fcimport
+
 * Tue Mar 13 2018 Igor Vlasenko <viy@altlinux.ru> 0.100005-alt1
 - automated CPAN update
 
