@@ -12,7 +12,7 @@
 
 Name: prometheus-%oname
 Version: 0.12.0
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Prometheus blackbox prober exporter
 
 Group: Development/Other
@@ -72,5 +72,8 @@ install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/prometheus/blackbox.yml
 
 %changelog
+* Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.12.0-alt2%ubt
+- fix typo in option
+
 * Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.12.0-alt1%ubt
 - Initial build for ALT.
