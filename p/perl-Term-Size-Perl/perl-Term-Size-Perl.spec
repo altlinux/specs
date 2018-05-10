@@ -1,22 +1,21 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators
+BuildRequires: perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Term-Size-Perl
 Version:        0.031
-Release:        alt1
+Release:        alt1_1
 Summary:        Perl extension for retrieving terminal size (Perl version)
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Term-Size-Perl/
 Source0:        http://www.cpan.org/authors/id/F/FE/FERREIRA/Term-Size-Perl-%{version}.tar.gz
 # Build
-BuildRequires:  gcc-common
-BuildRequires:  perl-devel
+BuildRequires:  gcc
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/CBuilder.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Runtime
@@ -24,9 +23,6 @@ BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(strict.pm)
 # Tests only
 BuildRequires:  perl(Test/More.pm)
-# Optional tests only
-BuildRequires:  perl(Test/Pod.pm)
-BuildRequires:  perl(Test/Pod/Coverage.pm)
 
 # although the resulting rpm appears to be noarch, the build is arch-dependent
 # and produces different code for ppc and x86
@@ -42,7 +38,7 @@ exception of a C probe run on build time.
 %setup -q -n Term-Size-Perl-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -53,10 +49,14 @@ make pure_install DESTDIR=%{buildroot}
 make test
 
 %files
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.031-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.031-alt1
 - automated CPAN update
 
