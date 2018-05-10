@@ -1,15 +1,16 @@
-Group: Development/C
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++ pkgconfig(libusb-1.0)
 # END SourceDeps(oneline)
+Group: Development/C
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global majorver 3 
 
 Name: libapogee
 Version: 3.0.3234
-Release: alt1_6
+Release: alt1_8
 Summary: Library for Apogee CCD Cameras
 
 License: GPLv2+ and MPLv2.0
@@ -20,7 +21,7 @@ URL: http://indilib.org
 Source0: %{name}-%{version}.tar.gz
 Source1: %{name}-generate-tarball.sh
 
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel ctest cmake libusb-compat-devel libcurl-devel journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
+BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel ctest cmake libusb-compat-devel libcurl-devel libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-stateless systemd-sysvinit systemd-utils
 Source44: import.info
 
 %description
@@ -46,7 +47,7 @@ make VERBOSE=1 %{?_smp_mflags}
 make install DESTDIR=%{buildroot}
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README
 %{_libdir}/*.so.*
 %{_sysconfdir}/Apogee/*
@@ -57,6 +58,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.3234-alt1_8
+- update to new release by fcimport
+
 * Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.3234-alt1_6
 - update to new release by fcimport
 
