@@ -27,7 +27,7 @@
 
 Name: freeipa
 Version: 4.6.3
-Release: alt4%ubt
+Release: alt5%ubt
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -1435,6 +1435,9 @@ fi
 %endif # with_python3
 
 %changelog
+* Tue Apr 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.3-alt5%ubt
+- Rebuilt due to selinux update.
+
 * Sat Mar 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.6.3-alt4%ubt
 - Rebuild with samba-4.7
 

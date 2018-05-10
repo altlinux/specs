@@ -3,21 +3,19 @@
 
 Name: libselinux
 Epoch: 1
-Version: 2.5
-Release: alt4.1
+Version: 2.7
+Release: alt1
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
 Url: http://userspace.selinuxproject.org/
 Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
-Patch1: alt-man-selinuxconlist.patch
-Patch2: alt-linking.patch
+Patch0: %name-%version-alt.patch
 
 %{?_with_python:BuildPreReq: rpm-build-python}
-BuildRequires: libpcre-devel libsepol-devel >= 2.5
-%{?_with_python:BuildRequires: python-devel swig >= 3.0.12-alt4 libsepol-devel-static >= 2.5}
-%{?_with_python3:BuildRequires: python3-devel swig >= 3.0.12-alt4 libsepol-devel-static >= 2.5}
+BuildRequires: libpcre-devel libsepol-devel >= 2.7
+%{?_with_python:BuildRequires: python-devel swig >= 3.0.12-alt4 libsepol-devel-static >= 2.7}
+%{?_with_python3:BuildRequires: python3-devel swig >= 3.0.12-alt4 libsepol-devel-static >= 2.7}
 
 %description
 libselinux provides an API for SELinux applications to get and set
@@ -79,8 +77,6 @@ This package contains SELinux python 3.x bindings.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 %make_build CFLAGS="%optflags $(pkg-config libpcre --cflags)" LIBDIR=%_libdir all
@@ -98,10 +94,10 @@ popd
 %install
 %if_with python3
 pushd ../python3
-%makeinstall_std LIBDIR=%buildroot%_libdir SHLIBDIR=%buildroot/%_lib PYTHON=/usr/bin/python3 install-pywrap
+%makeinstall_std LIBDIR=%buildroot%_libdir SHLIBDIR=%buildroot/%_lib LIBSEPOLA=%_libdir/libsepol.a PYTHON=/usr/bin/python3 install-pywrap
 popd
 %endif
-%makeinstall_std LIBDIR=%buildroot%_libdir SHLIBDIR=%buildroot/%_lib %{?_with_python:install-pywrap}
+%makeinstall_std LIBDIR=%buildroot%_libdir SHLIBDIR=%buildroot/%_lib LIBSEPOLA=%_libdir/libsepol.a %{?_with_python:install-pywrap}
 install -d -m 0755 %buildroot/var/run/setrans
 
 %check
@@ -149,6 +145,9 @@ fi
 %endif
 
 %changelog
+* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.7-alt1
+- Updated to upstream version 2.7.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.5-alt4.1
 - (NMU) Rebuilt with python-3.6.4.
 
