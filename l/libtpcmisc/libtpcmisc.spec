@@ -7,7 +7,7 @@ Group: Development/C
 %define _localstatedir %{_var}
 Name:           libtpcmisc
 Version:        1.4.8
-Release:        alt2_15
+Release:        alt2_17
 Summary:        Miscellaneous PET functions
 
 License:        LGPLv2+
@@ -15,7 +15,7 @@ URL:            http://www.turkupetcentre.net/software/libdoc/%{name}/index.html
 Source0:        http://www.turkupetcentre.net/software/libsrc/%{name}_1_4_8_src.zip
 Patch0:         %{name}-shared.patch
 
-BuildRequires:  doxygen dos2unix graphviz libgraphviz
+BuildRequires:  doxygen dos2unix graphviz libgraphviz gcc
 Source44: import.info
 
 
@@ -93,6 +93,9 @@ popd
 %{_libdir}/%{name}.a
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.8-alt2_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.8-alt2_15
 - update to new release by fcimport
 
