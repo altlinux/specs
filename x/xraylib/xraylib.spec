@@ -2,7 +2,7 @@
 
 Name: xraylib
 Version: 3.1.0
-Release: alt1.git20141114.1.1
+Release: alt2.git20141114
 Summary: X-ray matter interaction cross sections for X-ray fluorescence applications
 License: BSD
 Group: Sciences/Physics
@@ -99,7 +99,7 @@ popd
 %install
 %makeinstall_std
 rm -f %buildroot%python_sitelibdir/*.la
-%ifarch x86_64
+%if "%_lib" == "lib64"
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
@@ -115,7 +115,7 @@ rm -f buildroot%python3_sitelibdir/*.la
 install -d %buildroot%python3_sitelibdir
 mv buildroot%python3_sitelibdir/* \
 	%buildroot%python3_sitelibdir/
-%ifarch x86_64
+%if "%_lib" == "lib64"
 mv buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
@@ -144,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Thu May 10 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1.0-alt2.git20141114
+- fixed packaging on 64bit arches other than x86_64
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.0-alt1.git20141114.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
