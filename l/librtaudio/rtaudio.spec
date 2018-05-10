@@ -7,21 +7,19 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Summary:        Real-time Audio I/O Library
 Name:           librtaudio
-Version:        4.0.11
-Release:        alt1_13
+Version:        5.0.0
+Release:        alt1_2
 License:        MIT
 Group:          System/Libraries
 URL:            http://www.music.mcgill.ca/~gary/rtaudio/
-# The original tarball contains nonfree bits. We remove them and create a free tarball:
-#    VERSION=4.0.11
-#    wget -N http://www.music.mcgill.ca/~gary/rtaudio/release/rtaudio-$VERSION.tar.gz
-#    tar zxf rtaudio-$VERSION.tar.gz
-#    rm -fr rtaudio-$VERSION/include/ rtaudio-$VERSION/tests/Windows
-#    tar zcf rtaudio-$VERSION-fe.tar.gz rtaudio-$VERSION
-Source0:        %{oldname}-%{version}-fe.tar.gz
+Source0:        https://github.com/thestk/rtaudio/archive/v%{version}/rtaudio-%{version}.tar.gz
 BuildRequires:  libalsa-devel
 BuildRequires:  libjack-devel
 BuildRequires:  libpulseaudio-devel
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
+BuildRequires:  doxygen
 Source44: import.info
 Provides: rtaudio = %{version}-%{release}
 
@@ -73,38 +71,30 @@ for file in tests/teststops.cpp; do
    mv -f $file.tmp2 $file
 done
 
-# Remove empty directory
-rm -fr tests/Debug
-
-# To pass the optflags properly
-sed -i '/CFLAGS *=/d' Makefile.in
-
-# To fix the ppc64 compilation issue
-# cp -p /usr/lib/rpm/config.{sub,guess} config/
-
 %build
+autoreconf -fiv
 export CFLAGS="%optflags -fPIC"
-%configure --with-jack --with-alsa --with-pulse
-# parallel make fails here
-make
+%configure --with-jack --with-alsa --with-pulse --enable-shared --disable-static --verbose
+%make_build V=1
 
 %install
-mkdir -p %{buildroot}%{_includedir} %{buildroot}%{_libdir}
-cp -a RtAudio.h RtError.h %{buildroot}%{_includedir}
-cp -p lib%{oldname}.so.%{version} %{buildroot}%{_libdir}/
-ln -s %{_libdir}/lib%{oldname}.so.%{version} %{buildroot}%{_libdir}/lib%{oldname}.so
-# ldconfig -v -n  %{buildroot}%{_libdir}
+make install DESTDIR=%{buildroot}
 
 %files
+%doc --no-dereference doc/doxygen/license.txt
 %doc readme doc/release.txt
 %{_libdir}/lib%{oldname}.so.*
 
 %files devel
-%doc doc/html doc/images tests
-%{_includedir}/*.h
+%doc doc/html doc/images
+%{_includedir}/%{oldname}/*.h
 %{_libdir}/lib%{oldname}.so
+%{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1_2
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.11-alt1_13
 - update to new release by fcimport
 
