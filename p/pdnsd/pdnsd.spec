@@ -1,33 +1,15 @@
 Name: pdnsd
-Version: 1.2.7
-Release: alt1.qa1
+Version: 1.2.9a
+Release: alt1
 
 Summary: A caching DNS proxy for small networks and dialup users
 License: %gpl3plus
 Group: System/Servers
 
-Packager: Andrey Rahmatullin <wrar@altlinux.ru>
+Url: http://members.home.nl/p.a.rombouts/pdnsd/
 
-Url: http://www.phys.uu.nl/~rombouts/pdnsd.html
-Source0: %name-%version-par.tar.bz2
-
-Source1: %name.init
-Source2: %name.conf
-Source3: %name.ip-up
-Source4: %name.init.old
-Source5: %name-1.2-README.ALT
-
-Patch1: %name-1.2-alt-chroot_dir.patch
-Patch2: %name-1.2.4-alt-droppriv.patch
-Patch3: %name-1.2.4-alt-no-old-glibc.patch
-Patch4: %name-1.2.7-alt-sock_path.patch
-Patch5: %name-1.2.5-alt-stat_sock.patch
-Patch6: %name-1.2.4-alt-syslog.patch
-Patch7: %name-1.2-alt-cache.patch
-Patch8: %name-1.2.7-alt-no-stat-conff.patch
-
-# TODO
-Patch20: %name-1.1.7a-alt-getopt.patch
+# git://git.altlinux.org/gears/p/pdnsd.git
+Source: %name-%version-%release.tar
 
 BuildPreReq: %_bindir/mksock
 BuildPreReq: rpm-build-licenses >= 0.7
@@ -37,19 +19,9 @@ pdnsd is a proxy DNS daemon with permanent disk cache and the ability
 to serve local records.
 
 %prep
-%setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
+%setup -n %name-%version-%release
 
-#patch20 -p1
-
-cp -a %SOURCE5 README.ALT
+mv alt/README.ALT .
 
 %build
 %autoreconf
@@ -63,9 +35,10 @@ cp -a %SOURCE5 README.ALT
 mkdir -p %buildroot{%_cachedir/%name,%_var/run/%name}
 rm -f contrib/Makefile*
 
-install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
-install -pD -m755 %SOURCE2 %buildroot%_sysconfdir/%name.conf
-install -pD -m755 %SOURCE3 %buildroot%_sysconfdir/ppp/ip-up.d/0%name
+install -pD -m755 alt/%name.init %buildroot%_initdir/%name
+install -pD -m755 alt/%name.conf %buildroot%_sysconfdir/%name.conf
+install -pD -m755 alt/%name.ip-up %buildroot%_sysconfdir/ppp/ip-up.d/0%name
+install -pD -m755 alt/%name.tmpfiles.d %buildroot%_tmpfilesdir/%name.conf
 
 touch %buildroot%_cachedir/%name/%name.cache
 mksock %buildroot%_var/run/%name/socket
@@ -76,6 +49,7 @@ bzip -9 ChangeLog
 %doc AUTHORS Change* COPYING.BSD NEWS README* THANKS TODO doc/pdnsd.conf contrib doc/txt doc/html
 %_sbindir/%{name}*
 %_mandir/man?/%{name}*
+%_tmpfilesdir/%name.conf
 %config %_initdir/%name
 %config %_sysconfdir/ppp/ip-up.d/0%name
 %config(noreplace) %_sysconfdir/%name.conf
@@ -93,13 +67,19 @@ bzip -9 ChangeLog
         echo -n -e "pd12\0\0\0\0" >%_cachedir/%name/%name.cache
 chmod 0600 %_cachedir/%name/%name.cache
 chown root:%name %_cachedir/%name/%name.cache
-	
+
 %post_service %name
 
 %preun
 %preun_service %name
 
 %changelog
+* Fri May 11 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.2.9a-alt1
+- 1.2.9a
+- rediffed patches
+- updated home url
+- add tmpfiles.d conf
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.7-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
