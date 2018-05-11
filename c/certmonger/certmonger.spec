@@ -3,8 +3,8 @@
 %define _localstatedir /var
 
 Name: certmonger
-Version: 0.79.5
-Release: alt2%ubt
+Version: 0.79.6
+Release: alt1%ubt
 Summary: Certificate status monitor and PKI enrollment client
 
 Group: System/Base
@@ -20,7 +20,7 @@ BuildRequires: libdbus-devel
 BuildRequires: libnspr-devel
 BuildRequires: libnss-devel
 BuildRequires: libssl-devel
-BuildRequires: libidn-devel
+BuildRequires: libidn2-devel
 BuildRequires: libuuid-devel
 BuildRequires: libtalloc-devel
 BuildRequires: libtevent-devel
@@ -100,6 +100,9 @@ mv %buildroot/usr%_tmpfilesdir/%name.conf %buildroot%_tmpfilesdir/%name.conf
 %_datadir/dbus-1/system-services/*
 
 %changelog
+* Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.79.6-alt1%ubt
+- Updated to upstream version 0.79.6.
+
 * Thu Mar 15 2018 Stanislav Levin <slev@altlinux.org> 0.79.5-alt2%ubt
 - Keep LC_*, LANG, set default LC_CTYPE
 
