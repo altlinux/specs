@@ -2,10 +2,11 @@
 
 %def_with python3
 #def_disable check
+%def_without bootstrap
 
 Name: python-module-%oname
 Version: 4.6.1
-Release: alt1
+Release: alt3
 Summary: IPython Kernel for Jupyter
 License: BSD
 Group: Development/Python
@@ -26,7 +27,12 @@ BuildRequires: python3-module-pathlib2
 %endif
 
 %py_provides %oname
-%py_requires IPython traitlets jupyter_client
+%py_requires traitlets jupyter_client
+
+%if_with bootstrap
+%py_requires IPython
+%endif
+
 
 %description
 This package provides the IPython kernel for Jupyter.
@@ -46,7 +52,12 @@ This package contains tests for %oname.
 Summary: IPython Kernel for Jupyter
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires IPython traitlets jupyter_client
+%py3_requires traitlets jupyter_client
+
+%if_with bootstrap
+%py3_requires IPython
+%endif
+
 %add_python3_req_skip gtk
 
 %description -n python3-module-%oname
@@ -122,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Fri May 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 4.6.1-alt3
+- rebuild with python3.6
+
 * Wed Nov 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.1-alt1
 - Updated to upstream version 4.6.1.
 

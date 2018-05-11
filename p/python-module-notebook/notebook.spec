@@ -2,11 +2,12 @@
 
 %def_with python3
 #def_disable check
+%def_without bootstrap
 %def_with doc
 
 Name: python-module-%oname
 Version: 5.2.2
-Release: alt2.1
+Release: alt2.2
 
 Summary: Jupyter Interactive Notebook
 License: BSD
@@ -21,10 +22,15 @@ BuildArch: noarch
 BuildRequires: python-module-pathlib
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-zmq python-module-jinja2
-BuildRequires: python-module-tornado python-module-ipython_genutils-tests
+BuildRequires: python-module-tornado
+%if_with bootstrap
+BuildRequires: python-module-ipython_genutils-tests
+%endif
 BuildRequires: python-module-traitlets-tests python-module-jupyter_core
 BuildRequires: python-module-jupyter_client python-module-nbformat
-BuildRequires: python-module-nbconvert python-module-ipykernel
+%if_with bootstrap
+BuildRequires: python-module-ipykernel python-module-nbconvert
+%endif
 BuildRequires: python-module-mock python-module-terminado
 BuildRequires: python-module-nose python-module-requests
 BuildRequires: python-module-coverage
@@ -36,10 +42,15 @@ BuildRequires: pandoc
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-zmq python3-module-jinja2
-BuildRequires: python3-module-tornado python3-module-ipython_genutils-tests
+BuildRequires: python3-module-tornado
+%if_with bootstrap
+BuildRequires: python3-module-ipython_genutils-tests
+%endif
 BuildRequires: python3-module-traitlets-tests python3-module-jupyter_core
 BuildRequires: python3-module-jupyter_client python3-module-nbformat
-BuildRequires: python3-module-nbconvert python3-module-ipykernel
+%if_with bootstrap
+BuildRequires: python3-module-ipykernel python3-module-nbconvert
+%endif
 BuildRequires: python3-module-mock python3-module-terminado
 BuildRequires: python3-module-nose python3-module-requests
 BuildRequires: python3-module-coverage
@@ -157,6 +168,7 @@ popd
 
 %python_install
 
+%if_with bootstrap
 %check
 export LC_ALL=en_US.UTF-8
 nosetests -vv --with-coverage --cover-package=%oname %oname
@@ -165,6 +177,7 @@ nosetests -vv --with-coverage --cover-package=%oname %oname
 pushd ../python3
 nosetests3 -vv --with-coverage --cover-package=%oname %oname
 popd
+%endif
 %endif
 
 %files
@@ -210,6 +223,9 @@ popd
 %endif
 
 %changelog
+* Fri May 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.2.2-alt2.2
+- off build requires for nmu
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 5.2.2-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
