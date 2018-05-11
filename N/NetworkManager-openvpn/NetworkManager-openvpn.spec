@@ -8,14 +8,14 @@
 
 %define _unpackaged_files_terminate_build 1
 
-%ifarch e2k
+%ifarch %e2k
 %define more_warnings no
 %else
 %define more_warnings error
 %endif
 
 Name: NetworkManager-openvpn
-Version: 1.8.0
+Version: 1.8.2
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -105,6 +105,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Fri May 11 2018 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt1
+- Use %%e2k macro.
+- Updated to 1.8.2.
+
 * Thu Oct 12 2017 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt1
 - Fix build on e2k.
 - Fixes from upstream:
