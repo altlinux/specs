@@ -2,8 +2,8 @@
 %define api_ver 0.1
 
 Name: libopenraw
-Version: 0.1.2
-Release: alt1.1
+Version: 0.1.3
+Release: alt1
 
 Summary: Decode camera RAW files
 Group: System/Libraries
@@ -12,7 +12,8 @@ Url: http://libopenraw.freedesktop.org/wiki
 
 Source: http://libopenraw.freedesktop.org/download/libopenraw-%version.tar.bz2
 
-BuildRequires: boost-devel gcc-c++ libcurl-devel libgio-devel libgdk-pixbuf-devel libjpeg-devel libxml2-devel
+BuildRequires: autoconf-archive boost-devel gcc-c++ libcurl-devel libgio-devel
+BuildRequires: libgdk-pixbuf-devel libjpeg-devel libxml2-devel
 
 %description
 libopenraw is an ongoing project to provide a free software implementation for
@@ -84,6 +85,9 @@ sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 %_pkgconfigdir/%name-gnome-%api_ver.pc
 
 %changelog
+* Fri May 11 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.3-alt1
+- 0.1.3
+
 * Fri Mar 02 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt1.1
 - fixed boost.m4 for e2k
 
