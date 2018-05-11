@@ -1,9 +1,9 @@
 Name: dvbackup
 Version: 0.0.4
-Release: alt1.qa1
+Release: alt2
 Group: Archiving/Backup
 Summary: Backup to digital camcoders
-Summary(ru_RU.KOI8-R): Архивирование на цифровые видеокамеры
+Summary(ru_RU.UTF-8): п░я─я┘п╦п╡п╦я─п╬п╡п╟п╫п╦п╣ п╫п╟ я├п╦я└я─п╬п╡я▀п╣ п╡п╦п╢п╣п╬п╨п╟п╪п╣я─я▀
 License: GPL
 Url:http://dvbackup.sourceforge.net/
 
@@ -24,8 +24,8 @@ BuildRequires: docbook-utils libpopt-devel zlib-devel
 %description
 Dvbackup allows you to backup files to digital camcoder tapes.
 
-%description -l ru_RU.KOI8-R
-Dvbackup позволяет архивировать файлы на ленту цифровых видеокамер.
+%description -l ru_RU.UTF-8
+Dvbackup п©п╬п╥п╡п╬п╩я▐п╣я┌ п╟я─я┘п╦п╡п╦я─п╬п╡п╟я┌я▄ я└п╟п╧п╩я▀ п╫п╟ п╩п╣п╫я┌я┐ я├п╦я└я─п╬п╡я▀я┘ п╡п╦п╢п╣п╬п╨п╟п╪п╣я─.
 
 %prep
 %setup -q -a1
@@ -39,6 +39,7 @@ Dvbackup позволяет архивировать файлы на ленту цифровых видеокамер.
 %__mv rsbep0.0.5/Makefile_plain_C rsbep0.0.5/Makefile
 
 %build
+%add_optflags -fgnu89-inline
 export CC=gcc
 export CFLAGS=$RPM_OPT_FLAGS
 %make_build includedir=%_includedir
@@ -69,6 +70,9 @@ popd
 %_man1dir/*
 
 %changelog
+* Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.4-alt2
+- NMU: fixed build with new gcc and converted spec to UTF-8.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
