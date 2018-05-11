@@ -14,7 +14,7 @@
 
 Name: ejabberd
 Version: 18.03
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Fault-tolerant distributed Jabber server written in Erlang
 License: GPL2
 Group: System/Servers
@@ -32,6 +32,8 @@ Patch4: ejabberd-fedora-enable-systemd-notification-if-available.patch
 
 Patch10: ejabberd-alt-deps.patch
 Patch11: ejabberd-alt-version.patch
+# https://github.com/processone/ejabberd/issues/1037
+Patch12: ejabberd-alt-erllibs-path.patch
 
 BuildRequires(pre): jabber-common >= 0.2
 BuildRequires(pre): rpm-build-erlang
@@ -110,6 +112,7 @@ The main features of ejabberd is:
 %patch4 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 # Upstream seems to import erlang-xmpp and erlang-fast_xml in a way that isn't compatible with them
 # being system libraries. We need to patch the include statements to fix this.
@@ -129,6 +132,9 @@ perl -p -i -e "s|deps/fast_xml/include|$(rpm -ql erlang-fast_xml | grep -E '/inc
 perl -p -i -e "s|deps/xmpp/include|$(rpm -ql erlang-xmpp | grep -E '/include$' )|g"   rebar.config
 
 sed -i -e "s:@version@:%version:g" configure.ac
+
+# additional update for patch 12
+sed -i -e "s|@ERL_LIBS@|%_erllibdir/%name-%version:|g" ejabberdctl.template
 
 %build
 %autoreconf
@@ -209,6 +215,9 @@ install -p -m 0644 sql/pg.sql    %buildroot%_erllibdir/%name-%version/priv/sql/
 %attr(1770,root,ejabberd) %dir %_lockdir/ejabberd
 
 %changelog
+* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 18.03-alt2%ubt
+- Fixed LDAP module (upstream issue #1037).
+
 * Fri Apr 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 18.03-alt1%ubt
 - Updated to upstream version 18.03.
 
