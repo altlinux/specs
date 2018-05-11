@@ -6,14 +6,13 @@ BuildRequires: /usr/bin/ccache boost-devel boost-python-devel cmake gcc-c++ glib
 %define _localstatedir %{_var}
 Name:           cegui
 Version:        0.8.7
-Release:        alt3_7
+Release:        alt3_10
 Summary:        Free library providing windowing and widgets for graphics APIs / engines
 Group:          System/Libraries
 License:        MIT
 URL:            http://www.cegui.org.uk
 Source0:        http://downloads.sourceforge.net/crayzedsgui/cegui-%{version}.tar.bz2
 Patch0:         cegui-0.8.4-lua53.patch
-Patch1:         cegui-0.8.7-alt-gcc7.patch
 
 BuildRequires:  libdevil-devel
 BuildRequires:  libfreeimage-devel
@@ -23,12 +22,11 @@ BuildRequires:  libxml2-devel
 BuildRequires:  libICE-devel
 BuildRequires:  libglm-devel
 BuildRequires:  libGLU-devel
-BuildRequires:  libtool-common
+BuildRequires:  libtool
 BuildRequires:  libSM-devel
 BuildRequires:  lua-devel >= 0.5.2
 BuildRequires:  libpcre-devel libpcrecpp-devel
 BuildRequires:  SILLY-devel
-BuildRequires:  libxerces-c-devel
 BuildRequires:  tolua++-devel >= 1.0.93
 BuildRequires:  tinyxml-devel
 BuildRequires:  libGLEW-devel
@@ -40,6 +38,8 @@ BuildRequires:  graphviz libgraphviz
 # We no longer build a python subpackage as the python bindings are
 # broken when building with gcc6 / boost-1.60 and no-one uses them
 Obsoletes:      %{name}-python < %{version}-%{release}
+# Idem for the xerces-xmlparser (broken with recent xerces versions)
+Obsoletes:      %{name}-xerces-xmlparser < %{version}-%{release}
 Source44: import.info
 
 %description
@@ -54,14 +54,13 @@ games, not building GUI sub-systems!
 Summary:        Development files for cegui
 Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
-Requires:       cegui = %{version}-%{release}
+Requires:       %{name}-DevIL-imagecodec = %{version}-%{release}
 Requires:       %{name}-freeimage-imagecodec = %{version}-%{release}
-Requires:       cegui = %{version}-%{release}
-Requires:       cegui = %{version}-%{release}
-Requires:       cegui = %{version}-%{release}
-Requires:       cegui = %{version}-%{release}
-Requires:       cegui = %{version}-%{release}
-Requires:       cegui = %{version}-%{release}
+Requires:       %{name}-irrlicht-renderer = %{version}-%{release}
+Requires:       %{name}-ogre-renderer = %{version}-%{release}
+Requires:       %{name}-null-renderer = %{version}-%{release}
+Requires:       %{name}-libxml-xmlparser = %{version}-%{release}
+Requires:       %{name}-tinyxml-xmlparser = %{version}-%{release}
 
 %description devel
 Development files for cegui
@@ -150,29 +149,21 @@ Requires:       cegui = %{version}-%{release}
 Alternative xml parsing library for CEGUI using tinyxml.
 
 
-%package xerces-xmlparser
-Summary:        Alternative xml parsing library for CEGUI using xerces
-Group:          System/Libraries
-Requires:       cegui = %{version}-%{release}
-
-%description xerces-xmlparser
-Alternative xml parsing library for CEGUI using xerces.
-
-
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p2
 find -name "*.orig" -exec rm -f {} ';'
 
 
 %build
 %{fedora_cmake} \
 -D CMAKE_INSTALL_DOCDIR=%{_docdir}/%{name} \
--D CEGUI_BUILD_RENDERER_DIRECTFB=false \
+-D CEGUI_BUILD_IMAGECODEC_SDL2=false \
 -D CEGUI_BUILD_IMAGECODEC_STB=false \
 -D CEGUI_BUILD_IMAGECODEC_TGA=false \
 -D CEGUI_BUILD_PYTHON_MODULES=false \
+-D CEGUI_BUILD_RENDERER_DIRECTFB=false \
+-D CEGUI_BUILD_XMLPARSER_XERCES=false \
 -D CEGUI_OPTION_DEFAULT_XMLPARSER=ExpatParser \
 -D CEGUI_OPTION_DEFAULT_IMAGECODEC=SILLYImageCodec \
 -D CEGUI_BUILD_RENDERER_NULL=true \
@@ -199,7 +190,7 @@ find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
 
 %files
 %doc README.md
-%doc COPYING
+%doc --no-dereference COPYING
 %{_libdir}/libCEGUIBase-0.so.*
 %{_libdir}/libCEGUICommonDialogs-0.so.*
 %{_libdir}/libCEGUILuaScriptModule-0.so.*
@@ -227,8 +218,8 @@ find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
 
 %{_datadir}/cegui-0
 
-#%files devel-doc
-#%doc %{_docdir}/cegui-0.8.4/html
+%files devel-doc
+%doc %{_docdir}/cegui-0.8.4/html
 
 %files samples
 %{_bindir}/CEGUISampleFramework-0.8
@@ -257,11 +248,10 @@ find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
 %files tinyxml-xmlparser
 %{_libdir}/cegui-0.8/libCEGUITinyXMLParser.so
 
-%files xerces-xmlparser
-%{_libdir}/cegui-0.8/libCEGUIXercesParser.so
-
-
 %changelog
+* Fri May 11 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.7-alt3_10
+- resynced with fc
+
 * Tue Apr 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.7-alt3_7
 - Rebuilt with new libboost.
 
