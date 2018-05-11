@@ -1,6 +1,6 @@
 Name: apg
 Version: 2.2.3
-Release: alt4
+Release: alt5
 
 Summary: Automated password generator
 License: BSD
@@ -12,7 +12,7 @@ Source1: %name.xinetd
 Patch: %name-makefile.patch
 Packager: Denis Ovsienko <pilot@altlinux.ru>
 
-Summary(ru_RU.KOI8-R): Автоматический генератор паролей
+Summary(ru_RU.UTF-8): п░п╡я┌п╬п╪п╟я┌п╦я┤п╣я│п╨п╦п╧ пЁп╣п╫п╣я─п╟я┌п╬я─ п©п╟я─п╬п╩п╣п╧
 
 %description
 * Built-in ANSI X9.17 RNG (Random Number Generator)(CAST/SHA1)
@@ -54,7 +54,7 @@ Requires: %name xinetd service
 Requires: setup >= 2.2.3-alt1
 Group: System/Servers
 Summary: Automated password generator service
-Summary(ru_RU.KOI8-R): Сервис автоматической генерации паролей
+Summary(ru_RU.UTF-8): п║п╣я─п╡п╦я│ п╟п╡я┌п╬п╪п╟я┌п╦я┤п╣я│п╨п╬п╧ пЁп╣п╫п╣я─п╟я├п╦п╦ п©п╟я─п╬п╩п╣п╧
 
 %description daemon
 * Ability to log password generation requests for network version
@@ -77,6 +77,9 @@ Summary(ru_RU.KOI8-R): Сервис автоматической генерации паролей
 # - migrate to _apgd pseudouser?
 
 %changelog
+* Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.3-alt5
+- NMU: rebuilt with new glibc and converted summary to UTF-8.
+
 * Sun Mar 27 2011 Michael Shigorin <mike@altlinux.org> 2.2.3-alt4
 - rebuilt
 - dropped pseudouser removal upon package deletion
