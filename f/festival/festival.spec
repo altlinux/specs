@@ -16,7 +16,7 @@
 Summary:	general multi-lingual speech synthesis system
 Name:		festival
 Version:	%{fst_version}
-Release:	alt4.1
+Release:	alt5
 Group:		Sound
 Packager:	Igor Vlasenko <viy@altlinux.ru>
 # the emacs file is GPL+, there is one TCL licensed source file
@@ -298,6 +298,8 @@ Patch138: speech_tools-1.2.95-alt-hts_support-fest1.96.patch
 Patch139: speech_tools-2.0.95-alt-config-project.patch
 Patch137: speech_tools-2.0.96-alt-gcc48.patch
 
+Patch1000: speech_tools-alt-nullptrs.patch
+
 Requires:	festvox
 
 # --displayname
@@ -486,6 +488,8 @@ cd $RPM_BUILD_DIR/speech_tools
 %patch138 -p1
 %patch139 -p2
 %patch137 -p1
+
+%patch1000 -p2
 
 # prep Edinburgh Speech Tools
 sed -i s/'# INCLUDE_MODULES += ESD_AUDIO'/'INCLUDE_MODULES += ESD_AUDIO'/ \
@@ -829,6 +833,9 @@ grep '^%festival_user:' /etc/passwd >/dev/null || \
 
 
 %changelog
+* Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.95-alt5
+- NMU: fixed build with new gcc.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.95-alt4.1
 - NMU: added BR: texinfo
 
