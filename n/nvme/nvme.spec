@@ -1,8 +1,8 @@
-%define git 0b78004
+%define git 9c0660a
 
 Name: nvme
-Version: 1.4
-Release: alt5.g%git
+Version: 1.5
+Release: alt1.g%git
 Summary: Core nvme tools
 License: GPL
 Group: System/Configuration/Hardware
@@ -20,6 +20,7 @@ cli rpm installs core management tools with minimal dependencies.
 %setup
 
 %build
+subst 's,$(NVME_VERSION),%version-g%{git},' Makefile
 CFLAGS="%optflags" \
 %make_build
 
@@ -44,6 +45,9 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Fri May 11 2018 L.A. Kostis <lakostis@altlinux.ru> 1.5-alt1.g9c0660a
+- GIT 9c0660a.
+
 * Tue Jan 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4-alt5.g0b78004
 - Fixed build.
 
