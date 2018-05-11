@@ -2,10 +2,11 @@
 
 %def_with python3
 %def_disable check
+%def_without bootstrap
 
 Name: python-module-%oname
 Version: 4.1.0
-Release: alt1.dev.git20150819.1.1
+Release: alt2
 Summary: Interactive Parallel Computing with IPython
 License: BSD
 Group: Development/Python
@@ -30,13 +31,18 @@ BuildRequires(pre): rpm-build-python3
 %endif
 
 %py_provides %oname
-%py_requires ipython_genutils decorator zmq IPython jupyter_client
-%py_requires ipykernel
+%py_requires decorator zmq jupyter_client
+
+%if_with bootstrap
+%py_requires ipykernel ipython_genutils IPython
+%endif
 
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: ipython python-base python-devel python-module-Pillow python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-decorator python-module-docutils python-module-enum34 python-module-functools32 python-module-future python-module-genshi python-module-greenlet python-module-ipykernel python-module-ipyparallel python-module-ipython_genutils python-module-jinja2 python-module-jinja2-tests python-module-jsonschema python-module-jupyter_client python-module-jupyter_core python-module-markupsafe python-module-matplotlib python-module-nbconvert python-module-nbformat python-module-ndg-httpsclient python-module-ntlm python-module-numpy python-module-path python-module-pexpect python-module-pickleshare python-module-ptyprocess python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pygobject3 python-module-pyparsing python-module-pytz python-module-setuptools python-module-simplegeneric python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-terminado python-module-tornado python-module-tornado_xstatic python-module-traitlets python-module-wx3.0 python-module-xstatic python-module-xstatic-term.js python-module-zmq python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-sqlite3 python-modules-unittest python-modules-wsgiref python3 python3-base
-BuildRequires: python-module-alabaster python-module-html5lib python-module-nose python-module-notebook python-module-objects.inv python-module-pytest python3-module-zope rpm-build-python3 time
+BuildRequires: python-module-alabaster python-module-html5lib python3-module-zope
+BuildRequires: python-module-nose python-module-notebook python-module-objects.inv
+BuildRequires: python-module-pytest rpm-build-python3 time
 
 %description
 Use multiple instances of IPython in parallel, interactively.
@@ -55,9 +61,11 @@ This package contains tests for %oname.
 %package -n python3-module-%oname
 Summary: Interactive Parallel Computing with IPython
 Group: Development/Python3
+%if_with bootstrap
+%py3_requires ipykernel ipython_genutils IPython
+%endif
 %py3_provides %oname
-%py3_requires ipython_genutils decorator zmq IPython jupyter_client
-%py3_requires ipykernel
+%py3_requires decorator zmq jupyter_client
 
 %description -n python3-module-%oname
 Use multiple instances of IPython in parallel, interactively.
@@ -176,6 +184,9 @@ popd
 %endif
 
 %changelog
+* Fri May 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 4.1.0-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.0-alt1.dev.git20150819.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

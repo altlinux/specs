@@ -2,10 +2,11 @@
 
 %def_with python3
 %def_without docs
+%def_without bootstrap
 
 Name: python-module-%oname
 Version: 5.3.1
-Release: alt2
+Release: alt3
 Summary: Converting Jupyter Notebooks
 License: BSD
 Group: Development/Python
@@ -19,8 +20,11 @@ Source: %name-%version.tar
 Source1: 4.3.0-style.min.css
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: pandoc time python-module-alabaster python-module-html5lib python-module-ipython_genutils-tests
-BuildRequires: python-module-notebook python-module-objects.inv python-module-pytest python-module-traitlets-tests
+BuildRequires: pandoc time python-module-alabaster python-module-html5lib
+%if_with bootstrap
+BuildRequires: python-module-ipython_genutils-tests python-module-notebook
+%endif
+BuildRequires: python-module-objects.inv python-module-pytest python-module-traitlets-tests
 BuildRequires: python-module-pathlib2 python2.7(entrypoints) python2.7(pandocfilters) python2.7(bleach)
 BuildRequires: texlive texlive-dist
 %if_with docs
@@ -28,7 +32,10 @@ BuildRequires: python2.7(sphinx_rtd_theme) python2.7(nbsphinx)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-html5lib python3-module-ipython_genutils-tests python3-module-jinja2-tests python3-module-notebook python3-module-traitlets-tests
+BuildRequires: python3-module-html5lib python3-module-jinja2-tests python3-module-traitlets-tests
+%if_with bootstrap
+BuildRequires: python3-module-ipython_genutils-tests python3-module-notebook
+%endif
 BuildRequires: python3-module-pathlib2 python3(entrypoints) python3(pandocfilters) python3(bleach)
 %endif
 
@@ -147,6 +154,7 @@ export PATH=$PATH:%buildroot%_bindir
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
+%if_with bootstrap
 %check
 export LC_ALL=en_US.UTF-8
 PYTHONPATH=$(pwd) py.test -vv
@@ -154,6 +162,7 @@ PYTHONPATH=$(pwd) py.test -vv
 pushd ../python3
 PYTHONPATH=$(pwd) py.test3 -vv
 popd
+%endif
 %endif
 
 %files
@@ -195,6 +204,9 @@ popd
 %endif
 
 %changelog
+* Fri May 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.1-alt3
+- off build requires for nmu
+
 * Tue Mar 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3.1-alt2
 - Updated build dependencies.
 

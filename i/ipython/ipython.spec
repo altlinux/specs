@@ -3,7 +3,7 @@
 
 Name: ipython
 Version: 5.5.0
-Release: alt2
+Release: alt3
 
 %setup_python_module IPython
 
@@ -216,6 +216,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Fri May 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.5.0-alt3
+- rebuild with python3.6
+
 * Wed Mar 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.5.0-alt2
 - Updated build and runtime dependencies.
 
