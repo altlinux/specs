@@ -2,7 +2,7 @@
 
 Name: uniset2-testsuite
 Version: 2.6
-Release: alt3
+Release: alt4
 Summary: UniSet test suite
 Group: Development/Python
 License: LGPL
@@ -86,11 +86,17 @@ SNMP Plugin for uniset2-testsuite
 %endif
 
 %changelog
+* Fri May 11 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt4
+- fixed format_comment bug
+
 * Fri May 11 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt3
 - disabled replace for 'replace'
 
 * Sun May 06 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt2
 - minor fixes in ConsoleReporter 
+
+* Sun May 06 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt2
+- minor fixes in ConsoleReporter
 
 * Sun Mar 19 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt1
 - release 
