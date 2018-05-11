@@ -1,7 +1,7 @@
 %define modname colorlog
 
 Name: python-module-%modname
-Version: 3.1.2
+Version: 3.1.4
 Release: alt1
 
 Summary: Python module for log formatting with colors
@@ -62,6 +62,9 @@ popd
 
 
 %changelog
+* Fri May 11 2018 Yuri N. Sedunov <aris@altlinux.org> 3.1.4-alt1
+- 3.1.4
+
 * Wed Feb 07 2018 Yuri N. Sedunov <aris@altlinux.org> 3.1.2-alt1
 - 3.1.2
 
