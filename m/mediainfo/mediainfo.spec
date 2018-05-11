@@ -1,5 +1,5 @@
 Name: mediainfo
-Version: 18.03.1
+Version: 18.05
 Release: alt1
 
 Group: File tools
@@ -142,6 +142,9 @@ grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4s
 %_K5srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Fri May 11 2018 Yuri N. Sedunov <aris@altlinux.org> 18.05-alt1
+- 18.05
+
 * Tue Mar 27 2018 Yuri N. Sedunov <aris@altlinux.org> 18.03.1-alt1
 - 18.03.1
 
