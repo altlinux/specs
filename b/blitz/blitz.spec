@@ -1,19 +1,22 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: blitz
 Summary: C++ class library for scientific computing
-Version: 0.10
-Release: alt1.hg20120703.1
+Version: 1.0.1
+Release: alt1
 Group: Sciences/Mathematics
-License: LGPL v2.1
-URL: http://www.oonumerics.org/blitz/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+License: LGPL v3
+URL: https://github.com/blitzpp/blitz
 
-# hg clone http://blitz.hg.sourceforge.net:8000/hgroot/blitz/blitz
-Source: %name-%version.tar.gz
+# https://github.com/blitzpp/blitz.git
+Source: %name-%version.tar
 
-Requires: lib%name = %version-%release
+Patch1: %name-alt-version.patch
 
-BuildPreReq: gcc-c++ gcc-fortran liblapack-devel
-BuildPreReq: doxygen graphviz
+Requires: lib%name = %EVR
+
+BuildRequires: gcc-c++ gcc-fortran liblapack-devel
+BuildRequires: doxygen graphviz
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
@@ -38,7 +41,7 @@ This package contains shared libraries of Blitz++.
 %package -n lib%name-devel
 Summary: Development files of Blitz++
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Blitz++ is a C++ class library for scientific computing which provides
@@ -76,12 +79,17 @@ This package contains examples for Blitz++.
 
 %prep
 %setup
+%patch1 -p1
+
+sed -i -e "s:@@VERSION@@:%version:g" configure.ac
 
 %build
-%add_optflags
+export CC="gcc -pthread"
+export CXX="g++ -pthread"
+
 %autoreconf
 %configure \
-%ifarch x86_64
+%if "%_lib" == "lib64"
 	--enable-64bit \
 %endif
 	--enable-shared \
@@ -89,19 +97,27 @@ This package contains examples for Blitz++.
 	--enable-threadsafe \
 	--enable-fortran \
 	--with-blas=%prefix
+
 %make_build
-%make info
+%make info html
 
 %install
-%makeinstall_std install-info
+export CC="gcc -pthread"
+export CXX="g++ -pthread"
+
+%makeinstall_std install-info install-html
+
+bzip2 -9 ChangeLog*
 
 mv %buildroot%_docdir/%name-%version %buildroot%_docdir/%name
-cp -fR examples %buildroot%_docdir/%name/
 
-bzip2 ChangeLog*
+rm -f %buildroot%_libdir/libblitz.a
+
+%check
+%make_build check-testsuite
 
 %files
-%doc AUTHORS COPYING COPYRIGHT ChangeLog.* LEGAL LICENSE README TODO
+%doc AUTHORS COPYING* COPYRIGHT ChangeLog.* LEGAL LICENSE README TODO
 %_infodir/*
 
 %files -n lib%name
@@ -113,15 +129,15 @@ bzip2 ChangeLog*
 %_pkgconfigdir/*
 
 %files -n lib%name-devel-doc
-%doc %dir %_docdir/%name
-%doc %_docdir/%name/*
-%exclude %_docdir/%name/examples
+%doc %_docdir/%name
 
 %files examples
-%doc %dir %_docdir/%name
-%_docdir/%name/examples
+%doc examples
 
 %changelog
+* Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt1
+- Updated to upstream version 1.0.1.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1.hg20120703.1
 - NMU: added BR: texinfo
 
