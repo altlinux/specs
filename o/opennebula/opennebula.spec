@@ -20,7 +20,7 @@
 
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
-Version: 5.4.10
+Version: 5.4.12
 Release: alt1%ubt
 License: Apache
 Group: System/Servers
@@ -678,6 +678,9 @@ fi
 ################################################################################
 
 %changelog
+* Sat May 12 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.12-alt1%ubt
+- 5.4.12
+
 * Tue Apr 03 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.10-alt1%ubt
 - 5.4.10
 
