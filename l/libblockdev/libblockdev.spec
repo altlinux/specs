@@ -1,5 +1,5 @@
 %define _name blockdev
-%define ver_major 2.16
+%define ver_major 2.17
 %define rev 1
 
 Name: lib%_name
@@ -27,6 +27,8 @@ BuildRequires: libkmod-devel
 BuildRequires: libparted-devel
 BuildRequires: libblkid-devel
 BuildRequires: libbytesize-devel
+BuildRequires: libuuid-devel
+BuildRequires: libndctl-devel
 
 %ifarch s390 s390x
 BuildRequires: s390utils-devel
@@ -328,6 +330,26 @@ Requires: %name-utils-devel = %version-%release
 This package contains header files and pkg-config files needed for development
 with the libblockdev-swap plugin/library.
 
+%package nvdimm
+Summary: The ndctl plugin for the libblockdev library
+Group: System/Libraries
+Requires: %name-utils = %version-%release
+Requires: ndctl daxctl
+
+%description nvdimm
+The libblockdev library plugin (and in the same time a standalone library)
+providing the functionality related to NVDIMM devices.
+
+%package nvdimm-devel
+Summary: Development files for the libblockdev-nvdimm plugin/library
+Group: Development/C
+Requires: %name-nvdimm = %version-%release
+Requires: %name-utils-devel = %version-%release
+
+%description nvdimm-devel
+This package contains header files and pkg-config files needed for development
+with the libblockdev-nvdimm plugin/library.
+
 %package s390
 Summary: The s390 plugin for the libblockdev library
 Group: System/Libraries
@@ -362,6 +384,7 @@ Requires: %name-mdraid = %version-%release
 Requires: %name-mpath = %version-%release
 Requires: %name-part = %version-%release
 Requires: %name-swap = %version-%release
+Requires: %name-nvdimm = %version-%release
 %ifarch s390 s390x
 Requires: %name-s390 = %version-%release
 %endif
@@ -522,6 +545,15 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %dir %_includedir/blockdev
 %_includedir/blockdev/swap.h
 
+%files nvdimm
+%_libdir/libbd_nvdimm.so.*
+
+%files nvdimm-devel
+%_libdir/libbd_nvdimm.so
+%dir %_includedir/blockdev
+%_includedir/blockdev/nvdimm.h
+
+
 %ifarch s390 s390x
 %files s390
 %_libdir/libbd_s390.so.*
@@ -536,6 +568,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 
 
 %changelog
+* Fri May 11 2018 Yuri N. Sedunov <aris@altlinux.org> 2.17-alt1
+- 2.17 with new nvdimm* subpackages
+
 * Fri Feb 09 2018 Yuri N. Sedunov <aris@altlinux.org> 2.16-alt1
 - 2.16
 
