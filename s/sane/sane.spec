@@ -3,7 +3,7 @@
 
 Name: sane
 Version: 1.0.27
-Release: alt3
+Release: alt4
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -25,6 +25,7 @@ Patch5: 0001-Revert-use-rewind-instead-of-slow_back_home.patch
 
 # Fedora patches
 Patch109: sane-backends-1.0.18-glibc-2.7.patch
+Patch110: sane-backends-revert-samsung-patch.patch
 
 # Mandriva patches
 Patch201: sane-backends-1.0.18-plustek-s12.patch
@@ -147,6 +148,7 @@ This package contains SANE static libraries.
 
 # Fedora patches
 %patch109 -p1 -b .glibc-2.7
+%patch110 -p1 -b .samsung
 
 # Mandriva patches
 %patch201 -p1 -b .plusteks12
@@ -255,6 +257,9 @@ rm -f %buildroot%_libdir/%name/*.a
 %endif
 
 %changelog
+* Fri May 11 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.27-alt4
+- revert Color scanning for Samsung models, which support JPEG Lossy compression (ALT bug 34855)
+
 * Sun Dec 10 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.27-alt3
 - cleanup spec
 
