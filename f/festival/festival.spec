@@ -16,7 +16,7 @@
 Summary:	general multi-lingual speech synthesis system
 Name:		festival
 Version:	%{fst_version}
-Release:	alt5
+Release:	alt6
 Group:		Sound
 Packager:	Igor Vlasenko <viy@altlinux.ru>
 # the emacs file is GPL+, there is one TCL licensed source file
@@ -510,7 +510,7 @@ echo "PROJECT_LIBRARY_USES_estools = estbase tinfo" >> config/project.mak
 # Build Edinburgh Speech Tools
 cd $RPM_BUILD_DIR/speech_tools
 %add_optflags -Wno-non-template-friend
-
+cp -pv /usr/share/gnu-config/* .
 # parallel build fails :( so not %make
 #-------------
 # new g++ 4.3 have no -fno-shared-data option
@@ -526,6 +526,7 @@ make test
 
 # Build Festival
 cd $RPM_BUILD_DIR/festival
+cp -pv /usr/share/gnu-config/* .
 %configure
 cat <<EOF >>config/config
 # FESTIVAL_HOME := %_prefix
@@ -833,6 +834,9 @@ grep '^%festival_user:' /etc/passwd >/dev/null || \
 
 
 %changelog
+* Fri May 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.95-alt6
+- fixed build on aarch64
+
 * Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.95-alt5
 - NMU: fixed build with new gcc.
 
