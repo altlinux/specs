@@ -2,11 +2,11 @@
 
 %def_with python3
 %def_disable check
-%def_without bootstrap
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 4.1.0
-Release: alt2
+Release: alt3
 Summary: Interactive Parallel Computing with IPython
 License: BSD
 Group: Development/Python
@@ -184,6 +184,9 @@ popd
 %endif
 
 %changelog
+* Fri May 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 4.1.0-alt3
+- rebuild with all requires
+
 * Fri May 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 4.1.0-alt2
 - rebuild with python3.6
 

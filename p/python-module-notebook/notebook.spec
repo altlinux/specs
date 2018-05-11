@@ -2,12 +2,12 @@
 
 %def_with python3
 #def_disable check
-%def_without bootstrap
+%def_with bootstrap
 %def_with doc
 
 Name: python-module-%oname
 Version: 5.2.2
-Release: alt2.2
+Release: alt3
 
 Summary: Jupyter Interactive Notebook
 License: BSD
@@ -223,6 +223,9 @@ popd
 %endif
 
 %changelog
+* Fri May 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.2.2-alt3
+- rebuild with all requires
+
 * Fri May 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.2.2-alt2.2
 - off build requires for nmu
 
