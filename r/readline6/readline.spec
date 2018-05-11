@@ -1,15 +1,16 @@
-%define sover 7
+%define sover 6
+%define oname readline
 
-Name: readline
-%define rl_version 7.0
-%define rl_patch .3
+Name: %oname%sover
+%define rl_version 6.3
+%define rl_patch .8
 %define srcname readline-%rl_version
 Version: %rl_version%rl_patch
-Release: alt1
+Release: alt3
 
 Summary: A library for editing typed in command lines
 License: GPLv2+
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: http://www.gnu.org/software/readline/
 
 # ftp://ftp.gnu.org/gnu/readline/readline-%rl_version.tar.gz
@@ -21,13 +22,14 @@ Patch: readline-%version-%release.patch
 # Automatically added by buildreq on Mon Sep 02 2002
 BuildRequires: libtinfo-devel makeinfo
 
-%package -n lib%name%sover
+%package -n lib%oname%sover
 Summary: A library for editing typed in command lines
-Group: System/Libraries
+Group: System/Legacy libraries
 Obsoletes: readline
 Provides: readline = %version-%release
 Provides: libreadline = %version-%release
 
+%if 0
 %package -n lib%name-devel
 Summary: Files needed to develop programs which use the readline library
 Group: Development/C
@@ -39,15 +41,17 @@ PreReq: lib%name = %version-%release
 Summary: Files needed to develop statically linked programs which use the readline library
 Group: Development/C
 Requires: lib%name-devel = %version-%release
+%endif
 
 %description
 The readline library reads a line from the terminal and returns it,
 allowing the user to edit the line with standard emacs editing keys.
 
-%description -n lib%name%sover
+%description -n lib%oname%sover
 The readline library reads a line from the terminal and returns it,
 allowing the user to edit the line with standard emacs editing keys.
 
+%if 0
 %description -n lib%name-devel
 The readline library reads a line from the terminal and returns it,
 allowing the user to edit the line with standard emacs editing keys.
@@ -63,9 +67,10 @@ allowing the user to edit the line with standard emacs editing keys.
 This package contains the files needed to develop statically linked
 programs which use the readline library to provide an easy to use
 and more intuitive command line interface for users.
+%endif
 
 %prep
-%setup
+%setup -n %oname-%version
 %patch -p1
 rm examples/*.tar*
 
@@ -123,9 +128,10 @@ popd
 
 %set_verify_elf_method strict
 
-%files -n lib%name%sover
+%files -n lib%oname%sover
 /%_lib/*
 
+%if 0
 %files -n lib%name-devel
 %_libdir/*.so
 %_includedir/*
@@ -135,10 +141,11 @@ popd
 
 %files -n lib%name-devel-static
 %_libdir/*.a
+%endif
 
 %changelog
-* Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 7.0.3-alt1
-- Updated to upstream version 7.0.3.
+* Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.3.8-alt3
+- Rebuilt as legacy library.
 
 * Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 6.3.8-alt2
 - Added makeinfo to BuildRequires.
