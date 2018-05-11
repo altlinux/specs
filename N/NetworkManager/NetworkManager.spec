@@ -22,6 +22,17 @@
 %def_enable nmtui
 %def_enable bluez5dun
 %def_enable vala
+%ifnarch %e2k
+%def_enable ovs
+%else
+%def_disable ovs
+%endif
+
+%if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
+%define tests yes
+%else
+%define tests no
+%endif
 
 # There is no sources in debuginfo with LTO
 %def_disable lto
@@ -29,7 +40,7 @@
 # NOTE: ONLY use sanitizers for debug purposes
 %def_disable sanitizers
 
-%ifarch e2k
+%ifarch %e2k
 %define more_warnings no
 %else
 %define more_warnings error
@@ -42,7 +53,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.10.6
+Version: 1.10.8
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -64,8 +75,8 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 # For tests
-BuildPreReq: dbus dhcpcd dhcp-client
-BuildRequires: python3-module-pygobject3 python-module-dbus
+%{?!_without_check:%{?!_disable_check:BuildPreReq: dbus dhcpcd dhcp-client}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-pygobject3 python-module-dbus}}
 
 BuildPreReq: intltool libgcrypt-devel libtool
 BuildRequires: glibc-devel-static iproute2 libnl-devel libwireless-devel ppp-devel
@@ -79,6 +90,7 @@ BuildRequires: libndp-devel
 BuildRequires: libreadline-devel
 BuildRequires: libaudit-devel
 BuildRequires: libcurl-devel libpsl-devel
+BuildRequires: python-module-pygobject3
 %{?_enable_teamdctl:BuildRequires: libteamdctl-devel libjansson-devel}
 %{?_enable_nmtui:BuildRequires: libnewt-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgudev-gir-devel}
@@ -419,7 +431,7 @@ GObject introspection devel data for the NetworkManager.
 	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
 	--enable-ppp=yes \
 	--with-system-ca-path=/var/lib/ssl/certs \
-	--enable-tests=yes \
+	--enable-tests=%tests \
 	%{?_enable_systemd:--with-systemdsystemunitdir=/lib/systemd/system} \
 %if_enabled systemd
 	--with-session-tracking=systemd \
@@ -442,6 +454,7 @@ GObject introspection devel data for the NetworkManager.
 	--with-config-plugins-default='etcnet-alt,ibft' \
 	--with-modem-manager-1 \
 	%{subst_enable teamdctl} \
+	%{subst_enable ovs} \
 %if_enabled nmtui
 	--with-nmtui=yes \
 %else
@@ -607,10 +620,14 @@ fi
 %{?_enable_systemd:/lib/systemd/system/%name.service}
 %{?_enable_systemd:/lib/systemd/system/%name-wait-online.service}
 %{?_enable_systemd:/lib/systemd/system/%name-dispatcher.service}
+%if_enabled ovs
 %{?_enable_systemd:%dir %_unitdir/NetworkManager.service.d/}
+%endif
 
 %exclude %_man1dir/nmtui*
+%if_enabled ovs
 %exclude %_man7dir/nm-openvswitch.*
+%endif
 
 %files adsl
 %_libdir/%name/libnm-device-plugin-adsl.so
@@ -618,10 +635,12 @@ fi
 %files bluetooth
 %_libdir/%name/libnm-device-plugin-bluetooth.so
 
+%if_enabled ovs
 %files ovs
 %_unitdir/NetworkManager.service.d/NetworkManager-ovs.conf
 %_libdir/%name/libnm-device-plugin-ovs.so
 %_man7dir/nm-openvswitch.*
+%endif
 
 %if_enabled teamdctl
 %files team
@@ -725,6 +744,14 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri May 11 2018 Mikhail Efremov <sem@altlinux.org> 1.10.8-alt1
+- Disable ovs plugin on e2k.
+- Use %%e2k macro.
+- macro.h: Fix build on e2k.
+- Make build with tests conditional.
+- Update 'not set to disconndcted' patch.
+- Updated to 1.10.8.
+
 * Mon Mar 12 2018 Mikhail Efremov <sem@altlinux.org> 1.10.6-alt1
 - Updated to 1.10.6.
 
