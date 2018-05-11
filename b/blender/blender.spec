@@ -1,6 +1,6 @@
 Name: blender
-Version: 2.78c
-Release: alt1.1
+Version: 2.79b
+Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPLv2
@@ -97,6 +97,10 @@ Languages support for blender
 %patch22 -p1
 %patch23 -p1
 
+%ifnarch %ix86 x86_64
+sed -i 's,-fuse-ld=gold,,' build_files/cmake/platform/platform_unix.cmake
+%endif
+
 %build
 BUILD_DATE="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%Y-%%m-%%d')"
 BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
@@ -109,6 +113,7 @@ cmake .. \
   -DCMAKE_INSTALL_PREFIX=%{_prefix} \
 %ifnarch %{ix86} x86_64
   -DWITH_RAYOPTIMIZATION=OFF \
+  -DWITH_CPU_SSE=OFF \
 %endif
  -DCMAKE_SKIP_RPATH=ON \
  -DBUILD_SHARED_LIBS=OFF \
@@ -160,6 +165,9 @@ install -d release/plugins/include
 %files i18n -f %name.lang
 
 %changelog
+* Wed Apr 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.79b-alt1
+- Updated to 2.79b.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.78c-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
