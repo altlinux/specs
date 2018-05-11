@@ -1,5 +1,5 @@
 %define oname mysqlclient
-%define fname python-module-%oname
+%define fname python3-module-%oname
 %define descr \
 mysqlclient is a fork of MySQL-python. It add Python 3.3 support and \
 merges some pull requests.
@@ -12,7 +12,7 @@ Release: alt2
 
 %if ""==""
 Summary: Python interface to MySQL
-Group: Development/Python
+Group: Development/Python3
 %else
 Summary: Documentation for %oname
 Group: Development/Documentation
@@ -30,10 +30,10 @@ Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
 BuildArch: noarch
 %else
-%py_provides MySQLdb
+%py3_provides MySQLdb
 %endif
 
-BuildRequires(pre): rpm-macros-sphinx rpm-build-python
+BuildRequires(pre): rpm-macros-sphinx rpm-build-python3
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-setuptools
 BuildRequires: libmysqlclient-devel python-module-alabaster python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest python3-devel python3-module-nose python3-module-pytest rpm-build-python3 time
@@ -63,7 +63,7 @@ ln -s ../objects.inv doc/
 
 %build
 %if ""==""
-%python_build
+%python3_build
 %else
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C doc pickle
@@ -73,19 +73,19 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 
 %install
 %if ""==""
-%python_install
+%python3_install
 %else
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname
+cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %if ""==""
 %check
-python setup.py test
+python3 setup.py test
 
 %files
 %doc HISTORY *.md
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %else
 
@@ -93,7 +93,7 @@ python setup.py test
 %doc doc/_build/html/*
 
 %files -n %fname-pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %endif
 

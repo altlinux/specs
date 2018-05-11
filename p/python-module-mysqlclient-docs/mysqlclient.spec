@@ -6,11 +6,11 @@ merges some pull requests.
 
 %def_disable check
 
-Name: %fname
+Name: %fname-docs
 Version: 1.3.6
 Release: alt2
 
-%if ""==""
+%if "-docs"==""
 Summary: Python interface to MySQL
 Group: Development/Python
 %else
@@ -25,7 +25,7 @@ Source: %name-%version.tar
 
 Conflicts: python-module-MySQLdb
 Conflicts: python-module-MySQLdb2
-%if ""!=""
+%if "-docs"!=""
 Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
 BuildArch: noarch
@@ -41,7 +41,7 @@ BuildRequires: libmysqlclient-devel python-module-alabaster python-module-docuti
 %description
 %descr
 
-%if ""!=""
+%if "-docs"!=""
 This package contains documentation for %oname.
 
 %package -n %fname-pickles
@@ -56,13 +56,13 @@ This package contains pickles for %oname.
 
 %prep
 %setup
-%if ""!=""
+%if "-docs"!=""
 %prepare_sphinx .
 ln -s ../objects.inv doc/
 %endif
 
 %build
-%if ""==""
+%if "-docs"==""
 %python_build
 %else
 export PYTHONPATH=%buildroot%python_sitelibdir
@@ -72,14 +72,14 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 
 
 %install
-%if ""==""
+%if "-docs"==""
 %python_install
 %else
 install -d %buildroot%python_sitelibdir/%oname
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
-%if ""==""
+%if "-docs"==""
 %check
 python setup.py test
 
