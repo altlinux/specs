@@ -1,11 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ladspa-caps-plugins
 Version:        0.9.24
-Release:        alt3_4
+Release:        alt3_6
 Summary:        The C* Audio Plugin Suite
 License:        GPLv3+
 Group:          Sound
@@ -13,7 +10,8 @@ URL:            http://quitte.de/dsp/caps.html
 Source0:        http://quitte.de/dsp/caps_%{version}.tar.bz2
 Patch0:         caps-0.9.10-nostrip.patch
 Patch1:         caps-0.9.24-gcc6.patch
-Patch2:         caps-0.9.24-alt-compat.patch
+Patch2:         caps-pow-exp.patch
+BuildRequires:  gcc-c++
 BuildRequires:  ladspa_sdk
 Requires:       ladspa_sdk
 Obsoletes:      caps <= 0.3.0-2
@@ -34,13 +32,13 @@ equalization and others.
 %setup -q -n caps-%{version}
 %patch0 -p1 -z .nostrip
 %patch1 -p1
-%patch2 -p2
+%patch2 -p1
 # use the system version of ladspa.h
 rm ladspa.h
 
 
 %build
-%make_build OPTS="$RPM_OPT_FLAGS -fPIC"
+%make_build OPTS="$RPM_OPT_FLAGS -fPIC" LDFLAGS="$RPM_LD_FLAGS -shared"
 
 
 %install
@@ -49,12 +47,15 @@ rm ladspa.h
 
 %files
 %doc CHANGES README*
-%doc COPYING
+%doc --no-dereference COPYING
 %{_libdir}/ladspa/*.so
 %{_datadir}/ladspa/rdf/*
 
 
 %changelog
+* Fri May 11 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.24-alt3_6
+- use fc patch instead of caps-0.9.24-alt-compat.patch
+
 * Thu Feb 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.24-alt3_4
 - Fixed build with new toolchain.
 
