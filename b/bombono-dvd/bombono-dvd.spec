@@ -1,6 +1,6 @@
 Name: bombono-dvd
 Version: 1.2.4
-Release: alt3
+Release: alt4
 
 Summary: DVD authoring program with nice and clean GUI
 Group: Video
@@ -17,6 +17,10 @@ Patch12: fix_c++11_literal_warnings.patch
 Patch13: autoptr2uniqueptr.patch
 Patch14: fix_deprecated_boost_api.patch
 Patch15: fix_ffmpeg30.patch
+
+# https://github.com/muravjov/bombono-dvd/pull/15
+Patch20: operator-ambiguity.patch
+Patch21: remove-exception-specifiers.patch
 
 %py_provides ASettings
 
@@ -56,6 +60,8 @@ This package provides noarch data needed for %name to work.
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch20 -p1
+%patch21 -p1
 
 %build
 scons -j %__nprocs \
@@ -85,6 +91,9 @@ ln -s %_datadir/fonts/ttf/freefont/FreeSans.ttf %buildroot%_datadir/bombono/reso
 %_datadir/mime/packages/*
 
 %changelog
+* Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.4-alt4
+- Fixed build with new toolchain.
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt3
 - rebuilt with boost-65
 
