@@ -5,11 +5,11 @@ Pysqlite is an interface to the SQLite 3.0  database server for Python. \
 It aims to be fully compliant with Python database API version 2.0 \
 while also exploiting the unique features of SQLite 3.0.
 
-Name: %fname
+Name: %fname-docs
 Version: 2.8.3
 Release: alt1
 
-%if ""==""
+%if "-docs"==""
 Summary: Python interface to SQLite 3.0
 Group: Development/Python
 %else
@@ -26,14 +26,14 @@ BuildRequires(pre): rpm-macros-sphinx
 BuildPreReq: python-module-sphinx-devel texlive-latex-recommended
 BuildRequires: libsqlite3-devel
 
-%if ""!=""
+%if "-docs"!=""
 Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
 %endif
 
 %description
 %descr
-%if ""!=""
+%if "-docs"!=""
 
 This package contains documentation for %oname.
 
@@ -61,27 +61,27 @@ This package contains tests for %oname.
 %prep
 %setup
 %patch -p1
-%if ""!=""
+%if "-docs"!=""
 %prepare_sphinx doc/sphinx
 %endif
 
 %build
 %add_optflags -fno-strict-aliasing
-%if ""==""
+%if "-docs"==""
 %python_build
 %else
 %make -C doc/sphinx html
 %endif
 
 %install
-%if ""==""
+%if "-docs"==""
 %python_install
 %else
 mkdir -p %buildroot%python_sitelibdir/%oname
 cp -fR doc/sphinx/.build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
-%if ""==""
+%if "-docs"==""
 %files
 %doc LICENSE PKG-INFO doc/default.css doc/docutils.css
 %python_sitelibdir/*
