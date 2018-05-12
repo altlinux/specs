@@ -8,7 +8,7 @@
 %def_disable rygel
 
 Name: pragha
-Version: 1.3.91.1
+Version: 1.3.92
 Release: alt1
 
 Summary: Pragha is a "Fork" of consonance Music manager
@@ -76,6 +76,9 @@ subst 's/%name.appdata/%rdnn_name.metainfo/' data/Makefile.am
 
 
 %changelog
+* Sat May 12 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.92-alt1
+- updated to v1.3.92-11-gbd864d3
+
 * Sat Apr 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.91.1-alt1
 - updated to v1.3.91.1-3-g3a51015
 
