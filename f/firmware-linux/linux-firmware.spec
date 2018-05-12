@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180430
+Version: 20180507
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,13 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sat May 12 2018 Cronbuild Service <cronbuild@altlinux.org> 20180507-alt1
+- upstream changes (GIT 8fc2d4e):
+  + update Marvell USB8997 firmware image to add WPA2 vulnerability
+    fix (thx Ganapathi Bhat)
+  + update Marvell SD8897-B0 firmware image to add WPA2 vulnerability
+    fix (thx Ganapathi Bhat)
+
 * Sun May 06 2018 Cronbuild Service <cronbuild@altlinux.org> 20180430-alt1
 - upstream changes (GIT 397a604):
   + qed: Add firmware 8.33.12.0 (thx Rasesh Mody)
