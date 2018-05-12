@@ -19,7 +19,7 @@
 %def_enable python
 
 Name: xplayer
-Version: 1.6.1
+Version: 1.8.0
 Release: alt1
 
 Summary: Xplayer is a generic media player.
@@ -28,6 +28,10 @@ License: %gpl2only
 URL: https://github.com/linuxmint/xplayer
 
 Source: %name-%version.tar
+
+# use python3
+AutoReqProv: nopython
+%define __python %nil
 
 Provides: %name-backend = %version %name-backend-gstreamer = %version %name-backend-xine = %version
 
@@ -65,7 +69,7 @@ BuildPreReq: libclutter-devel >= %clutter_ver
 BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildPreReq: libclutter-gst3.0-devel >= %clutter_gst_ver
 BuildRequires: libgrilo-devel >= %grilo_ver
-%{?_enable_python:BuildRequires: rpm-build-python python-devel python-module-pygobject3-devel pylint}
+%{?_enable_python:BuildRequires: rpm-build-python python-devel python3-module-pygobject3-devel pylint-py3}
 %{?_enable_vala:BuildRequires: libvala-devel >= 0.14 vala-tools}
 BuildRequires: libdbus-devel gsettings-desktop-schemas-devel
 %{?_enable_lirc:BuildRequires: liblirc-devel}
@@ -213,6 +217,8 @@ export ac_cv_path_PYLINT=%_bindir/pylint.py3
 	%{subst_enable vala} \
 	--disable-browser-plugins \
 	--disable-static \
+	--disable-Werror \
+   --enable-introspection		\
 	%{?_enable_snapshot:--enable-gtk-doc}
 
 %make_build
@@ -309,6 +315,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Mon May 7 2018 Vladimir Didenko <cow@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Thu Nov 23 2017 Vladimir Didenko <cow@altlinux.org> 1.6.1-alt1
 - 1.6.1
 

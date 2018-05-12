@@ -4,7 +4,7 @@
 %def_enable python
 
 Name: xed
-Version: 1.6.3
+Version: 1.8.0
 Release: alt1
 
 Summary: xed is a small and lightweight text editor.
@@ -48,6 +48,8 @@ BuildRequires: libpeas-devel
 BuildRequires: python3-dev
 BuildRequires: libgtk+3-gir-devel
 BuildRequires: libgtksourceview3-gir-devel
+BuildRequires: libgspell-devel
+BuildRequires: libxapps-devel
 
 %description
 xed is a small and lightweight text editor.
@@ -148,6 +150,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*
 
 %changelog
+* Mon May 7 2018 Vladimir Didenko <cow@altlinux.org> 1.8.0-alt1
+- New version
+
 * Thu Nov 23 2017 Vladimir Didenko <cow@altlinux.org> 1.6.3-alt1
 - New version
 

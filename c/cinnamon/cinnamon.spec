@@ -1,5 +1,5 @@
 Name: cinnamon
-Version: 3.8.1
+Version: 3.8.2
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -216,6 +216,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Mon May 7 2018 Vladimir Didenko <cow@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Fri May 4 2018 Vladimir Didenko <cow@altlinux.org> 3.8.1-alt1
 - 3.8.1-8-g19ec2b0
 

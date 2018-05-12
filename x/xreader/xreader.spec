@@ -6,8 +6,8 @@
 %def_enable introspection
 
 Name: xreader
-Version: 1.6.2
-Release: alt1.1
+Version: 1.8.1
+Release: alt1
 
 Summary: A document viewer
 Group: Office
@@ -31,10 +31,12 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildRequires: glib2-devel
 BuildRequires: gcc-c++ gnome-common gtk-doc
 BuildRequires: intltool yelp-tools itstool
-BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel libnemo-devel  libspectre-devel libtiff-devel
+BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel libspectre-devel libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel zlib-devel libsecret-devel
 %{?_enable_xps:BuildRequires: libgxps-devel}
 BuildRequires: libSM-devel libICE-devel libXi-devel
+BuildRequires: libxapps-devel
+BuildRequires: libwebkit2gtk-devel
 
 %if_enabled introspection
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
@@ -76,14 +78,6 @@ Requires: lib%name-gir = %version-%release lib%name-devel = %version-%release
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Xreader library
 
-%package -n nemo-xreader
-Summary: XReader extension for Nemo
-Group: Graphical desktop/GNOME
-Requires: nemo
-
-%description -n nemo-xreader
-This package contains the XReader extension for the Nemo.
-
 %prep
 %setup
 %patch0 -p1
@@ -100,9 +94,7 @@ This package contains the XReader extension for the Nemo.
 	--enable-dvi \
 	--enable-comics \
 	--enable-gtk-doc \
-	--enable-nemo \
 	--enable-dbus \
-	--disable-caja \
 	%{subst_enable xps} \
 	%{subst_enable introspection} \
 	--disable-static
@@ -157,12 +149,10 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %_datadir/gir-1.0/XreaderView-%gir_version.gir
 %endif
 
-%files -n nemo-xreader
-%_libdir/nemo/extensions-3.0/*.so
-%_datadir/nemo/extensions/*.nemo-extension
-%exclude %_libdir/nemo/extensions-3.0/*.la
-
 %changelog
+* Thu May 10 2018 Vladimir Didenko <cow@altlinux.org> 1.8.1-alt1
+- New version
+
 * Sat Feb 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1.1
 - NMU: rebuild with texlive 2016
 
