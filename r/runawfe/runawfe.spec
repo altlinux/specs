@@ -1,6 +1,6 @@
 Name: runawfe
 Version: 4.3.0
-Release: alt13
+Release: alt14
 
 Summary: Runawfe
 
@@ -318,7 +318,7 @@ if [ ! -e ""\$gpddir/"" ] ; then
     mkdir -p \$gpdconfdir
     cp -na %runagpddir/workspace/ "\$gpddir/"
     chown -R \$USER "\$gpddir/"/workspace/
-
+    find "\$gpddir/" -exec touch -t 201001010000 \{\} \\;
 fi
 
 cd "\$gpddir"
@@ -359,6 +359,9 @@ useradd -d %runadir -r -s %_sbindir/%name %runauser >/dev/null 2>&1 || :
 %attr(755,root,root) %_bindir/runawfe-notifier
 
 %changelog
+* Sat May 12 2018 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt14
+- gpd workspace 
+
 * Wed May 02 2018 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt13
 - gpd workspace 
 
