@@ -4,7 +4,7 @@
 %define real_name    QtPass
 
 Name:     qtpass
-Version:  1.2.1
+Version:  1.2.2
 Release:  alt1
 
 Summary: a multi-platform GUI for pass, the standard unix password manager
@@ -30,9 +30,9 @@ Source3: %name-48.png
 BuildRequires(pre): rpm-build-licenses desktop-file-utils
 
 
-# Automatically added by buildreq on Sun Dec 10 2017
-# optimized out: gcc-c++ libGL-devel libqt5-core libqt5-gui libqt5-network libqt5-widgets libqt5-xml libstdc++-devel python-base python-modules python3 python3-base qt5-base-common qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel
-BuildRequires: kf5-kwallet-devel python-module-google python3-module-zope qt5-multimedia-devel qt5-script-devel qt5-svg-devel qt5-tools-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
+# Automatically added by buildreq on Sat May 12 2018
+# optimized out: gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libqt5-core libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base python-modules python3 python3-base python3-module-zope qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel ruby
+BuildRequires: kf5-kwallet-devel python3-dev python3-module-mpl_toolkits qt5-multimedia-devel qt5-script-devel qt5-svg-devel qt5-tools-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel ruby-stdlibs
 
 Requires: gnupg gnupg2 git-core pwgen
 
@@ -68,7 +68,7 @@ QtPass -  кроссплатформенный графический интер
 %patch0 -p1
 
 %patch1
-%patch2
+#%%patch2
 
 
 mv -- LICENSE LICENSE.orig
@@ -100,8 +100,12 @@ install -D -m0644 -- qtpass.appdata.xml %buildroot%_datadir/appdata/%name.appdat
 %_iconsdir/hicolor/*/apps/*
 %_datadir/appdata/%name.appdata.xml
 
+%exclude /usr/usr/share/qt5/tests/%name
 
 %changelog
+* Sat May 12 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.2.2-alt1
+- New version
+
 * Mon Jan 08 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.2.1-alt1
 - New version
   - Insecure password generation fixed
