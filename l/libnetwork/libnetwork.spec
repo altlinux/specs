@@ -4,7 +4,7 @@
 
 %global provider_prefix %{provider}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          1b91bc94094ecfdae41daa465cc0c8df37dfb3dd
+%global commit          c15b372ef22125880d378167dde44f4b134e1a77
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -16,7 +16,7 @@
 
 Name:           libnetwork
 Version:        0.8.0
-Release:        alt3.git%shortcommit
+Release:        alt4.git%shortcommit
 Summary:        Networking for containers
 Group:          Development/Other
 License:        Apache 2.0
@@ -61,6 +61,9 @@ install -p -m 755 bin/docker-proxy %buildroot/%_bindir
 %_bindir/*
 
 %changelog
+* Thu May 10 2018 Vladimir Didenko <cow@altlinux.org> 0.8.0-alt4.gitc15b372
+- New version (for docker 18.03.1-ce).
+
 * Thu Mar 22 2018 Vladimir Didenko <cow@altlinux.org> 0.8.0-alt3.git1b91bc9
 - New version (for docker 18.03.0-ce).
 

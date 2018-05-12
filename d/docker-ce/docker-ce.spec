@@ -15,7 +15,7 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-ce
-Version:    18.03.0
+Version:    18.03.1
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -46,9 +46,9 @@ Provides: docker-io = %version-%release
 Obsoletes: docker-io <= 17.05.0
 Obsoletes: docker-io-devel <= 17.05.0
 Requires: /usr/bin/docker-proxy
-Requires: docker-containerd
-Requires: docker-runc
-Requires: docker-init
+Requires: docker-containerd >= 1.0.2-alt1
+Requires: docker-runc >= 1.0.0-alt4.rc5
+Requires: docker-init >= 0.17.0-alt1
 
 %define gopath %_datadir/gocode
 
@@ -172,6 +172,9 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Thu May 10 2018 Vladimir Didenko <cow@altlinux.org> 18.03.1-alt1
+- New version
+
 * Thu Mar 22 2018 Vladimir Didenko <cow@altlinux.org> 18.03.0-alt1
 - New version
 
