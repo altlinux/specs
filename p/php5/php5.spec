@@ -3,13 +3,13 @@
 
 Summary: The PHP5 scripting language
 Name:	 php5
-Version: 5.6.33
+Version: 5.6.36
 Release: alt1%ubt
 
 %define php5_name      %name
 %define _php5_version  %version
 %define _php5_major  5.6
-%define _php5_snapshot 20180104
+%define _php5_snapshot 20180425
 %define php5_release   %release
 %define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
 
@@ -35,6 +35,8 @@ Patch12: php-devel-scripts-alternatives.patch
 Patch13: php-4.3.11-dlopen.patch
 
 Patch17: php-fix-headers-order.patch
+
+Patch20: php-pcre-jit.patch
 
 Patch30: php-4.3.11-libtool.patch
 Patch32: php-5.2.1-umask.patch
@@ -165,6 +167,7 @@ in use by other PHP5-related packages.
 %patch12 -p2 -b .alternatives
 %patch13 -p1
 %patch17 -p1
+%patch20 -p1
 %patch30 -p0
 %patch32 -p1
 %patch33 -p2
@@ -252,6 +255,9 @@ subst "s,./stamp=$,," build/buildcheck.sh
 	--without-mysql \
 	--with-mm=%_usr \
 	--without-sqlite \
+%ifarch e2k
+	--without-pcre-jit \
+%endif
 	--with-regex=php \
 	--without-pear \
 	--with-system-tzdata \
@@ -428,6 +434,14 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Tue May 08 2018 Anton Farygin <rider@altlinux.ru> 5.6.36-alt1%ubt
+- 5.6.33 (fixes: CVE-2018-10549, CVE-2018-10546, CVE-2018-10548, CVE-2018-10547, CVE-2018-10545, CVE-2018-7584)
+
+* Tue May 08 2018 Michael Shigorin <mike@altlinux.org> 5.6.33-alt2%ubt
+- NMU: backported php7 patch to disable pcre jit;
+  see also https://bugs.php.net/bug.php?id=73121
+- E2K: avoid pcre jit (needs porting) (closes: #34143)
+
 * Wed Jan 31 2018 Anton Farygin <rider@altlinux.ru> 5.6.33-alt1%ubt
 - new version (fixes: CVE-2018-5711, CVE-2018-5712)
 
