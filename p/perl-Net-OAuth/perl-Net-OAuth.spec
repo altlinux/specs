@@ -4,7 +4,7 @@
 
 Name: perl-Net-OAuth
 Version: 0.28
-Release: alt1
+Release: alt2
 
 Summary: Perl module that provides OAuth protocol support
 
@@ -16,6 +16,8 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
 Source: http://search.cpan.org/CPAN/authors/id/K/GR/KGRENNAN/%real_name-%version.tar
 BuildArch: noarch
+
+Patch0: crypt-optenssl-rsa-0.30_sha1.patch
 
 AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses perl-Test-Warn
@@ -34,6 +36,8 @@ http://oauth.net/ for details.
 %prep
 %setup  -n %real_name-%version
 
+%patch0 -p1
+
 %build
 %perl_vendor_build
 
@@ -45,6 +49,9 @@ http://oauth.net/ for details.
 %perl_vendor_privlib/Net/OAuth*
 
 %changelog
+* Sat May 12 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.28-alt2
+- Fix build with Crypt::OpenSSL::RSA >= 0.30
+
 * Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.28-alt1
 - New version
 
