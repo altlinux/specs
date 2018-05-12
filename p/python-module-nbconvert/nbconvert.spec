@@ -2,11 +2,11 @@
 
 %def_with python3
 %def_without docs
-%def_without bootstrap
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 5.3.1
-Release: alt3
+Release: alt4
 Summary: Converting Jupyter Notebooks
 License: BSD
 Group: Development/Python
@@ -204,6 +204,9 @@ popd
 %endif
 
 %changelog
+* Fri May 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.1-alt4
+- rebuild with all requires
+
 * Fri May 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.1-alt3
 - off build requires for nmu
 

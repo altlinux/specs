@@ -2,11 +2,11 @@
 
 %def_with python3
 #def_disable check
-%def_without bootstrap
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 4.6.1
-Release: alt3
+Release: alt3.1
 Summary: IPython Kernel for Jupyter
 License: BSD
 Group: Development/Python
@@ -133,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Fri May 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 4.6.1-alt3.1
+- rebuild with all requires
+
 * Fri May 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 4.6.1-alt3
 - rebuild with python3.6
 
