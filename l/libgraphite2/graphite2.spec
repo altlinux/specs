@@ -1,10 +1,11 @@
 %define _name graphite2
 # since 1.3.10 newer latex required
 %def_disable docs
+%def_enable check
 
 Name: lib%_name
-Version: 1.3.10
-Release: alt2
+Version: 1.3.11
+Release: alt1
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
 Group: System/Libraries
@@ -80,6 +81,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Sun May 13 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.11-alt1
+- 1.3.11
+
 * Sun Aug 27 2017 Michael Shigorin <mike@altlinux.org> 1.3.10-alt2
 - E2K: avoid lcc-unsupported option; explicit -lcxa
 
