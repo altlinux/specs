@@ -1,5 +1,5 @@
 Name: gns3-gui
-Version: 2.1.4
+Version: 2.1.5
 Release: alt1
 
 Summary: GNS3 Graphical User Interface
@@ -20,12 +20,9 @@ Source5: gns3.desktop
 
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-Requires: gns3-server = %version
-Requires: gns3-net-converter >= 1.3.0
 Requires: python3-module-jsonschema >= 2.4.0
 Requires: python3-module-raven >= 5.23.0
 Requires: python3-module-psutil >= 2.2.1
-Provides: gns3 == %version
 
 %description
 GNS3 is a excellent complementary tool to real labs for administrators
@@ -36,6 +33,17 @@ It can also be used to experiment features of Cisco IOS or to check
 configurations that need to be deployed later on real routers.
 
 Important notice: users must provide their own Cisco IOS to use GNS3.
+
+%package -n gns3
+Summary: GNS3 virtual package
+Group: Games/Strategy
+BuildArch: noarch
+Requires: gns3-server = %version
+Requires: gns3-net-converter >= 1.3.0
+Requires: gns3-gui = %EVR
+
+%description -n gns3
+Full installation gns3-server, gns3-gui and optional Requires.
 
 %prep
 %setup
@@ -64,7 +72,12 @@ install -Dp -m0644 %SOURCE5 %buildroot%_desktopdir/gns3.desktop
 %_iconsdir/hicolor/48x48/mimetypes/application-x-gns3.png
 %_datadir/mime/packages/gns3.xml
 
+%files -n gns3
+
 %changelog
+* Sun May 13 2018 Anton Midyukov <antohami@altlinux.org> 2.1.5-alt1
+- new version 2.1.5
+
 * Mon Mar 26 2018 Anton Midyukov <antohami@altlinux.org> 2.1.4-alt1
 - new version 2.1.4
 
