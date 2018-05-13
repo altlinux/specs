@@ -1,6 +1,6 @@
 Name: gns3-net-converter
 Version: 1.3.0
-Release: alt1.1
+Release: alt2
 
 Summary: GNS3 Topology Converter
 License: GPLv3
@@ -45,6 +45,9 @@ sed "s/name='gns3-converter'/name='gns3-net-converter'/" setup.py -i
 %python3_sitelibdir/gns3_net_converter-*.egg-info
 
 %changelog
+* Sun May 13 2018 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt2
+- Added the ability to update using gear-remotes
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
