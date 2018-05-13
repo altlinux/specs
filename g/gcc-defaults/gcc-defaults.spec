@@ -1,7 +1,7 @@
 %set_compress_method none
 
-%define gcc_version 7
-%define psuffix -%gcc_version
+%define gcc_branch 7
+%define psuffix -%gcc_branch
 
 %define gnat_arches		%ix86 x86_64
 %define go_arches		%ix86 x86_64
@@ -17,12 +17,13 @@
 %define libvtv_arches		%ix86 x86_64
 
 Name: gcc-defaults
-Version: %gcc_version
-Release: alt4
+Version: %gcc_branch
+Release: alt5
 License: None
 Group: Development/Other
 
 Summary: %vendor GNU Compiler Collection Setup
+Url: http://git.altlinux.org/gears/g/gcc-defaults.git
 
 %define gcc_target_platform %_target_platform
 
@@ -33,7 +34,7 @@ GNU Compiler Collection Setup.
 %package -n cpp
 Summary: Dependency package for GNU C preprocessor
 Group: Development/C
-Requires: cpp%gcc_version
+Requires: cpp%gcc_branch
 Conflicts: cpp3.4 < 3.4.5-alt18
 Conflicts: cpp4.1 < 4.1.2-alt13
 Conflicts: cpp4.3 < 4.3.2-alt21
@@ -53,7 +54,7 @@ This is metapackage for the default GNU C preprocessor.
 Summary: Dependency package for GNU C compiler
 Group: Development/C
 Requires: cpp = %EVR
-Requires: gcc%gcc_version
+Requires: gcc%gcc_branch
 Conflicts: gcc3.4 < 3.4.5-alt18
 Conflicts: gcc4.1 < 4.1.2-alt13
 Conflicts: gcc4.3 < 4.3.2-alt21
@@ -71,9 +72,9 @@ This is metapackage for the default GNU C compiler.
 
 %package -n gcc-c++
 Summary: Dependency package for GNU C++ compiler
-Group: Development/C
+Group: Development/C++
 Requires: gcc = %EVR
-Requires: gcc%gcc_version-c++
+Requires: gcc%gcc_branch-c++
 Conflicts: gcc3.4-c++ < 3.4.5-alt18
 Conflicts: gcc4.1-c++ < 4.1.2-alt13
 Conflicts: gcc4.3-c++ < 4.3.2-alt21
@@ -94,7 +95,7 @@ Summary: Dependency package for GNU Fortran compiler
 Group: Development/C
 Provides: gcc-g77 = %EVR
 Requires: gcc = %EVR
-Requires: gcc%gcc_version-fortran
+Requires: gcc%gcc_branch-fortran
 Conflicts: gcc4.1-fortran < 4.1.2-alt13
 Conflicts: gcc4.3-fortran < 4.3.2-alt21
 Conflicts: gcc4.4-fortran < 4.4.7-alt5
@@ -113,7 +114,7 @@ This is metapackage for the default GNU Fortran compiler.
 Summary: Dependency package for GNU Go compiler
 Group: Development/C
 Requires: gcc = %EVR
-Requires: gcc%gcc_version-go
+Requires: gcc%gcc_branch-go
 Conflicts: gcc4.7-go < 4.7.2-alt11
 Conflicts: gcc4.8-go < 4.8.2-alt6
 Conflicts: gcc4.9-go < 4.9.2-alt6
@@ -127,7 +128,7 @@ This is metapackage for the default GNU Go compiler.
 Summary: Dependency package for GNU Ada compiler
 Group: Development/C
 Requires: gcc = %EVR
-Requires: gcc%gcc_version-gnat
+Requires: gcc%gcc_branch-gnat
 Conflicts: gcc4.1-gnat < 4.1.2-alt13
 Conflicts: gcc4.3-gnat < 4.3.2-alt21
 Conflicts: gcc4.4-gnat < 4.4.7-alt5
@@ -147,10 +148,11 @@ This is metapackage for the default GNU Ada compiler.
 %package -n %{1}-%{2} \
 Summary: Dependency package for %{1}-%{2} \
 Group: Development/C \
-Requires: %{1}%gcc_version-%{2}\
+Requires: %{1}%gcc_branch-%{2}\
 %{4}BuildArch: noarch \
 %description -n %{1}-%{2} \
 This is metapackage for %{1}-%{2}. \
+%files -n %{1}-%{2} \
 %endif
 
 # noarch
@@ -170,19 +172,41 @@ This is metapackage for %{1}-%{2}. \
 %do_package libstdc++ devel-static 1 %nil
 
 # arch
+%ifarch %libasan_arches
 %do_package libasan devel-static 1 #
+%endif
+%ifarch %libatomic_arches
 %do_package libatomic devel-static 1 #
+%endif
+%ifarch %libcilkrts_arches
 %do_package libcilkrts devel 1 #
 %do_package libcilkrts devel-static 1 #
+%endif
+%ifarch %gnat_arches
 %do_package libgnat devel 1 #
 %do_package libgnat devel-static 1 #
+%endif
+%ifarch %libitm_arches
 %do_package libitm devel-static 1 #
+%endif
+%ifarch %liblsan_arches
 %do_package liblsan devel-static 1 #
+%endif
+%ifarch %libmpx_arches
 %do_package libmpx devel-static 1 #
+%endif
+%ifarch %libquadmath_arches
 %do_package libquadmath devel 1 #
+%endif
+%ifarch %libtsan_arches
 %do_package libtsan devel-static 1 #
+%endif
+%ifarch %libubsan_arches
 %do_package libubsan devel-static 1 #
+%endif
+%ifarch %libvtv_arches
 %do_package libvtv devel-static 1 #
+%endif
 
 %install
 mkdir -p %buildroot%_bindir
@@ -191,8 +215,8 @@ mkdir -p %buildroot%_man1dir
 ln_bin()
 {
 	for i; do
-		ln -s %_target_platform-"$i"%psuffix \
-			%buildroot%_bindir/%_target_platform-"$i"
+		ln -s %gcc_target_platform-"$i"%psuffix \
+			%buildroot%_bindir/%gcc_target_platform-"$i"
 	done
 }
 
@@ -235,94 +259,51 @@ ln_bin gnat gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls \
 %endif
 
 %files -n cpp
-%_bindir/%_target_platform-cpp
+%_bindir/%gcc_target_platform-cpp
 %_man1dir/cpp.1.xz
 
 %files -n gcc
-%_bindir/%_target_platform-gcc
+%_bindir/%gcc_target_platform-gcc
 %_man1dir/gcc.1.xz
 
-%_bindir/%_target_platform-gcc-ar
-%_bindir/%_target_platform-gcc-nm
-%_bindir/%_target_platform-gcc-ranlib
+%_bindir/%gcc_target_platform-gcc-ar
+%_bindir/%gcc_target_platform-gcc-nm
+%_bindir/%gcc_target_platform-gcc-ranlib
 
-%_bindir/%_target_platform-gcov
+%_bindir/%gcc_target_platform-gcov
 %_man1dir/gcov.1.xz
 
-%_bindir/%_target_platform-gcov-tool
+%_bindir/%gcc_target_platform-gcov-tool
 %_man1dir/gcov-tool.1.xz
 
-%_bindir/%_target_platform-gcov-dump
+%_bindir/%gcc_target_platform-gcov-dump
 %_man1dir/gcov-dump.1.xz
 
 %files -n gcc-c++
-%_bindir/%_target_platform-g++
+%_bindir/%gcc_target_platform-g++
 %_man1dir/g++.1.xz
 
 %files -n gcc-fortran
-%_bindir/%_target_platform-gfortran
+%_bindir/%gcc_target_platform-gfortran
 %_man1dir/gfortran.1.xz
 
 %ifarch %go_arches
 %files -n gcc-go
-%_bindir/%_target_platform-gccgo
+%_bindir/%gcc_target_platform-gccgo
 %_man1dir/gccgo.1.xz
 %endif
 
 %ifarch %gnat_arches
 %files -n gcc-gnat
-%_bindir/%_target_platform-gnat*
-%files -n libgnat-devel
-%files -n libgnat-devel-static
-%endif
-
-%files -n gcc-doc
-%files -n gcc-locales
-%files -n gcc-objc
-%files -n gcc-objc++
-%files -n gcc-plugin-devel
-%files -n libgccjit-devel
-%files -n libgfortran-devel
-%files -n libgfortran-devel-static
-%files -n libgomp-devel
-%files -n libgomp-devel-static
-%files -n libobjc-devel
-%files -n libobjc-devel-static
-%files -n libstdc++-devel
-%files -n libstdc++-devel-static
-%ifarch %libasan_arches
-%files -n libasan-devel-static
-%endif
-%ifarch %libatomic_arches
-%files -n libatomic-devel-static
-%endif
-%ifarch %libcilkrts_arches
-%files -n libcilkrts-devel
-%files -n libcilkrts-devel-static
-%endif
-%ifarch %libitm_arches
-%files -n libitm-devel-static
-%endif
-%ifarch %liblsan_arches
-%files -n liblsan-devel-static
-%endif
-%ifarch %libmpx_arches
-%files -n libmpx-devel-static
-%endif
-%ifarch %libquadmath_arches
-%files -n libquadmath-devel
-%endif
-%ifarch %libtsan_arches
-%files -n libtsan-devel-static
-%endif
-%ifarch %libubsan_arches
-%files -n libubsan-devel-static
-%endif
-%ifarch %libvtv_arches
-%files -n libvtv-devel-static
+%_bindir/%gcc_target_platform-gnat*
 %endif
 
 %changelog
+* Sun May 13 2018 Ivan Zakharyaschev <imz@altlinux.org> 7-alt5
+- (.spec) Made possible to disable noarch subpkgs.
+- More specific Group for gcc-c++. (ALT#34901)
+- Filled URL. (ALT#34624)
+
 * Sun Feb 18 2018 Dmitry V. Levin <ldv@altlinux.org> 7-alt4
 - aarch64: packaged liblsan-devel-static and libtsan-devel-static.
 
