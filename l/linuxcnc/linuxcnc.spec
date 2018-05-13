@@ -2,8 +2,8 @@
 %def_without static
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
-Version: 2.7.12
-Release: alt2
+Version: 2.7.13
+Release: alt1
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -252,6 +252,9 @@ popd
 %endif
 
 %changelog
+* Sun May 13 2018 Anton Midyukov <antohami@altlinux.org> 2.7.13-alt1
+- new version 2.7.13
+
 * Tue Mar 06 2018 Anton Midyukov <antohami@altlinux.org> 2.7.12-alt2
 - replace requres python-module-gst -> python-module-gst1.0
 - disable build docs
