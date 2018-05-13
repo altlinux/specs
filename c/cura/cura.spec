@@ -1,18 +1,19 @@
-%global with_check 0
+%global with_check 1
 %add_python3_compile_include %_libexecdir/cura
 
 Name: cura
 Epoch: 1
-Version: 3.2.1
+Version: 3.3.0
 Release: alt1%ubt
 Summary: 3D printer control software
-License: AGPLv3+
+License: LGPLv3+
 
 Group: Engineering
 Url: https://github.com/Ultimaker/Cura
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+Patch: upstream-fix.patch
 
 BuildArch: noarch
 
@@ -22,7 +23,7 @@ BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: dos2unix
 BuildRequires: python3-devel
-BuildRequires: Uranium = %version
+BuildRequires: Uranium >= %version
 # Tests
 %if 0%{?with_check}
 BuildRequires: python3-module-pytest
@@ -33,6 +34,7 @@ BuildRequires: python3-module-pip
 Requires: python3-module-savitar = %version
 Requires: Uranium = %version
 Requires: qt5-quickcontrols
+Requires: qt5-quickcontrols2
 Requires: CuraEngine = %epoch:%version
 Requires: cura-fdm-materials = %version
 Requires: 3dprinter-udev-rules
@@ -48,9 +50,7 @@ needs. As it's open source, our community helps enrich it even more.
 
 %prep
 %setup
-
-# package noarch
-sed -i 's/${LIB_SUFFIX}//g' CMakeLists.txt
+%patch -p1
 
 # The setup.py is only useful for py2exe, remove it, so noone is tempted to use it
 rm setup.py
@@ -62,7 +62,8 @@ dos2unix docs/How_to_use_the_flame_graph_profiler.md
 %__subst '1s=^#!%_bindir/\(python\|env python\)3*=#!%__python3=' cura_app.py
 
 %build
-%cmake -DCURA_VERSION:STRING=%version
+%cmake -DCURA_VERSION:STRING=%version \
+       -DLIB_SUFFIX:STR=
 %cmake_build
 
 # rebuild locales
@@ -116,6 +117,9 @@ desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 %_libexecdir/%name
 
 %changelog
+* Mon May 07 2018 Anton Midyukov <antohami@altlinux.org> 1:3.3.0-alt1%ubt
+- New version 3.3.0
+
 * Sat Feb 24 2018 Anton Midyukov <antohami@altlinux.org> 1:3.2.1-alt1%ubt
 - New version 3.2.1
 - Disable tests

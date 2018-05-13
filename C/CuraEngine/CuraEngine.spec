@@ -1,6 +1,6 @@
 Name: CuraEngine
 Epoch: 1
-Version: 3.2.1
+Version: 3.3.0
 Release: alt1%ubt
 
 Summary: Engine for processing 3D models into G-code instructions for 3D printers
@@ -11,9 +11,7 @@ Url: https://github.com/Ultimaker/CuraEngine
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-Patch: CuraEngine-rpath-3.0.3.patch
-Patch1: CuraEngine-static-libstdcpp-3.0.3.patch
-Patch2: CuraEngine-system-libs-3.0.3.patch
+Patch1: CuraEngine-static-libstdcpp.patch
 
 Buildrequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-cmake
@@ -32,30 +30,32 @@ to the old Skeinforge engine.
 
 %prep
 %setup
-#%%patch -p1
 %patch1 -p1
-%patch2 -p1
-
-# bundled libraries
-rm -rf libs/clipper
-sed -i 's|#include <clipper/clipper.hpp>|#include <polyclipping/clipper.hpp>|' src/utils/*.h src/*.cpp
-
-# The -DCURA_ENGINE_VERSION does not work, so we sed-change the default value
-sed -i 's/"DEV"/"%{version}"/' src/settings/settings.h
 
 %build
 %cmake -DBUILD_SHARED_LIBS:BOOL=OFF \
-       -DCURA_ENGINE_VERSION:STRING=%version
+       -DCURA_ENGINE_VERSION:STRING=%version \
+       -DUSE_SYSTEM_LIBS:BOOL=ON \
+       -DCMAKE_CXX_FLAGS_RELEASE_INIT:STRING="%optflags -fPIC"
 %cmake_build
 
 %install
 %cmakeinstall_std
+
+%check
+# Smoke test
+%buildroot%_bindir/%name help
 
 %files
 %_bindir/*
 %doc LICENSE README.md
 
 %changelog
+* Sun May 06 2018 Anton Midyukov <antohami@altlinux.org> 1:3.3.0-alt1%ubt
+- New version 3.3.0
+- Make sure Fedora CXXFLAGS are used, also -fPIC
+- Use new USE_SYSTEM_LIBS option instead of patch+sed
+
 * Sat Feb 24 2018 Anton Midyukov <antohami@altlinux.org> 1:3.2.1-alt1%ubt
 - New version 3.2.1
 

@@ -1,9 +1,9 @@
-%global with_check 0
+%global with_check 1
 
 %add_python3_compile_include %_libexecdir/uranium
 
 Name:    Uranium
-Version: 3.2.1
+Version: 3.3.0
 Release: alt1.%ubt
 
 Summary:  A Python framework for building Desktop applications.
@@ -29,8 +29,6 @@ BuildRequires:  python3-module-typing
 BuildRequires:  python3-module-pip
 %endif
 
-#Requires: python3-module-typing
-
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -49,15 +47,14 @@ related applications.
 %prep
 %setup
 
-# package noarch
-sed -i 's/${LIB_SUFFIX}//g' CMakeLists.txt
-
 # empty file. appending to the end to make sure we are not overriding
 # a non empty file in the future
 echo '# empty' >> UM/Settings/ContainerRegistryInterface.py
 
 %build
-%cmake
+# there is no arch specific content, so we set LIB_SUFFIX to nothing
+# see https://github.com/Ultimaker/Uranium/commit/862a246bdfd7e25541b04a35406957612c6f4bb7
+%cmake -DLIB_SUFFIX:STR=
 %cmake_build
 %cmake_build doc
 
@@ -78,7 +75,8 @@ popd
 %check
 %if 0%{?with_check}
 pip3 freeze
-%_bindir/python3 -m pytest -v
+# https://github.com/Ultimaker/Uranium/issues/345
+python3 -m pytest -v -k "not test_emptyPlugin"
 %endif
 
 %files -f uranium.lang
@@ -92,6 +90,9 @@ pip3 freeze
 %doc html LICENSE
 
 %changelog
+* Sun May 06 2018 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1.%ubt
+- New version 3.3.0
+
 * Fri Feb 23 2018 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1.%ubt
 - New version 3.2.1
 
