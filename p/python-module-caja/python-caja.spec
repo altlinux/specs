@@ -12,7 +12,7 @@ Python bindings for Caja
 
 Name:           python-module-caja
 Version:        1.20.0
-Release:        alt1_1
+Release:        alt2_1
 Epoch:          1
 Summary:        Python bindings for Caja
 
@@ -25,6 +25,7 @@ BuildRequires:  python-devel
 BuildRequires:  mate-file-manager-devel
 BuildRequires:  python-module-pygobject3-common-devel
 BuildRequires:  mate-common
+BuildRequires:  intltool
 Source44: import.info
 
 
@@ -81,6 +82,9 @@ rm $RPM_BUILD_ROOT%{_docdir}/python-caja/README
 
 
 %changelog
+* Mon May 14 2018 Michael Shigorin <mike@altlinux.org> 1:1.20.0-alt2_1
+- explicit BR: intltool after it's been dropped from mate-common R:
+
 * Thu Feb 22 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.20.0-alt1_1
 - new fc release
 
