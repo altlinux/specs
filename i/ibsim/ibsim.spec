@@ -1,33 +1,33 @@
 Name: ibsim
 Summary: InfiniBand fabric simulator for management
-Version: 0.5
-Release: alt3
+Version: 0.7
+Release: alt1
 License: %gpl2only
 Group: Monitoring
 Url: http://openfabrics.org
+
+# http://git.openfabrics.org/?p=~halr/ibsim.git;a=summary
 Source: %name-%version.tar
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: libibmad-devel >= 1.3.2
+BuildRequires: libinfiniband-diags-devel
 
 %description
 %name provides simulation of infiniband fabric for using with
 OFA OpenSM, diagnostic and management tools.
 
-
 %prep
 %setup
-
+%patch1 -p1
 
 %build
 %make_build CFLAGS="%optflags %optflags_shared -I. -I../include"
 
-
 %install
-%make_install DESTDIR=%buildroot \
-	prefix=%_prefix libpath=%_libdir binpath=%_bindir install
-
+%makeinstall_std \
+	prefix=%_prefix libpath=%_libdir binpath=%_bindir
 
 %files
 %doc README TODO net-examples scripts
@@ -35,6 +35,9 @@ OFA OpenSM, diagnostic and management tools.
 %_bindir/*
 
 %changelog
+* Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7-alt1
+- Updated to version 0.7.
+
 * Thu Mar 24 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt3
 - Rebuilt for debuginfo
 
