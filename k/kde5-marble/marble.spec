@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 17.12.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Education
@@ -128,6 +128,9 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5lib/libmarblewidget-qt5.so.*
 
 %changelog
+* Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 17.12.3-alt2%ubt
+- NMU: rebuilt with new libshape.
+
 * Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 

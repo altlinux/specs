@@ -7,7 +7,7 @@
 %define bugfix 3
 Name: kde4-marble
 Version: %major.%minor.%bugfix
-Release: alt2%ubt
+Release: alt3%ubt
 
 Group: Education
 Summary: A virtual globe and world atlas
@@ -129,6 +129,9 @@ KDE 4 library
 
 
 %changelog
+* Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 15.4.3-alt3%ubt
+- NMU: rebuilt with new libshape.
+
 * Mon Jun 05 2017 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt2%ubt
 - clean maps
 
