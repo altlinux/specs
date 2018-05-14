@@ -1,23 +1,38 @@
 %define oname prettytable
+%define git 4676e41
 
 %def_with python3
+%def_disable tests
 
 Name:		python-module-%oname
-Version:	0.7.2
-Release:	alt2.1
+Version:	0.10
+Release:	alt1.g%git
 Summary:	Python library to display tabular data in tables
 
 Group:		Development/Python
 License:	BSD
 Source0:	%{name}-%{version}.tar.gz
+# boxchar changes from https://github.com/platomav/PTable
+Patch1:         0001-add-line-drawing-mode.patch
+Patch2:         0002-Fix-hrules-ALL-Line-Drawing-Mode.patch
+Patch3:         0003-Fix-vrules-ALL-w-o-Header-Line-Drawing-Mode.patch
+Patch4:         0004-Fix-Line-Drawing-Mode-w-o-Title-Header.patch
+Patch5:         alt-encoding.patch
+
 URL:		http://pypi.python.org/pypi/PrettyTable
 
 BuildArch:	noarch
 BuildRequires:	python-devel
+%if_enabled tests
+BuildRequires:  python-module-nose python-module-coverage
+%endif
 BuildRequires:	python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires:	python3-devel
+%if_enabled tests
+BuildRequires:  python3-module-nose python3-module-coverage
+%endif
 BuildRequires:	python3-module-setuptools
 %endif
 
@@ -46,6 +61,11 @@ and printing of "sub-tables" by specifying a row range.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p2
 
 %if_with python3
 cp -fR . ../python3
@@ -60,14 +80,16 @@ pushd ../python3
 popd
 %endif
 
+%if_enabled tests
 %check
 export LC_ALL=en_US.UTF-8
-python prettytable_test.py
+make test
 %if_with python3
 pushd ../python3
-python3 prettytable_test.py
+make test
 popd
 %endif
+%endif #tests
 
 %install
 %python_install
@@ -77,19 +99,26 @@ pushd ../python3
 %python3_install
 popd
 %endif
+rm -rf %buildroot%_bindir
 
 %files
-%doc README COPYING CHANGELOG
-%{python_sitelibdir}/prettytable.py*
-%{python_sitelibdir}/prettytable-%{version}*
+%doc README.rst COPYING CHANGELOG.md
+%dir %python_sitelibdir/%oname
+%python_sitelibdir/%oname
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README COPYING CHANGELOG
-%python3_sitelibdir/*
+%doc README.rst COPYING CHANGELOG.md
+%dir %python3_sitelibdir/%oname
+%python3_sitelibdir/%oname
 %endif
 
 %changelog
+* Mon May 14 2018 L.A. Kostis <lakostis@altlinux.ru> 0.10-alt1.g4676e41
+- GIT 4676e41.
+- Added boxchar changes from https://github.com/platomav/PTable (need MCExtractor to work).
+- Disable tests (as they rely on coverage %% rather than exit code).
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.2-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
