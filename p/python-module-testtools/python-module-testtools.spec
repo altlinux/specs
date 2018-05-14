@@ -1,39 +1,28 @@
 %define oname testtools
 
-%def_with python3
 %def_disable check
 
 Name: python-module-%oname
 Version: 1.8.0
-Release: alt2.1.1
-Summary: extensions to the Python standard library's unit testing framework
+Release: alt3
 
+Summary: extensions to the Python standard library's unit testing framework
 Group: Development/Python
 License: MIT
 Url: http://pypi.python.org/pypi/testtools
+BuildArch: noarch
 
 Source: %name-%version.tar
-Packager: Vladimir Lettiev <crux@altlinux.ru>
 
-BuildArch: noarch
-BuildRequires(pre): rpm-macros-sphinx
+BuildRequires(pre): rpm-macros-sphinx rpm-build-python3
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-linecache2 python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-traceback2 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-linecache2 python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools python3-module-six python3-module-traceback2
-BuildRequires: git-core python-module-alabaster python-module-docutils python-module-extras python-module-html5lib python-module-mimeparse python-module-objects.inv python-module-pbr python-module-pytest python-module-unittest2 python3-module-extras python3-module-html5lib python3-module-mimeparse python3-module-pbr python3-module-pytest python3-module-unittest2 rpm-build-python3 time
-
-#BuildRequires: python-module-setuptools-tests git
-#BuildRequires: python-module-unittest2 python-module-mimeparse
-#BuildRequires: python-module-six python-module-argparse
-#BuildRequires: python-module-pbr
-#BuildRequires: python-module-sphinx-devel python-module-extras
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-setuptools-tests
-#BuildRequires: python3-module-unittest2 python3-module-mimeparse
-#BuildRequires: python3-module-six python3-module-argparse
-#BuildPreReq: python3-module-extras
-#BuildRequires: python3-module-pbr
-%endif
+BuildRequires: git-core python-module-alabaster python-module-docutils
+BuildRequires: python-module-extras python-module-html5lib python-module-mimeparse
+BuildRequires: python-module-objects.inv python-module-pbr python-module-pytest
+BuildRequires: python-module-unittest2 time
+BuildPreReq: python3-module-extras python3-module-html5lib python3-module-mimeparse
+BuildPreReq: python3-module-pbr python3-module-pytest python3-module-unittest2
 
 %py_requires mimeparse traceback2
 
@@ -65,7 +54,6 @@ sources.
 
 This package contains documentation for %oname.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: extensions to the Python 3 standard library's unit testing framework
 Group: Development/Python3
@@ -78,7 +66,6 @@ testtools is a set of extensions to the Python standard library's unit
 testing framework. These extensions have been derived from years of
 experience with unit testing in Python and come from many different
 sources.
-%endif
 
 %prep
 %setup
@@ -95,18 +82,15 @@ git tag -m "%version" %version
 %prepare_sphinx .
 ln -s ../objects.inv doc/
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 export PYTHONPATH=$PWD
 %make -C doc pickle
@@ -114,21 +98,19 @@ export PYTHONPATH=$PWD
 
 %install
 %python_install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
-%endif
 
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 python setup.py test
-%if_with python3
+
 pushd ../python3
 python3 setup.py test
 popd
-%endif
 
 %files
 %python_sitelibdir/testtools*
@@ -141,13 +123,15 @@ popd
 %files docs
 %doc doc/_build/html/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc LICENSE NEWS README*
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Mon May 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.8.0-alt3
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.8.0-alt2.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

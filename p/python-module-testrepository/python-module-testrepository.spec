@@ -1,33 +1,29 @@
-# Created by pyp2rpm-1.0.1
 %global pypi_name testrepository
-%def_with python3
 
 Name:           python-module-%{pypi_name}
 Version:        0.0.20
-Release:        alt1.1.1
+Release:        alt2
+
 Summary:        A repository of test results
 Group:          Development/Python
-
 License:        ASL 2.0
 URL:            https://launchpad.net/testrepository
-Source0:        %{name}-%{version}.tar
 BuildArch:      noarch
+
+Source0:        %{name}-%{version}.tar
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-numpy python-module-pyasn1 python-module-serial python-module-setuptools python-module-twisted-core python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
-BuildRequires: python-module-mimeparse python-module-pbr python-module-unittest2 python3-module-html5lib python3-module-mimeparse python3-module-pbr python3-module-unittest2 rpm-build-python3
+BuildRequires: python-module-mimeparse python-module-pbr 
+BuildRequires: python-module-unittest2 python-module-fixtures
+BuildRequires: python-module-subunit python-module-testtools
+BuildRequires: python-module-extras
 
-#BuildRequires:  python-devel
-#BuildRequires:  python-module-setuptools
-#BuildRequires:  python-module-fixtures
-#buildRequires:  python-module-python-subunit
-#BuildRequires:  python-module-testtools
-#BuildRequires:  python-module-extras
-
-Requires:       python-module-fixtures
-Requires:       python-module-python-subunit
-Requires:       python-module-testtools
-Requires:       python-module-extras
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-module-html5lib python3-module-mimeparse
+BuildPreReq: python3-module-pbr python3-module-unittest2
+BuildPreReq: python3-module-fixtures python3-module-subunit
+BuildPreReq: python3-module-testtools python3-module-extras
 
 %description
 Provides a database of test results which can be used to
@@ -36,22 +32,10 @@ like isolating failing tests. Testrepository is compatible
 with any test suite that can output subunit. This includes any
 TAP test suite and any pyunit compatible test suite.
 
-%if_with python3
 %package -n python3-module-%{pypi_name}
 Summary:        A repository of test results
 Group:		Development/Python
 BuildArch:      noarch
-#BuildRequires:  rpm-build-python3
-#BuildRequires:  python3-module-setuptools
-#BuildRequires:  python3-module-fixtures
-#buildRequires:  python3-module-python-subunit
-#BuildRequires:  python3-module-testtools
-#BuildRequires:  python3-module-extras
-
-Requires:       python3-module-fixtures
-Requires:       python3-module-python-subunit
-Requires:       python3-module-testtools
-Requires:       python3-module-extras
 
 %description -n python3-module-%{pypi_name}
 Provides a database of test results which can be used to
@@ -60,34 +44,26 @@ like isolating failing tests. Testrepository is compatible
 with any test suite that can output subunit. This includes any
 TAP test suite and any pyunit compatible test suite.
 
-%endif
-
 %prep
 %setup
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 mv %{buildroot}%{_bindir}/testr %{buildroot}%{_bindir}/python3-testr
 popd
-%endif
 
 %python_install
 
@@ -97,15 +73,17 @@ popd
 %{python_sitelibdir}/%{pypi_name}
 %{python_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
 
-%if_with python3
 %files -n python3-module-%{pypi_name}
 %doc README.txt Apache-2.0
 %{_bindir}/python3-testr
 %{python3_sitelibdir}/%{pypi_name}
 %{python3_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
-%endif
+
 
 %changelog
+* Mon May 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.0.20-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.20-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

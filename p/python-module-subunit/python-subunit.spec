@@ -1,35 +1,35 @@
 %define oname subunit
 
-%add_python3_req_skip gtk.gdk
-
-%def_with python3
-
 Name: python-module-%oname
 Version: 1.2.0
-Release: alt3.1
+Release: alt4
+
 Summary: Python implementation of subunit test streaming protocol
 License: Apache or BSD
 Group: Development/Python
-BuildArch: noarch
 Url: http://pypi.python.org/pypi/python-subunit/
+BuildArch: noarch
 
 Source: %name-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-testtools python-module-mimeparse
+BuildRequires: python-module-mimeparse
 BuildRequires: python-module-testscenarios
 BuildRequires: python2.7(hypothesis) python2.7(fixtures)
-%if_with python3
+BuildRequires: python-module-testtools
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-testtools python-tools-2to3
+BuildRequires: python-tools-2to3
 BuildRequires: python3-module-mimeparse
 BuildRequires: python3-module-testscenarios
 BuildRequires: python3(hypothesis) python3(fixtures)
-%endif
+BuildRequires: python3-module-testtools
 
 Provides: python-module-python-%oname = %EVR
 Obsoletes: python-module-python-%oname < %EVR
+
+%add_python3_req_skip gtk.gdk
 
 %description
 Subunit is a streaming protocol for test results. The protocol is human
@@ -41,7 +41,6 @@ Subunit comes with command line filters to process a subunit stream and
 language bindings for python, C, C++ and shell. Bindings are easy to
 write for other languages.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Python 3 implementation of subunit test streaming protocol
 Group: Development/Python3
@@ -77,7 +76,6 @@ language bindings for python, C, C++ and shell. Bindings are easy to
 write for other languages.
 
 This package contains tests for python-subunit.
-%endif
 
 %package tests
 Summary: Tests for python-subunit
@@ -100,22 +98,19 @@ This package contains tests for python-subunit.
 
 %prep
 %setup
-%if_with python3
+
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -124,17 +119,15 @@ for i in $(ls); do
 	mv $i py3_$i
 done
 popd
-%endif
 
 %python_install
 
 %check
 python setup.py test
-%if_with python3
+
 pushd ../python3
 python3 setup.py test
 popd
-%endif
 
 %files
 %doc NEWS README.rst
@@ -146,7 +139,6 @@ popd
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %doc NEWS README.rst
 %_bindir/py3_*
@@ -155,9 +147,12 @@ popd
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
+
 
 %changelog
+* Mon May 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt4
+- rebuild with python3.6
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.2.0-alt3.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
