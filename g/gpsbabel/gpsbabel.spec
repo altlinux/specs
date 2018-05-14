@@ -1,20 +1,21 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: gpsbabel
-Version: 1.3.6
-Release: alt2.qa1
-Packager: Grigory Batalov <bga@altlinux.ru>
+Version: 1.5.4
+Release: alt1
 
 Summary: A tool to convert between various formats used by GPS devices
 License: GPL
 Group: Sciences/Geosciences
 Url: http://www.gpsbabel.org
 
-# http://www.gpsbabel.org/plan9.php?dl=%name-%version.tar
+# https://github.com/gpsbabel/gpsbabel.git
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
-# Automatically added by buildreq on Fri Sep 12 2008
-BuildRequires: libexpat-devel libusb-devel zlib-devel
-BuildRequires: texlive-latex-recommended
+Patch1: %name-%version-alt.patch
+
+BuildRequires: libexpat-devel libusb-devel zlib-devel libminizip-devel gcc-c++
+BuildRequires: qt5-base-devel qt5-tools
 
 %description
 GPSBabel converts waypoints, tracks, and routes from one format to another,
@@ -34,28 +35,28 @@ data that may (or may not be) placed on a map, such as waypoints,
 tracks, and routes.
 
 %prep
-%setup -q
-%patch -p1
-rm -fR coldsync
-
-find . -type f \( -name '*.c' -o -name '*.h' \) -print0 | xargs -r0 chmod a-x
+%setup
+%patch1 -p1
 
 %build
-%configure --with-zlib=system --enable-pdb=no
-%make_build
+%configure \
+	--with-zlib=system \
+	--with-libminizip=system \
+	--enable-pdb=no
 
-cd doc
 %make_build
-dvips -o gpsbabel.ps doc.dvi
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
-%doc AUTHORS README* contrib intdoc gpsbabel.html doc/gpsbabel.ps
+%doc AUTHORS README* intdoc gpsbabel.html
 %_bindir/%name
 
 %changelog
+* Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.4-alt1
+- Updated to upstream version 1.5.4.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.6-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
