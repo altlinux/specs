@@ -4,7 +4,7 @@
 
 Name: iperf
 Version: 2.0.5
-Release: alt5
+Release: alt6
 
 Summary: Iperf was developed as a modern alternative for measuring TCP and UDP bandwidth performance
 License: BSD
@@ -27,9 +27,11 @@ Patch4: 003-fix-hyphen-used-as-minus-sign.patch
 Patch5: 005-iperf-die-on-bind-fail.patch
 Patch6: 010-fix-format-security-ftbfs.patch
 Patch7: 011-ipv6_mcast_check.patch
+Patch8: iperf-alt-no-bool-check.patch
+Patch9: iperf-alt-man-install.patch
 
 
-BuildRequires: gcc5-c++
+BuildRequires: gcc-c++
 
 %description
 Iperf is a tool to measure maximum TCP bandwidth, allowing the tuning of various
@@ -45,8 +47,11 @@ datagram loss.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p2
+%patch9 -p2
 
 %build
+%autoreconf
 %configure
 %make
 
@@ -88,6 +93,9 @@ rm -f doc/Makefile*
 %doc README doc/* ChangeLog AUTHORS
 
 %changelog
+* Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.5-alt6
+- Fixed build.
+
 * Mon Jan 30 2017 Terechkov Evgenii <evg@altlinux.org> 2.0.5-alt5
 - Fix build by hardcoding gcc5-c++ compiler
 
