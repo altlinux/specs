@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.i18nmessageid
-%define fname python-module-%oname
+%define fname python3-module-%oname
 %define descr \
 This package provides facilities for *declaring* messages within \
 program source text;  translation of the messages is the responsiblity \
@@ -14,7 +14,7 @@ Release: alt2
 
 %if ""==""
 Summary: Message Identifiers for internationalization
-Group: Development/Python
+Group: Development/Python3
 %else
 Summary: Documentation for %oname
 Group: Development/Documentation
@@ -25,11 +25,11 @@ License: ZPLv2.1
 Url: http://pypi.python.org/pypi/zope.i18nmessageid
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx rpm-build-python
-BuildRequires: python-dev python-module-sphinx python-module-sphinx-devel python-module-setuptools
+BuildRequires(pre): rpm-macros-sphinx rpm-build-python3
+BuildRequires: python3-dev python-module-sphinx python3-module-sphinx-devel python3-module-setuptools
 
 %if_with check
-BuildRequires: python-module-zope.testing python-module-zope.testrunner
+BuildRequires: python3-module-zope.testing python3-module-zope.testrunner
 %endif
 
 %if ""!=""
@@ -46,7 +46,7 @@ This package contains documentation for %oname.
 
 %package -n %fname-pickles
 Summary: Pickles for Zope Configuration Markup Language (ZCML)
-Group: Development/Python
+Group: Development/Python3
 
 %description -n %fname-pickles
 %descr
@@ -57,7 +57,7 @@ This package contains pickles for %oname.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -77,7 +77,7 @@ ln -s ../objects.inv docs/
 %build
 %if ""==""
 %add_optflags -fno-strict-aliasing
-%python_build
+%python3_build
 %else
 %make -C docs pickle
 %make -C docs html
@@ -85,24 +85,24 @@ ln -s ../objects.inv docs/
 
 %install
 %if ""==""
-%python_install
+%python3_install
 %else
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %if ""==""
 %check
 export PYTHONPATH=src
-python setup.py test -v
+python3 setup.py test -v
 
 %files
 %doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/zope/i18nmessageid/tests.*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/zope/i18nmessageid/tests.*
 
 %files tests
-%python_sitelibdir/zope/i18nmessageid/tests.*
+%python3_sitelibdir/zope/i18nmessageid/tests.*
 
 %else
 
@@ -110,7 +110,7 @@ python setup.py test -v
 %doc docs/_build/html
 
 %files -n %fname-pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 %endif
 
 %changelog

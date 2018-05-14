@@ -8,11 +8,11 @@ of the 'zope.i18n' package.
 
 %def_with check
 
-Name: %fname
+Name: %fname-docs
 Version: 4.1.0
 Release: alt2
 
-%if ""==""
+%if "-docs"==""
 Summary: Message Identifiers for internationalization
 Group: Development/Python
 %else
@@ -32,7 +32,7 @@ BuildRequires: python-dev python-module-sphinx python-module-sphinx-devel python
 BuildRequires: python-module-zope.testing python-module-zope.testrunner
 %endif
 
-%if ""!=""
+%if "-docs"!=""
 Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
 BuildArch: noarch
@@ -41,7 +41,7 @@ BuildArch: noarch
 %description
 %descr
 
-%if ""!=""
+%if "-docs"!=""
 This package contains documentation for %oname.
 
 %package -n %fname-pickles
@@ -69,13 +69,13 @@ This package contains tests for %oname.
 
 %prep
 %setup
-%if ""!=""
+%if "-docs"!=""
 %prepare_sphinx .
 ln -s ../objects.inv docs/
 %endif
 
 %build
-%if ""==""
+%if "-docs"==""
 %add_optflags -fno-strict-aliasing
 %python_build
 %else
@@ -84,14 +84,14 @@ ln -s ../objects.inv docs/
 %endif
 
 %install
-%if ""==""
+%if "-docs"==""
 %python_install
 %else
 install -d %buildroot%python_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
-%if ""==""
+%if "-docs"==""
 %check
 export PYTHONPATH=src
 python setup.py test -v
