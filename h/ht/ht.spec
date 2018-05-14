@@ -1,6 +1,6 @@
 Name: ht
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Summary: Disassembler, object dumper and hex editor
 License: GPLv2
 Group: Development/Tools
@@ -40,6 +40,9 @@ install -pD -m 0644 {doc,%buildroot%_infodir}/%name.info
 
 
 %changelog
+* Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt2
+- Fixed build with new toolchain.
+
 * Fri Jun 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt1
 - Updated to version 2.1.0
 
