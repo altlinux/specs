@@ -3,7 +3,7 @@
 
 Name:		tini
 Version:	0.18.0
-Release:	alt1
+Release:	alt2
 Summary:	A tiny but valid init for containers
 
 Group:		Development/Other
@@ -11,9 +11,8 @@ License:	%mit
 URL:		https://github.com/krallin/tini
 
 Source0: %name-%version.tar
-ExclusiveArch: x86_64
-
-BuildRequires(pre): rpm-build-licenses
+ExclusiveArch: %go_arches
+BuildRequires(pre): rpm-build-licenses rpm-build-golang
 BuildRequires: cmake
 BuildRequires: glibc-devel-static
 
@@ -35,14 +34,17 @@ cmake .
 make tini-static
 
 %install
-mkdir -p -- %buildroot/%_bindir
-cp -a -- tini-static    %buildroot/%_bindir/tini
+mkdir -p -- %buildroot%_bindir
+cp -a -- tini-static    %buildroot%_bindir/tini
 
 %files
 
 %_bindir/tini
 
 %changelog
+* Mon May 14 2018 Alexey Shabalin <shaba@altlinux.ru> 0.18.0-alt2
+- define ExclusiveArch as %%go_arches
+
 * Thu May 10 2018 Vladimir Didenko <cow@altlinux.org> 0.18.0-alt1
 - New version
 
