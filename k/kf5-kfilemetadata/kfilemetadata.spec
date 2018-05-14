@@ -3,7 +3,7 @@
 %def_enable exiv2
 
 Name: kf5-%rname
-Version: 5.45.0
+Version: 5.46.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -74,13 +74,16 @@ KF5 library
 %_K5inc/KFileMetaData/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5FileMetaData
-#%_K5archdata/mkspecs/modules/qt_KFileMetaData.pri
+%_K5archdata/mkspecs/modules/qt_KFileMetaData.pri
 
 %files -n libkf5filemetadata
 %_K5lib/libKF5FileMetaData.so.*
 %_K5plug/kf5/kfilemetadata/
 
 %changelog
+* Mon May 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1%ubt
+- new version
+
 * Fri May 04 2018 Sergey V Turchin <zerg@altlinux.org> 5.45.0-alt1%ubt
 - new version
 

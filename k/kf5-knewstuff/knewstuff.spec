@@ -1,7 +1,7 @@
 %define rname knewstuff
 
 Name: kf5-%rname
-Version: 5.45.0
+Version: 5.46.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -103,6 +103,9 @@ done
 
 
 %changelog
+* Mon May 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1%ubt
+- new version
+
 * Fri May 04 2018 Sergey V Turchin <zerg@altlinux.org> 5.45.0-alt1%ubt
 - new version
 
