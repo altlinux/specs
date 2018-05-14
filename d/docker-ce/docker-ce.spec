@@ -16,7 +16,7 @@
 
 Name:       docker-ce
 Version:    18.03.1
-Release: alt1
+Release: alt2
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -25,8 +25,7 @@ Group: System/Configuration/Other
 %global fullversion %{version}-%{versuffix}
 
 Url: https://github.com/docker/docker-ce
-# only x86_64 for now: https://github.com/docker/docker/issues/136
-ExclusiveArch: x86_64
+ExclusiveArch: %go_arches 
 Conflicts: docker
 
 Source0: %name-%version.tar
@@ -38,6 +37,7 @@ Source5: daemon.json
 
 Patch1: %name-17.12.0-bash-completion.patch
 
+BuildRequires(pre): rpm-build-golang
 BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel-static libsqlite3-devel-static libbtrfs-devel
 BuildRequires: python-module-sphinx-devel python-module-sphinxcontrib-httpdomain pandoc
 BuildRequires: golang-github-cpuguy83-go-md2man
@@ -49,8 +49,6 @@ Requires: /usr/bin/docker-proxy
 Requires: docker-containerd >= 1.0.2-alt1
 Requires: docker-runc >= 1.0.0-alt4.rc5
 Requires: docker-init >= 0.17.0-alt1
-
-%define gopath %_datadir/gocode
 
 # do not extract debuginfo
 %define __find_debuginfo_files %nil
@@ -75,7 +73,7 @@ servers, OpenStack clusters, public instances, or combinations of the above.
 %build
 
 mkdir -p %{build_dir}
-export GOPATH="$(pwd)/%{build_dir}:%{gopath}"
+export GOPATH="$(pwd)/%{build_dir}:%{go_path}"
 
 # build cli
 mkdir -p %{build_dir_cli}
@@ -172,6 +170,9 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Mon May 14 2018 Alexey Shabalin <shaba@altlinux.ru> 18.03.1-alt2
+- define ExclusiveArch as  %%go_arches
+
 * Thu May 10 2018 Vladimir Didenko <cow@altlinux.org> 18.03.1-alt1
 - New version
 

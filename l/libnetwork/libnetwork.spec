@@ -16,12 +16,12 @@
 
 Name:           libnetwork
 Version:        0.8.0
-Release:        alt4.git%shortcommit
+Release:        alt5.git%shortcommit
 Summary:        Networking for containers
 Group:          Development/Other
 License:        Apache 2.0
 URL:            https://%provider_prefix
-ExclusiveArch:  x86_64
+ExclusiveArch:  %go_arches
 
 Source0:        %name-%version.tar
 
@@ -61,6 +61,9 @@ install -p -m 755 bin/docker-proxy %buildroot/%_bindir
 %_bindir/*
 
 %changelog
+* Mon May 14 2018 Alexey Shabalin <shaba@altlinux.ru> 0.8.0-alt5.gitc15b372
+- define ExclusiveArch as %%go_arches
+
 * Thu May 10 2018 Vladimir Didenko <cow@altlinux.org> 0.8.0-alt4.gitc15b372
 - New version (for docker 18.03.1-ce).
 
