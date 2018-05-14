@@ -2,7 +2,7 @@
 %define origname krusader
 
 Name: kde5-%origname
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 
 Source: %origname.tar.gz
@@ -64,7 +64,7 @@ published under the GNU General Public Licence
 %find_lang %origname --with-kde
 
 %files -f %origname.lang
-%doc README AUTHORS ChangeLog TODO COPYING SVNNEWS FAQ INSTALL
+%doc README AUTHORS ChangeLog TODO COPYING FAQ INSTALL
 %_K5bin/%origname
 %_K5xdgapp/*.desktop
 %_datadir/%origname
@@ -76,6 +76,9 @@ published under the GNU General Public Licence
 %_K5doc/*/%origname
 
 %changelog
+* Mon May 14 2018 Konstantin Artyushkin <akv@altlinux.org> 2.7.0-alt1
+- new version
+
 * Thu Aug 31 2017 Konstantin Artyushkin <akv@altlinux.org> 2.6.0-alt1
 - new version
 
