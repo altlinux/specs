@@ -1,6 +1,6 @@
 Name: grub
 Version: 2.02
-Release: alt7%ubt
+Release: alt8%ubt
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -36,6 +36,7 @@ Patch9: grub-2.00-fedora-unrestricted.patch
 Patch10: grub2-stfu.patch
 Patch11: grub-2.02-shift-interrupt-timeout.patch
 Patch12: grub-2.02-ubuntu-efi-setup.patch
+Patch13: grub-2.02-check_writes-alt.patch
 
 BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
 BuildRequires: liblzma-devel help2man zlib-devel
@@ -157,6 +158,7 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p2
 
 sed -i 's,@GRUB_EFI_NAME@,%grubefiname,' %SOURCE10
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version[^]]\+/%version-%release/" configure.ac
@@ -189,7 +191,7 @@ popd
 %make_build
 
 ./grub-mkimage -O %grubefiarch -o grub.efi -d grub-core -p "" \
-	part_gpt part_apple part_msdos hfsplus fat ext2 btrfs xfs squash4 normal chain boot configfile linux \
+	part_gpt part_apple part_msdos hfsplus fat ext2 btrfs xfs squash4 normal chain boot configfile linux diskfilter \
 	minicmd reboot halt search search_fs_uuid search_fs_file search_label sleep test syslinuxcfg all_video video \
 	font gfxmenu gfxterm gfxterm_background lvm lsefi efifwsetup cat gzio iso9660 loadenv loopback mdraid09 mdraid1x \
 	png jpeg
@@ -340,6 +342,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Sun May 13 2018 Leonid Krivoshein <klark@altlinux.org> 2.02-alt8%ubt
+- write to read-only grub device problem fixed.
+
 * Mon Apr 16 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt7%ubt
 - revert back the LVM+LUKS fixes from alt6
 
