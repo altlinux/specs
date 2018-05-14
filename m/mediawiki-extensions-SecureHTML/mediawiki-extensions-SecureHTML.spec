@@ -1,9 +1,7 @@
 %define oname SecureHTML
-%define major 2.3.0
-%define revision r1223
 
 Name: mediawiki-extensions-%oname
-Version: %major.%revision
+Version: 3.0
 Release: alt1
 
 Summary: This MediaWiki extension provides a secure way to include raw HTML code on a page
@@ -18,12 +16,12 @@ BuildArch: noarch
 
 BuildPreReq: rpm-build-mediawiki >= 0.3
 
-Requires: mediawiki-common >= 1.15.1-alt4
+Requires: mediawiki-common >= 1.30
 
 Requires: mediawiki-extensions-StubManager
 
-# http://mediawiki.googlecode.com/svn/trunk/extensions/SecureHTML/
-Source0: %oname-%version.tar
+# Source-url: https://github.com/wikimedia/mediawiki-extensions-SecureHTML/archive/v%version.tar.gz
+Source: %oname-%version.tar
 
 %description
 This extension allows editors to add HTML section(s) or pages on a wiki page.
@@ -39,6 +37,9 @@ but allows an editor to add a protected template on an unprotected, editable pag
 %files -f %oname.files
 
 %changelog
+* Mon May 14 2018 Vitaly Lipatov <lav@altlinux.ru> 3.0-alt1
+- new version (3.0) with rpmgs script
+
 * Wed May 26 2010 Vitaly Lipatov <lav@altlinux.ru> 2.3.0.r1223-alt1
 - initial build for ALT Linux Sisyphus
 
