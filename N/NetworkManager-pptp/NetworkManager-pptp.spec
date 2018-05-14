@@ -9,9 +9,15 @@
 
 %define _unpackaged_files_terminate_build 1
 
+%ifarch %e2k
+%define more_warnings no
+%else
+%define more_warnings error
+%endif
+
 Name: NetworkManager-pptp
-Version: 1.2.4
-Release: alt2%git_date
+Version: 1.2.6
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for pptp
@@ -71,7 +77,7 @@ NetworkManager panel applet.
 %if_without libnm_glib
 	--without-libnm-glib \
 %endif
-	--enable-more-warnings=error
+	--enable-more-warnings=%more_warnings
 %make_build
 
 %install
@@ -94,7 +100,6 @@ NetworkManager panel applet.
 %_libdir/NetworkManager/libnm-pptp-properties.so
 %endif
 %_libexecdir/NetworkManager/nm-pptp-auth-dialog
-%_datadir/gnome-vpn-properties/*
 %_libdir/NetworkManager/libnm-vpn-plugin-pptp-editor.so
 %_datadir/appdata/*.xml
 
@@ -102,6 +107,10 @@ NetworkManager panel applet.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri May 11 2018 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt1
+- Fix build on e2k.
+- Updated to 1.2.6.
+
 * Mon Feb 06 2017 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt2
 - Require NetworkManager-ppp.
 
