@@ -1,5 +1,5 @@
 Name: nsd
-Version: 4.1.20
+Version: 4.1.21
 Release: alt1
 
 Summary: Name Server Daemon
@@ -81,6 +81,9 @@ install -Dpm 644 %SOURCE6 %buildroot%_tmpfilesdir/%name.conf
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Mon May 14 2018 Alexei Takaseev <taf@altlinux.org> 4.1.21-alt1
+- 4.1.21
+
 * Thu Mar 22 2018 Alexei Takaseev <taf@altlinux.org> 4.1.20-alt1
 - 4.1.20
 - Add /etc/tmpfiles.d/nsd.conf
