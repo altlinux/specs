@@ -241,7 +241,7 @@ BuildRequires: /proc
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt4_1.b01jpp8
+Release: alt5_1.b01jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -310,6 +310,7 @@ Patch504: rh1163501.patch
 Patch511: rh1214835.patch
 # Turn off strict overflow on IndicRearrangementProcessor{,2}.cpp following 8140543: Arrange font actions
 Patch512: no_strict_overflow.patch
+Patch513: pr1983-jdk.patch
 
 Patch900: gcc6.patch
 
@@ -389,11 +390,7 @@ BuildRequires: pkgconfig
 BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 #BuildRequires: redhat-lsb
 BuildRequires: zip
-%ifarch %e2k
 BuildRequires: java-1.8.0-openjdk-devel
-%else
-BuildRequires: java-1.7.0-openjdk-devel
-%endif
 # Zero-assembler build requirement.
 %ifnarch %{jit_arches}
 BuildRequires: libffi-devel
@@ -454,7 +451,7 @@ BuildRequires: gcc4.9-c++
 %add_findprov_lib_path %{_jvmdir}/%{jredir}/lib/%archinstall/client
 %endif
 
-%ifarch x86_64
+%ifarch aarch64 x86_64
 Provides: /usr/lib/jvm/java/jre/lib/%archinstall/server/libjvm.so()(64bit)
 Provides: /usr/lib/jvm/java/jre/lib/%archinstall/server/libjvm.so(SUNWprivate_1.1)(64bit)
 %endif
@@ -678,9 +675,6 @@ sh %{SOURCE12}
 # Zero PPC fixes.
 #%patch403
 
-%patch603
-%patch601
-%patch602
 %patch605
 
 #%patch501
@@ -690,6 +684,7 @@ sh %{SOURCE12}
 #%patch505
 %patch511
 %patch512
+%patch513
 
 %patch900
 
@@ -1450,6 +1445,10 @@ fi
 %endif
 
 %changelog
+* Mon May 14 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0:1.8.0.144-alt5_1.b01jpp8
+- require java-1.8.0-openjdk for build on all platforms
+- built for aarch64
+
 * Thu May 03 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.144-alt4_1.b01jpp8
 - merged e2k support
 
