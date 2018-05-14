@@ -1,6 +1,6 @@
 Name: flashrom
-Version: 0.9.9
-Release: alt2
+Version: 1.0
+Release: alt1
 
 Summary: Universal flash programming utility
 License: %gpl2plus
@@ -8,9 +8,8 @@ Group: System/Kernel and hardware
 
 Url: http://flashrom.org/Flashrom
 # Homepage: http://www.flashrom.org
-# svn co svn://flashrom.org/flashrom/trunk
-Source: %name-%version.tar.bz2
-Source100: %name.watch
+# https://review.coreboot.org/flashrom.git
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libftdi1-devel libpci-devel zlib-devel libusb-compat-devel
@@ -39,7 +38,7 @@ from a flash chip.
 
 %build
 %define _optlevel s
-%add_optflags -Werror
+%add_optflags -Werror -Wno-error=deprecated-declarations
 %make_build CFLAGS="%optflags" PREFIX=%_prefix 
 
 %install
@@ -52,6 +51,9 @@ install -dm755 %buildroot%_sbindir
 %_man8dir/*
 
 %changelog
+* Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt1
+- Updated to upstream version 1.0.
+
 * Tue Aug 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.9-alt2
 - Updated build dependencies.
 
