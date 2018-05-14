@@ -3,12 +3,12 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.1.14
+Version: 7.2.5
 Release: alt1%ubt
 
 %define php7_name      %name
 %define _php7_version  %version
-%define _php7_major  7.1
+%define _php7_major  7.2
 %define php7_release   %release
 %define rpm_build_version %_php7_version
 
@@ -39,7 +39,6 @@ Patch38: php-no-static-program.patch
 Patch39: php-set-session-save-path.patch
 Patch40: php7-7.1.10-alt-lsattr.patch
 Patch41: php5-alt-checklibs.patch
-Patch51: php-5.3.5-alt-build-gcc-version.patch
 Patch61: php5-5.5.9-phar-phppath.patch
 Patch62: php-mysqlnd-socket.patch
 Patch63: php-7.1-alt-zend-signal-visibility.patch
@@ -162,7 +161,6 @@ in use by other PHP7-related packages.
 %patch39 -p2
 %patch40 -p1
 %patch41 -p2
-%patch51 -p2
 %patch61 -p1
 %patch62 -p1
 %patch63 -p1
@@ -170,8 +168,6 @@ in use by other PHP7-related packages.
 %patch65 -p1
 
 
-cp Zend/LICENSE Zend/ZEND_LICENSE
-cp Zend/ZEND_CHANGES Zend/ZEND_ChangeLog 
 mv README.SELF-CONTAINED-EXTENSIONS SELF-CONTAINED-EXTENSIONS
 
 cp -dpR %SOURCE2 .
@@ -292,7 +288,7 @@ cat << EOF > %buildroot/%_altdir/php7
 %_bindir/phpdbg		%_bindir/phpdbg7	$php_weight
 %_bindir/php	%_bindir/php7-%_php7_version	$php_weight
 %_bindir/php7	%_bindir/php7-%_php7_version	$php_weight
-%_man1dir/php7.1	%_man1dir/php-%_php7_version.1	$php_weight
+%_man1dir/php7.2	%_man1dir/php-%_php7_version.1	$php_weight
 EOF
 
 cat << EOF > %buildroot/%_altdir/php7-devel
@@ -369,11 +365,11 @@ subst 's,sbin/lsattr,bin/lsattr,' %buildroot/%php7_libdir/build/config.guess
 %dir %php7_sysconfdir/%php7_sapi/php.d
 %config(noreplace) %php7_sysconfdir/%php7_sapi/php.ini
 %_man1dir/php7-%_php7_version.1*
-%_man1dir/php7.1*
-%_man1dir/phpdbg7.1*
+%_man1dir/php7.*
+%_man1dir/phpdbg7.*
 %_man1dir/phar7*.1*
 %doc CODING_STANDARDS CREDITS INSTALL LICENSE
-%doc NEWS README.* Zend/ZEND_* php.ini-* EXTENSIONS
+%doc NEWS README.* php.ini-* EXTENSIONS
 %doc UPGRADING*
 
 %files -n rpm-build-php7-version
@@ -402,12 +398,15 @@ subst 's,sbin/lsattr,bin/lsattr,' %buildroot/%php7_libdir/build/config.guess
 %_altdir/php7-devel
 %_libdir/libphp-%_php7_version.a
 %_usrsrc/php7-devel
-%_man1dir/php-config7.1*
-%_man1dir/phpize7.1*
+%_man1dir/php-config7.*
+%_man1dir/phpize7.*
 %doc SELF-CONTAINED-EXTENSIONS php-packaging.readme
 %doc tests run-tests.php 
 
 %changelog
+* Fri May 11 2018 Anton Farygin <rider@altlinux.ru> 7.2.5-alt1%ubt
+- 7.2.5
+
 * Wed Feb 07 2018 Anton Farygin <rider@altlinux.ru> 7.1.14-alt1%ubt
 - 7.1.14
 

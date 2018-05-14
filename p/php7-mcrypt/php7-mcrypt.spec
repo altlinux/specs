@@ -1,4 +1,5 @@
 %define		php7_extension	mcrypt
+%define 	mcrypt_version	1.0.1
 
 Name:	 	php7-%php7_extension
 Version:	%php7_version
@@ -7,7 +8,7 @@ Release:	%php7_release
 Summary:	Mcrypt library support for PHP
 Group:		System/Servers
 License:	PHP Licence
-
+Source0:	%name-%mcrypt_version.tar
 Source1:	php-%php7_extension.ini
 Source2:	php-%php7_extension-params.sh
 
@@ -28,8 +29,7 @@ BLOWFISH, ARCFOUR, WAKE and more. Install this package in addition
 to main PHP package if you plan to use any of these algorithms.
 
 %prep
-%setup -T -c
-cp -pr %php7_extsrcdir/%php7_extension/* .
+%setup -n %name-%mcrypt_version
 
 %build
 phpize
@@ -49,7 +49,6 @@ install -D -m 644 %SOURCE2 %buildroot/%php7_extconf/%php7_extension/params
 %files
 %php7_extconf/%php7_extension
 %php7_extdir/*
-%doc CREDITS TODO
 
 %post
 %php7_extension_postin
