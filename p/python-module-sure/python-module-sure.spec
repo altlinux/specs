@@ -4,7 +4,7 @@
 Name: python-module-%modname
 
 Version: 1.2.12
-Release: alt2.git20150625.1.1
+Release: alt2.git20150625.2
 
 Summary: Assertion toolbox for python
 
@@ -92,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.12-alt2.git20150625.2
+- Rebuild with python-module-six
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.12-alt2.git20150625.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

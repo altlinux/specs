@@ -6,7 +6,7 @@
 Summary: mock object framework for Python
 Name: %packagename
 Version: 0.5.3
-Release: alt3.git20140721.1
+Release: alt3.git20140721.2
 # https://github.com/freyes/pymox.git
 Source0: %origname-%version.tar
 License: Apache License 2.0
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.3-alt3.git20140721.2
+- Rebuild with python-module-six
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.3-alt3.git20140721.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

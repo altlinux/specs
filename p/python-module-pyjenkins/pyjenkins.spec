@@ -4,7 +4,7 @@
 
 Name: python-module-py%oname
 Version: 0.4.8
-Release: alt1.git20150810.1.1
+Release: alt1.git20150810.2
 Summary: Python bindings for the remote Jenkins API
 License: BSD
 Group: Development/Python
@@ -139,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 0.4.8-alt1.git20150810.2
+- Rebuild with python-module-six
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.8-alt1.git20150810.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
