@@ -1,6 +1,6 @@
 Name: wsjtx
-Version: 1.8.0
-Release: alt2.S1
+Version: 1.9.0
+Release: alt1.S1
 Summary: WSJT-X implements communication protocols or "modes" called JT4, JT9, JT65, and WSPR
 License: GPLv3
 Group: Engineering
@@ -10,12 +10,32 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 # Source-url: http://physics.princeton.edu/pulsar/k1jt/%name-%version.tgz
 Patch0: wsjtx-1.8.0-compile-fix.patch
+Patch1: not-find-hamlib_LIBRARY_DIRS.patch
 
-ExclusiveArch: x86_64 
-
-Buildrequires(pre): cmake rpm-macros-cmake
-BuildRequires: gcc-c++ ctags hamlib-devel openmpi-devel python-devel pkgconfig(libxslt) pkgconfig(libusb-1.0) libfftw3-devel libgomp-devel qt5-base-devel pkgconfig(Qt5Concurrent) pkgconfig(Qt5Multimedia) pkgconfig(Qt5OpenGL) pkgconfig(Qt5SerialPort) ImageMagick-tools makeinfo asciidoc-a2x libudev-devel dos2unix boost-program_options-devel libportaudio2-devel desktop-file-utils
+Buildrequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: ctags
+BuildRequires: openmpi-devel
+BuildRequires: hamlib-devel
+BuildRequires: pkgconfig(libxslt)
+BuildRequires: libudev-devel
+BuildRequires: boost-program_options-devel
+BuildRequires: libgomp-devel
+BuildRequires: libportaudio2-devel
+BuildRequires: libfftw3-devel
+BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: qt5-base-devel
+BuildRequires: pkgconfig(Qt5Concurrent)
+BuildRequires: pkgconfig(Qt5Multimedia)
+BuildRequires: pkgconfig(Qt5SerialPort)
+BuildRequires: ImageMagick-tools
+BuildRequires: dos2unix
+BuildRequires: desktop-file-utils
+BuildRequires: makeinfo
 BuildRequires: asciidoctor
+BuildRequires: asciidoc-a2x
+
 Requires: %name-data = %version-%release
 
 %description
@@ -51,9 +71,14 @@ Data files for %name
 rm -f src/hamlib.tgz*
 tar -xzf src/%name.tgz
 
+# remove archive
+rm -f src/wsjtx.tgz*
+
 %patch0 -p1
 
 pushd %name
+%patch1 -p1
+
 #remove bundled boost
 rm -rf boost
 
@@ -63,10 +88,8 @@ popd
 
 %build
 pushd %name
-# workaround for hamlib check, i.e. for hamlib_LIBRARY_DIRS not to be empty
-export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1
-%cmake -DWSJT_GENERATE_DOCS=ON \
-       -Dhamlib_STATIC=OFF \
+%cmake -DWSJT_GENERATE_DOCS=TRUE \
+       -Dhamlib_STATIC=FALSE \
        -DBoost_NO_SYSTEM_PATHS=FALSE
 %cmake_build
 popd
@@ -109,6 +132,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Mon May 14 2018 Anton Midyukov <antohami@altlinux.org> 1.9.0-alt1.S1
+- Release candidate 1.9.0-RC4
+
 * Thu Nov 23 2017 Anton Midyukov <antohami@altlinux.org> 1.8.0-alt2.S1
 - Release 1.8.0
 - Build with system hamlib
