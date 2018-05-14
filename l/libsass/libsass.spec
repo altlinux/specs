@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: libsass
-Version: 3.4.9
+Version: 3.5.4
 Release: alt1
 
 Summary: A C/C++ implementation of a Sass compiler
@@ -46,6 +46,8 @@ This package contains development files of Sass compiler.
 %setup
 
 %build
+export LIBSASS_VERSION=%version
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure --enable-static=no
 %make_build
@@ -66,6 +68,9 @@ This package contains development files of Sass compiler.
 %_pkgconfigdir/*
 
 %changelog
+* Mon May 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.5.4-alt1
+- 3.5.4
+
 * Thu Feb 22 2018 Yuri N. Sedunov <aris@altlinux.org> 3.4.9-alt1
 - 3.4.9
 
