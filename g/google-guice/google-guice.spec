@@ -23,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           google-%{short_name}
 Version:        4.1
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 Summary:        Lightweight dependency injection framework for Java 5 and above
 License:        ASL 2.0
 URL:            https://github.com/google/%{short_name}
@@ -36,7 +36,7 @@ Source1:        create-tarball.sh
 BuildRequires:  maven-local
 BuildRequires:  mvn(aopalliance:aopalliance)
 BuildRequires:  mvn(cglib:cglib)
-BuildRequires:  mvn(com.google.guava:guava)
+BuildRequires:  mvn(com.google.guava:guava:19.0)
 BuildRequires:  mvn(javax.inject:javax.inject)
 BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -293,6 +293,9 @@ This package provides %{summary}.
 
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:4.1-alt1_10jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.1-alt1_8jpp8
 - fc27 update
 
