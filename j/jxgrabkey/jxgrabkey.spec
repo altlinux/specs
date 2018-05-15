@@ -1,6 +1,6 @@
 Name: jxgrabkey
 Version: 0.3.2
-Release: alt2.r55
+Release: alt3.r55
 
 Summary: Using global X11 hotkeys on Linux from Java.
 License: MIT
@@ -12,8 +12,9 @@ Source0: %name-%version.tar
 Patch0: %name-%version-alt-dont-do-tar-thing.patch
 Patch1: default-java-path.patch
 Patch2: fix-missing-headers.patch
+Patch3: jxgrabkey-0.3.2-alt-doc.patch
 
-BuildPreReq: ant gcc-c++ java-devel-default libgcj4.5-devel libX11-devel junit
+BuildPreReq: ant gcc-c++ java-devel-default libX11-devel junit
 
 %description
 JXGrabKey is a jni library for easy use of global X11 hotkeys on linux
@@ -26,6 +27,7 @@ originally created as a subproject of Coopnet
 %patch0 -p1
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 %build
 pushd misc/Ant
@@ -45,6 +47,9 @@ popd
 %_javadir/JXGrabKey.jar
 
 %changelog
+* Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt3.r55
+- NMU: fixed build.
+
 * Fri Feb 22 2013 Paul Wolneykien <manowar@altlinux.ru> 0.3.2-alt2.r55
 - Fix missing headers (patch).
 - Fix the default java path (patch).
