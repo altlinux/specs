@@ -4,8 +4,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: genius
-Version: %ver_major.23
-Release: alt2
+Version: %ver_major.24
+Release: alt1
 
 Summary: Genius Calculator
 License: LGPLv3+
@@ -25,11 +25,13 @@ Source: %name-%version.tar
 %define mpfr_ver 2.3.0
 
 BuildPreReq: libgio-devel >= %glib_ver libgtk+2-devel >= %gtk_ver
-BuildRequires: libgtksourceview-devel >= %gtksourceview_ver libvte-devel >= %vte_ver
+BuildRequires: libgtksourceview-devel >= %gtksourceview_ver
 BuildRequires: libreadline-devel libncurses-devel libgmp-devel libmpfr-devel >= %mpfr_ver
 BuildRequires: autoconf-archive intltool xsltproc bison flex
 # for non-UTF korean trnslation
 BuildRequires: perl-Encode-KR
+# since 1.0.24 internal vte used
+# BuildRequires: libvte-devel >= %vte_ver
 
 %description
 Genius calculator is a general purpose calculator and mathematics tool
@@ -95,6 +97,9 @@ popd
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Tue May 15 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.24-alt1
+- 1.0.24
+
 * Mon Feb 26 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.23-alt2
 - rebuilt against libmpfr.so.6
 
