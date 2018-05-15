@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             solr3
 Version:          3.6.2
-Release:          alt1_15jpp8
+Release:          alt1_17jpp8
 Summary:          Apache Solr
 License:          ASL 2.0
 Url:              http://lucene.apache.org/solr/
@@ -30,19 +30,39 @@ Source10:         https://repository.jboss.org/nexus/service/local/repositories/
 
 Source20:         solr-contrib.pom
 
-BuildRequires:    lucene3
-BuildRequires:    lucene3-contrib
-BuildRequires:    maven-local
-BuildRequires:    maven-plugin-build-helper
-BuildRequires:    woodstox-core
-BuildRequires:    apache-commons-fileupload
-BuildRequires:    icu4j
-BuildRequires:    jcl-over-slf4j
-BuildRequires:    apache-parent
-
-BuildRequires:    regexp
-BuildRequires:    buildnumber-maven-plugin
-BuildRequires:    maven-plugin-bundle
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(com.google.guava:guava:20.0)
+BuildRequires:  mvn(com.ibm.icu:icu4j)
+BuildRequires:  mvn(commons-codec:commons-codec)
+BuildRequires:  mvn(commons-fileupload:commons-fileupload)
+BuildRequires:  mvn(commons-httpclient:commons-httpclient)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(javax.servlet:servlet-api)
+BuildRequires:  mvn(jakarta-regexp:jakarta-regexp)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
+BuildRequires:  mvn(org.apache.httpcomponents:httpmime)
+BuildRequires:  mvn(org.apache.lucene:lucene-analyzers:3.6.2)
+BuildRequires:  mvn(org.apache.lucene:lucene-core:3.6.2)
+BuildRequires:  mvn(org.apache.lucene:lucene-grouping:3.6.2)
+BuildRequires:  mvn(org.apache.lucene:lucene-highlighter:3.6.2)
+BuildRequires:  mvn(org.apache.lucene:lucene-icu:3.6.2)
+BuildRequires:  mvn(org.apache.lucene:lucene-kuromoji:3.6.2)
+BuildRequires:  mvn(org.apache.lucene:lucene-memory:3.6.2)
+BuildRequires:  mvn(org.apache.lucene:lucene-misc:3.6.2)
+BuildRequires:  mvn(org.apache.lucene:lucene-phonetic:3.6.2)
+BuildRequires:  mvn(org.apache.lucene:lucene-queries:3.6.2)
+BuildRequires:  mvn(org.apache.lucene:lucene-smartcn:3.6.2)
+BuildRequires:  mvn(org.apache.lucene:lucene-solr-grandparent:pom:3.6.2)
+BuildRequires:  mvn(org.apache.lucene:lucene-spatial:3.6.2)
+BuildRequires:  mvn(org.apache.lucene:lucene-spellchecker:3.6.2)
+BuildRequires:  mvn(org.apache.lucene:lucene-stempel:3.6.2)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
+BuildRequires:  mvn(org.slf4j:jcl-over-slf4j)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
 
 BuildArch:        noarch
 Source44: import.info
@@ -72,7 +92,7 @@ tar -xf %{SOURCE0} apache-solr-%{version}/solr
 
 %setup -D -T -n apache-solr-%{version}
 
-mkdir parent
+mkdir -p parent
 mv solr/* .
 rm -rf solr
 
@@ -82,6 +102,7 @@ cp %{SOURCE1} parent/pom.xml
 %pom_remove_plugin ":gmaven-plugin" parent/pom.xml
 # Make it build
 %pom_remove_plugin ":maven-enforcer-plugin" parent/pom.xml
+%pom_remove_plugin ":buildnumber-maven-plugin" parent/pom.xml
 
 cp %{SOURCE2} pom.xml
 
@@ -127,12 +148,15 @@ sed -i "s|wstx-asl|woodstox-core-asl|" solrj/pom.xml
 
 %files -f .mfiles
 %doc README.txt
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.6.2-alt1_17jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.6.2-alt1_15jpp8
 - fc27 update
 
