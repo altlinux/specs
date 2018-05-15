@@ -1,9 +1,9 @@
 %define oname testscenarios
-%def_without bootstrap
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt2
+Release: alt2.1
 
 Summary: Testscenarios, a pyunit extension for dependency injection
 License: BSD
@@ -24,7 +24,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python-module-pytest python-module-pbr
 BuildRequires: python-module-testtools
 
-BuildPreReq: python3-module-html5lib python3-module-mimeparse
+BuildPreReq: python3-module-html5lib python3-module-mimeparse python3-module-testtools
 BuildPreReq: python3-module-pytest python3-module-unittest2 python3-module-pbr
 
 
@@ -91,6 +91,9 @@ popd
 
 
 %changelog
+* Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.5.0-alt2.1
+- rebuild with all requires
+
 * Mon May 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.5.0-alt2
 - rebuild with python3.6
 
