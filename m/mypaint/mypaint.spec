@@ -1,14 +1,20 @@
+%def_enable snapshot
+
 Name: mypaint
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: A simple paint program
 Group: Graphics
 License: GPLv2+
 Url: http://mypaint.org/
 
-# VCS: https://github.com/mypaint/mypaint
+%if_disabled snapshot
 Source: https://github.com/%name/%name/releases/download/v%version/%name-%version.tar.xz
+%else
+# VCS: https://github.com/mypaint/mypaint
+Source: %name-%version.tar
+%endif
 
 Requires: %name-data = %version-%release
 Requires: python-module-pygobject3-pygtkcompat
@@ -68,7 +74,7 @@ scons
 
 %install
 scons prefix=%buildroot%_prefix install
-%find_lang --output=%name.lang %name lib%name
+%find_lang --output=%name.lang %name
 
 %files -f %name.lang
 %_bindir/*
@@ -91,6 +97,10 @@ scons prefix=%buildroot%_prefix install
 %endif
 
 %changelog
+* Tue May 15 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt2
+- updated to v1.2.1-4-g498cb3f
+- removed libmypaint.mo to avoid conflict with standalone libmypaint used by gimp-2.10 now
+
 * Fri Feb 10 2017 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
