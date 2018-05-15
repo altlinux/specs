@@ -7,19 +7,19 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackson-core
-Version:       2.7.6
-Release:       alt1_3jpp8
+Version:       2.9.4
+Release:       alt1_2jpp8
 Summary:       Core part of Jackson
 License:       ASL 2.0
-URL:           http://wiki.fasterxml.com/JacksonHome
+URL:           https://github.com/FasterXML/jackson-core/
 Source0:       https://github.com/FasterXML/jackson-core/archive/%{name}-%{version}.tar.gz
 
-BuildRequires: maven-local
-BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
-BuildRequires: mvn(com.google.code.maven-replacer-plugin:replacer)
-BuildRequires: mvn(junit:junit)
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
+BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 
-BuildArch:     noarch
+BuildArch:      noarch
 Source44: import.info
 
 %description
@@ -28,25 +28,17 @@ as basic shared abstractions.
 
 %package javadoc
 Group: Development/Java
-Summary:       Javadoc for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
-# remove unavailable com.google.doclava doclava 1.0.3
-%pom_xpath_remove "pom:reporting/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration"
-%pom_xpath_inject "pom:reporting/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']" '
-<configuration>
-  <encoding>${project.reporting.outputEncoding}</encoding>
-  <quiet>true</quiet>
-  <source>${javac.src.version}</source>
-</configuration>'
-
-%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:executions"
+# Remove plugins unnecessary for RPM builds
+%pom_remove_plugin ":maven-enforcer-plugin"
 
 cp -p src/main/resources/META-INF/LICENSE .
 cp -p src/main/resources/META-INF/NOTICE .
@@ -55,20 +47,22 @@ sed -i 's/\r//' LICENSE NOTICE
 %mvn_file : %{name}
 
 %build
-
-%mvn_build -- -Dmaven.test.failure.ignore=true
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
 %doc README.md release-notes/*
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_2jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_3jpp8
 - fc27 update
 
