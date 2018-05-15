@@ -1,8 +1,9 @@
 %define rname kholidays
 
-Name: kde5-%rname
-Version: 17.12.3
+Name: kf5-%rname
+Version: 5.46.0
 Release: alt1%ubt
+Epoch: 1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -12,20 +13,11 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 
-# Automatically added by buildreq on Tue Aug 11 2015 (-bi)
-# optimized out: cmake cmake-modules elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs
-#BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libdb4-devel python-module-google qt5-quick1-devel qt5-tools-devel rpm-build-python3 rpm-build-ruby
+# Automatically added by buildreq on Mon May 21 2018 (-bi)
+# optimized out: cmake cmake-modules elfutils fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libqt5-core libqt5-gui libqt5-network libqt5-qml libqt5-xml libstdc++-devel perl python-base python-modules python3 python3-base qt5-base-devel qt5-tools rpm-build-python3 rpm-build-qml ruby ruby-stdlibs
+#BuildRequires: extra-cmake-modules libssl-devel python3-dev qt5-declarative-devel qt5-tools-devel rpm-build-kf5 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel
-BuildRequires: qt5-quick1-devel qt5-tools-devel
-BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
-BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
-BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel
-BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static
-BuildRequires: kf5-kdesignerplugin-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel
-BuildRequires: kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
-BuildRequires: kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel
-BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: extra-cmake-modules qt5-declarative-devel qt5-tools-devel
 
 %description
 %summary.
@@ -35,12 +27,16 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
+Provides: kde5-kholidays-common = 18
+Obsoletes: kde5-kholidays-common < 18
 %description common
 %name common package
 
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Provides: kde5-kholidays-devel = 18
+Obsoletes: kde5-kholidays-devel < 18
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -61,6 +57,7 @@ KF5 library
 
 %install
 %K5install
+mkdir -p %buildroot/%_K5data/libkholidays/
 %find_lang %name --with-kde --all-name
 %K5find_qtlang %name --all-name
 
@@ -81,6 +78,9 @@ KF5 library
 %_K5qml/org/kde/kholidays/
 
 %changelog
+* Mon May 21 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.46.0-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 

@@ -1,7 +1,7 @@
 %define rname akonadi-mime
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init
 
@@ -61,6 +61,7 @@ KF5 library
 
 %files common -f %name.lang
 %doc COPYING*
+%config(noreplace) %_K5xdgconf/*.*categories
 %_K5xdgmime/x-vnd.kde.contactgroup.xml
 %_K5cfg/*.kcfg
 
@@ -74,8 +75,13 @@ KF5 library
 
 %files -n libkf5akonadimime
 %_K5lib/libKF5AkonadiMime.so.*
+%_K5plug/akonadi_serializer_mail.so
+%_datadir/akonadi5/plugins/serializer/akonadi_serializer_mail.desktop
 
 %changelog
+* Tue May 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 

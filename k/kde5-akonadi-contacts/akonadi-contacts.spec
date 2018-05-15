@@ -1,7 +1,7 @@
 %define rname akonadi-contacts
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init
 
@@ -85,6 +85,9 @@ KF5 library
 %_K5srv/akonadi/contact/
 %_K5srv/*akonadicontact*.desktop
 #
+%_K5plug/akonadi_serializer_addressee.so
+%_datadir/akonadi5/plugins/serializer/akonadi_serializer_addressee.desktop
+#
 %_datadir/akonadi5/contact/
 %_K5srvtyp/*.desktop
 
@@ -93,8 +96,14 @@ KF5 library
 #%_K5plug/*contacteditor*.so
 %_K5plug/akonadi/contacts/plugins/categorieseditwidgetplugin.so
 #%_K5data/contacteditor/
+#
+%_K5plug/akonadi_serializer_contactgroup.so
+%_datadir/akonadi5/plugins/serializer/akonadi_serializer_contactgroup.desktop
 
 %changelog
+* Tue May 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 

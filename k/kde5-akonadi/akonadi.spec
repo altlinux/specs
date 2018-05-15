@@ -3,7 +3,7 @@
 %def_enable tools
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init altplace
 
@@ -156,6 +156,7 @@ KF5 library
     -DBUILD_TESTING=OFF \
     -DBUILD_TOOLS=%{?_enable_tools:ON}%{!?_enable_tools:OFF} \
     #
+#    -DDATABASE_BACKEND=MYSQL \
 
 %install
 %K5install
@@ -171,10 +172,12 @@ mkdir -p %buildroot/%_K5plug/akonadi/contacts/plugins/
 mkdir -p %buildroot/%_datadir/akonadi5/{agents,contact,plugins,accountwizard}
 
 mkdir %buildroot/%_K5data/akonadi/
+mkdir %buildroot/%_K5data/akonadi5/
 for f in %buildroot/%_datadir/akonadi5/*.xs* ; do
     fname=`basename $f`
     dname=`dirname $f`
     ln -s `relative %_datadir/akonadi5/$fname %_K5data/akonadi/$fname` %buildroot/%_K5data/akonadi/$fname
+    ln -s `relative %_datadir/akonadi5/$fname %_K5data/akonadi5/$fname` %buildroot/%_K5data/akonadi5/$fname
 done
 
 %find_lang %name --with-kde --all-name
@@ -218,6 +221,7 @@ done
 %dir %_K5srv/akonadi/
 %dir %_K5srv/akonadi/contact/
 %dir %_K5data/akonadi/
+%dir %_K5data/akonadi5/
 %dir %_datadir/akonadi5/
 %dir %_datadir/akonadi5/accountwizard/
 %dir %_datadir/akonadi5/agents/
@@ -240,6 +244,7 @@ done
 %_K5archdata/mkspecs/modules/qt_Akonadi*.pri
 %_datadir/akonadi5/*.xs*
 %_K5data/akonadi/*.xs*
+%_K5data/akonadi5/*.xs*
 %_K5data/kdevappwizard/templates/*akonadi*
 
 %files -n libkf5akonadiprivate
@@ -262,6 +267,9 @@ done
 %endif
 
 %changelog
+* Tue May 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 

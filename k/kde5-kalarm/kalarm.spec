@@ -1,7 +1,7 @@
 %define rname kalarm
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init
 
@@ -24,7 +24,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-phonon-devel qt5-x11extras-devel
 BuildRequires: boost-devel xsltproc libXres-devel libsasl2-devel
 BuildRequires: kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-kalarmcal-devel kde5-kcalcore-devel kde5-kcalutils-devel
-BuildRequires: kde5-kcontacts-devel kde5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmailtransport-devel kde5-kmime-devel
+BuildRequires: kde5-kcontacts-devel kf5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmailtransport-devel kde5-kmime-devel
 BuildRequires: kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-mailcommon-devel kde5-messagelib-devel kde5-pim-apps-libs-devel kde5-pimcommon-devel
 BuildRequires: kf5-kcmutils-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-kwallet-devel
 
@@ -58,11 +58,6 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch -p3
-# rename against kde4 conflict
-find ./ -type f | \
-while read f ; do
-    sed -i 's|org.kde.kalarmrtcwake|org.kde5.kalarmrtcwake|g' $f
-done
 
 %build
 %K5build
@@ -75,7 +70,7 @@ done
 %files -f %name.lang
 %doc COPYING*
 %config(noreplace) %_K5xdgconf/*kalarm*
-%config(noreplace) %_K5conf_dbus_sysd/org.kde5.kalarmrtcwake.conf
+%config(noreplace) %_K5conf_dbus_sysd/org.kde.kalarm.rtcwake.conf
 %_K5bin/kalarm
 %_K5bin/kalarmautostart
 %_K5libexecdir/kauth/kalarm_helper
@@ -87,11 +82,14 @@ done
 %_K5xmlgui/kalarm/
 %_K5icon/*/*/apps/kalarm.*
 #%doc %_K5doc/en/kalarm/
-%_K5dbus_sys_srv/org.kde5.kalarmrtcwake.service
-%_datadir/polkit-1/actions/org.kde5.kalarmrtcwake.policy
+%_K5dbus_sys_srv/org.kde.kalarm.rtcwake.service
+%_datadir/polkit-1/actions/org.kde.kalarm.rtcwake.policy
 
 
 %changelog
+* Tue May 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 

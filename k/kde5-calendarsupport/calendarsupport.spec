@@ -4,7 +4,7 @@
 %define libkf5calendarsupport libkf5calendarsupport%sover
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init
 
@@ -21,7 +21,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-tools-devel-static
 BuildRequires: libsasl2-devel
-BuildRequires: kde5-akonadi-calendar-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kholidays-devel
+BuildRequires: kde5-akonadi-calendar-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kf5-kholidays-devel
 BuildRequires: kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-pim-apps-libs-devel
 BuildRequires: kde5-pimcommon-devel
 BuildRequires: boost-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
@@ -85,6 +85,9 @@ KF5 library
 %_K5lib/libKF5CalendarSupport.so.*
 
 %changelog
+* Tue May 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 
