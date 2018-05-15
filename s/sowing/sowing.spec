@@ -1,17 +1,21 @@
 %define somver 1
-%define sover %somver.1.18
+%define sover %somver.1.25
 %def_with doc
+%define descr \
+The tools that are part of the program development and maintenance environment.\
+They are really a collection of mostly simple tools that help leverage many of \
+the excellent Unix tools for programmers.
 
 Name: sowing
-Version: 1.1.18
-Release: alt1.2
+Version: %sover
+Release: alt1
 
 Summary: The program development and maintenance environment
 License: Free
 Group: Development/Tools
 
-Url: http://ftp.mcs.anl.gov/pub/sowing/
-Source: http://ftp.mcs.anl.gov/pub/sowing/sowing.tar.gz
+Url: http://wgropp.cs.illinois.edu/projects/software/sowing/
+Source: sowing.tar.gz
 Patch: sowing-1.1.18-fix_brackets_for_perl5.26.patch
 
 Requires: %name-common = %version-%release
@@ -20,9 +24,7 @@ BuildPreReq: gcc-c++
 %{?_with_doc:BuildPreReq: ghostscript-utils}
 
 %description
-The tools that are part of the program development and maintenance environment.
-They are really a collection of mostly simple tools that help leverage many of
-the excellent Unix tools for programmers.
+%descr
 
 %package common
 Summary: Architecture independend files of Sowing
@@ -30,9 +32,7 @@ Group: Development/Tools
 BuildArch: noarch
 
 %description common
-The tools that are part of the program development and maintenance environment.
-They are really a collection of mostly simple tools that help leverage many of
-the excellent Unix tools for programmers.
+%descr
 
 This package contains architecture independend files of Sowing.
 
@@ -41,9 +41,7 @@ Summary: Shared libraries of Sowing
 Group: System/Libraries
 
 %description -n lib%name
-The tools that are part of the program development and maintenance environment.
-They are really a collection of mostly simple tools that help leverage many of
-the excellent Unix tools for programmers.
+%descr
 
 This package contains shared libraries of Sowing.
 
@@ -55,9 +53,7 @@ Conflicts: lib%name-devel < %version-%release
 Obsoletes: lib%name-devel < %version-%release
 
 %description -n lib%name-devel
-The tools that are part of the program development and maintenance environment.
-They are really a collection of mostly simple tools that help leverage many of
-the excellent Unix tools for programmers.
+%descr
 
 This package contains development files of Sowing.
 
@@ -68,9 +64,7 @@ Requires: lib%name-devel = %version-%release
 Conflicts: lib%name-devel < %version-%release
 
 %description -n lib%name-devel-static
-The tools that are part of the program development and maintenance environment.
-They are really a collection of mostly simple tools that help leverage many of
-the excellent Unix tools for programmers.
+%descr
 
 This package contains static libraries of Sowing.
 
@@ -136,6 +130,9 @@ sed -i '1s|/sh|/bash|' %buildroot%_bindir/pstoxbm
 %_libdir/*.a
 
 %changelog
+* Tue May 15 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.25-alt1
+- Build new version.
+
 * Fri Mar 02 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.18-alt1.2
 - Add patch for fix build with perl 5.26
 
