@@ -1,7 +1,7 @@
 %define ver_major 3.28
 
 Name: gnome3
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME 3 Desktop installers
@@ -75,7 +75,7 @@ Requires: xorg-drv-libinput
 Requires: gnome-shell >= %ver_major
 Requires: gnome-shell-extensions >= %ver_major
 # user settings utility
-Requires: gnome-tweak-tool >= %ver_major
+Requires: gnome-tweaks >= %ver_major
 Requires: dconf-editor >= %dconf_editor_ver
 
 # default font
@@ -110,7 +110,7 @@ Requires: gedit >= %gedit_ver
 ## Default themes
 Requires: gnome-icon-theme >= 3.12
 Requires: gnome-icon-theme-symbolic >= 3.12
-Requires: gnome-themes-standard >= %themes_ver
+Requires: gnome-themes-extra >= %themes_ver
 #Requires: libgtk3-engine-adwaita
 Requires: libgtk2-engine-adwaita
 
@@ -406,6 +406,11 @@ Requires: pitivi
 # Other
 Requires: gnome-battery-bench
 Requires: gnome-multi-writer
+# Additional LibreOffice packages
+# (sushi requires LibreOffice-integrated, gnome-documents requires libreofficekit)
+Requires: LibreOffice
+Requires: LibreOffice-gnome
+Requires: LibreOffice-langpack-ru
 
 %description regular
 This virtual package includes default GNOME 3 Desktop components and
@@ -422,6 +427,13 @@ some other useful GNOME and GTK applications.
 %files regular
 
 %changelog
+* Tue May 15 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
+- regular: added LibreOffice-{gnome,langpack-ru} see ALT#34909
+
+* Fri Mar 23 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt2
+- gnome-tweak-tool -> gnome-tweaks
+- gnome-themes-standard -> gnome-themes-extra
+
 * Mon Mar 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 - added gnome-usage to -default
