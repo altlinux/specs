@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.7.0
-Release: alt1.1
+Release: alt1.2
 Summary: Sphinx "images" extension
 License: ASLv2.0
 Group: Development/Python
@@ -124,6 +124,9 @@ export PYTHONPATH=$PWD
 %endif
 
 %changelog
+* Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.7.0-alt1.2
+- (NMU) rebuild with python3.6
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

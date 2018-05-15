@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 0.11
-Release: alt2.git20130117
+Release: alt2.git20130117.1
 Summary: Sphinx integration with different issuetrackers
 License: BSD
 Group: Development/Python
@@ -46,6 +46,9 @@ Currently the following issue trackers are supported:
 %python_sitelibdir/*
 
 %changelog
+* Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.11-alt2.git20130117.1
+- (NMU) rebuild with python3.6
+
 * Thu Oct 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.11-alt2.git20130117
 - Applied fixes for sphinx-1.6.5 support.
 

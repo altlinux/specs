@@ -1,7 +1,9 @@
 %define oname sphinxcontrib-ansi
+%def_without bootstrap
+
 Name: python-module-%oname
 Version: 0.6
-Release: alt1.1
+Release: alt1.2
 Summary: Sphinx extension ansi
 License: BSD
 Group: Development/Python
@@ -14,8 +16,10 @@ BuildArch: noarch
 BuildPreReq: python-module-setuptools python-module-sphinx
 BuildPreReq: python-module-mock
 
+%if_with bootstrap
 %py_provides sphinxcontrib.ansi
 %py_requires sphinxcontrib sphinx
+%endif
 
 %description
 A Sphinx extension, which turns ANSI color sequences in Sphinx documents
@@ -30,15 +34,20 @@ into colored HTML output.
 %install
 %python_install
 
+%if_with bootstrap
 %check
 python setup.py test
 py.test -vv
+%endif
 
 %files
 %doc README *.rst doc/*.rst
 %python_sitelibdir/*
 
 %changelog
+* Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6-alt1.2
+- (NMU) rebuild with python3.6
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

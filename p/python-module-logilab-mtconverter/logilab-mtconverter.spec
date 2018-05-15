@@ -1,10 +1,8 @@
 %define oname logilab-mtconverter
 
-%def_with python3
-
 Name: python-module-%oname
 Version: 0.8.4
-Release: alt2.hg20130321.1.1
+Release: alt3
 Summary: A library to convert from a MIME type to another
 
 Group: Development/Python
@@ -13,20 +11,13 @@ URL: http://www.logilab.org/project/logilab-mtconverter
 # hg clone http://hg.logilab.org/logilab/mtconverter
 Source: %name-%version.tar
 BuildArch: noarch
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-#BuildPreReq: python-devel python-module-logilab-common
-#BuildPreReq: python-module-distribute python-module-epydoc
-#BuildPreReq: graphviz
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: fontconfig fonts-bitmap-misc libwayland-client libwayland-server python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-egenix-mx-base python-module-genshi python-module-jinja2 python-module-kerberos python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-setuptools
-BuildRequires: graphviz python-module-epydoc python-module-html5lib python-module-logilab-common python3-module-logilab-common rpm-build-python3 time
+BuildRequires: graphviz python-module-epydoc python-module-html5lib time
+BuildPreReq: python-module-logilab-common python3-module-logilab-common
 
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python3-module-logilab-common python-tools-2to3
-%endif
 
 %description
 A library to convert from a MIME type to another.
@@ -46,7 +37,6 @@ all Zope's internal removed (e.g. most of the code).
 
 This package contains documentation for logilab mtconverter.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: A library to convert from a MIME type to another (Python 3)
 Group: Development/Python3
@@ -70,7 +60,6 @@ This package originally a backport of Zope's PortalTransforms tool with
 all Zope's internal removed (e.g. most of the code).
 
 This package contains tests for logilab mtconverter.
-%endif
 
 %package tests
 Summary: Tests for logilab mtconverter
@@ -89,16 +78,13 @@ This package contains tests for logilab mtconverter.
 %setup
 touch test/__init__.py
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
 touch ../python3/test/__init__.py
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 for i in $(find ./ -name '*.py'); do
 	if [ "$i" != "./setup.py" ]; then
@@ -107,7 +93,6 @@ for i in $(find ./ -name '*.py'); do
 done
 %python3_build
 popd
-%endif
 
 %make -C doc
 
@@ -115,12 +100,10 @@ popd
 %python_install
 rm -f %buildroot%python_sitelibdir/logilab/__init__.py*
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
 rm -f %buildroot%python3_sitelibdir/logilab/__init__.py*
-%endif
 
 %files
 %doc announce.txt ChangeLog README
@@ -134,7 +117,6 @@ rm -f %buildroot%python3_sitelibdir/logilab/__init__.py*
 %files docs
 %doc doc/apidoc/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc announce.txt ChangeLog README
 %python3_sitelibdir/*
@@ -143,9 +125,12 @@ rm -f %buildroot%python3_sitelibdir/logilab/__init__.py*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/test
-%endif
+
 
 %changelog
+* Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.8.4-alt3
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.4-alt2.hg20130321.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

@@ -1,7 +1,7 @@
 %define oname sphinxcontrib-embedly
 Name: python-module-%oname
 Version: 0.2
-Release: alt1.git20140223.1
+Release: alt1.git20140223.2
 Summary: This is a sphinx extension for using Embedly
 License: BSD
 Group: Development/Python
@@ -40,6 +40,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.2-alt1.git20140223.2
+- (NMU) rebuild with python3.6
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2-alt1.git20140223.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

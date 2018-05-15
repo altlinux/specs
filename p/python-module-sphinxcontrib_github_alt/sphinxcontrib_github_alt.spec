@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        1.0
-Release:        alt1%ubt
+Release:        alt2
 Summary:        Github roles for Sphinx docs
 Group:          Development/Python
 License:        BSD
@@ -62,5 +62,8 @@ popd
 %endif
 
 %changelog
+* Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt2
+- (NMU) rebuild with python3.6
+
 * Fri Nov 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt1%ubt
 - Initial build for ALT.
