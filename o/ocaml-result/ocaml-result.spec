@@ -1,6 +1,6 @@
 %define module result
 Name: ocaml-%module
-Version: 1.2
+Version: 1.3
 Release: alt1%ubt
 Summary: Compat result type
 
@@ -9,8 +9,8 @@ Url: https://github.com/janestreet/result/
 Source0: %name-%version.tar
 Group: Development/ML
 
-BuildRequires: ocaml
-BuildRequires: ocaml-findlib
+BuildRequires: ocaml 
+BuildRequires: ocaml-findlib jbuilder opam
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -31,15 +31,11 @@ files for developing applications that use %name.
 %setup
 
 %build
-%make_build byte
-%make_build native
+jbuilder build
 
 %install
-# Currently result installs itself with ocamlfind.
-export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot/%_libdir/ocaml
-mkdir -p $OCAMLFIND_DESTDIR
-make install
+mkdir -p %buildroot%_libdir/ocaml
+jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 %files
 %doc README.md
@@ -56,6 +52,9 @@ make install
 %_libdir/ocaml/%module/*.ml
 
 %changelog
+* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.3-alt1%ubt
+- 1.3
+
 * Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.2-alt1%ubt
 - first build for ALT, based on RH spec
 

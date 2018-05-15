@@ -1,6 +1,8 @@
+%set_verify_elf_method textrel=relaxed
+
 Name: ocaml-mysql
-Version: 1.2.1
-Release: alt3%ubt
+Version: 1.2.2
+Release: alt1%ubt
 
 Summary: MySQL bindings for OCaml
 License: LGPL
@@ -59,6 +61,9 @@ mv %buildroot%_libdir/ocaml/site-lib/mysql/dllmysql_stubs.so %buildroot%_libdir/
 %_libdir/ocaml/stublibs/dll*.so
 
 %changelog
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.2.2-alt1%ubt
+- 1.2.2
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.2.1-alt3%ubt
 - rebuild with ocaml 4.04.2
 

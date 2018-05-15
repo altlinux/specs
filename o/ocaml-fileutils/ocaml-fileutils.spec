@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-fileutils
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1%ubt
 Summary: OCaml library for common file and filename operations
 Group: Development/ML
@@ -74,6 +74,9 @@ make test
 %_libdir/ocaml/fileutils/*.mli
 
 %changelog
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 0.5.3-alt1%ubt
+- rebuilt for ocaml-4.06.1
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 0.5.2-alt1%ubt
 - new version
 

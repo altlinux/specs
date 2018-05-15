@@ -1,5 +1,5 @@
 Name: ocaml-menhir
-Version: 20170607
+Version: 20171222
 Release: alt1%ubt
 Summary: LR(1) parser generator for the OCaml programming language.
 
@@ -34,7 +34,7 @@ replacing all calls to module Parsing with new Menhir-specific keywords.
 %setup -q -n menhir-%version
 
 %build
-make PREFIX=%buildroot/usr all
+make PREFIX=/usr all
 
 %install
 %define ocamlsitelib %_libdir/ocaml/site-lib
@@ -75,6 +75,12 @@ bzip2 -z9 %buildroot%_man1dir/menhir.1
 %_libdir/ocaml/menhirSdk/*
 
 %changelog
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 20171222-alt1%ubt
+- 20171222
+
+* Tue Dec 19 2017 Anton Farygin <rider@altlinux.ru> 20170607-alt2%ubt
+- rebuilt for ocaml 4.06
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 20170607-alt1%ubt
 - updated to 20170607
 

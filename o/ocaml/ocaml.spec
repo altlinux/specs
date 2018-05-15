@@ -9,7 +9,7 @@
 %remove_optflags -fomit-frame-pointer
 
 Name: ocaml
-Version: 4.04.2
+Version: 4.06.1
 Release: alt1%ubt
 
 Summary: The Objective Caml compiler and programming environment
@@ -24,7 +24,7 @@ Source1: %name.desktop
 Source2: ocaml-reqprov.ml
 
 Patch1: ocaml-3.12.1-alt-stdlib-pdf.patch
-Patch2: ocaml-4.01-alt-mk-reqprov.patch
+Patch2: ocaml-4.06-alt-mk-reqprov.patch
 
 Requires: rpm-build-ocaml >= 1.1
 BuildRequires(pre): rpm-build-ocaml >= 1.1.1
@@ -193,7 +193,6 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %config %_libdir/ocaml/ld.conf
 %dir %_libdir/ocaml/stublibs
 %_libdir/ocaml/stublibs/dllbigarray.so
-%_libdir/ocaml/stublibs/dllnums.so
 %_libdir/ocaml/stublibs/dllcamlstr.so
 %_libdir/ocaml/stublibs/dllthreads.so
 %_libdir/ocaml/stublibs/dllunix.so
@@ -213,6 +212,12 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 4.06.1-alt1%ubt
+- 4.06.1
+
+* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 4.06.0-alt1%ubt
+- new version
+
 * Tue Jul 04 2017 Anton Farygin <rider@altlinux.ru> 4.04.2-alt1%ubt
 - new version with security fixes:
    + CVE-2017-9772 Local privilege escalation issue with ocaml binaries

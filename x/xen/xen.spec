@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.10.0
-Release: alt5%ubt
+Release: alt6%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -793,6 +793,9 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Tue May 22 2018 Anton Farygin <rider@altlinux.ru> 4.10.0-alt6%ubt
+- rebuild for 4.06.1
+
 * Fri Mar 09 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt5%ubt
 - upstream updates:
   + xen/arm: Flush TLBs before turning on the MMU to avoid stale

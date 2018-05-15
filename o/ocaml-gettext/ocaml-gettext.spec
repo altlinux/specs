@@ -1,13 +1,12 @@
+%set_verify_elf_method textrel=relaxed
 Name: ocaml-gettext
-Version: 0.3.7
-Release: alt4%ubt
+Version: 0.3.8
+Release: alt1%ubt
 Summary: OCaml library for i18n
 Group: Development/ML
 
 License: LGPLv2+ with exceptions
 Url: http://forge.ocamlcore.org/projects/ocaml-gettext
-
-Packager: Lenar Shakirov <snejok@altlinux.ru>
 
 Source: %name-%version.tar
 
@@ -117,6 +116,9 @@ chrpath --delete $OCAMLFIND_DESTDIR/stublibs/dll*.so
 %_bindir/ocaml-xgettext
 
 %changelog
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 0.3.8-alt1%ubt
+- 0.3.8
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt4%ubt
 - rebuild with ocaml 4.04.2
 

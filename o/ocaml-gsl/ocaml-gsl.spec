@@ -2,7 +2,7 @@
 
 Name:           ocaml-gsl
 Version:        1.19.3
-Release:        alt3%ubt
+Release:        alt4%ubt
 Summary:        Interface to GSL (GNU scientific library) for OCaml
 Summary(ru_RU.UTF-8): Интерфейс библиотеки GSL для OCaml
 License:        GPLv2
@@ -86,6 +86,9 @@ mkdir -p %buildroot/%docdir
 %ocamlsitelib/gsl/META
 
 %changelog
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.19.3-alt4%ubt
+- rebuilt for ocaml-4.06.1
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.19.3-alt3%ubt
 - rebuild with ocaml 4.04.2
 

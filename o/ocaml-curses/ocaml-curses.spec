@@ -1,18 +1,18 @@
+%set_verify_elf_method textrel=relaxed
 Name: ocaml-curses
 Version: 1.0.3
-Release: alt4%ubt
+Release: alt5%ubt
 Summary: OCaml bindings for ncurses
 
 Group: System/Libraries
 License: LGPLv2+
 Url: http://savannah.nongnu.org/projects/ocaml-tmk/
-Packager: Lenar Shakirov <snejok@altlinux.ru>
-
 Source: http://download.savannah.gnu.org/releases/ocaml-tmk/%name-%version.tar
+Patch0:ocaml-curses-1.0.3-fix-term-h-detection.patch
 
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
-BuildRequires: libncurses-devel
+BuildRequires: libncurses-devel libtinfo-devel
 BuildRequires: gawk
 BuildRequires(pre): rpm-build-ubt
 
@@ -33,6 +33,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 autoreconf
 
@@ -64,6 +65,9 @@ ocamlfind install curses META *.cmi *.cmx *.cma *.cmxa *.a *.so *.mli
 %_libdir/ocaml/curses/*.mli
 
 %changelog
+* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.0.3-alt5%ubt
+- rebuilt for ocaml 4.06.1
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.0.3-alt4%ubt
 - rebuild with ocaml 4.04.2
 

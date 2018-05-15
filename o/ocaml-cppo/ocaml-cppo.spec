@@ -1,15 +1,15 @@
+%set_verify_elf_method textrel=relaxed
 Name: ocaml-cppo
-Version: 1.5.0
-Release: alt2%ubt
+Version: 1.6.4
+Release: alt1%ubt
 Summary: Equivalent of the C preprocessor for OCaml programs
 License: BSD
 Group: Development/ML
 Url: http://mjambon.com/cppo.html
 # https://github.com/mjambon/cppo
 Source0: %name-%version.tar
-BuildRequires: ocaml ocaml-findlib
+BuildRequires: ocaml ocaml-findlib jbuilder opam ocaml-ocamlbuild
 BuildRequires(pre): rpm-build-ubt
-BuildArch: noarch
 
 %description
 Cppo is an equivalent of the C preprocessor targeted at the OCaml
@@ -31,14 +31,17 @@ to the robustness of cppo across OCaml versions.
 make all
 
 %install
-install -d %buildroot%_bindir
-install -p cppo %buildroot%_bindir/cppo
+mkdir -p %buildroot%prefix %buildroot%_libdir/ocaml
+jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 %files
-%doc LICENSE README.md Changes
+%doc LICENSE.md README.md Changes
 %_bindir/cppo
 
 %changelog
+* Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 1.6.4-alt1%ubt
+- 1.6.4
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.5.0-alt2%ubt
 - rebuild with ocaml 4.04.2
 

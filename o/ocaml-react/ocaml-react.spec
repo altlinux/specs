@@ -3,7 +3,7 @@
 
 Name: ocaml-react
 Version: 1.2.0
-Release: alt3%ubt
+Release: alt4%ubt
 Summary: Development files for %name
 License: BSD
 Group: Development/ML
@@ -73,6 +73,9 @@ done
 %_libdir/ocaml/react/*.mli
 
 %changelog
+* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.2.0-alt4%ubt
+- rebuilt for ocaml 4.06.1
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt3%ubt
 - rebuild with ocaml 4.04.2
 

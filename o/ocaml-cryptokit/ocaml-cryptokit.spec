@@ -7,8 +7,8 @@
 %define ocamlstublib %_libdir/ocaml/stublibs/
 
 Name: ocaml-%pkgname
-Version: 1.11
-Release: alt3%ubt
+Version: 1.13
+Release: alt1%ubt
 Group: Development/ML
 Summary: OCaml library of cryptographic and hash functions
 License: LGPLv2 with exceptions
@@ -78,6 +78,9 @@ make install
 %pkgsitelib/*.mli
 
 %changelog
+* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.13-alt1%ubt
+- 1.13
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.11-alt3%ubt
 - rebuild with ocaml 4.04.2
 

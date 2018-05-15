@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-lablgtk
-Version: 2.18.5
-Release: alt4%ubt
+Version: 2.18.6
+Release: alt1%ubt
 
 Summary: Objective Caml interface to gtk+
 
@@ -135,6 +135,10 @@ find examples -name .cvsignore -exec rm {} \;
 %doc examples doc/html
 
 %changelog
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 2.18.6-alt1%ubt
+- 2.18.6
+- rebuilt for ocaml 4.06.1
+
 * Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 2.18.5-alt4%ubt
 - rebuild with ocaml 4.04.2
 

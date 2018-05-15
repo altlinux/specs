@@ -1,11 +1,12 @@
+%set_verify_elf_method textrel=relaxed
 %global pkgname curl
 %define ocamlsitelib %_libdir/ocaml
 %define pkgsitelib %ocamlsitelib/%pkgname
 %define ocamlstublib %_libdir/ocaml/stublibs/
 
 Name: ocaml-%pkgname
-Version: 0.7.9
-Release: alt3%ubt
+Version: 0.8.1
+Release: alt1%ubt
 Summary: OCaml Curl library (ocurl)
 License: MIT
 Group: Development/ML
@@ -65,6 +66,9 @@ make -C examples clean
 %pkgsitelib/*.mli
 
 %changelog
+* Thu May 17 2018 Anton Farygin <rider@altlinux.ru> 0.8.1-alt1%ubt
+- 0.8.1
+
 * Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 0.7.9-alt3%ubt
 - rebuild with ocaml 4.04.2
 

@@ -1,5 +1,5 @@
 Name: ocaml-camlp4
-Version: 4.04.2
+Version: 4.06.1
 Release: alt1%ubt
 
 Summary: Preprocessor for OCaml
@@ -9,7 +9,7 @@ Url: https://github.com/ocaml/camlp4
 Source0: %name-%version.tar
 BuildRequires: rpm-build-ocaml >= 1.2
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: ocaml >= 4.04 ocaml-ocamlbuild
+BuildRequires: ocaml >= 4.06 ocaml-ocamlbuild
 Provides: ocaml4-campl4
 Obsoletes: ocaml4-campl4
 Conflicts: camlp4
@@ -81,6 +81,9 @@ make install BINDIR=%buildroot%_bindir LIBDIR=%buildroot%_libdir/ocaml MANDIR=%b
 %_libdir/ocaml/camlp4/Camlp4Top/*.o
 
 %changelog
+* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 4.06.1-alt1%ubt
+- up to 4.06+1
+
 * Thu Jul 06 2017 Anton Farygin <rider@altlinux.ru> 4.04.2-alt1%ubt
 - up to 30fc8cd  from 4.04 branch
 - rebuild with ocaml-4.04.2
