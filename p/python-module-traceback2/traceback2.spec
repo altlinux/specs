@@ -1,11 +1,11 @@
 %define oname traceback2
 
 %def_disable check
-%def_without bootstrap
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 1.4.0
-Release: alt2
+Release: alt2.1
 
 Summary: Backports of the traceback module
 License: Python
@@ -129,6 +129,9 @@ popd
 
 
 %changelog
+* Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.4.0-alt2.1
+- rebuild with all requires
+
 * Mon May 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.4.0-alt2
 - rebuild with python3.6
 
