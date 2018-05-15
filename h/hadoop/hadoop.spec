@@ -1,4 +1,3 @@
-BuildRequires: mvn(com.centerkey.utils:BareBonesBrowserLaunch)
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
@@ -27,7 +26,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:   hadoop
 Version: 2.7.3
-Release: alt2_6jpp8
+Release: alt2_7jpp8
 Summary: A software platform for processing vast amounts of data
 # The BSD license file is missing
 # https://issues.apache.org/jira/browse/HADOOP-9849
@@ -133,7 +132,7 @@ BuildRequires: httpcomponents-client
 BuildRequires: httpcomponents-core
 BuildRequires: istack-commons
 BuildRequires: jackson
-BuildRequires: jakarta-commons-httpclient
+BuildRequires: apache-commons-httpclient
 BuildRequires: java-base64
 BuildRequires: java-devel
 BuildRequires: java-xmlbuilder
@@ -188,10 +187,10 @@ BuildRequires: servlet3
 BuildRequires: slf4j
 BuildRequires: libsnappy-devel
 BuildRequires: snappy-java
-BuildRequires: journalctl libsystemd-devel libudev-devel systemd systemd-utils
+BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-stateless systemd-sysvinit systemd-utils
 BuildRequires: tomcat
 BuildRequires: tomcat-el-3.0-api
-BuildRequires: tomcat
+BuildRequires: tomcat-log4j
 BuildRequires: tomcat-servlet-3.1-api
 BuildRequires: txw2
 BuildRequires: xmlenc
@@ -242,7 +241,7 @@ Requires: glassfish-jaxb
 Requires: glassfish-jsp
 Requires: glassfish-jsp-api
 Requires: istack-commons
-Requires: jakarta-commons-httpclient
+Requires: apache-commons-httpclient
 Requires: java-base64
 Requires: java-xmlbuilder
 Requires: javamail
@@ -332,7 +331,7 @@ Requires: apache-commons-dbcp
 Requires: ecj >= 1:4.2.1
 Requires: json_simple
 Requires: tomcat
-Requires: tomcat-lib
+Requires: tomcat-el-3.0-api tomcat-jsp-2.3-api tomcat-lib tomcat-servlet-3.1-api
 Requires: tomcat-native
 
 %description httpfs
@@ -1137,6 +1136,9 @@ fi
 %attr(6010,root,yarn) %{_bindir}/container-executor
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt2_7jpp8
+- java update
+
 * Tue Apr 24 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt2_6jpp8
 - fixes for e2k
 
