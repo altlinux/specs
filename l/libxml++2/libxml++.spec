@@ -7,7 +7,7 @@
 
 Name: %{_name}2
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: C++ wrapper for the libxml2 XML parser library
 Group: System/Libraries
@@ -19,6 +19,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %else
 Source: %_name-%version.tar
 %endif
+Patch: libxml++-0f5aa54.patch
 
 BuildPreReq: mm-common gcc-c++
 BuildRequires: libxml2-devel >= 2.6.1 libglibmm-devel >= 2.46.0
@@ -48,6 +49,7 @@ This package contains the development documentation for libxml++ library.
 
 %prep
 %setup -n %_name-%version
+%patch -p1 -R -b .0f5aa54
 
 #sed -i 's|\(doctooldir\)\ glibmm\-2\.4|\1 mm-common-util|' configure
 
@@ -78,6 +80,11 @@ mm-common-prepare --force --copy
 %_docdir/%_name-%xml_ver/*
 
 %changelog
+* Tue May 15 2018 Yuri N. Sedunov <aris@altlinux.org> 2.40.1-alt3
+- reverted broken
+  "Replace (deprecated) Glib::Threads::Mutex with std::mutex."
+  (ALT #34908)
+
 * Thu Apr 05 2018 Yuri N. Sedunov <aris@altlinux.org> 2.40.1-alt2
 - updated to 2.40.1-8-g174481a
 
