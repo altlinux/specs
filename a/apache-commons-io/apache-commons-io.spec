@@ -7,14 +7,15 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-commons-io
-Version:        2.6
-Release:        alt1_1jpp8
 Epoch:          1
+Version:        2.6
+Release:        alt1_3jpp8
 Summary:        Utilities to assist with developing IO functionality
 License:        ASL 2.0
 URL:            http://commons.apache.org/io
-Source0:        http://archive.apache.org/dist/commons/io/source/commons-io-%{version}-src.tar.gz
 BuildArch:      noarch
+
+Source0:        http://archive.apache.org/dist/commons/io/source/commons-io-%{version}-src.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
@@ -27,13 +28,7 @@ Commons-IO contains utility classes, stream implementations,
 file filters, and endian classes. It is a library of utilities
 to assist with developing IO functionality.
 
-%package javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package provides %{summary}.
+%{?javadoc_package}
 
 %prep
 %setup -q -n commons-io-%{version}-src
@@ -43,20 +38,21 @@ sed -i 's/\r//' *.txt
 %mvn_file  : commons-io %{name}
 %mvn_alias : org.apache.commons:
 
-# FIXME: tests skipped because commons-io is on surefire's classpath and causes
+# NOTE: tests *may* fail because commons-io is on surefire's classpath and causes
 # tests to be run against the system version and not the one we just built
-%mvn_build -f -- -Dmaven.test.skip.exec=true
+%mvn_build -- -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc RELEASE-NOTES.txt
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.6-alt1_3jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.6-alt1_1jpp8
 - new version
 
