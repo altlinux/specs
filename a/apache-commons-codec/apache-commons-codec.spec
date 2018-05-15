@@ -9,29 +9,22 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# READ BEFORE UPDATING: After updating this package to new upstream
-# version eclipse-ecf should be rebuilt.  For more info, see:
-# https://fedoraproject.org/wiki/SIGs/Java#Package_Update.2FRebuild_Notes
+Name:           apache-commons-codec
+Version:        1.11
+Release:        alt1_3jpp8
+Summary:        Implementations of common encoders and decoders
+License:        ASL 2.0
+URL:            http://commons.apache.org/codec/
+BuildArch:      noarch
 
-%global base_name codec
-%global short_name commons-%{base_name}
-
-Name:          apache-%{short_name}
-Version:       1.10
-Release:       alt1_5jpp8
-Summary:       Implementations of common encoders and decoders
-License:       ASL 2.0
-URL:           http://commons.apache.org/%{base_name}/
-BuildArch:     noarch
-
-Source0:       http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+Source0:        http://archive.apache.org/dist/commons/codec/source/commons-codec-%{version}-src.tar.gz
 # Data in DoubleMetaphoneTest.java originally has an inadmissible license.
 # The author gives MIT in e-mail communication.
-Source1:       aspell-mail.txt
+Source1:        aspell-mail.txt
 
-BuildRequires: maven-local
-BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires: mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 Source44: import.info
 
 %description
@@ -39,21 +32,16 @@ Commons Codec is an attempt to provide definitive implementations of
 commonly used encoders and decoders. Examples include Base64, Hex,
 Phonetic and URLs.
 
-%package javadoc
-Group: Development/Java
-Summary:       API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-%{summary}.
+%{?javadoc_package}
 
 %prep
-%setup -q -n %{short_name}-%{version}-src
+%setup -q -n commons-codec-%{version}-src
+
 cp %{SOURCE1} aspell-mail.txt
 sed -i 's/\r//' RELEASE-NOTES*.txt LICENSE.txt NOTICE.txt
 
-%mvn_file : %{short_name} %{name}
-%mvn_alias : %{short_name}:%{short_name}
+%mvn_file : commons-codec %{name}
+%mvn_alias : commons-codec:commons-codec
 
 %build
 %mvn_build
@@ -62,12 +50,13 @@ sed -i 's/\r//' RELEASE-NOTES*.txt LICENSE.txt NOTICE.txt
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt RELEASE-NOTES* aspell-mail.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt aspell-mail.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt aspell-mail.txt
+%doc RELEASE-NOTES*
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.11-alt1_3jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_5jpp8
 - fc27 update
 
