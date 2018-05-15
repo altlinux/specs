@@ -1,19 +1,20 @@
 Name: starfighter
-Version: 1.2
+Version: 1.7
 Release: alt1
 
-Summary: Project: Starfighter - old school 2D shoot'em up
+Summary: Starfighter is an old school 2D shoot'em up
 Group: Games/Arcade
-License: GPL
-Url: http://sourceforge.net/projects/pr-starfighter/
+License: GPLv2, GPLv3, CC0, CC BY 3.0, CC BY-SA 3.0, Public Domain
 
-Source: %name-%version.tar.gz
+Url: http://sourceforge.net/projects/pr-starfighter/
+# http://download.savannah.gnu.org/releases/starfighter/1.7/starfighter-1.7-src.tar.gz
+Source: %name-%version.tar
 Source1: %name.desktop
 
-Patch0: %name-1.1-alt-makefile.patch
+Patch0: starfighter-1.7-fix_misleading_indentation-alt.patch
 
 # Automatically added by buildreq on Wed Mar 22 2006
-BuildRequires: gcc-c++ libSDL-devel libSDL_image-devel libSDL_mixer-devel
+BuildRequires: gcc-c++ libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel
 
 %description
 Project: Starfighter is an old school 2D shoot 'em up. In the game you
@@ -28,37 +29,30 @@ intercepted him.
 
 %prep
 %setup
-#patch0 -p1
+%patch0 -p2
 
 %build
-%make_build \
-	BINDIR="%_gamesbindir/" \
-	DATADIR="%_gamesdatadir/%name/" \
-	DOCDIR="%_defaultdocdir/%name" \
-	OPT_CFLAGS="$RPM_OPT_FLAGS"
+%configure
+%make_build
 
 %install
-mkdir -p %buildroot%_gamesbindir/
-mkdir -p %buildroot%_gamesdatadir/%name/
-mkdir -p %buildroot%_defaultdocdir/%name/
 
-%makeinstall \
-	BINDIR="%_gamesbindir/" \
-	DATADIR="%_gamesdatadir/%name/" \
-	DOCDIR="%_defaultdocdir/%name" \
-	DESTDIR="%buildroot"
-
+%makeinstall_std
 install -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 install -D gfx/rocketAmmo.png %buildroot%_niconsdir/%name.png
 
 %files
-%doc %_defaultdocdir/%name/*
-%_gamesbindir/*
-%_gamesdatadir/%name/
+%doc %_defaultdocdir/%name
+%_bindir/*
+%_datadir/%name
 %_desktopdir/%name.desktop
 %_niconsdir/%name.png
+%_pixmapsdir/%name.png
 
 %changelog
+* Tue May 15 2018 Grigory Ustinov <grenka@altlinux.org> 1.7-alt1
+- Build new version.
+
 * Mon Jun 18 2012 Fr. Br. George <george@altlinux.ru> 1.2-alt1
 - Autobuild version bump to 1.2
 - Fix build
