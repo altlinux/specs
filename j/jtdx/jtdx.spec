@@ -1,6 +1,6 @@
 Name: jtdx
 Version: 18.0
-Release: alt1
+Release: alt2
 Summary: JTDX means "JT modes for DXing"
 License: GPLv3
 Group: Engineering
@@ -8,6 +8,8 @@ Url: http://www.qrz.lt/ly3bg/JTDX/jtdx.html
 Source: %name-%version.tar
 # Source-url: http://www.qrz.lt/ly3bg/JTDX/%version/src_JTDX_v%version.zip
 ExclusiveArch: x86_64
+
+Patch1: %name-18.0-alt-cmake.patch
 
 Buildrequires(pre): cmake rpm-macros-cmake
 BuildRequires: gcc-c++ ctags hamlib-devel openmpi-devel python-devel pkgconfig(libusb-1.0) pkgconfig(libxslt) libfftw3-devel libgomp-devel qt5-base-devel pkgconfig(Qt5Concurrent) pkgconfig(Qt5Multimedia) pkgconfig(Qt5OpenGL) pkgconfig(Qt5SerialPort) ImageMagick-tools makeinfo asciidoc-a2x libudev-devel
@@ -46,6 +48,7 @@ Data files for %name
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 pushd wsjtx
@@ -84,6 +87,9 @@ mv %buildroot%_desktopdir/wsjtx.desktop %buildroot%_desktopdir/%name.desktop
 %_docdir/jtdx
 
 %changelog
+* Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 18.0-alt2
+- NMU: fixed build.
+
 * Sat Oct 07 2017 Anton Midyukov <antohami@altlinux.org> 18.0-alt1
 - Version 18.0 Step 89.
 
