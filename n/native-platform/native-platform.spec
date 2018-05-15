@@ -8,15 +8,15 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 0.10
+%define version 0.14
 %global debug_package %{nil}
 
 %global namedreltag %{nil}
 %global namedversion %{version}%{?namedreltag}
 
 Name:          native-platform
-Version:       0.10
-Release:       alt1_11jpp8
+Version:       0.14
+Release:       alt1_12jpp8
 Summary:       Java bindings for various native APIs
 License:       ASL 2.0
 URL:           https://github.com/adammurdoch/native-platform
@@ -25,10 +25,10 @@ Source0:       https://github.com/adammurdoch/native-platform/archive/%{namedver
 Source4:       %{name}-0.7-Makefile
 # Try to load native library from /usr/lib*/native-platform
 # instead of extractDir or classpath.
-Patch0:        %{name}-0.10-NativeLibraryLocator.patch
+Patch0:        0001-Load-lib-from-system.patch
 # Use generate libraries without arch references
 # Add support for arm and other x64 arches
-Patch1:        %{name}-0.10-native-libraries-name.patch
+Patch1:        0002-Use-library-name-without-arch.patch
 
 # build tools and deps
 BuildRequires: java-devel
@@ -59,8 +59,8 @@ This package contains javadoc for %{name}.
 find .  -name "*.jar" -delete
 find .  -name "*.class" -delete
 
-%patch0 -p0
-%patch1 -p0
+%patch0 -p1
+%patch1 -p1
 
 cp -p %{SOURCE4} Makefile
 
@@ -90,12 +90,15 @@ install -pm 0755 build/binaries/libnative-platform.so %{buildroot}%{_libdir}/%{n
 %files -f .mfiles
 %{_libdir}/%{name}
 %doc readme.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_12jpp8
+- java update
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_11jpp8
 - fc27 update
 
