@@ -1,8 +1,8 @@
 %define _name tap-plugins
 
 Name: ladspa-%_name
-Version: 0.7.0
-Release: alt1.qa1
+Version: 1.0.0
+Release: alt1
 
 Summary: Tom's Audio Processing plugins for LADSPA
 License: GPL
@@ -64,6 +64,9 @@ find . -type f -print0|xargs -r0 %__subst 's,"ladspa\.h",<ladspa.h>,' --
 %doc README CREDITS
 
 %changelog
+* Tue May 08 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
+- Build new version (Closes: #21359).
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
