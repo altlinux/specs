@@ -1,34 +1,24 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname shapelib
 Name: libshape
-Version: 1.3.0b2
-Release: alt1.qa1
-
+Version: 1.4.1
+Release: alt1%ubt
 Summary: API in "C" for Shapefile handling
-
+Group: Development/C
 # No version of the LGPL is given.
 License: LGPLv2+ or MIT
-
 Url: http://shapelib.maptools.org/
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://download.osgeo.org/shapelib/%oname-%version.tar
 
-Patch: shapelib-1.3.0b1-Makefile.patch
-Patch1: shapelib-1.3.0b2-Makefile2.patch
-Patch2: shapelib-1.2.10-endian.patch
-Patch3: shapelib-1.3.0b1-buildid.patch
-
-Group: Development/C
-
-# Automatically added by buildreq on Sat Nov 13 2010
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libproj-devel
-
-BuildRequires: libproj-devel >= 4.4.1
 
 %package devel
 Summary: Development files for shapelib
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description
 The Shapefile C Library provides the ability to write
@@ -41,41 +31,30 @@ This package contains libshp and the appropriate header files.
 
 %prep
 %setup -n %oname-%version
-%patch0 -p1 -b .makefile
-%patch1 -p1 -b .makefile2
-%patch2 -p1 -b .endian
-%patch3 -p1 -b .buildid
-%__subst "s/\r//g" README
-chmod -x README
 
 %build
-%make_build libdir=%_libdir CFLAGS="$RPM_OPT_FLAGS" lib
-%make_build libdir=%_libdir CFLAGS="$RPM_OPT_FLAGS" all
-
-cd contrib
-%make_build libdir=%_libdir EXTRACFLAGS="$RPM_OPT_FLAGS"
+%autoreconf
+%configure --disable-static
+%make_build
 
 %install
-%makeinstall
-rm -f %buildroot/%_libdir/libshp.a
-
-cd contrib
-%makeinstall
+%makeinstall_std
 
 %files
+%doc COPYING README README.tree ChangeLog web/*.html
+%doc contrib/doc/
 %_bindir/*
 %_libdir/*.so.*
 
-%doc LICENSE.LGPL README README.tree web/*.html
-%doc contrib/doc/shpproj.txt stream1.sh stream1.out stream2.sh
-%doc stream2.out makeshape.sh stream3.out ChangeLog
-
 %files devel
-%doc LICENSE.LGPL README
-%_includedir/libshp/
+%_includedir/*
 %_libdir/*.so
+%_pkgconfigdir/*
 
 %changelog
+* Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.1-alt1%ubt
+- Updated to upstream version 1.4.1.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.0b2-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
