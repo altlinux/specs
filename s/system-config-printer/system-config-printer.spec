@@ -1,6 +1,6 @@
 Name:    system-config-printer
 Version: 1.5.11
-Release: alt1
+Release: alt2
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -94,6 +94,9 @@ exit 0
 %python3_sitelibdir_noarch/cupshelpers-*
 
 %changelog
+* Tue May 15 2018 Andrey Cherepanov <cas@altlinux.org> 1.5.11-alt2
+- Complete localization into Russian (thanks Olesya Gerasimenko).
+
 * Sat Apr 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.5.11-alt1
 - New version (ALT #34774).
 
