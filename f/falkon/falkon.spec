@@ -11,8 +11,8 @@
 %define libfalkonprivate libfalkonprivate%sover
 
 Name: falkon
-Version: 3.0.0
-Release: alt3%ubt
+Version: 3.0.1
+Release: alt1%ubt
 %K5init no_altplace
 
 Summary: A very fast open source browser based on WebKit core
@@ -20,16 +20,13 @@ License: GPLv3+
 Group: Networking/WWW
 Url: https://www.falkon.org/
 
-PreReq(post,preun): alternatives >= 0.2
-Provides: webclient
-
 Source: %name-%version.tar
 # Automatically added by buildreq on Thu Apr 07 2016
 # optimized out: fontconfig gcc-c++ libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel pkg-config python-base python-modules qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules
-BuildRequires: libssl-devel libxcbutil-devel qt5-multimedia-devel qt5-script-devel qt5-tools-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
-BuildRequires: kf5-kwallet-devel libgnome-keyring-devel
+BuildRequires: libssl-devel libxcbutil-devel qt5-multimedia-devel qt5-script-devel qt5-tools-devel qt5-webengine-devel qt5-websockets-devel qt5-x11extras-devel
+BuildRequires: kf5-kwallet-devel kf5-ki18n-devel libgnome-keyring-devel
 
 %description
 Falkon is a new and very fast World Wide Web Browser
@@ -38,24 +35,40 @@ It is a lightweight browser with some advanced functions
 like integrated AdBlock, Search Engines Manager, Theming
 support, Speed Dial and SSL Certificate manager.
 
+%package core
+Group: Graphical desktop/KDE
+Summary: Falkon KDE integration
+PreReq(post,preun): alternatives >= 0.2
+Provides: webclient
+Provides: %name = %version-%release
+Obsoletes: %name < %EVR
+%description core
+Falkon KDE integration.
+
 %package kde5
 Group: Graphical desktop/KDE
 Summary: Falkon KDE integration
-Requires: %name
+Requires: %{name}-core
+Provides: webclient
+Provides: %name = %version-%release
+Provides: %name-kde = %version-%release
 %description kde5
 Falkon KDE integration.
 
 %package gnome3
 Group: Graphical desktop/GNOME
 Summary: Falkon GNOME integration
-Requires: %name
+Requires: %{name}-core
+Provides: webclient
+Provides: %name = %version-%release
+Provides: %name-gnome = %version-%release
 %description gnome3
 Falkon GNOME integration.
 
 %package -n %libfalkonprivate
 Group: System/Libraries
 Summary: %name library
-#Requires: %name-common = %EVR
+#Requires: %name-common
 %description -n %libfalkonprivate
 %name library
 
@@ -77,7 +90,7 @@ __EOF__
 
 %find_lang --all-name --with-qt %name
 
-%files -f %name.lang
+%files core -f %name.lang
 %config /%_sysconfdir/alternatives/packages.d/%name
 %_K5bin/%name
 %dir %_K5plug/%name/
@@ -109,6 +122,9 @@ __EOF__
 %_K5lib/libFalkonPrivate.so.%sover.*
 
 %changelog
+* Tue May 15 2018 Sergey V Turchin <zerg@altlinux.org> 3.0.1-alt1%ubt
+- new version
+
 * Mon Apr 09 2018 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt3%ubt
 - fix URL
 
