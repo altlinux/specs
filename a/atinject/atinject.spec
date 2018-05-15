@@ -1,7 +1,6 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
@@ -12,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           atinject
 Version:        1
-Release:        alt7_25.20100611svn86jpp8
+Release:        alt7_27.20100611svn86jpp8
 Summary:        Dependency injection specification for Java (JSR-330)
 License:        ASL 2.0
 URL:            http://code.google.com/p/atinject/
@@ -25,11 +24,9 @@ BuildArch:      noarch
 # rm -rf atinject-1/{lib,javadoc}/
 # tar caf atinject-1.tar.xz atinject-1
 Source0:        %{name}-%{version}.tar.xz
-
 # These manifests based on the ones shipped by eclipse.org
 Source1:        MANIFEST.MF
 Source2:        MANIFEST-TCK.MF
-
 Source3:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 # Compile with source/target 1.5
@@ -49,14 +46,6 @@ traditional approaches such as constructors, factories, and service
 locators (e.g., JNDI). This process, known as dependency injection, is
 beneficial to most nontrivial applications.
 
-%package        javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description    javadoc
-%{summary}.
-
 %package        tck
 Group: Development/Java
 Summary:        TCK for testing %{name} compatibility with JSR-330
@@ -65,6 +54,8 @@ Requires:       junit
 
 %description    tck
 %{summary}.
+
+%{?javadoc_package}
 
 %prep
 %setup -q
@@ -98,26 +89,20 @@ jar umf %{SOURCE2} build/tck/dist/javax.inject-tck.jar
 %mvn_artifact pom.xml build/dist/javax.inject.jar
 %mvn_artifact tck-pom.xml build/tck/dist/javax.inject-tck.jar
 
-%install
-%mvn_install
+mv build/tck/javadoc build/javadoc/tck
 
-# Javadocs
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}/tck
-cp -pr build/javadoc/* %{buildroot}%{_javadocdir}/%{name}
-cp -pr build/tck/javadoc/* %{buildroot}%{_javadocdir}/%{name}/tck
+%install
+%mvn_install -J build/javadoc
 
 %files -f .mfiles
-%doc LICENSE
-%dir %{_javadir}/javax.inject
-%dir %{_mavenpomdir}/javax.inject
+%doc --no-dereference LICENSE
 
 %files tck -f .mfiles-tck
 
-%files javadoc
-%doc LICENSE
-%{_javadocdir}/atinject
-
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1-alt7_27.20100611svn86jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1-alt7_25.20100611svn86jpp8
 - fc27 update
 
