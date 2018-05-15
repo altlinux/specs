@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -7,8 +8,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		canl-java
-Version:	2.4.1
-Release:	alt1_3jpp8
+Version:	2.5.0
+Release:	alt1_2jpp8
 Summary:	EMI Common Authentication library - bindings for Java
 
 #		The main parts of the code are BSD
@@ -18,16 +19,20 @@ Summary:	EMI Common Authentication library - bindings for Java
 #		See LICENSE.txt for details
 License:	BSD and ASL 2.0 and MIT
 URL:		https://github.com/eu-emi/%{name}/
-Source0:	https://github.com/eu-emi/%{name}/archive/canl-%{version}.tar.gz
+Source0:	https://github.com/eu-emi/%{name}/archive/canl-%{version}/%{name}-%{version}.tar.gz
 #		Disable tests that require network connections
 Patch0:		%{name}-test.patch
+#		Javadoc fixes (backport from upstream's git)
+Patch1:		%{name}-javadoc.patch
 BuildArch:	noarch
 
 BuildRequires:	maven-local
 BuildRequires:	mvn(commons-io:commons-io)
-BuildRequires:	mvn(junit:junit)
+BuildRequires:	mvn(junit:junit) >= 4.8
 BuildRequires:	mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.54
 BuildRequires:	mvn(org.bouncycastle:bcprov-jdk15on) >= 1.54
+Requires:	mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.54
+Requires:	mvn(org.bouncycastle:bcprov-jdk15on) >= 1.54
 Source44: import.info
 
 %description
@@ -44,6 +49,7 @@ Javadoc documentation for EMI caNl.
 %prep
 %setup -q -n %{name}-canl-%{version}
 %patch0 -p1
+%patch1 -p1
 
 # Remove maven-wagon-webdav-jackrabbit dependency
 %pom_xpath_remove pom:build/pom:extensions
@@ -64,13 +70,17 @@ Javadoc documentation for EMI caNl.
 %mvn_install
 
 %files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc API-Changes.txt README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1_2jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1_3jpp8
 - fc27 update
 
