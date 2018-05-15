@@ -1,56 +1,45 @@
 Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global short_name      commons-cli
+Name:           apache-commons-cli
+Version:        1.4
+Release:        alt1_4jpp8
+Summary:        Command Line Interface Library for Java
+License:        ASL 2.0
+URL:            http://commons.apache.org/cli/
+BuildArch:      noarch
 
-Name:             apache-%{short_name}
-Version:          1.4
-Release:          alt1_2jpp8
-Summary:          Command Line Interface Library for Java
-License:          ASL 2.0
-URL:              http://commons.apache.org/cli/
-BuildArch:        noarch
-
-Source0:          http://www.apache.org/dist/commons/cli/source/%{short_name}-%{version}-src.tar.gz
+Source0:        http://www.apache.org/dist/commons/cli/source/commons-cli-%{version}-src.tar.gz
 
 # workaround for https://issues.apache.org/jira/browse/CLI-253
-Patch0:           CLI-253-workaround.patch
+Patch0:         CLI-253-workaround.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 Source44: import.info
-Obsoletes: jakarta-%{short_name} < 1:%{version}-%{release}
-Conflicts: jakarta-%{short_name} < 1:%{version}-%{release}
 Provides: jakarta-commons-cli = %version
 
 %description
 The CLI library provides a simple and easy to use API for working with the
 command line arguments and options.
 
-%package javadoc
-Group: Development/Java
-Summary:          Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
+%{?javadoc_package}
 
 %prep
-%setup -q -n %{short_name}-%{version}-src
-
+%setup -q -n commons-cli-%{version}-src
 %patch0 -p1
 
 # Compatibility links
-%mvn_alias "%{short_name}:%{short_name}" "org.apache.commons:%{short_name}"
-%mvn_file :commons-cli %{short_name} %{name}
+%mvn_alias : org.apache.commons:commons-cli
+%mvn_file : commons-cli %{name}
 
 %build
 %mvn_build
@@ -59,12 +48,13 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt README.md RELEASE-NOTES.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc README.md RELEASE-NOTES.txt
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_4jpp8
+- java update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_2jpp8
 - new jpp release
 
