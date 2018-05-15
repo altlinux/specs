@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
+BuildRequires: rpm-build-java zip
 # END SourceDeps(oneline)
 # fc script use systemctl calls -- gives dependency on systemctl :(
 %add_findreq_skiplist %{_sbindir}/tomcat
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tomcat
-%define version 8.0.47
+%define version 8.5.29
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -47,14 +47,14 @@ BuildRequires: jpackage-generic-compat
 
 %global jspspec 2.3
 %global major_version 8
-%global minor_version 0
-%global micro_version 47
+%global minor_version 5
+%global micro_version 29
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 3.1
 %global elspec 3.0
 %global tcuid 91
-#Recommended version is specified in java/org/apache/catalina/core/AprLifecycleListener.java
-%global native_version 1.1.33
+# Recommended version is specified in java/org/apache/catalina/core/AprLifecycleListener.java
+%global native_version 1.2.8
 
 
 # FHS 2.3 compliant tree structure - http://www.pathname.com/fhs/2.3/
@@ -71,10 +71,16 @@ BuildRequires: jpackage-generic-compat
 %global _initrddir %{_sysconfdir}/init.d
 %global _systemddir /lib/systemd/system
 
+# Fedora doesn't seem to have this macro, so we define it if it doesn't exist
+%{!?_mavendepmapfragdir: %global _mavendepmapfragdir /usr/share/maven-metadata}
+# Fedora 24 erroneously uses %%{_datadir}/maven-fragments instead of /maven-metadata for some reason...
+# Override the mavendepmapfragdir var on fc24
+%{?fc24: %global _mavendepmapfragdir /usr/share/maven-metadata}
+
 Name:          tomcat
 Epoch:         1
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt1_2jpp8
+Release:       alt1_1jpp8
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
 Group:         System/Servers
@@ -104,6 +110,7 @@ Source32:      tomcat-named.service
 Patch0:        %{name}-%{major_version}.%{minor_version}-bootstrap-MANIFEST.MF.patch
 Patch1:        %{name}-%{major_version}.%{minor_version}-tomcat-users-webapp.patch
 Patch2:        %{name}-8.0.36-CompilerOptionsV9.patch
+Patch3:        disableJavadocFailOnWarning.patch
 
 BuildArch:     noarch
 
@@ -117,7 +124,7 @@ BuildRequires: apache-commons-pool
 BuildRequires: tomcat-taglibs-standard
 BuildRequires: java-devel >= 1.6.0
 BuildRequires: jpackage-utils >= 0:1.7.0
-%if 0%{?fedora} >= 27
+%if 0%{?fedora} >= 27 || 0%{?rhel} > 7
 # add_maven_depmap is deprecated, using javapackages-local for now
 # See https://fedora-java.github.io/howto/latest/#_add_maven_depmap_macro
 BuildRequires: javapackages-local
@@ -125,14 +132,14 @@ BuildRequires: javapackages-local
 BuildRequires: junit
 BuildRequires: geronimo-jaxrpc
 BuildRequires: wsdl4j
+
 Requires:      apache-commons-daemon
-Requires:      apache-commons-logging
 Requires:      apache-commons-collections
 Requires:      apache-commons-dbcp
 Requires:      apache-commons-pool
 Requires:      jpackage-utils
-Requires:      procps sysvinit-utils
-Requires:      %{name}-lib = %{epoch}:%{version}-%{release}
+Requires:      procps
+Requires:      tomcat-el-3.0-api tomcat-jsp-2.3-api tomcat-lib tomcat-servlet-3.1-api
 Requires:    tomcat-native >= %{native_version}
 Requires(pre):    shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
 
@@ -191,14 +198,14 @@ which allows tomcat to perform some privileged operations
 
 %package jsp-%{jspspec}-api
 Group: Development/Other
-Summary: Apache Tomcat JSP API implementation classes
+Summary: Apache Tomcat JavaServer Pages v%{jspspec} API Implementation Classes
 Provides: jsp = %{jspspec}
 Obsoletes: %{name}-jsp-2.2-api
 Requires: %{name}-servlet-%{servletspec}-api = %{epoch}:%{version}-%{release}
 Requires: %{name}-el-%{elspec}-api = %{epoch}:%{version}-%{release}
 
 %description jsp-%{jspspec}-api
-Apache Tomcat JSP API implementation classes.
+Apache Tomcat JSP API Implementation Classes.
 
 %package lib
 Group: Development/Other
@@ -217,23 +224,23 @@ Libraries needed to run the Tomcat Web container.
 
 %package servlet-%{servletspec}-api
 Group: Development/Other
-Summary: Apache Tomcat Servlet API implementation classes
+Summary: Apache Tomcat Java Servlet v%{servletspec} API Implementation Classes
 Provides: servlet = %{servletspec}
 Provides: servlet6
 Provides: servlet3
 Obsoletes: %{name}-servlet-3.0-api
 
 %description servlet-%{servletspec}-api
-Apache Tomcat Servlet API implementation classes.
+Apache Tomcat Servlet API Implementation Classes.
 
 %package el-%{elspec}-api
 Group: Development/Other
-Summary: Expression Language v%{elspec} API
+Summary: Apache Tomcat Expression Language v%{elspec} API Implementation Classes
 Provides: el_api = %{elspec}
 Obsoletes: %{name}-el-2.2-api
 
 %description el-%{elspec}-api
-Expression Language %{elspec}.
+Apache Tomcat EL API Implementation Classes.
 
 %package webapps
 Group: Networking/WWW
@@ -253,6 +260,7 @@ find . -type f \( -name "*.bat" -o -name "*.class" -o -name Thumbs.db -o -name "
 %patch0 -p0
 %patch1 -p0
 %patch2 -p0
+%patch3 -p0
 
 ln -s $(build-classpath tomcat-taglibs-standard/taglibs-standard-impl) webapps/examples/WEB-INF/lib/jstl.jar
 ln -s $(build-classpath tomcat-taglibs-standard/taglibs-standard-compat) webapps/examples/WEB-INF/lib/standard.jar
@@ -264,9 +272,6 @@ export OPT_JAR_LIST="xalan-j2-serializer"
    # tomcat-dbcp.jar with apache-commons-{collections,dbcp,pool}-tomcat5.jar
    # so just create a dummy file for later removal
    touch HACK
-   mkdir -p HACKDIR
-   touch HACKDIR/build.xml
-   touch HACKDIR/LICENSE
 
    # who needs a build.properties file anyway
    %{ant} -Dbase.path="." \
@@ -274,29 +279,22 @@ export OPT_JAR_LIST="xalan-j2-serializer"
       -Dcommons-collections.jar="$(build-classpath apache-commons-collections)" \
       -Dcommons-daemon.jar="$(build-classpath apache-commons-daemon)" \
       -Dcommons-daemon.native.src.tgz="HACK" \
-      -Djasper-jdt.jar="$(build-classpath ecj)" \
       -Djdt.jar="$(build-classpath ecj)" \
       -Dtomcat-native.tar.gz="HACK" \
       -Dtomcat-native.home="." \
-      -Dtomcat-native.win.path="HACKDIR" \
       -Dcommons-daemon.native.win.mgr.exe="HACK" \
       -Dnsis.exe="HACK" \
       -Djaxrpc-lib.jar="$(build-classpath jaxrpc)" \
       -Dwsdl4j-lib.jar="$(build-classpath wsdl4j)" \
-      -Dcommons-pool.home="HACKDIR" \
-      -Dcommons-dbcp.home="HACKDIR" \
       -Dno.build.dbcp=true \
       -Dversion="%{version}" \
       -Dversion.build="%{micro_version}" \
       -Djava.7.home=%{java_home} \
+      -Dexecute.validate=false \
       deploy dist-prepare dist-source javadoc
 
     # remove some jars that we'll replace with symlinks later
-   rm output/build/bin/commons-daemon.jar \
-           output/build/lib/ecj.jar
-
-    # remove the cruft we created
-   rm output/build/bin/tomcat-native.tar.gz
+    rm output/build/bin/commons-daemon.jar output/build/lib/ecj.jar
 pushd output/dist/src/webapps/docs/appdev/sample/src
 mkdir -p ../web/WEB-INF/classes
 %{javac} -cp ../../../../../../../../output/build/lib/servlet-api.jar -d ../web/WEB-INF/classes mypackage/Hello.java
@@ -358,7 +356,7 @@ install -d -m 0755 ${RPM_BUILD_ROOT}%{_libexecdir}/%{name}
 # First copy supporting libs to tomcat lib
 pushd output/build
     cp -a bin/*.{jar,xml} ${RPM_BUILD_ROOT}%{bindir}
-    cp -a conf/*.{policy,properties,xml} ${RPM_BUILD_ROOT}%{confdir}
+    cp -a conf/*.{policy,properties,xml,xsd} ${RPM_BUILD_ROOT}%{confdir}
     cp -a lib/*.jar ${RPM_BUILD_ROOT}%{libdir}
     cp -a webapps/* ${RPM_BUILD_ROOT}%{appdir}
 popd
@@ -535,6 +533,10 @@ cp -a tomcat-websocket-api.pom ${RPM_BUILD_ROOT}%{_mavenpomdir}/JPP.%{name}-webs
 # tomcat-tomcat-websocket
 cp -a tomcat-websocket.pom ${RPM_BUILD_ROOT}%{_mavenpomdir}/JPP.%{name}-tomcat-websocket.pom
 %add_maven_depmap JPP.%{name}-tomcat-websocket.pom %{name}/tomcat-websocket.jar
+
+# tomcat-jaspic-api
+cp -a tomcat-jaspic-api.pom ${RPM_BUILD_ROOT}%{_mavenpomdir}/JPP.%{name}-jaspic-api.pom
+%add_maven_depmap JPP.%{name}-jaspic-api.pom %{name}/jaspic-api.jar
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jsp_tomcat-jsp-2.3-api<<EOF
 %{_javadir}/jsp.jar	%{_javadir}/%{name}-jsp-%{jspspec}-api.jar	20200
 EOF
@@ -599,6 +601,9 @@ install -D -m 755 %{S:46} %buildroot%_sbindir/%{name}-sysv
 %config(noreplace) %{confdir}/context.xml
 %config(noreplace) %{confdir}/server.xml
 %attr(0640,root,tomcat) %config(noreplace) %{confdir}/tomcat-users.xml
+%attr(0644,root,tomcat) %{confdir}/tomcat-users.xsd
+%attr(0644,root,tomcat) %config(noreplace) %{confdir}/jaspic-providers.xml
+%attr(0644,root,tomcat) %{confdir}/jaspic-providers.xsd
 %config(noreplace) %{confdir}/web.xml
 %attr(0755,root,root) %dir %{apphomedir}
 %{bindir}/bootstrap.jar
@@ -629,7 +634,9 @@ install -D -m 755 %{S:46} %buildroot%_sbindir/%{name}-sysv
 %{_javadir}/%{name}-jsp-%{jspspec}*.jar
 
 %files lib -f output/dist/src/res/maven/.mfiles-tomcat-lib
-%{libdir}
+%dir %{libdir}
+%{libdir}/*.jar
+%{_javadir}/*.jar
 %{bindir}/tomcat-juli.jar
 %{_mavenpomdir}/JPP.%{name}-annotations-api.pom
 %{_mavenpomdir}/JPP.%{name}-catalina-ha.pom
@@ -644,8 +651,12 @@ install -D -m 755 %{S:46} %buildroot%_sbindir/%{name}-sysv
 %{_mavenpomdir}/JPP.%{name}-tomcat-jdbc.pom
 %{_mavenpomdir}/JPP.%{name}-websocket-api.pom
 %{_mavenpomdir}/JPP.%{name}-tomcat-websocket.pom
+%{_mavenpomdir}/JPP.%{name}-jaspic-api.pom
 %{_datadir}/maven-metadata/tomcat.xml
 %exclude %{libdir}/%{name}-el-%{elspec}-api.jar
+%exclude %{_javadir}/%{name}-servlet-%{servletspec}*.jar
+%exclude %{_javadir}/%{name}-el-%{elspec}-api.jar
+%exclude %{_javadir}/%{name}-jsp-%{jspspec}*.jar
 
 %files servlet-%{servletspec}-api -f output/dist/src/res/maven/.mfiles-tomcat-servlet-api
 %_altdir/servlet_tomcat-servlet-3.1-api
@@ -671,6 +682,9 @@ install -D -m 755 %{S:46} %buildroot%_sbindir/%{name}-sysv
 %attr(0660,tomcat,tomcat) %verify(not size md5 mtime) %{logdir}/catalina.out
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:8.5.29-alt1_1jpp8
+- java update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1:8.0.47-alt1_2jpp8
 - new version
 
