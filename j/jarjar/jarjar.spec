@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jarjar
 Version:        1.4
-Release:        alt1_18jpp8
+Release:        alt1_20jpp8
 Summary:        Jar Jar Links
 License:        ASL 2.0
 URL:            http://code.google.com/p/jarjar/
@@ -49,6 +49,7 @@ Source1:        jarjar.pom
 Source2:        jarjar-util.pom
 Patch0:         fix-maven-plugin.patch
 Patch1:         do-not-embed-asm.patch
+Patch2:         port-to-asm6.patch
 
 BuildRequires:  ant
 BuildRequires:  ant-junit
@@ -90,6 +91,7 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}
 %patch0
 %patch1
+%patch2 -p1
 
 # remove all binary libs
 rm -f lib/*.jar
@@ -143,6 +145,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc COPYING
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_20jpp8
+- java update
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_18jpp8
 - fc27 update
 
