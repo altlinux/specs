@@ -1,10 +1,12 @@
 %define realname sd_notify
 
+%def_disable check
+
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
 Version: 1.0
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Erlang interface to systemd notify subsystem
 Group: Development/Erlang
 License: MIT
@@ -40,6 +42,9 @@ BuildRequires: libsystemd-devel
 %_erllibdir/%realname-%version
 
 %changelog
+* Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt2%ubt
+- Disabled tests.
+
 * Sat Apr 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt1%ubt
 - Rebuilt to fix linking.
 
