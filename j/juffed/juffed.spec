@@ -1,23 +1,22 @@
 Name:		juffed
 Version:	0.10
-Release:	alt1.4
+Release:	alt2
 License:	GPL
-Packager:	Andrey Cherepanov <cas@altlinux.org>
 Group:		Editors
 Summary:	Simple tabbed text editor
 
-Source:		%{name}_%{version}.tar.gz
-Patch0:		move-plugins-to-lib-dir.patch
+Source:		%name-%version.tar
+Patch1:		%name-%version-fedora-cmake.patch
 
-BuildRequires:	gcc-c++, cmake, libqt4-devel, libqscintilla2-qt4-devel, chrpath
+BuildRequires: gcc-c++ cmake libqt4-devel libqscintilla2-qt4-devel chrpath
 
-Provides:   %name-plugins = %version-%release
-Obsoletes:  %name-plugins < %version-%release
+Provides:   %name-plugins = %EVR
+Obsoletes:  %name-plugins < %EVR
 
 %package devel
 Summary:	Includes for juffed
 Group:		Development/KDE and QT
-Requires:	%name = %version-%release
+Requires:	%name = %EVR
 BuildArch:	noarch
 
 %description
@@ -29,18 +28,17 @@ HTML, PHP, XML, TeX, Makefiles, ini-files and patch-files
 See http://code.google.com/p/juffed-plugins/wiki/JuffEd_Plugins_Tutorial for details.
 
 %prep
-%setup -q
-#%%patch0 -p2
+%setup
+%patch1 -p1
 
 %build
-cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release \
-	-DCMAKE_CXX_FLAGS_RELEASE:STRING='%optflags -Wno-error=misleading-indentation' \
-	-DQSCINTILLA_NAMES=qscintilla2_qt4
+%cmake \
+	-DQSCINTILLA_NAMES=qscintilla2_qt4 \
 
-make VERBOSE=1
+%cmake_build VERBOSE=1
 
 %install
-make DESTDIR=%buildroot install
+%cmakeinstall_std
 chrpath -d %buildroot%_bindir/%name
 chrpath -d %buildroot%_libdir/libjuff.so
 mkdir -p %buildroot/%_libdir/%name/plugins
@@ -61,6 +59,9 @@ mkdir -p %buildroot/%_libdir/%name/plugins
 %_includedir/%name
 
 %changelog
+* Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10-alt2
+- Fixed build with current toolchain.
+
 * Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10-alt1.4
 - Rebuilt with qscintilla2 2.10.1.
 
