@@ -12,9 +12,9 @@ BuildRequires: jpackage-generic-compat
 Summary:    JavaScript minifier and checker
 Name:       closure-compiler
 #define commit ad29f06d581fb8c54ad031334b82a5c301b6ce0a
-#define shorthash %(printf %%.7s %commit)
+#define shorthash %%(printf %%.7s %%commit)
 Version:    20160315
-Release:    alt1_2jpp8
+Release:    alt1_5jpp8
 License:    ASL 2.0
 URL:        https://developers.google.com/closure/compiler/
 Source0:    https://github.com/google/closure-compiler/archive/maven-release-v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -25,7 +25,7 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(args4j:args4j)
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(com.google.code.gson:gson)
-BuildRequires:  mvn(com.google.guava:guava)
+BuildRequires:  mvn(com.google.guava:guava:20.0)
 BuildRequires:  mvn(com.google.protobuf:protobuf-java)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -60,13 +60,6 @@ This package contains the %{summary}.
 
 rm -rf lib/*
 
-# Compatibility with more guava versions
-sed -i -e 's/CharMatcher\.whitespace()/CharMatcher.WHITESPACE/' \
-  src/com/google/javascript/jscomp/deps/*.java
-sed -i -e 's/CharMatcher\.javaUpperCase()/CharMatcher.JAVA_UPPER_CASE/' -e 's/CharMatcher\.javaLetterOrDigit()/CharMatcher.JAVA_LETTER_OR_DIGIT/' \
-  src/com/google/javascript/jscomp/parsing/JsDocInfoParser.java
-sed -i -e 's/isSupertypeOf/isAssignableFrom/g' src/com/google/javascript/jscomp/ConformanceRules.java
-
 # Don't build shaded jar because it bundles all deps
 %pom_disable_module "pom-main-shaded.xml" pom-main.xml
 %mvn_alias :closure-compiler-unshaded :closure-compiler
@@ -90,7 +83,7 @@ xsltproc \
 
 %install
 %mvn_install
-%jpackage_script com.google.javascript.jscomp.CommandLineRunner "" "" args4j:google-gson:jsr-305:protobuf-java:js:guava:%{name} %{name} true
+%jpackage_script com.google.javascript.jscomp.CommandLineRunner "" "" args4j:google-gson:jsr-305:protobuf-java:js:guava20:%{name} %{name} true
 
 install -Dm0644 %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 
@@ -100,13 +93,16 @@ install -Dm0644 %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.*
 
-%doc COPYING
+%doc --no-dereference COPYING
 %doc README.md
 
 %files javadoc -f .mfiles-javadoc
-%doc COPYING
+%doc --no-dereference COPYING
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:20160315-alt1_5jpp8
+- java update
+
 * Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:20160315-alt1_2jpp8
 - new version
 
