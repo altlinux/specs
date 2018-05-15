@@ -24,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xmvn
 Version:        3.0.0
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
 URL:            https://fedora-java.github.io/xmvn/
@@ -33,6 +33,10 @@ BuildArch:      noarch
 Source0:        https://github.com/fedora-java/xmvn/releases/download/%{version}/xmvn-%{version}.tar.xz
 
 Patch0:         0001-Fix-installer-plugin-loading.patch
+Patch1:         0001-Port-to-Gradle-4.2.patch
+Patch2:         0001-Port-to-Gradle-4.3.1.patch
+Patch3:         0001-Support-setting-Xdoclint-none-in-m-javadoc-p-3.0.0.patch
+Patch4:         0001-Fix-configuration-of-aliased-plugins.patch
 
 BuildRequires:  maven >= 3.5.0
 BuildRequires:  maven-local
@@ -54,7 +58,7 @@ BuildRequires:  plexus-containers-container-default
 BuildRequires:  plexus-containers-component-annotations
 BuildRequires:  plexus-containers-component-metadata
 %if %{with gradle}
-BuildRequires:  gradle >= 2.5
+BuildRequires:  gradle 
 %endif
 
 Requires:       %{name}-minimal = %{version}-%{release}
@@ -79,7 +83,7 @@ Requires:       apache-commons-cli
 Requires:       apache-commons-lang3
 Requires:       atinject
 Requires:       google-guice
-Requires:       guava
+Requires:       guava20
 Requires:       maven-lib
 Requires:       maven-resolver-api
 Requires:       maven-resolver-impl
@@ -220,6 +224,10 @@ This package provides %{summary}.
 %prep
 %setup -q
 %patch0 -p1
+#patch1 -p1
+#patch2 -p1
+#patch3 -p1
+%patch4 -p1
 
 # Bisect IT has no chances of working in local, offline mode, without
 # network access - it needs to access remote repositories.
@@ -370,6 +378,9 @@ cp -P ${maven_home}/bin/m2.conf %{buildroot}%{_datadir}/%{name}/bin/
 %doc LICENSE NOTICE
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_7jpp8
+- rebuild with guava20
+
 * Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_6jpp8
 - new version (unbootstrap build)
 
