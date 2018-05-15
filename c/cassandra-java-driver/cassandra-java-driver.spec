@@ -7,16 +7,15 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		cassandra-java-driver
-Version:	3.1.4
-Release:	alt1_2jpp8
+Version:	3.4.0
+Release:	alt1_1jpp8
 Summary:	DataStax Java Driver for Apache Cassandra
 License:	ASL 2.0
 URL:		https://github.com/datastax/java-driver
 Source0:	https://github.com/datastax/java-driver/archive/%{version}.tar.gz
 
-# added --allow-script-in-comments option to javadoc plugin
-# https://bugzilla.redhat.com/show_bug.cgi?id=1417677
-Patch0:		%{name}-%{version}-allow-script-in-comments.patch
+# In Fedora 28 is only Guava>=20 available
+Patch0:         %{name}-%{version}-Remove-Guava-code-for-v18.patch
 
 BuildRequires:	maven-local
 BuildRequires:	mvn(io.dropwizard.metrics:metrics-core)
@@ -33,6 +32,7 @@ BuildRequires:	mvn(org.assertj:assertj-core)
 BuildRequires:	mvn(org.hdrhistogram:HdrHistogram)
 BuildRequires:	mvn(org.mockito:mockito-all)
 BuildRequires:	mvn(org.ow2.asm:asm-all)
+BuildRequires:	mvn(org.slf4j:slf4j-api)
 BuildRequires:	mvn(org.slf4j:slf4j-log4j12)
 BuildRequires:	mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:	mvn(org.testng:testng)
@@ -44,6 +44,7 @@ BuildRequires:	mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:	mvn(org.apache.maven.plugins:maven-failsafe-plugin)
 BuildRequires:	mvn(org.apache.felix:org.apache.felix.framework)
 # driver-tests stress module dependencies
+BuildRequires:	mvn(ch.qos.logback:logback-classic)
 #BuildRequires:	mvn(net.sf.jopt-simple:jopt-simple)
 #BuildRequires:	mvn(com.yammer.metrics:metrics-core) missing
 BuildArch:	noarch
@@ -95,7 +96,7 @@ This package contains javadoc for %{name}.
 %prep
 %setup -qn java-driver-%{version}
 
-# allow-script-in-comments.patch
+# remove Guava v18 code
 %patch0 -p1
 
 # Unneeded features
@@ -103,6 +104,8 @@ This package contains javadoc for %{name}.
 %pom_disable_module driver-examples
 # missing dependency for stress tests
 %pom_disable_module stress driver-tests
+# we remove maven-shade-plugin
+%pom_disable_module shading driver-tests
 # Unavailable plugins
 %pom_remove_plugin -r :animal-sniffer-maven-plugin:
 %pom_remove_plugin -r :clirr-maven-plugin
@@ -133,19 +136,22 @@ rm manual/object_mapper/.nav
 
 %files -f .mfiles-cassandra-driver-core
 %doc README.md changelog faq manual upgrade_guide
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files extras -f .mfiles-cassandra-driver-extras
 %files mapping -f .mfiles-cassandra-driver-mapping
 %files parent -f .mfiles-cassandra-driver-parent
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files tests -f .mfiles-tests
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt1_1jpp8
+- java update
+
 * Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.4-alt1_2jpp8
 - new version
 
