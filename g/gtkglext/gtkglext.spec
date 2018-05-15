@@ -1,6 +1,6 @@
 Name: gtkglext
 Version: 1.2.0
-Release: alt3
+Release: alt4
 
 Summary: An OpenGL extention to GTK2
 
@@ -17,6 +17,7 @@ Patch0: gtkglext-support-pango.patch
 Patch1: gtkglext-1.2.0-newer-gtk.patch
 Patch2: gtkglext-1.2.0-alt-DSO.patch
 Patch3: gtkglext-1.2.0-alt-pangox.patch
+Patch4: gtkglext-fedora-GCC-8-fixes.patch
 
 %define gtk_ver 2.4.0
 %define gtk_doc_ver 1.1
@@ -71,6 +72,7 @@ statically linked against GtkGLExt.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p1
 
 %build
 %autoreconf
@@ -100,6 +102,9 @@ rm -rf %buildroot%_datadir/gtk-doc/html
 %endif
 
 %changelog
+* Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt4
+- NMU: fixed build with new toolchain.
+
 * Wed Dec 06 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt3
 - disable build doc
 
