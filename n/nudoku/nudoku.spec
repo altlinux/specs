@@ -1,7 +1,7 @@
-%def_enable Werror
+#%%def_enable Werror
 
 Name:     nudoku
-Version:  0.2.5
+Version:  1.0.0
 Release:  alt1
 
 Summary:  ncurses based sudoku game
@@ -38,5 +38,8 @@ BuildRequires: libncursesw-devel
 %doc AUTHORS LICENSE README.md
 
 %changelog
+* Tue May 15 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
+- Build new version.
+
 * Mon Oct 30 2017 Grigory Ustinov <grenka@altlinux.org> 0.2.5-alt1
 - Initial build for Sisyphus.
