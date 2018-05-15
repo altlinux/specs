@@ -1,51 +1,43 @@
-# -*- rpm-spec -*-
+%define _unpackaged_files_terminate_build 1
 
 Name: jpilot
 Summary: Palm pilot desktop for Linux
-Summary(ru_RU.KOI8-R): Palm pilot desktop для Linux
-Version: 0.99.9
-Release: alt7.qa5
-
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
+Summary(ru_RU.UTF-8): Palm pilot desktop п╢п╩я▐ Linux
+Version: 1.8.2
+Release: alt1
 
 License: GPL
 Group: Communications
 Url: http://www.jpilot.org
-Source: %name-%{version}.tar
-Source1: jpilot-icons.tar
-Source2: jpilot-ru.po
-Source3: mkinstalldirs
-Requires: pilot-link >= 0.12.1-alt1
 
-Patch0: jpilot-0.99.8-alt-fixes.patch
-Patch1: jpilot-0.99.8-1-alt-fixes.patch
-#Patch2: %name-0.99.8-alt-gettext.patch
-Patch2: jpilot-0.99.9pre2-alt-gettext.patch
-Patch3: jpilot-0.99.8-sync.patch
-Patch4: jpilot-0.99.9-keyring.patch
-#Patch5: jpilot-0.99.9-keyring-br.patch
-Patch6: jpilot-0.99.9-configure-lib64.patch
+Source: %name-%version.tar
+Source1: jpilot-icons.tar
+
+Patch1: %name-%version-alt.patch
+
+Requires: pilot-link >= 0.12.1-alt1
 
 BuildRequires: libpilot-link-devel >= 0.12.1-alt1
 
 BuildRequires: fontconfig freetype2 gcc-c++ glib2-devel intltool libatk-devel
-BuildRequires: libcairo-devel libg2c-devel libgtk+2-devel libpango-devel
+BuildRequires: libcairo-devel libgtk+2-devel libpango-devel
 BuildRequires: libssl-devel libstdc++-devel perl-XML-Parser pkgconfig
+BuildRequires: libgcrypt-devel
 
 %description
 J-Pilot is a desktop organizer application for the palm pilot that runs
 under Linux and UNIX.  It is similar in functionality to the one that 3com
 distributes for a well known rampant legacy operating system.
 
-%description -l ru_RU.KOI8-R
-J-Pilot - настольное приложение для Palm pilot, которое работает под Linux и UNIX.
-Его функциональность похожа на оригинальную версию, которую 3com распространяет для
-хорошо известной операционной системы.
+%description -l ru_RU.UTF-8
+J-Pilot - п╫п╟я│я┌п╬п╩я▄п╫п╬п╣ п©я─п╦п╩п╬п╤п╣п╫п╦п╣ п╢п╩я▐ Palm pilot, п╨п╬я┌п╬я─п╬п╣ я─п╟п╠п╬я┌п╟п╣я┌ п©п╬п╢ Linux п╦ UNIX.
+п∙пЁп╬ я└я┐п╫п╨я├п╦п╬п╫п╟п╩я▄п╫п╬я│я┌я▄ п©п╬я┘п╬п╤п╟ п╫п╟ п╬я─п╦пЁп╦п╫п╟п╩я▄п╫я┐я▌ п╡п╣я─я│п╦я▌, п╨п╬я┌п╬я─я┐я▌ 3com я─п╟я│п©я─п╬я│я┌я─п╟п╫я▐п╣я┌ п╢п╩я▐
+я┘п╬я─п╬я┬п╬ п╦п╥п╡п╣я│я┌п╫п╬п╧ п╬п©п╣я─п╟я├п╦п╬п╫п╫п╬п╧ я│п╦я│я┌п╣п╪я▀.
 
 %package plugins-devel
 Summary: Library and header file needed for jpilot plugin development
 Group: Communications
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-devel
 J-Pilot is a desktop organizer application for the palm pilot that runs
@@ -55,34 +47,21 @@ distributes for a well known rampant legacy operating system.
 The library and header file required for plugin development
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
 %patch1 -p1
-%patch2 -p1
-#%patch3 -p0
-%patch4 -p0
-#%patch5 -p0
-%patch6 -p1
-
-cp %SOURCE2 po/ru.po
-cp %SOURCE3 .
-chmod +x mkinstalldirs
 
 %build
 NOCONFIGURE=1 ./autogen.sh
 export ABILIB=%_lib
 %configure \
 	--enable-stock-buttons \
-	--libdir=%_libdir/jpilot
+	--libdir=%_libdir/jpilot \
+	--with-openssl \
 
 %make_build
 
 %install
-install -d %buildroot/{%_mandir/man1,%_bindir}
-%makeinstall
-
-install -d html
-install docs/*.html docs/*.png html
+%makeinstall_std libdir=%_libdir/jpilot/plugins
 
 install -d %buildroot%_datadir/%name
 install jpilotrc.* %buildroot%_datadir/%name
@@ -95,52 +74,34 @@ install -D -m644 jpilot.xpm %buildroot/%_niconsdir/jpilot.xpm
 install -D -m644 mini/jpilot.xpm %buildroot/%_miconsdir/jpilot.xpm
 install -D -m644 large/jpilot.xpm %buildroot/%_liconsdir/jpilot.xpm
 
-if grep '^Categories=Application;Office;$' %buildroot%_desktopdir/jpilot.desktop; then
-    cat > %buildroot%_desktopdir/jpilot.desktop <<EOF
-[Desktop Entry]
-Name=J-Pilot
-Comment=Desktop organizer application for the Palm Pilot
-Exec=jpilot
-Icon=jpilot
-Terminal=false
-Type=Application
-Categories=Office;PDA;
-EOF
-    else
-	echo "desktop above is deprecated. PLEASE, merge Categories to the new upstream desktop file"
-	exit 1
-fi
-
-# Fix jpilot doc bug
-rm -rf %buildroot/usr/doc
-
 rm -f %buildroot%_libdir/%name/plugins/*.la
 
 %find_lang %name
 
 %files -f %name.lang
-#%doc AUTHORS BUGS ChangeLog INSTALL README TODO html
 %_bindir/*
+%dir %_datadir/jpilot
 %_datadir/jpilot/jpilotrc.*
 %_datadir/jpilot/*.pdb
 %_miconsdir/*xpm
 %_niconsdir/*xpm
 %_liconsdir/*xpm
 %_datadir/applications/*
-%dir %_datadir/jpilot
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
 %_libdir/%name/plugins/*.so*
-%_mandir/man1/*
-%_datadir/doc/%name-%version
+%_man1dir/*
+%_datadir/doc/%name
 
 %files plugins-devel
-%dir %_libdir/%name
-%dir %_libdir/%name/plugins
 %_libdir/jpilot/plugins/libplugin.h
 %_libdir/jpilot/plugins/prefs.h
 
 %changelog
+* Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt1
+- Updated to upstream version 1.8.2.
+- Converted spec to UTF-8.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.99.9-alt7.qa5
 - NMU: rebuilt for updated dependencies.
 
