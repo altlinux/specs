@@ -1,6 +1,6 @@
 Name:    thefuck
-Version: 3.25
-Release: alt2
+Version: 3.26
+Release: alt1
 
 Summary: Magnificent app which corrects your previous console command
 License: MIT
@@ -31,10 +31,13 @@ rm -v thefuck/system/win32.py
 
 %files
 %_bindir/*
-%python3_sitelibdir/%name 
+%python3_sitelibdir/%name
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue May 15 2018 Grigory Ustinov <grenka@altlinux.org> 3.26-alt1
+- Build new version.
+
 * Mon Feb 12 2018 Grigory Ustinov <grenka@altlinux.org> 3.25-alt2
 - Change package group.
 
