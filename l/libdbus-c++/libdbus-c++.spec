@@ -4,13 +4,12 @@
 Summary: A C++ bindings for libdbus and libdbus-glib
 Name: libdbus-c++
 Version: 0.9.0
-Release: alt1.1
+Release: alt2
 License: LGPLv2.1
 Group: System/Libraries
 URL: http://www.freedesktop.org/wiki/Software/dbus-c++
-Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
-Provides: %name-etersoft = %version-%release
+Provides: %name-etersoft = %EVR
 
 Source0: dbus-c++-%version.tar.bz2
 # SuSE
@@ -18,6 +17,9 @@ Patch1: libdbus-c++-gcc47.patch
 Patch2: libdbus-c++-nodocdatetime.patch
 Patch3: libdbus-c++-noreturn.patch
 Patch4: libdbus-c++-pthread.patch
+# Debian
+Patch5: libdbus-c++-0.9.0-debian-fix-gcc-7-ftbfs.patch
+Patch6: libdbus-c++-0.9.0-debian-fix-mutex-ftbfs.patch
 # ALT
 Patch10: libdbus-c++-0.9.0-alt-linking.patch
 Patch11: libdbus-c++-0.9.0-alt-is_running.patch
@@ -28,6 +30,7 @@ Patch13: libdbus-c++-0.9.0-alt-enable_anon.patch
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel libatk-devel libatkmm-devel libcairo-devel libcairomm-devel libdbus-c++ libdbus-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgtk+2-devel libpango-devel libpangomm-devel libsigc++2-devel libstdc++-devel libsystemd-daemon libwayland-client libwayland-server pkg-config python-base ruby ruby-stdlibs
 #BuildRequires: cups-filters doxygen fonts-ttf-dejavu gcc-c++ glibc-devel-static graphviz libdbus-c++-devel libexpat-devel libgtkmm2-devel rpm-build-ruby
 BuildRequires: doxygen gcc-c++ glibc-devel libexpat-devel libdbus-devel libgtkmm2-devel
+BuildRequires: /usr/bin/dot
 
 %description
 This package contains C++ bindings for libdbus and libdbus-glib, provides
@@ -36,8 +39,8 @@ ability to reflect dbus methods and signals into a more natural C++ object syste
 %package devel
 Summary: Development files for libdbus-c++
 Group: Development/C++
-Requires: %name = %version-%release
-Provides: %name-etersoft-devel = %version-%release
+Requires: %name = %EVR
+Provides: %name-etersoft-devel = %EVR
 
 %description devel
 This package provides development files for libdbus-c++.
@@ -46,8 +49,8 @@ This package provides development files for libdbus-c++.
 %package devel-static
 Summary: Static version of libdbus-c++
 Group: Development/C++
-Requires: %name-devel = %version-%release
-Provides: %name-etersoft-devel-static = %version-%release
+Requires: %name-devel = %EVR
+Provides: %name-etersoft-devel-static = %EVR
 %description devel-static
 This package contains static version of libdbus-c++ library.
 %endif
@@ -61,7 +64,7 @@ This package contains Doxygen-generated API documentation for libdbus-c++ librar
 %package examples
 Summary: Example programs which make use of libdbus-c++
 Group: Development/C++
-Requires: %name-devel = %version
+Requires: %name-devel = %EVR
 %description examples
 Example programs which make use of libdbus-c++
 
@@ -71,6 +74,8 @@ Example programs which make use of libdbus-c++
 %patch2 -p0
 %patch3 -p0
 %patch4 -p0
+%patch5 -p1
+%patch6 -p1
 #
 %patch10 -p0
 %patch11 -p1
@@ -120,6 +125,9 @@ make -C examples clean
 %doc examples
 
 %changelog
+* Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.0-alt2
+- Fixed build with new toolchain.
+
 * Sat Jun 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.0-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
