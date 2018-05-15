@@ -1,6 +1,6 @@
 Name: lam
 Version: 7.1.4
-Release: alt4.qa2
+Release: alt5
 
 %define mpi_prefix %_libexecdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -14,7 +14,7 @@ Url: http://www.lam-mpi.org/
 Source: http://www.lam-mpi.org/download/files/%name-%version.tar
 
 # Automatically added by buildreq on Mon Mar 17 2003
-BuildRequires: gcc-c++ gcc-g77 glibc-devel-static libg2c-devel libstdc++-devel openssh-clients
+BuildRequires: gcc-c++ gcc-g77 glibc-devel-static libstdc++-devel openssh-clients
 
 BuildPreReq: mpi-selector
 Requires(post,preun): mpi-selector
@@ -184,6 +184,9 @@ EOF
 %mpi_prefix/man/man3
 
 %changelog
+* Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 7.1.4-alt5
+- NMU: updated build dependencies.
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 7.1.4-alt4.qa2
 - Rebuilt for gcc5 C++11 ABI.
 
