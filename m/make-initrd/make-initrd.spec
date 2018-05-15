@@ -1,8 +1,8 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.0.10
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -204,6 +204,25 @@ fi
 %endif
 
 %changelog
+* Tue May 15 2018 Alexey Gladkov <legion@altlinux.ru> 2.1.0-alt1
+- Runtime changes:
+  + Remove sysvinit binary
+  + Add service for emergency shell
+  + Allow to customize mount options for /sys, /run
+- New feature:
+  + system-glibc to add additional glibc components
+  + Add modules-crypto-user-api feature that contains userspace
+    crypto API modules
+- LUKS feature changes:
+  + Fix luks2 configuration
+- Ucode feature changes:
+  + Make compress dependency optional
+  + Remove debug
+- Other fixes:
+  + Fix module-* dependencies
+- add-deps-ext4: Remove libcrc32c dependency
+- Reduce the number of put-file calls
+
 * Wed May 02 2018 Alexey Gladkov <legion@altlinux.ru> 2.0.10-alt2
 - Remove build dependence, which was too heavy for not primary platforms.
 
