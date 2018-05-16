@@ -9,18 +9,22 @@ BuildRequires: jpackage-generic-compat
 %global hghash 7ff584954008
 Name:          jmh
 Version:       1.13
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       Java Microbenchmark Harness
 License:       GPLv2 with exceptions
 URL:           http://openjdk.java.net/projects/code-tools/jmh/
 Source0:       http://hg.openjdk.java.net/code-tools/jmh/archive/%{hghash}.tar.bz2
 
+# Patch for jopt-simple >= 5
+Patch0: jopt-simple.patch
+
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(net.sf.jopt-simple:jopt-simple)
+BuildRequires: mvn(net.sf.jopt-simple:jopt-simple) >= 5
 BuildRequires: mvn(org.apache.commons:commons-math3)
 BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
 BuildRequires: mvn(org.ow2.asm:asm)
+Requires: mvn(net.sf.jopt-simple:jopt-simple) >= 5
 
 BuildArch:     noarch
 Source44: import.info
@@ -92,6 +96,7 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n %{name}-%{hghash}
+%patch0 -p1
 
 %pom_disable_module %{name}-archetypes
 %pom_disable_module %{name}-core-ct
@@ -124,40 +129,42 @@ done
 sed -i "s,59,51,;s,Temple Place,Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1307,02110-1301," src/license/gpl_cpe/license.txt
 
 %build
-
 %mvn_build -s
 
 %install
 %mvn_install
 
 %files -f .mfiles-%{name}-core
-%doc %{name}-core/LICENSE
+%doc --no-dereference %{name}-core/LICENSE
 
 %files core-benchmarks -f .mfiles-%{name}-core-benchmarks
-%doc %{name}-core-benchmarks/LICENSE
+%doc --no-dereference %{name}-core-benchmarks/LICENSE
 
 %files generator-annprocess -f .mfiles-%{name}-generator-annprocess
-%doc %{name}-generator-annprocess/LICENSE
+%doc --no-dereference %{name}-generator-annprocess/LICENSE
 
 %files generator-asm -f .mfiles-%{name}-generator-asm
-%doc %{name}-generator-asm/LICENSE
+%doc --no-dereference %{name}-generator-asm/LICENSE
 
 %files generator-bytecode -f .mfiles-%{name}-generator-bytecode
-%doc %{name}-generator-bytecode/LICENSE
+%doc --no-dereference %{name}-generator-bytecode/LICENSE
 
 %files generator-reflection -f .mfiles-%{name}-generator-reflection
-%doc %{name}-generator-reflection/LICENSE
+%doc --no-dereference %{name}-generator-reflection/LICENSE
 
 %files parent -f .mfiles-%{name}-parent
-%doc LICENSE src/license/*
+%doc --no-dereference LICENSE src/license/*
 
 %files samples -f .mfiles-%{name}-samples
-%doc %{name}-samples/LICENSE src/license/bsd/*
+%doc --no-dereference %{name}-samples/LICENSE src/license/bsd/*
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE src/license/*
+%doc --no-dereference LICENSE src/license/*
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_4jpp8
 - fc27 update
 
