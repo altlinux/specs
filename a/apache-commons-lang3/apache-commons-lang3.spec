@@ -8,12 +8,13 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-commons-lang3
 Version:        3.7
-Release:        alt1_1jpp8
+Release:        alt1_3jpp8
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
 URL:            http://commons.apache.org/lang
-Source0:        http://archive.apache.org/dist/commons/lang/source/commons-lang3-%{version}-src.tar.gz
 BuildArch:      noarch
+
+Source0:        http://archive.apache.org/dist/commons/lang/source/commons-lang3-%{version}-src.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
@@ -37,16 +38,11 @@ therefore created differently named artifact and jar files. This is
 the new version, while apache-commons-lang is the compatibility
 package.
 
-%package        javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description    javadoc
-%{summary}.
+%{?javadoc_package}
 
 %prep
 %setup -q -n commons-lang3-%{version}-src
+
 
 %mvn_file : %{name} commons-lang3
 
@@ -65,13 +61,13 @@ rm src/test/java/org/apache/commons/lang3/RandomStringUtilsTest.java
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 %doc RELEASE-NOTES.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
-
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.7-alt1_3jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.7-alt1_1jpp8
 - new version
 
