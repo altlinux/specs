@@ -1,5 +1,5 @@
 Name: lessjs
-Version: 2.5.1
+Version: 3.0.0
 Release: alt1
 
 Summary: Less.js The dynamic stylesheet language
@@ -51,6 +51,9 @@ cp -rp lib/* %buildroot%_datadir/%name/
 %_datadir/%name/
 
 %changelog
+* Wed May 16 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
+- New veersion (ALT #34914).
+
 * Sat Aug 27 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.1-alt1
 - new version 2.5.1 (with rpmrb script)
 
