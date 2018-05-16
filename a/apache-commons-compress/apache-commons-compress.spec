@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %global short_name      commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        1.15
+Version:        1.16.1
 Release:        alt1_1jpp8
 Summary:        Java API for working with compressed files and archivers
 License:        ASL 2.0
@@ -20,12 +20,15 @@ BuildArch:      noarch
 
 Source0:        http://archive.apache.org/dist/commons/compress/source/%{short_name}-%{version}-src.tar.gz
 
-Patch0: 0001-Remove-Brotli-compressor.patch
+Patch0:         0001-Remove-Brotli-compressor.patch
+Patch1:         0002-Remove-ZSTD-compressor.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.objenesis:objenesis)
 BuildRequires:  mvn(org.powermock:powermock-api-mockito)
 BuildRequires:  mvn(org.powermock:powermock-module-junit4)
 BuildRequires:  mvn(org.tukaani:xz)
@@ -47,16 +50,22 @@ This package provides %{summary}.
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
+
+# Unavailable Google Brotli library (org.brotli.dec)
 %patch0 -p1
 %pom_remove_dep org.brotli:dec
+rm -r src/{main,test}/java/org/apache/commons/compress/compressors/brotli
 
-rm -r src/main/java/org/apache/commons/compress/compressors/brotli
-rm -r src/test/java/org/apache/commons/compress/compressors/brotli
+# Unavailable ZSTD JNI library
+%patch1 -p1
+%pom_remove_dep :zstd-jni
+rm -r src/{main,test}/java/org/apache/commons/compress/compressors/zstandard
+rm src/test/java/org/apache/commons/compress/compressors/DetectCompressorTestCase.java
 
 %build
 %mvn_file  : %{short_name} %{name}
 %mvn_alias : commons:
-%mvn_build -- -Dmaven.test.skip.exec=true
+%mvn_build
 
 %install
 %mvn_install
@@ -68,6 +77,9 @@ rm -r src/test/java/org/apache/commons/compress/compressors/brotli
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.16.1-alt1_1jpp8
+- java update
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_1jpp8
 - new version
 
