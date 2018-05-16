@@ -1,8 +1,8 @@
 %def_without tests
 
 Name:           retext
-Version:        6.0.2
-Release:        alt1.1
+Version:        7.0.1
+Release:        alt1
 License:        GPLv3+
 Summary:        Text editor for Markdown and reStructuredText
 Summary(de):    Texteditor für Markdown und reStructuredText
@@ -11,6 +11,7 @@ URL: 		https://github.com/retext-project/retext
 
 Source0:        %name-%version.tar
 Source1:        %name.1
+Patch:		fix-setup-desktop-file.patch
 
 BuildArch:      noarch
 
@@ -25,13 +26,14 @@ BuildRequires:  librsvg-devel
 BuildRequires:  librsvg-utils
 BuildRequires:  ImageMagick-tools
 BuildRequires:  qt5-tools-devel
+BuildRequires:  python-module-PyQt5-devel
 
 %if_with tests
 BuildRequires:  libappstream-glib
 %endif
 
 %py3_requires docutils enchant markdown sip
-%add_python3_req_skip FakeVim
+%add_python3_req_skip FakeVim PyQt5.QtWebEngineWidgets
 
 %description
 ReText is a simple but powerful text editor for Markdown and
@@ -43,6 +45,7 @@ für Markdown und reStructuredText.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %python3_build_debug
@@ -84,6 +87,9 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Wed May 16 2018 Andrey Cherepanov <cas@altlinux.org> 7.0.1-alt1
+- New version
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 6.0.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
