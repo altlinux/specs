@@ -8,13 +8,13 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:     jnr-ffi
 Version:  2.1.6
-Release:  alt1_2jpp8
+Release:  alt1_4jpp8
 Summary:  Java Abstracted Foreign Function Layer
 License:  ASL 2.0
 URL:      http://github.com/jnr/%{name}/
 Source0:  https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 
-BuildRequires:  gcc-common
+BuildRequires:  gcc
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.github.jnr:jffi)
@@ -67,13 +67,16 @@ sed -i 's|-Werror||' libtest/GNUmakefile
 ln -s %name/%name.jar %buildroot%_javadir/%name.jar
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 %_javadir/%name.jar
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Wed May 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.6-alt1_4jpp8
+- java update
+
 * Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.6-alt1_2jpp8
 - new version
 
