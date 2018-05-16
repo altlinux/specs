@@ -54,7 +54,7 @@
 Name: systemd
 Epoch: 1
 Version: 238
-Release: alt7
+Release: alt8
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1784,6 +1784,10 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Wed May 16 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt8
+- merge with v238-stable branch
+- add "noexec" for /run/lock mount option
+
 * Fri Apr 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt7
 - merge with v238-stable branch
 
