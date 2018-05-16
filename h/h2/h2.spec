@@ -8,10 +8,13 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           h2
 Version:        1.4.196
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Java SQL database
 
-License:        EPL or MPLv1.1
+# Most classes are dual licensed as EPL/MPL
+# One class is triple licensed EPL/MPL/LGPL: src/main/org/h2/jdbcx/JdbcConnectionPool.java
+# Some tests are ASL licensed
+License:        (EPL or MPLv2.0 or LGPLv3+) and ASL 2.0
 URL:            http://www.h2database.com
 Source0:        http://www.h2database.com/h2-2017-06-10.zip
 Source1:        http://repo2.maven.org/maven2/com/h2database/h2/%{version}/h2-%{version}.pom
@@ -92,12 +95,15 @@ sh build.sh jar docs
 %files -f .mfiles
 %doc docs/index.html
 %doc docs/html
-%doc src/docsrc/html/license.html
+%doc --no-dereference src/docsrc/html/license.html
 
 %files javadoc -f .mfiles-javadoc
-%doc src/docsrc/html/license.html
+%doc --no-dereference src/docsrc/html/license.html
 
 %changelog
+* Wed May 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.196-alt1_3jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.196-alt1_2jpp8
 - new version
 
