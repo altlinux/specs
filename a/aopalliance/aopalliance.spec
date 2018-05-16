@@ -9,13 +9,14 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           aopalliance
-Version:        1.0
-Release:        alt6_15jpp8
 Epoch:          0
+Version:        1.0
+Release:        alt6_17jpp8
 Summary:        Java/J2EE AOP standards
 License:        Public Domain
 URL:            http://aopalliance.sourceforge.net/
 BuildArch:      noarch
+
 # cvs -d:pserver:anonymous@aopalliance.cvs.sourceforge.net:/cvsroot/aopalliance login
 # password empty
 # cvs -z3 -d:pserver:anonymous@aopalliance.cvs.sourceforge.net:/cvsroot/aopalliance export -r HEAD aopalliance
@@ -36,13 +37,7 @@ environements (e.g. Eclipse).  The AOP Alliance also aims to ensure
 interoperability between Java/J2EE AOP implementations to build a
 larger AOP community.
 
-%package javadoc
-Group: Development/Java
-Summary:        API documentation for %{summary}
-BuildArch: noarch
-
-%description javadoc
-%{summary}.
+%{?javadoc_package}
 
 %prep
 %setup -q -n %{name}
@@ -63,9 +58,10 @@ jar umf %{SOURCE2} build/%{name}.jar
 
 %files -f .mfiles
 
-%files javadoc -f .mfiles-javadoc
-
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_17jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_15jpp8
 - fc27 update
 
