@@ -1,18 +1,36 @@
 Name: jtdx
-Version: 18.0
-Release: alt2
+Version: 18.1.0.85
+Release: alt3.S1
 Summary: JTDX means "JT modes for DXing"
 License: GPLv3
 Group: Engineering
-Url: http://www.qrz.lt/ly3bg/JTDX/jtdx.html
+Url: http://ru.jtdx.tech
 Source: %name-%version.tar
-# Source-url: http://www.qrz.lt/ly3bg/JTDX/%version/src_JTDX_v%version.zip
-ExclusiveArch: x86_64
-
 Patch1: %name-18.0-alt-cmake.patch
 
-Buildrequires(pre): cmake rpm-macros-cmake
-BuildRequires: gcc-c++ ctags hamlib-devel openmpi-devel python-devel pkgconfig(libusb-1.0) pkgconfig(libxslt) libfftw3-devel libgomp-devel qt5-base-devel pkgconfig(Qt5Concurrent) pkgconfig(Qt5Multimedia) pkgconfig(Qt5OpenGL) pkgconfig(Qt5SerialPort) ImageMagick-tools makeinfo asciidoc-a2x libudev-devel
+Buildrequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: ctags
+BuildRequires: openmpi-devel
+BuildRequires: hamlib-devel
+BuildRequires: pkgconfig(libxslt)
+BuildRequires: libudev-devel
+BuildRequires: boost-program_options-devel
+BuildRequires: libgomp-devel
+BuildRequires: libportaudio2-devel
+BuildRequires: libfftw3-devel
+BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: qt5-base-devel
+BuildRequires: pkgconfig(Qt5Concurrent)
+BuildRequires: pkgconfig(Qt5Multimedia)
+BuildRequires: pkgconfig(Qt5SerialPort)
+BuildRequires: ImageMagick-tools
+BuildRequires: dos2unix
+BuildRequires: desktop-file-utils
+BuildRequires: makeinfo
+BuildRequires: asciidoc-a2x
+
 Requires: %name-data = %version-%release
 Conflicts: wsjtx
 
@@ -50,27 +68,36 @@ Data files for %name
 %setup
 %patch1 -p2
 
+pushd wsjtx
+
+# convert CR + LF to LF
+dos2unix *.ui *.iss *.rc *.txt
+popd
+
 %build
 pushd wsjtx
-%cmake_insource -DWSJT_GENERATE_DOCS=OFF
-%make_build
+%cmake -DWSJT_GENERATE_DOCS=OFF
+%cmake_build
 popd
 
 %install
 pushd wsjtx
-%makeinstall_std
+%cmakeinstall_std
 popd
 
 cp CALL3.TXT %buildroot%_datadir/%name
-cp JTDX* Release* %buildroot%_docdir/%name
+cp Release* %buildroot%_docdir/%name
 
+mv %buildroot%_pixmapsdir/wsjtx_icon.png \
+   %buildroot%_pixmapsdir/jtdx_icon.png
 for x in 16 32 48; do
     mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps/
-    convert %buildroot%_pixmapsdir/wsjtx_icon.png -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/wsjtx_icon.png
+    convert %buildroot%_pixmapsdir/jtdx_icon.png -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/jtdx_icon.png
 done
 
 sed -i 's/Name=wsjtx/Name=%name/g' %buildroot%_desktopdir/wsjtx.desktop
 sed -i 's/Exec=wsjtx/Exec=%name/g' %buildroot%_desktopdir/wsjtx.desktop
+sed -i 's/wsjtx_icon/jtdx_icon/g' %buildroot%_desktopdir/wsjtx.desktop
 mv %buildroot%_desktopdir/wsjtx.desktop %buildroot%_desktopdir/%name.desktop
 
 %files
@@ -80,13 +107,16 @@ mv %buildroot%_desktopdir/wsjtx.desktop %buildroot%_desktopdir/%name.desktop
 %files data
 %_man1dir/*
 %exclude %_pixmapsdir/*
-%_liconsdir/wsjtx_icon.png
-%_niconsdir/wsjtx_icon.png
-%_miconsdir/wsjtx_icon.png
-%_datadir/jtdx
-%_docdir/jtdx
+%_liconsdir/jtdx_icon.png
+%_niconsdir/jtdx_icon.png
+%_miconsdir/jtdx_icon.png
+%_datadir/%name
+%_docdir/%name
 
 %changelog
+* Wed May 16 2018 Anton Midyukov <antohami@altlinux.org> 18.1.0.85-alt3.S1
+- Version 18.1.0.85
+
 * Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 18.0-alt2
 - NMU: fixed build.
 
