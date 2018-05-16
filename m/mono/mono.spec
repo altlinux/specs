@@ -5,11 +5,11 @@
 %set_verify_elf_method no
 
 # p8 support uses this macro
-%define qIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
+%define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 
 Name: mono
 Version: 5.10.0.157
-Release: alt3%ubt
+Release: alt4%ubt
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -188,7 +188,7 @@ Requires: %name-mono2-compat-devel = %EVR
 Conflicts: mono4-devel-full < %version-%release
 Obsoletes: mono4-devel-full
 Provides: mono4-devel-full = %version-%release
-%qIF_ver_lteq %ubt_id M80P
+%qIF_ver_lt %ubt_id S1
 Conflicts: %name-nunit-devel < %version-%release
 Obsoletes: %name-nunit-devel
 Provides: %name-nunit-devel = %version-%release
@@ -206,7 +206,7 @@ Requires: glib2-devel
 Conflicts: mono4-devel < %version-%release
 Obsoletes: mono4-devel
 Provides: mono4-devel = %version-%release
-%qIF_ver_lteq %ubt_id M80P
+%qIF_ver_lt %ubt_id S1
 Conflicts: mono-mcs < %version-%release
 Provides: mono-mcs = %version-%release
 Obsoletes: mono-mcs
@@ -395,7 +395,7 @@ Requires: %name-core = %EVR
 Conflicts: mono4-monodoc < %version-%release
 Obsoletes: mono4-monodoc
 Provides: mono4-monodoc = %version-%release
-%qIF_ver_lteq %ubt_id M80P
+%qIF_ver_lt %ubt_id S1
 Conflicts: monodoc < %version-%release
 Provides: monodoc = %version-%release
 Obsoletes: monodoc
@@ -413,7 +413,7 @@ Requires: pkg-config
 Conflicts: mono4-monodoc-devel < %version-%release
 Obsoletes: mono4-monodoc-devel
 Provides: mono4-monodoc-devel = %version-%release
-%qIF_ver_lteq %ubt_id M80P
+%qIF_ver_lt %ubt_id S1
 Conflicts: monodoc-devel < %version-%release
 Provides: monodoc-devel = %version-%release
 Obsoletes: monodoc-devel
@@ -606,7 +606,7 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 # install file trigger
 install -pD -m755 %SOURCE4 %buildroot%_rpmlibdir/mono-cert-sync.filetrigger
 
-%qIF_ver_lteq %ubt_id M80P
+%qIF_ver_lt %ubt_id S1
 ln -s mcs %buildroot%_bindir/gmcs
 %endif
 
@@ -614,7 +614,7 @@ ln -s mcs %buildroot%_bindir/gmcs
 
 
 %files core -f mcs.lang
-%qIF_ver_lteq %ubt_id M80P
+%qIF_ver_lt %ubt_id S1
 %_bindir/gmcs
 %endif
 %doc  CONTRIBUTING.md LICENSE COPYING.LIB  NEWS README.md PATENTS.TXT
@@ -1121,6 +1121,9 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Wed May 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt4%ubt
+- Updated interpackage dependencies.
+
 * Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt3%ubt
 - Fixed build on some architectures.
 
