@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		uddi4j
 Version:	2.0.5
-Release:	alt2_15jpp8
+Release:	alt2_17jpp8
 Summary:	Universal Description, Discovery and Integration registry API for Java
 License:	IBM
 URL:		http://sourceforge.net/projects/uddi4j/
@@ -17,21 +17,13 @@ URL:		http://sourceforge.net/projects/uddi4j/
 Source0:	http://downloads.sf.net/project/uddi4j/uddi4j/%{version}/uddi4j-src-%{version}.zip
 Source1:	%{name}-MANIFEST.MF
 
-# Set javac path in build.xml
-Patch0:		uddi4j-set-javac-path.patch
-
 # A couple of utf8 incompatible chars prevent compile
-Patch1:		uddi4j-remove-nonutf8-chars.patch
+Patch0:		uddi4j-remove-nonutf8-chars.patch
 
 BuildArch:	noarch
 
 BuildRequires:	ant
-BuildRequires:	axis
-BuildRequires:	xerces-j2
 BuildRequires:	javapackages-local
-
-Requires:	axis
-Requires:	xerces-j2
 Source44: import.info
 
 %description
@@ -49,18 +41,15 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
-%patch1 -p1
 
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
-ln -s %{_datadir}/java/axis/saaj.jar
-ln -s %{_datadir}/java/axis/axis.jar
-ln -s %{_datadir}/java/axis/jaxrpc.jar
-ln -s %{_datadir}/java/xerces-j2.jar xerces.jar
+# Disable java 8 doclinting
+sed -i -e '/<javadoc/aadditionalparam="-Xdoclint:none"' build.xml
 
 %build
-ant compile javadocs
+ant -Djavac.executable=javac compile javadocs
 
 %install
 # inject OSGi manifests
@@ -74,13 +63,16 @@ zip -u build/lib/%{name}.jar META-INF/MANIFEST.MF
 %mvn_install -J build/javadocs
 
 %files -f .mfiles
-%doc LICENSE.html
+%doc --no-dereference LICENSE.html
 %doc ReleaseNotes.html
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.html
+%doc --no-dereference LICENSE.html
 
 %changelog
+* Wed May 16 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt2_17jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt2_15jpp8
 - fc27 update
 
