@@ -4,8 +4,8 @@
 %def_enable xa
 
 Name: Mesa
-Version: 17.3.6
-Release: alt1
+Version: 17.3.9
+Release: alt1%ubt
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -15,9 +15,11 @@ Url: http://www.mesa3d.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
-BuildRequires: llvm4.0-devel llvm4.0-devel-static
+BuildPreReq: /proc
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: llvm-devel llvm-devel-static
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
 BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel libelf-devel
@@ -126,6 +128,8 @@ Xorg Gallium3D acceleration development package
 Summary: Mesa software rendering libraries
 Group: System/X11
 Requires: libGL = %epoch:%version-%release
+Provides: xorg-dri-virgl
+Obsoletes: xorg-dri-virgl < %epoch:%version-%release
 
 %description -n xorg-dri-swrast
 Mesa software rendering libraries
@@ -159,14 +163,6 @@ Requires: libvdpau
 
 %description -n xorg-dri-nouveau
 DRI driver for nVidia
-
-%package -n xorg-dri-virgl
-Summary: Virtio DRI driver
-Group: System/X11
-Requires: libGL = %epoch:%version-%release
-
-%description -n xorg-dri-virgl
-DRI driver for Virtio
 
 %package -n glxinfo
 Summary: display info about a GLX extension and OpenGL renderer
@@ -203,10 +199,7 @@ framerate information to stdout
 %build
 %autoreconf
 %configure \
-%ifarch %ix86
-	--with-dri-drivers=%dri_ix86 \
-%else
-%ifarch x86_64
+%ifarch %ix86 x86_64
 	--with-dri-drivers=%dri_ix86 \
 %else
 %ifarch ppc
@@ -216,7 +209,6 @@ framerate information to stdout
 	--with-dri-drivers=swrast \
 %else
 	--with-dri-drivers=%dri_common \
-%endif
 %endif
 %endif
 %endif
@@ -250,6 +242,36 @@ framerate information to stdout
 
 %install
 %make DESTDIR=%buildroot install
+
+m=%buildroot%_libdir/X11/modules/dri
+%ifarch %ix86 x86_64
+	m="$m %buildroot%_libdir/dri"
+%endif
+for d in $m; do
+	for f in $d/*.so; do
+		[ ! -L "$f" ] || continue
+		n="${f##*/}"
+		s="$(objdump -p "$f" | awk '/SONAME/ {print $2}')"
+		[ -n "$s" ]
+		[ "$n" != "$s" ] || continue
+		t="$d/$s"
+		[ -f "$t" ] || mv "$f" "$t"
+		ln -v -snf "${t##*/}" "$f"
+	done
+done
+%ifarch %ix86 x86_64
+d=%buildroot%_libdir/vdpau
+	for f in $d/*.so.1.0.0; do
+                [ ! -L "$f" ] || continue
+                n="${f##*/}"
+                s="$(objdump -p "$f" | awk '/SONAME/ {print $2}')"
+                [ -n "$s" ]
+                [ "$n" != "$s" ] || continue
+                t="$d/$s"
+                [ -f "$t" ] || mv "$f" "$t"
+                ln -v -snf "${t##*/}" "$f"
+        done
+%endif
 
 mkdir -p %buildroot%_sysconfdir/X11/%_lib
 # moved libGL
@@ -375,6 +397,13 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 
 %files -n xorg-dri-swrast
 %_libdir/X11/modules/dri/*swrast*_dri.so
+%_libdir/X11/modules/dri/mesa_dri_drivers.so
+%ifarch %ix86 x86_64
+%_libdir/X11/modules/dri/gallium_dri.so
+%_libdir/X11/modules/dri/virtio_gpu_dri.so
+%_libdir/dri/gallium_drv_video.so
+%_libdir/vdpau/libvdpau_gallium.so.1
+%endif
 
 %ifarch ppc %ix86 x86_64
 %files -n xorg-dri-intel
@@ -412,11 +441,6 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %endif
 %endif
 
-%ifarch %ix86 x86_64
-%files -n xorg-dri-virgl
-%_libdir/X11/modules/dri/virtio_gpu_dri.so
-%endif
-
 %files -n glxinfo
 %_bindir/glxinfo
 
@@ -424,6 +448,15 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Wed May 16 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:17.3.9-alt1%ubt
+- 17.3.9
+
+* Thu Apr 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:17.3.8-alt1
+- 17.3.8
+
+* Mon Mar 26 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:17.3.7-alt1
+- 17.3.7
+
 * Tue Feb 27 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:17.3.6-alt1
 - 17.3.6
 - packed GLES3 includes (closes: #34580)
