@@ -46,7 +46,7 @@ BuildRequires: jpackage-generic-compat
 
 %global section		devel
 %global source_path	pgjdbc/src/main/java/org/postgresql
-%global parent_ver	1.1.2
+%global parent_ver	1.1.3
 %global parent_poms_builddir	./pgjdbc-parent-poms
 
 %global pgjdbc_mvn_options -DwaffleEnabled=false -DosgiEnabled=false \\\
@@ -54,17 +54,17 @@ BuildRequires: jpackage-generic-compat
 
 Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
-Version:	42.1.4
-Release:	alt1_1jpp8
+Version:	42.2.1
+Release:	alt1_2jpp8
 License:	BSD
 URL:		http://jdbc.postgresql.org/
 
-Source0:	https://github.com/pgjdbc/pgjdbc/archive/REL%version.tar.gz
+Source0:	https://github.com/pgjdbc/pgjdbc/archive/REL%{version}/pgjdbc-REL%{version}.tar.gz
 
 # Upstream moved parent pom.xml into separate project (even though there is only
 # one dependant project on it?).  Let's try to not complicate packaging by
 # having separate spec file for it, too.
-Source1:	https://github.com/pgjdbc/pgjdbc-parent-poms/archive/REL%parent_ver.tar.gz
+Source1:	https://github.com/pgjdbc/pgjdbc-parent-poms/archive/REL%parent_ver/pgjdbc-parent-poms-REL%{parent_ver}.tar.gz
 
 # disable test that makes unpredictable assumptions about non-routable IPs
 # See https://github.com/pgjdbc/pgjdbc/issues/556
@@ -79,6 +79,9 @@ BuildRequires:	maven-enforcer-plugin
 BuildRequires:	maven-plugin-bundle
 BuildRequires:	maven-plugin-build-helper
 BuildRequires:	classloader-leak-test-framework
+
+BuildRequires:	mvn(com.ongres.scram:client)
+BuildRequires:	mvn(org.apache.maven.plugins:maven-clean-plugin)
 
 %if %runselftest
 BuildRequires:	postgresql10-contrib postgresql10-server
@@ -115,7 +118,7 @@ This package contains the API Documentation for %{name}.
 
 
 %prep
-%setup -c -q -a 1 -n pgjdbc-REL%version
+%setup -c -q -a 1
 
 mv pgjdbc-REL%version/* .
 mv pgjdbc-parent-poms-REL%parent_ver pgjdbc-parent-poms
@@ -131,6 +134,7 @@ find -name "*.jar" -or -name "*.class" | xargs rm -f
 %pom_xpath_inject pom:modules "<module>%parent_poms_builddir</module>"
 %pom_xpath_inject pom:parent "<relativePath>pgjdbc-parent-poms/pgjdbc-versions</relativePath>"
 %pom_xpath_set pom:relativePath ../pgjdbc-parent-poms/pgjdbc-core-parent pgjdbc
+%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-shade-plugin']" pgjdbc
 
 # compat symlink: requested by dtardon (libreoffice), reverts part of
 # 0af97ce32de877 commit.
@@ -157,7 +161,7 @@ mkdir -p pgjdbc/target/generated-sources/annotations
 
 # Include PostgreSQL testing methods and variables.
 %if %runselftest
-%pgtests_init
+%postgresql_tests_init
 
 PGTESTS_LOCALE=C.UTF-8
 
@@ -175,7 +179,7 @@ protocolVersion=0
 EOF
 
 # Start the local PG cluster.
-%pgtests_start
+%postgresql_tests_start
 %else
 # -f is equal to -Dmaven.test.skip=true
 opts="-f"
@@ -189,20 +193,23 @@ opts="-f"
 
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 
 
 %files parent-poms -f .mfiles-parent-poms
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc pgjdbc-parent-poms/CHANGELOG.md pgjdbc-parent-poms/README.md
 
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 
 %changelog
+* Wed May 16 2018 Igor Vlasenko <viy@altlinux.ru> 0:42.2.1-alt1_2jpp8
+- java fc28 update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:42.1.4-alt1_1jpp8
 - new version
 
