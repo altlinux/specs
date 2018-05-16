@@ -9,11 +9,10 @@
 %def_enable omhttpfs
 %def_enable elasticsearch
 %def_enable libsystemd
-%def_enable libcurl
-%def_disable mmkubernetes
+%def_enable mmkubernetes
 
 Name: rsyslog
-Version: 8.34.0
+Version: 8.35.0
 Release: alt1%ubt
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -48,7 +47,6 @@ BuildRequires: liblognorm-devel >= 2.0.3
 %{?_enable_omhttpfs:BuildRequires: libcurl-devel >= 7.0.0}
 %{?_enable_omhiredis:BuildRequires: libhiredis-devel >= 0.10.1}
 %{?_enable_libsystemd:BuildRequires: libsystemd-devel >= 209}
-%{?_enable_libcurl:BuildRequires: libcurl-devel}
 %{?_enable_mmkubernetes:BuildRequires: libcurl-devel}
 
 BuildRequires: iproute2
@@ -300,6 +298,15 @@ feed logs directly into hiredis.
 
  o omhiredis.so - This module provides output to Redis.
 
+%package mmkubernetes
+Summary: Provides the mmkubernetes module
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+
+%description mmkubernetes
+The rsyslog-mmkubernetes package provides module for adding kubernetes
+container metadata.
+
 %package extra
 Summary: Extra support for rsyslog
 Group: System/Kernel and hardware
@@ -328,6 +335,7 @@ all other functions:
  o impstats.so           - Input Module to Generate Periodic Statistics of Internal Counters
  o omstdout.so           - stdout output module (stdout)
  o mmexternal.so         - external message modification modules
+ o fmhttp.so
 
 
 %prep
@@ -393,7 +401,6 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-unlimited-select \
 	--enable-usertools \
 	--enable-generate-man-pages \
-	%{subst_enable libcurl} \
 	%{subst_enable mmkubernetes} \
 	%{subst_enable libsystemd} \
 	--with-systemdsystemunitdir=%_unitdir
@@ -540,6 +547,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %files mmanon
 %mod_dir/mmanon.so
 
+%files mmkubernetes
+%mod_dir/mmkubernetes.so
+
 %files elasticsearch
 %mod_dir/omelasticsearch.so
 
@@ -564,8 +574,12 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/pmpanngfw.so
 %mod_dir/mmexternal.so
 %mod_dir/mmsnmptrapd.so
+%mod_dir/fmhttp.so
 
 %changelog
+* Wed May 16 2018 Alexey Shabalin <shaba@altlinux.ru> 8.35.0-alt1%ubt
+- 8.35.0
+
 * Sat Apr 07 2018 Alexey Shabalin <shaba@altlinux.ru> 8.34.0-alt1%ubt
 - 8.34.0
 
