@@ -1,10 +1,11 @@
 %define oname tgming
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.0.8
-Release: alt2.1
+Release: alt2.2
 Summary: TurboGears2 Support for Ming MongoDB ORM
 License: MIT
 Group: Development/Python
@@ -29,6 +30,9 @@ automatically setup tgming and all the required dependencies.
 %package -n python3-module-%oname
 Summary: TurboGears2 Support for Ming MongoDB ORM
 Group: Development/Python3
+%if_with bootstrap
+%add_python3_req_skip ming
+%endif
 
 %description -n python3-module-%oname
 tgming is used by TurboGears2 to support ming backend. To create a ming
@@ -72,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.0.8-alt2.2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.8-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

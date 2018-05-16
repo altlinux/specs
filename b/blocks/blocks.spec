@@ -1,7 +1,7 @@
 Summary: Conversion tools to enable bcache or LVM on existing block devices
 Name: blocks
 Version: 0.1.4
-Release: alt2.1
+Release: alt2.2
 License: GPLv3
 Group: System/Kernel and hardware
 Source0: %name-%version.tar
@@ -55,6 +55,9 @@ mv %buildroot{%_bindir,%_sbindir}/%name
 %doc README.md
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.1.4-alt2.2
+- (NMU) rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.4-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

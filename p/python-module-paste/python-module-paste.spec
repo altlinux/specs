@@ -1,36 +1,27 @@
 %define modulename paste
-
-%def_with python3
+%def_with bootstrap
 
 Name: python-module-%modulename
-Version: 1.7.5.1
-Release: alt3.hg20140319.1.1
+Version: 2.0.3
+Release: alt1
 
 Summary: Tools for using a Web Server Gateway Interface stack
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 
 Url: http://pythonpaste.org
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-BuildArch: noarch
 
 Source: %name-%version.tar
 
-#BuildPreReq: python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3 time
 
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python-tools-2to3
-%endif
+BuildRequires: python-module-setuptools python3-module-setuptools time
 
-%setup_python_module %modulename
 %py_provides Paste
 
 %add_python_req_skip flup openid scgi
+
 
 %description
 These provide several pieces of "middleware" (or filters) that can be
@@ -38,66 +29,64 @@ nested to build web applications. Each piece of middleware uses the
 WSGI (PEP 333) interface, and should be compatible with other
 middleware based on those interfaces.
 
-%if_with python3
 %package -n python3-module-%modulename
 Summary: Tools for using a Web Server Gateway Interface stack (Python 3)
 Group: Development/Python3
 %py3_provides Paste
 %add_python3_req_skip flup openid scgi hotshot
+%if_with bootstrap
+%add_python3_req_skip flup.middleware.session hotshot.stats rfc822
+%endif
 
 %description -n python3-module-%modulename
 These provide several pieces of "middleware" (or filters) that can be
 nested to build web applications. Each piece of middleware uses the
 WSGI (PEP 333) interface, and should be compatible with other
 middleware based on those interfaces.
-%endif
 
 %prep
 %setup
 #rm -f paste/util/subprocess24.py
-sed -i -e '/^#!.*/,1 d' \
-	paste/util/scgiserver.py \
-	paste/debug/doctest_webapp.py
+#sed -i -e '/^#!.*/,1 d' \
+#	paste/util/scgiserver.py \
+#	paste/debug/doctest_webapp.py
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 sed -i 's|/usr/bin/env python|/usr/bin/env python3|' \
 	tests/cgiapp_data/*
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 # hack for autocreate "provides python2.5(paste)"
 touch %buildroot%python_sitelibdir/%modulename/__init__.py
 
-%if_with python3
 pushd ../python3
 %python3_install
 touch %buildroot%python3_sitelibdir/%modulename/__init__.py
 popd
-%endif
 
 %files
 %python_sitelibdir/%modulename/
 %python_sitelibdir/*.egg-info
 
-%if_with python3
 %files -n python3-module-%modulename
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/*.egg-info
-%endif
+
 
 %changelog
+* Tue May 22 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.0.3-alt1
+- updated version to 2.0.3 from tarball
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.7.5.1-alt3.hg20140319.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

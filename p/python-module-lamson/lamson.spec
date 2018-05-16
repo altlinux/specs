@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3.4
-Release: alt2.1
+Release: alt2.2
 Summary: Lamson is a modern Pythonic mail server built like a web application server
 License: BSD or GPLv3
 Group: Development/Python
@@ -159,6 +159,9 @@ popd
 %endif
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.3.4-alt2.2
+- (NMU) rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.4-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

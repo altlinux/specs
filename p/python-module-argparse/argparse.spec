@@ -5,7 +5,7 @@
 
 Name:           python-module-%oname
 Version:        1.3.0
-Release:        alt2.hg20141215.1
+Release:        alt2.hg20141215.2
 Summary:        Python command line parser
 
 Group:          Development/Python
@@ -127,6 +127,9 @@ This package contains pickles for argparse.
 %endif
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.3.0-alt2.hg20141215.2
+- (NMU) rebuild with python3.6
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt2.hg20141215.1
 - NMU: Use buildreq for BR.
 

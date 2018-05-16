@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.4.0
-Release: alt4
+Release: alt4.1
 Summary: Allows Python code to live in the ZODB
 License: ZPLv2.1
 Group: Development/Python
@@ -106,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.4.0-alt4.1
+- (NMU) rebuild with python3.6
+
 * Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.0-alt4
 - Rebuilt to regenerate dependencies.
 

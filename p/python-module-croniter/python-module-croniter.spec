@@ -4,7 +4,7 @@
 
 Name:           python-module-%{pypi_name}
 Version:        0.3.4
-Release:        alt1.1
+Release:        alt1.2
 Summary:        Iteration for datetime object with cron like format
 Group:          Development/Python
 
@@ -92,6 +92,9 @@ rm -fr %{buildroot}%{python3_sitelibdir}/%{pypi_name}/tests/
 %endif
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.3.4-alt1.2
+- (NMU) rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.4-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

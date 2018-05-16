@@ -9,7 +9,7 @@
 Summary: Random assortment of WSGI servers, middleware
 Name: python-module-%oname
 Version: %version
-Release: alt2.hg20120223.1.1
+Release: alt2.hg20120223.1.2
 # http://hg.saddi.com/flup-server
 Source0: %modulename.tar.bz2
 License: BSD
@@ -112,6 +112,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir_noarch/%oname/
 %endif
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.3-alt2.hg20120223.1.2
+- (NMU) rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.3-alt2.hg20120223.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

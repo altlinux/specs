@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.8
-Release: alt2.svn20140714.1
+Release: alt2.svn20140714.2
 Summary: A Python Utility Library
 License: BSD, LGPL
 Group: Development/Python
@@ -1208,6 +1208,9 @@ touch %buildroot%python_sitelibdir/%oname/component/__init__.py
 %endif
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 4.8-alt2.svn20140714.2
+- (NMU) rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.8-alt2.svn20140714.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

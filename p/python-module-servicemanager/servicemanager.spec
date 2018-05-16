@@ -1,19 +1,19 @@
 %define oname servicemanager
 
 %def_with python3
+%def_without bootstrap
 
 Name: python-module-%oname
 Version: 0.0.16
-Release: alt1.git20141007.1
+Release: alt2
 Summary: A python tool to manage developing and testing with lots of microservices
 License: ASL v2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/servicemanager/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/hmrc/service-manager.git
-Source: %name-%version.tar
 BuildArch: noarch
+
+Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -24,6 +24,9 @@ BuildPreReq: python-tools-2to3
 
 %py_provides %oname
 %py_requires pymongo
+
+%add_python3_req_skip bottle
+
 
 %description
 A set of utilities to run applications and micro services during the
@@ -89,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Thu May 17 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.0.16-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.16-alt1.git20141007.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

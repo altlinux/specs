@@ -4,7 +4,7 @@
 
 Name:           python-module-%{pypi_name}
 Version:        1.4
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Cross-platform system power status information
 License:        MIT
@@ -81,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.4-alt1.1
+- (NMU) rebuild with python3.6
+
 * Thu Mar 17 2016 Andrey Cherepanov <cas@altlinux.org> 1.4-alt1
 - Initail build in Sisyphus
 

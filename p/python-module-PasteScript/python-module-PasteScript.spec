@@ -1,14 +1,10 @@
 %define version 1.7.5
-%define release alt3.hg20120208
 %define oname PasteScript
+%def_without bootstrap
 
-%def_with python3
-
-%setup_python_module %oname
-
-Name: %packagename
+Name: python-module-%oname
 Version:%version
-Release: alt3.hg20120208.1
+Release: alt4
 Serial: 1
 
 Summary: A pluggable command-line frontend
@@ -17,49 +13,48 @@ License: MIT/X11
 Group: Development/Python
 BuildArch: noarch
 Url: http://pythonpaste.org
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # hg clone http://bitbucket.org/ianb/pastescript
-Source: %modulename-%version.tar
+
+Source: %name-%version.tar
 
 Conflicts: python-module-paste.script
 Obsoletes: python-module-paste.script
 %py_provides %oname
 
+%if_with bootstrap
 BuildRequires: python-module-PasteDeploy
-BuildPreReq: python-module-sphinx python-module-Pygments
-%if_with python3
+BuildPreReq: python3-module-PasteDeploy
+%endif
+
+BuildRequires: python-module-sphinx python-module-Pygments
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-PasteDeploy
 BuildPreReq: python3-module-sphinx python3-module-Pygments
 BuildPreReq: python-tools-2to3
-%endif
+
 
 %description
 A pluggable command-line frontend, including commands to setup
 package file layouts.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: A pluggable command-line frontend (Python 3)
 Group: Development/Python3
 %py3_provides %oname
-%add_python3_req_skip new
+%add_python3_req_skip new paste.deploy paste.deploy.converters paste.translogger
+%add_python3_req_skip paste.util paste.util.template paste.wsgilib
 
 %description -n python3-module-%oname
 A pluggable command-line frontend, including commands to setup
 package file layouts.
-%endif
 
 %prep
-%setup -n %modulename-%version
-%if_with python3
+%setup -n %name-%version
+
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
-%if_with python3
 pushd ../python3
 sed -i 's|%_bindir/env python|%_bindir/env python3|' \
 	tests/test_logging_config.py scripts/paster
@@ -67,36 +62,36 @@ sed -i 's|%_bindir/env python|%_bindir/env python3|' \
 find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 popd
-%endif
 
 %python_build
 ./regen-docs
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 mv %buildroot%_bindir/paster %buildroot%_bindir/paster3
 popd
-%endif
+
 %python_install
 
 %files
 %doc docs/_build/*
 %python_sitelibdir/paste/script
-%python_sitelibdir/%modulename-*
+%python_sitelibdir/%oname-*
 %_bindir/paster
 %exclude %python_sitelibdir/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %_bindir/paster3
 %python3_sitelibdir/paste/script
-%python3_sitelibdir/%modulename-*
+%python3_sitelibdir/%oname-*
 %exclude %python3_sitelibdir/tests
-%endif
+
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.7.5-alt4
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.7.5-alt3.hg20120208.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
