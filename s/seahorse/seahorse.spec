@@ -1,8 +1,11 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
 %define ver_major 3.20
 
 %def_disable debug
-%def_enable ldap
+# ldap support broken (incomplete) now
+%def_disable ldap
 %def_enable hkp
 %def_enable gnome_keyring
 %def_enable pkcs11
@@ -15,41 +18,41 @@
 
 Name: seahorse
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A password and encryption key manager
 License: %gpllgpl2plus
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Seahorse
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
+Requires: dconf
 Requires: gnupg2 gcr
 Requires: pinentry-x11
 %{?_enable_ssh:Requires: openssh-clients}
 %{?_enable_sharing:Requires: avahi-daemon}
 
-BuildPreReq: rpm-build-gnome gnome-common libappstream-glib-devel
-
-# From configure.ac
-BuildPreReq: intltool >= 0.35
-BuildPreReq: libgio-devel
-BuildPreReq: yelp-tools itstool
-BuildPreReq: libgtk+3-devel >= 3.4.0
-BuildPreReq: gnupg2
-BuildPreReq: libgpgme-devel >= 1.0.0
-BuildPreReq: libgpg-error-devel
-BuildRequires: vala-tools
-%{?_enable_ldap:BuildPreReq: libldap-devel}
-%{?_enable_hkp:BuildPreReq: libsoup-devel >= 2.4}
-%{?_enable_gnome_keyring:BuildPreReq: libsecret-devel >= 0.5}
-%{?_enable_pkcs11:BuildPreReq: gcr-libs-devel >= 3.11.91 gcr-libs-vala}
-%{?_enable_sharing:BuildPreReq: libavahi-glib-devel >= 0.6 libavahi-devel }
-%{?_enable_ssh:BuildPreReq: openssh openssh-clients}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
-BuildRequires: gtk-doc docbook-dtds gcc-c++ perl-XML-Parser
-BuildRequires: rpm-build-licenses
+BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
+BuildRequires: yelp-tools libappstream-glib-devel yelp-tools
+BuildRequires: gtk-doc docbook-dtds perl-XML-Parser
 BuildRequires: desktop-file-utils
+BuildRequires: gcc-c++ libgtk+3-devel >= 3.22.0
+BuildRequires: gnupg2
+BuildRequires: libgpgme-devel >= 1.0.0
+BuildRequires: libgpg-error-devel
+BuildRequires: vala-tools
+%{?_enable_ldap:BuildRequires: libldap-devel}
+%{?_enable_hkp:BuildRequires: libsoup-devel >= 2.4}
+%{?_enable_gnome_keyring:BuildRequires: libsecret-devel >= 0.5}
+%{?_enable_pkcs11:BuildRequires: gcr-libs-devel >= 3.11.91 gcr-libs-vala}
+%{?_enable_sharing:BuildRequires: libavahi-glib-devel >= 0.6 libavahi-devel }
+%{?_enable_ssh:BuildRequires: openssh openssh-clients}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 
 %description
 Seahorse is a password and encryption key manager for GNOME desktop.
@@ -58,30 +61,23 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %setup
 
 %build
-%autoreconf
-#export GNUPG=/usr/bin/gpg
-%configure \
-	%{subst_enable ldap} \
-	%{subst_enable hkp} \
-	%{subst_enable sharing} \
-	%{subst_enable ssh} \
-	%{subst_enable debug} \
-	%{?_enable_gnome-keyring:--enable-gnome-keyring} \
-	%{subst_enable pkcs11} \
-	--disable-schemas-compile
-
-%make_build
+%meson \
+%{?_disable_ldap:-Dldap-support=false} \
+%{?_disable_pkcs11:-Dpkcs11-support=false} \
+%{?_disable_hkp:-Dhkp-support=false} \
+%{?_disable_sharing:-Dkey-sharing=false}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name --with-gnome
 
 %files -f %name.lang
 %_bindir/%name
-%dir %_libdir/%name
-%_libdir/%name/%name-ssh-askpass
-%_libdir/%name/xloadimage
+%dir %_libexecdir/%name
+%_libexecdir/%name/ssh-askpass
+%_libexecdir/%name/xloadimage
 %dir %_datadir/%name
 %_datadir/%name/*
 %_iconsdir/hicolor/*/apps/%{name}*.*
@@ -92,12 +88,13 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %config %_datadir/glib-2.0/schemas/org.gnome.seahorse.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.seahorse.manager.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.seahorse.window.gschema.xml
-%_datadir/GConf/gsettings/org.gnome.seahorse.convert
-%_datadir/GConf/gsettings/org.gnome.seahorse.manager.convert
-%_datadir/appdata/%name.appdata.xml
-%doc AUTHORS NEWS README THANKS TODO HACKING
+%_datadir/metainfo/%name.appdata.xml
+%doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Wed May 16 2018 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt2
+- updated to 3.20.0-312-g77df305 from master branch, 3.20 totally obsolete
+
 * Fri Mar 25 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
