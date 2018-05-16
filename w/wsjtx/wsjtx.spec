@@ -1,6 +1,6 @@
 Name: wsjtx
 Version: 1.9.0
-Release: alt1.S1
+Release: alt2.S1
 Summary: WSJT-X implements communication protocols or "modes" called JT4, JT9, JT65, and WSPR
 License: GPLv3
 Group: Engineering
@@ -10,7 +10,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 # Source-url: http://physics.princeton.edu/pulsar/k1jt/%name-%version.tgz
 Patch0: wsjtx-1.8.0-compile-fix.patch
-Patch1: not-find-hamlib_LIBRARY_DIRS.patch
+Patch1: %name-1.9-alt-cmake.patch
 
 Buildrequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -75,14 +75,14 @@ tar -xzf src/%name.tgz
 rm -f src/wsjtx.tgz*
 
 %patch0 -p1
+%patch1 -p2
 
 pushd %name
-%patch1 -p1
 
-#remove bundled boost
+# remove bundled boost
 rm -rf boost
 
-#convert CR + LF to LF
+# convert CR + LF to LF
 dos2unix *.ui *.iss *.rc *.txt
 popd
 
@@ -132,6 +132,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Wed May 16 2018 Anton Midyukov <antohami@altlinux.org> 1.9.0-alt2.S1
+- Added alt-cmake.patch (thanks darktemplar)
+
 * Mon May 14 2018 Anton Midyukov <antohami@altlinux.org> 1.9.0-alt1.S1
 - Release candidate 1.9.0-RC4
 
