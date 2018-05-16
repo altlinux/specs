@@ -1,7 +1,7 @@
 Summary: Inotify cron system
 Name: incron
 Version: 0.5.12
-Release: alt1
+Release: alt1%ubt
 
 Group: System/Base
 License: GPLv2
@@ -10,10 +10,11 @@ Source0: http://inotify.aiken.cz/download/incron/%name-%version.tar
 Source1: incrond.init
 Source2: incrontab.control
 Source3: incrond.service
-Patch0: %name-%version-%release.patch
+Patch0: %name-%version-alt.patch
 
 # Automatically added by buildreq on Sun May 24 2009
 BuildRequires: gcc-c++
+BuildRequires(pre): rpm-build-ubt
 
 %description
 This program is an "inotify cron" system.
@@ -70,6 +71,9 @@ make install-man MANPATH="%buildroot%_mandir" INSTALL="install -D -p"
 %_unitdir/incrond.service
 
 %changelog
+* Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 0.5.12-alt1%ubt
+- added %%ubt
+
 * Thu Jul 21 2016 Anton Farygin <rider@altlinux.ru> 0.5.12-alt1
 - new version
 
