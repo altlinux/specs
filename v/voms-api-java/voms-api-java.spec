@@ -1,5 +1,6 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -7,23 +8,23 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		voms-api-java
-Version:	3.2.0
-Release:	alt1_4jpp8
+Version:	3.3.0
+Release:	alt1_1jpp8
 Summary:	Virtual Organization Membership Service Java API
 
 License:	ASL 2.0
 URL:		https://wiki.italiangrid.it/VOMS
-Source0:	https://github.com/italiangrid/%{name}/archive/v%{version}.tar.gz
+Source0:	https://github.com/italiangrid/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
 #		Disable tests using non-local network interface
 Patch0:		%{name}-no-local.patch
 BuildArch:	noarch
 
 BuildRequires:	maven-local
-BuildRequires:	mvn(eu.eu-emi.security:canl)
+BuildRequires:	mvn(eu.eu-emi.security:canl) >= 2.5
 BuildRequires:	mvn(junit:junit)
 BuildRequires:	mvn(org.mockito:mockito-core)
-BuildRequires:	mvn(com.mycila.maven-license-plugin:maven-license-plugin)
 BuildRequires:	mvn(net.jcip:jcip-annotations)
+Requires:	mvn(eu.eu-emi.security:canl) >= 2.5
 Source44: import.info
 
 %description
@@ -48,26 +49,33 @@ Virtual Organization Membership Service (VOMS) Java API Documentation.
 %setup -q
 %patch0 -p1
 
+# Do not create source jars
 %pom_remove_plugin org.apache.maven.plugins:maven-source-plugin
+
+# Cobertura no longer in Fedora due to licensing issues
 %pom_remove_plugin org.codehaus.mojo:cobertura-maven-plugin
 
-%pom_xpath_inject "pom:project/pom:build/pom:plugins/pom:plugin[pom:groupId='com.mycila.maven-license-plugin']/pom:configuration/pom:excludes" "<exclude>.xmvn/**</exclude>"
-%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:groupId='com.mycila.maven-license-plugin']/pom:configuration/pom:strictCheck"
+# Remove license plugin
+%pom_remove_plugin com.mycila.maven-license-plugin:maven-license-plugin
 
 %build
 %mvn_build
 
 %install
-%mvn_install
+%mvn_install -J target/site/javadoc/apidocs
 
 %files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc AUTHORS README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Wed May 16 2018 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_1jpp8
+- java fc28 update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt1_4jpp8
 - fc27 update
 
