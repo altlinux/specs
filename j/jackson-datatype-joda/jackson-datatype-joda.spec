@@ -7,27 +7,24 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackson-datatype-joda
-Version:       2.7.6
-Release:       alt1_3jpp8
+Version:       2.9.4
+Release:       alt1_2jpp8
 Summary:       Add-on module for Jackson to support Joda data-types
 License:       ASL 2.0
 URL:           http://wiki.fasterxml.com/JacksonModuleJoda
 Source0:       https://github.com/FasterXML/jackson-datatype-joda/archive/%{name}-%{version}.tar.gz
 
-BuildRequires: maven-local
-BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
-BuildRequires: mvn(com.fasterxml.jackson.core:jackson-annotations)
-BuildRequires: mvn(com.fasterxml.jackson.core:jackson-core)
-BuildRequires: mvn(com.fasterxml.jackson.core:jackson-databind)
-BuildRequires: mvn(com.google.code.maven-replacer-plugin:replacer)
-BuildRequires: mvn(joda-time:joda-time)
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
-BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations) >= %{version}
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core) >= %{version}
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind) >= %{version}
+BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
+BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
+BuildRequires:  mvn(joda-time:joda-time)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 
-BuildArch:     noarch
+BuildArch:      noarch
 Source44: import.info
 
 %description
@@ -37,11 +34,11 @@ library.
 
 %package javadoc
 Group: Development/Java
-Summary:       Javadoc for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
@@ -49,13 +46,9 @@ This package contains javadoc for %{name}.
 sed -i 's/\r//' src/main/resources/META-INF/LICENSE
 cp -p src/main/resources/META-INF/LICENSE .
 
-# ComparisonFailure: expected:<...Midnight","2001-05-2[5]"]> but was:<...Midnight","2001-05-2[4]"]>
-rm -r src/test/java/com/fasterxml/jackson/datatype/joda/JodaSerializationTest.java
-
 %mvn_file : %{name}
 
 %build
-
 %mvn_build
 
 %install
@@ -63,12 +56,15 @@ rm -r src/test/java/com/fasterxml/jackson/datatype/joda/JodaSerializationTest.ja
 
 %files -f .mfiles
 %doc README.md release-notes/*
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_2jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_3jpp8
 - fc27 update
 
