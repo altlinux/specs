@@ -3,7 +3,7 @@
 
 Name: ocaml-dose3
 Version: 5.0.1
-Release: alt0.5.2git09392e2%ubt
+Release: alt1.5.2git09392e2%ubt
 Summary: Framework for managing distribution packages and dependencies
 Group: Development/ML
 
@@ -37,11 +37,6 @@ BuildRequires: rpm-devel
 BuildRequires: zlib-devel
 
 BuildRequires: perl
-
-# Needs latex for documentation.
-BuildRequires: texlive
-BuildRequires: hevea
-BuildRequires: graphviz
 
 # Depend on pod2man, pod2html.
 BuildRequires: /usr/bin/pod2man
@@ -142,6 +137,9 @@ ln -s %_bindir/distcheck %buildroot%_bindir/eclipsecheck
 %_mandir/man8/*.8*
 
 %changelog
+* Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 5.0.1-alt1.5.2git09392e2%ubt
+- cleanup  buildrequires
+
 * Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 5.0.1-alt0.5.2git09392e2%ubt
 - first build for ALT, based on RH spec
 
