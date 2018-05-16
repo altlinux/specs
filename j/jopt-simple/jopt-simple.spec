@@ -8,19 +8,20 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name: jopt-simple
-Version: 4.6
-Release: alt1_6jpp8
-Summary: A Java command line parser
-License: MIT
-URL: http://pholser.github.io/jopt-simple/
-Source0: https://github.com/pholser/jopt-simple/archive/jopt-simple-%{version}.tar.gz
+Name:           jopt-simple
+Version:        5.0.4
+Release:        alt1_2jpp8
+Summary:        A Java command line parser
+License:        MIT
+URL:            http://jopt-simple.github.io/jopt-simple
+BuildArch:      noarch
 
-BuildArch: noarch
+Source0:        https://github.com/jopt-simple/jopt-simple/archive/jopt-simple-%{version}.tar.gz
 
-BuildRequires: maven-local
-BuildRequires: joda-time
-BuildRequires: sonatype-oss-parent
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -29,7 +30,7 @@ you might pass to an invocation of javac.
 
 %package javadoc
 Group: Development/Java
-Summary: Javadoc for %{name}
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -43,6 +44,7 @@ This package contains the API documentation for %{name}.
 %pom_remove_plugin org.pitest:pitest-maven
 %pom_remove_plugin org.codehaus.mojo:cobertura-maven-plugin
 %pom_remove_plugin org.apache.maven.plugins:maven-pmd-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
 
 %build
 # Unit testing is disabled due to a missing dependency in Fedora of continuous-testing-toolkit
@@ -52,13 +54,15 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
-%dir %{_javadir}/%{name}
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:5.0.4-alt1_2jpp8
+- java update
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.6-alt1_6jpp8
 - fc27 update
 
