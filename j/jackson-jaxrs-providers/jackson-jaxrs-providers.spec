@@ -7,50 +7,43 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackson-jaxrs-providers
-Version:       2.7.6
-Release:       alt1_3jpp8
+Version:       2.9.4
+Release:       alt1_2jpp8
 Summary:       Jackson JAX-RS providers
 License:       ASL 2.0
-URL:           http://wiki.fasterxml.com/JacksonHome
+URL:           https://github.com/FasterXML/jackson-jaxrs-providers
 Source0:       https://github.com/FasterXML/jackson-jaxrs-providers/archive/%{name}-%{version}.tar.gz
 
-BuildRequires: maven-local
-BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
-BuildRequires: mvn(com.fasterxml.jackson.core:jackson-core)
-BuildRequires: mvn(com.fasterxml.jackson.core:jackson-databind)
-BuildRequires: mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-cbor)
-BuildRequires: mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-smile)
-BuildRequires: mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-xml)
-BuildRequires: mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-yaml)
-BuildRequires: mvn(com.fasterxml.jackson.module:jackson-module-jaxb-annotations)
-BuildRequires: mvn(com.google.code.maven-replacer-plugin:replacer)
-BuildRequires: mvn(com.sun.jersey:jersey-core:1)
-BuildRequires: mvn(com.sun.jersey:jersey-server:1)
-BuildRequires: mvn(com.sun.jersey:jersey-servlet:1)
-BuildRequires: mvn(javax.ws.rs:jsr311-api)
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires: mvn(org.codehaus.woodstox:stax2-api)
-BuildRequires: mvn(org.codehaus.woodstox:woodstox-core-asl)
-BuildRequires: mvn(org.eclipse.jetty:jetty-server)
-BuildRequires: mvn(org.eclipse.jetty:jetty-servlet)
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core) >= %{version}
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind) >= %{version}
+BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-cbor)
+BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-smile)
+BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-xml)
+BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-yaml)
+BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
+BuildRequires:  mvn(com.fasterxml.jackson.module:jackson-module-jaxb-annotations)
+BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
+BuildRequires:  mvn(com.google.guava:guava)
+BuildRequires:  mvn(javax.ws.rs:javax.ws.rs-api)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.codehaus.woodstox:stax2-api)
+BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-server)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-servlet)
+BuildRequires:  mvn(org.glassfish.jersey.containers:jersey-container-servlet)
+BuildRequires:  mvn(org.glassfish.jersey.core:jersey-server)
+BuildRequires:  mvn(org.jboss.resteasy:resteasy-jaxrs)
+BuildRequires:  mvn(org.ow2.asm:asm)
 
-BuildArch:     noarch
+BuildArch:      noarch
 Source44: import.info
 
 %description
 This is a multi-module project that contains Jackson-based JAX-RS providers for
-following data formats:
-
-* JSON (https://github.com/FasterXML/jackson-core)
-* Smile (https://github.com/FasterXML/jackson-dataformat-smile)
-* XML (https://github.com/FasterXML/jackson-dataformat-xml)
-* CBOR (https://github.com/FasterXML/jackson-dataformat-cbor)
-* YAML (https://github.com/FasterXML/jackson-dataformat-yaml) 
+following data formats: JSON, Smile (binary JSON), XML, CBOR (another kind of
+binary JSON), YAML.
 
 %package -n jackson-jaxrs-cbor-provider
 Group: Development/Java
@@ -93,20 +86,27 @@ Summary:       Jackson-JAXRS-YAML
 Functionality to handle YAML input/output for JAX-RS implementations
 (like Jersey and RESTeasy) using standard Jackson data binding.
 
+%package datatypes
+Group: Development/Java
+Summary: Functionality for reading/writing core JAX-RS helper types
+
+%description datatypes
+Functionality for reading/writing core JAX-RS helper types.
+
 %package parent
 Group: Development/Java
-Summary:       Jackson JAX-RS providers Parent POM
+Summary: Parent for Jackson JAX-RS providers
 
 %description parent
 Parent POM for Jackson JAX-RS providers.
 
 %package javadoc
 Group: Development/Java
-Summary:       Javadoc for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
@@ -115,21 +115,23 @@ cp -p xml/src/main/resources/META-INF/LICENSE .
 cp -p xml/src/main/resources/META-INF/NOTICE .
 sed -i 's/\r//' LICENSE NOTICE
 
-%pom_xpath_set "pom:properties/pom:version.jersey" 1
-
 # Disable jar with no-meta-inf-services classifier, breaks build
 %pom_remove_plugin :maven-jar-plugin cbor
 %pom_remove_plugin :maven-jar-plugin json
 %pom_remove_plugin :maven-jar-plugin smile
 %pom_remove_plugin :maven-jar-plugin xml
 %pom_remove_plugin :maven-jar-plugin yaml
+%pom_remove_plugin :maven-jar-plugin datatypes
+
+# Add missing deps to fix java.lang.ClassNotFoundException during tests
+%pom_add_dep com.google.guava:guava:18.0:test datatypes cbor json smile xml yaml
+%pom_add_dep org.ow2.asm:asm:5.1:test cbor json smile xml yaml
 
 # Circular dep?
 %pom_remove_dep org.jboss.resteasy:resteasy-jackson2-provider json
 rm json/src/test/java/com/fasterxml/jackson/jaxrs/json/resteasy/RestEasyProviderLoadingTest.java
 
 %build
-
 %mvn_build -s 
 
 %install
@@ -137,20 +139,27 @@ rm json/src/test/java/com/fasterxml/jackson/jaxrs/json/resteasy/RestEasyProvider
 
 %files -f .mfiles-jackson-jaxrs-base
 %doc README.md release-notes/*
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files -n jackson-jaxrs-cbor-provider -f .mfiles-jackson-jaxrs-cbor-provider
 %files -n jackson-jaxrs-json-provider -f .mfiles-jackson-jaxrs-json-provider
 %files -n jackson-jaxrs-smile-provider -f .mfiles-jackson-jaxrs-smile-provider
 %files -n jackson-jaxrs-xml-provider -f .mfiles-jackson-jaxrs-xml-provider
 %files -n jackson-jaxrs-yaml-provider -f .mfiles-jackson-jaxrs-yaml-provider
+
+%files datatypes -f .mfiles-jackson-datatype-jaxrs
+%doc --no-dereference LICENSE NOTICE
+
 %files parent -f .mfiles-jackson-jaxrs-providers
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_2jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_3jpp8
 - fc27 update
 
