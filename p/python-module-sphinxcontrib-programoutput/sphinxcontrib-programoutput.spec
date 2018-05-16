@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.8
-Release: alt1
+Release: alt1.1
 
 Summary: Sphinx extension to include program output
 License: BSD
@@ -36,6 +36,9 @@ into documents, helping you to keep your command examples up to date.
 %python_sitelibdir/*
 
 %changelog
+* Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.8-alt1.1
+- (NMU) rebuild with python3.6
+
 * Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1
 - Initial build for Sisyphus
 

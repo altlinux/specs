@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        1.0.1
-Release:        alt2%ubt
+Release:        alt3
 Summary:        Sphinx API for Web Apps
 License:        BSD
 Group:          Development/Python
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.1-alt3
+- (NMU) rebuild with python3.6
+
 * Wed Mar 21 2018 Stanislav Levin <slev@altlinux.org> 1.0.1-alt2%ubt
 - Rebuild with new setuptools to fix namespace package
 

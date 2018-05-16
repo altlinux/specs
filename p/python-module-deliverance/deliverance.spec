@@ -1,25 +1,22 @@
 %define oname deliverance
 
-%def_with python3
-
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt2.1
+Release: alt3
+
 Summary: Deliverance transforms HTML to theme pages
 License: MIT
 Group: Development/Python
 Url: http://pypi.python.org/pypi/Deliverance
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source: %name-%version.tar
 BuildArch: noarch
 
+Source: %name-%version.tar
+
 BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
-%endif
+
 
 %description
 Deliverance does transformations of HTML to 'theme' pages, similar in
@@ -62,24 +59,19 @@ This package contains tests for Deliverance.
 %prep
 %setup
 
-%if_with python3
 cp -fR . ../python3
 find ../python3 -type f -name '*.py' -exec \
 	sed -i 's|rfc822|rfc822py3|' '{}' +
 find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -88,7 +80,6 @@ for i in $(ls); do
 	mv $i $i.py3
 done
 popd
-%endif
 
 %python_install
 
@@ -100,9 +91,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 
 %files
 %_bindir/*
-%if_with python3
+
 %exclude %_bindir/*.py3
-%endif
+
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/*/*/*/*/*/test
@@ -111,7 +102,6 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %python_sitelibdir/*/tests
 %python_sitelibdir/*/*/*/*/*/*/test
 
-%if_with python3
 %files -n python3-module-%oname
 %_bindir/*.py3
 %python3_sitelibdir/*
@@ -121,9 +111,12 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/*/*/*/*/*/test
-%endif
+
 
 %changelog
+* Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6.1-alt3
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.1-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

@@ -1,39 +1,32 @@
 %define oname Pygments
 
-%def_with python3
-
 Name: python-module-Pygments
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: Pygments is a syntax highlighting package written in Python
-
 License: BSD
 Group: Development/Python
 Url: http://pygments.org/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-Source: Pygments-%version.tar.gz
-
 BuildArch: noarch
 
-%setup_python_module %oname
+Source: Pygments-%version.tar.gz
 
-# manually removed: pybliographic python-module-Rabbyt python-module-pybliographer
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-peak python-module-pyasn1 python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-twisted-core python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python3 python3-base xz
-BuildRequires: python-module-Pyrex python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-setuptools rpm-build-python3 time 
+BuildRequires: python-module-Pyrex
+BuildRequires: python-module-docutils
+BuildRequires: python-module-objects.inv
+BuildRequires: python-module-alabaster
+BuildRequires: python-module-html5lib
+BuildRequires: time
 
-#BuildPreReq: python-module-RuleDispatch python-module-setuptools
-#BuildPreReq: python-module-sphinx-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-objects.inv
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python-tools-2to3
-%endif
+BuildPreReq: python3-module-docutils
+BuildPreReq: python3-module-alabaster
+BuildPreReq: python3-module-html5lib
+BuildPreReq: python3-module-objects.inv
+
 
 %description
 It is a generic syntax highlighter for general use in all kinds of
@@ -45,7 +38,6 @@ to prettify source code. Highlights are:
  * a number of output formats, presently HTML, LaTeX, RTF, SVG and ANSI sequences
  * it is usable as a command-line tool and as a library
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Pygments is a syntax highlighting package written in Python 3
 Group: Development/Python
@@ -92,7 +84,6 @@ BuildArch: noarch
 %description -n python3-module-%oname-pickles
 
 This package contains pickles for %name.
-%endif
 
 %package tests
 Summary: Tests for %name
@@ -148,10 +139,9 @@ This package contains pickles for %name.
 
 %prep
 %setup -n %oname-%version
-%if_with python3
+
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %prepare_sphinx .
 ln -s ../objects.inv doc/
@@ -162,21 +152,18 @@ ln -s ../objects.inv doc/
 %make -C doc pickle
 %make -C doc html
 
-%if_with python3
 pushd ../python3
 %python3_build
 %make SPHINXBUILD='PYTHONPATH=.. py3_sphinx-build' -C doc pickle
 %make SPHINXBUILD='PYTHONPATH=.. py3_sphinx-build' -C doc html
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
 mv %buildroot%_bindir/pygmentize %buildroot%_bindir/pygmentize3
-%endif
+
 %python_install
 
 install -d %buildroot%_man1dir
@@ -190,7 +177,6 @@ install -p -m644 doc/pygmentize.1 %buildroot%_man1dir
 cp -fR tests %buildroot%python_sitelibdir/pygments/
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/pygments/
 
-%if_with python3
 pushd ../python3
 install -d %buildroot%_docdir/python3-module-%oname/
 cp -fR tests %buildroot%python3_sitelibdir/pygments/
@@ -198,7 +184,6 @@ rm %buildroot%python3_sitelibdir/pygments/tests/examplefiles/unicodedoc.py
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/pygments/
 cp -fR doc/_build/html %buildroot%_docdir/python3-module-%oname/
 popd
-%endif
 
 %files
 %doc %dir %_docdir/%name
@@ -220,7 +205,6 @@ popd
 %files pickles
 %python_sitelibdir/*/pickle
 
-%if_with python3
 %files -n python3-module-%oname
 %_bindir/pygmentize3
 %python3_sitelibdir/*
@@ -237,9 +221,11 @@ popd
 %files -n python3-module-%oname-pickles
 %python3_sitelibdir/*/pickle
 
-%endif
 
 %changelog
+* Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.2.0-alt2
+- rebuild with python3.6
+
 * Tue Jun 06 2017 Fr. Br. George <george@altlinux.ru> 2.2.0-alt1
 - Autobuild version bump to 2.2.0
 - Move "testing" lexer back to main package

@@ -1,22 +1,18 @@
 %define oname sphinx
-
-%def_with python3
-
 %define sphinx_dir %python_sitelibdir_noarch/%oname
-%if_with python3
 %define sphinx3_dir %python3_sitelibdir_noarch/%oname
-%endif
 
 Name: python-module-%oname
 Version: 1.6.5
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
 Group: Development/Python
 Url: http://sphinx.pocoo.org/
-Packager: Python Development Team <python@packages.altlinux.org>
+# https://github.com/sphinx-doc/sphinx.git
+BuildArch: noarch
 
 %py_requires simplejson
 %py_requires alabaster
@@ -28,7 +24,6 @@ Packager: Python Development Team <python@packages.altlinux.org>
 Provides: python-module-objects.inv
 Obsoletes: python-module-objects.inv
 
-# https://github.com/sphinx-doc/sphinx.git
 Source0: %name-%version.tar
 Source1: conf.py.template
 Source2: macro
@@ -37,46 +32,17 @@ Source4: refcounting.py
 Source5: sphinx-1.6.4-alt-disable-remote-tests.patch
 Patch0: sphinx-1.4b1-alt-avoid-download-objects.inv.patch 
 
-BuildArch: noarch
-
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-sphinx-objects.inv
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose
-BuildRequires: python2.7(typing) python2.7(sphinxcontrib.websupport)
-BuildRequires: python2.7(sphinxcontrib) /usr/bin/convert
-
-#BuildRequires: python-devel python-module-setuptools python-module-simplejson
-# for docs
-#BuildRequires: texlive-latex-extra 
-#BuildRequires: python-module-Pygments
-#BuildRequires: python-module-docutils python-module-jinja2 texlive-latex-base
-# for tests
-#BuildRequires:  python-module-nose python-modules-json
-#BuildRequires: python-module-snowballstemmer python-module-babel
-#BuildRequires: python-module-alabaster python-module-sphinx_rtd_theme
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-html5lib python3-module-nose
-#BuildRequires: python3-devel python3-module-distribute
-#BuildRequires: python3-module-Pygments python3-module-docutils
-#BuildRequires: python3-module-jinja2 python3-module-nose
-#BuildRequires: python-tools-2to3 python3-module-jinja2-tests
-#BuildRequires: python3-module-snowballstemmer python3-module-babel
-#BuildRequires: python3-module-alabaster python3-module-sphinx_rtd_theme
-BuildRequires: python3(typing) python3(sphinxcontrib.websupport)
-
-# For python3-2to3:
-BuildRequires: python3-tools
-%endif
-
-# For running the new sphinx itself (and generating the docs):
-BuildPreReq: %py_dependencies imagesize
-%if_with python3
-BuildPreReq: python3(imagesize)
-%endif
-
+BuildRequires: python-module-docutils
+BuildRequires: python-module-html5lib
+BuildRequires: python-module-nose
+BuildRequires: python-module-alabaster
+BuildRequires: python2.7(typing)
+BuildRequires: python2.7(sphinxcontrib.websupport)
+BuildRequires: /usr/bin/convert
+BuildRequires: python2.7(sphinxcontrib)
+BuildRequires: %py_dependencies imagesize
 # For %%check:
 BuildRequires: %py_dependencies mock
 # minimal deps on the built-in sqlite driver have been fixed in 1.0.8-alt2:
@@ -84,20 +50,31 @@ BuildRequires: python-module-SQLAlchemy >= 1.0.8-alt2
 # These 2 must be recent to pass the tests:
 BuildRequires: python-module-Pygments >= 2.1.3
 BuildRequires: python-module-alabaster >= 0.7.6-alt2.git20150703
-%if_with python3
-BuildRequires: python3(mock) python3(docutils) python3(jinja2) python3(pygments)
-BuildRequires: python3-module-SQLAlchemy >= 1.0.8-alt2
+
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-module-html5lib
+BuildPreReq: python3-module-nose
+BuildPreReq: python3(typing)
+BuildPreReq: python3(sphinxcontrib.websupport)
+# For python3-2to3:
+BuildPreReq: python3-tools
+# For running the new sphinx itself (and generating the docs):
+BuildPreReq: python3(imagesize)
+BuildPreReq: python3(mock)
+BuildPreReq: python3(docutils)
+BuildPreReq: python3(jinja2)
+BuildPreReq: python3(pygments)
+BuildPreReq: python3-module-SQLAlchemy >= 1.0.8-alt2
 # These 2 must be recent to pass the tests:
-BuildRequires: python3-module-Pygments >= 2.1.3
-BuildRequires: python3-module-alabaster >= 0.7.6-alt2.git20150703
-%endif
+BuildPreReq: python3-module-Pygments >= 2.1.3
+BuildPreReq: python3-module-alabaster >= 0.7.6-alt2.git20150703
+
 
 %description
 Sphinx is a tool that makes it easy to create intelligent and beautiful
 documentation for Python projects (or other documents consisting of
 multiple reStructuredText sources)
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Tool for producing documentation for Python 3 projects
 Group: Development/Python3
@@ -115,7 +92,6 @@ multiple reStructuredText sources)
 Summary: Development package for Sphinx (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %epoch:%version-%release
-#Requires: python3-module-%oname-pickles = %epoch:%version-%release
 Requires: python3-module-%oname-tests
 Requires: rpm-macros-sphinx3 = %epoch:%version-%release
 Requires: python3-module-jinja2-tests
@@ -158,8 +134,6 @@ This packages contains tests for Sphinx.
 %package -n rpm-macros-sphinx3
 Summary: RPM macros for build with Sphinx (Python 3)
 Group: Development/Python3
-#Requires: rpm-build-python3
-#Requires: python3-module-%oname = %epoch:%version-%release
 
 # W.r.t. to the content of the macros (see the substitution in %%install):
 #Requires: %sphinx3_dir
@@ -171,7 +145,6 @@ documentation for Python projects (or other documents consisting of
 multiple reStructuredText sources)
 
 This packages contains RPM macros for build with Sphinx.
-%endif
 
 %package devel
 Summary: Development package for Sphinx
@@ -190,7 +163,6 @@ This package destinated for development of Python modules.
 %package -n rpm-macros-sphinx
 Summary: RPM macros for build with Sphinx
 Group: Development/Python
-#Requires: rpm-build-python
 
 # W.r.t. to the content of the macros (see the substitution in %%install):
 #Requires: %sphinx_dir
@@ -259,11 +231,9 @@ ln -s %_datadir/python-sphinx/objects.inv tests/
 
 cp %SOURCE4 sphinx/ext/
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
 install -pm644 %_sourcedir/macro3 ../python3/
-%endif
 
 install -pm644 %_sourcedir/macro .
 # Invalid Python2:
@@ -272,30 +242,21 @@ rm tests/py35/test_autodoc_py35.py
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 
 sed -i 's|python|python3|' doc/Makefile
 sed -i 's|%_bindir/env python|%_bindir/env python3|' \
 	tests/run.py
 
-#cp -R tests %oname/
-#for i in $(find %oname/tests -type d)
-#do
-#	touch $i/__init__.py
-#done
-
 %python3_build
 
 popd
-%endif
 
 # docs
 %make_build -C doc html
 %make_build -C doc man
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 
@@ -317,12 +278,10 @@ for i in $(ls); do
 	mv $i py3_$i
 done
 popd
-%endif
 
 %python_install
 
 # tests
-
 cp -R tests %buildroot%sphinx_dir/
 for i in $(find %buildroot%sphinx_dir/tests -type d)
 do
@@ -337,28 +296,15 @@ ln -frs %buildroot%_datadir/python-sphinx/objects.inv \
 
 # docs
 install -d %buildroot%_docdir/%name
-#install -d %buildroot%_docdir/%name/pdf
 install -d %buildroot%_man1dir
-
 cp -R doc/_build/html %buildroot%_docdir/%name/
-#install -p -m644 doc/_build/latex/*.pdf %buildroot%_docdir/%name/pdf
 install -p -m644 AUTHORS CHANGES* EXAMPLES LICENSE README.rst \
 	%buildroot%_docdir/%name
-#install -p -m644 doc/_build/man/*.1 %buildroot%_man1dir
 
 # macros
-
 install -d %buildroot%_rpmmacrosdir
 sed -e 's:@SPHINX_DIR@:%sphinx_dir:g' < macro > %buildroot%_rpmmacrosdir/sphinx
 sed -e 's:@SPHINX3_DIR@:%sphinx3_dir:g' < ../python3/macro3 > %buildroot%_rpmmacrosdir/sphinx3
-
-#install -p -m644 %oname/directives/desc.py \
-#	%buildroot%sphinx_dir/directives/
-
-#if_with python3
-#install -p -m644 %oname/directives/desc.py \
-#	%buildroot%sphinx3_dir/directives/
-#endif
 
 # add pickle files
 %make_build -C doc pickle
@@ -366,51 +312,33 @@ sed -e 's:@SPHINX3_DIR@:%sphinx3_dir:g' < ../python3/macro3 > %buildroot%_rpmmac
 install -d %buildroot%sphinx_dir/doctrees
 install -p -m644 doc/_build/doctrees/*.pickle \
 	%buildroot%sphinx_dir/doctrees/
-#install -p -m644 %oname/pycode/*.pickle \
-#	%buildroot%sphinx_dir/pycode/
 cp -R doc/_build/pickle %buildroot%sphinx_dir/
 install -p -m644 conf.py.template \
 	%buildroot%sphinx_dir/
 
-#if_with python3
-#pushd ../python3
-#export PYTHONPATH=%buildroot%python3_sitelibdir
-#export PATH=$PATH:%buildroot%_bindir
-#sed -i 's|^SPHINXBUILD.*|SPHINXBUILD = py3_sphinx-build|' doc/Makefile
-#make_build PYTHON=python3 -C doc pickle
-#install -d %buildroot%sphinx3_dir/doctrees
-#install -p -m644 doc/_build/doctrees/*.pickle \
-#	%buildroot%sphinx3_dir/doctrees/
-#cp -R doc/_build/pickle %buildroot%sphinx3_dir/
 install -p -m644 conf.py.template \
 	%buildroot%sphinx3_dir/
-#popd
-#endif
 
 mkdir -p %buildroot%_rpmlibdir
 cat <<\EOF >%buildroot%_rpmlibdir/%name-files.req.list
-# %name dirlist for %_rpmlibdir/files.req
 %sphinx_dir	%name
 EOF
-%if_with python3
+
 cat <<\EOF >%buildroot%_rpmlibdir/python3-module-%oname-files.req.list
-# python3-module-%oname dirlist for %_rpmlibdir/files.req
 %sphinx3_dir	python3-module-%oname
 EOF
-%endif
 
 %check
 # Tried to export NOSE_PROCESSES=%%__nprocs, but it makes a lot tests fail.
 export LC_ALL=en_US.utf8 # some tests fail otherwise, because they use paths with Unicode
-%if_with python3
+
 pushd ../python3
 # disable remote tests
 rm -f tests/test_build_linkcheck.py
 patch -p1 < %SOURCE5
 PYTHONPATH=$(pwd) %make_build PYTHON=python3 test
 popd
-%endif
-# disable remote tests
+
 rm -f tests/test_build_linkcheck.py
 patch -p1 < %SOURCE5
 PYTHONPATH=$(pwd) %make_build test
@@ -423,17 +351,14 @@ PYTHONPATH=$(pwd) %make_build test
 %exclude %sphinx_dir/pickle
 %exclude %sphinx_dir/doctrees
 %python_sitelibdir/*.egg-info
-#_man1dir/*
 
 %files devel
 
 %files pickles
-#dir %sphinx_dir/
 %sphinx_dir/pickle
 %sphinx_dir/doctrees
 
 %files tests
-#dir %sphinx_dir/
 %sphinx_dir/tests
 
 %files doc
@@ -443,32 +368,26 @@ PYTHONPATH=$(pwd) %make_build test
 %_rpmmacrosdir/sphinx
 %_rpmlibdir/%name-files.req.list
 
-%if_with python3
 %files -n python3-module-%oname
 %_bindir/py3_*
 %sphinx3_dir/
 %exclude %sphinx3_dir/tests
-#exclude %sphinx3_dir/pickle
-#exclude %sphinx3_dir/doctrees
 %python3_sitelibdir/*.egg-info
 
 %files -n python3-module-%oname-devel
 
-#files -n python3-module-%oname-pickles
-#dir %sphinx3_dir/
-#%sphinx3_dir/pickle
-#%sphinx3_dir/doctrees
-
 %files -n python3-module-%oname-tests
-#dir %sphinx3_dir/
 %sphinx3_dir/tests
 
 %files -n rpm-macros-sphinx3
 %_rpmmacrosdir/sphinx3
 %_rpmlibdir/python3-module-%oname-files.req.list
-%endif
+
 
 %changelog
+* Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.6.5-alt2
+- rebuild with python3.6
+
 * Wed Oct 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.6.5-alt1
 - Updated to upstream version 1.6.5.
 
