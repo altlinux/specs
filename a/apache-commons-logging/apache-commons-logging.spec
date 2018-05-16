@@ -17,16 +17,16 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 %bcond_without  avalon
 
-%global short_name commons-logging
-
-Name:           apache-%{short_name}
+Name:           apache-commons-logging
 Version:        1.2
-Release:        alt1_11jpp8
+Release:        alt1_13jpp8
 Summary:        Apache Commons Logging
 License:        ASL 2.0
 URL:            http://commons.apache.org/logging
-Source0:        http://www.apache.org/dist/commons/logging/source/%{short_name}-%{version}-src.tar.gz
-Source2:        http://mirrors.ibiblio.org/pub/mirrors/maven2/%{short_name}/%{short_name}-api/1.1/%{short_name}-api-1.1.pom
+BuildArch:      noarch
+
+Source0:        http://www.apache.org/dist/commons/logging/source/commons-logging-%{version}-src.tar.gz
+Source2:        http://mirrors.ibiblio.org/pub/mirrors/maven2/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1.pom
 
 Patch0:         0001-Generate-different-Bundle-SymbolicName-for-different.patch
 Patch1:         0002-Port-to-maven-jar-plugin-3.0.0.patch
@@ -44,10 +44,7 @@ BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-
-BuildArch:      noarch
 Source44: import.info
-
 
 %description
 The commons-logging package provides a simple, component oriented
@@ -60,18 +57,10 @@ commons-logging abstraction is meant to minimize the differences between
 the two, and to allow a developer to not tie himself to a particular
 logging implementation.
 
-%package        javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description    javadoc
-%{summary}.
-
-# -----------------------------------------------------------------------------
+%{?javadoc_package}
 
 %prep
-%setup -q -n %{short_name}-%{version}-src
+%setup -q -n commons-logging-%{version}-src
 %patch0 -p1
 %patch1 -p1
 
@@ -96,35 +85,30 @@ rm src/main/java/org/apache/commons/logging/impl/LogKitLogger.java
 sed -i 's/\r//' RELEASE-NOTES.txt LICENSE.txt NOTICE.txt
 
 # for compatibility reasons
-%mvn_file ":%{short_name}{*}" "%{short_name}@1" "%{name}@1"
-%mvn_alias ":%{short_name}{*}" "org.apache.commons:%{short_name}@1" "apache:%{short_name}@1"
+%mvn_file ":commons-logging{*}" "commons-logging@1" "%{name}@1"
+%mvn_alias ":commons-logging{*}" "org.apache.commons:commons-logging@1" "apache:commons-logging@1"
 
 # Remove log4j12 tests
 rm -rf src/test/java/org/apache/commons/logging/log4j/log4j12
-
 
 %build
 %mvn_build
 
 # The build produces more artifacts from one pom
-%mvn_artifact %{SOURCE2} target/%{short_name}-%{version}-api.jar
-%mvn_artifact commons-logging:commons-logging-adapters:%{version} target/%{short_name}-%{version}-adapters.jar
-
-# -----------------------------------------------------------------------------
+%mvn_artifact %{SOURCE2} target/commons-logging-%{version}-api.jar
+%mvn_artifact commons-logging:commons-logging-adapters:%{version} target/commons-logging-%{version}-adapters.jar
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 %doc PROPOSAL.html RELEASE-NOTES.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
-
-# -----------------------------------------------------------------------------
-
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_13jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_11jpp8
 - fc27 update
 
