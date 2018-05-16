@@ -1,5 +1,5 @@
 Name: cryptmount
-Version: 5.2
+Version: 5.3
 Release: alt1
 Group: File tools
 Packager: Pavel Isopenko <pauli@altlinux.org>
@@ -66,6 +66,9 @@ install -d -m0755 %buildroot%_sysconfdir/default/cryptmount/
 %attr(4711, root, root) %_bindir/cryptmount
 
 %changelog
+* Fri May 11 2018 Pavel Isopenko <pauli@altlinux.org> 5.3-alt1
+- version 5.3
+
 * Wed Mar 23 2016 Pavel Isopenko <pauli@altlinux.org> 5.2-alt1
 - new version 5.2
 - add BuildRequires: doxygen libudev-devel libcryptsetup
