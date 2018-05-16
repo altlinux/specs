@@ -1,6 +1,6 @@
 Name: conky
 Version: 1.9.0
-Release: alt1
+Release: alt1.1
 
 %def_enable lua
 %def_enable ncurses
@@ -33,7 +33,7 @@ Source1: conky-dotfiles.tar.bz2
 BuildRequires: glib2-devel libXdamage-devel libXext-devel libXft-devel xsltproc zlib-devel
 
 %if_enabled lua
-BuildPreReq: liblua5-devel
+BuildPreReq: lua5.1-devel
 %endif
 
 %if_enabled ncurses
@@ -77,11 +77,11 @@ BuildPreReq: imlib2-devel
 %endif
 
 %if_enabled lua_imlib2
-BuildPreReq: liblua5-devel tolua++-devel imlib2-devel
+BuildPreReq: lua5.1-devel libtolua++-lua5.1-devel imlib2-devel
 %endif
 
 %if_enabled lua_cairo
-BuildPreReq: liblua5-devel tolua++-devel libcairo-devel
+BuildPreReq: lua5.1-devel libtolua++-lua5.1 libcairo-devel
 %endif
 
 %description
@@ -145,6 +145,9 @@ install -p -m644 %SOURCE1 ./
 %config %_sysconfdir/%name/%{name}_no_x11.conf
 
 %changelog
+* Wed May 16 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.9.0-alt1.1
+- e2k: rebuilt with explicit lua5.1 BR
+
 * Wed Oct 30 2013 Fr. Br. George <george@altlinux.ru> 1.9.0-alt1
 - Autobuild version bump to 1.9.0
 
