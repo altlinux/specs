@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -17,28 +17,28 @@ BuildRequires: jpackage-generic-compat
 %bcond_with pcollections
 
 Name:          jackson-datatypes-collections
-Version:       2.7.6
-Release:       alt1_3jpp8
+Version:       2.9.4
+Release:       alt1_2jpp8
 Summary:       Jackson datatypes: collections
 # Source files without license headers https://github.com/FasterXML/jackson-datatypes-collections/issues/10
 License:       ASL 2.0
 URL:           https://github.com/FasterXML/jackson-datatypes-collections
 Source0:       https://github.com/FasterXML/jackson-datatypes-collections/archive/%{name}-%{version}.tar.gz
 
-BuildRequires: maven-local
-BuildRequires: mvn(com.carrotsearch:hppc)
-BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
-BuildRequires: mvn(com.fasterxml.jackson.core:jackson-core)
-BuildRequires: mvn(com.fasterxml.jackson.core:jackson-databind)
-BuildRequires: mvn(com.google.guava:guava) >= 15.0
-BuildRequires: mvn(com.google.code.maven-replacer-plugin:replacer)
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.carrotsearch:hppc)
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core) >= %{version}
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind) >= %{version}
+BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
+BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
+BuildRequires:  mvn(com.google.guava:guava)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 %if %{with pcollections}
-BuildRequires: mvn(org.pcollections:pcollections)
+BuildRequires:  mvn(org.pcollections:pcollections)
 %endif
 
-BuildArch:     noarch
+BuildArch:      noarch
 Source44: import.info
 
 %description
@@ -77,11 +77,11 @@ deserialization of PCollections data-types.
 
 %package javadoc
 Group: Development/Java
-Summary:       Javadoc for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
@@ -94,7 +94,6 @@ cp -p hppc/src/main/resources/META-INF/LICENSE .
 %endif
 
 %build
-
 %mvn_build -s
 
 %install
@@ -102,26 +101,29 @@ cp -p hppc/src/main/resources/META-INF/LICENSE .
 
 %files -f .mfiles-jackson-datatypes-collections
 %doc README.md release-notes
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files -n jackson-datatype-guava -f .mfiles-jackson-datatype-guava
 %doc guava/README.md guava/release-notes
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files -n jackson-datatype-hppc -f .mfiles-jackson-datatype-hppc
 %doc hppc/README.md hppc/release-notes
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %if %{with pcollections}
 %files -n jackson-datatype-pcollections -f .mfiles-jackson-datatype-pcollections
 %doc pcollections/README.md pcollections/release-notes
-%doc LICENSE
+%doc --no-dereference LICENSE
 %endif
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1_2jpp8
+- java update
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_3jpp8
 - new version
 
