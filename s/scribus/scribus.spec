@@ -1,6 +1,6 @@
 Name: scribus
-Version: 1.5.3
-Release: alt2
+Version: 1.5.4
+Release: alt1
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -81,7 +81,7 @@ BuildArch: noarch
 %patch0 -p1
 #cp %_datadir/CMake/Modules/FindFreetype.cmake cmake/modules/
 #patch1 -p0
-%patch2 -p1
+#patch2 -p1
 
 # recode man page to UTF-8
 #pushd scribus/manpages
@@ -171,6 +171,10 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Thu May 17 2018 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.4-alt1
+- new version 1.5.4 (with rpmrb script)
+- rebuild with libicu60
+
 * Mon Nov 06 2017 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.3-alt2
 - rebuild with new poppler 0.60
 - build with libfreehand, libpagemaker, libmspub
