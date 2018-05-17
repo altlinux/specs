@@ -1,4 +1,3 @@
-BuildRequires: ecj
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
@@ -11,138 +10,107 @@ BuildRequires: jpackage-generic-compat
 # Prevent brp-java-repack-jars from being run.
 %global __jar_repack %{nil}
 
-%global checkForbiddenJARFiles F=`find -type f -iname '*.jar'`; [ ! -z "$F" ] && \
-echo "ERROR: Sources should not contain JAR files:" && echo "$F" && exit 1
-
-%global fm_compatible_ver 2.3
-%global fm_ver %{fm_compatible_ver}.23
-
 Name:           freemarker
-Version:        %{fm_ver}
-Release:        alt2_5jpp8
-Summary:        A template engine
-License:        BSD
-URL:            http://freemarker.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Version:        2.3.27
+Release:        alt1_2jpp8
+Summary:        The Apache FreeMarker Template Engine
+License:        ASL 2.0
+URL:            https://freemarker.apache.org/
+Source0:        https://github.com/apache/incubator-freemarker/archive/v%{version}/%{name}-%{version}.tar.gz
 
-# Remove JSP 1.x and 2.0 API usage
+# Remove JSP 2.0 API usage
 Patch1:         jsp-api.patch
 # Compile only the classes compatible with the version of jython
 Patch2:         jython-compatibility.patch
 # illegal character in the javadoc comment
 Patch3:         fix-javadoc-encoding.patch
-# Fix ivy configuration
-Patch4:         ivy-configuration.patch
-# Disable JavaRebelIntegration
+# Disable JRebel integration, it is not free software and not in Fedora
 Patch5:         no-javarebel.patch
 # enable jdom extension
 Patch6:         enable-jdom.patch
-# use system javacc and fix Token.java
-Patch7:         javacc.patch
 # Fix compatibility with javacc 7
-Patch8:         javacc-7.patch
+Patch7:         javacc-7.patch
 
 BuildArch:      noarch
 
-BuildRequires: ant >= 1.6
+BuildRequires: ant
 BuildRequires: apache-parent
 BuildRequires: apache-commons-logging
-BuildRequires: apache-commons-io
 BuildRequires: aqute-bnd
 BuildRequires: avalon-logkit >= 1.2
 BuildRequires: dom4j >= 1.6.1
-BuildRequires: emma >= 2.0
-BuildRequires: findbugs
 BuildRequires: hamcrest
 BuildRequires: ivy-local
-BuildRequires: java-devel >= 1.6.0
-BuildRequires: javacc >= 4.0
-BuildRequires: javapackages-local
+BuildRequires: glassfish-jsp-api
+BuildRequires: glassfish-servlet-api
+BuildRequires: javacc >= 7.0
 BuildRequires: jaxen >= 1.1
-BuildRequires: jboss-jsp-2.2-api
 BuildRequires: jcl-over-slf4j
 BuildRequires: jdom >= 1.0
-BuildRequires: jetty-jsp
-BuildRequires: jetty-webapp
-BuildRequires: junit >= 3.8.2
-BuildRequires: jython >= 2.2.1
-BuildRequires: log4j >= 1.2
+BuildRequires: junit
+BuildRequires: jython
 BuildRequires: log4j-over-slf4j
-BuildRequires: logback
 BuildRequires: rhino >= 1.6
-BuildRequires: sonatype-oss-parent
 BuildRequires: saxpath
 BuildRequires: slf4j
 BuildRequires: xalan-j2 >= 2.7.0
 Source44: import.info
 
 %description
-FreeMarker is a Java tool to generate text output based on templates.
-It is designed to be practical as a template engine to generate web
-pages and particularly for servlet-based page production that follows
-the MVC (Model View Controller) pattern. That is, you can separate the
-work of Java programmers and website designers - Java programmers
-needn't know how to design nice websites, and website designers needn't
-know Java programming.
+Apache FreeMarker is a template engine: a Java library to generate text output
+(HTML web pages, e-mails, configuration files, source code, etc.) based on
+templates and changing data. Templates are written in the FreeMarker Template
+Language (FTL), which is a simple, specialized language (not a full-blown
+programming language like PHP).
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{version} -c
+%setup -q -n incubator-freemarker-%{version}
 
+find -type f -name "*.jar" -delete
+find -type f -name "*.class" -delete
 
-find . -name "*.jar" -delete
-find . -name "*.class" -delete
-rm -rf documentation/_html/api/
-
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+%patch1
+%patch2
+%patch3
+%patch5
+%patch6
 %patch7 -p1
-%patch8 -p1
 
-# javacc generated sources are not Java 4 compatible, set source and target levels to Java 8
-sed -i 's/"1\.4"/"1.8"/g' source/build.xml
+# Use system ivy settings
+rm ivysettings.xml
 
-rm -rf source/ivysettings.xml
-
-# %%{__rm} -rf src/freemarker/core/ParseException.java
-rm -rf source/src/freemarker/core/FMParser.java
-rm -rf source/src/freemarker/core/FMParserConstants.java
-rm -rf source/src/freemarker/core/FMParserTokenManager.java
-rm -rf source/src/freemarker/core/SimpleCharStream.java
-rm -rf source/src/freemarker/core/Token.java
-rm -rf source/src/freemarker/core/TokenMgrError.java
-
-%checkForbiddenJARFiles
+# Correct classpath for Javadoc generation
+sed -i 's/cachepath conf="IDE"/cachepath conf="javadoc"/' build.xml
+sed -i '/conf name="IDE"/i<conf name="javadoc" extends="build.jython2.5,build.jsp2.1" />' ivy.xml
 
 %mvn_file org.%{name}:%{name} %{name}
 
 %build
-cd source
-ant -Divy.mode=local javacc jar javadoc maven-pom
+ant -Divy.mode=local -Ddeps.available=true javacc jar javadoc maven-pom
 
 %install
-%mvn_artifact source/build/pom.xml source/build/%{name}.jar
-%mvn_install -J source/build/api
+%mvn_artifact build/pom.xml build/%{name}.jar
+%mvn_install -J build/api
 
 %files -f .mfiles
-%doc README.txt
-%doc LICENSE.txt NOTICE.txt
+%doc README.md RELEASE-NOTES
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.3.27-alt1_2jpp8
+- java update
+
 * Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.3.23-alt2_5jpp8
 - fixed build with new tomcat
 
