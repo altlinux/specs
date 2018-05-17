@@ -5,12 +5,26 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# The gaxis module requires axis version 1.x
+%if %{?fedora}%{!?fedora:0} >= 28 || %{?rhel}%{!?rhel:0} >= 7
+%define gaxismodule 0
+%else
+%global gaxismodule 1
+%endif
+
+# The tomcat module is not compatible with tomcat 8.5 or later
+%if %{?fedora}%{!?fedora:0} >= 28 || %{?rhel}%{!?rhel:0} >= 8
+%define tomcatmodule 0
+%else
+%global tomcatmodule 1
+%endif
+
 Name:		jglobus
 Version:	2.1.0
-Release:	alt1_8jpp8
+Release:	alt1_9jpp8
 Summary:	Globus Java client libraries
 
 #		Everything is Apache 2.0 except for one file that is MIT:
@@ -33,15 +47,15 @@ Patch3:		%{name}-javadoc.patch
 BuildArch:	noarch
 
 BuildRequires:	maven-local
-%if %{?fedora}%{!?fedora:0}
+%if %{gaxismodule}
 BuildRequires:	mvn(axis:axis)
 BuildRequires:	mvn(axis:axis-jaxrpc)
+BuildRequires:	mvn(commons-httpclient:commons-httpclient)
+BuildRequires:	mvn(javax.servlet:servlet-api)
 %endif
 BuildRequires:	mvn(commons-codec:commons-codec)
-BuildRequires:	mvn(commons-httpclient:commons-httpclient)
 BuildRequires:	mvn(commons-io:commons-io)
 BuildRequires:	mvn(commons-logging:commons-logging)
-BuildRequires:	mvn(javax.servlet:servlet-api)
 BuildRequires:	mvn(junit:junit)
 BuildRequires:	mvn(log4j:log4j)
 BuildRequires:	mvn(org.apache.httpcomponents:httpclient)
@@ -49,8 +63,10 @@ BuildRequires:	mvn(org.apache.maven.plugins:maven-compiler-plugin)
 BuildRequires:	mvn(org.apache.maven.plugins:maven-release-plugin)
 BuildRequires:	mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:	mvn(org.apache.maven.plugins:maven-surefire-plugin)
+%if %{tomcatmodule}
 BuildRequires:	mvn(org.apache.tomcat:tomcat-catalina)
 BuildRequires:	mvn(org.apache.tomcat:tomcat-coyote)
+%endif
 BuildRequires:	mvn(org.bouncycastle:bcprov-jdk15on)
 Source44: import.info
 
@@ -70,6 +86,12 @@ Globus Java libraries parent maven pom file
 Group: Development/Java
 Summary:	Globus Java - SSL and proxy certificate support
 License:	ASL 2.0 and MIT
+%if ! %{gaxismodule}
+Obsoletes:	%{name}-axisg < %{version}-%{release}
+%endif
+%if ! %{tomcatmodule}
+Obsoletes:	%{name}-ssl-proxies-tomcat < %{version}-%{release}
+%endif
 
 %description ssl-proxies
 Globus Java library with SSL and proxy certificate support
@@ -110,6 +132,7 @@ Requires:	%{name}-gss = %{version}-%{release}
 %description gridftp
 Globus Java library with GridFTP support
 
+%if %{tomcatmodule}
 %package ssl-proxies-tomcat
 Group: Development/Java
 Summary:	Globus Java - SSL and proxy certificate support for Tomcat
@@ -118,6 +141,7 @@ Requires:	%{name}-jsse = %{version}-%{release}
 
 %description ssl-proxies-tomcat
 Globus Java library with SSL and proxy certificate support for Tomcat
+%endif
 
 %package io
 Group: Development/Java
@@ -138,7 +162,7 @@ Requires:	%{name}-gss = %{version}-%{release}
 %description myproxy
 Globus Java library with MyProxy support
 
-%if %{?fedora}%{!?fedora:0}
+%if %{gaxismodule}
 %package axisg
 Group: Development/Java
 Summary:	Globus Java - Apache AXIS support
@@ -151,7 +175,7 @@ Globus Java library with Apache AXIS support
 
 %package javadoc
 Group: Development/Java
-Summary:	Javadocs for %{name}
+Summary:	Javadoc for %{name}
 License:	ASL 2.0 and MIT
 BuildArch: noarch
 
@@ -172,9 +196,12 @@ This package contains the API documentation for %{name}.
 # Avoid build dependency bloat
 %pom_remove_parent
 
-# Disable axis module for EPEL 7
-%if %{?rhel}%{!?rhel:0} == 7
+%if ! %{gaxismodule}
 %pom_disable_module axis
+%endif
+
+%if ! %{tomcatmodule}
+%pom_disable_module ssl-proxies-tomcat
 %endif
 
 %build
@@ -200,13 +227,15 @@ This package contains the API documentation for %{name}.
 
 %files gridftp -f .mfiles-gridftp
 
+%if %{tomcatmodule}
 %files ssl-proxies-tomcat -f .mfiles-ssl-proxies-tomcat
+%endif
 
 %files io -f .mfiles-io
 
 %files myproxy -f .mfiles-myproxy
 
-%if %{?fedora}%{!?fedora:0}
+%if %{gaxismodule}
 %files axisg -f .mfiles-axisg
 %doc axis/src/main/java/org/globus/axis/example/README.txt
 %endif
@@ -214,6 +243,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_9jpp8
+- fixed build with new tomcat
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_8jpp8
 - java update
 
