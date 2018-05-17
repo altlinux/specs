@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           weld-core
 Version:        2.3.5
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Reference Implementation for JSR-299: Contexts and Dependency Injection (CDI)
 
 # OFL: ./probe/core/src/main/client/font-awesome.*
@@ -39,15 +39,13 @@ Patch1:         weld-core-2.3.2.Final-Remove-gwtdev-environment.patch
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.guava:guava)
+BuildRequires:  mvn(com.google.guava:guava:18.0)
 BuildRequires:  mvn(io.undertow:undertow-servlet)
 BuildRequires:  mvn(javax.el:el-api)
 BuildRequires:  mvn(javax.enterprise:cdi-api)
 BuildRequires:  mvn(javax.faces:jsf-api)
-BuildRequires:  mvn(javax.persistence:persistence-api)
 BuildRequires:  mvn(javax.portlet:portlet-api)
 BuildRequires:  mvn(javax.servlet.jsp:jsp-api)
-BuildRequires:  mvn(javax.transaction:jta)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.sourceforge.findbugs:annotations)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
@@ -146,8 +144,11 @@ rm -rf environments/servlet/core/src/main/java/org/jboss/weld/environment/gwtdev
 %pom_xpath_set pom:properties/pom:jboss.logging.processor.version 1
 %pom_change_dep -r :jboss-logging-processor ::1
 
-%build
+# Fix build against tomcat API
+sed -i -e 's/InstantiationException/InstantiationException, NoSuchMethodException/' \
+  environments/servlet/core/src/main/java/org/jboss/weld/environment/tomcat/{Weld,}ForwardingInstanceManager.java
 
+%build
 %mvn_build -f
 
 %install
@@ -159,6 +160,9 @@ rm -rf environments/servlet/core/src/main/java/org/jboss/weld/environment/gwtdev
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_5jpp8
+- fixed build with new tomcat
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_3jpp8
 - fc27 update
 
