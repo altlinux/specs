@@ -2,7 +2,7 @@
 %define module_name Term-ProgressBar
 
 Name: perl-%module_name
-Version: 2.21
+Version: 2.22
 Release: alt1
 
 Summary: Provides a progress meter on a standard terminal
@@ -13,7 +13,7 @@ License: GPL or Artistic
 Source0: http://www.cpan.org/authors/id/M/MA/MANWAR/%{module_name}-%{version}.tar.gz
 Buildarch: noarch
 AutoReqProv: yes, perl
-BuildRequires: perl-Class-MethodMaker perl-Module-Build perl-Term-ReadKey perl-devel perl(Test/Exception.pm) perl(Capture/Tiny.pm)
+BuildRequires: perl-Class-MethodMaker perl-Module-Build perl-Term-ReadKey perl-devel perl(Test/Exception.pm) perl(Capture/Tiny.pm) perl(Test/Warnings.pm)
 BuildRequires: perl-autodie
 
 %description
@@ -42,6 +42,9 @@ has been done, and maybe an estimate at how long remains.
 %perl_vendorlib/Term/ProgressBar/IO.pm
 
 %changelog
+* Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 2.22-alt1
+- automated CPAN update
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.21-alt1
 - automated CPAN update
 
