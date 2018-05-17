@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,8 +7,8 @@ BuildRequires: perl(autodie.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Acme-Alien-DontPanic
-Version:        0.044
-Release:        alt1_1
+Version:        1.03
+Release:        alt1
 Summary:        Test module for Alien::Base
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Acme-Alien-DontPanic/
@@ -68,6 +69,9 @@ perl Build.PL --installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
+- automated CPAN update
+
 * Fri Dec 29 2017 Igor Vlasenko <viy@altlinux.ru> 0.044-alt1_1
 - to Sisyphus
 
