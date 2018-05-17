@@ -6,7 +6,7 @@ BuildRequires: libsowing-devel perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Carp.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.43
+Version: 0.44
 Release: alt1
 Summary: Represents a date and time of day with an offset from UTC
 Group: Development/Perl
@@ -33,6 +33,9 @@ From summary: %summary
 %perl_vendor_autolib/*
 
 %changelog
+* Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
+- automated CPAN update
+
 * Fri Mar 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.43-alt1
 - automated CPAN update
 
