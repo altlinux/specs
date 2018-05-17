@@ -1,56 +1,42 @@
-%define oname protobuf
-%define soversion 15
+# find-requires: message.h:112:18: fatal error: vector: No such file or directory
+%add_findreq_skiplist %_includedir/google/protobuf/message.h
+%add_findprov_skiplist %_includedir/google/protobuf/message.h
 
-# set 'enable' to build legacy package
-%def_disable legacy
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %_var
 
-%if_disabled legacy
-%define _unpackaged_files_terminate_build 1
-
-# normal package may include python3 or java support
-%def_with python3
 %def_with java
-%else
-# for legacy package python3 and java should always be disabled since it's not packed anyway
-%def_without python3
-%def_without java
-%endif
+%define oname protobuf
+%define soversion 14
 
-%if_disabled legacy
-Name: %oname
-%else
+%def_with python3
+
 Name: %oname%soversion
-%endif
-Version: 3.5.2
-Release: alt1
+Version: 3.4.1
+Release: alt2
 Summary: Protocol Buffers - Google's data interchange format
 License: Apache License 2.0
-%if_disabled legacy
-Group: System/Libraries
-%else
 Group: System/Legacy libraries
-%endif
 Url: https://github.com/google/protobuf
 
-# https://github.com/google/protobuf.git
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 Obsoletes: libprotobuf <= 2.0.0-alt1
 
 # Automatically added by buildreq on Wed Nov 19 2008
 BuildRequires: gcc-c++ python-devel libnumpy-devel zlib-devel
 
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-google-apputils
-BuildRequires: python-module-mox python-module-mox python-module-dateutil
-BuildRequires: python-module-pytz python-module-gflags
+BuildPreReq: python-module-setuptools
+BuildPreReq: python-module-google-apputils
+BuildPreReq: python-module-mox python-module-mox python-module-dateutil
+BuildPreReq: python-module-pytz python-module-gflags
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel libnumpy-py3-devel
-BuildRequires: python3-module-setuptools python-tools-2to3
-BuildRequires: python3-module-google-apputils
-BuildRequires: python3-module-mox python3-module-mox python3-module-dateutil
-BuildRequires: python3-module-pytz python3-module-gflags
+BuildPreReq: python3-devel libnumpy-py3-devel
+BuildPreReq: python3-module-setuptools python-tools-2to3
+BuildPreReq: python3-module-google-apputils
+BuildPreReq: python3-module-mox python3-module-mox python3-module-dateutil
+BuildPreReq: python3-module-pytz python3-module-gflags
 %endif
 
 %description
@@ -61,20 +47,16 @@ almost all of its internal RPC protocols and file formats.
 %package compiler
 Summary: Protocol Buffers Compiler
 Group: Development/Other
-Requires: lib%oname%soversion = %EVR
+Requires: lib%oname%soversion = %version-%release
 
 %description compiler
 Compiler for protocol buffer definition files
 
 %package -n lib%oname%soversion
 Summary: Protocol Buffer c++ library
-%if_disabled legacy
-Group: System/Libraries
-%else
 Group: System/Legacy libraries
-%endif
 
-Provides: libprotobuf = %EVR
+Provides: libprotobuf = %version-%release
 
 %description -n lib%oname%soversion
 Protocol Buffers are a way of encoding structured data in
@@ -83,12 +65,8 @@ almost all of its internal RPC protocols and file formats.
 
 %package -n lib%oname%soversion-lite
 Summary: Protocol Buffers LITE_RUNTIME libraries
-%if_disabled legacy
-Group: System/Libraries
-%else
 Group: System/Legacy libraries
-%endif
-Provides: libprotobuf-lite = %EVR
+Provides: libprotobuf-lite = %version-%release
 
 %description -n lib%oname%soversion-lite
 Protocol Buffers built with optimize_for = LITE_RUNTIME.
@@ -100,7 +78,7 @@ lacks descriptors, reflection, and some other features.
 %package -n lib%oname-devel
 Summary: Development files for %oname
 Group: Development/C
-Requires: lib%oname%soversion = %EVR
+Requires: lib%oname%soversion = %version-%release
 
 %description -n lib%oname-devel
 This package contains development files required for packaging
@@ -109,8 +87,8 @@ This package contains development files required for packaging
 %package -n lib%oname-lite-devel
 Summary: Protocol Buffers LITE_RUNTIME development libraries
 Group: Development/C
-Requires: lib%oname%soversion-lite = %EVR
-Requires: lib%oname-devel = %EVR
+Requires: lib%oname%soversion-lite = %version-%release
+Requires: lib%oname-devel = %version-%release
 
 %description -n lib%oname-lite-devel
 This package contains development libraries built with
@@ -123,10 +101,10 @@ lacks descriptors, reflection, and some other features.
 %package -n python-module-%oname
 Summary: Python module files for %oname
 Group: Development/Python
-Requires: lib%oname%soversion = %EVR
+Requires: lib%oname%soversion = %version-%release
 %py_requires google.apputils
-Conflicts: %name-compiler > %version
-Conflicts: %name-compiler < %version
+Conflicts: %oname-compiler > %version
+Conflicts: %oname-compiler < %version
 
 %description -n python-module-%oname
 Python bindings for protocol buffers
@@ -134,10 +112,10 @@ Python bindings for protocol buffers
 %package -n python3-module-%oname
 Summary: Python module files for %oname
 Group: Development/Python3
-Requires: lib%oname%soversion = %EVR
+Requires: lib%oname%soversion = %version-%release
 %py3_requires google.apputils
-Conflicts: %name-compiler > %version
-Conflicts: %name-compiler < %version
+Conflicts: %oname-compiler > %version
+Conflicts: %oname-compiler < %version
 
 %description -n python3-module-%oname
 Python bindings for protocol buffers
@@ -158,8 +136,8 @@ BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires:  rpm-build-java java-devel-default
 BuildRequires:  libgmock-devel libgtest-devel
-Conflicts: %name-compiler > %version
-Conflicts: %name-compiler < %version
+Conflicts: %oname-compiler > %version
+Conflicts: %oname-compiler < %version
 # remove when xmvn will be patched to not insert this dep automatically
 %filter_from_requires /^java-headless/d
 
@@ -170,7 +148,7 @@ This package contains Java Protocol Buffers runtime library.
 Summary: Javadocs for %oname-java
 Group: Development/Documentation
 BuildArch: noarch
-Requires: %name-java = %EVR
+Requires: %oname-java = %version-%release
 
 %description javadoc
 This package contains the API documentation for %oname-java.
@@ -204,12 +182,9 @@ Protocol Buffer Parent POM.
 %endif
 
 %prep
-%setup -n %oname-%version
+%setup
 find -name \*.cc -o -name \*.h | xargs chmod -x
 chmod 644 examples/*
-
-# remove test with broken dependencies
-rm -f python/google/protobuf/internal/json_format_test.py
 
 %if_with python3
 cp -fR python python3
@@ -249,18 +224,16 @@ mv CONTRIBUTORS.txt.utf8 CONTRIBUTORS.txt
 rm -f m4/{lt*,libtool*}.m4
 export PTHREAD_LIBS="-lpthread"
 %autoreconf
-%configure \
-	--disable-static \
-	--localstatedir=%_var \
-
+chmod 755 configure
+%configure --disable-static
 %make_build
 pushd python
-%python_build --cpp_implementation
+%python_build
 popd
 
 %if_with python3
 pushd python3
-%python3_build --cpp_implementation
+%python3_build
 popd
 %endif
 
@@ -270,6 +243,7 @@ popd
 
 %install
 %makeinstall_std
+mkdir -p %buildroot%python_sitelibdir/google/
 
 pushd python
 %python_install --cpp_implementation
@@ -285,7 +259,7 @@ popd
 %mvn_install
 %endif
 
-%if_disabled legacy
+%if 0
 %files compiler
 %_bindir/protoc
 %endif
@@ -295,7 +269,7 @@ popd
 %_libdir/*.so.*
 %exclude %_libdir/libprotobuf-lite.so.*
 
-%if_disabled legacy
+%if 0
 %files -n lib%oname-devel
 %dir %_includedir/google/
 %_includedir/google/protobuf/
@@ -307,7 +281,7 @@ popd
 %files -n lib%oname%soversion-lite
 %_libdir/libprotobuf-lite.so.*
 
-%if_disabled legacy
+%if 0
 %files -n lib%oname-lite-devel
 %_libdir/libprotobuf-lite.so
 %_pkgconfigdir/protobuf-lite.pc
@@ -339,9 +313,8 @@ popd
 %endif
 
 %changelog
-* Thu May 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.2-alt1
-- Updated to upstream version 3.5.2.
-- Reworked spec.
+* Thu May 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.1-alt2
+- Rebuilt as legacy library.
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.4.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
