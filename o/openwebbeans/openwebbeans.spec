@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 %bcond_with arquillian
 Name:          openwebbeans
 Version:       1.2.8
-Release:       alt1_4jpp8
+Release:       alt2_4jpp8
 Summary:       Implementation of the JSR-299 WebBeans
 License:       ASL 2.0
 URL:           http://openwebbeans.apache.org/
@@ -220,6 +220,7 @@ rm -r DEPENDENCIES
 %pom_disable_module webbeans-tck
 %pom_disable_module atinject-tck
 %pom_disable_module webbeans-tomcat6
+%pom_disable_module webbeans-tomcat7
 
 %if %{without arquillian}
 %pom_disable_module webbeans-arquillian
@@ -269,57 +270,62 @@ rm -rf webbeans-clustering/src/test/java/org/apache/webbeans/web/failover/tests/
 %mvn_install
 
 %files -f .mfiles-%{name}
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files clustering -f .mfiles-%{name}-clustering
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files ee -f .mfiles-%{name}-ee
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files ee-common -f .mfiles-%{name}-ee-common
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files ejb -f .mfiles-%{name}-ejb
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files el22 -f .mfiles-%{name}-el22
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files impl -f .mfiles-%{name}-impl
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files jee5-ejb-resource -f .mfiles-%{name}-jee5-ejb-resource
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files jms -f .mfiles-%{name}-jms
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files jsf -f .mfiles-%{name}-jsf
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files osgi -f .mfiles-%{name}-osgi
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files resource -f .mfiles-%{name}-resource
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files spi -f .mfiles-%{name}-spi
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files test -f .mfiles-test
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
+%if 0
 %files tomcat7 -f .mfiles-%{name}-tomcat7
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
+%endif
 
 %files web -f .mfiles-%{name}-web
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.8-alt2_4jpp8
+- fixed build with new tomcat
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.8-alt1_4jpp8
 - fc27 update
 
