@@ -1,5 +1,5 @@
 Name: fping
-Version: 3.16
+Version: 4.0
 Release: alt1
 
 Summary: %name - A tool to quickly ping N number of hosts to determine their reachability
@@ -32,9 +32,7 @@ fping это аналог известной утилиты ping(1) исполь
 %setup -q
 
 %build
-%configure \
-    --enable-ipv6 \
-    --enable-ipv4
+%configure --enable-safe-limits
 
 %make_build
 
@@ -43,24 +41,26 @@ fping это аналог известной утилиты ping(1) исполь
 
 install -d %buildroot%_controldir
 %__sed -e 's|-=BINNAME=-|fping|'  < %SOURCE1 > %buildroot%_controldir/fping
-%__sed -e 's|-=BINNAME=-|fping6|' < %SOURCE1 > %buildroot%_controldir/fping6
 chmod +x %buildroot%_controldir/fping*
 
 %pre
 %pre_control fping
-%pre_control fping6
 
 %post
 %post_control -s restricted fping
-%post_control -s restricted fping6
 
 %files
 %_sbindir/*
 %config %_controldir/*
 %_man8dir/*
-%doc README doc/README.1992 INSTALL ChangeLog COPYING
+%doc INSTALL CHANGELOG.md COPYING doc/CHANGELOG.pre-v4 doc/README.1992
 
 %changelog
+* Thu May 17 2018 Sergey Y. Afonin <asy@altlinux.ru> 4.0-alt1
+- 4.0
+- removed fping6: fping and fping6 are now unified into one binary
+- built with --enable-safe-limits (was defauilt for 3.x)
+
 * Fri Jul 21 2017 Sergey Y. Afonin <asy@altlinux.ru> 3.16-alt1
 - 3.16
 
