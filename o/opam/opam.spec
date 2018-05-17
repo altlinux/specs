@@ -1,11 +1,12 @@
 Name: opam
 Version: 1.3.1
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: A source-based package manager for OCaml
 License: LGPLv3
 Group: Development/ML
 Url: http://opam.ocamlpro.com/
 Source0: %name-%version.tar
+Patch0: %name-%version-alt.patch
 BuildRequires: ocaml
 BuildRequires: ocaml-camlp4-devel
 BuildRequires: hevea
@@ -56,6 +57,7 @@ The %name-doc package contains documentation for using %name.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %configure
@@ -85,6 +87,9 @@ popd
 %doc shell/
 
 %changelog
+* Thu May 17 2018 Anton Farygin <rider@altlinux.ru> 1.3.1-alt2%ubt
+- fixed stubs libraries location
+
 * Thu Dec 21 2017 Anton Farygin <rider@altlinux.ru> 1.3.1-alt1%ubt
 - first build for ALT
 
