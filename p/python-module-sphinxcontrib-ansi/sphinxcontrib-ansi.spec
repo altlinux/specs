@@ -1,9 +1,9 @@
 %define oname sphinxcontrib-ansi
-%def_without bootstrap
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.6
-Release: alt1.2
+Release: alt1.3
 Summary: Sphinx extension ansi
 License: BSD
 Group: Development/Python
@@ -34,7 +34,7 @@ into colored HTML output.
 %install
 %python_install
 
-%if_with bootstrap
+%if_without bootstrap
 %check
 python setup.py test
 py.test -vv
@@ -45,6 +45,9 @@ py.test -vv
 %python_sitelibdir/*
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6-alt1.3
+- (NMU) rebuild with all requires
+
 * Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6-alt1.2
 - (NMU) rebuild with python3.6
 
