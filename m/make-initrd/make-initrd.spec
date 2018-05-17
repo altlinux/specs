@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -204,6 +204,12 @@ fi
 %endif
 
 %changelog
+* Thu May 17 2018 Alexey Gladkov <legion@altlinux.ru> 2.1.1-alt1
+- Runtime changes:
+  + Move functions that check real root existance into common place
+  + Check and run /sbin/init-bin for backward compatibility
+  + Always generate /etc/fstab
+
 * Tue May 15 2018 Alexey Gladkov <legion@altlinux.ru> 2.1.0-alt1
 - Runtime changes:
   + Remove sysvinit binary
