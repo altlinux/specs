@@ -11,7 +11,7 @@
 %def_enable pulse
 
 Name: %_name-good%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -77,6 +77,9 @@ This package contains development documentation for GStreamer Good Plugins
 %_gtk_docdir/*
 
 %changelog
+* Thu May 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
+- 1.14.1
+
 * Tue Mar 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
 - 1.14.0
 

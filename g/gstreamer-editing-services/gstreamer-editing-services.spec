@@ -6,7 +6,7 @@
 %def_enable python3
 
 Name: gstreamer-editing-services
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -96,7 +96,6 @@ library.
 %autoreconf
 %configure --enable-gtk-doc \
 	%{?_enable_python3:PYTHON=%__python3}
-
 %make_build
 
 %install
@@ -135,6 +134,9 @@ library.
 %_datadir/gtk-doc/html/%_name-%api_ver/
 
 %changelog
+* Thu May 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
+- 1.14.1
+
 * Tue Mar 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
 - 1.14.0
 

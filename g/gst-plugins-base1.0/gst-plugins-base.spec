@@ -8,7 +8,7 @@
 %def_disable gtk_doc
 
 Name: %_name-base%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -170,6 +170,9 @@ GObject introspection devel data for the GStreamer library
 
 
 %changelog
+* Thu May 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
+- 1.14.1
+
 * Tue Mar 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
 - 1.14.0
 
