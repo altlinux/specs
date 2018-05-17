@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define libname mesonbuild
 %def_disable check
 
 Name: meson
-Version: 0.46.0
-Release: alt2
+Version: 0.46.1
+Release: alt1
 
 Summary: High productivity build system
 Group: Development/Python3
@@ -89,6 +89,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 
 %changelog
+* Thu May 17 2018 Yuri N. Sedunov <aris@altlinux.org> 0.46.1-alt1
+- 0.46.1
+
 * Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt2
 - updated to 0.46.0-33-gd1e8ae1
 
