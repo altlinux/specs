@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             cookcc
 Version:          0.3.3
-Release:          alt2_16jpp8
+Release:          alt3_16jpp8
 Summary:          Lexer and Parser Generator
 License:          BSD
 URL:              https://github.com/coconut2015/cookcc
@@ -27,11 +27,11 @@ BuildArch:        noarch
 
 BuildRequires:    ant
 BuildRequires:    cookxml
-BuildRequires:    freemarker
+BuildRequires:    freemarker2.3.23
 BuildRequires:    javapackages-local
 BuildRequires:    xerces-j2
 
-Requires:         freemarker
+Requires:         freemarker2.3.23
 Requires:         cookxml
 Requires:         xerces-j2
 Source44: import.info
@@ -58,7 +58,7 @@ This package contains the API documentation for %{name}.
 find . -name '*.jar' -delete
 
 %build
-CLASSPATH=$(build-classpath xerces-j2 freemarker cookxml) ant cookcc_jar javadocs
+CLASSPATH=$(build-classpath xerces-j2 freemarker2.3.23-2.3.23 cookxml) ant cookcc_jar javadocs
 
 %install
 %mvn_artifact %{SOURCE1} dist/%{name}-%{version}.jar
@@ -71,6 +71,9 @@ CLASSPATH=$(build-classpath xerces-j2 freemarker cookxml) ant cookcc_jar javadoc
 %doc LICENSE_cookcc.txt
 
 %changelog
+* Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt3_16jpp8
+- build with compat fremarker2.3.23
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_16jpp8
 - fc27 update
 
