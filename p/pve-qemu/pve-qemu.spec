@@ -55,7 +55,7 @@
 
 Name: pve-%rname
 Version: 2.11.1
-Release: alt5%ubt
+Release: alt5%ubt.1
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
 Group: Emulators
@@ -110,6 +110,7 @@ Patch43: 0032-rbd-fix-cache-mode-behavior.patch
 Patch44: 0033-vma-remove-forced-NO_FLUSH-option.patch
 Patch40: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
 Patch41: 0002-ratelimit-don-t-align-wait-time-with-slices.patch
+Patch45: 0001-Remove-problematic-evdev-86-key-from-en-us-keymap.patch
 
 ExclusiveArch: x86_64
 BuildRequires(pre): rpm-build-ubt
@@ -325,6 +326,7 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch44 -p1
 %patch40 -p1
 %patch41 -p1
+%patch45 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -498,6 +500,9 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Thu May 17 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.1-alt5%ubt.1
+- remove problematic 'evdev 86' key from en-us keymap (closes: #34856)
+
 * Mon Apr 09 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.1-alt5%ubt
 - 2.11.1-5
 
