@@ -1,5 +1,5 @@
 Name: ndctl
-Version: 60.1
+Version: 60.3
 Release: alt1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
@@ -123,6 +123,9 @@ echo %version > version
 %_pkgconfigdir/libdaxctl.pc
 
 %changelog
+* Thu May 17 2018 Yuri N. Sedunov <aris@altlinux.org> 60.3-alt1
+- 60.3
+
 * Sat May 12 2018 Yuri N. Sedunov <aris@altlinux.org> 60.1-alt1
 - first build for Sisyphus
 
