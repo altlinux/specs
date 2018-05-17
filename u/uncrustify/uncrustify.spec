@@ -1,5 +1,5 @@
 Name: uncrustify
-Version: 0.66.1
+Version: 0.67
 Release: alt1
 
 Summary: Uncrustify is a source code beautifier
@@ -10,7 +10,9 @@ Url: http://uncrustify.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/%name/%name-%version.tar
+# Source-url: https://github.com/uncrustify/uncrustify/archive/uncrustify-%version.tar.gz
+Source: %name-%version.tar
+
 Patch: uncrustify-0.59-alt-glibc-2.16.patch
 
 BuildPreReq: rpm-macros-cmake cmake
@@ -42,6 +44,9 @@ configurable, and is easy to modify.
 %_man1dir/*
 
 %changelog
+* Fri May 18 2018 Vitaly Lipatov <lav@altlinux.ru> 0.67-alt1
+- new version 0.67 (with rpmrb script)
+
 * Fri Nov 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.66.1-alt1
 - new version 0.66.1 (with rpmrb script)
 
