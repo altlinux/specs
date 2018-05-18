@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.44
+Version: 0.8.45
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,13 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Fri May 18 2018 Ivan Zakharyaschev <imz@altlinux.org> 0.8.45-alt1
+- check-fhs: allow libdirs compatible with the processor arch
+  determined by rpm_arch. For e2k*, the peculiar lib32 has been
+  added to the list of allowed libdirs.
+- check-fhs: added an exception for lcc (the proprietary compiler
+  for e2k provided as binary blobs).
+
 * Tue Oct 31 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.8.44-alt1
 - 220-check-python: prohibit modules with version files containing
   unknown version. (Thanks Aleksei Nikiforov darktemplar@)
