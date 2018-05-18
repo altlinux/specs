@@ -26,7 +26,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:   hadoop
 Version: 2.7.3
-Release: alt2_7jpp8
+Release: alt3_7jpp8
 Summary: A software platform for processing vast amounts of data
 # The BSD license file is missing
 # https://issues.apache.org/jira/browse/HADOOP-9849
@@ -83,6 +83,7 @@ Patch21: %{name}-openssl.patch
 Patch22: %{name}-aws.patch
 # fix classpath issues
 Patch23: classpath.patch
+Patch33: hadoop-2.7.3-guava20.0.patch
 
 BuildRequires: ant
 BuildRequires: antlr-tool
@@ -456,8 +457,9 @@ This package contains files needed to run Apache Hadoop YARN in secure mode.
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
+%patch33 -p1
 
-%pom_xpath_set "pom:properties/pom:protobuf.version" 3.4.0 hadoop-project
+%pom_xpath_set "pom:properties/pom:protobuf.version" 3.5.1 hadoop-project
 %pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions/pom:execution[pom:phase='test-compile']" "<id>default-jar</id>"  hadoop-yarn-project/hadoop-yarn/hadoop-yarn-applications/hadoop-yarn-applications-distributedshell
 
 # Remove the maven-site-plugin.  It's not needed
@@ -1136,6 +1138,9 @@ fi
 %attr(6010,root,yarn) %{_bindir}/container-executor
 
 %changelog
+* Fri May 18 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt3_7jpp8
+- fixed build with new guava
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt2_7jpp8
 - java update
 
