@@ -1,11 +1,12 @@
 Name: lightdm-settings
-Version: 1.1.4
+Version: 1.2.0
 Release: alt1
 Summary: Configuration tool for the LightDM display manager
 Group: Graphical desktop/Other
 License: GPLv3+
 Url: https://github.com/linuxmint/lightdm-settings
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 BuildArch: noarch
 
 Requires: slick-greeter
@@ -18,13 +19,7 @@ This tool currently lets users configure slick-greeter.
 
 %prep
 %setup
-
-# Force polkit support
-f=".%{_bindir}/%{name}"
-%{__sed} -e 's!support_pkexec=False!support_pkexec=True!g'		\
-	< ${f} > ${f}.new
-/bin/touch -r ${f} ${f}.new
-%{__mv} -f ${f}.new ${f}
+%patch0 -p1
 
 %build
 %make_build
@@ -50,6 +45,9 @@ chmod -c 0755 %{buildroot}%{_bindir}/%{name}			\
 %{_datadir}/polkit-1/actions/org.x.%{name}.policy
 
 %changelog
+* Fri May 18 2018 Vladimir Didenko <cow@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Thu Nov 23 2017 Vladimir Didenko <cow@altlinux.org> 1.1.4-alt1
 - 1.1.4
 
