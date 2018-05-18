@@ -1,17 +1,17 @@
-%define ver_major 5.0
+%define ver_major 5.2
 
 Name: gnuplot
-Version: %ver_major.3
-Release: alt1.2
 Epoch: 1
+Version: %ver_major.3
+Release: alt1
 
 Summary: A program for plotting mathematical expressions and data
 Summary (ru_RU.UTF-8): Программа для построения графиков математических выражений и данных
 License: gnuplot and MIT
 Group: Sciences/Other
 URL: http://www.gnuplot.info/
-Packager: Alexey Morsov <swi@altlinux.ru>
 
+# git://git.code.sf.net/p/gnuplot/gnuplot-main
 Source0: %name-%version.tar
 Source2: http://www.gnuplot.info/faq/%name-faq.html.bz2
 Source3: %name.desktop
@@ -23,51 +23,53 @@ Source12: %name.48.png
 
 Source14: gnuplot-emacs.el
 
-Patch1: %name-%version-%release.patch
+Patch1: %name-alt.patch
+Patch2: gnuplot-5.0.6-gentoo-no-picins.patch
 
 BuildRequires(pre): rpm-build-tex
 BuildPreReq: desktop-file-utils
-BuildRequires: gcc-c++ ghostscript-module-X groff-base libXt-devel libncurses-devel libreadline-devel xorg-cf-files zlib-devel libgd2-devel libpng-devel libjpeg-devel libgif-devel
+BuildRequires: gcc-c++ ghostscript-module-X groff-base libXt-devel libncurses-devel libreadline-devel xorg-cf-files zlib-devel libgd3-devel libpng-devel libjpeg-devel libgif-devel
 BuildRequires: /usr/bin/tex
 BuildRequires: /usr/bin/dvips
 BuildRequires: /usr/bin/pdflatex
 BuildRequires: /usr/bin/htlatex
 BuildRequires: PDFlib-Lite-utils libpdflib-lite-devel
 BuildRequires: emacs-common texinfo latex2html
+BuildRequires: tex(utf8x.def)
 
 # for wxt terminal
 BuildRequires: libwxGTK-devel libcairo-devel libpango-devel libgtk+2-devel
 # for qt terminal
-BuildRequires: libqt4-devel >= 4.5
+BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools
 # for lua/TikZ
 BuildRequires: lua-devel tex(pgf.sty)
 
 
 Requires(post,postun): desktop-file-utils
 Requires: fonts-ttf-dejavu
-Requires: %name-common-x11 = %{?epoch:%epoch:}%version-%release
+Requires: %name-common-x11 = %EVR
 
 %package common
 Group: Sciences/Other
 Summary: The common gnuplot parts
 BuildArch: noarch
-Conflicts: %name < %{?epoch:%epoch:}%version-%release
+Conflicts: %name < %EVR
 
 %package common-x11
 Group: Sciences/Other
 Summary: The common-x11 gnuplot parts
-Requires: %name-common = %{?epoch:%epoch:}%version-%release
-Conflicts: %name < %{?epoch:%epoch:}%version-%release
+Requires: %name-common = %EVR
+Conflicts: %name < %EVR
 
 %package minimal
 Group: Sciences/Other
 Summary: Minimal version of program for plotting mathematical expressions and data
-Requires: %name-common = %{?epoch:%epoch:}%version-%release
+Requires: %name-common = %EVR
 
 %package qt
 Group: Sciences/Other
 Summary: Qt interface for gnuplot
-Requires: %name-common-x11 = %{?epoch:%epoch:}%version-%release
+Requires: %name-common-x11 = %EVR
 
 %package doc
 Group: Documentation
@@ -136,11 +138,15 @@ plotting tool
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
 
 %build
 #export CFLAGS="$RPM_OPT_FLAGS -fno-fast-math"
 
 %define configure_opts --with-readline=gnu --with-png --with-pdf --enable-history-file --without-linux-vga --without-row-help --enable-thin-splines --with-texdir=%_texmfmain/%name --with-lua --with-gihdir=%name/%ver_major
+
+sh prepare
+%autoreconf
 
 # at first create minimal version of gnuplot for server SIG purposes
 mkdir minimal
@@ -172,20 +178,23 @@ bunzip *.html.bz2
 # Docs don't build properly out of tree
 %configure  %configure_opts --with-tutorial
 ln -s ../wx/src/gnuplot src/
-make -C docs html info
+export PERL5LIB=$(pwd)/docs:$(pwd)/docs/htmldocs
+ln -s ../VERSION docs/VERSION
+make -C docs html pdf
 export GNUPLOT_PS_DIR=../../term/PostScript
 make -C docs/psdoc ps_symbols.ps ps_fontfile_doc.pdf
 rm -rf docs/htmldocs/images.idx
 make -C tutorial
+make -C docs gih
 
 %install
 # install wx
-make -C wx install DESTDIR=%buildroot INSTALL='install -p'
+%makeinstall_std -C wx
 # rename binary
 mv %buildroot%_bindir/%name %buildroot%_bindir/%name-wx
 
 # install qt
-make -C qt install DESTDIR=%buildroot INSTALL='install -p'
+%makeinstall_std -C qt
 # rename binary
 mv %buildroot%_bindir/%name %buildroot%_bindir/%name-qt
 
@@ -193,7 +202,7 @@ mv %buildroot%_bindir/%name %buildroot%_bindir/%name-qt
 install -p -m 755 minimal/src/%name %buildroot%_bindir/%name-minimal
 
 # install docs
-make -C docs install DESTDIR=%buildroot INSTALL='install -p'
+%makeinstall_std -C docs
 
 # Add alternatives for gnuplot
 mkdir -p %buildroot%_altdir
@@ -209,6 +218,9 @@ install -D -pm644 %SOURCE3  %buildroot%_desktopdir/%name.desktop
 install -D -pm644 %SOURCE10  %buildroot/%_miconsdir/%name.png
 install -D -pm644 %SOURCE11  %buildroot/%_niconsdir/%name.png
 install -D -pm644 %SOURCE12  %buildroot/%_liconsdir/%name.png
+
+# help data
+cp docs/%{name}.gih %buildroot%_datadir/%name/%ver_major/
 
 # cleanup before add to doc
 rm -f demo/Makefile*
@@ -244,7 +256,7 @@ rm -f demo/html/Makefile*
 %_datadir/%name/%ver_major/qt
 
 %files doc
-%doc ChangeLog Copyright BUGS  README NEWS RELEASE_NOTES
+%doc ChangeLog Copyright BUGS README NEWS RELEASE_NOTES
 %doc tutorial/tutorial.dvi gnuplot-faq.html
 %doc docs/psdoc/ps_* docs/gnuplot.pdf docs/htmldocs
 
@@ -252,6 +264,9 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.2.3-alt1
+- Updated to upstream version 5.2.3.
+
 * Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.0.3-alt1.2
 - NMU: build with texlive 2017
 
