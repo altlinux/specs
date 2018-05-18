@@ -6,7 +6,7 @@
 
 Name: shotwell
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -33,7 +33,7 @@ BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
 BuildRequires: libdconf-devel libdbus-glib-devel libgexiv2-devel >= %gexiv_ver
 BuildRequires: libgphoto2-devel libgudev-devel libjson-glib-devel
 BuildRequires: libraw-devel libexif-devel libgomp-devel
-BuildRequires: libsqlite3-devel libstdc++-devel libunique3-devel libwebkit2gtk-devel
+BuildRequires: libsqlite3-devel libstdc++-devel libwebkit2gtk-devel
 BuildRequires: librest-devel libgee0.8-devel gcr-libs-devel
 BuildRequires: desktop-file-utils gnome-doc-utils yelp-tools libappstream-glib-devel
 BuildRequires: vala gcr-libs-vala
@@ -82,6 +82,9 @@ find ./ -name "*.stamp" -delete
 %doc AUTHORS COPYING NEWS README THANKS
 
 %changelog
+* Fri May 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.3-alt1.1
+- fixed buildreqs
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.3-alt1
 - 0.28.3
 
