@@ -7,7 +7,7 @@ BuildRequires: perl(B.pm) perl(Carp.pm) perl(Data/Dumper.pm) perl(DateTime.pm) p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 Summary: Pure Perl implementation of MongoDB's BSON serialization
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/B*
 
 %changelog
+* Fri May 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1
+- automated CPAN update
+
 * Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1
 - automated CPAN update
 
