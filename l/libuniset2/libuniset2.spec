@@ -19,7 +19,7 @@
 
 Name: libuniset2
 Version: 2.7
-Release: alt10
+Release: alt11
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -47,8 +47,8 @@ BuildRequires: libcomedi-devel
 %endif
 
 %if_enabled mysql
-# Using old package name instead of libmysqlclient-devel it absent in branch 5.0 for yauza
-BuildRequires: libmysqlclient-devel
+# build with mariadb 
+BuildRequires: libmariadb-devel
 %endif
 
 %if_enabled sqlite
@@ -540,6 +540,9 @@ rm -f %buildroot%_libdir/*.la
 # history of current unpublished changes
 
 %changelog
+* Mon Jun 04 2018 Alexey Shabalin <shaba@altlinux.ru> 2.7-alt11
+- rebuild with libmariadb
+
 * Thu May 24 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt10
 - fix pack opentsdb backend
 
