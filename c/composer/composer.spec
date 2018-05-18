@@ -1,7 +1,7 @@
 #!!! Create new vendor cache for new composer version by get_vendor_cache.sh !!!
 
 Name: composer
-Version: 1.6.2
+Version: 1.6.5
 Release: alt1
 
 Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere.
@@ -15,9 +15,9 @@ Source: %name-%version.tar
 
 Packager: Danil Mikhailov <danil@altlinux.org>
 
-Requires: php5-openssl php5 php5-curl
+Requires: php7-openssl php7 php7-curl
 
-BuildRequires: git-core php5-openssl php5
+BuildRequires: git-core php7-openssl php7
 
 BuildArch: noarch
 
@@ -60,6 +60,10 @@ EOF
 %attr(755,root,root) %_datadir/%name.phar
 
 %changelog
+* Fri May 18 2018 Vitaly Lipatov <lav@altlinux.ru> 1.6.5-alt1
+- build new version
+- switch to php7
+
 * Tue Jan 23 2018 Vitaly Lipatov <lav@altlinux.ru> 1.6.2-alt1
 - build new version
 
