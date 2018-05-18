@@ -1,6 +1,6 @@
 Name: runawfe
 Version: 4.3.0
-Release: alt14
+Release: alt15
 
 Summary: Runawfe
 
@@ -359,6 +359,9 @@ useradd -d %runadir -r -s %_sbindir/%name %runauser >/dev/null 2>&1 || :
 %attr(755,root,root) %_bindir/runawfe-notifier
 
 %changelog
+* Fri May 18 2018 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt15
+- rtn port
+
 * Sat May 12 2018 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt14
 - gpd workspace 
 
