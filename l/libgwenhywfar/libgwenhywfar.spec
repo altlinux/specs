@@ -3,7 +3,7 @@
 
 Name:     libgwenhywfar
 Version:  4.20.0
-Release:  alt1
+Release:  alt2
 
 Summary:  A multi-platform helper library for other libraries
 Group:    System/Libraries
@@ -20,7 +20,9 @@ Patch2:   %name-fix-build-with-qt5.patch
 
 BuildRequires: gcc-c++ glibc-devel graphviz libcom_err-devel 
 BuildRequires: libgnutls-devel libssl-devel tzdata
-BuildRequires: libqt4-devel libgtk+2-devel
+BuildRequires: libqt4-devel
+BuildRequires: libgtk+2-devel
+BuildRequires: libgtk+3-devel
 %if_with qt5
 BuildRequires: qt5-base-devel qt5-tools
 %endif
@@ -39,12 +41,20 @@ Check http://www.freesource.info/wiki/Altlinux/Policy/TLS
 for ALT Linux TLS/SSL policy
 
 %package  gtk2
-Summary:  Gwenhywfar support for GTK+
+Summary:  Gwenhywfar support for GTK+ 2.x
 Group:    System/Libraries
 Requires: %name = %version-%release
 
 %description gtk2
-Gwenhywfar support for GTK+
+Gwenhywfar support for GTK+ 2.x.
+
+%package  gtk3
+Summary:  Gwenhywfar support for GTK+ 3.x
+Group:    System/Libraries
+Requires: %name = %version-%release
+
+%description gtk3
+Gwenhywfar support for GTK+ 3.x.
 
 %package  qt4
 Summary:  Gwenhywfar support for Qt4
@@ -93,12 +103,12 @@ export PATH=$PATH:%_qt5_bindir
 	--disable-static \
 	--with-openssl-libs=%_libdir \
 %if_with qt5
-	--with-guis="gtk2 qt4 qt5" \
+	--with-guis="gtk2 gtk3 qt4 qt5" \
 	--with-qt5-qmake=%_bindir/qmake-qt5 \
 	--with-qt5-moc=%_bindir/moc-qt5 \
 	--with-qt5-uic=%_bindir/uic-qt5 \
 %else
-	--with-guis="gtk2 qt4" \
+	--with-guis="gtk2 gtk3 qt4" \
 %endif
 	--with-qt4-libs="%_libdir"
 
@@ -118,6 +128,7 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_bindir/gsa
 %_libdir/*.so.*
 %exclude %_libdir/libgwengui-gtk2.so.*
+%exclude %_libdir/libgwengui-gtk3.so.*
 %exclude %_libdir/libgwengui-qt4.so.*
 %if_with qt5
 %exclude %_libdir/libgwengui-qt5.so.*
@@ -128,6 +139,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 
 %files gtk2
 %_libdir/libgwengui-gtk2.so.*
+
+%files gtk3
+%_libdir/libgwengui-gtk3.so.*
 
 %files qt4
 %_libdir/libgwengui-qt4.so.*
@@ -151,6 +165,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_libdir/cmake/*
 
 %changelog
+* Mon Apr 02 2018 Andrey Cherepanov <cas@altlinux.org> 4.20.0-alt2
+- Build gtk3 bindings.
+
 * Fri Mar 02 2018 Andrey Cherepanov <cas@altlinux.org> 4.20.0-alt1
 - New version.
 
