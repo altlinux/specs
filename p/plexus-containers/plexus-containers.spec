@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plexus-containers
 Version:        1.7.1
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Containers for Plexus
 License:        ASL 2.0 and MIT
 URL:            https://github.com/codehaus-plexus/plexus-containers
@@ -22,7 +22,7 @@ Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{ver
 Patch0:         0001-Port-to-current-qdox.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.collections:google-collections)
+BuildRequires:  mvn(com.google.guava:guava:20.0)
 BuildRequires:  mvn(commons-cli:commons-cli)
 BuildRequires:  mvn(com.sun:tools)
 BuildRequires:  mvn(com.thoughtworks.qdox:qdox)
@@ -41,7 +41,9 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.jdom:jdom2)
+BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-all)
+BuildRequires:  mvn(org.ow2.asm:asm-commons)
 Source44: import.info
 
 
@@ -110,6 +112,8 @@ BuildArch: noarch
 # For Maven 3 compat
 %pom_add_dep org.apache.maven:maven-core plexus-component-metadata
 
+%pom_change_dep -r :google-collections com.google.guava:guava:20.0
+
 # ASM dependency was changed to "provided" in XBean 4.x, so we need to provide ASM
 %pom_add_dep org.ow2.asm:asm:5.0.3:runtime plexus-container-default
 %pom_add_dep org.ow2.asm:asm-commons:5.0.3:runtime plexus-container-default
@@ -165,6 +169,9 @@ sed -i "s|<version>2.3</version>|<version> %{javadoc_plugin_version}</version>|"
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri May 18 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_5jpp8
+- use guava 20
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_3jpp8
 - fc27 update
 
