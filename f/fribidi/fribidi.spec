@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_disable static
 %def_enable docs
 %def_enable deprecated
 %def_enable check
 
 Name: fribidi
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Bi-directional scripts support
@@ -83,7 +83,7 @@ programs which will use fribidi.
 %files
 %_bindir/*
 %doc README AUTHORS TODO THANKS NEWS
-%{?_disable_snapshot:ChangeLog}
+%{?_disable_snapshot:%doc ChangeLog}
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -100,6 +100,9 @@ programs which will use fribidi.
 %endif
 
 %changelog
+* Fri May 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Fri Mar 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - updated to v1.0.2-5-g47ed4eb
 
