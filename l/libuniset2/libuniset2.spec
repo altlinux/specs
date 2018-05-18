@@ -18,7 +18,7 @@
 
 Name: libuniset2
 Version: 2.7
-Release: alt7
+Release: alt8
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -509,6 +509,10 @@ rm -f %buildroot%_libdir/*.la
 # history of current unpublished changes
 
 %changelog
+* Fri May 18 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt8
+- (codegen): added msgstr() function
+- make style
+
 * Tue May 08 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt7
 - (http): added support "CORS" (Access-Control-Allow-Origin)
 - (logdb): added --logdb-httpserver-reply-addr host:port
