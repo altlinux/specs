@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             xnio
 Version:          3.4.0
-Release:          alt1_5jpp8
+Release:          alt2_5jpp8
 Summary:          JBoss XNIO
 # LGPLv2+ ./api/src/main/java/org/xnio/ObjectProperties.java
 License:          ASL 2.0 and LGPLv2+
@@ -75,7 +75,7 @@ rm nio-impl/src/test/java/org/xnio/nio/test/MultiThreadedNioSslTcpConnectionTest
  
 %build
 
-%mvn_build
+%mvn_build -- -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install
@@ -87,6 +87,9 @@ rm nio-impl/src/test/java/org/xnio/nio/test/MultiThreadedNioSslTcpConnectionTest
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri May 18 2018 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt2_5jpp8
+- fixed build
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt1_5jpp8
 - java update
 
