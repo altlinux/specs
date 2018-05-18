@@ -1,7 +1,7 @@
 %define major 1.7
 Name: sword
 Version: %major.5a1
-Release: alt2
+Release: alt3
 
 Summary: The SWORD Project framework for manipulating Bible texts
 Summary(ru_RU.UTF-8): Проект SWORD - оболочка для работы с текстами Библии
@@ -80,6 +80,9 @@ popd
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri May 18 2018 Vitaly Lipatov <lav@altlinux.ru> 1.7.5a1-alt3
+- rebuild with libicu60
+
 * Mon Jul 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.5a1-alt2
 - Fixed build with new toolchain
 - Migrated to clucene-core
