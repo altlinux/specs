@@ -1,8 +1,8 @@
 %def_with bootstrap
 
 Name: libcxxabi
-Version: 5.0.0
-Release: alt2
+Version: 6.0.0
+Release: alt1
 
 Summary: Low level support for a standard C++ library
 
@@ -15,7 +15,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: http://llvm.org/releases/%version/libcxxabi-%version.src.tar.xz
 Source: %name-%version.tar
 
-BuildRequires: clang4.0 llvm4.0-devel cmake llvm4.0-devel-static
+BuildRequires: clang llvm-devel cmake llvm-devel-static
 BuildRequires: libcxx-devel >= %version
 
 %if_with bootstrap
@@ -95,6 +95,9 @@ cp -a include/* %buildroot%_includedir
 %_libdir/libc++abi.a
 
 %changelog
+* Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.0-alt1
+- Updated to upstream version 6.0.0.
+
 * Tue Jan 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.0-alt2
 - Removed unsupported compiler flags.
 

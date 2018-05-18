@@ -3,8 +3,8 @@
 %def_with bootstrap
 
 Name: libcxx
-Version: 5.0.0
-Release: alt2
+Version: 6.0.0
+Release: alt1
 
 Summary: C++ standard library targeting C++11
 
@@ -17,7 +17,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: http://llvm.org/releases/%version/libcxx-%version.src.tar.xz
 Source: %name-%version.tar
 
-BuildRequires: clang4.0 llvm4.0-devel cmake llvm4.0-devel-static
+BuildRequires: clang llvm-devel cmake llvm-devel-static
 
 %if_with bootstrap
 %add_verify_elf_skiplist %_libdir/libc++.so.1.0
@@ -100,6 +100,9 @@ export LDFLAGS="-Wl,--build-id -stdlib=libc++"
 %_libdir/libc++*.a
 
 %changelog
+* Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.0-alt1
+- Updated to upstream version 6.0.0.
+
 * Tue Jan 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.0-alt2
 - Removed unsupported compiler flags.
 
