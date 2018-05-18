@@ -1,6 +1,6 @@
 Name: xtreemfs
 Version: 1.5.1
-Release: alt2
+Release: alt3
 
 Summary: XtreemFS base package
 
@@ -11,6 +11,8 @@ Url: http://www.XtreemFS.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://www.xtreemfs.org/downloads/XtreemFS-%version.tar
+
+Patch1: boost-1.66.patch
 
 BuildRequires: ant >= 1.6.5 java-devel >= 1.6.0
 
@@ -73,6 +75,7 @@ This package contains XtreemFS administration tools.
 
 %prep
 %setup -n XtreemFS-%version
+%patch1 -p1
 
 %build
 export ANT_OPTS=-D"file.encoding=UTF-8"
@@ -234,6 +237,9 @@ fi
 %doc LICENSE
 
 %changelog
+* Fri May 18 2018 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt3
+- fix build with boost 1.66
+
 * Sat Oct 07 2017 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt2
 - rebuild with boost 1.65
 
