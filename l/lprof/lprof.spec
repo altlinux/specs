@@ -1,16 +1,16 @@
 Summary:        Open source color profiler
 Name:           lprof
 Version:        1.11.4.1
-Release:       	alt6.20100921.5
+Release:       	alt7.20100921
 License:        GPL
 Group:          Graphics
-Url:		http://www.mozilla.org/projects/security/pki/nss
+Url:		http://lprof.sourceforge.net/
 Packager: Alexandra Panyukova <mex3@altlinux.ru>
 
 Source0:	%name.tar
 
 # Automatically added by buildreq on Wed Feb 13 2008 (-bi)
-BuildRequires: scons gcc4.1-c++ libvigra-devel libX11-devel libusb-devel libjpeg-devel libusb-compat-devel libvigra strace vim
+BuildRequires: scons gcc-c++ libvigra-devel libX11-devel libusb-devel libjpeg-devel libusb-compat-devel libvigra strace vim
 BuildRequires: qt4-devel libqt4-assistant-devel
 
 BuildPreReq: libXxf86vm-devel libXdmcp-devel libtiff-devel
@@ -23,13 +23,13 @@ LProf is an open source color profiler that creates ICC compliant profiles for d
 
 %build
 cd lprof
-scons
+scons ccflags='%optflags' cxxflags='%optflags'
 
 %install
 mkdir -p %buildroot
 mkdir -p %buildroot/usr
 cd lprof
-scons install PREFIX=%buildroot/usr
+scons ccflags='%optflags' cxxflags='%optflags' install PREFIX=%buildroot/usr
 
 %files
 %_bindir/*
@@ -38,6 +38,9 @@ scons install PREFIX=%buildroot/usr
 %_datadir/lprof
 
 %changelog
+* Fri May 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.4.1-alt7.20100921
+- NMU: updated build dependencies, forced using system compilation flags, fixed URL.
+
 * Mon Apr 18 2016 Yuri N. Sedunov <aris@altlinux.org> 1.11.4.1-alt6.20100921.5
 - rebuilt against libvigraimpex.so.11
 
