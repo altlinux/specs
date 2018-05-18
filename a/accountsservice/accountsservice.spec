@@ -3,7 +3,7 @@
 
 
 Name: accountsservice
-Version: 0.6.45
+Version: 0.6.49
 Release: alt1%ubt
 Summary: D-Bus interfaces for querying and manipulating user account information
 
@@ -17,7 +17,7 @@ Patch1: %name-%version.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: intltool gtk-doc
-BuildRequires: glib2-devel libgio-devel >= 2.37.3
+BuildRequires: glib2-devel >= 2.44 libgio-devel >= 2.37.3
 BuildRequires: libpolkit-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: libsystemd-devel >= 186 systemd-devel
@@ -113,6 +113,9 @@ GObject introspection devel data for the accountsservice library
 %_girdir/*.gir
 
 %changelog
+* Fri May 18 2018 Alexey Shabalin <shaba@altlinux.ru> 0.6.49-alt1%ubt
+- 0.6.49
+
 * Sat Aug 05 2017 Alexey Shabalin <shaba@altlinux.ru> 0.6.45-alt1%ubt
 - 0.6.45
 
