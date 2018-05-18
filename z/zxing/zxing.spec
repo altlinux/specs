@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          zxing
 Version:       3.2.1
-Release:       alt2_4jpp8
+Release:       alt2_7jpp8
 Summary:       Java multi-format 1D/2D bar-code image processing library
 License:       ASL 2.0
 URL:           https://github.com/zxing/zxing/
@@ -16,6 +16,9 @@ URL:           https://github.com/zxing/zxing/
 # sh zxing-repack.sh <VERSION>
 Source0:       %{name}-%{version}.tar.xz
 Source1:       zxing-repack.sh
+# FTBFS fix manually cherry picked from upstream commit
+#   https://github.com/zxing/zxing/commit/e2afb336e2f7afaa9d0895c4d16e9e85013c2f3d
+Patch0:        zxing-3.2.1-deprecated-JCommander-usage.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.beust:jcommander)
@@ -56,6 +59,7 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+%patch0
 
 %pom_remove_dep com.google.android:
 %pom_remove_dep :android-core
@@ -120,29 +124,30 @@ sed -i '/ITFBlackBox/d' core/src/test/java/com/google/zxing/AllPositiveBlackBoxT
 sed -i '/EAN8BlackBox/d' core/src/test/java/com/google/zxing/AllPositiveBlackBoxTester.java
 sed -i '/Code39ExtendedBlackBox2TestCase/d' core/src/test/java/com/google/zxing/AllPositiveBlackBoxTester.java
 
-sed -i -e /-Werror/d pom.xml
-
 %build
 
-%mvn_build -s  -- -Dmaven.test.skip.exec=true  -Dmaven.test.skip.exec=true
+%mvn_build -s -- -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install
 
 %files -f .mfiles-core
 %doc AUTHORS CHANGES README.md
-%doc COPYING NOTICE
+%doc --no-dereference COPYING NOTICE
 
 %files javase -f .mfiles-javase
-%doc COPYING NOTICE
+%doc --no-dereference COPYING NOTICE
 
 %files parent -f .mfiles-zxing-parent
-%doc COPYING NOTICE
+%doc --no-dereference COPYING NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc COPYING NOTICE
+%doc --no-dereference COPYING NOTICE
 
 %changelog
+* Fri May 18 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt2_7jpp8
+- fc 28 update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt2_4jpp8
 - fixed build
 
