@@ -1,5 +1,5 @@
 Name: code
-Version: 1.20.1
+Version: 1.23.1
 Release: alt1
 
 Summary: Visual Studio Code
@@ -22,7 +22,7 @@ ExclusiveArch: x86_64 i586
 AutoReq:yes,nonodejs,nonodejs_native,nomono,nopython,nomingw32,nomingw64,noshebang
 AutoProv: no
 
-BuildRequires: libgtk+2 libxkbfile libnss libnspr libXtst libalsa libcups libXScrnSaver libGConf
+BuildRequires: libgtk+2 libxkbfile libnss libnspr libXtst libalsa libcups libXScrnSaver libGConf libsecret
 
 %description
 Visual Studio Code is a new choice of tool that combines the simplicity
@@ -63,6 +63,9 @@ install -m644 -D %SOURCE3 %buildroot%_pixmapsdir/code.png
 %_pixmapsdir/code.png
 
 %changelog
+* Fri May 18 2018 Vitaly Lipatov <lav@altlinux.ru> 1.23.1-alt1
+- new version 1.23.1 (ALT bug 34012)
+
 * Sat Feb 24 2018 Vitaly Lipatov <lav@altlinux.ru> 1.20.1-alt1
 - new version 1.20.1
 
