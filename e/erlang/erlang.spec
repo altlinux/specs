@@ -4,7 +4,11 @@
 %def_enable smp
 %def_disable halfword
 %def_enable kernel_poll
+%ifarch %ix86 x86_64 %arm
 %def_enable hipe
+%else
+%def_disable hipe
+%endif
 %def_enable megaco_flex_scanner_lineno
 %def_with ssl
 %def_with ssl_zlib
@@ -42,13 +46,6 @@
 #----------------------------------------------------------------------
 %{?_enable_smp_io_thread:%set_disable port_tasks}
 
-%ifnarch %ix86 %x86_64 arm sparc ppc ppc64
-%set_without native
-%endif
-
-%{?_disable_hipe:%set_without otp_native}
-
-
 %define Name Erlang
 %define ver 20
 Name: erlang
@@ -56,7 +53,7 @@ Epoch: 1
 %define subver 1.3
 Version: %ver.%subver
 %define plevel b
-Release: alt1
+Release: alt2
 Summary: A programming language developed by Ericsson
 License: %asl
 Group: Development/Erlang
@@ -73,6 +70,30 @@ Source8:	epmd@.socket
 Requires: %name-otp-modules = %version-%release
 Provides: erlang_mod(hipe_bifs) = %version
 Provides: erlang_mod(demo) = %version
+
+%if_disabled hipe
+Provides: erlang_mod(hipe)
+Provides: erlang_mod(hipe_amd64_main)
+Provides: erlang_mod(hipe_arm_main)
+Provides: erlang_mod(hipe_data_pp)
+Provides: erlang_mod(hipe_icode2rtl)
+Provides: erlang_mod(hipe_icode_heap_test)
+Provides: erlang_mod(hipe_llvm_liveness)
+Provides: erlang_mod(hipe_llvm_main)
+Provides: erlang_mod(hipe_ppc_main)
+Provides: erlang_mod(hipe_rtl_arch)
+Provides: erlang_mod(hipe_rtl_cfg)
+Provides: erlang_mod(hipe_rtl_cleanup_const)
+Provides: erlang_mod(hipe_rtl_lcm)
+Provides: erlang_mod(hipe_rtl_ssa)
+Provides: erlang_mod(hipe_rtl_ssa_avail_expr)
+Provides: erlang_mod(hipe_rtl_ssa_const_prop)
+Provides: erlang_mod(hipe_rtl_ssapre)
+Provides: erlang_mod(hipe_rtl_symbolic)
+Provides: erlang_mod(hipe_sparc_main)
+Provides: erlang_mod(hipe_tagscheme)
+Provides: erlang_mod(hipe_x86_main)
+%endif
 
 %set_autoconf_version 2.5
 BuildRequires(pre): rpm-build-licenses
@@ -588,6 +609,7 @@ This package contains documentation for %Name/OTP in PDF format.
 %prep
 %setup -n otp_src_OTP-%ver.%subver
 chmod -R u+w ./
+cp -p /usr/share/gnu-config/config.* erts/autoconf/
 
 #if_with ssl
 #subst "s/\/usr\/local\/kerberos\/include/\/usr\/include\/krb5/g" erts/configure.in
@@ -605,6 +627,7 @@ sed -i '/^include .*\/make\/otp_release_targets.mk/iMAKEFLAGS += -j1' \
 	lib/{{os_mon,snmp}/mibs,public_key/asn1,ic/examples/pre_post_condition,orber/examples/Stack,orber/COSS/CosNaming,megaco/src/binary}/Makefile*
 sed -i '/^bootstrap_setup_target:/s|:| $(BOOTSTRAP_ROOT)/bootstrap/target:|' Makefile.in
 subst "s/^.*ERL_COMPILE_FLAGS.*\+debug_info/#\0/g" make/otp.mk.in
+sed -i 's,armv7hl,armh,' erts/configure.in
 
 %build
 %define _optlevel 2
@@ -928,8 +951,10 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/hipe-*/icode
 %_otplibdir/hipe-*/main
 %_otplibdir/hipe-*/misc
+%ifnarch aarch64
 %_otplibdir/hipe-*/rtl
 %_otplibdir/hipe-*/llvm
+%endif
 %_otplibdir/ic-*/include
 %_otplibdir/ic-*/src
 %_otplibdir/inets-*/include
@@ -1220,6 +1245,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Fri May 18 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:20.1.3-alt2
+- fixed build on arm arches
+
 * Thu Oct 26 2017 Denis Medvedev <nbr@altlinux.org> 1:20.1.3-alt1
 - new version
 
