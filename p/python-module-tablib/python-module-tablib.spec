@@ -1,10 +1,8 @@
-
-%def_with python3
 %define modname tablib
 
 Name:		python-module-%modname
-Version:	0.10.0
-Release:	alt1.1.1
+Version:	0.12.1
+Release:	alt1
 Summary:	Format agnostic tabular data library (XLS, JSON, YAML, CSV)
 
 Group:		Development/Python
@@ -14,24 +12,13 @@ Source0:	%name-%version.tar
 
 BuildArch:	noarch
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: pyflakes python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-flake8 python-module-genshi python-module-jinja2 python-module-mccabe python-module-pbr python-module-pyasn1 python-module-pytz python-module-setuptools python-module-simplejson python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-modules-xml python-tools-2to3 python-tools-pep8 python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
-BuildRequires: python-module-chardet python-module-docutils python-module-hacking python-module-html5lib python-module-ndg-httpsclient python-module-ntlm python-module-yaml python3-module-html5lib python3-module-pbr python3-module-yaml rpm-build-python3 time
+BuildRequires: python-module-chardet python-module-docutils time
+BuildRequires: python-module-hacking python-module-html5lib
+BuildRequires: python-module-ndg-httpsclient python-module-ntlm python-module-yaml
 
-#BuildRequires:    python-devel
-#BuildRequires:    python-module-setuptools
-#BuildRequires:    python-module-pbr
-#BuildRequires:    python-module-yaml
-#BuildPreReq: python-module-sphinx-devel python-module-oslosphinx
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires:    python-tools-2to3
-#BuildRequires:    python3-devel
-#BuildRequires:    python3-module-setuptools
-#BuildRequires:    python3-module-pbr
-#BuildRequires:    python3-module-yaml
-%endif
+BuildPreReq: python3-module-html5lib python3-module-pbr python3-module-yaml
+
 
 %description
 Tablib is a format-agnostic tabular dataset library, written in Python.
@@ -66,53 +53,38 @@ Output formats supported:
 
 %prep
 %setup
-
-# Remove shebangs
-for lib in $(find . -name "*.py"); do
- sed '/\/usr\/bin\/env/d' $lib > $lib.new &&
- touch -r $lib $lib.new &&
- mv $lib.new $lib
-done
-
-%if_with python3
-cp -fR . ../python3
-pushd ../python3
-sed -i "/\(xlwt\|odf\|xlrd\|openpyxl\|openpyxl\..*\|yaml\)'/d" setup.py
-find . -name "*.py" | grep -v 3 | xargs 2to3 -w
+pushd tablib/packages/dbfpy/
+sed -i '/print.*/ s/$/)/' dbfnew.py | sed 's/print/print(/' > dbfnew.py
 popd
-%endif
-
-sed -i '/tablib.packages.*3/d' setup.py
+cp -fR . ../python3
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
 %doc README.rst AUTHORS LICENSE
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%modname
 %doc README.rst AUTHORS LICENSE
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Fri May 18 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.12.1-alt1
+- updated version to 0.12.1
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.0-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
