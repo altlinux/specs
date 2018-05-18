@@ -1,5 +1,5 @@
 Name:           python-module-tweepy
-Version:        3.5.0
+Version:        3.6.0
 Release:        alt1
 Summary:        Twitter library for python
 
@@ -42,6 +42,9 @@ cp -p %SOURCE1 ./LICENSE
 %python_sitelibdir/tweepy-*.egg-info
 
 %changelog
+* Fri May 18 2018 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1
+- New version.
+
 * Thu May 26 2016 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1
 - New version
 - Add python-module-pip to build requirements
