@@ -3,7 +3,7 @@
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
 
 Name:           mintmenu
-Version:        5.8.4
+Version:        5.8.6
 Release:        alt1
 Epoch:          1
 # MIT is needed for keybinding.py
@@ -39,17 +39,21 @@ Patch38:	mintmenu-alt-use-rpminstall.patch
 Patch41:	mintmenu-alt-fix-package-manager.patch
 Patch42:	mintmenu-alt-do-not-use-mint-utils.patch
 Patch43: 	mintmenu-alt-disable-get_apt_cache.patch
+Patch44: 	mintmenu-alt-applet-text-l10n.patch
+Patch45: 	mintmenu-alt-set-default-PATH.patch
+Patch46: 	mintmenu-alt-use-themed-app-list.patch
 
-Requires: GConf2 mate-search-tool
-Requires: python-module-gnome-menus
-Requires: python-module-pygnome-desktop
-Requires: python-module-pyxdg
+Requires: dconf mate-search-tool
+# not detected by rpm-build-python
+# see usr/lib/linuxmint/mintMenu/plugins/places.py:177: from configobj import ConfigObj
 Requires: python-module-configobj
 Requires: menu-icons-default
 Requires: mint-translations
 Requires: mate-menu-editor
 
 Requires: apt
+
+BuildRequires: rpm-build-gir
 BuildRequires: apt
 
 # due to apt: protocol
@@ -85,6 +89,9 @@ added to your gnome-panel or launched in its own window.
 %patch41 -p0
 %patch42 -p1
 %patch43 -p1
+%patch44 -p0
+%patch45 -p1
+%patch46 -p1
 
 # Replace path to %%_datadir
 subst 's,/usr/lib/linuxmint,%_datadir/linuxmint,g' `find usr -type f`
@@ -143,6 +150,19 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-baseal
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Fri May 18 2018 Andrey Cherepanov <cas@altlinux.org> 1:5.8.6-alt1
+- New version.
+
+* Wed May 16 2018 Andrey Cherepanov <cas@altlinux.org> 1:5.8.4-alt3
+- Use themed application list from %_datadir/linuxmint/mintMenu/applications.list-themed.
+- Use default user PATH instead of value passed from DBus.
+- Use GSettings localization for menu button text (thanks aris@).
+
+* Wed Feb 21 2018 Yuri N. Sedunov <aris@altlinux.org> 1:5.8.4-alt2
+- updated dependencies using rpm-build-gir
+- removed useless pygnome-* dependencies
+- replaced Gconf dep by dconf one
+
 * Mon Nov 13 2017 Andrey Cherepanov <cas@altlinux.org> 1:5.8.4-alt1
 - New version
 

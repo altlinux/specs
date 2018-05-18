@@ -1,6 +1,6 @@
 Name:    mint-translations
 Version: 2018.01.06
-Release: alt1
+Release: alt2
 License: GPLv2+ and MIT
 Summary: Translation files for Linux Mint applications
 
@@ -9,6 +9,7 @@ Url:     http://packages.linuxmint.com/pool/main/m/mint-translations/
 Source:  http://packages.linuxmint.com/pool/main/m/mint-translations/mint-translations_%version.tar.xz
 
 Source1: mint-translations.watch
+Patch: mintmenu-ru-with-menubutton-l10n.patch
 
 BuildArch: noarch
 
@@ -17,6 +18,7 @@ Translation files for Linux Mint applications.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %make_build
@@ -30,6 +32,9 @@ cp -a usr/share/linuxmint/locale %buildroot%_datadir
 %_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Wed May 16 2018 Andrey Cherepanov <cas@altlinux.org> 2018.01.06-alt2
+- Add Russian translation of menubutton of mintmenu.
+
 * Mon Jan 15 2018 Andrey Cherepanov <cas@altlinux.org> 2018.01.06-alt1
 - New version.
 
