@@ -1,6 +1,6 @@
 Name: linux-pam
-Version: 1.3.0.0.23.94f5
-Release: alt2
+Version: 1.3.1
+Release: alt1
 
 Summary: Pluggable Authentication Modules
 # The library is BSD-style *without* advertising clause, with option to relicense as GPLv2+.
@@ -349,6 +349,9 @@ make check
 %docdir/Linux-PAM*
 
 %changelog
+* Fri May 18 2018 Dmitry V. Levin <ldv@altlinux.org> 1.3.1-alt1
+- v1.3.0-23-g94f529d4 -> v1.3.1.
+
 * Thu Nov 09 2017 Dmitry V. Levin <ldv@altlinux.org> 1.3.0.0.23.94f5-alt2
 - %helperdir/pam_tally2 --reset: avoid creating a missing tallylog file (closes: #34035).
 - Packaged %%ghost %_logdir/tallylog file.
