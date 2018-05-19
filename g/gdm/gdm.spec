@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define ver_major 3.28
 %define api_ver 1.0
 
@@ -24,7 +26,7 @@
 %def_enable user_display_server
 
 Name: gdm
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -32,10 +34,15 @@ License: GPLv2+
 URL: http://wiki.gnome.org/Projects/GDM
 Group: Graphical desktop/GNOME
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
+
 Source1: gdm_xdmcp.control
 Source2: gdm.wms-method
+Source3: default.pa-for-gdm
 
 # PAM config files
 Source10: gdm.pam
@@ -226,6 +233,9 @@ find %buildroot -name '*.la' -delete
 # control gdm/xdmcp
 install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
 
+# default.pa for gdm
+install -p -m644 -D %SOURCE3 %buildroot%_localstatedir/lib/gdm/.config/pulse/default.pa
+
 %find_lang %name
 %find_lang --output=%name-help.lang --without-mo --with-gnome %name
 
@@ -282,6 +292,9 @@ xvfb-run %make check
 %attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.local
 %attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.local/share
 %attr(1777, root, gdm) %dir %_localstatedir/run/gdm
+%attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.config
+%attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.config/pulse
+%attr(0600, gdm, gdm) %_localstatedir/lib/gdm/.config/pulse/default.pa
 %_datadir/gdm/greeter/applications/mime-dummy-handler.desktop
 %_datadir/gdm/greeter/applications/mimeapps.list
 %dir %_datadir/%name/greeter/autostart
@@ -307,6 +320,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Sat May 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
+- 3.28.2
+
 * Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 
