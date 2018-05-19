@@ -2,10 +2,11 @@
 
 %def_with python3
 %def_disable check
+%def_without bootstrap
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt1.dev0.git20150127.1.1
+Release: alt2
 Summary: REST API framework powered by Flask, SQLAlchemy and good intentions
 License: GPL / BSD
 Group: Development/Python
@@ -42,7 +43,10 @@ RESTful Web Services with SQL-based backends.
 Summary: REST API framework powered by Flask, SQLAlchemy and good intentions
 Group: Development/Python3
 %py3_provides eve_sqlalchemy
+%add_python3_req_skip flask.ext.sqlalchemy
+%if_with bootstrap
 %py3_requires eve sqlalchemy flask_sqlalchemy
+%endif
 
 %description -n python3-module-%oname
 Powered by Eve, SQLAlchemy and good intentions this extenstion allows to
@@ -93,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.3-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3-alt1.dev0.git20150127.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
