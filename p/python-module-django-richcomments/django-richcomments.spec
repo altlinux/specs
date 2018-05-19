@@ -1,10 +1,11 @@
 %define oname django-richcomments
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.0.2
-Release: alt1.git20110915.1
+Release: alt2
 Summary: Django app extending the builtin comments framework for AJAX style commenting
 License: BSD
 Group: Development/Python
@@ -41,6 +42,10 @@ This package contains tests for %oname.
 %package -n python3-module-%oname
 Summary: Django app extending the builtin comments framework for AJAX style commenting
 Group: Development/Python3
+%if_with bootstrap
+%add_python3_req_skip django.conf.urls.defaults
+%add_python3_req_skip django.contrib.comments.templatetags.comments
+%endif
 
 %description -n python3-module-%oname
 django-richcomments wraps the Django's comments frameworks existing
@@ -105,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.0.2-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.2-alt1.git20110915.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

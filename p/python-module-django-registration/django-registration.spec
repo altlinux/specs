@@ -1,10 +1,11 @@
 %define oname django-registration
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1.hg20130617.1.1
+Release: alt2
 Summary: An extensible user-registration application for Django
 License: BSD
 Group: Development/Python
@@ -72,6 +73,11 @@ This package contains tests for %oname.
 %package pickles
 Summary: Pickles for %oname
 Group: Development/Python
+%if_with bootstrap
+%add_python3_req_skip django.conf.urls.defaults
+%add_python3_req_skip django.utils.hashcompat
+%add_python3_req_skip django.views.generic.simple
+%endif
 
 %description pickles
 This is a fairly simple user-registration application for Django,
@@ -155,6 +161,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.0-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.0-alt1.hg20130617.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

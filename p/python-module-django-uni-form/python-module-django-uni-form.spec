@@ -1,10 +1,11 @@
 %define module_name django-uni-form
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%module_name
 Version: 0.9.0
-Release: alt2.1
+Release: alt2.2
 
 Summary: The best way to have Django_ DRY forms. Build programmatic reusable layouts out of components, having full control of the rendered HTML
 
@@ -34,6 +35,9 @@ lets you quickly render forms in a div format
 %package -n python3-module-%module_name
 Summary: The best way to have Django_ DRY forms. Build programmatic reusable layouts out of components, having full control of the rendered HTML
 Group: Development/Python3
+%if_with bootstrap
+%add_python3_req_skip django.conf.urls.defaults django.test.simple
+%endif
 
 %description -n python3-module-%module_name
 Django_ forms are easily rendered as tables, paragraphs, and unordered lists. 
@@ -88,6 +92,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.0-alt2.2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.0-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

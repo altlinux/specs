@@ -1,10 +1,11 @@
 %define oname django-facebook-api
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.1.20
-Release: alt1.git20140601.1
+Release: alt2
 Summary: Django implementation for Facebook Graph API
 License: BSD
 Group: Development/Python
@@ -41,6 +42,9 @@ API.
 %package -n python3-module-%oname
 Summary: Django implementation for Facebook Graph API
 Group: Development/Python3
+%if_with bootstrap
+%add_python3_req_skip django.db.models.related
+%endif
 
 %description -n python3-module-%oname
 Application for interacting with Facebook Graph API objects using Django
@@ -105,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.1.20-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.20-alt1.git20140601.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
