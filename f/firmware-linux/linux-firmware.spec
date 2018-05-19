@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180507
+Version: 20180518
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,35 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun May 20 2018 L.A. Kostis <lakostis@altlinux.ru> 20180518-alt1
+- upstream changes (GIT 2a9b2cf):
+  + amd-ucode: delete conflicting ucode
+  + Update firmware file for Intel Bluetooth,8265 (thx Amit K Bag)
+  + Update firmware patch for Intel Bluetooth 7260 (B5/B6) (thx Amit K Bag)
+  + Update firmware patch for Intel Bluetooth 7260 (B3/B4) (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth,9260 (thx Amit K Bag)
+  + linux-firmware:Update firmware patch for Intel Bluetooth 7265
+    (D1) (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth,9560 (thx Amit K Bag)
+  + Update AMD cpu microcode (thx Sherry Hurwitz)
+  + amdgpu: sync up polaris12 firmware with 18.10 release (thx Alex Deucher)
+  + amdgpu: sync up polaris11 firmware with 18.10 release (thx Alex Deucher)
+  + amdgpu: sync up polaris10 firmware with 18.10 release (thx Alex Deucher)
+  + amdgpu: sync up vega10 firmware with 18.10 release (thx Alex Deucher)
+  + amdgpu: sync up carrizo firmware with 18.10 release (thx Alex Deucher)
+  + amdgpu: sync up topaz firmware with 18.10 release (thx Alex Deucher)
+  + amdgpu: sync up stoney firmware with 18.10 release (thx Alex Deucher)
+  + amdgpu: sync up tonga firmware with 18.10 release (thx Alex Deucher)
+  + amdgpu: sync up fiji firmware with 18.10 release (thx Alex Deucher)
+  + amdgpu: sync up raven firmware with 18.10 release (thx Alex Deucher)
+  + nfp: Add symlink for Agilio CX 1x40GbE flower firmware (thx Louis Peens)
+  + nfp: update Agilio SmartNIC flower firmware to rev AOTC-2.9.A.16 (thx Louis Peens)
+  + liquidio: update firmware to v1.7.2 (thx Felix Manlunas)
+  + update Marvell USB8997 firmware image to add WPA2 vulnerability
+    fix (thx Ganapathi Bhat)
+  + update Marvell SD8897-B0 firmware image to add WPA2 vulnerability
+    fix (thx Ganapathi Bhat)
+
 * Sat May 12 2018 Cronbuild Service <cronbuild@altlinux.org> 20180507-alt1
 - upstream changes (GIT 8fc2d4e):
   + update Marvell USB8997 firmware image to add WPA2 vulnerability
