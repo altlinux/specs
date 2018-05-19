@@ -1,9 +1,11 @@
 %define oname apicapi
 %def_with python3
 
+%def_with bootstrap
+
 Name:       python-module-%oname
 Version:    1.0.3
-Release:    alt1.1.1
+Release:    alt2
 Summary:    Library for APIC REST api
 License:    ASL 2.0
 URL:       http://github.com/noironetworks/%oname
@@ -36,6 +38,10 @@ There is a Python library provides an interface to the APIC REST api.
 %package -n python3-module-%oname
 Summary: Library for APIC REST api
 Group: Development/Python3
+
+%if_with bootstrap
+%add_python3_req_skip oslo.config oslo.db.sqlalchemy
+%endif
 
 %description -n python3-module-%oname
 There is a Python library provides an interface to the APIC REST api.
@@ -89,6 +95,9 @@ rm -fr %buildroot%python3_sitelibdir/*/test
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.3-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.3-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
