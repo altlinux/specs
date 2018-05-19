@@ -3,10 +3,11 @@
 %define git_commit 1fe658
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%module_name
 Version: 1.3.9
-Release: alt1.dev.git%git_commit.1
+Release: alt2
 
 Summary: Management extensions for the Django Framework
 
@@ -39,6 +40,9 @@ Management extensions for the Django Framework.
 Summary: Tests for django-command-extensions
 Group: Development/Python3
 Requires: python3-module-%module_name = %version-%release
+%if_with bootstrap
+%add_python3_req_skip django_extensions.tests.models
+%endif
 
 %description -n python3-module-%module_name-tests
 Management extensions for the Django Framework.
@@ -97,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.3.9-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.9-alt1.dev.git1fe658.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

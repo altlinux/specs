@@ -1,10 +1,11 @@
 %define module_name django-cms3.0
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%module_name
 Version: 3.0.5
-Release: alt1.git20140820.1
+Release: alt2
 
 Summary: An Advanced Django CMS
 
@@ -38,6 +39,12 @@ An Advanced Django CMS.
 Summary: An Advanced Django CMS
 Group: Development/Python3
 Requires: python3-module-django-classy-tags
+
+%if_with bootstrap
+%add_python3_req_skip cms.test_utils.util.context_managers
+%add_python3_req_skip django.contrib.formtools.wizard.views
+%add_python3_req_skip mptt.models
+%endif
 
 %description -n python3-module-%module_name
 An Advanced Django CMS.
@@ -80,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.0.5-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.5-alt1.git20140820.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

@@ -1,10 +1,11 @@
 %define module_name django-country-dialcode
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%module_name
 Version: 0.5.1
-Release: alt1.git20140716.1.1
+Release: alt2
 Summary: Application providing Dialcode and Countries code
 License: MIT
 Group: Development/Python
@@ -35,6 +36,9 @@ Application providing Dialcode and Countries code
 %package -n python3-module-%module_name
 Summary: Application providing Dialcode and Countries code
 Group: Development/Python3
+%if_with bootstrap
+%add_python3_req_skip django.conf.urls.defaults
+%endif
 
 %description -n python3-module-%module_name
 Application providing Dialcode and Countries code
@@ -88,6 +92,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.5.1-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.1-alt1.git20140716.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

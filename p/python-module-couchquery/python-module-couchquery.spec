@@ -1,11 +1,12 @@
 %define oname couchquery
 
 %def_with python3
+%def_with bootstrap
 
 Summary: Python library for simple and dynamic access to CouchDB
 Name: python-module-couchquery
 Version: 0.10.2
-Release: alt1.git20140814.1
+Release: alt2
 # https://github.com/nicolaisi/couchquery.git
 Source0: %name-%version-%release.tar
 License: GPL
@@ -35,6 +36,9 @@ httplib.HTTPConnection
 %package -n python3-module-%oname
 Summary: Python library for simple and dynamic access to CouchDB
 Group: Development/Python3
+%if_with bootstrap
+%add_python3_req_skip mimetools
+%endif
 
 %description -n python3-module-%oname
 This module is an attempt to combine the best features of httplib with
@@ -82,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.10.2-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.2-alt1.git20140814.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
