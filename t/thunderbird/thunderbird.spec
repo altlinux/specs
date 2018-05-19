@@ -1,12 +1,15 @@
 %def_with	enigmail
 %define 	r_name thunderbird
+%ifndef build_parallel_jobs
+%define build_parallel_jobs 7
+%endif
 
-%define enigmail_version  1.9.9
+%define enigmail_version  2.0.4
 %define gdata_version     2.6
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	52.7.0
+Version:	52.8.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -234,7 +237,9 @@ MOZ_SMP_FLAGS=-j1
 
 mkdir objdir mozilla/objdir
 
+export NPROCS=%build_parallel_jobs
 make -f client.mk \
+	-j$NPROCS \
 	STRIP="/bin/true" \
 	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
 	mozappdir=%buildroot/%tbird_prefix \
@@ -424,6 +429,24 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Sat May 19 2018 Andrey Cherepanov <cas@altlinux.org> 52.8.0-alt1
+- New version (52.8.0).
+- Enigmail 2.0.4.
+- Fixes:
+  + CVE-2018-5183 Backport critical security fixes in Skia
+  + CVE-2018-5184 Full plaintext recovery in S/MIME via chosen-ciphertext attack
+  + CVE-2018-5154 Use-after-free with SVG animations and clip paths
+  + CVE-2018-5155 Use-after-free with SVG animations and text paths
+  + CVE-2018-5159 Integer overflow and out-of-bounds write in Skia
+  + CVE-2018-5161 Hang via malformed headers
+  + CVE-2018-5162 Encrypted mail leaks plaintext through src attribute
+  + CVE-2018-5170 Filename spoofing for external attachments
+  + CVE-2018-5168 Lightweight themes can be installed without user interaction
+  + CVE-2018-5178 Buffer overflow during UTF-8 to Unicode string conversion through legacy extension
+  + CVE-2018-5185 Leaking plaintext through HTML forms
+  + CVE-2018-5150 Memory safety bugs fixed in Firefox 60, Firefox ESR 52.8, and Thunderbird 52.8
+- Build in several threads.
+
 * Sat Mar 24 2018 Andrey Cherepanov <cas@altlinux.org> 52.7.0-alt1
 - New version (52.7.0)
 - Fixes:
