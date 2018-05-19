@@ -1,10 +1,11 @@
 %define oname FormAlchemy
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 1.5.3
-Release: alt2.1
+Release: alt3
 Summary: Greatly speeds development with SQLAlchemy mapped classes in a HTML forms environment
 License: MIT
 Group: Development/Python
@@ -37,6 +38,9 @@ FormAlchemy is also highly customizable.
 Summary: Greatly speeds development with SQLAlchemy mapped classes in a HTML forms environment
 Group: Development/Python3
 %py3_provides %oname
+%if_with bootstrap
+%add_python3_req_skip cStringIO
+%endif
 
 %description -n python3-module-%oname
 FormAlchemy eliminates boilerplate by autogenerating HTML input fields
@@ -133,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.5.3-alt3
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.3-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
