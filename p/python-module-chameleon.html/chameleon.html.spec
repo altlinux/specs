@@ -1,10 +1,11 @@
 %define oname chameleon
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname.html
 Version: 1.0.b4
-Release: alt2.bzr20090520.1
+Release: alt3
 Summary: Dynamic HTML template compiler with XSS language support
 License: BSD
 Group: Development/Python
@@ -24,6 +25,11 @@ BuildPreReq: python-tools-2to3
 
 %py_requires chameleon repoze.cssutils zope.interface
 %py_requires zope.component
+
+%if_with bootstrap
+%add_python3_req_skip chameleon.core chameleon.core.config chameleon.core.testing
+%endif
+
 
 %description
 This package implements a template compiler for dynamic HTML
@@ -112,6 +118,9 @@ popd
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.b4-alt3
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.b4-alt2.bzr20090520.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

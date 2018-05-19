@@ -1,10 +1,11 @@
 %define oname chameleon
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname.genshi
 Version: 1.0.b4
-Release: alt2.bzr20090728.1
+Release: alt3
 Summary: Genshi template engine based on Chameleon
 License: BSD
 Group: Development/Python
@@ -20,6 +21,11 @@ BuildPreReq: python-devel python-module-setuptools
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
+%endif
+
+%if_with bootstrap
+%add_python3_req_skip chameleon.core chameleon.core.loader
+%add_python3_req_skip chameleon.core.config chameleon.core.testing
 %endif
 
 %description
@@ -107,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.b4-alt3
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.b4-alt2.bzr20090728.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
