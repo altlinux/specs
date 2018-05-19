@@ -1,10 +1,11 @@
 %define oname django-jenkins
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.16.3
-Release: alt1.git20140920.1
+Release: alt2
 Summary: Plug and play continuous integration with django and jenkins
 License: LGPLv3
 Group: Development/Python
@@ -27,6 +28,9 @@ Plug and play continuous integration with Django and Jenkins.
 %package -n python3-module-%oname
 Summary: Plug and play continuous integration with django and jenkins
 Group: Development/Python3
+%if_with bootstrap
+%add_python3_req_skip flake8.engine
+%endif
 
 %description -n python3-module-%oname
 Plug and play continuous integration with Django and Jenkins.
@@ -67,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.16.3-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.16.3-alt1.git20140920.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

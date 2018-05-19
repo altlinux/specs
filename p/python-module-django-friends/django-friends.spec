@@ -1,10 +1,11 @@
 %define oname django-friends
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.1.5
-Release: alt1.git20130126.1
+Release: alt2
 Summary: Friendship, contact and invitation management for the Django web framework
 License: MIT
 Group: Development/Python
@@ -30,6 +31,9 @@ framework.
 Summary: Friendship, contact and invitation management for the Django web framework
 Group: Development/Python3
 %add_python3_req_skip gdata vobject ybrowserauth
+%if_with bootstrap
+%add_python3_req_skip django.utils.hashcompat gdata.contacts.service
+%endif
 
 %description -n python3-module-%oname
 Friendship, contact and invitation management for the Django web
@@ -72,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.1.5-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.5-alt1.git20130126.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

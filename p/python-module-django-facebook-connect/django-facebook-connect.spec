@@ -1,10 +1,11 @@
 %define oname django-facebook-connect
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1.git20121127.1
+Release: alt2
 Summary: Add facebook connect authentication to your Django website
 License: MIT
 Group: Development/Python
@@ -34,6 +35,9 @@ This package is small, does not have external dependencies, and should
 %package -n python3-module-%oname
 Summary: Add facebook connect authentication to your Django website
 Group: Development/Python3
+%if_with bootstrap
+%add_python3_req_skip django.conf.urls.defaults
+%endif
 
 %description -n python3-module-%oname
 This package adds facebook connect authentication to a Django web site.
@@ -81,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt1.git20121127.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

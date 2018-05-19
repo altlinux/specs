@@ -1,12 +1,13 @@
 %define version 0.0.0
-%define release alt2.svn1916.2
+%define release alt3
 %setup_python_module django-pantheon
 
 %def_with python3
+%def_with bootstrap
 
 Name: %packagename
 Version: %version
-Release: alt2.svn1916.2.1
+Release: alt3
 
 Summary: Pantheon django modules
 
@@ -31,6 +32,10 @@ Pantheon django modules
 %package -n python3-module-%modulename
 Summary: Pantheon django modules
 Group: Development/Python3
+%if_with bootstrap
+%add_python3_req_skip django.conf.urls.defaults
+%add_python3_req_skip django.utils.images
+%endif
 
 %description -n python3-module-%modulename
 Pantheon django modules
@@ -69,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.0.0-alt3
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.0-alt2.svn1916.2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

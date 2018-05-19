@@ -1,10 +1,11 @@
 %define oname django-facebook-comments
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.1.5
-Release: alt1.hg20120729.1
+Release: alt2
 Summary: Drop-in facebook comments for django
 License: MIT
 Group: Development/Python
@@ -33,6 +34,9 @@ the rendered html (some people like this for SEO purposes).
 %package -n python3-module-%oname
 Summary: Drop-in facebook comments for django
 Group: Development/Python3
+%if_with bootstrap
+%add_python3_req_skip django.conf.urls.defaults
+%endif
 
 %description -n python3-module-%oname
 django-facebook-comments is a reusable Django app to place facebook
@@ -79,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.1.5-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.5-alt1.hg20120729.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
