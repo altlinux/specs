@@ -1,4 +1,4 @@
-%define ver_major 1.1
+%define ver_major 1.2
 %define gst_api_ver 1.0
 %def_with recording
 
@@ -48,8 +48,8 @@ with the help of a map.
 %_bindir/%name
 %_datadir/applications/%name.desktop
 %_datadir/%name/
-%_datadir/glib-2.0/schemas/org.gnome.gnome-internet-radio-locator.enums.xml
-%_datadir/glib-2.0/schemas/org.gnome.gnome-internet-radio-locator.gschema.xml
+#%_datadir/glib-2.0/schemas/org.gnome.gnome-internet-radio-locator.enums.xml
+#%_datadir/glib-2.0/schemas/org.gnome.gnome-internet-radio-locator.gschema.xml
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_datadir/appdata/%name.appdata.xml
 %_man1dir/%name.1.*
@@ -57,6 +57,9 @@ with the help of a map.
 
 
 %changelog
+* Sat May 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Fri Apr 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
