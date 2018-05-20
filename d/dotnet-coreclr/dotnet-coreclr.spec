@@ -4,7 +4,7 @@
 
 Name: dotnet-coreclr
 Version: 2.0.5
-Release: alt1
+Release: alt2
 
 Summary: .NET Core runtime, called CoreCLR, and the base library, called mscorlib
 
@@ -15,6 +15,7 @@ Group: Development/Other
 # Source-url: https://github.com/dotnet/coreclr/archive/v%version%pre.tar.gz
 Source: %name-%version.tar
 Patch1: 0001-Add-support-for-building-under-glibc-2.26-13785.patch
+Patch2: 0001-fix-build-with-clang6.0.patch
 #Source1: init-tools.sh
 
 ExclusiveArch: x86_64
@@ -27,7 +28,7 @@ ExclusiveArch: x86_64
 # verify-elf: ERROR: ./usr/lib64/dotnet/shared/Microsoft.NETCore.App/1.1.1/Linux.x64.Release/libcoreclr.so: TEXTREL entry found: 0x0000000000000000
 #set_verify_elf_method relaxed
 
-BuildRequires: clang4.0 llvm4.0
+BuildRequires: clang6.0 llvm6.0
 
 BuildRequires: cmake libstdc++-devel libunwind-devel liblttng-ust-devel liblwp-devel
 #BuildRequires: lldb-devel
@@ -35,7 +36,8 @@ BuildRequires: libicu-devel libuuid-devel zlib-devel libcurl-devel libkrb5-devel
 BuildRequires: python-modules-xml
 
 # it is not linked directly (the same like in libicu-devel)
-Requires: libicu56
+# there are icu detection in a version range
+Requires: libicu60
 
 %if_with bootstrap
 BuildRequires: dotnet-bootstrap
@@ -62,6 +64,7 @@ cross platform applications that work on Linux, Mac and Windows.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 # make strange error if uncomment due isMSBuildOnNETCoreSupported initialized
 find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_libdir/dotnet/fake-os-release|g"
@@ -73,7 +76,7 @@ find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_libdir/dotnet/fake-
 %__subst "s|add_subdirectory(src/ToolBox/SOS/lldbplugin)||" CMakeLists.txt
 
 %build
-DOTNET_TOOL_DIR=%bootstrapdir sh -x ./build.sh x64 release verbose skipnuget
+DOTNET_TOOL_DIR=%bootstrapdir sh -x ./build.sh x64 release verbose skipnuget ignorewarnings
 
 %install
 mkdir -p %buildroot%_dotnet_shared/
@@ -99,6 +102,10 @@ cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,libSystem.Gl
 %_dotnet_shared/sosdocsunix.txt
 
 %changelog
+* Sun May 20 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt2
+- rebuild with llvm 6.0
+- set libicu60 require
+
 * Thu Feb 22 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt1
 - new version (2.0.5) with rpmgs script
 - CVE-2018-0764, CVE-2018-0786
