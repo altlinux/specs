@@ -1,10 +1,11 @@
 %define pypi_name WSME
 %define lpypi_name wsme
 %def_with python3
+%def_with bootstrap
 
 Name:           python-module-%lpypi_name
 Version:        0.8.0
-Release:        alt2.1
+Release:        alt2.2
 Summary:        Web Services Made Easy
 Group:          Development/Python
 
@@ -66,6 +67,11 @@ Requires: python3-module-simplegeneric
 %add_python3_req_skip turbogears
 %add_python3_req_skip sphinx
 
+%if_with bootstrap
+%add_python3_req_skip cherrypy.filters.basefilter
+%add_python3_req_skip turbogears.startup turbogears.view
+%endif
+
 %description -n python3-module-%lpypi_name
 Web Services Made Easy, simplifies the implementation of
 multiple protocol REST web services by providing simple yet
@@ -114,6 +120,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %python3_sitelibdir/*
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.8.0-alt2.2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.0-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

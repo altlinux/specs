@@ -1,10 +1,11 @@
 %define oname theano
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt3.2.1
+Release: alt4
 Summary: Optimizing compiler for evaluating mathematical expressions on CPUs and GPUs
 License: BSD
 Group: Development/Python
@@ -50,6 +51,11 @@ multi-dimensional arrays. It is built on top of NumPy. Theano features:
 Summary: Optimizing compiler for evaluating mathematical expressions on CPUs and GPUs
 Group: Development/Python3
 %add_python3_req_skip lazylinker_ext pycuda scan_perform gnumpy pygpu
+%if_with bootstrap
+%add_python3_req_skip lazylinker_ext.lazylinker_ext pycuda.compiler
+%add_python3_req_skip pycuda.elementwise pycuda.tools
+%add_python3_req_skip scan_perform.scan_perform theano.compat.six.moves
+%endif
 
 %description -n python3-module-%oname
 Theano is a Python library that allows you to define, optimize, and
@@ -73,6 +79,9 @@ Summary: Tests for Theano
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
 %add_python3_req_skip multinomial neighbours theano_object
+%if_with bootstrap
+%add_python3_req_skip pycuda.driver pycuda.gpuarray pygpu.array
+%endif
 
 %description -n python3-module-%oname-tests
 Theano is a Python library that allows you to define, optimize, and
@@ -193,6 +202,9 @@ popd
 %endif
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6.0-alt4
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.0-alt3.2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
