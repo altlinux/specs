@@ -1,9 +1,10 @@
 %def_with python3
 %define oname mysql-connector-python
+%def_with bootstrap
 
 Name: python-module-mysql
 Version: 2.0.4
-Release: alt1.1
+Release: alt2
 
 Summary: MySQL Connector for Python
 
@@ -20,15 +21,14 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %oname-%version.tar
 
 BuildArch: noarch
-
+BuildRequires(pre): rpm-build-python3
 Provides: %{oname} = %version
 
 # manually removed: python-module-cmd2 python-module-google python-module-mwlib python3 ruby ruby-stdlibs
 # Automatically added by buildreq on Sun Sep 14 2014
 # optimized out: python-base python-devel python-module-distribute python-module-zope python-modules python-modules-compiler python-modules-email python3-base
 BuildRequires: python-devel
-
-BuildPreReq(pre): rpm-build-python3
+%add_python3_req_skip django
 
 %description
 MySQL Connector/Python is implementing the MySQL Client/Server protocol
@@ -37,11 +37,13 @@ is necessary to run this Python DB API v2.0 compliant driver.
 
 Documentation: http://dev.mysql.com/doc/connector-python/en/index.html
 
-%if_with python3
 %package -n python3-module-mysql
 Summary: MySQL Connector for Python 3
 Group: Development/Python
 Provides: %{oname}3 = %version
+%if_with bootstrap
+%add_python3_req_skip django.db.backends.creation django.db.backends.schema
+%endif
 
 %description -n python3-module-mysql
 MySQL Connector/Python is implementing the MySQL Client/Server protocol
@@ -49,7 +51,6 @@ completely in Python. No MySQL libraries are needed, and no compilation
 is necessary to run this Python DB API v2.0 compliant driver.
 
 Documentation: http://dev.mysql.com/doc/connector-python/en/index.html
-%endif
 
 %prep
 %setup -n %oname-%version
@@ -89,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.0.4-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.4-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

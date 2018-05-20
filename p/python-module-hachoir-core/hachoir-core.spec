@@ -2,10 +2,11 @@
 %define oname %mname-core
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 1.3.4
-Release: alt3.hg20140628.1
+Release: alt4
 Epoch: 1
 
 Summary: Core of Hachoir framework: parse and edit binary files
@@ -145,6 +146,9 @@ hexadecimal data and Hachoir reprensentation.
 Summary: Core of Hachoir framework: parse and edit binary files (Python 3)
 Group: Development/Python3
 %add_python3_req_skip hotshot
+%if_with bootstrap
+%add_python3_req_skip hotshot.stats
+%endif
 
 %description -n python3-module-%oname
 Hachoir is a Python library that allows to view and edit a binary stream
@@ -479,6 +483,9 @@ popd
 %endif
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.3.4-alt4
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.3.4-alt3.hg20140628.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
