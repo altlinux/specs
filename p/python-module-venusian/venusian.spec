@@ -1,10 +1,11 @@
 %define oname venusian
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt2.1
+Release: alt2.2
 Summary: A library for deferring decorator actions
 License: BSD-derived
 Group: Development/Python
@@ -46,6 +47,9 @@ Summary: Tests for Venusian (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
 %add_python3_req_skip doesnt
+%if_with bootstrap
+%add_python3_req_skip doesnt.exist
+%endif
 
 %description -n python3-module-%oname-tests
 Venusian is a library which allows framework authors to defer decorator
@@ -154,6 +158,9 @@ popd
 %endif
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt2.2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
