@@ -1,6 +1,6 @@
 # TODO: build from sources
 Name: electron
-Version: 1.7.10
+Version: 1.8.7
 Release: alt1
 
 Summary: Build cross platform desktop apps with JavaScript, HTML, and CSS
@@ -52,6 +52,9 @@ ln -rs %buildroot%_libdir/%name/%name %buildroot/%_bindir/%name
 %_libdir/%name/
 
 %changelog
+* Sun May 20 2018 Vitaly Lipatov <lav@altlinux.ru> 1.8.7-alt1
+- new version 1.8.7 (with rpmrb script)
+
 * Sat Jan 06 2018 Vitaly Lipatov <lav@altlinux.ru> 1.7.10-alt1
 - new version 1.7.10 (with rpmrb script)
 
