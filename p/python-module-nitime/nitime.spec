@@ -1,10 +1,11 @@
 %define oname nitime
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: Nitime: timeseries analysis for neuroscience data
 License: BSD
@@ -56,6 +57,9 @@ This package contains tests for Nitime.
 %package -n python3-module-%oname
 Summary: Nitime: timeseries analysis for neuroscience data
 Group: Development/Python3
+%if_with bootstrap
+%add_python3_req_skip nitime.six.moves
+%endif
 
 %description -n python3-module-%oname
 Nitime is library of tools and algorithms for the analysis of
@@ -145,6 +149,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.5-alt1.2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

@@ -3,10 +3,11 @@
 %def_with python3
 # because we have old polib
 %def_disable check
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1.git20150101.1.1
+Release: alt2
 Summary: Test your translation files
 License: MIT
 Group: Development/Python
@@ -40,6 +41,9 @@ Summary: Test your translation files
 Group: Development/Python3
 %py3_provides pytest_translations
 %py3_requires polib
+%if_with bootstrap
+%add_python3_req_skip py.test.collect
+%endif
 
 %description -n python3-module-%oname
 py.test plugin to test your translation files.
@@ -88,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.2.0-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt1.git20150101.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

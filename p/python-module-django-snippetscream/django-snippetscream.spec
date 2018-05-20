@@ -1,10 +1,11 @@
 %define oname django-snippetscream
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.0.7
-Release: alt2.git20110919.1
+Release: alt3
 Summary: Django app packaging the best snippets found on http://djangosnippets.org
 License: BSD
 Group: Development/Python
@@ -49,6 +50,9 @@ http://djangosnippets.org
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
+%if_with bootstrap
+%add_python3_req_skip django.conf.urls.defaults
+%endif
 
 %description -n python3-module-%oname-tests
 Django app packaging the best snippets found on
@@ -101,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.0.7-alt3
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.7-alt2.git20110919.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

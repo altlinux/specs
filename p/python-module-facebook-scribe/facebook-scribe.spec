@@ -1,10 +1,11 @@
 %define oname facebook-scribe
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 2.0
-Release: alt1.git20130530.1
+Release: alt2
 Summary: A Python client for Facebook Scribe
 License: ASL v2.0
 Group: Development/Python
@@ -27,6 +28,9 @@ This is a Python client for scribe.
 %package -n python3-module-%oname
 Summary: A Python client for Facebook Scribe
 Group: Development/Python3
+%if_with bootstrap
+%add_python3_req_skip thrift
+%endif
 
 %description -n python3-module-%oname
 This is a Python client for scribe.
@@ -67,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.0-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0-alt1.git20130530.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

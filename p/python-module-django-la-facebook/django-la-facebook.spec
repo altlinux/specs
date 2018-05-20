@@ -1,10 +1,11 @@
 %define oname django-la-facebook
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1.git20110418.1.1
+Release: alt2
 Summary: Definitive facebook auth for Django
 License: BSD
 Group: Development/Python
@@ -48,6 +49,9 @@ This package contains tests for %oname.
 %package -n python3-module-%oname
 Summary: Definitive facebook auth for Django
 Group: Development/Python3
+%if_with bootstrap
+%add_python3_req_skip django.conf.urls.defaults
+%endif
 
 %description -n python3-module-%oname
 Dedicated facebook authentication for Django that does it via the
@@ -153,6 +157,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.1.1-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.1-alt1.git20110418.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

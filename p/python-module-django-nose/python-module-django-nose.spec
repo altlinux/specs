@@ -1,9 +1,10 @@
 %global pkgname django-nose
 %def_with python3
+%def_with bootstrap
 
 Name:           python-module-django-nose
 Version:        1.3
-Release:        alt2.1
+Release:        alt2.2
 Summary:        Django test runner that uses nose
 Group:          Development/Python
 
@@ -15,6 +16,7 @@ BuildArch:      noarch
 BuildRequires:  python-devel python-module-setuptools
 Requires:       python-module-nose
 Requires:       python-module-django
+BuildRequires(pre): rpm-build-python3
 
 %description
 Django test runner that uses nose.
@@ -27,6 +29,9 @@ BuildArch:      noarch
 BuildRequires:  rpm-build-python3 python3-module-setuptools
 Requires:       python3-module-nose
 Requires:       python3-module-django
+%if_with bootstrap
+%add_python3_req_skip django.db.backends.creation
+%endif
 
 %description -n python3-module-%{pkgname}
 Django test runner that uses nose.
@@ -75,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.3-alt2.2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
