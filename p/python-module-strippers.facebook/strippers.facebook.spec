@@ -2,10 +2,11 @@
 %define oname %pname.facebook
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.9
-Release: alt1.b.1
+Release: alt2
 Summary: Python library for Facebook Graph API
 License: LGPL
 Group: Development/Python
@@ -37,6 +38,9 @@ Core files of %pname.
 Summary: Python library for Facebook Graph API
 Group: Development/Python3
 Requires: python3-module-%pname = %EVR
+%if_with bootstrap
+%add_python3_req_skip mimetools
+%endif
 
 %description -n python3-module-%oname
 Python library for Facebook Graph API.
@@ -113,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt1.b.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

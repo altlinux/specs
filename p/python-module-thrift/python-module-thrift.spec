@@ -1,10 +1,11 @@
 %define oname thrift
 
 %def_with python3
+%def_with bootstrap
 
 Name:           python-module-%oname
 Version:        0.9.2
-Release:        alt1.1
+Release:        alt1.2
 Summary:        Python bindings for the Apache Thrift RPC system
 License:        Apache-2.0
 Group:          Development/Python
@@ -31,6 +32,9 @@ the generated code for the reflection structures.
 Summary: Python bindings for the Apache Thrift RPC system
 Group: Development/Python3
 %add_python3_req_skip SCons
+%if_with bootstrap
+%add_python3_req_skip SCons.Builder
+%endif
 
 %description -n python3-module-%oname
 Thrift Python Software Library
@@ -83,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.2-alt1.2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.2-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
