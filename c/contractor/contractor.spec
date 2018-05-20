@@ -1,17 +1,18 @@
 %define ver_major 0.3
 
 Name: contractor
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: service for sharing data between apps
 License: GPLv3+
 Group: Graphical desktop/Other
-Url: https://launchpad.net/contractor
+Url: https://github.com/elementary/contractor
 
-Source: https://launchpad.net/%name/loki/%version/+download/%name-%version.tar.xz
+# VCS: https://github.com/elementary/contractor.git
+Source: %name-%version.tar.gz
 
-BuildRequires: cmake gcc-c++ vala libgee0.8-devel libgio-devel
+BuildRequires: cmake gcc-c++ vala-tools libgee0.8-devel libgio-devel
 
 %description
 A sharing service that allows source apps to send their data to
@@ -31,9 +32,12 @@ have the destination apps hard coded into them.
 %files
 %_bindir/*
 %_datadir/dbus-1/services/org.elementary.contractor.service
-%doc INSTALL
+%doc README*
 
 %changelog
+* Sun May 20 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
+- 0.3.3
+
 * Fri Jan 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
 - 0.3.2
 
