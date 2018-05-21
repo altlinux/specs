@@ -1,6 +1,6 @@
 Name: grub
 Version: 2.02
-Release: alt8%ubt
+Release: alt9%ubt
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -342,6 +342,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Mon May 21 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt9%ubt
+- fixed config generation errors on EFI platform (closes: #34852)
+
 * Sun May 13 2018 Leonid Krivoshein <klark@altlinux.org> 2.02-alt8%ubt
 - write to read-only grub device problem fixed.
 
