@@ -2,7 +2,7 @@
 
 Name: alterator-grub
 Version: 0.12
-Release: alt1
+Release: alt2
 
 Summary: alterator module to setup grub bootloader
 License: GPL
@@ -15,14 +15,16 @@ Requires: alterator >= 4.7-alt5
 Requires: alterator-l10n >= 2.9-alt10
 Requires: alterator-sh-functions >= 0.6-alt1
 Requires: alterator-hw-functions >= 0.7.6-alt1
+%ifarch %ix86 x86_64
 Requires: grub-pc > 2.00-alt20
+%endif
 Conflicts: guile-evms < 0.4-alt13
 
 BuildPreReq: alterator >= 4.7-alt5
 BuildRequires: grub >= 2.00-alt7
 BuildRequires: libdevmapper-devel
 
-%ifarch x86_64
+%ifarch aarch64 x86_64
 Requires: grub-efi >= 2.00-alt12
 %endif
 
@@ -47,6 +49,9 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Mon May 21 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12-alt2
+- do not require grub-pc on non-pc
+
 * Wed Mar 21 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.12-alt1
 - added display of the default username (closes: #33098, #34249)
 - disabled web-ui (until solved #34208)
