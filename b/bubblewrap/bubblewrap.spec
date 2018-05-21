@@ -1,6 +1,6 @@
 Name: bubblewrap
-Version: 0.2.0
-Release: alt2
+Version: 0.2.1
+Release: alt1
 
 Summary: Unprivileged sandboxing tool
 
@@ -51,6 +51,9 @@ _EOF_
 %_datadir/bash-completion/completions/bwrap
 
 %changelog
+* Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 0.2.1-alt1
+- new version 0.2.1 (with rpmrb script)
+
 * Fri Oct 27 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt2
 - fixed permissions for bwrap
 - created %%_sysctldir/90-bwrap.conf
