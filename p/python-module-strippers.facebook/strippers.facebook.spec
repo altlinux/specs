@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.9
-Release: alt2
+Release: alt3
 Summary: Python library for Facebook Graph API
 License: LGPL
 Group: Development/Python
@@ -81,7 +81,7 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
+%if "%_lib" == "lib64"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -117,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Mon May 21 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9-alt3
+- fixed packaging on 64bit arches other than x86_64
+
 * Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9-alt2
 - rebuild with python3.6
 
