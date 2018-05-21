@@ -1,6 +1,6 @@
 Name: control
-Version: 0.7.6
-Release: alt2
+Version: 0.8.0
+Release: alt1
 
 Summary: A set of scripts to control installed system facilities
 License: GPLv2+
@@ -54,6 +54,10 @@ install -pD -m644 control.macros %buildroot%_rpmmacrosdir/control
 %_mandir/ru/man8/*.8*
 
 %changelog
+* Fri Jan 26 2018 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
+- Initialize local variables.
+- Add capabilities support.
+
 * Mon Nov 27 2017 Dmitry V. Levin <ldv@altlinux.org> 0.7.6-alt2
 - Packaged translated manpages (from gremlin@; closes: #33920).
 
