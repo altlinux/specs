@@ -1,23 +1,30 @@
 Name: startup-rescue
-Version: 0.28
+Version: 0.29
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
 License: GPL
 Group: System/Base
 
-Url: http://en.altlinux.org/Rescue
+Url: http://en.altlinux.org/rescue
 Source: rescue-%version.tar
+Packager: Anton V. Boyarshinov <boyarsh@altlinux.ru>
 
 BuildArch: noarch
-Packager: Anton V. Boyarshinov <boyarsh@altlinux.ru>
 
 Requires(post): %post_service
 Requires(preun): %preun_service
 Requires: sfdisk console-vt-tools libshell system-report
 
+# Weird kludge
+Provides: /sbin/find-fstab
+
 # Optional requires
-Requires: dmidecode ddcprobe altquire
+%ifarch %ix86 x86_64
+Requires: dmidecode ddcprobe
+%endif
+Requires: altquire
+Requires: agetty
 
 Conflicts: startup-school-rescue startup-nanolive
 
@@ -31,7 +38,9 @@ This package contains scripts used to boot your system from rescue disk.
 mkdir -p -- %buildroot{%_bindir,/sbin,%_initdir}
 
 install -pm755 rescue-shell %buildroot%_bindir/
+%ifarch %ix86 x86_64
 install -pm755 fixmbr find-fstab %buildroot/sbin/
+%endif
 install -pm755 mount-fstab mount-system %buildroot/sbin/
 install -pm644 inittab.rescue mdadm-ro.conf %buildroot/etc/
 install -pm755 rc.sysinit.rescue %buildroot/etc/rc.d/
@@ -54,6 +63,10 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Mon May 21 2018 Michael Shigorin <mike@altlinux.org> 0.29-alt1
+- restrict dmidecode, ddcprobe and fixmbr to x86
+- hackaround for suddenly "missing" /sbin/find-fstab self-dependency
+
 * Tue Jan 24 2017 Michael Shigorin <mike@altlinux.org> 0.28-alt1
 - stop plymouth
 
