@@ -1,7 +1,7 @@
 %define _userunitdir /usr/lib/systemd/user
 
 Name: flatpak
-Version: 0.11.3
+Version: 0.11.7
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -137,6 +137,7 @@ rm -rf %buildroot%_docdir/%name/
 %_datadir/%name
 %_datadir/polkit-1/actions/org.freedesktop.Flatpak.policy
 %_datadir/polkit-1/rules.d/org.freedesktop.Flatpak.rules
+%_libexecdir/flatpak-portal
 %_libexecdir/flatpak-dbus-proxy
 %_libexecdir/flatpak-session-helper
 %_libexecdir/flatpak-system-helper
@@ -146,8 +147,11 @@ rm -rf %buildroot%_docdir/%name/
 %_man1dir/%{name}*.1*
 #exclude %_man1dir/flatpak-builder.*
 %_sysconfdir/dbus-1/system.d/org.freedesktop.Flatpak.SystemHelper.conf
+%_datadir/dbus-1/interfaces/org.freedesktop.portal.Flatpak.xml
+%_datadir/dbus-1/services/org.freedesktop.portal.Flatpak.service
 %_sysconfdir/profile.d/flatpak.sh
 %_unitdir/flatpak-system-helper.service
+%_userunitdir/flatpak-portal.service
 %_userunitdir/flatpak-session-helper.service
 #_userunitdir/xdg-document-portal.service
 #_userunitdir/xdg-permission-store.service
@@ -176,6 +180,9 @@ rm -rf %buildroot%_docdir/%name/
 %_libdir/libflatpak.so.*
 
 %changelog
+* Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 0.11.7-alt1
+- new version 0.11.7 (with rpmrb script)
+
 * Tue Mar 20 2018 Vitaly Lipatov <lav@altlinux.ru> 0.11.3-alt1
 - new version 0.11.3 (with rpmrb script)
 
