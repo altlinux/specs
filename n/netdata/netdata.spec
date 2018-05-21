@@ -3,8 +3,8 @@
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.9.0
-Release: alt2
+Version: 1.10.0
+Release: alt1
 
 Summary: Real-time performance monitoring, done right!
 
@@ -156,6 +156,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %_libexecdir/%name/python.d/postgres.chart.py
 
 %changelog
+* Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1.10.0-alt1
+- new version 1.10.0 (with rpmrb script)
+
 * Mon Feb 26 2018 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt2
 - fix pid file path in service file
 - cleanup spec
