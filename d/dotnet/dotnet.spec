@@ -3,7 +3,7 @@
 
 Name: dotnet
 Version: 2.0.5
-Release: alt1
+Release: alt2
 
 Summary: Installer packages for the .NET Core runtime and libraries
 
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 
 ExclusiveArch: x86_64
 
-BuildRequires: clang4.0 llvm4.0
+BuildRequires: clang6.0 llvm6.0
 
 BuildRequires: cmake libstdc++-devel
 
@@ -88,6 +88,9 @@ ln -sr %buildroot%_dotnetdir/dotnet %buildroot%_bindir/dotnet
 #_dotnet_shared/libhostfxr.so
 
 %changelog
+* Sun May 20 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt2
+- rebuild with lvvm6.0
+
 * Thu Feb 22 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt1
 - new version 2.0.5 (with rpmrb script)
 
