@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.7.10
+Version: 2.7.11
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,13 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 2.7.11-alt1
+- hide SETCOLOR_* error on fatal due under root using
+- repl: install 32-bit packages separately (see eterbug #12749)
+- spec: fix remove_bashism (add check for {,}
+- rpmbps: fix ia32-libs-dev for Debian/Ubuntu
+- rpmgs: allow git repo for gear_production/source
+
 * Fri Feb 23 2018 Vitaly Lipatov <lav@altlinux.ru> 2.7.10-alt1
 - add npm install --production support
 - gitask: add ls --all support
