@@ -8,7 +8,7 @@
 
 Name:    freecad
 Version: 0.17
-Release: alt2
+Release: alt3
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
@@ -157,6 +157,8 @@ mkdir -p %buildroot%ldir/bin
 mv %buildroot%_bindir/* %buildroot%ldir/bin
 ln -s ../%_lib/%name/bin/FreeCAD %buildroot%_bindir/freecad
 ln -s ../%_lib/%name/bin/FreeCADCmd %buildroot%_bindir/freecadcmd
+ln -s ../%_lib/%name/bin/FreeCAD %buildroot%_bindir/FreeCAD
+ln -s ../%_lib/%name/bin/FreeCADCmd %buildroot%_bindir/FreeCADCmd
 
 # desktop files
 install -Dm0644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
@@ -212,6 +214,9 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/doc
 
 %changelog
+* Mon May 21 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.17-alt3
+- Fix run from menu (add FreeCAD executable to %_bindir).
+
 * Fri May 04 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.17-alt2
 - Build with OCE instead of opencascade
 
