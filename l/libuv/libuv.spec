@@ -1,5 +1,5 @@
 Name: libuv
-Version: 1.18.0
+Version: 1.20.3
 Release: alt1
 
 Summary: Evented I/O for NodeJS
@@ -57,6 +57,9 @@ rm -f %buildroot%_libdir/%name.a
 
 
 %changelog
+* Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1.20.3-alt1
+- new version 1.20.3 (with rpmrb script)
+
 * Mon Dec 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1.18.0-alt1
 - new version 1.18.0 (with rpmrb script)
 
