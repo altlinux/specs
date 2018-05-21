@@ -4,7 +4,7 @@
 
 Name: loudmouth
 Version: 1.5.2
-Release: alt1
+Release: alt2
 
 Summary: Jabber library for C
 Group: System/Libraries
@@ -14,6 +14,7 @@ Url: https://mcabber.com
 #VCS: https://github.com/mcabber/loudmouth.git
 Source: %url/files/loudmouth/%name-%version.tar.xz
 Patch: %name-1.4.3-alt-certs_location.patch
+Patch2: %name-%version-upstream-typo.patch
 
 BuildRequires: libgio-devel >= 2.26 gtk-doc libcheck-devel
 BuildRequires: libgnutls-devel >= 1.2.0 libidn-devel libkrb5-devel libasyncns-devel
@@ -70,6 +71,7 @@ and yet extensible to let you do anything the Jabber protocol allows.
 %prep
 %setup
 %patch -p1 -b .sert_location
+%patch2 -p1
 
 %build
 %autoreconf
@@ -106,6 +108,9 @@ and yet extensible to let you do anything the Jabber protocol allows.
 %endif # enabled static
 
 %changelog
+* Fri May 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.2-alt2
+- NMU: fixed build with new toolchain.
+
 * Sun Feb 07 2016 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
 - 1.5.2 (new upstream)
 - dropped upstreamed patches
