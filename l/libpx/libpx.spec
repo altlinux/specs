@@ -1,6 +1,6 @@
 %define oname pxlib
 Name: libpx
-Version: 0.6.7
+Version: 0.6.8
 Release: alt1
 
 Summary: A library to read Paradox DB files
@@ -67,6 +67,9 @@ done
 %_man3dir/*
 
 %changelog
+* Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 0.6.8-alt1
+- new version 0.6.8 (with rpmrb script)
+
 * Fri Aug 05 2016 Vitaly Lipatov <lav@altlinux.ru> 0.6.7-alt1
 - new version 0.6.7 (with rpmrb script)
 
