@@ -1,6 +1,6 @@
 Name: asymptote
-Version: 2.41
-Release: alt1.1
+Version: 2.44
+Release: alt1
 
 Summary: Descriptive vector graphics language
 
@@ -79,6 +79,9 @@ rm -fv *.tar.gz
 %_infodir/%name/*.info*
 
 %changelog
+* Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 2.44-alt1
+- new version 2.44 (with rpmrb script)
+
 * Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 2.41-alt1.1
 - build with texlive 2017
 
