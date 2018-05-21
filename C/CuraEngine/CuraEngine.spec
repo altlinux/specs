@@ -1,7 +1,7 @@
 Name: CuraEngine
 Epoch: 1
 Version: 3.3.0
-Release: alt1%ubt
+Release: alt1%ubt.1
 
 Summary: Engine for processing 3D models into G-code instructions for 3D printers
 License: AGPL-3.0
@@ -51,6 +51,9 @@ to the old Skeinforge engine.
 %doc LICENSE README.md
 
 %changelog
+* Mon May 21 2018 Anton Midyukov <antohami@altlinux.org> 1:3.3.0-alt1%ubt.1
+- Rebuilt with protobuf-compiler 3.5.2
+
 * Sun May 06 2018 Anton Midyukov <antohami@altlinux.org> 1:3.3.0-alt1%ubt
 - New version 3.3.0
 - Make sure Fedora CXXFLAGS are used, also -fPIC

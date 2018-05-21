@@ -1,6 +1,6 @@
 Name: libArcus
 Version: 3.3.0
-Release: alt1%ubt
+Release: alt1%ubt.1
 
 Summary: Communication library between internal components for Ultimaker software
 License: LGPLv3+
@@ -59,6 +59,9 @@ Communication library between internal components for Ultimaker software
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 21 2018 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1%ubt.1
+- Rebuilt with protobuf-compiler 3.5.2
+
 * Sun May 06 2018 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1%ubt
 - New version 3.3.0
 
