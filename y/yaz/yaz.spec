@@ -7,8 +7,8 @@
 %define subst_with_to() %{expand:%%{?_with_%{1}:--with-%{2}}} %{expand:%%{?_without_%{1}:--without-%{2}}}
 
 Name: yaz
-Version: 5.13.0
-Release: alt2
+Version: 5.25.0
+Release: alt1
 
 Summary: Z39.50/SRW/SRU toolkit
 
@@ -106,7 +106,7 @@ bzip2 --best --force --keep NEWS
 %make_build -k check
 
 %files
-%doc README LICENSE NEWS.*
+%doc README.md LICENSE NEWS
 %_bindir/*
 %exclude %_bindir/%name-config
 %exclude %_bindir/%name-asncomp
@@ -142,6 +142,10 @@ bzip2 --best --force --keep NEWS
 %_docdir/%name/
 
 %changelog
+* Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 5.25.0-alt1
+- new version 5.25.0 (with rpmrb script)
+- rebuild with libicu60
+
 * Thu Feb 25 2016 Vitaly Lipatov <lav@altlinux.ru> 5.13.0-alt2
 - rebuilt with libicuuc.so.56
 
