@@ -5,7 +5,7 @@
 
 Name: python-module-%sname
 Version: 1.0.5
-Release: alt1.bzr20120206.1
+Release: alt2
 
 Summary: FontTools-based package for querying system fonts
 
@@ -15,6 +15,7 @@ Url: http://ttfquery.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-git: https://github.com/mindw/ttfquery
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -123,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.5-alt2
+- build from latest https://github.com/mindw/ttfquery
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.5-alt1.bzr20120206.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
