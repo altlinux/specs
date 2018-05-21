@@ -4,7 +4,7 @@
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 6.13
+%define major 6.14
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -29,7 +29,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.0
+Version: %major.2
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -259,6 +259,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 6.14.2-alt1
+- new version 6.14.2 (with rpmrb script)
+- 2018-04-30 Node.js v6.14.2 'Boron' (LTS) Release
+
 * Tue Feb 27 2018 Alexey Shabalin <shaba@altlinux.ru> 6.13.0-alt1
 - new version 6.13.0
 - 2018-02-13, Version 6.13.0 'Boron' (LTS)
