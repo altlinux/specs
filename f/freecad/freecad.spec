@@ -8,7 +8,7 @@
 
 Name:    freecad
 Version: 0.17
-Release: alt3
+Release: alt4
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
@@ -162,6 +162,7 @@ ln -s ../%_lib/%name/bin/FreeCADCmd %buildroot%_bindir/FreeCADCmd
 
 # desktop files
 install -Dm0644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
+subst 's/@lib@/%_lib/' %buildroot%_desktopdir/%name.desktop
 
 # icons
 for size in 16 32 48 64
@@ -214,6 +215,9 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/doc
 
 %changelog
+* Tue May 22 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.17-alt4
+- Fix path in desktop file.
+
 * Mon May 21 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.17-alt3
 - Fix run from menu (add FreeCAD executable to %_bindir).
 
