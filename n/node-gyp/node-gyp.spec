@@ -1,6 +1,6 @@
 Name: node-gyp
-Version: 3.4.0
-Release: alt2
+Version: 3.6.2
+Release: alt1
 
 Summary: Node.js native addon build tool
 License: MIT
@@ -10,11 +10,15 @@ Url: https://github.com/TooTallNate/node-gyp
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+#Source-url: http://registry.npmjs.org/node-gyp/-/node-gyp-%version.tgz
 # Note: see .gear/gear-sources created with rpmgs -f from etersoft-build-utils
-#Source-url: https://github.com/nodejs/node-gyp/archive/v%version.tar.gz
-# Source-url: http://registry.npmjs.org/node-gyp/-/node-gyp-%version.tgz
+# Source-url: https://github.com/nodejs/node-gyp/archive/v%version.tar.gz
 Source: %name-%version.tar
-Source1: addon-rpm.gypi
+
+#Source1: %name-sources-%version.tar
+Source2: %name-production-%version.tar
+
+Source10: addon-rpm.gypi
 
 BuildArch: noarch
 
@@ -56,12 +60,12 @@ native addon modules for Node.js, which takes away the pain of dealing with the
 various differences in build platforms.
 
 %prep
-%setup
+%setup -a 2
 #patch1 -p1
 #patch2 -p1
 
 # use system gyp
-%__subst "s|\(var gyp_script =\).*|\1 '/usr/bin/gyp'|g" lib/configure.js
+#__subst "s|\(var gyp_script =\).*|\1 '/usr/bin/gyp'|g" lib/configure.js
 
 #nodejs_fixdep request 2.x
 #nodejs_fixdep npmlog 3
@@ -70,14 +74,21 @@ various differences in build platforms.
 #patch33 -p0
 
 rm -rf gyp/
+mkdir gyp/
+# compat hack
+ln -s %_bindir/gyp gyp/gyp_main.py
 
 %build
 #nothing to do
 
 %install
+# replace node_modules with got after npm install --production
+#rm -rf node_modules
+#tar xf %SOURCE2
+
 mkdir -p %buildroot%nodejs_sitelib/node-gyp/
-cp -pr addon*.gypi bin lib node_modules package.json %buildroot%nodejs_sitelib/node-gyp/
-cp -p %SOURCE1 %buildroot%nodejs_sitelib/node-gyp/addon-rpm.gypi
+cp -pr addon*.gypi bin lib gyp node_modules package.json %buildroot%nodejs_sitelib/node-gyp/
+cp -p %SOURCE10 %buildroot%nodejs_sitelib/node-gyp/addon-rpm.gypi
 
 mkdir -p %buildroot%_bindir
 ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %buildroot%_bindir/node-gyp
@@ -91,6 +102,9 @@ ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %buildroot%_bindir/node-gyp
 %doc README.md LICENSE
 
 %changelog
+* Tue May 22 2018 Vitaly Lipatov <lav@altlinux.ru> 3.6.2-alt1
+- new version (3.6.2) with rpmgs script
+
 * Sat Mar 18 2017 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt2
 - build fixes
 

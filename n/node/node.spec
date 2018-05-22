@@ -1,10 +1,10 @@
 # check deps/npm/package.json for it
-%define npmver 3.10.10
+%define npmver 5.6.0
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 6.14
+%define major 8.11
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -13,7 +13,7 @@
 # TODO: really we have no configure option to build with shared libv8
 # V8 presently breaks ABI at least every x.y release while never bumping SONAME,
 # so we need to be more explicit until spot fixes that
-%global v8_abi 5.1
+%global v8_abi 6.2
 %def_without systemv8
 
 # supports only openssl >= 1.0.2
@@ -21,7 +21,7 @@
 %define openssl_version 1.0.2n
 %def_with systemssl
 
-%global libuv_abi 1.16.1
+%global libuv_abi 1.19.1
 %def_with systemuv
 
 %def_disable check
@@ -38,8 +38,10 @@ Group: Development/Tools
 License: MIT License
 Url: http://nodejs.org/
 
-# Source-git: https://github.com/nodejs/node.git
+##Source-git: https://github.com/nodejs/node.git
+# Source-url: https://nodejs.org/dist/v%version/node-v%version.tar.gz
 Source: %name-%version.tar
+
 Source7: nodejs_native.req.files
 
 BuildRequires(pre): rpm-macros-nodejs
@@ -259,6 +261,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Tue May 22 2018 Vitaly Lipatov <lav@altlinux.ru> 8.11.2-alt1
+- new version (8.11.2) with rpmgs script
+- 2018-05-15, Version 8.11.2 'Carbon' (LTS)
+
 * Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 6.14.2-alt1
 - new version 6.14.2 (with rpmrb script)
 - 2018-04-30 Node.js v6.14.2 'Boron' (LTS) Release
