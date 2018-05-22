@@ -1,6 +1,6 @@
 Name: installer-feature-selinux
-Version: 0.8
-Release: alt1
+Version: 0.9
+Release: alt3
 
 Summary: Installer selinux hooks
 License: GPL
@@ -27,6 +27,19 @@ install -pm755 postinstall.sh %buildroot%hookdir/postinstall.d/90-selinux.sh
 %hookdir/postinstall.d/*
 
 %changelog
+* Tue May 22 2018 Michael Shigorin <mike@altlinux.org> 0.9-alt3
+- e2k support
+- missing grub is not a problem (at least not this package's problem)
+
+* Wed Mar 28 2018 Denis Medvedev <nbr@altlinux.org> 0.9-alt1.M80C.1
+- to c8
+
+* Wed Mar 28 2018 Denis Medvedev <nbr@altlinux.org> 0.9-alt2
+- fixed wrong string characters when adding string in common_login
+
+* Thu Mar 15 2018 Denis Medvedev <nbr@altlinux.org> 0.9-alt1
+- fixed wrong pam_selinux placement not in end of file of common_login
+
 * Tue Feb 14 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.8-alt1
 - disable users listing in lightdm
 
