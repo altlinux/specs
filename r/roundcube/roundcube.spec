@@ -1,6 +1,6 @@
 %define oname roundcubemail
 Name: roundcube
-Version: 1.3.4
+Version: 1.3.6
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -18,13 +18,14 @@ BuildArch: noarch
 
 BuildPreReq: rpm-build-apache2
 BuildRequires: rpm-macros-webserver-common
-BuildRequires: php5
+BuildRequires: php7
 
 Requires: composer >= 1.1.3
 
 # check it with composer.json or on http://trac.roundcube.net/wiki/Howto_Requirements
-Requires: php5 >= 5.4.1
-Requires: webserver-common php-engine
+Requires: php7 >= 7.1
+# php-engine
+Requires: webserver-common
 Requires: pear-Mail_Mime >= 1.10.0
 Requires: pear-Net_SMTP >= 1.7.1
 Requires: pear-Net_IDNA2 >= 0.1.1
@@ -36,11 +37,15 @@ Requires: pear-Net_Sieve >= 1.3.4
 Requires: pear-Net_Socket >= 1.0.12
 Requires: pear-Mail_mimeDecode
 
-Requires: php5-dom php5-mcrypt php5-openssl
-Requires: php5-pdo_mysql
-Requires: php5-mbstring php5-fileinfo php5-mcrypt php5-zip php5-pspell
+Requires: php7-dom php7-mcrypt php7-openssl
+Requires: php7-pdo_mysql
+Requires: php7-mbstring php7-fileinfo php7-mcrypt php7-zip
+# TODO: check if needed
+Requires: php7-sockets php7-intl 
+# missed. use browser's spelling
+#php7-pspell
 # for endroid/qrcode
-Requires: php5-gd2
+Requires: php7-gd2
 
 Provides: roundcube-plugin-acl
 Obsoletes: roundcube-plugin-acl
@@ -61,7 +66,7 @@ RoundCube Webmail is written in PHP and requires a MySQL or Postgres database.
 Summary: %name's apache config file
 Group: System/Servers
 Requires: %name = %version-%release
-Requires: apache2-httpd
+Requires: apache2-httpd apache2-mod_php7
 BuildArch: noarch
 
 %description apache2
@@ -70,7 +75,7 @@ BuildArch: noarch
 %prep
 %setup
 %patch0 -p2
-sed -i 's,php_,php5_,' .htaccess
+#sed -i 's,php_,php5_,' .htaccess
 
 # disable Reply button
 %__subst 's|\(command="reply"\)|\1 style="display:none"|g' skins/larry/includes/mailtoolbar.html skins/classic/includes/messagetoolbar.html
@@ -144,6 +149,10 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Tue May 22 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.6-alt1
+- new version 1.3.6 (with rpmrb script)
+- migrate to php7
+
 * Tue Jan 16 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.4-alt1
 - new version 1.3.4 (with rpmrb script)
 
