@@ -7,7 +7,7 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define module_version	390.48
+%define module_version	390.59
 %define module_release	alt1
 %define flavour		std-def
 
@@ -251,6 +251,13 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue May 22 2018 Sergey V Turchin <zerg at altlinux dot org> 390.59-alt1
+- new release (390.59)
+
+
+* Mon Apr 16 2018 Sergey V Turchin <zerg at altlinux dot org> 390.48-alt2
+- fix for 4.16 kernel
 
 * Mon Apr 02 2018 Sergey V Turchin <zerg at altlinux dot org> 390.48-alt1
 - new release (390.48)

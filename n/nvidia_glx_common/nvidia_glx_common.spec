@@ -11,9 +11,9 @@
 # version-release
 
 %define nv_version 390
-%define nv_release 48
+%define nv_release 59
 %define nv_minor %nil
-%define pkg_rel alt190%ubt
+%define pkg_rel alt191%ubt
 %define set_gl_nvidia_ver 0.20.4
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -273,6 +273,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 390.59-alt191%ubt
+- new version
+
 * Mon Apr 02 2018 Sergey V Turchin <zerg@altlinux.org> 390.48-alt190%ubt
 - new version
 
