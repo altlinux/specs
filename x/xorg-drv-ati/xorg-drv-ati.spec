@@ -1,6 +1,6 @@
 Name: xorg-drv-ati
 Version: 7.9.0
-Release: alt1
+Release: alt2
 Epoch: 4
 Summary: ATI video driver
 License: MIT/X11
@@ -9,7 +9,10 @@ Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
-Requires: xorg-drv-radeon xorg-drv-r128 xorg-drv-mach64
+Requires: xorg-drv-radeon
+%ifnarch %e2k
+Requires: xorg-drv-r128 xorg-drv-mach64
+%endif
 
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -61,6 +64,9 @@ and the Xinerama extension.
 %_man4dir/radeon.4*
 
 %changelog
+* Tue May 22 2018 Michael Shigorin <mike@altlinux.org> 4:7.9.0-alt2
+- E2K: avoid R: xorg-drv-r128 xorg-drv-mach64 (no sense)
+
 * Thu Mar 16 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:7.9.0-alt1
 - 7.9.0
 
