@@ -5,7 +5,7 @@ Name: readline
 %define rl_patch .3
 %define srcname readline-%rl_version
 Version: %rl_version%rl_patch
-Release: alt1
+Release: alt2
 
 Summary: A library for editing typed in command lines
 License: GPLv2+
@@ -137,6 +137,10 @@ popd
 %_libdir/*.a
 
 %changelog
+* Tue May 22 2018 Dmitry V. Levin <ldv@altlinux.org> 7.0.3-alt2
+- Reintroduced rl_readline_state that was lost in the previous build.
+- Exported 11 more symbols declared in rlprivate.h file.
+
 * Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 7.0.3-alt1
 - Updated to upstream version 7.0.3.
 
