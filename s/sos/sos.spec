@@ -5,7 +5,7 @@
 Summary: A set of tools to gather troubleshooting information from a system
 Name: sos
 Version: 3.5
-Release: alt1%ubt
+Release: alt2%ubt
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Source: %name-%version.tar
@@ -53,6 +53,10 @@ rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
 %doc %_defaultdocdir/sos/html
 
 %changelog
+* Tue May 22 2018 Evgeny Sinelnikov <sin@altlinux.org> 3.5-alt2%ubt
+- Add samba-ad profile
+- Fix build scheme from sources
+
 * Fri Apr 13 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt1%ubt
 - Update to latest release
 
