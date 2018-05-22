@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt110
+Release: alt111
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -511,6 +511,10 @@ mv %buildroot%_rpmlibdir/{,build}macros
 %endif #with python
 
 %changelog
+* Tue May 22 2018 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt111
+- ldd: changed to try interpreters listed in /usr/bin/ldd.
+- platform: changed %__nprocs to use nproc(1) instead of /proc/stat.
+
 * Tue Apr 17 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.4-alt110
 - Added support for RPM_STRICT_INTERDEPS environment variable.
 
