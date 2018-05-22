@@ -1,5 +1,5 @@
 Name:           conntrack-tools
-Version:        1.4.4
+Version:        1.4.5
 Release: 	alt1%ubt
 Summary:        Tool to manipulate netfilter connection tracking table
 
@@ -26,7 +26,7 @@ show an event message (one line) per newly established connection.
 %build
 %autoreconf -fisv
 %configure --enable-systemd
-%make_build
+%make
 
 %install
 make install DESTDIR=%buildroot
@@ -41,6 +41,9 @@ make install DESTDIR=%buildroot
 %_man5dir/*
 
 %changelog
+* Tue May 22 2018 Anton Farygin <rider@altlinux.ru> 1.4.5-alt1%ubt
+- 1.4.5
+
 * Mon Mar 27 2017 Anton Farygin <rider@altlinux.ru> 1.4.4-alt1%ubt
 - new version
 
