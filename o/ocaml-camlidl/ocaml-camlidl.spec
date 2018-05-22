@@ -1,6 +1,6 @@
 Name: ocaml-camlidl
 Version: 1.05
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: Stub code generator and COM binding for Objective Caml
 License: QPL and LGPLv2 with exceptions
 Group: Development/ML
@@ -83,6 +83,9 @@ make OCAMLLIB=%buildroot%_libdir/ocaml \
 %_libdir/ocaml/caml/*.h
 
 %changelog
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.05-alt3%ubt
+- rebuilt for ocaml 4.06.1
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.05-alt2%ubt
 - rebuild with ocaml 4.04.2
 

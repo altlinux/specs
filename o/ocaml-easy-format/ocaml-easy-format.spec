@@ -2,7 +2,7 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-easy-format
-Version: 1.2.0
+Version: 1.3.1
 Release: alt1%ubt
 Summary: High-level and functional interface to the Format module
 License: BSD
@@ -13,6 +13,8 @@ Source0: %name-%version.tar
 BuildRequires: ocaml >= 4.04
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamldoc
+BuildRequires: jbuilder
+BuildRequires: opam
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -51,25 +53,28 @@ sed -i.add-debuginfo 's/ocamlopt/ocamlopt -g/;s/ocamlc \(-[co]\)/ocamlc -g \1/' 
 make
 
 %install
-export DESTDIR=%buildroot
 export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
 mkdir -p $OCAMLFIND_DESTDIR
-make install
+opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 %files
 %doc LICENSE
 %_libdir/ocaml/easy-format
 %exclude %_libdir/ocaml/*/*.cmx
-%exclude %_libdir/ocaml/*/*.o
 %exclude %_libdir/ocaml/*/*.mli
 
 %files devel
 %doc LICENSE README.md Changes
 %_libdir/ocaml/*/*.cmx
-%_libdir/ocaml/*/*.o
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.3.1-alt1%ubt
+- 1.3.1
+
+* Thu Dec 21 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2%ubt
+- rebuilt for ocaml 4.06
+
 * Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1%ubt
 - new version
 

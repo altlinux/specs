@@ -1,6 +1,6 @@
 Name: ocaml-lablgl
 Version: 1.05
-Release: alt3%ubt
+Release: alt4%ubt
 Summary: OpenGL library for OCaml
 License: BSD-style
 Group: Development/ML
@@ -109,6 +109,9 @@ install -p -m644 META %buildroot%_libdir/ocaml/lablGL/META
 %_libdir/ocaml/lablGL/build.ml
 
 %changelog
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.05-alt4%ubt
+- rebuilt for ocaml 4.06.1
+
 * Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1.05-alt3%ubt
 - rebuild with ocaml 4.04.2
 

@@ -1,12 +1,12 @@
+%set_verify_elf_method textrel=relaxed
 Name: ocaml-libvirt
 Version: 0.6.1.4
-Release: alt4%ubt
+Release: alt5%ubt
 Summary: OCaml binding for libvirt
 Group: System/Libraries
 
 License: LGPLv2+
 Url: http://libvirt.org/ocaml/
-Packager: Lenar Shakirov <snejok@altlinux.ru>
 
 Source: http://libvirt.org/sources/ocaml/%name-%version.tar
 
@@ -22,6 +22,12 @@ Patch4: 0002-Don-t-bother-checking-return-from-virInitialize.patch
 
 # Upstream patch to remove unused function.
 Patch5: 0001-Remove-unused-not_supported-function.patch
+
+# Upstream patches to tidy up warnings.
+Patch6:         0001-Use-g-warn-error.patch
+Patch7:         0002-Update-dependencies.patch
+
+Patch8: 0001-Use-safe-string-and-fix-the-library.patch
 
 BuildRequires: ocaml >= 3.10.0
 BuildRequires: ocaml-ocamldoc
@@ -51,6 +57,9 @@ developing applications that use %name.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
 %build
 %configure
@@ -82,6 +91,9 @@ make install-opt
 %_libdir/ocaml/libvirt/*.mli
 
 %changelog
+* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt5%ubt
+- rebuilt for ocaml 4.06.1
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt4%ubt
 - rebuild with ocaml 4.04.2
 

@@ -1,7 +1,8 @@
+%set_verify_elf_method textrel=relaxed
 %define oname ocamlbdb
 Name: ocaml-bdb
 Version: 4.3.21
-Release: alt6%ubt
+Release: alt7%ubt
 Summary: OCaml interface to Berkeley-DB
 Packager: Boris Savelev <boris@altlinux.org>
 Source: http://www.eecs.harvard.edu/~stein/%oname-%version.tar.gz
@@ -53,6 +54,9 @@ install -m 644 bdb.cma bdb.cmi libcamlbdb.a %buildroot%_libdir/ocaml/bdb/
 %exclude %_libdir/ocaml/bdb/*.cmi
 
 %changelog
+* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 4.3.21-alt7%ubt
+- rebuilt for ocaml 4.06.1
+
 * Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 4.3.21-alt6%ubt
 - added ubt tag
 - moved out from site-lib dir

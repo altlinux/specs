@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-ocamlgraph
-Version: 1.8.7
-Release: alt2%ubt
+Version: 1.8.8
+Release: alt1%ubt
 Summary: OCaml library for arc and node graphs
 Group: Development/ML
 License: LGPLv2 with exceptions
@@ -105,6 +105,9 @@ install -m 0755 -p view_graph/viewgraph.opt \
 %_bindir/*
 
 %changelog
+* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 1.8.8-alt1%ubt
+- 1.8.8
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.8.7-alt2%ubt
 - rebuild with ocaml 4.04.2
 

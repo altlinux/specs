@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-re
 Version: 1.7.1
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: A regular expression library for OCaml
 
 License: LGPLv2 with exceptions
@@ -63,6 +63,9 @@ rm -rf %buildroot%_docdir/re/
 %_libdir/ocaml/re/*.mli
 
 %changelog
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.7.1-alt2%ubt
+- rebuilt for ocaml 4.06.1
+
 * Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.7.1-alt1%ubt
 - first build for ALT, based on RH spec
 

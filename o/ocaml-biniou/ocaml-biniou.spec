@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-biniou
-Version: 1.0.13
-Release: alt2%ubt
+Version: 1.2.0
+Release: alt1%ubt
 Summary: Safe and fast binary data format
 Group: Development/ML
 License: BSD
@@ -10,10 +10,11 @@ Url: http://mjambon.com/biniou.html
 # https://github.com/mjambon/biniou
 Source0:%name-%version.tar
 
-BuildRequires: ocaml >= 4.04
+BuildRequires: ocaml >= 4.06
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-easy-format-devel
 BuildRequires: ocaml-ocamldoc
+BuildRequires: jbuilder opam
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -45,15 +46,12 @@ sed -i.add-debuginfo \
 
 %build
 make all
-make opt
-make META
 
 %install
-export PREFIX=%buildroot%prefix
 export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
 mkdir -p %buildroot%_bindir
 mkdir -p $OCAMLFIND_DESTDIR
-make install 
+opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 # avoid potential future name conflict
 mv %buildroot%_bindir/{,ocaml-}bdump
@@ -64,7 +62,6 @@ mv %buildroot%_bindir/{,ocaml-}bdump
 %exclude %_libdir/ocaml/*/*.a
 %exclude %_libdir/ocaml/*/*.cmxa
 %exclude %_libdir/ocaml/*/*.cmx
-%exclude %_libdir/ocaml/*/*.o
 %exclude %_libdir/ocaml/*/*.mli
 
 %files devel
@@ -73,10 +70,15 @@ mv %buildroot%_bindir/{,ocaml-}bdump
 %_libdir/ocaml/*/*.a
 %_libdir/ocaml/*/*.cmxa
 %_libdir/ocaml/*/*.cmx
-%_libdir/ocaml/*/*.o
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1%ubt
+- new version
+
+* Thu Dec 21 2017 Anton Farygin <rider@altlinux.ru> 1.0.13-alt3%ubt
+- rebuilt for ocaml 4.06
+
 * Thu Jul 06 2017 Anton Farygin <rider@altlinux.ru> 1.0.13-alt2%ubt
 - new version
 

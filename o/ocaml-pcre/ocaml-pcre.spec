@@ -2,8 +2,8 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-pcre
-Version: 7.2.3
-Release: alt4%ubt
+Version: 7.3.4
+Release: alt1%ubt
 
 Summary: Perl compatibility regular expressions (PCRE) for OCaml
 License: LGPL
@@ -17,7 +17,7 @@ Obsoletes: pcre-ocaml
 Provides: ocaml-pcre-runtime = %version-%release
 Obsoletes: ocaml-pcre-runtime < %version-%release
 
-BuildRequires: libpcre-devel ocaml ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc
+BuildRequires: libpcre-devel ocaml ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc jbuilder opam ocaml-base ocaml-configurator ocaml-stdio
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -39,31 +39,33 @@ developing applications that use %name.
 %setup
 
 %build
-%make_build NO_CUSTOM=1 INCDIRS=%_includedir/pcre
+make
 
 %install
 mkdir -p %buildroot%_libdir/ocaml/stublibs
 export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
-make install
+opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 %files
-%doc COPYING.txt
+%doc LICENSE.md README.md
 %_libdir/ocaml/pcre
 %exclude %_libdir/ocaml/pcre/*.a
 %exclude %_libdir/ocaml/pcre/*.cmxa
 %exclude %_libdir/ocaml/pcre/*.cmx
 %exclude %_libdir/ocaml/pcre/*.mli
 %_libdir/ocaml/stublibs/*.so
-%_libdir/ocaml/stublibs/*.so.owner
 
 %files devel
-%doc COPYING.txt README.md
+%doc README.md
 %_libdir/ocaml/pcre/*.a
 %_libdir/ocaml/pcre/*.cmxa
 %_libdir/ocaml/pcre/*.cmx
 %_libdir/ocaml/pcre/*.mli
 
 %changelog
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 7.3.4-alt1%ubt
+- 7.3.4
+
 * Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 7.2.3-alt4%ubt
 - rebuild with ocaml 4.04.2
 

@@ -1,7 +1,7 @@
 %define _name findlib
 Name: ocaml-%_name
-Version: 1.7.3
-Release: alt2%ubt
+Version: 1.8.0
+Release: alt1%ubt
 
 Summary: A module packaging tool for OCaml
 License: Distributable
@@ -16,7 +16,7 @@ Patch3: findlib-1.6.2-alt-install-doc.patch
 BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: rpm-build-ocaml >= 1.2 ocaml-camlp4-devel ocaml-labltk >= 8.06.2 libtinfo-devel ocaml-ocamldoc
-BuildRequires: ocaml-ocamlbuild libX11-devel tcl-devel tk-devel
+BuildRequires: ocaml-ocamlbuild libX11-devel tcl-devel tk-devel libncurses-devel
 
 %package -n ocaml-ocamlfind-mini
 Summary: Minimal findlib script to be distributed with user libraries
@@ -125,6 +125,12 @@ rm -f %buildroot%_libdir/ocaml/findlib/*.cmxs
 
 
 %changelog
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1%ubt
+- 1.8.0
+
+* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 1.7.3-alt3%ubt
+- rebuilt for ocaml-4.06.0
+
 * Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1.7.3-alt2%ubt
 - rebuild with ocaml-4.04.2
 

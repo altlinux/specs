@@ -2,16 +2,18 @@
 Name: ocaml-xmlm
 %global libname %(sed -e 's/^ocaml-//' <<< %name)
 Group: Development/ML
-Version: 1.2.0
-Release: alt3%ubt
+Version: 1.3.0
+Release: alt1%ubt
 Summary: A streaming XML codec
 License: BSD
 Url: http://erratique.ch/software/xmlm
 # https://github.com/dbuenzli/xmlm
 Source0: %name-%version.tar
-BuildRequires: ocaml >= 4.04
+BuildRequires: ocaml >= 4.06
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamlbuild
+BuildRequires: ocaml-topkg
+BuildRequires: opam
 BuildRequires(pre):rpm-build-ubt
 
 %description
@@ -30,25 +32,16 @@ developing applications that use %name.
 
 %prep
 %setup
-#patch0 -p1 -b .debug
 
 %build
-./pkg/build true
+ocaml ./pkg/pkg.ml build
 
 %install
-# These rules work if the library uses 'ocamlfind install' to install itself.
-export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
-mkdir -p %buildroot%_bindir
-mkdir -p $OCAMLFIND_DESTDIR/%libname
-
-install -m 755 -p _build/test/xmltrip.native %buildroot%_bindir/xmltrip
-install -m 644 -p _build/src/xmlm.{a,cmxa} $OCAMLFIND_DESTDIR/%libname/
-install -m 755 -p _build/src/xmlm.cmxs $OCAMLFIND_DESTDIR/%libname/
-install -m 644 -p _build/pkg/META _build/src/xmlm.{cm?,mli} $OCAMLFIND_DESTDIR/%libname/
+mkdir -p %buildroot%_libdir/ocaml
+opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 %files
-%doc README.md
+%doc README.md LICENSE.md
 %_bindir/xmltrip
 %_libdir/ocaml/xmlm/
 %exclude %_libdir/ocaml/*/*.a
@@ -58,7 +51,6 @@ install -m 644 -p _build/pkg/META _build/src/xmlm.{cm?,mli} $OCAMLFIND_DESTDIR/%
 %exclude %_libdir/ocaml/*/*.mli
 
 %files devel
-# LICENSE not bundled
 %doc CHANGES.md _build/test/examples.ml _build/test/xhtml.ml doc
 %_libdir/ocaml/*/*.a
 %_libdir/ocaml/*/*.cmxa
@@ -67,6 +59,9 @@ install -m 644 -p _build/pkg/META _build/src/xmlm.{cm?,mli} $OCAMLFIND_DESTDIR/%
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.3.0-alt1%ubt
+- 1.3.0
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt3%ubt
 - rebuild with ocaml 4.04.2
 

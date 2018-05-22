@@ -1,8 +1,8 @@
 #/usr/lib/ocaml/oUnit/oUnit.cmxs: TEXTREL entry found: 0x00000000
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-ounit
-Version: 2.0.0
-Release: alt3%ubt
+Version: 2.0.8
+Release: alt1%ubt
 Summary: Unit test framework for OCaml
 Group: Development/ML
 License: MIT
@@ -60,6 +60,9 @@ make install
 %_libdir/ocaml/oUnit/*.mli
 
 %changelog
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 2.0.8-alt1%ubt
+- 2.0.8
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 2.0.0-alt3%ubt
 - rebuild with ocaml 4.04.2
 

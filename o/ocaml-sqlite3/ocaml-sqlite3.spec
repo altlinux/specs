@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define module sqlite3
 Name: ocaml-%module
-Version: 4.1.3
+Version: 4.4.0
 Release: alt1%ubt
 
 Summary: OCaml library for accessing SQLite3 databases
@@ -10,7 +10,7 @@ Group: Development/ML
 Url: http://www.ocaml.info/home/ocaml_sources.html
 Source: http://www.ocaml.info/ocaml_sources/%name-%version.tar
 
-BuildRequires: ocaml-findlib libsqlite3-devel ocaml-ocamldoc ocaml-ocamlbuild
+BuildRequires: ocaml-findlib libsqlite3-devel ocaml-ocamldoc jbuilder opam ocaml-base ocaml-stdio ocaml-configurator
 Provides:	ocaml4-%module
 Obsoletes:	ocaml4-%module
 
@@ -30,40 +30,25 @@ Runtime part of OCaml library for accessing SQLite3 databases
 %prep
 %setup -q 
 %define docdir %_docdir/%name-%version
-./configure --mandir=%_mandir --docdir=%buildroot%docdir --destdir=%buildroot
 
 %build
-make all
+make
 
 %install
-%define ocamlsitelib %_libdir/ocaml/site-lib
-%define ocamlstublib %_libdir/ocaml/stublibs/
-export OCAMLFIND_LDCONF=ignore
-export OCAMLFIND_DESTDIR=%buildroot%ocamlsitelib/
-export DESTDIR=%buildroot
-mkdir -p $OCAMLFIND_DESTDIR $OCAMLFIND_DESTDIR/stublibs
-
-%makeinstall
-
-rm -f %buildroot%ocamlsitelib/%module/*.annot
-rm -f %buildroot%ocamlsitelib/%module/*.cmx
-rm -f %buildroot%ocamlsitelib/%module/*.cmt
-rm -f %buildroot%ocamlsitelib/%module/*.cmti
-rm -f %buildroot%ocamlsitelib/%module/*.ml
-rm -f %buildroot%ocamlsitelib/%module/*.mli
-
-mkdir -p %buildroot%ocamlstublib/
-mv $OCAMLFIND_DESTDIR/stublibs/* %buildroot%ocamlstublib/
+mkdir -p %buildroot%_libdir/ocaml
+jbuilder install --destdir=%buildroot --libdir=%buildroot%_libdir/ocaml
 
 %files
-%doc COPYING.txt CHANGES.txt README.md TODO.md
-%ocamlsitelib/%module
+%doc LICENSE.md CHANGES.md README.md TODO.md
+%_libdir/ocaml/%module
 
 %files runtime
-%ocamlstublib/*.so
-%ocamlstublib/*.so.owner
+%_libdir/ocaml/stublibs/*.so
 
 %changelog
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 4.4.0-alt1%ubt
+- 4.4.0
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 4.1.3-alt1%ubt
 - new version
 

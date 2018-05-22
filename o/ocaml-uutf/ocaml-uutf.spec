@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-uutf
-Version: 0.9.4
+Version: 1.0.1
 Release: alt1%ubt
 Summary: Non-blocking streaming codec for UTF-8, UTF-16, UTF-16LE and UTF-16BE
 License: BSD3
@@ -11,6 +11,7 @@ BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-cmdliner-devel
 BuildRequires: ocaml-result-devel
+BuildRequires: ocaml-topkg opam
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -37,22 +38,10 @@ developing applications that use %name.
 %setup
 
 %build
-ocaml pkg/git.ml
-ocaml pkg/build.ml native=true native-dynlink=true cmdliner=true
-
-ocamlfind ocamlc -c -bin-annot -package cmdliner -I test -I _build/src -o test/utftrip.cmo test/utftrip.ml
-ocamlfind ocamlopt -c -bin-annot -package cmdliner -I test -I _build/src -o test/utftrip.cmx test/utftrip.ml
+ocaml pkg/pkg.ml build
 
 %install
-export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot/%_libdir/ocaml
-mkdir -p $OCAMLFIND_DESTDIR/uutf
-pushd _build/src/
- ocamlfind install uutf ../pkg/META *.a *.cm[iax] *.cmx[as] *.mli
-popd
-
-install -d %buildroot%_bindir/
-install -m 0755 _build/test/utftrip.native %buildroot%_bindir/utftrip
+opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml 
 
 %files
 %doc README.md CHANGES.md
@@ -60,6 +49,7 @@ install -m 0755 _build/test/utftrip.native %buildroot%_bindir/utftrip
 %_libdir/ocaml/uutf/META
 %_libdir/ocaml/uutf/*.cma
 %_libdir/ocaml/uutf/*.cmi
+%_libdir/ocaml/uutf/*.cmti
 %_libdir/ocaml/uutf/*.cmxs
 %_bindir/utftrip
 
@@ -72,6 +62,9 @@ install -m 0755 _build/test/utftrip.native %buildroot%_bindir/utftrip
 %_libdir/ocaml/uutf/*.mli
 
 %changelog
+* Mon May 21 2018 Anton Farygin <rider@altlinux.ru> 1.0.1-alt1%ubt
+- 1.0.1
+
 * Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 0.9.4-alt1%ubt
 - first build for ALT, based on specfile from Mageia
 

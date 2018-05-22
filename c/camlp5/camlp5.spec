@@ -1,5 +1,5 @@
 Name: camlp5
-Version: 7.00
+Version: 7.05
 Release: alt1%ubt
 
 Summary: preprocessor-pretty-printer of OCaml
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 Source2: META.src
 Patch1: camlp5-5.08-alt-dynlink.patch
 
-BuildRequires: ocaml
+BuildRequires: ocaml >= 4.06.0
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -46,6 +46,12 @@ install -pD -m644 META %buildroot%_libdir/ocaml/site-lib/%name/META
 %_man1dir/*5*.1*
 
 %changelog
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 7.05-alt1%ubt
+- 7.05
+
+* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 7.03-alt1%ubt
+- 7.03
+
 * Tue Jul 04 2017 Anton Farygin <rider@altlinux.ru> 7.00-alt1%ubt
 - 7.00
 

@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-jsonm
-Version: 0.9.1
+Version: 1.0.1
 Release: alt1%ubt
 Summary: Non-blocking streaming codec to decode and encode JSON
 License: BSD3
@@ -10,7 +10,8 @@ Source0: %name-%version.tar
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-uutf-devel
 BuildRequires: ocaml-ocamldoc
-BuildRequires: ocaml-ocamlbuild
+BuildRequires: ocaml-ocamlbuild opam ocaml-topkg
+BuildRequires: ocaml-uutf 
 Requires: ocaml-uutf
 BuildRequires(pre):rpm-build-ubt
 
@@ -38,36 +39,20 @@ developing applications that use %name.
 %setup
 
 %build
-ocaml setup.ml -configure \
-    --prefix %prefix \
-    --libdir %_libdir \
-    --libexecdir %_libexecdir \
-    --exec-prefix %_exec_prefix \
-    --bindir %_bindir \
-    --sbindir %_sbindir \
-    --mandir %_mandir \
-    --datadir %_datadir \
-    --localstatedir %_localstatedir \
-    --sharedstatedir %_sharedstatedir \
-    --destdir %buildroot
-
-ocaml setup.ml -build
+ocaml pkg/pkg.ml build
 
 %install
-export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot/%_libdir/ocaml
-mkdir -p $OCAMLFIND_DESTDIR/INSTALL_DIR
-ocaml setup.ml -install
+opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 %files
-%doc README CHANGES
+%doc README.md CHANGES.md
 %dir %_libdir/ocaml/jsonm
 %_libdir/ocaml/jsonm/META
 %_libdir/ocaml/jsonm/*.cma
 %_libdir/ocaml/jsonm/*.cmi
+%_libdir/ocaml/jsonm/*.cmti
 %_libdir/ocaml/jsonm/*.cmxs
 %_bindir/jsontrip
-%_bindir/ocamltweets
 
 %files devel
 %doc doc/
@@ -77,6 +62,9 @@ ocaml setup.ml -install
 %_libdir/ocaml/jsonm/*.mli
 
 %changelog
+* Mon May 21 2018 Anton Farygin <rider@altlinux.ru> 1.0.1-alt1%ubt
+- 1.0.1
+
 * Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 0.9.1-alt1%ubt
 - first build for ALT, based on Mageia spec
 

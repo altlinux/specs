@@ -2,8 +2,8 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-yojson
 %define libname %(sed -e 's/^ocaml-//' <<< %name)
-Version: 1.3.3
-Release: alt3%ubt
+Version: 1.4.1
+Release: alt1%ubt
 Summary: An optimized parsing and printing library for the JSON format
 Group: Development/ML
 License: BSD
@@ -16,6 +16,7 @@ BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-biniou-devel
 BuildRequires: ocaml-cppo
 BuildRequires: ocaml-easy-format-devel
+BuildRequires: opam jbuilder
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -43,30 +44,28 @@ developing applications that use %name.
 %setup
 
 %build
-make META all
-make opt
+make all
 
 %install
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
-mkdir -p %buildroot%_bindir
-mkdir -p $OCAMLFIND_DESTDIR
-make install BINDIR=%buildroot%_bindir
+mkdir -p %buildroot%_libdir/ocaml
+opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 %files
 %doc LICENSE
 %_libdir/ocaml/%libname/
 %_bindir/ydump
 %exclude %_libdir/ocaml/*/*.cmx
-%exclude %_libdir/ocaml/*/*.o
 %exclude %_libdir/ocaml/*/*.mli
 
 %files devel
 %doc LICENSE README.md Changes examples
 %_libdir/ocaml/*/*.cmx
-%_libdir/ocaml/*/*.o
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1%ubt
+- 1.4.1
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt3%ubt
 - rebuild with ocaml 4.04.2
 
