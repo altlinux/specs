@@ -9,9 +9,10 @@
 %def_enable tls
 %def_enable pkcs11
 %def_enable installed_tests
+%def_disable check
 
 Name: glib-networking
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Networking support for GIO
@@ -57,19 +58,13 @@ the functionality of the installed %name package.
 
 %prep
 %setup
-%ifarch e2k
-sed -i 's,-Werror=missing-include-dirs,,' configure*
-%endif
 
 %build
 %meson \
 	%{?_enable_libproxy:-Dlibproxy_support=true} \
 	%{?_enable_gnome_proxy:-Dgnome_proxy_support=true} \
-	%{?_enable_tls:-Dtls_support=true} \
 	%{?_enable_pkcs11:-Dpkcs11_support=true} \
-	%{?_enable_installed_tests:-Dinstalled-tests=true} \
-	-Dca-certificates_path=%_datadir/ca-certificates/ca-bundle.crt \
-	-Dsystemd-user-unit-dir=%_userinitdir
+	%{?_enable_installed_tests:-Dinstalled_tests=true}
 %meson_build
 
 %install
@@ -78,7 +73,7 @@ sed -i 's,-Werror=missing-include-dirs,,' configure*
 %find_lang %name
 
 %check
-#%%meson_test
+%meson_test
 
 %files -f %name.lang
 %{?_enable_tls:%_libdir/gio/modules/libgiognutls.so}
@@ -93,11 +88,14 @@ sed -i 's,-Werror=missing-include-dirs,,' configure*
 
 %if_enabled installed_tests
 %files tests
-#%_libexecdir/installed-tests/%name/
+%_libexecdir/installed-tests/%name/
 %_datadir/installed-tests/%name/
 %endif
 
 %changelog
+* Tue May 22 2018 Yuri N. Sedunov <aris@altlinux.org> 2.56.1-alt1
+- 2.56.1
+
 * Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 2.56.0-alt1
 - 2.56.0
 
