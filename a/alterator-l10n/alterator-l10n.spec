@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.39
+Version: 2.9.40
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -114,6 +114,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Wed May 16 2018 Grigory Ustinov <grenka@altlinux.org> 2.9.40-alt1
+- Fix translation of reset button (Closes: #16762).
+
 * Mon Dec 04 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.9.39-alt1
 - Update Russian translations and help for alterator-grub
 
