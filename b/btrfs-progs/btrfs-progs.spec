@@ -1,6 +1,6 @@
 Name: btrfs-progs
-Version: 4.16
-Release: alt2%ubt
+Version: 4.16.1
+Release: alt1%ubt
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -76,6 +76,9 @@ ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so
 %_includedir/*
 
 %changelog
+* Tue May 22 2018 Anton Farygin <rider@altlinux.ru> 4.16.1-alt1%ubt
+- 4.16.1
+
 * Wed Apr 11 2018 Anton Farygin <rider@altlinux.ru> 4.16-alt2%ubt
 - Fix up headers location (closes: #34792)
 
