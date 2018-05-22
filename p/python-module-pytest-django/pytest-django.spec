@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.8.0
-Release: alt2.git20150303.1
+Release: alt3
 Summary: A Django plugin for py.test
 License: BSD
 Group: Development/Python
@@ -27,7 +27,11 @@ BuildPreReq: python-module-sphinx-devel
 #BuildPreReq: python-module-django-dbbackend-sqlite3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-django python3-module-pytest-xdist python3-module-tox
+%if_with bootstrap
+BuildRequires: python3-module-pytest-xdist
+%endif
+
+BuildRequires: python3-module-django python3-module-tox
 #BuildPreReq: python3-devel python3-module-setuptools-tests
 #BuildPreReq: python3-module-pytest python3-module-django-tests
 #BuildPreReq: python3-module-django-configurations python3-module-wheel
@@ -133,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Thu May 17 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.8.0-alt3
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.8.0-alt2.git20150303.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

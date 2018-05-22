@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.02
-Release: alt2.git20130421.1
+Release: alt2.git20130421.2
 Summary: py.test plugin to randomize tests
 License: MPLv2.0
 Group: Development/Python
@@ -93,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.02-alt2.git20130421.2
+- (NMU) rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.02-alt2.git20130421.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

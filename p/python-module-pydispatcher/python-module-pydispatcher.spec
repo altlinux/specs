@@ -5,7 +5,7 @@
 
 Name: python-module-%sname
 Version: 2.0.5
-Release: alt1.bzr20150114.1
+Release: alt1.bzr20150114.2
 
 Summary: Multi-producer-multi-consumer signal dispatching mechanism
 
@@ -103,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.0.5-alt1.bzr20150114.2
+- (NMU) rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.5-alt1.bzr20150114.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

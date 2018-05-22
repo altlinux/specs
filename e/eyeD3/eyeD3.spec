@@ -2,7 +2,7 @@
 
 Name: eyeD3
 Version: 0.7.4
-Release: alt1.1
+Release: alt1.2
 
 Summary: Console tool that displays and manipulates id3-tags on mp3 files
 License: GPLv2+
@@ -119,6 +119,9 @@ install -p -m755 bin/%name %buildroot%_bindir/
 %endif
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.7.4-alt1.2
+- (NMU) rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.4-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

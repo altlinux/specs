@@ -2,7 +2,7 @@
 
 Summary: Python DNS library
 Version: 3.0.2
-Release: alt1.bzr20120722.1.1
+Release: alt1.bzr20120722.1.2
 
 %add_python3_req_skip winreg
 
@@ -41,6 +41,9 @@ PyDNS provides a module for performing DNS queries from python applications.
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.0.2-alt1.bzr20120722.1.2
+- (NMU) rebuild with python3.6
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.2-alt1.bzr20120722.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

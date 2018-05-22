@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.11
-Release: alt1.git20140816.1.1
+Release: alt1.git20140816.1.2
 Summary: A collection of network utilities used by pathod and mitmproxy
 License: MIT
 Group: Development/Python3
@@ -81,6 +81,9 @@ py.test-%_python3_version
 #python3_sitelibdir/*/*/test.*
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.11-alt1.git20140816.1.2
+- (NMU) rebuild with python3.6
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.11-alt1.git20140816.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

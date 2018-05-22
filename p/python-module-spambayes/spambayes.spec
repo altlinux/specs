@@ -1,10 +1,11 @@
 %define oname spambayes
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 1.1b1
-Release: alt2.1
+Release: alt2.2
 Summary: Spam classification system
 License: Python
 Group: Development/Python
@@ -36,6 +37,14 @@ of alternate methods yielded a more useful response.
 Summary: Spam classification system
 Group: Development/Python3
 %add_python3_req_skip pywintypes win32com
+%if_with bootstrap
+%add_python3_req_skip MoinMoin.Page MoinMoin.PageEditor
+%add_python3_req_skip MoinMoin.security MoinMoin.user win32com.client
+%add_python3_req_skip MoinMoin.util.mail MoinMoin.wikidicts
+%add_python3_req_skip __main__ email.Errors email.Generator
+%add_python3_req_skip email.Header email.Iterators email.Message
+%add_python3_req_skip email.Parser email.Utils twisted.protocols.imap4
+%endif
 
 %description -n python3-module-%oname
 The SpamBayes project is working on developing a statistical (commonly,
@@ -99,6 +108,9 @@ ln -s %_bindir/sb_server.py3 %buildroot%python3_sitelibdir/sb_server.py
 %endif
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.1b1-alt2.2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1b1-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

@@ -1,7 +1,7 @@
 %define oname ipfix
 Name: python3-module-%oname
 Version: 0.9.7
-Release: alt1.git20140704.1
+Release: alt1.git20140704.2
 Summary: IPFIX implementation for Python 3.3+
 License: LGPLv3+
 Group: Development/Python3
@@ -57,6 +57,9 @@ This package contains tests for %oname.
 %python3_sitelibdir/*/*/testutils.*
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.7-alt1.git20140704.2
+- (NMU) rebuild with python3.6
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.7-alt1.git20140704.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

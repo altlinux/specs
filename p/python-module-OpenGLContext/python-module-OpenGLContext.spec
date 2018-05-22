@@ -2,10 +2,11 @@
 %define oname OpenGLContext
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 2.3.0
-Release: alt2.b1.1
+Release: alt3
 
 Summary: Demonstration and testing contexts for PyOpenGL
 
@@ -52,6 +53,10 @@ Summary: Demonstration and testing contexts for PyOpenGL
 Group: Development/Python3
 %add_python3_req_skip pygame win32con win32ui wx FXPy fontTools
 %add_python3_req_skip ttfquery
+
+%if_with bootstrap
+%add_python3_req_skip FXPy.fox wx.py
+%endif
 
 %description -n python3-module-%oname
 Demonstration and Testing Contexts for PyOpenGL
@@ -142,6 +147,9 @@ popd
 %endif
 
 %changelog
+* Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.3.0-alt3
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.3.0-alt2.b1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

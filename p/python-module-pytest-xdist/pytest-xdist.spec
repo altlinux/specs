@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest-xdist
-
+%def_without bootstrap
 %def_with check
 
 Name: python-module-%oname
 Version: 1.22.2
-Release: alt1%ubt
+Release: alt2
 
 Summary: py.test xdist plugin for distributed testing and loop-on-failing modes
 License: MIT
@@ -23,8 +23,7 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-setuptools_scm
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
-
-%if_with check
+%if_with bootstrap
 BuildRequires: /dev/pts
 BuildRequires: python-module-tox
 BuildRequires: python-module-pycmd
@@ -39,6 +38,8 @@ BuildRequires: python3-module-pexpect
 BuildRequires: python3-module-execnet
 BuildRequires: python3-module-virtualenv
 %endif
+
+%add_python3_req_skip execnet
 
 %define overview							 \
 The pytest-xdist plugin extends py.test with some unique test execution  \
@@ -97,6 +98,7 @@ pushd ../python3
 %python3_install
 popd
 
+%if_with bootstrap
 %check
 %define python_version_nodots() %(%1 -Esc "import sys; sys.stdout.write('{0.major}{0.minor}'.format(sys.version_info))")
 
@@ -120,6 +122,7 @@ cp -f %_bindir/py.test3 .tox/py%{python_version_nodots python3}/bin/py.test
 
 TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
+%endif
 
 %files
 %doc CHANGELOG.rst LICENSE README.rst example
@@ -130,6 +133,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Thu May 17 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.22.2-alt2
+- rebuild with python3.6
+
 * Fri Apr 13 2018 Stanislav Levin <slev@altlinux.org> 1.22.2-alt1%ubt
 - 1.11 -> 1.22.2
 

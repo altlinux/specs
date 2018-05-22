@@ -3,7 +3,7 @@
 Summary: python refactoring library
 Name: python3-module-%real_name
 Version: 0.9.4.1
-Release: alt1.1
+Release: alt1.2
 License: GPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/rope_py3k
@@ -47,6 +47,9 @@ cp -fR ropetest %buildroot%python3_sitelibdir/
 %python3_sitelibdir/ropetest
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.4.1-alt1.2
+- (NMU) rebuild with python3.6
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.4.1-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

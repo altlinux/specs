@@ -1,10 +1,11 @@
 %define oname django-taggit
 
 %def_with python3
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.12.2
-Release: alt1.git20140921.1.1
+Release: alt2
 Summary: Simple tagging for django
 License: BSD
 Group: Development/Python
@@ -33,6 +34,9 @@ django-taggit is a reusable Django application for simple tagging.
 %package -n python3-module-%oname
 Summary: Simple tagging for django
 Group: Development/Python3
+%if_with bootstrap
+%add_python3_req_skip django.db.models.related
+%endif
 
 %description -n python3-module-%oname
 django-taggit is a reusable Django application for simple tagging.
@@ -79,6 +83,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.12.2-alt2
+- rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.12.2-alt1.git20140921.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

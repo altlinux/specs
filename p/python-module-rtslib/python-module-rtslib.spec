@@ -5,7 +5,7 @@ License:        ASL 2.0
 Group:          Development/Python
 Summary:        API for Linux kernel LIO SCSI target
 Version:        2.1.fb48
-Release:        alt2.1
+Release:        alt2.2
 URL:            https://fedorahosted.org/targetcli-fb/
 Source:         %{name}-%{version}.tar
 Source1:        target.service
@@ -104,6 +104,9 @@ popd
 %doc doc/html
 
 %changelog
+* Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.1.fb48-alt2.2
+- (NMU) rebuild with python3.6
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.1.fb48-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
