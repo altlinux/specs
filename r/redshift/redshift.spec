@@ -5,8 +5,8 @@
 %def_enable gui
 
 Name: redshift
-Version: 1.11
-Release: alt3
+Version: 1.12
+Release: alt1
 
 Summary: Redshift adjusts the color temperature of your screen
 Summary(ru_RU.UTF-8): Redshift изменяет температуру цвета вашего экрана для снижения утомляемости глаз
@@ -18,7 +18,6 @@ Url: http://jonls.dk/redshift
 #Source: https://github.com/jonls/%name/releases/download/v%version/%name-%version.tar.xz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Patch1: %name-geoclue-provider.patch
 
 Requires: geoclue2
 Requires: typelib(Gtk) = 3.0
@@ -33,7 +32,7 @@ BuildRequires(pre): rpm-build-gir
 %{?_enable_randr:BuildRequires: libxcb-devel}
 %{?_enable_vidmode:BuildRequires: libXxf86vm-devel libXrandr-devel}
 BuildRequires: libgio-devel geoclue2-devel
-BuildRequires: systemd-devel intltool
+BuildRequires: systemd-devel intltool libappstream-glib-devel
 
 # libaptindicator is not package in ALT Linux
 %add_typelib_req_skiplist typelib(AppIndicator3)
@@ -58,7 +57,6 @@ Redshift изменяет температуру цвета экрана ваш�
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 %autoreconf
 
 %build
@@ -91,6 +89,9 @@ Redshift изменяет температуру цвета экрана ваш�
 %doc DESIGN NEWS* README* redshift.conf.sample
 
 %changelog
+* Tue May 22 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12-alt1
+- 1.12
+
 * Thu Dec 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.11-alt3
 - explicitly required typelib(Gtk) = 3.0 (ALT #34289)
 
