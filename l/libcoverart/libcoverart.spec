@@ -1,6 +1,6 @@
 Name: libcoverart
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Cover Art Archive Client Library
 Group: System/Libraries
@@ -33,6 +33,7 @@ developing applications that use %name.
 
 
 %build
+%add_optflags -Wno-error=implicit-fallthrough
 %cmake_insource -DCMAKE_BUILD_TYPE=Release
 %make_build
 
@@ -49,6 +50,9 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue May 22 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt2
+- rebuilt with -Wno-error=implicit-fallthrough
+
 * Sun Mar 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - first build for Sisyphus
 
