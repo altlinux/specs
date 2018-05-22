@@ -1,13 +1,11 @@
-%define rev 0
-
 Name: openblas
-Version: 0.2.14
-Release: alt1.git20150324
+Version: 0.2.20
+Release: alt1
+
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
 Group: Sciences/Mathematics
 Url: https://github.com/xianyi/OpenBLAS
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # http://github.com/xianyi/OpenBLAS
 Source: %name-%version.tar
@@ -72,49 +70,32 @@ This package contains development files of OpenBLAS.
 %prep
 %setup
 
-# more verbose
-sed -i "s<-ln <ln <" Makefile
-
-# fix path to libpthread.so*
-sed -i 's|@LIB@|%_lib|g' c_check
-
-# tune soname version
-#sed -i 's|@REV@|%rev|g' exports/Makefile
-
 %build
 FLAGS="%optflags %optflags_shared"
-%ifarch x86_64
-	BITS=64
-%else
-	BITS=32
-%endif
 
-FC="gfortran $FLAGS" F77="g77 $FLAGS" F_COMPILER="gfortran $FLAGS" \
-	C_COMPILER="gcc $FLAGS" \
-	%make_build SMP=1 \
-%ifnarch x86_64
-		STATIC_ALLOCATION=1 \
+FC="gfortran $FLAGS" F77="g77 $FLAGS" \
+F_COMPILER="gfortran $FLAGS" C_COMPILER="gcc $FLAGS" \
+%make_build SMP=1 \
+%if "%_lib" == "lib64"
+	BINARY=64 \
 %else
-		BINARY64=1 \
+	BINARY=32 \
 %endif
-		BINARY=$BITS \
-		ALLOC_HUGETLB=1 \
-		DYNAMIC_ARCH=1 \
-		NO_LAPACK=1
+%ifarch armh
+	TARGET=ARMV7 \
+%endif
+%ifarch aarch64
+	TARGET=ARMV8 \
+%endif
+	DYNAMIC_ARCH=1 \
+	ALLOC_HUGETLB=1 \
+	NO_LAPACK=1
 
 %install
-install -d %buildroot%_libdir
-install -d %buildroot%_includedir/%name
-
-install -m644 *-r*.so %buildroot%_libdir
-pushd %buildroot%_libdir
-ln -s *-r*.so lib%name.so.%rev
-ln -s lib%name.so.%rev lib%name.so
-popd
-
-sed -i 's|^//\(include.*\)|#\1|' cblas.h
-sed -i 's|^#include "common.h"||' cblas.h
-install -p -m644 *.h %buildroot%_includedir/%name
+%make_install OPENBLAS_LIBRARY_DIR=%buildroot%_libdir \
+	      OPENBLAS_INCLUDE_DIR=%buildroot%_includedir/openblas \
+	      install
+sed -i 's,%buildroot,,' %buildroot%_pkgconfigdir/openblas.pc
 
 %files -n lib%name
 %doc README* *.txt
@@ -122,11 +103,15 @@ install -p -m644 *.h %buildroot%_includedir/%name
 %_libdir/*.so.*
 
 %files -n lib%name-devel
-%_libdir/*.so
 %exclude %_libdir/*-r*.so
-%_includedir/*
+%_libdir/*.so
+%_pkgconfigdir/openblas.pc
+%_includedir/openblas
 
 %changelog
+* Tue May 22 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.20-alt1
+- 0.2.20 released
+
 * Mon Jun 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.14-alt1.git20150324
 - Version 0.2.14
 
