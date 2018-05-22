@@ -1,6 +1,6 @@
 Name: mpeg4ip
 Version: 1.5.0.1
-Release: alt16
+Release: alt17
 
 Summary: Set of linux video stream processing utilities
 License: MPL
@@ -14,7 +14,7 @@ Patch1: %name-1.5.0.1-alt-v4l.patch
 Patch2: %name-1.5.0.1-alt-v4l-libav.patch
 Patch3: %name-1.5.0.1-alt-DSO.patch
 Patch4: %name-1.5.0.1-alt-libav9.patch
-Patch5: %name-1.5.0.1-alt-gcc6.patch
+Patch5: %name-1.5.0.1-alt-gcc.patch
 
 # Automatically added by buildreq on Thu Dec 15 2005
 BuildRequires: esound-devel fontconfig-devel freetype2-devel gcc-c++ glib2-devel id3lib-devel libSDL-devel liba52-devel libalsa-devel libatk-devel libaudio-devel libaudiofile-devel libcairo-devel libfaad-devel libglitz-devel libgtk+2-devel liblame-devel libmad-devel libmpeg2-devel libpango-devel libpng-devel libstdc++-devel libvorbis-devel nasm xvid-devel zlib-devel libx264-devel
@@ -165,6 +165,9 @@ rm -rf %buildroot%_datadir/doc/%name-%version/{mp4v2,programs}
 %exclude %_bindir/mpeg4ip-config
 
 %changelog
+* Tue May 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.0.1-alt17
+- NMU: fixed build with gcc-7.
+
 * Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.0.1-alt16
 - Fix build with gcc-6
 
