@@ -1,5 +1,5 @@
 %define module_name	ipset
-%define module_version	6.35
+%define module_version	6.38
 %define module_release	alt1
 
 %define flavour		un-def
@@ -19,7 +19,7 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
 URL: http://ipset.netfilter.org/
-BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): rpm-build-kernel rpm-build-ubt
 BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 BuildRequires: libmnl-devel
