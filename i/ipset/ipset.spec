@@ -3,7 +3,7 @@
 %define _prefix /
 %define soname 11
 Name: ipset
-Version: 6.35
+Version: 6.38
 Release: alt1%ubt
 
 Summary: Tools for managing sets of IP or ports with iptables
@@ -99,6 +99,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Tue May 22 2018 Anton Farygin <rider@altlinux.ru> 6.38-alt1%ubt
+- 6.38
+
 * Tue Jan 23 2018 Anton Farygin <rider@altlinux.ru> 6.35-alt1%ubt
 - new version
 
