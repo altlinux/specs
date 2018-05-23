@@ -1,17 +1,23 @@
+%def_with doc
+
 Name: jansson
 Version: 2.7
-Release: alt1
+Release: alt2
+
+Summary: C library for encoding, decoding and manipulating JSON data
 License: MIT
+Group: System/Libraries
+
 Url: http://www.digip.org/jansson/
 Source: %name-%version.tar
-Group: System/Libraries
-Summary: C library for encoding, decoding and manipulating JSON data
 
+%if_with doc
 BuildRequires: python-module-sphinx
-#gcc-c++ 
+%endif
 
 %description
-Jansson is a C library for encoding, decoding and manipulating JSON data. It features:
+Jansson is a C library for encoding, decoding and manipulating JSON data.
+It features:
  - Simple and intuitive API and data model
  - Comprehensive documentation
  - No dependencies on other libraries
@@ -24,7 +30,8 @@ Group: System/Libraries
 Provides: %name = %version-%release
 
 %description -n lib%name
-Jansson is a C library for encoding, decoding and manipulating JSON data. It features:
+Jansson is a C library for encoding, decoding and manipulating JSON data.
+It features:
  - Simple and intuitive API and data model
  - Comprehensive documentation
  - No dependencies on other libraries
@@ -37,7 +44,8 @@ Group: Development/C
 Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
-Jansson is a C library for encoding, decoding and manipulating JSON data. It features:
+Jansson is a C library for encoding, decoding and manipulating JSON data.
+It features:
  - Simple and intuitive API and data model
  - Comprehensive documentation
  - No dependencies on other libraries
@@ -51,7 +59,9 @@ Jansson is a C library for encoding, decoding and manipulating JSON data. It fea
 %autoreconf
 %configure
 %make_build
+%if_with doc
 %make html
+%endif
 
 %install
 %makeinstall_std
@@ -64,12 +74,18 @@ Jansson is a C library for encoding, decoding and manipulating JSON data. It fea
 %doc README* LICENSE CHANGES
 
 %files -n lib%name-devel
-%doc doc/_build/html/*
 %_includedir/*.h
 %_pkgconfigdir/*
 %_libdir/*so
+%if_with doc
+%doc doc/_build/html/*
+%endif
 
 %changelog
+* Wed May 23 2018 Michael Shigorin <mike@altlinux.org> 2.7-alt2
+- introduce doc knob (on by default)
+- minor spec cleanup
+
 * Fri Jul 08 2016 Alexey Shabalin <shaba@altlinux.ru> 2.7-alt1
 - 2.7
 
