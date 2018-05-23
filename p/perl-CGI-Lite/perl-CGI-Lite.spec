@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-CGI-Lite
-Version: 3.01
+Version: 3.02
 Release: alt1
 
 Summary: Process and decode WWW forms and cookies
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/CGI-Lite/
 
 BuildArch: noarch
 #Source: http://search.cpan.org//CPAN/authors/id/S/SM/SMYLERS/%m_distro-%version.tar.gz
-Source: http://www.cpan.org/authors/id/H/HO/HOUSTON/CGI-Lite-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HO/HOUSTON/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Sep 05 2008 (-bi)
 BuildRequires: perl-devel
@@ -38,7 +38,7 @@ manner; you need not concern yourself with the actual details
 behind the decoding process.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -50,6 +50,9 @@ behind the decoding process.
 %doc CHANGES README TODO examples
 
 %changelog
+* Wed May 23 2018 Igor Vlasenko <viy@altlinux.ru> 3.02-alt1
+- automated CPAN update
+
 * Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 3.01-alt1
 - automated CPAN update
 
