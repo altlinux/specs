@@ -1,45 +1,25 @@
 %def_without scglib
-%def_disable xdao
-
-%define cvsdate 20020925
-%undefine cvsdate
-%define rc_ver %nil
+%def_disable gcdmaster
 
 Name: cdrdao
-Version: 1.2.3
-%define release alt4%rc_ver
-
-%ifdef cvsdate
-#Release: %{release}cvs%cvsdate
-%else
-Release: %release
-%endif
+Version: 1.2.4
+Release: alt1
 
 Summary: Cdrdao - Write audio CD-Rs in disk-at-once mode
 Group: Archiving/Cd burning
 License: GPLv2
 Url: http://cdrdao.sourceforge.net
 
-%ifndef cvsdate
-#Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
-Source: %name-%version%rc_ver.tar.bz2
-%else
-Source: %name-%version-%cvsdate.tar.bz2
-%endif
-
+Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source1: %name.control
-Patch: %name-1.1.9-alt-locale.patch
-# from Fedora
-Patch2: cdrdao-1.2.2-desktop.patch
-Patch3: cdrdao-1.2.3-version.patch
-Patch4: cdrdao-1.2.3-stat.patch
-Patch5: cdrdao-1.2.3-narrowing.patch
-Patch6: cdrdao-1.2.3-format_security.patch
-
 PreReq: control
 
-BuildRequires: gcc-c++ libacl-devel libao-devel liblame-devel libmad-devel libvorbis-devel
+%define lame_ver 3.100
+
+BuildRequires: gcc-c++ libacl-devel libao-devel liblame-devel >= %lame_ver
+BuildRequires: libmad-devel libvorbis-devel
 BuildRequires: libGConf-devel
+%{?_enable_gcdmaster:BuildRequires: libgnomeuimm-devel}
 
 %description
 Writes audio CD-Rs in disc-at-once (DAO) mode allowing
@@ -61,42 +41,22 @@ It supports PQ-channel editing, entry of meta data like
 ISRC codes/CD-TEXT and non destructive cut of the audio data.
 
 %prep
-
-%ifndef cvsdate
-#%setup -q -n %name-%version
-%setup -q -n %name-%version%rc_ver
-%else
-%setup -q -n %name-%version-%cvsdate
-%endif
-#%%patch -p1
-%patch2 -p1 -b .desktop
-%patch3 -p1 -b .version
-%patch4 -p1 -b .stat
-%patch5 -p1 -b .narr
-%patch6 -p1 -b .format
-
-subst 's,<linux/../scsi/scsi.h>,<scsi/scsi.h>,' dao/sg_err.h
+%setup
+#subst 's,<linux/../scsi/scsi.h>,<scsi/scsi.h>,' dao/sg_err.h
 
 %build
-%ifdef cvsdate
-find -type d -name CVS -print0 | xargs -r0 %__rm -rf --
-%define __autoconf autoconf_2.5
-%__subst 's@autoconf@%__autoconf@' autogen.sh
-./autogen.sh
-%endif
-
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
-
 %configure \
 	--with-mp3-support \
 	--with-ogg-support \
-	%{?_disable_xdao:--without-xdao} \
+	%{?_disable_gcdmaster:--without-gcdmaster} \
 	%{subst_with scglib}
 
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 # control support
 install -pD -m755 %SOURCE1 %buildroot%_controldir/%name
@@ -113,21 +73,20 @@ chmod 700 %buildroot%_bindir/%name
 %_datadir/%name
 %_man1dir/*
 %config /etc/control.d/facilities/%name
-%doc README CREDITS ChangeLog NEWS
+%doc README CREDITS ChangeLog
 
-%if_enabled xdao
-%exclude %_bindir/gcdmaster
-%exclude %_man1dir/gcdmaster*
-
+%if_enabled gcdmaster
 %files -n gcdmaster
 %_bindir/gcdmaster
-%_datadir/applications/*
+%_desktopdir/*
 %_datadir/pixmaps/*
 %_man1dir/gcdmaster*
-%_menudir/gcdmaster
 %endif
 
 %changelog
+* Tue May 22 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
+- 1.2.4
+
 * Mon Jan 16 2017 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt4
 - fc patches: cdrdao-1.2.3-narrowing.patch
               cdrdao-1.2.3-format_security.patch

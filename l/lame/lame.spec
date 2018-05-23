@@ -1,6 +1,6 @@
 Name: lame
-Version: 3.99.5
-Release: alt3
+Version: 3.100
+Release: alt1
 Summary: LAME Ain't an Mp3 Encoder
 License: LGPL
 Group: Sound
@@ -10,8 +10,10 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Requires: lib%name = %version-%release
 Conflicts: %name-hydrogen
 
-Source: http://prdownloads.sourceforge.net/lame/%name-%version.tar.gz
+Source: %name-%version.tar.gz
 Patch: lame-3.99.5-mcst-e2k.patch
+Patch1: %name-noexecstack.patch
+Patch2: libmp3lame-symbols.patch
 
 BuildRequires: libsndfile-devel libtinfo-devel
 %ifarch %ix86 x86_64
@@ -43,21 +45,25 @@ This package contains header files required to develop
 %prep
 %setup
 %patch -p1
+%patch1 -p1
+%patch2 -p1
 
 %ifarch %ix86
-# http://www.linuxfromscratch.org/blfs/view/svn/multimedia/lame.html
-sed -i -e '/xmmintrin\.h/d' configure
+export CFLAGS="$RPM_OPT_FLAGS -ffast-math"
+#From LFS:http://www.linuxfromscratch.org/blfs/view/svn/multimedia/lame.html
+export ac_cv_header_xmmintrin_h=no
 %endif
 
 %build
+sed -i -e 's/^\(\s*hardcode_libdir_flag_spec\s*=\).*/\1/' configure
 %configure \
 	--disable-static \
 %ifarch %ix86 x86_64
-	--enable-nasm
+	--enable-nasm \
 %endif
+	--enable-mp3x \
+	--enable-mp3rtp
 
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %make_build
 
 %install
@@ -77,6 +83,9 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %_libdir/*.so
 
 %changelog
+* Wed May 23 2018 Valery Inozemtsev <shrek@altlinux.ru> 3.100-alt1
+- 3.100 (closes: #34938)
+
 * Thu Mar 16 2017 Michael Shigorin <mike@altlinux.org> 3.99.5-alt3
 - E2K: applied mcst configure patch
 
