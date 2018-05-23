@@ -1,55 +1,64 @@
-%filter_from_requires /^java-headless/d
 %define _unpackaged_files_terminate_build 1
 
 Name: tomcatjss
-Version: 7.2.4
-Release: alt2%ubt
-Summary: JSSE implementation using JSS for Tomcat
+Version: 7.3.0
+Release: alt1%ubt
+
+Summary: JSSE module for Apache Tomcat that uses JSS
 License: LGPLv2+
 Group: System/Libraries
-Url: http://pki.fedoraproject.org/
+# Source-git: https://github.com/dogtagpki/tomcatjss.git
+Url: http://www.dogtagpki.org/wiki/TomcatJSS
 
-Source0: http://pki.fedoraproject.org/pki/sources/%name/%name-%version.tar.gz
+Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-java rpm-build-ubt
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 BuildRequires: ant
 BuildRequires: apache-commons-lang
-BuildRequires: jss >= 4.4.2
-BuildRequires: tomcat >= 8.0.18
+BuildRequires: jss
+BuildRequires: tomcat
 
 BuildArch: noarch
+Requires: apache-commons-lang
+Requires: apache-commons-logging
+Requires: java-headless
+Requires: jss
+Requires: tomcat
 
 %description
-A Java Secure Socket Extension (JSSE) implementation
-using Java Security Services (JSS) for Tomcat 7.
-
-NOTE: The 'tomcatjss' package conflicts with the 'tomcat-native' package
-       because it uses an underlying NSS security model rather than the
-       OpenSSL security model, so these two packages may not co-exist.
+JSS Connector for Apache Tomcat, installed via the tomcatjss package,
+is a Java Secure Socket Extension (JSSE) module for Apache Tomcat that
+uses Java Security Services (JSS), a Java interface to Network Security
+Services (NSS).
 
 %prep
 %setup
-chmod -c -x LICENSE README
 
 %build
-ant -f build.xml -Djnidir=%_jnidir
-ant -f build.xml -Djnidir=%_jnidir dist
+ant -v -f build.xml \
+    -Djnidir=%_jnidir dist
 
 %install
-# Unpack the files we just built
-cd dist/binary
-unzip %name-%version.zip -d %buildroot
+ant -v -f build.xml \
+    -Djnidir=%_jnidir \
+    -Dinstall.doc.dir=%buildroot%_docdir/%name-%version \
+    -Dinstall.jar.dir=%buildroot%_javadir \
+    install
 
 %files
 %doc README LICENSE
 %_javadir/*
 
 %changelog
+* Thu May 24 2018 Stanislav Levin <slev@altlinux.org> 7.3.0-alt1%ubt
+- 7.2.4 -> 7.3.0
+
 * Wed Nov 08 2017 Stanislav Levin <slev@altlinux.org> 7.2.4-alt2%ubt
 - Remove tomcat-native from Conflicts due to tomcat dependency on
-  tomcat-native 
+  tomcat-native
 
 * Fri Sep 22 2017 Stanislav Levin <slev@altlinux.org> 7.2.4-alt1%ubt
 - Update to upstream's 7.2.4 version
