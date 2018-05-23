@@ -1,6 +1,6 @@
 Name:     curseofwar
 Version:  1.2.0.0.11.git47f7989
-Release:  alt1
+Release:  alt2
 
 Summary:  A Real Time Strategy game for Linux
 License:  GPLv3
@@ -64,8 +64,8 @@ Requires: %name-common
 %patch1 -p1
 
 %build
-%make_build CFLAGS="$CFLAGS -Werror"
-%make_build SDL=yes CFLAGS="$CFLAGS -Werror"
+%make_build CFLAGS="$CFLAGS"
+%make_build SDL=yes CFLAGS="$CFLAGS"
 
 %install
 %makeinstall_std
@@ -86,6 +86,9 @@ Requires: %name-common
 %files
 
 %changelog
+* Wed May 23 2018 Grigory Ustinov <grenka@altlinux.org> 1.2.0.0.11.git47f7989-alt2
+- Disable Werror flag for building on e2k arch.
+
 * Tue Dec 19 2017 Grigory Ustinov <grenka@altlinux.org> 1.2.0.0.11.git47f7989-alt1
 - Build new version.
 - Fix SDL path.
