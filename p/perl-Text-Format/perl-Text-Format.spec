@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Text-Format
 Name: perl-%dist
-Version: 0.60
+Version: 0.61
 Release: alt1
 
 Summary: Various subroutines to format text
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SH/SHLOMIF/Text-Format-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -29,7 +29,7 @@ though not modfied.  Text::Format is meant for more powerful text
 formatting than what Text::Wrap allows.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -38,10 +38,13 @@ formatting than what Text::Wrap allows.
 %perl_vendor_install
 
 %files
-%doc Changes
+%doc Changes README
 %perl_vendor_privlib/Text
 
 %changelog
+* Wed May 23 2018 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
 - automated CPAN update
 
