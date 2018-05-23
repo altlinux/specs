@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define module Net-UPnP
 %define m_distro Net-UPnP
 %define m_name Net::UPnP
 %define _enable_test 1
 
 Name: perl-Net-UPnP
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 Summary: Perl extension for UPnP
@@ -43,9 +44,13 @@ outputs the RSS file for Vodcasting.
 %perl_vendor_install
 
 %files
+%doc README Changes examples
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Wed May 23 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.4-alt1
+- automated CPAN update
+
 * Tue Dec 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1
 - automated CPAN update
 
