@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-pushd
 Name: perl-%dist
-Version: 1.014
+Version: 1.016
 Release: alt1
 
 Summary: Change directory temporarily for a limited scope
@@ -11,7 +11,7 @@ Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
 URL: %CPAN %dist
 # http://search.cpan.org/CPAN/authors/id/D/DA/DAGOLDEN/File-pushd-1.00.tar.gz
-Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/File-pushd-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/%{dist}-%{version}.tar.gz
 Patch: %name-1.005.patch
 
 BuildArch: noarch
@@ -38,7 +38,7 @@ For convenience, the object stringifies as the canonical form of the
 absolute pathname of the directory entered.
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p1
 
 %build
@@ -52,6 +52,9 @@ absolute pathname of the directory entered.
 %perl_vendor_privlib/File/
 
 %changelog
+* Wed May 23 2018 Igor Vlasenko <viy@altlinux.ru> 1.016-alt1
+- automated CPAN update
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.014-alt1
 - automated CPAN update
 
