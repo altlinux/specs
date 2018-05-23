@@ -1,5 +1,5 @@
 Name: girar-nmu
-Version: 1.51
+Version: 1.52
 Release: alt1
 
 Summary: git.alt client utilities for NMU automation
@@ -51,6 +51,9 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Wed May 23 2018 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1
+- e2k support (add -H git.e2k to use)
+
 * Wed Apr 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.51-alt1
 - added -N for not signing already signed rpm
 
