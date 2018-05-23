@@ -1,5 +1,5 @@
 Name:           ocaml-omake
-Version:        0.9.8.6
+Version:        0.10.3
 Release:        alt1%ubt
 Summary:        Build system with automated dependency analysis
 License:        LGPLv2+ with exceptions and GPLv2+ and BSD
@@ -8,11 +8,7 @@ Group:          Development/ML
 URL:            http://omake.metaprl.org/download.html
 Source: 	%name-%version.tar
 
-Patch0:         omake-debian-disable-ocaml-warnings.patch
-Patch1:         omake-0.9.8.6-fix-and-or-operators.patch
-Patch2:         omake-0.9.8.6-kill-warn-error.patch
-
-BuildRequires: rpm-build-ocaml ocaml
+BuildRequires: rpm-build-ocaml ocaml ocaml-curses libreadline-devel gcc-c++ ocaml-findlib hevea
 BuildRequires(pre):rpm-build-ubt
 Provides: ocaml4-omake = %version-%release
 Obsoletes: ocaml4-omake
@@ -39,33 +35,29 @@ features many additional enhancements, including the following.
 %prep
 %setup -q
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-
 %build
-make all \
-  PREFIX=%{_prefix} MANDIR=%{_mandir} BINDIR=%{_bindir} LIBDIR=%{_libdir}
+./configure --prefix=%_prefix
+sed -i 's/2\.06/2.31/' doc/OMakefile
+make all
 
 
 %install
 make install \
-  INSTALL_ROOT=$RPM_BUILD_ROOT \
-  PREFIX=%{_prefix} MANDIR=%{_mandir} BINDIR=%{_bindir} LIBDIR=%{_libdir}
+  INSTALL_ROOT=$RPM_BUILD_ROOT 
 
 chmod 0755 $RPM_BUILD_ROOT%{_bindir}/*
 
 %files
 %doc LICENSE LICENSE.OMake
-%doc CHANGELOG.txt
-%doc doc/txt/omake-doc.txt doc/ps/omake-doc.pdf doc/html/
-%dir %_libdir/omake/
-%_libdir/omake/*
+%dir %_libexecdir/omake/
+%_libexecdir/omake/*
 %_bindir/omake
 %_bindir/osh
-%_bindir/cvs_realclean
 
 %changelog
+* Wed May 23 2018 Anton Farygin <rider@altlinux.ru> 0.10.3-alt1%ubt
+- 0.10.3
+
 * Sun Apr 16 2017 Anton Farygin <rider@altlinux.ru> 0.9.8.6-alt1%ubt
 - renamed to ocaml-omake
 - built with new ocaml-4.04
