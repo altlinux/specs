@@ -1,19 +1,19 @@
-%def_enable Werror
+#%%def_enable Werror
 
-Name: 	  pacman
+Name:     pacman
 Version:  0.9.0.19.git7cf259d
-Release:  alt1
+Release:  alt2
 
 Summary:  Yet another pacman clone in C/C++ and SDL
 License:  GPLv2, fonts of unknown license
 Group:    Games/Arcade
 
-Url:	  https://github.com/ebuc99/pacman
+Url:      https://github.com/ebuc99/pacman
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 Source:   %name-%version.tar
-Patch:	  pacman-0.9-alt1-fix_path.patch
+Patch:    pacman-0.9-alt1-fix_path.patch
 
 BuildRequires: gcc-c++ libSDL2-devel libSDL2_image-devel libSDL2_ttf-devel libSDL2_mixer-devel
 
@@ -28,7 +28,7 @@ with a very low CPU usage.
 
 %build
 %configure
-%make_build
+%make_build pacman_CXXFLAGS='%optflags -std=gnu++11'
 
 %install
 %makeinstall_std
@@ -41,5 +41,9 @@ rm -r %buildroot/%_defaultdocdir/%name
 %_datadir/applications/pacman.desktop
 
 %changelog
+* Wed May 23 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.0.19.git7cf259d-alt2
+- Force building with optflags and c++11 standart for e2k.
+- Disable Werror flag.
+
 * Tue Oct 31 2017 Grigory Ustinov <grenka@altlinux.org> 0.9.0.19.git7cf259d-alt1
 - Initial build for Sisyphus.
