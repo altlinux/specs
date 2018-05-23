@@ -1,18 +1,19 @@
 Name: pcb
 Version: 20140316
-Release: alt1
+Release: alt2
 
 Summary: PCB
 License: GPL
 Group: Development/Other
 Url: http://ftp.geda-project.org/pcb/pcb-20140316/
 
-Packager: barssc <barssc@altlinux.ru>
+Source0: %name-%version.tar
+Patch1: %name-alt-gdlib-pkgconfig.patch
+Patch2: %name-alt-doc-configure.patch
 
-Source0: %name-%version.tar.gz
-
-BuildRequires: gcc-c++ libX11-devel flex gtk+2 libgd2-devel libgd2 libdbus-devel libdbus libdbus-glib libdbus-glib-devel tk intltool libGL-devel libGLU-devel libgtkglext-devel
-BuildRequires: libgtk+2-devel libgtk+2 libjpeg libjpeg-devel gd2-utils libpng-devel zlib-devel libXpm-devel libfreetype-devel perl-XML-Parser desktop-file-utils
+BuildRequires: gcc-c++ libX11-devel flex gtk+2 libdbus-devel libdbus libdbus-glib libdbus-glib-devel tk intltool libGL-devel libGLU-devel libgtkglext-devel
+BuildRequires: libgtk+2-devel libgtk+2 libjpeg libjpeg-devel libpng-devel zlib-devel libXpm-devel libfreetype-devel perl-XML-Parser desktop-file-utils
+BuildRequires: libgd3-devel gd3-utils
 Requires: dbus-tools-gui
 Requires(post,postun): shared-mime-info >= 0.15-alt2
 
@@ -74,8 +75,11 @@ For example: TSSOP, SO, SOIC, MSOP, TQFP, LQFP and etc.
 
 %prep
 %setup -q
+%patch1 -p2
+%patch2 -p2
 
 %build
+%autoreconf
 %configure	\
     --enable-doc \
     --enable-dbus \
@@ -85,7 +89,7 @@ For example: TSSOP, SO, SOIC, MSOP, TQFP, LQFP and etc.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files -n %name
 %_bindir/*
@@ -132,6 +136,9 @@ For example: TSSOP, SO, SOIC, MSOP, TQFP, LQFP and etc.
 
 
 %changelog
+* Wed May 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 20140316-alt2
+- NMU: rebuilt with new libgd.
+
 * Sun Dec 6 2015 barssc <barssc@altlinux.ru> 20140316-alt1
 - New version 20140316.
 
