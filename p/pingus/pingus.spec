@@ -3,7 +3,7 @@
 
 Name: pingus
 Version: 0.7.6
-Release: alt1.qa9
+Release: alt2
 
 
 Summary: A free Lemmings clone
@@ -25,6 +25,8 @@ Patch6:         pingus-0.7.2-gcc43.patch
 
 Patch7:         pingus-0.7.2-gcc44.patch
 Patch8:         pingus-0.7.6-alt-VERSION.patch
+
+Patch9:         pingus-0.7.6-upstream-std-header.patch
 
 #Patch1: pingus-0.6.0-alt-gcc33.patch
 #Patch2: pingus-0.6.0-alt-gcc34.patch
@@ -63,6 +65,7 @@ SDL, что должно сделать его портируемым на мн�
 #patch6 -p1
 #patch7 -p1
 %patch8 -p2
+%patch9 -p1
 
 %build
 
@@ -145,6 +148,9 @@ EOF
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Wed May 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.6-alt2
+- NMU: fixed build with new toolchain.
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.6-alt1.qa9
 - NMU: rebuilt with boost 1.57.0 -> 1.58.0.
 
