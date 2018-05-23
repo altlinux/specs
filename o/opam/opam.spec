@@ -1,6 +1,6 @@
 Name: opam
-Version: 1.3.1
-Release: alt2%ubt
+Version: 2.0.0
+Release: alt1%ubt.rc
 Summary: A source-based package manager for OCaml
 License: LGPLv3
 Group: Development/ML
@@ -9,7 +9,9 @@ Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 BuildRequires: ocaml
 BuildRequires: ocaml-camlp4-devel
+BuildRequires: ocaml-opam-file-format-devel
 BuildRequires: hevea
+BuildRequires: ocaml-cppo
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-cudf-devel
 BuildRequires: ocaml-ocamlgraph-devel
@@ -19,7 +21,7 @@ BuildRequires: ocaml-dose3-devel
 BuildRequires: ocaml-extlib-devel
 BuildRequires: ocaml-jsonm-devel
 BuildRequires: ocaml-result-devel
-BuildRequires: curl
+BuildRequires: curl jbuilder
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -76,7 +78,6 @@ popd
 %doc README.md LICENSE CHANGES
 %doc AUTHORS CONTRIBUTING.md
 %_bindir/%name
-%_bindir/%name-admin
 %_bindir/%name-installer
 %_mandir/man1/%name.1*
 %_mandir/man1/%name-*.1*
@@ -87,6 +88,9 @@ popd
 %doc shell/
 
 %changelog
+* Wed May 23 2018 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1%ubt.rc
+- 2.0.0-rc
+
 * Thu May 17 2018 Anton Farygin <rider@altlinux.ru> 1.3.1-alt2%ubt
 - fixed stubs libraries location
 
