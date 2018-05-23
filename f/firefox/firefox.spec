@@ -6,7 +6,7 @@
 
 %define gst_version 1.0
 %define nspr_version 4.17
-%define nss_version 3.33.0
+%define nss_version 3.36.1
 %define rust_version 1.24.1
 %define cargo_version 0.25.0
 
@@ -14,8 +14,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        59.0.2
-Release:        alt2
+Version:        60.0.1
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -56,6 +56,8 @@ BuildRequires: rpm-macros-alternatives
 BuildRequires: rust >= %rust_version
 BuildRequires: rust-cargo >= %cargo_version
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
+BuildRequires: libXcursor-devel
+BuildRequires: libXi-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXdamage-devel
 BuildRequires: libcurl-devel libgtk+2-devel libgtk+3-devel libhunspell-devel libjpeg-devel
@@ -172,8 +174,11 @@ export MOZ_BUILD_APP=browser
 MOZ_OPT_FLAGS="-pipe -O2 -g0"
 
 MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS \
- -fuse-ld=lld -flto=thin \
- -Wl,--thinlto-jobs=4 -Wl,--thinlto-cache-dir=thinlto-cache -Wl,--thinlto-cache-policy,cache_size=10%% -Wl,--lto-O0"
+ -fuse-ld=lld"
+
+#MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS \
+# -fuse-ld=lld -flto=thin \
+# -Wl,--thinlto-jobs=4 -Wl,--thinlto-cache-dir=thinlto-cache -Wl,--thinlto-cache-policy,cache_size=10%% -Wl,--lto-O0"
 
 # PIE, full relro
 MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -DPIC -fPIC -Wl,-z,relro -Wl,-z,now"
@@ -330,6 +335,36 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Thu May 17 2018 Alexey Gladkov <legion@altlinux.ru> 60.0.1-alt1
+- New release (60.0.1).
+- Fixed:
+  + CVE-2018-5154: Use-after-free with SVG animations and clip paths
+  + CVE-2018-5155: Use-after-free with SVG animations and text paths
+  + CVE-2018-5157: Same-origin bypass of PDF Viewer to view protected PDF files
+  + CVE-2018-5158: Malicious PDF can inject JavaScript into PDF Viewer
+  + CVE-2018-5159: Integer overflow and out-of-bounds write in Skia
+  + CVE-2018-5160: Uninitialized memory use by WebRTC encoder
+  + CVE-2018-5152: WebExtensions information leak through webRequest API
+  + CVE-2018-5153: Out-of-bounds read in mixed content websocket messages
+  + CVE-2018-5163: Replacing cached data in JavaScript Start-up Bytecode Cache
+  + CVE-2018-5164: CSP not applied to all multipart content sent with multipart/x-mixed-replace
+  + CVE-2018-5166: WebExtension host permission bypass through filterReponseData
+  + CVE-2018-5167: Improper linkification of chrome: and javascript: content in web console and JavaScript debugger
+  + CVE-2018-5168: Lightweight themes can be installed without user interaction
+  + CVE-2018-5169: Dragging and dropping link text onto home button can set home page to include chrome pages
+  + CVE-2018-5172: Pasted script from clipboard can run in the Live Bookmarks page or PDF viewer
+  + CVE-2018-5173: File name spoofing of Downloads panel with Unicode characters
+  + CVE-2018-5174: Windows Defender SmartScreen UI runs with less secure behavior for downloaded files in Windows 10 April 2018 Update
+  + CVE-2018-5175: Universal CSP bypass on sites using strict-dynamic in their policies
+  + CVE-2018-5176: JSON Viewer script injection
+  + CVE-2018-5177: Buffer overflow in XSLT during number formatting
+  + CVE-2018-5165: Checkbox for enabling Flash protected mode is inverted in 32-bit Firefox
+  + CVE-2018-5180: heap-use-after-free in mozilla::WebGLContext::DrawElementsInstanced
+  + CVE-2018-5181: Local file can be displayed in noopener tab through drag and drop of hyperlink
+  + CVE-2018-5182: Local file can be displayed from hyperlink dragged and dropped on addressbar
+  + CVE-2018-5151: Memory safety bugs fixed in Firefox 60
+  + CVE-2018-5150: Memory safety bugs fixed in Firefox 60 and Firefox ESR 52.8
+
 * Fri Mar 30 2018 Alexey Gladkov <legion@altlinux.ru> 59.0.2-alt2
 - Fix locale switch (ALT#34741)
 
