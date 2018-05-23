@@ -1,14 +1,14 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: makeinfo
+BuildRequires: /usr/bin/octave-config makeinfo pkgconfig(nettle)
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 2.0.0
+%define octave_pkg_version 2.1.0
 %define octave_pkg_name general
 %define octave_descr_name general
 Epoch: 1
 Name: octave-%octave_pkg_name
-Version: 2.0.0
-Release: alt2
+Version: 2.1.0
+Release: alt1
 Summary: General
 
 Group: Sciences/Mathematics
@@ -20,13 +20,13 @@ Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Pac
 BuildRequires: octave-devel
 %if_with _octave_arch
 BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
-BuildRequires: libGL-devel libGLU-devel libGraphicsMagick-c++-devel libGraphicsMagick-devel fontconfig-devel libfreetype-devel libX11-devel libgl2ps-devel libcurl-devel libsuitesparse-devel libarpack-ng-devel libqrupdate-devel libpcre-devel
 %else
 BuildArch: noarch
 %endif
 Provides: octave(general) = %version
 # Depends: octave (>= 4.0.0)
 Requires: octave >= 4.0.0
+
 
 %description
 Octave-Forge - Extra packages for GNU Octave.
@@ -39,13 +39,13 @@ General tools for Octave.
 %setup -q -n %{octave_pkg_name}-%{octave_pkg_version}
 
 %build
-%define build_flags CXXFLAGS=$CXXFLAGS
-%build_flags octave -H --no-site-file --eval "pkg build -verbose -nodeps . %SOURCE0"
+octave -q -H --no-site-file --no-window-system --eval "pkg build -verbose -nodeps . %SOURCE0"
 
 %install
 mkdir -p %buildroot%_datadir/octave/packages
 mkdir -p %buildroot%_libdir/octave/packages
-octave -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages; pkg install -verbose -local -nodeps %octave_pkg_name-%octave_pkg_version-$(octave -H --no-site-file --eval "printf([__octave_config_info__(\"canonical_host_type\"), \"-\",  __octave_config_info__(\"api_version\")])").tar.gz"
+#octave -q -H --no-site-file --no-window-system --eval "pkg prefix %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages; pkg global_list %buildroot%_datadir/octave/packages; pkg local_list %buildroot%_datadir/octave/packages; pkg install -nodeps -verbose %{_builddir}/%{buildsubdir}/%octave_pkg_name-%octave_pkg_version-%{_arch}-alt-linux-gnu-api-v52.tar.gz"
+octave -q -H --no-site-file --no-window-system --eval "pkg prefix %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages; pkg install -nodeps -verbose -local %{_builddir}/%{buildsubdir}/%octave_pkg_name-%octave_pkg_version-%{_arch}-alt-linux-gnu-api-v52.tar.gz"
 
 %files
 %_datadir/octave/packages/%octave_pkg_name-%octave_pkg_version
@@ -54,6 +54,9 @@ octave -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages 
 %endif
 
 %changelog
+* Wed May 23 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.1.0-alt1
+- regenerated from template by package builder
+
 * Thu May 18 2017 Paul Wolneykien <manowar@altlinux.org> 1:2.0.0-alt2
 - regenerated from template by package builder
 

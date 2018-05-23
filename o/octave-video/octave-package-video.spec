@@ -7,7 +7,7 @@ BuildRequires: makeinfo
 %define octave_descr_name video
 Name: octave-%octave_pkg_name
 Version: 1.2.3
-Release: alt2.1
+Release: alt3.1
 Summary: Video functions
 
 Group: Sciences/Mathematics
@@ -56,6 +56,9 @@ octave -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages 
 %endif
 
 %changelog
+* Tue May 22 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt3.1
+- rebuild with octave 4.4
+
 * Thu Jun 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt2.1
 - rebuild with ffmpeg
 

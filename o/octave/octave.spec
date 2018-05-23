@@ -1,7 +1,7 @@
-%def_without qt5
+%def_with qt5
 
 Name: octave
-Version: 4.2.2
+Version: 4.4.0
 Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
@@ -23,6 +23,7 @@ BuildRequires: libarpack-ng-devel
 %if_with qt5
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools
+BuildRequires: qt5-tools-devel
 BuildRequires: libqscintilla2-qt5-devel
 %else
 BuildRequires: libqt4-devel
@@ -42,8 +43,10 @@ Source2: %name.watch
 Patch0: octave-include-pcre.patch
 Patch1: octave-alt-desktop-l10n.patch
 Patch2: octave-alt-fix-build.patch
-Patch3: octave-qscintilla-lib-names.patch
+Patch3: octave-alt-fix-doc-build.patch
 
+Provides:  qtoctave = %EVR
+Obsoletes: qtoctave < %EVR
 Requires: gnuplot
 
 %package devel
@@ -95,21 +98,21 @@ This package contains extra documentation for GNU Octave.
 %setup
 %patch0 -p2
 %patch1 -p2
-#patch2 -p2
-%patch3 -p2
 
 %build
 %add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
 %add_optflags $(pkg-config fontconfig --cflags) -fpermissive -lm
 %undefine _configure_gettext
 %autoreconf
+patch -p2 < %PATCH3
 %configure --with-blas=openblas \
     --enable-dl --enable-shared \
     --disable-static 
 #    --disable-rpath \
 #    --enable-lite-kernel --enable-picky-flags
 #smp-unaware
-%make
+export NPROCS=7
+%make_build
 
 %install
 %makeinstall_std
@@ -135,6 +138,9 @@ export RPM_FILES_TO_LD_PRELOAD_octave='%_libdir/%name/packages/*'
 EOF
 
 mkdir -p %buildroot%_datadir/doc/%name-doc-%version
+
+mkdir -p %buildroot%_datadir/appdata
+mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 
 #check
 #make check
@@ -176,6 +182,11 @@ mkdir -p %buildroot%_datadir/doc/%name-doc-%version
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Thu May 03 2018 Andrey Cherepanov <cas@altlinux.org> 4.4.0-alt1
+- New version.
+- Build with Qt5.
+- Obsoletes qtoctave.
+
 * Mon Mar 19 2018 Andrey Cherepanov <cas@altlinux.org> 4.2.2-alt1
 - New version.
 

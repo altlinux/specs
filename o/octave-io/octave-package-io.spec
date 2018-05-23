@@ -2,12 +2,12 @@
 BuildRequires: makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 2.4.7
+%define octave_pkg_version 2.4.11
 %define octave_pkg_name io
 %define octave_descr_name io
 Epoch: 1
 Name: octave-%octave_pkg_name
-Version: 2.4.7
+Version: 2.4.11
 Release: alt1
 Summary: Input/Output
 
@@ -25,8 +25,8 @@ BuildRequires: libGL-devel libGLU-devel libGraphicsMagick-c++-devel libGraphicsM
 BuildArch: noarch
 %endif
 Provides: octave(io) = %version
-# Depends: octave (>= 3.8.0), Octave (< 4.4.0)
-Requires: octave >= 3.8.0 octave < 4.4.0
+# Depends: octave (>= 3.8.0)
+Requires: octave >= 3.8.0
 
 %description
 Octave-Forge - Extra packages for GNU Octave.
@@ -54,6 +54,9 @@ octave -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages 
 %endif
 
 %changelog
+* Mon May 21 2018 Andrey Cherepanov <cas@altlinux.org> 1:2.4.11-alt1
+- New version.
+
 * Thu May 18 2017 Paul Wolneykien <manowar@altlinux.org> 1:2.4.7-alt1
 - regenerated from template by package builder
 

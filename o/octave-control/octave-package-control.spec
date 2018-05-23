@@ -8,7 +8,7 @@ BuildRequires: makeinfo texinfo
 Epoch: 1
 Name: octave-%octave_pkg_name
 Version: 3.0.0
-Release: alt2
+Release: alt3
 Summary: Computer-Aided Control System Design
 
 Group: Sciences/Mathematics
@@ -54,6 +54,9 @@ octave -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages 
 %endif
 
 %changelog
+* Tue May 22 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.0.0-alt3
+- rebuild with octave 4.4
+
 * Thu May 18 2017 Paul Wolneykien <manowar@altlinux.org> 1:3.0.0-alt2
 - regenerated from template by package builder
 

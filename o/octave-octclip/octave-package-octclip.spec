@@ -7,7 +7,7 @@ BuildRequires: makeinfo
 %define octave_descr_name OctCLIP
 Name: octave-%octave_pkg_name
 Version: 1.0.8
-Release: alt2
+Release: alt3
 Summary: GNU Octave clipping polygons tool
 
 Group: Sciences/Mathematics
@@ -53,6 +53,9 @@ octave -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages 
 %endif
 
 %changelog
+* Tue May 22 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt3
+- rebuild with octave 4.4
+
 * Thu May 18 2017 Paul Wolneykien <manowar@altlinux.org> 1.0.8-alt2
 - regenerated from template by package builder
 

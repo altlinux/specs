@@ -7,7 +7,7 @@ BuildRequires: libgmp-devel makeinfo texinfo
 %define octave_descr_name interval
 Name: octave-%octave_pkg_name
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Summary: Real-valued interval arithmetic
 
 Group: Sciences/Mathematics
@@ -59,6 +59,9 @@ octave -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages 
 %endif
 
 %changelog
+* Tue May 22 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt2
+- rebuild with octave 4.4
+
 * Thu May 18 2017 Paul Wolneykien <manowar@altlinux.org> 2.1.0-alt1
 - regenerated from template by package builder
 
