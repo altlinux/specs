@@ -2,7 +2,7 @@
 
 Name: PokerTH
 Version: 1.1.2
-Release: alt2
+Release: alt3
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
@@ -47,6 +47,10 @@ This package contents data files for %name.
 
 %build
 %add_optflags -fno-strict-aliasing
+
+# regenerate protobuf files
+qmake-qt5 pokerth_protocol.pro
+
 qmake-qt5 \
 	QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags" \
@@ -72,6 +76,10 @@ install -pm755 pokerth bin/pokerth_server %buildroot%_bindir
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Wed May 23 2018 Mikhail Efremov <sem@altlinux.org> 1.1.2-alt3
+- Regenerate protobuf files with current protobuf.
+- Fix enum entry name.
+
 * Mon Mar 12 2018 Mikhail Efremov <sem@altlinux.org> 1.1.2-alt2
 - Fix build with boost 1.66.
 
