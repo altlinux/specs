@@ -1,7 +1,7 @@
-%define major 1.7
+%define major 1.8
 Name: sword
-Version: %major.5a1
-Release: alt3
+Version: %major.0
+Release: alt1
 
 Summary: The SWORD Project framework for manipulating Bible texts
 Summary(ru_RU.UTF-8): Проект SWORD - оболочка для работы с текстами Библии
@@ -80,6 +80,9 @@ popd
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed May 23 2018 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
+- new version (1.8.0) with rpmgs script (ALT bug #30670)
+
 * Fri May 18 2018 Vitaly Lipatov <lav@altlinux.ru> 1.7.5a1-alt3
 - rebuild with libicu60
 

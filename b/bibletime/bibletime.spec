@@ -1,6 +1,6 @@
 Name: bibletime
-Version: 2.10.1
-Release: alt3
+Version: 2.11.1
+Release: alt1
 
 Summary: BibleTime is a Bible study application based on Qt
 Summary(ru_RU.UTF-8): BibleTime - простое в использовании средство для изучения Библии
@@ -11,16 +11,19 @@ Group: Text tools
 
 Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar
+# Source-url: https://github.com/bibletime/bibletime/archive/v%version.tar.gz
+Source: %name/%name-%version.tar
 #Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Tue Aug 03 2010
-BuildRequires: boost-devel cmake gcc-c++ libclucene-core-devel libqt4-devel
+BuildRequires(pre): rpm-build-licenses rpm-macros-cmake
+
+BuildRequires: cmake libclucene-core-devel libssl-devel qt5-imageformats qt5-svg-devel qt5-tools-devel qt5-webkit-devel
 
 BuildRequires: libsword-devel >= 1.7
 
 BuildRequires: librsvg-utils
+
+Requires: qt5-imageformats
 
 %description
 BibleTime is a free and easy to use bible study tool for UNIX systems.
@@ -39,17 +42,17 @@ subst 's/-Werror //' CMakeLists.txt
 %build
 %add_optflags -fpermissive
 %cmake
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmakeinstall_std
 install -D -m 644 pics/icons/bibletime.svg %buildroot%_iconsdir/hicolor/scalable/apps/bibletime.svg
 install -d %buildroot%_liconsdir/
 rsvg-convert -w 48 -h 48 pics/icons/bibletime.svg -f png -o %buildroot%_liconsdir/bibletime.png
 rm -f %buildroot%_iconsdir/%name.svg
 
 %files
-%doc ChangeLog README
+%doc ChangeLog README.md
 %_bindir/*
 %_datadir/%name/
 %_desktopdir/*
@@ -57,6 +60,10 @@ rm -f %buildroot%_iconsdir/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed May 23 2018 Vitaly Lipatov <lav@altlinux.ru> 2.11.1-alt1
+- new version (2.11.1) with rpmgs script
+- build with Qt5, sword 1.8, update buildreqs
+
 * Mon Jul 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.1-alt3
 - Migrated to clucene-core
 
