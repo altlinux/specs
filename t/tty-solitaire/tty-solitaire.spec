@@ -2,7 +2,7 @@
 
 Name:     tty-solitaire
 Version:  1.0.0
-Release:  alt2
+Release:  alt3
 
 Summary:  Play solitaire in your terminal!
 
@@ -25,7 +25,7 @@ Buildrequires: libncursesw-devel
 %patch0 -p1
 
 %build
-%make_build CFLAGS='%optflags'
+%make_build CFLAGS='%optflags -std=gnu11'
 
 %install
 %makeinstall_std PREFIX=%_prefix
@@ -35,6 +35,9 @@ Buildrequires: libncursesw-devel
 %doc README.md
 
 %changelog
+* Wed May 23 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt3
+- Force building with gnu11 standart for e2k arch.
+
 * Thu Nov 02 2017 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt2
 - Remove buildroot macro from spec.
 
