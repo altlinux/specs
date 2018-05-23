@@ -1,6 +1,6 @@
 
 Name: acpica
-Version: 20180209
+Version: 20180508
 Release: alt1%ubt
 Summary: ACPICA tools for the development and debug of ACPI tables
 
@@ -197,6 +197,9 @@ cd ..
 %_man1dir/*
 
 %changelog
+* Wed May 23 2018 Alexey Shabalin <shaba@altlinux.ru> 20180508-alt1%ubt
+- 20180508
+
 * Mon Apr 02 2018 Alexey Shabalin <shaba@altlinux.ru> 20180209-alt1%ubt
 - 20180209
 - Fixes:
