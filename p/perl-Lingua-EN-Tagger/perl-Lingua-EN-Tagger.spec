@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Lingua-EN-Tagger
 Name: perl-%dist
-Version: 0.28
+Version: 0.29
 Release: alt1
 
 Summary: Part-of-speech tagger for English natural language processing
@@ -44,6 +44,9 @@ to be treated as nouns or other parts of speech.
 %perl_vendor_privlib/Lingua*
 
 %changelog
+* Wed May 23 2018 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- automated CPAN update
+
 * Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - automated CPAN update
 
