@@ -25,7 +25,7 @@
   --enable-toolbar
 
 Name: xterm
-Version: 331
+Version: 333
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -56,9 +56,7 @@ PreReq: libutempter >= 1.0.7, alternatives >= 0.3.5-alt1
 BuildPreReq: alternatives groff-base imake libXaw-devel libXft-devel libncurses-devel libutempter-devel libxkbfile-devel xorg-cf-files
 # Automatically added by buildreq on Wed Nov 14 2012
 # optimized out: alternatives fontconfig fontconfig-devel gnu-config libICE-devel libSM-devel libX11-devel libXmu-devel libXrender-devel libXt-devel libfreetype-devel libtinfo-devel pkg-config xorg-kbproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: ctags desktop-file-utils groff-base imake libXaw-devel libXext-devel libXft-devel libncurses-devel libneXtaw-devel libutempter-devel libxkbfile-devel xorg-cf-files
-
-BuildRequires: desktop-file-utils
+BuildRequires: ctags groff-base imake libXaw-devel libXext-devel libXft-devel libncurses-devel libneXtaw-devel libutempter-devel libxkbfile-devel xorg-cf-files
 
 Requires: /etc/X11/app-defaults
 
@@ -101,9 +99,6 @@ sed -i 's|^Exec=xterm|& -name XTerm|' %name.desktop
 sed -i 's|_48x48||' *.desktop
 sed -i '/^Comment=/s/$/ (UTF8 forced)/' uxterm.desktop
 
-## Do we need this?
-## sed '/^Exec=xterm/s/-name XTerm/ -tn xterm-color -name XTerm-color/' %name.desktop > xterm-color.desktop
-
 # Remove deprecated Encoding key
 sed -i '/^Encoding=/d' *.desktop
 
@@ -115,7 +110,7 @@ touch ctlseqs.ms
 %configure %xterm_stdfalgs
 %make_build all ctlseqs.txt
 cp xterm xterm.std
-bzip2 -9fk ctlseqs.txt
+xz ctlseqs.txt
 
 make distclean
 %configure %xterm_stdfalgs %xterm_expflags
@@ -126,19 +121,13 @@ cp xterm.std xterm
 %install
 %makeinstall_std
 install xterm.extd %buildroot%_bindir/XTerm
-# TODO this getting strange (some "=auto" in desktop-file-install)
-# but may be improved later (see icon theme configure option)
-# install-desktop --silent --no-print-directory
 install -D %name.desktop %buildroot/%_desktopdir/%name.desktop
-## Do we need this?
-## install -D %name-color.desktop %buildroot/%_desktopdir/%name-color.desktop
 
 for n in xterm xterm-color; do
   for s in 48 32; do
     install -D icons/${n}_${s}x${s}.xpm %buildroot%_iconsdir/hicolor/${s}x${s}/apps/$n.xpm
   done
   install -D icons/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
-  ## install -D icons/terminal*.* %buildroot%_pixmapsdir/
 done
 
 mkdir -p %buildroot%_altdir
@@ -166,6 +155,10 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Wed May 23 2018 Fr. Br. George <george@altlinux.ru> 333-alt1
+- Autobuild version bump to 333
+- Cleanup buildreq
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 331-alt1
 - Autobuild version bump to 331
 
