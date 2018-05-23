@@ -1,7 +1,9 @@
 # -*- rpm-spec -*-
 
+%define _unpackaged_files_terminate_build 1
+
 # for set release
-%define release_pre alt10
+%define release_pre alt1
 
 # for distr selected
 %def_without M24
@@ -55,7 +57,7 @@
 %define package_release %{release_pre}%{release_distr}
 
 Name: nut
-Version: 2.6.5
+Version: 2.7.4
 Release: %package_release
 
 Summary: Network UPS Tools
@@ -83,13 +85,15 @@ Patch21: nut-2.6.0-upsd-listen.patch
 Patch22: nut-2.6.0-usb_submit_urb.patch
 Patch23: nut-2.6.5-alt-systemd.patch
 Patch24: nut-2.6.5-bcmxcp.patch
+Patch25: nut-2.7.4-alt-gdlib.patch
+Patch26: nut-2.7.4-alt-linking.patch
 
 # Fedora patches
 Patch103: nut-2.6.5-quickfix.patch
-Patch104: nut-2.6.5-ipmifix.patch
 Patch105: nut-2.6.5-dlfix.patch
-Patch106: nut-2.6.5-pthreadfix.patch
 Patch107: nut-2.6.5-foreground.patch
+Patch108: nut-2.6.5-unreachable.patch
+Patch109: nut-2.6.5-rmpidf.patch
 
 %def_with ssl
 %def_with cgi
@@ -121,6 +125,7 @@ Patch107: nut-2.6.5-foreground.patch
 PreReq: shadow-utils
 PreReq: libupsclient = %version-%release
 
+BuildRequires: gcc-c++
 BuildRequires: pkgconfig libtool-common
 BuildRequires: libltdl-devel
 %{?_with_systemd:BuildRequires: systemd-devel}
@@ -222,6 +227,10 @@ Conflicts: nut-devel
 Summary: Shared library libnutscan of nut
 Group: Development/C
 
+%package -n libnutclient
+Summary: Shared library libnutclient of nut
+Group: Development/C
+
 %package -n libupsclient-devel
 Summary: Header files and C programming manuals for nut
 Group: Development/C
@@ -312,6 +321,15 @@ live status tracking on web pages, and more.
 
 This package includes shared library of NUT project.
 
+%description -n libnutclient
+These programs are part of a developing project to monitor the assortment 
+of UPSes that are found out there in the field.  Many models have serial 
+serial ports of some kind that allow some form of state checking.  This
+capability has been harnessed where possible to allow for safe shutdowns, 
+live status tracking on web pages, and more.
+
+This package includes shared library of NUT project.
+
 %description -n libupsclient-devel
 These programs are part of a developing project to monitor the assortment 
 of UPSes that are found out there in the field.  Many models have serial 
@@ -327,23 +345,25 @@ This package includes header files and C programming manuals for nut.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch10 -p1
+%patch10 -p2
 %if_with M24
 %patch20 -p0
 %endif
 %patch21 -p1
 %if_with M24
-%patch22 -p1
+%patch22 -p2
 %endif
 %patch24 -p1
 
 %patch103 -p1 -b .quickfix
-%patch104 -p1 -b .ipmifix
 %patch105 -p1 -b .dlfix
-%patch106 -p1 -b .pthreadfix
 %patch107 -p1 -b .foreground
+%patch108 -p1 -b .unreachable
+%patch109 -p1 -b .rmpidf
 
-%patch23 -p1
+%patch23 -p2
+%patch25 -p2
+%patch26 -p2
 
 # fix cgi path in html links for current %%cgidir
 sed -i 's@/cgi-bin/nut/@/cgi-bin/@g' data/html/header.html.in
@@ -382,10 +402,6 @@ test -f libtool && rm -f libtool && ln -s `which libtool` libtool
 
 %install
 %makeinstall_std
-
-# Since %drvdir != /sbin, we have to create /sbin/upsdrvctl manually.
-mkdir -p %buildroot/sbin
-ln -s %drvdir/upsdrvctl %buildroot/sbin/
 
 # Provide %drvdir/newapc for compatibility with nut-1.4.x
 ln -s apcsmart %buildroot%drvdir/newapc
@@ -450,7 +466,7 @@ test -f scripts/hal/20-ups-nut-device.fdi && cp scripts/hal/20-ups-nut-device.fd
 
 # Rename udev rules file
 %if_with usb
-mv %buildroot/lib/udev/rules.d/52-nut-usbups.rules %buildroot/lib/udev/rules.d/98-nut-usbups.rules
+mv %buildroot/lib/udev/rules.d/62-nut-usbups.rules %buildroot/lib/udev/rules.d/98-nut-usbups.rules
 %endif
 %if_with freeipmi
 mv %buildroot/lib/udev/rules.d/52-nut-ipmipsu.rules %buildroot/lib/udev/rules.d/98-nut-ipmipsu.rules
@@ -462,6 +478,9 @@ ln -s nut-monitor.service %buildroot%_unitdir/upsmon.service
 ln -s nut-driver.service %buildroot%_unitdir/upsdrv.service
 ln -s nut-server.service %buildroot%_unitdir/upsd.service
 %endif
+
+# remove unpackaged files
+rm -f %buildroot%_libdir/*.a
 
 %pre
 if [ $1 -gt 1 -a -x /sbin/upsmon -a ! -d /etc/nut/certs ]; then
@@ -550,7 +569,7 @@ fi
 %files server
 %_sbindir/upsd
 %_bindir/nut-scanner
-/sbin/upsdrvctl
+%_sbindir/upsdrvctl
 
 %_initdir/upsd
 %_initdir/upsdrv
@@ -689,6 +708,9 @@ fi
 %files -n libnutscan
 %_libdir/libnutscan.so.*
 
+%files -n libnutclient
+%_libdir/libnutclient.so.*
+
 %files -n libupsclient-devel
 %_libdir/*.so
 %_includedir/*
@@ -698,6 +720,9 @@ fi
 %_man3dir/*
 
 %changelog
+* Tue May 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.4-alt1
+- Updated to upstream version 2.7.4.
+
 * Tue Aug 22 2017 Anton Farygin <rider@altlinux.ru> 2.6.5-alt10
 - rebuilt for freeipmi
 
