@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(base.pm) perl-devel perl-podlators
@@ -6,14 +7,14 @@ BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/
 %define upstream_version 0.0402
 
 Name:       perl-%{upstream_name}
-Version:    0.0402
+Version:    0.0403
 Release:    alt1
 
 Summary:    Sprintf-like function with named conversions
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/S/SH/SHLOMIF/Text-Sprintf-Named-%{version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Exporter.pm)
@@ -36,7 +37,7 @@ a string, and '"%(num)4d"' will emit the ''num'' parameter as a variable
 with a width of 4.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -50,10 +51,13 @@ with a width of 4.
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml  README TODO
+%doc Changes META.json META.yml README TODO
 %perl_vendor_privlib/*
 
 %changelog
+* Wed May 23 2018 Igor Vlasenko <viy@altlinux.ru> 0.0403-alt1
+- automated CPAN update
+
 * Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.0402-alt1
 - automated CPAN update
 
