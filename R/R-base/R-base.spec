@@ -1,5 +1,5 @@
 Name: R-base
-Version: 3.4.3
+Version: 3.5.0
 Release: alt1
 
 Summary: A language for data analysis and graphics
@@ -12,7 +12,7 @@ Source: R-%version.tar
 Patch: R-%version-%release.patch
 
 # Automatically added by buildreq on Thu Mar 03 2011
-BuildRequires: bzlib-devel gcc-c++ gcc-fortran libXmu-devel libjpeg-devel liblzma-devel libpango-devel libpcre-devel libpng-devel libreadline-devel libtiff-devel texlive-fonts-recommended texlive-generic-recommended texlive-xetex tk-devel zlib-devel makeinfo texi2dvi libcurl-devel libcairo-devel libtre-devel rpm-build-java java-devel-default
+BuildRequires: bzlib-devel gcc-c++ gcc-fortran libXmu-devel libjpeg-devel liblzma-devel libpango-devel libpcre-devel libpng-devel libreadline-devel libtiff-devel texlive-collection-latex texlive-dist tk-devel zlib-devel makeinfo texi2dvi libcurl-devel libcairo-devel libtre-devel rpm-build-java java-devel-default
 
 BuildPreReq: liblapack-devel libicu-devel
 
@@ -197,6 +197,16 @@ make check
 %exclude %Rdocdir/COPYING*
 	%Rhome/doc
 
+%package -n R-full
+Summary: Meta-package that installs all components of R Statitical Environment
+Group: Development/Other
+Requires: R-devel = %version-%release R-tcltk = %version-%release R-doc-html = %version-%release gcc-c++ gcc-fortran liblapack-devel
+
+%description -n R-full
+Meta-package that installs all components of R Statitical Environment
+
+%files -n R-full
+
 %package -n R-devel
 Summary: Development files for the R Statistical Environment
 Group: Development/Other
@@ -318,6 +328,20 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Mon May 21 2018 Kirill Maslinsky <kirill@altlinux.org> 3.5.0-alt1
+- Version 3.5.0
+- change meta-package name to R-full since #34737 is still unresolved
+- add dependencies on gcc-fortran, gcc-c++, liblapack-devel to R-full 
+  to make installation of R packages easier for less profcient users 
+  (these are the most common tools required to build R packages that are 
+  commonly missing in a user's system by default).
+
+* Thu Mar 22 2018 Kirill Maslinsky <kirill@altlinux.org> 3.4.4-alt1
+- Version 3.4.4
+- Add meta-package R that installs all major components 
+  (R-base, R-devel, R-tcltk)
+- Rebuilt with texlive-2017
+
 * Sun Jan 14 2018 Kirill Maslinsky <kirill@altlinux.org> 3.4.3-alt1
 - Version 3.4.3
 
