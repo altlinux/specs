@@ -3,7 +3,7 @@
 
 Name: python-module-zeroconf
 Version: 0.19.1
-Release: alt1
+Release: alt2
 Summary: Pure Python Multicast DNS Service Discovery Library (Bonjour/Avahi compatible)
 
 License: LGPLv2
@@ -31,7 +31,7 @@ modified by William McBrine (https://github.com/wmcbrine/pyzeroconf).
 Summary: Pure Python Multicast DNS Service Discovery Library (Bonjour/Avahi compatible)
 Group: Development/Python
 %py3_provides %oname
-%py3_requires enum34
+%py3_requires enum
 BuildArch: noarch
 
 %description -n python3-module-%oname
@@ -78,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.19.1-alt2
+- Rebuilt to regenerate dependencies.
+
 * Fri Oct 20 2017 Anton Midyukov <antohami@altlinux.org> 0.19.1-alt1
 - new version 0.19.1
 

@@ -2,7 +2,7 @@
 
 Name: python-module-vk_api
 Version: 9.3.1
-Release: alt1
+Release: alt2
 
 Summary: Module for writing scripts for vk.com (vkontakte)
 License: Apache 2.0
@@ -29,7 +29,7 @@ Module for writing scripts for vk.com (vkontakte).
 %package -n python3-module-vk_api
 Summary: Module for writing scripts for vk.com (vkontakte)
 Group: Development/Python3
-%py3_requires enum34
+%py3_requires enum
 
 %description -n python3-module-vk_api
 Module for writing scripts for vk.com (vkontakte).
@@ -63,6 +63,9 @@ popd
 
 
 %changelog
+* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 9.3.1-alt2
+- Rebuilt to regenerate dependencies.
+
 * Mon Mar 19 2018 Andrey Bychkov <mrdrew@altlinux.ru> 9.3.1-alt1
 - Version 9.3.1
 

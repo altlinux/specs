@@ -1,31 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define oname enum34
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 1.1.6
-Release: alt2
+Release: alt3
 Summary: Python 3.4 Enum backported to 3.3, 3.2, 3.1, 2.7, 2.6, 2.5, and 2.4
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/enum34/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source0: https://pypi.python.org/packages/bf/3e/31d502c25302814a7c2f1d3959d2a3b3f78e509002ba91aea64993936876/%{oname}-%{version}.tar.gz
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pluggy python-module-py python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
-BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3 time
 
 %description
 An enumeration is a set of symbolic names (members) bound to unique,
@@ -44,6 +41,7 @@ identity, and the enumeration itself can be iterated over.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python 3.4 Enum backported to 3.3, 3.2, 3.1, 2.7, 2.6, 2.5, and 2.4
 Group: Development/Python3
@@ -65,6 +63,7 @@ constant values. Within an enumeration, the members can be compared by
 identity, and the enumeration itself can be iterated over.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup -q -n %{oname}-%{version}
@@ -120,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.6-alt3
+- Rebuilt without python-3.
+
 * Tue Jul 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.6-alt2
 - Fixed build spec
 

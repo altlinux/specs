@@ -1,13 +1,13 @@
 %define oname protobuf3
+
 Name: python3-module-%oname
 Epoch: 1
 Version: 0.2.1
-Release: alt1.1
+Release: alt2
 Summary: Protocol buffers library for Python 3
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/protobuf3/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Pr0Ger/protobuf3.git
 Source: %name-%version.tar
@@ -15,15 +15,15 @@ Patch1: %oname-%version-alt-docs.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-enum34 protobuf-compiler
-BuildRequires: python-module-sphinx-devel
-BuildRequires: python-module-sphinx_rtd_theme
+BuildRequires: python3(enum) protobuf-compiler
+BuildRequires: python3-module-sphinx-devel
+BuildRequires: python3-module-sphinx_rtd_theme
 BuildRequires: python3-module-pytest
 
 %py3_provides %oname
-%py3_requires enum34
+%py3_requires enum
 
 %description
 Initial idea of this project was lack of support Python 3 in original
@@ -34,7 +34,7 @@ currently there is no easy way to use it with Python 3.
 %setup
 %patch1 -p1
 
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
 %build
@@ -43,7 +43,7 @@ ln -s ../objects.inv docs/
 %install
 %python3_install
 
-%make -C docs html
+%make -C docs html SPHINXBUILD=py3_sphinx-build
 
 %check
 python3 setup.py test
@@ -55,6 +55,9 @@ py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.2.1-alt2
+- Rebuilt without python3-module-enum34.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:0.2.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

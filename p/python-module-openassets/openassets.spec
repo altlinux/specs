@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname openassets
 
 %def_without python2
@@ -5,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt2.git20141102.1
+Release: alt3.git20141102
 Summary: Reference implementation of the Open Assets Protocol
 License: MIT
 Group: Development/Python
@@ -18,19 +20,18 @@ Source: %name-%version.tar
 %if_with python2
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(asyncio) python-module-bitcoinlib
-BuildRequires: python-module-enum34
+BuildRequires: python2.7(enum34)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(asyncio) python3-module-bitcoinlib
-BuildRequires: python3-module-enum34
+BuildRequires: python3(enum)
 %endif
 
 %py_provides %oname
 Requires: python-module-bitcoinlib
-Requires: python-module-enum34
-%py_requires asyncio
+%py_requires asyncio enum34
 
 %description
 The openassets Python package is the reference implementation of the
@@ -46,8 +47,7 @@ Summary: Reference implementation of the Open Assets Protocol
 Group: Development/Python3
 %py3_provides %oname
 Requires: python3-module-bitcoinlib
-Requires: python3-module-enum34
-%py3_requires asyncio
+%py3_requires asyncio enum
 
 %description -n python3-module-%oname
 The openassets Python package is the reference implementation of the
@@ -110,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Thu May 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3-alt3.git20141102
+- NMU: rebuilt to regenerate dependencies.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3-alt2.git20141102.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

@@ -1,7 +1,7 @@
 %define oname antlr4
 Name: python3-module-%oname
 Version: 4.6
-Release: alt1
+Release: alt1.1
 Summary: ANTLR 4.5 runtime for Python 3
 License: BSD
 Group: Development/Python3
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-python3
 #BuildPreReq: python3-module-enum34
 
 %py3_provides %oname
-Requires: python3-module-enum34
+Requires: python3(enum)
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python3 python3-base
@@ -39,6 +39,9 @@ This is the Python 3 runtime for AntLR.
 %python3_sitelibdir/*
 
 %changelog
+* Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6-alt1.1
+- NMU: rebuilt to regenerate dependencies.
+
 * Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 4.6-alt1
 - automated PyPI update
 
