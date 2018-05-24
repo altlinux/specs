@@ -1,103 +1,62 @@
 %define _unpackaged_files_terminate_build 1
 
-# RESTEasy
-%define resteasy_lib /usr/share/java/resteasy
-%define jaxrs_api_jar /usr/share/java/jboss-jaxrs-2.0-api.jar
+%def_with check
+%def_with python3_default
 
-# Java
-%define java_home /usr/lib/jvm/jre
+%define java_home     %_jvmdir/jre
+%define resteasy_lib  %_javadir/resteasy
+%define jaxrs_api_jar %_javadir/jboss-jaxrs-2.0-api.jar
+%define app_server    tomcat-8.5
+%define nss_db_type   sql
 
 Name: pki-core
-Version: 10.5.6
+Version: 10.6.1
 Release: alt1%ubt
+
 Summary: Certificate System - PKI Core Components
-# Source-git: https://github.com/dogtagpki/pki
-Url: http://pki.fedoraproject.org
 License: %gpl2only
 Group: System/Servers
+# Source-git: https://github.com/dogtagpki/pki
+Url: http://www.dogtagpki.org
+
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-build-python
-BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires(pre): rpm-macros-java
-BuildRequires(pre): java-1.8.0-openjdk-devel
+
+BuildRequires: java-devel
+BuildRequires: rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: sh4
-BuildRequires: zip
-BuildRequires: ldapjdk
+BuildRequires: apache2-devel
 BuildRequires: apache-commons-cli
-BuildRequires: apache-commons-codec
-BuildRequires: apache-commons-io
-BuildRequires: apache-commons-lang
-BuildRequires: jakarta-commons-httpclient
+BuildRequires: apache-commons-httpclient
 
-BuildRequires: libnspr-devel
 BuildRequires: libnss-devel
+BuildRequires: zlib-devel
+BuildRequires: selinux-policy-alt
 
-BuildRequires: libnuxwdog-java
-
-BuildRequires: libldap-devel
-BuildRequires: pkg-config
-BuildRequires: policycoreutils
+BuildRequires: jackson
 BuildRequires: velocity
-BuildRequires: xalan-j2
-BuildRequires: xerces-j2
-BuildRequires: slf4j
-BuildRequires: slf4j-jdk14
-
-BuildRequires: jboss-annotations-1.2-api
-BuildRequires: jboss-jaxrs-2.0-api
-BuildRequires: jboss-logging
+BuildRequires: ldapjdk
 BuildRequires: resteasy-atom-provider
 BuildRequires: resteasy-client
-BuildRequires: resteasy-jaxb-provider
-BuildRequires: resteasy-core
-BuildRequires: resteasy-jackson-provider
-BuildRequires: junit
-BuildRequires: javapackages-tools
-BuildRequires: jss >= 4.4.2
-BuildRequires: tomcatjss >= 7.2.4
-BuildRequires: tomcat-servlet-3.1-api
-BuildRequires: tomcat-lib
+BuildRequires: libnuxwdog-java
+BuildRequires: tomcatjss
+BuildRequires: xalan-j2
+BuildRequires: slf4j-jdk14
 
-BuildRequires: pylint
-BuildRequires: python-module-flake8
-BuildRequires: pyflakes
-BuildRequires: python-module-lxml
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-nss
-BuildRequires: python-module-requests
-BuildRequires: python-module-pyldap
-BuildRequires: python-module-six
-BuildRequires: python-module-cryptography
-BuildRequires: python-module-selinux
-BuildRequires: python-module-sepolgen
-BuildRequires: python3-module-flake8
-BuildRequires: python3-pyflakes
-BuildRequires: python3-module-cryptography
-BuildRequires: python3-module-lxml
-BuildRequires: python3-module-nss
-BuildRequires: python3-module-pyldap
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-six
+BuildRequires: python-module-ldap
 
-BuildRequires: systemd
-
-# additional build requirements needed to build native 'tpsclient'
-# REMINDER:  Revisit these once 'tpsclient' is rewritten as a Java app
-BuildRequires: libsasl2-devel
-BuildRequires: libapr1-devel
-BuildRequires: libaprutil1-devel
-BuildRequires: apache2-devel >= 2.4.2
-BuildRequires: libpcrecpp-devel
-BuildRequires: python
-BuildRequires: zlib-devel
+%if_with check
+BuildRequires: junit
+%endif
 
 %global overview                                                       \
 ==================================                                     \
@@ -164,13 +123,11 @@ least one PKI Theme package:                                           \
 %nil
 
 %description %overview
-
 %package -n pki-symkey
 Summary: Symmetric Key JNI Package
 Group: System/Libraries
-Requires: jss >= 4.4.2
-Requires: libnss
-Requires: java-1.8.0-openjdk-headless
+Requires: jss
+Requires: java-headless
 Requires: javapackages-tools
 Provides: symkey = %EVR
 Obsoletes: symkey < %EVR
@@ -191,7 +148,6 @@ Provides: pki-common = %EVR
 Provides: pki-util = %EVR
 Obsoletes: pki-common < %EVR
 Obsoletes: pki-util < %EVR
-Requires: libnss
 
 %description -n pki-base
 The PKI Framework contains the common and client libraries and utilities.
@@ -203,27 +159,10 @@ This package is a part of the PKI Core used by the Certificate System.
 Summary: Certificate System - Java Framework
 Group: System/Base
 BuildArch: noarch
-Requires: java-1.8.0-openjdk-headless
-Requires: apache-commons-cli
-Requires: apache-commons-codec
-Requires: apache-commons-io
-Requires: apache-commons-lang
-Requires: apache-commons-logging
-Requires: jakarta-commons-httpclient
-Requires: slf4j
-Requires: slf4j-jdk14
-Requires: javassist
-Requires: javapackages-tools
-Requires: jss >= 4.4.2
-Requires: ldapjdk
 Requires: pki-base = %EVR
-Requires: resteasy-atom-provider >= 3.0.6
-Requires: resteasy-client >= 3.0.6
-Requires: resteasy-jackson-provider >= 3.0.6
-Requires: resteasy-core >= 3.0.6
-Requires: resteasy-jaxb-provider >= 3.0.6
+Requires: java-headless
+Requires: javassist
 Requires: xalan-j2
-Requires: xerces-j2
 Requires: xml-commons-apis
 Requires: xml-commons-resolver
 
@@ -239,14 +178,8 @@ This package is a part of the PKI Core used by the Certificate System.
 %package -n python-module-pki-base
 Summary: Certificate System - PKI Framework
 Group: Development/Python
-
 BuildArch: noarch
-
 Requires: pki-base = %EVR
-Requires: python-module-nss
-Requires: python-module-six
-Requires: python-module-requests
-Requires: python-module-cryptography
 
 %description -n python-module-pki-base
 This package contains PKI client library for Python 3.
@@ -258,15 +191,8 @@ This package is a part of the PKI Core used by the Certificate System.
 %package -n python3-module-pki-base
 Summary: Certificate System - PKI Framework
 Group: Development/Python3
-
 BuildArch: noarch
-
 Requires: pki-base = %EVR
-Requires: python3-module-nss
-Requires: python3-module-six
-Requires: python3-module-lxml
-Requires: python3-module-requests
-Requires: python3-module-cryptography
 
 %description -n python3-module-pki-base
 This package contains PKI client library for Python 3.
@@ -278,17 +204,15 @@ This package is a part of the PKI Core used by the Certificate System.
 %package -n pki-tools
 Summary: Certificate System - PKI Tools
 Group: System/Base
+Requires: pki-base = %EVR
+Requires: pki-base-java = %EVR
+Requires: openldap-clients
+Requires: nss-utils
+Requires: tomcat-servlet-3.1-api
 Provides: pki-native-tools = %EVR
 Provides: pki-java-tools = %EVR
 Obsoletes: pki-native-tools < %EVR
 Obsoletes: pki-java-tools < %EVR
-Requires: openldap-clients
-Requires: libnss
-Requires: java-1.8.0-openjdk-headless
-Requires: pki-base = %EVR
-Requires: pki-base-java = %EVR
-Requires: javapackages-tools
-Requires: tomcat-servlet-3.1-api
 Conflicts: strongswan
 
 %description -n pki-tools
@@ -302,8 +226,12 @@ This package is a part of the PKI Core used by the Certificate System.
 %package -n pki-server
 Summary: Certificate System - PKI Server Framework
 Group: System/Base
-
 BuildArch: noarch
+Requires: pki-symkey = %EVR
+Requires: pki-tools = %EVR
+Requires: pki-base = %EVR
+Requires: pki-base-java = %EVR
+Requires: openssl
 
 Provides: pki-deploy = %EVR
 Provides: pki-setup = %EVR
@@ -312,31 +240,6 @@ Provides: pki-silent = %EVR
 Obsoletes: pki-deploy < %EVR
 Obsoletes: pki-setup < %EVR
 Obsoletes: pki-silent < %EVR
-
-Requires: java-1.8.0-openjdk-headless
-Requires: net-tools
-Requires: openldap-clients
-Requires: openssl
-Requires: pki-tools = %EVR
-Requires: pki-base = %EVR
-Requires: pki-base-java = %EVR
-Requires: policycoreutils
-Requires: python-module-lxml
-Requires: python-module-pyldap
-Requires: python-module-selinux
-
-Requires: selinux-policy-targeted
-Obsoletes: pki-selinux
-
-Requires: tomcat >= 8.0.32
-Requires: tomcat-el-3.0-api
-Requires: tomcat-jsp-2.3-api
-Requires: tomcat-servlet-3.1-api
-Requires: velocity
-Requires: systemd
-Requires: tomcatjss >= 7.2.4
-Requires: libnuxwdog
-Requires: libnuxwdog-java
 
 %description -n pki-server
 The PKI Server Framework is required by the following four PKI subsystems:
@@ -355,10 +258,7 @@ The package contains scripts to create and remove PKI subsystems.
 %package -n pki-ca
 Summary: Certificate System - Certificate Authority
 Group: System/Servers
-
 BuildArch: noarch
-
-Requires: java-1.8.0-openjdk-headless
 Requires: pki-server = %EVR
 
 %description -n pki-ca
@@ -378,10 +278,7 @@ provided by the PKI Core used by the Certificate System.
 %package -n pki-kra
 Summary: Certificate System - Data Recovery Manager
 Group: System/Servers
-
 BuildArch: noarch
-
-Requires: java-1.8.0-openjdk-headless
 Requires: pki-server = %EVR
 
 %description -n pki-kra
@@ -407,10 +304,7 @@ provided by the PKI Core used by the Certificate System.
 %package -n pki-ocsp
 Summary: Certificate System - Online Certificate Status Protocol Manager
 Group: System/Servers
-
 BuildArch: noarch
-
-Requires: java-1.8.0-openjdk-headless
 Requires: pki-server = %EVR
 
 %description -n pki-ocsp
@@ -443,12 +337,8 @@ provided by the PKI Core used by the Certificate System.
 %package -n pki-tks
 Summary: Certificate System - Token Key Service
 Group: System/Servers
-
 BuildArch: noarch
-
-Requires: java-1.8.0-openjdk-headless
 Requires: pki-server = %EVR
-Requires: pki-symkey = %EVR
 
 %description -n pki-tks
 The Token Key Service (TKS) is an optional PKI subsystem that manages the
@@ -474,22 +364,12 @@ provided by the PKI Core used by the Certificate System.
 %package -n pki-tps
 Summary: Certificate System - Token Processing Service
 Group: System/Servers
-
-Provides: pki-tps-tomcat
-Provides: pki-tps-client
-
-Obsoletes: pki-tps-tomcat
-Obsoletes: pki-tps-client
-
-Requires: java-1.8.0-openjdk-headless
 Requires: pki-server = %EVR
 
-# additional runtime requirements needed to run native 'tpsclient'
-# REMINDER:  Revisit these once 'tpsclient' is rewritten as a Java app
-Requires: libnss
-Requires: nss-utils
-Requires: openldap-clients
-Requires: pki-symkey = %EVR
+Provides: pki-tps-tomcat = %EVR
+Provides: pki-tps-client = %EVR
+Obsoletes: pki-tps-tomcat < %EVR
+Obsoletes: pki-tps-client < %EVR
 
 %description -n pki-tps
 The Token Processing System (TPS) is an optional PKI subsystem that acts
@@ -516,13 +396,12 @@ smart card.
 %package -n pki-javadoc
 Summary: Certificate System - PKI Framework Javadocs
 Group: Documentation
-
 BuildArch: noarch
+Requires: javapackages-tools
 
 Provides: pki-util-javadoc = %EVR
 Provides: pki-java-tools-javadoc = %EVR
 Provides: pki-common-javadoc = %EVR
-
 Obsoletes: pki-util-javadoc < %EVR
 Obsoletes: pki-java-tools-javadoc < %EVR
 Obsoletes: pki-common-javadoc < %EVR
@@ -538,6 +417,12 @@ This package is a part of the PKI Core used by the Certificate System.
 %prep
 %setup
 %patch0 -p1
+# change port from 8080 to 8090
+# Port 8080 is used by alterator-ahttpd-server
+grep -rl 8080 | xargs sed -i 's/\(\W\|^\)8080\(\W\|$\)/\18090\2/g'
+# change apache2 alt paths
+grep -rPl '#include \x22httpd/' | \
+xargs sed -i 's/#include \x22httpd\//#include \x22apache2\//g'
 # from sem@:
 # At least one script required bash4.
 # Just use sh4 for all scripts.
@@ -554,61 +439,30 @@ pushd BUILD
 	-DJAVA_HOME=%java_home \
 	-DJAVA_LIB_INSTALL_DIR=%_jnidir \
 	-DSYSTEMD_LIB_INSTALL_DIR=%_unitdir \
-	-DWITH_TOMCAT7:BOOL=OFF \
 	-DJAXRS_API_JAR=%jaxrs_api_jar \
 	-DRESTEASY_LIB=%resteasy_lib \
+	-DPKI_NSS_DB_TYPE=%nss_db_type \
+	-DAPP_SERVER=%app_server \
+%if_with check
+	-DWITH_TEST:BOOL=ON \
+%else
+	-DWITH_TEST:BOOL=OFF \
+%endif
+%if_with python3_default
+	-DWITH_PYTHON3_DEFAULT:BOOL=ON \
+%else
+	-DWITH_PYTHON3_DEFAULT:BOOL=OFF \
+%endif
+	-DWITH_PYTHON2:BOOL=ON \
+	-DWITH_PYTHON3:BOOL=ON \
         ..
 popd
 %cmake_build VERBOSE=1 all
 
-%check
-%cmake_build VERBOSE=1 unit-test
-
-# Scanning the python code with pylint.
-python pylint-build-scan.py rpm --prefix %buildroot
-if [ $? -ne 0 ]; then
-    echo "pylint failed. RC: $?"
-    exit 1
-fi
-
-python pylint-build-scan.py rpm --prefix %buildroot -- --py3k
-if [ $? -ne 0 ]; then
-    echo "pylint --py3k failed. RC: $?"
-    exit 1
-fi
-
-flake8 --config tox.ini %buildroot
-if [ $? -ne 0 ]; then
-    echo "flake8 for Python 2 failed. RC: $?"
-    exit 1
-fi
-
-python3-flake8 --config tox.ini %buildroot
-if [ $? -ne 0 ]; then
-    echo "flake8 for Python 3 failed. RC: $?"
-    exit 1
-fi
-
 %install
 %cmakeinstall_std
-# Create symlinks for admin console (TPS does not use admin console)
-for subsystem in ca kra ocsp tks; do
-    mkdir -p %buildroot%_datadir/pki/$subsystem/webapps/$subsystem/admin
-    ln -s %_datadir/pki/server/webapps/pki/admin/console %buildroot%_datadir/pki/$subsystem/webapps/$subsystem/admin
-done
-
-# Create compatibility symlink for DRMTool -> KRATool
-ln -s %_bindir/KRATool %buildroot%_bindir/DRMTool
-# Create compatibility symlink for DRMTool.cfg -> KRATool.cfg
-ln -s %_datadir/pki/java-tools/KRATool.cfg %buildroot%_datadir/pki/java-tools/DRMTool.cfg
-# Create compatibility symlink for DRMTool.1.gz -> KRATool.1.gz
-ln -s %_man1dir/KRATool.1.xz %buildroot%_man1dir/DRMTool.1.xz
-
 # Customize client library links in /usr/share/pki/lib
 rm -f %buildroot%_datadir/pki/lib/scannotation.jar
-rm -f %buildroot%_datadir/pki/lib/resteasy-jaxrs-api.jar
-rm -f %buildroot%_datadir/pki/lib/resteasy-jaxrs-jandex.jar
-ln -sf %jaxrs_api_jar %buildroot%_datadir/pki/lib/jboss-jaxrs-2.0-api.jar
 ln -sf %_datadir/java/jboss-logging/jboss-logging.jar %buildroot%_datadir/pki/lib/jboss-logging.jar
 ln -sf %_datadir/java/jboss-annotations-1.2-api/jboss-annotations-api_1.2_spec.jar %buildroot%_datadir/pki/lib/jboss-annotations-api_1.2_spec.jar
 
@@ -619,10 +473,6 @@ ln -sf %jaxrs_api_jar %buildroot%_datadir/pki/server/common/lib/jboss-jaxrs-2.0-
 ln -sf %_datadir/java/jboss-logging/jboss-logging.jar %buildroot%_datadir/pki/server/common/lib/jboss-logging.jar
 ln -sf %_datadir/java/jboss-annotations-1.2-api/jboss-annotations-api_1.2_spec.jar %buildroot%_datadir/pki/server/common/lib/jboss-annotations-api_1.2_spec.jar
 
-rm -rf %buildroot%_datadir/pki/server/lib
-
-mkdir -p %buildroot%_logdir/pki
-mkdir -p %buildroot%_sharedstatedir/pki
 # from sem@:
 # This file should be sourced only
 chmod -x %buildroot%_datadir/pki/scripts/operations
@@ -635,8 +485,8 @@ touch %buildroot%_logdir/pki/pki-server-upgrade-%version.log
 %define pki_groupname pkiuser
 %define pki_homedir %_localstatedir/pki
 
-/usr/sbin/groupadd -r -f %pki_groupname ||:
-/usr/sbin/useradd -g %pki_groupname -c 'Certificate System' \
+%_sbindir/groupadd -r -f %pki_groupname ||:
+%_sbindir/useradd -g %pki_groupname -c 'Certificate System' \
                   -d %pki_homedir -s /sbin/nologin -r %pki_username \
                   > /dev/null 2>&1 ||:
 
@@ -649,7 +499,7 @@ then
 else
     # On RPM upgrade run system upgrade
     echo "Upgrading PKI system configuration at `/bin/date`." >> %_logdir/pki/pki-upgrade-%version.log 2>&1
-    /usr/sbin/pki-upgrade --silent >> %_logdir/pki/pki-upgrade-%version.log 2>&1
+    %_sbindir/pki-upgrade --silent >> %_logdir/pki/pki-upgrade-%version.log 2>&1
     echo >> %_logdir/pki/pki-upgrade-%version.log 2>&1
 fi
 
@@ -662,17 +512,16 @@ fi
 
 %post -n pki-server
 echo "Upgrading PKI server configuration at `/bin/date`." >> %_logdir/pki/pki-server-upgrade-%version.log 2>&1
- /usr/sbin/pki-server-upgrade --silent >> %_logdir/pki/pki-server-upgrade-%version.log 2>&1
+ %_sbindir/pki-server-upgrade --silent >> %_logdir/pki/pki-server-upgrade-%version.log 2>&1
 echo >> %_logdir/pki/pki-server-upgrade-%version.log 2>&1
 
 # Migrate Tomcat configuration
- /usr/sbin/pki-server migrate >> %_logdir/pki/pki-server-upgrade-%version.log 2>&1
+ %_sbindir/pki-server migrate >> %_logdir/pki/pki-server-upgrade-%version.log 2>&1
 echo >> %_logdir/pki/pki-server-upgrade-%version.log 2>&1
 
 if [ "$1" == "2" ]
 then
-    systemctl daemon-reload
-    systemctl restart pki-tomcatd@pki-tomcat.service
+    systemctl daemon-reload ||:
 fi
 
 %files -n pki-symkey
@@ -684,15 +533,18 @@ fi
 %doc base/common/LICENSE
 %doc base/common/LICENSE.LESSER
 %doc %_datadir/doc/pki-base
-%_datadir/pki/VERSION
-%_datadir/pki/etc/
-%_datadir/pki/upgrade/
+%dir %_datadir/pki/etc
+%dir %_datadir/pki/scripts
 %dir %_datadir/pki/examples
-%dir %_datadir/pki/key
-%_datadir/pki/key/templates
+%dir %_logdir/pki
+%_datadir/pki/VERSION
+%_datadir/pki/etc/pki.conf
+%_datadir/pki/etc/logging.properties
+%_datadir/pki/scripts/config
+%_datadir/pki/upgrade/
+%_datadir/pki/key/
 %config(noreplace) %_sysconfdir/pki/pki.conf
 %ghost %_sysconfdir/pki/pki.version
-%dir %_logdir/pki
 %ghost %_logdir/pki/pki-upgrade-%version.log
 %_sbindir/pki-upgrade
 %_man1dir/pki-python-client.1.*
@@ -710,12 +562,17 @@ fi
 %files -n python-module-pki-base
 %doc base/common/LICENSE
 %doc base/common/LICENSE.LESSER
+%if_without python3_default
 %exclude %python_sitelibdir_noarch/pki/server
+%endif
 %python_sitelibdir_noarch/pki
 
 %files -n python3-module-pki-base
 %doc base/common/LICENSE
 %doc base/common/LICENSE.LESSER
+%if_with python3_default
+%exclude %python3_sitelibdir_noarch/pki/server
+%endif
 %python3_sitelibdir_noarch/pki
 
 %files -n pki-tools
@@ -755,6 +612,9 @@ fi
 %_man1dir/AuditVerify.1.*
 %_man1dir/BtoA.1.*
 %_man1dir/CMCEnroll.1.*
+%_man1dir/CMCRequest.1.*
+%_man1dir/CMCSharedToken.1.*
+%_man1dir/CMCResponse.1.*
 %_man1dir/DRMTool.1.*
 %_man1dir/KRATool.1.*
 %_man1dir/PrettyPrintCert.1.*
@@ -783,24 +643,30 @@ fi
 %doc base/server/LICENSE
 %doc base/server/README
 %_sysconfdir/pki/default.cfg
+%dir %_sysconfdir/sysconfig/pki
+%dir %_sysconfdir/sysconfig/pki/tomcat
 %_sbindir/pkispawn
 %_sbindir/pkidestroy
 %_sbindir/pki-server
 %_sbindir/pki-server-nuxwdog
 %_sbindir/pki-server-upgrade
+%if_with python3_default
+%python3_sitelibdir_noarch/pki/server/
+%else
 %python_sitelibdir_noarch/pki/server/
+%endif
+%_datadir/pki/etc/tomcat.conf
 %dir %_datadir/pki/deployment
 %_datadir/pki/deployment/config/
-%dir %_datadir/pki/scripts
 %_datadir/pki/scripts/operations
 %_bindir/pkidaemon
 %dir %_sysconfdir/systemd/system/pki-tomcatd.target.wants
-%attr(644,root,root) %_unitdir/pki-tomcatd@.service
-%attr(644,root,root) %_unitdir/pki-tomcatd.target
+%_unitdir/pki-tomcatd@.service
+%_unitdir/pki-tomcatd.target
 %dir %_sysconfdir/systemd/system/pki-tomcatd-nuxwdog.target.wants
 %ghost %_logdir/pki/pki-server-upgrade-%version.log
-%attr(644,root,root) %_unitdir/pki-tomcatd-nuxwdog@.service
-%attr(644,root,root) %_unitdir/pki-tomcatd-nuxwdog.target
+%_unitdir/pki-tomcatd-nuxwdog@.service
+%_unitdir/pki-tomcatd-nuxwdog.target
 %_javadir/pki/pki-cms.jar
 %_javadir/pki/pki-cmsbundle.jar
 %_javadir/pki/pki-cmscore.jar
@@ -825,46 +691,27 @@ fi
 %files -n pki-ca
 %doc base/ca/LICENSE
 %_javadir/pki/pki-ca.jar
-%dir %_datadir/pki/ca
-%_datadir/pki/ca/conf/
-%_datadir/pki/ca/emails/
-%dir %_datadir/pki/ca/profiles
-%_datadir/pki/ca/profiles/ca/
-%_datadir/pki/ca/setup/
-%_datadir/pki/ca/webapps/
+%_datadir/pki/ca/
 
 %files -n pki-kra
 %doc base/kra/LICENSE
 %_javadir/pki/pki-kra.jar
-%dir %_datadir/pki/kra
-%_datadir/pki/kra/conf/
-%_datadir/pki/kra/setup/
-%_datadir/pki/kra/webapps/
+%_datadir/pki/kra/
 
 %files -n pki-ocsp
 %doc base/ocsp/LICENSE
 %_javadir/pki/pki-ocsp.jar
-%dir %_datadir/pki/ocsp
-%_datadir/pki/ocsp/conf/
-%_datadir/pki/ocsp/setup/
-%_datadir/pki/ocsp/webapps/
+%_datadir/pki/ocsp/
 
 %files -n pki-tks
 %doc base/tks/LICENSE
 %_javadir/pki/pki-tks.jar
-%dir %_datadir/pki/tks
-%_datadir/pki/tks/conf/
-%_datadir/pki/tks/setup/
-%_datadir/pki/tks/webapps/
+%_datadir/pki/tks/
 
 %files -n pki-tps
 %doc base/tps/LICENSE
 %_javadir/pki/pki-tps.jar
-%dir %_datadir/pki/tps
-%_datadir/pki/tps/applets/
-%_datadir/pki/tps/conf/
-%_datadir/pki/tps/setup/
-%_datadir/pki/tps/webapps/
+%_datadir/pki/tps/
 %_man5dir/pki-tps-connector.5.*
 %_man5dir/pki-tps-profile.5.*
 %_man1dir/tpsclient.1.*
@@ -889,6 +736,9 @@ fi
 %_javadocdir/pki-%version/
 
 %changelog
+* Thu May 24 2018 Stanislav Levin <slev@altlinux.org> 10.6.1-alt1%ubt
+- 10.5.6 -> 10.6.1
+
 * Tue Feb 20 2018 Stanislav Levin <slev@altlinux.org> 10.5.6-alt1%ubt
 - 10.5.5 -> 10.5.6
 
