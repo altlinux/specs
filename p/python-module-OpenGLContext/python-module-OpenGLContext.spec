@@ -1,42 +1,28 @@
 %define pre b1
 %define oname OpenGLContext
 
-%def_with python3
-%def_with bootstrap
+%def_without bootstrap
 
 Name: python-module-%oname
 Version: 2.3.0
-Release: alt3
+Release: alt3.1
 
 Summary: Demonstration and testing contexts for PyOpenGL
-
 Group: Development/Python
 License: BSD-like
 Url: http://pyopengl.sourceforge.net/context
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+BuildArch: noarch
 
 Source: http://prdownloads.sourceforge.net/pyopengl/%oname-%version%pre.tar.gz
 
-BuildArch: noarch
-
-%setup_python_module %oname
-
 %add_python_req_skip win32con win32ui FXPy
 
-#BuildPreReq: python-module-setuptools python-devel
-#BuildPreReq: python-modules-compiler python-modules-encodings
-#BuildPreReq: libnumpy-devel
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-module-setuptools python3-devel
-#BuildPreReq: libnumpy-py3-devel
-BuildPreReq: python-tools-2to3
-%endif
+BuildRequires: python-module-html5lib python-module-matplotlib time
+BuildRequires: python-tools-2to3 python-module-docutils
 
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-numpy
-BuildRequires: python-module-docutils python-module-html5lib python-module-matplotlib python3-module-setuptools rpm-build-python3 time
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-module-setuptools
+
 
 %description
 Demonstration and Testing Contexts for PyOpenGL
@@ -51,12 +37,8 @@ used to maintain and extend PyOpenGL.
 %package -n python3-module-%oname
 Summary: Demonstration and testing contexts for PyOpenGL
 Group: Development/Python3
-%add_python3_req_skip pygame win32con win32ui wx FXPy fontTools
-%add_python3_req_skip ttfquery
-
-%if_with bootstrap
-%add_python3_req_skip FXPy.fox wx.py
-%endif
+%add_python3_req_skip pygame win32con win32ui fontTools
+%add_python3_req_skip FXPy.fox wx wx.py ttfquery
 
 %description -n python3-module-%oname
 Demonstration and Testing Contexts for PyOpenGL
@@ -105,48 +87,38 @@ This package contains tests for %name.
 %prep
 %setup -n %oname-%version%pre
 
-%if_with python3
 rm -rf ../python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
-#_bindir/vrml_view
-#_bindir/choosecontext
 %doc docs
-%python_sitelibdir/%modulename/
-#exclude %python_sitelibdir/%modulename/tests
+%python_sitelibdir/%oname/
 %python_sitelibdir/*egg-info/
 
-#files tests
-#python_sitelibdir/%modulename/tests
-
-%if_with python3
 %files -n python3-module-%oname
-%python3_sitelibdir/%modulename/
+%python3_sitelibdir/%oname/
 %python3_sitelibdir/*egg-info/
-%endif
+
 
 %changelog
+* Thu May 24 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.3.0-alt3.1
+- rebuild with all requires
+
 * Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.3.0-alt3
 - rebuild with python3.6
 

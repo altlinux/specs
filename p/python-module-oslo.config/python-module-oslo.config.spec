@@ -4,7 +4,7 @@
 
 Name:       python-module-%oname
 Version:    3.22.1
-Release:    alt1.1
+Release:    alt2
 Summary:    OpenStack common configuration library
 
 Group:      Development/Python
@@ -160,6 +160,9 @@ popd
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu May 24 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.22.1-alt2
+- rebuild with python3.6
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.22.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

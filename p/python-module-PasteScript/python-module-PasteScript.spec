@@ -1,19 +1,19 @@
 %define version 1.7.5
 %define oname PasteScript
-%def_without bootstrap
+
+%def_with bootstrap
 
 Name: python-module-%oname
 Version:%version
-Release: alt4
+Release: alt4.1
 Serial: 1
 
 Summary: A pluggable command-line frontend
-
 License: MIT/X11
 Group: Development/Python
-BuildArch: noarch
 Url: http://pythonpaste.org
 # hg clone http://bitbucket.org/ianb/pastescript
+BuildArch: noarch
 
 Source: %name-%version.tar
 
@@ -89,6 +89,9 @@ popd
 
 
 %changelog
+* Thu May 24 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.7.5-alt4.1
+- rebuild with all requires
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.7.5-alt4
 - rebuild with python3.6
 
