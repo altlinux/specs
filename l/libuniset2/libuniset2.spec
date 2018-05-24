@@ -13,12 +13,13 @@
 %def_enable api
 %def_enable logdb
 %def_enable com485f
+%def_enable opentsdb
 
 %define oname uniset2
 
 Name: libuniset2
 Version: 2.7
-Release: alt8
+Release: alt10
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -223,6 +224,25 @@ Database (sqlite) for logs for %name
 %endif
 %endif
 
+%if_enabled opentsdb
+%package extension-opentsdb
+Group: Development/C++
+Summary: backend for OpenTSDB
+Requires: %name-extension-common = %version-%release
+
+%description extension-opentsdb
+Backend for OpenTSDB
+
+%package extension-opentsdb-devel
+Group: Development/Databases
+Summary: Libraries needed to develop for uniset OpenTSDB backend
+Requires: %name-extension-common-devel = %version-%release
+
+%description extension-opentsdb-devel
+Libraries needed to develop for backend for OpenTSDB
+
+%endif
+
 %if_enabled pgsql
 %package extension-pgsql
 Group: Development/Databases
@@ -317,7 +337,7 @@ Libraries needed to develop for uniset MQTT extension
 
 %build
 %autoreconf
-%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api} %{subst_enable netdata} %{subst_enable logdb} %{subst_enable com485f}
+%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api} %{subst_enable netdata} %{subst_enable logdb} %{subst_enable com485f} %{subst_enable opentsdb}
 %make_build
 
 # fix for ALTLinux build (noarch)
@@ -392,6 +412,17 @@ rm -f %buildroot%_libdir/*.la
 %files extension-logdb
 %_bindir/%oname-logdb*
 %endif
+%endif
+
+%if_enabled opentsdb
+%files extension-opentsdb
+%_bindir/%oname-backend-opentsdb*
+%_libdir/libUniSet2BackendOpenTSDB.so*
+
+%files extension-opentsdb-devel
+%_pkgconfigdir/libUniSet2BackendOpenTSDB.pc
+%_includedir/%oname/extensions/BackendOpenTSDB.h
+%_libdir/libUniSet2BackendOpenTSDB.so
 %endif
 
 %if_enabled pgsql
@@ -509,6 +540,12 @@ rm -f %buildroot%_libdir/*.la
 # history of current unpublished changes
 
 %changelog
+* Thu May 24 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt10
+- fix pack opentsdb backend
+
+* Thu May 24 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt9
+- added opentsdb backend
+
 * Fri May 18 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt8
 - (codegen): added msgstr() function
 - make style
