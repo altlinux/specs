@@ -1,33 +1,42 @@
-Name: maven-remote-resources-plugin
-Version: 1.5
-Summary: Maven Remote Resources Plugin
-License: ASL 2.0
-Url: http://maven.apache.org/plugins/maven-remote-resources-plugin/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-remote-resources-plugin = 1.5-1.fc28
-Provides: mvn(org.apache.maven.plugins:maven-remote-resources-plugin) = 1.5
-Provides: mvn(org.apache.maven.plugins:maven-remote-resources-plugin:pom:) = 1.5
-Requires: java-headless
-Requires: javapackages-tools
-Requires: mvn(org.apache.maven.shared:maven-artifact-resolver)
-Requires: mvn(org.apache.maven.shared:maven-common-artifact-filters)
-Requires: mvn(org.apache.maven.shared:maven-filtering)
-Requires: mvn(org.apache.maven:maven-artifact:2.2.1)
-Requires: mvn(org.apache.maven:maven-core)
-Requires: mvn(org.apache.maven:maven-model:2.2.1)
-Requires: mvn(org.apache.maven:maven-monitor)
-Requires: mvn(org.apache.maven:maven-plugin-api)
-Requires: mvn(org.apache.maven:maven-project)
-Requires: mvn(org.apache.maven:maven-settings:2.2.1)
-Requires: mvn(org.apache.velocity:velocity)
-Requires: mvn(org.codehaus.plexus:plexus-interpolation)
-Requires: mvn(org.codehaus.plexus:plexus-resources)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-remote-resources-plugin-1.5-1.fc28.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires: rpm-build-java unzip
+# END SourceDeps(oneline)
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           maven-remote-resources-plugin
+Version:        1.5
+Release:        alt1_1jpp8
+Summary:        Maven Remote Resources Plugin
+License:        ASL 2.0
+URL:            http://maven.apache.org/plugins/maven-remote-resources-plugin/
+BuildArch:      noarch
+
+Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven:maven-artifact:2.2.1)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model:2.2.1)
+BuildRequires:  mvn(org.apache.maven:maven-monitor)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven:maven-settings:2.2.1)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-resolver)
+BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
+BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
+BuildRequires:  mvn(org.apache.velocity:velocity)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-resources)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+Source44: import.info
+
 
 %description
 Process resources packaged in JARs that have been deployed to
@@ -37,24 +46,34 @@ projects. Maven projects at Apache use this plug-in to satisfy
 licensing requirements at Apache where each project much include
 license and notice files for each release.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+# Tests use Maven 2 APIs
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_1jpp8
+- unbootstrap build
+
 * Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 1.5-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
