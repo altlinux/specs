@@ -8,7 +8,7 @@
 
 Name: MySQL
 Version: 5.7.21
-Release: alt4%ubt
+Release: alt5%ubt
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -125,6 +125,7 @@ PreReq: shadow-utils, coreutils, glibc-locales
 Requires(post,preun): chkconfig, chrooted, coreutils, findutils, grep, sed
 Provides: mysql-server = %version MySQL = %version mysql = %version community-mysql = %version
 Obsoletes: mysql-server < %version MySQL < %version mysql < %version
+Conflicts: mariadb-server-control
 
 %package server-perl
 Summary: Perl utils for MySQL-server
@@ -459,6 +460,12 @@ fi
 %pre_control mysqld
 %pre_control mysqld-chroot
 
+echo "####################################################################"
+echo "#   You may need database format conversion for correct operation: #"
+echo "#  Please consider using: /usr/bin/mysql_upgrade according to      #"
+echo "#  https://dev.mysql.com/doc/refman/5.7/en/upgrading.html          #"
+echo "####################################################################"
+
 %post server
 if [ -f /etc/my.cnf.rename -a ! -L /etc/my.cnf.rename -a ! -e /etc/my.cnf ]; then
 	mv -fv %ROOT/my.cnf %ROOT/my.cnf.rpmnew &&
@@ -486,6 +493,7 @@ rm -rf %ROOT/dev
 
 %post_control -s local mysqld
 %post_control -s enabled mysqld-chroot
+
 
 # see also http://dev.mysql.com/doc/refman/5.5/en/upgrading.html
 %get_datadir
@@ -525,6 +533,18 @@ else
 #    echo "Database dir is Empty, removing"
     rmdir %ROOT$DATADIR/mysql ||:
 fi
+
+echo "####################################################################"
+echo "#              Attention! MySQL upgrade 5.5.xx -> %version           #"
+echo "####################################################################"
+echo "#  Please backup your data before you start conversion!            #"
+echo "#  You may need database format conversion for correct operation:  #"
+echo "# 1. run server: /usr/sbin/mysqld -C utf8 --skip-grant-tables &    #"
+echo "# 2. run converter:  /usr/bin/mysql_upgrade                        #"
+echo "#  To ensure the conversion succeeded:                             #"
+echo "# 3. cat %ROOT$DATADIR/mysql_upgrade_info                      #"
+echo "# MySQL version should be displayed as: \"%version\"                   #"
+echo "####################################################################"
 
 %triggerpostun server -- MySQL-server < 5.5.28-alt1
 %get_datadir
@@ -664,6 +684,11 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Wed May 24 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt5%ubt
+- fix installation with preinstalled maria-db (conflict mariadb-server-control)
+- add database upgrade warning message to post install scripts
+- fixed typo in initscript (thanks to rider@)
+
 * Wed May 10 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt4%ubt
 - enable backport to p8 (merge commit history)
 
