@@ -1,48 +1,33 @@
+Name: maven-remote-resources-plugin
+Version: 1.5
+Summary: Maven Remote Resources Plugin
+License: ASL 2.0
+Url: http://maven.apache.org/plugins/maven-remote-resources-plugin/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-remote-resources-plugin = 1.5-1.fc28
+Provides: mvn(org.apache.maven.plugins:maven-remote-resources-plugin) = 1.5
+Provides: mvn(org.apache.maven.plugins:maven-remote-resources-plugin:pom:) = 1.5
+Requires: java-headless
+Requires: javapackages-tools
+Requires: mvn(org.apache.maven.shared:maven-artifact-resolver)
+Requires: mvn(org.apache.maven.shared:maven-common-artifact-filters)
+Requires: mvn(org.apache.maven.shared:maven-filtering)
+Requires: mvn(org.apache.maven:maven-artifact:2.2.1)
+Requires: mvn(org.apache.maven:maven-core)
+Requires: mvn(org.apache.maven:maven-model:2.2.1)
+Requires: mvn(org.apache.maven:maven-monitor)
+Requires: mvn(org.apache.maven:maven-plugin-api)
+Requires: mvn(org.apache.maven:maven-project)
+Requires: mvn(org.apache.maven:maven-settings:2.2.1)
+Requires: mvn(org.apache.velocity:velocity)
+Requires: mvn(org.codehaus.plexus:plexus-interpolation)
+Requires: mvn(org.codehaus.plexus:plexus-resources)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           maven-remote-resources-plugin
-Version:        1.4
-Release:        alt3_13jpp8
-Summary:        Maven Remote Resources Plugin
-License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-remote-resources-plugin/
-BuildArch:      noarch
-
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-monitor)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.apache.maven:maven-settings)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-resolver)
-BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
-BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
-BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
-BuildRequires:  mvn(org.apache.maven.shared:maven-verifier)
-BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
-BuildRequires:  mvn(org.apache.velocity:velocity)
-BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-resources)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
-Source44: import.info
-
+Release: alt0.1jpp
+Source: maven-remote-resources-plugin-1.5-1.fc28.cpio
 
 %description
 Process resources packaged in JARs that have been deployed to
@@ -52,40 +37,28 @@ projects. Maven projects at Apache use this plug-in to satisfy
 licensing requirements at Apache where each project much include
 license and notice files for each release.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-
-#Class org.apache.maven.shared.artifact.filter.collection.TransitivityFilter which ProcessRemoteResourcesMojo.java imports
-#is renamed as org.apache.maven.shared.artifact.filter.collection.ProjectTransitivityFilter in
-#the version 1.3 of maven-shared-common-artifact-filters package.
-sed -i "s/TransitivityFilter/Project&/" `find -name ProcessRemoteResourcesMojo.java`
-
-# fix 613582
-# we now use plexus-velocity which has the correct descriptor with a hint.
-rm -f src/main/resources/META-INF/plexus/components.xml
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-# Tests use Maven 2 APIs
-%mvn_build -f
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE NOTICE
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%files -f %name-list
 
 %changelog
+* Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 1.5-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_13jpp8
 - fc27 update
 
