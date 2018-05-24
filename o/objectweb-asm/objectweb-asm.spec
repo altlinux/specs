@@ -10,8 +10,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           objectweb-asm
-Version:        5.1
-Release:        alt1_8jpp8
+Version:        6.0
+Release:        alt1_1jpp8
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
 URL:            http://asm.ow2.org/
@@ -19,6 +19,10 @@ BuildArch:      noarch
 
 Source0:        http://download.forge.ow2.org/asm/asm-%{version}.tar.gz
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+# Temporarily reintroduces asm-all uberjar, will be removed when we have time
+# to fix dependent packages
+Patch1:         0001-Revert-removal-of-asm-all.patch
 
 BuildRequires:  ant
 BuildRequires:  aqute-bnd
@@ -43,6 +47,9 @@ This package provides %{summary}.
 
 %prep
 %setup -q -n asm-%{version}
+
+%patch1 -p1
+
 find -name *.jar -delete
 
 sed -i /Class-Path/d archive/*.bnd
@@ -51,11 +58,11 @@ sed -i "s|\${config}/biz.aQute.bnd.jar|`build-classpath aqute-bnd slf4j/api slf4
 sed -i -e '/kind="lib"/d' -e 's|output/eclipse|output/build|' .classpath
 
 %build
-%ant -Dobjectweb.ant.tasks.path= jar jdoc
+%ant -Dobjectweb.ant.tasks.path= -Dbiz.aQute.bnd.path= jar jdoc
 
 %install
 %mvn_artifact output/dist/lib/asm-parent-%{version}.pom
-for m in asm asm-analysis asm-commons asm-tree asm-util asm-xml all/asm-all all/asm-debug-all; do
+for m in asm asm-analysis asm-commons asm-tree asm-util asm-xml asm-all asm-debug-all; do
     %mvn_artifact output/dist/lib/${m}-%{version}.pom \
                   output/dist/lib/${m}-%{version}.jar
 done
@@ -64,14 +71,17 @@ done
 %jpackage_script org.objectweb.asm.xml.Processor "" "" %{name}/asm:%{name}/asm-attrs:%{name}/asm-util:%{name}/asm-xml %{name}-processor true
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %doc README.txt
 %{_bindir}/%{name}-processor
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:6.0-alt1_1jpp8
+- java update
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:5.1-alt1_8jpp8
 - fc27 update
 
