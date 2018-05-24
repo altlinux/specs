@@ -1,5 +1,5 @@
 Name: google-drive-ocamlfuse
-Version: 0.6.20
+Version: 0.6.25
 Release: alt1%ubt
 License: BSD-2-Clause
 Summary: FUSE filesystem for Google Drive
@@ -7,6 +7,7 @@ Url: http://gdfuse.forge.ocamlcore.org
 Group: Networking/Remote access
 Source: %name-%version.tar
 BuildRequires: ocaml ocaml-ocamlbuild
+BuildRequires: jbuilder opam
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-fuse-devel
 BuildRequires: ocaml-gapi-devel
@@ -44,18 +45,20 @@ Further documentation is available here:
 %setup
 
 %build
-ocaml setup.ml -configure
-ocaml setup.ml -build
+jbuilder build @install
 
 %install
-mkdir -p %buildroot%_bindir
-cp gdfuse.native %buildroot%_bindir/%name
+mkdir -p %buildroot%_bindir %buildroot%_libdir/ocaml
+jbuilder install --destdir=%buildroot%_prefix --libdir=%buildroot%_libdir/ocaml
 
 %files
 %doc README.md doc/ LICENSE
 %_bindir/%name
 
 %changelog
+* Thu May 24 2018 Anton Farygin <rider@altlinux.ru> 0.6.25-alt1%ubt
+- 0.6.25
+
 * Fri Jul 21 2017 Anton Farygin <rider@altlinux.ru> 0.6.20-alt1%ubt
 - new version
 
