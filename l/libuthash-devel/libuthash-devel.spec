@@ -1,12 +1,11 @@
 Name: libuthash-devel
-Version: 1.9.8
+Version: 2.0.2
 Release: alt1
 Summary: A hash table for C structures
 License: BSD
 Group: Development/C
 Url: http://troydhanson.github.io/uthash
 Source0: %name-%version.tar
-Patch0: uthash-remove-failed-tests.patch
 BuildArch: noarch
 
 %description
@@ -17,7 +16,6 @@ delete items from the hash table.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %install
@@ -30,8 +28,14 @@ make
 
 %files
 %_includedir/ut*.h
+%_includedir/libut.h
+%_includedir/ringbuf.h
+
 %doc LICENSE doc/*.txt
 
 %changelog
+* Thu May 24 2018 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt1
+- Build new version (Closes: #33241).
+
 * Thu Jan 30 2014 Terechkov Evgenii <evg@altlinux.org> 1.9.8-alt1
 - Initial build for ALT Linux Sisyphus
