@@ -20,7 +20,7 @@ BuildRequires: jpackage-generic-compat
 Name:           maven
 Epoch:          1
 Version:        3.5.2
-Release:        alt1_1jpp8
+Release:        alt1_5jpp8
 Summary:        Java project management and project comprehension tool
 License:        ASL 2.0
 URL:            http://maven.apache.org/
@@ -36,7 +36,7 @@ Patch1:         0001-Adapt-mvn-script.patch
 Patch2:         0002-Invoke-logback-via-reflection.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.guava:guava)
+BuildRequires:  mvn(com.google.guava:guava:20.0)
 BuildRequires:  mvn(com.google.inject:guice::no_aop:)
 BuildRequires:  mvn(commons-cli:commons-cli)
 BuildRequires:  mvn(commons-jxpath:commons-jxpath)
@@ -103,7 +103,7 @@ Requires:       atinject
 Requires:       cdi-api
 Requires:       geronimo-annotation
 Requires:       google-guice
-Requires:       guava
+Requires:       guava20
 Requires:       hawtjni-runtime
 Requires:       httpcomponents-client
 Requires:       httpcomponents-core
@@ -234,7 +234,7 @@ build-jar-repository -s -p %{buildroot}%{_datadir}/%{name}/lib \
 rm %{buildroot}%{_datadir}/%{name}/lib/jboss-interceptors*.jar
 rm %{buildroot}%{_datadir}/%{name}/lib/javax.el-api*.jar
 
-for cmd in mvn mvnDebug mvnyjp; do
+for cmd in mvn mvnDebug; do
     ln -s %{_datadir}/%{name}/bin/$cmd %{buildroot}%{_bindir}/$cmd
     echo ".so man1/mvn.1" >%{buildroot}%{_mandir}/man1/$cmd.1
 done
@@ -285,6 +285,9 @@ ln -s maven-resolver-provider.jar $RPM_BUILD_ROOT%_javadir/maven/maven-aether-pr
 
 
 %changelog
+* Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt1_5jpp8
+- fc 28 update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt1_1jpp8
 - new version
 
