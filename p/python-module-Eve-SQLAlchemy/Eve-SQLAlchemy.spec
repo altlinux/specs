@@ -1,38 +1,29 @@
 %define oname Eve-SQLAlchemy
 
-%def_with python3
 %def_disable check
-%def_without bootstrap
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt2
+Release: alt3
+
 Summary: REST API framework powered by Flask, SQLAlchemy and good intentions
 License: GPL / BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/Eve-SQLAlchemy/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/RedTurtle/eve-sqlalchemy.git
-Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-eve-tests python-module-SQLAlchemy
-#BuildPreReq: python-module-flask_sqlalchemy python-modules-sqlite3
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-eve-tests python3-module-SQLAlchemy
-#BuildPreReq: python3-module-flask_sqlalchemy python3-modules-sqlite3
-%endif
+Source: %name-%version.tar
 
 %py_provides eve_sqlalchemy
 %py_requires eve sqlalchemy flask_sqlalchemy
 
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-jinja2 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-jinja2 python3-module-setuptools
-BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3
+BuildRequires: python-module-pytest
+
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-module-pytest
+
 
 %description
 Powered by Eve, SQLAlchemy and good intentions this extenstion allows to
@@ -56,47 +47,42 @@ RESTful Web Services with SQL-based backends.
 %prep
 %setup
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
 python setup.py test
-%if_with python3
+
 pushd ../python3
 python3 setup.py test
 popd
-%endif
 
 %files
 %doc AUTHORS CHANGES *.rst docs/*.rst examples
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc AUTHORS CHANGES *.rst docs/*.rst examples
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu May 24 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.3-alt3
+- rebuild with all requires
+
 * Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.3-alt2
 - rebuild with python3.6
 
@@ -112,4 +98,3 @@ popd
 
 * Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.dev0.git20150113
 - Initial build for Sisyphus
-

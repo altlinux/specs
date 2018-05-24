@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.17.1
-Release: alt1.1
+Release: alt2
 Summary: OpenStack oslo.db library
 Group: Development/Python
 License: ASL 2.0
@@ -165,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Thu May 24 2018 Andrey Bychkov <mrdrew@altlinux.org> 4.17.1-alt2
+- rebuild with python3.6
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.17.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
