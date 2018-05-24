@@ -1,30 +1,20 @@
 Name: lapack
+Version: 3.8.0
+Release: alt1
+Epoch: 1
+
 %define sover 4
 %define soname lib%name.so.%sover
-Version: 3.5.0
-Epoch: 1
-Release: alt2
 
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
 License: BSD
 Group: Development/Other
+Url: http://www.netlib.org/
 
-URL: http://www.netlib.org/
 Source: %name-%version.tar
 Source1: manpages.tar
-Source2: zla_rpvgrw.f
-Source3: sla_rpvgrw.f
-Source4: cla_rpvgrw.f
-Source5: dla_rpvgrw.f
-Patch: lapack-3.1.1-alt3.qa1.patch
 
-BuildRequires: gcc-fortran cmake
-BuildPreReq: libsuperlu-devel
-
-BuildPreReq: libxblas-devel
-# for %%check
-BuildPreReq: ctest python-modules
-BuildRequires: libopenblas-devel
+BuildRequires: cmake gcc-fortran libopenblas-devel libsuperlu-devel libxblas-devel
 
 %package -n lib%name
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
@@ -119,11 +109,7 @@ not general sparse matrices. Similar functionality is provided for
 real and complex matrices in both single and double precision.
 
 %prep
-%setup
-%patch -p1
-
-install -m644 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 SRC
-tar -xf %SOURCE1
+%setup -a1
 
 export LC_COLLATE=C
 ls manpages/blas/man/manl >blas.manpages
@@ -134,32 +120,21 @@ rm blas.manpages lapack.manpages dup.manpages
 rm -fR BLAS
 
 %build
-
-# for rpm -bc --short-circuit, rebuild test suite with liblapack.a
-rm -f TESTING/x*
-
-FLAGS="-g -pipe -Wall -O3 %optflags_shared -pthread"
-cmake \
+%add_optflags %optflags_shared
+%cmake \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-	-DCMAKE_C_FLAGS:STRING="$FLAGS" \
-	-DCMAKE_CXX_FLAGS:STRING="$FLAGS" \
-	-DCMAKE_Fortran_FLAGS:STRING="$FLAGS" \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DBLAS_goto2_LIBRARY:FILEPATH=%_libdir/libopenblas.so \
-	-DUSEXBLAS:BOOL=ON \
 	-DUSE_XBLAS:BOOL=ON \
+	-DBUILD_DEPRECATED:BOOL=ON \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
 	-DBUILD_STATIC_LIBS:BOOL=OFF \
-	-DSOVER:STRING=%sover \
-%if "%_lib" == "lib64"
-	-DLIB_SUFFIX:STRING=64 \
-%endif
-	.
-%make_build
+	-DSOVER:STRING=%sover
+
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 for f in manpages/blas/man/manl/*.l; do
 	m=$(basename "$f" .l).3f
@@ -179,16 +154,9 @@ for f in manpages/man/manl/*.l; do
 	echo %_man3dir/"$m*"
 done >lapack-man.files
 
-%check
-echo '#!/bin/sh' >lapack_testing
-echo './lapack_testing.py -s -d TESTING' \
-	>>lapack_testing
-chmod +x lapack_testing
-ctest --force-new-ctest-process -VV
-
 %files -n lib%name
 %define _customdocdir %_docdir/lapack-3.1
-%doc LICENSE README
+%doc LICENSE README.md
 %_libdir/%soname
 
 %files -n lib%name-devel
@@ -201,6 +169,9 @@ ctest --force-new-ctest-process -VV
 %files -n lapack-man -f lapack-man.files
 
 %changelog
+* Thu May 24 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:3.8.0-alt1
+- 3.8.0 released
+
 * Thu Apr 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:3.5.0-alt2
 - fixed build on AArch64
 
