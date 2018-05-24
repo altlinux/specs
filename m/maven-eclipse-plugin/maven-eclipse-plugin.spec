@@ -1,6 +1,5 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -12,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-eclipse-plugin
 Version:        2.9
-Release:        alt6_18jpp8
+Release:        alt6_20jpp8
 Summary:        Maven Eclipse Plugin
 
 License:        ASL 2.0
@@ -99,13 +98,14 @@ ln -s "$plugin_file" $CORE_PLUGIN_DIR/resources-$CORE_FAKE_VERSION.jar
 
 %files -f .mfiles
 %doc LICENSE NOTICE DEPENDENCIES README-testing.txt
-%dir %{_javadir}/maven-eclipse-plugin
-%dir %{_mavenpomdir}/maven-eclipse-plugin
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 2.9-alt6_20jpp8
+- fc 28 update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.9-alt6_18jpp8
 - fixed build
 
