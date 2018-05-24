@@ -1,7 +1,6 @@
-BuildRequires: apache-parent
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          mina-ftpserver
 Version:       1.0.6
-Release:       alt2_5jpp8
+Release:       alt2_7jpp8
 Summary:       A 100% pure Java FTP server
 License:       ASL 2.0
 URL:           http://mina.apache.org/ftpserver-project/
@@ -23,6 +22,7 @@ BuildRequires: mvn(commons-net:commons-net)
 BuildRequires: mvn(hsqldb:hsqldb:1)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(org.apache:apache:pom:)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.apache.mina:mina-core)
@@ -126,22 +126,25 @@ rm core/src/test/java/org/apache/ftpserver/impl/DefaultFtpServerTest.java  \
 
 %build
 
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8 -Dmaven.test.skip.exec=true
+%mvn_build -- -Dmaven.test.skip.exec=true  -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
 
 %files -f .mfiles
 %doc distribution/README.txt
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files examples -f .mfiles-examples
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.6-alt2_7jpp8
+- fc 28 update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.6-alt2_5jpp8
 - added BR: apache-parent for javapackages 5
 
