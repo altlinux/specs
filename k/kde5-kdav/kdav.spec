@@ -4,7 +4,7 @@
 %define libkpimkdav libkpimkdav%sover
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init
 
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules kf5-kio-devel python-module-google python3-dev qt5-xmlpatterns-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-xmlpatterns-devel
-BuildRequires: kf5-kio-devel
+BuildRequires: kf5-kio-devel kf5-ki18n-devel
 
 %description
 DAV protocol implemention with KJobs.
@@ -77,6 +77,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libKPimKDAV.so.*
 
 %changelog
+* Tue May 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 

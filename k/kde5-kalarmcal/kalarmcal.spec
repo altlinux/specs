@@ -1,7 +1,7 @@
 %define rname kalarmcal
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init altplace
 
@@ -18,7 +18,8 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: boost-devel-headers libical-devel
-BuildRequires: kde5-akonadi-devel kde5-kcalcore-devel kde5-kholidays-devel kde5-kidentitymanagement-devel kde5-kpimtextedit-devel
+BuildRequires: kde5-akonadi-devel kde5-kcalcore-devel kf5-kholidays-devel kde5-kidentitymanagement-devel kde5-kpimtextedit-devel
+BuildRequires: kde5-kcalutils-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static
@@ -66,6 +67,7 @@ KF5 library
 %files common -f %name.lang
 #%doc COPYING*
 %config(noreplace) %_K5xdgconf/*.*categories
+%dir %_datadir/akonadi5/plugins/serializer/
 
 %files devel
 %_K5inc/kalarmcal_version.h
@@ -76,8 +78,13 @@ KF5 library
 
 %files -n libkf5alarmcalendar
 %_K5lib/libKF5AlarmCalendar.so.*
+%_K5plug/*.so
+%_datadir/akonadi5/plugins/serializer/*.desktop
 
 %changelog
+* Tue May 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 

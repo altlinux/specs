@@ -8,7 +8,7 @@
 %define libadblocklibprivate libadblocklibprivate%sover
 
 Name: kde5-pim-addons
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init
 
@@ -32,6 +32,7 @@ Patch1: alt-akonadi-plugins-dir.patch
 #BuildRequires: extra-cmake-modules kde5-akonadi-calendar-devel kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-notes-devel kde5-calendarsupport-devel kde5-eventviews-devel kde5-gpgmepp-devel kde5-grantleetheme-devel kde5-incidenceeditor-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kdgantt2-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmailtransport-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-ktnef-devel kde5-libgravatar-devel kde5-libkdepim-devel kde5-mailcommon-devel kde5-messagelib-devel kde5-pim-apps-libs-devel kde5-pimcommon-devel kf5-kdeclarative-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-kpackage-devel kf5-kwallet-devel kf5-libkgapi-devel libsasl2-devel python-module-google python3-dev qt5-webengine-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-webengine-devel
+BuildRequires: libpoppler-qt5-devel
 BuildRequires: kde5-libkgapi-devel libsasl2-devel libgpgme-devel libassuan-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-notes-devel
 BuildRequires: kde5-calendarsupport-devel kde5-eventviews-devel kde5-grantleetheme-devel kde5-incidenceeditor-devel kde5-libksieve-devel
@@ -40,7 +41,7 @@ BuildRequires: kde5-kimap-devel kde5-kmailtransport-devel kde5-kmime-devel kde5-
 BuildRequires: kde5-libkdepim-devel kde5-mailcommon-devel kde5-messagelib-devel kde5-pim-apps-libs-devel kde5-pimcommon-devel
 BuildRequires: kde5-mailimporter-devel kde5-akonadi-import-wizard-devel
 BuildRequires: kf5-kdeclarative-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-kpackage-devel
-BuildRequires: kf5-kwallet-devel kf5-syntax-highlighting-devel kf5-prison-devel
+BuildRequires: kf5-kwallet-devel kf5-syntax-highlighting-devel kf5-prison-devel kf5-kholidays-devel
 
 %description
 %summary.
@@ -191,6 +192,9 @@ mv %buildroot/%_K5xdgmime/application-vnd-apple-pkpass.xml \
 %_K5lib/libadblocklibprivate.so.*
 
 %changelog
+* Tue May 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 

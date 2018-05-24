@@ -6,7 +6,7 @@
 %define libkorganizerprivate libkorganizerprivate%pim_sover
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init
 
@@ -29,7 +29,7 @@ BuildRequires: extra-cmake-modules qt5-base-devel qt5-phonon-devel qt5-tools-dev
 BuildRequires: boost-devel libXres-devel libassuan-devel libldap-devel libsasl2-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-notes-devel
 BuildRequires: kde5-akonadi-search-devel kde5-calendarsupport-devel kde5-eventviews-devel kde5-incidenceeditor-devel kde5-kcalcore-devel
-BuildRequires: kde5-kcalutils-devel kde5-kcontacts-devel kde5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel
+BuildRequires: kde5-kcalutils-devel kde5-kcontacts-devel kf5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel
 BuildRequires: kde5-kldap-devel kde5-kmailtransport-devel kde5-kmime-devel kde5-kontactinterface-devel kde5-kpimtextedit-devel
 BuildRequires: kde5-libkdepim-devel kde5-mailcommon-devel kde5-messagelib-devel kde5-pim-apps-libs-devel kde5-pimcommon-devel
 BuildRequires: kf5-kcmutils-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-knewstuff-devel kf5-kwallet-devel
@@ -145,6 +145,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkorganizerprivate.so.*
 
 %changelog
+* Tue May 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 

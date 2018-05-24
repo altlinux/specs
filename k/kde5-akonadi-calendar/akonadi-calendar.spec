@@ -1,7 +1,7 @@
 %define rname akonadi-calendar
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init altplace
 
@@ -66,6 +66,7 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
+%config(noreplace) %_K5xdgconf/*.*categories
 
 %files devel
 %_K5inc/akonadi-calendar_version.h
@@ -77,8 +78,13 @@ KF5 library
 
 %files -n libkf5akonadicalendar
 %_K5lib/libKF5AkonadiCalendar.so.*
+%_K5plug/akonadi_serializer_kcalcore.so
+%_datadir/akonadi5/plugins/serializer/akonadi_serializer_kcalcore.desktop
 
 %changelog
+* Tue May 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 
