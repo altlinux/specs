@@ -1,18 +1,26 @@
+%def_enable snapshot
 %define ver_major 0.4
 %define gst_api_ver 1.0
+# [ lastfm', 'audioplayer', 'cdrom', 'ipod' ]
+%define plugins [ 'audioplayer', 'cdrom', 'ipod' ]
 
 Name: noise
 %define xdg_name org.pantheon.%name
+%define rdnn_name io.elementary.music
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: The official elementary music player
 Group: Sound
 License: GPLv3
 Url: https://launchpad.net/noise
 
-#VCS: https://github.com/elementary/music.git
+%if_disabled snapshot
 Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%version.tar.xz
+%else
+#VCS: https://github.com/elementary/music.git
+Source: %name-%version.tar
+%endif
 
 Requires: elementary-icon-theme
 # gstreamer
@@ -23,7 +31,8 @@ Requires: gst-plugins-bad%gst_api_ver
 # sync 0.4 uses sqlite via libgda
 Requires: libgda5-sqlite
 
-BuildRequires: intltool libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: libappstream-glib-devel
 BuildRequires: cmake gcc-c++ vala-tools libsqlheavy-devel libsqlite3-devel libgee0.8-devel
 BuildRequires: libxml2-devel libgtk+3-devel libpeas-devel
 BuildRequires: libgranite-devel gst-plugins%gst_api_ver-devel
@@ -39,6 +48,8 @@ BuildRequires: gobject-introspection-devel
 #BuildRequires: libdbusmenu-devel libindicator-devel (pkgconfig(indicate-0.7))
 # sync 0.4
 BuildRequires: libgda5-devel
+# for lastfm plugin
+#BuildRequires: libaccounts-glib-devel libgsignon-glib-devel
 
 %description
 Noise is an easy to use, stable, fast and good looking music library
@@ -82,40 +93,39 @@ This package contains the development files.
 
 %prep
 %setup
-# fix libdir
-find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINATION}/|g' --
 
 %build
-%cmake -DCMAKE_BUILD_TYPE:STRING="Release"
-%cmake_build
+%meson -Dplugins="%plugins"
+%meson_build
 
 %install
-%cmakeinstall_std
+%meson_install
 
-%find_lang %name
+%find_lang --output=%name.lang %rdnn_name
 
 %files -f %name.lang
-%_bindir/*
-%_libdir/%name/plugins
-%_desktopdir/%xdg_name.desktop
-%_datadir/%name/
-%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_bindir/%rdnn_name
+%_libdir/%rdnn_name/plugins/
+%_desktopdir/%rdnn_name.desktop
+#%_datadir/%rdnn_name/
+%_datadir/glib-2.0/schemas/%rdnn_name.gschema.xml
 %_datadir/icons/hicolor/*/apps/multimedia-audio-player.svg
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%rdnn_name.appdata.xml
 
 %files -n lib%name-core
-%_libdir/lib%name-core.so.*
+%_libdir/lib%rdnn_name-core.so.*
 
 %files -n lib%name-core-devel
-%_includedir/%name-core/
-%_libdir/lib%name-core.so
-%_pkgconfigdir/%name-core.pc
-
-# TODO:
-#    /usr/share/vala/vapi/%name-core.deps
-#    /usr/share/vala/vapi/%name-core.vapi
+%_includedir/%rdnn_name-core.h
+%_libdir/lib%rdnn_name-core.so
+%_pkgconfigdir/%rdnn_name-core.pc
+%_vapidir/%rdnn_name-core.deps
+%_vapidir/%rdnn_name-core.vapi
 
 %changelog
+* Thu May 24 2018 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt2
+- updated to 0.4.2-382-g7a90c49
+
 * Thu Nov 30 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
 - 0.4.2
 
