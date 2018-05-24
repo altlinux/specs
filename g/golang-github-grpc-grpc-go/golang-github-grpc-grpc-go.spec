@@ -48,18 +48,17 @@ BuildRequires: rpm-build-golang
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        1.0.0
-Release:        alt1_0.7.git%{shortcommit}
+Version:        1.12.0
+Release:        alt1
 Summary:        The Go language implementation of gRPC. HTTP/2 based RPC
 License:        BSD
 URL:            https://%{provider_prefix}
-Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{shortcommit}.tar.gz
+Source: %name-%version.tar
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
 ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 aarch64 %{arm}}
 # If go_compiler is not set to 1, there is no virtual provide. Use golang instead.
 BuildRequires:  %{?go_compiler:compiler(go-compiler)}%{!?go_compiler:golang}
-Source44: import.info
 
 %description
 %{summary}
@@ -157,7 +156,7 @@ providing packages with %{import_path} prefix.
 %endif
 
 %prep
-%setup -q -n %{repo}-%{commit}
+%setup
 
 %build
 
@@ -237,6 +236,9 @@ export GOPATH=%{buildroot}/%{go_path}:$(pwd)/Godeps/_workspace:%{go_path}
 %endif
 
 %changelog
+* Thu May 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.0-alt1
+- Updated to upstream version 1.12.0.
+
 * Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.7.git8050b9c
 - new version
 
