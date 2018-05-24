@@ -1,13 +1,14 @@
 %global __soversion 1.1
 
 Name: biblesync
-Version: 1.1.2
+Version: 1.2.0
 Release: alt1
 Summary: A Cross-platform library for sharing Bible navigation
 Group: System/Libraries
 License: Public Domain
 Url: http://www.xiphos.org
-Source: http://downloads.sourceforge.net/gnomesword/biblesync-%version.tar.gz
+Source: https://github.com/karlkleinpaste/biblesync/releases/download/%version/biblesync-%version.tar.gz
+Source44: %name.watch
 
 # Automatically added by buildreq on Wed Sep 13 2017
 # optimized out: cmake-modules libstdc++-devel python-base python-modules
@@ -58,6 +59,9 @@ that use %name.
 %_man7dir/*
 
 %changelog
+* Wed May 23 2018 Ildar Mulyukov <ildar@altlinux.ru> 1.2.0-alt1
+- new version
+
 * Wed Sep 13 2017 Ildar Mulyukov <ildar@altlinux.ru> 1.1.2-alt1
 - converted for ALT Linux by srpmconvert tools
 
