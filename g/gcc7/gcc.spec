@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 7.3.1
-Release: alt3
+Release: alt4
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -127,7 +127,7 @@ Patch110: gcc-foffload-default.patch
 Patch111: gcc-Wno-format-security.patch
 # Patch112: gcc-aarch64-sanitizer-fix.patch
 Patch113: gcc-rh1512529-aarch64.patch
-Patch114: gcc-pr84064.patch
+Patch114: gcc-pr84524.patch
 Patch115: gcc-pr84128.patch
 
 # Debian patches.
@@ -144,6 +144,9 @@ Patch221: ada-gcc-name.diff
 Patch224: testsuite-glibc-warnings.diff
 # Not neeed (fixed in rh branch)
 # Patch225: pr82880.diff
+Patch230: gcc-as-needed-push-pop.diff
+Patch231: alt-gcc-as-needed.diff
+Patch232: alt-mips-gcc-multiarch.diff
 
 # ALT patches.
 Patch700: alt-_GCC_AUTOCONF_VERSION.patch
@@ -960,6 +963,9 @@ version %version.
 %patch224 -p2
 # Not neeed (fixed in rh branch)
 #%%patch225 -p2
+%patch230 -p2
+%patch231 -p2
+%patch232 -p2
 
 # ALT patches.
 %patch700 -p1
@@ -1995,6 +2001,14 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Thu May 24 2018 Dmitry V. Levin <ldv@altlinux.org> 7.3.1-alt4
+- Updated to redhat/gcc-7-branch r258210.
+- Synced with Fedora gcc 7.3.1-5.
+- Use --push-state --as-needed and --pop-state instead of --as-needed
+  for libgcc (closes: #34935).
+- Link libasan, liblsan, libtsan, and libubsan always with --no-as-needed.
+- mips64el: set default ABI to N64.
+
 * Tue Feb 20 2018 Dmitry V. Levin <ldv@altlinux.org> 7.3.1-alt3
 - Do not add -Werror=stringop-overflow by default.
   Unlike the former alt-escalate-always-overflow.patch that used to
