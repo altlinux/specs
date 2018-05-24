@@ -5,22 +5,35 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 1.3.7
-Release: alt2.git20160316.1
+Release: alt3.git20160316
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
 Group: Development/Python
 License: LGPL
-#Url: http://code.google.com/p/python-nose/
-#Url: https://github.com/nose-devs/nose
-Url: http://www.somethingaboutorange.com/mrl/projects/nose/
+Url: https://nose.readthedocs.io/en/latest/
 
 BuildArch: noarch
 
 %setup_python_module %oname
 
 Source: %name-%version.tar
+
+# https://github.com/nose-devs/nose/pull/1004
 Patch1: %oname-%version-alt-coverage4.patch
+
+# Fix UnicodeDecodeError with captured output
+# https://github.com/nose-devs/nose/pull/988
+Patch2: python-nose-fedora-unicode.patch
+
+# Allow docutils to read utf-8 source
+Patch3: python-nose-fedora-readunicode.patch
+
+# Fix Python 3.6 compatibility
+# Python now returns ModuleNotFoundError instead of the previous ImportError
+# https://github.com/nose-devs/nose/pull/1029
+Patch4: python-nose-fedora-py36.patch
+
 
 BuildRequires: python-module-setuptools python-module-coverage
 %if_with python3
@@ -48,6 +61,9 @@ as is reasonably possible without resorting to too much magic.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 sed -i "s|man/man1|share/man/man1|g" setup.py
 
@@ -104,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.3.7-alt3.git20160316
+- Rebuilt with python-3.6.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:1.3.7-alt2.git20160316.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
