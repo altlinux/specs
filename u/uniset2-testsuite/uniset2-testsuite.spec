@@ -2,7 +2,7 @@
 
 Name: uniset2-testsuite
 Version: 2.6
-Release: alt4
+Release: alt9
 Summary: UniSet test suite
 Group: Development/Python
 License: LGPL
@@ -86,6 +86,21 @@ SNMP Plugin for uniset2-testsuite
 %endif
 
 %changelog
+* Thu May 24 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt9
+- added '--log-screen-width max'
+
+* Wed May 23 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt8
+- up version
+
+* Wed May 23 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt7
+- again: fix encode for comments
+
+* Tue May 22 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt6
+- up version
+
+* Tue May 22 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt5
+- fixed utf encode for comments
+
 * Fri May 11 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt4
 - fixed format_comment bug
 
