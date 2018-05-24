@@ -77,7 +77,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.4
-Release: alt1
+Release: alt2
 License: Python
 Group: Development/Python3
 
@@ -327,6 +327,12 @@ Patch1006: python-3.5.1-glibc-2.25-getentropy.patch
 # or SSLv2 has to be removed completely, because it wouldn't work without this change anyway.
 Patch1007: python3-sslv2-compat.patch
 
+# Fixed incorrect detection of information of some distributions.
+# Since the information file os-release becomes a certain standard, this patch 
+# check its availability and if it is in the system, then parse 
+# the information from it.
+Patch1008: python3-platform-osrelease.patch
+
 # ======================================================
 # Additional metadata, and subpackages
 # ======================================================
@@ -561,6 +567,8 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 
 %patch1006 -p2
 %patch1007 -p2
+
+%patch1008 -p1
 
 # Currently (2010-01-15), http://docs.python.org/library is for 2.6, and there
 # are many differences between 2.6 and the Python 3 library.
@@ -1127,6 +1135,9 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/asyncio/__pycache__/test_utils%bytecode_suffixes
 
 %changelog
+* Tue May 08 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.6.4-alt2
+- Fixed incorrect detection of information of some distributions (Closes: #34421)
+
 * Tue Apr 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.4-alt1
 - Updated to upstream version 3.6.4.
 
