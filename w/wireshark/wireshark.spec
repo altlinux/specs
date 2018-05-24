@@ -5,8 +5,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.6.0
-Release: alt2%ubt
+Version: 2.6.1
+Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -289,6 +289,9 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Thu May 24 2018 Anton Farygin <rider@altlinux.ru> 2.6.1-alt1%ubt
+- 2.6.1 (fixes: CVE-2018-11359, CVE-2018-11361, CVE-2018-11358, CVE-2018-11360, CVE-2018-11356, CVE-2018-11357, CVE-2018-11355, CVE-2018-11354, CVE-2018-11362)
+
 * Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 2.6.0-alt2%ubt
 - patch for wireshark #14638 l16mono.so issue is applied
 
