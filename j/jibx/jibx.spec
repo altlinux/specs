@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %global _version 1_2_6
 Name:          jibx
 Version:       1.2.6
-Release:       alt1_7jpp8
+Release:       alt1_11jpp8
 Summary:       Framework for binding XML data to Java objects
 License:       BSD and ASL 1.1
 URL:           http://sourceforge.net/projects/jibx/
@@ -149,6 +149,9 @@ done
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.2.6-alt1_11jpp8
+- fc 28 update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.2.6-alt1_7jpp8
 - fixed build
 
