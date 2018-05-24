@@ -7,7 +7,7 @@ BuildRequires: libportaudio2-devel makeinfo
 %define octave_descr_name LTFAT
 Name: octave-%octave_pkg_name
 Version: 2.2.0
-Release: alt1
+Release: alt2
 Summary: The Large Time-Frequency Analysis Toolbox
 
 Group: Sciences/Mathematics
@@ -56,6 +56,9 @@ octave -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages 
 %endif
 
 %changelog
+* Tue May 22 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt2
+- rebuild with octave 4.4
+
 * Thu May 18 2017 Paul Wolneykien <manowar@altlinux.org> 2.2.0-alt1
 - regenerated from template by package builder
 

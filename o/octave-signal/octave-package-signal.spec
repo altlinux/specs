@@ -1,21 +1,22 @@
+%def_with _octave_arch
+%define octave_pkg_version 1.4.0
+%define octave_pkg_name signal
+%define octave_descr_name signal
 # BEGIN SourceDeps(oneline):
 BuildRequires: makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 1.3.2
-%define octave_pkg_name signal
-%define octave_descr_name Signal
 Epoch: 2
 Name: octave-%octave_pkg_name
-Version: 1.3.2
-Release: alt2
-Summary: Signal Processing.
+Version: 1.4.0
+Release: alt1
+Summary: Signal Processing
 
 Group: Sciences/Mathematics
 License: GPLv3+, public domain
-URL: http://octave.sf.net
+URL: https://octave.sourceforge.io/signal/
 
-Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octave_pkg_name}-%{octave_pkg_version}.tar.gz
+Source0: %{octave_pkg_name}-%{octave_pkg_version}.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
@@ -25,8 +26,9 @@ BuildRequires: libGL-devel libGLU-devel libGraphicsMagick-c++-devel libGraphicsM
 BuildArch: noarch
 %endif
 Provides: octave(signal) = %version
-# Depends: octave (>= 3.8.0), control (>= 2.4.5)
-Requires: octave >= 3.8.0 octave(control) >= 2.4.5
+Provides: octave(signal) = %version
+# Depends: octave (>= 3.8), control (>= 2.4)
+Requires: octave >= 3.8 octave(control) >= 2.4
 
 %description
 Octave-Forge - Extra packages for GNU Octave.
@@ -54,6 +56,9 @@ octave -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages 
 %endif
 
 %changelog
+* Wed May 23 2018 Igor Vlasenko <viy@altlinux.ru> 2:1.4.0-alt1
+- regenerated from template by package builder
+
 * Thu May 18 2017 Paul Wolneykien <manowar@altlinux.org> 2:1.3.2-alt2
 - regenerated from template by package builder
 
