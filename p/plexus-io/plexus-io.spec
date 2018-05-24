@@ -8,8 +8,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plexus-io
-Version:        2.7.1
-Release:        alt1_3jpp8
+Version:        3.0.0
+Release:        alt1_2jpp8
 Summary:        Plexus IO Components
 License:        ASL 2.0
 URL:            https://github.com/codehaus-plexus/plexus-io
@@ -54,13 +54,16 @@ cp %{SOURCE1} .
 %mvn_install
 
 %files -f .mfiles
-%doc NOTICE.txt LICENSE-2.0.txt
+%doc --no-dereference NOTICE.txt LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc NOTICE.txt LICENSE-2.0.txt
+%doc --no-dereference NOTICE.txt LICENSE-2.0.txt
 
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.0.0-alt1_2jpp8
+- java update
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt1_3jpp8
 - fc27 update
 

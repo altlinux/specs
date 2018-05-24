@@ -1,37 +1,25 @@
+Name: plexus-archiver
+Version: 3.5
+Summary: Plexus Archiver Component
+License: ASL 2.0
+Url: http://codehaus-plexus.github.io/plexus-archiver
+Epoch: 0
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(org.codehaus.plexus:plexus-archiver) = 3.5
+Provides: mvn(org.codehaus.plexus:plexus-archiver:pom:) = 3.5
+Provides: plexus-archiver = 0:3.5-5.fc28
+Requires: java-headless
+Requires: javapackages-tools
+Requires: mvn(org.apache.commons:commons-compress)
+Requires: mvn(org.codehaus.plexus:plexus-io)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
+Requires: mvn(org.iq80.snappy:snappy)
+Requires: mvn(org.tukaani:xz)
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           plexus-archiver
-Version:        3.4
-Release:        alt1_3jpp8
-Epoch:          0
-Summary:        Plexus Archiver Component
-License:        ASL 2.0
-URL:            http://codehaus-plexus.github.io/plexus-archiver
-BuildArch:      noarch
-
-Source0:        https://github.com/codehaus-plexus/plexus-archiver/archive/plexus-archiver-%{version}.tar.gz
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.code.findbugs:jsr305)
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(org.apache.commons:commons-compress)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
-BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.iq80.snappy:snappy)
-
-# Missing from xmvn-builddep
-BuildRequires:  mvn(org.tukaani:xz)
-Source44: import.info
+Release: alt0.1jpp
+Source: plexus-archiver-3.5-5.fc28.cpio
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -41,33 +29,28 @@ reusable components for hibernate, form processing, jndi, i18n,
 velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-Javadoc for %{name}.
-
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{name}-%{name}-%{version}
-%mvn_file :%{name} plexus/archiver
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build -f
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%files -f %name-list
 
 %changelog
+* Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.5-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.4-alt1_3jpp8
 - fc27 update
 
