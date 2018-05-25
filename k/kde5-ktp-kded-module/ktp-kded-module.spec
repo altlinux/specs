@@ -1,7 +1,7 @@
 %define rname ktp-kded-module
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init altplace
 
@@ -24,7 +24,7 @@ BuildRequires: dbus-tools kde5-ktp-common-internals-devel telepathy-qt5-devel-st
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kidletime-devel kf5-kio-devel kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kservice-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-kcmutils-devel
+BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-kcmutils-devel kf5-kactivities-devel
 
 %description
 This module sits in KDED and takes care of various bits of system
@@ -82,6 +82,9 @@ KF5 library
 #%_K5lib/libktp-kded-module.so.*
 
 %changelog
+* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 
