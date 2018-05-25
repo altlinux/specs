@@ -1,50 +1,44 @@
-%define module_name django-command-extensions
+%define modulename django-command-extensions
 
-%define git_commit 1fe658
-
-%def_with python3
 %def_with bootstrap
 
-Name: python-module-%module_name
+Name: python-module-%modulename
 Version: 1.3.9
-Release: alt2
+Release: alt2.1
 
 Summary: Management extensions for the Django Framework
-
 License: BSD
 Group: Development/Python
 Url: http://code.google.com/p/django-command-extensions
-
 # https://github.com/django-extensions/django-extensions.git
-Source: %name-%version.tar
-
 BuildArch: noarch
 
-%setup_python_module %module_name
-%if_with python3
+Source: %name-%version.tar
+
+BuildRequires: python-devel python-module-setuptools
+
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
 Management extensions for the Django Framework.
 
-%package -n python3-module-%module_name
+%package -n python3-module-%modulename
 Summary: Management extensions for the Django Framework
 Group: Development/Python3
 
-%description -n python3-module-%module_name
+%description -n python3-module-%modulename
 Management extensions for the Django Framework.
 
-%package -n python3-module-%module_name-tests
+%package -n python3-module-%modulename-tests
 Summary: Tests for django-command-extensions
 Group: Development/Python3
-Requires: python3-module-%module_name = %version-%release
-%if_with bootstrap
+Requires: python3-module-%modulename = %version-%release
 %add_python3_req_skip django_extensions.tests.models
-%endif
+%py3_requires django_extensions
 
-%description -n python3-module-%module_name-tests
+%description -n python3-module-%modulename-tests
 Management extensions for the Django Framework.
 
 This package contains tests for django-command-extensions.
@@ -62,27 +56,21 @@ This package contains tests for django-command-extensions.
 %prep
 %setup
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
 %python_sitelibdir/*
@@ -91,16 +79,18 @@ popd
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
-%files -n python3-module-%module_name
+%files -n python3-module-%modulename
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
-%files -n python3-module-%module_name-tests
+%files -n python3-module-%modulename-tests
 %python3_sitelibdir/*/tests
-%endif
+
 
 %changelog
+* Fri May 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.3.9-alt2.1
+- rebuild with all requires
+
 * Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.3.9-alt2
 - rebuild with python3.6
 

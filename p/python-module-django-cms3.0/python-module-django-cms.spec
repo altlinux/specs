@@ -1,36 +1,28 @@
 %define module_name django-cms3.0
 
-%def_with python3
-%def_with bootstrap
+%def_without bootstrap
 
 Name: python-module-%module_name
 Version: 3.0.5
-Release: alt2
+Release: alt2.1
 
 Summary: An Advanced Django CMS
-
 License: BSD
 Group: Development/Python
 Url: http://www.django-cms.org
-
 # https://github.com/divio/django-cms.git
-Source: %module_name-%version.tar
-
 BuildArch: noarch
 
-# see docs/getting_started/installation.rst
+Source: %module_name-%version.tar
+
 Requires: Django >= 1.2.3
 Requires: python-module-django-classy-tags >= 0.2.2
 
 BuildRequires: python-module-setuptools
-%if_with python3
+
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
-%setup_python_module %module_name
-
-#add_python_req_skip south tinymce dbgettext testapp
 
 %description
 An Advanced Django CMS.
@@ -40,11 +32,8 @@ Summary: An Advanced Django CMS
 Group: Development/Python3
 Requires: python3-module-django-classy-tags
 
-%if_with bootstrap
 %add_python3_req_skip cms.test_utils.util.context_managers
 %add_python3_req_skip django.contrib.formtools.wizard.views
-%add_python3_req_skip mptt.models
-%endif
 
 %description -n python3-module-%module_name
 An Advanced Django CMS.
@@ -52,41 +41,37 @@ An Advanced Django CMS.
 %prep
 %setup
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
 %doc CHANGELOG.txt AUTHORS LICENSE RELEASE_INFO *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/test*
 
-%if_with python3
 %files -n python3-module-%module_name
 %doc CHANGELOG.txt AUTHORS LICENSE RELEASE_INFO *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
-%endif
+
 
 %changelog
+* Fri May 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.0.5-alt2.1
+- rebuild with all requires
+
 * Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.0.5-alt2
 - rebuild with python3.6
 
