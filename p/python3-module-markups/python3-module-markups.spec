@@ -2,8 +2,8 @@
 %def_with tests
 
 Name:           python3-module-markups
-Version:        2.0.1
-Release:        alt1.1
+Version:        3.0.0
+Release:        alt1
 License:        MIT
 Summary:        Wrapper around various text markups
 Group:          Development/Python3
@@ -19,6 +19,7 @@ BuildPreReq: 	python3-devel python3-module-setuptools /dev/pts
 %if_with tests
 BuildRequires:  python3-module-docutils
 BuildRequires:  python3-module-markdown
+BuildRequires:  python3-module-markdown-math
 BuildRequires:  python3-module-textile
 %endif
 
@@ -50,6 +51,9 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
+- New version.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
