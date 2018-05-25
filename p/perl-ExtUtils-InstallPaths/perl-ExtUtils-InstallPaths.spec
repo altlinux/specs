@@ -1,23 +1,23 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
-%define fedora 25
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-ExtUtils-InstallPaths
 Version:	0.012
-Release:	alt1
+Release:	alt1_1
 Summary:	Build.PL install path logic made easy
-Group:		Development/Other
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/ExtUtils-InstallPaths
-Source0:	http://www.cpan.org/authors/id/L/LE/LEONT/ExtUtils-InstallPaths-%{version}.tar.gz
+Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/ExtUtils-InstallPaths-%{version}.tar.gz
 BuildArch:	noarch
 # Build
-BuildRequires:	perl-devel
+BuildRequires:	coreutils
+BuildRequires:	findutils
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module
 BuildRequires:	perl(Carp.pm)
@@ -29,17 +29,7 @@ BuildRequires:	perl(warnings.pm)
 BuildRequires:	perl(Config.pm)
 BuildRequires:	perl(File/Spec/Functions.pm)
 BuildRequires:	perl(File/Temp.pm)
-BuildRequires:	perl(IO/Handle.pm)
-BuildRequires:	perl(IPC/Open3.pm)
 BuildRequires:	perl(Test/More.pm)
-# Release Tests
-# perl-Pod-Coverage-TrustPod a.. perl-Pod-Eventual a.. perl-Mixin-Linewise a..
-#   perl-YAML-Tiny a.. perl-Module-Build-Tiny a.. perl-ExtUtils-InstallPaths
-%if 0%{!?perl_bootstrap:1} && ( 0%{?rhel} > 6 || 0%{?fedora} )
-BuildRequires:	perl(Pod/Coverage/TrustPod.pm)
-BuildRequires:	perl(Test/Pod.pm)
-BuildRequires:	perl(Test/Pod/Coverage.pm)
-%endif
 Source44: import.info
 # Runtime
 
@@ -59,24 +49,20 @@ you want to create bundled-up installable packages.
 %setup -q -n ExtUtils-InstallPaths-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-# %{_fixperms} %{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
-%if 0%{!?perl_bootstrap:1} && ( 0%{?rhel} > 6 || 0%{?fedora} )
-make test RELEASE_TESTING=1
-%else
 make test
-%endif
 
 %files
 %if 0%{?_licensedir:1}
-%doc LICENSE
+%doc --no-dereference LICENSE
 %else
 %doc LICENSE
 %endif
@@ -84,6 +70,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1_1
+- update to new release by fcimport
+
 * Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1
 - automated CPAN update
 
