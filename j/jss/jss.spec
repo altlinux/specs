@@ -1,53 +1,56 @@
-%filter_from_requires /^java-headless/d
+%define _unpackaged_files_terminate_build 1
 
-Name:           jss
-Version:        4.4.2
-Release:        alt1%ubt
-Summary:        Java Security Services (JSS)
+Name: jss
+Version: 4.4.3
+Release: alt1%ubt
 
-License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Group:          System/Libraries
-URL:            http://www.mozilla.org/projects/security/pki/jss/
-Source0:        http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/%{name}-%{version}.tar.gz
-Source1:        http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/MPL-1.1.txt
-Source2:        http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/gpl.txt
-Source3:        http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/lgpl.txt
-Patch1:         jss-HMAC-test-for-AES-encrypt-unwrap.patch
-Patch2:         jss-PBE-padded-block-cipher-enhancements.patch
-Patch3:         jss-fix-PK11Store-getEncryptedPrivateKeyInfo-segfault.patch
-Patch4:         jss-link-alt.patch
-Patch5:         jss-alt-sem-as-needed.patch
+Summary: Java Security Services (JSS)
+License: MPLv1.1 or GPLv2+ or LGPLv2+
+Group: System/Libraries
+# Source-git: https://github.com/dogtagpki/jss.git
+Url: http://www.dogtagpki.org/wiki/JSS
 
-BuildRequires(pre): rpm-macros-java rpm-build-ubt
-BuildRequires:  /proc 
-BuildRequires:  jpackage-generic-compat
-BuildRequires:  libnss-devel >= 3.28.4
-BuildRequires:  libnspr-devel >= 4.13.1
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
+
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+BuildRequires: libnss-devel
+BuildRequires: libnspr-devel
 
 %description
-Java Security Services (JSS) is a java native interface which provides a bridge
-for java-based applications to use native Network Security Services (NSS).
-This only works with gcj. Other JREs require that JCE providers be signed.
+Network Security Services for Java (JSS) is a Java interface to NSS. JSS
+supports most of the security standards and encryption technologies supported by
+NSS. JSS also provides a pure Java interface for ASN.1 types and BER/DER
+encoding.
+
+JSS offers a implementation of Java SSL sockets that uses NSS's SSL/TLS
+implementation rather than Sun's JSSE implementation. You might want to use
+JSS's own SSL classes if you want to use some of the capabilities found in NSS's
+SSL/TLS library but not found in JSSE.
+
+NSS is the cryptographic module where all cryptographic operations are
+performed. JSS essentially provides a Java JNI bridge to NSS C shared libraries.
+When NSS is put in FIPS mode, JSS ensures FIPS compliance by ensuring that all
+cryptographic operations are performed by the NSS cryptographic module.
 
 %package javadoc
-Summary:        Java Security Services (JSS) Javadocs
-Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
-BuildArch: 	noarch
+Summary: Java Security Services (JSS) Javadocs
+Group: Development/Java
+Requires: %name = %EVR
+BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for JSS.
 
 %prep
-%setup -n %{name}-%{version} 
-%patch1 -d jss -p1
-%patch2 -d jss -p1
-%patch3 -d jss -p1
-%patch4 -d jss -p1
-%patch5 -d jss -p1
+%setup
+%patch0 -d %name -p1
 
 %build
-[ -z "$JAVA_HOME" ] && export JAVA_HOME=%{_jvmdir}/java
+[ -z "$JAVA_HOME" ] && export JAVA_HOME=%_jvmdir/java
 [ -z "$USE_INSTALLED_NSPR" ] && export USE_INSTALLED_NSPR=1
 [ -z "$USE_INSTALLED_NSS" ] && export USE_INSTALLED_NSS=1
 
@@ -55,26 +58,21 @@ This package contains the API documentation for JSS.
 # NOTE: If you ever need to create a debug build with optimizations disabled
 # just comment out this line and change in the %%install section below the
 # line that copies jars xpclass.jar to be xpclass_dbg.jar
-BUILD_OPT=1
-export BUILD_OPT
+export BUILD_OPT=1
 
 # Generate symbolic info for debuggers
-XCFLAGS="-g $RPM_OPT_FLAGS"
-export XCFLAGS
+export XCFLAGS="-g $RPM_OPT_FLAGS"
 
-PKG_CONFIG_ALLOW_SYSTEM_LIBS=1
-PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
-
-export PKG_CONFIG_ALLOW_SYSTEM_LIBS
-export PKG_CONFIG_ALLOW_SYSTEM_CFLAGS
+export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1
+export PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
 
 NSPR_INCLUDE_DIR=`/usr/bin/pkg-config --cflags-only-I nspr | sed 's/-I//'`
 NSPR_LIB_DIR=`/usr/bin/pkg-config --libs-only-L nspr | sed 's/-L//'`
-[ -z $NSPR_LIB_DIR ] && NSPR_LIB_DIR="%{_libdir}"
+[ -z $NSPR_LIB_DIR ] && NSPR_LIB_DIR="%_libdir"
 
 NSS_INCLUDE_DIR=`/usr/bin/pkg-config --cflags-only-I nss | sed 's/-I//'`
 NSS_LIB_DIR=`/usr/bin/pkg-config --libs-only-L nss | sed 's/-L//'`
-[ -z $NSS_LIB_DIR ] && NSS_LIB_DIR="%{_libdir}"
+[ -z $NSS_LIB_DIR ] && NSS_LIB_DIR="%_libdir"
 
 export NSPR_INCLUDE_DIR
 export NSPR_LIB_DIR
@@ -82,56 +80,43 @@ export NSS_INCLUDE_DIR
 export NSS_LIB_DIR
 
 %ifarch x86_64 ppc64 ia64 s390x sparc64
-USE_64=1
-export USE_64
+export USE_64=1
 %endif
 
 # The Makefile is not thread-safe
-make -C jss/coreconf
-make -C jss 
-make -C jss javadoc
+%make -C %name all
+%make -C %name javadoc
 
 %install
-rm -rf $RPM_BUILD_ROOT docdir
-
-# Copy the license files here so we can include them in %%doc
-cp -p %{SOURCE1} .
-cp -p %{SOURCE2} .
-cp -p %{SOURCE3} .
-
-# There is no install target so we'll do it by hand
-
-# jars
-install -d -m 0755 $RPM_BUILD_ROOT%{_jnidir}
+install -d -m 0755 $RPM_BUILD_ROOT%_jnidir
 # NOTE: if doing a debug no opt build change xpclass.jar to xpclass_dbg.jar
-install -m 644 dist/xpclass.jar ${RPM_BUILD_ROOT}%{_jnidir}/jss4.jar
+install -m 644 dist/xpclass.jar $RPM_BUILD_ROOT%_jnidir/jss4.jar
 
 # We have to use the name libjss4.so because this is dynamically
 # loaded by the jar file.
-install -d -m 0755 $RPM_BUILD_ROOT%{_libdir}/jss
-install -m 0755 dist/Linux*.OBJ/lib/libjss4.so ${RPM_BUILD_ROOT}%{_libdir}/jss/
-pushd  ${RPM_BUILD_ROOT}%{_libdir}/jss
-    ln -fs %{_jnidir}/jss4.jar jss4.jar
+install -d -m 0755 $RPM_BUILD_ROOT%_libdir/%name
+install -m 0755 dist/Linux*.OBJ/lib/libjss4.so $RPM_BUILD_ROOT%_libdir/%name/
+pushd  $RPM_BUILD_ROOT%_libdir/%name
+    ln -fs %_jnidir/jss4.jar jss4.jar
 popd
 
 # javadoc
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -rp dist/jssdoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -p jss/jss.html $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -p *.txt $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+install -d -m 0755 $RPM_BUILD_ROOT%_javadocdir/%name-%version
+cp -rp dist/jssdoc/* $RPM_BUILD_ROOT%_javadocdir/%name-%version
+cp -p %name/jss.html $RPM_BUILD_ROOT%_javadocdir/%name-%version
 
 %files
-%doc jss/jss.html MPL-1.1.txt gpl.txt lgpl.txt
-%{_libdir}/jss/*
-%{_jnidir}/*
-%{_libdir}/jss/lib*.so
+%_libdir/%name/*
+%_jnidir/*
+%_libdir/%name/libjss4.so
 
 %files javadoc
-%dir %{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}-%{version}/*
-
+%_javadocdir/%name-%version
 
 %changelog
+* Wed May 23 2018 Stanislav Levin <slev@altlinux.org> 4.4.3-alt1%ubt
+- 4.4.2 -> 4.4.3
+
 * Wed Sep 20 2017 Levin Stanislav <slev@altlinux.org> 4.4.2-alt1%ubt
 - Update to upstream 4.4.2 version
 
