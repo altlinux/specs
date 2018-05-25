@@ -1,7 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # spec file for package asl
@@ -12,12 +12,12 @@ BuildRequires: gcc-c++
 #
 # Spec file for Fedora modified by Eric Smith <brouhaha@fedoraproject.org>
 
-%global patchlevel bld133
+%global patchlevel bld134
 
 Name:           asl
 URL:            http://john.ccac.rwth-aachen.de:8000/as/index.html
 Version:        1.42
-Release:        alt2_0.37.%{patchlevel}
+Release:        alt2_0.38.%{patchlevel}
 Group:          Development/Other
 License:        GPLv2+
 Summary:        Macro Assembler AS
@@ -108,6 +108,9 @@ done
 %endif
 
 %changelog -n asl
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.38.bld134
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.37.bld133
 - update to new release by fcimport
 
