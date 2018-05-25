@@ -15,7 +15,7 @@
 %define libnvidia_egl_wayland libnvidia-egl-wayland%nvidia_egl_wayland_sover
 
 Name: nvidia_glx_src
-Version: 390.48
+Version: 390.59
 Release: alt1%ubt
 
 Source0: null
@@ -155,6 +155,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %_sysconfdir/OpenCL/vendors/nvidia.icd
 
 %changelog
+* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 390.59-alt1%ubt
+- new version
+
 * Thu Apr 19 2018 Sergey V Turchin <zerg@altlinux.org> 390.48-alt1%ubt
 - new version
 
