@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jsilver
 Version:        1.0.0
-Release:        alt1_13jpp8
+Release:        alt2_13jpp8
 Summary:        A pure-Java implementation of Clearsilver
 
 License:        ASL 2.0 
@@ -27,6 +27,7 @@ BuildRequires:  maven-local
 BuildRequires:  exec-maven-plugin
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  sablecc
+BuildRequires:  guava
 Source44: import.info
 
 %description
@@ -64,6 +65,9 @@ mv build/site target
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_13jpp8
+- fixed build with new guava
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_13jpp8
 - fc27 update
 
