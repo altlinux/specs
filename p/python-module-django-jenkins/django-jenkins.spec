@@ -1,26 +1,23 @@
 %define oname django-jenkins
 
-%def_with python3
-%def_with bootstrap
-
 Name: python-module-%oname
 Version: 0.16.3
-Release: alt2
+Release: alt2.1
+
 Summary: Plug and play continuous integration with django and jenkins
 License: LGPLv3
 Group: Development/Python
 Url: https://pypi.python.org/pypi/django-jenkins/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/kmmbvnr/django-jenkins.git
-Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
+Source: %name-%version.tar
+
+BuildRequires: python-devel python-module-setuptools
+
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
 Plug and play continuous integration with Django and Jenkins.
@@ -28,9 +25,7 @@ Plug and play continuous integration with Django and Jenkins.
 %package -n python3-module-%oname
 Summary: Plug and play continuous integration with django and jenkins
 Group: Development/Python3
-%if_with bootstrap
 %add_python3_req_skip flake8.engine
-%endif
 
 %description -n python3-module-%oname
 Plug and play continuous integration with Django and Jenkins.
@@ -38,39 +33,35 @@ Plug and play continuous integration with Django and Jenkins.
 %prep
 %setup
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
 %doc *.rst
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Fri May 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.16.3-alt2.1
+- rebuild with all requires
+
 * Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.16.3-alt2
 - rebuild with python3.6
 
