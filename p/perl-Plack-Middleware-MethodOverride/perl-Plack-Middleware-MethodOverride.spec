@@ -1,27 +1,26 @@
-%define module_version 0.15
+%define _unpackaged_files_terminate_build 1
 %define module_name Plack-Middleware-MethodOverride
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(Plack/Middleware.pm) perl(Plack/Request.pm) perl(Plack/Test.pm) perl(Plack/Util/Accessor.pm) perl(Test/More.pm) perl(URI.pm) perl(parent.pm) perl(strict.pm) perl(warnings.pm) perl(Cpanel/JSON/XS.pm)
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(Plack/Middleware.pm) perl(Plack/Request.pm) perl(Plack/Test.pm) perl(Plack/Util/Accessor.pm) perl(Test/More.pm) perl(URI.pm) perl(parent.pm) perl(strict.pm) perl(warnings.pm) perl(Cpanel/JSON/XS.pm) perl(Module/Build/Tiny.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.15
-Release: alt2
+Version: 0.18
+Release: alt1
 Summary: Override REST methods to Plack apps via POST
 Group: Development/Perl
 License: perl
 URL: http://search.cpan.org/dist/Plack-Middleware-MethodOverride/
 
-Source0: http://cpan.org.ua/authors/id/D/DW/DWHEELER/%{module_name}-%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MI/MIYAGAWA/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/P*
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2
 - fixed build
 
