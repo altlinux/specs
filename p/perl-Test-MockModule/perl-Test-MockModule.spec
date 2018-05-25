@@ -1,23 +1,51 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Scalar/Util.pm) perl-podlators perl(Test/Warnings.pm)
+BuildRequires: perl(parent.pm) perl-podlators
 # END SourceDeps(oneline)
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Run optional test
+%if ! (0%{?rhel})
+%bcond_without perl_Test_MockModule_enables_optional_test
+%else
+%bcond_with perl_Test_MockModule_enables_optional_test
+%endif
+
 Name:           perl-Test-MockModule
 Version:        0.15
-Release:        alt1
+Release:        alt1_1
 Summary:        Override subroutines in a module for unit testing
 Group:          Development/Other
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Test-MockModule/
-Source0:        http://www.cpan.org/authors/id/G/GF/GFRANKS/Test-MockModule-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/G/GF/GFRANKS/Test-MockModule-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  coreutils
 BuildRequires:  rpm-build-perl
-BuildRequires:  perl(CGI.pm)
-BuildRequires:  perl(Test/More.pm), perl(Test/Pod.pm), perl(Test/Pod/Coverage.pm)
-BuildRequires:  perl(Module/Build.pm), perl(SUPER.pm)
+BuildRequires:  perl-devel
+BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Run-time:
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(SUPER.pm)
+BuildRequires:  perl(vars.pm)
+# Tests:
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:	perl(Test/Warnings.pm)
+%if %{with perl_Test_MockModule_enables_optional_test}
+# Optional tests:
+BuildRequires:  perl(Test/Pod.pm)
+BuildRequires:  perl(Test/Pod/Coverage.pm)
+%endif
 Source44: import.info
 
 %description
@@ -27,7 +55,7 @@ Source44: import.info
 %setup -q -n Test-MockModule-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+/usr/bin/perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -39,10 +67,13 @@ chmod -R u+w $RPM_BUILD_ROOT/*
 
 %files
 %doc Changes README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_1
+- update to new release by fcimport
+
 * Wed May 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
