@@ -2,7 +2,7 @@
 
 Name: gnome3
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -21,7 +21,7 @@ BuildPreReq: rpm-build-licenses
 ## Applications
 %define seahorse_ver 3.20
 %define utils_ver 3.20
-%define games_ver 3.22
+%define games_ver %ver_major
 %define weather_ver 3.26
 %define pm_ver 3.26
 %define yelp_ver %ver_major
@@ -200,7 +200,7 @@ Requires: totem
 # and plugins
 Requires: totem-plugins
 ## Stock GNOME games
-Requires: gnome-games >= %games_ver
+Requires: gnome-games-full >= %games_ver
 ## Default photo viewer
 Requires: gnome-photos >= %ver_major
 ## Default image viewer
@@ -427,6 +427,9 @@ some other useful GNOME and GTK applications.
 %files regular
 
 %changelog
+* Fri May 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt2
+- replaced gnome-games by new gnome-games-full virtual package
+
 * Tue May 15 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - regular: added LibreOffice-{gnome,langpack-ru} see ALT#34909
 
