@@ -8,26 +8,26 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-mime4j
-Version:        0.7.2
-Release:        alt3_17jpp8
+Version:        0.8.1
+Release:        alt1_1jpp8
 Summary:        Apache JAMES Mime4j
 License:        ASL 2.0
 URL:            http://james.apache.org/mime4j
 BuildArch:      noarch
 
-Source0:        http://apache.online.bg//james/mime4j/apache-mime4j-project-%{version}-source-release.zip
+Source0:        http://archive.apache.org/dist/james/mime4j/%{version}/james-mime4j-sources-%{version}.zip
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(com.google.guava:guava:18.0)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.james:james-project:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.apache.rat:apache-rat-plugin)
+BuildRequires:  mvn(org.assertj:assertj-core)
 BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
+BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
 Source44: import.info
 
 %description
@@ -35,26 +35,26 @@ Java stream based MIME message parser.
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-project-%{version}
-rm -fr stage
-# prevents rat plugin from failing the build
-rm -fr DEPENDENCIES
+%setup -q -n james-mime4j
+
+# Disable plugins not needed for RPM builds
+%pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :maven-jar-plugin
+
+# Don't need to build dist assembly
+%pom_disable_module assemble
 
 # Compat symlinks for jboss-as
 for p in core dom storage; do
   %mvn_file :*$p %{name}/%{name}-$p %{name}/$p
 done
-
-# Don't use deprecated "attached" goal of Maven Assembly Plugin, which
-# was removed in version 3.0.0.
-%pom_xpath_set "pom:plugin[pom:artifactId='maven-assembly-plugin']/pom:executions/pom:execution/pom:goals/pom:goal[text()='attached']" single assemble
 
 %build
 %mvn_build
@@ -70,6 +70,9 @@ done
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.8.1-alt1_1jpp8
+- new version
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.7.2-alt3_17jpp8
 - java update
 
