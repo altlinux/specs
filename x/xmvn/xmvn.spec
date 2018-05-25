@@ -24,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xmvn
 Version:        3.0.0
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
 URL:            https://fedora-java.github.io/xmvn/
@@ -224,8 +224,8 @@ This package provides %{summary}.
 %prep
 %setup -q
 %patch0 -p1
-#patch1 -p1
-#patch2 -p1
+%patch1 -p1
+%patch2 -p1
 #patch3 -p1
 %patch4 -p1
 
@@ -378,6 +378,10 @@ cp -P ${maven_home}/bin/m2.conf %{buildroot}%{_datadir}/%{name}/bin/
 %doc LICENSE NOTICE
 
 %changelog
+* Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_8jpp8
+- support for gradle 4.3
+- no support for maven-javadoc-plugin >= 3.0.0 yet
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_7jpp8
 - rebuild with guava20
 
