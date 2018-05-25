@@ -1,40 +1,41 @@
-%def_with python3
+%define _unpackaged_files_terminate_build 1
+
+%def_with check
 
 Name: pylint
-Version: 1.7.4
-Release: alt2%ubt.1
+Version: 1.9.1
+Release: alt1%ubt
 
 Summary: Python code static checker
 License: GPLv2+
 Group: Development/Python
-
-BuildArch: noarch
-
-Url: http://www.pylint.org/
 # https://github.com/PyCQA/pylint.git
+Url: http://www.pylint.org/
+
 Source: %name-%version.tar
 
-%add_findreq_skiplist %python_sitelibdir/%name/gui.py
-
-%setup_python_module %name
-
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: python-module-singledispatch python-module-astroid-tests
-BuildRequires: python-module-pytest
-BuildRequires: python-module-pytest-runner
-BuildRequires: python2.7(configparser) python2.7(backports.functools_lru_cache)
-BuildRequires: python2.7(isort) python2.7(mccabe) python2.7(six)
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-astroid
-BuildRequires: python3-module-unittest2
-BuildRequires: python3-module-astroid-tests
-BuildRequires: python3-module-pytest
+
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-pytest-runner
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pytest-runner
-BuildRequires: python3(isort) python3(mccabe) python3(six)
+
+%if_with check
+BuildRequires: python-module-pytest
+BuildRequires: python-module-astroid
+BuildRequires: python-module-mccabe
+BuildRequires: python-module-configparser
+BuildRequires: python-module-isort
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-astroid
+BuildRequires: python3-module-mccabe
+BuildRequires: python3-module-isort
+BuildRequires: python3-modules-tkinter
 %endif
 
+BuildArch: noarch
 %py_requires mccabe
 
 %description
@@ -73,62 +74,56 @@ Additionally, it is possible to write plugins to add your own checks.
 %prep
 %setup
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-rm -rf %buildroot%python3_sitelibdir/%name/test
 pushd %buildroot%_bindir
 for i in $(ls); do
 	mv $i $i.py3
 done
 popd
-%endif
+# do not pack tests and hide from python3.req
+rm -rf %buildroot%python3_sitelibdir/%name/test
+rm -rf %buildroot%python3_sitelibdir/%name/*/test*
 
 %python_install
-rm -rf %buildroot%python_sitelibdir/%name/test
+# do not pack tests and hide from python.req
+rm -rf %buildroot%python_sitelibdir/%name/test*
 
 %check
-PYTHONPATH=$(pwd)/build/lib/ py.test
+PYTHONPATH=$(pwd) py.test -v
 
-%if_with python3
 pushd ../python3
-PYTHONPATH=$(pwd)/build/lib/ py.test3
+PYTHONPATH=$(pwd) py.test3 -v
 popd
-%endif
 
 %files
+%doc ChangeLog README.rst doc/
 %_bindir/*
-%if_with python3
 %exclude %_bindir/*.py3
-%endif
 %python_sitelibdir/%name
 %python_sitelibdir/%name-%version-py2*.egg-info
-%doc ChangeLog README.rst doc/
 
-%if_with python3
 %files py3
+%doc ChangeLog README.rst doc/
 %_bindir/*.py3
 %python3_sitelibdir/%name
 %python3_sitelibdir/%name-%version-py3*.egg-info
-%doc ChangeLog README.rst doc/
-%endif
 
 %changelog
+* Fri May 25 2018 Stanislav Levin <slev@altlinux.org> 1.9.1-alt1%ubt
+- 1.7.4 -> 1.9.1
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.7.4-alt2%ubt.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
