@@ -5,7 +5,7 @@
 %define libkompareinterface libkompareinterface%sover
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init altplace
 
@@ -82,10 +82,11 @@ KF5 library
 %_K5bin/kompare
 %_K5plug/kompare*.so
 %_K5xdgapp/org.kde.kompare.desktop
-%_K5icon/hicolor/*/apps/kompare.*
+%_K5icon/hicolor/*/apps/*kompare*.*
 %_K5xmlgui/kompare/
-%_K5srv/kompare*.desktop
-%_K5srvtyp/kompare*.desktop
+%_K5srv/*kompare*.desktop
+%_K5srv/ServiceMenus/*kompare*.desktop
+%_K5srvtyp/*kompare*.desktop
 %_K5xmlgui/komparepart/
 
 %files devel
@@ -103,6 +104,9 @@ KF5 library
 %_K5lib/libkomparedialogpages.so.*
 
 %changelog
+* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Mon Mar 12 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 
