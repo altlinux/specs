@@ -3,7 +3,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lib%_name
-Version: 0.2.9
+Version: 0.3.0
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
@@ -17,7 +17,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses meson
 
-BuildRequires: libgtk+3-devel >= 3.4 libnotify-devel
+BuildRequires: libgtk+3-devel >= 3.4 libnotify-devel libpango-devel
 BuildRequires: intltool
 
 %description
@@ -60,6 +60,9 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri May 25 2018 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
+- Updated to 0.3.0.
+
 * Wed Apr 18 2018 Mikhail Efremov <sem@altlinux.org> 0.2.9-alt1
 - Updated to 0.2.9.
 
