@@ -2,7 +2,7 @@
 
 Name: uniset2-testsuite
 Version: 2.6
-Release: alt9
+Release: alt10
 Summary: UniSet test suite
 Group: Development/Python
 License: LGPL
@@ -24,15 +24,6 @@ BuildRequires: doxygen
 
 %description
 %summary
-
-%package gui
-Summary: GUI interface of uniset2-testsuite
-Group: Development/Python
-Requires: %name = %version-%release 
-Requires: python-module-pygtk
-AutoReq: no
-%description gui
-GUI (gtk) interface of uniset2-testsuite
 
 %package doc
 Summary: docs for uniset2-testsuite
@@ -70,22 +61,15 @@ SNMP Plugin for uniset2-testsuite
 %files snmp
 %_datadir/%name/plugins.d/*SNMP.py
 
-%files gui
-%_datadir/%name/gtkplayer/guiTestSuitePlayer-gtk.py
-%_datadir/%name/gtkplayer/GtkProcessMonitor.py
-%_datadir/%name/gtkplayer/ScenarioParamEditor*
-%_datadir/%name/gtkplayer/dlg*.py
-%_bindir/%name-gtkplayer
-%_datadir/%name/gtkplayer/*.ui
-%_datadir/%name/gtkplayer/editors/*
-%_datadir/%name/gtkplayer/images/*
-
 %if_enabled doc
 %files doc
 %_docdir/%name
 %endif
 
 %changelog
+* Fri May 25 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt10
+- remove (DEPRECATED) gui package
+
 * Thu May 24 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt9
 - added '--log-screen-width max'
 
