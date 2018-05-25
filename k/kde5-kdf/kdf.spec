@@ -1,10 +1,10 @@
 %define rname kdf
 
-%define kdfprivate_sover 17
+%define kdfprivate_sover 18
 %define libkdfprivate libkdfprivate%kdfprivate_sover
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init
 
@@ -82,6 +82,9 @@ KF5 library
 %_K5lib/libkdfprivate.so.*
 
 %changelog
+* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Mon Mar 12 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 
