@@ -9,13 +9,13 @@
 
 Name: telepathy-qt5
 Version: 0.9.7
-Release: alt1
+Release: alt2%ubt
 
 Summary: Telepathy framework - Qt5 connection manager library 
 License: GPLv2
 Group: System/Libraries
 
-URL: http://telepathy.freedesktop.org/wiki/Telepathy%%20Qt
+URL: https://telepathy.freedesktop.org/components/telepathy-qt/
 
 Source: telepathy-qt-%version.tar
 # FC
@@ -23,10 +23,9 @@ Patch1: 0001-FindQt5.cmake-look-in-the-correct-pkg-config-file-fo.patch
 Patch2: 0002-FindQt5.cmake-remove-hardcoded-fPIC-flag.patch
 Patch3: 0003-CMakeLists.txt-require-python-2.7.patch
 Patch4: 0004-Adapt-the-client-registrar-to-the-new-thread-based-i.patch
-# ALT
-Patch100: alt-fix-linking.patch
+Patch5: 0005-Revert-cmake-telepathy-service-does-not-depend-on-te.patch
 
-BuildRequires(pre): qt5-base-devel qt5-tools
+BuildRequires(pre): rpm-build-ubt qt5-base-devel qt5-tools
 BuildRequires: python < 3 python >= 2.7
 BuildRequires: cmake doxygen gcc-c++ git-core graphviz phonon-devel
 BuildRequires: libxml2-devel glib2-devel libdbus-devel libdbus-glib-devel
@@ -98,7 +97,7 @@ Static libraries for %name.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch100 -p1
+%patch5 -p1
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -146,6 +145,9 @@ export QT_DOC_DIR=%_qt5_docdir
 #%_libdir/lib*.a
 
 %changelog
+* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt2%ubt
+- update package Url
+
 * Wed Sep 21 2016 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt1
 - new version
 
