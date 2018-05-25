@@ -1,6 +1,6 @@
 Name: grub
 Version: 2.02
-Release: alt9%ubt
+Release: alt10%ubt
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -342,6 +342,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Fri May 25 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt10%ubt
+- removed xxd requires from efi firmware setup script
+
 * Mon May 21 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt9%ubt
 - fixed config generation errors on EFI platform (closes: #34852)
 
