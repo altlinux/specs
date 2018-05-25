@@ -1,14 +1,13 @@
 Group: Development/Tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%define fedora 26
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: xsd
 Version: 4.0.0
-Release: alt1_20
+Release: alt1_23
 Summary: W3C XML schema to C++ data binding compiler
 # Exceptions permit otherwise GPLv2 incompatible combination with ASL 2.0
 License: GPLv2 with exceptions and ASL 2.0  
@@ -25,11 +24,15 @@ Patch0: %{name}-3.3.0-xsdcxx-rename.patch
 # http://codesynthesis.com/pipermail/xsd-users/2015-October/004705.html
 Patch1: %{name}-Fix_bug_C++_Parser_Expat_Support.patch
 
-BuildRequires: m4, libxerces-c-devel, libcutl-devel
+# Remove tests for character reference values unsupported by Xerces-C++ 3.2
+# https://anonscm.debian.org/cgit/collab-maint/xsd.git/diff/debian/patches/0110-xerces-c3.2.patch?id=442e98604d4158dae11056c4f94aaa655cb480fa
+Patch2: %{name}-xerces_3-2.patch
+
+BuildRequires: m4, libxerces-c-devel, libcutl-devel, gcc-c++
 %if 0%{?rhel}
 BuildRequires: boost148-devel
 %else
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel
 %endif
 
 %if 0%{?rhel}
@@ -58,6 +61,9 @@ This package contains API documentation for %{name}.
 %setup -q -n xsd-%{version}+dep
 %patch0 -p1 -b .xsdcxx-rename
 %patch1 -p0
+%if 0%{?fedora} > 27
+%patch2 -p1
+%endif
 
 ##Unbundle libcutl
 rm -rf libcutl
@@ -119,7 +125,7 @@ make -j 1 test EXTERNAL_LIBCUTL=y BOOST_LINK_SYSTEM=y
 %files
 %{!?_licensedir:%global license %doc}
 %doc docdir/README docdir/NEWS docdir/FLOSSE
-%doc docdir/GPLv2 docdir/LICENSE
+%doc --no-dereference docdir/GPLv2 docdir/LICENSE
 %{_bindir}/xsdcxx
 %{_mandir}/man1/xsdcxx.1*
 %{_includedir}/xsd/
@@ -127,10 +133,13 @@ make -j 1 test EXTERNAL_LIBCUTL=y BOOST_LINK_SYSTEM=y
 %files doc
 %{!?_licensedir:%global license %doc}
 %doc docdir/README docdir/NEWS docdir/FLOSSE
-%doc docdir/GPLv2 docdir/LICENSE
+%doc --no-dereference docdir/GPLv2 docdir/LICENSE
 %doc apidocdir/*
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt1_23
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt1_20
 - update to new release by fcimport
 
