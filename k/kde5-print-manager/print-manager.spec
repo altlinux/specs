@@ -4,7 +4,7 @@
 %define libkcupslib libkcupslib%sover
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init altplace
 
@@ -75,7 +75,7 @@ KF5 library
 %_K5bin/kde-add-printer
 %_K5bin/kde-print-queue
 %_K5plug/*print*.so
-%_K5xdgapp/*Print*.desktop
+%_K5xdgapp/*rint*.desktop
 %_K5data/plasma/plasmoids/org.kde.plasma.printmanager/
 %_K5qml/org/kde/plasma/printmanager/
 %_K5srv/kded/*.desktop
@@ -87,6 +87,9 @@ KF5 library
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 

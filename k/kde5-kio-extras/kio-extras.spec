@@ -1,6 +1,6 @@
 %define rname kio-extras
 
-%define molletnetwork_sover 17
+%define molletnetwork_sover 18
 %define libmolletnetwork libmolletnetwork5%molletnetwork_sover
 %define kioarchive_sover 5
 %define libkioarchive libkioarchive%kioarchive_sover
@@ -8,7 +8,7 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init altplace
 
@@ -138,6 +138,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 

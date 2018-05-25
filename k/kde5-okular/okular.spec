@@ -2,12 +2,12 @@
 %def_enable msits
 %def_enable mobile
 
-%define sover 8
+%define sover 9
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 17.12.3
-Release: alt2%ubt
+Version: 18.04.1
+Release: alt1%ubt
 %K5init
 
 Group: Office
@@ -144,6 +144,9 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Thu Mar 22 2018 Oleg Solovyov <mcpain@altlinux.org> 17.12.3-alt2%ubt
 - apply CHM patch
 

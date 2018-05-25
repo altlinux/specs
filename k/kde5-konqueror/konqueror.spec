@@ -10,7 +10,7 @@
 %define libkonqsidebarplugin libkonqsidebarplugin%konqsidebarplugin_sover
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init
 
@@ -38,6 +38,7 @@ BuildRequires: extra-cmake-modules qt5-base-devel qt5-script-devel qt5-webengine
 BuildRequires: libXres-devel libtidy-devel zlib-devel
 BuildRequires: kf5-kactivities-devel kf5-kcmutils-devel kf5-kded kf5-kded-devel kf5-kdelibs4support-devel
 BuildRequires: kf5-kdesu-devel kf5-kdoctools-devel-static kf5-khtml-devel kf5-kio-devel kf5-kjs-devel kf5-kpty-devel
+BuildRequires: kf5-kwallet-devel
 
 %if_enabled text2speech
 BuildRequires: qt5-speech-devel
@@ -190,6 +191,9 @@ rm -f %buildroot/%_K5xdgapp/kfmclient_dir.desktop
 #%_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 
