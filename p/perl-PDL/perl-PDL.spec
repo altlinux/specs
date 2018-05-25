@@ -1,4 +1,4 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(PadWalker.pm) perl(Prima/Application.pm) perl(Prima/Buttons.pm) perl(Prima/Edit.pm) perl(Prima/Label.pm) perl(Prima/MsgBox.pm) perl(Prima/PodView.pm) perl(Prima/Utils.pm) perl(threads.pm) perl(threads/shared.pm) perl-podlators
@@ -19,25 +19,27 @@ BuildRequires: gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Proj has proved not beeing compatible all the time, bug #839651
-%{bcond_without proj}
+%{bcond_without perl_PDL_enables_proj}
 
 # Slatec does not work on PPC64 since 2.4.something
 # could be a big endian related issue
 %ifarch ppc64 s390 s390x
-%{bcond_with slatec}
+%{bcond_with perl_PDL_enables_slatec}
 %else
-%{bcond_without slatec}
+%{bcond_without perl_PDL_enables_slatec}
 %endif
 
+# Run optional test
+%{bcond_without perl_PDL_enables_optional_test}
+
 Name:           perl-PDL
-%global cpan_version 2.018
-Version:        2.019
-Release:        alt1
+%global cpan_version 2.019
+Version:        2.19.0
+Release:        alt1_1
 Summary:        The Perl Data Language
-Group:          Development/Other
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
-Source0:        http://www.cpan.org/authors/id/C/CH/CHM/PDL-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/C/CH/CHM/PDL-%{cpan_version}.tar.gz
 # Uncomment to enable PDL::IO::Browser
 # Patch0:         perl-PDL-2.4.10-settings.patch
 Patch1:         perl-PDL-2.8.0-hdf.patch
@@ -53,14 +55,14 @@ BuildRequires:  libfftw-devel
 BuildRequires:  findutils
 BuildRequires:  libfreeglut-devel
 BuildRequires:  gcc-fortran
-BuildRequires:  libgd2-devel
+BuildRequires:  libgd3-devel
 BuildRequires:  libgsl-devel >= 1.0
-BuildRequires:  hdf-devel hdf-devel
+BuildRequires:  hdf-static hdf-devel
 BuildRequires:  libXi-devel
 BuildRequires:  libXmu-devel
 BuildRequires:  perl-devel
-BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 # perl(Astro::FITS::Header) not packaged yet
 # Modified perl(Carp) bundled
 # Modified perl(Carp::Heavy) bundled
@@ -127,11 +129,15 @@ BuildRequires:  perl(Test/Deep.pm)
 BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Warn.pm)
+%if %{with perl_PDL_enables_optional_test}
 # Optional tests:
+# netpbm-progs for jpegtopnm
+BuildRequires:  netpbm
 BuildRequires:  perl(Convert/UU.pm)
 BuildRequires:  perl(Storable.pm)
+%endif
 
-%if %{with proj}
+%if %{with perl_PDL_enables_proj}
 # Needed by PDL::GIS::Proj
 BuildRequires:  libproj-devel
 BuildRequires:  proj-nad
@@ -156,20 +162,14 @@ Requires:       perl(Prima/Label.pm)
 Requires:       perl(Prima/PodView.pm)
 Requires:       perl(Prima/Utils.pm)
 Requires:       perl(Text/Balanced.pm) >= 1.890
-Provides:       perl(PDL/Config.pm)
-Provides:       perl(PDL/PP/CType.pm)
-Provides:       perl(PDL/PP/Dims.pm)
-Provides:       perl(PDL/PP/PDLCode.pm)
-Provides:       perl(PDL/PP/SymTab.pm)
-Provides:       perl(PDL/PP/XS.pm)
-Provides:       perl(PDL/Lite.pm)
-Provides:       perl(PDL/LiteF.pm)
-Provides:       perl(PDL/Graphics/TriD.pm)
-Provides:       perl(PDL/Graphics/TriD/GL.pm)
-Provides:       perl(PDL/Graphics/TriD/Contours.pm)
-Provides:       perl(PDL/Graphics/TriD/Image.pm)
-Provides:       perl(PDL/Graphics/TriD/Objects.pm)
-Provides:       perl(PGPLOT.pm)
+Provides:       perl(PDL/Config.pm) = %{version}
+Provides:       perl(PDL/PP/CType.pm) = %{version}
+Provides:       perl(PDL/PP/Dims.pm) = %{version}
+Provides:       perl(PDL/PP/PDLCode.pm) = %{version}
+Provides:       perl(PDL/PP/SymTab.pm) = %{version}
+Provides:       perl(PDL/PP/XS.pm) = %{version}
+Provides:       perl(PDL/Graphics/TriD/Objects.pm) = %{version}
+Provides:       perl(PGPLOT.pm) = %{version}
 
 
 
@@ -178,10 +178,10 @@ Provides:       perl(PGPLOT.pm)
 # Remove under-specified dependencies
 
 Source44: import.info
-%filter_from_requires /^perl\\((OpenGL.Config|PDL.Demos.Screen|Tk|Win32.DDE.Client).pm\\)$/d
-%filter_from_provides /^perl\\(Inline.pm\\)$/d
-%filter_from_provides /^perl\\(Win32.*.pm\\)$/d
-%filter_from_requires /^perl\\((Data.Dumper|File.Spec|Filter.Simple|Inline|Module.Compile|OpenGL|Text.Balanced).pm\\)$/d
+%filter_from_requires /^perl(\(OpenGL.Config\|PDL.Demos.Screen\|Tk\|Win32.DDE.Client\)\\)$/d
+%filter_from_provides /^perl(Inline\\)$/d
+%filter_from_provides /^perl(Win32.*\\)$/d
+%filter_from_requires /^perl(\(Data.Dumper\|File.Spec\|Filter.Simple\|Inline\|Module.Compile\|OpenGL\|Text.Balanced\)\\)$/d
 Patch33: PDL-2.018-alt-link-Slatec-hack.patch
 
 %description
@@ -192,15 +192,15 @@ turns perl into a free, array-oriented, numerical language similar to
 such commercial packages as IDL and MatLab.
 
 %prep
-%setup -q -n PDL-%{version}
+%setup -q -n PDL-%{cpan_version}
 # Uncomment to enable PDL::IO::Browser
 # %%patch0 -p1 -b .settings
 %patch1 -p1 -b .hdf
-%if %{without proj}
+%if %{without perl_PDL_enables_proj}
 %patch2 -p1 -b .proj
 %endif
 %patch3 -p1 -b .slatecpic
-%if %{without slatec}
+%if %{without perl_PDL_enables_slatec}
 %patch4 -p1 -b .slatec
 %endif
 %patch5 -p1
@@ -218,7 +218,7 @@ CFLAGS="$CFLAGS -ffp-contract=off"
 %endif
 # Uncomment to enable PDL::IO::Browser
 # CFLAGS="$CFLAGS -DNCURSES"
-CFLAGS="$CFLAGS" perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="$CFLAGS"
+CFLAGS="$CFLAGS" perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 OPTIMIZE="$CFLAGS"
 make OPTIMIZE="$CFLAGS" %{?_smp_mflags}
 
 %install
@@ -226,7 +226,6 @@ make pure_install DESTDIR=%{buildroot}
 perl -Mblib Doc/scantree.pl %{buildroot}%{perl_vendor_archlib}
 perl -pi -e "s|%{buildroot}/|/|g" %{buildroot}%{perl_vendor_archlib}/PDL/pdldoc.db
 find %{buildroot}%{perl_vendor_archlib} -type f -name "*.pm" | xargs chmod -x
-find %{buildroot} -type f -name .packlist -delete
 find %{buildroot} -type f -name '*.bs' -empty -delete
 chmod -R u+w %{buildroot}/*
 
@@ -236,7 +235,8 @@ export PERL5LIB=`pwd`/blib/lib
 make test
 
 %files
-%doc COPYING Changes INTERNATIONALIZATION Known_problems README TODO Bugs.pod Changes_CVS Doc Example
+%doc --no-dereference COPYING
+%doc Changes INTERNATIONALIZATION Known_problems README TODO
 %{_bindir}/*
 %{perl_vendor_archlib}/Inline/*
 %{perl_vendor_archlib}/PDL*
@@ -244,6 +244,9 @@ make test
 %{_mandir}/man1/*.1*
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 2.19.0-alt1_1
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.019-alt1
 - automated CPAN update
 
