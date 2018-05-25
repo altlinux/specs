@@ -3,7 +3,7 @@
 Name: gnuplot
 Epoch: 1
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: A program for plotting mathematical expressions and data
 Summary (ru_RU.UTF-8): Программа для построения графиков математических выражений и данных
@@ -29,13 +29,8 @@ Patch2: gnuplot-5.0.6-gentoo-no-picins.patch
 BuildRequires(pre): rpm-build-tex
 BuildPreReq: desktop-file-utils
 BuildRequires: gcc-c++ ghostscript-module-X groff-base libXt-devel libncurses-devel libreadline-devel xorg-cf-files zlib-devel libgd3-devel libpng-devel libjpeg-devel libgif-devel
-BuildRequires: /usr/bin/tex
-BuildRequires: /usr/bin/dvips
-BuildRequires: /usr/bin/pdflatex
-BuildRequires: /usr/bin/htlatex
-BuildRequires: PDFlib-Lite-utils libpdflib-lite-devel
 BuildRequires: emacs-common texinfo latex2html
-BuildRequires: tex(utf8x.def)
+BuildRequires: dblatex
 
 # for wxt terminal
 BuildRequires: libwxGTK-devel libcairo-devel libpango-devel libgtk+2-devel
@@ -210,7 +205,6 @@ printf '%_bindir/%name\t%_bindir/gnuplot-minimal\t10\n' > %buildroot%_altdir/%na
 printf '%_bindir/%name\t%_bindir/gnuplot-wx\t20\n' > %buildroot%_altdir/%name-wx
 printf '%_bindir/%name\t%_bindir/gnuplot-qt\t30\n' > %buildroot%_altdir/%name-qt
 
-
 # menus
 install -D -pm644 %SOURCE3  %buildroot%_desktopdir/%name.desktop
 
@@ -264,6 +258,9 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Fri May 25 2018 Grigory Ustinov <grenka@altlinux.org> 1:5.2.3-alt2
+- Removed PDFLib-Lite from build requires (Closes: #33946).
+
 * Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.2.3-alt1
 - Updated to upstream version 5.2.3.
 
