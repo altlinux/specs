@@ -1,23 +1,33 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Carp.pm) perl(DateTime.pm) perl(overload.pm) perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Tiny
 Version:        1.07
-Release:        alt1
+Release:        alt1_1
 Summary:        Date object, with as little code as possible
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/DateTime-Tiny/
-Source0:        http://www.cpan.org/authors/id/D/DA/DAGOLDEN/DateTime-Tiny-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/D/DA/DAGOLDEN/DateTime-Tiny-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl-devel >= 0:5.004
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Run-time
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(DateTime.pm)
+BuildRequires:  perl(overload.pm)
+# Tests
+BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(utf8.pm)
+Requires:       perl(Carp.pm)
 Requires:       perl(DateTime.pm)
 Source44: import.info
 
@@ -29,14 +39,11 @@ datetime.
 %setup -q -n DateTime-Tiny-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -44,10 +51,13 @@ make test
 
 %files
 %doc Changes README CONTRIBUTING.mkdn
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1_1
+- update to new release by fcimport
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
 - automated CPAN update
 
