@@ -1,7 +1,7 @@
 %define  pkgname docile
  
 Name: 	 ruby-%pkgname
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
  
 Summary: Docile keeps your Ruby DSLs tame and well-behaved
@@ -54,6 +54,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1
+- New version.
+
 * Thu Feb 08 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1
 - New version.
 
