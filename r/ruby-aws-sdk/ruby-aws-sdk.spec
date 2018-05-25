@@ -1,7 +1,7 @@
 %define  pkgname aws-sdk
 
 Name: 	 ruby-%pkgname
-Version: 2.11.55
+Version: 2.11.56
 Release: alt1
 
 Summary: The official AWS SDK for Ruby
@@ -103,6 +103,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 2.11.56-alt1
+- New version.
+
 * Wed May 23 2018 Andrey Cherepanov <cas@altlinux.org> 2.11.55-alt1
 - New version.
 
