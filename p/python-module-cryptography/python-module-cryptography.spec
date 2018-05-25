@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 2.2.2
-Release: alt1.1
+Release: alt2
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
@@ -18,7 +18,7 @@ Source: %oname-%version.tar
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Fri Jan 29 2016 (-bi)
 # optimized out: elfutils libcom_err-devel libkrb5-devel python-base python-devel python-module-pycparser python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pycparser python3-module-pytest python3-module-setuptools
-BuildRequires: libssl-devel python-module-cffi python-module-enum34 python-module-pyasn1 python-module-setuptools python3-devel python3-module-cffi python3-module-enum34 python3-module-setuptools rpm-build-python3
+BuildRequires: libssl-devel python-dev python-module-cffi python-module-enum34 python-module-pyasn1 python-module-setuptools python3-dev python3-module-cffi python3(enum) python3-module-setuptools rpm-build-python3
 
 #BuildRequires: python-devel python-module-distribute python-module-setuptools
 #BuildRequires: python-module-six python-module-cffi python-module-pycparser
@@ -37,6 +37,8 @@ BuildRequires(pre): rpm-build-python3
 %endif
 
 Requires: python-module-cffi
+
+%py_requires enum34
 
 %setup_python_module %oname
 
@@ -104,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Thu May 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.2-alt2
+- NMU: fixed buildtime and runtime dependencies.
+
 * Fri Apr 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.2-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 

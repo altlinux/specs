@@ -1,38 +1,32 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname smmap
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.0
-Release: alt1.git20150107.1.1.1
-
+Version: 2.0.3
+Release: alt1%ubt
 Summary:  Sliding window memory map manager
-
 License: BSD
+BuildArch: noarch
 Group: Development/Python
-Url: git://github.com/Byron/smmap.git
+Url: https://pypi.org/project/smmap2
 
+# https://github.com/gitpython-developers/smmap.git
 Source: %name-%version.tar
+Patch1: %oname-alt-docs.patch
 
-%setup_python_module %oname
-
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-nose python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-nose python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nosexcover python-module-objects.inv python-module-setuptools python3-module-coverage python3-module-nosexcover python3-module-setuptools rpm-build-python3 time
-
-#BuildRequires: python-devel python-module-setuptools
-#BuildPreReq: python-module-nose python-module-nosexcover
-#BuildPreReq: python-module-coverage
-#BuildPreReq: python-module-sphinx-devel
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-coverage python-module-nosexcover
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python3-module-nose python3-module-nosexcover
-#BuildPreReq: python3-module-coverage
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-coverage python3-module-nosexcover
 %endif
-
-BuildArch: noarch
 
 %description
 A pure python implementation of a sliding window memory map manager
@@ -47,6 +41,7 @@ A pure python implementation of a sliding window memory map manager
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary:  Sliding window memory map manager
 Group: Development/Python3
@@ -63,9 +58,11 @@ Requires: python3-module-%oname = %EVR
 A pure python implementation of a sliding window memory map manager
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -97,6 +94,7 @@ export PYTHONOPATH=%buildroot%python_sitelibdir
 
 %check
 python setup.py test
+
 %if_with python3
 pushd ../python3
 python3 setup.py test
@@ -105,25 +103,26 @@ popd
 
 %files
 %doc README.md doc/build/html
-%python_sitelibdir/%modulename/
-%exclude %python_sitelibdir/%modulename/test
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/*
+%exclude %python_sitelibdir/%oname/test
 
 %files tests
-%python_sitelibdir/%modulename/test
+%python_sitelibdir/%oname/test
 
 %if_with python3
 %files -n python3-module-%oname
 %doc README.md doc/build/html
-%python3_sitelibdir/%modulename/
-%exclude %python3_sitelibdir/%modulename/test
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/test
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/%modulename/test
+%python3_sitelibdir/%oname/test
 %endif
 
 %changelog
+* Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.3-alt1%ubt
+- Updated to upstream version 2.0.3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.0-alt1.git20150107.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

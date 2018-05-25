@@ -1,28 +1,29 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.svn20130102.1.1.1.1
-%define module_name mimeparse
+%define _unpackaged_files_terminate_build 1
+
+%define oname mimeparse
 
 %def_with python3
 
-Name: python-module-%module_name
-Version: 0.1.4
-#Release: alt1.svn20130102.1.1.1
+Name: python-module-%oname
+Version: 1.6.0
+Release: alt1%ubt
+Summary: Basic functions for handling mime-types in python
+License: MIT
 Group: Development/Python
-License: BSD License
-Summary: A module provides basic functions for parsing mime-type names and matching them against a list of media-ranges
-URL: http://pypi.python.org/pypi/mimeparse
-# http://mimeparse.googlecode.com/svn/trunk/
-Source: %module_name-%version.tar.gz
+BuildArch: noarch
+Url: https://pypi.org/project/python-mimeparse
 
-#BuildPreReq: python-module-setuptools
+# https://github.com/dbtsai/python-mimeparse.git
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: python-dev python-module-setuptools
+BuildRequires: python2.7(json)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3(json)
 %endif
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
-BuildRequires: python-devel rpm-build-python3
 
 %description
 This module provides basic functions for handling mime-types. It can handle
@@ -42,11 +43,12 @@ Contents:
     - best_match():        Choose the mime-type with the highest quality
       ('q') from a list of candidates.
 
-%package -n python3-module-%module_name
-Summary: A module provides basic functions for parsing mime-type names and matching them against a list of media-ranges
+%if_with python3
+%package -n python3-module-%oname
+Summary: Basic functions for handling mime-types in python
 Group: Development/Python3
 
-%description -n python3-module-%module_name
+%description -n python3-module-%oname
 This module provides basic functions for handling mime-types. It can handle
 matching mime-types against a list of media-ranges. See section 14.1 of 
 the HTTP specification [RFC 2616] for a complete explanation.
@@ -63,20 +65,21 @@ Contents:
       parameter must be pre-parsed.
     - best_match():        Choose the mime-type with the highest quality
       ('q') from a list of candidates.
+%endif
 
 %prep
-%setup -n %module_name-%version
+%setup
 
 %if_with python3
 cp -fR . ../python3
 %endif
 
 %build
-%python_build
+%python_build_debug
 
 %if_with python3
 pushd ../python3
-%python3_build
+%python3_build_debug
 popd
 %endif
 
@@ -89,22 +92,30 @@ pushd ../python3
 popd
 %endif
 
-%if "%_target_libdir_noarch" != "%_libdir"
-mv %buildroot%_target_libdir_noarch %buildroot%_libdir
-%endif
-
-%files
-%doc README
-%python_sitelibdir/mimeparse*
+%check
+python mimeparse_test.py
 
 %if_with python3
-%files -n python3-module-%module_name
-%doc README
-%python3_sitelibdir/mimeparse*
-%python3_sitelibdir/__pycache__/*
+pushd ../python3
+python3 mimeparse_test.py
+popd
+%endif
+
+
+%files
+%doc README.rst LICENSE
+%python_sitelibdir/*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc README.rst LICENSE
+%python3_sitelibdir/*
 %endif
 
 %changelog
+* Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.0-alt1%ubt
+- Updated to upstream version 1.6.0.
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.4-alt1.svn20130102.1.1.1.1
 - (AUTO) subst_x86_64.
 

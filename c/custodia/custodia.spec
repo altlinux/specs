@@ -6,7 +6,7 @@
 
 Name: custodia
 Version: 0.5.0
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: A tool for managing secrets
 
 Group: System/Configuration/Other
@@ -30,7 +30,7 @@ BuildRequires: python-module-coverage
 BuildRequires: python-module-tox >= 2.3.1
 BuildRequires: python-module-systemd
 BuildRequires: python-module-virtualenv
-BuildRequires: python-module-configparser
+BuildRequires: python2.7(configparser)
 BuildRequires: python-module-coverage
 BuildRequires: python-module-cryptography
 BuildRequires: python-module-etcd
@@ -46,7 +46,7 @@ BuildRequires: python3-module-coverage
 BuildRequires: python3-module-tox >= 2.3.1
 BuildRequires: python3-module-systemd
 BuildRequires: python3-module-virtualenv
-BuildRequires: python3-module-configparser
+BuildRequires: python3(configparser)
 BuildRequires: python3-module-coverage
 BuildRequires: python3-module-cryptography
 BuildRequires: python3-module-etcd
@@ -80,7 +80,7 @@ Requires: python-module-setuptools
 Requires: python-module-jwcrypto >= 0.4.2
 Requires: python-module-requests
 Requires: python-module-systemd
-Requires: python-module-configparser
+%py_requires configparser
 Requires: python-module-urllib3
 Conflicts: python-module-freeipa < %ipa_conflict
 %py_provides %name
@@ -95,7 +95,7 @@ Requires: python3-module-setuptools
 Requires: python3-module-jwcrypto >= 0.4.2
 Requires: python3-module-requests
 Requires: python3-module-systemd
-Requires: python3-module-configparser
+%py3_requires configparser
 Requires: python3-module-urllib3
 %py3_provides %name
 
@@ -151,12 +151,10 @@ install -m 644 %_builddir/%name-%version/contrib/config/tmpfiles.d/custodia.conf
 # don't download packages
 export PIP_INDEX_URL=http://host.invalid./
 
-export PYTHONPATH=%python_sitelibdir_noarch:%_libdir/python2.7/site-packages
-TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py27 -v
+tox --sitepackages -e py%{python_version_nodots python} -v
 
 pushd ../python3
-export PYTHONPATH=%python3_sitelibdir_noarch:%_libdir/python3/site-packages
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py35 -v
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 popd
 
 %pre
@@ -206,6 +204,9 @@ exit 0
 %_bindir/custodia-cli.py3
 
 %changelog
+* Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.0-alt3%ubt
+- NMU: rebuilt with python-3.6.
+
 * Mon Jan 29 2018 Stanislav Levin <slev@altlinux.org> 0.5.0-alt2%ubt
 - Fix tests for Python3
 
