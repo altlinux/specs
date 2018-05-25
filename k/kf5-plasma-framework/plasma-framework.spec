@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.46.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -13,6 +13,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Source10: ru-libplasma5.po
 Patch1: alt-def-theme-wallpaper.patch
 Patch2: alt-plasma-install-dir.patch
 
@@ -72,6 +73,8 @@ KF5 library
 %patch1 -p1
 %patch2 -p1
 
+cat %SOURCE10 >po/ru/libplasma5.po
+
 %build
 %K5build
 
@@ -124,6 +127,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt2%ubt
+- udpate russian translation
+
 * Mon May 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1%ubt
 - new version
 
