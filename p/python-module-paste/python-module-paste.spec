@@ -3,7 +3,7 @@
 
 Name: python-module-%modulename
 Version: 2.0.3
-Release: alt1
+Release: alt1.1
 
 Summary: Tools for using a Web Server Gateway Interface stack
 License: MIT
@@ -20,7 +20,7 @@ BuildRequires: python-module-setuptools python3-module-setuptools time
 
 %py_provides Paste
 
-%add_python_req_skip flup openid scgi
+%add_python_req_skip scgi
 
 
 %description
@@ -33,10 +33,8 @@ middleware based on those interfaces.
 Summary: Tools for using a Web Server Gateway Interface stack (Python 3)
 Group: Development/Python3
 %py3_provides Paste
-%add_python3_req_skip flup openid scgi hotshot
-%if_with bootstrap
-%add_python3_req_skip flup.middleware.session hotshot.stats rfc822
-%endif
+%add_python3_req_skip scgi hotshot rfc822
+%add_python3_req_skip flup.middleware.session hotshot.stats
 
 %description -n python3-module-%modulename
 These provide several pieces of "middleware" (or filters) that can be
@@ -46,10 +44,6 @@ middleware based on those interfaces.
 
 %prep
 %setup
-#rm -f paste/util/subprocess24.py
-#sed -i -e '/^#!.*/,1 d' \
-#	paste/util/scgiserver.py \
-#	paste/debug/doctest_webapp.py
 
 rm -rf ../python3
 cp -a . ../python3
@@ -84,6 +78,9 @@ popd
 
 
 %changelog
+* Fri May 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.0.3-alt1.1
+- fix requires
+
 * Tue May 22 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.0.3-alt1
 - updated version to 2.0.3 from tarball
 

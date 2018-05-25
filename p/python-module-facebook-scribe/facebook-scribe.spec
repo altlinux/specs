@@ -1,26 +1,25 @@
 %define oname facebook-scribe
 
-%def_with python3
-%def_with bootstrap
+%def_without bootstrap
 
 Name: python-module-%oname
 Version: 2.0
-Release: alt2
+Release: alt2.1
+
 Summary: A Python client for Facebook Scribe
 License: ASL v2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/facebook-scribe/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/tomprimozic/scribe-python.git
-Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
+Source: %name-%version.tar
+
+BuildRequires: python-devel python-module-setuptools
+
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
 This is a Python client for scribe.
@@ -38,39 +37,35 @@ This is a Python client for scribe.
 %prep
 %setup
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
 %doc *.md
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.md
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Fri May 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.0-alt2.1
+- rebuild with all requires
+
 * Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.0-alt2
 - rebuild with python3.6
 
