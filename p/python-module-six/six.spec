@@ -4,20 +4,18 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.10.0
-Release: alt9
+Version: 1.11.0
+Release: alt1
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: http://pypi.python.org/pypi/six
-# Url: https://github.com/benjaminp/six
-Packager: Python Development Team <python at packages.altlinux.org>
 
+# Url: https://github.com/benjaminp/six
 Source: %name-%version.tar
 Source2: move.list
 Patch: 0001-Fix-pytest-command.patch
-Patch1: Add-unquote_to_bytes.patch
-BuildArch: noarch
 
 %define move_list %(echo `cat %{SOURCE2}`)
 
@@ -68,7 +66,6 @@ provided.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 
 %if_with python3
 rm -rf ../python3
@@ -95,26 +92,29 @@ popd
 export PIP_INDEX_URL=http://host.invalid./
 
 export PYTHONPATH=%python_sitelibdir_noarch
-TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py27 -v -- -v
+TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py%{python_version_nodots python} -v -- -v
 
 %if_with python3
 pushd ../python3
 export PYTHONPATH=%python3_sitelibdir_noarch
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py36 -v -- -v
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -v -- -v
 popd
 %endif
 
 %files
-%doc README documentation/*.rst
+%doc README.rst documentation/*.rst
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README documentation/*.rst
+%doc README.rst documentation/*.rst
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.0-alt1
+- Updated to upstream version 1.11.0.
+
 * Mon May 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.10.0-alt9
 - Add unquote_to_bytes to moved urllib.parse.
 - Adapt tests for python 3.6.

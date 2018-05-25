@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt2.git20140811.1
+Release: alt3.git20140811
 Summary: Async Web framework based on Tulip/asyncio
 License: BSD
 Group: Development/Python
@@ -17,12 +17,12 @@ Source: %name-%version.tar
 
 %if_with python2
 BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-enum34 python2.7(asyncio)
+BuildRequires: python2.7(enum34) python2.7(asyncio)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-enum34 python3(asyncio)
+BuildRequires: python3(enum) python3(asyncio)
 %endif
 
 %py_provides vase
@@ -39,7 +39,6 @@ A demo websocket app is available here http://vase-chat.herokuapp.com/
 Summary: Async Web framework based on Tulip/asyncio
 Group: Development/Python3
 %py3_provides vase
-%py3_requires enum34 asyncio
 
 %description -n python3-module-%oname
 Vase is a webframework for Tulip/asyncio.
@@ -103,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.4-alt3.git20140811
+- Rebuilt to regenerate dependencies.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.4-alt2.git20140811.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

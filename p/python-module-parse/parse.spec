@@ -3,33 +3,31 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.6.6
-Release: alt2
+Version: 1.8.2
+Release: alt1
 Summary: parse() is the opposite of format()
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/parse
 
 # https://github.com/r1chardj0n3s/parse.git
 Source: %name-%version.tar
-Patch1: %oname-python-3.5-test.patch
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pluggy python-module-py python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
-BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3 time
-
 %description
 Parse strings using a specification based on the Python format() syntax.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: parse() is the opposite of format()
 Group: Development/Python3
@@ -37,10 +35,10 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 Parse strings using a specification based on the Python format() syntax.
+%endif
 
 %prep
 %setup
-%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -83,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt1
+- Updated to upstream version 1.8.2.
+
 * Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.6-alt2
 - Fixed tests.
 
