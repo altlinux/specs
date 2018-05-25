@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-validate gcc-c++ pkgconfig(gcr-3) pkgconfig
 %define _localstatedir %{_var}
 Summary:	A Usenet newsreader for GNOME/GTK+
 Name:		pan
-Version:	0.144
+Version:	0.145
 Release:	alt1_1
 Epoch:		1
 License:	GPLv2
@@ -72,6 +72,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_mandir}/man1/pan.1*
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.145-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.144-alt1_1
 - update to new release by fcimport
 
