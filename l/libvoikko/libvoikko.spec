@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %if 0%{?fedora}
@@ -12,7 +12,7 @@ BuildRequires: gcc-c++
 
 Name:           libvoikko
 Version:        3.8
-Release:        alt1_8
+Release:        alt1_9
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
 Group:          System/Libraries
@@ -23,6 +23,7 @@ Source0:        http://www.puimula.org/voikko-sources/%{name}/%{name}-%{version}
 # The usual format of test release URLs
 #Source0:        http://www.puimula.org/htp/testing/%%{name}-%%{version}rc1.tar.gz
 
+BuildRequires:  python3-devel
 %if 0%{?with_python2}
 BuildRequires:  python-devel
 %endif
@@ -126,6 +127,9 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %endif
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1_9
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1_8
 - update to new release by fcimport
 
