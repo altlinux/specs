@@ -1,56 +1,48 @@
-#def_disable check
-%def_with python3
-
+%define _unpackaged_files_terminate_build 1
 %define oname astroid
+
+%def_with check
+
 Name: python-module-%oname
-Version: 1.5.3
-Release: alt3
+Version: 1.6.4
+Release: alt1%ubt
 
 Summary: Python Abstract Syntax Tree New Generation
 License: LGPLv2.1+
 Group: Development/Python
+# Source-git: https://github.com/PyCQA/astroid.git
+Url: https://pypi.org/project/astroid
+
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
+
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-pytest-runner
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pytest-runner
+
+%if_with check
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-lazy_object_proxy
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-wrapt
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-dateutil
+%endif
 
 BuildArch: noarch
 
-Url: http://www.logilab.org/project/logilab-astng
-# hg clone https://bitbucket.org/logilab/astroid
-Source: %name-%version.tar
-
-Provides: python-module-logilab-astng = %version-%release
+Provides: python-module-logilab-astng = %EVR
 Obsoletes: python-module-logilab-astng <= 0.24.2
 
-Requires: python-module-logilab-common >= 0.60.0
-Requires: python-module-lazy_object_proxy
-
-%setup_python_module %oname
-%python_module_declare %python_sitelibdir/logilab
-
-%add_findreq_skiplist %python_sitelibdir/%oname/tests/testdata/python*/data/invalid_encoding.py
-%add_findreq_skiplist %python3_sitelibdir/%oname/tests/testdata/python*/data/invalid_encoding.py
-%add_findreq_skiplist %python_sitelibdir/%oname/tests/testdata/python*/data/namespace_pep_420/module.py
-%add_findreq_skiplist %python3_sitelibdir/%oname/tests/testdata/python*/data/namespace_pep_420/module.py
-%add_findreq_skiplist %python_sitelibdir/%oname/tests/testdata/python*/data/module.py
-%add_findreq_skiplist %python3_sitelibdir/%oname/tests/testdata/python*/data/module.py
-%add_findreq_skiplist %python_sitelibdir/%oname/tests/testdata/python*/data/module2.py
-%add_findreq_skiplist %python3_sitelibdir/%oname/tests/testdata/python*/data/module2.py
-%add_findreq_skiplist %python_sitelibdir/%oname/tests/testdata/python*/data/all.py
-%add_findreq_skiplist %python3_sitelibdir/%oname/tests/testdata/python*/data/all.py
-%add_findreq_skiplist %python_sitelibdir/%oname/tests/testdata/python*/data/noendingnewline.py
-%add_findreq_skiplist %python3_sitelibdir/%oname/tests/testdata/python*/data/noendingnewline.py
-
-BuildRequires: python-module-logilab-common python-module-pytest
-BuildRequires: python-module-wrapt
-BuildRequires: python-module-lazy_object_proxy python-module-singledispatch
-BuildRequires: python-module-enum34
-%{?!_without_check:%{?!_disable_check:BuildRequires: /usr/bin/pytest}}
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-logilab-common python3-module-pytest
-BuildRequires: python3-module-lazy_object_proxy python3-module-singledispatch
-BuildRequires: python3-module-wrapt
-%endif
-
-%py_requires logilab.common six backports.functools_lru_cache enum34 singledispatch
+%py_requires backports.functools_lru_cache
+%py_requires enum34
+%py_requires singledispatch
 
 %description
 The aim of this module is to provide a common base representation of
@@ -64,35 +56,12 @@ object, which can either generate extended ast (let's call them astng ;)
 by visiting an existant ast tree or by inspecting living object. Methods
 are added by monkey patching ast classes.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-The aim of this module is to provide a common base representation of
-python source code for projects such as pychecker, pyreverse, pylint...
-Well, actually the development of this library is essentialy governed by
-pylint's needs.
-It extends class defined in the compiler.ast [1] module (python <= 2.4)
-or in the builtin _ast module (python >= 2.5) with some additional
-methods and attributes. Instance attributes are added by a builder
-object, which can either generate extended ast (let's call them astng ;)
-by visiting an existant ast tree or by inspecting living object. Methods
-are added by monkey patching ast classes.
-
-This package contains tests for %oname.
-
-%if_with python3
 %package -n python3-module-%oname
 Summary: Python 3 Abstract Syntax Tree New Generation
 Group: Development/Python3
-%py3_requires logilab.common six
 
-Provides: python3-module-logilab-astng = %version-%release
+Provides: python3-module-logilab-astng = %EVR
 Obsoletes: python3-module-logilab-astng <= 0.24.2
-
-Requires: python3-module-logilab-common >= 0.60.0
 
 %description -n python3-module-%oname
 The aim of this module is to provide a common base representation of
@@ -106,77 +75,54 @@ object, which can either generate extended ast (let's call them astng ;)
 by visiting an existant ast tree or by inspecting living object. Methods
 are added by monkey patching ast classes.
 
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-The aim of this module is to provide a common base representation of
-python source code for projects such as pychecker, pyreverse, pylint...
-Well, actually the development of this library is essentialy governed by
-pylint's needs.
-It extends class defined in the compiler.ast [1] module (python <= 2.4)
-or in the builtin _ast module (python >= 2.5) with some additional
-methods and attributes. Instance attributes are added by a builder
-object, which can either generate extended ast (let's call them astng ;)
-by visiting an existant ast tree or by inspecting living object. Methods
-are added by monkey patching ast classes.
-
-This package contains tests for %oname.
-%endif
-
 %prep
 %setup
-%if_with python3
+%patch0 -p1
+# python attr module is not packaged
+sed -i '/[[:space:]]*attr\([[:space:]]\|$\)/d;
+       s/python -Wi {envsitepackagesdir}\/coverage/python -m coverage/g' tox.ini
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
-#PYTHONPATH=%buildroot%python_sitelibdir python -m unittest discover -p "unittest*.py"
+%define python_version_nodots() %(%1 -Esc "import sys; sys.stdout.write('{0.major}{0.minor}'.format(sys.version_info))")
+export PIP_INDEX_URL=http://host.invalid./
 
-%if_with python3
-PYTHONPATH=%buildroot%python3_sitelibdir python3 -m unittest discover -p "unittest*.py"
-%endif
+# python 2.7 tests are not supported more
+
+pushd ../python3
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
+popd
 
 %files
-%python_sitelibdir/astroid/
-%exclude %python_sitelibdir/astroid/test*
-%python_sitelibdir/*.egg-info
 %doc ChangeLog README.rst
+%python_sitelibdir/%oname/
+%python_sitelibdir/*.egg-info
+%exclude %python_sitelibdir/%oname/test*
 
-%files tests
-%python_sitelibdir/astroid/test*
-
-%if_with python3
 %files -n python3-module-%oname
 %doc ChangeLog README.rst
-%python3_sitelibdir/astroid/
-%exclude %python3_sitelibdir/astroid/test*
+%python3_sitelibdir/%oname/
 %python3_sitelibdir/*.egg-info
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/astroid/test*
-%endif
+%exclude %python3_sitelibdir/%oname/*/test*
+%exclude %python3_sitelibdir/%oname/test*
 
 %changelog
+* Fri May 25 2018 Stanislav Levin <slev@altlinux.org> 1.6.4-alt1%ubt
+- 1.5.3 -> 1.6.4
+
 * Fri Oct 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.3-alt3
 - Updated runtime dependencies.
 
