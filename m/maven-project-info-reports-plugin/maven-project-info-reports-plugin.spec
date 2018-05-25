@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-project-info-reports-plugin
 Version:        2.8.1
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Maven Project Info Reports Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-project-info-reports-plugin/
@@ -17,6 +17,8 @@ BuildArch:      noarch
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 Patch0:         0001-Port-to-Maven-3-API.patch
+Patch1:         0002-Port-to-latest-doxia.patch
+Patch2:	maven-project-info-reports-plugin-2.8.1-buildfix.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-validator:commons-validator)
@@ -84,8 +86,13 @@ API documentation for %{name}.
 %setup -q -c
 mv %{name}-%{version}/* .
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 # removed cvsjava provider since we don't support it anymore
 %pom_remove_dep :maven-scm-provider-cvsjava
+# Port to latest keytool-maven-plugin
+%pom_xpath_set "pom:goal[text()='genkey']" generateKeyPair
+sed -i -e s,generateKeyPair,genkey, pom.xml
 
 %build
 %mvn_build -f
@@ -98,6 +105,9 @@ mv %{name}-%{version}/* .
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt1_3jpp8
+- java update
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt1_2jpp8
 - new version
 
