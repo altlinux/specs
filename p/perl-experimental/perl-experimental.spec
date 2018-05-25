@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -8,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-experimental
 Version:        0.020
-Release:        alt1
+Release:        alt1_1
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/experimental/
@@ -49,11 +48,14 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.020-alt1_1
+- update to new release by fcimport
+
 * Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 0.020-alt1
 - automated CPAN update
 
