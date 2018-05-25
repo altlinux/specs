@@ -1,7 +1,9 @@
+%def_disable doc
+
 %define oname comedilib
 Name: libcomedi
 Version: 0.11.0
-Release: alt2
+Release: alt3
 %define oversion %(echo "%version" | sed -e "s|\\.|_|g")
 
 Summary: Data Acquisition library for the Comedi DAQ driver
@@ -24,7 +26,11 @@ BuildRequires: rpm-macros-intro-conflicts
 
 # manually removed: hostinfo eric gcc-g77
 # Automatically added by buildreq on Sun Nov 07 2004
-BuildRequires: docbook-utils-print xmlto dblatex flex gcc-c++ libstdc++-devel python-devel python-modules-encodings swig
+BuildRequires: flex gcc-c++ libstdc++-devel python-devel python-modules-encodings swig
+
+%if_enabled doc
+BuildRequires: docbook-utils-print xmlto dblatex 
+%endif
 
 %description
 The Linux Control and Measurement Device Interface Library.
@@ -136,8 +142,10 @@ for developing applications with %name
 %_includedir/comedi*
 %_libdir/%name.so
 %_docdir/%oname/
-%_man3dir/*
 %_pkgconfigdir/*
+%if_enabled doc
+%_man3dir/*
+%endif
 
 %files devel-static
 %_libdir/%name.a
@@ -145,6 +153,9 @@ for developing applications with %name
 #_libdir/_comedi.la
 
 %changelog
+* Fri May 25 2018 Pavel Vainerman <pv@altlinux.ru> 0.11.0-alt3
+- disabled build documentations (man3)
+
 * Sat Oct 28 2017 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt2
 - drop demo with binaries from devel subpackage
 
