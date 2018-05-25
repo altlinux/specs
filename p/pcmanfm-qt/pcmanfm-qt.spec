@@ -1,24 +1,22 @@
 Name:    pcmanfm-qt
-Version: 0.12.0
-Release: alt3
+Version: 0.13.0
+Release: alt1
 
 Summary: PCManFM-Qt is the Qt port of the LXDE file manager PCManFM
 License: GPLv2+
 Group:   File tools
 
-Url:     http://lxqt.org
+Url:     https://lxqt.org
 Source0: %name-%version.tar
 Source1: %name.desktop
 
 # fix initial settigs
 Patch: alt-settings.patch
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
-BuildRequires: qt5-base-devel qt5-tools-devel qt5-x11extras-devel qt5-svg-devel
-BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: libXdmcp-devel
+BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires: qt5-base-devel qt5-tools-devel
 BuildRequires: libfm-devel >= 1.2.0
-BuildRequires: libfm-qt-devel >= 0.11.0
+BuildRequires: libfm-qt-devel >= 0.13.0
 BuildRequires: liblxqt-devel
 BuildRequires: libmenu-cache-devel
 BuildRequires: rpm-build-xdg
@@ -33,21 +31,26 @@ PCManFM-Qt is the Qt port of the LXDE file manager PCManFM.
 %patch -p1
 
 %build
-%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
-%make_build
+%cmake -DPULL_TRANSLATIONS=OFF \
+       -DUPDATE_TRANSLATIONS=OFF
+%cmake_build
 
 %install
-%makeinstall_std
-%find_lang --with-qt %name
+%cmakeinstall_std
 install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
-%files -f %name.lang
+%files
 %_bindir/*
 %_desktopdir/*.desktop
 %_xdgconfigdir/*/*
+%_datadir/%name
 %_man1dir/*
+%doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sat May 26 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
+- new version 0.13.0
+
 * Tue May 08 2018 Anton Midyukov <antohami@altlinux.org> 0.12.0-alt3
 - Enabled quick execution in the file manager
 

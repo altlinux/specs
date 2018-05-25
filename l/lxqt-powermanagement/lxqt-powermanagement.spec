@@ -1,16 +1,15 @@
 Name: lxqt-powermanagement
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: Powermanagement module for LXQt
 License: LGPL
 Group: Graphical desktop/Other
 
-Url: http://lxqt.org
+Url: https://lxqt.org
 Source: %name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
+BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel qt5-svg-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-solid-devel kf5-kidletime-devel
 BuildRequires: rpm-build-xdg libqtxdg-devel
@@ -30,20 +29,27 @@ Obsoletes: razorqt-power < 0.7.0
 %setup
 
 %build
-%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
-%make_build
+%cmake -DPULL_TRANSLATIONS=OFF \
+       -DUPDATE_TRANSLATIONS=OFF
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %_bindir/*
 %_xdgconfigdir/*/*
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*.svg
-%doc AUTHORS
+%doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Fri May 25 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
+- new version 0.13.0
+
+* Mon Feb 19 2018 Anton Midyukov <antohami@altlinux.org> 0.12.0-alt0.M80P.1
+- backport to ALT p8
+
 * Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
 - 0.12.0
 

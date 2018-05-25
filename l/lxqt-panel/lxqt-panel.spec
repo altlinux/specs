@@ -1,20 +1,21 @@
 Name: lxqt-panel
-Version: 0.12.0
-Release: alt5
+Version: 0.13.0
+Release: alt1
 
 Summary: Desktop panel
 License: LGPL
 Group: Graphical desktop/Other
 
-Url: http://lxqt.org
+Url: https://lxqt.org
 Source: %name-%version.tar
 Patch: alt-settings.patch
-Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
-BuildRequires: liblxqt-devel kf5-solid-devel
+BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires: liblxqt-devel
 BuildRequires: libqtxdg-devel qt5-base-devel qt5-tools-devel
-BuildRequires: kf5-kwindowsystem-devel kf5-kguiaddons-devel
+BuildRequires: kf5-solid-devel
+BuildRequires: kf5-kwindowsystem-devel
+#kf5-kguiaddons-devel
 BuildRequires: libdbusmenu-qt5-devel
 BuildRequires: lxqt-globalkeys-devel
 BuildRequires: libalsa-devel
@@ -53,12 +54,13 @@ This package provides the development files for %name.
 %patch -p1
 
 %build
-%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF \
-	-DVOLUME_USE_PULSEAUDIO=ON
-%make_build
+%cmake -DPULL_TRANSLATIONS=OFF \
+       -DUPDATE_TRANSLATIONS=OFF \
+       -DVOLUME_USE_PULSEAUDIO=ON
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %_man1dir/*
@@ -67,12 +69,15 @@ This package provides the development files for %name.
 %_xdgconfigdir/*/*
 %_datadir/lxqt/*
 %_datadir/desktop-directories/*
-%doc AUTHORS
+%doc AUTHORS CHANGELOG LICENSE README.md
 
 %files devel
 %_includedir/*/*.h
 
 %changelog
+* Thu May 24 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
+- new version 0.13.0
+
 * Sat Apr 14 2018 Anton Midyukov <antohami@altlinux.org> 0.12.0-alt5
 - replaced qupzilla to falkon in initial settings
 

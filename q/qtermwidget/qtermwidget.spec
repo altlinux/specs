@@ -1,14 +1,13 @@
 Name: qtermwidget
-Version: 0.8.0
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Summary: unicode-enabled, embeddable QT4 terminal widget
 License: GPL
 Group: Terminals
 
-Url: http://github.com/qterminal/qtermwidget
+Url: https://github.com/lxqt/qtermwidget
 Source: %name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Wed Mar 07 2012
 # optimized out: cmake-modules fontconfig libqt4-core libqt4-designer libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libstdc++-devel
@@ -63,11 +62,11 @@ This package contains the development headers for %name library.
 %setup
 
 %build
-%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
-%make_build
+%cmake -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 
@@ -82,13 +81,16 @@ This package contains the development headers for %name library.
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%_datadir/cmake/*/
+%_libdir/cmake/*/
 
 # TODO:
 # - P:/O: qtermwidget-qt5 after check
 # - build with libutf8proc (pkgconfig problem in 0.8.0 though)
 
 %changelog
+* Tue May 22 2018 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Tue Oct 24 2017 Michael Shigorin <mike@altlinux.org> 0.8.0-alt2
 - added conflicts with qtermwidget-qt5 package
 

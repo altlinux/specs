@@ -1,53 +1,35 @@
-%define soname 3
-
 Name: libfm-qt
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: Core library of PCManFM-Qt file manager
 License: LGPLv2+
 Group: System/Libraries
 
-Url: http://lxqt.org
+Url: https://lxqt.org
 Source: %name-%version.tar
 
-BuildPreReq: rpm-build-xdg
-BuildRequires: intltool libmenu-cache-devel
-BuildRequires: libdbus-glib-devel libudisks2-devel
-BuildRequires: glib2-devel libgtk+2-devel gtk-doc
-BuildRequires: vala >= 0.13.0
+BuildRequires: cmake rpm-macros-cmake
+BuildRequires: rpm-build-xdg
+BuildRequires: gcc-c++
+BuildRequires: lxqt-build-tools >= 0.5.0
 BuildRequires: libexif-devel
-BuildRequires: libxslt-devel
-
-BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
-BuildRequires: qt5-base-devel qt5-tools-devel
-BuildRequires: libqtxdg-devel
-
+BuildRequires: qt5-base-devel 
+BuildRequires: qt5-tools-devel
 BuildRequires: pkgconfig(Qt5X11Extras)
-BuildRequires: pkgconfig(x11)
-BuildRequires: pkgconfig(xcb)
-BuildRequires: pkgconfig(glib-2.0)
-BuildRequires: pkgconfig(gio-2.0)
-BuildRequires: pkgconfig(gio-unix-2.0)
-BuildRequires: pkgconfig(libfm)
-BuildRequires: pkgconfig(lxqt) >= 0.11.0
-BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: pkgconfig(libmenu-cache) >= 0.3.0
+BuildRequires: pkgconfig(libfm) >= 1.2.0
+BuildRequires: pkgconfig(libmenu-cache) >= 0.4.0
+
+Conflicts: libfm-qt3
 
 %description
-LibFM-Qt is a core library of PCManFM-Qt file manager.
-
-%package -n %name%soname
-Summary: %summary
-Group: System/Libraries
-
-%description -n %name%soname
 LibFM-Qt is a core library of PCManFM-Qt file manager.
 
 %package devel
 Summary: Development files for %name
 Group: Development/Other
 Requires: libexif-devel libmenu-cache-devel
+Requires: %name = %EVR
 
 %description devel
 This package contains files needed to build applications using LibFM-Qt.
@@ -56,20 +38,17 @@ This package contains files needed to build applications using LibFM-Qt.
 %setup
 
 %build
-# FIXME: insource build broken upstream as of 0.12.0:
-# https://pastebin.com/ExqvpJVa (notified agaida@)
-#cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
-%cmake -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
-%make_build -C BUILD
+%cmake -DPULL_TRANSLATIONS=OFF \
+       -DUPDATE_TRANSLATIONS=OFF
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
-%find_lang --with-qt %name
+%cmakeinstall_std
 
 # We need to fix this upstream
 find %buildroot -size 0 -delete
 
-%files -n %name%soname -f libfm-qt.lang
+%files
 %_libdir/*.so.*
 %_datadir/%name/
 %_xdgmimedir/*/*
@@ -79,9 +58,12 @@ find %buildroot -size 0 -delete
 %_includedir/*
 %_pkgconfigdir/*
 %_datadir/cmake/fm-qt/*
-%doc AUTHORS
+%doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Thu May 24 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
+- new version 0.13.0
+
 * Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
 - 0.12.0
 

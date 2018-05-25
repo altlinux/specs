@@ -1,18 +1,17 @@
 Name: lxqt-qtplugin
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: LxQt platform integration plugin for Qt
 License: LGPL
 Group: Graphical desktop/Other
 
-Url: http://lxqt.org
+Url: https://lxqt.org
 Source: %name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel libqtxdg-devel
-BuildRequires: kf5-kwindowsystem-devel libdbusmenu-qt5-devel
+BuildRequires: libdbusmenu-qt5-devel
 BuildRequires: libfm-qt-devel
 
 %description
@@ -22,17 +21,20 @@ BuildRequires: libfm-qt-devel
 %setup
 
 %build
-%cmake_insource
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %_libdir/qt5/plugins/*/libqtlxqt.so
-%doc AUTHORS
+%doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Thu May 24 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
+- new version 0.13.0
+
 * Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
 - 0.12.0
 
