@@ -1,6 +1,6 @@
 
 Name:    chef
-Version: 12.15.11
+Version: 14.1.21
 Release: alt1
 
 Summary: Clients for the chef systems integration framework
@@ -14,7 +14,7 @@ Packager:  Andrey Cherepanov <cas@altlinux.org>
 BuildArch: noarch
 
 # Filter automatic requirements
-%filter_from_requires /^ruby(\(win32\|windows\|wmi-lite\).*)/d;/^python2.7(yum)/d
+%filter_from_requires /^ruby(\(win32\|windows\|wmi-lite\|appscript\).*)/d;/^python2.7(yum)/d
 
 Source:  %name-%version.tar
 Source1: chef-client.init
@@ -114,10 +114,6 @@ mkdir -p %buildroot%_var/log/chef
 mkdir -p %buildroot%_var/lib/chef
 mkdir -p %buildroot%_var/cache/chef
 mkdir -p %buildroot/run/chef
-mkdir -p %buildroot%_man1dir
-mkdir -p %buildroot%_man8dir
-cp distro/common/man/man1/*.1 %buildroot%_man1dir/
-cp distro/common/man/man8/*.8 %buildroot%_man8dir/
 
 
 %check
@@ -136,8 +132,6 @@ cp distro/common/man/man8/*.8 %buildroot%_man8dir/
 %dir %attr(0750, _chef, _chef) %_var/cache/chef
 %ruby_sitelibdir/*
 %exclude %ruby_sitelibdir/chef-config/*
-%_man1dir/*
-%_man8dir/*
 
 %files config
 %ruby_sitelibdir/chef-config/*
@@ -150,6 +144,27 @@ getent group _chef  >/dev/null || groupadd -r _chef
 getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbin/nologin -c "Opscode Chef Daemon" _chef
 
 %changelog
+* Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 14.1.21-alt1
+- New version.
+
+* Tue Mar 20 2018 Andrey Cherepanov <cas@altlinux.org> 14.0.142-alt1
+- New version.
+
+* Thu Sep 07 2017 Andrey Cherepanov <cas@altlinux.org> 13.4.15-alt1
+- New version
+
+* Mon Sep 04 2017 Andrey Cherepanov <cas@altlinux.org> 13.4.11-alt1
+- New version
+
+* Sun Aug 27 2017 Andrey Cherepanov <cas@altlinux.org> 13.3.52-alt1
+- New version
+
+* Mon Apr 10 2017 Andrey Cherepanov <cas@altlinux.org> 13.1.0-alt1
+- New version
+
+* Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 12.19.2-alt1
+- new version 12.19.2
+
 * Wed Oct 05 2016 Andrey Cherepanov <cas@altlinux.org> 12.15.11-alt1
 - new version 12.15.11
 
