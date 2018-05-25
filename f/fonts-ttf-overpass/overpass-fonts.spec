@@ -7,8 +7,8 @@ Group: System/Fonts/True type
 %global monofontconf 60-%{fontname}-mono.conf
 
 Name:		fonts-ttf-overpass
-Version:	3.0.2
-Release:	alt1_2
+Version:	3.0.3
+Release:	alt1_1
 Summary:	Typeface based on the U.S. interstate highway road signage type system
 License:	OFL or LGPLv2+
 URL:		https://github.com/RedHatBrand/overpass/
@@ -63,6 +63,12 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
 ln -s %{_fontconfig_templatedir}/%{monofontconf} \
                 %{buildroot}%{_fontconfig_confdir}/%{monofontconf}
 
+# I do not think this is useful to package, but if it is...
+%if 0
+mkdir -p %{buildroot}/usr/lib/node_modules/overpass/
+cp -a bower.json package.json %{buildroot}/usr/lib/node_modules/overpass/
+%endif
+
 # Add AppStream metadata
 install -Dm 0644 -p %{SOURCE2} \
 	%{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
@@ -107,6 +113,7 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/overpass-bold*.otf
 %{_fontbasedir}/*/%{_fontstem}/overpass-extra*.otf
 %{_fontbasedir}/*/%{_fontstem}/overpass-heavy*.otf
@@ -116,18 +123,25 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/overpass-semibold*.otf
 %{_fontbasedir}/*/%{_fontstem}/overpass-thin*.otf
 %doc README.md overpass-specimen.pdf
-%doc LICENSE.md
+%doc --no-dereference LICENSE.md
 %{_datadir}/appdata/%{fontname}.metainfo.xml
+%if 0
+/usr/lib/node_modules/overpass/
+%endif
 
 %files -n fonts-ttf-overpass-mono
 %{_fontconfig_templatedir}/%{monofontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{monofontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/overpass-mono-*.otf
 %doc README.md overpass-mono-specimen.pdf
-%doc LICENSE.md
+%doc --no-dereference LICENSE.md
 %{_datadir}/appdata/%{fontname}-mono.metainfo.xml
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1_2
 - update to new release by fcimport
 
