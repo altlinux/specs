@@ -21,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:                      jython
 Version:                   2.7.1
-Release:                   alt1_5jpp8
+Release:                   alt2_5jpp8
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
@@ -48,7 +48,7 @@ Requires:                  antlr32-java
 Requires:                  apache-commons-compress
 Requires:                  bouncycastle
 Requires:                  bouncycastle-pkix
-Requires:                  guava
+Requires:                  guava20
 Requires:                  objectweb-asm
 Requires:                  jctools >= 2.0.2
 Requires:                  jnr-constants
@@ -71,7 +71,7 @@ BuildRequires:             antlr32-tool
 BuildRequires:             apache-commons-compress
 BuildRequires:             bouncycastle
 BuildRequires:             bouncycastle-pkix
-BuildRequires:             guava
+BuildRequires:             guava20
 BuildRequires:             objectweb-asm
 BuildRequires:             jctools >= 2.0.2
 BuildRequires:             jnr-constants
@@ -153,7 +153,7 @@ sed -i -e 's/CharMatcher\.ascii()/CharMatcher.ASCII/' \
 build-jar-repository -p -s extlibs \
   antlr32/antlr antlr32/antlr-runtime stringtemplate antlr \
   jffi jffi-native jnr-constants jnr-ffi jnr-netdb jnr-posix jline/jline jansi/jansi icu4j/icu4j \
-  glassfish-servlet-api guava objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util \
+  glassfish-servlet-api guava20 objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util \
   commons-compress junit hamcrest/core
 
 ant \
@@ -172,7 +172,7 @@ popd
 # Symlink run-time libs
 rm dist/javalib/*.jar
 build-jar-repository -p -s dist/javalib antlr32/antlr-runtime-3.2 \
-  objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util guava icu4j/icu4j \
+  objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util guava20 icu4j/icu4j \
   jffi jffi-native jnr-constants jnr-ffi jnr-netdb jnr-posix jline/jline jansi/jansi \
   netty/netty-buffer netty/netty-codec netty/netty-common netty/netty-handler netty/netty-resolver netty/netty-transport \
   jctools/jctools-core apache-commons-compress bcprov bcpkix xerces-j2
@@ -251,6 +251,9 @@ fi || :
 %{_datadir}/%{name}/Demo
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt2_5jpp8
+- build with guava20
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt1_5jpp8
 - java update
 
