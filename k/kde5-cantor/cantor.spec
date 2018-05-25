@@ -4,7 +4,7 @@
 %def_enable python3
 %def_disable luajit
 
-%define cantor_sover 17
+%define cantor_sover 18
 %define libcantorlibs libcantorlibs%cantor_sover
 %define cantor_pythonbackend_sover 0
 %define libcantor_pythonbackend libcantor_pythonbackend%cantor_pythonbackend_sover
@@ -12,8 +12,8 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 17.12.3
-Release: alt1%ubt.1
+Version: 18.04.1
+Release: alt1%ubt
 %K5init
 
 Group: Education
@@ -98,6 +98,7 @@ KF5 library
 #popd
 
 %build
+%K5cmake
 %K5build \
     -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
     #
@@ -140,6 +141,9 @@ KF5 library
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 17.12.3-alt1%ubt.1
 - (NMU) Rebuilt with python-3.6.4.
 
