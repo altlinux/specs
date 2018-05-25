@@ -1,10 +1,10 @@
 %define rname ark
 
-%define sover 17
+%define sover 18
 %define libkerfuffle libkerfuffle%sover
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init altplace
 
@@ -66,13 +66,13 @@ KF5 library
 
 %install
 %K5install
-mv %buildroot/%_K5xdgmime/kerfuffle{,5}.xml
+#mv %buildroot/%_K5xdgmime/kerfuffle{,5}.xml
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
 %doc COPYING*
 %dir %_K5plug/kf5/kfileitemaction/
-%_K5xdgmime/kerfuffle5.xml
+#%_K5xdgmime/kerfuffle5.xml
 
 %files
 %config(noreplace) %_K5xdgconf/ark.*
@@ -102,6 +102,9 @@ mv %buildroot/%_K5xdgmime/kerfuffle{,5}.xml
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 

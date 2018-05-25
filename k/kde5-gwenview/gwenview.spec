@@ -4,7 +4,7 @@
 %define libgwenview libgwenviewlib%sover
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init
 
@@ -68,7 +68,7 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data gwenview gvpart solid
+%K5install_move data gwenview gvpart solid kconf_update
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -87,6 +87,7 @@ KF5 library
 %_K5srv/*.desktop
 %_K5xmlgui/*
 #%_K5srvtyp/*
+%_K5conf_up/*gwenview*
 
 %files devel
 #%_K5inc/gwenview_version.h
@@ -100,6 +101,9 @@ KF5 library
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 

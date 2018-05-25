@@ -5,8 +5,8 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 17.12.3
-Release: alt2%ubt
+Version: 18.04.1
+Release: alt1%ubt
 %K5init
 
 Group: File tools
@@ -98,6 +98,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 
 %files common -f %name.lang
 %doc COPYING*
+%_datadir/locale/*/LC_SCRIPTS/dolphin/
 
 %files
 %config(noreplace) %_K5xdgconf/*
@@ -125,6 +126,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Tue May 08 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt2%ubt
 - update russian translation
 

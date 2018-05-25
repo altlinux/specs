@@ -1,10 +1,10 @@
 %define rname konsole
 
-%define sover 17
+%define sover 18
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init
 
@@ -37,7 +37,7 @@ BuildRequires: kf5-kdesignerplugin-devel kf5-kemoticons-devel kf5-kguiaddons-dev
 BuildRequires: kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel
 BuildRequires: kf5-knotifyconfig-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel
-BuildRequires: kf5-sonnet-devel
+BuildRequires: kf5-sonnet-devel kf5-knewstuff-devel kf5-kglobalaccel-devel
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel
 BuildRequires: libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
 BuildRequires: libxkbfile-devel
@@ -97,6 +97,7 @@ __EOF__
 
 %files
 %config %_sysconfdir/alternatives/packages.d/kde5-konsole
+%config %_K5xdgconf/*rc
 # adding to utmp don't work because dbus checking for saved guid
 #attr(2711,root,utempter) %_K5bin/konsole
 %_K5bin/konsole
@@ -116,6 +117,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 
