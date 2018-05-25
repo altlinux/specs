@@ -1,24 +1,25 @@
 %define oname aar2slob
 
-%def_without bootstrap
+%def_with bootstrap
 
 Name: python3-module-%oname
 Version: 0.01
-Release: alt2
-Summary: converts Aard Dictionary .aar files to slob format
-BuildArch: noarch
-Group: Development/Other
-Url: http://aarddict.org
-License: GPL3
+Release: alt2.1
 
+Summary: converts Aard Dictionary .aar files to slob format
+Group: Development/Other
+License: GPL3
+Url: http://aarddict.org
 #https://github.com/itkach/aar2slob.git
+BuildArch: noarch
+
 Source: %name.tar
 
 %if_with bootstrap
-Requires: python3.3(cssselect)
+%py3_requires cssselect
 %endif
 
-BuildPreReq: rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 
 
 %description
@@ -38,6 +39,9 @@ converts Aard Dictionary .aar files to slob format
 %doc README*
 
 %changelog
+* Fri May 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.01-alt2.1
+- rebuild with all requires
+
 * Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.01-alt2
 - rebuild with python3.6
 

@@ -1,11 +1,9 @@
 %define oname pydap3.2
 
-%def_with python3
-%def_without bootstrap
-
 Name: python-module-%oname
 Version: 3.2
-Release: alt2
+Release: alt2.1
+
 Summary: A Python library implementing the Data Access Protocol (DAP, aka OPeNDAP or DODS)
 License: MIT
 Group: Development/Python
@@ -15,21 +13,14 @@ BuildArch: noarch
 
 Source: %oname-%version.tar.gz
 
-Requires: python-modules-email
-%if_with bootstrap
-%py_requires paste.deploy
-%py3_requires paste.deploy
-%endif
+%py_requires email
+
 Conflicts: python-module-pydap
 
-BuildRequires: python-module-PasteDeploy python-module-PasteScript 
 BuildRequires: python-module-docutils python-module-html5lib python-module-httplib2 
 BuildRequires: python-module-matplotlib python-module-pytest 
 
 BuildRequires(pre): rpm-build-python3
-%if_with bootstrap
-BuildPreReq: python3-module-PasteDeploy python3-module-PasteScript
-%endif
 BuildPreReq: python3-module-genshi python3-module-httplib2 
 BuildPreReq: python3-module-pytest rpm-build-python3 time
 
@@ -59,24 +50,19 @@ Opendap server, implemented as a WSGI application.
 %prep
 %setup
 
-%if_with python3
 cp -fR . ../python3
 pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 popd
-%endif
 
 %build
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -85,26 +71,27 @@ for i in $(ls); do
 	mv $i $i.py3
 done
 popd
-%endif
 
 %python_install
 
 %files
 %doc *.txt *.rst
 %_bindir/*
-%if_with python3
+
 %exclude %_bindir/*.py3
-%endif
+
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt *.rst
 %_bindir/*.py3
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Fri May 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.2-alt2.1
+- fix requires
+
 * Thu May 17 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.2-alt2
 - rebuild with python3.6
 
