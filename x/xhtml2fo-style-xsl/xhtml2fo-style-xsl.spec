@@ -5,7 +5,7 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name: xhtml2fo-style-xsl
 Version: 20051222
-Release: alt1_15
+Release: alt1_16
 Group: Text tools
 
 Summary: Antenna House, Inc. XHTML to XSL:FO stylesheets
@@ -63,6 +63,9 @@ fi
 
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 20051222-alt1_16
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20051222-alt1_15
 - update to new release by fcimport
 
