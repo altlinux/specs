@@ -1,5 +1,5 @@
 Name: retroshare
-Version: 0.6.3
+Version: 0.6.4
 Release: alt1
 
 Summary: Secure communication with friends
@@ -15,9 +15,14 @@ Source: %name-%version.tar
 
 # manually removed: ruby ruby-stdlibs selinux-policy i586-libxcb  python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope
 # Automatically added by buildreq on Tue Jan 03 2017
-# optimized out: gcc-c++ glib2-devel libGL-devel libX11-devel libXScrnSaver-devel libavutil-devel libcom_err-devel libgnome-keyring libgpg-error libjson-c libkrb5-devel libp11-kit libqt5-core libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxml2-devel pkg-config python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-tools-devel qt5-xmlpatterns-devel xorg-scrnsaverproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: bzlib-devel libavcodec-devel libcurl-devel libgnome-keyring-devel libmicrohttpd-devel libopencv-devel libqtav-devel libspeex-devel libspeexdsp-devel libsqlcipher-devel libssl-devel libupnp-devel libxslt-devel
+# optimized out: gcc-c++ glib2-devel libGL-devel libX11-devel libXScrnSaver-devel libavutil-devel libcom_err-devel libgnome-keyring libgpg-error libjson-c libkrb5-devel libp11-kit libqt5-core libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxml2-devel qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-tools-devel qt5-xmlpatterns-devel xorg-scrnsaverproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: bzlib-devel libavcodec-devel libcurl-devel libgnome-keyring-devel libmicrohttpd-devel libqtav-devel  libsqlcipher-devel libssl-devel libupnp-devel libxslt-devel
 BuildRequires: qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel-static qt5-wayland-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
+
+# VOIP extension
+BuildRequires: libspeex-devel libspeexdsp-devel libopencv-devel qt5-multimedia-devel
+#libhighgui-dev - part of opencv
+
 
 BuildRequires: gcc-c++ desktop-file-utils
 
@@ -71,7 +76,7 @@ This package provides a plugin for RetroShare, a secured Friend-to-Friend commun
 %setup
 
 %build
-qmake-qt5 "CONFIG-=debug" "CONFIG+=release" PREFIX=%prefix LIB_DIR=%_libdir RetroShare.pro
+qmake-qt5 "CONFIG-=debug" "CONFIG+=release" "CONFIG+=retroshare_plugins" PREFIX=%prefix LIB_DIR=%_libdir RetroShare.pro
 %make_build
 
 %install
@@ -99,6 +104,9 @@ desktop-file-validate %buildroot%_desktopdir/retroshare.desktop
 %_libdir/retroshare/extensions6/libFeedReader.so*
 
 %changelog
+* Sat May 26 2018 Vitaly Lipatov <lav@altlinux.ru> 0.6.4-alt1
+- new version 0.6.4 (with rpmrb script)
+
 * Sat Oct 21 2017 Vitaly Lipatov <lav@altlinux.ru> 0.6.3-alt1
 - new version 0.6.3 (with rpmrb script)
 
