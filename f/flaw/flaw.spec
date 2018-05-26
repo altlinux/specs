@@ -10,16 +10,18 @@ BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-gettextize gcc-c++ i
 
 Name:		flaw
 Version:	1.3.2a
-Release:	alt2_16
+Release:	alt2_18
 Summary:	Free top-down wizard battle game
 Group:		Games/Other
 License:	GPLv3+
 URL:		http://flaw.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+#patch to build on aarch64, upstream notified to use autoconf 2.69
 Patch0:		flaw-aarch64.patch
 
 BuildRequires:	libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libSDL-devel fonts-ttf-gnu-freefont-serif 
 BuildRequires:	libSDL_gfx-devel desktop-file-utils fonts-ttf-gnu-freefont-sans gettext gettext-tools intltool
+BuildRequires:	gcc
 Requires:	fonts-ttf-gnu-freefont-sans fonts-ttf-gnu-freefont-serif
 Source44: import.info
 
@@ -33,8 +35,7 @@ that provide special abilities.
 
 %prep
 %setup -q
-#patch to build on aarch64, upstream notified to use autoconf 2.69
-%patch0 -p 1
+%patch0 -p1
 
 # Fix spurious executable permissions
 chmod 644 src/*.cc
@@ -48,7 +49,7 @@ sed -i -e '2d' data/flaw.desktop
 %make_build
 
 %install
-make install DESTDIR=%{buildroot}
+%makeinstall_std
 
 # Register as an application to be visible in the software center
 #
@@ -108,6 +109,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %doc %{_docdir}/%{name}
 
 %changelog
+* Sat May 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt2_18
+- fc update (fixed build)
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt2_16
 - update to new release by fcimport
 
