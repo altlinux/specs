@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-%module
-Version: 0.062
+Version: 0.063
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -55,6 +55,9 @@ RPM-Source-BundleImport plugin for Perl source code
 %perl_vendor_privlib/RPM/Source/BundleImport/Perl
 
 %changelog
+* Sat May 26 2018 Igor Vlasenko <viy@altlinux.ru> 0.063-alt1
+- new version
+
 * Sat Jan 13 2018 Igor Vlasenko <viy@altlinux.ru> 0.062-alt1
 - TeXlive support
 
