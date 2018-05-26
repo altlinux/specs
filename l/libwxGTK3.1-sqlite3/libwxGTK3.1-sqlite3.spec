@@ -3,7 +3,7 @@
 %define oname wxsqlite3
 
 Name: libwxGTK%wxversion-sqlite3
-Version: 3.5.1
+Version: 4.0.3
 Release: alt1
 
 Summary: C++ wrapper around the SQLite 3.x database
@@ -39,6 +39,7 @@ Summary: Development files for %name
 Group: Development/C
 Requires: %name = %version-%release
 Requires: libwxGTK%wxversion-devel
+Requires: libsqlite3-devel
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -87,11 +88,15 @@ wxsqlite3.pc.in > %buildroot%_pkgconfigdir/%oname-%wxversion.pc
 %files devel
 %wxincdir/wx/*
 %_pkgconfigdir/%oname-%wxversion.pc
+%_pkgconfigdir/%oname.pc
 %_libdir/*.so
 
 #files doc
 #doc docs/html
 
 %changelog
+* Sat May 26 2018 Vitaly Lipatov <lav@altlinux.ru> 4.0.3-alt1
+- new version 4.0.3 (with rpmrb script)
+
 * Mon Mar 13 2017 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt1
 - initial build to ALT Linux Sisyphus
