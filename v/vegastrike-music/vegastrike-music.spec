@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:           vegastrike-music
 Version:        0.5.1
-Release:        alt2_10.r1
+Release:        alt2_11.r1
 Summary:        Music for Vega Strike
 Group:          Games/Other
 License:        GPL+
@@ -67,6 +67,9 @@ cp -r music communications sounds $RPM_BUILD_ROOT%{_datadir}/vegastrike
 
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_11.r1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_10.r1
 - update to new release by fcimport
 
