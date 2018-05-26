@@ -9,10 +9,12 @@ BuildRequires(pre): rpm-build-ubt
 %def_without ffmpeg_static
 %endif
 
+%def_without clang
+%def_without libcxx
 
 Name: telegram-desktop
-Version: 1.1.23
-Release: alt3
+Version: 1.3.0
+Release: alt1
 
 Summary: Telegram is a messaging app with a focus on speed and security
 
@@ -31,7 +33,6 @@ Patch3: 0003_qt-plugins.patch
 Patch4: 0004_API-ID.patch
 Patch5: 0005_Downgrade-Qt-version.patch
 Patch6: 0006_fix-static-qt-functions.patch
-Patch7: 0007_cvefix.patch
 Patch8: 0008_add_locales.patch
 #Patch9: 0001-use-correct-executable-path.patch
 Patch14: 0014-get-language-name-and-country-name-from-QLocale.patch
@@ -50,8 +51,8 @@ Requires: qt5-imageformats
 # for -lQt5PlatformSupport
 BuildRequires: qt5-base-devel-static
 
-# for autoupdater
-#BuildRequires: liblzma-devel
+# for autoupdater (included ever if disabled)
+BuildRequires: liblzma-devel
 
 # for SourceFiles/mtproto/connection.cpp
 BuildRequires: libzip-devel
@@ -59,7 +60,8 @@ BuildRequires: libzip-devel
 BuildRequires: zlib-devel >= 1.2.8
 
 BuildRequires: libminizip-devel libpcre-devel libexpat-devel libssl-devel bison
-#BuildRequires: libexif-devel libpixman-devel libz3-devel liblzma-devel
+BuildRequires: libpixman-devel
+#BuildRequires:  libpixman-devel libz3-devel 
 #BuildRequires: libxkbcommon-devel libxkbcommon-x11-devel
 #BuildRequires: libXi-devel libSM-devel libICE-devel libdbus-devel libXfixes-devel
 BuildRequires: libX11-devel
@@ -75,9 +77,10 @@ BuildRequires: libopenal-devel >= 1.17.2
 # used by qt imageformats: libwebp-devel 
 BuildRequires: libva-devel libdrm-devel
 
-BuildRequires: libtgvoip-devel >= 0.4.1.2
+BuildRequires: libtgvoip-devel >= 1.2.18t
+BuildRequires: libcrl-devel >= 0.1
 # C++ sugar
-BuildRequires: libmicrosoft-gsl-devel libvariant-devel
+BuildRequires: libmicrosoft-gsl-devel libvariant-devel librange-v3-devel
 
 # FIXME: libva need only for linking, extra deps?
 
@@ -90,13 +93,21 @@ BuildRequires: libffmpeg-devel-static
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libswscale-devel libswresample-devel
 %endif
 
+%if_with clang
+BuildRequires: clang6.0
+%remove_optflags -frecord-gcc-switches
+%endif
+%if_with libcxx
+%add_optflags -stdlib=libc++
+%endif
+
 Requires: dbus
 
 # some problems with t_assert
 %add_optflags -fpermissive
 
 # disable some warnings
-%add_optflags -Wno-strict-aliasing
+%add_optflags -Wno-strict-aliasing -Wno-unused-variable -Wno-sign-compare -Wno-switch
 
 
 %description
@@ -119,12 +130,11 @@ $ XDG_CURRENT_DESKTOP=NONE tdesktop
 %patch3 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 %patch8 -p1
 #patch9 -p1
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
+#patch16 -p1
 
 cp %SOURCE2 Telegram/
 # MacOS things will conflicts with binary name, so delete Telegram dir
@@ -144,7 +154,18 @@ EOF
 export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %endif
 cd Telegram
-%cmake_insource
+%if_with clang
+export CC=clang
+export CXX=clang++
+%endif
+%cmake_insource \
+%if_with libcxx
+    -DLLVM_ENABLE_LIBCXX=ON
+%else
+    %nil
+%endif
+# due precompiled headers
+export CCACHE_SLOPPINESS=pch_defines,time_macros
 %make_build
 
 %install
@@ -178,6 +199,26 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Fri Jun 01 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0 (with rpmrb script)
+
+* Sat May 26 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2.23-alt1
+- new version 1.2.23 (with rpmrb script)
+
+* Thu Feb 22 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2.8-alt1
+- new version (1.2.8) with rpmgs script
+
+* Thu Dec 14 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
+- new version 1.2.1 (with rpmrb script)
+
+* Sun Dec 03 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.26-alt1
+- new version 1.1.26 (with rpmrb script)
+
+* Thu Nov 30 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.24-alt1
+- new version 1.1.24 (with rpmrb script)
+- build with librange-v3-include
+- disable GTK integration (ALT bug 34182)
+
 * Sat Oct 21 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.23-alt3
 - fix old lang code in settings
 - fix CVE-2016-10351: Insecure cWorkingDir permissions
