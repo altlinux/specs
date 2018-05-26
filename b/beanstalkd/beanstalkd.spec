@@ -1,7 +1,3 @@
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %_var
-%global _hardened_build 1
-
 %define beanstalkd_user      beanstalkd
 %define beanstalkd_group     %beanstalkd_user
 %define beanstalkd_home      %_localstatedir/lib/beanstalkd
@@ -9,12 +5,12 @@
 
 Name: beanstalkd
 Version: 1.10
-Release: alt2
+Release: alt3
 Summary: A simple, fast work-queue service
 
 Group: System/Servers
 License: MIT
-Url: http://kr.github.io/%name/
+Url: http://kr.github.io/beanstalkd/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -25,6 +21,10 @@ Source2: %name.sysconfig
 
 Patch1: beanstalkd-1.10-warnings.patch
 Patch2: beanstalkd-1.10-mkdtemp.patch
+
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+#define _localstatedir %_var
+BuildRequires: rpm-macros-intro-conflicts
 
 Requires(pre):    shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
 Source44: import.info
@@ -87,6 +87,10 @@ fi
 %ghost %attr(0755,%beanstalkd_user,%beanstalkd_group) %dir %beanstalkd_binlogdir
 
 %changelog
+* Sun Oct 01 2017 Vitaly Lipatov <lav@altlinux.ru> 1.10-alt3
+- build with rpm-build-intro
+- fix quotes in sysconfig file
+
 * Sun Oct 01 2017 Vitaly Lipatov <lav@altlinux.ru> 1.10-alt2
 - native build for ALT Sisyphus
 
