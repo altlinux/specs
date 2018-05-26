@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%modulename
-Version: 3.5.1
-Release: alt1.hg20140627.1.2
+Version: 14.2.0
+Release: alt1
 
 %setup_python_module %modulename
 
@@ -15,23 +15,29 @@ Group: Development/Python
 URL: http://www.cherrypy.org
 BuildArch: noarch
 
-# hg clone https://bitbucket.org/cherrypy/cherrypy
-Source: http://download.cherrypy.org/cherrypy/%version/%name-%version.tar
+# git clone https://github.com/cherrypy/cherrypy
+Source: %modulename-%version.tar
+Patch: disable-codecov_button.patch
 
 Conflicts: python-module-cherrypy2 >= 2.3.0-alt1
 
-#BuildPreReq: %py_dependencies setuptools
-#BuildPreReq: python-module-sphinx-devel python-module-nose
-#BuildPreReq: python-module-coverage
+BuildRequires: python-module-setuptools_scm
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base
-BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python3-module-setuptools rpm-build-python3 time
-
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python-tools-2to3
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python-module-alabaster
+BuildRequires: python-module-coverage
+BuildRequires: python-module-docutils
+BuildRequires: python-module-html5lib
+BuildRequires: python-module-nose
+BuildRequires: python-module-objects.inv
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-rst.linker
+BuildRequires: python3-module-jaraco.packaging
+BuildRequires: time
 %endif
 
 %add_python_req_skip win32api
@@ -116,28 +122,31 @@ This package contains tests for CherryPy (Python 3).
 %endif
 
 %prep
-%setup
+%setup -n %modulename-%version
+%patch -p1
+sed -i "s/f'/'/;s/f\"/\"/" docs/conf.py
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
 %endif
 
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python_build
 %if_with python3
 pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w '{}' +
-sed -i 's|%_bindir/python|%_bindir/python3|' \
-	cherrypy/process/servers.py cherrypy/test/sessiondemo.py
-sed -i 's|%_bindir/env python|%_bindir/env python3|' cherrypy/cherryd
+find -type f -name '*.py' -exec 2to3 -w --no-diffs '{}' +
+subst 's|%_bindir/python|%_bindir/python3|' \
+      cherrypy/process/servers.py cherrypy/test/sessiondemo.py
 %python3_build
 popd
 %endif
 
 %install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %if_with python3
 pushd ../python3
 %python3_install
@@ -146,10 +155,10 @@ mv %buildroot%_bindir/cherryd %buildroot%_bindir/cherryd3
 %endif
 %python_install
 
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=%_builddir/python3
 pushd docs
-sphinx-build -b pickle -d build/doctrees . build/pickle
-sphinx-build -b html -d build/doctrees . build/html
+python3 /usr/bin/sphinx-build -b pickle -d build/doctrees . build/pickle
+python3 /usr/bin/sphinx-build -b html -d build/doctrees . build/html
 popd
 
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%modulename/
@@ -183,6 +192,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%modulename/
 %endif
 
 %changelog
+* Sat May 26 2018 Andrey Cherepanov <cas@altlinux.org> 14.2.0-alt1
+- New version.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.5.1-alt1.hg20140627.1.2
 - (NMU) rebuild with python3.6
 
