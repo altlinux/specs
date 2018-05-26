@@ -1,50 +1,75 @@
-%define _unpackaged_files_terminate_build 1
-%filter_from_requires /^perl.Module.Compile.Ext.pm./d
-%define module_name Module-Compile
-%filter_from_requires /^perl.Module.Compile.Ext.pm./d
-%filter_from_requires /^perl.Module.Compile.Ext.pm./d
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Carp.pm) perl(Data/Dumper.pm) perl(Digest/SHA1.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Path.pm) perl(Filter/Util/Call.pm) perl(LWP/Simple.pm) perl(MIME/Base64.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/Pod.pm) perl(Text/Diff.pm) perl(YAML.pm) perl(base.pm) perl(overload.pm) perl(Capture/Tiny.pm)
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(LWP/Simple.pm) perl(Test/Deep.pm) perl(Test/Pod.pm) perl(Text/Diff.pm) perl-podlators
 # END SourceDeps(oneline)
-BuildRequires: rpm-build-perl perl-devel perl-podlators
+BuildRequires: perl-Filter
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           perl-Module-Compile
+Version:        0.37
+Release:        alt1_1
+Summary:        Perl Module Compilation
+License:        GPL+ or Artistic
+Group:          Development/Other
+URL:            http://search.cpan.org/dist/Module-Compile/
+Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Module-Compile-%{version}.tar.gz
+BuildArch:      noarch
+# Build
+BuildRequires:  coreutils
+BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+BuildRequires:  sed
+# Runtime
+BuildRequires:  perl(constant.pm)
+BuildRequires:  perl(Digest/SHA1.pm)
+BuildRequires:  perl(Filter/Util/Call.pm)
+# Tests only
+BuildRequires:  perl(App/Prove.pm)
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(Capture/Tiny.pm)
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(Test/Base.pm)
+BuildRequires:  perl(Test/Base/Filter.pm)
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(YAML.pm)
+Requires:       perl(Digest/SHA1.pm) >= 2.130
+Requires:       perl(Filter/Util/Call.pm)
 
-Name: perl-%module_name
-Version: 0.37
-Release: alt1
-Summary: Perl Module Compilation
-Group: Development/Perl
-License: perl
-URL: https://github.com/ingydotnet/module-compile-pm
 
-Source0: http://www.cpan.org/authors/id/I/IN/INGY/%{module_name}-%{version}.tar.gz
-BuildArch: noarch
+Source44: import.info
+%filter_from_requires /:__requires_exclude\|}^perl(Digest.SHA1\\)$/d
 
 %description
-This module provides a system for writing modules that *compile* other
+This module provides a system for writing modules that compile other
 Perl modules.
 
-Modules that use these compilation modules get compiled into some
-altered form the first time they are run. The result is cached into
-`.pmc' files.
-
-Perl has native support for `.pmc' files. It always checks for them, before
-loading a `.pm' file.
-
-
 %prep
-%setup -q -n %{module_name}-%{version}
+%setup -q -n Module-Compile-%{version}
+rm -rf inc/ && sed -i -e '/^inc\//d' MANIFEST
 
 %build
-%perl_vendor_build
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
+%make_build
 
 %install
-%perl_vendor_install
+make pure_install DESTDIR=%{buildroot}
+# %{_fixperms} %{buildroot}/*
+
+%check
+make test
 
 %files
-%doc Changes LICENSE README
-%perl_vendor_privlib/M*
+%doc --no-dereference LICENSE
+%doc Changes CONTRIBUTING README
+%{perl_vendor_privlib}/*
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1_1
+- update to new release by fcimport
+
 * Wed May 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
 - automated CPAN update
 
