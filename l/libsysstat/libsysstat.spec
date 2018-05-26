@@ -1,12 +1,12 @@
 Name: libsysstat
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Library used to query system info and statistics
 License: LGPL
 Group: System/Libraries
 
-Url: http://lxqt.org
+Url: https://lxqt.org
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -32,11 +32,11 @@ which is used to query system info and statistics.
 %ifarch e2k
 %add_optflags -std=c++11
 %endif
-%cmake_insource
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %_libdir/*.so.*
@@ -48,6 +48,9 @@ which is used to query system info and statistics.
 %_datadir/cmake/*/
 
 %changelog
+* Tue May 22 2018 Anton Midyukov <antohami@altlinux.org> 0.4.1-alt1
+- new version 0.4.1
+
 * Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.4.0-alt1
 - 0.4.0
 

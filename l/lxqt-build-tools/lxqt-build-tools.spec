@@ -1,14 +1,13 @@
 Name: lxqt-build-tools
-Version: 0.4.0
-Release: alt2
+Version: 0.5.0
+Release: alt1
 
 Summary: Various packaging tools and scripts for LXQt applications
 License: BSD 3-clause
 Group: Graphical desktop/Other
 
-Url: http://lxqt.org
+Url: https://lxqt.org
 Source: %name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: qt5-base-devel qt5-tools-devel glib2-devel
@@ -27,17 +26,20 @@ sed -i '/-flto/d' cmake/modules/LXQtCompilerSettings.cmake
 %endif
 
 %build
-%cmake_insource
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %doc BSD-3-Clause
 %_datadir/cmake/%name
 
 %changelog
+* Tue May 22 2018 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
+- new version 0.5.0
+
 * Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.4.0-alt2
 - fix BR:
 - E2K: avoid lcc-unsupported options

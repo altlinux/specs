@@ -1,19 +1,19 @@
 Name: liblxqt
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: Core utility library for LXDE-Qt components
 License: LGPL
 Group: Graphical desktop/Other
 
-Url: http://lxqt.org
+Url: https://lxqt.org
 Source: %name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel
 BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: lxqt-build-tools libqtxdg-devel
+BuildRequires: libpolkitqt5-qt5-devel
 BuildRequires: git-core
 
 Provides: librazorqt = %version
@@ -25,13 +25,13 @@ Obsoletes: %name-data < 0.11.0
 %description
 %summary
 
-%package data
-Summary: Shared data for LXQt
+%package -n lxqt-backlight_backend
+Summary: backlight backend for LXQt
 Group: Graphical desktop/Other
-BuildArch: noarch
+Requires: %name = %version
 
-%description data
-This package provides shared data files for LXQt library.
+%description -n lxqt-backlight_backend
+This package provides backlight backend for LXQt library.
 
 %package devel
 Summary: Development headers for LXQt library
@@ -46,15 +46,21 @@ This package provides the development files for LXQt library.
 %setup
 
 %build
-%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
-%make_build
+%cmake -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %_libdir/*.so.*
-%doc AUTHORS
+%doc AUTHORS CHANGELOG COPYING README.md
+
+%files -n lxqt-backlight_backend
+%_bindir/lxqt-backlight_backend
+%dir %_datadir/lxqt
+%_datadir/lxqt/*
+%_datadir/polkit-1/actions/org.lxqt.backlight.pkexec.policy
 
 %files devel
 %_libdir/*.so
@@ -63,6 +69,9 @@ This package provides the development files for LXQt library.
 %_datadir/cmake/*/
 
 %changelog
+* Tue May 22 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
+- new version 0.13.0
+
 * Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
 - 0.12.0
 

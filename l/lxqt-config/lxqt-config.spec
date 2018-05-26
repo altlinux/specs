@@ -1,16 +1,15 @@
 Name: lxqt-config
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: LXDE-Qt system configurations (control center)
 License: LGPL
 Group: Graphical desktop/Other
 
-Url: http://lxqt.org
+Url: https://lxqt.org
 Source: %name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
+BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: libXau-devel libXcursor-devel libXdmcp-devel libXfixes-devel
 BuildRequires: liblxqt-devel libqtxdg-devel qt5-base-devel qt5-tools-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-libkscreen-devel qt5-svg-devel
@@ -31,11 +30,14 @@ Obsoletes: lxqt-config-randr < 0.8.0
 
 %build
 # FIXME: 0.10.0 fiddling with liblxqt-config-cursor.so (thx palinek)
-%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF -DCMAKE_SKIP_RPATH:BOOL=OFF -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
-%make_build
+%cmake -DPULL_TRANSLATIONS=OFF \
+       -DUPDATE_TRANSLATIONS=OFF \
+       -DCMAKE_SKIP_RPATH:BOOL=OFF \
+       -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %_bindir/*
@@ -44,9 +46,12 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %_xdgconfigdir/*/*
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
-%doc AUTHORS
+%doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Fri May 25 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
+- new version 0.13.0
+
 * Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
 - 0.12.0
 

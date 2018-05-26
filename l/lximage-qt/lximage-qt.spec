@@ -1,21 +1,20 @@
 Name: lximage-qt
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: Image viewer and screenshot tool
 License: LGPL
 Group: Graphical desktop/Other
 
-Url: http://lxqt.org
+Url: https://lxqt.org
 Source: %name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
+BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: libXdmcp-devel libXfixes-devel libexif-devel
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
 BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: libfm-devel libfm-qt-devel
-BuildRequires: libmenu-cache-devel >= 0.4.0
+BuildRequires: libmenu-cache-devel >= 0.5.0
 BuildRequires: glib2-devel libpcre-devel
 
 %description
@@ -25,19 +24,23 @@ BuildRequires: glib2-devel libpcre-devel
 %setup
 
 %build
-%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
-%make_build
+%cmake -DPULL_TRANSLATIONS=OFF \
+       -DUPDATE_TRANSLATIONS=OFF
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %_bindir/*
 %_iconsdir/*/*/*/*
 %_desktopdir/*.desktop
-%doc AUTHORS
+%doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Fri May 25 2018 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt1
+- new version 0.7.0
+
 * Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.6.0-alt1
 - 0.6.0
 

@@ -1,15 +1,14 @@
 Name: lxqt-session
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: Session manager
 License: LGPL
 Group: Graphical desktop/Other
 
-Url: http://lxqt.org
+Url: https://lxqt.org
 Source0: %name-%version.tar
 Source1: 08lxqt
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
@@ -34,25 +33,30 @@ Conflicts: lxqt-common <= 0.11.0
 sed -i 's,Exec=,Exec=%_bindir/,' xsession/lxqt.desktop.in
 
 %build
-%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF -DBUNDLE_XDG_UTILS=No
-%make_build
+%cmake -DPULL_TRANSLATIONS=OFF \
+       -DUPDATE_TRANSLATIONS=OFF \
+       -DBUNDLE_XDG_UTILS=No
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 
 %files
 %_man1dir/*
 %_bindir/*
-%dir %_xdgconfigdir/lxqt
 %_xdgconfigdir/*/*
 %_desktopdir/*.desktop
 %_datadir/xsessions/*.desktop
 %_datadir/kdm/sessions/*.desktop
+%_datadir/lxqt
 %_sysconfdir/X11/wmsession.d/08lxqt
-%doc AUTHORS
+%doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Fri May 25 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
+- new version 0.13.0
+
 * Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
 - 0.12.0
 - tweak desktop file (see also #32657)

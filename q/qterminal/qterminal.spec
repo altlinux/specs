@@ -1,5 +1,5 @@
 Name: qterminal
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 
 Summary: Qt-based multitab terminal emulator
@@ -8,7 +8,6 @@ Group: Terminals
 
 Url: http://github.com/qterminal/qterminal
 Source: %name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake lxqt-build-tools
 BuildRequires: qt5-base-devel qt5-tools-devel qt5-x11extras-devel
@@ -37,16 +36,15 @@ at http://qterminal.sourceforge.net/
 %ifarch e2k
 %add_optflags -std=c++11
 %endif
-%cmake_insource \
-	-DUSE_QT5=true -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF \
-	-DQTERMWIDGET_PATH_SHARE=%_datadir/qtermwidget5
-%make_build
+%cmake \
+    -DUSE_QT5=true -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF \
+    -DQTERMWIDGET_PATH_SHARE=%_datadir/qtermwidget5
+%cmake_build
 
 %install
-%makeinstall_std
-%find_lang %name
+%cmakeinstall_std
 
-%files -f %name.lang
+%files
 %doc AUTHORS LICENSE CHANGELOG README*
 %_bindir/%name
 %_desktopdir/*.desktop
@@ -54,6 +52,9 @@ at http://qterminal.sourceforge.net/
 %_datadir/appdata/*
 
 %changelog
+* Tue May 22 2018 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Tue Oct 24 2017 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
