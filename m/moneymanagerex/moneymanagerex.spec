@@ -1,6 +1,6 @@
 Name: moneymanagerex
 Version: 1.3.3
-Release: alt1
+Release: alt2
 
 Summary: Simple to use financial management software
 License: GPLv2
@@ -36,7 +36,7 @@ would want to see in a personal finance application.
 The design goals are to concentrate on simplicity
 and user friendliness - something one can use everyday.
 
-TODO: build with external lua, ccpunit, wxsqlite3
+TODO: build with external lua, ccpunit
 
 %prep
 %setup
@@ -63,6 +63,9 @@ TODO: build with external lua, ccpunit, wxsqlite3
 
 
 %changelog
+* Sat May 26 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.3-alt2
+- rebuild with libwxGTK3.1-sqlite3 4.0.3
+
 * Mon Mar 13 2017 Vitaly Lipatov <lav@altlinux.ru> 1.3.3-alt1
 - new version 1.3.3 (with rpmrb script)
 
