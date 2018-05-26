@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -9,12 +8,12 @@ BuildRequires: perl(Locale/Maketext.pm)
 %define _localstatedir %{_var}
 Name:           perl-Catalyst-Controller-HTML-FormFu
 Version:        2.04
-Release:        alt1
+Release:        alt1_1
 Summary:        HTML::FormFu controller for Catalyst
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/Catalyst-Controller-HTML-FormFu/
-Source0:        http://www.cpan.org/authors/id/N/NI/NIGELM/Catalyst-Controller-HTML-FormFu-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/N/NI/NIGELM/Catalyst-Controller-HTML-FormFu-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  coreutils
@@ -68,12 +67,12 @@ BuildRequires:  perl(Test/WWW/Mechanize.pm)
 Requires:       perl(Catalyst/Component/InstancePerContext.pm)
 Requires:       perl(Catalyst/Controller.pm)
 Requires:       perl(Catalyst/Runtime.pm) >= 5.710.010
-Requires:       perl(HTML/FormFu.pm) >= 1.0
+Requires:       perl(HTML/FormFu.pm) >= 2.060
 Requires:       perl(MooseX/Attribute/Chained.pm) >= 1.0.1
 # Task::Weaken for Scalar::Util, see Makefile.PL
 Requires:       perl(Task/Weaken.pm)
 Source44: import.info
-%filter_from_requires /^perl\\((HTML.FormFu|MooseX.Attribute.Chained).pm\\)$/d
+%filter_from_requires /^perl(\(HTML.FormFu\|MooseX.Attribute.Chained\)\\)$/d
 
 %description
 This base controller merges the functionality of HTML::FormFu with Catalyst.
@@ -85,7 +84,7 @@ This base controller merges the functionality of HTML::FormFu with Catalyst.
 %setup -q -n Catalyst-Controller-HTML-FormFu-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -97,10 +96,13 @@ make test
 
 %files
 %doc Changes README
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1_1
+- update to new release by fcimport
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1
 - automated CPAN update
 
