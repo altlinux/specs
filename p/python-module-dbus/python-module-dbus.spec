@@ -4,10 +4,11 @@
 # required dbus_py_test.so for both pythons
 %def_disable installed_tests
 %add_findreq_skiplist %_libexecdir/installed-tests/%_name/test/*.py
+%def_enable documentation
 
 Name: python-module-dbus
-Version: 1.2.6
-Release: alt1.1
+Version: 1.2.8
+Release: alt1
 
 Summary: Python bindings for D-BUS library
 License: AFL/GPL
@@ -27,9 +28,12 @@ Obsoletes: %name-data < %version-%release
 BuildRequires: autoconf-archive libdbus-devel >= 1.8 libgio-devel >= 2.40
 BuildRequires: python-devel >= 2.7 python3-devel >= 3.4 python-modules-unittest
 BuildRequires: python-module-pygobject3 python-module-tappy
+%{?_enable_documentation:BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme}
+
 # for python3
 BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3
 %{?_enable_check:BuildRequires: /proc dbus-tools dbus-tools-gui glibc-i18ndata python3-module-tappy}
+%{?_enable_documentation:BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme}
 
 %description
 D-Bus python bindings for use with python programs.
@@ -54,6 +58,15 @@ Provides: python3-module-dbus-devel = %version-%release
 D-Bus python bindings for use with python programs.
 Development package.
 
+%package devel-doc
+Summary: Development documentation for %_name
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name-devel < %version-%release
+
+%description devel-doc
+Development documentation for %_name.
+
 %package tests
 Summary: Tests for the %name package
 Group: Development/Python
@@ -70,7 +83,7 @@ the functionality of the installed python-dbus package.
 mv %_name-%version py3build
 
 %build
-%define options %{?_enable_installed_tests:--enable-installed-tests}
+%define options %{?_enable_installed_tests:--enable-installed-tests} %{subst_enable documentation}
 
 # Install python code into arch-specific dir for PyQt4 (ALT#23134)
 export am_cv_python_pythondir=%python_sitelibdir
@@ -111,9 +124,9 @@ done
 %doc AUTHORS COPYING NEWS
 
 %files devel
-%doc doc/*.txt
 %_includedir/dbus-1.0/dbus/dbus-python.h
 %_pkgconfigdir/dbus-python.pc
+%doc doc/*.txt
 
 %exclude %python_sitelibdir/*.la
 
@@ -130,9 +143,17 @@ done
 %_datadir/installed-tests/%_name/
 %endif
 
-%exclude %_docdir/%_name
+%if_enabled documentation
+%files devel-doc
+%_docdir/%_name/
+%endif
+
 
 %changelog
+* Sat May 26 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.8-alt1
+- 1.2.8
+- new devel-doc subpackage
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.6-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
