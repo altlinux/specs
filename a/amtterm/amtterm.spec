@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install perl(SOAP/Lite.pm)
 Name:         amtterm
 License:      GPLv2+
 Version:      1.6
-Release:      alt1_3
+Release:      alt1_5
 Summary:      Serial-over-lan (sol) client for Intel AMT
 Group:        Networking/WWW
 URL:          http://www.kraxel.org/blog/linux/amtterm/
@@ -29,7 +29,7 @@ about and remotely control AMT managed computers.
 %setup -q
 
 %build
-export CFLAGS="%{optflags}"
+
 make prefix=/usr
 
 %install
@@ -49,6 +49,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications/ \
 %{_datadir}/applications/gamt.desktop
 
 %changelog
+* Sat May 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_5
+- fc update (regenerated)
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_3
 - update to new release by fcimport
 
