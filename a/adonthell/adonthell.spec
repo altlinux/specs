@@ -1,13 +1,13 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(cairo) pkgconfig(gtk+-2.0) zlib-devel
+BuildRequires: pkgconfig(cairo) pkgconfig(gtk+-2.0) zlib-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           adonthell
 Summary:        A 2D graphical RPG game
 Version:        0.3.6
-Release:        alt1_6.1
+Release:        alt1_8
 License:        GPLv2+
 URL:            http://adonthell.nongnu.org/
 Source0:        http://savannah.nongnu.org/download/%{name}/%{name}-src-%{version}.tar.gz
@@ -22,8 +22,8 @@ BuildRequires:  libpng-devel
 BuildRequires:  swig
 BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
+BuildRequires:  gcc-c++
 Source44: import.info
-
 
 %description
 A 2D, graphical, single player role playing game inspired by good old
@@ -55,7 +55,7 @@ sed -i 's|^CFLAGS|^#CFLAGS|g' configure
 sed -i "s|ac_precious_vars='build_alias|'ac_precious_vars=build_alias|g" configure
 %build
 %configure --enable-doc
-%make_build PY_LIBS="$(python3-config --libs)"
+%make_build
 
 
 %install
@@ -63,7 +63,7 @@ sed -i "s|ac_precious_vars='build_alias|'ac_precious_vars=build_alias|g" configu
 
 
 %files
-%doc COPYING AUTHORS
+%doc --no-dereference COPYING AUTHORS
 %{_bindir}/%{name}-0.3
 %{_datadir}/%{name}/
 %{_mandir}/man6/*
@@ -73,6 +73,9 @@ sed -i "s|ac_precious_vars='build_alias|'ac_precious_vars=build_alias|g" configu
 
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.6-alt1_8
+- update to new release by fcimport
+
 * Fri Mar 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.6-alt1_6.1
 - (NMU) Rebuilt with python-3.6.4.
 
