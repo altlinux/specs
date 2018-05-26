@@ -1,5 +1,5 @@
 Name: libdrm
-Version: 2.4.89
+Version: 2.4.92
 Release: alt1%ubt
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
@@ -58,6 +58,9 @@ develop programs which make use of %name
 %_man7dir/*.7*
 
 %changelog
+* Thu May 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.92-alt1%ubt
+- 2.4.92
+
 * Mon Jan 22 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.89-alt1%ubt
 - added ubt tag
 

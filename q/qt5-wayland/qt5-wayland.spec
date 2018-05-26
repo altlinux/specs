@@ -3,7 +3,7 @@
 
 Name: qt5-wayland
 Version: 5.9.5
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt5 - Wayland platform support and QtCompositor module
@@ -132,6 +132,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt2%ubt
+- rebuild with new libwayland-egl
+
 * Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
 - new version
 

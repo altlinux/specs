@@ -1,8 +1,12 @@
 %def_disable snapshot
 %def_disable doc
+# since mesa-18.0 wayland-egl moved to this wayland package
+%define main_ver 1.15.0
+%define egl_ver 18.1.0
+%define mesa_epoch 4
 
 Name: wayland
-Version: 1.14.0
+Version: %main_ver
 Release: alt1
 
 Summary: Wayland protocol libraries
@@ -29,9 +33,8 @@ client itself. The clients can be traditional applications, X servers
 (rootless or fullscreen) or other display servers.
 
 %package devel
-Group: Development/C
 Summary: Common headers for Wayland
-License: MIT
+Group: Development/C
 
 %description devel
 Common headers for Wayland.
@@ -39,7 +42,6 @@ Common headers for Wayland.
 %package -n lib%name-client
 Summary: Wayland client library
 Group: System/Libraries
-License: MIT
 
 %description -n lib%name-client
 Wayland client shared library.
@@ -47,9 +49,8 @@ Wayland client shared library.
 %package -n lib%name-client-devel
 Summary: Development files for Wayland client library
 Group: Development/C
-License: MIT
-Requires: lib%name-client = %version-%release
-Requires: %name-devel = %version-%release
+Requires: lib%name-client = %EVR
+Requires: %name-devel = %EVR
 
 %description -n lib%name-client-devel
 This package provides development files for Wayland client library.
@@ -57,7 +58,6 @@ This package provides development files for Wayland client library.
 %package -n lib%name-server
 Summary: Wayland server library
 Group: System/Libraries
-License: MIT
 
 %description -n lib%name-server
 Wayland server shared library.
@@ -65,9 +65,8 @@ Wayland server shared library.
 %package -n lib%name-server-devel
 Summary: Development files for Wayland server library
 Group: Development/C
-License: MIT
-Requires: lib%name-server = %version-%release
-Requires: %name-devel = %version-%release
+Requires: lib%name-server = %EVR
+Requires: %name-devel = %EVR
 
 %description -n lib%name-server-devel
 This package provides development files for Wayland server library.
@@ -75,26 +74,46 @@ This package provides development files for Wayland server library.
 %package -n lib%name-cursor
 Summary: Wayland cursor helper library
 Group: System/Libraries
-License: MIT
-Requires: lib%name-client = %version-%release
+Requires: lib%name-client = %EVR
 
 %description -n lib%name-cursor
 Wayland cursor helper shared library.
 
 %package -n lib%name-cursor-devel
 Summary: Wayland cursor helper library
-Group: System/Libraries
-License: MIT
-Requires: lib%name-cursor = %version-%release
-Requires: lib%name-client-devel = %version-%release
+Group: Development/C
+Requires: lib%name-cursor = %EVR
+Requires: lib%name-client-devel = %EVR
 
 %description -n lib%name-cursor-devel
 This package provides development files for Wayland cursor helper library.
+
+%package -n lib%name-egl
+Version: %egl_ver
+Epoch: %mesa_epoch
+Summary: Wayland-EGL library
+Group: System/Libraries
+Requires: lib%name-client = %main_ver-%release
+
+%description -n lib%name-egl
+EGL library for Wayland
+
+%package -n lib%name-egl-devel
+Version: %egl_ver
+Epoch: %mesa_epoch
+Summary: Wayland-EGL development package
+Group: Development/C
+Requires: lib%name-egl = %epoch:%egl_ver-%release
+Requires: lib%name-client-devel = %main_ver-%release
+
+%description -n libwayland-egl-devel
+Wayland-EGL development package
 
 %prep
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure --disable-static \
 	%{?_disable_doc:--disable-documentation}
@@ -147,7 +166,21 @@ This package provides development files for Wayland cursor helper library.
 %_libdir/lib%name-cursor.so
 %_pkgconfigdir/%name-cursor.pc
 
+%files -n lib%name-egl
+%_libdir/lib%name-egl.so.*
+
+%files -n lib%name-egl-devel
+%_includedir/wayland-egl-backend.h
+%_libdir/lib%name-egl.so
+%_pkgconfigdir/%name-egl.pc
+%_pkgconfigdir/%name-egl-backend.pc
+
+
 %changelog
+* Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt1
+- 1.15.0
+- new libwayland-egl* subpackages
+
 * Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
 - 1.14.0
 

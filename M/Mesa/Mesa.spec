@@ -1,10 +1,9 @@
 %def_enable egl
 %def_enable gles2
-%def_enable wayland_egl
 %def_enable xa
 
 Name: Mesa
-Version: 17.3.9
+Version: 18.1.0
 Release: alt1%ubt
 Epoch: 4
 License: MIT
@@ -19,12 +18,12 @@ Patch: %name-%version.patch
 
 BuildPreReq: /proc
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: llvm-devel llvm-devel-static
+BuildRequires: libllvm-devel-static
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
-BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel libelf-devel
+BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libffi-devel libelf-devel
 BuildRequires: libva-devel libvdpau-devel libXvMC-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel libnettle-devel
-BuildRequires: libelf-devel python-module-mako python-module-argparse zlib-devel wayland-protocols
+BuildRequires: libelf-devel python-module-mako python-module-argparse zlib-devel
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -92,22 +91,6 @@ Requires: libgbm = %epoch:%version-%release
 
 %description -n libgbm-devel
 GBM buffer management development package
-
-%package -n libwayland-egl
-Summary: Mesa Wayland-EGL library
-Group: System/Libraries
-Requires: libGL = %epoch:%version-%release
-
-%description -n libwayland-egl
-Mesa EGL library for Wayland
-
-%package -n libwayland-egl-devel
-Summary: Mesa Wayland-EGL development package
-Group: Development/C
-Requires: libwayland-egl = %epoch:%version-%release
-
-%description -n libwayland-egl-devel
-Mesa Wayland-EGL development package
 
 %package -n libxatracker
 Summary: Mesa XA state tracker
@@ -231,10 +214,6 @@ framerate information to stdout
 	--enable-glx-tls \
 	--enable-selinux \
 	--with-dri-driverdir=%_libdir/X11/modules/dri \
-%if_enabled wayland_egl
-	--with-platforms=x11,wayland,drm \
-	--enable-gbm \
-%endif
 	%{subst_enable xa}
 #
 
@@ -368,7 +347,6 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_pkgconfigdir/glesv2.pc
 %endif
 
-%if_enabled wayland_egl
 %files -n libgbm
 %_libdir/libgbm.so.*
 
@@ -376,14 +354,6 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_includedir/gbm.h
 %_libdir/libgbm.so
 %_pkgconfigdir/gbm.pc
-
-%files -n libwayland-egl
-%_libdir/libwayland-egl.so.*
-
-%files -n libwayland-egl-devel
-%_libdir/libwayland-egl.so
-%_pkgconfigdir/wayland-egl.pc
-%endif
 
 %if_enabled xa
 %files -n libxatracker
@@ -448,6 +418,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Thu May 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.1.0-alt1%ubt
+- 18.1.0
+
 * Wed May 16 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:17.3.9-alt1%ubt
 - 17.3.9
 

@@ -15,7 +15,7 @@
 
 Name: plasma5-%rname
 Version: 5.12.5
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -189,6 +189,9 @@ KF5 library
 
 
 %changelog
+* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt2%ubt
+- rebuild with new libwayland-egl
+
 * Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt1%ubt
 - new version
 
