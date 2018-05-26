@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: ImageMagick-tools
-# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %add_python_req_skip Base
 %filter_from_requires /^python2...Briefing.$/d
@@ -12,7 +9,7 @@ BuildRequires: ImageMagick-tools
 %define _localstatedir %{_var}
 Name:           vegastrike-data
 Version:        0.5.1
-Release:        alt2_12.r1
+Release:        alt2_15.r1
 Summary:        Data files for Vega Strike
 Group:          Games/Other
 License:        GPLv2+
@@ -21,7 +18,7 @@ Source0:        http://downloads.sourceforge.net/vegastrike/vegastrike-data-0.5.
 Source1:        http://downloads.sourceforge.net/vegastrike/vegastrike-extra-0.5.1.r1.tar.bz2
 # Remove Falik's songs from playlists (no longer needed, kept for reference)
 Patch0:         vegastrike-data-0.5.0-playlists.patch
-BuildRequires:  python-devel ImageMagick
+BuildRequires:  python-devel ImageMagick-tools
 BuildArch:      noarch
 Requires:       icon-theme-hicolor vegastrike >= %{version}
 Source44: import.info
@@ -110,10 +107,9 @@ cat data.pyc >> data.files
 # multiple -f flags in %files: merging -f data.pyo into -f data.files
 cat data.pyo >> data.files
 
-
 %files -f data.files   
 %doc documentation/*
-%doc vega-license.txt
+%doc --no-dereference vega-license.txt
 %dir %{_datadir}/vegastrike
 %{_datadir}/vegastrike/documentation
 %{_datadir}/icons/hicolor/128x128/apps/vegastrike.png
@@ -122,6 +118,9 @@ cat data.pyo >> data.files
 
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_15.r1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_12.r1
 - update to new release by fcimport
 
