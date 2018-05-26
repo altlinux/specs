@@ -3,13 +3,14 @@ Group: Text tools
 %define _localstatedir %{_var}
 Name: hunspell-ko
 Summary: Korean hunspell dictionaries
-Version: 0.5.6
-Release: alt1_2
-Source: https://github.com/changwoo/hunspell-dict-ko/archive/%{version}.tar.gz
-URL: https://github.com/changwoo/hunspell-dict-ko
+Version: 0.7.0
+Release: alt1_3
+Source: https://github.com/spellcheck-ko/hunspell-dict-ko/archive/%{version}.tar.gz
+URL: https://github.com/spellcheck-ko/hunspell-dict-ko
 License: MPLv1.1 or GPLv2 or LGPLv2
 BuildArch: noarch
-BuildRequires: python-module-lxml, hunspell, python, perl-devel
+BuildRequires: python-module-lxml, hunspell
+BuildRequires: python3, perl-devel
 Requires: hunspell
 Source44: import.info
 
@@ -31,10 +32,14 @@ cp -p ko.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/ko_KR.dic
 #make test
 
 %files
-%doc README LICENSE LICENSE.GPL LICENSE.LGPL LICENSE.MPL
+%doc README.md
+%doc --no-dereference LICENSE LICENSE.GPL LICENSE.LGPL LICENSE.MPL
 %{_datadir}/myspell/*
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_3
+- update to new release by fcimport
+
 * Fri Sep 29 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.6-alt1_2
 - update to new release by fcimport
 
