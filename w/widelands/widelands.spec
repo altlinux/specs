@@ -1,53 +1,52 @@
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/doxygen gcc-c++ libGL-devel libGLU-devel libminizip-devel python-devel rpm-build-python zlib-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/doxygen libGL-devel libGLU-devel libX11-devel libicu-devel python-devel rpm-build-python zlib-devel
 # END SourceDeps(oneline)
-%define fedora 25
+
+%filter_from_requires /^.usr.share.fonts.ttf./d
+Requires: fonts-ttf-amiri
+Requires: fonts-ttf-lklug
+Requires: fonts-ttf-wqy-microhei
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global buildno 18
+%global buildno 19
 %global buildid build%{buildno}
-%global build_id build-%{buildno}
 
 Name:           widelands
 Version:        0
-Release:        alt6_0.59.%{buildid}
+Release:        alt6_0.62.%{buildid}
 Summary:        Open source realtime-strategy game
 
 Group:          Games/Other
 License:        GPLv2+
 URL:            http://www.widelands.org
-Source0:        http://launchpad.net/widelands/%{buildid}/%{build_id}/+download/widelands-%{buildid}-src.tar.bz2
+Source0:        https://launchpad.net/widelands/%{buildid}/%{buildid}/+download/widelands-%{buildid}-src-gcc7.tar.bz2
+Patch0:         widelands-build19-ppc64le.patch
 
-BuildRequires: libSDL-devel >= 1.2.11
-BuildRequires: libSDL_gfx-devel
-BuildRequires: libSDL_image-devel
-BuildRequires: libSDL_mixer-devel >= 1.2.6
-BuildRequires: libSDL_net-devel
-BuildRequires: libSDL_sound-devel
-BuildRequires: libSDL_ttf-devel >= 2.0.0
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
-BuildRequires: boost-devel-static >= 1.47.0
+BuildRequires: libSDL2-devel
+BuildRequires: libSDL2_image-devel
+BuildRequires: libSDL2_mixer-devel
+BuildRequires: libSDL2_net-devel
+BuildRequires: libSDL2_ttf-devel
+BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires: ctest cmake
 BuildRequires: ctags
 BuildRequires: desktop-file-utils
 BuildRequires: gettext gettext-tools
-BuildRequires: ggz-base-libs-devel
+BuildRequires: gcc
+BuildRequires: gcc-c++
 BuildRequires: libGLEW-devel
-BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
-BuildRequires: libtiff-devel libtiffxx-devel
-BuildRequires: optipng
-%if 0%{?fedora} >= 20
-BuildRequires: liblua5.1-devel
-%else
-BuildRequires: lua-devel
-%endif
-Requires:      fonts-otf-drehatlas-widelands
-Requires:      fonts-ttf-gnu-freefont-serif
-Requires:      fonts-ttf-gnu-freefont-sans
 Requires:      icon-theme-hicolor
+# The game contains a copy of these fonts, we replaces these with system fonts
+Requires:      fonts-ttf-amiri
+Requires:      fonts-ttf-dejavu
+Requires:      fonts-ttf-dejavu
+Requires:      fonts-ttf-dejavu
+Requires:      fonts-otf-drehatlas-widelands
+Requires:      fonts-ttf-lklug
+Requires:      fonts-ttf-wqy-microhei
 Source44: import.info
 
 %description
@@ -58,30 +57,36 @@ perhaps will have a thought, what Widelands is all about.
 
 
 %prep
-%setup -q -n widelands-%{buildid}-src
+%setup -q -n widelands-%{buildid}-src-gcc7
+
+%ifarch ppc64le
+%patch0 -p1 -b .ppc64le
+%endif
 
 
 %build
-mkdir -p build/compile
-pushd build/compile
+mkdir build
+pushd build
 # We need to set CMAKE_INCLUDE_PATH to /usr for FindLua51.cmake
 %{fedora_cmake} \
-    -DCMAKE_INCLUDE_PATH=%{_prefix} \
-    -DWL_INSTALL_PREFIX=%{_prefix} \
-    -DWL_INSTALL_BINDIR=%{_bindir} \
-    -DWL_INSTALL_DATADIR=share/%{name} \
-    ../..
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=%{_bindir} \
+    -DWL_INSTALL_BASEDIR=%{_prefix}/share/%{name} \
+    -DWL_INSTALL_DATADIR=%{_prefix}/share/%{name} \
+    -DOPTION_BUILD_WEBSITE_TOOLS=OFF \
+    ..
 %make_build
 popd
 
 
 %install
-pushd build/compile
+pushd build
 %makeinstall_std
 popd
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
-cp -a pics/wl-logo-64.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
+ln -s /usr/share/%{name}/images/logos/wl-logo-64.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
+
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 cat > widelands.desktop <<EOF
 [Desktop Entry]
@@ -98,38 +103,26 @@ desktop-file-install  \
   --dir=$RPM_BUILD_ROOT%{_datadir}/applications/ %{name}.desktop
 
 pushd $RPM_BUILD_ROOT
-rm usr/share/widelands/fonts/FreeSans.ttf
-rm usr/share/widelands/fonts/FreeSerif.ttf
-rm usr/share/widelands/fonts/Widelands/*
-ln -s /usr/share/fonts/ttf/gnu-free/FreeSans.ttf usr/share/widelands/fonts/FreeSans.ttf
-ln -s /usr/share/fonts/ttf/gnu-free/FreeSerif.ttf usr/share/widelands/fonts/FreeSerif.ttf
-ln -s /usr/share/fonts/otf/drehatlas-widelands/Widelands.otf usr/share/widelands/fonts/Widelands/Widelands.ttf
-find usr/share/widelands/locale/ -maxdepth 1 -type d -name \*_\* | sed -n 's#\(usr/share/widelands/locale/\(.*\)_.*\)#%lang(\2) /\1#p' > %{_builddir}/widelands-%{buildid}-src/%{name}.files
-find usr/share/widelands/locale/ -maxdepth 1 -type d ! -name "*_*" | sed -n -e 's#\(usr/share/widelands/locale/\(.\+\)\)#%lang(\2) /\1#p' >> %{_builddir}/widelands-%{buildid}-src/%{name}.files
-find usr/share/widelands/ -mindepth 1 -maxdepth 1 -not -name locale | sed -n 's#\(usr/share/widelands/*\)#/\1#p' >> %{_builddir}/widelands-%{buildid}-src/%{name}.files
+# We don't want this development tool / utility
+rm usr/bin/wl_render_richtext
+
+# Replace fonts with system fonts
+rm -r usr/share/%{name}/i18n/fonts/amiri
+rm -r usr/share/%{name}/i18n/fonts/DejaVu
+rm -r usr/share/%{name}/i18n/fonts/MicroHei
+rm -r usr/share/%{name}/i18n/fonts/Sinhala
+rm -r usr/share/%{name}/i18n/fonts/Widelands/*
+ln -s /usr/share/fonts/ttf/amiri usr/share/%{name}/i18n/fonts/amiri
+ln -s /usr/share/fonts/ttf/dejavu usr/share/%{name}/i18n/fonts/DejaVu
+ln -s /usr/share/fonts/ttf/wqy-microhei usr/share/%{name}/i18n/fonts/MicroHei
+ln -s /usr/share/fonts/ttf/lklug usr/share/%{name}/i18n/fonts/Sinhala
+ln -s /usr/share/fonts/otf/drehatlas-widelands/Widelands.otf usr/share/%{name}/i18n/fonts/Widelands/Widelands.ttf
+
+# Scripting magic to add proper %%lang() markings to the locale files
+find usr/share/widelands/locale/ -maxdepth 1 -type d -name \*_\* | sed -n 's#\(usr/share/widelands/locale/\(.*\)_.*\)#%lang(\2) /\1#p' > %{_builddir}/widelands-%{buildid}-src-gcc7/%{name}.files
+find usr/share/widelands/locale/ -maxdepth 1 -type d ! -name "*_*" | sed -n -e 's#\(usr/share/widelands/locale/\(.\+\)\)#%lang(\2) /\1#p' >> %{_builddir}/widelands-%{buildid}-src-gcc7/%{name}.files
+find usr/share/widelands/ -mindepth 1 -maxdepth 1 -not -name locale | sed -n 's#\(usr/share/widelands/*\)#/\1#p' >> %{_builddir}/widelands-%{buildid}-src-gcc7/%{name}.files
 popd
-
-
-%pre
-cat << EOF | while read name; do rm -rf "%{_datadir}/widelands/maps/${name}.wmf"; done
-Checkmate
-Dry Riverbed
-Elven Forests
-Enemy in sight
-Finlakes
-Firegames
-Four Castles
-Glacier Lake
-Golden Peninsula
-Lake of tranquility
-Plateau
-Riverlands
-The Oasis Triangle
-The big lake
-The long way
-Two frontiers
-War of the Valleys
-EOF
 
 
 %files -f %{name}.files
@@ -142,6 +135,9 @@ EOF
 
 
 %changelog
+* Sun May 27 2018 Igor Vlasenko <viy@altlinux.ru> 1:0-alt6_0.62.build19
+- build19
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1:0-alt6_0.59.build18
 - update to new release by fcimport
 
