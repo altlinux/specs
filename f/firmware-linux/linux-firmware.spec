@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180518
+Version: 20180524
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,11 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun May 27 2018 Cronbuild Service <cronbuild@altlinux.org> 20180524-alt1
+- upstream changes (GIT 7518922):
+  + Update firmware patch for Intel Bluetooth 8260 (thx Amit K Bag)
+  + qed: Add firmware 8.37.2.0 (thx Rahul Verma)
+
 * Sun May 20 2018 L.A. Kostis <lakostis@altlinux.ru> 20180518-alt1
 - upstream changes (GIT 2a9b2cf):
   + amd-ucode: delete conflicting ucode
