@@ -1,32 +1,36 @@
-%define _userunitdir /usr/lib/systemd/user
+%define _localstatedir %_var
+%define _libexecdir %_prefix/libexec
+%define _userunitdir %_prefix/lib/systemd/user
+
+%define xdg_name org.freedesktop.Flatpak
+%define api_ver 1.0
+
+# unstable peer to peer support requires ostree-2018.5
+%def_disable p2p
+%def_enable docs
 
 Name: flatpak
 Version: 0.11.7
-Release: alt1
+Release: alt2
 
 Summary: Application deployment framework for desktop apps
 
 Group: Development/Tools
-License: LGPLv2+
+License: LGPLv2.1+
 Url: http://flatpak.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/flatpak/flatpak/releases/download/%version/%name-%version.tar.xz
 Source: %name-%version.tar
-# Until https://github.com/flatpak/flatpak/pull/225 is merged and a new release
-# made.
-Patch: flatpak-0.6.8-add-flatpak-metadata-xml.patch
 
-BuildRequires: rpm-macros-intro-conflicts libelf-devel gtk-doc gobject-introspection-devel
+Requires: %_bindir/fusermount
+Requires: %_bindir/bwrap
 
-BuildRequires: pkgconfig(fuse)
+BuildRequires: gtk-doc gobject-introspection-devel
 BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libarchive) >= 2.8.0
-# we have no pc file
-#BuildRequires: pkgconfig(libelf) >= 0.8.12
-BuildRequires: pkgconfig(libgsystem) >= 2015.1
 BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: pkgconfig(ostree-1) >= 2017.14
 BuildRequires: pkgconfig(polkit-gobject-1)
@@ -34,51 +38,29 @@ BuildRequires: pkgconfig(libseccomp)
 BuildRequires: pkgconfig(appstream-glib)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(xau)
-BuildRequires: docbook-dtds
-BuildRequires: docbook-style-xsl
-BuildRequires: intltool
 BuildRequires: libattr-devel
 BuildRequires: libcap-devel
-BuildRequires: libdwarf-devel
 BuildRequires: libgpgme-devel
 BuildRequires: udev-rules
 BuildRequires: %_bindir/bwrap
-BuildRequires: %_bindir/xmlto
-BuildRequires: %_bindir/xsltproc
-
 BuildRequires: bubblewrap >= 0.1.8
-
+BuildRequires: %_bindir/xsltproc
+%{?_enable_docs:BuildRequires: %_bindir/xmlto docbook-dtds docbook-style-xsl}
 BuildRequires: /proc
 
-# Crashes with older kernels (the bug being introduced in 4.0.2), without the
-# upstream fixes in this version.
-#Requires: kernel >= 4.0.4-202
-
-# Needed for the document portal.
-Requires: %_bindir/fusermount
-
-Requires: %_bindir/bwrap
-
 %description
-flatpak is a system for building, distributing and running sandboxed desktop
+Flatpak is a system for building, distributing and running sandboxed desktop
 applications on Linux. See https://wiki.gnome.org/Projects/SandboxedApps for
 more information.
 
-%package builder
-Summary: Build helper for %name
-Group: Development/Tools
+%package -n lib%name
+Summary: Libraries for %name
+Group: Development/Other
 License: LGPLv2+
-Requires: %name%{?_isa} = %version-%release
-Requires: %_bindir/bzr
-Requires: %_bindir/git
-Requires: %_bindir/patch
-Requires: %_bindir/strip
-Requires: /bin/tar
-Requires: %_bindir/unzip
+Requires: %_bindir/bwrap
 
-%description builder
-flatpak-builder is a tool that makes it easy to build applications and their
-dependencies by automating the configure && make && make install steps.
+%description -n lib%name
+This package contains libflatpak.
 
 %package -n lib%name-devel
 Summary: Development files for %name
@@ -90,34 +72,26 @@ Requires: lib%name = %version-%release
 %description -n lib%name-devel
 This package contains the pkg-config file and development headers for %name.
 
-%package -n lib%name
-Summary: Libraries for %name
-Group: Development/Other
-License: LGPLv2+
-Requires: %_bindir/bwrap
-
-%description -n lib%name
-This package contains libflatpak.
 
 %prep
 %setup
-#patch0 -p1
 
 %build
 # workaround for collision with new copy_file_range glibc function. remove it when it's no longer needed.
 %add_optflags -DHAVE_DECL_COPY_FILE_RANGE
 # User namespace support is sufficient.
-%configure --with-dwarf-header=%_includedir/libdwarf --with-priv-mode=none \
-           --with-system-bubblewrap --enable-docbook-docs \
-           --with-systemdsystemunitdir=%_unitdir --with-systemduserunitdir=%_userunitdir
-%make_build V=1
+%configure --with-priv-mode=none \
+           --with-system-bubblewrap \
+           %{?_enable_docs:--enable-docbook-docs} \
+           --with-systemdsystemunitdir=%_unitdir \
+           --with-systemduserunitdir=%_userunitdir
+%make_build
 
 %install
 %makeinstall_std
 # The system repo is not installed by the flatpak build system.
 install -d %buildroot%_localstatedir/lib/flatpak
-rm -f %buildroot%_libdir/libflatpak.la
-rm -rf %buildroot%_docdir/%name/
+
 %find_lang %name
 
 %post
@@ -125,61 +99,53 @@ rm -rf %buildroot%_docdir/%name/
 %_bindir/flatpak remote-list --system
 
 %files -f %name.lang
-%doc COPYING NEWS README.md
-%_bindir/flatpak
+%_bindir/%name
+%_bindir/%name-bisect
 %_datadir/bash-completion
-%_datadir/dbus-1/services/org.freedesktop.Flatpak.service
-#_datadir/dbus-1/services/org.freedesktop.impl.portal.PermissionStore.service
-#_datadir/dbus-1/services/org.freedesktop.portal.Documents.service
-%_datadir/dbus-1/system-services/org.freedesktop.Flatpak.SystemHelper.service
+%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/dbus-1/system-services/%xdg_name.SystemHelper.service
 # Co-own directory.
 %_datadir/gdm/env.d
 %_datadir/%name
-%_datadir/polkit-1/actions/org.freedesktop.Flatpak.policy
-%_datadir/polkit-1/rules.d/org.freedesktop.Flatpak.rules
-%_libexecdir/flatpak-portal
-%_libexecdir/flatpak-dbus-proxy
-%_libexecdir/flatpak-session-helper
-%_libexecdir/flatpak-system-helper
-#_libexecdir/xdg-document-portal
-#_libexecdir/xdg-permission-store
-%dir %_localstatedir/lib/flatpak
+%_datadir/polkit-1/actions/%xdg_name.policy
+%_datadir/polkit-1/rules.d/%xdg_name.rules
+%_libexecdir/%name-portal
+%_libexecdir/%name-dbus-proxy
+%_libexecdir/%name-session-helper
+%_libexecdir/%name-system-helper
+%dir %_localstatedir/lib/%name
 %_man1dir/%{name}*.1*
-#exclude %_man1dir/flatpak-builder.*
-%_sysconfdir/dbus-1/system.d/org.freedesktop.Flatpak.SystemHelper.conf
+%_sysconfdir/dbus-1/system.d/%xdg_name.SystemHelper.conf
 %_datadir/dbus-1/interfaces/org.freedesktop.portal.Flatpak.xml
 %_datadir/dbus-1/services/org.freedesktop.portal.Flatpak.service
-%_sysconfdir/profile.d/flatpak.sh
-%_unitdir/flatpak-system-helper.service
-%_userunitdir/flatpak-portal.service
-%_userunitdir/flatpak-session-helper.service
-#_userunitdir/xdg-document-portal.service
-#_userunitdir/xdg-permission-store.service
-# Co-own directory.
+%_sysconfdir/profile.d/%name.sh
+%_unitdir/%name-system-helper.service
+%_userunitdir/%name-portal.service
+%_userunitdir/%name-session-helper.service
 %_userunitdir/dbus.service.d
 %_man5dir/*
-
-%files builder
-#_bindir/flatpak-builder
-%_bindir/flatpak-bisect
-#_man1dir/flatpak-builder.*
-
-%files -n lib%name-devel
-%_datadir/gir-1.0/Flatpak-1.0.gir
-%_datadir/gtk-doc/
-%_includedir/%name/
-%_libdir/libflatpak.so
-%_pkgconfigdir/%name.pc
-%_datadir/dbus-1/interfaces/org.freedesktop.Flatpak.xml
-#_datadir/dbus-1/interfaces/org.freedesktop.portal.Documents.xml
-#_datadir/dbus-1/interfaces/org.freedesktop.impl.portal.PermissionStore.xml
+%doc NEWS README.md
+%{?_enable_docs:%doc %_docdir/%name/}
 
 %files -n lib%name
-%doc COPYING
-%_libdir/girepository-1.0/Flatpak-1.0.typelib
-%_libdir/libflatpak.so.*
+%_libdir/lib%name.so.*
+%_typelibdir/Flatpak-%api_ver.typelib
+
+%files -n lib%name-devel
+%_includedir/%name/
+%_libdir/lib%name.so
+%_pkgconfigdir/%name.pc
+%_datadir/dbus-1/interfaces/%xdg_name.xml
+%_girdir/Flatpak-%api_ver.gir
+%doc %_datadir/gtk-doc/html/%name
+
 
 %changelog
+* Sun May 27 2018 Yuri N. Sedunov <aris@altlinux.org> 0.11.7-alt2
+- removed -builder subpackage (since 0.9.9 flatpak-builder was split out into separate project)
+- updated buildreqs
+- removed obsolete metadata-xml.patch
+
 * Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 0.11.7-alt1
 - new version 0.11.7 (with rpmrb script)
 
