@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Class-Date
 Name: perl-%dist
-Version: 1.1.15
-Release: alt1.1.1.1.1
+Version: 1.1.16
+Release: alt1
 
 Summary: Class for easy date and time manipulation 
 License: GPL or Artistic
 Group: Development/Perl
-
+BuildArch: noarch
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/Class-Date-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/Y/YA/YANICK/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Test/Warnings.pm)
 
 %description
 This module is intended to provide a general-purpose date and datetime type
@@ -19,7 +20,7 @@ for perl.  You have a Class::Date class for absolute date and datetime, and
 have a Class::Date::Rel class for relative dates.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -28,11 +29,14 @@ have a Class::Date::Rel class for relative dates.
 %perl_vendor_install
 
 %files
-%doc Changes README
-%perl_vendor_archlib/Class
-%perl_vendor_autolib/Class
+%doc Changes CONTRIBUTORS README.mkdn
+%perl_vendor_privlib/Class
+#perl_vendor_autolib/Class
 
 %changelog
+* Mon May 28 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.16-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.15-alt1.1.1.1.1
 - rebuild with new perl 5.26.1
 
