@@ -1,5 +1,5 @@
 Name: fftw3
-Version: 3.3.7
+Version: 3.3.8
 Release: alt1
 
 Summary: Library for computing Fast Fourier Transforms
@@ -283,6 +283,9 @@ fi
 %docdir/*.pdf
 
 %changelog
+* Mon May 28 2018 Dmitry V. Levin <ldv@altlinux.org> 3.3.8-alt1
+- 3.3.7 -> 3.3.8.
+
 * Sun Dec 10 2017 Dmitry V. Levin <ldv@altlinux.org> 3.3.7-alt1
 - 3.3.3 -> 3.3.7.
 
