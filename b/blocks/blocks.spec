@@ -1,33 +1,23 @@
-Summary: Conversion tools to enable bcache or LVM on existing block devices
+
 Name: blocks
 Version: 0.1.4
-Release: alt2.2
+Release: alt2.3
+
+Summary: Conversion tools to enable bcache or LVM on existing block devices
 License: GPLv3
 Group: System/Kernel and hardware
+Url: https://github.com/g2p/blocks
+BuildArch: noarch
+
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
-Packager: Evgenii Terechkov <evg@altlinux.org>
-Url: https://github.com/g2p/blocks
 
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-module-setuptools
+Requires: python3-module-maintboot
 
-Requires: python3-module-augeas >= 0.4.1
-Requires: python3-module-parted >= 3.10
+%py3_requires augeas parted
 
-Requires: bcache-tools
-Requires: btrfs-progs
-Requires: cryptsetup
-Requires: dmsetup
-Requires: e2fsprogs
-Requires: losetup
-Requires: lvm2
-Requires: nilfs-utils
-Requires: reiserfsprogs
-Requires: udev
-Requires: util-linux
-Requires: xfsprogs
-
-BuildArch: noarch
 
 %description
 Conversion tools for block devices.
@@ -55,6 +45,9 @@ mv %buildroot{%_bindir,%_sbindir}/%name
 %doc README.md
 
 %changelog
+* Mon May 28 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.1.4-alt2.3
+- fixed requires
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.1.4-alt2.2
 - (NMU) rebuild with python3.6
 
