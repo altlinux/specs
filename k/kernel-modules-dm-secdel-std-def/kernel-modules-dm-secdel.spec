@@ -1,5 +1,5 @@
 %define module_name     dm-secdel
-%define module_version  1.0.0
+%define module_version  1.0.2
 %define module_release  alt1
 %define flavour         std-def
 
@@ -42,7 +42,7 @@ make -C %_usrsrc/linux-%kversion-%flavour-%krelease M=$(pwd) modules
 
 %install
 install -d %buildroot/%module_dir
-install -m644 -D *.ko %buildroot/%module_dir/
+install -m644 -D dm-secdel.ko %buildroot/%module_dir/
 
 %files
 %module_dir
