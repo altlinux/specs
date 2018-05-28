@@ -1,23 +1,24 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname setuptools_cython
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 0.2.1
-Release: alt1.1
+Release: alt2
 Summary: Cython setuptools integration
 License: GPLv2
 Group: Development/Python
 Url: https://pypi.python.org/pypi/setuptools_cython/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools python-module-Cython
+BuildRequires: python-module-setuptools python-module-Cython
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools python3-module-Cython
+BuildRequires: python3-module-setuptools python3-module-Cython
 %endif
 
 %py_provides %oname
@@ -27,6 +28,7 @@ BuildPreReq: python3-module-setuptools python3-module-Cython
 Allows compiling Cython extensions in setuptools by putting
 setuptools_cython in your setup_requires.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Cython setuptools integration
 Group: Development/Python3
@@ -36,6 +38,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 Allows compiling Cython extensions in setuptools by putting
 setuptools_cython in your setup_requires.
+%endif
 
 %prep
 %setup
@@ -73,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.1-alt2
+- NMU: rebuilt to regenerate dependencies.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.1-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

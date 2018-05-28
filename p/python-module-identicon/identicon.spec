@@ -1,36 +1,34 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname identicon
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 20101207
-Release: alt1.1.1
+Release: alt2
 Summary: Python identicon implementation
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://github.com/aerosol/identicon
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/aerosol/identicon.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-module-setuptools
+BuildRequires: python-dev python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python-tools-2to3
 %endif
 
 %py_requires PIL
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
-BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
-
 %description
 identicon.py: identicon python implementation.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python identicon implementation
 Group: Development/Python3
@@ -38,6 +36,7 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 identicon.py: identicon python implementation.
+%endif
 
 %prep
 %setup
@@ -76,6 +75,9 @@ popd
 %endif
 
 %changelog
+* Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 20101207-alt2
+- NMU: rebuilt to regenerate dependencies.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 20101207-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

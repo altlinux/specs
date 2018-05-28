@@ -1,16 +1,18 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname rfc822py3
+
 Name: python3-module-%oname
 Version: 20110416
-Release: alt1.1.1
+Release: alt2
 Summary: A port of the Python 2.x rfc822 library to Python3
 License: Python
 Group: Development/Python3
+BuildArch: noarch
 Url: https://github.com/MarkNenadov/rfc822py3
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/MarkNenadov/rfc822py3.git
 Source: %name-%version.tar
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -29,6 +31,9 @@ install -p -m644 *.py %buildroot%python3_sitelibdir
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 20110416-alt2
+- NMU: rebuilt to regenerate dependencies.
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 20110416-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
