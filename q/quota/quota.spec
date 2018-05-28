@@ -1,8 +1,9 @@
 Name: quota
-Version: 4.03.0.39.251c
+Version: 4.04.0.13.d769
 Release: alt1
 Epoch: 2
 
+%def_enable rpc
 %def_disable rpcsetquota
 
 # quota_nld.c, quotaio_xfs.h:       GPLv2
@@ -22,6 +23,7 @@ Source: %name-%version-%release.tar
 
 Requires: vitmp
 BuildRequires: libe2fs-devel
+%{?_enable_rpc:BuildRequires: libtirpc-devel}
 
 %description
 This package contains system administration tools for monitoring
@@ -60,6 +62,7 @@ This package contains remote quota protocol header files and documentation.
 	--disable-netlink \
 	--disable-silent-rules \
 	--disable-xfs-roothack \
+	%{subst_enable rpc} \
 	%{subst_enable rpcsetquota} \
 	#
 %make_build
@@ -68,13 +71,18 @@ This package contains remote quota protocol header files and documentation.
 %makeinstall_std
 mkdir %buildroot/sbin
 mv %buildroot%_sbindir/quota{on,off,check} %buildroot/sbin/
+%if_enabled rpc
 install -Dpm644 rpc-rquotad.service %buildroot%_unitdir/rpc-rquotad.service
 install -Dpm644 rpc-rquotad.sysconfig %buildroot/etc/sysconfig/rpc-rquotad
+%endif
 %define docdir %_docdir/%name
 gzip -9n %buildroot%docdir/*.eps
 gzip -c9n Changelog > %buildroot%docdir/Changelog.gz
 
 %find_lang %name
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %post rpc
 %post_service rpc.rquotad
@@ -87,13 +95,14 @@ gzip -c9n Changelog > %buildroot%docdir/Changelog.gz
 /sbin/*
 %_bindir/*
 %_sbindir/*
-%exclude %_sbindir/rpc.rquotad
+%{?_enable_rpc:%exclude %_sbindir/rpc.rquotad}
 %_man1dir/*
 %_man5dir/*
 %_man8dir/*
-%exclude %_man8dir/rpc.rquotad.8*
+%{?_enable_rpc:%exclude %_man8dir/rpc.rquotad.8*}
 %doc %docdir/
 
+%if_enabled rpc
 %files rpc
 %config(noreplace) /etc/sysconfig/rpc-rquotad
 %_unitdir/rpc-rquotad.service
@@ -101,10 +110,14 @@ gzip -c9n Changelog > %buildroot%docdir/Changelog.gz
 %_man8dir/rpc.rquotad.8*
 
 %files devel
-%_includedir/rpcsvc/*
-%_man3dir/*
+%_includedir/rpcsvc/rquota.*
+%_man3dir/rquota.*
+%endif # rpc
 
 %changelog
+* Mon May 28 2018 Dmitry V. Levin <ldv@altlinux.org> 2:4.04.0.13.d769-alt1
+- v4.03-39-g251c393 -> v4.04-13-gd7694c9.
+
 * Thu May 18 2017 Dmitry V. Levin <ldv@altlinux.org> 2:4.03.0.39.251c-alt1
 - v4.03-3-g861154e -> v4.03-39-g251c393 (closes: #33488).
 
