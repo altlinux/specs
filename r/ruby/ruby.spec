@@ -13,7 +13,7 @@ Name: ruby
 %define branch 2.5
 %define ver_teeny 1
 Version: %branch.%ver_teeny
-Release: alt1
+Release: alt2
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -294,6 +294,9 @@ mkdir -p %buildroot%_datadir/%name-%version-miniruby
 mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%version-miniruby/
 %endif
 
+# Make empty dir for ri documentation
+mkdir -p %buildroot%_datadir/ri/site
+
 %check
 %make_build test
 
@@ -306,6 +309,8 @@ mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%version-miniruby/
 %lang(ja) %doc %_docdir/%name-%version/*.ja
 %_bindir/%name
 %_man1dir/%name.*
+%dir %_datadir/ri
+%dir %_datadir/ri/site
 
 %files -n %lname
 %{?_enable_shared:%_libdir/*.so.*}
@@ -351,6 +356,9 @@ mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%version-miniruby/
 %endif
 
 %changelog
+* Mon May 28 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt2
+- Package %ruby_ridir and %ruby_ri_sitedir directories in ruby.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt1
 - New version.
 - Fixes:
