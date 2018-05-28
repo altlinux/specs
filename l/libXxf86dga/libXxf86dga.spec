@@ -1,6 +1,6 @@
 Name: libXxf86dga
 Version: 1.1.4
-Release: alt1
+Release: alt2
 Summary: XFree86 Direct Graphics Access Extension Library
 License: MIT/X11
 Group: System/Libraries
@@ -10,7 +10,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: libX11-devel libXext-devel xorg-xf86dgaproto-devel xorg-util-macros xorg-sgml-doctools xmlto
+BuildRequires: libX11-devel libXext-devel xorg-proto-devel xorg-util-macros xorg-sgml-doctools xmlto
 
 %description
 XFree86 Direct Graphics Access Extension Library
@@ -48,6 +48,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Mon May 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.1.4-alt2
+- rebuild
+
 * Fri May 31 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.1.4-alt1
 - 1.1.4
 
