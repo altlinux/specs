@@ -1,38 +1,35 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname eggtestinfo
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt2.1.1
-
+Release: alt3
 Summary: Add test information to .egg-info
 License: ZPL
 Group: Development/Python
-
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/eggtestinfo
 
 Source: %name-%version.tar
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
-#BuildPreReq: python-module-setuptools
+BuildRequires: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-module-setuptools
 %endif
 
 %setup_python_module %oname
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
 
 %description
 This package is a setuptools plugin: it adds a file to the generated
 .egg-info directory, capturing the information used by the setup.py test
 command when running tests.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Add test information to .egg-info
 Group: Development/Python3
@@ -41,6 +38,7 @@ Group: Development/Python3
 This package is a setuptools plugin: it adds a file to the generated
 .egg-info directory, capturing the information used by the setup.py test
 command when running tests.
+%endif
 
 %prep
 %setup
@@ -78,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3-alt3
+- NMU: rebuilt to regenerate dependencies.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3-alt2.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

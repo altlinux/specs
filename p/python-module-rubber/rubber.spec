@@ -1,24 +1,25 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname rubber
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 0.1.8
-Release: alt2.1
+Release: alt3
 Summary: Elasticsearch client with Django support
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/rubber
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildRequires: python-dev python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python-tools-2to3
 %endif
 
 %description
@@ -34,6 +35,7 @@ Its main features are:
   - rubber is unit-testing friendly: you don't need an elasticsearch
     instance to run your tests
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Elasticsearch client with Django support
 Group: Development/Python3
@@ -50,6 +52,7 @@ Its main features are:
     for querying
   - rubber is unit-testing friendly: you don't need an elasticsearch
     instance to run your tests
+%endif
 
 %prep
 %setup
@@ -70,10 +73,12 @@ popd
 
 %install
 %python_install
+rm -rf %buildroot%python_sitelibdir/tests
 
 %if_with python3
 pushd ../python3
 %python3_install
+rm -rf %buildroot%python3_sitelibdir/tests
 popd
 %endif
 
@@ -88,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.8-alt3
+- NMU: rebuilt to regenerate dependencies.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.8-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
