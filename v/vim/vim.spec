@@ -51,9 +51,9 @@
 %define vimspell_version	50.1
 
 Name: vim
-%define branch 8.0
-Version: %branch.711
-Release: alt1.1.2
+%define branch 8.1
+Version: %branch.26
+Release: alt1
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -545,6 +545,7 @@ cd src/shadow
 	--with-x=no \
 	--enable-gui=no \
 	--disable-gpm \
+	--enable-multibyte \
 	--disable-rpath \
 	%{subst_enable selinux} \
 	--with-tlib=tinfo \
@@ -1064,6 +1065,10 @@ fi
 
 # {{{ changelog
 %changelog
+* Mon May 28 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.1.26-alt1
+- Updated to 8.1.0026.
+- %name-minimal: enabled support of multibyte encodings (ALT#33359).
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 4:8.0.711-alt1.1.2
 - Rebuild with Ruby 2.5.0
 
