@@ -1,6 +1,6 @@
 Name: libfm-qt
 Version: 0.13.0
-Release: alt1
+Release: alt2
 
 Summary: Core library of PCManFM-Qt file manager
 License: LGPLv2+
@@ -21,6 +21,7 @@ BuildRequires: pkgconfig(libfm) >= 1.2.0
 BuildRequires: pkgconfig(libmenu-cache) >= 0.4.0
 
 Conflicts: libfm-qt3
+Obsoletes: libfm-qt3
 
 %description
 LibFM-Qt is a core library of PCManFM-Qt file manager.
@@ -61,6 +62,9 @@ find %buildroot -size 0 -delete
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Mon May 28 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt2
+- obsoletes libfm-qt3
+
 * Thu May 24 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
 - new version 0.13.0
 
