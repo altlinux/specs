@@ -1,7 +1,7 @@
 %define rname libkmahjongg
 
 Name: kde5-%rname
-Version: 17.12.3
+Version: 18.04.1
 Release: alt1%ubt
 %K5init
 
@@ -72,6 +72,9 @@ KF5 library
 %_K5lib/libKF5KMahjongglib.so.*
 
 %changelog
+* Mon May 28 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 
