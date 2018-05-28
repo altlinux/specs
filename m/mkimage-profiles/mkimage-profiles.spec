@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.2.14
+Version: 1.2.15
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,9 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon May 28 2018 Michael Shigorin <mike@altlinux.org> 1.2.15-alt1
+- fixup release
+
 * Mon May 21 2018 Michael Shigorin <mike@altlinux.org> 1.2.14-alt1
 - pkgpriorities feature (manowar@)
 - extended e2k support
