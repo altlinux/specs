@@ -1,10 +1,11 @@
 %define version 1.5.2
-%define release alt2
+%define release alt2.1
 %define oname PasteDeploy
+%def_without bootstrap
 
 Name: python-module-%oname
 Version:%version
-Release: alt2
+Release: alt2.1
 Epoch: 1
 
 Summary: Load, configure, and compose WSGI applications and servers
@@ -37,7 +38,9 @@ this configuration file.
 Summary: Load, configure, and compose WSGI applications and servers (Python 3)
 Group: Development/Python3
 %py3_provides %oname
+%if_with bootstrap
 %add_python3_req_skip paste.script.templates
+%endif
 
 %description -n python3-module-%oname
 This tool provides code to load WSGI applications and servers from
@@ -78,6 +81,9 @@ popd
 
 
 %changelog
+* Mon May 28 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.5.2-alt2.1
+- fix requires
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.5.2-alt2
 - rebuild with python3.6
 
