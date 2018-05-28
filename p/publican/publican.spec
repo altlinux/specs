@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: /usr/bin/desktop-file-install perl(HTML/WikiConverter.pm) perl(base.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: /usr/bin/desktop-file-install perl(HTML/WikiConverter.pm) perl-podlators
 # END SourceDeps(oneline)
 Requires: docbook-dtds docbook-style-xsl perl-Makefile-Parser
 BuildRequires: docbook-dtds docbook-style-xsl
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 
 # Track font name changes
 %define RHEL6 %([[ %{?dist}x == .el6[a-z]* ]] && echo 1 || echo 0)
@@ -28,7 +30,7 @@ BuildRequires: docbook-dtds docbook-style-xsl
 
 Name:           publican
 Version:        4.3.2
-Release:        alt2_2
+Release:        alt2_9
 Summary:        Common files and scripts for publishing with DocBook XML
 # For a breakdown of the licensing, refer to LICENSE
 License:        (GPLv2+ or Artistic) and CC0
@@ -103,10 +105,11 @@ BuildRequires:  perl(XML/LibXSLT.pm)
 BuildRequires:  perl(XML/Simple.pm)
 BuildRequires:  perl(XML/TreeBuilder.pm)
 # BZ #1053609
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl-XML-TreeBuilder >= 5.4
 BuildRequires:  docbook-style-xsl >= 1.77.1
 BuildRequires:  desktop-file-utils
-BuildRequires:  gettext
+BuildRequires:  gettext gettext-tools
 BuildRequires:  perl(Text/CSV_XS.pm)
 BuildRequires:  perl(Sort/Versions.pm)
 BuildRequires:  perl(DBD/SQLite.pm)
@@ -116,16 +119,16 @@ BuildRequires:  perl(version.pm)
 BuildRequires:  perl(Locale/Msgfmt.pm)
 BuildRequires:  perl(Locale/Maketext/Lexicon.pm)
 BuildRequires:  perl(Lingua/EN/Fathom.pm)
-BuildRequires:  rpm-build libicu-devel
+BuildRequires:  rpm-build rpmspec libicu-devel
 
 # Most of these are handled automatically
-Requires:       perl(Locale/Maketext/Gettext.pm)  >= 1.27
-Requires:       rpm-build
+Requires:       perl(Locale/Maketext/Gettext.pm)  >= 1.270
+Requires:       rpm-build rpmspec
 Requires:       docbook-style-xsl >= 1.77.1
-Requires:       perl(XML/LibXML.pm)  >=  1.70
-Requires:       perl(XML/LibXSLT.pm) >=  1.70
-Requires:       perl(XML/TreeBuilder.pm) >= 5.4
-Requires:       perl(HTML/WikiConverter/Markdown.pm) >= 0.06
+Requires:       perl(XML/LibXML.pm)  >=  1.700
+Requires:       perl(XML/LibXSLT.pm) >=  1.700
+Requires:       perl(XML/TreeBuilder.pm) >= 5.400
+Requires:       perl(HTML/WikiConverter/Markdown.pm) >= 0.060
 # BZ #1053609
 Requires:       perl-XML-TreeBuilder >= 5.4
 Requires:       perl-Template
@@ -153,8 +156,8 @@ Requires:       fonts-ttf-lohit-tamil fonts-ttf-lohit-telugu dejavu-lgc-sans-mon
 Requires:       dejavu-fonts-common fonts-ttf-dejavu fonts-ttf-dejavu
 Requires:       fonts-ttf-dejavu fonts-ttf-overpass
 Requires:       fonts-ttf-wqy-zenhei
-Requires:       wkhtmltopdf >= 0.12.1.devlopment
-BuildRequires:  wkhtmltopdf >= 0.12.1.development
+Requires:       libwkhtmltox wkhtmltopdf
+BuildRequires:  libwkhtmltox wkhtmltopdf
 BuildRequires:  fonts-ttf-liberation fonts-ttf-liberation fonts-ttf-liberation
 BuildRequires:  fonts-ttf-cjkuni-uming fonts-ttf-ipa-gothic fonts-ttf-ipa-pgothic
 BuildRequires:  fonts-ttf-lklug fonts-ttf-baekmuk-batang
@@ -165,8 +168,8 @@ BuildRequires:  fonts-ttf-dejavu fonts-ttf-overpass dejavu-lgc-sans-mono-fonts
 Requires:       fonts-ttf-liberation fonts-ttf-liberation fonts-ttf-liberation
 Requires:       fonts-ttf-cjkuni-uming fonts-ttf-ipa-gothic fonts-ttf-ipa-pgothic
 Requires:       fonts-ttf-lklug fonts-ttf-baekmuk-batang fonts-ttf-overpass
-Requires:       wkhtmltopdf >= 0.12.1.devlopment
-BuildRequires:  wkhtmltopdf >= 0.12.1.development
+Requires:       libwkhtmltox wkhtmltopdf
+BuildRequires:  libwkhtmltox wkhtmltopdf
 BuildRequires:  fonts-ttf-liberation fonts-ttf-liberation fonts-ttf-liberation
 BuildRequires:  fonts-ttf-cjkuni-uming fonts-ttf-ipa-gothic fonts-ttf-ipa-pgothic
 BuildRequires:  fonts-ttf-lklug fonts-ttf-baekmuk-batang
@@ -193,6 +196,7 @@ Group:          Documentation
 Summary:        Documentation for the Publican package
 Requires:       xdg-utils
 Obsoletes:      publican-doc < 3
+BuildArch: noarch
 
 %description doc
 Publican is a tool for publishing material authored in DocBook XML.
@@ -229,19 +233,19 @@ Website style for common brand for DocBook5 content
 
 %build
 sed -i -e 's,PATH,%{DBPATH},g' catalog
-XML_CATALOG_FILES=$dir/catalog %{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor --nocolours=1
+XML_CATALOG_FILES=$dir/catalog /usr/bin/perl Build.PL installdirs=vendor --nocolours=1
 
 XML_CATALOG_FILES=$dir/catalog ./Build --nocolours=1
 dir=`pwd`
 
-cd Users_Guide && XML_CATALOG_FILES=$dir/catalog  %{__perl} -CDAS -I $dir/blib/lib $dir/blib/script/publican build \
+cd Users_Guide && XML_CATALOG_FILES=$dir/catalog  /usr/bin/perl -CDAS -I $dir/blib/lib $dir/blib/script/publican build \
     --formats=html-desktop --publish --langs=en-US \
     --common_config="$dir/blib/datadir" \
     --common_content="$dir/blib/datadir/Common_Content" --nocolours
 
 cd $dir
 
-cd Release_Notes && XML_CATALOG_FILES=$dir/catalog %{__perl} -CDAS -I $dir/blib/lib $dir/blib/script/publican build \
+cd Release_Notes && XML_CATALOG_FILES=$dir/catalog /usr/bin/perl -CDAS -I $dir/blib/lib $dir/blib/script/publican build \
     --formats=html-desktop --publish --langs=en-US \
     --common_config="$dir/blib/datadir" \
     --common_content="$dir/blib/datadir/Common_Content" --nocolours
@@ -268,11 +272,11 @@ desktop-file-install --vendor="%{my_vendor}" --dir=$RPM_BUILD_ROOT%{_datadir}/ap
 mkdir -p -m755 $RPM_BUILD_ROOT/%{wwwdir}/common
 dir=`pwd`
 cd datadir/Common_Content/common
-XML_CATALOG_FILES=$dir/catalog %{__perl} -CDAS -I $dir/blib/lib $dir/blib/script/publican install_brand --web --path=$RPM_BUILD_ROOT/%{wwwdir}/common
+XML_CATALOG_FILES=$dir/catalog /usr/bin/perl -CDAS -I $dir/blib/lib $dir/blib/script/publican install_brand --web --path=$RPM_BUILD_ROOT/%{wwwdir}/common
 cd -
 mkdir -p -m755 $RPM_BUILD_ROOT/%{wwwdir}/common-db5
 cd datadir/Common_Content/common-db5
-XML_CATALOG_FILES=$dir/catalog %{__perl} -CDAS -I $dir/blib/lib $dir/blib/script/publican install_brand --web --path=$RPM_BUILD_ROOT/%{wwwdir}/common-db5
+XML_CATALOG_FILES=$dir/catalog /usr/bin/perl -CDAS -I $dir/blib/lib $dir/blib/script/publican install_brand --web --path=$RPM_BUILD_ROOT/%{wwwdir}/common-db5
 cd -
 sed -i -e '1,4s,perl[0-9a-z\.]*,perl,' %buildroot%_bindir/*
 
@@ -334,6 +338,9 @@ fi
 %{wwwdir}/common-db5
 
 %changelog
+* Mon May 28 2018 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt2_9
+- fixed build
+
 * Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt2_2
 - sed -i -e '1,4s,perl[0-9a-z\.]*,perl,' %%buildroot%%_bindir/*
 
