@@ -1,6 +1,6 @@
 Name: xorg-installers
 Version: 7.8
-Release: alt6
+Release: alt7
 
 Summary: Set of various Xorg-related installers
 License: MIT/X11
@@ -52,26 +52,15 @@ Requires: xorg-drv-evdev xorg-drv-synaptics
 %description -n xorg-drv-input
 xorg-drv-input requires all input drivers for X Window System
 
-%package -n xorg-proto-devel
-Summary: X proto header files
-Group: Development/C
-Requires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel
-Requires: xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel
-Requires: xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel
-Requires: xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel
-Requires: xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel
-Requires: xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
-
-%description -n xorg-proto-devel
-X proto header files
-
 %files -n xorg-utils
 %files -n xorg-apps
 %files -n xorg-drv-video
 %files -n xorg-drv-input
-%files -n xorg-proto-devel
 
 %changelog
+* Mon May 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 7.8-alt7
+- remove xorg-proto-devel subpackage
+
 * Thu May 03 2018 Michael Shigorin <mike@altlinux.org> 7.8-alt6
 - support e2kv4 through %%e2k
 
