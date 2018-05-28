@@ -30,7 +30,7 @@ BuildRequires: docbook-dtds docbook-style-xsl
 
 Name:           publican
 Version:        4.3.2
-Release:        alt2_9
+Release:        alt3_9
 Summary:        Common files and scripts for publishing with DocBook XML
 # For a breakdown of the licensing, refer to LICENSE
 License:        (GPLv2+ or Artistic) and CC0
@@ -119,11 +119,10 @@ BuildRequires:  perl(version.pm)
 BuildRequires:  perl(Locale/Msgfmt.pm)
 BuildRequires:  perl(Locale/Maketext/Lexicon.pm)
 BuildRequires:  perl(Lingua/EN/Fathom.pm)
-BuildRequires:  rpm-build rpmspec libicu-devel
+BuildRequires:  libicu-devel
 
 # Most of these are handled automatically
 Requires:       perl(Locale/Maketext/Gettext.pm)  >= 1.270
-Requires:       rpm-build rpmspec
 Requires:       docbook-style-xsl >= 1.77.1
 Requires:       perl(XML/LibXML.pm)  >=  1.700
 Requires:       perl(XML/LibXSLT.pm) >=  1.700
@@ -338,6 +337,9 @@ fi
 %{wwwdir}/common-db5
 
 %changelog
+* Mon May 28 2018 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt3_9
+- removed BR: rpm-build
+
 * Mon May 28 2018 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt2_9
 - fixed build
 
