@@ -8,7 +8,7 @@
 
 Name: plasma5-desktop
 Version: 5.12.5
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -210,6 +210,9 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Mon May 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt2%ubt
+- add fix against KDEBUG-394013
+
 * Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt1%ubt
 - new version
 
