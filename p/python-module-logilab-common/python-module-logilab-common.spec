@@ -4,7 +4,7 @@
 %define oname logilab-common
 Name: python-module-%oname
 Version: 1.4.1
-Release: alt2
+Release: alt3
 
 Summary: Useful miscellaneous modules used by Logilab projects
 License: LGPLv2.1+
@@ -145,6 +145,9 @@ popd
 %endif
 
 %changelog
+* Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.1-alt3
+- Rebuilt with python-3.6.
+
 * Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.1-alt2
 - Rebuilt with updated setuptools.
 

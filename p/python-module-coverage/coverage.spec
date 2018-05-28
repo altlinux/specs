@@ -1,11 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname coverage
 
 %def_with python3
 %def_with doc
 
 Name: python-module-%oname
-Version: 4.4.1
-Release: alt1.1
+Version: 4.5.1
+Release: alt1
 Summary: A tool for measuring code coverage of Python programs
 License: Apache-2.0
 Group: Development/Python
@@ -14,7 +16,7 @@ Url: http://nedbatchelder.com/code/coverage/
 # hg clone http://bitbucket.org/ned/coveragepy
 # https://github.com/nedbat/coveragepy.git
 Source: %oname-%version.tar
-Patch1: %oname-%version-alt-build-docs.patch
+Patch1: %oname-alt-build-docs.patch
 
 BuildRequires: python-devel python-module-setuptools
 %if_with doc
@@ -156,6 +158,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.1-alt1
+- Updated to upstream version 4.5.1.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 

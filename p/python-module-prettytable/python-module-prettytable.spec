@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname prettytable
 %define git 4676e41
 
@@ -6,7 +8,7 @@
 
 Name:		python-module-%oname
 Version:	0.10
-Release:	alt1.g%git
+Release:	alt2.g%git
 Summary:	Python library to display tabular data in tables
 
 Group:		Development/Python
@@ -103,17 +105,18 @@ rm -rf %buildroot%_bindir
 
 %files
 %doc README.rst COPYING CHANGELOG.md
-%dir %python_sitelibdir/%oname
-%python_sitelibdir/%oname
+%python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
 %doc README.rst COPYING CHANGELOG.md
-%dir %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname
+%python3_sitelibdir/*
 %endif
 
 %changelog
+* Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10-alt2.g4676e41
+- NMU: packaged egg-info files.
+
 * Mon May 14 2018 L.A. Kostis <lakostis@altlinux.ru> 0.10-alt1.g4676e41
 - GIT 4676e41.
 - Added boxchar changes from https://github.com/platomav/PTable (need MCExtractor to work).

@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.14
-Release: alt2
+Release: alt3
 
 %define package_name		%real_name
 %define weight			1001
@@ -453,6 +453,8 @@ Requires: %name = %version-%release
 Provides: %real_name-devel = %require_ver
 Obsoletes: %python_name-modules-dev <= %noversion_from
 Provides: lib%name-devel = %version-%release
+# require libnsl2-devel, otherwise arch-specific modules may fail to link.
+Requires: libnsl2-devel
 
 %description dev
 The Python programming language's interpreter can be extended with
@@ -1147,6 +1149,9 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.14-alt3
+- NMU: updated runtime devel dependencies.
+
 * Thu Mar 22 2018 Ivan Zakharyaschev <imz@altlinux.org> 2.7.14-alt2
 - buildreq's ignore list (thx grenka@):
   + Make buildreq ignore atomic .egg-info files

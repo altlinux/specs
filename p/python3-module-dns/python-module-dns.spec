@@ -5,7 +5,7 @@
 
 Name: python3-module-%modulename
 Version: 1.15.0
-Release: alt1
+Release: alt2
 
 Summary: DNS toolkit (Python 3)
 License: BSD-like
@@ -59,6 +59,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.15.0-alt2
+- NMU: rebuilt with python-3.6.
+
 * Wed Jul 12 2017 Terechkov Evgenii <evg@altlinux.org> 1.15.0-alt1
 - 1.15.0
 

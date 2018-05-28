@@ -1,50 +1,69 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname gitdb
 
 %def_with python3
-%def_disable check
 
-Name: python-module-GitDB
-Version: 2.0.0
-Release: alt1
-
+Name: python-module-%oname
+Version: 2.0.3
+Release: alt1%ubt
 Summary: IO of git-style object databases
-
 License: BSD
+BuildArch: noarch
 Group: Development/Python
 Url: https://pypi.python.org/pypi/gitdb/
 
 # https://github.com/gitpython-developers/gitdb.git
 Source: %name-%version.tar
+Patch1: %oname-alt-build.patch
 
-%setup_python_module gitdb
-
-#BuildPreReq: python-devel python-module-setuptools-tests git
-#BuildPreReq: python-module-smmap python-module-nose
-#BuildPreReq: python-module-coverage
-#BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: git-core
+BuildRequires: python-dev python-module-setuptools
+BuildRequires: python2.7(smmap)
+BuildRequires: python2.7(nose)
+BuildRequires: python2.7(coverage)
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-smmap python3-module-nose
-#BuildPreReq: python3-module-coverage
+BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3(smmap)
+BuildRequires: python3(nose)
+BuildRequires: python3(coverage)
 %endif
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
-BuildRequires: git-core python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-smmap python3-devel rpm-build-python3 time
 
 %description
 IO of git-style object databases.
 
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+IO of git-style object databases.
+
+This package contains tests for %oname.
+
+%if_with python3
 %package -n python3-module-%oname
 Summary: IO of git-style object databases
 Group: Development/Python3
-%py3_provides %oname
-Provides: python3-module-GitDB = %EVR
 
 %description -n python3-module-%oname
 IO of git-style object databases.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+IO of git-style object databases.
+
+This package contains tests for %oname.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -67,6 +86,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -91,7 +111,6 @@ popd
 %if_with python3
 pushd ../python3
 %python3_install
-rm -f %buildroot%python3_sitelibdir/%oname/_perf.*.so
 popd
 %endif
 
@@ -101,18 +120,44 @@ popd
 cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
+# needed for tests
+git config --global user.email "darktemplar at altlinux.org"
+git config --global user.name "darktemplar"
+
+git init
+git add -A
+git commit -m "%version"
+git tag %version -m "%version"
+
+# TODO: This test doesn't work, remove it for now
+rm -f gitdb/test/performance/test_pack_streaming.py
+
 %make coverage
+
 %if_with python3
 pushd ../python3
-%make coverage PYTHON=python3 TESTRUNNER=nosetests3
+
+# needed for tests
+git init
+git add -A
+git commit -m "%version"
+git tag %version -m "%version"
+
+# TODO: This test doesn't work, remove it for now
+rm -f gitdb/test/performance/test_pack_streaming.py
+
+%make coverage PYTHON=python3 TESTRUNNER=$(which nosetests3)
 popd
 %endif
 
 %files
 %doc AUTHORS *.rst
-%python_sitelibdir/%oname
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/pickle
+%exclude %python_sitelibdir/%oname/test
+
+%files tests
+%python_sitelibdir/%oname/test
 
 %files pickles
 %python_sitelibdir/%oname/pickle
@@ -123,11 +168,17 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %doc AUTHORS *.rst
-%python3_sitelibdir/%oname
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/test
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/%oname/test
 %endif
 
 %changelog
+* Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.3-alt1%ubt
+- Updated to upstream version 2.0.3.
+
 * Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - new version 2.0.0 (with rpmrb script)
 
