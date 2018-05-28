@@ -1,6 +1,6 @@
 %define nm_version 1.4.1-alt1.git20160914
-%define git_date .git20180106
-#define git_date %nil
+#define git_date .git20180106
+%define git_date %nil
 
 %define _unpackaged_files_terminate_build 1
 
@@ -9,14 +9,14 @@
 %def_without selinux
 %def_with gcr
 
-%ifarch e2k
+%ifarch %e2k
 %define more_warnings no
 %else
 %define more_warnings error
 %endif
 
 Name: NetworkManager-applet-gtk
-Version: 1.8.11
+Version: 1.8.12
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -236,6 +236,10 @@ make check
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Mon May 28 2018 Mikhail Efremov <sem@altlinux.org> 1.8.12-alt1
+- Updated to 1.8.12.
+- Use %%e2k macro.
+
 * Thu Jan 11 2018 Mikhail Efremov <sem@altlinux.org> 1.8.11-alt1.git20180106
 - Upstream git snapshot.
 
