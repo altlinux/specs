@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 4.7.9
+Version: 4.8.1
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -47,37 +47,6 @@ manual. Currently phpMyAdmin can:
   - administer multiple servers and single databases
   - communicate in more than 20 different languages
 
-%package apache2
-Summary: phpMyAdmin - web-based MySQL administration (for apache 2.x and php5)
-Group: System/Servers
-Requires: %name = %version-%release
-Requires: apache2-mod_php5 >= 5.2.0
-Requires: apache2-base
-Requires: php5-mysqli
-Requires: php5-mcrypt
-Requires: php5-mbstring
-Requires: php5-gd2
-Conflicts: %name-apache2-php7
-
-%description apache2
-phpMyAdmin can administer a whole MySQL-server (needs a super-user)
-but also a single database. To accomplish the latter you'll need a
-properly set up MySQL-user who can read/write only the desired
-database. It's up to you to look up the appropiate part in the MySQL
-manual. Currently phpMyAdmin can:
-  - create and drop databases
-  - create, copy, drop and alter tables
-  - delete, edit and add fields
-  - execute any SQL-statement, even batch-queries
-  - manage keys on fields
-  - load text files into tables
-  - create (*) and read dumps of tables
-  - export (*) and import data to CSV values
-  - administer multiple servers and single databases
-  - communicate in more than 20 different languages
-
-Install this package if you need phpMyAdmin for apache 2.0 and php5.
-
 %package apache2-php7
 Summary: phpMyAdmin - web-based MySQL administration (for apache 2.x and php7)
 Group: System/Servers
@@ -107,7 +76,7 @@ manual. Currently phpMyAdmin can:
   - administer multiple servers and single databases
   - communicate in more than 20 different languages
 
-Install this package if you need phpMyAdmin for apache 2.0 and php5.
+Install this package if you need phpMyAdmin for apache 2.4 and php5.
 
 %prep
 %setup
@@ -120,7 +89,7 @@ cp -r ../%name-%version %buildroot%webserver_webappsdir/%name
 # remove unneeded
 rm -rf %buildroot%webserver_webappsdir/%name/test/
 rm -rf %buildroot%webserver_webappsdir/%name/doc/{_ext,doctrees,Makefile,make.bat,conf.py,*.rst}
-rm -f %buildroot%webserver_webappsdir/%name/.coveralls.yml
+rm -f %buildroot%webserver_webappsdir/%name/{.coveralls.yml,.editorconfig,.eslintignore,.eslintrc.json}
 
 cp -a %SOURCE3 %buildroot%webserver_webappsdir/%name/.htaccess
 cp %SOURCE2 .
@@ -154,17 +123,16 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 %attr(640,root,%webserver_group) %config(noreplace) %webserver_webappsdir/%name/config.inc.php
 %exclude %webserver_webappsdir/%name/setup
 
-%files apache2
-%config(noreplace) %apache2_extra_available/%name.conf
-%apache2_extra_enabled/%name.conf
-#attr(755,root,root) %_controldir/%name-apache2
-
 %files apache2-php7
 %config(noreplace) %apache2_extra_available/%name.conf
 %apache2_extra_enabled/%name.conf
 #attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Mon May 28 2018 Vitaly Lipatov <lav@altlinux.ru> 4.8.1-alt1
+- new version 4.8.1 (with rpmrb script)
+- drop php5 support
+
 * Tue Mar 20 2018 Vitaly Lipatov <lav@altlinux.ru> 4.7.9-alt1
 - new version 4.7.9 (with rpmrb script)
 
