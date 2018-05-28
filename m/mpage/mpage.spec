@@ -1,18 +1,17 @@
 Name: mpage
-Version: 2.5.4
-Release: alt2.1
+Version: 2.5.7
+Release: alt1
 
 Summary: A tool for printing multiple pages of text on each printed page
 License: GPL
 Group: System/Configuration/Printing
 
 Url: http://www.mesa.nl/pub/mpage
-Source: http://www.mesa.nl/pub/mpage/%name-%version.tar
-Patch: mpage252-config.patch
-Patch1: %name-2.5.1-newenc.patch
-Patch2: %name-2.5.4-alt-tmpfile.patch
-Patch3: mpage-2.5.4-alt-no-japanese.patch
-Patch4: mpage-2.5.4-rh-gcc4.patch
+Source: %name-%version.tar
+Patch0: mpage252-config.patch
+Patch1: mpage-2.5.1-newenc.patch
+Patch2: mpage-2.5.7-alt-tmpfile.patch
+Patch3: mpage-2.5.7-alt-no-japanese.patch
 
 %description
 The mpage utility takes plain text files or PostScript(TM) documents
@@ -26,18 +25,17 @@ Mpage should be installed if you need a useful utility for viewing
 long text documents without wasting paper.
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%patch2 -p2
+%patch3 -p2
 
 %build
 %make_build BINDIR=%_bindir LIBDIR=%_datadir MANDIR=%_mandir/man1 PREFIX=%prefix
 
 %install
-make PREFIX=$RPM_BUILD_ROOT%prefix MANDIR=$RPM_BUILD_ROOT%_mandir/man1 install
+make PREFIX=%buildroot%prefix MANDIR=%buildroot%_mandir/man1 install
 
 %files
 %doc CHANGES Copyright README NEWS TODO
@@ -46,6 +44,9 @@ make PREFIX=$RPM_BUILD_ROOT%prefix MANDIR=$RPM_BUILD_ROOT%_mandir/man1 install
 %_datadir/%name
 
 %changelog
+* Mon May 28 2018 Grigory Ustinov <grenka@altlinux.org> 2.5.7-alt1
+- Build new version.
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.5.4-alt2.1
 - NMU: added URL
 
