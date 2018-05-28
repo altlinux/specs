@@ -1,6 +1,6 @@
 Name:     puppetdb
 Version:  5.2.2
-Release:  alt1
+Release:  alt2%ubt
 
 Summary:  Centralized Puppet Storage
 License:  Apache-2.0
@@ -13,7 +13,7 @@ Source:   %name-%version.tar
 
 BuildArch:      noarch
 
-BuildPreReq: /proc rpm-build-java rpm-build-ruby
+BuildPreReq: /proc rpm-build-java rpm-build-ruby rpm-build-ubt
 
 # Requires: puppet
 Requires: postgresql
@@ -137,6 +137,9 @@ useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin)
 %ruby_sitelibdir/*
 
 %changelog
+* Mon May 28 2018 Maxim Voronov <mvoronov@altlinux.org> 5.2.2-alt2%ubt
+- Use ubt macro
+
 * Fri May 18 2018 Maxim Voronov <mvoronov@altlinux.org> 5.2.2-alt1
 - Update to 5.2.2
 
