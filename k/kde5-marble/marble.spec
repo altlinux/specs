@@ -4,8 +4,8 @@
 %define libmarblewidget libmarblewidget-qt5%marblewidget_sover
 
 Name: kde5-%rname
-Version: 17.12.3
-Release: alt2%ubt
+Version: 18.04.1
+Release: alt1%ubt
 %K5init
 
 Group: Education
@@ -128,6 +128,9 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5lib/libmarblewidget-qt5.so.*
 
 %changelog
+* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- new version
+
 * Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 17.12.3-alt2%ubt
 - NMU: rebuilt with new libshape.
 
