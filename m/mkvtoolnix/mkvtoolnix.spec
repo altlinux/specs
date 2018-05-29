@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_disable debug
 %def_disable profiling
 
@@ -12,25 +14,29 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 12.0.0
-Release: alt1
+Version: 23.0.0
+Release: alt1%ubt
 
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL
 Group: Video
-URL: http://www.bunkus.org/videotools/%name/
-Source: %{url}sources/%name-%version.tar
+URL: https://mkvtoolnix.download/
 
-Provides: mkvmerge = %version-%release
+# https://gitlab.com/mbunkus/mkvtoolnix.git
+Source: %name-%version.tar
 
+Provides: mkvmerge = %EVR
+
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ boost-devel boost-filesystem-devel zlib-devel libmagic-devel
 BuildRequires: libexpat-devel libvorbis-devel ImageMagick ruby ruby-stdlibs symlinks
-BuildRequires: libcurl-devel libebml-devel >= 1.3.4 libmatroska-devel >= 1.4.7
+BuildRequires: libcurl-devel libebml-devel >= 1.3.6 libmatroska-devel >= 1.4.9
 BuildRequires: docbook-style-xsl xsltproc ruby-tools
+BuildRequires: libpugixml-devel
 
 %{?_enable_wxwidgets:BuildRequires: libpango-devel libwxGTK3.1-devel}
-%{?_enable_qt:BuildRequires: qt5-base-devel qt5-multimedia-devel}
+%{?_enable_qt:BuildRequires: qt5-base-devel qt5-multimedia-devel cmark-devel}
 %{?_enable_bz2:BuildRequires: bzlib-devel}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
 %{?_with_flac:BuildRequires: libflac-devel}
@@ -46,8 +52,8 @@ files and create (mkvmerge) Matroska files from other media files.
 Summary: GUI for mkvmerge including a chapter editor
 License: GPL
 Group: Video
-Provides: mmg = %version-%release
-Provides: mkvmerge-gui = %version-%release
+Provides: mmg = %EVR
+Provides: mkvmerge-gui = %EVR
 Obsoletes: mkvmerge-gui
 
 %description gui
@@ -87,6 +93,7 @@ This package contains some additional tools.
 
 %prep
 %setup
+rm -rf lib/pugixml
 
 %build
 ./autogen.sh
@@ -104,14 +111,8 @@ export LINGUAS="en ru uk"
 
 rake %{?_with_tools:TOOLS=1} V=1
 
-bzip2 --best --force --keep ChangeLog
-
 %install
 rake DESTDIR=%buildroot install
-
-mkdir -p %buildroot%_defaultdocdir/%name-%version
-install -m0644 AUTHORS ChangeLog.* README.md %buildroot%_defaultdocdir/%name-%version
-cp -ar examples %buildroot%_defaultdocdir/%name-%version
 
 %if_with tools
 install -m0755 -D src/tools/{base64tool,diracparser,ebml_validator,vc1parser} %buildroot%_bindir
@@ -120,19 +121,21 @@ install -m0755 -D src/tools/{base64tool,diracparser,ebml_validator,vc1parser} %b
 %find_lang %name
 
 %files -f %name.lang
+%doc COPYING AUTHORS NEWS.md README.md examples
 %_bindir/mkvextract
 %_bindir/mkvmerge
 %_bindir/mkvpropedit
 %_man1dir/mkvextract.*
 %_man1dir/mkvmerge.*
 %_man1dir/mkvpropedit.*
-%_defaultdocdir/%name-%version
+%_iconsdir/hicolor/*/apps/mkvextract.*
+%_iconsdir/hicolor/*/apps/mkvmerge.*
+%_iconsdir/hicolor/*/apps/mkvpropedit.*
 
 %files -n mkvinfo
 %_bindir/mkvinfo
 %_man1dir/mkvinfo.*
 %_iconsdir/hicolor/*/apps/mkvinfo.*
-%_desktopdir/org.bunkus.mkvinfo.desktop
 
 %if_enabled gui
 %files gui
@@ -152,6 +155,9 @@ install -m0755 -D src/tools/{base64tool,diracparser,ebml_validator,vc1parser} %b
 %endif
 
 %changelog
+* Tue May 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 23.0.0-alt1%ubt
+- Updated to upstream version 23.0.0.
+
 * Thu Jun 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 12.0.0-alt1
 - Update to 12.0.0
 
@@ -322,7 +328,7 @@ install -m0755 -D src/tools/{base64tool,diracparser,ebml_validator,vc1parser} %b
 
 * Mon Nov 27 2006 Led <led@altlinux.ru> 1.8.1-alt1
 - 1.8.1
-- Fixed Requires/Provides for %gname package
+- Fixed Requires/Provides for %%gname package
 
 * Tue Nov 14 2006 Led <led@altlinux.ru> 1.8.0-alt1
 - 1.8.0
