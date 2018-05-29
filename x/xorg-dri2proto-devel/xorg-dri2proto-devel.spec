@@ -1,6 +1,6 @@
 Name: xorg-dri2proto-devel
 Version: 2.8
-Release: alt1
+Release: alt2
 Summary: DRI2 Protocol Headers
 License: MIT/X11
 Group: Development/C
@@ -12,6 +12,7 @@ Provides: dri2proto = %version-%release
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildArch: noarch
 BuildRequires: xorg-util-macros
 
 %description
@@ -23,7 +24,9 @@ DRI2 Protocol Headers
 
 %build
 %autoreconf
-%configure
+%configure \
+        --host= \
+        --build=
 
 %install
 %make DESTDIR=%buildroot install
@@ -31,9 +34,12 @@ DRI2 Protocol Headers
 %files
 %_datadir/doc/dri2proto
 %_includedir/X11
-%_pkgconfigdir/*.pc
+%_datadir/pkgconfig/*.pc
 
 %changelog
+* Tue May 29 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.8-alt2
+- noarch
+
 * Sat Sep 15 2012 Valery Inozemtsev <shrek@altlinux.ru> 2.8-alt1
 - 2.8
 
