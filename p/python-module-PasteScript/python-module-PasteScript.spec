@@ -1,11 +1,11 @@
 %define version 1.7.5
 %define oname PasteScript
 
-%def_with bootstrap
+%def_without bootstrap
 
 Name: python-module-%oname
 Version:%version
-Release: alt4.1
+Release: alt4.2
 Serial: 1
 
 Summary: A pluggable command-line frontend
@@ -21,9 +21,11 @@ Conflicts: python-module-paste.script
 Obsoletes: python-module-paste.script
 %py_provides %oname
 
-%if_with bootstrap
+%if_without bootstrap
 BuildRequires: python-module-PasteDeploy
 BuildPreReq: python3-module-PasteDeploy
+BuildRequires: python-module-paste
+BuildPreReq: python3-module-paste
 %endif
 
 BuildRequires: python-module-sphinx python-module-Pygments
@@ -41,8 +43,11 @@ package file layouts.
 Summary: A pluggable command-line frontend (Python 3)
 Group: Development/Python3
 %py3_provides %oname
-%add_python3_req_skip new paste.deploy paste.deploy.converters paste.translogger
+%add_python3_req_skip new
+%if_with bootstrap
+%add_python3_req_skip paste.deploy paste.deploy.converters paste.translogger
 %add_python3_req_skip paste.util paste.util.template paste.wsgilib
+%endif
 
 %description -n python3-module-%oname
 A pluggable command-line frontend, including commands to setup
@@ -55,6 +60,7 @@ rm -rf ../python3
 cp -a . ../python3
 
 %build
+export PYTHONPATH=$PWD
 pushd ../python3
 sed -i 's|%_bindir/env python|%_bindir/env python3|' \
 	tests/test_logging_config.py scripts/paster
@@ -89,6 +95,9 @@ popd
 
 
 %changelog
+* Mon May 28 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.7.5-alt4.2
+- fix requires
+
 * Thu May 24 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.7.5-alt4.1
 - rebuild with all requires
 
