@@ -2,7 +2,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with jam
 %def_with devel_static
@@ -41,17 +41,15 @@
 %endif
 
 %define ver_maj 1
-%define ver_min 67
+%define ver_min 66
 %define ver_rel 0
 
 %define namesuff %{ver_maj}_%{ver_min}_%ver_rel
 
-%define _unpackaged_files_terminate_build 1
-
-Name: boost
+Name: boost%namesuff
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt2
 
 Summary: Boost libraries
 License: Boost Software License
@@ -68,7 +66,6 @@ Patch29: boost-1.53.0-alt-qt4-moc-fix.patch
 Patch30: boost-1.63.0-alt-python-paths.patch
 Patch82: boost-1.66.0-fedora-no-rpath.patch
 Patch84: boost-1.66.0-fedora-spirit-abs-overflow.patch
-Patch85: boost-1.67.0-upstream-python.patch
 
 # we use %%requires_python_ABI, introduced in rpm-build-python-0.36.6-alt1
 BuildRequires(pre): rpm-build-python >= 0.36.6-alt1
@@ -140,7 +137,6 @@ PreReq: %name-devel-headers = %epoch:%version-%release
 Requires: libboost_atomic%version = %epoch:%version-%release
 Requires: libboost_chrono%version = %epoch:%version-%release
 Requires: libboost_container%version = %epoch:%version-%release
-Requires: libboost_contract%version = %epoch:%version-%release
 Requires: libboost_date_time%version = %epoch:%version-%release
 Requires: libboost_graph%version = %epoch:%version-%release
 Requires: libboost_iostreams%version = %epoch:%version-%release
@@ -816,22 +812,6 @@ including STL containers. The aim of the library is to offers advanced
 features not present in standard containers or to offer the latest
 standard draft features for compilers that comply with C++03.
 
-%package -n libboost_contract%version
-Summary: Boost.Contract Library
-Group: Development/C++
-
-%if_with strict_deps
-Requires: libboost_system%version = %epoch:%version-%release
-%endif
-
-%description -n libboost_contract%version
-Boost.Contract library implements contract programming for C++.
-All contract programming features are supported:
-Subcontracting, class invariants, postconditions (with old and return values),
-preconditions, customizable actions
-on assertion failure (e.g., terminate or throw),
-optional compilation and checking of assertions, etc, from Lorenzo Caminiti. 
-
 
 %package -n libboost_context%version
 Summary: Boost.Context Library
@@ -1057,6 +1037,18 @@ Boost.MPI is a library for message passing in high-performance parallel
 applications. This package contains shared library for python bindings.
 %endif
 
+%if_with python3
+%package -n libboost_mpi_python3-%version
+Summary: Boost.MPI python 3 shared library
+Group: Development/C++
+
+%requires_python3_ABI_for_files %_libdir/*_mpi_python3.so.*
+
+%description -n libboost_mpi_python3-%version
+Boost.MPI is a library for message passing in high-performance parallel
+applications. This package contains shared library for python3 bindings.
+%endif
+
 %package -n libboost_program_options%version
 Summary: The Boost Program_options Library (Boost.Program_options)
 Group: Development/C++
@@ -1088,7 +1080,7 @@ Provides: boost-python = %epoch:%version-%release
 # http://lists.altlinux.org/pipermail/devel/2012-April/193731.html
 # and especially message where ldv@ suggested this hack (thanks):
 # http://lists.altlinux.org/pipermail/devel/2012-April/193827.html
-%requires_python_ABI_for_files %_libdir/*boost_python2*.so.*
+%requires_python_ABI_for_files %_libdir/*boost_python.so.*
 
 %description -n libboost_python%version
 Use the Boost Python Library to quickly and easily export a C++ library
@@ -1103,7 +1095,7 @@ in order to use them with Boost.Python. The system should simply
 Summary: The Boost Python Library (Boost.Python) for Python 3
 Group: Development/C++
 
-%requires_python3_ABI_for_files %_libdir/*boost_python3*.so.*
+%requires_python3_ABI_for_files %_libdir/*boost_python3.so.*
 
 %description -n libboost_python3-%version
 Use the Boost Python Library to quickly and easily export a C++ library
@@ -1311,10 +1303,6 @@ applications. This package contains python module.
 %patch30 -p1
 %patch82 -p1
 %patch84 -p1
-
-pushd libs/mpi
-%patch85 -p1
-popd
 
 COMPILER_FLAGS="%optflags -fno-strict-aliasing"
 
@@ -1695,9 +1683,10 @@ rm -f %buildroot%_libdir/*.a || :
 %_includedir/%name/python*
 
 %files python-devel
-%_libdir/*boost_python2*.so
-
+%_libdir/*boost_python*.so
 %if_with python3
+%exclude %_libdir/*boost_python3*.so
+
 %files python3-devel
 %_libdir/*boost_python3*.so
 %endif
@@ -1738,9 +1727,6 @@ rm -f %buildroot%_libdir/*.a || :
 
 %files -n libboost_container%version
 %_libdir/*_container*.so.*
-
-%files -n libboost_contract%version
-%_libdir/*_contract*.so.*
 
 %if_with context
 %files -n libboost_context%version
@@ -1802,15 +1788,21 @@ rm -f %buildroot%_libdir/*.a || :
 
 %files -n libboost_mpi_python%version
 %_libdir/*_mpi_python.so.*
+
+%if_with python3
+%files -n libboost_mpi_python3-%version
+%_libdir/*_mpi_python3.so.*
+%endif
 %endif
 
 %files -n libboost_program_options%version
 %_libdir/*_program_options*.so.*
 
 %files -n libboost_python%version
-%_libdir/*boost_python2*.so.*
-
+%_libdir/*boost_python*.so.*
 %if_with python3
+%exclude %_libdir/*boost_python3*.so.*
+
 %files -n libboost_python3-%version
 %_libdir/*boost_python3*.so.*
 %endif
@@ -1895,10 +1887,8 @@ done
 
 
 %changelog
-* Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.67.0-alt1
-- Updated to 1.67.0.
-- Packaged libboost_contract.
-- Removed libboost_mpi_python3.
+* Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.66.0-alt2
+- Rebuilt as compat package without development files.
 
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.66.0-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
