@@ -13,15 +13,14 @@
 # published by the Open Source Initiative.
 
 Name: libpff
-Version: 20131028
+Version: 20161119
 Release: alt1
 
 Summary: Library and tools to access Microsoft PFF and OFF format files
 License: LGPLv3+ and GFDLv1.1+ and GFDLv1.3+
 Group: File tools
 
-Url: http://code.google.com/p/libpff/
-#DL-URL:        https://googledrive.com/host/0B3fBvzttpiiScU9qcG5ScEZKZE0/libpff-experimental-20130722.tar.gz
+Url: https://github.com/libyal/libpff
 Source0: %name-experimental-%version.tar.gz
 Source1: %name.watch
 Source2: PFF_Forensics_-_analyzing_the_horrible_reference_file_format.pdf
@@ -136,6 +135,10 @@ cp -a "%{S:2}" "%{S:3}" "%{S:4}" "%{S:5}" "%{S:6}" .
 %python_sitelibdir/pypff.so
 
 %changelog
+* Tue May 29 2018 Grigory Ustinov <grenka@altlinux.org> 20161119-alt1
+- Build new version.
+- Fix URL (Closes: #32337).
+
 * Mon May 12 2014 Michael Shigorin <mike@altlinux.org> 20131028-alt1
 - new version (watch file uupdate)
 
