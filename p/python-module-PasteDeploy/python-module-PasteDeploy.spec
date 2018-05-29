@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version:%version
-Release: alt2.1
+Release: alt2.2
 Epoch: 1
 
 Summary: Load, configure, and compose WSGI applications and servers
@@ -26,6 +26,7 @@ BuildRequires: python-module-alabaster python-module-docutils python-module-html
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-html5lib python3-module-sphinx time
+%py_requires Paste
 
 
 %description
@@ -38,6 +39,7 @@ this configuration file.
 Summary: Load, configure, and compose WSGI applications and servers (Python 3)
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires Paste
 %if_with bootstrap
 %add_python3_req_skip paste.script.templates
 %endif
@@ -81,6 +83,9 @@ popd
 
 
 %changelog
+* Tue May 29 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.5.2-alt2.2
+- fix requires(2)
+
 * Mon May 28 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.5.2-alt2.1
 - fix requires
 
