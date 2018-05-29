@@ -1,7 +1,7 @@
 %define module Source-Repository-Mass
 
 Name: perl-%module
-Version: 0.418
+Version: 0.419
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ Conflicts: perl-Source-Repository < 0.391
 %perl_vendor_privlib/Source*
 
 %changelog
+* Tue May 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.419-alt1
+- new version
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.418-alt1
 - new version
 
