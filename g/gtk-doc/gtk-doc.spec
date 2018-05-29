@@ -1,11 +1,10 @@
 %def_disable snapshot
 %def_with mkpdf
-# our dblatex can't be --quiet
-%def_disable check
+%def_enable check
 
 Name: gtk-doc
 Version: 1.28
-Release: alt1
+Release: alt2
 
 Summary: API documentation generation tool for GTK+ and GNOME
 Group: Development/Other
@@ -14,6 +13,7 @@ Url: http://www.gtk.org/gtk-doc/
 
 %define pkgdocdir %_docdir/%name-%version
 %define python_ver 2.7
+%define dblatex_ver 0.3.10
 
 Requires: python >= %python_ver
 Requires: sgml-common >= 0.6.3-alt11
@@ -44,14 +44,11 @@ BuildRequires: docbook-dtds xml-common xml-utils
 BuildRequires: common-licenses rpm-build-licenses
 BuildRequires: docbook-dtds >= 1.0-alt7
 BuildRequires: docbook-style-xsl bc
-%{?_with_mkpdf:BuildRequires: rpm-build-gnome yelp-tools highlight}
+%{?_with_mkpdf:BuildRequires: rpm-build-gnome yelp-tools highlight dblatex >= %dblatex_ver}
 # for SGML
 BuildRequires: docbook-style-dsssl
 BuildRequires: openjade >= 1.3.1
-# for check
-BuildRequires: glib2-devel
-# since 1.25
-%{?_with_mkpdf:BuildRequires: dblatex}
+%{?_enable_check:BuildRequires: glib2-devel python-module-mock}
 
 %description
 %name is a tool for generating API reference documentation.
@@ -62,6 +59,7 @@ and GNOME.
 Summary: PDF converter for %name
 Group: Development/Other
 Requires: %name = %version-%release
+Requires: dblatex >= %dblatex_ver
 
 %description mkpdf
 %name is a tool for generating API reference documentation.
@@ -152,6 +150,10 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Tue May 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.28-alt2
+- enabled tests with dblatex-0.3.10
+- gtk-doc-mkpdf requires dblatex-0.3.10
+
 * Sat Mar 24 2018 Yuri N. Sedunov <aris@altlinux.org> 1.28-alt1
 - 1.28
 
