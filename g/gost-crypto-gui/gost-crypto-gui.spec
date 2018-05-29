@@ -2,7 +2,7 @@
 
 Name: gost-crypto-gui
 Version: 0.3
-Release: alt0.5.a.git%gitrev
+Release: alt0.6.a.git%gitrev
 Summary: A PyQt GUI for performing cryptographic operations over files using GOST algorithms
 
 License: MIT
@@ -21,6 +21,9 @@ BuildArch: noarch
 
 Source0: %name.tar
 
+# fix error of returt zero-code and ru linux locale
+Patch0: patch_for_4b7a47a.patch
+
 Provides:  gostcryptogui = %EVR
 Obsoletes: gostcryptogui < %EVR
 
@@ -30,6 +33,7 @@ algorithms. Requires CryproPro (http://www.cryptopro.ru).
 
 %prep
 %setup -q
+%patch0 -p0
 
 %build
 %python_build
@@ -72,6 +76,9 @@ rm -f %buildroot%_iconsdir/gost-crypto-gui.png
 %_iconsdir/*.png
 
 %changelog
+* Tue May 29 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.3-alt0.6.a.git4b7a47a
+-fix error of returt zero-code and ru linux locale
+
 * Fri Apr 20 2018 Andrey Cherepanov <cas@altlinux.org> 0.3-alt0.5.a.git4b7a47a
 - New version (ALT #34836).
 
