@@ -22,7 +22,7 @@
 
 Name: xorg-server
 Version: 1.19.6
-Release: alt1
+Release: alt2
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -326,6 +326,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Tue May 29 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.19.6-alt2
+- rebuild
+
 * Thu Dec 21 2017 Valery Inozemtsev <shrek@altlinux.ru> 2:1.19.6-alt1
 - 1.19.6
 
