@@ -1,10 +1,10 @@
-# vim: set ft=spec: -*- rpm-spec -*-
+%def_without tests
 
 %define pkgname net-scp
 
 Name: ruby-%pkgname
-Version: 1.0.2
-Release: alt2.1
+Version: 1.2.1
+Release: alt1
 
 Summary: A pure Ruby implementation of the SCP client protocol
 Group: Development/Ruby
@@ -13,12 +13,12 @@ Url: http://rubyforge.org/projects/net-ssh/
 
 BuildArch: noarch
 
-Source0: %pkgname-%version.tar.gz
+Source0: %pkgname-%version.tar
 Patch: net-scp-1.0.2-alt-tests.patch
 
-# Automatically added by buildreq on Sat Dec 05 2009 (-bi)
 BuildRequires: rpm-build-ruby ruby-mocha ruby-net-ssh ruby-tool-rdoc ruby-tool-setup
 BuildRequires: ruby-test-unit
+BuildRequires: ruby-mocha
 
 %description
 Net::SCP is a pure-Ruby implementation of the SCP protocol. This operates over
@@ -40,14 +40,18 @@ Documentation files for %name
 %build
 %ruby_config
 %ruby_build
-%ruby_test_unit -Ilib:test test/test_all.rb
 
 %install
 %ruby_install
 %rdoc lib/
 
+%check
+%if_with tests
+%ruby_test_unit -Ilib:test test/test_all.rb
+%endif
+
 %files
-%doc CHANGELOG.rdoc README.rdoc
+%doc README.rdoc
 %ruby_sitelibdir/*
 
 %files doc
@@ -55,6 +59,10 @@ Documentation files for %name
 %ruby_ri_sitedir/Net/SCP
 
 %changelog
+* Tue May 29 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1
+- New version.
+- Disable tests.
+
 * Sat Dec 08 2012 Led <led@altlinux.ru> 1.0.2-alt2.1
 - Rebuilt with ruby-1.9.3-alt1
 - fixed BuildRequires
