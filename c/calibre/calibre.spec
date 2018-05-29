@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 3.23.0
+Version: 3.24.2
 Release: alt1
 
 Summary: A e-book library management application
@@ -41,7 +41,7 @@ Requires: python >= 2.7.9
 BuildRequires: python-modules-json python-modules-compiler python-modules-curses python-modules-encodings
 
 BuildRequires: python-module-sip-devel >= 4.19.1
-Requires: python-module-sip-devel >= 4.19.1
+Requires: python-module-sip >= 4.19.1
 
 # Checked 01.10.2017 with
 # https://github.com/kovidgoyal/build-calibre/blob/master/scripts/sources.json
@@ -166,8 +166,10 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 #_datadir/appdata/*.appdata.xml
 %_datadir/metainfo/*.appdata.xml
 
-
 %changelog
+* Tue May 29 2018 Vitaly Lipatov <lav@altlinux.ru> 3.24.2-alt1
+- new version 3.24.2 (with rpmrb script)
+
 * Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 3.23.0-alt1
 - new version 3.23.0 (with rpmrb script)
 
