@@ -2,8 +2,8 @@ Summary: CUPS printer drivers for SPL (Samsung Printer Language) printers
 
 %define real_name splix
 Name: printer-driver-%real_name
-Version: 2.0.0
-Release: alt2.svn306
+Version: 2.0.1
+Release: alt1.svn315
 
 Provides: %real_name = %version
 Obsoletes: %real_name
@@ -11,8 +11,8 @@ Obsoletes: %real_name
 # svn co https://splix.svn.sourceforge.net/svnroot/splix/splix splix
 # revision 306
 
-License:	GPL
-Group:		Publishing
+License: GPL
+Group: Publishing
 
 URL: http://splix.ap2c.org/
 Source:	http://downloads.sourceforge.net/splix/%real_name-%version.tar
@@ -69,6 +69,10 @@ install -Dpm755 tools/decompress %buildroot%_bindir/%name-decompress
 %_bindir/*
 
 %changelog
+* Tue May 29 2018 Oleg Solovyov <mcpain@altlinux.org> 2.0.1-alt1.svn315
+- Update to current svn
+- Move Samsung drivers back to /pps dir
+
 * Tue Jun 05 2012 Fr. Br. George <george@altlinux.ru> 2.0.0-alt2.svn306
 - Update to current svn
 - Rawhide patch applied

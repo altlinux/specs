@@ -1,16 +1,15 @@
 Summary: Drivers for printing to HP PPA printers
 
 Name: pnm2ppa
-Version: 1.04
-Release: alt1.qa1
+Version: 1.13
+Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
 URL: http://sourceforge.net/projects/pnm2ppa 
 
 Source: http://download.sourceforge.net/pnm2ppa/pnm2ppa-%{version}.tar.gz
-Patch: pnm2ppa-1.04-rh-build.patch
-Patch1: pnm2ppa-1.04-alt-build.patch
+Patch: pnm2ppa-1.11-rh-build.patch
 
 License: GPL
 Group: Publishing
@@ -26,21 +25,19 @@ Install pnm2ppa if you need to print to a PPA printer.
 %prep
 %setup -q
 %patch -p1
-%patch1 -p1
 
 %build
+%configure
 %make
 
 
 %install
-%__install -d %buildroot/%_bindir
-%__install -d %buildroot/%_sysconfdir
-%__install -d %buildroot%_man1dir
+install -d %buildroot/%_bindir
+install -d %buildroot/%_sysconfdir
+install -d %buildroot%_man1dir
 
 make \
-    INSTALLDIR=%buildroot%_bindir \
-    CONFDIR=%buildroot/%_sysconfdir \
-    MANDIR=%buildroot%_man1dir \
+    DESTDIR=%buildroot \
     install
 
 for i in utils/Linux/*; do
@@ -58,6 +55,9 @@ chmod 644 docs/en/LICENSE
 %config(noreplace) /etc/pnm2ppa.conf
 
 %changelog
+* Tue May 29 2018 Oleg Solovyov <mcpain@altlinux.org> 1.13-alt1
+- Build version 1.13 from mageia package
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.04-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
