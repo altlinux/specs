@@ -1,6 +1,6 @@
 Name: xorg-xf86dgaproto-devel
 Version: 2.1
-Release: alt2
+Release: alt3
 Serial: 1
 Summary: X.org XF86DGAProto protocol headers
 License: MIT/X11
@@ -14,6 +14,7 @@ Conflicts: xorg-x11-proto-devel <= 7.4.0-alt1
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildArch: noarch
 BuildRequires: xorg-util-macros
 
 %description
@@ -25,16 +26,21 @@ X.org XF86DGAProto protocol headers
 
 %build
 %autoreconf
-%configure
+%configure \
+        --host= \
+        --build=
 
 %install
 %make DESTDIR=%buildroot install
 
 %files
 %_includedir/X11
-%_pkgconfigdir/*.pc
+%_datadir/pkgconfig/*.pc
 
 %changelog
+* Tue May 29 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.1-alt3
+- noarch
+
 * Sun Feb 21 2010 Valery Inozemtsev <shrek@altlinux.ru> 1:2.1-alt2
 - 2.1
 

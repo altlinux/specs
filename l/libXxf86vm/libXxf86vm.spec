@@ -1,5 +1,5 @@
 Name: libXxf86vm
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 
 Summary: XFree86 Video Mode Extension Library
@@ -11,7 +11,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: libX11-devel libXext-devel xorg-xf86vidmodeproto-devel xorg-util-macros xmlto xorg-sgml-doctools
+BuildRequires: libX11-devel libXext-devel xorg-proto-devel xorg-util-macros xmlto xorg-sgml-doctools
 
 %description
 XFree86 Video Mode Extension Library
@@ -49,6 +49,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Tue May 29 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.1.4-alt1
+- 1.1.4
+
 * Fri May 31 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.1.3-alt1
 - 1.1.3
 
