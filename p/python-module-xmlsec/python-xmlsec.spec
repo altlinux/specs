@@ -1,11 +1,12 @@
 %def_without check
 Name: python-module-xmlsec
 Version: 1.3.3
-Release: alt1.1
+Release: alt2
 Source: %version.tar.gz
 Summary: Python bindings for the XML Security Library
 License: MIT
 Group: Development/Python
+Url: https://github.com/mehcode/python-xmlsec
 Obsoletes: python-module-mehcode-xmlsec
 
 BuildRequires(pre): rpm-build-python
@@ -68,6 +69,9 @@ py.test-%_python3_version -vv
 %python3_sitelibdir/*
 
 %changelog
+* Tue May 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.3-alt2
+- NMU: Add URL (Closes: #34693).
+
 * Mon Mar 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.3-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
