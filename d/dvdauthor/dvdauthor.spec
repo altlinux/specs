@@ -2,7 +2,7 @@
 
 Name: dvdauthor
 Version: 0.7.2
-Release: alt2
+Release: alt3
 
 Summary: set of tools to author a DVD
 Group: Video
@@ -46,6 +46,9 @@ touch %buildroot%_sysconfdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Tue May 22 2018 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt3
+- rebuilt against ImageMagick-6.9.9.47 libraries
+
 * Fri Aug 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt2
 - rebuilt with libImageMagick-6.9.9.7
 

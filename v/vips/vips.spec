@@ -2,7 +2,7 @@
 
 Name: vips
 Version: 8.4.5
-Release: alt2
+Release: alt3
 
 Summary: Large image processing library
 License: LGPLv2.1
@@ -112,6 +112,9 @@ find %buildroot \( -name '*.la' -o -name '*.a' \) -exec rm -f {} ';'
 # - package python bindings
 
 %changelog
+* Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 8.4.5-alt3
+- rebuilt for ImageMagick
+
 * Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 8.4.5-alt2
 - rebuilt for ImageMagick
 

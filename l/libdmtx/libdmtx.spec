@@ -1,6 +1,6 @@
 Name: libdmtx
 Version: 0.7.2
-Release: alt6.3
+Release: alt7
 Summary: Library for working with Data Matrix 2D bar-codes
 
 Group: System/Libraries
@@ -153,6 +153,9 @@ popd
 %_datadir/vala/vapi/libdmtx.vapi
 
 %changelog
+* Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 0.7.2-alt7
+- rebuild with new libImageMagick
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.2-alt6.3
 - Rebuild with Ruby 2.5.1
 

@@ -1,6 +1,6 @@
 Name: pqiv
 Version: 2.8.5
-Release: alt2
+Release: alt3
 
 Summary: Minimalist Image Viewer
 License: GPL3+
@@ -135,6 +135,9 @@ _EOF_
 %_libdir/%name/%name-backend-wand.so
 
 %changelog
+* Wed May 30 2018 Anton Farygin <rider@altlinux.ru> 2.8.5-alt3
+- Rebuilt for ImageMagick.
+
 * Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 2.8.5-alt2
 - Rebuilt for ImageMagick.
 

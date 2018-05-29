@@ -2,7 +2,7 @@
 
 Name: zbar
 Version: 0.10
-Release: alt8
+Release: alt9
 %define libname libzbar
 
 Summary: A library for scanning and decoding bar codes
@@ -268,6 +268,9 @@ done
 %_libdir/libzbarqt.a
 
 %changelog
+* Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 0.10-alt9
+- Rebuilt for ImageMagick.
+
 * Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 0.10-alt8
 - Rebuilt for ImageMagick.
 

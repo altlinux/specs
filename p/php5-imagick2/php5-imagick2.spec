@@ -4,7 +4,7 @@
 
 Name:	 	php5-%{php5_extension}2
 Version:	%php5_version
-Release:	%php5_release.2
+Release:	%php5_release.3
 
 Summary:	PHP5 wrapper to the ImageMagick library
 

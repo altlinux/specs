@@ -5,7 +5,7 @@
 
 Name: rss_glx
 Version: 0.9.1
-Release: alt7
+Release: alt8
 
 Summary: Really Slick Screensavers
 License: GNU GPL
@@ -115,6 +115,9 @@ install -pm644 %name.xss %buildroot%xss_ad_dir/%name.xss
 %endif
 
 %changelog
+* Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 0.9.1-alt8
+- Rebuilt for ImageMagick.
+
 * Wed Aug 23 2017 Michael Shigorin <mike@altlinux.org> 0.9.1-alt7
 - replaced our patch with debian's one (adding two more while at that)
   to fix pixelcity FTBFS

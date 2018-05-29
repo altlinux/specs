@@ -4,7 +4,7 @@
 
 Name:	 	php7-%{php7_extension}
 Version:	%php7_version
-Release:	%php7_release
+Release:	%php7_release.1
 
 Summary:	PHP7 wrapper to the ImageMagick library
 

@@ -31,7 +31,7 @@
 
 Name: transcode
 Version: 1.1.7
-Release: alt9%ubt
+Release: alt10%ubt
 
 Summary: A linux video stream processing utility
 
@@ -146,10 +146,10 @@ sed -i s/getline/get_line/ contrib/subrip/subtitleripper/vobsub.c
 install -m644 %SOURCE2 filter/
 
 %build
+sed -i 's,strtof ,,' configure.in
 %autoreconf
-%add_optflags -fpie
+%add_optflags -fpie -D_LARGEFILE_SOURCE -D__USE_LARGEFILE -D_FILE_OFFSET_BITS=64
 export LDFLAGS=-pie
-export CFLAGS="$RPM_OPT_FLAGS -D_LARGEFILE_SOURCE -D__USE_LARGEFILE -D_FILE_OFFSET_BITS=64"
 %configure \
 --enable-experimental \
 --enable-deprecated \
@@ -250,6 +250,9 @@ export RPM_FILES_TO_LD_PRELOAD_transcode='%_libdir/%name/*.so'
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
+* Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 1.1.7-alt10%ubt
+- rebuilt for ImageMagick
+
 * Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 1.1.7-alt9%ubt
 - rebuilt with ImageMagick
 
