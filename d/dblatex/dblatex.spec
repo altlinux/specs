@@ -1,6 +1,6 @@
 Name: dblatex
-Version: 0.3
-Release: alt2
+Version: 0.3.10
+Release: alt1
 
 Summary: DocBook to LaTeX/ConTeXt Publishing
 License: %gpl2plus
@@ -90,6 +90,9 @@ mv %buildroot%_docdir/%name %buildroot%_docdir/%name-%version
 %_man1dir/dblatex.1.*
 
 %changelog
+* Tue May 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.3.10-alt1
+- Build new version (Closes: #34675).
+
 * Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2
 - NMU: rebuild with rpm-build-tex
 
