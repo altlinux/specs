@@ -8,7 +8,7 @@
 
 Name: MySQL
 Version: 5.7.21
-Release: alt5%ubt
+Release: alt6%ubt
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -41,10 +41,8 @@ Source22: mysqld.service.d-user
 Source25: client.cnf
 Source26: server.cnf
 Source27: mysql-clients.cnf
-Source28: server-chroot.cnf
-Source29: server-no-chroot.cnf
-Source30: client-server-chroot.cnf
-Source31: client-server-no-chroot.cnf
+Source28: chroot.cnf
+Source29: no-chroot.cnf
 
 Patch0: mysql-%version.patch
 
@@ -383,10 +381,8 @@ install -pD -m644 %SOURCE5 %buildroot%_sysconfdir/my.cnf
 install -pD -m644 %SOURCE25 %buildroot%_sysconfdir/my.cnf.d/client.cnf
 install -pD -m644 %SOURCE26 %buildroot%_sysconfdir/my.cnf.d/server.cnf
 install -pD -m644 %SOURCE27 %buildroot%_sysconfdir/my.cnf.d/mysql-clients.cnf
-install -pD -m644 %SOURCE28 %buildroot%_sysconfdir/my.cnf.server/server-chroot.cnf
-install -pD -m644 %SOURCE29 %buildroot%_sysconfdir/my.cnf.server/server-no-chroot.cnf
-install -pD -m644 %SOURCE30 %buildroot%_sysconfdir/my.cnf.server/client-server-chroot.cnf
-install -pD -m644 %SOURCE31 %buildroot%_sysconfdir/my.cnf.server/client-server-no-chroot.cnf
+install -pD -m644 %SOURCE28 %buildroot%_sysconfdir/my.cnf.server/chroot.cnf
+install -pD -m644 %SOURCE29 %buildroot%_sysconfdir/my.cnf.server/no-chroot.cnf
 
 install -pD -m644 %SOURCE20 %buildroot%_tmpfilesdir/mysql.conf
 install -pD -m644 %SOURCE21 %buildroot%_unitdir/mysqld.service
@@ -637,6 +633,7 @@ fi
 %config %_sysconfdir/chroot.d/*
 %config(noreplace) %_sysconfdir/my.cnf
 %config(noreplace) %_sysconfdir/my.cnf.d/server.cnf
+%_sysconfdir/my.cnf.server
 %config(noreplace) %_sysconfdir/my.cnf.server/*.cnf
 %_tmpfilesdir/mysql.conf
 %_unitdir/mysqld.service
@@ -684,6 +681,10 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Wed May 29 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt6%ubt
+- modify chroot control facility (combine server and client setup)
+- fix unowned dir /etc/my.cnf.server (closes: #32229) 
+
 * Wed May 24 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt5%ubt
 - fix installation with preinstalled maria-db (conflict mariadb-server-control)
 - add database upgrade warning message to post install scripts
