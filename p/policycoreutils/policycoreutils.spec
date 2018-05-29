@@ -1,10 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 
 %define _libexecdir %prefix/libexec
+
+%def_with python3
 
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
-Version: 2.5
+Version: 2.7
 Release: alt1
 License: GPLv2
 Group: System/Base
@@ -13,22 +16,22 @@ Source0: %name-%version.tar
 Source1: restorecond.init
 Source2: sandbox.init
 Source3: system-config-selinux.pam
-Source4: system-config-selinux.png
-Source5: system-config-selinux.desktop
 Source6: system-config-selinux.console
-Source7: selinux-polgengui.desktop
 Source8: selinux-polgengui.console
 Source9: mcstrans.init
-Source11: restorecond.service
-Source12: mcstransd.service
-Patch1: alt-autorelabel-fix-path.patch
-Patch2: alt-fix-free-groups.patch
-Patch3: alt-mcstrans.patch
-Patch4: alt-cap-setgid.patch
-Patch5: alt-symlink.patch
-Patch6: alt-semodule-path.patch
-Patch7: alt-newrole.patch
-Patch8: alt-fix-compile.patch
+
+Source13: selinux-python-%version.tar
+Source14: selinux-gui-%version.tar
+Source15: selinux-sandbox-%version.tar
+Source16: selinux-dbus-%version.tar
+Source17: semodule-utils-%version.tar
+Source18: restorecond-%version.tar
+Source19: mcstrans-%version.tar
+
+Patch1: %name-%version-policycoreutils-alt.patch
+Patch2: %name-%version-python-alt.patch
+Patch3: %name-%version-restorecond-alt.patch
+Patch4: %name-%version-mcstrans-alt.patch
 
 %define mcstrans_ver 0.3.3
 Requires: python-module-semanage python-module-audit
@@ -39,12 +42,16 @@ BuildRequires: libselinux-devel libsemanage-devel libsepol-devel libsepol-devel-
 BuildRequires: python-devel
 BuildRequires: python-module-pygnome
 BuildRequires: desktop-file-utils
-BuildRequires: python-module-sepolgen
 BuildRequires: glib2-devel libdbus-glib-devel
 BuildRequires: libcap-ng-devel libpcre-devel libcgroup-devel
 
 # Build sequence: libsepol -> setools -> policycoreutils
 BuildRequires: libsetools-devel >= 3.3.8-alt3
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+%endif
 
 %description
 policycoreutils contains the policy core utilities that are required
@@ -57,7 +64,7 @@ context.
 %package newrole
 Summary: The newrole application for RBAC/MLS
 Group: System/Base
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description newrole
 RBAC/MLS policy machines require newrole as a way of changing the role
@@ -67,7 +74,7 @@ or level of a logged in user.
 %package sandbox
 Summary: SELinux sandbox utilities
 Group: System/Base
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description sandbox
 This package contains the sandbox which allow you to run an applications
@@ -77,7 +84,7 @@ within a tightly confined SELinux domain.
 %package sandbox-x
 Summary: SELinux sandbox utilities for X applications
 Group: System/Base
-Requires: %name-sandbox = %version-%release
+Requires: %name-sandbox = %EVR
 Requires: xorg-xephyr
 Requires: matchbox-window-manager
 Requires: xmodmap
@@ -107,7 +114,7 @@ from internal representations to user defined representation.
 
 
 %package devel
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Summary: SELinux policy core policy devel utilities
 Group: System/Base
 
@@ -119,78 +126,119 @@ develop policy in an SELinux environment.
 %package gui
 Summary: SELinux configuration GUI
 Group: System/Base
-Requires: policycoreutils = %version-%release
+Requires: policycoreutils = %EVR
 #Requires: setools-console
 Requires: selinux-policy
 
 %description gui
 system-config-selinux is a utility for managing the SELinux environment.
 
+%package -n python-module-policycoreutils
+Summary: SELinux policy core python utilities
+Group:   Development/Python
+Requires: %name = %EVR
+
+%description -n python-module-policycoreutils
+The policycoreutils-python package contains the management tools use to manage
+an SELinux environment.
+
+%if_with python3
+%package -n python3-module-policycoreutils
+Summary: SELinux policy core python utilities
+Group:   Development/Python
+Requires: %name = %EVR
+
+%description -n python3-module-policycoreutils
+The policycoreutils-python package contains the management tools use to manage
+an SELinux environment.
+%endif
 
 %prep
-%setup
-%patch1 -p1
-%patch2 -p2
-%patch3 -p2
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-sed -i '/^override CFLAGS/s/ -Werror//g' sandbox/Makefile
-sed -i 's/\( awk \)-S /\1/g' setfiles/Makefile
+%setup -c -n selinux
+%setup -q -T -D -a 13 -n selinux
+%setup -q -T -D -a 14 -n selinux
+%setup -q -T -D -a 15 -n selinux
+%setup -q -T -D -a 16 -n selinux
+%setup -q -T -D -a 17 -n selinux
+%setup -q -T -D -a 18 -n selinux
+%setup -q -T -D -a 19 -n selinux
 
+pushd %name-%version
+%patch1 -p1
+popd
+
+pushd selinux-python-%version
+%patch2 -p1
+popd
+
+pushd restorecond-%version
+%patch3 -p1
+popd
+
+pushd mcstrans-%version
+%patch4 -p1
+popd
 
 %build
-%make_build LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
-%make_build -C mcstrans LIBDIR=%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre)"
-
+%make_build -C policycoreutils-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build -C selinux-python-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build -C selinux-gui-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build -C selinux-sandbox-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build -C selinux-dbus-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build -C semodule-utils-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build -C restorecond-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build -C mcstrans-%version LIBDIR=%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre)" LIBSEPOLA="%_libdir/libsepol.a"
 
 %install
-install -d -m 0755 %buildroot/var/lib/selinux
+%makeinstall_std -C policycoreutils-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%buildroot%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%if_with python3
+%makeinstall_std -C selinux-python-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%buildroot%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" PYTHON=python3
+%endif
+%makeinstall_std -C selinux-python-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%buildroot%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C selinux-gui-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%%buildroot_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C selinux-sandbox-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%buildroot%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C selinux-dbus-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%buildroot%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C semodule-utils-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%buildroot%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C restorecond-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%buildroot%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" SYSTEMDDIR="%buildroot/lib/systemd"
+%makeinstall_std -C mcstrans-%version LIBDIR=%buildroot%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre)" LIBSEPOLA="%_libdir/libsepol.a" SYSTEMDDIR="%buildroot/lib/systemd"
+
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
+mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
+rm -rf %buildroot%_prefix/lib/python2*
+%if_with python3
+mv  %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
+rm -rf %buildroot%_prefix/lib/python3*
+%endif
+%endif
+
+install -d -m 0755 %buildroot%_localstatedir/selinux
 install -D -m 0644 %SOURCE3 %buildroot%_sysconfdir/pam.d/system-config-selinux
 install -D -m 0644 %SOURCE3 %buildroot%_sysconfdir/pam.d/selinux-polgengui
-install -D -m 0644 %SOURCE4 %buildroot%_iconsdir/hicolor/24x24/apps/system-config-selinux.png
-install -D -m 0644 %SOURCE4 %buildroot%_datadir/system-config-selinux/system-config-selinux.png
 install -D -m 0644 %SOURCE6 %buildroot%_sysconfdir/security/console.apps/system-config-selinux
 install -D -m 0644 %SOURCE8 %buildroot%_sysconfdir/security/console.apps/selinux-polgengui
 
-%makeinstall_std LSPP_PRIV=y LIBDIR=%buildroot%_libdir
-%makeinstall_std -C gui LIBDIR="%buildroot%_libdir"
-%makeinstall_std -C mcstrans
-
 # sysvinit
-install -m 0755 %SOURCE1 %buildroot%_initddir/restorecond
-install -m 0755 %SOURCE2 %buildroot%_initddir/sandbox
-install -m 0755 %SOURCE9 %buildroot%_initddir/mcstrans
-
-# systemd
-install -pD -m 0644 %SOURCE11 %buildroot%_unitdir/restorecond.service
-install -pD -m 0644 %SOURCE12 %buildroot%_unitdir/mcstrans.service
+install -D -m 0755 %SOURCE1 %buildroot%_initddir/restorecond
+install -D -m 0755 %SOURCE2 %buildroot%_initddir/sandbox
+install -D -m 0755 %SOURCE9 %buildroot%_initddir/mcstrans
 
 for f in system-config-selinux selinux-polgengui; do
 	ln -sf consolehelper %buildroot%_bindir/$f
 done
 
-desktop-file-install --dir %buildroot%_datadir/applications --add-category Settings %SOURCE5
-desktop-file-install --dir %buildroot%_datadir/applications %SOURCE7
-
 install -d -m 0755 %buildroot{%_datadir/mcstrans,%_sysconfdir/selinux/mls/setrans.d}
-cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
+cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 
 %find_lang %name
 
-
 %triggerin -- selinux-policy
 [ -f %_datadir/selinux/devel/include/build.conf ] && sepolgen-ifgen ||:
-
 
 %post restorecond
 %post_service restorecond
 
 %preun restorecond
 %preun_service restorecond
-
 
 %post mcstransd
 %post_service mcstrans
@@ -208,9 +256,9 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 #
 %files -f %name.lang
 /sbin/restorecon
+/sbin/restorecon_xattr
 /sbin/fixfiles
 /sbin/setfiles
-%_sbindir/load_policy
 /sbin/load_policy
 %_sbindir/genhomedircon
 %_sbindir/setsebool
@@ -228,24 +276,11 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %_bindir/audit2allow
 %_bindir/audit2why
 %_bindir/semodule_package
-%python_sitelibdir/seobject.py*
-%dir %python_sitelibdir/sepolicy
-%{python_sitelibdir}/sepolicy/*so
-%{python_sitelibdir}/sepolicy/templates
-%{python_sitelibdir}/sepolicy/__init__.py*
-%{python_sitelibdir}/sepolicy/booleans.py*
-%{python_sitelibdir}/sepolicy/communicate.py*
-%{python_sitelibdir}/sepolicy/interface.py*
-%{python_sitelibdir}/sepolicy/manpage.py*
-%{python_sitelibdir}/sepolicy/network.py*
-%{python_sitelibdir}/sepolicy/transition.py*
-%{python_sitelibdir}/sepolicy/sedbus.py*
 
 #
 # Policy Kit config, send_destination="org.selinux"
 #
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.selinux.conf
-%{python_sitelibdir}/sepolicy*.egg-info
 %dir /var/lib/selinux
 
 #
@@ -263,6 +298,7 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %_man8dir/fixfiles.*
 %_man8dir/load_policy.*
 %_man8dir/restorecon.*
+%_man8dir/restorecon_xattr.*
 %_man8dir/semodule.*
 %_man8dir/sestatus.*
 %_man8dir/setsebool.*
@@ -336,13 +372,14 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %_bindir/sepolgen-ifgen
 %_bindir/sepolgen-ifgen-attr-helper
 %_bindir/sepolicy
-%python_sitelibdir/sepolicy/generate.py*
 %_bindir/semodule_deps
 %_bindir/semodule_expand
 %_bindir/semodule_link
 %_bindir/semodule_unpackage
 
 %_datadir/bash-completion/completions/sepolicy
+
+%_localstatedir/sepolgen/perm_map
 
 %_man8dir/sepolgen.*
 %_man8dir/sepolicy-booleans.*
@@ -363,26 +400,21 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %_bindir/system-config-selinux
 %_bindir/selinux-polgengui
 
-%_datadir/applications/system-config-selinux.desktop
-%_datadir/applications/selinux-polgengui.desktop
-
 %_iconsdir/hicolor/24x24/apps/system-config-selinux.png
 %_pixmapsdir/system-config-selinux.png
+%_iconsdir/hicolor/*/apps/sepolicy.png
+%_pixmapsdir/sepolicy.png
 
 %dir %_datadir/system-config-selinux
 %_datadir/system-config-selinux/*.py*
 %_datadir/system-config-selinux/*png
 %_datadir/system-config-selinux/*.glade
 
+%_datadir/system-config-selinux/selinux-polgengui.desktop
+%_datadir/system-config-selinux/sepolicy.desktop
+%_datadir/system-config-selinux/system-config-selinux.desktop
+
 %_xdgconfigdir/autostart/restorecond.desktop
-
-%python_sitelibdir/sepolicy/gui.py*
-%python_sitelibdir/sepolicy/sepolicy.glade
-
-%dir %python_sitelibdir/sepolicy/help
-%python_sitelibdir/sepolicy/help/*.py*
-%python_sitelibdir/sepolicy/help/*.txt
-%python_sitelibdir/sepolicy/help/*.png
 
 %config(noreplace) %_sysconfdir/pam.d/system-config-selinux
 %config(noreplace) %_sysconfdir/pam.d/selinux-polgengui
@@ -397,8 +429,24 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %_man8dir/selinux-polgengui.*
 %_man8dir/sepolicy-gui*
 
+%files -n python-module-policycoreutils
+%python_sitelibdir/sepolicy
+%python_sitelibdir/sepolgen
+%python_sitelibdir/sepolicy-*.egg-info
+%python_sitelibdir/seobject.py*
+
+%if_with python3
+%files -n python3-module-policycoreutils
+%python3_sitelibdir/sepolicy
+%python3_sitelibdir/sepolgen
+%python3_sitelibdir/sepolicy-*.egg-info
+%python3_sitelibdir/seobject.py*
+%endif
 
 %changelog
+* Mon Feb 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.7-alt1
+- Updated to upstream version 2.7.
+
 * Tue Nov 01 2016 Anton Farygin <rider@altlinux.ru> 1:2.5-alt1
 - new version
 

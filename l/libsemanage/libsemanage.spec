@@ -3,25 +3,28 @@
 
 %def_disable check
 %def_with python
+%def_with python3
 
 Name: libsemanage
 Epoch: 1
-Version: 2.5
+Version: 2.7
 Release: alt1
 Summary: Library, which provides an interface for SELinux management
 Group: System/Libraries
 License: LGPLv2.1+
 Url: http://userspace.selinuxproject.org
 Source: %name-%version.tar
-Patch1: alt-extra-homedirs.patch
-Patch2: alt-linking.patch
-Patch3: alt-pkgconfig.patch
-Patch4: alt-lib-install-dir.patch
+Patch0: %name-%version-alt.patch
 
 %{?_with_python:BuildPreReq: rpm-build-python}
-BuildRequires: bzlib-devel flex libustr-devel libsepol-devel >= 2.5 libselinux-devel >= 2.5 libaudit-devel
+BuildRequires: bzlib-devel flex libustr-devel libsepol-devel >= 2.7 libselinux-devel >= 2.7 libaudit-devel
 %{?_with_python:BuildRequires: swig python-dev}
-%{!?_disable_check:BuildRequires: CUnit-devel libsepol-devel-static >= 2.5 libselinux-devel-static >= 2.5}
+%{!?_disable_check:BuildRequires: CUnit-devel libsepol-devel-static >= 2.7 libselinux-devel-static >= 2.7}
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: swig python3-devel
+%endif
 
 %description
 This package provides the shared libraries for the manipulation of
@@ -30,7 +33,6 @@ and similar tools, as well as by programs like load_policy that need
 to perform specific transformations on binary policies such as
 customizing policy boolean settings. This contains the run-time
 libraries needed by such tools.
-
 
 %package devel
 Summary: Development files for %name
@@ -80,13 +82,22 @@ as by programs like load_policy that need to perform specific transformations
 on binary policies such as customizing policy boolean settings.
 %endif
 
+%if_with python3
+
+%package -n python3-module-semanage
+Summary: Python module for %name
+Group: System/Configuration/Other
+Requires: %name = %version
+
+%description -n python3-module-semanage
+Python bindings  for SELinux policy manipulation tools
+This package provides python bindings for the manipulation of SELinux
+binary policies.
+%endif
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%patch0 -p1
 
 %build
 %make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib LIBEXECDIR=%_libexecdir all
@@ -94,13 +105,14 @@ on binary policies such as customizing policy boolean settings.
 
 
 %install
+%if_with python3
+%makeinstall_std LIBDIR=%buildroot/%_libdir SHLIBDIR=%buildroot/%_lib %{?_with_python:install-pywrap} PYTHON=python3
+%endif
 %makeinstall_std LIBDIR=%buildroot/%_libdir SHLIBDIR=%buildroot/%_lib %{?_with_python:install-pywrap}
-ln -sf /%_lib/libsemanage.so.1 %buildroot/%_libdir/libsemanage.so
-
+ln -sf $(relative /%_lib/libsemanage.so.1 %_libdir/libsemanage.so) %buildroot/%_libdir/libsemanage.so
 
 %check
 %make_build test
-
 
 %files
 %dir %_sysconfdir/selinux
@@ -108,17 +120,14 @@ ln -sf /%_lib/libsemanage.so.1 %buildroot/%_libdir/libsemanage.so
 /%_lib/*.so.*
 %_man5dir/*
 
-
 %files devel
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*
 %_man3dir/*
 
-
 %files devel-static
 %_libdir/*.a
-
 
 %if_with python
 %files -n python-module-semanage
@@ -127,8 +136,15 @@ ln -sf /%_lib/libsemanage.so.1 %buildroot/%_libdir/libsemanage.so
 #%%_libexecdir/selinux/*
 %endif
 
+%if_with python3
+%files -n python3-module-semanage
+%python3_sitelibdir/*
+%endif
 
 %changelog
+* Mon Feb 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.7-alt1
+- Updated to upstream version 2.7.
+
 * Tue Nov 01 2016 Anton Farygin <rider@altlinux.ru> 1:2.5-alt1
 - new version
 

@@ -1,18 +1,16 @@
 Name:     netlabel_tools
-Version:  0.21
-Release:  alt2
+Version:  0.30.0
+Release:  alt2%ubt
 Summary:  Configuration tools for the Linux NetLabel subsystem
 License:  %gpl2only
 Group:    System/Base
-Source:   %name-%version.tar
 Url:      https://github.com/netlabel/netlabel_tools
 
-Patch1:   alt-build-netlabelctl-0.21.patch
-Patch2:   alt-s0-mark-flag-0.21.patch
-Patch3:   upstream-add-missingfiles-0.21.patch
+Source:   %name-%version.tar
+Patch1:   %name-%version-alt.patch
 
+BuildRequires(pre): rpm-build-licenses rpm-build-ubt
 BuildRequires: libnl-devel doxygen systemd-devel
-BuildRequires(pre):rpm-build-licenses rpm-build-ubt
 
 %description
 NetLabel is a packet labeling framework that has been present in the upstream
@@ -21,13 +19,11 @@ tools and libraries designed to make it easier to use and manage the Linux
 Kernel's NetLabel configuration.
 
 %prep
-%setup -n %name-%version
+%setup
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
-autoreconf -fisv
+%autoreconf
 %configure --with-systemdsystemunitdir=auto
 %make_build
 
@@ -43,6 +39,9 @@ autoreconf -fisv
 %_man8dir/netlabelctl.8.*
 
 %changelog
+* Tue Apr 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.30.0-alt2%ubt
+- Updated to upstream version 0.30.0.
+
 * Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.21-alt2
 - NMU: added URL
 
