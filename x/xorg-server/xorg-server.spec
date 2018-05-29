@@ -22,7 +22,7 @@
 
 Name: xorg-server
 Version: 1.19.6
-Release: alt2
+Release: alt3
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -52,11 +52,9 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: doxygen flex libGL-devel libXau-devel libXaw-devel libXdmcp-devel libXext-devel libXfixes-devel libXfont-devel libXmu-devel
 BuildRequires: libXi-devel libXpm-devel libXrender-devel libXres-devel libXtst-devel libXv-devel libdmx-devel libudev-devel libSM-devel
-BuildRequires: libpciaccess-devel libpixman-devel libssl-devel libxkbfile-devel xorg-bigreqsproto-devel xorg-compositeproto-devel
-BuildRequires: xorg-damageproto-devel xorg-dri2proto-devel xorg-randrproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel
-BuildRequires: xorg-xcmiscproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel
+BuildRequires: libpciaccess-devel libpixman-devel libssl-devel libxkbfile-devel xorg-proto-devel
 BuildRequires: xorg-font-utils xorg-xtrans-devel xorg-util-macros libselinux-devel libaudit-devel xmlto xorg-sgml-doctools
-BuildRequires: xorg-glproto-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel libdrm-devel libXfont2-devel
+BuildRequires: libxshmfence-devel libdrm-devel libXfont2-devel
 %if_enabled glamor
 BuildRequires: libEGL-devel libgbm-devel libepoxy-devel
 %endif
@@ -326,6 +324,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Tue May 29 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.19.6-alt3
+- update build dependensies
+
 * Tue May 29 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.19.6-alt2
 - rebuild
 

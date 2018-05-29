@@ -24,7 +24,7 @@
 %define qsa_major 1
 %define qsa_minor 1
 %define qsa_bugfix 5
-%define rlz alt10
+%define rlz alt11
 Name: %rname%major
 Version: %major.%minor.%bugfix
 Release: %rlz
@@ -144,8 +144,7 @@ Patch9007: 9100-qt-x11-free-3.3.8-fix_shortcuts.patch
 
 BuildRequires: libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXcursor-devel libXext-devel
 BuildRequires: libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel libXft-devel libXmu-devel
-BuildRequires: xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel
-BuildRequires: xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: xorg-proto-devel
 #
 BuildRequires: freetype2-devel libGLU-devel
 BuildRequires: libcups-devel libssl libcups-devel
@@ -208,8 +207,7 @@ PreReq: lib%name = %version-%release
 Requires: freetype2-devel fontconfig-devel zlib-devel
 Requires: libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXcursor-devel libXext-devel
 Requires: libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel libXft-devel libXmu-devel
-Requires: xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel
-Requires: xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel
+Requires: xorg-proto-devel
 %if %with_nas
 Requires: libaudio-devel
 %endif
@@ -1285,6 +1283,9 @@ install -m 644 %SOURCE103 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %_rpmmacrosdir/*
 
 %changelog
+* Wed May 30 2018 Sergey V Turchin <zerg@altlinux.org> 3.3.8d-alt11
+- update requires
+
 * Fri May 12 2017 Sergey V Turchin <zerg@altlinux.org> 3.3.8d-alt10
 - rebuild with new libmng
 

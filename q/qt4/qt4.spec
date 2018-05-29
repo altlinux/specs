@@ -3,6 +3,11 @@
 %define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 %define qIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
+%define my_gcc_ver 5
+%qIF_ver_gteq %ubt_id M90
+%define my_gcc_ver 6
+%endif
+
 %define binutils_ver %{get_version binutils}
 %define _keep_libtool_files 1
 #define _optlevel s
@@ -34,7 +39,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt11%ubt
+%define rlz alt12%ubt
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -123,6 +128,7 @@ Patch701: handle-tga-files-properly.diff
 Patch702: build-qvfb-tool.diff
 Patch703: libqt4-libtool-nodate.diff
 Patch704: qfatal-noreturn.diff
+Patch705: fix-build-icu59.patch
 #
 Patch706: qt-never-strip.diff
 Patch707: rcc-stable-dirlisting.diff
@@ -142,10 +148,12 @@ Patch9106: 9107-qt-webkit-fix_graphicscontextqt.patch
 # Automatically added by buildreq on Thu Apr 07 2011 (-bi)
 # optimized out: alternatives elfutils fontconfig fontconfig-devel glib2-devel gstreamer-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXcursor-devel libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel libatk-devel libcairo-devel libcom_err-devel libdbus-devel libfreetype-devel libgdk-pixbuf-devel libgio-devel libgst-plugins libkrb5-devel libpango-devel libpng-devel libpq-devel libqt4-devel libqt4-sql-sqlite libssl-devel libstdc++-devel libtiff-devel libunixODBC-devel libxml2-devel pkg-config python-base ruby xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: firebird-devel gcc-c++ glibc-devel-static gst-plugins-devel libalsa-devel libcups-devel libfreetds-devel libgtk+2-devel libjpeg-devel libmng-devel libmysqlclient-devel libpulseaudio-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libsqlite-devel libsqlite3-devel makedepend phonon-devel postgresql-devel rpm-build-ruby
+%set_gcc_version %my_gcc_ver
+BuildRequires: gcc%{my_gcc_ver}-c++
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libfreetype-devel pkg-config rpm-utils rpm-macros-alternatives browser-plugins-npapi-devel
 BuildRequires: libcups-devel libalsa-devel
-BuildRequires: gcc-c++ libstdc++-devel libcom_err-devel libicu-devel libffi-devel
+BuildRequires: libstdc++-devel libcom_err-devel libicu-devel libffi-devel
 BuildRequires: libjpeg-devel libmng-devel libpng-devel zlib-devel libtiff-devel
 BuildRequires: libxml2-devel libxslt-devel libreadline-devel libpam0-devel
 BuildRequires: libmysqlclient-devel libsqlite3-devel
@@ -157,8 +165,7 @@ BuildRequires: libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel li
 BuildRequires: libGLES-devel
 %endif
 BuildRequires: libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel
-BuildRequires: xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel
-BuildRequires: xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel libXtst-devel
+BuildRequires: xorg-proto-devel libXtst-devel
 %{?_enable_sql_tds:BuildRequires: libfreetds-devel}
 %{?_enable_sql_pgsql:BuildRequires: postgresql-devel > 8.0.4 libpq-devel > 8.0.4 libecpg-devel-static}
 %{?_enable_sql_ibase:BuildRequires: firebird-devel}
@@ -412,8 +419,7 @@ Requires: lib%name-scripttools = %version-%release
 Requires: libssl-devel freetype2-devel fontconfig-devel libpng-devel zlib-devel
 Requires: libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXcursor-devel libXext-devel
 Requires: libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel
-Requires: xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel
-Requires: xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel libXtst-devel
+Requires: xorg-proto-devel libXtst-devel
 Requires: libdbus-devel
 %if_disabled bootstrap
 Requires: phonon-devel
@@ -733,6 +739,7 @@ Install this package if you want to create RPM packages that use %name
 %patch702 -p0
 %patch703 -p0
 %patch704 -p0
+%patch705 -p1
 #
 %patch706 -p0
 %patch707 -p1
@@ -1452,6 +1459,10 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Wed May 30 2018 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt12%ubt
+- update requires
+- fix to build
+
 * Fri May 12 2017 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt11%ubt
 - rebuild with new libmng
 
