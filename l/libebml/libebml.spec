@@ -1,15 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: libebml
-Version: 1.3.5
-Release: alt1
+Version: 1.3.6
+Release: alt1%ubt
 
 Summary: Extensible Binary Meta Language access library
 License: GPL/QPL
 Group: System/Libraries
 Url: http://www.matroska.org
 
-Source: %name-%version-%release.tar
+# https://github.com/Matroska-Org/libebml.git
+Source: %name-%version.tar
 
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: gcc-c++ cmake
 
 %description
 A library for reading and writing files with the Extensible Binary
@@ -18,7 +22,7 @@ Meta Language, a binary pendant to XML.
 %package devel
 Summary: Development files for libebml
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Files needed to build programs using libebml
@@ -27,12 +31,13 @@ Files needed to build programs using libebml
 %setup
 
 %build
-%autoreconf
-%configure --disable-static
-%make_build
+%cmake \
+	-DBUILD_SHARED_LIBS=YES
+
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %_libdir/*.so.*
@@ -40,9 +45,13 @@ Files needed to build programs using libebml
 %files devel
 %_includedir/ebml
 %_libdir/*.so
-%_libdir/pkgconfig/*.pc
+%_libdir/cmake/*
+%_pkgconfigdir/*.pc
 
 %changelog
+* Tue May 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.6-alt1%ubt
+- Updated to upstream version 1.3.6.
+
 * Sun Apr 01 2018 Anton Farygin <rider@altlinux.ru> 1.3.5-alt1
 - 1.3.5
 
