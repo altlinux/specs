@@ -2,7 +2,7 @@ Name: kernel-image-std-pae
 Release: alt1
 epoch:1 
 %define kernel_base_version	4.4
-%define kernel_sublevel .133
+%define kernel_sublevel .134
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -17,7 +17,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
 %define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
 
-%define nprocs 12
+%define nprocs 8 
 # Build options
 # You can change compiler version by editing this line:
 %define kgcc_version	5
@@ -611,6 +611,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed May 30 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.134-alt1
+- v4.4.134  (Fixes: CVE-2018-6412)
+
 * Mon May 28 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.133-alt1
 - v4.4.133
 
