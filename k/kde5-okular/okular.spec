@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 18.04.1
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Office
@@ -29,6 +29,7 @@ BuildRequires: zlib-devel libdiscount-devel
 BuildRequires: ebook-tools-devel libdjvu-devel libjpeg-devel libpoppler-qt5-devel libqca-qt5-devel libspectre-devel libtiff-devel
 BuildRequires: kde5-libkexiv2-devel
 BuildRequires: plasma5-libkscreen-devel
+#BuildRequires: kf5-purpose-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel
 BuildRequires: kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-khtml-devel
@@ -90,6 +91,9 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 %K5build \
     -DLIBZIP_INCLUDE_DIR=%_includedir/libzip \
     -DINCLUDE_INSTALL_DIR=%_K5inc \
+    -Ddiscount_INCLUDE_DIR=%_includedir \
+    -Ddiscount_LIBRARIES=%_libdir/libmarkdown.so \
+    -Ddiscount_FOUND:BOOL=TRUE \
     #
 
 %install
@@ -144,6 +148,9 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Wed May 30 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
+- update build requires
+
 * Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 
