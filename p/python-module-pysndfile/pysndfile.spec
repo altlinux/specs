@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname pysndfile
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1.1
+Release: alt2
 Summary: Cython wrapper class for reading/writing soundfiles using libsndfile
 License: LGPLv3
 Group: Development/Python
@@ -13,13 +14,13 @@ Url: https://pypi.python.org/pypi/pysndfile/
 
 Source: %oname-%version.tar
 
-BuildRequires: clang libstdc++-devel libsndfile-devel
-BuildRequires: python-devel python-module-setuptools
+BuildRequires: gcc-c++ libsndfile-devel
+BuildRequires: python-dev python-module-setuptools
 BuildRequires: python-module-Cython libnumpy-devel python-module-numpy-testing
 BuildRequires: python-module-html5lib python-module-notebook
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python3-module-Cython libnumpy-py3-devel python3-module-numpy-testing
 BuildRequires: python3-module-html5lib python3-module-notebook
 %endif
@@ -63,12 +64,6 @@ cp -fR . ../python3
 %endif
 
 %build
-# Clang doesn't support these options
-%remove_optflags -frecord-gcc-switches
-%add_optflags -std=c++14
-
-export CC=clang
-export CXX=clang++
 %python_build_debug
 
 %if_with python3
@@ -78,8 +73,6 @@ popd
 %endif
 
 %install
-export CC=clang
-export CXX=clang++
 %python_install
 
 %if_with python3
@@ -93,8 +86,6 @@ export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
 export FFLAGS="%optflags"
 
-export CC=clang
-export CXX=clang++
 python setup.py test
 PYTHONPATH=%buildroot%python_sitelibdir python tests/pysndfile_test.py
 
@@ -116,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Wed May 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt2
+- Rebuilt without clang.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
