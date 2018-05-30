@@ -1,13 +1,14 @@
 Name: bonnie
-Version: 1.4
-Release: alt3.qa1
+Version: 1.5
+Release: alt1%ubt
 
 Summary: Unix filesystem performance benchmark
 License: Artistic
 Group: System/Kernel and hardware
 
-URL: http://www.garloff.de/kurt/linux/bonnie
-Source: %url/bonnie-%version.tar.bz2
+URL: https://fossies.org/linux/privat/old/
+Source: %url/bonnie-%version.tar.gz
+BuildRequires(pre):rpm-build-ubt
 
 %description
 bonnie is a classic file system and storage device benchmark. It tests
@@ -21,7 +22,6 @@ operations with direct I/O (O_DIRECT on Linux).
 %setup -n bonnie
 
 %build
-%__subst 's|asm/page.h|sys/user.h|' Bonnie.c
 %make CFLAGS="%optflags"
 
 %install
@@ -34,6 +34,9 @@ install -pD -m644 bonnie.1 %buildroot%_man1dir/bonnie.1
 %doc bonnie.doc README
 
 %changelog
+* Wed May 30 2018 Anton Farygin <rider@altlinux.ru> 1.5-alt1%ubt
+- 1.5
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
