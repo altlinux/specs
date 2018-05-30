@@ -59,7 +59,7 @@ BuildRequires: jpackage-generic-compat
 %global appdir      %{jettylibdir}/webapps
 
 
-%global addver  .v20170914
+%global addver  .v20180503
 
 # minimal version required to build eclipse and thermostat
 # eclipse needs: util, server, http, continuation, io, security, servlet
@@ -68,8 +68,8 @@ BuildRequires: jpackage-generic-compat
 %bcond_with     jp_minimal
 
 Name:           jetty
-Version:        9.4.7
-Release:        alt1_1.v20170914jpp8
+Version:        9.4.10
+Release:        alt1_1.v20180503jpp8
 Summary:        Java Webserver and Servlet Container
 
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
@@ -94,7 +94,6 @@ BuildRequires:  mvn(org.slf4j:slf4j-api)
 %if %{without jp_minimal}
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.github.jnr:jnr-unixsocket)
-BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(com.hazelcast:hazelcast)
 BuildRequires:  mvn(com.hazelcast:hazelcast-client)
 BuildRequires:  mvn(javax.annotation:javax.annotation-api)
@@ -104,6 +103,7 @@ BuildRequires:  mvn(javax.servlet.jsp:javax.servlet.jsp-api)
 BuildRequires:  mvn(javax.servlet:jstl)
 BuildRequires:  mvn(javax.transaction:javax.transaction-api)
 BuildRequires:  mvn(javax.websocket:javax.websocket-api)
+BuildRequires:  mvn(javax.websocket:javax.websocket-client-api)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.ant:ant-launcher)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -119,17 +119,19 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-war-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-tools-api)
+BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer)
 BuildRequires:  mvn(org.apache.taglibs:taglibs-standard-impl)
 BuildRequires:  mvn(org.apache.taglibs:taglibs-standard-spec)
 BuildRequires:  mvn(org.apache.tomcat:tomcat-jasper)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires:  mvn(org.eclipse.equinox.http:servlet)
-BuildRequires:  mvn(org.eclipse.jdt.core.compiler:ecj)
 BuildRequires:  mvn(org.eclipse.jetty.alpn:alpn-api)
 BuildRequires:  mvn(org.eclipse.jetty.orbit:javax.mail.glassfish)
 BuildRequires:  mvn(org.eclipse.jetty.orbit:javax.security.auth.message)
+BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-assembly-descriptors)
 BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-schemas)
 BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-test-helper)
 BuildRequires:  mvn(org.eclipse.osgi:org.eclipse.osgi)
@@ -145,11 +147,11 @@ BuildRequires:  mvn(org.springframework:spring-beans)
 BuildRequires:  mvn(org.mortbay.jetty.alpn:alpn-boot)
 BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-artifact-remote-resources)
 BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-distribution-remote-resources)
-BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-assembly-descriptors)
 BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-test-policy)
 #BuildRequires:  mvn(org.eclipse.jetty.toolchain.setuid:jetty-setuid-java)
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  glassfish-el
+BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-stateless systemd-sysvinit systemd-utils
 
 # duplicate providers, choose one
 BuildRequires:  jboss-websocket-1.0-api
@@ -218,6 +220,7 @@ Requires:       %{name}-http2-http-client-transport = %{version}-%{release}
 Requires:       %{name}-http2-server = %{version}-%{release}
 
 Requires(pre):    shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
+%{?systemd_ordering}
 
 
 Provides:       group(%username) = %jtuid
@@ -695,6 +698,7 @@ find . -name "*.class" -exec rm {} \;
 %pom_remove_plugin -r :maven-deploy-plugin
 %pom_remove_plugin -r :jacoco-maven-plugin
 %pom_remove_plugin -r :maven-release-plugin
+%pom_remove_plugin -r :buildnumber-maven-plugin
 
 %pom_disable_module aggregates/jetty-all
 
@@ -711,6 +715,9 @@ find . -name "*.class" -exec rm {} \;
 # txt artifact - not installable
 %pom_remove_plugin ":jetty-version-maven-plugin"
 %pom_xpath_remove "pom:artifactItem[pom:classifier='version']" jetty-home
+
+# Disable building source release
+%pom_xpath_remove 'pom:execution[pom:id="sources"]' jetty-home
 
 # Remove google analytics from javadoc
 %pom_xpath_remove 'pom:plugin[pom:artifactId="maven-javadoc-plugin"]/pom:configuration/pom:header'
@@ -748,6 +755,13 @@ sed -i 's#;</Export-Package>#</Export-Package>#' jetty-http2/http2-common/pom.xm
 rm -r jetty-hazelcast/src/test
 %pom_remove_dep :::test jetty-hazelcast
 %pom_xpath_remove 'pom:dependency[pom:type="test-jar"]' jetty-hazelcast
+
+# missing conscrypt
+%pom_disable_module jetty-alpn-conscrypt-server jetty-alpn
+%pom_disable_module jetty-alpn-conscrypt-client jetty-alpn
+%pom_remove_dep -r :jetty-alpn-conscrypt-server
+%pom_remove_dep -r :jetty-alpn-conscrypt-client
+rm -fr examples/embedded/src/main/java/org/eclipse/jetty/embedded/ManyConnectors.java
 
 cp %{SOURCE6} .
 
@@ -799,7 +813,6 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 
 %endif # with jp_minimal
 
-
 %build
 %mvn_package :jetty-home __noinstall
 %mvn_package :jetty-distribution __noinstall
@@ -827,6 +840,10 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 %mvn_package :jetty-runner __noinstall
 
 %mvn_package org.eclipse.jetty.cdi: jetty-cdi
+
+%mvn_package ':jetty-alpn*-client' jetty-alpn-client
+%mvn_package ':jetty-alpn*-server' jetty-alpn-server
+
 
 %mvn_package :apache-jsp jetty-jsp
 %mvn_alias :apache-jsp :jetty-jsp
@@ -871,7 +888,7 @@ build-jar-repository %{buildroot}%{apphomedir}/lib/apache-jsp \
            tomcat/tomcat-util-scan glassfish-el-api glassfish-el
 
 # ecj doesn't have javapackages metadata in manifest, remove when fixed
-ecj=`echo %{buildroot}%{apphomedir}/lib/apache-jsp/org.eclipse.jdt.core.compiler.ecj-*.jar`
+ecj=`echo %{buildroot}%{apphomedir}/lib/apache-jsp/org.eclipse.jdt*.ecj-*.jar`
 rm $ecj
 
 # substitute dependency jars
@@ -961,7 +978,7 @@ exit 0
 %files server -f .mfiles-jetty-server
 %files servlet -f .mfiles-jetty-servlet
 %files util -f .mfiles-jetty-util
-%doc LICENSE-eplv10-aslv20.html NOTICE.txt LICENSE-MIT
+%doc --no-dereference LICENSE-eplv10-aslv20.html NOTICE.txt LICENSE-MIT
 %files webapp -f .mfiles-jetty-webapp
 %files jmx -f .mfiles-jetty-jmx
 %files xml -f .mfiles-jetty-xml
@@ -987,7 +1004,7 @@ exit 0
 
 %files project -f .mfiles-project
 %doc README.md VERSION.txt
-%doc LICENSE-eplv10-aslv20.html NOTICE.txt
+%doc --no-dereference LICENSE-eplv10-aslv20.html NOTICE.txt
 
 %files annotations -f .mfiles-jetty-annotations
 %files ant -f .mfiles-jetty-ant
@@ -1036,9 +1053,12 @@ exit 0
 %endif # without jp_minimal
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-eplv10-aslv20.html LICENSE-MIT
+%doc --no-dereference LICENSE-eplv10-aslv20.html LICENSE-MIT
 
 %changelog
+* Wed May 30 2018 Igor Vlasenko <viy@altlinux.ru> 9.4.10-alt1_1.v20180503jpp8
+- new version
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 9.4.7-alt1_1.v20170914jpp8
 - new version
 
