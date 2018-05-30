@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    hibernate3
 Version: 3.6.10
-Release: alt3_22jpp8
+Release: alt4_22jpp8
 Summary: Relational persistence and query service
 License: LGPLv2+
 URL:     http://www.hibernate.org/
@@ -134,6 +134,10 @@ Summary: Hibernate JUnit test utilities
 %pom_remove_plugin org.jboss.maven.plugins:maven-jdocbook-plugin hibernate-parent
 %pom_remove_plugin org.jboss.maven.plugins:maven-jdocbook-style-plugin hibernate-parent
 %pom_remove_plugin :gmaven-plugin hibernate-parent
+%pom_remove_plugin :maven-javadoc-plugin hibernate-parent
+%pom_remove_plugin :maven-javadoc-plugin hibernate-core
+%pom_remove_plugin :maven-javadoc-plugin hibernate-envers
+%pom_remove_plugin :maven-javadoc-plugin
 %pom_disable_module hibernate-testsuite
 %pom_disable_module hibernate-oscache
 %pom_disable_module hibernate-swarmcache
@@ -192,7 +196,7 @@ sed -i "s,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1
 # "Unable to get the default Bean Validation factory"
 export jdk16_home=/usr
 export LANG=en_US.UTF-8
-%mvn_build -s -f -- -DdisableDistribution=true
+%mvn_build -s -f -j -- -DdisableDistribution=true
 
 %install
 %mvn_install
@@ -201,8 +205,8 @@ export LANG=en_US.UTF-8
 %doc changelog.txt
 %doc lgpl.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc lgpl.txt
+#%files javadoc -f .mfiles-javadoc
+#%doc lgpl.txt
 
 %files entitymanager -f .mfiles-hibernate-entitymanager
 %doc lgpl.txt
@@ -223,6 +227,9 @@ export LANG=en_US.UTF-8
 %doc lgpl.txt
 
 %changelog
+* Wed May 30 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt4_22jpp8
+- fixed build with maven-javadoc-plugin 3
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt3_22jpp8
 - fc27 update
 
