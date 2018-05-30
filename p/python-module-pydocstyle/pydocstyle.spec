@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname pydocstyle
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 2.1.1
-Release: alt2
+Release: alt3
 Summary: Python docstring style checker
 License: MIT
 Group: Development/Python
@@ -18,11 +20,11 @@ Patch1: %oname-%version-alt-docs.patch
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-objects.inv python-module-sphinxcontrib-issuetracker
 BuildRequires: python-module-html5lib python-module-mock python-module-pytest python-module-pathlib
-BuildRequires: python2.7(backports.configparser)
+BuildRequires: python2.7(configparser) python2.7(snowballstemmer) python2.7(six)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-html5lib python3-module-mock python3-module-pytest python3-module-pathlib
-BuildRequires: python3(backports.configparser) python3(snowballstemmer)
+BuildRequires: python3(configparser) python3(snowballstemmer) python3(six)
 %endif
 
 %description
@@ -148,6 +150,9 @@ popd
 %endif
 
 %changelog
+* Wed May 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.1-alt3
+- Fixed build dependencies.
+
 * Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.1-alt2
 - Upstream renamed package to pydocstyle from pep257.
 
