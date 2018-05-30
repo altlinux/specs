@@ -15,7 +15,7 @@
 %def_with python3
 
 # mpi
-%ifarch %arm e2k
+%ifarch e2k
 %def_without mpi
 %else
 %def_with mpi
@@ -51,7 +51,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt2
 
 Summary: Boost libraries
 License: Boost Software License
@@ -1895,6 +1895,9 @@ done
 
 
 %changelog
+* Wed May 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.67.0-alt2
+- built with MPI support on arm
+
 * Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.67.0-alt1
 - Updated to 1.67.0.
 - Packaged libboost_contract.
