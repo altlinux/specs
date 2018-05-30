@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname rasterio
 
 %def_with python3
@@ -5,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 0.36.0
-Release: alt1.1.1
+Release: alt2
 Summary: Fast and direct raster I/O for use with Numpy and SciPy
 License: BSD
 Group: Development/Python
@@ -17,31 +19,33 @@ Source1: conf.py
 Source2: index.rst
 Patch1: %oname-%version-alt-setup.patch
 
-BuildPreReq: libgdal-devel libproj-nad libproj-devel gcc-c++
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-Cython libnumpy-devel ipython
-BuildPreReq: python-module-affine python-module-cligj
-BuildPreReq: python-module-enum34 python-module-coveralls
-BuildPreReq: python-module-wheel python-module-click-tests
-BuildPreReq: python-module-snuggs python-module-click-plugins
-BuildPreReq: python-module-pytest-cov
-BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: libgdal-devel libproj-nad libproj-devel gcc-c++
+BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-module-Cython libnumpy-devel ipython
+BuildRequires: python-module-affine python-module-cligj
+BuildRequires: python2.7(enum34) python-module-coveralls
+BuildRequires: python-module-wheel python-module-click-tests
+BuildRequires: python-module-snuggs python-module-click-plugins
+BuildRequires: python-module-pytest-cov
+BuildRequires: python-module-sphinx-devel
 BuildRequires: xvfb-run
 BuildRequires: python-module-boto3 python-module-packaging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-Cython libnumpy-py3-devel ipython3
-BuildPreReq: python3-module-affine python3-module-cligj
-BuildPreReq: python3-module-enum34 python3-module-coveralls
-BuildPreReq: python3-module-wheel python3-module-click-tests
-BuildPreReq: python3-module-snuggs python3-module-click-plugins
-BuildPreReq: python3-module-pytest-cov
+BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-module-Cython libnumpy-py3-devel ipython3
+BuildRequires: python3-module-affine python3-module-cligj
+BuildRequires: python3(enum) python3-module-coveralls
+BuildRequires: python3-module-wheel python3-module-click-tests
+BuildRequires: python3-module-snuggs python3-module-click-plugins
+BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-boto3 python3-module-packaging
 %endif
 
 %py_provides %oname
 %py_requires numpy IPython
+%py_requires enum34
 
 %description
 Rasterio reads and writes geospatial raster datasets.
@@ -172,6 +176,9 @@ popd
 %endif
 
 %changelog
+* Wed May 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.36.0-alt2
+- Updated build and runtime dependencies.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.36.0-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
