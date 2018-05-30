@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:     nailgun
 Version:  0.9.1
-Release:  alt1_7jpp8
+Release:  alt2_7jpp8
 Summary:  Framework for running Java from the cli without the JVM startup overhead
 Group:    Development/Java
 License:  ASL 2.0
@@ -53,8 +53,10 @@ This package contains the API documentation for %{name}.
 find ./ -name '*.jar' -exec rm -f '{}' \; 
 find ./ -name '*.class' -exec rm -f '{}' \; 
 
+%pom_remove_plugin :maven-javadoc-plugin
+
 %build
-%mvn_build
+%mvn_build -j
 
 %install
 %mvn_install
@@ -62,10 +64,13 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 %files -f .mfiles
 %doc README.md
 
-%files javadoc -f .mfiles-javadoc
+#%files javadoc -f .mfiles-javadoc
 #%doc LICENSE.txt
 
 %changelog
+* Wed May 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_7jpp8
+- fixed build with maven-javadoc-plugin 3
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_7jpp8
 - fc update
 
