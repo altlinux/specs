@@ -1,6 +1,6 @@
 Name: libXxf86vm
 Version: 1.1.4
-Release: alt1
+Release: alt2
 
 Summary: XFree86 Video Mode Extension Library
 License: MIT/X11
@@ -20,7 +20,6 @@ XFree86 Video Mode Extension Library
 Summary: XFree86 Video Mode Extension Library and Header Files
 Group: Development/C
 Requires: %name = %version-%release
-Conflicts: xorg-xf86vidmodeproto-devel < 2.3
 
 %description devel
 %name-devel contains the libraries and header files needed to
@@ -49,6 +48,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Wed May 30 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.1.4-alt2
+- devel: remove conflict to xorg-xf86vidmodeproto-devel
+
 * Tue May 29 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.1.4-alt1
 - 1.1.4
 
