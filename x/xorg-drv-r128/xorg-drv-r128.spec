@@ -1,5 +1,5 @@
 Name: xorg-drv-r128
-Version: 6.10.1
+Version: 6.10.2
 Release: alt1
 Epoch: 4
 Summary: ATI Rage 128 video driver
@@ -14,9 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): xorg-sdk
-BuildRequires: libXext-devel xorg-fontsproto-devel xorg-randrproto-devel xorg-renderproto-devel
-BuildRequires: xorg-videoproto-devel xorg-xproto-devel xorg-xineramaproto-devel
-BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
+BuildRequires: libXext-devel xorg-proto-devel
 
 %description
 r128 is an Xorg driver for ATI Rage 128 based video cards. It contains full support for 8, 15, 16 and 24 bit pixel
@@ -45,6 +43,9 @@ mode restoration for VT switching. Dualhead is supported on M3/M4 mobile chips.
 %_man4dir/r128.4*
 
 %changelog
+* Thu May 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:6.10.2-alt1
+- 6.10.2
+
 * Thu Dec 01 2016 Valery Inozemtsev <shrek@altlinux.ru> 4:6.10.1-alt1
 - 6.10.1
 

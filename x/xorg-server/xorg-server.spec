@@ -1,4 +1,4 @@
-%define mesaversion 11.0
+%define mesaversion 18.0
 %define xorgversion 7.7.0
 
 %define _libexecdir /usr/libexec
@@ -21,8 +21,8 @@
 %endif
 
 Name: xorg-server
-Version: 1.19.6
-Release: alt3
+Version: 1.20.0
+Release: alt1
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -31,7 +31,7 @@ Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 # grep ABI_ hw/xfree86/common/xf86Module.h
-Provides: XORG_ABI_VIDEODRV = 23.0
+Provides: XORG_ABI_VIDEODRV = 24.0
 Provides: XORG_ABI_XINPUT = 24.1
 Provides: XORG_ABI_EXTENSION = 10.0
 Provides: xorg-x11-server = %epoch:%version-%release xorg-extensions-glx = %epoch:%version-%release
@@ -324,6 +324,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Wed May 30 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.0-alt1
+- 1.20.0
+
 * Tue May 29 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.19.6-alt3
 - update build dependensies
 
