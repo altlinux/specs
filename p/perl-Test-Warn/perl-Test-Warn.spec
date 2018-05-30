@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Test-Warn
 Name: perl-%dist
-Version: 0.32
+Version: 0.33
 Release: alt1
 
 Summary: Perl extension to test methods for warnings
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BI/BIGJ/Test-Warn-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BIGJ/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -19,7 +20,7 @@ BuildRequires: perl-Sub-Uplevel perl-Test-Pod perl-Tree-DAG_Node
 This module provides a few convenience methods for testing warning based code.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -32,6 +33,9 @@ This module provides a few convenience methods for testing warning based code.
 %perl_vendor_privlib/Test
 
 %changelog
+* Wed May 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
+- automated CPAN update
+
 * Thu Dec 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
