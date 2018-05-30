@@ -1,5 +1,5 @@
 Name: libX11
-Version: 1.6.4
+Version: 1.6.5
 Release: alt1
 Epoch: 3
 Summary: X11 Library
@@ -16,8 +16,7 @@ Obsoletes: %name-ccache < %version-%release
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: libxcb-devel perl-Pod-Parser xorg-inputproto-devel xorg-kbproto-devel xorg-xf86bigfontproto-devel
-BuildRequires: xorg-xextproto-devel xorg-xproto-devel xorg-xtrans-devel xorg-util-macros xmlto xorg-sgml-doctools
+BuildRequires: libxcb-devel perl-Pod-Parser xorg-proto-devel xorg-util-macros xmlto xorg-sgml-doctools xorg-xtrans-devel
 
 %description
 X11 Library
@@ -89,6 +88,9 @@ rm -f %buildroot%_libdir/X11/locale/common/*.la
 %_datadir/X11/locale
 
 %changelog
+* Mon May 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 3:1.6.5-alt1
+- 1.6.5
+
 * Tue Nov 29 2016 Valery Inozemtsev <shrek@altlinux.ru> 3:1.6.4-alt1
 - 1.6.4
 
