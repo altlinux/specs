@@ -1,20 +1,21 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname boto3
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.6
-Release: alt1.1
+Version: 1.7.29
+Release: alt1
 Summary: The AWS SDK for Python
 License: ASLv2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/boto3/
 
 # https://github.com/boto/boto3.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-docs.patch
-
-BuildArch: noarch
+Patch1: %oname-alt-docs.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-devel python-module-setuptools python-module-unittest2 python-module-mock
@@ -116,11 +117,11 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 rm -rf tests/integration
-nosetests-2.7
+nosetests
 %if_with python3
 pushd ../python3
 rm -rf tests/integration
-nosetests-3.5
+nosetests3
 popd
 %endif
 
@@ -142,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Wed May 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.29-alt1
+- Updated to upstream version 1.7.29.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.6-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
