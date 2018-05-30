@@ -24,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xmvn
 Version:        3.0.0
-Release:        alt1_8jpp8
+Release:        alt1_14jpp8
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
 URL:            https://fedora-java.github.io/xmvn/
@@ -58,7 +58,7 @@ BuildRequires:  plexus-containers-container-default
 BuildRequires:  plexus-containers-component-annotations
 BuildRequires:  plexus-containers-component-metadata
 %if %{with gradle}
-BuildRequires:  gradle 
+BuildRequires:  gradle >= 4.3.1
 %endif
 
 Requires:       %{name}-minimal = %{version}-%{release}
@@ -226,7 +226,7 @@ This package provides %{summary}.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-#patch3 -p1
+%patch3 -p1
 %patch4 -p1
 
 # Bisect IT has no chances of working in local, offline mode, without
@@ -378,6 +378,9 @@ cp -P ${maven_home}/bin/m2.conf %{buildroot}%{_datadir}/%{name}/bin/
 %doc LICENSE NOTICE
 
 %changelog
+* Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_14jpp8
+- support for maven-javadoc-plugin-3.0.0
+
 * Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_8jpp8
 - support for gradle 4.3
 - no support for maven-javadoc-plugin >= 3.0.0 yet
