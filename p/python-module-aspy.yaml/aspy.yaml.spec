@@ -1,11 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+
 %define mname aspy
 %define oname %mname.yaml
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.0
-Release: alt1.1
+Version: 1.1.1
+Release: alt1
 Summary: Some extensions to pyyaml
 License: MIT
 Group: Development/Python
@@ -14,15 +16,16 @@ Url: https://pypi.python.org/pypi/aspy.yaml/
 # https://github.com/asottile/aspy.yaml.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-dev python-module-setuptools
 BuildRequires: python-module-yaml python-module-coverage
 BuildRequires: python-module-flake8 pylint
 BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python3-module-yaml python3-module-coverage
 BuildRequires: python3-module-flake8 pylint-py3
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -136,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Wed May 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt1
+- Updated to upstream version 1.1.1.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
