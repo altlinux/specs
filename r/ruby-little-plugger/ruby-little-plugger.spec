@@ -1,7 +1,7 @@
 %define  pkgname little-plugger
 
 Name:    ruby-%pkgname
-Version: 1.1.2
+Version: 1.1.4
 Release: alt1
 
 Summary: A gems based plugin framework for Ruby
@@ -56,5 +56,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed May 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.4-alt1
+- New version.
+
 * Sun May 27 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
 - Initial build for Sisyphus
