@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname pyScss
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 1.3.5
-Release: alt1.1.1
+Release: alt2
 Summary: pyScss, a Scss compiler for Python
 License: MIT
 Group: Development/Python
@@ -15,19 +17,25 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: libpcre-devel python-module-Pillow python-module-alabaster python-module-docutils python-module-enum34 python-module-html5lib python-module-objects.inv python-module-pathlib python-module-pytest-cov python-module-setuptools time
+BuildRequires: libpcre-devel
+BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-module-Pillow python2.7(enum34) python-module-pathlib python-module-pytest-cov
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-Pillow python3-module-enum34 python3-module-pathlib python3-module-pytest-cov python3-module-setuptools python3-module-six
+BuildRequires: python3-dev python3-module-setuptools python3-module-six
+BuildRequires: python3-module-Pillow python3(enum) python3-module-pathlib python3-module-pytest-cov
 %endif
 
 %py_provides %oname scss
 %py_requires six pathlib logging PIL
+%py_requires enum34
 
 %description
 pyScss is a compiler for the Sass language, a superset of CSS3 that adds
 programming capabilities and some other syntactic sugar.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: pyScss, a Scss compiler for Python
 Group: Development/Python3
@@ -37,6 +45,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 pyScss is a compiler for the Sass language, a superset of CSS3 that adds
 programming capabilities and some other syntactic sugar.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -137,6 +146,9 @@ popd
 %endif
 
 %changelog
+* Wed May 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.5-alt2
+- Updated build and runtime dependencies.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.5-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
