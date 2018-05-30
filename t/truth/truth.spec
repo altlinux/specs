@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           truth
 Version:        0.23
-Release:        alt1_6jpp8
+Release:        alt2_6jpp8
 Summary:        An assertion framework for Java unit tests
 License:        ASL 2.0
 URL:            https://github.com/google/truth
@@ -45,6 +45,7 @@ This package contains the API documentation for %{name}.
 %setup -q
 %pom_remove_plugin :maven-gpg-plugin
 %pom_remove_plugin :gwt-maven-plugin core
+%pom_remove_plugin :maven-javadoc-plugin core
 %pom_remove_dep :gwt-user core
 %pom_remove_dep :guava-gwt core
 %pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId[text()='maven-compiler-plugin']]/pom:configuration" "
@@ -53,7 +54,7 @@ This package contains the API documentation for %{name}.
           </testExcludes>" core
 
 %build
-%mvn_build
+%mvn_build -j
 
 %install
 %mvn_install
@@ -62,10 +63,14 @@ This package contains the API documentation for %{name}.
 %doc README.md
 %dir %{_javadir}/%{name}
 %doc LICENSE
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE
+
+#%files javadoc -f .mfiles-javadoc
+#%doc LICENSE
 
 %changelog
+* Wed May 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.23-alt2_6jpp8
+- fixed build with maven-javadoc-plugin 3
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_6jpp8
 - fc27 update
 
