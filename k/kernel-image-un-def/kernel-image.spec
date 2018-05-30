@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	4.16
-%define kernel_sublevel .10
+%define kernel_sublevel .12
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -17,7 +17,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
 %define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
 
-%define nprocs 12
+%define nprocs 8 
 # Build options
 # You can change compiler version by editing this line:
 %define kgcc_version	7
@@ -462,6 +462,9 @@ KbuildFiles="
 	scripts/gcc-version.sh
 	scripts/gcc-goto.sh
 	scripts/recordmcount.pl
+	scripts/recordmcount.h
+	scripts/recordmcount.c
+	scripts/recordmcount
 	scripts/gcc-x86_*-has-stack-protector.sh
 	scripts/module-common.lds
 	scripts/depmod.sh
@@ -610,6 +613,14 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Mon May 28 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.12-alt1
+- v4.16.12
+- external modules build fixed
+- experimantal AltHa LSM added
+
+* Wed May 23 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.11-alt1
+- v4.16.11
+
 * Mon May 21 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.16.10-alt1
 - v4.16.10  (Fixes: CVE-2018-1120)
 
