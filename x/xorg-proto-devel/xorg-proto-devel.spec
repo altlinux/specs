@@ -1,25 +1,25 @@
 Name: xorg-proto-devel
 Version: 2018.4
-Release: alt2
+Release: alt3
 Summary: X.Org combined protocol headers
 License: MIT/X11
 Group: Development/C
 Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Provides: xorg-bigreqsproto-devel xorg-dri3proto-devel xorg-inputproto-devel xorg-randrproto-devel xorg-videoproto-devel xorg-xf86driproto-devel
-Provides: xorg-evieproto-devel xorg-kbproto-devel xorg-recordproto-devel
-Provides: xorg-compositeproto-devel xorg-fixesproto-devel xorg-pmproto-devel xorg-renderproto-devel xorg-xcmiscproto-devel xorg-xf86rushproto-devel
-Provides: xorg-damageproto-devel xorg-presentproto-devel xorg-resourceproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel
-Provides: xorg-dmxproto-devel xorg-fontsproto-devel xorg-scrnsaverproto-devel xorg-xf86bigfontproto-devel xorg-xineramaproto-devel
-Provides: xorg-dri2proto-devel xorg-glproto-devel xorg-xf86dgaproto-devel xorg-xproto-devel
+Provides: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-dri2proto-devel
+Provides: xorg-dri3proto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel
+Provides: xorg-inputproto-devel xorg-kbproto-devel xorg-presentproto-devel xorg-randrproto-devel
+Provides: xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel
+Provides: xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel
+Provides: xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 
-Obsoletes: xorg-bigreqsproto-devel xorg-dri3proto-devel xorg-inputproto-devel xorg-randrproto-devel xorg-videoproto-devel xorg-xf86driproto-devel
-Obsoletes: xorg-evieproto-devel xorg-kbproto-devel xorg-recordproto-devel
-Obsoletes: xorg-compositeproto-devel xorg-fixesproto-devel xorg-pmproto-devel xorg-renderproto-devel xorg-xcmiscproto-devel xorg-xf86rushproto-devel
-Obsoletes: xorg-damageproto-devel xorg-presentproto-devel xorg-resourceproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel
-Obsoletes: xorg-dmxproto-devel xorg-fontsproto-devel xorg-printproto-devel xorg-scrnsaverproto-devel xorg-xf86bigfontproto-devel xorg-xineramaproto-devel
-Obsoletes: xorg-dri2proto-devel xorg-glproto-devel xorg-xf86dgaproto-devel xorg-xproto-devel
+Obsoletes: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-dri2proto-devel
+Obsoletes: xorg-dri3proto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel
+Obsoletes: xorg-inputproto-devel xorg-kbproto-devel xorg-presentproto-devel xorg-randrproto-devel
+Obsoletes: xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel
+Obsoletes: xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel
+Obsoletes: xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -49,6 +49,9 @@ X.Org combined protocol headers
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Wed May 30 2018 Valery Inozemtsev <shrek@altlinux.ru> 2018.4-alt3
+- fixed provides/obsoletes
+
 * Tue May 29 2018 Valery Inozemtsev <shrek@altlinux.ru> 2018.4-alt2
 - fixed provides/obsoletes
 
