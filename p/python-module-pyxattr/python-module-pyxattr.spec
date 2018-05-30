@@ -6,8 +6,8 @@ to the extended attributes for filesystem objects available in some \
 operating systems.
 
 Name: %fname
-Version: 0.5.3
-Release: alt4
+Version: 0.6.0
+Release: alt1
 
 %if ""==""
 Summary: A python module for accessing filesystem Extended Attributes
@@ -32,8 +32,8 @@ Conflicts: %fname > %EVR
 
 %description
 %descr
-%if ""!=""
 
+%if ""!=""
 This package contains documentation for %oname.
 %endif
 
@@ -56,20 +56,21 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %python_install
 
 %if ""==""
-
 %files
 %python_sitelibdir/*
-%doc NEWS README
+%doc NEWS README*
 
 %else
 
 %files
 %doc doc/*
 %python_sitelibdir/*.egg-info*
-
 %endif
 
 %changelog
+* Wed May 30 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
+- Build new version.
+
 * Tue Apr 10 2018 Grigory Ustinov <grenka@altlinux.org> 0.5.3-alt4
 - Tranfer package to subst-packaging system.
 
