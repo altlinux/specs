@@ -1,7 +1,7 @@
 Summary: Visual brick construction tool for kids
 Summary (ru_RU.UTF-8): Детский конструктор, использующий блоки с шипами
 Name: leocad
-Version: 0.80.1
+Version: 18.01
 Release: alt1
 
 License: GPL
@@ -11,9 +11,6 @@ Group: Games/Puzzles
 Packager: Fr. Br. George <george@altlinux.ru>
 
 Source1: %name.desktop
-
-Patch1: %name-longint.patch
-Patch2: %name-gcc44.patch
 
 # Automatically added by buildreq on Mon Aug 26 2013
 # optimized out: fontconfig libGL-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libstdc++-devel zlib-devel
@@ -40,7 +37,6 @@ LEGO, которые не спонсируют и не курируют LeoCAD, 
 
 %prep
 %setup -n %name
-%patch2 -p1
 
 %build
 #make PREFIX=/usr
@@ -50,23 +46,19 @@ LEGO, которые не спонсируют и не курируют LeoCAD, 
 %install
 %makeinstall INSTALL_ROOT=%buildroot
 
-for f in tools/icon/icon*.png; do
-  size=${f##icon}; size=${size##.png}
-  install -D $f %buildroot%_iconsdir/hicolor/${size}x$size/apps/%name.png
-done
-install -D tools/icon/icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
-install -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
-install -D docs/leocad.1 %buildroot%_man1dir/leocad.1
-
 %files
 %doc %_defaultdocdir/%name
 %_bindir/*
 %_iconsdir/*/*/*/*
+%_pixmapsdir/%name.png
 %_man1dir/%name.*
 %_desktopdir/%name.desktop
 %_xdgmimedir/packages/*
 
 %changelog
+* Wed May 30 2018 Grigory Ustinov <grenka@altlinux.org> 18.01-alt1
+- Build new version (Closes: #34479).
+
 * Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 0.80.1-alt1
 - Autobuild version bump to 0.80.1
 
