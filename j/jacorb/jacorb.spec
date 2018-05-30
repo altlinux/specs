@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jacorb
 Version:       2.3.2
-Release:       alt1_3.jbossorg.5jpp8
+Release:       alt2_3.jbossorg.5jpp8
 Summary:       The Java implementation of the OMG's CORBA standard
 License:       LGPLv2
 URL:           http://www.jacorb.org/index.html
@@ -104,6 +104,10 @@ sed -i '/Class-Path/d' build.xml
 
 %pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-javadoc-plugin']/pom:executions"
 %pom_xpath_inject "pom:plugin[pom:artifactId = 'maven-javadoc-plugin']/pom:configuration" "<additionalparam>-Xdoclint:none</additionalparam>" maven/core maven/idl-compiler
+%pom_remove_plugin :maven-javadoc-plugin 
+%pom_remove_plugin :maven-javadoc-plugin maven/core
+%pom_remove_plugin :maven-javadoc-plugin maven/services
+%pom_remove_plugin :maven-javadoc-plugin maven/idl-compiler
 
 sed -i 's|${IGNORED_TAGS}|${IGNORED_TAGS} -Xdoclint:none|' build.xml
 sed -i 's|,org.jacorb.notification.\*||' build.xml
@@ -122,7 +126,7 @@ ln -s $(build-classpath avalon-logkit) lib/logkit-1.2.jar
 # due to javadoc x86_64 out of memory
 subst 's,maxmemory="256m",maxmemory="512m",' build.xml
 
-%mvn_build -- -Dcompile=all -DskipTests=true -Djava-source-version=1.6 -Djavac-encoding=utf-8
+%mvn_build -j -- -Dcompile=all -DskipTests=true -Djava-source-version=1.6 -Djavac-encoding=utf-8
 
 %install
 %mvn_install
@@ -132,10 +136,13 @@ subst 's,maxmemory="256m",maxmemory="512m",' build.xml
 %doc doc/REL_NOTES
 %doc doc/LICENSE
 
-%files javadoc -f .mfiles-javadoc
-%doc doc/LICENSE
+#%files javadoc -f .mfiles-javadoc
+#%doc doc/LICENSE
 
 %changelog
+* Wed May 30 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.3.2-alt2_3.jbossorg.5jpp8
+- fixed build with maven-javadoc-plugin 3
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.3.2-alt1_3.jbossorg.5jpp8
 - fc27 update
 
