@@ -7,8 +7,8 @@ complete RFC-959 FTP server implementation available for Python programming \
 language.
 
 Name: %fname
-Version: 1.5.2
-Release: alt2
+Version: 1.5.4
+Release: alt1
 
 %if ""==""
 Summary: Python FTP server library
@@ -25,16 +25,16 @@ Url: https://github.com/giampaolo/pyftpdlib
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-branch rpm-build-licenses
-BuildRequires: python-module-sphinx-devel
+BuildRequires: python-module-sphinx-devel python-module-sphinx_rtd_theme
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 
 %if ""!=""
 Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
-%endif
-
+%else
 %py_provides %oname
+%endif
 
 %if ""==""
 %description -l ru_RU.UTF-8
@@ -45,8 +45,8 @@ Conflicts: %fname > %EVR
 
 %description
 %descr
-%if ""!=""
 
+%if ""!=""
 This package contains documentation for %oname.
 
 %package -n %fname-pickles
@@ -120,6 +120,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed May 30 2018 Grigory Ustinov <grenka@altlinux.org> 1.5.4-alt1
+- Build new version.
+
 * Fri Mar 30 2018 Grigory Ustinov <grenka@altlinux.org> 1.5.2-alt2
 - Transfer package to subst-packaging system.
 
