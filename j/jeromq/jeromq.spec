@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jeromq
 Version:        0.3.6
-Release:        alt1_3jpp8
+Release:        alt2_3jpp8
 Summary:        Pure Java implementation of libzmq
 License:        MPLv2.0
 URL:            https://github.com/zeromq/jeromq
@@ -36,10 +36,11 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q
 %pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :maven-javadoc-plugin
 
 %build
 # Tests require network access and fail on Koji.
-%mvn_build -f
+%mvn_build -f -j
 
 %install
 %mvn_install
@@ -48,10 +49,13 @@ This package contains the API documentation for %{name}.
 %doc README.md CHANGELOG.md AUTHORS
 %doc LICENSE
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE
+#%files javadoc -f .mfiles-javadoc
+#%doc LICENSE
 
 %changelog
+* Wed May 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.6-alt2_3jpp8
+- fixed build with maven-javadoc-plugin 3
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.6-alt1_3jpp8
 - fc27 update
 
