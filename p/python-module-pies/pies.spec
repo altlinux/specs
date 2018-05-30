@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname pies
 
 %def_with python3
@@ -6,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 2.6.7
-Release: alt2
+Release: alt3
 Summary: The simplest way to write one program that runs on both Python 2 and Python 3
 License: MIT
 Group: Development/Python
@@ -16,13 +17,14 @@ Url: https://pypi.python.org/pypi/pies/
 # https://github.com/timothycrosley/pies.git
 Source: %oname-%version.tar
 
-BuildRequires: python-module-enum34 python-module-pytest
+BuildRequires: python2.7(enum34) python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-enum34 python3-module-pytest
+BuildRequires: python3(enum) python3-module-pytest
 %endif
 
 %py_provides %oname
+%py_requires enum34
 
 %description
 The simplest (and tastiest) way to write one program that runs on both
@@ -66,6 +68,7 @@ popd
 
 %check
 py.test
+
 %if_with python3
 pushd ../python3
 py.test3
@@ -81,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Wed May 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.7-alt3
+- Updated build and runtime dependencies.
+
 * Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.7-alt2
 - Fixed build.
 
