@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.14
-Release: alt3
+Release: alt3.1
 
 %define package_name		%real_name
 %define weight			1001
@@ -1149,6 +1149,9 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Fri May 30 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.7.14-alt3.1
+- added cleaning os-release parameters (patch25)
+
 * Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.14-alt3
 - NMU: updated runtime devel dependencies.
 
