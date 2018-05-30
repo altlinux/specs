@@ -2,7 +2,7 @@
 %define major 0.97
 Name: dia
 Version: %major.4
-Release: alt0.1
+Release: alt0.2
 
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
@@ -24,7 +24,9 @@ Source: %name-%version.tar
 
 BuildRequires: dblatex docbook-style-xsl docbook-utils gcc-c++ intltool libart_lgpl-devel libgtk+2-devel libxslt-devel
 BuildRequires: python-devel python-module-PyXML python-module-pygtk python-modules-email python-modules-encodings xsltproc
+%ifnarch %e2k
 BuildRequires: libEMF-devel
+%endif
 BuildRequires: libpng-devel
 BuildRequires: desktop-file-utils
 
@@ -62,7 +64,7 @@ intltoolize --force
 	--with-hardbooks \
 	--disable-gnome \
 	--without-python \
-%ifarch x86_64
+%ifarch x86_64 %e2k
 	--disable-libemf \
 %endif
 	--disable-static
@@ -94,6 +96,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_mandir/fr/man1/*
 
 %changelog
+* Wed May 30 2018 Michael Shigorin <mike@altlinux.org> 0.97.4-alt0.2
+- %%e2k: disable libEMF too (archdep)
+
 * Thu Mar 24 2016 Vitaly Lipatov <lav@altlinux.ru> 0.97.4-alt0.1
 - real build pre 0.97.4 from git 050e8f6d631de7eff
 
