@@ -7,8 +7,8 @@ merges some pull requests.
 %def_disable check
 
 Name: %fname-docs
-Version: 1.3.6
-Release: alt2
+Version: 1.3.12
+Release: alt1
 
 %if "-docs"==""
 Summary: Python interface to MySQL
@@ -25,6 +25,7 @@ Source: %name-%version.tar
 
 Conflicts: python-module-MySQLdb
 Conflicts: python-module-MySQLdb2
+
 %if "-docs"!=""
 Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
@@ -46,7 +47,7 @@ This package contains documentation for %oname.
 
 %package -n %fname-pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description -n %fname-pickles
 %descr
@@ -84,7 +85,7 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 python3 setup.py test
 
 %files
-%doc HISTORY *.md
+%doc HISTORY* *.md
 %python3_sitelibdir/*
 
 %else
@@ -94,10 +95,12 @@ python3 setup.py test
 
 %files -n %fname-pickles
 %python3_sitelibdir/*/pickle
-
 %endif
 
 %changelog
+* Wed May 30 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.12-alt1
+- Build new version.
+
 * Fri May 11 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.6-alt2
 - Tranfer package to subst-packaging system.
 

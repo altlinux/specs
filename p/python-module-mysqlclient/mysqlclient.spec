@@ -7,8 +7,8 @@ merges some pull requests.
 %def_disable check
 
 Name: %fname
-Version: 1.3.6
-Release: alt2
+Version: 1.3.12
+Release: alt1
 
 %if ""==""
 Summary: Python interface to MySQL
@@ -25,6 +25,7 @@ Source: %name-%version.tar
 
 Conflicts: python-module-MySQLdb
 Conflicts: python-module-MySQLdb2
+
 %if ""!=""
 Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
@@ -84,7 +85,7 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 python setup.py test
 
 %files
-%doc HISTORY *.md
+%doc HISTORY* *.md
 %python_sitelibdir/*
 
 %else
@@ -94,10 +95,12 @@ python setup.py test
 
 %files -n %fname-pickles
 %python_sitelibdir/*/pickle
-
 %endif
 
 %changelog
+* Wed May 30 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.12-alt1
+- Build new version.
+
 * Fri May 11 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.6-alt2
 - Tranfer package to subst-packaging system.
 
