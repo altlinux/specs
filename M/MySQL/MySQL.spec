@@ -8,7 +8,7 @@
 
 Name: MySQL
 Version: 5.7.21
-Release: alt6%ubt
+Release: alt7%ubt
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -681,6 +681,9 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Wed May 30 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt7%ubt
+- fix chrooted mysqld operation under SysVinit
+
 * Wed May 29 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt6%ubt
 - modify chroot control facility (combine server and client setup)
 - fix unowned dir /etc/my.cnf.server (closes: #32229) 
