@@ -1,7 +1,7 @@
 %define  pkgname rack-jsonp
 
 Name:    ruby-%pkgname
-Version: 1.1.0
+Version: 1.3.2
 Release: alt1
 
 Summary: A Rack middleware for providing JSON-P support
@@ -54,5 +54,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed May 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.2-alt1
+- New version.
+
 * Mon May 28 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus
