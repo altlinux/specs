@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           openprops
 Version:        0.7.1
-Release:        alt1_3jpp8
+Release:        alt2_3jpp8
 Summary:        An improved java.util.Properties from OpenJDK
 
 Group:          Development/Other
@@ -77,23 +77,27 @@ This package contains the API documentation for %{name}.
 %pom_xpath_inject "pom:build/pom:plugins" "<plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId><version>2.9.1</version><executions><execution><id>attach-javadocs</id><goals><goal>jar</goal></goals></execution></executions></plugin>"
 %endif
 
+%pom_remove_plugin :maven-javadoc-plugin
  
 %build
-%mvn_build
+%mvn_build -j
 
 %install
 %mvn_install
 # multiple -f flags in %files: merging -f .mfiles-javadoc into -f .mfiles
-cat .mfiles-javadoc >> .mfiles
+#cat .mfiles-javadoc >> .mfiles
 
 %files -f .mfiles
 %dir %{_javadir}/%{name}
 %doc README.txt COPYING.txt
 
-%doc COPYING.txt
+#%doc COPYING.txt
 
 
 %changelog
+* Wed May 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_3jpp8
+- fixed build with maven-javadoc-plugin 3
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_3jpp8
 - fc27 update
 
