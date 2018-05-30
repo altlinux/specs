@@ -1,30 +1,33 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname traitlets
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 4.3.2
-Release: alt1
+Release: alt2
 Summary: Traitlets Python config system
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/traitlets
 
 Source: %name-%version.tar
-BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: time python-module-alabaster python-module-decorator python-module-docutils python-module-html5lib
+BuildRequires: python-module-alabaster python-module-decorator python-module-docutils python-module-html5lib
 BuildRequires: python-module-ipython_genutils-tests python-module-objects.inv python-module-pytest
-BuildRequires: python-module-sphinx_rtd_theme python-module-enum34 python-module-mock
+BuildRequires: python-module-sphinx_rtd_theme python2.7(enum34) python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-decorator python3-module-ipython_genutils-tests python3-module-pytest
-BuildRequires: python3-module-sphinx_rtd_theme python3-module-enum34 python3-module-mock
+BuildRequires: python3-module-sphinx_rtd_theme python3(enum) python3-module-mock
 %endif
 
 %py_provides %oname
 %py_requires ipython_genutils decorator
+%py_requires enum34
 
 %description
 A configuration system for Python applications.
@@ -139,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Wed May 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.2-alt2
+- Updated build and runtime dependencies.
+
 * Wed Aug 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.2-alt1
 - Updated to upstream version 4.3.2.
 
