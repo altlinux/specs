@@ -1,7 +1,7 @@
 %define  pkgname ldap_fluff
 
 Name:    ruby-ldap-fluff
-Version: 0.3.7
+Version: 0.4.7
 Release: alt1
 
 Summary: An LDAP gem for querying LDAP in various styles: Active Directory, FreeIPA & POSIX
@@ -54,5 +54,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed May 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.4.7-alt1
+- New version.
+
 * Tue May 29 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.7-alt1
 - Initial build for Sisyphus
