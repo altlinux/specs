@@ -7,8 +7,8 @@ functionality to their applications and websites. Every part of how \
 Whoosh works can be extended or replaced to meet your needs exactly.
 
 Name: %fname
-Version: 2.7.0
-Release: alt2.hg20150805
+Version: 2.7.4
+Release: alt1
 
 %if ""==""
 Summary: Fast pure-Python indexing and search library
@@ -75,7 +75,7 @@ Requires: %fname = %version-%release
 %description tests
 %descr
 
-This package contains tests for whoosh.
+This package contains tests for %oname.
 
 %endif
 
@@ -124,6 +124,9 @@ cp -fR src/whoosh/query src/whoosh/matching %buildroot%python3_sitelibdir/%oname
 %endif
 
 %changelog
+* Wed May 30 2018 Grigory Ustinov <grenka@altlinux.org> 2.7.4-alt1
+- Build new version.
+
 * Fri Mar 30 2018 Grigory Ustinov <grenka@altlinux.org> 2.7.0-alt2.hg20150805
 - Tranfer package to subst-packaging system.
 
