@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 18.04.1
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-libraw-ver.patch
 
 # Automatically added by buildreq on Tue Jan 12 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libqt5-core libqt5-gui libstdc++-devel pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs
@@ -47,6 +48,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -69,6 +71,9 @@ KF5 library
 %_K5lib/libKF5KDcraw.so.*
 
 %changelog
+* Wed May 30 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
+- relax libraw version requirement
+
 * Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 
