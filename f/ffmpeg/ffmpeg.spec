@@ -76,7 +76,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	3.3.6
-Release:	alt2
+Release:	alt3
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -715,6 +715,9 @@ xz Changelog
 %endif
 
 %changelog
+* Wed May 30 2018 Anton Farygin <rider@altlinux.ru> 2:3.3.6-alt3
+- rebuilt in new environment
+
 * Thu Mar 15 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 2:3.3.6-alt2
 - built with new de/encoder: libopus
 - built with new encoders:

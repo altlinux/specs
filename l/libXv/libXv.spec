@@ -1,5 +1,5 @@
 Name: libXv
-Version: 1.0.10
+Version: 1.0.11
 Release: alt1
 Summary: The Xv Library
 License: MIT/X11
@@ -10,7 +10,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: libX11-devel libXext-devel xorg-videoproto-devel xorg-util-macros xorg-sgml-doctools xmlto
+BuildRequires: libX11-devel libXext-devel xorg-proto-devel xorg-util-macros xorg-sgml-doctools xmlto
 
 %description
 The Xv Library
@@ -46,6 +46,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Tue May 29 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.0.11-alt1
+- 1.0.11
+
 * Thu Jan 30 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.0.10-alt1
 - 1.0.10
 
