@@ -23,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 Name:          cxf
 Epoch:         1
 Version:       3.1.6
-Release:       alt1_7jpp8
+Release:       alt2_7jpp8
 Summary:       Apache CXF
 License:       ASL 2.0
 URL:           http://cxf.apache.org/
@@ -208,6 +208,9 @@ find . -name "*.class" -print -delete
 %patch4 -p1
 %patch5 -p1
 
+# viy: maven-javadoc-plugin 3
+%pom_disable_module "java2wadl-plugin" maven-plugins
+
 # Disable main modules
 # No ant-trax
 %pom_disable_module "testutils"
@@ -380,7 +383,7 @@ rm services/sts/sts-core/src/main/java/org/apache/cxf/sts/cache/HazelCast*.java
 
 %build
 
-%mvn_build -f
+%mvn_build -f -j
 
 # Create Jandex index file(s)
 # Required by WildFly
@@ -411,10 +414,13 @@ install -pm 644 rt/ws/security/target/cxf-rt-ws-security-%{version}-jandex.jar %
 %files maven-plugins -f .mfiles-maven-plugins
 %doc LICENSE NOTICE
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+#%files javadoc -f .mfiles-javadoc
+#%doc LICENSE NOTICE
 
 %changelog
+* Wed May 30 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.1.6-alt2_7jpp8
+- fixed build with maven-javadoc-plugin 3
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.1.6-alt1_7jpp8
 - fc27 update
 
