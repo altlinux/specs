@@ -1,6 +1,6 @@
 Name: ale
 Version: 0.9.0.3
-Release: alt8
+Release: alt9
 
 Summary: Combining multiple inputs representing the same scene
 License: GPLv3+
@@ -39,6 +39,9 @@ capture: combining multiple inputs representing the same scene.
 %_man1dir/*
 
 %changelog
+* Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 0.9.0.3-alt9
+- rebuilt for ImageMagick
+
 * Fri Jan 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.0.3-alt8
 - Updated build dependencies.
 

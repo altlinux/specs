@@ -2,10 +2,10 @@
 
 Name: pstoedit
 Version: 3.70
-Release: alt1
+Release: alt4
 
 Summary: converts Postscript(TM) and PDF files to other vector graphic formats
-Summary(ru_RU.KOI8-R): преобразует файлы Postscript(TM) и PDF в другие векторные форматы
+Summary(ru_RU.UTF-8): п©я─п╣п╬п╠я─п╟п╥я┐п╣я┌ я└п╟п╧п╩я▀ Postscript(TM) п╦ PDF п╡ п╢я─я┐пЁп╦п╣ п╡п╣п╨я┌п╬я─п╫я▀п╣ я└п╬я─п╪п╟я┌я▀
 License: GPL
 Group: Graphics
 URL: http://www.pstoedit.net/pstoedit
@@ -32,12 +32,12 @@ BuildRequires: fontconfig gcc-c++ ghostscript-classic libgd2-devel libImageMagic
 
 %package -n lib%name
 Summary: Libraries for pstoedit
-Summary(ru_RU.KOI8-R): Библиотеки для pstoedit
+Summary(ru_RU.UTF-8): п▒п╦п╠п╩п╦п╬я┌п╣п╨п╦ п╢п╩я▐ pstoedit
 Group: Development/C
 
 %package -n lib%name-devel
 Summary: Development tools for pstoedit
-Summary(ru_RU.KOI8-R): Средства разработки для pstoedit
+Summary(ru_RU.UTF-8): п║я─п╣п╢я│я┌п╡п╟ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ п╢п╩я▐ pstoedit
 Group: Development/C
 Requires: lib%name = %version-%release
 Obsoletes: pstoedit-devel
@@ -45,7 +45,7 @@ Provides: pstoedit-devel = %version
 
 %package -n lib%name-devel-static
 Summary: Static libraries for developing pstoedit addons
-Summary(ru_RU.KOI8-R): Статические библиотеки для разработки дополнений к pstoedit
+Summary(ru_RU.UTF-8): п║я┌п╟я┌п╦я┤п╣я│п╨п╦п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ п╢п╬п©п╬п╩п╫п╣п╫п╦п╧ п╨ pstoedit
 Group: Development/C
 Requires: lib%name-devel = %version-%release
 Obsoletes: pstoedit-devel-static-%version
@@ -63,39 +63,39 @@ additional drivers will slightly distort the resulting graphics. See the
 documentation provided with the plugins for further details.
 
 
-%description -l ru_RU.KOI8-R
-pstoedit преобразует файлы PostScript и PDF в другие векторные форматы.
-Полученные файлы можно редактировать или импортировать в различные
-графические программы. В pstoedit уже содержится большое количество
-обработчиков форматов (format drivers). Другие обработчики можно
-устанавливать как дополнения (plugins), они доступны по адресу
-http://www.pstoedit.net/plugins/. Просто скопируйте обработчик в тот же
-самый каталог, в который установлена сама программа pstoedit. Однако,
-если вы не получите файл с ключем для дополнений, дополнительные
-обработчики будут слегка искажать изображение на выходе. Для
-дополнительной информации смотрите документацию, прилагающуюся к
-обработчику. 
+%description -l ru_RU.UTF-8
+pstoedit п©я─п╣п╬п╠я─п╟п╥я┐п╣я┌ я└п╟п╧п╩я▀ PostScript п╦ PDF п╡ п╢я─я┐пЁп╦п╣ п╡п╣п╨я┌п╬я─п╫я▀п╣ я└п╬я─п╪п╟я┌я▀.
+п÷п╬п╩я┐я┤п╣п╫п╫я▀п╣ я└п╟п╧п╩я▀ п╪п╬п╤п╫п╬ я─п╣п╢п╟п╨я┌п╦я─п╬п╡п╟я┌я▄ п╦п╩п╦ п╦п╪п©п╬я─я┌п╦я─п╬п╡п╟я┌я▄ п╡ я─п╟п╥п╩п╦я┤п╫я▀п╣
+пЁя─п╟я└п╦я┤п╣я│п╨п╦п╣ п©я─п╬пЁя─п╟п╪п╪я▀. п▓ pstoedit я┐п╤п╣ я│п╬п╢п╣я─п╤п╦я┌я│я▐ п╠п╬п╩я▄я┬п╬п╣ п╨п╬п╩п╦я┤п╣я│я┌п╡п╬
+п╬п╠я─п╟п╠п╬я┌я┤п╦п╨п╬п╡ я└п╬я─п╪п╟я┌п╬п╡ (format drivers). п■я─я┐пЁп╦п╣ п╬п╠я─п╟п╠п╬я┌я┤п╦п╨п╦ п╪п╬п╤п╫п╬
+я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟я┌я▄ п╨п╟п╨ п╢п╬п©п╬п╩п╫п╣п╫п╦я▐ (plugins), п╬п╫п╦ п╢п╬я│я┌я┐п©п╫я▀ п©п╬ п╟п╢я─п╣я│я┐
+http://www.pstoedit.net/plugins/. п÷я─п╬я│я┌п╬ я│п╨п╬п©п╦я─я┐п╧я┌п╣ п╬п╠я─п╟п╠п╬я┌я┤п╦п╨ п╡ я┌п╬я┌ п╤п╣
+я│п╟п╪я▀п╧ п╨п╟я┌п╟п╩п╬пЁ, п╡ п╨п╬я┌п╬я─я▀п╧ я┐я│я┌п╟п╫п╬п╡п╩п╣п╫п╟ я│п╟п╪п╟ п©я─п╬пЁя─п╟п╪п╪п╟ pstoedit. п·п╢п╫п╟п╨п╬,
+п╣я│п╩п╦ п╡я▀ п╫п╣ п©п╬п╩я┐я┤п╦я┌п╣ я└п╟п╧п╩ я│ п╨п╩я▌я┤п╣п╪ п╢п╩я▐ п╢п╬п©п╬п╩п╫п╣п╫п╦п╧, п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я▀п╣
+п╬п╠я─п╟п╠п╬я┌я┤п╦п╨п╦ п╠я┐п╢я┐я┌ я│п╩п╣пЁп╨п╟ п╦я│п╨п╟п╤п╟я┌я▄ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╣ п╫п╟ п╡я▀я┘п╬п╢п╣. п■п╩я▐
+п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫п╬п╧ п╦п╫я└п╬я─п╪п╟я├п╦п╦ я│п╪п╬я┌я─п╦я┌п╣ п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▌, п©я─п╦п╩п╟пЁп╟я▌я┴я┐я▌я│я▐ п╨
+п╬п╠я─п╟п╠п╬я┌я┤п╦п╨я┐. 
 
 %description -n lib%name
 Libraries for pstoedit
 
-%description -l ru_RU.KOI8-R -n lib%name
-Библиотеки для pstoedit
+%description -l ru_RU.UTF-8 -n lib%name
+п▒п╦п╠п╩п╦п╬я┌п╣п╨п╦ п╢п╩я▐ pstoedit
 
 %description -n lib%name-devel
 Development tools for pstoedit
 
 
-%description -l ru_RU.KOI8-R -n lib%name-devel
-Средства разработки для pstoedit
+%description -l ru_RU.UTF-8 -n lib%name-devel
+п║я─п╣п╢я│я┌п╡п╟ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ п╢п╩я▐ pstoedit
 
 
 %description -n lib%name-devel-static
 Static libraries for developing pstoedit addons
 
 
-%description -l ru_RU.KOI8-R -n lib%name-devel-static
-Статические библиотеки для разработки дополнений к pstoedit
+%description -l ru_RU.UTF-8 -n lib%name-devel-static
+п║я┌п╟я┌п╦я┤п╣я│п╨п╦п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ п╢п╬п©п╬п╩п╫п╣п╫п╦п╧ п╨ pstoedit
 
 %prep
 %setup -q %name-%version
@@ -159,6 +159,12 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 3.70-alt4
+- Rebuilt for new ImageMagick.
+
+* Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 3.70-alt2
+- Rebuilt for new ImageMagick.
+
 * Fri Aug 18 2017 Anton Farygin <rider@altlinux.ru> 3.70-alt1
 - new version
 

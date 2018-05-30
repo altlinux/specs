@@ -6,7 +6,7 @@
 
 Name: pfstools
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: High Dynamic Range (HDR) Images and Video manipulation tools
 License: GPLv2+
@@ -223,6 +223,9 @@ channels or luminance channels in pfs stream using Octave.
 %endif
 
 %changelog
+* Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 2.1.0-alt2
+- rebuilt for ImageMagick
+
 * Sat Apr 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt1
 - Updated to upstream version 2.1.0.
 

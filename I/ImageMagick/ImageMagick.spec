@@ -1,9 +1,10 @@
 %define mversion	6
 %define dversion	%mversion.9.9
-%define drelease	40
+%define drelease	47
 %define qlev		Q16
 %define mgkdir		ImageMagick
-%define soname		4
+%define soname		6
+%define sonamepp	8
 
 %def_enable rsvg
 %def_enable x
@@ -32,9 +33,8 @@ Source2: imagemagick16.png
 Source3: imagemagick32.png
 Source4: imagemagick48.png
 Source5: %name.watch
-Patch1: ImageMagick-depends.patch
 
-Requires: ghostscript-classic fonts-type1-urw lib%name = %version-%release
+Requires: ghostscript-classic fonts-type1-urw lib%name%mversion.%soname = %EVR
 
 BuildPreReq: libpng-devel
 
@@ -61,19 +61,19 @@ a variety of image formats.
 
 This package installs the necessary files to run %name.
 
-%package -n lib%name
+%package -n lib%name%mversion.%soname
 Summary: %name shared libraries
 Group: System/Libraries
 Provides: %name-lib = %version
 Obsoletes: %name-lib < %version
 
-%description -n lib%name
+%description -n lib%name%mversion.%soname
 %name is a powerful image display, conversion and manipulation libraries.
 
 %package -n lib%name-devel
 Summary: Header files for %name app development
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name%mversion.%soname = %EVR
 %{?_enable_openmp:Requires: libgomp-devel} 
 Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
@@ -86,7 +86,7 @@ packages aren't necessary if you simply want to use %name, however.
 %package -n lib%name-devel-static
 Summary: Static libraries for %name app development
 Group: Development/C
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
 If you want to create applications that will use %name code or APIs,
@@ -99,7 +99,7 @@ necessary to develop applications.
 %package -n perl-Magick
 Summary: Libraries and modules for access to %name from perl
 Group: Development/Perl
-Requires: lib%name = %version-%release
+Requires: lib%name%mversion.%soname = %EVR
 # perl.prov can't get version from inheritance yet
 # so we need to add it manually for versioned dependencies.
 Provides: perl(Image/Magick.pm) = %mversion.860
@@ -111,7 +111,7 @@ and support files for access to %name library from perl.
 %package tools
 Summary: Console tools from %name
 Group: Graphics
-Requires: lib%name = %version-%release
+Requires: lib%name%mversion.%soname = %EVR
 Conflicts: GraphicsMagick-ImageMagick-compat
 Provides: convert
 
@@ -132,7 +132,6 @@ Documentation for %name
 
 %prep
 %setup -q -n %name-%dversion-%drelease
-#patch1 -p2
 touch config.rpath
 
 # XXX tests fail
@@ -190,6 +189,10 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
+%dir %_datadir/%mgkdir-%mversion
+%dir %_sysconfdir/%name-%mversion
+%_datadir/%mgkdir-%mversion/*
+%config %_sysconfdir/%name-%mversion/*
 
 %files doc
 %dir %_docdir/%name-%dversion
@@ -201,17 +204,14 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %exclude %_docdir/%name-%dversion/www/api
 %exclude %_docdir/%name-%dversion/www/Magick++
 
-%files -n lib%name
+%files -n lib%name%mversion.%soname
 %dir %_libdir/%mgkdir-%dversion
 %dir %_libdir/%mgkdir-%dversion/modules-%qlev
 %dir %_libdir/%mgkdir-%dversion/modules-%qlev/coders
 %dir %_libdir/%mgkdir-%dversion/modules-%qlev/filters
 %_libdir/%mgkdir-%dversion/modules-%qlev/*/*
-%dir %_datadir/%mgkdir-%mversion
-%dir %_sysconfdir/%name-%mversion
-%_datadir/%mgkdir-%mversion/*
-%config %_sysconfdir/%name-%mversion/*
-%_libdir/*.so.*
+%_libdir/*.so.%{soname}*
+%_libdir/*.so.%{sonamepp}*
 
 %files -n lib%name-devel
 %dir %_docdir/%name-%dversion
@@ -236,6 +236,10 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Tue May 22 2018 Anton Farygin <rider@altlinux.ru> 6.9.9.47-alt1
+- new version 6.9.9.47
+- library package was renamed for compatability with shared libs policy
+
 * Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 6.9.9.40-alt1
 - new version 6.9.9.40
 

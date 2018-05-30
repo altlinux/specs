@@ -12,9 +12,6 @@
 %define nxml_version 0.2.20041004
 %define cedet_version 2.0
 
-# perhaps, drop it and increase epoch instead?
-%define cedet_release alt9.1
-
 # subpackages to build;
 %def_enable nox
 %def_enable athena
@@ -24,7 +21,7 @@
 
 Name: emacs25
 Version: 25.3
-Release: alt8
+Release: alt10
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -783,13 +780,12 @@ You need to install %name-nxml-mode-el only if you intend to modify any of the
 #
 %package cedet
 Version: %cedet_version
-Release: %cedet_release
 Summary: CEDET - Collection of Emacs Development Enviromnent Tools
 Group: Editors
 BuildArch: noarch
 Requires: %name-common = %emacs_version
-Obsoletes: %shortname-cedet < %cedet_version-%cedet_release
-Provides: %shortname-cedet = %cedet_version-%cedet_release
+Obsoletes: %shortname-cedet < %cedet_version-%release
+Provides: %shortname-cedet = %cedet_version-%release
 Obsoletes: emacs22-cedet
 Obsoletes: emacs23-cedet
 Obsoletes: emacs24-cedet
@@ -811,13 +807,12 @@ including:
 #
 %package cedet-el
 Version: %cedet_version
-Release: %cedet_release
 Summary: The Emacs Lisp sources for bytecode included in %name-cedet
 Summary(ru_RU.UTF-8): Исходный код Lisp для байткода из %name-cedet
 Group: Development/Other
 BuildArch: noarch
 Requires: %name-common = %emacs_version
-Requires: %name-cedet = %cedet_version-%cedet_release
+Requires: %name-cedet = %cedet_version-%release
 Obsoletes: emacs22-cedet-el
 Obsoletes: emacs23-cedet-el
 Obsoletes: emacs24-cedet-el
@@ -1581,6 +1576,9 @@ cp -a %SOURCE9 %buildroot%_datadir/appdata/%{name}.appdata.xml
 
 
 %changelog
+* Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 25.3-alt10
+- Rebuilt for libImageMagick
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 25.3-alt8
 - NMU: added emacs.pc and emacs.appdata.xml
 
