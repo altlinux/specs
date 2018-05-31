@@ -1,6 +1,6 @@
 Name: sslh
-Version: 1.18
-Release: alt2
+Version: 1.19c
+Release: alt1
 
 Summary: A ssl/ssh multiplexer
 
@@ -8,7 +8,7 @@ License: GPL
 Group: System/Servers
 Url: http://www.rutschle.net/tech/sslh.shtml
 
-# Source-url: http://www.rutschle.net/tech/sslh/sslh-v%version.tar
+# Source-url: http://www.rutschle.net/tech/sslh/sslh-v%version.tar.gz
 Source: %name-%version.tar
 Source1: sslh.init
 Source2: sslh.config
@@ -17,7 +17,7 @@ Source2: sslh.config
 
 # Automatically added by buildreq on Sat Aug 04 2012
 # optimized out: perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators
-BuildRequires: libconfig-devel perl-Pod-Parser
+BuildRequires: libconfig-devel perl-Pod-Parser libpcre-devel libwrap-devel libsystemd-devel libcap-devel
 
 %description
 sslh lets one accept both HTTPS and SSH connections on the
@@ -31,7 +31,7 @@ Author: Yves Rutschle
 %setup
 
 %build
-%make_build
+%make_build USELIBWRAP=1 USESYSTEMD=1 USELIBCAP=1 CFLAGS="%optflags -I%_includedir/pcre"
 
 %install
 %makeinstall PREFIX=%buildroot%prefix
@@ -54,6 +54,10 @@ install -D -m 644 scripts/systemd.sslh.service %buildroot%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Thu May 31 2018 Vitaly Lipatov <lav@altlinux.ru> 1.19c-alt1
+- new version 1.19c (with rpmrb script)
+- build with libwrap, libcap, libpcre and systemd socket support
+
 * Wed Dec 06 2017 Vitaly Lipatov <lav@altlinux.ru> 1.18-alt2
 - pack .service file
 
