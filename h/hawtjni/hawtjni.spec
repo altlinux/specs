@@ -8,33 +8,35 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             hawtjni
-Version:          1.15
-Release:          alt1_3jpp8
+Version:          1.16
+Release:          alt1_1jpp8
 Summary:          Code generator that produces the JNI code
 License:          ASL 2.0 and EPL and BSD
 URL:              http://hawtjni.fusesource.org/
 BuildArch:        noarch
 
-Source0:          https://github.com/fusesource/hawtjni/archive/hawtjni-project-%{version}.tar.gz
+# That is the maven-release-plugin generated commit, but it's not tagged for some reason
+# https://github.com/fusesource/hawtjni/issues/46
+%global commit    fa1fd5dfdd0a1a5a67b61fa7d7ee7126b300c8f0
+Source0:          https://github.com/fusesource/hawtjni/archive/%{commit}/hawtjni-%{commit}.tar.gz
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(commons-cli:commons-cli)
-BuildRequires:  mvn(org.apache.maven:maven-archiver)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
-BuildRequires:  mvn(org.apache.maven:maven-compat)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.xbean:xbean-finder)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.fusesource:fusesource-pom:pom:)
-BuildRequires:  mvn(org.ow2.asm:asm)
-BuildRequires:  mvn(org.ow2.asm:asm-commons)
+BuildRequires:    maven-local
+BuildRequires:    mvn(commons-cli:commons-cli)
+BuildRequires:    mvn(org.apache.maven:maven-archiver)
+BuildRequires:    mvn(org.apache.maven:maven-artifact)
+BuildRequires:    mvn(org.apache.maven:maven-artifact-manager)
+BuildRequires:    mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:    mvn(org.apache.maven:maven-project)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:    mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:    mvn(org.apache.xbean:xbean-finder)
+BuildRequires:    mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:    mvn(org.codehaus.plexus:plexus-interpolation)
+BuildRequires:    mvn(org.codehaus.plexus:plexus-io)
+BuildRequires:    mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:    mvn(org.fusesource:fusesource-pom:pom:)
+BuildRequires:    mvn(org.ow2.asm:asm)
+BuildRequires:    mvn(org.ow2.asm:asm-commons)
 
 Requires:         autoconf
 Requires:         automake
@@ -72,20 +74,16 @@ Summary:          Use HawtJNI from a maven plugin
 This package allows to use HawtJNI from a maven plugin.
 
 %prep
-%setup -q -n hawtjni-hawtjni-project-%{version}
+%setup -q -n hawtjni-%{commit}
 
 %pom_disable_module hawtjni-example
-%pom_add_dep org.apache.maven:maven-compat maven-hawtjni-plugin
 %pom_remove_plugin -r :maven-shade-plugin
 %pom_remove_plugin -r :maven-eclipse-plugin
 
-pushd maven-hawtjni-plugin
-%pom_xpath_set 'pom:plugin[pom:artifactId="plexus-maven-plugin"]/pom:artifactId' plexus-component-metadata
-%pom_xpath_set 'pom:plugin[pom:artifactId="plexus-component-metadata"]//pom:goal' generate-metadata
-popd
-
 %mvn_package ":hawtjni-runtime" runtime
-%mvn_package ":maven-hawtjni-plugin" maven-plugin
+%mvn_package ":hawtjni-maven-plugin" maven-plugin
+
+%mvn_alias :hawtjni-maven-plugin :maven-hawtjni-plugin
 
 # javadoc generation fails due to strict doclint in JDK 8
 %pom_remove_plugin :maven-javadoc-plugin hawtjni-runtime
@@ -107,6 +105,9 @@ popd
 %files -n maven-hawtjni-plugin -f .mfiles-maven-plugin
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.16-alt1_1jpp8
+- java update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_3jpp8
 - java update
 
