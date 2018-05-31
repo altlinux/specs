@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           naga
 Version:        3.0
-Release:        alt1_9.82svnjpp8
+Release:        alt1_10.82svnjpp8
 Summary:        Simplified Java NIO asynchronous sockets
 
 Group:        	System/Base
@@ -87,6 +87,9 @@ cp -rp _BUILD/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_10.82svnjpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_9.82svnjpp8
 - fc27 update
 
