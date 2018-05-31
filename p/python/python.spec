@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.14
-Release: alt3.1
+Release: alt4
 
 %define package_name		%real_name
 %define weight			1001
@@ -73,6 +73,9 @@ Patch25: python2-platform-osrelease.patch
 Patch31: python-2.7.14-alt-test_resource-skip-impossible.patch
 # TODO: a bug which needs a fix ignored for now
 Patch32: python-2.7.14-alt-test_tuple-skip-bug.patch
+
+Patch33: python-2.7.14-upstream-issue31530-patch1.patch
+Patch34: python-2.7.14-upstream-issue31530-patch2.patch
 
 # 00104 #
 # Only used when "%_lib" == "lib64"
@@ -706,6 +709,9 @@ install -p -m644 %SOURCE12 -t Lib/distutils/command
 %patch31 -p2
 %patch32 -p2
 
+%patch33 -p1
+%patch34 -p1
+
 # XXX temporary Issue20445 fix
 sed -i 's/val1 == nice(2)/val1 == nice(2)+2/' configure.ac
 
@@ -1149,6 +1155,9 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.14-alt4
+- Fixed heap-use-after-free bug (Fixes: CVE-2018-1000030).
+
 * Fri May 30 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.7.14-alt3.1
 - added cleaning os-release parameters (patch25)
 
