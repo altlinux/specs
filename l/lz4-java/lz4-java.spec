@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          lz4-java
 Version:       1.3.0
-Release:       alt2_8jpp8
+Release:       alt2_9jpp8
 Summary:       LZ4 compression for Java
 # GPL: src/xxhash/bench.c
 # src/lz4/programs
@@ -129,6 +129,9 @@ ant %build_opts test
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_9jpp8
+- java update
+
 * Wed Apr 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_8jpp8
 - e2k support
 
