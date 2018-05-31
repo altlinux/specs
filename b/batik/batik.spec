@@ -12,8 +12,8 @@ BuildRequires: jpackage-generic-compat
 %global classpath batik:rhino:xml-commons-apis:xml-commons-apis-ext:xmlgraphics-commons:jai_imageio
 
 Name:           batik
-Version:        1.9
-Release:        alt1_6jpp8
+Version:        1.10
+Release:        alt1_1jpp8
 Summary:        Scalable Vector Graphics for Java
 License:        ASL 2.0 and W3C
 URL:            https://xmlgraphics.apache.org/batik/
@@ -37,7 +37,7 @@ BuildRequires:  mvn(xml-apis:xml-apis)
 BuildRequires:  mvn(xml-apis:xml-apis-ext)
 
 # full support for tiff
-Requires:       jai-imageio-core
+Requires:     jai-imageio-core
 Source44: import.info
 #19119
 Provides: xmlgraphics-batik = 0:%version-%release
@@ -176,9 +176,6 @@ find -name '*.jar' -exec rm -f '{}' \;
 cp -p %{SOURCE1} batik-svgrasterizer/src/main/resources/org/apache/batik/apps/rasterizer/resources/rasterizer.policy
 cp -p %{SOURCE1} batik-svgbrowser/src/main/resources/org/apache/batik/apps/svgbrowser/resources/svgbrowser.policy
 
-# We don't want a dependency
-%pom_xpath_inject 'pom:dependency[pom:artifactId="jython"]' '<optional>true</optional>' batik-script
-
 # It's an uberjar, it shouldn't have requires
 %pom_xpath_inject pom:dependency '<optional>true</optional>' batik-all
 
@@ -195,8 +192,6 @@ for pom in `find -mindepth 2 -name pom.xml -not -path ./batik-all/pom.xml`; do
         <configuration>
             <instructions>
                 <Bundle-SymbolicName>org.apache.batik.$(sed 's:./batik-::;s:/pom.xml::' <<< $pom)</Bundle-SymbolicName>
-                <!-- To prevent breaking eclipse -->
-                <Bundle-Version>1.7.0</Bundle-Version>
             </instructions>
         </configuration>
     "
@@ -206,6 +201,8 @@ done
 # for eclipse
 %pom_xpath_set pom:Bundle-SymbolicName org.apache.batik.util.gui batik-gui-util
 
+%pom_disable_module batik-test-old
+
 %mvn_package :batik-squiggle squiggle
 %mvn_package :batik-squiggle-ext squiggle
 %mvn_package :batik-svgpp svgpp
@@ -214,6 +211,7 @@ done
 %mvn_package :batik-rasterizer-ext rasterizer
 %mvn_package :batik-slideshow slideshow
 %mvn_package :batik-css css
+%mvn_package ':batik-test*' __noinstall
 
 %mvn_file :batik-all batik-all
 
@@ -287,6 +285,9 @@ touch $RPM_BUILD_ROOT/etc/ttf2svg.conf
 
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_1jpp8
+- java update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_6jpp8
 - java update
 
