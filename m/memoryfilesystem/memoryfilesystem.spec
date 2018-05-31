@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           memoryfilesystem
 Version:        0.6.7
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        An in memory implementation of a JSR-203 file system
 License:        MIT
 URL:            https://github.com/marschall/%{name}
@@ -58,11 +58,14 @@ rm -rf ./src/test/java/com/github/marschall/memoryfilesystem/ZipFileSystemIntero
 
 %files -f .mfiles
 %doc README.md
-%doc src/main/resources/LICENSE
+%doc --no-dereference src/main/resources/LICENSE
 
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.7-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.7-alt1_4jpp8
 - fc27 update
 
