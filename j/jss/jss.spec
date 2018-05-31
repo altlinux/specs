@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: jss
-Version: 4.4.3
+Version: 4.4.4
 Release: alt1%ubt
 
 Summary: Java Security Services (JSS)
@@ -114,6 +114,9 @@ cp -p %name/jss.html $RPM_BUILD_ROOT%_javadocdir/%name-%version
 %_javadocdir/%name-%version
 
 %changelog
+* Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 4.4.4-alt1%ubt
+- 4.4.3 -> 4.4.4
+
 * Wed May 23 2018 Stanislav Levin <slev@altlinux.org> 4.4.3-alt1%ubt
 - 4.4.2 -> 4.4.3
 
