@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          morphia
 Version:       1.0.1
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       A type-safe Java library for MongoDB
 License:       ASL 2.0
 URL:           https://github.com/mongodb/morphia
@@ -149,27 +149,30 @@ done
 
 %files -f .mfiles-%{name}
 %doc CONTRIBUTING.md README.md
-%doc %{name}/LICENSE.txt
+%doc --no-dereference %{name}/LICENSE.txt
 
 %files entityscanner-plug -f .mfiles-%{name}-entityscanner-plug
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files guice-plug -f .mfiles-%{name}-guice-plug
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files logging-slf4j -f .mfiles-%{name}-logging-slf4j
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files parent -f .mfiles-%{name}-parent
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files validation -f .mfiles-%{name}-validation
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc %{name}/LICENSE.txt
+%doc --no-dereference %{name}/LICENSE.txt
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_7jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_6jpp8
 - fc27 update
 
