@@ -7,24 +7,24 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xmlgraphics-commons
-Version:        2.0.1
-Release:        alt1_6jpp8
+Version:        2.2
+Release:        alt1_1jpp8
 Epoch:          0
 Summary:        XML Graphics Commons
 
 License:        ASL 2.0
 URL:            http://xmlgraphics.apache.org/
-Source0:        http://apache.org/dist/xmlgraphics/commons/source/%{name}-%{version}-src.tar.gz
+Source0:        http://archive.apache.org/dist/xmlgraphics/commons/source/xmlgraphics-commons-%{version}-src.tar.gz
 
 BuildArch:      noarch
-BuildRequires:  java-devel >= 1.6.0
-BuildRequires:  javapackages-local
-BuildRequires:  ant >= 0:1.6
-BuildRequires:  ant-junit >= 0:1.6
-BuildRequires:  junit
-BuildRequires:  apache-commons-io >= 1.3.1
-BuildRequires:  apache-commons-logging >= 1.0.4
-BuildRequires:  apache-parent
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(xml-resolver:xml-resolver)
 Source44: import.info
 
 %description
@@ -36,37 +36,39 @@ find components such as a PDF library, an RTF library,
 Graphics2D implementations that let you generate PDF &
 PostScript files, and much more.
 
-%package        javadoc
+%package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
-%description    javadoc
-%{summary}.
-
+%description javadoc
+This package contains API documentation for %{name}.
 
 %prep
 %setup -q %{name}-%{version}
-rm -f `find . -name "*.jar"`
 
-# create pom from template
-sed "s:@version@:%{version}:g" %{name}-pom-template.pom \
-    > %{name}.pom
+find -name "*.jar" -delete
 
+# Disable plugins not needed for RPM build
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :findbugs-maven-plugin
+
+# Make into OSGi bundle
+%pom_xpath_inject pom:project '<packaging>bundle</packaging>'
+%pom_add_plugin org.apache.felix:maven-bundle-plugin . \
+" <extensions>true</extensions>
+  <configuration>
+    <instructions>
+      <Bundle-SymbolicName>org.apache.xmlgraphics</Bundle-SymbolicName>
+    </instructions>
+  </configuration>"
 
 %build
-export CLASSPATH=$(build-classpath commons-logging)
-export OPT_JAR_LIST="ant/ant-junit junit"
-pushd lib
-ln -sf $(build-classpath commons-io) .
-popd
-ant package javadocs
+%mvn_file : %{name}
+%mvn_build
 
 %install
-%mvn_file : %{name}
-%mvn_artifact %{name}.pom build/%{name}-%{version}.jar
-
-%mvn_install -J build/javadocs
+%mvn_install
 
 %files -f .mfiles
 %doc --no-dereference LICENSE NOTICE
@@ -75,8 +77,10 @@ ant package javadocs
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE NOTICE
 
-
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_1jpp8
+- java update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt1_6jpp8
 - java update
 
