@@ -17,7 +17,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt1
+Release: alt2
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -33,6 +33,7 @@ Source2: imagemagick16.png
 Source3: imagemagick32.png
 Source4: imagemagick48.png
 Source5: %name.watch
+Patch0: ImageMagick-6.9.9-modules-path.patch
 
 Requires: ghostscript-classic fonts-type1-urw lib%name%mversion.%soname = %EVR
 
@@ -66,8 +67,16 @@ Summary: %name shared libraries
 Group: System/Libraries
 Provides: %name-lib = %version
 Obsoletes: %name-lib < %version
+Obsoletes: lib%name < %EVR
 
 %description -n lib%name%mversion.%soname
+%name is a powerful image display, conversion and manipulation libraries.
+
+%package -n lib%{name}++%mversion.%sonamepp
+Summary: %name shared libraries
+Group: System/Libraries
+
+%description -n lib%{name}++%mversion.%sonamepp
 %name is a powerful image display, conversion and manipulation libraries.
 
 %package -n lib%name-devel
@@ -132,6 +141,7 @@ Documentation for %name
 
 %prep
 %setup -q -n %name-%dversion-%drelease
+%patch0 -p1
 touch config.rpath
 
 # XXX tests fail
@@ -168,7 +178,7 @@ popd
 %make transform='' DESTDIR=%buildroot INSTALLDIRS=vendor install
 
 
-sed -i "s,%_libdir/libMagickCore.la,-L%_libdir -lMagickCore," %buildroot%_libdir/%mgkdir-%dversion/modules-%qlev/*/*.la
+sed -i "s,%_libdir/libMagickCore.la,-L%_libdir -lMagickCore," %buildroot%_libdir/%mgkdir-%dversion-%soname/modules-%qlev/*/*.la
 
 install -pDm644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
 install -pDm644 %SOURCE2 %buildroot%_miconsdir/%name.png
@@ -205,13 +215,16 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %exclude %_docdir/%name-%dversion/www/Magick++
 
 %files -n lib%name%mversion.%soname
-%dir %_libdir/%mgkdir-%dversion
-%dir %_libdir/%mgkdir-%dversion/modules-%qlev
-%dir %_libdir/%mgkdir-%dversion/modules-%qlev/coders
-%dir %_libdir/%mgkdir-%dversion/modules-%qlev/filters
-%_libdir/%mgkdir-%dversion/modules-%qlev/*/*
-%_libdir/*.so.%{soname}*
-%_libdir/*.so.%{sonamepp}*
+%dir %_libdir/%mgkdir-%dversion-%soname
+%dir %_libdir/%mgkdir-%dversion-%soname/modules-%qlev
+%dir %_libdir/%mgkdir-%dversion-%soname/modules-%qlev/coders
+%dir %_libdir/%mgkdir-%dversion-%soname/modules-%qlev/filters
+%_libdir/%mgkdir-%dversion-%soname/modules-%qlev/*/*
+%_libdir/libMagickWand*.so.%{soname}*
+%_libdir/libMagickCore*.so.%{soname}*
+
+%files -n lib%{name}++%mversion.%sonamepp
+%_libdir/*++*.so.%{sonamepp}*
 
 %files -n lib%name-devel
 %dir %_docdir/%name-%dversion
@@ -221,7 +234,7 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %_bindir/*-config
 %_includedir/*
 %_libdir/*.so
-%_libdir/%mgkdir-%dversion/config-%qlev
+%_libdir/%mgkdir-%dversion-%soname/config-%qlev
 %_pkgconfigdir/*.pc
 %_man1dir/*-config.1*
 
@@ -236,6 +249,11 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 6.9.9.47-alt2
+- modules path has been changed to reflect the library soname version
+- split library package
+- added obsoletes for old library package to resolve file conflicts (closes: #34972)
+
 * Tue May 22 2018 Anton Farygin <rider@altlinux.ru> 6.9.9.47-alt1
 - new version 6.9.9.47
 - library package was renamed for compatability with shared libs policy
