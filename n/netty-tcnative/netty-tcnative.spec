@@ -5,7 +5,7 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netty-tcnative
 Version:        1.1.30
-Release:        alt3_9jpp8
+Release:        alt3_10jpp8
 Summary:        Fork of Tomcat Native with improved OpenSSL and mavenized build
 License:        ASL 2.0
 URL:            https://github.com/netty/netty/wiki/Forked-Tomcat-Native
@@ -99,6 +99,9 @@ javac -d . -cp $RPM_BUILD_ROOT%{_jnidir}/%{name}/%{name}.jar %{SOURCE1}
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.30-alt3_10jpp8
+- java update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.30-alt3_9jpp8
 - java update
 
