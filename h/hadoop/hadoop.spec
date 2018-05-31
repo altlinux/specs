@@ -1,3 +1,5 @@
+# alt have openssl10
+%def_disable openssl11
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
@@ -26,7 +28,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:   hadoop
 Version: 2.7.3
-Release: alt3_7jpp8
+Release: alt4_7jpp8
 Summary: A software platform for processing vast amounts of data
 # The BSD license file is missing
 # https://issues.apache.org/jira/browse/HADOOP-9849
@@ -83,6 +85,7 @@ Patch21: %{name}-openssl.patch
 Patch22: %{name}-aws.patch
 # fix classpath issues
 Patch23: classpath.patch
+Patch32: hadoop-2.7.3-alt-E2K.patch
 Patch33: hadoop-2.7.3-guava20.0.patch
 
 BuildRequires: ant
@@ -457,6 +460,7 @@ This package contains files needed to run Apache Hadoop YARN in secure mode.
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
+%patch32 -p1
 %patch33 -p1
 
 %pom_xpath_set "pom:properties/pom:protobuf.version" 3.5.1 hadoop-project
@@ -1037,7 +1041,7 @@ fi
 %{_sbindir}/stop-secure-dns.sh
 %{_sbindir}/slaves.sh
 
-%if 0
+%if_enabled openssl11
 %files common-native
 %{_libdir}/%{name}/libhadoop.*
 %endif
@@ -1138,6 +1142,9 @@ fi
 %attr(6010,root,yarn) %{_bindir}/container-executor
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt4_7jpp8
+- merged e2k support
+
 * Fri May 18 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt3_7jpp8
 - fixed build with new guava
 
