@@ -5,7 +5,7 @@
 %def_enable libsystemd
 
 Name: gnome-disk-utility
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Disk management application
@@ -50,8 +50,8 @@ RAID, SMART monitoring, etc
 
 %build
 %meson \
-	%{?_enable_gsd_plugin:-Denable-gsd-plugin=true} \
-	%{?_enable_libsystemd:-Denable-libsystemd=true}
+	%{?_enable_gsd_plugin:-Dgsd_plugin=true} \
+	%{?_enable_libsystemd:-Dlibsystemd=true}
 %meson_build
 
 %install
@@ -79,6 +79,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Thu May 31 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
+- 3.28.3
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 
