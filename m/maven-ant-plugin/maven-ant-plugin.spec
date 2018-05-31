@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-ant-plugin
 Version:        2.3
-Release:        alt2_20jpp8
+Release:        alt2_21jpp8
 Summary:        Maven Ant Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-ant-plugin
@@ -70,6 +70,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2_21jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2_20jpp8
 - fc27 update
 
