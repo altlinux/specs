@@ -2,7 +2,7 @@
 
 Name: gost-crypto-gui
 Version: 0.3
-Release: alt0.6.a.git%gitrev
+Release: alt0.7.a.git%gitrev
 Summary: A PyQt GUI for performing cryptographic operations over files using GOST algorithms
 
 License: MIT
@@ -76,8 +76,11 @@ rm -f %buildroot%_iconsdir/gost-crypto-gui.png
 %_iconsdir/*.png
 
 %changelog
+* Thu May 31 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.3-alt0.7.a.git4b7a47a
+-fix return zero in patch0
+
 * Tue May 29 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.3-alt0.6.a.git4b7a47a
--fix error of returt zero-code and ru linux locale
+-fix error of return zero-code and ru linux locale
 
 * Fri Apr 20 2018 Andrey Cherepanov <cas@altlinux.org> 0.3-alt0.5.a.git4b7a47a
 - New version (ALT #34836).
