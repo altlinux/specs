@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-verifier-plugin
 Version:        1.0
-Release:        alt4_18jpp8
+Release:        alt4_19jpp8
 Summary:        Maven Verifier Plugin
 
 Group:          Development/Other
@@ -55,6 +55,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_19jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_18jpp8
 - fc27 update
 
