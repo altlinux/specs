@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          minlog
 Version:       1.3.0
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Minimal overhead Java logging
 License:       BSD
 URL:           https://github.com/EsotericSoftware/minlog
@@ -67,12 +67,15 @@ sed -i 's/\r//' license.txt
 
 %files -f .mfiles
 %doc README.md
-%doc license.txt
+%doc --no-dereference license.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc license.txt
+%doc --no-dereference license.txt
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_6jpp8
+- java update
+
 * Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_5jpp8
 - fc update
 
