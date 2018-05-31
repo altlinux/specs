@@ -1,85 +1,119 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat sonatype-oss-parent maven-plugin-plugin
+BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          forbidden-apis
-Version:       1.7
-Release:       alt2_3jpp8
-Summary:       Generics Policeman's Forbidden API check
-
-Group:         Development/Java
+Version:       2.5
+Release:       alt1_1jpp8
+Summary:       Policeman's Forbidden API Checker
 License:       ASL 2.0
-URL:           http://code.google.com/p/forbidden-apis/
+URL:           https://github.com/policeman-tools/forbidden-apis
+Source0:       https://github.com/policeman-tools/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
+
+# Avoid bundling deps
+Patch0:        avoid-jarjar-bundling.patch
+
+# Port to latest versions of gradle and maven in Fedora
+Patch1:        fix-gradle-maven-build.patch
+
 BuildArch:     noarch
 
-Source0:       https://oss.sonatype.org/content/repositories/releases/de/thetaphi/forbiddenapis/%{version}/forbiddenapis-%{version}-sources.jar
-
-# Customized pom file
-# Add build/test deps
-# Add maven plugins configuration
-Source1:       %{name}-pom.xml
-
+BuildRequires: gradle-local
+BuildRequires: ivy-local
 BuildRequires: maven-local
 BuildRequires: ant
-BuildRequires: objectweb-asm >= 5
-BuildRequires: dos2unix
-
-Requires: objectweb-asm >= 5
+BuildRequires: ant-antunit
+BuildRequires: ant-contrib
+BuildRequires: ant-junit
+BuildRequires: objectweb-asm
+BuildRequires: plexus-utils
+BuildRequires: maven-plugin-plugin
+BuildRequires: sonatype-oss-parent
 Source44: import.info
 
-
-
-
 %description
-This project implements the ANT task (+ Maven Mojo) announced in the Generics
-Policeman Blog. It checks Java byte code against a list of "forbidden" API
-signatures. 
 Allows to parse Java byte code to find invocations of method/class/field
-signatures and fail build (Apache Ant, Apache Maven, or CLI).
+signatures and fail build (Apache Ant, Apache Maven, or Gradle).
 
 %package javadoc
 Group: Development/Java
-Summary:       Javadoc for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains API documentation for %{name}.
 
 %prep
-%setup -q -n forbiddenapis-%{version}
+%setup -q
+%patch0
+%patch1
+
 find . -name "*.jar" -print -delete
 find . -name "*.class" -print -delete
-dos2unix LICENSE.txt
-dos2unix NOTICE.txt
-dos2unix README.txt
 
-cp -p %{SOURCE1} pom.xml
-%pom_xpath_inject pom:project "<version>%{version}</version>"
+# Use system ivy settings
+sed -i -e '/ivy:configure/d' build.xml
+
+# Can't use missing maven-ant-tasks
+%pom_xpath_remove "target/artifact:pom" build.xml
+%pom_xpath_remove "target/artifact:mvn" build.xml
+%pom_xpath_remove "target/artifact:install" build.xml
+%pom_xpath_inject "target[@name='maven-descriptor']" \
+"<exec executable='xmvn'>
+  <arg value=\"-o\"/>
+  <arg value=\"-f\"/>
+  <arg value=\"\${maven-build-dir}/pom-build.xml\"/>
+  <arg value=\"plugin:helpmojo\"/>
+  <arg value=\"plugin:descriptor\"/>
+  <arg value=\"plugin:report\"/>
+  <arg value=\"-Dinjected.src.dir=src/main/java\"/>
+  <arg value=\"-Dinjected.output.dir=../../build/main\"/>
+  <arg value=\"-Dinjected.build.dir=\${maven-build-dir}\"/>
+  <arg value=\"-Dinjected.maven-plugin-plugin.version=\${maven-plugin-plugin.version}\"/>
+</exec>" build.xml
+sed -i -e '/maven-ant-tasks/d' ivy.xml
+sed -i -e '/uri="antlib:org.apache.maven.artifact.ant/d' build.xml
+
+# Don't need to run RAT for RPM builds
+sed -i -e '/apache-rat/d' ivy.xml
+sed -i -e '/uri="antlib:org.apache.rat.anttasks/d' build.xml
 
 %build
-
-%mvn_file ":%{name}" %{name}
-# Skip test: 
-# - Demo2 needs JDK8 to compile
-# - Not able to run test with maven, requires itself
-%mvn_build -f
+ant -Divy.mode=local jar documentation test-junit
 
 %install
-%mvn_install
+# Add deps on unbundled jars, taken from ivy.xml
+%pom_add_dep org.apache.ant:ant:1.7.0:provided build/maven/pom-deploy.xml
+%pom_add_dep org.ow2.asm:asm:6.1.1 build/maven/pom-deploy.xml
+%pom_add_dep org.ow2.asm:asm-commons:6.1.1 build/maven/pom-deploy.xml
+%pom_add_dep org.codehaus.plexus:plexus-utils:1.1 build/maven/pom-deploy.xml
+%pom_add_dep commons-cli:commons-cli:1.3.1 build/maven/pom-deploy.xml
 
+# Install maven artifacts
+%mvn_artifact build/maven/pom-deploy.xml dist/forbiddenapis-2.5.jar
+%mvn_install -J build/docs
+
+# Install ant configuration
 mkdir -p %{buildroot}%{_sysconfdir}/ant.d
-echo "ant commons-cli %{name} maven/maven-plugin-api maven-plugin-tools/maven-plugin-annotations objectweb-asm/asm objectweb-asm/asm-commons plexus/utils" > %{name}-ant
+echo "%{name} ant apache-commons-cli objectweb-asm/asm objectweb-asm/asm-commons plexus/utils" > %{name}-ant
 install -pm 644 %{name}-ant %{buildroot}%{_sysconfdir}/ant.d/%{name}
 
 %files -f .mfiles
 %config(noreplace) %{_sysconfdir}/ant.d/%{name}
-%doc LICENSE.txt NOTICE.txt README.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc README.md
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_1jpp8
+- java update
+
 * Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_3jpp8
 - fixed build
 
