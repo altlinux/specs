@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           logback
 Version:        1.1.7
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        A Java logging library
 License:        LGPLv2 or EPL
 URL:            http://logback.qos.ch/
@@ -188,19 +188,22 @@ cp -r %{name}-examples/pom.xml %{name}-examples/src %{buildroot}%{_datadir}/%{na
 
 %files -f .mfiles
 %doc README.txt docs/*
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files access -f .mfiles-access
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files examples -f .mfiles-examples
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %{_datadir}/%{name}
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.1.7-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.7-alt1_3jpp8
 - fc27 update
 
