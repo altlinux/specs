@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          mavibot
 Version:       1.0.0
-Release:       alt1_0.6.M8jpp8
+Release:       alt1_0.7.M8jpp8
 Summary:       ApacheDS MVCC BTree implementation
 License:       ASL 2.0
 URL:           http://directory.apache.org/mavibot/
@@ -79,12 +79,15 @@ rm mavibot/src/test/java/org/apache/directory/mavibot/btree/PersistedBTreeBrowse
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.7.M8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.6.M8jpp8
 - fc27 update
 
