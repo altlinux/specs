@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-idea-plugin
 Version:        2.2.1
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        Maven IDEA Plugin
 
 Group:          Development/Other
@@ -70,6 +70,9 @@ cp %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_8jpp8
 - fc27 update
 
