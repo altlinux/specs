@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          maven-processor-plugin
 Version:       2.2.4
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       Maven Processor Plugin
 License:       LGPLv3+
 Url:           https://github.com/bsorrentino/maven-annotation-plugin
@@ -61,12 +61,15 @@ cp -p src/main/resources/COPYING.LESSER .
 %mvn_install
 
 %files -f .mfiles
-%doc COPYING.LESSER
+%doc --no-dereference COPYING.LESSER
 
 %files javadoc -f .mfiles-javadoc
-%doc COPYING.LESSER
+%doc --no-dereference COPYING.LESSER
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1_8jpp8
 - fc27 update
 
