@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          mvel
 Version:       2.2.8
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       MVFLEX Expression Language
 License:       ASL 2.0
 Url:           https://github.com/mvel
@@ -91,13 +91,16 @@ touch $RPM_BUILD_ROOT/etc/mvel.conf
 
 %files -f .mfiles
 %{_bindir}/%{name}
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %config(noreplace,missingok) /etc/mvel.conf
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.8-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.8-alt1_3jpp8
 - fc27 update
 
