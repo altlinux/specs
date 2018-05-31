@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          native-platform
 Version:       0.14
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       Java bindings for various native APIs
 License:       ASL 2.0
 URL:           https://github.com/adammurdoch/native-platform
@@ -96,6 +96,9 @@ install -pm 0755 build/binaries/libnative-platform.so %{buildroot}%{_libdir}/%{n
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_13jpp8
+- java update
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_12jpp8
 - java update
 
