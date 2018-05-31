@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%modulename
-Version: 15.1.0
-Release: alt3%ubt
+Version: 16.0.0
+Release: alt1%ubt
 
 Summary: Virtual Python Environment builder
 License: MIT
@@ -19,7 +19,6 @@ Patch2: allow_internal_symlinks.patch
 Patch3: python3-installation-within-the-bare-virtualenv.patch
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-module-setuptools
 BuildRequires: python3-module-setuptools
@@ -99,6 +98,7 @@ popd
 %python_install
 
 %check
+export PIP_INDEX_URL=http://host.invalid./
 py.test -v
 
 pushd ../python3
@@ -117,6 +117,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 16.0.0-alt1%ubt
+- 15.1.0 -> 16.0.0
+
 * Thu Mar 29 2018 Stanislav Levin <slev@altlinux.org> 15.1.0-alt3%ubt
 - Fix system sys.path down to virtualenv
 - Cleanup patches
