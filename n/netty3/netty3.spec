@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netty3
 Version:        3.10.6
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        An asynchronous event-driven network application framework and tools for Java
 # CC0: src/main/java/org/jboss/netty/handler/codec/base64/Base64.java
 License:        ASL 2.0 and BSD and CC0
@@ -131,17 +131,18 @@ rm -v src/main/java/org/jboss/netty/handler/ssl/JettyNpnSslEngine.java
 
 %install
 %mvn_install
-ln -s netty3-3.10.6.jar %buildroot%_javadir/netty3-3.9.3.jar
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE.txt NOTICE.txt
-%_javadir/netty3-3.9.3.jar
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
  
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.10.6-alt1_4jpp8
+- java update
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 3.10.6-alt1_3jpp8
 - new version
 
