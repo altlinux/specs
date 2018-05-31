@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-release
 Version:        2.2.1
-Release:        alt7_19jpp8
+Release:        alt7_20jpp8
 Summary:        Release a project updating the POM and tagging in the SCM
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-release-plugin/
@@ -128,6 +128,9 @@ EOT
 %doc LICENSE NOTICE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt7_20jpp8
+- java update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt7_19jpp8
 - java update
 
