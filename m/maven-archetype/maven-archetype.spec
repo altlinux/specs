@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-archetype
 Version:        2.4
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        Maven project templating toolkit
 
 # Most of the code is under ASL 2.0, but some bundled jdom sources are
@@ -222,6 +222,9 @@ popd
 %doc LICENSE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_7jpp8
 - fc27 update
 
