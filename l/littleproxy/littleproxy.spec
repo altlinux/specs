@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          littleproxy
 Version:       1.1.0
-Release:       alt2_2jpp8
+Release:       alt2_3jpp8
 Summary:       High Performance HTTP Proxy
 License:       ASL 2.0
 URL:           http://www.littleshoot.org/littleproxy/
@@ -144,19 +144,22 @@ rm src/test/java/org/littleshoot/proxy/IdleTest.java
 
 %build
 
-%mvn_build -- -Dmaven.test.skip.exec=true
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
 %doc README.md
-%doc COPYRIGHT.txt LICENSE.txt
+%doc --no-dereference COPYRIGHT.txt LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc COPYRIGHT.txt LICENSE.txt
+%doc --no-dereference COPYRIGHT.txt LICENSE.txt
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_3jpp8
+- java update
+
 * Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_2jpp8
 - fixed build with new jctools
 
