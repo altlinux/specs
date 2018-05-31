@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-stage-plugin
 Version:        1.0
-Release:        alt3_5jpp8
+Release:        alt3_6jpp8
 Summary:        Plugin to copy artifacts from one repository to another
 
 License:        ASL 2.0
@@ -56,12 +56,15 @@ API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_5jpp8
 - fc27 update
 
