@@ -16,20 +16,36 @@ URL:              http://www.dogtagpki.org/
 License:          GPLv2
 
 %if 0%{?rhel}
-Version:          10.6.0
-Release:          alt1_1jpp8
+Version:          10.6.1
+Release:          alt1_2jpp8
 %else
-Version:          10.6.0
-Release:          alt1_1jpp8
+Version:          10.6.1
+Release:          alt1_2jpp8
 %endif
 
-Source:           https://github.com/dogtagpki/pki/archive/v%{version}/pki-%{version}.tar.gz
+# To create a tarball from a version tag:
+# $ git archive \
+#     --format=tar.gz \
+#     --prefix pki-<version>/ \
+#     -o pki-<version>.tar.gz \
+#     <version tag>
+Source: https://github.com/dogtagpki/pki/archive/v%{version}/pki-%{version}.tar.gz
+
+# To create a patch for all changes since a version tag:
+# $ git format-patch \
+#     --stdout \
+#     <version tag> \
+#     > pki-VERSION-RELEASE.patch
+Patch: pki-10.6.1-2.patch
 
 BuildArch:        noarch
 
 ################################################################################
 # Build Dependencies
 ################################################################################
+
+# autosetup
+BuildRequires:    git
 
 BuildRequires:    ctest cmake
 BuildRequires:    gcc-c++
@@ -51,43 +67,45 @@ Group: System/Base
 
 Summary:          Dogtag PKI Server Theme Package
 
-Obsoletes:        dogtag-pki-common-theme <= %{version}-%{release}
-Obsoletes:        dogtag-pki-common-ui
-Obsoletes:        dogtag-pki-ca-theme <= %{version}-%{release}
-Obsoletes:        dogtag-pki-ca-ui
-Obsoletes:        dogtag-pki-kra-theme <= %{version}-%{release}
-Obsoletes:        dogtag-pki-kra-ui
-Obsoletes:        dogtag-pki-ocsp-theme <= %{version}-%{release}
-Obsoletes:        dogtag-pki-ocsp-ui
-Obsoletes:        dogtag-pki-tks-theme <= %{version}-%{release}
-Obsoletes:        dogtag-pki-tks-ui
-Obsoletes:        dogtag-pki-ra-theme <= %{version}-%{release}
-Obsoletes:        dogtag-pki-ra-ui
-Obsoletes:        dogtag-pki-tps-theme <= %{version}-%{release}
-Obsoletes:        dogtag-pki-tps-ui
+Obsoletes:        dogtag-pki-common-theme < %{version}-%{release}
+Obsoletes:        dogtag-pki-common-ui < %{version}-%{release}
+Obsoletes:        dogtag-pki-ca-theme < %{version}-%{release}
+Obsoletes:        dogtag-pki-ca-ui < %{version}-%{release}
+Obsoletes:        dogtag-pki-kra-theme < %{version}-%{release}
+Obsoletes:        dogtag-pki-kra-ui < %{version}-%{release}
+Obsoletes:        dogtag-pki-ocsp-theme < %{version}-%{release}
+Obsoletes:        dogtag-pki-ocsp-ui < %{version}-%{release}
+Obsoletes:        dogtag-pki-tks-theme < %{version}-%{release}
+Obsoletes:        dogtag-pki-tks-ui < %{version}-%{release}
+Obsoletes:        dogtag-pki-ra-theme < %{version}-%{release}
+Obsoletes:        dogtag-pki-ra-ui < %{version}-%{release}
+Obsoletes:        dogtag-pki-tps-theme < %{version}-%{release}
+Obsoletes:        dogtag-pki-tps-ui < %{version}-%{release}
 
 Provides:         dogtag-pki-common-theme = %{version}-%{release}
+Provides:         dogtag-pki-common-ui = %{version}-%{release}
+Provides:         dogtag-pki-ca-theme = %{version}-%{release}
+Provides:         dogtag-pki-ca-ui = %{version}-%{release}
+Provides:         dogtag-pki-kra-theme = %{version}-%{release}
+Provides:         dogtag-pki-kra-ui = %{version}-%{release}
+Provides:         dogtag-pki-ocsp-theme = %{version}-%{release}
+Provides:         dogtag-pki-ocsp-ui = %{version}-%{release}
+Provides:         dogtag-pki-tks-theme = %{version}-%{release}
+Provides:         dogtag-pki-tks-ui = %{version}-%{release}
+Provides:         dogtag-pki-tps-theme = %{version}-%{release}
+Provides:         dogtag-pki-tps-ui = %{version}-%{release}
+
 Provides:         pki-server-theme = %{version}-%{release}
 Provides:         pki-common-theme = %{version}-%{release}
 Provides:         pki-common-ui = %{version}-%{release}
-
-Provides:         dogtag-pki-ca-theme = %{version}-%{release}
 Provides:         pki-ca-theme = %{version}-%{release}
 Provides:         pki-ca-ui = %{version}-%{release}
-
-Provides:         dogtag-pki-kra-theme = %{version}-%{release}
 Provides:         pki-kra-theme = %{version}-%{release}
 Provides:         pki-kra-ui = %{version}-%{release}
-
-Provides:         dogtag-pki-ocsp-theme = %{version}-%{release}
 Provides:         pki-ocsp-theme = %{version}-%{release}
 Provides:         pki-ocsp-ui = %{version}-%{release}
-
-Provides:         dogtag-pki-tks-theme = %{version}-%{release}
 Provides:         pki-tks-theme = %{version}-%{release}
 Provides:         pki-tks-ui = %{version}-%{release}
-
-Provides:         dogtag-pki-tps-theme = %{version}-%{release}
 Provides:         pki-tps-theme = %{version}-%{release}
 Provides:         pki-tps-ui = %{version}-%{release}
 
@@ -110,7 +128,7 @@ Conflicts:        redhat-pki-console-theme
 Conflicts:        redhat-pki-console-ui
 %endif
 
-Obsoletes:        dogtag-pki-console-ui <= 9
+Obsoletes:        dogtag-pki-console-ui < %{version}-%{release}
 
 Provides:         pki-console-theme = %{version}-%{release}
 Provides:         pki-console-ui = %{version}-%{release}
@@ -124,8 +142,8 @@ Dogtag textual and graphical user interface for PKI Console.
 ################################################################################
 
 %setup -q -n pki-%{version}
+%patch0 -p1
 sed -i -e s,/usr/bin/ln,/bin/ln,g dogtag/common-ui/CMakeLists.txt
-
 
 ################################################################################
 %build
@@ -134,6 +152,7 @@ sed -i -e s,/usr/bin/ln,/bin/ln,g dogtag/common-ui/CMakeLists.txt
 mkdir -p build
 cd build
 %{fedora_cmake} \
+    --no-warn-unused-cli \
     -DVERSION=%{version}-%{release} \
     -DVAR_INSTALL_DIR:PATH=/var \
     -DJAVA_LIB_INSTALL_DIR=%{_jnidir} \
@@ -151,6 +170,7 @@ make \
     VERBOSE=%{?_verbose} \
     DESTDIR=%{buildroot} \
     INSTALL="install -p" \
+    --no-print-directory \
     all install
 
 # NOTE:  Several "theme" packages require ownership of the "/usr/share/pki"
@@ -186,6 +206,9 @@ make \
 
 ################################################################################
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 10.6.1-alt1_2jpp8
+- java update
+
 * Fri Apr 20 2018 Igor Vlasenko <viy@altlinux.ru> 10.6.0-alt1_1jpp8
 - java update
 
