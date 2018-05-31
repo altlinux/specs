@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-resources-plugin
-Version:        3.0.2
-Release:        alt1_3jpp8
+Version:        3.1.0
+Release:        alt1_1jpp8
 Summary:        Maven Resources Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-resources-plugin
@@ -17,18 +17,13 @@ BuildArch: noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
-BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
-BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-monitor)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.apache.maven:maven-settings)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
@@ -47,7 +42,7 @@ API documentation for %{name}.
 
 
 %prep
-%setup -q 
+%setup -q
 
 %build
 %mvn_build -f
@@ -60,6 +55,9 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_1jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1_3jpp8
 - fc27 update
 
