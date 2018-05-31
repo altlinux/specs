@@ -1,6 +1,6 @@
 Name: bonnie
 Version: 1.5
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Unix filesystem performance benchmark
 License: Artistic
@@ -34,6 +34,9 @@ install -pD -m644 bonnie.1 %buildroot%_man1dir/bonnie.1
 %doc bonnie.doc README
 
 %changelog
+* Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 1.5-alt2%ubt
+- fixed typo in manpage
+
 * Wed May 30 2018 Anton Farygin <rider@altlinux.ru> 1.5-alt1%ubt
 - 1.5
 
