@@ -7,14 +7,16 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-shared-utils
-Version:        3.1.0
-Release:        alt1_5jpp8
+Version:        3.2.1
+Release:        alt1_0.1jpp8
 Summary:        Maven shared utility classes
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-shared-utils
 BuildArch:      noarch
 
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+# XXX temporary for maven upgrade
+Patch0:         0001-Restore-compatibility-with-current-maven.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
@@ -40,12 +42,15 @@ a lot of unused code.
 Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
-    
+
 %description javadoc
 API documentation for %{name}.
 
 %prep
 %setup -q
+
+%patch0 -p1
+
 %pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
 
 %build
@@ -55,12 +60,15 @@ API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_0.1jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_5jpp8
 - fc27 update
 
