@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          lzma-java
 Version:       1.3
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       LZMA library for Java
 # Source files without license headers https://github.com/jponge/lzma-java/issues/13
 # Public Domain: ./src/main/java/lzma/sdk/*  ./src/test/java/lzma/*
@@ -55,12 +55,15 @@ This package contains javadoc for %{name}.
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_4jpp8
+- java update
+
 * Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_3jpp8
 - new version
 
