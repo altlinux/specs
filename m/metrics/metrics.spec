@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          metrics
 Version:       3.1.2
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Java library which gives you what your code does in production
 License:       ASL 2.0
 URL:           http://metrics.dropwizard.io
@@ -327,83 +327,86 @@ rm -rf docs/target/singlehtml/.buildinfo
 
 %files  -f .mfiles-%{name}-core
 %doc README.md
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files annotation -f .mfiles-%{name}-annotation
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files benchmarks -f .mfiles-%{name}-benchmarks
 %doc %{name}-benchmarks/README.md
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files ehcache -f .mfiles-%{name}-ehcache
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files ganglia -f .mfiles-%{name}-ganglia
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files graphite -f .mfiles-%{name}-graphite
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files healthchecks -f .mfiles-%{name}-healthchecks
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files httpasyncclient -f .mfiles-%{name}-httpasyncclient
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files httpclient -f .mfiles-%{name}-httpclient
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files jdbi -f .mfiles-%{name}-jdbi
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files jersey -f .mfiles-%{name}-jersey
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files jersey2 -f .mfiles-%{name}-jersey2
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %if 0
 %files jetty -f .mfiles-%{name}-jetty
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 %endif
 
 %files json -f .mfiles-%{name}-json
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files jvm -f .mfiles-%{name}-jvm
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files log4j2 -f .mfiles-%{name}-log4j2
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files log4j -f .mfiles-%{name}-log4j
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files logback -f .mfiles-%{name}-logback
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files parent -f .mfiles-%{name}-parent
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files servlet -f .mfiles-%{name}-servlet
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files servlets -f .mfiles-%{name}-servlets
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files doc
 %{_mandir}/man1/%{name}.*
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 %doc docs/target/singlehtml
 %if 0
 %doc docs/target/latex/*.pdf
 %endif
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.2-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.2-alt1_5jpp8
 - fc27 update
 
