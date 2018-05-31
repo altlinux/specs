@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           miglayout
 Version:        4.2
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        Versatile and flexible Swing layout manager
 URL:            http://www.miglayout.com/
 License:        BSD
@@ -71,6 +71,9 @@ cp -a doc %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 4.2-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 4.2-alt1_7jpp8
 - fc27 update
 
