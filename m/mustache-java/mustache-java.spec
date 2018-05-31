@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global oname mustache.java
 Name:          mustache-java
 Version:       0.9.4
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Implementation of mustache.js for Java
 License:       ASL 2.0
 URL:           https://github.com/spullara/mustache.java/
@@ -111,18 +111,21 @@ find . -name "*.jar" -print -delete
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files benchmarks -f .mfiles-benchmarks
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files maven-plugin -f .mfiles-maven-plugin
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt1_3jpp8
 - fc27 update
 
