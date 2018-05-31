@@ -1,5 +1,5 @@
 Name: xorg-drv-nouveau
-Version: 1.0.14
+Version: 1.0.15
 Release: alt1
 Epoch: 2
 Summary: NVIDIA video driver
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
-BuildRequires: libGL-devel xorg-glproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-xf86driproto-devel libudev-devel
+BuildRequires: libGL-devel xorg-proto-devel libudev-devel
 
 %description
 nouveau  is  an Xorg  driver  for  NVIDIA video cards.  The
@@ -42,6 +42,9 @@ for these depths
 %_man4dir/*
 
 %changelog
+* Thu May 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.0.15-alt1
+- 1.0.15
+
 * Thu Mar 16 2017 Valery Inozemtsev <shrek@altlinux.ru> 2:1.0.14-alt1
 - 1.0.14
 

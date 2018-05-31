@@ -1,6 +1,6 @@
 Name: xorg-drv-fbdev
-Version: 0.4.4
-Release: alt5
+Version: 0.5.0
+Release: alt1
 Epoch: 1
 Summary: video driver for framebuffer device
 License: MIT/X11
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
-BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
+BuildRequires: xorg-proto-devel
 
 %description
 fbdev  is an Xorg driver for framebuffer devices.  This is a
@@ -45,6 +45,12 @@ tions are supported.
 %_man4dir/*
 
 %changelog
+* Thu May 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:0.5.0-alt1
+- 0.5.0
+
+* Mon May 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:0.4.4-alt6
+- requires XORG_ABI_VIDEODRV = 24.0
+
 * Wed Nov 30 2016 Valery Inozemtsev <shrek@altlinux.ru> 1:0.4.4-alt5
 - requires XORG_ABI_VIDEODRV = 23.0
 

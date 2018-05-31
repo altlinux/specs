@@ -1,6 +1,6 @@
 Name: xorg-drv-mach64
-Version: 6.9.5
-Release: alt2
+Version: 6.9.6
+Release: alt1
 Epoch: 4
 Summary: ATI Mach 64 video driver
 Group: System/X11
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): xorg-sdk
-BuildRequires: xorg-xineramaproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel
+BuildRequires: xorg-proto-devel
 
 %description
 mach64 is an Xorg driver for ATI Mach 64 based video cards
@@ -39,6 +39,9 @@ mach64 is an Xorg driver for ATI Mach 64 based video cards
 %_x11modulesdir/drivers/mach64_drv.so
 
 %changelog
+* Thu May 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:6.9.6-alt1
+- 6.9.6
+
 * Thu Dec 01 2016 Valery Inozemtsev <shrek@altlinux.ru> 4:6.9.5-alt2
 - requires XORG_ABI_VIDEODRV = 23.0
 

@@ -1,6 +1,6 @@
 Name: xorg-installers
 Version: 7.8
-Release: alt7
+Release: alt8
 
 Summary: Set of various Xorg-related installers
 License: MIT/X11
@@ -35,9 +35,7 @@ Group: System/X11
 Requires: xorg-drv-radeon
 #Requires: xorg-drv-siliconmotion
 %else
-Requires: xorg-drv-ati xorg-drv-intel xorg-drv-nv xorg-drv-openchrome xorg-drv-cirrus
-Requires: xorg-drv-nouveau xorg-drv-qxl
-Requires: xorg-drv-amdgpu
+Requires: xorg-drv-ati xorg-drv-intel xorg-drv-cirrus xorg-drv-nouveau xorg-drv-qxl xorg-drv-amdgpu
 %endif
 
 %description -n xorg-drv-video
@@ -58,6 +56,9 @@ xorg-drv-input requires all input drivers for X Window System
 %files -n xorg-drv-input
 
 %changelog
+* Thu May 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 7.8-alt8
+- xorg-drv-video: remove nv, openchrome
+
 * Mon May 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 7.8-alt7
 - remove xorg-proto-devel subpackage
 

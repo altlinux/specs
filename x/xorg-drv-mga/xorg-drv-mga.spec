@@ -1,6 +1,6 @@
 Name: xorg-drv-mga
-Version: 1.6.4
-Release: alt2
+Version: 1.6.5
+Release: alt1
 Epoch: 1
 Summary: Matrox video driver
 License: MIT/X11
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
-BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
+BuildRequires: xorg-proto-devel
 
 %description
 mga is an Xorg driver for Matrox video cards.  The driver is
@@ -53,6 +53,9 @@ cards).
 %_man4dir/*
 
 %changelog
+* Thu May 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.6.5-alt1
+- 1.6.5
+
 * Thu Dec 15 2016 Valery Inozemtsev <shrek@altlinux.ru> 1:1.6.4-alt2
 - requires XORG_ABI_VIDEODRV = 23.0
 

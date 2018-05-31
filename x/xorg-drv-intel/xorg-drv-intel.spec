@@ -1,6 +1,6 @@
 Name: xorg-drv-intel
 Version: 2.99.917
-Release: alt5
+Release: alt6
 Epoch: 7
 Summary: Intel integrated graphics chipsets
 License: MIT/X11
@@ -15,10 +15,8 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
 BuildRequires: libGL-devel libX11-devel libXext-devel libXvMC-devel libXcursor-devel libXdamage-devel libXinerama-devel
-BuildRequires: libXrandr-devel libXtst-devel xorg-inputproto-devel xorg-fontsproto-devel xorg-randrproto-devel
-BuildRequires: xorg-renderproto-devel xorg-xextproto-devel xorg-xf86driproto-devel xorg-dri2proto-devel xorg-xineramaproto-devel
+BuildRequires: libXrandr-devel libXtst-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrender-devel libxcbutil-devel xorg-util-macros libXfixes-devel libudev-devel intel-gen4asm
-BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-dri3proto-devel libxshmfence-devel
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXxf86vm-devel libXfont2-devel
 
 %description
@@ -57,6 +55,9 @@ and 24 for the 830M and later
 %_man4dir/i*.4*
 
 %changelog
+* Mon May 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.917-alt6
+- git snapshot master.3594772
+
 * Wed Nov 30 2016 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.917-alt5
 - git snapshot master.bde9460
 

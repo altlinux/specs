@@ -1,6 +1,6 @@
 Name: xorg-drv-vesa
-Version: 2.3.4
-Release: alt3
+Version: 2.4.0
+Release: alt1
 Epoch: 1
 Summary: Generic VESA video driver
 License: MIT/X11
@@ -14,8 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk xorg-util-macros
-BuildRequires: libXext-devel xorg-fontsproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel
-BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
+BuildRequires: libXext-devel xorg-proto-devel
 
 %description
 vesa is an Xorg driver for generic VESA video cards.  It can
@@ -44,6 +43,9 @@ depths 8, 15 16 and 24.
 %_man4dir/*
 
 %changelog
+* Thu May 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.0-alt1
+- 2.4.0
+
 * Wed Nov 30 2016 Valery Inozemtsev <shrek@altlinux.ru> 1:2.3.4-alt3
 - requires XORG_ABI_VIDEODRV = 23.0
 

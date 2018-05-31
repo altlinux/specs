@@ -1,5 +1,5 @@
 Name: xorg-drv-amdgpu
-Version: 1.4.0
+Version: 18.0.1
 Release: alt1
 Summary: AMD GPU video driver for the Xorg X server
 License: MIT/X11
@@ -12,8 +12,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk xorg-util-macros
-BuildRequires: libGL-devel libgbm-devel libudev-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel
-BuildRequires: xorg-fixesproto-devel xorg-damageproto-devel
+BuildRequires: libGL-devel libgbm-devel libudev-devel xorg-proto-devel
 
 %description
 %summary
@@ -39,6 +38,12 @@ BuildRequires: xorg-fixesproto-devel xorg-damageproto-devel
 %_man4dir/*
 
 %changelog
+* Mon May 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 18.0.1-alt1
+- 18.0.1
+
+* Mon Oct 23 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.4.0-alt0.M80P.1
+- backport to p8 branch
+
 * Mon Oct 23 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 
