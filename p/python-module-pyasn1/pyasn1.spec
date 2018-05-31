@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 0.4.2
-Release: alt2%ubt
+Version: 0.4.3
+Release: alt1%ubt
 
 Summary: Abstract Syntax Notation One (ASN.1), Python implementation
 License: %bsdstyle
@@ -15,10 +15,8 @@ Url: https://pypi.python.org/pypi/pyasn1
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-licenses
 
@@ -28,6 +26,8 @@ BuildRequires: python3-module-setuptools
 %if_with check
 BuildRequires: python-modules-unittest
 %endif
+
+BuildArch: noarch
 
 %description
 This is an implementation of ASN.1 types and codecs in Python programming
@@ -47,9 +47,8 @@ based on ASN.1 specification.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
 
-rm -rf ../python3
 cp -a . ../python3
 
 %build
@@ -74,16 +73,19 @@ python3 setup.py test
 popd
 
 %files
-%doc LICENSE.rst README.md
+%doc LICENSE.rst README.md CHANGES.rst
 %python_sitelibdir/%mname
 %python_sitelibdir/%mname-%version-*.egg-info/
 
 %files -n python3-module-%mname
-%doc LICENSE.rst README.md
+%doc LICENSE.rst README.md CHANGES.rst
 %python3_sitelibdir/%mname
 %python3_sitelibdir/%mname-%version-*.egg-info/
 
 %changelog
+* Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 0.4.3-alt1%ubt
+- 0.4.2 -> 0.4.3
+
 * Thu Mar 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt2%ubt
 - Marked docstrings with backslashes as raw strings.
 
