@@ -9,8 +9,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           guava
-Version:        24.0
-Release:        alt1_2jpp8
+Version:        25.0
+Release:        alt1_1jpp8
 Summary:        Google Core Libraries for Java
 License:        ASL 2.0
 URL:            https://github.com/google/guava
@@ -108,6 +108,9 @@ find -name '*.java' | xargs sed -ri \
 %files testlib -f .mfiles-guava-testlib
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 25.0-alt1_1jpp8
+- java update
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 24.0-alt1_2jpp8
 - java update
 
