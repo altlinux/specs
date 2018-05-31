@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 18.04.1
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -20,12 +20,12 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-declarative-devel qt5-x11extras-devel
 BuildRequires: libxcbutil-cursor-devel libxcbutil-devel libxcbutil-image-devel
 BuildRequires: kde5-libkipi-devel
+BuildRequires: plasma5-libkscreen-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdoctools-devel-static
 BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel
 BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
-BuildRequires: kf5-solid-devel kf5-knewstuff-devel
-BuildRequires: plasma5-libkscreen-devel
+BuildRequires: kf5-solid-devel kf5-knewstuff-devel kf5-purpose-devel
 
 %description
 Spectacle is screenshot taking utility for the KDE desktop. Spectacle
@@ -71,6 +71,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Thu May 31 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
+- update build requires
+
 * Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 
