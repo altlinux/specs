@@ -21,8 +21,8 @@ BuildRequires: jpackage-generic-compat
 %bcond_without spring
 
 Name:           xbean
-Version:        4.5
-Release:        alt1_9jpp8
+Version:        4.8
+Release:        alt1_1jpp8
 Summary:        Java plugin based web server
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/xbean/
@@ -30,8 +30,6 @@ BuildArch:      noarch
 
 Source0:        http://repo2.maven.org/maven2/org/apache/%{name}/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-# Fix dependency on xbean-asm4-shaded to original objectweb-asm
-Patch0:         0001-Unshade-ASM.patch
 # Compatibility with Eclipse Luna (rhbz#1087461)
 Patch1:         0002-Port-to-Eclipse-Luna-OSGi.patch
 Patch2:         0003-Port-to-QDox-2.0.patch
@@ -128,7 +126,6 @@ This package provides %{summary}.
 # build failing on this due to doxia-sitetools problems
 rm src/site/site.xml
 
-%patch0 -p1
 %if %{with equinox}
 %patch1 -p1
 %endif
@@ -137,13 +134,15 @@ rm src/site/site.xml
 %pom_remove_parent
 %pom_remove_dep mx4j:mx4j
 
-%pom_remove_dep -r :xbean-asm5-shaded
+# Unshade ASM
+%pom_remove_dep -r :xbean-asm6-shaded
 %pom_remove_dep -r :xbean-finder-shaded
-%pom_disable_module xbean-asm5-shaded
+%pom_disable_module xbean-asm6-shaded
 %pom_disable_module xbean-finder-shaded
-
-%pom_xpath_remove pom:scope xbean-asm-util
-%pom_xpath_remove pom:optional xbean-asm-util
+%pom_add_dep org.apache.xbean:xbean-asm-util:%{version} xbean-reflect
+%pom_xpath_remove pom:optional xbean-reflect xbean-asm-util
+%pom_xpath_remove 'pom:scope[text()="provided"]' xbean-reflect xbean-asm-util
+sed -i 's/org\.apache\.xbean\.asm6/org.objectweb.asm/g' `find xbean-reflect -name '*.java'`
 
 # Prevent modules depending on springframework from building.
 %if %{without spring}
@@ -210,6 +209,9 @@ sed -i "s|</Private-Package>|</Private-Package-->|" xbean-blueprint/pom.xml
 %doc LICENSE NOTICE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:4.8-alt1_1jpp8
+- java update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:4.5-alt1_9jpp8
 - java update
 
