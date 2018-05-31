@@ -1,6 +1,6 @@
 Name: libXxf86dga
 Version: 1.1.4
-Release: alt2
+Release: alt3
 Summary: XFree86 Direct Graphics Access Extension Library
 License: MIT/X11
 Group: System/Libraries
@@ -19,7 +19,6 @@ XFree86 Direct Graphics Access Extension Library
 Summary: XFree86 Direct Graphics Access Extension Library and Header Files
 Group: Development/C
 Requires: %name = %version-%release
-Conflicts: xorg-xf86dgaproto-devel < 2.1
 
 %description devel
 %name-devel contains the libraries and header files needed to
@@ -48,6 +47,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Thu May 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.1.4-alt3
+- devel: remove conflict to xorg-xf86dgaproto-devel
+
 * Mon May 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.1.4-alt2
 - rebuild
 
