@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-deploy-plugin
 Version:        2.8.2
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        Maven Deploy Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-deploy-plugin/
@@ -66,6 +66,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.8.2-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.8.2-alt1_7jpp8
 - fc27 update
 
