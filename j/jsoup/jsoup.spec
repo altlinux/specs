@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jsoup
-Version:        1.11.2
-Release:        alt1_2jpp8
+Version:        1.11.3
+Release:        alt1_1jpp8
 Summary:        Java library for working with real-world HTML
 License:        MIT
 URL:            http://jsoup.org/
@@ -68,6 +68,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.11.3-alt1_1jpp8
+- java update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.11.2-alt1_2jpp8
 - java update
 
