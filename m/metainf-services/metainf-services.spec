@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           metainf-services
 Version:        1.7
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Small java library for generating META-INF/services files
 
 # License is specified in pom file
@@ -56,6 +56,9 @@ cp %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.7-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.7-alt1_3jpp8
 - fc27 update
 
