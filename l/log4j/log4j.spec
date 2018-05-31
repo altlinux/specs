@@ -21,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           log4j
 Version:        2.9.1
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Java logging package
 BuildArch:      noarch
 License:        ASL 2.0
@@ -56,14 +56,14 @@ BuildRequires:  mvn(org.apache.commons:commons-csv)
 BuildRequires:  mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
 BuildRequires:  mvn(org.jboss.spec.javax.jms:jboss-jms-api_1.1_spec)
 BuildRequires:  mvn(org.lightcouch:lightcouch)
-BuildRequires:  mvn(org.liquibase:liquibase-core)
 BuildRequires:  mvn(org.mongodb:mongo-java-driver)
 BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.zeromq:jeromq)
 BuildRequires:  mvn(sun.jdk:jconsole)
 %endif
 
-Obsoletes:      %{name}-osgi < %{version}-%{release}
+Obsoletes:      %{name}-osgi < 2.9.1-4
+Obsoletes:      %{name}-liquibase < 2.9.1-4
 Source44: import.info
 
 %description
@@ -129,13 +129,6 @@ Summary:        Apache Log4j NoSql
 %description nosql
 Use NoSQL databases such as MongoDB and CouchDB to append log messages.
 
-%package liquibase
-Group: Development/Java
-Summary:        Apache Log4j Liquibase Binding
-
-%description liquibase
-The Apache Log4j Liquibase binding to Log4j 2 Core.
-
 %endif
 
 %package        javadoc
@@ -181,6 +174,9 @@ rm log4j-core/src/main/java/org/apache/logging/log4j/core/async/DisruptorBlockin
 rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 %pom_remove_dep -r :kafka-clients
 
+# not compatible with fedora's version
+%pom_disable_module %{name}-liquibase
+
 # System scoped dep provided by JDK
 %pom_remove_dep :jconsole %{name}-jmx-gui
 %pom_add_dep sun.jdk:jconsole %{name}-jmx-gui
@@ -207,7 +203,6 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 %pom_disable_module %{name}-web
 %pom_disable_module %{name}-iostreams
 %pom_disable_module %{name}-jul
-%pom_disable_module %{name}-liquibase
 %pom_disable_module %{name}-core-its
 
 %pom_remove_dep -r :jackson-dataformat-yaml
@@ -240,7 +235,6 @@ rm log4j-api/src/main/java/org/apache/logging/log4j/util/Activator.java
 %mvn_package ':%{name}-web' web
 %mvn_package ':%{name}-bom' bom
 %mvn_package ':%{name}-nosql' nosql
-%mvn_package ':%{name}-liquibase' liquibase
 
 %mvn_package :log4j-core-its __noinstall
 
@@ -270,7 +264,6 @@ touch $RPM_BUILD_ROOT/etc/chainsaw.conf
 %files web -f .mfiles-web
 %files bom -f .mfiles-bom
 %files nosql -f .mfiles-nosql
-%files liquibase -f .mfiles-liquibase
 %files jmx-gui -f .mfiles-jmx-gui
 %{_bindir}/%{name}-jmx
 %endif
@@ -280,6 +273,9 @@ touch $RPM_BUILD_ROOT/etc/chainsaw.conf
 
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt1_4jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt1_2jpp8
 - new version
 
