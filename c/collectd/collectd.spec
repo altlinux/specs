@@ -29,7 +29,7 @@
 
 Name: collectd
 Version: 5.8.0
-Release: alt2
+Release: alt3
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -810,6 +810,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Wed May 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.8.0-alt3
+- NMU: rebuilt with new nut.
+
 * Wed Apr 18 2018 Michael Shigorin <mike@altlinux.org> 5.8.0-alt2
 - add the missing libdpdk, libgps knobs
 
