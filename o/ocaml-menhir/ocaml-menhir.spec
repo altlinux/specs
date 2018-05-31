@@ -1,13 +1,11 @@
 Name: ocaml-menhir
-Version: 20171222
+Version: 20180530
 Release: alt1%ubt
 Summary: LR(1) parser generator for the OCaml programming language.
 
 Group: Development/ML
 License: QPL
 Url: http://gallium.inria.fr/~fpottier/menhir/
-Packager: %packager
-
 Source: menhir-%version.tar
 
 BuildRequires(pre): ocaml rpm-build-ubt
@@ -37,13 +35,11 @@ replacing all calls to module Parsing with new Menhir-specific keywords.
 make PREFIX=/usr all
 
 %install
-%define ocamlsitelib %_libdir/ocaml/site-lib
-mkdir -p %buildroot%ocamlsitelib/menhirLib
-mkdir -p %buildroot%ocamlsitelib/menhirSdk
+#mkdir -p %buildroot%ocamlsitelib/menhirLib
+#mkdir -p %buildroot%ocamlsitelib/menhirSdk
+mkdir -p %buildroot%_libdir/ocaml
 make OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml PREFIX=%buildroot/usr install
 
-mv %buildroot%_libdir/ocaml/menhirLib/META %buildroot%ocamlsitelib/menhirLib
-mv %buildroot%_libdir/ocaml/menhirSdk/META %buildroot%ocamlsitelib/menhirSdk
 mkdir -p %buildroot%_datadir/doc/%name-%version
 mv %buildroot%_datadir/doc/menhir/* %buildroot%_datadir/doc/%name-%version/
 rm -rf %buildroot%_datadir/doc/menhir
@@ -52,11 +48,6 @@ rm -rf %buildroot%_datadir/doc/%name-%version/src/
 bzip2 -z9 %buildroot%_man1dir/menhir.1
 
 %files
-%_bindir/*
-%_man1dir/*
-%dir %_datadir/menhir
-%_datadir/menhir/*
-
 %doc CHANGES.md
 %doc demos
 %doc INSTALLATION.md
@@ -64,17 +55,19 @@ bzip2 -z9 %buildroot%_man1dir/menhir.1
 %doc LICENSE
 %doc Makefile
 %doc manual.pdf
-
-%dir %ocamlsitelib/menhirLib
-%dir %ocamlsitelib/menhirSdk
-%ocamlsitelib/menhirSdk/META
-%ocamlsitelib/menhirLib/META
+%_bindir/*
+%_man1dir/*
+%dir %_datadir/menhir
+%_datadir/menhir/*
 %dir %_libdir/ocaml/menhirLib
 %dir %_libdir/ocaml/menhirSdk
 %_libdir/ocaml/menhirLib/*
 %_libdir/ocaml/menhirSdk/*
 
 %changelog
+* Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 20180530-alt1%ubt
+- 20180530 (closes: #34902)
+
 * Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 20171222-alt1%ubt
 - 20171222
 
