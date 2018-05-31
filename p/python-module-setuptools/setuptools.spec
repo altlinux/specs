@@ -5,8 +5,8 @@
 
 Name: python-module-%mname
 Epoch: 1
-Version: 39.0.1
-Release: alt2%ubt
+Version: 39.2.0
+Release: alt1%ubt
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -18,11 +18,7 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-six
-BuildRequires: python-dev
-BuildRequires: python3-module-six
 BuildRequires: python3-dev
 
 %if_with check
@@ -72,21 +68,9 @@ This package contains documentation for Distribute.
 Summary: Python Distutils Enhancements
 Group: Development/Python3
 Provides: python3-module-distribute = %EVR
-# skip self requires
-%add_python3_req_skip pkg_resources.extern.pyparsing
-%add_python3_req_skip pkg_resources.extern.packaging.markers
-%add_python3_req_skip pkg_resources.extern.packaging.requirements
-%add_python3_req_skip pkg_resources.extern.packaging.specifiers
-%add_python3_req_skip pkg_resources.extern.packaging.version
-%add_python3_req_skip pkg_resources.extern.six
-%add_python3_req_skip pkg_resources.extern.six.moves
-%add_python3_req_skip pkg_resources.extern.six.moves.urllib
-%add_python3_req_skip %mname.extern.six
-%add_python3_req_skip %mname.extern.six.moves
-%add_python3_req_skip %mname.extern.six.moves.urllib
-%add_python3_req_skip %mname.extern.pyparsing
-%add_python3_req_skip %mname.extern.packaging.version
-%add_python3_req_skip %mname.extern.packaging.specifiers
+# skip requires of self
+%filter_from_requires /python3\(\.[[:digit:]]\)\?(pkg_resources\..*)/d
+%filter_from_requires /python3\(\.[[:digit:]]\)\?(setuptools\.extern\..*)/d
 
 %description -n python3-module-%mname
 Setuptools is a collection of enhancements to the Python3 distutils
@@ -103,7 +87,6 @@ rm -f setuptools/*.exe
 # do not generate version like release.postdate, we need release one
 sed -i '/^tag_build =.*/d;/^tag_date = 1/d' setup.cfg
 
-rm -rf ../python3
 cp -a . ../python3
 
 %build
@@ -129,6 +112,7 @@ ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %check
 export LC_ALL=C.UTF-8
 export PYTHONPATH=`pwd`
+export PIP_INDEX_URL=http://host.invalid./
 # unset env var RPM_BUILD_DIR to disable ALT specific behavior during
 # RPM build
 RPM_BUILD_DIR='' py.test -v
@@ -142,10 +126,7 @@ popd
 %doc LICENSE *.rst
 %_bindir/easy_install
 %_bindir/easy_install-%_python_version
-%python_sitelibdir/pkg_resources
-%python_sitelibdir/%mname
-%python_sitelibdir/easy_install.*
-%python_sitelibdir/%mname-%version-*.egg-info
+%python_sitelibdir/*
 
 %files docs
 %doc docs/*.txt
@@ -153,13 +134,12 @@ popd
 %files -n python3-module-%mname
 %_bindir/easy_install3
 %_bindir/easy_install-%_python3_version
-%python3_sitelibdir/__pycache__/*
-%python3_sitelibdir/pkg_resources
-%python3_sitelibdir/%mname
-%python3_sitelibdir/easy_install.*
-%python3_sitelibdir/%mname-%version-*.egg-info
+%python3_sitelibdir/*
 
 %changelog
+* Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 1:39.2.0-alt1%ubt
+- 39.0.1 -> 39.2.0
+
 * Thu Mar 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:39.0.1-alt2%ubt
 - Marked docstrings with backslashes as raw strings.
 
