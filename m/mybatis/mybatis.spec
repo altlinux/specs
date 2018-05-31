@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          mybatis
 Version:       3.2.8
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       SQL Mapping Framework for Java
 License:       ASL 2.0
 # http://code.google.com/p/mybatis/
@@ -129,12 +129,15 @@ opts="-f"
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_9jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_8jpp8
 - fc27 update
 
