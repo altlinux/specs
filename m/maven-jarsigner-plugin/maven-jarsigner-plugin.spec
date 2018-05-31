@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             maven-jarsigner-plugin
 Version:          1.4
-Release:          alt1_5jpp8
+Release:          alt1_6jpp8
 Summary:          Signs or verifies a project artifact and attachments using jarsigner
 License:          ASL 2.0
 URL:              http://maven.apache.org/plugins/%{name}/
@@ -67,6 +67,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_5jpp8
 - fc27 update
 
