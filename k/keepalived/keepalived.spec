@@ -10,7 +10,7 @@
 %def_enable libnl
 
 Name: keepalived
-Version: 1.4.3
+Version: 1.4.5
 Release: alt1%ubt
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
@@ -20,7 +20,6 @@ Url: http://www.keepalived.org/software/
 Source0: %url/%name-%version.tar
 Source1: %name.init
 
-Patch1: 0001-fix-dlopen-libipset.patch
 Patch2: 0002-update-systemd-unit-file.patch
 BuildRequires(pre):rpm-build-ubt
 
@@ -45,7 +44,6 @@ userspace daemon for LVS cluster nodes healthchecks and LVS directors failover.
 
 %prep
 %setup -q
-#%patch1 -p1
 %patch2 -p1
 
 %build
@@ -105,6 +103,9 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 1.4.5-alt1%ubt
+- 1.4.5
+
 * Thu May 03 2018 Anton Farygin <rider@altlinux.ru> 1.4.3-alt1%ubt
 - 1.4.3
 
