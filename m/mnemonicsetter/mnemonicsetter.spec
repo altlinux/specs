@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           mnemonicsetter
 Version:        0.5
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Menu and toolbar mnemonic library
 License:        ASL 2.0
 URL:            https://github.com/dpolivaev/%{name}
@@ -40,9 +40,12 @@ echo 'rootProject.name="%{name}"' >settings.gradle
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_3jpp8
 - fc27 update
 
