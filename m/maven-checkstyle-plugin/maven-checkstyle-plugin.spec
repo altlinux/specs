@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             maven-checkstyle-plugin
 Version:          3.0.0
-Release:          alt1_1jpp8
+Release:          alt1_2jpp8
 Summary:          Plugin that generates a report regarding the code style used by the developers
 License:          ASL 2.0
 URL:              https://maven.apache.org/plugins/%{name}
@@ -83,6 +83,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_2jpp8
+- java update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_1jpp8
 - java update
 
