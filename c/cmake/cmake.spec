@@ -1,7 +1,7 @@
 %set_verify_elf_method unresolved=strict
 %def_without check
 Name: cmake
-Version: 3.10.2
+Version: 3.11.2
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -12,6 +12,7 @@ Url: http://cmake.org/
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
+# https://gitlab.kitware.com/cmake/cmake.git
 Source: %name-%version.tar
 Source1: %name.macros
 Source2: CMakeCache.txt
@@ -260,6 +261,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.11.2-alt1
+- Updated to upstream version 3.11.2.
+
 * Wed Feb 28 2018 Alexey Shabalin <shaba@altlinux.ru> 3.10.2-alt1
 - 3.10.2
 - backport support boost-1.66 from cmake-3.11.0-rc2
