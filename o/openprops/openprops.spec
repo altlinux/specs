@@ -1,15 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           openprops
-Version:        0.7.1
-Release:        alt2_3jpp8
+Version:        0.8.5
+Release:        alt1_2jpp8
 Summary:        An improved java.util.Properties from OpenJDK
 
 Group:          Development/Other
@@ -24,35 +22,32 @@ BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-release-plugin
 BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-enforcer-plugin
-BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  jacoco-maven-plugin
 BuildRequires:  junit
 
 Requires:       jpackage-utils
 Source44: import.info
 
 %description
-OpenProps is a tiny Java library which reads and writes .properties files 
+OpenProps is a tiny Java library which reads and writes .properties files
 using the same code as java.util.Properties from the OpenJDK, but enhanced so
 that it preserves the order of entries within the file, and it also preserves
-comments in the file.  
-This means that a Properties editor or a file converter written to use 
-OpenProps won't have to lose comments or mess up the order of entries. 
+comments in the file.
+This means that a Properties editor or a file converter written to use
+OpenProps won't have to lose comments or mess up the order of entries.
 
-By using OpenJDK code, OpenProps should handle all the old corner-cases in 
+By using OpenJDK code, OpenProps should handle all the old corner-cases in
 exactly the same way Java does.  The handling of whitespace and comments is
 tested by a number of JUnit tests.  But please let me know if you find a bug!
 
 Note the following differences from java.util.Properties:
 
 1. preserves comments and the order of entries in the file
-2. storeToXml doesn't use the Sun DTD (or any DTD) because it adds attributes 
+2. storeToXml doesn't use the Sun DTD (or any DTD) because it adds attributes
    for comments.
 3. equals() and hashCode() won't work the same way as with java.util.Properties,
-   because they are no longer inherited from Hashtable.  
+   because they are no longer inherited from Hashtable.
    All you get is identity equality/hashcode.
 
 Also note that any header comment in the .properties file will be interpreted as
@@ -68,33 +63,28 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version} 
+%setup -q -n %{name}-%{name}-%{version}
 %pom_remove_plugin org.apache.maven.plugins:maven-gpg-plugin
 
-%if 0%{?fedora} >= 21
-%pom_xpath_inject "pom:build/pom:plugins" "<plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId><version>2.9.1</version><configuration><additionalparam>-Xdoclint:none</additionalparam></configuration><executions><execution><id>attach-javadocs</id><goals><goal>jar</goal></goals></execution></executions></plugin>" 
-%else
-%pom_xpath_inject "pom:build/pom:plugins" "<plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId><version>2.9.1</version><executions><execution><id>attach-javadocs</id><goals><goal>jar</goal></goals></execution></executions></plugin>"
-%endif
 
-%pom_remove_plugin :maven-javadoc-plugin
- 
 %build
-%mvn_build -j
+%mvn_build
 
 %install
 %mvn_install
-# multiple -f flags in %files: merging -f .mfiles-javadoc into -f .mfiles
-#cat .mfiles-javadoc >> .mfiles
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc README.txt COPYING.txt
+%doc --no-dereference COPYING.txt
+%doc README.txt
 
-#%doc COPYING.txt
+%files -f .mfiles-javadoc javadoc
+%doc --no-dereference COPYING.txt
 
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1_2jpp8
+- java update
+
 * Wed May 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_3jpp8
 - fixed build with maven-javadoc-plugin 3
 
