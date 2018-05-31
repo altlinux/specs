@@ -8,7 +8,7 @@ Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
 Version: 2.7
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -44,9 +44,6 @@ BuildRequires: python-module-pygnome
 BuildRequires: desktop-file-utils
 BuildRequires: glib2-devel libdbus-glib-devel
 BuildRequires: libcap-ng-devel libpcre-devel libcgroup-devel
-
-# Build sequence: libsepol -> setools -> policycoreutils
-BuildRequires: libsetools-devel >= 3.3.8-alt3
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -444,6 +441,9 @@ cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 %endif
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.7-alt2
+- Fixed build dependencies.
+
 * Mon Feb 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.7-alt1
 - Updated to upstream version 2.7.
 
