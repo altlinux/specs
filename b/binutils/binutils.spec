@@ -1,5 +1,7 @@
+%define binutils_sourcedir /usr/src/binutils-source
+
 Name: binutils
-Version: 2.27.0
+Version: 2.30.0
 Release: alt1
 Epoch: 1
 
@@ -8,30 +10,28 @@ License: GPLv3+
 Group: Development/Other
 Url: http://sourceware.org/binutils/
 
-# ftp://ftp.kernel.org/pub/linux/devel/%name/%name-%version.tar.xz
+# ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.xz
 Source: %name-%version.tar
 Source1: bfd.h
 Source2: gcc.sh
 Source3: g++.sh
 Source4: output-format.sed
 
-Patch: binutils-2_27-branch.patch
+Patch: binutils-2_30-branch.patch
 
 Patch0001: 0001-Add-lto-and-none-lto-input-support-for-ld-r.patch
 Patch0002: 0002-Add-test-for-nm-on-mixed-LTO-non-LTO-object.patch
 Patch0003: 0003-Don-t-check-the-plugin-target-twice.patch
 Patch0004: 0004-ld-testsuite-pr18808b.c-pass-Wno-return-type.patch
-Patch0005: 0005-gold-change-default-hash-style-to-gnu.patch
-Patch0006: 0006-bfd-export-demangle.h-and-hashtab.h.patch
-Patch0007: 0007-ld-add-no-warn-shared-textrel-option.patch
-Patch0008: 0008-ld-enable-optimization-and-warn-shared-textrel-by-de.patch
-Patch0009: 0009-ld-change-default-hash-style-to-gnu.patch
-Patch0010: 0010-ld-enable-z-relro-by-default.patch
-Patch0011: 0011-gold-enable-z-relro-by-default.patch
-Patch0012: 0012-ld-testsuite-restore-upstream-default-options.patch
-Patch0013: 0013-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
-Patch0014: 0014-bfd-elflink.c-bfd_elf_final_link-check-all-objects-f.patch
-Patch0015: 0015-ld-testsuite-pr19784c.c-pass-Wno-return-type.patch
+Patch0005: 0005-bfd-export-demangle.h-and-hashtab.h.patch
+Patch0006: 0006-ld-add-no-warn-shared-textrel-option.patch
+Patch0007: 0007-ld-enable-optimization-and-warn-shared-textrel-by-de.patch
+Patch0008: 0008-ld-enable-z-relro-by-default.patch
+Patch0009: 0009-gold-enable-z-relro-by-default.patch
+Patch0010: 0010-ld-testsuite-restore-upstream-default-options.patch
+Patch0011: 0011-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
+Patch0012: 0012-bfd-elflink.c-bfd_elf_final_link-check-all-objects-f.patch
+Patch0013: 0013-pr22269-1.c-disable-Wreturn-type-warning.patch
 
 PreReq: alternatives >= 0:0.4
 Conflicts: libbfd
@@ -53,6 +53,11 @@ Provides: libbfd-devel = %epoch:%version-%release
 Obsoletes: libiberty-devel
 Obsoletes: libbfd-devel
 
+%package source
+Summary: Binutils sources
+Group: Development/Other
+BuildArch: noarch
+
 %description
 Binutils is a collection of binary utilities, including:
 + addr2line: converting addresses to file and line;
@@ -70,10 +75,14 @@ This package contains include files, dynamic and static libraries needed
 for development software based on Binary File Descriptor library and
 libiberty.
 
+%description source
+This package contains source code of GNU Binutils.
+
 %prep
 %setup
 
 %patch -p1
+chmod +x gold/testsuite/plugin_pr22868.sh
 
 %patch0001 -p1
 %patch0002 -p1
@@ -88,8 +97,6 @@ libiberty.
 %patch0011 -p1
 %patch0012 -p1
 %patch0013 -p1
-%patch0014 -p1
-%patch0015 -p1
 
 # Replay libtool commits
 # a042d335197ac7afb824ab54c3aab91f3e79a2d0
@@ -102,7 +109,7 @@ sed -i -e '
 s,sys_lib_search_path_spec="/lib /usr/lib /usr/local/lib",sys_lib_search_path_spec="/lib$libsuff /usr/lib$libsuff /usr/local/lib$libsuff",
 s,sys_lib_dlsearch_path_spec="/lib /usr/lib",sys_lib_dlsearch_path_spec="/lib$libsuff /usr/lib$libsuff",
 s,sys_lib_dlsearch_path_spec="/lib /usr/lib \$lt_ld_extra",sys_lib_dlsearch_path_spec="$sys_lib_dlsearch_path_spec $lt_ld_extra",
-s,x86_64-\*kfreebsd\*-gnu|x86_64-\*linux\*|powerpc\*-\*linux\*|,aarch64*-*linux*|&,
+s,x86_64-\*kfreebsd\*-gnu|x86_64-\*linux\*|powerpc\*-\*linux\*|,aarch64*-*linux*|riscv64*-*linux*|mips64*-*linux*|&,
 ' libtool.m4 */configure
 
 sed -i 's/%%{release}/%release/g' bfd/Makefile{.am,.in}
@@ -129,6 +136,7 @@ ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --
 	--enable-gold=yes --enable-ld=default \
 	--with-stage1-ldflags=' ' \
 	--with-boot-ldflags=' ' \
+	--enable-default-hash-style=gnu \
 	$ADDITIONAL_TARGETS
 
 for t in configure-host maybe-all-{libiberty,bfd,opcodes} all; do
@@ -225,6 +233,10 @@ for n in binutils gas ld; do
 	install -pm644 $n/NEWS NEWS-$n
 done
 
+mkdir -p %buildroot%binutils_sourcedir
+cp %SOURCE0 %buildroot%binutils_sourcedir/
+cp %PATCH0 %buildroot%binutils_sourcedir/
+
 %find_lang binutils bfd gas gold gprof ld opcodes --append --output files.lst
 
 %set_verify_elf_method strict
@@ -237,6 +249,10 @@ GCC_PPN_LTO=$(gcc -print-prog-name=liblto_plugin.so)
 [ "$GCC_PFN_LTO" != 'liblto_plugin.so' -o "$GCC_PPN_LTO" != 'liblto_plugin.so' ] || exit
 RUNTESTFLAGS=
 XFAIL_TESTS=
+%ifarch %ix86
+# See https://sourceware.org/bugzilla/show_bug.cgi?id=21128
+XFAIL_TESTS="$XFAIL_TESTS icf_safe_so_test.sh"
+%endif
 %make_build -k check CC="%_sourcedir/gcc.sh" CXX="%_sourcedir/g++.sh" \
 	XFAIL_TESTS="$XFAIL_TESTS" RUNTESTFLAGS="$RUNTESTFLAGS"
 
@@ -258,7 +274,14 @@ XFAIL_TESTS=
 %exclude %_infodir/bfd.info*
 %doc NEWS*
 
+%files source
+%binutils_sourcedir
+
 %changelog
+* Mon May 28 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.30.0-alt1
+- Updated to 2.30.0 20180528.
+- Packaged binutils sources as separate package.
+
 * Thu Nov 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.27.0-alt1
 - Updated to 2.27.0 20161101.
 
