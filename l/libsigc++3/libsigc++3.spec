@@ -5,7 +5,7 @@
 %define api_ver 3.0
 
 Name: %{_name}3
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -19,7 +19,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
-BuildRequires: docbook-style-xsl doxygen gcc-c++ graphviz mm-common xsltproc
+BuildRequires: gcc-c++ mm-common >= 0.9.12
+BuildRequires: docbook-style-xsl doxygen graphviz xsltproc
 
 %description
 libsigc++ implements a typesafe callback system for standard C++.
@@ -78,6 +79,9 @@ install -pm644 AUTHORS NEWS README %buildroot%docdir/
 %doc %_datadir/devhelp/books/*
 
 %changelog
+* Thu May 31 2018 Yuri N. Sedunov <aris@altlinux.org> 2.99.11-alt1
+- 2.99.11
+
 * Thu Jan 11 2018 Yuri N. Sedunov <aris@altlinux.org> 2.99.10-alt1
 - 2.99.10
 
