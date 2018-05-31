@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          neko-htmlunit
 Version:       2.23
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       HtmlUnit adaptation of NekoHtml
 License:       ASL 2.0
 URL:           http://htmlunit.sourceforge.net
@@ -55,12 +55,15 @@ This package contains javadoc for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.23-alt1_4jpp8
+- java update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.23-alt1_3jpp8
 - new version
 
