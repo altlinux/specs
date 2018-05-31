@@ -15,8 +15,8 @@ BuildRequires: jpackage-generic-compat
 %bcond_without snappy
 
 Name:           plexus-archiver
-Version:        3.5
-Release:        alt1_5jpp8
+Version:        3.6.0
+Release:        alt1_1jpp8
 Epoch:          0
 Summary:        Plexus Archiver Component
 License:        ASL 2.0
@@ -88,6 +88,9 @@ rm -f src/main/java/org/codehaus/plexus/archiver/tar/PlexusIoTarSnappyFileResour
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.6.0-alt1_1jpp8
+- java update
+
 * Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.5-alt1_5jpp8
 - unbootstrap build
 
