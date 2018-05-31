@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          lightcouch
 Version:       0.1.8
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       CouchDB Java API
 License:       ASL 2.0
 URL:           http://www.lightcouch.org/
@@ -62,12 +62,15 @@ rm -r src/test/java/org/lightcouch/tests/AttachmentsTest.java \
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.8-alt1_5jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.8-alt1_4jpp8
 - fc27 update
 
