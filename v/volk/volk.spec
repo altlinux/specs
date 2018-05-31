@@ -1,6 +1,6 @@
 Name: volk
 Version: 1.4
-Release: alt1
+Release: alt1.1
 Summary: Vector-Optimized Library of Kernels
 License: GPLv3
 Group: Development/C++
@@ -76,6 +76,9 @@ Python module for VOLK.
 %python_sitelibdir/*
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4-alt1.1
+- NMU: rebuilt with boost-1.67.0
+
 * Sun Apr 22 2018 Anton Midyukov <antohami@altlinux.org> 1.4-alt1
 - new version 1.4
 

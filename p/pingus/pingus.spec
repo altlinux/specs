@@ -3,7 +3,7 @@
 
 Name: pingus
 Version: 0.7.6
-Release: alt2
+Release: alt2.1
 
 
 Summary: A free Lemmings clone
@@ -148,6 +148,9 @@ EOF
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.6-alt2.1
+- NMU: rebuilt with boost-1.67.0
+
 * Wed May 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.6-alt2
 - NMU: fixed build with new toolchain.
 

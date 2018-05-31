@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/R gcc-c++
 %define _localstatedir %{_var}
 Name:           libompl
 Version:        1.3.2
-Release:        alt1_2
+Release:        alt1_2.1
 Summary:        The Open Motion Planning Library
 
 Group:          System/Libraries
@@ -92,6 +92,9 @@ make -C build test || exit 0
 %{_libdir}/cmake/%{oldname}
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.2-alt1_2.1
+- NMU: rebuilt with boost-1.67.0
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.2-alt1_2
 - update to new release by fcimport
 

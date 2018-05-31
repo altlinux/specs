@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/ccache boost-devel boost-python-devel cmake gcc-c++ glib
 %define _localstatedir %{_var}
 Name:           cegui
 Version:        0.8.7
-Release:        alt3_10
+Release:        alt3_10.1
 Summary:        Free library providing windowing and widgets for graphics APIs / engines
 Group:          System/Libraries
 License:        MIT
@@ -249,6 +249,9 @@ find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
 %{_libdir}/cegui-0.8/libCEGUITinyXMLParser.so
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.7-alt3_10.1
+- NMU: rebuilt with boost-1.67.0
+
 * Fri May 11 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.7-alt3_10
 - resynced with fc
 

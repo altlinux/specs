@@ -3,7 +3,7 @@
 
 Name: i2pd
 Version: 2.18.0
-Release: alt1
+Release: alt1.1
 
 Summary: Full C++ implementation of I2P router
 
@@ -116,6 +116,9 @@ touch %buildroot%_logdir/%name/%name.log
 %dir %_logdir/%name/
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.18.0-alt1.1
+- NMU: rebuilt with boost-1.67.0
+
 * Mon Feb 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.18.0-alt1
 - new version 2.18.0 (with rpmrb script)
 

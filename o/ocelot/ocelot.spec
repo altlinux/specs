@@ -1,6 +1,6 @@
 Name:     ocelot
 Version:  1.0
-Release:  alt1
+Release:  alt1.1
 
 Summary:  Alternative compiled announcer (ocelot)
 License:  Noncommercial public
@@ -47,5 +47,8 @@ install -m0644 -D %SOURCE1 %buildroot%_unitdir/%name.service
 %doc LICENSE CHANGES README.md
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt1.1
+- NMU: rebuilt with boost-1.67.0
+
 * Sun Jan 28 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - initial build for ALT Sisyphus

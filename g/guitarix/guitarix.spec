@@ -3,7 +3,7 @@
 
 Name: guitarix
 Version: 0.36.1
-Release: alt1
+Release: alt1.1
 Summary: Mono amplifier to JACK
 Group: Sound
 License: GPLv2+
@@ -211,6 +211,9 @@ ln -s %_libdir/libgxw.so.0.1 %buildroot%_libdir/libgxw.so
 %_libdir/lv2/*
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.36.1-alt1.1
+- NMU: rebuilt with boost-1.67.0
+
 * Sun Apr 08 2018 Anton Midyukov <antohami@altlinux.org> 0.36.1-alt1
 - new version 0.36.1
 
