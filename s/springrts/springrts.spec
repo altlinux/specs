@@ -3,7 +3,7 @@
 
 Name: springrts
 Version: 104.0
-Release: alt1
+Release: alt1.1
 
 Summary: Real time strategy game engine with many mods
 License: GPL2+ or Artistic
@@ -108,6 +108,9 @@ sed -i -e '/NoDisplay=true/d' \
 %_iconsdir/hicolor/48x48/mimetypes/*.png
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 104.0-alt1.1
+- NMU: rebuilt with boost-1.67.0
+
 * Mon Apr 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 104.0-alt1
 - Updated to upstream version 104.0.
 

@@ -2,7 +2,7 @@
 
 Name: PokerTH
 Version: 1.1.2
-Release: alt3
+Release: alt3.1
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
@@ -76,6 +76,9 @@ install -pm755 pokerth bin/pokerth_server %buildroot%_bindir
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.2-alt3.1
+- NMU: rebuilt with boost-1.67.0
+
 * Wed May 23 2018 Mikhail Efremov <sem@altlinux.org> 1.1.2-alt3
 - Regenerate protobuf files with current protobuf.
 - Fix enum entry name.

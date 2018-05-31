@@ -1,6 +1,6 @@
 Name: ogre
 Version: 1.9.0
-Release: alt1.1.1.2
+Release: alt1.1.1.3
 Summary: Object-Oriented Graphics Rendering Engine
 # CC-BY-SA is for devel docs
 License: MIT
@@ -139,6 +139,9 @@ cp -f samples.cfg $RPM_BUILD_ROOT%_datadir/OGRE/samples.cfg
 %_libdir/OGRE/Samples
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt1.1.1.3
+- NMU: rebuilt with boost-1.67.0
+
 * Mon Sep 04 2017 Fr. Br. George <george@altlinux.ru> 1.9.0-alt1.1.1.2
 - Rebuild with boost 1.65
 

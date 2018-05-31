@@ -15,7 +15,7 @@ Requires: fonts-ttf-wqy-microhei
 
 Name:           widelands
 Version:        0
-Release:        alt6_0.62.%{buildid}
+Release:        alt6_0.62.%{buildid}.1
 Summary:        Open source realtime-strategy game
 
 Group:          Games/Other
@@ -135,6 +135,9 @@ popd
 
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0-alt6_0.62.build19.1
+- NMU: rebuilt with boost-1.67.0
+
 * Sun May 27 2018 Igor Vlasenko <viy@altlinux.ru> 1:0-alt6_0.62.build19
 - build19
 

@@ -2,7 +2,7 @@ Summary: An open source software for the creation of electronic schematic diagra
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
 Name: kicad
 Version: 4.0.7
-Release: alt2
+Release: alt2.1
 Epoch: 1
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -123,6 +123,9 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_datadir/%name/
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.0.7-alt2.1
+- NMU: rebuilt with boost-1.67.0
+
 * Thu Oct 26 2017 Anton Midyukov <antohami@altlinux.org> 1:4.0.7-alt2
 - Skip requires pcbnew.
 

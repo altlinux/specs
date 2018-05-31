@@ -13,7 +13,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1.1
+Release: alt1.2
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -497,6 +497,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.1.1-alt1.2
+- NMU: rebuilt with boost-1.67.0
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.1.1-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 

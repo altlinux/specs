@@ -27,7 +27,7 @@
 
 Name: krita
 Version: 3.3.2
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init no_altplace
 
 Group: Graphics
@@ -350,5 +350,8 @@ done
 %_libdir/libkritawidgetutils.so.*
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.2-alt2%ubt
+- NMU: rebuilt with boost-1.67.0
+
 * Wed Nov 15 2017 Sergey V Turchin <zerg@altlinux.org> 3.3.2-alt1%ubt
 - initial build

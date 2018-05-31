@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libGL-devel zlib-devel
 
 Name:           frogatto
 Version:        1.3.3
-Release:        alt2_10
+Release:        alt2_10.1
 Summary:        An old-school 2D platform game
 
 # Artwork and music not released under an open license
@@ -153,6 +153,9 @@ pod2man --section=6 \
 
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.3-alt2_10.1
+- NMU: rebuilt with boost-1.67.0
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt2_10
 - update to new release by fcimport
 
