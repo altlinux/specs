@@ -8,8 +8,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-jar-plugin
-Version:        3.0.2
-Release:        alt1_4jpp8
+Version:        3.1.0
+Release:        alt1_1jpp8
 Summary:        Maven JAR Plugin
 
 License:        ASL 2.0
@@ -23,8 +23,8 @@ BuildRequires:  mvn(org.apache.maven:maven-archiver)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
@@ -61,6 +61,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_1jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1_4jpp8
 - fc27 update
 
