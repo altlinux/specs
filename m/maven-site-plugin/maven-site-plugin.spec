@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-site-plugin
 Version:        3.6
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Maven Site Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-site-plugin/
@@ -86,12 +86,15 @@ API documentation for %{name}.
 
 %files -f .mfiles
 %dir %{_javadir}/%{name}
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.6-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.6-alt1_3jpp8
 - fc27 update
 
