@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          mybatis-parent
 Version:       21
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       The MyBatis parent POM
 License:       ASL 2.0
 URL:           http://www.mybatis.org/
@@ -67,9 +67,12 @@ The MyBatis parent POM which has to be inherited by all MyBatis modules.
 
 %files -f .mfiles
 %doc README
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 21-alt1_8jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 21-alt1_7jpp8
 - fc27 update
 
