@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          narayana
 Version:       5.3.3
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Distributed Transaction Manager
 License:       LGPLv2+
 URL:           http://narayana.io/
@@ -177,12 +177,15 @@ done
 
 %files -f .mfiles
 %doc README.md
-%doc common/copyright.txt
+%doc --no-dereference common/copyright.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc common/copyright.txt
+%doc --no-dereference common/copyright.txt
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 5.3.3-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.3.3-alt1_3jpp8
 - fc27 update
 
