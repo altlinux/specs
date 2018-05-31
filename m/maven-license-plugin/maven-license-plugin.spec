@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-license-plugin
 Version:        1.8.0
-Release:        alt6_22jpp8
+Release:        alt6_23jpp8
 Summary:        Maven plugin to update header licenses of source files
 
 Group:          Development/Other
@@ -84,12 +84,15 @@ mkdir -p $RPM_BUILD_ROOT%{_javadir}
 
 %files -f .mfiles
 %dir %{_javadir}/%{name}
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %doc NOTICE.txt
 
 %files javadoc  -f .mfiles-javadoc
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt6_23jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt6_22jpp8
 - fc27 update
 
