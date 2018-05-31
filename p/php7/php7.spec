@@ -3,7 +3,7 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.2.5
+Version: 7.2.6
 Release: alt1%ubt
 
 %define php7_name      %name
@@ -237,7 +237,7 @@ sed -is 's,\(zend_module_entry \)\(.*= {\),zend_module_entry __attribute__ ((vis
 	--without-sqlite \
 	--with-regex=php \
 	--without-pear \
-	%ifarch e2k
+	%ifarch %e2k
 	--without-pcre-jit \
 	%endif
 #
@@ -404,6 +404,9 @@ subst 's,sbin/lsattr,bin/lsattr,' %buildroot/%php7_libdir/build/config.guess
 %doc tests run-tests.php 
 
 %changelog
+* Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 7.2.6-alt1%ubt
+- 7.2.6
+
 * Fri May 11 2018 Anton Farygin <rider@altlinux.ru> 7.2.5-alt1%ubt
 - 7.2.5
 
