@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-mapping
 Version:        3.0.0
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Apache Maven Mapping
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/%{name}/
@@ -45,12 +45,15 @@ This package provides %{summary}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_6jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_5jpp8
 - fc27 update
 
