@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		%{?scl_prefix}mongo-java-driver
 Version:	3.4.2
-Release:	alt1_3jpp8
+Release:	alt1_4jpp8
 Summary:	A Java driver for MongoDB
 
 Group:		Development/Other
@@ -31,7 +31,7 @@ Patch0:         %{pkg_name}-gradle-local-fixes.patch
 BuildRequires:	java-devel
 }
 BuildRequires:  %{?scl_prefix_java_common}gradle-local
-BuildRequires:  maven-local
+BuildRequires:  %{?scl_prefix_java_common}javapackages-tools
 BuildRequires:  %{?scl_prefix_java_common}javapackages-local
 BuildRequires:  mvn(io.netty:netty-buffer)
 BuildRequires:  mvn(io.netty:netty-transport)
@@ -40,6 +40,7 @@ BuildRequires:  mvn(org.slf4j:slf4j-api)
 
 
 %{!?scl:
+Requires:	javapackages-tools
 }
 %{?scl:
 Requires:       %{scl_runtime}
@@ -53,6 +54,7 @@ This is an ueber jar for the MongoDB Java driver.
 Summary:	A Java-based BSON implementation
 Group:		Development/Other
 %{!?scl:
+Requires:	javapackages-tools
 }
 %{?scl:
 Requires:       %{scl_runtime}
@@ -71,6 +73,7 @@ that require BSON.
 Summary:	The MongoDB Java Driver
 Group:		Development/Other
 %{!?scl:
+Requires:	javapackages-tools
 }
 %{?scl:
 Requires:       %{scl_runtime}
@@ -83,6 +86,7 @@ The MongoDB Java Driver
 Summary:	The MongoDB Java Operations Layer
 Group:		Development/Other
 %{!?scl:
+Requires:	javapackages-tools
 }
 %{?scl:
 Requires:       %{scl_runtime}
@@ -96,6 +100,7 @@ parties can wrap this layer to provide custom higher-level APIs
 Summary:	The MongoDB Java Async Driver
 Group:		Development/Other
 %{!?scl:
+Requires:	javapackages-tools
 }
 %{?scl:
 Requires:       %{scl_runtime}
@@ -153,6 +158,9 @@ set -ex
 %doc README.md LICENSE.txt
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.4.2-alt1_4jpp8
+- java update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.2-alt1_3jpp8
 - fc27 update
 
