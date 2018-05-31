@@ -7,8 +7,8 @@
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.3
+Release: alt1
 
 Summary: Python bindings for GObject
 Group: Development/Python
@@ -206,6 +206,9 @@ popd
 %endif
 
 %changelog
+* Thu May 31 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
+- 3.28.3
+
 * Thu Mar 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.28.2-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
