@@ -4,7 +4,7 @@
 Name: jq
 %define lname lib%name
 Version: 1.5
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: Command-line JSON processor
 Group: Development/Other
 Source: %name-%version.tar
@@ -88,6 +88,9 @@ cat ./test-suite.log
 %endif
 
 %changelog
+* Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 1.5-alt3%ubt
+- security update (fixes: CVE-2016-4074)
+
 * Thu Apr 05 2018 Anton Farygin <rider@altlinux.ru> 1.5-alt2%ubt
 - rebuilt for new liboniguruma
 
