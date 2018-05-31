@@ -4,7 +4,7 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 28
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -21,11 +21,11 @@ BuildRequires: jpackage-generic-compat
 %global bundle    org.apache.felix.scr.generator
 
 Name:          felix-scr-generator
-Version:       1.16.0
-Release:       alt1_3jpp8
+Version:       1.18.0
+Release:       alt1_1jpp8
 Summary:       Descriptor Generator Implementation
 License:       ASL 2.0
-URL:           http://felix.apache.org/
+URL:           http://felix.apache.org/documentation/subprojects/apache-felix-service-component-runtime.html
 Source0:       http://archive.apache.org/dist/felix/%{bundle}-%{version}-source-release.tar.gz
 
 BuildArch:      noarch
@@ -39,8 +39,8 @@ BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:org.apache.felix.scr.annotations)
 %endif
 BuildRequires:  mvn(org.easymock:easymock)
-BuildRequires:  mvn(org.osgi:org.osgi.compendium)
-BuildRequires:  mvn(org.osgi:org.osgi.core)
+BuildRequires:  mvn(org.osgi:osgi.cmpn)
+BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.ow2.asm:asm-all)
 Source44: import.info
 
@@ -54,12 +54,15 @@ Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains API documentation for %{name}.
 
 %prep
 %setup -q -n %{bundle}-%{version}
 
 %mvn_file : felix/%{bundle}
+
+%pom_change_dep org.osgi:org.osgi.core org.osgi:osgi.core
+%pom_change_dep org.osgi:org.osgi.compendium org.osgi:osgi.cmpn
 
 %build
 # tests skipped for circular dependency with org.apache.felix.scr.annotations
@@ -80,6 +83,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.18.0-alt1_1jpp8
+- java update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_3jpp8
 - java update
 
