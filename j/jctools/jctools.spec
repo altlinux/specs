@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jctools
 Version:       2.0.2
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Java Concurrency Tools for the JVM
 License:       ASL 2.0
 URL:           http://jctools.github.io/JCTools/
@@ -117,17 +117,20 @@ done
 
 %files -f .mfiles-%{name}-core
 %doc README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files experimental -f .mfiles-%{name}-experimental
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files parent -f .mfiles-%{name}-parent
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1_3jpp8
+- java update
+
 * Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1_2jpp8
 - new version
 
