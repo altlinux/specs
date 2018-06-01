@@ -39,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           httpunit
 Version:        1.7
-Release:        alt6_24jpp8
+Release:        alt7_24jpp8
 Epoch:          0
 Summary:        Automated web site testing toolkit
 License:        MIT and ASL 2.0
@@ -62,14 +62,15 @@ BuildRequires:  ant >= 0:1.6
 BuildRequires:  nekohtml
 BuildRequires:  jtidy
 BuildRequires:  junit >= 0:3.8
-BuildRequires:  tomcat-servlet-3.1-api
+#BuildRequires:  tomcat-servlet-3.1-api
+BuildRequires: jboss-servlet-3.1-api
 BuildRequires:  javamail >= 0:1.3
 BuildRequires:  rhino
 BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  javapackages-local
 
 Requires:       junit >= 0:3.8
-Requires:       tomcat-servlet-3.1-api
+#Requires:       tomcat-servlet-3.1-api
 # As of 1.5, requires either nekohtml or jtidy, and prefers nekohtml.
 Requires:       nekohtml
 Requires:       rhino
@@ -120,11 +121,12 @@ sed -i -e 's|setCharEncoding( org.w3c.tidy.Configuration.UTF8 )|setInputEncoding
 find . -name "*.jar" -exec rm -f {} \;
 rm -rf doc/api
 
+#  %{_javadir}/tomcat-servlet-api.jar \
 ln -s \
   %{_javadir}/junit.jar \
   %{_javadir}/jtidy.jar \
   %{_javadir}/nekohtml.jar \
-  %{_javadir}/tomcat-servlet-api.jar \
+  %{_javadir}/jboss-servlet-3.1-api/jboss-servlet-api_3.1_spec.jar \
   %{_javadir}/js.jar \
   %{_javadir}/xerces-j2.jar \
   jars
@@ -175,6 +177,9 @@ popd
 %doc --no-dereference doc/*
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt7_24jpp8
+- rebuild with tomcat9
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt6_24jpp8
 - java update
 
