@@ -4,7 +4,7 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apiviz
 Version:          1.3.2
-Release:          alt2_16jpp8
+Release:          alt2_17jpp8
 Summary:          APIviz is a JavaDoc doclet to generate class and package diagrams
 Group:            Development/Other
 License:          LGPLv2+
@@ -26,24 +26,15 @@ Patch2:           0003-fix-deprecated-assembly-goal.patch
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-antrun-plugin
-BuildRequires:    maven-assembly-plugin
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-surefire-provider-junit
-BuildRequires:    maven-plugin-jxr
-BuildRequires:    jboss-parent
-BuildRequires:    jdepend
-BuildRequires:    ant-contrib
-BuildRequires:    junit
+BuildRequires:    mvn(ant-contrib:ant-contrib)
+BuildRequires:    mvn(com.sun:tools)
+BuildRequires:    mvn(jdepend:jdepend)
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 Source44: import.info
 
 %description
@@ -92,6 +83,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 %doc LICENSE.txt
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt2_17jpp8
+- java fc28+ update
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt2_16jpp8
 - java update
 
