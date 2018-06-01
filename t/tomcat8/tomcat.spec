@@ -81,7 +81,7 @@ BuildRequires: jpackage-generic-compat
 Name:          tomcat8
 Epoch:         1
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt2_1jpp8
+Release:       alt3_1jpp8
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
 Group:         System/Servers
@@ -228,8 +228,8 @@ Libraries needed to run the Tomcat Web container.
 Group: Development/Other
 Summary: Apache Tomcat Java Servlet v%{servletspec} API Implementation Classes
 Provides: servlet = %{servletspec}
-Provides: servlet6
-Provides: servlet3
+#Provides: servlet6
+#Provides: servlet3
 Obsoletes: %{oldname}-servlet-3.0-api
 Provides: %{oldname}-servlet-%{servletspec}-api = %EVR
 
@@ -492,11 +492,12 @@ cp -a %{oldname}-util-scan.pom ${RPM_BUILD_ROOT}%{_mavenpomdir}/JPP.%{oldname}-u
 
 # tomcat-jni
 cp -a %{oldname}-jni.pom ${RPM_BUILD_ROOT}%{_mavenpomdir}/JPP.%{oldname}-jni.pom
-%add_maven_depmap JPP.%{oldname}-jni.pom %{oldname}/%{oldname}-jni.jar -f "tomcat-lib"
+%add_maven_depmap JPP.%{oldname}-jni.pom %{oldname}/%{oldname}-jni.jar -f "tomcat-lib" -v %version
 
 # servlet-api jsp-api and el-api are not in tomcat subdir, since they are widely re-used elsewhere
 cp -a tomcat-jsp-api.pom ${RPM_BUILD_ROOT}%{_mavenpomdir}/JPP-tomcat8-jsp-api.pom
-%add_maven_depmap JPP-tomcat8-jsp-api.pom tomcat8-jsp-api.jar -f "tomcat8-jsp-api" -a "org.eclipse.jetty.orbit:javax.servlet.jsp"
+%add_maven_depmap JPP-tomcat8-jsp-api.pom tomcat8-jsp-api.jar -f "tomcat8-jsp-api" -a "org.eclipse.jetty.orbit:javax.servlet.jsp" -v %version
+
 
 cp -a tomcat-el-api.pom ${RPM_BUILD_ROOT}%{_mavenpomdir}/JPP-tomcat8-el-api.pom
 %add_maven_depmap JPP-tomcat8-el-api.pom tomcat8-el-api.jar -f "tomcat8-el-api" -a "org.eclipse.jetty.orbit:javax.el"
@@ -505,7 +506,8 @@ cp -a tomcat-servlet-api.pom ${RPM_BUILD_ROOT}%{_mavenpomdir}/JPP-tomcat8-servle
 # Generate a depmap fragment javax.servlet:servlet-api pointing to
 # tomcat-servlet-3.0-api for backwards compatibility
 # also provide jetty depmap (originally in jetty package, but it's cleaner to have it here
-%add_maven_depmap JPP-tomcat8-servlet-api.pom tomcat8-servlet-api.jar -f "tomcat8-servlet-api"
+#add_maven_depmap JPP-tomcat8-servlet-api.pom tomcat8-servlet-api.jar -f "javax-servlet-api" -a 'javax.servlet:javax.servlet-api' -v 3.1.0
+%add_maven_depmap JPP-tomcat8-servlet-api.pom tomcat8-servlet-api.jar -f "tomcat8-servlet-api" -v %version
 
 # replace temporary copy with link
 ln -s -f $(abs2rel %{bindir}/tomcat-juli.jar %{libdir}) ${RPM_BUILD_ROOT}%{libdir}/
@@ -695,6 +697,9 @@ install -D -m 755 %{S:46} %buildroot%_sbindir/%{oldname}-sysv
 %endif
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:8.5.29-alt3_1jpp8
+- added compat provides
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:8.5.29-alt2_1jpp8
 - compat package
 
