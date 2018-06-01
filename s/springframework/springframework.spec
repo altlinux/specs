@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          springframework
 Version:       3.2.18
-Release:       alt1_4jpp8
+Release:       alt2_4jpp8
 Summary:       Spring Java Application Framework
 Epoch:         0
 License:       ASL 2.0
@@ -83,6 +83,7 @@ BuildRequires:  mvn(javax.inject:javax.inject)
 BuildRequires:  mvn(javax.jdo:jdo-api)
 BuildRequires:  mvn(javax.mail:mail)
 BuildRequires:  mvn(javax.portlet:portlet-api)
+#BuildRequires: tomcat8-servlet-3.1-api
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(javax.servlet.jsp:jsp-api)
 BuildRequires:  mvn(javax.servlet:jstl)
@@ -117,7 +118,7 @@ BuildRequires:  mvn(org.apache.tiles:tiles-servlet)
 BuildRequires:  mvn(org.apache.tomcat:tomcat-catalina)
 BuildRequires:  mvn(org.apache.tomcat:tomcat-el-api)
 BuildRequires:  mvn(org.apache.tomcat:tomcat-jsp-api)
-BuildRequires:  mvn(org.apache.tomcat:tomcat-servlet-api)
+#BuildRequires:  mvn(org.apache.tomcat:tomcat-servlet-api)
 BuildRequires:  mvn(org.apache.xmlbeans:xmlbeans)
 BuildRequires:  mvn(org.aspectj:aspectjweaver)
 BuildRequires:  mvn(org.beanshell:bsh)
@@ -451,12 +452,15 @@ done
 %pom_remove_dep :persistence-api spring-orm
 %pom_add_dep org.hibernate.javax.persistence:hibernate-jpa-2.0-api spring-orm
 %pom_remove_dep javax.servlet:servlet-api spring-orm
-%pom_add_dep org.apache.tomcat:tomcat-servlet-api spring-context
+#pom_add_dep org.apache.tomcat:tomcat-servlet-api:8.5.29 spring-context
+%pom_add_dep javax.servlet:servlet-api:3.1.0 spring-orm
 
 %pom_remove_dep :persistence-api spring-test
 %pom_add_dep org.apache.tomcat:tomcat-el-api spring-test
 %pom_remove_dep javax.servlet.jsp:jsp-api spring-test
 %pom_add_dep org.apache.tomcat:tomcat-jsp-api spring-test
+%pom_remove_dep javax.servlet:servlet-api spring-test
+%pom_add_dep javax.servlet:servlet-api:3.1.0 spring-test
 
 %pom_remove_dep -r javax.activation:activation
 
@@ -617,6 +621,9 @@ done
 
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.2.18-alt2_4jpp8
+- rebuild with tomcat8
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.2.18-alt1_4jpp8
 - java update
 
