@@ -1,18 +1,17 @@
-BuildRequires: javapackages-local
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip hamcrest-core
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           sqljet
 Version:        1.1.10
-Release:        alt3_6jpp8
+Release:        alt3_10jpp8
 Summary:        Pure Java SQLite
 
-Group:          Development/Other
 License:        GPLv2
 URL:            http://sqljet.com/
 Source0:        http://sqljet.com/files/%{name}-%{version}-src.zip
@@ -21,17 +20,15 @@ Source4:        %{name}-build.xml
 Source5:        %{name}-pom.xml
 
 BuildRequires:  ant
-BuildRequires:  antlr-tool
-BuildRequires:  antlr3-java
-BuildRequires:  antlr3-tool
+BuildRequires:  antlr
+BuildRequires:  antlr32-java
+BuildRequires:  antlr32-tool
 BuildRequires:  easymock3
 BuildRequires:  junit
-BuildRequires:  stringtemplate4
-Requires:       antlr3-java
+BuildRequires:  stringtemplate
+BuildRequires:  hamcrest-core
+BuildRequires:  javapackages-local
 BuildArch: noarch
-
-# subpackage dropped in F23
-Obsoletes:      sqljet-browser < 1.1.10-5
 Source44: import.info
 
 %description
@@ -40,13 +37,12 @@ management system. SQLJet is a software library that provides API that enables
 Java application to read and modify SQLite databases.
 
 %package        javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description    javadoc
 API documentation for %{name}.
-
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -56,6 +52,7 @@ find \( -name '*.class' -o -name '*.jar' \) -delete
 rm -rf gradlew.bat gradlew gradle
 
 cp %{SOURCE4} build.xml
+cp %{SOURCE5} pom.xml
 
 cat > sqljet.build.properties <<EOF
 sqljet.version.major=1
@@ -63,41 +60,31 @@ sqljet.version.minor=1
 sqljet.version.micro=10
 sqljet.version.build=local
 
-antlr.version=3.4
+antlr.version=3.2
 sqlite.version=3.8.3
 EOF
 
 
 %build
-export CLASSPATH=$(build-classpath antlr3-runtime antlr3 antlr hamcrest/core stringtemplate4 easymock3 junit)
-
-ant jars osgi javadoc
-
+export CLASSPATH=$(build-classpath antlr32/antlr-runtime-3.2 antlr32/antlr-3.2 antlr stringtemplate easymock3 junit hamcrest-core)
+ant jars osgi javadoc pom
 
 %install
-# jars
-mkdir -p %{buildroot}%{_javadir}
-install -m 755  build/sqljet.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# maven metadata
-cp %{SOURCE5} pom.xml
-ant pom
-mkdir -p %{buildroot}%{_mavenpomdir}
-cp pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadocs
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp build/javadoc %{buildroot}%{_javadocdir}/%{name}
+%mvn_artifact pom.xml build/sqljet.jar
+%mvn_file ":sqljet" sqljet
+%mvn_install -J build/javadoc
 
 %files -f .mfiles
-%doc LICENSE.txt README.txt CHANGES.txt
+%doc --no-dereference LICENSE.txt
+%doc README.txt CHANGES.txt
 
-%files javadoc
-%doc LICENSE.txt
-%doc %{_javadocdir}/*
+%files javadoc -f .mfiles-javadoc
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.1.10-alt3_10jpp8
+- java fc28+ update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.10-alt3_6jpp8
 - added BR: javapackages-local for javapackages 5
 
