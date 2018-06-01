@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jamonapi
 Version:       2.74
-Release:       alt1_12jpp8
+Release:       alt2_12jpp8
 Summary:       A Java monitoring API
 License:       BSD
 URL:           http://jamonapi.sourceforge.net/
@@ -36,8 +36,8 @@ Patch3:        %{name}-jetty93.patch
 BuildRequires: java-devel
 BuildRequires: javapackages-local
 BuildRequires: ant
-BuildRequires: tomcat-el-3.0-api tomcat-jsp-2.3-api tomcat-lib tomcat-servlet-3.1-api
-BuildRequires: tomcat-servlet-3.1-api
+BuildRequires: tomcat-lib
+BuildRequires: tomcat-servlet-4.0-api
 BuildRequires: tomcat-el-3.0-api
 BuildRequires: jetty
 BuildRequires: geronimo-interceptor
@@ -116,6 +116,9 @@ cp -p src/JAMonUsersGuide/JAMonLicense.html .
 %doc --no-dereference JAMonLicense.html
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.74-alt2_12jpp8
+- rebuild with tomcat9
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.74-alt1_12jpp8
 - java update
 
