@@ -9,20 +9,22 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             jansi
-Version:          1.16
-Release:          alt1_3jpp8
+Version:          1.17
+Release:          alt1_1jpp8
 Summary:          Jansi is a java library for generating and interpreting ANSI escape sequences
 License:          ASL 2.0
-URL:              http://jansi.fusesource.org/
+URL:              http://fusesource.github.io/jansi/
 
 Source0:          https://github.com/fusesource/jansi/archive/jansi-project-%{version}.tar.gz
 
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    jansi-native
-BuildRequires:    maven-plugin-bundle
-BuildRequires:    fusesource-pom
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.fusesource:fusesource-pom:pom:)
+BuildRequires:    mvn(org.fusesource.hawtjni:hawtjni-runtime)
+BuildRequires:    mvn(org.fusesource.jansi:jansi-native)
 Source44: import.info
 
 %description
@@ -79,6 +81,9 @@ popd
 %doc --no-dereference license.txt
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.17-alt1_1jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.16-alt1_3jpp8
 - java update
 
