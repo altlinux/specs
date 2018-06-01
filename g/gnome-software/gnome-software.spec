@@ -7,22 +7,23 @@
 %def_enable gudev
 %def_enable gnome_desktop
 %def_enable polkit
-%def_disable fwupd
+%def_enable fwupd
 %def_enable flatpak
 %def_disable limba
 %def_disable packagekit
 %def_enable webapps
 %def_enable odrs
+%def_enable steam
 %def_disable valgrind
 %def_disable tests
 # dropped since 3.27.90
 %def_disable rpm
-%def_disable ostree
+%def_disable rpm_ostree
 %def_disable external_appstream
 
 Name: gnome-software
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -41,6 +42,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define fwupd_ver 1.0.3
 %define flatpak_ver 0.6.12
 %define limba_ver 0.5.6
+%define ostree_ver 2018.4
+
+%{?_enable_fwupd:Requires: fwupd >= %fwupd_ver}
 
 BuildRequires: meson
 BuildRequires: libgio-devel >= %glib_ver
@@ -55,12 +59,12 @@ BuildRequires: valgrind-tool-devel
 %{?_enable_gspell:BuildRequires: libgspell-devel}
 %{?_enable_gnome_desktop:BuildRequires: libgnome-desktop3-devel >= %gnome_desktop_ver}
 %{?_enable_polkit:BuildRequires: libpolkit-devel}
-%{?_enable_fwupd:BuildRequires: libfwupd-devel >= %fwupd_ver}
+%{?_enable_fwupd:BuildRequires: fwupd-devel >= %fwupd_ver}
 %{?_enable_flatpak:BuildRequires: libflatpak-devel >= %flatpak_ver}
 %{?_enable_limba:BuildRequires: liblimba-devel >= %limba_ver}
 %{?_enable_packagekit:BuildRequires: libpackage-kit-devel >= %packagekit_ver}
 %{?_enable_valgrind:BuildRequires: valgrind}
-%{?_enable_ostree:BuildRequires: libostree-devel >= %flatpak_ver}
+%{?_enable_rpm_ostree:BuildRequires: libostree-devel >= %ostree_ver}
 %{?_enable_rpm:BuildRequires: librpm-devel}
 
 %description
@@ -91,7 +95,6 @@ GNOME Software.
 
 %build
 %meson \
-	-Denable-schemas-compile=false \
 	%{?_enable_gspell:-Denable-gspell=true} \
 	%{?_enable_gudev:-Denable-gudev=true} \
 	%{?_enable_gnome_desktop:-Denable-gnome-desktop=true} \
@@ -100,7 +103,7 @@ GNOME Software.
 	%{?_enable_flatpak:-Denable-flatpak=true} \
 	%{?_enable_ostree:-Denable-ostree=true} \
 	%{?_disable_limba:-Denable-limba=false} \
-	%{?_disable_rpm:-Denable-rpm=false} \
+	%{?_enable_rpm_ostree:-Denable-rpm-ostree=true} \
 	%{?_disable_packagekit:-Denable-packagekit=false} \
 	%{?_disable_valgrind:-Denable-valgrind=false} \
 	%{?_disable_tests:-Denable-tests=false} \
@@ -134,9 +137,10 @@ GNOME Software.
 %_datadir/glib-2.0/schemas/org.gnome.software.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_datadir/metainfo/%xdg_name.Plugin.Epiphany.metainfo.xml
-%_datadir/metainfo/%xdg_name.Plugin.Flatpak.metainfo.xml
-%_datadir/metainfo/%xdg_name.Plugin.Odrs.metainfo.xml
-%_datadir/metainfo/%xdg_name.Plugin.Steam.metainfo.xml
+%{?_enable_flatpak:%_datadir/metainfo/%xdg_name.Plugin.Flatpak.metainfo.xml}
+%{?_enable_odrs:%_datadir/metainfo/%xdg_name.Plugin.Odrs.metainfo.xml}
+%{?_enable_steam:%_datadir/metainfo/%xdg_name.Plugin.Steam.metainfo.xml}
+%{?_enable_fwupd:%_datadir/metainfo/%xdg_name.Plugin.Fwupd.metainfo.xml}
 %_man1dir/%name.1.*
 %_man1dir/%name-editor.1.*
 %doc AUTHORS README*
@@ -149,6 +153,9 @@ GNOME Software.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Jun 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt2
+- enabled fwupd support
+
 * Wed May 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 
