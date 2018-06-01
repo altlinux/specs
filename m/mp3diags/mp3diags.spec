@@ -1,6 +1,6 @@
 Name: mp3diags
 Version: 1.2.03
-Release: alt2
+Release: alt2.1
 
 Summary: Finds problems in MP3 files and helps the user fix many of them
 License: GPLv2+
@@ -42,6 +42,9 @@ install -pD -m644 desktop/MP3Diags48.png %buildroot%_liconsdir/mp3diags.png
 %_liconsdir/*
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.03-alt2.1
+- NMU: rebuilt with boost-1.67.0
+
 * Wed Apr 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.03-alt2
 - rebuilt with boost-1.66
 

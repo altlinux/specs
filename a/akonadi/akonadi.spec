@@ -1,7 +1,7 @@
 
 Name: akonadi
 Version: 1.13.1
-Release: alt0.4%ubt
+Release: alt0.5%ubt
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -201,6 +201,9 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.13.1-alt0.5%ubt
+- NMU: rebuilt with boost-1.67.0
+
 * Wed Oct 11 2017 Sergey V Turchin <zerg@altlinux.org> 1.13.1-alt0.4%ubt
 - rebuild with new boost
 

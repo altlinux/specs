@@ -10,7 +10,7 @@ Group: Development/C
 
 Name: libapogee
 Version: 3.0.3234
-Release: alt1_8
+Release: alt1_8.1
 Summary: Library for Apogee CCD Cameras
 
 License: GPLv2+ and MPLv2.0
@@ -58,6 +58,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.3234-alt1_8.1
+- NMU: rebuilt with boost-1.67.0
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.3234-alt1_8
 - update to new release by fcimport
 
