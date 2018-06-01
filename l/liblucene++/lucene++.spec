@@ -2,7 +2,7 @@
 
 Name: lib%_name
 Version: 3.0.7
-Release: alt4
+Release: alt5
 
 Summary: A high-performance, full-featured text search engine written in C++
 Group: System/Libraries
@@ -53,6 +53,9 @@ search engine written in C++
 %_pkgconfigdir/%name-contrib.pc
 
 %changelog
+* Fri Jun 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.7-alt5
+- rebuilt with boost-1.67
+
 * Wed Apr 18 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.7-alt4
 - rebuilt with boost-1.66
 
