@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-surefire
-Version:        2.20.1
-Release:        alt1_3jpp8
+Version:        2.21.0
+Release:        alt1_1jpp8
 Epoch:          0
 Summary:        Test framework project
 License:        ASL 2.0 and CPL
@@ -21,6 +21,7 @@ Source2:        http://junit.sourceforge.net/cpl-v10.html
 Patch0:         0001-Maven-3.patch
 Patch1:         0002-Fix-test-with-doxia-1.7.patch
 Patch2:         0003-Port-to-TestNG-6.11.patch
+Patch3:         0004-Port-to-current-maven-shared-utils.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
@@ -34,7 +35,6 @@ BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
@@ -45,16 +45,16 @@ BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
 BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.apache.maven.shared:maven-verifier)
-BuildRequires:  mvn(org.apache.maven.surefire:surefire-junit47)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-java)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.fusesource.jansi:jansi)
 BuildRequires:  mvn(org.testng:testng)
 BuildRequires:  mvn(org.testng:testng::jdk15:)
 
 # PpidChecker relies on /usr/bin/ps to check process uptime
-Requires:       procps sysvinit-utils
+Requires:       procps
 Source44: import.info
 
 %description
@@ -131,6 +131,7 @@ cp -p %{SOURCE2} .
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # Disable strict doclint
 sed -i /-Xdoclint:all/d pom.xml
@@ -143,10 +144,14 @@ sed -i /-Xdoclint:all/d pom.xml
 # For building RPM package default settings will suffice.
 %pom_remove_plugin :maven-help-plugin surefire-setup-integration-tests
 
+# QA plugin useful only for upstream
+%pom_remove_plugin -r :jacoco-maven-plugin
+
 # Not in Fedora
 %pom_remove_plugin :animal-sniffer-maven-plugin
 # Complains
-%pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin -r :apache-rat-plugin
+%pom_remove_plugin -r :maven-enforcer-plugin
 # We don't need site-source
 %pom_remove_plugin :maven-assembly-plugin maven-surefire-plugin
 %pom_remove_dep -r ::::site-source
@@ -188,6 +193,9 @@ sed -i /-Xdoclint:all/d pom.xml
 %doc LICENSE NOTICE cpl-v10.html
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.21.0-alt1_1jpp8
+- java update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.20.1-alt1_3jpp8
 - new version
 
