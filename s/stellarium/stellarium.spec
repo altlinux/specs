@@ -1,24 +1,22 @@
 %define _optlevel s
 
 Name: stellarium
-Version: 0.16.1
-Release: alt1%ubt
+Version: 0.18
+Release: alt1
 
 Group: Education
 Summary: Astronomical Sky Simulator
 Url: http://www.stellarium.org/
-License: GPL
+License: GPLv2
 
 Source0: %name-%version.tar
 
 BuildPreReq: cmake rpm-macros-cmake
 
-
 # Automatically added by buildreq on Sun Feb 07 2016
 # optimized out: cmake-modules gcc-c++ libEGL-devel libGL-devel libqt5-concurrent libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-script libqt5-serialport libqt5-test libqt5-widgets libqt5-xml libstdc++-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators qt5-base-devel qt5-tools qt5-script-devel
 BuildRequires: cmake perl-Pod-Usage qt5-script-devel qt5-serialport-devel qt5-tools-devel zlib-devel libdrm-devel qt5-multimedia-devel qt5-location-devel
-
-BuildRequires(pre): rpm-build-ubt
+BuildRequires: fonts-ttf-dejavu
 
 %description
 Stellarium is a free software available for Windows, Linux/Unix and MacOSX.
@@ -35,24 +33,32 @@ telescope.
 
 %install
 pushd BUILD
-%makeinstall_std 
+%makeinstall_std
 popd
+
+# See ALT 25353
+find %buildroot -name DejaVuSans.ttf -delete
+find %buildroot -name DejaVuSansMono.ttf -delete
 
 %find_lang %name
 %find_lang %name-skycultures
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog README
+%doc ChangeLog README
 %_bindir/%name
 %_datadir/%name
 %_mandir/man1/%name.1.xz
 %_datadir/applications/%name.desktop
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %_datadir/icons/hicolor/*/apps/%name.png
 %_datadir/pixmaps/%name.xpm
 
 %changelog
-* Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 0.16.1-alt1%ubt
+* Fri Jun 01 2018 Grigory Ustinov <grenka@altlinux.org> 0.18-alt1
+- Build new version (Closes: #34976).
+- Remove fonts, packaged in fonts-ttf-dejavu (Closes: #25353).
+
+* Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 0.16.1-alt1.S1
 - new version
 
 * Sun Feb 21 2016 Mikhail E. Rudachenko (ali) <ali@altlinux.org> 0.14.2-alt1
