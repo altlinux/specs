@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           atinject
 Version:        1
-Release:        alt7_27.20100611svn86jpp8
+Release:        alt7_28.20100611svn86jpp8
 Summary:        Dependency injection specification for Java (JSR-330)
 License:        ASL 2.0
 URL:            http://code.google.com/p/atinject/
@@ -35,8 +35,6 @@ Patch0:         %{name}-target-1.5.patch
 BuildRequires:  javapackages-local
 BuildRequires:  java-devel
 BuildRequires:  junit
-
-Provides:       javax.inject
 Source44: import.info
 
 %description
@@ -100,6 +98,9 @@ mv build/tck/javadoc build/javadoc/tck
 %files tck -f .mfiles-tck
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:1-alt7_28.20100611svn86jpp8
+- java fc28+ update
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1-alt7_27.20100611svn86jpp8
 - java update
 
