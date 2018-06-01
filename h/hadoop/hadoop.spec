@@ -28,7 +28,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:   hadoop
 Version: 2.7.3
-Release: alt4_7jpp8
+Release: alt5_7jpp8
 Summary: A software platform for processing vast amounts of data
 # The BSD license file is missing
 # https://issues.apache.org/jira/browse/HADOOP-9849
@@ -195,7 +195,7 @@ BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-co
 BuildRequires: tomcat
 BuildRequires: tomcat-el-3.0-api
 BuildRequires: tomcat-log4j
-BuildRequires: tomcat-servlet-3.1-api
+BuildRequires: tomcat-servlet-4.0-api
 BuildRequires: txw2
 BuildRequires: xmlenc
 BuildRequires: zookeeper-java > 3.4.5
@@ -335,7 +335,7 @@ Requires: apache-commons-dbcp
 Requires: ecj >= 1:4.2.1
 Requires: json_simple
 Requires: tomcat
-Requires: tomcat-el-3.0-api tomcat-jsp-2.3-api tomcat-lib tomcat-servlet-3.1-api
+Requires: tomcat-lib
 Requires: tomcat-native
 
 %description httpfs
@@ -1142,6 +1142,9 @@ fi
 %attr(6010,root,yarn) %{_bindir}/container-executor
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt5_7jpp8
+- rebuild with tomcat9
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt4_7jpp8
 - merged e2k support
 
