@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %global master_version 3
 Name:          tiles
 Version:       2.2.2
-Release:       alt3_18jpp8
+Release:       alt4_18jpp8
 Summary:       Java templating framework for web application user interfaces
 License:       ASL 2.0
 Url:           http://tiles.apache.org/
@@ -43,7 +43,8 @@ BuildRequires: mvn(org.mvel:mvel2)
 BuildRequires: mvn(org.slf4j:jcl-over-slf4j)
 BuildRequires: mvn(org.slf4j:slf4j-jdk14)
 BuildRequires: slf4j
-BuildRequires: tomcat-el-3.0-api tomcat-jsp-2.3-api tomcat-lib tomcat-servlet-3.1-api
+#BuildRequires: tomcat-el-3.0-api tomcat-jsp-2.3-api tomcat-lib tomcat-servlet-3.1-api
+BuildRequires: tomcat-el-3.0-api tomcat-jsp-2.3-api tomcat-lib glassfish-servlet-api
 
 # test deps
 %if 0
@@ -101,31 +102,34 @@ This package contains javadoc for %{name}.
 %pom_disable_module tiles-extras src/pom.xml
 %pom_disable_module assembly src/pom.xml
 
+
+#pom_remove_dep hsqldb:jasper-el src/tiles-el
 sed -i "s|<artifactId>jasper-el|<artifactId>tomcat-jasper-el|" src/tiles-el/pom.xml
+#sed -i "s|<groupId>javax.servlet</groupId>|<groupId>org.apache.tomcat</groupId>|" src/tiles-el/pom.xml
 
-sed -i "s|<groupId>javax.servlet</groupId>|<groupId>org.apache.tomcat</groupId>|" src/tiles-core/pom.xml \
- src/tiles-api/pom.xml \
- src/tiles-velocity/pom.xml \
- src/tiles-servlet/pom.xml \
- src/tiles-compat/pom.xml \
- src/tiles-portlet/pom.xml \
- src/tiles-jsp/pom.xml \
- src/tiles-extras/pom.xml \
- src/tiles-freemarker/pom.xml \
- src/tiles-el/pom.xml \
- src/tiles-servlet-wildcard/pom.xml
+#sed -i "s|<groupId>javax.servlet</groupId>|<groupId>org.apache.tomcat</groupId>|" src/tiles-core/pom.xml \
+# src/tiles-api/pom.xml \
+# src/tiles-velocity/pom.xml \
+# src/tiles-servlet/pom.xml \
+# src/tiles-compat/pom.xml \
+# src/tiles-portlet/pom.xml \
+# src/tiles-jsp/pom.xml \
+# src/tiles-extras/pom.xml \
+# src/tiles-freemarker/pom.xml \
+# src/tiles-el/pom.xml \
+# src/tiles-servlet-wildcard/pom.xml
 
-sed -i "s|<artifactId>servlet-api</artifactId>|<artifactId>tomcat-servlet-api</artifactId>|" src/tiles-core/pom.xml \
- src/tiles-api/pom.xml \
- src/tiles-velocity/pom.xml \
- src/tiles-servlet/pom.xml \
- src/tiles-compat/pom.xml \
- src/tiles-portlet/pom.xml \
- src/tiles-jsp/pom.xml \
- src/tiles-extras/pom.xml \
- src/tiles-freemarker/pom.xml \
- src/tiles-el/pom.xml \
- src/tiles-servlet-wildcard/pom.xml
+#sed -i "s|<artifactId>servlet-api</artifactId>|<artifactId>tomcat-servlet-api</artifactId>|" src/tiles-core/pom.xml \
+# src/tiles-api/pom.xml \
+# src/tiles-velocity/pom.xml \
+# src/tiles-servlet/pom.xml \
+# src/tiles-compat/pom.xml \
+# src/tiles-portlet/pom.xml \
+# src/tiles-jsp/pom.xml \
+# src/tiles-extras/pom.xml \
+# src/tiles-freemarker/pom.xml \
+# src/tiles-el/pom.xml \
+# src/tiles-servlet-wildcard/pom.xml
 
 
 %pom_remove_parent src
@@ -169,6 +173,9 @@ cd src
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt4_18jpp8
+- rebuild with tomcat9
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt3_18jpp8
 - java update
 
