@@ -7,7 +7,7 @@
 %def_with python3
 
 Name: openvswitch
-Version: 2.7.2
+Version: 2.9.2
 Release: alt1%ubt
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -28,12 +28,15 @@ Source10: setup-ovsbr
 Source11: %name.service
 Source12: %name.tmpfiles
 
-Patch1: %name-%version-alt.patch
-Patch2: openvswitch-2.0_alt_fix_function.patch
-Patch3: openvswitch-2.5.0-fix-link.patch
+Patch1: openvswitch-2.0_alt_fix_function.patch
+Patch2: openvswitch-2.5.0-fix-link.patch
+Patch3: openvswitch-2.9.2-alt-systemd-unit.patch
 
 Obsoletes: %name-controller <= %name-%version
 Obsoletes: %name-ovsdbmonitor <= %name-%version
+
+# util-linux-2.32-alt2
+Requires: pam0(runuser)
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: graphviz libssl-devel openssl groff
@@ -47,7 +50,6 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-six
 %endif
 
-BuildRequires: checkpolicy selinux-policy-devel
 %{?_with_dpdk:BuildRequires: dpdk-devel >= 6.11.1 libpcap-devel libnuma-devel}
 
 %define ksrcdir %_usrsrc/kernel/sources
@@ -201,20 +203,10 @@ Requires: %name = %EVR
 %description -n bash-completion-%name
 Bash completion for %name.
 
-%package selinux-policy
-Summary: Open vSwitch SELinux policy
-Group: System/Base
-License: ASL 2.0
-BuildArch: noarch
-Requires: selinux-policy-targeted
-
-%description selinux-policy
-Tailored Open vSwitch SELinux policy
-
 %prep
 %setup
-%patch1 -p1
-%patch2 -p0
+%patch1 -p0
+%patch2 -p1
 %patch3 -p1
 
 %if_with ksrc
@@ -244,9 +236,7 @@ popd
 	--with-pkidir=%_localstatedir/%name/pki
 
 %make_build
-
-cd selinux
-make -f %_datadir/selinux/devel/Makefile
+make rhel/usr_lib_systemd_system_ovs-vswitchd.service
 
 # test 591 fails, reported upstream
 %if_with check
@@ -264,14 +254,20 @@ install -pm0644 ../kernel-source-%name-%version.tar %buildroot%ksrcdir/
 
 install -dm0755 %buildroot%_sysconfdir/%name
 install -pDm0755 %SOURCE1 %buildroot%_initdir/%name
+install -dm0755 %buildroot%_runtimedir/%name
+install -dm0750 %buildroot%_logdir/%name
+install -dm0755 %buildroot%_sysconfdir/%name
+
 install -pDm0644 vswitchd/vswitch.ovsschema \
          %buildroot%_datadir/%name/vswitch.ovsschema
 install -pDm0644 rhel/etc_logrotate.d_openvswitch \
          %buildroot%_sysconfdir/logrotate.d/%name
 install -pDm0644 rhel/usr_share_openvswitch_scripts_sysconfig.template \
          %buildroot/%_sysconfdir/sysconfig/%name
+install -pDm0644 rhel/etc_openvswitch_default.conf \
+	 %buildroot/%_sysconfdir/openvswitch/default.conf
 
-for service in openvswitch ovsdb-server ovs-vswitchd \
+for service in openvswitch ovsdb-server ovs-vswitchd ovs-delete-transient-ports \
                 ovn-controller ovn-controller-vtep ovn-northd; do
     install -pDm0644 \
             rhel/usr_lib_systemd_system_${service}.service \
@@ -321,9 +317,7 @@ rm -rf %buildroot%_datadir/%name/python
 
 touch %buildroot%_sysconfdir/%name/conf.db
 touch %buildroot%_sysconfdir/%name/system-id.conf
-
-install -p -m 644 -D selinux/openvswitch-custom.pp \
-        %buildroot%_datadir/selinux/packages/%name/openvswitch-custom.pp
+mkdir -p %buildroot%_logdir/%name
 
 # remove unpackaged files
 rm -f %buildroot%_bindir/ovs-benchmark \
@@ -333,20 +327,15 @@ rm -f %buildroot%_bindir/ovs-benchmark \
     %buildroot%_man8dir/ovs-parse-backtrace.8* \
     %buildroot%_man8dir/ovs-vlan-bug-workaround.8* \
     %buildroot%_datadir/openvswitch/scripts/ovs-save
+%pre common
+%_sbindir/groupadd -r -f %name
+%_sbindir/useradd -r -n -g %name -d / -s /sbin/nologin -c 'openvswitch server daemon' %name >/dev/null 2>&1 ||:
 
 %post
 %post_service %name
 
 %preun
 %preun_service %name
-
-%post selinux-policy
-/usr/sbin/semodule -i %_datadir/selinux/packages/%name/openvswitch-custom.pp &> /dev/null || :
-
-%postun selinux-policy
-if [ $1 -eq 0 ] ; then
-  /usr/sbin/semodule -r openvswitch-custom &> /dev/null || :
-fi
 
 %files
 %doc AUTHORS.rst COPYING NEWS NOTICE README.rst
@@ -362,11 +351,16 @@ fi
 %_unitdir/%name.service
 %_unitdir/ovs-vswitchd.service
 %_unitdir/ovsdb-server.service
+%_unitdir/ovs-delete-transient-ports.service
 %_tmpfilesdir/%name.conf
 %_man1dir/ovsdb-server.1*
 %_man1dir/ovsdb-tool.1*
 %_man5dir/ovs-vswitchd.conf.db.5*
+%_man5dir/ovsdb-server.5*
+%_man5dir/ovsdb.5*
 %_man7dir/ovs-fields.7*
+%_man7dir/ovsdb-server.7*
+%_man7dir/ovsdb.7*
 %_man8dir/ovs-ctl.8*
 %_man8dir/ovs-dpctl.8*
 %_man8dir/ovs-dpctl-top.8*
@@ -382,6 +376,7 @@ fi
 %config(noreplace) %ghost %_sysconfdir/openvswitch/conf.db
 %config(noreplace) %ghost %_sysconfdir/openvswitch/system-id.conf
 %config(noreplace) %_sysconfdir/sysconfig/%name
+%config(noreplace) %_sysconfdir/openvswitch/default.conf
 %config(noreplace) %_sysconfdir/logrotate.d/openvswitch
 %config(noreplace) %_sysconfdir/net/options.d/01-openvswitch
 %_sysconfdir/net/scripts/*
@@ -413,10 +408,12 @@ fi
 %_runtimedir/%name
 %_libdir/*.so.*
 %_bindir/ovs-appctl
+%_bindir/ovn-detrace
 %_bindir/ovs-ofctl
 %_bindir/ovs-pki
 %_bindir/ovsdb-client
 %_man1dir/ovsdb-client.1*
+%_man1dir/ovn-detrace.1*
 %_man8dir/ovs-appctl.8*
 %_man8dir/ovs-ofctl.8*
 %_man8dir/ovs-pki.8*
@@ -500,9 +497,6 @@ fi
 %python3_sitelibdir_noarch/ovs
 %endif
 
-%files selinux-policy
-%_datadir/selinux/packages/%name/openvswitch-custom.pp
-
 %files -n bash-completion-%name
 %_sysconfdir/bash_completion.d/*
 
@@ -512,6 +506,10 @@ fi
 %endif
 
 %changelog
+* Fri Jun 01 2018 Anton Farygin <rider@altlinux.ru> 2.9.2-alt1%ubt
+- 2.9.2
+- removed selinux policy subpackage
+
 * Thu Aug 03 2017 Anton Farygin <rider@altlinux.ru> 2.7.2-alt1%ubt
 - 2.7.2
 

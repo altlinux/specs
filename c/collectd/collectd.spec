@@ -29,7 +29,7 @@
 
 Name: collectd
 Version: 5.8.0
-Release: alt3
+Release: alt4
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -810,6 +810,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 5.8.0-alt4
+- rebuilt with new dpdk
+
 * Wed May 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.8.0-alt3
 - NMU: rebuilt with new nut.
 
