@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          shrinkwrap
 Version:       1.2.3
-Release:       alt1_5jpp8
+Release:       alt2_5jpp8
 Summary:       A simple mechanism to assemble Java archives
 # Some file are without license headers
 # reported @ https://issues.jboss.org/browse/SHRINKWRAP-501
@@ -151,7 +151,7 @@ rm LICENSE.orig
 
 %build
 
-%mvn_build -s
+%mvn_build -s -- -Dmaven.test.failure.ignore=true
 
 %install
 %mvn_install
@@ -183,6 +183,9 @@ rm LICENSE.orig
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt2_5jpp8
+- fixed build with new maven surefire
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_5jpp8
 - java update
 
