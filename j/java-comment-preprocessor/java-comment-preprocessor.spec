@@ -4,31 +4,53 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 28
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora}
+%bcond_without tests
+%else
+%bcond_with tests
+%endif
+
 %global section		devel
 
 Summary:	The Most Powerful Multi-Pass Java Preprocessor
 Name:		java-comment-preprocessor
 Version:	6.0.1
-Release:	alt2_8jpp8
+Release:	alt2_9jpp8
 License:	ASL 2.0
 
 URL:		https://github.com/raydac/java-comment-preprocessor
-Source0:	https://github.com/raydac/java-comment-preprocessor/archive/%{version}.tar.gz
+Source0:	https://github.com/raydac/%name/archive/%version/%name-%version.tar.gz
 
 BuildArch:		noarch
-BuildRequires:	maven-local
-BuildRequires:	maven-plugin-plugin
-BuildRequires:	maven-source-plugin
-BuildRequires:	maven-file-management
-BuildRequires:	exec-maven-plugin
-# Test requirements
-BuildRequires:	maven-plugin-testing-harness
-BuildRequires:	maven-shared-jar
-BuildRequires:	ant-testutil
-BuildRequires:	maven-verifier
-BuildRequires:	mockito
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:file-management)
+BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
+%if %{with tests}
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.ant:ant-testutil)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-jar)
+BuildRequires:  mvn(org.apache.maven.shared:maven-verifier)
+BuildRequires:  mvn(org.mockito:mockito-all)
+%endif
 Source44: import.info
 
 %description
@@ -45,7 +67,6 @@ BuildArch: noarch
 This package contains the API Documentation for %{name}.
 
 %prep
-
 %setup -q
 
 
@@ -57,7 +78,11 @@ This package contains the API Documentation for %{name}.
 find -name "*.jar" -or -name "*.class" | xargs rm -f
 
 %build
+%if %{with tests}
 %mvn_build
+%else
+%mvn_build -f
+%endif
 
 %install
 %mvn_install
@@ -70,6 +95,9 @@ find -name "*.jar" -or -name "*.class" | xargs rm -f
 %doc --no-dereference texts/LICENSE-2.0.txt
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt2_9jpp8
+- java fc28+ update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt2_8jpp8
 - java update
 
