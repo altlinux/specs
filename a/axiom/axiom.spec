@@ -1,36 +1,47 @@
 Group: Sciences/Mathematics
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           axiom
-Version:        1.2.12
-Release:        alt1_19jpp8
+Version:        1.2.14
+Release:        alt1_2jpp8
 Epoch:          2
 Summary:        Axis Object Model
 License:        ASL 2.0
 Url:            http://ws.apache.org/commons/axiom/
-# svn export http://svn.apache.org/repos/asf/webservices/commons/tags/axiom/1.2.12/ axiom-1.2.12
-# tar caf axiom-1.2.12.tar.xz axiom-1.2.12
-Source0:        %{name}-%{version}.tar.xz
+Source0:        http://archive.apache.org/dist/ws/axiom/%{version}/axiom-%{version}-source-release.zip
+
+Patch0:         port-to-mime4j-0.8.1.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(com.sun.xml.bind:jaxb-impl)
 BuildRequires:  mvn(javax.mail:mail)
+BuildRequires:  mvn(javax.xml.bind:jaxb-api)
 BuildRequires:  mvn(jaxen:jaxen)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(net.sf.saxon:saxon)
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.james:apache-mime4j-core) >= 0.8.1
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.woodstox:stax2-api)
-BuildRequires:  mvn(org.codehaus.woodstox:wstx-asl)
-BuildRequires:  mvn(org.osgi:org.osgi.core)
+BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
+BuildRequires:  mvn(org.jvnet.jaxb2.maven2:maven-jaxb2-plugin)
+BuildRequires:  mvn(org.osgi:osgi.cmpn)
+BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(xalan:xalan)
 BuildRequires:  mvn(xerces:xercesImpl)
 BuildRequires:  mvn(xmlunit:xmlunit)
+
+Requires:       mvn(org.apache.james:apache-mime4j-core) >= 0.8.1
 
 BuildArch:      noarch
 Source44: import.info
@@ -55,38 +66,47 @@ BuildArch: noarch
 
 %prep
 %setup -q
-
-# fix eol
-sed -i 's/\r//' README.txt NOTICE RELEASE-NOTE.txt
+%patch0
 
 # Disable plugins not needed for RPM builds
 %pom_remove_plugin -r :maven-javadoc-plugin
 %pom_remove_plugin -r :maven-source-plugin
 %pom_remove_plugin -r :apache-rat-plugin
 %pom_remove_plugin -r :gmaven-plugin
-%pom_remove_plugin -r :maven-scr-plugin
 
 # Don't build and attach manuals due to unavailable plugin "com.agilejava.docbkx:docbkx-maven-plugin"
 %pom_remove_plugin :docbkx-maven-plugin
 %pom_remove_plugin :build-helper-maven-plugin
 
-# Don't build fat-jar
+# No need to build dist assembly for RPM builds
 %pom_remove_plugin :maven-assembly-plugin
+
+# Change to modern OSGi dependencies
+%pom_change_dep -r org.osgi:org.osgi.core org.osgi:osgi.core
+%pom_change_dep -r org.osgi:org.osgi.compendium org.osgi:osgi.cmpn
 
 # Mordern JREs supply these APIs
 %pom_remove_dep :geronimo-activation_1.1_spec modules/axiom-{dom,parent,api,testutils,impl}
-%pom_remove_dep :geronimo-stax-api_1.0_spec modules/axiom-{dom,tests,parent,api,testutils,impl}
+%pom_remove_dep :geronimo-stax-api_1.0_spec modules/axiom-{tests,parent,api,testutils,impl}
+
+# Fix dep on mail API and saxon
+%pom_change_dep :geronimo-javamail_1.4_spec javax.mail:mail:1.4 modules/axiom-{dom,parent,api,impl}
+%pom_remove_dep :saxon-dom modules/axiom-dom-testsuite
+
+# This plugin is used to get all possible stax implementations for testing against, which
+# is impossible in Fedora; removing this means only testing against the JRE implementation
 %pom_remove_plugin :maven-dependency-plugin modules/axiom-api
 
-# Fix dep on mail API
-%pom_change_dep :geronimo-javamail_1.4_spec javax.mail:mail:1.4 modules/axiom-{dom,parent,api,impl}
-
-# Disable OSGi test suites due to unavailable deps
-%pom_disable_module modules/axiom-osgi
+# Disable test suites due to unavailable deps "crimson", "org.ops4j.*"
+%pom_disable_module modules/axiom-osgi-tests
 %pom_disable_module modules/axiom-integration
 
+# Don't build samples
+%pom_disable_module modules/axiom-samples
+
 # Don't ship tests
-%mvn_package ":axiom-{testutils,jaxen-testsuite,testsuite,tests}" __noinstall
+%mvn_package ":*-{tests,testsuite}" __noinstall
+%mvn_package ":axiom-{build,test}utils" __noinstall
 
 %build
 # Skipping tests for now due to unexplained failures
@@ -97,12 +117,15 @@ sed -i 's/\r//' README.txt NOTICE RELEASE-NOTE.txt
 
 %files -f .mfiles
 %doc *.txt
-%doc --no-dereference NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 2:1.2.14-alt1_2jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 2:1.2.12-alt1_19jpp8
 - java update
 
