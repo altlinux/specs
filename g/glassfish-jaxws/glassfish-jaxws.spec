@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-jaxws
 Version:       2.2.10
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       JAX-WS Reference Implementation (RI) Project
 # ASL 2.0
 # tools/wscompile/src/com/sun/tools/ws/ant/AnnotationProcessingTask.java
@@ -127,13 +127,12 @@ find . -name "*.zip" -print -delete
 
 %pom_disable_module docs
 %pom_disable_module tests
+%pom_disable_module jaxws-ri bundles
 %pom_disable_module jaxws-ri-src bundles
 
 
 %pom_disable_module ../eclipselink_jaxb extras
 %pom_disable_module ../eclipselink_sdo extras
-%pom_remove_dep :jaxws-eclipselink-plugin bundles/jaxws-ri
-%pom_remove_dep :sdo-eclipselink-plugin bundles/jaxws-ri
 %pom_remove_dep :jaxws-eclipselink-plugin boms/bom
 %pom_remove_dep :sdo-eclipselink-plugin boms/bom
 
@@ -142,14 +141,7 @@ find . -name "*.zip" -print -delete
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin com.sun.wts.tools.ant:package-rename-task rt
 %pom_remove_plugin :maven-dependency-plugin rt
-%pom_remove_plugin :maven-dependency-plugin bundles/jaxws-rt
-%pom_remove_plugin :maven-antrun-plugin bundles/jaxws-rt
 %pom_remove_plugin :maven-assembly-plugin bundles/jaxws-rt
-%pom_remove_plugin :maven-dependency-plugin bundles/jaxws-ri
-%pom_remove_plugin :maven-antrun-plugin bundles/jaxws-ri
-%pom_remove_plugin :maven-assembly-plugin bundles/jaxws-ri
-%pom_remove_plugin :maven-dependency-plugin bundles/jaxws-tools
-%pom_remove_plugin :maven-antrun-plugin bundles/jaxws-tools
 %pom_remove_plugin :maven-assembly-plugin bundles/jaxws-tools
 
 %pom_remove_plugin org.glassfish.metro:harness-maven-plugin tests
@@ -158,7 +150,6 @@ find . -name "*.zip" -print -delete
 %pom_xpath_remove "pom:dependencies/pom:dependency[pom:classifier='sources']" boms/bom
 %pom_xpath_remove "pom:dependencies/pom:dependency[pom:classifier='sources']" boms/bom-ext
 %pom_xpath_remove "pom:dependencies/pom:dependency[pom:type='zip']" boms/bom
-%pom_xpath_remove "pom:dependencies/pom:dependency[pom:type='zip']" bundles/jaxws-ri
 
 %pom_xpath_inject "pom:dependencies/pom:dependency[pom:artifactId='rt']" '<version>${project.version}</version>' tools/wscompile
 
@@ -222,16 +213,18 @@ find -name SAAJMessageWrapperTest.java -delete
 # Only on ARM fails
 find -name ClientProxyTest.java -delete
 
+# Don't install the pom for jaxws-tools distribution bundle, instead we give the wscompile
+# jar the jaxws-tools alias and install that in its place
+%mvn_package :jaxws-tools __noinstall
+%mvn_package :wscompile tools
+%mvn_alias :wscompile :jaxws-tools
 
 %mvn_package ":jaxws-*-transport" transports
 %mvn_package :extras transports
-%mvn_package :wscompile tools
 %mvn_alias :rt :jaxws-ri:jar: :jaxws-rt:jar:
-%mvn_alias :wscompile :jaxws-tools:jar:
 
 %build
-
-%mvn_build
+%mvn_build -- -P!generate-javadoc-profile
 
 %install
 %mvn_install
@@ -250,6 +243,9 @@ find -name ClientProxyTest.java -delete
 %doc --no-dereference CDDL+GPLv2.html CDDL-1.0-license.txt
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.2.10-alt1_9jpp8
+- java fc28+ update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.2.10-alt1_8jpp8
 - java update
 
