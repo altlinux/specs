@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:         codemodel
 Version:      2.6
-Release:      alt2_23jpp8
+Release:      alt2_24jpp8
 Summary:      Java library for code generators
 License:      CDDL-1.1 or GPLv2 with exceptions
 URL:          http://codemodel.java.net
@@ -22,11 +22,9 @@ Patch0:       %{name}-remove-istack-commons-dependency.patch
 BuildArch:     noarch
 
 BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-release-plugin
+BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(net.java:jvnet-parent:pom:)
 BuildRequires: mvn(org.apache.ant:ant)
-BuildRequires: mvn(junit:junit)
 Source44: import.info
 
 
@@ -70,6 +68,9 @@ find . -name '*.jar' -print -delete
 %doc --no-dereference LICENSE.html
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_24jpp8
+- java fc28+ update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_23jpp8
 - java update
 
