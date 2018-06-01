@@ -9,16 +9,14 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             jline
-Version:          2.13
-Release:          alt1_11jpp8
+Version:          2.14.6
+Release:          alt1_1jpp8
 Summary:          JLine is a Java library for handling console input
 License:          BSD
 URL:              https://github.com/jline/jline2
 BuildArch:        noarch
 
-# git clone git://github.com/jline/jline2.git
-# cd jline2/ && git archive --format=tar --prefix=jline-2.13/ jline-2.13 | xz > jline-2.13.tar.xz
-Source0:          jline-%{version}.tar.xz
+Source0:          https://github.com/jline/jline2/archive/jline-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
@@ -52,7 +50,7 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n jline-%{version}
+%setup -q -n jline2-jline-%{version}
 
 # Remove maven-shade-plugin usage
 %pom_remove_plugin "org.apache.maven.plugins:maven-shade-plugin"
@@ -62,6 +60,10 @@ This package contains the API documentation for %{name}.
 # Remove unavailable and unneeded deps
 %pom_xpath_remove "pom:build/pom:extensions"
 %pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+
+# Makes the build fail on deprecation warnings from jansi
+%pom_xpath_remove 'pom:arg[text()="-Werror"]'
 
 # Do not import non-existing internal package
 %pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions/pom:Import-Package"
@@ -79,7 +81,7 @@ mkdir -p target/generated-test-sources/test-annotations
 find -name TerminalFactoryTest.java -delete
 
 %build
-%mvn_build -- -Dmaven.test.skip.exec=true
+%mvn_build
 
 %install
 %mvn_install
@@ -89,6 +91,9 @@ find -name TerminalFactoryTest.java -delete
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.14.6-alt1_1jpp8
+- new version
+
 * Wed May 09 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.13-alt1_11jpp8
 - java update
 
