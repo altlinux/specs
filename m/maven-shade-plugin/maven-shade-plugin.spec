@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-shade-plugin
 Version:        3.1.0
-Release:        alt1_1jpp8
+Release:        alt1_3jpp8
 Summary:        This plugin provides the capability to package the artifact in an uber-jar
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/%{name}
@@ -19,7 +19,7 @@ Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%
 Patch0:         0001-Port-to-maven-dependency-tree-3.0.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.guava:guava)
+BuildRequires:  mvn(com.google.guava:guava:19.0)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
@@ -67,12 +67,15 @@ ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_3jpp8
+- java fc28+ update
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_1jpp8
 - new version
 
