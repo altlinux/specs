@@ -23,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 Name:          cxf
 Epoch:         1
 Version:       3.1.6
-Release:       alt2_7jpp8
+Release:       alt3_7jpp8
 Summary:       Apache CXF
 License:       ASL 2.0
 URL:           http://cxf.apache.org/
@@ -418,6 +418,9 @@ install -pm 644 rt/ws/security/target/cxf-rt-ws-security-%{version}-jandex.jar %
 #%doc LICENSE NOTICE
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.1.6-alt3_7jpp8
+- rebuild with tomcat9
+
 * Wed May 30 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.1.6-alt2_7jpp8
 - fixed build with maven-javadoc-plugin 3
 
