@@ -8,39 +8,29 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: liquibase
 Summary: Database Refactoring Tool
-Version: 3.5.3
-Release: alt1_4jpp8
+Version: 3.6.1
+Release: alt1_1jpp8
 License: ASL 2.0
 URL: http://www.liquibase.org
 
 Source0: https://github.com/liquibase/liquibase/archive/%{name}-parent-%{version}.tar.gz
 
-# See https://liquibase.jira.com/browse/CORE-2933
-Patch0: liquibase-javacc.patch
-
-BuildRequires: felix-framework
-BuildRequires: felix-osgi-core
 BuildRequires: java-devel >= 1.6.0
 BuildRequires: javapackages-tools
 BuildRequires: maven-local
+BuildRequires: mvn(ch.qos.logback:logback-classic)
 BuildRequires: mvn(commons-cli:commons-cli)
 BuildRequires: mvn(javax.enterprise:cdi-api)
 BuildRequires: mvn(javax.servlet:servlet-api)
-BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.ant:ant)
-BuildRequires: mvn(org.apache.derby:derby)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.felix:org.apache.felix.framework)
 BuildRequires: mvn(org.apache.maven:maven-compat)
-BuildRequires: mvn(org.apache.maven:maven-plugin-api)
 BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires: mvn(org.apache.maven.shared:maven-plugin-testing-harness)
-BuildRequires: mvn(org.apache.velocity:velocity)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires: mvn(org.codehaus.mojo:javacc-maven-plugin)
-BuildRequires: mvn(org.hsqldb:hsqldb)
-BuildRequires: mvn(org.hsqldb:hsqldb)
-BuildRequires: mvn(org.jboss.weld.se:weld-se)
-BuildRequires: mvn(org.osgi:org.osgi.core)
+BuildRequires: mvn(org.slf4j:slf4j-api)
 BuildRequires: mvn(org.springframework:spring-beans)
 BuildRequires: mvn(org.springframework:spring-context)
 BuildRequires: mvn(org.springframework:spring-core)
@@ -49,6 +39,10 @@ BuildRequires: mvn(org.yaml:snakeyaml)
 BuildArch:     noarch
 
 Requires: javapackages-tools
+Requires: mvn(ch.qos.logback:logback-classic)
+Requires: mvn(commons-cli:commons-cli)
+Requires: mvn(org.apache.felix:org.apache.felix.framework)
+Requires: mvn(org.slf4j:slf4j-api)
 Requires: mvn(org.yaml:snakeyaml) >= 0:1.13
 Source44: import.info
 
@@ -70,6 +64,8 @@ This package contains %{summary}.
 %package cdi
 Group: Databases
 Summary: Liquibase CDI
+Requires: %{name} = %{version}-%{release}
+Requires: mvn(javax.enterprise:cdi-api)
 %description cdi
 Liquibase CDI extension.
 
@@ -84,9 +80,11 @@ This package contains the %{summary}.
 %package maven-plugin
 Group: Development/Java
 Summary: Maven plugin for %{name}
+BuildRequires: mvn(org.apache.maven:maven-plugin-api)
 BuildRequires: mvn(org.apache.maven:maven-project)
-BuildRequires: mvn(org.apache.maven:maven-core)
 Requires: %{name} = %{version}-%{release}
+Requires: mvn(org.apache.maven:maven-plugin-api)
+Requires: mvn(org.apache.maven:maven-project)
 Requires: maven
 
 %description maven-plugin
@@ -94,14 +92,13 @@ Requires: maven
 
 %prep
 %setup -q -n %{name}-%{name}-parent-%{version}
-%patch0 -p1
 
 find -name "*.bat" -print -delete
 find -name "*.class" -print -delete
 find -name "*.jar" -print -delete
 # Do not bundle javascript libraries and fonts
 find -name "*.js" -print -delete
-rm -r %{name}-core/src/main/resources/liquibase/sdk/watch/{css,fonts}
+rm -r %{name}-core/src/main/resources/liquibase/sdk
 rm -r %{name}-core/src/main/resources/assembly
 rm -r %{name}-core/src/main/resources/dist
 
@@ -111,62 +108,33 @@ rm -r %{name}-core/src/main/resources/dist
 
 # Use Maven 3 APIs only
 %pom_change_dep -r :maven-project :maven-compat
-# Add missing test dep
-%pom_add_dep junit:junit:4.12:test %{name}-maven-plugin
 
 # Unavailable plugin
 %pom_remove_plugin -r :gmaven-plugin
-# Unwanted tasks
+# Unwanted tasks or tasks that break the build
 %pom_remove_plugin -r :maven-assembly-plugin
-%pom_remove_plugin -r :maven-deploy-plugin
 %pom_remove_plugin -r :maven-javadoc-plugin
 %pom_remove_plugin -r :maven-source-plugin
+%pom_remove_plugin -r :maven-deploy-plugin
 
-%pom_change_dep -r org.springframework:spring :spring-core
-%pom_add_dep org.springframework:spring-beans %{name}-core
-%pom_add_dep org.springframework:spring-context %{name}-core
+%pom_remove_dep -r org.osgi:org.osgi.core
 %pom_add_dep org.apache.felix:org.apache.felix.framework %{name}-core
 
-# Remove all test dependencies.  We aren't running tests with this build.
-%pom_xpath_remove "pom:dependency[pom:scope = 'test' ]" %{name}-core
-rm -r %{name}-core/src/test/*
 # Disable test jar
-%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-jar-plugin' ]/pom:executions" %{name}-core
-
-# Drop pre-existent manifest file and prevent OutOfMemoryError
-rm %{name}-core/src/main/resources/META-INF/MANIFEST.MF
-
 %pom_xpath_remove "pom:finalName" %{name}-core
-%pom_add_plugin org.apache.felix:maven-bundle-plugin:2.5.4 %{name}-core '
-<extensions>true</extensions>
-<configuration>
-  <instructions>
-    <Liquibase-Package>liquibase.change,liquibase.changelog,liquibase.database,liquibase.parser,liquibase.precondition,liquibase.datatype,liquibase.serializer,liquibase.sqlgenerator,liquibase.executor,liquibase.snapshot,liquibase.logging,liquibase.diff,liquibase.structure,liquibase.structurecompare,liquibase.lockservice,liquibase.sdk.database,liquibase.ext</Liquibase-Package>
-    <Main-Class>liquibase.integration.commandline.Main</Main-Class>
-  </instructions>
-</configuration>
-<executions>
-  <execution>
-    <id>bundle-manifest</id>
-    <phase>process-classes</phase>
-    <goals>
-      <goal>manifest</goal>
-    </goals>
-  </execution>
-</executions>'
-%pom_xpath_set pom:manifestFile '${project.build.outputDirectory}/META-INF/MANIFEST.MF' %{name}-core
 
 # Symlink liquibase/liquibase-core.jar to liquibase.jar
 %mvn_file :%{name}-core %{name}/%{name}-core %{name}
 
 
 %build
+# No tests (-f) and singleton packaging (-s) (i.e. one artifact per package)
 %mvn_build -s -f
 
 
 %install
 %mvn_install
-%jpackage_script liquibase.integration.commandline.Main "" "" %{name}/%{name}-core %{name} true
+%jpackage_script liquibase.integration.commandline.Main "" "" %{name}/%{name}-core:logback/logback-core:logback/logback-classic:slf4j/slf4j-api %{name} true
 mkdir -p %{buildroot}%{_mandir}/man1
 install -pm 0644 %{name}-rpm/src/main/resources/%{name}.1 %{buildroot}%{_mandir}/man1/
 
@@ -193,6 +161,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %files maven-plugin -f .mfiles-%{name}-maven-plugin
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.6.1-alt1_1jpp8
+- java update
+
 * Fri Apr 20 2018 Igor Vlasenko <viy@altlinux.ru> 3.5.3-alt1_4jpp8
 - java update
 
