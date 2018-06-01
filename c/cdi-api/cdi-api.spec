@@ -1,6 +1,5 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
@@ -24,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             cdi-api
 Version:          1.2
-Release:          alt1_7jpp8
+Release:          alt1_8jpp8
 Summary:          CDI API
 License:          ASL 2.0
 URL:              http://seamframework.org/Weld
@@ -46,8 +45,6 @@ BuildRequires:    mvn(org.testng:testng::jdk15:)
 BuildRequires:    asciidoc asciidoc-a2x
 BuildRequires:    /usr/bin/pygmentize
 %endif
-
-Provides:         javax.enterprise.inject
 Source44: import.info
 
 %description
@@ -92,11 +89,7 @@ asciidoc -n -b html5 -a toc2 -a toclevels=3 -a pygments -f html5.conf -o license
 cd api
 %mvn_install
 
-build-jar-repository %{buildroot}%{_javadir}/javax.enterprise.inject/ \
-                     jboss-interceptors-1.2-api glassfish-el-api javax.inject
-
 %files -f api/.mfiles
-%{_javadir}/javax.enterprise.inject/
 %doc spec/src/main/doc/cdi-spec.%{adoc}
 %doc --no-dereference spec/src/main/doc/license-asl2.%{adoc}
 %doc --no-dereference spec/src/main/doc/license-jcp.%{adoc}
@@ -106,6 +99,9 @@ build-jar-repository %{buildroot}%{_javadir}/javax.enterprise.inject/ \
 %doc --no-dereference spec/src/main/doc/license-jcp.%{adoc}
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_8jpp8
+- java fc28+ update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_7jpp8
 - java update
 
