@@ -77,7 +77,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.4
-Release: alt3
+Release: alt3.1
 License: Python
 Group: Development/Python3
 
@@ -1135,6 +1135,9 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/asyncio/__pycache__/test_utils%bytecode_suffixes
 
 %changelog
+* Fri Jun 01 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.6.4-alt3.1
+- fix regular expression in patch1008
+
 * Fri May 30 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.6.4-alt3
 - Added cleaning os-release parameters (patch1008)
 
