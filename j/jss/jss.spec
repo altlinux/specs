@@ -2,7 +2,7 @@
 
 Name: jss
 Version: 4.4.4
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Java Security Services (JSS)
 License: MPLv1.1 or GPLv2+ or LGPLv2+
@@ -79,7 +79,7 @@ export NSPR_LIB_DIR
 export NSS_INCLUDE_DIR
 export NSS_LIB_DIR
 
-%ifarch x86_64 ppc64 ia64 s390x sparc64
+%ifarch aarch64 x86_64 ppc64 ia64 s390x sparc64
 export USE_64=1
 %endif
 
@@ -114,6 +114,9 @@ cp -p %name/jss.html $RPM_BUILD_ROOT%_javadocdir/%name-%version
 %_javadocdir/%name-%version
 
 %changelog
+* Fri Jun 01 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.4.4-alt2%ubt
+- fixed packaging on aarch64
+
 * Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 4.4.4-alt1%ubt
 - 4.4.3 -> 4.4.4
 
