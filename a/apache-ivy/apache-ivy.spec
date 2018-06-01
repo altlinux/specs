@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-ivy
 Version:        2.4.0
-Release:        alt1_10jpp8
+Release:        alt1_12jpp8
 Summary:        Java-based dependency manager
 
 License:        ASL 2.0
@@ -146,6 +146,9 @@ echo "apache-ivy/ivy" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt1_12jpp8
+- java fc28+ update
+
 * Wed May 09 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt1_10jpp8
 - java update
 
