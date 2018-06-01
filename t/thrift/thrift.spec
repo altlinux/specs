@@ -57,7 +57,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    thrift
 Version: 0.10.0
-Release: alt1_9jpp8
+Release: alt2_9jpp8
 Summary: Software framework for cross-language services development
 
 # Parts of the source are used under the BSD and zlib licenses, but
@@ -238,7 +238,8 @@ BuildRequires: javapackages-local
 BuildRequires: junit
 BuildRequires: log4j
 BuildRequires: slf4j
-BuildRequires: tomcat-servlet-3.1-api
+#BuildRequires: tomcat-servlet-3.1-api
+BuildRequires: glassfish-servlet-api
 
 Requires: javapackages-tools
 Requires: mvn(org.slf4j:slf4j-api)
@@ -555,6 +556,9 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 %endif
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2_9jpp8
+- rebuild with tomcat9
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt1_9jpp8
 - e2k support; java update
 
