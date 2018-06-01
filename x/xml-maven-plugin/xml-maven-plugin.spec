@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          xml-maven-plugin
-Version:       1.0.1
-Release:       alt1_5jpp8
+Version:       1.0.2
+Release:       alt1_1jpp8
 Summary:       Maven XML Plugin
 License:       ASL 2.0
 URL:           http://www.mojohaus.org/xml-maven-plugin/
@@ -51,10 +51,6 @@ done
 # Add the version
 sed -i 's|stylesheet |stylesheet version="1.0" |'  src/it/it8/src/main/xsl/it8.xsl
 
-# These deps are supplied by the JRE
-%pom_remove_dep "xml-apis:xml-apis"
-%pom_remove_dep "xerces:xercesImpl"
-
 %build
 %mvn_build -f
 
@@ -68,6 +64,9 @@ sed -i 's|stylesheet |stylesheet version="1.0" |'  src/it/it8/src/main/xsl/it8.x
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1jpp8
+- java update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_5jpp8
 - java update
 
