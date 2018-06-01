@@ -18,7 +18,7 @@
 
 Name: ceph
 Version: 12.2.5
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -565,6 +565,7 @@ cmake .. \
     -DCMAKE_C_FLAGS:STRING='%optflags' \
     -DCMAKE_CXX_FLAGS:STRING='%optflags' \
     -DWITH_SYSTEM_BOOST=ON \
+    -DBOOST_PYTHON_VERSION=%{python_version_nodots python} \
 %if_with system_rocksdb
     -DWITH_SYSTEM_ROCKSDB=ON \
 %endif
@@ -1250,6 +1251,9 @@ fi
 %endif
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 12.2.5-alt2%ubt
+- NMU: rebuilt with boost-1.67.0
+
 * Sat Apr 28 2018 Alexey Shabalin <shaba@altlinux.ru> 12.2.5-alt1%ubt
 - 12.2.5
 - build with rdma support
