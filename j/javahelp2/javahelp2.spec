@@ -42,7 +42,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		javahelp2
 Version:	2.0.05
-Release:	alt3_22jpp8
+Release:	alt4_22jpp8
 Summary:	JavaHelp is a full-featured, platform-independent, extensible help system 
 License:	GPLv2 with exceptions
 Url:		https://javahelp.java.net/
@@ -52,10 +52,11 @@ Source2:	%{name}-jhsearch.sh
 BuildArch:	noarch
 
 BuildRequires:	javapackages-local
-BuildRequires:	java-devel >= 1.6.0
+BuildRequires:	java-devel-default
 
 BuildRequires:	ant
-BuildRequires:	tomcat-servlet-3.1-api
+#BuildRequires:	tomcat-servlet-3.1-api
+BuildRequires:	glassfish-servlet-api
 BuildRequires:	tomcat-jsp-2.3-api
 Source44: import.info
 
@@ -91,7 +92,8 @@ rm jhMaster/JavaHelp/src/new/javax/help/plaf/basic/BasicNativeContentViewerUI.ja
 
 mkdir javahelp_nbproject/lib
 ln -s %{_javadir}/tomcat-jsp-api.jar javahelp_nbproject/lib/jsp-api.jar
-ln -s %{_javadir}/tomcat-servlet-api.jar javahelp_nbproject/lib/servlet-api.jar
+#ln -s %{_javadir}/tomcat-servlet-api.jar javahelp_nbproject/lib/servlet-api.jar
+ln -s %{_javadir}/glassfish-servlet-api.jar javahelp_nbproject/lib/servlet-api.jar
 
 %build
 
@@ -130,6 +132,9 @@ touch $RPM_BUILD_ROOT/etc/jhsearch.conf
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.05-alt4_22jpp8
+- rebuild with tomcat9
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.0.05-alt3_22jpp8
 - java update
 
