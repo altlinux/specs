@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate gcc-c++ unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 Name:		arduino
 Epoch:		1
 Version:	1.8.5
-Release:	alt2_3jpp8
+Release:	alt2_4jpp8
 Summary:	An IDE for Arduino-compatible electronics prototyping platforms
 Group:		Development/Java
 License:	GPLv2+ and LGPLv2+ and CC-BY-SA
@@ -49,6 +49,7 @@ BuildRequires:	apache-commons-logging jsch guava jackson-annotations jssc
 BuildRequires:	bouncycastle-pg jackson-databind jackson-module-mrbean
 BuildRequires:	apache-commons-httpclient objectweb-asm
 BuildRequires:	rsyntaxtextarea batik xml-commons-apis xmlgraphics-commons
+BuildRequires:  libappstream-glib
 Requires:	java >= 1.8.0
 Requires:	fonts-type1-xorg ecj jna zenity polkit ecj jna
 Requires:	jmdns jsemver apache-commons-net apache-commons-codec git
@@ -191,6 +192,8 @@ tar -xf linux/%{name}-%{version}.tar.xz
 popd
 
 %install
+%global appstream_id cc.arduino.arduinoide
+
 cd build/%{name}-%{version}
 
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
@@ -230,18 +233,18 @@ ln -s %{_sysconfdir}/%{name}/preferences.txt \
 
 ln -s %{_bindir}/arduino-builder $RPM_BUILD_ROOT%{_datadir}/%{name}/arduino-builder
 
-cp -p ../linux/dist/desktop.template ../linux/dist/%{name}.desktop
-desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications --set-icon=arduino --set-key=Exec --set-value=arduino ../linux/dist/%{name}.desktop
+cp -p ../linux/dist/desktop.template ../linux/dist/%{appstream_id}.desktop
+desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications --set-icon=%{appstream_id} --set-key=Exec --set-value=%{name} ../linux/dist/%{appstream_id}.desktop
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/mime/packages
-cp -a ../linux/dist/mime.xml $RPM_BUILD_ROOT%{_datadir}/mime/packages/%{name}.xml
+cp -a ../linux/dist/mime.xml $RPM_BUILD_ROOT%{_datadir}/mime/packages/%{appstream_id}.xml
 
 for dir in ../shared/icons/*; do
     if [ -d $dir ]
     then
 	    size=`basename $dir`
 	    mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/$size/apps
-	    cp $dir/apps/%{name}.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/$size/apps/
+	    cp $dir/apps/%{name}.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/$size/apps/%{appstream_id}.png
     fi
 done
 
@@ -250,8 +253,8 @@ install -D ../linux/dist/%{name}-add-groups $RPM_BUILD_ROOT%{_libexecdir}/%{name
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/polkit-1/actions
 cp -a ../linux/dist/cc.arduino.add-groups.policy $RPM_BUILD_ROOT%{_datadir}/polkit-1/actions
 
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
-cp -a ../linux/dist/appdata.xml $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/metainfo
+cp -a ../linux/dist/appdata.xml $RPM_BUILD_ROOT%{_datadir}/metainfo/%{appstream_id}.appdata.xml
 # unFedorize; ALTize
 if grep 'dialout lock' %buildroot/%_bindir/arduino; then
    sed -i -e 's,dialout lock,uucp,' %buildroot/%_bindir/arduino
@@ -261,8 +264,11 @@ else
 fi
 
 
+%check
+desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
+appstream-util validate-relax --nonet $RPM_BUILD_ROOT/%{_datadir}/metainfo/*.appdata.xml
+
 # TODO
-#%check
 #pushd build
 #ant test
 #popd
@@ -273,12 +279,12 @@ fi
 %{_datadir}/%{name}/*.jar
 %{_datadir}/%{name}/lib/*
 %exclude %{_datadir}/%{name}/lib/version.txt
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/mime/packages/%{name}.xml
-%{_datadir}/icons/hicolor/*/apps/%{name}.png
+%{_datadir}/applications/%{appstream_id}.desktop
+%{_datadir}/mime/packages/%{appstream_id}.xml
+%{_datadir}/icons/hicolor/*/apps/%{appstream_id}.png
 %{_datadir}/polkit-1/actions/cc.arduino.add-groups.policy
 %{_libexecdir}/%{name}-add-groups
-%{_datadir}/appdata/%{name}.appdata.xml
+%{_datadir}/metainfo/%{appstream_id}.appdata.xml
 
 %files -n %{name}-doc
 %{_docdir}/%{name}/
@@ -301,6 +307,9 @@ fi
 %{_datadir}/%{name}/arduino-builder
 
 %changelog
+* Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.8.5-alt2_4jpp8
+- java update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.8.5-alt2_3jpp8
 - java update
 
