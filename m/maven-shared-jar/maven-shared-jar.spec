@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-shared-jar
 Version:        1.2
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 # Maven-shared defines maven-shared-jar version as 1.1
 Epoch:          1
 Summary:        Maven JAR Utilities
@@ -69,6 +69,9 @@ find -type f -iname '*.jar' -delete
 
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_5jpp8
+- java fc28+ update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_4jpp8
 - fc27 update
 
