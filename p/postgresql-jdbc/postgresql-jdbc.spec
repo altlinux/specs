@@ -54,12 +54,13 @@ BuildRequires: jpackage-generic-compat
 
 Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
-Version:	42.2.1
-Release:	alt1_2jpp8
+Version:	42.2.2
+Release:	alt1_4jpp8
 License:	BSD
 URL:		http://jdbc.postgresql.org/
 
 Source0:	https://github.com/pgjdbc/pgjdbc/archive/REL%{version}/pgjdbc-REL%{version}.tar.gz
+Provides:	pgjdbc = %version-%release
 
 # Upstream moved parent pom.xml into separate project (even though there is only
 # one dependant project on it?).  Let's try to not complicate packaging by
@@ -85,27 +86,19 @@ BuildRequires:	mvn(org.apache.maven.plugins:maven-clean-plugin)
 
 %if %runselftest
 BuildRequires:	postgresql10-contrib postgresql10-server
-BuildRequires:	libecpg-devel libpq-devel postgresql-devel
-BuildRequires:	postgresql10-contrib postgresql10-server
+BuildRequires:	postgresql-test-rpm-macros
 %endif
-Source44: import.info
 
 # gettext is only needed if we try to update translations
 #BuildRequires:	gettext
+
+Obsoletes:      %{name}-parent-poms < 42.2.2-2
+Source44: import.info
 
 %description
 PostgreSQL is an advanced Object-Relational database management
 system. The postgresql-jdbc package includes the .jar files needed for
 Java programs to access a PostgreSQL database.
-
-
-%package	parent-poms
-Group: Databases
-Summary:	Build dependency management for PostgreSQL JDBC driver.
-
-%description parent-poms
-Pom files bringing dependencies required for successful PostgreSQL JDBC driver
-build.
 
 
 %package javadoc
@@ -138,10 +131,10 @@ find -name "*.jar" -or -name "*.class" | xargs rm -f
 
 # compat symlink: requested by dtardon (libreoffice), reverts part of
 # 0af97ce32de877 commit.
-%mvn_file org.postgresql:postgresql %{name}/postgresql %{name}
+%mvn_file org.postgresql:postgresql %{name}/postgresql %{name} postgresql
 
-# Parent POMs should be installed in a separate subpackage.
-%mvn_package ":*{parent,versions,prevjre}*" parent-poms
+# Parent POMs should not be installed.
+%mvn_package ":*{parent,versions,prevjre}*" __noinstall
 
 # For compat reasons, make Maven artifact available under older coordinates.
 %mvn_alias org.postgresql:postgresql postgresql:postgresql
@@ -197,16 +190,14 @@ opts="-f"
 %doc README.md
 
 
-%files parent-poms -f .mfiles-parent-poms
-%doc --no-dereference LICENSE
-%doc pgjdbc-parent-poms/CHANGELOG.md pgjdbc-parent-poms/README.md
-
-
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE
 
 
 %changelog
+* Sat Jun 02 2018 Igor Vlasenko <viy@altlinux.ru> 0:42.2.2-alt1_4jpp8
+- fc28+ update
+
 * Wed May 16 2018 Igor Vlasenko <viy@altlinux.ru> 0:42.2.1-alt1_2jpp8
 - java fc28 update
 
