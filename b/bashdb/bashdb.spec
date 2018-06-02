@@ -1,26 +1,28 @@
-#set_verify_elf_method relaxed
+%define oversion 4.2-0.8
+
+Name: bashdb
+Version: 4.2_0.8
+Release: alt1
 
 Summary: BASH with Debugger and Improved Debug Support and Error Handling
-Name: bashdb
-Version: 4.0
-Release: alt2
+
 Url: http://bashdb.sourceforge.net/
 License: GPL
 Group: Shells
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
-%define oversion %version
-
-Source: http://dl.sf.net/bashdb/%name-%oversion.tar.bz2
+# Source-url: http://prdownloads.sf.net/bashdb/%name-%oversion.tar
+Source: http://prdownloads.sf.net/bashdb/%name-%version.tar
 Patch0: bashdb-alt-use-mktemp.patch
 Patch1: bashdb-alt-fix-builtin.patch
 Patch2: bashdb-fix-set0.patch
 
 Requires: /usr/lib/bash
 
+# manually removed: tetex-core
 # Automatically added by buildreq on Thu Aug 07 2008
-BuildRequires: gcc-c++ tetex-core bash-devel
+BuildRequires: gcc-c++ bash-devel
 
 %description
 The Bash Debugger Project contains patched sources to BASH that enable
@@ -29,7 +31,7 @@ addition, this project contains the most comprehensive source-code
 debugger for bash that has been written.
 
 %prep
-%setup -q -n %name-%oversion
+%setup -n %name-%version
 %patch0 -p1
 %patch1 -p1 -b .fix
 %patch2 -p1
@@ -53,12 +55,15 @@ mv -f -- %buildroot/%_datadir/%name/builtin/* %buildroot/usr/lib/bash
 %files
 %doc README THANKS NEWS TODO
 %_bindir/*
-%_datadir/%name
+%_datadir/%name/
 /usr/lib/bash/*
 %_infodir/*
 %_man1dir/*
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 4.2_0.8-alt1
+- new version 4.2_0.8 (with rpmrb script)
+
 * Tue Nov 04 2008 Alexey Gladkov <legion@altlinux.ru> 4.0-alt2
 - Fix build for x86_64.
 - Fix requires.
