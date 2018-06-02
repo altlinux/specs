@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-osgi
 Version:        0.2.0
-Release:        alt1_14jpp8
+Release:        alt1_15jpp8
 # Maven-shared defines maven-osgi version as 0.3.0
 Epoch:          1
 Summary:        Library for Maven-OSGi integration
@@ -74,6 +74,9 @@ sed -i 's/import aQute\.lib\.osgi/import aQute.bnd.osgi/g' src/main/java/org/apa
 
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.2.0-alt1_15jpp8
+- java fc28+ update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.2.0-alt1_14jpp8
 - fc27 update
 
