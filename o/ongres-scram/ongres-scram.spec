@@ -6,13 +6,16 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:		ongres-scram
-Version:	1.0.0~beta.2
-Release:	alt1_1jpp8
+%global		upstream_name    scram
+%global		upstream_version 1.0.0-beta.2
+
+Name:		ongres-%upstream_name
+Version:	%(echo %upstream_version | sed 's/-/~/g')
+Release:	alt1_5jpp8
 Summary:	Salted Challenge Response Authentication Mechanism (SCRAM) - Java Implementation
 License:	BSD
-URL:		https://github.com/ongres/scram
-Source0:	https://github.com/ongres/scram/archive/1.0.0-beta.2.tar.gz
+URL:		https://github.com/ongres/%upstream_name
+Source0:	https://github.com/ongres/%upstream_name/archive/%upstream_version/%upstream_name-%upstream_version.tar.gz
 BuildRequires:	maven-local
 BuildArch:	noarch
 Source44: import.info
@@ -46,10 +49,13 @@ Summary:	Parent POM of %{name}
 This package contains the %{name} parent POM.
 
 %prep
-%setup -q -n scram-1.0.0-beta.2
+%setup -q -n %upstream_name-%upstream_version
+
+find \( -name '*.jar' -o -name '*.class' \) -delete
 %pom_remove_plugin :nexus-staging-maven-plugin
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-dependency-plugin client
+%pom_remove_plugin -r :maven-javadoc-plugin
 
 %build
 %mvn_build -s
@@ -70,6 +76,9 @@ This package contains the %{name} parent POM.
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0~beta.2-alt1_5jpp8
+- java fc28+ update
+
 * Wed May 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0~beta.2-alt1_1jpp8
 - java fc28 update
 
