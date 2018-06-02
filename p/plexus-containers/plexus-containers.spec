@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plexus-containers
 Version:        1.7.1
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Containers for Plexus
 License:        ASL 2.0 and MIT
 URL:            https://github.com/codehaus-plexus/plexus-containers
@@ -80,8 +80,6 @@ Summary:        Component API from %{name}
 %package container-default
 Group: Development/Java
 Summary:        Default Container from %{name}
-Obsoletes:      plexus-container-default < 1.0-1
-Provides:       plexus-containers-component-api = %{version}-%{release}
 
 %description container-default
 %{summary}.
@@ -89,14 +87,6 @@ Provides:       plexus-containers-component-api = %{version}-%{release}
 %package javadoc
 Group: Development/Java
 Summary:        API documentation for all plexus-containers packages
-Provides:       %{name}-component-annotations-javadoc = %{version}-%{release}
-Obsoletes:      %{name}-component-annotations-javadoc < %{version}-%{release}
-Provides:       %{name}-component-javadoc-javadoc = %{version}-%{release}
-Obsoletes:      %{name}-component-javadoc-javadoc < %{version}-%{release}
-Provides:       %{name}-component-metadata-javadoc = %{version}-%{release}
-Obsoletes:      %{name}-component-metadata-javadoc < %{version}-%{release}
-Provides:       %{name}-container-default-javadoc = %{version}-%{release}
-Obsoletes:      %{name}-container-default-javadoc < %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -169,6 +159,9 @@ sed -i "s|<version>2.3</version>|<version> %{javadoc_plugin_version}</version>|"
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_6jpp8
+- java fc28+ update
+
 * Fri May 18 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_5jpp8
 - use guava 20
 
