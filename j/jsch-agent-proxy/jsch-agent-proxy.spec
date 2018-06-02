@@ -1,15 +1,22 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with     jp_minimal
+
 Name:           jsch-agent-proxy
 Version:        0.0.8
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Summary:        Proxy to ssh-agent and Pageant in Java
 License:        BSD
 URL:            http://www.jcraft.com/jsch-agent-proxy/
@@ -22,10 +29,10 @@ BuildRequires:  mvn(com.jcraft:jsch)
 BuildRequires:  mvn(com.trilead:trilead-ssh2)
 BuildRequires:  mvn(net.java.dev.jna:jna)
 BuildRequires:  mvn(net.java.dev.jna:platform)
+%if %{without jp_minimal}
 BuildRequires:  mvn(net.schmizz:sshj)
+%endif
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.apache.maven.wagon:wagon-ssh-external)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
@@ -72,12 +79,14 @@ Summary:        ssh-agent connector for jsch-agent-proxy
 %description sshagent
 %{summary}.
 
+%if %{without jp_minimal}
 %package sshj
 Group: Development/Java
 Summary:        sshj connector for jsch-agent-proxy
 
 %description sshj
 %{summary}.
+%endif
 
 %package trilead-ssh2
 Group: Development/Java
@@ -114,6 +123,15 @@ This package provides %{summary}.
 # Put parent POM together with core module
 %mvn_package :jsch.agentproxy jsch.agentproxy.core
 
+# Unnecessary for RPM builds
+%pom_remove_plugin ":maven-javadoc-plugin"
+%pom_remove_plugin ":maven-source-plugin"
+%pom_xpath_remove pom:build/pom:extensions
+
+%if %{with jp_minimal}
+%pom_disable_module jsch-agent-proxy-sshj
+%endif
+
 %build
 %mvn_build -s
 
@@ -121,23 +139,27 @@ This package provides %{summary}.
 %mvn_install
 
 %files core -f .mfiles-jsch.agentproxy.core
-%dir %{_javadir}/%{name}
 %doc README README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %files connector-factory -f .mfiles-jsch.agentproxy.connector-factory
 %files jsch -f .mfiles-jsch.agentproxy.jsch
 %files pageant -f .mfiles-jsch.agentproxy.pageant
 %files sshagent -f .mfiles-jsch.agentproxy.sshagent
+%if %{without jp_minimal}
 %files sshj -f .mfiles-jsch.agentproxy.sshj
+%endif
 %files trilead-ssh2 -f .mfiles-jsch.agentproxy.svnkit-trilead-ssh2
 %files usocket-jna -f .mfiles-jsch.agentproxy.usocket-jna
 %files usocket-nc -f .mfiles-jsch.agentproxy.usocket-nc
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt1_8jpp8
+- java fc28+ update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt1_6jpp8
 - java update
 
