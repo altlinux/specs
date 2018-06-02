@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 3.24.2
+Version: 3.25.0
 Release: alt1
 
 Summary: A e-book library management application
@@ -72,7 +72,9 @@ BuildRequires: libmtp-devel >= 1.1.11
 
 %py_use netifaces >= 0.10.5
 %py_use psutil >= 4.3.0
-%py_use apsw >= 3.13.0
+#py_use apsw >= 3.13.0
+# as in p8
+%py_use apsw >= 3.8.0
 %py_use dbus >= 1.2.4
 BuildRequires: libdbus-devel >= 1.10.8
 # pygments 2.1.3
@@ -167,6 +169,9 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Sat Jun 02 2018 Vitaly Lipatov <lav@altlinux.ru> 3.25.0-alt1
+- new version 3.25.0 (with rpmrb script)
+
 * Tue May 29 2018 Vitaly Lipatov <lav@altlinux.ru> 3.24.2-alt1
 - new version 3.24.2 (with rpmrb script)
 
