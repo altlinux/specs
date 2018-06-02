@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          libreadline-java
 Version:       0.8.0
-Release:       alt3_47jpp8
+Release:       alt3_48jpp8
 Summary:       Java wrapper for the EditLine library
 License:       LGPLv2+
 URL:           http://java-readline.sf.net/
@@ -23,6 +23,7 @@ Patch0:        %{name}-ncurses.patch
 Patch1:        %{name}-libdir.patch
 Patch2:        %{name}-editline.patch
 
+BuildRequires: gcc
 BuildRequires: java-devel >= 1.4.2
 BuildRequires: javapackages-local
 BuildRequires: libedit-devel >= %{editline_ver}
@@ -88,6 +89,9 @@ ln -sf %{_jnidir}/%{name}.jar %{buildroot}%{_libdir}/%{name}/%{name}.jar
 %doc --no-dereference COPYING.LIB
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt3_48jpp8
+- java fc28+ update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt3_47jpp8
 - java update
 
