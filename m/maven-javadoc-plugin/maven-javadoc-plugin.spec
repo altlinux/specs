@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-javadoc-plugin
 Version:        3.0.0
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Maven Javadoc Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-javadoc-plugin
@@ -61,6 +61,8 @@ API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{version}
 
+%pom_remove_plugin :maven-enforcer-plugin
+
 %build
 %mvn_build -f -- -DmavenVersion=3.5.0
 
@@ -74,6 +76,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_4jpp8
+- java fc28+ update
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_2jpp8
 - java update
 
