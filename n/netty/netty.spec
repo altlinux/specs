@@ -24,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netty
 Version:        4.1.13
-Release:        alt1_2jpp8
+Release:        alt1_5jpp8
 Summary:        An asynchronous event-driven network application framework and tools for Java
 License:        ASL 2.0
 URL:            https://netty.io/
@@ -36,6 +36,7 @@ Source1:        codegen.bash
 Patch0:         0001-Remove-OpenSSL-parts-depending-on-tcnative.patch
 Patch1:         0002-Remove-NPN.patch
 Patch2:         0003-Remove-conscrypt-ALPN.patch
+Patch3:         0004-Remove-jetty-ALPN.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(ant-contrib:ant-contrib)
@@ -44,13 +45,11 @@ BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(kr.motd.maven:os-maven-plugin)
 BuildRequires:  mvn(log4j:log4j:1.2.17)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.logging.log4j:log4j-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
-BuildRequires:  mvn(org.eclipse.jetty.alpn:alpn-api)
 BuildRequires:  mvn(org.fusesource.hawtjni:maven-hawtjni-plugin)
 BuildRequires:  mvn(org.javassist:javassist)
 BuildRequires:  mvn(org.jctools:jctools-core)
@@ -63,8 +62,10 @@ BuildRequires:  mvn(com.google.protobuf.nano:protobuf-javanano)
 BuildRequires:  mvn(com.google.protobuf:protobuf-java)
 BuildRequires:  mvn(com.ning:compress-lzf)
 BuildRequires:  mvn(net.jpountz.lz4:lz4)
+BuildRequires:  mvn(org.apache.logging.log4j:log4j-api)
 BuildRequires:  mvn(org.bouncycastle:bcpkix-jdk15on)
 BuildRequires:  mvn(org.jboss.marshalling:jboss-marshalling)
+BuildRequires:  mvn(org.eclipse.jetty.alpn:alpn-api)
 %endif
 Source44: import.info
 
@@ -96,6 +97,9 @@ BuildArch: noarch
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%if %{with jp_minimal}
+%patch3 -p1
+%endif
 
 # Missing Mavenized rxtx
 %pom_disable_module "transport-rxtx"
@@ -123,7 +127,6 @@ BuildArch: noarch
 </dependencies>'
 
 %pom_remove_plugin :maven-antrun-plugin
-# get-jetty-alpn-agent
 %pom_remove_plugin :maven-dependency-plugin
 # style checker
 %pom_remove_plugin :xml-maven-plugin
@@ -176,6 +179,8 @@ rm codec/src/*/java/io/netty/handler/codec/compression/Lzma*.java
 rm codec/src/*/java/io/netty/handler/codec/compression/Lzf*.java
 %pom_remove_dep -r net.jpountz.lz4:lz4
 rm codec/src/*/java/io/netty/handler/codec/compression/Lz4*.java
+%pom_remove_dep -r org.apache.logging.log4j:
+rm common/*/main/java/io/netty/util/internal/logging/Log4J2*.java
 
 %endif # jp_minimal
 
@@ -191,6 +196,8 @@ sed -i 's|taskdef|taskdef classpathref="maven.plugin.classpath"|' all/pom.xml
 # do by default. In this case install all attached artifacts with
 # the linux classifier.
 %mvn_package ":::linux*:"
+
+%mvn_package ':*-tests' __noinstall
 sed -i -e s,/bin/bash,/bin/bash4, common/codegen.bash
 
 %build
@@ -207,6 +214,9 @@ export CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS"
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 4.1.13-alt1_5jpp8
+- java fc28+ update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 4.1.13-alt1_2jpp8
 - java update
 
