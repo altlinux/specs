@@ -39,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           httpunit
 Version:        1.7
-Release:        alt7_24jpp8
+Release:        alt7_25jpp8
 Epoch:          0
 Summary:        Automated web site testing toolkit
 License:        MIT and ASL 2.0
@@ -57,20 +57,20 @@ Patch2:         %{name}-servlettest.patch
 Patch3:         %{name}-servlet31.patch
 Patch4:         junit4.patch
 URL:            http://httpunit.sourceforge.net/
+
 BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  nekohtml
 BuildRequires:  jtidy
 BuildRequires:  junit >= 0:3.8
-#BuildRequires:  tomcat-servlet-3.1-api
-BuildRequires: jboss-servlet-3.1-api
+BuildRequires:  glassfish-servlet-api
 BuildRequires:  javamail >= 0:1.3
 BuildRequires:  rhino
 BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  javapackages-local
 
 Requires:       junit >= 0:3.8
-#Requires:       tomcat-servlet-3.1-api
+Requires:       glassfish-servlet-api
 # As of 1.5, requires either nekohtml or jtidy, and prefers nekohtml.
 Requires:       nekohtml
 Requires:       rhino
@@ -121,12 +121,11 @@ sed -i -e 's|setCharEncoding( org.w3c.tidy.Configuration.UTF8 )|setInputEncoding
 find . -name "*.jar" -exec rm -f {} \;
 rm -rf doc/api
 
-#  %{_javadir}/tomcat-servlet-api.jar \
 ln -s \
   %{_javadir}/junit.jar \
   %{_javadir}/jtidy.jar \
   %{_javadir}/nekohtml.jar \
-  %{_javadir}/jboss-servlet-3.1-api/jboss-servlet-api_3.1_spec.jar \
+  %{_javadir}/glassfish-servlet-api.jar \
   %{_javadir}/js.jar \
   %{_javadir}/xerces-j2.jar \
   jars
@@ -142,20 +141,12 @@ install -m 644 %{SOURCE5} LICENSE-ASL
 export CLASSPATH=$(build-classpath javamail)
 export ANT_OPTS="-Dfile.encoding=iso-8859-1"
 ant -Dbuild.compiler=modern -Dbuild.sysclasspath=last \
-  jar javadocs test servlettest 
+  jar javadocs test servlettest
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p lib/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# Javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%mvn_file : %{name}
+%mvn_artifact pom.xml lib/%{name}.jar
+%mvn_install -J doc/api/
 
 
 # Avoid having api in doc
@@ -169,14 +160,16 @@ popd
 %files -f .mfiles
 %doc LICENSE-ASL
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE-ASL
-%{_javadocdir}/%{name}
 
 %files doc
 %doc --no-dereference doc/*
 
 %changelog
+* Sat Jun 02 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt7_25jpp8
+- fc28+ update
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt7_24jpp8
 - rebuild with tomcat9
 
