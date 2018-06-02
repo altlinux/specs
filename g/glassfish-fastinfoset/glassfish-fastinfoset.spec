@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-fastinfoset
 Version:       1.2.13
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       Fast Infoset
 License:       ASL 2.0
 URL:           https://fi.java.net
@@ -23,14 +23,11 @@ Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 Patch0:        %{name}-1.2.12-utilities-FastInfosetWriterSAXBufferProcessor.patch
 
 BuildRequires: maven-local
-BuildRequires: maven-surefire-provider-junit
 BuildRequires: mvn(com.sun.xml.stream.buffer:streambuffer)
 BuildRequires: mvn(com.sun.xsom:xsom)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(net.java:jvnet-parent:pom:)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-tools-api)
-BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
 
 BuildArch:     noarch
 Source44: import.info
@@ -92,6 +89,9 @@ cp %{SOURCE1} .
 %doc --no-dereference copyright.txt LICENSE-2.0.txt
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.13-alt1_9jpp8
+- java fc28+ update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.13-alt1_8jpp8
 - java update
 
