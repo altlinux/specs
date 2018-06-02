@@ -4,7 +4,7 @@ BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -19,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           %{?scl_prefix}jgraphx
 Version:        3.6.0.0
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Java Graph Drawing Component
 
 Group:          Development/Other
@@ -27,6 +27,8 @@ License:        BSD
 URL:            http://www.jgraph.com/jgraph.html
 Source0:        http://www.jgraph.com/downloads/jgraphx/archive/%{pkg_name}-%(echo %{version} |sed 's/\./_/g').zip
 Source1:        bnd.properties
+
+Patch1:         CVE-2017-18197-XXE-fix.patch
 
 BuildRequires:  %{?scl_prefix_java_common}javapackages-local
 BuildRequires:  %{?scl_prefix_java_common}ant
@@ -60,6 +62,7 @@ JavaDoc documentation for %{name}
 %setup -q -n %{pkg_name}
 find -name '*.jar' -delete
 rm -rf docs/api
+%patch1 -p2
 
 %build
 %{?scl:scl enable %{scl_maven} %{scl} - << "EOF"}
@@ -99,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 3.6.0.0-alt1_6jpp8
+- java fc28+ update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3.6.0.0-alt1_5jpp8
 - java update
 
