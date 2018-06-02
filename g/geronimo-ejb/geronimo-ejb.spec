@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -7,32 +8,24 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global spec_ver 3.1
-%global spec_name geronimo-ejb_%{spec_ver}_spec
+Name:           geronimo-ejb
+Version:        1.0
+Release:        alt4_20jpp8
+Summary:        Java EE: EJB API v3.1
+License:        ASL 2.0
+URL:            http://geronimo.apache.org
+BuildArch:      noarch
 
-Name:             geronimo-ejb
-Version:          1.0
-Release:          alt4_19jpp8
-Summary:          Java EE: EJB API v3.1
-Group:            Development/Other
-License:          ASL 2.0
-URL:              http://geronimo.apache.org
+Source0:        http://repo2.maven.org/maven2/org/apache/geronimo/specs/%{name}_3.1_spec/%{version}/%{name}_3.1_spec-%{version}-source-release.tar.gz
 
-Source0:          http://repo2.maven.org/maven2/org/apache/geronimo/specs/%{spec_name}/%{version}/%{spec_name}-%{version}-source-release.tar.gz
-
-BuildArch:        noarch
-
-BuildRequires:    java-devel
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-BuildRequires:    geronimo-parent-poms
-BuildRequires:    jta
-BuildRequires:    interceptor_api
-BuildRequires:    annotation_api
-BuildRequires:    jaxrpc_api
-BuildRequires:    geronimo-osgi-locator
-
-Provides:         ejb_api = %{spec_ver}
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-annotation_1.1_spec)
+BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-interceptor_1.1_spec)
+BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-jaxrpc_1.1_spec)
+BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-jta_1.1_spec)
+BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-osgi-locator)
+BuildRequires:  mvn(org.apache.geronimo.specs:specs:pom:)
 Source44: import.info
 
 %description
@@ -42,15 +35,14 @@ enterprise bean and the EJB container.
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadoc for %{name}
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
-
 %prep
-%setup -q -n %{spec_name}-%{version}
+%setup -q -n %{name}_3.1_spec-%{version}
 sed -i 's/\r//' LICENSE
 # Use parent pom files instead of unavailable 'genesis-java5-flava'
 %pom_set_parent org.apache.geronimo.specs:specs:1.4
@@ -69,12 +61,15 @@ sed -i 's/\r//' LICENSE
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_20jpp8
+- java fc28+ update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_19jpp8
 - java update
 
