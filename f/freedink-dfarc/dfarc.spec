@@ -1,6 +1,6 @@
 Name: freedink-dfarc
 Version: 3.12
-Release: alt1.2
+Release: alt1.3
 Summary: Frontend and .dmod installer for GNU FreeDink
 
 Group: Games/Adventure
@@ -42,6 +42,9 @@ install -D share/freedink-mime.xml %buildroot%_xdgmimedir/packages/freedink-mime
 %_mandir/man1/*
 
 %changelog
+* Sat Jun 02 2018 Vitaly Lipatov <lav@altlinux.ru> 3.12-alt1.3
+- rebuild with rebuilt wxGTK3.1
+
 * Mon Jul 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.12-alt1.2
 - Rebuilt with gcc5
 

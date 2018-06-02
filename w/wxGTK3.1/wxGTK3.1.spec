@@ -3,7 +3,7 @@
 
 Name: wxGTK3.1
 Version: 3.1.0
-Release: alt8
+Release: alt9
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -48,7 +48,7 @@ Header files for wxGTK, the GTK+ port of the wxWidgets library.
 Summary: Development files for wxGTK library
 Group: Development/C++
 Requires: lib%name = %version-%release
-Requires: python-module-PyDSTool
+
 %add_python_req_skip utils
 Conflicts: libwxGTK2.9-devel
 Conflicts: libwxGTK3.0-devel
@@ -338,15 +338,20 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %dir %_datadir/bakefile
 %_datadir/bakefile/*
 %_bindir/*
+%dir %_libdir/wx/%wxbranch.0
 %_libdir/wx/%wxbranch.0/*.so
 %_datadir/aclocal/*.m4
 %_includedir/wx-%wxbranch
 %_libdir/*.so
 
 %files examples
+%dir %_datadir/wx-%wxbranch/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Sat May 26 2018 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt9
+- remove python-module-PyDSTool requires from -devel subpackage (ALT bug 33882)
+
 * Fri Mar 10 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.1.0-alt8
 - Built against GStreamer 1.0.
 - clearly mark to build with GCC/G++ 5.
