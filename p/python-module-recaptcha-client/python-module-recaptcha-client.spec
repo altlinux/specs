@@ -1,19 +1,17 @@
-%define version 1.0.6
-%define release alt1
-%setup_python_module recaptcha-client
-
 %def_with python3
 
-Name: %packagename
-Version:%version
-Release: alt1.2
+Name: python-module-recaptcha-client
+Version: 2.0.1
+Release: alt1
 
-Summary: Provides a CAPTCHA for Python using the reCAPTCHA service
+Summary: Python module for working with Google's reCAPTCHA v1 and v2
 
 License: MIT/X11
 Group: Development/Python
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/recaptcha-client
+Url: https://github.com/redhat-infosec/python-recaptcha
+
+%setup_python_module recaptcha-client
 
 BuildRequires: python-module-setuptools
 %if_with python3
@@ -22,7 +20,8 @@ BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
 %endif
 
-Source: %modulename-%version.tar
+# Source-url: https://github.com/redhat-infosec/python-recaptcha/archive/v%version.tar.gz
+Source: %name-%version.tar
 
 %py_requires Crypto
 
@@ -31,6 +30,10 @@ Provides a CAPTCHA for Python using the reCAPTCHA service. Does not
 require any imaging libraries because the CAPTCHA is served directly
 from reCAPTCHA. Also allows you to securely obfuscate emails with
 Mailhide.
+
+This Python module brings in Google's reCAPTCHA v1 and v2 support.
+Although v1 is being deactivated starting from the 31st of March 2018
+it's kept around for backwards compatibility and it's still marked as the default library option.
 
 %package -n python3-module-%modulename
 Summary: Provides a CAPTCHA for Python using the reCAPTCHA service
@@ -43,8 +46,12 @@ require any imaging libraries because the CAPTCHA is served directly
 from reCAPTCHA. Also allows you to securely obfuscate emails with
 Mailhide.
 
+This Python module brings in Google's reCAPTCHA v1 and v2 support.
+Although v1 is being deactivated starting from the 31st of March 2018
+it's kept around for backwards compatibility and it's still marked as the default library option.
+
 %prep
-%setup -n %modulename-%version
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -61,7 +68,7 @@ popd
 %endif
 
 %install
-%python_install --record=INSTALLED_FILES
+%python_install
 
 %if_with python3
 pushd ../python3
@@ -69,7 +76,8 @@ pushd ../python3
 popd
 %endif
 
-%files -f INSTALLED_FILES
+%files
+%python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%modulename
@@ -77,6 +85,11 @@ popd
 %endif
 
 %changelog
+* Sat Jun 02 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt1
+- upstream got forked into https://github.com/redhat-infosec/python-recaptcha
+- build new version, cleanup spec
+- reCAPTCHA v2 support landed
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.6-alt1.2
 - (NMU) rebuild with python3.6
 
