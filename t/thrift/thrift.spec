@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl rpm-build-php7 rpm-build-python rpm-macros-fedora-compat rpm-macros-java
-BuildRequires: /usr/bin/perl /usr/bin/php /usr/bin/phpunit /usr/bin/ruby /usr/bin/runhaskell /usr/bin/trial gcc-c++ perl(Encode.pm) perl(HTTP/Request.pm) perl(IO/Select.pm) perl(IO/Socket/INET.pm) perl(IO/Socket/SSL.pm) perl(IO/Socket/UNIX.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Time/HiRes.pm) perl(base.pm) perl(overload.pm) perl-podlators pkgconfig(Qt5Core) pkgconfig(Qt5Network) pkgconfig(mono) rpm-build-java
+BuildRequires: /usr/bin/bundle /usr/bin/cabal /usr/bin/haxe /usr/bin/mcs /usr/bin/npm /usr/bin/perl /usr/bin/php /usr/bin/phpunit /usr/bin/ruby /usr/bin/runhaskell /usr/bin/trial perl(Encode.pm) perl(HTTP/Request.pm) perl(IO/Select.pm) perl(IO/Socket/INET.pm) perl(IO/Socket/SSL.pm) perl(IO/Socket/UNIX.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Time/HiRes.pm) perl(base.pm) perl(overload.pm) perl-podlators pkgconfig(Qt5Core) pkgconfig(Qt5Network) pkgconfig(mono) rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: mono-web javapackages-local
 BuildRequires: chrpath
@@ -9,6 +9,9 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global php_extdir  %(php-config --extension-dir 2>/dev/null || echo "undefined")
+
+
+%global __provides_exclude_from ^(%{python_sitelibdir}/.*\\.so|%{php7_extdir}/.*\\.so)$
 
 %global have_mongrel 0
 
@@ -57,7 +60,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    thrift
 Version: 0.10.0
-Release: alt2_9jpp8
+Release: alt2_11jpp8
 Summary: Software framework for cross-language services development
 
 # Parts of the source are used under the BSD and zlib licenses, but
@@ -98,10 +101,11 @@ BuildRequires: ant >= 1.7
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: bison
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires: boost-devel-static
 BuildRequires: flex
 BuildRequires: flex
+BuildRequires: gcc-c++
 BuildRequires: glib2-devel libgio libgio-devel
 BuildRequires: libevent-devel
 BuildRequires: libstdc++-devel
@@ -193,7 +197,7 @@ The perl-%{name} package contains Perl bindings for %{name}.
 %package -n d-%{name}
 Group: Development/Java
 Summary: D support for %{name}
-BuildRequires: dmd
+BuildRequires: ldc
 
 %description -n d-%{name}
 The d-%{name} package contains D bindings for %{name}.
@@ -205,7 +209,7 @@ Group: Development/Java
 Summary: PHP support for %{name}
 Requires: %{name} = %{version}-%{release}
 Requires: php(language) >= 5.3.0
-Requires: php-date
+Requires: php7-bz2 php7-calendar php7-curl php7-exif php7-fileinfo php7-sockets
 Requires: php-json
 BuildRequires: php5-devel
 
@@ -238,8 +242,8 @@ BuildRequires: javapackages-local
 BuildRequires: junit
 BuildRequires: log4j
 BuildRequires: slf4j
-#BuildRequires: tomcat-servlet-3.1-api
-BuildRequires: glassfish-servlet-api
+# javax.servlet-api 3.1.0 is provided by glassfish-servlet-api
+BuildRequires: mvn(javax.servlet:javax.servlet-api) = 3.1.0
 
 Requires: javapackages-tools
 Requires: mvn(org.slf4j:slf4j-api)
@@ -535,7 +539,6 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 %files -n lib%{name}-java -f .mfiles
 %doc LICENSE NOTICE
 
-%if 1
 %files -n fb303
 %{_datarootdir}/fb303
 %doc LICENSE NOTICE
@@ -553,9 +556,11 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 
 %files -n fb303-java -f .mfiles-fb303
 %doc LICENSE NOTICE
-%endif
 
 %changelog
+* Sat Jun 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2_11jpp8
+- java fc28+ update
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2_9jpp8
 - rebuild with tomcat9
 
