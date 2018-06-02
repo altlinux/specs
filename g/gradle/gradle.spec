@@ -29,7 +29,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           gradle
 Version:        4.3.1
-Release:        alt1_5jpp8
+Release:        alt1_7jpp8
 Summary:        Build automation tool
 # Some examples and integration tests are under GNU LGPL and Boost
 # Software License, but are not used to create binary package.
@@ -79,6 +79,8 @@ Patch0013:      0013-Add-missing-transitive-dependencies.patch
 Patch0014:      0014-Disable-ideNative-module.patch
 Patch0015:      0015-Disable-docs-build.patch
 Patch0016:      0016-Port-to-guava-20.0.patch
+# it depends on ant which is Java 8+
+Patch0017:      0017-Set-core-api-source-level-to-8.patch
 
 # For autosetup
 BuildRequires:  git
@@ -183,9 +185,6 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.codehaus.sonar:sonar-batch)
-BuildRequires:  mvn(org.codehaus.sonar:sonar-batch-bootstrapper)
-BuildRequires:  mvn(org.codehaus.sonar:sonar-plugin-api)
 BuildRequires:  mvn(org.codenarc:CodeNarc)
 BuildRequires:  mvn(org.eclipse.aether:aether-api)
 BuildRequires:  mvn(org.eclipse.aether:aether-connector-basic)
@@ -359,6 +358,7 @@ legacy automation challenges.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 
 # Remove bundled wrapper JAR
 rm -rf gradle/wrapper/
@@ -478,6 +478,9 @@ sed -i -e s,/usr/bin/bash,/bin/sh, %buildroot%_bindir/*
 %config(noreplace,missingok) /etc/java/%name.conf
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 4.3.1-alt1_7jpp8
+- java fc28+ update
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 4.3.1-alt1_5jpp8
 - unbootstrap build
 
