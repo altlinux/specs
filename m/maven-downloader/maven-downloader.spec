@@ -10,7 +10,7 @@ Name:           maven-downloader
 # Maven-shared defines maven-downloader version as 1.2
 Epoch:          1
 Version:        1.1
-Release:        alt1_14jpp8
+Release:        alt1_15jpp8
 Summary:        Maven artifact downloader
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-downloader
@@ -66,6 +66,9 @@ cp %{SOURCE1} LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_15jpp8
+- java fc28+ update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_14jpp8
 - fc27 update
 
