@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           nekohtml
 Version:        1.9.22
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Epoch:          0
 Summary:        HTML scanner and tag balancer
 License:        ASL 2.0
@@ -155,6 +155,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %files demo -f .mfiles-demo
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.9.22-alt1_6jpp8
+- java fc28+ update
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9.22-alt1_5jpp8
 - fc27 update
 
