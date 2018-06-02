@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           xmlrpc
 Version:        3.1.3
-Release:        alt7_19jpp8
+Release:        alt7_20jpp8
 Epoch:          1
 Summary:        Java XML-RPC implementation
 License:        ASL 2.0
@@ -20,6 +20,8 @@ Patch0:         %{name}-client-addosgimanifest.patch
 Patch1:         %{name}-common-addosgimanifest.patch
 Patch2:         %{name}-javax-methods.patch
 Patch3:         %{name}-server-addosgimanifest.patch
+Patch4:         %{name}-disallow-deserialization-of-ex-serializable-tags.patch
+Patch5:         %{name}-disallow-loading-external-dtd.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache:apache:pom:)
@@ -86,6 +88,8 @@ popd
 pushd server
 %patch3 -b .sav
 popd
+%patch4 -p1
+%patch5 -p1
 
 sed -i 's/\r//' LICENSE.txt
 
@@ -115,6 +119,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt7_20jpp8
+- java fc28+ update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt7_19jpp8
 - java update
 
