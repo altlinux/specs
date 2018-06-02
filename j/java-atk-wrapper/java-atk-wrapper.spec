@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/xprop gcc-c++ imake java-devel-default libXt-devel pkgconfig(dbus-1) xorg-cf-files
+BuildRequires: /usr/bin/xprop imake java-devel-default libXt-devel pkgconfig(dbus-1) xorg-cf-files
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:       java-atk-wrapper
 Version:    %{major_version}.%{minor_version}
-Release:    alt2_6jpp8
+Release:    alt3_7jpp8
 Summary:    Java ATK Wrapper
 
 Group:      Development/Other
@@ -25,6 +25,9 @@ Patch1:		removeNotExistingManifestInclusion.patch
 
 BuildRequires:  java-devel
 
+BuildRequires:	gcc
+BuildRequires:	gcc-c++
+BuildRequires:	clang6.0
 BuildRequires:  libatk-devel libatk-gir-devel
 BuildRequires:  GConf libGConf-devel libGConf-gir-devel
 BuildRequires:  glib2-devel libgio libgio-devel
@@ -87,6 +90,12 @@ ln -s %{_libdir}/%{name}/libatk-wrapper.so.%{libver} \
 
 
 %changelog
+* Sat Jun 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt3_7jpp8
+- fc28+ update
+
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt2_7jpp8
+- java fc28+ update
+
 * Fri May 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt2_6jpp8
 - make -j2 instead of %%make_build -- helps on altair
 
