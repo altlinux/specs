@@ -1,5 +1,5 @@
 Name: control++
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: System configuration tool
@@ -85,6 +85,9 @@ cp usage.txt %buildroot%_defaultdocdir/%name/
 %_includedir/libcontrol++/
 
 %changelog
+* Sat Jun 02 2018 Alexey Appolonov <alexey@altlinux.org> 0.9.1-alt1
+- Memory leakage fix.
+
 * Mon May 21 2018 Alexey Appolonov <alexey@altlinux.org> 0.9.0-alt1
 - New libcontrol++ features.
 
