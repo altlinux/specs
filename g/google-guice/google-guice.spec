@@ -23,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           google-%{short_name}
 Version:        4.1
-Release:        alt1_10jpp8
+Release:        alt1_11jpp8
 Summary:        Lightweight dependency injection framework for Java 5 and above
 License:        ASL 2.0
 URL:            https://github.com/google/%{short_name}
@@ -66,8 +66,6 @@ BuildRequires:  hibernate3-entitymanager
 BuildRequires:  mvn(org.hsqldb:hsqldb-j5)
 BuildRequires:  testng
 %endif
-
-Provides:       %{short_name} = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -200,7 +198,6 @@ and above. This package provides Bill of Materials module for Guice.
 %package javadoc
 Group: Development/Java
 Summary:        API documentation for Guice
-Provides:       %{short_name}-javadoc = %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -293,6 +290,9 @@ This package provides %{summary}.
 
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:4.1-alt1_11jpp8
+- java fc28+ update
+
 * Tue May 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:4.1-alt1_10jpp8
 - java update
 
