@@ -8,24 +8,19 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global spec_ver 1.3
-%global spec_name geronimo-annotation_%{spec_ver}_spec
+Name:           geronimo-annotation
+Version:        1.0
+Release:        alt4_23jpp8
+Summary:        Java EE: Annotation API v1.3
+License:        ASL 2.0
+URL:            http://geronimo.apache.org/
+BuildArch:      noarch
 
-Name:             geronimo-annotation
-Version:          1.0
-Release:          alt4_22jpp8
-Summary:          Java EE: Annotation API v1.3
-License:          ASL 2.0
-URL:              http://geronimo.apache.org/
-
-Source0:          http://repo2.maven.org/maven2/org/apache/geronimo/specs/%{spec_name}/%{version}/%{spec_name}-%{version}-source-release.zip
-BuildArch:        noarch
+Source0:        http://repo2.maven.org/maven2/org/apache/geronimo/specs/%{name}_1.3_spec/%{version}/%{name}_1.3_spec-%{version}-source-release.zip
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.geronimo.specs:specs:pom:)
-
-Provides:         annotation_api = %{spec_ver}
 Source44: import.info
 
 %description
@@ -33,15 +28,14 @@ This package defines the common annotations.
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadoc for %{name}
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
-
 %prep
-%setup -q -n %{spec_name}-%{version}
+%setup -q -n %{name}_1.3_spec-%{version}
 
 %pom_set_parent org.apache.geronimo.specs:specs:1.4
 
@@ -66,6 +60,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_23jpp8
+- java fc28+ update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_22jpp8
 - java update
 
