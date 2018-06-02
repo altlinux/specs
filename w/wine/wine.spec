@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.1
-%define major 3.8
+%define major 3.9
 
 Name: wine
 Version: %major.1
@@ -468,6 +468,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Tue May 29 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.9.1-alt1
+- new version 3.9.1 (with rpmrb script)
+
 * Fri May 18 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.8.1-alt1
 - new version 3.8.1 (with rpmrb script)
 
