@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Plugin-GithubMeta
 
 Name: perl-Dist-Zilla-Plugin-GithubMeta
-Version: 0.54
-Release: alt2
+Version: 0.56
+Release: alt1
 
 Summary: Dist:Zilla plugin to include GitHub meta information in META.yml
 
@@ -49,5 +49,8 @@ META.yml to the appropriate URLs for GitHub.
 %perl_vendor_privlib/Dist/Zilla/Plugin/GithubMeta*
 
 %changelog
+* Sun Jun 03 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.56-alt1
+- New version
+
 * Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.54-alt2
 - Initial build for ALT Linux Sisyphus
