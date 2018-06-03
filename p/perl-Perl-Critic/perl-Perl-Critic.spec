@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define m_distro Perl-Critic
 Name: perl-Perl-Critic
-Version: 1.130
+Version: 1.132
 Release: alt1
 
 Summary: Critique Perl source code for best-practices.  
@@ -12,9 +12,9 @@ Url: %CPAN %m_distro
 
 BuildArch: noarch
 # https://github.com/Perl-Critic/Perl-Critic.git
-Source: http://www.cpan.org/authors/id/T/TH/THALJEF/Perl-Critic-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PETDANCE/Perl-Critic-%{version}.tar.gz
 
-BuildRequires: perl-B-Keywords perl-Config-Tiny perl-Exception-Class perl-File-HomeDir perl-File-Which perl-HTML-Parser
+BuildRequires: perl-B-Keywords perl-Config-Tiny perl-Exception-Class perl-File-HomeDir perl-File-Which perl-HTML-Parser perl(PPIx/QuoteLike.pm)
 BuildRequires: perl-Module-Build perl-PPI perl-Perl-Tidy perl-Pod-Spell perl-Readonly perl-Regexp-Parser perl-String-Format
 BuildRequires: perl-version perl-podlators perl-Module-Pluggable perl-autodie perl-Email-Address perl-PPIx-Utilities perl-PPIx-Regexp perl-Test-Deep
 Requires: perl(Module/Pluggable.pm)
@@ -37,7 +37,7 @@ perlcritic is a Perl::Critic based command line utility for Perl source
 code analysis.
 
 %prep
-%setup -n %m_distro-%version
+%setup -q -n Perl-Critic-%{version}
 
 %build
 %perl_vendor_build --install_path bindoc=%_man1dir
@@ -46,6 +46,7 @@ code analysis.
 %perl_vendor_install
 
 %files
+%doc LICENSE TODO.pod CONTRIBUTING.md README.md Changes README examples
 %perl_vendor_privlib/Perl/Critic*
 %perl_vendor_privlib/Test/Perl/Critic/Policy.pm
 %doc examples extras Changes LICENSE INSTALL README.*
@@ -57,6 +58,9 @@ code analysis.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.132-alt1
+- automated CPAN update
+
 * Thu Aug 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.130-alt1
 - Updated to upstream version 1.130.
 
