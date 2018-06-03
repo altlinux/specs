@@ -28,8 +28,8 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.7.0-openjdk
-%define version 1.7.0.111
-%define release 2.6.7.2
+%define version 1.7.0.141
+%define release 2.6.10.1
 # If debug is 1, OpenJDK is built with all debug info present.
 %global debug 0
 
@@ -37,7 +37,7 @@ BuildRequires: jpackage-generic-compat
 # conflicting) files in the -debuginfo package
 %undefine _missing_build_ids_terminate_build
 
-%global icedtea_version 2.6.7
+%global icedtea_version 2.6.10
 %global hg_tag icedtea-{icedtea_version}
 
 %global aarch64			aarch64 arm64 armv8
@@ -52,6 +52,14 @@ BuildRequires: jpackage-generic-compat
 #looks liekopenjdk RPM specific bug
 # Always set this so the nss.cfg file is not broken
 %global NSS_LIBDIR %(pkg-config --variable=libdir nss)
+%global NSS_LIBS %(pkg-config --libs nss)
+%global NSS_CFLAGS %(pkg-config --cflags nss-softokn)
+# see https://bugzilla.redhat.com/show_bug.cgi?id=1332456
+%global NSSSOFTOKN_BUILDTIME_NUMBER %(pkg-config --modversion nss-softokn || : )
+%global NSS_BUILDTIME_NUMBER %(pkg-config --modversion nss || : )
+#this is worakround for processing of requires during srpm creation
+%global NSSSOFTOKN_BUILDTIME_VERSION %(if [ "x%{NSSSOFTOKN_BUILDTIME_NUMBER}" == "x" ] ; then echo "" ;else echo ">= %{NSSSOFTOKN_BUILDTIME_NUMBER}" ;fi)
+%global NSS_BUILDTIME_VERSION %(if [ "x%{NSS_BUILDTIME_NUMBER}" == "x" ] ; then echo "" ;else echo ">= %{NSS_BUILDTIME_NUMBER}" ;fi)
 
 %ifarch x86_64
 %global archbuild amd64
@@ -124,7 +132,7 @@ BuildRequires: jpackage-generic-compat
 # If hsbootstrap is 1, build HotSpot alone first and use that in the bootstrap JDK
 # You can turn this on to avoid issues where HotSpot is broken in the bootstrap JDK
 %ifarch %{jit_arches}
-%global hsbootstrap 1
+%global hsbootstrap 0
 %else
 %global hsbootstrap 0
 %endif
@@ -161,8 +169,8 @@ BuildRequires: jpackage-generic-compat
 
 # Standard JPackage naming and versioning defines.
 %global origin          openjdk
-%global updatever       111
-%global buildver        01
+%global updatever       141
+%global buildver        02
 # Keep priority on 7digits in case updatever>9
 %global priority        1700%{updatever}
 %global javaver         1.7.0
@@ -178,6 +186,8 @@ BuildRequires: jpackage-generic-compat
 %global sdkbindir       %{_jvmdir}/%{sdkdir}/bin
 %global jrebindir       %{_jvmdir}/%{jredir}/bin
 %global jvmjardir       %{_jvmjardir}/%{uniquesuffix}
+
+%global rpm_state_dir %{_localstatedir}/lib/rpm-state/
 
 #we can copy the javadoc to not arched dir, or made it not noarch
 %global uniquejavadocdir       %{fullversion}
@@ -199,12 +209,14 @@ BuildRequires: jpackage-generic-compat
   %endif
 %endif
 
+%global check_sum_presented_in_spec() %{nil}
+
 # Prevent brp-java-repack-jars from being run.
 %global __jar_repack 0
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt1_2.6.7.2jpp8
+Release: alt1_2.6.10.1jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -308,15 +320,8 @@ Patch400: rh1022017.patch
 
 # Temporary patches
 
-# Patches for b00->b01
-# S7081817: test/sun/security/provider/certpath/X509CertPath/IllegalCertiticates.java failing
-Patch501: 7081817.patch
-# S8140344: add support for 3 digit update release numbers
-Patch502: 8140344.patch
-# S8145017: Add support for 3 digit hotspot minor version numbers
-Patch503: 8145017.patch
-# S8162344: The API changes made by CR 7064075 need to be reverted 
-Patch504: 8162344.patch
+# PR2809: Backport "8076221: Disable RC4 cipher suites" (will appear in 2.7.0)
+Patch500: pr2809.patch
 
 # End of tmp patches
 
@@ -347,7 +352,8 @@ BuildRequires: zip
 BuildRequires: fontconfig
 BuildRequires: fonts-type1-xorg
 BuildRequires: zlib > 1.2.3
-BuildRequires: java-1.7.0-openjdk-devel
+# Require a build JDK which has a working jar uf (PR1437 / RH1207129)
+BuildRequires: java-1.7.0-openjdk-devel >= 1.7.0.111
 BuildRequires: fontconfig
 #BuildRequires: at-spi-devel
 BuildRequires: gawk
@@ -458,8 +464,15 @@ Requires: ca-trust
 Requires: jpackage-utils >= 1.7.3
 # Require zoneinfo data provided by tzdata-java subpackage.
 Requires: tzdata-java
+# there is need to depnd on exact version of nss
+Requires: libnss %{NSS_BUILDTIME_VERSION}
+Requires: libnss %{NSSSOFTOKN_BUILDTIME_VERSION}
+# tool to copy jdk's configs - should be Recommends only, but then only dnf/yum eforce it, not rpm transaction and so no configs are persisted when pure rpm -u is run. I t may be consiedered as regression
+#Requires:	copy-jdk-configs >= 1.1
 # Post requires alternatives to install tool alternatives.
+# in version 1.7 and higher for --family switch
 # Postun requires alternatives to uninstall tool alternatives.
+# in version 1.7 and higher for --family switch
 
 Provides: jre-%{javaver}-%{origin}-headless = %{epoch}:%{version}-%{release}
 Provides: jre-%{origin}-headless = %{epoch}:%{version}-%{release}
@@ -493,7 +506,9 @@ Group:   Development/Java
 # Require base package.
 Requires:         %{name} = %{epoch}:%{version}-%{release}
 # Post requires alternatives to install tool alternatives.
+# in version 1.7 and higher for --family switch
 # Postun requires alternatives to uninstall tool alternatives.
+# in version 1.7 and higher for --family switch
 
 # Standard JPackage devel provides.
 Provides: java-sdk-%{javaver}-%{origin} = %{epoch}:%{version}
@@ -533,7 +548,9 @@ Requires: jpackage-utils
 BuildArch: noarch
 
 # Post requires alternatives to install javadoc alternative.
+# in version 1.7 and higher for --family switch
 # Postun requires alternatives to uninstall javadoc alternative.
+# in version 1.7 and higher for --family switch
 
 # Standard JPackage javadoc provides.
 Provides: java-javadoc = %{epoch}:%{version}-%{release}
@@ -577,10 +594,7 @@ cp %{SOURCE2} .
 %patch400
 
 # Temporary fixes
-%patch501
-%patch502
-%patch503
-%patch504
+%patch500
 # End of temporary fixes
 
 # Add systemtap patches if enabled
@@ -610,6 +624,7 @@ for file in tapset/*.in; do
 %endif
     sed -i -e s:@ABS_JAVA_HOME_DIR@:%{_jvmdir}/%{sdkdir}:g $OUTPUT_FILE
     sed -i -e s:@INSTALL_ARCH_DIR@:%{archinstall}:g $OUTPUT_FILE
+    sed -i -e s:@prefix@:%{_jvmdir}/%{sdkdir $suffix}/:g $OUTPUT_FILE
 
 done
 
@@ -631,12 +646,13 @@ tar xzf %{SOURCE9}
 
 %patch106
 %patch200
+
+# this is check which controls, that latest java.security is included in post(_headless)
+%{check_sum_presented_in_spec openjdk/jdk/src/share/lib/security/java.security-linux}
 sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' openjdk/hotspot/make/linux/makefiles/defs.make
 %patch33 -p1
 
 %build
-%add_optflags -I/usr/include/nss
-%add_optflags -I/usr/include/nspr
 # How many cpu's do we have?
 export NUM_PROC=`/usr/bin/getconf _NPROCESSORS_ONLN 2> /dev/null || :`
 export NUM_PROC=${NUM_PROC:-1}
@@ -651,8 +667,6 @@ export CFLAGS="$CFLAGS -mieee"
 
 CFLAGS="$CFLAGS -fstack-protector-strong"
 export CFLAGS
-#CFLAGS="$CFLAGS -I/usr/include/nspr -I/usr/include/nss"
-#export CFLAGS
 
 # Build the re-written rhino jar
 mkdir -p rhino/{old,new}
@@ -785,8 +799,8 @@ make \
   JAVAC_WARNINGS_FATAL="false" \
   INSTALL_LOCATION=%{_jvmdir}/%{sdkdir} \
   SYSTEM_NSS="" \
-  NSS_LIBS="`pkg-config --libs nss` -lfreebl" \
-  NSS_CFLAGS="`pkg-config --cflags nss-softokn` -I/usr/include/nss -I/usr/include/nspr" \
+  NSS_LIBS="%{NSS_LIBS} -lfreebl" \
+  NSS_CFLAGS="%{NSS_CFLAGS}" \
   ECC_JUST_SUITE_B="true" \
   SYSTEM_GSETTINGS="true" \
   BUILD_JAXP=false BUILD_JAXWS=false BUILD_LANGTOOLS=false BUILD_JDK=false BUILD_CORBA=false \
@@ -794,7 +808,7 @@ make \
   %{debugbuild}
 
 export VM_DIR=bootstrap-vm/jre/lib/%{archinstall}/server
-cp -dR ${SYSTEM_JDK_DIR}-* bootstrap-vm
+cp -dR $(readlink -e ${SYSTEM_JDK_DIR}) bootstrap-vm
 rm -vf ${VM_DIR}/libjvm.so
 if [ ! -e ${VM_DIR} ] ; then mkdir -p ${VM_DIR}; fi
 cp -av bootstrap/hotspot/import/jre/lib/%{archinstall}/server/libjvm.so ${VM_DIR}
@@ -828,21 +842,13 @@ make \
   JAVAC_WARNINGS_FATAL="false" \
   INSTALL_LOCATION=%{_jvmdir}/%{sdkdir} \
   SYSTEM_NSS="" \
-  NSS_LIBS="`pkg-config --libs nss` -lfreebl" \
-  NSS_CFLAGS="`pkg-config --cflags nss-softokn` -I/usr/include/nss -I/usr/include/nspr" \
+  NSS_LIBS="%{NSS_LIBS} -lfreebl" \
+  NSS_CFLAGS="%{NSS_CFLAGS}" \
   ECC_JUST_SUITE_B="true" \
   SYSTEM_GSETTINGS="true" \
   %{debugbuild}
 
 popd >& /dev/null
-
-# JARs that are updated (jar uf) during the build end up with
-# the wrong permissions due to PR1437 / RH1207129
-# Once 2.6.7 is in place, we can require this and remove these lines
-if [ -e $(pwd)/%{buildoutputdir}/j2sdk-image/lib/sa-jdi.jar ]; then 
-  chmod 644 $(pwd)/%{buildoutputdir}/j2sdk-image/lib/sa-jdi.jar;
-fi
-chmod 644 $(pwd)/%{buildoutputdir}/j2sdk-image/jre/lib/resources.jar
 
 export JAVA_HOME=$(pwd)/%{buildoutputdir}/j2sdk-image
 
@@ -883,6 +889,12 @@ $JAVA_HOME/bin/javac -d . %{SOURCE12}
 $JAVA_HOME/bin/java TestCryptoLevel
 
 sh %{SOURCE11} ${JAVA_HOME}
+
+%check
+export JAVA_HOME=$(pwd)/%{buildoutputdir $suffix}/j2sdk-image
+
+# check java.security in this build is also in this specfile
+%{check_sum_presented_in_spec $JAVA_HOME/jre/lib/security/java.security}
 
 %install
 unset JAVA_HOME
@@ -1022,10 +1034,13 @@ NOT_HEADLESS=\
 "%{_jvmdir}/%{uniquesuffix}/jre/lib/%{archinstall}/libjsoundalsa.so 
 %{_jvmdir}/%{uniquesuffix}/jre/lib/%{archinstall}/libpulse-java.so 
 %{_jvmdir}/%{uniquesuffix}/jre/lib/%{archinstall}/libsplashscreen.so 
+%{_jvmdir}/%{uniquesuffix}/jre/lib/%{archinstall}/libjavagtk.so
 %{_jvmdir}/%{uniquesuffix}/jre/lib/%{archinstall}/xawt/libmawt.so
+%{_jvmdir}/%{uniquesuffix}/jre/bin/policytool
 %{_jvmdir}/%{uniquesuffix}/jre-abrt/lib/%{archinstall}/libjsoundalsa.so 
 %{_jvmdir}/%{uniquesuffix}/jre-abrt/lib/%{archinstall}/libpulse-java.so 
 %{_jvmdir}/%{uniquesuffix}/jre-abrt/lib/%{archinstall}/libsplashscreen.so 
+%{_jvmdir}/%{uniquesuffix}/jre-abrt/lib/%{archinstall}/libjavagtk.so
 %{_jvmdir}/%{uniquesuffix}/jre-abrt/lib/%{archinstall}/xawt/libmawt.so"
 #filter  %{name}.files from  %{name}.files.all to  %{name}.files-headless
 ALL=`cat %{name}.files.all`
@@ -1300,6 +1315,7 @@ fi
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/local_policy.jar
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/java.policy
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/java.security
+%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/blacklisted.certs
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/logging.properties
 %{_mandir}/man1/java-%{uniquesuffix}.1*
 %{_mandir}/man1/keytool-%{uniquesuffix}.1*
@@ -1398,6 +1414,9 @@ fi
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.141-alt1_2.6.10.1jpp8
+- new version
+
 * Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.111-alt1_2.6.7.2jpp8
 - new version
 
