@@ -1,8 +1,8 @@
 ## SPEC file for Perl module File::Find::Object::Rule
 
 Name: perl-File-Find-Object-Rule
-Version: 0.0306
-Release: alt3
+Version: 0.0307
+Release: alt1
 
 Summary: alternative interface to File::Find::Object
 
@@ -21,9 +21,9 @@ AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses
 
 
-# Automatically added by buildreq on Sun Aug 31 2014
-# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-XSAccessor perl-Devel-Symdump perl-Encode perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel perl-parent perl-podlators
-BuildRequires: perl-File-Find-Object perl-HTML-Parser perl-Module-Build perl-Number-Compare perl-Test-Pod perl-Test-Pod-Coverage perl-Text-Glob perl-unicore
+# Automatically added by buildreq on Sun Jun 03 2018
+# optimized out: perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-XSAccessor perl-Devel-Symdump perl-Encode perl-File-Find-Rule perl-HTML-Parser perl-JSON-PP perl-Module-Metadata perl-Number-Compare perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Text-Glob perl-devel perl-parent perl-podlators python-base python-modules python3 python3-base python3-module-zope ruby
+BuildRequires: perl-File-Find-Object perl-File-Find-Rule-Perl perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage
 
 %description
 Perl module File::Find::Object::Rule is a friendlier interface
@@ -46,6 +46,9 @@ specify the desired files and directories.
 %_man1dir/findorule*
 
 %changelog
+* Sun Jun 03 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.0307-alt1
+- New version
+
 * Sun Sep 18 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.0306-alt3
 - New version
 
