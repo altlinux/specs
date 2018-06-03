@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-generic-compat
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: ca-certificates-java
@@ -28,8 +28,8 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.7.0-openjdk
-%define version 1.7.0.141
-%define release 2.6.10.1
+%define version 1.7.0.181
+%define release 2.6.14.8
 # If debug is 1, OpenJDK is built with all debug info present.
 %global debug 0
 
@@ -37,7 +37,7 @@ BuildRequires: jpackage-generic-compat
 # conflicting) files in the -debuginfo package
 %undefine _missing_build_ids_terminate_build
 
-%global icedtea_version 2.6.10
+%global icedtea_version 2.6.14
 %global hg_tag icedtea-{icedtea_version}
 
 %global aarch64			aarch64 arm64 armv8
@@ -61,62 +61,78 @@ BuildRequires: jpackage-generic-compat
 %global NSSSOFTOKN_BUILDTIME_VERSION %(if [ "x%{NSSSOFTOKN_BUILDTIME_NUMBER}" == "x" ] ; then echo "" ;else echo ">= %{NSSSOFTOKN_BUILDTIME_NUMBER}" ;fi)
 %global NSS_BUILDTIME_VERSION %(if [ "x%{NSS_BUILDTIME_NUMBER}" == "x" ] ; then echo "" ;else echo ">= %{NSS_BUILDTIME_NUMBER}" ;fi)
 
+# In some cases, the arch used by the JDK does
+# not match _arch.
+# Also, in some cases, the machine name used by SystemTap
+# does not match that given by _build_cpu
 %ifarch x86_64
 %global archbuild amd64
 %global archinstall amd64
+%global stapinstall x86_64
 %endif
 %ifarch ppc
 %global archbuild ppc
 %global archinstall ppc
 %global archdef PPC
+%global stapinstall powerpc
 %endif
 %ifarch %{ppc64be}
 %global archbuild ppc64
 %global archinstall ppc64
 %global archdef PPC
+%global stapinstall powerpc
 %endif
 %ifarch %{ppc64le}
 %global archbuild ppc64le
 %global archinstall ppc64le
 %global archdef PPC64
+%global stapinstall powerpc
 %endif
 %ifarch %{ix86}
 %global archbuild i586
 %global archinstall i386
+%global stapinstall i386
 %endif
 %ifarch ia64
 %global archbuild ia64
 %global archinstall ia64
+%global stapinstall ia64
 %endif
 %ifarch s390
 %global archbuild s390
 %global archinstall s390
 %global archdef S390
+%global stapinstall s390
 %endif
 %ifarch s390x
 %global archbuild s390x
 %global archinstall s390x
 %global archdef S390
+%global stapinstall s390
 %endif
 %ifarch %{arm}
 %global archbuild arm
 %global archinstall arm
 %global archdef ARM
+%global stapinstall arm
 %endif
 %ifarch %{aarch64}
 %global archbuild aarch64
 %global archinstall aarch64
 %global archdef AARCH64
+%global stapinstall arm64
 %endif
 # 32 bit sparc, optimized for v9
 %ifarch sparcv9
 %global archbuild sparc
 %global archinstall sparc
+%global stapinstall %{_build_cpu}
 %endif
 # 64 bit sparc
 %ifarch sparc64
 %global archbuild sparcv9
 %global archinstall sparcv9
+%global stapinstall %{_build_cpu}
 %endif
 %ifnarch %{jit_arches}
 %global archbuild %{_arch}
@@ -132,7 +148,7 @@ BuildRequires: jpackage-generic-compat
 # If hsbootstrap is 1, build HotSpot alone first and use that in the bootstrap JDK
 # You can turn this on to avoid issues where HotSpot is broken in the bootstrap JDK
 %ifarch %{jit_arches}
-%global hsbootstrap 0
+%global hsbootstrap 1
 %else
 %global hsbootstrap 0
 %endif
@@ -169,8 +185,8 @@ BuildRequires: jpackage-generic-compat
 
 # Standard JPackage naming and versioning defines.
 %global origin          openjdk
-%global updatever       141
-%global buildver        02
+%global updatever       181
+%global buildver        00
 # Keep priority on 7digits in case updatever>9
 %global priority        1700%{updatever}
 %global javaver         1.7.0
@@ -202,21 +218,15 @@ BuildRequires: jpackage-generic-compat
 # for the primary arch for now). Systemtap uses the machine name
 # aka build_cpu as architecture specific directory name.
 %global tapsetroot /usr/share/systemtap
-  %ifarch %{ix86}
-    %global tapsetdir %{tapsetroot}/tapset/i386
-  %else
-    %global tapsetdir %{tapsetroot}/tapset/%{_build_cpu}
-  %endif
+%global tapsetdir %{tapsetroot}/tapset/%{stapinstall}
 %endif
-
-%global check_sum_presented_in_spec() %{nil}
 
 # Prevent brp-java-repack-jars from being run.
 %global __jar_repack 0
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt1_2.6.10.1jpp8
+Release: alt1_2.6.14.8jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -230,7 +240,18 @@ Epoch:   0
 Summary: OpenJDK Runtime Environment
 Group:   Development/Other
 
-License:  ASL 1.1 and ASL 2.0 and GPL+ and GPLv2 and GPLv2 with exceptions and LGPL+ and LGPLv2 and MPLv1.0 and MPLv1.1 and Public Domain and W3C
+# HotSpot code is licensed under GPLv2
+# JDK library code is licensed under GPLv2 with the Classpath exception
+# The Apache license is used in code taken from Apache projects (primarily JAXP & JAXWS)
+# DOM levels 2 & 3 and the XML digital signature schemas are licensed under the W3C Software License
+# The JSR166 concurrency code is in the public domain
+# The BSD and MIT licenses are used for a number of third-party libraries (see THIRD_PARTY_README)
+# The OpenJDK source tree includes the JPEG library (IJG), zlib & libpng (zlib), giflib and LCMS (MIT)
+# The test code includes copies of NSS under the Mozilla Public License v2.0
+# The PCSClite headers are under a BSD with advertising license
+# The elliptic curve cryptography (ECC) source code is licensed under the LGPLv2.1 or any later version
+# JavaScript support is provided by Rhino, which is licensed under MPLv1.1
+License:  ASL 1.1 and ASL 2.0 and BSD and BSD with advertising and GPL+ and GPLv2 and GPLv2 with exceptions and IJG and LGPLv2+ and MIT and MPLv1.1 and MPLv2.0 and Public Domain and W3C and zlib
 URL:      http://openjdk.java.net/
 
 # Source from upstream IcedTea 2.x project. To regenerate, use
@@ -249,8 +270,8 @@ Source2:  README.src
 Source5: class-rewriter.tar.gz
 
 # Systemtap tapsets. Zipped up to keep it small.
-# last update from http://icedtea.classpath.org/hg/icedtea7/file/fe313abbf5af/tapset
-Source6: systemtap-tapset-2016-07-20.tar.xz
+# last update from IcedTea 2.6.10
+Source6: systemtap-tapset-2.6.12.tar.xz
 
 # .desktop files. 
 Source7:  policytool.desktop
@@ -276,7 +297,9 @@ Source11: remove-buildids.sh
 # Ensure we aren't using the limited crypto policy
 Source12: TestCryptoLevel.java
 
-Source13: java-abrt-luncher
+Source13: java-abrt-launcher
+
+Source20: repackReproduciblePolycies.sh
 
 # RPM/distribution specific patches
 
@@ -320,9 +343,11 @@ Patch400: rh1022017.patch
 
 # Temporary patches
 
-# PR2809: Backport "8076221: Disable RC4 cipher suites" (will appear in 2.7.0)
-Patch500: pr2809.patch
-
+# 8076221, PR2809: Backport "8076221: Disable RC4 cipher suites" (will appear in 2.7.0)
+Patch500: 8076221-pr2809.patch
+# PR3393, RH1273760: Support using RSAandMGF1 with the SHA hash algorithms in the PKCS11 provider (will appear in 2.7.0)
+Patch501: pr3393-rh1273760.patch
+Patch529: rh1566890_embargoed20180521.patch
 # End of tmp patches
 
 BuildRequires: autoconf
@@ -468,7 +493,7 @@ Requires: tzdata-java
 Requires: libnss %{NSS_BUILDTIME_VERSION}
 Requires: libnss %{NSSSOFTOKN_BUILDTIME_VERSION}
 # tool to copy jdk's configs - should be Recommends only, but then only dnf/yum eforce it, not rpm transaction and so no configs are persisted when pure rpm -u is run. I t may be consiedered as regression
-#Requires:	copy-jdk-configs >= 1.1
+#Requires:	copy-jdk-configs >= 3.3
 # Post requires alternatives to install tool alternatives.
 # in version 1.7 and higher for --family switch
 # Postun requires alternatives to uninstall tool alternatives.
@@ -590,12 +615,15 @@ cp %{SOURCE2} .
 %patch300
 %endif
 
+# Temporary fixes
+%patch500
+%patch501
+# End of temporary fixes
+
 # ECC fix
 %patch400
 
-# Temporary fixes
-%patch500
-# End of temporary fixes
+%patch529
 
 # Add systemtap patches if enabled
 %if_enabled systemtap
@@ -622,7 +650,6 @@ for file in tapset/*.in; do
 %else
     sed -e '/@ABS_CLIENT_LIBJVM_SO@/d' $file.1 > $OUTPUT_FILE
 %endif
-    sed -i -e s:@ABS_JAVA_HOME_DIR@:%{_jvmdir}/%{sdkdir}:g $OUTPUT_FILE
     sed -i -e s:@INSTALL_ARCH_DIR@:%{archinstall}:g $OUTPUT_FILE
     sed -i -e s:@prefix@:%{_jvmdir}/%{sdkdir $suffix}/:g $OUTPUT_FILE
 
@@ -646,9 +673,6 @@ tar xzf %{SOURCE9}
 
 %patch106
 %patch200
-
-# this is check which controls, that latest java.security is included in post(_headless)
-%{check_sum_presented_in_spec openjdk/jdk/src/share/lib/security/java.security-linux}
 sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' openjdk/hotspot/make/linux/makefiles/defs.make
 %patch33 -p1
 
@@ -662,11 +686,19 @@ export NUM_PROC=${NUM_PROC:-1}
 export ARCH_DATA_MODEL=64
 %endif
 %ifarch alpha
-export CFLAGS="$CFLAGS -mieee"
+%global archflags "-mieee"
 %endif
 
-CFLAGS="$CFLAGS -fstack-protector-strong"
-export CFLAGS
+# Filter out flags from the optflags macro that cause problems with the OpenJDK build
+# We filter out -O flags so that the optimisation of HotSpot is not lowered from O3 to O2
+# We filter out -Wall which will otherwise cause HotSpot to produce hundreds of thousands of warnings (100+mb logs)
+# We replace it with -Wformat (required by -Werror=format-security) and -Wno-cpp to avoid FORTIFY_SOURCE warnings
+# We filter out -fexceptions as the HotSpot build explicitly does -fno-exceptions and it's otherwise the default for C++
+%global ourflags %(echo %optflags | sed -e 's|-Wall|-Wformat=2 -Wno-cpp -Wno-error=format-nonliteral|')
+# Disable RPM CFLAGS for now as the change appears to cause crashes on x86 RHEL 7.5 multilib
+#%global ourcppflags %(echo %ourflags | sed -e 's|-fexceptions||' | sed -r -e 's|-O[0-9]*||')
+%global ourcppflags "-fstack-protector-strong"
+%global ourldflags %{__global_ldflags}
 
 # Build the re-written rhino jar
 mkdir -p rhino/{old,new}
@@ -805,6 +837,7 @@ make \
   SYSTEM_GSETTINGS="true" \
   BUILD_JAXP=false BUILD_JAXWS=false BUILD_LANGTOOLS=false BUILD_JDK=false BUILD_CORBA=false \
   ALT_JDK_IMPORT_PATH=${JDK_TO_BUILD_WITH} ALT_OUTPUTDIR=${PWD}/bootstrap \
+  EXTRA_CFLAGS="%{ourcppflags}" EXTRA_LDFLAGS="%{ourldflags}" \
   %{debugbuild}
 
 export VM_DIR=bootstrap-vm/jre/lib/%{archinstall}/server
@@ -846,13 +879,14 @@ make \
   NSS_CFLAGS="%{NSS_CFLAGS}" \
   ECC_JUST_SUITE_B="true" \
   SYSTEM_GSETTINGS="true" \
+  EXTRA_CFLAGS="%{ourcppflags}" EXTRA_LDFLAGS="%{ourldflags}" \
   %{debugbuild}
 
 popd >& /dev/null
 
 export JAVA_HOME=$(pwd)/%{buildoutputdir}/j2sdk-image
 
-# Install java-abrt-luncher
+# Install java-abrt-launcher
 mkdir  $JAVA_HOME/jre-abrt
 mkdir  $JAVA_HOME/jre-abrt/bin
 mv $JAVA_HOME/jre/bin/java $JAVA_HOME/jre-abrt/bin/java
@@ -893,8 +927,6 @@ sh %{SOURCE11} ${JAVA_HOME}
 %check
 export JAVA_HOME=$(pwd)/%{buildoutputdir $suffix}/j2sdk-image
 
-# check java.security in this build is also in this specfile
-%{check_sum_presented_in_spec $JAVA_HOME/jre/lib/security/java.security}
 
 %install
 unset JAVA_HOME
@@ -1101,6 +1133,10 @@ find $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/demo \
     echo "" >> accessibility.properties
   popd
 
+bash %{SOURCE20} $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir} %{javaver}
+# https://bugzilla.redhat.com/show_bug.cgi?id=1183793
+touch -t 201401010000 $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir $suffix}/lib/security/java.security
+
 # touching all ghosts; hack for rpm 4.0.4
 for rpm404_ghost in %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/classes.jsa %{_jvmdir}/%{jredir}/lib/%{archinstall}/client/classes.jsa
 do
@@ -1287,6 +1323,7 @@ fi
 
 
 
+# intentioanlly only for non-debug
 %files -f %{name}.files
 %_sysconfdir/buildreqs/packages/substitute.d/%name
 %{_datadir}/icons/hicolor/*x*/apps/java-%{javaver}.png
@@ -1311,8 +1348,10 @@ fi
 %{jvmjardir}
 %dir %{_jvmdir}/%{jredir}/lib/security
 %{_jvmdir}/%{jredir}/lib/security/cacerts
-%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/US_export_policy.jar
-%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/local_policy.jar
+%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/policy/unlimited/US_export_policy.jar
+%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/policy/unlimited/local_policy.jar
+%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/policy/limited/US_export_policy.jar
+%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/policy/limited/local_policy.jar
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/java.policy
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/java.security
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/blacklisted.certs
@@ -1338,6 +1377,10 @@ fi
 %{_sysconfdir}/.java/
 %{_sysconfdir}/.java/.systemPrefs
 %{_jvmdir}/%{sdkdir}/jre-abrt
+# sisyphus_check
+%dir %{_jvmdir}/%{jredir}/lib/security/policy
+%dir %{_jvmdir}/%{jredir}/lib/security/policy/limited
+%dir %{_jvmdir}/%{jredir}/lib/security/policy/unlimited
 
 
 %files devel
@@ -1414,6 +1457,9 @@ fi
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.181-alt1_2.6.14.8jpp8
+- new version
+
 * Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.141-alt1_2.6.10.1jpp8
 - new version
 
