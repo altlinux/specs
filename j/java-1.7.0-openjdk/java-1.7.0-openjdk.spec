@@ -1,7 +1,7 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-generic-compat
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-BuildRequires: docbook-style-xsl
 BuildRequires: ca-certificates-java
 # ALT arm fix by Gleb Fotengauer-Malinovskiy <glebfm@altlinux.org>
 %ifarch %{arm}
@@ -11,30 +11,34 @@ BuildRequires: ca-certificates-java
 %def_disable jvmjardir
 %def_disable javaws
 %def_disable moz_plugin
+%def_disable control_panel
 %def_disable systemtap
 %def_disable desktop
 BuildRequires: unzip gcc-c++ libstdc++-devel-static
-BuildRequires: libXext-devel libXrender-devel libfreetype-devel libkrb5-devel
+BuildRequires: libXext-devel libXrender-devel libXcomposite-devel
+BuildRequires: libfreetype-devel libkrb5-devel
 BuildRequires(pre): browser-plugins-npapi-devel lsb-release
 BuildRequires(pre): rpm-macros-java
 BuildRequires: pkgconfig(gtk+-2.0)
 %set_compress_method none
 %define with_systemtap 0
 BuildRequires: /proc
-%define power64 ppc64
-# %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define release 2.5.5.0
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.7.0-openjdk
-%define version 1.7.0.79
+%define version 1.7.0.111
+%define release 2.6.7.2
 # If debug is 1, OpenJDK is built with all debug info present.
 %global debug 0
 
-%global icedtea_version 2.5.5
-%global hg_tag icedtea-{icedtea_version}
+# we remove the build id notes explicitly to avoid generating (potentially
+# conflicting) files in the -debuginfo package
+%undefine _missing_build_ids_terminate_build
 
-%global aarch64_rev 1939c010fd37
-%global aarch64_tag icedtea-2.6pre21
+%global icedtea_version 2.6.7
+%global hg_tag icedtea-{icedtea_version}
 
 %global aarch64			aarch64 arm64 armv8
 #sometimes we need to distinguish big and little endian PPC64
@@ -48,14 +52,6 @@ BuildRequires: /proc
 #looks liekopenjdk RPM specific bug
 # Always set this so the nss.cfg file is not broken
 %global NSS_LIBDIR %(pkg-config --variable=libdir nss)
-
-#fix for https://bugzilla.redhat.com/show_bug.cgi?id=1111349
-%global _privatelibs libmawt[.]so.*
-
-
-
-#if 0, then links are set forcibly, if 1 ten only if status is auto
-%global graceful_links 1
 
 %ifarch x86_64
 %global archbuild amd64
@@ -127,13 +123,18 @@ BuildRequires: /proc
 
 # If hsbootstrap is 1, build HotSpot alone first and use that in the bootstrap JDK
 # You can turn this on to avoid issues where HotSpot is broken in the bootstrap JDK
+%ifarch %{jit_arches}
+%global hsbootstrap 1
+%else
 %global hsbootstrap 0
+%endif
 
 %if %{debug}
 %global buildoutputdir openjdk/build/linux-%{archbuild}-debug
 %else
 %global buildoutputdir openjdk/build/linux-%{archbuild}
 %endif
+
 %global with_pulseaudio 1
 
 %if_enabled systemtap
@@ -160,10 +161,10 @@ BuildRequires: /proc
 
 # Standard JPackage naming and versioning defines.
 %global origin          openjdk
-%global updatever       79
-%global buildver        14
+%global updatever       111
+%global buildver        01
 # Keep priority on 7digits in case updatever>9
-%global priority        17000%{updatever}
+%global priority        1700%{updatever}
 %global javaver         1.7.0
 
 %global fullversion     %{name}-%{version}-%{release}
@@ -176,15 +177,10 @@ BuildRequires: /proc
 %global jredir          %{sdkdir}/jre
 %global sdkbindir       %{_jvmdir}/%{sdkdir}/bin
 %global jrebindir       %{_jvmdir}/%{jredir}/bin
-%if_enabled jvmjardir
 %global jvmjardir       %{_jvmjardir}/%{uniquesuffix}
-%endif
 
 #we can copy the javadoc to not arched dir, or made it not noarch
 %global uniquejavadocdir       %{fullversion}
-
-%global statuscheck		status is auto
-%global linkcheck		link currently points to
 
 %ifarch %{jit_arches}
 # Where to install systemtap tapset (links)
@@ -208,7 +204,7 @@ BuildRequires: /proc
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt9_2.5.5.0jpp7
+Release: alt1_2.6.7.2jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -220,28 +216,15 @@ Release: alt9_2.5.5.0jpp7
 # provides >= 1.6.0 must specify the epoch, "java >= 1:1.6.0".
 Epoch:   0
 Summary: OpenJDK Runtime Environment
-Group:   Development/Java
+Group:   Development/Other
 
 License:  ASL 1.1 and ASL 2.0 and GPL+ and GPLv2 and GPLv2 with exceptions and LGPL+ and LGPLv2 and MPLv1.0 and MPLv1.1 and Public Domain and W3C
 URL:      http://openjdk.java.net/
 
-#head
-#REPO=http://icedtea.classpath.org/hg/icedtea7-forest
-#current release
-#REPO=http://icedtea.classpath.org/hg/release/icedtea7-forest-2.5
-# hg clone $REPO/ openjdk -r %{hg_tag}
-# hg clone $REPO/corba/ openjdk/corba -r %{hg_tag}
-# hg clone $REPO/hotspot/ openjdk/hotspot -r %{hg_tag}
-# hg clone $REPO/jaxp/ openjdk/jaxp -r %{hg_tag}
-# hg clone $REPO/jaxws/ openjdk/jaxws -r %{hg_tag}
-# hg clone $REPO/jdk/ openjdk/jdk -r %{hg_tag}
-# hg clone $REPO/langtools/ openjdk/langtools -r %{hg_tag}
-# find openjdk -name ".hg" -exec rm -rf '{}' \;
-# sh /git/java-1.7.0-openjdk/rhel-7.1/fsg.sh
-# tar cJf openjdk-icedtea-%{icedtea_version}.tar.xz openjdk
+# Source from upstream IcedTea 2.x project. To regenerate, use
+# VERSION=icedtea-${icedtea_version} FILE_NAME_ROOT=openjdk-${VERSION}
+# REPO_ROOT=<path to checked-out repository> generate_source_tarball.sh
 Source0:  openjdk-icedtea-%{icedtea_version}.tar.xz
-# wget -v -O %{aarch64_tag}.tar.bz2 http://icedtea.classpath.org/hg/icedtea7-forest/hotspot/archive/%{aarch64_rev}.tar.bz2
-Source1:  http://icedtea.classpath.org/hg/icedtea7-forest/hotspot/archive/%{aarch64_rev}.tar.bz2#/aarch64-%{aarch64_tag}.tar.bz2
 
 # README file
 # This source is under maintainer's/java-team's control
@@ -254,8 +237,8 @@ Source2:  README.src
 Source5: class-rewriter.tar.gz
 
 # Systemtap tapsets. Zipped up to keep it small.
-# last update from http://icedtea.classpath.org/hg/icedtea7/file/8599fdfc398d/tapset
-Source6: systemtap-tapset-2014-03-19.tar.xz
+# last update from http://icedtea.classpath.org/hg/icedtea7/file/fe313abbf5af/tapset
+Source6: systemtap-tapset-2016-07-20.tar.xz
 
 # .desktop files. 
 Source7:  policytool.desktop
@@ -274,6 +257,9 @@ Source10: remove-intree-libraries.sh
 #http://icedtea.classpath.org/hg/icedtea7/file/933d082ec889/fsg.sh
 # file to clean tarball, should be ketp updated as possible
 Source1111: fsg.sh
+
+# Remove build ids from binaries
+Source11: remove-buildids.sh
 
 # Ensure we aren't using the limited crypto policy
 Source12: TestCryptoLevel.java
@@ -322,56 +308,62 @@ Patch400: rh1022017.patch
 
 # Temporary patches
 
-#Workaround RH902004
-Patch403: PStack-808293.patch
+# Patches for b00->b01
+# S7081817: test/sun/security/provider/certpath/X509CertPath/IllegalCertiticates.java failing
+Patch501: 7081817.patch
+# S8140344: add support for 3 digit update release numbers
+Patch502: 8140344.patch
+# S8145017: Add support for 3 digit hotspot minor version numbers
+Patch503: 8145017.patch
+# S8162344: The API changes made by CR 7064075 need to be reverted 
+Patch504: 8162344.patch
 
-# Use ppc64le as arch name on ppc64le, not ppc64
-# Remove when we move to IcedTea 2.6.x
-Patch404: rh1191652-hotspot.patch
-Patch405: rh1191652-jdk.patch
-
-Patch406: fixPtraceInclude.patch
 # End of tmp patches
 
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: gcc-c++
 BuildRequires: libalsa-devel
-BuildRequires: cups-devel
+BuildRequires: libcups-devel
 BuildRequires: desktop-file-utils
-BuildRequires: libungif-devel
-BuildRequires: liblcms2-devel >= 2.5
+BuildRequires: libgif-devel
+# LCMS 2 is disabled until security issues are resolved
+#BuildRequires: lcms2-devel >= 2.5
 BuildRequires: libX11-devel
 BuildRequires: libXi-devel
-BuildRequires: libXp-devel
+BuildRequires: libXp-devel xorg-printproto-devel
 BuildRequires: libXt-devel
 BuildRequires: libXtst-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
 BuildRequires: wget
-BuildRequires: xsltproc libxslt
-BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
-BuildRequires: ant1.9-nodeps
+BuildRequires: xorg-pmproto-devel xorg-proto-devel xorg-xf86miscproto-devel
+BuildRequires: ant1.9
 BuildRequires: libXinerama-devel
-#BuildRequires: rhino
-Source3: rhino.jar
+# Provides lsb_release for generating distro id in jdk_generic_profile.sh
+BuildRequires: lsb-release
+BuildRequires: rhino
 BuildRequires: zip
 BuildRequires: fontconfig
 BuildRequires: fonts-type1-xorg
-BuildRequires: zlib > 1.2.3-6
+BuildRequires: zlib > 1.2.3
 BuildRequires: java-1.7.0-openjdk-devel
 BuildRequires: fontconfig
-#BuildRequires: libat-spi-devel
+#BuildRequires: at-spi-devel
 BuildRequires: gawk
-BuildRequires: pkgconfig >= 0.9.0
-BuildRequires: xset xhost
+BuildRequires: xorg-utils
 # Requirements for setting up the nss.cfg
-BuildRequires: nss-devel
+BuildRequires: libnss-devel libnss-devel-static
 # Required for NIO2
 BuildRequires: libattr-devel
 # Build requirements for SunEC system NSS support
 BuildRequires: libnss-devel >= 3.16.1
-BuildRequires: python
+# Required for smartcard support
+BuildRequires: libpcsclite libpcsclite-devel
+# Required for SCTP support
+BuildRequires: liblksctp-devel
+# Required for fallback native proxy support
+BuildRequires: GConf libGConf-devel libGConf-gir-devel
 # PulseAudio build requirements.
 %if %{with_pulseaudio}
 BuildRequires: libpulseaudio-devel >= 0.9.11
@@ -409,18 +401,14 @@ Provides: java-%{origin} = %{epoch}:%{version}-%{release}
 Provides: java = %{epoch}:%{javaver}
 # Standard JPackage extensions provides.
 Provides: java-fonts = %{epoch}:%{version}
-
-# Obsolete older 1.6 packages as it cannot use the new bytecode
 Source44: import.info
-%filter_from_provides /^(%{_privatelibs})$/d
-%filter_from_requires /^(%{_privatelibs})$/d
-Patch33: java-1.7.0-openjdk-gcc-cxx-5-5d0a13adec23.patch
+Source45: rhino.jar
 
 %define altname %name
 %define label -%{name}
 %define javaws_ver      %{javaver}
 
-%def_with gcc49
+%def_without gcc49
 %if_with gcc49
 %set_gcc_version 4.9
 BuildRequires: gcc4.9-c++
@@ -445,21 +433,29 @@ Provides: /usr/lib/jvm/java/jre/lib/%archinstall/server/libjvm.so(SUNWprivate_1.
 Provides: /usr/lib/jvm/java/jre/lib/%archinstall/client/libjvm.so()
 Provides: /usr/lib/jvm/java/jre/lib/%archinstall/client/libjvm.so(SUNWprivate_1.1)
 %endif
-Patch34: java-1.7.0-openjdk-alt-no-Werror.patch
+Patch33: java-1.7.0-openjdk-alt-no-Werror.patch
+
+# Obsolete older 1.6 packages as it cannot use the new bytecode
+# Obsoletes: java-1.6.0-openjdk
+# Obsoletes: java-1.6.0-openjdk-demo
+# Obsoletes: java-1.6.0-openjdk-devel
+# Obsoletes: java-1.6.0-openjdk-javadoc
+# Obsoletes: java-1.6.0-openjdk-src
 
 %description
 The OpenJDK runtime environment.
 
 %package headless
 Summary: The OpenJDK runtime environment without audio and video support
-Group:   Development/Java
+Group:   Development/Other
 
-Requires: liblcms2 >= 2.5
-#Requires: libjpeg
+# LCMS 2 is disabled until security issues are resolved
+#Requires: lcms2 >= 2.5
+Requires: libjpeg
 # Require /etc/pki/java/cacerts.
-Requires: ca-certificates-java
+Requires: ca-trust
 # Require jpackage-utils for ant.
-# Requires: jpackage-utils >= 1.7.3-1jpp.2
+Requires: jpackage-utils >= 1.7.3
 # Require zoneinfo data provided by tzdata-java subpackage.
 Requires: tzdata-java
 # Post requires alternatives to install tool alternatives.
@@ -485,6 +481,7 @@ Provides: jdbc-stdext = 4.1
 Provides: java-sasl = %{epoch}:%{version}
 Requires: java-common
 Requires: /proc
+Requires(post): /proc
 
 %description headless
 The OpenJDK runtime environment without audio and video 
@@ -513,7 +510,7 @@ The OpenJDK development tools.
 
 %package demo
 Summary: OpenJDK Demos
-Group:   Development/Java
+Group:   Development/Other
 
 Requires: %{name} = %{epoch}:%{version}-%{release}
 
@@ -522,7 +519,7 @@ The OpenJDK demos.
 
 %package src
 Summary: OpenJDK Source Bundle
-Group:   Development/Java
+Group:   Development/Other
 
 Requires: %{name} = %{epoch}:%{version}-%{release}
 
@@ -568,15 +565,6 @@ if [ $prioritylength -ne 7 ] ; then
 fi
 cp %{SOURCE2} .
 
-%ifarch %{aarch64}
-pushd openjdk
-rm -r hotspot
-tar xf %{SOURCE1}
-mv hotspot-%{aarch64_rev} hotspot
-popd
-%endif
-%patch406
-
 # OpenJDK patches
 %patch100
 
@@ -587,6 +575,13 @@ popd
 
 # ECC fix
 %patch400
+
+# Temporary fixes
+%patch501
+%patch502
+%patch503
+%patch504
+# End of temporary fixes
 
 # Add systemtap patches if enabled
 %if_enabled systemtap
@@ -636,19 +631,12 @@ tar xzf %{SOURCE9}
 
 %patch106
 %patch200
-
-%patch403
-# HotSpot ppc64le patch is applied upstream
-# on AArch64/2.6.x HotSpot.
-%ifnarch %{aarch64}
-%patch404
-%endif
-%patch405
-%patch33 -p0
 sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' openjdk/hotspot/make/linux/makefiles/defs.make
-%patch34 -p1
+%patch33 -p1
 
 %build
+%add_optflags -I/usr/include/nss
+%add_optflags -I/usr/include/nspr
 # How many cpu's do we have?
 export NUM_PROC=`/usr/bin/getconf _NPROCESSORS_ONLN 2> /dev/null || :`
 export NUM_PROC=${NUM_PROC:-1}
@@ -663,6 +651,8 @@ export CFLAGS="$CFLAGS -mieee"
 
 CFLAGS="$CFLAGS -fstack-protector-strong"
 export CFLAGS
+#CFLAGS="$CFLAGS -I/usr/include/nspr -I/usr/include/nss"
+#export CFLAGS
 
 # Build the re-written rhino jar
 mkdir -p rhino/{old,new}
@@ -674,7 +664,7 @@ mkdir -p rhino/{old,new}
 
 # Extract rhino.jar contents and rewrite
 (cd rhino/old 
- jar xf %{_sourcedir}/rhino.jar
+ jar xf %_sourcedir/rhino.jar
 )
 
 java -cp rewriter com.redhat.rewriter.ClassRewriter \
@@ -696,8 +686,53 @@ java -cp rewriter com.redhat.rewriter.ClassRewriter \
    jar cfm ../rhino.jar META-INF/MANIFEST.MF sun
 )
 
-export JDK_TO_BUILD_WITH=/usr/lib/jvm/java-1.7.0
+export SYSTEM_JDK_DIR=/usr/lib/jvm/java-1.7.0-openjdk
 
+# Temporary workaround for ppc64le ; RH1191652
+# Need to work around the jre arch directory being
+# ppc64 instead of the expected ppc64le
+# Taken from IcedTea7 bootstrap-directory-stage1 & PR1765
+%ifarch %{ppc64le}
+STAGE1_BOOT_RUNTIME=jdk/jre/lib/rt.jar
+mkdir -p jdk/bin
+ln -sfv ${SYSTEM_JDK_DIR}/bin/java jdk/bin/java
+ln -sfv ${SYSTEM_JDK_DIR}/bin/javah jdk/bin/javah
+ln -sfv ${SYSTEM_JDK_DIR}/bin/rmic jdk/bin/rmic
+ln -sfv ${SYSTEM_JDK_DIR}/bin/jar jdk/bin/jar
+ln -sfv ${SYSTEM_JDK_DIR}/bin/native2ascii jdk/bin/native2ascii
+ln -sfv ${SYSTEM_JDK_DIR}/bin/javac jdk/bin/javac
+ln -sfv ${SYSTEM_JDK_DIR}/bin/javap jdk/bin/javap
+ln -sfv ${SYSTEM_JDK_DIR}/bin/idlj jdk/bin/idlj
+mkdir -p jdk/lib/modules
+mkdir -p jdk/jre/lib && \
+cp ${SYSTEM_JDK_DIR}/jre/lib/rt.jar ${STAGE1_BOOT_RUNTIME} && \
+chmod u+w ${STAGE1_BOOT_RUNTIME}
+mkdir -p jdk/lib && \
+ln -sfv ${SYSTEM_JDK_DIR}/lib/tools.jar jdk/lib/tools.jar ; \
+# Workaround some older ppc64le builds installing to 'ppc64' rather than 'ppc64le'
+if test -d ${SYSTEM_JDK_DIR}/jre/lib/ppc64 ; then \
+  ln -sfv ${SYSTEM_JDK_DIR}/jre/lib/ppc64 \
+    jdk/jre/lib/%{archinstall} ; \
+else \
+  ln -sfv ${SYSTEM_JDK_DIR}/jre/lib/%{archinstall} \
+    jdk/jre/lib/ ; \
+fi
+if ! test -d jdk/jre/lib/%{archinstall}; \
+  then \
+  ln -sfv ./%{archbuild} \
+    jdk/jre/lib/%{archinstall}; \
+fi
+mkdir -p jdk/include && \
+for i in ${SYSTEM_JDK_DIR}/include/*; do \
+  test -r ${i} | continue; \
+  i=`basename ${i}`; \
+  rm -f jdk/include/${i}; \
+  ln -sv ${SYSTEM_JDK_DIR}/include/${i} jdk/include/${i}; \
+done;
+export JDK_TO_BUILD_WITH=${PWD}/jdk
+%else
+export JDK_TO_BUILD_WITH=${SYSTEM_JDK_DIR}
+%endif
 
 
 pushd openjdk >& /dev/null
@@ -711,17 +746,28 @@ oldumask=`umask`
 %ifnarch %{jit_arches}
 export ZERO_BUILD=true
 %endif
+# LCMS 2 is disabled until security issues are resolved
+export LCMS_CFLAGS="disabled"
+export LCMS_LIBS="disabled"
+export PKGVERSION="ALTLinux-%{release}-%{_arch} u%{updatever}-b%{buildver}"
+
 source jdk/make/jdk_generic_profile.sh
 
 # Restore old umask
 umask $oldumask
 
-make MEMORY_LIMIT=-J-Xmx512m \
-  DISABLE_INTREE_EC=true \
+# LCMS 2 is disabled until security issues are resolved
+export SYSTEM_LCMS=false
+
+%if %{hsbootstrap}
+
+mkdir bootstrap
+
+make \
   UNLIMITED_CRYPTO=true \
   ANT="/usr/bin/ant1.9" \
   DISTRO_NAME="ALTLinux" \
-  DISTRO_PACKAGE_VERSION="ALTLinux-%{release}-%{_arch} u%{updatever}-b%{buildver}" \
+  DISTRO_PACKAGE_VERSION="${PKGVERSION}" \
   JDK_UPDATE_VERSION=`printf "%02d" %{updatever}` \
   JDK_BUILD_NUMBER=b`printf "%02d" %{buildver}` \
   JRE_RELEASE_VERSION=%{javaver}_`printf "%02d" %{updatever}`-b`printf "%02d" %{buildver}` \
@@ -738,17 +784,65 @@ make MEMORY_LIMIT=-J-Xmx512m \
   STRIP_POLICY="no_strip" \
   JAVAC_WARNINGS_FATAL="false" \
   INSTALL_LOCATION=%{_jvmdir}/%{sdkdir} \
-  SYSTEM_NSS="true" \
-  NSS_LIBS="`pkg-config --libs nss-softokn` -lfreebl" \
-  NSS_CFLAGS="`pkg-config --cflags nss-softokn` " \
+  SYSTEM_NSS="" \
+  NSS_LIBS="`pkg-config --libs nss` -lfreebl" \
+  NSS_CFLAGS="`pkg-config --cflags nss-softokn` -I/usr/include/nss -I/usr/include/nspr" \
   ECC_JUST_SUITE_B="true" \
+  SYSTEM_GSETTINGS="true" \
+  BUILD_JAXP=false BUILD_JAXWS=false BUILD_LANGTOOLS=false BUILD_JDK=false BUILD_CORBA=false \
+  ALT_JDK_IMPORT_PATH=${JDK_TO_BUILD_WITH} ALT_OUTPUTDIR=${PWD}/bootstrap \
+  %{debugbuild}
+
+export VM_DIR=bootstrap-vm/jre/lib/%{archinstall}/server
+cp -dR ${SYSTEM_JDK_DIR}-* bootstrap-vm
+rm -vf ${VM_DIR}/libjvm.so
+if [ ! -e ${VM_DIR} ] ; then mkdir -p ${VM_DIR}; fi
+cp -av bootstrap/hotspot/import/jre/lib/%{archinstall}/server/libjvm.so ${VM_DIR}
+
+export ALT_BOOTDIR=${PWD}/bootstrap-vm
+  
+%endif
+
+# ENABLE_FULL_DEBUG_SYMBOLS=0 is the internal HotSpot option
+# to turn off the stripping of debuginfo. FULL_DEBUG_SYMBOLS
+# does the same for product builds, but is ignored on non-product builds.
+make \
+  UNLIMITED_CRYPTO=true \
+  ANT="/usr/bin/ant1.9" \
+  DISTRO_NAME="ALTLinux" \
+  DISTRO_PACKAGE_VERSION="${PKGVERSION}" \
+  JDK_UPDATE_VERSION=`printf "%02d" %{updatever}` \
+  JDK_BUILD_NUMBER=b`printf "%02d" %{buildver}` \
+  JRE_RELEASE_VERSION=%{javaver}_`printf "%02d" %{updatever}`-b`printf "%02d" %{buildver}` \
+  MILESTONE="fcs" \
+  ALT_PARALLEL_COMPILE_JOBS="$NUM_PROC" \
+  HOTSPOT_BUILD_JOBS="$NUM_PROC" \
+  STATIC_CXX="false" \
+  RHINO_JAR="$PWD/../rhino/rhino.jar" \
+  GENSRCDIR="$PWD/generated.build" \
+  FT2_CFLAGS="`pkg-config --cflags freetype2` " \
+  FT2_LIBS="`pkg-config --libs freetype2` " \
+  DEBUG_CLASSFILES="true" \
+  DEBUG_BINARIES="true" \
+  STRIP_POLICY="no_strip" \
+  JAVAC_WARNINGS_FATAL="false" \
+  INSTALL_LOCATION=%{_jvmdir}/%{sdkdir} \
+  SYSTEM_NSS="" \
+  NSS_LIBS="`pkg-config --libs nss` -lfreebl" \
+  NSS_CFLAGS="`pkg-config --cflags nss-softokn` -I/usr/include/nss -I/usr/include/nspr" \
+  ECC_JUST_SUITE_B="true" \
+  SYSTEM_GSETTINGS="true" \
   %{debugbuild}
 
 popd >& /dev/null
 
+# JARs that are updated (jar uf) during the build end up with
+# the wrong permissions due to PR1437 / RH1207129
+# Once 2.6.7 is in place, we can require this and remove these lines
 if [ -e $(pwd)/%{buildoutputdir}/j2sdk-image/lib/sa-jdi.jar ]; then 
   chmod 644 $(pwd)/%{buildoutputdir}/j2sdk-image/lib/sa-jdi.jar;
 fi
+chmod 644 $(pwd)/%{buildoutputdir}/j2sdk-image/jre/lib/resources.jar
 
 export JAVA_HOME=$(pwd)/%{buildoutputdir}/j2sdk-image
 
@@ -767,7 +861,7 @@ sed -i -e s:@NSS_LIBDIR@:%{NSS_LIBDIR}:g $JAVA_HOME/jre/lib/security/nss.cfg
 # Build pulseaudio and install it to JDK build location
 %if %{with_pulseaudio}
 pushd pulseaudio
-make MEMORY_LIMIT=-J-Xmx512m JAVA_HOME=$JAVA_HOME -f Makefile.pulseaudio
+make JAVA_HOME=$JAVA_HOME -f Makefile.pulseaudio
 cp -pPRf build/native/libpulse-java.so $JAVA_HOME/jre/lib/%{archinstall}/
 cp -pPRf build/pulse-java.jar $JAVA_HOME/jre/lib/ext/
 popd
@@ -788,15 +882,14 @@ rm -f %{buildoutputdir}/lib/fontconfig*.bfc
 $JAVA_HOME/bin/javac -d . %{SOURCE12}
 $JAVA_HOME/bin/java TestCryptoLevel
 
+sh %{SOURCE11} ${JAVA_HOME}
+
 %install
 unset JAVA_HOME
 STRIP_KEEP_SYMTAB=libjvm*
 
-# Install symlink to default soundfont
-install -d -m 755 $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/audio
-pushd $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/audio
-ln -s %{_datadir}/soundfonts/default.sf2
-popd
+# There used to be a link to the soundfont.
+# This is now obsolete following the inclusion of 8140620/PR2710
 
 pushd %{buildoutputdir}/j2sdk-image
 
@@ -830,7 +923,6 @@ mkdir -p $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/%{archinstall}/client/
     ln -sf $RELATIVE/cacerts .
   popd
 
-%if_enabled jvmjardir
   # Install extension symlinks.
   install -d -m 755 $RPM_BUILD_ROOT%{jvmjardir}
   pushd $RPM_BUILD_ROOT%{jvmjardir}
@@ -854,21 +946,18 @@ mkdir -p $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/%{archinstall}/client/
       ln -sf $jar $(echo $jar | sed "s|-%{version}.jar|.jar|g")
     done
   popd
-%endif
 
   # Install JCE policy symlinks.
-  #install -d -m 755 $RPM_BUILD_ROOT%{_jvmprivdir}/%{uniquesuffix}/jce/vanilla
+  install -d -m 755 $RPM_BUILD_ROOT%{_jvmprivdir}/%{uniquesuffix}/jce/vanilla
 
   # Install versioned symlinks.
   pushd $RPM_BUILD_ROOT%{_jvmdir}
     ln -sf %{jredir} %{jrelnk}
   popd
 
-%if_enabled jvmjardir
   pushd $RPM_BUILD_ROOT%{_jvmjardir}
     ln -sf %{sdkdir} %{jrelnk}
   popd
-%endif
 
   # Remove javaws man page
   rm -f man/man1/javaws*
@@ -887,7 +976,7 @@ mkdir -p $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/%{archinstall}/client/
   # Install demos and samples.
   cp -a demo $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}
   mkdir -p sample/rmi
-  #mv bin/java-rmi.cgi sample/rmi
+  mv bin/java-rmi.cgi sample/rmi
   cp -a sample $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}
 
 popd
@@ -933,13 +1022,10 @@ NOT_HEADLESS=\
 "%{_jvmdir}/%{uniquesuffix}/jre/lib/%{archinstall}/libjsoundalsa.so 
 %{_jvmdir}/%{uniquesuffix}/jre/lib/%{archinstall}/libpulse-java.so 
 %{_jvmdir}/%{uniquesuffix}/jre/lib/%{archinstall}/libsplashscreen.so 
-%{_jvmdir}/%{uniquesuffix}/jre/lib/%{archinstall}/libjavagtk.so
 %{_jvmdir}/%{uniquesuffix}/jre/lib/%{archinstall}/xawt/libmawt.so
-%{_jvmdir}/%{uniquesuffix}/jre/bin/policytool
 %{_jvmdir}/%{uniquesuffix}/jre-abrt/lib/%{archinstall}/libjsoundalsa.so 
 %{_jvmdir}/%{uniquesuffix}/jre-abrt/lib/%{archinstall}/libpulse-java.so 
 %{_jvmdir}/%{uniquesuffix}/jre-abrt/lib/%{archinstall}/libsplashscreen.so 
-%{_jvmdir}/%{uniquesuffix}/jre-abrt/lib/%{archinstall}/libjavagtk.so
 %{_jvmdir}/%{uniquesuffix}/jre-abrt/lib/%{archinstall}/xawt/libmawt.so"
 #filter  %{name}.files from  %{name}.files.all to  %{name}.files-headless
 ALL=`cat %{name}.files.all`
@@ -1001,10 +1087,10 @@ find $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/demo \
   popd
 
 # touching all ghosts; hack for rpm 4.0.4
-for rpm_404_ghost in %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/classes.jsa %{_jvmdir}/%{jredir}/lib/%{archinstall}/client/classes.jsa
+for rpm404_ghost in %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/classes.jsa %{_jvmdir}/%{jredir}/lib/%{archinstall}/client/classes.jsa
 do
-    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
-    touch %buildroot"$rpm_404_ghost"
+    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+    touch %buildroot"$rpm404_ghost"
 done
 
 sed -i 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*policytool.desktop
@@ -1018,11 +1104,6 @@ install -m644 java-javadoc-buildreq-substitute \
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/%altname-javadoc<<EOF
 %{_javadocdir}/java	%{_javadocdir}/%{uniquejavadocdir}/api	%{priority}
 EOF
-
-# move soundfont to java
-grep /audio/default.sf2 %{name}.files-headless >> %{name}.files
-grep -v /audio/default.sf2 %{name}.files-headless > %{name}.files-headless-new
-mv %{name}.files-headless-new %{name}.files-headless
 
 
 ##################################################
@@ -1043,7 +1124,7 @@ Categories=Development;Profiling;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%
 EOF
 fi
 
-%if_enabled moz_plugin
+%if_enabled control_panel
 # ControlPanel freedesktop.org menu entry
 cat >> $RPM_BUILD_ROOT%{_datadir}/applications/%{name}-control-panel.desktop << EOF
 [Desktop Entry]
@@ -1101,6 +1182,12 @@ do
 EOF
 done
 
+%if_enabled control_panel
+cat <<EOF >>%buildroot%_altdir/%name-java
+%{_bindir}/ControlPanel	%{_jvmdir}/%{jredir}/bin/ControlPanel	%{_jvmdir}/%{jredir}/bin/java
+%{_bindir}/jcontrol	%{_jvmdir}/%{jredir}/bin/jcontrol	%{_jvmdir}/%{jredir}/bin/java
+EOF
+%endif
 # ----- JPackage compatibility alternatives ------
 cat <<EOF >>%buildroot%_altdir/%name-java-headless
 %{_jvmdir}/jre	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
@@ -1114,6 +1201,7 @@ cat <<EOF >>%buildroot%_altdir/%name-java-headless
 %endif
 EOF
 # ----- end: JPackage compatibility alternatives ------
+
 
 # Javac alternative
 cat <<EOF >%buildroot%_altdir/%name-javac
@@ -1155,26 +1243,6 @@ EOF
 
 # ----- end: JPackage compatibility alternatives ------
 
-%if_enabled moz_plugin
-# Mozilla plugin alternative
-cat <<EOF >%buildroot%_altdir/%name-mozilla
-%browser_plugins_path/libjavaplugin_oji.so	%mozilla_java_plugin_so	%priority
-EOF
-%endif	# enabled moz_plugin
-
-%if_enabled javaws
-# Java Web Start alternative
-cat <<EOF >%buildroot%_altdir/%name-javaws
-%_bindir/javaws	%{_jvmdir}/%{jredir}/bin/javaws	%{_jvmdir}/%{jredir}/bin/java
-%_man1dir/javaws.1.gz	%_man1dir/javaws%label.1.gz	%{_jvmdir}/%{jredir}/bin/java
-EOF
-# ----- JPackage compatibility alternatives ------
-cat <<EOF >>%buildroot%_altdir/%name-javaws
-%{_datadir}/javaws	%{_jvmdir}/%{jredir}/bin/javaws	%{_jvmdir}/%{jredir}/bin/java
-EOF
-# ----- end: JPackage compatibility alternatives ------
-%endif	# enabled javaws
-
 # hack (see #11383) to enshure that all man pages will be compressed
 for i in $RPM_BUILD_ROOT%_man1dir/*.1; do
     [ -f $i ] && gzip -9 $i
@@ -1192,11 +1260,15 @@ echo "install passed past alt linux specific."
 %force_update_alternatives
 
 %ifarch %{jit_arches}
+# MetaspaceShared::generate_vtable_methods not implemented for PPC JIT
+%ifnarch %{power64}
 #see https://bugzilla.redhat.com/show_bug.cgi?id=513605
 java=%{jrebindir}/java
-$java -Xshare:dump >/dev/null 2>/dev/null
+if [ -f /proc/cpuinfo ] && ! [ -d /.ours ] ; then #real workstation; not a mkimage-profile, etc
+    $java -Xshare:dump >/dev/null 2>/dev/null
+fi
 %endif
-
+%endif
 
 
 
@@ -1219,11 +1291,9 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %dir %{_jvmdir}/%{sdkdir}/jre/lib/%{archinstall}/xawt
 %endif
 %{_jvmdir}/%{jrelnk}
-#%{_jvmprivdir}/*
-%if_enabled jvmjardir
 %{_jvmjardir}/%{jrelnk}
+%{_jvmprivdir}/*
 %{jvmjardir}
-%endif
 %dir %{_jvmdir}/%{jredir}/lib/security
 %{_jvmdir}/%{jredir}/lib/security/cacerts
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/US_export_policy.jar
@@ -1241,7 +1311,8 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %{_mandir}/man1/tnameserv-%{uniquesuffix}.1*
 %{_mandir}/man1/unpack200-%{uniquesuffix}.1*
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/nss.cfg
-%{_jvmdir}/%{jredir}/lib/audio/
+# removed %%{_jvmdir}/%%{jredir}/lib/audio/
+# see soundfont in %%install
 %ifarch %{jit_arches}
 %attr(644, root, root) %ghost %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/classes.jsa
 %attr(644, root, root) %ghost %{_jvmdir}/%{jredir}/lib/%{archinstall}/client/classes.jsa
@@ -1251,7 +1322,6 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %{_sysconfdir}/.java/
 %{_sysconfdir}/.java/.systemPrefs
 %{_jvmdir}/%{sdkdir}/jre-abrt
-%exclude %{_jvmdir}/%{jredir}/lib/audio/default.sf2
 
 
 %files devel
@@ -1272,9 +1342,7 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %if_enabled systemtap
 %{_jvmdir}/%{sdkdir}/tapset/*.stp
 %endif
-%if_enabled jvmjardir
 %{_jvmjardir}/%{sdkdir}
-%endif
 %{_datadir}/applications/*jconsole.desktop
 %{_datadir}/applications/*policytool.desktop
 %{_mandir}/man1/appletviewer-%{uniquesuffix}.1*
@@ -1330,6 +1398,9 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.111-alt1_2.6.7.2jpp8
+- new version
+
 * Fri Apr 13 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt9_2.5.5.0jpp7
 - added BR: docbook-style-xsl
 
