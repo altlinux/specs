@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Class-Date
 Name: perl-%dist
-Version: 1.1.16
+Version: 1.1.17
 Release: alt1
 
 Summary: Class for easy date and time manipulation 
@@ -34,6 +34,9 @@ have a Class::Date::Rel class for relative dates.
 #perl_vendor_autolib/Class
 
 %changelog
+* Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.17-alt1
+- automated CPAN update
+
 * Mon May 28 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.16-alt1
 - automated CPAN update
 
