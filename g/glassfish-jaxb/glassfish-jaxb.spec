@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           glassfish-jaxb
 Version:        2.2.11
-Release:        alt1_8jpp8
+Release:        alt2_9jpp8
 Summary:        JAXB Reference Implementation
 
 License:        CDDL-1.1 and GPLv2 with exceptions
@@ -21,7 +21,6 @@ Patch0:         txw2-args4j.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(args4j:args4j)
-BuildRequires:  mvn(com.google.code.javaparser:javaparser)
 BuildRequires:  mvn(com.sun.istack:istack-commons-runtime)
 BuildRequires:  mvn(com.sun.istack:istack-commons-tools)
 BuildRequires:  mvn(com.sun:tools)
@@ -29,19 +28,15 @@ BuildRequires:  mvn(com.sun.xml.dtd-parser:dtd-parser)
 BuildRequires:  mvn(com.sun.xml.fastinfoset:FastInfoset)
 BuildRequires:  mvn(com.sun.xsom:xsom)
 BuildRequires:  mvn(javax.xml.bind:jaxb-api)
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.java.dev.msv:msv-core)
 BuildRequires:  mvn(net.java:jvnet-parent:pom:)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-deploy-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 BuildRequires:  mvn(org.jvnet.staxex:stax-ex)
 BuildRequires:  mvn(relaxngDatatype:relaxngDatatype)
-BuildRequires:  mvn(xmlunit:xmlunit)
 
 Requires:       glassfish-jaxb1-impl = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       %{name}-bom = %{?epoch:%epoch:}%{version}-%{release}
@@ -217,12 +212,13 @@ This package contains the API documentation for %{name}.
 
 %pom_remove_plugin :gfnexus-maven-plugin
 %pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :buildnumber-maven-plugin
 
 %mvn_alias org.glassfish.jaxb:jaxb-runtime "com.sun.xml.bind:jaxb-impl"
 %mvn_alias org.glassfish.jaxb:jaxb-xjc "com.sun.xml.bind:jaxb-xjc"
 
 %build
-%mvn_build -f -s -- -Ddev
+%mvn_build -f -s -- -Ddev -DbuildNumber=unknown
 
 %install
 %mvn_install
@@ -287,6 +283,12 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.2.11-alt2_9jpp8
+- fc28+ update
+
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.2.11-alt1_9jpp8
+- java fc28+ update
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.2.11-alt1_8jpp8
 - java update
 
