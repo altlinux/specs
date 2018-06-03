@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          jcsp
 Version:       1.1
-Release:       alt1_0.8.rc5jpp8
+Release:       alt1_0.9.rc5jpp8
 Summary:       Communicating Sequential Processes for Java (JCSP)
 License:       LGPLv2+
 URL:           https://github.com/codehaus/jcsp
@@ -23,7 +23,7 @@ Source1:       %{name}-create-tarball.sh
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.felix:org.osgi.core)
+BuildRequires: mvn(org.osgi:osgi.core)
 
 BuildArch:     noarch
 Source44: import.info
@@ -64,6 +64,9 @@ This package contains javadoc for %{name}.
 %pom_remove_plugin :jdepend-maven-plugin
 %pom_remove_plugin :rat-maven-plugin
 %pom_remove_plugin :taglist-maven-plugin
+
+# Use modern osgi implementation
+%pom_change_dep :org.osgi.core org.osgi:osgi.core
 
 # remove wagon-webdav
 %pom_xpath_remove "pom:project/pom:build/pom:extensions"
@@ -117,6 +120,9 @@ rm -r src/org/jcsp/win32 \
 %doc --no-dereference LICENCE.txt
 
 %changelog
+* Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_0.9.rc5jpp8
+- fc28+ update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_0.8.rc5jpp8
 - java update
 
