@@ -4,6 +4,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 BuildRequires: perl(FileHandle.pm) rpm-build-java unzip
 # END SourceDeps(oneline)
+BuildRequires: tex(pdftex.def)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -12,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           findbugs
 Version:        3.0.1
-Release:        alt1_13jpp8
+Release:        alt1_14jpp8
 Summary:        Find bugs in Java code
 
 License:        LGPLv2+
@@ -72,7 +73,6 @@ BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  tex(latex)
 BuildRequires:  texlive-collection-basic
-BuildRequires:  tex(pdftex.def)
 
 # Add temporary dependency on javapackages-local, for %%add_maven_depmap macro
 # See https://lists.fedoraproject.org/archives/list/java-devel@lists.fedoraproject.org/thread/R3KZ7VI5DPCMCELFIVJQ4AXB2WQED35C/
@@ -202,7 +202,7 @@ cp -p plugins/noUpdateChecks/build/noUpdateChecks.jar $RPM_BUILD_ROOT%{_datadir}
 # Create /usr/share/findbugs/lib directory containing symlinks to required JARs (bug #1080682)
 # List is based on the Class-Path attribute in etc/MANIFEST-findbugs.MF
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}/lib
-for i in findbugs findbugs-bcel dom4j jaxen objectweb-asm/asm-debug-all jsr-305 \
+for i in findbugs findbugs-bcel dom4j jaxen objectweb-asm/asm-all jsr-305 \
   jFormatString apache-commons-lang; do
     ln -s %{_javadir}/$i.jar $RPM_BUILD_ROOT%{_datadir}/%{name}/lib
 done
@@ -250,6 +250,9 @@ fi ||:
 %{_javadir}/findbugs-tools.jar
 
 %changelog
+* Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_14jpp8
+- fc28+ update
+
 * Fri Apr 20 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_13jpp8
 - java update
 
