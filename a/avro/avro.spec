@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: /usr/bin/asciidoc /usr/bin/source-highlight boost-devel boost-filesystem-devel boost-program_options-devel gcc-c++ pkgconfig(liblzma) rpm-build-java zlib-devel
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-generic-compat mvn(org.apache.maven.shared:file-management)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             avro
 Version:          1.7.6
-Release:          alt2_5jpp8
+Release:          alt3_5jpp8
 Summary:          Data serialization system
 License:          ASL 2.0
 URL:              http://avro.apache.org
@@ -224,6 +224,9 @@ done
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt3_5jpp8
+- fixed build
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt2_5jpp8
 - java update
 
