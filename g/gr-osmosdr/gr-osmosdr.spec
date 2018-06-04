@@ -1,7 +1,7 @@
 Name: gr-osmosdr
 Url: http://sdr.osmocom.org/trac/wiki/GrOsmoSDR
 Version: 0.1.4
-Release: alt3.20170612.S1
+Release: alt3.20170612.S1.1
 License: GPLv3+
 Group: Engineering
 Summary: Common software API for various radio hardware
@@ -46,6 +46,8 @@ Documentation files for gr-osmosdr.
 
 %build
 %cmake -DENABLE_DOXYGEN=on -DGR_PKG_DOC_DIR=%_docdir/%name ..
+# it contains some sort of dependencies issue, force building swig stuff first. TODO: remove it later
+%cmake_build _osmosdr_swig
 %cmake_build
 
 %install
@@ -70,6 +72,9 @@ Documentation files for gr-osmosdr.
 %doc %_docdir/%name/xml
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.4-alt3.20170612.S1.1
+- NMU: rebuilt with boost-1.67.0
+
 * Sun Apr 22 2018 Anton Midyukov <antohami@altlinux.org> 0.1.4-alt3.20170612.S1
 - rebuilt with libvolk 1.4
 
