@@ -1,6 +1,6 @@
 Name:    system-config-printer
 Version: 1.5.11
-Release: alt2
+Release: alt3
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -13,30 +13,39 @@ Patch:  %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
+BuildRequires: python3-module-cups
 BuildRequires: desktop-file-utils
-BuildRequires: gettext-devel
 BuildRequires: cups-devel
-BuildRequires: glib2-devel
-BuildRequires: intltool
 BuildRequires: libusb-devel
 BuildRequires: libudev-devel
+BuildRequires: gettext-devel
+BuildRequires: glib2-devel
+BuildRequires: intltool
 BuildRequires: xmlto
-BuildRequires: python3-module-cups 
 
-Requires: python3-module-cupshelpers = %version-%release
-Requires: python3-module-cups >= 1.9.61-alt1
+Requires: %name-lib = %EVR
 
 %filter_from_requires /PackageKit/d
 %add_python3_path /usr/share/system-config-printer
+
 
 %description
 system-config-printer is a graphical user interface that allows
 the user to configure a CUPS print server.
 
+%package lib
+Summary: Libraries and share for printer tools
+Group: System/Configuration/Printing
+Requires: python3-module-cupshelpers = %version-%release
+Requires: python3-module-cups >= 1.9.61-alt1
+
+%description lib
+Code used by both graphical and non-graphical parts
+
 %package udev
 Summary: Rules for udev for automatic configuration of USB printers
 Group: System/Configuration/Printing
-Requires: system-config-printer = %version-%release
+Requires: %name-lib = %version-%release
 
 %description udev
 The udev rules and helper programs for automatically configuring USB
@@ -71,29 +80,35 @@ mv %buildroot%_datadir/{metainfo,appdata}
 /bin/rm -f /var/cache/foomatic/foomatic.pickle ||:
 exit 0
 
+%files lib
+%_datadir/dbus-1/interfaces/*.xml
+%_datadir/dbus-1/services/*.service
+%_datadir/%name
+/etc/dbus-1/system.d/*.conf
+
 %files udev
+%_sysconfdir/tmpfiles.d/*
 /lib/udev/rules.d/*.rules
 /lib/udev/udev-*-printer
-/etc/tmpfiles.d/*
 
 %files -f system-config-printer.lang
-%doc README.md
-/etc/dbus-1/system.d/*
-/usr/share/dbus-1/interfaces/*
-/usr/share/dbus-1/services/*
+%doc README.md COPYING
 %_bindir/*
-%_datadir/%name/
+%_datadir/appdata/%name.appdata.xml
 %_desktopdir/*.desktop
 %_sysconfdir/xdg/autostart/*.desktop
 %_man1dir/*
-%_datadir/appdata/%name.appdata.xml
 
 %files -n python3-module-cupshelpers
 %config(noreplace) %_sysconfdir/cupshelpers/*.xml
 %python3_sitelibdir_noarch/cupshelpers
 %python3_sitelibdir_noarch/cupshelpers-*
 
+
 %changelog
+* Mon Jun 04 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.5.11-alt3
+- Rebuild with new structure of packages.
+
 * Tue May 15 2018 Andrey Cherepanov <cas@altlinux.org> 1.5.11-alt2
 - Complete localization into Russian (thanks Olesya Gerasimenko).
 
