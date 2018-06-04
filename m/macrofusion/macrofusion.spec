@@ -1,5 +1,5 @@
 Name: macrofusion
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 
 Summary: GUI to combine photos to get deeper DOF or HDR
@@ -8,13 +8,14 @@ Group: Graphics
 
 URL: http://sourceforge.net/projects/macrofusion/
 Source: http://download.sourceforge.net/macrofusion/macrofusion_%version.orig.tar.gz
-Patch1: macrofusion-0.7.2-notry.patch
-Patch2: macrofusion-0.7.2-desktop.patch
+Patch1: macrofusion-0.7.2-desktop.patch
+Patch2: macrofusion-0.7.4-specify-gi-versions.patch
+Patch3: macrofusion-0.7.4-use-frombytes.patch
 
 Requires: enblend hugin
 
 # Automatically added by buildreq on Sun Jan 01 2012 (-bi)
-BuildRequires: python-module-distribute rpm-build-gir
+BuildRequires: python3-module-Pillow python-module-distribute rpm-build-gir
 
 BuildArch: noarch
 
@@ -28,6 +29,7 @@ landscapers.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 
@@ -46,6 +48,9 @@ install -pDm644 macrofusion.desktop %buildroot%_desktopdir/macrofusion.desktop
 %_desktopdir/*
 
 %changelog
+* Mon Jun 04 2018 Grigory Ustinov <grenka@altlinux.org> 0.7.4-alt1
+- Build new version (Closes: #27298).
+
 * Sat Feb 25 2012 Victor Forsiuk <force@altlinux.org> 0.7.3-alt1
 - 0.7.3
 
