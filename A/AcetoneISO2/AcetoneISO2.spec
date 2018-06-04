@@ -1,6 +1,6 @@
 Name: AcetoneISO2
 Version: 2.3
-Release: alt1.qa1
+Release: alt2
 
 Summary: CD/DVD Image Manipulator
 
@@ -72,16 +72,19 @@ qmake-qt4
 make INSTALL_ROOT=%buildroot install
 
 #icon
-%__install -pD -m644 images/Acetino2.png %buildroot%_niconsdir/Acetino2.png
+%__install -pD -m644 images/Acetino2.png %buildroot%_iconsdir/Acetino2.png
 
 %files
 %doc ../AUTHORS ../CHANGELOG ../FEATURES ../LICENSE ../README ../TODO
 %_bindir/acetoneiso
 # %%{_datadir}/acetoneiso2
 %_desktopdir/AcetoneISO.desktop
-%_niconsdir/Acetino2.png
+%_iconsdir/Acetino2.png
 
 %changelog
+* Mon Jun 04 2018 Grigory Ustinov <grenka@altlinux.org> 2.3-alt2
+- Fix extra large icon in menu (Closes: #33482).
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.3-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
