@@ -1,7 +1,7 @@
 %define opencv_ver %{get_version libopencv-devel}
 
 %def_disable baloo
-%def_disable mysql
+%def_enable mysql
 %_K5if_ver_gteq %ubt_id M90
 %def_enable obsolete_kde4
 %else
@@ -23,7 +23,7 @@
 Name: kde5-%rname
 %define lname lib%name
 Version: 5.9.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Summary: digiKam is an advanced digital photo management application for linux
@@ -62,6 +62,9 @@ BuildRequires: kde5-akonadi-devel kde5-akonadi-mime-devel kde5-kcalcore-devel kd
 BuildRequires: kde5-libkipi-devel kde5-libksane-devel kde5-akonadi-contacts-devel
 BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kinit-devel
 BuildRequires: kf5-kio-devel kf5-kitemmodels-devel kf5-knotifyconfig-devel kf5-sonnet-devel kf5-threadweaver-devel
+%if_enabled mysql
+BuildRequires: libmysqlclient-devel
+%endif
 %if_enabled baloo
 BuildRequires: kf5-baloo-devel
 %endif
@@ -73,12 +76,11 @@ Source0: %rname-%version.tar
 Source1: po.tar
 Source2: doc.tar
 Source3: doc-translated.tar
-# upstream
-# FC
-Patch20: digikam-5.7.0-glibc_powf64.patch
+Source10: mysql_install_db
 # ALT
 Patch100: alt-libraw-aarch64.patch
 Patch101: alt-exiv2-req.patch
+Patch102: alt-own-mysql-install-db.patch
 
 %description
 DigiKam is an advanced digital photo management application for KDE.
@@ -156,11 +158,9 @@ Development files for %label.
 
 %prep
 %setup -n %rname-%version  -a1 -a2 -a3
-#
-#%patch20 -p2
-#
 %patch100 -p1
 %patch101 -p1
+%patch102 -p1
 
 # change double to qreal for casting on arm
 #find -type f -name \*.cpp | \
@@ -195,8 +195,8 @@ done
 
 %build
 %K5build \
-    -DENABLE_INTERNALMYSQL=OFF \
-    -DENABLE_MYSQLSUPPORT=OFF \
+    -DENABLE_INTERNALMYSQL=%{?_enable_mysql:ON}%{!_enable_mysql:OFF} \
+    -DENABLE_MYSQLSUPPORT=%{?_enable_mysql:ON}%{!_enable_mysql:OFF} \
     -DENABLE_KFILEMETADATASUPPORT=%{?_enable_baloo:ON}%{!?_enable_baloo:OFF} \
     -DBUILD_TESTING=OFF \
     -DENABLE_OPENCV3=%{?_enable_opencv3:ON}%{!?_enable_opencv3:OFF} \
@@ -208,6 +208,7 @@ done
 %if_disabled obsolete_kde4
 %K5install_move data showfoto locale
 %endif
+install -m 0755 %SOURCE10 %buildroot/%_K5bin/digikam_mysql_install_db
 rm -f %buildroot/%_K5i18n/*/*/kipiplugin*
 rm -f %buildroot/%_datadir/locale/*/*/kipiplugin*
 rm -f %buildroot/%_K5i18n/*/*/lib*
@@ -227,6 +228,7 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 
 %files
 %_K5bin/%rname
+%_K5bin/digikam_mysql_install_db
 %_datadir/%rname/utils/
 %_K5bin/showfoto
 %_K5bin/cleanup_digikamdb
@@ -280,6 +282,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Thu May 31 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt2%ubt
+- build with mysql
+
 * Fri Mar 30 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1%ubt
 - new version
 
