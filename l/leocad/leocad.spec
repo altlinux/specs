@@ -1,7 +1,7 @@
 Summary: Visual brick construction tool for kids
 Summary (ru_RU.UTF-8): Детский конструктор, использующий блоки с шипами
 Name: leocad
-Version: 18.01
+Version: 18.02
 Release: alt1
 
 License: GPL
@@ -56,6 +56,9 @@ LEGO, которые не спонсируют и не курируют LeoCAD, 
 %_xdgmimedir/packages/*
 
 %changelog
+* Mon Jun 04 2018 Grigory Ustinov <grenka@altlinux.org> 18.02-alt1
+- Rebuild, because of version number mistake in previous build (Closes: #34479).
+
 * Wed May 30 2018 Grigory Ustinov <grenka@altlinux.org> 18.01-alt1
 - Build new version (Closes: #34479).
 
