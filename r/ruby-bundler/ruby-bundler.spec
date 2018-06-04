@@ -1,7 +1,7 @@
 %define  pkgname bundler
 
 Name:    ruby-%pkgname
-Version: 1.16.1
+Version: 1.16.2
 Release: alt1
 
 Summary: Manage your Ruby application's gem dependencies
@@ -98,5 +98,8 @@ rm -rf %buildroot%_mandir/*.ronn
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Jun 04 2018 Andrey Cherepanov <cas@altlinux.org> 1.16.2-alt1
+- New version.
+
 * Wed May 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.16.1-alt1
 - Initial build for Sisyphus
