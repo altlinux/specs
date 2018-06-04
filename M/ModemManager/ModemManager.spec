@@ -10,14 +10,13 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.7.991
+Version: 1.8.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
 Url: http://cgit.freedesktop.org/ModemManager/ModemManager/
 Source: %name-%version.tar
-Source1: ModemManager.init
 Patch: %name-%version-%release.patch
 
 Requires: dbus >= %dbus_version
@@ -126,7 +125,7 @@ Requires: libmm-glib-devel = %version-%release
 %patch -p1
 
 %build
-%ifarch e2k
+%ifarch %e2k
 %define more_warnings no
 %else
 %define more_warnings yes
@@ -156,9 +155,6 @@ make check
 %makeinstall_std
 %find_lang %name
 
-# Install initscript
-install -Dm0755 %SOURCE1 %buildroot%_initdir/ModemManager
-
 %post
 # Don't restart service during upgrade:
 # the network can be via modem controlled
@@ -169,12 +165,6 @@ if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
 	"$SYSTEMCTL" daemon-reload ||:
 	if [ "$1" -eq 1 ]; then
 		"$SYSTEMCTL" -q preset %name.service||:
-	fi
-else
-	if [ "$1" -eq 1 ]; then
-		/sbin/chkconfig --add %name ||:
-	else
-		/sbin/chkconfig %name resetpriorities ||:
 	fi
 fi
 
@@ -187,8 +177,6 @@ if [ "$1" -eq 0 ]; then
 	SYSTEMCTL=systemctl
 	if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
 		"$SYSTEMCTL" --no-reload -q disable %name.service ||:
-	else
-		chkconfig --del %name ||:
 	fi
 fi
 
@@ -206,7 +194,6 @@ fi
 %_iconsdir/hicolor/*/apps/*
 %_datadir/polkit-1/actions/*.policy
 %_unitdir/*.service
-%_initdir/ModemManager
 %doc %_man8dir/*.*
 
 %exclude %_libdir/ModemManager/*.la
@@ -243,6 +230,11 @@ fi
 %endif
 
 %changelog
+* Mon Jun 04 2018 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt1
+- Drop init script.
+- Updated to 1.8.0.
+- Use %e2k macro.
+
 * Tue Mar 27 2018 Mikhail Efremov <sem@altlinux.org> 1.7.991-alt1
 - Updated to 1.7.991 (1.8-rc2).
 
