@@ -3,7 +3,7 @@
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
 
 Name:           mintmenu
-Version:        5.8.6
+Version:        5.8.8
 Release:        alt1
 Epoch:          1
 # MIT is needed for keybinding.py
@@ -150,6 +150,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-baseal
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Mon Jun 04 2018 Andrey Cherepanov <cas@altlinux.org> 1:5.8.8-alt1
+- New version.
+
 * Fri May 18 2018 Andrey Cherepanov <cas@altlinux.org> 1:5.8.6-alt1
 - New version.
 
