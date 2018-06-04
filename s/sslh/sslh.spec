@@ -1,6 +1,6 @@
 Name: sslh
 Version: 1.19c
-Release: alt1
+Release: alt2
 
 Summary: A ssl/ssh multiplexer
 
@@ -32,6 +32,7 @@ Author: Yves Rutschle
 
 %build
 %make_build USELIBWRAP=1 USESYSTEMD=1 USELIBCAP=1 CFLAGS="%optflags -I%_includedir/pcre"
+%__subst "s|/usr/bin/sslh|%_sbindir/sslh|g"  scripts/systemd.sslh.service
 
 %install
 %makeinstall PREFIX=%buildroot%prefix
@@ -54,6 +55,9 @@ install -D -m 644 scripts/systemd.sslh.service %buildroot%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Mon Jun 04 2018 Vitaly Lipatov <lav@altlinux.ru> 1.19c-alt2
+- fix path to binary in service file (redmine #1501)
+
 * Thu May 31 2018 Vitaly Lipatov <lav@altlinux.ru> 1.19c-alt1
 - new version 1.19c (with rpmrb script)
 - build with libwrap, libcap, libpcre and systemd socket support
