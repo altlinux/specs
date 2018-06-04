@@ -1,8 +1,9 @@
 %def_disable snapshot
 %define gst_api_ver 1.0
+%define rdn_name io.github.quodlibet.QuodLibet
 
 Name: quodlibet
-Version: 4.0.2
+Version: 4.1.0
 Release: alt1
 
 Summary: audio library tagger, manager, and player for GTK+
@@ -73,10 +74,10 @@ subst "s|\('share', '\)appdata'|\1metainfo'|" gdist/appdata.py
 # cli tagger
 %_bindir/operon
 %_datadir/dbus-1/services/net.sacredchao.QuodLibet.service
-%_datadir/gnome-shell/search-providers/%name-search-provider.ini
-%_iconsdir/hicolor/*/*/%{name}*.*
-%_desktopdir/%name.desktop
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/gnome-shell/search-providers/%rdn_name-search-provider.ini
+%_iconsdir/hicolor/*/*/%{rdn_name}*.*
+%_desktopdir/%rdn_name.desktop
+%_datadir/metainfo/%rdn_name.appdata.xml
 %_man1dir/%name.*
 %_man1dir/operon.*
 %doc NEWS README
@@ -91,6 +92,9 @@ subst "s|\('share', '\)appdata'|\1metainfo'|" gdist/appdata.py
 %python3_sitelibdir_noarch/%name-%version-py*
 
 %changelog
+* Mon Jun 04 2018 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
+- 4.1.0
+
 * Sat Feb 17 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0.2-alt1
 - 4.0.2 (ported to Python3, GTK+3, GStreamer-1.0)
 
