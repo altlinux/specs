@@ -1,37 +1,30 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           XmlSchema
-Version:        1.4.7
-Release:        alt1_16jpp8
+Version:        2.2.3
+Release:        alt1_1jpp8
 Summary:        Lightweight schema object model
 License:        ASL 2.0
-URL:            http://ws.apache.org/commons/XmlSchema
+URL:            http://ws.apache.org/xmlschema/
 BuildArch:      noarch
 
-# svn export http://svn.apache.org/repos/asf/webservices/commons/tags/XmlSchema/XmlSchema-1.4.7
-# tar cJf XmlSchema-1.4.7.tar.xz XmlSchema-1.4.7
-Source0:        %{name}-%{version}.tar.xz
-Source1:        LICENSE-2.0.txt
-
-# maven-site-plugin is broken by the lack of cvsjava in maven-scm. 
-# cvsjava was removed when netbeans was orphaned.
-Patch1:         %{name}-no-site-plugin.patch
+Source0:        http://archive.apache.org/dist/ws/xmlschema/%{version}/xmlschema-%{version}-source-release.zip
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(com.google.guava:guava-testlib)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+BuildRequires:  mvn(xerces:xercesImpl)
 BuildRequires:  mvn(xmlunit:xmlunit)
-
-BuildRequires:  dos2unix
 Source44: import.info
 
 Provides: ws-commons-%name = 0:%version-%release
@@ -52,31 +45,37 @@ BuildArch: noarch
 This package contains API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{version}
-%patch1 -p1
-
-# This is provided by modern Java environments
-%pom_remove_dep "org.apache.ws.commons:ws-commons-java5"
+%setup -q -n xmlschema-%{version}
 
 # Fix line endings
-cp -p %{SOURCE1} .
-dos2unix LICENSE-2.0.txt README.txt RELEASE-NOTE.txt
+sed -i -e 's/\r//g' RELEASE-NOTE.txt
 
-%mvn_file :%{name} %{name}
+# Missing deps on org.ops4j for this module
+%pom_disable_module xmlschema-bundle-test
+
+# This module contains only testdata and according to upstream, should not be deployed
+%pom_disable_module w3c-testcases
+
+# Compatibility alias
+%mvn_alias :xmlschema-core org.apache.ws.commons.schema:XmlSchema
 
 %build
-%mvn_build
+%mvn_build -- -P!sourcecheck
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-2.0.txt README.txt RELEASE-NOTE.txt
+%doc --no-dereference LICENSE NOTICE
+%doc README.txt RELEASE-NOTE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.3-alt1_1jpp8
+- new version
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt1_16jpp8
 - java update
 

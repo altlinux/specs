@@ -7,21 +7,24 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          neethi
-Version:       3.0.1
-Release:       alt2_15jpp8
+Version:       3.0.3
+Release:       alt1_1jpp8
 Summary:       Web Services Policy framework
 License:       ASL 2.0
 URL:           http://ws.apache.org/neethi/
 Source0:       http://archive.apache.org/dist/ws/neethi/%{version}/neethi-%{version}-source-release.zip
 BuildArch:     noarch
 
-BuildRequires: maven-local
-BuildRequires: wsdl4j
-BuildRequires: axiom
-BuildRequires: apache-parent
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-source-plugin
-Requires:      axiom
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.ws.commons.axiom:axiom-api)
+BuildRequires:  mvn(org.apache.ws.commons.axiom:axiom-dom)
+BuildRequires:  mvn(org.apache.ws.commons.axiom:axiom-impl)
+BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
+
+Requires:       axiom >= 1.2.14
 Source44: import.info
 
 Provides: ws-commons-%name = 0:%version-%release
@@ -47,14 +50,14 @@ API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{version}
 
-# This check always fails
-%pom_remove_plugin org.apache.rat:apache-rat-plugin
+# These plugins are not needed for RPM builds
+%pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :maven-source-plugin
 
 %mvn_file : %{name}
 
 %build
-# skip tests due to requirement for old wstx
-%mvn_build -- -Dmaven.test.skip=true
+%mvn_build
 
 %install
 %mvn_install
@@ -67,6 +70,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt1_1jpp8
+- new version
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt2_15jpp8
 - java update
 
