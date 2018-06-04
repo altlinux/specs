@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        High-performance, full-featured text search engine
 Name:           lucene5
 Version:        5.5.0
-Release:        alt1_0jpp8
+Release:        alt2_0jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -30,7 +30,7 @@ Patch1:         0002-Dependency-generation.patch
 BuildRequires:  ant
 BuildRequires:  ivy-local
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.carrotsearch.randomizedtesting:randomizedtesting-runner)
+BuildRequires:  randomizedtesting2.3.1-runner
 BuildRequires:  mvn(com.ibm.icu:icu4j)
 BuildRequires:  mvn(commons-codec:commons-codec)
 BuildRequires:  mvn(commons-logging:commons-logging)
@@ -203,8 +203,8 @@ Summary:      Apache Lucene Java Test Framework
 
 %if_with manualreq
 AutoReq: yes,nomaven
-Requires: mvn(com.carrotsearch.randomizedtesting:junit4-ant)  
-Requires: mvn(com.carrotsearch.randomizedtesting:randomizedtesting-runner)  
+#Requires: mvn(com.carrotsearch.randomizedtesting:junit4-ant:2.3.1) 
+Requires: randomizedtesting2.3.1-runner
 Requires: mvn(junit:junit)  
 Requires: mvn(org.apache.ant:ant)  
 Requires: %{name}-codecs = %EVR
@@ -624,6 +624,9 @@ popd
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jun 04 2018 Igor Vlasenko <viy@altlinux.ru> 0:5.5.0-alt2_0jpp8
+- built with compat randomizedtesting
+
 * Fri Apr 20 2018 Igor Vlasenko <viy@altlinux.ru> 0:5.5.0-alt1_0jpp8
 - compat package lucene5 for hibernate-search
 
