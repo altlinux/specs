@@ -28,7 +28,7 @@
 
 Name: libcogl
 Version: %ver_major.2
-Release: alt3
+Release: alt4
 
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 Group: System/Libraries
@@ -117,7 +117,6 @@ Conflicts: libclutter-gir-devel < 1.8.0
 %description gir-devel
 GObject introspection devel data for the %oname
 
-
 %package devel-doc
 Summary: Development package for %oname
 Group: Development/Documentation
@@ -126,6 +125,14 @@ Conflicts: %name < %version
 
 %description devel-doc
 Contains developer documentation for %oname.
+
+%package -n gst-plugins-%oname%gst_api_ver
+Summary: Cogl plugin for Gstreamer-1.0
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description -n gst-plugins-%oname%gst_api_ver
+This package provides Cogl plugin for Gstreamer (1.0 API version)
 
 %prep
 %setup -n %oname-%version
@@ -160,7 +167,9 @@ Contains developer documentation for %oname.
 %files -f %oname.lang
 %doc COPYING NEWS README ChangeLog
 %_libdir/libcogl*.so.*
+
 %if_enabled gst
+%files -n gst-plugins-%oname%gst_api_ver
 %_libdir/gstreamer-%gst_api_ver/libgstcogl.so
 %exclude %_libdir/gstreamer-%gst_api_ver/*.la
 %endif
@@ -180,6 +189,10 @@ Contains developer documentation for %oname.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Jun 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt4
+- updated to 1.22.2-18-g9036d14
+- gstreamer plugin moved to separate subpackage
+
 * Thu Aug 03 2017 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt3
 - updated to 1.22.2-11-g811f285
 
