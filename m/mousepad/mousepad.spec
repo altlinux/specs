@@ -1,5 +1,5 @@
 Name: mousepad
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Mousepad - A simple text editor for Xfce
@@ -58,6 +58,9 @@ Mousepad - простой текстовый редактор для Xfce осн
 %_desktopdir/*
 
 %changelog
+* Mon Jun 04 2018 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
+- Updated to 0.4.1.
+
 * Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
 - Fix Xfce name (XFCE -> Xfce).
 - Updated to 0.4.0.
