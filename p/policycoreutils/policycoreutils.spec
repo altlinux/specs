@@ -8,7 +8,7 @@ Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
 Version: 2.7
-Release: alt2
+Release: alt3
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -39,7 +39,7 @@ Requires: python-module-semanage python-module-audit
 BuildPreReq: rpm-build-xdg
 BuildRequires: libaudit-devel libcap-devel libpam-devel
 BuildRequires: libselinux-devel libsemanage-devel libsepol-devel libsepol-devel-static
-BuildRequires: python-devel
+BuildRequires: python-dev
 BuildRequires: python-module-pygnome
 BuildRequires: desktop-file-utils
 BuildRequires: glib2-devel libdbus-glib-devel
@@ -47,7 +47,7 @@ BuildRequires: libcap-ng-devel libpcre-devel libcgroup-devel
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-dev
 %endif
 
 %description
@@ -134,6 +134,7 @@ system-config-selinux is a utility for managing the SELinux environment.
 Summary: SELinux policy core python utilities
 Group:   Development/Python
 Requires: %name = %EVR
+Obsoletes: python-module-sepolgen
 
 %description -n python-module-policycoreutils
 The policycoreutils-python package contains the management tools use to manage
@@ -441,6 +442,9 @@ cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 %endif
 
 %changelog
+* Mon Jun 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.7-alt3
+- Obsoleted package python-module-sepolgen (Closes: #34981).
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.7-alt2
 - Fixed build dependencies.
 
