@@ -14,6 +14,10 @@
 %def_with strict_deps
 %def_with python3
 
+# Add compatibility links for boost-python-devel and boost-python3-devel
+# TODO: consider removing them later
+%def_with python_compat_symlinks
+
 # mpi
 %ifarch e2k
 %def_without mpi
@@ -51,7 +55,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt3
 
 Summary: Boost libraries
 License: Boost Software License
@@ -77,7 +81,7 @@ BuildRequires(pre): rpm-build-python >= 0.36.6-alt1
 # we use %%_python3_abiflags
 # we use %%requires_python_ABI, introduced in rpm-build-python3-0.1.9.3-alt1
 BuildRequires(pre): rpm-build-python3 >= 0.1.9.3-alt1
-BuildPreReq: python3-devel
+BuildPreReq: python3-dev
 %endif
 
 %if_with mpi
@@ -85,7 +89,7 @@ BuildRequires: %mpiimpl-devel
 %endif
 
 #buildreq doesn't do anything sane on this package
-BuildRequires: gcc-c++ libstdc++-devel zlib-devel bzlib-devel libicu-devel python-devel
+BuildRequires: gcc-c++ libstdc++-devel zlib-devel bzlib-devel libicu-devel python-dev
 #BuildRequires: libexpat-devel-static libexpat-devel
 
 %if_with devel
@@ -1460,6 +1464,12 @@ install_boost \
 %endif
        python=%_python_version
 
+%if_with python_compat_symlinks
+pushd %buildroot%_libdir
+ln -s libboost_python%{python_version_nodots python}.so libboost_python.so
+popd
+%endif
+
 %if_with python3
 install_boost \
 	--build-dir=build-py3 \
@@ -1469,6 +1479,13 @@ install_boost \
 	--with-mpi \
 %endif
 	python=%_python3_version
+
+%if_with python_compat_symlinks
+pushd %buildroot%_libdir
+ln -s libboost_python%{python_version_nodots python3}.so libboost_python3.so
+popd
+%endif
+
 %endif
 
 # install mpi python module
@@ -1696,6 +1713,10 @@ rm -f %buildroot%_libdir/*.a || :
 
 %files python-devel
 %_libdir/*boost_python2*.so
+%if_with python_compat_symlinks
+%_libdir/libboost_python.so
+%_libdir/libboost_python-mt.so
+%endif
 
 %if_with python3
 %files python3-devel
@@ -1895,6 +1916,9 @@ done
 
 
 %changelog
+* Mon Jun 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.67.0-alt3
+- Provided compatibility symlinks for boost-python-devel and boost-python3-devel.
+
 * Wed May 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.67.0-alt2
 - built with MPI support on arm
 
