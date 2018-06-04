@@ -17,7 +17,7 @@
 
 Name: NetworkManager-applet-gtk
 Version: 1.8.12
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -236,6 +236,10 @@ make check
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Mon Jun 04 2018 Mikhail Efremov <sem@altlinux.org> 1.8.12-alt2
+- Patch from upstream:
+    + Don't double-free priv->dupes (closes: #34980).
+
 * Mon May 28 2018 Mikhail Efremov <sem@altlinux.org> 1.8.12-alt1
 - Updated to 1.8.12.
 - Use %%e2k macro.
