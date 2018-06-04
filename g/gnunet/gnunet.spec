@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: %_bindir/git %_bindir/svnversion glib2-devel libICE-devel libSM-devel libglpk36-devel libgnutls-devel libidn-devel libltdl7-devel libmicrohttpd-devel libmysqlclient-devel libpq-devel libunistring-devel pkgconfig(libgtop-2.0) python-devel
+BuildRequires: %_bindir/git %_bindir/svnversion glib2-devel libICE-devel libSM-devel libglpk36-devel libgnutls-devel libidn-devel libltdl7-devel libmicrohttpd-devel libmariadb-devel libpq-devel libunistring-devel pkgconfig(libgtop-2.0) python-devel
 # END SourceDeps(oneline)
 Name: gnunet
 Version: 0.10.1
-Release: alt1
+Release: alt2
 
 Summary: Peer-to-peer framework
 
@@ -14,13 +14,12 @@ Packager: ALT QA Team <qa@packages.altlinux.org>
 
 Source: http://ftpmirror.gnu.org/gnunet/%name-%version.tar
 # (TODO: add pseudouser)
-Source1: %{name}d.init.altlinux
-# LSB init example
-Source2: gnunetd.init.lsb
+Source1: gnunetd.init.altlinux
+Source2: gnunetd.service
 
 # manually removed: libqt3-devel libqt4-devel  xorg-cf-files
 # Automatically added by buildreq on Mon Feb 01 2010
-BuildRequires: gcc-c++ glibc-devel-static guile18-devel imake libMySQL-devel libcurl-devel libextractor-devel libgcrypt-devel libglade-devel libncursesw-devel libsqlite3-devel zlib-devel
+BuildRequires: gcc-c++ glibc-devel-static guile18-devel imake libmariadb-devel libcurl-devel libextractor-devel libgcrypt-devel libglade-devel libncursesw-devel libsqlite3-devel zlib-devel
 BuildRequires: libpulseaudio-devel libopus-devel libogg-devel
 
 %description
@@ -68,7 +67,9 @@ applications which will use %name.
 %install
 %makeinstall_std
 %find_lang %name
-install -D -m0755 %SOURCE1 %buildroot%_initdir/gnunetd
+mkdir -p %buildroot{%_initdir,%_unitdir}
+install -m0755 %SOURCE1 %buildroot%_initdir/gnunetd
+install -m0644 %SOURCE2 %buildroot%_unitdir/gnunetd.service
 
 # unpackaged files found
 rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
@@ -126,6 +127,7 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 
 %_datadir/gnunet/
 %_initdir/gnunetd
+%_unitdir/gnunetd.service
 
 %files -n lib%name
 %_libdir/gnunet/
@@ -222,6 +224,11 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_libdir/pkgconfig/gnunetspeaker.pc
 
 %changelog
+* Thu May 31 2018 Alexey Shabalin <shaba@altlinux.ru> 0.10.1-alt2
+- rebuilld with libmariadb
+- fix sysvinit script
+- add systemd unit
+
 * Tue Jan 03 2017 Vitaly Lipatov <lav@altlinux.ru> 0.10.1-alt1
 - build new version
 

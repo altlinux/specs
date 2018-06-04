@@ -2,20 +2,19 @@
 %add_findreq_skiplist %_bindir/wsrep_sst_xtrabackup
 %add_findreq_skiplist %_bindir/wsrep_sst_xtrabackup-v2
 
-%def_with server
 %def_with libs
-%def_with devel
-%def_with common
-%def_with client
-%def_with bench
-%def_with mariabackup
+%def_without server
+%def_without devel
+%def_without common
+%def_without client
+%def_without bench
+%def_without mariabackup
 %def_disable build_test
 %def_disable static
 %define mysqld_user mysql
 %define _libexecdir %_sbindir
 %define ROOT %_localstatedir/mysql
 
-%def_without libwrap
 %def_with pcre
 %def_with systemd
 %def_with krb5
@@ -25,21 +24,19 @@
 %def_with tokudb
 %def_without mroonga
 #def_with mroonga
-%def_with rocksdb
 %else
 %def_without tokudb
 %def_without mroonga
-%def_without rocksdb
 %endif
 
-%def_with galera
-%def_with cassandra
-%def_with oqgraph
+%def_without galera
+%def_without cassandra
+%def_without oqgraph
 
-%def_with jemalloc
+%def_without jemalloc
 
-Name: mariadb
-Version: 10.2.15
+Name: mariadb-compat
+Version: 10.1.33
 Release: alt1%ubt
 
 Summary: A very fast and reliable SQL database engine
@@ -84,14 +81,11 @@ Source72: mariadbcheck.socket
 Source73: mariadbcheck@.service
 Source74: mariadbcheck.xinetd
 
-# git submodules
-Source101: libmariadb.tar
-Source102: rocksdb.tar
 
 Patch0: %name-%version.patch
 
 # ALTLinux
-Patch1: mariadb-10.2.7-alt-chroot.patch
+Patch1: mariadb-10.0.21-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
 Patch4: mariadb-10.1.8-alt-client.patch
 #Patch5: mariadb-10.0.21-alt-load_defaults.patch
@@ -109,11 +103,10 @@ Requires: %name-client = %EVR
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
-BuildRequires: libaio-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
-BuildRequires: liblz4-devel zlib-devel bzlib-devel liblzma-devel liblzo2-devel libsnappy-devel libzstd-devel
+BuildRequires: libaio-devel libwrap-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
+BuildRequires: liblz4-devel zlib-devel bzlib-devel liblzma-devel liblzo2-devel libsnappy-devel
 BuildRequires: chrooted control
 BuildRequires: libxml2-devel
-%{?_with_libwrap:BuildRequires: libwrap-devel}
 %{?_with_cassandra:BuildRequires: boost-devel}
 %{?_with_oqgraph:BuildRequires: boost-devel}
 %{?_with_jemalloc:BuildRequires: libjemalloc-devel}
@@ -127,9 +120,10 @@ Provides: %name-galera = %EVR
 Obsoletes: %name-galera < %EVR
 %endif
 
-%define soname 19
+%define soname 18
+
 # default plugin dir is %_libdir/mysql/plugin
-%define plugindir %_libdir/%name/plugin
+%define plugindir %_libdir/libmysql%soname/plugin
 
 %description
 The MariaDB software delivers a very fast, multi-threaded, multi-user,
@@ -168,7 +162,7 @@ mariadb-obsolete package:
 %package server
 Summary: A very fast and reliable MariaDB database server
 Group: Databases
-Requires: lib%name = %EVR %name-client = %EVR
+Requires: libmysqlclient%soname = %EVR %name-client = %EVR
 Requires: %name-common = %EVR
 Provides: mysql-server = %EVR
 Provides: mysql = %version
@@ -225,7 +219,7 @@ This package contents perl utils for MySQL-server.
 %package client
 Summary: Client
 Group: Databases
-Requires: lib%name = %EVR %name-common = %EVR
+Requires: libmysqlclient%soname = %EVR %name-common = %EVR
 Provides: mysql-client = %EVR
 Conflicts: MySQL-client
 
@@ -261,24 +255,25 @@ MariaDB Backup is an open source tool provided by MariaDB for performing
 physical online backups of InnoDB, Aria and MyISAM tables.
 For InnoDB, hot online backups are possible.
 
-%package -n lib%name
+%package -n libmysqlclient%soname
 Summary: Shared libraries
 Group: System/Libraries
-License: LGPLv2.1
 
-%description -n lib%name
+%description -n	libmysqlclient%soname
 This package contains the shared libraries (*.so*) which certain languages
 and applications need to dynamically load and use MariaDB/MySQL.
 
-%package -n lib%name-devel
+%package -n libmysqlclient-devel
 Summary: Development header files and libraries
 Group: Development/Other
 # see also #28676
 Requires: libssl-devel zlib-devel
-Requires: lib%name = %EVR
-Provides: libmysqlclient-devel = %EVR
+Requires: libmysqlclient%soname = %EVR
+Provides: mysql-devel = %version
+Provides: MySQL-devel = %version
+Provides: libMySQL-devel = %version
 
-%description -n lib%name-devel
+%description -n	libmysqlclient-devel
 This package contains the development header files and libraries necessary
 to develop MariaDB/MySQL client applications.
 
@@ -296,13 +291,14 @@ into a client application instead of running as a separate process.
 The API is identical for the embedded MariaDB version
 and the client/server version.
 
-%package -n libmysqld%soname-devel
+%package -n libmysqld-devel
 Summary: Development files for MySQL as an embeddable library
 Group: Development/Other
 Requires: libmysqld%soname = %EVR
+Requires: libmysqlclient%soname = %EVR
 Obsoletes: libmariadbembedded-devel < %EVR
 
-%description -n libmysqld%soname-devel
+%description -n libmysqld-devel
 MariaDB is a multi-user, multi-threaded SQL database server. This
 package contains files needed for developing and testing with
 the embedded version of the MariaDB server.
@@ -312,9 +308,6 @@ version.
 
 %prep
 %setup
-tar -xf %SOURCE101 -C libmariadb
-tar -xf %SOURCE102 -C storage/rocksdb/rocksdb
-
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -391,7 +384,6 @@ export LDFLAGS
 	-DWITHOUT_EXAMPLE_STORAGE_ENGINE=ON \
 	-DWITH_FAST_MUTEXES=ON \
 	-DWITHOUT_DAEMON_EXAMPLE=ON \
-	%{?_with_libwrap:-DWITH_LIBWRAP=ON} \
 	%{?_without_mariabackup:-DWITH_MARIABACKUP=OFF} \
 	%{?_without_libarchive:-DWITH_LIBARCHIVE=OFF} \
 	%{?_without_server:-DWITHOUT_SERVER=ON} \
@@ -451,7 +443,7 @@ install -p -m 0644 BUILD/support-files/wsrep.cnf %buildroot%_sysconfdir/my.cnf.d
 %endif
 
 %if_with tokudb
-install -pD -m644 BUILD/storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/tokudb.cnf
+install -pD -m644 storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/tokudb.cnf
 %endif
 
 install -pD -m644 %SOURCE20 %buildroot%_tmpfilesdir/mysql.conf
@@ -511,7 +503,6 @@ ln -sf {../bin,%buildroot%_sbindir}/mysql_install_db
 # remove static libs
 rm -f %buildroot%_libdir/libmysqlclient.a
 rm -f %buildroot%_libdir/libmysqlclient_r.a
-rm -f %buildroot%_libdir/libmariadbclient.a
 
 # Populate chroot with data to some extent.
 install -pD -m644 %buildroot%_datadir/mysql/charsets/* \
@@ -529,8 +520,10 @@ grep -EZl '^[[:space:]]*use the ' %buildroot%_bindir/* |
          xargs -r0 subst -p 's/\([[:space:]]*\)\(use the \)/\1then \2/g'
 
 
+subst -p 's/\(BUGmysql="\)\([^"]*\)"/\1\2,mysql@packages.altlinux.org"/g' %buildroot%_bindir/mysqlbug
+
 mkdir -p %buildroot%_docdir/%name-%version
-install -p -m644 README.md %SOURCE14 BUILD/support-files/*.cnf %buildroot%_docdir/%name-%version
+install -p -m644 README %SOURCE14 BUILD/support-files/*.cnf %buildroot%_docdir/%name-%version
 
 rm -f %buildroot%_bindir/safe_mysqld
 rm -f %buildroot%_datadir/mysql/mysql{-*.spec,-log-rotate,.server}
@@ -563,17 +556,23 @@ rm -f %buildroot%plugindir/daemon_example.ini
 rm -f %buildroot%_bindir/mysql_embedded
 rm -rf %buildroot%_datadir/info
 rm -f %buildroot%_datadir/mysql/binary-configure
-rm -f %buildroot%_datadir/mysql/my-huge.cnf
-rm -f %buildroot%_datadir/mysql/my-innodb-heavy-4G.cnf
-rm -f %buildroot%_datadir/mysql/my-large.cnf
-rm -f %buildroot%_datadir/mysql/my-medium.cnf
-rm -f %buildroot%_datadir/mysql/my-small.cnf
-rm -f %buildroot%_datadir/mysql/wsrep.cnf
+rm -f %buildroot%_datadir/mysql/config.huge.ini
+rm -f %buildroot%_datadir/mysql/config.medium.ini
+rm -f %buildroot%_datadir/mysql/config.small.ini
 rm -f %buildroot%_datadir/mysql/mysqld_multi.server
 rm -f %buildroot%_datadir/mysql/mysql-log-rotate
 rm -f %buildroot%_datadir/mysql/mysql.server
+rm -f %buildroot%_datadir/mysql/ndb-config-2-node.ini
 rm -f %buildroot%_datadir/mysql/magic
 
+# no idea how to fix this
+rm -rf %buildroot%prefix/data
+rm -rf %buildroot%prefix/docs
+rm -rf %buildroot%prefix/scripts
+rm -f %buildroot%prefix/COPYING
+rm -f %buildroot%prefix/COPYING.LESSER
+rm -f %buildroot%prefix/INSTALL-BINARY
+rm -f %buildroot%prefix/README
 
 ################################################################################
 # run the tests
@@ -611,7 +610,7 @@ fi
 %files
 
 %files server
-%doc README.md COPYING
+%doc README COPYING
 %_initdir/mysqld
 %config(noreplace) %_sysconfdir/sysconfig/*
 %config(noreplace) %_logrotatedir/*
@@ -655,12 +654,6 @@ fi
 %_bindir/galera_new_cluster
 %endif
 
-%if_with rocksdb
-%_bindir/myrocks_hotbackup
-%_bindir/mysql_ldb
-%_bindir/sst_dump
-%endif
-
 %_bindir/clustercheck
 %_unitdir/mariadbcheck.socket
 %_unitdir/mariadbcheck@.service
@@ -675,12 +668,13 @@ fi
 
 %attr(3770,root,mysql) %dir %_logdir/mysql
 %dir %_docdir/%name-%version
+%_docdir/%name-%version/README
 %_docdir/%name-%version/README.*
 %_docdir/%name-%version/*.cnf
 %attr(3771,root,mysql) %dir %ROOT
 %attr(710,root,mysql) %dir %ROOT/%_lib
 %attr(710,root,mysql) %dir %ROOT/%_libdir
-%attr(710,root,mysql) %dir %ROOT/%_libdir/%name
+%attr(710,root,mysql) %dir %ROOT/%_libdir/mysql
 %attr(710,root,mysql) %dir %ROOT/%plugindir
 %if_with galera
 %attr(710,root,mysql) %dir %ROOT/%_libdir/galera
@@ -707,7 +701,6 @@ fi
 %dir %ROOT/run/systemd
 %ghost %ROOT/run/systemd/notify
 
-
 %if_with common
 %files common
 %_datadir/mysql
@@ -723,6 +716,7 @@ fi
 %_bindir/mysql_convert_table_format
 %_bindir/mysql_find_rows
 %_bindir/mysql_setpermission
+%_bindir/mysql_zap
 %_bindir/mysqlhotcopy
 %_bindir/mysqlaccess
 %_bindir/mysqldumpslow
@@ -742,6 +736,7 @@ fi
 %_bindir/mysqladmin
 %_bindir/mysqlanalyze
 %_bindir/mysqlbinlog
+%_bindir/mysqlbug
 %_bindir/mysqlcheck
 %_bindir/mysqldump
 %_bindir/mysqlimport
@@ -773,7 +768,7 @@ fi
 %endif
 
 %if_with libs
-%files -n lib%name
+%files -n libmysqlclient%soname
 %_libdir/*.so.*
 # Clients plugin
 %dir %plugindir
@@ -786,15 +781,15 @@ fi
 %exclude %_libdir/libmysqld.so.*
 
 %files -n libmysqld%soname
+%doc README COPYING
 %_libdir/libmysqld.so.*
 #%_libdir/libmysqld.so.%%libmysqlembedded_major*
 %endif
 
 %if_with devel
-%files -n lib%name-devel
+%files -n libmysqlclient-devel
 %doc INSTALL-SOURCE
 %_bindir/mysql_config
-%_bindir/mariadb_config
 %_libdir/*.so
 %exclude %_libdir/libmysqld.so
 %_includedir/*
@@ -807,7 +802,7 @@ fi
 %_libdir/libmysqlservices.a
 
 %if_with server
-%files -n libmysqld%soname-devel
+%files -n libmysqld-devel
 %_libdir/libmysqld.so
 %_bindir/mysql_client_test_embedded
 %_bindir/mysqltest_embedded
@@ -818,33 +813,8 @@ fi
 %endif
 
 %changelog
-* Fri May 18 2018 Alexey Shabalin <shaba@altlinux.ru> 10.2.15-alt1.S1
-- 10.2.15
-- rename libmysqlclient18 to libmariadb
-- relocate plugindir to %%_libdir/%%name/plugin
-- build without libwrap support
-- Fixes for the following security vulnerabilities:
-  + CVE-2018-2562
-  + CVE-2018-2622
-  + CVE-2018-2640
-  + CVE-2018-2665
-  + CVE-2018-2668
-  + CVE-2018-2612
-  + CVE-2018-2786
-  + CVE-2018-2759
-  + CVE-2018-2777
-  + CVE-2018-2810
-  + CVE-2018-2782
-  + CVE-2018-2784
-  + CVE-2018-2787
-  + CVE-2018-2766
-  + CVE-2018-2755
-  + CVE-2018-2819
-  + CVE-2018-2817
-  + CVE-2018-2761
-  + CVE-2018-2781
-  + CVE-2018-2771
-  + CVE-2018-2813
+* Wed May 23 2018 Alexey Shabalin <shaba@altlinux.ru> 10.1.33-alt1%ubt
+- build legacy library only
 
 * Tue Jan 09 2018 Alexey Shabalin <shaba@altlinux.ru> 10.1.30-alt1%ubt
 - 10.1.30
