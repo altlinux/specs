@@ -1,6 +1,5 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -13,14 +12,18 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name maven
 %bcond_without  logback
 
 %global bundled_slf4j_version 1.7.25
+%global apphomedir %{_datadir}/%{name}%{?maven_version_suffix}
+%global confdir %{_sysconfdir}/%{name}%{?maven_version_suffix}
 
 Name:           maven
 Epoch:          1
-Version:        3.5.2
-Release:        alt1_5jpp8
+Version:        3.5.3
+Release:        alt1_1jpp8
 Summary:        Java project management and project comprehension tool
 License:        ASL 2.0
 URL:            http://maven.apache.org/
@@ -34,6 +37,8 @@ Patch1:         0001-Adapt-mvn-script.patch
 # Downstream-specific, avoids dependency on logback
 # Used only when %%without logback is in effect
 Patch2:         0002-Invoke-logback-via-reflection.patch
+# We don't have mockito 2 yet
+Patch3:         0003-Revert-MNG-6335-Update-Mockito-to-2.12.0.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.guava:guava:20.0)
@@ -83,6 +88,7 @@ BuildRequires:  mvn(ch.qos.logback:logback-classic)
 %endif
 
 Requires:       %{name}-lib = %{epoch}:%{version}-%{release}
+
 
 # Theoretically Maven might be usable with just JRE, but typical Maven
 # workflow requires full JDK, so we recommend it here.
@@ -168,6 +174,7 @@ BuildArch: noarch
 %setup -q -n apache-%{name}-%{version}
 
 %patch1 -p1
+%patch3 -p1
 
 # not really used during build, but a precaution
 find -name '*.jar' -not -path '*/test/*' -delete
@@ -184,7 +191,6 @@ rm apache-maven/src/main/appended-resources/META-INF/LICENSE.vm
 %pom_remove_plugin -r :animal-sniffer-maven-plugin
 %pom_remove_plugin -r :apache-rat-plugin
 %pom_remove_plugin -r :maven-site-plugin
-%pom_remove_plugin -r :maven-enforcer-plugin
 %pom_remove_plugin -r :buildnumber-maven-plugin
 sed -i "
 /buildNumber=/ {
@@ -217,37 +223,56 @@ mkdir m2home
 
 export M2_HOME=$(pwd)/m2home/apache-maven-%{version}%{?ver_add}
 
-install -d -m 755 %{buildroot}%{_datadir}/%{name}/conf
-install -d -m 755 %{buildroot}%{_bindir}
-install -d -m 755 %{buildroot}%{_sysconfdir}/%{name}
-install -d -m 755 %{buildroot}%{_datadir}/bash-completion/completions
-install -d -m 755 %{buildroot}%{_mandir}/man1
+install -d -m 755 %{buildroot}%{apphomedir}/conf
+install -d -m 755 %{buildroot}%{confdir}
+install -d -m 755 %{buildroot}%{_datadir}/bash-completion/completions/
 
-cp -a $M2_HOME/{bin,lib,boot} %{buildroot}%{_datadir}/%{name}/
-xmvn-subst -R %{buildroot} -s %{buildroot}%{_datadir}/%{name}
+cp -a $M2_HOME/{bin,lib,boot} %{buildroot}%{apphomedir}/
+xmvn-subst -R %{buildroot} -s %{buildroot}%{apphomedir}
 
 # Transitive deps of wagon-http, missing because of unshading
-build-jar-repository -s -p %{buildroot}%{_datadir}/%{name}/lib \
+build-jar-repository -s -p %{buildroot}%{apphomedir}/lib \
     commons-{codec,logging} httpcomponents/{httpclient,httpcore} maven-wagon/http-shared
 
 # Transitive deps of cdi-api that should have been excluded
-rm %{buildroot}%{_datadir}/%{name}/lib/jboss-interceptors*.jar
-rm %{buildroot}%{_datadir}/%{name}/lib/javax.el-api*.jar
+rm %{buildroot}%{apphomedir}/lib/jboss-interceptors*.jar
+rm %{buildroot}%{apphomedir}/lib/javax.el-api*.jar
 
-for cmd in mvn mvnDebug; do
-    ln -s %{_datadir}/%{name}/bin/$cmd %{buildroot}%{_bindir}/$cmd
-    echo ".so man1/mvn.1" >%{buildroot}%{_mandir}/man1/$cmd.1
-done
-install -p -m 644 %{SOURCE2} %{buildroot}%{_mandir}/man1
-install -p -m 644 %{SOURCE1} %{buildroot}%{_datadir}/bash-completion/completions/mvn
-mv $M2_HOME/bin/m2.conf %{buildroot}%{_sysconfdir}
-ln -sf %{_sysconfdir}/m2.conf %{buildroot}%{_datadir}/%{name}/bin/m2.conf
-mv $M2_HOME/conf/settings.xml %{buildroot}%{_sysconfdir}/%{name}
-ln -sf %{_sysconfdir}/%{name}/settings.xml %{buildroot}%{_datadir}/%{name}/conf/settings.xml
-mv $M2_HOME/conf/logging %{buildroot}%{_sysconfdir}/%{name}
-ln -sf %{_sysconfdir}/%{name}/logging %{buildroot}%{_datadir}/%{name}/conf
+install -p -m 644 %{SOURCE2} %{buildroot}%{apphomedir}/bin/
+gzip -9 %{buildroot}%{apphomedir}/bin/mvn.1
+install -p -m 644 %{SOURCE1} %{buildroot}%{_datadir}/bash-completion/completions/mvn%{?maven_version_suffix}
+mv $M2_HOME/bin/m2.conf %{buildroot}%{_sysconfdir}/m2%{?maven_version_suffix}.conf
+ln -sf %{_sysconfdir}/m2%{?maven_version_suffix}.conf %{buildroot}%{apphomedir}/bin/m2.conf
+mv $M2_HOME/conf/settings.xml %{buildroot}%{confdir}/
+ln -sf %{confdir}/settings.xml %{buildroot}%{apphomedir}/conf/settings.xml
+mv $M2_HOME/conf/logging %{buildroot}%{confdir}/
+ln -sf %{confdir}/logging %{buildroot}%{apphomedir}/conf
+
+# Ghosts for alternatives
+#install -d -m 755 %{buildroot}%{_bindir}/
+#install -d -m 755 %{buildroot}%{_mandir}/man1/
+#touch %{buildroot}%{_bindir}/{mvn,mvnDebug}
+#touch %{buildroot}%{_mandir}/man1/{mvn,mvnDebug}.1
 # maven-filesystem
 rm -f %buildroot%_datadir/%{name}/repository-jni/JPP
+
+# touching all ghosts; hack for rpm 4.0.4
+#for rpm404_ghost in %{_bindir}/mvn %{_bindir}/mvnDebug %{_mandir}/man1/mvn.1.gz %{_mandir}/man1/mvnDebug.1.gz
+#do
+#    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+#    touch %buildroot"$rpm404_ghost"
+#done
+install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/mvn_maven<<EOF
+%{_bindir}/mvn	%{apphomedir}/bin/mvn	%{?maven_alternatives_priority}0
+%{_bindir}/mvnDebug	%{apphomedir}/bin/mvnDebug	%{apphomedir}/bin/mvn
+%{_mandir}/man1/mvn.1.gz	%{apphomedir}/bin/mvn.1.gz	%{apphomedir}/bin/mvn
+%{_mandir}/man1/mvnDebug.1.gz	%{apphomedir}/bin/mvn.1.gz	%{apphomedir}/bin/mvn
+EOF
+
+mkdir -p %buildroot%{_bindir} %buildroot%{_man1dir}
+ln -s `relative %{apphomedir}/bin/mvn %{_bindir}/` %buildroot%{_bindir}/mvn
+ln -s `relative %{apphomedir}/bin/mvnDebug %{_bindir}/` %buildroot%{_bindir}/mvnDebug
+ln -s `relative %{apphomedir}/bin/mvn.1.gz %{_man1dir}/` %buildroot%{_man1dir}/mvn.1.gz
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/mavenrc`
 touch $RPM_BUILD_ROOT/etc/mavenrc
@@ -255,36 +280,38 @@ touch $RPM_BUILD_ROOT/etc/mavenrc
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/maven.conf`
 touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
-ln -s maven-resolver-provider.jar $RPM_BUILD_ROOT%_javadir/maven/maven-aether-provider.jar
 
 %pre 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=27807 (upgrade from maven1)
 [ -d %_datadir/maven/repository/JPP ] && rm -rf %_datadir/maven/repository/JPP ||:
 
 
+
 %files lib -f .mfiles
-%doc LICENSE NOTICE README.md
-%{_datadir}/%{name}
-%dir %{_javadir}/%{name}
-%dir %{_sysconfdir}/%{name}
-%dir %{_sysconfdir}/%{name}/logging
-%config(noreplace) %{_sysconfdir}/m2.conf
-%config(noreplace) %{_sysconfdir}/%{name}/settings.xml
-%config(noreplace) %{_sysconfdir}/%{name}/logging/simplelogger.properties
-%_javadir/maven/maven-aether-provider.jar
+%doc README.md
+%doc --no-dereference LICENSE NOTICE
+%{apphomedir}
+%dir %{confdir}
+%dir %{confdir}/logging
+%config(noreplace) %{_sysconfdir}/m2%{?maven_version_suffix}.conf
+%config(noreplace) %{confdir}/settings.xml
+%config(noreplace) %{confdir}/logging/simplelogger.properties
 
 %files
-%attr(0755,root,root) %{_bindir}/mvn*
+%_bindir/mvn*
+%_man1dir/mvn*
 %{_datadir}/bash-completion
-%{_mandir}/man1/mvn*.1*
 %config(noreplace,missingok) /etc/mavenrc
 %config(noreplace,missingok) /etc/java/maven.conf
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 
 %changelog
+* Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.5.3-alt1_1jpp8
+- new version
+
 * Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt1_5jpp8
 - fc 28 update
 
