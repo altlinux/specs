@@ -38,7 +38,7 @@ BuildRequires: libvorbis-devel
 
 Name: wesnoth%wessuffix
 Version: 1.12.6
-Release: alt4
+Release: alt4.1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
@@ -641,6 +641,9 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.6-alt4.1
+- NMU: rebuilt with boost-1.67.0
+
 * Wed Apr 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.6-alt4
 - Rebuilt with new boost.
 

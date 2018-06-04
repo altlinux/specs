@@ -3,7 +3,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.7.13
-Release: alt1
+Release: alt1.1
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -252,6 +252,9 @@ popd
 %endif
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.13-alt1.1
+- NMU: rebuilt with boost-1.67.0
+
 * Sun May 13 2018 Anton Midyukov <antohami@altlinux.org> 2.7.13-alt1
 - new version 2.7.13
 

@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.0.5
-Release: alt6
+Release: alt6.1
 
 Summary: Kerveros 5 database administration API for Python.
 
@@ -37,6 +37,9 @@ scons install DESTDIR=%buildroot
 %python_sitelibdir/*
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.5-alt6.1
+- NMU: rebuilt with boost-1.67.0
+
 * Fri Jul 14 2017 Evgeny Sinelnikov <sin@altlinux.ru> 0.0.5-alt6
 - Rebuild with krb5-1.15
 

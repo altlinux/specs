@@ -15,7 +15,7 @@ Name: kde4edu
 %define minor 12
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt6%ubt
+Release: alt7%ubt
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -902,6 +902,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 15.12.3-alt7%ubt
+- NMU: rebuilt with boost-1.67.0
+
 * Wed Aug 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 15.12.3-alt6%ubt
 - Rebuilt with new libgsl.
 - Built without facile.

@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/swig gcc-c++ ilmbase-devel
 %define _localstatedir %{_var}
 Name:		aqsis
 Version:	1.8.2
-Release:	alt2_29
+Release:	alt3_29
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -23,6 +23,8 @@ Patch2: aqsis-1.8.2-boost-1.59.patch
 # Fix code to be C++11 compatible
 # https://sourceforge.net/p/aqsis/bugs/433/
 Patch3: aqsis-1.8.2-gcc6.patch
+
+Patch4: aqsis-1.8.2-alt-boost-thread.patch
 
 BuildRequires:  desktop-file-utils
 
@@ -122,6 +124,7 @@ integration with third-party applications.
 %patch1 -p1 -b imfinputfile-forward-declaration
 %patch2 -p1
 %patch3 -p1
+%patch4 -p2
 
 %build
 ## Do not Enable pdiff=yes Because it will conflict with Printdiff :
@@ -236,6 +239,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Mon Jun 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt3_29
+- NMU: rebuilt with boost-1.67.0
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_29
 - update to new release by fcimport
 
