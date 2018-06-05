@@ -1,6 +1,6 @@
 Name:           pdfcube
 Version:        0.0.5
-Release:        alt4.svn20120708
+Release:        alt4.svn20120708.1
 Summary:        PDF presentation viewer with a spinning cube
 Group:          Office
 License:        GPL
@@ -37,6 +37,9 @@ rm -f m4/l*
 %_bindir/pdfcube
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.5-alt4.svn20120708.1
+- NMU: rebuilt with boost-1.67.0
+
 * Wed Apr 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.5-alt4.svn20120708
 - Rebuilt with new boost.
 

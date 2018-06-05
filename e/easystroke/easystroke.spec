@@ -3,7 +3,7 @@
 
 Name:     easystroke
 Version:  0.6.0
-Release:  alt3
+Release:  alt3.1
 
 Summary: a gesture-recognition application for X11
 
@@ -77,6 +77,9 @@ mkdir -p -- %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt3.1
+- NMU: rebuilt with boost-1.67.0
+
 * Mon Jul 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt3
 - Fixed build
 

@@ -1,6 +1,6 @@
 Name: xtreemfs
 Version: 1.5.1
-Release: alt3
+Release: alt3.1
 
 Summary: XtreemFS base package
 
@@ -237,6 +237,9 @@ fi
 %doc LICENSE
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.1-alt3.1
+- NMU: rebuilt with boost-1.67.0
+
 * Fri May 18 2018 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt3
 - fix build with boost 1.66
 

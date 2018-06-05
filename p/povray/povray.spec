@@ -1,7 +1,7 @@
 %define mjversion 3.7
 Name: povray
 Version: %mjversion.0.4
-Release: alt1
+Release: alt1.1
 
 Summary: Persistence of Vision Ray Tracer (POV-Ray)
 Summary(ru_RU.UTF-8): Трассировщик лучей POV-Ray
@@ -83,6 +83,9 @@ find %buildroot%_datadir/povray-%mjversion/scripts/ -type f -print0 |\
 %doc %_man1dir/*
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.7.0.4-alt1.1
+- NMU: rebuilt with boost-1.67.0
+
 * Thu Oct 05 2017 Anton Farygin <rider@altlinux.ru> 3.7.0.4-alt1
 - new version
 

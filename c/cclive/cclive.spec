@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/pod2man gcc-c++ pkgconfig(libpcre) pkgconfig(libpcrecpp)
 # END SourceDeps(oneline)
 Name:           cclive
 Version:        0.7.16
-Release:        alt2
+Release:        alt2.1
 Summary:        Command line video extraction utility
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group:          Video
@@ -42,6 +42,9 @@ chrpath --delete $RPM_BUILD_ROOT%{_bindir}/%{name}
 
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.16-alt2.1
+- NMU: rebuilt with boost-1.67.0
+
 * Fri Sep 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.16-alt2
 - Rebuilt with boost 1.65.0.
 

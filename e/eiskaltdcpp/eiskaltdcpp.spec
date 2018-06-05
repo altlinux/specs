@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
 Version: 2.2.10
-Release: alt1
+Release: alt1.1
 
 Summary: EiskaltDC++ - Direct Connect client
 
@@ -168,6 +168,9 @@ command line interface for XML-RPC Daemon
 %_datadir/%name/cli
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.10-alt1.1
+- NMU: rebuilt with boost-1.67.0
+
 * Mon Apr 23 2018 Grigory Ustinov <grenka@altlinux.org> 2.2.10-alt1
 - Build new version.
 - Transfer to qt5 (Closes: #34636).

@@ -1,6 +1,6 @@
 Name: asc
 Version: 2.6.1.0
-Release: alt1
+Release: alt1.1
 Group: Games/Strategy
 License: GPLv2+
 
@@ -42,6 +42,9 @@ cp %SOURCE1 %SOURCE2 %SOURCE3 data/music/
 %doc AUTHORS COPYING ChangeLog README TODO doc
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.1.0-alt1.1
+- NMU: rebuilt with boost-1.67.0
+
 * Fri Jan 20 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.1.0-alt1
 - Updated to 2.6.1.0.
 

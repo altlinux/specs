@@ -1,6 +1,6 @@
 Name: pcb2gcode
 Version: 1.3.2
-Release: alt1
+Release: alt1.1
 Summary: Command-line software for the isolation, routing and drilling of PCBs
 
 Group: Engineering
@@ -40,5 +40,8 @@ dynamic calibration of the milling depth.
 %doc COPYING
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.2-alt1.1
+- NMU: rebuilt with boost-1.67.0
+
 * Tue Jul 25 2017 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt1
 - Initial build for ALT Sisyphus.

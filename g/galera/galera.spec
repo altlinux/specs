@@ -1,6 +1,6 @@
 Name: galera
 Version: 25.3.22
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
 License: GPLv2
@@ -94,6 +94,9 @@ install -D -m 644 scripts/packages/README-MySQL %buildroot%_docdir/galera/README
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 25.3.22-alt2%ubt
+- NMU: rebuilt with boost-1.67.0
+
 * Tue Nov 07 2017 Alexey Shabalin <shaba@altlinux.ru> 25.3.22-alt1%ubt
 - 25.3.22
 

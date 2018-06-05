@@ -1,6 +1,6 @@
 Name: source-highlight
 Version: 3.1.8
-Release: alt5%ubt
+Release: alt6%ubt
 
 Summary: syntax highlighting for source documents
 License: GPL
@@ -91,6 +91,9 @@ BuildArch: noarch
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.8-alt6%ubt
+- NMU: rebuilt with boost-1.67.0
+
 * Tue Apr 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.8-alt5%ubt
 - Rebuilt with new boost.
 
