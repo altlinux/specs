@@ -3,7 +3,7 @@
 
 Name:           simarrange
 Version:        0.0
-Release:        alt2.%{relstring}
+Release:        alt3.%{relstring}
 Summary:        STL 2D plate packer with collision simulation
 
 Group:		Engineering
@@ -15,6 +15,7 @@ BuildRequires:  libgomp-devel
 BuildRequires:  libargtable2-devel
 BuildRequires:  libopencv-devel
 BuildRequires:  libuthash-devel
+BuildRequires:  gcc-c++
 
 %description
 Simarrange is a program that simulates collisions between STL meshes in
@@ -26,14 +27,16 @@ orientation already.
 %prep
 %setup -q
 
+mv simarrange.c simarrange.cpp
+
 # bundling
 rm utlist.h
 rm admesh -rf
 
 %build
 # the build script is one line and would need patching, so just skip it
-gcc %{optflags} simarrange.c -o ./%{name} -lm -lopencv_imgproc -lopencv_core \
-    -lopencv_highgui -ladmesh -largtable2 -fopenmp -DPARALLEL
+g++ %{optflags} simarrange.cpp -o ./%{name} -lm -lopencv_imgproc -lopencv_core \
+    -lopencv_highgui -lopencv_imgcodecs -ladmesh -largtable2 -fopenmp -DPARALLEL
 
 %install
 install -Dpm0755 %name %buildroot%_bindir/%name
@@ -45,6 +48,9 @@ install -Dpm0644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.*
 
 %changelog
+* Tue Jun 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0-alt3.git0f1fbef
+- NMU: rebuilt with opencv 3.4.
+
 * Fri Mar 20 2015 Andrey Cherepanov <cas@altlinux.org> 0.0-alt2.git0f1fbef
 - New version from upstream Git
 
