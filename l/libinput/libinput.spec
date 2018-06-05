@@ -5,7 +5,7 @@
 %def_enable tests
 
 Name: libinput
-Version: 1.10.7
+Version: 1.11.0
 Release: alt1
 
 Summary: Input devices library
@@ -15,11 +15,13 @@ Url: http://www.freedesktop.org/wiki/Software/libinput/
 
 Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
 
+%add_python3_path %_libexecdir/%name
+
 %define mtdev_ver 1.1.0
 %define evdev_ver 0.4
 
-BuildRequires(pre): meson
-BuildRequires: gcc-c++ rpm-build-python3
+BuildRequires(pre): meson rpm-build-python3
+BuildRequires: gcc-c++
 BuildRequires: libmtdev-devel >= %mtdev_ver libevdev-devel >= %evdev_ver
 BuildRequires: libudev-devel libcheck-devel libunwind-devel
 %{?_enable_libwacom:BuildRequires: libwacom-devel}
@@ -98,19 +100,20 @@ This package contains visual debug helper for %name.
 
 %files tools
 %_bindir/%name
-%_bindir/%name-list-devices
-%_bindir/%name-debug-events
 %dir %_libexecdir/%name
 %_libexecdir/%name/*
 %{?_enable_debug_gui:%exclude %_libexecdir/%name/%name-debug-gui}
 %_man1dir/%name.1.*
-%_man1dir/%name-list-devices.1.*
 %_man1dir/%name-debug-events.1.*
+%_man1dir/%name-list-devices.1.*
 %_man1dir/%name-measure.1.*
+%_man1dir/%name-measure-fuzz.1.*
+%_man1dir/%name-measure-touchpad-pressure.1.*
 %_man1dir/%name-measure-touchpad-tap.1.*
 %_man1dir/%name-measure-touch-size.1.*
-%_man1dir/%name-measure-touchpad-pressure.1.*
 %_man1dir/%name-measure-trackpoint-range.1.*
+%_man1dir/%name-record.1.*
+%_man1dir/%name-replay.1.*
 
 %if_enabled debug_gui
 %files tools-gui
@@ -120,6 +123,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Tue Jun 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
+- 1.11.0
+
 * Thu May 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.10.7-alt1
 - 1.10.7
 
