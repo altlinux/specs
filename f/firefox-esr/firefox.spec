@@ -1,19 +1,21 @@
 %define rname firefox
-%set_verify_elf_method unresolved=strict
+%set_verify_elf_method relaxed
 
 %define firefox_cid     \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define firefox_prefix  %_libdir/firefox
 %define firefox_datadir %_datadir/firefox
 
 %define gst_version 1.0
-%define nspr_version 4.15
-%define nss_version 3.31.0
+%define nspr_version 4.17
+%define nss_version 3.36.1
+%define rust_version 1.24.1
+%define cargo_version 0.25.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        52.8.0
+Version:        60.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -25,32 +27,38 @@ Source0:        firefox-source.tar
 Source1:        rpm-build.tar
 Source2:        searchplugins.tar
 Source4:        firefox-mozconfig
+Source5:        distribution.ini
 Source6:        firefox.desktop
 Source7:        firefox.c
 Source8:        firefox-prefs.js
 
 Patch6:         firefox-alt-disable-werror.patch
-#Patch7:         firefox-alt-disable-profiler.patch
+Patch7:         firefox-alt-fix-expandlibs.patch
 Patch14:        firefox-fix-install.patch
 Patch16:        firefox-cross-desktop.patch
 Patch17:        firefox-mediasource-crash.patch
+Patch18:        firefox-alt-nspr-for-rust.patch
 
 # Upstream
 Patch200:       mozilla-bug-256180.patch
 Patch201:       mozilla-bug-1196777.patch
 Patch202:       mozilla-bug-1430274.patch
 
-# Red Hat
-Patch301:       rhbz-1291190-appchooser-crash.patch
-Patch302:       rhbz-966424.patch
-
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
+BuildRequires: clang6.0
+BuildRequires: clang6.0-devel
+BuildRequires: llvm6.0-devel
+BuildRequires: lld-devel
+BuildRequires: libstdc++-devel
 BuildRequires: rpm-macros-alternatives
-BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend glibc-kernheaders
+BuildRequires: rust >= %rust_version
+BuildRequires: rust-cargo >= %cargo_version
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
+BuildRequires: libXcursor-devel
+BuildRequires: libXi-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXdamage-devel
 BuildRequires: libcurl-devel libgtk+2-devel libgtk+3-devel libhunspell-devel libjpeg-devel
@@ -77,11 +85,16 @@ BuildRequires: libpulseaudio-devel
 BuildRequires: libdbus-devel libdbus-glib-devel
 
 # Python requires
+BuildRequires: /dev/shm
 BuildRequires: python-module-distribute
+BuildRequires: python-module-pip
 BuildRequires: python-modules-compiler
 BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
+
+# Rust requires
+BuildRequires: /proc
 
 # Mozilla requires
 BuildRequires: pkgconfig(nspr) >= %nspr_version
@@ -122,18 +135,16 @@ cd mozilla
 tar -xf %SOURCE1
 tar -xf %SOURCE2
 
-%patch6  -p1
-#patch7  -p1
-%patch14 -p1
-%patch16 -p1
+#patch6  -p1
+%patch7  -p2
+#patch14 -p1
+%patch16 -p2
 %patch17 -p2
+%patch18 -p2
 
 %patch200 -p1
 %patch201 -p1
-%patch202 -p1
-
-%patch301 -p1
-%patch302 -p1
+#patch202 -p1
 
 cp -f %SOURCE4 .mozconfig
 
@@ -145,34 +156,25 @@ cd mozilla
 
 export MOZ_BUILD_APP=browser
 
-cat >> browser/confvars.sh <<EOF
-MOZ_UPDATER=
-MOZ_JAVAXPCOM=
-MOZ_EXTENSIONS_DEFAULT=' gio'
-MOZ_CHROME_FILE_FORMAT=jar
-EOF
+MOZ_OPT_FLAGS="-pipe -O2 -g0"
 
-MOZ_OPT_FLAGS="$RPM_OPT_FLAGS"
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS \
+ -fuse-ld=lld"
+
+#MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS \
+# -fuse-ld=lld -flto=thin \
+# -Wl,--thinlto-jobs=4 -Wl,--thinlto-cache-dir=thinlto-cache -Wl,--thinlto-cache-policy,cache_size=10%% -Wl,--lto-O0"
 
 # PIE, full relro
-MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fPIC -Wl,-z,relro -Wl,-z,now"
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -DPIC -fPIC -Wl,-z,relro -Wl,-z,now"
 
-# add -fno-delete-null-pointer-checks and -fno-inline-small-functions for gcc6
-MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-delete-null-pointer-checks -fno-inline-small-functions"
-%ifarch armh
-MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-schedule-insns"
-%endif
+# Add fake RPATH
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -Wl,-rpath,/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
 
-# Mozilla builds with -Wall with exception of a few warnings which show up
-# everywhere in the code; so, don't override that.
-#
-# Disable C++ exceptions since Mozilla code is not exception-safe
-#
-MOZ_OPT_FLAGS=$(echo $MOZ_OPT_FLAGS | \
-                sed \
-                    -e 's/-Wall//' \
-                    -e 's/-fexceptions/-fno-exceptions/g'
-)
+# If MOZ_DEBUG_FLAGS is empty, firefox's build will default it to "-g" which
+# overrides the -g0 from line above and breaks building on s390
+# (OOM when linking, rhbz#1238225)
+export MOZ_DEBUG_FLAGS=" "
 
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
@@ -184,33 +186,35 @@ export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
 export RPATH="-Wl,-rpath,$rpath"
 %endif
 
-export PREFIX="%_prefix"
-export LIBDIR="%_libdir"
+export CC="clang"
+export CXX="clang++"
+
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
+export RUST_BACKTRACE=1
+export RUSTFLAGS="-Cdebuginfo=0"
+export BUILD_VERBOSE_LOG=1
 
-%__autoconf
+cat >> .mozconfig <<'EOF'
+ac_add_options --prefix="%_prefix"
+ac_add_options --libdir="%_libdir"
+ac_add_options --enable-linker=lld
+EOF
 
-# On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
-# however builds tend to fail on other arches when building in parallel.
-MOZ_SMP_FLAGS=-j1
-[ "%__nprocs" -ge 2 ] && MOZ_SMP_FLAGS=-j2
-[ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
-[ "%__nprocs" -ge 6 ] && MOZ_SMP_FLAGS=-j6
+export MOZ_MAKE_FLAGS="-j6"
 
-make -f client.mk \
-	MAKENSISU= \
-	STRIP="/bin/true" \
-	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
-	mozappdir=%buildroot/%firefox_prefix \
-	libdir=%_libdir \
-	build
+%__autoconf old-configure.in > old-configure
+pushd js/src
+%__autoconf old-configure.in > old-configure
+popd
 
-%__cc %optflags \
+./mach build
+
+$CC $CFLAGS \
 	-Wall -Wextra \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
-	-DMOZ_PROGRAM=\"%firefox_prefix/firefox-bin\" \
+	-DMOZ_PROGRAM=\"%firefox_prefix/firefox\" \
 	-DMOZ_DIST_BIN=\"%firefox_prefix\"\
 	%SOURCE7 -o firefox
 
@@ -236,8 +240,9 @@ make -C objdir \
 install -D -m 644 %SOURCE8 %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
 
 cat > %buildroot/%firefox_prefix/browser/defaults/preferences/firefox-l10n.js <<EOF
-pref("intl.locale.matchOS",		true);
-pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
+pref("intl.locale.matchOS", true);
+pref("intl.locale.requested", "");
+pref("general.useragent.locale", "chrome://global/locale/intl.properties");
 EOF
 
 # icons
@@ -265,7 +270,9 @@ install -m755 firefox %buildroot/%_bindir/firefox
 
 cd %buildroot
 
-mv -f ./%firefox_prefix/application.ini ./%firefox_prefix/browser/application.ini
+# Add distribution.ini
+mkdir -p -- ./%firefox_prefix/distribution
+cp -- %SOURCE5 ./%firefox_prefix/distribution/distribution.ini
 
 # install menu file
 %__install -D -m 644 %SOURCE6 ./%_datadir/applications/firefox.desktop
@@ -275,7 +282,6 @@ mkdir -p ./%_altdir
 printf '%_bindir/xbrowser\t%_bindir/firefox\t100\n' >./%_altdir/firefox
 
 rm -f -- \
-	./%firefox_prefix/firefox \
 	./%firefox_prefix/removed-files
 
 # Remove devel files
@@ -286,20 +292,16 @@ rm -rf -- \
 #
 
 # Add real RPATH
-rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
-find \
-     %buildroot/%firefox_prefix \
--type f -print0 |
 (set +x
-        while read -r -d '' f; do
-              t="$(readlink -ev -- "$f")"
-
-              file -- "$t" | fgrep -qs ELF || continue
-
-              if chrpath -l "$t" | fgrep -qs "PATH=$rpath"; then
-                 chrpath -r "%firefox_prefix" "$t"
-              fi
-        done
+	rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
+	find %buildroot/%firefox_prefix -type f |
+	while read f; do
+		t="$(readlink -ev "$f")"
+		file "$t" | fgrep -qs ELF || continue
+		if chrpath -l "$t" | fgrep -qs "RPATH=$rpath"; then
+			chrpath -r "%firefox_prefix" "$t"
+		fi
+	done
 )
 
 %pre
@@ -322,8 +324,48 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Tue Jun 05 2018 Andrey Cherepanov <cas@altlinux.org> 60.0.1-alt1
+- New ESR version (60.0.1).
+- Fixed:
+  + CVE-2018-5154: Use-after-free with SVG animations and clip paths
+  + CVE-2018-5155: Use-after-free with SVG animations and text paths
+  + CVE-2018-5157: Same-origin bypass of PDF Viewer to view protected PDF files
+  + CVE-2018-5158: Malicious PDF can inject JavaScript into PDF Viewer
+  + CVE-2018-5159: Integer overflow and out-of-bounds write in Skia
+  + CVE-2018-5160: Uninitialized memory use by WebRTC encoder
+  + CVE-2018-5152: WebExtensions information leak through webRequest API
+  + CVE-2018-5153: Out-of-bounds read in mixed content websocket messages
+  + CVE-2018-5163: Replacing cached data in JavaScript Start-up Bytecode Cache
+  + CVE-2018-5164: CSP not applied to all multipart content sent with multipart/x-mixed-replace
+  + CVE-2018-5166: WebExtension host permission bypass through filterReponseData
+  + CVE-2018-5167: Improper linkification of chrome: and javascript: content in web console and JavaScript debugger
+  + CVE-2018-5168: Lightweight themes can be installed without user interaction
+  + CVE-2018-5169: Dragging and dropping link text onto home button can set home page to include chrome pages
+  + CVE-2018-5172: Pasted script from clipboard can run in the Live Bookmarks page or PDF viewer
+  + CVE-2018-5173: File name spoofing of Downloads panel with Unicode characters
+  + CVE-2018-5174: Windows Defender SmartScreen UI runs with less secure behavior for downloaded files in Windows 10 April 2018 Update
+  + CVE-2018-5175: Universal CSP bypass on sites using strict-dynamic in their policies
+  + CVE-2018-5176: JSON Viewer script injection
+  + CVE-2018-5177: Buffer overflow in XSLT during number formatting
+  + CVE-2018-5165: Checkbox for enabling Flash protected mode is inverted in 32-bit Firefox
+  + CVE-2018-5180: heap-use-after-free in mozilla::WebGLContext::DrawElementsInstanced
+  + CVE-2018-5181: Local file can be displayed in noopener tab through drag and drop of hyperlink
+  + CVE-2018-5182: Local file can be displayed from hyperlink dragged and dropped on addressbar
+  + CVE-2018-5151: Memory safety bugs fixed in Firefox 60
+  + CVE-2018-5150: Memory safety bugs fixed in Firefox 60 and Firefox ESR 52.8
+
 * Wed May 09 2018 Andrey Cherepanov <cas@altlinux.org> 52.8.0-alt1
 - New ESR version (52.8.0).
+- Fixes:
+  + CVE-2018-5183 Backport critical security fixes in Skia
+  + CVE-2018-5154 Use-after-free with SVG animations and clip paths
+  + CVE-2018-5155 Use-after-free with SVG animations and text paths
+  + CVE-2018-5157 Same-origin bypass of PDF Viewer to view protected PDF files
+  + CVE-2018-5158 Malicious PDF can inject JavaScript into PDF Viewer
+  + CVE-2018-5159 Integer overflow and out-of-bounds write in Skia
+  + CVE-2018-5168 Lightweight themes can be installed without user interaction
+  + CVE-2018-5178 Buffer overflow during UTF-8 to Unicode string conversion through legacy extension
+  + CVE-2018-5150 Memory safety bugs fixed in Firefox 60 and Firefox ESR 52.8
 
 * Wed May 02 2018 Andrey Cherepanov <cas@altlinux.org> 52.7.4-alt1
 - New ESR version (52.7.4).
@@ -410,6 +452,7 @@ done
   + CVE-2017-7802: Use-after-free resizing image elements
   + CVE-2017-7785: Buffer overflow manipulating ARIA attributes in DOM
   + CVE-2017-7786: Buffer overflow while painting non-displayable SVG
+  + CVE-2017-7806: Use-after-free in layer manager with SVG
   + CVE-2017-7753: Out-of-bounds read with cached style data and pseudo-elements
   + CVE-2017-7787: Same-origin policy bypass with iframes through page reloads
   + CVE-2017-7807: Domain hijacking through AppCache fallback
