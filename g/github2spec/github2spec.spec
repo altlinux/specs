@@ -1,6 +1,6 @@
 Name:     github2spec
 # NOTE update version in github2spec
-Version:  1.4.3
+Version:  1.4.4
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from github using genspec
@@ -34,6 +34,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Tue Jun 05 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.4-alt1
+- (ALT#34983) use version to change tag
+
 * Fri Mar 02 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.3-alt1
 - (ALT#34598) using empty strings instead of default values
 - (ALT#34597) requires to inappropriate version of genspec
