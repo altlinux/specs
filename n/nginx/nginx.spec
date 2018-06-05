@@ -4,8 +4,8 @@
 #============================================================================
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.12.1
-Release: alt2%ubt.1
+Version: 1.14.0
+Release: alt1%ubt
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel
@@ -208,7 +208,7 @@ CFLAGS="%optflags $CPU" ./configure \
 	--add-module=cache_purge \
 %endif
 %if_enabled rtmp
-	--add-module=nginx-rtmp-module \
+	--add-dynamic-module=nginx-rtmp-module \
 %endif
 %if_with debug
 	--with-google_perftools_module \
@@ -252,9 +252,9 @@ mkdir -p %buildroot%nginx_etc/modules-available.d
 mkdir -p %buildroot%nginx_etc/modules-enabled.d
 for s in %buildroot/%modpath/*.so; do
     fn=${s##*/}
-    module=${fn%.so}
+    module=${fn%%.so}
     module=${module#ngx_}
-    module=${module%_module}
+    module=${module%%_module}
     echo "load_module %modpath/$fn;" >> %buildroot%nginx_etc/modules-available.d/$module.conf
 done
 echo "# load dynamic nginx modules" > %buildroot%nginx_etc/nginx.conf.tmp
@@ -291,6 +291,7 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %config(noreplace) %nginx_etc/modules-available.d/stream.conf
 %config(noreplace) %nginx_etc/sites-available.d/default.conf
 %if_enabled rtmp
+%config(noreplace) %nginx_etc/modules-available.d/rtmp.conf
 %nginx_etc/stat.xsl
 %endif
 %dir %attr(0700,root,root) %_lockdir/%name
@@ -322,6 +323,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %dir %modpath
 %modpath/ngx_mail_module.so
 %modpath/ngx_stream_module.so
+%if_enabled rtmp
+%modpath/ngx_rtmp_module.so
+%endif
 
 %files geoip
 %config(noreplace) %nginx_etc/modules-available.d/http_geoip.conf
@@ -354,6 +358,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Tue Jun 05 2018 Denis Smirnov <mithraen@altlinux.ru> 1.14.0-alt1.S1
+- Updated to 1.14.0
+- Updated nginx-rtmp-module
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt2%ubt.1
 - rebuild with new perl 5.26.1
 
