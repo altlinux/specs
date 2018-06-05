@@ -8,7 +8,7 @@ BuildRequires: boost-filesystem-devel boost-program_options-devel cmake
 Name:           openscad
 Version:        2015.03.3
 %global upversion 2015.03-3
-Release:        alt2_12
+Release:        alt2_12.1
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 # Appdata file is CC0
@@ -192,6 +192,9 @@ cd -
 %{_datadir}/%{name}/libraries/MCAD
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2015.03.3-alt2_12.1
+- NMU: rebuilt with boost-1.67.0
+
 * Thu Apr 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2015.03.3-alt2_12
 - Rebuilt with new boost.
 

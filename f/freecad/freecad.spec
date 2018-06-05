@@ -8,7 +8,7 @@
 
 Name:    freecad
 Version: 0.17
-Release: alt4
+Release: alt4.1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
@@ -215,6 +215,9 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/doc
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.17-alt4.1
+- NMU: rebuilt with boost-1.67.0
+
 * Tue May 22 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.17-alt4
 - Fix path in desktop file.
 

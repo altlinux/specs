@@ -1,6 +1,6 @@
 Name: libpst
 Version: 0.6.68
-Release: alt2
+Release: alt2.1
 
 Summary: Tools for conversion of Outlook files to mailbox and other formats
 License: %gpl2plus
@@ -121,6 +121,9 @@ install -m0644 xml/*.pdf -t %buildroot%pkgdocdir/format-documentation/
 %python_sitelibdir/*.so
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.68-alt2.1
+- NMU: rebuilt with boost-1.67.0
+
 * Wed Sep 21 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.68-alt2
 - a further fix for empty headers instead of the authentic correct ones
   for the very rare case when the first internet header is wrapped

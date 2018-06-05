@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2013.1
-Release: alt1.git20140620.1.1.1
+Release: alt1.git20140620.1.1.2
 Summary: Seamless Numpy-UBlas interoperability
 License: BSD
 Group: Development/Python
@@ -147,6 +147,9 @@ rm -fR %_includedir/pyublas
 %endif
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2013.1-alt1.git20140620.1.1.2
+- NMU: rebuilt with boost-1.67.0
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2013.1-alt1.git20140620.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
