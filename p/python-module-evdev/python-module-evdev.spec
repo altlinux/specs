@@ -3,8 +3,8 @@
 %def_disable python2
 
 Name: python-module-%modname
-Version: 0.8.1
-Release: alt1.1
+Version: 1.0.0
+Release: alt1
 
 Summary: Python bindings to the generic input event interface
 Group: Development/Python
@@ -70,6 +70,9 @@ popd
 %doc README*
 
 %changelog
+* Tue Jun 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Tue Apr 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
