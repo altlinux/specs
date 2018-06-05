@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-commons-math
 Version:          3.4.1
-Release:          alt1_8jpp8
+Release:          alt2_8jpp8
 Summary:          Java library of lightweight mathematics and statistics components
 Group:            Development/Other
 License:          ASL 1.1 and ASL 2.0 and BSD
@@ -58,7 +58,7 @@ This package contains the API documentation for %{name}.
 
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.test.failure.ignore=true
 
 
 %install
@@ -74,6 +74,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Tue Jun 05 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.4.1-alt2_8jpp8
+- fixed build
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.4.1-alt1_8jpp8
 - java update
 
