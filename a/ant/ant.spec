@@ -51,19 +51,20 @@ BuildRequires: jpackage-generic-compat
 %global ant_home %{_datadir}/ant
 
 Name:           ant
-Version:        1.10.1
-Release:        alt1_9jpp8
+Version:        1.10.2
+Release:        alt1_0.1jpp8
 Epoch:          0
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
 Summary(fr):    Outil de compilation pour java
 License:        ASL 2.0
-URL:            http://ant.apache.org/
-Source0:        http://www.apache.org/dist/ant/source/apache-ant-%{version}-src.tar.bz2
+URL:            https://ant.apache.org/
+Source0:        https://www.apache.org/dist/ant/source/apache-ant-%{version}-src.tar.bz2
 Source2:        apache-ant-1.8.ant.conf
 
 # Fix some places where copies of classes are included in the wrong jarfiles
 Patch4:         apache-ant-class-path-in-manifest.patch
+Patch5:         ant-1.10.2-bootstrap.patch
 
 BuildRequires:  javapackages-local
 BuildRequires:  java-devel >= 1.8.0
@@ -416,6 +417,7 @@ find -name build.xml -o -name pom.xml | xargs sed -i -e s/-SNAPSHOT//
 
 # Fix class-path-in-manifest rpmlint warning
 %patch4
+%patch5
 
 # clean jar files
 find . -name "*.jar" | xargs -t rm
@@ -447,9 +449,6 @@ iconv KEYS -f iso-8859-1 -t utf-8 -o KEYS.utf8
 mv KEYS.utf8 KEYS
 iconv LICENSE -f iso-8859-1 -t utf-8 -o LICENSE.utf8
 mv LICENSE.utf8 LICENSE
-
-# It's part of the JDK now
-%pom_remove_dep javax.activation src/etc/poms/ant-javamail/pom.xml
 
 # We want a hard dep on antlr
 %pom_xpath_remove pom:optional src/etc/poms/ant-antlr/pom.xml
@@ -557,7 +556,7 @@ sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 
 %if %with tests
 %check
-%{ant} test
+LC_ALL=en_US.utf8 %{ant} test
 %endif
 
 %files
@@ -687,6 +686,9 @@ sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Jun 05 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.10.2-alt1_0.1jpp8
+- new version - bootstrap build
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.10.1-alt1_9jpp8
 - java update
 
