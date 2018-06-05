@@ -2,7 +2,7 @@
 %define rname amarok
 Name: kde4-%rname
 Version: 2.9.0
-Release: alt3%ubt
+Release: alt4%ubt
 
 Summary: Amarok is a music player for KDE.
 License: GPLv2
@@ -27,7 +27,7 @@ Patch102: alt-ffmpeg3.patch
 # Automatically added by buildreq on Thu Nov 19 2009 (-bi)
 #BuildRequires: dbus-tools-gui doxygen gcc-c++ git-core glibc-devel-static groff-ps kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libcurl-devel libgcrypt-devel libgio-devel libgpod-devel libgtk+2-common-devel liblastfm-devel libloudmouth-devel libmtp-devel libncursesw-devel libqca2-devel libqt3-devel libtag-devel libtag-extras-devel libxkbfile-devel libxml2-devel qtscriptbindings rpm-build-ruby tetex-latex time xorg-xf86vidmodeproto-devel
 BuildRequires(pre): rpm-build-ubt kde4libs-devel kde4base-runtime-devel
-BuildRequires: libmysqld19-devel libmariadb-devel
+BuildRequires: libmysqld19-devel libmysqlclient-devel
 BuildRequires: dbus-tools-gui doxygen gcc-c++ glibc-devel groff-ps
 BuildRequires: libtag-devel >= 1.6 libtag-extras-devel >= 1.0
 BuildRequires: libcurl-devel libgcrypt-devel libgio-devel libgpod-devel libgtk+2-common-devel liblastfm-devel
@@ -162,6 +162,9 @@ fi
 
 
 %changelog
+* Tue Jun 05 2018 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt4%ubt
+- rediff alt-disable-analizer.patch (thanks sbolshakov@alt)
+
 * Thu May 31 2018 Alexey Shabalin <shaba@altlinux.ru> 2.9.0-alt3%ubt
 - rebuild with libmariadb and libmysqld19
 
