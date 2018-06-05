@@ -1,19 +1,22 @@
 %define ver_major 0.2
+%define rdn_name io.elementary.cerbere
 
 Name: cerbere
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: service to relaunch Pantheon apps
 Group: Graphical desktop/Other
 License: GPLv2+
-Url: https://launchpad.net/cerbere
+Url: https://github.com/elementary/%name
 
-Source: https://launchpad.net/%name/0.x/%version/+download/%name-%version.tar.xz
+Source: %url/archive/%version/%name-%version.tar.gz
 
+Provides: %rdn_name = %version-%release
 Requires: dconf
 
-BuildRequires: cmake vala libgio-devel libgee0.8-devel gcc-c++
+BuildRequires(pre): meson
+BuildRequires: vala-tools libgio-devel libgee0.8-devel
 
 %description
 Cerbere is a sort of watchdog designed for Pantheon. It monitors a predefined
@@ -25,19 +28,22 @@ they crash or are killed by another process.
 %setup
 
 %build
-%cmake
-%cmake_build VERBOSE=1
+%meson
+%meson_build
 
 %install
-%cmakeinstall_std
+%meson_install
 
 %files
-%doc INSTALL
-%_bindir/*
-%_desktopdir/cerbere.desktop
-%_datadir/glib-2.0/schemas/org.pantheon.cerbere.gschema.xml
+%_bindir/%rdn_name
+%_desktopdir/%rdn_name.desktop
+%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%doc README*
 
 %changelog
+* Tue Jun 05 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
+- 0.2.3
+
 * Thu Jan 26 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
 - 0.2.2
 
