@@ -1,6 +1,6 @@
 Name: grub
 Version: 2.02
-Release: alt10%ubt
+Release: alt11%ubt
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -37,6 +37,7 @@ Patch10: grub2-stfu.patch
 Patch11: grub-2.02-shift-interrupt-timeout.patch
 Patch12: grub-2.02-ubuntu-efi-setup.patch
 Patch13: grub-2.02-check_writes-alt.patch
+Patch14: grub-2.02-alt-luks-use-uuid.patch
 
 BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
 BuildRequires: liblzma-devel help2man zlib-devel
@@ -159,6 +160,7 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p2
+%patch14 -p2
 
 sed -i 's,@GRUB_EFI_NAME@,%grubefiname,' %SOURCE10
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version[^]]\+/%version-%release/" configure.ac
@@ -342,6 +344,11 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Wed May 30 2018 Oleg Solovyov <mcpain@altlinux.org> 2.02-alt11%ubt
+- LVM+LUKS fixes:
+  + write UUID to grub.cfg after installation
+  + don't skip devices under /dev/mapper/
+
 * Fri May 25 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt10%ubt
 - removed xxd requires from efi firmware setup script
 
