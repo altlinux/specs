@@ -5,7 +5,7 @@
 
 Name: %pkgname
 Version: 2.1.2
-Release: alt2.2
+Release: alt3
 
 Summary: Pure ruby library which provides basic APIs for localization
 Group: Development/Ruby
@@ -65,7 +65,6 @@ install -Dm 0644 locale.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifica
 %files
 %doc README.rdoc
 %ruby_sitelibdir/*
-%exclude %ruby_sitelibdir/locale/driver/jruby.rb
 %exclude %ruby_sitelibdir/locale/driver/win32*.rb
 %ruby_libdir/gems/*/specifications/*.gemspec
 
@@ -74,6 +73,9 @@ install -Dm 0644 locale.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifica
 %ruby_ri_sitedir/Locale*
 
 %changelog
+* Tue May 29 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt3
+- Return jruby driver.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt2.2
 - Rebuild with Ruby 2.5.1
 
