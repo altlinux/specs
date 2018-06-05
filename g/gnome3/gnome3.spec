@@ -2,7 +2,7 @@
 
 Name: gnome3
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -247,6 +247,9 @@ Requires: rygel
 Requires: rygel-tracker
 Requires: gnome-usage
 
+# flatpak
+Requires: xdg-desktop-portal-gtk
+
 %description default
 This virtual package installs GNOME Desktop for an average user's
 requirements. It installs components from gnome-minimal package, some
@@ -427,6 +430,9 @@ some other useful GNOME and GTK applications.
 %files regular
 
 %changelog
+* Tue Jun 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt3
+- default: added xdg-desktop-portal-gtk (flatpak + xdg-desktop-portal)
+
 * Fri May 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt2
 - replaced gnome-games by new gnome-games-full virtual package
 
