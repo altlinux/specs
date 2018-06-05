@@ -1,6 +1,6 @@
 Name: swift
 Version: 3.0
-Release: alt1.beta2
+Release: alt2.beta2
 Summary: Swift, new friendly chat client.
 License: GPLv3, BSD-simplified
 Group: Networking/Instant messaging
@@ -49,6 +49,9 @@ scons -j%__nprocs allow_warnings=1 optimize=1 qt=%_qt4dir SWIFT_INSTALLDIR=%buil
 %_niconsdir/swift.xpm
 
 %changelog
+* Tue Jun 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0-alt2.beta2
+- NMU: rebuilt with boost-1.67.0.
+
 * Tue Aug 25 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0-alt1.beta2
 - Updated to 3.0beta2.
 
