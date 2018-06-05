@@ -1,6 +1,6 @@
 Name: powdertoy
 Version: 92.5
-Release: alt3
+Release: alt4
 Summary: Classic 'falling sand' physics sandbox game
 Group: Games/Educational
 Epoch: 1
@@ -33,7 +33,7 @@ cd "\$HOME/.powdertoy" && \$0.bin
 
 sed -i.lua51 's/lua5.1/lua/g' SConscript
 
-%ifarch e2k
+%ifarch %e2k
 # as of lcc 1.21.23
 sed -i 's,-ftree-vectorize,,;s,-funsafe-loop-optimizations,,' SConscript*
 %endif
@@ -81,6 +81,9 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Jun 05 2018 Michael Shigorin <mike@altlinux.org> 1:92.5-alt4
+- support e2kv4 through %%e2k macro
+
 * Tue Feb 27 2018 Michael Shigorin <mike@altlinux.org> 1:92.5-alt3
 - E2K: avoid lcc-unsupported options
 
