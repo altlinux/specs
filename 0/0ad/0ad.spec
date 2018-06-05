@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.0.22
-Release: alt1
+Release: alt2
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -77,6 +77,9 @@ cp -a binaries/data/* %buildroot/%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Tue Jun 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.0.22-alt2
+- NMU: rebuilt with boost-1.67.0.
+
 * Sun Nov 05 2017 Alexey Tourbin <at@altlinux.ru> 1:0.0.22-alt1
 - 0.0.21 -> 0.0.22
 
