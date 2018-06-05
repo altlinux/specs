@@ -1,12 +1,12 @@
 Name: ifplugd
 Version: 0.28
-Release: alt4.qa1
+Release: alt5
 
 Summary: Detect and perform actions when an ethernet cable is (un)plugged
 License: GPL
 Group: System/Configuration/Networking
 
-Url: http://www.stud.uni-hamburg.de/users/lennart/projects/%name
+Url: http://0pointer.de/lennart/projects/ifplugd/
 Source0: %url/%name-%version.tar.gz
 Source1: %name.init
 Patch0:	ifplugd-0.28-alt-etcnet.patch
@@ -17,8 +17,7 @@ Packager: Denis Ovsienko <pilot@altlinux.ru>
 BuildRequires: gcc-c++ hostinfo libdaemon-devel >= 0.4 mailcap pkgconfig
 Requires: libdaemon service coreutils util-linux network-config-subsystem
 
-Summary(ru_RU.KOI8-R): Конфигурирование сетевого интерфейса при наличии кабеля
-Summary(uk_UA.KOI8-U): Конф╕╜урування мережевого ╕нтерфейсу за наявност╕ кабелю
+Summary(ru_RU.UTF-8): п п╬п╫я└п╦пЁя┐я─п╦я─п╬п╡п╟п╫п╦п╣ я│п╣я┌п╣п╡п╬пЁп╬ п╦п╫я┌п╣я─я└п╣п╧я│п╟ п©я─п╦ п╫п╟п╩п╦я┤п╦п╦ п╨п╟п╠п╣п╩я▐
 
 %description
 %name is a service which will automatically configure your ethernet device
@@ -31,31 +30,21 @@ configure the interface when a cable is really connected.
 NB: not every Linux ethernet driver is capable of reporting link status.
 Use ifplugstatus to find out.
 
-%description -l ru_RU.KOI8-R
-%name -- сервис, отвечающий за автоматическое конфигурирование сетевого 
-интерфейса при подключении кабеля и деактивацию -- при отключении.
+%description -l ru_RU.UTF-8
+%name -- я│п╣я─п╡п╦я│, п╬я┌п╡п╣я┤п╟я▌я┴п╦п╧ п╥п╟ п╟п╡я┌п╬п╪п╟я┌п╦я┤п╣я│п╨п╬п╣ п╨п╬п╫я└п╦пЁя┐я─п╦я─п╬п╡п╟п╫п╦п╣ я│п╣я┌п╣п╡п╬пЁп╬
+п╦п╫я┌п╣я─я└п╣п╧я│п╟ п©я─п╦ п©п╬п╢п╨п╩я▌я┤п╣п╫п╦п╦ п╨п╟п╠п╣п╩я▐ п╦ п╢п╣п╟п╨я┌п╦п╡п╟я├п╦я▌ -- п©я─п╦ п╬я┌п╨п╩я▌я┤п╣п╫п╦п╦.
 
-Полезен на ноутбуках с сетевыми картами, т.к. при этом интерфейс будет
-активирован только при включении сетевого кабеля.
+п÷п╬п╩п╣п╥п╣п╫ п╫п╟ п╫п╬я┐я┌п╠я┐п╨п╟я┘ я│ я│п╣я┌п╣п╡я▀п╪п╦ п╨п╟я─я┌п╟п╪п╦, я┌.п╨. п©я─п╦ я█я┌п╬п╪ п╦п╫я┌п╣я─я└п╣п╧я│ п╠я┐п╢п╣я┌
+п╟п╨я┌п╦п╡п╦я─п╬п╡п╟п╫ я┌п╬п╩я▄п╨п╬ п©я─п╦ п╡п╨п╩я▌я┤п╣п╫п╦п╦ я│п╣я┌п╣п╡п╬пЁп╬ п╨п╟п╠п╣п╩я▐.
 
-NB: не каждый драйвер Ethernet в Linux выдаёт статус линка.
-Используйте ifplugstatus, чтобы выяснить это.
-
-%description -l uk_UA.KOI8-U
-%name -- серв╕с, що в╕дпов╕да╓ за автоматичне конф╕╜урування мережевого
-╕нтерфейсу при п╕дключенн╕ кабелю та деактивац╕ю -- при в╕дключенн╕.
-
-╢ корисним на ноутбуках ╕з мережевими картками, тому що при цьому ╕нтерфейс
-буде активовано т╕льки при включенн╕ мережевого кабелю.
-
-NB: не кожний драйвер Ethernet в Linux вида╓ статус л╕нка.
-Використовуйте ifplugstatus, щоб з'ясувати це.
+NB: п╫п╣ п╨п╟п╤п╢я▀п╧ п╢я─п╟п╧п╡п╣я─ Ethernet п╡ Linux п╡я▀п╢п╟я▒я┌ я│я┌п╟я┌я┐я│ п╩п╦п╫п╨п╟.
+п≤я│п©п╬п╩я▄п╥я┐п╧я┌п╣ ifplugstatus, я┤я┌п╬п╠я▀ п╡я▀я▐я│п╫п╦я┌я▄ я█я┌п╬.
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
 %patch1 -p0
-subst 's@/usr/local@@' man/*.[58]
+sed -i 's@/usr/local@@' man/*.[58]
 
 %build
 %configure \
@@ -66,9 +55,9 @@ subst 's@/usr/local@@' man/*.[58]
 %make
 
 %install
-subst 's,^ARGS="-,&q,' conf/ifplugd.conf
+sed -i 's,^ARGS="-,&q,' conf/ifplugd.conf
 %makeinstall sysinitdir=%buildroot%_initdir
-install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
+install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 
 %post
 %post_service ifplugd
@@ -90,6 +79,10 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 # - import Debian's apm script (suspend/resume ifplugd)
 
 %changelog
+* Tue Jun 05 2018 Michael Shigorin <mike@altlinux.org> 0.28-alt5
+- converted spec to ru_RU.UTF-8
+- minor spec cleanup
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.28-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
@@ -153,6 +146,6 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 * Thu Sep 11 2003 Michael Shigorin <mike@altlinux.ru> 0.16-alt1
 - built for ALT Linux
 - spec adapted from Cooker with large cleanups and sanitization
-  (credits: Per ьyvind Karlsen <peroyvind@sintrax.net>,
+  (credits: Per я▄yvind Karlsen <peroyvind@sintrax.net>,
             Frederic Lepied <flepied@mandrakesoft.com>)
 - new and shiny initscript
