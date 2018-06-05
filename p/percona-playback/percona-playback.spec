@@ -3,20 +3,21 @@
 
 Name: percona-playback
 Version: 0.6
-Release: alt2
+Release: alt3
 Summary: A tool for replaying captured database server load
 
 License: GPL2
 Url: http://www.percona.com/
 Source: percona-playback-%version.tar.gz
 Patch0: percona-playback-0.6-ac_prog_mkdir.patch
+Patch1: percona-playback-0.6-alt-compat.patch
 Group: Databases
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
 BuildRequires: libdrizzle-devel gettext-tools libpcap-devel
 BuildRequires: libtbb-devel libmysqlclient-devel intltool
 BuildRequires: boost-program_options-devel pkg-config python-modules
-BuildRequires: gcc5-c++
+BuildRequires: gcc-c++
 
 %description
 Percona Playback is a tool for replaying the captured load of one database
@@ -39,6 +40,7 @@ developing applications that use %name.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p2
 
 %build
 aclocal
@@ -66,6 +68,9 @@ make check
 %_libdir/*.so
 
 %changelog
+* Tue Jun 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6-alt3
+- NMU: rebuild with boost-1.67.0.
+
 * Mon Feb  6 2017 Terechkov Evgenii <evg@altlinux.org> 0.6-alt2
 - Fix build by hardcoding gcc5-c++ compiler
 
