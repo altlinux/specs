@@ -1,6 +1,6 @@
 Name: libfm-qt
-Version: 0.13.0
-Release: alt2
+Version: 0.13.1
+Release: alt1
 
 Summary: Core library of PCManFM-Qt file manager
 License: LGPLv2+
@@ -62,6 +62,9 @@ find %buildroot -size 0 -delete
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Tue Jun 05 2018 Anton Midyukov <antohami@altlinux.org> 0.13.1-alt1
+- new version 0.13.1
+
 * Mon May 28 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt2
 - obsoletes libfm-qt3
 
