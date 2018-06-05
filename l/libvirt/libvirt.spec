@@ -23,7 +23,6 @@
 %def_with avahi
 
 # Then the hypervisor drivers that run on local host
-%def_without xen
 %def_with qemu
 %def_with openvz
 %def_with lxc
@@ -126,7 +125,7 @@
 %def_without bash_completion 
 
 Name: libvirt
-Version: 4.2.0
+Version: 4.4.0
 Release: alt1%ubt
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -147,7 +146,6 @@ Requires: %name-client = %EVR
 Requires: %name-libs = %EVR
 
 BuildRequires(pre): rpm-build-ubt
-%{?_with_xen:BuildRequires: xen-devel xen-runtime}
 %{?_with_libxl:BuildRequires: xen-devel}
 %{?_with_hal:BuildRequires: libhal-devel}
 %{?_with_udev:BuildRequires: libudev-devel libpciaccess-devel}
@@ -510,21 +508,11 @@ an implementation of the hypervisor driver APIs using
 User Mode Linux
 %endif
 
-%if_with xen
-%package daemon-driver-xen
-Summary: Xen driver plugin for the libvirtd daemon
-Group: System/Libraries
-
-%description daemon-driver-xen
-The Xen driver plugin for the libvirtd daemon, providing
-an implementation of the hypervisor driver APIs using
-Xen
-%endif
-
 %if_with libxl
 %package daemon-driver-libxl
 Summary: Libxl driver plugin for the libvirtd daemon
 Group: System/Libraries
+Obsoletes: %name-daemon-driver-xen < 4.3.0
 
 %description daemon-driver-libxl
 The Libxl driver plugin for the libvirtd daemon, providing
@@ -626,9 +614,6 @@ Requires: %name-daemon-config-network = %EVR
 Requires: %name-daemon-config-nwfilter = %EVR
 Requires: xen
 %if_with driver_modules
-%if_with xen
-Requires: %name-daemon-driver-xen = %EVR
-%endif
 %if_with libxl
 Requires: %name-daemon-driver-libxl = %EVR
 %endif
@@ -781,7 +766,6 @@ LOADERS="$LOADERS_OLD:$LOADERS_NEW"
 		--with-sysctl=check \
 		%{subst_with libvirtd} \
 		%{subst_with avahi} \
-		%{subst_with xen} \
 		%{subst_with qemu} \
 		%{subst_with openvz} \
 		%{subst_with lxc} \
@@ -1115,11 +1099,14 @@ fi
 %endif
 %_libdir/%name/connection-driver/libvirt_driver_storage.so
 %dir %_libdir/%name/storage-backend
+%dir %_libdir/%name/storage-file
+%_libdir/%name/storage-file/libvirt_storage_file_fs.so
 
 %if_with storage_fs
 %files daemon-driver-storage-fs
 %_libdir/%name/storage-backend/libvirt_storage_backend_fs.so
 %endif
+
 
 %if_with storage_disk
 %files daemon-driver-storage-disk
@@ -1149,6 +1136,7 @@ fi
 %if_with storage_gluster
 %files daemon-driver-storage-gluster
 %_libdir/%name/storage-backend/libvirt_storage_backend_gluster.so
+%_libdir/%name/storage-file/libvirt_storage_file_gluster.so
 %endif
 
 %if_with storage_rbd
@@ -1179,11 +1167,6 @@ fi
 %if_with uml
 %files daemon-driver-uml
 %_libdir/%name/connection-driver/libvirt_driver_uml.so
-%endif
-
-%if_with xen
-%files daemon-driver-xen
-%_libdir/%name/connection-driver/libvirt_driver_xen.so
 %endif
 
 %if_with libxl
@@ -1237,9 +1220,8 @@ fi
 %dir %attr(0700, root, root) %_localstatedir/log/libvirt/uml
 %endif
 
-%if_with xen
-%files xen
 %if_with libxl
+%files xen
 %dir %attr(0700, root, root) %_localstatedir/log/libvirt/libxl
 %dir %attr(0700, root, root) %_localstatedir/lib/libvirt/libxl
 %config(noreplace) %_sysconfdir/libvirt/libxl*.conf
@@ -1247,7 +1229,6 @@ fi
 %_datadir/augeas/lenses/libvirtd_libxl.aug
 %_datadir/augeas/lenses/tests/test_libvirtd_libxl.aug
 %endif #if_with libxl
-%endif #if_with xen
 
 %if_with vbox
 %files vbox
@@ -1308,6 +1289,12 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Jun 05 2018 Alexey Shabalin <shaba@altlinux.ru> 4.4.0-alt1%ubt
+- 4.4.0
+
+* Mon Jun 04 2018 Alexey Shabalin <shaba@altlinux.ru> 4.3.0-alt1%ubt
+- 4.3.0
+
 * Sun Apr 01 2018 Alexey Shabalin <shaba@altlinux.ru> 4.2.0-alt1%ubt
 - 4.2.0 (Fixes: CVE-2018-5748)
 - Use Python 3 for building
