@@ -48,11 +48,14 @@ BuildRequires: jpackage-generic-compat
 %bcond_without tests
 %bcond_without javadoc
 
+# Disabled for now, asi it doesn't work (tests fail) and nobody needs it
+%bcond_with junit5
+
 %global ant_home %{_datadir}/ant
 
 Name:           ant
-Version:        1.10.2
-Release:        alt1_1jpp8
+Version:        1.10.3
+Release:        alt1_2jpp8
 Epoch:          0
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
@@ -61,9 +64,6 @@ License:        ASL 2.0
 URL:            https://ant.apache.org/
 Source0:        https://www.apache.org/dist/ant/source/apache-ant-%{version}-src.tar.bz2
 Source2:        apache-ant-1.8.ant.conf
-
-# Fix some places where copies of classes are included in the wrong jarfiles
-Patch4:         apache-ant-class-path-in-manifest.patch
 
 BuildRequires:  javapackages-local
 BuildRequires:  java-devel >= 1.8.0
@@ -86,13 +86,14 @@ BuildRequires:  mvn(regexp:regexp)
 BuildRequires:  mvn(xalan:xalan)
 BuildRequires:  mvn(xml-resolver:xml-resolver)
 
+%if %{with junit5}
+BuildRequires:  junit5
+%endif
+
 # Theoretically Ant might be usable with just JRE, but typical Ant
 # workflow requires full JDK, so we recommend it here.
 
 Requires:       %{name}-lib = %{epoch}:%{version}-%{release}
-
-Obsoletes:      %{name}-scripts < %{epoch}:%{version}-%{release}
-Provides:       %{name}-scripts = %{epoch}:%{version}-%{release}
 
 BuildArch:      noarch
 Source44: import.info
@@ -365,6 +366,19 @@ Optional junit tasks for %{name}.
 %description junit -l fr
 Taches junit optionelles pour %{name}.
 
+%if %{with junit5}
+%package junit5
+Group: Development/Java
+Summary:        Optional junit5 tasks for %{name}
+Requires:       %{name} = %{epoch}:%{version}-%{release}
+
+%description junit5
+Optional junit5 tasks for %{name}.
+
+%description junit5 -l fr
+Taches junit5 optionelles pour %{name}.
+%endif
+
 %package testutil
 Group: Development/Tools
 Summary:        Test utility classes for %{name}
@@ -411,11 +425,9 @@ Javadoc pour %{name}.
 
 %prep
 %setup -q -n apache-ant-%{version}
-#Fixup version
-find -name build.xml -o -name pom.xml | xargs sed -i -e s/-SNAPSHOT//
 
 # Fix class-path-in-manifest rpmlint warning
-%patch4
+%pom_xpath_remove 'attribute[@name="Class-Path"]' build.xml
 
 # clean jar files
 find . -name "*.jar" | xargs -t rm
@@ -429,6 +441,9 @@ rm src/tests/junit/org/apache/tools/ant/types/selectors/SignedSelectorTest.java 
 
 #install jars
 build-jar-repository -s -p lib/optional antlr bcel javamail/mailapi jdepend junit log4j-1 oro regexp bsf commons-logging commons-net jsch xalan-j2 xml-commons-resolver xalan-j2-serializer hamcrest/core xz-java
+%if %{with junit5}
+build-jar-repository -s -p lib/optional junit5 opentest4j
+%endif
 
 # fix hardcoded paths in ant script and conf
 cp -p %{SOURCE2} %{name}.conf
@@ -451,6 +466,10 @@ mv LICENSE.utf8 LICENSE
 # We want a hard dep on antlr
 %pom_xpath_remove pom:optional src/etc/poms/ant-antlr/pom.xml
 
+%if %{without junit5}
+%pom_xpath_inject 'target[@name="javadocs"]/javadoc/packageset' '<exclude name="**/junitlauncher"/>' build.xml
+%endif
+
 %build
 %{ant} jars test-jar
 
@@ -460,6 +479,9 @@ mv LICENSE.utf8 LICENSE
 
 #remove empty jai and netrexx jars. Due to missing dependencies they contain only manifests.
 rm -fr build/lib/ant-jai.jar build/lib/ant-netrexx.jar
+%if %{without junit5}
+rm -f build/lib/ant-junitlauncher.jar
+%endif
 # -----------------------------------------------------------------------------
 
 %install
@@ -542,6 +564,10 @@ echo "junit hamcrest/core ant/ant-junit4" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name
 echo "testutil ant/ant-testutil" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/testutil
 echo "xz-java ant/ant-xz" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/xz
 
+%if %{with junit5}
+echo "junit5 hamcrest/core junit opentest4j ant/ant-junitlauncher" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/junitlauncher
+%endif
+
 %if %with javadoc
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -573,7 +599,6 @@ LC_ALL=en_US.utf8 %{ant} test
 %{ant_home}/etc/mmetrics-frames.xsl
 %{ant_home}/etc/log.xsl
 %{ant_home}/etc/tagdiff.xsl
-%{ant_home}/etc/junit-frames-xalan1.xsl
 %{ant_home}/etc/common2master.xsl
 %{ant_home}/etc/printFailingTests.xsl
 %dir %{_sysconfdir}/%{name}.d
@@ -662,6 +687,15 @@ LC_ALL=en_US.utf8 %{ant} test
 %config(noreplace) %{_sysconfdir}/%{name}.d/junit4
 %{ant_home}/etc/junit-frames.xsl
 %{ant_home}/etc/junit-noframes.xsl
+%{ant_home}/etc/junit-frames-xalan1.xsl
+%{ant_home}/etc/junit-frames-saxon.xsl
+%{ant_home}/etc/junit-noframes-saxon.xsl
+
+%if %{with junit5}
+%files junit5 -f .mfiles-junitlauncher
+%{ant_home}/lib/%{name}-junitlauncher.jar
+%config(noreplace) %{_sysconfdir}/%{name}.d/junitlauncher
+%endif
 
 %files testutil -f .mfiles-testutil
 %{ant_home}/lib/%{name}-testutil.jar
@@ -684,6 +718,9 @@ LC_ALL=en_US.utf8 %{ant} test
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Jun 05 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.10.3-alt1_2jpp8
+- new version
+
 * Tue Jun 05 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.10.2-alt1_1jpp8
 - new version - non-bootstrap build
 
