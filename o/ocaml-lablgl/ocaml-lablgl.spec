@@ -1,13 +1,13 @@
 Name: ocaml-lablgl
 Version: 1.05
-Release: alt4%ubt
+Release: alt5%ubt
 Summary: OpenGL library for OCaml
 License: BSD-style
 Group: Development/ML
 Url: https://forge.ocamlcore.org/projects/lablgl/
 # git https://forge.ocamlcore.org/anonscm/git/lablgl/lablgl.git
 Source: %name-%version.tar
-Patch1: lablgl-1.03-alt-togl.patch
+#Patch1: lablgl-1.03-alt-togl.patch
 
 Provides: %name-runtime = %version-%release
 Obsoletes: %name-runtime < %version-%release
@@ -37,8 +37,8 @@ developing applications that use %name.
 
 %prep
 %setup
-rm -r Togl/src/Togl/
-%patch1 -p1
+#rm -r Togl/src/Togl/
+#%%patch1 -p1
 cat > Makefile.config <<EOF
 CAMLC = ocamlc.opt
 CAMLOPT = ocamlopt.opt
@@ -107,8 +107,14 @@ install -p -m644 META %buildroot%_libdir/ocaml/lablGL/META
 %_libdir/ocaml/lablGL/*.cmx
 %_libdir/ocaml/lablGL/*.a
 %_libdir/ocaml/lablGL/build.ml
+%exclude %_libdir/ocaml/lablGL/gl*.ml
+%exclude %_libdir/ocaml/lablGL/raw.ml
+%exclude %_libdir/ocaml/lablGL/togl.ml
 
 %changelog
+* Tue Jun 05 2018 Nikolai Kostrigin <nickel@altlinux.org> 1.05-alt5%ubt
+- rebuild with bundled tcl-togl 1.7 (cancel ALT Linux patch temporarily)
+
 * Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.05-alt4%ubt
 - rebuilt for ocaml 4.06.1
 
