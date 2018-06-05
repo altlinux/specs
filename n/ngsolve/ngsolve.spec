@@ -5,12 +5,11 @@
 
 Name: ngsolve
 Version: 6.1
-Release: alt1.dev.git20150323.qa1.2
+Release: alt1.dev.git20150323.qa1.3
 Summary: NGSolve Finite Element Library
 License: GPL or LGPL
 Group: Sciences/Mathematics
 Url: http://sourceforge.net/projects/ngsolve/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # git://git.code.sf.net/p/ngsolve/git
 Source: %name-%version.tar
@@ -21,6 +20,7 @@ BuildPreReq: libscotch-devel libparmetis-devel python-devel
 BuildPreReq: libgomp-devel boost-python-devel
 BuildPreReq: doxygen texlive-latex-recommended
 BuildPreReq: libnuma-devel
+BuildRequires: tex(epsf.sty)
 
 %description
 NGSolve is a general purpose Finite Element Library on top of Netgen.
@@ -181,6 +181,9 @@ ln -s %_libdir/ngslib.so %buildroot%python_sitelibdir/
 %python_sitelibdir/*
 
 %changelog
+* Tue Jun 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1-alt1.dev.git20150323.qa1.3
+- NMU: rebuilt with boost-1.67.0.
+
 * Sat Mar 25 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.1-alt1.dev.git20150323.qa1.2
 - Rebuilt against Tcl/Tk 8.6
 - Fixed build:
