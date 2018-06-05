@@ -52,7 +52,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           ant
 Version:        1.10.2
-Release:        alt1_0.1jpp8
+Release:        alt1_1jpp8
 Epoch:          0
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
@@ -64,11 +64,10 @@ Source2:        apache-ant-1.8.ant.conf
 
 # Fix some places where copies of classes are included in the wrong jarfiles
 Patch4:         apache-ant-class-path-in-manifest.patch
-Patch5:         ant-1.10.2-bootstrap.patch
 
 BuildRequires:  javapackages-local
 BuildRequires:  java-devel >= 1.8.0
-BuildRequires:  ant
+BuildRequires:  ant >= 1.10.2
 BuildRequires:  ant-junit
 
 BuildRequires:  mvn(antlr:antlr)
@@ -417,7 +416,6 @@ find -name build.xml -o -name pom.xml | xargs sed -i -e s/-SNAPSHOT//
 
 # Fix class-path-in-manifest rpmlint warning
 %patch4
-%patch5
 
 # clean jar files
 find . -name "*.jar" | xargs -t rm
@@ -686,6 +684,9 @@ LC_ALL=en_US.utf8 %{ant} test
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Jun 05 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.10.2-alt1_1jpp8
+- new version - non-bootstrap build
+
 * Tue Jun 05 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.10.2-alt1_0.1jpp8
 - new version - bootstrap build
 
