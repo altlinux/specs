@@ -1,17 +1,16 @@
-Summary:        Berusky, 2D logic game
 Name:           berusky
-Version:        1.1
-Release:        alt1.2.qa1
-License:        GPL
-Group:     Games/Other
+Version:        1.7.1
+Release:        alt1
+Summary:        Berusky, 2D logic game
+License:        GPLv2
+Group:          Games/Other
 Source:         http://www.anakreon.cz/download/berusky/tar.gz/%{name}-%{version}.tar.gz
 URL:            http://www.anakreon.cz/
-Packager:  Dmitriy Kulik <lnkvisitor@altlinux.org>
-Requires:  	berusky-data
-Requires:  	SDL
+Requires:       berusky-data
+Requires:       SDL
 
 # Automatically added by buildreq on Mon Mar 02 2009 (-bi)
-BuildRequires: gcc-c++ gcc-fortran libSDL-devel libncurses-devel
+BuildRequires: gcc-c++ gcc-fortran libgtk+2-devel libSDL_image-devel libncursesw-devel
 
 %description
 Berusky is a 2D logic game based on an ancient puzzle named Sokoban.
@@ -23,32 +22,28 @@ In addition, up to five bugs can cooperate and be controlled by the player.
 This package contains a binary for the game.
 
 %prep
-%setup -q -n %name-%version
+%setup
 
 %build
-%configure \
-    CFLAGS="$RPM_OPT_FLAGS"
-
+%configure
 %make
 
 %install
-rm -rf %buildroot
-make DESTDIR=%buildroot install
-
-mkdir -p %buildroot/%_datadir/%name
-mkdir -p %buildroot/%_docdir/%name-%version
-
+%makeinstall_std
 pushd %buildroot/usr/doc
-mv * %buildroot%_docdir/%name-%version
+mkdir -p %buildroot%_defaultdocdir/%name
+mv * %buildroot%_defaultdocdir/%name
 popd
 
 %files
-%dir %_docdir/%name-%version
-%doc %_docdir/%name-%version/*
+%doc %_defaultdocdir/%name
 %_bindir/berusky
-%_datadir/%name/*
+%_datadir/%name
 
 %changelog
+* Tue Jun 05 2018 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt1
+- Build new version (Closes: #29541).
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt1.2.qa1
 - NMU: rebuilt for debuginfo.
 
