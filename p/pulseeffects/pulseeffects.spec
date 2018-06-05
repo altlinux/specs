@@ -1,10 +1,8 @@
 %define gst_api_ver 1.0
-%define gst_ver 1.14
-%define gtk_ver 3.18
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 3.2.3
+Version: 4.0.1
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -12,33 +10,25 @@ License: GPLv3
 Group: Sound
 Url: https://github.com/wwmm/pulseeffects
 
-Source: https://github.com/wwmm/pulseeffects/archive/%name-%version.tar.gz
+Source: %url/archive/%version/%name-%version.tar.gz
 
-BuildArch: noarch
+%define gst_ver 1.12.5
+%define gtk_ver 3.20
 
-Requires: libgtk+3-gir >= %gtk_ver
 Requires: pulseaudio-daemon dconf
 Requires: gst-plugins-good%gst_api_ver >= %gst_ver
 Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
-Requires: ladspa-swh-plugins ladspa-rubberband
-#Requires: calf-plugins
-#Requires: liblilv zam-plugins
+Requires: ladspa-rubberband
+Requires: calf-plugins
+#Requires: zam-plugins
 
-# for CubicSpline
-Requires: python3-module-scipy >= 0.19
-
-# python3 used
-AutoReqProv: nopython
-%define __python %nil
-
-BuildRequires(pre): meson rpm-build-gir rpm-build-python3
-BuildRequires: python3-devel python3-module-pygobject3-devel
-BuildRequires: python3-module-pycairo-devel
-BuildRequires: libgtk+3-devel libgtk+3-gir-devel
+BuildRequires(pre): meson
+BuildRequires: gcc-c++ boost-filesystem-devel libgtkmm3-devel >= %gtk_ver
 BuildRequires: gst-plugins-bad%gst_api_ver-devel
 BuildRequires: libpulseaudio-devel
+BuildRequires: pkgconfig(gstreamer-webrtc-1.0)
 BuildRequires: libbs2b-devel
-#BuildRequires: liblilv-devel
+BuildRequires: liblilv-devel
 
 %description
 PulseEffects is a limiter, compressor, reverberation, stereo equalizer and auto volume
@@ -54,19 +44,23 @@ effects for Pulseaudio applications.
 %install
 %meson_install
 
-%find_lang --output=%name.lang PulseEffects
+%find_lang %name
 
 %files -f %name.lang
 %_bindir/%name
-#%_bindir/%{name}_calibration
-%python3_sitelibdir_noarch/*
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/com.github.wwmm.%name.*gschema.xml
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc README*
+%doc README* CHANGELOG.*
 
 %changelog
+* Tue Jun 05 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
+- 4.0.1
+
+* Mon Jun 04 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0 (ported to C++, Boost, GTKmm3)
+
 * Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.2.3-alt1
 - 3.2.3
 
