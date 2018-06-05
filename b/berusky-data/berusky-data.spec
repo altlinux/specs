@@ -1,15 +1,14 @@
 %define game_name berusky
 
-Summary:   A datafile for Berusky
 Name:      berusky-data
-Version:   1.0
+Version:   1.7
 Release:   alt1
+Summary:   A datafile for Berusky
 License:   GPL
 Group:     Games/Other
 Source:    http://www.anakreon.cz/download/berusky/tar.gz/%{name}-%{version}.tar.gz
 URL:       http://www.anakreon.cz/
 BuildArch: noarch
-Packager:  Dmitriy Kulik <lnkvisitor@altlinux.org>
 
 %description
 A datafile for Berusky. Berusky is a 2D logic game based on an ancient 
@@ -23,7 +22,7 @@ This package contains a data for the game, i.e. files with graphics, levels,
 game rules and configuration.
 
 %prep
-%setup -q -n %name-%version
+%setup
 
 %install
 mkdir -p %buildroot%_datadir/%game_name
@@ -34,15 +33,13 @@ mv Levels   %buildroot%_datadir/%game_name
 mv README   %buildroot%_datadir/%game_name
 mv COPYING  %buildroot%_datadir/%game_name
 
-mkdir -p %buildroot/var/games/%game_name
-install -m 644 berusky.ini %buildroot/var/games/%game_name
-
 %files
-%defattr(-, root, root)
 %_datadir/%game_name/*
-/var/games/%game_name/*
 
 %changelog
+* Tue Jun 05 2018 Grigory Ustinov <grenka@altlinux.org> 1.7-alt1
+- Build new version.
+
 * Mon Mar 02 2009 Dmitriy Kulik  <lnkvisitor@altlinux.org> 1.0-alt1
 - Build for ALT Linux Sisyphus
 
