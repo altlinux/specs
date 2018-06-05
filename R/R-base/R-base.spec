@@ -1,6 +1,6 @@
 Name: R-base
 Version: 3.5.0
-Release: alt1
+Release: alt2
 
 Summary: A language for data analysis and graphics
 License: GPL
@@ -66,6 +66,9 @@ export	lt_cv_prog_cc_static_works=no \
 
 mv %buildroot{%Rhome/lib,%_libdir}/libR.so
 
+# this symlink is needed for R-studio
+ln -s $(relative %_libdir/libR.so %Rhome/lib/libR.so) %buildroot%Rhome/lib/libR.so
+
 # make compatibility symlink and provides
 ln -s libR.so %buildroot%_libdir/libR-2.11.so
 %filter_from_provides /^libR\.so/{p;s/R/R-2.11/}
@@ -122,6 +125,8 @@ make check
 	%_desktopdir/%name.desktop
 
 %dir	%Rhome
+%dir	%Rhome/lib
+	%Rhome/lib/*
 
 %dir	%Rbindir
 	%Rbindir/R
@@ -242,7 +247,6 @@ classification, clustering, ...).
 	%Rhome/include
 
 %dir	%Rhome
-%dir	%Rhome/lib
 
 	%_pkgconfigdir/libR.pc
 
@@ -328,6 +332,9 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Fri Jun 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.0-alt2
+- Provided compatibility symlink for R-studio.
+
 * Mon May 21 2018 Kirill Maslinsky <kirill@altlinux.org> 3.5.0-alt1
 - Version 3.5.0
 - change meta-package name to R-full since #34737 is still unresolved
