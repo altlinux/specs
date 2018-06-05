@@ -3,7 +3,7 @@
 Summary: Gearman provides a generic application framework to farm out work to other machines.
 Name: gearmand
 Version: 1.1.18
-Release: alt1
+Release: alt1.1
 License: BSD
 Group: Development/C
 URL: http://gearman.org
@@ -15,6 +15,7 @@ BuildRequires: perl gcc-c++ boost-devel boost-program_options-devel libevent-dev
 BuildRequires: libsqlite3-devel libtokyocabinet-devel libmemcached-devel memcached libhiredis-devel
 BuildRequires: mysql-devel postgresql-devel zlib-devel
 BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme
+BuildRequires: libssl-devel
 
 %description
 %summary
@@ -68,6 +69,9 @@ popd
 %_man3dir/*
 
 %changelog
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.18-alt1.1
+- NMU: rebuilt with boost-1.67.0
+
 * Thu Apr 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.18-alt1
 - Updated to upstream version 1.1.18.
 
