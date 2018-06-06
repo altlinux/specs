@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 18.04.1
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -80,6 +80,9 @@ KF5 library
 %_K5srv/*baloo*.desktop
 
 %changelog
+* Wed Jun 06 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
+- update russian trsnslation
+
 * Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 
