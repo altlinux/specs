@@ -1,9 +1,7 @@
 Name: arj
 Version: 3.10.22
-Release: alt6
+Release: alt7
 Epoch: 1
-
-Packager: Victor Forsyuk <force@altlinux.org>
 
 Summary: An compressor and uncompressor for .arj format archive files
 License: GPL
@@ -15,6 +13,9 @@ Patch0: http://ftp.debian.org/debian/pool/main/a/arj/arj_%version-6.diff.gz
 Patch1: arj-3.10.22-custom-printf.patch
 Patch2: arj-3.10.22-missing-protos.patch
 Patch3: arj-3.10.22-safe_strcpy.patch
+# Needed on e2k: lcc removes the static const variable even when
+# optimization is disabled.
+Patch4: arj-3.10.22-drop-static.patch
 
 %description
 The ARJ program is used to compress and uncompress .arj format archives.
@@ -26,6 +27,9 @@ The .arj format archive was mostly used on DOS machines.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%ifarch %e2k
+%patch4 -p1
+%endif
 
 for i in debian/patches/00*.patch; do
   patch -p1 < $i
@@ -59,6 +63,10 @@ install -pD -m 644 resource/rearj.cfg.example $RPM_BUILD_ROOT%_sysconfdir/rearj.
 %doc doc/*.txt resource/en/*.txt
 
 %changelog
+* Wed Jun 06 2018 Mikhail Efremov <sem@altlinux.org> 1:3.10.22-alt7
+- Drop packager from spec.
+- Fix build on e2k.
+
 * Wed Jul 13 2011 Fr. Br. George <george@altlinux.ru> 1:3.10.22-alt6
 - Do not use srtcpy() for overlapping strings
 
