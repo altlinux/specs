@@ -13,13 +13,14 @@ BuildRequires: jpackage-generic-compat
 %global nameddottag  %(echo %{?namedreltag} | tr - . )
 Name:          spock
 Version:       0.7
-Release:       alt3_0.17.groovy.2.0jpp8
+Release:       alt4_0.17.groovy.2.0jpp8
 Summary:       A testing and specification framework
 License:       ASL 2.0
 URL:           https://github.com/spockframework/spock
 Source0:       https://github.com/spockframework/spock/archive/%{name}-%{namedversion}.tar.gz
 Patch0:        0001-Build-with-Gradle-local-mode.patch
 Patch1:        spock-0.7-core-port-to-groovy2.4.8.patch
+Patch33:       spock-0.7-groovy-2.0-alt-fix-build-with-ant.patch
 
 BuildRequires: gradle-local
 BuildRequires: apache-parent
@@ -65,6 +66,7 @@ testing Guice 2/3 based applications.
 %setup -q -n %{name}-%{name}-%{namedversion}
 %patch0 -p1
 %patch1 -p1
+%patch33 -p1
 find . -name "*.class" -delete
 find . -name "*.jar" -delete
 
@@ -88,6 +90,9 @@ rm -rf spock-maven spock-specs spock-spring spock-tapestry spock-unitils
 %files guice -f .mfiles-spock-guice
 
 %changelog
+* Wed Jun 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt4_0.17.groovy.2.0jpp8
+- fixed build with new ant
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt3_0.17.groovy.2.0jpp8
 - fixed build
 
