@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Sys-Virt
 Name: perl-%dist
-Version: 4.2.0
+Version: 4.4.0
 Release: alt1
 
 Summary: Represent and manage a libvirt hypervisor connection
@@ -9,10 +9,10 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/D/DA/DANBERR/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DANBERR/%{dist}-v%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Oct 19 2011
-BuildRequires: libvirt-devel perl-Test-Pod perl-Test-Pod-Coverage perl-XML-XPath
+BuildRequires: libvirt-devel perl-Test-Pod perl-Test-Pod-Coverage perl-XML-XPath perl(Module/Build.pm)
 
 %description
 The Sys::Virt module provides a Perl XS binding to the libvirt
@@ -21,7 +21,7 @@ within arbitrary virtualization containers to be managed with
 a consistent API.
 
 %prep
-%setup -q -n %{dist}-%{version}
+%setup -q -n %{dist}-v%{version}
 
 %build
 export NPROCS=1
@@ -36,6 +36,9 @@ export NPROCS=1
 %perl_vendor_autolib/Sys
 
 %changelog
+* Wed Jun 06 2018 Igor Vlasenko <viy@altlinux.ru> 4.4.0-alt1
+- automated CPAN update
+
 * Thu Apr 05 2018 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1
 - automated CPAN update
 
