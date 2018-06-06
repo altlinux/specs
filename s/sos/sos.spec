@@ -5,7 +5,7 @@
 Summary: A set of tools to gather troubleshooting information from a system
 Name: sos
 Version: 3.5
-Release: alt3%ubt
+Release: alt4%ubt
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Source: %name-%version.tar
@@ -53,6 +53,9 @@ rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
 %doc %_defaultdocdir/sos/html
 
 %changelog
+* Wed Jun 06 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt4%ubt
+- Add pam plugin to samba-ad profile
+
 * Fri May 25 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt3%ubt
 - Add additional functionality to samba-ad profile
 
