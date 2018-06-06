@@ -18,7 +18,7 @@
 
 Name: gcc-defaults
 Version: %gcc_branch
-Release: alt5
+Release: alt6
 License: None
 Group: Development/Other
 
@@ -258,6 +258,8 @@ ln_bin gnat gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls \
 	gnatmake gnatname gnatprep gnatxref
 %endif
 
+%add_findreq_skiplist %_man1dir/*
+
 %files -n cpp
 %_bindir/%gcc_target_platform-cpp
 %_man1dir/cpp.1.xz
@@ -299,6 +301,10 @@ ln_bin gnat gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls \
 %endif
 
 %changelog
+* Wed Jun 06 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 7-alt6
+- Fixed installation (with rpm --excludedocs option) of subpackages containing
+  symlinks on gcc manpages (ALT#34996).
+
 * Sun May 13 2018 Ivan Zakharyaschev <imz@altlinux.org> 7-alt5
 - (.spec) Made possible to disable noarch subpkgs.
 - More specific Group for gcc-c++. (ALT#34901)
