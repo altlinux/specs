@@ -4,7 +4,7 @@
 
 Name: qpid
 Version: 1.36.0
-Release: alt1.1
+Release: alt1.2
 Summary: Libraries for Qpid C++ client applications
 License: ASL 2.0
 Url: http://qpid.apache.org
@@ -212,6 +212,7 @@ Python bindings for qmfgen.
 
 %build
 %cmake_insource \
+	-DENABLE_WARNINGS:BOOL=OFF \
 	-DDOC_INSTALL_DIR:PATH=%_pkgdocdir \
 	-DBUILD_LINEARSTORE=true
 
@@ -362,6 +363,9 @@ mkdir -p %buildroot/%_localstatedir/qpidd
 %doc %_pkgdocdir
 
 %changelog
+* Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.36.0-alt1.2
+- NMU: rebuilt with boost-1.67.0.
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.36.0-alt1.1
 - rebuild with new perl 5.26.1
 
