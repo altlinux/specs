@@ -6,7 +6,7 @@
 
 Name: %bname-plugins
 Version: %major_ver.%minor_ver.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: Frei0r - a minimalistic plugin API for video effects
 License: %lgpl2plus
@@ -95,6 +95,9 @@ ln -s config.h include/cvconfig.h
 %endif
 
 %changelog
+* Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.1-alt1.2
+- NMU: rebuilt with opencv-3.4.
+
 * Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 1.6.1-alt1.1
 - BOOTSTRAP: introduce opencv knob (on by default)
 - minor spec cleanup
