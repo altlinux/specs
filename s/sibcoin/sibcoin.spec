@@ -2,7 +2,7 @@
 
 Name:		sibcoin
 Version:	0.16.1.2
-Release:	alt1
+Release:	alt2
 Summary:	Siberian Chervonets Wallet
 Url:		http://sibcoin.org/en/
 Group:		Office
@@ -11,6 +11,8 @@ Source0:	%name.tar.xz
 
 Source1:	%name.png
 Source2:	%name.desktop
+
+Patch1: sibcoin-0.16.1.2-upstream-boost-compat.patch
 
 
 BuildRequires: boost-devel-static boost-interprocess-devel libdb4.8_cxx-devel protobuf-compiler
@@ -28,6 +30,7 @@ updating and receiving an acknowledgment from the other participants.
 
 %prep
 %setup -n %name
+%patch1 -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -57,6 +60,9 @@ convert -resize 128x128 %SOURCE1 %buildroot%_giconsdir/%name.png
 %_giconsdir/%name.png
 
 %changelog
+* Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.16.1.2-alt2
+- NMU: rebuilt with boost-1.67.0.
+
 * Thu Sep 21 2017 Motsyo Gennadi <drool@altlinux.ru> 0.16.1.2-alt1
 - 0.16.1.2
 
