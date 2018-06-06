@@ -40,7 +40,7 @@
 
 Name: mariadb
 Version: 10.2.15
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -301,6 +301,7 @@ Summary: Development files for MySQL as an embeddable library
 Group: Development/Other
 Requires: libmysqld%soname = %EVR
 Obsoletes: libmariadbembedded-devel < %EVR
+Provides: libmysqld-devel = %EVR
 
 %description -n libmysqld%soname-devel
 MariaDB is a multi-user, multi-threaded SQL database server. This
@@ -818,7 +819,10 @@ fi
 %endif
 
 %changelog
-* Fri May 18 2018 Alexey Shabalin <shaba@altlinux.ru> 10.2.15-alt1.S1
+* Wed Jun 06 2018 Alexey Shabalin <shaba@altlinux.ru> 10.2.15-alt2%ubt
+- add libmysqld-devel provides (ALT #34997)
+
+* Fri May 18 2018 Alexey Shabalin <shaba@altlinux.ru> 10.2.15-alt1%ubt
 - 10.2.15
 - rename libmysqlclient18 to libmariadb
 - relocate plugindir to %%_libdir/%%name/plugin
