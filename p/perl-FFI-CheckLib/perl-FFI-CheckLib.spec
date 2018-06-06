@@ -6,7 +6,7 @@ BuildRequires: perl(Capture/Tiny.pm) perl(Config.pm) perl(DynaLoader.pm) perl(En
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.19
+Version: 0.20
 Release: alt1
 Summary: Check that a library is available for FFI
 Group: Development/Perl
@@ -33,6 +33,9 @@ From summary: %summary
 %perl_vendor_privlib/F*
 
 %changelog
+* Wed Jun 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 
