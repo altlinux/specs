@@ -1,6 +1,6 @@
 Name: blender
 Version: 2.79b
-Release: alt1
+Release: alt2
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPLv2
@@ -165,6 +165,9 @@ install -d release/plugins/include
 %files i18n -f %name.lang
 
 %changelog
+* Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.79b-alt2
+- Rebuilt with boost-1.67.0.
+
 * Wed Apr 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.79b-alt1
 - Updated to 2.79b.
 
