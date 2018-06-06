@@ -1,4 +1,4 @@
-# 6.0.1.1
+# 6.0.5.1
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -7,13 +7,13 @@
 
 Name: LibreOffice
 %define hversion 6.0
-%define urelease 1.1
+%define urelease 5.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
-%define uname libreoffice5
+%define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1.2
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -52,13 +52,21 @@ Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
 Patch4: FC-0001-gtk3-only-for-3.20.patch
 Patch5: FC-0001-Related-tdf-105998-except-cut-and-paste-as-bitmap-in.patch
 Patch6: FC-0001-request-installation-of-langpack-via-packagekit.patch
-Patch7: FC-0001-disable-libe-book-support.patch
+Patch7: FC-0001-Related-rhbz-1396729-use-cairo_surface_create_simila.patch
+Patch8: FC-0001-tdf-95843-Wait-for-fire_glxtest_process-also-in-head.patch
+Patch9: FC-0001-Related-tdf-116951-rhbz-1569331-end-should-be-in-ter.patch
+Patch10: FC-0001-Resolves-tdf-116951-rhbz-1569331-start-is-G_MAXINT.patch
+Patch11: FC-0001-set-Referer-on-link-mediadescriptor.patch
+Patch12: FC-0001-Resolves-tdf-117413-char-doubling-appearing-under-X-.patch
+Patch13: FC-0001-Missing-template-clone-in-configmgr-dconf-mode.patch
+Patch14: FC-0001-tdf-117601-a11y-crash-after-merging-cells.patch
+Patch15: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
 ## ALT patches
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
-Patch402: libreoffice-4-alt-drop-gnome-open.patch
+##Patch402: libreoffice-4-alt-drop-gnome-open.patch
 Patch403: alt-002-tmpdir.patch
 
 %set_verify_elf_method unresolved=relaxed
@@ -86,6 +94,8 @@ BuildRequires: doxygen e2fsprogs
 BuildRequires: libxmlsec1-nss-devel libgpgme-devel
 # 6.0.1
 BuildRequires: libepubgen-devel libqxp-devel boost-locale-devel boost-filesystem-devel
+# 6.0.5
+BuildRequires: qt5-base-devel
 
 
 %if_without python
@@ -132,6 +142,14 @@ Requires: %uname = %EVR
 Requires: %name-common = %EVR
 %description gtk3
 GTK3 extensions for %name
+
+%package qt5
+Summary: Qt5 Extensions for %name
+Group:  Office
+Requires: %uname = %EVR
+Requires: %name-common = %EVR
+%description qt5
+qt5 extensions for %name
 
 %package kde4
 Summary: KDE4 Extensions for %name
@@ -235,6 +253,14 @@ echo Direct build
 %patch5 -p1
 %patch6 -p1
 #patch7 -p1
+#patch8 -p1
+##patch9 -p1
+#patch10 -p1
+#patch11 -p1
+#patch12 -p1
+#patch13 -p1
+#patch14 -p1
+#patch15 -p1
 
 ## Long-term FC patches applying
 
@@ -248,6 +274,9 @@ sed -i 's@/libreoffice/@/LibreOffice/@g' libreofficekit/Library_libreofficekitgt
 
 # Hack hardcoded lsattr path
 for f in `grep -rl '/usr/sbin/lsattr' *`; do sed -i 's@/usr/sbin/lsattr@/usr/bin/lsattr@g' $f; done
+
+# Hack in MimeType=application/vnd.ms-visio.drawing.main+xml
+fgrep -q "application/vnd.ms-visio.drawing.main+xml" sysui/desktop/menus/draw.desktop || sed -i 's@MimeType=@MimeType=application/vnd.ms-visio.drawing.main+xml;@' sysui/desktop/menus/draw.desktop
 
 rm -fr %name-tnslations/git-hooks
 
@@ -312,6 +341,7 @@ export CXX=%_target_platform-g++
 	--with-help \
   \
 	--enable-kde4 \
+	--enable-qt5 \
 	--enable-gtk3 \
 	--disable-gstreamer-0-10 \
   \
@@ -320,7 +350,7 @@ export CXX=%_target_platform-g++
   	--enable-lto \
 %endif
 %if_with parallelism
-	--with-parallelism \
+	--with-parallelism=`nproc` \
 %else   
         --without-parallelism \
 %endif
@@ -398,14 +428,18 @@ find %buildroot%lodir -name -o -name "*gtk3*" | sed 's@^%buildroot@@' > files.gt
 # Create kde plugin list
 find %buildroot%lodir -name "*kde4*" | sed 's@^%buildroot@@' > files.kde4
 
+# Create qt5 plugin list
+find %buildroot%lodir -name "*qt5*" | sed 's@^%buildroot@@' > files.qt5
+
 # Generate base filelist by removing files from  separated packages
-{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gnome files.gtk3 files.kde4; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
+{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gnome files.gtk3 files.kde4 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
 
 unset RPM_PYTHON
 
 # Install wrappers
 for n in lo*.sh; do install -m755 -D $n %buildroot%_bindir/${n%%.sh}; done
 install -m755 -D libreoffice%hversion.sh %buildroot%_bindir/loffice
+install -m755 -D libreoffice%hversion.sh %buildroot%_bindir/libreoffice
 install -m755 libreoffice%hversion.sh %buildroot%_bindir/libreoffice%hversion
 
 # install icons
@@ -469,6 +503,8 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 
 %files kde4 -f files.kde4
 
+%files qt5 -f files.qt5
+
 %files extensions
 %lodir/share/extensions/*
 %exclude %lodir/share/extensions/package.txt
@@ -497,8 +533,14 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
-* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.1.1-alt1.2
-- NMU: rebuilt with boost-1.67.0
+* Wed Jun 06 2018 Fr. Br. George <george@altlinux.ru> 6.0.5.1-alt1
+- Update to 6.0.5.1 (Closes: #34765)
+- Introduce Qt5 chooser (Closes: #33136)
+- Provide libreoffice binary (Closes: #34825)
+- Add application/vnd.ms-visio.drawing.main+xml to mimetypes (Closes: #32699)
+
+* Wed May 23 2018 Fr. Br. George <george@altlinux.ru> 6.0.4.2-alt1
+- Update to 6.0.4.2
 
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.1.1-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
