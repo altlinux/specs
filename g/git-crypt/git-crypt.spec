@@ -1,6 +1,6 @@
 Name:    git-crypt
 Version: 0.6.0
-Release: alt1
+Release: alt1.1
 
 Summary: Transparent file encryption in git
 Url:     https://github.com/AGWA/git-crypt
@@ -41,5 +41,8 @@ down your entire repository.
 %_man1dir/*
 
 %changelog
+* Sat Jun 09 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6.0-alt1.1
+- Rebuilt against libtls17.
+
 * Mon Mar 05 2018 Alexey Gladkov <legion@altlinux.ru> 0.6.0-alt1
 - First build.

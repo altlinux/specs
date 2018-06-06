@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt30
+Release: alt32
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -170,6 +170,14 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ll_isbc.so
 
 %changelog
+* Fri Jun 15 2018 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt32
+- Build with a new LibreSSL version (2.7.3).
+
+* Thu Jun 07 2018 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt31
+- Fixed SIGSEGV on empty password.
+- Simplify the password cleanup in the PIN change procedure.
+- Implement the "check_pin_early" option.
+
 * Fri Nov 24 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt30
 - Move the control scripts and base profiles to the "pkcs11-profiles"
   package.

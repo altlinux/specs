@@ -1,8 +1,15 @@
 %define oname libressl
-%define libtls_abi 16
+%define libtls_sover 17
+
+# to avoid colission with OpenSSL pkgconfig provides
+%filter_from_provides /^pkgconfig(libcrypto)/d
+%filter_from_provides /^pkgconfig(libssl)/d
+%filter_from_provides /^pkgconfig(openssl)/d
+%filter_from_requires /^pkgconfig(libcrypto)/d
+%filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 2.6.4
+Version: 2.7.3
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
@@ -40,8 +47,6 @@ This package contains openssl(1) utility.
 Summary: Headers for %name
 Group: Development/C
 Conflicts: libcrypto-devel libssl-devel
-%filter_from_provides /^pkgconfig/d
-%filter_from_requires /^pkgconfig/d
 
 %description devel
 %common_descr
@@ -78,11 +83,11 @@ Group: Security/Networking
 
 LibreSSL libssl shared library
 
-%package -n libtls
+%package -n libtls%libtls_sover
 Summary: TLS library from LibreSSL
 Group: Security/Networking
 
-%description -n libtls
+%description -n libtls%libtls_sover
 %common_descr
 
 A new TLS library, designed to make it easier to write foolproof
@@ -91,8 +96,8 @@ applications.
 %package -n libtls-devel
 Summary: Headers for libtls
 Group: Development/C
-Requires: libtls = %version-%release
-Requires: %name-devel = %version-%release
+Requires: libtls%libtls_sover = %EVR
+Requires: %name-devel = %EVR
 
 %description -n libtls-devel
 %common_descr
@@ -132,6 +137,7 @@ License: BSD
 Obsoletes: netcat-openbsd
 Conflicts: netcat
 Provides: nc
+Provides: netcat
 Provides: netcat-ssl
 
 %description -n netcat-tls
@@ -161,6 +167,7 @@ Common uses include:
 	--enable-nc \
 	--with-openssldir='%_sysconfdir/%oname/' \
 	#
+%make_build
 
 %install
 %makeinstall_std
@@ -222,10 +229,10 @@ gzip -9 %buildroot%docdir/ChangeLog
 %files -n ocspcheck
 %_bindir/ocspcheck
 
-%files -n libtls
+%files -n libtls%libtls_sover
 %dir %docdir
-%_libdir/libtls.so.%libtls_abi
-%_libdir/libtls.so.%libtls_abi.*
+%_libdir/libtls.so.%libtls_sover
+%_libdir/libtls.so.%libtls_sover.*
 
 %files -n libtls-devel
 %_includedir/tls.h
@@ -242,6 +249,10 @@ gzip -9 %buildroot%docdir/ChangeLog
 %_man1dir/netcat.*
 
 %changelog
+* Wed Jun 06 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.3-alt1
+- 2.7.3
+- netcat-tls: provides netcat
+
 * Thu Dec 21 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.6.4-alt1
 - 2.6.4
 
