@@ -1,7 +1,7 @@
 %define  pkgname berkshelf
 
 Name:    ruby-%pkgname
-Version: 7.0.2
+Version: 7.0.3
 Release: alt1
 
 Summary: A Chef Cookbook manager
@@ -55,5 +55,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jun 06 2018 Andrey Cherepanov <cas@altlinux.org> 7.0.3-alt1
+- New version.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 7.0.2-alt1
 - Initial build for Sisyphus
