@@ -4,9 +4,10 @@
 
 Name: a52dec
 Version: 0.7.4
-Release: alt8
+Release: alt9
 
 Summary: Library for decoding ATSC A/52 streams
+Summary(ru_RU.UTF-8): Библиотека для декодирования потоков ATSC A/52
 Group: Sound
 License: GPL
 Url: http://%_name.sourceforge.net
@@ -28,12 +29,23 @@ also known as AC-3.
 a52dec is a test program for liba52. It decodes ATSC A/52 streams, and
 also includes a demultiplexer for mpeg-1 and mpeg-2 program streams.
 
+%description -l ru_RU.UTF8
+liba52 - свободная библиотека для декодирования потоков ATSC A/52,
+выпущенная под лицензией GPL. Стандарт A/52 используется в различных
+областях, включая цифровое телевидение и DVD. Он также известен как AC-3.
+
+a52dec - программа для тестирования библиотеки liba52. Она декодирует
+потоки ATSC A/52, а также содержит демультиплексор для потоков mpeg-1 и mpeg-2.
+
 %package -n %_name
 Summary: %_name shared libraries
 Group: System/Libraries
 
 %description -n %_name
 This package contains shared version of %_name.
+
+%description -n %_name -l ru_RU.UTF8
+Этот пакет сожержит разделяемые библиотеки %_name.
 
 %package -n %_name-devel
 Summary: %_name header files and development libraries
@@ -43,6 +55,9 @@ Requires: %_name = %version-%release
 %description -n %_name-devel
 Header files and development libraries for %_name.
 
+%description -n %_name-devel -l ru_RU.UTF8
+Заголовочные файлы и библиотеки для разработки с %_name.
+
 %if_enabled static
 %package -n %_name-devel-static
 Summary: %_name static libraries
@@ -51,6 +66,10 @@ Requires: %_name-devel = %version-%release
 
 %description -n %_name-devel-static
 Static version of %_name libraries.
+
+%description -n %_name-devel-static -l ru_RU.UTF8
+Статическая версия библиотек %_name.
+
 %endif
 
 %prep
@@ -92,6 +111,9 @@ rm -f %buildroot%_libdir/*.la
 %endif
 
 %changelog
+* Wed Jun 06 2018 Grigory Ustinov <grenka@altlinux.org> 0.7.4-alt9
+- Add russian descriptions (Closes: #22773).
+
 * Mon Apr 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.4-alt8
 - drop pointless libtool_1.5 BR
 
