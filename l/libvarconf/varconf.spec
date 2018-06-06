@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libvarconf
 Version:        1.0.1
-Release:        alt1_11
+Release:        alt1_11.1
 Summary:        Configuration library used by WorldForge clients
 
 Group:          Development/Other
@@ -69,6 +69,9 @@ cd tests ; ./conftest < conf.cfg
 
 
 %changelog
+* Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt1_11.1
+- NMU: rebuilt to regenerate ABI.
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_11
 - update to new release by fcimport
 
