@@ -4,7 +4,7 @@
 
 Name: kde5-%rname
 Version: 18.04.1
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Education
@@ -87,6 +87,9 @@ sed -i 's|^#set(FluidSynth_VERSION|set(FluidSynth_VERSION|' cmake/FindFluidSynth
 %_K5inc/minuet/
 
 %changelog
+* Wed Jun 06 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
+- update translations
+
 * Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 
