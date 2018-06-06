@@ -2,7 +2,7 @@
 
 Name: rpm-build-ruby
 Epoch: 1
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
@@ -67,6 +67,9 @@ install -D -m 0755 testrb %buildroot%_bindir/testrb
 %_bindir/testrb
 
 %changelog
+* Wed Jun 06 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.3.1-alt1
+- Fix file globbing in testrb.
+
 * Tue May 16 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1:0.3.0-alt1
 - Revert "ruby.req.files: clean ups" (from 0.1.2-alt1) because non-*.rb
   executable scripts were lost.
