@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 18.04.1
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Education
@@ -53,6 +53,9 @@ Kig is a program for exploring geometric constructions.
 %_K5srv/kig_part.desktop
 
 %changelog
+* Wed Jun 06 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
+- rebuild with new boost
+
 * Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 
