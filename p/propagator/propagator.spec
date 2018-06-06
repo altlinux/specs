@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20180423
+Version: 20180606
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,10 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Wed Jun 06 2018 Arseny Maslennikov <arseny@altlinux.org> 20180606-alt1
+- dhcp.c: Remove temporary default route properly (altbug:#34347).
+- dhcp.c: Provide DHCP vendor class identifier in requests (altbug:#34320).
+
 * Mon Apr 23 2018 Leonid Krivoshein <klark@altlinux.org> 20180423-alt1
 - New udev control logic imported from make-initrd scripts.
 - Udev-trigger replaced to udev-settle() in hardware wait loops.
