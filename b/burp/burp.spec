@@ -1,5 +1,5 @@
 Name:		burp
-Version:	2.1.32
+Version:	2.2.4
 Release:	alt1
 
 Summary:	Burp is a network-based backup and restore program
@@ -20,7 +20,7 @@ BuildRequires:  libuthash-devel
 BuildRequires:  libyajl-devel
 
 BuildRequires: rpm-macros-intro-conflicts
-
+%filter_from_requires /^\/usr\/local\/bin\/mail\.php$/d
 
 %description
 Burp is a network backup and restore program, using client and server.
@@ -41,13 +41,12 @@ amount of space that is used by each backup.
 
 %install
 %makeinstall_std install-all
-mkdir -p %{buildroot}%{_initrddir}
-install -p -m 0755 rhel/SOURCES/burp.init %{buildroot}%{_initrddir}/burp-server
-mkdir -p %{buildroot}%{_unitdir}
-install -p -m 0644 rhel/SOURCES/burp.service %{buildroot}%{_unitdir}/burp-server.service
-%__subst "s|daemon|start_daemon|g" %buildroot%_initdir/burp-server
-%__subst "s|killproc|stop_daemon|g" %buildroot%_initdir/burp-server
-%__subst "s|password|#password|g" %{buildroot}%_sysconfdir/burp/clientconfdir/testclient
+install -D -p -m 0755 .gear/burp.init %{buildroot}%{_initrddir}/burp-server
+install -D -p -m 0644 .gear/burp.service %{buildroot}%{_unitdir}/burp-server.service
+%__subst "s,password,#password,g" %{buildroot}%_sysconfdir/burp/clientconfdir/testclient
+chmod go-rwx %{buildroot}%_sysconfdir/burp
+chmod go-rwx %{buildroot}%_sysconfdir/burp/clientconfdir
+chmod go-rwx %{buildroot}%_sysconfdir/burp/*.conf
 
 %files
 %doc %_docdir/%name/
@@ -73,6 +72,13 @@ install -p -m 0644 rhel/SOURCES/burp.service %{buildroot}%{_unitdir}/burp-server
 %preun_service burp-server
 
 %changelog
+* Wed Jun 06 2018 Vitaly Chikunov <vt@altlinux.org> 2.2.4-alt1
+- Update to version 2.2.4
+
+* Thu Apr 19 2018 Vitaly Chikunov <vt@altlinux.org> 2.1.32-alt2
+- Fix init script
+- Secure permissions for configs that supposed to contain passwords
+
 * Sun Apr 15 2018 Vitaly Chikunov <vt@altlinux.org> 2.1.32-alt1
 - Respec for 2.1.32
 - Install init scripts
