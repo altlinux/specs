@@ -1,40 +1,20 @@
 Name: qtspim
-Version: 9.1.7
-Release: alt1.r598
+Version: 9.1.20
+Release: alt1.r715
 License: BSD
 Summary: MIPS32 Simulator
 Url: http://spimsimulator.sourceforge.net/
 Group: Emulators
-# from https://spimsimulator.svn.sourceforge.net/svnroot/spimsimulator
-# svn info  https://spimsimulator.svn.sourceforge.net/svnroot/spimsimulator
-
-# svn --depth empty co https://spimsimulator.svn.sourceforge.net/svnroot/spimsimulator/ --config-dir ./ -r 598 .
-# svn up README
-# svn up ChangeLog
-# svn up QtSpim
-# svn up CPU
-# svn --depth empty co https://spimsimulator.svn.sourceforge.net/svnroot/spimsimulator/Documentation --config-dir ./ -r 598 Documentation
-# cd Documentation/
-# svn up qtspim.man 
-# cd ..
-# svn --depth empty co https://spimsimulator.svn.sourceforge.net/svnroot/spimsimulator/Setup --config-dir ./ -r 598 Setup
-# cd Setup
-# svn up NewIcon48x48.png
-# cd ..
-# svn --depth empty co https://spimsimulator.svn.sourceforge.net/svnroot/spimsimulator/Setup/qtspim_debian_deployment --config-dir ./ -r 598 Setup/qtspim_debian_deployment
-# cd Setup/qtspim_debian_deployment
-# svn up copyright
-# cd ../..
 
 Source0: %name-%version.tar.bz2
 Source1: %name.desktop
 
-# Automatically added by buildreq on Sun Feb 26 2012
-# optimized out: fontconfig libqt4-clucene libqt4-core libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-sql libqt4-sql-sqlite libstdc++-devel
-BuildRequires: flex gcc-c++ phonon-devel
+# Automatically added by buildreq on Sun Jun 03 2018
+# optimized out: fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libqt5-core libqt5-gui libqt5-help libqt5-printsupport libqt5-sql libqt5-widgets libstdc++-devel python-base python-modules qt5-base-devel qt5-declarative-devel qt5-tools
+BuildRequires: flex qt5-location-devel qt5-multimedia-devel qt5-script-devel qt5-serialport-devel qt5-tools-devel
 
 
-Requires: qt4-assistant
+Requires: qt5-assistant
 
 %description
 SPIM is a simulator that runs programs written for MIPS32 computers.
@@ -51,12 +31,9 @@ pushd build
 cp -r ../QtSpim/help .
 cp -r ../QtSpim/windows_images .
 sed -i 's/TARGET = QtSpim/TARGET = qtspim/g' ../QtSpim/QtSpim.pro
-sed -i  s':help/qtspim.qhp:../build/help/qtspim.qhp:g' ../QtSpim/QtSpim.pro
-sed -i  s':help/qtspim.qhcp:../build/help/qtspim.qhcp:g' ../QtSpim/QtSpim.pro
-sed -i 's/qhelpgenerator/qhelpgenerator-qt4/g' ../QtSpim/QtSpim.pro
-sed -i 's/qcollectiongenerator/qcollectiongenerator-qt4/g' ../QtSpim/QtSpim.pro
-sed -i 's/start(QLatin1String("assistant")/start(QLatin1String("assistant-qt4")/g' ../QtSpim/menu.cpp
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" ../QtSpim/QtSpim.pro
+sed -i 's/QString("\/usr\/lib\/qtspim\/help\/qtspim.qhc")/QString("\/usr\/share\/qtspim\/help\/qtspim.qhc")/g' ../QtSpim/menu.cpp
+sed -i 's/"\/usr\/lib\/qtspim\/bin\/assistant"/"\/usr\/bin\/assistant-qt5"/g' ../QtSpim/menu.cpp
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" ../QtSpim/QtSpim.pro
 popd
 cp -f %SOURCE1 .
 
@@ -91,6 +68,12 @@ install -m  644  ChangeLog  Setup/qtspim_debian_deployment/copyright %buildroot%
 
 
 %changelog
+* Wed Jun 06 2018 Mikhail E. Rudachenko (ali) <ali@altlinux.org> 9.1.20-alt1.r715
+- new version
+- specfile cleanup
+- desktop file fix
+
+
 * Tue Apr 17 2012 Mikhail E. Rudachenko (ali) <ali@altlinux.org> 9.1.7-alt1.r598
 - Initial build from scratch.
 
