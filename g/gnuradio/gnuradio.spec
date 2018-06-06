@@ -5,7 +5,7 @@
 
 Name: gnuradio
 Version: 3.7.12.0
-Release: alt1
+Release: alt2
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
@@ -14,6 +14,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Patch: fix-gnuradio-qtgui.pc.patch
+Patch1: gnuradio-3.7.12.0-upstream-boost-1.67-compat.patch
 
 BuildPreReq: cmake rpm-macros-cmake rpm-build-python rpm-build-gir
 BuildRequires: gcc-c++
@@ -50,6 +51,7 @@ BuildRequires: pkgconfig(cppunit)
 %endif #tests
 %if_enabled docs
 BuildRequires: doxygen python-module-sphinx
+BuildRequires: /usr/bin/latex /usr/bin/dvips tex(dvips.def)
 %endif #docs
 BuildRequires: desktop-file-utils xdg-utils
 Requires: %name-data = %version-%release
@@ -107,6 +109,7 @@ GNU Radio Headers.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %cmake  -DENABLE_INTERNAL_VOLK=OFF \
@@ -190,6 +193,9 @@ rm -f %buildroot%_datadir/%name/examples/fcd/fcd_nfm_rx
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.7.12.0-alt2
+- NMU: rebuilt with boost-1.67.0.
+
 * Mon Apr 23 2018 Anton Midyukov <antohami@altlinux.org> 3.7.12.0-alt1
 - new version 3.7.12.0
 
