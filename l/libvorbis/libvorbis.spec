@@ -1,5 +1,5 @@
 Name: libvorbis
-Version: 1.3.5
+Version: 1.3.6
 Release: alt1
 
 Summary: The Vorbis General Audio Compression Codec
@@ -10,9 +10,8 @@ Url: http://www.xiph.org/vorbis/
 # http://downloads.xiph.org/releases/vorbis/%name-%version.tar.bz2
 Source: %name-%version.tar
 Patch1: libvorbis-1.3.2-alt-export-symbols.patch
-Patch2: libvorbis-1.3.5-alt-add-needed.patch
-Patch3: libvorbis-1.3.3-alt-aclocal.patch
-Patch4: libvorbis-1.3.5-alt-configure.patch
+Patch2: libvorbis-1.3.6-alt-add-needed.patch
+Patch3: libvorbis-1.3.5-alt-configure.patch
 
 BuildRequires: libogg-devel
 
@@ -57,9 +56,8 @@ statically linked libvorbis-based software.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
+%patch2 -p2
 %patch3 -p1
-%patch4 -p1
 for f in m4/*.m4; do
 	[ ! -f "%_datadir/aclocal/${f##*/}" ] ||
 		rm -fv "$f"
@@ -110,6 +108,9 @@ install -pm644 AUTHORS CHANGES COPYING %buildroot%docdir/
 %endif
 
 %changelog
+* Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.6-alt1
+- Updated to upstream version 1.3.6.
+
 * Wed Nov 22 2017 Dmitry V. Levin <ldv@altlinux.org> 1.3.5-alt1
 - 1.3.4 -> 1.3.5.
 - Fixed build on x86.
