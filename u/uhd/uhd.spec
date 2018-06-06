@@ -14,7 +14,7 @@
 Name: uhd
 Url: http://code.ettus.com/redmine/ettus/projects/uhd/wiki
 Version: 3.11.0.0
-Release: alt2
+Release: alt3
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -23,6 +23,8 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Source1: %name-limits.conf
 Source2: http://files.ettus.com/binaries/images/uhd-images_003.010.002.000-release.tar.xz
+
+Patch1: uhd-3.11.0.0-alt-boost-compat.patch
 
 BuildRequires: ctest cmake
 BuildRequires: boost-interprocess-devel gcc-c++ boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-program_options-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel libusb-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libgps-devel libudev-devel
@@ -72,6 +74,7 @@ Tools that are useful for working with and/or debugging USRP device.
 
 %prep
 %setup
+%patch1 -p1
 mkdir -p images/images
 tar -xJf %SOURCE2 -C images/images --strip-components=4
 rm -f images/images/{LICENSE.txt,*.tag}
@@ -144,6 +147,8 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %exclude %_datadir/uhd/images
 %doc _tmpdoc/*
 %_bindir/*
+%exclude %_bindir/usrp_x3xx_fpga_jtag_programmer.sh
+%exclude %_bindir/chdr_log
 %_udevrulesdir/10-usrp-uhd.rules
 %config(noreplace) %_sysconfdir/security/limits.d/*.conf
 %_libdir/lib*.so.*
@@ -170,6 +175,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %_bindir/chdr_log
 
 %changelog
+* Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.11.0.0-alt3
+- NMU: rebuilt with boost-1.67.0.
+
 * Fri Mar 30 2018 Anton Midyukov <antohami@altlinux.org> 3.11.0.0-alt2
 - Fix buildrequires
 
