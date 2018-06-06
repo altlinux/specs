@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %undefine __libtoolize
 
 ### Header
 Summary: A collection of basic system utilities
 Name: util-linux
 Version: 2.32
-Release: alt1
+Release: alt2
 License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
 Group: System/Base
 URL: ftp://ftp.kernel.org/pub/linux/utils/util-linux
@@ -14,6 +15,7 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 %def_enable raw
 %def_enable uuidd
 %def_with setarch
+%def_enable runuser
 %def_disable login
 %def_disable sulogin
 %def_disable su
@@ -43,12 +45,15 @@ BuildRequires: libcap-ng-devel
 %{?_with_udev:BuildRequires: libudev-devel}
 %{?_with_systemd:BuildRequires: libsystemd-devel}
 %{?_enable_login:BuildRequires: libpam-devel}
+%{?_enable_runuser:BuildRequires: libpam-devel}
 
 ### Sources
 # ftp://ftp.kernel.org/pub/linux/utils/util-linux-ng/v2.13/util-linux-ng-2.14.tar.bz2
 Source0: util-linux-%version.tar
 Source1: util-linux-login.pamd
-Source3: util-linux-chsh-chfn.pamd
+Source2: util-linux-runuser.pamd
+Source3: util-linux-runuser-l.pamd
+Source4: util-linux-chsh-chfn.pamd
 Source5: mount.control
 Source6: write.control
 Source7: vol_id
@@ -509,12 +514,14 @@ mv blkid.static rpm/blkid.initramfs
 	--disable-arch \
 	--disable-last \
 	--disable-mesg \
+	--disable-chfn-chsh \
 	--disable-pylibmount \
 	--without-python \
 	--enable-partx \
 	--enable-write \
 	--enable-rdev \
 	%{subst_enable raw} \
+	%{subst_enable runuser} \
 	%{subst_enable login} \
 	%{subst_enable sulogin} \
 	%{subst_enable su} \
@@ -579,10 +586,14 @@ echo '.so man8/raw.8' > %buildroot/%_man8dir/rawdevices.8
 ln -sf ../../bin/raw %buildroot/%_bindir/raw
 %endif
 
+%if_enabled runuser
+	install -m 644 %SOURCE2 %buildroot/%_sysconfdir/pam.d/runuser
+	install -m 644 %SOURCE3 %buildroot/%_sysconfdir/pam.d/runuser-l
+%endif
 %if_enabled chfn_chsh
 	chmod 4711 %buildroot/%_bindir/{ch{sh,fn}
-	install -m 644 %SOURCE3 %buildroot/%_sysconfdir/pam.d/chsh
-	install -m 644 %SOURCE3 %buildroot/%_sysconfdir/pam.d/chfn
+	install -m 644 %SOURCE4 %buildroot/%_sysconfdir/pam.d/chsh
+	install -m 644 %SOURCE4 %buildroot/%_sysconfdir/pam.d/chfn
 %endif
 %if_enabled newgrp
 	chmod 4711 %buildroot/%_bindir/newgrp
@@ -753,6 +764,9 @@ ln -s /proc/mounts %buildroot/etc/mtab
 
 # omit info/dir file
 rm -f -- %buildroot/%_infodir/dir
+
+# remove getopt docs
+rm -rf -- %buildroot/%_defaultdocdir/%name/getopt
 
 install -pD -m755 rpm/blkid.initramfs %buildroot/lib/mkinitrd/udev/sbin/blkid
 install -pD -m755 rpm/vol_id %buildroot/lib/mkinitrd/udev/lib/udev/vol_id
@@ -955,10 +969,17 @@ fi
 %_datadir/bash-completion/completions/*
 
 %files -f %name.files
+%if_enabled runuser
+%config(noreplace) %_sysconfdir/pam.d/runuser
+%config(noreplace) %_sysconfdir/pam.d/runuser-l
+%endif
 %attr(2711,root,tty) %_bindir/write
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Wed Jun 06 2018 Alexey Gladkov <legion@altlinux.ru> 2.32-alt2
+- Add runuser.
+
 * Thu Mar 29 2018 Alexey Gladkov <legion@altlinux.ru> 2.32-alt1
 - New version (2.32).
 - New subpackage rfkill.
