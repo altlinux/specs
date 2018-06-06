@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        High-performance, full-featured text search engine
 Name:           lucene3
 Version:        3.6.2
-Release:        alt1_13jpp8
+Release:        alt2_13jpp8
 Epoch:          0
 License:        ASL 2.0 and BSD
 URL:            http://lucene.apache.org/
@@ -59,6 +59,7 @@ BuildRequires:  xerces-j2
 
 BuildArch:      noarch
 Source44: import.info
+Patch33: lucene-3.6.2-alt-fix-build-with-ant.patch
 
 %description
 Apache Lucene is a high-performance, full-featured text search
@@ -113,6 +114,8 @@ sed -i -e "s|icu4j|icu4j/icu4j|g" contrib/icu/ivy.xml
 %patch0 -p2
 %patch1 -p1
 %patch2 -p1
+
+%patch33 -p1
 
 %build
 mkdir -p docs
@@ -227,6 +230,9 @@ cp -pr build/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %endif
 
 %changelog
+* Wed Jun 06 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.6.2-alt2_13jpp8
+- fixed build with new ant
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.6.2-alt1_13jpp8
 - java update
 
