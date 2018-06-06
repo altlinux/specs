@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/xmllint boost-interprocess
 %define _localstatedir %{_var}
 Name:           ember
 Version:        0.7.2
-Release:        alt2_22
+Release:        alt2_22.1
 Summary:        3D client for WorldForge
 
 Group:          Games/Other
@@ -109,6 +109,9 @@ make check
 %config %{_sysconfdir}/%{name}/*
 
 %changelog
+* Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.2-alt2_22.1
+- NMU: rebuilt with boost-1.67.0.
+
 * Tue Oct 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt2_22
 - rebuild with libaltascpp
 
