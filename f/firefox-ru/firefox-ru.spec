@@ -6,8 +6,9 @@
 
 Name:		firefox-ru
 Version:	60.0.1
-Release:	alt1
+Release:	alt2
 Summary:	Russian (RU) Language Pack for Firefox
+Summary(ru_RU.UTF-8): Русский языковой пакет для Firefox
 
 License:	MPL/GPL/LGPL
 Group:		Networking/WWW
@@ -30,6 +31,9 @@ BuildRequires:		unzip
 
 %description
 The Mozilla Firefox Russian translation and dictionary.
+
+%description -l ru_RU.UTF8
+Перевод интерфейса интернет-браузера Mozilla Firefox на Русский язык.
 
 %prep
 %setup -c -n %name-%version/%cid
@@ -84,6 +88,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %firefox_prefix/distribution/searchplugins/locale/ru
 
 %changelog
+* Wed Jun 06 2018 Grigory Ustinov <grenka@altlinux.org> 60.0.1-alt2
+- Add russian description (Closes: #22790).
+
 * Wed May 23 2018 Alexey Gladkov <legion@altlinux.ru> 60.0.1-alt1
 - New version (60.0.1).
 
