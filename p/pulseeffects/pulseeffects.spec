@@ -3,7 +3,7 @@
 
 Name: pulseeffects
 Version: 4.0.1
-Release: alt1
+Release: alt2
 
 Summary: Audio effects for Pulseaudio applications
 License: GPLv3
@@ -19,8 +19,12 @@ Requires: pulseaudio-daemon dconf
 Requires: gst-plugins-good%gst_api_ver >= %gst_ver
 Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
 Requires: ladspa-rubberband
+Requires: ladspa-zam-plugins
 Requires: calf-plugins
-#Requires: zam-plugins
+# https://sourceforge.net/projects/lsp-plugins
+# lsp-plug-in-plugins-lv2-comp-delay-x2-stereo
+#Requires: lsp-plugins-lv2
+
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ boost-filesystem-devel libgtkmm3-devel >= %gtk_ver
@@ -55,6 +59,9 @@ effects for Pulseaudio applications.
 %doc README* CHANGELOG.*
 
 %changelog
+* Thu Jun 07 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt2
+- updated dependencies
+
 * Tue Jun 05 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
 - 4.0.1
 
