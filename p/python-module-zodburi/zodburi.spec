@@ -1,9 +1,11 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname zodburi
 
 %def_with python3
 
 Name:           python-module-%oname
-Version:        2.2.2
+Version:        2.3.0
 Release:        alt1
 Summary:        Construct ZODB storage instances from URIs.
 Group:          Development/Python
@@ -117,5 +119,8 @@ python setup.py test
 %endif
 
 %changelog
+* Thu Jun 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt1
+- Updated to upstream version 2.3.0.
+
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.2-alt1
 - Initial build for ALT.
