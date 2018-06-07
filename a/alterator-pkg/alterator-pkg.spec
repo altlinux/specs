@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-pkg
-Version: 2.6.21
+Version: 2.7
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -61,6 +61,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Jun 07 2018 Michael Shigorin <mike@altlinux.org> 2.7-alt1
+- RPM 4.13 support
+
 * Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 2.6.21-alt1
 - get package list with comments in group content (ALT#32734)
 
