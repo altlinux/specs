@@ -1,6 +1,6 @@
 Name: sslh
 Version: 1.19c
-Release: alt2
+Release: alt3
 
 Summary: A ssl/ssh multiplexer
 
@@ -12,6 +12,8 @@ Url: http://www.rutschle.net/tech/sslh.shtml
 Source: %name-%version.tar
 Source1: sslh.init
 Source2: sslh.config
+Source3: sslh.service
+Source4: sslh.cfg
 
 #BuildRequires: tcpd-devel perl gcc make gzip
 
@@ -32,13 +34,14 @@ Author: Yves Rutschle
 
 %build
 %make_build USELIBWRAP=1 USESYSTEMD=1 USELIBCAP=1 CFLAGS="%optflags -I%_includedir/pcre"
-%__subst "s|/usr/bin/sslh|%_sbindir/sslh|g"  scripts/systemd.sslh.service
 
 %install
 %makeinstall PREFIX=%buildroot%prefix
 install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -D -m 755 %SOURCE1 %buildroot%_initdir/%name
-install -D -m 644 scripts/systemd.sslh.service %buildroot%_unitdir/%name.service
+install -D -m 644 %SOURCE3 %buildroot%_unitdir/%name.service
+mkdir -p %buildroot%_sysconfdir/%name/
+install -m 644 %SOURCE4 %buildroot%_sysconfdir/%name/sslh.cfg
 
 %post
 %post_service %name
@@ -53,8 +56,13 @@ install -D -m 644 scripts/systemd.sslh.service %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 %config(noreplace) %_initdir/sslh
 %config(noreplace) %_sysconfdir/sysconfig/%name
+%dir %_sysconfdir/%name/
+%config(noreplace) %_sysconfdir/%name/sslh.cfg
 
 %changelog
+* Thu Jun 07 2018 Vitaly Lipatov <lav@altlinux.ru> 1.19c-alt3
+- add default config and use it in service file (redmine #1501)
+
 * Mon Jun 04 2018 Vitaly Lipatov <lav@altlinux.ru> 1.19c-alt2
 - fix path to binary in service file (redmine #1501)
 
