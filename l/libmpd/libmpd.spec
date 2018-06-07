@@ -8,7 +8,7 @@ Epoch: 1
 Summary:	Music Player Daemon Library
 Name:		libmpd
 Version:	11.8.17
-Release:	alt1_8
+Release:	alt1_9
 License:	GPLv2+
 Group:		System/Libraries
 Url:		http://sarine.nl/libmpd
@@ -17,16 +17,16 @@ BuildRequires:	pkgconfig(glib-2.0) >= 2.16
 Source44: import.info
 
 %description
-Libmpd is an a library to easily connect to a mpd server. 
-It's wraps around libmpdclient and provides a higher level api. 
+Libmpd is an a library to easily connect to a mpd server.
+It's wraps around libmpdclient and provides a higher level api.
 
 %package -n %{libname}
 Summary:	Music Player Daemon Library
 Group:		System/Libraries
 
 %description -n %{libname}
-Libmpd is an a library to easily connect to a mpd server. 
-It's wraps around libmpdclient and provides a higher level api. 
+Libmpd is an a library to easily connect to a mpd server.
+It's wraps around libmpdclient and provides a higher level api.
 
 %package -n %{develname}
 Summary:	Header files for developing programs with libmpd
@@ -43,12 +43,15 @@ for developing program with libmpd.
 %setup -q
 
 %build
+# to recognize aarch64
+autoreconf -vfi
+
 # _XOPEN_SOURCE=700 is to get strndup()
 %configure \
     CPPFLAGS=-D_XOPEN_SOURCE=700 \
 	--disable-static
 
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -56,8 +59,7 @@ for developing program with libmpd.
 rm -f %{buildroot}%{_libdir}/%{name}.la
 
 %files -n %{libname}
-%{_libdir}/libmpd.so.%{major}
-%{_libdir}/libmpd.so.%{major}.*
+%{_libdir}/libmpd.so.%{major}*
 
 %files -n %{develname}
 %doc ChangeLog README
@@ -67,6 +69,9 @@ rm -f %{buildroot}%{_libdir}/%{name}.la
 
 
 %changelog
+* Thu Jun 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:11.8.17-alt1_9
+- update by mgaimport
+
 * Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:11.8.17-alt1_8
 - restored as import
 
