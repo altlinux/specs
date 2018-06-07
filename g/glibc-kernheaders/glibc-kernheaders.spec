@@ -1,4 +1,4 @@
-%define kernel_base_version 4.16
+%define kernel_base_version 4.17
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -33,8 +33,6 @@ Patch17: 0017-uapi-fix-linux-kexec.h-userspace-compilation-errors.patch
 Patch18: 0018-uapi-fix-linux-ncp_fs.h-userspace-compilation-errors.patch
 Patch19: 0019-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
 Patch20: 0020-uapi-fix-linux-fsmap.h-userspace-compilation-error.patch
-Patch21: 0021-uapi-fix-linux-kfd_ioctl.h-userspace-compilation-err.patch
-Patch22: 0022-uapi-fix-asm-bootparam.h-userspace-compilation-error.patch
 
 BuildRequires: rpm-build-kernel
 BuildRequires: %kernel_source = 1.0.0
@@ -114,8 +112,6 @@ cd %kernel_source
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
-%patch21 -p1
-%patch22 -p1
 
 sed -i 's/^headers_install:.*/&\n\t@echo SRCARCH=$(SRCARCH)/' Makefile
 
@@ -167,6 +163,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Thu Jun 07 2018 Dmitry V. Levin <ldv@altlinux.org> 4.17-alt1
+- v4.16 -> v4.17.
+
 * Thu Apr 05 2018 Dmitry V. Levin <ldv@altlinux.org> 4.16-alt1
 - v4.15 -> v4.16.
 
