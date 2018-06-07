@@ -1,33 +1,40 @@
+%define _unpackaged_files_terminate_build 1
+
+%define oname pip
 
 %def_with python3
+%def_without doc
 
 Summary: pip installs packages.  Python packages.  An easy_install replacement
-Name: python-module-pip
-Version: 9.0.1
-Release: alt1.1
-Source0: pip-%version.tar.gz
-Patch: pip-1.5.6-alt-python3.patch
+Name: python-module-%oname
+Version: 10.0.1
+Release: alt1%ubt
 License: MIT
 Group: Development/Python
 BuildArch: noarch
 Url: http://www.pip-installer.org
-%setup_python_module pip
 
+# https://github.com/pypa/pip.git
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: python-module-setuptools
+
+%if_with doc
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-lxml python-module-markupsafe python-module-pluggy python-module-py python-module-pytest python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-whoosh python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pytest python3-module-setuptools xz
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-setuptools python3-module-setuptools rpm-build-python3 time
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
+%endif
 
-#BuildRequires: python-module-setuptools
-#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 %add_python3_req_skip  UserDict
 %endif
 
 %description
 %summary
 
+%if_with doc
 %package pickles
 Summary: Pickles for pip
 Group: Development/Python
@@ -45,35 +52,55 @@ Group: Development/Documentation
 %summary
 
 This package contains documentation for pip.
+%endif
 
 %if_with python3
-%package -n python3-module-%modulename
+%package -n python3-module-%oname
 Summary: pip installs packages.  Python packages.  An easy_install replacement
 Group: Development/Python3
-%py3_provides %modulename pip._vendor.six.moves pip._vendor.six.moves.urllib
+%py3_provides %oname pip._vendor.six.moves pip._vendor.six.moves.urllib pip._vendor.six.moves.urllib.parse
 
-%description -n python3-module-%modulename
+%description -n python3-module-%oname
 %summary
 %endif
 
 %prep
-%setup -n %modulename-%version
+%setup
 
+%if_with python3
+cp -a . ../python3
+%endif
+
+%if_with doc
 %prepare_sphinx .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
+%if_with python3
+pushd ../python3
 %python3_install
+popd
+%endif
+
 %python_install
 
+%if_with doc
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C docs pickle
 %make -C docs html
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%modulename/
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
 %files
 %doc *.txt *.rst
@@ -82,6 +109,7 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%modulename/
 %exclude %_bindir/pip3*
 %endif
 %python_sitelibdir/*
+%if_with doc
 %exclude %python_sitelibdir/*/pickle
 
 %files pickles
@@ -89,15 +117,19 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%modulename/
 
 %files docs
 %doc docs/_build/html/*
+%endif
 
 %if_with python3
-%files -n python3-module-%modulename
+%files -n python3-module-%oname
 %doc *.txt *.rst
 %_bindir/pip3*
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jun 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 10.0.1-alt1%ubt
+- Updated to upstream version 10.0.1.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 9.0.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

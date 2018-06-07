@@ -1,10 +1,10 @@
-%define modulename django-command-extensions
+%define _unpackaged_files_terminate_build 1
 
-%def_with bootstrap
+%define modulename django-command-extensions
 
 Name: python-module-%modulename
 Version: 1.3.9
-Release: alt2.1
+Release: alt3%ubt
 
 Summary: Management extensions for the Django Framework
 License: BSD
@@ -15,6 +15,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-devel python-module-setuptools
 
 BuildRequires(pre): rpm-build-python3
@@ -88,6 +89,9 @@ popd
 
 
 %changelog
+* Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.9-alt3%ubt
+- Rebuilt with support for pip-10.
+
 * Fri May 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.3.9-alt2.1
 - rebuild with all requires
 
