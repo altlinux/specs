@@ -11,8 +11,8 @@
 
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
-Version: 4.10.0
-Release: alt6%ubt
+Version: 4.10.1
+Release: alt1%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -266,7 +266,6 @@ This package contains the Xen documentation.
 %package licenses
 Summary: License files from Xen source
 Group: Documentation
-BuildArch: noarch
 
 %description licenses
 The Xen Project hypervisor is an open-source type-1 or baremetal
@@ -347,7 +346,7 @@ ln -s ../mini-os-%version extras/mini-os
 %patch17 -p1
 #-%-patch18 -p1
 %patch19 -p1
-%{?_with_hypervisor:%patch21 -p1}
+#%#{?_with_hypervisor:%patch21 -p1}
 %patch50 -p2
 
 pushd tools/qemu-xen-traditional
@@ -708,6 +707,10 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_libexecdir/%name/bin/virtfs-proxy-helper
 %_libexecdir/%name/boot/hvmloader
 
+%ifnarch %ix86
+%_libexecdir/%name/boot/xen-shim
+%endif
+
 %dir %_libexecdir/%name/libexec
 %_libexecdir/%name/libexec/qemu-bridge-helper
 
@@ -793,6 +796,18 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Thu May 24 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.1-alt1%ubt
+- 4.10.1 release
+- upstream updates upto 7b35e7807, including:
+  + x86/HVM: guard against emulator driving ioreq state in weird ways
+    (thx Jan Beulich) (XSA-262)
+  + x86/vpt: add support for IO-APIC routed interrupts (part of XSA-261)
+  + x86/traps: Fix handling of #DB exceptions in hypervisor context
+    x86/traps: Use an Interrupt Stack Table for #DB
+    x86/pv: Move exception injection into {,compat_}test_all_events()
+    x86/traps: Fix %%dr6 handing in #DB handler
+    (thx Andrew Cooper) (part of XSA-260 / CVE-2018-8897)
+
 * Tue May 22 2018 Anton Farygin <rider@altlinux.ru> 4.10.0-alt6%ubt
 - rebuild for 4.06.1
 
