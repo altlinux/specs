@@ -2,7 +2,7 @@
 
 Name: libffi
 Version: 3.2.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Foreign Function Interface library
@@ -102,6 +102,9 @@ make -k check
 %_libdir/*.a
 
 %changelog
+* Sat Jun 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2.1-alt2
+- Applied patch for aarch64 from Fedora.
+
 * Mon Jan 25 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.2.1-alt1
 - Updated to 3.2.1.
 
