@@ -19,7 +19,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -57,6 +57,8 @@ BuildRequires: libbs2b-devel
 %{?_enable_opencv:BuildRequires: libopencv-devel}
 %{?_enable_ladspa:BuildRequires: ladspa_sdk liblrdf-devel libfluidsynth-devel}
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
+# webrtc-audio-processing for webrtcdsp
+BuildRequires: libwebrtc-devel >= 0.3
 # since 1.13.x
 BuildRequires: libnice-devel libva-devel liblcms2-devel liblilv-devel
 
@@ -143,6 +145,9 @@ subst 's/\(opencv <= 3\.\)3.0/\14.0/' configure.ac
 %endif
 
 %changelog
+* Thu Jun 07 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt2
+- built webrtcdsp plugin
+
 * Thu May 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
 - 1.14.1
 

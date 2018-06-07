@@ -1,15 +1,22 @@
+%def_disable snapshot
+
 Name: webrtc-audio-processing
-Version: 0.1
-Release: alt2
+Version: 0.3
+Release: alt1
+
 Summary: WebRTC Audio Processing library
 License: BSD
 Group: System/Libraries
-Url: http://code.google.com/p/webrtc/
+Url: https://freedesktop.org/software/pulseaudio/%name/
+
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %name-%version.tar.xz
-Patch: %name-%version-alt-link.patch
-Patch1: webrtc-fix-typedefs-on-other-arches.patch
+%if_disabled snapshot
+Source: %url/%name-%version.tar.xz
+%else
+#VCS: https://anongit.freedesktop.org/git/pulseaudio/%name
+Source: %name-%version.tar
+%endif
 
 BuildRequires: gcc-c++
 
@@ -39,28 +46,31 @@ libwebrtc-devel contains the libraries and header files needed to
 develop programs which make use of %name
 
 %prep
-%setup -q
-%patch -p1
-%patch1 -p1
+%setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
 	--disable-static
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files -n libwebrtc
 %_libdir/*.so.*
+%doc NEWS README.md
 
 %files -n libwebrtc-devel
-%_includedir/webrtc_audio_processing
+%_includedir/webrtc_audio_processing/
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jun 07 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3-alt1
+- 0.3 from freedesktop.org
+
 * Fri Sep 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1-alt2
 - Fixed build on non-x86 architectures.
 
