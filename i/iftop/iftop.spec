@@ -1,6 +1,6 @@
 Name: iftop
 Version: 0.17
-Release: alt4.qa1
+Release: alt5
 
 Summary: Display bandwidth usage on an interface
 License: GPL
@@ -13,8 +13,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 Source: iftop-%version.tar
 Patch: iftop-%version-%release.patch
 
-Summary(ru_RU.KOI8-R): Отображает использование полосы пропускания сети
-Summary(uk_UA.KOI8-U): В╕дбива╓ використання мереж╕
+Summary(ru_RU.UTF-8): п·я┌п╬п╠я─п╟п╤п╟п╣я┌ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣ п©п╬п╩п╬я│я▀ п©я─п╬п©я┐я│п╨п╟п╫п╦я▐ я│п╣я┌п╦
 
 Requires(pre): shadow-utils
 Requires: /var/resolv
@@ -26,19 +25,13 @@ BuildRequires: libncurses-devel libpcap-devel
 iftop does for network usage what top(1) does for CPU usage.
 It listens to network traffic on a named interface and displays
 a table of current bandwidth usage by pairs of hosts.  Handy for
-answering the question "why is our ADSL link so slow?".
+answering the question "why is our internet link so slow?".
 
-%description -l ru_RU.KOI8-R
-iftop - аналог top(1) по части использования сети: слушает
-трафик на указанном интерфейсе и отображает таблицу текущего
-использования по парам хостов.  Удобно для ответа на вопрос
-"почему наш ADSL так тормозит?".
-
-%description -l uk_UA.KOI8-U
-iftop - аналог top(1) щодо використання мереж╕: слуха╓ траф╕к
-на вказаному ╕нтерфейс╕ й зображу╓ таблицю поточного використання
-за парами хост╕в.  Зручно для в╕дпов╕д╕ на запитання "чому наш
-ADSL так гальму╓?".
+%description -l ru_RU.UTF-8
+iftop - п╟п╫п╟п╩п╬пЁ top(1) п©п╬ я┤п╟я│я┌п╦ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐ я│п╣я┌п╦: я│п╩я┐я┬п╟п╣я┌
+я┌я─п╟я└п╦п╨ п╫п╟ я┐п╨п╟п╥п╟п╫п╫п╬п╪ п╦п╫я┌п╣я─я└п╣п╧я│п╣ п╦ п╬я┌п╬п╠я─п╟п╤п╟п╣я┌ я┌п╟п╠п╩п╦я├я┐ я┌п╣п╨я┐я┴п╣пЁп╬
+п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐ п©п╬ п©п╟я─п╟п╪ я┘п╬я│я┌п╬п╡.  пёп╢п╬п╠п╫п╬ п╢п╩я▐ п╬я┌п╡п╣я┌п╟ п╫п╟ п╡п╬п©я─п╬я│
+"п©п╬я┤п╣п╪я┐ п╫п╟я┬ п╨п╟п╫п╟п╩ я┌п╟п╨ я┌п╬я─п╪п╬п╥п╦я┌?".
 
 %prep
 %setup
@@ -55,8 +48,8 @@ ADSL так гальму╓?".
 mkdir -p %buildroot%_bindir
 chmod 700 %buildroot%_sbindir/iftop
 mv %buildroot%_sbindir/iftop %buildroot%_bindir/
-ln -s `relative %_bindir/iftop %_sbindir/` %buildroot%_sbindir/
-install -pD -m755 iftop.control %buildroot%_controldir/iftop
+ln -sr %buildroot{%_bindir,%_sbindir}/iftop
+install -pDm755 iftop.control %buildroot%_controldir/iftop
 
 %pre
 %_sbindir/groupadd -r -f netadmin
@@ -75,6 +68,10 @@ install -pD -m755 iftop.control %buildroot%_controldir/iftop
 %doc ChangeLog README TODO
 
 %changelog
+* Thu Jun 07 2018 Michael Shigorin <mike@altlinux.org> 0.17-alt5
+- converted spec to ru_RU.UTF-8
+- minor spec cleanup
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.17-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
