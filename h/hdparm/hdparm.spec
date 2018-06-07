@@ -1,5 +1,5 @@
 Name: hdparm
-Version: 9.52
+Version: 9.56
 Release: alt1
 
 Summary: An utility for displaying and/or setting hard disk parameters
@@ -39,6 +39,9 @@ mkdir -p %buildroot%_sysconfdir/sysconfig/harddisk
 %doc *.lsm Changelog LICENSE.TXT README* contrib wiper
 
 %changelog
+* Thu Jun 07 2018 Dmitry V. Levin <ldv@altlinux.org> 9.56-alt1
+- 9.52 -> 9.56.
+
 * Sun Dec 10 2017 Dmitry V. Levin <ldv@altlinux.org> 9.52-alt1
 - 9.48 -> 9.52.
 
