@@ -3,23 +3,23 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define hash    b9bd7694f268
+
 %define major   1
 %define libname libtcod%{major}
 %define devname libtcod-devel
 
-%define date    20170226
-
 Name:           libtcod
-Version:        1.6.3
+Version:        1.6.6
 Release:        alt1_1
 Summary:        Color console, input management and other tools for roguelike games
 Group:          System/Libraries
 License:        BSD
 URL:            https://bitbucket.org/libtcod/libtcod
 # https://bitbucket.org/libtcod/libtcod/downloads?tab=tags
-Source0:        https://bitbucket.org/libtcod/libtcod/downloads/%{date}-%{name}-%{version}.tbz2
+Source0:        https://bitbucket.org/libtcod/libtcod/get/%{version}.tar.bz2
 # TODO: Have upstream handle their soname properly
-Patch0:         libtcod-1.6.1-mga-soname.patch
+Patch0:         libtcod-1.6.6-mga-soname.patch
 
 BuildRequires:  pkgconfig(sdl2)
 BuildRequires:  pkgconfig(zlib)
@@ -67,7 +67,7 @@ This package contains development headers and libraries for %{name}.
 #----------------------------------------------------------------------
 
 %prep
-%setup -q -n %{date}-%{name}-%{version}
+%setup -q -n %{name}-%{name}-%{hash}
 %patch0 -p1
 rm -rf src/zlib
 
@@ -101,6 +101,9 @@ EOF
 
 
 %changelog
+* Thu Jun 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt1_1
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.6.3-alt1_1
 - new version
 
