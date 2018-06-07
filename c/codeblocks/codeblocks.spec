@@ -1,6 +1,6 @@
 Name: codeblocks
 Version: 17.12
-Release: alt2
+Release: alt3
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -281,6 +281,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Thu Jun 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 17.12-alt3
+- NMU: rebuilt with boost-1.67.0.
+
 * Tue May 08 2018 Grigory Ustinov <grenka@altlinux.org> 17.12-alt2
 - Add patches for fix FortranProject plugin (Closes: #34891).
 
