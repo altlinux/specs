@@ -1,5 +1,5 @@
 Name: gutenprint
-Version: 5.2.9
+Version: 5.2.14
 Release: alt1
 Epoch: 1
 Summary: Gutenprint Printer Drivers
@@ -7,16 +7,15 @@ Group: Publishing
 License: GPLv2+
 Requires: lib%name = %version-%release, ghostscript
 Url: http://gimp-print.sourceforge.net/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: http://download.sourceforge.net/gimp-print/%name-%version.tar.bz2
-Patch0: gutenprint-5.2.8-alt-fixes.patch
+Patch0: gutenprint-5.2.14-alt-fixes.patch
 Patch1: gutenprint-5.2.9-alt-makefile.patch
-Patch2: gutenprint-5.2.9-alt-LFS.patch
+Patch2: gutenprint-5.2.14-alt-LFS.patch
 
-# Automatically added by buildreq on Sat Jun 16 2012
-# optimized out: fontconfig fontconfig-devel glib2-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libncurses-devel libpango-devel libtinfo-devel libwayland-client libwayland-server pkg-config xz zlib-devel
-BuildRequires: flex foomatic-db-engine libcups-devel libgimp-devel libijs-devel libreadline-devel
+BuildRequires: flex foomatic-db-engine libcups-devel libgimp-devel libreadline-devel
+BuildRequires: libusb-devel
 
 %description
 Gutenprint is a package of high quality printer drivers for Linux and
@@ -36,7 +35,7 @@ This package contains gutenprint shared libraries.
 %package -n lib%name-devel
 Summary: Library development files for gutenprint
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Gutenprint is a package of high quality printer drivers for Linux and
@@ -48,7 +47,7 @@ gutenprint-based software.
 %package -n gimp-plugin-%name
 Summary: GIMP plug-in for %name
 Group: Publishing
-Requires: %name = %version-%release gimp
+Requires: %name = %EVR gimp
 
 %description -n gimp-plugin-%name
 Gutenprint is a package of high quality printer drivers for Linux and
@@ -56,45 +55,46 @@ other UNIX-alike operating systems.
 
 This package contains the gutenprint GIMP plug-in.
 
-%package foomatic
-Summary: Foomatic printer database information for %name
-Group: Publishing
-Requires: %name = %version-%release
-PreReq: foomatic-db >= 3.0.1
-BuildArch: noarch
-
-%description foomatic
-Gutenprint is a package of high quality printer drivers for Linux and
-other UNIX-alike operating systems.
-
-This package contains a database of printers, printer drivers,
-and driver descriptions.
-
-%package CUPS
+%package cups
 Summary: CUPS drivers for Canon, Epson, HP and compatible printers
-Group: Publishing
-Requires: %name = %version-%release
+Group: System/Configuration/Hardware
+Provides: %name-CUPS = %EVR
+Obsoletes: %name-CUPS < %EVR
+Requires: %name = %EVR
 
-%description CUPS
+%description cups
 Gutenprint is a package of high quality printer drivers for Linux and
 other UNIX-alike operating systems.
 
 This package contains native CUPS support for a wide range of Canon,
 Epson, HP and compatible printers.
 
+%package cups-ppds
+Summary: PPDs for CUPS drivers for Canon, Epson, HP and compatible printers
+Group: System/Configuration/Hardware
+Requires: %name-cups = %EVR
+
+%description cups-ppds
+Gutenprint is a package of high quality printer drivers for Linux and
+other UNIX-alike operating systems.
+
+This package contains PPDs for gutenprint-cups.
+
 %prep
 %setup
-%patch0 -p1
+%patch0 -p2
 %patch1 -p1
 %patch2 -p2
-touch src/testpattern/testpatternl.l
 
 %build
+%undefine _configure_gettext
 # remove old versions of standard macros
 find m4* -type f -name \*.m4 -print0 |
 	xargs -r0 grep -lxZ 'dnl Copyright (C) .* Free Software Foundation, Inc\.' -- |
 	xargs -r0 rm -v --
 rm m4*/libtool.m4
+mkdir m4local
+
 %autoreconf
 %configure \
 	--enable-shared \
@@ -102,13 +102,10 @@ rm m4*/libtool.m4
 	--disable-rpath \
 	--with-modules=dlopen \
 	--with-cups \
-	--with-foomatic \
-	--with-foomatic3 \
 	--with-gimp2 \
 	--with-gimp2-as-gutenprint \
 	--enable-libgutenprintui2 \
 	--enable-cups-ppds \
-	--disable-translated-cups-ppds \
 	--enable-cups-level3-ppds \
 	--enable-cups-ppds-at-top-level
 
@@ -120,21 +117,19 @@ rm m4*/libtool.m4
 mkdir -p %buildroot%_docdir
 mv %buildroot%_datadir/%name/doc %buildroot%docdir
 find %buildroot%_libdir/%name/ -name \*.la -delete
+chmod +rx %buildroot%_prefix/lib/cups/backend/gutenprint52+usb
 %find_lang %name
 %set_verify_elf_method strict
 
-%triggerpostun CUPS -- %name-CUPS < %version
+%triggerpostun cups -- %name-cups < %version
 cups=%_initdir/cups
 if [ -x $cups ] && %_sbindir/cups-genppdupdate | grep -Fqs Restart; then
 	$cups condreload
 fi
 
 %files -f %name.lang
-%_bindir/ijs*
 %_bindir/escputil
 %_bindir/testpattern
-%dir %_prefix/lib/cups
-%_prefix/lib/cups/filter
 %_datadir/%name/
 %_man1dir/*.1*
 %exclude %_datadir/locale/*/gutenprint_*.po
@@ -159,21 +154,29 @@ fi
 %files -n gimp-plugin-%name
 %_libdir/gimp/2.0/plug-ins/%name
 
-%files foomatic
-%_datadir/foomatic/db/source/*/*.xml
-%exclude %_datadir/foomatic/kitload.log
-
-%files CUPS
+%files cups
 %_sysconfdir/cups/*
 %_bindir/cups-*
 %_sbindir/cups-*
-%dir %_prefix/lib/cups
-%_prefix/lib/cups/driver
-%_datadir/cups/model/C
+%_prefix/lib/cups/backend/gutenprint52+usb
+%_prefix/lib/cups/driver/%{name}*
+%_prefix/lib/cups/filter/*
+%_datadir/cups/usb/net.sf.gimp-print.usb-quirks
 %_datadir/cups/calibrate.ppm
 %_man8dir/*.8*
 
+%files cups-ppds
+%_datadir/cups/model/Global
+
 %changelog
+* Thu Jun 07 2018 Andrey Cherepanov <cas@altlinux.org> 1:5.2.14-alt1
+- New version (ALT #34674).
+- Rename gutenprint-CUPS to gutenprint-cups.
+- Enable support of CUPS dyesub USB backend.
+- Enable localized ppds.
+- Removed Foomatic data generator and the Ghostscript IJS driver.
+- Put all PPDs to package gutenprint-cups-ppds.
+
 * Wed Mar 20 2013 Fr. Br. George <george@altlinux.ru> 1:5.2.9-alt1
 - Version up
 - Fix i586 FILE64 build
