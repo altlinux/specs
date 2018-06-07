@@ -7,7 +7,7 @@
 
 Name: bijiben
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Note editor for GNOME
 License: LGPLv3+
@@ -44,8 +44,8 @@ desktop integration.
 
 %build
 %meson \
-	%{?_disable_zeitgeist:-Dzeitgeist=false} \
-	-Dupdate-mimedb=false
+	%{?_enable_zeitgeist:-Dzeitgeist=true} \
+	-Dupdate_mimedb=false
 %meson_build
 
 %install
@@ -69,6 +69,9 @@ desktop integration.
 %doc README AUTHORS NEWS
 
 %changelog
+* Thu Jun 07 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt2
+- fixed build options
+
 * Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 
