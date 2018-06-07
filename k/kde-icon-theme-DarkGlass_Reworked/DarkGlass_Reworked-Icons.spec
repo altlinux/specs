@@ -1,11 +1,12 @@
 %define		theme DarkGlass_Reworked
 Name:		kde-icon-theme-%theme
 Version:	2.72
-Release:	alt1
+Release:	alt2
 Summary:	A set of Icons for KDE
+Summary(ru_RU.UTF-8): Набор иконок для KDE
 License:	GPL
 Group:		Graphical desktop/KDE
-Url:		http://kde-look.org/content/show.php/DarkGlass_Reworked?content=67902
+Url:		https://store.kde.org/p/1002589/
 Provides:	kde-icon-theme
 Conflicts:	kdeartwork-extra <= 3.1.0-alt2
 Source0:	http://www.mentalrey.it/icon_set/%theme.tar.gz
@@ -17,6 +18,9 @@ BuildRequires: ImageMagick
 
 %description
 Icons by http://www.mentalrey.it/.
+
+%description -l ru_RU.UTF8
+Набор иконок для KDE от http://www.mentalrey.it/.
 
 %prep
 %setup -q -n %theme
@@ -36,5 +40,9 @@ rm -f %buildroot/%_iconsdir/%theme-Icons/buildset
 %_iconsdir/%theme-Icons
 
 %changelog
+* Wed Jun 06 2018 Grigory Ustinov <grenka@altlinux.org> 2.72-alt2
+- Update URL.
+- Add russian description (Closes: #22161).
+
 * Thu Sep 25 2008 Motsyo Gennadi <drool@altlinux.ru> 2.72-alt1
 - initial build for ALT Linux
