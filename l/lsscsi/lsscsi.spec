@@ -1,5 +1,5 @@
 Name: lsscsi
-Version: 0.28
+Version: 0.29
 Release: alt1
 
 Summary: List SCSI devices (or hosts) and associated information
@@ -37,6 +37,9 @@ Author:
 %_man8dir/*
 
 %changelog
+* Thu Jun 07 2018 Michael Shigorin <mike@altlinux.org> 0.29-alt1
+- new version (watch file uupdate)
+
 * Mon Dec 01 2014 Michael Shigorin <mike@altlinux.org> 0.28-alt1
 - new version (watch file uupdate)
 
