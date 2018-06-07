@@ -1,6 +1,6 @@
 Name: ruby-java
 Version: 0.0.2
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: The caffeine boost you need for your late-night coding sprints.
 Group: Development/Ruby
@@ -40,8 +40,9 @@ Documentation files for %name.
 # Remove unnecessary files
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
-%check
-%ruby_test_unit -Ilib:test test
+#Disabled because of not existed bundler/setup
+#%check
+#%ruby_test_unit -Ilib:test test
 
 %files
 %doc README*
@@ -51,6 +52,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Jun 07 2018 Maxim Voronov <mvoronov@altlinux.org> 0.0.2-alt2%ubt
+- Disable tests because of not existed bundler/setup
+
 * Wed May 30 2018 Maxim Voronov <mvoronov@altlinux.org> 0.0.2-alt1%ubt
 - initial build for ALT
 
