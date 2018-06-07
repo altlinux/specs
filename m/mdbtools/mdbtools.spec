@@ -1,9 +1,10 @@
+%def_enable snapshot
 %def_disable static
-%def_disable gmdb2
+%def_enable gmdb2
 
 Name: mdbtools
 Version: 0.7.1
-Release: alt1
+Release: alt2
 
 Summary: Utilities for use M$ Access databases under Linux
 
@@ -11,13 +12,17 @@ Group: Databases
 License: GPL/LGPL
 Url: https://github.com/brianb/mdbtools
 
+%if_disabled snapshot
 Source: %name-%version.tar.gz
+%else
+Source: %name-%version.tar
+%endif
 
 Requires: lib%name = %version-%release
 
-BuildRequires: flex libreadline-devel libunixODBC-devel glib2-devel
+BuildRequires: bison flex libreadline-devel libunixODBC-devel glib2-devel
 BuildRequires: gtk-doc txt2man
-%{?_enable_gmdb2:BuildRequires: libglade-devel libgnomeui-devel librarian}
+%{?_enable_gmdb2:BuildRequires: libglade-devel libgnomeui-devel gnome-doc-utils}
 
 %description
 MDB Tools is a set of libraries and programs to help you use Microsoft
@@ -74,17 +79,19 @@ statically linked with MDB Tools.
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
     %{subst_enable static} \
     --with-unixodbc=%_prefix \
     %{subst_enable gmdb2} \
     --enable-gtk-doc
-
 %make_build
 
 %install
 %makeinstall_std
+install -pD -m644 src/gmdb2/gmdb.desktop %buildroot/%_desktopdir/gmdb.desktop
+%{?_enable_gmdb2:%find_lang --with-gnome gmdb}
 
 %files
 %_bindir/*
@@ -93,10 +100,10 @@ statically linked with MDB Tools.
 %doc AUTHORS NEWS README TODO ChangeLog doc/faq.html
 
 %if_enabled gmdb2
-%files -n gmdb
+%files -n gmdb -f gmdb.lang
 %_bindir/gmdb2
+%_desktopdir/gmdb.desktop
 %_datadir/gmdb
-%doc %_datadir/gnome/help/gmdb
 %endif
 
 %files -n lib%name
@@ -113,6 +120,11 @@ statically linked with MDB Tools.
 %endif
 
 %changelog
+* Thu Jun 07 2018 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt2
+- updated to 0.7.1-82-gd6f5745
+- enabled gmdb build
+- updated buildreqs
+
 * Sat Jan 04 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
 - 0.7.1
 
