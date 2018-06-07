@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.10.1
-Release: alt1%ubt
+Release: alt2%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -52,7 +52,6 @@ Patch10: pygrubfix.patch
 Patch15: %name.use.fedora.ipxe.patch
 Patch17: %name.fedora.efi.build.patch
 Patch19: %name.pygrubtitlefix.patch
-Patch21: %name.64.bit.hyp.on.ix86.patch
 
 # ALT
 Patch50: %name-4.0.0-libfsimage-soname-alt.patch
@@ -60,7 +59,7 @@ Patch55: qemu-traditional-lost-parenthesis.patch
 Patch56: qemu-xen-non-static-memfd_create.patch
 
 
-ExclusiveArch: %ix86 %x86_64 armh aarch64
+ExclusiveArch: %ix86 %x86_64
 
 Requires: bridge-utils
 Requires: python-module-lxml
@@ -89,10 +88,9 @@ Requires: chkconfig
 %def_disable stubdom
 %endif
 
-BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-ubt rpm-macros-uefi
 
-%{?_with_efi:BuildPreReq: rpm-macros-uefi}
-BuildRequires: zlib-devel libncurses-devel libaio-devel
+BuildRequires: glibc-devel zlib-devel libncurses-devel libaio-devel
 BuildRequires: python-devel ghostscript %_bindir/texi2html transfig
 BuildRequires: pkgconfig(glib-2.0) >= 2.12
 # for the docs
@@ -117,14 +115,17 @@ BuildRequires: libe2fs-devel
 BuildRequires: libyajl-devel
 %{?_enable_ocamltools:BuildRequires: ocaml ocaml-ocamlbuild ocaml-ocamldoc ocaml-findlib}
 %{?_enable_xenapi:BuildRequires: libxml2-devel}
-BuildRequires: %_includedir/gnu/stubs-32.h
+
+%ifarch %ix86 %x86_64
 # for the VMX "bios"
 BuildRequires: dev86
+# efi image needs an ld that has -mi386pep option
+%{?_with_efi:BuildRequires: mingw64-binutils >= 2.26}
+%endif
+
 BuildRequires: libSDL-devel libXext-devel
 # xsm policy file needs needs checkpolicy and m4
 %{?_enable_xsmpolicy:BuildRequires: checkpolicy m4}
-# efi image needs an ld that has -mi386pep option
-%{?_with_efi:BuildRequires: mingw64-binutils >= 2.26}
 %{?_enable_stubdom:BuildRequires: makeinfo}
 # with hypervisor
 BuildRequires: flex discount libfdt-devel libgcrypt-devel liblzo2-devel libvde-devel perl-HTML-Parser perl-devel
@@ -214,7 +215,6 @@ userspace environment.
 %package runtime-common
 Summary: Core Xen runtime environment
 Group: Emulators
-BuildArch: noarch
 
 %description runtime-common
 The Xen Project hypervisor is an open-source type-1 or baremetal
@@ -245,7 +245,6 @@ This package contains the Xen hypervisor.
 %package doc
 Summary: Xen documentation
 Group: Documentation
-BuildArch: noarch
 Requires: xen-licenses
 
 %description doc
@@ -344,9 +343,7 @@ ln -s ../mini-os-%version extras/mini-os
 %patch10 -p1
 %patch15 -p1
 %patch17 -p1
-#-%-patch18 -p1
 %patch19 -p1
-#%#{?_with_hypervisor:%patch21 -p1}
 %patch50 -p2
 
 pushd tools/qemu-xen-traditional
@@ -491,6 +488,7 @@ done
 %ifarch %x86_64
 rm -fr %buildroot%_docdir/%name-%version/licenses/stubdom/lwip-x86_32
 rm -fr %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32
+rm -fr %buildroot%_docdir/%name-%version/licenses/tools/firmware/xen-dir
 
 mv %buildroot%_docdir/%name-%version/licenses/stubdom/lwip-x86_64 %buildroot%_docdir/%name-%version/licenses/stubdom/lwip
 mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_64 %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl
@@ -574,21 +572,13 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %dir %_libexecdir/%name/bin
 %_libexecdir/%name/bin/init-xenstore-domain
 %_libexecdir/%name/bin/libxl-save-helper
-%_libexecdir/%name/bin/lsevtchn
-%_libexecdir/%name/bin/readnotes
 
 %_libexecdir/%name/bin/xen-init-dom0
 %_libexecdir/%name/bin/xenconsole
 %_libexecdir/%name/bin/xendomains
 %_libexecdir/%name/bin/xenctx
-%_libexecdir/%name/bin/xenpaging
 %_libexecdir/%name/bin/xenpvnetboot
 
-%_bindir/qemu-img-xen
-%_bindir/qemu-nbd-xen
-%_bindir/xen-cpuid
-%_bindir/xen-detect
-%_bindir/xenalyze
 %_bindir/xencov_split
 %_bindir/xenstore
 %_bindir/xenstore-chmod
@@ -608,15 +598,8 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_sbindir/flask-loadpolicy
 %_sbindir/flask-set-bool
 %_sbindir/flask-setenforce
-%_sbindir/gdbsx
-%_sbindir/kdd
 %_sbindir/xen-diag
-%_sbindir/xen-hptool
-%_sbindir/xen-hvmcrash
-%_sbindir/xen-hvmctx
 %_sbindir/xen-livepatch
-%_sbindir/xen-lowmemd
-%_sbindir/xen-mfndump
 %_sbindir/xen-ringwatch
 %_sbindir/xen-tmem-list-parse
 %_sbindir/xenbaked
@@ -652,6 +635,26 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_man7dir/xen-vtpmmgr.*
 %_man8dir/xentrace.*
 %_man7dir/xl-numa-placement.7.xz
+
+%ifarch %ix86 %x86_64
+%_libexecdir/%name/bin/lsevtchn
+%_libexecdir/%name/bin/readnotes
+%_libexecdir/%name/bin/xenpaging
+
+%_bindir/qemu-img-xen
+%_bindir/qemu-nbd-xen
+%_bindir/xen-cpuid
+%_bindir/xen-detect
+%_bindir/xenalyze
+
+%_sbindir/gdbsx
+%_sbindir/kdd
+%_sbindir/xen-hptool
+%_sbindir/xen-hvmcrash
+%_sbindir/xen-hvmctx
+%_sbindir/xen-lowmemd
+%_sbindir/xen-mfndump
+%endif
 
 
 # Xen logfiles
@@ -695,21 +698,15 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_unitdir/xen-qemu-dom0.service
 
 %dir %_libexecdir/%name
+
 %dir %_libexecdir/%name/bin
-%dir %_libexecdir/%name/boot
 %_libexecdir/%name/bin/ivshmem-client
 %_libexecdir/%name/bin/ivshmem-server
-%_libexecdir/%name/bin/qemu-dm
 %_libexecdir/%name/bin/qemu-img
 %_libexecdir/%name/bin/qemu-io
 %_libexecdir/%name/bin/qemu-nbd
 %_libexecdir/%name/bin/qemu-system-i386
 %_libexecdir/%name/bin/virtfs-proxy-helper
-%_libexecdir/%name/boot/hvmloader
-
-%ifnarch %ix86
-%_libexecdir/%name/boot/xen-shim
-%endif
 
 %dir %_libexecdir/%name/libexec
 %_libexecdir/%name/libexec/qemu-bridge-helper
@@ -719,6 +716,16 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %python_sitelibdir/grub
 %python_sitelibdir/pygrub-*.egg-info
 %python_sitelibdir/fsimage.so
+
+%ifarch %ix86 %x86_64
+%dir %_libexecdir/%name/boot
+%_libexecdir/%name/boot/hvmloader
+%_libexecdir/%name/bin/qemu-dm
+%endif
+
+%ifarch %x86_64
+%_libexecdir/%name/boot/xen-shim
+%endif
 
 %attr(0700,root,root) %_logdir/%name
 
@@ -731,8 +738,11 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_libexecdir/%name/bin/convert-legacy-stream
 %_libexecdir/%name/bin/verify-stream-v2
 
-%_datadir/%name
 %_datadir/qemu-%name
+
+%ifarch %ix86 %x86_64
+%_datadir/%name
+%endif
 
 %exclude %_datadir/qemu-%name/qemu/s390-ccw.img
 %exclude %_datadir/qemu-%name/qemu/s390-netboot.img
@@ -796,6 +806,9 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Thu Jun 07 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.1-alt2.S1
+- fix: xen-licenses package should be noarch
+
 * Thu May 24 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.1-alt1%ubt
 - 4.10.1 release
 - upstream updates upto 7b35e7807, including:
