@@ -7,7 +7,7 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define module_version	390.59
+%define module_version	390.67
 %define module_release	alt1
 %define flavour		un-def
 
@@ -41,8 +41,8 @@
 %define legacy4 %nil
 %endif
 %define legacy4_src %(echo %legacy4 | tr -d .)
-%nvIF_ver_lt %xorg_ver 1.20
-%define legacy5 340.106
+%nvIF_ver_lt %xorg_ver 1.21
+%define legacy5 340.107
 %else
 %define legacy5 %nil
 %endif
@@ -251,6 +251,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Jun 07 2018 Sergey V Turchin <zerg at altlinux dot org> 390.67-alt1
+- new releases (390.67, 340.107)
 
 * Tue May 22 2018 Sergey V Turchin <zerg at altlinux dot org> 390.59-alt1
 - new release (390.59)
