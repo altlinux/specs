@@ -1,46 +1,55 @@
-%def_disable check
+%define _unpackaged_files_terminate_build 1
 
 %define oname ZEO
 
 %def_with python3
-#def_disable check
+%def_enable check
 
 Name: python-module-%oname
-Version: 5.1.1
+Version: 5.2.0
 Release: alt1
 Summary: ZEO provides a client-server storage implementation for ZODB
 License: ZPL
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/ZEO
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/ZEO.git
-Source: %oname-%version.tar
-BuildArch: noarch
+Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-zope.testing
-BuildPreReq: python-module-manuel
-BuildPreReq: python-module-transaction
-BuildPreReq: python-module-persistent
-BuildPreReq: python-module-zc.lockfile
-BuildPreReq: python-module-zconfig
-BuildPreReq: python-module-zdaemon
-BuildPreReq: python-module-zope.interface
+BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-module-zope.testing
+BuildRequires: python-module-manuel
+BuildRequires: python-module-transaction
+BuildRequires: python-module-persistent
+BuildRequires: python-module-zc.lockfile
+BuildRequires: python-module-zconfig
+BuildRequires: python-module-zdaemon
+BuildRequires: python-module-zope.interface
+BuildRequires: python2.7(concurrent) python2.7(trollius)
+%if_enabled check
+BuildRequires: python2.7(msgpack) python2.7(mock) python-module-ZODB-tests
+BuildRequires: python2.7(random2) python2.7(zope.testrunner)
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-zope.testing
-BuildPreReq: python3-module-manuel
-BuildPreReq: python3-module-transaction
-BuildPreReq: python3-module-persistent
-BuildPreReq: python3-module-zc.lockfile
-BuildPreReq: python3-module-zconfig
-BuildPreReq: python3-module-zdaemon
-BuildPreReq: python3-module-zope.interface
+BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-manuel
+BuildRequires: python3-module-transaction
+BuildRequires: python3-module-persistent
+BuildRequires: python3-module-zc.lockfile
+BuildRequires: python3-module-zconfig
+BuildRequires: python3-module-zdaemon
+BuildRequires: python3-module-zope.interface
+%if_enabled check
+BuildRequires: python3(msgpack) python3(mock) python3-module-ZODB-tests
+BuildRequires: python3(random2) python3(zope.testrunner)
+%endif
 %endif
 
 %py_requires ZODB persistent zc.lockfile ZConfig zdaemon zope.interface
+%py_requires concurrent trollius
 
 %description
 ZEO is a client-server system for sharing a single storage among many
@@ -66,6 +75,7 @@ protocol layered on top of TCP.
 
 This package contains tests for ZEO.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: ZEO provides a client-server storage implementation for ZODB
 Group: Development/Python3
@@ -95,14 +105,14 @@ clients. The ZEO client and server communicate using a custom RPC
 protocol layered on top of TCP.
 
 This package contains tests for ZEO.
+%endif
 
 %prep
-%setup -n ZEO-%version
+%setup
 
 %if_with python3
 rm -rf ../python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -130,8 +140,8 @@ popd
 
 %check
 python setup.py test
-#if_with python3
-%if 0
+
+%if_with python3
 pushd ../python3
 python3 setup.py test
 popd
@@ -167,6 +177,10 @@ popd
 %endif
 
 %changelog
+* Thu Jun 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.0-alt1
+- Updated to upstream version 5.2.0.
+- Updated runtime and build dependencies, enabled tests.
+
 * Mon Mar 26 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.1.1-alt1
 - Version 5.1.1
 
