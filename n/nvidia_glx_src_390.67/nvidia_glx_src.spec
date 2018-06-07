@@ -18,12 +18,12 @@
 
 # version-release
 %define nv_version 390
-%define nv_release 59
+%define nv_release 67
 %define nv_minor %nil
 %define pkg_rel alt184%ubt
 %def_enable kernelsource
 %def_disable glvnd
-%def_disable package_egl_wayland
+%def_enable package_egl_wayland
 %def_disable package_wfb
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -341,8 +341,8 @@ fi
 %endif
 
 %changelog
-* Thu Jun 07 2018 Sergey V Turchin <zerg@altlinux.org> 390.59-alt184%ubt
-- don't package libnvidia-egl-wayland
+* Thu Jun 07 2018 Sergey V Turchin <zerg@altlinux.org> 390.67-alt184%ubt
+- new version
 
 * Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 390.59-alt183%ubt
 - new version
