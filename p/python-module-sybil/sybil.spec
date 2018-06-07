@@ -1,9 +1,12 @@
-%define  oname sybil
+%define _unpackaged_files_terminate_build 1
+
 %def_with python3
+
+%define  oname sybil
 
 Name:    python-module-%oname
 Version: 1.0.7
-Release: alt1
+Release: alt2
 
 Summary:  Automated testing for the examples in your documentation.
 License: MIT
@@ -12,19 +15,21 @@ URL:     https://github.com/cjw296/sybil
 
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-dev python-module-setuptools
 BuildRequires: python2.7(nose.core)
-BuildRequires: python-module-sphinx-devel python2.7(pkginfo)
 BuildRequires: python2.7(pytest)
+BuildRequires: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python3(nose.core)
 BuildRequires: python3(pytest)
 %endif
 
 # https://github.com/cjw296/sybil.git
 Source:  %oname-%version.tar
+
+Patch1: %oname-%version-alt-docs.patch
 
 %description
 Automated testing for the examples in your documentation.
@@ -40,6 +45,7 @@ Automated testing for the examples in your documentation.
 
 %prep
 %setup -n %oname-%version
+%patch1 -p1
 
 %if_with python3
 cp -a . ../python3
@@ -66,7 +72,7 @@ pushd ../python3
 popd
 %endif
 
-PYTHONPATH=$(pwd) %make -C docs html SPHINXBUILD=sphinx-build
+PYTHONPATH=$(pwd) NAME=%oname VERSION=%version %make -C docs html SPHINXBUILD=sphinx-build
 mv docs/_build/html ./
 rm -rf docs/_build
 
@@ -92,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Thu Jun 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.7-alt2
+- Fixed documentation build.
+
 * Thu Mar 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.7-alt1
 - Updated to upstream version 1.0.7.
 
