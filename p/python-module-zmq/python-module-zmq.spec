@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 16.0.2
-Release: alt2.1
+Version: 17.0.0
+Release: alt1
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python
@@ -178,6 +178,9 @@ popd
 %endif
 
 %changelog
+* Thu Jun 07 2018 Grigory Ustinov <grenka@altlinux.org> 17.0.0-alt1
+- Build new version.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 16.0.2-alt2.1
 - (NMU) Rebuilt with python-3.6.4.
 
