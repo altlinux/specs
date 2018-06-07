@@ -1,15 +1,38 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: schroot
-Version: 1.4.23
-Release: alt1.qa7
+Version: 1.6.10
+Release: alt1
 Summary: Execute commands in a chroot environment
 Group: Development/Tools
 License: GPLv3+
 Url: http://packages.debian.org/schroot
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+
+# Fedora patches
+Patch0: schroot-pam.patch
+Patch1: schroot-default-config-path.patch
+Patch3: schroot-gcc8-assert-fix.patch
+
+# Debian patches
+Patch10: Add-support-for-more-compression-formats.patch
+Patch11: Add-SESSION_SOURCE-and-CHROOT_SESSION_SOURCE.patch
+Patch12: 10mount-Move-mount-directory-to-var-run.patch
+Patch13: Support-union-mounts-with-overlay-as-in-Linux-4.0.patch
+Patch14: GCC5-fixes-on-regexes.patch
+Patch15: schroot-mount-make-bind-mounts-private.patch
+Patch16: schroot-mount-resolve-mount-destinations-while-chrooted.patch
+Patch17: fix-test-suite-with-usrmerge.patch
+Patch18: Unmount-everything-that-we-can-instead-of-giving-up.patch
+Patch19: fix-killprocs.patch
+Patch20: fix-bash-completion.patch
+
+# ALT patches
+Patch50: schroot-alt-configs.patch
 
 BuildRequires: gcc-c++
+BuildRequires: cmake
 BuildRequires: cppunit-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: boost-filesystem-devel
@@ -18,6 +41,9 @@ BuildRequires: libpam0-devel
 BuildRequires: liblockdev-devel
 BuildRequires: libuuid-devel
 BuildRequires: gettext
+BuildRequires: liblvm2-devel
+BuildRequires: doxygen graphviz
+BuildRequires: po4a >= 0.40
 
 %description
 schroot allows users to execute commands or interactive shells in
@@ -56,16 +82,50 @@ functionality is available in the next generation tool called schroot.
 
 %prep
 %setup -q
-%patch -p1
+
+%patch0 -p0
+%patch1 -p0
+%patch3 -p1 -b .gcc8
+
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+
+%patch50 -p1
+
+# Release-Date and Released-By fields are taken from Debian tarball for this version
+cat > VERSION << END
+Package: schroot
+Version: %version
+Release-Date: 05 May 2014
+Released-By: Roger Leigh <rleigh@codelibre.net>
+Git-Tag: release/schroot-%version
+END
 
 %build
-./bootstrap
-%add_optflags -DBOOST_FILESYSTEM_VERSION=3 -fpermissive
-%configure --disable-rpath --enable-static --disable-shared --enable-dchroot --localstatedir=%_var
-%make V=1
+%cmake \
+	-Ddebug=OFF \
+	-Ddchroot=ON \
+	-Ddchroot-dsa=OFF \
+	-Dbash_completion_dir=/usr/share/bash-completion/completions \
+	-Duuid=ON \
+	-Dlvm-snapshot=ON \
+	-DLVCREATE_EXECUTABLE=/sbin/lvcreate \
+	-DLVREMOVE_EXECUTABLE=/sbin/lvremove
+
+%cmake_build
 
 %install
-make install DESTDIR=%buildroot
+%cmakeinstall_std
+
 mkdir -p %buildroot%_localstatedir/schroot/session
 mkdir -p %buildroot%_localstatedir/schroot/mount
 mkdir -p %buildroot%_sysconfdir/schroot/chroot.d
@@ -81,10 +141,13 @@ rm -rf %buildroot%_sysconfdir/schroot/buildd
 rm -rf %buildroot%_sysconfdir/schroot/sbuild
 rm -f %buildroot%_bindir/schroot-sbuild
 
+rm -rf %buildroot%_mandir/de
+rm -rf %buildroot%_mandir/fr
+
 %find_lang %name
 
 %files -f %name.lang
-%doc COPYING ABOUT-NLS AUTHORS ChangeLog HACKING INSTALL NEWS README THANKS TODO
+%doc COPYING AUTHORS HACKING NEWS README THANKS TODO
 %dir %_bindir/schroot
 %dir %_sysconfdir/schroot
 %dir %_sysconfdir/schroot/chroot.d
@@ -94,15 +157,13 @@ rm -f %buildroot%_bindir/schroot-sbuild
 %dir %_sysconfdir/schroot/desktop
 %dir %_sysconfdir/schroot/minimal
 %dir %_sysconfdir/schroot/setup.d
-%_sysconfdir/bash_completion.d/schroot
 %_sysconfdir/schroot/default/*
 %_sysconfdir/schroot/desktop/*
 %_sysconfdir/schroot/minimal/*
 %_sysconfdir/schroot/setup.d/*
-%dir %_libexecdir/schroot
-%_libexecdir/schroot/schroot-listmounts
-%_libexecdir/schroot/schroot-mount
-%_libexecdir/schroot/schroot-releaselock
+%dir %_prefix/libexec/schroot
+%_prefix/libexec/schroot/schroot-listmounts
+%_prefix/libexec/schroot/schroot-mount
 %dir %_localstatedir/schroot
 %dir %_localstatedir/schroot/session
 %dir %_localstatedir/schroot/mount
@@ -110,6 +171,8 @@ rm -f %buildroot%_bindir/schroot-sbuild
 %dir %_localstatedir/schroot/union/overlay
 %dir %_localstatedir/schroot/union/underlay
 %dir %_localstatedir/schroot/unpack
+%_datadir/bash-completion/completions/schroot
+%_datadir/%name/setup/common-config
 %_datadir/%name/setup/common-data
 %_datadir/%name/setup/common-functions
 %_man1dir/schroot*
@@ -119,11 +182,14 @@ rm -f %buildroot%_bindir/schroot-sbuild
 %_man7dir/schroot-faq*
 
 %files -n dchroot
-%doc COPYING ABOUT-NLS AUTHORS ChangeLog HACKING INSTALL NEWS README THANKS TODO
+%doc COPYING AUTHORS HACKING NEWS README THANKS TODO
 %_bindir/dchroot
-%_mandir/man1/dchroot*
+%_man1dir/dchroot*
 
 %changelog
+* Mon Jun 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.10-alt1
+- Updated to upstream version 1.6.10.
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.23-alt1.qa7
 - NMU: rebuilt with boost 1.57.0 -> 1.58.0.
 
