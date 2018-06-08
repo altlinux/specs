@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 0.9.17 
-Release: alt1
+Release: alt2
 
 Summary: A Ruby Gem that gives you full access to several of the Amazon Web Services API from your Ruby/Ruby on Rails apps
 License: MIT/Ruby
@@ -16,6 +16,10 @@ Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
+# For tests
+BuildRequires: ruby-test-spec
+BuildRequires: ruby-mocha
+BuildRequires: ruby-xml-simple
 
 %description
 %summary
@@ -57,5 +61,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Jun 08 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.17-alt2
+- Fix tests.
+
 * Fri Sep 01 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.17-alt1
 - Initial build for Sisyphus.
