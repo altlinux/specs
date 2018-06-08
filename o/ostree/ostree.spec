@@ -1,5 +1,5 @@
 Name: ostree
-Version: 2018.2
+Version: 2018.5
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -23,8 +23,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 # Note! Always use HEAD!!
-# TODO: https://github.com/GNOME/libglnx
-# Source1-url: https://git.gnome.org/browse/libglnx/snapshot/libglnx-master.tar.xz
+# Source1-url: https://github.com/GNOME/libglnx/archive/master.zip
 Source1: libglnx.tar
 
 # Source2-url: https://github.com/mendsley/bsdiff/archive/master.zip
@@ -136,6 +135,9 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jun 08 2018 Vitaly Lipatov <lav@altlinux.ru> 2018.5-alt1
+- new version (2018.5) with rpmgs script
+
 * Sat Feb 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2018.2-alt1
 - new version 2018.2 (with rpmrb script)
 
