@@ -15,7 +15,7 @@
 %define libnvidia_egl_wayland libnvidia-egl-wayland%nvidia_egl_wayland_sover
 
 Name: nvidia_glx_src
-Version: 390.59
+Version: 390.67
 Release: alt1%ubt
 
 Source0: null
@@ -46,7 +46,7 @@ Sources for nvidia_glx package
 
 %package -n ocl-nvidia
 Group: System/Libraries
-BuildArch: noarch
+#BuildArch: noarch
 Summary: nvidia library
 Requires: libnvidia-opencl libnvidia-compiler
 Requires: libnvidia-ptxjitcompiler
@@ -155,6 +155,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %_sysconfdir/OpenCL/vendors/nvidia.icd
 
 %changelog
+* Fri Jun 08 2018 Sergey V Turchin <zerg@altlinux.org> 390.67-alt1%ubt
+- new version
+
 * Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 390.59-alt1%ubt
 - new version
 
