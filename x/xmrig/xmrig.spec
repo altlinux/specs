@@ -1,6 +1,6 @@
 Name:		xmrig
-Version:	2.6.0
-Release:	alt0.beta3
+Version:	2.6.2
+Release:	alt1
 Summary:	Monero (XMR) CPU miner
 Url:		https://github.com/xmrig/xmrig
 Group:		Office
@@ -34,6 +34,9 @@ install -Dp -m 0755 ./%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Fri Jun 08 2018 Motsyo Gennadi <drool@altlinux.ru> 2.6.2-alt1
+- 2.6.2
+
 * Sat Apr 21 2018 Motsyo Gennadi <drool@altlinux.ru> 2.6.0-alt0.beta3
 - 2.6.0-beta3
 
