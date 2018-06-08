@@ -1,7 +1,7 @@
 %define dist Term-Gnuplot
 Name: perl-%dist
 Version: 0.90380905
-Release: alt5.1.1.qa1.1
+Release: alt6
 
 Summary: Lowlevel graphics using gnuplot drawing routines
 License: GPL or Artistic
@@ -13,7 +13,7 @@ Source: %dist-%version.tar.gz
 Patch: Term-Gnuplot-0.90380905-alt-fix-build-gnu11.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
-BuildRequires: libX11-devel libfreetype-devel libgd2-devel libjpeg-devel libpng-devel perl-devel
+BuildRequires: libX11-devel libfreetype-devel libgd3-devel libjpeg-devel libpng-devel perl-devel
 
 %description
 This module is intended for low-resolution or high-resolution graphics
@@ -36,6 +36,9 @@ sed -i- 's/-lvga//g' Makefile.PL
 %perl_vendor_autolib/Term
 
 %changelog
+* Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.90380905-alt6
+- NMU: rebuilt with libgd 2.2.5.
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.90380905-alt5.1.1.qa1.1
 - rebuild with new perl 5.26.1
 
