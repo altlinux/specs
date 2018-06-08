@@ -46,12 +46,23 @@
 
 %def_with systemd
 %def_enable avahi
+
+%ifarch e2k e2kv4
+%def_disable glusterfs
+%def_without libcephfs
+%else
+%ifarch mipsel
+%def_enable glusterfs
+%def_without libcephfs
+%else
 %def_enable glusterfs
 %def_with libcephfs
+%endif
+%endif
 
 Name:    samba-DC
-Version: 4.7.7
-Release: alt2%ubt
+Version: 4.7.8
+Release: alt1%ubt
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -125,7 +136,7 @@ BuildRequires: libcups-devel
 BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
 %{?_with_doc:BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-xsl}
 %{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.10 libpytalloc-devel}
-%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.34 python-module-tevent}
+%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.36 python-module-tevent}
 %{?_without_tdb:BuildRequires: libtdb-devel >= 1.3.15  python-module-tdb}
 %{?_without_ntdb:BuildRequires: libntdb-devel >= 0.9  python-module-ntdb}
 %{?_without_ldb:BuildRequires: libldb-devel >= 1.2.3 python-module-pyldb-devel}
@@ -444,7 +455,7 @@ Group: System/Servers
 BuildArch: noarch
 Provides: task-samba-ad-dc = %version-%release
 Provides: task-ad-dc = %version-%release
-Requires: samba-DC python-module-samba-DC samba-DC-common samba-DC-winbind-clients samba-DC-winbind samba-DC-client samba-DC-doc krb5-kinit
+Requires: samba-DC python-module-samba-DC samba-DC-common samba-DC-winbind-clients samba-DC-winbind samba-DC-client %{?_with_doc:samba-DC-doc} krb5-kinit
 Conflicts: samba python-module-samba samba-common samba-winbind-clients samba-winbind samba-client samba-doc
 
 %description -n task-samba-dc
@@ -1387,6 +1398,13 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Jun 21 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.7.8-alt1%ubt
+- Update to first summer release of Samba 4.7
+- Fix doc knob: task-samba-dc should conditionally R: samba-DC-doc
+- Rebuild for e2k with missing SYS_setgroups32
+- Disable glusterfs and cephfs for e2k
+- Disable cephfs support for mipsel
+
 * Fri Jun 08 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.7.7-alt2%ubt
 - Split samba-DC-common to separate samba-DC-common-tools
 - Fix build against new python Sisyphus release with libnsl2
