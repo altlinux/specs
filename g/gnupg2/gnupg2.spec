@@ -3,7 +3,7 @@
 %define _localstatedir /var
 
 Name: gnupg2
-Version: 2.2.7
+Version: 2.2.8
 Release: alt1%ubt
 
 Group: Text tools
@@ -143,6 +143,10 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Fri Jun 08 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.8-alt1%ubt
+- new version
+- security fix: CVE-2018-12020
+
 * Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.7-alt1%ubt
 - new version
 
