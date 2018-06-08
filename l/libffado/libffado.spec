@@ -1,21 +1,23 @@
+%define _unpackaged_files_terminate_build 1
+
 Summary: Free firewire audio driver library
 Name: libffado
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 License: GPLv2+
 Group: Sound
 Url: http://www.ffado.org/
-Source: %name-%version.tgz
-Patch0: libffado-2.0.0-rc1-dbus-mainloop-qt-detect.patch
-Patch1: libffado-2.0.0-ffado-diag-path.patch
-Patch2: libffado-2.0-rc1-includes.patch
-Patch3: libffado-2.0-alt.patch
-Patch4: libffado-2.0.1-alt.DSO.patch
-Patch5: libffado-2.0-alt-2.patch
+
+Source: %name-%version.tar
+
+Patch1: libffado-2.0-alt.patch
+
 %setup_python_module ffado
 
-# Automatically added by buildreq on Fri Sep 10 2010
-BuildRequires: gcc-c++ libdbus-devel libexpat-devel libiec61883-devel libxml++2-devel python-module-PyQt4 python-module-dbus python-modules-encodings scons subversion xdg-utils libconfig-c++-devel          
+BuildRequires: gcc-c++
+BuildRequires: libdbus-devel libexpat-devel libiec61883-devel libxml++2-devel
+BuildRequires: python-module-PyQt4 python-module-dbus python-modules-encodings
+BuildRequires: scons xdg-utils libconfig-c++-devel
 
 %description
 The FFADO project aims to provide a generic, open-source solution for the
@@ -25,7 +27,7 @@ successor of the FreeBoB project.
 %package devel
 Summary: Free firewire audio driver library development headers
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Development files needed to build applications against libffado.
@@ -33,7 +35,7 @@ Development files needed to build applications against libffado.
 %package -n ffado
 Summary: Free firewire audio driver library applications and utilities
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n ffado
 Applications and utilities for use with libffado.
@@ -42,36 +44,45 @@ Applications and utilities for use with libffado.
 Summary: Python bindings for %name, %summary
 Group: Development/Python
 Buildarch: noarch
+
 %description -n  %packagename
 Python bindings for %name, %summary
 
 %prep
-%setup -n %name-%version
+%setup
+%patch1 -p2
+
 # XXX this uses non-existed module and is not used itself!
 rm support/mixer-qt4/ffado/mixer/nodevice.py
-#patch0 -p1
-# This patch may be useful
-%patch1
-#patch2 -p1
-%patch3 -p2
-%patch4 -p2
-%patch5 -p2
+
+# We don't want to install all tests
+sed -i '/Install/d' tests/{,*/}SConscript
 
 %build
-[ -n "$NPROCS" ] || NPROCS=%__nprocs; scons -j$NPROCS PREFIX=%prefix LIBDIR=%_libdir WILL_DEAL_WITH_XDG_MYSELF=YES COMPILE_FLAGS='%optflags' MANDIR=%_mandir
+[ -n "$NPROCS" ] || NPROCS=%__nprocs;
+scons -j$NPROCS \
+	PREFIX=%prefix \
+	LIBDIR=%_libdir \
+	WILL_DEAL_WITH_XDG_MYSELF=YES \
+	CFLAGS='%optflags' \
+	CXXFLAGS='%optflags' \
+	CUSTOM_ENV=True \
+	MANDIR=%_mandir \
 
 %install
-rm -rf %buildroot
-scons PREFIX=%prefix LIBDIR=%_libdir \
-      WILL_DEAL_WITH_XDG_MYSELF=YES \
-      MANDIR=%_mandir \
-      DESTDIR=%buildroot install
-# install missing python modules
-install -m 0644 support/tools/listirqinfo.py %buildroot%_datadir/libffado/python
-install -m 0644 support/tools/helpstrings.py %buildroot%_datadir/libffado/python
+scons \
+	PREFIX=%prefix \
+	LIBDIR=%_libdir \
+	WILL_DEAL_WITH_XDG_MYSELF=YES \
+	CFLAGS='%optflags' \
+	CXXFLAGS='%optflags' \
+	CUSTOM_ENV=True \
+	MANDIR=%_mandir \
+	DESTDIR=%buildroot install
 
-%clean
-rm -rf %buildroot
+# remove unpackaged files
+rm -f %buildroot%_libdir/libffado/static_info.txt
+rm -f %buildroot%_datadir/metainfo/ffado-mixer.appdata.xml
 
 %files
 %doc AUTHORS ChangeLog LICENSE.* README
@@ -94,6 +105,9 @@ rm -rf %buildroot
 %python_sitelibdir_noarch/%modulename
 
 %changelog
+* Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.1-alt1
+- Updated to upstream version 2.4.1.
+
 * Thu Jan 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.0-alt1
 - Updated to upstream version 2.4.0
 
