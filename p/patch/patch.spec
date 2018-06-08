@@ -1,5 +1,5 @@
 Name: patch
-Version: 2.7.5.0.17.817d
+Version: 2.7.6.0.15.369d
 Release: alt1
 
 Summary: The GNU patch command, for modifying/upgrading files
@@ -43,6 +43,9 @@ echo -n %version > .tarball-version
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon May 07 2018 Dmitry V. Levin <ldv@altlinux.org> 2.7.6.0.15.369d-alt1
+- patch: v2.7.5-17-g817d7d1 -> v2.7.6-15-g369dccc (fixes: CVE-2018-1000156).
+
 * Tue Mar 21 2017 Dmitry V. Levin <ldv@altlinux.org> 2.7.5.0.17.817d-alt1
 - patch: v2.7.5-6-g3270d22 -> v2.7.5-17-g817d7d1.
 - gnulib: v0.1-585-g2fda85e -> v0.1-1209-g24b3216.
