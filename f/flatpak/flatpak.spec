@@ -5,13 +5,13 @@
 %define xdg_name org.freedesktop.Flatpak
 %define api_ver 1.0
 
-# unstable peer to peer support requires ostree-2018.5
+# peer to peer support requires ostree >= 2018.2 with experimental/P2P API
 %def_disable p2p
 %def_enable docs
 
 Name: flatpak
-Version: 0.11.7
-Release: alt2
+Version: 0.11.8
+Release: alt1
 
 Summary: Application deployment framework for desktop apps
 
@@ -24,15 +24,20 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/flatpak/flatpak/releases/download/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 
+%define ostree_ver 2017.15
+%define bwrap_ver 0.2.1
+%define libarchive_ver 2.8.0
+
 Requires: %_bindir/fusermount
 Requires: %_bindir/bwrap
+Requires: bubblewrap >= %bwrap_ver
 
 BuildRequires: gtk-doc gobject-introspection-devel
 BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(json-glib-1.0)
-BuildRequires: pkgconfig(libarchive) >= 2.8.0
+BuildRequires: pkgconfig(libarchive) >= %libarchive_ver
 BuildRequires: pkgconfig(libsoup-2.4)
-BuildRequires: pkgconfig(ostree-1) >= 2017.14
+BuildRequires: pkgconfig(ostree-1) >= %ostree_ver
 BuildRequires: pkgconfig(polkit-gobject-1)
 BuildRequires: pkgconfig(libseccomp)
 BuildRequires: pkgconfig(appstream-glib)
@@ -43,7 +48,7 @@ BuildRequires: libcap-devel
 BuildRequires: libgpgme-devel
 BuildRequires: udev-rules
 BuildRequires: %_bindir/bwrap
-BuildRequires: bubblewrap >= 0.1.8
+BuildRequires: bubblewrap >= %bwrap_ver
 BuildRequires: %_bindir/xsltproc
 %{?_enable_docs:BuildRequires: %_bindir/xmlto docbook-dtds docbook-style-xsl}
 BuildRequires: /proc
@@ -141,6 +146,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Fri Jun 08 2018 Yuri N. Sedunov <aris@altlinux.org> 0.11.8-alt1
+- 0.11.8
+
 * Sun May 27 2018 Yuri N. Sedunov <aris@altlinux.org> 0.11.7-alt2
 - removed -builder subpackage (since 0.9.9 flatpak-builder was split out into separate project)
 - updated buildreqs
