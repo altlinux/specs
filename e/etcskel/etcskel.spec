@@ -1,5 +1,5 @@
 Name: etcskel
-Version: 2.0.15
+Version: 2.0.16
 Release: alt1
 
 %def_enable langify
@@ -55,6 +55,13 @@ done
 %config(noreplace) %_sysconfdir/skel
 
 %changelog
+* Fri Jun 08 2018 Dmitry V. Levin <ldv@altlinux.org> 2.0.16-alt1
+- .bash*: enhanced comments (closes: #29933).
+- .bash_logout: invoke "clear" on linux terminals only.
+- .ssh/config: new file with a comment.
+- .ssh/authorized_keys: turn the comment into a proper sentence.
+- .xprofile: added support for ~/.ssh/id_ecdsa and ~/.ssh/id_ed25519 files.
+
 * Sat Feb 07 2015 Anton Farygin <rider@altlinux.ru> 2.0.15-alt1
 - .rpmmacros: dropped default tmpdir.
 
