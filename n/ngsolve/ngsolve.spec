@@ -1,32 +1,60 @@
-%set_automake_version 1.11
-
+%def_without shared_togl
+%def_without openmpi
 %define mpiimpl openmpi-compat
 %define mpidir %_libdir/%mpiimpl
+%def_without unittests
 
 Name: ngsolve
-Version: 6.1
-Release: alt1.dev.git20150323.qa1.3
+Version: 6.2
+Release: alt1.1804%ubt
 Summary: NGSolve Finite Element Library
 License: GPL or LGPL
 Group: Sciences/Mathematics
 Url: http://sourceforge.net/projects/ngsolve/
-
-# git://git.code.sf.net/p/ngsolve/git
+#Git: https://github.com/NGSolve/ngsolve.git
 Source: %name-%version.tar
 
-BuildPreReq: %mpiimpl-devel libnetgen-devel tcl-devel libscalapack-devel
-BuildPreReq: libmumps-devel liblapack-devel libsuperlu-devel chrpath
-BuildPreReq: libscotch-devel libparmetis-devel python-devel
-BuildPreReq: libgomp-devel boost-python-devel
-BuildPreReq: doxygen texlive-latex-recommended
-BuildPreReq: libnuma-devel
-BuildRequires: tex(epsf.sty)
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python3
+
+# Automatically added by buildreq on Wed Jun 13 2018
+# optimized out: OCE-foundation OCE-modeling OCE-ocaf OCE-visualization cmake cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libGLU-devel libX11-devel libavcodec-devel libavutil-devel libopenblas-devel libstdc++-devel openmpi-compat openssh-common python-base python-module-sphinx python-modules python3 python3-base tcl-devel tk-devel zlib-devel
+BuildRequires: gcc-c++
+BuildRequires: OCE-devel
+BuildRequires: ccmake
+BuildRequires: cvs
+BuildRequires: doxygen
+BuildRequires: git-core
+BuildRequires: libXmu-devel
+BuildRequires: libavformat-devel
+BuildRequires: libjpeg-devel
+BuildRequires: liblapack-devel
+BuildRequires: libswscale-devel
+BuildRequires: pybind11-devel
+BuildRequires: python3-dev
+BuildRequires: subversion
+BuildRequires: libnetgen-devel
+BuildRequires: netgen
+%if_with shared_togl
+BuildRequires: tcl-togl-devel
+%endif
+%if_with openmpi
+BuildRequires: %mpiimpl-devel
+BuildRequires: libnetgen-openmpi-devel
+BuildRequires: netgen-openmpi
+BuildRequires: libmetis-devel
+%endif
+
+ExclusiveArch: x86_64
+
+%define base_description \
+NGSolve is a general purpose Finite Element Library on top of Netgen. \
+With the basic library one can solve heat flow equations, Maxwell \
+equations, and solid mechanical problems. Several add-ons are available \
+for particular application classes.
 
 %description
-NGSolve is a general purpose Finite Element Library on top of Netgen.
-With the basic library one can solve heat flow equations, Maxwell
-equations, and solid mechanical problems. Several add-ons are available
-for particular application classes.
+%base_description
 
 %package -n lib%name
 Summary: Shared libraries of NGSolve
@@ -34,10 +62,7 @@ Group: System/Libraries
 %py_provides ngslib
 
 %description -n lib%name
-NGSolve is a general purpose Finite Element Library on top of Netgen.
-With the basic library one can solve heat flow equations, Maxwell
-equations, and solid mechanical problems. Several add-ons are available
-for particular application classes.
+%base_description
 
 This package contains shared libraries of NGSolve.
 
@@ -45,26 +70,22 @@ This package contains shared libraries of NGSolve.
 Summary: Development files of NGSolve
 Group: Development/C++
 Requires: lib%name = %version-%release
-BuildArch: noarch
+#BuildArch: noarch
 
 %description -n lib%name-devel
-NGSolve is a general purpose Finite Element Library on top of Netgen.
-With the basic library one can solve heat flow equations, Maxwell
-equations, and solid mechanical problems. Several add-ons are available
-for particular application classes.
+%base_description
 
 This package contains development files of NGSolve.
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python module of NGSolve
 Group: Development/Python
 Requires: lib%name = %version-%release
+Provides: python3(ngsolve.bla) python3(ngsolve.comp) python3(ngsolve.fem) python3(ngsolve.la) python3(ngsolve.ngstd) python3(ngsolve.solve)
+Conflicts: python3-module-%name-openmpi
 
-%description -n python-module-%name
-NGSolve is a general purpose Finite Element Library on top of Netgen.
-With the basic library one can solve heat flow equations, Maxwell
-equations, and solid mechanical problems. Several add-ons are available
-for particular application classes.
+%description -n python3-module-%name
+%base_description
 
 This package contains Python module of NGSolve.
 
@@ -75,10 +96,7 @@ Requires: lib%name = %version-%release
 %add_python_req_skip fem
 
 %description demos
-NGSolve is a general purpose Finite Element Library on top of Netgen.
-With the basic library one can solve heat flow equations, Maxwell
-equations, and solid mechanical problems. Several add-ons are available
-for particular application classes.
+%base_description
 
 This package contains demos for NGSolve.
 
@@ -88,75 +106,157 @@ Group: Development/Documentation
 BuildArch: noarch
 
 %description docs
-NGSolve is a general purpose Finite Element Library on top of Netgen.
-With the basic library one can solve heat flow equations, Maxwell
-equations, and solid mechanical problems. Several add-ons are available
-for particular application classes.
+%base_description
 
 This package contains development documentation for NGSolve.
+
+%if_with openmpi
+%package openmpi
+Summary: NGSolve Finite Element Library
+Group: Sciences/Mathematics
+
+%description openmpi
+%base_description
+
+%package -n lib%name-openmpi
+Summary: Shared libraries of NGSolve
+Group: System/Libraries
+%py_provides ngslib
+
+%description -n lib%name-openmpi
+%base_description
+
+This package contains shared libraries of NGSolve.
+
+%package -n lib%name-openmpi-devel
+Summary: Development files of NGSolve
+Group: Development/C++
+Requires: lib%name-openmpi = %version-%release
+#BuildArch: noarch
+
+%description -n lib%name-openmpi-devel
+%base_description
+
+This package contains development files of NGSolve.
+
+%package -n python3-module-%name-openmpi
+Summary: Python module of NGSolve
+Group: Development/Python
+Requires: lib%name-openmpi = %version-%release
+Provides: python3(ngsolve.bla) python3(ngsolve.comp) python3(ngsolve.fem) python3(ngsolve.la) python3(ngsolve.ngstd) python3(ngsolve.solve)
+Conflicts: python3-module-%name
+
+%description -n python3-module-%name-openmpi
+%base_description
+
+This package contains Python module of NGSolve.
+
+%endif #openmpi
 
 %prep
 %setup
 
-sed -i 's|@PYVER@|%_python_version|' configure.ac
-
 %build
-source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-%add_optflags -DPARALLEL -fpermissive
-%autoreconf
-%configure \
-	--enable-parallel \
-	--enable-mpi-threads \
-	--enable-mumps \
-	--enable-python \
-	--with-netgen=%prefix \
-	--with-lapack="-llapack -lopenblas" \
-	--with-superlu=-I%_includedir \
-	CXX=mpic++
-%make_build -C ngstd libngstd.la
-%make_build -C basiclinalg libngbla.la
-%make_build -C fem libngfem.la
-%make_build -C parallel libparallel.la
-%make_build -C multigrid libngmg.la
-%make_build -C comp libngcomp.la
-%make_build -C linalg libngla.la
-%make_build -C solve libngsolve.la
-%make_build -C comp clean
-%make_build -C comp libngcomp.la LIBNGLA=$PWD/linalg/libngla.la \
-	LIBNGSOLVE=$PWD/solve/libngsolve.la
-%make_build -C parallel clean
-%make_build -C parallel libparallel.la LIBNGLA=$PWD/linalg/libngla.la
-%make_build -C linalg clean
-%make_build -C linalg LIBNGSOLVE=$PWD/solve/libngsolve.la
-%make_build
+########################## SERIAL VERSION BUILD  ######################
 
-doxygen
-pushd doc
-latex -output-format=pdf ngsolve.tex
-popd
-
-%install
-source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
-
-install -d %buildroot%_libdir
-install -m644 solve/.libs/*.so linalg/.libs/*.so \
-	%buildroot%_libdir
-make install DESTDIR=%buildroot \
-	LIBPARALLEL=$PWD/parallel/libparallel.la \
-	LIBNGSOLVE=$PWD/solve/libngsolve.la LIBNGCOMP=$PWD/comp/libngcomp.la \
-	LIBNGLA=$PWD/linalg/libngla.la
-install -d %buildroot%_includedir/%name
-mv %buildroot%_includedir/*.h* %buildroot%_includedir/%name/
-
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
+OPTFLAGS="%optflags"
+CFLAGS="$OPTFLAGS -fno-strict-aliasing -Wno-sign-compare -Wno-maybe-uninitialized -Wno-literal-suffix"
+CXXFLAGS="$OPTFLAGS -fno-strict-aliasing -Wno-sign-compare -Wno-maybe-uninitialized -Wno-literal-suffix"
+%cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_C_FLAGS:STRING="$CFLAGS" \
+    -DCMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
+%if_with unittests
+    -DCMAKE_INSTALL_PREFIX=%_prefix \
+%endif
+    -DNGSOLVE_INSTALL_DIR_CMAKE=%_prefix \
+    -DNetgen_DIR:PATH=%_prefix/lib/cmake/%name/ \
+    -DUSE_SUPERBUILD=OFF \
+    -DUSE_MPI=OFF \
+    -DUSE_OCC=ON \
+    -DUSE_PYTHON=ON \
+    -DUSE_LAPACK=ON \
+    -DUSE_VT=OFF \
+    -DUSE_MKL=OFF \
+    -DUSE_HYPRE=OFF \
+    -DUSE_MUMPS=OFF \
+    -DUSE_PARDISO=OFF \
+    -DUSE_UMFPACK=OFF \
+    -DBUILD_UMFPACK=OFF \
+    -DINTEL_MIC=OFF \
+    -DUSE_VTUNE=OFF \
+    -DUSE_NUMA=OFF \
+    -DUSE_CCACHE=OFF \
+    -DINSTALL_DEPENDENCIES=OFF \
+    -DUSE_NATIVE_ARCH=OFF \
+%if_with unittests
+    -DENABLE_UNIT_TESTS=ON \
 %endif
 
-ln -s %_libdir/ngslib.so %buildroot%python_sitelibdir/
+%cmake_build VERBOSE=1
+
+######################### OpenMPI VERSION BUILD  ######################
+
+%if_with openmpi
+mkdir -p %mpiimpl-BUILD
+pushd %mpiimpl-BUILD
+mpi-selector --yes --set %mpiimpl
+source %mpidir/bin/mpivars.sh
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
+
+OPTFLAGS="%optflags"
+CFLAGS="$OPTFLAGS -fno-strict-aliasing -DOMPI_IGNORE_CXX_SEEK -Wno-sign-compare -Wno-maybe-uninitialized -Wno-literal-suffix"
+CXXFLAGS="$OPTFLAGS -fno-strict-aliasing -DOMPI_IGNORE_CXX_SEEK -Wno-sign-compare -Wno-maybe-uninitialized -Wno-literal-suffix"
+%cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_C_FLAGS:STRING="$CFLAGS" \
+    -DCMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
+    -DCMAKE_INSTALL_PREFIX=%_prefix \
+    -DNGSOLVE_INSTALL_DIR_CMAKE=%mpidir \
+    -DNetgen_DIR:PATH=%mpidir/lib/cmake/ \
+    -DUSE_SUPERBUILD=OFF \
+    -DUSE_MPI=ON \
+    -DUSE_OCC=ON \
+    -DUSE_PYTHON=ON \
+    -DUSE_LAPACK=ON \
+    -DUSE_VT=OFF \
+    -DUSE_MKL=OFF \
+    -DUSE_HYPRE=OFF \
+    -DUSE_MUMPS=OFF \
+    -DUSE_PARDISO=OFF \
+    -DUSE_UMFPACK=OFF \
+    -DBUILD_UMFPACK=OFF \
+    -DINTEL_MIC=OFF \
+    -DUSE_VTUNE=OFF \
+    -DUSE_NUMA=OFF \
+    -DUSE_CCACHE=OFF \
+    -DINSTALL_DEPENDENCIES=OFF \
+    -DUSE_NATIVE_ARCH=OFF \
+%if_with unittests
+    -DENABLE_UNIT_TESTS=ON \
+%endif
+    ../..
+
+%cmake_build VERBOSE=1
+popd
+%endif #openmpi
+
+%add_findreq_skiplist %_datadir/%name/py_tutorials/*.py
+doxygen
+
+%install
+
+%cmakeinstall_std
+
+%if_with openmpi
+pushd %mpiimpl-BUILD
+source %mpidir/bin/mpivars.sh
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
+export MPIDIR=%mpidir
+%cmakeinstall_std
+popd
+%endif
 
 %files
 %_bindir/ngsolve.tcl
@@ -166,21 +266,38 @@ ln -s %_libdir/ngslib.so %buildroot%python_sitelibdir/
 %_libdir/*.so
 
 %files -n lib%name-devel
+%_prefix/lib/cmake/%name/*.cmake
 %_includedir/*
 
 %files demos
-#doc programming_demos/*
 %_bindir/*
 %exclude %_bindir/ngsolve.tcl
 
 %files docs
-%doc doc/*.pdf doxy/html doc/quickstart/*.pdf
-#doc %_datadir/%name
+%doc doxy/html
 
-%files -n python-module-%name
-%python_sitelibdir/*
+%files -n python3-module-%name
+%python3_sitelibdir/*
+
+%if_with openmpi
+%files openmpi
+%mpidir/bin/*
+
+%files -n lib%name-openmpi
+%mpidir/lib/*.so*
+
+%files -n lib%name-openmpi-devel
+%mpidir/lib/cmake/*.cmake
+
+%files -n python3-module-%name-openmpi
+%python3_sitelibdir/*
+%endif
+
 
 %changelog
+* Sat Jun 09 2018 Nikolai Kostrigin <nickel@altlinux.org> 6.2-alt1.1804%ubt
+- New version
+
 * Tue Jun 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1-alt1.dev.git20150323.qa1.3
 - NMU: rebuilt with boost-1.67.0.
 
