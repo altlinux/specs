@@ -17,7 +17,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt1.1
+Release: alt2
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -31,6 +31,7 @@ License: GPLv2+
 
 Requires: coreutils
 Requires: popt >= 1.10.2.1
+Requires: librpm%sover = %EVR
 Conflicts: apt < 0.5.15lorg2-alt54
 
 BuildRequires(pre): rpm-build-python3
@@ -92,6 +93,7 @@ the package like its version, a description, etc.
 %package -n rpm2archive
 Summary: Program which converts rpm payload to tar archive
 Group: Archiving/Other
+Requires: librpm%sover = %EVR
 
 %description -n rpm2archive
 This package contains rpm2archive utility. It can be used to convert rpm
@@ -101,6 +103,7 @@ package into tarball.
 Summary: Program which allows to query rpm specfile.
 Group: Archiving/Other
 Conflicts: rpm < 4.13.0-alt6
+Requires: librpmbuild%sover = %EVR
 
 %description -n rpmspec
 This package contains rpmspec utility. It can be used to query rpm specfile.
@@ -111,7 +114,7 @@ Group: System/Libraries
 License: GPLv2+ and LGPLv2+ with exceptions
 Provides: rpm-plugin-selinux = %EVR
 Obsoletes: rpm-plugin-selinux < %EVR
-Conflicts: librpm < 4.0.4-alt100.97
+Conflicts: librpm < 4.0.4-alt102
 # due to liblua update
 # libapt 0.5.15lorg2-alt56 was rebuilt with lua 5.3.
 Conflicts: libapt < 0.5.15lorg2-alt56
@@ -503,6 +506,18 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Fri Jun 08 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0.1-alt2
+- darktemplar@:
+  + Added tag RPMTAG_AUTOINSTALLED (closes: #34252);
+  + spec: use strong interpackage dependencies.
+- Readded armh arch support (by Sergey Bolshakov).
+- librpm7: changed C: librpm to match 4.0.4-alt101.M80P.* versions from p8
+  (ALT#34505).
+- Synced macros definitions with rpm-build 4.0.4-alt112 (ALT#34684).
+- Fixed posttrans filetriggers when different root path is used (ALT#34430).
+- Changed rpm output format of non-terminal output to avoid truncation
+  of package names.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.13.0.1-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
