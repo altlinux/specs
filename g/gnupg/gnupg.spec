@@ -1,6 +1,6 @@
 Name: gnupg
 Version: 1.4.22
-Release: alt1
+Release: alt2
 
 Summary: The GNU Privacy Guard
 License: GPLv3+ with exceptions
@@ -128,6 +128,10 @@ rm -rv %buildroot%_datadir/%name
 %endif #enabled ldap
 
 %changelog
+* Fri Jun 08 2018 Dmitry V. Levin <ldv@altlinux.org> 1.4.22-alt2
+- Backported upstream fixes
+  (GnuPG-bug-id: 2923, 3329, 3898, 4012; fixes CVE-2018-12020).
+
 * Wed Jul 19 2017 Dmitry V. Levin <ldv@altlinux.org> 1.4.22-alt1
 - 1.4.21 -> 1.4.22 (fixes CVE-2017-7526).
 
