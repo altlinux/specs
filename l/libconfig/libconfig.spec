@@ -2,7 +2,7 @@
 
 Name: libconfig
 Version: 1.5
-Release: alt1.1
+Release: alt2
 
 Summary: C/C++ Configuration File Library
 License: LGPLv2.1+
@@ -122,6 +122,9 @@ sed -i '/examples.*Makefile/d' configure.ac
 %endif
 
 %changelog
+* Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5-alt2
+- NMU: rebuilt to regenerate ABI.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1.1
 - NMU: added BR: texinfo
 
