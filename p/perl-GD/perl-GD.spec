@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-GD
 Version: 2.68
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Perl interface to the GD graphics library
@@ -11,13 +11,14 @@ Group: Development/Perl
 URL: %CPAN GD
 Source0: http://www.cpan.org/authors/id/R/RU/RURBAN/GD-%{version}.tar.gz
 Patch: GD-2.66-GD.t-fonts.patch
+Patch1: %name-%version-alt-libgd-force-pkgconfig.patch
 
 Conflicts: perl-GD1
 Provides: perl-GD2 = %version
 Obsoletes: perl-GD2 < %version
 
 # Automatically added by buildreq on Sun Oct 09 2011
-BuildRequires: libgd2-devel perl-Math-Complex perl-devel perl-podlators perl(Module/Build.pm) perl(ExtUtils/PkgConfig.pm)
+BuildRequires: libgd3-devel perl-Math-Complex perl-devel perl-podlators perl(Module/Build.pm) perl(ExtUtils/PkgConfig.pm)
 
 %description
 This is a autoloadable interface module for GD, a popular library for creating
@@ -27,6 +28,7 @@ fly or modify existing files.
 %prep
 %setup -q -n GD-%{version}
 %patch -p1
+%patch1 -p2
 
 # do not override default CCFLAGS
 sed -i- '/CCFLAGS/d' Makefile.PL
@@ -52,6 +54,9 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 #%perl_vendor_archlib/qd.pl
 
 %changelog
+* Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.68-alt2
+- NMU: rebuilt with libgd 2.2.5.
+
 * Mon Feb 19 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.68-alt1
 - automated CPAN update
 
