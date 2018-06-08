@@ -1,5 +1,5 @@
 Name: xonotic-data
-Version: 0.7.0
+Version: 0.8.2
 Release: alt1
 
 Summary: Xonotic data files (graphics, music, maps etc)
@@ -7,18 +7,14 @@ Group: Games/Arcade
 License: GPLv2+
 Url: http://www.xonotic.org/
 
-Source0: font-nimbussansl-20130605.pk3
-Source1: font-xolonium-20130605.pk3
-Source2: xonotic-20130605-data.pk3
-Source3: xonotic-20130605-maps.pk3
-Source4: xonotic-20130605-music.pk3
-Source5: xonotic-20130605-nexcompat.pk3
-
-Requires: xonotic = %version
+Source0: font-unifont-20170401.pk3
+Source1: font-xolonium-20170401.pk3
+Source2: xonotic-20170401-data.pk3
+Source3: xonotic-20170401-maps.pk3
+Source4: xonotic-20170401-music.pk3
+Source5: xonotic-20170401-nexcompat.pk3
 
 BuildArch: noarch
-
-Packager: Igor Zubkov <icesik@altlinux.org>
 
 %description
 Data files used to play Xonotic.
@@ -38,6 +34,9 @@ install -pm644 %SOURCE5 %buildroot%_datadir/xonotic/data/
 %_datadir/xonotic/
 
 %changelog
+* Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.2-alt1
+- Updated to upstream version 0.8.2.
+
 * Thu Jun 13 2013 Igor Zubkov <icesik@altlinux.org> 0.7.0-alt1
 - 0.6.0 -> 0.7.0
 

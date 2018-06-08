@@ -1,5 +1,5 @@
 Name: xonotic
-Version: 0.7.0
+Version: 0.8.2
 Release: alt1
 
 Summary: A free multi-player first person shooter
@@ -7,16 +7,12 @@ Group: Games/Arcade
 License: GPLv2+
 Url: http://www.xonotic.org/
 
-# stripped version of original xonotic-0.7.0.zip
-Source0: Xonotic.tar.xz
+# stripped version of original xonotic-0.8.2.zip
+Source: Xonotic.tar
 
 Requires: %name-data = %version
 
-Packager: Igor Zubkov <icesik@altlinux.org>
-
-# Automatically added by buildreq on Sat Jun 22 2013
-# optimized out: libGL-devel libX11-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel xz
-BuildRequires:  libSDL-devel libXext-devel libXpm-devel libXxf86vm-devel libalsa-devel libfreetype-devel libjpeg-devel
+BuildRequires: libSDL2-devel libGL-devel zlib-devel libXext-devel libXpm-devel libXxf86vm-devel libalsa-devel libfreetype-devel libjpeg-devel
 
 %description
 Xonotic is a free (GPL), fast-paced first-person shooter that works on 
@@ -36,7 +32,7 @@ best possible open-source FPS (first-person-shooter) of its kind.
 %build
 cd source/darkplaces
 make clean
-%make_build release CPUOPTIMIZATIONS="%optflags" DP_FS_BASEDIR=%_datadir/%name
+%make_build debug CPUOPTIMIZATIONS="%optflags" DP_FS_BASEDIR=%_datadir/%name
 
 %install
 install -D -m 755 source/darkplaces/darkplaces-sdl %buildroot%_bindir/%name-sdl
@@ -84,6 +80,9 @@ EOF
 %_iconsdir/hicolor/*/apps/%name.svg
 
 %changelog
+* Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.2-alt1
+- Updated to upstream version 0.8.2.
+
 * Sat Jun 22 2013 Igor Zubkov <icesik@altlinux.org> 0.7.0-alt1
 - 0.6.0 -> 0.7.0
 
