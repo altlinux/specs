@@ -8,7 +8,7 @@ It currently only provides a few functions: \
 
 Name: %fname
 Version: 0.2.4
-Release: alt3
+Release: alt4
 
 Summary: Parse english textual date descriptions
 Group: Development/Python3
@@ -17,7 +17,7 @@ License: zlib / PHP
 Url: http://pypi.python.org/pypi/timelib
 Source: %name-%version.tar
 
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools python3-module-Cython
 
 %description
 %descr
@@ -36,6 +36,9 @@ BuildPreReq: python3-devel python3-module-setuptools
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jun 08 2018 Grigory Ustinov <grenka@altlinux.org> 0.2.4-alt4
+- Build with Cython (Closes: #34719).
+
 * Wed Apr 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.4-alt3
 - (NMU) Rebuilt with python-3.6.4.
 
