@@ -40,7 +40,7 @@
 
 Name: mariadb
 Version: 10.2.15
-Release: alt2%ubt
+Release: alt3%ubt
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -276,7 +276,6 @@ Group: Development/Other
 # see also #28676
 Requires: libssl-devel zlib-devel
 Requires: lib%name = %EVR
-Provides: libmysqlclient-devel = %EVR
 
 %description -n lib%name-devel
 This package contains the development header files and libraries necessary
@@ -819,6 +818,9 @@ fi
 %endif
 
 %changelog
+* Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 10.2.15-alt3%ubt
+- NMU: reverted provides update.
+
 * Wed Jun 06 2018 Alexey Shabalin <shaba@altlinux.ru> 10.2.15-alt2%ubt
 - add libmysqld-devel provides (ALT #34997)
 
