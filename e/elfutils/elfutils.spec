@@ -1,6 +1,6 @@
 Name: elfutils
-Version: 0.170
-Release: alt6
+Version: 0.171
+Release: alt1
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
@@ -259,6 +259,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Jun 08 2018 Dmitry V. Levin <ldv@altlinux.org> 0.171-alt1
+- Updated to elfutils-0.171-16-g6402475.
+
 * Thu Apr 19 2018 Dmitry V. Levin <ldv@altlinux.org> 0.170-alt6
 - Backported a few upstream commits.
 
