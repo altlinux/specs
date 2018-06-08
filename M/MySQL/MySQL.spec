@@ -8,7 +8,7 @@
 
 Name: MySQL
 Version: 5.7.21
-Release: alt7%ubt
+Release: alt8%ubt
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -94,13 +94,14 @@ Obsoletes: MySQL-devel < %version mysql-devel < %version
 Provides: libMySQL-devel = %version
 Obsoletes: libMySQL-devel < %version
 Conflicts: libmariadb-devel
+Provides: libmysqlclient-devel = %EVR
 
 %package -n libmysqlclient%soname-devel-static
 Summary: Development static libraries for MySQL
 Summary(ru_RU.UTF-8): Интерфейс прикладного уровня для разработки программ с MySQL
 License: LGPL
 Group: Development/C
-Requires: libmysqlclient-devel = %version-%release
+Requires: libmysqlclient%soname-devel = %EVR
 Provides: libMySQL-devel-static = %version
 Obsoletes: libMySQL-devel-static < %version
 Conflicts: libmariadb-devel-static
@@ -681,6 +682,9 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.7.21-alt8%ubt
+- NMU: updated provides (Closes: #35004).
+
 * Wed May 30 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt7%ubt
 - fix chrooted mysqld operation under SysVinit
 
