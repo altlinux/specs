@@ -1,7 +1,7 @@
 %define modname sortedcontainers
 
 Name: python-module-%modname
-Version: 2.0.3
+Version: 2.0.4
 Release: alt1
 
 Summary: Python SortedContainers module
@@ -61,6 +61,9 @@ popd
 
 
 %changelog
+* Thu Jun 07 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt1
+- 2.0.4
+
 * Fri Jun 01 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
 - 2.0.3
 
