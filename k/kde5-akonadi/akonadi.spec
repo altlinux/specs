@@ -4,7 +4,7 @@
 
 Name: kde5-%rname
 Version: 18.04.1
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init altplace
 
 Group: Databases
@@ -146,7 +146,7 @@ KF5 library
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-#%patch4 -p1
+%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 
@@ -267,6 +267,9 @@ done
 %endif
 
 %changelog
+* Fri Jun 08 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt3%ubt
+- fix apply last fix
+
 * Thu Jun 07 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
 - fix initialize mysql database
 
