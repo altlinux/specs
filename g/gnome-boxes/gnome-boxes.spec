@@ -1,12 +1,13 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.28
+%define xdg_name org.gnome.Boxes
 %def_disable ovirt
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.3
+Version: %ver_major.5
 Release: alt1
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
@@ -109,9 +110,9 @@ the functionality of the Boxes.
 %doc AUTHORS COPYING README NEWS TODO
 %_bindir/%name
 %_datadir/%name
-%_desktopdir/*.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/org.gnome.boxes.gschema.xml
-%_iconsdir/hicolor/*/apps/gnome-boxes*
+%_iconsdir/hicolor/*/apps/%{xdg_name}*
 %_libexecdir/gnome-boxes-search-provider
 %_datadir/dbus-1/services/*.service
 %_datadir/gnome-shell/search-providers/gnome-boxes-search-provider.ini
@@ -125,6 +126,9 @@ the functionality of the Boxes.
 
 
 %changelog
+* Fri Jun 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.5-alt1
+- updated to v3.28.5-5-ge8b9d5c
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
 - 3.28.3
 
