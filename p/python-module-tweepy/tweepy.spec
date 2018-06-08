@@ -1,6 +1,6 @@
 Name:           python-module-tweepy
 Version:        3.6.0
-Release:        alt1
+Release:        alt2
 Summary:        Twitter library for python
 
 License:        MIT
@@ -12,12 +12,13 @@ Packager:       Andrey Cherepanov <cas@altlinux.org>
 Source0:        tweepy-%{version}.tar.gz
 Source1:        MIT_LICENSE
 
+Patch1:         tweepy-%version-upstream-pip.patch
+
 BuildArch:      noarch
 BuildRequires(pre): rpm-build-python
 BuildRequires:  python-devel
 BuildRequires:  python-module-distribute
 BuildRequires:  python-module-simplejson
-BuildRequires:  python-module-pip
 Provides:	tweepy = %version
 Requires:       python-module-simplejson
 
@@ -27,6 +28,7 @@ entire API, and streaming API.
 
 %prep
 %setup -q -n tweepy-%version
+%patch1 -p1
 cp -p %SOURCE1 ./LICENSE
 
 %build
@@ -42,6 +44,9 @@ cp -p %SOURCE1 ./LICENSE
 %python_sitelibdir/tweepy-*.egg-info
 
 %changelog
+* Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.0-alt2
+- Fixed build.
+
 * Fri May 18 2018 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1
 - New version.
 
