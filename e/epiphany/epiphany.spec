@@ -9,7 +9,7 @@
 %def_disable libhttpseverywhere
 
 Name: epiphany
-Version: %ver_major.2.1
+Version: %ver_major.3.1
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -60,10 +60,10 @@ BuildRequires: libicu-devel libjson-glib-devel
 
 %description
 Epiphany is a GNOME web browser based on the Webkit rendering engine.
-%description -l ru_RU.UTF8
-Epiphany - интернет-браузер для графической
-оболочки GNOME, основанный на движке
-отрисовки страниц Webkit.
+
+%description -l ru_RU.UTF-8
+Epiphany - интернет-браузер для графической оболочки GNOME, основанный на
+движке отрисовки страниц Webkit.
 
 %package data
 Summary: Epiphany data files
@@ -113,6 +113,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Jun 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3.1-alt1
+- 3.28.3.1 (fixed CVE-2018-11396, CVE-2018-12016)
+
 * Tue May 22 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2.1-alt1
 - 3.28.2.1
 
