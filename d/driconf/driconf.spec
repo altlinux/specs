@@ -1,6 +1,6 @@
 %define name driconf
 %define version 0.9.1
-%define release alt1.qa3
+%define release alt2
 
 %setup_python_module %name
 
@@ -8,9 +8,10 @@ Summary: DRI Configuration GUI
 Summary(ru_RU.KOI8-R): Графическая утилита для настройки DRI
 Name: %name
 Version: %version
-Release: %release.1
+Release: %release
 Source0: %name-%version.tar.gz
 Source1: %name-0.9.0-ru.po
+Patch0:  driconf-0.9.1-fix_i_j.patch
 License: GPL
 Group: System/Configuration/Hardware
 Url: http://dri.freedesktop.org/wiki/DriConf
@@ -22,7 +23,7 @@ BuildRequires(pre): python-dev
 BuildRequires: python-module-pygtk
 
 %description
-DRI configuration GUI                                                                                                
+DRI configuration GUI
 
 This is the first graphical configuration tool for DRI. In order to 
 use it you need a recent development verion of DRI.
@@ -41,6 +42,7 @@ DRI-соместимых графических карт, позволяя вам подбирать оптимальные значения
 %setup -q
 %__install -m644 %SOURCE1 ru.po
 %__subst 's|\/usr\/local|\%_prefix|' setup.cfg driconf
+%patch -p2
 
 %build
 %__make mo
@@ -70,6 +72,9 @@ EOF
 #_libdir/%name/*.pyo
 
 %changelog
+* Fri Jun 08 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.1-alt2
+- Fix program start (Closes: #31685).
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.1-alt1.qa3.1
 - Rebuild with Python-2.7
 
