@@ -1,15 +1,17 @@
 Name: nepim
-Version: 0.53
-Release: alt1.qa1
+Version: 0.54
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
 Summary: Network pipemeter is a network benchmark utility
+
 License: GPLv2+
 Group: Networking/Other
-
 Url: http://www.nongnu.org/nepim/
-Source: http://download.savannah.gnu.org/releases/nepim/nepim-%{version}.tar.gz
+
+# Source-url: https://github.com/udhos/nepim/archive/v%version.tar.gz
+Source: %name-%version.tar
 Patch: nepim-0.51-asneeded.patch
 
 # Automatically added by buildreq on Mon Sep 01 2008
@@ -26,7 +28,6 @@ supports IPv6.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %make_build CC="gcc %optflags" -C src
@@ -35,10 +36,13 @@ supports IPv6.
 install -pD -m755 src/nepim %buildroot%_bindir/nepim
 
 %files
-%doc README
+%doc README.md
 %_bindir/*
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.54-alt1
+- new version (0.54) with rpmgs script
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.53-alt1.qa1
 - NMU: rebuilt for debuginfo.
 

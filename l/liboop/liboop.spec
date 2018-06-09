@@ -1,16 +1,17 @@
 Name: liboop
-Version: 1.0
-Release: alt3.qa3
+Version: 1.0.1
+Release: alt1
 
 Summary: Libraries for low-level event loop management
 
 License: LGPL
 Group: System/Libraries
-Url: http://liboop.ofb.net/
+Url: https://www.lysator.liu.se/liboop/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://download.ofb.net/liboop/%name.tar.bz2
+# Source-url: http://ftp.lysator.liu.se/pub/liboop/liboop-%version.tar.gz
+Source: %name-%version.tar
 
 Patch0: %name-libwww-fix.patch
 Patch1: %name-nolibs.patch
@@ -99,7 +100,7 @@ programs that use liboop w3c-libwww binding library.
 
 
 %prep
-%setup -q
+%setup
 #%patch0 -p1
 #%patch1 -p1
 %patch2
@@ -152,6 +153,10 @@ programs that use liboop w3c-libwww binding library.
 %_includedir/oop-www.h
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
+- new version (1.0.1) with rpmgs script
+- cleanup spec
+
 * Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.0-alt3.qa3
 - Rebuild against Tcl/Tk 8.6
 
