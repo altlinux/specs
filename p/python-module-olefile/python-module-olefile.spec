@@ -31,7 +31,7 @@ popd \
 
 %define modulename olefile
 Name: python-module-olefile
-Version: 0.44
+Version: 0.45.1
 Release: alt1
 
 Summary: Python package to parse, read and write Microsoft OLE2 files
@@ -109,6 +109,9 @@ McAfee antivirus quarantine files, etc.
 
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.45.1-alt1
+- new version 0.45.1 (with rpmrb script)
+
 * Wed Oct 04 2017 Vitaly Lipatov <lav@altlinux.ru> 0.44-alt1
 - initial build for ALT Sisyphus
 
