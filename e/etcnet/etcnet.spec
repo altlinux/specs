@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.14
-Release:	alt1
+Release:	alt1.1
 #Url:		http://etcnet.org/
 Url:		https://www.altlinux.org/Etcnet
 
@@ -141,6 +141,9 @@ fi
 %files full
 
 %changelog
+* Sat Jun 09 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.14-alt1.1
+- added path to wireguard
+
 * Mon May 07 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.14-alt1
 - wireguard support added
 
