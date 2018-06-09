@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 5.3.1
-Release: alt1.1
+Version: 5.4.3
+Release: alt1
 
 Summary: A process utilities module for Python
 
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 5.4.3-alt1
+- new version 5.4.3 (with rpmrb script)
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3.1-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
