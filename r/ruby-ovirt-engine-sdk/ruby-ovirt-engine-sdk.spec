@@ -2,7 +2,7 @@
 
 Name:    ruby-ovirt-engine-sdk
 Version: 4.2.4
-Release: alt1
+Release: alt1.1
 
 Summary: This is a mirror from gerrit.ovirt.org http://www.ovirt.org, for issues use http://bugzilla.redhat.com
 License: Apache 2.0
@@ -57,5 +57,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 4.2.4-alt1.1
+- Rebuild for aarch64.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 4.2.4-alt1
 - Initial build for Sisyphus
