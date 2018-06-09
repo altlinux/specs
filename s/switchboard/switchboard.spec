@@ -1,19 +1,26 @@
+%def_disable snapshot
 %define ver_major 2.3
 %define api_ver 2.0
 
 Name: switchboard
 %define xdg_name org.pantheon.%name
-Version: %ver_major.0
-Release: alt2
+%define rdn_name io.elementary.%name
+Version: %ver_major.1
+Release: alt1
 
 Summary: Modular Desktop Settings Hub for elementary OS
 License: GPLv2.1+
 Group: Graphical desktop/Other
-Url: https://launchpad.net/%name
+Url: https://github.com/elementary/%name
 
+%if_disabled snapshot
+Source: %url/archive/%name-%version.tar.gz
+%else
 # VCS: https://github.com/elementary/switchboard.git
-Source: https://launchpad.net/%name/2.x/%version/+download/%name-%version.tar.xz
+Source: %name-%version.tar
+%endif
 
+Provides: %rdn_name = %version-%release
 Requires: lib%name = %version-%release
 
 BuildRequires: cmake gcc-c++ intltool libappstream-glib-devel
@@ -48,7 +55,8 @@ subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 
 %build
 %cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
-	-DUSE_UNITY:BOOL=OFF
+	-DUSE_UNITY:BOOL=OFF \
+	-DGSETTINGS_COMPILE=OFF
 %cmake_build V=1
 
 %install
@@ -58,9 +66,9 @@ subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 
 %files -f %name.lang
 %_bindir/%name
-%_desktopdir/%xdg_name.desktop
-%_datadir/glib-2.0/schemas/org.pantheon.%name.gschema.xml
-%_datadir/metainfo/%name.appdata.xml
+%_desktopdir/%rdn_name.desktop
+%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/metainfo/%rdn_name.appdata.xml
 
 %files -n lib%name
 %_libdir/lib%name-%api_ver.so.*
@@ -73,6 +81,9 @@ subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Sat Jun 09 2018 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
+- 2.3.1
+
 * Sat Jan 06 2018 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt2
 - rebuilt against libgranite.so.4
 
