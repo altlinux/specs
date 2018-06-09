@@ -1,6 +1,6 @@
 Name: installer
 Version: 1.8.41
-Release: alt1
+Release: alt2
 
 Summary: Installer common parts
 License: GPLv2+
@@ -110,6 +110,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Sat Jun 09 2018 Sergey Bubnov <omg@altlinux.org> 1.8.41-alt2
+- Fix for DHCP waiting loop
+
 * Fri Jun 08 2018 Sergey Bubnov <omg@altlinux.org> 1.8.41-alt1
 - Wait for DHCP responce when `curl=` is in kernel parameters
   (closes: #26813)
