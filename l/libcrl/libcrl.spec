@@ -1,6 +1,6 @@
-%define soname 0.0
+%define soname 0.2
 Name: libcrl
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Concurrency Runtime Library for Telegram Desktop
@@ -76,5 +76,8 @@ done
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
+- build next latest commit
+
 * Sat May 26 2018 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt1
 - initial build for ALT Sisyphus
