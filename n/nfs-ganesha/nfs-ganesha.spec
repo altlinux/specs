@@ -70,8 +70,8 @@
 %global use_system_ntirpc %{on_off_switch system_ntirpc}
 
 Name: nfs-ganesha
-Version: 2.5.4
-Release: alt2
+Version: 2.6.2
+Release: alt1
 
 Summary: NFS-Ganesha is a NFS Server running in user space
 
@@ -95,6 +95,7 @@ BuildRequires: libdbus-devel
 BuildRequires: libcap-devel
 BuildRequires: libblkid-devel
 BuildRequires: libuuid-devel
+BuildRequires: librados2-devel
 %if_with system_ntirpc
 BuildRequires: libntirpc-devel >= 1.3.1
 %endif
@@ -544,6 +545,9 @@ install -m 644 ChangeLog	%buildroot%_docdir/ganesha
 %endif
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 2.6.2-alt1
+- new version 2.6.2 (with rpmrb script)
+
 * Tue Mar 27 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.4-alt2
 - libnfsidmap soname bump
 

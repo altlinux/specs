@@ -1,5 +1,5 @@
 Name: libntirpc
-Version: 1.5.3
+Version: 1.6.2
 Release: alt1
 
 Summary: New Transport Independent RPC Library
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 BuildRequires: cmake
 BuildRequires: libjemalloc-devel
 BuildRequires: libkrb5-devel
+BuildRequires: libnsl2-devel
 
 # libtirpc has /etc/netconfig, most machines probably have it anyway
 # for NFS client
@@ -67,6 +68,9 @@ ln -s %name.so.%version %buildroot%_libdir/%name.so.1
 %_pkgconfigdir/libntirpc.pc
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 1.6.2-alt1
+- new version 1.6.2 (with rpmrb script)
+
 * Fri Jul 28 2017 Vitaly Lipatov <lav@altlinux.ru> 1.5.3-alt1
 - new version 1.5.3 (with rpmrb script)
 
