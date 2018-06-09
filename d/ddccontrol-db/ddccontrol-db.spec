@@ -3,24 +3,15 @@ BuildRequires: /usr/bin/perl
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-#%global git_commit 9dd986fb8609fac856b5cad46f5e13894cb3ff77
-#%global git_date 20170623
-
-#%global git_short_commit %(c=%{git_commit}; echo ${c:0:8})
-#%global git_suffix %{git_date}git%{git_short_commit}
-
 Name:             ddccontrol-db
-#URL:              http://ddccontrol.sourceforge.net/
 URL:              https://github.com/ddccontrol/ddccontrol-db
-Version:          20171217
-Release:          alt1_2
-#.%{git_suffix}%{?dist}
+Version:          20180602
+Release:          alt1_1
 # Agreed by usptream to be GPLv2+
 # http://sourceforge.net/mailarchive/message.php?msg_id=29762202
 License:          GPLv2+
 Group:            System/Base
 Summary:          DDC/CI control database for ddccontrol
-#Source0:          https://github.com/ddccontrol/%{name}/archive/%{git_commit}.tar.gz#/%{name}-%{version}-%{git_suffix}.tar.gz
 Source0:          https://github.com/ddccontrol/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 # use autopoint instead of gettextize that is interactive tool
 BuildRequires:    gettext gettext-tools gettext-tools libasprintf-devel, libtool, intltool, perl(XML/Parser.pm)
@@ -33,7 +24,6 @@ Conflicts: ddccontrol < 0.4.2-alt15
 DDC/CU control database for DDCcontrol.
 
 %prep
-#%setup -q -n %{name}-%{git_commit}
 %setup -q
 
 ./autogen.sh
@@ -53,6 +43,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/%{name}
 
 %changelog
+* Sat Jun 09 2018 Igor Vlasenko <viy@altlinux.ru> 20180602-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 20171217-alt1_2
 - update to new release by fcimport
 
