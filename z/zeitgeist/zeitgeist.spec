@@ -1,23 +1,31 @@
+%def_enable snapshot
+
 %define major 1.0
 %define api_ver 2.0
 %define _noarchpkgconfigdir %_datadir/pkgconfig
 %define _libexecdir %_prefix/libexec
 
+%define pkgdocdir %_docdir/lib%name-%version
+
 %def_enable fts
+%def_enable docs
 
 Name: zeitgeist
-Version: %major
-Release: alt2
+Version: %major.1
+Release: alt1
 
 Summary: Framework providing Desktop activity awareness
-
 Group: Office
 License: LGPLv3+ and LGPLv3
 # zeitgeist/loggers/iso_strptime.py is LGPLv3 and the rest LGPLv3+
 Url: https://launchpad.net/zeitgeist
+
+%if_disabled snapshot
+Source: http://launchpad.net/%name/%major/%version/+download/%name-%version.tar.gz
+%else
 # VCS: git://anongit.freedesktop.org/zeitgeist/zeitgeist
 Source: %name-%version.tar
-#Source: http://launchpad.net/%name/%major/%version/+download/%name-%version.tar
+%endif
 Patch1: %name-0.9.12-alt-python3_syntax.patch
 
 Requires: lib%name%api_ver = %version-%release
@@ -29,7 +37,7 @@ Requires: lib%name%api_ver = %version-%release
 # can't do buildreq correctly
 BuildRequires: python-devel python-module-rdflib
 BuildRequires: raptor
-BuildRequires: gettext perl-XML-Parser intltool gtk-doc
+BuildRequires: gettext perl-XML-Parser intltool
 BuildRequires: gcc-c++ glib2-devel libsqlite3-devel libgio-devel libdbus-devel
 BuildRequires: libxapian-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel libjson-glib-devel
@@ -39,6 +47,7 @@ BuildRequires: vala-tools >= %vala_ver libtelepathy-glib-vala
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-rdflib
 BuildRequires: systemd-devel
+%{?_enable_docs:BuildRequires: gtk-doc valadoc}
 # for autoreconf
 BuildRequires: gettext-tools
 
@@ -146,17 +155,16 @@ pushd py3build
 popd
 
 %build
+%define opts --disable-static %{subst_enable fts}
 %autoreconf
-%configure --disable-static \
-	%{subst_enable fts} \
+%configure %opts \
 	PYTHON=%__python
 %make_build
 
 pushd py3build
 %autoreconf
-%configure --disable-static \
-    %{subst_enable fts} \
-    --enable-gtk-doc \
+%configure %opts \
+    %{subst_enable docs} \
     PYTHON=/usr/bin/python3
 %make_build
 popd
@@ -164,15 +172,17 @@ popd
 %install
 %makeinstall_std
 pushd py3build
+
+# install docs
+install -d -m755 %buildroot%pkgdocdir
+cp -aR doc/lib%name/{docs_c/html,docs_vala} %buildroot%pkgdocdir
 %makeinstall_std
 popd
-
-rm -rf %buildroot%_prefix/doc/
 
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog COPYING NEWS README
+%doc AUTHORS ChangeLog NEWS README
 %_bindir/%name-daemon
 %_bindir/%name-datahub
 %_datadir/%name/
@@ -212,12 +222,16 @@ rm -rf %buildroot%_prefix/doc/
 %files -n lib%name%api_ver-gir-devel
 %_girdir/Zeitgeist-2.0.gir
 
-%if 0
+%if_enabled docs
 %files -n lib%name%api_ver-devel-doc
-%_datadir/gtk-doc/html/*
+%pkgdocdir
 %endif
 
 %changelog
+* Sat Jun 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- updated to v1.0.1-3-g2b337c8
+- used gtk-doc & valadoc to build documentation
+
 * Fri Oct 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt2
 - Rebuilt with new xapian.
 
