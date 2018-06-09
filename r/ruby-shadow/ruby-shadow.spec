@@ -1,6 +1,6 @@
 Name:    ruby-shadow
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: Shadow Password module for Ruby
 License: Public Domain License
@@ -50,5 +50,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt2
+- Build for aarch64.
+
 * Thu May 31 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
 - Initial build for Sisyphus
