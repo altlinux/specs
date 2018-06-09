@@ -2,8 +2,8 @@
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 4.0.1
-Release: alt2
+Version: 4.0.2
+Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
 License: GPLv3
@@ -13,6 +13,7 @@ Url: https://github.com/wwmm/pulseeffects
 Source: %url/archive/%version/%name-%version.tar.gz
 
 %define gst_ver 1.12.5
+%define glibmm_ver 2.26
 %define gtk_ver 3.20
 
 Requires: pulseaudio-daemon dconf
@@ -27,7 +28,8 @@ Requires: calf-plugins
 
 
 BuildRequires(pre): meson
-BuildRequires: gcc-c++ boost-filesystem-devel libgtkmm3-devel >= %gtk_ver
+BuildRequires: gcc-c++ boost-filesystem-devel
+BuildRequires: libglibmm-devel >= %glibmm_ver libgtkmm3-devel >= %gtk_ver
 BuildRequires: gst-plugins-bad%gst_api_ver-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: pkgconfig(gstreamer-webrtc-1.0)
@@ -59,6 +61,9 @@ effects for Pulseaudio applications.
 %doc README* CHANGELOG.*
 
 %changelog
+* Sat Jun 09 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0.2-alt1
+- 4.0.2
+
 * Thu Jun 07 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt2
 - updated dependencies
 
