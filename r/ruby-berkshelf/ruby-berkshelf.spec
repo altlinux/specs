@@ -1,7 +1,7 @@
 %define  pkgname berkshelf
 
 Name:    ruby-%pkgname
-Version: 7.0.3
+Version: 7.0.4
 Release: alt1
 
 Summary: A Chef Cookbook manager
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 7.0.4-alt1
+- New version.
+
 * Wed Jun 06 2018 Andrey Cherepanov <cas@altlinux.org> 7.0.3-alt1
 - New version.
 
