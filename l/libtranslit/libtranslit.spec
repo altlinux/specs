@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: glib2-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gobject-2.0)
+BuildRequires: glib2-devel pkgconfig(gio-2.0)
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		libtranslit
 Version:	0.0.3
-Release:	alt1_11
+Release:	alt1_18
 Summary:	ASCII to Unicode transliteration library with multiple backends
 
 License:	GPLv3+
@@ -22,8 +24,8 @@ ASCII to Unicode transliteration library with multiple backends.
 %package	devel
 Group: System/Libraries
 Summary:	Development files for %{name}
-Requires:	%{name}%{?_isa} = %{version}
-Requires:	vala
+Requires:	%{name} = %{version}-%{release}
+Requires:	vala vala-tools
 
 %description	devel
 The %{name}-devel package contains libraries and header files for
@@ -33,7 +35,7 @@ developing applications that use %{name}.
 Group: System/Libraries
 Summary:	Transliteration module using m17n-lib for %{name}
 BuildRequires:	pkgconfig(m17n-shell)
-Requires:	%{name}%{?_isa} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description	m17n
 The %{name}-m17n package contains a transliteration module using
@@ -43,7 +45,7 @@ m17n-lib for %{name}.
 Group: System/Libraries
 Summary:	Transliteration module using m17n-lib for %{name}
 BuildRequires:	pkgconfig(icu-io)
-Requires:	%{name}%{?_isa} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description	icu
 The %{name}-icu package contains a transliteration module using
@@ -56,7 +58,7 @@ ICU for %{name}.
 
 %build
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -86,6 +88,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f '{}' ';'
 
 
 %changelog
+* Sat Jun 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.3-alt1_18
+- rebuild with new icu
+
 * Fri Feb 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.3-alt1_11
 - rebuild with new icu
 
