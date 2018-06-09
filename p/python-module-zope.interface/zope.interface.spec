@@ -1,138 +1,104 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.interface
 
-%def_with python3
-%def_disable check
+%def_with check
+
+Name: python-module-%oname
+Version: 4.5.0
+Release: alt1
 
 Summary: Zope interfaces package
-Name: python-module-%oname
-Version: 4.3.3
-#define subver c1
-Url: http://www.python.org/pypi/zope.interface
-%ifndef subver
-Release: alt1.1
-%else
-Release: alt0.%subver.1
-%endif
-# git://github.com/zopefoundation/zope.interface.git
-Source0: https://pypi.python.org/packages/44/af/cea1e18bc0d3be0e0824762d3236f0e61088eeed75287e7b854d65ec9916/%{oname}-%{version}.tar.gz
-License: ZPL
+License: ZPLv2.1
 Group: Development/Python
+# Source-git https://github.com/zopefoundation/zope.interface.git
+Url: http://www.python.org/pypi/zope.interface
 
-%setup_python_module %oname
+Source: %name-%version.tar
 
-#BuildPreReq: python-module-setuptools-tests
-#BuildPreReq: python-module-zope.fixers-tests
-#BuildPreReq: python-module-zope.event-tests
-#BuildPreReq: python-module-nose
-#BuildPreReq: python-module-coverage
-#BuildPreReq: python-module-sphinx-devel
-#BuildPreReq: python-module-repoze.sphinx.autointerface
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-repoze python-module-repoze.sphinx python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-setuptools python3-module-zope python3-module-zope.interface
-#Manually removed python*-module-zope.fixers and python*-module-zope.event
-BuildPreReq: python-module-alabaster python-module-coverage python-module-docutils
-BuildPreReq: python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest
-BuildPreReq: python-module-repoze.sphinx.autointerface
-BuildPreReq: python3-devel python3-module-coverage python3-module-nose
-BuildPreReq: python3-module-pytest rpm-build-python3 time
-#BuildRequires: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-zope.fixers-tests
-#BuildPreReq: python3-module-zope.event-tests
-#BuildPreReq: python3-module-nose
-#BuildPreReq: python3-module-coverage
+
+BuildRequires: python-module-repoze.sphinx.autointerface
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+BuildRequires: python-dev
+BuildRequires: python3-dev
+
+%if_with check
+BuildRequires: python-module-tox
+BuildRequires: python-module-zope.event
+BuildRequires: python-module-coverage
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-zope.event
+BuildRequires: python3-module-coverage
 %endif
 
 %description
-This is a separate distribution of the zope.interface package used in
+This is a separate distribution of the %oname package used in
 Zope 3, along with the packages it depends on.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Zope interfaces package (Python 3)
 Group: Development/Python3
 
 %description -n python3-module-%oname
-This is a separate distribution of the zope.interface package used in
+This is a separate distribution of the %oname package used in
 Zope 3, along with the packages it depends on.
 
 %package -n python3-module-%oname-tests
-Summary: Tests for zope.interface (Python 3)
+Summary: Tests for %oname (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
 %py3_requires zope.event
 
 %description -n python3-module-%oname-tests
-This is a separate distribution of the zope.interface package used in
-Zope 3, along with the packages it depends on.
-
-This package contains tests for zope.interface.
-%endif
+This package contains tests for %oname.
 
 %package tests
-Summary: Tests for zope.interface
+Summary: Tests for %oname
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %py_requires zope.event
 
 %description tests
-This is a separate distribution of the zope.interface package used in
-Zope 3, along with the packages it depends on.
-
-This package contains tests for zope.interface.
+This package contains tests for %oname.
 
 %package pickles
-Summary: Pickles for zope.interface
+Summary: Pickles for %oname
 Group: Development/Python
 
 %description pickles
-This is a separate distribution of the zope.interface package used in
-Zope 3, along with the packages it depends on.
-
-This package contains pickles for zope.interface.
+This package contains pickles for %oname.
 
 %package docs
-Summary: Documentation for zope.interface
+Summary: Documentation for %oname
 Group: Development/Documentation
 BuildArch: noarch
 
 %description docs
-This is a separate distribution of the zope.interface package used in
-Zope 3, along with the packages it depends on.
-
-This package contains documentation for zope.interface.
+This package contains documentation for %oname.
 
 %prep
-%setup -q -n %{oname}-%{version}
-%if_with python3
-rm -rf ../python3
+%setup
 cp -a . ../python3
-%endif
 
 %prepare_sphinx .
 ln -s ../objects.inv docs/
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug build_ext
-%if_with python3
+%python_build_debug
+
 pushd ../python3
-%python3_build build_ext
+%python3_build_debug
 popd
-%endif
 
 %install
-%python_module_declare %python_sitelibdir/zope
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 export PYTHONPATH=$PWD/src
 %make -C docs pickle
@@ -142,20 +108,26 @@ install -d %buildroot%python_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-python setup.py test
-%if_with python3
+export PIP_INDEX_URL=http://host.invalid./
+# copy necessary exec deps
+tox --sitepackages -e py%{python_version_nodots python} --notest
+cp -f %_bindir/coverage .tox/py%{python_version_nodots python}/bin/
+tox --sitepackages -e py%{python_version_nodots python} -v -- -v
+
 pushd ../python3
-python3 setup.py test
+# copy necessary exec deps
+tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
+cp -f %_bindir/coverage3 .tox/py%{python_version_nodots python3}/bin/coverage
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
-%endif
  
 %files
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/zope/interface/tests
 %exclude %python_sitelibdir/zope/interface/common/tests
-%doc *.txt *.rst
 
 %files pickles
 %python_sitelibdir/*/pickle
@@ -167,19 +139,21 @@ popd
 %python_sitelibdir/zope/interface/tests
 %python_sitelibdir/zope/interface/common/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/zope/interface/tests
 %exclude %python3_sitelibdir/zope/interface/common/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/zope/interface/tests
 %python3_sitelibdir/zope/interface/common/tests
-%endif
 
 %changelog
+* Sat Jun 09 2018 Stanislav Levin <slev@altlinux.org> 4.5.0-alt1
+- 4.3.3 -> 4.5.0
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.3-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
