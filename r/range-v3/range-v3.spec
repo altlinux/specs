@@ -1,22 +1,18 @@
-# Set Git revision of library...
-%global commit0 0b0dd886bd05d389649a043bb1d0bcd27c2bf25d
-%global shortcommit0 %(c=%commit0; echo ${c:0:7})
-%global date 20171112
-
 Name: range-v3
 
 Summary: Experimental range library for C++11/14/17
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 
 License: Boost
 Group: Development/C++
-Url: https://github.com/ericniebler/%name
+Url: https://github.com/ericniebler/range-v3
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: %url/archive/%commit0.tar.gz#/%name-%shortcommit0.tar.gz
+# Source-url: https://github.com/ericniebler/range-v3/archive/%version.tar.gz
 Source: %name-%version.tar
+
 BuildArch: noarch
 
 %description
@@ -47,6 +43,9 @@ cp -a include/* "%buildroot%_includedir/%name"
 %_includedir/%name
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.3.6-alt1
+- new version 0.3.6 (with rpmrb script)
+
 * Tue Mar 20 2018 Vitaly Lipatov <lav@altlinux.ru> 0.3.5-alt1
 - new version 0.3.5 (with rpmrb script)
 
