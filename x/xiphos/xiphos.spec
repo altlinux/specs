@@ -1,6 +1,6 @@
 Name: xiphos
 Version: 4.1.0
-Release: alt1
+Release: alt2
 Summary: Bible Study Software
 Url: http://xiphos.org/
 Group: Text tools
@@ -8,7 +8,7 @@ License: GPL2
 Source: https://github.com/crosswire/xiphos/releases/download/%version/%name-%version.tar.gz
 Source44: %name.watch
 
-Requires: yelp
+Requires: sword yelp
 Provides: gnomesword
 Obsoletes: gnomesword
 BuildRequires: biblesync-devel >= 1.2.0
@@ -53,6 +53,9 @@ mv %buildroot%_docdir/xiphos/ doc-install
 %_datadir/%name
 
 %changelog
+* Sun Jun 10 2018 Ildar Mulyukov <ildar@altlinux.ru> 4.1.0-alt2
+- add dep on `sword` for in-sword localizaton
+
 * Wed May 23 2018 Ildar Mulyukov <ildar@altlinux.ru> 4.1.0-alt1
 - new version
 

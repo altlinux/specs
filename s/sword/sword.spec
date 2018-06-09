@@ -1,6 +1,7 @@
+%def_with cmake
 %define major 1.8
 Name: sword
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: The SWORD Project framework for manipulating Bible texts
@@ -19,6 +20,10 @@ Source2: sword_icons.tar
 Requires: lib%name = %version
 
 BuildRequires: bc cppunit-devel gcc-c++ glibc-devel libclucene-core-devel libcurl-devel libicu-devel zlib-devel
+
+%if_with cmake
+BuildRequires: cmake
+%endif
 
 %description
 The SWORD Project is an effort to create an ever expanding software package
@@ -50,28 +55,47 @@ will need to develop applications which will use the SWORD Bible Framework.
 %setup
 
 %build
+%if_with cmake
+%cmake -DLIBSWORD_LIBRARY_TYPE=Shared \
+       -DSWORD_BUILD_UTILITIES="Yes" \
+       -DLIBSWORD_SOVERSION=%{major} \
+       -DLIBDIR=%{_libdir} \
+       -DSWORD_BUILD_TESTS=Yes
+       #-DSWORD_BINDINGS="Python" \
+       #-DSWORD_PYTHON_INSTALL_DIR="%{buildroot}%{_prefix}" \
+
+%cmake_build
+%else
 %add_optflags -fpermissive -ftemplate-depth=100
 %autoreconf
 %configure --with-lucene --with-icu --with-curl --disable-static
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
+%endif
 
 %install
+%if_with cmake
+%cmakeinstall_std
+%else
 %makeinstall_std
-
 pushd utilities
 install -m755 mkfastmod mod2vpl vpl2mod %buildroot/%_bindir
 popd
+%endif
+
+# TODO:
+%check
+make tests
 
 %files
 %_bindir/*
 %_sysconfdir/sword.conf
 %_datadir/%name/
-%doc README AUTHORS NEWS INSTALL ChangeLog
+%doc README AUTHORS NEWS ChangeLog
 %doc samples doc/*.*
 
 %files -n lib%name
-%_libdir/lib%name-%major.*.so
+%_libdir/lib%name.so.%major
 #_libdir/%name/
 
 %files -n lib%name-devel
@@ -80,6 +104,10 @@ popd
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt1
+- new version 1.8.1 (with rpmrb script)
+- build with cmake, use soname instead version
+
 * Wed May 23 2018 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
 - new version (1.8.0) with rpmgs script (ALT bug #30670)
 
