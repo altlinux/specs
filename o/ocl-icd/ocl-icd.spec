@@ -1,7 +1,7 @@
 %define dnum 814
 
 Name: ocl-icd
-Version: 2.2.11
+Version: 2.2.12
 Release: alt1
 
 Summary: OpenCL ICD Bindings
@@ -68,6 +68,9 @@ make check
 %_man7dir/*
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.12-alt1
+- new version 2.2.12 (with rpmrb script)
+
 * Sat Jun 17 2017 Vitaly Lipatov <lav@altlinux.ru> 2.2.11-alt1
 - initial build for ALT Sisyphus
 
