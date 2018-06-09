@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-pycparser
-Version: 2.14
-Release: alt1.1.1
+Version: 2.18
+Release: alt1
 
 Summary: C parser in Python
 
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 2.18-alt1
+- new version 2.18 (with rpmrb script)
+
 * Fri Feb 03 2017 Michael Shigorin <mike@altlinux.org> 2.14-alt1.1.1
 - BOOTSTRAP: avoid python-module-mwlib -> gevent -> greenlet (!e2k)
 
