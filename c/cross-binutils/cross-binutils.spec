@@ -47,9 +47,6 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 /usr/bin/runtest gcc-c++ texinfo
 %global build_sparc		0
 %global build_sh4		0
 
-# Obsolete in binutils
-%global build_sh64		0
-
 # not available in binutils-2.27
 %global build_hexagon		0
 %global build_unicore32		0
@@ -57,16 +54,23 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 /usr/bin/runtest gcc-c++ texinfo
 # Do not create deterministic archives by default  (cf: BZ 1195883)
 %global enable_deterministic_archives 0
 
-# Default to read-only-relocations (relro) in shared binaries.
-%define default_relro 1
-
 # Disable the default generation of compressed debug sections.
 %define default_compress_debug 0
 
+# Default to read-only-relocations (relro) in shared binaries.
+%define default_relro 1
+
+# Disable the default generation of GNU Build notes by the assembler.
+# This has turned out to be problematic for the i686 architecture.
+# although the extact reason has not been determined.  (See BZ 1572485)
+# It also breaks building EFI binaries on AArch64, as these cannot have
+# relocations against absolute symbols.
+%define default_generate_notes 0
+
 Summary: A GNU collection of cross-compilation binary utilities
 Name: %{cross}-binutils
-Version: 2.29.1
-Release: alt1_4
+Version: 2.30
+Release: alt1_2
 License: GPLv3+
 Group: Development/Tools
 URL: https://sourceware.org/binutils
@@ -74,6 +78,7 @@ URL: https://sourceware.org/binutils
 # Note - the Linux Kernel binutils releases are too unstable and contain too
 # many controversial patches so we stick with the official FSF version
 # instead.
+
 Source: http://ftp.gnu.org/gnu/binutils/binutils-%{version}.tar.xz
 
 Source2: binutils-2.19.50.0.1-output-format.sed
@@ -115,10 +120,6 @@ Patch04: binutils-2.22.52.0.4-no-config-h-check.patch
 # FIXME:    Try removing....
 Patch05: binutils-2.26-lto.patch
 
-# Purpose:  Skip PR14918 linker test for ARM native targets.
-# Lifetime: Fixed in 2.30.
-Patch06: binutils-2.29-skip-rp14918-test-for-arm.patch
-
 # Purpose:  Include the filename concerned in readelf error messages.  This
 #           makes readelf's output more helpful when it is run on multiple
 #           input files.
@@ -126,21 +127,7 @@ Patch06: binutils-2.29-skip-rp14918-test-for-arm.patch
 #           making it better (IMHO) but also potentially breaking tools that
 #           depend upon readelf's current format.  Hence it remains a local
 #           patch.
-Patch07: binutils-2.29-filename-in-error-messages.patch
-
-# Purpose:  Fix the generation of relocations to handle locating the start
-#           and stop symbols of orphan sections when using the GOLD linker.
-#           See: BZ 1500898 and PR 22291.
-# Lifetime: Fixed in 2.30.
-Patch08: binutils-2.29.1-gold-start-stop.patch
-
-# Purpose:  Update readelf so that if it is run with the --relocs option and
-#           there are no static relocs to be displayed, but there are dynamic
-#           relocs that could have been displayed, it will now issue a
-#           message suggesting the addition of the --use-dynamic option.
-#           See: BZ 1507694
-# Lifetime: Fixed in 2.30.
-Patch09: binutils-2.29.1-readelf-use-dynamic.patch
+Patch06: binutils-2.29-filename-in-error-messages.patch
 
 # Purpose:  Disable an x86/x86_64 optimization that moves functions from the
 #           PLT into the GOTPLT for faster access.  This optimization is
@@ -148,12 +135,7 @@ Patch09: binutils-2.29.1-readelf-use-dynamic.patch
 #           as ltrace and LD_AUDIT.  See BZs 1452111 and 1333481.
 # Lifetime: Permanent.  But it should not be.
 # FIXME:    Replace with a configure time option.
-Patch10: binutils-2.29-revert-PLT-elision.patch
-
-# Purpose:  Fixes a bug in strip/objcopy which could cause it to crash when
-#           deleting relocs in a file which also contains mergeable notes.
-# Lifetime: Fixed in 2.30.
-Patch11: binutils-strip-delete-relocs.patch
+Patch07: binutils-2.29-revert-PLT-elision.patch
 
 # Purpose:  Changes readelf so that when it displays extra information about
 #           a symbol, this information is placed at the end of the line.
@@ -161,32 +143,146 @@ Patch11: binutils-strip-delete-relocs.patch
 # FIXME:    The proper fix would be to update the scripts that are expecting
 #           a fixed output from readelf.  But it seems that some of them are
 #           no longer being maintained.
-Patch12: binutils-readelf-other-sym-info.patch
+Patch08: binutils-readelf-other-sym-info.patch
 
-# Purpose:  Enhances readelf and objcopy to support v3 build notes.
-# Lifetime: Fixed in 2.30.
-Patch13: binutils-support-v3-build-notes.patch
+# Purpose:  Do not create PLT entries for AARCH64 IFUNC symbols referenced in
+#           debug sections.
+# Lifetime: Permanent.
+# FIXME:    Find related bug.  Decide on permanency.
+Patch09: binutils-2.27-aarch64-ifunc.patch
 
-# Purpose:  Adds a "-z undefs" option to the linker to compliment the already
-#           present "-z defs" option.
-# Lifetime: Fixed in 2.30.
-Patch14: binutils-z-undefs.patch
+# Purpose:  Remove support for inserting PowerPC Speculation Barrier
+#           instructions from the linker.  (It has been deprecated in
+#           favour of a hardware fix).
+# Lifetime: Fixed in 2.30.1 and/or 2.31.
+Patch10: binutils-revert-PowerPC-speculation-barriers.patch
 
-# Purpose:  Fixes bugs in AArch64 static PIE support.  Specifically: FSF PRs
-#           22263 and 22269.
-# Lifetime: Fixed in 2.30.
-Patch15: binutils-aarch64-pie.patch
+# Purpose:  Stop readelf/objdump for searching for DWO links unless
+#           explicitly requested by the user.
+# Lifetime: Fixed in 2.30.1 and/or 2.31.
+Patch11: binutils-skip-dwo-search-if-not-needed.patch
 
-# Purpose:  Fixes the creation of function call stubs for PowerPC64.
-# Lifetime: Fixed in 2.31.  See BZ 1523457
-Patch16: binutils-ppc64-stub-creation.patch
+# Purpose:  Fix a bug in the BFD linker's layout algorithm which ended up
+#           placing executable and non-executable pages in the same segment.
+# Lifetime: Fixed in 2.30.1 and/or 2.31.
+Patch12: binutils-page-to-segment-assignment.patch
+
+# Purpose:  Fix a bug in ld for linking against AARCH64 UEFI
+# Lifetime: Fixed in 2.30.1 and/or 2.31
+Patch13: binutils-2.30-allow_R_AARCH64-symbols.patch
+
+# Purpose:  Stop strip from replacing unknown relocs with null relocs.  Make
+#           it return an error status and not strip the file instead.
+# Lifetime: Fixed in 2.31.
+Patch14: binutils-strip-unknown-relocs.patch
+
+# Purpose:  Improves objdump's function for locating a symbol to match a
+#           given address, so that it uses a binary chop algorithm.
+# Lifetime: Fixed in 2.31.
+Patch15: binutils-speed-up-objdump.patch
+
+# Purpose:  Ignore duplicate indirect symbols generated by GOLD.
+# Lifetime: Permanent.
+# FIXME:    This problem needs to be resolved in the FSF sources, but the
+#           GOLD maintainers seem to be reluctant to address the issue.
+Patch16: binutils-2.28-ignore-gold-duplicates.patch
+
+# Purpose:  Treat relosc against STT_GNU_IFUNC symbols in note sections as
+#           if they were relocs against STT_FUNC symbols instead.
+# Lifetime: Fixed in 2.31.
+Patch17: binutils-ifunc-relocs-in-notes.patch
+
+# Purpose:  Do not discard debug only object files created by GCC v8's
+#           LTO wrapper.
+# Lifetime: Fixed in 2.31.
+Patch18: binutils-debug-section-marking.patch
+
+# Purpose:  Fix the GOLD linker's handling of PROTECTED symbols from the
+#           LLVM plugin.
+# Lifetime: Fixed in 2.31 (probably - check...).
+Patch19: binutils-gold-llvm-plugin.patch
+
+# Purpose:  Enhance the assembler so that it will automatically generate
+#           GNU Build attribute notes if none are present in the inputs.
+# Lifetime: Fixed in 2.31
+Patch20: binutils-gas-build-notes.patch
+
+# Purpose:  Fix a seg-fault triggered by running objdump on a corrupt AOUT
+#           format file.
+# Lifetime: Fixed in 2.31
+Patch21: binutils-CVE-2018-7642.patch
+
+# Purpose:  Fix a seg-fault triggered by running readelf or objdump on a
+#           file containing corrupt DWARF debug information.
+# Lifetime: Fixed in 2.31
+Patch22: binutils-CVE-2018-7643.patch
+
+# Purpose:  Fix a seg-fault triggered by running objdump on a corrupt COFF
+#           format file.
+# Lifetime: Fixed in 2.31
+Patch23: binutils-CVE-2018-7208.patch
+
+# Purpose:  Fix a seg-fault triggered by running readelf or objdump on a
+#           file containing corrupt DWARF debug information.
+# Lifetime: Fixed in 2.31
+Patch24: binutils-CVE-2018-10372.patch
+
+# Purpose:  Fix another seg-fault triggered by running readelf or objdump on a
+#           file containing corrupt DWARF debug information.
+# Lifetime: Fixed in 2.31
+Patch25: binutils-CVE-2018-10373.patch
+
+# Purpose:  Fix a seg-fault triggered by running objcopy on a corrupt ELF
+#           file.
+# Lifetime: Fixed in 2.31
+Patch26: binutils-CVE-2018-7570.patch
+
+# Purpose:  Fix a seg-fault triggered by running objcopy on a large ELF
+#           file on a 32-bit host machine.
+# Lifetime: Fixed in 2.31
+Patch27: binutils-CVE-2018-6323.patch
+
+# Purpose:  Fix a seg-fault triggered by running nm on a corrupt ELF file.
+# Lifetime: Fixed in 2.31
+Patch28: binutils-CVE-2018-6759.patch
+
+# Purpose:  Fix a seg-fault triggered by running nm on a file containing
+#           corrupt DWARF information.
+# Lifetime: Fixed in 2.31
+Patch29: binutils-CVE-2018-7569.patch
+
+# Purpose:  Fix a seg-fault triggered by running nm on a file containing
+#           corrupt DWARF information.
+# Lifetime: Fixed in 2.31
+Patch30: binutils-CVE-2018-7568.patch
+
+# Purpose:  Fix a seg-fault triggered by running objcopy on a corrupt
+#           PE format file.
+# Lifetime: Fixed in 2.31
+Patch31: binutils-CVE-2018-10534.patch
+
+# Purpose:  Fix a seg-fault triggered by running objcopy on a corrupt
+#           ELF format file.
+# Lifetime: Fixed in 2.31
+Patch32: binutils-CVE-2018-10535.patch
+
+# Purpose:  Have the x86 linker resolve relocations against the _end,
+#           __bss_start and -edata symbols locally.
+# Lifetime: Fixed in 2.31
+Patch33: binutils-x86-local-relocs.patch
+
+# Purpose:  Stop the assembler from generating GNU build notes against
+#           linkonce sections.
+# Lifetime: Fixed in 2.31
+Patch34: binutils-linkonce-notes.patch
+
+# Purpose:  Fix a seg-fault triggered by running objcopy on a corrupt
+#           PE format file.
+# Lifetime: Fixed in 2.31
+Patch35: binutils-CVE-2018-8945.patch
 
 # NOTE!!! Don't add cross-binutils patches here as "binutils-xxx".  Name them
 # cross-binutils-xxx instead!
-
-%if %{build_sh64}
-Patch100: cross-binutils-2.25-fixup-for-sh64.patch
-%endif
 
 #----------------------------------------------------------------------------
 
@@ -223,9 +319,7 @@ converting addresses to file and line).
 Summary: Cross-build binary utility documentation and translation files
 Group: Development/Tools
 BuildArch: noarch
-%if !%{build_sh64}
 Obsoletes: binutils-sh64-linux-gnu < 2.27-1
-%endif
 %description -n %{cross}-binutils-common
 Documentation, manual pages and translation files for cross-build binary image
 generation, manipulation and query tools.
@@ -286,7 +380,6 @@ Cross-build binary image generation, manipulation and query tools. \
 %do_package score-linux-gnu	%{build_score}
 %do_package sh-linux-gnu	%{build_sh}
 %do_package sh4-linux-gnu	%{build_sh4}
-%do_package sh64-linux-gnu	%{build_sh64}
 %do_package sparc-linux-gnu	%{build_sparc}
 %do_package sparc64-linux-gnu	%{build_sparc64}
 %do_package tile-linux-gnu	%{build_tile}
@@ -309,10 +402,10 @@ Cross-build binary image generation, manipulation and query tools. \
 cd %{srcdir}
 #%patch00 -p1 -b .latest-git~
 %patch01 -p1
-%patch02 -p1 
-%patch03 -p1 
-%patch04 -p1 
-%patch05 -p1 
+%patch02 -p1
+%patch03 -p1
+%patch04 -p1
+%patch05 -p1
 %patch06 -p1
 %patch07 -p1
 %patch08 -p1
@@ -324,11 +417,25 @@ cd %{srcdir}
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-
-
-%if %{build_sh64}
-%patch100 -p1 -b .sh64-fixup~
-%endif
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+%patch25 -p1
+%patch26 -p1
+%patch27 -p1
+%patch28 -p1
+%patch29 -p1
+%patch30 -p1
+%patch31 -p1
+%patch32 -p1
+%patch33 -p1
+%patch34 -p1
+%patch35 -p1
 
 # We cannot run autotools as there is an exact requirement of autoconf-2.59.
 
@@ -400,7 +507,6 @@ cd ..
     prep_target score-linux-gnu		%{build_score}
     prep_target sh-linux-gnu		%{build_sh}
     prep_target sh4-linux-gnu		%{build_sh4}
-    prep_target sh64-linux-gnu		%{build_sh64}
     prep_target sparc-linux-gnu		%{build_sparc}
     prep_target sparc64-linux-gnu	%{build_sparc64}
     prep_target tile-linux-gnu		%{build_tile}
@@ -446,7 +552,6 @@ function config_target () {
 	openrisc-*)	target=or1k-linux-gnu;;
 	parisc-*)	target=hppa-linux;;
 	score-*)	target=score-elf;;
-	sh64-*)		target=sh64-linux-elf;;
 	tile-*)		target=tilegx-linux;;
 	v850-*)		target=v850e-linux;;
 	x86-*)		target=x86_64-linux;;
@@ -475,11 +580,6 @@ function config_target () {
     case $target in sh-*)
 	    CARGS="$CARGS --enable-targets=sh-linux,sh4-linux"
 	    # sh-elf is dropped for now as it makes for ambiguity in format recognition
-	    ;;
-    esac
-
-    case $target in sh64-*)
-	    CARGS="$CARGS --enable-obsolete"
 	    ;;
     esac
 
@@ -523,6 +623,11 @@ function config_target () {
 	--enable-compressed-debug-sections=all \
 %else
 	--enable-compressed-debug-sections=none \
+%endif
+%if %{default_generate_notes}
+	--enable-generate-build-notes=yes \
+%else
+	--enable-generate-build-notes=no \
 %endif
 	--enable-lto \
 	--enable-relro=yes \
@@ -614,10 +719,6 @@ do
     mkdir -p %{buildroot}%{auxbin_prefix}/$target/sys-root
     install_bin $target
 
-#    if [ $target = sh64-linux-gnu ]
-#    then
-#	ln -s %{auxbin_prefix}/sh64-elf %{buildroot}%{auxbin_prefix}/sh64-linux
-#    fi
 done
 
 echo "=== INSTALL man targets ==="
@@ -788,7 +889,6 @@ sed -i -e /sys-root/d files.ppc64*-linux-gnu
 %do_files score-linux-gnu	%{build_score}
 %do_files sh-linux-gnu		%{build_sh}
 %do_files sh4-linux-gnu		%{build_sh4}
-%do_files sh64-linux-gnu	%{build_sh64}
 %do_files sparc-linux-gnu	%{build_sparc}
 %do_files sparc64-linux-gnu	%{build_sparc64}
 %do_files tile-linux-gnu	%{build_tile}
@@ -797,6 +897,9 @@ sed -i -e /sys-root/d files.ppc64*-linux-gnu
 %do_files xtensa-linux-gnu	%{build_xtensa}
 
 %changelog
+* Sat Jun 09 2018 Igor Vlasenko <viy@altlinux.ru> 2.30-alt1_2
+- update to new release by fcimport
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 2.29.1-alt1_4
 - update to new release by fcimport
 
