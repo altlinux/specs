@@ -1,29 +1,33 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname setuptools_scm
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.15.0
-Release: alt1.1.1
+Version: 2.1.0
+Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/setuptools_scm/
 Packager: Python Development Team <python at packages.altlinux.org>
 
 # https://github.com/pypa/setuptools_scm.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %oname-%version-alt-tests.patch
 
 %py_provides %oname
 Requires: git-core mercurial
 %py_requires setuptools
 
-BuildRequires: python-module-setuptools git-core mercurial
+BuildRequires: git-core mercurial
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pytest
 %endif
 
@@ -58,19 +62,17 @@ It falls back to PKG-INFO/.hg_archival.txt when necessary.
 
 %prep
 %setup
+%patch1 -p1
 
-git config --global user.email "python at packages.altlinux.org"
-git config --global user.name "Python Development Team"
-git init-db
-git add . -A
-git commit -a -m "%version"
-git tag -m "%version" %version
+rm -f setuptools_scm/win_py31_compat.py
 
 %if_with python3
 cp -fR . ../python3
 %endif
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+
 %python_build_debug
 
 %if_with python3
@@ -80,6 +82,8 @@ popd
 %endif
 
 %install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+
 python setup.py egg_info
 %python_install
 
@@ -91,12 +95,19 @@ popd
 %endif
 
 %check
+export TESTS_NO_NETWORK=1
+
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 python setup.py test
+unset SETUPTOOLS_SCM_PRETEND_VERSION
 export PYTHONPATH=$PWD
 py.test -vv
+
 %if_with python3
 pushd ../python3
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 python3 setup.py test
+unset SETUPTOOLS_SCM_PRETEND_VERSION
 export PYTHONPATH=$PWD
 py.test3 -vv
 popd
@@ -113,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt1
+- Updated to upstream version 2.1.0.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.15.0-alt1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
