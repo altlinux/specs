@@ -3,7 +3,7 @@
 
 %define modulename bleach
 Name: python-module-bleach
-Version: 2.1.1
+Version: 2.1.3
 Release: alt1
 
 Summary: An easy whitelist-based HTML-sanitizing tool
@@ -80,6 +80,9 @@ popd
 
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.3-alt1
+- new version 2.1.3 (with rpmrb script)
+
 * Sun Oct 08 2017 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
 - new version 2.1.1 (with rpmrb script)
 
