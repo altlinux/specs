@@ -1,8 +1,8 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		mg
-Version:	20170401
-Release:	alt1_3
+Version:	20170828
+Release:	alt1_2
 Summary:	Tiny Emacs-like editor
 
 Group:		Editors
@@ -34,6 +34,9 @@ make install DESTDIR=%{buildroot} prefix=%{_prefix} mandir=%{_mandir} \
 %{_mandir}/man1/mg.1.*
 
 %changelog
+* Sat Jun 09 2018 Igor Vlasenko <viy@altlinux.ru> 20170828-alt1_2
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20170401-alt1_3
 - update to new release by fcimport
 
