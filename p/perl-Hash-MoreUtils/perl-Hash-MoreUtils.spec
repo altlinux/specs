@@ -16,7 +16,7 @@ BuildRequires: perl(Module/Build.pm)
 %define _enable_test 1
 
 Name: perl-Hash-MoreUtils
-Version: 0.05
+Version: 0.06
 Release: alt1
 
 Summary: Provide the stuff missing in Hash::Util
@@ -28,7 +28,7 @@ Url: %CPAN %m_distro
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RE/REHSACK/Hash-MoreUtils-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RE/REHSACK/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Nov 19 2009
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
@@ -38,7 +38,7 @@ Similar to "List::MoreUtils", "Hash::MoreUtils"
 contains trivial but commonly-used functionality for hashes.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -48,9 +48,13 @@ contains trivial but commonly-used functionality for hashes.
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
+%doc README.md Changes
 %perl_vendor_privlib/Hash/*
 
 %changelog
+* Sat Jun 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- automated CPAN update
+
 * Tue Dec 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - automated CPAN update
 
