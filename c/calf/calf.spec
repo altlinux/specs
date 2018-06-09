@@ -3,7 +3,7 @@
 
 Name: calf
 Version: 0.90.0
-Release: alt1
+Release: alt1.1
 
 Summary: Audio plugins pack
 Group: Sound
@@ -77,6 +77,7 @@ extensions.
 %ifarch x86_64 %ix86
 	--enable-sse
 %endif
+
 %make_build
 
 %install
@@ -105,6 +106,9 @@ extensions.
 
 
 %changelog
+* Sat Jun 09 2018 Yuri N. Sedunov <aris@altlinux.org> 0.90.0-alt1.1
+- rebuilt for aarch64
+
 * Sat Apr 21 2018 Yuri N. Sedunov <aris@altlinux.org> 0.90.0-alt1
 - 0.90.0-38-gb6513eb
 
