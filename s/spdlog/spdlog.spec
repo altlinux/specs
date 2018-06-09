@@ -1,5 +1,5 @@
 Name: spdlog
-Version: 0.13.0
+Version: 0.17.0
 Release: alt1
 
 Summary: Super fast C++ logging library
@@ -41,6 +41,9 @@ cp -pvR include/spdlog %buildroot%_includedir/
 %_includedir/spdlog/
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.17.0-alt1
+- new version 0.17.0 (with rpmrb script)
+
 * Sun Jul 23 2017 Vitaly Lipatov <lav@altlinux.ru> 0.13.0-alt1
 - new version 0.13.0 (with rpmrb script)
 
