@@ -1,6 +1,6 @@
 # Wait: https://github.com/haiwen/seafile/issues/1842
 Name: seafile
-Version: 6.1.7
+Version: 6.1.8
 Release: alt1
 
 Summary: Full-fledged cloud storage platform
@@ -114,6 +114,9 @@ cp %SOURCE1 .
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 6.1.8-alt1
+- new version 6.1.8 (with rpmrb script)
+
 * Fri Apr 06 2018 Vitaly Lipatov <lav@altlinux.ru> 6.1.7-alt1
 - new version 6.1.7 (with rpmrb script)
 - drop obsoleted buildreq libevhtp-seafile-devel (used in seafile-server only)
