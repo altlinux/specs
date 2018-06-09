@@ -3,7 +3,7 @@
 Summary: Convolution engine library
 Name: zita-convolver
 Version: 3.1.0
-Release: alt1
+Release: alt1.1
 License: GPLv3+
 Group: System/Libraries
 Url: http://kokkinizita.linuxaudio.org/
@@ -49,5 +49,8 @@ ln -s lib%name.so.%version %buildroot%_libdir/lib%name.so.%libmajor
 %_libdir/lib%name.so
 
 %changelog
+* Sat Jun 09 2018 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt1.1
+- Rebuilt for aarch64
+
 * Thu May 18 2017 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt1
 - Initial build for ALT Linux Sisyphus.
