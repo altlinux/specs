@@ -1,5 +1,5 @@
 %define oname libressl
-%define libtls_sover 17
+%define libtls_sover 18
 
 # to avoid colission with OpenSSL pkgconfig provides
 %filter_from_provides /^pkgconfig(libcrypto)/d
@@ -9,7 +9,7 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 2.7.4
+Version: 2.8.2
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
@@ -249,6 +249,9 @@ gzip -9 %buildroot%docdir/ChangeLog
 %_man1dir/netcat.*
 
 %changelog
+* Sat Oct 20 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.8.2-alt1
+- 2.8.2
+
 * Thu Aug 09 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.4-alt1
 - 2.7.4
 
