@@ -34,7 +34,7 @@ AutoReqProv: no
 
 Name: %{pkg}
 Version: %{ver}
-Release: alt1
+Release: alt2
 License: GPL
 URL: http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
 Group: System/Configuration/Hardware
@@ -78,5 +78,8 @@ make install-strip DESTDIR=%buildroot pkgdatadir=%_datadir
 %_datadir/cups/model/%name
 
 %changelog
+* Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.20-alt2
+- Increate release number to fix conflict with autoimports.
+
 * Thu Jun 07 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.20-alt1
 - Initial build in Sisyphus (imported from epson-inkjet-printer-escpr-1.6.20-1lsb3.2.src.rpm)
