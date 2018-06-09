@@ -1,7 +1,7 @@
 %define modulename spake2
 
 Name: python3-module-spake2
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: SPAKE2 password-authenticated key exchange (pure python)
@@ -58,5 +58,8 @@ message is 33 bytes long.
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt1
+- new version 0.8 (with rpmrb script)
+
 * Sun Dec 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
 - Initial build for ALT Sisyphus
