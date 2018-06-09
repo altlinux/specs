@@ -2,12 +2,13 @@
 
 Name: clementine
 Version: 1.3.1
-Release: alt6
+Release: alt7
+
 Summary: A music player and library organiser
 
 Group: Sound
 License: %lgpl3only
-Url: http://code.google.com/p/clementine-player
+Url: https://www.clementine-player.org/
 
 Source0: %name-%version.tar.gz
 Patch1: %name-1.3.0-alt-sqlite-fts3.patch
@@ -15,12 +16,13 @@ Patch2: %name-1.3.1-alt-disable-vk.patch
 Patch3: %name-1.3.1-alt-gcc-compat.patch
 Patch4: %name-1.3.1-chromaprint1.4.patch
 Patch5: %name-1.3.1-alt-gcc7-header-deps.patch
+Patch6: %name-1.3.1-libcryptopp-6.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: boost-devel-headers cmake gcc-c++ libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libgio-devel libglew-devel libgpod-devel liblastfm-devel libmtp-devel libqt4-opengl libqt4-sql libqt4-webkit libqt4-xmlpatterns libtag-devel libxkbfile-devel python-module-sip qt4-designer subversion
 BuildRequires: gstreamer%{gst_api_ver}-devel gst-plugins%gst_api_ver-devel gstreamer%gst_api_ver-utils
 BuildRequires: libchromaprint-devel
-BuildRequires: libcryptopp-devel
+BuildRequires: libcryptopp-devel >= 6
 # SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER is available since 3.12
 BuildRequires: libsqlite3-devel >= 3.12
 BuildRequires: libpulseaudio-devel
@@ -49,6 +51,7 @@ advantage of Qt4.
 %patch3 -p2
 %patch4 -p1
 %patch5 -p2
+%patch6 -p1
 
 %build
 %K4build -DSTATIC_SQLITE=on -DBUILD_WERROR=off
@@ -69,6 +72,9 @@ advantage of Qt4.
 
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt7
+- NMU: autorebuild with libcryptopp-6.1.0
+
 * Wed Feb 21 2018 Vladimir Didenko <cow@altlinux.org> 1.3.1-alt6
 - fix build with gcc7
 

@@ -1,8 +1,8 @@
 %define oname pycryptopp
 
 Name: python-module-%oname
-Version: 0.6.0
-Release: alt3.git20130916.2.1
+Version: 0.7.1
+Release: alt1
 
 Summary: Python wrappers for a few algorithms from the Crypto++ library
 License: GPLv2+ or other (see copyright)
@@ -10,10 +10,14 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/pycryptopp/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/tahoe-lafs/pycryptopp.git
+# Source-git: https://github.com/tahoe-lafs/pycryptopp.git
 Source: %name-%version.tar
 
-BuildPreReq: gcc-c++ libcryptopp-devel git-core
+# fix build with libcryptopp >= 6 https://gist.github.com/skydrome/bb9665fc0b449167bb25a57b45829ca8
+Patch1: libcryptopp-6.patch
+
+BuildPreReq: gcc-c++ git-core
+BuildPreReq: libcryptopp-devel >= 6
 BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-ecdsa python-module-ed25519
 
@@ -37,12 +41,13 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch1
 
 sed -i 's|@VERSION@|%version|' \
 	src/pycryptopp/publickey/ed25519/_version.py
-git config --global user.email "real at altlinux.org"
-git config --global user.name "REAL"
 git init-db
+git config user.email "real at altlinux.org"
+git config user.name "REAL"
 git add . -A
 git commit -a -m "%oname-%version"
 git tag %oname-%version -m "%oname-%version"
@@ -52,6 +57,7 @@ git tag %oname-%version -m "%oname-%version"
 
 %install
 %python_install
+rm -rf %_docdir/pycryptopp/
 
 %check
 python setup.py test
@@ -67,6 +73,10 @@ python setup.py test
 %python_sitelibdir/*/bench
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.7.1-alt1
+- build new version
+- rebuild with libcryptopp-6.1.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6.0-alt3.git20130916.2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

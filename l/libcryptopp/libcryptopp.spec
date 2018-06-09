@@ -2,7 +2,7 @@
 
 %define oname	cryptopp
 Name: libcryptopp
-Version: 5.6.5
+Version: 6.1.0
 Release: alt1
 
 # convert 5.6.2 -> 562 format
@@ -81,7 +81,7 @@ rm -f GNUmakefile
 %endif
  %make_build
 %else
- %make_build CXXFLAGS="%optflags %optflags_shared" PREFIX=%prefix static dynamic cryptest.exe
+ %make_build LDLIBS="-lpthread" CXXFLAGS="%optflags %optflags_shared" PREFIX=%prefix static dynamic cryptest.exe
 %endif
 
 
@@ -130,6 +130,9 @@ EOF
 %_datadir/cryptopp/
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 6.1.0-alt1
+- new version 6.1.0 (with rpmrb script)
+
 * Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 5.6.5-alt1
 - new version 5.6.5 (with rpmrb script)
 - return to native build

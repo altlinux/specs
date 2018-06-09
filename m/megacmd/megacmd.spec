@@ -1,6 +1,6 @@
 Name: megacmd
 Version: 0.9.7
-Release: alt1
+Release: alt2
 
 Summary: Command Line Interactive and Scriptable Application to access MEGA
 
@@ -60,5 +60,8 @@ cp -a %_datadir/libmegasdk/m4/ sdk/
 %doc README.md LICENSE
 
 %changelog
+* Sun Jun 10 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt2
+- rebuild with libmegasdk-devel 3.3.8
+
 * Sat Dec 23 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt1
 - Initial build for Sisyphus

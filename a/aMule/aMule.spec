@@ -2,7 +2,7 @@
 %define		_rc	rc8
 Name:		aMule
 Version:	2.3.2
-Release:	alt2
+Release:	alt3
 
 Summary:	aMule - eMule client.
 License:	GPL
@@ -17,10 +17,12 @@ Conflicts:	xmule
 
 Patch2:		%name-2.0.0%_rc-alt-up-down-ratio.patch
 Patch3:		%name-2.3.1-alt-wxGTK3.1-gcc4.9.patch
+Patch4:		aMule-2.3.2-libcryptopp-6.patch
 
 # Automatically added by buildreq on Mon Jun 16 2008
-BuildRequires: flex gcc gcc-c++ imake libcryptopp-devel libpng-devel libreadline-devel libwxGTK-devel xorg-cf-files
-BuildRequires: libupnp-devel
+BuildRequires: flex gcc gcc-c++ imake libpng-devel libreadline-devel libwxGTK-devel xorg-cf-files
+BuildRequires: libcryptopp-devel >= 6
+BuildRequires: libupnp-devel binutils-devel
 
 #BuildRequires: rpm-build-compat >= 0.95
 
@@ -40,6 +42,7 @@ for multiplatform support.
 %__subst "s,#include <wx/strconv\.h>,#include <wx/strconv\.h>\n#include <wx/intl\.h>," src/utils/aLinkCreator/src/ed2khash.cpp
 #patch2 -p1
 #patch3 -p0
+%patch4 -p2
 
 
 %build
@@ -79,6 +82,10 @@ for multiplatform support.
 %dir %_docdir/amule
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt3
+- NMU: autorebuild with libcryptopp-6.1.0
+- add binutils-devel BR
+
 * Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt2
 - NMU: autorebuild with libcryptopp-5.6.5
 
