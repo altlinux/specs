@@ -1,6 +1,6 @@
 Name:    ruby-libvirt
 Version: 0.7.1
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby bindings for libvirt
 License: LGPLv2+
@@ -51,5 +51,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.1-alt1.1
+- Rebuild for aarch64.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.1-alt1
 Initial build for Sisyphus.
