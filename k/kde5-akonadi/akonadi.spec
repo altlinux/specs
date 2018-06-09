@@ -4,7 +4,7 @@
 
 Name: kde5-%rname
 Version: 18.04.1
-Release: alt3%ubt
+Release: alt4%ubt
 %K5init altplace
 
 Group: Databases
@@ -22,6 +22,7 @@ Patch3: alt-mysql-paths.patch
 Patch4: alt-mysqlcheck-detached.patch
 Patch5: alt-own-mysql-install-db.patch
 Patch6: alt-find-resources.patch
+Patch7: alt-find-mysql-global-conf.patch
 
 # Automatically added by buildreq on Mon Apr 25 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms libxml2-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs shared-mime-info xml-utils
@@ -149,6 +150,7 @@ KF5 library
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 %K5build \
@@ -162,7 +164,7 @@ KF5 library
 %K5install
 %K5install_move data kdevappwizard
 
-install -m 0755 %SOURCE10 %buildroot/%_K5bin/akonadi5_mysql_install_db
+install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi5_mysql_install_db
 mv %buildroot/%_K5xdgmime/akonadi{,5}-mime.xml
 
 mkdir -p %buildroot/%_K5srv/akonadi/contact
@@ -209,7 +211,7 @@ done
 %files database-5-postgresql
 %files database-8-mysql
 %config(noreplace) %_K5xdgconf/akonadi/mysql-*.conf
-%_K5bin/akonadi5_mysql_install_db
+%_bindir/akonadi5_mysql_install_db
 
 %files common -f %name.lang
 %dir %_K5plug/akonadi/
@@ -267,6 +269,9 @@ done
 %endif
 
 %changelog
+* Sat Jun 09 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt4%ubt
+- fix initialize mysql database
+
 * Fri Jun 08 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt3%ubt
 - fix apply last fix
 
