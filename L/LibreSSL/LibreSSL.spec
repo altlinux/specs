@@ -1,7 +1,7 @@
 %define oname libressl
-%define libcrypto_sover 45
-%define libssl_sover 47
-%define libtls_sover 19
+%define libcrypto_sover 46
+%define libssl_sover 48
+%define libtls_sover 20
 
 # to avoid colission with OpenSSL pkgconfig provides
 %filter_from_provides /^pkgconfig(libcrypto)/d
@@ -11,8 +11,8 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 3.0.2
-Release: alt2
+Version: 3.1.0
+Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
 
@@ -30,9 +30,8 @@ Patch2: 0002-ALT-netcat-proxy_pass.patch
 Patch3: 0003-ALT-netcat-usage.patch
 Patch4: 0004-ALT-openssl-manpage.patch
 Patch5: 0005-ALT-OPENSSLDIR.patch
-Patch6: 0006-ALT-devel-manpages.patch
-Patch7: 0007-ALT-Do-not-build-tests-since-they-use-static-librari.patch
-Patch8: 0008-SUSE-extra-symver.patch
+Patch6: 0006-ALT-Do-not-build-tests-since-they-use-static-librari.patch
+Patch7: 0007-SUSE-ALT-extra-symver.patch
 
 %define common_descr \
 LibreSSL is a version of the TLS/crypto stack forked from OpenSSL in\
@@ -74,26 +73,22 @@ Conflicts: openssl-doc
 
 This package contains documantation pages for %name
 
-# change package name in the next major
-%package -n libcrypto-LibreSSL
-#package -n libcrypto%libcrypto_sover
+%package -n libcrypto%libcrypto_sover
 Summary: LibreSSL libcrypto shared library
 Group: Security/Networking
+Obsoletes: libcrypto-LibreSSL < %version
 
-%description -n libcrypto-LibreSSL
-#description -n libcrypto%libcrypto_sover
+%description -n libcrypto%libcrypto_sover
 %common_descr
 
 LibreSSL libcrypto shared library
 
-# change package name in the next major
-%package -n libssl-LibreSSL
-#package -n libssl%libssl_sover
+%package -n libssl%libssl_sover
 Summary: LibreSSL libssl shared library
 Group: Security/Networking
+Obsoletes: libssl-LibreSSL < %version
 
-%description -n libssl-LibreSSL
-#description -n libssl%libssl_sover
+%description -n libssl%libssl_sover
 %common_descr
 
 LibreSSL libssl shared library
@@ -233,8 +228,7 @@ xz %buildroot%docdir/ChangeLog
 %_man3dir/*
 %exclude %_man3dir/tls_*
 
-%files -n libcrypto-LibreSSL
-#files -n libcrypto%libcrypto_sover
+%files -n libcrypto%libcrypto_sover
 %dir %docdir
 %doc %docdir/*
 
@@ -245,8 +239,7 @@ xz %buildroot%docdir/ChangeLog
 %_libdir/libcrypto.so.%libcrypto_sover
 %_libdir/libcrypto.so.%libcrypto_sover.*
 
-%files -n libssl-LibreSSL
-#files -n libssl%libssl_sover
+%files -n libssl%libssl_sover
 %dir %docdir
 %_libdir/libssl.so.%libssl_sover
 %_libdir/libssl.so.%libssl_sover.*
@@ -275,6 +268,9 @@ xz %buildroot%docdir/ChangeLog
 %_man1dir/netcat.1*
 
 %changelog
+* Thu Apr 09 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.1.0-alt1
+- Updated to 3.1.0.
+
 * Sun Dec 01 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.2-alt2
 - Packed manpages:
   + ocspcheck.8 to ocspcheck subpackage;
