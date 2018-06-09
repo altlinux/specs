@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.8
-Release: alt1.1
+Version: 0.5.6
+Release: alt1
 
 Summary: A Python MessagePack (de)serializer
 
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.5.6-alt1
+- new version 0.5.6 (with rpmrb script)
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.8-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
