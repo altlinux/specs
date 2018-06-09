@@ -2,7 +2,7 @@
 
 Name:    ruby-cfpropertylist
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: Read, write and manipulate both binary and XML property lists as defined by apple
 License: MIT
@@ -16,6 +16,9 @@ Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
+# For tests
+BuildRequires: ruby-nokogiri
+BuildRequires: libxml-ruby
 
 %description
 CFPropertyList implementation class to read, manipulate and write both
@@ -56,5 +59,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt2
+- Rebuild with tests.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
 - Initial build for Sisyphus
