@@ -20,7 +20,7 @@
 
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
-Version: 5.4.12
+Version: 5.4.13
 Release: alt1%ubt
 License: Apache
 Group: System/Servers
@@ -45,6 +45,7 @@ BuildRequires: scons
 BuildRequires: java-1.8.0-openjdk-devel rpm-build-java ws-commons-util xmlrpc-common xmlrpc-client
 BuildRequires: zlib-devel
 BuildRequires: npm
+BuildRequires: ronn
 
 ################################################################################
 # Main Package
@@ -291,6 +292,7 @@ Configures an OpenNebula node providing kvm.
 
 %build
 export PATH="$PATH:$PWD/src/sunstone/public/node_modules/grunt/bin"
+export npm_config_devdir="$PWD/src/sunstone/public/node_modules/.node-gyp"
 
 pushd src/sunstone/public
 npm rebuild
@@ -299,9 +301,15 @@ popd
 # Compile OpenNebula
 scons -j2 mysql=yes new_xmlrpc=yes sunstone=yes
 
+# build man pages
+pushd share/man
+./build.sh
+popd
+
 #../build_opennebula.sh
-cd src/oca/java
+pushd src/oca/java
 ./build.sh -d
+popd
 
 %install
 export DESTDIR=%buildroot
@@ -613,6 +621,7 @@ fi
 %_libexecdir/one/ruby/VirtualMachineDriver.rb
 %_libexecdir/one/sh/*
 
+%_man1dir/*
 %doc LICENSE NOTICE
 
 %dir %attr(0750, oneadmin, oneadmin) %_sharedstatedir/one
@@ -678,6 +687,11 @@ fi
 ################################################################################
 
 %changelog
+* Sat Jun 09 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.13-alt1%ubt
+- 5.4.13
+- build man pages
+- add Restart=on-failure for services
+
 * Sat May 12 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.12-alt1%ubt
 - 5.4.12
 
