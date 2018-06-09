@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-dialog
-Version: 3.3.0
-Release: alt1.1.1
+Version: 3.4.0
+Release: alt1
 
 Summary: Python interface to the Unix dialog utility
 
@@ -80,6 +80,9 @@ popd
 %python_sitelibdir/python2_pythondialog-*.egg-info
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt1
+- new version 3.4.0 (with rpmrb script)
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
