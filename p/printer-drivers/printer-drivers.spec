@@ -1,6 +1,6 @@
 Name: printer-drivers
 Version: 3.0
-Release: alt5.1
+Release: alt6
 
 Summary: printing subsystem
 License: GPL
@@ -15,11 +15,13 @@ Group: Publishing
 #base
 Requires: cups ghostscript-classic foomatic-db foomatic-db-engine foomatic-filters 
 #big projects
-Requires: foo2zjs hplip-hpijs hplip-hpcups gutenprint-foomatic
+Requires: foo2zjs hplip-hpijs hplip-hpcups gutenprint-cups
 #ijs drivers
 Requires: epsoneplijs
 #cups drivers
 Requires: printer-driver-splix printer-driver-ptouch
+# 3rd party
+Requires: epson-inkjet-printer-escpr
 #filters
 Requires: c2070 c2050 pbm2l7k pbm2l2030 pbm2lwxl m2300w lz11-V2 cjet pnm2ppa ppmtomd min12xxw
 
@@ -28,7 +30,6 @@ Obsoletes: %name-utils
 
 Provides: ghostscript-drivers = 2008
 Obsoletes: ghostscript-drivers
-
 
 %package X11
 Summary: printing subsystem with X Window support
@@ -49,8 +50,11 @@ This is a virtual package to get printing subsystem with X11 printing utils
 
 %files X11
 
-
 %changelog
+* Thu Jun 07 2018 Andrey Cherepanov <cas@altlinux.org> 3.0-alt6
+- Replace deprecated gutenprint-foomatic by gutenprint-cups.
+- Add epson-inkjet-printer-escpr.
+
 * Tue Dec 04 2012 Igor Vlasenko <viy@altlinux.ru> 3.0-alt5.1
 - NMU: corrected hplip dependencies (closes: 28173)
 
