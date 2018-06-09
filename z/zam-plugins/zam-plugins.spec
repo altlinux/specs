@@ -2,7 +2,7 @@
 
 Name: zam-plugins
 Version: 3.10
-Release: alt1
+Release: alt1.1
 
 Summary: A collection of LV2/LADSPA/JACK audio plugins
 Group: Sound
@@ -90,6 +90,9 @@ rm -rf %buildroot%_libdir/vst %buildroot/*-dssi*
 %doc README.md
 
 %changelog
+* Sat Jun 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.10-alt1.1
+- rebuilt for aarch64
+
 * Wed Jun 06 2018 Yuri N. Sedunov <aris@altlinux.org> 3.10-alt1
 - first build on Sisyphus (based on fc 3.10-3)
 
