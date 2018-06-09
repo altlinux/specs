@@ -7,12 +7,11 @@ Summary(ru_RU.UTF8): Открытая SCADA система
 Summary(uk_UA.UTF8): Відкрита SCADA система
 Summary(de_DE.UTF8): Open SCADA-System
 Name: openscada
-Version: 0.8.19
+Version: 0.8.20
 Release: alt1
 Source: openscada-%version.tar
 Source1: openscada-res.tar.lzma
 Source2: oscada_ALT.init
-Patch: Remove-not-using-QTStarter-StApp-check.patch
 License: GPLv2
 Group: Graphics
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -1138,7 +1137,6 @@ Das Paket %{name}-Special.FLibSYS - bibliothek mit System-API für spezifische P
 %prep
 %setup -q -n %srcname
 %setup -T -D -a 1 -n %srcname
-%patch -p2
 
 %build
 %autoreconf
@@ -1530,6 +1528,9 @@ sed -i 's|/usr/lib|%_libdir|' %buildroot/%_sysconfdir/oscada*.xml
 
 
 %changelog
+* Thu Jun 07 2018 Anton Midyukov <antohami@altlinux.org> 0.8.20-alt1
+- The build of 0.8.20 main update to the production release
+
 * Sun Jan 21 2018 Anton Midyukov <antohami@altlinux.org> 0.8.19-alt1
 - The build of 0.8.19 main update to the production release
 
