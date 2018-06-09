@@ -1,5 +1,5 @@
 Name: matrix-synapse
-Version: 0.26.0
+Version: 0.29.1
 Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
@@ -45,6 +45,10 @@ BuildRequires: python-module-lxml
 BuildRequires: python-module-msgpack
 BuildRequires: python-module-jsonschema >= 2.5.1
 BuildRequires: python-module-phonenumbers >= 8.2.0
+
+# for /usr/lib/matrix-synapse/sync_room_to_group.pl
+BuildRequires: perl-CPAN
+BuildRequires: perl-JSON-XS
 
 Requires: python-module-twisted-conch >= 17.5.0
 Requires: python-module-twisted-names >= 17.5.0
@@ -99,6 +103,8 @@ fi
 %_libexecdir/%name/register_new_matrix_user
 %_libexecdir/%name/synapse_port_db
 %_libexecdir/%name/synctl
+%_libexecdir/%name/move_remote_media_to_new_store.py
+%_libexecdir/%name/sync_room_to_group.pl
 %_sbindir/synctl
 %_unitdir/synapse.service
 %_tmpfilesdir/%name.conf
@@ -110,6 +116,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.29.1-alt1
+- new version 0.29.1 (with rpmrb script)
+
 * Wed Feb 07 2018 Vitaly Lipatov <lav@altlinux.ru> 0.26.0-alt1
 - new version 0.26.0 (with rpmrb script)
 
