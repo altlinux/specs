@@ -3,7 +3,7 @@
 
 %define modulename canonicaljson
 Name: python-module-canonicaljson
-Version: 1.0.0
+Version: 1.1.3
 Release: alt1
 
 Summary: Canonical JSONs
@@ -94,6 +94,9 @@ popd
 
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 1.1.3-alt1
+- new version 1.1.3 (with rpmrb script)
+
 * Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - initial build for ALT Sisyphus
 
