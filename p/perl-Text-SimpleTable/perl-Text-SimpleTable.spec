@@ -12,7 +12,7 @@
 %def_enable test
 
 Name: perl-Text-SimpleTable
-Version: 2.04
+Version: 2.05
 Release: alt1
 
 Summary: %m_name - Simple Eyecandy ASCII Tables
@@ -34,7 +34,11 @@ Simple eyecandy ASCII tables, as seen in Catalyst.
 
 %prep
 %setup -q -n %{module}-%{version}
+# old Test2; remove me after Test2 update
+rm t/05tables_cjk.t
+
 %build
+export LANG=en_US.UTF-8
 %perl_vendor_build
 
 %install
@@ -46,6 +50,9 @@ Simple eyecandy ASCII tables, as seen in Catalyst.
 %doc Changes README
 
 %changelog
+* Sat Jun 09 2018 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1
+- automated CPAN update
+
 * Sat Mar 24 2018 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1
 - automated CPAN update
 
