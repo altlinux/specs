@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 0.8.6
-Release: alt1
+Release: alt2
 
 Summary: A Fast, Enjoyable HTML Parser for Ruby
 Group: Development/Ruby
@@ -66,6 +66,9 @@ LANG=en_US.UTF-8 %ruby_test_unit -Iext/hpricot_scan:ext/fast_xs:lib test/test_*
 %ruby_ri_sitedir/*
 
 %changelog
+* Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 0.8.6-alt2
+- Build ro aarch64.
+
 * Wed May 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.8.6-alt1
 - new version 0.8.6
 
