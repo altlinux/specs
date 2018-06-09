@@ -1,6 +1,6 @@
 Name: zopfli
 Version: 1.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Zlib compatible better compressor
 
@@ -103,6 +103,9 @@ ln -s libzopflipng.so.%version %buildroot%_libdir/libzopflipng.so.1
 
 
 %changelog
+* Sun Jun 10 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt1.1
+- Rebuild for aarch64.
+
 * Tue Jun 05 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
 - new version 1.0.2 (with rpmrb script)
 - add libzopfli and libzopfli-devel subpackages (ALT bug 34993)
