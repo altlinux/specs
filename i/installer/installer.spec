@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.40
+Version: 1.8.41
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,10 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Jun 08 2018 Sergey Bubnov <omg@altlinux.org> 1.8.41-alt1
+- Wait for DHCP responce when `curl=` is in kernel parameters
+  (closes: #26813)
+
 * Fri Dec 08 2017 Mikhail Efremov <sem@altlinux.org> 1.8.40-alt1
 - Remove DRM modules if Xorg server is not present.
 - Drop autofs4 from initrd.
