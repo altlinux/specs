@@ -1,5 +1,5 @@
 Name: pve-spice-client
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1%ubt
 
 Summary: PVE Spice Client
@@ -35,6 +35,9 @@ Spice remote viewer launcher
 %_desktopdir/*
 
 %changelog
+* Sat Jun 09 2018 Maxim Voronov <mvoronov@altlinux.org> 1.2.1-alt1%ubt
+- fixed segmentation fault on quit with new server
+
 * Fri Mar 30 2018 Maxim Voronov <mvoronov@altlinux.org> 1.2.0-alt1%ubt
 - new version
 
