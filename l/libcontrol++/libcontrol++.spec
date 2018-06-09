@@ -1,18 +1,23 @@
-Name: control++
-Version: 0.9.1
+Name: libcontrol++
+Version: 0.10.0
 Release: alt1
 
-Summary: System configuration tool
+Summary: control++ common classes and functions library
 License: GPLv3
-Group: System/Configuration/Other
+Group: Development/Other
 Url: https://www.altlinux.org/Control++
 
 Packager: Alexey Appolonov <alexey@altlinux.org>
 
-# http://git.altlinux.org/people/alexey/packages/?p=controlplusplus.git
+# http://git.altlinux.org/people/alexey/packages/?p=libcontrolplusplus.git
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
+
+%define libcontrol++_desc \
+libcontrol++ provides common classes and functions,\
+that can be used in other app\
+(such as ini-parser or file-operations).
 
 %description
 control++ is a simple system configuration tool
@@ -21,19 +26,7 @@ set permission modes and, in perspective,
 perform other administrative operations.
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# libcontrol++
-
-%package -n libcontrol++
-Summary: control++ common classes and functions library
-Group: Development/Other
-
-%define libcontrol++_desc \
-libcontrol++ provides common classes and functions,\
-that can be used in other app\
-(such as ini-parser or file-operations).
-
-%description -n libcontrol++
-%libcontrol++_desc
+# libcontrol++-devel
 
 %package -n libcontrol++-devel
 Summary: libcontrol++ headers
@@ -53,38 +46,28 @@ Development package for libcontrol++.
 mkdir -p bin/Release
 mkdir -p obj/Release
 %make_build -C libcontrol++/ release
-export CFLAGS="-iquote ../libcontrol++/src"
-%make_build -C control++/ release LDFLAGS="-L../libcontrol++/bin/Release/ -lcontrol++"
 
 %install
-mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_libdir
 mkdir -p %buildroot%_includedir/libcontrol++
-mkdir -p %buildroot%_docdir/%name
-mkdir -p %buildroot%_sysconfdir/%name
 # Executables
-cp control++/bin/Release/%name %buildroot%_bindir
 cp libcontrol++/bin/Release/libcontrol++.so %buildroot%_libdir
 # Includes
 cp libcontrol++/src/*.h %buildroot%_includedir/libcontrol++
-# Configuration
-cp -r samples/* %buildroot%_sysconfdir/%name
-# Documentation
-cp COPYING %buildroot%_defaultdocdir/%name/
-cp usage.txt %buildroot%_defaultdocdir/%name/
 
 %files
-%_bindir/%name
-%_sysconfdir/%name
-%_defaultdocdir/%name/
-
-%files -n libcontrol++
 %_libdir/*.so
 
 %files -n libcontrol++-devel
 %_includedir/libcontrol++/
 
 %changelog
+* Sat Jun 09 2018 Alexey Appolonov <alexey@altlinux.org> 0.10.0-alt1
+- Revised PrintOnEntireLine function.
+
+* Sat Jun 09 2018 Alexey Appolonov <alexey@altlinux.org> 0.9.1-alt2
+- libcontrol++ is a separate package now.
+
 * Sat Jun 02 2018 Alexey Appolonov <alexey@altlinux.org> 0.9.1-alt1
 - Memory leakage fix.
 
