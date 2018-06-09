@@ -51,7 +51,7 @@
 
 Name:    samba-DC
 Version: 4.7.7
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -146,6 +146,7 @@ Samba is the standard Windows interoperability suite of programs for Linux and U
 Summary: Samba client programs
 Group: Networking/Other
 Requires: %name-common = %version-%release
+Requires: %name-common-tools = %version-%release
 Requires: %name-libs = %version-%release
 %if_with libsmbclient
 Requires: libsmbclient-DC = %version-%release
@@ -199,6 +200,15 @@ Group: System/Libraries
 %description common-libs
 The %rname-common-libs package contains the common libraries needed by modules that
 link against the SMB, RPC and other protocols provided by the Samba suite.
+
+%package common-tools
+Summary: Tools for Samba servers and clients
+Group: System/Servers
+Requires: %name-libs = %version-%release
+
+%description common-tools
+The %rname-common-tools package contains tools for Samba servers and
+SMB/CIFS clients.
 
 %package -n libsmbclient-DC
 Summary: The SMB client library
@@ -861,6 +871,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_man5dir/smbgetrc.5*
 %exclude %_man1dir/smbtar.1*
 %_man1dir/smbtree.1*
+%_man5dir/smbpasswd.5*
 %_man8dir/smbpasswd.8*
 %_man8dir/smbspool.8*
 %_man8dir/smbspool_krb5_wrapper.8*
@@ -912,14 +923,8 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libldb-cmdline.so
 %endif
 
-%files common -f net.lang
+%files common
 %_tmpfilesdir/%rname.conf
-%_bindir/mvxattr
-%_bindir/net
-%_bindir/pdbedit
-%_bindir/profiles
-%_bindir/smbcontrol
-%_bindir/testparm
 %config(noreplace) %_sysconfdir/logrotate.d/samba
 %config(noreplace) %_sysconfdir/security/limits.d/90-samba.conf
 %attr(0700,root,root) %dir /var/log/samba
@@ -933,17 +938,26 @@ TDB_NO_FSYNC=1 %make_build test
 %config(noreplace) %_sysconfdir/samba/lmhosts
 %config(noreplace) %_sysconfdir/sysconfig/samba
 %if_with doc
+%_man5dir/lmhosts.5*
+%_man5dir/smb.conf.5*
+%_man7dir/samba.7*
+%endif #doc
+
+%files common-tools -f net.lang
+%_bindir/mvxattr
+%_bindir/net
+%_bindir/pdbedit
+%_bindir/profiles
+%_bindir/smbcontrol
+%_bindir/testparm
+%if_with doc
 %_man1dir/mvxattr.1*
 %_man1dir/profiles.1*
 %_man1dir/smbcontrol.1*
 %_man1dir/testparm.1*
-%_man5dir/lmhosts.5*
-%_man5dir/smb.conf.5*
-%_man5dir/smbpasswd.5*
-%_man7dir/samba.7*
 %_man8dir/net.8*
 %_man8dir/pdbedit.8*
-%endif
+%endif #doc
 
 # common libraries
 %_samba_mod_libdir/libpopt-samba3-samba4.so
@@ -1373,6 +1387,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Jun 08 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.7.7-alt2%ubt
+- Split samba-DC-common to separate samba-DC-common-tools
+- Fix build against new python Sisyphus release with libnsl2
+
 * Thu Apr 19 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.7.7-alt1%ubt
 - Update to first spring release of Samba 4.7
 

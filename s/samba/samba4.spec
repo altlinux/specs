@@ -43,7 +43,7 @@
 
 Name: samba
 Version: 4.7.7
-Release: alt1%ubt
+Release: alt2%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -155,7 +155,7 @@ of SMB/CIFS shares and printing to SMB/CIFS printers.
 Summary: Samba client libraries
 Group: Networking/Other
 Conflicts: samba-common < %version-%release
-Requires(pre): %name-common = %version-%release
+Requires(pre): %_sysconfdir/samba/smb.conf
 
 %description client-libs
 The samba-client-libs package contains internal libraries needed by the
@@ -176,7 +176,7 @@ packages of Samba.
 %package common-libs
 Summary: Libraries used by both Samba servers and clients
 Group: System/Libraries
-Requires(pre): %name-common = %version-%release
+Requires(pre): %_sysconfdir/samba/smb.conf
 Requires: %name-client-libs = %version-%release
 %if_with libwbclient
 Requires: libwbclient = %version-%release
@@ -270,7 +270,7 @@ Summary: The SMB client library
 Group: System/Libraries
 Provides: libsmbclient4 = %version-%release
 Obsoletes: libsmbclient4 < %version-%release
-Requires(pre): %name-common = %version-%release
+Requires(pre): %_sysconfdir/samba/smb.conf
 Requires: %name-client-libs = %version-%release
 
 %description -n libsmbclient
@@ -1410,6 +1410,10 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Fri Jun 08 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.7.7-alt2%ubt
+- Avoid client libraries requires to samba-common
+- Fix build against new python Sisyphus release with libnsl2
+
 * Wed Apr 18 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.7.7-alt1%ubt
 - Update to first spring release of Samba 4.7
 
