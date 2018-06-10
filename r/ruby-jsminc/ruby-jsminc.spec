@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 2.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: A fast JavaScript minifier written in C (by Douglas Crockford)
 License: MIT
@@ -53,5 +53,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sun Jun 10 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1.1
+- Rebuild for aarch64.
+
 * Mon Jun 04 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus
