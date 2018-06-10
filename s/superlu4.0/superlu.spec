@@ -4,13 +4,14 @@
 %define sover %somver.2.0
 Name: %oname%over
 Version: 4.3
-Release: alt5
+Release: alt6
+
 Summary: A set of subroutines to solve a sparse linear system A*X=B
 License: BSD-like
 Group: Sciences/Mathematics
-Url: http://acts.nersc.gov/superlu/
 
-Source: %{oname}_%version.tar.gz
+Url: http://acts.nersc.gov/superlu/
+Source: %{oname}_%version.tar
 Source1: http://www.netlib.org/clapack/what/testing/matgen/clatm1.c
 Source2: http://www.netlib.org/clapack/what/testing/matgen/zlatm1.c
 Source3: http://www.netlib.org/clapack/CLAPACK-3.1.1/TESTING/MATGEN/blaswrap.h
@@ -20,7 +21,7 @@ Requires: lib%name = %version-%release
 
 BuildRequires: gcc-fortran gcc-c++ liblapack-devel
 BuildRequires: csh doxygen graphviz ghostscript-utils
-#BuildPreReq: texlive-latex-recommended texlive-extra-utils
+#BuildRequires: texlive-latex-recommended texlive-extra-utils
 
 %description
 SuperLU contains a set of subroutines to solve a sparse linear system
@@ -83,10 +84,10 @@ mkdir lib
 %build
 sed -i "s|(HOME)|$PWD|" make.inc
 sed -i "s|(LIBDIR)|%_libdir|" make.inc
-%ifarch %arm e2k
+%ifarch %arm %e2k
 sed -i "s|-lopenblas|-lblas|" make.inc
 %endif
-%ifarch e2k
+%ifarch %e2k
 sed -i "s|-lgfortran||" make.inc
 %endif
 %make install
@@ -132,7 +133,6 @@ done
 popd
 
 # shared libraries
-
 pushd %buildroot%_libdir
 for i in libsuperlu_%over libtmglib; do
 	if [ "$i" = "libtmglib" ]; then
@@ -142,7 +142,7 @@ for i in libsuperlu_%over libtmglib; do
 %ifarch %arm
 	g++ -shared *.o $ADDLIB -llapack -lblas -lgfortran -lm \
 %else
-%ifarch e2k
+%ifarch %e2k
 	g++ -shared *.o $ADDLIB -llapack -lblas -lm \
 %else
 	g++ -shared *.o $ADDLIB -llapack -lopenblas -lgfortran -lm \
@@ -170,7 +170,16 @@ popd
 %files -n lib%oname-devel-doc
 %_docdir/%name
 
+# TODO:
+# - redo doc subpackage with tex?
+# - install -p
+
 %changelog
+* Sun Jun 10 2018 Michael Shigorin <mike@altlinux.org> 4.3-alt6
+- support e2kv4 through %%e2k macro
+- gear: avoid tarball compression
+- minor spec cleanup
+
 * Mon Nov 20 2017 Andrew Savchenko <bircoph@altlinux.org> 4.3-alt5
 - Fix build on e2k.
 
