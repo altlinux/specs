@@ -1,5 +1,5 @@
 Name: libmicrosoft-gsl
-Version: 20170612
+Version: 20180608
 Release: alt1
 
 Summary: Guidelines Support Library
@@ -13,7 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-git: https://github.com/Microsoft/GSL.git
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ cmake ctest libunittest-cpp-devel
+BuildRequires: gcc-c++ cmake ctest catch2-devel >= 2.0
 
 %description
 The Guideline Support Library (GSL) contains functions and types that are suggested
@@ -40,6 +40,8 @@ developing applications that use %name.
 
 %prep
 %setup
+# FIXME
+#__subst "s|-Werror||g" tests/CMakeLists.txt
 
 %build
 %cmake_insource
@@ -58,5 +60,11 @@ make test
 %_includedir/%name/gsl/
 
 %changelog
+* Sun Jun 10 2018 Vitaly Lipatov <lav@altlinux.ru> 20180608-alt1
+- build new version
+
+* Sat Jun 02 2018 Vitaly Lipatov <lav@altlinux.ru> 20180315-alt1
+- update to v1.0.0
+
 * Mon Jun 12 2017 Vitaly Lipatov <lav@altlinux.ru> 20170612-alt1
 - initial build for ALT Sisyphus
