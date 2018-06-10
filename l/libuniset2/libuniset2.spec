@@ -12,14 +12,19 @@
 %def_disable netdata
 %def_enable api
 %def_enable logdb
-%def_enable com485f
 %def_enable opentsdb
+
+%ifarch %ix86
+%def_enable com485f
+%else
+%def_disable com485f
+%endif
 
 %define oname uniset2
 
 Name: libuniset2
 Version: 2.7
-Release: alt11
+Release: alt12
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -340,19 +345,14 @@ Libraries needed to develop for uniset MQTT extension
 %configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api} %{subst_enable netdata} %{subst_enable logdb} %{subst_enable com485f} %{subst_enable opentsdb}
 %make_build
 
-# fix for ALTLinux build (noarch)
-%if_enabled docs
-cd docs/html
-PNGFILES=`find ./ -name '*.png' -type f`
-for F in ${PNGFILES}; do
-#   echo "$F"
-    convert ${F} -flatten +matte ${F}
-done
-%endif
-
 %install
 %makeinstall_std
 rm -f %buildroot%_libdir/*.la
+
+%if_enabled docs
+rm -f %buildroot%_docdir/%oname/html/*.map
+rm -f %buildroot%_docdir/%oname/html/*.md5
+%endif
 
 %files utils
 %_bindir/%oname-admin
@@ -402,11 +402,12 @@ rm -f %buildroot%_libdir/*.la
 %if_enabled sqlite
 %files extension-sqlite
 %_bindir/%oname-sqlite-*dbserver
-%_libdir/*-sqlite.so*
+%_libdir/*-sqlite.so.*
 
 %files extension-sqlite-devel
 %_pkgconfigdir/libUniSet2SQLite.pc
 %_includedir/%oname/extensions/sqlite/
+%_libdir/*-sqlite.so
 
 %if_enabled logdb
 %files extension-logdb
@@ -417,7 +418,7 @@ rm -f %buildroot%_libdir/*.la
 %if_enabled opentsdb
 %files extension-opentsdb
 %_bindir/%oname-backend-opentsdb*
-%_libdir/libUniSet2BackendOpenTSDB.so*
+%_libdir/libUniSet2BackendOpenTSDB.so.*
 
 %files extension-opentsdb-devel
 %_pkgconfigdir/libUniSet2BackendOpenTSDB.pc
@@ -428,17 +429,19 @@ rm -f %buildroot%_libdir/*.la
 %if_enabled pgsql
 %files extension-pgsql
 %_bindir/%oname-pgsql-*dbserver
-%_libdir/*-pgsql.so*
+%_libdir/*-pgsql.so.*
 
 %files extension-pgsql-devel
 %_pkgconfigdir/libUniSet2PostgreSQL.pc
 %_includedir/%oname/extensions/pgsql/
+%_libdir/*-pgsql.so
 %endif
 
 %if_enabled python
 %files -n python-module-%oname
 %python_sitelibdir/*
 %python_sitelibdir_noarch/%oname/*
+%dir %python_sitelibdir_noarch/%oname
 %endif
 
 %if_enabled netdata
@@ -521,6 +524,7 @@ rm -f %buildroot%_libdir/*.la
 %files extension-common-devel
 %dir %_includedir/%oname/extensions
 %_includedir/%oname/extensions/*.*
+%exclude %_includedir/%oname/extensions/BackendOpenTSDB.h
 %_libdir/libUniSet2Extensions.so
 %_libdir/libUniSet2MB*.so
 %_libdir/libUniSet2RT*.so
@@ -540,6 +544,9 @@ rm -f %buildroot%_libdir/*.la
 # history of current unpublished changes
 
 %changelog
+* Sun Jun 10 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt12
+- spec cleanup
+
 * Mon Jun 04 2018 Alexey Shabalin <shaba@altlinux.ru> 2.7-alt11
 - rebuild with libmariadb
 
