@@ -2,7 +2,7 @@
 
 Name: biblesync
 Version: 1.2.0
-Release: alt1
+Release: alt2
 Summary: A Cross-platform library for sharing Bible navigation
 Group: System/Libraries
 License: Public Domain
@@ -59,6 +59,9 @@ that use %name.
 %_man7dir/*
 
 %changelog
+* Sun Jun 10 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt2
+- just rebuild
+
 * Wed May 23 2018 Ildar Mulyukov <ildar@altlinux.ru> 1.2.0-alt1
 - new version
 
