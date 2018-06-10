@@ -13,7 +13,7 @@
 
 Name: graphviz
 Version: 2.40.1
-Release: alt1.1.1.2
+Release: alt2
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -96,7 +96,6 @@ BuildArch: noarch
 %description graphs
 This package provides some example graphs for %name.
 
-%if_enabled guile
 %package guile
 Summary: Guile bindings to %name
 Group: Development/Other
@@ -104,9 +103,7 @@ Requires: %name = %version-%release
 
 %description guile
 This package makes %name functionality accessible from Guile
-%endif
 
-%if_enabled lua
 %package lua
 Summary: Lua bindings to %name
 Group: Development/Other
@@ -114,7 +111,6 @@ Requires: %name = %version-%release
 
 %description lua
 This package makes %name functionality accessible from Lua
-%endif
 
 %package perl
 Summary: Perl bindings to %name
@@ -124,7 +120,6 @@ Requires: %name = %version-%release
 %description perl
 This package makes %name functionality accessible from Perl
 
-%if_enabled python
 %package python
 Summary: Python bindings to %name
 Group: Development/Python
@@ -133,7 +128,6 @@ BuildRequires: rpm-build-python
 
 %description python
 This package makes %name functionality accessible from Python
-%endif
 
 %package ruby
 Summary: Ruby bindings to %name
@@ -161,18 +155,20 @@ This package makes %name functionality accessible from Tcl
 %patch0 -p1
 #patch1
 %patch2 -p1
-%ifarch e2k
-sed -i 's,-Wmissing-include-dirs ,,' \
-	configure cmd/gvpr/lib/Makefile
-%endif
 
 %build
-%add_optflags -DNDEBUG %optflags_fastmath
+%add_optflags -DNDEBUG
+# altbug #34101
+sed -i 's,-Wall -ffast-math,-Wall,' configure*
+
 # Some plugins use C++ and need lcxa. It can't be loaded
 # dynamically, so all binaries should be linked with it.
-%ifarch e2k
-export LIBS+=" -lcxa"
+%ifarch %e2k
+cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
 %endif
+
+# http://lists.gnu.org/archive/html/libtool/2008-10/msg00010.html
+%autoreconf --no-recursive
 %configure \
 	--disable-static \
 	--with-pangocairo \
@@ -340,6 +336,13 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 # - enable/fix/test language bindings
 
 %changelog
+* Sun Jun 10 2018 Michael Shigorin <mike@altlinux.org> 2.40.1-alt2
+- disable -ffast-math (closes: #34101, but maybe not; thx lav@)
+- E2K:
+  + support e2kv4
+  + prepare for lcc-1.23+
+- minor spec cleanup
+
 * Fri Jan 12 2018 Andrew Savchenko <bircoph@altlinux.org> 2.40.1-alt1.1.1.2
 - E2K: binaries must be compiled with -lcxa, because plugins use
   C++ and may engage cxa.
