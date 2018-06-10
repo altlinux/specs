@@ -4,8 +4,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-remote-desktop
-Version: 0.1.2
-Release: alt2
+Version: 0.1.4
+Release: alt1
 
 Summary: GNOME Remote Desktop
 Group: Networking/Remote access
@@ -31,13 +31,11 @@ BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-video-1.0) >= %gst_ver
 BuildRequires: libsystemd-devel
 
-
 %description
 Remote desktop daemon for GNOME using pipewire.
 
 %prep
 %setup
-subst 's/default:/value:/' meson_options.txt
 
 %build
 %meson -Dsystemd-user-unit-dir=%_userinitdir
@@ -53,6 +51,9 @@ subst 's/default:/value:/' meson_options.txt
 %doc README
 
 %changelog
+* Sun Jun 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.4-alt1
+- 0.1.4
+
 * Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt2
 - fixed build with meson-0.43
 
