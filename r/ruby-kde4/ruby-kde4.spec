@@ -6,7 +6,7 @@
 %define bugfix 0
 Name: ruby-kde4
 Version: %major.%minor.%bugfix
-Release: alt4.4
+Release: alt4.5
 
 Group: Development/Ruby
 Summary: Korundum Ruby-KDE library
@@ -67,6 +67,9 @@ chmod a+x %buildroot/%ruby_sitelibdir/khtml/khtml.rb
 %_K4apps/plasma_ruby_digital_clock/
 
 %changelog
+* Sun Jun 10 2018 Andrey Cherepanov <cas@altlinux.org> 4.14.0-alt4.5
+- Rebuild for aarch64.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 4.14.0-alt4.4
 - Rebuild with Ruby 2.5.1
 
