@@ -3,8 +3,8 @@
 %def_with bootstrap
 
 Name: python-module-mysql
-Version: 2.0.4
-Release: alt2
+Version: 2.1.7
+Release: alt1
 
 Summary: MySQL Connector for Python
 
@@ -29,6 +29,10 @@ Provides: %{oname} = %version
 # optimized out: python-base python-devel python-module-distribute python-module-zope python-modules python-modules-compiler python-modules-email python3-base
 BuildRequires: python-devel
 %add_python3_req_skip django
+
+# we miss The _mysql_connector C Extension Module
+%add_python_req_skip _mysql_connector
+%add_python3_req_skip _mysql_connector
 
 %description
 MySQL Connector/Python is implementing the MySQL Client/Server protocol
@@ -60,16 +64,18 @@ cp -fR . ../BUILD3
 
 %build
 %python_build_debug
+# HACK: created something like lib.linux-x86_64-2.7, but install from build/lib
+cd build ; ln -s lib.linux* lib ; cd ..
 
 %if_with python3
 pushd ../BUILD3
 %python3_build_debug
+cd build ; ln -s lib.linux* lib ; cd ..
 popd
 %endif
 
 %install
 %python_install
-rm -rf build
 
 %if_with python3
 pushd ../BUILD3
@@ -80,16 +86,21 @@ popd
 %files
 %doc CHANGES.txt LICENSE.txt README* docs/README_DOCS.txt
 %doc examples
-%python_sitelibdir/*
+%python_sitelibdir/mysql/
+%python_sitelibdir/mysql_connector_python-%version-py2.7.egg-info
 
 %if_with python3
 %files -n python3-module-mysql
 %doc CHANGES.txt LICENSE.txt README* docs/README_DOCS.txt
 %doc examples
-%python3_sitelibdir/*
+%python3_sitelibdir/mysql/
+%python3_sitelibdir/mysql_connector_python-%version-py3*.egg-info
 %endif
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.7-alt1
+- new version 2.1.7 (with rpmrb script)
+
 * Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.0.4-alt2
 - rebuild with python3.6
 
