@@ -5,7 +5,7 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-esr-l10n
-Version:	60.0.1
+Version:	60.0.2
 Release:	alt1
 Summary:	Language Pack for Firefox ESR
 
@@ -19,6 +19,8 @@ Source0:	%name-%version.tar
 Source1:	firefox-l10n-template.in
 
 BuildRequires(pre): rpm-build-firefox
+
+ExclusiveArch: %ix86 x86_64
 
 # Spell dictionaries
 BuildRequires: hunspell-af
@@ -416,6 +418,9 @@ for locale in %dictionaries; do
 done
 
 %changelog
+* Fri Jun 08 2018 Andrey Cherepanov <cas@altlinux.org> 60.0.2-alt1
+- New version.
+
 * Tue Jun 05 2018 Andrey Cherepanov <cas@altlinux.org> 60.0.1-alt1
 - New version.
 - Added languages: Belarusian, Interlingua, Burmese, Occitan and Urdu.
