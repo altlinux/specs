@@ -2,7 +2,7 @@
 
 Name: http_get
 
-Version: 20160309
+Version: 20180523
 Release: alt1
 
 Summary: utility to fetch an HTTP/HTTPS URL
@@ -49,6 +49,9 @@ install -m 0644 %name.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Mon Jun 11 2018 Nikolay A. Fetisov <naf@altlinux.org> 20180523-alt1
+- New version
+
 * Sat Mar 19 2016 Nikolay A. Fetisov <naf@altlinux.ru> 20160309-alt1
 - New version
 
