@@ -4,7 +4,7 @@
 
 Name:    OCE
 Version: 0.18.3
-Release: alt1
+Release: alt1.1
 Summary: OpenCASCADE Community Edition
 
 Group:   System/Libraries
@@ -280,6 +280,9 @@ export CTEST_OUTPUT_ON_FAILURE=1
 %_libdir/oce-%ver_major.%ver_minor/*.cmake
 
 %changelog
+* Mon Jun 11 2018 Anton Midyukov <antohami@altlinux.org> 0.18.3-alt1.1
+- Rebuilt for aarch64.
+
 * Thu Apr 26 2018 Andrey Cherepanov <cas@altlinux.org> 0.18.3-alt1
 - Initial build in Sisyphus (based on Fedora package).
 
