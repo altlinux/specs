@@ -1,7 +1,7 @@
 %define  pkgname ffi-libarchive
 
 Name:    ruby-%pkgname
-Version: 0.2.0
+Version: 0.4.1
 Release: alt1
 
 Summary: A Ruby FFI binding to libarchive.
@@ -16,6 +16,8 @@ Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
+# For tests
+BuildRequires: ruby-ffi
 
 %description
 %summary
@@ -44,7 +46,7 @@ Documentation files for %{name}.
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+#%%ruby_test_unit -Ilib:test test
 
 %files
 %doc README*
@@ -54,5 +56,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Jun 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt1
+- New version.
+- Disable tests.
+
 * Tue May 29 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus
