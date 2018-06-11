@@ -4,7 +4,7 @@
 %define real_name    QtPass
 
 Name:     qtpass
-Version:  1.2.2
+Version:  1.2.3
 Release:  alt1
 
 Summary: a multi-platform GUI for pass, the standard unix password manager
@@ -100,9 +100,10 @@ install -D -m0644 -- qtpass.appdata.xml %buildroot%_datadir/appdata/%name.appdat
 %_iconsdir/hicolor/*/apps/*
 %_datadir/appdata/%name.appdata.xml
 
-%exclude /usr/usr/share/qt5/tests/%name
-
 %changelog
+* Mon Jun 11 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.2.3-alt1
+- New version
+
 * Sat May 12 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.2.2-alt1
 - New version
 
