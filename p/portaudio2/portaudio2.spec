@@ -1,16 +1,26 @@
-Name: portaudio2
+%def_enable snapshot
+%define _name portaudio
+%def_enable docs
+
+Name: %{_name}2
 Version: 19
-Release: alt6
+Release: alt7
 
 Summary: PortAudio is a free, cross platform, open-source, audio I/O library
 License: BSD
 Group: System/Libraries
-URL: http://www.portaudio.com/
+Url: http://www.portaudio.com/
 
+%if_disabled snapshot
 Source: http://www.portaudio.com/archives/pa_stable_v190600_20161030.tgz
+%else
+#VCS: https://git.assembla.com/portaudio.git
+Source: %_name-%version.tar
+%endif
 
 # Automatically added by buildreq on Mon Sep 19 2011
 BuildRequires: gcc-c++ libalsa-devel libjack-devel
+%{?_enable_docs:BuildRequires: doxygen graphviz}
 
 %description
 PortAudio is a free, cross platform, open-source, audio I/O
@@ -71,14 +81,16 @@ This package contains the static PortAudio library and its header
 files.
 
 %prep
-%setup -q -n portaudio
-sed -i '/^Libs:/s/ @/\nLibs.private: @/' portaudio-2.0.pc.in 
+%setup -n portaudio%{?_enable_snapshot:-%version}
+sed -i '/^Libs:/s/ @/\nLibs.private: @/
+        s/^\(Requires:\)/\1 alsa/' portaudio-2.0.pc.in
 
 %build
 %autoreconf
 %configure --disable-static --enable-cxx
-[ %__nprocs -le 3 ] || export NPROCS=3
+%make_build lib/libportaudio.la
 %make_build
+%{?_enable_docs:doxygen}
 
 %install
 %makeinstall_std
@@ -91,8 +103,15 @@ sed -i '/^Libs:/s/ @/\nLibs.private: @/' portaudio-2.0.pc.in
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%doc README.txt
+%{?_enable_docs:%doc doc/html}
 
 %changelog
+* Sat Jun 09 2018 Yuri N. Sedunov <aris@altlinux.org> 19-alt7
+- updated to pa_stable_v190600_20161030-10-g8dc6d59
+- add documentation to devel subpackage
+- fixed SMP-build in spec
+
 * Sun Jan 29 2017 Yuri N. Sedunov <aris@altlinux.org> 19-alt6
 - updated to pa_stable_v190600_20161030
 
