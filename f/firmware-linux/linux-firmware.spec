@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180524
+Version: 20180606
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,19 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Mon Jun 11 2018 Cronbuild Service <cronbuild@altlinux.org> 20180606-alt1
+- upstream changes (GIT d114732):
+  + brcm: update firmware for bcm4356 pcie (thx Chi-Hsien Lin)
+  + brcm: update firmware for bcm4354 sdio (thx Chi-Hsien Lin)
+  + brcm: update firmware for bcm43362 sdio (thx Chi-Hsien Lin)
+  + brcm: update firmware for bcm43340 sdio (thx Chi-Hsien Lin)
+  + brcm: update firmware for bcm43430 sdio (thx Chi-Hsien Lin)
+  + amdgpu: update vega10 VCE firmware to version 55.3 (thx Alex Deucher)
+  + Update firmware patch for Intel Bluetooth 7265 (D0) (thx Amit K Bag)
+  + linux-firmware:Update firmware patch for Intel Bluetooth 7265
+    (D1) (thx Amit K Bag)
+  + qcom: add venus firmware files for v5.2 (thx Vikash Garodia)
+
 * Sun May 27 2018 Cronbuild Service <cronbuild@altlinux.org> 20180524-alt1
 - upstream changes (GIT 7518922):
   + Update firmware patch for Intel Bluetooth 8260 (thx Amit K Bag)
