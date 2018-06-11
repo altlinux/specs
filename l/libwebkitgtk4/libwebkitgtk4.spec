@@ -16,16 +16,16 @@
 # while build webki2gtk-dep typelibs this error appears
 # FATAL: Could not allocate gigacage memory with maxAlignment = ..
 # To avoid it set GIGACAGE_ENABLED=0
-%def_disable gigacage
+%def_enable gigacage
 
 Name: libwebkitgtk4
-Version: 2.20.2
+Version: 2.20.3
 Release: alt1
 
 Summary: Web browser engine
 Group: System/Libraries
 License: %bsd %lgpl2plus
-Url: http://www.webkitgtk.org/
+Url: https://www.webkitgtk.org/
 
 Source: %url/releases/%_name-%version.tar.xz
 Source1: webkit2gtk.env
@@ -236,12 +236,6 @@ export GIGACAGE_ENABLED=0
 #-DENABLE_BATTERY_STATUS:BOOL=ON \
 #-DENABLE_DEVICE_ORIENTATION:BOOL=ON \
 #-DENABLE_ORIENTATION_EVENTS:BOOL=ON
-
-# workaround for j=1
-[ -n "$NPROCS" ] && [ $NPROCS -eq 1 ] && \
-mkdir -p  BUILD/DerivedSources/ForwardingHeaders/JavaScriptCore
-cp Source/JavaScriptCore/API/{JSContextRef,JSObjectRef,JSBase,JSValueRef,WebKitAvailability}.h \
-BUILD/DerivedSources/ForwardingHeaders/JavaScriptCore
 %cmake_build
 
 %install
@@ -310,6 +304,11 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Mon Jun 11 2018 Yuri N. Sedunov <aris@altlinux.org> 2.20.3-alt1
+- 2.20.3 (fixed  CVE-2018-4190, CVE-2018-4199, CVE-2018-4218,
+  CVE-2018-4222, CVE-2018-4232, CVE-2018-4233, CVE-2018-4246,
+  CVE-2018-11646)
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 2.20.2-alt1
 - 2.20.2 (fixed CVE-2018-4200)
 
