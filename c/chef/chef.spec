@@ -1,6 +1,6 @@
 
 Name:    chef
-Version: 14.2.2
+Version: 14.3.5
 Release: alt1
 
 Summary: Clients for the chef systems integration framework
@@ -144,6 +144,9 @@ getent group _chef  >/dev/null || groupadd -r _chef
 getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbin/nologin -c "Opscode Chef Daemon" _chef
 
 %changelog
+* Mon Jun 11 2018 Andrey Cherepanov <cas@altlinux.org> 14.3.5-alt1
+- New version.
+
 * Fri Jun 08 2018 Andrey Cherepanov <cas@altlinux.org> 14.2.2-alt1
 - New version.
 
