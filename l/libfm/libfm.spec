@@ -3,26 +3,25 @@
 
 Name: libfm
 Version: 1.3.0.2
-Release: alt1
+Release: alt2
 
 Summary: Core library of PCManFM file manager
 License: GPL
 Group: System/Libraries
 
-Url: http://lxqt.org
+Url: https://lxde.org
 Source: %name-%version.tar
 
 BuildPreReq: rpm-build-xdg
 BuildRequires: intltool libmenu-cache-devel
 BuildRequires: libdbus-glib-devel libudisks2-devel
-BuildRequires: glib2-devel libgtk+%gtkver-devel gtk-doc
+BuildRequires: glib2-devel libgtk+%gtkver-devel
+BuildRequires: gtk-doc
 BuildRequires: vala >= 0.13.0
 BuildRequires: libexif-devel
 BuildRequires: libxslt-devel
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-#BuildRequires: qt5-base-devel
-#BuildRequires: libqtxdg-devel
 
 %description
 LibFM is a core library of PCManFM file manager.
@@ -67,7 +66,7 @@ sed -ri '/AM_INIT_AUTOMAKE/s,-Werror,\0 -Wno-portability,' configure.ac
     --disable-static \
     --disable-silent-rules \
     --with-gtk=%gtkver \
-    --enable-gtk-doc \
+    --disable-gtk-doc \
     --enable-largefile \
     --enable-udisks \
     --sysconfdir=%_sysconfdir
@@ -106,7 +105,7 @@ rm -f %buildroot%_libdir/%name/modules/*.la
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*
-%doc %_datadir/gtk-doc/html/%name
+#%%doc %_datadir/gtk-doc/html/%name
 
 %files -n lxde-lxshortcut
 %_bindir/lxshortcut
@@ -114,6 +113,10 @@ rm -f %buildroot%_libdir/%name/modules/*.la
 %_man1dir/lxshortcut.1*
 
 %changelog
+* Tue Jun 12 2018 Anton Midyukov <antohami@altlinux.org> 1.3.0.2-alt2
+- disable gtk-doc (fix FTBFS)
+- fix URL
+
 * Tue May 01 2018 Anton Midyukov <antohami@altlinux.org> 1.3.0.2-alt1
 - new version 1.3.0.2
 
