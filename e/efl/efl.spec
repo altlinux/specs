@@ -1,6 +1,5 @@
 %def_disable snapshot
 
-%define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 %define ver_major 1.20
 %define beta %nil
@@ -14,6 +13,7 @@
 %def_enable drm
 %def_enable ibus
 %def_enable gstreamer1
+%def_enable emotion
 
 %def_enable wayland
 # wayland requires elput and drm
@@ -22,11 +22,22 @@
 %def_disable egl
 # currently with GLES only
 %def_disable gl_drm
+
+# aarch64 with luajit-2.1-alt6: PANIC: unprotected error in call to Lua API (bad light userdata pointer)
+%ifarch aarch64
+%def_disable elua
+%else
+%def_enable elua
+%endif
+
+%ifnarch %e2k
 %def_enable lua
+%define _unpackaged_files_terminate_build 1
+%endif
 
 Name: efl
 Version: %ver_major.7
-Release: alt1
+Release: alt2
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
@@ -57,8 +68,16 @@ BuildRequires: libX11-devel libXau-devel libXcomposite-devel libXdamage-devel li
 BuildRequires: libXfixes-devel libXinerama-devel libXrandr-devel libXrender-devel libXScrnSaver-devel
 BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel
 BuildRequires: libGL-devel
-BuildRequires: libunwind-devel
+
+%ifarch %e2k
+%{?_enable_lua:BuildRequires: liblua5.1-devel}
+# FIXME: lua is broken, elua won't be built but we need it to pass configure
+BuildRequires: liblua5.1-devel
+%else
+# 20171106: not ported to e2k yet
 %{?_enable_lua:BuildRequires: libluajit-devel}
+BuildRequires: libunwind-devel
+%endif
 %{?_enable_ibus:BuildRequires: libibus-devel}
 %{?_enable_tslib:BuildRequires: libts-devel}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-server-devel libwayland-cursor-devel wayland-protocols libxkbcommon-devel >= 0.6.0 libuuid-devel}
@@ -70,7 +89,7 @@ BuildRequires: libunwind-devel
 # for elementary
 BuildRequires: /proc dbus-tools-gui doxygen /usr/bin/convert
 # for emotion_generic_players
-BuildRequires: libvlc-devel >= 2.0
+%{?_enable_emotion:BuildRequires: libvlc-devel >= 2.0}
 # for evas_generic_loaders
 BuildRequires: libpoppler-cpp-devel
 BuildRequires: libspectre-devel
@@ -222,6 +241,11 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 	--enable-harfbuzz \
 	--enable-liblz4 \
 	--enable-image-loader-webp \
+%ifarch %e2k
+	--enable-lua-old \
+%else
+	%{subst_enable elua} \
+%endif
 	%{subst_enable multisense} \
 	%{subst_enable tslib} \
 	%{subst_enable wayland} \
@@ -265,7 +289,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_bindir/efreetd
 %_bindir/eina-bench-cmp
 %_bindir/eina_modinfo
-%{?_enable_lua:%_bindir/elua}
+%{?_enable_elua:%_bindir/elua}
 %_bindir/ethumb
 %_bindir/ethumbd
 %_bindir/ethumbd_client
@@ -281,7 +305,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_libdir/edje/
 %_libdir/eeze/
 %_libdir/efreet/
-%_libdir/emotion/
+%{?_enable_emotion:%_libdir/emotion/}
 %_libdir/ethumb/
 %_libdir/ethumb_client/
 %_libdir/evas/
@@ -293,14 +317,16 @@ find %buildroot%_libdir -name "*.la" -delete
 %_datadir/eeze/
 %_datadir/efreet/
 %_datadir/embryo/
-%_datadir/emotion/
+%{?_enable_emotion:%_datadir/emotion/}
 %_datadir/eo/
 %exclude %_datadir/eo/gdb/eo_gdb.py
 %exclude %_datadir/eo/gdb/eo_gdb.py
 %_datadir/ethumb/
 %_datadir/ethumb_client/
 %_datadir/evas/
-%{?_enable_lua:%_datadir/elua/}
+%{?_enable_elua:%_datadir/elua/}
+# /usr/share/elua/checkme
+%{?_disable_elua:%exclude %_datadir/elua}
 %_datadir/mime/packages/edje.xml
 %_prefix/lib/systemd/user/ethumb.service
 %doc AUTHORS README NEWS COMPLIANCE
@@ -360,10 +386,10 @@ find %buildroot%_libdir -name "*.la" -delete
 %_pkgconfigdir/eldbus.pc
 %_pkgconfigdir/elocation.pc
 %{?_enable_elput:%_pkgconfigdir/elput.pc}
-%{?_enable_lua:%_pkgconfigdir/elua.pc}
+%{?_enable_elua:%_pkgconfigdir/elua.pc}
 %_pkgconfigdir/embryo.pc
 %_pkgconfigdir/emile.pc
-%_pkgconfigdir/emotion.pc
+%{?_enable_emotion:%_pkgconfigdir/emotion.pc}
 %_pkgconfigdir/eo-cxx.pc
 %_pkgconfigdir/eo.pc
 %_pkgconfigdir/eolian-cxx.pc
@@ -422,6 +448,12 @@ find %buildroot%_libdir -name "*.la" -delete
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Tue Jun 12 2018 Yuri N. Sedunov <aris@altlinux.org> 1.20.7-alt2
+- mike:
+  introduce emotion knob (on by default)
+  E2K: avoid not-ported-yet BRs (libunwind, luajit)
+- disabled elua for aarch64 (https://github.com/LuaJIT/LuaJIT/pull/230)
+
 * Thu Mar 01 2018 Yuri N. Sedunov <aris@altlinux.org> 1.20.7-alt1
 - 1.20.7
 
