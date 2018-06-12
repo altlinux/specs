@@ -1,13 +1,13 @@
 %global v_major 6.0
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt0.8
+%global rel alt0.9
 %global llvm_name llvm%v_major
 %global clang_name clang%v_major
 %global lld_name lld
 
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
-%global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
+%define optflags_debug -g1
 
 %def_disable tests
 %ifnarch aarch64
@@ -393,8 +393,11 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Tue Jun 12 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.0.0-alt0.9.rel
+- aarch64: rebuilt with clang.
+
 * Tue Jun 12 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.0.0-alt0.8.rel
-- lld: backported upstream patch implementing --{push,pop}-state support.
+- lld: backported upstream commit implementing --{push,pop}-state support.
 - clang: changed default dynamic linker path for aarch64 architecture.
 - aarch64: temporarily rebuilt with gcc to fix build from source.
 - clang-alt-triple.patch: added mipsel and mips64el triplets.
