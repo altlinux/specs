@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.03
+Version: 1.04
 Release: alt1
 Summary: Parse and format RFC 2822 email addresses and groups
 Group: Development/Perl
@@ -59,6 +59,9 @@ instead of the Email::Address::List module.
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Jun 12 2018 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
+- automated CPAN update
+
 * Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update
 
