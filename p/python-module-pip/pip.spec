@@ -1,40 +1,28 @@
-%define _unpackaged_files_terminate_build 1
-
-%define oname pip
-
-%def_with python3
-%def_without doc
-
 Summary: pip installs packages.  Python packages.  An easy_install replacement
-Name: python-module-%oname
+Name: python-module-pip
 Version: 10.0.1
-Release: alt1%ubt
+Release: alt2
+Source0: pip-%version.tar.gz
+Patch: pip-1.5.6-alt-python3.patch
 License: MIT
 Group: Development/Python
 BuildArch: noarch
 Url: http://www.pip-installer.org
+%setup_python_module pip
 
-# https://github.com/pypa/pip.git
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: python-module-setuptools
-
-%if_with doc
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
-%endif
+# Automatically added by buildreq on Wed Jun 13 2018 (-bi)
+# optimized out: python-base python-devel python-module-OpenSSL python-module-PyStemmer python-module-Pygments python-module-SQLAlchemy python-module-asn1crypto python-module-attrs python-module-babel python-module-backports python-module-backports.ssl_match_hostname python-module-cffi python-module-chardet python-module-cryptography python-module-docutils python-module-enum34 python-module-funcsigs python-module-idna python-module-imagesize python-module-ipaddress python-module-jinja2 python-module-lxml python-module-markupsafe python-module-ndg-httpsclient python-module-ntlm python-module-pluggy python-module-py python-module-pycparser python-module-pytest python-module-pytz python-module-requests python-module-setuptools python-module-simplejson python-module-six python-module-sphinx python-module-sphinxcontrib python-module-typing python-module-urllib3 python-module-webencodings python-module-whoosh python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-sphinx-objects.inv python3 python3-base python3-module-OpenSSL python3-module-Pygments python3-module-asn1crypto python3-module-babel python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-pytz python3-module-requests python3-module-setuptools python3-module-six python3-module-sphinx python3-module-urllib3 rpm-build-python3 xz
+BuildRequires: ctags python-module-alabaster python-module-html5lib python-module-sphinxcontrib-websupport python3-module-alabaster python3-module-sphinxcontrib-websupport time
 
-%if_with python3
+#BuildRequires: python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-%add_python3_req_skip  UserDict
-%endif
+##add_python3_req_skip  UserDict
 
 %description
 %summary
 
-%if_with doc
 %package pickles
 Summary: Pickles for pip
 Group: Development/Python
@@ -52,81 +40,94 @@ Group: Development/Documentation
 %summary
 
 This package contains documentation for pip.
-%endif
 
-%if_with python3
-%package -n python3-module-%oname
+%package -n python3-module-%modulename
 Summary: pip installs packages.  Python packages.  An easy_install replacement
 Group: Development/Python3
-%py3_provides %oname pip._vendor.six.moves pip._vendor.six.moves.urllib pip._vendor.six.moves.urllib.parse
+%py3_provides %modulename pip._vendor.six.moves pip._vendor.six.moves.urllib pip._vendor.six.moves.urllib.parse
 
-%description -n python3-module-%oname
+%description -n python3-module-%modulename
 %summary
-%endif
+
+%package -n python3-module-%modulename-pickles
+Summary: Pickles for pip3
+Group: Development/Python3
+
+%description -n python3-module-%modulename-pickles
+%summary
+
+This package contains pickles for pip.
+
+%package -n python3-module-%modulename-docs
+Summary: Documentation for pip3
+Group: Development/Documentation
+
+%description -n python3-module-%modulename-docs
+%summary
+
+This package contains documentation for pip.
 
 %prep
-%setup
+%setup -n %modulename-%version
 
-%if_with python3
-cp -a . ../python3
-%endif
+# XXX wait for packaging pypa_theme
+sed -i '
+s/pypa_theme/default/
+/.navigation_depth.: 3,/s/^/#/
+/.issues_url.:/s/^/#/
+' docs/conf.py
 
-%if_with doc
+
 %prepare_sphinx .
 ln -s ../objects.inv docs/
-%endif
 
 %build
+# py2 and py3 builds are identical
 %python_build
 
-%if_with python3
-pushd ../python3
-%python3_build
-popd
-%endif
+PYTHONPATH=`pwd`/build/lib %make -C docs pickle BUILDDIR=build2
+PYTHONPATH=`pwd`/build/lib %make -C docs html BUILDDIR=build2
+
+PYTHONPATH=`pwd`/build/lib %make -C docs pickle BUILDDIR=build3 SPHINXBUILD=py3_sphinx-build
+PYTHONPATH=`pwd`/build/lib %make -C docs html BUILDDIR=build3 SPHINXBUILD=py3_sphinx-build
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
 %python_install
 
-%if_with doc
-export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C docs pickle
-%make -C docs html
-
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
-%endif
+cp -fR docs/build2/pickle %buildroot%python_sitelibdir/%modulename/
+cp -fR docs/build2/pickle %buildroot%python3_sitelibdir/%modulename/
 
 %files
 %doc *.txt *.rst
 %_bindir/*
-%if_with python3
 %exclude %_bindir/pip3*
-%endif
 %python_sitelibdir/*
-%if_with doc
 %exclude %python_sitelibdir/*/pickle
 
 %files pickles
 %python_sitelibdir/*/pickle
 
 %files docs
-%doc docs/_build/html/*
-%endif
+%doc docs/build2/html/*
 
-%if_with python3
-%files -n python3-module-%oname
+%files -n python3-module-%modulename
 %doc *.txt *.rst
 %_bindir/pip3*
 %python3_sitelibdir/*
-%endif
+%exclude %python3_sitelibdir/*/pickle
+
+%files -n python3-module-%modulename-pickles
+%python3_sitelibdir/*/pickle
+
+%files -n python3-module-%modulename-docs
+%doc docs/build3/html/*
 
 %changelog
+* Tue Jun 12 2018 Fr. Br. George <george@altlinux.ru> 10.0.1-alt2
+- Autobuild version bump to 10.0.1
+- Introduce python3 generated documentation
+
 * Tue Jun 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 10.0.1-alt1%ubt
 - Updated to upstream version 10.0.1.
 
