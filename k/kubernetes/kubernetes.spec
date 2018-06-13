@@ -11,7 +11,7 @@
 %brp_strip_none %_bindir/*
 
 Name: kubernetes
-Version: 1.10.2
+Version: 1.10.4
 Release: alt1%ubt
 Summary: Container cluster management
 
@@ -306,5 +306,8 @@ install -p -m 0644 -t %buildroot/%_sysconfdir/systemd/system.conf.d %SOURCE3
 %_datadir/bash-completion/completions/kubectl
 
 %changelog
+* Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.10.4-alt1%ubt
+- 1.10.4
+
 * Mon May 14 2018 Alexey Shabalin <shaba@altlinux.ru> 1.10.2-alt1%ubt
 - Initial build for ALT
