@@ -15,7 +15,7 @@
 
 Name: cni-plugins
 Version: 0.7.1
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Container Network Interface plugins
 Group: Development/Other
 License: ASL 2.0
@@ -57,6 +57,9 @@ install -m0755 bin/* %buildroot%cni_dir/
 %cni_dir/*
 
 %changelog
+* Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 0.7.1-alt2%ubt
+- rebuild for aarch64
+
 * Sat May 12 2018 Alexey Shabalin <shaba@altlinux.ru> 0.7.1-alt1%ubt
 - Initial package
 

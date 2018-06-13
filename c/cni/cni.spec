@@ -16,7 +16,7 @@
 
 Name: cni
 Version: 0.6.0
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Container Network Interface - networking for Linux containers
 Group: Development/Other
 License: ASL 2.0
@@ -59,5 +59,8 @@ install -m0755 bin/cnitool %buildroot%_sbindir/
 %_sbindir/*
 
 %changelog
+* Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt2%ubt
+- rebuild for aarch64
+
 * Sat May 12 2018 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt1%ubt
 - Initial package
