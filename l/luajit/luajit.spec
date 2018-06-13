@@ -1,6 +1,6 @@
 Name: luajit
 Version: 2.1
-Release: alt5
+Release: alt6
 
 Summary: a Just-In-Time Compiler for Lua
 License: MIT
@@ -84,6 +84,9 @@ mv %buildroot%_bindir/luajit-2.1.0-beta3 %buildroot%_bindir/luajit
 %_libdir/*.a
 
 %changelog
+* Wed Jun 13 2018 Vladimir Didenko <cow@altlinux.org> 2.1-alt6
+- git20180605 (closes: #35026)
+
 * Wed May 3 2017 Vladimir Didenko <cow@altlinux.org> 2.1-alt5
 - v2.1.0-beta3
 - luaconf.h: use lua/5.1 instead lua5/
