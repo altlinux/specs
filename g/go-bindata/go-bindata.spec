@@ -44,7 +44,7 @@ BuildRequires: rpm-build-golang
 
 Name:           go-bindata
 Version:        3.0.7
-Release:        alt1_11.git%{shortcommit}
+Release:        alt2_11.git%{shortcommit}
 Summary:        A small utility which generates Go code from any file
 License:        MIT
 URL:		https://%{provider_prefix}
@@ -87,6 +87,9 @@ install -m 755 bin/go-bindata %{buildroot}%{_bindir}/go-bindata
 %{_bindir}/go-bindata
 
 %changelog
+* Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 3.0.7-alt2_11.gita0ff256
+- NMU: rebuild for aarch64
+
 * Sat Dec 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.7-alt1_11.gita0ff256
 - new version
 
