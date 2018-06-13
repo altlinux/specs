@@ -1,0 +1,80 @@
+%define  modulename cheroot
+%def_with python3
+
+Name:    python-module-%modulename
+Version: 6.3.1
+Release: alt1
+
+Summary: Cheroot is the high-performance, pure-Python HTTP server used by CherryPy
+License: BSD
+Group:   Development/Python
+URL:     https://github.com/cherrypy/cheroot
+
+Source:  %modulename-%version.tar
+Patch:   alt-fix-requires.patch
+
+Packager: Andrey Cherepanov <cas@altlinux.org>
+
+BuildRequires: rpm-build-python
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools_scm
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools_scm
+%endif
+
+BuildArch: noarch
+
+Requires: python-module-backports-functools-lru-cache
+
+%description
+Cheroot is the high-performance, pure-Python HTTP server used by CherryPy.
+
+%if_with python3
+%package -n python3-module-%modulename
+Summary: Cheroot is the high-performance, pure-Python HTTP server used by CherryPy
+Group: Development/Python3
+
+%description -n python3-module-%modulename
+Cheroot is the high-performance, pure-Python HTTP server used by CherryPy.
+%endif
+
+%prep
+%setup -n %modulename-%version
+%patch -p1
+%if_with python3
+rm -rf ../python3
+cp -a . ../python3
+%endif
+
+%build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%python_build
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
+%install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%python_install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+%files
+%python_sitelibdir/%modulename/
+%python_sitelibdir/*.egg-info
+
+%if_with python3
+%files -n python3-module-%modulename
+%_bindir/cheroot
+%python3_sitelibdir/%{modulename}*
+%endif
+
+%changelog
+* Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 6.3.1-alt1
+- Initial build for Sisyphus
