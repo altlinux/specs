@@ -1,8 +1,8 @@
 %define confdir ext/redhat
 
 Name:    puppet
-Version: 5.5.1
-Release: alt2
+Version: 5.5.2
+Release: alt1
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
@@ -203,6 +203,12 @@ END.
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Mon Jun 11 2018 Andrey Cherepanov <cas@altlinux.org> 5.5.2-alt1
+- New version.
+
+* Fri Jun 01 2018 Andrey Cherepanov <cas@altlinux.org> 5.5.1-alt3
+- Fix "Cannot determine basic system flavour" (https://tickets.puppetlabs.com/browse/SERVER-14).
+
 * Wed Apr 25 2018 Andrey Cherepanov <cas@altlinux.org> 5.5.1-alt2
 - Create and package all configuration directories.
 - Add puppetdb example configuration to puppet.conf.
