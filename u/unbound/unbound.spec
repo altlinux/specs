@@ -1,6 +1,6 @@
 Name: unbound
-Version: 1.7.1
-Release: alt2
+Version: 1.7.2
+Release: alt1
 License: BSD
 Url: http://unbound.net/
 Source: %name-%version.tar
@@ -195,6 +195,9 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Wed Jun 13 2018 Alexei Takaseev <taf@altlinux.org> 1.7.2-alt1
+- 1.7.2
+
 * Thu Jun 07 2018 Alexei Takaseev <taf@altlinux.org> 1.7.1-alt2
 - Fix permission to /var/lib/unbound/root.key (ALT#35001)
 - Move create _unbound user to libunbound subpackage
