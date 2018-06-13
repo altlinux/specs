@@ -1,7 +1,7 @@
 %define qt_module qtgamepad
 
 Name: qt5-gamepad
-Version: 5.9.5
+Version: 5.9.6
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -71,6 +71,9 @@ syncqt.pl-qt5 -version %version -private
 %_pkgconfigdir/Qt?Gamepad.pc
 
 %changelog
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
+- new version
+
 * Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
 - new version
 

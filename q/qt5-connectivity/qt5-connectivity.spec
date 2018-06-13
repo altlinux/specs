@@ -3,7 +3,7 @@
 %def_enable btle
 
 Name: qt5-connectivity
-Version: 5.9.5
+Version: 5.9.6
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -114,6 +114,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
+- new version
+
 * Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
 - new version
 

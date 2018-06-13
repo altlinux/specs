@@ -24,7 +24,7 @@
 
 Name: qt5-webengine
 Version: 5.10.1
-Release: alt2%ubt
+Release: alt3%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -331,6 +331,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.1-alt3%ubt
+- rebuild with new Qt
+
 * Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.1-alt2%ubt
 - rebuild with new Qt
 - sync FC patches
