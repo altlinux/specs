@@ -1,22 +1,26 @@
-%define luaver 5.2
-%define luapkgdir %{_datadir}/lua/%{luaver}
+%define modname lunit
+%define luaver 5.3
+%define luapkgdir %_datadir/lua/%luaver
 
-Name:           lua-lunit
-Version:        0.5
-Release:        alt1_10
-Summary:        Unit testing framework for Lua
+%def_enable check
 
-Group:          Development/Other
-License:        MIT
-URL:            http://nessie.de/mroth/lunit/index.html
-Source0:        http://nessie.de/mroth/lunit/lunit-%{version}.tar.gz
+Name: lua-lunit
+Version: 0.5
+Release: alt2
 
-# for running tests
-BuildRequires:  lua >= %{luaver}
-Requires:       lua >= %{luaver}
+Summary: Unit testing framework for Lua
+Group: Development/Other
+License: MIT
+Url: https://nessie.de/mroth/%modname/index.html
 
-BuildArch:      noarch
+Source: %url/%modname-%version.tar.gz
 Source44: import.info
+
+BuildArch: noarch
+
+Requires: lua >= %luaver
+
+%{?_enable_check:BuildRequires: lua >= %luaver}
 
 %description
 Lunit is a unit testing framework for lua, written in lua.
@@ -27,34 +31,30 @@ in an easy unit testing framework.
 Lunit comes with a test suite to test itself. The testsuite consists
 of approximately 710 assertions.
 
-
 %prep
-%setup -q -n lunit-%{version}
-
+%setup -n %modname-%version
 
 %build
-
-
 %install
-mkdir -p $RPM_BUILD_ROOT%{_bindir}
-cp -p lunit $RPM_BUILD_ROOT%{_bindir}
+mkdir -p %buildroot%_bindir
+cp -p lunit %buildroot%_bindir
 
-mkdir -p $RPM_BUILD_ROOT%{luapkgdir}
-cp -pr lunit{,-console}.lua $RPM_BUILD_ROOT%{luapkgdir}
-
+mkdir -p %buildroot%luapkgdir
+cp -pr lunit{,-console}.lua %buildroot%luapkgdir
 
 %check
 ./lunit lunit-tests.lua | tee testlog.txt
 grep -q "0 failed, 0 errors" testlog.txt
 
-
 %files
 %doc LICENSE ANNOUNCE CHANGES DOCUMENTATION README* example.lua
-%{_bindir}/lunit
-%{luapkgdir}/*
-
+%_bindir/lunit
+%luapkgdir/*
 
 %changelog
+* Thu Jun 14 2018 Yuri N. Sedunov <aris@altlinux.org> 0.5-alt2
+- rebuilt for lua-5.3
+
 * Wed Oct 05 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.5-alt1_10
 - converted for ALT Linux by srpmconvert tools
 
