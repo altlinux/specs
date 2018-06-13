@@ -1,7 +1,7 @@
 %define  modulename jaraco.packaging
 
 Name:    python3-module-%modulename
-Version: 5.1
+Version: 5.1.1
 Release: alt1
 
 Summary: Tools to supplement packaging Python releases
@@ -38,5 +38,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Jun 13 2018 Andrey Cherepanov <cas@altlinux.org> 5.1.1-alt1
+- New version.
+
 * Mon May 14 2018 Andrey Cherepanov <cas@altlinux.org> 5.1-alt1
 - Initial build for Sisyphus
