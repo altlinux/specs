@@ -1,5 +1,5 @@
 Name: libbabl
-Version: 0.1.46
+Version: 0.1.50
 Release: alt1
 
 Summary: babl is a dynamic, any to any, pixel format translation library
@@ -66,6 +66,9 @@ contain development files.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jun 13 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.1.50-alt1
+- 0.1.50
+
 * Tue May 08 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.1.46-alt1
 - 0.1.46
 
