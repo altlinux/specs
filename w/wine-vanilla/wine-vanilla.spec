@@ -2,7 +2,7 @@
 %define mono_version 4.7.1
 
 Name: wine-vanilla
-Version: 3.9
+Version: 3.10
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -24,7 +24,7 @@ AutoReq: yes, noperl
 
 # try build wine64 only on ALT
 %if %_vendor == "alt"
-%ifarch x86_64
+%ifarch x86_64 aarch64
 	%def_with build64
 %else
     %def_without build64
@@ -33,9 +33,15 @@ AutoReq: yes, noperl
    %def_without build64
 %endif
 
+%ifarch aarch64
+BuildRequires: clang >= 5.0
+%else
+BuildRequires: gcc
+%endif
+
 # General dependencies
 BuildRequires: rpm-build-intro >= 1.0
-BuildRequires: gcc util-linux flex bison
+BuildRequires: util-linux flex bison
 BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libncurses-devel libncursesw-devel libtinfo-devel
 BuildRequires: zlib-devel libldap-devel libgnutls-devel
@@ -69,9 +75,11 @@ BuildRequires: prelink
 # Actually for x86_32
 Requires: glibc-pthread glibc-nss
 
-# Enable with can build on x86_64
-# GCC v4.4 is needed for build wine64
-#ExclusiveArch:  %{ix86}
+# Runtime linking
+Requires: libcups libncurses
+Requires: libXrender libXi libXext libX11 libICE
+Requires: libssl libgnutls30 libpng16 libjpeg
+
 Requires: webclient
 
 Requires: wine-gecko = %gecko_version
@@ -218,6 +226,11 @@ develop programs which make use of Wine.
 %if_with build64
 %remove_optflags -fomit-frame-pointer
 %add_optflags -fno-omit-frame-pointer
+%endif
+
+%ifarch aarch64
+%remove_optflags -frecord-gcc-switches
+export CC=clang
 %endif
 
 %configure --with-x \
@@ -416,6 +429,11 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Wed Jun 13 2018 Vitaly Lipatov <lav@altlinux.ru> 3.10-alt1
+- new version 3.10
+- add runtime linking requires
+- use clang on aarch64
+
 * Sat May 26 2018 Vitaly Lipatov <lav@altlinux.ru> 3.9-alt1
 - new version 3.9
 
