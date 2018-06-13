@@ -1,6 +1,6 @@
 Name: libudfread
 Version: 1.0.0
-Release: alt2
+Release: alt3
 Summary: library for reading UDF from raw devices and image file
 License: LGPL
 Group: Development/C
@@ -42,6 +42,9 @@ autoreconf -fisv
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jun 13 2018 Anton Farygin <rider@altlinux.ru> 1.0.0-alt3
+- rebuilt for aarch64
+
 * Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 1.0.0-alt2
 - fixed cflags in pkgconfig
 
