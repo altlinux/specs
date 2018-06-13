@@ -1,7 +1,7 @@
 %global v_major 6.0
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt0.7
+%global rel alt0.8
 %global llvm_name llvm%v_major
 %global clang_name clang%v_major
 %global lld_name lld
@@ -9,18 +9,10 @@
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 
-%ifndef build_parallel_jobs
-%global build_parallel_jobs 8
-%endif
-
 %def_disable tests
+%ifnarch aarch64
 %def_with clang
-
-# do not overscale this on systems with less cores
-# on i586 and maybe on memory constrained x86_64
-#%%if %__nprocs < %build_parallel_jobs
-#%%define build_parallel_jobs %__nprocs
-#%%endif
+%endif
 
 Name: %llvm_name
 Version: 6.0.0
@@ -43,11 +35,15 @@ Patch5: compiler-rt-alt-i586-arch.patch
 Patch6: RH-0001-CMake-Split-static-library-exports-into-their-own-ex.patch
 Patch7: 0001-DebugInfo-Discard-invalid-DBG_VALUE-instructions-in-.patch
 Patch8: 0001-Fixup-for-rL326769-RegState-Debug-is-being-truncated.patch
+Patch9: 0001-Implement-push-pop-state.patch
+Patch10: clang-alt-aarch64-dynamic-linker-path.patch
 
 # ThinLTO requires /proc/cpuinfo to exists so the same does llvm
 BuildPreReq: /proc
 
 BuildRequires(pre): cmake >= 3.4.3
+# Due to %%_libsuff
+BuildRequires: rpm-build >= 4.0.4-alt112
 BuildRequires: chrpath libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
 BuildRequires: python-modules-compiler python-modules-unittest python-modules-xml
 BuildRequires: python-modules-json zip zlib-devel
@@ -225,6 +221,8 @@ mv compiler-rt-%version projects/compiler-rt
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
+%patch10 -p1
 
 %build
 %cmake -G Ninja \
@@ -255,11 +253,7 @@ mv compiler-rt-%version projects/compiler-rt
 	-DCMAKE_SHARED_LINKER_FLAGS="-Wl,-Bsymbolic" \
 	%endif
 	\
-	%if "%_lib" == "lib64"
-	-DLLVM_LIBDIR_SUFFIX="64" \
-	%else
-	-DLLVM_LIBDIR_SUFFIX="" \
-	%endif
+	-DLLVM_LIBDIR_SUFFIX="%_libsuff" \
 	-DLLVM_BUILD_RUNTIME:BOOL=ON \
 	\
 	-DLLVM_INCLUDE_TOOLS:BOOL=ON \
@@ -288,7 +282,7 @@ mv compiler-rt-%version projects/compiler-rt
 
 ninja \
        -vvv \
-       -j %build_parallel_jobs \
+       -j %__nprocs \
        -C BUILD
 
 %install
@@ -399,6 +393,12 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Tue Jun 12 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.0.0-alt0.8.rel
+- lld: backported upstream patch implementing --{push,pop}-state support.
+- clang: changed default dynamic linker path for aarch64 architecture.
+- aarch64: temporarily rebuilt with gcc to fix build from source.
+- clang-alt-triple.patch: added mipsel and mips64el triplets.
+
 * Tue Mar 20 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.7.rel
 - Reduce debuginfo for x86_64.
 - Use 'Release' build on x86_64.
