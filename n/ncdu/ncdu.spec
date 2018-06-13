@@ -1,5 +1,5 @@
 Name: ncdu
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Summary: Text-based disk usage viewer
@@ -8,7 +8,7 @@ Group: File tools
 License: MIT
 Url: http://dev.yorhel.nl/ncdu/
 
-Source: http://dev.yorhel.nl/download/%name-%version.tar.gz
+Source: http://dev.yorhel.nl/download/%name-%version.tar
 
 # Automatically added by buildreq on Fri Jun 11 2010
 BuildRequires: libncursesw-devel
@@ -33,6 +33,9 @@ and provides a fast way to see what directories are using your disk space.
 %_man1dir/ncdu.1.*
 
 %changelog
+* Wed Jun 13 2018 Vitaly Lipatov <lav@altlinux.ru> 1.13-alt1
+- new version 1.13 (with rpmrb script)
+
 * Thu Jan 05 2017 Vitaly Lipatov <lav@altlinux.ru> 1.12-alt1
 - new version 1.12 (with rpmrb script)
 
