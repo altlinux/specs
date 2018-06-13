@@ -6,8 +6,6 @@
 
 %global provider_prefix %provider/%project/%repo
 %global import_path %provider_prefix
-%global commit e04dd994baa1051f1205578d12d69eec83dbb905
-%global shortcommit %(c=%commit; echo ${c:0:7})
 
 # valid values: src coreos host kvm fly
 %global stage1_flavors host,fly
@@ -22,7 +20,7 @@
 
 Name: rkt
 Version: 1.30.0
-Release: alt1.git.%shortcommit
+Release: alt2%ubt
 Summary: A pod-native container engine for Linux
 Group: Development/Other
 License: ASL 2.0
@@ -30,7 +28,7 @@ Url: https://%provider_prefix
 ExclusiveArch: %go_arches aarch64
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-build-golang rpm-build-ubt
 BuildRequires: bc
 BuildRequires: glibc-devel-static
 BuildRequires: golang >= 1.6
@@ -174,6 +172,9 @@ touch %buildroot%_sharedstatedir/%name/cas/db/.34a8b4c1ad933745146fdbfef3073706e
 %attr(0660,root,rkt) %_sharedstatedir/%name/cas/db/.34a8b4c1ad933745146fdbfef3073706ee571625
 
 %changelog
+* Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.30.0-alt2%ubt
+- rebuild with ubt macros
+
 * Fri May 11 2018 Alexey Shabalin <shaba@altlinux.ru> 1.30.0-alt1.git.e04dd99
 - 1.30.0
 
