@@ -18,10 +18,11 @@
 %def_without imageio
 %def_without quicktime
 %def_with pic
+%ifarch %{ix86} x86_64
 %def_with gdcm
-%ifarch %{ix86} x86_64 %{arm}
 %def_with openni
 %else
+%def_without gdcm
 %def_without openni
 %endif
 #----------------------------------------------------------------------
@@ -39,7 +40,7 @@
 Name: lib%bname%sover
 Epoch: 1
 Version: 3.4.1
-Release: alt1.1
+Release: alt2
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -54,6 +55,7 @@ Source2: %bname-xfeatures2d-boostdesc-%version.tar
 Source3: %bname-xfeatures2d-vgg-%version.tar
 
 Patch1: %bname-alt-build.patch
+Patch2: %bname-alt-unimplemented-functions.patch
 
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
@@ -65,7 +67,10 @@ BuildRequires: libGLU-devel libXau-devel libXdmcp-devel libgtkglext-devel
 BuildRequires: python-module-sphinx-devel python-module-Pygments
 BuildRequires: texlive-latex-base
 BuildRequires: libprotobuf-devel protobuf-compiler libwebp-devel
-BuildRequires: ceres-solver-devel libgflags-devel libglog-devel
+BuildRequires: libgflags-devel
+%ifarch %{ix86} x86_64
+BuildRequires: ceres-solver-devel libglog-devel
+%endif
 %{?_enable_openmp:BuildRequires: libgomp-devel}
 %{?_with_unicap:BuildRequires: libunicap-devel}
 %{?_with_ffmpeg:BuildRequires: libavformat-devel libswscale-devel libavresample-devel}
@@ -105,6 +110,7 @@ Conflicts: lib%bname-devel < %version-%release
 Obsoletes: lib%bname-devel < %version-%release
 Conflicts: lib%{bname}2-devel < %version-%release
 Obsoletes: lib%{bname}2-devel < %version-%release
+Provides: lib%bname-devel-static = %EVR
 
 %description -n lib%bname-devel
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -115,22 +121,6 @@ about 300 C functions and a few C++ classes. Also there are constantly
 improving Python bindings to %Name.
 
 This package contains header files and documentation needed to develop
-applications with %name.
-
-%package -n lib%bname-devel-static
-Group: Development/C++
-Summary: Development files for %name
-Requires: lib%bname-devel = %version-%release
-
-%description -n lib%bname-devel-static
-%Name means Intel(R) Open Source Computer Vision Library. It is a
-collection of C functions and a few C++ classes that implement many
-popular Image Processing and Computer Vision algorithms.
-%Name provides cross-platform middle-to-high level API that includes
-about 300 C functions and a few C++ classes. Also there are constantly
-improving Python bindings to %Name.
-
-This package contains static libraries needed to develop
 applications with %name.
 
 %package doc
@@ -212,7 +202,6 @@ Python language mapping for the %Name.
 %package examples
 Group: Video
 Summary: %Name samples
-BuildArch: noarch
 Conflicts: lib%bname-examples
 Conflicts: lib%{bname}2-examples
 
@@ -229,6 +218,7 @@ This package contains %Name examples.
 %prep
 %setup -b 1 -b 2 -b 3
 %patch1 -p1
+%patch2 -p1
 
 rm -fR 3rdparty/{ffmpeg,lib,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protobuf,libwebp}
 
@@ -281,18 +271,16 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %doc README.md
 %_libdir/*.so.*
 %dir %_datadir/%Name
-%_datadir/%Name/haarcascades
-%_datadir/%Name/lbpcascades
 
 %files -n lib%bname-devel
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*
 %_datadir/%Name/*.supp
-
-%files -n lib%bname-devel-static
 %_datadir/%Name/*.cmake
+%ifarch %{ix86} x86_64
 %_libdir/%Name/3rdparty/%_lib/*.a
+%endif
 
 %files doc
 %_docdir/%name
@@ -305,8 +293,13 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 
 %files examples
 %_datadir/%Name/samples
+%_datadir/%Name/haarcascades
+%_datadir/%Name/lbpcascades
 
 %changelog
+* Wed Jun 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.1-alt2
+- Fixed build for aarch64, removed devel-static subpackage.
+
 * Thu May 10 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.4.1-alt1.1
 - NMU: rebuild with gdcm 2.8.4
 
