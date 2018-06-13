@@ -5,7 +5,7 @@
 
 Name: kde5-liquidshell
 Version: 0.1.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -22,6 +22,9 @@ Patch2: alt-def-quicklaunch.patch
 Patch3: alt-def-date-format.patch
 Patch4: alt-panel-minimum-rows.patch
 Patch5: alt-widgets-order.patch
+Patch6: alt-def-wallpaper.patch
+Patch7: alt-clean-device-notifier.patch
+Patch8: alt-start-menu-icon.patch
 
 # Automatically added by buildreq on Sat Jun 09 2018 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgio-devel libgpg-error libnm-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3
@@ -78,6 +81,9 @@ Requires: %name-common = %version-%release
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
 %build
 %K5build
@@ -97,5 +103,9 @@ Requires: %name-common = %version-%release
 %_K5notif/*liquidshell*
 
 %changelog
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt2%ubt
+- set default wallpaper
+- set start menu icon
+
 * Sat Jun 09 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt1%ubt
 - initial build
