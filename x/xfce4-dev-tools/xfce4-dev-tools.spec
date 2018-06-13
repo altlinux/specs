@@ -1,6 +1,6 @@
 Name: xfce4-dev-tools
 Version: 4.12.0
-Release: alt1
+Release: alt2
 
 Summary: Development tools for Xfce
 Summary (ru): Инструменты для разработчика Xfce
@@ -18,6 +18,8 @@ BuildRequires: glib2-devel
 
 Requires: intltool >= 0.50.0
 Requires: xfce4-common
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Development tools for Xfce
@@ -48,6 +50,10 @@ sed  -e "s/@REVISION@//g" \
 %_datadir/xfce4/dev-tools
 
 %changelog
+* Wed Jun 13 2018 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt2
+- Use _unpackaged_files_terminate_build.
+- Remove autom4te.cache before running automake.
+
 * Thu Mar 05 2015 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt1
 - Updated to 4.12.0.
 
