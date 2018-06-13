@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.8.1
-Release: alt2%ubt
+Release: alt3%ubt
 
 Summary: Zope testrunner script
 License: ZPLv2.1
@@ -16,16 +16,17 @@ Url: http://pypi.python.org/pypi/zope.testrunner
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python-module-setuptools
 BuildRequires: python3-module-setuptools
 
 %if_with check
+BuildRequires: python-module-tox
 BuildRequires: python-module-zope.interface
 BuildRequires: python-module-zope.testing
 BuildRequires: python-module-six
+BuildRequires: python3-module-tox
 BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.interface
 BuildRequires: python3-module-six
@@ -67,7 +68,11 @@ This package contains tests for %oname.
 
 %prep
 %setup
-rm -rf ../python3
+# ALT zope subpackages have to be packaged without pth files
+# due to import errors caused by a namespace specifics.
+# Likewise this file should be removed before tests run.
+sed -i '/commands[[:space:]]*=/a \    bash -c "rm -f {envsitepackagesdir}/*-nspkg.pth"' \
+       tox.ini
 cp -a . ../python3
 
 %build
@@ -82,26 +87,25 @@ pushd ../python3
 %python3_install
 popd
 
-mv %buildroot%_bindir/zope-testrunner \
-	%buildroot%_bindir/zope-testrunner3
+mv %buildroot%_bindir/zope-testrunner{,3}
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-        %buildroot%python3_sitelibdir/
+mv %buildroot{%python3_sitelibdir_noarch/*,%python3_sitelibdir}
 %endif
 
 %python_install
 %if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-        %buildroot%python_sitelibdir/
+mv %buildroot{%python_sitelibdir_noarch/*,%python_sitelibdir}
 %endif
 
 %check
-python setup.py test -v
+
+export PIP_INDEX_URL=http://host.invalid./
+tox --sitepackages -e py%{python_version_nodots python} -v -- -v
 
 pushd ../python3
-python3 setup.py test -v
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
 
 %files
@@ -118,13 +122,16 @@ popd
 %doc *.rst
 %_bindir/zope-testrunner3
 %python3_sitelibdir/*
-
+%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Sat Jun 09 2018 Stanislav Levin <slev@altlinux.org> 4.8.1-alt3%ubt
+- Fix namespace package import ( python3 subpackage )
+
 * Wed Feb 14 2018 Stanislav Levin <slev@altlinux.org> 4.8.1-alt2%ubt
 - Fix a wrong logic of packaging for non x86_64 arch
 
