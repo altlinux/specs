@@ -1,6 +1,6 @@
 Name: xorg-drv-intel
 Version: 2.99.917
-Release: alt6
+Release: alt7
 Epoch: 7
 Summary: Intel integrated graphics chipsets
 License: MIT/X11
@@ -13,6 +13,7 @@ Requires: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv xorg-dri-intel
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+ExclusiveArch: %ix86 x86_64
 BuildRequires(Pre): xorg-sdk
 BuildRequires: libGL-devel libX11-devel libXext-devel libXvMC-devel libXcursor-devel libXdamage-devel libXinerama-devel
 BuildRequires: libXrandr-devel libXtst-devel xorg-proto-devel libxshmfence-devel
@@ -55,6 +56,9 @@ and 24 for the 830M and later
 %_man4dir/i*.4*
 
 %changelog
+* Thu Jun 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.917-alt7
+- git snapshot master.3d39506
+
 * Mon May 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.917-alt6
 - git snapshot master.3594772
 
