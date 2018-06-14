@@ -6,8 +6,8 @@
 %define soversion 20
 
 Name: libgcrypt
-Version: 1.7.9
-Release: alt2%ubt
+Version: 1.7.10
+Release: alt1%ubt
 
 %define soname %{name}%{soversion}
 
@@ -17,6 +17,7 @@ License: LGPL
 URL: http://www.gnupg.org/
 
 Source: %name-%version.tar.bz2
+Patch1: libgcrypt-1.7.10.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libgpg-error-devel >= %req_gpgerror_ver
@@ -86,6 +87,7 @@ Static libraries for the %name-devel package
 
 %prep
 %setup -q
+%patch1 -p1
 %if_enabled info_nogen
 sed -i "s|^info_TEXINFOS|#info_TEXINFOS|" doc/Makefile.am
 sed -i "s|^gcrypt_TEXINFOS|#gcrypt_TEXINFOS|" doc/Makefile.am
@@ -153,6 +155,10 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
+* Thu Jun 14 2018 Sergey V Turchin <zerg@altlinux.org> 1.7.10-alt1%ubt
+- new version
+- security fixes: CVE-2018-0495
+
 * Tue Dec 26 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.9-alt2%ubt
 - clean description (ALT#34383)
 
