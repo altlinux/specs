@@ -3,7 +3,7 @@
 
 Name:    python-module-%modulename
 Version: 6.3.1
-Release: alt1
+Release: alt2
 
 Summary: Cheroot is the high-performance, pure-Python HTTP server used by CherryPy
 License: BSD
@@ -25,7 +25,7 @@ BuildRequires: python3-devel python3-module-setuptools_scm
 
 BuildArch: noarch
 
-Requires: python-module-backports-functools-lru-cache
+%py_requires backports.functools_lru_cache
 
 %description
 Cheroot is the high-performance, pure-Python HTTP server used by CherryPy.
@@ -76,5 +76,8 @@ popd
 %endif
 
 %changelog
+* Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 6.3.1-alt2
+- Require module instead of package.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 6.3.1-alt1
 - Initial build for Sisyphus
