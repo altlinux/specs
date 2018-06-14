@@ -1,10 +1,8 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
 %define pkgname mocha
 
 Name: ruby-%pkgname
-Version: 0.9.12
-Release: alt1.2
+Version: 1.5.0
+Release: alt1
 
 Summary: Library for mocking and stubbing in Ruby
 Group: Development/Ruby
@@ -16,10 +14,10 @@ Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
 Source: %pkgname-%version.tar
-Patch: %pkgname-%version-%release.patch
 
-# Automatically added by buildreq on Mon Nov 10 2008 (-bi)
-BuildRequires: rpm-build-ruby ruby-tool-rdoc ruby-tool-setup ruby-test-unit
+BuildRequires(pre): rpm-build-ruby 
+BuildRequires: ruby-tool-rdoc ruby-tool-setup ruby-test-unit
+BuildRequires: ruby-metaclass
 
 %description
 Mocha is a library for mocking and stubbing in Ruby using a syntax
@@ -35,26 +33,30 @@ Documentation files for %name
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
 %update_setup_rb
 
 %build
 %ruby_config
 %ruby_build
-%ruby_test_unit -Ilib:test test/unit/*_test.rb test/unit/*/*_test.rb
 
 %install
 %ruby_install
 %rdoc lib/
 
+%check
+%ruby_test_unit -Ilib:test test/unit/*_test.rb test/unit/*/*_test.rb
+
 %files
-%doc README.rdoc
+%doc *.md
 %ruby_sitelibdir/*
 
 %files doc
 %ruby_ri_sitedir/Mocha*
 
 %changelog
+* Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
+- New version.
+
 * Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.12-alt1.2
 - Rebuild with Ruby 2.4.1
 
