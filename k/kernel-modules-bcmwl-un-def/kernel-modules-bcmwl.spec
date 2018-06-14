@@ -1,8 +1,9 @@
 %define module_name	bcmwl
 %define module_version	6.30.223.248
-%define module_release alt15
+%define module_release alt15.k
 
 %define flavour		un-def
+%define karch x86_64 i586
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-un-def
 
