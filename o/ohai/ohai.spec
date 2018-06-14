@@ -2,7 +2,7 @@
  
 Name: 	 %pkgname
 Version: 14.2.0
-Release: alt1
+Release: alt2
  
 Summary: Ohai profiles your system and emits JSON
 License: MIT/Ruby
@@ -24,7 +24,7 @@ BuildRequires: ruby-mixlib-cli
 BuildRequires: ruby-mixlib-config >= 2.0
 BuildRequires: ruby-mixlib-log
 BuildRequires: ruby-mixlib-shellout >= 2.0
-BuildRequires: ruby-net-dhcp
+#BuildRequires: ruby-net-dhcp
 BuildRequires: ruby-systemu >= 2.6.4
 BuildRequires: ruby-ipaddr_extensions
 BuildRequires: ruby-sigar
@@ -73,6 +73,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Thu Jun 14 2018 Dmitry Terekhin <jqt4@altlinux.org> 14.2.0-alt2
+- Delete dependency "ruby-net-dhcp" for rebuild to mipsel.
+
 * Wed Jun 06 2018 Andrey Cherepanov <cas@altlinux.org> 14.2.0-alt1
 - New version.
 
