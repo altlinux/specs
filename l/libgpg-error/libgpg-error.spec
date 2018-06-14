@@ -1,7 +1,7 @@
 %def_enable static
 
 Name: libgpg-error
-Version: 1.29
+Version: 1.31
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -84,6 +84,9 @@ ln -sf ../../%_lib/libgpg-error.so.0 %buildroot%_libdir/libgpg-error.so
 %endif
 
 %changelog
+* Thu Jun 14 2018 Sergey V Turchin <zerg@altlinux.org> 1.31-alt1%ubt
+- new version
+
 * Thu Apr 19 2018 Sergey V Turchin <zerg@altlinux.org> 1.29-alt1%ubt
 - new version
 
