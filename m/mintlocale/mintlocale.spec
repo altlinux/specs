@@ -1,5 +1,5 @@
 Name: mintlocale
-Version: 1.4.4
+Version: 1.4.8
 Release: alt1
 
 Summary: Language selection tool for Cinnamon
@@ -8,7 +8,6 @@ Group: Graphical desktop/GNOME
 
 Url: https://github.com/linuxmint/mintlocale
 Source0: %name-%version.tar
-Source1: org.%name.policy
 
 BuildArch: noarch
 
@@ -39,10 +38,6 @@ rm -f %buildroot%_bindir/add-remove-locales \
   %buildroot%_prefix/lib/linuxmint/mintlocale/add.py \
   %buildroot%_prefix/lib/linuxmint/mintlocale/install_remove.py
 
-#install polkit files
-install -m 0755 -d %buildroot%{_datadir}/polkit-1/actions/
-install -D -p -m 0644 %{SOURCE1} %buildroot%{_datadir}/polkit-1/actions/
-
 echo 'LANG=$locale' > %{buildroot}%{_datadir}/linuxmint/mintlocale/templates/default_locale.template
 
 %files
@@ -51,11 +46,14 @@ echo 'LANG=$locale' > %{buildroot}%{_datadir}/linuxmint/mintlocale/templates/def
 %_prefix/lib/linuxmint
 %_datadir/applications/%{name}.desktop
 %_datadir/linuxmint
-%_datadir/polkit-1/actions/org.mintlocale.policy
+%_datadir/polkit-1/actions/com.linuxmint.mintlocale.policy
 
 %doc debian/copyright debian/changelog
 
 %changelog
+* Wed Jun 13 2018 Vladimir Didenko <cow@altlinux.org> 1.4.8-alt1
+- new version
+
 * Mon Oct 30 2017 Vladimir Didenko <cow@altlinux.org> 1.4.4-alt1
 - new version
 
