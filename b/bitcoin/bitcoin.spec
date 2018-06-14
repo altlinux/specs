@@ -1,6 +1,6 @@
 Name: bitcoin
-Version: 0.16.0
-Release: alt2.1
+Version: 0.16.1
+Release: alt1
 
 Summary: peer-to-peer network based anonymous digital currency
 License: MIT
@@ -55,6 +55,9 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Thu Jun 14 2018 Alexei Takaseev <taf@altlinux.org> 0.16.1-alt1
+- Version 0.16.1
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.16.0-alt2.1
 - NMU: rebuilt with boost-1.67.0
 
