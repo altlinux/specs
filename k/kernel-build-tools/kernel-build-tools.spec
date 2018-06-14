@@ -1,5 +1,5 @@
 Name: kernel-build-tools
-Version: 0.104
+Version: 0.105
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -24,6 +24,15 @@ PreReq: rpm >= 4.0.4-alt1
 
 %ifnarch %ix86
 Provides: kernel-headers-modules-std-pae
+%endif
+%ifnarch %ix86 x86_64
+Provides: kernel-headers-modules-std-def
+Provides: kernel-headers-modules-un-def
+Provides: kernel-headers-modules-ovz-el
+Provides: kernel-headers-modules-ovz-el7
+%endif
+%ifnarch aarch64
+Provides: kernel-headers-modules-mp
 %endif
 
 %description
@@ -55,6 +64,13 @@ install -Dpm644 kernel-macros \
 %_rpmmacrosdir/kernel
 
 %changelog
+* Sat Jun 09 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.105-alt1
+- km-create-tag: added --force and --arches options.
+- kernel-macros:
+  + added mips and riscv support to %%base_arch macro;
+  + dropped buggy karch macro.
+- rpm-build-kernel: added fake provides for existing kernel flavours.
+
 * Tue Sep 29 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.104-alt1
 - kernel-macros: added new arch translation aarch64 -> arm64.
 
