@@ -1,13 +1,13 @@
-%define  pkgname rack-test
+%define  pkgname selenium-webdriver
 
-Name: 	 ruby-%pkgname
-Version: 1.0.0
+Name:    ruby-%pkgname
+Version: 3.12.0
 Release: alt1
 
-Summary: Rack::Test is a layer on top of Rack's MockRequest similar to Merb's RequestHelper
-License: MIT
+Summary: WebDriver is a tool for writing automated tests of websites
+License: Apache 2.0
 Group:   Development/Ruby
-Url:     https://github.com/rack-test/rack-test
+Url:     https://github.com/SeleniumHQ/selenium
 
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
@@ -17,8 +17,12 @@ Source:  %pkgname-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 
+%filter_from_requires /^ruby(win32/d
+
 %description
-%summary
+WebDriver is a tool for writing automated tests of websites. It aims to
+mimic the behaviour of a real user, and as such interacts with the HTML
+of the application.
 
 %package doc
 Summary: Documentation files for %name
@@ -54,8 +58,5 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
-* Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
-- New version.
-
-* Tue Jun 13 2017 Gordeev Mikhail <obirvalger@altlinux.org> 0.6.3-alt1
+* Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 3.12.0-alt1
 - Initial build for Sisyphus

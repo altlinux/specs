@@ -1,24 +1,25 @@
-%define  pkgname rack-test
-
-Name: 	 ruby-%pkgname
-Version: 1.0.0
+Name:    puma
+Version: 3.11.4
 Release: alt1
 
-Summary: Rack::Test is a layer on top of Rack's MockRequest similar to Merb's RequestHelper
-License: MIT
+Summary: A Ruby/Rack web server built for concurrency
+License: BSD 3-Clause
 Group:   Development/Ruby
-Url:     https://github.com/rack-test/rack-test
+Url:     https://github.com/puma/puma
 
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
 
-Source:  %pkgname-%version.tar
+Source:  %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
+BuildRequires: libruby-devel
+# For tests
+#BuildRequires: ruby-rack
 
 %description
-%summary
+Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server
+for Ruby/Rack applications in development and production.
 
 %package doc
 Summary: Documentation files for %name
@@ -30,7 +31,7 @@ BuildArch: noarch
 Documentation files for %{name}.
 
 %prep
-%setup -n %pkgname-%version
+%setup -n %name-%version
 %update_setup_rb
 
 %build
@@ -44,18 +45,16 @@ Documentation files for %{name}.
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+#%%ruby_test_unit -Ilib:ext:test test
 
 %files
 %doc README*
+%_bindir/%{name}*
 %ruby_sitelibdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
-* Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
-- New version.
-
-* Tue Jun 13 2017 Gordeev Mikhail <obirvalger@altlinux.org> 0.6.3-alt1
+* Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 3.11.4-alt1
 - Initial build for Sisyphus

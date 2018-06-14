@@ -1,13 +1,13 @@
-%define  pkgname rack-test
+%define  pkgname mono_logger
 
-Name: 	 ruby-%pkgname
-Version: 1.0.0
+Name:    ruby-mono-logger
+Version: 1.1.0
 Release: alt1
 
-Summary: Rack::Test is a layer on top of Rack's MockRequest similar to Merb's RequestHelper
+Summary: A lock-free logger for Ruby 2.0
 License: MIT
 Group:   Development/Ruby
-Url:     https://github.com/rack-test/rack-test
+Url:     https://github.com/steveklabnik/mono_logger
 
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
@@ -16,6 +16,8 @@ Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
+
+Provides: ruby-%pkgname = %EVR
 
 %description
 %summary
@@ -44,7 +46,7 @@ Documentation files for %{name}.
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+#%%ruby_test_unit -Ilib:test test/*.rb
 
 %files
 %doc README*
@@ -54,8 +56,5 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
-* Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
-- New version.
-
-* Tue Jun 13 2017 Gordeev Mikhail <obirvalger@altlinux.org> 0.6.3-alt1
+* Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus
