@@ -1,5 +1,5 @@
 Name: libpciaccess
-Version: 0.13.4
+Version: 0.14
 Release: alt1
 Epoch: 1
 Summary: X.org libpciaccess library
@@ -19,7 +19,6 @@ Library providing generic access to the PCI bus and devices
 %package devel
 Summary: The pciaccess Library and Header Files
 Group: Development/C
-Requires: %name = %version-%release
 
 %description devel
 %name-devel contains the libraries and header files needed to
@@ -49,6 +48,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jun 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:0.14-alt1
+- 0.14
+
 * Wed May 13 2015 Valery Inozemtsev <shrek@altlinux.ru> 1:0.13.4-alt1
 - 0.13.4
 
