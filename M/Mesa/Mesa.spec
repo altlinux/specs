@@ -3,7 +3,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 18.1.0
+Version: 18.1.1
 Release: alt1%ubt
 Epoch: 4
 License: MIT
@@ -18,12 +18,14 @@ Patch: %name-%version.patch
 
 BuildPreReq: /proc
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: libllvm-devel-static
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
-BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
+BuildRequires: libdrm-devel libexpat-devel python-modules libselinux-devel libxcb-devel libSM-devel
 BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libffi-devel libelf-devel
-BuildRequires: libva-devel libvdpau-devel libXvMC-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel libnettle-devel
+BuildRequires: libva-devel libvdpau-devel libXvMC-devel xorg-proto-devel libxshmfence-devel libnettle-devel
 BuildRequires: libelf-devel python-module-mako python-module-argparse zlib-devel
+%ifarch %ix86 x86_64
+BuildRequires: libllvm-devel-static
+%endif
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -147,6 +149,14 @@ Requires: libvdpau
 %description -n xorg-dri-nouveau
 DRI driver for nVidia
 
+%package -n xorg-dri-armsoc
+Summary: SoC DRI drivers
+Group: System/X11
+Requires: libGL = %epoch:%version-%release
+
+%description -n xorg-dri-armsoc
+DRI drivers for various SoCs
+
 %package -n glxinfo
 Summary: display info about a GLX extension and OpenGL renderer
 Group: System/X11
@@ -171,10 +181,6 @@ framerate information to stdout
 
 %set_verify_elf_method unresolved=relaxed
 
-%define dri_common	r200,radeon
-%define dri_ix86	%dri_common,i915,i965,nouveau
-%define dri_ppc		%dri_common,i915,i965
-
 %prep
 %setup -q
 %patch -p1
@@ -183,25 +189,21 @@ framerate information to stdout
 %autoreconf
 %configure \
 %ifarch %ix86 x86_64
-	--with-dri-drivers=%dri_ix86 \
-%else
-%ifarch ppc
-	--with-dri-drivers=%dri_ppc \
-%else
-%ifarch %arm
-	--with-dri-drivers=swrast \
-%else
-	--with-dri-drivers=%dri_common \
-%endif
-%endif
-%endif
-%ifarch %ix86 x86_64
+	--with-dri-drivers=r200,radeon,i915,i965,nouveau \
 	--with-gallium-drivers=swrast,r300,r600,nouveau,radeonsi,virgl \
+%endif
+%ifarch %arm
+	--with-dri-drivers=no \
+	--with-gallium-drivers=swrast,vc4,imx,etnaviv,freedreno \
+%endif
+%ifarch aarch64
+	--with-dri-drivers=r200,radeon,nouveau \
+	--with-gallium-drivers=swrast,r300,r600,nouveau,virgl,vc4,imx,etnaviv,freedreno \
+%endif
 	--disable-llvm-shared-libs \
 	--enable-vdpau \
 	--enable-xvmc \
 	--enable-dri3 \
-%endif
 %ifarch x86_64
 	--with-vulkan-drivers=intel,radeon \
 %endif
@@ -367,15 +369,17 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 
 %files -n xorg-dri-swrast
 %_libdir/X11/modules/dri/*swrast*_dri.so
-%_libdir/X11/modules/dri/mesa_dri_drivers.so
-%ifarch %ix86 x86_64
 %_libdir/X11/modules/dri/gallium_dri.so
+%ifarch %ix86 x86_64 aarch64
+%_libdir/X11/modules/dri/mesa_dri_drivers.so
 %_libdir/X11/modules/dri/virtio_gpu_dri.so
+%ifarch %ix86 x86_64
 %_libdir/dri/gallium_drv_video.so
 %_libdir/vdpau/libvdpau_gallium.so.1
 %endif
+%endif
 
-%ifarch ppc %ix86 x86_64
+%ifarch %ix86 x86_64
 %files -n xorg-dri-intel
 %config(noreplace) %_sysconfdir/drirc
 %_libdir/X11/modules/dri/i9?5_dri.so
@@ -385,19 +389,18 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %dir %_datadir/vulkan/icd.d
 %_datadir/vulkan/icd.d/intel_icd*
 %endif
+%endif
 
+%ifarch %ix86 x86_64 aarch64
 %files -n xorg-dri-nouveau
 %_libdir/X11/modules/dri/nouveau_*dri.so
-%ifarch %ix86 x86_64
 %_libdir/dri/nouveau_drv_video.so
 %_libdir/vdpau/libvdpau_nouveau.so*
 %_libdir/libXvMCnouveau.so.*
-%endif
 
 %files -n xorg-dri-radeon
 %_libdir/X11/modules/dri/radeon*_dri.so
 %_libdir/X11/modules/dri/r?00_dri.so
-%ifarch %ix86 x86_64
 %_libdir/vdpau/libvdpau_r*.so*
 %_libdir/dri/r*_drv_video.so
 %_libdir/libXvMCr*.so.*
@@ -409,6 +412,14 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_datadir/vulkan/icd.d/radeon_icd*
 %endif
 %endif
+
+%ifarch %arm aarch64
+%files -n xorg-dri-armsoc
+%_libdir/X11/modules/dri/etnaviv_dri.so
+%_libdir/X11/modules/dri/imx-drm_dri.so
+%_libdir/X11/modules/dri/kgsl_dri.so
+%_libdir/X11/modules/dri/msm_dri.so
+%_libdir/X11/modules/dri/vc4_dri.so
 %endif
 
 %files -n glxinfo
@@ -418,6 +429,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Thu Jun 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.1.1-alt1%ubt
+- 18.1.1
+
 * Thu May 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.1.0-alt1%ubt
 - 18.1.0
 
