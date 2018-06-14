@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.7.3
-Release: alt1.5
+Release: alt1.6
  
 Summary: System Information Gatherer And Reporter
 License: Apache 2.0
@@ -13,6 +13,7 @@ Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
  
 Source:  %pkgname-%version.tar
 Patch1:  %pkgname-disable-inline.patch
+Patch2:  %pkgname-alt-fix-mips-and-TIOCGETP.patch
  
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
@@ -33,6 +34,7 @@ Documentation files for %{name}.
 %prep
 %setup -n %pkgname-%version
 %patch1 -p1
+%patch2 -p1
 %update_setup_rb
  
 %build
@@ -54,6 +56,10 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Thu Jun 14 2018 Dmitry Terekhin <jqt4@altlinux.org> 0.7.3-alt1.6
+- Add patch for mipsel like as:
+- https://github.com/hyperic/sigar/issues/39
+
 * Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.3-alt1.5
 - Rebuild with aarch64.
 
