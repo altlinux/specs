@@ -2,7 +2,7 @@
 %define rname kfilemetadata
 Name: kde4-kfilemetadata
 Version: 4.14.3
-Release: alt4%ubt
+Release: alt5%ubt
 
 Group: System/Libraries
 Summary: A library for extracting file metadata
@@ -17,8 +17,8 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: ebook-tools-devel gcc-c++ kde4libs-devel
 BuildRequires: libexiv2-devel libpoppler-qt4-devel
-BuildRequires: libavresample-devel libavdevice-devel libpostproc-devel libswscale-devel
-BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
+#BuildRequires: libavresample-devel libavdevice-devel libpostproc-devel libswscale-devel
+#BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
 BuildRequires: libtag-devel
 BuildRequires: kde-common-devel
 #BuildRequires: qmobipocket-devel
@@ -61,6 +61,9 @@ Summary: %name library
 %_K4libdir/cmake/KFileMetaData/
 
 %changelog
+* Thu Jun 14 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt5%ubt
+- build without ffmpeg
+
 * Tue Jun 20 2017 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt4%ubt
 - rebuild with ffmpeg
 
