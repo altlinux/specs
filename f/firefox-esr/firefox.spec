@@ -7,7 +7,7 @@
 
 %define gst_version 1.0
 %define nspr_version 4.17
-%define nss_version 3.36.1
+%define nss_version 3.36.4
 %define rust_version 1.24.1
 %define cargo_version 0.25.0
 
@@ -15,7 +15,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        60.0.1
+Version:        60.0.2
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -112,6 +112,8 @@ Provides:	firefox = %EVR
 Conflicts:	firefox
 Requires:	mozilla-common
 
+ExclusiveArch: %ix86 x86_64
+
 # ALT#30732
 Requires:	gst-plugins-ugly%gst_version
 
@@ -147,6 +149,9 @@ tar -xf %SOURCE2
 #patch202 -p1
 
 cp -f %SOURCE4 .mozconfig
+%ifarch %ix86 x86_64
+echo "ac_add_options --disable-elf-hack" >> .mozconfig
+%endif
 
 %build
 cd mozilla
@@ -324,6 +329,11 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Mon Jun 11 2018 Andrey Cherepanov <cas@altlinux.org> 60.0.2-alt1
+- New ESR version (60.0.2).
+- Fixed:
+  + CVE-2018-6126 Heap buffer overflow rasterizing paths in SVG with Skia
+
 * Tue Jun 05 2018 Andrey Cherepanov <cas@altlinux.org> 60.0.1-alt1
 - New ESR version (60.0.1).
 - Fixed:
