@@ -1,9 +1,10 @@
 %define module_name	acpi_call
 %define module_version	0.1
 
-%define module_release alt5
+%define module_release alt5.k
 
 %define flavour		un-def
+%define karch x86_64 i586
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-un-def
 
