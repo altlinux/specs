@@ -22,7 +22,7 @@
 
 Name: xorg-server
 Version: 1.20.0
-Release: alt1
+Release: alt2
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -324,6 +324,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Thu Jun 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.0-alt2
+- exa: Use PictureMatchFormat for source-only picture format description (closes: #34975)
+
 * Wed May 30 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.0-alt1
 - 1.20.0
 
