@@ -10,8 +10,8 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.0.2
-Release: alt2%ubt
+Version: 3.0.3
+Release: alt1%ubt
 
 Source:%name-%version.tar
 
@@ -83,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Thu Jun 14 2018 Sergey V Turchin <zerg at altlinux dot org> 3.0.3-alt1%ubt
+- set window icon
+
 * Fri Apr 20 2018 Sergey V Turchin <zerg at altlinux dot org> 3.0.2-alt2%ubt
 - require virtualkeyboard module
 
