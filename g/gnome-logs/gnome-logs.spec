@@ -3,7 +3,7 @@
 %define _name org.gnome.Logs
 
 Name: gnome-logs
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The GNOME logfile viewer
@@ -23,9 +23,8 @@ Requires: gsettings-desktop-schemas
 
 BuildPreReq: rpm-build-gnome gnome-common libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: gsettings-desktop-schemas-devel libsystemd-journal-devel
-BuildRequires: intltool docbook-dtds docbook-style-xsl xsltproc desktop-file-utils
-BuildRequires: appdata-tools libappstream-glib-devel
-BuildRequires: yelp-tools
+BuildRequires: docbook-dtds docbook-style-xsl xsltproc desktop-file-utils
+BuildRequires: libappstream-glib-devel yelp-tools
 
 %description
 GNOME Logs is a log viewer for the systemd journal.
@@ -57,6 +56,9 @@ GNOME Logs is a log viewer for the systemd journal.
 %doc NEWS README
 
 %changelog
+* Thu Jun 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
+- 3.28.3
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 
