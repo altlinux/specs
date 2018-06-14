@@ -1,9 +1,10 @@
 %define module_name	ipt_netflow
 %define module_version	2.3
 
-%define module_release alt1
+%define module_release alt1.k
 
 %define flavour		std-def
+%define karch x86_64 i586
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-def
 
