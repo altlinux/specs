@@ -1,8 +1,9 @@
 %define module_name             ipt-ratelimit
 %define module_version          0.3
-%define module_release 		alt2
+%define module_release 		alt2.k
 
 %define flavour		un-def
+%define karch x86_64 i586
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-un-def
 
