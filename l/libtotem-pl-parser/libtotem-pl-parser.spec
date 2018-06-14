@@ -1,19 +1,20 @@
 %define _name totem-pl-parser
 %define ver_major 3.26
 %define _libexecdir %_prefix/libexec
+
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable libgcrypt
 %def_enable quvi
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Shared libraries of the Totem media player play list parser
 Group: System/Libraries
 License: GPL
-URL: http://www.hadess.net/%_name.php3
+Url: http://www.hadess.net/%_name.php3
 
 #Source: %_name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -23,12 +24,14 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %define quvi_ver 0.9.1
 %define archive_ver 3.0
 
+%{?_enable_quvi:Requires: libquvi-scripts0.9 >= %quvi_ver}
+
 BuildPreReq: meson gtk-doc intltool libgio-devel >= %glib_ver
 BuildPreReq: libarchive-devel >= %archive_ver libsoup-gnome-devel >= %soup_ver
 BuildRequires: libgmime3.0-devel libxml2-devel
 %{?_enable_libgcrypt:BuildRequires: libgcrypt-devel}
-%{?_enable_quvi:BuildRequires: libquvi0.9-devel >= %quvi_ver}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.9.5}
+%{?_enable_quvi:BuildRequires: libquvi0.9-devel >= %quvi_ver}
 
 %description
 Shared libraries that come with the Totem media player.
@@ -74,15 +77,12 @@ GObject introspection devel data for the Totem playlist parser library
 
 %prep
 %setup -n %_name-%version
-[ ! -d m4 ] && mkdir m4
 
 %build
 %meson \
-	-Denable-static=false \
 	%{?_enable_gtk_doc:-Denable-gtk-doc=true} \
-	%{?_enable_introspection:-Denable-introspection=true} \
-	-Denable-libgcrypt=auto \
-	-Denable-quvi=auto
+	%{?_enable_libgcrypt:-Denable-libgcrypt=yes} \
+	%{?_enable_quvi:-Denable-quvi=yes}
 %meson_build
 
 %install
@@ -115,6 +115,9 @@ GObject introspection devel data for the Totem playlist parser library
 %endif
 
 %changelog
+* Thu Jun 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
+- 3.26.1
+
 * Thu Sep 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 
