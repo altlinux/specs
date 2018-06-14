@@ -8,7 +8,7 @@
 
 Name: python-module-%oname
 Version: %major.2.0
-Release: alt1.1
+Release: alt1.1.qa1
 Epoch: 1
 
 # Enable/disable GLcanvas
@@ -53,7 +53,7 @@ BuildRequires: gcc-c++ libgtk+3-devel python-devel python-module-libxml2
 BuildPreReq: libwxGTK%libmajor-devel xvfb-run
 BuildPreReq: libGL-devel libGLU-devel
 BuildPreReq: python-module-sphinx-devel python-module-Pygments-tests
-BuildPreReq: libGConf-devel gst-plugins-devel swig
+BuildPreReq: libGConf-devel swig
 BuildPreReq: python-module-distribute python-module-enchant
 BuildPreReq: python-module-Pillow python-module-PyPDF2
 %if_with python3
@@ -262,7 +262,7 @@ mv %buildroot/include/wx-%major/wx/wxPython \
 	%buildroot%_includedir/wx-%major/wx/wxPython3
 
 %define pythonsite %buildroot%python3_sitelibdir_noarch
-%ifarch x86_64
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 mv %pythonsite/wx.pth %pythonsite/*.egg-info %pythonsite/wxversion.py* \
 	%buildroot%python3_sitelibdir
 #mv %pythonsite/wxaddons/ %buildroot%python3_sitelibdir
@@ -303,7 +303,7 @@ cd wxPython
 
 %define pythonsite %buildroot%python_sitelibdir_noarch
 
-%ifarch x86_64
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 mv %pythonsite/wx.pth %pythonsite/*.egg-info %pythonsite/wxversion.py* \
 	%buildroot%python_sitelibdir
 #mv %pythonsite/wxaddons/ %buildroot%python_sitelibdir
@@ -386,6 +386,10 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Thu Jun 14 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.0.2.0-alt1.1.qa1
+- Removed redundant BR: gst-plugins-devel.
+- Fixed installations of wxversion module on aarch64 architecture.
+
 * Thu Aug 10 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:3.0.2.0-alt1.1
 - Rebuilt for changed libwxGTK3.0 ABI
 
