@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.26
@@ -37,8 +37,8 @@
 %def_disable gromit
 
 Name: totem
-Version: %ver_major.0
-Release: alt3.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -48,7 +48,7 @@ Url: https://wiki.gnome.org/Apps/Videos
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %endif
 
 Obsoletes: %name-gstreamer < %version %name-backend-gstreamer < %version %name-backend-xine < %version
@@ -92,7 +92,7 @@ BuildRequires: gst-plugins-bad%gst_api_ver-devel
 BuildPreReq: iso-codes-devel gnome-icon-theme
 BuildPreReq: glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgio-devel libpeas-devel >= %peas_ver
 BuildPreReq: libtotem-pl-parser-devel >= %parser_ver
-BuildPreReq: libXtst-devel libXrandr-devel libXxf86vm-devel xorg-xproto-devel
+BuildPreReq: libXtst-devel libXrandr-devel libXxf86vm-devel xorg-proto-devel
 BuildPreReq: libclutter-devel >= %clutter_ver
 BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildPreReq: libclutter-gst3.0-devel >= %clutter_gst_ver
@@ -406,6 +406,9 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Fri Jun 15 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
+- 3.26.1
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.26.0-alt3.1
 - (NMU) Rebuilt with python-3.6.4.
 
