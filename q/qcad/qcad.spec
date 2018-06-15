@@ -1,8 +1,8 @@
 %def_with debug
 
 Name: 	 qcad
-Version: 3.20.1.3
-Release: alt2
+Version: 3.20.1.6
+Release: alt1
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
 
@@ -121,6 +121,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 3.20.1.6-alt1
+- New version.
+
 * Sun May 06 2018 Andrey Cherepanov <cas@altlinux.org> 3.20.1.3-alt2
 - Use Qt file dialogs for any unknown WM (KDE in some cases) (ALT #34805).
 
