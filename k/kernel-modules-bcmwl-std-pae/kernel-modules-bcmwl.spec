@@ -1,8 +1,9 @@
 %define module_name	bcmwl
 %define module_version	6.30.223.248
-%define module_release alt14
+%define module_release alt14.k
 
 %define flavour		std-pae
+%define karch i586
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-pae
 
