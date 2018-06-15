@@ -1,5 +1,5 @@
 Name: mate-panel
-Version: 1.20.1
+Version: 1.20.2
 Release: alt1
 Epoch: 2
 Summary: MATE Desktop panel and applets
@@ -78,6 +78,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/MatePanelApplet-4.0.gir
 
 %changelog
+* Fri Jun 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.2-alt1
+- 1.20.2
+
 * Tue Mar 27 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.1-alt1
 - 1.20.1
 
