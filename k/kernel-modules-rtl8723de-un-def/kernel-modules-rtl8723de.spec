@@ -1,8 +1,9 @@
 %define module_name	rtl8723de
 %define module_version	5.1.1.8
-%define module_release alt1
+%define module_release alt1.k
 
 %define flavour		un-def
+%define karch x86_64 i586
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-un-def
 
