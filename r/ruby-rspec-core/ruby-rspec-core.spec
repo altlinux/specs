@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 3.7.1
-Release: alt1
+Release: alt2
  
 Summary: RSpec runner and formatters
 License: MIT/Ruby
@@ -17,6 +17,8 @@ Source:  %pkgname-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
  
+%filter_from_requires \,^ruby(mocha/object),d
+
 %description
 rspec-core provides the structure for writing executable examples of how
 your code should behave, and an rspec command with tools to constrain
@@ -58,6 +60,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Jun 15 2018 Andrey Cherepanov <cas@altlinux.org> 3.7.1-alt2
+- Rebuild with mocha 1.5.0.
+
 * Thu Jan 04 2018 Andrey Cherepanov <cas@altlinux.org> 3.7.1-alt1
 - New version.
 
