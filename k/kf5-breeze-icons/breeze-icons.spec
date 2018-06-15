@@ -1,7 +1,7 @@
 %define rname breeze-icons
 
 Name: kf5-%rname
-Version: 5.46.0
+Version: 5.47.0
 Release: alt1%ubt
 %K5init no_altplace
 
@@ -89,6 +89,9 @@ done
 %_iconsdir/breeze*/
 
 %changelog
+* Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1%ubt
+- new version
+
 * Mon May 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1%ubt
 - new version
 

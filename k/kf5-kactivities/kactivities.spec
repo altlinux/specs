@@ -1,7 +1,7 @@
 %define rname kactivities
 
 Name: kf5-%rname
-Version: 5.46.0
+Version: 5.47.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -94,6 +94,9 @@ sed -i 's|KACTIVITIES_LIB_VERSION_STRING|KACTIVITIES_VERSION_STRING|' src/lib/li
 %_K5qml/org/kde/activities/
 
 %changelog
+* Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1%ubt
+- new version
+
 * Mon May 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1%ubt
 - new version
 
