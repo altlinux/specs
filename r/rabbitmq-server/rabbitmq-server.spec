@@ -8,8 +8,8 @@
 %add_erlang_req_modules_skiplist app_utils credit_flow gen_server2 mirrored_supervisor pmon priority_queue rand_compat supervisor2 time_compat
 
 Name: rabbitmq-server
-Version: 3.6.14
-Release: alt4
+Version: 3.6.16
+Release: alt1%ubt
 Summary: The RabbitMQ server
 License: MPLv1.1
 BuildArch: noarch
@@ -25,19 +25,20 @@ Source7: rabbitmq-server.tmpfiles
 
 Patch1: rabbitmq-server-0001-Remove-excessive-sd_notify-code.patch
 Patch2: rabbitmq-server-0002-Add-systemd-notification-support.patch
-Patch3: rabbitmq-server-0003-Revert-Distinct-exit-codes-for-CLI-utilities.patch
-Patch4: rabbitmq-server-0004-Allow-guest-login-from-non-loopback-connections.patch
-Patch5: rabbitmq-server-0005-rabbit_prelaunch-must-use-RABBITMQ_SERVER_ERL_ARGS.patch
+Patch3: rabbitmq-server-0003-Allow-guest-login-from-non-loopback-connections.patch
+Patch4: rabbitmq-server-0004-rabbit_prelaunch-must-use-RABBITMQ_SERVER_ERL_ARGS.patch
 Patch101: rabbitmq-common-0001-Use-proto_dist-from-command-line.patch
+Patch201: rabbitmq-server-release-0001-Don-t-use-templates.patch
 
 URL: http://www.rabbitmq.com/
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-erlang
 BuildRequires: erlang-devel erlang-otp-devel
 BuildRequires: python-module-simplejson python-modules-xml
 BuildRequires: xmlto zip unzip netcat rsync
 Requires: erlang  >= 1:20.1.3
-Requires: tsung   >= 1.7.0-alt1
+Requires: tsung   >= 1.7.0
 
 
 %description
@@ -55,17 +56,19 @@ Erlang header files for %name
 
 %prep
 %setup -q
-cd deps/rabbit
+
+pushd deps/rabbit
 %patch1 -p1
 %patch2 -p1
-#%patch3 -p1
+%patch3 -p1
 %patch4 -p1
-%patch5 -p1
-cd ../..
+popd
 
-cd deps/rabbit_common
+pushd deps/rabbit_common
 %patch101 -p1
-cd ../..
+popd
+
+%patch201 -p1
 
 # We have to remove it until common_test subpackage lands RHOS
 rm -f \
@@ -156,6 +159,9 @@ rm -f %buildroot%_erlanglibdir/rabbitmq_server-%version/{LICENSE,LICENSE-*,INSTA
 #%_datadir/%name
 
 %changelog
+* Fri Jun 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.16-alt1%ubt
+- Updated to upstream version 3.6.16.
+
 * Mon Nov 27 2017 Denis Medvedev <nbr@altlinux.org> 3.6.14-alt4
 - added (Fixes: CVE-2016-9877).
 
