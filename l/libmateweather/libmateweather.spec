@@ -1,5 +1,5 @@
 Name: libmateweather
-Version: 1.20.0
+Version: 1.20.1
 Release: alt1
 Epoch: 1
 Summary: Libraries to allow MATE Desktop to display weather information
@@ -40,7 +40,6 @@ Development files for libmateweather
 %build
 %autoreconf
 %configure \
-	--enable-python \
 	--enable-gtk-doc-html \
 	--enable-locations-compression \
 	--disable-static \
@@ -68,6 +67,9 @@ Development files for libmateweather
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jun 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.1-alt1
+- 1.20.1
+
 * Mon Mar 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.0-alt1
 - initial build from git.mate-desktop.org
 
