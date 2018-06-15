@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_with otp_debug
 %def_with otp_native
 %def_enable threads
@@ -53,7 +55,7 @@ Epoch: 1
 %define subver 1.3
 Version: %ver.%subver
 %define plevel b
-Release: alt2
+Release: alt3%ubt
 Summary: A programming language developed by Ericsson
 License: %asl
 Group: Development/Erlang
@@ -96,6 +98,7 @@ Provides: erlang_mod(hipe_x86_main)
 %endif
 
 %set_autoconf_version 2.5
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-%name
 BuildRequires: rpm-build-%name
@@ -197,7 +200,6 @@ Headers for standart visual %Name modules.
 %package visual
 Summary: Standart visual applications for %Name
 Group: Development/Erlang
-BuildArch: noarch
 Provides: %name-visual-modules = %epoch:%version-%release
 Requires: %name-visual-common = %epoch:%version-%release
 
@@ -329,7 +331,6 @@ This package contains arch-depend binaries %Name OTP files.
 %package otp-devel
 Summary: Headers for standard %Name OTP
 Group: Development/Erlang
-BuildArch: noarch
 Provides: otp-devel = %epoch:%version-%release
 Requires: %name-otp-common = %epoch:%version-%release
 Requires: %name-otp-modules = %epoch:%version-%release
@@ -341,7 +342,6 @@ Headers for standard %Name OTP.
 %package otp
 Summary: Standard %Name OTP
 Group: Development/Erlang
-BuildArch: noarch
 Provides: %name-otp-modules = %epoch:%version-%release
 Provides: otp = %epoch:%version-%release
 Requires: %name-otp-common = %epoch:%version-%release
@@ -401,7 +401,6 @@ This package requires all standard %Name/OTP subpackages.
 %package otp-debug
 Summary: Standard %Name OTP modules with debug information
 Group: Development/Erlang
-BuildArch: noarch
 Provides: %name-otp-modules-debug = %epoch:%version-%release
 Provides: otp-debug = %epoch:%version-%release
 Requires: %name-otp-common = %epoch:%version-%release
@@ -677,8 +676,8 @@ export ERL_LIBS=$PWD/lib
 %if_enabled docs
 %{?fop_options:export FOP_OPTS="%fop_options"}
 export PATH=$PWD/bin:$PATH
-%make_build BUILD_DOC_PARALLEL=1 docs
-%make_build BUILD_DOC_PARALLEL=1 release_docs
+%make docs
+%make release_docs
 %endif
 %if_enabled pdf_opt
 for f in {system,erts,{release,lib}/*}/doc/pdf/*.pdf; do
@@ -837,6 +836,7 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_docdir/%name-%version/README.md
 %_bindir/*
 %exclude %_bindir/ct_run
+%_unitdir/*
 %dir %_otpdir
 ##dir %_otpdir/doc
 %dir %_otpdir/bin
@@ -972,6 +972,7 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/parsetools-*/include
 %_otplibdir/public_key-*/asn1
 %_otplibdir/public_key-*/include
+%_otplibdir/public_key-*/src
 %_otplibdir/runtime_tools-*/include
 %_otplibdir/sasl-*/include
 %_otplibdir/sasl-*/src
@@ -983,6 +984,7 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/ssl-*/src
 %_otplibdir/stdlib-*/include
 %_otplibdir/stdlib-*/src
+%_otplibdir/syntax_tools-*/include
 %_otplibdir/tools-*/include
 %_otplibdir/tools-*/src
 %_otplibdir/xmerl-*/include
@@ -1071,7 +1073,20 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/debugger-*/ebin
 %_otplibdir/dialyzer-*/ebin
 %_otplibdir/et-*/ebin
-%{?_enable_hipe:%_otplibdir/hipe*}
+%if_enabled hipe
+%_otplibdir/hipe-*
+%exclude %_otplibdir/hipe-*/ebin
+%exclude %_otplibdir/hipe-*/cerl
+%exclude %_otplibdir/hipe-*/flow
+%exclude %_otplibdir/hipe-*/icode
+%exclude %_otplibdir/hipe-*/main
+%exclude %_otplibdir/hipe-*/misc
+%ifnarch aarch64
+%exclude %_otplibdir/hipe-*/rtl
+%exclude %_otplibdir/hipe-*/llvm
+%endif
+%exclude %_otplibdir/hipe-*/doc
+%endif
 %_otplibdir/observer-*/ebin
 %exclude %_otplibdir/observer-*/ebin/ttb.*
 %_otplibdir/reltool-*/ebin
@@ -1127,7 +1142,7 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %exclude %_otplibdir/common_test-*
 %exclude %_otplibdir/debugger-*
 %exclude %_otplibdir/et-*
-%{?_enable_hipe:%exclude %_otplibdir/hipe*}
+%{?_enable_hipe:%exclude %_otplibdir/hipe-*}
 %exclude %_otplibdir/observer-*
 %exclude %_otplibdir/odbc-*
 %exclude %_otplibdir/reltool-*/ebin.debug
@@ -1198,6 +1213,7 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %if_with java
 %files jinterface
 %dir %_otplibdir/jinterface-*
+%_otplibdir/jinterface-*/ebin
 %_otplibdir/jinterface-*/priv
 %endif
 
@@ -1245,6 +1261,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Fri Jun 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:20.1.3-alt3%ubt
+- Rebuilt with %%ubt macro support, disabled parallel docs build.
+
 * Fri May 18 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:20.1.3-alt2
 - fixed build on arm arches
 
