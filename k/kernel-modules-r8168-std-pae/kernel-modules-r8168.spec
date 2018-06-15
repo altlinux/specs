@@ -1,8 +1,9 @@
 %define module_name	r8168
-%define module_release	alt1
+%define module_release	alt1.k
 %define module_version	8.045.08
 
 %define flavour		std-pae
+%define karch i586
 
 %setup_kernel_module %flavour
 
