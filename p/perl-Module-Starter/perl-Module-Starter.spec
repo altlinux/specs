@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Module-Starter
-Version: 1.73
+Version: 1.75
 Release: alt1
 
 Summary: a simple starter kit for any module
@@ -58,6 +58,9 @@ just one method, "create_distro".
 %_man1dir/*
 
 %changelog
+* Fri Jun 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.75-alt1
+- automated CPAN update
+
 * Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.73-alt1
 - automated CPAN update
 
