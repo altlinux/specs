@@ -6,7 +6,7 @@
 Name: dhcpcd
 Epoch: 1
 Version: 7.0.5b
-Release: alt1
+Release: alt2
 
 Summary: DHCP Client
 License: %bsd
@@ -15,6 +15,9 @@ Group: System/Servers
 URL: http://roy.marples.name/projects/%name
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
+# Patch from upstream. must be dropped when
+# new version will be released.
+Patch1: fix-ignore-carrier-loss.patch
 
 AutoReq: yes, noshell
 
@@ -36,6 +39,7 @@ which it is running. It also tries to renew the lease time according to RFC2131.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %add_optflags -fpie
@@ -91,6 +95,9 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Fri Jun 15 2018 Mikhail Efremov <sem@altlinux.org> 1:7.0.5b-alt2
+- Don't ignore carrier loss on IPv4 addresses.
+
 * Wed Jun 13 2018 Mikhail Efremov <sem@altlinux.org> 1:7.0.5b-alt1
 - Updated to 7.0.5b.
 
