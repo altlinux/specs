@@ -8,8 +8,9 @@
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
 %define module_version	375.26
-%define module_release	alt1
+%define module_release	alt1.k
 %define flavour		std-pae
+%define karch i586
 
 %setup_kernel_module %flavour
 %define module_srcver	%(echo %module_version | tr -d .)
