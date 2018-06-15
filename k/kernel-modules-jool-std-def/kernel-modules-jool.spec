@@ -1,5 +1,5 @@
 %define module_name             jool
-%define module_version          3.5.4
+%define module_version          3.5.7
 %define module_release          alt1
 
 %define flavour		std-def
@@ -31,7 +31,7 @@ Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
-ExclusiveArch: %karch
+ExclusiveArch: %ix86 x86_64
 
 %description
 %module_name kernel driver support NAT64 for jool
@@ -59,6 +59,10 @@ install -m644 -D mod/stateless/jool_siit.ko %buildroot/%module_dir/jool_siit.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Jun 15 2018 Alexei Takaseev <taf@altlinux.org> 3.5.7-alt1
+- 3.5.7
+- Remove obsolete %karch
 
 * Fri Jul 28 2017 Alexei Takaseev <taf@altlinux.org> 3.5.4-alt1
 - 3.5.4
