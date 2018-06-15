@@ -1,7 +1,7 @@
 %define module_name	virtualbox
 %define module_version	5.1.30
 
-%define module_release	alt2
+%define module_release	alt2.k
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
@@ -9,6 +9,7 @@
 %define net_module_adaptor_name	vboxnetadp
 
 %define flavour		std-pae
+%define karch i586
 BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
 BuildRequires(pre): kernel-headers-modules-std-pae
 
