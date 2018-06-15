@@ -1,38 +1,30 @@
 %define _unpackaged_files_terminate_build 1
 %define oname ply
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
 Version: 3.9
-Release: alt1
+Release: alt2
 
 Summary: lex and yacc python implementation
 
-License: LGPL
+License: BSD
 Group: Development/Python
 Url: http://www.dabeaz.com/ply/
 
-Source0: https://pypi.python.org/packages/a8/4d/487e12d0478ee0cbb15d6fe9b8916e98fe4e2fce4cc65e4de309209c0b24/%{oname}-%{version}.tar.gz
+Source0: https://pypi.python.org/packages/a8/4d/487e12d0478ee0cbb15d6fe9b8916e98fe4e2fce4cc65e4de309209c0b24/%oname-%version.tar.gz
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3 time
-
-#BuildPreReq: python-module-distribute
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python-tools-2to3
-%endif
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
 
 %description
 PLY is a 100%% Python implementation of the common parsing tools lex
 and yacc.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: lex and yacc python 3 implementation
 Group: Development/Python3
@@ -40,46 +32,50 @@ Group: Development/Python3
 %description -n python3-module-%oname
 PLY is a 100%% Python implementation of the common parsing tools lex
 and yacc.
-%endif
 
 %prep
-%setup -q -n %{oname}-%{version}
-%if_with python3
-rm -rf ../python3
+%setup -n %oname-%version
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
-%endif
 
 %install
 %python_install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
-%endif
 
-%find_lang %name
+%check
 
-%files -f %name.lang
-#%_bindir/*
+pushd test
+python testlex.py -v
+python testyacc.py -v
+popd
+
+pushd ../python3/test
+python3 testlex.py -v
+python3 testyacc.py -v
+popd
+
+%files
 %doc CHANGES doc/*.html example/
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc CHANGES doc/*.html
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Fri Jun 15 2018 Stanislav Levin <slev@altlinux.org> 3.9-alt2
+- Fix python3 package
+- Enable tests
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.9-alt1
 - automated PyPI update
 
