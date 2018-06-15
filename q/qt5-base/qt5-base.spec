@@ -31,7 +31,7 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.9.5
+Version: 5.9.6
 Release: alt1%ubt
 %define libname  lib%gname
 
@@ -76,7 +76,7 @@ Patch1008: alt-mkspecs-features.patch
 #BuildRequires: firebird-devel gcc-c++ gst-plugins-devel libXi-devel libalsa-devel libcups-devel libdbus-devel libfreetds-devel libgtk+2-devel libicu-devel libjpeg-devel libmysqlclient-devel libpcre-devel libpulseaudio-devel libsqlite3-devel libudev-devel libunixODBC-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel postgresql-devel python-module-distribute rpm-build-python3 rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libcups-devel libdbus-devel libicu-devel libjpeg-devel libpng-devel libharfbuzz-devel
-BuildRequires: libproxy-devel
+BuildRequires: libproxy-devel libssl-devel
 BuildRequires: libpcre2-devel libudev-devel libEGL-devel libdrm-devel libgbm-devel zlib-devel libgtk+3-devel
 BuildRequires: libmtdev-devel libinput-devel libts-devel
 BuildRequires: pkgconfig(gl) pkgconfig(glesv2) pkgconfig(egl)
@@ -150,7 +150,6 @@ Requires: pkgconfig(zlib)
 %summary.
 
 %package doc
-BuildArch: noarch
 Summary: Document for developing apps which will use Qt%{major}
 Group: Development/KDE and QT
 Requires: %name-common = %EVR
@@ -481,7 +480,6 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
 
 %make_build
 %if_disabled bootstrap
-export QT_HASH_SEED=0
 [ -d doc/qtcore ] || %make docs
 %endif
 
@@ -493,7 +491,6 @@ sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE_FULL\s*=.*$|QMAKE_CFLAGS_OPTIMIZE_FULL = -O3
 make install INSTALL_ROOT=%buildroot
 %if_disabled bootstrap
 [ -d doc/qtcore ] && %make INSTALL_ROOT=%buildroot install_docs ||:
-#rm -rf %buildroot/%_qt5_docdir/qtwidgets/*tutorials-addressbook*
 %endif
 
 # create/own dirs
@@ -536,7 +533,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.9.5
+Version: 5.9.6
 __EOF__
 
 # rpm macros
@@ -795,6 +792,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
+- new version
+
 * Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
 - new version
 

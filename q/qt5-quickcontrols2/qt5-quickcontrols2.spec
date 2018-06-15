@@ -3,7 +3,7 @@
 #qml_add_req_skip HelperWidgets
 
 Name: qt5-quickcontrols2
-Version: 5.9.5
+Version: 5.9.6
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -35,10 +35,8 @@ Requires: qt5-base-common qt5-declarative-common
 Common package for %name
 
 %package doc
-#BuildArch: noarch
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
-BuildArch: noarch
 Requires: %name-common = %EVR
 %description doc
 This package contains documentation for Qt5 %qt_module
@@ -87,7 +85,6 @@ syncqt.pl-qt5 -version %version -private
 %build
 %qmake_qt5
 %make_build
-export QT_HASH_SEED=0
 %make docs
 
 %install
@@ -131,6 +128,9 @@ export QT_HASH_SEED=0
 #%_qt5_libdatadir/libQt*.a
 
 %changelog
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
+- new version
+
 * Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
 - new version
 

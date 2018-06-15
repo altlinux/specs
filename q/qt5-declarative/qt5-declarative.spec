@@ -3,7 +3,7 @@
 %def_disable bootstrap
 
 Name: qt5-declarative
-Version: 5.9.5
+Version: 5.9.6
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -62,7 +62,6 @@ Requires: %name-devel
 %summary.
 
 %package doc
-BuildArch: noarch
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
 Requires: %name-common = %EVR
@@ -127,7 +126,6 @@ syncqt.pl-qt5 -version %version -private
 %qmake_qt5
 %make_build
 %if_disabled bootstrap
-export QT_HASH_SEED=0
 %make docs
 %endif
 
@@ -240,6 +238,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
+- new version
+
 * Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
 - new version
 
