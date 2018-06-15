@@ -1,8 +1,9 @@
 %define module_name             accel-ppp
 %define module_version          1.11.2
-%define module_release          alt2
+%define module_release          alt2.k
 
 %define flavour		std-pae
+%define karch i586
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-pae
 
