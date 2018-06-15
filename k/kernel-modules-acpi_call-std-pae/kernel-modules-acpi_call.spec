@@ -1,9 +1,10 @@
 %define module_name	acpi_call
 %define module_version	0.1
 
-%define module_release alt4
+%define module_release alt4.k
 
 %define flavour		std-pae
+%define karch i586
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-pae
 
