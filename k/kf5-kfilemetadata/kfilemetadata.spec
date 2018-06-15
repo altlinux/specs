@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.46.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -13,19 +13,20 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-old-libav.patch
 
 # Automatically added by buildreq on Thu Feb 26 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils fontconfig libavcodec-devel libavutil-devel libcloog-isl4 libopencore-amrnb0 libopencore-amrwb0 libpoppler1-qt5 libqt5-core libqt5-gui libqt5-xml libstdc++-devel pkg-config python-base ruby ruby-stdlibs
 #BuildRequires: ebook-tools-devel extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-ki18n-devel libavdevice-devel libavformat-devel libexiv2-devel libpoppler-qt5-devel libpostproc-devel libswscale-devel libtag-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-multimedia-devel
-BuildRequires: kf5-karchive-devel kf5-ki18n-devel
 BuildRequires: ebook-tools-devel libpoppler-qt5-devel libtag-devel
 %if_enabled exiv2
 BuildRequires: libexiv2-devel
 %endif
 BuildRequires: libattr-devel
 BuildRequires: libavdevice-devel libavformat-devel libpostproc-devel libswscale-devel
+BuildRequires: kf5-karchive-devel kf5-ki18n-devel
 
 %description
 KFileMetaData provides a simple library for extracting the text and metadata
@@ -57,6 +58,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -81,6 +83,12 @@ KF5 library
 %_K5plug/kf5/kfilemetadata/
 
 %changelog
+* Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt2%ubt
+- rebuild with new ffmpeg
+
+* Wed May 16 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1%ubt.1
+- fix to build with old libav
+
 * Mon May 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1%ubt
 - new version
 

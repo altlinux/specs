@@ -5,8 +5,8 @@
 
 %define rname qmmp
 Name: qmmp1
-Version: 1.2.0
-Release: alt2%ubt
+Version: 1.2.2
+Release: alt1%ubt
 
 Group: Sound
 Summary: Qmmp - Qt-based multimedia player
@@ -22,7 +22,6 @@ Conflicts: qmmp-docs qmmp-qsui
 Requires: unzip winamplike-skins
 
 Source: %rname-%version.tar
-Patch1: alt-def-ui.patch
 Patch2: alt-def-plugins.patch
 Patch3: alt-def-statusicon.patch
 Patch4: alt-hide-on-close.patch
@@ -234,7 +233,6 @@ Qmmp Shared library
 
 %prep
 %setup -qn %rname-%version
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -243,6 +241,7 @@ Qmmp Shared library
 %build
 %Kbuild \
     -DQMMP_DEFAULT_OUTPUT=pulse \
+    -DQMMP_DEFAULT_UI=qsui \
     #
 cd doc && doxygen Doxyfile
 
@@ -274,6 +273,9 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_libdir/lib*.so
 
 %changelog
+* Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt1%ubt
+- new version
+
 * Fri Jan 12 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt2%ubt
 - rebuild with new libcdio
 

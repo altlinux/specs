@@ -1,5 +1,4 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
+Release: alt2
 %define origname aubio
 %define sover 4
 %def_enable python
@@ -142,6 +141,9 @@ waf install --destdir=%buildroot
 %_docdir/lib%origname-doc
 
 %changelog
+* Wed Jun 13 2018 Anton Farygin <rider@altlinux.ru> 0.4.6-alt2
+- rebuilt for ffmpeg-4.0
+
 * Mon Nov 13 2017 Anton Farygin <rider@altlinux.ru> 0.4.6-alt1
 - 0.4.6
 

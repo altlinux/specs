@@ -4,8 +4,8 @@
 %define soversion 0
 
 Name: %libname%soversion
-Version: 0.1.3
-Release: alt1.git20140714
+Version: 0.1.5
+Release: alt1
 Summary: OpenCore implementation of AMR speech codec.
 
 Group: System/Libraries
@@ -125,6 +125,9 @@ cp -fR test examples
 %_bindir/*
 
 %changelog
+* Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 0.1.5-alt1
+- 0.1.5
+
 * Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20140714
 - Version 0.1.3
 

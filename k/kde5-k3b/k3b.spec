@@ -19,13 +19,14 @@
 %define req_std_burning cdrkit cdrdao dvd+rw-tools cdrskin
 %define req_std_common kf5-filesystem %req_permhelper
 %define req_multimedia sox-play libsox-fmt-pulseaudio transcode vcdimager normalize lame flac mpc
+#req_multimedia transcode
 %define req_mini %req_std_burning %req_std_common
 %define req_all %req_mini %req_multimedia
 
 %define rname k3b
 Name: kde5-%rname
 Version: 18.04.1
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Group: Archiving/Cd burning
@@ -181,6 +182,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
+- remove requires to transcode
+
 * Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 

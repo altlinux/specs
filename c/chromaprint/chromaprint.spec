@@ -2,7 +2,7 @@
 %define libchromaprint libchromaprint%sover
 
 Name: chromaprint
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1%ubt
 Summary: Library implementing the AcoustID fingerprinting
 
@@ -79,6 +79,9 @@ applications which will use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 1.4.3-alt1%ubt
+- new version
+
 * Thu Aug 10 2017 Sergey V Turchin <zerg@altlinux.org> 1.4.2-alt1%ubt
 - new version
 

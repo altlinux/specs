@@ -1,5 +1,5 @@
 Name: v4l-utils
-Version: 1.12.5
+Version: 1.14.2
 Release: alt1
 
 Summary: Collection of video4linux support libraries and utilities
@@ -122,6 +122,9 @@ video/TV viewer application.
 %_man1dir/qv4l2.1*
 
 %changelog
+* Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 1.14.2-alt1
+- 1.14.2
+
 * Fri Jul 07 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.12.5-alt1
 - 1.12.5 released
 

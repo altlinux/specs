@@ -2,7 +2,7 @@
 %define rname kid3
 Name: kde4-%rname
 Version: 3.4.5
-Release: alt2%ubt
+Release: alt3%ubt
 
 Group: Sound
 Summary: ID3 tagger
@@ -168,6 +168,9 @@ Requires: %rname-common = %EVR
 %_libdir/libkid3-gui.so.*
 
 %changelog
+* Thu Jun 14 2018 Sergey V Turchin <zerg@altlinux.org> 3.4.5-alt3%ubt
+- rebuild with new ffmpeg
+
 * Thu Aug 10 2017 Sergey V Turchin <zerg@altlinux.org> 3.4.5-alt2%ubt
 - rebuild with new chromaprint
 

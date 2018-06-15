@@ -1,14 +1,14 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
+%define _localstatedir %_var
 %define major 2
-%define libname libvalhalla%{major}
+%define libname libvalhalla%major
 %define develname libvalhalla-devel
 
 Name: libvalhalla
 Version: 2.0.0
-Release: alt1_15
-URL: http://libvalhalla.geexbox.org/
-Source:	http://libvalhalla.geexbox.org/releases/%{name}-%{version}.tar.bz2
+Release: alt2
+Url: http://libvalhalla.geexbox.org/
+Source: http://libvalhalla.geexbox.org/releases/%name-%version.tar.bz2
 # commit 1093 from upstream (http://hg.geexbox.org/libvalhalla)
 # commit 1091 from upstream (http://hg.geexbox.org/libvalhalla)
 Patch1: libvalhalla-fix_curl_include.patch
@@ -65,24 +65,24 @@ and libavutil) and libcurl. It features many Internet grabbers that allows
 automatic download of covers, lyrics, informations on media files, tags
 retrival in video and music files and so on.
 
-%package -n %{libname}
+%package -n %libname
 Summary: A media scanner
 Group: System/Libraries
 
-%description -n %{libname}
+%description -n %libname
 libvalhalla is a library written in C. It is a media scanner, that stores
 various information in an SQLite database and relies on FFmpeg (libavformat
 and libavutil) and libcurl. It features many Internet grabbers that allows
 automatic download of covers, lyrics, informations on media files, tags
 retrival in video and music files and so on.
 
-%package -n %{develname}
+%package -n %develname
 Summary: A media scanner
 Group: System/Libraries
-Provides: %{name}-devel = %{version}-%{release}
+Provides: %name-devel = %version-%release
 Requires: %libname = %version
 
-%description -n %{develname}
+%description -n %develname
 libvalhalla is a library written in C. It is a media scanner, that stores
 various information in an SQLite database and relies on FFmpeg (libavformat
 and libavutil) and libcurl. It features many Internet grabbers that allows
@@ -93,7 +93,7 @@ This package contains the headers required for compiling software that uses
 the libvalhalla library.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -109,13 +109,12 @@ the libvalhalla library.
 %patch13 -p1
 
 %build
-
 export
 ./configure \
-	--prefix=%{_prefix} \
-	--bindir=%{_bindir} \
-	--libdir=%{_libdir} \
-	--includedir=%{_includedir} \
+	--prefix=%prefix \
+	--bindir=%_bindir \
+	--libdir=%_libdir \
+	--includedir=%_includedir \
 	--disable-static \
 	--enable-pic \
 	--enable-shared || cat config.log
@@ -125,20 +124,22 @@ export
 %makeinstall_std
 
 %files test
-%{_bindir}/*
-%{_mandir}/man1/*
+%_bindir/*
+%_mandir/man1/*
 
-%files -n %{libname}
-%{_libdir}/*.so.%{major}
-%{_libdir}/*.so.%{major}.*
+%files -n %libname
+%_libdir/*.so.%major
+%_libdir/*.so.%major.*
 
-%files -n %{develname}
-%{_libdir}/*.so
-%{_includedir}/*
-%{_libdir}/pkgconfig/*
-
+%files -n %develname
+%_libdir/*.so
+%_includedir/*
+%_libdir/pkgconfig/*
 
 %changelog
+* Thu Jun 14 2018 Anton Farygin <rider@altlinux.ru> 2.0.0-alt2
+- rebuilt for ffmpeg-4.0
+
 * Sun May 06 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_15
 - update by mgaimport
 

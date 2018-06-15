@@ -31,7 +31,7 @@
 Version: %branch.0
 Epoch: 1
 Name: qmmp
-Release: %rel.%svn
+Release: %rel.%svn.1
 Summary: QMMP - Qt-based multimedia player
 Summary(ru_RU.UTF8): Qmmp - мультимедиа проигрыватель на базе Qt
 Summary(uk_UA.UTF8): Qmmp - мультимедіа програвач на базі Qt
@@ -953,6 +953,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Tue Jun 05 2018 Motsyo Gennadi <drool@altlinux.ru> 1:0.12.0-alt1.svn7877.1
+- build with new libva
+
 * Sat Mar 17 2018 Motsyo Gennadi <drool@altlinux.ru> 1:0.12.0-alt1.svn7877
 - 0.12.0 svn7877 version
 

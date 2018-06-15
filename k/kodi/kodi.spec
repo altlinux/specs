@@ -1,11 +1,13 @@
 Name: kodi
 Version: 17.6
-Release: alt2
+Release: alt3
 
 Summary: Kodi Media Center
 License: GPL
 Group: Video
 Url: http://kodi.tv
+
+ExclusiveArch: %ix86 x86_64
 
 Provides: xbmc = %version-%release
 Obsoletes: xbmc
@@ -30,7 +32,7 @@ BuildRequires: libsqlite3-devel libtiff-devel libwavpack-devel
 BuildRequires: libplist-devel libpulseaudio-devel libssh-devel python-devel
 BuildRequires: libbluez-devel libtag-devel tinyxml-devel libudev-devel libuuid-devel
 BuildRequires: fontconfig-devel libgcrypt-devel liblame-devel libxml2-devel libxslt-devel
-BuildRequires: libcrossguid-devel libdrm-devel zlib-devel
+BuildRequires: libcrossguid-devel libdrm-devel libssl-devel zlib-devel
 BuildRequires: libva-devel libvdpau-devel libGL-devel libGLU-devel libGLEW-devel libEGL-devel
 BuildRequires: java-1.8.0-openjdk-devel /proc
 
@@ -137,6 +139,9 @@ E_O_F
 %_libdir/kodi/*.cmake
 
 %changelog
+* Thu Jun 14 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.6-alt3
+- rebuilt with recent libva
+
 * Fri Jan 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.6-alt2
 - rebuilt with recent libcdio
 

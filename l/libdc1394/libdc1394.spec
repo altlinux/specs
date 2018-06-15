@@ -1,6 +1,6 @@
 %define abiversion 22
 Name: libdc1394
-Version: 2.2.2
+Version: 2.2.5
 Release: alt1
 
 Summary: Library for 1394 Digital Camera Specification
@@ -94,6 +94,9 @@ isochronous channel packets and test %name basic functionality.
 %_man1dir/*
 
 %changelog
+* Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 2.2.5-alt1
+- 2.2.5
+
 * Tue Apr 01 2014 Vitaly Lipatov <lav@altlinux.ru> 2.2.2-alt1
 - new version 2.2.2 (with rpmrb script)
 

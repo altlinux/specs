@@ -6,7 +6,7 @@
 %def_enable libdvdread
 %def_enable libfame
 %def_enable libjpeg
-%def_enable libquicktime
+%def_disable libquicktime
 %def_enable libxml2
 %def_enable lzo
 %def_enable mjpegtools
@@ -31,7 +31,7 @@
 
 Name: transcode
 Version: 1.1.7
-Release: alt10%ubt
+Release: alt11%ubt
 
 Summary: A linux video stream processing utility
 
@@ -55,10 +55,12 @@ Patch14: transcode-1.1.7-libav-9.patch
 Patch15: transcode-1.1.7-preset-force.patch
 Patch16: transcode-1.1.7-ffmpeg2.patch
 Patch17: transcode-1.1.7-freetype251.patch
+Patch18: transcode-1.1.7-ffmpeg24.patch
+Patch19: transcode-1.1.7-ffmpeg4.patch
 # rpmfusion
-Patch18: transcode-1.1.7-ffmpeg29.patch
+Patch20: transcode-1.1.7-ffmpeg29.patch
 # Debian
-Patch19: transcode-1.7.7-debian-underlinkage.patch
+Patch21: transcode-1.7.7-debian-underlinkage.patch
 # ALTLinux patches
 Patch96: transcode-1.1.7-libav-10.patch
 Patch98: transcode-1.1.5-textrel.patch
@@ -75,8 +77,20 @@ BuildRequires: glibc-devel imake libImageMagick-devel libSDL-devel libXaw-devel 
 BuildRequires: libXv-devel liba52-devel libalsa-devel
 BuildRequires: libavformat-devel libdvdread-devel libfreetype-devel liblame-devel liblzo2-devel
 BuildRequires: libmjpegtools-devel libmpeg2-devel libnetpbm-devel libpostproc-devel libswscale-devel
-BuildRequires: libquicktime-devel libtheora-devel libv4l-devel libx264-devel libxml2-devel
+BuildRequires: libtheora-devel libv4l-devel libx264-devel libxml2-devel
 BuildRequires: libavresample-devel libxvid-devel >= %xvid_ver xorg-cf-files
+%if_enabled libdv
+BuildRequires: libdv-devel
+%endif
+%if_enabled libjpeg
+BuildRequires: libjpeg-devel
+%endif
+%if_enabled libquicktime
+BuildRequires: libquicktime-devel
+%endif
+%if_enabled vorbis
+BuildRequires: libvorbis-devel
+%endif
 BuildPreReq: libpng-devel
 BuildRequires(pre):rpm-build-ubt
 
@@ -138,6 +152,8 @@ sed -i s/getline/get_line/ contrib/subrip/subtitleripper/vobsub.c
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
+%patch21 -p1
 #
 %patch96 -p1
 %patch98 -p2
@@ -250,6 +266,9 @@ export RPM_FILES_TO_LD_PRELOAD_transcode='%_libdir/%name/*.so'
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
+* Mon Jun 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.7-alt11%ubt
+- Rebuilt with ffmpeg-4.0 and without quicktime.
+
 * Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 1.1.7-alt10%ubt
 - rebuilt for ImageMagick
 

@@ -6,7 +6,7 @@
 
 Name: avidemux-qt
 Version: 2.7.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -43,7 +43,7 @@ Patch100: avidemux-2.5.1-opencore-check.patch
 # optimized out: cmake-modules elfutils glibc-devel-static libEGL-devel libGL-devel libX11-devel libXext-devel libXv-devel libalsa-devel libgpg-error libjack-devel libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libqt5-core libqt5-gui libqt5-script libqt5-widgets libqt5-xml libstdc++-devel libvorbis-devel libxcb-devel makeinfo perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage pkg-config python-base python3 python3-base qt5-base-devel rpm-build-gir rsync ruby ruby-stdlibs xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: bzlib-devel cmake gcc-c++ git-core libSDL-devel libXvMC-devel libaften-devel libarts-devel libdca-devel libfaad-devel liblame-devel liblzma-devel liblzo2-devel libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsamplerate-devel libsqlite3-devel libva-devel libvdpau-devel libvpx-devel libx264-devel libx265-devel libxvid-devel nss-ldapd perl-podlators python-module-google qt5-script-devel qt5-tools rpm-build-python3 rpm-build-ruby texi2html xsltproc yasm zlib-devel-static
 BuildRequires: bzlib-devel cmake gcc-c++ yasm glibc-devel libGL-devel libGLU-devel libSDL2-devel python-devel
-BuildRequires: libaften-devel libdca-devel libfaad-devel libjack-devel liblame-devel libtwolame-devel libopus-devel
+BuildRequires: libdca-devel libfaad-devel libjack-devel liblame-devel libtwolame-devel libopus-devel
 BuildRequires: liblzma-devel liblzo2-devel libsqlite3-devel libfreetype-devel fontconfig-devel libfribidi-devel
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsamplerate-devel
 BuildRequires: libvdpau-devel libva-devel libXv-devel libXvMC-devel
@@ -52,11 +52,12 @@ BuildRequires: libxvba-devel
 %endif
 BuildRequires: libvorbis-devel libvpx-devel libx264-devel libx265-devel
 BuildRequires: libass-devel liba52-devel libmad-devel libmp4v2-devel
-BuildRequires: libxml2-devel libxvid-devel
+BuildRequires: libaften-devel libxml2-devel libxvid-devel
 BuildRequires: perl-podlators perl-IO-Compress texi2html
 BuildRequires: qt5-base-devel qt5-script-devel qt5-tools
 BuildRequires: xml-utils xsltproc yasm kde-common-devel libalsa-devel zlib-devel
 BuildRequires(pre): rpm-build-ubt
+ExclusiveArch: %ix86 x86_64
 
 %description
 Avidemux is a graphical tool to edit AVI. It allows you to multiplex and
@@ -197,6 +198,10 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %exclude %_includedir/avidemux
 
 %changelog
+* Thu Jun 14 2018 Anton Farygin <rider@altlinux.ru> 2.7.0-alt2%ubt
+- rebuilt with libva-2.1 
+- build only on x86
+
 * Tue Feb 27 2018 Sergey V Turchin <zerg@altlinux.org> 2.7.0-alt1%ubt
 - new version
 

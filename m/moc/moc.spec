@@ -19,7 +19,7 @@
 
 Name: moc
 Version: 2.6.0
-Release: alt0.4
+Release: alt0.5
 
 Summary: Console player
 Group: Sound
@@ -29,6 +29,7 @@ Url: http://moc.daper.net/
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source: moc-%version.tar
+Patch0: ffmpeg4.patch
 
 Requires: %name-player %name-plugin-flac %name-plugin-mp3 %name-plugin-sndfile %name-plugin-vorbis
 
@@ -211,6 +212,7 @@ Hybrid Lossless Wavefile Compressor support.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %add_optflags %optflags_warnings
@@ -325,6 +327,9 @@ EOF
 %endif
 
 %changelog
+* Sun Jun 17 2018 Alexey Gladkov <legion@altlinux.ru> 2.6.0-alt0.5
+- Rebuilt with libva.
+
 * Mon Jun 05 2017 Alexey Gladkov <legion@altlinux.ru> 2.6.0-alt0.4
 - Rebuilt with ffmpeg.
 

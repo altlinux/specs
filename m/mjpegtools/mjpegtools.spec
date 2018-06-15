@@ -1,27 +1,22 @@
-%def_enable static
-%def_with quicktime
 %define shver 2.1
 
 Name: mjpegtools
 Version: 2.1.0
-Release: alt1.1.1
+Release: alt2
 
 Summary: Tools for recording, editing, playing back mpeg-encoding video under linux
 License: GPL
 Group: Video
 Url: http://mjpeg.sourceforge.net
 
-Source: http://prdownloads.sourceforge.net/mjpeg/%name-%version.tar.gz
+Source: http://prdownloads.sourceforge.net/mjpeg/%name-%version.tar
 
-%define quicktime_ver 0.9.7
 %define libdv_ver 0.9
 
-Requires: libquicktime >= %quicktime_ver
 Requires: lib%name%shver = %version-%release 
 Requires: libdv >= %libdv_ver
 
-BuildPreReq: libquicktime-devel >= %quicktime_ver
-BuildPreReq: libdv >= %libdv_ver
+BuildPreReq: libdv-devel >= %libdv_ver
 
 BuildRequires: glibc-kernheaders libjpeg-devel libSDL_gfx-devel gcc-c++
 BuildRequires: libpng-devel libXxf86dga-devel libgtk+2-devel libSDL-devel
@@ -29,8 +24,6 @@ BuildRequires: libXt-devel libv4l-devel
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
-#BuildRequires: libICE-devel libSDL-devel libSM-devel libX11-devel libXext-devel libXt-devel libXxf86dga-devel libatk-devel libcairo-devel libdv-devel libgtk+2-devel libpango-devel libpng-devel libquicktime-devel libstdc++-devel pkg-config xorg-cf-files xorg-x11-proto-devel zlib-devel libjpeg-mmx-devel
-   
 %description
 The MJPEG-tools are a basic set of utilities for recording, editing,
 playing back and encoding (to mpeg) video under linux. Recording can
@@ -69,22 +62,6 @@ Requires: lib%name%shver = %version-%release
 This package contains libraries and header files needed to compile
 applications that use part of the libraries of the mjpegtools package.
 
-%package -n lib%name-devel-static
-Summary: Static libraries for the mjpegtools
-Group: Development/C
-Obsoletes: %name-static-libs
-Provides: %name-static-libs = %version-%release
-Requires: lib%name-devel = %version-%release
-
-%description -n lib%name-devel-static
-This package contains static libraries needed to compile applications
-that use part of the libraries of the mjpegtools package.
-
-%ifarch %ix86
-NOTE:
-This binaries does ***NOT*** compatible with a K6 or Pentium CPU
-%endif
-
 %prep
 %setup
 
@@ -92,7 +69,6 @@ This binaries does ***NOT*** compatible with a K6 or Pentium CPU
 %autoreconf
 %configure \
 	%{subst_enable static} \
-	%{subst_with quicktime} \
 	--enable-large-file \
 	--with-x \
 %ifarch %ix86
@@ -124,10 +100,11 @@ rm -f %buildroot%_infodir/dir
 %_libdir/pkgconfig/*
 %_man5dir/*
 
-%files -n lib%name-devel-static
-%_libdir/*.a
-
 %changelog
+* Wed Jun 13 2018 Anton Farygin <rider@altlinux.ru> 2.1.0-alt2
+- disable quicktime support
+- rebuilt for ffmpeg
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1.1.1
 - NMU: added BR: texinfo
 

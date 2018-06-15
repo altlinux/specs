@@ -5,7 +5,7 @@
 
 Name: qt5-multimedia
 Version: 5.9.6
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt5 - Multimedia support
@@ -130,6 +130,9 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Mon Jun 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt2%ubt
+- rebuild with new ffmpeg
+
 * Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
 - new version
 

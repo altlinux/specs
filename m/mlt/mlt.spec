@@ -17,8 +17,8 @@
 %define libmltxx libmlt++%mltxx_sover
 
 Name: mlt
-Version: 6.6.0
-Release: alt2%ubt
+Version: 6.8.0
+Release: alt1%ubt
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
@@ -44,15 +44,14 @@ Patch104: alt-glibc2.26.patch
 
 # Automatically added by buildreq on Sun Mar 18 2018 (-bi)
 # optimized out: elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libSDL-devel libX11-devel libavcodec-devel libavformat-devel libavutil-devel libcdio-paranoia libdc1394-22 libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-gui libqt5-svg libqt5-widgets libqt5-xml libraw1394-11 libstdc++-devel libvdpau-devel libx265-130 perl pkg-config python-base python-devel python-modules qt5-base-devel rpm-build-gir swig-data xorg-xproto-devel
-BuildRequires: frei0r-devel ladspa_sdk libSDL2-devel libSDL_image-devel libalsa-devel libavdevice-devel libavfilter-devel libexif-devel libfftw3-devel libjack-devel libopencv-devel libpulseaudio-devel libsamplerate-devel libsox-devel libswscale-devel libxml2-devel qt5-svg-devel swig
-
+#BuildRequires: frei0r-devel ladspa_sdk libSDL2-devel libSDL2_image-devel libalsa-devel libavdevice-devel libavfilter-devel libexif-devel libfftw3-devel libjack-devel libopencv-devel libpulseaudio-devel libsamplerate-devel libsox-devel libswscale-devel libxml2-devel qt5-svg-devel swig
 #BuildRequires: frei0r-devel ladspa_sdk libSDL_image-devel libalsa-devel libavdevice-devel libavformat-devel libexif-devel libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel libswfdec-devel libswscale-devel libxml2-devel python-module-google python3-dev qt5-svg-devel rpm-build-ruby swig
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: qt5-svg-devel
-BuildRequires: frei0r-devel libSDL_image-devel libalsa-devel libexif-devel
-BuildRequires: libavfilter-devel libswscale-devel libavdevice-devel libavformat-devel
+BuildRequires: frei0r-devel libSDL2_image-devel libalsa-devel libexif-devel
+BuildRequires: libavfilter-devel libswscale-devel libavdevice-devel libavformat-devel libswresample-devel
 BuildRequires: libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel
-buildRequires: libvidstab-devel
+BuildRequires: libvidstab-devel
 BuildRequires: libxml2-devel swig python-devel ladspa_sdk
 %if_enabled vdpau
 BuildRequires: libvdpau-devel
@@ -200,6 +199,9 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %_pkgconfigdir/mlt++.pc
 
 %changelog
+* Thu Jun 14 2018 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1%ubt
+- new version
+
 * Thu Apr 05 2018 Oleg Solovyov <mcpain@altlinux.org> 6.6.0-alt2%ubt
 - rebuild with libvidstab
 

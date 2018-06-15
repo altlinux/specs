@@ -1,7 +1,7 @@
 %def_disable freerdp
 
 Name: vlc
-Version: 3.0.1
+Version: 3.0.3.1
 Release: alt1
 
 Summary: VLC media player
@@ -1369,6 +1369,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Wed Jun 13 2018 Anton Farygin <rider@altlinux.ru> 3.0.3.1-alt1
+- 3.0.3-1
+
 * Fri Mar 02 2018 Anton Farygin <rider@altlinux.ru> 3.0.1-alt1
 - 3.0.1
 

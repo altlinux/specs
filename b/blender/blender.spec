@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: blender
 Version: 2.79b
-Release: alt2
+Release: alt3
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPLv2
@@ -18,6 +20,9 @@ Patch13: 0003-locales_directory_install.patch
 Patch14: 0004-update_manpages.patch
 Patch15: 0005-do_not_use_version_number_in_system_path.patch
 Patch16: 0006-look_for_dejavu_ttf_with_fontconfig.patch
+
+# https://git.archlinux.org/svntogit/community.git/tree/trunk/ffmpeg4.0.patch?h=packages/blender&id=059566c3ec72
+Patch17: blender-2.79-arch-ffmpeg40.patch
 
 Patch21: blender-2.66-alt-pcre.patch
 Patch22: blender-2.77-alt-enable-localization.patch
@@ -58,6 +63,8 @@ BuildRequires: boost-filesystem-devel boost-locale-devel cmake fontconfig-devel 
 BuildPreReq: libopenCOLLADA-devel >= 0-alt3
 BuildPreReq: python3-devel >= 3.5
 
+Obsoletes: %name-i18n
+
 %description
 Fully integrated creation suite, offering a broad range of essential
 tools for the creation of 3D content, including modeling, uv-mapping,
@@ -73,17 +80,8 @@ scripting, rendering, compositing, post-production and game creation
 клавиш, большое количество легко доступных расширений, написанных
 на языке Python.
 
-%package i18n
-Group: Graphics
-Summary: Languages support for blender
-Requires: %name = %version-%release
-BuildArch: noarch
-
-%description i18n
-Languages support for blender
-
 %prep
-%setup -q -n %name-%version
+%setup
 
 # debian
 %patch11 -p1
@@ -92,6 +90,8 @@ Languages support for blender
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+
+%patch17 -p1
 
 %patch21 -p1
 %patch22 -p1
@@ -152,19 +152,19 @@ install -d release/plugins/include
 /bin/install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%name-win.desktop
 %find_lang blender
 
-%files
+%files -f %name.lang
 %_bindir/*
 %_desktopdir/*
-
-%_niconsdir/%name.png
-%_miconsdir/%name.png
+%_iconsdir/hicolor/*/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
-
 %_datadir/%name/
-
-%files i18n -f %name.lang
+%_defaultdocdir/%name/
 
 %changelog
+* Mon Jun 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.79b-alt3
+- Rebuilt with ffmpeg-4.0.
+- Moved i18n files back into main package.
+
 * Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.79b-alt2
 - Rebuilt with boost-1.67.0.
 

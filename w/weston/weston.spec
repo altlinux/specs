@@ -1,7 +1,7 @@
-%global libweston_major 3
+%global libweston_major 4
 
 Name:           weston
-Version:        3.0.0
+Version:        4.0.0
 Release:        alt1
 Summary:        Reference compositor for Wayland
 Group:          Graphical desktop/Other
@@ -133,6 +133,9 @@ find %buildroot -name \*.la | xargs rm -f
 %_pkgconfigdir/libweston*.pc
 
 %changelog
+* Tue Jun 19 2018 Alexey Gladkov <legion@altlinux.ru> 4.0.0-alt1
+- Version (4.0.0).
+
 * Wed Feb 14 2018 Alexey Gladkov <legion@altlinux.ru> 3.0.0-alt1
 - Version (3.0.0).
 

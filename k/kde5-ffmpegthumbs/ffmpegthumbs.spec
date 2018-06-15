@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 18.04.1
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Video
@@ -41,6 +41,9 @@ Video thumbnail generator for KDE.
 %_K5srv/ffmpegthumbs.desktop
 
 %changelog
+* Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
+- rebuild with new ffmpeg
+
 * Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 

@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.6.20
-Release: alt1%ubt
+Release: alt2%ubt
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -31,11 +31,11 @@ BuildRequires: libisdn-devel libpri-devel libopenr2.3-devel
 BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
 BuildRequires: libuuid-devel postgresql-devel
 BuildRequires: java-common java-1.8.0-openjdk-devel /proc libavformat-devel libavutil-devel libavresample-devel libswscale-devel
-BuildRequires: libmemcached-devel libopus-devel libv8-3.24-devel libbroadvoice-devel libcodec2-devel libImageMagick-devel 
+BuildRequires: libmemcached-devel libopus-devel libbroadvoice-devel libcodec2-devel libImageMagick-devel 
 BuildRequires: flite-devel libyuv-devel libfreetype-devel libvpx-devel libsilk-devel libg7221-devel libvlc-devel libavcodec-devel libx264-devel
 
 %ifarch %ix86 x86_64
-BuildRequires: libsangoma-devel yasm
+BuildRequires: yasm
 %endif
 
 %description
@@ -346,9 +346,6 @@ fi
 %_libdir/freetdm/ftmod_r2.so
 %_libdir/freetdm/ftmod_skel.so
 %_libdir/freetdm/ftmod_zt.so
-%ifarch %ix86 x86_64
-%_libdir/freetdm/ftmod_wanpipe.so
-%endif
 
 %files -n libfreetdm-devel
 %_includedir/freetdm
@@ -608,6 +605,10 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Tue Jun 19 2018 Anton Farygin <rider@altlinux.ru> 1:1.6.20-alt2%ubt
+- disabled sagoma support
+- rebuilt for ffmpeg-4.0
+
 * Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 1:1.6.20-alt1%ubt
 - 1.6.20
 

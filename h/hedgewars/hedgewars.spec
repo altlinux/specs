@@ -1,6 +1,6 @@
 Name: hedgewars
 Version: 0.9.22
-Release: alt3
+Release: alt4
 
 Summary: Game with heavily armed fighting hedgehogs
 License: GPLv2
@@ -12,6 +12,10 @@ Packager: Denis G. Samsonenko <ogion@altlinux.org>
 Source0: %name-src-%version.tar.bz2
 Patch0: %name-no-bytestring.patch
 Patch1: %name-ffmpeg3.patch
+# updates from recent upstream version
+Patch2: %name-ffmpeg4.patch
+
+ExclusiveArch: %ix86 x86_64
 
 Requires: %name-data = %version
 
@@ -57,6 +61,7 @@ This package contains all the data files for %name.
 %setup -q -n %name-src-%version
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 %build
 %cmake_insource -DWITH_SERVER=1 -DPHYSFS_SYSTEM=0 -DDATA_INSTALL_DIR=%_datadir/%name -Dtarget_library_install_dir="%_libdir"
@@ -112,6 +117,9 @@ install -p -D -m 644 man/%name.6 %buildroot%_mandir/man6/%name.6
 
 
 %changelog
+* Mon Jun 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.22-alt4
+- Rebuilt with ffmpeg-4.
+
 * Tue Jun 06 2017 Denis G. Samsonenko <ogion@altlinux.org> 0.9.22-alt3
 - rebuild with ffmpeg
 - %name-ffmpeg3.patch

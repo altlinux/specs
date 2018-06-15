@@ -4,7 +4,7 @@
 %define libname libqtav
 Name: QtAV
 Version: 1.12.0
-Release: alt1.1
+Release: alt2
 
 Summary: A cross-platform multimedia framework based on Qt and FFmpeg
 License: LGPL v2.1
@@ -118,6 +118,9 @@ rm -f examples/simpletranscode/Makefile
 %doc doc/UseQtAVinYourProjects.md
 
 %changelog
+* Tue Jun 19 2018 Anton Farygin <rider@altlinux.ru> 1.12.0-alt2
+- rebuilt for ffmpeg-4.0
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1.1
 - NMU: added URL
 

@@ -2,7 +2,7 @@
 
 Name: libmediastreamer
 Version: 2.16.1
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Audio/Video real-time streaming
@@ -92,6 +92,9 @@ mkdir -p %buildroot/%_libdir/mediastreamer/plugins
 %_includedir/*
 
 %changelog
+* Sat Jun 16 2018 Alexei Takaseev <taf@altlinux.org> 2.16.1-alt4
+- rebuilt with ffmpeg-4.0
+
 * Wed Apr 25 2018 Alexei Takaseev <taf@altlinux.org> 2.16.1-alt3
 - Build with libzrtp and libsrtp
 

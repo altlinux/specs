@@ -1,5 +1,5 @@
 Name: mpv
-Version: 0.27.1
+Version: 0.28.2
 Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
@@ -92,7 +92,7 @@ chmod ugo+rx waf
 %_niconsdir/%name.png
 %_iconsdir/hicolor/64x64/apps/%name.png
 %_desktopdir/%name.desktop
-%doc LICENSE Copyright README.md RELEASE_NOTES etc/input.conf etc/mplayer-input.conf etc/mpv.conf etc/restore-old-bindings.conf
+%doc Copyright README.md RELEASE_NOTES etc/input.conf etc/mplayer-input.conf etc/mpv.conf etc/restore-old-bindings.conf
 
 %files -n zsh-completion-%name
 %_datadir/zsh/site-functions/_mpv
@@ -106,6 +106,9 @@ chmod ugo+rx waf
 %_libdir/libmpv.so.*
 
 %changelog
+* Thu Jun 14 2018 Anton Farygin <rider@altlinux.ru> 0.28.2-alt1
+- 0.28.2
+
 * Mon Feb 12 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.27.1-alt1
 - 0.27.1
 - Fixes:

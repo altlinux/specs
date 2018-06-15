@@ -1,6 +1,6 @@
 Name: vcmi
 Version: 0.99
-Release: alt3.1
+Release: alt4
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
 Summary(ru_RU.UTF-8): Open-source движок для игры HMM3:WoG
@@ -95,6 +95,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name/
 
 %changelog
+* Fri Jun 22 2018 Anton Midyukov <antohami@altlinux.org> 0.99-alt4
+- Rebuilt with ffmpeg 4.0
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99-alt3.1
 - NMU: rebuilt with boost-1.67.0
 
