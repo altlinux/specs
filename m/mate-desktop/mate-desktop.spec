@@ -1,5 +1,5 @@
 Name: mate-desktop
-Version: 1.20.1
+Version: 1.20.3
 Release: alt1
 Epoch: 1
 Summary: Shared code for mate-panel, mate-session, mate-file-manager, etc
@@ -69,6 +69,13 @@ picture-options='stretched'
 
 [org.mate.interface]
 gtk-theme='BlueMenta'
+icon-theme='mate'
+
+[org.mate.Marco.general]
+theme='BlueMenta'
+
+[org.mate.peripherals-mouse]
+cursor-theme='mate'
 __EOF__
 
 %find_lang %name --with-gnome --all-name
@@ -95,6 +102,9 @@ __EOF__
 %_datadir/gir-1.0/MateDesktop-2.0.gir
 
 %changelog
+* Fri Jun 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.3-alt1
+- 1.20.3
+
 * Tue Mar 27 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.1-alt1
 - 1.20.1
 
