@@ -3,7 +3,7 @@
 
 Name: cinnamon-screensaver
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon Screensaver
 License: GPLv2+
@@ -27,6 +27,7 @@ BuildRequires: libgtk+3-gir-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: libdbus-glib-devel
 BuildRequires: libpam0-devel
+Requires: %name-translations
 Requires: typelib(CDesktopEnums)
 
 %description
@@ -118,6 +119,9 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %_datadir/gir-1.0/*
 
 %changelog
+* Fri Jun 15 2018 Vladimir Didenko <cow@altlinux.org> 3.8.2-alt2
+- add translation package to dependency
+
 * Wed Jun 13 2018 Vladimir Didenko <cow@altlinux.org> 3.8.2-alt1
 - 3.8.2
 
