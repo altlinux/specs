@@ -1,6 +1,6 @@
 #based on fedora spec
 Name: pybind11
-Version: 2.2.2
+Version: 2.2.3
 Release: alt1%ubt
 
 Summary: Seamless operability between C++11 and Python
@@ -9,12 +9,6 @@ Group: Development/Other
 Url: https://github.com/pybind/pybind11
 
 Source0: %name-%version.tar
-
-# Apply fedora patches 
-# Little-endian fix
-Patch0:  pybind11-2.2.2-endian.patch
-# Don't use pip to get path to headers
-Patch1:  pybind11-2.2.2-nopip.patch
 
 BuildRequires(pre): rpm-build-ubt
 # Automatically added by buildreq on Thu May 10 2018
@@ -74,8 +68,6 @@ This package contains the Python 3 files.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
 
 %build
 for py in python python3; do
@@ -114,5 +106,9 @@ make -C python3/BUILD/tests check -j$NPROCS
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Fri Jun 15 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.2.3-alt1%ubt
+- New version
+- Remove patches due to upstream application
+
 * Sat Apr 28 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.2.2-alt1%ubt
 - Initial build
