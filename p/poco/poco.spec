@@ -1,6 +1,6 @@
 Name: poco
 Version: 1.9.0
-Release: alt1
+Release: alt2
 Summary: POrtable COmponents C++ Libraries
 License: Boost Software License v1.0
 Group: Development/C++
@@ -10,7 +10,7 @@ Url: http://pocoproject.org/
 Source: %name-%version.tar
 
 BuildPreReq: gcc-c++ cmake libsqlite3-devel zlib-devel libpcre-devel
-BuildPreReq: libexpat-devel libssl-devel libmysqlclient-devel
+BuildPreReq: libexpat-devel libssl-devel libmariadb-devel
 BuildPreReq: libunixODBC-devel libiodbc-devel
 
 %description
@@ -262,6 +262,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 #files -n lib%name-devel-docs
 
 %changelog
+* Fri Jun 15 2018 Alexei Takaseev <taf@altlinux.org> 1.9.0-alt2
+- Build with MariaDB client libraries
+
 * Fri Mar 09 2018 Alexei Takaseev <taf@altlinux.org> 1.9.0-alt1
 - 1.9.0
 
