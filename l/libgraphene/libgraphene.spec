@@ -18,7 +18,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Graphene is a library of data types commonly used to implement 2D-in-3D or full 3D canvases
@@ -141,6 +141,9 @@ the functionality of the installed Graphene library.
 
 
 %changelog
+* Thu Jun 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
+- 1.8.2
+
 * Fri Feb 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 - new -tests subpackage
