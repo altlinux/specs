@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/doxygen gcc-c++
 Summary:	Audio/Video Conference software for Instant Messengers
 Name:		libmimic
 Version:	1.0.4
-Release:	alt1_14
+Release:	alt1_15
 License:	LGPLv2+
 Url:		http://sourceforge.net/projects/farsight/
 Group:		Networking/Instant messaging
@@ -21,7 +21,7 @@ Source44: import.info
 
 %description
 Audio/Video Conference software for Instant Messengers.
-It aims to provide Audio/Video conferencing for as many 
+It aims to provide Audio/Video conferencing for as many
 Instant Messengers as possible through a modular design.
 
 %package -n %libname
@@ -31,7 +31,7 @@ Obsoletes: libmimic
 
 %description -n %libname
 Audio/Video Conference software for Instant Messengers.
-It aims to provide Audio/Video conferencing for as many 
+It aims to provide Audio/Video conferencing for as many
 Instant Messengers as possible through a modular design.
 
 %package -n %develname
@@ -49,12 +49,14 @@ Headers of %{name} for development.
 %patch0 -p1
 
 %build
+# fix build on aarch64
+autoreconf -vfi
 
 %configure --disable-static
-%make
+%make_build
 
 %install
-%{makeinstall_std}
+%makeinstall_std
 
 # don't ship .la
 find %{buildroot} -name *.la | xargs rm -f
@@ -69,6 +71,9 @@ find %{buildroot} -name *.la | xargs rm -f
 
 
 %changelog
+* Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_15
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_14
 - new version
 
