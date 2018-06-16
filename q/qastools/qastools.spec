@@ -1,6 +1,6 @@
 Name: qastools
 Version: 0.21.0
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: Collection of desktop applications for ALSA
 License: GPLv3
 
@@ -102,6 +102,9 @@ done
 %_man1dir/qasmixer.1.*
 
 %changelog
+* Sat Jun 16 2018 Anton Midyukov <antohami@altlinux.org> 0.21.0-alt3%ubt
+- Rebuilt for aarch64
+
 * Sun Jan 14 2018 Anton Midyukov <antohami@altlinux.org> 0.21.0-alt2%ubt
 - Disabled tray icon at startup
 
