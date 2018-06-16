@@ -10,14 +10,14 @@ BuildRequires: gcc-c++
 Name:		libxkbui
 Summary:	The xkbui Library
 Version:	1.0.2
-Release:	alt1_15
+Release:	alt1_16
 Group:		Development/C
 License:	MIT
 URL:		http://xorg.freedesktop.org
 Source0:	http://xorg.freedesktop.org/releases/individual/lib/%{name}-%{version}.tar.bz2
-BuildRequires:	libX11-devel >= 1.0.0
-BuildRequires:	libxkbfile-devel >= 1.0.1
-BuildRequires:	libXt-devel >= 1.0.0
+BuildRequires:	pkgconfig(x11) >= 1.0.0
+BuildRequires:	pkgconfig(xkbfile) >= 1.0.1
+BuildRequires:	pkgconfig(xt) >= 1.0.0
 BuildRequires:	xorg-util-macros >= 1.0.1
 Source44: import.info
 
@@ -61,9 +61,12 @@ Development files for %{name}
 %setup -q -n libxkbui-%{version}
 
 %build
+# fix build on aarch64
+autoreconf -vfi
+
 %configure \
 	--disable-static
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -72,6 +75,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_16
+- update by mgaimport
+
 * Thu Jun 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_15
 - update by mgaimport
 
