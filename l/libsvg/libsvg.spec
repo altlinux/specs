@@ -10,16 +10,16 @@ BuildRequires: gcc-c++
 Summary:	A generic SVG library
 Name:		libsvg
 Version:	0.1.4
-Release:	alt2_20
+Release:	alt2_21
 License:	LGPL
 Group:		System/Libraries
 URL:		http://cairographics.org/snapshots/
 Source:		http://cairographics.org/snapshots/%{name}-%{version}.tar.bz2
 Patch0:		libsvg-0.1.4-link.patch
 Patch1:		libsvg-0.1.4-libpng14.patch
-BuildRequires:	libxml2-devel
-BuildRequires:	libpng-devel
-BuildRequires:	libjpeg-devel libturbojpeg-devel
+BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	pkgconfig(libpng)
+BuildRequires:	pkgconfig(libjpeg)
 Source44: import.info
 
 %description
@@ -48,9 +48,12 @@ files to allow you to develop with libsvg.
 %patch0 -p0
 %patch1 -p0
 
+# fix build on aarch64
+cp -af /usr/share/gnu-config/config.{guess,sub} .
+
 %build
 %configure --disable-static
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -70,6 +73,9 @@ rm -f %{buildroot}%{_libdir}/libsvg.la
 
 
 %changelog
+* Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.4-alt2_21
+- update by mgaimport
+
 * Mon Mar 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.4-alt2_20
 - new version
 
