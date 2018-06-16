@@ -1,116 +1,194 @@
-Name: devscripts
-Version: 2.12.6
-Release: alt2.1
-Source: %{name}_%version.tar.gz
-# XXX We have awfully old po4a
-Source1: devscripts-po4a.conf
-Patch: devscripts-uscan-no_ssl_namecheck.patch
-Patch2: devscripts-2.12.6-alt-fix-pod.patch
-License: GPLv2
 Group: Development/Other
-Url: http://packages.debian.org/devscripts
-Summary: Scripts to make the life of a Debian Package maintainer easier
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl rpm-build-python3 rpm-macros-fedora-compat
+BuildRequires: perl(Authen/SASL.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(HTTP/Date.pm) perl(HTTP/Status.pm) perl(IO/Uncompress/AnyUncompress.pm) perl(LWP/Protocol/https.pm) perl(Net/SMTPS.pm) perl(Pod/Usage.pm) perl(SOAP/Lite.pm) perl(String/ShellQuote.pm) perl(Term/ANSIColor.pm) perl(Term/Size.pm) perl(Try/Tiny.pm) perl(YAML/Syck.pm)
+# END SourceDeps(oneline)
+# we do not have them
+%filter_from_requires /^python3.apt/d
+%filter_from_requires /^python3.debian.changelog/d
+%filter_from_requires /^python3.debian.deb822/d
 
-%setup_python_module %name
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           devscripts
+Version:        2.18.3
+Release:        alt1_1
+Summary:        Scripts for Debian Package maintainers
 
-BuildRequires: python-module-setuptools
+License:        GPLv2+
+URL:            https://packages.debian.org/sid/%{name}
+Source0:        http://ftp.debian.org/debian/pool/main/d/%{name}/%{name}_%{version}.tar.xz
+# Fixes path to xsl-stylesheet manpages docbook.xsl
+Patch0:         devscripts_docbook.patch
+# Removes the debian-only --install-layout python-setuptools option
+Patch1:         devscripts_install-layout.patch
+# Install some additional man pages
+Patch2:         devscripts_install-man.patch
 
-# Automatically added by buildreq on Tue Jun 21 2011
-# optimized out: libgpg-error perl-Dpkg perl-Encode perl-File-BaseDir perl-HTTP-Date perl-HTTP-Message perl-Locale-gettext perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Text-CharWidth perl-Text-WrapI18N perl-TimeDate perl-URI perl-libnet perl-podlators python-base xml-common
-BuildRequires: docbook5-style-xsl dpkg perl-DBM perl-File-DesktopEntry perl-libwww po4a xsltproc
+BuildRequires:  gcc
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(constant.pm)
+BuildRequires:  perl(Cwd.pm)
+BuildRequires:  perl(Data/Dumper.pm)
+BuildRequires:  perl(DB_File.pm)
+BuildRequires:  perl(Digest/MD5.pm)
+BuildRequires:  perl(Dpkg/Changelog/Debian.pm)
+BuildRequires:  perl(Dpkg/Changelog/Parse.pm)
+BuildRequires:  perl(Dpkg/Control.pm)
+BuildRequires:  perl(Dpkg/Control/Hash.pm)
+BuildRequires:  perl(Dpkg/Vendor.pm)
+BuildRequires:  perl(Dpkg/Version.pm)
+BuildRequires:  perl(Encode.pm)
+BuildRequires:  perl(Encode/Locale.pm)
+BuildRequires:  perl(Fcntl.pm)
+BuildRequires:  perl(feature.pm)
+BuildRequires:  perl(File/Basename.pm)
+BuildRequires:  perl(File/Copy.pm)
+BuildRequires:  perl(File/DesktopEntry.pm)
+BuildRequires:  perl(File/Find.pm)
+BuildRequires:  perl(File/HomeDir.pm)
+BuildRequires:  perl(FileHandle.pm)
+BuildRequires:  perl(File/Path.pm)
+BuildRequires:  perl(File/Spec.pm)
+BuildRequires:  perl(File/Temp.pm)
+BuildRequires:  perl(filetest.pm)
+BuildRequires:  perl(Getopt/Long.pm)
+BuildRequires:  perl(Git/Wrapper.pm)
+BuildRequires:  perl(IO/Dir.pm)
+BuildRequires:  perl(IO/File.pm)
+BuildRequires:  perl(IO/Handle.pm)
+BuildRequires:  perl(IPC/Run.pm)
+BuildRequires:  perl(JSON/PP.pm)
+BuildRequires:  perl(List/Compare.pm)
+BuildRequires:  perl(List/Util.pm)
+BuildRequires:  perl(LWP/UserAgent.pm)
+BuildRequires:  perl(Net/SMTP.pm)
+BuildRequires:  perl(open.pm)
+BuildRequires:  perl(Parse/DebControl.pm)
+BuildRequires:  perl(Pod/Checker.pm)
+BuildRequires:  perl(POSIX.pm)
+BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(Text/ParseWords.pm)
+BuildRequires:  perl(Text/Wrap.pm)
+BuildRequires:  perl(URI.pm)
+BuildRequires:  perl(URI/QueryParam.pm)
+BuildRequires:  perl(vars.pm)
+BuildRequires:  perl(warnings.pm)
 
-BuildPreReq: perl-Pod-Checker
+BuildRequires:  docbook-style-xsl
+BuildRequires:  libxslt xsltproc
+BuildRequires:  po4a
+BuildRequires:  python3-devel
+BuildRequires:  python3-module-distribute
+BuildRequires:  /usr/bin/dpkg-buildflags
+BuildRequires:  /usr/bin/dpkg-vendor
+BuildRequires:  /usr/bin/dpkg-parsechangelog
+BuildRequires:  /usr/bin/help2man
+
+Requires:       dpkg
+# man for manpage-alert
+Requires:       %{_bindir}/man
+
+Requires:       checkbashisms
+Source44: import.info
+
 
 %description
-Devscripts provides several scripts which may be of use to Debian
-developers.  The following gives a summary of the available scripts --
-please read the manpages for full details about the use of these
-scripts.  They are contributed by multiple developers; for details of
-the authors, please see the code or manpages.
+Scripts to make the life of a Debian Package maintainer easier.
 
-Also, many of these scripts have dependencies on other packages, but
-rather than burden the package with a large number of dependencies,
-most of which will not be needed by most people, the individual
-dependencies are listed as "Recommends" in the control file.  This
-ensures that the packages will be installed by default but allows
-users to remove them if desired.  The dependencies and recommendations
-are listed in square brackets in the description below, as well as in
-the Description field in the control file.
-
-%package -n %packagename
-Group: Development/Other
+%package -n python3-module-%name
+Group: Development/Python3
 Summary: Python bingings for %name
 Buildarch: noarch
-%description -n python-module-%name
+%description -n python3-module-%name
 Python bingings for %name, %summary
 
-%package -n checkbashisms
 
-Summary: Check shell scripts for common bash-specific contructs
+%package -n checkbashisms
 Group: Development/Other
-BuildArch: noarch
+Summary:        Devscripts checkbashisms script
 
 %description -n checkbashisms
-checkbashisms checks whether a /bin/sh script contains any common
-bash-specific contructs.
-It is the part of the Debian devscripts package.
+This package contains the devscripts checkbashisms script.
+
+
+%package compat
+Group: Development/Other
+Summary:        Compatibility package for devscripts-minimal
+Requires:       devscripts perl-App-Licensecheck
+Requires:       checkbashisms = %{version}-%{release}
+Obsoletes:      devscripts-minimal < 2.16.6-1
+
+%description compat
+This package only exists to help transition from devscripts-minimal to
+licensecheck and devscripts-checkbashisms. It will be removed after one
+distribution release cycle, please do not reference it or depend on it in any way.
+
 
 %prep
-%setup
-%patch -p0
-%patch2 -p2
-sed -i 's/^[.]TQ/.TP/' scripts/diff2patches.1
-grep -rl /usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl . |
-	while read N; do
-		sed -i 's@/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl@/usr/share/sgml/docbook/xsl-ns-stylesheets/manpages/docbook.xsl@g' "$N"
-	done
-# XXX We have awfully old po4a
-cp %SOURCE1 po4a/
-touch po4a/fr/deb-reversion.fr.1
-sed -i 's/ --install-layout=deb//' scripts/Makefile
+%setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+
 
 %build
-%make
+%make_build CFLAGS="%{optflags}" LDFLAGS="%{__global_ldflags}"
+
 
 %install
-mkdir -p %buildroot/%_bindir \
-	%buildroot/%prefix/lib/devscripts \
-	%buildroot/%_datadir/devscripts \
-	%buildroot/%_man1dir \
-	%buildroot/%_man5dir \
-	%buildroot/%perl_vendorlib \
-	%buildroot/%_sysconfdir/bash_completion.d
+%makeinstall_std
 
-%makeinstall DESTDIR=%buildroot
-install scripts/*.1 %buildroot/%_man1dir/
-install scripts/*.5 %buildroot/%_man5dir/
-install -D cowpoke.conf %buildroot%_sysconfdir/cowpoke.conf
+# Install docs through %%doc
+rm -rf %{buildroot}%{_datadir}/doc
 
-# XXX
-cp -r Devscripts %buildroot/%perl_vendorlib/
+# archpath requires tla (gnu-arch) or baz (bazaar), both of which are obsolete
+# and the respective Fedora packages dead. See #1128503
+rm %{buildroot}%{_bindir}/archpath %{buildroot}%{_mandir}/man1/archpath*
+
+# whodepends requires configured deb repositories
+rm %{buildroot}%{_bindir}/whodepends %{buildroot}%{_mandir}/man1/whodepends*
+
+# Create symlinks like the debian package does
+ln -s %{_bindir}/cvs-debi      %{buildroot}%{_bindir}/cvs-debc
+ln -s %{_bindir}/debchange     %{buildroot}%{_bindir}/dch
+ln -s %{_bindir}/pts-subscribe %{buildroot}%{_bindir}/pts-unsubscribe
+ln -s %{_mandir}/man1/debchange.1.gz     %{buildroot}%{_mandir}/man1/dch.1.gz
+ln -s %{_mandir}/man1/pts-subscribe.1.gz %{buildroot}%{_mandir}/man1/pts-unsubscribe.1.gz
+
+# This already is in bash-completion
+rm -f %{buildroot}%{_datadir}/bash-completion/completions/bts
+mkdir -p %buildroot%_sysconfdir
 touch %buildroot%_sysconfdir/cvsdeb.conf
 
+
 %files
-%doc README*
-%exclude %_defaultdocdir/%name
-%_bindir/*
-%_mandir/man*/*
-%prefix/lib/devscripts
-%_datadir/devscripts
-%_sysconfdir/bash_completion.d/*
-%perl_vendorlib/Devscripts
-%config %_sysconfdir/[^b]*
-%exclude %_bindir/checkbashisms
-%exclude %_man1dir/checkbashisms.1*
+%doc README
+%doc --no-dereference COPYING
+%{_bindir}/*
+%{_datadir}/%{name}/
+%{_mandir}/man1/*
+%{perl_vendor_privlib}/Devscripts
+%exclude %{_bindir}/checkbashisms
+%exclude %{_mandir}/man1/checkbashisms.1*
+%config %_sysconfdir/cvsdeb.conf
+%files -n python3-module-%name
+%{python3_sitelibdir_noarch}/%{name}
+%{python3_sitelibdir_noarch}/%{name}*.egg-info/
+
 
 %files -n checkbashisms
-%_bindir/checkbashisms
-%_man1dir/checkbashisms.1*
-
-%files -n %packagename
-%python_sitelibdir_noarch/*
+%doc --no-dereference COPYING
+%{_bindir}/checkbashisms
+%{_mandir}/man1/checkbashisms.1*
 
 %changelog
+* Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.18.3-alt1_1
+- new version - checkbashisms that works
+
 * Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12.6-alt2.1
 - Fixed build
 
