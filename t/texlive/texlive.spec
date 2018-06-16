@@ -64,7 +64,7 @@ BuildRequires: chrpath
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt2_3
+Release:	alt2_4
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -188,6 +188,7 @@ Conflicts: texlive-omega < 2009
 Conflicts: texlive-xetex < 2009
 Patch33: texlive-2017-alt-texmf-first.patch
 Provides: texlive-collection-binextra = %{tl_version}
+Patch34: texlive-2017-luatex-segfault.patch
 #-----------------------------------------------------------------------
 %description
 TeX Live is an easy way to get up and running with the TeX document
@@ -441,6 +442,7 @@ perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
 	 -e 's%%^(OSFONTDIR\s+= ).*%%$1%{_datadir}/fonts%%;'		  \
 	texk/kpathsea/texmf.cnf
 %patch33 -p0
+%patch34 -p0
 
 #-----------------------------------------------------------------------
 %build
@@ -661,6 +663,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt2_4
+- luatex bugfix thanks to lakostis@ (closes: #35024)
+
 * Sun Mar 11 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt2_3
 - final release
 
