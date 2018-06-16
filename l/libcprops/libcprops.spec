@@ -21,7 +21,7 @@
 
 Name:		lib%{oname}
 Version:	0.1.12
-Release:	alt1_14
+Release:	alt1_15
 
 Summary:	C Prototyping Tools
 Group:		Development/C
@@ -51,7 +51,7 @@ Obsoletes:	%{_lib}libcprops0 < 0.1.12-3
 %package -n %{mysqllib}
 Summary:	MySQL (MariaDB) dbms driver for %{name}
 Group:		System/Libraries
-BuildRequires:	libmysqlclient-devel
+BuildRequires:	libmariadb-devel
 
 %description -n %{mysqllib}
 This package contains the MySQL (MariaDB) dbms driver for %{name}.
@@ -92,6 +92,9 @@ developing applications that use %{name}.
 # for autoreconf
 mkdir -p m4
 
+# fix build on aarch64
+cp -af /usr/share/gnu-config/config.{guess,sub} .
+
 %build
 autoreconf -vfi
 %configure \
@@ -111,7 +114,7 @@ sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
     -e 's|CC -shared|CC -shared -Wl,--as-needed|g' \
     -i libtool
 
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -143,6 +146,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.12-alt1_15
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.12-alt1_14
 - new version
 
