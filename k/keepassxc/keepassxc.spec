@@ -1,5 +1,5 @@
 Name: keepassxc
-Version:  2.2.2
+Version:  2.3.3
 Release:  alt1
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
 Group: File tools
@@ -15,7 +15,9 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake ctest gcc-c++
 BuildRequires: qt5-base-devel >= 5.2.0 qt5-tools-devel >= 5.2.0
-BuildRequires: libgcrypt-devel >= 1.6.0
+BuildRequires: libgcrypt-devel >= 1.7.0
+BuildRequires: libargon2-devel
+BuildRequires: libsodium-devel >= 1.0.12
 BuildRequires: zlib-devel >= 1.2.0
 # Optional for Auto-Type on X11/Linux:
 BuildRequires: libXi-devel, libXtst-devel, qt5-x11extras-devel
@@ -36,8 +38,10 @@ open-source password manager.
 %build
 %cmake \
   -DWITH_CXX11=ON \
-  -DWITH_XC_HTTP=ON \
+  -DWITH_XC_BROWSER=ON \
+  -DWITH_XC_NETWORKING=ON \
   -DWITH_XC_AUTOTYPE=ON \
+  -DWITH_XC_SSHAGENT=ON \
 %if_with yubikey
   -DWITH_XC_YUBIKEY=ON
 %endif
@@ -50,13 +54,17 @@ open-source password manager.
 %files
 %_bindir/*
 %_libdir/%name
-%_desktopdir/org.%name.desktop
-%_datadir/metainfo/org.keepassxc.appdata.xml
+%_desktopdir/org.%name.KeePassXC.desktop
+%_datadir/metainfo/org.%name.KeePassXC.appdata.xml
 %_datadir/mime/packages/%name.xml
 %_iconsdir/hicolor/*/*/*
 %_datadir/%name
+%_mandir/man?/*
 
 %changelog
+* Sat Jun 16 2018 Pavel Nakonechnyi <zorg@altlinux.org> 2.3.3-alt1
+- Updated to v2.3.3.
+
 * Mon Oct 23 2017 Pavel Vyazovoy <paulelms@altlinux.org> 2.2.2-alt1
 - Updated to v2.2.2.
 
