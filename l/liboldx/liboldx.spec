@@ -10,12 +10,12 @@ BuildRequires: gcc-c++
 Name: liboldx
 Summary:  The oldX Library
 Version: 1.0.1
-Release: alt1_15
+Release: alt1_16
 Group: Development/C
 License: MIT
 URL: http://xorg.freedesktop.org
 Source0: http://xorg.freedesktop.org/releases/individual/lib/liboldX-%{version}.tar.bz2
-BuildRequires: libX11-devel >= 1.0.0
+BuildRequires: pkgconfig(x11) >= 1.0.0
 BuildRequires: xorg-proto-devel >= 1.0.0
 BuildRequires: xorg-util-macros >= 1.0.1
 Source44: import.info
@@ -28,7 +28,6 @@ X.Org X11 liboldX runtime library.
 %package -n %{liboldx}
 Summary:  The oldX Library
 Group: Development/C
-Conflicts: libxorg-x11 < 7.0
 Provides: %{name} = %{version}
 
 %description -n %{liboldx}
@@ -45,7 +44,6 @@ Summary: Development files for %{name}
 Group: Development/C
 Requires: %{liboldx} = %{version}-%{release}
 Provides: liboldx-devel = %{version}-%{release}
-Conflicts: libxorg-x11-devel < 7.0
 Obsoletes: %{_lib}oldx6-devel < 1.0.1-11
 Obsoletes: %{_lib}oldx6-static-devel < 1.0.1-11
 
@@ -63,9 +61,12 @@ Development files for %{name}.
 %setup -q -n liboldX-%{version}
 
 %build
+# fix build on aarch64
+autoreconf -vfi
+
 %configure \
 	--disable-static
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -74,6 +75,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_16
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_15
 - new version
 
