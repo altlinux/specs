@@ -7,7 +7,7 @@
 Summary:	Libopennet allows you to open_net() files the same way you open() them now
 Name:		libopennet
 Version:	0.9.9
-Release:	alt1_6
+Release:	alt1_7
 Group:		System/Libraries
 License:	LGPL
 URL:		http://www.rkeene.org/oss/libopennet/
@@ -44,11 +44,14 @@ This package contains the %{name} library and its header files.
 %setup -q
 %patch0 -p0
 
+# fix build on aarch64
+cp -af /usr/share/gnu-config/config.{guess,sub} .
+
 %build
 # fix soname and shared library build detection
 export SHOBJFLAGS="-Wl,-soname=%{name}.so.%{major} -shared -rdynamic -fPIC -D_REENTRANT"
 %configure --disable-static
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -66,6 +69,9 @@ export SHOBJFLAGS="-Wl,-soname=%{name}.so.%{major} -shared -rdynamic -fPIC -D_RE
 
 
 %changelog
+* Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.9-alt1_7
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.9-alt1_6
 - new version
 
