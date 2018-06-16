@@ -15,14 +15,14 @@ BuildRequires: gcc-c++
 Summary:	Open Crypto Development Kit
 Name:		opencdk
 Version:	0.6.6
-Release:	alt1_12
+Release:	alt1_13
 License:	GPLv2+
 Group:		System/Libraries
 URL:		http://www.gnutls.org/
 Source0:	http://www.gnu.org/software/gnutls/releases/opencdk/%{name}-%{version}.tar.bz2
 Source1:	http://www.gnu.org/software/gnutls/releases/opencdk/%{name}-%{version}.tar.bz2.sig
 Patch0:		opencdk-0.6.6-link.patch
-BuildRequires:	zlib-devel
+BuildRequires:	pkgconfig(zlib)
 BuildRequires:	gcrypt-utils libgcrypt-devel
 Source44: import.info
 
@@ -77,8 +77,11 @@ compile any applications/libraries that use %{name}.
 %patch0 -p1
 
 %build
+# fix build on aarch64
+autoreconf -vfi
+
 %configure --disable-static
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -104,6 +107,9 @@ echo #multiarch_binaries %{buildroot}%{_bindir}/*-config
 
 
 %changelog
+* Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt1_13
+- update by mgaimport
+
 * Sat Apr 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt1_12
 - new version
 
