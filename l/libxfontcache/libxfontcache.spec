@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(fontcacheproto) pkgconfig(xextproto)
+BuildRequires: gcc-c++ pkgconfig(fontcacheproto)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -10,13 +10,13 @@ BuildRequires: gcc-c++ pkgconfig(fontcacheproto) pkgconfig(xextproto)
 Name: libxfontcache
 Summary:  The Xfontcache Library
 Version: 1.0.5
-Release: alt1_10
+Release: alt1_11
 Group: Development/C
 License: MIT
 URL: http://xorg.freedesktop.org
 Source0: http://xorg.freedesktop.org/releases/individual/lib/libXfontcache-%{version}.tar.bz2
-BuildRequires: libX11-devel >= 1.0.0
-BuildRequires: libXext-devel >= 1.0.0
+BuildRequires: pkgconfig(x11) >= 1.0.0
+BuildRequires: pkgconfig(xext) >= 1.0.0
 BuildRequires: xorg-proto-devel >= 1.0.0
 BuildRequires: xorg-util-macros >= 1.0.1
 Source44: import.info
@@ -63,8 +63,11 @@ Development files for %{name}
 %setup -q -n libXfontcache-%{version}
 
 %build
+# fix build on aarch64
+autoreconf -vfi
+
 %configure	--disable-static
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -73,6 +76,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_11
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_10
 - new version
 
