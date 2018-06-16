@@ -9,7 +9,7 @@ BuildRequires: gcc-c++
 
 Name:		liblettertree
 Version:	0.1
-Release:	alt1_12
+Release:	alt1_13
 Summary:	A letter tree data structure
 License:	LGPL
 Group:		System/Libraries
@@ -43,9 +43,12 @@ This package contains development files for %{name}.
 %setup -q
 
 %build
+# fix build on aarch64
+autoreconf -vfi
+
 %configure \
 	--disable-static
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -63,10 +66,10 @@ find %{buildroot} -name "*.la" -delete
 %{_includedir}/lettertree.h
 
 
-
-
-
 %changelog
+* Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_13
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_12
 - new version
 
