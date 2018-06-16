@@ -1,5 +1,5 @@
 Name: redis
-Version: 4.0.9
+Version: 4.0.10
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -144,6 +144,12 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 
 %changelog
+* Sat Jun 16 2018 Nikolay A. Fetisov <naf@altlinux.org> 4.0.10-alt1
+- New version
+  * Fix security issues related to the Lua scripting engine
+  * Fix a bug with SCAN/SSCAN/HSCAN/ZSCAN, that may not return all the elements
+  * Fix a PSYNC2 bug that can affect partial resynchronization
+
 * Sat Apr 14 2018 Nikolay A. Fetisov <naf@altlinux.org> 4.0.9-alt1
 - New version
 
