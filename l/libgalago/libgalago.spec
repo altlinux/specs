@@ -7,18 +7,18 @@ BuildRequires: gcc-c++ libcheck-devel
 %define libname libgalago%{major}
 %define develname libgalago-devel
 
-Summary: Base library of Galago 
+Summary: Base library of Galago
 Name: libgalago
 Version: 0.5.2
-Release: alt1_16
+Release: alt1_17
 Source0: http://www.galago-project.org/files/releases/source/libgalago/%{name}-%{version}.tar.bz2
 License: LGPL
 Group: System/Libraries
 Url: http://www.galago-project.org/
-BuildRequires: libdbus-glib-devel
+BuildRequires: pkgconfig(dbus-glib-1)
 BuildRequires: gtk-doc
+BuildRequires: gettext-tools libasprintf-devel
 Source44: import.info
-
 
 %description
 This is the base library of the Galago desktop presence framework.
@@ -49,8 +49,12 @@ This is the base library of the Galago desktop presence framework.
 %setup -q
 
 %build
+# fix build on aarch64
+#autoreconf -vfi
+cp /usr/share/gnu-config/config.* .
+
 %configure --disable-static
-%make
+%make_build
 
 %install
 rm -rf $RPM_BUILD_ROOT %name.lang
@@ -76,6 +80,9 @@ find %{buildroot} -name '*.la' | xargs rm -f
 
 
 %changelog
+* Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt1_17
+- update by mgaimport
+
 * Mon Apr 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt1_16
 - new version
 
