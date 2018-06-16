@@ -1,6 +1,6 @@
 Name: matiec
 Version: 20180420
-Release: alt1
+Release: alt1.1
 
 Summary: IEC 61131-3 compiler
 Summary(ru_RU.UTF-8): МЭК 61131-3 компилятор
@@ -82,6 +82,9 @@ cp -r lib/* %buildroot/%_libexecdir/%name
 %exclude %_libdir/*.a
 
 %changelog
+* Sat Jun 16 2018 Anton Midyukov <antohami@altlinux.org> 20180420-alt1.1
+- Rebuilt for aarch64
+
 * Wed Jun 06 2018 Anton Midyukov <antohami@altlinux.org> 20180420-alt1
 - New snapshot.
 
