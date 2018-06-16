@@ -1,7 +1,7 @@
 %define modulename emonoda
 
 Name: emonoda
-Version: 2.0.48
+Version: 2.1.13
 Release: alt1
 
 Summary: The set of tools to organize and management of your torrents
@@ -12,10 +12,8 @@ Url: https://github.com/mdevaev/emonoda
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-git: https://github.com/mdevaev/emonoda.git
+# Source-url: https://github.com/mdevaev/emonoda/archive/v%version.tar.gz
 Source: %name-%version.tar
-
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -27,6 +25,8 @@ Obsoletes: rtfetch
 # Automatically added by buildreq on Sun Jul 19 2015
 # optimized out: python3 python3-base python3-module-greenlet python3-module-pycparser 
 BuildRequires: python3-module-chardet python3-module-nose python3-module-setuptools
+
+BuildRequires: python3-dev python3-module-Cython 
 
 # do not requires by findreq...
 Requires: python3-module-yaml
@@ -49,13 +49,17 @@ The set of tools to organize and management of your torrents.
 %_bindir/emfind
 %_bindir/emload
 %_bindir/emrm
-%_bindir/emtest-confetti
+%_bindir/emconfetti-demo
+%_bindir/emconfetti-tghi
 %_bindir/emupdate
 
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Sat Jun 16 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.13-alt1
+- new version 2.1.13 (with rpmrb script)
+
 * Tue Mar 20 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.48-alt1
 - new version 2.0.48 (with rpmrb script)
 
