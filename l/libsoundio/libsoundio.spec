@@ -1,18 +1,18 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-mageia-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define	libname	libsoundio1
+%define major	1
+%define	libname	libsoundio%{major}
 %define	devel	libsoundio-devel
-%define	static	libsoundio-devel-static
 
 Name:		libsoundio
 Version:	1.1.0
-Release:	alt1_1
+Release:	alt1_2
 Summary:	C library for cross-platform real-time audio input and output
 Group:		Sound
-
 License:	MIT
 URL:		http://libsound.io/
 Source0:	https://github.com/andrewrk/libsoundio/archive/%{version}/%{name}-%{version}.tar.gz
@@ -20,7 +20,7 @@ Source0:	https://github.com/andrewrk/libsoundio/archive/%{version}/%{name}-%{ver
 BuildRequires:	ccmake cmake ctest
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(jack)
-BuildRequires:	libpulseaudio-devel
+BuildRequires:	pkgconfig(libpulse)
 Source44: import.info
 
 %description
@@ -33,30 +33,27 @@ performance and power, and API convenience, the scale is tipped closer to the
 former. Features that only exist in some sound backends are exposed.
 
 
-%package	%{libname}
-Group: Sound
+%package -n	%{libname}
 Summary:	Library files for %{name}
-Requires:	%{name}
+Group:		System/Libraries
+Requires:	%{name} = %{version}-%{release}
+Obsoletes:	libsoundio-%{_lib}soundio1 < 1.1.0-2
 
-%description	%{libname}
+%description -n	%{libname}
 This package contains the library files for %{name}
 
-%package        %{devel}
-Group: Sound
+%package -n	%{devel}
 Summary:	Development files for %{name}
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Group:		Development/C++
+Requires:	%{libname} = %{version}-%{release}
+Provides:	soundio-devel = %{version}-%{release}
+Obsoletes:	libsoundio-%{_lib}soundio-devel < 1.1.0-2
+Obsoletes:	libsoundio-%{_lib}soundio-static-devel < 1.1.0-2
 
-%description	%{devel}
-The %{name}-%{devel} package contains libraries and header files for
+%description -n	%{devel}
+The %{devel} package contains libraries and header files for
 developing applications that use %{name}.
 
-%package	%{static}
-Group: Sound
-Summary:	Static deveopment files for %{name}
-
-%description	%{static}
-The %{name}-%{static} package contains the static libraries and header
-files for developing applications that use %{name}.
 
 %prep
 %setup -q
@@ -71,25 +68,26 @@ cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo
 
 
 %install
-cd build
-make install DESTDIR=%{buildroot}
+%makeinstall_std -C build
+
 
 %files
 %doc LICENSE README.md
 %{_bindir}/*
 
-%files	%{libname}
-%{_libdir}/*.so.*
+%files -n %{libname}
+%{_libdir}/*.so.%{major}
+%{_libdir}/*.so.%{major}.*
 
-%files	%{devel}
+%files -n %{devel}
 %{_includedir}/*
 %{_libdir}/*.so
 
-%files	%{static}
-%{_libdir}/*.a
-
 
 %changelog
+* Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_2
+- fixed build
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_1
 - new version
 
