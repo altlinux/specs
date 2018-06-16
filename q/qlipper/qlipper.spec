@@ -1,6 +1,6 @@
 Name: qlipper
 Version: 5.1.1
-Release: alt2%ubt
+Release: alt3%ubt
 License: GPLv3+
 Summary: Lightweight clipboard history
 Group: Graphical desktop/Other
@@ -51,6 +51,9 @@ install -m 644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/
 %_sysconfdir/xdg/autostart/qlipper-startup.desktop
 
 %changelog
+* Sat Jun 16 2018 Anton Midyukov <antohami@altlinux.org> 5.1.1-alt3%ubt
+- Rebuilt for aarch64
+
 * Thu Mar 22 2018 Anton Midyukov <antohami@altlinux.org> 5.1.1-alt2%ubt
 - Added autostart
 
