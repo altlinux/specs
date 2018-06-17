@@ -6,7 +6,7 @@
 
 %define gst_version 1.0
 %define nspr_version 4.17
-%define nss_version 3.36.1
+%define nss_version 3.36.4
 %define rust_version 1.24.1
 %define cargo_version 0.25.0
 
@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        60.0.1
+Version:        60.0.2
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -37,6 +37,8 @@ Patch14:        firefox-fix-install.patch
 Patch16:        firefox-cross-desktop.patch
 Patch17:        firefox-mediasource-crash.patch
 Patch18:        firefox-alt-nspr-for-rust.patch
+Patch19:        build-aarch64-skia.patch
+Patch20:        bug1375074-save-restore-x28.patch
 
 # Upstream
 Patch200:       mozilla-bug-256180.patch
@@ -149,19 +151,14 @@ tar -xf %SOURCE2
 %patch16 -p2
 %patch17 -p2
 %patch18 -p2
+%patch19 -p1 -b .aarch64-skia
+%patch20 -p1 -b .bug1375074-save-restore-x28
 
 %patch200 -p1
 %patch201 -p1
 #patch202 -p1
 
 cp -f %SOURCE4 .mozconfig
-
-%ifnarch %{ix86} x86_64 armh
-echo "ac_add_options --disable-methodjit" >> .mozconfig
-echo "ac_add_options --disable-monoic" >> .mozconfig
-echo "ac_add_options --disable-polyic" >> .mozconfig
-echo "ac_add_options --disable-tracejit" >> .mozconfig
-%endif
 
 %build
 cd mozilla
@@ -208,6 +205,11 @@ cat >> .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
 ac_add_options --enable-linker=lld
+%ifnarch %{ix86} x86_64
+ac_add_options --disable-webrtc
+%else
+ac_add_options --disable-elf-hack
+%endif
 EOF
 
 export MOZ_MAKE_FLAGS="-j6"
@@ -335,6 +337,11 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Thu Jun 07 2018 Alexey Gladkov <legion@altlinux.ru> 60.0.2-alt1
+- New release (60.0.2).
+- Fixed:
+  + CVE-2018-6126: Heap buffer overflow rasterizing paths in SVG with Skia
+
 * Thu May 17 2018 Alexey Gladkov <legion@altlinux.ru> 60.0.1-alt1
 - New release (60.0.1).
 - Fixed:
