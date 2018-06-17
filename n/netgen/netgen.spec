@@ -1,151 +1,120 @@
+#TODO: try bulding against OpenMPI only when version upgrade 2.1->3.1
+%def_without openmpi
+%def_with ffmpeg
+
 %define mpiimpl openmpi-compat
 %define mpidir %_libdir/%mpiimpl
 
-%set_automake_version 1.11
-%def_with python2
-%def_without python3
+%def_without shared_togl
+%define togl_ver 2.1
 
-%define oname netgen
-Name: %oname
-Version: 6.1
-Release: alt1.dev.git20150306.qa5.1
+%set_verify_elf_method unresolved=relaxed
+
+Name: netgen
+Version: 6.2
+Release: alt1.1804%ubt
 Summary: Automatic 3d tetrahedral mesh generator
-License: LGPL
-Group: Graphics
-Url: http://www.hpfem.jku.at/netgen/
+License: LGPLv2
+Group: Sciences/Mathematics
+Url: https://sourceforge.net/projects/netgen-mesher/
+#Git: https://github.com/NGSolve/netgen.git
 
-# svn://svn.code.sf.net/p/netgen-mesher/code/netgen
 Source: %name-%version.tar
-#Source1: demoapp.tar
-#Source2: dropsexport.tar
+Source1: netgen.png
+Source2: netgen.desktop
+Source3: netgen-parallel.desktop
 
-Requires: lib%oname = %version-%release tcl-tix
+# Don't try to install pybind files
+Patch1: netgen-6.2-alt-dont-install-pybind-files.patch
+# Rename shared libaries (the original names are often way too generic), add library version
+Patch2: netgen-6.2-alt-libs-rename-and-versions.patch
+# Set a default NETGENDIR appropriate for packaging
+Patch3: netgen-6.2-alt-set-default-netgendir.patch
+# Make some includes relative (needed for when headers are in -private subpackage)
+Patch4: 0004-Make-some-includes-relative.patch
+# Make bin, lib and python sitearch installation directories configurable
+Patch5: 0005-Make-bin-lib-and-pysitearch-dirs-configurable.patch
+# Unbundle togl (see also %%prep)
+Patch6: netgen-6.2-alt-unbundle-togl.patch
+# SuperBuild.cmake fails to propagate USE_JPEG
+Patch7: 0007-Add-missing-USE_JPEG-propagation.patch
+# Add missing -ldl
+Patch8: 0008-Add-missing-ldl.patch
+# Only include immintrin.h on x86 arches
+Patch9: 0009-immintrin.patch
+
 BuildRequires(pre): rpm-build-tcl
-BuildRequires: %mpiimpl-devel libjpeg-devel libavcodec-devel tcl-devel tk-devel
-BuildRequires: tcl-togl-devel libGL-devel libGLU-devel libparmetis-devel
-BuildRequires: libavformat-devel libswscale-devel bzlib-devel zlib-devel
-BuildRequires: OCE-devel
-BuildRequires: libXmu-devel chrpath
-%if_with python2
-BuildRequires: python-devel boost-python-devel
-%endif
-%if_with python3
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel boost-python3-devel
+
+# Automatically added by buildreq on Wed Jun 13 2018
+# optimized out: OCE-foundation OCE-modeling OCE-ocaf OCE-visualization cmake cmake-modules fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXres-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libavcodec-devel libavutil-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libstdc++-devel libx265-130 libxkbfile-devel mpi-selector openmpi-compat perl pkg-config python-base python-modules python3 python3-base tcl tcl-devel tk tk-devel xorg-proto-devel xorg-xf86miscproto-devel
+BuildRequires: gcc-c++
+BuildRequires: ccmake
+BuildRequires: OCE-devel
+BuildRequires: libXmu-devel
+BuildRequires: libavformat-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libswresample-devel
+BuildRequires: libswscale-devel
+BuildRequires: pybind11-devel
+BuildRequires: python3-dev
+BuildRequires: zlib-devel
+BuildRequires: desktop-file-utils
+%if_with openmpi
+BuildRequires: libmetis-devel
+BuildRequires: %mpiimpl-devel
+%endif
+%if_with shared_togl
+BuildRequires: tcl-togl-devel 
 %endif
 
-Conflicts: %oname-py3
+Requires: lib%name = %version-%release tcl-tix
 
-%add_findreq_skiplist %_datadir/%oname/*
+ExclusiveArch: x86_64
+
+%add_findreq_skiplist %_datadir/%name/*
+%add_findprov_lib_path %_libdir/%mpiimpl/lib %_tcllibdir
+
+%define base_description \
+"NETGEN is an automatic 3d tetrahedral mesh generator. It accepts input \
+from constructive solid geometry (CSG) or boundary representation (BRep) \
+from STL file format. The connection to a geometry kernel allows the \
+handling of IGES and STEP files. NETGEN contains modules for mesh \
+optimization and hierarchical mesh refinement."
 
 %description
-NETGEN is an automatic 3d tetrahedral mesh generator. It accepts input
-from constructive solid geometry (CSG) or boundary representation (BRep)
-from STL file format. The connection to a geometry kernel allows the
-handling of IGES and STEP files. NETGEN contains modules for mesh
-optimization and hierarchical mesh refinement.
+%base_description
 
-%package -n lib%oname
+%package -n lib%name
 Summary: Shared library of NETGEN
 Group: System/Libraries
-Conflicts: lib%oname-py3
 
-%description -n lib%oname
-NETGEN is an automatic 3d tetrahedral mesh generator. It accepts input
-from constructive solid geometry (CSG) or boundary representation (BRep)
-from STL file format. The connection to a geometry kernel allows the
-handling of IGES and STEP files. NETGEN contains modules for mesh
-optimization and hierarchical mesh refinement.
+%description -n lib%name
+%base_description
 
 This package contains shared library of NETGEN.
 
-%package -n python-module-%oname
-Summary: Python bindings of NETGEN
-Group: Development/Python
-Requires: lib%oname = %version-%release
-Conflicts: python3-module-%oname
-
-%description -n python-module-%oname
-NETGEN is an automatic 3d tetrahedral mesh generator. It accepts input
-from constructive solid geometry (CSG) or boundary representation (BRep)
-from STL file format. The connection to a geometry kernel allows the
-handling of IGES and STEP files. NETGEN contains modules for mesh
-optimization and hierarchical mesh refinement.
-
-This package contains Python bindings of NETGEN.
-
-%if_with python3
-%package %oname-py3
-Summary: Automatic 3d tetrahedral mesh generator
-Group: Graphics
-Conflicts: %oname
-
-%description %oname-py3
-NETGEN is an automatic 3d tetrahedral mesh generator. It accepts input
-from constructive solid geometry (CSG) or boundary representation (BRep)
-from STL file format. The connection to a geometry kernel allows the
-handling of IGES and STEP files. NETGEN contains modules for mesh
-optimization and hierarchical mesh refinement.
-
-%package -n python3-module-%oname
+%package -n python3-module-%name
 Summary: Python bindings of NETGEN
 Group: Development/Python3
-Requires: lib%oname-py3 = %version-%release
-Conflicts: python-module-%oname
+Requires: lib%name = %version-%release
+Provides: python3(netgen.libngpy._NgOCC) python3(netgen.libngpy._csg) python3(netgen.libngpy._geom2d) python3(netgen.libngpy._meshing) python3(netgen.libngpy._stl)
+Conflicts: python3-module-%name-openmpi
 
-%description -n python3-module-%oname
-NETGEN is an automatic 3d tetrahedral mesh generator. It accepts input
-from constructive solid geometry (CSG) or boundary representation (BRep)
-from STL file format. The connection to a geometry kernel allows the
-handling of IGES and STEP files. NETGEN contains modules for mesh
-optimization and hierarchical mesh refinement.
+%description -n python3-module-%name
+%base_description
 
 This package contains Python bindings of NETGEN.
 
-%package -n lib%oname-py3
-Summary: Shared library of NETGEN
-Group: System/Libraries
-Conflicts: lib%oname
-
-%description -n lib%oname-py3
-NETGEN is an automatic 3d tetrahedral mesh generator. It accepts input
-from constructive solid geometry (CSG) or boundary representation (BRep)
-from STL file format. The connection to a geometry kernel allows the
-handling of IGES and STEP files. NETGEN contains modules for mesh
-optimization and hierarchical mesh refinement.
-
-This package contains shared library of NETGEN.
-
-%package -n lib%oname-py3-devel
+%package -n lib%name-devel
 Summary: Development files of NETGEN
 Group: Development/C++
-BuildArch: noarch
-Requires: lib%oname-py3 = %version-%release
-Conflicts: lib%oname-devel
+#BuildArch: noarch
+Requires: lib%name = %version-%release
 
-%description -n lib%oname-py3-devel
-NETGEN is an automatic 3d tetrahedral mesh generator. It accepts input
-from constructive solid geometry (CSG) or boundary representation (BRep)
-from STL file format. The connection to a geometry kernel allows the
-handling of IGES and STEP files. NETGEN contains modules for mesh
-optimization and hierarchical mesh refinement.
-
-This package contains development files of NETGEN.
-%endif
-
-%package -n lib%oname-devel
-Summary: Development files of NETGEN
-Group: Development/C++
-BuildArch: noarch
-Requires: lib%oname = %version-%release
-Conflicts: lib%oname-py3-devel
-
-%description -n lib%oname-devel
-NETGEN is an automatic 3d tetrahedral mesh generator. It accepts input
-from constructive solid geometry (CSG) or boundary representation (BRep)
-from STL file format. The connection to a geometry kernel allows the
-handling of IGES and STEP files. NETGEN contains modules for mesh
-optimization and hierarchical mesh refinement.
+%description -n lib%name-devel
+%base_description
 
 This package contains development files of NETGEN.
 
@@ -155,11 +124,7 @@ Group: Documentation
 BuildArch: noarch
 
 %description doc
-NETGEN is an automatic 3d tetrahedral mesh generator. It accepts input
-from constructive solid geometry (CSG) or boundary representation (BRep)
-from STL file format. The connection to a geometry kernel allows the
-handling of IGES and STEP files. NETGEN contains modules for mesh
-optimization and hierarchical mesh refinement.
+%base_description
 
 This package contains documentation for NETGEN.
 
@@ -169,277 +134,249 @@ Group: Documentation
 BuildArch: noarch
 
 %description tutorials
-NETGEN is an automatic 3d tetrahedral mesh generator. It accepts input
-from constructive solid geometry (CSG) or boundary representation (BRep)
-from STL file format. The connection to a geometry kernel allows the
-handling of IGES and STEP files. NETGEN contains modules for mesh
-optimization and hierarchical mesh refinement.
+%base_description
 
 This package contains tutorials for NETGEN.
 
-%package demo
-Summary: Demo for NETGEN
-Group: Graphics
-BuildArch: noarch
-Requires: %name = %version-%release
+%if_with openmpi
+%package openmpi
+Summary: Shared library of NETGEN built with %mpiimpl
+Group: System/Libraries
+%description openmpi
+%base_description
 
-%description demo
-NETGEN is an automatic 3d tetrahedral mesh generator. It accepts input
-from constructive solid geometry (CSG) or boundary representation (BRep)
-from STL file format. The connection to a geometry kernel allows the
-handling of IGES and STEP files. NETGEN contains modules for mesh
-optimization and hierarchical mesh refinement.
+%package -n lib%name-openmpi
+Summary: Shared library of NETGEN
+Group: System/Libraries
 
-This package contains demo for NETGEN.
+%description -n lib%name-openmpi
+%base_description
+
+This package contains shared library of NETGEN.
+
+%package -n lib%name-openmpi-devel
+Summary: Development files of NETGEN
+Group: Development/C++
+#BuildArch: noarch
+Requires: lib%name-openmpi = %version-%release
+
+%description -n lib%name-openmpi-devel
+%base_description
+
+This package contains development files of NETGEN.
+
+%package -n python3-module-%name-openmpi
+Summary: Python bindings of NETGEN
+Group: Development/Python3
+Requires: lib%name-openmpi = %version-%release
+Provides: python3(netgen.libngpy._NgOCC) python3(netgen.libngpy._csg) python3(netgen.libngpy._geom2d) python3(netgen.libngpy._meshing) python3(netgen.libngpy._stl)
+Conflicts: python3-module-%name
+
+%description -n python3-module-%name-openmpi
+%base_description
+
+This package contains Python bindings of NETGEN.
+
+%endif
+
 
 %prep
 %setup
-%ifarch x86_64
-sed -i "s|@UINT64_C@|UL|" ng/ngpkg.cpp
+
+%patch1 -p1
+#%%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+#%%patch5 -p1
+%if_with shared_togl
+%patch6 -p1
+%endif
+%patch7 -p1
+#%%patch8 -p1
+%patch9 -p1
+
+%if_with shared_togl
+# Remove bundled togl
+rm -rf ng/Togl-1.7
+rm -rf ng/Togl2.1
+rm -f ng/togl_1_7.h
+%endif
+
+%ifarch x86_64 aarch64
+sed -i 's|@UINT64_C@|UL|' ng/ngpkg.cpp
 %else
-sed -i "s|@UINT64_C@|ULL|" ng/ngpkg.cpp
+sed -i 's|@UINT64_C@|ULL|' ng/ngpkg.cpp
 %endif
 
-sed -i 's|@MPIDIR@|%mpidir|g' configure.ac
+#repair default (R)PATHs
+sed -i 's|NG_INSTALL_DIR_LIB_DEFAULT lib|NG_INSTALL_DIR_LIB_DEFAULT lib${LIB_SUFFIX}|' CMakeLists.txt
+#TODO: uncomment and apply if no MPI version to be assembled in future
+#sed -i 's|NG_INSTALL_DIR_CMAKE_DEFAULT lib/cmake/${NG_INSTALL_SUFFIX}|NG_INSTALL_DIR_CMAKE_DEFAULT share/cmake|' CMakeLists.txt
+#sed -i 's|${NG_RPATH_TOKEN};${NG_RPATH_TOKEN}/${NETGEN_RPATH}|${NG_RPATH_TOKEN};${NG_RPATH_TOKEN}/${NETGEN_RPATH};%%mpidir/lib:%%_tcllibdir|' CMakeLists.txt
+#sed -i 's|${NG_RPATH_TOKEN};${NG_RPATH_TOKEN}/${NETGEN_RPATH}|%%_tcllibdir|' CMakeLists.txt
+#sed -i 's|${NG_RPATH_TOKEN}/../${NETGEN_PYTHON_RPATH}||' ng/CMakeLists.txt
 
-%if_with python3
-cp -fR . ../python3
-sed -i 's|@PYVER@|%_python3_version%_python3_abiflags|' \
-	../python3/ng/Makefile.am
-sed -i 's|@IF3@|3|' ../python3/ng/Makefile.am
-sed -i 's|@PYVER@|%_python3_version|' ../python3/configure.ac
-sed -i 's|boost_python|boost_python3|g' ../python3/m4/ax_boost_python.m4
+%if_without shared_togl
+sed -i 's|<tkInt.h>|<tk/generic/tkInt.h>|' ng/Togl2.1/togl.c
 %endif
-
-sed -i 's|@PYVER@|%_python_version|' ng/Makefile.am
-sed -i 's|@IF3@||' ng/Makefile.am
-sed -i 's|@PYVER@|%_python_version|' configure.ac
-
-#tar -xf %SOURCE1
-#tar -xf %SOURCE2
 
 %build
-%add_optflags $(pkg-config --cflags parmetis)
-mpi-selector --set %mpiimpl
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
+
+###########################################################################
+###################          SERIAL VER           #########################
+  OPTFLAGS="%optflags"
+  CFLAGS="$OPTFLAGS -fno-strict-aliasing" \
+  CXXFLAGS="$OPTFLAGS -fno-strict-aliasing" \
+  %cmake \
+    -DCMAKE_INSTALL_PREFIX=%_prefix \
+    -DNG_INSTALL_DIR_BIN=%_bindir \
+    -DNG_INSTALL_DIR_INCLUDE=%_includedir/%name \
+    -DUSE_JPEG=1 \
+    -DUSE_OCC=1 \
+    -DPYBIND_INCLUDE_DIR=%_includedir \
+    -DNG_INSTALL_PYBIND=OFF \
+    -DLIBTOGL=%_tcllibdir/libTogl%togl_ver.so \
+    -Dng_install_dir_lib=%_libdir \
+    -DCMAKE_SKIP_RPATH=OFF \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+    -DCMAKE_SKIP_BUILD_RPATH=OFF \
+    -DCMAKE_BUILD_WITH_INSTALL_RPATH=OFF \
+    -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=FALSE \
+    -DCMAKE_INSTALL_RPATH="%_tcllibdir" \
+    -DNETGEN_PYTHON_RPATH="%_libdir" \
+    -DUSE_NATIVE_ARCH=OFF \
+    -DUSE_GUI=ON \
+    -DUSE_PYTHON=ON \
+    -DUSE_MPI=OFF \
+    -DUSE_OCC=ON \
+    -DUSE_JPEG=ON \
+%if_with ffmpeg
+    -DUSE_MPEG=ON \
+%else
+    -DUSE_MPEG=OFF \
+%endif
+
+%cmake_build VERBOSE=1
+
+############################################################################
+############################      MPI ver ##################################
+
+%if_with openmpi
+mkdir -p %mpiimpl-BUILD
+pushd %mpiimpl-BUILD
+mpi-selector --yes --set %mpiimpl
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath, %mpidir/lib -L%mpidir/lib"
 source %mpidir/bin/mpivars.sh
 export MPIDIR=%mpidir
 
-PARS="-DPARALLEL -DOMPI_IGNORE_CXX_SEEK -DMETIS -DHAVE_IOMANIP"
-PARS="$PARS -DGLX_GLXEXT_PROTOTYPES -I%mpidir/include"
-%add_optflags $PARS -DJPEGLIB -DFFMPEG -DHAVE_IOSTREAM -DHAVE_LIMITS
+  OPTFLAGS="%optflags"
+  CFLAGS="$OPTFLAGS -fno-strict-aliasing -DOMPI_IGNORE_CXX_SEEK" \
+  CXXFLAGS="$OPTFLAGS -fno-strict-aliasing -DOMPI_IGNORE_CXX_SEEK" \
+  %cmake \
+    -DCMAKE_INSTALL_PREFIX=%_prefix \
+    -DNG_INSTALL_DIR_BIN=%mpidir/bin \
+    -DNG_INSTALL_DIR_LIB=%mpidir/lib \
+    -DNG_INSTALL_DIR_INCLUDE=%mpidir/include/%name \
+    -DNG_INSTALL_DIR_CMAKE=%mpidir/lib/cmake \
+    -DMETIS_INCLUDE_DIR:PATH=%_includedir/metis \
+    -DUSE_JPEG=1 \
+    -DUSE_OCC=1 \
+    -DPYBIND_INCLUDE_DIR=%_includedir \
+    -DNG_INSTALL_PYBIND=OFF \
+    -DLIBTOGL=%_tcllibdir/libTogl%togl_ver.so \
+    -Dng_install_dir_lib=%_libdir \
+    -DCMAKE_SKIP_RPATH=OFF \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+    -DCMAKE_SKIP_BUILD_RPATH=OFF \
+    -DCMAKE_BUILD_WITH_INSTALL_RPATH=OFF \
+    -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=FALSE \
+    -DCMAKE_INSTALL_RPATH="%mpidir/lib:%_tcllibdir" \
+    -DNETGEN_PYTHON_RPATH=%_libdir \
+    -DUSE_NATIVE_ARCH=OFF \
+    -DUSE_GUI=ON \
+    -DUSE_PYTHON=ON \
+    -DNG_INSTALL_DIR_PYTHON=%python3_sitelibdir \
+    -DUSE_MPI=ON \
+    -DUSE_OCC=ON \
+    -DUSE_JPEG=ON \
+%if_with ffmpeg
+    -DUSE_MPEG=ON \
+%else
+    -DUSE_MPEG=OFF \
+%endif 
+    ../..
 
-%if_with python2
-%autoreconf
-%configure \
-	--enable-occ \
-	--enable-nglib \
-	--enable-parallel \
-	--enable-jpeglib \
-	--enable-ffmpeg \
-	--enable-python \
-	--with-tcl=%_libdir \
-	--with-togl=%_tcllibdir \
-	--with-tk=%_libdir \
-	--with-metis=%prefix \
-	--with-boost=yes
-%make -C libsrc/linalg
-%make -C libsrc/gprim
-%make -C libsrc/general
-%make -C libsrc/meshing
-%make -C libsrc/interface
-%make -C libsrc/visualization
-%make -C libsrc/interface clean
-%make -C libsrc/interface \
-	LIBVISUAL="-Wl,--no-as-needed $PWD/libsrc/visualization/libvisual.la -Wl,--as-needed"
-%make_build TCLLIBDIR=%_tcllibdir
-# for complete linking of libraries
-for i in csg stlgeom meshing interface geom2d
-do
-	pushd libsrc/$i
-	%make clean
-	popd
-	if [ "$i" == "csg" ]; then
-		%make_build TCLLIBDIR=%_tcllibdir \
-			NGLIB=$PWD/nglib/libnglib.la LIBNETGEN=$PWD/nglib/libnetgen.la \
-			LIBVISUAL=$PWD/libsrc/visualization/libvisual.la TOPDIR=$PWD
-	elif [ "$i" == "interface" ]; then
-		%make_build TCLLIBDIR=%_tcllibdir \
-			NGLIB=$PWD/nglib/libnglib.la \
-			LIBNETGEN="-Wl,--no-as-needed $PWD/nglib/libnetgen.la -Wl,--as-needed" \
-			LIBVISUAL="-Wl,--no-as-needed $PWD/libsrc/visualization/libvisual.la -Wl,--as-needed" \
-			LIBCSG="-Wl,--no-as-needed $PWD/libsrc/csg/libcsg.la -Wl,--as-needed" \
-			TOPDIR=$PWD
-	else
-		%make_build TCLLIBDIR=%_tcllibdir \
-			NGLIB=$PWD/nglib/libnglib.la \
-			LIBNETGEN="-Wl,--no-as-needed $PWD/nglib/libnetgen.la -Wl,--as-needed" \
-			LIBCSG="-Wl,--no-as-needed $PWD/libsrc/csg/libcsg.la -Wl,--as-needed" \
-			LIBVISUAL=$PWD/libsrc/visualization/libvisual.la \
-			TOPDIR=$PWD
-	fi
-done
-%endif
-
-%if_with python3
-pushd ../python3
-%autoreconf
-%configure \
-	--enable-occ \
-	--enable-nglib \
-	--enable-parallel \
-	--enable-jpeglib \
-	--enable-ffmpeg \
-	--enable-python \
-	--with-tcl=%_libdir \
-	--with-togl=%_tcllibdir \
-	--with-tk=%_libdir \
-	--with-metis=%prefix \
-	--with-boost=yes
-%make -C libsrc/linalg
-%make -C libsrc/gprim
-%make -C libsrc/general
-%make -C libsrc/meshing
-%make -C libsrc/interface
-%make -C libsrc/visualization
-%make -C libsrc/interface clean
-%make -C libsrc/interface \
-	LIBVISUAL="-Wl,--no-as-needed $PWD/libsrc/visualization/libvisual.la -Wl,--as-needed"
-%make_build TCLLIBDIR=%_tcllibdir
-# for complete linking of libraries
-for i in csg stlgeom meshing interface geom2d
-do
-	pushd libsrc/$i
-	%make clean
-	popd
-	if [ "$i" == "csg" ]; then
-		%make_build TCLLIBDIR=%_tcllibdir \
-			NGLIB=$PWD/nglib/libnglib.la LIBNETGEN=$PWD/nglib/libnetgen.la \
-			LIBVISUAL=$PWD/libsrc/visualization/libvisual.la TOPDIR=$PWD
-	elif [ "$i" == "interface" ]; then
-		%make_build TCLLIBDIR=%_tcllibdir \
-			NGLIB=$PWD/nglib/libnglib.la \
-			LIBNETGEN="-Wl,--no-as-needed $PWD/nglib/libnetgen.la -Wl,--as-needed" \
-			LIBVISUAL="-Wl,--no-as-needed $PWD/libsrc/visualization/libvisual.la -Wl,--as-needed" \
-			LIBCSG="-Wl,--no-as-needed $PWD/libsrc/csg/libcsg.la -Wl,--as-needed" \
-			TOPDIR=$PWD
-	else
-		%make_build TCLLIBDIR=%_tcllibdir \
-			NGLIB=$PWD/nglib/libnglib.la \
-			LIBNETGEN="-Wl,--no-as-needed $PWD/nglib/libnetgen.la -Wl,--as-needed" \
-			LIBCSG="-Wl,--no-as-needed $PWD/libsrc/csg/libcsg.la -Wl,--as-needed" \
-			LIBVISUAL=$PWD/libsrc/visualization/libvisual.la \
-			TOPDIR=$PWD
-	fi
-done
+%cmake_build VERBOSE=1
 popd
-%endif
+%endif #openmpi
 
 %install
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
+
+sed -i 's|file(INSTALL DESTINATION "%_prefix/include/netgen/pybind11" TYPE FILE FILES "/usr/include/../LICENSE")||' BUILD/netgen/cmake_install.cmake
+
+#installing serial version
+%cmakeinstall_std NETGENDIR=%_bindir TCLLIBDIR=%_tcllibdir LIBTOGL=%_tcllibdir/libTogl%togl_ver.so TOPDIR=$PWD
+%add_findreq_skiplist %_datadir/%name/py_tutorials/*.py
+
+# Install icon and desktop file
+install -Dpm 0644 %SOURCE1 %buildroot%_iconsdir/hicolor/48x48/apps/%name.png
+desktop-file-install --dir %buildroot%_datadir/applications/ %SOURCE2
+
+%if_with openmpi
 export MPIDIR=%mpidir
-
-%if_with python2
-install -d %buildroot%_libdir
-cp -P nglib/.libs/*.so* libsrc/csg/.libs/*.so* \
-	libsrc/visualization/.libs/*.so* \
-	%buildroot%_libdir/
-
-%makeinstall_std TCLLIBDIR=%_tcllibdir TOPDIR=$PWD
-%ifarch x86_64
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir
-%endif
-
-pushd %buildroot%_libdir
-for i in *.so.?; do
-	lib=$(echo $i |sed 's|\.so.*||')
-	ln -s ../../$i %buildroot%python_sitelibdir/$lib.so
-done
+#installing OpenMPI version
+pushd %mpiimpl-BUILD
+%cmakeinstall_std NETGENDIR=%_bindir TCLLIBDIR=%_tcllibdir LIBTOGL=%_tcllibdir/libTogl%togl_ver.so TOPDIR=$PWD
 popd
 
-#pushd dropsexport
-#autoreconf
-#configure \
-#	--enable-static=no \
-#	--with-netgen=%buildroot \
-#	--with-netgensrc=$PWD/..
-#make_build
-#makeinstall_std
-#popd
-
-for i in %buildroot%_libdir/*.so %buildroot%_bindir/*; do
-	chrpath -r %mpidir/lib:%_tcllibdir $i ||:
-done
+# Install parallel desktop file
+desktop-file-install --dir %buildroot%_datadir/applications/ %SOURCE3
+sed -i 's|Exec=mpirun|Exec=%mpidir/bin/mpirun|' %buildroot%_datadir/applications/netgen-parallel.desktop
 %endif
 
-%if_with python3
-pushd ../python3
-install -d %buildroot%_libdir
-cp -P nglib/.libs/*.so* libsrc/csg/.libs/*.so* \
-	libsrc/visualization/.libs/*.so* \
-	%buildroot%_libdir/
+rm -rf %buildroot%_includedir/netgen/pybind11
+rm -rf %buildroot%_datadir/%name/doc
 
-%makeinstall_std TCLLIBDIR=%_tcllibdir TOPDIR=$PWD
-
-%ifarch x86_64
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir
-%endif
-popd
-
-pushd %buildroot%_libdir
-for i in *.so.?; do
-	lib=$(echo $i |sed 's|\.so.*||')
-	ln -s ../../$i %buildroot%python3_sitelibdir/$lib.so
-done
-popd
-
-for i in %buildroot%_libdir/*.so %buildroot%_bindir/*; do
-	chrpath -r %mpidir/lib:%_tcllibdir $i ||:
-done
-%endif
-
-%if_with python2
 %files
 %doc AUTHORS
+%_datadir/icons/hicolor/48x48/apps/%name.png
+%_datadir/applications/*.desktop
 %_bindir/*
 
-%files -n lib%oname
+%files -n lib%name
 %_libdir/*.so*
 
-%files -n lib%oname-devel
+%files -n lib%name-devel
 %_includedir/*
+%_prefix/lib/cmake/%name/*.cmake
 
 %files doc
-%_docdir/%name
+%doc doc/ng4.pdf
 
 %files tutorials
 %_datadir/%name
 
-#files demo
-#doc demoapp
-
-%files -n python-module-%oname
-%python_sitelibdir/*
-%endif
-
-%if_with python3
-%files -n python3-module-%oname
+%files -n python3-module-%name
 %python3_sitelibdir/*
 
-%files %oname-py3
-%doc AUTHORS
-%_bindir/*
+%if_with openmpi
+%files openmpi
+%mpidir/bin/*
 
-%files -n lib%oname-py3
-%_libdir/*.so*
+%files -n lib%name-openmpi
+%mpidir/lib/*.so*
 
-%files -n lib%oname-py3-devel
-%_includedir/*
-%endif
+%files -n lib%name-openmpi-devel
+%mpidir/lib/cmake/*.cmake
+
+%files -n python3-module-%name-openmpi
+%python3_sitelibdir/*
+%endif #openmpi
 
 %changelog
+* Fri Jun 08 2018 Nikolai Kostrigin <nickel@altlinux.org> 6.2-alt1.1804%ubt
+- New version
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1-alt1.dev.git20150306.qa5.1
 - NMU: rebuilt with boost-1.67.0
 
