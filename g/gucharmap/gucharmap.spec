@@ -1,19 +1,24 @@
+%def_enable snapshot
 %def_enable introspection
-%define ver_major 10.0
+
+%define ver_major 11.0
 %define api_ver 2.90
-%define unicode_ver 10.0.0
+%define unicode_ver 11.0.0
 
 Name: gucharmap
-Version: %ver_major.4
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: gucharmap is a featureful Unicode character map
 Group: Text tools
 License: %gpl3plus
 Url: https://wiki.gnome.org/Gucharmap
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#http://www.unicode.org/Public/%unicode_ver/ucd/
+%else
+Source: %name-%version.tar
+%endif
 
 # From configure.ac
 %define glib_ver 2.32.0
@@ -74,6 +79,7 @@ GObject introspection devel data for the GNOME Unicode character map library
 %setup
 
 %build
+%autoreconf
 export LDFLAGS="$LDFLAGS -ldl"
 %configure \
     --disable-static \
@@ -112,6 +118,9 @@ export LDFLAGS="$LDFLAGS -ldl"
 %endif
 
 %changelog
+* Sun Jun 17 2018 Yuri N. Sedunov <aris@altlinux.org> 11.0.1-alt1
+- 11.0.1
+
 * Sun Mar 18 2018 Yuri N. Sedunov <aris@altlinux.org> 10.0.4-alt1.1
 - added Url tag
 
