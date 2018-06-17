@@ -1,7 +1,7 @@
 %define oname cryfs
 Name: fuse-cryfs
-Version: 0.9.7
-Release: alt2.1
+Version: 0.9.9
+Release: alt1
 
 Summary: Cryptographic filesystem for the cloud
 
@@ -16,13 +16,15 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
 
-BuildRequires: cmake
-BuildRequires: boost-devel
-BuildRequires: boost-devel-static
+BuildRequires: rpm-macros-cmake cmake
+BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-program_options-devel
+#BuildRequires: boost-devel-static
 BuildRequires: libcryptopp-devel
 BuildRequires: libcurl-devel
 BuildRequires: libfuse-devel
 BuildRequires: libssl-devel
+
+BuildRequires: gcc-c++
 
 # instead builtin
 BuildRequires: libspdlog-devel
@@ -46,7 +48,7 @@ rm -rf vendor/spdlog/
 %__subst "s|spdlog||" src/cpp-utils/CMakeLists.txt
 
 %build
-%cmake -DBUILD_TESTING=off -DCMAKE_BUILD_TYPE=RELEASE
+%cmake -DBUILD_TESTING=off -DBoost_INCLUDE_DIRS=%_includedir/boost -DBoost_USE_STATIC_LIBS=off -DCMAKE_BUILD_TYPE=RELEASE
 %make_build -C BUILD
 
 %install
@@ -54,8 +56,13 @@ rm -rf vendor/spdlog/
 
 %files
 %_bindir/cryfs
+%_man1dir/*
 
 %changelog
+* Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.9-alt1
+- new version 0.9.9 (with rpmrb script), rebuild with libcryptopp-6.1.0
+- enable dynamic boost build
+
 * Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt2.1
 - NMU: autorebuild with libcryptopp-5.6.5
 

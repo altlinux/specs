@@ -1,5 +1,5 @@
 Name: megasync
-Version: 3.5.3.0
+Version: 3.6.6.0
 Release: alt1
 
 Summary: Easy automated syncing between your computers and your MEGA Cloud Drive
@@ -13,6 +13,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/meganz/MEGAsync/archive/v%{version}_Linux.tar.gz
 Source: %name-%version.tar
 Source1: qt5sdk.pri
+
+# TODO: due google_breakpad
+ExclusiveArch: %ix86 x86_64
 
 BuildPreReq: rpm-macros-qt5
 
@@ -67,5 +70,8 @@ cp -a icons/hicolor/ %buildroot%_iconsdir/
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Jun 10 2018 Vitaly Lipatov <lav@altlinux.ru> 3.6.6.0-alt1
+- new version 3.6.6.0 (with rpmrb script)
+
 * Fri Dec 22 2017 Vitaly Lipatov <lav@altlinux.ru> 3.5.3.0-alt1
 - initial build for ALT Linux Sisyphus
