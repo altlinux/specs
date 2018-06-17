@@ -8,7 +8,7 @@
 %define api_ver 1
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A spell-checking library for GTK+ applications
@@ -99,10 +99,8 @@ the functionality of the installed Gspell library.
 %makeinstall_std
 %find_lang --output=%name.lang %_name-%api_ver
 
-%if_enabled check
 %check
 xvfb-run %make check
-%endif
 
 %files -f %name.lang
 %_bindir/%_name-app1
@@ -132,6 +130,9 @@ xvfb-run %make check
 
 
 %changelog
+* Sat Jun 16 2018 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
