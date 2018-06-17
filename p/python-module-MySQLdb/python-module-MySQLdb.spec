@@ -5,7 +5,7 @@
 %def_disable check
 
 Version: 1.2.5
-Release: alt1.1.1.1
+Release: alt2
 Epoch: 1
 %setup_python_module %oname
 Name: %packagename
@@ -119,7 +119,7 @@ pushd ../python3
 popd
 %endif
 
-export PYTHONPATH=%buildroot%python_sitelibidr
+export PYTHONPATH=%buildroot%python_sitelibdir
 pushd doc
 sphinx-build -b pickle -d _build/doctrees . _build/pickle
 sphinx-build -b html -d _build/doctrees . _build/html
@@ -152,6 +152,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 17 2018 Vitaly Lipatov <lav@altlinux.ru> 1:1.2.5-alt2
+- rebuild with libmysqlclient20
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.2.5-alt1.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
