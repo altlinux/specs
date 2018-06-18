@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.1
-%define major 3.9
+%define major 3.10
 
 Name: wine
 Version: %major.1
@@ -34,7 +34,7 @@ AutoReq: yes, noperl
 
 # try build wine64 only on ALT
 %if %_vendor == "alt"
-%ifarch x86_64
+%ifarch x86_64 aarch64
 	%def_with build64
 %else
     %def_without build64
@@ -46,9 +46,15 @@ AutoReq: yes, noperl
 # for wine-staging gitapply.sh script
 BuildPreReq: /proc
 
+%ifarch aarch64
+BuildRequires: clang >= 5.0
+%else
+BuildRequires: gcc
+%endif
+
 # General dependencies
 BuildRequires: rpm-build-intro >= 1.0
-BuildRequires: gcc util-linux flex bison
+BuildRequires: util-linux flex bison
 BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libncurses-devel libncursesw-devel libtinfo-devel
 BuildRequires: zlib-devel libldap-devel libgnutls-devel
@@ -56,14 +62,17 @@ BuildRequires: libxslt-devel libxml2-devel
 BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libtiff-devel
 BuildRequires: libgphoto2-devel libsane-devel libcups-devel
 BuildRequires: libalsa-devel jackit-devel libgsm-devel libmpg123-devel libpulseaudio-devel
-BuildRequires: libopenal-devel libGLU-devel libva-devel
-BuildRequires: libusb-devel libieee1284-devel libpcap-devel
+BuildRequires: libopenal-devel libGLU-devel
+BuildRequires: libusb-devel libieee1284-devel libpcap-devel libkrb5-devel
 BuildRequires: libv4l-devel
 BuildRequires: libunixODBC-devel
-# GTK3 theme support: staging only
-BuildRequires: libgtk+3-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
 # TODO: opencl-headers (autoimports now), osmesa
+
+# Staging part
+# GTK3 theme support: staging only
+BuildRequires: libgtk+3-devel
+BuildRequires: libva-devel
 
 # udev needed for udev version detect
 BuildRequires: libudev-devel udev libdbus-devel
@@ -76,8 +85,6 @@ BuildRequires: libXres-devel libXScrnSaver-devel libXinerama-devel libXt-devel
 BuildRequires: libXxf86dga-devel libXxf86misc-devel libXcomposite-devel
 BuildRequires: libXxf86vm-devel libfontenc-devel libXdamage-devel
 BuildRequires: libXvMC-devel libXcursor-devel libXevie-devel libXv-devel
-
-BuildRequires: libkrb5-devel
 
 BuildRequires: perl-XML-Simple
 
@@ -262,6 +269,11 @@ wine-patches-%version/patchapply.sh
 %if_with build64
 %remove_optflags -fomit-frame-pointer
 %add_optflags -fno-omit-frame-pointer
+%endif
+
+%ifarch aarch64
+%remove_optflags -frecord-gcc-switches
+export CC=clang
 %endif
 
 %configure --with-x \
@@ -468,6 +480,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Wed Jun 13 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.10.1-alt1
+- new version 3.10.1 (with rpmrb script)
+- use clang on aarch64
+
 * Tue May 29 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.9.1-alt1
 - new version 3.9.1 (with rpmrb script)
 
