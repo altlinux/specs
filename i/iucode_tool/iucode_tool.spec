@@ -1,12 +1,14 @@
 Name: iucode_tool
 Version: 2.3.1
-Release: alt1
+Release: alt2
 Summary: Intel(r) 64 and IA-32 processor microcode tool 
 
 Group: System/Base
 License: GPLv2
 Url: https://gitlab.com/iucode-tool
 Source0: iucode-tool_%{version}.tar.xz 
+
+ExclusiveArch: %ix86 x86_64
 
 %description
 Tool to manipulate Intel IA32/X86_64 microcode bundles.
@@ -16,7 +18,7 @@ Tool to manipulate Intel IA32/X86_64 microcode bundles.
 
 %build
 %autoreconf
-export CFLAGS=$RPM_OPT_FLAGS
+export CFLAGS="$RPM_OPT_FLAGS"
 %configure
 %make_build
 
@@ -29,6 +31,10 @@ make install DESTDIR=%buildroot INSTALL="install -p"
 %_sbindir/%name
 
 %changelog
+* Mon Jun 18 2018 L.A. Kostis <lakostis@altlinux.ru> 2.3.1-alt2
+- Fix optflags.
+- Make package %%ix86/x86_64 only (due cpuid dependencies).
+
 * Mon Apr 30 2018 L.A. Kostis <lakostis@altlinux.ru> 2.3.1-alt1
 - 2.3.1.
 
