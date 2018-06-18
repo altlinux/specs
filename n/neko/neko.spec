@@ -1,6 +1,6 @@
 Name: neko
-Version: 2.0.0
-Release: alt3
+Version: 2.2.0
+Release: alt1
 
 Summary: The Neko Programming Language
 
@@ -8,13 +8,17 @@ License: LGPL
 Group: Development/Other
 Url: http://haxe.org
 
-# https://github.com/HaxeFoundation/neko.git
+%define aversion %(echo "%version" | sed -e "s|\\.|-|g")
+# Source-url: https://github.com/HaxeFoundation/neko/archive/v%aversion.tar.gz
 Source: %name-%version.tar
 
-# manually removed:  python3 ruby ruby-stdlibs
-# Automatically added by buildreq on Tue Aug 06 2013
-# optimized out: fontconfig fontconfig-devel glib2-devel libapr1-devel libaprutil1-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libssl-devel pkg-config python3-base zlib-devel
-BuildRequires: apache2-devel libgc-devel libgtk+2-devel libmysqlclient-devel libpcre-devel libsqlite3-devel
+Patch1: neko-apr-util.patch
+
+BuildRequires: rpm-macros-cmake cmake git-core
+
+BuildRequires: apache2-devel libgc-devel libgtk+2-devel libmysqlclient-devel libpcre-devel libsqlite3-devel libmbedtls-devel libaprutil1-devel libapr1-devel
+
+Requires: lib%name = %version-%release
 
 %description
 Neko is an intermediate programming language. It has been designed to
@@ -25,29 +29,62 @@ Neko and then use the Neko runtime to compile, run, and access libraries.
 
 Neko is a good way for language designers to focus on design and reuse a
 fast and well-designed runtime, as well as existing libraries for
- accessing filesystem, network, databases, xml...
+accessing filesystem, network, databases, xml...
+
+
+%package -n lib%name
+Summary: The Neko Programming Language
+Group: System/Libraries
+
+%description -n lib%name
+This package provides %name shared libraries.
+
+%package -n lib%name-devel
+Summary: The Neko Programming Language
+Group: Development/Other
+Requires: lib%name = %version-%release
+
+%description -n lib%name-devel
+
+This package provides development files for %name.
+
 
 %prep
 %setup
+%patch1 -p2
 
 %build
-%__make
+%cmake_insource -DCMAKE_INSTALL_LIBDIR=%_libdir
+%make_build
 
 %install
-mkdir -p %buildroot{%_libdir,%_bindir,%_libexecdir}
-make install INSTALL_PREFIX=%buildroot%prefix LIBDIRNAME=%_lib
+%makeinstall_std
+# hack
+mkdir -p %buildroot/usr/share/cmake/Modules/
+mv %buildroot%_libdir/cmake/Neko %buildroot/usr/share/cmake/Modules/
 
 %files
+%doc README.md
 %_bindir/%name
 %_bindir/nekoc
 %_bindir/nekoml
-%_bindir/nekoml.std
 %_bindir/nekotools
+
+%files -n lib%name
+%_libdir/*.so.*
+%_libdir/%name/
+
+%files -n lib%name-devel
 %_libdir/*.so
-%_libexecdir/%name/
+%_datadir/cmake/Modules/
 %_includedir/*.h
 
+
 %changelog
+* Mon Jun 18 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
+- new version 2.2.0 (with rpmrb script)
+- build from tarball
+
 * Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt3
 - Fixed build with new glibc.
 
