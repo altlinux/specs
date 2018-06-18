@@ -1,5 +1,5 @@
 Name: libmicrosoft-gsl
-Version: 20180608
+Version: 20180615
 Release: alt1
 
 Summary: Guidelines Support Library
@@ -60,6 +60,9 @@ make test
 %_includedir/%name/gsl/
 
 %changelog
+* Mon Jun 18 2018 Vitaly Lipatov <lav@altlinux.ru> 20180615-alt1
+- Revert "not_null constructor is now explicit (#659)", see #699
+
 * Sun Jun 10 2018 Vitaly Lipatov <lav@altlinux.ru> 20180608-alt1
 - build new version
 
