@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.0.3
+Version: 3.0.4
 Release: alt1%ubt
 
 Source:%name-%version.tar
@@ -83,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Mon Jun 18 2018 Sergey V Turchin <zerg at altlinux dot org> 3.0.4-alt1%ubt
+- fix busy cursor on long alterator request
+
 * Thu Jun 14 2018 Sergey V Turchin <zerg at altlinux dot org> 3.0.3-alt1%ubt
 - set window icon
 
