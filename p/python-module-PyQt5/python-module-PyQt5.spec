@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.9.2
-Release: alt2%ubt.1
+Release: alt3%ubt
 
 Summary: Python bindings for Qt 5
 License: GPL
@@ -153,7 +153,7 @@ cp -R . ../python3
 %endif
 
 # add missing Qt versions to list of supported
-for v in Qt_5_9_4 Qt_5_9_5
+for v in Qt_5_9_4 Qt_5_9_5 Qt_5_9_6 Qt_5_9_7 Qt_5_10_1 Qt_5_11_1 Qt_5_11_2
 do
     grep -qe "[[:space:]]$v" sip/QtCore/QtCoremod.sip \
 	|| sed -i "s|Qt_5_9_3|$v Qt_5_9_3|" sip/QtCore/QtCoremod.sip
@@ -258,6 +258,9 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %endif
 
 %changelog
+* Mon Jun 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt3%ubt
+- add missing Qt versions to list of supported
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.9.2-alt2%ubt.1
 - (NMU) Rebuilt with python-3.6.4.
 
