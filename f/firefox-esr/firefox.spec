@@ -16,7 +16,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
 Version:        60.0.2
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -38,6 +38,8 @@ Patch14:        firefox-fix-install.patch
 Patch16:        firefox-cross-desktop.patch
 Patch17:        firefox-mediasource-crash.patch
 Patch18:        firefox-alt-nspr-for-rust.patch
+Patch19:        build-aarch64-skia.patch
+Patch20:        bug1375074-save-restore-x28.patch
 
 # Upstream
 Patch200:       mozilla-bug-256180.patch
@@ -112,8 +114,6 @@ Provides:	firefox = %EVR
 Conflicts:	firefox
 Requires:	mozilla-common
 
-ExclusiveArch: %ix86 x86_64
-
 # ALT#30732
 Requires:	gst-plugins-ugly%gst_version
 
@@ -143,15 +143,14 @@ tar -xf %SOURCE2
 %patch16 -p2
 %patch17 -p2
 %patch18 -p2
+%patch19 -p1 -b .aarch64-skia
+%patch20 -p1 -b .bug1375074-save-restore-x28
 
 %patch200 -p1
 %patch201 -p1
 #patch202 -p1
 
 cp -f %SOURCE4 .mozconfig
-%ifarch %ix86 x86_64
-echo "ac_add_options --disable-elf-hack" >> .mozconfig
-%endif
 
 %build
 cd mozilla
@@ -205,6 +204,11 @@ cat >> .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
 ac_add_options --enable-linker=lld
+%ifnarch %{ix86} x86_64
+ac_add_options --disable-webrtc
+%else
+ac_add_options --disable-elf-hack
+%endif
 EOF
 
 export MOZ_MAKE_FLAGS="-j6"
@@ -329,6 +333,9 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Mon Jun 18 2018 Andrey Cherepanov <cas@altlinux.org> 60.0.2-alt2
+- Fix build for aarch64 (thanks legion@).
+
 * Mon Jun 11 2018 Andrey Cherepanov <cas@altlinux.org> 60.0.2-alt1
 - New ESR version (60.0.2).
 - Fixed:
