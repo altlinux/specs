@@ -2,13 +2,14 @@
 
 Name: remmina
 Version: 1.2.0
-Release: alt1.rc20%ubt
+Release: alt2.rc20%ubt
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
 License: GPLv2+ and MIT
 Url: http://remmina.sourceforge.net
 Source: %name-%version.tar
+Patch: remmina-1.2.0-rdp-passwordispin_option.patch
 
 Requires: icon-theme-hicolor
 
@@ -70,6 +71,7 @@ A set of plugins-gnome for %name remote desktop client
 
 %prep
 %setup
+%patch -p1
 
 #? Hack: https://github.com/FreeRDP/Remmina/issues/292
 sed -i 's#install(DIRECTORY include/remmina DESTINATION include/remmina #install(DIRECTORY remmina/include/remmina DESTINATION include/ #' CMakeLists.txt
@@ -125,6 +127,10 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Wed Jun 13 2018 Oleg Gadelshin <olegeg@altlinux.ru> 1.2.0-alt2.rc20%ubt
+- increase release number to alt2
+- add remmina-1.2.0-rdp-passwordispin_option.patch for use of smartcard pin as password
+
 * Tue Sep 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt1.rc20%ubt
 - 1.2.0-rcgit.20
 - increase release number for allow backport to p8
