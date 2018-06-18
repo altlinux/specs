@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20180312
+%define orig_timestamp 20180425
 
 Name: firmware-intel-ucode
-Version: 4
-Release: alt1.%orig_timestamp
+Version: 5
+Release: alt2.%orig_timestamp
 Epoch: 2
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
@@ -22,6 +22,7 @@ BuildRequires: iucode_tool
 # beware that this probably should be ix86
 # but who cares about intel on ARM?
 BuildArch: noarch
+ExclusiveArch: %ix86 x86_64
 
 %description
 The microcode data file for Linux contains the latest microcode
@@ -48,6 +49,19 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Mon Jun 18 2018 L.A. Kostis <lakostis@altlinux.ru> 2:5-alt2.20180425
+- Make package %%ix86/x86_64 only.
+
+* Mon Jun 18 2018 L.A. Kostis <lakostis@altlinux.ru> 2:5-alt1.20180425
+- Update 20180425 (debian changelog below):
+  + Updated Microcodes:
+    sig 0x000406f1, pf_mask 0xef, 2018-03-21, rev 0xb00002c, size 27648
+    sig 0x000706a1, pf_mask 0x01, 2017-12-26, rev 0x0022, size 73728
+  + Implements IBRS/IBPB/STIPB support, Spectre-v2 mitigation
+  - source: remove undesired list files from microcode directories
+  - source: switch to microcode-<id>.d/ since Intel dropped .dat
+    support.
+
 * Tue Mar 20 2018 L.A. Kostis <lakostis@altlinux.ru> 2:4-alt1.20180312
 - Update to 20180312.
   + New Microcodes:
