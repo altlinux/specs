@@ -3,7 +3,7 @@
 %define pkgname net-ssh
 
 Name: ruby-%pkgname
-Version: 4.2.0
+Version: 5.0.2
 Release: alt1
 
 Summary: Pure-Ruby implementation of the SSH2 client protocol
@@ -54,6 +54,12 @@ Documentation files for %name
 %ruby_ri_sitedir/Net/SSH
 
 %changelog
+* Mon Jun 18 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.2-alt1
+- New version.
+
+* Mon Jun 04 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.1-alt1
+- New version.
+
 * Mon Sep 11 2017 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt1
 - New version
 
