@@ -1,12 +1,11 @@
 Name: pkg-config
-Version: 0.25
-Release: alt2
+Version: 0.29.2
+Release: alt1
 
 Summary: Pkgconfig helps make building packages easier
 License: GPLv2+
 Group: Development/Other
-Url: http://pkg-config.freedesktop.org/wiki/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
+Url: https://www.freedesktop.org/wiki/Software/pkg-config/
 
 Provides: %_libdir/pkgconfig
 Provides: %_datadir/pkgconfig
@@ -19,9 +18,10 @@ Obsoletes: pkgconfig
 Provides: pkgconfig(pkg-config) = %version
 
 # http://git.altlinux.org/gears/p/pkg-config.git
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-BuildRequires: glib2-devel libpopt-devel
+BuildRequires: glib2-devel
 
 %define docdir %_docdir/%name-%version
 
@@ -31,12 +31,14 @@ libraries in the system.  It is typically used to compile and link
 against one or more libraries.
 
 %prep
-%setup -n %name-%version-%release
-sed -i 's/^\([A-Z]*_SUBDIR *=\).*/\1/' Makefile.am
+%setup
+%patch -p1
+rm -r glib
+mkdir glib
 
 %build
 %autoreconf
-%configure --docdir=%docdir --with-installed-glib --with-installed-popt
+%configure --docdir=%docdir --without-internal-glib
 %make_build
 
 %install
@@ -72,6 +74,13 @@ EOF
 %docdir/
 
 %changelog
+* Tue Jun 19 2018 Alexey Tourbin <at@altlinux.ru> 0.29.2-alt1
+- 0.25 -> 0.29.2, rebased.
+- Reimplemented --disable-recursion.
+- Reimplemented "Tolerate missing Requires.private in --cflags mode".
+- Fields like Cflags/Requires can span multiple lines.
+- Some other changes, waiting for the missing upstream maintainer.
+
 * Mon Feb 28 2011 Alexey Tourbin <at@altlinux.ru> 0.25-alt2
 - Tolerate missing Requires.private in --cflags mode.
 
