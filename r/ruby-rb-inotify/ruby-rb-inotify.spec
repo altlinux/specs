@@ -1,21 +1,30 @@
-%define  pkgname rb-inotify
+%define pkgname rb-inotify
+%define _unpackaged_files_terminate_build 1
+%define gem_dir %ruby_libdir/gems/%(%ruby_rubyconf RUBY_LIB_VERSION)
+%define gem_instdir %gem_dir/gems
+%define gem_docdir %gem_dir/doc
+%define gem_cache %gem_dir/cache
 
-Name: 	 ruby-%pkgname
+Name: ruby-%pkgname
 Version: 0.9.10
-Release: alt1
+Release: alt2
 
-Summary: A thorough inotify wrapper for Ruby using FFI.
+Summary: A thorough inotify wrapper for Ruby using FFI
 License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/guard/rb-inotify/
+Group: Development/Ruby
+Url: https://github.com/guard/rb-inotify/
 
-Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
-Source:  %pkgname-%version.tar
+Source: %pkgname-%version.tar
+Patch1: ruby-rb-inotify-alt-no-git.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
+
+%filter_from_requires /^ruby(bundler\/setup)/d
+%filter_from_requires /^ruby(spec_helper)/d
 
 %description
 %summary
@@ -27,32 +36,38 @@ Group: Documentation
 BuildArch: noarch
 
 %description doc
-Documentation files for %{name}.
+Documentation files for %name.
 
 %prep
 %setup -n %pkgname-%version
-%update_setup_rb
+%patch1 -p1
 
 %build
-%ruby_config
-%ruby_build
+gem build %pkgname.gemspec
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+# install first to temp directory instead of buildroot due to invalid file owner of some files installed by 'gem install'
+mkdir -p .%pkgname
+gem install -V --local --build-root .%pkgname --force --document=ri,rdoc %pkgname-%version.gem
+cp -a .%pkgname %buildroot
 
 %check
-%ruby_test_unit -Ilib:test test
+pushd .%pkgname
+ruby -e 'Dir.glob "./test/**/*_test.rb", &method(:require)'
+popd
 
 %files
-%doc README*
-%ruby_sitelibdir/*
+%doc README.md
+%gem_dir
+%exclude %gem_cache
+%exclude %gem_docdir
 
 %files doc
-%ruby_ri_sitedir/*
+%gem_docdir
 
 %changelog
+* Tue Jun 19 2018 Alexandr Antonov <aas@altlinux.org> 0.9.10-alt2
+- Rebuild as ruby gem for openqa
+
 * Thu Sep 28 2017 Mikhail Gordeev <obirvalger@altlinux.org> 0.9.10-alt1
 - Initial build for Sisyphus
