@@ -1,13 +1,14 @@
 %define Name Nokogiri
 %define bname nokogiri
 Name: ruby-%bname
-Version: 1.8.2
-Release: alt1.2
+Version: 1.8.3
+Release: alt1
 Summary: Ruby libraries for %Name (HTML, XML, SAX, and Reader parser)
 Group: Development/Ruby
 License: MIT/Ruby
 URL: http://%bname.org
 Source: %bname-%version.tar
+Patch:  shutdown-libxml2-warning.patch
 
 BuildPreReq: rpm-build-ruby
 BuildRequires: ruby ruby-stdlibs libruby-devel ruby-racc ruby-tool-setup %_bindir/rexical
@@ -21,7 +22,6 @@ BuildRequires: libxml2-devel libxslt-devel java-devel ruby-pkg-config
 implemented CSS3 selector support as well as XPath support.
 This package contanis Ruby libraries for Nokogiri.
 
-
 %package -n %bname
 Summary: HTML, XML, SAX, and Reader parser
 Group: Development/Other
@@ -34,7 +34,6 @@ Requires: %name = %version-%release
 implemented CSS3 selector support as well as XPath support.
 This package contanis Ruby libraries for Nokogiri.
 
-
 %package doc
 Summary: Documentation for %Name
 Group: Development/Documentation
@@ -43,9 +42,9 @@ BuildArch: noarch
 %description doc
 Documentation for %Name.
 
-
 %prep
 %setup -q -n %bname-%version
+%patch -p1
 
 DisableTest()
 {
@@ -66,11 +65,10 @@ DisableTest css/test_nthiness last_of_type nth_last_of_type nth_of_type
 
 %update_setup_rb
 
-
 %build
+export CFLAGS="$CFLAGS -Wno-unused-parameter"
 %ruby_config -- --use-system-libraries
 %ruby_build
-
 
 %install
 %ruby_install
@@ -97,6 +95,9 @@ ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/%Name$' | xargs rm -rf
 
 
 %changelog
+* Mon Jun 18 2018 Andrey Cherepanov <cas@altlinux.org> 1.8.3-alt1
+- New version.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.8.2-alt1.2
 - Rebuild with Ruby 2.5.1
 
