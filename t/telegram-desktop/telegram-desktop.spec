@@ -13,7 +13,7 @@ BuildRequires(pre): rpm-build-ubt
 %def_without libcxx
 
 Name: telegram-desktop
-Version: 1.3.5
+Version: 1.3.7
 Release: alt1
 
 Summary: Telegram is a messaging app with a focus on speed and security
@@ -39,7 +39,7 @@ Patch14: 0014-get-language-name-and-country-name-from-QLocale.patch
 Patch15: 0015-disable-resource-fonts.patch
 Patch16: 0016-fix-lzma.patch
 
-ExclusiveArch: %ix86 x86_64
+#ExclusiveArch: %ix86 x86_64
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-qt5 rpm-macros-cmake
 BuildRequires(pre): rpm-macros-kde-common-devel
@@ -82,7 +82,8 @@ BuildRequires: libva-devel libdrm-devel
 BuildRequires: libtgvoip-devel >= 2.1
 BuildRequires: libcrl-devel >= 0.2
 # C++ sugar
-BuildRequires: libmicrosoft-gsl-devel libvariant-devel librange-v3-devel
+BuildRequires: libmicrosoft-gsl-devel >= 20180615
+BuildRequires: libvariant-devel librange-v3-devel
 
 # FIXME: libva need only for linking, extra deps?
 
@@ -201,6 +202,9 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Thu Jun 14 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.7-alt1
+- new version 1.3.7 (with rpmrb script)
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.5-alt1
 - new version 1.3.5 (with rpmrb script)
 
