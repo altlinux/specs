@@ -4,12 +4,16 @@
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
 
+%def_with libnm_glib
+
+%if_with libnm_glib
 %define nm_glib_sover 4
 %define libnm_glib libnm-glib%nm_glib_sover
 %define nm_glib_vpn_sover 1
 %define libnm_glib_vpn libnm-glib-vpn%nm_glib_vpn_sover
 %define nm_util_sover 2
 %define libnm_util libnm-util%nm_util_sover
+%endif
 
 %define ppp_version 2.4.7
 %define wpa_supplicant_version 0.7.3-alt3
@@ -49,11 +53,12 @@
 %define _name %name-daemon
 %define dispatcherdir %_sysconfdir/NetworkManager/dispatcher.d
 %define nmlibdir %_prefix/lib/NetworkManager
+%define nmplugindir %_libdir/%name/%version-%release
 
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.10.8
+Version: 1.11.90
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -79,11 +84,10 @@ BuildRequires(pre): rpm-build-licenses
 %{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-pygobject3 python-module-dbus}}
 
 BuildPreReq: intltool libgcrypt-devel libtool
-BuildRequires: glibc-devel-static iproute2 libnl-devel libwireless-devel ppp-devel
+BuildRequires: iproute2 libnl-devel libwireless-devel ppp-devel
 BuildRequires: libdbus-glib-devel >= %libdbus_glib_version
 BuildRequires: libpolkit1-devel libnss-devel libgio-devel libuuid-devel gtk-doc perl-YAML
 BuildRequires: libudev-devel
-BuildRequires: libgnome-bluetooth-devel
 BuildRequires: iptables
 BuildRequires: libmm-glib-devel
 BuildRequires: libndp-devel
@@ -228,6 +232,7 @@ Requires: %_name = %version-%release
 %description tui
 %summary
 
+%if_with libnm_glib
 %package devel
 License: %gpl2plus
 Summary: Libraries and headers for adding NetworkManager support to applications
@@ -239,6 +244,7 @@ Requires: pkgconfig
 %description devel
 This package contains various headers accessing some NetworkManager
 functionality from applications.
+%endif
 
 %package -n libnm
 License: %gpl2plus
@@ -249,6 +255,7 @@ Group: System/Libraries
 This package contains the libraries that make it easier to use some
 NetworkManager functionality from applications.
 
+%if_with libnm_glib
 %package -n %libnm_glib
 License: %gpl2plus
 Summary: Library for adding NetworkManager support to applications that use glib
@@ -291,6 +298,7 @@ BuildArch: noarch
 %description glib-devel
 Virtual package for backward compatibility.
 Deprecated and will be removed soon.
+%endif
 
 %package -n libnm-devel
 Summary: Header files for adding NetworkManager support to applications.
@@ -304,6 +312,7 @@ Requires: libnm = %version-%release
 This package contains the header and pkg-config files for development
 applications using NetworkManager functionality.
 
+%if_with libnm_glib
 %package -n libnm-glib-devel
 Summary: Header files for adding NetworkManager support to applications that use glib.
 Group: Development/C
@@ -344,6 +353,7 @@ Requires: libdbus-glib-devel >= %libdbus_glib_version
 %description -n libnm-util-devel
 This package contains the header and pkg-config files
 for %libnm_util.
+%endif
 
 %package -n libnm-devel-doc
 Summary: Development documentation for %name
@@ -353,6 +363,7 @@ BuildArch: noarch
 %description -n libnm-devel-doc
 This package contains development documentation for %name.
 
+%if_with libnm_glib
 %package devel-doc
 Summary: Development documentation for %name
 Group: Development/Documentation
@@ -367,11 +378,12 @@ Obsoletes: %name-%name-devel-doc < %version-%release
 %description devel-doc
 This package contains development documentation for %name.
 Includes libnm-util and libnm-glib development documentation.
+%endif
 
 %package -n libnm-gir
 Summary: GObject introspection data for the NetworkManager (libnm)
 Group: System/Libraries
-Requires: %libnm_glib %libnm_glib_vpn %libnm_util
+Requires: libnm = %version-%release
 
 %description -n libnm-gir
 GObject introspection data for the NetworkManager (libnm).
@@ -380,14 +392,12 @@ GObject introspection data for the NetworkManager (libnm).
 Summary: GObject introspection devel data for the NetworkManager (libnm)
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-glib-gir = %version-%release
-Requires: libnm-glib-devel = %version-%release
-Requires: libnm-glib-vpn-devel = %version-%release
-Requires: libnm-util-devel = %version-%release
+Requires: libnm-gir = %version-%release
 
 %description -n libnm-gir-devel
 GObject introspection devel data for the NetworkManager (libnm).
 
+%if_with libnm_glib
 %package glib-gir
 Summary: GObject introspection data for the NetworkManager
 Group: System/Libraries
@@ -407,7 +417,7 @@ Requires: libnm-util-devel = %version-%release
 
 %description glib-gir-devel
 GObject introspection devel data for the NetworkManager.
-
+%endif
 
 %prep
 %setup
@@ -482,6 +492,11 @@ GObject introspection devel data for the NetworkManager.
 %else
 	--disable-address-sanitizer \
 	--disable-undefined-sanitizer \
+%endif
+%if_with libnm_glib
+	--with-libnm-glib \
+%else
+	--without-libnm-glib \
 %endif
 	--with-dist-version=%version-%release \
 	--disable-silent-rules \
@@ -592,11 +607,11 @@ fi
 %doc %_man7dir/*.*
 %doc %_man8dir/*.*
 %doc %_defaultdocdir/%name-%version/
-%dir %_libexecdir/NetworkManager/
 %dir %_libdir/NetworkManager/
 %dir %nmlibdir/
 %dir %nmlibdir/VPN/
-%_libdir/NetworkManager/libnm-settings-plugin-*.so
+%dir %nmplugindir/
+%nmplugindir/libnm-settings-plugin-*.so
 %_libexecdir/NetworkManager/nm-*
 %_sbindir/*
 %_sysconfdir/dbus-1/system.d/*.conf
@@ -630,29 +645,29 @@ fi
 %endif
 
 %files adsl
-%_libdir/%name/libnm-device-plugin-adsl.so
+%nmplugindir/libnm-device-plugin-adsl.so
 
 %files bluetooth
-%_libdir/%name/libnm-device-plugin-bluetooth.so
+%nmplugindir/libnm-device-plugin-bluetooth.so
 
 %if_enabled ovs
 %files ovs
 %_unitdir/NetworkManager.service.d/NetworkManager-ovs.conf
-%_libdir/%name/libnm-device-plugin-ovs.so
+%nmplugindir/libnm-device-plugin-ovs.so
 %_man7dir/nm-openvswitch.*
 %endif
 
 %if_enabled teamdctl
 %files team
-%_libdir/%name/libnm-device-plugin-team.so
+%nmplugindir/libnm-device-plugin-team.so
 %endif
 
 %files wifi
-%_libdir/%name/libnm-device-plugin-wifi.so
+%nmplugindir/libnm-device-plugin-wifi.so
 
 %files wwan
-%_libdir/%name/libnm-device-plugin-wwan.so
-%_libdir/%name/libnm-wwan.so
+%nmplugindir/libnm-device-plugin-wwan.so
+%nmplugindir/libnm-wwan.so
 
 %if_enabled nmtui
 %files tui
@@ -662,8 +677,9 @@ fi
 
 %files ppp
 %_libdir/pppd/%ppp_version/nm-pppd-plugin.so
-%_libdir/%name/libnm-ppp-plugin.so
+%nmplugindir/libnm-ppp-plugin.so
 
+%if_with libnm_glib
 %files devel
 %dir %_includedir/%name
 %_includedir/%name/%name.h
@@ -671,10 +687,12 @@ fi
 %_includedir/%name/nm-version-macros.h
 %_includedir/%name/nm-version.h
 %_pkgconfigdir/%name.pc
+%endif
 
 %files -n libnm
 %_libdir/libnm.so.*
 
+%if_with libnm_glib
 %files -n %libnm_glib
 %_libdir/libnm-glib.so.%nm_glib_sover
 %_libdir/libnm-glib.so.%nm_glib_sover.*
@@ -688,6 +706,7 @@ fi
 %_libdir/libnm-util.so.%nm_util_sover.*
 
 %files glib-devel
+%endif
 
 %files -n libnm-devel
 %_includedir/libnm
@@ -696,6 +715,7 @@ fi
 %{?_enable_vala:%_vapidir/libnm.*}
 %_datadir/dbus-1/interfaces/*.xml
 
+%if_with libnm_glib
 %files -n libnm-glib-devel
 %_includedir/libnm-glib
 %exclude %_includedir/libnm-glib/nm-vpn-*.h
@@ -715,14 +735,17 @@ fi
 %_pkgconfigdir/libnm-util.pc
 %_libdir/libnm-util.so
 %{?_enable_vala:%_vapidir/libnm-util.*}
+%endif
 
 %files -n libnm-devel-doc
 %doc %_datadir/gtk-doc/html/libnm
-
-%files devel-doc
 %doc %_datadir/gtk-doc/html/%name
+
+%if_with libnm_glib
+%files devel-doc
 %doc %_datadir/gtk-doc/html/libnm-glib
 %doc %_datadir/gtk-doc/html/libnm-util
+%endif
 
 %if_enabled introspection
 %files -n libnm-gir
@@ -731,6 +754,7 @@ fi
 %files -n libnm-gir-devel
 %_datadir/gir-1.0/NM-1.0.gir
 
+%if_with libnm_glib
 %files glib-gir
 %_libdir/girepository-1.0/NMClient-1.0.typelib
 %_libdir/girepository-1.0/NetworkManager-1.0.typelib
@@ -739,11 +763,25 @@ fi
 %_datadir/gir-1.0/NMClient-1.0.gir
 %_datadir/gir-1.0/NetworkManager-1.0.gir
 %endif
+%endif
 
-%exclude %_libdir/NetworkManager/*.la
+%exclude %nmplugindir/*.la
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Jun 18 2018 Mikhail Efremov <sem@altlinux.org> 1.11.90-alt1
+- Fix requires.
+- Make build with libnm-glib-* optional.
+- Disable scan-rand-mac-address for rtl8192ce (closes: #35058).
+- Cleanup BR.
+- Don't package directory twice.
+- Update path to plugins.
+- etcnet-alt: Drop properties.
+- etcnet-alt: Fix build with current NM.
+- Updated 'not set to disconndcted' patch.
+- Updated "Don't use dns plugins" patch.
+- Updated to 1.11.90 (1.12-rc1).
+
 * Fri May 11 2018 Mikhail Efremov <sem@altlinux.org> 1.10.8-alt1
 - Disable ovs plugin on e2k.
 - Use %%e2k macro.
