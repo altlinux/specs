@@ -8,7 +8,7 @@ custom importers (PEP302) and common command line completion tools.
 
 Name:           %fname
 Version:        1.4
-Release:        alt1
+Release:        alt3
 
 Summary:        A Python namespace control and lazy-import mechanism
 
@@ -39,5 +39,8 @@ BuildRequires: python-module-setuptools
 %python_sitelibdir/*.egg-info*
 
 %changelog
+* Tue Jun 19 2018 Grigory Ustinov <grenka@altlinux.org> 1.4-alt3
+- Raise release to allow the safe upgrade from "Autoimports/Sisyphus".
+
 * Fri Jun 08 2018 Grigory Ustinov <grenka@altlinux.org> 1.4-alt1
 - Initial build for Sisyphus.
