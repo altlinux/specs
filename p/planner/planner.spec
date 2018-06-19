@@ -1,24 +1,23 @@
 Name: planner
 Version: 0.14.6
-Release: alt1
+Release: alt2
 
 Summary: Planner - project management application
-Summary(ru_RU.KOI8-R): Программа управления проектами Planner
+Summary(ru_RU.UTF-8): п÷я─п╬пЁя─п╟п╪п╪п╟ я┐п©я─п╟п╡п╩п╣п╫п╦я▐ п©я─п╬п╣п╨я┌п╟п╪п╦ Planner
 
 License: GPL
 Group: Office
 Url: http://live.gnome.org/Planner
-#http://ftp.gnome.org/pub/GNOME/sources/planner/0.14
 
 Packager: Pavel Vainerman <pv@altlinux.ru>
 
 #Source: http://ftp.gnome.org/pub/GNOME/sources/planner/%version/%name-%version.tar.bz2
-Source: http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%name-%version.tar.bz2
+Source: http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%name-%version.tar
 Source1: %name-%version.ru.po
 #Patch: %name-%version.patch
 
 # Automatically added by buildreq on Sat Jun 26 2010
-BuildRequires: desktop-file-utils glibc-devel-static gtk-doc intltool libglade-devel libgnomeui-devel librarian libxslt-devel libgsf-devel
+BuildRequires: desktop-file-utils gtk-doc intltool libglade-devel libgnomeui-devel librarian libxslt-devel libgsf-devel
 
 # python-base python-dev python-module-pygtk-devel python-modules-compiler python-modules-encodings esound
 
@@ -27,13 +26,14 @@ Provides: mrproject
 
 Requires: lib%name = %version-%release
 
-%add_findprov_lib_path %_libdir/%name
+#add_findprov_lib_path %_libdir/%name
+%add_verify_elf_skiplist %_libdir/%name/plugins/*.so
 
 %description
 Planner, a project management application for GNOME.
 
-%description -l ru_RU.KOI8-R
-Программа управления проектами Planner для GNOME.
+%description -l ru_RU.UTF-8
+п÷я─п╬пЁя─п╟п╪п╪п╟ я┐п©я─п╟п╡п╩п╣п╫п╦я▐ п©я─п╬п╣п╨я┌п╟п╪п╦ Planner п╢п╩я▐ GNOME.
 
 %package -n lib%name
 Summary: Libraries for planner
@@ -42,33 +42,35 @@ Obsoletes: libmrproject
 
 %description -n lib%name
 This package provides libraries to use planner.
-%description -n lib%name -l ru_RU.KOI8-R
-Пакет предоставляет библиотеки, используемые planner.
+%description -n lib%name -l ru_RU.UTF-8
+п÷п╟п╨п╣я┌ п©я─п╣п╢п╬я│я┌п╟п╡п╩я▐п╣я┌ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦, п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀п╣ planner.
 
 %package -n lib%name-devel
 Group: Development/C
 Summary: Libraries needed to develop for planner
-Summary(ru_RU.KOI8-R): Библиотеки, требуемые для разработки с planner
+Summary(ru_RU.UTF-8): п▒п╦п╠п╩п╦п╬я┌п╣п╨п╦, я┌я─п╣п╠я┐п╣п╪я▀п╣ п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ я│ planner
 Requires: lib%name = %version-%release libxml2-devel 
 Obsoletes: libmrproject-devel
 
 %description -n lib%name-devel
 Libraries needed to develop for planner.
-%description -n lib%name-devel -l ru_RU.KOI8-R
-Библиотеки, требуемые для разработки с planner.
+%description -n lib%name-devel -l ru_RU.UTF-8
+п▒п╦п╠п╩п╦п╬я┌п╣п╨п╦, я┌я─п╣п╠я┐п╣п╪я▀п╣ п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ я│ planner.
 
 
 %prep
-%setup -q
+%setup
 #%patch -p0
 cp -f %SOURCE1 po/ru.po
+# https://bugzilla.altlinux.org/show_bug.cgi?id=35056
+#__subst "s|sr@Latn|sr@latin|" po/LINGUAS
+#mv po/sr@Latn.po po/sr@latin.po
 
 %build
 #autoreconf -fisv
 %__subst "s| install-data-hook||" data/mime/Makefile.in
-%configure --disable-postgres --disable-python --enable-simple-priority-scheduling
-#%make_build
-%make
+%configure --disable-python --enable-simple-priority-scheduling --disable-schemas-install
+%make_build || %make
 
 %install
 %makeinstall
@@ -86,19 +88,18 @@ do
 	%__mv ../%name/$i $i
 done
 
+rm -rf %buildroot%_libdir/%name/*/*.la
+# drop incorrect locale
+rm -rf %buildroot%_datadir/locale/sr@Latn/
 
 %files -n lib%name-devel
-%_includedir/%name-1.0
+%_includedir/%name-1.0/
 %_libdir/pkgconfig/*
 %_libdir/libplanner-1.so
 
 %files -n lib%name
-%_libdir/%name
 %_libdir/*.so.*
-%_libdir/%name/*/*.so
-
-%exclude %_libdir/%name/*/*.la
-#%exclude %_libdir/%name/*.la
+%_libdir/%name/
 
 #%_libdir/%name/file-modules/*.so
 #%_libdir/%name/plugins/*.so
@@ -114,21 +115,21 @@ done
 %_datadir/applications/*
 #%_datadir/mime-info/*
 %_datadir/mime/packages/*
-%_datadir/gnome/help/%name
+# both already in find_lang -with-gnome
+#_datadir/gnome/help/%name/
+#_datadir/omf/%name/
 # %_datadir/gtk-doc/html/lib%name
-%_datadir/doc/%name-%version/*
-%_datadir/omf/%name
+%_docdir/%name-%version/
 %_datadir/pixmaps/*
-%_datadir/%name
+%_datadir/%name/
 %_datadir/icons/hicolor/48x48/mimetypes/*
 %_man1dir/*
-# The package does not own its own docdir subdirectory.
-# The line below is added by repocop to fix this bug in a straightforward way. 
-# Another way is to rewrite the spec to use relative doc paths.
-%dir %_docdir/planner-%version 
 
 
 %changelog
+* Tue Jun 19 2018 Vitaly Lipatov <lav@altlinux.ru> 0.14.6-alt2
+- cleanup and recode spec
+
 * Tue Jan 31 2012 Pavel Vainerman <pv@altlinux.ru> 0.14.6-alt1
 - new version (0.14.6)
 
