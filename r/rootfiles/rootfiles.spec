@@ -1,11 +1,10 @@
 Name: rootfiles
 Version: alt
-Release: alt11
+Release: alt12
 
 Summary: The basic required files for the root user's directory
 License: GPLv2+
 Group: System/Base
-Packager: Etcskel Development Team <etcskel@packages.altlinux.org>
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -32,6 +31,13 @@ chmod -R go-rwx %buildroot/root
 %dir /root/tmp
 
 %changelog
+* Tue Jun 19 2018 Dmitry V. Levin <ldv@altlinux.org> alt-alt12
+- Synced with etcskel:
+  + .bash*: enhanced comments;
+  + .bash_logout: changed to invoke "clear" on linux terminals only;
+  + .ssh/config: added new file with a comment;
+  + .ssh/authorized_keys: turned the comment into a proper sentence.
+
 * Wed Jun 09 2010 Dmitry V. Levin <ldv@altlinux.org> alt-alt11
 - .i18n: cleaned up.
 - .tcshrc: synced with .bashrc.
