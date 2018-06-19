@@ -1,5 +1,5 @@
 Name: nextcloud
-Version: 13.0.2
+Version: 13.0.4
 Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
@@ -16,12 +16,12 @@ BuildRequires(pre): rpm-macros-webserver-common
 BuildRequires: python3-base
 Requires(pre): webserver-common
 
-#https://docs.nextcloud.com/server/12/admin_manual/installation/source_installation.html
-Requires: php5 >= 5.6 php5-libs php5-dom php5-gd2 php5-mbstring php5-xmlreader php5-zip
-#Highly recommended:
-Requires: php5-curl php5-fileinfo php5-openssl
-#For SQLite (minimal installation)
-Requires: php5-pdo
+# https://docs.nextcloud.com/server/13/admin_manual/installation/source_installation.html#ubuntu-installation-label
+Requires: php7 php7-libs php7-dom php7-gd2 php7-mbstring php7-xmlreader php7-zip
+# Highly recommended:
+Requires: php7-curl php7-fileinfo php7-openssl
+# For SQLite (minimal installation)
+Requires: php7-pdo
 
 Source0: %name-%version.tar
 
@@ -121,6 +121,11 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf 
 
 %changelog
+* Tue Jun 19 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 13.0.4-alt1
+- version 13.0.4 (Jun 11 2018)
+- update requires: php5 > php7
+  (php5-xmlreader there is not for aarch64)
+
 * Mon May 28 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 13.0.2-alt1
 - version 13.0.2 (Apr 26 2018)
 
