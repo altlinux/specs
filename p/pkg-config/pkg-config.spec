@@ -1,6 +1,6 @@
 Name: pkg-config
 Version: 0.29.2
-Release: alt1
+Release: alt2
 
 Summary: Pkgconfig helps make building packages easier
 License: GPLv2+
@@ -74,6 +74,9 @@ EOF
 %docdir/
 
 %changelog
+* Tue Jun 19 2018 Alexey Tourbin <at@altlinux.ru> 0.29.2-alt2
+- Re-added --enable-recursion to complement --disable-recursion, for cpp.req.
+
 * Tue Jun 19 2018 Alexey Tourbin <at@altlinux.ru> 0.29.2-alt1
 - 0.25 -> 0.29.2, rebased.
 - Reimplemented --disable-recursion.
