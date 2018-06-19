@@ -1,6 +1,6 @@
 Name: yosys
-Version: 0.7
-Release: alt1.qa1
+Version: 0.7.0.0.826.g626b555
+Release: alt1
 
 Summary: Yosys Open SYnthesis Suite
 License: ISC
@@ -11,13 +11,17 @@ Source: %name-%version.tar
 Patch0: explicit-git-revision.patch
 Patch1: makefile-cxxflags.patch
 
-# Automatically added by buildreq on Mon Jan 23 2017
-# optimized out: libstdc++-devel pkg-config python-base python3 tcl
-BuildRequires: flex gcc-c++ libffi-devel libreadline-devel python3-base tcl-devel
+BuildRequires(pre): rpm-build-python3
+
+# Automatically added by buildreq on Thu Jun 21 2018
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel pkg-config python-base python3-base tcl
+BuildRequires: flex gcc-c++ libffi-devel libreadline-devel python3 tcl-devel
 
 BuildPreReq: /proc
 
 Requires: alanmi-abc
+
+%add_python3_path %_datadir/%name
 
 %description
 Yosys is a framework for RTL synthesis tools. It currently has extensive
@@ -67,6 +71,9 @@ mv %buildroot%_datadir/%name/include/ %buildroot%_includedir/%name
 %_man1dir/%name-config.1*
 
 %changelog
+* Tue Jun 19 2018 Elvira Khabirova <lineprinter@altlinux.org> 0.7.0.0.826.g626b555-alt1
+- New version
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt1.qa1
 - NMU: rebuild against Tcl/Tk 8.6
 
