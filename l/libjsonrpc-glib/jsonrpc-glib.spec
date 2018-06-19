@@ -10,7 +10,7 @@
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A JSON-RPC library for GLib
@@ -107,6 +107,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Tue Jun 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
+- 3.28.1
+
 * Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 
