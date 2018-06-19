@@ -1,5 +1,5 @@
 Name: tutka
-Version: 0.12.5
+Version: 1.1.2
 Release: alt1
 
 Summary: tracker style MIDI sequencer
@@ -7,12 +7,11 @@ License: %gpl2plus
 Group: Sound
 Url: http://www.nongnu.org/tutka/
 
-Packager: Timur Batyrshin <erthad@altlinux.org>
 Source0: %name-%version.tar.bz2
-Patch:   %name-remove-deprecated-funcs.patch
 
 BuildPreReq: rpm-build-licenses
 BuildRequires: gcc-c++ libalsa-devel libgtk+2-devel libgnomeui-devel libxml2-devel libglade-devel
+BuildRequires: qt5-base-devel qt5-tools-devel
 
 %description
 Tutka is a free (as in freedom) tracker style MIDI sequencer for GNU/Linux (and
@@ -20,30 +19,34 @@ other systems; only GNU/Linux is supported at this time though). It is similar
 to programs like SoundTracker, ProTracker and FastTracker except that it does
 not support samples and is meant for MIDI use only. Tutka is licensed under the
 GNU GPL.
-   
+
 %prep
 %setup
-%patch -p2
 
 %build
-%configure
+qmake-qt5
+# Wno-error=type-limits for aarch64, due it use unsigned char
+%ifnarch aarch64
 %make_build
+%else
+%make_build CXXFLAGS="$CXXFLAGS -Wno-error=type-limits"
+%endif
 
 %install
-%makeinstall_std
-mkdir -p %buildroot/%_liconsdir/
-mv %buildroot%_pixmapsdir/* %buildroot/%_liconsdir/
+%makeinstall_std INSTALL_ROOT=%buildroot
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog NEWS README TODO 
+%doc AUTHORS NEWS README TODO 
 %_bindir/*
-%_sysconfdir/gconf/schemas/*.schemas
 %_desktopdir/*
 %_liconsdir/*
-%_datadir/%name
+%_iconsdir/hicolor/512x512/apps/%name.png
 
 %changelog
+* Mon Jun 18 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt1
+- Build new version.
+
 * Mon Apr 15 2013 Andrey Cherepanov <cas@altlinux.org> 0.12.5-alt1
 - New version 0.12.5
 - Remove deprecated function g_thread*
