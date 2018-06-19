@@ -1,7 +1,7 @@
 %global v_major 6.0
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt0.9
+%global rel alt0.10
 %global llvm_name llvm%v_major
 %global clang_name clang%v_major
 %global lld_name lld
@@ -37,6 +37,9 @@ Patch7: 0001-DebugInfo-Discard-invalid-DBG_VALUE-instructions-in-.patch
 Patch8: 0001-Fixup-for-rL326769-RegState-Debug-is-being-truncated.patch
 Patch9: 0001-Implement-push-pop-state.patch
 Patch10: clang-alt-aarch64-dynamic-linker-path.patch
+# needed to apply next patch correctly
+Patch11: 0001-On-Windows-expansion-of-regex-file-name-patterns-is-.patch
+Patch12: 0001-llvm-ar-Support-multiple-dashed-options.patch 
 
 # ThinLTO requires /proc/cpuinfo to exists so the same does llvm
 BuildPreReq: /proc
@@ -223,6 +226,8 @@ mv compiler-rt-%version projects/compiler-rt
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 %build
 %cmake -G Ninja \
@@ -393,6 +398,10 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Tue Jun 19 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.10.rel
+- llvm-ar: backported support of dashed options (chromium build
+  depends on it).
+
 * Tue Jun 12 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.0.0-alt0.9.rel
 - aarch64: rebuilt with clang.
 
