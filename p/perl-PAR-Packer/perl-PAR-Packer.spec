@@ -3,8 +3,8 @@
 %define real_name PAR-Packer
 
 Name: perl-PAR-Packer
-Version: 1.043
-Release: alt1
+Version: 1.045
+Release: alt2
 
 Summary: Perl module to generate stand-alone executables and ".par" archives
 
@@ -49,6 +49,9 @@ PAR archives.
 %prep
 %setup -q -n %real_name-%version
 
+# Fix for parallel build:
+sed -e 's#MY::postamble#MY::depend#' -i Makefile.PL
+
 %build
 %perl_vendor_build
 
@@ -69,6 +72,12 @@ mv -- %buildroot%_bindir/pp %buildroot%_bindir/par-pp
 
 
 %changelog
+* Tue Jun 19 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.045-alt2
+- Fix build in the parallel BTE
+
+* Sun Jun 17 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.045-alt1
+- New version
+
 * Sat Apr 07 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.043-alt1
 - New version
 
