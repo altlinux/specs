@@ -3,7 +3,7 @@
 
 Name: kde5-%origname
 Version: 2.7.0
-Release: alt1
+Release: alt2
 
 Source: %origname.tar.gz
 Patch1: not_show_hidden_files.patch
@@ -30,6 +30,9 @@ BuildRequires: kf5-knotifications-devel
 BuildRequires: kf5-ktextwidgets-devel
 BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: kf5-kguiaddons-devel
+# need some binaries for work
+Requires: kf5-kio
+Requires: kf5-kinit
 
 %description
 Krusader is an advanced twin panel (commander style) file manager
@@ -76,6 +79,9 @@ published under the GNU General Public Licence
 %_K5doc/*/%origname
 
 %changelog
+* Tue Jun 19 2018 Konstantin Artyushkin <akv@altlinux.org> 2.7.0-alt2
+- add some requires for non-kde5 environtments
+
 * Mon May 14 2018 Konstantin Artyushkin <akv@altlinux.org> 2.7.0-alt1
 - new version
 
