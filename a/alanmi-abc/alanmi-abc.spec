@@ -1,5 +1,5 @@
 Name: alanmi-abc
-Version: 20160717.196.5d42a91ef6fb
+Version: 20180617.0.g28a1307
 Release: alt1
 
 Summary: System for Sequential Logic Synthesis and Formal Verification
@@ -7,7 +7,6 @@ License: %bsdstyle
 Group: Engineering
 
 Url: https://people.eecs.berkeley.edu/~alanmi/abc/
-# Repacked https://bitbucket.org/alanmi/abc/get/default.zip
 Source: %name-%version.tar
 
 # https://bitbucket.org/alanmi/abc/issues/27/assertion-failure-in-write_pla-command
@@ -16,9 +15,11 @@ Patch1: use-external-bzlib-zlib.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Mon Jan 23 2017
-# optimized out: libstdc++-devel python-base
+# Automatically added by buildreq on Tue Jun 19 2018
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel python-base
 BuildRequires: gcc-c++ libreadline-devel
+
+Provides: berkeley-abc
 
 %description
 ABC is a growing software system for synthesis and verification of binary
@@ -41,15 +42,16 @@ were a tool-box rather than a complete tool.
 
 %install
 mkdir -p %buildroot/%_bindir/
-mkdir -p %buildroot/%_man1dir/
 install -p -m 755 abc %buildroot/%_bindir/
-install -p -m 644 abc.1 %buildroot/%_man1dir/
 
 %files -n alanmi-abc
-%doc copyright.txt
+%doc copyright.txt README.md
 %_bindir/abc
-%_man1dir/abc.1.*
 
 %changelog
+* Tue Jun 19 2018 Elvira Khabirova <lineprinter@altlinux.org> 20180617.0.g28a1307-alt1
+- New version
+- Upstream moved to github
+
 * Fri Feb 10 2017 Elvira Khabirova <lineprinter@altlinux.org> 20160717.196.5d42a91ef6fb-alt1
 - Initial build
