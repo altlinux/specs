@@ -7,7 +7,7 @@
 %def_disable gtk_doc
 
 Name: libdazzle
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A library to delight your users with fancy features
@@ -110,6 +110,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Tue Jun 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
+- 3.28.3
+
 * Thu May 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 
