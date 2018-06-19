@@ -14,6 +14,11 @@
 %set_verify_elf_method relaxed
 %endif
 %def_enable always_reducing_debuginfo
+%ifarch %ix86
+%def_disable no_sse2
+%else
+%def_disable no_sse2
+%endif
 
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 %if %is_ffmpeg
@@ -23,8 +28,8 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.10.1
-Release: alt3%ubt
+Version: 5.11.1
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -34,7 +39,7 @@ License: GPLv2 / GPLv3 / LGPLv3
 Source: %qt_module-opensource-src-%version.tar
 # FC
 Patch1:  qtwebengine-everywhere-src-5.10.0-linux-pri.patch
-Patch2:  qtwebengine-opensource-src-5.6.0-no-icudtl-dat.patch
+Patch2:  qtwebengine-everywhere-src-5.11.0-no-icudtl-dat.patch
 Patch3:  qtwebengine-opensource-src-5.9.0-fix-extractcflag.patch
 Patch4:  qtwebengine-everywhere-src-5.10.0-system-nspr-prtime.patch
 Patch5:  qtwebengine-everywhere-src-5.10.0-system-icu-utf.patch
@@ -44,13 +49,14 @@ Patch8: qtwebengine-opensource-src-5.9.0-openmax-dl-neon.patch
 Patch9: qtwebengine-opensource-src-5.9.0-webrtc-neon-detect.patch
 Patch10: qtwebengine-everywhere-src-5.10.0-gn-bootstrap-verbose.patch
 Patch11: qtwebengine-everywhere-src-5.10.0-icu59.patch
-Patch12: qtwebengine-everywhere-src-5.10.0-no-aspirational-scripts.patch
-Patch13: qtwebengine-everywhere-src-5.10.1-security-5.9.5.patch
-Patch14: qtwebengine-everywhere-src-5.10.1-CVE-2018-6033.patch
+Patch12: qtwebengine-everywhere-src-5.10.1-gcc8-alignof.patch
+# SuSE
+Patch30: fix-build-with-ffmpeg4.patch
 # ALT
 Patch100: alt-pepflashplayer.patch
 Patch101: alt-codecs.patch
 Patch102: alt-find-vpx.patch
+Patch103: alt-fix-shrank-by-one-character.patch
 
 # Automatically added by buildreq on Sun Apr 03 2016
 # optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel kf5-attica-devel kf5-kjs-devel libEGL-devel libGL-devel libX11-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXext-devel libXfixes-devel libXi-devel libXrandr-devel libXrender-devel libXtst-devel libfreetype-devel libgpg-error libharfbuzz-devel libharfbuzz-icu libicu-devel libnspr-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-sql libqt5-webchannel libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-multiprocessing python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-phonon-devel qt5-tools qt5-webchannel-devel qt5-webkit-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
@@ -62,6 +68,7 @@ BuildRequires: libavcodec-devel libavutil-devel libavformat-devel libopus-devel 
 %endif
 BuildRequires: /proc
 BuildRequires: flex libicu-devel libEGL-devel
+BuildRequires: libgio-devel
 BuildRequires: git-core gperf libalsa-devel libcap-devel libdbus-devel libevent-devel libexpat-devel libjpeg-devel libminizip-devel libnss-devel
 BuildRequires: fontconfig-devel libdrm-devel yasm gyp libudev-devel libxml2-devel libXNVCtrl-devel jsoncpp-devel liblcms2-devel
 BuildRequires: libopus-devel libpci-devel libpng-devel libprotobuf-devel libpulseaudio-devel libre2-devel libsnappy-devel libsrtp2-devel
@@ -143,25 +150,28 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+#patch4 -p1
 %if_enabled system_icu
-%patch5 -p1
+#patch5 -p1
 %endif
+%if_enabled no_sse2
 %patch6 -p1
+%endif
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %if_enabled system_icu
-%patch11 -p1
+#%patch11 -p1
 %endif
 %patch12 -p1
-%patch13 -p1
-%patch14 -p1
+#
+%patch30 -p1
 #
 %patch100 -p1
 %patch101 -p1
 %patch102 -p1
+%patch103 -p1
 syncqt.pl-qt5 -version %version -private
 
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
@@ -190,6 +200,8 @@ sed -i -e 's/symbol_level=2/symbol_level=1/g' src/core/config/common.pri
 # most arches run out of memory with full debuginfo, so use -g1 on non-x86_64
 sed -i -e 's/symbol_level=2/symbol_level=1/g' src/core/config/common.pri
 %endif
+sed -i -e 's/symbol_level=[[:digit:]]/symbol_level=0/g' src/core/config/common.pri
+
 
 # redefine _FORTIFY_SOURCE
 for f in \
@@ -216,7 +228,7 @@ ln -s %_bindir/ninja-build bin/ninja
 
 %build
 export PATH=$PWD/bin:$PATH
-%ifarch %ix86
+%if_enabled no_sse2
 # workaround against linking
 mkdir -p %_target_platform/lib
 ln -s ../src/core/Release/lib/libv8.so %_target_platform/lib/libv8.so
@@ -240,9 +252,10 @@ export CFLAGS="$OPTFLAGS"
 
 mkdir -p %_target_platform
 pushd %_target_platform
+#    CONFIG+="webcore_debug v8base_debug" \
 %_qt5_qmake \
     QMAKE_CXXFLAGS="$CXXFLAGS" \
-    CONFIG+="webcore_debug v8base_debug force_debug_info pulseaudio system-opus system-webp proprietary-codecs %qt_ffmpeg_type" \
+    CONFIG+="release force_debug_info pulseaudio system-opus system-webp proprietary-codecs %qt_ffmpeg_type" \
     WEBENGINE_CONFIG+=" use_proprietary_codecs use_spellchecker" \
 %if_enabled system_icu
     CONFIG+="system-icu" \
@@ -304,7 +317,7 @@ done
 %_qt5_qmldir/QtWebEngine/
 %files -n libqt5-webenginecore
 %_qt5_libdir/libQt?WebEngineCore.so.*
-%ifarch %ix86
+%if_enabled no_sse2
 %_qt5_libdir/qtwebengine/
 %endif
 %_qt5_libexecdir/QtWebEngineProcess
@@ -331,6 +344,12 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Tue Jun 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+- new version
+
+* Mon Jun 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.0-alt1%ubt
+- new version
+
 * Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.1-alt3%ubt
 - rebuild with new Qt
 
