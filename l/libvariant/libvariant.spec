@@ -1,6 +1,6 @@
 Name: libvariant
 Version: 1.1.5
-Release: alt1
+Release: alt2
 
 Summary: C++11/C++14 Variant
 
@@ -30,7 +30,10 @@ developing applications that use %name.
 %setup
 
 %build
-# build test skipped
+%make_build out/unit
+
+%check
+make test
 
 %install
 mkdir -p %buildroot%_includedir/%name/
@@ -41,5 +44,8 @@ cp -a include/mapbox %buildroot%_includedir/%name/
 %_includedir/%name/mapbox/
 
 %changelog
+* Tue Jun 19 2018 Vitaly Lipatov <lav@altlinux.ru> 1.1.5-alt2
+- enable check
+
 * Mon Jun 12 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.5-alt1
 - initial build for ALT Sisyphus
