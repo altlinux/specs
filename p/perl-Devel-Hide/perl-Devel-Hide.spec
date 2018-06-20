@@ -14,8 +14,8 @@ BuildRequires: perl(Module/CoreList.pm) perl-podlators
 %bcond_without perl_Devel_Hide_enables_optional_test
 
 Name:           perl-Devel-Hide
-Version:        0.0009
-Release:        alt1_14
+Version:        0.0010
+Release:        alt1
 Summary:        Forces the unavailability of specified Perl modules (for testing)
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -68,6 +68,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Jun 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.0010-alt1
+- automated CPAN update
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.0009-alt1_14
 - update to new release by fcimport
 
