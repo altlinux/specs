@@ -1,5 +1,5 @@
 %global import_path github.com/grafana/grafana
-%global commit 989bf2067c199ffd2aa38a29f2c4e12cea689925
+%global commit a5fe24fcce3026f113f722cc22bedc749be91bfc
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -10,7 +10,7 @@
 
 
 Name:		grafana
-Version:	4.6.3
+Version:	5.1.4
 Release:	alt1%ubt
 Summary:	Metrics dashboard and graph editor
 
@@ -19,7 +19,8 @@ License:	ASL 2.0
 URL:		https://grafana.com
 
 Source: %name-%version.tar
-Source2: %name-%version.linux-x64.tar
+#Source2: %name-%version.linux-x64.tar
+Patch: %name-%version.patch
 
 Source100: %name-server.sysconfig
 #Source101: %name.logrotate
@@ -43,7 +44,8 @@ for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
 
 %prep
 %setup -q
-tar -xf %SOURCE2
+#tar -xf %SOURCE2
+%patch -p1
 
 %build
 # Important!!!
@@ -60,9 +62,7 @@ tar -xf %SOURCE2
 # Build the Front-end Assets
 # $ npm install yarn
 # $ ./node_modules/.bin/yarn install --pure-lockfile
-# $ npm install grunt-cli
-# $ ./node_modules/.bin/grunt release
-# move from dist to .gear/grafana-X.X.X.linux-x64.tar
+# $ npm run build
 
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
@@ -79,7 +79,7 @@ export BRANCH=altlinux
 %golang_build pkg/cmd/*
 #go install -ldflags "-X main.version=$VERSION -X main.commit=$COMMIT -X main.branch=$BRANCH" ./...
 
-#npm run build
+npm run build
 
 %install
 export BUILDDIR="$PWD/.gopath"
@@ -95,13 +95,10 @@ popd
 rm -rf -- %buildroot/usr/src
 rm -f -- %buildroot%_bindir/govendor
 
-# Install prebuilded Front-end Assets
+# Install Front-end Assets
 install -d -m 755 %buildroot%_datadir
-cp -pr %name-%version %buildroot%_datadir/%name
-# Cleanup
-rm -rf -- %buildroot%_datadir/%name/scripts
-rm -f -- %buildroot%_datadir/%name/*.md
-rm -f -- %buildroot%_datadir/%name/vendor/phantomjs/phantomjs
+cp -pr conf %buildroot%_datadir/%name/
+cp -pr public %buildroot%_datadir/%name/
 
 # Install config files
 install -p -D -m 640 conf/sample.ini %buildroot%_sysconfdir/%name/%name.ini
@@ -148,6 +145,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Wed Jun 20 2018 Alexey Shabalin <shaba@altlinux.ru> 5.1.4-alt1%ubt
+- 5.1.4
+
 * Wed Feb 14 2018 Alexey Shabalin <shaba@altlinux.ru> 4.6.3-alt1%ubt
 - 4.6.3
 
