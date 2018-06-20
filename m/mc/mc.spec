@@ -2,11 +2,11 @@
 %def_with    gpm
 
 Name: mc
-Version: 4.8.20
-Release: alt2
+Version: 4.8.21
+Release: alt1
 
 # '-gitYYYYMMDD' or ''
-%define ver_date '-git20180224'
+%define ver_date '-git20180620'
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -204,6 +204,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Wed Jun 20 2018 Sergey Y. Afonin <asy@altlinux.ru> 4.8.21-alt1
+- 4.8.21 (updated to 20180620 git snapshot)
+
 * Sun Mar 04 2018 Sergey Y. Afonin <asy@altlinux.ru> 4.8.20-alt2
 - updated to 20180224 git snapshot (ALT #34573)
 
