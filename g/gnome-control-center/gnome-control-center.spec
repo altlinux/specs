@@ -12,7 +12,7 @@
 
 Name: gnome-control-center
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: GNOME Control Center
 License: GPLv2+
@@ -79,7 +79,7 @@ BuildRequires: libpwquality-devel >= %pwq_ver  libkrb5-devel libsmbclient-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 # for test-endianess
 BuildRequires: glibc-i18ndata
-BuildRequires: libnm-gtk-devel >= %nm_ver libmm-glib-devel libnma-devel
+BuildRequires: libnm-devel >= %nm_ver libmm-glib-devel libnma-devel
 BuildRequires: libgnome-online-accounts-devel >= %goa_ver
 BuildRequires: libaccountsservice-devel >= %acc_ver
 BuildRequires: libwacom-devel >= %wacom_ver
@@ -178,6 +178,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Wed Jun 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt2
+- fixed buildreqs
+
 * Tue May 29 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 

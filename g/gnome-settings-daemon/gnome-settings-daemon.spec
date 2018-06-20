@@ -16,7 +16,7 @@
 
 Name: gnome-settings-daemon
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A program that manages general GNOME settings
 License: GPLv2+
@@ -71,12 +71,12 @@ BuildRequires: xkeyboard-config-devel
 BuildRequires: libxkbfile-devel
 BuildRequires: rpm-build-gnome docbook-style-xsl xsltproc
 BuildRequires: gcc-c++ libcups-devel libgudev-devel libX11-devel libXi-devel libXext-devel libXfixes-devel
-BuildRequires: libXrandr-devel xorg-inputproto-devel libICE-devel libSM-devel
+BuildRequires: libXrandr-devel xorg-proto-devel libICE-devel libSM-devel
 BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver librsvg-devel
 BuildRequires: libwacom-devel >= %wacom_ver xorg-drv-wacom-devel libXtst-devel
 BuildRequires: libgweather-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver libgeoclue2-devel >= %geoclue_ver
-BuildRequires: libnm-devel >= %nm_ver libnm-glib-devel libnm-util-devel
+BuildRequires: libnm-devel >= %nm_ver
 
 # for check
 %{?_enable_check:BuildRequires: /proc xvfb-run gnome-color-manager}
@@ -185,6 +185,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Wed Jun 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt2
+- fixed buildreqs
+
 * Thu Apr 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 
