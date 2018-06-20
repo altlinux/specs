@@ -6,8 +6,8 @@
 %def_enable zeitgeist
 
 Name: bijiben
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Note editor for GNOME
 License: LGPLv3+
@@ -69,6 +69,9 @@ desktop integration.
 %doc README AUTHORS NEWS
 
 %changelog
+* Wed Jun 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
+- 3.28.3
+
 * Thu Jun 07 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt2
 - fixed build options
 
