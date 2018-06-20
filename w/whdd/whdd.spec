@@ -1,6 +1,6 @@
 Name: whdd
 Version: 3.0
-Release: alt1
+Release: alt2
 
 Summary: Diagnostic and recovery tool for block devices
 License: GNU GPL
@@ -46,6 +46,9 @@ WHDD может работать с жёстким диском на низко�
 %attr(4711, root, root) %_bindir/%name
 
 %changelog
+* Wed Jun 20 2018 Vitaly Lipatov <lav@altlinux.ru> 3.0-alt2
+- rebuild with libdialog.so.14
+
 * Mon May 29 2017 Pavel Isopenko <pauli@altlinux.org> 3.0-alt1
 - new version 3.0
 - change destination directory to /usr/bin
