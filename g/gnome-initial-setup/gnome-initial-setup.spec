@@ -4,10 +4,11 @@
 %define _localstatedir %_var
 
 %def_disable software_sources
+%def_enable cheese
 
 Name: gnome-initial-setup
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Bootstrapping your OS
 Group: Graphical desktop/GNOME
@@ -16,7 +17,8 @@ Url: https://live.gnome.org/GnomeOS/Design/Whiteboards/InitialSetup
 
 Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define nm_ver 0.9
+%define nm_ver 1.2
+%define nma_ver 1.0
 %define glib_ver 2.53.0
 %define gtk_ver 3.12.0
 %define secret_ver 0.18
@@ -29,7 +31,7 @@ Requires: ibus gnome-keyring gnome-getting-started-docs
 BuildRequires: intltool
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: NetworkManager-devel >= %nm_ver libnm-gtk-devel
+BuildRequires: libnm-devel >= %nm_ver libnma-devel >= %nma_ver
 BuildRequires: libkrb5-devel libpwquality-devel
 BuildRequires: libxkbfile-devel libibus-devel librest-devel
 BuildRequires: libaccountsservice-devel libgnome-desktop3-devel
@@ -37,11 +39,11 @@ BuildRequires: gstreamer%gst_api_ver-devel libclutter-gst3.0-devel
 BuildRequires: libgweather-devel libgnome-online-accounts-devel
 BuildRequires: gdm-libs-devel iso-codes-devel libpolkit-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
-BuildRequires: libcheese-devel
 BuildRequires: libsecret-devel >= %secret_ver
 BuildRequires: libgeoclue2-devel >= %geoclue_ver libgeocode-glib-devel
 BuildRequires: libwebkit2gtk-devel
 BuildRequires: libnm-devel libnma-devel
+%{?_enable_cheese:BuildRequires: libcheese-devel}
 %{?_enable_software_sources:BuildRequires: pkgconfig(packagekit-glib2) >= %packagekit_ver}
 
 %description
@@ -85,6 +87,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Wed Jun 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt2
+- fixed buildreqs
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 
