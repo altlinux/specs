@@ -1,7 +1,7 @@
 %define module DistroMap
 
 Name: perl-%module
-Version: 0.39
+Version: 0.391
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm) perl-Source-Share
 %_man1dir/distro*
 
 %changelog
+* Wed Jun 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.391-alt1
+- new version
+
 * Tue Feb 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
 - support for python-module-DistroDbMaker-generated distrodb
 
