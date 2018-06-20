@@ -2,19 +2,18 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Data/Dumper.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/Base.pm) perl(Test/Base/Filter.pm) perl(Test/More.pm) perl(Test/Pod.pm)
 # END SourceDeps(oneline)
-%define module_version 1.06
 %define module_name Test-YAML
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.06
+Version: 1.07
 Release: alt1
 Summary: Testing Module for YAML Implementations
 Group: Development/Perl
 License: perl
 URL: https://github.com/ingydotnet/test-yaml-pm
 
-Source: http://www.cpan.org/authors/id/I/IN/INGY/Test-YAML-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TI/TINITA/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -29,7 +28,7 @@ Requires: %name = %{?epoch:%epoch:}%version-%release
 scripts for %module_name
 
 %prep
-%setup -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 sed -i -e s,/usr/bin/bash,/bin/sh, bin/test-yaml
 
 %build
@@ -39,13 +38,16 @@ sed -i -e s,/usr/bin/bash,/bin/sh, bin/test-yaml
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes
+%doc README LICENSE Changes CONTRIBUTING
 %perl_vendor_privlib/T*
 
 %files scripts
 %_bindir/*
 
 %changelog
+* Wed Jun 20 2018 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
 - automated CPAN update
 
