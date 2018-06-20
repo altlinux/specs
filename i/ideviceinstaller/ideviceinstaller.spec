@@ -1,6 +1,6 @@
 Name: ideviceinstaller
 Version: 1.1.0
-Release: alt2.git.58d359fd
+Release: alt3.git.f7988de8
 
 Summary: A tool to manage installed apps on iOS device
 Group: System/Kernel and hardware
@@ -38,6 +38,9 @@ and enumerate installed or archived apps.
 %doc AUTHORS README NEWS
 
 %changelog
+* Wed Jun 20 2018 Pavel Nakonechnyi <zorg@altlinux.org> 1.1.0-alt3.git.f7988de8
+- updated to upstream commit 'f7988de8' (minor bugfixes)
+
 * Sat Apr 21 2018 Pavel Nakonechnyi <zorg@altlinux.org> 1.1.0-alt2.git.58d359fd
 - updated to upstream commit '58d359fd' (minor bugfixes)
 
