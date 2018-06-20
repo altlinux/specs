@@ -1,3 +1,12 @@
+# TODO: with additional buildreqs it builds
+#    /usr/bin/osgQtBrowser
+#    /usr/bin/osgQtWidgets
+#    /usr/bin/osgqfont
+#    /usr/bin/osgviewerFLTK
+#    /usr/bin/osgviewerQt
+#    /usr/bin/osgviewerWX
+
+
 #
 # Copyright (c) 2005, 2006, 2007, 2008, 2009 Ralf Corsepius, Ulm, Germany.
 # Copyright (c) 2009 Michael Shigorin
@@ -5,25 +14,29 @@
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
 
-%define apiver 3.4.0
-%define osgbranch 3.4
-
 Name: OpenSceneGraph
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
 
 Summary: High performance real-time graphics toolkit
+
 License: OSGPL (wxWidgets, clarified LGPL)
 Group: System/Libraries
-
 Url: http://www.openscenegraph.org
-Source: %url/downloads/stable_releases/OpenSceneGraph-%osgbranch/OpenSceneGraph-%version.zip
-Patch: OpenSceneGraph-3.0.0-alt-cmake.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
+
+# Source-url: https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-%version.tar.gz
+Source: %name-%version.tar
+
+# thanks, Fedora
+Patch1: 0001-Cmake-fixes.patch
+Patch2: 0003-Unset-DOT_FONTNAME.patch
+Patch3: 0005-c-11-narrowing-hacks-Work-around-c-11-erroring-out-n.patch
 
 # Automatically added by buildreq on Wed Nov 30 2011
 # optimized out: cmake-modules fontconfig fontconfig-devel fonts-ttf-liberation glib2-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXcursor-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXrandr-devel libXrender-devel libXt-devel libXv-devel libatk-devel libcairo-devel libcurl-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libjpeg-devel libpango-devel libpng-devel libpoppler8-glib libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-webkit libqt4-xml libstdc++-devel libtiff-devel pkg-config xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: cmake doxygen gcc-c++ gnuplot graphviz libInventor-devel libSDL-devel libXScrnSaver-devel libXcomposite-devel libXdmcp-devel libXpm-devel libXtst-devel libXxf86misc-devel libfreeglut-devel libgif-devel libgtkglext-devel libopenal-devel libpoppler-glib-devel librsvg-devel libwxGTK-devel libxkbfile-devel libxml2-devel phonon-devel unzip wget
+BuildRequires: rpm-macros-cmake cmake doxygen gcc-c++ gnuplot graphviz libInventor-devel libSDL-devel libXScrnSaver-devel libXcomposite-devel libXdmcp-devel libXpm-devel libXtst-devel libXxf86misc-devel libfreeglut-devel libgif-devel libgtkglext-devel libopenal-devel libpoppler-glib-devel librsvg-devel libxkbfile-devel libxml2-devel wget libgta-devel
 
 #BuildRequires: libpixman-devel
 BuildRequires: libtiff-devel
@@ -41,25 +54,25 @@ for rapid development of graphics applications.
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
+# path to install examples (instead the patch)
+%__subst "s|share/OpenSceneGraph/bin|bin|" CMakeModules/OsgMacroUtils.cmake
 
 %build
-mkdir BUILD
-pushd BUILD
-cmake -DCMAKE_BUILD_TYPE="Release" -DCMAKE_INSTALL_PREFIX:PATH=%_usr \
-      -DBUILD_OSG_EXAMPLES=ON -DBUILD_OSG_WRAPPERS=ON -DBUILD_DOCUMENTATION=ON \
-      ..
-# still uses single CPU core
-%make_build VERBOSE=1
-make doc_openscenegraph doc_openthreads
-popd
+%cmake -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_OSG_EXAMPLES=ON -DBUILD_OSG_WRAPPERS=ON -DBUILD_DOCUMENTATION=ON
+%cmake_build
 
 %install
-pushd BUILD
-%makeinstall_std
+%cmakeinstall_std
 # Supposed to take OpenSceneGraph data
 mkdir -p %buildroot%_datadir/OpenSceneGraph
-popd
+
+# hack for 3.4.x (it is ok since 3.6.0)
+rm -rf %buildroot/usr/doc/
 
 %files
 %doc AUTHORS.txt LICENSE.txt NEWS.txt README.txt
@@ -78,7 +91,7 @@ Requires: libOpenThreads = %version-%release
 Runtime libraries files for OpenSceneGraph
 
 %files -n lib%name
-%_libdir/osgPlugins-%apiver
+%_libdir/osgPlugins-*
 %_libdir/libosg*.so.*
 
 %package -n lib%name-devel
@@ -119,18 +132,6 @@ OSG sample applications using SDL
 #files examples-fltk
 #_bindir/osgviewerFLTK
 
-%package examples-qt
-Summary: OSG sample applications using qt
-Group: Development/Documentation
-
-%description examples-qt
-OSG sample applications using qt
-
-%files examples-qt
-%_bindir/osgviewerQt
-%_bindir/osgQtBrowser
-%_bindir/osgQtWidgets
-
 # OpenSceneGraph-examples
 %package examples
 Summary: Sample applications for OpenSceneGraph
@@ -150,7 +151,7 @@ Sample applications for OpenSceneGraph
 %_bindir/osgoutline
 %_bindir/osgparticleshader
 %_bindir/osgposter
-%_bindir/osgqfont
+#_bindir/osgqfont
 %_bindir/osgshadercomposition
 %_bindir/osgshadergen
 %_bindir/osgtexturecompression
@@ -281,7 +282,7 @@ Sample applications for OpenSceneGraph
 %_bindir/osgunittests
 %_bindir/osgvertexprogram
 %_bindir/osgviewerGLUT
-%_bindir/osgviewerWX
+#_bindir/osgviewerWX
 %_bindir/osgvolume
 %_bindir/osgwindows
 
@@ -341,6 +342,10 @@ Development files for OpenThreads
 %_includedir/OpenThreads
 
 %changelog
+* Thu Jun 21 2018 Vitaly Lipatov <lav@altlinux.ru> 3.4.1-alt1
+- cleanup spec
+- disable build with wxWidgets (any reasons?) and Qt
+
 * Wed Sep 30 2015 Michael Shigorin <mike@altlinux.org> 3.4.0-alt1
 - 3.4.0
 - updated example filelist

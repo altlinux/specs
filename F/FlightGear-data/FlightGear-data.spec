@@ -1,24 +1,29 @@
 Name: FlightGear-data
-Version: 2016.1.1
+Version: 2018.2.2
 Release: alt1
 
 Summary: Data pack for FlightGear open-source flight simulator
+
 License: GPL
 Group: Games/Arcade
-
 Url: http://www.flightgear.org
+
 Packager: Michael Shigorin <mike@altlinux.org>
+
+# Source-url: https://sourceforge.net/projects/flightgear/files/release-2018.2/FlightGear-%version-data.tar.bz2
 Source: %name-%version.tar
 
+BuildArch: noarch
+
 AutoReqProv: no
+
 Provides: fgfs-data = %version-%release
 # to avoid data lurking w/o binaries
 # NB: release intentionally left out
 Requires: FlightGear = %version
 
-BuildArch: noarch
 
-# it's 450+ Mb of data
+# it's more than two gigs of data
 %brp_strip_none
 %set_fixup_method skip
 #set_strip_method none
@@ -46,10 +51,10 @@ interesting flight simulator ideas.
 This package contains FlightGear documentation.
 
 See also this nice and eagerly read tutorial:
-http://www.4p8.com/eric.brasseur/flight_simulator_tutorial.html
+http://ericbrasseur.org/flight_simulator_tutorial.html
 
 %prep
-%setup -n data
+%setup
 
 %install
 mkdir -p %buildroot{%_datadir/flightgear,%_docdir}
@@ -64,12 +69,15 @@ mv * %buildroot%_datadir/flightgear/
 find %buildroot -name 'Thumbs.db*' -print -delete
 
 %files
-%_datadir/flightgear
+%_datadir/flightgear/
 
 %files -n FlightGear-doc
 %_docdir/FlightGear-%version
 
 %changelog
+* Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2018.2.2-alt1
+- 2018.2.2
+
 * Sat Feb 20 2016 Michael Shigorin <mike@altlinux.org> 2016.1.1-alt1
 - 2016.1
 

@@ -1,15 +1,18 @@
 %def_without dbus
 
+%define major 2018.2
 Name: FlightGear
-Version: 2016.1.1
+Version: %major.2
 Release: alt1
 
 Summary: open-source flight simulator
+
 License: GPL
 Group: Games/Arcade
-
 Url: http://www.flightgear.org
-Source0: %name-%version.tar.gz
+
+# Source0-url: https://sourceforge.net/projects/flightgear/files/release-%major/flightgear-%version.tar.bz2
+Source0: %name-%version.tar
 Source2: FlightGear.menu
 Source3: FlightGear-22x22.xpm
 Source4: FlightGear-32x32.xpm
@@ -25,15 +28,19 @@ Patch2: 0002-make-ShivaVG-and-FGAdminUI-static-libraries.patch
 Patch5: 0005-explicitely-link-with-libX11.patch
 Patch6: 0006-make-fglauncher-a-static-library.patch
 
-Requires: fgfs-data = %version
+Requires: FlightGear-data = %version
 #Requires: fgrun >= 1.6.1
 
-# Automatically added by buildreq on Sat Mar 03 2012
-# optimized out: alternatives cmake-modules cpio ed elfutils fontconfig glibc-devel-static kde4libs libGL-devel libGLU-devel libICE-devel libOpenSceneGraph-devel libOpenThreads-devel libSM-devel libX11-devel libXau-devel libXext-devel libXt-devel libapr1-devel libaprutil1-devel libdb4-devel libdrm-devel libgdk-pixbuf libgpg-error libldap-devel libneon-devel libopenal-devel libqt4-declarative libqt4-qt3support libqt4-xmlpatterns libstdc++-devel pkg-config plib python-base shared-mime-info strace sysvinit-utils termutils time vim-common vim-minimal xorg-kbproto-devel xorg-xproto-devel xxd xz zlib-devel
-BuildRequires: boost-devel-headers cmake fakeroot gcc-c++ imake libXi-devel libXmu-devel libalut-devel libfltk-devel libfreeglut-devel libjpeg-devel libpng-devel libsimgear-devel-static libsubversion-devel libudev-devel plib-devel rpm-utils sisyphus_check vim-console vitmp
+BuildRequires: libsimgear-devel-static = %version
+BuildRequires: libOpenSceneGraph-devel >= 3.4.0
+BuildRequires: boost-devel >= 1.44
+BuildRequires: plib-devel >= 1.8.5
 
-BuildRequires: cmake libpng-devel libfltk-devel libudev-devel
-BuildPreReq: libOpenSceneGraph-devel boost-devel libXres-devel
+# TODO: fltk??
+BuildRequires: rpm-macros-cmake cmake gcc-c++ imake libalut-devel libfltk-devel libfreeglut-devel libjpeg-devel libpng-devel
+
+BuildRequires: libpng-devel libfltk-devel libudev-devel
+BuildPreReq: libXres-devel libXi-devel libXmu-devel
 BuildPreReq: libXtst-devel libXcomposite-devel libXcursor-devel
 BuildPreReq: libXdamage-devel libXdmcp-devel libXfixes-devel
 BuildPreReq: libXft-devel libXinerama-devel libxkbfile-devel
@@ -61,8 +68,8 @@ http://www.4p8.com/eric.brasseur/flight_simulator_tutorial.html
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
-%patch5 -p1
+#patch2 -p1
+#patch5 -p1
 %patch6 -p1
 
 sed -i 's/\r//' docs-mini/AptNavFAQ.FlightGear.html
@@ -82,37 +89,39 @@ sed -i 's,/lib/FlightGear,/share/flightgear,' CMakeLists.txt
 # http://www.mail-archive.com/flightgear-devel@lists.sourceforge.net/msg39430.html
 rm -f src/Include/version.h
 
+# TODO: link with external sqlite3
+%ifarch e2k
+# unsupported as of lcc-1.21.20
+sed -i 's,-fno-fast-math,,' 3rdparty/sqlite3/CMakeLists.txt
+%endif
+
 %build
 %cmake
-%make_build -C BUILD VERBOSE=1
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
-
-install -pDm644 %SOURCE3 %buildroot%_miconsdir/%name.xpm
-install -pDm644 %SOURCE4 %buildroot%_niconsdir/%name.xpm
-install -pDm644 %SOURCE5 %buildroot%_liconsdir/%name.xpm
-
-install -pDm644 %SOURCE10 %buildroot%_iconsdir/hicolor/16x16/apps/%name.png
-install -pDm644 %SOURCE11 %buildroot%_iconsdir/hicolor/32x32/apps/%name.png
-install -pDm644 %SOURCE12 %buildroot%_iconsdir/hicolor/48x48/apps/%name.png
-install -pDm644 %SOURCE13 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
-install -pDm644 %SOURCE14 %buildroot%_iconsdir/hicolor/128x128/apps/%name.png
-
-install -pDm644 %SOURCE15 %buildroot%_desktopdir/%name.desktop
+%cmakeinstall_std
 
 rm -rf %buildroot%_datadir/locale
+rm -rf %buildroot%_datadir/bash-completion/ %buildroot%_datadir/zsh/
 
 %files
 %_bindir/*
 %_mandir/*/*
-%_iconsdir/*/*/*/%name.png
-%_niconsdir/%name.xpm
-%_liconsdir/%name.xpm
-%_miconsdir/%name.xpm
-%_desktopdir/%name.desktop
+%_iconsdir/*/*/*/flightgear.*
+%_desktopdir/org.flightgear.FlightGear.desktop
 
 %changelog
+* Thu Jun 21 2018 Vitaly Lipatov <lav@altlinux.ru> 2018.2.2-alt1
+- new version (2018.2.2)
+- rebuild against OpenSceneGraph 3.4.1
+
+* Thu Sep 07 2017 Michael Shigorin <mike@altlinux.org> 2017.2.1-alt1
+- 2017.2.1
+  + dropped patch2 along with fgadmin
+  + disabled patch5
+- E2K: avoid lcc-unsupported option
+
 * Sat Feb 20 2016 Michael Shigorin <mike@altlinux.org> 2016.1.1-alt1
 - 2016.1
 
