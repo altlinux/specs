@@ -1,15 +1,21 @@
+%def_enable snapshot
 %def_disable python
 
 Name: libimobiledevice
-Version: 1.2.0
-Release: alt2
+Version: 1.2.1
+Release: alt0.1
 
 Summary: Library for connecting to Apple iPhone and iPod touch
 Group: System/Libraries
 License: LGPLv2+
 Url: http://www.libimobiledevice.org
 
+%if_disabled snapshot
 Source: %url/downloads/%name-%version.tar.bz2
+%else
+# VCS: https://github.com/libimobiledevice/libimobiledevice.git
+Source: %name-%version.tar
+%endif
 
 %define plist_ver 1.11
 %define usbmuxd_ver 1.0.9
@@ -18,7 +24,7 @@ Source: %url/downloads/%name-%version.tar.bz2
 BuildPreReq: libplist-devel >= %plist_ver
 BuildPreReq: libusbmuxd-devel >= %usbmuxd_ver
 
-BuildRequires: gcc-c++ glib2-devel libxml2-devel libusb-devel libplistmm-devel
+BuildRequires: gcc-c++ autoconf-archive glib2-devel libxml2-devel libusb-devel libplistmm-devel
 BuildRequires: libgnutls-devel libtasn1-devel libgcrypt-devel libssl-devel
 BuildRequires: python-devel python-module-Cython >= %cython_ver python-module-libplist
 
@@ -71,6 +77,9 @@ Python bindings for libimobiledevice.
 %endif
 
 %changelog
+* Wed Jun 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt0.1
+- updated to 1.2.0-75-g26373b3 (ALT #35060)
+
 * Fri Apr 08 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt2
 - rebuilt for new gcc, python, cython etc.
 
