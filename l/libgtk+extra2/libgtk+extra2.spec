@@ -3,7 +3,7 @@
 
 Name: libgtk+extra2
 Version: 2.1.2
-Release: alt2.1
+Release: alt3
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -48,7 +48,9 @@ for gtk+extra widgets.
 
 %prep
 %setup -n %oname-%version
-subst "s|#include <glib/gunicode.h>||g" gtkextra/gtkcharsel.c
+%__subst "s|#include <glib/gunicode.h>||g" gtkextra/gtkcharsel.c
+# extern inline does not work since gcc 5
+%__subst "s|inline gint roundint|gint roundint|" gtkextra/*.c
 
 %patch -p2
 %patch1 -p2
@@ -57,7 +59,7 @@ subst "s|#include <glib/gunicode.h>||g" gtkextra/gtkcharsel.c
 %build
 %configure \
 	--disable-static \
-	--enable-gtk-doc
+	--disable-gtk-doc
 %make_build
 
 %install
@@ -78,6 +80,10 @@ cp -fR docs/tutorial %buildroot%_gtkdocdir/
 %_gtkdocdir/*
 
 %changelog
+* Thu Jun 21 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.2-alt3
+- fix build (the upstream find maintainer)
+- disable doc build
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.2-alt2.1
 - Fixed build with make 3.82
 - Extracted docs into separate package
