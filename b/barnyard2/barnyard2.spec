@@ -1,6 +1,6 @@
 Name: barnyard2
 Version: 2.1.13
-Release: alt4.qa1
+Release: alt5
 
 Summary: Snort Log Backend
 License: GPLv2
@@ -36,7 +36,7 @@ Group: Networking/Other
 BuildArch: noarch
 Requires: %name = %version-%release
 Requires: mysql
-BuildRequires: mysql-devel libmysqlclient-devel libmysqlclient18 libmysqlclient16
+BuildRequires: mysql-devel libmysqlclient-devel
 %description mysql
 barnyard2 binary compiled with mysql support.
 
@@ -83,6 +83,9 @@ install -Dpm 644 schemas/create_mysql %buildroot%_datadir/%name/schemas/create_m
 %_datadir/%name/schemas/create_mysql
 
 %changelog
+* Thu Jun 21 2018 Grigory Ustinov <grenka@altlinux.org> 2.1.13-alt5
+- Fixed FTBFS.
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.13-alt4.qa1
 - Rebuilt against Tcl/Tk 8.6
 
