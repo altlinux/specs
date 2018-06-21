@@ -11,7 +11,7 @@
 
 Name: pki-core
 Version: 10.6.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Certificate System - PKI Core Components
 License: %gpl2only
@@ -208,7 +208,6 @@ Requires: pki-base = %EVR
 Requires: pki-base-java = %EVR
 Requires: openldap-clients
 Requires: nss-utils
-Requires: tomcat-servlet-3.1-api
 Provides: pki-native-tools = %EVR
 Provides: pki-java-tools = %EVR
 Obsoletes: pki-native-tools < %EVR
@@ -736,6 +735,9 @@ fi
 %_javadocdir/pki-%version/
 
 %changelog
+* Thu Jun 21 2018 Igor Vlasenko <viy@altlinux.ru> 10.6.1-alt2%ubt
+- removed Requires: tomcat-servlet-3.1-api (useless)
+
 * Thu May 24 2018 Stanislav Levin <slev@altlinux.org> 10.6.1-alt1%ubt
 - 10.5.6 -> 10.6.1
 
