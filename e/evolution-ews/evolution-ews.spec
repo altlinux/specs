@@ -4,7 +4,7 @@
 
 Name: evolution-ews
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Group: Networking/Mail
 Summary: Evolution extension for Exchange Web Services
@@ -35,12 +35,6 @@ BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= 3.0
 BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: libsqlite3-devel libical-devel
-
-# following unusual reqs needed to link against evolution >= 3.13.6 libraries
-BuildRequires: libchamplain-gtk3-devel libgail3-devel gcr-libs-devel libp11-kit-devel
-BuildRequires: libgnome-desktop3-devel libdbus-devel libdbus-glib-devel libgeocode-glib-devel
-BuildRequires: libgeoclue-devel libgtkspell3-devel libgnome-autoar-devel
-BuildRequires: libcanberra-gtk3-devel libcryptui-devel
 
 %description
 This package allows Evolution to interact with Microsoft Exchange servers,
@@ -81,6 +75,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/metainfo/%xdg_name-ews.metainfo.xml
 
 %changelog
+* Thu Jun 21 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1.1
+- fixed buildreqs
+
 * Mon Jun 18 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
 - 3.28.3
 
