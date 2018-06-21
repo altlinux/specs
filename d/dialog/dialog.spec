@@ -1,23 +1,33 @@
 # -*- rpm-spec -*-
 # $Id: dialog,v 1.5 2003/09/05 10:17:48 grigory Exp $
+%define major 1.3
+%define snapshot 20171209
 
 Name: dialog
-Version: 1.2
+Version: %major.%snapshot
 Release: alt1
-%define snapshot 20130902
 
 Summary: A utility for creating TTY dialog boxes
-License: LGPL
-Group: Development/Other
 
+License: LGPLv2
+Group: Development/Other
 Url: http://invisible-island.net/dialog/
-Source: ftp://invisible-island.net/dialog/%name-%version.tar
+
+#Source: ftp://invisible-island.net/dialog/%name-%version.tar
+# Source-url: ftp://ftp.invisible-island.net/dialog/dialog-%major-%snapshot.tgz
+Source: %name-%version.tar
+
+BuildRequires: ncurses-devel gcc gettext findutils libtool
+
 Patch1: dialog-incdir.patch
 Patch2: dialog-multilib.patch
-Provides: cdialog lib%name-devel
+
+Provides: cdialog
 Obsoletes: cdialog
 
 Requires: terminfo
+
+Requires: lib%name = %version-%release
 
 BuildPreReq: libncursesw-devel libtinfo-devel
 
@@ -67,8 +77,10 @@ Static dialog library.
 %make_build
 
 %install
-%makeinstall_std install-full
-#find samples -type f -print0 |xargs -r0 chmod a-x
+%makeinstall_std install-lib
+
+# hack due obsoleted configure
+rm -rf %buildroot%_libdir/.libs/
 
 %find_lang %name
 
@@ -90,6 +102,13 @@ Static dialog library.
 %_libdir/*.a
 
 %changelog
+* Wed Jun 20 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.20171209-alt1
+- new version (sync with Fedora)
+
+* Wed Jun 20 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt3
+- cleanup build
+- drop provides libdialog-devel from devel package
+
 * Thu Sep 19 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2-alt1
 - new version
 
