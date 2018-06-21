@@ -1,7 +1,7 @@
 %define rname pyscard
 
 Name:           python-module-%rname
-Version:        1.9.6
+Version:        1.9.7
 Release:        alt1
 Summary:        A framework for building smart card aware applications in Python
 
@@ -46,12 +46,15 @@ subst 's/Pyro\./Pyro4./g' smartcard/pyro/PyroReader.py
 chmod 755 %buildroot%python_sitelibdir/smartcard/scard/_scard.so
 
 %files
-%doc README LICENSE
+%doc README.md LICENSE
 %doc smartcard/doc/*
 %doc smartcard/Examples
 %python_sitelibdir/*
 
 %changelog
+* Thu Jun 21 2018 Andrey Cherepanov <cas@altlinux.org> 1.9.7-alt1
+- New version.
+
 * Tue Aug 22 2017 Andrey Cherepanov <cas@altlinux.org> 1.9.6-alt1
 - New version
 
