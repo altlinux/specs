@@ -1,5 +1,5 @@
 Name: RHVoice
-Version: 0.5
+Version: 0.7.0
 Release: alt1
 
 Summary: RHVoice is a Russian speech synthesizer written by Olga Yakovleva
@@ -74,7 +74,7 @@ Development files for %name
 
 %build
 %add_optflags -std=c++11
-scons CXXFLAGS="%optflags" prefix=%_prefix libdir=%_libdir sysconfdir=%_sysconfdir
+scons %_smp_mflags CXXFLAGS="%optflags" prefix=%_prefix libdir=%_libdir sysconfdir=%_sysconfdir
 
 %install
 #make DESTDIR=%buildroot install
@@ -87,13 +87,13 @@ scons install DESTDIR=%buildroot prefix=%_prefix libdir=%_libdir sysconfdir=%_sy
 %tts_unregister rhvoice-en
 
 %files
-%doc COPYING NEWS README
+%doc NEWS README
 %dir %_sysconfdir/RHVoice/
 %config(noreplace) %_sysconfdir/RHVoice/RHVoice.conf
 %_ttsdir/*
 %_bindir/*
 %_datadir/%name/
-%_datadir/dbus-1/services/*
+#_datadir/dbus-1/services/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -104,6 +104,9 @@ scons install DESTDIR=%buildroot prefix=%_prefix libdir=%_libdir sysconfdir=%_sy
 %_includedir/RHVoice_common.h
 
 %changelog
+* Wed Jun 20 2018 Vitaly Lipatov <lav@altlinux.ru> 0.7.0-alt1
+- new version 0.7.0 (with rpmrb script)
+
 * Sun Apr 24 2016 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
 - build 0.5 from https://github.com/Olga-Yakovleva/RHVoice
 
