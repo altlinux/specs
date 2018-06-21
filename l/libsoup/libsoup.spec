@@ -12,7 +12,7 @@
 
 Name: libsoup
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
@@ -166,6 +166,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %patch1 -p1
 
 %build
+%ifarch %e2k
+%add_optflags -Wno-error=pointer-arith
+%endif
 %autoreconf
 %configure \
     %{subst_enable static} \
@@ -228,6 +231,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Thu Jun 21 2018 Yuri N. Sedunov <aris@altlinux.org> 2.62.2-alt2
+- used -Wno-error=pointer-arith for %%e2k
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 2.62.2-alt1
 - 2.62.2
 
