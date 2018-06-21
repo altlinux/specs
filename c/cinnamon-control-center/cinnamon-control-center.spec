@@ -3,14 +3,13 @@
 
 %def_disable debug
 %def_disable static
-%def_with libsocialweb
 %def_enable systemd
 %def_enable ibus
 %def_enable onlineaccounts
 
 Name: cinnamon-control-center
 Version: %ver_major.0
-Release: alt1
+Release: alt3
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -74,15 +73,10 @@ BuildRequires: libcinnamon-menus-devel
 BuildRequires: glibc-i18ndata
 BuildRequires: libnm-devel >= %nm_ver
 BuildRequires: libnma-devel >= %nm_ver
-BuildRequires: libnm-gtk-devel >= %nm_ver
-BuildRequires: libnm-glib-devel >= %nm_ver
-BuildRequires: libnm-glib-vpn-devel >= %nm_ver
-BuildRequires: libnm-util-devel >= %nm_ver
 BuildRequires: libmm-glib-devel
 BuildRequires: libgnome-online-accounts-devel >= %goa_ver colord-devel
 BuildRequires: libgnome-bluetooth-devel >= %bt_ver
 BuildRequires: libclutter-gtk3-devel
-%{?_with_libsocialweb:BuildRequires: libsocialweb-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
 
 %description
@@ -124,7 +118,6 @@ you'll want to install this package.
 	%{subst_enable debug} \
 	%{subst_enable static} \
 	--disable-update-mimedb \
-	%{subst_with libsocialweb} \
 	%{subst_enable systemd} \
 	%{subst_enable ibus} \
 	%{subst_enable onlineaccounts}
@@ -171,6 +164,12 @@ you'll want to install this package.
 
 
 %changelog
+* Thu Jun 21 2018 Vladimir Didenko <cow@altlinux.org> 3.8.0-alt3
+- remove socialweb from buildrequires
+
+* Wed Jun 20 2018 Vladimir Didenko <cow@altlinux.org> 3.8.0-alt2
+- fix build requires for libnm
+
 * Thu May 3 2018 Vladimir Didenko <cow@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

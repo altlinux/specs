@@ -1,6 +1,6 @@
 Name: cinnamon
 Version: 3.8.4
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -68,7 +68,7 @@ BuildPreReq: libjson-glib-devel >= %json_glib_ver
 BuildPreReq: evolution-data-server-devel >= %eds_ver
 BuildRequires: gcc-c++
 BuildRequires: libcinnamon-desktop-devel libgnome-keyring-devel libcinnamon-menus-devel libstartup-notification-devel
-BuildRequires: libpolkit-devel libupower-devel libgudev-devel libsoup-devel libnm-glib-devel
+BuildRequires: libpolkit-devel libupower-devel libgudev-devel libsoup-devel libnm-devel
 BuildRequires: libcanberra-gtk3-devel libcroco-devel GConf libGConf-devel
 BuildRequires: gobject-introspection >= %gi_ver libupower-gir-devel libgudev-gir-devel libsoup-gir-devel libfolks-gir-devel
 BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel libcinnamon-menus-gir-devel NetworkManager-glib-gir-devel
@@ -216,6 +216,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Wed Jun 20 2018 Vladimir Didenko <cow@altlinux.org> 3.8.4-alt2
+- fix build requires for libnm
+
 * Wed Jun 13 2018 Vladimir Didenko <cow@altlinux.org> 3.8.4-alt1
 - 3.8.4
 
