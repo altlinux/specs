@@ -1,45 +1,57 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/desktop-file-install gcc-c++
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/xsltproc rpm-build-java zip
 # END SourceDeps(oneline)
 %def_enable javaws
 %def_enable moz_plugin
 BuildRequires(pre): browser-plugins-npapi-devel
 %set_compress_method none
-%filter_from_requires /^java-headless/d
 %define oldname icedtea-web
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Version of java
 %define javaver 1.8.0
 
 # Alternatives priority
 %define priority 18000
+# jnlp prorocol gnome registry keys
+%define gurlhandler   /desktop/gnome/url-handlers
+%define jnlphandler   %{gurlhandler}/jnlp
+%define jnlpshandler  %{gurlhandler}/jnlps
 
-%define javadir     %{_jvmdir}/java-openjdk
-%define jredir      %{_jvmdir}/jre-openjdk
-%define javaplugin  libjavaplugin.so.%{_arch}
+%define javadir     %{_jvmdir}/java-%{javaver}-openjdk
+%define jredir      %{_jvmdir}/jre-%{javaver}-openjdk
 
 %define binsuffix      .itweb
 
+%define preffered_java  java-%{javaver}-openjdk
+
 Name:		mozilla-plugin-java-1.8.0-openjdk
-Version:	1.6.2
-Release:	alt3_1jpp8
+Version:	1.7.1
+Release:	alt1_5jpp8
 Summary:	Additional Java components for OpenJDK - Java browser plug-in and Web Start implementation
+# will become arched again with rust on board
+BuildArch:  noarch
 
 Group:      Networking/WWW
 License:    LGPLv2+ and GPLv2 with exceptions
 URL:        http://icedtea.classpath.org/wiki/IcedTea-Web
 Source0:    http://icedtea.classpath.org/download/source/%{oldname}-%{version}.tar.gz
+Patch0:     1473-1480.patch
 
-BuildRequires:  maven-local
-BuildRequires:  java-%{javaver}-openjdk-devel
+BuildRequires:  javapackages-tools
+#for deprecated add_maven_depmap, see https://www.spinics.net/lists/fedora-devel/msg233211.html
+BuildRequires:  javapackages-local
+BuildRequires:  %{preffered_java}-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  xulrunner-devel
-BuildRequires:  glib2-devel
+BuildRequires:  glib2-devel libgio libgio-devel
 BuildRequires:  autoconf
 BuildRequires:  automake
-BuildRequires:  xulrunner-devel
+BuildRequires:	gcc
+BuildRequires:	gcc-c++
+BuildRequires:	python-module-clang
 BuildRequires:  junit
 BuildRequires:  hamcrest
 BuildRequires:  libappstream-glib
@@ -49,27 +61,33 @@ BuildRequires:  tagsoup
 BuildRequires:      rhino
 
 # For functionality and the OpenJDK dirs
-Requires:      java-%{javaver}-openjdk
+Requires:      %{preffered_java}
+Requires:      javapackages-tools
 #maven fragments
+Requires(post):      javapackages-tools
+Requires(postun):      javapackages-tools
 
 # For the mozilla plugin dir
 Requires:       browser-plugins-npapi
-
 # When itw builds against it, it have to be also in runtime
 Requires:      tagsoup
-
 # rhino is used as JS evaluator in runtime
 Requires:      rhino
 
-# Post requires alternatives to install plugin alternative.
-
-# Postun requires alternatives to uninstall plugin alternative.
+# Post requires alternatives to install tool alternatives.
+# in version 1.7 and higher for --family switch
+# jnlp protocols support
+Requires(post):   GConf libGConf
+# Postun requires alternatives to uninstall tool alternatives.
+# in version 1.7 and higher for --family switch
+# jnlp protocols support
+Requires(postun):   GConf libGConf
 
 # Standard JPackage plugin provides.
 Provides: java-plugin = 1:%{javaver}
 Provides: javaws = 1:%{javaver}
 
-Provides:   java-%{javaver}-openjdk-plugin = 1:%{version}
+Provides:   %{preffered_java}-plugin = 1:%{version}
 Source44: import.info
 
 %define altname java-%{javaver}-openjdk
@@ -119,14 +137,25 @@ with %{name} J2SE Runtime Environment.
 %package javadoc
 Summary:    API documentation for IcedTea-Web
 Group:      Development/Java
-Requires:   %{name} = %{version}
+Requires:   %{name} = %{version}-%{release}
 BuildArch:  noarch
 
 %description javadoc
 This package contains Javadocs for the IcedTea-Web project.
 
+
+%package devel
+Summary:    pure sources for debugging IcedTea-Web
+Group:      Development/Java
+Requires:   %{name} = %{version}-%{release}
+BuildArch:  noarch
+
+%description devel
+This package contains ziped sources of the IcedTea-Web project.
+
 %prep
 %setup -n %{oldname}-%{version} -q
+%patch0 -p1
 
 %build
 autoreconf -vfi
@@ -138,18 +167,21 @@ CXXFLAGS="$RPM_OPT_FLAGS $RPM_LD_FLAGS" \
     --with-jre-home=%{jredir} \
     --libdir=%{_libdir} \
     --program-suffix=%{binsuffix} \
+    --disable-native-plugin \
     --prefix=%{_prefix}
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 
 # icedteaweb-completion is currently not handled by make nor make install
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/
-cp icedteaweb-completion $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/
+mv completion/policyeditor.bash $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/
+mv completion/javaws.bash $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/
+mv completion/itweb-settings.bash $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/
 
 # Move javaws man page to a more specific name
-mv $RPM_BUILD_ROOT/%{_mandir}/man1/javaws.1 $RPM_BUILD_ROOT/%{_mandir}/man1/javaws-itweb.1
+mv $RPM_BUILD_ROOT/%{_mandir}/man1/javaws.1 $RPM_BUILD_ROOT/%{_mandir}/man1/javaws.itweb.1
 
 # Install desktop files.
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/{applications,pixmaps}
@@ -177,6 +209,13 @@ cp metadata/%{oldname}-plugin.pom  $RPM_BUILD_ROOT/%{_mavenpomdir}/%{oldname}-pl
 
 %add_maven_depmap %{oldname}.pom %{oldname}.jar
 %add_maven_depmap %{oldname}-plugin.pom %{oldname}-plugin.jar
+
+cp  netx.build/lib/src.zip  $RPM_BUILD_ROOT%{_datadir}/%{oldname}/netx.src.zip
+cp liveconnect/lib/src.zip  $RPM_BUILD_ROOT%{_datadir}/%{oldname}/plugin.src.zip
+
+%find_lang %{oldname} --all-name --with-man
+# multiple -f flags in %files: merging -f %{oldname}.lang into -f .mfiles
+cat %{oldname}.lang >> .mfiles
 
 install -d -m 755 %buildroot/etc/icedtea-web
 cat > %buildroot/etc/icedtea-web/javaws.policy << EOF
@@ -258,25 +297,22 @@ done
 # - END alt linux specific, shared with openjdk -#
 ##################################################
 
-
-
 %check
-make check
+#make check
 appstream-util validate $RPM_BUILD_ROOT/%{_datadir}/appdata/*.xml || :
 
-%files -f .mfiles
-%{_sysconfdir}/bash_completion.d/icedteaweb-completion
+%files -f .mfiles 
+%{_sysconfdir}/bash_completion.d/*
 %{_prefix}/bin/*
-%{_libdir}/IcedTeaPlugin.so
 %{_datadir}/applications/*
-%{_datadir}/%{oldname}
+%dir %{_datadir}/%{oldname}
+%{_datadir}/%{oldname}/*.jar
+%{_datadir}/%{oldname}/*.png
 %{_datadir}/man/man1/*
-%{_datadir}/man/cs/man1/*
-%{_datadir}/man/de/man1/*
-%{_datadir}/man/pl/man1/*
 %{_datadir}/pixmaps/*
 %{_datadir}/appdata/*.xml
-%doc NEWS README COPYING
+%doc NEWS README
+%doc --no-dereference COPYING
 # alt linux specific
 %_altdir/%altname-plugin
 %{_desktopdir}/%{altname}-control-panel.desktop
@@ -286,7 +322,7 @@ appstream-util validate $RPM_BUILD_ROOT/%{_datadir}/appdata/*.xml || :
 # separate javaws
 %exclude %{_desktopdir}/%{altname}-javaws.desktop
 %exclude %{_datadir}/pixmaps/javaws.png
-%exclude %{_man1dir}/javaws-itweb.1.gz
+%exclude %{_man1dir}/javaws.itweb.1.gz
 %exclude %_bindir/javaws.itweb
 # security policy
 %dir /etc/icedtea-web
@@ -294,18 +330,25 @@ appstream-util validate $RPM_BUILD_ROOT/%{_datadir}/appdata/*.xml || :
 
 %files javadoc
 %{_datadir}/javadoc/%{oldname}
-%doc COPYING
+%doc --no-dereference COPYING
+
+%files devel
+%{_datadir}/%{oldname}/*.zip
+%doc --no-dereference COPYING
 
 %files -n %altname-javaws
 #
 %_altdir/%altname-javaws
 %{_desktopdir}/%{altname}-javaws.desktop
 %{_datadir}/pixmaps/javaws.png
-%{_man1dir}/javaws-itweb.1.gz
+%{_man1dir}/javaws.itweb.1.gz
 %_bindir/javaws.itweb
 
 
 %changelog
+* Thu Jun 21 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt1_5jpp8
+- new version
+
 * Sat Apr 30 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt3_1jpp8
 - removed fedora-based alternative (closes: #32043)
 
