@@ -1,18 +1,29 @@
-%define ver_major 0.4
+%def_enable snapshot
+
+%define ver_major 0.5
 %define xdg_name org.pantheon.terminal
+%define rdn_name io.elementary.terminal
 
 Name: pantheon-terminal
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major
+Release: alt1
 
 Summary: Pantheon Terminal
 Group: Terminals
 License: GPLv3
 Url: https://github.com/elementary/terminal
 
+%if_disabled snapshot
 Source: %url/archive/%version/terminal-%version.tar.gz
+%else
+#VCS: https://github.com/elementary/terminal.git
+Source: %name-%version.tar
+%endif
+# https://git.archlinux.org/svntogit/community.git/tree/trunk?h=packages/pantheon-terminal
+Patch: pantheon-terminal-0.5-arch-vte0.52.patch
 
-BuildRequires: cmake gcc-c++ intltool libappstream-glib-devel libnotify-devel
+BuildRequires(pre): meson
+BuildRequires: gcc-c++ appstream libnotify-devel desktop-file-utils
 BuildRequires: libvte3-devel libgranite-devel libpixman-devel
 BuildRequires: libXdmcp-devel vala libgranite-vala
 
@@ -34,27 +45,32 @@ This package provides Vala language bindings for the %name.
 
 
 %prep
+%if_disabled snapshot
 %setup -n terminal-%version
+%else
+%setup
+%endif
+%patch -p1
 
 %build
-%cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
-	-DGSETTINGS_COMPILE:BOOL=OFF \
-	-DGSETTINGS_LOCALINSTALL:BOOL=OFF
-%cmake_build VERBOSE=1
+%meson
+%meson_build
 
 %install
-%cmakeinstall_std
+%meson_install
 
-%find_lang %name
+%find_lang %rdn_name
 
-%files -f %name.lang
+%files -f %rdn_name.lang
 %doc AUTHORS README*
-%_bindir/*
-%_datadir/%name/
-%_desktopdir/%xdg_name.desktop
+%_bindir/%rdn_name
+%_datadir/%rdn_name/
+%_desktopdir/%rdn_name.desktop
 %_desktopdir/open-%name-here.desktop
-%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/appdata/%name.appdata.xml
+%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/metainfo/%rdn_name.appdata.xml
+
+%exclude %_datadir/fish/vendor_conf.d/pantheon_terminal_process_completion_notifications.fish
 
 %if 0
 %files vala
@@ -62,6 +78,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Thu Jun 21 2018 Yuri N. Sedunov <aris@altlinux.org> 0.5-alt1
+- 0.5
+
 * Sat Jan 06 2018 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt2
 - rebuilt against libgranite.so.4
 
