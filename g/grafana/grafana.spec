@@ -11,7 +11,7 @@
 
 Name:		grafana
 Version:	5.1.4
-Release:	alt1%ubt
+Release:	alt2%ubt
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
@@ -89,19 +89,22 @@ export GOPATH="$BUILDDIR:%go_path:$PWD"
 
 
 pushd .gopath/src/%import_path
+# Install Front-end Assets
+install -d -m 755 %buildroot%_datadir/%name
+cp -pr conf %buildroot%_datadir/%name/
+cp -pr public %buildroot%_datadir/%name/
 %golang_install
 popd
 
 rm -rf -- %buildroot/usr/src
 rm -f -- %buildroot%_bindir/govendor
 
-# Install Front-end Assets
-install -d -m 755 %buildroot%_datadir
-cp -pr conf %buildroot%_datadir/%name/
-cp -pr public %buildroot%_datadir/%name/
-
 # Install config files
 install -p -D -m 640 conf/sample.ini %buildroot%_sysconfdir/%name/%name.ini
+install -p -D -m 640 conf/ldap.toml %buildroot%_sysconfdir/%name/ldap.toml
+mkdir -p %buildroot%_sysconfdir/%name/provisioning/{dashboards,datasources}
+install -p -D -m 640 conf/provisioning/dashboards/sample.yaml %buildroot%_sysconfdir/%name/provisioning/dashboards/sample.yaml
+install -p -D -m 640 conf/provisioning/datasources/sample.yaml %buildroot%_sysconfdir/%name/provisioning/datasources/sample.yaml
 # Setup directories
 install -d -m 755 %buildroot%_logdir/%name
 install -d -m 755 %buildroot%_sharedstatedir/%name
@@ -137,7 +140,12 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_unitdir/%name-server.service
 %_tmpfilesdir/%name.conf
 %dir %attr(0750, root, %name) %_sysconfdir/%name
+%dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning
+%dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/dashboards
+%dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/datasources
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.ini
+%config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/ldap.toml
+%config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/provisioning/*/*.yaml
 #%config(noreplace) %_logrotatedir/%name
 %dir %attr(0770, root, %name) %_logdir/%name
 %dir %attr(0775, root, %name) %_runtimedir/%name
@@ -145,6 +153,10 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Thu Jun 21 2018 Alexey Shabalin <shaba@altlinux.ru> 5.1.4-alt2%ubt
+- update init script and systemd unit
+- fix package files and config
+
 * Wed Jun 20 2018 Alexey Shabalin <shaba@altlinux.ru> 5.1.4-alt1%ubt
 - 5.1.4
 
