@@ -12,7 +12,7 @@ Requires: freeglut plib libalut
 
 Name: TORCS
 Version: 1.3.0
-Release: alt6.2
+Release: alt7
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -33,6 +33,7 @@ Source13: %name.48.xpm
 
 Patch0: torcs-1.3.0.patch
 Patch3: torcs-1.2.4-alt-remove-gdb.patch
+Patch4: torcs-1.3.7-isnan.patch
 
 # Thanks, SUSE
 Patch13: torcs-alut.diff
@@ -61,6 +62,7 @@ A 3D racing car simulator using OpenGL.
 
 %patch
 %patch3 -p1
+%patch4 -p1
 #patch13
 %patch14
 %patch15
@@ -102,6 +104,9 @@ install -m 644 -D %SOURCE13 %buildroot%_liconsdir/%name.xpm
 %_liconsdir/%name.xpm
 
 %changelog
+* Thu Jun 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt7
+- fix build
+
 * Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt6.2
 - Fixed build
 
