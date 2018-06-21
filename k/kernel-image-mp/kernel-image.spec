@@ -1,5 +1,5 @@
 %define kernel_base_version	4.16
-%define kernel_sublevel        .12
+%define kernel_sublevel        .16
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -263,6 +263,9 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Mon Jun 18 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.16.16-alt1
+- 4.16.16
+
 * Mon May 28 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.16.12-alt1
 - 4.16.12
 
