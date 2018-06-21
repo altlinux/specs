@@ -28,7 +28,7 @@
 %def_disable check
 
 Name:    golang
-Version: 1.10.2
+Version: 1.10.3
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -40,6 +40,9 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 Source0: golang-%version.tar
 Source1: golang-gdbinit
 Patch2:  golang-alt-certs-path.patch
+
+# backported upstream patches:
+Patch1001: 0001-cmdinternalobjarm64-fix-branch-too-far-with-TBZ-like-instructions.patch
 
 ExclusiveArch: %go_arches
 
@@ -106,6 +109,9 @@ Go sources and documentation.
 %setup -q
 
 %patch2 -p1
+
+# backported upstream patches:
+%patch1001 -p1
 
 %build
 # go1.5 bootstrapping. The compiler is written in golang.
@@ -279,6 +285,10 @@ mkdir -p -- \
 
 
 %changelog
+* Fri Jun 22 2018 Alexey Shabalin <shaba@altlinux.ru> 1.10.3-alt1
+- New version (1.10.3).
+- backport patches from upstream for aarch64
+
 * Thu May 03 2018 Alexey Gladkov <legion@altlinux.ru> 1.10.2-alt1
 - New version (1.10.2).
 
