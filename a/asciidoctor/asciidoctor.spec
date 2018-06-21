@@ -1,7 +1,7 @@
 %global _unpacked_files_terminate_build 1
 
-Name: 	 asciidoctor
-Version: 1.5.6.1 
+Name:    asciidoctor
+Version: 1.5.7.1
 Release: alt1
 
 Summary: A fast text processor and publishing toolchain for converting AsciiDoc content to different formats
@@ -18,7 +18,7 @@ Patch1:  asciidoctor-1.5.6.1-alt-fix-DATA_PATH.patch
 %filter_from_requires \!^ruby(asciidoctor/js)$!d
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
+BuildRequires: ruby-tool-setup nokogiri
 
 %description
 Asciidoctor is a fast text processor and publishing toolchain for converting
@@ -60,8 +60,9 @@ rm %buildroot%_datadir/locale/attributes.adoc
 %ruby_test_unit -Ilib:test test
 
 %files
-%doc README*
+%doc README.adoc
 %doc data/locale/attributes.adoc man/%name.adoc
+%exclude %_datadir/locale/attributes-*
 %_bindir/%name
 %_bindir/%name-safe
 %_man1dir/%name.1.xz
@@ -72,5 +73,8 @@ rm %buildroot%_datadir/locale/attributes.adoc
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Jun 21 2018 Grigory Ustinov <grenka@altlinux.org> 1.5.7.1-alt1
+- Build new version.
+
 * Thu Aug 03 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.5.6.1-alt1
 - Initial build for Sisyphus
