@@ -1,5 +1,5 @@
 Name:    guake
-Version: 3.2.2
+Version: 3.3.0
 Release: alt1
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
@@ -65,6 +65,9 @@ rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_datadir/glib-2.0/schemas/org.guake.gschema.xml
 
 %changelog
+* Thu Jun 21 2018 Andrey Cherepanov <cas@altlinux.org> 3.3.0-alt1
+- New version.
+
 * Mon Jun 04 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.2-alt1
 - New version.
 
