@@ -1,6 +1,12 @@
+%def_enable snapshot
+
 %define _name blockdev
-%define ver_major 2.17
+%define ver_major 2.18
 %define rev 1
+
+%def_without vdo
+
+%def_with dmraid
 
 Name: lib%_name
 Version: %ver_major
@@ -11,7 +17,12 @@ Group: System/Libraries
 License: LGPLv2+
 Url: https://github.com/storaged-project/%name
 
+%if_disabled snapshot
+#VCS: https://github.com/rhinstaller/libblockdev.git
 Source: %url/releases/download/%ver_major-%rev/%name-%version.tar.gz
+%else
+Source: %name-%version.tar
+%endif
 
 BuildRequires(pre): rpm-build-python rpm-build-python3
 BuildRequires: python-devel python3-devel
@@ -20,7 +31,7 @@ BuildRequires: gtk-doc
 BuildRequires: libgio-devel gobject-introspection-devel
 BuildRequires: libcryptsetup-devel libdevmapper-devel
 BuildRequires: systemd-devel libudev-devel libmount-devel
-BuildRequires: dmraid-devel
+%{?_with_dmraid:BuildRequires: dmraid-devel}
 BuildRequires: libvolume_key-devel >= 0.3.9
 BuildRequires: libnss-devel
 BuildRequires: libkmod-devel
@@ -29,6 +40,7 @@ BuildRequires: libblkid-devel
 BuildRequires: libbytesize-devel
 BuildRequires: libuuid-devel
 BuildRequires: libndctl-devel
+%{?_with_vdo:BuildRequires: libyaml-devel}
 
 %ifarch s390 s390x
 BuildRequires: s390utils-devel
@@ -129,7 +141,7 @@ Summary: The Device Mapper plugin for the libblockdev library
 Group: System/Libraries
 Requires: %name-utils = %version-%release
 Requires: dmsetup
-Requires: dmraid
+%{?_with_dmraid:Requires: dmraid}
 
 %description dm
 The libblockdev library plugin (and in the same time a standalone library)
@@ -369,6 +381,27 @@ Requires: %name-utils-devel = %version-%release
 This package contains header files and pkg-config files needed for development
 with the libblockdev-s390 plugin/library.
 
+%package vdo
+Summary: The vdo plugin for the libblockdev library
+Group: System/Libraries
+Requires: %name-utils >= %version-%release
+# https://github.com/dm-vdo/vdo
+# https://github.com/dm-vdo/kvdo
+Requires: vdo kmod-kvdo
+
+%description vdo
+The libblockdev library plugin providing the functionality related to VDO devices.
+
+%package vdo-devel
+Summary: Development files for the libblockdev-vdo plugin/library
+Group: Development/C
+Requires: %name-vdo = %version-%release
+Requires: %name-utils-devel = %version-%release
+
+%description vdo-devel
+This package contains header files and pkg-config files needed for development
+with the libblockdev-vdo plugin/library.
+
 %package plugins
 Summary: Meta-package that pulls all the libblockdev plugins as dependencies
 Group: System/Libraries
@@ -385,6 +418,7 @@ Requires: %name-mpath = %version-%release
 Requires: %name-part = %version-%release
 Requires: %name-swap = %version-%release
 Requires: %name-nvdimm = %version-%release
+%{?_with_vdo:Requires: %name-vdo = %version-%release}
 %ifarch s390 s390x
 Requires: %name-s390 = %version-%release
 %endif
@@ -400,7 +434,9 @@ subst 's/mkfs\.vfat/mkfs.fat/g
 %build
 %add_optflags -lm
 %autoreconf
-%configure
+%configure \
+	%{subst_with vdo} \
+	%{subst_with dmraid}
 %make_build
 
 %install
@@ -564,10 +600,25 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %_includedir/blockdev/s390.h
 %endif
 
+%if_with vdo
+%files vdo
+%_libdir/libbd_vdo.so.*
+
+%files vdo-devel
+%_libdir/libbd_vdo.so
+%dir %_includedir/blockdev
+%_includedir/blockdev/vdo.h
+%endif
+
 %files plugins
 
 
 %changelog
+* Thu Jun 21 2018 Yuri N. Sedunov <aris@altlinux.org> 2.18-alt1
+- 2.18 with
+- prepared optional vdo* subpackages (vdo and kvdo required)
+- added conditionals for dmraid support
+
 * Fri May 11 2018 Yuri N. Sedunov <aris@altlinux.org> 2.17-alt1
 - 2.17 with new nvdimm* subpackages
 
