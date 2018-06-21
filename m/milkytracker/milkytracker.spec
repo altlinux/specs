@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/xmlto gcc-c++ libalsa-deve
 %define _localstatedir %{_var}
 Name:           milkytracker
 Version:        1.02.00
-Release:        alt1_1
+Release:        alt2_1
 Summary:        Module tracker software for creating music
 
 Group:          Sound
@@ -74,6 +74,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata
 %{_docdir}/%{name}
 
 %changelog
+* Thu Jun 21 2018 Igor Vlasenko <viy@altlinux.ru> 1.02.00-alt2_1
+- rebuild with new librtmidi
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.02.00-alt1_1
 - update to new release by fcimport
 
