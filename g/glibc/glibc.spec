@@ -2,7 +2,7 @@
 
 Name: glibc
 Version: 2.27
-Release: alt4
+Release: alt5
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -51,14 +51,15 @@ Obsoletes: linuxthreads, gencat, ldconfig
 %define libc_locales %(for i in %libc_locales_list;do echo -n "locale-$i locales-$i ";done)
 %define renamed_locales ru_RU.iso88595 ru_UA.koi8u uk_UA.koi8u
 
-PreReq: %name-core = %epoch:%version-%release
-PreReq: %name-pthread = %epoch:%version-%release
-PreReq: %name-nss = %epoch:%version-%release
-PreReq: %name-locales = %epoch:%version-%release
-PreReq: %name-gconv-modules = %epoch:%version-%release
-PreReq: iconv = %epoch:%version-%release
-PreReq: %name-timezones = %epoch:%version-%release
-PreReq: %name-utils = %epoch:%version-%release
+PreReq: %name-core = %EVR
+PreReq: %name-pthread = %EVR
+PreReq: %name-nss = %EVR
+PreReq: %name-locales = %EVR
+PreReq: %name-gconv-modules = %EVR
+PreReq: iconv = %EVR
+PreReq: %name-timezones = %EVR
+PreReq: %name-utils = %EVR
+# libcrypt1 is intentionally omitted
 
 # Required to hardlink identical locale files.
 BuildPreReq: hardlink
@@ -81,8 +82,8 @@ BuildPreReq: makeinfo
 
 %define _localstatedir /var
 %define _gconvdir %_libdir/gconv
-%define __find_provides %_builddir/%name-%version-%release/alt/find-provides.sh
-%define __find_requires %_builddir/%name-%version-%release/alt/find-requires.sh
+%filter_from_provides /GLIBC_PRIVATE/d
+%filter_from_requires /GLIBC_PRIVATE/d;/\/libcrypt\.so\.1/d
 
 %package preinstall
 Summary: The GNU libc preinstall utilities
@@ -95,12 +96,11 @@ Summary: The GNU libc core libraries and utilities
 Group: System/Libraries
 AutoReq: no
 PreReq: setup
-PreReq: %name-preinstall >= %epoch:%version-%release
-Conflicts: %name < %epoch:%version-%release
+PreReq: %name-preinstall >= %EVR
+Conflicts: %name < %EVR
 Conflicts: glibc-core-archopt
 Provides: linuxthreads, ldconfig
 Obsoletes: linuxthreads, ldconfig
-Provides: glibc-crypt_blowfish = 1.2
 # The dynamic linker supports DT_GNU_HASH
 Provides: rtld(GNU_HASH)
 # The dynamic linker supports STB_GNU_UNIQUE
@@ -111,8 +111,7 @@ Provides: rtld(GNU_IFUNC)
 %package pthread
 Summary: The GNU libc pthread libraries
 Group: System/Libraries
-PreReq: %name-core = %epoch:%version-%release
-Conflicts: %name < %epoch:%version-%release
+PreReq: %name-core = %EVR
 %{expand:%%define lib_suffix %(test %_lib != lib64 && echo %%nil || echo '()(64bit)')}
 # due to pthread_cancel_init() which calls __libc_dlopen ("libgcc_s.so.1")
 Requires: libgcc_s.so.1%lib_suffix
@@ -120,62 +119,60 @@ Requires: libgcc_s.so.1%lib_suffix
 %package nss
 Summary: The GNU libc Name Service Switch subsystem
 Group: System/Libraries
-PreReq: %name-pthread = %epoch:%version-%release
-Conflicts: %name < %epoch:%version-%release
+PreReq: %name-pthread = %EVR
+
+%package -n libcrypt1
+Summary: Password hashing library
+Group: System/Libraries
+PreReq: %name-core = %EVR
+Provides: glibc-crypt_blowfish = 1.2
 
 %package -n libnsl1
 Summary: Legacy NIS support library
 Group: System/Legacy libraries
-PreReq: %name-core = %epoch:%version-%release
-Conflicts: %name < %epoch:%version-%release
+PreReq: %name-core = %EVR
 
 %package locales
 Summary: The GNU libc locales
 Group: System/Internationalization
-PreReq: %name-pthread = %epoch:%version-%release
-Provides: %name-locales-virtual = %epoch:%version-%release
+PreReq: %name-pthread = %EVR
+Provides: %name-locales-virtual = %EVR
 Provides: locale locales %libc_locales
 Obsoletes: locale locales %libc_locales
 Obsoletes: %name-locales-junior
-Conflicts: %name < %epoch:%version-%release
 Obsoletes: i586-glibc-locales
 
 %package i18ndata
 Summary: Files for building customized GNU libc locales
 Group: System/Base
 BuildArch: noarch
-PreReq: %name-core = %epoch:%version-%release
+PreReq: %name-core = %EVR
 Obsoletes: %name-localedata
 Provides: %name-localedata
-Conflicts: %name < %epoch:%version-%release
 Conflicts: mutt < 1.3.22.1i
 
 %package gconv-modules
 Summary: The GNU libc charset conversion modules
 Group: System/Base
-PreReq: %name-pthread = %epoch:%version-%release
-Conflicts: %name < %epoch:%version-%release
+PreReq: %name-pthread = %EVR
 # hack
 Provides: %(test %_lib = lib64 && s='()(64bit)' || s=; for n in CNS GB ISOIR165 JIS JISX0213 KSC; do echo -n "lib$n.so$s %_libdir/gconv/lib$n.so$s "; done)
 
 %package -n iconv
 Summary: The GNU libc charset conversion modules
 Group: System/Base
-PreReq: %name-gconv-modules = %epoch:%version-%release
-Conflicts: %name < %epoch:%version-%release
+PreReq: %name-gconv-modules = %EVR
 
 %package timezones
 Summary: The GNU libc timezones data
 Group: System/Base
-PreReq: %name-pthread = %epoch:%version-%release
-Conflicts: %name < %epoch:%version-%release
+PreReq: %name-pthread = %EVR
 Requires: tzdata
 
 %package utils
 Summary: The GNU libc misc utilities
 Group: System/Base
-PreReq: %name-pthread = %epoch:%version-%release
-Conflicts: %name < %epoch:%version-%release
+PreReq: %name-pthread = %EVR
 Requires: mktemp >= 1:1.3.1
 Provides: gencat
 Obsoletes: gencat
@@ -185,8 +182,8 @@ Conflicts: rpcbind < 0.2.1-alt0.4
 %package devel
 Summary: Include and object files required for C development
 Group: Development/C
-Requires: %name = %epoch:%version-%release, glibc-kernheaders >= %enablekernel, kernel-headers-common >= 1.1.4-alt1
-#Requires: %name-doc = %epoch:%version-%release
+Requires: %name = %EVR, glibc-kernheaders >= %enablekernel, kernel-headers-common >= 1.1.4-alt1
+#Requires: %name-doc = %EVR
 %ifarch %ix86 x86_64 %arm
 Provides: %_includedir/gnu/stubs-32.h
 %endif
@@ -200,20 +197,20 @@ Obsoletes: libc-headers, libc-devel, linuxthreads-devel
 %package devel-static
 Summary: Static libraries for C development
 Group: Development/C
-Requires: %name-devel = %epoch:%version-%release
+Requires: %name-devel = %EVR
 Obsoletes: libc-static
 
 %package doc
 Summary: Documentation for C development
 Group: Development/Other
 BuildArch: noarch
-PreReq: %name-pthread = %epoch:%version-%release
+PreReq: %name-pthread = %EVR
 Conflicts: texinfo < 3.11
 
 %package debug
 Summary: The GNU libc utilities for software debugging
 Group: Development/C
-Requires: %name-devel = %epoch:%version-%release
+Requires: %name-devel = %EVR
 Obsoletes: libc-debug
 
 %package -n nscd
@@ -221,7 +218,7 @@ Summary: A Name Service Caching Daemon (nscd)
 Group: System/Servers
 Conflicts: kernel < 2.2.0
 PreReq: shadow-utils
-PreReq: %name-pthread = %epoch:%version-%release
+PreReq: %name-pthread = %EVR
 
 %package source
 Summary: GNU libc sources
@@ -281,6 +278,9 @@ didn't fit in specific packages.
 NSS is a Name Service Switch subsystem.  The basic idea is to put the
 implementation of the different services offered to access the databases
 in separate modules.
+
+%description -n libcrypt1
+This package provides crypt* functions which implement password hashing.
 
 %description -n libnsl1
 This package provides the legacy version of libnsl library, for
@@ -519,6 +519,7 @@ export TIMEOUTFACTOR=10
 cat > %buildtarget/xfail.mk <<@@@
 export test-xfail-XPG4/unistd.h/linknamespace = yes
 export test-xfail-tst-resolv-search=yes
+export test-xfail-tst-default-attr=yes
 %ifarch x86_64
 export test-xfail-test-ildouble=yes
 %endif
@@ -550,10 +551,17 @@ export test-xfail-test-ldouble-lgamma=yes
 export test-xfail-test-ldouble=yes
 export test-xfail-tst-malloc-usable-tunables=yes
 %endif
+%ifarch aarch64
+export test-xfail-test-errno-linux=yes
+export test-xfail-tst-mlock2=yes
+export test-xfail-tst-pkey=yes
+export test-xfail-tst-clock2=yes
+%endif
 
 include Makefile
 @@@
 
+ulimit -u $(ulimit -Hu)
 make %PARALLELMFLAGS -C %buildtarget -f xfail.mk -k check fast-check=yes LDFLAGS=-Wl,--no-as-needed || {
   rc=$?
   grep '^FAIL:' %buildtarget/tests.sum | cut -d" " -f2- |
@@ -632,6 +640,7 @@ fi
 /%_lib/lib*.so*
 %exclude /%_lib/lib*thread*.so*
 %exclude /%_lib/libanl*.so*
+%exclude /%_lib/libcrypt*.so*
 %exclude /%_lib/librt*.so*
 /%_lib/ld*.so.*
 %attr(755,root,root)/%_lib/ld*.so
@@ -659,6 +668,10 @@ fi
 %files nss
 /%_lib/libnss_*.so*
 %exclude /%_lib/libnss_f*
+
+%files -n libcrypt1
+/%_lib/libcrypt-*.so
+/%_lib/libcrypt.so.1
 
 %files -n libnsl1
 %_libdir/libnsl-*.so
@@ -750,6 +763,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Thu Jun 21 2018 Dmitry V. Levin <ldv@altlinux.org> 6:2.27-alt5
+- Updated to glibc-2.27-64-gffc5623 from 2.27 branch.
+- Moved libcrypt from glibc-core to a separate subpackage.
+
 * Thu May 10 2018 Dmitry V. Levin <ldv@altlinux.org> 6:2.27-alt4
 - Updated to glibc-2.27-51-gb2dd29a from 2.27 branch.
 - glibc_preinstall: rewritten as a regular statically linked executable.
