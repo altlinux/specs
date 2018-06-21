@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.019
+Version: 0.020
 Release: alt1
 Summary: DistroDb Maker tools
 License: LGPL2+
@@ -71,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Thu Jun 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.020-alt1
+- new version
+
 * Tue May 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.019-alt1
 - new version
 
