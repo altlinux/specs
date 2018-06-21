@@ -1,25 +1,22 @@
+%define oldname librtmidi
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-Group: Development/C
+Group: System/Legacy libraries
 %add_optflags %optflags_shared
 %define oldname rtmidi
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:       librtmidi
-Version:    3.0.0
-Release:    alt1_2
+Name:       librtmidi2
+Version:    2.1.0
+Release:    alt2_9
 Summary:    Library for realtime MIDI input/output (ALSA support)
 License:    MIT
 URL:        http://www.music.mcgill.ca/~gary/rtmidi/index.html
 Source0:    http://www.music.mcgill.ca/~gary/rtmidi/release/%{oldname}-%{version}.tar.gz
-Patch0:     rtmidi-3.0.0-buildfix.patch
 BuildRequires:  libalsa-devel, libjack-devel
-BuildRequires:  autoconf, automake, libtool, /usr/bin/dos2unix
-BuildRequires:  doxygen
-Obsoletes:  %{oldname}-jack < 2.0.0
+BuildRequires:  autoconf-common, /usr/bin/dos2unix
 Source44: import.info
-Provides: rtmidi = %{version}-%{release}
 
 %description
 RtMidi is a set of C++ classes (RtMidiIn and RtMidiOut) that provides a common 
@@ -34,29 +31,10 @@ goals:
   projects
 * MIDI device enumeration
 
-%package -n librtmidi4
-Summary: Library for realtime MIDI input/output (ALSA support)
-Group: System/Libraries
-
-%description -n librtmidi4
-RtMidi is a set of C++ classes (RtMidiIn and RtMidiOut) that provides a common 
-API (Application Programming Interface) for realtime MIDI input/output across 
-Linux (ALSA & Jack), Macintosh OS X, Windows (Multimedia Library), and SGI 
-operating systems. RtMidi significantly simplifies the process of interacting 
-with computer MIDI hardware and software. It was designed with the following 
-goals:
-* object oriented C++ design
-* simple, common API across all supported platforms
-* only two header files and one source file for easy inclusion in programming 
-  projects
-* MIDI device enumeration
-
-
-This package contains shared library for %name.
 %package devel
 Group: Development/C
 Summary:    Development headers and libraries for rtmidi
-Requires:   %{name}4 = %{version}-%{release}
+Requires:   %{name} = %{version}-%{release}
 Provides: rtmidi-devel = %{version}-%{release}
 
 %description devel
@@ -65,55 +43,48 @@ Development headers and libraries for rtmidi.
 %prep
 %setup -n %{oldname}-%{version} -q
 
-%patch0 -p1
-
 # cp -f /usr/lib/rpm/config.{guess,sub} config/
-sed -i.orig -e 's/\/lib/\/%{_lib}/' Makefile.in rtmidi.pc.in
+sed -i -e 's/\/lib/\/%{_lib}/' Makefile.in librtmidi.pc.in
+sed -i -e 's/RtError\.h//' Makefile.in
+autoconf -f
 # fix end of line
 dos2unix doc/release.txt doc/doxygen/tutorial.txt
 sed -i -e 's,$(LIBS) $(SOURCE),$(SOURCE) $(LIBS),' Makefile*
 
-rm config/ltmain.sh
-
 %build
-find . -name Makefile.in -delete
-./autogen.sh --no-configure
+# First pass, jack.
 %configure --docdir=%{_docdir}/%{oldname}-devel --with-jack --with-alsa
-%make_build AM_DEFAULT_VERBOSITY=1
-
-# Get rid of the -L/usr/lib in the output of this convenience script
-sed -i -E 's/-L[^ "]+//' %{oldname}-config
+make CFLAGS="$CXXFLAGS -fPIC"
 
 %install
-make DESTDIR=%{buildroot} install
+mkdir -p %{buildroot}%{_libdir} %{buildroot}%{_bindir} %{buildroot}%{_includedir}
+sed -i -E 's/-L[^ "]+//' %{oldname}-config
+make install PREFIX=%{buildroot}%{_prefix}
 
-install --verbose -D -t %{buildroot}%{_bindir} %{oldname}-config
+rm %{buildroot}%{_libdir}/pkgconfig
+mkdir -p %{buildroot}%{_libdir}/pkgconfig
+cp -p lib%{oldname}.pc %{buildroot}%{_libdir}/pkgconfig/
+rm %{buildroot}%{_libdir}/*.a
 
-rm %{buildroot}%{_libdir}/lib%{oldname}.{a,la}
+rm -rf %buildroot%_bindir %buildroot%{_includedir} %buildroot%{_libdir}/pkgconfig %buildroot%{_libdir}/lib%{oldname}.so
 
-# There is a file in the package with a name starting with <tt>._</tt>, 
-# the file name pattern used by Mac OS X to store resource forks in non-native 
-# file systems. Such files are generally useless in packages and were usually 
-# accidentally included by copying complete directories from the source tarball.
-find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
-# for ones installed as %%doc
-find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
-
-
-%files -n librtmidi4
-%doc README.md
+%files
+%doc readme
 %{_libdir}/lib%{oldname}.so.*
 
+%if 0
 %files devel
-%doc doc/html
+%doc doc/*
 %{_bindir}/%{oldname}-config
-%{_includedir}/%{oldname}
+#{_docdir}/%{oldname}-devel/
+%{_includedir}/RtMidi.h
 %{_libdir}/lib%{oldname}.so
-%{_libdir}/pkgconfig/%{oldname}.pc
+%{_libdir}/pkgconfig/lib%{oldname}.pc
+%endif
 
 %changelog
-* Thu Jun 21 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_2
-- new version
+* Thu Jun 21 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt2_9
+- legacy library
 
 * Tue Oct 10 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_9
 - update to new release by fcimport
