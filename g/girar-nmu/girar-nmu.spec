@@ -1,5 +1,5 @@
 Name: girar-nmu
-Version: 1.52
+Version: 1.991
 Release: alt1
 
 Summary: git.alt client utilities for NMU automation
@@ -12,10 +12,11 @@ Url: http://www.altlinux.org/Git.alt/girar-nmu
 Source: %name-%version.tar
 
 #BuildRequires: help2man
+BuildRequires: m4
 BuildRequires: perl-devel perl-podlators perl(RPM/Header.pm) perl-RPM-Source-Editor perl-RPM-Source-Convert perl(Pod/Usage.pm) perl(Date/Parse.pm) /usr/bin/pod2man perl-Gear-Rules perl(Source/Shared/Utils/GlobList.pm)
 
 Requires: gear
-Requires: perl-RPM-Source-Editor >= 0.9200
+Requires: perl-RPM-Source-Editor >= 0.9210
 
 %description
 This package contains client utilities for git.alt
@@ -26,31 +27,64 @@ for NMU automation.
 rm *.spec
 
 %build
+%make VERSION=%version
 gcc -O2 %optflags -o girar-nmu-helper-pos-sort pos-sort.c
 
 %install
-#make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 mkdir -p %buildroot%perl_vendor_privlib/RPM/Source/Tools
 install -m 644 GirarWriterPrototype.pm %buildroot%perl_vendor_privlib/RPM/Source/Tools/
 
-mkdir -p %buildroot%_bindir
+mkdir -p %buildroot%_sysconfdir/%name/
+install -m 644 config/* %buildroot%_sysconfdir/%name/
+
+mkdir -p %buildroot%_bindir/
 install -m 755 girar-* rpm-sign-* srpmlschangelog %buildroot%_bindir/
 
-for i in girar-* srpmlschangelog; do
-    pod2man  --name $i --center 'girar-nmu utils' --section 1 --release %version $i > $i.1 ||:
+for i in girar-* srpmlschangelog dist/girar-*; do
+    name=`basename $i`
+    pod2man  --name $name --center 'girar-nmu utils' --section 1 --release %version $i > $name.1 ||:
 done
 find . -name '*.1' -size 0 -print -delete
 mkdir -p %buildroot%_man1dir
-install -m 644 girar-*.1 %buildroot%_man1dir/
+install -m 644 *.1 %buildroot%_man1dir/
+
+(while true; do
+read link script
+[ -n "$script" ] || break
+    ln -s $link %buildroot%_bindir/$script
+    ln -s $link.1.xz %buildroot%_man1dir/$script.1.xz
+done) << EOF
+girar-task-add-git	girar-task-for-each-git
+girar-task-add-git	girar-build-git
+girar-task-add-srpm	girar-task-for-each-srpm
+girar-task-add-srpm	girar-build-srpm
+girar-task-add-rebuild girar-task-add-del
+girar-task-add-rebuild girar-task-add-copy
+girar-task-add-rebuild girar-task-for-each-rebuild
+girar-task-add-rebuild girar-task-for-each-del
+girar-task-add-rebuild girar-task-for-each-copy
+girar-task-add-rebuild girar-build-rebuild
+girar-task-add-rebuild girar-build-del
+girar-task-add-rebuild girar-build-copy
+EOF
 
 %files
 %doc README
 %_bindir/*
 %_man1dir/*
+%config(noreplace) %_sysconfdir/%name/default
+%config(noreplace) %_sysconfdir/%name/e2k
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Thu Jun 21 2018 Igor Vlasenko <viy@altlinux.ru> 1.991-alt1
+- 2.0 beta 1
+
+* Wed Jun 20 2018 Igor Vlasenko <viy@altlinux.ru> 1.990-alt1
+- 2.0 alpha
+
 * Wed May 23 2018 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1
 - e2k support (add -H git.e2k to use)
 
