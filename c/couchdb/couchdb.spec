@@ -1,7 +1,7 @@
 %define oname apache-couchdb
 
 Name: couchdb
-Version: 1.6.1
+Version: 1.7.1
 Release: alt1
 
 Summary: A peer based distributed database system
@@ -16,7 +16,7 @@ Packager: Mikhail Pokidko <pma@altlinux.org>
 Source: %name-%version.tar
 Source1: couch.init
 
-BuildRequires: erlang erlang-devel erlang-otp-devel libicu-devel libcurl-devel help2man libjs-devel
+BuildRequires: gcc-c++ autoconf-archive rpm-macros-erlang erlang erlang-devel erlang-otp-devel libicu-devel libcurl-devel help2man libjs-devel
 
 Requires: libicu-devel erlang erlang-otp
 
@@ -39,10 +39,12 @@ efficient system.
 
 %prep
 %setup
+touch THANKS
 
 %build
 ./bootstrap
-%configure --with-js-include=%_includedir/js --localstatedir=/var --libdir=%_libexecdir
+%configure --with-js-include=%_includedir/js --localstatedir=/var --libdir=%_libexecdir \
+    --with-erlang=%_otpdir%_includedir --disable-docs
 %make_build
 
 %install
@@ -95,10 +97,14 @@ rm -f %buildroot/etc/rc.d/couchdb
 %attr(0770,root, _couchdb) %_localstatedir/%name
 %attr(0770,root, _couchdb) %_logdir/%name
 %doc %_defaultdocdir/%name
-%_man1dir/*
+#_man1dir/*
 
 
 %changelog
+* Thu Jun 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1.7.1-alt1
+- new version 1.7.1 (with rpmrb script)
+- disable build doc
+
 * Wed Feb 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt1
 - new version 1.6.1 (with rpmrb script)
 - build with icu 5.6
