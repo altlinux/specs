@@ -3,7 +3,7 @@
 
 Name: apitrace
 Version: 7.1
-Release: alt1
+Release: alt2
 
 Summary: Tools for tracing OpenGL
 
@@ -19,9 +19,10 @@ Source2: qapitrace.appdata.xml
 
 # Unbundle gtest
 Patch: apitrace-7.1_gtest.patch
-# Don't add '-nn' to the moc options, it ends up in the CFLAGS
-# https://github.com/apitrace/apitrace/issues/528
-Patch1: apitrace_moc-options.patch
+
+# due https://bugzilla.altlinux.org/show_bug.cgi?id=35067
+%remove_optflags -O2
+%add_optflags -O1
 
 BuildRequires: cmake ctest
 BuildRequires: qt5-base-devel
@@ -71,8 +72,6 @@ This package contains qapitrace, the Graphical frontend for apitrace.
 %prep
 %setup
 %patch -p1
-# TODO: remove after fix https://bugzilla.altlinux.org/show_bug.cgi?id=34055
-%patch1 -p1
 
 # Remove bundled libraries, except khronos headers and libbacktrace
 # TODO:
@@ -130,6 +129,9 @@ make check
 %_datadir/appdata/qapitrace.appdata.xml
 
 %changelog
+* Thu Jun 21 2018 Vitaly Lipatov <lav@altlinux.ru> 7.1-alt2
+- fix build with eat memory bug in gcc
+
 * Mon Oct 30 2017 Vitaly Lipatov <lav@altlinux.ru> 7.1-alt1
 - initial build for ALT Sisyphus
 - restore dlsym hack
