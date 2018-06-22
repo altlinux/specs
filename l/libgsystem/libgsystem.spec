@@ -11,7 +11,7 @@ BuildRequires: /usr/bin/xsltproc
 
 Name:		libgsystem
 Version:	2015.2
-Release:	alt1_4
+Release:	alt2_4
 Summary:	GIO-based library for use by operating system components
 License:	LGPLv2+
 URL:		https://wiki.gnome.org/Projects/LibGSystem
@@ -46,6 +46,10 @@ for use by operating system components.
 %package -n %{libname}
 Summary:	GIO-based library for use by operating system components
 Group:		System/Libraries
+# https://bugzilla.altlinux.org/show_bug.cgi?id=35074
+Conflicts: libgsystem < 2015.2
+Obsoletes: libgsystem < 2015.2
+
 
 %description -n %{libname}
 LibGSystem is a GIO-based library, targeted primarily
@@ -112,6 +116,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Fri Jun 22 2018 Igor Vlasenko <viy@altlinux.ru> 2015.2-alt2_4
+- added conflicts/obsoletes (closes: #35074)
+
 * Thu Jun 07 2018 Igor Vlasenko <viy@altlinux.ru> 2015.2-alt1_4
 - new version
 
