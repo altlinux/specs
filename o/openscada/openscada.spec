@@ -1,54 +1,10 @@
-%define gver 5
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
+%set_verify_elf_method relaxed
+%define gver 7
 %set_gcc_version %gver
-
-#===== Generic Info ======
-Summary: Open SCADA system
-Summary(ru_RU.UTF8): Открытая SCADA система
-Summary(uk_UA.UTF8): Відкрита SCADA система
-Summary(de_DE.UTF8): Open SCADA-System
-Name: openscada
-Version: 0.8.20
-Release: alt1
-Source: openscada-%version.tar
-Source1: openscada-res.tar.lzma
-Source2: oscada_ALT.init
-License: GPLv2
-Group: Graphics
-Packager: Anton Midyukov <antohami@altlinux.org>
-URL: http://oscada.org
-
-%define srcname openscada-%version
-
-#= Individual distributives seting =
-%if %_vendor == "alt"
-%set_verify_elf_method no
-BuildRequires: glibc-devel gcc%gver-c++ libpcre-devel libgd2-devel
-BuildRequires: libMySQL-devel libsqlite3-devel firebird-devel postgresql-devel
-BuildRequires: libsensors3-devel libnet-snmp-devel libportaudio2-devel libqt4-devel libfftw3-devel
-%else
-%define _initdir /etc/init.d
-%define _desktopdir %_datadir/applications
-%define _iconsdir /usr/share/icons
-%define _pkgconfigdir %_libdir/pkgconfig
-BuildRoot: %_tmppath/%name-%version-root
-%endif
-
-Requires: %name-Archive.DBArch %name-Archive.FSArch
-Requires: %name-DAQ.BlockCalc %name-DAQ.DAQGate %name-DAQ.DCON %name-DAQ.JavaLikeCalc %name-DAQ.LogicLev %name-DAQ.ModBus
-Requires: %name-DAQ.OPC_UA %name-DAQ.SNMP %name-DAQ.Siemens %name-DAQ.SoundCard %name-DAQ.System
-Requires: %name-DB.SQLite %name-DB.MySQL
-Requires: %name-Transport.Sockets %name-Transport.SSL %name-Transport.Serial %name-Protocol.SelfSystem %name-Protocol.HTTP %name-Protocol.UserProtocol
-Requires: %name-UI.QTStarter %name-UI.QTCfg %name-UI.VCAEngine %name-UI.Vision %name-UI.WebVision %name-UI.WebCfgD %name-UI.WebUser
-Requires: %name-Special.FLibComplex1 %name-Special.FLibSYS %name-Special.FLibMath
-
-%description
-Open SCADA system. Typical installation.
-%description -l ru_RU.UTF8
-Открытая SCADA система. Типичная установка.
-%description -l uk_UA.UTF8
-Відкрита SCADA система. Типове встановлення.
-%description -l de_DE.UTF8
-Das offene SCADA System. Typische Installation.
+%def_with qt5
 
 #===== DB subsystem modules ======
 %def_enable DBF
@@ -77,6 +33,12 @@ Das offene SCADA System. Typische Installation.
 %def_enable ICP_DAS
 %def_enable DiamondBoards
 %endif
+%def_enable Comedi
+%def_enable AMRDevs
+%def_enable MMS
+# FT3 bad_elf_symbols detected: _ZN3FT35TProt8optDescrB5cxx11Ev
+%def_disable FT3
+%def_enable GPIO
 
 #=====  Archive modules =====
 %def_enable FSArch
@@ -108,15 +70,101 @@ Das offene SCADA System. Typische Installation.
 %def_enable FLibMath
 %def_enable FLibSYS
 
+#===== Generic Info ======
+Summary: Open SCADA system
+Summary(ru_RU.UTF8): Открытая SCADA система
+Summary(uk_UA.UTF8): Відкрита SCADA система
+Summary(de_DE.UTF8): Open SCADA-System
+Name: openscada
+Version: 0.9.0
+Release: alt1
+Source: openscada-%version.tar
+Source1: openscada-res.tar.xz
+Patch: added_lsb_header.patch
+License: GPLv2
+Group: Engineering
+Packager: Anton Midyukov <antohami@altlinux.org>
+URL: http://oscada.org
+
+%define srcname openscada-%version
+
+BuildRequires: glibc-devel gcc-c++ libpcre-devel libgd2-devel sqlite3
+BuildRequires: libsqlite3-devel
+BuildRequires: libportaudio2-devel
+BuildRequires: libfftw3-devel
+%if_enabled MySQL
+BuildRequires: libMySQL-devel
+%endif
+%if_enabled FireBird
+BuildRequires: firebird-devel
+%endif
+%if_enabled PostgreSQL
+BuildRequires: postgresql-devel
+%endif
+%if_enabled System
+BuildRequires: libsensors3-devel
+%endif
+%if_enabled SNMP
+BuildRequires: libnet-snmp-devel
+%endif
+%if_enabled Comedi
+BuildRequires: libcomedi-devel
+%endif
+%if_with qt5
+BuildRequires: qt5-base-devel qt5-sensors-devel zlib-devel
+%else
+BuildRequires: libqt4-devel libqt4-sensors-devel
+%endif
+
+Requires: %name-Archive.DBArch = %EVR
+Requires: %name-Archive.FSArch = %EVR
+Requires: %name-DAQ.BlockCalc = %EVR
+Requires: %name-DAQ.DAQGate = %EVR
+Requires: %name-DAQ.DCON = %EVR
+Requires: %name-DAQ.JavaLikeCalc = %EVR
+Requires: %name-DAQ.LogicLev = %EVR
+Requires: %name-DAQ.ModBus = %EVR
+Requires: %name-DAQ.OPC_UA = %EVR
+Requires: %name-DAQ.SNMP = %EVR
+Requires: %name-DAQ.Siemens = %EVR
+Requires: %name-DAQ.SoundCard = %EVR
+Requires: %name-DAQ.System = %EVR
+Requires: %name-DAQ.GPIO = %EVR
+Requires: %name-DB.SQLite = %EVR
+Requires: %name-DB.MySQL = %EVR
+Requires: %name-Transport.Sockets = %EVR
+Requires: %name-Transport.SSL = %EVR
+Requires: %name-Transport.Serial = %EVR
+Requires: %name-Protocol.SelfSystem = %EVR
+Requires: %name-Protocol.HTTP = %EVR
+Requires: %name-Protocol.UserProtocol = %EVR
+Requires: %name-UI.QTStarter = %EVR
+Requires: %name-UI.QTCfg = %EVR
+Requires: %name-UI.VCAEngine = %EVR
+Requires: %name-UI.Vision = %EVR
+Requires: %name-UI.WebVision = %EVR
+Requires: %name-UI.WebCfgD = %EVR
+Requires: %name-UI.WebUser = %EVR
+Requires: %name-Special.FLibComplex1 = %EVR
+Requires: %name-Special.FLibSYS = %EVR
+Requires: %name-Special.FLibMath = %EVR
+
+%description
+Open SCADA system. Typical installation.
+%description -l ru_RU.UTF8
+Открытая SCADA система. Типичная установка.
+%description -l uk_UA.UTF8
+Відкрита SCADA система. Типове встановлення.
+%description -l de_DE.UTF8
+Das offene SCADA System. Typische Installation.
+
 %package core
 Summary: Open SCADA system core
 Summary(ru_RU.UTF8): Ядро открытой SCADA системы
 Summary(uk_UA.UTF8): Ядро відкритої SCADA системи
 Summary(de_DE.UTF8): Open SCADA-System Kern
-%if %_vendor == "alt"
-AutoReq: noshell
-%endif
-Group: Graphics
+Group: Engineering
+Requires: lib%name
 %description core
 Open SCADA system core. For access use default account "root" and password "openscada".
 %description core -l ru_RU.UTF8
@@ -125,6 +173,27 @@ Open SCADA system core. For access use default account "root" and password "open
 Ядро відкритої SCADA системи. Для доступу використовуйте типовий обліковий запис "root" та пароль "openscada".
 %description core -l de_DE.UTF8
 Das offene SCADA System Core. Für den Zugriff Verwendung Standardkonto "root" und das Kennwort "openscada".
+
+%package -n lib%name
+Summary: Open SCADA development
+Summary(ru_RU.UTF8): Разработка открытой SCADA
+Summary(uk_UA.UTF8): Розробка відкритої SCADA
+Summary(de_DE.UTF8): Open SCADA Entwicklung
+Group: Engineering
+%description -n lib%name
+Library for %name.
+%description -n lib%name -l ru_RU.UTF8
+Библиотеки для %name.
+
+%package devel
+Summary: Open SCADA development
+Summary(ru_RU.UTF8): Разработка открытой SCADA
+Summary(uk_UA.UTF8): Розробка відкритої SCADA
+Summary(de_DE.UTF8): Open SCADA Entwicklung
+Group: Development/C++
+Requires: lib%name = %EVR
+%description devel
+Developments for %name.
 
 %package docEN
 Summary: Open SCADA documents (EN)
@@ -174,29 +243,17 @@ The %name-docUK package include documents files (Ukraine).
 %description docUK -l de_DE.UTF8
 Das Paket %name-docUK enthaelt Dokumentationsdateien (Ukrainisch).
 
-%package devel
-Summary: Open SCADA development
-Summary(ru_RU.UTF8): Разработка открытой SCADA
-Summary(uk_UA.UTF8): Розробка відкритої SCADA
-Summary(de_DE.UTF8): Open SCADA Entwicklung
-Group: Development/C++
-Requires: %name-core = %version-%release
-%description devel
-The %name-devel package - includes library archives and include files.
-%description devel -l ru_RU.UTF8
-Пакет %name-devel - включает архив библиотек и включаемые файлы.
-%description devel -l uk_UA.UTF8
-Пакет %name-devel - включає архів бібліотек та включаємі файли.
-%description devel -l de_DE.UTF8
-Das Paket %name-devel enthaelt die Bibliotheken und Archive Include-Dateien.
-
 %package LibDB.Main
 Summary: Main OpenSCADA libraries for DAQ and other into SQLite DB
 Summary(ru_RU.UTF8): Основные библиотеки OpenSCADA для сбора данных и другого в БД SQLite
 Summary(uk_UA.UTF8): Основні бібліотеки OpenSCADA для збору даних та іншого у БД SQLite
 Summary(de_DE.UTF8): Hauptbibliothek OpenSCADA für die Datenerhebung und die anderen in der Datenbank SQLite
-Group: Graphics
-Requires: %name-DB.SQLite %name-DAQ.JavaLikeCalc %name-DAQ.LogicLev %name-Special.FLibComplex1 %name-Special.FLibSYS
+Group: Engineering
+Requires: %name-DB.SQLite = %EVR
+Requires: %name-DAQ.JavaLikeCalc = %EVR
+Requires: %name-DAQ.LogicLev = %EVR
+Requires: %name-Special.FLibComplex1 = %EVR
+Requires: %name-Special.FLibSYS = %EVR
 BuildArch: noarch
 %description LibDB.Main
 The %{name}-LibDB.Main package includes main OpenSCADA libraries into SQLite DB.
@@ -216,8 +273,11 @@ Summary: Visual components libraries into SQLite DB
 Summary(ru_RU.UTF8): Библиотеки визуальных компонетов в БД SQLite
 Summary(uk_UA.UTF8): Бібліотеки візуальних компонентів у БД SQLite
 Summary(de_DE.UTF8): Visuelle Komponente in einer Bibliothek Datenbank SQLite
-Group: Graphics
-Requires: %name-DB.SQLite %name-DAQ.JavaLikeCalc %name-Special.FLibSYS %name-UI.VCAEngine
+Group: Engineering
+Requires: %name-DB.SQLite = %EVR
+Requires: %name-DAQ.JavaLikeCalc = %EVR
+Requires: %name-Special.FLibSYS = %EVR
+Requires: %name-UI.VCAEngine = %EVR
 BuildArch: noarch
 %description LibDB.VCA
 The %{name}-LibDB.VCA package includes visual components libraries into SQLite DB.
@@ -233,85 +293,110 @@ Das Paket %{name}-LibDB.VCA enthaelt Visuelle Komponente in einer Bibliothek Dat
 So verwenden, verbinden Sie die Datei Datenbank SQLite LibsDB/vcaBase.db und LibsDB/vcaTest.db.
 
 %package Model.AGLKS
-Summary: Model "AGLKS" data bases and config (Demo: EN,RU,UK)
-Summary(ru_RU.UTF8): БД и конфигурация модели "АГЛКС" (Демо: EN,RU,UK)
-Summary(uk_UA.UTF8): БД та конфігурація моделі "АГЛКС" (Демо: EN,RU,UK)
-Summary(de_DE.UTF8): Datenbanken und Konfigurationsdateien Modell "AGLKS" (Demo: EN,RU,UK)
-Group: Graphics
-%if %_vendor == "alt"
-AutoReq: noshell
-%endif
-Requires: %name-LibDB.Main %name-LibDB.VCA
-Requires: %name-Transport.Sockets %name-Transport.SSL %name-Transport.Serial %name-Protocol.HTTP %name-Protocol.SelfSystem %name-Protocol.UserProtocol
-Requires: %name-DAQ.BlockCalc %name-DAQ.ModBus %name-DAQ.System %name-Archive.FSArch
-Requires: %name-UI.QTStarter %name-UI.QTCfg %name-UI.Vision %name-UI.WebCfgD %name-UI.WebVision
-Requires: %name-Special.FLibMath
+Summary: Model "AGLKS" data bases and config (Demo: EN,UK,RU)
+Summary(ru_RU.UTF8): БД и конфигурация модели "АГЛКС" (Демо: EN,UK,RU)
+Summary(uk_UA.UTF8): БД та конфігурація моделі "АГЛКС" (Демо: EN,UK,RU)
+Summary(de_DE.UTF8): Datenbanken und Konfigurationsdateien Modell "AGLKS" (Demo: EN,UK,RU)
+Group: Engineering
+BuildArch: noarch
+Requires: %name-LibDB.Main = %EVR
+Requires: %name-LibDB.VCA = %EVR
+Requires: %name-Transport.Sockets = %EVR
+Requires: %name-Transport.SSL = %EVR
+Requires: %name-Transport.Serial = %EVR
+Requires: %name-Protocol.HTTP = %EVR
+Requires: %name-Protocol.SelfSystem = %EVR
+Requires: %name-Protocol.UserProtocol = %EVR
+Requires: %name-DAQ.BlockCalc = %EVR
+Requires: %name-DAQ.ModBus = %EVR
+Requires: %name-DAQ.System = %EVR
+Requires: %name-Archive.FSArch = %EVR
+Requires: %name-UI.QTStarter = %EVR
+Requires: %name-UI.QTCfg = %EVR
+Requires: %name-UI.Vision = %EVR
+Requires: %name-UI.WebCfgD = %EVR
+Requires: %name-UI.WebVision = %EVR
+Requires: %name-Special.FLibMath = %EVR
 %description Model.AGLKS
 The %{name}-Model.AGLKS package includes model "AGLKS" data bases and config.
-The Model is used for OpenSCADA demo and allowed for English, Russian and Ukrainian languages.
-For start use command <openscada_demo> or <openscada_AGLKS>.
-For access use account "root" and password "openscada" or account "user" and password "user".
+The Model is used for OpenSCADA demo and allowed for English, Ukrainian and Russian languages.
+For start use command <openscada_AGLKS>.
 %description Model.AGLKS -l ru_RU.UTF8
 Пакет %{name}-Model.AGLKS включает БД и конфигурацию модели "АГЛКС".
-Модель используется для демонстрации OpenSCADA и доступна на Английском, Русском и Украинском языках.
-Для старта используйте команду <openscada_demo> мли <openscada_AGLKS>.
-Для доступа используйте запись "root" и пароль "openscada" или запись "user" и пароль "user".
+Модель используется для демонстрации OpenSCADA и доступна на Английском, Украинском и Российском языках.
+Для старта используйте команду <openscada_AGLKS>.
 %description Model.AGLKS -l uk_UA.UTF8
 Пакет %{name}-Model.AGLKS включає БД та конфігурацію моделі "АГЛКС".
-Модель використано для демонстрації OpenSCADA та доступно на Англійській, Російській та Українській мовах.
-Для старту використовуйте команду <openscada_demo> та <openscada_AGLKS>.
-Для доступу використовуйте запис "root" та пароль "openscada" або запис "user" та пароль "user".
+Модель використано для демонстрації OpenSCADA та доступно на Англійській, Українській та Російській мовах.
+Для старту використовуйте команду <openscada_AGLKS>.
 %description Model.AGLKS -l de_DE.UTF8
 Das Paket %{name}-Model.AGLKS enthaelt Datenbanken und Konfigurationsdateien Modell "AGLKS".
-Das Modell wird verwendet, um OpenSCADA demonstrieren und ist verfügbar in Englisch, Russisch und Ukrainisch.
-Fuers Starten wird Kommando <openscada_demo> oder <openscada_AGLKS> benutzt.
-Fuer den Zugang die Aufzeichnung "root" und das Kennwort "openscada" benutzen.
+Das Modell wird verwendet, um OpenSCADA demonstrieren und ist verfügbar in Englisch, Ukrainisch und Russisch.
+Fuers Starten wird Kommando <openscada_AGLKS> benutzt.
 
 %package Model.Boiler
-Summary: Model "Boiler" data bases and config (EN,RU,UK)
-Summary(ru_RU.UTF8): БД и конфигурация модели "Котёл" (EN,RU,UK)
-Summary(uk_UA.UTF8): БД та конфігурація моделі "Котел" (EN,RU,UK)
-Summary(de_DE.UTF8): Datenbanken und Konfigurationsdateien Modell "Kessel" (EN,RU,UK)
-Group: Graphics
-%if %_vendor == "alt"
-AutoReq: noshell
-%endif
-Requires: %name-LibDB.Main %name-LibDB.VCA
-Requires: %name-DAQ.BlockCalc %name-DAQ.System %name-Archive.FSArch
-Requires: %name-UI.QTCfg %name-UI.QTStarter %name-UI.Vision %name-UI.WebCfgD %name-UI.WebVision
+Summary: Model "Boiler" data bases and config (EN,UK,RU)
+Summary(ru_RU.UTF8): БД и конфигурация модели "Котёл" (EN,UK,RU)
+Summary(uk_UA.UTF8): БД та конфігурація моделі "Котел" (EN,UK,RU)
+Summary(de_DE.UTF8): Datenbanken und Konfigurationsdateien Modell "Kessel" (EN,UK,RU)
+Group: Engineering
+BuildArch: noarch
+Requires: %name-LibDB.Main
+Requires: %name-LibDB.VCA
+Requires: %name-DAQ.BlockCalc
+Requires: %name-DAQ.System
+Requires: %name-Archive.FSArch
+Requires: %name-UI.QTCfg
+Requires: %name-UI.QTStarter
+Requires: %name-UI.Vision
+Requires: %name-UI.WebCfgD
+Requires: %name-UI.WebVision
 Requires: %name-Special.FLibMath
 %description Model.Boiler
 The %{name}-Model.Boiler package model "Boiler" data bases and config.
-The Model is allowed for English, Russian and Ukrainian languages.
+The Model is allowed for English, Ukrainian and Russian languages.
 For start use command <openscada_Boiler>.
-For access use account "root" and password "openscada" or account "user" and password "user".
 %description Model.Boiler -l ru_RU.UTF8
 Пакет %{name}-Model.Boiler включает БД и конфигурацию модели "Котёл".
-Модель доступна доступна на Английском, Русском и Украинском языках.
+Модель доступна доступна на Английском, Украинском и Российском языках.
 Для старта используйте команду <openscada_Boiler>.
-Для доступа используйте запись "root" и пароль "openscada" или запись "user" и пароль "user".
 %description Model.Boiler -l uk_UA.UTF8
 Пакет %{name}-Model.Boiler включає БД та конфігурацію моделі "Котел".
-Модель доступно на Англійській, Російській та Українській мовах.
+Модель доступно на Англійській, Українській та Російській мовах.
 Для старту використовуйте команду <openscada_Boiler>.
-Для доступу використовуйте запис "root" та пароль "openscada" або запис "user" та пароль "user".
 %description Model.Boiler -l de_DE.UTF8
 Das Paket %{name}-Model.Boiler enthaelt Datenbanken und Konfigurationsdateien Modell "Kessel".
-Das Modell ist verfügbar in Englisch, Russisch und Ukrainisch.
+Das Modell ist verfügbar in Englisch, Ukrainisch und Russisch.
 Fuers Starten wird Kommando <openscada_Boiler> benutzt.
-Fuer den Zugang die Aufzeichnung "root" und das Kennwort "openscada" benutzen. 
 
 %package plc
 Summary: OpenSCADA - PLC virtual package
 Summary(ru_RU.UTF8): Виртуальный пакет OpenSCADA - ПЛК
 Summary(uk_UA.UTF8): Віртуальний пакет OpenSCADA - ПЛК
 Summary(de_DE.UTF8): OpenSCADA - SPS virtuelles Paket
-Group: Graphics
+Group: Engineering
 BuildArch: noarch
-Requires: %name-DB.SQLite
-Requires: %name-Transport.Serial %name-Transport.Sockets %name-Transport.SSL %name-Protocol.HTTP %name-Protocol.SelfSystem %name-Protocol.UserProtocol
-Requires: %name-DAQ.JavaLikeCalc %name-DAQ.BlockCalc %name-DAQ.LogicLev %name-DAQ.ModBus %name-DAQ.System %name-DAQ.DCON %name-Archive.FSArch
-Requires: %name-UI.VCAEngine %name-UI.WebCfgD %name-UI.WebVision %name-Special.FLibComplex1 %name-Special.FLibMath %name-Special.FLibSYS
+Requires: %name-DB.SQLite = %EVR
+Requires: %name-Transport.Serial = %EVR
+Requires: %name-Transport.Sockets = %EVR
+Requires: %name-Transport.SSL = %EVR
+Requires: %name-Protocol.HTTP = %EVR
+Requires: %name-Protocol.SelfSystem = %EVR
+Requires: %name-Protocol.UserProtocol = %EVR
+Requires: %name-DAQ.JavaLikeCalc = %EVR
+Requires: %name-DAQ.BlockCalc = %EVR
+Requires: %name-DAQ.LogicLev = %EVR
+Requires: %name-DAQ.ModBus = %EVR
+Requires: %name-DAQ.System = %EVR
+Requires: %name-DAQ.DCON = %EVR
+Requires: %name-Archive.FSArch = %EVR
+Requires: %name-UI.VCAEngine = %EVR
+Requires: %name-UI.WebCfgD = %EVR
+Requires: %name-UI.WebVision = %EVR
+Requires: %name-Special.FLibComplex1 = %EVR
+Requires: %name-Special.FLibMath = %EVR
+Requires: %name-Special.FLibSYS = %EVR
+Conflicts: %name-server
 %description plc
 The %name-plc is virtual package for PLC.
 %description plc -l ru_RU.UTF8
@@ -326,15 +411,37 @@ Summary: OpenSCADA - server virtual package
 Summary(ru_RU.UTF8): Виртуальный пакет OpenSCADA - сервер
 Summary(uk_UA.UTF8): Віртуальний пакет OpenSCADA - сервер
 Summary(de_DE.UTF8): OpenSCADA - Server virtuelles Paket
-Group: Graphics
+Group: Engineering
 BuildArch: noarch
-Requires: %name-DB.SQLite %name-DB.MySQL %name-DB.FireBird %name-DB.PostgreSQL
-Requires: %name-DAQ.System %name-DAQ.BlockCalc %name-DAQ.JavaLikeCalc
-Requires: %name-DAQ.LogicLev %name-DAQ.SNMP %name-DAQ.Siemens %name-DAQ.ModBus %name-DAQ.DCON %name-DAQ.DAQGate %name-DAQ.SoundCard
-Requires: %name-Archive.FSArch %name-Archive.DBArch
-Requires: %name-Transport.Sockets %name-Transport.SSL %name-Transport.Serial %name-Protocol.HTTP %name-Protocol.SelfSystem
-Requires: %name-UI.VCAEngine %name-UI.WebCfg %name-UI.WebCfgD %name-UI.WebVision
-Requires: %name-Special.FLibComplex1 %name-Special.FLibMath %name-Special.FLibSYS
+Requires: %name-DB.SQLite = %EVR
+Requires: %name-DB.MySQL = %EVR
+Requires: %name-DB.FireBird = %EVR
+Requires: %name-DB.PostgreSQL = %EVR
+Requires: %name-DAQ.System = %EVR
+Requires: %name-DAQ.BlockCalc = %EVR
+Requires: %name-DAQ.JavaLikeCalc = %EVR
+Requires: %name-DAQ.LogicLev = %EVR
+Requires: %name-DAQ.SNMP = %EVR
+Requires: %name-DAQ.Siemens = %EVR
+Requires: %name-DAQ.ModBus = %EVR
+Requires: %name-DAQ.DCON = %EVR
+Requires: %name-DAQ.DAQGate = %EVR
+Requires: %name-DAQ.SoundCard = %EVR
+Requires: %name-Archive.FSArch = %EVR
+Requires: %name-Archive.DBArch = %EVR
+Requires: %name-Transport.Sockets = %EVR
+Requires: %name-Transport.SSL = %EVR
+Requires: %name-Transport.Serial = %EVR
+Requires: %name-Protocol.HTTP = %EVR
+Requires: %name-Protocol.SelfSystem = %EVR
+Requires: %name-UI.VCAEngine = %EVR
+Requires: %name-UI.WebCfg = %EVR
+Requires: %name-UI.WebCfgD = %EVR
+Requires: %name-UI.WebVision = %EVR
+Requires: %name-Special.FLibComplex1 = %EVR
+Requires: %name-Special.FLibMath = %EVR
+Requires: %name-Special.FLibSYS = %EVR
+Conflicts: %name-plc
 %description server
 The %name-server is virtual package for SCADA-server.
 %description server -l ru_RU.UTF8
@@ -349,15 +456,33 @@ Summary: OpenSCADA - visual station virtual package
 Summary(ru_RU.UTF8): Виртуальный пакет OpenSCADA - визуальная станция
 Summary(uk_UA.UTF8): Віртуальний пакет OpenSCADA - візуальна станція
 Summary(de_DE.UTF8): OpenSCADA - visuelle Station virtuelles Paket
-Group: Graphics
+Group: Engineering
 BuildArch: noarch
-Requires: %name-DB.SQLite %name-DB.MySQL
-Requires: %name-DAQ.System %name-DAQ.BlockCalc %name-DAQ.JavaLikeCalc %name-DAQ.LogicLev %name-DAQ.SNMP %name-DAQ.Siemens
-Requires: %name-DAQ.ModBus %name-DAQ.DCON %name-DAQ.DAQGate %name-DAQ.SoundCard
-Requires: %name-Archive.FSArch %name-Archive.DBArch
-Requires: %name-Transport.Sockets %name-Transport.SSL %name-Transport.Serial %name-Protocol.SelfSystem
-Requires: %name-UI.VCAEngine %name-UI.Vision %name-UI.QTStarter %name-UI.QTCfg
-Requires: %name-Special.FLibComplex1 %name-Special.FLibMath %name-Special.FLibSYS
+Requires: %name-DB.SQLite = %EVR
+Requires: %name-DB.MySQL = %EVR
+Requires: %name-DAQ.System = %EVR
+Requires: %name-DAQ.BlockCalc = %EVR
+Requires: %name-DAQ.JavaLikeCalc = %EVR
+Requires: %name-DAQ.LogicLev = %EVR
+Requires: %name-DAQ.SNMP = %EVR
+Requires: %name-DAQ.Siemens = %EVR
+Requires: %name-DAQ.ModBus = %EVR
+Requires: %name-DAQ.DCON = %EVR
+Requires: %name-DAQ.DAQGate = %EVR
+Requires: %name-DAQ.SoundCard = %EVR
+Requires: %name-Archive.FSArch = %EVR
+Requires: %name-Archive.DBArch = %EVR
+Requires: %name-Transport.Sockets = %EVR
+Requires: %name-Transport.SSL = %EVR
+Requires: %name-Transport.Serial = %EVR
+Requires: %name-Protocol.SelfSystem = %EVR
+Requires: %name-UI.VCAEngine = %EVR
+Requires: %name-UI.Vision = %EVR
+Requires: %name-UI.QTStarter = %EVR
+Requires: %name-UI.QTCfg = %EVR
+Requires: %name-Special.FLibComplex1 = %EVR
+Requires: %name-Special.FLibMath = %EVR
+Requires: %name-Special.FLibSYS = %EVR
 %description visStation
 The %name-visStation is virtual package for visual station (SCADA).
 %description visStation -l ru_RU.UTF8
@@ -374,8 +499,8 @@ Summary: DB DBF support
 Summary(ru_RU.UTF8): Поддержка БД DBF
 Summary(uk_UA.UTF8): Підтримка БД DBF
 Summary(de_DE.UTF8): DB DBF unterstützen
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DB.DBF
 The %{name}-DB.DBF package - provides support of the *.dbf files, version 3.0.
 %description DB.DBF -l ru_RU.UTF8
@@ -392,8 +517,8 @@ Summary: DB SQLite support
 Summary(ru_RU.UTF8): Поддержка БД SQLite
 Summary(uk_UA.UTF8): Підтримка БД SQLite
 Summary(de_DE.UTF8): DB SQLite unterstützen
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DB.SQLite
 The %{name}-DB.SQLite package - provides support of the BD SQLite.
 %description DB.SQLite -l ru_RU.UTF8
@@ -410,8 +535,8 @@ Summary: DB MySQL support
 Summary(ru_RU.UTF8): Поддержка БД MySQL
 Summary(uk_UA.UTF8): Підтримка БД MySQL
 Summary(de_DE.UTF8): DB MySQL unterstützen
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DB.MySQL
 The %{name}-DB.MySQL package - provides support of the BD MySQL.
 %description DB.MySQL -l ru_RU.UTF8
@@ -428,8 +553,8 @@ Summary: DB FireBird support
 Summary(ru_RU.UTF8): Поддержка БД FireBird
 Summary(uk_UA.UTF8): Підтримка БД FireBird
 Summary(de_DE.UTF8): DB FireBird unterstützen
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DB.FireBird
 The %{name}-DB.FireBird package - provides support of the DB FireBird.
 %description DB.FireBird -l ru_RU.UTF8
@@ -446,8 +571,8 @@ Summary: DB PostgreSQL support
 Summary(ru_RU.UTF8): Поддержка БД PostgreSQL
 Summary(uk_UA.UTF8): Підтримка БД PostgreSQL
 Summary(de_DE.UTF8): DB PostgreSQL unterstützen
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DB.PostgreSQL
 The %{name}-DB.PostgreSQL package - provides support of the DB PostgreSQL.
 %description DB.PostgreSQL -l ru_RU.UTF8
@@ -465,8 +590,8 @@ Summary: System DA
 Summary(ru_RU.UTF8): Источник данных "Система"
 Summary(uk_UA.UTF8): Джерело даних "Система"
 Summary(de_DE.UTF8): Source Data "Systems"
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DAQ.System
 The %{name}-DAQ.System package - provides data acquisition from the OS.
 Supported OS Linux data sources: HDDTemp, Sensors, Uptime, Memory, CPU, UPS etc.
@@ -487,8 +612,8 @@ Summary: Block based calculator
 Summary(ru_RU.UTF8): Блочный вычислитель
 Summary(uk_UA.UTF8): Блоковий обчислювач
 Summary(de_DE.UTF8): Block-Rechner
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DAQ.BlockCalc
 The %{name}-DB.DAQ.BlockCalc package - provides block based calculator.
 %description DAQ.BlockCalc -l ru_RU.UTF8
@@ -505,8 +630,8 @@ Summary: Java-like based calculator
 Summary(ru_RU.UTF8): Вычислитель, основанный на Java-подобном языке
 Summary(uk_UA.UTF8): Обчислювач, який засновано на подібній до Java мові
 Summary(de_DE.UTF8): Java-basierter Rechner wie
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DAQ.JavaLikeCalc
 The %{name}-DAQ.JavaLikeCalc package - provides based on java like language calculator and engine of libraries.
 The user can create and modify functions and libraries.
@@ -527,8 +652,8 @@ Summary: Diamond DA boards
 Summary(ru_RU.UTF8): Платы сбора данных Diamond
 Summary(uk_UA.UTF8): Плати збору даних Diamond
 Summary(de_DE.UTF8): Diamond DA-Boards
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DAQ.DiamondBoards
 The %{name}-DAQ.DiamondBoards package - provides an access to "Diamond Systems" DAQ boards.
 Includes main support for all generic boards.
@@ -549,8 +674,8 @@ Summary: Logic level
 Summary(ru_RU.UTF8): Логический уровень
 Summary(uk_UA.UTF8): Логічний рівень
 Summary(de_DE.UTF8): Logikpegel
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DAQ.LogicLev
 The %{name}-DAQ.LogicLev package - provides the logical level of parameters.
 %description DAQ.LogicLev -l ru_RU.UTF8
@@ -567,8 +692,8 @@ Summary: SNMP client
 Summary(ru_RU.UTF8): Клиент SNMP
 Summary(uk_UA.UTF8): Клієнт SNMP
 Summary(de_DE.UTF8): SNMP-Client
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DAQ.SNMP
 The %{name}-DAQ.SNMP package - provides an implementation of the client of SNMP-service.
 %description DAQ.SNMP -l ru_RU.UTF8
@@ -585,8 +710,8 @@ Summary: Siemens DAQ
 Summary(ru_RU.UTF8): Источник данных Siemens
 Summary(uk_UA.UTF8): Джерело даних Siemens
 Summary(de_DE.UTF8): Siemens DAQ
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DAQ.Siemens
 The %{name}-DAQ.Siemens package - provides a data source PLC Siemens by means of Hilscher CIF cards,
 by using the MPI protocol, and Libnodave library for the rest.
@@ -607,8 +732,8 @@ Summary: ModBus protocol and DAQ
 Summary(ru_RU.UTF8): ModBus протокол и сбор данных
 Summary(uk_UA.UTF8): ModBus протокол та збір даних
 Summary(de_DE.UTF8): MODBUS-Protokoll und DAQ
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DAQ.ModBus
 The %{name}-DAQ.ModBus package - provides realisation of ModBus client service.
 Supported Modbus/TCP, Modbus/RTU and Modbus/ASCII protocols.
@@ -629,8 +754,8 @@ Summary: DCON client
 Summary(ru_RU.UTF8): Клиент DCON
 Summary(uk_UA.UTF8): Клієнт DCON
 Summary(de_DE.UTF8): DCON Client
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DAQ.DCON
 The %{name}-DAQ.DCON package - provides an implementation of DCON-client protocol.
 Supports I-7000 DCON protocol.
@@ -651,8 +776,8 @@ Summary: Data sources gate
 Summary(ru_RU.UTF8): Шлюз источников данных
 Summary(uk_UA.UTF8): Шлюз джерел даних
 Summary(de_DE.UTF8): Datenquellen Tor
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DAQ.DAQGate
 The %{name}-DAQ.DAQGate package - allows you to perform the locking of the data sources
 of the remote OpenSCADA stations in the local ones.
@@ -673,8 +798,8 @@ Summary: Sound card
 Summary(ru_RU.UTF8): Звуковая карта
 Summary(uk_UA.UTF8): Звукова карта
 Summary(de_DE.UTF8): Soundkarte
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DAQ.SoundCard
 The %{name}-DAQ.SoundCard package - provides an access to the sound card.
 %description DAQ.SoundCard -l ru_RU.UTF8
@@ -691,8 +816,8 @@ Summary: ICP DAS hardware
 Summary(ru_RU.UTF8): Оборудование ICP DAS
 Summary(uk_UA.UTF8): Обладнання ICP DAS
 Summary(de_DE.UTF8): ICP DAS Hardware
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DAQ.ICP_DAS
 The %{name}-DAQ.ICP_DAS package - provides implementation for "ICP DAS" hardware support.
 Includes main I-87xxx DCON modules, I-8xxx fast modules and boards on ISA bus.
@@ -713,8 +838,8 @@ Summary: OPC UA protocol and DAQ
 Summary(ru_RU.UTF8): OPC UA протокол и сбор данных
 Summary(uk_UA.UTF8): OPC UA протокол та збір даних
 Summary(de_DE.UTF8): OPC UA-Protokoll und DAQ
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description DAQ.OPC_UA
 The %{name}-DAQ.OPC_UA package - provides realisation of OPC UA protocol.
 %description DAQ.OPC_UA -l ru_RU.UTF8
@@ -727,17 +852,112 @@ Das Paket %{name}-DAQ.OPC_UA - erlauben Realisierung von OPC UA-Protokoll.
 
 %if_enabled BFN
 %package DAQ.BFN
-Summary: BFN
-Group: Graphics
-Requires: %name-core = %version-%release
+Summary: Big Farm Net
+Group: Engineering
+Requires: %name-core = %EVR
 %description DAQ.BFN
-The %{name}-DAQ.BFN package - allow realisation of BFN.
+The %{name}-DAQ.BFN package - provides Big Farm Net (BFN) modules support for
+ Viper CT/BAS and other from "Big Dutchman" (http://www.bigdutchman.com).
 %description DAQ.BFN -l ru_RU.UTF8
-Пакет %{name}-DAQ.BFN - предоставляет реализацию BFN.
+Пакет %{name}-DAQ.BFN - предоставляет поддержку модулей Большой Сети Фермы (BFN)
+для Viper CT/BAS и других от "Big Dutchman" (http://www.bigdutchman.com).
 %description DAQ.BFN -l uk_UA.UTF8
-Пакет %{name}-DAQ.BFN - надає реалізацію BFN.
+Пакет %{name}-DAQ.BFN - надає підтримку модулів Великої Мережі Ферми (BFN)
+для Viper CT/BAS та інших від "Big Dutchman" (http://www.bigdutchman.com).
 %description DAQ.BFN -l de_DE.UTF8
-Das Paket %{name}-DAQ.BFN - erlauben Realisierung von BFN.
+Das Paket %{name}-DAQ.BFN - bietet Big Farm Net (BFN) Module Unterstützung für
+Viper CT/BAS und andere von "Big Dutchman" (http://www.bigdutchman.com).
+%endif
+
+%if_enabled Comedi
+%package DAQ.Comedi
+Summary: DAQ boards by Comedi
+Summary(ru_RU.UTF8): DAQ платы от Comedi
+Summary(uk_UA.UTF8): DAQ плати від Comedi
+Summary(de_DE.UTF8): DAQ-Karte aus Comedi
+Group: Engineering
+Requires: %name-core = %EVR
+%description DAQ.Comedi
+The %{name}-DAQ.Comedi package - provides ISA, PCI, PCMCIA, USB DAQ boards collection by Comedi(http://www.comedi.org).
+%description DAQ.Comedi -l ru_RU.UTF8
+Пакет %{name}-DAQ.Comedi - предоставляет коллекцию ISA, PCI, PCMCIA, USB DAQ плат от Comedi(http://www.comedi.org).
+%description DAQ.Comedi -l uk_UA.UTF8
+Пакет %{name}-DAQ.Comedi - надає колекцію ISA, PCI, PCMCIA, USB DAQ плат від Comedi(http://www.comedi.org).
+%description DAQ.Comedi -l de_DE.UTF8
+Das Paket %{name}-DAQ.Comedi - erlauben die Sammlung von ISA, PCI, PCMCIA, USB DAQ-Karten von Comedi (http://www.comedi.org).
+%endif
+
+%if_enabled AMRDevs
+%package DAQ.AMRDevs
+Summary: AMR devices
+Summary(ru_RU.UTF8): Устройства АСКУ
+Summary(uk_UA.UTF8): Пристрої АСКО
+Summary(de_DE.UTF8): Die AMR-Devices
+Group: Engineering
+Requires: %name-core = %EVR
+%description DAQ.AMRDevs
+The %{name}-DAQ.AMRDevs package - provides access to automatic meter reading devices.
+Supported devices: Kontar (http://www.mzta.ru).
+%description DAQ.AMRDevs -l ru_RU.UTF8
+Пакет %{name}-DAQ.AMRDevs - предоставляет доступ к устройствам счётчиков коммерческого учёта.
+Поддерживаются устройства: Kontar (http://www.mzta.ru).
+%description DAQ.AMRDevs -l uk_UA.UTF8
+Пакет %{name}-DAQ.AMRDevs - надає доступ до пристроїв лічильників комерцевого обліку.
+Підтримуються пристрої: Kontar (http://www.mzta.ru).
+%description DAQ.AMRDevs -l de_DE.UTF8
+Das Paket %{name}-DAQ.AMRDevs - ermöglicht den Zugang zu den Zählerwerken der kommerziellen Inventur.
+Es werden die Anlagen unterstützt: Kontar (http://www.mzta.ru).
+%endif
+
+%if_enabled MMS
+%package DAQ.MMS
+Summary: MMS(IEC-9506)
+Group: Engineering
+Requires: %name-core = %EVR
+%description DAQ.MMS
+The %{name}-DAQ.MMS package - provides MMS(IEC-9506) client implementation.
+%description DAQ.MMS -l ru_RU.UTF8
+Пакет %{name}-DAQ.MMS - предоставляет реализацию клиента MMS(IEC-9506).
+%description DAQ.MMS -l uk_UA.UTF8
+Пакет %{name}-DAQ.MMS - надає реалізацію клієнта MMS(IEC-9506).
+%description DAQ.MMS -l de_DE.UTF8
+Das Paket %{name}-DAQ.MMS - ermöglicht MMS(IEC-9506) Client-Implementierung.
+%endif
+
+%if_enabled FT3
+%package DAQ.FT3
+Summary: FT3 protocol
+Group: Engineering
+Requires: %name-core = %EVR
+%description DAQ.FT3
+Package%name-DAQ.FT3 - provides an implementation of the
+FT3 protocol. The module allows to exchange data with
+controllers APSTM, ASDKU, AMAP over FT3 protocol (master),
+and also provide data in the logic controller mode (slave).
+%description DAQ.FT3 -l ru_RU.UTF8
+Пакет %name-DAQ.FT3 - предоставляет реализацию протокола FT3.
+Модуль позволяет выполнять обмен данными с контроллерами АПСТМ,
+АСДКУ, СУАП по протоколу FT3 (ведущий), а также предоставлять
+данные в режиме логического контроллера (ведомый).
+%endif
+
+%if_enabled GPIO
+%package DAQ.GPIO
+Summary: GPIO different single board PCs
+Group: Engineering
+Requires: %name-core = %EVR
+%description DAQ.GPIO
+GPIO different single board PCs: Broadcom BCM 2835 and more
+(Raspberry Pi, ...), SUNXI AllWinner H2 and more (Orange Pi
+Zero, ...).
+%description DAQ.GPIO -l ru_RU.UTF8
+GPIO различных одноплатных ПК: Broadcom BCM 2835 и больше
+(Raspberry Pi, ...), SUNXI AllWinner H2 и больше (Orange
+Pi Zero, ...).
+%description DAQ.GPIO -l uk_UA.UTF8
+GPIO різних одноплатних ПК: Broadcom BCM 2835 та більше
+(Raspberry Pi, ...), SUNXI AllWinner H2 та більше (Orange
+Pi Zero, ...).
 %endif
 
 #===== Archiver subsystem modules =====
@@ -747,8 +967,8 @@ Summary: To file system archiver
 Summary(ru_RU.UTF8): Архиватор на файловую систему
 Summary(uk_UA.UTF8): Архіватор на файлову систему
 Summary(de_DE.UTF8): File System archivator
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description Archive.FSArch
 The %{name}-Archive.FSArch package - provides functions for messages and values archiving to file system.
 %description Archive.FSArch -l ru_RU.UTF8
@@ -765,8 +985,8 @@ Summary: To DB archiver
 Summary(ru_RU.UTF8): Архиватор на БД
 Summary(uk_UA.UTF8): Архіватор на БД
 Summary(de_DE.UTF8): Um DB archivator
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description Archive.DBArch
 The %{name}-Archive.DBArch package - provides functions for messages and values archiving to DB.
 %description Archive.DBArch -l ru_RU.UTF8
@@ -784,8 +1004,8 @@ Summary: Transport: Sockets
 Summary(ru_RU.UTF8): Транспорт: Сокеты
 Summary(uk_UA.UTF8): Транспорт: Сокети
 Summary(de_DE.UTF8): Verkehr: Sockets
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description Transport.Sockets
 The %{name}-Transport.Sockets package - provides sockets based transport.
 Supports inet and unix sockets. Inet socket uses TCP, UDP and RAWCAN protocols.
@@ -806,8 +1026,8 @@ Summary: Transport: SSL
 Summary(ru_RU.UTF8): Транспорт: SSL
 Summary(uk_UA.UTF8): Транспорт: SSL
 Summary(de_DE.UTF8): Verkehr: SSL
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description Transport.SSL
 The %{name}-Transport.SSL package - provides transport based on the secure sockets' layer.
 OpenSSL is used and SSLv2, SSLv3 and TLSv1 are supported.
@@ -828,8 +1048,8 @@ Summary: Transport: Serial interfaces
 Summary(ru_RU.UTF8): Транспорт: Последовательные интерфейсы
 Summary(uk_UA.UTF8): Транспорт: Послідовні інтерфейси
 Summary(de_DE.UTF8): Verkehr: Serielle Schnittstellen
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description Transport.Serial
 The %{name}-Transport.Serial package - Provides a serial interface.
 It is used to data exchange via the serial interfaces of type RS232, RS485, GSM and more.
@@ -851,8 +1071,8 @@ Summary: Protocol: HTTP-realisation
 Summary(ru_RU.UTF8): Протокол: реалізация HTTP
 Summary(uk_UA.UTF8): Протокол: реалізація HTTP
 Summary(de_DE.UTF8): Protokoll: HTTP-Realisierung
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description Protocol.HTTP
 The %{name}-Protocol.HTTP package - provides support for the HTTP protocol for WWW-based user interfaces.
 %description Protocol.HTTP -l ru_RU.UTF8
@@ -869,8 +1089,8 @@ Summary: Self system OpenSCADA protocol
 Summary(ru_RU.UTF8): Протокол: собственный системы OpenSCADA
 Summary(uk_UA.UTF8): Протокол: власний системи OpenSCADA
 Summary(de_DE.UTF8): Protokoll: Eigener System OpenSCADA
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description Protocol.SelfSystem
 The %{name}-Protocol.SelfSystem package - provides own OpenSCADA protocol based at XML and one's control interface.
 %description Protocol.SelfSystem -l ru_RU.UTF8
@@ -887,8 +1107,8 @@ Summary: User protocol
 Summary(ru_RU.UTF8): Протокол пользователя
 Summary(uk_UA.UTF8): Протокол користувача
 Summary(de_DE.UTF8): User-Protokoll
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description Protocol.UserProtocol
 The %{name}-Protocol.UserProtocol package - allows you to create your own user protocols on any OpenSCADA's language.
 %description Protocol.UserProtocol -l ru_RU.UTF8
@@ -906,8 +1126,8 @@ Summary: Visual Control Area (VCA) engine
 Summary(ru_RU.UTF8): Движок визуальной среды управления
 Summary(uk_UA.UTF8): Рущій візуального середовища керування
 Summary(de_DE.UTF8): Visuelle Kontrolle Bereich Engine
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description UI.VCAEngine
 The %{name}-UI.VCAEngine package - the main visual control area engine.
 %description UI.VCAEngine -l ru_RU.UTF8
@@ -924,8 +1144,8 @@ Summary: Operation user interface (Qt)
 Summary(ru_RU.UTF8): Рабочий интерфейс пользователя (Qt)
 Summary(uk_UA.UTF8): Робочий інтерфейс користувача (Qt)
 Summary(de_DE.UTF8): Operation Benutzeroberfläche (Qt)
-Group: Graphics
-Requires: %name-core = %version-%release %name-UI.QTStarter
+Group: Engineering
+Requires: %name-core = %EVR %name-UI.QTStarter
 %description UI.Vision
 The %{name}-UI.Vision package - visual operation user interface,
 based on Qt library - front-end to VCA engine.
@@ -946,8 +1166,8 @@ Summary: Qt-based GUI starter
 Summary(ru_RU.UTF8): Пускатель графических основанных на Qt интерфейсов
 Summary(uk_UA.UTF8): Пускач графічних інтерфейсів заснованих на Qt
 Summary(de_DE.UTF8): Qt-basierte GUI-Starter
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description UI.QTStarter
 The %{name}-UI.QTStarter package - provides the Qt GUI starter.
 Qt-starter is the only and compulsory component for all GUI modules based on the Qt library.
@@ -969,8 +1189,8 @@ Summary: OpenSCADA system configurator (Qt)
 Summary(ru_RU.UTF8): Системный OpenSCADA конфигуратор (Qt)
 Summary(uk_UA.UTF8): Системний OpenSCADA конфігуратор (Qt)
 Summary(de_DE.UTF8): System-Konfigurator OpenSCADA (Qt)
-Group: Graphics
-Requires: %name-core = %version-%release %name-UI.QTStarter
+Group: Engineering
+Requires: %name-core = %EVR %name-UI.QTStarter
 %description UI.QTCfg
 The %{name}-UI.QTCfg package - provides the Qt-based configurator of the OpenSCADA system.
 %description UI.QTCfg -l ru_RU.UTF8
@@ -987,8 +1207,8 @@ Summary: System configurator (WEB)
 Summary(ru_RU.UTF8): Системный конфигуратор (WEB)
 Summary(uk_UA.UTF8): Системний конфігуратор (WEB)
 Summary(de_DE.UTF8): System-Konfigurator (WEB)
-Group: Graphics
-Requires: %name-core = %version-%release %name-Protocol.HTTP
+Group: Engineering
+Requires: %name-core = %EVR %name-Protocol.HTTP
 %description UI.WebCfg
 The %{name}-UI.WebCfg package - provides the WEB-based configurator of the OpenSCADA system.
 %description UI.WebCfg -l ru_RU.UTF8
@@ -1005,8 +1225,8 @@ Summary: Dynamic WEB configurator
 Summary(ru_RU.UTF8): Динамичный WEB конфигуратор
 Summary(uk_UA.UTF8): Динамічний WEB конфігуратор
 Summary(de_DE.UTF8): Dynamische Web-Konfigurator
-Group: Graphics
-Requires: %name-core = %version-%release %name-Protocol.HTTP
+Group: Engineering
+Requires: %name-core = %EVR %name-Protocol.HTTP
 %description UI.WebCfgD
 The %{name}-UI.WebCfgD package - provides dynamic WEB based configurator.
 Uses XHTML, CSS and JavaScript technology.
@@ -1027,8 +1247,8 @@ Summary: Operation user interface (WEB)
 Summary(ru_RU.UTF8): Рабочий интерфейс пользователя (WEB)
 Summary(uk_UA.UTF8): Робочий інтерфейс користувача (WEB)
 Summary(de_DE.UTF8): Operation Benutzeroberfläche (WEB)
-Group: Graphics
-Requires: %name-core = %version-%release %name-Protocol.HTTP
+Group: Engineering
+Requires: %name-core = %EVR %name-Protocol.HTTP
 %description UI.WebVision
 The %{name}-UI.WebVision package - visual operation user interface,
 based on WEB - front-end to VCA engine.
@@ -1049,8 +1269,8 @@ Summary: Web interface from user
 Summary(ru_RU.UTF8): Web интерфейс от пользователя
 Summary(uk_UA.UTF8): Web інтерфейс від користувача
 Summary(de_DE.UTF8): Web-Oberfläche vom Benutzer
-Group: Graphics
-Requires: %name-core = %version-%release %name-Protocol.HTTP
+Group: Engineering
+Requires: %name-core = %EVR %name-Protocol.HTTP
 %description UI.WebUser
 The %{name}-UI.WebUser package - allows you to create your own user web-interfaces in any language of OpenSCADA.
 %description UI.WebUser -l ru_RU.UTF8
@@ -1068,8 +1288,8 @@ Summary: OpenSCADA system's tests
 Summary(ru_RU.UTF8): Системные тесты OpenSCADA
 Summary(uk_UA.UTF8): Системні тести OpenSCADA
 Summary(de_DE.UTF8): OpenSCADA System-Tests
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description Special.SystemTests
 The %{name}-Special.SystemTests package - provides the group of tests to the OpenSCADA system.
 %description Special.SystemTests -l ru_RU.UTF8
@@ -1086,8 +1306,8 @@ Summary: Complex1 function's library
 Summary(ru_RU.UTF8): Библиотека функций Complex1
 Summary(uk_UA.UTF8): Бібліотека функцій Complex1
 Summary(de_DE.UTF8): Complex1 Funktion's library
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description Special.FLibComplex1
 The %{name}-Special.FLibComplex1 package - provides the library of functions compatible with SCADA Complex1 of the firm SIC "DIYA".
 %description Special.FLibComplex1 -l ru_RU.UTF8
@@ -1104,8 +1324,8 @@ Summary: Math function's library
 Summary(ru_RU.UTF8): Библиотека математических функций
 Summary(uk_UA.UTF8): Бібліотека математичних функцій
 Summary(de_DE.UTF8): Math-Funktion ist library
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description Special.FLibMath
 The %{name}-Special.FLibMath package - provides the library of standard mathematical functions.
 %description Special.FLibMath -l ru_RU.UTF8
@@ -1122,8 +1342,8 @@ Summary: System API functions
 Summary(ru_RU.UTF8): Функции системного API
 Summary(uk_UA.UTF8): Функції системного API
 Summary(de_DE.UTF8): System-API-Funktionen
-Group: Graphics
-Requires: %name-core = %version-%release
+Group: Engineering
+Requires: %name-core = %EVR
 %description Special.FLibSYS
 The %{name}-Special.FLibSYS package - provides the library of system API of user programming area.
 %description Special.FLibSYS -l ru_RU.UTF8
@@ -1137,149 +1357,144 @@ Das Paket %{name}-Special.FLibSYS - bibliothek mit System-API für spezifische P
 %prep
 %setup -q -n %srcname
 %setup -T -D -a 1 -n %srcname
+%patch -p1
 
 %build
 %autoreconf
 %configure \
+    %if_with qt5
+    --with-qt5=yes \
+    %endif
     %{subst_enable DBF} %{subst_enable SQLite} %{subst_enable MySQL} %{subst_enable FireBird} %{subst_enable PostgreSQL} \
     %{subst_enable System} %{subst_enable BlockCalc} %{subst_enable JavaLikeCalc} %{subst_enable DiamondBoards} \
     %{subst_enable LogicLev} %{subst_enable SNMP} %{subst_enable Siemens} %{subst_enable ModBus} %{subst_enable DCON} \
     %{subst_enable DAQGate} %{subst_enable SoundCard} %{subst_enable ICP_DAS} %{subst_enable OPC_UA} %{subst_enable BFN} \
+    %{subst_enable Comedi} %{subst_enable AMRDevs} %{subst_enable MMS} %{subst_enable GPIO} %{subst_enable FT3}\
     %{subst_enable FSArch} %{subst_enable DBArch} \
     %{subst_enable Sockets} %{subst_enable SSL} %{subst_enable Serial} \
     %{subst_enable HTTP} %{subst_enable SelfSystem} %{subst_enable UserProtocol} \
     %{subst_enable VCAEngine} %{subst_enable Vision} %{subst_enable QTStarter} %{subst_enable QTCfg} \
     %{subst_enable WebCfg} %{subst_enable WebCfgD} %{subst_enable WebVision} %{subst_enable WebUser} \
     %{subst_enable SystemTests} %{subst_enable FLibComplex1} %{subst_enable FLibMath} %{subst_enable FLibSYS}
+
 %make_build
 
 %install
 %makeinstall_std
+
 rm -f %buildroot/%_libdir/openscada/*.la
-install -m 755 -d %buildroot/var/spool/openscada/{DATA,icons,LibsDB,AGLKS,Boiler}
-install -m 755 -d %buildroot/var/spool/openscada/ARCHIVES/{MESS,VAL}
-install -m 644 -pD data/oscada.xml %buildroot/%_sysconfdir/oscada.xml
-install -m 644 -pD data/oscada_start.xml %buildroot/%_sysconfdir/oscada_start.xml
-install -m 755 -pD data/openscada_start %buildroot/%_bindir/openscada_start
-install -m 644 -pD data/openscada.desktop %buildroot/%_desktopdir/openscada.desktop
-install -m 644 -pD data/openscada.png %buildroot/%_iconsdir/openscada.png
-install -m 755 -pD %SOURCE2 %buildroot/%_initdir/oscadad
-echo "OpenSCADA data dir" > %buildroot/var/spool/openscada/DATA/.info
-install -m 644 data/icons/* %buildroot/var/spool/openscada/icons
-echo "OpenSCADA messages archive dir" > %buildroot/var/spool/openscada/ARCHIVES/MESS/.info
-echo "OpenSCADA values archive dir" > %buildroot/var/spool/openscada/ARCHIVES/VAL/.info
+rm -f %buildroot/%_libdir/*.*a
+install -m 755 -d %buildroot/%_datadir/openscada/{DATA,icons,docs,LibsDB,AGLKS,Boiler}
+install -m 755 -pD data/oscada_ALT.init %buildroot/%_initdir/openscada-server
+sed -i "s/oscada.xml/oscada_server.xml/" %buildroot/%_initdir/openscada-server
+install -m 755 -pD data/oscada_ALT.init %buildroot/%_initdir/openscada-plc
+sed -i "s/--projName=server/--projName=plc/" %buildroot/%_initdir/openscada-plc
+sed -i "s/oscada.xml/oscada_plc.xml/" %buildroot/%_initdir/openscada-plc
+install -m 755 -d %buildroot/%_mandir/man1
+install -m 755 -d %buildroot/%_mandir/{uk,ru}/man1
+install -m 644 doc/{openscada.1,openscada_start.1} %buildroot/%_mandir/man1/
+install -m 644 doc/openscada.uk.1 %buildroot/%_mandir/uk/man1/openscada.1
+install -m 644 doc/openscada_start.uk.1 %buildroot/%_mandir/uk/man1/openscada_start.1
+install -m 644 doc/openscada.ru.1 %buildroot/%_mandir/ru/man1/openscada.1
+install -m 644 doc/openscada_start.ru.1 %buildroot/%_mandir/ru/man1/openscada_start.1
 
-install -m 644 data/LibsDB/*.db %buildroot/var/spool/openscada/LibsDB
+ln -s openscada %buildroot/%_bindir/openscada_AGLKS
+ln -s openscada %buildroot/%_bindir/openscada_Boiler
 
-install -m 644 data/ModelsDB/AGLKS/*.db %buildroot/var/spool/openscada/AGLKS
-install -m 644 -pD data/ModelsDB/AGLKS/oscada_AGLKS.xml %buildroot/%_sysconfdir/oscada_AGLKS.xml
-install -m 755 -pD data/ModelsDB/AGLKS/openscada_AGLKS %buildroot/%_bindir/openscada_AGLKS
-install -m 755 -pD data/ModelsDB/AGLKS/openscada_demo %buildroot/%_bindir/openscada_demo
-install -m 644 -pD data/ModelsDB/AGLKS/openscada_AGLKS.desktop %buildroot/%_desktopdir/openscada_AGLKS.desktop
-install -m 644 -pD data/ModelsDB/AGLKS/openscada_AGLKS.png %buildroot/%_iconsdir/openscada_AGLKS.png
-install -m 644 -pD data/ModelsDB/AGLKS/openscada_AGLKS.png %buildroot/var/spool/openscada/icons/AGLKS.png
+ln -s %_defaultdocdir/%name-docEN-%version %buildroot/%_datadir/openscada/docs/en
+ln -s %_defaultdocdir/%name-docRU-%version %buildroot/%_datadir/openscada/docs/ru
+ln -s %_defaultdocdir/%name-docUK-%version %buildroot/%_datadir/openscada/docs/uk
 
-install -m 644 data/ModelsDB/Boiler/*.db %buildroot/var/spool/openscada/Boiler
-install -m 644 -pD data/ModelsDB/Boiler/oscada_Boiler.xml %buildroot/%_sysconfdir/oscada_Boiler.xml
-install -m 755 -pD data/ModelsDB/Boiler/openscada_Boiler %buildroot/%_bindir/openscada_Boiler
-install -m 644 -pD data/ModelsDB/Boiler/openscada_Boiler.desktop %buildroot/%_desktopdir/openscada_Boiler.desktop
-install -m 644 -pD data/ModelsDB/Boiler/openscada_Boiler.png %buildroot/%_iconsdir/openscada_Boiler.png
-install -m 644 -pD data/ModelsDB/Boiler/openscada_Boiler.png %buildroot/var/spool/openscada/icons/Boiler.png 
+%post plc
+%post_service openscada-plc
 
-sed -i 's|/usr/lib|%_libdir|' %buildroot/%_sysconfdir/oscada*.xml
+%preun plc
+%preun_service openscada-plc
+
+%post server
+%post_service openscada-server
+
+%preun server
+%preun_service openscada-server
 
 %files
 
-%post core
-%if %_vendor == "alt"
-%post_service oscadad
-%else
-/sbin/chkconfig --add oscadad
-%endif
-
-%preun core
-%if %_vendor == "alt"
-%preun_service oscadad
-%else
-/sbin/chkconfig --del oscadad
-%endif
-
-%files core
-%defattr(-,root,root)
-%config(noreplace) %_sysconfdir/oscada.xml
-%config(noreplace) %_sysconfdir/oscada_start.xml
-%config %_initdir/oscadad
-%_bindir/openscada
-%_bindir/openscada_start
-%doc README README_ru README_uk COPYING ChangeLog INSTALL TODO TODO_ru TODO_uk
+%files -n lib%name
 %_libdir/*.so.*
-%dir %_libdir/openscada
-%_datadir/locale/*/LC_MESSAGES/openscada.mo
-/var/spool/openscada/DATA/.info
-/var/spool/openscada/icons/*
-%dir /var/spool/openscada
-%dir /var/spool/openscada/ARCHIVES
-%dir /var/spool/openscada/ARCHIVES/MESS
-%dir /var/spool/openscada/ARCHIVES/VAL
-%dir /var/spool/openscada/DATA
-%dir /var/spool/openscada/icons
-%exclude /var/spool/openscada/icons/AGLKS.png
-%exclude /var/spool/openscada/icons/Boiler.png
-/var/spool/openscada/ARCHIVES/MESS/.info
-/var/spool/openscada/ARCHIVES/VAL/.info
-%dir /var/spool/openscada/LibsDB
-
-%files docEN
-%defattr(-,root,root)
-%doc doc/en/*
-
-%files docRU
-%defattr(-,root,root)
-%doc doc/ru/*
-
-%files docUK
-%defattr(-,root,root)
-%doc doc/uk/*
 
 %files devel
-%defattr(-,root,root)
 %_libdir/*.so
-%exclude %_libdir/*.*a
 %_includedir/openscada
 %_pkgconfigdir/openscada.pc
 
+%files core
+%config(noreplace) %_sysconfdir/oscada.xml
+%config(noreplace) %_sysconfdir/oscada_start.xml
+%_bindir/openscada
+%_bindir/openscada_start
+%_bindir/openscada-proj
+%doc README README_ru README_uk COPYING ChangeLog INSTALL TODO TODO_ru TODO_uk
+%_mandir/man1/*
+%_mandir/*/man1/*
+%dir %_libdir/%name
+%_datadir/locale/*/LC_MESSAGES/openscada.mo
+%dir %_datadir/openscada
+%dir %_datadir/openscada/docs
+%_datadir/openscada/icons
+%exclude %_datadir/openscada/icons/AGLKS.png
+%exclude %_datadir/openscada/icons/Boiler.png
+
+%files docEN
+%doc doc/en/*
+%dir %_datadir/openscada/
+%dir %_datadir/openscada/docs/
+%_datadir/openscada/docs/en
+
+%files docRU
+%doc doc/ru/*
+%dir %_datadir/openscada/
+%dir %_datadir/openscada/docs/
+%_datadir/openscada/docs/ru
+
+%files docUK
+%doc doc/uk/*
+%dir %_datadir/openscada/
+%dir %_datadir/openscada/docs/
+%_datadir/openscada/docs/uk
+
 %files LibDB.Main
-%defattr(-,root,root)
-/var/spool/openscada/LibsDB/OscadaLibs.db
+%dir %_datadir/openscada/LibsDB
+%_datadir/openscada/LibsDB/OscadaLibs.db
 
 %files LibDB.VCA
-%defattr(-,root,root)
-/var/spool/openscada/LibsDB/vca*.db
+%dir %_datadir/openscada/LibsDB/
+%_datadir/openscada/LibsDB/vca*.db
 
 %files Model.AGLKS
-%defattr(-,root,root)
 %config(noreplace) %_sysconfdir/oscada_AGLKS.xml
 %_bindir/openscada_AGLKS
-%_bindir/openscada_demo
 %_desktopdir/openscada_AGLKS.desktop
 %_iconsdir/openscada_AGLKS.png
-/var/spool/openscada/icons/AGLKS.png
-%dir /var/spool/openscada/AGLKS
-/var/spool/openscada/AGLKS/*.db
+%_datadir/openscada/icons/AGLKS.png
+%dir %_datadir/openscada/AGLKS
+%_datadir/openscada/AGLKS/*.db
 
 %files Model.Boiler
-%defattr(-,root,root)
 %config(noreplace) %_sysconfdir/oscada_Boiler.xml
 %_bindir/openscada_Boiler
 %_desktopdir/openscada_Boiler.desktop
 %_iconsdir/openscada_Boiler.png
-/var/spool/openscada/icons/Boiler.png
-%dir /var/spool/openscada/Boiler
-/var/spool/openscada/Boiler/*.db 
+%_datadir/openscada/icons/Boiler.png
+%dir %_datadir/openscada/Boiler/
+%_datadir/openscada/Boiler/*.db
 
 %files plc
+%config(noreplace) %_sysconfdir/oscada_plc.xml
+%config %_initdir/openscada-plc
 
 %files server
+%config(noreplace) %_sysconfdir/oscada_server.xml
+%config %_initdir/openscada-server
 
 %files visStation
 
@@ -1397,6 +1612,38 @@ sed -i 's|/usr/lib|%_libdir|' %buildroot/%_sysconfdir/oscada*.xml
 %files DAQ.BFN
 %_libdir/openscada/daq_BFN.so
 %_datadir/locale/*/LC_MESSAGES/oscd_BFN.mo
+%dir %_datadir/openscada/BFN/
+%_datadir/openscada/BFN/*.db
+%endif
+
+%if_enabled Comedi
+%files DAQ.Comedi
+%_libdir/openscada/daq_Comedi.so
+%_datadir/locale/*/LC_MESSAGES/oscd_Comedi.mo
+%endif
+
+%if_enabled AMRDevs
+%files DAQ.AMRDevs
+%_libdir/openscada/daq_AMRDevs.so
+%_datadir/locale/*/LC_MESSAGES/oscd_AMRDevs.mo
+%endif
+
+%if_enabled MMS
+%files DAQ.MMS
+%_libdir/openscada/daq_MMS.so
+%_datadir/locale/*/LC_MESSAGES/oscd_MMS.mo
+%endif
+
+%if_enabled FT3
+%files DAQ.FT3
+%_libdir/openscada/daq_FT3.so
+%_datadir/locale/*/LC_MESSAGES/oscd_FT3.mo
+%endif
+
+%if_enabled GPIO
+%files DAQ.GPIO
+%_libdir/openscada/daq_GPIO.so
+%_datadir/locale/*/LC_MESSAGES/oscd_GPIO.mo
 %endif
 
 #=====  Archive modules =====
@@ -1526,8 +1773,12 @@ sed -i 's|/usr/lib|%_libdir|' %buildroot/%_sysconfdir/oscada*.xml
 %_datadir/locale/*/LC_MESSAGES/oscd_FLibSYS.mo
 %endif
 
-
 %changelog
+* Fri Jun 22 2018 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
+- The build of 0.9.0 main update to the production release
+- build with gcc7
+- build with qt5
+
 * Thu Jun 07 2018 Anton Midyukov <antohami@altlinux.org> 0.8.20-alt1
 - The build of 0.8.20 main update to the production release
 
