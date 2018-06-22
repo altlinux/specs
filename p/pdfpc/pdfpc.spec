@@ -1,19 +1,16 @@
-%define commit 0350b1a96472e52fdf64b106a9ead50e09c16f4b
-
 Name: pdfpc
-Version: 4.0.6
+Version: 4.1.2
 Release: alt1
 Summary: A GTK based presentation viewer application for GNU/Linux
 
 Group: Other
 License: GPLv2+
 Url: https://github.com/pdfpc/pdfpc
-# Repacked %url/archive/%commit.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-# Automatically added by buildreq on Mon Oct 03 2016
-# optimized out: at-spi2-atk cmake-modules fontconfig glib2-devel gstreamer1.0-devel libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgst-plugins1.0 libpango-devel libpoppler8-glib libwayland-client libwayland-cursor libwayland-egl libwayland-server pkg-config python-base python-modules xorg-xproto-devel
+# Automatically added by buildreq on Fri Jun 22 2018
+# optimized out: at-spi2-atk cmake-modules fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfribidi-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgst-plugins1.0 libpango-devel libpoppler8-glib libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl pkg-config python-base python-modules wayland-devel xorg-proto-devel
 BuildRequires: cmake gst-plugins1.0-devel libgee0.8-devel libgtk+3-devel libpoppler-glib-devel vala
 
 Provides: pdf-presenter-console
@@ -49,6 +46,10 @@ which can be created using nearly any of today's presentation software.
 %_datadir/pixmaps/%name
 
 %changelog
+* Fri Jun 22 2018 Elvira Khabirova <lineprinter@altlinux.org> 4.1.2-alt1
+- New version.
+- Build directly from git.
+
 * Tue Mar 07 2017 Elvira Khabirova <lineprinter@altlinux.org> 4.0.6-alt1
 - New version 4.0.6.
 
