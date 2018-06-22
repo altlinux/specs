@@ -1,11 +1,13 @@
+%def_with system_locale
+
 Name:    nx-libs
 Version: 3.5.2.31
-Release: alt2
+Release: alt7
 Summary: NX X11 protocol compression libraries
 
 Group:   System/Libraries
 License: GPLv2+
-URL:     http://x2go.org/
+URL:     https://github.com/ArcticaProject/nx-libs/
 
 # Source0-url: https://github.com/ArcticaProject/nx-libs/archive/redist-server/%version.tar.gz
 Source0: %name-%version.tar
@@ -41,6 +43,9 @@ BuildRequires: zlib-devel
 
 Conflicts: nx
 Provides:  nx = %EVR
+%if_with system_locale
+Requires: libX11-locales
+%endif
 
 %description
 NX is a software suite which implements very efficient compression of
@@ -117,8 +122,8 @@ done
 # Install into /usr
 sed -i -e 's,/usr/local,/usr,' nx-X11/config/cf/site.def
 # Use rpm optflags
-sed -i -e 's#-O3#%{optflags}#' nx-X11/config/cf/host.def
-sed -i -e 's#-O3#%{optflags}#' nx-X11/config/cf/linux.cf
+sed -i -e 's|-O3|%{optflags}|' nx-X11/config/cf/host.def
+sed -i -e 's|-O3|%{optflags}|' nx-X11/config/cf/linux.cf
 echo "#define DefaultGcc2Ppc64Opt %optflags" >> nx-X11/config/cf/host.def
 # Use multilib dirs
 # We're installing binaries into %%_libdir/nx/bin rather than %%_libexedir/nx
@@ -144,12 +149,21 @@ find -type f -name '*.[hc]' | xargs chmod -x
 
 %__subst "s:\$(NLSSUBDIR):nls:" nx-X11/Imakefile
 
+
+# set locale path for ALT Linux
+%if_with system_locale
+%__subst "s|#define XLocaleDir \$(LIBDIR)/locale|#define XLocaleDir %_datadir/X11/locale|g" nx-X11/config/cf/X11.tmpl
+%else
+%__subst "s|#define XLocaleDir \$(LIBDIR)/locale|#define XLocaleDir %_datadir/nx/X11/locale|g" nx-X11/config/cf/X11.tmpl
+%endif
+
 cp %SOURCE1 nx-X11
 
 
 %build
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
+
 # allow use rpm optflags
 %__subst "s|^C.*FLAGS=.*-O.*||" */configure*
 
@@ -254,12 +268,15 @@ rm -rf %buildroot%_libdir/nxserver/lib*/X11/*.so*
 rm -rf %buildroot%_libdir/nxserver/lib*/X11/config
 rm -rf %buildroot%_libdir/nxserver/lib*/X11/config
 rm -rf %buildroot%_libdir/nxserver/lib*/X11/xserver
-rm -rf %buildroot/usr/lib/nx/X11/locale
 rm -rf %buildroot/usr/lib/nx/X11/xserver
 rm -rf %buildroot%_libdir/nxserver/lib*/pkgconfig
 rm -rf %buildroot%_libdir/nxserver/lib*/*.so*
 rm -rf %buildroot%_libdir/nxserver/lib*/*.a
 rm -rf %buildroot%_libdir/pkgconfig/*.pc
+
+%if_with system_locale
+rm -rf %buildroot%_datadir/X11/locale
+%endif
 
 mkdir -p %buildroot%_datadir/nx/
 install -m644 debian/rgb %buildroot%_datadir/nx/rgb.txt
@@ -286,11 +303,6 @@ cp -a debian/nxagent.keyboard %buildroot%_sysconfdir/nxagent/
 mkdir -p %buildroot%_datadir/pixmaps/
 cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps/
 
-%post -n nxagent
-# fix font path
-[ -r %_datadir/X11/fonts/misc ] || ln -s %_datadir/fonts/bitmap/misc %_datadir/X11/fonts/misc
-
-
 %files
 #%doc README.md LICENSE LICENSE.nxcomp
 %doc %_docdir/%name-%version
@@ -302,6 +314,11 @@ cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps
 %_datadir/nx/*
 %exclude %_datadir/nx/VERSION.nxagent
 %exclude %_datadir/nx/VERSION.nxproxy
+
+%if_without system_locale
+%dir %_libdir/nx/X11/locale
+%_libdir/nx/X11/locale/*
+%endif
 
 %files devel
 %_libdir/libNX_*.so
@@ -333,6 +350,23 @@ cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps
 %_datadir/nx/VERSION.nxproxy
 
 %changelog
+* Fri Jun 08 2018 Pavel Vainerman <pv@altlinux.ru> 3.5.2.31-alt7
+- fix window title encoding (eterbug #12919)
+- fix font path for ALTLinux (eterbug #12807)
+
+* Fri May 18 2018 Pavel Vainerman <pv@altlinux.ru> 3.5.2.31-alt6
+- minor fixes in spec 
+
+* Wed May 16 2018 Pavel Vainerman <pv@altlinux.ru> 3.5.2.31-alt5
+- fixed segfault in rootless mode (eterbug #12859)
+
+* Fri May 04 2018 Pavel Vainerman <pv@altlinux.ru> 3.5.2.31-alt4
+- (gitlab-ci): minor fixes
+
+* Thu Apr 12 2018 Pavel Vainerman <pv@altlinux.ru> 3.5.2.31-alt3
+- update URL
+- (gitlab-ci): added build for p7
+
 * Mon Apr 09 2018 Pavel Vainerman <pv@altlinux.ru> 3.5.2.31-alt2
 - update build require
 
