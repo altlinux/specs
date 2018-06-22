@@ -2,7 +2,7 @@
 
 Name: openstack-%oname
 Version: 10.0.2
-Release: alt3
+Release: alt4
 Epoch: 1
 Provides: openstack-quantum = %EVR
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
@@ -49,7 +49,7 @@ BuildArch: noarch
 
 BuildRequires: crudini
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
@@ -557,6 +557,9 @@ fi
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Fri Jun 22 2018 Grigory Ustinov <grenka@altlinux.org> 1:10.0.2-alt4
+- Fixed FTBFS (remove python-module-setuptools-tests from BR).
+
 * Wed Jul 19 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.2-alt3
 - fix neutron-ovs-cleanup.service
 

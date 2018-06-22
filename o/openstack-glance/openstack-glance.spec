@@ -2,7 +2,7 @@
 
 Name: openstack-%oname
 Version: 14.0.0
-Release: alt3
+Release: alt4
 Epoch: 1
 Summary: OpenStack Image Service
 
@@ -25,7 +25,7 @@ Source46: %name-glare.init
 BuildArch: noarch
 BuildRequires: python-devel
 BuildRequires: crudini
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
@@ -279,6 +279,9 @@ crudini --set %glance_conf paste_deploy flavor keystone
 %doc doc/build/html
 
 %changelog
+* Fri Jun 22 2018 Grigory Ustinov <grenka@altlinux.org> 1:14.0.0-alt4
+- Fixed FTBFS (remove python-module-setuptools-tests from BR).
+
 * Wed Jul 19 2017 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.0-alt3
 - fix lock_path in default config
 
