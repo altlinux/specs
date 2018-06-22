@@ -1,7 +1,7 @@
 %define  pkgname fog-aliyun
 
 Name:    ruby-%pkgname
-Version: 0.2.2
+Version: 0.3.0
 Release: alt1
 
 Summary: Fog provider for aliyun
@@ -54,5 +54,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Jun 22 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1
+- New version.
+
 * Thu May 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt1
 - Initial build for Sisyphus
