@@ -1,6 +1,6 @@
 Name: blobwars
 Version: 2.00
-Release: alt1
+Release: alt2
 
 Summary: Mission and Objective based 2D Platform Game
 License: %gpl2plus
@@ -12,7 +12,8 @@ Patch1: blobwars-2.00-alt-fix-build.patch
 Patch2: %name-2.00-alt-fixes.patch
 #found in suse
 Patch4: blobwars-icons_blobwars.desktop.patch
-Patch5: blobwars-2.00-fix-gzclose.patch
+# SuSE PATCH-FIX-UPSTREAM https://sourceforge.net/p/blobwars/patches/8/
+Patch5: reproducible.patch
 Source1: %{name}.appdata.xml
 
 
@@ -35,7 +36,25 @@ MIAs as possible.
 %patch1
 %patch2
 %patch4
-%patch5
+%patch5 -p1
+
+# from SuSE
+# Correct Permissions
+chmod 0644 Makefile*
+
+# SED-FIX-OPENSUSE -- Fix paths and libraries
+sed -i -e 's|USEPAK ?= 0|USEPAK ?= 1|;
+           s|$(PREFIX)/games|$(PREFIX)/bin|;
+           s|$(PREFIX)/share/games|$(PREFIX)/share|;
+           s| -Werror||;
+           s|$(CXX) $(LIBS) $(GAMEOBJS) -o $(PROG)|$(CXX) $(GAMEOBJS) $(LIBS) -o $(PROG)|;
+           s|$(CXX) $(LIBS) $(PAKOBJS) -o pak|$(CXX) $(PAKOBJS) $(LIBS) -o pak|;
+           s|$(CXX) $(LIBS) $(MAPOBJS) -o mapeditor|$(CXX) $(MAPOBJS) $(LIBS) -o mapeditor|' Makefile
+
+# SED-FIX-OPENSUSE -- Fix pak
+sed -i -e 's|gzclose(pak)|gzclose((gzFile)pak)|;
+           s|gzclose(fp)|gzclose((gzFile)fp)|' src/pak.cpp
+
 
 %build
 %make_build VERSION=%version RELEASE=1
@@ -47,12 +66,14 @@ MIAs as possible.
 mkdir -p %buildroot%_liconsdir
 install -m 644 icons/blobwars48x48.png %buildroot%_liconsdir/blobwars.png
 
+%if_without pack
 # fonts
-pushd %buildroot%_gamesdatadir/%name
+pushd %buildroot%_datadir/%name
 rm data/vera.ttf
 # not Vera.ttf form fonts-ttf-vera, but DejaVuSans (fc-query data/vera.ttf for yourselves)
 ln -s %_ttffontsdir/dejavu/DejaVuSans.ttf data/vera.ttf
 popd
+%endif
 
 # Install appdata
 mkdir -p %{buildroot}%{_datadir}/appdata
@@ -61,14 +82,19 @@ install -Dm 0644 %{S:1} %{buildroot}%{_datadir}/appdata
 %find_lang %name
 
 %files -f %name.lang
-%_gamesbindir/%name
-%_gamesdatadir/%name
+%_bindir/%name
+%_datadir/%name
 %_desktopdir/%name.desktop
 %{_datadir}/appdata/*
 %_iconsdir/hicolor/*/apps/%name.png
 %doc doc/*
 
 %changelog
+* Fri Jun 22 2018 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2
+- fixed build
+- moved from /games
+- merged SuSE patches
+
 * Sat Oct 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
 - new version by request
 - USEPAK=0
