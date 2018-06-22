@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-ShareDir
 Name: perl-%dist
-Version: 1.112
+Version: 1.114
 Release: alt1
 
 Summary: Locate per-dist and per-module shared files
@@ -49,6 +49,9 @@ very strange ways to make the data available to their code.
 %perl_vendor_privlib/auto/share/*
 
 %changelog
+* Fri Jun 22 2018 Igor Vlasenko <viy@altlinux.ru> 1.114-alt1
+- automated CPAN update
+
 * Wed Jun 20 2018 Igor Vlasenko <viy@altlinux.ru> 1.112-alt1
 - automated CPAN update
 
