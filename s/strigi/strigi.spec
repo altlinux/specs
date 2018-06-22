@@ -3,7 +3,7 @@
 
 Name: strigi
 Version: 0.7.8
-Release: alt6
+Release: alt8
 
 Summary: The fastest and smallest desktop searching program
 License: LGPL2+
@@ -18,7 +18,7 @@ Source1: %name.watch
 Source2: strigi-daemon.desktop
 Source3: strigiclient.desktop
 
-Patch1: %name-%version-alt-gcc6.patch
+Patch1: %name-%version-alt-gcc7.patch
 
 # FC
 Patch101: libstreamanalyzer-0001-Fix-for-non-valid-values-in-Exif-field-ISOSpeedRatin.patch
@@ -78,6 +78,9 @@ pushd libstreams
 popd
 
 %build
+%ifarch %e2k
+%add_optflags -std=gnu++11
+%endif
 %Kcmake \
     -DCMAKE_SKIP_RPATH=YES \
     -DENABLE_FFMPEG:BOOL=OFF \
@@ -128,6 +131,12 @@ install -m0644 %SOURCE3 %buildroot/%_desktopdir/
 
 
 %changelog
+* Fri Jun 22 2018 Michael Shigorin <mike@altlinux.org> 0.7.8-alt8
+- updated ALT patch for gcc7+
+
+* Fri Jun 22 2018 Michael Shigorin <mike@altlinux.org> 0.7.8-alt7
+- E2K: force -std=gnu++11
+
 * Thu Aug 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.8-alt6
 - Fixed build with gcc-6.
 
