@@ -1,11 +1,12 @@
 Name: nfdump
-Version: 1.6.15
-Release: alt2
+Version: 1.6.17
+Release: alt1
 Summary: collect and process netflow data
 
 Group: Monitoring
 License: %bsd
-Url: http://sourceforge.net/projects/nfdump/
+#Url: http://sourceforge.net/projects/nfdump/
+Url: https://github.com/phaag/nfdump/releases
 
 Source: %name-%version.tar
 Source2: nfcapd.init
@@ -133,6 +134,10 @@ install -m0644 %SOURCE8 %buildroot%_unitdir/sfcapd.service
 %_libdir/libnfdump.so
 
 %changelog
+* Fri Jun 22 2018 Sergey Y. Afonin <asy@altlinux.ru> 1.6.17-alt1
+- 1.6.17
+- changed Url
+
 * Tue Oct 31 2017 Sergey Y. Afonin <asy@altlinux.ru> 1.6.15-alt2
 - rebuilt with librrd8
 
