@@ -3,7 +3,7 @@
 
 Name: openstack-%oname
 Version: 11.0.3
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: OpenStack Identity Service
 
@@ -30,7 +30,7 @@ Requires(pre): shadow-utils
 BuildRequires: webserver-common rpm-build-webserver-common rpm-macros-apache2
 BuildRequires: crudini
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-webob >= 1.6.0
@@ -66,7 +66,6 @@ BuildRequires: python-module-msgpack >= 0.4.0
 BuildRequires: python-module-osprofiler >= 1.4.0
 
 BuildRequires: python-module-webtest
-BuildRequires: python-module-pep257
 BuildRequires: python-module-sphinx >= 1.0
 BuildRequires: python-module-oslosphinx >= 2.5.0
 BuildRequires: python-module-reno >= 1.8.0
@@ -357,6 +356,9 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Jun 22 2018 Grigory Ustinov <grenka@altlinux.org> 1:11.0.3-alt2
+- Fixed FTBFS (remove python-module-setuptools-tests from BR).
+
 * Thu Aug 10 2017 Alexey Shabalin <shaba@altlinux.ru> 1:11.0.3-alt1
 - 11.0.3
 

@@ -5,7 +5,7 @@
 Name: openstack-%oname
 Summary: OpenStack Orchestration (heat)
 Version: 8.0.3
-Release: alt1
+Release: alt2
 Epoch: 1
 License: ASL 2.0
 Group: System/Servers
@@ -30,7 +30,8 @@ Patch0: %name-6.1.0-remove-bash3-header.patch
 BuildArch: noarch
 BuildRequires: git
 BuildRequires: crudini
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-pycrypto
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-oslo.cache >= 0.4.0
 BuildRequires: python-module-oslo.context >= 0.2.0
@@ -380,6 +381,9 @@ crudini --set %heat_conf oslo_concurrency lock_path %_runtimedir/heat
 %_prefix/lib/heat/docker
 
 %changelog
+* Fri Jun 22 2018 Grigory Ustinov <grenka@altlinux.org> 1:8.0.3-alt2
+- Fixed FTBFS (remove python-module-setuptools-tests from BR).
+
 * Thu Aug 10 2017 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.3-alt1
 - 8.0.3
 

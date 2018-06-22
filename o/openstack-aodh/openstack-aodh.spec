@@ -2,7 +2,7 @@
 
 Name: openstack-%oname
 Version: 4.0.1
-Release: alt1
+Release: alt2
 Summary: OpenStack Telemetry Alarming
 Group: System/Servers
 License: ASL 2.0
@@ -31,7 +31,7 @@ Requires(pre):    shadow-utils
 BuildRequires: crudini
 BuildRequires: webserver-common rpm-build-webserver-common rpm-macros-apache2
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -355,6 +355,9 @@ rm -fr %buildroot/usr/etc
 %_initdir/%name-expirer
 
 %changelog
+* Fri Jun 22 2018 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt2
+- Fixed FTBFS (remove python-module-setuptools-tests from BR).
+
 * Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 4.0.1-alt1
 - 4.0.1
 

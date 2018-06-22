@@ -2,7 +2,7 @@
 
 Name: openstack-%oname
 Version: 10.0.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: OpenStack Networking VPNaaS
 
@@ -16,7 +16,7 @@ Source2: neutron-vpn-agent.service
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-reno
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
@@ -113,6 +113,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/neutron-vpn-agent.service
 
 
 %changelog
+* Fri Jun 22 2018 Grigory Ustinov <grenka@altlinux.org> 1:10.0.0-alt2
+- Fixed FTBFS (remove python-module-setuptools-tests from BR).
+
 * Wed Jun 07 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.0-alt1
 - 10.0.0
 - add tests package

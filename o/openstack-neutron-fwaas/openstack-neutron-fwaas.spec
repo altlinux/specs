@@ -2,7 +2,7 @@
 
 Name: openstack-%oname
 Version: 10.0.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: OpenStack Networking FWaaS
 
@@ -14,7 +14,7 @@ Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-reno
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
@@ -95,6 +95,9 @@ install -p -D -m 644 etc/fwaas_driver.ini.sample %buildroot%_sysconfdir/neutron/
 %exclude %python_sitelibdir/*/tests/contrib
 
 %changelog
+* Fri Jun 22 2018 Grigory Ustinov <grenka@altlinux.org> 1:10.0.1-alt2
+- Fixed FTBFS (remove python-module-setuptools-tests from BR).
+
 * Wed Jun 07 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.1-alt1
 - 10.0.1
 - add tests package
