@@ -1,6 +1,6 @@
 Name: connector
 Version: 1.5.6
-Release: alt2
+Release: alt3
 
 Summary: Remote desktop chooser
 License: GPL
@@ -46,6 +46,9 @@ install -pDm644 kiosk.access %buildroot%_sysconfdir/%name/kiosk.access
 %config(noreplace) %_sysconfdir/%name/kiosk.access
 
 %changelog
+* Fri Jun 22 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.5.6-alt3
+- Fixed connect from preferences window
+
 * Tue Jun 05 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.5.6-alt2
 - Fixed the fast connect from console
 
