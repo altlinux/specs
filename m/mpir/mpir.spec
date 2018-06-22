@@ -1,6 +1,6 @@
 Name: mpir
 Version: 3.0.0
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: A library for arbitrary precision arithmetic
 
 License: LGPLv3+
@@ -85,5 +85,8 @@ mv doc/devel doc/html
 %_infodir/mpir.info*
 
 %changelog
+* Sat Jun 16 2018 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt2%ubt
+- Rebuilt for aarch64
+
 * Fri Jan 05 2018 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt1%ubt
 - Initial build for ALT Sisyphus.
