@@ -1,6 +1,6 @@
 Name:           x2goclient
 Version:        4.1.1.1
-Release:        alt6
+Release:        alt8
 Summary:        X2Go Client application (Qt)
 
 Group:          Communications
@@ -16,6 +16,7 @@ Patch0:         x2goclient-krb5.patch
 Patch2:         x2goclient-optflags.patch
 Patch3:  	x2goclient-alt-startkde.patch
 Patch4:		x2goclient-encoding.patch
+Patch5:		x2goclient-alt-no-pam.patch
 
 BuildRequires(pre): rpm-build-apache2
 BuildRequires:  gcc-c++
@@ -105,6 +106,7 @@ the X2Go Plugin via an Apache webserver.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 # update russian translations
 cat %SOURCE1 >res/i18n/x2goclient_ru.ts
 # Fix up install issues
@@ -151,6 +153,14 @@ ln -s ../../x2go/x2goplugin-apache.conf %buildroot%_sysconfdir/httpd/conf.d/x2go
 %_datadir/x2go/
 
 %changelog
+* Thu Jun 21 2018 Oleg Solovyov <mcpain@altlinux.org> 4.1.1.1-alt8
+- fix remote printing
+
+* Fri Jun 15 2018 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1.1-alt7
+- fix window title encoding (patch updated)
+  (thx Oleg Solovyov <mcpain@altlinux.org>
+  and Sergey V Turchin <zerg@altlinux.org>).
+
 * Wed Jun 06 2018 Oleg Solovyov <mcpain@altlinux.org> 4.1.1.1-alt6
 - fix window title encoding
 
