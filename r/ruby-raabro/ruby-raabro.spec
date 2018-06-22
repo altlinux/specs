@@ -1,7 +1,7 @@
 %define  pkgname raabro
 
 Name:    ruby-%pkgname
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 
 Summary: a Ruby version of flon-io/aabro
@@ -54,5 +54,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Jun 22 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.6-alt1
+- New version.
+
 * Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt1
 - Initial build for Sisyphus
