@@ -1,6 +1,6 @@
 Name: marsyas
 Version: 0.6.0
-Release: alt1.alpha.git20150301.2
+Release: alt1.alpha.git20150301.3
 Summary: Music Analysis, Retrieval and Synthesis for Audio Signals
 License: GPLv2
 Group: Sound
@@ -8,6 +8,8 @@ Url: http://marsyas.info/
 
 # https://github.com/marsyas/marsyas.git
 Source: %name-%version.tar
+
+ExclusiveArch: %ix86 x86_64
 
 BuildRequires: gcc-c++ cmake doxygen graphviz libjack-devel clang-devel
 BuildRequires: qt5-base-devel libalsa-devel qt5-declarative-devel
@@ -23,6 +25,7 @@ BuildRequires: libXpm-devel libXrandr-devel libXScrnSaver-devel
 BuildRequires: libXv-devel libXxf86misc-devel libXxf86vm-devel
 BuildRequires: %_bindir/latex %_bindir/gs
 BuildRequires: texi2dvi texi2html makeinfo
+BuildRequires: tex(dvips.def)
 
 %description
 Marsyas (Music Analysis, Retrieval and Synthesis for Audio Signals) is
@@ -115,6 +118,7 @@ done
 %build
 %add_optflags -fpermissive -I%_includedir/ANN -I$PWD/src/marsyas
 %add_optflags -I$PWD/src/marsyas/marsystems %optflags_shared
+%add_optflags $(rtmidi-config --cppflags)
 cmake \
 %if %_lib == lib64
 	-DLIB_SUFFIX=64 \
@@ -165,6 +169,9 @@ rm -f doc/CMakeLists.txt
 %doc MIREX doc/*.txt doc/examples doc/out-www
 
 %changelog
+* Fri Jun 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt1.alpha.git20150301.3
+- Rebuilt with new librtmidi 3.0.0.
+
 * Wed Nov 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt1.alpha.git20150301.2
 - Fixed build with new librtmidi.
 
