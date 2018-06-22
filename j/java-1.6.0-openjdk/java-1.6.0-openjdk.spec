@@ -111,7 +111,7 @@ BuildRequires: /proc
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt4
+Release: alt5
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -186,6 +186,9 @@ Patch3:	  java-1.6.0-openjdk-java-access-bridge-security.patch
 Patch4:   java-1.6.0-openjdk-accessible-toolkit.patch
 
 Patch34: java-1.6.0-openjdk-old-times.patch
+
+# no support for aarch64
+ExclusiveArch: %{jit_arches}
 
 BuildRequires: libalsa-devel
 BuildRequires: libcups-devel
@@ -438,6 +441,7 @@ The OpenJDK API documentation.
 #%patch0
 cp %{SOURCE4} .
 cp %{SOURCE6} .
+sed -i 's,\[ant\],[ant1.9],' configure.ac
 
 %build
 unset JAVA_HOME
@@ -1025,6 +1029,9 @@ done
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jun 22 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.41-alt5
+- ExclusiveArch and pure ant1.9
+
 * Fri Apr 13 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.41-alt4
 - added BR: docbook-style-xsl
 
