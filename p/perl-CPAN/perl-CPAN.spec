@@ -2,7 +2,7 @@
 %define dist CPAN
 Name: perl-%dist
 Version: 2.16
-Release: alt1
+Release: alt2
 
 Summary: Download and build Perl modules from CPAN sites
 License: GPL or Artistic
@@ -17,6 +17,9 @@ BuildArch: noarch
 %filter_from_requires /^perl.CPAN.Meta/d
 %filter_from_requires /^perl.CPAN.SQLite/d
 %filter_from_requires /^perl.Devel.Size/d
+
+# https://bugzilla.altlinux.org/35062
+Requires: perl(Digest/SHA.pm) perl(CPAN/Meta/Requirements.pm)
 
 # Automatically added by buildreq on Thu Nov 10 2011
 BuildRequires: gnupg perl-Archive-Tar perl-Archive-Zip perl-CPAN-Checksums perl-Expect perl-File-HomeDir perl-HTTP-Tiny perl-IO-Stty perl-Module-Build perl-Module-CoreList perl-Module-Pluggable perl-Module-Signature perl-Net-Ping perl-Parse-CPAN-Meta perl-Sort-Versions perl-Term-ReadKey perl-Test-Perl-Critic perl-Test-Pod perl-Test-Pod-Coverage perl-Text-Diff perl-Text-Glob perl-YAML perl-YAML-Syck perl-libwww
@@ -51,6 +54,9 @@ rm t/30shell.t t/31sessions.t
 	%perl_vendor_privlib/CPAN*
 
 %changelog
+* Fri Jun 22 2018 Igor Vlasenko <viy@altlinux.ru> 2.16-alt2
+- added requires (closes: #35062)
+
 * Fri Feb 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.16-alt1
 - automated CPAN update
 
