@@ -1,6 +1,6 @@
 Name: wammu
 Version: 0.44
-Release: alt1
+Release: alt2
 
 Summary: Mobile phone manager
 License: GPL
@@ -25,7 +25,7 @@ BuildRequires: python-module-setuptools
 #py_requires wx	### yields python-module-wx3.0 currently => breaks
 Requires: python-module-wx
 BuildRequires: python-module-wx >= 2.8
-BuildConflicts: python-module-wx >= 2.9
+#BuildConflicts: python-module-wx >= 2.9
 
 %description
 Mobile phone manager using Gammu as its backend.
@@ -50,6 +50,9 @@ subst '/man1/ D' INSTALLED_FILES
 %_mandir/*/man1/*
 
 %changelog
+* Thu Jun 21 2018 Grigory Ustinov <grenka@altlinux.org> 0.44-alt2
+- Fix FTBFS (rebuild with current python-module-wx).
+
 * Fri Jan 05 2018 Michael Shigorin <mike@altlinux.org> 0.44-alt1
 - new version (watch file uupdate)
 
