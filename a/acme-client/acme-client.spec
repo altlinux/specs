@@ -1,6 +1,6 @@
 Name: acme-client
 Version: 0.1.16
-Release: alt1.1
+Release: alt1.2
 
 Summary: secure ACME client
 
@@ -43,6 +43,9 @@ TODO: build lib libseccomp.
 %_man1dir/%name.*
 
 %changelog
+* Thu Jun 07 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.1.16-alt1.2
+- NMU: rebuilt against libtls17
+
 * Mon Nov 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.1.16-alt1.1
 - rebuilt against new libtls
 
