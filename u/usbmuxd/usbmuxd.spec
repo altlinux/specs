@@ -1,9 +1,11 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _localstatedir %_var
+%define git 08d9ec0
+%define _group usbmux
 
 Name: usbmuxd
-Version: 1.1.0
-Release: alt4
+Version: 1.1.1
+Release: alt0.2.g%git
 
 Summary: Daemon for communicating with Apple's iPod Touch and iPhone
 Group: System/Servers
@@ -17,8 +19,8 @@ Source: http://www.libimobiledevice.org/downloads/%name-%version.tar.bz2
 Source: %name-%version.tar
 %endif
 
-%define plist_ver 1.12
-%define usb_ver 1.0.3
+%define plist_ver 1.11
+%define usb_ver 1.0.9
 %define imobiledevice_ver 1.1.6
 
 BuildRequires: gcc-c++ cmake
@@ -43,14 +45,25 @@ the device to be accessed simultaneously.
 %install
 %makeinstall_std
 
+%pre
+/usr/sbin/groupadd -rf %_group ||:
+/usr/sbin/useradd -M -r -s /dev/null -c "USB Multiplex Daemon" \
+	-d %_localstatedir/empty -g %_group %_group &>/dev/null ||:
+
 %files
 %_sbindir/usbmuxd
 /lib/udev/rules.d/39-%name.rules
 %_unitdir/%name.service
-%_man1dir/%name.1.*
+%_man8dir/%name.*
 %doc AUTHORS README
 
 %changelog
+* Fri Jun 22 2018 L.A. Kostis <lakostis@altlinux.ru> 1.1.1-alt0.2.g08d9ec0
+- Add usbmux user.
+
+* Fri Jun 22 2018 L.A. Kostis <lakostis@altlinux.ru> 1.1.1-alt0.1.g08d9ec0
+- 1.1.0-43-g08d9ec0
+
 * Thu Oct 26 2017 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt4
 - rebuilt with _localstatedir=%%_var
 
