@@ -1,7 +1,7 @@
 %define  pkgname fugit
 
 Name:    ruby-%pkgname
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: time tools (cron, parsing, durations, ...) for Ruby and flor
@@ -54,6 +54,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Jun 22 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.3-alt1
+- New version.
+
 * Thu Jun 21 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
 - New version.
 
