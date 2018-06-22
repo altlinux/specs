@@ -1,5 +1,5 @@
 Name: arachne-pnr
-Version: 0.1.0.0.203.g7e135ed
+Version: 0.1.0.0.310.g5d830dd
 Release: alt1
 
 Summary: Place and route tool for iCE40 family FPGAs
@@ -11,10 +11,11 @@ Source: %name-%version.tar
 Patch: use-explicit-git-hash.patch
 
 BuildRequires(pre): rpm-build-licenses
-BuildPreReq: icestorm >= 0.0.0.357.g3c42bdb /proc yosys
+BuildPreReq: /proc yosys
 # Automatically added by buildreq on Mon Jul 17 2017
 # optimized out: glibc-kernheaders-x86 libstdc++-devel python-base python3 python3-base
-BuildRequires: gcc-c++ glibc-kernheaders-generic icestorm
+BuildRequires: gcc-c++ glibc-kernheaders-generic icestorm-chipdb
+Requires: %name-chipdb = %version-%release
 
 %description
 Arachne-pnr implements the place and route step of the hardware compilation
@@ -27,6 +28,16 @@ harware device.
 Together, Yosys, arachne-pnr and IceStorm provide an fully open-source
 Verilog-to-bistream tool chain for iCE40 1K and 8K FPGA development.
 
+%package -n %name-chipdb
+Summary: Place and route tool for iCE40 family FPGAs - binary chipdb files
+Group: Engineering
+BuildArch: noarch
+
+%description -n %name-chipdb
+Arachne-pnr implements the place and route step of the hardware compilation
+process for FPGAs. It currently targets the Lattice Semiconductor iCE40 family.
+This package contains binary chipdb files.
+
 %prep
 %setup
 %patch
@@ -37,15 +48,22 @@ Verilog-to-bistream tool chain for iCE40 1K and 8K FPGA development.
 %install
 %makeinstall_std PREFIX=%prefix CXX=false ICEBOX=%_datadir/icebox
 
-%check
-sed -i 's/shasum/sha1sum/g' tests/simple/run-test.sh
-make simpletest ICEBOX=%_datadir/icebox
+# see issue #120
+#%check
+#sed -i 's/shasum/sha1sum/g' tests/simple/run-test.sh
+#make simpletest ICEBOX=%_datadir/icebox
 
 %files
 %_bindir/%name
+
+%files -n %name-chipdb
 %_datadir/%name
 
 %changelog
+* Fri Jun 22 2018 Elvira Khabirova <lineprinter@altlinux.org> 0.1.0.0.310.g5d830dd-alt1
+- New version
+- Move noarch chipdb files to a separate package
+
 * Sun Jul 16 2017 Elvira Khabirova <lineprinter@altlinux.org> 0.1.0.0.203.g7e135ed-alt1
 - New version
 
