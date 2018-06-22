@@ -1,11 +1,8 @@
-BuildRequires: docbook-style-xsl
-%ifarch %e2k
-%def_with e2k_lcc_wrapper
-%endif
-%filter_from_requires /.usr.bin.java/d
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-generic-compat
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: ca-certificates-java
 # ALT arm fix by Gleb Fotengauer-Malinovskiy <glebfm@altlinux.org>
 %ifarch %{arm}
@@ -15,24 +12,25 @@ BuildRequires: ca-certificates-java
 %def_disable jvmjardir
 %def_disable javaws
 %def_disable moz_plugin
-%def_disable systemtap
+%def_disable control_panel
 %def_disable desktop
+%def_disable systemtap
 BuildRequires: unzip gcc-c++ libstdc++-devel-static
-BuildRequires: libXext-devel libXrender-devel libfreetype-devel libkrb5-devel
+BuildRequires: libXext-devel libXrender-devel libXcomposite-devel
+BuildRequires: libfreetype-devel libkrb5-devel
 BuildRequires(pre): browser-plugins-npapi-devel lsb-release
 BuildRequires(pre): rpm-macros-java
 BuildRequires: pkgconfig(gtk+-2.0)
 %set_compress_method none
-%define with_systemtap 0
-BuildRequires(pre): rpm-macros-fedora-compat
+%filter_from_requires /.usr.bin.java/d
 BuildRequires: /proc
-#BuildRequires: jpackage-generic-compat
-%define power64 ppc64
-# %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define release 1.b01
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.144
+%define version 1.8.0.151
+%define release 5.b12
 # note, parametrised macros are order-senisitve (unlike not-parametrized) even with normal macros
 # also necessary when passing it as parameter other macros. If not macro, then it is considered as switch
 %global debug_suffix_unquoted -debug
@@ -55,11 +53,25 @@ BuildRequires: /proc
 %global build_loop1 %{nil}
 %endif
 
-# by default we build debug build during main build only on intel arches
-%ifarch %{ix86} x86_64
+%global aarch64         aarch64 arm64 armv8
+# sometimes we need to distinguish big and little endian PPC64
+%global ppc64le         ppc64le
+%global ppc64be         ppc64 ppc64p7
+%global multilib_arches %{power64} sparc64 x86_64
+%global jit_arches      %{ix86} x86_64 sparcv9 sparc64 %{aarch64} %{power64}
+
+# By default, we build a debug build during main build on JIT architectures
+%ifarch %{jit_arches}
 %global include_debug_build 0
 %else
 %global include_debug_build 0
+%endif
+
+# On x86_64 and AArch64, we use the Shenandoah HotSpot
+%ifarch x86_64 %{aarch64}
+%global use_shenandoah_hotspot 1
+%else
+%global use_shenandoah_hotspot 0
 %endif
 
 %if %{include_debug_build}
@@ -72,8 +84,13 @@ BuildRequires: /proc
 %global build_loop  %{build_loop1} %{build_loop2}
 # note, that order  normal_suffix debug_suffix, in case of both enabled,
 # is expected in one single case at the end of build
+%global rev_build_loop  %{build_loop2} %{build_loop1}
 
-%global bootstrap_build 0
+%ifarch %{jit_arches}
+%global bootstrap_build 1
+%else
+%global bootstrap_build 1
+%endif
 
 %if %{bootstrap_build}
 %global targets bootcycle-images docs
@@ -81,19 +98,7 @@ BuildRequires: /proc
 %global targets all
 %endif
 
-%global aarch64         aarch64 arm64 armv8
-# sometimes we need to distinguish big and little endian PPC64
-%global ppc64le         ppc64le
-%global ppc64be         ppc64 ppc64p7
-%global multilib_arches %{power64} sparc64 x86_64
-%global jit_arches      %{ix86} x86_64 sparcv9 sparc64 %{aarch64} %{power64} %e2k
 
-%ifnarch %{jit_arches}
-# Disable hardened build on non-jit arches. Work-around for RHBZ#1290936.
-%undefine _hardened_build
-%global ourcppflags %{nil}
-%global ourldflags %{nil}
-%else
 %ifarch %{aarch64}
 # Disable hardened build on AArch64 as it didn't bootcycle
 %undefine _hardened_build
@@ -105,10 +110,9 @@ BuildRequires: /proc
 # We filter out -Wall which will otherwise cause HotSpot to produce hundreds of thousands of warnings (100+mb logs)
 # We replace it with -Wformat (required by -Werror=format-security) and -Wno-cpp to avoid FORTIFY_SOURCE warnings
 # We filter out -fexceptions as the HotSpot build explicitly does -fno-exceptions and it's otherwise the default for C++
-%global ourflags %(echo %optflags %optflags_shared | sed -e 's|-Wall|-Wformat -Wno-cpp|' | sed -r -e 's|-O[0-9]*||')
-%global ourcppflags %(echo %ourflags | sed -e 's|-fexceptions||')
+%global ourflags %(echo %optflags | sed -e 's|-Wall|-Wformat -Wno-cpp|' | sed -r -e 's|-O[0-9]*||')
+%global ourcppflags %(echo %ourflags | sed -e 's|-fexceptions||') "-fstack-protector-strong"
 %global ourldflags %{__global_ldflags}
-%endif
 %endif
 
 # With diabled nss is NSS deactivated, so in NSS_LIBDIR can be wrong path
@@ -116,58 +120,78 @@ BuildRequires: /proc
 #looks liekopenjdk RPM specific bug
 # Always set this so the nss.cfg file is not broken
 %global NSS_LIBDIR %(pkg-config --variable=libdir nss)
+%global NSS_LIBS %(pkg-config --libs nss)
+%global NSS_CFLAGS %(pkg-config --cflags nss-softokn)
+# see https://bugzilla.redhat.com/show_bug.cgi?id=1332456
+%global NSSSOFTOKN_BUILDTIME_NUMBER %(pkg-config --modversion nss-softokn || : )
+%global NSS_BUILDTIME_NUMBER %(pkg-config --modversion nss || : )
+#this is worakround for processing of requires during srpm creation
+%global NSSSOFTOKN_BUILDTIME_VERSION %(if [ "x%{NSSSOFTOKN_BUILDTIME_NUMBER}" == "x" ] ; then echo "" ;else echo ">= %{NSSSOFTOKN_BUILDTIME_NUMBER}" ;fi)
+%global NSS_BUILDTIME_VERSION %(if [ "x%{NSS_BUILDTIME_NUMBER}" == "x" ] ; then echo "" ;else echo ">= %{NSS_BUILDTIME_NUMBER}" ;fi)
+
 
 # fix for https://bugzilla.redhat.com/show_bug.cgi?id=1111349
 %global _privatelibs libmawt[.]so.*
 
 
 
+# In some cases, the arch used by the JDK does
+# not match _arch.
+# Also, in some cases, the machine name used by SystemTap
+# does not match that given by _build_cpu
 %ifarch x86_64
 %global archinstall amd64
+%global stapinstall x86_64
 %endif
 %ifarch ppc
 %global archinstall ppc
+%global stapinstall powerpc
 %endif
 %ifarch %{ppc64be}
 %global archinstall ppc64
+%global stapinstall powerpc
 %endif
 %ifarch %{ppc64le}
 %global archinstall ppc64le
+%global stapinstall powerpc
 %endif
 %ifarch %{ix86}
 %global archinstall i386
+%global stapinstall i386
 %endif
 %ifarch ia64
 %global archinstall ia64
+%global stapinstall ia64
 %endif
 %ifarch s390
 %global archinstall s390
+%global stapinstall s390
 %endif
 %ifarch s390x
 %global archinstall s390x
+%global stapinstall s390
 %endif
 %ifarch %{arm}
 %global archinstall arm
+%global stapinstall arm
 %endif
 %ifarch %{aarch64}
 %global archinstall aarch64
+%global stapinstall arm64
 %endif
 # 32 bit sparc, optimized for v9
 %ifarch sparcv9
 %global archinstall sparc
+%global stapinstall %{_build_cpu}
 %endif
 # 64 bit sparc
 %ifarch sparc64
 %global archinstall sparcv9
+%global stapinstall %{_build_cpu}
 %endif
 %ifnarch %{jit_arches}
 %global archinstall %{_arch}
 %endif
-%ifarch e2k
-%global archinstall %{_arch}
-%endif
-
-
 
 %if_enabled systemtap
 %global with_systemtap 1
@@ -186,8 +210,12 @@ BuildRequires: /proc
 %global origin          openjdk
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global project         aarch64-port
-#%global repo            jdk8u60
-%global revision        aarch64-jdk8u144-b01
+%global repo            jdk8u
+%global revision        aarch64-jdk8u151-b12
+%global shenandoah_project	aarch64-port
+%global shenandoah_repo		jdk8u-shenandoah
+%global shenandoah_revision    	aarch64-shenandoah-jdk8u151-b12
+
 # eg # jdk8u60-b27 -> jdk8u60 or # aarch64-jdk8u60-b27 -> aarch64-jdk8u60  (dont forget spec escape % by %%)
 %global whole_update    %(VERSION=%{revision}; echo ${VERSION%%-*})
 # eg  jdk8u60 -> 60 or aarch64-jdk8u60 -> 60
@@ -195,7 +223,7 @@ BuildRequires: /proc
 # eg jdk8u60-b27 -> b27
 %global buildver        %(VERSION=%{revision}; echo ${VERSION##*-})
 # priority must be 7 digits in total. The expression is workarounding tip
-%global priority        %(TIP=1800%{updatever};  echo ${TIP/tip/99})
+%global priority        %(TIP=1800%{updatever};  echo ${TIP/tip/999})
 
 %global javaver         1.8.0
 
@@ -217,11 +245,9 @@ BuildRequires: /proc
 %global jredir %{sdkdir}/jre
 %global sdkbindir %{_jvmdir}/%{sdkdir}/bin
 %global jrebindir %{_jvmdir}/%{jredir}/bin
-%if_enabled jvmjardir
 %global jvmjardir %{_jvmjardir}/%{uniquesuffix}
-%endif
 
-%global rpm_state_dir %{_var}/lib/rpm-state/
+%global rpm_state_dir %{_localstatedir}/lib/rpm-state/
 
 %if_enabled systemtap
 # Where to install systemtap tapset (links)
@@ -233,15 +259,51 @@ BuildRequires: /proc
 # for the primary arch for now). Systemtap uses the machine name
 # aka build_cpu as architecture specific directory name.
 %global tapsetroot /usr/share/systemtap
-%global tapsetdir %{tapsetroot}/tapset/%{_build_cpu}
+%global tapsetdir %{tapsetroot}/tapset/%{stapinstall}
 %endif
+
+# not-duplicated scriplets for normal/debug packages
+%global update_desktop_icons /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# not-duplicated requires/provides/obsolate for normal/debug packages
+
+
+
+
+
+
+
 
 # Prevent brp-java-repack-jars from being run.
 %global __jar_repack 0
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt5_1.b01jpp8
+Release: alt1_5.b12jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -254,39 +316,52 @@ Release: alt5_1.b01jpp8
 
 Epoch:   0
 Summary: OpenJDK Runtime Environment
-Group:   Development/Java
+Group:   Development/Other
 
 License:  ASL 1.1 and ASL 2.0 and GPL+ and GPLv2 and GPLv2 with exceptions and LGPL+ and LGPLv2 and MPLv1.0 and MPLv1.1 and Public Domain and W3C
 URL:      http://openjdk.java.net/
 
 # aarch64-port now contains integration forest of both aarch64 and normal jdk
 # Source from upstream OpenJDK8 project. To regenerate, use
-# VERSION=aarch64-jdk8u71-b15 FILE_NAME_ROOT=${VERSION}
+# VERSION=%%{revision} FILE_NAME_ROOT=%%{project}-%%{repo}-${VERSION}
 # REPO_ROOT=<path to checked-out repository> generate_source_tarball.sh
-Source0:  %{revision}.tar.xz
-Source111: lcc-mk-wrapper.sh
+# where the source is obtained from http://hg.openjdk.java.net/%%{project}/%%{repo}
+Source0: %{project}-%{repo}-%{revision}.tar.xz
+
+# Shenandoah HotSpot
+# aarch64-port/jdk8u-shenandoah contains an integration forest of
+# OpenJDK 8u, the aarch64 port and Shenandoah
+# To regenerate, use:
+# VERSION=%%{shenandoah_revision}
+# FILE_NAME_ROOT=%%{shenandoah_project}-%%{shenandoah_repo}-${VERSION}
+# REPO_ROOT=<path to checked-out repository> REPOS=hotspot generate_source_tarball.sh
+# where the source is obtained from http://hg.openjdk.java.net/%%{project}/%%{repo}
+Source1: %{shenandoah_project}-%{shenandoah_repo}-%{shenandoah_revision}.tar.xz
 
 # Custom README for -src subpackage
 Source2:  README.src
 
 # Use 'generate_tarballs.sh' to generate the following tarballs
-# They are based on code contained in the IcedTea7 project.
+# They are based on code contained in the IcedTea project (3.x).
 
 # Systemtap tapsets. Zipped up to keep it small.
-Source8: systemtap-tapset.tar.gz
+Source8: systemtap-tapset-3.6.0pre02.tar.xz
 
 # Desktop files. Adapated from IcedTea.
 Source9: jconsole.desktop.in
 Source10: policytool.desktop.in
 
 # nss configuration file
-Source11: nss.cfg
+Source11: nss.cfg.in
 
 # Removed libraries that we link instead
 Source12: %{name}-remove-intree-libraries.sh
 
 # Ensure we aren't using the limited crypto policy
 Source13: TestCryptoLevel.java
+
+# Ensure ECDSA is working
+Source14: TestECDSA.java
 
 Source20: repackReproduciblePolycies.sh
 
@@ -296,6 +371,7 @@ Source101: config.sub
 
 # RPM/distribution specific patches
 
+# Accessibility patches
 # Ignore AWTError when assistive technologies are loaded 
 Patch1:   %{name}-accessible-toolkit.patch
 # Restrict access to java-atk-wrapper classes
@@ -306,25 +382,47 @@ Patch3: java-atk-wrapper-security.patch
 Patch5: multiple-pkcs11-library-init.patch
 # PR2095, RH1163501: 2048-bit DH upper bound too small for Fedora infrastructure (sync with IcedTea 2.x)
 Patch504: rh1163501.patch
-# S4890063, PR2304, RH1214835: HPROF: default text truncated when using doe=n option (upstreaming post-CPU 2015/07)
+# S4890063, PR2304, RH1214835: HPROF: default text truncated when using doe=n option
 Patch511: rh1214835.patch
 # Turn off strict overflow on IndicRearrangementProcessor{,2}.cpp following 8140543: Arrange font actions
 Patch512: no_strict_overflow.patch
+# Support for building the SunEC provider with the system NSS installation
+# PR1983: Support using the system installation of NSS with the SunEC provider
+# PR2127: SunEC provider crashes when built using system NSS
+# PR2815: Race condition in SunEC provider with system NSS
+# PR2899: Don't use WithSeed versions of NSS functions as they don't fully process the seed
+# PR2934: SunEC provider throwing KeyException with current NSS
+# PR3479, RH1486025: ECC and NSS JVM crash
 Patch513: pr1983-jdk.patch
-
-Patch900: gcc6.patch
+Patch514: pr1983-root.patch
+Patch515: pr2127.patch
+Patch516: pr2815.patch
+Patch517: pr2899.patch
+Patch518: pr2934.patch
+Patch519: pr3479-rh1486025.patch
+# S8150954, RH1176206, PR2866: Taking screenshots on x11 composite desktop produces wrong result
+# In progress: http://mail.openjdk.java.net/pipermail/awt-dev/2016-March/010742.html
+Patch508: rh1176206-jdk.patch
+Patch509: rh1176206-root.patch
+# RH1337583, PR2974: PKCS#10 certificate requests now use CRLF line endings rather than system line endings
+Patch523: pr2974-rh1337583.patch
+# PR3083, RH1346460: Regression in SSL debug output without an ECC provider
+Patch528: pr3083-rh1346460.patch
+# Patches 204 and 205 stop the build adding .gnu_debuglink sections to unstripped files
+Patch204: hotspot-remove-debuglink.patch
+Patch205: dont-add-unnecessary-debug-links.patch
+# Enable debug information for assembly code files
+Patch206: hotspot-assembler-debuginfo.patch
+# 8188030, PR3459, RH1484079: AWT java apps fail to start when some minimal fonts are present
+Patch560: 8188030-pr3459-rh1484079.patch
 
 # Arch-specific upstreamable patches
-# JVM heap size changes for s390 (thanks to aph)
+# PR2415: JVM -Xmx requirement is too high on s390
 Patch100: %{name}-s390-java-opts.patch
 # Type fixing for s390
 Patch102: %{name}-size_t.patch
 # Use "%z" for size_t on s390 as size_t != intptr_t
 Patch103: s390-size_t_format_flags.patch
-
-# AArch64-specific upstreamable patches
-# Remove template in AArch64 port which causes issues with GCC 6
-Patch106: remove_aarch64_template_for_gcc6.patch
 
 # Patches which need backporting to 8u
 # S8073139, RH1191652; fix name of ppc64le architecture
@@ -339,74 +437,112 @@ Patch202: system-libpng.patch
 Patch203: system-lcms.patch
 # PR2462: Backport "8074839: Resolve disabled warnings for libunpack and the unpack200 binary"
 # This fixes printf warnings that lead to build failure with -Werror=format-security from optflags
-Patch502: pr2462-01.patch
-Patch503: pr2462-02.patch
-# S8140620, PR2769: Find and load default.sf2 as the default soundbank on Linux
-Patch605: soundFontPatch.patch
+Patch502: pr2462.patch
+# S8148351, PR2842: Only display resolved symlink for compiler, do not change path
+Patch506: pr2842-01.patch
+Patch507: pr2842-02.patch
+# S8154313: Generated javadoc scattered all over the place
+Patch400: 8154313.patch
+# S6260348, PR3066: GTK+ L&F JTextComponent not respecting desktop caret blink rate
+Patch526: 6260348-pr3066.patch
+# 8061305, PR3335, RH1423421: Javadoc crashes when method name ends with "Property"
+Patch538: 8061305-pr3335-rh1423421.patch
 
-# Patches upstream and appearing in 8u76
-# Fixes StackOverflowError on ARM32 bit Zero. See RHBZ#1206656
-# 8087120: [GCC5] java.lang.StackOverflowError on Zero JVM initialization on non x86 platforms
-Patch403: rhbz1206656_fix_current_stack_pointer.patch
-# S8146566, PR2428: OpenJDK build can't handle commas in LDFLAGS
-Patch501: 8146566.patch
-# S8143855: Bad printf formatting in frame_zero.cpp 
-Patch505: 8143855.patch
+# Patches upstream and appearing in 8u151
+# 8075484, PR3473, RH1490713: SocketInputStream.socketRead0 can hang even with soTimeout set
+Patch561: 8075484-pr3473-rh1490713.patch
+
+# Patches upstream and appearing in 8u152
+# 8153711, PR3313, RH1284948: [REDO] JDWP: Memory Leak: GlobalRefs never deleted when processing invokeMethod command
+Patch535: 8153711-pr3313-rh1284948.patch
+# 8162384, PR3122, RH1358661: Performance regression: bimorphic inlining may be bypassed by type speculation
+Patch532: 8162384-pr3122-rh1358661.patch
+# 8173941, PR3326: SA does not work if executable is DSO
+Patch547: 8173941-pr3326.patch
+# 8175813, PR3394, RH1448880: PPC64: "mbind: Invalid argument" when -XX:+UseNUMA is used
+Patch550: 8175813-pr3394-rh1448880.patch
+# 8175887, PR3415: C1 value numbering handling of Unsafe.get*Volatile is incorrect
+Patch554: 8175887-pr3415.patch
+# 8180048, PR3411, RH1449870: Interned string and symbol table leak memory during parallel unlinking
+Patch564: 8180048-pr3411-rh1449870.patch
+
+# Patches upstream and appearing in 8u161
+# 8164293, PR3412, RH1459641: HotSpot leaking memory in long-running requests
+Patch555: 8164293-pr3412-rh1459641.patch
+ 
+# Patches upstream and appearing in 8u162
+# 8181055, PR3394, RH1448880: PPC64: "mbind: Invalid argument" still seen after 8175813
+Patch551: 8181055-pr3394-rh1448880.patch
+# 8181419, PR3413, RH1463144: Race in jdwp invoker handling may lead to crashes or invalid results
+Patch553: 8181419-pr3413-rh1463144.patch
+# 8145913, PR3466, RH1498309: PPC64: add Montgomery multiply intrinsic
+Patch556: 8145913-pr3466-rh1498309.patch
+# 8168318, PR3466, RH1498320: PPC64: Use cmpldi instead of li/cmpld
+Patch557: 8168318-pr3466-rh1498320.patch
+# 8170328, PR3466, RH1498321: PPC64: Use andis instead of lis/and
+Patch558: 8170328-pr3466-rh1498321.patch
+# 8181810, PR3466, RH1498319: PPC64: Leverage extrdi for bitfield extract
+Patch559: 8181810-pr3466-rh1498319.patch
 
 # Patches ineligible for 8u
 # 8043805: Allow using a system-installed libjpeg
 Patch201: system-libjpeg.patch
 
 # Local fixes
-# Turns off ECC support as we don't ship the SunEC provider currently
-Patch12: removeSunEcProvider-RH1154143.patch
+# PR1834, RH1022017: Reduce curves reported by SSL to those in NSS
+Patch525: pr1834-rh1022017.patch
+# Turn on AssumeMP by default on RHEL systems
+Patch534: always_assumemp.patch
+# PR2888: OpenJDK should check for system cacerts database (e.g. /etc/pki/java/cacerts)
+Patch539: pr2888.patch
 
 # Non-OpenJDK fixes
-Patch300: jstack-pr1845.patch
 
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libalsa-devel
 BuildRequires: binutils
-BuildRequires: cups-devel
+BuildRequires: libcups-devel
 BuildRequires: desktop-file-utils
+BuildRequires: elfutils
 BuildRequires: fontconfig
 BuildRequires: libfreetype-devel
-BuildRequires: libungif-devel
+BuildRequires: libgif-devel
 BuildRequires: gcc-c++
-BuildRequires: gtk2-devel
+BuildRequires: gdb libgdb-devel
+BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
 BuildRequires: liblcms2-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
-BuildRequires: xsltproc libxslt
+BuildRequires: libxslt xsltproc
 BuildRequires: libX11-devel
 BuildRequires: libXi-devel
 BuildRequires: libXinerama-devel
 BuildRequires: libXt-devel
 BuildRequires: libXtst-devel
 # Requirements for setting up the nss.cfg
-BuildRequires: nss-devel
-BuildRequires: pkgconfig
-BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
-#BuildRequires: redhat-lsb
+BuildRequires: libnss-devel libnss-devel-static
+BuildRequires: xorg-pmproto-devel xorg-proto-devel xorg-xf86miscproto-devel
 BuildRequires: zip
+# Use OpenJDK 8 to bootstrap on AArch64 until RH1482244 is resolved in buildroot
+%ifarch %{ix86} x86_64
 BuildRequires: java-1.8.0-openjdk-devel
+%else
+BuildRequires: java-1.8.0-openjdk-devel
+%endif
 # Zero-assembler build requirement.
 %ifnarch %{jit_arches}
 BuildRequires: libffi-devel
 %endif
-%ifarch %e2k
-BuildRequires: libffi-devel
-%endif
-
 BuildRequires: tzdata-java >= 2015d
+# Earlier versions have a bug in tree vectorization on PPC
+BuildRequires: gcc >= 4.8.3
+# Build requirements for SunEC system NSS support
+BuildRequires: libnss-devel >= 3.16.1
 
-# cacerts build requirement.
-BuildRequires: openssl
 %if_enabled systemtap
 BuildRequires: systemtap-sdt-devel
 %endif
-
 
 # this is built always, also during debug-only build
 # when it is built in debug-only, then this package is just placeholder
@@ -428,6 +564,7 @@ Provides: java = %{epoch}:%{javaver}
 # Standard JPackage extensions provides.
 Provides: java-fonts = %{epoch}:%{version}
 
+#Obsoletes: java-1.7.0-openjdk
 Source44: import.info
 %filter_from_provides /^(%{_privatelibs})$/d
 %filter_from_requires /^(%{_privatelibs})$/d
@@ -436,12 +573,6 @@ Source44: import.info
 %define label -%{name}
 %define javaws_ver      %{javaver}
 
-%def_without gcc49
-%if_with gcc49
-%set_gcc_version 4.9
-BuildRequires: gcc4.9-c++
-%endif
-# gcc5? links in a strange way that generates additional requires :(
 # findprov below did not help at all :(
 %add_findprov_lib_path %{_jvmdir}/%{jredir}/lib/%archinstall
 %add_findprov_lib_path %{_jvmdir}/%{jredir}/lib/%archinstall/jli
@@ -451,7 +582,7 @@ BuildRequires: gcc4.9-c++
 %add_findprov_lib_path %{_jvmdir}/%{jredir}/lib/%archinstall/client
 %endif
 
-%ifarch aarch64 x86_64
+%ifarch x86_64
 Provides: /usr/lib/jvm/java/jre/lib/%archinstall/server/libjvm.so()(64bit)
 Provides: /usr/lib/jvm/java/jre/lib/%archinstall/server/libjvm.so(SUNWprivate_1.1)(64bit)
 %endif
@@ -463,26 +594,38 @@ Provides: /usr/lib/jvm/java/jre/lib/%archinstall/client/libjvm.so(SUNWprivate_1.
 %endif
 Patch33: java-1.8.0-openjdk-alt-no-Werror.patch
 Patch34: java-1.8.0-openjdk-alt-link.patch
-Patch35: java-1.8.0-openjdk-e2k-lcc-support.patch
 
 %description
 The OpenJDK runtime environment.
 
+%if %{include_debug_build}
+%package debug
+Summary: OpenJDK Runtime Environment %{debug_on}
+Group:   Development/Other
+
+%description debug
+The OpenJDK runtime environment.
+%{debug_warning}
+%endif
+
 %if %{include_normal_build}
 %package headless
 Summary: OpenJDK Runtime Environment
-Group:   Development/Java
+Group:   Development/Other
 
 # Require /etc/pki/java/cacerts.
-Requires: ca-certificates
-# Require javapackages-tools for ownership of /usr/lib/jvm/
-#Requires: maven-local
+Requires: ca-trust
+# Require jpackage-utils for ownership of /usr/lib/jvm/
+Requires: jpackage-utils
 # Require zoneinfo data provided by tzdata-java subpackage.
 Requires: tzdata-java >= 2015d
 # libsctp.so.1 is being `dlopen`ed on demand
-Requires: liblksctp
+Requires: liblksctp lksctp-tools
+# there is a need to depend on the exact version of NSS
+Requires: libnss %{NSS_BUILDTIME_VERSION}
+Requires: libnss %{NSSSOFTOKN_BUILDTIME_VERSION}
 # tool to copy jdk's configs - should be Recommends only, but then only dnf/yum eforce it, not rpm transaction and so no configs are persisted when pure rpm -u is run. I t may be consiedered as regression
-#Requires:	copy-jdk-configs >= 1.1-3
+#Requires:	copy-jdk-configs >= 2.2
 # Post requires alternatives to install tool alternatives.
 # in version 1.7 and higher for --family switch
 # Postun requires alternatives to uninstall tool alternatives.
@@ -507,12 +650,28 @@ Provides: jsse = %{epoch}:%{version}
 Provides: jce = %{epoch}:%{version}
 Provides: jdbc-stdext = 4.1
 Provides: java-sasl = %{epoch}:%{version}
+
+#https://bugzilla.redhat.com/show_bug.cgi?id=1312019
+Provides: /usr/bin/jjs
 Requires: java-common
 Requires: /proc
 Requires(post): /proc
 
+#Obsoletes: java-1.7.0-openjdk-headless
+
 %description headless
 The OpenJDK runtime environment without audio and video support.
+%endif
+
+%if %{include_debug_build}
+%package headless-debug
+Summary: OpenJDK Runtime Environment %{debug_on}
+Group:   Development/Other
+
+
+%description headless-debug
+The OpenJDK runtime environment without audio and video support.
+%{debug_warning}
 %endif
 
 %if %{include_normal_build}
@@ -536,40 +695,82 @@ Provides: java-%{javaver}-devel = %{epoch}:%{version}
 Provides: java-devel-%{origin} = %{epoch}:%{version}
 Provides: java-devel = %{epoch}:%{javaver}
 
+#Obsoletes: java-1.7.0-openjdk-devel
+#Obsoletes: java-1.5.0-gcj-devel
 
 %description devel
 The OpenJDK development tools.
 %endif
 
+%if %{include_debug_build}
+%package devel-debug
+Summary: OpenJDK Development Environment %{debug_on}
+Group:   Development/Java
+
+
+%description devel-debug
+The OpenJDK development tools.
+%{debug_warning}
+%endif
+
 %if %{include_normal_build}
 %package demo
 Summary: OpenJDK Demos
-Group:   Development/Java
+Group:   Development/Other
 
 Requires: %{name} = %{epoch}:%{version}-%{release}
 
+Provides: java-%{javaver}-%{origin}-demo = %{epoch}:%{version}-%{release}
+
+#Obsoletes: java-1.7.0-openjdk-demo
 
 %description demo
 The OpenJDK demos.
 %endif
 
+%if %{include_debug_build}
+%package demo-debug
+Summary: OpenJDK Demos %{debug_on}
+Group:   Development/Other
+
+
+%description demo-debug
+The OpenJDK demos.
+%{debug_warning}
+%endif
+
 %if %{include_normal_build}
 %package src
 Summary: OpenJDK Source Bundle
-Group:   Development/Java
+Group:   Development/Other
 
 Requires: %{name}-headless = %{epoch}:%{version}-%{release}
 
+# Standard JPackage javadoc provides.
+Provides: java-src = %{epoch}:%{version}-%{release}
+Provides: java-%{javaver}-src = %{epoch}:%{version}-%{release}
+Provides: java-%{javaver}-%{origin}-src = %{epoch}:%{version}-%{release}
+#Obsoletes: java-1.7.0-openjdk-src
 
 %description src
 The OpenJDK source bundle.
+%endif
+
+%if %{include_debug_build}
+%package src-debug
+Summary: OpenJDK Source Bundle %{for_debug}
+Group:   Development/Other
+
+
+%description src-debug
+The OpenJDK source bundle %{for_debug}.
 %endif
 
 %if %{include_normal_build}
 %package javadoc
 Summary: OpenJDK API Documentation
 Group:   Development/Java
-#Requires: maven-local
+Requires: jpackage-utils
 BuildArch: noarch
 
 # Post requires alternatives to install javadoc alternative.
@@ -580,14 +781,65 @@ BuildArch: noarch
 # Standard JPackage javadoc provides.
 Provides: java-javadoc = %{epoch}:%{version}-%{release}
 Provides: java-%{javaver}-javadoc = %{epoch}:%{version}-%{release}
-
+Provides: java-%{javaver}-%{origin}-javadoc = %{epoch}:%{version}-%{release}
 # fc provides
 Provides: java-javadoc = 1:1.9.0
+
+#Obsoletes: java-1.7.0-openjdk-javadoc
 
 
 %description javadoc
 The OpenJDK API documentation.
 %endif
+
+%if %{include_normal_build}
+%package javadoc-zip
+Summary: OpenJDK API Documentation compressed in single archive
+Group:   Development/Java
+Requires: javapackages-tools
+BuildArch: noarch
+
+# Post requires alternatives to install javadoc alternative.
+# in version 1.7 and higher for --family switch
+# Postun requires alternatives to uninstall javadoc alternative.
+# in version 1.7 and higher for --family switch
+
+# Standard JPackage javadoc provides.
+Provides: java-javadoc = %{epoch}:%{version}-%{release}
+Provides: java-%{javaver}-javadoc = %{epoch}:%{version}-%{release}
+Provides: java-%{javaver}-%{origin}-javadoc = %{epoch}:%{version}-%{release}
+
+#Obsoletes: java-1.7.0-openjdk-javadoc
+
+
+%description javadoc-zip
+The OpenJDK API documentation compressed in single archive.
+%endif
+
+%if %{include_debug_build}
+%package javadoc-debug
+Summary: OpenJDK API Documentation %{for_debug}
+Group:   Development/Java
+Requires: jpackage-utils
+BuildArch: noarch
+
+
+%description javadoc-debug
+The OpenJDK API documentation %{for_debug}.
+%endif
+
+%if %{include_debug_build}
+%package javadoc-zip-debug
+Summary: OpenJDK API Documentation compressed in single archive %{for_debug}
+Group:   Development/Java
+Requires: javapackages-tools
+BuildArch: noarch
+
+
+%description javadoc-zip-debug
+The OpenJDK API documentation compressed in single archive %{for_debug}.
+%endif
+
 
 %if %{include_normal_build}
 %package accessibility
@@ -597,6 +849,9 @@ Summary: OpenJDK accessibility connector
 Requires: java-atk-wrapper
 Requires: %{name} = %{epoch}:%{version}-%{release}
 
+Provides: java-%{javaver}-%{origin}-accessibility = %{epoch}:%{version}-%{release}
+
+#Obsoletes: java-1.7.0-openjdk-accessibility
 
 %description accessibility
 Enables accessibility support in OpenJDK by using java-atk-wrapper. This allows
@@ -607,6 +862,16 @@ Please note, the java-atk-wrapper is still in beta, and OpenJDK itself is still
 being tuned to be working with accessibility features. There are known issues
 with accessibility on, so please do not install this package unless you really
 need to.
+%endif
+
+%if %{include_debug_build}
+%package accessibility-debug
+Group: Development/Other
+Summary: OpenJDK accessibility connector %{for_debug}
+
+
+%description accessibility-debug
+See normal java-%{version}-openjdk-accessibility description.
 %endif
 
 %prep
@@ -626,7 +891,7 @@ if [ %{include_debug_build} -eq 0 -a  %{include_normal_build} -eq 0 ] ; then
   echo "you have disabled both include_debug_build and include_debug_build. no go."
   exit 13
 fi
-%setup -q -c -n %{uniquesuffix} -T -a 0
+%setup -q -c -n %{uniquesuffix ""} -T -a 0
 # https://bugzilla.redhat.com/show_bug.cgi?id=1189084
 prioritylength=`expr length %{priority}`
 if [ $prioritylength -ne 7 ] ; then
@@ -635,6 +900,16 @@ if [ $prioritylength -ne 7 ] ; then
 fi
 # For old patches
 ln -s openjdk jdk8
+%if %{use_shenandoah_hotspot}
+# On Shenandoah-supported architectures, replace HotSpot with
+# the Shenandoah version
+pushd openjdk
+tar -xf %{SOURCE1}
+rm -rf hotspot
+mv openjdk/hotspot .
+rm -rf openjdk
+popd
+%endif
 
 cp %{SOURCE2} .
 
@@ -642,56 +917,98 @@ cp %{SOURCE2} .
 #
 # the configure macro will do this too, but it also passes a few flags not
 # supported by openjdk configure script
-%ifnarch %e2k
 cp %{SOURCE100} openjdk/common/autoconf/build-aux/
 cp %{SOURCE101} openjdk/common/autoconf/build-aux/
-%endif
 
 # OpenJDK patches
 
 # Remove libraries that are linked
 sh %{SOURCE12}
 
+# System library fixes
 %patch201
 %patch202
 %patch203
+
+# Debugging fixes
+%patch204
+%patch205
+%patch206
 
 %patch1
 %patch3
 %patch5
 %patch7
-%patch12
 
 # s390 build fixes
-%ifarch s390
 %patch100
 %patch102
 %patch103
-%endif
 
-# aarch64 build fixes
-#%patch106
+# ppc64le fixes
 
-# Zero PPC fixes.
-#%patch403
+%patch603
+%patch601
+%patch602
 
-%patch605
+# Zero fixes.
 
-#%patch501
+# Upstreamable fixes
 %patch502
-%patch503
 %patch504
-#%patch505
+%patch506
+%patch507
+%patch508
+%patch509
 %patch511
 %patch512
 %patch513
+%patch514
+%patch515
+%patch516
+%patch517
+%patch518
+%patch519
+%patch400
+%patch523
+%patch526
+%patch528
+%patch532
+%patch535
+%patch538
+%patch547
+%patch550
+%patch551
+%patch553
+%patch555
+%patch560
+%patch561
+%patch564
 
-%patch900
+# PPC64 updates
+%patch556
+%patch557
+%patch558
+%patch559
+
+# RPM-only fixes
+%patch525
+%patch539
+
+# RHEL-only patches
+%if 0%{?rhel}
+%patch534
+%endif
+
+# 8175887 was added to the Shenandoah HotSpot ahead of time
+%if %{use_shenandoah_hotspot}
+%else
+%patch554
+%endif
 
 # Extract systemtap tapsets
 %if_enabled systemtap
-tar xzf %{SOURCE8}
-%patch300
+tar -x -I xz -f %{SOURCE8}
 %if %{include_debug_build}
 cp -r tapset tapset%{debug_suffix}
 %endif
@@ -709,6 +1026,7 @@ for suffix in %{build_loop} ; do
 %endif
     sed -i -e s:@ABS_JAVA_HOME_DIR@:%{_jvmdir}/%{sdkdir}:g $OUTPUT_FILE
     sed -i -e s:@INSTALL_ARCH_DIR@:%{archinstall}:g $OUTPUT_FILE
+    sed -i -e s:@prefix@:%{_jvmdir}/%{sdkdir}/:g $OUTPUT_FILE
   done
 done
 # systemtap tapsets ends
@@ -723,16 +1041,19 @@ for file in %{SOURCE9} %{SOURCE10} ; do
     OUTPUT_FILE=$NAME$suffix.$EXT
     sed -e s:#JAVA_HOME#:%{sdkbindir}:g $file > $OUTPUT_FILE
     sed -i -e  s:#JRE_HOME#:%{jrebindir}:g $OUTPUT_FILE
-    sed -i -e  s:#ARCH#:%{_arch}$suffix:g $OUTPUT_FILE
+    sed -i -e  s:#ARCH#:%{version}-%{release}.%{_arch}$suffix:g $OUTPUT_FILE
 done
 done
+
+# Setup nss.cfg
+sed -e s:@NSS_LIBDIR@:%{NSS_LIBDIR}:g %{SOURCE11} > nss.cfg
+sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' openjdk/hotspot/make/linux/makefiles/defs.make
+sed -i -e 's, -m32, -m32 %optflags_shared -fpic -D_BLA_BLA_BLA1,' openjdk/hotspot/make/linux/makefiles/gcc.make
 sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' jdk8/hotspot/make/linux/makefiles/defs.make
 sed -i -e /BASIC_REMOVE_SYMBOLIC_LINKS/d jdk8/common/autoconf/toolchain.m4
 %patch33 -p1
 %patch34 -p1
-%patch35 -p0
 
-sed -i -e 's, -m32, -m32 %optflags_shared -fpic -D_BLA_BLA_BLA1,' openjdk/hotspot/make/linux/makefiles/gcc.make
 
 %build
 # How many cpu's do we have?
@@ -752,15 +1073,10 @@ export CFLAGS="$CFLAGS -mieee"
 %endif
 
 # We use ourcppflags because the OpenJDK build seems to
-# pass these to the HotSpot C++ compiler...
+# pass EXTRA_CFLAGS to the HotSpot C++ compiler...
 EXTRA_CFLAGS="%ourcppflags"
-# Disable various optimizations to fix miscompliation. See:
-# - https://bugzilla.redhat.com/show_bug.cgi?id=1120792
-EXTRA_CPP_FLAGS="%ourcppflags -fno-tree-vrp"
-# PPC/PPC64 needs -fno-tree-vectorize since -O3 would
-# otherwise generate wrong code producing segfaults.
+EXTRA_CPP_FLAGS="%ourcppflags"
 %ifarch %{power64} ppc
-EXTRA_CFLAGS="$EXTRA_CFLAGS -fno-tree-vectorize"
 # fix rpmlint warnings
 EXTRA_CFLAGS="$EXTRA_CFLAGS -fno-strict-aliasing"
 %endif
@@ -780,13 +1096,8 @@ fi
 mkdir -p %{buildoutputdir}
 pushd %{buildoutputdir}
 
-%if_with e2k_lcc_wrapper
-SAVEPATH=$PATH
-LCC_WRAPPER_DIR=%_builddir/lcc-wrapper
-sh %{SOURCE111} $LCC_WRAPPER_DIR
-PATH=$LCC_WRAPPER_DIR:$PATH
-%endif
-
+NSS_LIBS="%{NSS_LIBS} -lfreebl" \
+NSS_CFLAGS="%{NSS_CFLAGS}" \
 bash ../../configure \
 %ifnarch %{jit_arches}
     --with-jvm-variants=zero \
@@ -795,9 +1106,6 @@ bash ../../configure \
     --with-milestone="fcs" \
     --with-update-version=%{updatever} \
     --with-build-number=%{buildver} \
-%ifarch %{aarch64}
-    --with-user-release-suffix="aarch64-%{updatever}-%{buildver}" \
-%endif
     --with-boot-jdk=/usr/lib/jvm/java-openjdk \
     --with-debug-level=$debugbuild \
     --enable-unlimited-crypto \
@@ -807,11 +1115,12 @@ bash ../../configure \
     --with-libpng=system \
     --with-lcms=bundled \
     --with-stdc++lib=dynamic \
+    --with-extra-cxxflags="$EXTRA_CPP_FLAGS" \
+    --with-extra-cflags="$EXTRA_CFLAGS" \
+    --with-extra-ldflags="%{ourldflags}" \
     --with-num-cores="$NUM_PROC"
 
-#    --with-extra-cxxflags="$EXTRA_CPP_FLAGS" \
-#    --with-extra-cflags="$EXTRA_CFLAGS" \
-#    --with-extra-ldflags="%{ourldflags}" \
+#    --enable-system-nss \
 cat spec.gmk
 cat hotspot-spec.gmk
 
@@ -827,6 +1136,8 @@ make \
     POST_STRIP_CMD="" \
     LOG=trace \
     %{targets}
+
+make zip-docs
 
 # the build (erroneously) removes read permissions from some jars
 # this is a regression in OpenJDK 7 (our compiler):
@@ -844,33 +1155,87 @@ popd >& /dev/null
 export JAVA_HOME=$(pwd)/%{buildoutputdir}/images/%{j2sdkimage}
 
 # Install nss.cfg right away as we will be using the JRE above
-install -m 644 %{SOURCE11} $JAVA_HOME/jre/lib/security/
+install -m 644 nss.cfg $JAVA_HOME/jre/lib/security/
 
-
-# TODO:
 # Use system-wide tzdata
-#rm $JAVA_HOME/jre/lib/tzdb.dat
-#ln -s %{_datadir}/javazi-1.8/tzdb.dat $JAVA_HOME/jre/lib/tzdb.dat
+rm $JAVA_HOME/jre/lib/tzdb.dat
+ln -s %{_datadir}/javazi-1.8/tzdb.dat $JAVA_HOME/jre/lib/tzdb.dat
+
+#build cycles
+done
+
+%check
+
+# We test debug first as it will give better diagnostics on a crash
+for suffix in %{rev_build_loop} ; do
+
+export JAVA_HOME=$(pwd)/%{buildoutputdir}/images/%{j2sdkimage}
 
 # Check unlimited policy has been used
-$JAVA_HOME/bin/javac -d . %{SOURCE13}
-$JAVA_HOME/bin/java TestCryptoLevel
+#$JAVA_HOME/bin/javac -d . %{SOURCE13}
+#$JAVA_HOME/bin/java TestCryptoLevel
 
-%ifnarch %e2k
+# Check ECC is working
+#$JAVA_HOME/bin/javac -d . %{SOURCE14}
+#$JAVA_HOME/bin/java $(echo $(basename %{SOURCE14})|sed "s|\.java||")
+
 # Check debug symbols are present and can identify code
-SERVER_JVM="$JAVA_HOME/jre/lib/%{archinstall}/server/libjvm.so"
-if [ -f "$SERVER_JVM" ] ; then
-  nm -aCl "$SERVER_JVM" | grep javaCalls.cpp
-fi
-CLIENT_JVM="$JAVA_HOME/jre/lib/%{archinstall}/client/libjvm.so"
-if [ -f "$CLIENT_JVM" ] ; then
-  nm -aCl "$CLIENT_JVM" | grep javaCalls.cpp
-fi
-ZERO_JVM="$JAVA_HOME/jre/lib/%{archinstall}/zero/libjvm.so"
-if [ -f "$ZERO_JVM" ] ; then
-  nm -aCl "$ZERO_JVM" | grep javaCalls.cpp
-fi
-%endif
+find "$JAVA_HOME" -iname '*.so' -print0 | while read -d $'\0' lib
+do
+  if [ -f "$lib" ] ; then
+    echo "Testing $lib for debug symbols"
+    # All these tests rely on RPM failing the build if the exit code of any set
+    # of piped commands is non-zero.
+
+    # Test for .debug_* sections in the shared object. This is the  main test.
+    # Stripped objects will not contain these.
+    eu-readelf -S "$lib" | grep "] .debug_"
+    test $(eu-readelf -S "$lib" | grep -E "\]\ .debug_(info|abbrev)" | wc --lines) == 2
+
+    # Test FILE symbols. These will most likely be removed by anyting that
+    # manipulates symbol tables because it's generally useless. So a nice test
+    # that nothing has messed with symbols.
+    old_IFS="$IFS"
+    IFS=$'\n'
+    for line in $(eu-readelf -s "$lib" | grep "00000000      0 FILE    LOCAL  DEFAULT")
+    do
+     # We expect to see .cpp files, except for architectures like aarch64 and
+     # s390 where we expect .o and .oS files
+      echo "$line" | grep -E "ABS ((.*/)?[-_a-zA-Z0-9]+\.(c|cc|cpp|cxx|o|oS))?$"
+    done
+    IFS="$old_IFS"
+
+    # If this is the JVM, look for javaCalls.(cpp|o) in FILEs, for extra sanity checking.
+    if [ "`basename $lib`" = "libjvm.so" ]; then
+      eu-readelf -s "$lib" | \
+        grep -E "00000000      0 FILE    LOCAL  DEFAULT      ABS javaCalls.(cpp|o)$"
+    fi
+
+    # Test that there are no .gnu_debuglink sections pointing to another
+    # debuginfo file. There shouldn't be any debuginfo files, so the link makes
+    # no sense either.
+    eu-readelf -S "$lib" | grep 'gnu'
+    if eu-readelf -S "$lib" | grep '] .gnu_debuglink' | grep PROGBITS; then
+      echo "bad .gnu_debuglink section."
+      eu-readelf -x .gnu_debuglink "$lib"
+      false
+    fi
+  fi
+done
+
+# Make sure gdb can do a backtrace based on line numbers on libjvm.so
+gdb -q "$JAVA_HOME/bin/java" <<EOF | tee gdb.out
+handle SIGSEGV pass nostop noprint
+handle SIGILL pass nostop noprint
+set breakpoint pending on
+break javaCalls.cpp:1
+commands 1
+backtrace
+quit
+end
+run -version
+EOF
+grep 'JavaCallWrapper::JavaCallWrapper' gdb.out
 
 # Check src.zip has all sources. See RHBZ#1130490
 jar -tf $JAVA_HOME/src.zip | grep 'sun.misc.Unsafe'
@@ -885,7 +1250,7 @@ $JAVA_HOME/bin/javap -l java.nio.ByteBuffer | grep "Compiled from"
 $JAVA_HOME/bin/javap -l java.nio.ByteBuffer | grep LineNumberTable
 $JAVA_HOME/bin/javap -l java.nio.ByteBuffer | grep LocalVariableTable
 
-#build cycles
+#build cycles check
 done
 
 %install
@@ -910,7 +1275,7 @@ mkdir -p $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/%{archinstall}/client/
   # Install systemtap support files.
   install -dm 755 $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/tapset
   # note, that uniquesuffix  is in BUILD dir in this case
-  cp -a $RPM_BUILD_DIR/%{uniquesuffix}/tapset$suffix/*.stp $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/tapset/
+  cp -a $RPM_BUILD_DIR/%{uniquesuffix ""}/tapset$suffix/*.stp $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/tapset/
   pushd  $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/tapset/
    tapsetFiles=`ls *.stp`
   popd
@@ -924,15 +1289,15 @@ mkdir -p $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/%{archinstall}/client/
   popd
 %endif
 
-  # Install cacerts symlink.
+  # Remove empty cacerts database.
   rm -f $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/security/cacerts
+  # Install cacerts symlink needed by some apps which hardcode the path.
   pushd $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/security
     RELATIVE=$(%{abs2rel} %{_sysconfdir}/pki/java \
       %{_jvmdir}/%{jredir}/lib/security)
     ln -sf $RELATIVE/cacerts .
   popd
 
-%if_enabled jvmjardir
   # Install extension symlinks.
   install -d -m 755 $RPM_BUILD_ROOT%{jvmjardir}
   pushd $RPM_BUILD_ROOT%{jvmjardir}
@@ -956,7 +1321,6 @@ mkdir -p $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/%{archinstall}/client/
       ln -sf $jar $(echo $jar | sed "s|-%{version}.jar|.jar|g")
     done
   popd
-%endif
 
   # Install JCE policy symlinks.
   install -d -m 755 $RPM_BUILD_ROOT%{_jvmprivdir}/%{uniquesuffix}/jce/vanilla
@@ -966,11 +1330,9 @@ mkdir -p $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/%{archinstall}/client/
     ln -sf %{jredir} %{jrelnk}
   popd
 
-%if_enabled jvmjardir
   pushd $RPM_BUILD_ROOT%{_jvmjardir}
     ln -sf %{sdkdir} %{jrelnk}
   popd
-%endif
 
   # Remove javaws man page
   rm -f man/man1/javaws*
@@ -997,9 +1359,11 @@ mkdir -p $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/%{archinstall}/client/
 
 popd
 
+
 # Install Javadoc documentation.
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}
 cp -a %{buildoutputdir}/docs $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}
+cp -a %{buildoutputdir}/bundles/jdk-%{javaver}_%{updatever}$suffix-%{buildver}-docs.zip  $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
 
 # Install icons and menu entries.
 for s in 16 24 32 48 ; do
@@ -1098,20 +1462,25 @@ find $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/demo \
   popd
 
 bash %{SOURCE20} $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir} %{javaver}
+# https://bugzilla.redhat.com/show_bug.cgi?id=1183793
+touch -t 201401010000 $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir}/lib/security/java.security
 
 # end, dual install
 done
+# multiple -f flags in %files: merging -f  into -f %{name}.files
+#cat  >> %{name}.files
+
+# touching all ghosts; hack for rpm 4.0.4
+for rpm404_ghost in %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/classes.jsa %{_jvmdir}/%{jredir}/lib/%{archinstall}/client/classes.jsa
+do
+    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+    touch %buildroot"$rpm404_ghost"
+done
+
 
 %if %{include_normal_build} 
 # intentioanlly only for non-debug
 %endif
-
-# touching all ghosts; hack for rpm 4.0.4
-for rpm_404_ghost in %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/classes.jsa %{_jvmdir}/%{jredir}/lib/%{archinstall}/client/classes.jsa
-do
-    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
-    touch %buildroot"$rpm_404_ghost"
-done
 
 sed -i 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*policytool.desktop
 sed -i 's,^Categories=.*,Categories=Development;Profiling;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*jconsole.desktop
@@ -1144,7 +1513,7 @@ Categories=Development;Profiling;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%
 EOF
 fi
 
-%if_enabled moz_plugin
+%if_enabled control_panel
 # ControlPanel freedesktop.org menu entry
 cat >> $RPM_BUILD_ROOT%{_datadir}/applications/%{name}-control-panel.desktop << EOF
 [Desktop Entry]
@@ -1188,7 +1557,7 @@ install -m644 j2se-devel-buildreq-substitute \
 install -d %buildroot%_altdir
 
 # J2SE alternative
-cat <<EOF >%buildroot%_altdir/%name-java
+cat <<EOF >%buildroot%_altdir/%name-java-headless
 %{_bindir}/java	%{_jvmdir}/%{jredir}/bin/java	%priority
 %_man1dir/java.1.gz	%_man1dir/java%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
@@ -1196,14 +1565,20 @@ EOF
 for i in keytool policytool servertool pack200 unpack200 \
 orbd rmid rmiregistry tnameserv
 do
-  cat <<EOF >>%buildroot%_altdir/%name-java
+  cat <<EOF >>%buildroot%_altdir/%name-java-headless
 %_bindir/$i	%{_jvmdir}/%{jredir}/bin/$i	%{_jvmdir}/%{jredir}/bin/java
 %_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
 done
 
-# ----- JPackage compatibility alternatives ------
+%if_enabled control_panel
 cat <<EOF >>%buildroot%_altdir/%name-java
+%{_bindir}/ControlPanel	%{_jvmdir}/%{jredir}/bin/ControlPanel	%{_jvmdir}/%{jredir}/bin/java
+%{_bindir}/jcontrol	%{_jvmdir}/%{jredir}/bin/jcontrol	%{_jvmdir}/%{jredir}/bin/java
+EOF
+%endif
+# ----- JPackage compatibility alternatives ------
+cat <<EOF >>%buildroot%_altdir/%name-java-headless
 %{_jvmdir}/jre	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmdir}/jre-%{origin}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmdir}/jre-%{javaver}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
@@ -1214,19 +1589,6 @@ cat <<EOF >>%buildroot%_altdir/%name-java
 %{_jvmjardir}/jre-%{javaver}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %endif
 EOF
-%if_enabled moz_plugin
-cat <<EOF >>%buildroot%_altdir/%name-java
-%{_bindir}/ControlPanel	%{_jvmdir}/%{jredir}/bin/ControlPanel	%{_jvmdir}/%{jredir}/bin/java
-%{_bindir}/jcontrol	%{_jvmdir}/%{jredir}/bin/jcontrol	%{_jvmdir}/%{jredir}/bin/java
-EOF
-%endif
-%if 0
-# JPackage specific: alternatives for security policy
-cat <<EOF >>%buildroot%_altdir/%name-java
-%{_jvmdir}/%{jrelnk}/lib/security/local_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar	%{priority}
-%{_jvmdir}/%{jrelnk}/lib/security/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar
-EOF
-%endif
 # ----- end: JPackage compatibility alternatives ------
 
 
@@ -1270,26 +1632,6 @@ EOF
 
 # ----- end: JPackage compatibility alternatives ------
 
-%if_enabled moz_plugin
-# Mozilla plugin alternative
-cat <<EOF >%buildroot%_altdir/%name-mozilla
-%browser_plugins_path/libjavaplugin_oji.so	%mozilla_java_plugin_so	%priority
-EOF
-%endif	# enabled moz_plugin
-
-%if_enabled javaws
-# Java Web Start alternative
-cat <<EOF >%buildroot%_altdir/%name-javaws
-%_bindir/javaws	%{_jvmdir}/%{jredir}/bin/javaws	%{_jvmdir}/%{jredir}/bin/java
-%_man1dir/javaws.1.gz	%_man1dir/javaws%label.1.gz	%{_jvmdir}/%{jredir}/bin/java
-EOF
-# ----- JPackage compatibility alternatives ------
-cat <<EOF >>%buildroot%_altdir/%name-javaws
-%{_datadir}/javaws	%{_jvmdir}/%{jredir}/bin/javaws	%{_jvmdir}/%{jredir}/bin/java
-EOF
-# ----- end: JPackage compatibility alternatives ------
-%endif	# enabled javaws
-
 # hack (see #11383) to enshure that all man pages will be compressed
 for i in $RPM_BUILD_ROOT%_man1dir/*.1; do
     [ -f $i ] && gzip -9 $i
@@ -1307,13 +1649,15 @@ echo "install passed past alt linux specific."
 %force_update_alternatives
 
 %ifarch %{jit_arches}
+# MetaspaceShared::generate_vtable_methods not implemented for PPC JIT
+%ifnarch %{power64}
 #see https://bugzilla.redhat.com/show_bug.cgi?id=513605
 java=%{jrebindir}/java
-if [ -f /proc/cpuinfo ] && ! [ -d /.ours ]; then #real workstation; not a mkimage-profile, etc
-$java -Xshare:dump >/dev/null 2>/dev/null
+if [ -f /proc/cpuinfo ] && ! [ -d /.ours ] ; then #real workstation; not a mkimage-profile, etc
+    $java -Xshare:dump >/dev/null 2>/dev/null
 fi
 %endif
-
+%endif
 
 %if %{include_normal_build} 
 %files -f %{name}.files
@@ -1322,15 +1666,14 @@ fi
 %{_datadir}/icons/hicolor/*x*/apps/java-%{javaver}.png
 %{_datadir}/applications/*policytool.desktop
 %else
-%files
 # placeholder
 %endif
 
 
 %if %{include_normal_build} 
 %files headless  -f %{name}.files-headless
+%_altdir/%altname-java-headless
 %_sysconfdir/buildreqs/packages/substitute.d/%name-headless
-%_altdir/%altname-java
 # important note, see https://bugzilla.redhat.com/show_bug.cgi?id=1038092 for whole issue 
 # all config/norepalce files (and more) have to be declared in pretrans. See pretrans
 %doc %{buildoutputdir}/images/%{j2sdkimage}/jre/ASSEMBLY_EXCEPTION
@@ -1338,15 +1681,15 @@ fi
 %doc %{buildoutputdir}/images/%{j2sdkimage}/jre/THIRD_PARTY_README
 %dir %{_jvmdir}/%{sdkdir}
 %{_jvmdir}/%{jrelnk}
-%if_enabled jvmjardir
-%{_jvmprivdir}/*
 %{_jvmjardir}/%{jrelnk}
+%{_jvmprivdir}/*
 %{jvmjardir}
-%endif
 %dir %{_jvmdir}/%{jredir}/lib/security
 %{_jvmdir}/%{jredir}/lib/security/cacerts
-%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/US_export_policy.jar
-%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/local_policy.jar
+%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/policy/unlimited/US_export_policy.jar
+%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/policy/unlimited/local_policy.jar
+%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/policy/limited/US_export_policy.jar
+%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/policy/limited/local_policy.jar
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/java.policy
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/java.security
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/blacklisted.certs
@@ -1371,6 +1714,10 @@ fi
 %endif
 %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/
 %{_jvmdir}/%{jredir}/lib/%{archinstall}/client/
+# sisyphus_check
+%dir %{_jvmdir}/%{jredir}/lib/security/policy
+%dir %{_jvmdir}/%{jredir}/lib/security/policy/limited
+%dir %{_jvmdir}/%{jredir}/lib/security/policy/unlimited
 
 %files devel
 %_altdir/%altname-javac
@@ -1384,9 +1731,7 @@ fi
 %{_jvmdir}/%{sdkdir}/bin/*
 %{_jvmdir}/%{sdkdir}/include/*
 %{_jvmdir}/%{sdkdir}/lib/*
-%if_enabled jvmjardir
 %{_jvmjardir}/%{sdkdir}
-%endif
 %{_datadir}/applications/*jconsole.desktop
 %{_mandir}/man1/appletviewer-%{uniquesuffix}.1*
 %{_mandir}/man1/extcheck-%{uniquesuffix}.1*
@@ -1438,13 +1783,38 @@ fi
 %doc %{_javadocdir}/%{uniquejavadocdir}
 %doc %{buildoutputdir}/images/%{j2sdkimage}/jre/LICENSE
 
+%files javadoc-zip
+%doc %{_javadocdir}/%{uniquejavadocdir}.zip
+%doc %{buildoutputdir}/images/%{j2sdkimage}/jre/LICENSE
+
 %files accessibility
 %{_jvmdir}/%{jredir}/lib/%{archinstall}/libatk-wrapper.so
 %{_jvmdir}/%{jredir}/lib/ext/java-atk-wrapper.jar
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 %endif
 
+%if %{include_debug_build} 
+%files debug -f %{name}.files-debug
+
+%files headless-debug  -f %{name}.files-headless-debug
+
+%files devel-debug
+
+%files demo-debug -f %{name}-demo.files-debug
+
+%files src-debug
+
+%files javadoc-debug
+
+%files javadoc-zip-debug
+
+%files accessibility-debug
+%endif
+
 %changelog
+* Fri Jun 22 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.151-alt1_5.b12jpp8
+- new version
+
 * Mon May 14 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0:1.8.0.144-alt5_1.b01jpp8
 - require java-1.8.0-openjdk for build on all platforms
 - built for aarch64
