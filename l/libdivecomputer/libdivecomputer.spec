@@ -1,137 +1,78 @@
-Group: Other
-%add_optflags %optflags_shared
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/doxygen pkgconfig(bluez) pkgconfig(libusb-1.0)
+# END SourceDeps(oneline)
+BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-#global        snapdate   20120717
-#global        snaphash   4bc477b
-#global        snapver    {snapdate}.git{snaphash}
+%define major           0
+%define libname     libdivecomputer%{major}
+%define develname   libdivecomputer-devel
 
-Name:           libdivecomputer
-Version:        0.4.2
-#Release:        2.{snapver}{?dist}
-Release:        alt1_8
-Summary:        Library for communication with dive computers
-
-License:        LGPLv2+
-URL:            http://libdivecomputer.org
-Source0:        http://libdivecomputer.org/releases/%{name}-%{version}.tar.gz
-# Sources generated using:
-# git clone git://libdivecomputer.git.sourceforge.net/gitroot/libdivecomputer/libdivecomputer && cd libdivecomputer
-# git archive --format=tar --prefix=libdivecomputer-4bc477b/ 4bc477b | xz -z > libdivecomputer-0.1.0-20120717git4bc477b.tar.xz
-#Source0:        libdivecomputer-0.1.0-20120717git4bc477b.tar.xz
-
-BuildRequires:  libusb-devel
+Name:       libdivecomputer
+Version:    0.6.0
+Release:    alt1_1
+Summary:    Library for communication with dive computers
+License:    LGPL
+Group:      Development/C
+URL:        http://www.divesoftware.org/libdc/index.html
+Source:     http://www.divesoftware.org/libdc/download/libdivecomputer-%{version}.tar.gz
 Source44: import.info
-#BuildRequires:  autoconf
 
 %description
-Libdivecomputer is a cross-platform and open source library for
-communication with dive computers from various manufacturers.
+Libdivecomputer is a cross-platform and open source library for communication
+with dive computers from various manufacturers.
 
-Supported devices:
+%package -n %{libname}
+Summary:    Libraries for %{name}
+Group:      Development/C
 
-    Suunto
-        Solution
-        Eon, Solution Alpha and Solution Nitrox/Vario
-        Vyper, Cobra, Vytec, Vytec DS, D3, Spyder, Gekko, Mosquito,
-        Stinger and Zoop
-        Vyper2, Cobra2, Cobra3, Vyper Air and HelO2
-        D9, D6, D4, D9tx, D6i and D4i
-    Uwatec
-        Aladin
-        Memomouse
-        Smart and Galileo (infrared)
-    Reefnet
-        Sensus
-        Sensus Pro
-        Sensus Ultra
-    Oceanic, Aeris, Sherwood, Hollis, Genesis and Tusa (Pelagic)
-        VT Pro, Versa Pro, Pro Plus 2, Wisdom, Atmos 2, Atmos AI,
-        Atmos Elite, ...
-        Veo 250, Veo 180Nx, XR2, React Pro, DG02, Insight, ...
-        Atom 2.0, VT3, Datamask, Geo, Geo 2.0, Veo 2.0, Veo 3.0, Pro
-        Plus 2.1, Compumask, Elite T3, Epic, Manta, IQ-900 (Zen),
-        IQ-950 (Zen Air), IQ-750 (Element II), ...
-    Mares
-        Nemo, Nemo Excel, Nemo Apneist, ...
-        Puck, Puck Air, Nemo Air, Nemo Wide, ...
-        Darwin, Darwin Air, M1, M2, Airlab
-        Icon HD, Icon HD Net Ready
-    Heinrichs Weikamp
-        OSTC, OSTC Mk.2 and OSTC 2N
-        Frog
-    Cressi, Zeagle and Mares (Seiko)
-        Edy, Nemo Sport
-        N2iTiON3
-    Atomic Aquatics
-        Cobalt
+%description -n %{libname}
+Libraries for %{name}.
 
-Note: Backends marked with an asterisk (*) are not yet included in the
-source code.
+%package -n %{develname}
+Summary:    Header files and development libraries for %{name}
+Group:      Development/C
+Requires:   %{libname} = %{version}-%{release}
+Provides:   divecomputer-devel = %{version}-%{release}
 
-%package        devel
-Group: Other
-Summary:        Development files for %{name}
-Requires:       %{name} = %{version}-%{release}
-
-%description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
-
-# Linus seems to prefer that this library is compiled with static:
-# http://lists.hohndel.org/pipermail/subsurface/2012-July/000283.html
-# And since subsurface is pretty much the only desktop application that
-# uses that library and I plan to maintain both (being in contact with
-# upstream), I am fine with this for the moment.
-
-%package        static
-Group: Other
-Summary:        Static files for %{name}
-Requires:       %{name} = %{version}-%{release}
-
-%description    static
-The %{name}-static package contains static files for
-developing applications that use %{name}.
-
+%description -n %{develname}
+Header files and development libraries for %{name}.
 
 %prep
-#setup -q -n {name}-{snaphash}
 %setup -q
 
 %build
-#autoreconf --install
-%configure 
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-%make_build
-
+%configure --disable-static
+%make
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+%makeinstall_std
 
-rm $RPM_BUILD_ROOT/%{_bindir}/{aladin,atom2,d9,darwin,edy,eon,frog,iconhd}
-rm $RPM_BUILD_ROOT/%{_bindir}/{leonardo,memomouse,n2ition3,nemo,ostc,predator}
-rm $RPM_BUILD_ROOT/%{_bindir}/{puck,sensus,sensuspro,sensusultra,smart,solution}
-rm $RPM_BUILD_ROOT/%{_bindir}/{veo250,vtpro,vyper,vyper2}
+#we don't want these
+find %{buildroot} -name "*.la" -delete
+# kill rpath
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
+	chrpath -d $i ||:
+done
 
 %files
-%doc NEWS README
-%{_libdir}/*.so.*
-%{_bindir}/universal
+%{_bindir}/*
 
-%files devel
-%doc
-%{_includedir}/*
-%{_libdir}/*.so
-%{_libdir}/pkgconfig/%{name}.pc
+%files -n %{libname}
+%{_libdir}/libdivecomputer.so.%{major}
+%{_libdir}/libdivecomputer.so.%{major}.*
 
-%files static
-%doc
-%{_libdir}/*.a
+%files -n %{develname}
+%{_includedir}/%{name}/
+%{_mandir}/man3/*
+%{_libdir}/libdivecomputer.so
+%{_libdir}/pkgconfig/libdivecomputer.pc
 
 
 %changelog
+* Fri Jun 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_1
+- new version
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_8
 - update to new release by fcimport
 
