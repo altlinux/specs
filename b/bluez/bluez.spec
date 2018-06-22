@@ -7,7 +7,7 @@
 %def_enable deprecated
 
 Name: bluez
-Version: 5.49
+Version: 5.50
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -176,6 +176,9 @@ chkconfig bluetoothd on
 %endif
 
 %changelog
+* Fri Jun 22 2018 L.A. Kostis <lakostis@altlinux.ru> 5.50-alt1
+- 5.50.
+
 * Sat Mar 31 2018 L.A. Kostis <lakostis@altlinux.ru> 5.49-alt1
 - 5.49.
 - Enable btpclient (and new dependency to libell).
