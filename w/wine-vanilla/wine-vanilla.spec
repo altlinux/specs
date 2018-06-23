@@ -2,7 +2,7 @@
 %define mono_version 4.7.1
 
 Name: wine-vanilla
-Version: 3.10
+Version: 3.11
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -222,12 +222,6 @@ develop programs which make use of Wine.
 %setup
 
 %build
-# Workaround for https://bugzilla.altlinux.org/show_bug.cgi?id=31834
-%if_with build64
-%remove_optflags -fomit-frame-pointer
-%add_optflags -fno-omit-frame-pointer
-%endif
-
 %ifarch aarch64
 %remove_optflags -frecord-gcc-switches
 export CC=clang
@@ -429,6 +423,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sat Jun 23 2018 Vitaly Lipatov <lav@altlinux.ru> 3.11-alt1
+- new version 3.11
+
 * Wed Jun 13 2018 Vitaly Lipatov <lav@altlinux.ru> 3.10-alt1
 - new version 3.10
 - add runtime linking requires
