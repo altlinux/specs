@@ -21,7 +21,7 @@ Practice.
 
 Name: %oname-%seqmpi
 Version: 3.2
-Release: alt2.svn20150317
+Release: alt3.svn20150317
 Summary: CFD General Notation System (%desc version)
 
 Group: Sciences/Mathematics
@@ -33,7 +33,6 @@ Source1: CMakeCache.txt
 Source2: CGNS_docs.tar
 Source3: UserGuideCode.tar
 Source4: F77_examples.tar
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Provides: %oname = %version-%release
 Requires: lib%name = %version-%release
@@ -163,7 +162,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std
 
-%ifarch x86_64
+%ifarch x86_64 or aarch64
 install -d %buildroot%_libdir
 mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %endif
@@ -213,6 +212,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %endif
 
 %changelog
+* Sat Jun 23 2018 Anton Midyukov <antohami@altlinux.org> 3.2-alt3.svn20150317
+- Rebuilt for aarch64
+
 * Fri Mar 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt2.svn20150317
 - New snapshot
 
