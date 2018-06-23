@@ -38,12 +38,23 @@
 
 %def_with systemd
 %def_enable avahi
+
+%ifarch e2k e2kv4
+%def_disable glusterfs
+%def_without libcephfs
+%else
+%ifarch mipsel
+%def_enable glusterfs
+%def_without libcephfs
+%else
 %def_enable glusterfs
 %def_with libcephfs
+%endif
+%endif
 
 Name: samba
-Version: 4.7.7
-Release: alt2%ubt
+Version: 4.7.8
+Release: alt1%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -114,7 +125,7 @@ BuildRequires: libkrb5-devel libssl-devel libcups-devel
 BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
 %{?_with_doc:BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-xsl}
 %{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.10 libpytalloc-devel}
-%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.34 python-module-tevent}
+%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.36 python-module-tevent}
 %{?_without_tdb:BuildRequires: libtdb-devel >= 1.3.15  python-module-tdb}
 %{?_without_ldb:BuildRequires: libldb-devel >= 1.2.3 python-module-pyldb-devel}
 #{?_with_clustering_support:BuildRequires: ctdb-devel}
@@ -1410,6 +1421,12 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Fri Jun 22 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.7.8-alt1%ubt
+- Update to first summer release of Samba 4.7
+- Rebuild for e2k with missing SYS_setgroups32
+- Disable glusterfs and cephfs for e2k
+- Disable cephfs support for mipsel
+
 * Fri Jun 08 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.7.7-alt2%ubt
 - Avoid client libraries requires to samba-common
 - Fix build against new python Sisyphus release with libnsl2

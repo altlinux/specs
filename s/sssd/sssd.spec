@@ -17,7 +17,7 @@
 
 Name: sssd
 Version: 1.16.1
-Release: alt5%ubt
+Release: alt7%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -31,7 +31,6 @@ Patch: %name-%version-alt.patch
 
 # Determine the location of the LDB modules directory
 %define ldb_modulesdir %(pkg-config --variable=modulesdir ldb)
-%define ldb_version 1.3.2
 
 %define _localstatedir /var
 %define _libexecdir /usr/libexec
@@ -50,7 +49,6 @@ Patch: %name-%version-alt.patch
 
 Requires: %name-client = %version-%release
 Requires: libsss_idmap = %version-%release
-Requires: libldb = %ldb_version
 
 %if_branch_ge M80C
 Requires: libkrb5 >= 1.14.4-alt2
@@ -64,7 +62,7 @@ BuildRequires: libpopt-devel
 BuildRequires: libtalloc-devel
 BuildRequires: libtevent-devel
 BuildRequires: libtdb-devel >= 1.1.3
-BuildRequires: libldb-devel = %ldb_version
+BuildRequires: libldb-devel >= 1.3.3
 BuildRequires: libdhash-devel >= 0.4.2
 BuildRequires: libcollection-devel >= 0.5.1
 BuildRequires: libini_config-devel >= 1.3.0
@@ -98,7 +96,7 @@ BuildRequires: systemd-devel libsystemd-daemon-devel libsystemd-journal-devel li
 %else
 BuildRequires: libsystemd-devel
 %endif
-%ifnarch %e2k
+%ifnarch e2k e2kv4 mipsel
 BuildRequires: selinux-policy-targeted
 %endif
 BuildRequires: cifs-utils-devel
@@ -461,7 +459,6 @@ UIDs/GIDs to names and vice versa. It can be also used for mapping principal
     --with-krb5-rcache-dir=%_localstatedir/cache/krb5rcache \
     --enable-nsslibdir=/%_lib \
     --enable-pammoddir=/%_lib/security \
-    --enable-ldb-version-check \
 %if_branch_le M80P
     --enable-nfsidmaplibdir=%nfsidmapdir \
 %endif
@@ -837,6 +834,56 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %nfsidmapdir/sss.so
 
 %changelog
+* Fri Jun 08 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt7%ubt
+- Rebuild with latest version on libldb-1.3.3
+- Disable strict requirement to version of libldb
+
+* Fri May 25 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.16.1-alt6%ubt
+- Applied patches fixing AD and generic issues from Fedora 1.16.2 pre-release
+  (https://src.fedoraproject.org/rpms/sssd/tree/5f75f7e4f25f4844)
+  + 0001-IPA-Handle-empty-nisDomainName.patch
+  + 0002-intg-enhance-netgroups-test.patch
+  + 0003-CONFDB-Start-a-ldb-transaction-from-sss_ldb_modify_p.patch
+  + 0004-TOOLS-Take-into-consideration-app-domains.patch
+  + 0005-TESTS-Move-get_call_output-to-util.py.patch
+  + 0006-TESTS-Make-get_call_output-more-flexible-about-the-s.patch
+  + 0007-TESTS-Add-a-basic-test-of-sssctl-domain-list.patch
+  + 0008-KCM-Use-json_loadb-when-dealing-with-sss_iobuf-data.patch
+  + 0009-KCM-Remove-mem_ctx-from-kcm_new_req.patch
+  + 0010-KCM-Introduce-kcm_input_get_payload_len.patch
+  + 0011-KCM-Do-not-use-2048-as-fixed-size-for-the-payload.patch
+  + 0012-KCM-Adjust-REPLY_MAX-to-the-one-used-in-krb5.patch
+  + 0014-KCM-Fix-typo-in-ccdb_sec_delete_list_done.patch
+  + 0015-KCM-Only-print-the-number-of-found-items-after-we-ha.patch
+  + 0016-SYSDB-When-marking-an-entry-as-expired-also-set-the-.patch
+  + 0019-SERVER-Tone-down-shutdown-messages-for-socket-activa.patch
+  + 0025-AD-Missing-header-in-ad_access.h.patch
+  + 0026-GPO-Add-ad_options-to-ad_gpo_process_som_state.patch
+  + 0027-GPO-Use-AD-site-override-if-set.patch
+  + 0030-sssctl-Showing-help-even-when-sssd-not-configured.patch
+  + 0031-sssctl-move-check-for-version-error-to-correct-place.patch
+  + 0032-MAN-Add-sss-certmap-man-page-regarding-priority-proc.patch
+  + 0033-SDAP-Improve-a-DEBUG-message-about-GC-detection.patch
+  + 0034-MAN-Improve-docs-about-GC-detection.patch
+  + 0035-nss-idmap-do-not-set-a-limit.patch
+  + 0036-nss-idmap-use-right-group-list-pointer-after-sss_get.patch
+  + 0037-NSS-Add-InvalidateGroupById-handler.patch
+  + 0038-DP-Add-dp_sbus_invalidate_group_memcache.patch
+  + 0039-ERRORS-Add-ERR_GID_DUPLICATED.patch
+  + 0040-LDAP-Augment-the-sdap_opts-structure-with-a-data-pro.patch
+  + 0041-SDAP-Add-sdap_handle_id_collision_for_incomplete_gro.patch
+  + 0042-SDAP-Properly-handle-group-id-collision-when-renamin.patch
+  + 0043-SYSDB_OPS-Error-out-on-id-collision-when-adding-an-i.patch
+  + 0044-TESTS-Add-an-integration-test-for-renaming-incomplet.patch
+  + 0045-SYSDB-sysdb_add_incomplete_group-now-returns-EEXIST-.patch
+  + 0046-MAN-Document-which-principal-does-the-AD-provider-us.patch
+  + 0047-GPO-Fix-bug-with-empty-GPO-rules.patch
+  + 0057-AD-Warn-if-the-LDAP-schema-is-overriden-with-the-AD-.patch
+  + 0058-SYSDB-Only-check-non-POSIX-groups-for-GID-conflicts.patch
+  + 0060-CACHE_REQ-Do-not-fail-the-domain-locator-plugin-if-I.patch
+  + 0061-NSS-nss_clear_netgroup_hash_table-do-not-free-data.patch
+  + 0062-SYSDB-Properly-handle-name-gid-override-when-using-d.patch
+
 * Fri Apr 20 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt5%ubt
 - Set ownership of sssd.ldb even if local provider is not used
 

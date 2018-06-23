@@ -1,7 +1,7 @@
 %def_enable tests
 
 Name: libldb
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1%ubt
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
@@ -10,6 +10,7 @@ Url: http://ldb.samba.org/
 
 Source: http://samba.org/ftp/ldb/ldb-%{version}.tar.gz
 Patch: ldb-samba-modules.patch
+Patch1: ldb-alt-fix-python-ldflags.patch
 
 BuildRequires: python-devel python-module-tdb libpytalloc-devel python-module-tevent
 BuildRequires: libpopt-devel libldap-devel libcmocka-devel xsltproc docbook-style-xsl docbook-dtds
@@ -63,6 +64,7 @@ Development files for the Python bindings for the LDB library
 %prep
 %setup -n ldb-%version
 %patch -p2
+%patch1 -p1
 
 %build
 %undefine _configure_gettext
@@ -119,6 +121,10 @@ make test
 %_pkgconfigdir/pyldb-util.pc
 
 %changelog
+* Fri Jun 08 2018 Ivan A. Melnikov <iv@altlinux.org> 1.3.3-alt1%ubt
+- Update to the 1.3.3 release
+- Add patch #1 to fix build with new python
+
 * Fri Mar 23 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.3.2-alt1%ubt
 - Update to new release for samba-4.8.0
 
