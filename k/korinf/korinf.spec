@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.1.10
+Version: 2.1.11
 Release: alt1
 
 Summary: Korinf multidistro single source build system
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 BuildArchitectures: noarch
 
 Requires: eepm >= 2.1.1
-Requires: etersoft-build-utils >= 2.5.2
+Requires: etersoft-build-utils >= 2.7.14
 Requires: alien >= 8.86-alt3
 Requires: lsof
 
@@ -47,6 +47,11 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Sat Jun 23 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.11-alt1
+- writedeps: skip write deps for debug packages
+- copying: rewrite debug packages copying
+- use epm req instead rpmreqs (which is alt only)
+
 * Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.10-alt1
 - fix debuginfo copying
 - bin-rx: add prunner, rx-etersoft-pcsc
