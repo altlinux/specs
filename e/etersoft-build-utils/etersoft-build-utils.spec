@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.7.13
+Version: 2.7.14
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,14 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Jun 23 2018 Vitaly Lipatov <lav@altlinux.ru> 2.7.14-alt1
+- gitask: add share support
+- rpmgs: add support for v1-2-3 git tags
+- gitask: keep --test-only when run, support log for last task, improve help
+- save used repl files and do pretty output
+- rpmlog: add -n to force version, -a for auto increment version/release
+- update pkgrepls
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 2.7.13-alt1
 - gitask: fix get subtask
 - rpmck: fix error and add info about development stage
