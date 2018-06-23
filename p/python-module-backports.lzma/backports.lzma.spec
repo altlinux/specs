@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 0.0.6
-Release: alt1.1
+Release: alt1.2
 Summary: Backport of Python 3.3's 'lzma' module for XZ/LZMA compressed files
 License: Python
 Group: Development/Python
@@ -44,6 +44,9 @@ for XZ Utils (aka LZMA Utils v2) by Igor Pavlov.
 %exclude %python_sitelibdir/%ocore/__init__.py*
 
 %changelog
+* Sat Jun 23 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt1.2
+- rebuild for aarch64
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.6-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
