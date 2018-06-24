@@ -1,5 +1,5 @@
 Name: haxe
-Version: 3.0.0
+Version: 3.4.7
 Release: alt1
 
 Summary: Haxe is an open source programming language
@@ -8,12 +8,12 @@ License: GPLv2
 Group: Development/Other
 Url: http://haxe.org
 
-# https://github.com/HaxeFoundation/haxe.git
+# Source-git: https://github.com/HaxeFoundation/haxe.git
 Source: %name-%version.tar
+Source1: haxe-postsubmodules-%version.tar
 
-# Automatically added by buildreq on Fri Mar 29 2013
-# optimized out: ocaml ocaml-runtime
-BuildRequires: camlp4 zlib-devel
+BuildRequires: rpm-build-intro zlib-devel libpcre-devel neko
+BuildRequires: ocaml-camlp4-devel >= 4.02
 
 %define haxelib %_prefix/lib/%name
 
@@ -34,30 +34,30 @@ What Haxe provides you with is:
 * platform-specific libraries : the full APIs for a given platform are accessible from Haxe
 
 %prep
-%setup
+%setup -a1
+%__subst "s|-I pcre|-I %_includedir/pcre|" libs/pcre/Makefile
 
 %build
+export OCAMLPARAM="safe-string=0,_"
+#export CFLAGS="%optflags -I%_includedir/pcre"
 %__make
 
 %install
-#makeinstall_std INSTALL_DIR=%buildroot%_prefix
-install -D haxe %buildroot%_bindir/haxe
-mkdir -p %buildroot/%haxelib/
-cp -a std %buildroot/%haxelib/
-# FIXME: haxelib dir
-mkdir -p %buildroot/%haxelib/lib/
-#mkdir %buildroot/%_localstatedir/haxe/
-#chmod 755 $(INSTALL_DIR)/lib/haxe/lib
-install -D std/tools/haxelib/haxelib.sh %buildroot%_bindir/haxelib
-install -D std/tools/haxedoc/haxedoc.sh %buildroot%_bindir/haxedoc
+%makeinstall_std
+# hack due broken make
+rm -f %buildroot%_bindir/{haxe,haxelib}
+%__ln_sr %buildroot%haxelib/haxe  %buildroot%_bindir/haxe
+%__ln_sr %buildroot%haxelib/haxelib  %buildroot%_bindir/haxelib
 
 %files
-%_bindir/%name
-%_bindir/haxedoc
+%_bindir/haxe
 %_bindir/haxelib
 %haxelib/
 
 %changelog
+* Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 3.4.7-alt1
+- build 3.4.7 version
+
 * Mon Aug 05 2013 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1
 - merge with tag v3-00, real 3.0.0 version
 
