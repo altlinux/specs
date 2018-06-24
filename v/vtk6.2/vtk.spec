@@ -5,12 +5,11 @@
 %define ver 6.2
 Name: %oname%ver
 Version: %ver.0
-Release: alt2.qa1
+Release: alt3
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
 Url: http://www.vtk.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 %setup_python_module vtk
 
 Source: %name-%version.tar
@@ -21,7 +20,10 @@ Requires: lib%name = %version-%release
 
 BuildRequires(pre): rpm-build-tcl rpm-build-python /proc
 BuildPreReq: gcc-c++ tcl-devel tk-devel cmake libGLU-devel libXt-devel
-BuildPreReq: libmysqlclient-devel postgresql-devel libopenpdt-devel
+BuildPreReq: libmysqlclient-devel postgresql-devel
+%ifarch i586 or x86_64
+BuildPreReq: libopenpdt-devel
+%endif
 BuildPreReq: boost-devel boost-filesystem-devel python-module-matplotlib
 BuildPreReq: boost-graph-parallel-devel vtk-data%ver
 BuildPreReq: libfreetype-devel libnetcdf-devel libjpeg-devel
@@ -29,12 +31,14 @@ BuildPreReq: libxml2-devel libexpat-devel libftgl220-devel libpng-devel
 BuildPreReq: libtiff-devel zlib-devel libhdf5-devel libsqlite3-devel
 BuildPreReq: doxygen graphviz qt4-devel libgsl-devel
 BuildPreReq: libbfd-devel libnumpy-devel chrpath libopenmotif-devel
-BuildPreReq: libavcodec56 libgl2ps-devel
+BuildPreReq: libgl2ps-devel
 BuildPreReq: python-devel libXxf86misc-devel libimlxx-devel
-BuildPreReq: libdc1394-devel ffmpeg2theora libtheora-devel
+BuildPreReq: libdc1394-devel libtheora-devel
+#BuildPreReq: ffmpeg2theora
 BuildPreReq: libgsm-devel libvorbis-devel libtag-devel
 BuildPreReq: libslurm-devel slurm-utils gnuplot
-BuildPreReq: libcgns-seq-devel inkscape texlive-latex-base
+BuildPreReq: libcgns-seq-devel
+BuildPreReq: inkscape texlive-latex-base
 BuildPreReq: texlive-latex-extra texlive-science
 BuildPreReq: qt4-common qt4-dbus qt4-designer python-module-PyQt4-devel
 BuildPreReq: phonon-devel libqt4-clucene python-module-sip-devel
@@ -287,7 +291,7 @@ sed -i 's|@PYVER@|%_python_version|g' \
 
 ln -s %_datadir/vtk-%ver/.ExternalData ./
 
-%ifarch x86_64
+%ifarch x86_64 or aarch64
 LIB64=64
 %endif
 sed -i "s|@64@|$LIB64|g" CMakeCache.txt CMakeLists.txt \
@@ -303,17 +307,13 @@ FLAGS="$FLAGS -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_SOCKET_H"
 FLAGS="$FLAGS -D__USE_LARGEFILE64 -DH5_HAVE_SIGSETJMP -D__USE_POSIX"
 FLAGS="$FLAGS -DH5_HAVE_SETJMP_H"
 
-cmake \
-%if %_lib == lib64
-	-DLIB_SUFFIX=64 \
-%endif
+%cmake_insource \
 	-DCMAKE_INSTALL_PREFIX:PATH=%buildroot%prefix \
 	-DCMAKE_C_FLAGS:STRING="$FLAGS" \
 	-DCMAKE_CXX_FLAGS:STRING="$FLAGS" \
 	-DCMAKE_Fortran_FLAGS:STRING="$FLAGS" \
 	-DSIP_INCLUDE_DIR:PATH=%_includedir/%_python_version \
-	-DVTK_INSTALL_QT_PLUGIN_DIR:PATH=%buildroot%_qt4_plugindir/designer \
-	.
+	-DVTK_INSTALL_QT_PLUGIN_DIR:PATH=%buildroot%_qt4_plugindir/designer
 tar -czf src.tar.gz Examples
 export LD_LIBRARY_PATH=$PWD/lib
 %make_build
@@ -328,7 +328,7 @@ install -d %buildroot%_datadir/%oname-%ver-examples
 #install -d %buildroot%_libexecdir/qt4
 install -d %buildroot%_tcldatadir/%oname%ver
 
-%ifarch x86_64
+%ifarch x86_64 or aarch64
 mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %endif
 #pushd %buildroot%_libdir/%oname-%ver
@@ -505,6 +505,10 @@ install -p -m644 Common/Core/vtkArrayIteratorIncludes.h \
 %python_sitelibdir/*/test
 
 %changelog
+* Sun Jun 24 2018 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt3
+- Rebuilt for aarch64
+- Fix FTBFS
+
 * Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.2.0-alt2.qa1
 - NMU: rebuilt against Tcl/Tk 8.6
 
