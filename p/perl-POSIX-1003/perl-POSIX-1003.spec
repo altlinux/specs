@@ -1,14 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Config.pm) perl(Encode.pm) perl(ExtUtils/MakeMaker.pm) perl(Fcntl.pm) perl(File/Spec.pm) perl(POSIX.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(base.pm)
 # END SourceDeps(oneline)
-%define module_version 0.98
 %define module_name POSIX-1003
-%define _unpackaged_files_terminate_build 1
-BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-POSIX-1003
-Version: 0.98
-Release: alt4.1
+Version: 0.99_07
+Release: alt1
 
 Summary: POSIX::1003, alternative for POSIX in core
 
@@ -18,13 +15,18 @@ Url: %CPAN %module_name
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://cpan.org.ua/authors/id/M/MA/MARKOV/%module_name-%module_version.tar.gz
+Source: http://cpan.org/authors/id/M/MA/MARKOV/%module_name-%version.tar.gz
+
+BuildRequires: rpm-build-perl perl-devel perl-podlators
+
+# test t/50glob.t check /etc/a* (more than 2)
+BuildRequires: alternatives atop
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -n %module_name-%version
 
 %build
 %perl_vendor_build
@@ -38,6 +40,9 @@ Source: http://cpan.org.ua/authors/id/M/MA/MARKOV/%module_name-%module_version.t
 %perl_vendor_autolib/*
 
 %changelog
+* Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 0.99_07-alt1
+- new version 0.99_07 (with rpmrb script)
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.98-alt4.1
 - rebuild with new perl 5.26.1
 
