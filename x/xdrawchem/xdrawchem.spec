@@ -1,6 +1,6 @@
 Name: xdrawchem
-Version: 1.9.9
-Release: alt3.qa3.2
+Version: 1.10.2
+Release: alt1
 
 Summary: XDrawChem is a two-dimensional molecule drawing program
 Summary(ru_RU.UTF-8): XDrawChem - программа двумерного рисования молекул
@@ -9,9 +9,11 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 License: GPL
 Group: Sciences/Chemistry
-Url: http://xdrawchem.sourceforge.net/
+Url: http://www.woodsidelabs.com/chemistry/xdrawchem.php
 
-Source: http://dl.sf.net/%name/%name-%version.tar.bz2
+# Source-url: https://github.com/bryanherger/xdrawchem/archive/%version-1.tar.gz
+Source: %name-%version.tar
+
 Source1: xdrawchem.desktop
 Source2: xdrawchem.png
 #Source3: %name-%version.ru.po
@@ -20,10 +22,7 @@ Patch1: xdrawchem-ob22.patch
 Patch2: new-openbabel-string-type-fix.patch
 Patch3: xdrawchem-1.9.9-alt-glibc-2.16.patch
 
-# Automatically added by buildreq on Fri Dec 16 2005
-BuildRequires: fontconfig freetype2 gcc-c++ libopenbabel-devel libqt3-devel libqt3-qsa-devel libstdc++-devel pkg-config 
-
-BuildPreReq: libopenbabel-devel >= 2.0.0
+BuildRequires: gcc-c++ openbabel libopenbabel-devel qt5-base-devel
 
 %description
 XDrawChem is a two-dimensional molecule drawing program for Unix
@@ -41,29 +40,31 @@ XDrawChem - это программа двумерного рисования м
 
 %prep
 %setup
-%patch0
-%patch1 -p1
-%patch2 -p1
-%patch3 -p2
+cd xdrawchem-qt5
 
 %build
-%configure --with-qtdir=%_prefix --with-qtlibdir=%_qt3dir/lib
+cd xdrawchem-qt5
+qmake-qt5 PREFIX="%_prefix"
 %make_build
-#%_qt3dir/bin/msg2qm translation/%name-ru.po translation/%{name}_ru.qm
 
 %install
-%makeinstall_std
+cd xdrawchem-qt5
+%makeinstall_std INSTALL_ROOT=%buildroot
 install -pD -m 644 %SOURCE1 %buildroot/%_desktopdir/xdrawchem.desktop
 install -pD -m 644 %SOURCE2 %buildroot/%_niconsdir/xdrawchem.png
 
 %files
-%doc COPYRIGHT.txt README.txt TODO.txt
+%doc README.md
 %_bindir/%name
 %_datadir/xdrawchem/
 %_desktopdir/xdrawchem.desktop
 %_niconsdir/xdrawchem.png
 
 %changelog
+* Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 1.10.2-alt1
+- new version (1.10.2) with rpmgs script
+- build with Qt5
+
 * Tue Oct 18 2016 Michael Shigorin <mike@altlinux.org> 1.9.9-alt3.qa3.2
 - NMU:
   + rebuilt against current openbabel
