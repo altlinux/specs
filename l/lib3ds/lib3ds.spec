@@ -6,7 +6,7 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name:           lib3ds
 Version:        1.3.0
-Release:        alt2_25
+Release:        alt2_25.1
 
 Summary:        3D Studio file format library
 
@@ -68,6 +68,7 @@ Development files for lib3ds
 
 
 %build
+%autoreconf
 %configure  --disable-static
 
 %make_build
@@ -103,6 +104,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/aclocal/*
 
 %changelog
+* Sun Jun 24 2018 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt2_25.1
+- Fix build for aarch64
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_25
 - update to new release by fcimport
 
