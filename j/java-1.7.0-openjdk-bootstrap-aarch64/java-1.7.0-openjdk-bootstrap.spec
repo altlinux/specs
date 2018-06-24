@@ -8,7 +8,7 @@ Url: http://openjdk.java.net/
 Packager: Igor Vlasenko <viy@altlinux.ru>
 ExclusiveArch: aarch64
 Group: Development/Java
-Release: alt0.1jpp
+Release: alt0.2jpp
 Source: java-1.7.0-openjdk-aarch64.tar.xz
 
 Provides: java = 1.7.0
@@ -45,6 +45,7 @@ Requires: ca-certificates-java
 Requires: jpackage-utils
 Requires: libjpeg
 Requires: tzdata-java
+Requires: java-common
 
 
 
@@ -82,6 +83,9 @@ done
 %files -f %name-list
 
 %changelog
+* Sun Jun 24 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.0.181-alt0.2jpp
+- added Req: java-common
+
 * Sun Jun 24 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.0.181-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
