@@ -1,6 +1,7 @@
-%define post 0
+# TODO: issue about dash in version: https://github.com/Microsoft/omi/issues/532
+%define post 4
 Name: 	  omi
-Version:  1.4.1
+Version:  1.4.2
 Release:  alt1
 
 Summary:  Open Management Infrastructure
@@ -11,11 +12,21 @@ Url:      https://github.com/Microsoft/omi
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/Microsoft/omi/archive/v%version-%post.tar.gz
-Source:   %name-%version.tar
+Source: %name-%version.tar
+Patch: omi-1.4.2-4-include.patch
 
 # Automatically added by buildreq on Fri Jun 02 2017
 # optimized out: libcom_err-devel libkrb5-devel libstdc++-devel lsb-release pkg-config python-base python-modules python3 python3-base
-BuildRequires: gcc-c++ libpam-devel libssl-devel openssl lsb-core
+BuildRequires: gcc-c++ libpam-devel libssl-devel openssl
+
+# FIXME: aarcg64 is not supported by build script yet
+ExclusiveArch: x86_64
+
+%ifarch aarch64
+# no lsb
+%else
+BuildRequires: lsb-core
+%endif
 
 %description
 Open Management Infrastructure (OMI) is an open source project
@@ -63,17 +74,25 @@ Internal development files for %name.
 
 %prep
 %setup
+%patch -p1
+
 %__subst "s|.*-rpath.*|true|g" Unix/buildtool
 
 %build
 # FIXME: version
-export OMI_BUILDVERSION_MAJOR=1
-export OMI_BUILDVERSION_MINOR=2
-export OMI_BUILDVERSION_PATCH=0
+export OMI_BUILDVERSION_MAJOR=$(echo %version | cut -d. -f1)
+export OMI_BUILDVERSION_MINOR=$(echo %version | cut -d. -f2)
+export OMI_BUILDVERSION_PATCH=$(echo %version | cut -d. -f3)
 export OMI_BUILDVERSION_BUILDNR=%post
 cd Unix
+# for buildtool --target
+export os=LINUX
+export compiler=GNU
 ./configure --prefix=%prefix --localstatedir=/var/omi --sysconfdir=/etc/omi \
 	--libdir=%_libdir --includedir=%_includedir/omi --datadir=%_datadir/%name \
+%ifarch aarch64
+	--target=LINUX_ARM_GNU \
+%endif
 	--certsdir=/etc/omi/ssl
 #	 --credsdir=/etc/omi/creds
 
@@ -142,6 +161,10 @@ cp output/lib/*.a %buildroot%_libdir/%name/lib/
 %_includedir/omi/nits/
 
 %changelog
+* Thu Jun 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
+- new version (1.4.2) with rpmgs script
+- fix build on aarch64
+
 * Wed Dec 20 2017 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
 - new version 1.4.1 (with rpmrb script)
 
