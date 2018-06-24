@@ -2,7 +2,7 @@
 
 Name: kino
 Version: 1.3.4
-Release: alt8.qa1
+Release: alt9
 
 Summary: Non-linear DV editor
 Group: Video
@@ -80,7 +80,7 @@ BuildArch: noarch
 
 %description dvdauthor
 This package contains optional scripts to be able to prepare and burn
-a DVD right from Kino
+a DVD right from Kino.
 
 %prep
 %setup
@@ -140,10 +140,13 @@ fi
 %files devel
 %_includedir/*
 
-%files dvdauthor
-%_datadir/%name/scripts/dvdauthor/
+#files dvdauthor
+#_datadir/%name/scripts/dvdauthor/
 
 %changelog
+* Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.4-alt9
+- build without obsoleted dvdauthor subpackage
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.3.4-alt8.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
