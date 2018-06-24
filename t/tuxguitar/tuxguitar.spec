@@ -1,6 +1,6 @@
 Name: tuxguitar
 Version: 1.2
-Release: alt4
+Release: alt5
 
 Summary: A multitrack guitar tablature editor and player
 License: LGPL
@@ -20,8 +20,10 @@ Patch: %name-plugin-properties.patch
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+ExclusiveArch: %ix86 x86_64
+
 # Automatically added by buildreq on Thu Jan 06 2011
-BuildRequires: ant ant-junit checkstyle eclipse-swt itext jtidy libfluidsynth-devel libgcj-devel tzdata
+BuildRequires: ant ant-junit checkstyle eclipse-swt itext jtidy libfluidsynth-devel tzdata
 
 BuildRequires: libalsa-devel libjack-devel
 
@@ -165,6 +167,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pixmapsdir/*.png
 
 %changelog
+* Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt5
+- fix build: drop libgcj-devel
+
 * Mon Nov 06 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt4
 - fix build: add libalsa-devel, libjack-devel
 
