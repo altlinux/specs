@@ -1,9 +1,11 @@
 %define svndate 20110114
 
 Name: mISDN
-Summary: %name library utilites
 Version: 1.1.5
-Release: alt3
+Release: alt3.1
+
+Summary: %name library utilites
+
 License: LGPL
 Group: System/Servers
 Url: http://www.misdn.org/
@@ -103,7 +105,7 @@ mkdir -p %buildroot%_libdir
 install -d %buildroot%_udevrulesdir
 install %SOURCE2 %buildroot%_udevrulesdir/00-misdn.rules
 
-%ifarch x86_64
+%if %_lib != "lib"
 mv %buildroot/usr/lib/* %buildroot%_libdir/
 %endif
 
@@ -137,6 +139,9 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_usrsrc/kernel/sources/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 1.1.5-alt3.1
+- fix build on aarch64
+
 * Tue Jul 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.5-alt3
 - Fixed build with gcc-6
 
