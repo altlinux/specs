@@ -1,6 +1,6 @@
 Name:		lxcfs
-Version:	2.0.7
-Release:	alt2
+Version:	3.0.1
+Release:	alt1
 Summary:	FUSE filesystem for LXC
 
 Group:		Development/Other
@@ -13,9 +13,10 @@ Source0:	%name-%version.tar
 
 Requires: libfuse
 
-BuildRequires(pre): libpam-devel
 BuildRequires: libfuse-devel
 BuildRequires: help2man
+
+%define _check_contents_method relaxed
 
 %description
 FUSE filesystem for LXC, offering the following features:
@@ -25,19 +26,6 @@ FUSE filesystem for LXC, offering the following features:
    - meminfo
    - stat
    - uptime
-
-%set_pam_name pam_cgfs
-
-%package -n %pam_name
-Summary: %summary
-Group: System/Base
-
-%description -n %pam_name
-%summary
-This package provides a Pluggable Authentication Module (PAM) to provide
-logged-in users with a set of cgroups which they can administer.
-This allows for instance unprivileged containers, and session
-management using cgroup process tracking.
 
 %prep
 %setup
@@ -61,7 +49,7 @@ mkdir -p %buildroot%_localstatedir/%name
 %files
 %doc AUTHORS COPYING README.md
 %_bindir/*
-%_libdir/*.so*
+%_libdir/%name/*
 %_man1dir/*
 %_unitdir/*
 %_datadir/lxc/config/common.conf.d/*
@@ -69,11 +57,14 @@ mkdir -p %buildroot%_localstatedir/%name
 %_datadir/%name/*
 %ghost %dir %_localstatedir/%name
 
-%files -n %pam_name
-%doc AUTHORS COPYING
-%_pam_modules_dir/*
-
 %changelog
+* Sun Jun 24 2018 Denis Pynkin <dans@altlinux.org> 3.0.1-alt1
+- Update
+- pam moved to lxc package
+
+* Sun Jan 24 2018 Denis Pynkin <dans@altlinux.org> 2.0.8-alt1
+- Update
+
 * Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.7-alt2
 - Fixed localstatedir location.
 
