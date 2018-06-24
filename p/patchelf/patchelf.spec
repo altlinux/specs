@@ -1,6 +1,6 @@
 Name: patchelf
 Version: 0.9
-Release: alt2
+Release: alt3
 Summary: A utility for patching ELF binaries
 
 Group: Development/Tools
@@ -48,5 +48,8 @@ rm -rf %buildroot/usr/share/doc/%name
 %_mandir/man1/patchelf.1*
 
 %changelog
+* Sun Jun 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.9-alt3
+- NMU: build for aarch64
+
 * Mon Nov 07 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9-alt2
 - Initial build.
