@@ -1,6 +1,6 @@
 Name: vargus-viewer
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
 Summary: Qt4 client for vargus server
 
@@ -43,6 +43,9 @@ cp lang/lang_ru.qm %buildroot%_datadir/%name/lang/
 %_datadir/%name/
 
 %changelog
+* Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt2
+- fix vlc include, update tests
+
 * Thu Mar 27 2014 Michael A. Kangin <prividen@altlinux.org> 1.0.2-alt1
 - Fixed request for information about the last camera
 
