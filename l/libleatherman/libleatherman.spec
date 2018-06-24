@@ -1,6 +1,6 @@
 Name:    libleatherman
-Version: 1.4.1
-Release: alt1.1
+Version: 1.4.2
+Release: alt1
 Summary: A collection of C++ and CMake utility libraries
  
 Group:   System/Libraries
@@ -56,6 +56,9 @@ sed -i 's/rb_data_object_alloc/rb_data_object_wrap/g' \
 %_libdir/cmake/leatherman
 
 %changelog
+* Sun Jun 24 2018 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
+- New version.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.1-alt1.1
 - NMU: rebuilt with boost-1.67.0
 
