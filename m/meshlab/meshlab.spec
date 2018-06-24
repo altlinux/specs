@@ -3,7 +3,7 @@
 Summary: A system for processing and editing unstructured 3D triangular meshes
 Name: meshlab
 Version: 2016.12
-Release: alt1%ubt
+Release: alt2%ubt
 Url: http://meshlab.sourceforge.net/
 License: GPLv2+ and BSD and Public Domain
 Group: Graphics
@@ -248,6 +248,9 @@ install -m 644 meshlab-%version/src/plugins_experimental/filter_segmentation/lic
 %_pixmapsdir/%name.png
 
 %changelog
+* Sat Jun 16 2018 Anton Midyukov <antohami@altlinux.org> 2016.12-alt2%ubt
+- Rebuilt for aarch64
+
 * Fri Jan 05 2018 Anton Midyukov <antohami@altlinux.org> 2016.12-alt1%ubt
 - New version 2016.12
 
