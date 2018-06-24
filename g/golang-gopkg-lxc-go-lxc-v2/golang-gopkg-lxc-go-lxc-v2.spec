@@ -1,12 +1,12 @@
 %global import_path gopkg.in/lxc/go-lxc.v2
 
-%global commit 1a2cf29ce27f74298fe70acbf817ca2f46cf7457
+%global commit 1c13b43ccb43defbf04a8b4b931e4bb18fd481e6
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-gopkg-lxc-go-lxc-v2
 Version: 2.0
-Release: alt7.git%abbrev
+Release: alt9.git%abbrev
 Summary: This package implements Go bindings for the LXC C API.
 License: MIT
 Group: Development/Other
@@ -57,6 +57,12 @@ rm -rf -- %buildroot/%go_path/src/%import_path/examples
 %go_path/src/*
 
 %changelog
+* Sun Jun 24 2018 Denis Pynkin <dans@altlinux.org> 2.0-alt9.git1c13b43c
+- Update
+
+* Fri Feb 02 2018 Denis Pynkin <dans@altlinux.org> 2.0-alt8.gitb964baab
+- Update
+
 * Sat Jul 29 2017 Denis Pynkin <dans@altlinux.org> 2.0-alt7.git1a2cf29c
 - Update
 

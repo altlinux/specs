@@ -2,7 +2,7 @@
 # lxc: linux Container library
 #
 # (C) Copyright IBM Corp. 2007, 2008
-# (C) ALT Linux Team 2009-2017
+# (C) ALT Linux Team 2009-2018
 #
 # Authors:
 # Daniel Lezcano <dlezcano at fr.ibm.com>
@@ -28,8 +28,8 @@
 %define init_script systemd,sysvinit
 
 Name: lxc
-Version: 2.1.0
-Release: alt1.1
+Version: 3.0.1
+Release: alt1
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -90,17 +90,6 @@ Group:		System/Configuration/Other
 %description	libs
 The %{name}-libs package contains libraries for running %{name} applications.
 
-%package	-n python3-module-%name
-Summary:	Python 3 bindings to %{name}
-Group:		System/Configuration/Other
-Obsoletes: %name-python3
-Requires: python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: rpm-build-python3
-%description	-n python3-module-%name
-The %{name}-python package contains %{name} bindings for Python 3.
-
 %package devel
 Summary: development library for %name
 Group: Development/Other
@@ -108,6 +97,19 @@ Group: Development/Other
 %description devel
 The %name-devel package contains header files and library needed for
 development of the linux containers.
+
+%set_pam_name pam_cgfs
+%package -n %pam_name
+Summary: %summary
+Group: System/Base
+BuildRequires(pre): libpam-devel
+
+%description -n %pam_name
+%summary
+This package provides a Pluggable Authentication Module (PAM) to provide
+logged-in users with a set of cgroups which they can administer.
+This allows for instance unprivileged containers, and session
+management using cgroup process tracking.
 
 %prep
 %setup
@@ -120,9 +122,8 @@ CFLAGS+=-I%_includedir/linux-default/include/
     --disable-cgmanager \
     --localstatedir=%_var \
     --with-config-path=%_var/lib/lxc \
-    --enable-python \
-    --disable-lua \
     --with-distro=altlinux \
+    --enable-pam \
     --with-init-script=%{init_script}
 
 %make_build
@@ -171,20 +172,24 @@ mkdir -p %buildroot%_cachedir/%name
 %attr(4111,root,root) %{_libexecdir}/%{name}/lxc-user-nic
 %{_libexecdir}/%{name}/hooks/*
 
-%files -n python3-module-%name
-%defattr(-,root,root)
-%{python3_sitelibdir}/_lxc*
-%{python3_sitelibdir}/lxc/*
-%{python3_sitelibdir}/*.egg-*
-
 %files devel
 %defattr(-,root,root)
 %{_includedir}/%{name}/*
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*
 
+%files -n %pam_name
+%_pam_modules_dir/*
 
 %changelog
+* Sun Jun 24 2018 Denis Pynkin <dans@altlinux.org> 3.0.1-alt1
+- Version updated 
+
+* Wed May 09 2018 Denis Pynkin <dans@altlinux.org> 3.0.0-alt1
+- New major version
+- python bindings are moved to separate source tree
+- pam0_cgfs module has been moved from lxcfs to lxc
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
