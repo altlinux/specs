@@ -1,14 +1,28 @@
 Name: yate
+Version: 6.0.0
+Release: alt1
+
 Summary: Yet Another Telephony Engine
-Version: 3.3.2
-Release: alt5
+
 License: GPL
 Group: System/Servers
-BuildRequires: dahdi-linux-headers doxygen gcc-c++ kdoc libalsa-devel libcoredumper-devel libgsm-devel liblksctp-devel libmysqlclient-devel libopenh323_1.19-devel libpw1.11-devel libqt4-network libspandsp6-devel libspeex-devel postgresql-devel libqt4-devel
-Packager: Denis Smirnov <mithraen@altlinux.ru>
-Source: yate-3.3.2-1.tar
-Source2: yate.init
 Url: http://yate.null.ro/
+
+Packager: Denis Smirnov <mithraen@altlinux.ru>
+
+# Source-url: http://yate.null.ro/tarballs/yate6/yate-%version-1.tar.gz
+Source: %name-%version.tar
+Source2: yate.init
+
+Patch: yate-aarch64.patch
+
+BuildRequires: gcc-c++ doxygen kdoc
+BuildRequires: dahdi-linux-headers libalsa-devel libgsm-devel liblksctp-devel libmysqlclient-devel
+# obsoleted
+# libcoredumper-devel 
+# TODO: use H323Plus
+#BuildRequires: libopenh323_1.19-devel libpt-devel
+BuildRequires: libqt4-network libqt4-devel libspandsp6-devel libspeex-devel zlib-devel postgresql-devel
 
 %package all
 Summary: Metapackage for Yate
@@ -17,7 +31,7 @@ Requires: %name = %version-%release
 Requires: %name-alsa = %version-%release
 Requires: %name-gsm = %version-%release
 Requires: %name-speex = %version-%release
-Requires: %name-h323 = %version-%release
+#Requires: %name-h323 = %version-%release
 Requires: %name-isdn = %version-%release
 Requires: %name-lksctp = %version-%release
 Requires: %name-openssl = %version-%release
@@ -206,31 +220,36 @@ for small to large scale projects.
 
 
 %prep
-%setup -n %name
+%setup
+%patch -p2
 
 %build
-%configure --enable-sctp --enable-tdmcard --enable-dahdi
-# It fails during parallel builds randomly (sometimes); therefore:
-NPROCS=1
-%make_build
+%configure --enable-sctp --enable-tdmcard --enable-dahdi --without-coredumper
+%make_build || %make
 
 %install
 %makeinstall_std
-mkdir -p %buildroot%_initdir
-cp -p %_builddir/%name/packing/rpm/yate.init %buildroot%_initdir/yate
-mkdir -p %buildroot%_sysconfdir/logrotate.d
-cp -p %_builddir/%name/packing/yate.logrotate %buildroot%_sysconfdir/logrotate.d/yate
-install -D -m755 -p %SOURCE2 %buildroot%_initdir/yate
+mkdir -p %buildroot%_initddir/
+install -D -m755 -p %SOURCE2 %buildroot%_initddir/yate
+mkdir -p %buildroot%_sysconfdir/logrotate.d/
+cp -p packing/yate.logrotate %buildroot%_sysconfdir/logrotate.d/yate
 
 %files
 %dir %_docdir/yate-%version
 %doc %_docdir/yate-%version/README
 %doc %_docdir/yate-%version/COPYING
 %doc %_docdir/yate-%version/ChangeLog
+%doc %_docdir/yate-%version/WebRTC-LICENSE
+%doc %_docdir/yate-%version/WebRTC-LICENSE_THIRD_PARTY
+%doc %_docdir/yate-%version/WebRTC-PATENTS
+%doc %_docdir/yate-%version/iLBC-LICENSE.txt
 %_libdir/libyate.so.*
 %_libdir/libyatejabber.so.*
 %_libdir/libyatesig.so.*
 %_libdir/libyatemgcp.so.*
+%_libdir/libyateasn.so.*
+%_libdir/libyateradio.so.*
+%_libdir/libyatescript.so.*
 %_bindir/yate
 %_mandir/*/yate.*
 %_initdir/yate
@@ -241,6 +260,9 @@ install -D -m755 -p %SOURCE2 %buildroot%_initdir/yate
 %dir %_libdir/yate/jabber
 %dir %_libdir/yate/server
 %dir %_libdir/yate/sip
+%dir %_libdir/yate/radio
+%dir %_libdir/yate/sig
+
 %_libdir/yate/cdrbuild.yate
 %_libdir/yate/cdrfile.yate
 %_libdir/yate/regexroute.yate
@@ -270,6 +292,15 @@ install -D -m755 -p %SOURCE2 %buildroot%_initdir/yate
 %_libdir/yate/yjinglechan.yate
 %_libdir/yate/enumroute.yate
 %_libdir/yate/ilbccodec.yate
+%_libdir/yate/cdrcombine.yate
+%_libdir/yate/fileinfo.yate
+%_libdir/yate/gvoice.yate
+%_libdir/yate/ilbcwebrtc.yate
+%_libdir/yate/isaccodec.yate
+%_libdir/yate/javascript.yate
+
+%_libdir/yate/server/cache.yate
+%_libdir/yate/server/eventlogs.yate
 %_libdir/yate/server/dbwave.yate
 %_libdir/yate/server/dbpbx.yate
 %_libdir/yate/server/pbxassist.yate
@@ -288,7 +319,7 @@ install -D -m755 -p %SOURCE2 %buildroot%_initdir/yate
 %_libdir/yate/server/ysigchan.yate
 %_libdir/yate/server/ciscosm.yate
 %_libdir/yate/server/sigtransport.yate
-%_libdir/yate/server/isupmangler.yate
+#%_libdir/yate/server/isupmangler.yate
 %_libdir/yate/server/analog.yate
 %_libdir/yate/server/analogdetect.yate
 %_libdir/yate/server/users.yate
@@ -298,11 +329,18 @@ install -D -m755 -p %SOURCE2 %buildroot%_initdir/yate
 %_libdir/yate/server/ccongestion.yate
 %_libdir/yate/server/monitoring.yate
 %_libdir/yate/server/ysnmpagent.yate
+
 %_libdir/yate/client/osschan.yate
 %_libdir/yate/client/jabberclient.yate
 %_libdir/yate/jabber/jabberserver.yate
 %_libdir/yate/jabber/jbfeatures.yate
 %_libdir/yate/sip/sip_cnam_lnp.yate
+%_libdir/yate/radio/dummyradio.yate
+%_libdir/yate/radio/radiotest.yate
+%_libdir/yate/sig/camel_map.yate
+%_libdir/yate/sig/isupmangler.yate
+%_libdir/yate/sig/ss7_lnp_ansi.yate
+
 %dir %_sysconfdir/yate
 %config(noreplace) %_sysconfdir/yate/accfile.conf
 %config(noreplace) %_sysconfdir/yate/cdrbuild.conf
@@ -354,6 +392,22 @@ install -D -m755 -p %SOURCE2 %buildroot%_initdir/yate
 %config(noreplace) %_sysconfdir/yate/jabberserver.conf
 %config(noreplace) %_sysconfdir/yate/jbfeatures.conf
 %config(noreplace) %_sysconfdir/yate/sip_cnam_lnp.conf
+
+%config(noreplace) %_sysconfdir/yate/amrnbcodec.conf
+%config(noreplace) %_sysconfdir/yate/cache.conf
+%config(noreplace) %_sysconfdir/yate/camel_map.conf
+%config(noreplace) %_sysconfdir/yate/dummyradio.conf
+%config(noreplace) %_sysconfdir/yate/eventlogs.conf
+%config(noreplace) %_sysconfdir/yate/fileinfo.conf
+%config(noreplace) %_sysconfdir/yate/gvoice.conf
+%config(noreplace) %_sysconfdir/yate/h323chan.conf
+%config(noreplace) %_sysconfdir/yate/javascript.conf
+%config(noreplace) %_sysconfdir/yate/lksctp.conf
+%config(noreplace) %_sysconfdir/yate/radiotest.conf
+%config(noreplace) %_sysconfdir/yate/sqlitedb.conf
+%config(noreplace) %_sysconfdir/yate/ss7_lnp_ansi.conf
+%config(noreplace) %_sysconfdir/yate/ybladerf.conf
+
 %config %_sysconfdir/logrotate.d/yate
 
 %files all
@@ -388,9 +442,9 @@ install -D -m755 -p %SOURCE2 %buildroot%_initdir/yate
 %files gsm
 %_libdir/yate/gsmcodec.yate
 
-%files h323
-%_libdir/yate/h323chan.yate
-%config(noreplace) %_sysconfdir/yate/h323chan.conf
+#%files h323
+#%_libdir/yate/h323chan.yate
+#%config(noreplace) %_sysconfdir/yate/h323chan.conf
 
 %files isdn
 %config(noreplace) %_sysconfdir/yate/wpcard.conf
@@ -433,6 +487,12 @@ install -D -m755 -p %SOURCE2 %buildroot%_initdir/yate
 %config(noreplace) %_sysconfdir/yate/zlibcompress.conf
 
 %changelog
+* Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt1
+- new version (6.0.0) with rpmgs script
+- cleanup spec, fix build on aarch64
+- do not use coredumper
+- disable h323 build
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.2-alt5
 - It fails during parallel builds randomly (sometimes); therefore: NPROCS=1
 
