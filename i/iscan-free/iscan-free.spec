@@ -1,6 +1,6 @@
 Name: iscan-free
 Version: 2.20.0
-Release: alt5
+Release: alt6
 
 Summary: Free Image Scan Version with epkowa Driver for Epson Scanners
 
@@ -140,6 +140,10 @@ grep -q 'requires DFSG non-free' doc/epkowa.desc || exit 1
 #rm -f m4/libtool.m4
 #autoreconf
 # By using disable-frontend it builds without the frontend (i.e. without the non-free stuff):
+# add HAVE_SYS_IO due missed detection
+%ifarch i586
+%add_optflags -DHAVE_SYS_IO_H
+%endif
 %configure  --enable-jpeg \
             --enable-png \
             --enable-tiff \
@@ -177,6 +181,9 @@ rm -f %buildroot%_datadir/iscan/fix-udev-rules
 
 
 %changelog
+* Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2.20.0-alt6
+- fix build on i586
+
 * Tue Dec 05 2017 Vitaly Lipatov <lav@altlinux.ru> 2.20.0-alt5
 - fix /var/lib/lib/iscan (add rpm-macros-intro-conflicts)
 
