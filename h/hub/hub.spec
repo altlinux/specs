@@ -3,7 +3,7 @@
 # TODO: build with external sources
 
 Name: hub
-Version: 2.2.9
+Version: 2.4.0
 Release: alt1
 
 Summary: A command-line wrapper for git with github shortcuts
@@ -21,6 +21,8 @@ BuildRequires(pre): rpm-macros-golang
 ExclusiveArch: %go_arches
 
 BuildRequires: golang >= 1.7
+# for man and help
+BuildRequires: ronn
 
 BuildRequires: git-core
 
@@ -66,13 +68,18 @@ ln -snf $(pwd) Godeps/src/github.com/github/hub
 export GOPATH=$(pwd):$(pwd)/Godeps:%go_path
 %gobuild -o bin/%name -ldflags '-X github.com/github/hub/version.Version=2.2.9'
 
+# use system ronn, skip build from Internet
+ln -s %_bindir/ronn bin/ronn
+make man-pages
+
 %install
 # /bin/hub
-install -D -p -m 755 bin/%name %buildroot%_bindir/%name
+#install -D -p -m 755 bin/%name %buildroot%_bindir/%name
+make install PREFIX=%buildroot%_prefix
 
 # Documentation
-install -d -m 755 %buildroot%_man1dir/
-cp -p man/hub.1 %buildroot%_man1dir/.
+#install -d -m 755 %buildroot%_man1dir/
+#cp -p man/hub.1 %buildroot%_man1dir/.
 
 # Bash-completion
 install -d -m 755 %buildroot%_sysconfdir/bash_completion.d/
@@ -99,13 +106,16 @@ find . -maxdepth 2 -name '*.go' '!' -name '*_test.go' | \
 %files
 %doc LICENSE
 %doc README.md CONTRIBUTING.md
-%doc man/hub.1.html man/hub.1.ronn
+#doc man/hub.1.html man/hub.1.ronn
 %_bindir/hub
-%_man1dir/hub.1.*
+%_man1dir/*
 %_sysconfdir/bash_completion.d/
 %_datadir/zsh/site-functions/_hub
 
 %changelog
+* Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
+- new version 2.4.0 (with rpmrb script)
+
 * Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 2.2.9-alt1
 - initial build for ALT Sisyphus
 
