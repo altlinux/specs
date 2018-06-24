@@ -1,6 +1,6 @@
 Name: opm-wh_nagios
-Version: 2.3
-Release: alt2
+Version: 2.5
+Release: alt1
 
 Summary: Nagios stat warehouse for Open PostgreSQL Monitoring
 License: BSD like
@@ -8,6 +8,7 @@ Group: Monitoring
 
 Url: https://github.com/OPMDG/opm-wh_nagios
 
+# Source-git: https://github.com/OPMDG/opm-wh_nagios.git
 Source: %name-%version.tar
 
 BuildArchitectures: noarch
@@ -69,6 +70,9 @@ install -m655 bin/nagios_dispatcher.pl %buildroot/%_sbindir/
 %_sbindir/nagios_dispatcher.pl
 
 %changelog
+* Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2.5-alt1
+- new version 2.5 (with rpmrb script)
+
 * Tue Aug 16 2016 Vitaly Lipatov <lav@altlinux.ru> 2.3-alt2
 - PostgreSQL version agnostic build
 
