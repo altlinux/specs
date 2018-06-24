@@ -7,7 +7,7 @@
 
 Name: gstreamer-vaapi
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: GStreamer plugins to use VA-API video acceleration
 Group: System/Libraries
@@ -76,6 +76,9 @@ GStreamer applications.
 %endif
 
 %changelog
+* Mon Jun 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt2
+- rebuilt against libva*.so.2
+
 * Thu May 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
 - 1.14.1
 

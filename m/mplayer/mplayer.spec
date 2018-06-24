@@ -104,7 +104,7 @@
 %def_enable bs2b
 %def_enable dca
 %def_enable libdv
-%def_enable crystalhd
+%def_disable crystalhd
 %def_enable mad
 %def_disable toolame
 %def_disable twolame
@@ -296,7 +296,7 @@
 
 Name: %lname
 Version: 1.3.0
-Release: alt1.1
+Release: alt2
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -1091,6 +1091,11 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Wed Jun 20 2018 Anton Farygin <rider@altlinux.ru> 1.3.0-alt2
+- rebuilt with libbluray.so.1
+- disabled crystalhd support
+- fixed build on aarch64
+
 * Sun Jan 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1.1
 - rebuild against libcdio.so.18
 

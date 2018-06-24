@@ -13,7 +13,7 @@
 
 Name: pipewire
 Version: %ver_major.9
-Release: alt1
+Release: alt2
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -147,6 +147,9 @@ This package contains command line utilities for the PipeWire media server.
 %_man1dir/%name-cli.1*
 
 %changelog
+* Mon Jun 04 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt2
+- rebuilt with ffmpeg-4.0
+
 * Fri Mar 02 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt1
 - 0.1.9
 

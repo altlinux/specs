@@ -2,7 +2,7 @@
 %define rname k9copy
 Name: kde4-%rname
 Version: 2.3.8
-Release: alt7%ubt
+Release: alt8%ubt
 
 Group: Video
 Summary: Copy, split and shrink DVDs
@@ -95,6 +95,9 @@ K9Copy - маленькая программа для копирования DVD
 
 
 %changelog
+* Thu Jun 14 2018 Sergey V Turchin <zerg@altlinux.org> 2.3.8-alt8%ubt
+- rebuild with new ffmpeg
+
 * Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 2.3.8-alt7%ubt
 - fix to build with ffmpeg
 

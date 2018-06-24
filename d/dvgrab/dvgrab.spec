@@ -1,8 +1,6 @@
-%def_with quicktime
-
 Name: dvgrab
 Version: 3.5
-Release: alt2
+Release: alt3
 
 Summary: A program to copy Digital Video data from a DV camcorder
 Group: Video
@@ -14,10 +12,7 @@ Url: http://www.kinodv.org
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildPreReq: libquicktime-devel >= 0.9.7-alt4
-
-# Automatically added by buildreq on Fri Aug 15 2008
-BuildRequires: gcc-c++ libiec61883-devel libquicktime-devel
+BuildRequires: gcc-c++ libiec61883-devel libavc1394-devel libjpeg-devel libdv-devel
 
 Summary(ru_RU.UTF-8): Программа для копирования видео с DV-камеры
 
@@ -33,7 +28,7 @@ dvgrab копирует цифровое видео с DV-видеокамеры
 
 %build
 %autoreconf
-%configure %{subst_with quicktime}
+%configure
 %make_build
 
 %install
@@ -45,6 +40,9 @@ dvgrab копирует цифровое видео с DV-видеокамеры
 %doc AUTHORS ChangeLog NEWS README TODO
 
 %changelog
+* Wed Jun 20 2018 Anton Farygin <rider@altlinux.ru> 3.5-alt3
+- disabled quicktime support
+
 * Tue Feb 07 2017 Yuri N. Sedunov <aris@altlinux.org> 3.5-alt2
 - updated from new source (https://github.com/ddennedy/dvgrab.git)
 

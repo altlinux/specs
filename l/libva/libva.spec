@@ -2,18 +2,16 @@
 %def_enable glx
 %def_enable egl
 %def_enable x11
-%def_enable wayland
 
 Name: libva
-Version: 1.8.3
-Release: alt2%ubt
+Version: 2.1.0
+Release: alt1
 
 Summary: Video Acceleration (VA) API for Linux
 License: MIT
 Group: System/Libraries
 Url: https://github.com/01org/libva
 
-Obsoletes: libva1 < %version-%release vainfo < %version-%release
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -30,10 +28,7 @@ BuildRequires: libEGL-devel
 %if_enabled x11
 BuildRequires: libXext-devel libXfixes-devel
 %endif
-%if_enabled wayland
-BuildRequires: libwayland-client-devel libwayland-server-devel
-%endif
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ libwayland-client-devel libwayland-server-devel
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -48,6 +43,7 @@ libva-driver-intel
 Summary: Development files for %name
 Group: Development/C++
 Requires: %name = %version-%release
+Requires: glibc-kernheaders
 Obsoletes: libva1-devel < %version-%release
 
 %description devel
@@ -64,12 +60,11 @@ This package provides the development environment for libva
 	%{subst_enable glx} \
 	%{subst_enable egl} \
 	%{subst_enable x11} \
-	%{subst_enable wayland} \
 	--disable-static
 %make_build
 
 %install
-%makeinstall_std
+%make DESTDIR=%buildroot install
 
 %files
 %_libdir/*.so.*
@@ -80,6 +75,9 @@ This package provides the development environment for libva
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 2.1.0-alt1
+- 2.1.0
+
 * Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 1.8.3-alt2%ubt
 - bump release to jump over p8
 
@@ -91,7 +89,7 @@ This package provides the development environment for libva
 - dummy_drv_video.so removed by upstream
 
 * Thu Jun 01 2017 Anton Farygin <rider@altlinux.ru> 1.8.2-alt1
-- new version
+- new version 
 
 * Wed May 24 2017 L.A. Kostis <lakostis@altlinux.ru> 1.7.3-alt2
 - Re-enabled glx/egl back (transition to GLVND is over).

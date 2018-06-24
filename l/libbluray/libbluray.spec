@@ -1,5 +1,5 @@
 Name: libbluray
-Version: 0.9.2
+Version: 1.0.2
 Release: alt1
 Summary: BD library
 
@@ -9,7 +9,7 @@ Url: http://www.videolan.org/developers/libbluray.html
 
 Source: %name-%version-%release.tar
 
-BuildRequires: fontconfig-devel libfreetype-devel libxml2-devel
+BuildRequires: fontconfig-devel libfreetype-devel libxml2-devel ant libudfread-devel /proc java java-devel
 
 %description
 %summary
@@ -53,6 +53,9 @@ This package contains various utilities using libbluray library.
 %_bindir/*
 
 %changelog
+* Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1
+- 1.0.2
+
 * Mon Jan 11 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.2-alt1
 - 0.9.2 released
 

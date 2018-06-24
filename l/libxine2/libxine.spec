@@ -1,15 +1,15 @@
-%define plugin_version 2.5
+%define plugin_version 2.7
 
 Name: libxine2
-Version: 1.2.6
-Release: alt7
+Version: 1.2.9
+Release: alt1
 
 Summary: Free libraries for play video and audio
 License: GPLv2+
 Group: System/Libraries
 Url: http://xinehq.de/
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel
@@ -103,6 +103,9 @@ mv %buildroot%_man5dir/xine.5 %buildroot%_man5dir/xine2.5
 %_libdir/xine/plugins/%plugin_version/xineplug_inp_smb.so
 
 %changelog
+* Wed Jun 13 2018 Anton Farygin <rider@altlinux.ru> 1.2.9-alt1
+- 1.2.9
+
 * Fri Jan 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.6-alt7
 - rebuild with recent libcdio
 

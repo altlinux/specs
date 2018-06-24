@@ -3,7 +3,7 @@
 Summary: Base library for gmerlin applications
 Name: gmerlin
 Version: 1.2.0
-Release: alt1.4.1
+Release: alt2
 License: GPL
 Group: Development/C++
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
@@ -34,8 +34,8 @@ Url: http://gmerlin.sourceforge.net/
 BuildRequires: doxygen imake libXinerama-devel libXtst-devel libXv-devel
 BuildRequires: libalsa-devel libcddb-devel libesd-devel libexif-devel
 BuildRequires: libgavl-devel libgtk+2-devel libjack-devel libmusicbrainz-devel
-BuildRequires: libpulseaudio-devel libquicktime-devel libtiff-devel libv4l-devel libvisual0.4-devel
-BuildRequires: libxml2-devel xorg-cf-files
+BuildRequires: libpulseaudio-devel libtiff-devel libv4l-devel libvisual0.4-devel
+BuildRequires: libxml2-devel xorg-cf-files libjpeg-devel
 
 BuildRequires: libcdio-paranoia-devel libcdio-devel >=  0.93
 BuildRequires: desktop-file-utils
@@ -89,19 +89,6 @@ Requires: libgmerlin_gtk = %version
 %description -n libgmerlin-gtk-devel
 Header files for compiling gmerlin gtk applications.
 
-#
-# Libquicktime
-#
-%package lqt
-Summary: Libquicktime plugins for gmerlin
-Group: Video
-BuildRequires: libquicktime-devel
-Provides: %name-input-plugin
-
-%description lqt
-Libquicktime plugins for gmerlin (see http://libquicktime.sf.net)
-
-#
 # Alsa
 #
 %package alsa
@@ -568,9 +555,6 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %files jpeg
 %_libdir/%name/plugins/*jpeg*.so
 
-%files lqt
-%_libdir/%name/plugins/*lqt*.so
-
 %files mikmod
 %_libdir/%name/plugins/*mikmod*.so
 
@@ -690,6 +674,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_liconsdir/%name-plugincfg.png
 
 %changelog
+* Wed Jun 20 2018 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2
+- disabled quicktime support
+
 * Sun Jan 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1.4.1
 - rebuild against libcdio.so.18
 

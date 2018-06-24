@@ -1,28 +1,24 @@
 %ifarch %ix86
 %define platform x86-linux-gcc
 %else
-%ifarch x86_64
-%define platform x86_64-linux-gcc
-%else
 %ifarch arm
 %define platform armv5te-linux-gcc
 %else
 %ifarch armh
 %define platform armv7-linux-gcc
 %else
-%ifarch aarch64
-%define platform arm64-linux-gcc
-%else
+%ifarch %e2k aarch64
 %define platform generic-gnu
-%endif
+%else
+%define platform %_arch-linux-gcc
 %endif
 %endif
 %endif
 %endif
 
-Name: libvpx4
-Version: 1.6.1
-Release: alt4
+Name: libvpx5
+Version: 1.7.0
+Release: alt1
 Summary: VP8 video codec
 Group: Video
 License: BSD
@@ -41,11 +37,20 @@ VP8 is an open video codec, originally developed by On2 and released
 as open source by Google Inc. It is the successor of the VP3 codec,
 on which the Theora codec was based
 
+%package -n libvpx-devel
+Summary: VP8 Libraries and Header Files
+Group: Development/C
+Requires: %name = %version-%release
+
+%description -n libvpx-devel
+%name-devel contains the libraries and header files needed to
+develop programs which make use of %name
+
 %prep
 %setup
 %patch -p1
 %ifarch armh
-sed -i -e 's,softfp,hard,' -e 's,arm-none-linux-gnueabi-,,' build/make/configure.sh
+sed -i -e 's,softfp,hard,' build/make/configure.sh
 %endif
 
 %build
@@ -76,12 +81,14 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %doc AUTHORS LICENSE PATENTS CHANGELOG
 %_libdir/*.so.*
 
-%changelog
-* Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 1.6.1-alt4
-- removed devel package
+%files -n libvpx-devel
+%_includedir/vpx
+%_libdir/*.so
+%_pkgconfigdir/*.pc
 
-* Thu Apr 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.1-alt3
-- fixed build on aarch64
+%changelog
+* Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 1.7.0-alt1
+- 1.7.0
 
 * Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 1.6.1-alt2
 - enabled spatial svc

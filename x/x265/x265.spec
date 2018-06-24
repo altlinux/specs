@@ -1,7 +1,7 @@
-%define soversion 130
+%define soversion 160
 Name: x265
-Version: 2.5
-Release: alt2
+Version: 2.8
+Release: alt1
 
 Summary: H.265/HEVC encoder
 License: GPL
@@ -55,7 +55,7 @@ cmake -DCMAKE_CXX_FLAGS='%optflags' -DCMAKE_INSTALL_PREFIX=%prefix -DLIB_INSTALL
 %_bindir/x265
 
 %files -n libx265-%soversion
-%_libdir/libx265.so.*
+%_libdir/libx265.so.%soversion
 
 %files -n libx265-devel
 %_libdir/libx265.so
@@ -64,6 +64,9 @@ cmake -DCMAKE_CXX_FLAGS='%optflags' -DCMAKE_INSTALL_PREFIX=%prefix -DLIB_INSTALL
 %_pkgconfigdir/*
 
 %changelog
+* Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 2.8-alt1
+- 2.8 
+
 * Fri Feb 16 2018 Anton Farygin <rider@altlinux.ru> 2.5-alt2
 - renamed libx265 to libx265-130
 

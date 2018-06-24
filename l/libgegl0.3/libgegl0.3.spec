@@ -1,17 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gegl
 %define ver_major 0.3
 %define api_ver %ver_major
-%if "%(rpmvercmp '%{get_version libavformat-devel}' '3.0.0')" > "0"
-%def_with libavformat
-%endif
+%def_without libavformat
 %def_disable docs
 %def_enable gtk_doc
 
 Name: lib%_name%api_ver
-Version: %ver_major.29
-Release: alt0.1
+Version: %ver_major.30
+Release: alt1
 
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
@@ -125,6 +123,10 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Thu Jun 14 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.30-alt1
+- 0.3.30
+- disabled libavformat support, not ready for ffmpeg-4.0
+
 * Wed Feb 07 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.29-alt0.1
 - updated to GEGL_0_3_28-45-gfa99f10
 

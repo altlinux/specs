@@ -5,7 +5,7 @@
 
 Name: guvcview
 Version: %ver_major.0.5
-Release: alt3
+Release: alt4
 
 Summary: A GTK UVC video viewer
 License: GPLv3+
@@ -13,6 +13,8 @@ Group: Video
 Url: http://%name.sourceforge.net/
 
 Source: http://download.sourceforge.net/%name/%name-src-%version.tar.gz
+#https://git.archlinux.org/svntogit/community.git/plain/trunk/ffmpeg4.patch?h=packages/guvcview
+Patch: guvcview-2.0.5-arch-ffmpeg4.patch
 
 Requires: lib%name = %version-%release
 
@@ -57,6 +59,7 @@ This package contains files necessary to develop applications that use
 
 %prep
 %setup -n %name-src-%version
+%patch -p1
 
 %build
 export LIBS="$LIBS -lm"
@@ -106,6 +109,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/%name
 
 %changelog
+* Mon Jun 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt4
+- rebuilt with ffmpeg-4.0
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt3
 - rebuilt against libgsl.so.23
 

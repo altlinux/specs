@@ -1,6 +1,6 @@
 Name: libheif
 Version: 1.2.0
-Release: alt1
+Release: alt1%ubt
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
 Group: System/Libraries
@@ -8,8 +8,9 @@ Url: https://github.com/strukturag/libheif
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libde265-devel libjpeg-devel libpng-devel libx265-devel
 
 %description
@@ -49,5 +50,8 @@ Development libraries for %name
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Jun 19 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.2.0-alt1%ubt
+- rebuild with libva 2.1.0
+
 * Wed Jun 13 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.2.0-alt1
 - initial release

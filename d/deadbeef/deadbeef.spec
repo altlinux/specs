@@ -1,34 +1,32 @@
 %set_verify_elf_method textrel=relaxed 
-%define gtkver 3
-Name:		deadbeef
-Version:	0.7.1
-Release:	alt4
-Summary:	DeaDBeeF is an audio player
-Url:		http://deadbeef.sf.net
-#https://github.com/Alexey-Yakovenko/deadbeef
-Source0:	%name-%version.tar
-Group:		Sound
-License:	zlib, GPLv2, LGPLv2.1
+Name: deadbeef
+Version: 0.7.1
+Release: alt5
+Summary: DeaDBeeF is an audio player
+Url: https://github.com/Alexey-Yakovenko/deadbeef
+Source0: %name-%version.tar
+Group: Sound
+License: zlib, GPLv2, LGPLv2.1
 
-Patch1:		deadbeef-plugins-ffmpeg-aac-support.patch
-Patch2:		deadbeef-repocop-desktop-file.patch
-Patch3:		deadbeef-0.5.1-alt-libav-using.patch
-Patch4:		deadbeef-0.5.1-fr-fix-build.patch
-Patch5:		deadbeef-0.5.1-using-tt.patch
-Patch6:		deadbeef-0.5.4-alt-categories-desktop-file.patch
-Patch7:		deadbeef-0.5.6-alt-gdk-threads.patch
-Patch8:		deadbeef-0.7.1-arm.patch
+Patch1: deadbeef-plugins-ffmpeg-aac-support.patch
+Patch2: deadbeef-repocop-desktop-file.patch
+Patch3: deadbeef-0.5.1-alt-libav-using.patch
+Patch4: deadbeef-0.5.1-fr-fix-build.patch
+Patch5: deadbeef-0.5.1-using-tt.patch
+Patch6: deadbeef-0.5.4-alt-categories-desktop-file.patch
+Patch7: deadbeef-0.5.6-alt-gdk-threads.patch
+Patch8: deadbeef-0.7.1-arm.patch
 
 BuildRequires: /usr/bin/yasm gcc-c++ intltool glib2-devel libX11-devel libatk-devel libcairo-devel libcddb-devel libcdio-devel libcdparanoia-devel libcurl-devel libfaad-devel libflac-devel libgdk-pixbuf-devel libgtk+2-devel libjpeg-devel libmad-devel libmpg123-devel libogg-devel libpango-devel libpng-devel libsndfile-devel libvorbis-devel libwavpack-devel perl(Exporter.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(IPC/Open2.pm) perl(IPC/Open3.pm) perl(Locale/Country.pm) perl(Locale/Language.pm) perl(base.pm) pkgconfig(alsa) pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gtk+-3.0) pkgconfig(imlib2) pkgconfig(jansson) pkgconfig(libavcodec) pkgconfig(libavformat) pkgconfig(libavutil) pkgconfig(libpulse-simple) pkgconfig(libzip) pkgconfig(samplerate) swig zlib-devel
 
-Requires:	%name-out-alsa %name-gtk%gtkver
+Requires: %name-out-alsa %name-gtk3
 
-Obsoletes:	%name-medialib	
+Obsoletes: %name-medialib
 
 %description
 DeaDBeeF is an audio player for GNU/Linux systems with
 X11 written in C and C++. Features: minimal depends,
-native GTK%gtkver GUI, cuesheet support, mp3, ogg, flac, ape,
+native GTK3 GUI, cuesheet support, mp3, ogg, flac, ape,
 chiptune formats with subtunes, song-length databases, etc,
 small memory footprint.
 
@@ -46,7 +44,7 @@ Requires: %name-in-flac %name-in-mp3 %name-in-psf %name-in-ffmpeg %name-in-oggvo
 #Requires: %name-dsp-supereq %name-dsp-libsrc
 
 # General
-Requires: %name-artwork %name-hotkeys %name-notify %name-gtk%gtkver %name-shellexec %name-m3u
+Requires: %name-artwork %name-hotkeys %name-notify %name-gtk3 %name-shellexec %name-m3u
 
 %description -n %name-incomplete
 Virtual package for incomplete installation DeaDBeeF
@@ -68,10 +66,11 @@ Requires: %name-in-shn %name-in-mp3 %name-in-psf
 
 # General
 Requires: %name-artwork %name-hotkeys %name-lastfm %name-notify 
-Requires: %name-gtk%gtkver %name-pltbrowser_gtk%gtkver
+Requires: %name-gtk3 %name-pltbrowser_gtk3
 Requires: %name-shellexec
 Requires: %name-m3u
 Requires: %name-dsp-supereq %name-dsp-libsrc %name-dsp-mono2stereo
+Requires: %name-vfs_zip
 
 %description -n %name-full
 Virtual package for full installation DeaDBeeF (exclude %name-devel,
@@ -401,14 +400,14 @@ Requires: %name = %version-%release
 %description -n %name-statusnotifier
 System tray icon support for KDE 5
 
-%package -n %name-gtk%gtkver
-Summary: DeaDBeeF GTK%gtkver UI Plugin
+%package -n %name-gtk3
+Summary: DeaDBeeF GTK3 UI Plugin
 Group: Sound
 Requires: %name = %version-%release
 Obsoletes: %name-gtkui
 
-%description -n %name-gtk%gtkver
-DeaDBeeF GTK%gtkver UI Plugin
+%description -n %name-gtk3
+DeaDBeeF GTK3 UI Plugin
 Default DeaDBeeF GUI
 
 %package -n %name-shellexec
@@ -462,12 +461,12 @@ Allows file conversion between various containers and codecs.
 #DeaDBeeF medialib Plugin
 #Scans disk for music files and manages them as database.
 
-%package -n %name-pltbrowser_gtk%gtkver
+%package -n %name-pltbrowser_gtk3
 Summary: Deadbeef plugin
 Group: Sound
 Requires: %name = %version-%release
 
-%description -n %name-pltbrowser_gtk%gtkver
+%description -n %name-pltbrowser_gtk3
 Playlist browser plugin.
 
 %package -n %name-in-sc68
@@ -477,6 +476,14 @@ Requires: %name = %version-%release
 
 %description -n %name-in-sc68
 SC68 player (Atari ST SNDH YM2149)
+
+%package -n %name-vfs_zip
+Summary: DeaDBeeF plugin for support zip
+Group: Sound
+Requires: %name = %version-%release
+
+%description -n %name-vfs_zip
+DeaDBeeF plugin for support zip
 
 %prep
 %setup
@@ -494,13 +501,15 @@ sed -i '/m4/ d' Makefile.am
 %build
 #%%autoreconf 
 ./autogen.sh
-%configure --enable-notify --docdir=%_docdir/%name-%version --disable-static \
-		--enable-src=yes \
-		--enable-m3u=yes \
-		--enable-ffmpeg=yes \
-		--enable-gtk%gtkver=yes \
-		#--enable-medialib=yes \
-
+%configure \
+        --enable-notify \
+        --docdir=%_docdir/%name-%version \
+        --disable-static \
+        --enable-src=yes \
+        --enable-m3u=yes \
+        --enable-ffmpeg=yes \
+        --enable-gtk2=no \
+        --enable-gtk3=yes
 
 %make_build
 
@@ -509,7 +518,7 @@ sed -i '/m4/ d' Makefile.am
 %find_lang %name
 rm -rf %buildroot/%_libdir/%name/*.la
 
-%files  -f %name.lang
+%files -f %name.lang
 %dir %_libdir/%name
 %doc AUTHORS COPYING COPYING.* NEWS README ChangeLog about.txt help.txt
 %_bindir/%name
@@ -623,8 +632,8 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-statusnotifier
 %_libdir/%name/statusnotifier.so
 
-%files -n %name-gtk%gtkver
-%_libdir/%name/ddb_gui_GTK%gtkver.*
+%files -n %name-gtk3
+%_libdir/%name/ddb_gui_GTK3.*
 
 %files -n %name-dsp-supereq
 %_libdir/%name/supereq.*
@@ -649,8 +658,11 @@ rm -rf %buildroot/%_libdir/%name/*.la
 #files -n %name-medialib
 #_libdir/%name/medialib.*
 
-%files -n %name-pltbrowser_gtk%gtkver
-%_libdir/%name/pltbrowser_gtk%gtkver.*
+%files -n %name-pltbrowser_gtk3
+%_libdir/%name/pltbrowser_gtk3.*
+
+%files -n %name-vfs_zip
+%_libdir/%name/vfs_zip.*
 
 # Development
 %files -n %name-devel
@@ -662,6 +674,11 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Sat Jun 16 2018 Anton Midyukov <antohami@altlinux.org> 0.7.1-alt5
+- Rebuilt with ffmpeg-4.0
+- added packages:
+  + deadbeef-vfs_zip
+
 * Mon Apr 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.1-alt4
 - fixed build on arm
 

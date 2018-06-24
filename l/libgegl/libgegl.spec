@@ -3,7 +3,7 @@
 
 Name: lib%rname
 Version: %api_ver.2
-Release: alt1
+Release: alt1%ubt
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
 Group: System/Libraries
@@ -11,6 +11,7 @@ Url: http://www.gimp.org
 
 Source: %rname-%version.tar
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: asciidoc enscript gcc-c++ graphviz gtk-doc libSDL-devel libavformat-devel libbabl-devel libexiv2-devel
 BuildRequires: libgexiv2-devel libgomp-devel libgtk+3-devel libjasper-devel libjpeg-devel libjson-glib-devel
 BuildRequires: libpoly2tri-c-devel libraw-devel librsvg-devel libspiro-devel libsuitesparse-devel libswscale-devel
@@ -93,6 +94,9 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Tue Jun 19 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.2-alt1%ubt
+- rebuild with libva 2.1.0
+
 * Wed Jun 13 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.2-alt1
 - 0.4.2
 
