@@ -1,6 +1,6 @@
 Name: libtgl
 Version: 2.0.3.0.ffb04caca71
-Release: alt1
+Release: alt2
 
 Summary: library that handles telegram api and protocol
 
@@ -71,6 +71,9 @@ cp -a crypto/*.h %buildroot%_includedir/tgl/crypto/
 %_includedir/tgl/crypto/*.h
 
 %changelog
+* Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.3.0.ffb04caca71-alt2
+- fix error: __builtin___sprintf_chk may write a terminating nul past the end of the destination
+
 * Tue Mar 14 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.3.0.ffb04caca71-alt1
 - new build with ffb04caca71de0cddf28cd33a4575922900a59ed
 
