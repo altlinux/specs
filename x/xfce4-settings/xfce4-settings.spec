@@ -1,5 +1,5 @@
 Name: xfce4-settings
-Version: 4.12.3
+Version: 4.12.4
 Release: alt1
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
@@ -43,8 +43,9 @@ for the Xfce desktop.
 %xfce4_drop_gitvtag xfce4_settings_version_tag configure.ac.in
 %xfce4reconf
 %configure  \
-	--enable-debug=no \
+	--enable-debug=minimum \
 	--enable-maintainer-mode \
+	--disable-silent-rules \
 	--enable-libnotify \
 	--enable-xcursor \
 	--enable-xorg-libinput \
@@ -69,6 +70,11 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Fri Jun 22 2018 Mikhail Efremov <sem@altlinux.org> 4.12.4-alt1
+- Disabled silent rules.
+- Enabled debug (minimum level).
+- Updated to 4.12.4.
+
 * Mon Mar 19 2018 Mikhail Efremov <sem@altlinux.org> 4.12.3-alt1
 - Updated to 4.12.3.
 
