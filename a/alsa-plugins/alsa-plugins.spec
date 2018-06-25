@@ -1,6 +1,6 @@
 Name: alsa-plugins
 Version: 1.1.6
-Release: alt1
+Release: alt2
 Serial: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) plugins
@@ -66,6 +66,9 @@ __EOF__
 %_datadir/alsa/alsa.conf.d/50-pulseaudio.conf
 
 %changelog
+* Mon Jun 25 2018 Anton Farygin <rider@altlinux.ru> 1:1.1.6-alt2
+- rebuilt for ffmpeg-4
+
 * Wed Apr 04 2018 Michael Shigorin <mike@altlinux.org> 1:1.1.6-alt1
 - 1.1.6
 
