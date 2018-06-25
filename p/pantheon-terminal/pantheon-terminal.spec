@@ -6,7 +6,7 @@
 
 Name: pantheon-terminal
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: Pantheon Terminal
 Group: Terminals
@@ -21,6 +21,8 @@ Source: %name-%version.tar
 %endif
 # https://git.archlinux.org/svntogit/community.git/tree/trunk?h=packages/pantheon-terminal
 Patch: pantheon-terminal-0.5-arch-vte0.52.patch
+
+Provides: %rdn_name = %version-%release
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ appstream libnotify-devel desktop-file-utils
@@ -78,6 +80,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.5-alt2
+- rebuilt against libgranite.so.5
+
 * Thu Jun 21 2018 Yuri N. Sedunov <aris@altlinux.org> 0.5-alt1
 - 0.5
 

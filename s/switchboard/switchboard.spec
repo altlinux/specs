@@ -6,7 +6,7 @@ Name: switchboard
 %define xdg_name org.pantheon.%name
 %define rdn_name io.elementary.%name
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Modular Desktop Settings Hub for elementary OS
 License: GPLv2.1+
@@ -81,6 +81,9 @@ subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt2
+- rebuilt against libgranite.so.5
+
 * Sat Jun 09 2018 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
 - 2.3.1
 

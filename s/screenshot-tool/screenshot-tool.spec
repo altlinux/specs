@@ -1,21 +1,25 @@
+%define rdn_name io.elementary.screenshot-tool
+
 Name: screenshot-tool
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1%ubt
 
 Summary: Screenshot tool designed for elementary OS
-License: LGPL-3.0
 Group: Graphical desktop/GNOME
+License: LGPL-3.0
 Url: https://github.com/elementary/screenshot-tool
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 
+Provides: %rdn_name = %version-%release
+
+Requires: icon-theme-hicolor
+
+BuildRequires(pre): meson
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
-BuildRequires: gcc-c++
-BuildRequires: intltool
 BuildRequires: vala >= 0.24
 BuildRequires: vala-tools
 BuildRequires: pkgconfig(gdk-pixbuf-2.0)
@@ -25,8 +29,8 @@ BuildRequires: pkgconfig(granite)
 BuildRequires: pkgconfig(libcanberra)
 BuildRequires: vapi(granite)
 BuildRequires: vapi(libcanberra)
+BuildRequires: desktop-file-utils
 
-Requires: icon-theme-hicolor
 
 %description
 %summary
@@ -35,21 +39,24 @@ Requires: icon-theme-hicolor
 %setup
 
 %build
-%cmake
-%cmake_build
+%meson
+%meson_build
 
 %install
-%cmakeinstall_std
-%find_lang %name
+%meson_install
+%find_lang %rdn_name
 
-%files -f %name.lang
+%files -f %rdn_name.lang
 %doc COPYING README.md
-%_bindir/%name
-%_datadir/appdata/%name.appdata.xml
-%_desktopdir/%name.desktop
-%_datadir/glib-2.0/schemas/net.launchpad.screenshot.gschema.xml
+%_bindir/%rdn_name
+%_datadir/metainfo/%rdn_name.appdata.xml
+%_desktopdir/%rdn_name.desktop
+%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/accessories-screenshot.svg
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt1.S1
+- 0.1.5
+
 * Sat Feb 17 2018 Anton Midyukov <antohami@altlinux.org> 0.1.4-alt1%ubt
 - Initial build for Sisyphus

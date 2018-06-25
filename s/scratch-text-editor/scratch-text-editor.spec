@@ -2,12 +2,12 @@
 
 %define _name scratch
 %define xdg_name org.pantheon.%_name
-%define rdnn_name io.elementary.code
+%define rdn_name io.elementary.code
 %define ver_major 2.4
 
 Name: scratch-text-editor
 Version: %ver_major.1
-Release: alt4.1
+Release: alt5
 
 Summary: The text editor that works
 License: GPLv3
@@ -21,6 +21,8 @@ Source: %url/2.x/%version/+download/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 Patch: %name-2.4.1-up-vala_0.36.patch
+
+Provides: %rdn_name = %version-%release
 
 Requires: contractor
 
@@ -99,19 +101,19 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %install
 %cmakeinstall_std
 
-%find_lang %rdnn_name
+%find_lang %rdn_name
 
-%files -f %rdnn_name.lang
-%_bindir/%rdnn_name
+%files -f %rdn_name.lang
+%_bindir/%rdn_name
 %_libdir/lib%{_name}core.so.*
-%_libdir/%rdnn_name/
+%_libdir/%rdn_name/
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.plugins.folder-manager.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.plugins.spell.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.plugins.terminal.gschema.xml
-%_iconsdir/hicolor/*/*/%rdnn_name.*
-%_datadir/metainfo/%rdnn_name.appdata.xml
+%_iconsdir/hicolor/*/*/%rdn_name.*
+%_datadir/metainfo/%rdn_name.appdata.xml
 
 %files devel
 %_libdir/*.so
@@ -123,6 +125,9 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt5
+- rebuilt against libgranite.so.5
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt4.1
 - rebuilt with vala-0.40
 

@@ -1,11 +1,13 @@
+%def_enable snapshot
+
 %define ver_major 0.2
 %define gst_api_ver 1.0
 %define _name videos
-%define rdnn_name io.elementary.%_name
+%define rdn_name io.elementary.%_name
 
 Name: audience
 %define xdg_name org.pantheon.%name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: A modern media player
@@ -13,9 +15,14 @@ License: GPLv3
 Group: Video
 Url: https://launchpad.net/audience
 
-#VCS: https://github.com/elementary/videos.git
+%if_disabled snapshot
 Source: %_name-%version.tar.gz
-#Source: https://launchpad.net/%name/0.4-loki/%version/+download/%name-%version.tar.xz
+%else
+#VCS: https://github.com/elementary/videos.git
+Source: %name-%version.tar
+%endif
+
+Provides: %rdn_name = %version-%release
 
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
@@ -23,39 +30,38 @@ Requires: gst-plugins-bad%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
 Requires: gst-libav
 
-BuildRequires: cmake gcc-c++ intltool libgranite-devel libclutter-gtk3-devel
-BuildRequires: gst-plugins%gst_api_ver-devel libpixman-devel
-BuildRequires: libexpat-devel libXdmcp-devel libXxf86vm-devel libharfbuzz-devel
-BuildRequires: libpng-devel libXinerama-devel libXcursor-devel
-BuildRequires: at-spi2-atk-devel vala libgranite-vala
+BuildRequires(pre): meson
+BuildRequires: gcc-c++ libgranite-devel libclutter-gtk3-devel
+BuildRequires: libclutter-gst3.0-devel gst-plugins%gst_api_ver-devel
+BuildRequires: vala-tools libgranite-vala
 BuildRequires: gobject-introspection-devel
-BuildRequires: libclutter-gst3.0-devel
 
 %description
 Audience is a simple, modern media player that makes greater use of
 hardware acceleration than most players out there.
 
 %prep
-%setup -n %_name-%version
-# fix libdir
-find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINATION}/|g' --
+%setup -n %name-%version
 
 %build
-%cmake -DCMAKE_BUILD_TYPE:STRING="Release"
-%cmake_build VERBOSE=1
+%meson
+%meson_build
 
 %install
-%cmakeinstall_std
+%meson_install
 
-%find_lang %rdnn_name
+%find_lang %rdn_name
 
-%files -f %rdnn_name.lang
-%_bindir/%rdnn_name
-%_desktopdir/%xdg_name.desktop
-%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/appdata/%rdnn_name.appdata.xml
+%files -f %rdn_name.lang
+%_bindir/%rdn_name
+%_desktopdir/%rdn_name.desktop
+%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/metainfo/%rdn_name.appdata.xml
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.6-alt1
+- 0.2.6
+
 * Fri Jan 12 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt1
 - 0.2.5
 
