@@ -2,7 +2,7 @@
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 4.0.7
+Version: 4.1.0
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -13,7 +13,7 @@ Url: https://github.com/wwmm/pulseeffects
 Source: %url/archive/%version/%name-%version.tar.gz
 
 %define gst_ver 1.12.5
-%define glibmm_ver 2.26
+%define glibmm_ver 2.56
 %define gtk_ver 3.20
 
 Requires: pulseaudio-daemon dconf
@@ -25,7 +25,6 @@ Requires: calf-plugins
 # https://sourceforge.net/projects/lsp-plugins
 # lsp-plug-in-plugins-lv2-comp-delay-x2-stereo
 #Requires: lsp-plugins-lv2
-
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ boost-filesystem-devel
@@ -61,6 +60,9 @@ effects for Pulseaudio applications.
 %doc README* CHANGELOG.*
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
+- 4.1.0
+
 * Mon Jun 18 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0.7-alt1
 - 4.0.7
 
