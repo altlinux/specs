@@ -9,7 +9,7 @@
 
 Name: lib%_name%api_ver
 Version: %ver_major.30
-Release: alt1
+Release: alt2
 
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
@@ -123,6 +123,9 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.30-alt2
+- rebuilt against libjasper.so.4
+
 * Thu Jun 14 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.30-alt1
 - 0.3.30
 - disabled libavformat support, not ready for ffmpeg-4.0

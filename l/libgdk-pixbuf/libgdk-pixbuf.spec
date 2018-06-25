@@ -14,7 +14,7 @@
 
 Name: lib%_name
 Version: %ver_major.12
-Release: alt1
+Release: alt2
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -131,7 +131,7 @@ install -p -m644 %_sourcedir/%_name.map %_name/compat.map
 install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
 
 %build
-%ifarch e2k
+%ifarch %e2k
 # till lcc ~1.23
 export LIBS=-lcxa
 %endif
@@ -240,6 +240,9 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.36.12-alt2
+- rebuilt against libjasper.so.4
+
 * Sun Apr 08 2018 Yuri N. Sedunov <aris@altlinux.org> 2.36.12-alt1
 - 2.36.12
 
