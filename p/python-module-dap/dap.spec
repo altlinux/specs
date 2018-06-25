@@ -1,7 +1,7 @@
 %define oname dap
 Name: python-module-%oname
 Version: 2.2.6.7
-Release: alt1.svn20081222.3.1
+Release: alt2.svn20081222
 Summary: Python implementation of the Data Access Protocol (DAP)
 License: MIT
 Group: Development/Python
@@ -16,7 +16,7 @@ BuildArch: noarch
 %py_requires paste.deploy
 
 BuildPreReq: python-devel python-module-httplib2 python-module-setuptools
-BuildPreReq: python-module-paste python-module-cheetah
+BuildPreReq: python-module-paste
 %setup_python_module %oname
 
 %description
@@ -70,6 +70,9 @@ install -p -m644 tests/* %buildroot%python_sitelibdir/%oname/tests
 %python_sitelibdir/*
 
 %changelog
+* Mon Jun 25 2018 Grigory Ustinov <grenka@altlinux.org> 2.2.6.7-alt2.svn20081222
+- Fixed FTBFS.
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.2.6.7-alt1.svn20081222.3.1
 - Rebuild with Python-2.7
 
