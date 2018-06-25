@@ -1,7 +1,12 @@
+%if_with backport
+%define mansuff gz
+%else
+%define mansuff xz
+%endif
 #set_compress_method none
-%set_compress_method xz
+%set_compress_method %mansuff
 Name: girar-nmu
-Version: 1.993
+Version: 1.994
 Release: alt1
 
 Summary: git.alt client utilities for NMU automation
@@ -56,7 +61,7 @@ install -m 644 *.1 %buildroot%_man1dir/
 read link script
 [ -n "$script" ] || break
     ln -s $link %buildroot%_bindir/$script
-    ln -s $link.1.xz %buildroot%_man1dir/$script.1.xz
+    ln -s $link.1.%mansuff %buildroot%_man1dir/$script.1.%mansuff
 done) << EOF
 girar-task-add-git	girar-task-for-each-git
 girar-task-add-git	girar-build-git
@@ -81,6 +86,9 @@ EOF
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Mon Jun 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.994-alt1
+- 2.0 beta 4
+
 * Sat Jun 23 2018 Igor Vlasenko <viy@altlinux.ru> 1.993-alt1
 - 2.0 beta 3
 
