@@ -1,9 +1,11 @@
+%set_verify_elf_method unresolved=relaxed
+
 %define ver_major 2.0
 %define ver_api 2.0
 %define _libexecdir %_prefix/libexec
 
 Name: tracker-miners
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -12,7 +14,6 @@ Group: Office
 Url: http://wiki.gnome.org/Projects/Tracker
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-
 
 %def_enable libxml2
 %def_enable rss
@@ -88,11 +89,12 @@ database, tag/metadata database, search tool and indexer.
 
 This package provides miners for TRacker.
 
-
 %prep
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+%autoreconf
 %configure \
 	--enable-generic-media-extractor=%generic_media_extractor \
 	--disable-static \
@@ -126,9 +128,7 @@ This package provides miners for TRacker.
 %makeinstall_std
 %find_lang %name
 
-
 %files -f %name.lang
-
 %_xdgconfigdir/autostart/tracker-extract.desktop
 %_xdgconfigdir/autostart/tracker-miner-apps.desktop
 %_xdgconfigdir/autostart/tracker-miner-fs.desktop
@@ -165,6 +165,9 @@ This package provides miners for TRacker.
 
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt1
+- 2.0.5
+
 * Wed Feb 07 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt1
 - 2.0.4
 
