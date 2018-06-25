@@ -5,8 +5,8 @@
 %def_without prelude
 
 Name: audit
-Version: 2.8.3
-Release: alt3%ubt
+Version: 2.8.4
+Release: alt1%ubt
 
 Packager: Anton Farygin <rider@altlinux.com>
 
@@ -82,7 +82,7 @@ and libauparse can be used by python.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
 sed -i 's@/etc/init.d/auditd restart@/etc/init.d/auditd stop\nservice auditd start@' \
 	init.d/auditd.restart
 sed -i 's@RETVAL=1@&\nstart-stop-daemon -p "/var/run/auditd.pid" -u root -K -n auditd -t >/dev/null \&\& \\@' \
@@ -216,6 +216,9 @@ fi
 %endif
 
 %changelog
+* Mon Jun 25 2018 Anton Farygin <rider@altlinux.ru> 2.8.4-alt1%ubt
+- 2.8.4
+
 * Fri Apr 20 2018 Stanislav Levin <slev@altlinux.org> 2.8.3-alt3%ubt
 - Fix dependency to systemd in post script
 
