@@ -7,7 +7,7 @@
 Summary:        Implementation of DLNA (Digital Living Network Alliance)
 Name:           libdlna
 Version:        0.2.4
-Release:        alt1_10
+Release:        alt2_10
 License:        LGPLv2+
 Group:          System/Libraries
 Url:            http://libdlna.geexbox.org/
@@ -69,6 +69,9 @@ make
 
 
 %changelog
+* Mon Jun 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt2_10
+- rebuild with ffmpeg
+
 * Sun May 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt1_10
 - update by mgaimport
 
