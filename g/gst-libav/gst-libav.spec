@@ -4,16 +4,56 @@
 # switched from libav to ffmpeg since 1.5.90
 # was 11.4 for libav fork
 %define libav_ver 3.0
-#%%if "%(rpmvercmp '%{get_version libavformat-devel}' '3.0.0')" > "0"
+%ifarch %ix86 x86_64
+%def_enable mmx
+%else
+%def_disable mmx
+%endif
 %def_without system_libav
-#%%endif
 %if_without system_libav
+%def_enable doc
+%def_enable gpl
+%def_enable gnutls
+%def_enable libxvid
+%def_enable libx264
+%def_enable libx265
+%def_enable libmp3lame
+%def_enable libvorbis
+%def_enable libcdio
+%def_enable libfreetype
+%def_enable libpulse
+%def_enable libgsm
+%def_enable libdc1394
+%def_enable shared
+%def_enable static
+%def_enable pthreads
+%def_enable zlib
+%def_disable avisynth
+%def_enable libtheora
+%def_enable debug
+%def_enable bzlib
+%def_enable vaapi
+%def_enable vdpau
+%def_enable libopencore_amrwb
+%def_enable libopencore_amrnb
+%def_enable libvpx
+%def_enable libv4l2
+%def_enable libspeex
+%def_enable librtmp
+%def_disable frei0r
+
+%if_enabled mmx
 %set_verify_elf_method textrel=relaxed
+%endif
+
+%ifarch %arm
+%set_verify_elf_method textrel=relaxed
+%endif
 %endif
 
 Name: gst-libav
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: GStreamer (%gst_api_ver API) streaming media framework plug-in using FFmpeg
 Group: System/Libraries
@@ -28,32 +68,38 @@ BuildRequires: orc liborc-devel zlib-devel bzlib-devel liblzma-devel gtk-doc
 BuildRequires: libavformat-devel >= %libav_ver
 BuildRequires: libswscale-devel libavresample-devel libavfilter-devel
 %else
-BuildRequires: glibc-devel-static yasm
+BuildRequires: glibc-devel-static
 BuildRequires: libX11-devel libXext-devel libXvMC-devel libXfixes-devel
-BuildRequires: libfreetype-devel libSDL-devel
-BuildRequires: libgnutls-devel
-BUildRequires: liblame-devel
-BuildRequires: libvorbis-devel
-BuildRequires: libcdio-devel libcdio-paranoia-devel
-BuildRequires: libgsm-devel
-BuildRequires: libpulseaudio-devel
-BuildRequires: libxvid-devel
-BuildRequires: libx264-devel
-BuildRequires: libx265-devel
-BuildRequires: libdc1394-devel libraw1394-devel
-BuildRequires: libschroedinger-devel
-BuildRequires: libtheora-devel
-BuildRequires: bzlib-devel
-BuildRequires: liblzo2-devel
-BuildRequires: libva-devel
-BuildRequires: libvdpau-devel
-BuildRequires: libopencore-amrwb-devel
-BuildRequires: libopencore-amrnb-devel
-BuildRequires: libvpx-devel
-BuildRequires: libv4l-devel
-BuildRequires: librtmp-devel
-BuildRequires: frei0r-devel
-BuildRequires: libspeex-devel
+BuildRequires: libalsa-devel
+BuildRequires: libbluray-devel libass-devel
+%if_with doc
+BuildRequires: perl-podlators texi2html
+%endif
+%ifarch %ix86 x86_64
+BuildRequires: yasm
+%endif
+%{?_enable_gnutls:BuildRequires: libgnutls-devel}
+%{?_enable_libmp3lame:BuildRequires: liblame-devel}
+%{?_enable_libvorbis:BuildRequires: libvorbis-devel}
+%{?_enable_libfreetype:BuildRequires: libfreetype-devel}
+%{?_enable_libcdio:BuildRequires: libcdio-devel libcdio-paranoia-devel}
+%{?_enable_libgsm:BuildRequires: libgsm-devel}
+%{?_enable_libpulse:BuildRequires: libpulseaudio-devel}
+%{?_enable_libxvid:BuildRequires: libxvid-devel}
+%{?_enable_libx264:BuildRequires: libx264-devel >= 118}
+%{?_enable_libx265:BuildRequires: libx265-devel}
+%{?_enable_libdc1394:BuildRequires: libdc1394-devel libraw1394-devel}
+%{?_enable_libtheora:BuildRequires: libtheora-devel}
+%{?_enable_bzlib:BuildRequires: bzlib-devel}
+%{?_enable_vaapi:BuildRequires: libva-devel}
+%{?_enable_vdpau:BuildRequires: libvdpau-devel}
+%{?_enable_libopencore_amrwb:BuildRequires: libopencore-amrwb-devel}
+%{?_enable_libopencore_amrnb:BuildRequires: libopencore-amrnb-devel}
+%{?_enable_libvpx:BuildRequires: libvpx-devel}
+%{?_enable_libv4l2:BuildRequires: libv4l-devel}
+%{?_enable_librtmp:BuildRequires: librtmp-devel}
+%{?_enable_frei0r:BuildRequires: frei0r-devel}
+%{?_enable_libspeex:BuildRequires: libspeex-devel}
 %endif
 
 %description
@@ -100,6 +146,9 @@ plug-in.
 %_datadir/gtk-doc/html/%name-plugins-%gst_api_ver/
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt3
+- updated buildreqs for bundled ffmpeg
+
 * Mon Jun 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt2
 - rebuilt with bundled ffmpeg, not ready for ffmpeg-4.0
 
