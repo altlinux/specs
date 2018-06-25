@@ -1,7 +1,7 @@
 %define  pkgname fog-powerdns
 
 Name:    ruby-%pkgname
-Version: 0.1.2
+Version: 0.2.0
 Release: alt1
 
 Summary: Module for the 'fog' gem to support PowerDNS
@@ -54,6 +54,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Jun 25 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.0-alt1
+- New version.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 0.1.2-alt1
 - New version.
 
