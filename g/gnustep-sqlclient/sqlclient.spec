@@ -1,13 +1,14 @@
 %set_verify_elf_method unresolved=strict
-
 Name: gnustep-sqlclient
 Version: 1.7.0
-Release: alt6.svn20140221.1
+Release: alt7.svn20140221.1
 Summary: Provide a simple interface to SQL databases for GNUstep applications
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+# gnustep is not built on aarch64
+ExclusiveArch: %{ix86} x86_64
 
 # http://svn.gna.org/svn/gnustep/libs/sqlclient/trunk/
 Source: %name-%version.tar
@@ -129,6 +130,9 @@ buildIt $libSQLClient
 %_docdir/GNUstep
 
 %changelog
+* Mon Jun 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt7.svn20140221.1
+- NMU: rebuild with new openjdk java
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt6.svn20140221.1
 - NMU: rebuild with new openjdk java
 
