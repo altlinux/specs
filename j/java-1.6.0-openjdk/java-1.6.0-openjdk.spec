@@ -111,7 +111,7 @@ BuildRequires: /proc
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt5
+Release: alt6
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -714,6 +714,7 @@ EOF
 
 sed -i 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/policytool.desktop
 sed -i 's,^Categories=.*,Categories=Development;Profiling;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/jconsole.desktop
+sed -i 's,^Icon=java,Icon=java-%{javaver},' %buildroot/usr/share/applications/*desktop
 
 # HACK around find-requires
 %define __find_requires    $RPM_BUILD_ROOT/.find-requires
@@ -1029,6 +1030,9 @@ done
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jun 25 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.41-alt6
+- fixed icons in desktop files (closes: #35083)
+
 * Fri Jun 22 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.41-alt5
 - ExclusiveArch and pure ant1.9
 
