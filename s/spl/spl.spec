@@ -1,5 +1,5 @@
 Name: spl
-Version: 0.7.5
+Version: 0.7.9
 Release: alt1%ubt
 Summary: Solaris Porting Layer (SPL)
 License: GPLv2+
@@ -66,6 +66,9 @@ install -pD -m0644 %name-%version.tar.xz %kernel_srcdir/%name-%version.tar.xz
 %_usrsrc/kernel
 
 %changelog
+* Mon Jun 25 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.7.9-alt1%ubt
+- 0.7.9
+
 * Tue Dec 19 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.5-alt1%ubt
 - 0.7.5
 

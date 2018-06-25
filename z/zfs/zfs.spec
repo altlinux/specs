@@ -2,18 +2,18 @@
 %global _localstatedir %_var
 
 Name: zfs
-Version: 0.7.5
-Release: alt2%ubt
+Version: 0.7.9
+Release: alt1%ubt
 Summary: ZFS on Linux
-License: GPLv2+
+License: CDDL
 Group: System/Kernel and hardware
 URL: http://zfsonlinux.org/
 Conflicts: fuse-zfs
 Requires: spl-utils
 
 Source0: %name-%version.tar
-Patch0: zfs-0.7.1-conf-alt.patch
-Patch1: zfs-0.6.5.8-import-by-disk-id.patch
+Patch0: zfs-0.7.9-conf-alt.patch
+Patch1: zfs-0.7.9-import-by-disk-id.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libattr-devel libblkid-devel libuuid-devel zlib-devel rpm-build-kernel
@@ -88,7 +88,6 @@ tar -C .. \
 	--with-systemdunitdir=%_unitdir \
 	--with-systemdpresetdir=%_unitdir-preset \
 	--disable-sysvinit \
-	--with-blkid \
 	--with-gnu-ld \
 	--disable-static
 %make_build
@@ -194,6 +193,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Mon Jun 25 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.7.9-alt1%ubt
+- 0.7.9
+
 * Wed Dec 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.5-alt2%ubt
 - update preset service
 
