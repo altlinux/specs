@@ -7,7 +7,7 @@
 
 
 # Enable/Disable stuff
-%def_enable doc
+%def_enable docs
 %def_enable gpl
 %def_enable version3
 %def_enable ffplay
@@ -68,7 +68,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	4.0.1
-Release:	alt1
+Release:	alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -80,13 +80,12 @@ Source:		%name-%version.tar
 BuildRequires:	libX11-devel libXext-devel libXvMC-devel libXfixes-devel
 BuildRequires:	libalsa-devel
 BuildRequires:	libbluray-devel libass-devel
-%if_with doc
-BuildRequires:	perl-podlators texi2html
-%endif
 %ifarch %ix86 x86_64
 BuildRequires:	yasm
 %endif
 
+%{?_enable_docs:BuildRequires: perl-podlators}
+%{?_enable_docs:BuildRequires: texi2html}
 %{?_enable_ffplay:BuildRequires: libSDL2-devel}
 %{?_enable_gnutls:BuildRequires: libgnutls-devel}
 %{?_enable_libmp3lame:BuildRequires: liblame-devel}
@@ -512,11 +511,11 @@ xz Changelog
 %doc Changelog*
 %doc LICENSE.md
 %_bindir/ffmpeg
-%{?_with_doc:%_man1dir/ffmpeg*}
+%{?_enable_docs:%_man1dir/ffmpeg*}
 %_datadir/ffmpeg
 %exclude %_datadir/ffmpeg/examples
 
-%if_with doc
+%if_enabled docs
 %files doc
 %doc doc/ffmpeg*.html
 %doc doc/faq.html
@@ -532,9 +531,9 @@ xz Changelog
 %if_enabled ffplay
 %files -n ffplay
 %_bindir/ffplay
-%{?_with_doc:%_man1dir/ffplay*}
+%{?_enable_docs:%_man1dir/ffplay*}
 
-%if_with doc
+%if_with docs
 %files -n ffplay-doc
 %doc doc/ffplay*.html
 %endif
@@ -543,9 +542,9 @@ xz Changelog
 %if_enabled ffprobe
 %files -n ffprobe
 %_bindir/ffprobe
-%{?_with_doc:%_man1dir/ffprobe*}
+%{?_enable_docs:%_man1dir/ffprobe*}
 
-%if_with doc
+%if_enabled docs
 %files -n ffprobe-doc
 %doc doc/ffprobe*.html
 %endif
@@ -554,12 +553,12 @@ xz Changelog
 %if_enabled ffserver
 %files -n ffserver
 %_bindir/ffserver
-%{?_with_doc:%_man1dir/ffserver*}
+%{?_with_docs:%_man1dir/ffserver*}
 %endif
 
-%if_with doc
+%if_enabled docs
 %files -n ffserver-doc
-%{?_with_ffserver:%doc doc/ffserver*.html}
+%{?_enable_ffserver:%doc doc/ffserver*.html}
 %endif
 
 %files -n libavcodec%avcodecver
@@ -666,6 +665,9 @@ xz Changelog
 %endif
 
 %changelog
+* Mon Jun 25 2018 Anton Farygin <rider@altlinux.ru> 2:4.0.1-alt2
+- enabled documentation build
+
 * Fri Jun 22 2018 Anton Farygin <rider@altlinux.ru> 2:4.0.1-alt1
 - 4.0 -> 4.0.1
 
@@ -714,7 +716,6 @@ xz Changelog
 
 * Tue Oct 03 2017 Anton Farygin <rider@altlinux.ru> 2:3.3.4-alt2
 - rebuild for recent libvpx4 1.6.1
->>>>>>> 3ff5a75... 2:3.3.6-alt3
 
 * Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 2:3.3.4-alt1
 - 3.3.4 with fixes for multiple vilnerabilities (CVE-2017-14054, CVE-2017-14055,
