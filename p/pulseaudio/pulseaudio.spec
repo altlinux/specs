@@ -1,6 +1,6 @@
 Name: pulseaudio
-Version: 11.0
-Release: alt2
+Version: 12.0
+Release: alt1
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -14,7 +14,7 @@ BuildRequires: doxygen intltool jackit-devel libalsa-devel libasyncns-devel
 BuildRequires: libavahi-devel libbluez-devel
 BuildRequires: libcap-devel libdbus-devel libgdbm-devel libudev-devel
 BuildRequires: liblirc-devel libltdl7-devel libsoxr-devel
-BuildRequires: libsndfile-devel libspeex-devel libspeexdsp-devel
+BuildRequires: libsndfile-devel libspeex-devel libspeexdsp-devel libwebrtc-devel
 BuildRequires: libssl-devel libwrap-devel
 BuildRequires: libSM-devel libX11-devel libXtst-devel libxcbutil-devel
 BuildRequires: libGConf-devel
@@ -189,7 +189,6 @@ This package contains doxygen documentation for pulseaudio.
 touch config.rpath
 
 %build
-%remove_optflags -mfpu=vfpv3-d16
 %autoreconf
 %configure \
     --localstatedir=/var \
@@ -212,7 +211,7 @@ find %buildroot%_libdir -name \*.la -delete
 
 %find_lang %name
 
-%define pulselibdir %_libdir/pulse-11.0
+%define pulselibdir %_libdir/pulse-12.0
 %define pulsemoduledir %pulselibdir/modules
 
 %pre system
@@ -241,7 +240,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/zsh/site-functions/_pulseaudio
 %_datadir/bash-completion/completions/*
 
-%_libdir/pulseaudio/libpulsecore-11.0.so
+%_libdir/pulseaudio/libpulsecore-12.0.so
 
 %_libexecdir/systemd/user/pulseaudio.service
 %_libexecdir/systemd/user/pulseaudio.socket
@@ -323,7 +322,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-11.0.so
+%_libdir/pulseaudio/libpulsecommon-12.0.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -337,6 +336,9 @@ find %buildroot%_libdir -name \*.la -delete
 %doc doxygen/html
 
 %changelog
+* Mon Jun 25 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.0-alt1
+- 12.0 released
+
 * Fri Feb 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 11.0-alt2
 - Fixed build with glibc-2.27.
 
