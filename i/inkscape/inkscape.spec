@@ -1,12 +1,11 @@
 %define major 0.92
 %def_without gnome_vfs
 %def_without dbus
-%add_optflags -fpermissive -std=gnu++11
 
 %define pre %nil
 Name: inkscape
 Version: %major.3
-Release: alt1
+Release: alt2
 
 Summary: A Vector Drawing Application
 
@@ -21,9 +20,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://launchpad.net/inkscape/%major.x/%version/+download/inkscape-%version.tar.bz2
 Source: %name-%version.tar
 
-#Source1: %name-%version.ru.po
-Source2: tutorial-%version.tar
-
 Patch: %name-dia.patch
 Patch1: inkscape-poppler-0.58.patch
 
@@ -37,7 +33,7 @@ BuildPreReq: desktop-file-utils
 # manually removed: bzr
 # Automatically added by buildreq on Sat Aug 04 2012
 # optimized out: fontconfig fontconfig-devel glib2-devel gnome-vfs libGConf-devel libX11-devel libatk-devel libatkmm-devel libavahi-glib libcairo-devel libcairomm-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgpg-error libgtk+2-devel libp11-kit libpango-devel libpangomm-devel libpng-devel libpoppler-devel libpoppler8-glib libsigc++2-devel libstdc++-devel  libxml2-devel perl-Encode perl-XML-Parser pkg-config python-base python-devel python-module-distribute python-module-peak python-module-zope python-modules xorg-xproto-devel zlib-devel
-BuildRequires: boost-devel-headers gcc-c++  intltool libImageMagick-devel libaspell-devel libgc-devel libgsl-devel libgtkmm2-devel libgtkspell-devel liblcms2-devel libpoppler-glib-devel libpopt-devel  libxslt-devel perl-devel python-module-paste zlib-devel
+BuildRequires: boost-devel-headers gcc-c++  intltool libImageMagick-devel libaspell-devel libgc-devel libgsl-devel libgtkmm2-devel libgtkspell-devel liblcms2-devel libpoppler-glib-devel libpopt-devel libxslt-devel perl-devel zlib-devel
 %{?_with_gnome_vfs:BuildRequires: gnome-vfs-devel}
 %{?_with_dbus: BuildRequires: libdbus-devel}
 BuildRequires: libwpg-devel librevenge-devel libcdr-devel libvisio-devel
@@ -78,8 +74,6 @@ inkview is standalone viewer for Inkscape files (SVG)
 %patch
 #patch1 -p1
 
-#cat %%SOURCE1 >po/ru.po
-
 %build
 %autoreconf
 subst "s|.*\(checkPYTHON_LIBS\)=.*|\1=-lpython%_python_version|" ./configure
@@ -93,11 +87,6 @@ subst "s|.*\(checkPYTHON_LIBS\)=.*|\1=-lpython%_python_version|" ./configure
 
 %install
 %makeinstall_std
-
-# use tango by default (bug #13994)
-#cp share/icons/tango_icons.svg %buildroot%_datadir/%name/icons/icons.svg
-
-tar xvf %SOURCE2 -C %buildroot%_datadir/inkscape/tutorials/
 
 # remove unneeded man
 rm -rf %buildroot%_mandir/fr/
@@ -128,6 +117,9 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Mon Jun 25 2018 Vitaly Lipatov <lav@altlinux.ru> 0.92.3-alt2
+- don't override tutorial with obsoleted one (ALT bug 35081)
+
 * Sun Apr 22 2018 Vitaly Lipatov <lav@altlinux.ru> 0.92.3-alt1
 - new version 0.92.3 (with rpmrb script)
 
