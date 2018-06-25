@@ -3,7 +3,7 @@
 
 Name: qt5-serialbus
 Version: 5.9.6
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt5 - SerialBus component
@@ -11,6 +11,7 @@ Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
+Patch1: alt-segfault.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: qt5-base-devel qt5-serialport-devel qt5-tools
@@ -59,6 +60,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -n %qt_module-opensource-src-%version
+%patch1 -p1
 syncqt.pl-qt5 -version %version -private
 
 %build
@@ -95,6 +97,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Mon Jun 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt2%ubt
+- fix crash in canbusutil
+
 * Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
 - new version
 
