@@ -1,6 +1,6 @@
 Name: dvdstyler
-Version: 3.0.3
-Release: alt2%ubt
+Version: 3.0.4
+Release: alt1%ubt
 Summary: %name is a crossplatform DVD Authoring System
 Summary(ru_RU.UTF-8): %name - это программа для создания DVD дисков
 License: GPL
@@ -11,6 +11,7 @@ Source: http://prdownloads.sourceforge.net/dvdstyler/DVDStyler-%version.tar
 Source2: %name.desktop
 Source4: %name-16x16.png
 Source5: %name-32x32.png
+Patch0: %name-ffmpeg-4.patch
 
 BuildRequires: gcc-c++ libwxGTK3.1-devel libmjpegtools-devel netpbm
 BuildRequires: libnetpbm-devel libwxsvg-devel libexif-devel
@@ -52,6 +53,7 @@ The main %name features are:
 
 %prep
 %setup -n DVDStyler-%version
+%patch0 -p2
 
 rm -f ./configure configure.in
 
@@ -93,6 +95,9 @@ install -p -m 644 data/%name.png %buildroot%_liconsdir/%name.png
 
 
 %changelog
+* Mon Jun 25 2018 Anton Farygin <rider@altlinux.ru> 3.0.4-alt1%ubt
+- new version
+
 * Fri Jan 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.3-alt2%ubt
 - Rebuilt with ffmpeg instead of avconv.
 
