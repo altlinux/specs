@@ -1,15 +1,15 @@
-
-Name: jsoncpp1
-Version: 1.7.2
-Release: alt3%ubt
 %define sover 1
 %define libname libjsoncpp%sover
 
-Group: System/Libraries
-Summary: JSON library implemented in C++
-Url: https://github.com/open-source-parsers/jsoncpp/
-License: MIT
+Name: jsoncpp1
+Version: 1.7.2
+Release: alt4%ubt
 
+Summary: JSON library implemented in C++
+License: MIT
+Group: System/Libraries
+
+Url: https://github.com/open-source-parsers/jsoncpp/
 Source: jsoncpp-%version.tar
 
 # Automatically added by buildreq on Thu Jun 11 2015 (-bi)
@@ -50,7 +50,10 @@ BuildArch: noarch
 This package contains the documentation for %name
 
 %prep
-%setup -qn jsoncpp-%version
+%setup -n jsoncpp-%version
+%ifarch %e2k
+sed -i 's, -Werror=conversion,,' CMakeLists.txt
+%endif
 
 %build
 %Kbuild \
@@ -75,6 +78,9 @@ rm -rf %buildroot/%_pkgconfigdir
 %_libdir/libjsoncpp.so.%sover.*
 
 %changelog
+* Mon Jun 25 2018 Michael Shigorin <mike@altlinux.org> 1.7.2-alt4%ubt
+- E2K: drop -Werror=conversion, the code itsn't ready for that
+
 * Fri Feb 16 2018 Sergey V Turchin <zerg@altlinux.org> 1.7.2-alt3%ubt
 - fix library package name
 
