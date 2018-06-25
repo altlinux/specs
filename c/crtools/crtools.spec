@@ -2,7 +2,7 @@ Name: crtools
 Version: 3.9
 #define pre 
 %define ver %version%{?pre:%pre}
-Release: alt1
+Release: alt2
 Summary: Utility to checkpoint/restore tasks
 License: GPLv2
 Group: System/Configuration/Other
@@ -10,7 +10,7 @@ URL: http://criu.org
 Source: %name-%ver.tar
 #Patch: %name-%version-%release.patch
 Provides: criu = %version-%release
-ExclusiveArch: x86_64 %arm
+ExclusiveArch: x86_64 aarch64 armh
 
 BuildRequires: libnet2-devel
 BuildRequires: libprotobuf-c-devel %_bindir/protoc-c
@@ -64,12 +64,18 @@ Python library library of checkpoint/restore.
 
 %build
 export CFLAGS="%optflags"
-%make_build PREFIX=%prefix V=1 all docs
-
+%make_build \
+%ifarch armh
+UNAME-M=armv7l \
+%endif
+PREFIX=%prefix V=1 all docs
 
 %install
-%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir LIBEXECDIR=%_libexecdir SYSTEMDUNITDIR=%_unitdir
-
+%makeinstall_std \
+%ifarch armh
+UNAME-M=armv7l \
+%endif
+PREFIX=%prefix LIBDIR=%_libdir LIBEXECDIR=%_libexecdir SYSTEMDUNITDIR=%_unitdir
 
 %files
 %doc README.md COPYING CREDITS
@@ -100,6 +106,9 @@ export CFLAGS="%optflags"
 
 
 %changelog
+* Mon Jun 25 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.9-alt2
+- built for aarch64 too
+
 * Sun Jun 24 2018 Denis Pynkin <dans@altlinux.org> 3.9-alt1
 - updated
 
