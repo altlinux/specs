@@ -1,6 +1,11 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
+%ifarch %{ix86} x86_64
 BuildRequires: java-1.6.0-devel
+#BuildRequires: java-1.7.0-devel
+%else
+BuildRequires: java-1.8.0-devel
+%endif
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -35,7 +40,7 @@ BuildRequires: java-1.6.0-devel
 
 Name:           ant%major_version
 Version:        1.9.6
-Release:        alt6_3jpp8
+Release:        alt7_3jpp8
 Epoch:          0
 Summary:        Java build tool
 Group:          Development/Java
@@ -55,7 +60,8 @@ Patch4:         apache-ant-class-path-in-manifest.patch
 Requires: %{name}-lib = %{epoch}:%{version}
 Provides: %{name}-nodeps = %{epoch}:%{version}
 
-Conflicts: ant
+# no more
+# Conflicts: ant
 
 BuildArch:      noarch
 
@@ -172,8 +178,8 @@ install -m 755 -D src/script/ant $RPM_BUILD_ROOT%{_bindir}/%name
 install -m 755 -D src/script/antRun $RPM_BUILD_ROOT%{_bindir}/antRun%{major_version}
 ln -sf %{_bindir}/%name $RPM_BUILD_ROOT%{ant_home}/bin/ant
 ln -sf %{_bindir}/antRun%{major_version} $RPM_BUILD_ROOT%{ant_home}/bin/antRun
-ln -sf %name $RPM_BUILD_ROOT%{_bindir}/ant
-ln -sf antRun%{major_version} $RPM_BUILD_ROOT%{_bindir}/antRun
+#ln -sf %name $RPM_BUILD_ROOT%{_bindir}/ant
+#ln -sf antRun%{major_version} $RPM_BUILD_ROOT%{_bindir}/antRun
 
 sed -i -e s,ant.conf,%{name}.conf,g $RPM_BUILD_ROOT%{_bindir}/%name
 sed -i -e s,/usr/share/ant,/usr/share/%{name},g $RPM_BUILD_ROOT%{_bindir}/%name
@@ -187,13 +193,17 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d
 
 sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 
+pushd $RPM_BUILD_ROOT%{ant_home}/etc
+rm -f jdepend-frames.xsl jdepend.xsl junit-frames.xsl junit-noframes.xsl maudit-frames.xsl
+popd
+
 %files
 %doc KEYS LICENSE NOTICE README WHATSNEW
 %config(noreplace) %{_sysconfdir}/%{name}.conf
 %attr(0755,root,root) %{_bindir}/%{name}
 %attr(0755,root,root) %{_bindir}/antRun%{major_version}
-%{_bindir}/ant
-%{_bindir}/antRun
+#%{_bindir}/ant
+#%{_bindir}/antRun
 %dir %{ant_home}
 %dir %{ant_home}/bin
 %{ant_home}/bin/ant
@@ -225,6 +235,9 @@ sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 # -----------------------------------------------------------------------------
 
 %changelog
+* Fri Jun 22 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt7_3jpp8
+- removed bindir/ant
+
 * Fri Apr 20 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt6_3jpp8
 - nodeps build for bootstrap purposes
 
