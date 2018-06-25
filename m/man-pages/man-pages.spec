@@ -1,5 +1,5 @@
 Name: man-pages
-Version: 4.15
+Version: 4.16
 Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
@@ -80,20 +80,7 @@ man-pages translators.
 %setup -b1
 
 %build
-# Refer to original crypt(3)
-%define cryptpfx std
-mv man3/crypt.3 man3/crypt-%cryptpfx.3
-sed -r '/^[.]SH DESCRIPTION/a\
-This is Openwall version of\
-.BR crypt (3)\
-manual page, focused mostly on the particular implementation. For more general and \
-probably more recent information please look at\
-.BR crypt-%cryptpfx (3)\
-manual page.\
-.sp
-/^[.]SH SEE ALSO/a\
-.BR crypt-%cryptpfx (3),
-' < man3/crypt-owl.3 > man3/crypt.3
+rm man3/crypt{,_r}.3
 
 %install
 mkdir -p %buildroot%_datadir/%name
@@ -107,12 +94,15 @@ find %buildroot%_mandir -type f -print0 |
 %files
 %doc README* *.Announce *.lsm
 %_mandir/man?/*
-%exclude %_man3dir/crypt-owl*
 
 %files utils
 %_datadir/%name/
 
 %changelog
+* Mon Jun 25 2018 Dmitry V. Levin <ldv@altlinux.org> 4.16-alt1
+- 4.15 -> 4.16.
+- Moved Owl crypt*(3) manual pages to libcrypt-devel.
+
 * Tue Feb 20 2018 Dmitry V. Levin <ldv@altlinux.org> 4.15-alt1
 - 4.14 -> 4.15.
 
