@@ -1,6 +1,10 @@
+%def_enable snapshot
+%def_disable docs
+
 %define _name granite
-%define ver_major 0.5
+%define ver_major 5.0
 %define api_ver 1.0
+%define sover 5
 
 Name: libgranite
 Version: %ver_major
@@ -11,15 +15,17 @@ Group: System/Libraries
 License: GPLv3+
 Url: https://github.com/elementary/%_name
 
+%if_disabled snapshot
 Source: %url/archive/%version/%_name-%version.tar.gz
+%else
+#VCS: https://github.com/elementary/granite.git
+Source: %_name-%version.tar
+%endif
 
-BuildRequires: cmake rpm-build-gir vala libgtk+3-devel libgee0.8-devel
-BuildRequires: libpixman-devel gobject-introspection-devel libXdmcp-devel
-BuildRequires: libXdamage-devel libXxf86vm-devel libharfbuzz-devel libpng-devel
-BuildRequires: libXinerama-devel libXi-devel libXrandr-devel libXcursor-devel
-BuildRequires: libXcomposite-devel libxkbcommon-devel libwayland-cursor-devel
-BuildRequires: at-spi2-atk-devel libgtk+3-gir-devel libgee0.8-gir-devel
-BuildRequires: libexpat-devel
+BuildRequires: cmake rpm-build-gir vala-tools libgtk+3-devel libgee0.8-devel
+BuildRequires: gobject-introspection-devel
+BuildRequires: libgtk+3-gir-devel libgee0.8-gir-devel
+%{?_enable_docs:BuildRequires: gtk-doc valadoc}
 
 %description
 Granite is an extension of GTK+. Among other things, it provides the
@@ -86,6 +92,7 @@ GObject introspection devel data for the granite library.
 %build
 %cmake_insource -DCMAKE_BUILD_TYPE:STRING="Release"
 %make_build VERBOSE=1
+%{?_enable_docs:%make docs}
 
 %install
 %makeinstall_std
@@ -118,6 +125,9 @@ GObject introspection devel data for the granite library.
 %_datadir/vala/vapi/%_name.vapi
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 5.0-alt1
+- updated to 5.0-21-g4e84fc7
+
 * Mon Nov 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.5-alt1
 - 0.5
 

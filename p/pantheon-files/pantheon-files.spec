@@ -1,17 +1,26 @@
+%def_enable snapshot
+
 %define ver_major 0.3
 %define xdg_name org.pantheon.files
+%define rdn_name io.elementary.files
 
 Name: pantheon-files
 Version: %ver_major.5
-Release: alt2
+Release: alt3
 
 Summary: The file manager of the Pantheon desktop
 License: GPLv3
 Group: File tools
 Url: https://launchpad.net/pantheon-files
 
-#VCS: https://github.com/elementary/files.git
+%if_disabled snapshot
 Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%version.tar.xz
+%else
+#VCS: https://github.com/elementary/files.git
+Source: %name-%version.tar
+%endif
+
+Provides: %rdn_name = %version-%release
 
 #Depends: tumbler
 #Recommends: contractor
@@ -19,15 +28,10 @@ Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%ver
 Requires: polkit zeitgeist
 
 BuildRequires: cmake gcc-c++ intltool libappstream-glib-devel
-BuildRequires: vala libsqlite3-devel libgtk+3-devel
-BuildRequires: libgee0.8-devel libpixman-devel libgranite-devel
+BuildRequires: vala-tools libsqlite3-devel libgtk+3-devel
+BuildRequires: libgee0.8-devel libgranite-devel
 BuildRequires: libgail3-devel libdbus-glib-devel libnotify-devel
-BuildRequires: libXdmcp-devel libGConf-devel libXdamage-devel
-BuildRequires: libXxf86vm-devel libharfbuzz-devel libpng-devel
-BuildRequires: libXinerama-devel libXi-devel libXrandr-devel
-BuildRequires: libXcursor-devel libXcomposite-devel
-BuildRequires: libxkbcommon-devel libwayland-cursor-devel
-BuildRequires: at-spi2-atk-devel libgranite-vala
+BuildRequires: libxkbcommon-devel libgranite-vala
 BuildRequires: libzeitgeist2.0-devel libplank-devel libplank-vala
 BuildRequires: libpolkit-devel
 BuildRequires: libcanberra-devel libcanberra-vala
@@ -65,28 +69,28 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %install
 %cmakeinstall_std
 
-%find_lang %name
+%find_lang %rdn_name
 
-%files -f %name.lang
-%doc AUTHORS HACKING INSTALL README
+%files -f %rdn_name.lang
+%doc AUTHORS README*
 %_bindir/*
 %_libdir/*.so.*
 %_libdir/gtk-3.0/modules/libpantheon-filechooser-module.so
-%_libdir/%name/
-%_desktopdir/%xdg_name.desktop
-%_datadir/dbus-1/services/%name.service
-%_datadir/dbus-1/services/io.elementary.pantheon-files.FileManager1.service
-%_datadir/glib-2.0/schemas/org.pantheon.files.gschema.xml
-%_datadir/polkit-1/actions/net.launchpad.%name.policy
-%_datadir/%name/
-%dir %_pixmapsdir/%name
-%_pixmapsdir/%name/*.png
-%_datadir/appdata/%xdg_name.appdata.xml
+%_libdir/%rdn_name/
+%_desktopdir/%rdn_name.desktop
+%_datadir/dbus-1/services/%rdn_name.service
+%_datadir/dbus-1/services/%rdn_name.FileManager1.service
+%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/polkit-1/actions/%rdn_name.policy
+%_datadir/%rdn_name/
+%dir %_pixmapsdir/%rdn_name
+%_pixmapsdir/%rdn_name/*.png
+%_datadir/metainfo/%rdn_name.appdata.xml
 
 %files devel
 %_includedir/%name-widgets/
-%_libdir/*.so
 %_includedir/%name-core/
+%_libdir/*.so
 %_pkgconfigdir/%name-core.pc
 %_pkgconfigdir/%name-widgets.pc
 
@@ -100,6 +104,10 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %endif
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt3
+- updated to d5c2444 (no tags in git)
+- built against libgranite.so.5
+
 * Sat Jan 06 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt2
 - rebuilt against libgranite.so.4
 

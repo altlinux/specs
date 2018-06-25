@@ -6,9 +6,9 @@
 
 Name: noise
 %define xdg_name org.pantheon.%name
-%define rdnn_name io.elementary.music
+%define rdn_name io.elementary.music
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: The official elementary music player
 Group: Sound
@@ -21,6 +21,8 @@ Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%ver
 #VCS: https://github.com/elementary/music.git
 Source: %name-%version.tar
 %endif
+
+Provides: %rdn_name = %version-%release
 
 Requires: elementary-icon-theme
 # gstreamer
@@ -101,28 +103,32 @@ This package contains the development files.
 %install
 %meson_install
 
-%find_lang --output=%name.lang %rdnn_name
+%find_lang --output=%name.lang %rdn_name
 
 %files -f %name.lang
-%_bindir/%rdnn_name
-%_libdir/%rdnn_name/plugins/
-%_desktopdir/%rdnn_name.desktop
-#%_datadir/%rdnn_name/
-%_datadir/glib-2.0/schemas/%rdnn_name.gschema.xml
+%_bindir/%rdn_name
+%_libdir/%rdn_name/plugins/
+%_desktopdir/%rdn_name.desktop
+#%_datadir/%rdn_name/
+%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/icons/hicolor/*/apps/multimedia-audio-player.svg
-%_datadir/metainfo/%rdnn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.appdata.xml
 
 %files -n lib%name-core
-%_libdir/lib%rdnn_name-core.so.*
+%_libdir/lib%rdn_name-core.so.*
 
 %files -n lib%name-core-devel
-%_includedir/%rdnn_name-core.h
-%_libdir/lib%rdnn_name-core.so
-%_pkgconfigdir/%rdnn_name-core.pc
-%_vapidir/%rdnn_name-core.deps
-%_vapidir/%rdnn_name-core.vapi
+%_includedir/%rdn_name-core.h
+%_libdir/lib%rdn_name-core.so
+%_pkgconfigdir/%rdn_name-core.pc
+%_vapidir/%rdn_name-core.deps
+%_vapidir/%rdn_name-core.vapi
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt3
+- updated to 0.4.2-439-g64bccda
+- built against libgranite.so.5
+
 * Thu May 24 2018 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt2
 - updated to 0.4.2-382-g7a90c49
 

@@ -17,7 +17,7 @@
 
 Name: spice-up
 Version: 1.3.2
-Release: alt1
+Release: alt2
 
 Summary: Desktop presentation application
 License: GPLv3
@@ -74,6 +74,9 @@ ln -s %xdg_name %buildroot%_bindir/%name
 
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt2
+- rebuilt against libgranite.so.5
+
 * Mon Feb 26 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
 - 1.3.2
 
