@@ -1,6 +1,6 @@
 Name: ffmpeg2theora
 Version: 0.30
-Release: alt2
+Release: alt3
 
 Summary: Theora video encoder using ffmpeg
 License: GPLv2+
@@ -36,6 +36,9 @@ install -pDm644 %name.1 %buildroot%_man1dir/%name.1
 %doc AUTHORS ChangeLog
 
 %changelog
+* Tue Jun 26 2018 Anton Farygin <rider@altlinux.ru> 0.30-alt3
+- rebuilt with ffmpeg-4.0.1
+
 * Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 0.30-alt2
 - rebuild with debuginfo-enabled ffmpeg
 
