@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt112
+Release: alt113
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -512,6 +512,11 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %endif #with python
 
 %changelog
+* Tue Jun 26 2018 Alexey Tourbin <at@altlinux.ru> 4.0.4-alt113
+- Implemented limited support for large files: a 2GB+ file can now be packaged,
+  but the total size of uncompressed cpio payload is capped at 4 GB.
+- Automatically downgrade LZMA compression levels 7-9 -> 6 on small payloads.
+
 * Fri Jun 08 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt112
 - imz@:
   + Turned on running %%__find_{conflicts,obsoletes} if they are defined.
