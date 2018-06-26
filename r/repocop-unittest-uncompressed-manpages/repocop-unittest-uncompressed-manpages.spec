@@ -1,6 +1,6 @@
 Name: repocop-unittest-uncompressed-manpages
-Version: 0.1
-Release: alt2
+Version: 0.2
+Release: alt1
 
 Summary: uncompressed-manpages intergration tests for repocop test platform
 Group: Development/Other
@@ -13,7 +13,7 @@ Packager: Igor Zubkov <icesik@altlinux.org>
 
 BuildArch: noarch
 
-Requires: repocop >= 0.09-alt1
+Requires: repocop >= 0.73
 
 %description
 uncompressed-manpages intergration tests for repocop test platform.
@@ -24,13 +24,16 @@ uncompressed-manpages intergration tests for repocop test platform.
 
 %install
 mkdir -p %buildroot%_datadir/repocop/pkgtests/uncompressed-manpages/
-install -p -m 755 %SOURCE0 %buildroot%_datadir/repocop/pkgtests/uncompressed-manpages/done
+install -p -m 755 %SOURCE0 %buildroot%_datadir/repocop/pkgtests/uncompressed-manpages/posttest
 
 %files
 %dir %_datadir/repocop/pkgtests/uncompressed-manpages/
-%_datadir/repocop/pkgtests/uncompressed-manpages/done
+%_datadir/repocop/pkgtests/uncompressed-manpages/posttest
 
 %changelog
+* Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 0.2-alt1
+- changed to posttest
+
 * Tue Sep 22 2009 Igor Zubkov <icesik@altlinux.org> 0.1-alt2
 - add Url:
 
