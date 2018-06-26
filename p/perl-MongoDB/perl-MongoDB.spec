@@ -3,7 +3,7 @@
 %add_findreq_skiplist %perl_vendor_archlib/MongoDB/Collection.pm
 %define dist MongoDB
 Name: perl-%dist
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 
 Summary: Mongo Driver for Perl
@@ -37,6 +37,9 @@ This is the Perl driver for MongoDB, a document-oriented database.
 %perl_vendor_autolib/MongoDB
 
 %changelog
+* Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.3-alt1
+- automated CPAN update
+
 * Wed May 23 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt1
 - automated CPAN update
 
