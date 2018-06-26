@@ -3,7 +3,7 @@
 
 Name: zfs
 Version: 0.7.9
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: ZFS on Linux
 License: CDDL
 Group: System/Kernel and hardware
@@ -72,9 +72,10 @@ tar -C .. \
 	--exclude 'include/*Makefile.*' \
 	-cJf %name-%version.tar.xz \
 	%name-%version/module \
-	%name-%version/config/{{install-,ltmain.}sh,config.{awk,guess,sub},missing} \
+	%name-%version/scripts/enum-extract.pl \
+	%name-%version/config \
 	%name-%version/include \
-	%name-%version/{AUTHORS,COPYRIGHT,DISCLAIMER,META,OPENSOLARIS.LICENSE,configure,%name{.release,_config.h}.in}
+	%name-%version/{AUTHORS,COPYRIGHT,DISCLAIMER,META,OPENSOLARIS.LICENSE,configure,%name{.release,_config.h}.in,aclocal.m4}
 
 %build
 %autoreconf
@@ -193,6 +194,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Tue Jun 26 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.7.9-alt2%ubt
+- fixed build kernel modules
+
 * Mon Jun 25 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.7.9-alt1%ubt
 - 0.7.9
 
