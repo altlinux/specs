@@ -2,7 +2,7 @@
 
 Name: remmina
 Version: 1.2.0
-Release: alt2.rc20%ubt
+Release: alt3.rc21%ubt
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -108,7 +108,8 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %files -f %name.lang
 %doc AUTHORS CHANGELOG.md README.md
 %_bindir/%name
-%_datadir/appdata/*.appdata.xml
+%_datadir/metainfo/*.appdata.xml
+%_datadir/mime/*/*.xml
 %_datadir/applications/*.desktop
 %_iconsdir/*/*/*/*
 %_datadir/%name
@@ -127,6 +128,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Tue Jun 26 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt3.rc21%ubt
+- increase release number for allow backport to p8
+
 * Wed Jun 13 2018 Oleg Gadelshin <olegeg@altlinux.ru> 1.2.0-alt2.rc20%ubt
 - increase release number to alt2
 - add remmina-1.2.0-rdp-passwordispin_option.patch for use of smartcard pin as password
