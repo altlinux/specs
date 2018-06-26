@@ -1,7 +1,7 @@
 %define rname kio
 
 Name: kf5-%rname
-Version: 5.46.0
+Version: 5.47.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -99,7 +99,7 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data doc
+%K5install_move data doc kconf_update
 %find_lang %name --with-kde --all-name
 %K5find_qtlang %name --all-name
 
@@ -118,6 +118,7 @@ KF5 library
 %_K5notif/*
 %_K5plug/*.so
 %_K5xdgapp/*.desktop
+%_K5conf_up/*.upd
 %_K5srv/*
 #%config(noreplace) %_K5conf_dbus_sysd/*.conf
 %_K5dbus_srv/*.service
@@ -147,6 +148,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1%ubt
+- new version
+
 * Mon May 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1%ubt
 - new version
 
