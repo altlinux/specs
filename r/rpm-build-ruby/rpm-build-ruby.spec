@@ -2,7 +2,7 @@
 
 Name: rpm-build-ruby
 Epoch: 1
-Version: 0.3.1
+Version: 0.4
 Release: alt1
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
@@ -16,8 +16,8 @@ Requires: ruby >= 1.9
 Requires: ruby-stdlibs >= 1.9
 Requires: %_bindir/rdoc
 Requires: %_bindir/rake
-Requires: rpm-macros-ruby = %epoch:%version-%release
-Requires: ruby-test-unit = %epoch:%version-%release
+Requires: rpm-macros-ruby = %EVR
+Requires: ruby-test-unit = %EVR
 
 %{!?_disable_check:BuildRequires: ruby >= 1.9 ruby-stdlibs >= 1.9}
 
@@ -67,6 +67,10 @@ install -D -m 0755 testrb %buildroot%_bindir/testrb
 %_bindir/testrb
 
 %changelog
+* Mon Jun 25 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.4-alt1
+- Add macro %%add_ruby_req_skip module... to exclude ruby(module) from generated requirements.
+- Add %%rubygem_specdir macro for Ruby gem specification directory.
+
 * Wed Jun 06 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.3.1-alt1
 - Fix file globbing in testrb.
 
