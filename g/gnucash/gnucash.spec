@@ -4,8 +4,8 @@
 %def_enable python
 
 Name: 	 gnucash
-Version: 3.1
-Release: alt1.1
+Version: 3.2
+Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
 Summary(ru_RU.UTF8): Программа учёта финансов GnuCash
@@ -191,6 +191,9 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Tue Jun 26 2018 Andrey Cherepanov <cas@altlinux.org> 3.2-alt1
+- New version
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1-alt1.1
 - NMU: rebuilt with boost-1.67.0
 
