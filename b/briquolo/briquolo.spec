@@ -1,7 +1,7 @@
 # vim:set ft=spec: -*- rpm-spec -*-
 Name: briquolo
 Version: 0.5.7
-Release: alt5.1.qa1
+Release: alt6
 
 Group: Games/Arcade
 Summary: OpenGL-based 3D breakout
@@ -20,6 +20,7 @@ Patch02: briquolo-0.5.7-alt-libpng15.patch
 
 # Automatically added by buildreq on Thu Sep 04 2008
 BuildRequires: gcc-c++ imake libSDL_sound-devel libSDL_mixer-devel libSDL_ttf-devel libX11-devel libfreetype-devel libpng-devel xorg-cf-files
+Requires: fonts-ttf-dejavu
 
 %description
 BRIQUOLO is a breakout with 3D representation based on OpenGL.
@@ -74,6 +75,10 @@ install -m 644 %SOURCE3 %buildroot/%_liconsdir/%name.png
 install -m 644 %SOURCE3 %buildroot/%_pixmapsdir/%name.png
 %find_lang %name
 
+# remove bundled font (see ALT 25349)
+rm -f %buildroot%_datadir/games/briquolo/data/DejaVuSans.ttf
+ln -srf %buildroot%_datadir/fonts/ttf/dejavu/DejaVuSans.ttf %buildroot%_datadir/games/briquolo/data/DejaVuSans.ttf
+
 %files -f %name.lang
 %_desktopdir/%name.desktop
 %_gamesbindir/%name
@@ -85,6 +90,9 @@ install -m 644 %SOURCE3 %buildroot/%_pixmapsdir/%name.png
 %doc README*
 
 %changelog
+* Tue Jun 26 2018 Grigory Ustinov <grenka@altlinux.org> 0.5.7-alt6
+- Remove bundled font (Closes: #25349).
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.7-alt5.1.qa1
 - NMU: rebuilt for updated dependencies.
 
