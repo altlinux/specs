@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.22
 %define module_name Test-CleanNamespaces
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Class/MOP/Class.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Find/Rule.pm) perl(File/Find/Rule/Perl.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(Module/Runtime.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(Moose.pm) perl(Moose/Exporter.pm) perl(Moose/Role.pm) perl(MooseX/Role/Parameterized.pm) perl(Mouse.pm) perl(Mouse/Role.pm) perl(Package/Stash.pm) perl(Role/Tiny.pm) perl(Scalar/Util.pm) perl(Sub/Exporter.pm) perl(Sub/Identify.pm) perl(Test/Builder.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(Test/Tester.pm) perl(Test/Warnings.pm) perl(constant.pm) perl(if.pm) perl(lib.pm) perl(metaclass.pm) perl(namespace/clean.pm) perl(overload.pm) perl(parent.pm) perl(strict.pm) perl(warnings.pm) perl(Module/Metadata.pm) perl(File/pushd.pm) perl(Test/Needs.pm)
@@ -7,21 +6,21 @@ BuildRequires: perl(Class/MOP/Class.pm) perl(Exporter.pm) perl(ExtUtils/MakeMake
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.22
+Version: 0.23
 Release: alt1
 Summary: Check for uncleaned imports
 Group: Development/Perl
 License: perl
 URL: https://github.com/karenetheridge/Test-CleanNamespaces
 
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/Test-CleanNamespaces-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README CONTRIBUTING
 %perl_vendor_privlib/T*
 
 %changelog
+* Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - automated CPAN update
 
