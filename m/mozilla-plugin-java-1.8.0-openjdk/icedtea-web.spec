@@ -30,7 +30,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		mozilla-plugin-java-1.8.0-openjdk
 Version:	1.7.1
-Release:	alt1_6jpp8
+Release:	alt2_6jpp8
 Summary:	Additional Java components for OpenJDK - Java browser plug-in and Web Start implementation
 # will become arched again with rust on board
 BuildArch:  noarch
@@ -261,7 +261,8 @@ EOF
 %endif
 
 
-JAVACANDIDATE=`head -2 /etc/alternatives/packages.d/java-%{javaver}-openjdk-java| tail -1 | awk '{print $3}'`
+JAVACANDIDATE=`head -2 /etc/alternatives/packages.d/java-%{javaver}-openjdk-java-headless| tail -1 | awk '{print $3}'`
+[ -n "JAVACANDIDATE" ] || exit 1
 
 install -d %buildroot%_altdir
 %if_enabled moz_plugin
@@ -346,6 +347,9 @@ appstream-util validate $RPM_BUILD_ROOT/%{_datadir}/appdata/*.xml || :
 
 
 %changelog
+* Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt2_6jpp8
+- fixed alternatives
+
 * Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt1_6jpp8
 - fixed icons in desktop files
 
