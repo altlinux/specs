@@ -1,6 +1,6 @@
 Name: xpilot-ng
 Version: 4.7.3
-Release: alt2.1
+Release: alt3
 
 Summary: An X Window System based multiplayer aerial combat game
 License: GPL
@@ -15,7 +15,7 @@ Patch: xpilot-ng-4.7.3-alt-getline.patch
 
 # Automatically added by buildreq on Fri Jan 15 2010 (-bi)
 BuildRequires: imake libGL-devel libSDL-devel libSDL_image-devel libSDL_ttf-devel libXext-devel libXt-devel libexpat-devel libopenal-devel xorg-cf-files zlib-devel libGLU-devel libICE-devel libSM-devel libX11-devel xorg-xextproto-devel xorg-xproto-devel
-
+Requires: fonts-ttf-gnu-freefont-sans fonts-ttf-vera
 #BuildRequires: xorg-x11-devel libexpat-devel libSDL-devel libSDL_ttf-devel libSDL_image-devel libopenal-devel
 
 %description
@@ -90,6 +90,11 @@ bzcat %SOURCE3 > %buildroot%_niconsdir/%name.png
 install -m 755 -d %buildroot%_liconsdir/
 bzcat %SOURCE4 > %buildroot%_liconsdir/%name.png
 
+# remove bundled fonts (see ALT 25329)
+rm -f %buildroot%_datadir/%name/fonts/FreeSansBoldOblique.ttf %buildroot%_datadir/%name/fonts/VeraMoBd.ttf
+ln -srf %buildroot%_datadir/fonts/ttf/gnu-free/FreeSansBoldOblique.ttf %buildroot%_datadir/%name/fonts/FreeSansBoldOblique.ttf
+ln -srf %buildroot%_datadir/fonts/ttf/TrueType-vera/VeraMoBd.ttf %buildroot%_datadir/%name/fonts/VeraMoBd.ttf
+
 %files
 %doc README NEWS
 %doc mapconvert.py
@@ -106,6 +111,9 @@ bzcat %SOURCE4 > %buildroot%_liconsdir/%name.png
 %_niconsdir/*.png
 
 %changelog
+* Tue Jun 26 2018 Grigory Ustinov <grenka@altlinux.org> 4.7.3-alt3
+- Remove bundled fonts (Closes: 25329).
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 4.7.3-alt2.1
 - Rebuild with Python-2.7
 
