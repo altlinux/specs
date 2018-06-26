@@ -1,6 +1,6 @@
 Name: rpm-build-erlang
 Version: 0.7.10.1
-Release: alt1
+Release: alt2%ubt
 Summary: RPM helper scripts to calculate Erlang dependencies
 License: %gpl3plus
 Group: Development/Erlang
@@ -10,8 +10,8 @@ Requires: rpm >= 4.0.4-alt78
 Requires: file >= 4.26
 Requires: rpm-macros-erlang >= 0.6.2
 AutoReq: yes, noerlang
-Packager: Sergey Shilov <hsv@altlinux.org>
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: erlang-otp-devel
 
@@ -41,6 +41,9 @@ install -m 0755 erlang.* %buildroot%_rpmlibdir/
 
 
 %changelog
+* Fri Jun 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.10.1-alt2%ubt
+- Rebuilt with %%ubt macro support.
+
 * Sun Nov 26 2017 Denis Medvedev <nbr@altlinux.org> 0.7.10.1-alt1
 - finding app in ez files
 

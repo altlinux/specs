@@ -1,6 +1,6 @@
 Name: tsung
 Version: 1.7.0
-Release: alt1
+Release: alt2%ubt
 Summary: A distributed multi-protocol load testing tool
 URL: http://%name.erlang-projects.org/
 License: %gpl2plus
@@ -9,8 +9,8 @@ Source: http://%name.erlang-projects.org/dist/%name-%version.tar
 BuildArch: noarch
 Provides: erlang-%name = %version-%release
 Requires: erlang-otp  perl-RRD
-Packager: hsv <hsv@altlinux.org>
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-erlang
 BuildRequires: rpm-build-erlang
@@ -35,7 +35,7 @@ It also has support for SSL.
 %build
 %autoreconf
 %configure
-%make_build %name doc
+%make %name doc
 %make
 bzip2 --best --keep --force CHANGELOG.md
 
@@ -62,6 +62,9 @@ install -m 0644 CHANGELOG* CONTRIBUTORS README.md TODO  %buildroot%_docdir/%name
 
 
 %changelog
+* Fri Jun 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.0-alt2%ubt
+- Rebuilt with %%ubt macro support.
+
 * Tue Oct 31 2017 Denis Medvedev <nbr@altlinux.org> 1.7.0-alt1
 - new version
 
