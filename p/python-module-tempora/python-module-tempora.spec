@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:    python-module-%modulename
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Summary: Objects and routines pertaining to date and time (tempora)
@@ -71,5 +71,8 @@ popd
 %endif
 
 %changelog
+* Tue Jun 26 2018 Andrey Cherepanov <cas@altlinux.org> 1.12-alt1
+- New version.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 1.11-alt1
 - Initial build for Sisyphus
