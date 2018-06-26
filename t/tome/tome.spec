@@ -2,7 +2,7 @@
 
 Name:		tome
 Version: 	2.3.5
-Release: 	alt2.qa1
+Release: 	alt3
 
 Packager:	Alexey Voinov <voins@altlinux.ru>
 
@@ -42,6 +42,9 @@ make -f makefile.std install DESTDIR="$RPM_BUILD_ROOT" \
 find $RPM_BUILD_ROOT -name delete.me -exec rm -f '{}' ';'
 touch $RPM_BUILD_ROOT%varpath/apex/scores.raw
 
+# remove bundled font (see ALT 25530)
+rm -f %buildroot%_localstatedir/tome/xtra/font/VeraMono.ttf
+
 %preun
 if [ -d %varpath/data/ ]; then
 	rm -rf %varpath/data/*
@@ -73,6 +76,9 @@ fi
 %varpath/module.lua
 
 %changelog
+* Tue Jun 26 2018 Grigory Ustinov <grenka@altlinux.org> 2.3.5-alt3
+- Remove bundled font (Closes: #25330).
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.3.5-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
