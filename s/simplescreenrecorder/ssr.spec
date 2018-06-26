@@ -1,5 +1,5 @@
 Name: simplescreenrecorder
-Version: 0.3.9
+Version: 0.3.11
 Release: alt1
 Summary: Simple Screen Recording with OpenGL capture
 
@@ -7,6 +7,7 @@ Group: Video
 License: GPLv3
 Url: http://www.maartenbaert.be/simplescreenrecorder/
 Obsoletes: simplescreenrecording
+ExclusiveArch: %ix86 x86_64
 
 Source: %version.tar.gz
 
@@ -45,6 +46,10 @@ done
 %_datadir/appdata/*
 
 %changelog
+* Tue Jun 26 2018 Fr. Br. George <george@altlinux.ru> 0.3.11-alt1
+- Autobuild version bump to 0.3.11
+- Exclusive x86 build
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 0.3.9-alt1
 - Autobuild version bump to 0.3.9
 
