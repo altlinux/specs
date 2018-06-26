@@ -21,7 +21,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.4.15
-Release: alt1%ubt
+Release: alt2%ubt
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
@@ -46,6 +46,7 @@ BuildRequires: java-1.8.0-openjdk-devel rpm-build-java ws-commons-util xmlrpc-co
 BuildRequires: zlib-devel
 BuildRequires: npm
 BuildRequires: ronn
+BuildRequires: groff-base
 
 ################################################################################
 # Main Package
@@ -687,6 +688,9 @@ fi
 ################################################################################
 
 %changelog
+* Tue Jun 26 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.15-alt2%ubt
+- backport patches from upstream/one-5.4 branch
+
 * Tue Jun 19 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.15-alt1%ubt
 - 5.4.15
 
