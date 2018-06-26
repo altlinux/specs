@@ -1,6 +1,6 @@
 Name:    ruby-gettext
 Version: 3.2.9
-Release: alt1.2
+Release: alt1.3
 
 Summary: Native Language Support Library for Ruby
 Group:   Development/Ruby
@@ -14,15 +14,15 @@ Obsoletes: %name-erb
 Provides: %name-cgi = %version-%release
 Provides: %name-erb = %version-%release
 
-BuildRequires: rpm-build-ruby ruby-locale ruby-racc-runtime ruby-rake ruby-tool-rdoc ruby-tool-setup
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: ruby-locale ruby-racc-runtime ruby-rake ruby-tool-rdoc ruby-tool-setup
 BuildRequires: ruby-test-unit
 
 Requires: ruby-text
 
 Source: gettext-%version.tar
-Patch1: alt-gemspec.patch
 
-%filter_from_requires /^ruby(mathn)$/d
+%add_ruby_req_skip mathn
 
 %description
 Ruby GetText Package is Native Language Support Library and Tools
@@ -50,7 +50,6 @@ Documentation files for %name
 
 %prep
 %setup
-%patch1 -p1
 %update_setup_rb
 
 %build
@@ -59,9 +58,6 @@ Documentation files for %name
 
 %install
 %ruby_install
-# Install gemspec
-export rbVersion=`ruby -e "puts RbConfig::CONFIG[\"ruby_version\"]"`
-install -Dm 0644 gettext.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifications/gettext.gemspec
 %rdoc lib/
 
 %find_lang rgettext
@@ -91,7 +87,7 @@ find . -name 'test_*.rb' -print0 | xargs -r0 -n 1 %ruby_test_unit -I../lib -I./
 %ruby_sitelibdir/*
 %exclude %ruby_sitelibdir/gettext/tools
 %exclude %ruby_sitelibdir/gettext/tools.rb
-%ruby_libdir/gems/*/specifications/*.gemspec
+%rubygem_specdir/*.gemspec
 
 %files -f rgettext.lang utils
 %_bindir/*
@@ -103,6 +99,9 @@ find . -name 'test_*.rb' -print0 | xargs -r0 -n 1 %ruby_test_unit -I../lib -I./
 %ruby_ri_sitedir/GetText*
 
 %changelog
+* Tue Jun 26 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.9-alt1.3
+- Use new macro and automatic gemspec installation.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.9-alt1.2
 - Rebuild with Ruby 2.5.1
 
