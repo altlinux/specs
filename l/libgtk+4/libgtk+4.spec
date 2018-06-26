@@ -1,12 +1,12 @@
 %def_disable snapshot
 
 %define _name gtk+
-%define ver_major 3.93
+%define ver_major 3.94
 %define api_ver 4.0
 %define binary_ver 4.0.0
 %define _libexecdir %_prefix/libexec
 
-%def_enable xkb
+%def_enable x11
 %def_disable static
 %def_disable documentation
 %def_disable man
@@ -20,6 +20,7 @@
 %def_enable cloudproviders
 %def_enable vulkan
 %def_enable install_tests
+%def_disable check
 
 Name: libgtk+4
 Version: %ver_major.0
@@ -52,18 +53,20 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 %define wayland_protocols_ver 1.7
 %define epoxy_ver 1.4
 %define graphene_ver 1.5.1
+%define cloudproviders_ver 0.2.5
 
 Provides: libgtk3-engine-adwaita = %version-%release
 Obsoletes: libgtk3-engine-adwaita < 3.13.0
 
 Requires: gtk-update-icon-cache
 Requires: icon-theme-adwaita
+Requires: iso-codes
 # ALT #32028
 Requires: gtk+3-themes-incompatible
 %{?_enable_colord:Requires: colord}
 
 BuildRequires(pre): meson rpm-build-licenses rpm-build-gnome
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ sassc
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel
 BuildPreReq: libcairo-devel >= %cairo_ver
 BuildPreReq: libcairo-gobject-devel >= %cairo_ver
@@ -76,23 +79,25 @@ BuildPreReq: gtk-doc >= %gtk_doc_ver
 BuildPreReq: libcups-devel >= %cups_ver
 BuildPreReq: libepoxy-devel >= %epoxy_ver
 BuildPreReq: libgraphene-devel >= %graphene_ver
+BuildRequires: iso-codes-devel
 BuildRequires: gtk-update-icon-cache docbook-utils zlib-devel
-
+%if_enabled x11
 BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-devel
 BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
 BuildRequires: libXrender-devel libXt-devel
-
+%endif
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel libgraphene-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel wayland-protocols >= %wayland_protocols_ver}
 %{?_enable_cloudprint:BuildRequires: librest-devel libjson-glib-devel}
-%{?_enable_cloudproviders:BuildRequires: libcloudproviders-devel}
+%{?_enable_cloudproviders:BuildRequires: libcloudproviders-devel >= %cloudproviders_ver}
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
 
 # for examples
 BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel
-# for check
-BuildRequires: /proc dbus-tools-gui icon-theme-hicolor gnome-icon-theme-symbolic
+%{?_enable_check:BuildRequires: /proc dbus-tools-gui icon-theme-hicolor gnome-icon-theme-symbolic}
+# since 3.94.0 for media backend
+BuildRequires: pkgconfig(gstreamer-player-1.0)
 
 %description
 GTK+ is a multi-platform toolkit for creating graphical user interfaces.
@@ -186,40 +191,25 @@ the functionality of the installed GTK+3 packages.
 %prep
 %setup -n %_name-%version
 %patch -p1
-subst '/Werror=return-type/d' meson.build
+#subst '/Werror=return-type/d' meson.build
 
 %build
 %meson \
-    %{?_enable_static:-Denable-static=true} \
-    -Denable-x11-backend=true \
-    %{?_enable_xkb:-Denable-xkb=true} \
-    -Denable-schemas-compile=false \
-    %{?_enable_gtk_doc:-Denable-documentation=true} \
-    %{?_enable_man:-Denable-man-pages=true} \
-    %{?_enable_colord:-Denable-colord=yes} \
-    %{?_enable_wayland:-Denable-wayland-backend=true} \
-    %{?_enable_broadway:-Denable-broadway-backend=true} \
-    %{?_enable_install_tests:-Denable-install-tests=true} \
-    %{?_enable_cloudprint:-Denable-cloudprint-print-backend=yes} \
-    %{?_enable_cloudproviders:-Denable-cloudproviders=true} \
-    %{?_enable_vulkan:-Denable-vulkan=yes}
+    %{?_enable_x11:-Dx11-backend=true} \
+    %{?_enable_wayland:-Dwayland-backend=true} \
+    %{?_enable_broadway:-Dbroadway-backend=true} \
+    %{?_enable_cloudproviders:-Dcloudproviders=true} \
+    %{?_enable_gtk_doc:-Ddocumentation=true} \
+    %{?_enable_man:-Dman-pages=true} \
+    %{?_enable_colord:-Dcolord=yes} \
+    %{?_enable_install_tests:-Dinstall-tests=true} \
+    %{?_enable_vulkan:-Dvulkan=yes}
+#    %{?_enable_cloudprint:-Dcloudprint-print-backend=yes} \
 %meson_build
 
 %install
 %meson_install
 install -d %buildroot{%_sysconfdir/gtk-%api_ver,%_libdir/gtk-%api_ver/%binary_ver/engines}
-
-touch %buildroot%_libdir/gtk-%api_ver/%binary_ver/immodules.cache
-
-# posttransfiletrigger to update immodules cache
-cat <<EOF > filetrigger
-#!/bin/sh -e
-
-dir=%fulllibpath/immodules
-grep -qs '^'\$dir'' && %_bindir/gtk4-query-immodules --update-cache ||:
-EOF
-
-install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
 
 # The license
 ln -sf %_licensedir/LGPL-2 COPYING
@@ -235,10 +225,10 @@ mkdir -p %buildroot/%_docdir/%name-devel-%version/examples
 cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 %check
+%meson_test
 
 %files -f gtk40.lang
 %{?_enable_broadway:%_bindir/gtk4-broadwayd}
-%_bindir/gtk4-query-immodules
 %_bindir/gtk4-query-settings
 %_bindir/gtk4-launch
 %_bindir/gtk4-encode-symbolic-svg
@@ -247,31 +237,13 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %dir %_libdir/gtk-%api_ver/modules
 %dir %fulllibpath
 %dir %fulllibpath/engines
-%dir %fulllibpath/immodules
-%fulllibpath/immodules/im-am-et.so
-%fulllibpath/immodules/im-cedilla.so
-%fulllibpath/immodules/im-cyrillic-translit.so
-%fulllibpath/immodules/im-inuktitut.so
-%fulllibpath/immodules/im-ipa.so
-%fulllibpath/immodules/im-thai.so
-%fulllibpath/immodules/im-ti-er.so
-%fulllibpath/immodules/im-ti-et.so
-%fulllibpath/immodules/im-viqr.so
-%fulllibpath/immodules/im-multipress.so
-%fulllibpath/immodules/im-xim.so
-%{?_enable_broadway:%fulllibpath/immodules/im-broadway.so}
 %dir %fulllibpath/printbackends
+%dir %fulllibpath/media
 %fulllibpath/printbackends/libprintbackend-*.so
-# compiled in?
-#%dir %_datadir/themes/*/gtk-%{api_ver}*
-#%_datadir/themes/*/gtk-%{api_ver}/*.css
-
+%fulllibpath/media/libmedia-gstreamer.so
 %dir %_sysconfdir/gtk-%api_ver
-%config(noreplace) %_sysconfdir/gtk-%api_ver/im-multipress.conf
-%ghost %_libdir/gtk-%api_ver/%binary_ver/immodules.cache
 %if_enabled man
 %{?_enable_broadway:%_man1dir/gtk4-broadwayd.1.*}
-%_man1dir/gtk4-query-immodules*
 %_man1dir/gtk4-query-settings.1.*
 %_man1dir/gtk4-launch.*
 %_man1dir/gtk4-encode-symbolic-svg.1.*
@@ -284,7 +256,6 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %exclude %_datadir/glib-2.0/schemas/org.gtk.Settings.Debug.gschema.xml
 %exclude %_datadir/glib-2.0/schemas/org.gtk.Settings.EmojiChooser.gschema.xml
 
-%_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
 %doc --no-dereference COPYING
 %doc AUTHORS NEWS.bz2 README.md
 
@@ -322,6 +293,8 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_datadir/glib-2.0/schemas/org.gtk.Demo.gschema.xml
 %_iconsdir/hicolor/*x*/apps/gtk4-demo*.png
 %_iconsdir/hicolor/*x*/apps/gtk4-widget*.png
+%_datadir/metainfo/org.gtk.Demo.appdata.xml
+%_datadir/metainfo/org.gtk.WidgetFactory.appdata.xml
 
 %if_enabled man
 %_man1dir/gtk4-demo.1.*
@@ -355,11 +328,14 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %if_enabled install_tests
 %files tests
 %_libexecdir/installed-tests/gtk-%api_ver/
-#%_datadir/installed-tests/gtk-%api_ver/
+%_datadir/installed-tests/gtk-%api_ver/
 %endif
 
 
 %changelog
+* Tue Jun 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.94.0-alt1
+- 3.94.0
+
 * Wed Dec 27 2017 Yuri N. Sedunov <aris@altlinux.org> 3.93.0-alt1
 - 3.93.0
 

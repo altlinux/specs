@@ -6,7 +6,7 @@
 
 Name: lib%_name
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: Library for integration of cloud storage providers
 Group: System/Libraries
@@ -78,6 +78,9 @@ This package contains development documentation for %name.
 %endif
 
 %changelog
+* Tue Jun 26 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt2
+- updated to 0.2.5-13-gd188a03
+
 * Wed Dec 27 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt1
 - first build for Sisyphus
 
