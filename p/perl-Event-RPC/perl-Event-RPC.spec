@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Event-RPC
 Name: perl-%dist
-Version: 1.08
+Version: 1.09
 Release: alt1
 
 Summary: Event based transparent Client/Server RPC framework
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/J/JR/JRED/Event-RPC-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JR/JRED/%{dist}-%{version}.tar.gz
 Patch: perl-Event-RPC-ipv6.patch
 
 BuildArch: noarch
@@ -25,7 +25,7 @@ using IO::Socket::SSL. Several event loop managers are supported due to
 an extensible API. Currently Event and Glib are implemented.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 #patch -p1
 
 %build
@@ -35,10 +35,13 @@ an extensible API. Currently Event and Glib are implemented.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README examples
 %perl_vendor_privlib/Event
 
 %changelog
+* Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
+- automated CPAN update
+
 * Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
 - automated CPAN update
 
