@@ -1,6 +1,6 @@
 Name: 0ad-data
 Epoch: 1
-Version: 0.0.22
+Version: 0.0.23
 Release: alt1
 BuildArch: noarch
 
@@ -30,13 +30,16 @@ educational celebration of game development and ancient history.
 %setup -n 0ad-%version-alpha
 
 %install
-mkdir -p %buildroot/%_datadir/0ad
-mv binaries/data/* %buildroot/%_datadir/0ad
+mkdir -p %buildroot%_datadir/0ad
+mv binaries/data/* %buildroot%_datadir/0ad/
 
 %files
 %_datadir/0ad
 
 %changelog
+* Tue Jun 05 2018 Alexey Tourbin <at@altlinux.ru> 1:0.0.23-alt1
+- 0.0.22 -> 0.0.23
+
 * Sun Nov 05 2017 Alexey Tourbin <at@altlinux.ru> 1:0.0.22-alt1
 - 0.0.21 -> 0.0.22
 

@@ -1,6 +1,6 @@
 Name: 0ad
 Epoch: 1
-Version: 0.0.22
+Version: 0.0.23
 Release: alt2
 
 Group: Games/Strategy
@@ -10,12 +10,16 @@ Url: http://www.wildfiregames.com/0ad/
 Requires: %name-data = %epoch:%version
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ python zip cmake
-BuildRequires: boost-devel boost-filesystem-devel boost-flyweight-devel boost-signals-devel 
-BuildRequires: libgamin-devel libgamin-fam libcurl-devel libjpeg-devel libpng-devel libvorbis-devel
-BuildRequires: libxml2-devel libopenal-devel libSDL-devel wxGTK-devel libXcursor-devel libgloox-devel
-BuildRequires: libnspr-devel python-dev python-modules-json libicu-devel libenet-devel libminiupnpc-devel
-BuildRequires: libSDL2-devel
+BuildRequires: gcc-c++ python cmake
+BuildRequires: boost-filesystem-devel boost-flyweight-devel boost-signals-devel
+BuildRequires: libjpeg-devel libpng-devel libvorbis-devel
+BuildRequires: libopenal-devel libGL-devel libSDL2-devel libwxGTK3.0-devel libXcursor-devel
+BuildRequires: libcurl-devel libxml2-devel libnspr-devel libicu-devel zlib-devel
+BuildRequires: libenet-devel libminiupnpc-devel libgloox-devel libsodium-devel
+BuildRequires: libmozjs38-devel
+
+# premake5 requires /proc/self/exe
+BuildRequires: /proc
 
 %description
 0 A.D. (pronounced "zero ey-dee") is a free, open-source, cross-platform
@@ -40,21 +44,19 @@ mkdir -p libraries/source/fcollada/src/output/debug/FCollada
 export CFLAGS="%optflags"
 export CPPFLAGS="%optflags"
 export SHELL=/bin/sh
-[ -n "$NPROCS" ] || NPROCS=%__nprocs; build/workspaces/update-workspaces.sh \
+[ -n "$NPROCS" ] || NPROCS=%__nprocs
+build/workspaces/update-workspaces.sh \
 	--bindir=%_bindir \
 	--datadir=%_datadir/%name \
 	--libdir=%_libdir/%name \
-	-j$NPROCS \
-	#
-pushd build/workspaces/gcc
-%make_build verbose=1
-popd
+	--with-system-mozjs38 \
+	-j$NPROCS
+%make_build -C build/workspaces/gcc verbose=1
 
 %install
 install -Dm 0755 binaries/system/pyrogenesis %buildroot%_bindir/pyrogenesis
 install -Dm 0755 binaries/system/libCollada.so %buildroot%_libdir/%name/libCollada.so
 install -Dm 0755 binaries/system/libAtlasUI.so %buildroot%_libdir/%name/libAtlasUI.so
-install -Dm 0755 binaries/system/libmozjs*-ps-release.so %buildroot%_libdir/%name/
 install -Dm 0755 binaries/system/libnvcore.so %buildroot%_libdir/%name/libnvcore.so
 install -Dm 0755 binaries/system/libnvimage.so %buildroot%_libdir/%name/libnvimage.so
 install -Dm 0755 binaries/system/libnvmath.so %buildroot%_libdir/%name/libnvmath.so
@@ -63,8 +65,8 @@ install -Dm 0755 binaries/system/libnvtt.so %buildroot%_libdir/%name/libnvtt.so
 install -Dm 0644 build/resources/0ad.desktop %buildroot%_desktopdir/%name.desktop
 install -Dm 0644 build/resources/0ad.png %buildroot%_pixmapsdir/%name.png
 install -Dm 0755 build/resources/0ad.sh %buildroot%_bindir/0ad
-mkdir -p %buildroot/%_datadir/0ad/
-cp -a binaries/data/* %buildroot/%_datadir/0ad/
+mkdir -p %buildroot%_datadir/0ad
+cp -a binaries/data/* %buildroot%_datadir/0ad/
 
 %files
 %doc README.txt
@@ -77,8 +79,12 @@ cp -a binaries/data/* %buildroot/%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
-* Tue Jun 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.0.22-alt2
-- NMU: rebuilt with boost-1.67.0.
+* Tue Jun 26 2018 Alexey Tourbin <at@altlinux.ru> 1:0.0.23-alt2
+- bundled mozjs won't build on aarch64, trying --with-system-mozjs38
+
+* Wed Jun 06 2018 Alexey Tourbin <at@altlinux.ru> 1:0.0.23-alt1
+- 0.0.22 -> 0.0.23
+- updated build dependencies (wxGTK 2.8 -> 3.0, added libsodium)
 
 * Sun Nov 05 2017 Alexey Tourbin <at@altlinux.ru> 1:0.0.22-alt1
 - 0.0.21 -> 0.0.22
