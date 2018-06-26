@@ -3,8 +3,8 @@
 %def_enable tools
 
 Name: kde5-%rname
-Version: 18.04.1
-Release: alt4%ubt
+Version: 18.04.2
+Release: alt1%ubt
 %K5init altplace
 
 Group: Databases
@@ -269,6 +269,9 @@ done
 %endif
 
 %changelog
+* Tue Jun 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Sat Jun 09 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt4%ubt
 - fix initialize mysql database
 
