@@ -4,7 +4,7 @@
 %define libname libaccounts-qt5%sover
 Name: accounts-qt5
 Version: 1.15
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Accounts framework Qt 5 bindings
@@ -44,6 +44,7 @@ sed -i '/^SUBDIRS/s|tests||'  accounts-qt.pro
 
 %build
 %qmake_qt5 \
+    QMAKE_STRIP=echo \
     QMF_INSTALL_ROOT=%prefix \
     CONFIG+=release \
     PREFIX=%_prefix \
@@ -54,7 +55,7 @@ sed -i '/^SUBDIRS/s|tests||'  accounts-qt.pro
 %make_build
 
 %install
-%install_qt5
+%install_qt5 STRIP=echo
 
 rm -f %buildroot/%_datadir/doc/accounts-qt/html/installdox
 
@@ -78,6 +79,9 @@ mkdir %buildroot/%_qt5_docdir
 #%_qt5_docdir/accounts.qch
 
 %changelog
+* Tue Jun 26 2018 Sergey V Turchin <zerg@altlinux.org> 1.15-alt2%ubt
+- enable debuginfo
+
 * Mon Jun 19 2017 Sergey V Turchin <zerg@altlinux.org> 1.15-alt1%ubt
 - new version
 
