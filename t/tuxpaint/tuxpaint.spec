@@ -1,6 +1,6 @@
 Name: tuxpaint
 Version: 0.9.22
-Release: alt1
+Release: alt2
 
 Summary: A drawing program for young children
 Summary(ru_RU.UTF8): Простая детская программа для рисования
@@ -76,6 +76,9 @@ sed -i 's|^\(CFLAGS\).*=\(.*\))|\1 = -g \2|' Makefile
 install -d %buildroot%_datadir/applications
 cp -aRf %SOURCE1 %buildroot%_datadir/applications/
 
+# Remove fonts (see ALT 25339)
+rm -f /usr/share/tuxpaint/fonts/Free*.ttf
+
 %files -f %name.lang
 # bin files
 %_bindir/tuxpaint*
@@ -105,6 +108,9 @@ cp -aRf %SOURCE1 %buildroot%_datadir/applications/
 %_man1dir/tp-magic-config*
 
 %changelog
+* Tue Jun 26 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.22-alt2
+- Remove fonts from package (Closes: #25339).
+
 * Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.22-alt1
 - Version 0.9.22
 
