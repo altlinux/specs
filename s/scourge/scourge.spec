@@ -5,7 +5,7 @@ Version: 0.21.1
 Summary: Rogue-like RPG
 Summary(de): Rogue-artiges Rollenspiel
 Group: Games/Adventure
-Release: alt5.svn3264
+Release: alt6.svn3264
 License: GPL2
 URL: https://sourceforge.net/projects/scourge/
 
@@ -16,6 +16,7 @@ Patch1: scourge-0.21.1-alt-build.patch
 BuildRequires: gcc-c++ libGL-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libX11-devel libfreetype-devel zlib-devel
 
 Requires: %name-data = %EVR
+Requires: fonts-ttf-dejavu-lgc
 
 # data contains some scripts, ignore them
 %add_findreq_skiplist  %_datadir/%name/*
@@ -73,6 +74,11 @@ install -p -m 644 assets/%name.png %buildroot%_datadir/pixmaps
 #install data
 cp -aRf ../scourge_data/* %buildroot%_datadir/%name
 
+# remove bundled fonts (see ALT 25635)
+rm %buildroot%_datadir/%name/fonts/DejaVuLGCSans.ttf %buildroot%_datadir/%name/fonts/DejaVuLGCSansMono.ttf
+ln -srf %buildroot%_datadir/fonts/ttf/dejavu-lgc/DejaVuLGCSans.ttf %buildroot%_datadir/%name/fonts/DejaVuLGCSans.ttf
+ln -srf %buildroot%_datadir/fonts/ttf/dejavu-lgc/DejaVuLGCSansMono.ttf %buildroot%_datadir/%name/fonts/DejaVuLGCSansMono.ttf
+
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -88,6 +94,9 @@ cp -aRf ../scourge_data/* %buildroot%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Tue Jun 26 2018 Grigory Ustinov <grenka@altlinux.org> 0.21.1-alt6.svn3264
+- Removed bundled fonts (Closes: #25635).
+
 * Thu Apr 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.21.1-alt5.svn3264
 - Fixed build.
 
