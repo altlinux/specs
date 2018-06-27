@@ -1,6 +1,6 @@
 Name: wsjtx
-Version: 1.9.0
-Release: alt2.S1
+Version: 1.9.1
+Release: alt1.S1
 Summary: WSJT-X implements communication protocols or "modes" called JT4, JT9, JT65, and WSPR
 License: GPLv3
 Group: Engineering
@@ -118,6 +118,8 @@ install -p -m 0644 -t %buildroot%_docdir/%name GUIcontrols.txt jt9.txt \
 
 popd
 
+mv %buildroot%_docdir/%name %buildroot%_docdir/WSJT-X
+
 %files -f %name/%name.lang
 %_bindir/*
 %_desktopdir/*.desktop
@@ -129,9 +131,12 @@ popd
 %_niconsdir/wsjtx_icon.png
 %_miconsdir/wsjtx_icon.png
 %_datadir/%name
-%_docdir/%name
+%_docdir/WSJT-X
 
 %changelog
+* Wed Jun 27 2018 Anton Midyukov <antohami@altlinux.org> 1.9.1-alt1.S1
+- new version 1.9.1
+
 * Wed May 16 2018 Anton Midyukov <antohami@altlinux.org> 1.9.0-alt2.S1
 - Added alt-cmake.patch (thanks darktemplar)
 
