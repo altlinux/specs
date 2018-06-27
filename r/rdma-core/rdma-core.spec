@@ -10,7 +10,7 @@
 
 
 Name: rdma-core
-Version: 17.1
+Version: 18.1
 Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
@@ -31,7 +31,11 @@ BuildRequires: libudev-devel
 BuildRequires: pkgconfig(libnl-3.0)
 BuildRequires: pkgconfig(libnl-route-3.0)
 BuildRequires: libsystemd-devel
-
+BuildRequires: python-modules
+# need haskell :(
+%ifarch %ix86 x86_64
+BuildRequires: pandoc
+%endif
 Conflicts: infiniband-diags < 2.0.0
 
 %define docdir %_docdir/%name-%version
@@ -411,6 +415,9 @@ install -D -m0644 ibacm_opts.cfg %buildroot%_sysconfdir/rdma/
 %docdir/ibsrpdm.md
 
 %changelog
+* Wed Jun 27 2018 Alexey Shabalin <shaba@altlinux.ru> 18.1-alt1
+- 18.1
+
 * Tue Mar 13 2018 Alexey Shabalin <shaba@altlinux.ru> 17.1-alt1
 - Initial build
 
