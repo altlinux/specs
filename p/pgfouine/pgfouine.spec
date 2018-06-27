@@ -1,6 +1,6 @@
 Name: pgfouine
 Version: 1.2
-Release: alt2
+Release: alt3
 
 Summary: PgFouine PostgreSQL log analyzer
 
@@ -12,6 +12,8 @@ Source2: pgfouine-tutorial.txt
 Url: http://pgfouine.projects.postgresql.org
 
 Patch1: pgfouine-0.7-include_path.patch
+
+Requires: fonts-ttf-dejavu
 
 %description
 pgFouine is a PostgreSQL log analyzer. It generates text
@@ -48,6 +50,10 @@ done
 install -m 755 pgfouine.php %buildroot/%_bindir/
 install -m 755 pgfouine_vacuum.php %buildroot/%_bindir/
 
+# remove bundled font (see ALT 25364)
+rm %buildroot%_datadir/%name/include/reporting/artichow/font/DejaVuSans.ttf
+ln -srf %buildroot%_datadir/fonts/ttf/dejavu/DejaVuSans.ttf %buildroot%_datadir/%name/include/reporting/artichow/font/DejaVuSans.ttf
+
 %files
 %doc AUTHORS ChangeLog COPYING THANKS README pgfouine-tutorial.txt
 %attr(0755, root, root) %_bindir/pgfouine.php
@@ -55,6 +61,9 @@ install -m 755 pgfouine_vacuum.php %buildroot/%_bindir/
 %_datadir/%name
 
 %changelog
+* Wed Jun 27 2018 Grigory Ustinov <grenka@altlinux.org> 1.2-alt3
+- Removed bundled font (Closes: #25364).
+
 * Fri Aug 27 2010 Vladimir V. Kamarzin <vvk@altlinux.org> 1.2-alt2
 - Real update to 1.2
 
