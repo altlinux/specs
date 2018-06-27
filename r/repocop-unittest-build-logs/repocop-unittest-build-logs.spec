@@ -4,7 +4,7 @@ BuildRequires: perl(Test/Repocop/ExternalTest.pm)
 %define testname build-logs
 
 Name: repocop-unittest-%testname
-Version: 0.07
+Version: 0.08
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,7 +13,7 @@ Summary: %testname unit tests for repocop test platform
 Group: Development/Other
 License: GPL or Artistic
 Url: http://repocop.altlinux.org
-Requires: repocop >= 0.65
+Requires: repocop >= 0.73
 
 Source0: %name-%version.tar
 
@@ -50,6 +50,9 @@ done
 %_datadir/repocop/srccollectors/*
 
 %changelog
+* Wed Jun 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- added verbosity and timeout
+
 * Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - fixed build with perl 5.26
 
