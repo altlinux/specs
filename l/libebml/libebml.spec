@@ -2,7 +2,7 @@
 
 Name: libebml
 Version: 1.3.6
-Release: alt1%ubt
+Release: alt2
 
 Summary: Extensible Binary Meta Language access library
 License: GPL/QPL
@@ -31,6 +31,10 @@ Files needed to build programs using libebml
 %setup
 
 %build
+# try to remove with lcc 1.23
+%ifarch %e2k
+%add_optflags -std=gnu++11
+%endif
 %cmake \
 	-DBUILD_SHARED_LIBS=YES
 
@@ -49,7 +53,10 @@ Files needed to build programs using libebml
 %_pkgconfigdir/*.pc
 
 %changelog
-* Tue May 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.6-alt1%ubt
+* Wed Jun 27 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.6-alt2
+- Rebuild for e2k.
+
+* Tue May 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.6-alt1.S1
 - Updated to upstream version 1.3.6.
 
 * Sun Apr 01 2018 Anton Farygin <rider@altlinux.ru> 1.3.5-alt1
