@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.74
+Version: 0.75
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -47,7 +47,7 @@ repocop-report-html with whe same arguments as repocop-run.
 %package tools
 Group: Development/Other
 Summary: repocop tools for auto repairing repocop packages
-Requires: perl-RPM-Source-Editor > 0.900
+Requires: perl-RPM-Source-Editor > 0.9200
 Requires: %name = %version-%release
 
 %description tools
@@ -65,7 +65,7 @@ This package provides repocop HTML reports.
 %setup
 
 %build
-%perl_vendor_build INSTALLMAN1DIR=%_man1dir
+%perl_vendor_build
 
 %install
 %perl_vendor_install
@@ -134,6 +134,11 @@ done
 %_datadir/repocop/html
 
 %changelog
+* Wed Jun 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.75-alt1
+- repocop-run --swift optimization
+- bugfixes in repocop-report-diff
+- updated documantation
+
 * Fri Oct 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.74-alt1
 - do not use deprecated COPYRIGHT rpm tag
 
