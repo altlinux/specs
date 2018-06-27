@@ -1,6 +1,6 @@
 Name:     dsd
 Version:  1.7.0
-Release:  alt1.20150806%ubt
+Release:  alt1.20150806%ubt.1
 
 Summary:  Digital Speech Decoder
 License:  GPLv2+
@@ -39,5 +39,8 @@ which is a separate package.
 %_bindir/%name
 
 %changelog
+* Wed Jun 27 2018 Anton Midyukov <antohami@altlinux.org> 1.7.0-alt1.20150806%ubt.1
+- Rebuilt for aarch64
+
 * Thu Jan 25 2018 Anton Midyukov <antohami@altlinux.org> 1.7.0-alt1.20150806%ubt
 - Initial build for Sisyphus
