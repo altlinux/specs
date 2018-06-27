@@ -2,7 +2,7 @@
 
 Name: ufraw
 Version: 0.22
-Release: alt3
+Release: alt4
 
 Summary: UFRaw is a graphical utility for opening and converting RAW files from digital photo cameras
 License: GPLv2+
@@ -88,6 +88,9 @@ fi
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Wed Jun 27 2018 Yuri N. Sedunov <aris@altlinux.org> 0.22-alt4
+- rebuilt against libjasper.so.4
+
 * Mon Sep 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.22-alt3
 - applied fc patchset
 - rebuilt against libexiv2.so.26
