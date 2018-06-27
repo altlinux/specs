@@ -1,5 +1,5 @@
 Name:     girar-utils
-Version:  1.5.9
+Version:  1.5.9.1
 Release:  alt1
 
 Summary:  git.alt client utilities
@@ -30,6 +30,9 @@ This package contains client utilities for git.alt.
 %_mandir/man?/*
 
 %changelog
+* Wed Jun 27 2018 Grigory Ustinov <grenka@altlinux.org> 1.5.9.1-alt1
+- Fix little typo.
+
 * Sun Jul 24 2016 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt1
 - [girar-show] Remove preceding # from task number
 - [girar-show] Add -t argument to show days after last build
