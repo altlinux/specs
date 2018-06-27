@@ -1,6 +1,6 @@
 Name:	xye
 Version:	0.12.1
-Release:	alt2
+Release:	alt3
 Summary:	Puzzle game that reproduces and extends Kye
 License:	GPL
 
@@ -19,13 +19,13 @@ BuildRequires: gcc-c++ libSDL-devel libSDL_image-devel libSDL_ttf-devel desktop-
 Requires: fonts-ttf-dejavu
 
 %description
-Xye is a new, free version of the classic game Kye which also extends the game adding more objects and gameplay options
-
-Kye is a win32 game made by Colin Garbutt, released in 1992. It was a Charity Shareware - you had to donate to Save the Children in order to register and get a lot of more levels.
-
-I consider Kye to be one of the best games ever, because it combines strategy, reflexes and even speed.
-
-Yet it was a very simple game to understand the nice thing was the way the objects interacted.
+Xye is a new, free version of the classic game Kye which also extends the game
+adding more objects and gameplay options. Kye is a win32 game made by Colin Garbutt,
+released in 1992. It was a Charity Shareware - you had to donate
+to Save the Children in order to register and get a lot of more levels.
+I consider Kye to be one of the best games ever, because it combines strategy,
+reflexes and even speed. Yet it was a very simple game to understand the nice thing
+was the way the objects interacted.
 
 %prep
 %setup -q
@@ -44,6 +44,11 @@ make docdir=%_defaultdocdir/%name-%version DESTDIR=%buildroot install
 install -pD -m644 %SOURCE1 %buildroot%_pixmapsdir/%name.xpm
 desktop-file-install --dir %buildroot%_desktopdir %SOURCE2
 
+# remove bundled fonts (see ALT 25355)
+rm %buildroot%_datadir/%name/res/DejaVuSans.ttf %buildroot%_datadir/%name/res/DejaVuSans-Bold.ttf
+ln -srf %buildroot%_datadir/fonts/ttf/dejavu/DejaVuSans.ttf %buildroot%_datadir/%name/res/DejaVuSans.ttf
+ln -srf %buildroot%_datadir/fonts/ttf/dejavu/DejaVuSans-Bold.ttf %buildroot%_datadir/%name/res/DejaVuSans-Bold.ttf
+
 %files
 %doc NEWS AUTHORS COPYING INSTALL README 
 %_bindir/%name
@@ -53,6 +58,9 @@ desktop-file-install --dir %buildroot%_desktopdir %SOURCE2
 %_desktopdir/*.desktop
 
 %changelog
+* Wed Jun 27 2018 Grigory Ustinov <grenka@altlinux.org> 0.12.1-alt3
+- Remove bundled fonts (Closes: #25355).
+
 * Fri Oct 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.12.1-alt2
 - Fixed build with new toolchain.
 - Added desktop menu entry.
