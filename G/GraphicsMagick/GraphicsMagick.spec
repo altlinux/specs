@@ -51,7 +51,7 @@
 Name: %Name
 %define lname lib%name
 Version: 1.3.20
-Release: alt2.1.1.1
+Release: alt2.1.1.2
 Summary: An X application for displaying and manipulating images
 Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
 License: %mit
@@ -512,6 +512,9 @@ __MENU__
 %endif
 
 %changelog
+* Mon Jun 25 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.20-alt2.1.1.2
+- NMU: autorebuild with libjpasper.so.4
+
 * Mon Feb 12 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.20-alt2.1.1.1
 - NMU: Disable openmp for e2k arch.
 

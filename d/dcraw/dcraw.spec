@@ -1,6 +1,6 @@
 Name: dcraw
 Version: 9.28.0
-Release: alt1
+Release: alt2
 
 Summary: Command-line decoder for raw digital photos
 License: Freely distributable
@@ -53,6 +53,9 @@ done
 %doc dcraw.html *.png .badpixels
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 9.28.0-alt2
+- rebuilt against libjasper.so.4
+
 * Wed Jun 06 2018 Yuri N. Sedunov <aris@altlinux.org> 9.28.0-alt1
 - 9.28.0
 

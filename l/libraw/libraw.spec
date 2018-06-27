@@ -5,7 +5,7 @@
 
 Name: libraw
 Version: 0.18.12
-Release: alt1
+Release: alt2
 
 Summary: library for reading RAW files obtained from digital photo cameras
 Group: System/Libraries
@@ -96,6 +96,9 @@ This package contains static library.
 %_libdir/libraw_r.a
 
 %changelog
+* Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18.12-alt2
+- rebuilt against libjasper.so.4
+
 * Tue Jun 12 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18.12-alt1
 - 0.18.12 (fixed SA83507)
 

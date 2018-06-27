@@ -40,7 +40,7 @@
 Name: lib%bname%sover
 Epoch: 1
 Version: 3.4.1
-Release: alt3
+Release: alt3.1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -297,6 +297,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %_datadir/%Name/lbpcascades
 
 %changelog
+* Mon Jun 25 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.4.1-alt3.1
+- NMU: autorebuild with libjpasper.so.4
+
 * Thu Jun 14 2018 Anton Farygin <rider@altlinux.ru> 1:3.4.1-alt3
 - rebuilt with ffmpeg-4.0
 
