@@ -1,7 +1,7 @@
 %define rname kscreen
 
 Name: plasma5-%rname
-Version: 5.12.5
+Version: 5.12.6
 Release: alt1%ubt
 %K5init altplace
 
@@ -86,6 +86,9 @@ sed -i 's|^\(add_subdirectory.*tests.*\)|#\1|' CMakeLists.txt
 #%_K5archdata/mkspecs/modules/qt_KScreen.pri
 
 %changelog
+* Wed Jun 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt1%ubt
+- new version
+
 * Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt1%ubt
 - new version
 

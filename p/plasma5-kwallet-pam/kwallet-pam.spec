@@ -1,7 +1,7 @@
 %define rname kwallet-pam
 
 Name: plasma5-%rname
-Version: 5.12.5
+Version: 5.12.6
 Release: alt1%ubt
 %K5init altplace
 
@@ -12,8 +12,6 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 Patch1: alt-defaults.patch
-Patch10: CVE-2018-10380-1.patch
-Patch11: CVE-2018-10380-2.patch
 
 # Automatically added by buildreq on Thu Aug 27 2015 (-bi)
 # optimized out: cmake-modules elfutils libgpg-error libgpg-error-devel libstdc++-devel python-base python3 python3-base ruby ruby-stdlibs
@@ -46,8 +44,6 @@ KDE5 PAM KWallet integration
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch10 -p1
-%patch11 -p1
 
 mkdir kde4
 mv c* C* p* kde4
@@ -111,6 +107,9 @@ sed -i '/^Exec=/s|/pam_kwallet_init|/pam_kwallet5_init|' \
 %_K5start/pam_kwallet5_init.desktop
 
 %changelog
+* Wed Jun 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt1%ubt
+- new version
+
 * Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt1%ubt
 - new version
 - security fixes: CVE-2018-10380
