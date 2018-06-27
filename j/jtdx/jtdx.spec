@@ -1,6 +1,6 @@
 Name: jtdx
-Version: 18.1.0.85
-Release: alt3.S1
+Version: 18.1.0.87
+Release: alt1.S1
 Summary: JTDX means "JT modes for DXing"
 License: GPLv3
 Group: Engineering
@@ -114,6 +114,9 @@ mv %buildroot%_desktopdir/wsjtx.desktop %buildroot%_desktopdir/%name.desktop
 %_docdir/%name
 
 %changelog
+* Wed Jun 27 2018 Anton Midyukov <antohami@altlinux.org> 18.1.0.87-alt1.S1
+- Version 18.1.0.87
+
 * Wed May 16 2018 Anton Midyukov <antohami@altlinux.org> 18.1.0.85-alt3.S1
 - Version 18.1.0.85
 
