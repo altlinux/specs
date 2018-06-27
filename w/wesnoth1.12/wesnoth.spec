@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 ####### wesnoth >= 1.13  ##############
 BuildRequires: boost-devel-headers
 #######################################
@@ -5,7 +6,6 @@ BuildRequires: boost-devel-headers
 BuildRequires: libvorbis-devel
 #######################################
 
-%define _unpackaged_files_terminate_build 0
 %def_with build_using_scons
 %def_with install_using_scons
 %def_without install_using_manual
@@ -38,7 +38,7 @@ BuildRequires: libvorbis-devel
 
 Name: wesnoth%wessuffix
 Version: 1.12.6
-Release: alt4.1
+Release: alt5
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
@@ -541,6 +541,10 @@ sed -i 's/wesnoth-icon/wesnoth%wessuffix/' %buildroot%_desktopdir/%name.desktop
 sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/wesnoth_editor%wessuffix.desktop
 %endif
 
+pushd %buildroot%_bindir
+rm -f cutter%wessuffix exploder%wessuffix schema_generator%wessuffix wesnoth_addon_manager%wessuffix wmlindent%wessuffix wmllint%wessuffix wmlscope%wessuffix
+popd
+
 %if_enabled server
 %pre server
 /usr/sbin/groupadd -r -f %_pseudouser_group ||:
@@ -641,6 +645,9 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Wed Jun 27 2018 Igor Vlasenko <viy@altlinux.ru> 1.12.6-alt5
+- prepared for _unpackaged_files_terminate_build 1
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.6-alt4.1
 - NMU: rebuilt with boost-1.67.0
 
