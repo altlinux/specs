@@ -1,18 +1,14 @@
 Name: libaio
-Version: 0.3.110
-Release: alt1.1
+Version: 0.3.111
+Release: alt1
 
 Summary: Linux-native asynchronous I/O access library
 License: LGPLv2+
 Group: System/Libraries
-URL: http://pkgs.fedoraproject.org/gitweb/?p=libaio.git
-Packager: Victor Forsiuk <force@altlinux.org>
-Source: ftp://ftp.kernel.org/pub/linux/libs/aio/libaio-%version.tar.bz2
-Patch1: libaio-install-to-slash.patch
-Patch2: libaio-mcst-e2k.patch
+Url: https://pagure.io/libaio
+Source: %name-%version.tar
 
-# 0.3.109 supports ARM architecture.
-#ExclusiveArch: %ix86 x86_64
+Patch: %name-%version.patch
 
 %description
 The Linux-native asynchronous I/O facility ("async I/O", or "aio") has a richer
@@ -30,32 +26,42 @@ Requires: libaio = %version-%release
 This package provides header files to include and libraries to link with
 for the Linux-native asynchronous I/O facility ("async I/O", or "aio").
 
+%package devel-static
+Summary: Linux-native asynchronous I/O access static library
+Group: Development/C
+Requires: libaio-devel = %version-%release
+
+%description devel-static
+This package contains static library for
+the Linux-native asynchronous I/O facility ("async I/O", or "aio").
+
 %prep
 %setup
-%patch1 -p1
-%patch2 -p2
+%patch -p1
 
 %build
-#subst 's/ -O./ %optflags/' Makefile
 %make_build
 
 %install
-%make install destdir=%buildroot \
-	libdir=/%_lib usrlibdir=%_libdir includedir=%_includedir
-# Convert absolute symlink into relative.
-v=`readlink %buildroot%_libdir/%name.so`
-ln -snf ../../%_lib/${v##*/} %buildroot%_libdir/%name.so
-%set_verify_elf_method strict
+%makeinstall_std \
+	prefix=%_prefix libdir=/%_lib usrlibdir=%_libdir
 
 %files
 /%_lib/*.so.*
 
 %files devel
 %_libdir/*.so
-%exclude %_libdir/*.a
 %_includedir/*
 
+%files devel-static
+%_libdir/*.a
+
 %changelog
+* Wed Jun 27 2018 Alexey Shabalin <shaba@altlinux.ru> 0.3.111-alt1
+- 0.3.111
+- add package with static library
+- add patches from debian for support more arches
+
 * Sat Jan 28 2017 Michael Shigorin <mike@altlinux.org> 0.3.110-alt1.1
 - E2K: partially added mcst patch.
 
