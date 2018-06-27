@@ -29,7 +29,7 @@
 
 Name: lxc
 Version: 3.0.1
-Release: alt1
+Release: alt2
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -114,9 +114,12 @@ management using cgroup process tracking.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+# redefined typedef unsigned int __u32;
+sed -i 's,-Werror,,' configure.ac
+%endif
 
 %build
-CFLAGS+=-I%_includedir/linux-default/include/
 %autoreconf
 %configure -disable-rpath \
     --disable-cgmanager \
@@ -132,8 +135,7 @@ CFLAGS+=-I%_includedir/linux-default/include/
 %makeinstall_std
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_cachedir/%name
-
-%__install -m 0644 %SOURCE1 %buildroot/%_sysconfdir/sysconfig/lxc-net
+install -pm644 %SOURCE1 %buildroot/%_sysconfdir/sysconfig/lxc-net
 
 %files
 %defattr(-,root,root)
@@ -182,6 +184,10 @@ mkdir -p %buildroot%_cachedir/%name
 %_pam_modules_dir/*
 
 %changelog
+* Tue Jun 26 2018 Michael Shigorin <mike@altlinux.org> 3.0.1-alt2
+- Worked around FTBFS on e2k
+- Minor spec cleanup
+
 * Sun Jun 24 2018 Denis Pynkin <dans@altlinux.org> 3.0.1-alt1
 - Version updated 
 
