@@ -1,5 +1,5 @@
 Name: repocop-unittest-altlinux-policy
-Version: 0.37
+Version: 0.38
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -12,11 +12,13 @@ License: GPLv2+
 Source: %name-%version.tar
 Provides: repocop-unittest-altlinux-policy-rpm-macros-packaging = 0.04
 Obsoletes: repocop-unittest-altlinux-policy-rpm-macros-packaging
+Obsoletes: repocop-unittest-unknown-summary < 0.02
 
 # for pixmap-in-deprecated-location
 # Requires: pcregrep
 Requires: repocop-collector-specfile
-Requires: repocop > 0.55
+Requires: repocop-collector-description > 0.02
+Requires: repocop > 0.73
 
 %description
 The test warns packages that contain rpm macros, but are not named
@@ -42,6 +44,10 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Wed Jun 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
+- bugfix in altlinux-policy-policykit-bad-location.posttest
+- added altlinux-policy-unknown-summary.posttest
+
 * Sun Oct 08 2017 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
 - added altlinux-policy-policykit-bad-location.posttest
 
