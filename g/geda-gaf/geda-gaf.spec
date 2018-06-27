@@ -5,7 +5,7 @@
 %define major 1.9
 
 Name: geda-gaf
-Version: %major.1
+Version: %major.2
 Release: alt1
 Epoch: 2
 
@@ -13,16 +13,16 @@ Summary: Design Automation toolkit for electronic design
 
 License: GPLv2
 Group: Video
-Url: http://www.geda.seul.org
+Url: http://www.geda-project.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://ftp.geda-project.org/geda-gaf/unstable/v%major/%version/geda-gaf-%version.tar
 
-#Patch: %name-%version.patch
+Patch: %name.patch
 
 # Automatically added by buildreq on Tue Mar 30 2010
-BuildRequires: desktop-file-utils flex git-core glibc-devel groff-base guile18-devel libgtk+2-devel
+BuildRequires: desktop-file-utils flex git-core glibc-devel groff-base guile22-devel libgtk+2-devel makeinfo
 
 %description
 The GPL Electronic Design Automation (gEDA) project has produced and
@@ -127,6 +127,8 @@ Several utilities for the gEDA project.
 
 %prep
 %setup
+%patch -p2
+%__subst "s|guile-2.0|guile-2.2|" m4/geda-guile.m4
 
 %build
 %autoreconf
@@ -139,7 +141,7 @@ find -name *.c | xargs %__subst "s|#include <glib/g[mt].*||g"
 
 %install
 %makeinstall_std
-%find_lang libgeda44
+%find_lang libgeda45
 %find_lang geda-gaf
 %find_lang geda-gschem
 %find_lang geda-gattrib
@@ -161,7 +163,7 @@ rm -f %buildroot/%_datadir/mime/version
 %files
 %doc ABOUT-NLS AUTHORS ChangeLog COPYING README NEWS
 
-%files -n libgeda -f libgeda44.lang
+%files -n libgeda -f libgeda45.lang
 %doc libgeda/{HACKING,ChangeLog*,BUGS,TODO}
 %dir %_datadir/gEDA/
 %dir %_datadir/gEDA/scheme
@@ -213,7 +215,7 @@ rm -f %buildroot/%_datadir/mime/version
 %_bindir/gnetlist
 #%_bindir/mk_verilog_syms
 #%_bindir/sch2eaglepos.sh
-%_bindir/sw2asc
+#_bindir/sw2asc
 %_datadir/gEDA/scheme/gnet*.scm
 %_datadir/gEDA/scheme/auto-place-netname.scm
 %_datadir/gEDA/scheme/gnetlist/
@@ -226,6 +228,8 @@ rm -f %buildroot/%_datadir/mime/version
 #%_bindir/gschemdoc
 %_datadir/gEDA/gschem-colormap-bw
 %_datadir/gEDA/icons/
+%_datadir/gEDA/scheme/auto-refdes.scm
+%_datadir/gEDA/scheme/spice-common.scm
 %_datadir/gEDA/scheme/default-attrib-positions.scm
 %_datadir/gEDA/scheme/geda-deprecated-config.scm
 %_datadir/gEDA/scheme/partslist-common.scm
@@ -269,19 +273,18 @@ rm -f %buildroot/%_datadir/mime/version
 %_bindir/garchive
 %_bindir/schdiff
 %_bindir/grenum
-%_bindir/gmk_sym
-%_bindir/smash_megafile
-%_bindir/convert_sym
-%_bindir/sarlacc_schem
-%_bindir/sarlacc_sym
-#%_bindir/gschupdate
+#_bindir/gmk_sym
+#_bindir/smash_megafile
+#_bindir/convert_sym
+#_bindir/sarlacc_schem
+#_bindir/sarlacc_sym
 %_bindir/gsymfix
 %_bindir/pcb_backannotate
 %_bindir/gschlas
-%_bindir/olib
+#_bindir/olib
 %_bindir/refdes_renum
 %_bindir/gsch2pcb
-%_bindir/pads_backannotate
+#_bindir/pads_backannotate
 %_bindir/tragesym
 #%_bindir/gsymupdate
 %_bindir/gxyrs
@@ -294,23 +297,26 @@ rm -f %buildroot/%_datadir/mime/version
 %_man1dir/grenum.1.*
 %_man1dir/gsymfix.1.*
 %_man1dir/garchive.1.*
-%_man1dir/convert_sym.1.*
-%_man1dir/gmk_sym.1.*
+#_man1dir/convert_sym.1.*
+#_man1dir/gmk_sym.1.*
 %_man1dir/gsch2pcb.1.*
 %_man1dir/gschlas.1.*
 %_man1dir/gxyrs.1.*
-%_man1dir/olib.1.*
-%_man1dir/pads_backannotate.1.*
+#_man1dir/olib.1.*
+#_man1dir/pads_backannotate.1.*
 %_man1dir/pcb_backannotate.1.*
 %_man1dir/refdes_renum.1.*
-%_man1dir/sarlacc_schem.1.*
-%_man1dir/sarlacc_sym.1.*
+#_man1dir/sarlacc_schem.1.*
+#_man1dir/sarlacc_sym.1.*
 %_man1dir/schdiff.1.*
-%_man1dir/smash_megafile.1.*
-%_man1dir/sw2asc.1.*
+#_man1dir/smash_megafile.1.*
+#_man1dir/sw2asc.1.*
 %_man1dir/tragesym.1.*
 
 %changelog
+* Mon Jun 25 2018 Vitaly Lipatov <lav@altlinux.ru> 2:1.9.2-alt1
+- new version (1.9.2) with rpmgs script
+
 * Thu Dec 11 2014 Vitaly Lipatov <lav@altlinux.ru> 2:1.9.1-alt1
 - new version 1.9.1 (with rpmrb script) (ALT bug #30536)
 
