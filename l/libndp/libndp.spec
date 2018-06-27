@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libndp
-Version: 1.6
+Version: 1.7
 Release: alt1
 
 Summary: Library for Neighbor Discovery Protocol
@@ -63,6 +63,9 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Jun 27 2018 Mikhail Efremov <sem@altlinux.org> 1.7-alt1
+- Updated to 1.7.
+
 * Mon May 23 2016 Mikhail Efremov <sem@altlinux.org> 1.6-alt1
 - Updated to 1.6.
 
