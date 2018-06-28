@@ -1,6 +1,6 @@
 Name: shadow
 Version: 4.5
-Release: alt2
+Release: alt3
 Serial: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -40,8 +40,8 @@ BuildPreReq: libselinux-devel libsemanage-devel
 
 %{?_with_audit:BuildRequires: libaudit-devel}
 
-# Automatically added by buildreq on Mon Oct 28 2002
 BuildRequires: libpam-devel libtcb-devel pam_userpass-devel
+BuildRequires: libcrypt-devel >= 4.0.1-alt1
 
 %description
 This package includes the tools necessary for manipulating local user and
@@ -202,7 +202,7 @@ This virtual package unifies all shadow suite subpackages.
 
 %build
 %autoreconf
-%ifnarch e2k
+%ifnarch %e2k
 %add_optflags -Werror -Wno-error=address -Wno-error=cpp
 %endif
 %add_optflags -DEXTRA_CHECK_HOME_DIR
@@ -403,6 +403,12 @@ fi
 %exclude %_man8dir/nologin.8.*
 
 %changelog
+* Thu Jun 28 2018 Mikhail Efremov <sem@altlinux.org> 1:4.5-alt3
+- Fix default hashing method.
+- Request automatic entropy for salt.
+- vipw: Change -u option to imply -s (closes: #35097).
+- Use %%e2k macro.
+
 * Tue Feb 27 2018 Mikhail Efremov <sem@altlinux.org> 1:4.5-alt2
 - Fixed build with gcc-7:
   + Remove redundant const qualifier.
