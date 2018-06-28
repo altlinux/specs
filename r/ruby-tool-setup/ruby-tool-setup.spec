@@ -2,7 +2,7 @@
 
 Name: ruby-tool-%pkgname
 Version: 3.4.1
-Release: alt7
+Release: alt8
 Summary: Generic installer for ruby scripts and libraries
 License: LGPLv2.1
 Group: Development/Ruby
@@ -56,6 +56,9 @@ Documentation files for %name
 %doc doc.* sample
 
 %changelog
+* Thu Jun 28 2018 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt8
+- Do not try to save gemspec with errors.
+
 * Tue Jun 26 2018 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt7
 - Install adapted *.gemspec if it exists.
 
