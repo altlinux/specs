@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Event-RPC
 Name: perl-%dist
-Version: 1.09
+Version: 1.10
 Release: alt1
 
 Summary: Event based transparent Client/Server RPC framework
@@ -39,6 +39,9 @@ an extensible API. Currently Event and Glib are implemented.
 %perl_vendor_privlib/Event
 
 %changelog
+* Thu Jun 28 2018 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
+- automated CPAN update
+
 * Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
 - automated CPAN update
 
