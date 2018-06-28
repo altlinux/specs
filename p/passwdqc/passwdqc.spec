@@ -1,6 +1,6 @@
 Name: passwdqc
 Version: 1.3.1.1
-Release: alt1
+Release: alt2
 
 Summary: A passphrase strength checking and policy enforcement toolset
 License: LGPLv2+
@@ -107,7 +107,7 @@ rebuilding.
 %setup -n %name-%version-%release
 
 %build
-%add_optflags -W -Werror -DENABLE_NLS=1
+%add_optflags -W -Werror -D_DEFAULT_SOURCE=1 -DENABLE_NLS=1
 %make_build \
 	CFLAGS_lib='%optflags %optflags_shared -DLINUX_PAM' \
 	CFLAGS_bin='%optflags' \
@@ -149,6 +149,9 @@ install -pD -m755 passwdqc.control \
 %_man1dir/*
 
 %changelog
+* Thu Jun 28 2018 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.1-alt2
+- Fixed build with modern glibc.
+
 * Mon Aug 14 2017 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.1-alt1
 - pam_passwdqc:
   + implemented i18n support (by Oleg Solovyov and me);
