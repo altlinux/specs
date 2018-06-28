@@ -6,7 +6,7 @@
 Name: python-module-%mname
 Epoch: 1
 Version: 39.2.0
-Release: alt2%ubt
+Release: alt3%ubt
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -50,6 +50,12 @@ BuildRequires: python3-module-pytest-flake8
 
 BuildArch: noarch
 
+%package -n python-module-pkg_resources
+Summary: Package Discovery and Resource Access for Python2 libraries
+Group: Development/Python
+# Not separated yet:
+Conflicts: python-module-%mname < 39.2.0-alt3
+
 %package docs
 Summary: Documentation for Setuptools
 Group: Development/Documentation
@@ -62,6 +68,12 @@ Provides: python3-module-distribute = %EVR
 # skip requires of self
 %filter_from_requires /python3\(\.[[:digit:]]\)\?(pkg_resources\.extern\..*)/d
 %filter_from_requires /python3\(\.[[:digit:]]\)\?(setuptools\.extern\..*)/d
+
+%package -n python3-module-pkg_resources
+Summary: Package Discovery and Resource Access for Python3 libraries
+Group: Development/Python3
+# Not separated yet:
+Conflicts: python3-module-%mname < 39.2.0-alt3
 
 %description
 Setuptools is a collection of enhancements to the Python distutils
@@ -78,6 +90,27 @@ This package contains documentation for Distribute.
 Setuptools is a collection of enhancements to the Python3 distutils
 that allow you to more easily build and distribute Python3 packages,
 especially ones that have dependencies on other packages.
+
+%global pkg_resources_desc The "pkg_resources" module distributed with "setuptools" provides an API\
+for Python libraries to access their resource files, and for extensible\
+applications and frameworks to automatically discover plugins.  It also\
+provides runtime support for using C extensions that are inside zipfile-format\
+eggs, support for merging packages that have separately-distributed modules or\
+subpackages, and APIs for managing Python's current "working set" of active\
+packages.\
+\
+Any Python code can make use of pkg_resources at runtime (unlike setuptools,\
+whose purpose is preparing packages).
+
+%description -n python-module-pkg_resources
+%pkg_resources_desc
+
+This package contains pkg_resources for Python2.
+
+%description -n python3-module-pkg_resources
+%pkg_resources_desc
+
+This package contains pkg_resources for Python3.
 
 %prep
 %setup
@@ -130,10 +163,13 @@ popd
 %doc LICENSE *.rst
 %_bindir/easy_install
 %_bindir/easy_install-%_python_version
-%python_sitelibdir/pkg_resources
 %python_sitelibdir/setuptools
 %python_sitelibdir/easy_install.*
 %python_sitelibdir/setuptools-%version-*.egg-info
+
+%files -n python-module-pkg_resources
+%doc LICENSE
+%python_sitelibdir/pkg_resources
 
 %files docs
 %doc docs/*.txt
@@ -143,12 +179,18 @@ popd
 %_bindir/easy_install3
 %_bindir/easy_install-%_python3_version
 %python3_sitelibdir/__pycache__/*
-%python3_sitelibdir/pkg_resources
 %python3_sitelibdir/setuptools
 %python3_sitelibdir/easy_install.*
 %python3_sitelibdir/setuptools-%version-*.egg-info
 
+%files -n python3-module-pkg_resources
+%doc LICENSE
+%python3_sitelibdir/pkg_resources
+
 %changelog
+* Thu Jun 28 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:39.2.0-alt3%ubt
+- pkg_resources packaged separately (needed at runtime; unlike setuptools)
+
 * Thu Jun 28 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:39.2.0-alt2%ubt
 - (.spec) cleanup (for maintainer's convenience)
 
