@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.3.1 
-Release: alt2.2
+Release: alt3
  
 Summary: Collection of text algorithms
 License: MIT/Ruby
@@ -13,7 +13,6 @@ Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
  
 Source:  %pkgname-%version.tar
-Patch1: alt-gemspec.patch
  
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
@@ -33,7 +32,6 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-%patch1 -p1
 %update_setup_rb
  
 %build
@@ -61,6 +59,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Thu Jun 28 2018 Denis Medvedev <nbr@altlinux.org> 1.3.1-alt3
+- fix build: alt-gemspec patch no longer needed
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt2.2
 - Rebuild with Ruby 2.5.1
 
