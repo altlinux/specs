@@ -2,7 +2,7 @@
 
 Name: libva-driver-vdpau
 Version: 0.7.4
-Release: alt3.1
+Release: alt4
 
 Summary: VDPAU-based backend for VA API
 License: GPLv2
@@ -33,6 +33,10 @@ A VDPAU-based backend for VA-API.
 %_libdir/dri/*.so
 
 %changelog
+* Fri Oct 13 2017 L.A. Kostis <lakostis@altlinux.ru> 0.7.4-alt4
+- Rebuild w/ libva 2.x.
+- vdpau_decode: remove deprecated VAProfileH264Baseline profile.
+
 * Thu Dec 08 2016 L.A. Kostis <lakostis@altlinux.ru> 0.7.4-alt3.1
 - Merge w/ sbolshakov@.
 - Compile fixes w/ recent libva.
