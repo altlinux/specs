@@ -4,20 +4,35 @@
 
 %def_disable 	appdata
 %def_enable 	svg
+%ifnarch %e2k
+%def_enable 	networkmanager
+%else
+%def_disable 	networkmanager
+%endif
 
 # pligins
 %def_enable 	archive
 %def_disable	bsfilter
+%ifnarch %e2k
 %def_disable 	dillo
 %def_enable 	fancy
+%else
+%def_enable 	dillo
+%def_disable 	fancy
+%endif
 %def_enable 	gdata
+%ifnarch %e2k
+%def_enable 	python
+%else
+%def_disable 	python
+%endif
 %def_enable 	tnef
 
 %define _unpackaged_files_terminate_build 1
 
 Name:   	claws-mail
 Version:	3.16.0
-Release: 	alt2
+Release: 	alt3
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -35,13 +50,15 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq:	autoconf-common gettext-tools
 
-BuildRequires: NetworkManager-devel flex libSM-devel libcompface-devel libdbus-glib-devel libenchant-devel libetpan-devel libgnutls-devel libgpgme-devel libldap-devel libpilot-link-devel libstartup-notification-devel libgcrypt-devel zlib-devel
+BuildRequires: flex libSM-devel libcompface-devel libdbus-glib-devel libenchant-devel libetpan-devel libgnutls-devel libgpgme-devel libldap-devel libpilot-link-devel libstartup-notification-devel libgcrypt-devel zlib-devel
+BuildRequires: libnettle-devel
 %if_enabled gtk3
 BuildRequires: libgtk+3-devel
 %else
 BuildRequires: libgtk+2-devel
 %endif
 %{?_enable_svg:BuildRequires: librsvg-devel}
+%{?_enable_networkmanager:BuildRequires: libnm-devel}
 
 # For plugin-archive:
 %if_enabled archive
@@ -76,7 +93,7 @@ BuildRequires: libpoppler-glib-devel
 BuildRequires: perl-devel sed
 
 # For pligin-python
-BuildRequires: python-devel python-module-pygtk-devel
+%{?_enable_python:BuildRequires: python-devel python-module-pygtk-devel}
 
 # For plugin-notification
 %def_disable indicator
@@ -179,7 +196,9 @@ Requires:	%name-plugin-perl = %version-%release
 Requires:	%name-plugin-pgpcore = %version-%release
 Requires:	%name-plugin-pgpinline = %version-%release
 Requires:	%name-plugin-pgpmime = %version-%release
+%if_enabled python
 Requires:	%name-plugin-python = %version-%release
+%endif
 Requires:	%name-plugin-rssyl = %version-%release
 Requires:	%name-plugin-smime = %version-%release
 Requires:	%name-plugin-spamassassin = %version-%release
@@ -590,6 +609,7 @@ export LDFLAGS=-pie
 		%{subst_enable appdata} \
 		%{subst_enable gtk3} \
 		%{subst_enable svg} \
+		%{subst_enable networkmanager} \
 		%if_disabled archive
 		--disable-archive-plugin \
 		%endif
@@ -604,6 +624,9 @@ export LDFLAGS=-pie
 		%endif
 		%if_disabled gdata
 		--disable-gdata-plugin \
+		%endif
+		%if_disabled python
+		--disable-python-plugin \
 		%endif
 		%if_disabled tnef
 		--disable-tnef_parse-plugin \
@@ -813,10 +836,12 @@ install -p -m644 %name.png %buildroot%_pixmapsdir/
 %_datadir/appdata/claws-mail-perl.metainfo.xml
 %endif
 
+%if_enabled python
 %files plugin-python
 %_claws_plugins_path/python.so
 %if_enabled appdata
 %_datadir/appdata/claws-mail-python.metainfo.xml
+%endif
 %endif
 
 %files plugin-rssyl
@@ -856,6 +881,18 @@ install -p -m644 %name.png %buildroot%_pixmapsdir/
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Thu Jun 28 2018 Mikhail Efremov <sem@altlinux.org> 3.16.0-alt3
+- Add libnettle-devel to BR.
+- Require libnm-devel instead of NetworkManager-devel.
+- Patches from upstream:
+  + Fix bug 3895: Port from libnm-util/libnm-glib to libnm.
+  + Fix a buffer overflow in password encryption, and allow arbitrary
+    password length.
+  + require nettle, following removal of libcrypt from glibc.
+- Add e2k build support.
+- Add knob to disable python plugin.
+- Add NetworkManager support knob.
+
 * Fri Feb 02 2018 Mikhail Efremov <sem@altlinux.org> 3.16.0-alt2
 - Drop libnsl check.
 
