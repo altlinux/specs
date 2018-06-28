@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.3.1 
-Release: alt3
+Release: alt3.1
  
 Summary: Collection of text algorithms
 License: MIT/Ruby
@@ -59,6 +59,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Thu Jun 28 2018 Denis Medvedev <nbr@altlinux.org> 1.3.1-alt3.1
+- removed patch from package
+
 * Thu Jun 28 2018 Denis Medvedev <nbr@altlinux.org> 1.3.1-alt3
 - fix build: alt-gemspec patch no longer needed
 
