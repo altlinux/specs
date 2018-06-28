@@ -6,7 +6,7 @@
 Name: python-module-%mname
 Epoch: 1
 Version: 39.2.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -14,10 +14,14 @@ Group: Development/Python
 # Source-git: https://github.com/pypa/setuptools.git
 Url: http://pypi.python.org/pypi/setuptools
 
+Provides: python-module-distribute = %EVR
+Obsoletes: python-module-distribute <= 0.6.35-alt1
+
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
 
@@ -45,32 +49,30 @@ BuildRequires: python3-module-pytest-flake8
 %endif
 
 BuildArch: noarch
-Provides: python-module-distribute = %EVR
-Obsoletes: python-module-distribute <= 0.6.35-alt1
-
-%description
-Setuptools is a collection of enhancements to the Python distutils
-that allow you to more easily build and distribute Python packages,
-especially ones that have dependencies on other packages.
 
 %package docs
 Summary: Documentation for Setuptools
 Group: Development/Documentation
 Provides: python-module-distribute-docs = %EVR
 
-%description docs
-Distribute is intended to replace Setuptools as the standard method for
-working with Python module distributions.
-
-This package contains documentation for Distribute.
-
 %package -n python3-module-%mname
 Summary: Python Distutils Enhancements
 Group: Development/Python3
 Provides: python3-module-distribute = %EVR
 # skip requires of self
-%filter_from_requires /python3\(\.[[:digit:]]\)\?(pkg_resources\..*)/d
+%filter_from_requires /python3\(\.[[:digit:]]\)\?(pkg_resources\.extern\..*)/d
 %filter_from_requires /python3\(\.[[:digit:]]\)\?(setuptools\.extern\..*)/d
+
+%description
+Setuptools is a collection of enhancements to the Python distutils
+that allow you to more easily build and distribute Python packages,
+especially ones that have dependencies on other packages.
+
+%description docs
+Distribute is intended to replace Setuptools as the standard method for
+working with Python module distributions.
+
+This package contains documentation for Distribute.
 
 %description -n python3-module-%mname
 Setuptools is a collection of enhancements to the Python3 distutils
@@ -87,7 +89,9 @@ rm -f setuptools/*.exe
 # do not generate version like release.postdate, we need release one
 sed -i '/^tag_build =.*/d;/^tag_date = 1/d' setup.cfg
 
-cp -a . ../python3
+# cleanup after other builds:
+rm -rf ../python3
+cp -a . -T ../python3
 
 %build
 python bootstrap.py
@@ -105,9 +109,9 @@ pushd ../python3
 %python3_install
 popd
 
-rm -f %buildroot%_bindir/easy_install
-ln -s easy_install-%_python_version %buildroot%_bindir/easy_install
-ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
+rm %buildroot%_bindir/easy_install
+ln -s easy_install-%_python_version -T %buildroot%_bindir/easy_install
+ln -s easy_install-%_python3_version -T %buildroot%_bindir/easy_install3
 
 %check
 export LC_ALL=C.UTF-8
@@ -126,17 +130,28 @@ popd
 %doc LICENSE *.rst
 %_bindir/easy_install
 %_bindir/easy_install-%_python_version
-%python_sitelibdir/*
+%python_sitelibdir/pkg_resources
+%python_sitelibdir/setuptools
+%python_sitelibdir/easy_install.*
+%python_sitelibdir/setuptools-%version-*.egg-info
 
 %files docs
 %doc docs/*.txt
 
 %files -n python3-module-%mname
+%doc LICENSE *.rst
 %_bindir/easy_install3
 %_bindir/easy_install-%_python3_version
-%python3_sitelibdir/*
+%python3_sitelibdir/__pycache__/*
+%python3_sitelibdir/pkg_resources
+%python3_sitelibdir/setuptools
+%python3_sitelibdir/easy_install.*
+%python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
+* Thu Jun 28 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:39.2.0-alt2%ubt
+- (.spec) cleanup (for maintainer's convenience)
+
 * Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 1:39.2.0-alt1%ubt
 - 39.0.1 -> 39.2.0
 
