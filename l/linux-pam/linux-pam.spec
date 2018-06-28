@@ -1,5 +1,5 @@
 Name: linux-pam
-Version: 1.3.1
+Version: 1.3.1.0.5.955b
 Release: alt1
 
 Summary: Pluggable Authentication Modules
@@ -349,6 +349,10 @@ make check
 %docdir/Linux-PAM*
 
 %changelog
+* Fri Jun 22 2018 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.0.5.955b-alt1
+- v1.3.1 -> v1.3.1-5-g955b3e2 (fixes grammar of messages printed via pam_prompt).
+- Updated Russian translation.
+
 * Fri May 18 2018 Dmitry V. Levin <ldv@altlinux.org> 1.3.1-alt1
 - v1.3.0-23-g94f529d4 -> v1.3.1.
 

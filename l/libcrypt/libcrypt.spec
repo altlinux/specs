@@ -1,0 +1,87 @@
+Name: libcrypt
+Version: 4.0.1
+Release: alt1
+
+Summary: Modern password hashing library
+License: LGPLv2.1+
+Group: System/Libraries
+Url: https://github.com/besser82/libxcrypt
+Source: %name-%version-%release.tar
+
+Provides: glibc-crypt_blowfish = 1.3
+Provides: libcrypt1 = 6:2.27-alt6
+Obsoletes: libcrypt1 < 6:2.27-alt6
+
+%description
+libcrypt is a modern library for one-way hashing of passwords.
+It supports DES, MD5, SHA-2-256, SHA-2-512, and bcrypt-based
+password hashes, and provides the traditional Unix 'crypt' and
+'crypt_r' interfaces, as well as a set of extended interfaces
+pioneered by Openwall Linux, 'crypt_rn', 'crypt_ra',
+'crypt_gensalt', 'crypt_gensalt_rn', and 'crypt_gensalt_ra'.
+
+%package devel
+Summary: Development files for libcrypt password hashing library
+License: LGPLv2.1+
+Group: Development/C
+Requires: %name = %EVR
+Conflicts: glibc-devel < 6:2.27-alt6
+Conflicts: man-pages < 4.16
+
+%description -n libcrypt-devel
+This package contains libraries and header files for developing
+applications that use libcrypt.
+
+%prep
+%setup -n %name-%version-%release
+
+%build
+%autoreconf
+%configure \
+	--disable-static \
+	--enable-obsolete-api=alt \
+	--enable-weak-hashes=glibc \
+	#
+%make_build
+
+%install
+%makeinstall_std
+%define docdir %_docdir/%name
+install -Dpm0644 -t %buildroot%docdir AUTHORS LICENSING README NEWS
+
+# Relocate shared library from %_libdir/ to /%_lib/.
+mkdir -p %buildroot/%_lib
+for f in %buildroot%_libdir/*.so; do
+	t=$(readlink -v "$f")
+	ln -rsnf %buildroot/%_lib/"$t" "$f"
+done
+mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
+
+# Install additional manpage symlinks.
+for n in crypt crypt_r crypt_ra; do
+	ln -s crypt_rn.3 %buildroot%_man3dir/$n.3
+done
+for n in crypt_gensalt_rn crypt_gensalt_ra; do
+	ln -s crypt_gensalt.3 %buildroot%_man3dir/$n.3
+done
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+
+%check
+%make_build -k check VERBOSE=1
+
+%files
+%docdir/
+/%_lib/libcrypt.so.1*
+%_man5dir/*.5*
+
+%files devel
+%_libdir/libcrypt.so
+%_includedir/crypt.h
+%_pkgconfigdir/libcrypt.pc
+%_man3dir/*.3*
+
+%changelog
+* Wed Jun 27 2018 Dmitry V. Levin <ldv@altlinux.org> 4.0.1-alt1
+- Initial build for Sisyphus.

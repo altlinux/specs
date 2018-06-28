@@ -1,5 +1,5 @@
 Name: tcb
-Version: 1.1
+Version: 1.1.0.1
 Release: alt1
 
 Summary: Libraries and tools implementing the %name password shadowing scheme
@@ -17,8 +17,6 @@ Patch2: tcb-0.9.9-alt-tcb_convert-try_auth.patch
 BuildRequires(pre): libpam-devel
 # due to change in format of PAM modules requirements.
 BuildRequires: rpm-build >= 0:4.0.4-alt55
-# due to crypt_gensalt.
-#BuildPreReq: libcrypt.so.1(GLIBC_2.2.2)
 
 %description
 This package consists of three components: pam_tcb, libnss_tcb, and
@@ -58,7 +56,6 @@ Summary: %name PAM module
 License: GPL or BSD
 Group: System/Base
 PreReq: nss_%name = %version-%release, libpam%_pam_name_suffix, control
-Requires: glibc-crypt_blowfish >= 1.2
 Provides: pam_%name = %version-%release
 Obsoletes: pam_%name
 
@@ -104,7 +101,8 @@ if [ "%_libexecdir" != '/usr/libexec' ]; then
 fi
 
 %build
-CFLAGS='%optflags -W -DENABLE_SETFSUGID -DENABLE_NLS -DNLS_PACKAGE=\"Linux-PAM\"' make
+CFLAGS='%optflags '"$(getconf LFS_CFLAGS)"' -W -DENABLE_SETFSUGID -DENABLE_NLS -DNLS_PACKAGE=\"Linux-PAM\"' \
+	make
 
 %install
 %make_install install-non-root install-pam_unix install-pam_pwdb \
@@ -168,6 +166,16 @@ fi
 %_man8dir/tcb_*
 
 %changelog
+* Tue Jun 26 2018 Dmitry V. Levin <ldv@altlinux.org> 1.1.0.1-alt1
+- pam_tcb:
+  + dropped obsolete nis/nis+ support (closes: #34919);
+  + changed to use default prefix implemented by libcrypt;
+  + changed to use pam_get_authtok(3);
+  + dropped not_set_pass option;
+  + added authtok_type= option;
+  + synced password expiration messages with Linux-PAM.
+- Enabled LFS support.
+
 * Fri Aug 12 2011 Dmitry V. Levin <ldv@altlinux.org> 1.1-alt1
 - Updated to 1.1:
   * Sun Jul 17 2011 Solar Designer <solar@owl> 1.1-owl1

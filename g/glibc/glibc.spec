@@ -2,7 +2,7 @@
 
 Name: glibc
 Version: 2.27
-Release: alt5
+Release: alt6
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -59,7 +59,6 @@ PreReq: %name-gconv-modules = %EVR
 PreReq: iconv = %EVR
 PreReq: %name-timezones = %EVR
 PreReq: %name-utils = %EVR
-# libcrypt1 is intentionally omitted
 
 # Required to hardlink identical locale files.
 BuildPreReq: hardlink
@@ -83,7 +82,7 @@ BuildPreReq: makeinfo
 %define _localstatedir /var
 %define _gconvdir %_libdir/gconv
 %filter_from_provides /GLIBC_PRIVATE/d
-%filter_from_requires /GLIBC_PRIVATE/d;/\/libcrypt\.so\.1/d
+%filter_from_requires /GLIBC_PRIVATE/d
 
 %package preinstall
 Summary: The GNU libc preinstall utilities
@@ -120,12 +119,6 @@ Requires: libgcc_s.so.1%lib_suffix
 Summary: The GNU libc Name Service Switch subsystem
 Group: System/Libraries
 PreReq: %name-pthread = %EVR
-
-%package -n libcrypt1
-Summary: Password hashing library
-Group: System/Libraries
-PreReq: %name-core = %EVR
-Provides: glibc-crypt_blowfish = 1.2
 
 %package -n libnsl1
 Summary: Legacy NIS support library
@@ -182,7 +175,10 @@ Conflicts: rpcbind < 0.2.1-alt0.4
 %package devel
 Summary: Include and object files required for C development
 Group: Development/C
-Requires: %name = %EVR, glibc-kernheaders >= %enablekernel, kernel-headers-common >= 1.1.4-alt1
+Requires: %name = %EVR
+Requires: glibc-kernheaders >= %enablekernel
+Requires: kernel-headers-common >= 1.1.4-alt1
+Requires: libcrypt-devel
 #Requires: %name-doc = %EVR
 %ifarch %ix86 x86_64 %arm
 Provides: %_includedir/gnu/stubs-32.h
@@ -279,9 +275,6 @@ NSS is a Name Service Switch subsystem.  The basic idea is to put the
 implementation of the different services offered to access the databases
 in separate modules.
 
-%description -n libcrypt1
-This package provides crypt* functions which implement password hashing.
-
 %description -n libnsl1
 This package provides the legacy version of libnsl library, for
 accessing NIS services.
@@ -351,6 +344,7 @@ mkdir %buildtarget
 pushd %buildtarget
 
 %configure \
+	--disable-crypt \
 	--disable-profile \
 	--enable-bind-now \
 	%{?_enable_multiarch:--enable-multi-arch} \
@@ -460,7 +454,6 @@ rm %buildroot{%_infodir/dir,%_datadir/locale/locale.alias}
 rm -rf %buildroot%docdir
 mkdir -p %buildroot%docdir
 cp -pL LICENSES README* alt/README* NEWS \
-	crypt/README.ufc-crypt ChangeLog \
 	%buildroot%docdir/
 find %buildroot%docdir/ -type f -size +8k -print0 |
 	xargs -r0 xz -9
@@ -640,7 +633,6 @@ fi
 /%_lib/lib*.so*
 %exclude /%_lib/lib*thread*.so*
 %exclude /%_lib/libanl*.so*
-%exclude /%_lib/libcrypt*.so*
 %exclude /%_lib/librt*.so*
 /%_lib/ld*.so.*
 %attr(755,root,root)/%_lib/ld*.so
@@ -668,10 +660,6 @@ fi
 %files nss
 /%_lib/libnss_*.so*
 %exclude /%_lib/libnss_f*
-
-%files -n libcrypt1
-/%_lib/libcrypt-*.so
-/%_lib/libcrypt.so.1
 
 %files -n libnsl1
 %_libdir/libnsl-*.so
@@ -763,6 +751,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Mon Jun 25 2018 Dmitry V. Levin <ldv@altlinux.org> 6:2.27-alt6
+- The password hashing library, libcrypt, is now provided
+  by a separate package.
+
 * Thu Jun 21 2018 Dmitry V. Levin <ldv@altlinux.org> 6:2.27-alt5
 - Updated to glibc-2.27-64-gffc5623 from 2.27 branch.
 - Moved libcrypt from glibc-core to a separate subpackage.
