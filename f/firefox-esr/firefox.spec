@@ -15,8 +15,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        60.0.2
-Release:        alt2
+Version:        60.1.0
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -143,7 +143,7 @@ tar -xf %SOURCE2
 %patch16 -p2
 %patch17 -p2
 %patch18 -p2
-%patch19 -p1 -b .aarch64-skia
+%patch19 -p2 -b .aarch64-skia
 %patch20 -p1 -b .bug1375074-save-restore-x28
 
 %patch200 -p1
@@ -333,6 +333,26 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Tue Jun 26 2018 Andrey Cherepanov <cas@altlinux.org> 60.1.0-alt1
+- New ESR version (60.1.0).
+- Fixed:
+  + CVE-2018-12359 Buffer overflow using computed size of canvas element
+  + CVE-2018-12360 Use-after-free when using focus()
+  + CVE-2018-12361 Integer overflow in SwizzleData
+  + CVE-2018-12362 Integer overflow in SSSE3 scaler
+  + CVE-2018-5156 Media recorder segmentation fault when track type is changed during capture
+  + CVE-2018-12363 Use-after-free when appending DOM nodes
+  + CVE-2018-12364 CSRF attacks through 307 redirects and NPAPI plugins
+  + CVE-2018-12365 Compromised IPC child process can list local filenames
+  + CVE-2018-12371 Integer overflow in Skia library during edge builder allocation
+  + CVE-2018-12366 Invalid data handling during QCMS transformations
+  + CVE-2018-12367 Timing attack mitigation of PerformanceNavigationTiming
+  + CVE-2018-12368 No warning when opening executable SettingContent-ms files
+  + CVE-2018-12369 WebExtension security permission checks bypassed by embedded experiments
+  + CVE-2018-5187 Memory safety bugs fixed in Firefox 60 and Firefox ESR 60.1
+  + CVE-2018-5188 Memory safety bugs fixed in Firefox 60, Firefox ESR 60.1, and Firefox ESR 52.9
+
+
 * Mon Jun 18 2018 Andrey Cherepanov <cas@altlinux.org> 60.0.2-alt2
 - Fix build for aarch64 (thanks legion@).
 
