@@ -1,5 +1,5 @@
 Name: tiptop
-Version: 2.3
+Version: 2.3.1
 Release: alt1
 
 Summary: Tiptop is a performance monitoring tool for Linux
@@ -38,5 +38,8 @@ comes from hardware counters.
 %doc README AUTHORS tiptoprc
 
 %changelog
+* Thu Jun 28 2018 Terechkov Evgenii <evg@altlinux.org> 2.3.1-alt1
+- 2.3.1
+
 * Fri Jun 16 2017 Terechkov Evgenii <evg@altlinux.org> 2.3-alt1
 - Initial build for ALT Linux Sisyphus
