@@ -1,8 +1,13 @@
 %define pkgname ffi
 
+%global gem_dir %ruby_libdir/gems/%(%ruby_rubyconf RUBY_LIB_VERSION)
+%global gem_instdir %gem_dir/gems
+%global gem_docdir %gem_dir/doc
+%global gem_cache %gem_dir/cache
+
 Name: ruby-%pkgname
 Version: 1.9.23
-Release: alt1.2
+Release: alt2
 
 Summary: Ruby foreign function interface
 Group: Development/Ruby
@@ -11,11 +16,13 @@ Url: https://github.com/ffi/ffi
 
 Source: %pkgname-%version.tar
 Patch1: %name-alt-fix-requires.patch
+Patch2: ruby-ffi-alt-gemspec.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libffi-devel libruby-devel ruby-tool-setup
 
 %filter_from_requires \,^ruby(lib/ffi/.*generator),d
+%filter_from_requires /^ruby(spec)/d
 
 %description
 A Ruby foreign function interface.
@@ -25,39 +32,52 @@ Summary: Documentation files for %name
 Group: Documentation
 BuildArch: noarch
 
+Requires: %name = %EVR
+
 %description doc
 Documentation files for %name
 
 %prep
 %setup -n %pkgname-%version
 %patch1 -p1
-%update_setup_rb
-
-sed -i -r '/^[[:blank:]]*Data_Get_Struct\(/s/^(([[:blank:]]*).*)((field) = layout->fields\[i\])(\).*)$/\2\3;\n\1\4\5/' \
-	ext/ffi_c/StructLayout.c
+%patch2 -p1
 
 %build
-%ruby_config
-%ruby_build
+gem build %pkgname.gemspec
 
 %install
-%ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+# install first to temp directory instead of buildroot due to invalid file owner of some files installed by 'gem install'
+mkdir -p .%pkgname
+gem install -V --local --build-root .%pkgname --force --document=ri,rdoc %pkgname-%version.gem
+cp -a .%pkgname %buildroot
+
+# Remove some cruft
+rm -rf %buildroot%gem_instdir/%pkgname-%version/ext
+rm -rf %buildroot%gem_instdir/%pkgname-%version/setup.rb
+find %buildroot%gem_dir -name gem.build_complete -delete
+find %buildroot%gem_dir -name gem_make.out -delete
+find %buildroot%gem_dir -name mkmf.log -delete
 
 %check
-%ruby_test_unit -Ilib:test test
+pushd .%pkgname
+ruby -e 'Dir.glob "./test/**/*_test.rb", &method(:require)'
+popd
 
 %files
 %doc README.md LICENSE
-%ruby_sitelibdir/*
-%ruby_sitearchdir/*
+%gem_dir
+%exclude %gem_cache
+%exclude %gem_docdir
+%exclude %gem_instdir/%pkgname-%version/samples
 
 %files doc
-%ruby_ri_sitedir/*
+%gem_docdir
+%gem_instdir/%pkgname-%version/samples
 
 %changelog
+* Tue Jun 19 2018 Alexandr Antonov <aas@altlinux.org> 1.9.23-alt2
+- Rebuild as ruby gem for openqa
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.9.23-alt1.2
 - Rebuild with Ruby 2.5.1
 
@@ -109,4 +129,3 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 * Sun Jun 28 2009 Alexey I. Froloff <raorn@altlinux.org> 0.3.5-alt1
 - Built for Sisyphus
-

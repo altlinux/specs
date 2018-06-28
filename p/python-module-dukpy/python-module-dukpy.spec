@@ -4,7 +4,7 @@
 %define modulename dukpy
 Name: python-module-dukpy
 Version: 0.1.0
-Release: alt1.1
+Release: alt2
 
 Summary: Simple JavaScript interpreter for Python
 
@@ -85,6 +85,9 @@ popd
 
 
 %changelog
+* Tue Jun 19 2018 Alexandr Antonov <aas@altlinux.org> 0.1.0-alt2
+- Rebuild for aarch64
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.0-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
