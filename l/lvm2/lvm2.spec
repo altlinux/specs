@@ -1,5 +1,5 @@
-%define lvm2version 2.02.177
-%define dmversion 1.02.146
+%define lvm2version 2.02.180
+%define dmversion 1.02.149
 
 %define _sbindir /sbin
 %define _runtimedir /run
@@ -18,6 +18,21 @@
 %def_enable systemd
 %def_enable thin
 
+# liblvm2app is deprecated. Use D-Bus API
+%def_enable applib
+%def_disable python2_bindings
+%def_disable python3_bindings
+
+%def_enable cmdlib
+
+%if_enabled python2_bindings
+ %def_enable applib
+%endif
+
+%if_enabled python3_bindings
+ %def_enable applib
+%endif
+
 %if_enabled lvmlockd
  %def_enable lvmlockd_sanlock
   %if_enabled cluster
@@ -28,7 +43,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt4
+Release: alt0.1
 License: GPL
 
 Group: System/Base
@@ -51,6 +66,7 @@ Requires: liblvm2  = %{lvm2version}-%{release}
 
 BuildRequires: gcc-c++
 BuildRequires: libreadline-devel libtinfo-devel libudev-devel CUnit-devel
+BuildRequires: libaio-devel
 %if_enabled systemd
 # libudev-devel >= 205 required for udev-systemd-background-jobs
 BuildRequires: libudev-devel >= 205
@@ -61,16 +77,20 @@ BuildRequires: thin-provisioning-tools >= 0.7.0
 %else
 BuildRequires: libudev-devel
 %endif
+%if_enabled python2_bindings
 BuildRequires: python-devel python-module-setuptools
+%endif
+%if_enabled python3_bindings
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
+%endif
 BuildRequires: autoconf-archive
 %{?_enable_thin:BuildRequires: thin-provisioning-tools >= 0.5.4}
 %{?_enable_lvmdbusd:BuildRequires: python-module-dbus python-module-pyudev python3-module-dbus python3-module-pyudev}
-%{?_enable_static:BuildRequires: libreadline-devel-static libtinfo-devel-static}
+%{?_enable_static:BuildRequires: libreadline-devel-static libtinfo-devel-static libaio-devel-static}
 %{?_enable_cluster:BuildRequires: libcorosync2-devel libdlm-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel libsepol-devel}
-%{?_enable_blkid_wiping:BuildRequires: libblkid-devel >= 2.24}
+%{?_enable_blkid_wiping:BuildRequires: libblkid-devel >= 2.23}
 %{?_enable_lvmlockd_sanlock:BuildRequires: sanlock-devel >= 3.3.0}
 
 %description
@@ -253,7 +273,6 @@ export ac_cv_path_MODPROBE_CMD=%_sbindir/modprobe
 	--disable-selinux \
 	--disable-blkid_wiping \
 	--disable-nls \
-	--enable-lvm1_fallback \
 	--enable-static_link \
 	ac_cv_lib_dl_dlopen=no \
 	--with-optimisation="%optflags -Os" \
@@ -284,8 +303,6 @@ mv libdm/ioctl/libdevmapper.a .
 %configure \
 	%{subst_enable selinux} \
 	--disable-static_link \
-	--enable-lvm1_fallback \
-	--with-lvm1=internal \
 	--enable-readline \
 	--with-group= \
 	--with-user= \
@@ -297,8 +314,8 @@ mv libdm/ioctl/libdevmapper.a .
 %if_enabled cluster
 	--with-clvmd=corosync \
 %endif
-	--enable-applib \
-	--enable-cmdlib \
+	%{subst_enable applib} \
+	%{subst_enable cmdlib} \
 	--with-usrlibdir=%_libdir \
 	--enable-dmeventd \
 	--with-udevdir=%_udevrulesdir \
@@ -320,25 +337,9 @@ mv libdm/ioctl/libdevmapper.a .
 	--with-default-dm-run-dir=%_runtimedir \
 	--with-default-run-dir=%_runtimedir/lvm \
 	--with-default-locking-dir=%_lockdir/lvm \
-	--with-pool=internal \
 	--with-cluster=internal \
-	--with-snapshots=internal \
-	--with-mirrors=internal \
-	--with-raid=internal \
-	--with-cache=internal \
-	--with-cache-check=/usr/sbin/cache_check \
-	--with-cache-dump=/usr/sbin/cache_dump \
-	--with-cache-repair=/usr/sbin/cache_repair \
-	--with-cache-restore=/usr/sbin/cache_restore \
-%if_enabled thin
-	--with-thin=internal \
-	--with-thin-check=/usr/sbin/thin_check \
-	--with-thin-dump=/usr/sbin/thin_dump \
-	--with-thin-repair=/usr/sbin/thin_repair \
-	--with-thin-restore=/usr/sbin/thin_restore \
-%endif
-	--enable-python2-bindings \
-	--enable-python3-bindings
+	%{subst_enable python2-bindings} \
+	%{subst_enable python3-bindings}
 
 %make
 
@@ -347,7 +348,9 @@ mv libdm/ioctl/libdevmapper.a .
 %makeinstall_std install_system_dirs
 %if_enabled systemd
 %makeinstall_std install_systemd_units
+%if_enabled applib
 %makeinstall_std install_systemd_generators
+%endif
 %endif
 %makeinstall_std install_tmpfiles_configuration
 
@@ -371,12 +374,16 @@ done
 
 mv %buildroot%_libdir/libdevmapper.so.1.00 %buildroot/%_lib/
 mv %buildroot%_libdir/libdevmapper-event.so.1.00 %buildroot/%_lib/
+%if_enabled applib
 mv %buildroot%_libdir/liblvm2app.so.2.2 %buildroot/%_lib/
+%endif
 
 pushd %buildroot%_libdir
 rm -f libdevmapper-event.so liblvm2app.so
 ln -sf ../../%_lib/libdevmapper-event.so.1.00 ./libdevmapper-event.so
+%if_enabled applib
 ln -sf ../../%_lib/liblvm2app.so.2.2 ./liblvm2app.so
+%endif
 popd
 
 # Fix pkgconfig file.
@@ -479,7 +486,9 @@ __EOF__
 %endif
 %endif
 %if_enabled systemd
+%if_enabled applib
 /lib/systemd/system-generators/lvm2-activation-generator
+%endif
 %endif
 %_tmpfilesdir/%name.conf
 %dir %_sysconfdir/lvm
@@ -509,16 +518,19 @@ __EOF__
 %endif
 
 %files -n liblvm2
+%if_enabled applib
 /%_lib/liblvm2app.so.*
+%endif
 %_libdir/liblvm2cmd.so.*
 
 %files -n liblvm2-devel
+%if_enabled applib
 %_libdir/liblvm2app.so
-%_libdir/liblvm2cmd.so
-
 %_includedir/lvm2app.h
-%_includedir/lvm2cmd.h
 %_pkgconfigdir/lvm2app.pc
+%endif
+%_libdir/liblvm2cmd.so
+%_includedir/lvm2cmd.h
 
 %files -n libdevmapper
 /%_lib/libdevmapper.so.*
@@ -585,13 +597,21 @@ __EOF__
 %python3_sitelibdir/lvmdbusd/*
 %endif
 
+%if_enabled python2_bindings
 %files -n python-module-lvm
 %python_sitelibdir/*
+%endif
 
+%if_enabled python3_bindings
 %files -n python3-module-lvm
 %python3_sitelibdir/*
+%endif
 
 %changelog
+* Wed Jun 27 2018 Alexey Shabalin <shaba@altlinux.ru> 2.02.180-alt0.1
+- 2.02.180(2)-git (2018-06-18)
+- disable build python2 and python3 bindings based on deprecated liblvm2app
+
 * Sat Apr 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.02.177-alt4
 - (NMU) Rebuilt with python-3.6.4.
 
