@@ -2,7 +2,7 @@
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 4.1.0
+Version: 4.1.1
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -22,6 +22,7 @@ Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
 Requires: ladspa-rubberband
 Requires: ladspa-zam-plugins
 Requires: calf-plugins
+Requires: lv2-mda-plugins
 # https://sourceforge.net/projects/lsp-plugins
 # lsp-plug-in-plugins-lv2-comp-delay-x2-stereo
 #Requires: lsp-plugins-lv2
@@ -60,6 +61,9 @@ effects for Pulseaudio applications.
 %doc README* CHANGELOG.*
 
 %changelog
+* Thu Jun 28 2018 Yuri N. Sedunov <aris@altlinux.org> 4.1.1-alt1
+- 4.1.1
+
 * Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
 - 4.1.0
 
