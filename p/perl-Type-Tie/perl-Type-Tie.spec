@@ -1,6 +1,5 @@
 %define _unpackaged_files_terminate_build 1
 %define _without_test 1
-%define module_version 0.009
 %define module_name Type-Tie
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Data/Dumper.pm) perl(Exporter/Tiny.pm) perl(ExtUtils/MakeMaker.pm) perl(Hash/FieldHash.pm) perl(Hash/Util/FieldHash.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/Types/Moose.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Requires.pm)
@@ -8,21 +7,21 @@ BuildRequires: perl(Data/Dumper.pm) perl(Exporter/Tiny.pm) perl(ExtUtils/MakeMak
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.009
+Version: 0.011
 Release: alt1
 Summary: tie a variable to a type constraint
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/release/Type-Tie
 
-Source: http://www.cpan.org/authors/id/T/TO/TOBYINK/Type-Tie-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TOBYINK/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,10 +30,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc COPYRIGHT LICENSE README Changes
+%doc COPYRIGHT LICENSE README Changes CREDITS
 %perl_vendor_privlib/T*
 
 %changelog
+* Thu Jun 28 2018 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1
+- automated CPAN update
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1
 - automated CPAN update
 
