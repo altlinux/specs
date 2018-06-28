@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%add_findreq_skiplist %perl_vendor_archlib/MongoDB/BulkWrite.pm
-%add_findreq_skiplist %perl_vendor_archlib/MongoDB/Collection.pm
+%add_findreq_skiplist %perl_vendor_privlib/MongoDB/BulkWrite.pm
+%add_findreq_skiplist %perl_vendor_privlib/MongoDB/Collection.pm
 %define dist MongoDB
 Name: perl-%dist
-Version: 1.8.3
+Version: 2.0.0
 Release: alt1
 
 Summary: Mongo Driver for Perl
@@ -13,8 +13,10 @@ Group: Development/Perl
 URL: http://www.cpan.org
 Source0: http://www.cpan.org/authors/id/M/MO/MONGODB/%{dist}-v%{version}.tar.gz
 
+BuildArch: noarch
+
 # Automatically added by buildreq on Sun Oct 09 2011 (-bb)
-BuildRequires: perl-Any-Moose perl-Class-Method-Modifiers perl-Data-Types perl-DateTime perl-File-Slurp perl-JSON perl-Module-Install perl-Moose perl-Package-Stash-XS perl-Readonly perl-Readonly-XS perl-Test-Exception perl-Tie-IxHash perl-boolean perl(Config/AutoConf.pm) perl(Path/Tiny.pm) perl(Throwable.pm) perl(Syntax/Keyword/Junction.pm) perl(Safe/Isa.pm) perl(DateTime/Locale.pm) perl(Authen/SCRAM/Client.pm) perl(Digest/SHA.pm) perl(BSON/Decimal128.pm)
+BuildRequires: perl-Any-Moose perl-Class-Method-Modifiers perl-Data-Types perl-DateTime perl-File-Slurp perl-JSON perl-Module-Install perl-Moose perl-Package-Stash-XS perl-Readonly perl-Readonly-XS perl-Test-Exception perl-Tie-IxHash perl-boolean perl(Config/AutoConf.pm) perl(Path/Tiny.pm) perl(Throwable.pm) perl(Syntax/Keyword/Junction.pm) perl(Safe/Isa.pm) perl(DateTime/Locale.pm) perl(Authen/SCRAM/Client.pm) perl(Digest/SHA.pm) perl(BSON/Decimal128.pm) perl(UUID/URandom.pm)
 
 %description
 This is the Perl driver for MongoDB, a document-oriented database.
@@ -33,10 +35,13 @@ This is the Perl driver for MongoDB, a document-oriented database.
 
 %files
 %doc Changes README CONTRIBUTING.md INSTALL.md README.md
-%perl_vendor_archlib/MongoDB*
-%perl_vendor_autolib/MongoDB
+%perl_vendor_privlib/MongoDB*
+#perl_vendor_autolib/MongoDB
 
 %changelog
+* Thu Jun 28 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1
+- automated CPAN update
+
 * Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.3-alt1
 - automated CPAN update
 
