@@ -1,13 +1,19 @@
 Name: xrdb
 Version: 1.0.9
-Release: alt1
+Release: alt2
+
 Summary: X server resource database utility
 License: MIT/X11
 Group: System/X11
+
 Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.org>
 
+%ifarch %e2k
+Requires: mcpp
+%else
 Requires: cpp
+%endif
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -15,30 +21,40 @@ Patch: %name-%version-%release.patch
 BuildRequires: libXmu-devel xorg-util-macros
 
 %description
-Xrdb  is  used to get or set the contents of the RESOURCE_MANAGER prop-
-erty on the root window of screen 0, or the  SCREEN_RESOURCES  property
-on  the root window of any or all screens, or everything combined.  You
-would normally run this program from your X startup file.
+Xrdb is used to get or set the contents of the RESOURCE_MANAGER
+property on the root window of screen 0, or the SCREEN_RESOURCES
+property on the root window of any or all screens, or everything
+combined.
+
+You would normally run this program from your X startup file.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
 %autoreconf
 %configure \
+%ifarch %e2k
+	--with-cpp=%_bindir/mcpp
+%else
 	--with-cpp=%_bindir/cpp
+%endif
 
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Tue Jun 26 2018 Michael Shigorin <mike@altlinux.org> 1.0.9-alt2
+- E2K: depend on mcpp to avoid pulling whole lcc in
+- minor spec cleanup
+
 * Tue Apr 05 2011 Valery Inozemtsev <shrek@altlinux.ru> 1.0.9-alt1
 - 1.0.9
 
