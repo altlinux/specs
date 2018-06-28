@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Dat
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.05
+Version: 0.06
 Release: alt1
 Summary: Overrides the time() and sleep() core functions for testing
 Group: Development/Perl
@@ -42,6 +42,9 @@ custom time by passing time => number after the `use' statement:
 %perl_vendor_privlib/T*
 
 %changelog
+* Thu Jun 28 2018 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- automated CPAN update
+
 * Wed Aug 30 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - automated CPAN update
 
