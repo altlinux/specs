@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define module Locale-Maketext-Lexicon
 %define m_distro Locale-Maketext-Lexicon
 %define m_name Locale::Maketext::Lexicon
@@ -7,7 +8,7 @@
 
 Name: perl-Locale-Maketext-Lexicon
 Version: 1.00
-Release: alt1
+Release: alt2
 
 Summary: Locale::Maketext::Lexicon - Use other catalog formats in Maketext
 
@@ -43,9 +44,13 @@ for extracting translatable strings from source files.
 %files
 %doc Changes README
 %_bindir/xgettext.pl
+%_man1dir/xgettext.pl*
 %perl_vendor_privlib/Locale/
 
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.00-alt2
+- fixed unpackaged files
+
 * Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
 - automated CPAN update
 
