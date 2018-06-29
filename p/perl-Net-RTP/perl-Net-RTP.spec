@@ -1,3 +1,5 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 %define module Net-RTP
 %define m_distro Net-RTP
 %define m_name Net::RTP
@@ -6,7 +8,7 @@
 
 Name: perl-Net-RTP
 Version: 0.09
-Release: alt1
+Release: alt2
 
 Summary: Net-RTP - Send and receive RTP packets
 
@@ -32,6 +34,15 @@ The Net::RTP::Packet module is used to parse the RTP packet headers.
 It may be used totally independently of Net::RTP if you want to handle
 sending and receiving packets yourself.
 
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %name = %EVR
+
+%description scripts
+scripts for %name
+
+
 
 %prep
 %setup -q -n %m_distro-%version
@@ -46,7 +57,15 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Net/*
 %doc README Changes tools/*.pl
 
+%files scripts
+%_bindir/*
+%_man1dir/*
+
+
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2
+- fixed unpackaged files
+
 * Fri Jul 24 2009 Michael Bochkaryov <misha@altlinux.ru> 0.09-alt1
 - initial build for ALT Linux Sisyphus
 
