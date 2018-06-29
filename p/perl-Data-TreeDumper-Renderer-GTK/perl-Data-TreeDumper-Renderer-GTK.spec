@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define m_distro Data-TreeDumper-Renderer-GTK
 Name: perl-Data-TreeDumper-Renderer-GTK
 Version: 0.02
-Release: alt1
+Release: alt2
 Summary: Rendering plug-in for Data::TreeDumper
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
@@ -30,11 +31,17 @@ xvfb-run -a make test
 %install
 %perl_vendor_install
 
+# demo
+rm -f %buildroot%_bindir/*.pl %buildroot%perl_vendor_privlib/Data/TreeDumper/Renderer/*.pl
+
 %files
 %perl_vendor_privlib/Data/TreeDumper/Renderer/GTK*
 %perl_vendor_privlib/auto/Data/TreeDumper/Renderer/GTK
 %doc Changes Todo README 
 
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2
+- fixed unpackaged files
+
 * Tue Aug 24 2010 Vladimir Lettiev <crux@altlinux.ru> 0.02-alt1
 - initial build
