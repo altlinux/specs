@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define m_distro HTTP-Server-Simple-PSGI
 Name: perl-HTTP-Server-Simple-PSGI
 Version: 0.16
-Release: alt1
+Release: alt2
 Summary: HTTP::Server::Simple::PSGI - PSGI handler for HTTP::Server::Simple
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
@@ -31,9 +32,13 @@ modules so it's best to be used as an embedded web server.
 
 %files
 %perl_vendor_privlib/HTTP/Server/Simple/PSGI*
+%perl_vendor_privlib/Plack/Handler/HTTP/Server/Simple.pm
 %doc Changes README 
 
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.16-alt2
+- fixed unpackaged files
+
 * Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 
