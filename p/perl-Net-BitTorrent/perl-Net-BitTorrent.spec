@@ -1,3 +1,5 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 #module 'Net::BitTorrent' is known to be broken in version 0.052 and below
 %def_without test
 # BEGIN SourceDeps(oneline):
@@ -20,7 +22,7 @@ BuildRequires: perl(Digest/SHA.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(File/Sp
 
 Name: perl-Net-BitTorrent
 Version: 0.052
-Release: alt2
+Release: alt3
 
 Summary: Net-BitTorrent - Perl module
 
@@ -36,6 +38,15 @@ Source: http://search.cpan.org/CPAN/authors/id/S/SA/SANKO/%m_distro-%version.tar
 %description
 None.
 
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %name = %EVR
+
+%description scripts
+scripts for %name
+
+
 %prep
 %setup -n %m_distro-%version
 
@@ -48,7 +59,15 @@ None.
 %files
 %perl_vendor_privlib/Net/*
 
+%files scripts
+%_bindir/*
+%_man1dir/*
+
+
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.052-alt3
+- fixed unpackaged files
+
 * Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.052-alt2
 - fixed build with new perl 5.26
 - dusabled tests
