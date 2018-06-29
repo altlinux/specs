@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Statistics-Distributions
 
 Name: perl-%module_name
 Version: 1.02
-Release: alt1.1
+Release: alt2
 
 Summary: Critical values and upper probabilities of common statistical distributions
 License: Perl
@@ -38,8 +39,12 @@ calculate confidence intervals.
 
 %files
 %perl_vendor_privlib/Statistics
+%perl_vendor_privlib/auto/Statistics*
 
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.02-alt2
+- fixed unpackaged files
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
