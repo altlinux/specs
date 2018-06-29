@@ -13,7 +13,7 @@
 
 Name: python-module-%oname
 Version: %majver.3
-Release: alt2.1.1
+Release: alt2.2
 Epoch: 1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
@@ -41,6 +41,7 @@ Obsoletes: libsyfi-devel < 0.6.1-alt3.hg20090822
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: /proc
 BuildRequires: python-devel
+BuildRequires: python-module-setuptools
 BuildRequires: doxygen gcc-c++ gcc-fortran liblapack-devel
 BuildRequires: swig
 BuildRequires: python-module-Cython python-module-Pyrex
@@ -49,6 +50,7 @@ BuildRequires: python-module-alabaster python-module-html5lib python-module-matp
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-Cython
+BuildRequires: python3-module-setuptools
 %endif
 
 %if_without doc
@@ -80,6 +82,8 @@ Requires: lib%oname-py3 = %version-%release
 %py3_provides %oname.addons
 Provides: python3-module-numpy-addons = %EVR
 %add_python3_req_skip Scons setuptools distutils nose number code_generators
+# See bug 35103
+%add_python3_req_skip setuptools.command.develop setuptools.command.egg_info
 
 %description -n python3-module-%oname
 NumPy is a general-purpose array-processing package designed to
@@ -97,7 +101,7 @@ Summary: Testing part of NumPy (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
 %add_python3_req_skip setuptools
-	
+
 %description -n python3-module-%oname-testing
 NumPy is a general-purpose array-processing package designed to
 efficiently manipulate large multi-dimensional arrays of arbitrary
@@ -940,6 +944,11 @@ fi
 %endif
 
 %changelog
+* Fri Jun 29 2018 Anton Midyukov <antohami@altlinux.org> 1:1.13.3-alt2.2
+- Skip requires from python3-module numpy (Closes:35103) to:
+  - python3(setuptools.command.develop)
+  - python3(setuptools.command.egg_info)
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.13.3-alt2.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
