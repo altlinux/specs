@@ -19,7 +19,7 @@
 
 Name: perl-ack
 Version: 2.24
-Release: alt1
+Release: alt2
 
 Summary: A grep-like program specifically for large source trees
 
@@ -43,6 +43,8 @@ BuildRequires: perl-File-Next perl-Test-Differences perl-Test-Pod perldoc
 BuildRequires: perl-podlators
 BuildRequires: /proc
 
+Requires: perl(Term/ANSIColor.pm)
+
 %description
 If you want to know about the ack program, see the ack file itself.
 No user-serviceable parts inside.  ack is all that should use this.
@@ -65,6 +67,9 @@ export TMPDIR=/tmp
 %perl_vendor_privlib/App/
 
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 2.24-alt2
+- added perl-Term-ANSIColor (closes: #31247)
+
 * Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 2.24-alt1
 - automated CPAN update
 
