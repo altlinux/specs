@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Class-C3-Componentised
 Name: perl-%dist
 Version: 1.001002
-Release: alt1
+Release: alt2
 
 Summary: Load mix-ins or components to your C3-based class.
 
@@ -29,10 +30,15 @@ Load mix-ins or components to your C3-based class.
 %perl_vendor_install
 
 %files
-%perl_vendor_privlib/Class/C3/Componentised.pm 
 %doc Changes README
+%perl_vendor_privlib/Class/C3/Componentised.pm
+%dir %perl_vendor_privlib/Class/C3/Componentised
+%perl_vendor_privlib/Class/C3/Componentised/ApplyHooks.pm
 
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.001002-alt2
+- unpackaged files fixed
+
 * Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.001002-alt1
 - automated CPAN update
 
