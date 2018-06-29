@@ -1,3 +1,5 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 %define module Clipboard
 %define m_distro Clipboard
 %define m_name Clipboard
@@ -6,7 +8,7 @@
 
 Name: perl-Clipboard
 Version: 0.13
-Release: alt1
+Release: alt2
 
 Summary: Cliboard - Copy and Paste with any OS
 
@@ -25,6 +27,15 @@ BuildRequires: perl-Module-Install xclip
 %description
 None.
 
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %name = %EVR
+
+%description scripts
+scripts for %name
+
+
 %prep
 %setup -n %m_distro-%version
 rm -f lib/Clipboard/MacPasteboard.pm
@@ -39,7 +50,15 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Clipboard/*
 %perl_vendor_privlib/Clipboard.pm
 
+%files scripts
+%_bindir/*
+%_man1dir/*
+
+
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2
+- fixed unpackaged files
+
 * Tue Feb 08 2011 Denis Smirnov <mithraen@altlinux.ru> 0.13-alt1
 - 0.13
 
