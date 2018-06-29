@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module	Net-SNMP
 
 Name: perl-Net-SNMP
 Version: 6.0.1
-Release: alt2
+Release: alt3
 
 Summary: Net::SNMP (module for perl) - Object oriented interface to SNMP
 License: Artistic
@@ -28,7 +29,16 @@ SNMP protocol.  The module supports SNMP version-1, SNMP version-2c
 (Community-Based SNMPv2), and SNMP version-3.  The Net::SNMP module
 assumes that the user has a basic understanding of the Simple Network
 Management Protocol and related network management concepts.
-							
+
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %name = %EVR
+Conflicts: perl-Net-SNMP <= 6.0.1-alt2
+
+%description scripts
+scripts for %name
+
 %prep
 %setup -q -n %module-v%{version}
 
@@ -39,11 +49,18 @@ Management Protocol and related network management concepts.
 %perl_vendor_install
 
 %files
-%_bindir/*
 %doc MANIFEST README Changes
 %perl_vendor_privlib/Net*
 
+%files scripts
+%_bindir/*
+%_man1dir/*
+
+
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt3
+- fixed unpackaged files
+
 * Mon Oct 24 2011 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt2
 - fixed build (added BR:)
 
