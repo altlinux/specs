@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Pod-LaTeX
 Name: perl-%dist
 Version: 0.61
-Release: alt1
+Release: alt2
 
 Summary: Convert Pod data to formatted Latex
 License: GPL or Artistic
@@ -32,8 +33,12 @@ into Latex.  The pod2latex command uses this module for translation.
 %doc ChangeLog README
 %perl_vendor_privlib/Pod
 %_bindir/pod2latex
+%_man1dir/pod2latex*
 
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.61-alt2
+- fixed unpackaged files
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
 - automated CPAN update
 
