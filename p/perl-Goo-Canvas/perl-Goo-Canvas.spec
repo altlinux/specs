@@ -1,8 +1,10 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 %define module Goo-Canvas
 
 Name: perl-%module
 Version: 0.06
-Release: alt3.1.1.1.1
+Release: alt4
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -14,10 +16,19 @@ Url: %CPAN %module
 Source: http://www.cpan.org/modules/by-module/Goo/%module-%version.tar.gz
 
 # Automatically added by buildreq on Mon Oct 10 2011
-BuildRequires: libgoocanvas-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Gtk2-devel perl-podlators
+BuildRequires: libgoocanvas-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Gtk2-devel perl-Glib-devel perl-podlators perl(Locale/Maketext.pm)
 
 %description
 Perl interface to the GooCanvas.
+
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %name = %EVR
+
+%description scripts
+scripts for %name
+
 
 %prep
 %setup -n %module-%version
@@ -37,9 +48,18 @@ Perl interface to the GooCanvas.
 # XXX devel?
 %dir	%perl_vendor_archlib/Goo/Canvas
 %doc	%perl_vendor_archlib/Goo/Canvas/*.pod
+%dir	%perl_vendor_archlib/Goo/Cairo
+%doc	%perl_vendor_archlib/Goo/Cairo/*.pod
 	%perl_vendor_archlib/Goo/Canvas/Install
 
+%files scripts
+%_bindir/*
+%_man1dir/*
+
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.06-alt4
+- fixed unpackaged files
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt3.1.1.1.1
 - rebuild with new perl 5.26.1
 
