@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module RPM-Specfile
 
 Name: perl-%module
 Version: 1.51
-Release: alt2.1
+Release: alt3
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -31,12 +32,18 @@ This is a simple module for creation of RPM Spec files.
 %install
 %perl_vendor_install
 
+# not ported for ALT
+rm -rf %buildroot%_bindir/cpanflute2*
+
 %files
 %doc README Changes
 %perl_vendor_privlib/*
 %exclude %perl_vendor_archlib
 
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.51-alt3
+- fixed unpackaged files
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.51-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
