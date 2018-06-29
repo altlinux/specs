@@ -1,6 +1,6 @@
 Name: libvpb
-Version: 4.2.42
-Release: alt1.qa3
+Version: 4.2.58
+Release: alt1
 
 Summary: Voicetronix VPB interface library
 
@@ -11,9 +11,10 @@ Url: http://www.voicetronix.com/downloads.htm
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 %define oname vpb-driver
-Source: http://www.voicetronix.com/Downloads/vpb-driver-4.x/%oname-%version.tar.bz2
+Source: http://www.voicetronix.com/Downloads/vpb-driver-4.x/%oname-%version.tar
 Patch: libvpb-4.2.42-alt-DSO.patch
 Patch1: libvpb-4.2.42-alt-gcc4.7.patch
+Patch2: libvpb-4.2.58-glibc2.27.patch
 
 # Automatically added by buildreq on Fri Jan 16 2009
 BuildRequires: gcc-c++ libpci-devel zlib-devel
@@ -36,9 +37,11 @@ Requires: %name = %version-%release
 Header files for %name library.
 
 %prep
-%setup -q -n %oname-%version
-%patch -p2
+%setup -n %oname-%version
+#patch -p2
 %patch1 -p2
+%patch2 -p1
+
 # disable build kernel module
 %__subst "s|\$(srcdir)/vtcore.*||g" src/Makefile.in
 %__subst "s|/sbin/ldconfig||g" src/libvpb/Makefile.in
@@ -49,6 +52,7 @@ Header files for %name library.
 
 %install
 %makeinstall_std
+rm -rf %buildroot/etc/modprobe.d/blunt-axe.conf
 
 %files
 %doc README* COPYING
@@ -62,6 +66,10 @@ Header files for %name library.
 %_includedir/*
 
 %changelog
+* Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 4.2.58-alt1
+- new version 4.2.58 (with rpmrb script)
+- fix build with glibc 2.27 (pow10->exp10)
+
 * Wed Oct 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.42-alt1.qa3
 - Fixed build with gcc 4.7
 
