@@ -1,6 +1,6 @@
 Name: iouyap
 Version: 0.97
-Release: alt1
+Release: alt1.1
 Summary: Bridge IOU to TAP, UDP and Ethernet
 License: GPLv3
 Group: Networking/Other
@@ -36,5 +36,8 @@ cp %name %buildroot%_bindir
 %attr(0750,root,iouyap) %_bindir/%name
 
 %changelog
+* Fri Jun 29 2018 Anton Midyukov <antohami@altlinux.org> 0.97-alt1.1
+- Rebuilt for aarch64
+
 * Mon Aug 08 2016 Anton Midyukov <antohami@altlinux.org> 0.97-alt1
 - Initial build for ALT Linux Sisyphus.
