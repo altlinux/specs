@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist DelimMatch
 Name: perl-Text-DelimMatch
 Version: 1.06a
-Release: alt3
+Release: alt4
 
 Summary: find regexp delimited strings with proper nesting
 License: GPL or Artistic
@@ -35,8 +36,12 @@ and end delimiters.
 %files
 %doc README
 %perl_vendor_privlib/Text
+%perl_vendor_privlib/auto/Text
 
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.06a-alt4
+- fixed unpackaged files
+
 * Tue Oct 04 2011 Alexey Tourbin <at@altlinux.ru> 1.06a-alt3
 - rebuilt
 
