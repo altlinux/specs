@@ -1,10 +1,10 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %def_enable updatedb
 
 Name: shared-mime-info
-Version: 1.9
-Release: alt2
+Version: 1.10
+Release: alt1
 
 Summary: Shared MIME-Info Specification
 Group: System/Libraries
@@ -20,7 +20,7 @@ Source: %name-%version.tar
 Source1: %name.filetrigger
 Patch: %name-0.19-alt-cachedir-param.patch
 Patch1: %name-1.5-alt-swf.patch
-Patch2: %name-1.6-alt-q_option.patch
+Patch2: %name-1.10-alt-q_option.patch
 
 Requires: rpm-build-xdg
 
@@ -110,6 +110,9 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Fri Jun 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt1
+- 1.10
+
 * Mon Jan 22 2018 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt2
 - updated to 1-9-4-gc8153d0 (fixes for DjVu, MJPEG, QML, XPS)
 
