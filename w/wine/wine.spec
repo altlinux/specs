@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.1
-%define major 3.10
+%define major 3.11
 
 Name: wine
 Version: %major.1
@@ -265,12 +265,6 @@ wine-staging-%version/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=pat
 wine-patches-%version/patchapply.sh
 
 %build
-# Workaround for https://bugzilla.altlinux.org/show_bug.cgi?id=31834
-%if_with build64
-%remove_optflags -fomit-frame-pointer
-%add_optflags -fno-omit-frame-pointer
-%endif
-
 %ifarch aarch64
 %remove_optflags -frecord-gcc-switches
 export CC=clang
@@ -480,6 +474,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Fri Jun 29 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.11.1-alt1
+- new version (3.11.1) with rpmgs script
+- drop -fno-omit-frame-pointer
+
 * Wed Jun 13 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.10.1-alt1
 - new version 3.10.1 (with rpmrb script)
 - use clang on aarch64
