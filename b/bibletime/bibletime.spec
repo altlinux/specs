@@ -1,6 +1,6 @@
 Name: bibletime
-Version: 2.11.1
-Release: alt2
+Version: 2.11.2
+Release: alt1
 
 Summary: BibleTime is a Bible study application based on Qt
 Summary(ru_RU.UTF-8): BibleTime - простое в использовании средство для изучения Библии
@@ -60,6 +60,9 @@ rm -f %buildroot%_iconsdir/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Jun 29 2018 Vitaly Lipatov <lav@altlinux.ru> 2.11.2-alt1
+- new version 2.11.2 (with rpmrb script)
+
 * Sun Jun 10 2018 Vitaly Lipatov <lav@altlinux.ru> 2.11.1-alt2
 - rebuild with sword.so.1.8
 
