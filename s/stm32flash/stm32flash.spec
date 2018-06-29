@@ -1,6 +1,6 @@
 Name: stm32flash
 Version: 0.5
-Release: alt1
+Release: alt1.1
 Summary: Flash Program for the STM32 Bootloader
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -51,5 +51,8 @@ Features:
 %_mandir/man?/*.*
 
 %changelog
+* Thu Jun 28 2018 Anton Midyukov <antohami@altlinux.org> 0.5-alt1.1
+- Rebuilt for aarch64
+
 * Sat Apr 29 2017 Anton Midyukov <antohami@altlinux.org> 0.5-alt1
 - Initial build for ALT Linux Sisyphus.
