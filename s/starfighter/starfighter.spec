@@ -1,6 +1,6 @@
 Name: starfighter
 Version: 1.7
-Release: alt1
+Release: alt2
 
 Summary: Starfighter is an old school 2D shoot'em up
 Group: Games/Arcade
@@ -8,7 +8,7 @@ License: GPLv2, GPLv3, CC0, CC BY 3.0, CC BY-SA 3.0, Public Domain
 
 Url: http://sourceforge.net/projects/pr-starfighter/
 # http://download.savannah.gnu.org/releases/starfighter/1.7/starfighter-1.7-src.tar.gz
-Source: %name-%version.tar
+Source: %name-%version-src.tar.gz
 Source1: %name.desktop
 
 Patch0: starfighter-1.7-fix_misleading_indentation-alt.patch
@@ -50,6 +50,9 @@ install -D gfx/rocketAmmo.png %buildroot%_niconsdir/%name.png
 %_pixmapsdir/%name.png
 
 %changelog
+* Fri Jun 29 2018 Fr. Br. George <george@altlinux.ru> 1.7-alt2
+- Revive building scheme
+
 * Tue May 15 2018 Grigory Ustinov <grenka@altlinux.org> 1.7-alt1
 - Build new version.
 
