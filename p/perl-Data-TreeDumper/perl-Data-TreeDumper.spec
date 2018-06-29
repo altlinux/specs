@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define m_distro Data-TreeDumper
 Name: perl-Data-TreeDumper
 Version: 0.40
-Release: alt1
+Release: alt2
 Summary: dumps any data structure
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
@@ -26,11 +27,17 @@ BuildRequires: perl-devel perl-Check-ISA perl-Term-Size perl-Sort-Naturally perl
 %install
 %perl_vendor_install
 
+# demo
+rm -f %buildroot%_bindir/*.pl %buildroot%perl_vendor_privlib/Data/*.pl
+
 %files
 %perl_vendor_privlib/Data/TreeDumper*
 %doc Changes Todo README 
 
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.40-alt2
+- fixed unpackaged files
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
 - automated CPAN update
 
