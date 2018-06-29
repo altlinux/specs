@@ -1,10 +1,12 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 %define module_dir XML
 %define module  XML-Entities
 
 
 Name: perl-%module
 Version: 1.0002
-Release: alt2
+Release: alt3
 
 Packager: Pavel Zilke <zidex at altlinux dot org>
 
@@ -28,6 +30,15 @@ This module deals with decoding of strings with XML character entities.
 The module provides two functions:
 decode( $entity_set, $string, ... )
 numify( $entity_set, $string, ... )
+
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %name = %EVR
+
+%description scripts
+scripts for %name
+
     
 %prep
 %setup -n %module
@@ -43,7 +54,15 @@ numify( $entity_set, $string, ... )
 %doc Changes README
 %perl_vendor_privlib/%module_dir/*
 
+%files scripts
+%_bindir/*
+%_man1dir/*
+
+
 %changelog
+* Sat Jun 30 2018 Igor Vlasenko <viy@altlinux.ru> 1.0002-alt3
+- fixed unpackaged files
+
 * Wed Dec 06 2017 Igor Vlasenko <viy@altlinux.ru> 1.0002-alt2
 - fixed broken URL
 
