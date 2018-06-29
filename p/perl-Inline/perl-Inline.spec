@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Inline
 Name: perl-%dist
 Version: 0.80
-Release: alt1
+Release: alt2
 
 Summary: Write Perl subroutines in other programming languages
 License: GPL or Artistic
@@ -32,6 +33,8 @@ can just run your Perl script like normal.
 %install
 %perl_vendor_install
 
+rm -f %buildroot%perl_vendor_privlib/Inline/MakeMaker/Changes
+
 %files
 %doc	Changes README
 	%perl_vendor_privlib/Inline.pm
@@ -42,6 +45,9 @@ can just run your Perl script like normal.
 %doc	%perl_vendor_privlib/Inline/*.pod
 
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.80-alt2
+- fixed unpackaged files
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.80-alt1
 - automated CPAN update
 
