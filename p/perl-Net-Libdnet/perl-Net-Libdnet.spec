@@ -1,7 +1,9 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 %define dist Net-Libdnet
 Name: perl-%dist
 Version: 0.98
-Release: alt2.1.1.1.1
+Release: alt3
 
 Summary: Binding for Dug Song's libdnet
 License: BSD
@@ -21,6 +23,15 @@ lookup and manipulation, network traffic interception via tunnel interfaces,
 and raw IP packet and Ethernet frame transmission. It is intended to complement
 the functionality provided by libpcap.
 
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %name = %EVR
+
+%description scripts
+scripts for %name
+
+
 %prep
 %setup -q -n %dist-%version
 
@@ -35,7 +46,15 @@ the functionality provided by libpcap.
 %perl_vendor_archlib/Net
 %perl_vendor_autolib/Net
 
+%files scripts
+%_bindir/*
+#%_man1dir/*
+
+
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.98-alt3
+- fixed unpackaged files
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.98-alt2.1.1.1.1
 - rebuild with new perl 5.26.1
 
