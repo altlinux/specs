@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 BuildRequires: perl(Module/Build.pm)
 #
 #   - TheSchwartz -
@@ -16,7 +17,7 @@ BuildRequires: perl(Module/Build.pm)
 
 Name: perl-TheSchwartz
 Version: 1.12
-Release: alt1
+Release: alt2
 
 Summary: TheSchwartz is a reliable job queue system
 
@@ -55,10 +56,14 @@ is used to automatically dispatch to the proper class to do the actual work.
 
 %files
 %_bindir/schwartzmon
+%_man1dir/schwartzmon*
 %perl_vendor_privlib/TheSchwartz.pm
 %perl_vendor_privlib/TheSchwartz/
 
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.12-alt2
+- fixed unpackaged files
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
 - automated CPAN update
 
