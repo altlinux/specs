@@ -27,7 +27,7 @@
 
 Name: freeipa
 Version: 4.6.3
-Release: alt5%ubt
+Release: alt6%ubt
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -555,7 +555,6 @@ Requires: python-module-dateutil
 Requires: python-module-yubico >= 1.2.3
 Requires: python-module-sss-murmur
 Requires: python-module-dbus
-Requires: python-module-setuptools
 Requires: python-module-six
 # 0.4.2: Py3 fix https://bugzilla.redhat.com/show_bug.cgi?id=1476150
 Requires: python-module-jwcrypto >= 0.4.2
@@ -597,7 +596,6 @@ Requires: python3-module-dateutil
 #Requires: python3-module-yubico >= 1.3.2-7
 Requires: python3-module-sss-murmur
 Requires: python3-module-dbus
-Requires: python3-module-setuptools
 Requires: python3-module-six
 # 0.4.2: Py3 fix https://bugzilla.redhat.com/show_bug.cgi?id=1476150
 Requires: python3-module-jwcrypto >= 0.4.2
@@ -1435,6 +1433,13 @@ fi
 %endif # with_python3
 
 %changelog
+* Fri Jun 29 2018 Ivan Zakharyaschev <imz@altlinux.org> 4.6.3-alt6%ubt
+- Improved formal deps (in python*-module-freeipa, dropped the
+  unnecessary explicit dep on setuptools in favor of autoreqs) so that
+  there is more flexibility in the base system where freeipa can be
+  installed (i.e., gcc won't be required since the split of
+  python*-module-setuptools-1:39.2.0-alt3).
+
 * Tue Apr 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.3-alt5%ubt
 - Rebuilt due to selinux update.
 
