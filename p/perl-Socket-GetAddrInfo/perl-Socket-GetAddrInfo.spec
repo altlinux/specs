@@ -1,7 +1,9 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 %define dist Socket-GetAddrInfo
 Name: perl-%dist
 Version: 0.22
-Release: alt1
+Release: alt2
 
 Summary: RFC 2553's getaddrinfo and getnameinfo functions
 License: GPL or Artistic
@@ -27,6 +29,15 @@ of arguments to pass to the "socket()" and "connect()" syscalls, and
 "getnameinfo" converts a socket address back into its host name/service
 name pair.
 
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %name = %EVR
+
+%description scripts
+scripts for %name
+
+
 %prep
 %setup -q -n %dist-%version
 
@@ -40,7 +51,15 @@ name pair.
 %doc Changes README
 %perl_vendor_privlib/Socket
 
+%files scripts
+%_bindir/*
+%_man1dir/*
+
+
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.22-alt2
+- fixed unpackaged files
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.22-alt1
 - 0.21 -> 0.22
 - built for perl-5.16
