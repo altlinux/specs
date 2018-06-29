@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Gtk2-ImageView
 Name: perl-%dist
 Version: 0.05
-Release: alt3.1.1.1.1
+Release: alt4
 
 Summary: Perl bindings for the GtkImageView widget
 License: LPGL
@@ -11,7 +12,7 @@ URL: %CPAN %dist
 Source: %dist-%version.tar.gz
 
 # Automatically added by buildreq on Tue Oct 11 2011
-BuildRequires: libgtkimageview-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Gtk2-devel perl-podlators
+BuildRequires: libgtkimageview-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Gtk2-devel libgtk+2-devel perl-podlators
 
 %description
 Perl bindings to the GtkImageView image viewer widget
@@ -45,8 +46,15 @@ should be considered the canonical documentation.
 %dir	%perl_vendor_archlib/Gtk2/ImageView/Tool
 %doc	%perl_vendor_archlib/Gtk2/ImageView/Tool/*.pod
 	%perl_vendor_archlib/Gtk2/ImageView/Install
+%dir	%perl_vendor_archlib/Gtk2/Gdk
+%dir	%perl_vendor_archlib/Gtk2/Gdk/Pixbuf
+%dir	%perl_vendor_archlib/Gtk2/Gdk/Pixbuf/Draw
+%doc	%perl_vendor_archlib/Gtk2/Gdk/Pixbuf/Draw/Cache.pod
 
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.05-alt4
+- fixed unpackaged files
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt3.1.1.1.1
 - rebuild with new perl 5.26.1
 
