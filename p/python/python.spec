@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.14
-Release: alt4
+Release: alt5
 
 %define package_name		%real_name
 %define weight			1001
@@ -105,7 +105,7 @@ BuildRequires: bzlib-devel gcc-c++ libdb4-devel libexpat-devel libgdbm-devel lib
 %{?_with_valgrind:BuildRequires: valgrind-devel}
 %{?_with_ssl:BuildRequires: libssl-devel}
 %{?_with_bluez:BuildRequires: libbluez-devel}
-# Not to loose a module which used to be a part of our standard "interface"
+# Not to lose a module which used to be a part of our standard "interface"
 # (i.e., no reqs were generated because nis was assumed to be always present).
 BuildPreReq: libnsl2-devel
 %{?!_without_check:%{?!_disable_check:BuildPreReq: /proc /dev/pts}}
@@ -736,15 +736,16 @@ build () {
 _Target="$1"
 shift
 export LDFLAGS="$(pkg-config --libs libnsl)" CPPFLAGS="$(pkg-config --cflags libnsl)"
+%ifarch %e2k
+cc --version | grep -q '^lcc:1.21' && export LIBS+="-lcxa"
+%endif
 %configure \
 	--with-threads \
 	%{subst_with valgrind} \
 	%{subst_with tk} \
 	--with-system-ffi \
 	--with-system-expat \
-%ifarch e2k
-	--with-libs="-lcxa" \
-%endif
+	--with-libs="$LIBS" \
 	--enable-ipv6 \
 	$*
 
@@ -1155,6 +1156,11 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Fri Jun 29 2018 Michael Shigorin <mike@altlinux.org> 2.7.14-alt5
+- E2K:
+  + support e2kv4 through %%e2k macro (grenka@)
+  + reworked -lcxa quirk towards lcc-1.23+ compatibility
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.14-alt4
 - Fixed heap-use-after-free bug (Fixes: CVE-2018-1000030).
 
