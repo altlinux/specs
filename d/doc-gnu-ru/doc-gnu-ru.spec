@@ -5,7 +5,7 @@
 
 Name: doc-gnu-%LANG
 Version: 1.0
-Release: alt3
+Release: alt3.qa1
 
 Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 
@@ -134,12 +134,17 @@ Exec=url_handler.sh /usr/share/doc/doc-gnu-ru/HTML/index.html
 Categories=Development;Documentation;
 EOF
 
+rm -rf %buildroot/doc-gnu-ru-manuals \
+    %buildroot/gnu-head-sm.jpg %buildroot/makedirindex
 
 %files -n %name-html
 %_docdir/%name/%formathtml
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Sat Jun 30 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3.qa1
+- NMU: fixed unpackaged files
+
 * Tue May 08 2018 Grigory Ustinov <grenka@altlinux.org> 1.0-alt3
 - NMU: fix summary (Closes: #22172).
 
