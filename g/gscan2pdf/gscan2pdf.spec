@@ -1,7 +1,7 @@
 %def_without test
 
 Name: gscan2pdf
-Version: 2.0.3
+Version: 2.1.2
 Release: alt1
 
 Summary: A GUI to ease the process of producing a multipage PDF from a scan
@@ -59,7 +59,7 @@ Scanning is handled with SANE via scanimage. PDF conversion is done by libtiff.
 %prep
 %setup
 #patch -p2
-%__subst "s|use Gtk3 -init;|use Gtk3; INIT { Gtk3->init; }|g" bin/%name
+%__subst "s|use Gtk3 0.028 -init;|use Gtk3 0.028; INIT { Gtk3->init; }|g" bin/%name
 # djvu %_bindir/cjb2
 %__subst "s|requires djvulibre-bin|djvu-utils|g" bin/%name
 
@@ -93,6 +93,9 @@ find %buildroot -name .packlist | xargs rm -f
 %perl_vendor_privlib/Gscan2pdf/
 
 %changelog
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.2-alt1
+- new version 2.1.2 (with rpmrb script)
+
 * Mon Apr 02 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
 - new version 2.0.3 (with rpmrb script)
 - add missed require libgoocanvas2-gir (ALT bug 34750)
