@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Xmms-Perl
 Name: perl-Xmms
 version: 0.12
-Release: alt4.1.1.1.1
+Release: alt5
 
 Summary: fullname (module for perl)
 License: GPL
@@ -27,10 +28,14 @@ Xmms module for perl
 
 %files
 %doc Changes README
+%perl_vendor_archlib/Bundle/Xmms*
 %perl_vendor_archlib/Xmms*
 %perl_vendor_autolib/Xmms
 
 %changelog
+* Sat Jun 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.12-alt5
+- fixed unpackaged files
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt4.1.1.1.1
 - rebuild with new perl 5.26.1
 
