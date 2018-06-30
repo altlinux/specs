@@ -1,98 +1,107 @@
 Name: hfsprogs
-Version: 332.25
-Release: alt2
+Version: 540.1.linux3
+Release: alt1
 
-Summary: mkfs and fsck for HFS and HFS+ file systems
+Summary: mkfs and fsck for Apple HFS and HFS+ file systems
 Summary(ru_RU.UTF-8): Утилиты для работы с файловыми системами Linux
 
-License: APSL
+License: APSL 2.0
 Group: System/Configuration/Hardware
-Url: http://packages.debian.org/ru/sid/hfsprogs
+Url: http://gentoo-wiki.com/HOWTO_hfsplus
 
-Source: %name-%version.tar
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Patch0: 00-create_makefiles.patch
-Patch1: 10-linux_specific_code.patch
-Patch2: 20-apple_specific_files.patch
-Patch3: 25-64-bit-fix.patch
-Patch4: 30-formatting_strings.patch
-Patch5: 40-printf_types.patch
-Patch6: 50-typo-new_fs-manpage.diff
-Patch7: 60-hfs-wrapper-boot-in-usr-share.diff
-Patch8: 70-diskdev_cmds_system_check-332.14.patch
-Patch9: 80-fix_manpages.patch
-Patch10: 90-rename_dprintf.patch
-Patch11: 91-remove-nils.patch
-Patch12: 92-fix-types.patch
+#Source-url: https://opensource.apple.com/tarballs/diskdev_cmds/diskdev_cmds-%version.tar.gz
+# Source-url: http://cavan.codon.org.uk/~mjg59/diskdev_cmds/diskdev_cmds-%version.tar.gz
+Source: %name-%version.tar
 
-# Automatically added by buildreq on Fri Dec 16 2011
-BuildRequires: libbsd-devel libssl-devel
+Source100: apsl-2.0.txt
+
+# those tools are outdated, given the rebuilt mkfs/fsck.hfsplus in this
+# package.  However, I don't want to Obsolete that package yet, as some people
+# may have a valid use for it on their systems. 
+Conflicts: hfsplusutils
+
+Patch0: hfsplus-tools-no-blocks.patch
+Patch1: hfsplus-tools-learn-to-stdarg.patch
+
+BuildRequires: libuuid-devel libssl-devel
+
+# we want this to end up with the other mkfs.*'s, in /sbin
+%define _exec_prefix /
 
 %description
-The HFS+ file system used by Apple Computer for their Mac OS is
-supported by the Linux kernel.  Apple provides mkfs and fsck for
-HFS+ with the Unix core of their operating system, Darwin.
+HFS+, HFS Plus, or Mac OS Extended are names for a file system developed by
+Apple Computer to replace their Hierarchical File System (HFS). In addition to
+being the default file system on modern Apple computers, HFS+ is one of two
+formats, FAT being the other, that are supported by the iPod hard-disk based
+music player. Unlike FAT, HFS+ supports UNIX style file permissions, which
+makes it useful, for serving and sharing files in a secured manner. As Apple
+Computer's devices and systems become increasingly ubiquitous, it becomes
+important that Linux fully support this format.  This package provides tools
+to create and check HFS+ filesystems under Linux.
 
-This package is a port of Apple's tools for HFS+ filesystems.
-
- For users, HFS+ seems to be a good compromise to carry files between
- MacOS X and Linux Machines, as HFS+ doesn't suffer the problems of
- FAT32 like:
-
- * huge space waste (in slack space as devices grow faster);
- * ability to create files that are more than 4GB in size (especially
-   good for those working with multimedia and that need to carry large
-   ISO files);
- * ability to use case preserving (and even sensitivity!);
- * ability to use uid's and gid's on the filesystem.
-
-Users in general can enjoy such benefits since it is expected to have
-more HFS+ filesystems in use, as Apple has announced Macintoshes for
-ix86-64, besides the filesystem being already supported by PowerPC
-systems since the beginning.
+The Linux kernel does not support writing to HFS+ journals, writing to a
+hfsplus partition is recommended only after disabling journaling; however, the
+kernel, as of version 2.6.16, supports case-sensitivity (also known as HFSX)
+commit.
 
 
 %prep
 %setup
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
+
+# remove errant execute bits
+find . -type f -name '*.[ch]' -exec chmod -c -x {} +
+
+# make life easier on doc
+cp %{SOURCE100} .
+
 
 %build
-# DeallocateFile at SExtents.c:701:8: call to __builtin___memset_chk will always overflow destination buffer
-%add_optflags -U_FORTIFY_SOURCE
-%add_optflags -DDEBUG_BUILD=0 -D_FILE_OFFSET_BITS=64 -D LINUX=1 -D BSD=1 -I$(pwd)/include
-%make_build -f Makefile.lnx CFLAGS="%optflags"
+export CFLAGS="%{optflags}"
+%make_build -f Makefile
 
 %install
-mkdir -p %buildroot%_sbindir/ %buildroot%_man8dir/ %buildroot%_datadir/hfsbootdata/
-install -m 644 newfs_hfs.tproj/hfsbootdata.img %buildroot%_datadir/hfsbootdata/
+mkdir -p %buildroot%_sbindir/
+#mkdir -p %buildroot%_datadir/hfsbootdata/
+#install -m 644 newfs_hfs.tproj/hfsbootdata.img %buildroot%_datadir/hfsbootdata/
+
 install -m 755 newfs_hfs.tproj/newfs_hfs   %buildroot%_sbindir/mkfs.hfsplus
 install -m 755 fsck_hfs.tproj/fsck_hfs     %buildroot%_sbindir/fsck.hfsplus
-install -m 644 newfs_hfs.tproj/newfs_hfs.8 %buildroot%_man8dir/mkfs.hfsplus.8
-install -m 644 fsck_hfs.tproj/fsck_hfs.8   %buildroot%_man8dir/fsck.hfsplus.8
+
+# man pages -- a mildly non-invasive name change is in order
+mkdir -p %{buildroot}/%{_mandir}/man8
+cat fsck_hfs.tproj/fsck_hfs.8 | sed -e 's/[F|f]sck_hfs/fsck.hfsplus/g' \
+    > %{buildroot}/%{_mandir}/man8/fsck.hfsplus.8
+cat newfs_hfs.tproj/newfs_hfs.8 | sed -e 's/[N|n]ewfs_hfs/mkfs.hfsplus/g' \
+    > %{buildroot}/%{_mandir}/man8/mkfs.hfsplus.8
+
+# and a utility symlink...
+cd %{buildroot}/%{_sbindir}
+ln -s fsck.hfsplus fsck.hfs
+cd %{buildroot}/%{_mandir}/man8
+ln -s fsck.hfsplus.8 fsck.hfs.8
+
 
 %files
+%doc apsl-2.0.txt
 %_sbindir/mkfs.hfsplus
 %_sbindir/fsck.hfsplus
-%_datadir/hfsbootdata/
-%_man8dir/*
+%_sbindir/fsck.hfs
+%_man8dir/mkfs.hfsplus.*
+%_man8dir/fsck.hfsplus.*
+%_man8dir/fsck.hfs.*
 
 %changelog
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 540.1.linux3-alt1
+- new version 540.1.linux3 (thanks, Fedora!)
+
 * Tue Jul 31 2012 Vitaly Lipatov <lav@altlinux.ru> 332.25-alt2
 - fix build: disable FORTIFY_SOURCE
 
 * Fri Dec 16 2011 Vitaly Lipatov <lav@altlinux.ru> 332.25-alt1
 - initial build for ALT Linux Sisyphus
+
 
