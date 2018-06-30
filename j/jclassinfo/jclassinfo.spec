@@ -1,7 +1,7 @@
 Summary: Extracts information from java class files
 Name: jclassinfo
 Version: 0.19.1
-Release: alt4.qa1
+Release: alt5
 Packager: Igor Vlasenko <viy@altlinux.ru>
 License: GPL2
 URL: http://jclassinfo.sourceforge.net/
@@ -74,6 +74,7 @@ mkdir -p $RPM_BUILD_ROOT%_datadir/doc/libjclass-docs-%version/html
 %_libdir/jclass
 %_libdir/libjclass.so
 %_pkgconfigdir/jclass.pc
+%exclude %_libdir/libjclass.a
 
 %files -n libjclass-docs
 %doc %_datadir/doc/libjclass-docs-%version/html
@@ -90,6 +91,9 @@ mkdir -p $RPM_BUILD_ROOT%_datadir/doc/libjclass-docs-%version/html
 /usr/share/xml/jclassinfo
 
 %changelog
+* Sat Jun 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.19.1-alt5
+- fixed unpackaged files
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.19.1-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
