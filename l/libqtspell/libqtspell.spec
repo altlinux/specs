@@ -2,7 +2,7 @@
 
 %define oname qtspell
 Name: libqtspell
-Version: 0.8.4
+Version: 0.8.5
 Release: alt1
 
 Summary: Spell checking for Qt text widgets
@@ -136,6 +136,9 @@ cp -al build-qt5 BUILD
 %doc build-qt4/doc/html
 
 %changelog
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 0.8.5-alt1
+- new version 0.8.5 (with rpmrb script)
+
 * Sun Dec 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.8.4-alt1
 - new version 0.8.4 (with rpmrb script)
 
