@@ -1,5 +1,5 @@
 Name: libraqm
-Version: 0.2.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Complex Textlayout Library
@@ -73,6 +73,9 @@ rm -f %buildroot%_libdir/*.{la,a}
 %_datadir/gtk-doc/html/raqm
 
 %changelog
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 0.5.0-alt1
+- new version 0.5.0 (with rpmrb script)
+
 * Wed Apr 26 2017 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt1
 - new version (0.2.0) with rpmgs script
 
