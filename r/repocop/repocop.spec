@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.75
+Version: 0.76
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -23,6 +23,7 @@ BuildRequires: perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-DBD-SQLite
 BuildRequires: perl-RPM-Source-Editor
 BuildRequires: perl-File-Lock-ParentLock
 BuildRequires: perl-HTML-Template-Pro
+BuildRequires: perl(Source/Shared/CLI.pm)
 Requires: perl-DBD-SQLite sqlite3
 
 # obsolete repocop-sqlite interface
@@ -47,7 +48,7 @@ repocop-report-html with whe same arguments as repocop-run.
 %package tools
 Group: Development/Other
 Summary: repocop tools for auto repairing repocop packages
-Requires: perl-RPM-Source-Editor > 0.9200
+Requires: perl-RPM-Source-Editor > 0.9210
 Requires: %name = %version-%release
 
 %description tools
@@ -134,6 +135,10 @@ done
 %_datadir/repocop/html
 
 %changelog
+* Sat Jun 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.76-alt1
+- fixes for p8 acl
+- purge by src.rpm names for quick testing
+
 * Wed Jun 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.75-alt1
 - repocop-run --swift optimization
 - bugfixes in repocop-report-diff
