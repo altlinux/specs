@@ -1,5 +1,5 @@
 Name: clinfo
-Version: 2.2.17.10.25
+Version: 2.2.18.04.06
 Release: alt1
 
 Summary: Enumerate OpenCL platforms and devices
@@ -37,11 +37,14 @@ install -Dpm0644 man1/%name.1 %buildroot%_man1dir/%name.1
 
 %files
 %doc LICENSE legalcode.txt
-%doc README
+%doc README.md
 %_bindir/%name
 %_man1dir/%name.1*
 
 %changelog
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.18.04.06-alt1
+- new version 2.2.18.04.06 (with rpmrb script)
+
 * Mon Nov 06 2017 Vitaly Lipatov <lav@altlinux.ru> 2.2.17.10.25-alt1
 - new version 2.2.17.10.25 (with rpmrb script)
 
