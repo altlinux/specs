@@ -1,6 +1,6 @@
 Name: retroshare
 Version: 0.6.4
-Release: alt1
+Release: alt2
 
 Summary: Secure communication with friends
 
@@ -74,6 +74,9 @@ This package provides a plugin for RetroShare, a secured Friend-to-Friend commun
 
 %prep
 %setup
+# https://svnweb.freebsd.org/ports?view=revision&revision=468858
+# fix build with ffmpeg 4.0 (replace CODEC_, skip CODEC_ID)
+%__subst "s| \(CODEC_[^I]\)| AV_\1|g" plugins/VOIP/gui/VideoProcessor.cpp
 
 %build
 qmake-qt5 "CONFIG-=debug" "CONFIG+=release" "CONFIG+=retroshare_plugins" PREFIX=%prefix LIB_DIR=%_libdir RetroShare.pro
@@ -104,6 +107,9 @@ desktop-file-validate %buildroot%_desktopdir/retroshare.desktop
 %_libdir/retroshare/extensions6/libFeedReader.so*
 
 %changelog
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 0.6.4-alt2
+- rebuild with ffmpeg 4.0
+
 * Sat May 26 2018 Vitaly Lipatov <lav@altlinux.ru> 0.6.4-alt1
 - new version 0.6.4 (with rpmrb script)
 
