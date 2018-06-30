@@ -1,5 +1,5 @@
 Name: libdwarf
-Version: 20180129
+Version: 20180527
 Release: alt1
 
 Summary: Library to access the DWARF Debugging file format
@@ -87,6 +87,9 @@ install -pDm 0755 dwarfdump/dwarfdump     %buildroot%_bindir/dwarfdump
 %_bindir/dwarfdump
 
 %changelog
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 20180527-alt1
+- new version 20180527 (with rpmrb script)
+
 * Sat Feb 24 2018 Vitaly Lipatov <lav@altlinux.ru> 20180129-alt1
 - new version 20180129 (with rpmrb script)
 
