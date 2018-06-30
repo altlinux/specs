@@ -1,10 +1,9 @@
-
 # BEGIN SourceDeps(oneline):
 BuildRequires: libGL-devel libICE-devel libX11-devel pkgconfig(dbus-1) pkgconfig(ecore-x) pkgconfig(libpulse) pkgconfig(xi)
 # END SourceDeps(oneline)
 Name: e16
 Version: 1.0.11
-Release: alt3.1
+Release: alt4
 #Serial: 1
 
 Summary: The Enlightenment DR16 window manager
@@ -99,6 +98,10 @@ install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/X11/wmsession.d/05E16
 %add_findreq_skiplist %_bindir/starte16
 %add_findreq_skiplist %_datadir/e16/misc/*
 
+# unpackaged files
+rm -f %buildroot/usr/share/applications/e16.desktop \
+    %buildroot/usr/share/gnome-session/sessions/e16-gnome.session
+
 %files -f e16.lang
 %doc AUTHORS COMPLIANCE ChangeLog
 # for old menu-method
@@ -116,6 +119,9 @@ install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/X11/wmsession.d/05E16
 %_datadir/doc/%name
 
 %changelog
+* Sat Jun 30 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt4
+- fixed unpackaged files
+
 * Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.11-alt3.1
 - Rebuilt with new audiofile
 
