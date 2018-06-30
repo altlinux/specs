@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        66.0.3359.117
+Version:        67.0.3396.87
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -75,6 +75,9 @@ Patch020: 0020-ALT-allow-_FORTIFY_SOURCE-for-clang.patch
 Patch021: 0021-FEDORA-Fix-gcc-round.patch
 Patch022: 0022-FEDORA-Fix-memcpy.patch
 Patch023: 0023-GENTOO-chromium-ffmpeg-r1.patch
+Patch024: 0024-ARCHLINUX-chromium-widevine-r2.patch
+Patch025: 0025-ALT-openh264-always-pic-on-x86.patch
+Patch026: 0026-ALT-clang.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -91,6 +94,7 @@ BuildRequires:  clang6.0-devel
 BuildRequires:  llvm6.0-devel
 BuildRequires:  lld-devel
 %endif
+BuildRequires:  ninja-build
 BuildRequires:  gperf
 BuildRequires:  libcups-devel
 %if_enabled wayland
@@ -227,12 +231,11 @@ tar -xf %SOURCE1
 %patch021 -p1
 %patch022 -p1
 %patch023 -p1
+%patch024 -p1
+%patch025 -p1
+%patch026 -p1
 ### Finish apply patches
 
-# Enable support for the Widevine CDM plugin
-# libwidevinecdm.so is not included, but can be copied over from Chrome
-# (Version string doesn't seem to matter so let's go with "Pinkie Pie")
-sed '14i#define WIDEVINE_CDM_VERSION_STRING "Pinkie Pie"' -i third_party/widevine/cdm/stub/widevine_cdm_version.h
 echo > "third_party/adobe/flash/flapper_version.h"
 
 # lost sources
@@ -242,26 +245,24 @@ for f in .rpm/blinkpy-common/*.py; do
 done
 touch third_party/blink/tools/blinkpy/__init__.py
 
-# No cheats inside!
-sed -i \
-	-e 's,cc = "$prefix/clang",cc = getenv("CC"),g' \
-	-e 's,cxx = "$prefix/clang++",cxx = getenv("CXX"),g' \
-build/toolchain/gcc_toolchain.gni
-
 mkdir -p third_party/node/linux/node-linux-x64/bin
 ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/
+
+rm -f -- .rpm/depot_tools/ninja
+ln -s /usr/bin/ninja .rpm/depot_tools/ninja
 
 
 %build
 %if_enabled clang
-export CC="clang -v"
-export CXX="clang++ -v"
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
 %else
 export CC="gcc"
 export CXX="g++"
+export AR="ar"
 %endif
 
-export AR="ar"
 export RANLIB="ranlib"
 export PATH="$PWD/.rpm/depot_tools:$PATH"
 export CHROMIUM_RPATH="%_libdir/%name"
@@ -351,8 +352,7 @@ ninja \
 	-C %target \
 	chrome \
 	chrome_sandbox \
-	chromedriver \
-	widevinecdmadapter
+	chromedriver
 
 %install
 mkdir -p -- \
@@ -380,12 +380,10 @@ cp -a chromedriver   %buildroot%_libdir/%name/chromedriver
 
 ln -s -- %_libdir/%name/chromedriver %buildroot/%_bindir/chromedriver
 
-cp -at %buildroot%_libdir/%name -- \
- *.bin *.so* *.pak \
- swiftshader \
- locales \
- icudtl.dat \
-#
+for f in *.bin *.so* *.pak swiftshader locales icudtl.dat; do
+	[ ! -e "$f" ] ||
+		cp -at %buildroot%_libdir/%name -- "$f"
+done
 
 # Remove garbage
 find -name '*.TOC' -delete
@@ -473,6 +471,37 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Sun Jun 17 2018 Alexey Gladkov <legion@altlinux.ru> 67.0.3396.87-alt1
+- New version (67.0.3396.87).
+- Use ninja-build.
+- Security fixes:
+  - CVE-2018-6149: Out of bounds write in V8.
+  - CVE-2018-6148: Incorrect handling of CSP header.
+  - CVE-2018-6123: Use after free in Blink.
+  - CVE-2018-6124: Type confusion in Blink.
+  - CVE-2018-6125: Overly permissive policy in WebUSB.
+  - CVE-2018-6126: Heap buffer overflow in Skia.
+  - CVE-2018-6127: Use after free in indexedDB.
+  - CVE-2018-6128: uXSS in Chrome on iOS.
+  - CVE-2018-6129: Out of bounds memory access in WebRTC.
+  - CVE-2018-6130: Out of bounds memory access in WebRTC.
+  - CVE-2018-6131: Incorrect mutability protection in WebAssembly.
+  - CVE-2018-6132: Use of uninitialized memory in WebRTC.
+  - CVE-2018-6133: URL spoof in Omnibox.
+  - CVE-2018-6134: Referrer Policy bypass in Blink.
+  - CVE-2018-6135: UI spoofing in Blink.
+  - CVE-2018-6136: Out of bounds memory access in V8.
+  - CVE-2018-6137: Leak of visited status of page in Blink.
+  - CVE-2018-6138: Overly permissive policy in Extensions.
+  - CVE-2018-6139: Restrictions bypass in the debugger extension API.
+  - CVE-2018-6140: Restrictions bypass in the debugger extension API.
+  - CVE-2018-6141: Heap buffer overflow in Skia.
+  - CVE-2018-6142: Out of bounds memory access in V8.
+  - CVE-2018-6143: Out of bounds memory access in V8.
+  - CVE-2018-6144: Out of bounds memory access in PDFium.
+  - CVE-2018-6145: Incorrect escaping of MathML in Blink.
+  - CVE-2018-6147: Password fields not taking advantage of OS protections in Views.
+
 * Thu Apr 19 2018 Alexey Gladkov <legion@altlinux.ru> 66.0.3359.117-alt1
 - New version (66.0.3359.117).
 - Security fixes:
