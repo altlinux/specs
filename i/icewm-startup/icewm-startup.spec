@@ -4,7 +4,7 @@
 %def_without kde3kdesktop
 Name: icewm-startup
 Version: 0.19
-Release: alt1
+Release: alt2
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -417,12 +417,14 @@ sleep $delay
 EOF
 
 echo 'xtoolwait gkrellm'> %buildroot/%icewmconfdir/startup.d/gkrellm
-echo 'kdesktop&'> %buildroot/%icewmconfdir/startup.d/kdesktop
 echo 'mount-tray&'> %buildroot/%icewmconfdir/startup.d/mount-tray
 echo 'ivman&'> %buildroot/%icewmconfdir/startup.d/ivman
 echo 'apt-indicator&'> %buildroot/%icewmconfdir/startup.d/apt-indicator
 echo "/usr/libexec/notification-daemon&" > %buildroot/%icewmconfdir/startup.d/notification-daemon
 echo "spacefm --desktop&" > %buildroot/%icewmconfdir/startup.d/spacefm
+%if_with kde3kdesktop
+echo 'kdesktop&'> %buildroot/%icewmconfdir/startup.d/kdesktop
+%endif
 
 cat <<EOF > %buildroot/%icewmconfdir/startup.d/020-idesk
 #!/bin/sh
@@ -619,6 +621,9 @@ fi
 %config %icewmconfdir/shutdown.d/000-simple-sound
 
 %changelog
+* Sat Jun 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.19-alt2
+- fixed unpackaged files
+
 * Wed Apr 11 2018 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - added spacefm (closes: 34794)
 
