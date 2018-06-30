@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Unicode-Map
 Name: perl-%dist
 Version: 0.112
-Release: alt6.1.1.1.1
+Release: alt7
 
 Summary: Maps charsets from and to utf16 unicode
 License: GPL or Artistic
@@ -12,12 +13,23 @@ Source0: %dist-%version.tar.gz
 Source1: http://www.unicode.org/Public/MAPPINGS/VENDORS/MISC/KOI8-R.TXT
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl-podlators
 
 %description
 This module converts strings from and to 2-byte Unicode UCS2 format.
 All mappings happen via 2 byte UTF16 encodings, not via 1 byte UTF8
 encoding. To transform these use Unicode::String.
+
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %name = %EVR
+Conflicts: %name < 0.112-alt7
+BuildRequires: perl(HTTP/Status.pm) perl(LWP/Simple.pm)
+
+%description scripts
+scripts for %name
+
 
 %prep
 %setup -q -n %dist-%version
@@ -54,12 +66,20 @@ perl -Mblib -MUnicode::Map -e 'Unicode::Map->new("KOI8-R") or die "KOI8-R broken
 
 %files
 %doc Changes README
-%_bindir/map
-%_bindir/mkmapfile
 %perl_vendor_archlib/Unicode
 %perl_vendor_autolib/Unicode
 
+%files scripts
+%_bindir/map
+%_bindir/mkmapfile
+%_bindir/mirrorMappings
+%_bindir/mkCSGB2312
+%_man1dir/*
+
 %changelog
+* Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.112-alt7
+- fixed unpackaged files
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.112-alt6.1.1.1.1
 - rebuild with new perl 5.26.1
 
