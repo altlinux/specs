@@ -2,20 +2,20 @@
 %define oname nicotine+
 
 Name: nicotine-plus
-Version: 1.2.16
-Release: alt2.1
+Version: 1.4.1
+Release: alt1
 
 Summary: The client program for the SoulSeek filesharing system
 Summary(ru_RU.UTF-8): Клиент для файлообменной сети SoulSeek
 
 Group: Networking/File transfer
 License: GPL
-Url: http://nicotine-plus.sourceforge.net/
+Url: https://github.com/Nicotine-Plus/nicotine-plus
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/%name/%oname-%version.tar
-Source12: nicotine.48.png
+# Source-url: https://github.com/Nicotine-Plus/nicotine-plus/archive/%version.tar.gz
+Source: %oname-%version.tar
 
 Patch: %name-alt-desktop-entry.patch
 
@@ -75,25 +75,12 @@ Nicotine поддерживает оптимизатор кода psyco, вы м
 
 %prep
 %setup -n %oname-%version
-#patch
 
 %build
 %python_build
 
 %install
 %python_install
-
-%define _iconstheme    hicolor
-%define _iconsbasedir  %_iconsdir/%{_iconstheme}
-%define _icons16dir    %{_iconsbasedir}/16x16/apps
-%define _icons48dir    %{_iconsbasedir}/48x48/apps
-
-install -D -m644 files/%name-16px.png %buildroot%_icons16dir/%name.png
-install -D -m644 files/%name-32px.png %buildroot%_niconsdir/%name.png
-install -D -m644 %SOURCE12 %buildroot%_icons48dir/%name.png
-
-rm -rf %buildroot%_datadir/nicotine/documentation/
-ln -s nicotine.py %buildroot%_bindir/nicotine
 
 %find_lang nicotine
 
@@ -105,18 +92,20 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 %files -f nicotine.lang
 %_bindir/nicotine
-%_bindir/nicotine.py
-%doc doc/*
+%doc %_docdir/nicotine/
 %python_sitelibdir/pynicotine/
+%python_sitelibdir/nicotine*egg-info
 %_desktopdir/*
-%_icons16dir/*
-%_niconsdir/*
-%_icons48dir/*
+%_iconsdir/hicolor/*x*/apps/*.png
+%_iconsdir/hicolor/scalable/apps/*.svg
 %_man1dir/*
-%_pixmapsdir/*
 %_datadir/nicotine/
 
 %changelog
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
+- new version (1.4.1) with rpmgs script
+- cleanup spec, change sources to github
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.16-alt2.1
 - Rebuild with Python-2.7
 
