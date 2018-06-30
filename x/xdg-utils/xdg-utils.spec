@@ -1,6 +1,6 @@
 Name: xdg-utils
-Version: 1.1.2
-Release: alt4
+Version: 1.1.3
+Release: alt1
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -95,6 +95,9 @@ popd
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.1.3-alt1
+- new version 1.1.3 (with rpmrb script)
+
 * Tue Mar 06 2018 Anton Midyukov <antohami@altlinux.org> 1.1.2-alt4
 - fix xdg-open support lxqt (Closes: 34614)
 
