@@ -1,10 +1,12 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 %define module		XML-XQL
 %define m_distro	XML-XQL
 %define m_name		XML::XQL
 %define m_author_id	TJMATHER
 Name: perl-%module
 Version: 0.68
-Release: alt2.1
+Release: alt3
 
 Summary: A perl module for querying XML tree structures with XQL
 Group: Development/Perl
@@ -25,6 +27,15 @@ This is a Perl extension that allows you to perform XQL queries on XML
 object trees. Currently only the XML::DOM module is supported, but
 other implementations, like XML::Grove, may soon follow.
 
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %name = %EVR
+
+%description scripts
+scripts for %name
+
+
 %prep
 %setup -q -n %m_distro-%version
 
@@ -38,7 +49,15 @@ other implementations, like XML::Grove, may soon follow.
 %doc README Changes
 %perl_vendor_privlib/XML/
 
+%files scripts
+%_bindir/*
+#%_man1dir/*
+
+
 %changelog
+* Sat Jun 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.68-alt3
+- fixed unpackaged files
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.68-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
