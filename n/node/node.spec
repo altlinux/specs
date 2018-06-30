@@ -24,12 +24,15 @@
 %global libuv_abi 1.19.1
 %def_with systemuv
 
+%global libicu_abi 6.0
+%def_with systemicu
+
 %def_disable check
 
 %define oversion %version
 
 Name: node
-Version: %major.2
+Version: %major.3
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -67,7 +70,10 @@ Requires: openssl >= %openssl_version
 BuildRequires: libuv-devel >= %libuv_abi
 %endif
 
-BuildRequires: libicu-devel
+%if_with systemicu
+BuildRequires: libicu-devel >= %libicu_abi
+%endif
+
 BuildRequires: libhttp-parser-devel
 BuildRequires: libcares-devel >= 1.11.0
 
@@ -144,14 +150,27 @@ node programs. It manages dependencies and does other cool stuff.
 %if_with systemv8
 # hack against https://bugzilla.altlinux.org/show_bug.cgi?id=32573#c3
 cp -a deps/v8/include/libplatform src
-rm -rf deps/v8
+rm -rf deps/v8/
+%endif
+%if_with systemicu
+rm -rf deps/icu-small/
+%endif
+%if_with systemuv
+#rm -rf deps/uv/
+%endif
+# TODO:
+# rm -rf deps/zlib deps/openssl deps/cares deps/http-parser deps/gtest
+%if_without npm
+rm -rf deps/npm/
 %endif
 
 %build
 ./configure \
     --prefix=%_prefix \
     --shared-zlib \
+%if_with systemicu
     --with-intl=system-icu \
+%endif
     --shared-http-parser \
     --shared-cares \
 %if_with systemssl
@@ -261,6 +280,11 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 8.11.3-alt1
+- new version (8.11.3) with rpmgs script
+- 2018-06-12, Version 8.11.3 'Carbon' (LTS), @evanlucas
+- CVE-2018-7167, CVE-2018-7161, CVE-2018-1000168
+
 * Tue May 22 2018 Vitaly Lipatov <lav@altlinux.ru> 8.11.2-alt1
 - new version (8.11.2) with rpmgs script
 - 2018-05-15, Version 8.11.2 'Carbon' (LTS)
