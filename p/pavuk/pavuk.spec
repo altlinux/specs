@@ -1,6 +1,6 @@
 Name: pavuk
 Version: 0.9.35
-Release: alt6.1
+Release: alt6.2
 Epoch: 1
 Packager: Igor Vlasenko <viy@altlinux.org>
 Summary: Pavuk WWW Graber
@@ -67,6 +67,8 @@ install -m 644 pavuk.desktop $RPM_BUILD_ROOT%_desktopdir/
 
 %{find_lang} %{name}
 
+rm -f %buildroot/usr/share/icons/pavuk_prg_icon.xpm
+
 %files -f %{name}.lang
 #olddoc FAQ 
 %doc ABOUT-NLS AUTHORS BUGS ChangeLog COPYING CREDITS INSTALL MAILINGLIST NEWS README TODO 
@@ -81,6 +83,9 @@ install -m 644 pavuk.desktop $RPM_BUILD_ROOT%_desktopdir/
 #_datadir/pixmaps/*.xpm
 
 %changelog 
+* Sat Jun 30 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.9.35-alt6.2
+- fixed unpackaged files
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.9.35-alt6.1
 - Fixed build
 
