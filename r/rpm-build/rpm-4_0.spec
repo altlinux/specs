@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt113
+Release: alt114
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -512,6 +512,10 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %endif #with python
 
 %changelog
+* Sat Jun 30 2018 Alexey Tourbin <at@altlinux.ru> 4.0.4-alt114
+- cpio.c: Fixed the conversion of 8-digit hex file sizes from cpio header.
+  Packages with a 2GB+ file should now be installable.
+
 * Tue Jun 26 2018 Alexey Tourbin <at@altlinux.ru> 4.0.4-alt113
 - Implemented limited support for large files: a 2GB+ file can now be packaged,
   but the total size of uncompressed cpio payload is capped at 4 GB.
