@@ -1,6 +1,6 @@
 Name: unpaper
 Version: 6.1
-Release: alt2
+Release: alt3
 
 Summary: unpaper is a post-processing tool for scanned sheets of paper
 Summary(ru_RU.UTF-8): программа для обработки страниц после сканирования
@@ -8,6 +8,8 @@ Summary(ru_RU.UTF-8): программа для обработки страни�
 License: GPLv2
 Group: Publishing
 Url: http://www.flameeyes.eu/projects/unpaper
+
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/Flameeyes/unpaper/archive/unpaper-%version.tar.gz
 Source: http://www.flameeyes.eu/files/%name-%version.tar
@@ -56,6 +58,9 @@ unpaper — это программа для обработки страниц �
 %doc AUTHORS NEWS README.md
 
 %changelog
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 6.1-alt3
+- rebuild with ffmpeg 4.0
+
 * Mon Jun 12 2017 Vitaly Lipatov <lav@altlinux.ru> 6.1-alt2
 - rebuild with ffmpeg
 
