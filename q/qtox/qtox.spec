@@ -1,7 +1,7 @@
 %def_with ffmpeg
 Name: qtox
 Version: 1.15.0
-Release: alt1
+Release: alt2
 
 Summary: Powerful Tox client that follows the Tox design guidelines
 
@@ -80,6 +80,9 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.15.0-alt2
+- rebuild with ffmeg 4.0
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 1.15.0-alt1
 - new version 1.15.0 (with rpmrb script)
 
