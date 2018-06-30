@@ -1,5 +1,5 @@
 Name: 	 xrdp
-Version: 0.9.6
+Version: 0.9.7
 Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
@@ -230,6 +230,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Fri Jun 29 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.7-alt1
+- New version.
+
 * Mon Mar 26 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.6-alt1
 - New version.
 
