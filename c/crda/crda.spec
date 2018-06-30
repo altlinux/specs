@@ -6,7 +6,7 @@
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
 Version: 4.14
-Release: alt2.%_db_date
+Release: alt3.%_db_date
 License: copyleft-next 0.3.0
 Group: Networking/Other
 
@@ -84,12 +84,12 @@ cd %_db
 cd ../%name-%version
 cp ../%_db/key.pub.pem pubkeys
 
-%make SBINDIR=%sbindir LIBDIR=%crda_lib \
+%make SBINDIR=%sbindir/ LIBDIR=%crda_lib \
 	REG_BIN=../%_db/regulatory.bin V=1
 
 %install
 cd crda-%version
-%makeinstall_std MANDIR=%_mandir SBINDIR=%sbindir LIBDIR=/%_lib
+%makeinstall_std MANDIR=%_mandir SBINDIR=%sbindir/ LIBDIR=/%_lib
 
 cd ../%_db
 %makeinstall_std PREFIX='' MANDIR=%_mandir
@@ -127,6 +127,9 @@ ln -s regulatory.bin.5 %buildroot%_man5dir/regulatory.db.5
 %_includedir/reglib
 
 %changelog
+* Sat Jun 30 2018 L.A. Kostis <lakostis@altlinux.ru> 4.14-alt3.2018.05.31
+- fix sbin dir.
+
 * Wed Jun 27 2018 L.A. Kostis <lakostis@altlinux.ru> 4.14-alt2.2018.05.31
 - wireless-regdb:
   + split to separate package;
