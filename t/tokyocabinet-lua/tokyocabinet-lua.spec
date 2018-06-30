@@ -3,7 +3,7 @@
 %define bname tokyocabinet
 Name: %bname-lua
 Version: 1.8
-Release: alt2.qa2
+Release: alt2.qa3
 Summary: Lua binding to the Tokyo Cabinet
 License: %lgpl2plus
 Group: Development/Other
@@ -49,16 +49,19 @@ install -m 0644 overview.html %buildroot%_docdir/%name-%version/
 install -m 0644 doc/modules/* %buildroot%_docdir/%name-%version/html/modules/
 install -m 0644 doc/*.{css,html} %buildroot%_docdir/%name-%version/html/
 
+rm -f %buildroot%_bindir/*test.lua
 
 %files
 %_libdir/*/*/*.so
-
 
 %files doc
 %_docdir/%name-%version
 
 
 %changelog
+* Sat Jun 30 2018 Igor Vlasenko <viy@altlinux.ru> 1.8-alt2.qa3
+- NMU: fixed unpackaged files
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.8-alt2.qa2
 - rebuild with new lua
 
