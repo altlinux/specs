@@ -4,8 +4,8 @@
 %define dmp_ver 0.18.8
 
 Name: libraw
-Version: 0.18.12
-Release: alt2
+Version: 0.18.13
+Release: alt1
 
 Summary: library for reading RAW files obtained from digital photo cameras
 Group: System/Libraries
@@ -96,6 +96,9 @@ This package contains static library.
 %_libdir/libraw_r.a
 
 %changelog
+* Sat Jun 30 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18.13-alt1
+- 0.18.13
+
 * Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18.12-alt2
 - rebuilt against libjasper.so.4
 
