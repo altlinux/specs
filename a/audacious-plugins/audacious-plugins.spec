@@ -3,7 +3,7 @@
 %define oname audacious
 Name: audacious-plugins
 Version: 3.9
-Release: alt2.1
+Release: alt3
 
 Summary: Plugins for Audacious
 
@@ -17,10 +17,7 @@ Source: http://distfiles.audacious-media-player.org/%name-%version%rel.tar
 
 Requires: %oname = %version
 
-# manually removed: i586-libxcb  python3 ruby ruby-stdlibs
-# Automatically added by buildreq on Tue Sep 02 2014
-# optimized out: glib2-devel gnu-config libGL-devel libX11-devel libXfixes-devel libXrender-devel libalsa-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcloog-isl4 libdbus-devel libdbus-glib libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libpango-devel libsndfile-devel libstdc++-devel pkg-config python-base python-devel python-module-distribute python-module-zope python-modules python-modules-xml python3-base termutils xorg-compositeproto-devel xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: gcc-c++ libSDL-devel libXcomposite-devel libaudacious-devel libavformat-devel libbinio-devel libbs2b-devel libcddb-devel libcdio-paranoia-devel libcue-devel libcurl-devel libdbus-glib-devel libfaad-devel libflac-devel libfluidsynth-devel libgtk+3-devel liblame-devel liblirc-devel libmms-devel libmodplug-devel libmpg123-devel libneon-devel libnotify-devel libpulseaudio-devel libsamplerate-devel libsidplayfp-devel libvorbis-devel libwavpack-devel libxml2-devel python-module-PyXML python-module-cmd2 python-module-google python-module-mwlib
+BuildRequires: gcc-c++ libSDL-devel libXcomposite-devel libaudacious-devel libavformat-devel libbinio-devel libbs2b-devel libcddb-devel libcdio-paranoia-devel libcue-devel libcurl-devel libdbus-glib-devel libfaad-devel libflac-devel libfluidsynth-devel libgtk+3-devel liblame-devel liblirc-devel libmms-devel libmodplug-devel libmpg123-devel libneon-devel libnotify-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel libxml2-devel libalsa-devel
 
 BuildRequires: lib%oname-devel = %version
 
@@ -65,6 +62,10 @@ This package contains the base I/O plugins:
 %_libdir/%oname/*
 
 %changelog
+* Fri Jun 29 2018 Vitaly Lipatov <lav@altlinux.ru> 3.9-alt3
+- rebuild with ffmpeg 4.0
+- add missed libalsa-devel
+
 * Sat Jan 13 2018 Vitaly Lipatov <lav@altlinux.ru> 3.9-alt2.1
 - autorebuild with libcdio-2.0.0
 
