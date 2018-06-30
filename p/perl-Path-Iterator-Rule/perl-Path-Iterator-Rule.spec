@@ -3,7 +3,7 @@
 %define real_name Path-Iterator-Rule
 
 Name: perl-Path-Iterator-Rule
-Version: 1.012
+Version: 1.014
 Release: alt1
 
 Summary: Iterative, recursive file finder
@@ -51,5 +51,8 @@ arguments to the method that generates an iterator.
 %perl_vendor_privlib/PIR*
 
 %changelog
+* Sat Jun 30 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.014-alt1
+- New version
+
 * Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.ru> 1.012-alt1
 - Initial build for ALT Linux Sisyphus
