@@ -2,7 +2,7 @@
 %define ver_major 2.4
 
 Name: openshot
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Non Linear Video Editor using Python and MLT
@@ -13,13 +13,13 @@ Url: http://www.openshotvideo.com/
 %if_disabled snapshot
 Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-qt-%version.tar.gz
 %else
-# bzr branch lp:openshot/2.0
+# VCS: https://github.com/OpenShot/openshot-qt.git
 Source: %name-%version.tar.gz
 %endif
 
 BuildArch: noarch
 
-Requires: python3-module-%name >= 0.1.9
+Requires: python3-module-%name >= 0.2.0
 Requires: blender inkscape
 
 # should be self-satisfied
@@ -37,7 +37,7 @@ and image formats. Create videos for YouTube, Flickr, Vimeo, Metacafe,
 Xbox, and many more common formats.
 
 %prep
-%setup -D -c -n %name-qt-%version
+%setup -n %name-qt-%version
 
 %build
 %python3_build
@@ -55,9 +55,12 @@ Xbox, and many more common formats.
 %_pixmapsdir/*
 %_desktopdir/*
 %_datadir/mime/packages/*
-%doc AUTHORS README
+%doc AUTHORS README*
 
 %changelog
+* Sat Jun 30 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
+- 2.4.2
+
 * Mon Nov 13 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
 - 2.4.1
 
