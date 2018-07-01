@@ -2,16 +2,15 @@
 %define api_ver 5.5
 %define plugin_abi_ver 0
 
-%def_enable gnome_keyring
 #monitor device suspending and resuming
 %def_disable upower
 # NetworkManager support
 %def_enable nm
-%def_enable check
+%def_disable check
 
 Name: telepathy-mission-control
 Version: 5.16.4
-Release: alt1
+Release: alt2
 
 Summary: Telepathy mission control plugin library
 License: LGPL v2.1
@@ -19,11 +18,13 @@ Group: System/Libraries
 Url: http://mission-control.sourceforge.net/
 
 Source: http://telepathy.freedesktop.org/releases/%name/%name-%version.tar.gz
+Patch: %name-5.16.4-up-string_max_size_calculation.patch
+
+Requires: dconf
 
 BuildRequires: gtk-doc libgio-devel >= 2.46.0 libdbus-glib-devel libtelepathy-glib-devel >= 0.22.0
 %{?_enable_upower:BuildRequires: libupower-devel}
 %{?_enable_nm:BuildRequires: libnm-devel}
-%{?_enable_gnome_keyring:BuildRequires: libgnome-keyring-devel}
 
 %if_enabled check
 BuildRequires: python-modules-encodings python-module-twisted-words python-module-twisted-core-gui
@@ -62,12 +63,12 @@ Development libraries and header files for %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
 export CFLAGS="$CFLAGS `pkg-config --cflags glib-2.0` `pkg-config --cflags dbus-glib-1`"
 %configure \
-	%{?_enable_gnome_keyring:--enable-gnome-keyring} \
 	--disable-static \
 	--disable-schemas-compile
 
@@ -79,7 +80,7 @@ export CFLAGS="$CFLAGS `pkg-config --cflags glib-2.0` `pkg-config --cflags dbus-
 mkdir %buildroot%_libdir/mission-control-plugins.%plugin_abi_ver
 
 %check
-%{?_enable_check:%make check}
+%make check
 
 %files -n lib%name
 %_bindir/*
@@ -99,6 +100,10 @@ mkdir %buildroot%_libdir/mission-control-plugins.%plugin_abi_ver
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sun Jul 01 2018 Yuri N. Sedunov <aris@altlinux.org> 5.16.4-alt2
+- updated buildreqs
+- disabled %%check
+
 * Sat Sep 03 2016 Yuri N. Sedunov <aris@altlinux.org> 5.16.4-alt1
 - 5.16.4
 
