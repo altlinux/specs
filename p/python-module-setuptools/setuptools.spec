@@ -6,7 +6,7 @@
 Name: python-module-%mname
 Epoch: 1
 Version: 39.2.0
-Release: alt3%ubt
+Release: alt4%ubt
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -17,13 +17,17 @@ Url: http://pypi.python.org/pypi/setuptools
 Provides: python-module-distribute = %EVR
 Obsoletes: python-module-distribute <= 0.6.35-alt1
 
+Requires: python-module-pkg_resources = %EVR
+# setuptools has commands for doing binary builds; for them to work always:
+Requires: python-dev
+
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
+BuildPreReq: python %py_dependencies distutils
 
 %if_with check
 BuildRequires: python-module-pytest
@@ -46,6 +50,9 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-contextlib2
 BuildRequires: python3-module-pytest-fixture-config
 BuildRequires: python3-module-pytest-flake8
+# For the tests of the setuptools commands to do binary builds:
+BuildPreReq: python-dev
+BuildPreReq: python3-dev
 %endif
 
 BuildArch: noarch
@@ -65,6 +72,9 @@ Provides: python-module-distribute-docs = %EVR
 Summary: Python Distutils Enhancements
 Group: Development/Python3
 Provides: python3-module-distribute = %EVR
+Requires: python3-module-pkg_resources = %EVR
+# setuptools has commands for doing binary builds; for them to work always:
+Requires: python3-dev
 # skip requires of self
 %filter_from_requires /python3\(\.[[:digit:]]\)\?(pkg_resources\.extern\..*)/d
 %filter_from_requires /python3\(\.[[:digit:]]\)\?(setuptools\.extern\..*)/d
@@ -165,11 +175,19 @@ popd
 %_bindir/easy_install-%_python_version
 %python_sitelibdir/setuptools
 %python_sitelibdir/easy_install.*
-%python_sitelibdir/setuptools-%version-*.egg-info
 
 %files -n python-module-pkg_resources
 %doc LICENSE
 %python_sitelibdir/pkg_resources
+# People write "setuptools" in *.egg-info/requires.txt (or in setup.py's requires)
+# even if they use only the pkg_resources part;
+# if setuptools-*.egg-info is not present, pkg_resources.load_entry_point() fails
+# (for no real reason). Unfortunately, they have nothing better to write there...
+# So we fool this mechanism by putting this file even
+# if having incomplete setuptools code.
+# Our autoreqs will take over the duty of tracking the real dependencies.
+# (In future, we could patch their requires.txt.)
+%python_sitelibdir/setuptools-%version-*.egg-info
 
 %files docs
 %doc docs/*.txt
@@ -181,13 +199,21 @@ popd
 %python3_sitelibdir/__pycache__/*
 %python3_sitelibdir/setuptools
 %python3_sitelibdir/easy_install.*
-%python3_sitelibdir/setuptools-%version-*.egg-info
 
 %files -n python3-module-pkg_resources
 %doc LICENSE
 %python3_sitelibdir/pkg_resources
+%python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
+* Fri Jun 29 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:39.2.0-alt4%ubt
+- put *.egg-info even in the uncomplete pkg_resources subpkg
+  to fool the checking mechanism. (People declare that they use "setuptools",
+  but actually they often just use pkg_resources. They shouldn't get an error.
+  In future, we could patch their requires.txt.)
+- Requires: python*-dev (for commands for binary builds to work
+  always)
+
 * Thu Jun 28 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:39.2.0-alt3%ubt
 - pkg_resources packaged separately (needed at runtime; unlike setuptools)
 

@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.14
-Release: alt5
+Release: alt6
 
 %define package_name		%real_name
 %define weight			1001
@@ -105,7 +105,7 @@ BuildRequires: bzlib-devel gcc-c++ libdb4-devel libexpat-devel libgdbm-devel lib
 %{?_with_valgrind:BuildRequires: valgrind-devel}
 %{?_with_ssl:BuildRequires: libssl-devel}
 %{?_with_bluez:BuildRequires: libbluez-devel}
-# Not to lose a module which used to be a part of our standard "interface"
+# Not to loose a module which used to be a part of our standard "interface"
 # (i.e., no reqs were generated because nis was assumed to be always present).
 BuildPreReq: libnsl2-devel
 %{?!_without_check:%{?!_disable_check:BuildPreReq: /proc /dev/pts}}
@@ -232,6 +232,19 @@ Requires: %name-modules = %version-%release
 %description user-scripts
 Python scripts for user improvements. Current release includes console
 autocompletion based on readline for command line interface.
+
+%package modules-distutils
+Summary: Python "distutils" module
+Group: Development/Python
+Requires: %name-modules = %version-%release
+# distutils used to be a part of python-dev:
+Conflicts: %name-dev < 0:2.7.14-alt6
+
+%description modules-distutils
+The "distutils" modules included with the Python distribution.
+
+distutils are used when preparing Python packages for distribution,
+but also at runtime by some Python libraries/executables.
 
 %package modules-encodings
 Summary: Python "encodings" module
@@ -452,6 +465,7 @@ this separate package was made because of extra library dependencies.
 Summary: The libraries and header files needed for Python development
 Group: Development/Python
 Requires: %name-modules = %version-%release
+Requires: %name-modules-distutils = %version-%release
 Requires: %name = %version-%release
 Provides: %real_name-devel = %require_ver
 Obsoletes: %python_name-modules-dev <= %noversion_from
@@ -1046,6 +1060,10 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %files modules-unittest -f modules-unittest-list
 %python_libdir/unittest
 
+%files modules-distutils -f modules-distutils-list
+%python_libdir/distutils
+%exclude %python_libdir/distutils/tests
+
 %files modules-encodings -f modules-encodings-list
 %python_libdir/encodings
 
@@ -1121,8 +1139,6 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-dev
 %_includedir/%python_name
 %exclude %_includedir/%python_name/pyconfig.h
-%python_libdir/distutils
-%exclude %python_libdir/distutils/tests
 %_libdir/lib%python_name.so
 %_pkgconfigdir/python.pc
 %_pkgconfigdir/python2.pc
@@ -1156,6 +1172,10 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Fri Jun 29 2018 Ivan Zakharyaschev <imz@altlinux.org> 2.7.14-alt6
+- move distutils into a separate pkg from python-dev
+  (because it can be used at runtime by other libs/executables).
+
 * Fri Jun 29 2018 Michael Shigorin <mike@altlinux.org> 2.7.14-alt5
 - E2K:
   + support e2kv4 through %%e2k macro (grenka@)
