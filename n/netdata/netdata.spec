@@ -1,10 +1,10 @@
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit 3bd41a09fccccbc6b095805556d3009b9ebf6213
+%define release_commit c92349444f88427d8ddef2fb1ac6c4932cf6c8bb
 
 %define netdatauser netdata
 Name: netdata
 Version: 1.10.0
-Release: alt1
+Release: alt2
 
 Summary: Real-time performance monitoring, done right!
 
@@ -16,6 +16,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-git: https://github.com/firehol/netdata.git
 Source: %name-%version.tar
+
+Source1: netdata.logrotate
 
 # manually removed: python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs
 # Automatically added by buildreq on Fri Aug 05 2016
@@ -95,7 +97,11 @@ install -m 644 -p system/netdata.conf %buildroot%_sysconfdir/%name/netdata.conf
 #mkdir -p %buildroot%_sysconfdir/%name/charts.d/
 
 mkdir -p %buildroot%_logrotatedir/
+%if %_vendor == "alt"
+install -m 644 -p %SOURCE1 %buildroot%_logrotatedir/%name
+%else
 install -m 644 -p system/netdata.logrotate %buildroot%_logrotatedir/%name
+%endif
 
 find %buildroot -name .keep | xargs rm
 
@@ -156,6 +162,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %_libexecdir/%name/python.d/postgres.chart.py
 
 %changelog
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.10.0-alt2
+- adopt logrotate conf for ALT
+
 * Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1.10.0-alt1
 - new version 1.10.0 (with rpmrb script)
 
