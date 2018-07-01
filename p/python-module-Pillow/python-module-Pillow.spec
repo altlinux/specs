@@ -1,54 +1,65 @@
+%define __python2 %_bindir/python2
 %define oname Pillow
 
 %def_with python3
-%def_disable check
+# bootstrap building docs (pillow is required by docutils, docutils are
+#  required by sphinx; pillow build-requires sphinx)
+%def_with docs
+%def_enable check
+
+%global py2_libbuilddir %(python -c 'import sys; import sysconfig; print("lib.{p}-{v[0]}.{v[1]}".format(p=sysconfig.get_platform(), v=sys.version_info))')
+%global py3_libbuilddir %(python3 -c 'import sys; import sysconfig; print("lib.{p}-{v[0]}.{v[1]}".format(p=sysconfig.get_platform(), v=sys.version_info))')
 
 Name: python-module-%oname
-Version: 5.1.0
-Release: alt2
+Version: 5.2.0
+Release: alt1
 
-Summary: Python Imaging Library (Fork)
+Summary: Python image processing library
 
-License: Standard PIL License
+# License: see http://www.pythonware.com/products/pil/license.htm
+License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/Pillow/
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/python-pillow/Pillow.git
-# Source-url: https://pypi.io/packages/source/P/%oname/%oname-%version.tar.gz
+#Source-url: https://pypi.io/packages/source/P/%oname/%oname-%version.tar.gz
+# Source-url: https://github.com/python-pillow/Pillow/archive/%version.tar.gz
 Source: %name-%version.tar
-Source1: PIL.pth
 
-#BuildPreReq: python-devel python-module-setuptools-tests liblcms2-devel
-#BuildPreReq: python-module-nose
-#BuildPreReq: zlib-devel libjpeg-devel libtiff-devel libfreetype-devel
-#BuildPreReq: tcl-devel tk-devel libwebp-devel libwebp-tools
-#BuildPreReq: python-modules-tkinter
-#BuildPreReq: python-module-sphinx-devel python3-module-sphinx
-#BuildPreReq: python3-module-sphinx-better-theme
+BuildRequires: rpm-build-intro >= 2.1.4
+
+BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-module-nose python-module-html5lib python-module-pytest
+BuildPreReq: python-modules-tkinter
+
+BuildRequires: tk-devel zlib-devel libwebp-devel libopenjpeg2.0-devel
+BuildRequires: libfreetype-devel libjpeg-devel liblcms2-devel libtiff-devel libwebp-devel libimagequant-devel
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3 >= 0.1.9.2-alt1
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-nose
-#BuildPreReq: python3-modules-tkinter
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-module-nose python3-module-html5lib python3-module-jinja2-tests python3-module-pytest
+BuildPreReq: python3-modules-tkinter
 %endif
 
 Conflicts: python-module-imaging < %EVR
 Obsoletes: python-module-imaging < %EVR
 Provides: python-module-imaging = %EVR
 
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: elfutils fontconfig libX11-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-markupsafe python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer python3-module-sphinx_rtd_theme tcl-devel xorg-xproto-devel xz
-BuildRequires: libfreetype-devel libjpeg-devel liblcms2-devel libtiff-devel libwebp-devel python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest python-modules-tkinter python3-devel python3-module-html5lib python3-module-jinja2-tests python3-module-nose python3-module-pytest python3-module-sphinx python3-module-sphinx-better-theme python3-modules-tkinter rpm-build-python3 time tk-devel zlib-devel libimagequant-devel
 
-# optimized out: -=FIXES: python3(sphinx_rtd_theme)
-BuildRequires: python2.7(sphinx_rtd_theme)
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python-module-docutils python3-module-sphinx python3-module-sphinx-better-theme
+BuildRequires: python3-module-sphinx_rtd_theme python3-module-olefile
+%endif
 
 %description
-Pillow is the "friendly" PIL fork by Alex Clark and Contributors. PIL is
-the Python Imaging Library by Fredrik Lundh and Contributors.
+Python image processing library, fork of the Python Imaging Library (PIL)
+
+This library provides extensive file format support, an efficient
+internal representation, and powerful image processing capabilities.
 
 %package devel
 Summary: Development files for %oname
@@ -57,18 +68,22 @@ BuildArch: noarch
 Requires: %name = %EVR
 
 %description devel
-Pillow is the "friendly" PIL fork by Alex Clark and Contributors. PIL is
-the Python Imaging Library by Fredrik Lundh and Contributors.
+Python image processing library, fork of the Python Imaging Library (PIL)
+
+This library provides extensive file format support, an efficient
+internal representation, and powerful image processing capabilities.
 
 This package contains development files for %oname.
 
-%package pickles
+%package -n python3-module-%oname-pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
-%description pickles
-Pillow is the "friendly" PIL fork by Alex Clark and Contributors. PIL is
-the Python Imaging Library by Fredrik Lundh and Contributors.
+%description -n python3-module-%oname-pickles
+Python image processing library, fork of the Python Imaging Library (PIL)
+
+This library provides extensive file format support, an efficient
+internal representation, and powerful image processing capabilities.
 
 This package contains pickles for %oname.
 
@@ -78,8 +93,10 @@ Group: Development/Documentation
 BuildArch: noarch
 
 %description docs
-Pillow is the "friendly" PIL fork by Alex Clark and Contributors. PIL is
-the Python Imaging Library by Fredrik Lundh and Contributors.
+Python image processing library, fork of the Python Imaging Library (PIL)
+
+This library provides extensive file format support, an efficient
+internal representation, and powerful image processing capabilities.
 
 This package contains documentation for %oname.
 
@@ -88,8 +105,10 @@ Summary: Python Imaging Library (Fork)
 Group: Development/Python3
 
 %description -n python3-module-%oname
-Pillow is the "friendly" PIL fork by Alex Clark and Contributors. PIL is
-the Python Imaging Library by Fredrik Lundh and Contributors.
+Python image processing library, fork of the Python Imaging Library (PIL)
+
+This library provides extensive file format support, an efficient
+internal representation, and powerful image processing capabilities.
 
 %package -n python3-module-%oname-devel
 Summary: Development files for %oname
@@ -98,28 +117,31 @@ BuildArch: noarch
 Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-devel
-Pillow is the "friendly" PIL fork by Alex Clark and Contributors. PIL is
-the Python Imaging Library by Fredrik Lundh and Contributors.
+Python image processing library, fork of the Python Imaging Library (PIL)
+
+This library provides extensive file format support, an efficient
+internal representation, and powerful image processing capabilities.
 
 This package contains development files for %oname.
 
 %prep
 %setup
+%python3_dirsetup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
+%if_with docs
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 %python_build_debug
 
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
+%python3_dirbuild_debug
+
+%if_with docs
+export LC_ALL=en_US.UTF-8
+PYTHONPATH=$PWD/../python3/build/%py3_libbuilddir make -C docs pickle html BUILDDIR=_build_py3 SPHINXBUILD=%_bindir/py3_sphinx-build
+rm -f docs/_build_py3/html/.buildinfo
 %endif
 
 %install
@@ -131,62 +153,60 @@ install -d %buildroot%__python3_includedir
 install -p -m644 src/libImaging/*.h \
 	%buildroot%__python3_includedir
 popd
-install -m 644 %SOURCE1 %buildroot%python3_sitelibdir/
-#pushd %buildroot%_bindir
-#for i in $(ls); do
-#	mv $i $i.py3
-#done
-#popd
 %endif
 
 %python_install
 install -d %buildroot%python_includedir
 install -p -m644 src/libImaging/*.h %buildroot%python_includedir/
-install -m 644 %SOURCE1 %buildroot%python_sitelibdir/
 
-export LC_ALL=en_US.UTF-8
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%make -C docs pickle
-%make -C docs html
-
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname/
+%if_with python3
+cp -fR docs/_build_py3/pickle %buildroot%python3_sitelibdir/PIL/pickle
+%endif
 
 %check
-export PYTHONPATH=%buildroot%python_sitelibdir
-python test-installed.py
-nosetests -v Tests/test_*.py
+# Check Python 2 modules
+#ln -s $PWD/Images $PWD/build/%py2_libbuilddir/Images
+cp -R $PWD/Tests $PWD/build/%py2_libbuilddir/Tests
+cp -R $PWD/selftest.py $PWD/build/%py2_libbuilddir/selftest.py
+pushd build/%py2_libbuilddir
+PYTHONPATH=$PWD %{__python2} selftest.py
+popd
+
 %if_with python3
-pushd ../python3
-export PYTHONPATH=%buildroot%python3_sitelibdir
-python3 test-installed.py
-nosetests3 -v Tests/test_*.py
+# Check Python 3 modules
+#ln -s $PWD/Images $PWD/build/%py3_libbuilddir/Images
+cp -R $PWD/Tests $PWD/../python3/build/%py3_libbuilddir/Tests
+cp -R $PWD/selftest.py $PWD/../python3/build/%py3_libbuilddir/selftest.py
+pushd ../python3/build/%py3_libbuilddir
+PYTHONPATH=$PWD %{__python3} selftest.py
 popd
 %endif
 
 %files
 %doc *.rst docs/COPYING LICENSE *.md
-#_bindir/*
-#if_with python3
-#exclude %_bindir/*.py3
-#endif
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python_sitelibdir/PIL/
+%python_sitelibdir/%oname-*.egg-info/
 
 %files devel
 %python_includedir/*
 
-%files pickles
-%python_sitelibdir/*/pickle
+%if_with docs
+%files -n python3-module-%oname-pickles
+%python3_sitelibdir/PIL/pickle/
 
 %files docs
-%doc docs/_build/html/*
+%doc docs/_build_py3/html/*
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.rst docs/COPYING LICENSE *.md
-#_bindir/*.py3
-%python3_sitelibdir/*
+%python3_sitelibdir/PIL/
+%python3_sitelibdir/%oname-*.egg-info/
+%if_with docs
+%exclude %python3_sitelibdir/PIL/pickle/
+%endif
 
 %files -n python3-module-%oname-devel
 # Here, we re-use the same path as in the build system
@@ -194,6 +214,12 @@ popd
 %endif
 
 %changelog
+* Sun Jul 01 2018 Vitaly Lipatov <lav@altlinux.ru> 5.2.0-alt1
+- new version 5.2.0 (with rpmrb script) with check enabled
+- drop PIL.pth, it was an illusion to support import Image
+- rewrite install, check and make docs (thanks, Fedora)
+- add openjpeg support
+
 * Wed Apr 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.0-alt2
 - (NMU) Rebuilt with python-3.6.4.
 
