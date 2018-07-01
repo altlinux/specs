@@ -1,23 +1,26 @@
 %define rname sevencolors
 
-Summary: Little addicting game, take over the gaming area with your color
 Name: 7colors
-Version: 0.80
-Release: alt13
-Source0: http://digilander.iol.it/sbel/7colors/%rname-%version.tar.bz2
+Version: 0.10
+Release: alt1
+Epoch: 2
+
+Summary: Little addicting game, take over the gaming area with your color
+
+License: GPLv2
+Group: Games/Boards
 URL: http://digilander.libero.it/sbel/7colors.english.html
-Packager: Sergei Epiphanov <serpiph@altlinux.ru>
+
+# Source-url: https://github.com/slitvinov/7colors-gtk/archive/master.zip
+Source: %rname-%version.tar
+
 Source4: %name.menu
 Source5: %name-16.xpm
 Source6: %name-32.xpm
 Source7: %name-48.xpm
 Source8: %name.desktop
-Patch0: %name-build.patch
-License: GPLv2
-Group: Games/Boards
 
-# Automatically added by buildreq on Mon Jul 21 2008
-BuildRequires: gnome-libs-devel gtk+-devel gtk+-devel
+BuildRequires: libgtk+2-devel
 
 %description
 7colors is a game for XWindow, for one or two players, the goal is to color the
@@ -27,36 +30,33 @@ lower left for player 1, the upper right for player 2) to all the neighbour
 rhombs with the same color.
 
 %prep
-%setup -n %rname-%version -q
-%patch0 -p1
+%setup -n %rname-%version
 
 %build
 %configure
 %make_build
 
 %install
-install -D src/%rname %buildroot%_bindir/%rname
+install -D src/%name %buildroot%_bindir/%name
+ln -s %rname %buildroot%_bindir/%rname
 
-#install -D -m644 %SOURCE4 %buildroot%_menudir/%name
 install -D -m644 %SOURCE6 %buildroot%_niconsdir/%name.xpm
 install -D -m644 %SOURCE5 %buildroot%_miconsdir/%name.xpm
 install -D -m644 %SOURCE7 %buildroot%_liconsdir/%name.xpm
 install -D -m644 %SOURCE8 %buildroot%_desktopdir/%name.desktop
 
-%post
-
-%postun
-
 %files
-%doc TODO README HISTORY
+%doc TODO src/README HISTORY
 %_bindir/*
-#_menudir/*
 %_niconsdir/*.xpm
 %_miconsdir/*
 %_liconsdir/*
 %_desktopdir/*
 
 %changelog
+* Sun Jul 01 2018 Vitaly Lipatov <lav@altlinux.ru> 2:0.10-alt1
+- return to gtk only version ported to gtk2
+
 * Sun Jun 03 2012 Sergei Epiphanov <serpiph@altlinux.ru> 0.80-alt13
 - Fix build
 

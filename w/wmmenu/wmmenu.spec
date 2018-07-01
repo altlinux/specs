@@ -3,7 +3,7 @@
 
 Name: wmmenu
 Version: 1.2
-Release: alt1.qa1
+Release: alt2
 
 Packager: Sir Raorn <raorn@altlinux.ru>
 
@@ -64,6 +64,9 @@ want; dunno what it's useful for...).
 %_x11mandir/man1/wmmenu.1*
 
 %changelog
+* Mon Jul 02 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt2
+- rebuild without gdk-pixbuf (TODO: update to 1.3 2015/01/24)
+
 * Tue May 10 2011 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1.qa1
 - Remove xorg-x11-devel build requires
 

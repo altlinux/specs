@@ -1,6 +1,7 @@
+%def_without xmms
 Name: xosd
 Version: 2.2.14
-Release: alt6
+Release: alt7
 
 Summary: X On Screen Display, displays XMMS status information
 License: GPL
@@ -9,10 +10,14 @@ Url: http://sourceforge.net/projects/libxosd/
 Packager: Evgenii Terechkov <evg@altlinux.ru>
 
 Source: %name-%version.tar
+Patch1: xosd-2.2.14-Do-not-install-some-manual-pages-twice.patch
 Patch2: %name-2.2.14-alt-aclocal-quoting.patch
 
 # Automatically added by buildreq on Thu Nov 08 2007 (-bi)
-BuildRequires: gcc-c++ gdk-pixbuf-devel imake libXinerama-devel libXt-devel libxmms-devel xorg-cf-files libXext-devel
+BuildRequires: gcc-c++ imake libXinerama-devel libXt-devel xorg-cf-files libXext-devel
+%ifdef xmms
+BuildRequires: gdk-pixbuf-devel libxmms-devel
+%endif
 
 %description
 This is a X On Screen Display library, modules and utilities.
@@ -70,14 +75,27 @@ This package contains an osd_cat.
 
 %prep
 %setup
+%patch1 -p1
 %patch2 -p1
 
+%__subst 's|-rpath \$(libdir)||' src/libxosd/Makefile.in
+%if_without xmms
+# XMMS is dead, gdk-pixbuf-0 is dead. Dropping xmms plug-in.
+sed -i -e '/AM_PATH_GTK/,+1 d' -e '/AM_PATH_XMMS/,+1 d' \
+    -e '/AM_PATH_GDK_PIXBUF/,+1 d' configure.ac
+# Update config.sub to support aarch64, Redhat bug #926836
+%autoreconf
+%endif
+
 %build
-%configure --enable-new-plugin --disable-beep_media_player_plugin
+%configure --enable-new-plugin --disable-beep_media_player_plugin --disable-dependency-tracking
 %make_build
 
 %install
 make install DESTDIR=%buildroot
+%if_without xmms
+rm -rf %buildroot%_datadir/%name/
+%endif
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -95,16 +113,21 @@ make install DESTDIR=%buildroot
 %files -n lib%name-devel-static
 %_libdir/*.a
 
+%if_with xmms
 %files -n xmms-osd
 %xmms_generaldir/*
 %dir %_datadir/%name
 %_datadir/%name/*.png
+%endif
 
 %files -n %name-utils
 %_bindir/osd_cat
 %_man1dir/osd_cat.1*
 
 %changelog
+* Sun Jul 01 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.14-alt7
+- build without xmms-xosd subpackage need obsoleted gdk-pixbuf-devel
+
 * Fri Sep 23 2011 Alexey Tourbin <at@altlinux.ru> 2.2.14-alt6
 - Rebuilt for debuginfo
 - Packaged %_datadir/%name directory
