@@ -1,11 +1,11 @@
 %def_with python
 %def_with python3
 %def_without ruby
-%def_without docs
+%def_without doc
 
 Name: xapian-bindings
 Version: 1.4.5
-Release: alt1.1
+Release: alt2
 
 Summary: Xapian search engine bindings
 License: GPL
@@ -22,13 +22,13 @@ Patch1: %name-%version-alt-no-docs.patch
 # Automatically added by buildreq on Thu Dec 05 2013
 # optimized out: elfutils gnu-config libncurses-devel libstdc++-devel libtinfo-devel pam0_userpass python-base python-modules python-modules-compiler ruby ruby-stdlibs xz
 BuildRequires: gcc-c++ libruby-devel libxapian-devel python-dev
-%if_with docs
+%if_with doc
 BuildRequires: python-module-sphinx-devel python-module-sphinx
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
-%if_with docs
+%if_with doc
 BuildRequires: python3-module-sphinx-devel python3-module-sphinx
 %endif
 %endif
@@ -45,7 +45,6 @@ add advanced indexing and search facilities to applications.
 
 This package contains programming language bindings.
 
-%if_with python
 %package -n python-module-xapian
 Summary: Python bindings for Xapian search engine
 License: GPL
@@ -60,9 +59,7 @@ add advanced indexing and search facilities to applications.
 
 This package provides the files needed for developing Python scripts
 which use Xapian.
-%endif
 
-%if_with python3
 %package -n python3-module-xapian
 Summary: Python 3 bindings for Xapian search engine
 License: GPL
@@ -77,9 +74,7 @@ add advanced indexing and search facilities to applications.
 
 This package provides the files needed for developing Python 3 scripts
 which use Xapian.
-%endif
 
-%if_with ruby
 %package -n ruby-xapian
 Summary: Ruby bindings for Xapian search engine
 License: GPL
@@ -93,22 +88,19 @@ add advanced indexing and search facilities to applications.
 
 This package provides the files needed for developing Ruby scripts
 which use Xapian.
-%endif
 
 %prep
 %setup
-%if_without docs
+%if_without doc
 %patch1 -p2
 %endif
 
 %build
-%ifarch e2k
+%ifarch %e2k
 # http://stackoverflow.com/questions/14892101/
 %add_optflags -ftls-model=global-dynamic
 %endif
-%if_without docs
 %autoreconf
-%endif
 %configure %{subst_with python} %{subst_with python3} %{subst_with ruby}
 %make_build
 # FIXME: maybe we should drop %version there as well and get rid of this
@@ -140,13 +132,46 @@ rm -rf %buildroot%_defaultdocdir/%name/
 # - package other bindings (perl, tcl...)
 # - package docs/examples properly
 
+# NOTE:
+# - do NOT build this package from git unless you want to maintain it,
+#   I use watch file and it's more convenient to do that with srpms
+
 %changelog
+* Sun Jul 01 2018 Michael Shigorin <mike@altlinux.org> 1.4.5-alt2
+- support e2kv4 through %%e2k macro (grenka@)
+- merged my changes back
+- changed docs knob to doc (see also http://altlinux.org/bootstrap)
+- minor spec cleanup: package descriptions need no conditionals
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.5-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
 * Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.5-alt1
 - Updated to latest stable upstream version 1.4.5.
 - Enabled building bindings for python-3.
+
+* Tue Oct 17 2017 Michael Shigorin <mike@altlinux.org> 1.4.5-alt0
+- new version (watch file uupdate)
+
+* Tue May 09 2017 Michael Shigorin <mike@altlinux.org> 1.4.4-alt1
+- new version (watch file uupdate)
+
+* Fri Jan 27 2017 Michael Shigorin <mike@altlinux.org> 1.4.3-alt1
+- new version (watch file uupdate)
+
+* Wed Dec 28 2016 Michael Shigorin <mike@altlinux.org> 1.4.2-alt2
+- BOOTSTRAP: introduce doc knob for cyclic BR:
+  python-module-sphinx <-> python-module-xapian
+
+* Tue Dec 27 2016 Michael Shigorin <mike@altlinux.org> 1.4.2-alt1
+- new version (watch file uupdate)
+
+* Mon Oct 24 2016 Michael Shigorin <mike@altlinux.org> 1.4.1-alt1
+- new version (watch file uupdate)
+- disable sphinx for bootstrap
+
+* Tue Sep 27 2016 Michael Shigorin <mike@altlinux.org> 1.4.0-alt1
+- new version (watch file uupdate)
 
 * Tue Sep 27 2016 Michael Shigorin <mike@altlinux.org> 1.2.23-alt2
 - rebuilt against ruby-2.3.1
