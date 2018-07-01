@@ -1,12 +1,10 @@
-# TODO: python2.7(palib)
-# https://github.com/jonathanunderwood/pypactl
 # TODO:
 # typelib(GdkGLExt)
 # typelib(GtkGLExt)
 
 Name: xpra
-Version: 0.17.6
-Release: alt3
+Version: 2.3.2
+Release: alt1
 
 Summary: X Persistent Remote Applications
 
@@ -16,11 +14,18 @@ Url: http://xpra.org/
 
 Source: https://xpra.org/src/xpra-%version.tar
 
-# Automatically added by buildreq on Sat Dec 08 2012
-# optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libXfixes-devel libXi-devel libXrender-devel libatk-devel libavutil-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libpango-devel pkg-config python-base python-devel python-module-distribute python-module-peak python-module-pygobject-devel python-module-zope python-modules python-modules-compiler python-modules-email python-modules-encodings xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: libXcomposite-devel libXdamage-devel libXrandr-devel libXtst-devel libavcodec-devel libswscale-devel libvpx-devel libx264-devel python-module-Cython python-module-mwlib python-module-paste python-module-pygtk-devel
+BuildRequires: gcc-c++ libXcomposite-devel libXdamage-devel libXrandr-devel libXtst-devel libxkbfile-devel libpam0-devel libsystemd-devel
 
-BuildPreReq: libxkbfile-devel
+# TODO use gtk3
+BuildRequires: python-module-pygtk-devel
+
+# Video
+BuildRequires: libavformat-devel libavcodec-devel libswscale-devel libvpx-devel libx264-devel libx265-devel libwebp-devel libjpeg-devel libpng-devel libyuv-devel python-module-yuicompressor
+
+# Sound
+BuildRequires: libogg-devel libopus-devel libflac-devel libspeex-devel libvorbis-devel libwavpack-devel liblame-devel libtwolame-devel libmad-devel
+
+BuildRequires: python-module-pygtkglext python-module-OpenGL python-module-OpenGL_accelerate python-module-Pillow python-module-websockify
 
 # See https://bugzilla.altlinux.org/show_bug.cgi?id=28632
 BuildPreReq: python-module-Cython >= 0.20
@@ -32,7 +37,7 @@ AutoReq: yes, nomingw
 BuildRequires(pre): rpm-build-gir rpm-build-intro rpm-macros-kde-common-devel
 
 # Unity specific?
-%add_typelib_req_skiplist typelib(AppIndicator) typelib(AppIndicator3)
+%add_typelib_req_skiplist typelib(AppIndicator) typelib(AppIndicator3) typelib(GtkosxApplication)
 
 # Note: we have no linking requires to libwebp.so.x
 Requires: libwebp xorg-xvfb setxkbmap
@@ -67,22 +72,30 @@ If connecting from a remote machine, you would use something like (or you can al
 %setup
 %__subst "s|-Werror|-Wall|g" setup.py
 # fatal error: pygtk-2.0/pygtk/pygtk.h: No such file or directory
-%__subst "s|pygtk-2.0/||g" xpra/x11/gtk2/*.pyx xpra/gtk_common/gdk_atoms.pyx
+%__subst "s|pygtk-2.0/||g" xpra/x11/gtk2/gdk_display_source.pyx xpra/gtk_common/gtk2/gdk_bindings.pyx
 #patch -p1
 
-# dynamic patch against libav build
-%__subst "s|\(.*AV_PIX_FMT_0RGB.*\)|#\1|g" xpra/codecs/dec_avcodec2/decoder.pyx xpra/codecs/csc_swscale/colorspace_converter.pyx
-%__subst "s|\(.*AV_PIX_FMT_BGR0.*\)|#\1|g" xpra/codecs/dec_avcodec2/decoder.pyx xpra/codecs/csc_swscale/colorspace_converter.pyx
-%__subst "s|\(.*AV_CODEC_ID_H265.*\)|#\1|g" xpra/codecs/dec_avcodec2/decoder.pyx
-%__subst 's|\(.*"h265".*\)|#\1|g' xpra/codecs/dec_avcodec2/decoder.pyx
+# already have turbojpeg, but there are some differences in headers
+#__subst "s|libturbojpeg|libjpeg|" setup.py
+#__subst "s|turbojpeg.h|jpeglib.h|" xpra/codecs/jpeg/encoder.pyx
+
+# move systemd service to correct %_unitdir
+%__subst "s|/bin/systemctl|NONONO|g" setup.py
+%__subst "s|.*/etc/default/xpra.*||g" service/xpra
 
 %build
-%python_build --without-sound --without-opengl
+%python_build --without-opengl
 
 %install
-%python_install  --without-sound --without-opengl
+%python_install --without-opengl
 mkdir -p %buildroot/%_tmpfilesdir/
 mv -f %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot/%_tmpfilesdir/
+mkdir -p %buildroot%_udevrulesdir/
+mv -f %buildroot/usr/lib/udev/rules.d/71-xpra-virtual-pointer.rules %buildroot%_udevrulesdir/
+install -m644 -D service/xpra.service %buildroot%_unitdir/%name.service
+
+# TODO
+rm -f %buildroot/usr/lib/sysusers.d/xpra.conf
 
 %pre
 %_sbindir/groupadd -r -f xpra &>/dev/null ||:
@@ -91,6 +104,7 @@ mv -f %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot/%_tmpfilesdir/
 %dir %_sysconfdir/%name/
 %config(noreplace) %_sysconfdir/%name/*
 %_bindir/*
+%_libexecdir/%name/
 %python_sitelibdir/*
 %_desktopdir/*
 %_iconsdir/*
@@ -102,8 +116,19 @@ mv -f %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot/%_tmpfilesdir/
 %_datadir/appdata/xpra.appdata.xml
 %_K4xdg_mime/application-x-xpraconfig.xml
 %_cupslibdir/backend/xpraforwarder
+%_sysconfigdir/%name
+%_sysconfdir/pam.d/%name
+%_sysconfdir/init.d/%name
+%_unitdir/%name.service
+%_unitdir/%name.socket
+%_udevrulesdir/71-xpra-virtual-pointer.rules
+/etc/dbus-1/system.d/xpra.conf
+/etc/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt1
+- new version 2.3.2 (with rpmrb script)
+
 * Mon Jul 10 2017 Konstantin Kondratyuk <kondratyuk@altlinux.org> 0.17.6-alt3
 - rebuild with ffmpeg
 
