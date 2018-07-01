@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.14
-Release: alt6
+Release: alt7
 
 %define package_name		%real_name
 %define weight			1001
@@ -236,9 +236,14 @@ autocompletion based on readline for command line interface.
 %package modules-distutils
 Summary: Python "distutils" module
 Group: Development/Python
-Requires: %name-modules = %version-%release
 # distutils used to be a part of python-dev:
 Conflicts: %name-dev < 0:2.7.14-alt6
+# To mitigate the absence of something after the separation, we should ensure
+# that we install maximum Python minus python-dev (cf. python-dev's deps):
+# (TODO: don't require extra stuff; however, I believe that
+# patching the other specs for this is not a priority task.)
+Requires: %name-modules = %version-%release
+Requires: %name = %version-%release
 
 %description modules-distutils
 The "distutils" modules included with the Python distribution.
@@ -1172,6 +1177,10 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Mon Jul 02 2018 Ivan Zakharyaschev <imz@altlinux.org> 2.7.14-alt7
+- Made distutils install maximum Python minus python-dev
+  to mitigate the separation from python-dev (for building packages).
+
 * Fri Jun 29 2018 Ivan Zakharyaschev <imz@altlinux.org> 2.7.14-alt6
 - move distutils into a separate pkg from python-dev
   (because it can be used at runtime by other libs/executables).
