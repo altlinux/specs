@@ -1,62 +1,48 @@
 Name: soundtracker
 Version: 0.6.8
-Release: alt5.qa4
+Release: alt6
 
 Summary: Sound modules editor/player
 License: GPL
 Group: Sound
 
 Url: http://www.soundtracker.org/
-Source: ftp://ftp.soundtracker.org/pub/soundtracker/v0.6/soundtracker-%version.tar.gz
+Source: ftp://ftp.soundtracker.org/pub/soundtracker/v0.6/soundtracker-%version.tar
 Source2: %name-icon.png
 Source3: %name.control
 Source4: %name.1
 
 Patch0: %name-0.6.7-desktop-alt.patch
-Patch1: %name-0.6.8-fixjack-up.patch
-Patch2: %name-0.6.8-translation-alt.patch
-Patch3: %name-0.6.8-gccwarnings-up.patch.bz2
-Patch4: %name-0.6.8-utf8overflow-alt.patch.bz2
-Patch5: %name-0.6.8-fixjack-alt.patch
-Patch6: %name-0.6.8-alt-DSO.patch
 
-Summary(ru_RU.KOI8-R): Редактор/проигрыватель модулей
-Summary(uk_UA.KOI8-U): Редактор/трекер модул╕в
+Summary(ru_RU.UTF-8): п═п╣п╢п╟п╨я┌п╬я─/п©я─п╬п╦пЁя─я▀п╡п╟я┌п╣п╩я▄ п╪п╬п╢я┐п╩п╣п╧
+Summary(uk_UA.UTF-8): п═п╣п╢п╟п╨я┌п╬я─/я┌я─п╣п╨п╣я─ п╪п╬п╢я┐п╩Б∙∙п╡
 
-# Automatically added by buildreq on Sat Jan 22 2005
-#BuildRequires: esound-devel gdk-pixbuf-devel glib-devel glib2 gnome-libs-devel gtk+-devel imlib-devel jackit-devel libaudiofile-devel libdb1-devel libsndfile-devel pkgconfig xorg-x11-devel xorg-x11-libs
-BuildRequires: esound-devel gdk-pixbuf-devel glib-devel gtk+-devel imlib-devel jackit-devel libaudiofile-devel libdb1-devel libsndfile-devel pkgconfig libX11-devel
-BuildRequires: gnome-libs-devel >= 1.4.2-alt7
+# Automatically added by buildreq on Sun Jul 01 2018
+# optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config gnustep-base-devel libGConf-devel libX11-devel libatk-devel libaudiofile-devel libcairo-devel libdbus-glib libenchant-devel libfreetype-devel libfribidi-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+2-devel libpango-devel pkg-config python-base python-modules python3 python3-base sssd-client xorg-proto-devel
+BuildRequires: libSDL-devel libalsa-devel libappstream-glib-devel libgoocanvas-devel libgtkhtml3-devel libjack-devel libpolkit-devel libsndfile-devel
 
 %description
 Soundtracker is a module tracker for the X Window System similar to
 the DOS program `FastTracker'. Soundtracker is based on the XM file
 format.  The user interface makes use of GTK+, and, optionally, GNOME.
 
-%description -l ru_RU.KOI8-R
-Soundtraker -- графический редактор модулей, похожий на FastTracker и
-использующий формат XM. Пользовательский интерфейс на основе библиотек GTK+ и
-GNOME (по желанию).
+%description -l ru_RU.UTF-8
+Soundtraker -- пЁя─п╟я└п╦я┤п╣я│п╨п╦п╧ я─п╣п╢п╟п╨я┌п╬я─ п╪п╬п╢я┐п╩п╣п╧, п©п╬я┘п╬п╤п╦п╧ п╫п╟ FastTracker п╦
+п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╦п╧ я└п╬я─п╪п╟я┌ XM. п÷п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄я│п╨п╦п╧ п╦п╫я┌п╣я─я└п╣п╧я│ п╫п╟ п╬я│п╫п╬п╡п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨ GTK+ п╦
+GNOME (п©п╬ п╤п╣п╩п╟п╫п╦я▌).
 
-%description -l uk_UA.KOI8-U
-Soundtraker -- граф╕чний редактор модул╕в, що схожий на FastTracker та
-використову╓ формат XM. ╤нтерфейс користувача на основ╕ б╕бл╕отек GTK+ та
-GNOME (опц╕онально).
+%description -l uk_UA.UTF-8
+Soundtraker -- пЁя─п╟я└Б∙∙я┤п╫п╦п╧ я─п╣п╢п╟п╨я┌п╬я─ п╪п╬п╢я┐п╩Б∙∙п╡, я┴п╬ я│я┘п╬п╤п╦п╧ п╫п╟ FastTracker я┌п╟
+п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐Б∙⌠ я└п╬я─п╪п╟я┌ XM. Б∙╓п╫я┌п╣я─я└п╣п╧я│ п╨п╬я─п╦я│я┌я┐п╡п╟я┤п╟ п╫п╟ п╬я│п╫п╬п╡Б∙∙ п╠Б∙∙п╠п╩Б∙∙п╬я┌п╣п╨ GTK+ я┌п╟
+GNOME (п╬п©я├Б∙∙п╬п╫п╟п╩я▄п╫п╬).
 
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p2
+subst "s|^inline ||g" app/gui-subs.c app/gui-subs.h
 
 %build
-unset CC CXX
-sed -i 's,chown,echo &,g' `find -name 'Makefile*'`
-%configure
+%configure --disable-asm LIBS=-lm 
 %make_build
 
 %install
@@ -92,6 +78,10 @@ install -pD -m755 %SOURCE4 %buildroot%_man1dir/%name.1
 
 
 %changelog
+* Sun Jul 01 2018 Vitaly Lipatov <lav@altlinux.ru> 0.6.8-alt6
+- build from https://git.code.sf.net/p/soundtracker/git (ALT bug 35012)
+- update buildreqs
+
 * Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.8-alt5.qa4
 - Come back into Sisyphus
 
