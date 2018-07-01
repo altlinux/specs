@@ -2,7 +2,7 @@
 
 Name: perl-Image-Sane
 Version: 0.14
-Release: alt3
+Release: alt4
 
 Summary: Perl extension for the SANE (Scanner Access Now Easy) Project
 
@@ -42,6 +42,9 @@ Find out more about SANE at http://www.sane-project.org.
 %perl_vendor_autolib/*
 
 %changelog
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 0.14-alt4
+- rebuild on aarch64
+
 * Sun Feb 25 2018 Vitaly Lipatov <lav@altlinux.ru> 0.14-alt3
 - initial build for ALT Sisyphus
 
