@@ -1,5 +1,5 @@
 Name:    fldigi
-Version: 4.0.16
+Version: 4.0.17
 Release: alt1
 Summary: Fldigi is a software modem for Amateur Radio use
 
@@ -7,6 +7,8 @@ License: GPLv3+
 Group:   Communications
 URL:	 http://www.w1hkj.com/Fldigi.html
 # Download from http://www.w1hkj.com/download.html
+
+ExclusiveArch: %ix86 x86_64
 
 Source0: %name-%version.tar
 Source1: %name.watch
@@ -58,6 +60,10 @@ ARQ data via fldigi.
 %doc %_man1dir/*
 
 %changelog
+* Sun Jul 01 2018 Andrey Cherepanov <cas@altlinux.org> 4.0.17-alt1
+- new version 4.0.17
+- do not build for aarch64
+
 * Tue Feb 13 2018 Cronbuild Service <cronbuild@altlinux.org> 4.0.16-alt1
 - new version 4.0.16
 
