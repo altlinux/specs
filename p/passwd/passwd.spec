@@ -1,6 +1,6 @@
 Name: passwd
-Version: 1.0.13
-Release: alt1.1
+Version: 1.0.14
+Release: alt1
 
 Summary: The passwd utility for setting/changing passwords using PAM
 License: GPLv2+
@@ -40,8 +40,14 @@ a user's authentication token(s).
 %_mandir/man?/passwd.*
 
 %changelog
+* Sun Jul 01 2018 Dmitry V. Levin <ldv@altlinux.org> 1.0.14-alt1
+- Refuse to change password for different logged in user by default
+  (closes: #33440).
+- passwd -d: clarify the meaning of delete option (closes: #34906).
+- passwd -S: support detection of modern encryption modes (by vt@).
+
 * Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt1.1
-- NMU: added URL
+- NMU: added URL.
 
 * Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 1.0.13-alt1
 - %_sbindir/passwd: always check seteuid return code.
