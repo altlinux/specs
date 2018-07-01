@@ -2,7 +2,7 @@
 %define rev 57468
 
 Name:       lazarus
-Version:    1.8.2
+Version:    1.8.4
 Release:    alt1
 Epoch:      1
 
@@ -12,6 +12,8 @@ Group:      Development/Other
 Url:        http://www.lazarus-ide.org/
 
 Packager:   Andrey Cherepanov <cas@altlinux.org>
+
+ExclusiveArch: %ix86 x86_64
 
 Source:     %name-%version.tar
 Source2:    extra.tar
@@ -192,6 +194,10 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Fri Jun 29 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.8.4-alt1
+- New version.
+- Build only for i586 and x86_64.
+
 * Thu Mar 08 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.8.2-alt1
 - New version.
 
