@@ -14,8 +14,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: plasma5-%rname
-Version: 5.12.5
-Release: alt2%ubt
+Version: 5.12.6
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -189,6 +189,9 @@ KF5 library
 
 
 %changelog
+* Wed Jun 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt1%ubt
+- new version
+
 * Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt2%ubt
 - rebuild with new libwayland-egl
 
