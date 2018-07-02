@@ -1,6 +1,6 @@
 Name:    system-config-printer
 Version: 1.5.11
-Release: alt4
+Release: alt5
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -11,6 +11,7 @@ Url:     http://cyberelk.net/tim/software/system-config-printer/
 Source: %name-%version.tar
 Patch:  %name-%version-%release.patch
 Patch1: fix_search_printer.patch
+Patch2: about_logo.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -66,6 +67,7 @@ Python module to configure a CUPS print server
 sed -i 's/mod.*ins.*_aft.*//' newprinter.py
 %patch -p1
 %patch1 -p0
+%patch2 -p0
 
 %build
 ./bootstrap
@@ -109,6 +111,9 @@ exit 0
 
 
 %changelog
+* Mon Jul 02 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.5.11-alt5
+- fix logo in 'About' (Closes #33002)
+
 * Thu Jun 21 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.5.11-alt4
 - fix same printer-list in search
 - fix mix device-list
