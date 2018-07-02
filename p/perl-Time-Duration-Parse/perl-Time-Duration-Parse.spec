@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Time-Duration-Parse
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: Parse string that represents time duration
@@ -27,7 +27,7 @@ Url: %CPAN %m_distro
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/N/NE/NEILB/Time-Duration-Parse-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NE/NEILB/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Nov 19 2009
 BuildRequires: perl-Exporter-Lite perl-Module-Install
@@ -37,7 +37,7 @@ Time::Duration::Parse is a module to parse human readable duration
 strings like 2 minutes and 3 seconds to seconds.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -47,9 +47,13 @@ strings like 2 minutes and 3 seconds to seconds.
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
+%doc Changes LICENSE README
 %perl_vendor_privlib/Time/Duration/Parse.pm
 
 %changelog
+* Mon Jul 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Mon Oct 26 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
