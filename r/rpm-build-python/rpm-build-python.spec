@@ -1,5 +1,5 @@
 Name: rpm-build-python
-Version: 0.36.10
+Version: 0.37.0
 Release: alt1
 
 # redefine python_libdir for 0.29.alt2 is buggy 
@@ -31,6 +31,8 @@ python modules by some Alt Linux Team Policy compatible way.
 
 %build
 sed -i 's/@PYTHON_VERSION@/%__python_version/g' python
+
+%check
 ./test.sh
 
 %install
@@ -61,6 +63,16 @@ unset RPM_PYTHON
 %doc python-module-SAMPLE.spec policy notes doc
 
 %changelog
+* Mon Jul  2 2018 Ivan Zakharyaschev <imz@altlinux.org> 0.37.0-alt1
+- Assume that setuptools are required if the traditional Python build/install
+  macros are used (overridable through %%python_setup_buildrequires).
+
+  The idea is that the Build Root Policy scripts for Python are executed
+  unconditionally whenever python is present in the system, but the
+  setuptools requirement is optional. (As a consequence, there may be a
+  working system with Python without setuptools, because setuptools
+  are not used at runtime.)
+
 * Tue Mar 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.36.10-alt1
 - Added macro python_version_nodots for retrieving python version
   in format 'MajorMinor' without dot delimiter.

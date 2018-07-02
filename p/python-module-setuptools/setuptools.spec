@@ -6,7 +6,7 @@
 Name: python-module-%mname
 Epoch: 1
 Version: 39.2.0
-Release: alt4%ubt
+Release: alt5%ubt
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -138,10 +138,12 @@ cp -a . -T ../python3
 
 %build
 python bootstrap.py
+%global python_setup_buildrequires %nil
 %python_build_debug
 
 pushd ../python3
 python3 bootstrap.py
+%global python3_setup_buildrequires %nil
 %python3_build_debug
 popd
 
@@ -206,6 +208,10 @@ popd
 %python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
+* Mon Jul 02 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:39.2.0-alt5%ubt
+- (.spec) our setup.py won't require external setuptools,
+  so we override this dep from rpm-build-python*. (Useful for bootstrap.)
+
 * Fri Jun 29 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:39.2.0-alt4%ubt
 - put *.egg-info even in the uncomplete pkg_resources subpkg
   to fool the checking mechanism. (People declare that they use "setuptools",
