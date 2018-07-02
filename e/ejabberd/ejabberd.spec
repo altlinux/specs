@@ -14,7 +14,7 @@
 
 Name: ejabberd
 Version: 18.03
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: Fault-tolerant distributed Jabber server written in Erlang
 License: GPL2
 Group: System/Servers
@@ -215,6 +215,9 @@ install -p -m 0644 sql/pg.sql    %buildroot%_erllibdir/%name-%version/priv/sql/
 %attr(1770,root,ejabberd) %dir %_lockdir/ejabberd
 
 %changelog
+* Mon Jul 02 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 18.03-alt3%ubt
+- Fixed SysVInit script.
+
 * Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 18.03-alt2%ubt
 - Fixed LDAP module (upstream issue #1037).
 
