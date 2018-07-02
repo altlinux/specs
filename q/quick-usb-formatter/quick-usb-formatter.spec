@@ -1,6 +1,6 @@
 Name: quick-usb-formatter
 Version: 0.6
-Release: alt4%ubt
+Release: alt5%ubt
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -59,6 +59,9 @@ install -m 0644 %SOURCE10 translations/
 
 
 %changelog
+* Mon Jul 02 2018 Sergey V Turchin <zerg@altlinux.org> 0.6-alt5%ubt
+- show menu entry only in KDE
+
 * Fri Nov 17 2017 Sergey V Turchin <zerg@altlinux.org> 0.6-alt4%ubt
 - port to KF5
 
