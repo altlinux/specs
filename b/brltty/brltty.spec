@@ -25,7 +25,7 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt1.1
+Release: alt2
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
@@ -50,7 +50,7 @@ BuildRequires: byacc glibc-kernheaders
 BuildRequires: /proc java-devel
 %{?_with_at_spi2:BuildRequires: libat-spi2-core-devel}
 %{?_with_speech_dispatcher:BuildRequires: libspeechd-devel}
-%{?_with_python:BuildRequires: python-module-Cython >= %cython_ver}
+%{?_with_python:BuildRequires: python-devel python-module-Cython >= %cython_ver}
 %{?_with_python3:BuildRequires: rpm-build-python3 python3-devel python3-module-Cython >= %cython_ver}
 %{?_with_tcl:BuildRequires: tcl-devel}
 %{?_with_ocaml:BuildRequires: ocaml findlib}
@@ -415,6 +415,9 @@ chmod +x %buildroot%_bindir/%name-config
 %endif
 
 %changelog
+* Mon Jul 02 2018 Yuri N. Sedunov <aris@altlinux.org> 5.6-alt2
+- updated buildreqs
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.6-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 

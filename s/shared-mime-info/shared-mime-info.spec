@@ -4,7 +4,7 @@
 
 Name: shared-mime-info
 Version: 1.10
-Release: alt1
+Release: alt1.1
 
 Summary: Shared MIME-Info Specification
 Group: System/Libraries
@@ -22,9 +22,7 @@ Patch: %name-0.19-alt-cachedir-param.patch
 Patch1: %name-1.5-alt-swf.patch
 Patch2: %name-1.10-alt-q_option.patch
 
-Requires: rpm-build-xdg
-
-BuildPreReq: rpm-build-licenses rpm-build-xdg
+BuildRequires(pre): rpm-build-licenses rpm-build-xdg
 BuildPreReq: intltool xml-utils
 # for build test programs
 BuildPreReq: libgio-devel
@@ -110,6 +108,9 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Mon Jul 02 2018 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt1.1
+- removed rpm-build-xdg dependency (ALT #32548)
+
 * Fri Jun 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt1
 - 1.10
 

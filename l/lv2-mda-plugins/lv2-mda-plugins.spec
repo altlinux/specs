@@ -3,7 +3,7 @@
 
 Name: lv2-mda-plugins
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Summary: A port of the MDA VST plugins to LV2
 Group: Sound
@@ -19,7 +19,7 @@ Source: %_name-%version.tar
 
 Requires: lv2
 
-BuildRequires: gcc-c++ lv2-devel libsuil-devel libgtk+2-devel
+BuildRequires: python-devel gcc-c++ lv2-devel libsuil-devel libgtk+2-devel
 
 %description
 A collection of LV2 plugins including delay, tube distortion, compressor,
@@ -41,6 +41,9 @@ sed -i -e 's|obj.cxxflags = cflags|obj.cxxflags = cflags + "%optflags".split(" "
 %doc NEWS README
 
 %changelog
+* Mon Jul 02 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt2
+- updated buildreqs
+
 * Thu Jun 28 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
 - first build for Sisyphus
 

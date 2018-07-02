@@ -12,7 +12,7 @@
 
 Name: libpeas
 Version: %ver_major.0
-Release: alt1.1
+Release: alt2
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
@@ -28,7 +28,7 @@ BuildRequires: gnome-common intltool gtk-doc
 BuildRequires: libgio-devel >= 2.32.0 libgtk+3-devel >= 3.0.0
 BuildRequires: gobject-introspection-devel >= 1.31.10 libgtk+3-gir-devel
 # for python support
-BuildRequires: python-module-pygobject3-devel >= 3.1.1
+BuildRequires: python-devel python-module-pygobject3-devel >= 3.1.1
 # for python3 support
 BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.1.1
 BuildRequires: libgladeui2.0-devel
@@ -200,6 +200,9 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Mon Jul 02 2018 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt2
+- updated buildreqs
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.22.0-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 

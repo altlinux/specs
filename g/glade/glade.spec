@@ -8,7 +8,7 @@
 
 Name: glade
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A user interface designer for Gtk+ and GNOME
 Group: Development/GNOME and GTK+
@@ -29,7 +29,7 @@ BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 #AutoReqProv: nopython
 #%%define __python %nil
 #BuildRequires: rpm-build-python3 python3-module-pygobject3-devel
-%{?_enable_python:BuildRequires: python-module-pygobject3-devel}
+%{?_enable_python:BuildRequires: python-devel python-module-pygobject3-devel}
 %{?_enable_webkit2gtk:BuildRequires: libwebkit2gtk-devel}
 
 %description
@@ -89,6 +89,7 @@ GObject introspection devel data for the GladeUI library.
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
 	--enable-gtk-doc \
@@ -147,6 +148,9 @@ GObject introspection devel data for the GladeUI library.
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Mon Jul 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt2
+- updated buildreqs
+
 * Tue Apr 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 
