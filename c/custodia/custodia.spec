@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%def_with check
 
 # FreeIPA up to 4.4.4 are not compatible with custodia because the custodia
 # script now runs under Python 3. FreeIPA 4.4.5 and 4.4.4-2 on F26 are fixed.
@@ -6,58 +7,51 @@
 
 Name: custodia
 Version: 0.5.0
-Release: alt3%ubt
-Summary: A tool for managing secrets
+Release: alt4
 
-Group: System/Configuration/Other
+Summary: A tool for managing secrets
 License: %gpl3plus
+Group: System/Configuration/Other
+
 Url: https://github.com/latchset/custodia
 BuildArch: noarch
 
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-jwcrypto >= 0.4.2
-BuildRequires: python-module-requests
-BuildRequires: python-module-coverage
-BuildRequires: python-module-tox >= 2.3.1
-BuildRequires: python-module-systemd
-BuildRequires: python-module-virtualenv
-BuildRequires: python2.7(configparser)
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python-module-configparser
 BuildRequires: python-module-coverage
 BuildRequires: python-module-cryptography
 BuildRequires: python-module-etcd
-BuildRequires: python-modules-sqlite3
-BuildRequires: python-module-pytest
+BuildRequires: python-module-jwcrypto
+BuildRequires: python-module-mock
 BuildRequires: python-module-pytest-runner
 BuildRequires: python-module-pytest-cov
+BuildRequires: python-module-requests
+BuildRequires: python-modules-sqlite3
+BuildRequires: python-module-tox
 BuildRequires: pytest
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-jwcrypto >= 0.4.2
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-tox >= 2.3.1
-BuildRequires: python3-module-systemd
-BuildRequires: python3-module-virtualenv
-BuildRequires: python3(configparser)
 BuildRequires: python3-module-coverage
 BuildRequires: python3-module-cryptography
 BuildRequires: python3-module-etcd
-BuildRequires: python3-modules-sqlite3
-BuildRequires: python3-module-pytest
+BuildRequires: python3-module-jwcrypto
 BuildRequires: python3-module-pytest-runner
 BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-requests
+BuildRequires: python3-modules-sqlite3
+BuildRequires: python3-module-tox
 BuildRequires: pytest3
+%endif
 
-Requires: python3-module-custodia = %version-%release
-
+Requires: python3-module-%name = %EVR
 Conflicts: freeipa-server-common < %ipa_conflict
 
 %define overview                                                              \
@@ -76,12 +70,7 @@ authorization, storage and API plugins are combined and exposed.
 %package -n python-module-%name
 Summary: Subpackage with python custodia modules
 Group: Development/Python
-Requires: python-module-setuptools
-Requires: python-module-jwcrypto >= 0.4.2
-Requires: python-module-requests
-Requires: python-module-systemd
 %py_requires configparser
-Requires: python-module-urllib3
 Conflicts: python-module-freeipa < %ipa_conflict
 %py_provides %name
 
@@ -91,12 +80,6 @@ Conflicts: python-module-freeipa < %ipa_conflict
 %package -n python3-module-%name
 Summary: Subpackage with python3 custodia modules
 Group: Development/Python
-Requires: python3-module-setuptools
-Requires: python3-module-jwcrypto >= 0.4.2
-Requires: python3-module-requests
-Requires: python3-module-systemd
-%py3_requires configparser
-Requires: python3-module-urllib3
 %py3_provides %name
 
 %description -n python3-module-%name
@@ -105,7 +88,6 @@ Requires: python3-module-urllib3
 %prep
 %setup
 %patch -p1
-rm -rf ../python3
 cp -a . ../python3
 
 %build
@@ -117,7 +99,7 @@ popd
 
 %install
 mkdir -p %buildroot%_sbindir
-mkdir -p %buildroot%_mandir/man7
+mkdir -p %buildroot%_man7dir
 mkdir -p %buildroot%_defaultdocdir/custodia
 mkdir -p %buildroot%_defaultdocdir/custodia/examples
 mkdir -p %buildroot%_sysconfdir/custodia
@@ -139,7 +121,7 @@ popd
 %python_install
 mv -v %buildroot%_bindir/custodia %buildroot%_sbindir/custodia
 mv -v %buildroot%_bindir/custodia.py3 %buildroot%_sbindir/custodia.py3
-install -m 644 -t "%buildroot%_mandir/man7" man/custodia.7
+install -m 644 -t "%buildroot%_man7dir" man/custodia.7
 install -m 644 -t "%buildroot%_defaultdocdir/custodia" README API.md
 install -m 644 -t "%buildroot%_defaultdocdir/custodia/examples" custodia.conf
 install -m 600 %_builddir/%name-%version/contrib/config/custodia/custodia.conf %buildroot%_sysconfdir/custodia
@@ -148,13 +130,11 @@ install -m 644 %_builddir/%name-%version/contrib/config/systemd/system/custodia@
 install -m 644 %_builddir/%name-%version/contrib/config/tmpfiles.d/custodia.conf  %buildroot%_tmpfilesdir/custodia.conf
 
 %check
-# don't download packages
 export PIP_INDEX_URL=http://host.invalid./
-
-tox --sitepackages -e py%{python_version_nodots python} -v
+tox --sitepackages -e py%{python_version_nodots python} -v -- -v
 
 pushd ../python3
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
 
 %pre
@@ -204,13 +184,16 @@ exit 0
 %_bindir/custodia-cli.py3
 
 %changelog
-* Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.0-alt3%ubt
+* Mon Jul 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.0-alt4
+- Remove runtime requirements to setuptools (closes: #35114)
+
+* Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.0-alt3
 - NMU: rebuilt with python-3.6.
 
-* Mon Jan 29 2018 Stanislav Levin <slev@altlinux.org> 0.5.0-alt2%ubt
+* Mon Jan 29 2018 Stanislav Levin <slev@altlinux.org> 0.5.0-alt2
 - Fix tests for Python3
 
-* Wed Oct 25 2017 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1%ubt
+* Wed Oct 25 2017 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1
 - Put v0.5.0 sources from https://github.com/latchset/custodia
 
 * Tue Sep 26 2017 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt4

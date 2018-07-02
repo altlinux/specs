@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Version: 1.0.0
-Release: alt1%ubt
+Release: alt2
 
 Summary: A GSSAPI/SPNEGO authentication handler for python-requests
 License: ISC
@@ -16,7 +16,6 @@ Url: https://pypi.org/project/requests-gssapi
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-module-setuptools
 BuildRequires: python3-module-setuptools
@@ -53,6 +52,7 @@ Group: Development/Python3
 
 %prep
 %setup
+%patch -p1
 
 cp -fR . ../python3
 
@@ -86,5 +86,8 @@ popd
 %python3_sitelibdir/*
 
 %changelog
-* Fri May 04 2018 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1%ubt
+* Mon Jul 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.0-alt2
+- Fix regex string escaping
+
+* Fri May 04 2018 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
 - Initial build
