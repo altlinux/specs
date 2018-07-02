@@ -4,7 +4,7 @@ BuildRequires: perl(Test/Repocop/ExternalTest.pm)
 %define testname build-logs
 
 Name: repocop-unittest-%testname
-Version: 0.08
+Version: 0.09
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,7 +13,7 @@ Summary: %testname unit tests for repocop test platform
 Group: Development/Other
 License: GPL or Artistic
 Url: http://repocop.altlinux.org
-Requires: repocop >= 0.73
+Requires: repocop >= 0.74
 
 Source0: %name-%version.tar
 
@@ -29,6 +29,7 @@ Source0: %name-%version.tar
 mkdir -p $RPM_BUILD_ROOT%_bindir/
 install -m 755 \
    repocop-unittest-build-log \
+   repocop-unittest-build-log-filter-diff \
    repocop-rsync-beehive-logs \
    repocop-process-build-logs \
    $RPM_BUILD_ROOT%_bindir/
@@ -50,6 +51,9 @@ done
 %_datadir/repocop/srccollectors/*
 
 %changelog
+* Mon Jul 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- fix for mangled logs
+
 * Wed Jun 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - added verbosity and timeout
 
