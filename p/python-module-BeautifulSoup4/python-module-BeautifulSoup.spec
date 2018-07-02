@@ -1,13 +1,9 @@
-# test new macroses
-%define python_build CFLAGS="%optflags" python setup.py build
-%define python_install python setup.py install --root %buildroot --optimize=2
-
 %def_with python3
 
 %define oname BeautifulSoup4
 Name: python-module-%oname
 Version: 4.5.3
-Release: alt1
+Release: alt2
 
 Summary: HTML/XML parser for quick-turnaround applications like screen-scraping
 
@@ -21,13 +17,15 @@ BuildArch: noarch
 
 Source0: https://pypi.python.org/packages/9b/a5/c6fa2d08e6c671103f9508816588e0fb9cec40444e8e72993f3d4c325936/beautifulsoup4-%{version}.tar.gz
 
+BuildRequires(pre): rpm-build-python
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-setuptools
-BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3 time
+BuildRequires: python-module-pytest
 
 #BuildPreReq: python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pytest
 #BuildRequires: python3-devel python-tools-2to3
 #BuildPreReq: python3-module-setuptools-tests
 %endif
@@ -128,6 +126,10 @@ popd
 %endif
 
 %changelog
+* Mon Jul 02 2018 Ivan Zakharyaschev <imz@altlinux.org> 4.5.3-alt2
+- (.spec) use standard Python build/install macros
+- (.spec) re-arrange Python/Python3 BuildRequires
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.5.3-alt1
 - automated PyPI update
 

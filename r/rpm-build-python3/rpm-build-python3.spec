@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.12
+Version: 0.1.13
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -87,6 +87,16 @@ popd
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Mon Jul 02 2018 Ivan Zakharyaschev <imz@altlinux.org> 0.1.13-alt1
+- Assume that setuptools are required if the traditional Python3 build/install
+  macros are used (overridable through %%python3_setup_buildrequires).
+
+  The idea is that the Build Root Policy scripts for Python3 are executed
+  unconditionally whenever python3 is present in the system, but the
+  setuptools requirement is optional. (As a consequence, there may be a
+  working system with Python3 without setuptools, because setuptools
+  are not used at runtime.)
+
 * Wed Apr 25 2018 Ivan Zakharyaschev <imz@altlinux.org> 0.1.12-alt1
 - python3.prov.py & %%py3_provides: rm old-style provs. (It's the final 3rd
   stage of the cosmetic renaming started in 0.1.10-alt1. It's possible if
