@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-CPAN-Perl-Releases
-Version: 3.66
+Version: 3.68
 Release: alt1
 
 Summary: Mapping Perl releases on CPAN to the location of the tarballs
@@ -30,6 +30,9 @@ BuildRequires: perl-devel
 %doc Changes LICENSE README
 
 %changelog
+* Mon Jul 02 2018 Igor Vlasenko <viy@altlinux.ru> 3.68-alt1
+- automated CPAN update
+
 * Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 3.66-alt1
 - automated CPAN update
 
