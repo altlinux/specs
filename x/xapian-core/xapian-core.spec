@@ -2,7 +2,7 @@
 
 Name: xapian-core
 Version: 1.4.5
-Release: alt1
+Release: alt2
 
 Summary: The Xapian Probabilistic Information Retrieval Library
 License: GPL
@@ -11,6 +11,7 @@ Group: Databases
 Url: http://www.xapian.org
 Source0: http://www.oligarchy.co.uk/xapian/%version/%{name}-%{version}.tar.xz
 Source100: %name.watch
+Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Wed May 05 2010
 BuildRequires: gcc-c++ libblkid libe2fs libpasswdqc libss libtic libuuid-devel libwrap libzio pam0_userpass python-base zlib-devel
@@ -71,7 +72,7 @@ This package contains API reference in HTML and PostScript.
 
 %prep
 %setup
-%ifarch e2k
+%ifarch %e2k
 # current lcc doesn't know these
 sed -i  -e 's,-fno-gnu-keywords,,;s,-Wstrict-null-sentinel,,' \
 	-e 's,-Wstrict-overflow=1,,;s,-Wlogical-op,,;s,-Wdouble-promotion,,' \
@@ -110,8 +111,7 @@ rm -f %buildroot%_libdir/libxapian.a
 %_bindir/xapian-replicate
 %_bindir/xapian-replicate-server
 %_bindir/xapian-tcpsrv
-%dir %_datadir/xapian-core
-%_datadir/xapian-core/*
+%_datadir/xapian-core/
 %_man1dir/*.1*
 %doc AUTHORS ChangeLog* NEWS PLATFORMS README
 
@@ -137,9 +137,38 @@ rm -f %buildroot%_libdir/libxapian.a
 %doc docs/apidoc/html/
 %doc HACKING
 
+# NOTE:
+# - do NOT build this package from git unless you want to maintain it,
+#   I use watch file and it's more convenient to do that with srpms
+
 %changelog
+* Sun Jul 01 2018 Michael Shigorin <mike@altlinux.org> 1.4.5-alt2
+- support e2kv4 through %%e2k macro (grenka@)
+- merged my changes back
+
 * Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.5-alt1
 - Updated to latest stable upstream version 1.4.5.
+
+* Tue Oct 17 2017 Michael Shigorin <mike@altlinux.org> 1.4.5-alt0
+- new version (watch file uupdate)
+
+* Tue May 09 2017 Michael Shigorin <mike@altlinux.org> 1.4.4-alt1
+- new version (watch file uupdate)
+
+* Fri Jan 27 2017 Michael Shigorin <mike@altlinux.org> 1.4.3-alt1
+- new version (watch file uupdate)
+
+* Tue Dec 27 2016 Michael Shigorin <mike@altlinux.org> 1.4.2-alt1
+- new version (watch file uupdate)
+- E2K: lcc adaptations
+
+* Mon Oct 24 2016 Michael Shigorin <mike@altlinux.org> 1.4.1-alt1
+- new version (watch file uupdate)
+
+* Sun Jun 26 2016 Michael Shigorin <mike@altlinux.org> 1.4.0-alt1
+- new version (watch file uupdate)
+  + dropped xapian-chert-update, xapian-inspect utilities
+  + renamed delve to xapian-delve
 
 * Wed Mar 30 2016 Michael Shigorin <mike@altlinux.org> 1.2.23-alt1
 - new version (watch file uupdate)
