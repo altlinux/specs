@@ -5,7 +5,7 @@
 
 Name: hugin
 Version: 2018.0.0
-Release: alt1.1
+Release: alt2
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
 Group: Graphics
@@ -24,7 +24,7 @@ BuildRequires: libpng-devel libstdc++-devel libtiff-devel
 BuildRequires: zlib-devel libpango-devel zip cmake openexr-devel libexiv2-devel libtclap-devel
 BuildRequires: liblensfun-devel libvigra-devel libgomp-devel libfftw3-devel libsqlite3-devel
 BuildRequires: libflann-devel
-%{?_enable_hsi:BuildRequires: swig}
+%{?_enable_hsi:BuildRequires: python-devel swig}
 %{?_enable_lapack:BuildRequires: liblapack-devel}
 BuildRequires: desktop-file-utils
 BuildRequires: liblcms2-devel
@@ -76,6 +76,9 @@ done
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Jul 02 2018 Yuri N. Sedunov <aris@altlinux.org> 2018.0.0-alt2
+- fixed buildreqs
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2018.0.0-alt1.1
 - NMU: rebuilt with boost-1.67.0
 
