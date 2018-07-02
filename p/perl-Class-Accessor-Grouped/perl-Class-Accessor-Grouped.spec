@@ -1,6 +1,6 @@
 %define dist Class-Accessor-Grouped
 Name: perl-Class-Accessor-Grouped
-Version: 0.10012
+Version: 0.10014
 Release: alt1
 
 Summary: Lets you build groups of accessors
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RI/RIBASUSHI/Class-Accessor-Grouped-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -19,7 +19,7 @@ This class lets you build groups of accessors that will call
 different getters and setters.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -32,6 +32,9 @@ different getters and setters.
 %perl_vendor_privlib/Class/Accessor/Grouped.pm
 
 %changelog
+* Mon Jul 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.10014-alt1
+- automated CPAN update
+
 * Mon Oct 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.10012-alt1
 - automated CPAN update
 
