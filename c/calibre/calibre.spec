@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 3.25.0
+Version: 3.26.1
 Release: alt1
 
 Summary: A e-book library management application
@@ -80,14 +80,11 @@ BuildRequires: libdbus-devel >= 1.10.8
 # pygments 2.1.3
 # optipng 0.7.6
 # mozjpeg 3.1
-# need it really?
-%py_use BeautifulSoup >= 3.0.5
 %py_use cssselect >= 0.7.1
 
 BuildRequires: libmtdev-devel libts-devel libinput-devel libxkbcommon-devel
 
 BuildRequires: zlib-devel bzlib-devel
-# TODO? unrarsrc unrardll
 BuildRequires: libexpat >= 2.2.4
 BuildRequires: libffi-devel >= 3.2.1
 #BuildRequires: nasm
@@ -113,6 +110,7 @@ BuildRequires: libdbus-glib-devel >= 0.106
 %py_use html5lib >= 0.999999999
 %py_use Pillow >= 3.2.0
 # TODO qtwebkit
+Requires: python-module-unrardll
 
 %description
 calibre is an e-book library manager. It can view, convert and catalog e-books
@@ -169,6 +167,10 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Mon Jul 02 2018 Vitaly Lipatov <lav@altlinux.ru> 3.26.1-alt1
+- new version 3.26.1 (with rpmrb script)
+- drop BeautifulSoup requires (patched one used)
+
 * Sat Jun 02 2018 Vitaly Lipatov <lav@altlinux.ru> 3.25.0-alt1
 - new version 3.25.0 (with rpmrb script)
 
