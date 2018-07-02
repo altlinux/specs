@@ -3,7 +3,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 18.1.1
+Version: 18.1.3
 Release: alt1%ubt
 Epoch: 4
 License: MIT
@@ -19,10 +19,11 @@ Patch: %name-%version.patch
 BuildPreReq: /proc
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
-BuildRequires: libdrm-devel libexpat-devel python-modules libselinux-devel libxcb-devel libSM-devel
+BuildRequires: libdrm-devel libexpat-devel python-modules libselinux-devel libxcb-devel libSM-devel libtinfo-devel
 BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libffi-devel libelf-devel
 BuildRequires: libva-devel libvdpau-devel libXvMC-devel xorg-proto-devel libxshmfence-devel libnettle-devel
 BuildRequires: libelf-devel python-module-mako python-module-argparse zlib-devel
+BuildRequires: libwayland-client-devel libwayland-server-devel wayland-protocols
 %ifarch %ix86 x86_64
 BuildRequires: libllvm-devel-static
 %endif
@@ -215,6 +216,7 @@ framerate information to stdout
 	--enable-texture-float \
 	--enable-glx-tls \
 	--enable-selinux \
+	--with-platforms=x11,wayland,drm \
 	--with-dri-driverdir=%_libdir/X11/modules/dri \
 	%{subst_enable xa}
 #
@@ -429,6 +431,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Mon Jul 02 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.1.3-alt1%ubt
+- 18.1.3
+
 * Thu Jun 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.1.1-alt1%ubt
 - 18.1.1
 
