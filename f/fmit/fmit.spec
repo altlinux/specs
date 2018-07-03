@@ -1,5 +1,5 @@
 Name: fmit
-Version: 1.2.1
+Version: 1.2.6
 Release: alt1
 
 Summary: Free Music Instrument Tuner
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 # manually removed: git-core i586-libxcb python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope  ruby ruby-stdlibs
 # Automatically added by buildreq on Fri Jul 29 2016
 # optimized out: gcc-c++ libGL-devel libgpg-error libjson-c libqt5-core libqt5-gui libqt5-multimedia libqt5-network libqt5-opengl libqt5-svg libqt5-widgets libstdc++-devel python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-xmlpatterns-devel
-BuildRequires: libalsa-devel libfftw3-devel libportaudio2-devel qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webkit-devel qt5-websockets-devel
+BuildRequires: itstool libalsa-devel libfftw3-devel libportaudio2-devel qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webkit-devel qt5-websockets-devel
 
 BuildRequires: desktop-file-utils
 
@@ -54,9 +54,13 @@ desktop-file-install --dir %buildroot%_desktopdir \
 # FIXME: add macro for appdata
 %_datadir/appdata/fmit.appdata.xml
 %_iconsdir/hicolor/*/apps/fmit.*
+%_iconsdir/hicolor/symbolic/apps/fmit-symbolic.svg
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Jul 03 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2.6-alt1
+- new version 1.2.6 (with rpmrb script)
+
 * Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
 - new version 1.2.1 (with rpmrb script)
 
