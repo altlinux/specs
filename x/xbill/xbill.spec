@@ -1,19 +1,18 @@
-Summary: Stop Bill from loading his OS into all the computers
-Summary(ru_RU.KOI8-R): Помешайте Биллу поставить свою ОС на все компьютеры
 Name: xbill
-Version: 2.1
-Release: alt5
+Version: 2.1.0gtk2
+Release: alt1
 
-Packager: Grigory Batalov <bga@altlinux.ru>
+Summary: Stop Bill from loading his OS into all the computers
+Summary(ru_RU.UTF-8): п÷п╬п╪п╣я┬п╟п╧я┌п╣ п▒п╦п╩п╩я┐ п©п╬я│я┌п╟п╡п╦я┌я▄ я│п╡п╬я▌ п·п║ п╫п╟ п╡я│п╣ п╨п╬п╪п©я▄я▌я┌п╣я─я▀
 
 License: GPL
 Group: Games/Arcade
-Source: ftp://ftp.xbill.org/pub/xbill/%name-%version.tar.gz
 Url: http://www.xbill.org/
 
-Patch: xbill-fix-build-with-gtk.patch
+# Source-url: https://github.com/alistairmcmillan/Xbill/archive/master.zip
+Source: %name-%version.tar
 
-BuildRequires: flex gcc-c++ imake libXt-devel gtk+-devel
+BuildRequires: flex gcc-c++ imake libXt-devel libgtk+2-devel
 
 %description
 The xbill game tests your reflexes as you seek out and destroy all
@@ -22,16 +21,17 @@ universe, and boldly go where no geek has gone before.  Xbill has
 become an increasingly attractive option as the Linux Age progresses,
 and it is very popular at Red Hat.
 
-%description -l ru_RU.KOI8-R
-Игра xBill развивает рефлексы. Найдите и уничтожьте всех маленьких
-человечков, пытающихся заразить ваши компьютеры вирусом Windows [TM].
+%description -l ru_RU.UTF-8
+п≤пЁя─п╟ xBill я─п╟п╥п╡п╦п╡п╟п╣я┌ я─п╣я└п╩п╣п╨я│я▀. п²п╟п╧п╢п╦я┌п╣ п╦ я┐п╫п╦я┤я┌п╬п╤я▄я┌п╣ п╡я│п╣я┘ п╪п╟п╩п╣п╫я▄п╨п╦я┘
+я┤п╣п╩п╬п╡п╣я┤п╨п╬п╡, п©я▀я┌п╟я▌я┴п╦я┘я│я▐ п╥п╟я─п╟п╥п╦я┌я▄ п╡п╟я┬п╦ п╨п╬п╪п©я▄я▌я┌п╣я─я▀ п╡п╦я─я┐я│п╬п╪ Windows [TM].
 
 %prep
-%setup -q
-%patch -p2
+%setup
 
 %build
-%configure --bindir=%_bindir --localstatedir=%_localstatedir/games --disable-motif --enable-gtk
+autoconf
+%configure --bindir=%_bindir --localstatedir=%_localstatedir/games \
+           --disable-motif --disable-athena --enable-gtk
 %make_build
 
 %install
@@ -54,14 +54,16 @@ EOF
 
 %files
 %attr(0755,root,games) %_x11bindir/xbill
-%dir %_localstatedir/games/%name
-%attr(664,root,games) %_localstatedir/games/%name/scores
-%config(noreplace) %_localstatedir/games/%name/scores
+%dir %_localstatedir/games/%name/
+%config(noreplace) %attr(664,root,games) %_localstatedir/games/%name/scores
 %_datadir/%name
 %_desktopdir/%{name}.desktop
 %_man6dir/%name.*
 
 %changelog
+* Tue Jul 03 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.0gtk2-alt1
+- build GTK+2 version from https://github.com/alistairmcmillan/Xbill
+
 * Thu Mar 03 2016 Andrey Cherepanov <cas@altlinux.org> 2.1-alt5
 - Build with GUI (gtk) (ALT #26006)
 - Package man page
