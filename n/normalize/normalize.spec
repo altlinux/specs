@@ -1,6 +1,6 @@
 Name: normalize
 Version: 0.7.7
-Release: alt2.1
+Release: alt3
 
 Summary: A tool for adjusting the volume of WAV files to a standard level
 License: GPL
@@ -20,7 +20,7 @@ Requires: lame mp3info mpg123 vorbis-tools
 # manually removed: gcc-fortran 
 # Automatically added by buildreq on Tue Sep 20 2011
 # optimized out: glib-devel gtk+ libgfortran-devel libstdc++-devel
-BuildRequires: flac gcc-c++ gtk+-devel lame libaudiofile-devel libmad-devel madplay vorbis-tools
+BuildRequires: flac gcc-c++ lame libaudiofile-devel libmad-devel madplay vorbis-tools
 
 %description
 normalize is a tool for adjusting the volume of wave files to a
@@ -37,7 +37,7 @@ touch AUTHORS ChangeLog
 
 %build
 %autoreconf
-%configure --with-mad --with-audiofile
+%configure --with-mad --with-audiofile --disable-xmms
 %make_build
 
 %install
@@ -54,6 +54,9 @@ ln -s normalize-mp3.1 %buildroot%_man1dir/normalize-ogg.1
 %_man1dir/*
 
 %changelog
+* Tue Jul 03 2018 Vitaly Lipatov <lav@altlinux.ru> 0.7.7-alt3
+- rebuild without gtk+-devel
+
 * Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.7-alt2.1
 - Rebuilt with new audiofile
 
