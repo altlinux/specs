@@ -1,5 +1,5 @@
 Name: libmspack
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: Compressors and decompressors for Microsoft compression formats
@@ -33,29 +33,51 @@ with.
 This package contains development files required
 in development of the %name-based applications.
 
+%package tools
+Summary: Tool from libmspack
+Group: File tools
+Conflicts: mscompress
+
+%description tools
+This package contains tools
+cabrip, chmextract, msexpand, oabextract
+based on %name.
+
 %prep
 %setup
 
 %build
+cd libmspack
 mkdir m4
 %autoreconf
 %configure --disable-static
 %make_build
 
 %install
+cd libmspack
 %makeinstall_std
 
 %files
-%doc README
+%doc libmspack/README
 %_libdir/*.so.*
 
 %files devel
-%doc doc/*
+%doc libmspack/doc/*
 %_includedir/mspack.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
+%files tools
+%doc libmspack/README
+%_bindir/cabrip
+%_bindir/chmextract
+%_bindir/msexpand
+%_bindir/oabextract
+
 %changelog
+* Tue Jul 03 2018 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
+- new version 0.6 (with rpmrb script)
+
 * Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
 - new version 0.5 (with rpmrb script)
 
