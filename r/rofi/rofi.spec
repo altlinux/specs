@@ -1,6 +1,6 @@
 
 Name: rofi
-Version: 1.3.1
+Version: 1.5.1
 Release: alt1
 Summary: A window switcher, run dialog and dmenu replacement
 License: MIT
@@ -30,6 +30,10 @@ BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: glib2-devel libgio-devel
+BuildRequires: librsvg-devel
+BuildRequires: libcairo-devel
+BuildRequires: libcheck-devel
+BuildRequires: flex
 Requires: xdg-utils
 
 %description
@@ -38,11 +42,20 @@ This version started off as a clone of simpleswitcher, the version from Sean Pri
 All credit for this great tool should go to him. Rofi developed extra features,
 like a run-dialog, ssh-launcher and can act as a drop-in dmenu replacement, making it a very versatile tool.
 
+%package devel
+Summary: headers file for rofi launcher
+Group: Graphical desktop/Other
+Requires: %name
+
+%description devel
+%summary
+
 %prep
 %setup
 #%%patch0 -p1
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -55,9 +68,17 @@ like a run-dialog, ssh-launcher and can act as a drop-in dmenu replacement, maki
 %_bindir/rofi-*
 %_man1dir/%name.*
 %_man1dir/%name-*
+%_man5dir/%name-*
 %_datadir/%name/themes/*
 
+%files devel
+%_includedir/%name
+%_pkgconfigdir/%name.pc
+
 %changelog
+* Tue Jul 03 2018 Konstantin Artyushkin <akv@altlinux.org> 1.5.1-alt1
+- update
+
 * Mon Mar 13 2017 Konstantin Artyushkin <akv@altlinux.org> 1.3.1-alt1
 - update
 
