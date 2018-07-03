@@ -2,8 +2,8 @@
 
 Name: wireguard
 
-Version: 0.0.20180413
-Release: alt2%ubt
+Version: 0.0.20180625
+Release: alt1%ubt
 
 Summary: Wireguard is a fast, modern, secure VPN tunnel module for Linux kernel
 License: GPLv2
@@ -111,6 +111,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Tue Jul 03 2018 Alexey Shabalin <shaba@altlinux.ru> 0.0.20180625-alt1%ubt
+- 0.0.20180625
+
 * Thu May 03 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.0.20180413-alt2%ubt
 - Rebuild to provide wg-quick as a separate package
 
