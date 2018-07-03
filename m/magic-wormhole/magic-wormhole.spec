@@ -1,5 +1,5 @@
 Name:    magic-wormhole
-Version: 0.10.3
+Version: 0.10.5
 Release: alt1
 
 Summary: get things from one computer to another, safely
@@ -63,6 +63,7 @@ Wormhole codes are single-use and do not need to be memorized.
 
 %install
 %python3_install
+rm -rf %buildroot%python3_sitelibdir/wormhole/test/
 
 %files
 %_bindir/wormhole
@@ -71,5 +72,8 @@ Wormhole codes are single-use and do not need to be memorized.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Jul 03 2018 Vitaly Lipatov <lav@altlinux.ru> 0.10.5-alt1
+- new version 0.10.5 (with rpmrb script)
+
 * Sun Dec 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.10.3-alt1
 - Initial build for ALT Sisyphus
