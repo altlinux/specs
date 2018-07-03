@@ -6,7 +6,7 @@
 
 Name: gnome-flashback
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME Flashback session
 License: GPLv3
@@ -48,7 +48,8 @@ Requires: ibus xkeyboard-config
 # since 3.20
 Conflicts: notification-daemon < 3.20
 
-BuildRequires: rpm-build-gnome gnome-common
+BuildRequires(pre): rpm-build-gnome rpm-build-xdg
+BuildRequires: gnome-common
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libdbus-glib-devel >= %dbus_glib_ver
@@ -132,6 +133,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Tue Jul 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt2
+- fixed buildreqs
+
 * Sun Mar 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 
