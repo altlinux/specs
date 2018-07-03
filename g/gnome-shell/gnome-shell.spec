@@ -8,7 +8,7 @@
 
 Name: gnome-shell
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -184,8 +184,7 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %build
 %meson \
-	%{?_enable_gtk_doc:-Dgtk_doc=true} \
-	-Denable-schemas-compile=false
+	%{?_enable_gtk_doc:-Dgtk_doc=true}
 %meson_build
 
 %install
@@ -238,6 +237,9 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %endif
 
 %changelog
+* Tue Jul 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt2
+- updated to 3.28.2-10-gda96408
+
 * Wed May 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 

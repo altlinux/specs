@@ -13,7 +13,7 @@
 %endif
 
 %def_enable cairo
-%def_enable gst
+%def_disable gst
 %def_disable profile
 
 %def_enable glib
@@ -28,7 +28,7 @@
 
 Name: libcogl
 Version: %ver_major.2
-Release: alt4
+Release: alt5
 
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 Group: System/Libraries
@@ -41,6 +41,19 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%oname/%ver_major/%oname-%version.
 Source: %oname-%version.tar
 %endif
 Patch: cogl-1.16.1-alt-gles2.patch
+
+# fc patches
+# Vaguely related to https://bugzilla.gnome.org/show_bug.cgi?id=772419
+# but on the 1.22 branch, and the static inline in the header is gross
+# ajax promises he'll clean this up.
+Patch10: 0001-egl-Use-eglGetPlatformDisplay-not-eglGetDisplay.patch
+# "GL_ARB_shader_texture_lod" is used to do lod biased texturing. It
+# make achieve faster blurring of images instead of using large blur radius.
+Patch11: 0002-add-GL_ARB_shader_texture_lod-support.patch
+# "copy_sub_image" is used to implement feature similar with kwin blur
+# effect by being abel to copy partial of framebuffer contents as texture
+# and do post blurring.
+Patch12: 0003-texture-support-copy_sub_image.patch
 
 Conflicts: libclutter < 1.8.0
 
@@ -137,6 +150,9 @@ This package provides Cogl plugin for Gstreamer (1.0 API version)
 %prep
 %setup -n %oname-%version
 %patch -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 %build
 %autoreconf
@@ -188,7 +204,13 @@ This package provides Cogl plugin for Gstreamer (1.0 API version)
 %files devel-doc
 %_datadir/gtk-doc/html/*
 
+%{?_disable_examples_install:%exclude %_datadir/cogl/examples-data}
+
 %changelog
+* Tue Jun 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt5
+- disabled gstreamer support
+- applied fc patchset
+
 * Mon Jun 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt4
 - updated to 1.22.2-18-g9036d14
 - gstreamer plugin moved to separate subpackage

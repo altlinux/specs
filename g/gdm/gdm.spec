@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 3.28
 %define api_ver 1.0
@@ -27,7 +27,7 @@
 
 Name: gdm
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -99,7 +99,7 @@ BuildPreReq: libcanberra-devel >= %libcanberra_ver libcanberra-gtk3-devel
 BuildRequires: libXdmcp-devel
 
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXext-devel libXft-devel libSM-devel
-BuildRequires: libXi-devel xorg-inputproto-devel libXinerama-devel xorg-xineramaproto-devel libXevie-devel
+BuildRequires: libXi-devel xorg-proto-devel libXinerama-devel libXevie-devel
 BuildRequires: xorg-xephyr xorg-server
 
 BuildPreReq: libcheck-devel >= %check_ver
@@ -320,6 +320,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Wed Jun 06 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt2
+- updated to 3.28.2-15-g909d417
+
 * Sat May 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 
