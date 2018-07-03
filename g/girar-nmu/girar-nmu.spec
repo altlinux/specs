@@ -6,7 +6,7 @@
 #set_compress_method none
 %set_compress_method %mansuff
 Name: girar-nmu
-Version: 1.994
+Version: 1.995
 Release: alt1
 
 Summary: git.alt client utilities for NMU automation
@@ -86,6 +86,9 @@ EOF
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Tue Jul 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.995-alt1
+- fixed --share bug
+
 * Mon Jun 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.994-alt1
 - 2.0 beta 4
 
