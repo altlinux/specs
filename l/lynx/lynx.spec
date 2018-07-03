@@ -1,21 +1,18 @@
-%define ver	2.8.6
-%define subver  rel.2
-%define bver	2-8-6
+%define ver	2.8.9
+%define subver  pre.1
+%define bver	2-8-9
 
 Name: lynx
 Version: %ver
-Release: alt9.%subver.2
+Release: alt1.%subver
 
 Summary: Text based browser for the world wide web
-License: GPL
+License: GPLv2
 Url: http://lynx.browser.org
 Group: Networking/WWW
 
-Packager: Denis Smirnov <mithraen@altlinux.ru>
-
 Source: lynx.tar
 Source1: %name.wmconfig
-
 Source100: lynx-16.xpm
 Source101: lynx-32.xpm
 Source102: lynx-48.xpm
@@ -23,7 +20,7 @@ Source102: lynx-48.xpm
 Requires: %name-data = %version-%release
 
 Patch: %name-pld.patch
-Patch1: lynx2-8-5-alt-cfg.patch
+Patch1: lynx2-8-9-alt-cfg.patch
 Patch2: %name-tmpdir.patch
 Patch3: lynx2-8-4-fix-ugly-color.patch
 Patch4: %name-284-ipv6-salen.patch
@@ -57,8 +54,8 @@ Data files for lynx
 %patch2 -p0
 %patch3 -p1
 #patch4 -p1
-%patch5 -p1
-%patch6 -p0
+#patch5 -p1
+%patch6 -p1
 %patch7 -p0
 
 %build
@@ -70,26 +67,29 @@ CFLAGS="$RPM_OPT_FLAGS -w -DUSE_SSL -D_USE_PLD -U_GNU_SOURCE " LDFLAGS=-s \
 ./configure \
 	--prefix=/usr \
 	--sysconfdir=/etc \
-	--enable-warnings \
-	--enable-color-style \
-	--enable-default-colors \
-	--enable-externs \
-	--enable-internal-links \
-	--enable-nsl-fork \
-	--enable-persistent-cookies \
-	--enable-cgi-links	\
-	--enable-nls \
-	--enable-charset-choice\
-	--enable-ipv6 \
-	--enable-nested-tables\
-	--enable-prettysrc \
-	--enable-source-cache \
-	--enable-libjs \
-	--enable-scrollbar \
-	--enable-read-eta \
-	--enable-file-upload \
-	--enable-addrlist-page \
-	--enable-justify-elts \
+	--disable-font-switch           \
+	--enable-addrlist-page          \
+	--enable-charset-choice         \
+	--enable-cgi-links              \
+	--enable-color-style            \
+	--enable-default-colors         \
+	--enable-externs                \
+	--enable-file-upload            \
+	--enable-internal-links         \
+	--enable-ipv6                   \
+	--enable-japanese-utf8          \
+	--enable-justify-elts           \
+	--enable-locale-charset         \
+	--enable-libjs                  \
+	--enable-nested-tables          \
+	--enable-nls                    \
+	--enable-nsl-fork               \
+	--enable-persistent-cookies     \
+	--enable-prettysrc              \
+	--enable-read-eta               \
+	--enable-scrollbar              \
+	--enable-source-cache           \
+	--enable-warnings               \
 	--with-ssl \
 	--with-zlib $SOCKS5 \
 	--with-screen=ncursesw
@@ -160,6 +160,13 @@ install -m 644 %SOURCE101 %buildroot/%_liconsdir/lynx.xpm
 %_datadir/%name
 
 %changelog
+* Mon Jul 02 2018 Alexei Takaseev <taf@altlinux.org> 2.8.9-alt1.pre.1
+- 2.8.8pre.1
+- Disable lynx2-8-5-alt-i18n.patch
+
+* Mon Jul 02 2018 Alexei Takaseev <taf@altlinux.org> 2.8.8-alt1.rel.2
+- 2.8.8rel.2
+
 * Thu Sep 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.8.6-alt9.rel.2.2
 - Updated config.{sub,guess} configs.
 
