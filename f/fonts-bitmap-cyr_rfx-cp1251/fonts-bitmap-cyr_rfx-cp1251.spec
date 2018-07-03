@@ -8,7 +8,7 @@
 
 Name: fonts-bitmap-cyr_rfx-cp1251
 Version: 1.1a
-Release: alt6
+Release: alt7
 
 Summary: Cyrillic bitmap fonts for the X Window System in microsoft-cp1251 encoding
 
@@ -30,12 +30,31 @@ BuildArch: noarch
 BuildRequires: unzip mkfontdir bdftopcf xorg-font-utils rpm-build-fonts >= 0.3
 PreReq: fontconfig >= 2.4.2
 
-Provides: XFree86-%fname-fonts-%cname
 Obsoletes: XFree86-%fname-fonts-%cname
 Obsoletes: cyr_rfx-windows-1251
+Requires: fonts-bitmap-%fname-%cname-misc = %EVR
+Requires: fonts-bitmap-%fname-%cname-75dpi = %EVR
 
 %description
 Collection of cyrillic raster fonts for X Window System by D. Bolkhovityanov.
+
+%package -n fonts-bitmap-%fname-%cname-misc
+Group: System/Fonts/X11 bitmap
+Summary: Cyrillic bitmap fonts in microsoft-cp1251 encoding
+Conflicts: fonts-bitmap-%fname-%cname < 1.1a-alt7
+
+%description -n fonts-bitmap-%fname-%cname-misc
+Collection of cyrillic raster fonts for X Window System  in microsoft-cp1251 encoding
+by D. Bolkhovityanov, misc part.
+
+%package -n fonts-bitmap-%fname-%cname-75dpi
+Group: System/Fonts/X11 bitmap
+Summary: Cyrillic bitmap fonts in microsoft-cp1251 encoding
+Conflicts: fonts-bitmap-%fname-%cname < 1.1a-alt7
+
+%description -n fonts-bitmap-%fname-%cname-75dpi
+Collection of cyrillic raster fonts for X Window System  in microsoft-cp1251 encoding
+by D. Bolkhovityanov, 75dpi part.
 
 %prep
 %setup -q -n %origname
@@ -62,20 +81,36 @@ for n in 75dpi misc; do
 	mkfontdir %buildroot%__bitmapdir/$n
 done
 
+%if_with xfs
 mkdir -p %buildroot%_fontpathdir/
 ln -s ../../..%__bitmapdir/misc \
 	%buildroot%_fontpathdir/bitmap-%fname-%cname-misc:unscaled:pri=10
 ln -s ../../..%__bitmapdir/75dpi \
 	%buildroot%_fontpathdir/bitmap-%fname-%cname-75dpi:unscaled:pri=10
+%endif
 
 %files
 %doc doc/*
-%_fontpathdir/*
+
+%files -n fonts-bitmap-%fname-%cname-misc
+%if_with xfs
+%_fontpathdir/*misc*
+%endif
 %dir %__bitmapdir/
 %__bitmapdir/misc/
+
+%files -n fonts-bitmap-%fname-%cname-75dpi
+%if_with xfs
+%_fontpathdir/*75dpi*
+%endif
+%dir %__bitmapdir/
 %__bitmapdir/75dpi/
 
 %changelog
+* Tue Jul 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1a-alt7
+- split on misc and 75dpi subpackages
+  to avoid fonconfig conflict for times and helvetica
+
 * Wed Aug 24 2011 Igor Vlasenko <viy@altlinux.ru> 1.1a-alt6
 - dropped %%post/un according to Fonts Policy
 
