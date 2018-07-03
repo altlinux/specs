@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.15
-Release:	alt1
+Release:	alt2
 #Url:		http://etcnet.org/
 Url:		https://www.altlinux.org/Etcnet
 
@@ -141,6 +141,9 @@ fi
 %files full
 
 %changelog
+* Tue Jul 03 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.15-alt2
+- fix typo for DEFAULT_WG
+
 * Thu Jun 28 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.15-alt1
 - added KEEP_UP option
 
