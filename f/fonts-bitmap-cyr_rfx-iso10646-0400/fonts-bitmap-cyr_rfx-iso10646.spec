@@ -5,7 +5,7 @@
 
 Name: fonts-bitmap-%fname-%cname
 Version: 1.1
-Release: alt10
+Release: alt11
 License: distributable
 Group: System/Fonts/X11 bitmap
 Summary: Cyrillic bitmap fonts for the X Window System in unicode encoding
@@ -15,14 +15,34 @@ Source1: Makefile.fonts-iso10646
 BuildArch: noarch
 
 PreReq: fontconfig >= 2.4.2
-Provides: XFree86-%fname-fonts-%cname = %version
 Obsoletes: XFree86-%fname-fonts-%cname
+
+Requires: fonts-bitmap-%fname-%cname-misc = %EVR
+Requires: fonts-bitmap-%fname-%cname-75dpi = %EVR
 
 # Automatically added by buildreq on Wed Oct 01 2003
 BuildRequires: xorg-font-utils
 
 %description
 Collection of cyrillic raster fonts for X Window System by D. Bolkhovityanov.
+
+%package -n fonts-bitmap-%fname-%cname-misc
+Group: System/Fonts/X11 bitmap
+Summary: Cyrillic bitmap fonts in unicode encoding - misc part
+Conflicts: fonts-bitmap-%fname-%cname < 1.1-alt11
+
+%description -n fonts-bitmap-%fname-%cname-misc
+Collection of cyrillic raster fonts for X Window System  in unicode encoding
+by D. Bolkhovityanov, misc part.
+
+%package -n fonts-bitmap-%fname-%cname-75dpi
+Group: System/Fonts/X11 bitmap
+Summary: Cyrillic bitmap fonts in unicode encoding - 75dpi part
+Conflicts: fonts-bitmap-%fname-%cname < 1.1-alt11
+
+%description -n fonts-bitmap-%fname-%cname-75dpi
+Collection of cyrillic raster fonts for X Window System  in unicode encoding
+by D. Bolkhovityanov, 75dpi part.
 
 %prep
 %setup -q -n  %origname
@@ -51,20 +71,36 @@ make FONTDIR=%buildroot%_fontsdir/%fname-%cname install
 mkfontdir %buildroot%_fontsdir/%fname-%cname/misc
 mkfontdir %buildroot%_fontsdir/%fname-%cname/75dpi
 
+%if_with xfs
 mkdir -p %buildroot%_sysconfdir/X11/fontpath.d
 ln -s ../../..%_fontsdir/%fname-%cname/misc \
 	%buildroot%_sysconfdir/X11/fontpath.d/bitmap-%fname-%cname-misc:unscaled:pri=20
 ln -s ../../..%_fontsdir/%fname-%cname/75dpi \
 	%buildroot%_sysconfdir/X11/fontpath.d/bitmap-%fname-%cname-75dpi:unscaled:pri=20
+%endif
 
 %files
 %doc doc/*
-%_sysconfdir/X11/fontpath.d/*
+
+%files -n fonts-bitmap-%fname-%cname-misc
+%if_with xfs
+%_sysconfdir/X11/fontpath.d/*misc*
+%endif
 %dir %_fontsdir/%fname-%cname
 %_fontsdir/%fname-%cname/misc
+
+%files -n fonts-bitmap-%fname-%cname-75dpi
+%if_with xfs
+%_sysconfdir/X11/fontpath.d/*75dpi*
+%endif
+%dir %_fontsdir/%fname-%cname
 %_fontsdir/%fname-%cname/75dpi
 
 %changelog
+* Tue Jul 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt11
+- split on misc and 75dpi subpackages
+  to avoid fonconfig conflict for times and helvetica
+
 * Wed Aug 24 2011 Igor Vlasenko <viy@altlinux.ru> 1.1-alt10
 - dropped %%post/un according to Fonts Policy
 
