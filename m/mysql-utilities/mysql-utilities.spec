@@ -1,5 +1,5 @@
 Name: mysql-utilities
-Version: 1.6.1
+Version: 1.6.5
 Release: alt1
 
 Summary: MySQL Utilities
@@ -10,10 +10,7 @@ Url: https://launchpad.net/mysql-utilities
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Upstream has a mirror redirector for downloads, so the URL is hard to
-# represent statically.  You can get the tarball by following a link from
-# http://dev.mysql.com/downloads/utilities/
-# Source-url: https://launchpad.net/ubuntu/+archive/primary/+files/mysql-utilities_%version.orig.tar.gz
+# Source-url: https://github.com/mysql/mysql-utilities/archive/release-%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -81,14 +78,14 @@ rm -rf %buildroot%python_sitelibdir/mysql/connector/
 %_bindir/mysqluserclone
 %python_sitelibdir/mysql/utilities
 %python_sitelibdir/mysql_utilities*
-%_man1dir/mysql*
 # empty file already provided by mysql-connector-python
 %exclude %python_sitelibdir/mysql/__init*
 
 # mysql fabric files
-%dir %_sysconfdir/mysql/
-%config(noreplace) %_sysconfdir/mysql/fabric.cfg
-%_bindir/mysqlfabric
+#%_man1dir/mysql*
+#dir %_sysconfdir/mysql/
+#config(noreplace) %_sysconfdir/mysql/fabric.cfg
+#_bindir/mysqlfabric
 %_bindir/mysqlrplms
 %_bindir/mysqlrplsync
 %_bindir/mysqlbinlogmove
@@ -96,9 +93,12 @@ rm -rf %buildroot%python_sitelibdir/mysql/connector/
 %_bindir/mysqlbinlogrotate
 %_bindir/mysqlgrants
 %_bindir/mysqlslavetrx
-%python_sitelibdir/mysql/fabric
+#python_sitelibdir/mysql/fabric
 
 %changelog
+* Tue Jul 03 2018 Vitaly Lipatov <lav@altlinux.ru> 1.6.5-alt1
+- new version 1.6.5 (with rpmrb script)
+
 * Sun Jul 26 2015 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt1
 - new version 1.6.1 (with rpmrb script)
 - download source from launchpad
