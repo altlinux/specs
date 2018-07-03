@@ -1,6 +1,6 @@
 Name: ostree
 Version: 2018.5
-Release: alt1
+Release: alt2
 
 Summary: Linux-based operating system develop/build/deploy tool
 
@@ -36,7 +36,7 @@ Source2: bsdiff.tar
 # We always run autogen.sh
 # Automatically added by buildreq on Wed Mar 15 2017
 # optimized out: dconf docbook-dtds docbook-style-xsl glib-networking glib2-devel gnu-config gobject-introspection libgio-devel libgpg-error libgpg-error-devel libgpgme-pthread11 perl pkg-config python-base python-devel python-module-google python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml python3 python3-base xml-common xsltproc
-BuildRequires: db2latex-xsl gobject-introspection-devel libarchive-devel libe2fs-devel libfuse-devel libgpgme-devel liblzma-devel libsoup-devel libsystemd-devel time zlib-devel
+BuildRequires: db2latex-xsl gobject-introspection-devel libarchive-devel libe2fs-devel libfuse-devel libgpgme-devel liblzma-devel libsoup-devel libsystemd-devel time zlib-devel libselinux-devel libcurl-devel libssl-devel
 
 BuildRequires: autoconf automake libtool
 # Too bad there isn't a pkg-config file =(
@@ -80,6 +80,13 @@ Requires: libostree = %version-%release
 %description -n libostree-devel
 Development package containing library and header files of %name.
 
+%package -n libostree-devel-doc
+Summary: Development documentation for lib%name
+Group: Development/Documentation
+BuildArch: noarch
+
+%description -n libostree-devel-doc
+This package contains development documentation for lib%name.
 
 %prep
 %setup -a1 -a2
@@ -90,6 +97,10 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 
 %configure --disable-silent-rules \
 	   --without-dracut \
+           --with-selinux \
+           --with-curl \
+           --with-openssl \
+           --enable-gtk-doc \
 	   --without-grub2-mkconfig-path
 
 # hack to fix missed dirname declaration
@@ -117,6 +128,7 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_unitdir/ostree-remount.service
 %_tmpfilesdir/ostree-tmpfiles.conf
 %_datadir/bash-completion/completions/ostree
+%_unitdir/ostree-finalize-staged.service
 # due missed buildreqs
 #    /usr/lib64/girepository-1.0/OSTree-1.0.typelib
 #    /usr/share/gir-1.0/OSTree-1.0.gir
@@ -134,7 +146,14 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_libdir/libostree*.so
 %_pkgconfigdir/*.pc
 
+%files -n libostree-devel-doc
+%_datadir/gtk-doc/html/ostree/
+
 %changelog
+* Fri Jun 08 2018 Vitaly Lipatov <lav@altlinux.ru> 2018.5-alt2
+- enable gtk-doc build
+- enable build with libcurl, openssl, selinux
+
 * Fri Jun 08 2018 Vitaly Lipatov <lav@altlinux.ru> 2018.5-alt1
 - new version (2018.5) with rpmgs script
 
