@@ -1,9 +1,12 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %def_without docs
 %def_without static
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
-Version: 2.7.13
-Release: alt1.1
+Version: 2.7.14
+Release: alt1
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -15,12 +18,25 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Patch: fix_build_with_libmodbus3.1.4.patch
 Patch1: fix-dir-path.patch
+Patch2: without-sys-io.h-for-no-x86.patch
 Buildrequires(pre): rpm-build-tcl rpm-build-python
-# Automatically added by buildreq on Thu Feb 02 2017
-# optimized out: ImageMagick-tools asciidoc boost-python-headers dblatex docbook-dtds fontconfig fontconfig-devel fonts-type1-urw ghostscript-classic glib2-devel groff-base libGL-devel libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel libart_lgpl-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgnomecanvas-devel libgnomeprint-devel libgpg-error libgtk+2-devel libncurses-devel libpango-devel libstdc++-devel libtinfo-devel libwayland-client libwayland-server libxml2-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-xml sysvinit-utils tcl tcl-devel tex-common texlive-base texlive-base-bin texlive-bibtex-extra texlive-common texlive-fonts-recommended texlive-generic-recommended texlive-latex-base texlive-latex-extra texlive-latex-recommended texlive-pictures texlive-xetex tk xml-common xorg-xproto-devel xsltproc zlib-devel
-BuildRequires: boost-devel-headers boost-python-devel bwidget gcc-c++ libstdc++-devel imake kmod libGLU-devel libXaw-devel libXinerama-devel libgnomeprintui-devel libmodbus-devel libreadline-devel libudev-devel libusb-devel python-modules-tkinter python-modules-unittest tcl-img tclx time tk-devel xorg-cf-files
+BuildRequires: gcc-c++ pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(gtk+-2.0)
+BuildRequires: libGL-devel libGLU-devel
+BuildRequires: libXaw-devel libXinerama-devel libXmu-devel libXt-devel xorg-cf-files
+BuildRequires: pkgconfig(libmodbus)
+BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: pkgconfig(libudev)
+BuildRequires: libncurses-devel libreadline-devel
+BuildRequires: kmod
+BuildRequires: man-db
+BuildRequires: python-modules-tkinter python-modules-unittest
+BuildRequires: boost-devel-headers boost-python-devel
 BuildRequires: pkgconfig(pygtk-2.0)
+BuildRequires: tcl-devel tk-devel tcl-img tclx bwidget
+#BuildRequires: tcl-blt-devel
 BuildRequires: intltool
+#BuildRequires: pkgconfig(libgnomeprintui-2.2)
 %if_with docs
 BuildPreReq: asciidoc-a2x ghostscript-common ghostscript-utils source-highlight graphviz groff-ps
 %endif
@@ -120,6 +136,7 @@ Spanish documementation for %name
 %setup
 %patch -p1
 %patch1 -p1
+%patch2 -p1
 
 #fix make install
 sed 's/ -o root//g' -i src/Makefile
@@ -127,11 +144,12 @@ sed 's/ -o root//g' -i src/Makefile
 %build
 pushd src
 %autoreconf
-%configure  --enable-non-distributable=yes \
-            --with-realtime=uspace \
-            %if_with docs
-            --enable-build-documentation=pdf \
-            %endif
+%configure \
+    --enable-non-distributable=yes \
+    --with-realtime=uspace \
+    %if_with docs
+    --enable-build-documentation=pdf \
+    %endif
 
 %make_build
 popd
@@ -252,6 +270,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 03 2018 Anton Midyukov <antohami@altlinux.org> 2.7.14-alt1
+- new version 2.7.14
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.13-alt1.1
 - NMU: rebuilt with boost-1.67.0
 
