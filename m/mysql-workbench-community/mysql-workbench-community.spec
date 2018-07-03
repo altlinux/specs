@@ -1,6 +1,6 @@
 Name: mysql-workbench-community
 Version: 6.3.10
-Release: alt1
+Release: alt2
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Summary: A MySQL visual database modeling tool
@@ -50,6 +50,7 @@ Requires: mysql-client gnome-keyring
 Requires: %name-data = %version
 
 BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-xdg
 
 # Automatically added by buildreq on Sun Mar 20 2011
 # and edited manualy
@@ -174,6 +175,9 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildr
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Tue Jul 03 2018 Sergey Y. Afonin <asy@altlinux.ru> 6.3.10-alt2
+- Added rpm-build-xdg to BuildRequires
+
 * Mon Jun 25 2018 Sergey Y. Afonin <asy@altlinux.ru> 6.3.10-alt1
 - Updated to last release (thanks to viy@altlinux)
 - Added ExclusiveArch: %%ix86 x86_64
