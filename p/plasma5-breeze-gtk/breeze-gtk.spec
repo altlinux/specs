@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.12.6
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -58,6 +58,9 @@ Provides: gtk3-theme-breeze = %version-%release
 %_datadir/themes/Breeze*
 
 %changelog
+* Tue Jul 03 2018 Oleg Solovyov <mcpain@altlinux.org> 5.12.6-alt2%ubt
+- fix GTK2 progressbar color
+
 * Wed Jun 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt1%ubt
 - new version
 
