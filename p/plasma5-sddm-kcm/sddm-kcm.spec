@@ -1,8 +1,9 @@
 %define rname sddm-kcm
 
 Name: plasma5-%rname
-Version: 18.04.1
+Version: 5.12.6
 Release: alt2%ubt
+Epoch: 1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -90,6 +91,9 @@ KF5 library
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.6-alt2%ubt
+- fix version
+
 * Tue Jul 03 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
 - update russian translation
 
