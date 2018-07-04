@@ -4,12 +4,12 @@
 %define build_parallel_jobs 7
 %endif
 
-%define enigmail_version  2.0.4
+%define enigmail_version  2.0.7
 %define gdata_version     2.6
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	52.8.0
+Version:	52.9.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -429,6 +429,23 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 52.9.0-alt1
+- New version (52.9.0).
+- Enigmail 2.0.7.
+- Fixes:
+  + CVE-2018-12359 Buffer overflow using computed size of canvas element
+  + CVE-2018-12360 Use-after-free when using focus()
+  + CVE-2018-12372 S/MIME and PGP decryption oracles can be built with HTML emails
+  + CVE-2018-12373 S/MIME plaintext can be leaked through HTML reply/forward
+  + CVE-2018-12362 Integer overflow in SSSE3 scaler
+  + CVE-2018-12363 Use-after-free when appending DOM nodes
+  + CVE-2018-12364 CSRF attacks through 307 redirects and NPAPI plugins
+  + CVE-2018-12365 Compromised IPC child process can list local filenames
+  + CVE-2018-12366 Invalid data handling during QCMS transformations
+  + CVE-2018-12368 No warning when opening executable SettingContent-ms files
+  + CVE-2018-12374 Using form to exfiltrate encrypted mail part by pressing enter in form field
+  + CVE-2018-5188 Memory safety bugs fixed in Firefox 60, Firefox ESR 60.1, Firefox ESR 52.9, and Thunderbird 52.9
+
 * Sat May 19 2018 Andrey Cherepanov <cas@altlinux.org> 52.8.0-alt1
 - New version (52.8.0).
 - Enigmail 2.0.4.
