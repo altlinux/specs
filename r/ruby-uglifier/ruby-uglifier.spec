@@ -1,7 +1,7 @@
 %define  pkgname uglifier
 
 Name:    ruby-%pkgname
-Version: 4.1.12
+Version: 4.1.14
 Release: alt1
 
 Summary: Ruby wrapper for UglifyJS JavaScript compressor.
@@ -49,11 +49,16 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*.gemspec
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.14-alt1
+- New version.
+- Package as gem.
+
 * Thu Jun 21 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.12-alt1
 - New version.
 
