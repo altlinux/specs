@@ -2,7 +2,7 @@
 
 Name: rpm-build-ruby
 Epoch: 1
-Version: 0.5
+Version: 0.6
 Release: alt1
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
@@ -18,18 +18,18 @@ Requires: %_bindir/rdoc
 Requires: %_bindir/rake
 Requires: rpm-macros-ruby = %EVR
 Requires: ruby-test-unit = %EVR
-Requires: git
 
 %{!?_disable_check:BuildRequires: ruby >= 1.9 ruby-stdlibs >= 1.9}
 
 %description
-These herlper scripts will look at ruby source files in your package, and will
+These helper scripts will look at Ruby source files in your package, and will
 use this information to generate automatic Requires and Provides tags for the
 package.
 
 %package -n rpm-macros-ruby
 Summary: rpm macros for Ruby packages
 Group: Development/Ruby
+Requires: ruby-tool-setup
 
 %description -n rpm-macros-ruby
 rpm macros for Ruby packages.
@@ -68,6 +68,11 @@ install -D -m 0755 testrb %buildroot%_bindir/testrb
 %_bindir/testrb
 
 %changelog
+* Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.6-alt1
+- Require ruby-tool-setup used in macros.
+- ruby-tool-setup requires git-core so remove git requirements from rpm-build-ruby.
+- Fix small typo in description.
+
 * Thu Jun 28 2018 Denis Medvedev <nbr@altlinux.org> 1:0.5-alt1
 - add git as a requirement fror successful git imported modules build
 
