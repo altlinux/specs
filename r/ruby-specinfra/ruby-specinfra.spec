@@ -1,7 +1,7 @@
 %define  pkgname specinfra
 
 Name:    ruby-%pkgname
-Version: 2.73.3
+Version: 2.73.4
 Release: alt1
 
 Summary: Command Execution Framework for serverspec, itamae and so on
@@ -49,10 +49,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*.gemspec
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 2.73.4-alt1
+- New version.
+- Package as gem.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 2.73.3-alt1
 - Initial build for Sisyphus
