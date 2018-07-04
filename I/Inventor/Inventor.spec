@@ -6,16 +6,20 @@
 
 %def_with demos
 %def_with examples
+%def_with motif
 
 Name: Inventor
 Version: 2.1.5
-Release: alt3.4
+Release: alt4
 
 Summary: SGI Open Inventor (TM)
+
 License: LGPLv2+
 Group: Development/C++
+Url: https://github.com/aumuell/open-inventor
 
-Url: http://oss.sgi.com/projects/inventor
+Packager: Michael Shigorin <mike@altlinux.org>
+
 Source: ftp://oss.sgi.com/projects/inventor/download/inventor-2.1.5-10.src.tar.gz
 Patch: Inventor-2.1.5-30.diff.bz2
 Patch1: Inventor-2.1.5-30-31.diff
@@ -24,7 +28,10 @@ Patch2: Inventor-2.1.5-31-32.diff
 # Misc C++ modernization stuff
 Patch3: Inventor-2.1.5-32-33.diff
 Patch4: Inventor-2.1.5-alt-DSO.diff
-Packager: Michael Shigorin <mike@altlinux.org>
+# abs issue
+Patch5: Inventor-2.1.5-abs-c++17.patch
+# aarch64
+Patch6: Inventor-2.1.5-64bit.patch
 
 %define hackcxxflags -O2 -fno-strict-aliasing
 
@@ -38,13 +45,17 @@ BuildRequires: libXi-devel
 BuildRequires: libX11-devel
 BuildRequires: libXt-devel
 
+%if_with motif
 BuildRequires: libopenmotif-devel
+%endif
 BuildRequires: libfreetype-devel
 BuildRequires: libjpeg-devel
 BuildRequires: bison
 BuildRequires: tcsh
 
 BuildRequires: fonts-ttf-liberation rpm-macros-make
+
+%add_optflags -funsigned-char
 
 %description
 SGI Open Inventor(TM) is an object-oriented 3D toolkit offering a
@@ -73,6 +84,7 @@ Requires: libfreetype-devel libjpeg-devel
 %description -n lib%name-devel
 SGI Open Inventor (TM) development files
 
+%if_with motif
 %package -n libInventorXt
 Summary: SGI Open Inventor (TM) Motif bindings
 Group: System/Libraries
@@ -89,10 +101,12 @@ Requires: %name = %version-%release
 Requires: libInventorXt = %version-%release
 Requires: libInventor-devel = %version-%release
 Requires: pkg-config
-Requires: openmotif-devel
+Requires: libopenmotif-devel
 
 %description -n libInventorXt-devel
 SGI Open Inventor (TM) development files
+
+%endif
 
 %if_with demos
 %package demos
@@ -133,6 +147,8 @@ find -name CVS | xargs rm -rf
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
+%patch5 -p1
+%patch6 -p1
 
 sed -i \
 -e 's,^IVPREFIX =.*$,IVPREFIX = %prefix,' \
@@ -225,6 +241,8 @@ install -d -m755 %buildroot%_datadir/Inventor/data/materials
 install -d -m755 %buildroot%_datadir/Inventor/data/textures
 install -d -m755 %buildroot%_datadir/Inventor/fonts
 
+rm -rf %buildroot/usr/X11R6/lib64/X11/app-defaults/
+
 # Map Inventor's standard fonts
 # Utopia, Helvetica and Courier to liberation-TTF fonts
 # Times-Roman is being used by some examples
@@ -273,6 +291,7 @@ popd > /dev/null
 %_man3dir/Sb*
 %_man3dir/So[^X]*
 
+%if_with motif
 %files -n libInventorXt
 %_bindir/SceneViewer
 %_bindir/ivview
@@ -294,6 +313,7 @@ popd > /dev/null
 %_libdir/libInventorXt.so
 %_pkgconfigdir/libInventorXt*.pc
 %_man3dir/SoXt*
+%endif
 
 %files data
 %dir %_datadir/Inventor
@@ -316,6 +336,11 @@ popd > /dev/null
 %endif
 
 %changelog
+* Wed Jun 20 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.5-alt4
+- cleanup spec
+- fix build with std::abs (C++17)
+- fix build on aarch64
+
 * Thu Jun 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.5-alt3.4
 - Fixed build
 

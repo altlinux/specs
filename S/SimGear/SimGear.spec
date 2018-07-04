@@ -1,22 +1,26 @@
+%define major 2018.2
 Name: SimGear
-Version: 2016.1.1
+Version: %major.2
 Release: alt1
 
 Summary: Simulator Construction Tools
+
 License: GPL
 Group: System/Libraries
-
 Url: http://www.flightgear.org
+
 Packager: Michael Shigorin <mike@altlinux.org>
-Source: %name-%version.tar.gz
+
+# Source-url: https://sourceforge.net/projects/flightgear/files/release-%major/simgear-%version.tar.bz2
+Source: %name-%version.tar
 Patch0: simgear-3.2.0-fedora-format.patch
 Patch1: simgear-3.6.0-fedora-aarch64.patch
 
 # Automatically added by buildreq on Sat Mar 03 2012
 # optimized out: cmake-modules libGL-devel libICE-devel libOpenThreads-devel libSM-devel libX11-devel libXau-devel libXext-devel libopenal-devel libstdc++-devel xorg-kbproto-devel xorg-xproto-devel
-BuildRequires: boost-devel-headers cmake gcc-c++ libGLU-devel libOpenSceneGraph-devel libXi-devel libXt-devel libalut-devel libapr1-devel zlib-devel
+BuildRequires: boost-devel-headers cmake gcc-c++ libGLU-devel libOpenSceneGraph-devel libXi-devel libXt-devel libalut-devel libapr1-devel zlib-devel libcurl-devel
 
-BuildRequires: cmake libapr1-devel libsubversion-devel
+BuildRequires: cmake libapr1-devel
 
 %description
 SimGear is a set of open-source libraries designed to be used
@@ -30,7 +34,10 @@ Provides: SimGear = %version
 Provides: SimGear-devel = %version
 Obsoletes: SimGear-devel < 1.0.0
 Conflicts: SimGear-devel < 1.0.0
-Requires: libOpenSceneGraph-devel
+
+# from SimGearTargets.cmake
+Requires: libOpenSceneGraph-devel libOpenThreads-devel
+Requires: zlib-devel libcurl-devel libopenal-devel libGL-devel libGLU-devel
 
 %description -n libsimgear-devel-static
 SimGear is a set of open-source libraries designed to be used as
@@ -43,6 +50,7 @@ This package contains header files for SimGear.
 %setup
 %patch0 -p1
 %patch1 -p1
+%__subst "s|\${CMAKE_INSTALL_LIBDIR}/cmake/SimGear|%_libdir/cmake/SimGear|" CMakeLists.txt
 
 %build
 %add_optflags %optflags_shared
@@ -55,8 +63,12 @@ This package contains header files for SimGear.
 %files -n libsimgear-devel-static
 %_libdir/*.a
 %_includedir/simgear
+%_libdir/cmake/SimGear/
 
 %changelog
+* Thu Jun 21 2018 Vitaly Lipatov <lav@altlinux.ru> 2018.2.2-alt1
+- new version (2018.2.2) with rpmgs script
+
 * Sat Feb 20 2016 Michael Shigorin <mike@altlinux.org> 2016.1.1-alt1
 - 2016.1
 

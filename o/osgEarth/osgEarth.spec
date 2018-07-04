@@ -2,7 +2,7 @@
 
 Name: osgEarth
 Version: 2.9
-Release: alt1
+Release: alt2
 
 Summary: Dynamic map generation toolkit for OpenSceneGraph
 License: LGPL
@@ -120,6 +120,9 @@ popd
 %_datadir/osgEarth
 
 %changelog
+* Sat Jun 23 2018 Vitaly Lipatov <lav@altlinux.ru> 2.9-alt2
+- NUM: rebuild against OpenSceneGraph 3.4.1
+
 * Fri Feb 09 2018 Andrey Cherepanov <cas@altlinux.org> 2.9-alt1
 - New version.
 - Drop obsoleted patch.
