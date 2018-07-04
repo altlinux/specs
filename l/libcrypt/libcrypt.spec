@@ -1,6 +1,6 @@
 Name: libcrypt
 Version: 4.0.1
-Release: alt1
+Release: alt2
 
 Summary: Modern password hashing library
 License: LGPLv2.1+
@@ -8,13 +8,15 @@ Group: System/Libraries
 Url: https://github.com/besser82/libxcrypt
 Source: %name-%version-%release.tar
 
+Provides: crypt-yescrypt = 1.0.3
 Provides: glibc-crypt_blowfish = 1.3
 Provides: libcrypt1 = 6:2.27-alt6
 Obsoletes: libcrypt1 < 6:2.27-alt6
+Conflicts: glibc-core < 6:2.27-alt5
 
 %description
 libcrypt is a modern library for one-way hashing of passwords.
-It supports DES, MD5, SHA-2-256, SHA-2-512, and bcrypt-based
+It supports DES, MD5, SHA-2-256, SHA-2-512, bcrypt and yescrypt-based
 password hashes, and provides the traditional Unix 'crypt' and
 'crypt_r' interfaces, as well as a set of extended interfaces
 pioneered by Openwall Linux, 'crypt_rn', 'crypt_ra',
@@ -83,5 +85,8 @@ done
 %_man3dir/*.3*
 
 %changelog
+* Wed Jul 04 2018 Dmitry V. Levin <ldv@altlinux.org> 4.0.1-alt2
+- Added yescrypt and gost-yescrypt support (by vt@).
+
 * Wed Jun 27 2018 Dmitry V. Levin <ldv@altlinux.org> 4.0.1-alt1
 - Initial build for Sisyphus.
