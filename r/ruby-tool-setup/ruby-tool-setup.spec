@@ -2,7 +2,7 @@
 
 Name: ruby-tool-%pkgname
 Version: 3.4.1
-Release: alt8
+Release: alt9
 Summary: Generic installer for ruby scripts and libraries
 License: LGPLv2.1
 Group: Development/Ruby
@@ -16,6 +16,8 @@ Provides: ruby-%pkgname = %version-%release
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-module-etc ruby-module-fileutils ruby-module-stringio
+
+Requires: git-core
 
 Source: %pkgname-%version.tar
 Patch: %name-%version-%release.patch
@@ -56,6 +58,9 @@ Documentation files for %name
 %doc doc.* sample
 
 %changelog
+* Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt9
+- Init git repo for git ls-files and fix open gemspec.
+
 * Thu Jun 28 2018 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt8
 - Do not try to save gemspec with errors.
 
