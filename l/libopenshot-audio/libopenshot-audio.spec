@@ -4,7 +4,7 @@
 %define libopenshot_ver %ver_major.3
 
 Name: %_name-audio
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: OpenShot Audio Library
@@ -52,6 +52,9 @@ that are needed to write applications that use %name.
 %_libdir/%name.so
 
 %changelog
+* Sat Jun 30 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.6-alt1
+- 0.1.6
+
 * Mon Nov 13 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt1
 - 0.1.5
 

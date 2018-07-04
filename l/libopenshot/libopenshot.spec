@@ -1,13 +1,13 @@
 %def_disable snapshot
 %define _name openshot
 
-%define ver_major 0.1
+%define ver_major 0.2
 %define api_ver 1.0
 %def_disable doc
 
 Name: lib%_name
-Version: %ver_major.9
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: OpenShot Video Library
 Group: System/Libraries
@@ -20,11 +20,7 @@ Source: %url/%ver_major/%version/+download/%name-%version.tar.gz
 # VCS: https://github.com/OpenShot/libopenshot.git
 Source: %name-%version.tar
 %endif
-Patch: libopenshot-0.1.9-774eb365b3f663b1f53dd24c1650fafb3c445ea6.patch
-# https://git.archlinux.org/svntogit/community.git/plain/trunk/ffmpeg-32-writer.patch?h=packages/libopenshot
-Patch1: libopenshot-0.1.9-arch-ffmpeg-32-writer.patch
-#https://git.archlinux.org/svntogit/community.git/plain/trunk/ffmpeg-4.0.patch?h=packages/libopenshot
-Patch2: libopenshot-0.1.9-arch-ffmpeg4.patch
+Patch: libopenshot-0.2.0-arch-ffmpeg4.patch
 
 %define __python %nil
 BuildRequires: gcc-c++ cmake libgomp-devel libunittest-cpp-devel jsoncpp-devel
@@ -59,19 +55,18 @@ Requires: %name = %version-%release
 This package provides Python3 bindings for OpenShot Video Library.
 
 %prep
-%setup -D -c -n %name-%version
+%setup
+# ffmpeg-4.0 fixes
 %patch -p1
-%patch1 -p1
-#https://github.com/OpenShot/libopenshot/issues/87
-%patch2 -p1
-# +
 sed -i \
 	-e 's#FF_INPUT_BUFFER_PADDING_SIZE#AV_INPUT_BUFFER_PADDING_SIZE#g' \
 	-e 's#CODEC_FLAG_GLOBAL_HEADER#AV_CODEC_FLAG_GLOBAL_HEADER#g' \
 	src/FFmpegWriter.cpp src/FFmpegReader.cpp
 
 %build
-%cmake -DUSE_SYSTEM_JSONCPP:BOOL=ON
+%cmake  -DUSE_SYSTEM_JSONCPP:BOOL=ON \
+	-DMAGICKCORE_HDRI_ENABLE:BOOL=ON \
+	-DMAGICKCORE_QUANTUM_DEPTH=16
 %cmake_build
 
 %install
@@ -89,6 +84,9 @@ sed -i \
 %python3_sitelibdir/*
 
 %changelog
+* Sat Jun 30 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Thu Jun 14 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt3
 - rebuilt with ffmpeg-4.0
 
