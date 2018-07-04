@@ -1,6 +1,6 @@
 Name: cinnamon
-Version: 3.8.4
-Release: alt2
+Version: 3.8.6
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -85,6 +85,7 @@ BuildRequires: libpulseaudio-devel
 BuildRequires: desktop-file-utils
 BuildRequires: gtk-doc gnome-common intltool
 BuildRequires: at-spi2-atk-devel
+BuildRequires: rpm-build-xdg
 
 # There is already registered upstream issue https://github.com/linuxmint/muffin/issues/199
 # But untill it will be fixed by Cinnamon devs we handle it manually.
@@ -195,8 +196,6 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %exclude %_datadir/xsessions/*.desktop
 %_datadir/cinnamon/
 %_datadir/polkit-1/actions/org.cinnamon.settings-users.policy
-%_datadir/polkit-1/actions/org.cinnamon.schema-install.policy
-%_datadir/polkit-1/actions/org.cinnamon.schema-remove.policy
 %_datadir/icons/hicolor/*/actions/*.svg
 %_datadir/icons/hicolor/*/apps/*.svg
 %_datadir/icons/hicolor/*/categories/*.svg
@@ -216,6 +215,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Wed Jul 4 2018 Vladimir Didenko <cow@altlinux.org> 3.8.6-alt1
+- 3.8.6-2-g66e54f4
+
 * Wed Jun 20 2018 Vladimir Didenko <cow@altlinux.org> 3.8.4-alt2
 - fix build requires for libnm
 
