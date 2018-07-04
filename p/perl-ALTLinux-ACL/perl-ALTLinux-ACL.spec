@@ -1,7 +1,7 @@
 %define module ALTLinux-ACL
 
 Name: perl-%module
-Version: 0.17
+Version: 0.18
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -10,7 +10,9 @@ Summary: %module - Perl extension for quering ALTLinux ACL files
 Group: Development/Perl
 License: GPL or Artistic
 Source: %module-%version.tar.gz
-Url: http://search.cpan.org/dist/%module
+# TODO: upload
+#Url: http://search.cpan.org/dist/%module
+Url: http://git.altlinux.org/people/viy/packages/%name
 
 BuildRequires: perl-devel perl(Pod/Usage.pm) perl-IPC-Run3 perl(Data/Array2ArrayMap/Hash/XSTree.pm) perl(Pod/Text.pm)
 
@@ -34,6 +36,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl-IPC-Run3 perl(Data/Array2Array
 %_man1dir/*
 
 %changelog
+* Wed Jul 04 2018 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- updated documentation, fixed Url
+
 * Sat Jun 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - support for empty acl in p8
 
