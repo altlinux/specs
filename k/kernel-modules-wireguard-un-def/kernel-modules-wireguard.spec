@@ -1,9 +1,9 @@
 %define module_name	wireguard
-%define module_version	0.0.20180413
-%define module_release	alt1.k
+%define module_version	0.0.20180625
+%define module_release	alt1
 
 %define flavour		un-def
-%define karch x86_64 i586
+%define karch %ix86 x86_64
 BuildRequires(pre): kernel-headers-modules-un-def
 %setup_kernel_module %flavour
 
@@ -63,6 +63,12 @@ install wireguard.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jul 04 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.0.20180625-alt1
+- New version 0.0.20180625
+
+* Fri Jun 15 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.20180625-alt1.k
+- Add karch specsubst
 
 * Tue Apr 17 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.0.20180413-alt1
 - Initial build
