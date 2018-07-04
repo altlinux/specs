@@ -1,5 +1,5 @@
 Name: kernel-build-tools
-Version: 0.105
+Version: 0.106
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -34,6 +34,16 @@ Provides: kernel-headers-modules-ovz-el7
 %ifnarch aarch64
 Provides: kernel-headers-modules-mp
 %endif
+%ifnarch %e2k
+Provides: kernel-headers-modules-elbrus-def
+%endif
+%ifnarch e2k
+Provides: kernel-headers-modules-elbrus-4c
+%endif
+%ifnarch e2kv4
+Provides: kernel-headers-modules-elbrus-1cp
+Provides: kernel-headers-modules-elbrus-8c
+%endif
 
 %description
 Utilities to facilitate creation of kernel and additional module packages
@@ -64,6 +74,9 @@ install -Dpm644 kernel-macros \
 %_rpmmacrosdir/kernel
 
 %changelog
+* Wed Jul 04 2018 Michael Shigorin <mike@altlinux.org> 0.106-alt1
+- added %%e2k support
+
 * Sat Jun 09 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.105-alt1
 - km-create-tag: added --force and --arches options.
 - kernel-macros:
