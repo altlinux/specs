@@ -1,5 +1,5 @@
-%define kernel_base_version	4.16
-%define kernel_sublevel        .16
+%define kernel_base_version	4.17
+%define kernel_sublevel        .4
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -155,15 +155,12 @@ cp -a include %buildroot%kbuild_dir/include
 cp -a arch/%base_arch/include %buildroot%kbuild_dir/arch/%base_arch
 
 # drivers-headers install
-install -d %buildroot%kbuild_dir/drivers/scsi
 install -d %buildroot%kbuild_dir/drivers/md
 install -d %buildroot%kbuild_dir/drivers/usb/core
 install -d %buildroot%kbuild_dir/drivers/net/wireless
 install -d %buildroot%kbuild_dir/net/mac80211
 install -d %buildroot%kbuild_dir/kernel
 install -d %buildroot%kbuild_dir/lib
-cp -a drivers/scsi/{{scsi,scsi_typedefs}.h,scsi_module.c} \
-	%buildroot%kbuild_dir/drivers/scsi/
 cp -a drivers/md/dm*.h \
 	%buildroot%kbuild_dir/drivers/md/
 cp -a drivers/usb/core/*.h \
@@ -263,6 +260,12 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Wed Jul 04 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.17.4-alt1
+- 4.17.4
+
+* Mon Jul 02 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.17.0-alt1
+- 4.17
+
 * Mon Jun 18 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.16.16-alt1
 - 4.16.16
 
