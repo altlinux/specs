@@ -25,8 +25,8 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 18.04.1
-Release: alt2%ubt
+Version: 18.04.2
+Release: alt1%ubt
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Group: Archiving/Cd burning
@@ -182,6 +182,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
 - remove requires to transcode
 

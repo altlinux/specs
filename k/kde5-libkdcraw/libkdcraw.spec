@@ -1,8 +1,8 @@
 %define rname libkdcraw
 
 Name: kde5-%rname
-Version: 18.04.1
-Release: alt2%ubt
+Version: 18.04.2
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -71,6 +71,9 @@ KF5 library
 %_K5lib/libKF5KDcraw.so.*
 
 %changelog
+* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Wed May 30 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
 - relax libraw version requirement
 

@@ -4,7 +4,7 @@
 %define libkerfuffle libkerfuffle%sover
 
 Name: kde5-%rname
-Version: 18.04.1
+Version: 18.04.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -24,6 +24,7 @@ Patch1: alt-clizip-priority.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: bzlib-devel libarchive-devel liblzma-devel zlib-devel
+#BuildRequires: libzip-devel # wrong filenames decodings
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kitemmodels-devel
 BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
@@ -102,6 +103,9 @@ KF5 library
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 

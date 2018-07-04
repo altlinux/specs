@@ -1,8 +1,8 @@
 %define rname spectacle
 
 Name: kde5-%rname
-Version: 18.04.1
-Release: alt2%ubt
+Version: 18.04.2
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -71,6 +71,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Thu May 31 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
 - update build requires
 
