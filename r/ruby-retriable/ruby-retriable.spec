@@ -1,7 +1,7 @@
 %define  pkgname retriable
 
 Name:    ruby-%pkgname
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 Summary: Retriable is an simple DSL to retry failed code blocks with randomized exponential backoff.
@@ -49,10 +49,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*.gemspec
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Jul 05 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.2-alt1
+- New version.
+- Package as gem.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.1-alt1
 - Initial build for Sisyphus
