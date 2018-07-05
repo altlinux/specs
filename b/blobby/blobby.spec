@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ libGLU-devel unzip
+BuildRequires: /usr/bin/desktop-file-install boost-devel gcc-c++ libGLU-devel unzip
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global svn_rev 1681
 Name:           blobby
 Version:        1.0
-Release:        alt2_17.svn%{svn_rev}
+Release:        alt3_17.svn%{svn_rev}
 Summary:        Volley-ball game
 Group:          Games/Other
 License:        GPLv2+
@@ -25,7 +25,7 @@ Patch2:         blobby-vector3.patch
 Patch3:         blobby-compile-flags.patch
 Patch4:         blobby-vector4.patch
 
-BuildRequires:  libSDL2-devel, libphysfs-devel, zlib-devel ctest cmake boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel, zip
+BuildRequires:  libSDL2-devel, libphysfs-devel, zlib-devel ctest cmake, boost-complete, zip
 BuildRequires:  ImageMagick-tools, desktop-file-utils, icon-theme-hicolor
 BuildRequires:  tinyxml-devel lua-devel
 BuildRequires:  libGL-devel
@@ -89,6 +89,9 @@ install -p -m 644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata/blobby.appdat
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_17.svn1681
+- use boost-complete
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_17.svn1681
 - update to new release by fcimport
 
