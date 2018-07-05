@@ -2,9 +2,10 @@
 
 %define module_name	dahdi
 %define module_version	2.11.1
-%define module_release alt1
+%define module_release alt1.k
 
 %define flavour	std-pae
+%define karch i586
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-pae
 
