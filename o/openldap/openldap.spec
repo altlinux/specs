@@ -18,7 +18,7 @@
 
 Name: openldap
 Version: %_sover.45
-Release: alt4
+Release: alt5
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -705,6 +705,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Thu Jul  5 2018 Leonid Krivoshein <klark@altlinux.org> 2.4.45-alt5
+- /etc/sysconfig/ldap: use SLAPD_BACKEND= for ldap-dn create calls.
+
 * Thu Jan 18 2018 Stanislav Levin <slev@altlinux.org> 2.4.45-alt4
 - fix default value of TLS_REQCERT (NEVER -> DEMAND) in ldap.conf
   accoding to upstream. Some of applications expect to use the default
