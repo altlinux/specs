@@ -2,7 +2,7 @@
 %define api_ver 0.4
 
 Name: lib%rname
-Version: %api_ver.2
+Version: %api_ver.4
 Release: alt1%ubt
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
@@ -94,6 +94,9 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Thu Jul 05 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.4-alt1%ubt
+- 0.4.4
+
 * Tue Jun 19 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.2-alt1%ubt
 - rebuild with libva 2.1.0
 
