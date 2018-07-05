@@ -1,6 +1,6 @@
 Name: libkafel
 Version: 1
-Release: alt1.gitf664aca
+Release: alt2.git409ccb2
 
 Summary: A language and library for specifying syscall filtering policies
 License: Apache-2.0
@@ -11,7 +11,7 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source0: %name-%version.tar
 
-Patch0: 0001-Add-i386-platform.patch
+Patch0: fix-lexer-build-error.patch
 
 BuildRequires: flex
 
@@ -35,7 +35,7 @@ sed -i -e 's#-soname,$@#-soname,$(notdir $@)#' src/Makefile
 
 
 %build
-%make_build
+make
 
 
 %install
@@ -60,5 +60,8 @@ make test
 
 
 %changelog
+* Thu Jul 05 2018 Alexey Gladkov <legion@altlinux.ru> 1-alt2.git409ccb2
+- New snapshot.
+
 * Fri Apr 06 2018 Alexey Gladkov <legion@altlinux.ru> 1-alt1.gitf664aca
 - First build.
