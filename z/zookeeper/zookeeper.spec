@@ -3,9 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-build-python rpm-macros-java
 BuildRequires: gcc-c++ perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(threads.pm) perl-devel rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global _hardened_build 1
@@ -13,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          zookeeper
 Version:       3.4.9
-Release:       alt1_7jpp8
+Release:       alt2_7
 Summary:       A high-performance coordination service for distributed applications
 License:       ASL 2.0 and BSD
 URL:           https://zookeeper.apache.org/
@@ -33,7 +31,7 @@ Patch6:        missing-pom.template.patch
 
 BuildRequires: autoconf
 BuildRequires: automake
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires: boost-complete
 BuildRequires: pkgconfig(cppunit)
 BuildRequires: dos2unix
 BuildRequires: doxygen
@@ -50,7 +48,7 @@ BuildRequires: ant-junit
 BuildRequires: apache-ivy
 BuildRequires: checkstyle
 BuildRequires: ivy-local
-BuildRequires: maven-local
+BuildRequires: javapackages-tools
 
 BuildRequires: jtoaster
 BuildRequires: junit
@@ -79,7 +77,7 @@ BuildRequires: xml-commons-apis
 BuildRequires: apache-commons-parent
 BuildRequires: jetty-server
 BuildRequires: jetty-servlet
-BuildRequires: journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
+BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-stateless systemd-sysvinit systemd-utils
 
 Requires:      checkstyle
 Requires:      jline1
@@ -327,6 +325,9 @@ getent passwd zookeeper >/dev/null || \
 %doc LICENSE.txt NOTICE.txt src/contrib/zkpython/README
 
 %changelog
+* Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 3.4.9-alt2_7
+- use boost-complete
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.9-alt1_7jpp8
 - fc27 update
 
