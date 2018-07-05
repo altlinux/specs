@@ -1,7 +1,7 @@
 %define  pkgname selenium-webdriver
 
 Name:    ruby-%pkgname
-Version: 3.12.0
+Version: 3.13.0
 Release: alt1
 
 Summary: WebDriver is a tool for writing automated tests of websites
@@ -53,10 +53,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*.gemspec
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 3.13.0-alt1
+- New version.
+- Package as gem.
+
 * Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 3.12.0-alt1
 - Initial build for Sisyphus
