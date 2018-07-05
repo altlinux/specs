@@ -6,7 +6,7 @@
 
 %define gst_version 1.0
 %define nspr_version 4.17
-%define nss_version 3.36.4
+%define nss_version 3.38.0
 %define rust_version 1.24.1
 %define cargo_version 0.25.0
 
@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        60.0.2
+Version:        61.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -38,7 +38,6 @@ Patch16:        firefox-cross-desktop.patch
 Patch17:        firefox-mediasource-crash.patch
 Patch18:        firefox-alt-nspr-for-rust.patch
 Patch19:        build-aarch64-skia.patch
-Patch20:        bug1375074-save-restore-x28.patch
 
 # Upstream
 Patch200:       mozilla-bug-256180.patch
@@ -87,12 +86,14 @@ BuildRequires: libdbus-devel libdbus-glib-devel
 
 # Python requires
 BuildRequires: /dev/shm
+BuildRequires: python3-base
 BuildRequires: python-module-distribute
 BuildRequires: python-module-pip
 BuildRequires: python-modules-compiler
 BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
+
 
 # Rust requires
 BuildRequires: /proc
@@ -152,11 +153,9 @@ tar -xf %SOURCE2
 %patch17 -p2
 %patch18 -p2
 %patch19 -p1 -b .aarch64-skia
-%patch20 -p1 -b .bug1375074-save-restore-x28
 
 %patch200 -p1
 %patch201 -p1
-#patch202 -p1
 
 cp -f %SOURCE4 .mozconfig
 
@@ -337,6 +336,28 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Mon Jul 02 2018 Alexey Gladkov <legion@altlinux.ru> 61.0-alt1
+- New release (61.0).
+- Fixed:
+  + CVE-2018-12359: Buffer overflow using computed size of canvas element
+  + CVE-2018-12360: Use-after-free when using focus()
+  + CVE-2018-12361: Integer overflow in SwizzleData
+  + CVE-2018-12358: Same-origin bypass using service worker and redirection
+  + CVE-2018-12362: Integer overflow in SSSE3 scaler
+  + CVE-2018-5156: Media recorder segmentation fault when track type is changed during capture
+  + CVE-2018-12363: Use-after-free when appending DOM nodes
+  + CVE-2018-12364: CSRF attacks through 307 redirects and NPAPI plugins
+  + CVE-2018-12365: Compromised IPC child process can list local filenames
+  + CVE-2018-12371: Integer overflow in Skia library during edge builder allocation
+  + CVE-2018-12366: Invalid data handling during QCMS transformations
+  + CVE-2018-12367: Timing attack mitigation of PerformanceNavigationTiming
+  + CVE-2018-12368: No warning when opening executable SettingContent-ms files
+  + CVE-2018-12369: WebExtension security permission checks bypassed by embedded experiments
+  + CVE-2018-12370: SameSite cookie protections bypassed when exiting Reader View
+  + CVE-2018-5186: Memory safety bugs fixed in Firefox 61
+  + CVE-2018-5187: Memory safety bugs fixed in Firefox 60 and Firefox ESR 60.1
+  + CVE-2018-5188: Memory safety bugs fixed in Firefox 60, Firefox ESR 60.1, and Firefox ESR 52.9
+
 * Thu Jun 07 2018 Alexey Gladkov <legion@altlinux.ru> 60.0.2-alt1
 - New release (60.0.2).
 - Fixed:
