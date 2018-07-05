@@ -7,7 +7,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 %define _localstatedir %{_var}
 Name: xsd
 Version: 4.0.0
-Release: alt1_23
+Release: alt2_23
 Summary: W3C XML schema to C++ data binding compiler
 # Exceptions permit otherwise GPLv2 incompatible combination with ASL 2.0
 License: GPLv2 with exceptions and ASL 2.0  
@@ -32,7 +32,7 @@ BuildRequires: m4, libxerces-c-devel, libcutl-devel, gcc-c++
 %if 0%{?rhel}
 BuildRequires: boost148-devel
 %else
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires: boost-complete
 %endif
 
 %if 0%{?rhel}
@@ -137,6 +137,9 @@ make -j 1 test EXTERNAL_LIBCUTL=y BOOST_LINK_SYSTEM=y
 %doc apidocdir/*
 
 %changelog
+* Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_23
+- use boost-complete
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt1_23
 - update to new release by fcimport
 
