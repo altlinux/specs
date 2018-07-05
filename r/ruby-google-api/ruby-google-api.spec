@@ -1,7 +1,7 @@
 %define  pkgname google-api-ruby-client
 
 Name:    ruby-google-api
-Version: 0.21.2
+Version: 0.23.0
 Release: alt1
 
 Summary: Google API Client for Ruby
@@ -53,11 +53,19 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc *.md
 %_bindir/generate-api
 %ruby_sitelibdir/*
+%rubygem_specdir/*.gemspec
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Jun 26 2018 Andrey Cherepanov <cas@altlinux.org> 0.23.0-alt1
+- New version.
+- Package as gem.
+
+* Wed May 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.22.0-alt1
+- New version.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 0.21.2-alt1
 - New version.
 

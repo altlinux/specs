@@ -1,7 +1,7 @@
 %define  pkgname fog-google
 
 Name:    ruby-%pkgname
-Version: 1.3.3
+Version: 1.6.0
 Release: alt1
 
 Summary: Fog for Google Cloud Platform
@@ -49,10 +49,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*.gemspec
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Jul 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1
+- New version.
+- Package as gem.
+
 * Thu May 24 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.3-alt1
 - Initial build for Sisyphus
