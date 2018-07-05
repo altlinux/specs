@@ -1,12 +1,12 @@
 Name: connector
-Version: 1.5.6
-Release: alt4
+Version: 1.6.3
+Release: alt1
 
 Summary: Remote desktop chooser
 License: GPL
 Group: Networking/Remote access
 
-Url: http://www.myconnector.ru
+Url: http://myconnector.ru
 Source0: %name-%version.tar.gz
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
@@ -46,6 +46,11 @@ install -pDm644 kiosk.access %buildroot%_sysconfdir/%name/kiosk.access
 %config(noreplace) %_sysconfdir/%name/kiosk.access
 
 %changelog
+* Thu Jul 05 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.6.3-alt1
+- Added support SPICE
+- Added support connect to fileservers (SMB, FTP, etc.)
+- Remmina: Disable password storing by default
+
 * Mon Jun 25 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.5.6-alt4
 - Remmina: fixed connect from preferences window
 
