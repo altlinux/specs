@@ -1,6 +1,6 @@
 Name: make
 Version: 4.2.1
-Release: alt2
+Release: alt3
 Epoch: 2
 
 Summary: A GNU tool which simplifies the build process for users
@@ -16,8 +16,10 @@ Patch03: make-4.0-rh-newlines.patch
 Patch04: make-4.0-rh-weird-shell.patch
 Patch05: make-4.2.1-upstream-compat.patch
 Patch06: make-4.2.1-upstream-glob-compat.patch
+Patch07: make-4.2.1-alt-increase-timeout-for-test-output-sync.patch
 
-BuildRequires: makeinfo /proc
+BuildRequires: /proc
+BuildRequires: makeinfo
 
 %description
 A GNU tool for controlling the generation of executables and other
@@ -35,6 +37,7 @@ makefile.
 %patch04 -p1
 %patch05 -p1
 %patch06 -p1
+%patch07 -p2
 
 sed -i \
 	-e 's,^AM_INIT_AUTOMAKE(\[1\.15 ,AM_INIT_AUTOMAKE([1.14.1 ,' \
@@ -67,6 +70,9 @@ ln -sf make %buildroot%_bindir/gmake
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Jul 05 2018 Alexey Gladkov <legion@altlinux.ru> 2:4.2.1-alt3
+- Increase timeout for slow test.
+
 * Thu Feb 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2:4.2.1-alt2
 - Fixed build with new toolchain.
 
