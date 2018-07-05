@@ -1,27 +1,25 @@
-%define  pkgname hoe
+Name:    rake-compiler
+Version: 1.0.4
+Release: alt1
 
-Name:    ruby-%pkgname
-Version: 3.17.0
-Release: alt2
-
-Summary: Hoe is a rake/rubygems helper for project Rakefiles
+Summary: Provide a standard and simplified way to build and package Ruby C and Java extensions using Rake as glue.
 License: MIT
 Group:   Development/Ruby
-Url:     git://github.com/seattlerb/hoe
+Url:     https://github.com/rake-compiler/rake-compiler
 
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
-Source:  %pkgname-%version.tar
+Source:  %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 
-%add_ruby_req_skip flay_task flog_task rake/extensiontask rake/gempackagetask
-%add_ruby_req_skip spec/rake/spectask
-
 %description
-%summary
+rake-compiler is first and foremost a productivity tool for Ruby
+developers. Its goal is to make the busy developer's life easier by
+simplifying the building and packaging of Ruby extensions by simplifying
+code and reducing duplication.
 
 %package doc
 Summary: Documentation files for %name
@@ -33,13 +31,12 @@ BuildArch: noarch
 Documentation files for %{name}.
 
 %prep
-%setup -n %pkgname-%version
+%setup -n %name-%version
 %update_setup_rb
 
 %build
 %ruby_config
 %ruby_build
-rake debug_gem > %pkgname-%version.gemspec 
 
 %install
 %ruby_install
@@ -52,17 +49,12 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %files
 %doc README*
-%_bindir/sow
+%_bindir/%name
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
-* Thu Jul 05 2018 Andrey Cherepanov <cas@altlinux.org> 3.17.0-alt2
-- Clarify ignored modules.
-- Package as gem.
-
-* Wed Jun 06 2018 Andrey Cherepanov <cas@altlinux.org> 3.17.0-alt1
+* Thu Jul 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt1
 - Initial build for Sisyphus

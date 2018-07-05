@@ -1,13 +1,13 @@
-%define  pkgname hoe
+%define  pkgname concourse-gem
 
-Name:    ruby-%pkgname
-Version: 3.17.0
-Release: alt2
+Name:    ruby-concourse
+Version: 0.18.0
+Release: alt1
 
-Summary: Hoe is a rake/rubygems helper for project Rakefiles
+Summary: Provide Rake tasks to ease management of Concourse pipelines. See https://concourse.ci/ to learn about Concourse.
 License: MIT
 Group:   Development/Ruby
-Url:     git://github.com/seattlerb/hoe
+Url:     https://github.com/flavorjones/concourse-gem
 
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
@@ -16,9 +16,6 @@ Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
-
-%add_ruby_req_skip flay_task flog_task rake/extensiontask rake/gempackagetask
-%add_ruby_req_skip spec/rake/spectask
 
 %description
 %summary
@@ -39,7 +36,6 @@ Documentation files for %{name}.
 %build
 %ruby_config
 %ruby_build
-rake debug_gem > %pkgname-%version.gemspec 
 
 %install
 %ruby_install
@@ -52,7 +48,6 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %files
 %doc README*
-%_bindir/sow
 %ruby_sitelibdir/*
 %rubygem_specdir/*.gemspec
 
@@ -60,9 +55,5 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
-* Thu Jul 05 2018 Andrey Cherepanov <cas@altlinux.org> 3.17.0-alt2
-- Clarify ignored modules.
-- Package as gem.
-
-* Wed Jun 06 2018 Andrey Cherepanov <cas@altlinux.org> 3.17.0-alt1
+* Thu Jul 05 2018 Andrey Cherepanov <cas@altlinux.org> 0.18.0-alt1
 - Initial build for Sisyphus
