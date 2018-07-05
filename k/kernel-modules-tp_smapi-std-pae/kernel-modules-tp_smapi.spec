@@ -1,8 +1,9 @@
 %define module_name             tp_smapi
 %define module_version          0.41
-%define module_release alt3
+%define module_release alt3.k
 
 %define flavour		std-pae
+%define karch i586
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-pae
 
