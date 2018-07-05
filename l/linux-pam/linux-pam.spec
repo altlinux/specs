@@ -1,6 +1,6 @@
 Name: linux-pam
 Version: 1.3.1.0.5.955b
-Release: alt1
+Release: alt2
 
 Summary: Pluggable Authentication Modules
 # The library is BSD-style *without* advertising clause, with option to relicense as GPLv2+.
@@ -349,6 +349,9 @@ make check
 %docdir/Linux-PAM*
 
 %changelog
+* Thu Jul 05 2018 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.0.5.955b-alt2
+- Fixed Russian translation (closes: #35128).
+
 * Fri Jun 22 2018 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.0.5.955b-alt1
 - v1.3.1 -> v1.3.1-5-g955b3e2 (fixes grammar of messages printed via pam_prompt).
 - Updated Russian translation.
