@@ -1,7 +1,7 @@
 %define rname kmahjongg
 
 Name: kde5-%rname
-Version: 18.04.1
+Version: 18.04.2
 Release: alt1%ubt
 %K5init
 
@@ -48,6 +48,9 @@ a variation usually known as Mahjong Solitaire.
 %_K5icon/*/*/apps/*kmahjongg*
 
 %changelog
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Mon May 28 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 
