@@ -6,7 +6,7 @@ BuildRequires: boost-program_options-devel
 %define _localstatedir %{_var}
 Name:		bastet
 Version:	0.43.1
-Release:	alt1_22.1
+Release:	alt1_23
 Summary:	An evil falling bricks game
 
 Group:		Games/Other
@@ -19,7 +19,7 @@ Source2:	%{name}.png
 Patch0:		bastet-tr1.patch
 Patch1:		bastet-fix-appdata.patch
 
-BuildRequires:	boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel desktop-file-utils
+BuildRequires:	boost-complete libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel desktop-file-utils
 Source44: import.info
 
 
@@ -88,6 +88,9 @@ mkdir -p %{buildroot}%{_mandir}/man6/
 
 
 %changelog
+* Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.43.1-alt1_23
+- use boost-complete
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.43.1-alt1_22.1
 - NMU: rebuilt with boost-1.67.0
 
