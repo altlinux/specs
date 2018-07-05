@@ -1,7 +1,7 @@
 %define rname kmouth
 
 Name: kde5-%rname
-Version: 18.04.1
+Version: 18.04.2
 Release: alt1%ubt
 %K5init
 
@@ -68,6 +68,9 @@ Requires: %name-common = %version-%release
 %_K5xmlgui/kmouth/
 
 %changelog
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 

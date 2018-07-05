@@ -1,7 +1,7 @@
 %define rname kcachegrind
 
 Name: kde5-%rname
-Version: 18.04.1
+Version: 18.04.2
 Release: alt1%ubt
 %K5init
 
@@ -56,6 +56,9 @@ rm -f %buildroot/%_K5i18n/*/LC_MESSAGES/*.qm
 %_K5data/%rname/
 
 %changelog
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 

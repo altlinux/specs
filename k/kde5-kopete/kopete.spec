@@ -30,7 +30,7 @@
 %define libqgroupwise libqgroupwise%sover
 
 Name: kde5-kopete
-Version: 18.04.1
+Version: 18.04.2
 Release: alt1%ubt
 %K5init
 
@@ -49,7 +49,6 @@ Source: %rname-%version.tar
 # ALT
 Patch100: alt-mobile.patch
 Patch101: alt-soversion.patch
-Patch102: alt-install.patch
 
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: rpm-macros-browser-plugins
@@ -212,7 +211,6 @@ based on %name.
 %patch100 -p1
 %endif
 %patch101 -p1
-%patch102 -p1
 
 # avoid conflicts with KDE4
 find -type f -name CMakeLists.txt | \
@@ -267,6 +265,7 @@ done
 %_K5data/kopete_*/
 #%_K5data/kopeterichtexteditpart/
 %_K5xmlgui/kopete*/
+%_K5notif/kopete*
 
 %if_enabled kopete_irc
 %files -n %libkirc
@@ -322,6 +321,9 @@ done
 %_K5dbus_iface/*
 
 %changelog
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Mon Jun 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 
