@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.16.2
-Release: alt1
+Release: alt2
 
 Summary: Manage your Ruby application's gem dependencies
 License: MIT/Ruby
@@ -13,7 +13,6 @@ Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
 Source:  %pkgname-%version.tar
-Patch1:  alt-gemspec.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
@@ -22,7 +21,7 @@ BuildRequires: ronn groff-base
 Conflicts: golang-tools
 
 %add_findreq_skiplist *.tt
-%filter_from_requires \,^ruby(rubygems/\(builder\|format\))$,d
+%add_ruby_req_skip rubygems/builder rubygems/format
 
 %description
 Bundler makes sure Ruby applications run the same code on every machine.
@@ -47,7 +46,6 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-%patch1 -p1
 %update_setup_rb
 
 %build
@@ -90,7 +88,7 @@ rm -rf %buildroot%_mandir/*.ronn
 %doc README*
 %_bindir/*
 %ruby_sitelibdir/*
-%ruby_libdir/gems/*/specifications/%pkgname.gemspec
+%rubygem_specdir/*.gemspec
 %_man1dir/*
 %_man5dir/*
 
@@ -98,6 +96,10 @@ rm -rf %buildroot%_mandir/*.ronn
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 1.16.2-alt2
+- Clarify ignored modules.
+- Use common way to package as gem.
+
 * Mon Jun 04 2018 Andrey Cherepanov <cas@altlinux.org> 1.16.2-alt1
 - New version.
 
