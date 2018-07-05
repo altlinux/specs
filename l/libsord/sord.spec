@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++ waf
+BuildRequires: waf
 # END SourceDeps(oneline)
 BuildRequires: libpcre-devel
 %add_optflags %optflags_shared
@@ -15,7 +15,7 @@ BuildRequires: libpcre-devel
 
 Name:       libsord
 Version:    0.16.0
-Release:    alt1_3
+Release:    alt1_4
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 Group:      System/Libraries
@@ -23,13 +23,12 @@ License:    ISC
 URL:        http://drobilla.net/software/sord/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires: doxygen
 BuildRequires: graphviz libgraphviz
 BuildRequires: glib2-devel libgio libgio-devel
 BuildRequires: python
 BuildRequires: libserd-devel >= 0.22.4
-BuildRequires: gcc-c++-common
+BuildRequires: gcc-c++
 Source44: import.info
 Provides: sord = %{version}-%{release}
 
@@ -81,7 +80,7 @@ install -pm 644 AUTHORS NEWS README COPYING %{buildroot}%{_docdir}/%{oldname}
 %{_docdir}/%{oldname}
 %exclude %{_docdir}/%{oldname}/%{oldname}-%{maj}/
 %exclude %{_docdir}/%{oldname}/COPYING
-%doc COPYING
+%doc --no-dereference COPYING
 %{_libdir}/lib%{oldname}-%{maj}.so.*
 %{_bindir}/sordi
 %{_bindir}/sord_validate
@@ -95,6 +94,9 @@ install -pm 644 AUTHORS NEWS README COPYING %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_4
+- removed boost form BR:
+
 * Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_3
 - update to new release by fcimport
 
