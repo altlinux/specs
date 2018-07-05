@@ -1,5 +1,5 @@
 Name: rednotebook
-Version: 1.15
+Version: 2.5
 Release: alt1
 
 Summary: A desktop diary
@@ -14,17 +14,13 @@ Source: http://prdownloads.sf.net/%name/%name-%version.tar
 
 BuildArch: noarch
 
-# for encoding
-#Requires: python-module-chardet
+# Automatically added by buildreq on Thu Jul 05 2018
+# optimized out: python-base python-modules python3 python3-base sssd-client
+BuildRequires: python3-dev python3-module-yieldfrom
 
-Requires: python-module-yaml
-
-Requires: python-module-pywebkitgtk
-
-%add_python_req_skip daywidgets
-
-# Automatically added by buildreq on Sun Oct 24 2010
-BuildRequires: python-module-paste python-module-peak
+Requires: python3-module-yaml
+# TODO:
+#Requires: python3-module-pywebkitgtk
 
 %description
 RedNotebook is a desktop diary that makes it very easy for you
@@ -36,22 +32,27 @@ and does so in style.
 %setup
 
 %build
-%python_build
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 %find_lang %name
 
 %files -f %name.lang
 %doc CHANGELOG README.md
 %_bindir/%name
 %_desktopdir/%name.desktop
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/rednotebook.appdata.xml
 %_iconsdir/hicolor/scalable/apps/rednotebook.svg
-%python_sitelibdir/%name/
-%python_sitelibdir/%{name}*.egg-info
+# TODO: own dir in datadir
+%python3_sitelibdir/%name/
+%python3_sitelibdir/%{name}*.egg-info
 
 %changelog
+* Thu Jul 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.5-alt1
+- new version 2.5 (with rpmrb script)
+- python 3, GTK3
+
 * Tue May 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1.15-alt1
 - new version 1.15 (with rpmrb script)
 
