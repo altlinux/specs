@@ -1,5 +1,5 @@
 Name: bootloader-utils
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: Bootloader utilities
@@ -14,10 +14,6 @@ PreReq: /usr/sbin/make-initrd
 Conflicts: make-initrd < 0.4.3-alt2
 Conflicts: grub2 < 1.98-alt13
 Conflicts: lilo < 22.7.3-alt7
-
-%ifarch %arm
-PreReq: uboot-tools >= 2013.07
-%endif
 
 # Automatically added by buildreq on Thu Feb 22 2007
 BuildRequires: perl-devel
@@ -92,6 +88,9 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Thu Jul 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.2-alt1
+- installkernel: add extlinux-like u-boot config handling
+
 * Thu Mar 22 2018 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt1
 - kernel.filetrigger: Initialize local variables.
 - sysconfig/installkernel: Comment out INITRD_GENERATOR.
