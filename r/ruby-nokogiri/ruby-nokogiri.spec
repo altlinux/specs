@@ -1,7 +1,7 @@
 %define Name Nokogiri
 %define bname nokogiri
 Name: ruby-%bname
-Version: 1.8.3
+Version: 1.8.4
 Release: alt1
 Summary: Ruby libraries for %Name (HTML, XML, SAX, and Reader parser)
 Group: Development/Ruby
@@ -10,10 +10,13 @@ URL: http://%bname.org
 Source: %bname-%version.tar
 Patch:  shutdown-libxml2-warning.patch
 
-BuildPreReq: rpm-build-ruby
-BuildRequires: ruby ruby-stdlibs libruby-devel ruby-racc ruby-tool-setup %_bindir/rexical
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: libruby-devel ruby-racc ruby-rexical
 BuildRequires: libxml2-devel libxslt-devel java-devel ruby-pkg-config
+BuildRequires: ruby-hoe rake-compiler ruby-concourse
 #BuildRequires: db2latex-xsl xhtml1-dtds
+
+Requires: ruby-mini_portile2
 
 %filter_from_requires /^ruby(.*\.jar)/d
 
@@ -69,6 +72,7 @@ DisableTest css/test_nthiness last_of_type nth_last_of_type nth_of_type
 export CFLAGS="$CFLAGS -Wno-unused-parameter"
 %ruby_config -- --use-system-libraries
 %ruby_build
+rake debug_gem > %bname-%version.gemspec
 
 %install
 %ruby_install
@@ -84,17 +88,20 @@ ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/%Name$' | xargs rm -rf
 %ruby_sitelibdir/*.jar
 %ruby_sitelibdir/*.rb
 %ruby_sitearchdir/*
-
+%rubygem_specdir/*.gemspec
 
 %files -n %bname
 %_bindir/*
 
-
 %files doc
 %ruby_ri_sitedir/*
 
-
 %changelog
+* Thu Jul 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.8.4-alt1
+- New version.
+- Package as gem.
+- Simplify requirements and add requirements for rake tasks.
+
 * Mon Jun 18 2018 Andrey Cherepanov <cas@altlinux.org> 1.8.3-alt1
 - New version.
 
