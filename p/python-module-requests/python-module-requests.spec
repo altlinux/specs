@@ -4,8 +4,8 @@
 %def_disable check
 
 Name:           python-module-requests
-Version:        2.18.4
-Release:        alt1.1
+Version:        2.19.1
+Release:        alt1
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
 
@@ -21,19 +21,20 @@ Patch0:         python-requests-system-cert-bundle.patch
 # - https://github.com/kennethreitz/requests/issues/1811
 # - https://github.com/kennethreitz/requests/pull/1812
 Patch1:         dont-import-OrderedDict-from-urllib3.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1450608
+Patch2:         Remove-tests-that-use-the-tarpit.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1567862
+Patch3:         Don-t-inject-pyopenssl-into-urllib3.patch
 
 BuildArch:      noarch
 
-BuildRequires:  python-devel python-modules-json
-BuildRequires:  python-module-chardet
-BuildRequires:  python-module-urllib3 >= 1.13.1
-BuildRequires:  python-module-idna
-%{?_enable_check:BuildRequires: python-module-httpbin}
-BuildRequires:  python-module-setuptools
+%setup_python_module requests
 
-Requires:       ca-certificates
-Requires:       python-module-chardet
-Requires:       python-module-urllib3 >= 1.13.1
+BuildRequires: python-module-chardet
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-urllib3
+%{?_enable_check:BuildRequires: python-module-httpbin}
+
 %py_requires json
 
 %description
@@ -47,15 +48,10 @@ designed to make HTTP requests easy for developers.
 Summary: HTTP library, written in Python, for human beings
 Group:   Development/Python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires:  python3-devel
-BuildRequires:  python3-module-chardet
-BuildRequires:  python3-module-urllib3 >= 1.13.1
-BuildRequires:  python3-module-idna
+BuildRequires: python3-module-chardet
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-urllib3
 %{?_enable_check:BuildRequires: python3-module-httpbin}
-BuildRequires:  python3-module-setuptools
-Requires:       ca-certificates
-Requires:       python3-module-chardet
-Requires:       python3-module-urllib3 >= 1.13.1
 %py3_requires json
 
 %description -n python3-module-%pkgname
@@ -70,6 +66,8 @@ designed to make HTTP requests easy for developers.
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 # Unbundle the certificate bundle from mozilla.
 rm -rf requests/cacert.pem
@@ -107,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 06 2018 Dmitry V. Levin <ldv@altlinux.org> 2.19.1-alt1
+- Emergency NMU: 2.18.4 -> 2.19.1.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.18.4-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
