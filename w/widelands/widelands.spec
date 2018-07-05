@@ -1,7 +1,7 @@
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/doxygen libGL-devel libGLU-devel libX11-devel libicu-devel python-devel rpm-build-python zlib-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/doxygen boost-devel libGL-devel libGLU-devel libX11-devel libicu-devel python-devel rpm-build-python zlib-devel
 # END SourceDeps(oneline)
 
 %filter_from_requires /^.usr.share.fonts.ttf./d
@@ -15,7 +15,7 @@ Requires: fonts-ttf-wqy-microhei
 
 Name:           widelands
 Version:        0
-Release:        alt6_0.62.%{buildid}.1
+Release:        alt7_0.62.%{buildid}
 Summary:        Open source realtime-strategy game
 
 Group:          Games/Other
@@ -29,7 +29,7 @@ BuildRequires: libSDL2_image-devel
 BuildRequires: libSDL2_mixer-devel
 BuildRequires: libSDL2_net-devel
 BuildRequires: libSDL2_ttf-devel
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires: boost-complete >= 1.48.0
 BuildRequires: ctest cmake
 BuildRequires: ctags
 BuildRequires: desktop-file-utils
@@ -135,6 +135,9 @@ popd
 
 
 %changelog
+* Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 1:0-alt7_0.62.build19
+- use boost-complete
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0-alt6_0.62.build19.1
 - NMU: rebuilt with boost-1.67.0
 
