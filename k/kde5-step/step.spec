@@ -1,8 +1,8 @@
 %define rname step
 
 Name: kde5-%rname
-Version: 18.04.1
-Release: alt2%ubt
+Version: 18.04.2
+Release: alt1%ubt
 %K5init
 
 Group: Education
@@ -45,9 +45,8 @@ you can not only learn but feel how physics works!
 %K5install
 %K5install_move data step
 
-rm -rf %buildroot/%_datadir/locale/*/LC_MESSAGES/*_qt.qm
-rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
-%find_lang %name --with-kde --all-name
+%K5find_qtlang %name --all-name
+%find_lang %name --with-kde --all-name --append
 
 %files -f %name.lang
 %doc COPYING*
@@ -63,6 +62,9 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5xmlgui/step/
 
 %changelog
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Wed Jun 06 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
 - update russian translation
 

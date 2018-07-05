@@ -1,7 +1,7 @@
 %define rname ktouch
 
 Name: kde5-%rname
-Version: 18.04.1
+Version: 18.04.2
 Release: alt1%ubt
 %K5init
 
@@ -52,6 +52,9 @@ to write. KTouch can also help you to remember what fingers to use.
 %_K5cfg/ktouch.kcfg
 
 %changelog
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 

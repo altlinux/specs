@@ -4,8 +4,8 @@
 %define libmarblewidget libmarblewidget-qt5%marblewidget_sover
 
 Name: kde5-%rname
-Version: 18.04.1
-Release: alt2%ubt
+Version: 18.04.2
+Release: alt1%ubt
 %K5init
 
 Group: Education
@@ -23,6 +23,7 @@ Patch2: alt-clean-maps.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-location-devel qt5-phonon-devel qt5-quickcontrols2-devel qt5-svg-devel qt5-tools-devel qt5-serialport-devel
 #BuildRequires: qt5-webkit-devel
+#BuildRequires: libwlocate-devel
 BuildRequires: libgps-devel libshape-devel zlib-devel libprotobuf-devel protobuf-compiler
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
@@ -129,6 +130,9 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5lib/libmarblewidget-qt5.so.*
 
 %changelog
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Wed May 30 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
 - build without qtwebkit
 
