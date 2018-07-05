@@ -40,7 +40,7 @@ Name: openmpi
 #pkgname
 
 Version: 2.0.1
-Release: alt5
+Release: alt6
 
 %define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -261,8 +261,9 @@ EOF
 %mpi_prefix/bin/orte-*
 #mpi_prefix/bin/opal-*
 
-%mpi_prefix/bin/osh*
-%mpi_prefix/bin/shmem*
+%mpi_prefix/bin/oshmem_info
+%mpi_prefix/bin/oshrun
+%mpi_prefix/bin/shmemrun
 
 %dir %mpi_prefix/lib
 %dir %mpi_prefix/lib/openmpi
@@ -292,6 +293,10 @@ EOF
 %mpi_prefix/bin/mpif77
 %mpi_prefix/bin/mpif90
 %mpi_prefix/bin/mpifort
+%mpi_prefix/bin/oshcc
+%mpi_prefix/bin/oshfort
+%mpi_prefix/bin/shmemcc
+%mpi_prefix/bin/shmemfort
 
 #mpi_prefix/bin/orte_wrapper_script
 #mpi_prefix/bin/orteCC
@@ -331,6 +336,10 @@ EOF
 %endif
 
 %changelog
+* Thu Jul 05 2018 Ivan A. Melnikov <iv@altlinux.org> 2.0.1-alt6
+- (NMU) avoid requirement from openmpi to openmpi-devel
+  (closes: #33185)
+
 * Tue Apr 17 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.1-alt5
 - fixed build on arm
 
