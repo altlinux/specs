@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.32
+Version: 0.33
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -39,6 +39,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Thu Jul 05 2018 Arseny Maslennikov <arseny@altlinux.org> 0.33-alt1
+- netboot: Fixed busybox support.
+
 * Sun Jan 21 2018 Arseny Maslennikov <arseny@altlinux.org> 0.32-alt1
 - netboot: Allowed use of different overlay storage locations.
 - netboot: Forbade mounting overlays with unspecified profile.
