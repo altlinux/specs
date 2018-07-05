@@ -4,7 +4,7 @@
 %define _localstatedir %{_var}
 Name:        libvsqlite++
 Version:    0.3.13
-Release:    alt1_21
+Release:    alt2_21
 Summary:    Well designed C++ sqlite 3.x wrapper library
 
 Group:      Development/Other
@@ -14,7 +14,7 @@ Source0:    http://evilissimo.fedorapeople.org/releases/vsqlite--/%{version}/%{o
 
 BuildRequires:  gcc-c++
 BuildRequires:  gcc
-BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires:  boost-complete
 BuildRequires:  libsqlite3-devel
 BuildRequires:  libtool
 BuildRequires:  doxygen
@@ -81,6 +81,9 @@ make DESTDIR=%{buildroot} install
 %{_libdir}/libvsqlitepp.so.*
 
 %changelog
+* Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.13-alt2_21
+- use boost-complete
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.13-alt1_21
 - update to new release by fcimport
 
