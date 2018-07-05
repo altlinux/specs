@@ -1,7 +1,7 @@
 %define  pkgname apipie-rails
 
 Name:    ruby-%pkgname
-Version: 0.5.8
+Version: 0.5.9
 Release: alt1
 
 Summary: Ruby on Rails API documentation tool
@@ -51,10 +51,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*.gemspec
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.9-alt1
+- New version.
+- Package as gem.
+
 * Fri Jun 01 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.8-alt1
 - Initial build for Sisyphus
