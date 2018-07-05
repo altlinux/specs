@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.424
+Version: 0.425
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -9,7 +9,7 @@ Group: Development/Other
 License: GPL or Artistic
 Url: http://repocop.altlinux.org
 
-Requires: repocop > 0.73
+Requires: repocop > 0.76
 Obsoletes: repocop-report-distromap-db < 0.12
 Requires: repocop-collector-buildreqs-subst
 
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.425-alt1
+- use repocop 0.77 api
+
 * Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.424-alt1
 - added themes
 
