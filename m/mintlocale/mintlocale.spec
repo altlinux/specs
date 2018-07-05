@@ -1,5 +1,5 @@
 Name: mintlocale
-Version: 1.4.8
+Version: 1.4.9
 Release: alt1
 
 Summary: Language selection tool for Cinnamon
@@ -45,12 +45,17 @@ echo 'LANG=$locale' > %{buildroot}%{_datadir}/linuxmint/mintlocale/templates/def
 %_bindir/set-default-locale
 %_prefix/lib/linuxmint
 %_datadir/applications/%{name}.desktop
+%_datadir/icons/hicolor/*/apps/%{name}-im.svg
+%_datadir/icons/hicolor/*/apps/%{name}-im.png
 %_datadir/linuxmint
 %_datadir/polkit-1/actions/com.linuxmint.mintlocale.policy
 
 %doc debian/copyright debian/changelog
 
 %changelog
+* Wed Jul 4 2018 Vladimir Didenko <cow@altlinux.org> 1.4.9-alt1
+- new version
+
 * Wed Jun 13 2018 Vladimir Didenko <cow@altlinux.org> 1.4.8-alt1
 - new version
 
