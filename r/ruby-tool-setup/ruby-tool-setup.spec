@@ -2,7 +2,7 @@
 
 Name: ruby-tool-%pkgname
 Version: 3.4.1
-Release: alt9
+Release: alt10
 Summary: Generic installer for ruby scripts and libraries
 License: LGPLv2.1
 Group: Development/Ruby
@@ -58,6 +58,9 @@ Documentation files for %name
 %doc doc.* sample
 
 %changelog
+* Thu Jul 05 2018 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt10
+- Save pure gemspec file with name contains gem name and its version.
+
 * Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt9
 - Init git repo for git ls-files and fix open gemspec.
 
