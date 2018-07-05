@@ -12,7 +12,7 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 18.04.1
+Version: 18.04.2
 Release: alt1%ubt
 %K5init
 
@@ -98,7 +98,6 @@ KF5 library
 #popd
 
 %build
-%K5cmake
 %K5build \
     -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
     #
@@ -141,6 +140,9 @@ KF5 library
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 
