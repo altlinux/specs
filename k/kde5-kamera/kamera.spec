@@ -1,7 +1,7 @@
 %define rname kamera
 
 Name: kde5-%rname
-Version: 18.04.1
+Version: 18.04.2
 Release: alt1%ubt
 %K5init
 
@@ -68,6 +68,9 @@ KF5 library
 %_K5data/solid/actions/*amera*.desktop
 
 %changelog
+* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 

@@ -6,8 +6,8 @@
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 18.04.1
-Release: alt2%ubt
+Version: 18.04.2
+Release: alt1%ubt
 %K5init
 
 Group: Office
@@ -148,6 +148,9 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Wed May 30 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
 - update build requires
 
