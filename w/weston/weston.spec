@@ -2,7 +2,7 @@
 
 Name:           weston
 Version:        4.0.0
-Release:        alt1
+Release:        alt2
 Summary:        Reference compositor for Wayland
 Group:          Graphical desktop/Other
 License:        BSD and CC-BY-SA
@@ -10,6 +10,8 @@ URL:            http://wayland.freedesktop.org/
 Source0:        %name-%version.tar
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
+
+BuildRequires(pre): rpm-build-xdg
 
 BuildRequires: autoconf gcc-c++ pkg-config doxygen
 BuildRequires: glibc-devel-static
@@ -133,6 +135,9 @@ find %buildroot -name \*.la | xargs rm -f
 %_pkgconfigdir/libweston*.pc
 
 %changelog
+* Thu Jul 05 2018 Alexey Gladkov <legion@altlinux.ru> 4.0.0-alt2
+- Add rpm-build-xdg to buildrequires.
+
 * Tue Jun 19 2018 Alexey Gladkov <legion@altlinux.ru> 4.0.0-alt1
 - Version (4.0.0).
 
