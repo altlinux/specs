@@ -1,5 +1,5 @@
 Name: code
-Version: 1.23.1
+Version: 1.24.1
 Release: alt1
 
 Summary: Visual Studio Code
@@ -9,7 +9,9 @@ Url: https://code.visualstudio.com/
 Group: Development/Other
 
 # Get from https://code.visualstudio.com/Download
+# Source-script: download.sh x86_64
 Source: %name-%version.tar
+# Source1-script: download.sh i586
 Source1: %name-%version-i586.tar
 
 Source2: code.desktop
@@ -22,7 +24,10 @@ ExclusiveArch: x86_64 i586
 AutoReq:yes,nonodejs,nonodejs_native,nomono,nopython,nomingw32,nomingw64,noshebang
 AutoProv: no
 
-BuildRequires: libgtk+2 libxkbfile libnss libnspr libXtst libalsa libcups libXScrnSaver libGConf libsecret
+# /usr/lib64/code/resources/app/node_modules.asar.unpacked/keytar/build/Release/keytar.node: library libsecret-1.so.0
+BuildRequires: libsecret
+
+BuildRequires: libxkbfile libnss libnspr libXtst libalsa libcups libXScrnSaver libGConf
 
 %description
 Visual Studio Code is a new choice of tool that combines the simplicity
@@ -63,6 +68,9 @@ install -m644 -D %SOURCE3 %buildroot%_pixmapsdir/code.png
 %_pixmapsdir/code.png
 
 %changelog
+* Thu Jul 05 2018 Vitaly Lipatov <lav@altlinux.ru> 1.24.1-alt1
+- new version 1.24.1
+
 * Fri May 18 2018 Vitaly Lipatov <lav@altlinux.ru> 1.23.1-alt1
 - new version 1.23.1 (ALT bug 34012)
 
