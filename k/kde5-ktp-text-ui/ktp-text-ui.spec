@@ -1,7 +1,7 @@
 %define rname ktp-text-ui
 
 Name: kde5-%rname
-Version: 18.04.1
+Version: 18.04.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -14,7 +14,6 @@ Requires: telepathy-logger
 
 Source: %rname-%version.tar
 Patch1: alt-soname.patch
-Patch2: alt-qt56.patch
 
 # Automatically added by buildreq on Thu Jun 18 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils kf5-kcmutils-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libgst-plugins1.0 libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libtelepathy-logger-qt5 libtelepathy-qt5 libtelepathy-qt5-devel libxcbutil-keysyms python-base python3 python3-base qt5-base-devel rpm-build-gir ruby ruby-stdlibs telepathy-logger-qt5-devel
@@ -65,7 +64,6 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p1
 
 %build
 %K5build \
@@ -111,6 +109,9 @@ KF5 library
 %_K5lib/libktpimagesharer.so.*
 
 %changelog
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 
