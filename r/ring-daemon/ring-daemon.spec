@@ -12,7 +12,7 @@
 
 Name: ring-daemon
 Version: 4.0.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
@@ -26,6 +26,7 @@ PreReq(post,preun): alternatives >= 0.2
 Source: %name-%version.tar
 Patch1: alt-fix-compile.patch
 Patch2: alt-fix-linking.patch
+Patch3: alt-ffmpeg.patch
 
 # Automatically added by buildreq on Tue Mar 15 2016 (-bi)
 # optimized out: boost-devel-headers cmake-modules elfutils fontconfig gnu-config kde4libs libavcodec-devel libavutil-devel libcdio-paranoia libdbus-c++ libdbus-devel libdbusmenu-qt2 libdc1394-22 libgnome-keyring libgpg-error libjson-c libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt4-core libqt4-dbus libqt4-gui libqt4-network libqt4-svg libqt4-xml libraw1394-11 libsasl2-3 libstdc++-devel libyaml-cpp0 perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators pkg-config python-base python3 python3-base rpm-build-python3 xz
@@ -87,6 +88,7 @@ developing applications that use %name.
 %setup -qn %name-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 pushd .gear
 while read project_dir tarball_dir tarball_name
@@ -188,6 +190,9 @@ __EOF__
 #%_libdir/libring.a
 
 %changelog
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 4.0.0-alt2%ubt
+- fix to build with new ffmpeg
+
 * Tue Jul 25 2017 Sergey V Turchin <zerg@altlinux.org> 4.0.0-alt1%ubt
 - new version
 - add dummy client alternative
