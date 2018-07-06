@@ -1,25 +1,25 @@
 Name: backupninja
-Version: 1.0.2
+Version: 1.1.0
 Release: alt1
 
 Summary: backup system
 License: GPL v2
 Group: Archiving/Backup
 
-Url: http://dev.riseup.net/backupninja/
+Url: https://0xacab.org/riseuplabs/backupninja
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: https://labs.riseup.net/code/attachments/download/229/backupninja-0.9.9.tar.bz2
+# Source-url: https://0xacab.org/riseuplabs/backupninja/repository/%name-%version/archive.tar.bz2
 Source: %name-%version.tar
 
 BuildArch: noarch
 
-Requires: %_sysconfdir/cron.d %_sysconfdir/logrotate.d dialog
+Requires: %_sysconfdir/cron.d %_sysconfdir/logrotate.d dialog bash4
 
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir /var
+BuildRequires: bash4
+
+BuildRequires: rpm-macros-intro-conflicts
 
 %description
 Backupninja lets you drop simple config files in %_sysconfdir/backup.d to coordinate
@@ -39,6 +39,8 @@ configuration, currently supported are: rdiff-backup, duplicity, CD/DVD.
 # lib/Makefile.am:1: `pkglibdir' is not a legitimate directory for `SCRIPTS'
 %__subst "s|(pkglib|(pkglibexec|g" */Makefile.am
 %__subst "s|pkglib_SCRIPTS|pkglibexec_SCRIPTS|g" lib/Makefile.am
+# HACK: use bash4
+%__subst "s|bash|bash4|g" configure.ac
 
 %build
 %autoreconf
@@ -50,7 +52,7 @@ configuration, currently supported are: rdiff-backup, duplicity, CD/DVD.
 mkdir -p %buildroot%_sysconfdir/backup.d/
 
 %files
-%doc README TODO AUTHORS
+%doc README.md TODO AUTHORS
 %config(noreplace) %_sysconfdir/%name.conf
 %_sysconfdir/cron.d/%name
 %_sysconfdir/logrotate.d/%name
@@ -65,6 +67,10 @@ mkdir -p %buildroot%_sysconfdir/backup.d/
 %_sbindir/ninjahelper
 
 %changelog
+* Fri Jul 06 2018 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
+- new version 1.1.0 (with rpmrb script)
+- use bash4
+
 * Mon Nov 06 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
 - new version 1.0.2 (with rpmrb script)
 
