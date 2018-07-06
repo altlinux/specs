@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 4.1.14
-Release: alt1
+Release: alt2
 
 Summary: Ruby wrapper for UglifyJS JavaScript compressor.
 License: MIT
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.14-alt2
+- Rebuild ro correct gemspec name.
+
 * Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.14-alt1
 - New version.
 - Package as gem.
