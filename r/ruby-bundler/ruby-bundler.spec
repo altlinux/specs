@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.16.2
-Release: alt2
+Release: alt3
 
 Summary: Manage your Ruby application's gem dependencies
 License: MIT/Ruby
@@ -55,10 +55,6 @@ Documentation files for %{name}.
 %install
 %ruby_install
 
-# Install gemspec
-export rbVersion=`ruby -e "puts RbConfig::CONFIG[\"ruby_version\"]"`
-install -Dm 0644 %pkgname.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifications/%pkgname.gemspec
-
 # Install exe files
 cp -a exe %buildroot%ruby_sitelibdir/%pkgname
 
@@ -69,6 +65,7 @@ ln -svr %buildroot%ruby_sitelibdir/%pkgname/exe/bundle %buildroot%_bindir/bundle
 # Remove non-working executables
 rm -f %buildroot%_bindir/{rake,rspec,rubocop,bundle1,bundle2}
 
+# Generate documentation
 %rdoc lib/
 # Remove unnecessary files
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
@@ -96,6 +93,9 @@ rm -rf %buildroot%_mandir/*.ronn
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 1.16.2-alt3
+- Fix gemspec name.
+
 * Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 1.16.2-alt2
 - Clarify ignored modules.
 - Use common way to package as gem.
