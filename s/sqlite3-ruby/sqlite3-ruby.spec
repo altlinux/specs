@@ -1,17 +1,20 @@
 Name: sqlite3-ruby
 Version: 1.3.13
-Release: alt2.4
+Release: alt2.5
 
 Summary: A Ruby interface for the SQLite database engine
 Group: Development/Ruby
 License: BSD
 Url: http://rubyforge.org/projects/sqlite-ruby/
 
+BuildRequires(pre): rpm-build-ruby
 BuildRequires: libruby-devel libsqlite3-devel ruby-test-unit ruby-tool-setup
+BuildRequires: rake-compiler ruby-mini_portile2 ruby-hoe
 
 %filter_from_requires \,ruby(sqlite3/#{$1}/sqlite3_native),d
 
 Source: %name-%version.tar
+Patch:  alt-use-mini_portile2.patch
 
 %description
 A Ruby interface for the SQLite database engine.
@@ -26,9 +29,11 @@ Documentation files for %name
 
 %prep
 %setup
+%patch -p0
 %update_setup_rb
 # Threaded tests fail for some reason.
 rm -f test/test_integration_pending.rb
+rake debug_gem > sqlite3-%version.gemspec
 
 %build
 %ruby_config
@@ -45,11 +50,15 @@ rm -f test/test_integration_pending.rb
 %doc API_CHANGES.rdoc CHANGELOG.rdoc README.rdoc
 %ruby_sitearchdir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*.gemspec
 
 %files doc
 %ruby_ri_sitedir/SQLite3*
 
 %changelog
+* Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.13-alt2.5
+- Package as gem.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.13-alt2.4
 - Rebuild with Ruby 2.5.1
 
