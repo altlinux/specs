@@ -1,6 +1,6 @@
 
 Name: phpipam
-Version: 1.31.000
+Version: 1.32.000
 Release: alt1%ubt
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
@@ -98,7 +98,7 @@ rm -f %buildroot%webserver_webappsdir/%name/.gitmodules
 install -pDm644 %SOURCE11 %buildroot%apache2_extra_available/%name.conf
 %__subst 's|--dir--|%webserver_webappsdir/%name|g' %buildroot%apache2_extra_available/%name.conf
 
-chmod 644 INSTALL.txt README UPDATE misc/CHANGELOG misc/Roadmap
+chmod 644 INSTALL.txt README.md UPDATE misc/CHANGELOG misc/Roadmap
 
 # Cleanup PHPMailer
 rm -f %buildroot%webserver_webappsdir/%name/functions/PHPMailer/.gitattributes
@@ -111,7 +111,7 @@ rm -rf %buildroot%webserver_webappsdir/%name/functions/PHPMailer/examples
 rm -rf %buildroot%webserver_webappsdir/%name/functions/PHPMailer/test
 
 %files
-%doc INSTALL.txt README UPDATE misc/CHANGELOG misc/Roadmap
+%doc INSTALL.txt README.md UPDATE misc/CHANGELOG misc/Roadmap
 %dir %webserver_webappsdir/%name/
 %webserver_webappsdir/%name/*
 %webserver_webappsdir/%name/.htaccess
@@ -125,6 +125,9 @@ rm -rf %buildroot%webserver_webappsdir/%name/functions/PHPMailer/test
 %files php7
 
 %changelog
+* Fri Jul 06 2018 Alexey Shabalin <shaba@altlinux.ru> 1.32.000-alt1%ubt
+- 1.3.2 release
+
 * Fri Dec 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1.31.000-alt1%ubt
 - 1.3.1 release
 
