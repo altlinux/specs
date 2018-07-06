@@ -1,6 +1,6 @@
 Name:    ruby-gettext
 Version: 3.2.9
-Release: alt1.3
+Release: alt1.4
 
 Summary: Native Language Support Library for Ruby
 Group:   Development/Ruby
@@ -99,6 +99,9 @@ find . -name 'test_*.rb' -print0 | xargs -r0 -n 1 %ruby_test_unit -I../lib -I./
 %ruby_ri_sitedir/GetText*
 
 %changelog
+* Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.9-alt1.4
+- Rebuild for correct gemspec file name.
+
 * Tue Jun 26 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.9-alt1.3
 - Use new macro and automatic gemspec installation.
 
