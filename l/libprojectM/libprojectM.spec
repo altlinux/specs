@@ -2,21 +2,22 @@
 
 Name: lib%oname
 Version: 2.1.0
-Release: alt11
-
-License: LGPLv2.1
-Group: System/Libraries
-Url: http://projectm.sourceforge.net/
+Release: alt12
 
 Summary: Awesome music visualizer
+License: LGPLv2.1
+Group: System/Libraries
+
+Url: http://projectm.sourceforge.net/
+Source: http://freefr.dl.sourceforge.net/project/projectm/2.0.1/%oname-complete-%version-Source.tar.gz
 
 Packager: Motsyo Gennadi <drool@altlinux.ru>
 
-Source0: http://freefr.dl.sourceforge.net/project/projectm/2.0.1/%oname-complete-%version-Source.tar.gz
 Patch1: %name-complete-2.1.0-doxy.patch
 Patch2: %name-complete-2.1.0-link.patch
 Patch3: %name-%version-alt-gcc6.patch
-Patch4: %name-lib64.patch
+Patch4: %name-2.1.0-paths.patch
+Patch5: %name-qt-2.1.0-paths.patch
 
 Requires: fonts-ttf-dejavu
 
@@ -94,7 +95,8 @@ Static projectM library.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p2
-%patch4 -p2
+%patch4 -p1
+%patch5 -p1
 
 %build
 %cmake -DUSE_FBO:STRING=FALSE \
@@ -153,7 +155,14 @@ ln -s /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf %buildroot/%_datadir/%oname
 %_pkgconfigdir/libprojectM-qt.pc
 %endif
 
+# TODO:
+# - consider https://src.fedoraproject.org/rpms/libprojectM/raw/master/f/libprojectM-c++14.patch
+
 %changelog
+* Fri Jul 06 2018 Michael Shigorin <mike@altlinux.org> 2.1.0-alt12
+- replaced x86_64/aarch64 specific kludge with proper fedora patches
+- minor spec cleanup
+
 * Wed Apr 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.0-alt11
 - fixed packaging on 64bit arches other than x86_64
 
