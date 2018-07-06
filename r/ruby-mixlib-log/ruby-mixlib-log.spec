@@ -1,7 +1,7 @@
 %define  pkgname mixlib-log
  
 Name: 	 ruby-%pkgname
-Version: 2.0.4
+Version: 2.0.5
 Release: alt1
  
 Summary: A simple class based Log mechanism, similar to Merb and Chef, that you can mix in to your project
@@ -50,11 +50,16 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*.gemspec
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.5-alt1
+- New version.
+- Package as gem.
+
 * Tue May 29 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.4-alt1
 - New version.
 
