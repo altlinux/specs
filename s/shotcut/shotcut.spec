@@ -1,18 +1,24 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
+%define _vstring %(echo %{version} |tr -d ".")
+
 Name: shotcut
-Version: 18.04
-Release: alt3
+Version: 18.06.02
+Release: alt1
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платфоорменный видеоредактор
 License: GPL-3.0+
 Group: Video
 Url: http://www.shotcut.org/
 Packager: Anton Midyukov <antohami@altlinux.org>
-# Source-url: https://github.com/mltframework/shotcut/archive/v%version.tar.gz
 Source: %name-%version.tar
-# https://forum.shotcut.org/t/appdata-xml-file-for-gnome-software-center/2742
-Source1: %name.appdata.xml
-Patch: shotcut-18.01-nicepath.patch
-Patch1: shotcut-18.01-desktop.patch
+Patch: shotcut-18.07-nicepath.patch
+# Melt patch /usr/bin/melt
+Patch1: mlt_path.patch
+# shotcut-noupdatecheck.patch -- Disable automatic update check
+Patch2: shotcut-noupdatecheck.patch
+Patch3: shotcut-18.06.02-qt.patch
 
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
@@ -33,9 +39,8 @@ BuildRequires: qt5-linguist
 BuildRequires: pkgconfig(mlt++)
 BuildRequires: pkgconfig(mlt-framework)
 BuildRequires: libx264-devel
+BuildRequires: pkgconfig(sdl2)
 BuildRequires: ImageMagick-tools
-
-#BuildRequires: gcc-c++ qt5-base-devel >= 5.5.0 qt5-multimedia-devel qt5-quick1-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel libmlt-devel libmlt++-devel qt5-tools ImageMagick-tools libX11-devel
 
 Requires: %name-data = %version
 Requires: mlt-utils
@@ -105,29 +110,39 @@ Data files for %name
 
 %prep
 %setup
-%patch -p2
-%patch1 -p2
+%patch -p1
+%patch1 -p0
+%patch2 -p0
+%patch3 -p0
+
+# Create version.json from current version
+echo "{" > version.json
+echo " \"version_number\": %{_vstring}02," >> version.json
+echo " \"version_string\": \"%{version}.02\"," >> version.json
+echo " \"url\": \"https://shotcut.org/blog/new-release-%{_vstring}/\"" >> version.json
+echo "}" >> version.json
+echo "" >> version.json
 
 # Postmortem debugging tools for MinGW.
 rm -rf drmingw
 
 %build
 lrelease-qt5 translations/*.ts
-%qmake_qt5 PREFIX=%buildroot%_prefix
+export _VSTRING="%{version}.02"
+%qmake_qt5 \
+    _VSTRING="%{version}.02" \
+    PREFIX=%buildroot%_prefix
+
 %make_build
 
 %install
 %makeinstall_std
-install -d -m0755 %buildroot/%_datadir/%name/translations
-cp -a translations/*.qm %buildroot/%_datadir/%name/translations/
-install -Dp -m0644 snap/gui/shotcut.desktop %buildroot%_desktopdir/%name.desktop
-install -Dm644 %SOURCE1 %buildroot/%_datadir/appdata/%name.appdata.xml
 chmod a+x %buildroot/%_datadir/shotcut/qml/export-edl/rebuild.sh
 
 for i in 16 32 48; do
     mkdir -p %buildroot/%_iconsdir/hicolor/"$i"x"$i"/apps
     convert icons/%name-logo-64.png -resize "$i"x"$i" \
-    %buildroot/%_iconsdir/hicolor/"$i"x"$i"/apps/%name.png
+    %buildroot/%_iconsdir/hicolor/"$i"x"$i"/apps/org.shotcut.Shotcut.png
 done
 
 # fixes E: script-without-shebang
@@ -142,17 +157,22 @@ chmod a-x src/mvcp/{qconsole.cpp,qconsole.h}
 
 %files
 %_bindir/%name
-%_desktopdir/%name.desktop
+%_desktopdir/org.shotcut.Shotcut.desktop
 %doc COPYING README.md
-%_datadir/appdata/%name.appdata.xml
-%_miconsdir/%name.png
-%_niconsdir/%name.png
-%_liconsdir/%name.png
+%_iconsdir/hicolor/*/apps/org.shotcut.Shotcut.png
+%_datadir/metainfo/org.shotcut.Shotcut.appdata.xml
+%_datadir/mime/packages/org.shotcut.Shotcut.xml
 
 %files data
 %_datadir/%name
 
 %changelog
+* Tue Jul 03 2018 Anton Midyukov <antohami@altlinux.org> 18.06.02-alt1
+- new version 18.07
+- unpackaged files in buildroot should terminate build
+- update from git
+- disabled autoupdate check
+
 * Sat May 05 2018 Anton Midyukov <antohami@altlinux.org> 18.04-alt3
 - Added missing requires qt5-quickcontrols
 - Added missing requires qt5-graphicaleffects
