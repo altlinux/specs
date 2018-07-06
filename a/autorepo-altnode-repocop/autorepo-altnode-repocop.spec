@@ -2,7 +2,7 @@
 
 #BuildRequires: 
 Name: autorepo-altnode-repocop
-Version: 0.21
+Version: 0.22
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -14,7 +14,7 @@ License: GPL2+
 Source: %name-%version.tar
 
 BuildRequires: repocop perl(Pod/Text.pm)
-Requires: repocop > 0.73
+Requires: repocop > 0.76
 
 %description
 %summary
@@ -35,6 +35,9 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- repocop 0.77 api
+
 * Wed Jun 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - mail reports on emergency
 

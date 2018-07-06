@@ -1,5 +1,5 @@
 Name: repocop-report-qa-robot
-Version: 0.41
+Version: 0.42
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -12,8 +12,8 @@ Url: http://repocop.altlinux.org
 Source: %name-%version.tar
 
 Conflicts: repocop < 0.34
-Requires: repocop > 0.68
-BuildRequires: repocop > 0.68 perl(Pod/Text.pm)
+Requires: repocop > 0.76
+BuildRequires: repocop > 0.76 perl(Pod/Text.pm)
 
 %description
 Repocop is a repository unit tests platform.
@@ -36,6 +36,9 @@ install -m755 bin/* $RPM_BUILD_ROOT%_datadir/repocop-report-email/bin/
 %_datadir/repocop-report-email
 
 %changelog
+* Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1
+- use repocop 0.77 api
+
 * Mon Oct 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
 - use non-modified copy of qa-robot 0.3.9
 
