@@ -1,6 +1,6 @@
 Name: dynamips
 Version: 0.2.18
-Release: alt1
+Release: alt1.1
 
 Summary: Cisco 7200 Simulator
 License: GPLv2
@@ -52,6 +52,9 @@ rm -fR %buildroot%_docdir/%name
 %dir %_localstatedir/%name/labs
 
 %changelog
+* Fri Jul 06 2018 Anton Midyukov <antohami@altlinux.org> 0.2.18-alt1.1
+- rebuilt for aarch64
+
 * Wed Apr 11 2018 Anton Midyukov <antohami@altlinux.org> 0.2.18-alt1
 - new version 0.2.18
 
