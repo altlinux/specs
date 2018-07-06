@@ -1,6 +1,6 @@
 # TODO: build from sources
 Name: electron
-Version: 1.8.7
+Version: 2.0.4
 Release: alt1
 
 Summary: Build cross platform desktop apps with JavaScript, HTML, and CSS
@@ -14,6 +14,8 @@ Source: %name-%version.tar
 # Source1-url: https://github.com/electron/electron/releases/download/v%version/electron-v%version-linux-ia32.zip
 Source1: %name-%version-i586.tar
 
+Source2: patch_binary.sh
+
 ExclusiveArch: x86_64 i586
 
 %set_verify_elf_method skip
@@ -21,7 +23,10 @@ ExclusiveArch: x86_64 i586
 AutoReq:yes,nonodejs,nonodejs_native,nomono,nopython,nomingw32,nomingw64,noshebang
 AutoProv: no
 
-BuildRequires: libgtk+2 libxkbfile libnss libnspr libXtst libalsa libcups libXScrnSaver libGConf
+BuildRequires: libgtk+3 libxkbfile libnss libnspr libXtst libalsa libcups libXScrnSaver libGConf
+# bundled:
+# library libnode.so not found
+# library libffmpeg.so not found
 
 %description
 Build cross platform desktop apps with JavaScript, HTML, and CSS.
@@ -33,13 +38,7 @@ tar xfv %SOURCE1
 %endif
 
 %build
-# replace strange missed functions with exit
-sed -E -i -e "s@(_ZN10crash_keys17SetVari|_ZN15MersenneTwister12in|_ZN15MersenneTwister13ge|_ZN15MersenneTwisterC1Ev|_ZN15MersenneTwisterD1Ev)@exit\x0MersenneTwisterD1Ev@g" ./%name
-#_ZN10crash_keys17SetVari ationsListERKSt6vectorISsSaISsEE
-#_ZN15MersenneTwister12in it_genrandEj
-#_ZN15MersenneTwister13ge nrand_int32Ev
-#_ZN15MersenneTwisterC1Ev
-#_ZN15MersenneTwisterD1Ev
+sh %SOURCE2 ./%name
 
 %install
 mkdir -p %buildroot%_libdir/%name/
@@ -52,6 +51,10 @@ ln -rs %buildroot%_libdir/%name/%name %buildroot/%_bindir/%name
 %_libdir/%name/
 
 %changelog
+* Thu Jul 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.4-alt1
+- new version 2.0.4 (with rpmrb script)
+- GTK3 now
+
 * Sun May 20 2018 Vitaly Lipatov <lav@altlinux.ru> 1.8.7-alt1
 - new version 1.8.7 (with rpmrb script)
 
