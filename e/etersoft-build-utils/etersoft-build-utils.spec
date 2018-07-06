@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.7.14
+Version: 2.8.0
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,18 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Jul 06 2018 Vitaly Lipatov <lav@altlinux.ru> 2.8.0-alt1
+- fix on aarch64, fixes to use system /etc/apt/apt.conf
+- gitask: add run --force (override --test-only)
+- rpmgs: improve support for gitmodules
+- gitask: fix get last task and use it when run
+- rpmgs:improve merge tag search
+- myhsh: skip sisyphus_check if missed
+- common: ignore missed csed
+- rpmbs; use sisyphus_check --no-check-gpg
+- rpmgs: add download script support (Source-script)
+- rpmbs: disable chmod for generated srpm packages
+
 * Sat Jun 23 2018 Vitaly Lipatov <lav@altlinux.ru> 2.7.14-alt1
 - gitask: add share support
 - rpmgs: add support for v1-2-3 git tags
