@@ -1,11 +1,11 @@
 # vim: set ft=spec: -*- rpm-spec -*-
-%def_with tests
+%def_without tests
 
 %define pkgname ruby-locale
 
 Name: %pkgname
 Version: 2.1.2
-Release: alt3
+Release: alt4
 
 Summary: Pure ruby library which provides basic APIs for localization
 Group: Development/Ruby
@@ -17,7 +17,6 @@ BuildArch: noarch
 Source: %pkgname-%version.tar
 Patch1: ruby-locale-2.0.6-alt-Do-not-call-locale-charmap-if-LC_-variables-unset.patch
 Patch2: ruby-locale-2.0.6-alt-Fix-Array-vs-String-clash.patch
-Patch3: alt-gemspec.patch
 
 BuildRequires: rpm-build-ruby ruby-stdlibs ruby-test-unit ruby-tool-rdoc ruby-tool-setup
 
@@ -40,7 +39,6 @@ Documentation files for %name
 %setup -n %pkgname-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %update_setup_rb
 
 rm -f test/test_driver_jruby.rb
@@ -52,9 +50,6 @@ rm -f test/test_driver_win32.rb
 
 %install
 %ruby_install
-# Install gemspec
-export rbVersion=`ruby -e "puts RbConfig::CONFIG[\"ruby_version\"]"`
-install -Dm 0644 locale.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifications/locale.gemspec
 %rdoc lib/
 
 %check
@@ -66,13 +61,17 @@ install -Dm 0644 locale.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifica
 %doc README.rdoc
 %ruby_sitelibdir/*
 %exclude %ruby_sitelibdir/locale/driver/win32*.rb
-%ruby_libdir/gems/*/specifications/*.gemspec
+%rubygem_specdir/*.gemspec
 
 %files doc
 %doc samples ChangeLog
 %ruby_ri_sitedir/Locale*
 
 %changelog
+* Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt4
+- Use system way  of gemspec installation.
+- Disable tests.
+
 * Tue May 29 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt3
 - Return jruby driver.
 
