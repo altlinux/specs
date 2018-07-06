@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.3.1 
-Release: alt3.1
+Release: alt4
  
 Summary: Collection of text algorithms
 License: MIT/Ruby
@@ -40,9 +40,6 @@ Documentation files for %{name}.
  
 %install
 %ruby_install
-# Install gemspec
-export rbVersion=`ruby -e "puts RbConfig::CONFIG[\"ruby_version\"]"`
-install -Dm 0644 %pkgname.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifications/%pkgname.gemspec
 %rdoc lib/
 # Remove unnecessary files
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
@@ -53,12 +50,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
-%ruby_libdir/gems/*/specifications/%pkgname.gemspec
+%rubygem_specdir/*.gemspec
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt4
+- Use system way to package as gem.
+
 * Thu Jun 28 2018 Denis Medvedev <nbr@altlinux.org> 1.3.1-alt3.1
 - removed patch from package
 
