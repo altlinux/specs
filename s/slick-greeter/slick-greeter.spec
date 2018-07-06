@@ -3,7 +3,7 @@
 
 Name: slick-greeter
 Version: 1.2.2
-Release: alt1
+Release: alt2
 Summary: A slick-looking LightDM greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -18,6 +18,7 @@ Requires: /usr/share/design/current
 Requires: onboard
 
 Provides: lightdm-greeter
+Provides: lightdm-slick-greeter
 
 BuildRequires: intltool gnome-common
 BuildRequires: glib2-devel
@@ -76,6 +77,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %{_mandir}/man1/slick-greeter-check-hidpi.1.*
 
 %changelog
+* Fri Jul 6 2018 Vladimir Didenko <cow@altlinux.org> 1.2.2-alt2
+- Add lightdm-slick-greeter to provides (requested by @mike for m-p)
+
 * Wed Jul 4 2018 Vladimir Didenko <cow@altlinux.org> 1.2.2-alt1
 - 1.2.2
 
