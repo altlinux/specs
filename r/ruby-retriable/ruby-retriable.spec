@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 3.1.2
-Release: alt1
+Release: alt2
 
 Summary: Retriable is an simple DSL to retry failed code blocks with randomized exponential backoff.
 License: MIT
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.2-alt2
+- Rebuild for correct gemspec file name.
+
 * Thu Jul 05 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.2-alt1
 - New version.
 - Package as gem.
