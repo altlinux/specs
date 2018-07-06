@@ -1,7 +1,7 @@
 %define  pkgname mixlib-install
 
 Name:    ruby-%pkgname
-Version: 3.10.0
+Version: 3.11.0
 Release: alt1
 
 Summary: A library for interacting with Chef Software Inc's software distribution systems.
@@ -52,10 +52,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/%pkgname
 %ruby_sitelibdir/*
+%rubygem_specdir/*.gemspec
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 3.11.0-alt1
+- New version.
+- Package as gem.
+
 * Thu May 31 2018 Andrey Cherepanov <cas@altlinux.org> 3.10.0-alt1
 - Initial build for Sisyphus
