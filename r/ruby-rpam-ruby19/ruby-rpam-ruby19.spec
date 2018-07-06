@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 1.2.2 
-Release: alt1.gitbc66d5e.6
+Release: alt1.gitbc66d5e.7
 
 Summary: PAM auth for Ruby - 1.9 compat version
 License: GPLv2
@@ -12,7 +12,6 @@ Url:     https://github.com/canweriotnow/rpam-ruby19
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:  %pkgname-%version.tar
-Patch:   alt-gemspec.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libruby-devel
@@ -35,7 +34,6 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
 %update_setup_rb
 
 %build
@@ -44,9 +42,6 @@ Documentation files for %{name}.
 
 %install
 %ruby_install
-# Install gemspec
-export rbVersion=`ruby -e "puts RbConfig::CONFIG[\"ruby_version\"]"`
-install -Dm 0644 rpam.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifications/rpam.gemspec
 %rdoc lib/
 # Remove unnecessary files
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
@@ -58,12 +53,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README* examples
 %ruby_sitelibdir/rpam.rb
 %ruby_sitearchdir/*
-%ruby_libdir/gems/*/specifications/*.gemspec
+%rubygem_specdir/*.gemspec
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1.gitbc66d5e.7
+- Fix package as gem.
+
 * Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1.gitbc66d5e.6
 - Rebuild for aarch64.
 
