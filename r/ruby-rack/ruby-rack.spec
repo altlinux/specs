@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.6.8
-Release: alt2.2
+Release: alt2.3
 Epoch:   1
 
 Summary: Modular Ruby webserver interface
@@ -66,9 +66,6 @@ Documentation files for %name
 
 %install
 %ruby_install
-# Install gemspec
-export rbVersion=`ruby -e "puts RbConfig::CONFIG[\"ruby_version\"]"`
-install -Dm 0644 %pkgname.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifications/%pkgname.gemspec
 %rdoc lib/
 
 %files
@@ -76,13 +73,16 @@ install -Dm 0644 %pkgname.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifi
 %_bindir/rackup
 %ruby_sitelibdir/*
 %exclude %ruby_sitelibdir/rack/handler/*
-%ruby_libdir/gems/*/specifications/*.gemspec
+%rubygem_specdir/*.gemspec
 
 %files doc
 %doc example
 %ruby_ri_sitedir/Rack*
 
 %changelog
+* Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.6.8-alt2.3
+- Use system way to install gemspec.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.6.8-alt2.2
 - Rebuild with Ruby 2.5.1
 
