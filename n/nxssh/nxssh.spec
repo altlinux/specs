@@ -2,9 +2,9 @@
 
 Name: nxssh
 Version: 7.5
-Release: alt7
+Release: alt9
 
-Summary: Openssh portable (Etersoft edition) for using with NX
+Summary: Openssh portable (Etersoft edition) for using with NX in RX@Etersoft
 
 License: GPL, MIT/X11 for X11 bits
 Group: Networking/Remote access
@@ -19,16 +19,14 @@ Patch1: 0001-fix-openssl-1.1.patch-eterbug-12901.patch
 
 Requires: nx-libs >= 3.5.0.31
 
-# Automatically added by buildreq on Wed Nov 08 2017
-# optimized out: gnu-config libcom_err-devel libkrb5-devel nx perl python-base python-modules python3 python3-base zlib-devel
-BuildRequires: libjpeg-devel libpam-devel libpng-devel libssl-devel libstdc++-devel nx-libs-devel openssh-clients
+BuildRequires: libpam-devel libssl-devel nx-libs-devel openssh-clients
 
 %if_with kerberos5
 BuildRequires: libkrb5-devel
 %endif
 
 %description
-Openssh portable (Etersoft edition) for using with NX.
+Openssh portable (Etersoft edition) for using with NX in RX@Etersoft.
 
 %prep
 %setup
@@ -47,7 +45,7 @@ confdir=""
 %__subst "s|-DSSHDIR=\\\\\"\$(sysconfdir)\\\\\"|-DSSHDIR=\\\\\"\$(sysconfdir)${confdir}\\\\\"|g" Makefile.in
 
 %autoreconf
-%configure --without-zlib-version-check %{subst_with kerberos}
+%configure --without-zlib-version-check %{subst_with kerberos5}
 %make_build || %make
 
 echo "checking ssh config path"
@@ -61,6 +59,14 @@ install -m755 nxssh %buildroot%_bindir/
 %_bindir/nxssh
 
 %changelog
+* Fri Jul 06 2018 Vitaly Lipatov <lav@altlinux.ru> 7.5-alt9
+- fix bug with kerberos build missing
+- drop gcc-c++ and other image libs buildrequires
+- use optflags from rpm (drop hardcoded CFLAGS)
+
+* Thu Jun 28 2018 Etersoft Builder <builder@etersoft.ru> 7.5-alt8
+- (CI): added test build
+
 * Sat Jun 23 2018 Vitaly Lipatov <lav@altlinux.ru> 7.5-alt7
 - cleanup spec, pack only nxssh
 
