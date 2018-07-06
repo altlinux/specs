@@ -1,5 +1,5 @@
 Name: code
-Version: 1.24.1
+Version: 1.25.0
 Release: alt1
 
 Summary: Visual Studio Code
@@ -8,10 +8,10 @@ License: Multiple, see https://code.visualstudio.com/license
 Url: https://code.visualstudio.com/
 Group: Development/Other
 
-# Get from https://code.visualstudio.com/Download
-# Source-script: download.sh x86_64
+# The same like from https://code.visualstudio.com/Download
+# Source-url: https://vscode-update.azurewebsites.net/%version/linux-x64/stable
 Source: %name-%version.tar
-# Source1-script: download.sh i586
+# Source1-url: https://vscode-update.azurewebsites.net/%version/linux-ia32/stable
 Source1: %name-%version-i586.tar
 
 Source2: code.desktop
@@ -27,7 +27,8 @@ AutoProv: no
 # /usr/lib64/code/resources/app/node_modules.asar.unpacked/keytar/build/Release/keytar.node: library libsecret-1.so.0
 BuildRequires: libsecret
 
-BuildRequires: libxkbfile libnss libnspr libXtst libalsa libcups libXScrnSaver libGConf
+# we need it for AutoReq
+BuildRequires: libgtk+2 libxkbfile libnss libnspr libXtst libalsa libcups libXScrnSaver libGConf
 
 %description
 Visual Studio Code is a new choice of tool that combines the simplicity
@@ -42,14 +43,6 @@ tar xfv %SOURCE1
 %endif
 
 %build
-# replace strange missed functions with exit
-sed -E -i -e "s@(_ZN10crash_keys17SetVari|_ZN15MersenneTwister12in|_ZN15MersenneTwister13ge|_ZN15MersenneTwisterC1Ev|_ZN15MersenneTwisterD1Ev)@exit\x0MersenneTwisterD1Ev@g" ./code
-#_ZN10crash_keys17SetVari ationsListERKSt6vectorISsSaISsEE
-#_ZN15MersenneTwister12in it_genrandEj
-#_ZN15MersenneTwister13ge nrand_int32Ev
-#_ZN15MersenneTwisterC1Ev
-#_ZN15MersenneTwisterD1Ev
-#exit
 
 %install
 mkdir -p %buildroot%_libdir/%name/
@@ -68,6 +61,10 @@ install -m644 -D %SOURCE3 %buildroot%_pixmapsdir/code.png
 %_pixmapsdir/code.png
 
 %changelog
+* Fri Jul 06 2018 Vitaly Lipatov <lav@altlinux.ru> 1.25.0-alt1
+- new version 1.25.0 (with rpmrb script)
+- use direct download links
+
 * Thu Jul 05 2018 Vitaly Lipatov <lav@altlinux.ru> 1.24.1-alt1
 - new version 1.24.1
 
