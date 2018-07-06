@@ -1,13 +1,13 @@
 Name: mongo
-Version: 3.6.5
-Release: alt1
+Version: 4.0.0
+Release: alt1.2
 Summary: mongo client shell and tools
 License: AGPL 3.0
 Url: http://www.mongodb.org
 Group: Development/Databases
 # From https://docs.mongodb.com/manual/installation
 # Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
@@ -15,7 +15,14 @@ Source: %name-%version.tar
 
 Patch1:         mongodb-2.4.5-no-term.patch
 
-BuildRequires: /proc gcc-c++ python-devel python-module-pymongo scons boost-devel boost-filesystem-devel boost-program_options-devel libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel libpcap-devel libsnappy-devel libv8-3.24-devel systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel libyaml-cpp-devel valgrind-devel zlib-devel python-modules-json python-module-Cheetah python-module-typing python-module-yaml
+BuildRequires: /proc gcc-c++ python-devel python-module-pymongo scons
+BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
+BuildRequires: libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel
+BuildRequires: libpcap-devel libsnappy-devel
+BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
+BuildRequires: libyaml-cpp-devel valgrind-devel zlib-devel python-modules-json
+BuildRequires: python-module-Cheetah python-module-typing python-module-yaml
+BuildRequires: libcurl-devel
 
 %description
 Mongo (from "huMONGOus") is a schema-free document-oriented database.
@@ -67,6 +74,9 @@ sed -i -r "s|(env.Append\(CCFLAGS=\['-DDEBUG_MODE=false')(\]\))|\1,'-O0'\2|"  sr
 %build
 # NOTE: Build flags must be EXACTLY the same in the install step!
 # If you fail to do this, mongodb will be built twice...
+%ifarch aarch64
+%define ccflags_arch_opts "-march=armv8-a+crc"
+%endif
 %define common_opts \\\
        -j %__nprocs \\\
        --use-system-tcmalloc \\\
@@ -83,7 +93,7 @@ sed -i -r "s|(env.Append\(CCFLAGS=\['-DDEBUG_MODE=false')(\]\))|\1,'-O0'\2|"  sr
        --ssl \\\
        --disable-warnings-as-errors \\\
        MONGO_VERSION="%{version}-%{release}" \\\
-       CCFLAGS="%{?optflags} `pkg-config --cflags libpcrecpp`"
+       CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`"
 
 scons core tools %common_opts
 
@@ -137,11 +147,9 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %doc README GNU-AGPL-3.0.txt APACHE-2.0.txt
 
 %_bindir/mongo
-%_bindir/mongoperf
 %exclude %_bindir/install_compass
 
 %_man1dir/mongo.1*
-%_man1dir/mongoperf.1*
 
 # man pages for mongo-tools
 %exclude %_man1dir/bsondump.1*
@@ -181,6 +189,16 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Fri Jul 6 2018 Vladimir Didenko <cow@altlinux.org> 4.0.0-alt1.2
+- Fix build on aarch64
+
+* Thu Jul 5 2018 Vladimir Didenko <cow@altlinux.org> 4.0.0-alt1.1
+- Remove libv8 from BuildRequires
+
+* Wed Jul 4 2018 Vladimir Didenko <cow@altlinux.org> 4.0.0-alt1
+- 4.0.0
+- support build on aarch64
+
 * Sat Jun 9 2018 Vladimir Didenko <cow@altlinux.org> 3.6.5-alt1
 - 3.6.5
 
