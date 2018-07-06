@@ -1,6 +1,6 @@
 Name: libaacs
 Version: 0.8.1
-Release: alt2
+Release: alt3
 
 Summary: BD AACS library
 License: LGPL
@@ -26,6 +26,9 @@ This package contains the headers and libraries for libaacs development.
 %setup
 
 %build
+%ifarch %e2k
+export cc_cv_cflags__Werror_implicit_function_declaration=no
+%endif
 %autoreconf
 %configure
 %make_build
@@ -35,7 +38,6 @@ This package contains the headers and libraries for libaacs development.
 
 %files
 %_bindir/aacs_info
-
 %_libdir/*.so.*
 
 %files devel
@@ -44,6 +46,9 @@ This package contains the headers and libraries for libaacs development.
 %_libdir/pkgconfig/*
 
 %changelog
+* Fri Jul 06 2018 Michael Shigorin <mike@altlinux.org> 0.8.1-alt3
+- worked around ftbfs on e2k
+
 * Tue Oct 06 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.1-alt2
 - rebuilt with recent libgcrypt
 
