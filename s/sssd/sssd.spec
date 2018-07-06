@@ -16,8 +16,8 @@
 %endif
 
 Name: sssd
-Version: 1.16.1
-Release: alt7%ubt
+Version: 1.16.2
+Release: alt1%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -90,6 +90,7 @@ BuildRequires: glib2-devel
 BuildRequires: diffstat
 BuildRequires: findutils
 BuildRequires: samba-devel
+BuildRequires: samba-winbind
 BuildRequires: libsmbclient-devel
 %if_branch_le M70P
 BuildRequires: systemd-devel libsystemd-daemon-devel libsystemd-journal-devel libsystemd-login-devel
@@ -479,8 +480,8 @@ UIDs/GIDs to names and vice versa. It can be also used for mapping principal
 %endif
     #
 
-# %%make_build all docs
-%make all docs
+%make_build all
+%make docs
 
 %install
 %make install DESTDIR=%buildroot
@@ -834,6 +835,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %nfsidmapdir/sss.so
 
 %changelog
+* Wed Jul 04 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.16.2-alt1%ubt
+- New upstream release 1.16.2
+
 * Fri Jun 08 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt7%ubt
 - Rebuild with latest version on libldb-1.3.3
 - Disable strict requirement to version of libldb
