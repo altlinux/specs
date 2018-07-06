@@ -1,6 +1,6 @@
 Name: connector
 Version: 1.6.3
-Release: alt1
+Release: alt2
 
 Summary: Remote desktop chooser
 License: GPL
@@ -46,6 +46,9 @@ install -pDm644 kiosk.access %buildroot%_sysconfdir/%name/kiosk.access
 %config(noreplace) %_sysconfdir/%name/kiosk.access
 
 %changelog
+* Fri Jul 06 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.6.3-alt2
+- Fixed open preferences window for FS
+
 * Thu Jul 05 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.6.3-alt1
 - Added support SPICE
 - Added support connect to fileservers (SMB, FTP, etc.)
