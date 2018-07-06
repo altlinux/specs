@@ -1,8 +1,8 @@
 %define  pkgname ohai
  
 Name: 	 %pkgname
-Version: 14.2.0
-Release: alt2
+Version: 14.2.1
+Release: alt1
  
 Summary: Ohai profiles your system and emits JSON
 License: MIT/Ruby
@@ -68,11 +68,16 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/%pkgname
 %ruby_sitelibdir/*
+%rubygem_specdir/*.gemspec
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 14.2.1-alt1
+- New version.
+- Package as gem.
+
 * Thu Jun 14 2018 Dmitry Terekhin <jqt4@altlinux.org> 14.2.0-alt2
 - Delete dependency "ruby-net-dhcp" for rebuild to mipsel.
 
