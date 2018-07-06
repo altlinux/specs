@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.1.0
-Release: alt2.2
+Release: alt3
  
 Summary: GetText but 3.5 x faster, 560 x less memory, simple, clean namespace (7 vs 34) and threadsafe!
 License: MIT/Ruby
@@ -13,7 +13,6 @@ Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
  
 Source:  %pkgname-%version.tar
-Patch1:  alt-gemspec.patch
  
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
@@ -39,7 +38,6 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-%patch1 -p1
 %update_setup_rb
  
 %build
@@ -48,10 +46,6 @@ Documentation files for %{name}.
  
 %install
 %ruby_install
-
-# Install gemspec
-export rbVersion=`ruby -e "puts RbConfig::CONFIG[\"ruby_version\"]"`
-install -Dm 0644 %pkgname.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifications/%pkgname.gemspec
 
 %rdoc lib/
 # Remove unnecessary files
@@ -63,12 +57,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc Readme*
 %ruby_sitelibdir/*
-%ruby_libdir/gems/*/specifications/*.gemspec
+%rubygem_specdir/*.gemspec
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt3
+- Fix package as gem.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt2.2
 - Rebuild with Ruby 2.5.1
 
