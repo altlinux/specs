@@ -13,7 +13,7 @@
 
 Name: graphviz
 Version: 2.40.1
-Release: alt2
+Release: alt3
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -36,9 +36,10 @@ Obsoletes: libdotneato < %version
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel gnu-config guile18 libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXmu-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgmp-devel libgtk+2-devel libltdl7-devel libpango-devel libpangox-compat libpangox-compat-devel libpng-devel libqt4-core libqt4-devel libqt4-gui libstdc++-devel libwayland-client libwayland-server perl-devel pkg-config python-base rpm-build-tcl tcl tcl-devel tk xorg-renderproto-devel xorg-xproto-devel zlib-devel
 BuildRequires: flex gcc-c++ groff-base imake libXaw-devel libXpm-devel libann-devel libexpat-devel libgd2-devel swig tk-devel xorg-cf-files
 
-%{?!_with_bootstrap:BuildRequires: ghostscript-utils libfreeglut-devel libglade-devel libgs-devel libgtkglext-devel libgts-devel liblasi-devel librsvg-devel phonon-devel}
+%{?!_with_bootstrap:BuildRequires: ghostscript-utils libfreeglut-devel libglade-devel libgs-devel libgtkglext-devel libgts-devel liblasi-devel librsvg-devel}
 %{?_enable_lua:BuildRequires: liblua5-devel}
 %{?_enable_guile:BuildRequires: guile18-devel}
+%{?_enable_python:BuildRequires: python-devel}
 
 %define gvdatadir %_datadir/%name
 %define gvlibdir %_libdir/%name
@@ -176,6 +177,7 @@ cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
 	--with-gdk-pixbuf \
 	--without-gnomeui \
 	--with-gtk \
+	--without-qt \
 	--with-ipsepcola \
 	--with-sfdp \
 	--with-smyrna \
@@ -226,6 +228,7 @@ touch %buildroot%gvlibdir/config
 
 rm -f %buildroot%gvlibdir/*/lib*.la
 rm -f %buildroot%gvlibdir/libgvplugin_*.la
+rm -fv %buildroot%_datadir/graphviz/demo/modgraph.py
 
 %post
 [ ! -x %_bindir/dot ] || %_bindir/dot -c >&/dev/null
@@ -236,7 +239,7 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 %gvdatadir/gvpr
 %gvdatadir/lefty
 %if_without bootstrap
-%gvdatadir/gvedit
+#gvdatadir/gvedit
 %gvdatadir/smyrna
 %endif
 %ghost %gvlibdir/config
@@ -336,6 +339,9 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 # - enable/fix/test language bindings
 
 %changelog
+* Sat Jul 07 2018 Vitaly Lipatov <lav@altlinux.ru> 2.40.1-alt3
+- disable build gvedit (uses qt4 and was packed in the main package)
+
 * Sun Jun 10 2018 Michael Shigorin <mike@altlinux.org> 2.40.1-alt2
 - disable -ffast-math (closes: #34101, but maybe not; thx lav@)
 - E2K:
