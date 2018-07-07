@@ -1,3 +1,4 @@
+%def_with xfs
 %define fname  cyr_rfx
 %define cname  koi8-r
 %define origname koi8-1
@@ -5,7 +6,7 @@
 
 Name: fonts-bitmap-%fname-%cname
 Version: 1.1
-Release: alt15
+Release: alt16
 License: distributable
 Group: System/Fonts/X11 bitmap
 URL: http://www.inp.nsk.su/~bolkhov/files/fonts/cyr-rfx/00index.ru.html
@@ -102,6 +103,9 @@ ln -s ../../..%_fontsdir/%fname-%cname/75dpi \
 %_fontsdir/%fname-%cname/75dpi
 
 %changelog
+* Sat Jul 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt16
+- restored X fontpath.d support
+
 * Tue Jul 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt15
 - split on misc and 75dpi subpackages
   to avoid fonconfig conflict for times and helvetica
