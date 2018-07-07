@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.5.4
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -12,23 +12,47 @@ Url: http://www.scribus.net/
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar
-Source1: CMakeCache.txt
 
 Patch0: scribus-1.3.5.1-plugindir-alt.patch
-Patch1: FindFreetype.cmake.diff
 Patch2: scribus-1.3.5.1-poppler.patch
 
-# Automatically added by buildreq on Fri Sep 01 2017
-# optimized out: cmake cmake-modules fontconfig fontconfig-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libEGL-devel libGL-devel libX11-devel libfreetype-devel libgpg-error libharfbuzz-devel libharfbuzz-icu libicu-devel libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-widgets libqt5-xml librevenge-devel libstdc++-devel libwayland-client libwayland-server pkg-config python-base python-devel python-modules python3 python3-base qt5-base-common qt5-base-devel qt5-tools sssd-client xml-utils xorg-xproto-devel zlib-devel
-BuildRequires: boost-devel-headers ccmake libcairo-devel libcdr-devel libcups-devel libhunspell-devel libjpeg-devel liblcms2-devel
-BuildRequires: libpodofo-devel libpoppler-devel libpoppler-cpp-devel libtiff-devel libvisio-devel libxml2-devel
-BuildRequires: qt5-imageformats qt5-tools-devel zlib-devel
+BuildRequires: cmake zlib-devel libssl-devel
+BuildRequires: libpoppler-devel libpoppler-cpp-devel
+BuildRequires: qt5-imageformats qt5-declarative-devel qt5-tools-devel
 
-BuildRequires: libfreehand-devel libpagemaker-devel libmspub-devel
+# Required from BUILDING file
+BuildRequires: qt5-base-devel >= 5.5.0
+BuildRequires: libfreetype-devel >= 2.1.7
+BuildRequires: libcairo-devel >= 1.14.0
+BuildRequires: libtiff-devel >= 3.6.0
+BuildRequires: liblcms2-devel >= 2.1
+BuildRequires: libjpeg-devel
+BuildRequires: libharfbuzz-devel >= 0.9.42
+BuildRequires: libicu-devel
 
-# FIXME: obsoletes?
-BuildRequires: libhyphen-devel aspell libaspell-devel hunspell desktop-file-utils
-BuildPreReq: lib2geom-devel xml-utils fontconfig-devel libwmf-devel
+# Recommended from BUILDING file
+BuildRequires: libcups-devel
+BuildRequires: fontconfig-devel >= 2.0
+BuildRequires: libxml2-devel >= 2.6.0
+BuildRequires: ghostscript > 9.0
+BuildRequires: python-dev >= 2.3
+BuildRequires: python-modules-tkinter
+BuildRequires: python-module-Pillow
+BuildRequires: libhunspell-devel
+BuildRequires: libpodofo-devel > 0.7.0
+# boost used only for 2geom
+BuildRequires: boost-devel-headers
+BuildRequires: GraphicsMagick
+BuildRequires: libGraphicsMagick-c++-devel
+
+# TODO: build with OSG
+
+# TODO: use system libs instead third_party
+#BuildPreReq: libhyphen-devel lib2geom-devel
+
+# For import filters
+BuildRequires: libfreehand-devel libpagemaker-devel libmspub-devel libcdr-devel 
+BuildRequires: libwmf-devel libvisio-devel libqxp-devel libzmf-devel
 
 Requires: %name-doc >= %epoch:%version
 Requires: %name-data >= %epoch:%version
@@ -79,33 +103,17 @@ BuildArch: noarch
 %prep
 %setup -q -n %name-%version
 %patch0 -p1
-#cp %_datadir/CMake/Modules/FindFreetype.cmake cmake/modules/
-#patch1 -p0
-#patch2 -p1
-
-# recode man page to UTF-8
-#pushd scribus/manpages
-#iconv -f ISO8859-2 -t UTF-8 scribus.1.pl > tmp
-#touch -r scribus.1.pl tmp
-#mv tmp scribus.1.pl
-#popd
-
-# fix permissions
-#chmod a-x scribus/pageitem_latexframe.h
 
 %build
-#mkdir -p build
-#pushd build
-#install -p -m644 %SOURCE1 .
 %cmake \
 %ifarch x86_64
 	-DWANT_LIB64=true \
 %endif
 	-DWANT_NORPATH=true \
 	-DWANT_DISTROBUILD=true \
+	-DWANT_CCACHE=true \
+	-DWANT_GRAPHICSMAGICK=true \
 	-DFONTCONFIG_CONFIG:FILEPATH=%_pkgconfigdir/fontconfig.pc \
-	-DQT_QTNSPLUGIN_LIBRARY_RELEASE:FILEPATH=%_K4lib/libnsplugin.so \
-	-D2geom_LIB_DEPENDS:FILEPATH=%_libdir/lib2geom.so \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags"
 
@@ -113,21 +121,6 @@ BuildArch: noarch
 
 %install
 %cmakeinstall_std
-
-#install -p -D -m0644 %buildroot%_datadir/scribus/icons/scribus.png %buildroot%_pixmapsdir/scribus.png
-#install -p -D -m0644 %buildroot%_datadir/scribus/icons/scribusdoc.png %buildroot%_pixmapsdir/x-scribus.png
-
-#find %buildroot -type f -name "*.la" -exec rm -f {} ';'
-
-# install the global desktop file
-#rm -f %buildroot%_datadir/mimelnk/application/*scribus.desktop
-#desktop-file-install --dir=%buildroot%_desktopdir scribus.desktop
-
-# move icons into %%_?iconsdir
-#install -d %buildroot%_liconsdir
-#install -d %buildroot%_niconsdir
-#mv %buildroot%_pixmapsdir/%name.png %buildroot%_liconsdir
-#mv %buildroot%_pixmapsdir/x-%name.png %buildroot%_niconsdir
 
 pushd %buildroot%_docdir/%name
 for i in $(ls ChangeLog*); do
@@ -171,6 +164,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Sat Jul 07 2018 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.4-alt2
+- cleanup spec, fix build
+
 * Thu May 17 2018 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.4-alt1
 - new version 1.5.4 (with rpmrb script)
 - rebuild with libicu60
