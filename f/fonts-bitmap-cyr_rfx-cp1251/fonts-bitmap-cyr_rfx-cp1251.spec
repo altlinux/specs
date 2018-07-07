@@ -1,3 +1,4 @@
+%def_with xfs
 %define fname  cyr_rfx
 %define cname  cp1251
 
@@ -8,7 +9,7 @@
 
 Name: fonts-bitmap-cyr_rfx-cp1251
 Version: 1.1a
-Release: alt7
+Release: alt8
 
 Summary: Cyrillic bitmap fonts for the X Window System in microsoft-cp1251 encoding
 
@@ -107,6 +108,9 @@ ln -s ../../..%__bitmapdir/75dpi \
 %__bitmapdir/75dpi/
 
 %changelog
+* Sat Jul 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.1a-alt8
+- restored X fontpath.d support
+
 * Tue Jul 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1a-alt7
 - split on misc and 75dpi subpackages
   to avoid fonconfig conflict for times and helvetica
