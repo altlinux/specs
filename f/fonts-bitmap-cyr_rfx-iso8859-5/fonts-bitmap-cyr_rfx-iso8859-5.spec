@@ -1,3 +1,4 @@
+%def_with xfs
 %define fname  cyr_rfx
 %define cname  iso8859-5
 %define origname iso8859-5
@@ -5,7 +6,7 @@
 
 Name: fonts-bitmap-%fname-%cname
 Version: 1.1
-Release: alt5
+Release: alt6
 License: distributable
 URL: http://www.inp.nsk.su/~bolkhov/files/fonts/cyr-rfx/00index.ru.html
 Group: System/Fonts/X11 bitmap
@@ -94,6 +95,9 @@ ln -s ../../..%_fontsdir/%fname-%cname/75dpi \
 %_fontsdir/%fname-%cname/75dpi
 
 %changelog
+* Sat Jul 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt6
+- restored X fontpath.d support
+
 * Tue Jul 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5
 - split on misc and 75dpi subpackages
   to avoid fonconfig conflict for times and helvetica
