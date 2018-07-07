@@ -1,10 +1,8 @@
 %define realname childsplay_sp
-%define alphabet_ver 0.4.3
-%define alphabet_url http://download.savannah.gnu.org/releases/childsplay/language_packs
-
+%define alphabet_dir %_datadir/%name/alphabet-sounds
 
 Name: childsplay
-Version: 2.6.5
+Version: 3.3
 Release: alt1
 
 License: GPLv3+
@@ -18,16 +16,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://download.savannah.gnu.org/releases/childsplay/%name-%version.tar
 
 Source1: %name.desktop
-Source11: %alphabet_url/alphabet_sounds_ca-%alphabet_ver.tgz
-Source12: %alphabet_url/alphabet_sounds_de-%alphabet_ver.tgz
-Source15: %alphabet_url/alphabet_sounds_es-%alphabet_ver.tgz
-Source16: %alphabet_url/alphabet_sounds_fr-%alphabet_ver.tgz
-Source17: %alphabet_url/alphabet_sounds_it-%alphabet_ver.tgz
-Source20: %alphabet_url/alphabet_sounds_nl-%alphabet_ver.tgz
-Source21: %alphabet_url/alphabet_sounds_pt-%alphabet_ver.tgz
-Source23: %alphabet_url/alphabet_sounds_ru-%alphabet_ver.tgz
-Source24: %alphabet_url/alphabet_sounds_sl-%alphabet_ver.tgz
-Source25: %alphabet_url/alphabet_sounds_sv-%alphabet_ver.tgz
 
 BuildArch: noarch
 
@@ -42,8 +30,8 @@ BuildRequires: libSDL-devel >= 1.2
 BuildRequires: libSDL_image-devel >= 1.2
 BuildRequires: libSDL_ttf-devel >= 2.0
 BuildRequires: libSDL_mixer-devel >= 1.2
-BuildRequires: libogg-devel 
-BuildRequires: gettext-tools 
+BuildRequires: libogg-devel
+BuildRequires: gettext-tools
 
 Requires: python-module-SQLAlchemy
 
@@ -61,14 +49,18 @@ available as childsplay-alphabet_sounds packages. For those you'll have to
 install the childsplay-alphabet_sounds package for the languages you intend to
 use. For example childsplay-alphabet_sounds_nl.
 Available alphabet sounds packages:
+childsplay-alphabet_sounds_bg
 childsplay-alphabet_sounds_ca
 childsplay-alphabet_sounds_de
+childsplay-alphabet_sounds_el
 childsplay-alphabet_sounds_es
 childsplay-alphabet_sounds_fr
 childsplay-alphabet_sounds_it
 childsplay-alphabet_sounds_nl
 childsplay-alphabet_sounds_pt
+childsplay-alphabet_sounds_ro
 childsplay-alphabet_sounds_ru
+childsplay-alphabet_sounds_sk
 childsplay-alphabet_sounds_sl
 childsplay-alphabet_sounds_sv
 
@@ -81,10 +73,17 @@ Requires:       %name = %version-%release
 Bulgarian alphabet sounds for Childsplay
 
 %package alphabet_sounds_ca
-Summary:        Catalan alphabet sounds for Childsplay
+Summary:        Czech  alphabet sounds for Childsplay
 Group: Games/Educational
 Requires:       %name = %version-%release
 %description alphabet_sounds_ca
+Czech  alphabet sounds for Childsplay
+
+%package alphabet_sounds_cs
+Summary:        Catalan alphabet sounds for Childsplay
+Group: Games/Educational
+Requires:       %name = %version-%release
+%description alphabet_sounds_cs
 Catalan alphabet sounds for Childsplay
 
 %package alphabet_sounds_de
@@ -122,6 +121,20 @@ Requires:       %name = %version-%release
 %description alphabet_sounds_fr
 French alphabet sounds for Childsplay
 
+%package alphabet_sounds_gl
+Summary:        Galician alphabet sounds for Childsplay
+Group: Games/Educational
+Requires:       %name = %version-%release
+%description alphabet_sounds_gl
+Galician alphabet sounds for Childsplay
+
+%package alphabet_sounds_hr
+Summary:        Croatian alphabet sounds for Childsplay
+Group: Games/Educational
+Requires:       %name = %version-%release
+%description alphabet_sounds_hr
+Croatian alphabet sounds for Childsplay
+
 %package alphabet_sounds_it
 Summary:        Italian alphabet sounds for Childsplay
 Group: Games/Educational
@@ -135,6 +148,13 @@ Group: Games/Educational
 Requires:       %name = %version-%release
 %description alphabet_sounds_lt
 Lithuanian alphabet sounds for Childsplay
+
+%package alphabet_sounds_nb
+Summary:        Norwegian alphabet sounds for Childsplay
+Group: Games/Educational
+Requires:       %name = %version-%release
+%description alphabet_sounds_nb
+Norwegian alphabet sounds for Childsplay
 
 %package alphabet_sounds_nl
 Summary:        Dutch alphabet sounds for Childsplay
@@ -150,6 +170,13 @@ Requires:       %name = %version-%release
 %description alphabet_sounds_pt
 Portuguese alphabet sounds for Childsplay
 
+%package alphabet_sounds_pt_BR
+Summary:        Portuguese Brazil alphabet sounds for Childsplay
+Group: Games/Educational
+Requires:       %name = %version-%release
+%description alphabet_sounds_pt_BR
+Portuguese Brazil alphabet sounds for Childsplay
+
 %package alphabet_sounds_ro
 Summary:        Romanian alphabet sounds for Childsplay
 Group: Games/Educational
@@ -163,6 +190,13 @@ Group: Games/Educational
 Requires:       %name = %version-%release
 %description alphabet_sounds_ru
 Russian alphabet sounds for Childsplay
+
+%package alphabet_sounds_sk
+Summary:        Slovak alphabet sounds for Childsplay
+Group: Games/Educational
+Requires:       %name = %version-%release
+%description alphabet_sounds_sk
+Slovak alphabet sounds for Childsplay
 
 %package alphabet_sounds_sl
 Summary:        Slovenian alphabet sounds for Childsplay
@@ -179,23 +213,24 @@ Requires:       %name = %version-%release
 Swedish alphabet sounds for Childsplay
 
 %prep
-%setup -q -a 11 -a 12 -a 15 -a 16 -a 17 -a 20 -a 21 -a 23 -a 24 -a 25
+%setup
 
 # due unknown Mail module
-rm -f SPDebugDialog.py
+rm -fv SPDebugDialog.py
+rm -fv SPWidgets/test.py
 %__subst "s|import SpDebugDialog||" SPMainCore.py
 
-# set pathes 
-echo "## Automated file please do not edit" > SPBasePaths.py
-echo "# This module holds all the paths needed for %name." >> SPBasePaths.py
-echo "DOCDIR = '%_datadir/doc/%name-%version'" >> SPBasePaths.py
-#echo "PYTHONCPDIR = '%python_sitelibdir/%realname'" >> SPBasePaths.py
-echo "BASEDIR = '%_datadir/%name'" >> SPBasePaths.py
-echo "SHARELIBDATADIR = '%_datadir/%name/lib'" >> SPBasePaths.py
-echo "ALPHABETDIR = '%_datadir/%name/alphabetsounds'" >> SPBasePaths.py
-echo "LOCALEDIR = '%_datadir/locale'" >> SPBasePaths.py
-echo "WWWDIR = 'www/backend'" >> SPBasePaths.py
-
+# set pathes
+cat <<EOF >SPBasePaths.py
+# This module holds all paths needed for %name.
+DOCDIR = '%_datadir/doc/%name-%version'
+#PYTHONCPDIR = '%python_sitelibdir/%realname'
+BASEDIR = '%_datadir/%name'
+SHARELIBDATADIR = '%_datadir/%name/lib'
+ALPHABETDIR = '%alphabet_dir'
+LOCALEDIR = '%_datadir/locale'
+WWWDIR = 'www/backend'
+EOF
 
 %install
 mkdir -p %buildroot%_bindir/
@@ -211,16 +246,8 @@ mkdir -p %buildroot%_datadir/%name/
 
 cp -a *.py lib SPWidgets %buildroot%_datadir/%name/
 cp sp_content.db %buildroot%_datadir/%name/lib/
-cp -a alphabetsounds %buildroot%_datadir/%name/
+cp -a alphabet-sounds %buildroot%_datadir/%name/
 cp -a locale/* %buildroot%_datadir/locale/
-
-#Alphabet sounds
-for CN in ca de es fr it nl pt ru sl sv; do
-  subdir=$CN
-  test -d alphabet_sounds_$CN-%alphabet_ver/AlphabetSounds/$CN || subdir=
-  mkdir -p %buildroot%_datadir/%name/alphabetsounds/$CN/
-  cp -a alphabet_sounds_$CN-%alphabet_ver/AlphabetSounds/$subdir/* %buildroot%_datadir/%name/alphabetsounds/$CN/
-done
 
 mkdir -p %buildroot%_desktopdir/
 install -m644 %SOURCE1 %buildroot%_desktopdir/
@@ -232,66 +259,82 @@ install -m644 %SOURCE1 %buildroot%_desktopdir/
 %files -f %name.lang
 %doc Changelog COPYING db.dev
 %_bindir/%name
-%_datadir/%name/
-%exclude %_datadir/%name/alphabetsounds/
-%_datadir/%name/alphabetsounds/en/
+%dir %_datadir/%name/
+%dir %alphabet_dir/
+%_datadir/%name/*.py*
+%_datadir/%name/lib/
+%_datadir/%name/SPWidgets/
 %_desktopdir/%name.desktop
 #%_datadir/icons/hicolor/*/apps/%name.png
 
+%files alphabet_sounds_bg
+%alphabet_dir/bg/
+
 %files alphabet_sounds_ca
-%doc  alphabet_sounds_ca-%alphabet_ver/copyright  alphabet_sounds_ca-%alphabet_ver/GPL-2
-%_datadir/%name/alphabetsounds/ca
+%alphabet_dir/ca/
+
+%files alphabet_sounds_cs
+%alphabet_dir/cs/
 
 %files alphabet_sounds_de
-%doc  alphabet_sounds_de-%alphabet_ver/copyright  alphabet_sounds_de-%alphabet_ver/GPL-2
-%_datadir/%name/alphabetsounds/de
+%alphabet_dir/de/
 
-#%files alphabet_sounds_el
-#%doc  alphabet_sounds_el-%alphabet_ver/copyright  alphabet_sounds_el-%alphabet_ver/GPL-2
-#%_datadir/%name/alphabetsounds/el
+%files alphabet_sounds_el
+%alphabet_dir/el/
 
-#%files alphabet_sounds_en_GB
-#%doc  alphabet_sounds_en_GB-%alphabet_ver/copyright  alphabet_sounds_en_GB-%alphabet_ver/GPL-2
-#%_datadir/%name/alphabetsounds/en_GB
+%files alphabet_sounds_en_GB
+%alphabet_dir/en_GB/
 
 %files alphabet_sounds_es
-%doc  alphabet_sounds_es-%alphabet_ver/copyright  alphabet_sounds_es-%alphabet_ver/GPL-2
-%_datadir/%name/alphabetsounds/es
+%alphabet_dir/es/
 
 %files alphabet_sounds_fr
-%doc  alphabet_sounds_fr-%alphabet_ver/copyright  alphabet_sounds_fr-%alphabet_ver/GPL-2
-%_datadir/%name/alphabetsounds/fr
+%alphabet_dir/fr/
+
+%files alphabet_sounds_gl
+%alphabet_dir/gl/
+
+%files alphabet_sounds_hr
+%alphabet_dir/hr/
 
 %files alphabet_sounds_it
-%doc  alphabet_sounds_it-%alphabet_ver/copyright  alphabet_sounds_it-%alphabet_ver/GPL-2
-%_datadir/%name/alphabetsounds/it
+%alphabet_dir/it/
 
-#%files alphabet_sounds_lt
-#%doc  alphabet_sounds_lt-%alphabet_ver/copyright  alphabet_sounds_lt-%alphabet_ver/GPL-2
-#%_datadir/%name/alphabetsounds/lt
+%files alphabet_sounds_lt
+%alphabet_dir/lt/
+
+%files alphabet_sounds_nb
+%alphabet_dir/nb/
 
 %files alphabet_sounds_nl
-%doc  alphabet_sounds_nl-%alphabet_ver/copyright  alphabet_sounds_nl-%alphabet_ver/GPL-2
-%_datadir/%name/alphabetsounds/nl
+%alphabet_dir/nl/
 
 %files alphabet_sounds_pt
-%doc  alphabet_sounds_pt-%alphabet_ver/copyright  alphabet_sounds_pt-%alphabet_ver/GPL-2
-%_datadir/%name/alphabetsounds/pt
+%alphabet_dir/pt/
+
+%files alphabet_sounds_pt_BR
+%alphabet_dir/pt_BR/
+
+%files alphabet_sounds_ro
+%alphabet_dir/ro/
 
 %files alphabet_sounds_ru
-%doc  alphabet_sounds_ru-%alphabet_ver/copyright  alphabet_sounds_ru-%alphabet_ver/GPL-2
-%_datadir/%name/alphabetsounds/ru
+%alphabet_dir/ru/
+
+%files alphabet_sounds_sk
+%alphabet_dir/sk/
 
 %files alphabet_sounds_sl
-%doc  alphabet_sounds_sl-%alphabet_ver/copyright  alphabet_sounds_sl-%alphabet_ver/GPL-2
-%_datadir/%name/alphabetsounds/sl
+%alphabet_dir/sl/
 
 %files alphabet_sounds_sv
-%doc  alphabet_sounds_sv-%alphabet_ver/copyright  alphabet_sounds_sv-%alphabet_ver/GPL-2
-%_datadir/%name/alphabetsounds/sv
+%alphabet_dir/sv/
 
 
 %changelog
+* Sat Jul 07 2018 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt1
+- new version 3.3 (with rpmrb script)
+
 * Sat Oct 01 2016 Vitaly Lipatov <lav@altlinux.ru> 2.6.5-alt1
 - new version (2.6.5) with rpmgs script
 - fix requires (ALT bug #26630)
