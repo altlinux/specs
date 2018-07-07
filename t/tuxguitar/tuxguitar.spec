@@ -1,6 +1,6 @@
 Name: tuxguitar
 Version: 1.2
-Release: alt5
+Release: alt6
 
 Summary: A multitrack guitar tablature editor and player
 License: LGPL
@@ -27,7 +27,7 @@ BuildRequires: ant ant-junit checkstyle eclipse-swt itext jtidy libfluidsynth-de
 
 BuildRequires: libalsa-devel libjack-devel
 
-BuildRequires: rpm-build-java java-devel-default
+BuildRequires: rpm-build-xdg rpm-build-java java-devel-default
 #BuildRequires: xml-commons-apis
 
 Requires: eclipse-swt
@@ -167,6 +167,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pixmapsdir/*.png
 
 %changelog
+* Sat Jul 07 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt6
+- fix build: add rpm-build-xdg
+
 * Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt5
 - fix build: drop libgcj-devel
 
