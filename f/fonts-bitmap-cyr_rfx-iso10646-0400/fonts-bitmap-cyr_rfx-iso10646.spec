@@ -1,3 +1,4 @@
+%def_with xfs
 %define fname  cyr_rfx
 %define cname  iso10646-0400
 %define origname iso10646-0400
@@ -5,7 +6,7 @@
 
 Name: fonts-bitmap-%fname-%cname
 Version: 1.1
-Release: alt11
+Release: alt12
 License: distributable
 Group: System/Fonts/X11 bitmap
 Summary: Cyrillic bitmap fonts for the X Window System in unicode encoding
@@ -97,6 +98,9 @@ ln -s ../../..%_fontsdir/%fname-%cname/75dpi \
 %_fontsdir/%fname-%cname/75dpi
 
 %changelog
+* Sat Jul 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt12
+- restored X fontpath.d support
+
 * Tue Jul 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt11
 - split on misc and 75dpi subpackages
   to avoid fonconfig conflict for times and helvetica
