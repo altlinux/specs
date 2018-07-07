@@ -2,15 +2,16 @@
 %define apache_moduledir %_libdir/apache2/modules
 
 Name: apache2-mod_revocator
-Summary: Apache 2.0 module that lets the user configure remote Certificate Revocation Lists
 Version: 1.0.3
-Release: alt3
+Release: alt4
+
+Summary: Apache 2.0 module that lets the user configure remote Certificate Revocation Lists
+
 License: Apache 2.0
 Group: System/Servers
 Url: http://port389.org/
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 Source1: revocator.conf
 Source2: revocator.load
 Patch: %name-include-alt.patch
@@ -32,8 +33,9 @@ down if the CRL expires and a new one cannot be obtained.
 %autoreconf
 
 %build
-
-./configure --with-apr-config --with-apxs=%apache2_apxs --with-ldapsdk-inc=/usr/include/mozldap --with-ldapsdk-lib=%_libdir --with-nss-lib=%_libdir --with-nss-inc=/usr/include/nss/
+./configure --with-apr-config --with-apxs=%apache2_apxs \
+            --with-ldapsdk-inc=/usr/include/mozldap --with-ldapsdk-lib=%_libdir \
+            --with-nss-lib=%_libdir --with-nss-inc=/usr/include/nss/
 %make
 
 %install
@@ -42,7 +44,11 @@ mkdir -p %buildroot/%_bindir
 mkdir -p %buildroot/%_libdir
 mkdir -p %buildroot%apache_confdir/mods-available/
 install -m 755 .libs/libmodrev.so %buildroot/%apache_moduledir/mod_rev.so
-install -m 755 .libs/librevocation.so* %buildroot/%_libdir
+
+install -m 755 .libs/librevocation.so.*.*.* %buildroot/%_libdir/
+# install missing symlink (was giving no-ldconfig-symlink rpmlint errors)
+/sbin/ldconfig -n %buildroot/%_libdir/
+
 install -m 755 ldapget %buildroot/%_bindir
 install -m 644 %SOURCE1 %buildroot%apache_confdir/mods-available/
 install -m 644 %SOURCE2 %buildroot%apache_confdir/mods-available/
@@ -56,6 +62,9 @@ install -m 644 %SOURCE2 %buildroot%apache_confdir/mods-available/
 %doc docs/mod_revocator.html README
 
 %changelog
+* Sat Jul 07 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt4
+- cleanup spec, fix libs packing (ALT bug 35138)
+
 * Fri Apr 29 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.3-alt3
 - rebuild with apache-2.4
 
