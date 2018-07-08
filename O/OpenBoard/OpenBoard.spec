@@ -1,7 +1,10 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define dest_dir %_libdir/OpenBoard
 Name: OpenBoard
 Version: 1.3.6
-Release: alt2%ubt
+Release: alt2%ubt.1
 Summary: Interactive whiteboard for schools and universities
 License: GPL-3.0+
 Group: Education
@@ -128,6 +131,9 @@ cp -R resources/customizations %buildroot%dest_dir/
 %_bindir/%name
 
 %changelog
+* Sun Jul 08 2018 Anton Midyukov <antohami@altlinux.org> 1.3.6-alt2%ubt.1
+- Rebuilt for aarch64
+
 * Wed Jan 31 2018 Anton Midyukov <antohami@altlinux.org> 1.3.6-alt2%ubt
 - Fix build for ALT Sisyphus.
 
