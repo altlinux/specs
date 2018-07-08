@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Test::MockObject
 
 Name: perl-Test-MockObject
-Version: 1.20161202
+Version: 1.20180705
 Release: alt1
 
 Summary: Perl extension for emulating troublesome interfaces
@@ -12,7 +12,7 @@ Group: Development/Perl
 %define real_name Test-MockObject
 URL: http://search.cpan.org/dist/Test-MockObject/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source: %real_name-%version.tar
 
@@ -46,6 +46,9 @@ test purposes.
 %perl_vendor_privlib/Test/MockObject*
 
 %changelog
+* Sun Jul 08 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.20180705-alt1
+- New version
+
 * Sat Jan 21 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.20161202-alt1
 - New version
 
