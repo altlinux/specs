@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module Benchmark-Timer
 
 Name: perl-%module
-Version: 0.7107
+Version: 0.7110
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -11,12 +12,12 @@ License: GPLv2
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/D/DC/DCOPPIT/Benchmark-Timer-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DC/DCOPPIT/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Nov 22 2010
-BuildRequires: perl-Module-Install perl-Statistics-TTest
+BuildRequires: perl-Module-Install perl-Statistics-TTest perl(Test/Compile.pm)
 
 %description
 The Benchmark::Timer class allows you to time portions of code conveniently, as
@@ -26,7 +27,7 @@ of your code than the Benchmark module will give you, but don't want to go all
 out and profile your code.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,9 +36,13 @@ out and profile your code.
 %perl_vendor_install
 
 %files
+%doc TODO LICENSE CHANGES README
 %perl_vendor_privlib/Benchmark
 
 %changelog
+* Sun Jul 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.7110-alt1
+- automated CPAN update
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.7107-alt1
 - automated CPAN update
 
