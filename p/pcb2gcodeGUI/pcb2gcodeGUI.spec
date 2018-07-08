@@ -1,6 +1,6 @@
 Name: pcb2gcodeGUI
 Version: 1.3.2
-Release: alt1
+Release: alt1.1
 Summary: A GUI for pcb2gcode
 
 Group: Engineering
@@ -55,5 +55,8 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Jul 08 2018 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt1.1
+- Rebuilt for aarch64
+
 * Tue Aug 22 2017 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt1
 - Initial build for ALT Sisyphus.
