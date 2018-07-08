@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name:     otter-browser
-Version:  0.9.99
+Version:  0.9.99.1
 Release:  alt1%ubt
 
 Summary:  Otter Browser aims to recreate the best aspects of the classic Opera (12.x) UI using Qt5
@@ -49,6 +52,9 @@ BuildRequires: pkgconfig(hunspell)
 %doc CHANGELOG CONTRIBUTING.md COPYING README.md
 
 %changelog
+* Fri Jul 06 2018 Anton Midyukov <antohami@altlinux.org> 0.9.99.1-alt1%ubt
+- new version 0.9.99.1
+
 * Thu Jun 07 2018 Anton Midyukov <antohami@altlinux.org> 0.9.99-alt1%ubt
 - new version 0.9.99
 
