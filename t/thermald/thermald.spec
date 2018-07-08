@@ -1,7 +1,10 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define _localstatedir /var
 
 Name: thermald
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 
 Summary: Thermal daemon for IA
@@ -15,6 +18,8 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar.gz
 Source1: thermald.init
+
+ExclusiveArch: %ix86 x86_64
 
 BuildRequires: gcc-c++ pkgconfig(glib) pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) libgomp-devel pkgconfig(libxml-2.0)
 Requires: dbus
@@ -58,7 +63,6 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 %_datadir/dbus-1/system-services/org.freedesktop.%name.service
 %_unitdir/%name.service
 %_initdir/%name
-%exclude %_sysconfdir/init/%name.conf
 %dir %_sysconfdir/%name
 %_sysconfdir/%name/*
 %_sysconfdir/dbus-1/system.d/*
@@ -66,6 +70,10 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 %_man8dir/*
 
 %changelog
+* Sun Jul 08 2018 Anton Midyukov <antohami@altlinux.org> 1.7.2-alt1
+- new version 1.7.2
+- exclusive arch ix86 and x86_64
+
 * Sat Oct 28 2017 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt1
 - new version (1.7.1) with rpmgs script
 
