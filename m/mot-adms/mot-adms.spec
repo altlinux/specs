@@ -1,3 +1,6 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %_var
 # This package is part of the Free Electronic Lab.
@@ -6,7 +9,7 @@
 
 Name: mot-adms
 Version: %majver.4
-Release: alt1
+Release: alt1.1
 Summary: An electrical compact device models converter
 
 Group: Engineering
@@ -59,5 +62,8 @@ find %buildroot -type f -name "*.la" -delete
 %_man1dir/admsCheck.1*
 
 %changelog
+* Sun Jul 08 2018 Anton Midyukov <antohami@altlinux.org> 2.3.4-alt1.1
+- Rebuilt for aarch64
+
 * Sun Aug 06 2017 Anton Midyukov <antohami@altlinux.org> 2.3.4-alt1
 - Initial build for ALT Sisyphus.
