@@ -1,7 +1,7 @@
 %define  pkgname mysql2
  
 Name: 	 ruby-%pkgname
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
  
 Summary: A modern, simple and very fast Mysql library for Ruby - binding to libmysql
@@ -61,11 +61,16 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %ruby_sitearchdir/*
 %ruby_sitelibdir/*
- 
+%rubygem_specdir/*.gemspec
+
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Sun Jul 08 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.2-alt1
+- New version.
+- Package as gem.
+
 * Wed Apr 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.1-alt1
 - New version.
 
