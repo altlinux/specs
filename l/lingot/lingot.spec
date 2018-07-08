@@ -1,6 +1,8 @@
 
+%define _unpackaged_files_terminate_build 1
+
 Name: lingot
-Version: 0.9.1
+Version: 1.0.1
 Release: alt1
 
 Summary: LINGOT Is Not a Guitar-Only Tuner
@@ -9,7 +11,9 @@ Group: Sound
 Url: http://lingot.nongnu.org/
 
 BuildRequires: libjack-devel libalsa-devel
-BuildRequires: intltool libgtk+2-devel libglade-devel
+BuildRequires: intltool libgtk+3-devel
+BuildRequires: libpulseaudio-devel libcairo-devel
+BuildRequires: libfftw3-devel
 
 Packager: Ivan A. Melnikov <iv@altlinux.org>
 Source: %name-%version.tar
@@ -40,13 +44,18 @@ rm -rf %buildroot/%_defaultdocdir/%name
 
 %files -f %name.lang
 %_bindir/*
-%_datadir/%name
 %_desktopdir/*.desktop
-%_pixmapsdir/%{name}*
-%doc AUTHORS ChangeLog MAINTAINERS NEWS README THANKS TODO
+%_iconsdir/*/*/*/*
+%_datadir/metainfo/*.xml
+%_man1dir/*
+
+%doc AUTHORS ChangeLog NEWS README THANKS
 
 
 %changelog
+* Sun Jul 08 2018 Ivan A. Melnikov <iv@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Thu Oct 04 2012 Ivan A. Melnikov <iv@altlinux.org> 0.9.1-alt1
 - 0.9.1
 
