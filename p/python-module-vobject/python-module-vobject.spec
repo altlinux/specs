@@ -1,10 +1,10 @@
-%define version 0.9.5
+%define version 0.9.6
 %define release alt1
 %setup_python_module vobject
 
 Name: python-module-vobject
 Version: %version
-Release: %release
+Release: alt1
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Summary: Python module for parsing and generating vCard files
@@ -67,6 +67,9 @@ popd
 %python3_sitelibdir/%{modulename}*
 
 %changelog
+* Sun Jul 08 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.6-alt1
+- New version.
+
 * Thu Apr 05 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.5-alt1
 - New version.
 
