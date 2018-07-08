@@ -1,6 +1,6 @@
 Name:     sddm-config-editor
 Version:  0.1
-Release:  alt1.20170916%ubt
+Release:  alt1.20170916%ubt.1
 
 Summary:  SDDM Configuration Editor
 License:  ASL 2.0
@@ -49,5 +49,8 @@ popd
 %doc README.md
 
 %changelog
+* Sun Jul 08 2018 Anton Midyukov <antohami@altlinux.org> 0.1-alt1.20170916%ubt.1
+- Rebuilt for aarch64
+
 * Sun Feb 18 2018 Anton Midyukov <antohami@altlinux.org> 0.1-alt1.20170916%ubt
 - Initial build for Sisyphus
