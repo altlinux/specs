@@ -1,7 +1,7 @@
 %define  pkgname mixlib-install
 
 Name:    ruby-%pkgname
-Version: 3.11.0
+Version: 3.11.1
 Release: alt1
 
 Summary: A library for interacting with Chef Software Inc's software distribution systems.
@@ -58,6 +58,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sun Jul 08 2018 Andrey Cherepanov <cas@altlinux.org> 3.11.1-alt1
+- New version.
+
 * Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 3.11.0-alt1
 - New version.
 - Package as gem.
