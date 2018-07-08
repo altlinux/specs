@@ -4,7 +4,7 @@
 %define dist_name RadiusPerl
 
 Name: perl-Authen-Radius
-Version: 0.26
+Version: 0.27
 Release: alt1
 
 Summary: provide simple Radius client facilities
@@ -14,7 +14,7 @@ Group: Development/Perl
 
 URL: http://search.cpan.org/~manowar/RadiusPerl/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source: %real_name-%version.tar
 
@@ -52,6 +52,9 @@ response.
 
 
 %changelog
+* Sun Jul 08 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.27-alt1
+- New version
+
 * Sat Jan 21 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.26-alt1
 - New version
 
