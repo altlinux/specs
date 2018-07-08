@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Getargs-Long
 
 Name: perl-%module_name
-Version: 1.1007
+Version: 1.1010
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -11,12 +12,12 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://www.cpan.org/authors/id/D/DC/DCOPPIT/Getargs-Long-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DC/DCOPPIT/%{module_name}-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Fri Aug 01 2008
-BuildRequires: perl-Log-Agent perl-Module-Install
+BuildRequires: perl-Log-Agent perl-Module-Install perl(Test/Compile.pm)
 
 %description
 The "Getargs::Long" module allows usage of named parameters in function calls,
@@ -25,7 +26,7 @@ the parameters within the routine, and yields concise descriptions for the
 common cases of all-mandatory and all-optional parameter lists.
 
 %prep
-%setup -n %module_name-%version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,9 +35,13 @@ common cases of all-mandatory and all-optional parameter lists.
 %perl_vendor_install
 
 %files
+%doc CHANGES LICENSE README
 %perl_vendor_privlib/Getargs/
 
 %changelog
+* Sun Jul 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.1010-alt1
+- automated CPAN update
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.1007-alt1
 - automated CPAN update
 
