@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 9.0.0
-Release: alt1
+Release: alt2
 
 Summary: A Relational Algebra
 License: MIT
@@ -49,10 +49,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*.gemspec
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Sun Jul 08 2018 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt2
+- Package as gem.
+
 * Wed Jun 13 2018 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt1
 - Initial build for Sisyphus
