@@ -1,6 +1,6 @@
 Name: yapyserial
 Version: 0.0
-Release: alt1.20170523.1
+Release: alt1.20170523.1.1
 
 Summary: Dynamic library for replacing PySerial
 Summary(ru_RU.UTF-8): Динамическая библиотека для замены PySerial
@@ -38,5 +38,8 @@ platform).
 %_libdir/libYaPySerial.so
 
 %changelog
+* Sun Jul 08 2018 Anton Midyukov <antohami@altlinux.org> 0.0-alt1.20170523.1.1
+- Rebuilt for aarch64
+
 * Sat May 27 2017 Anton Midyukov <antohami@altlinux.org> 0.0-alt1.20170523.1
 - Initial build for ALT Linux Sisyphus.
