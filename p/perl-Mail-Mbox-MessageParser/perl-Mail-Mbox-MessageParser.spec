@@ -1,6 +1,6 @@
 %define dist Mail-Mbox-MessageParser
 Name: perl-%dist
-Version: 1.5106
+Version: 1.5108
 Release: alt1
 
 Summary: A fast and simple mbox folder reader
@@ -38,6 +38,9 @@ cached folder information, GNU grep, or highly optimized Perl.
 %perl_vendor_privlib/Mail/Mbox/MessageParser/*.pm
 
 %changelog
+* Sun Jul 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.5108-alt1
+- automated CPAN update
+
 * Mon Jul 02 2018 Igor Vlasenko <viy@altlinux.ru> 1.5106-alt1
 - automated CPAN update
 
