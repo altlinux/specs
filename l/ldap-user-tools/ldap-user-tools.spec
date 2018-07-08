@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name:    ldap-user-tools
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: Utilities to work with LDAP users
@@ -30,7 +30,8 @@ make -C po
 for i in scripts/*; do
 install -Dpm755 "$i" "%buildroot%_sbindir/${i##*/}"
 done
-install -Dpm640 data/slapd-template.conf %buildroot/%_ldapconfdir/slapd-template.conf
+install -Dpm640 data/slapd-hdb-template.conf %buildroot/%_ldapconfdir/slapd-hdb-template.conf
+install -Dpm640 data/slapd-mdb-template.conf %buildroot/%_ldapconfdir/slapd-mdb-template.conf
 install -Dpm444 schema/kerberos.schema %buildroot/%_ldapconfdir/schema/kerberos.schema
 install -Dpm755 bin/mkntpasswd %buildroot/%_sbindir/mkntpasswd
 install -Dpm755 hooks/ldap-domain %buildroot/%_hooksdir/21-ldap-domain
@@ -42,12 +43,21 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 %files -f %name.lang
 %_sbindir/ldap-*
 %_sbindir/mkntpasswd
-%_ldapconfdir/slapd-template.conf
+%_ldapconfdir/slapd-hdb-template.conf
+%_ldapconfdir/slapd-mdb-template.conf
 %_ldapconfdir/schema/kerberos.schema
 %_hooksdir/21-ldap-domain
 %dir %_sysconfdir/alterator/openldap
 
 %changelog
+* Sun Jul  8 2018 Leonid Krivoshein <klark@altlinux.org> 0.9.4-alt1
+- deprecated backend template renamed to slapd-hdb-template.conf
+- added new MDB template for work with openldap >= 2.4.45-alt3
+- new MDB backend template now used by default (ALT #35095)
+- added support both database backends: deprecated HDB and new MDB
+- before create DN may set key SLAPD_BACKEND in /etc/sysconfig/ldap
+- for create HDB-based DN's also may run: 'ldap_dn create <DN> --hdb'
+
 * Wed Jun 08 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9.3-alt1
 - no more direct calls of /etc/init.d/slapd
 
@@ -171,13 +181,13 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 - added kerberos schema enabling in openldap hook
 
 * Mon Mar 30 2009 Lebedev Sergey <barabashka@altlinux.org> 0.3-alt2
-- rewrote ldap-init #19371 
+- rewrote ldap-init #19371
 
 * Mon Mar 23 2009 Lebedev Sergey <barabashka@altlinux.org> 0.3-alt1
 - invoke supplemental kdc ops when applicable (by sbolshakov)
 
 * Fri Mar 20 2009 Lebedev Sergey <barabashka@altlinux.org> 0.2-alt9
-- fixed renaming dn 
+- fixed renaming dn
 - added support ou=kdcroot for kerberos
 
 * Fri Mar 20 2009 Lebedev Sergey <barabashka@altlinux.org> 0.2-alt8
@@ -258,7 +268,8 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 - fixed ldap-config
 
 * Fri Jan 30 2009 Lebedev Sergey <barabashka@altlinux.org> 0.1-alt2.M41
-- working version for alterator-ldap-auth alterator-ldap-users 
+- working version for alterator-ldap-auth alterator-ldap-users
 
 * Fri Jan 30 2009 Lebedev Sergey <barabashka@altlinux.org> 0.1-alt1.M41
-- initial version based on cl-user-tools 
+- initial version based on cl-user-tools
+
