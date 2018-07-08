@@ -1,6 +1,6 @@
 Name:    alterator-net-domain
 Version: 0.7.0
-Release: alt6.1.1
+Release: alt7
 Source:  %name-%version.tar
 
 Summary: Alterator module to provision system network domain
@@ -45,6 +45,9 @@ and FreeIPA domain.
 %_bindir/*-sh-functions
 
 %changelog
+* Sun Jul  8 2018 Leonid Krivoshein <klark@altlinux.org> 0.7.0-alt7
+- alt-domain-server installer feature no more required (ALT #31712).
+
 * Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt6.1.1
 - NMU: Replace BuildRequires for guile on e2k arch.
 
