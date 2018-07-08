@@ -6,8 +6,8 @@ BuildRequires: perl(parent.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-App-Nopaste
-Version:        1.011
-Release:        alt1_1
+Version:        1.012
+Release:        alt1
 Summary:        Easy access to any pastebin
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/App-Nopaste/
@@ -101,6 +101,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Sun Jul 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.012-alt1
+- automated CPAN update
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.011-alt1_1
 - update to new release by fcimport
 
