@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-parent
-Version: 0.236
+Version: 0.237
 Release: alt1
 
 Summary: Establish an ISA relationship with base classes at compile time
@@ -27,7 +27,7 @@ Url: http://search.cpan.org/dist/parent/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/C/CO/CORION/parent-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/C/CO/CORION/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Sep 05 2008 (-bi)
 BuildRequires: perl-devel
@@ -50,7 +50,7 @@ mostly is similar in effect to
 
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -63,6 +63,9 @@ mostly is similar in effect to
 %doc Changes
 
 %changelog
+* Sun Jul 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.237-alt1
+- automated CPAN update
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.236-alt1
 - automated CPAN update
 
