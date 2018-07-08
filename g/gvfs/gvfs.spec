@@ -32,7 +32,7 @@
 
 Name: gvfs
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -526,6 +526,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Sun Jul 08 2018 Yuri N. Sedunov <aris@altlinux.org> 1.36.2-alt3
+- rebuilt against libnfs.so.12
+
 * Mon Jun 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1.36.2-alt2
 - rebuilt against libbluray.so.2
 

@@ -1,6 +1,6 @@
 Name: fuse-nfs
 Version: 1.0.0
-Release: alt0.3
+Release: alt0.4
 
 Summary: A FUSE module for NFSv3
 License: GPLv3
@@ -51,6 +51,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Sun Jul 08 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.4
+- built current snapshot against libnfs.so.12
+
 * Sun Jun 25 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.3
 - built current snapshot against libnfs.so.11
 

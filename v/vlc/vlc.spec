@@ -2,7 +2,7 @@
 
 Name: vlc
 Version: 3.0.3.1
-Release: alt1
+Release: alt2
 
 Summary: VLC media player
 License: GPLv2
@@ -1369,6 +1369,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Mon Jul 09 2018 Anton Farygin <rider@altlinux.ru> 3.0.3.1-alt2
+- rebuilt for libnfs-3.0
+
 * Wed Jun 13 2018 Anton Farygin <rider@altlinux.ru> 3.0.3.1-alt1
 - 3.0.3-1
 
