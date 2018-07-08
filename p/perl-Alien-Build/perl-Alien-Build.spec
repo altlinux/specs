@@ -9,7 +9,7 @@ Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 #BuildRequires: perl(FFI/Platypus.pm) perl(PkgConfig.pm)
-BuildRequires: gcc-c++ perl(AnyEvent.pm) perl(Inline.pm) perl(Module/Build.pm) perl(Mojo/JSON.pm) perl(Mojo/URL.pm) perl(Mojolicious/Lite.pm) perl(Net/SSLeay.pm) perl(Proc/Daemon.pm) perl(autodie.pm) perl-podlators
+BuildRequires: gcc-c++ perl(AnyEvent.pm) perl(Inline.pm) perl(Module/Build.pm) perl(Mojo/JSON.pm) perl(Mojo/URL.pm) perl(Mojolicious/Lite.pm) perl(Net/SSLeay.pm) perl(Proc/Daemon.pm) perl(autodie.pm) perl-podlators cmake
 # END SourceDeps(oneline)
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -23,7 +23,7 @@ BuildRequires: gcc-c++ perl(AnyEvent.pm) perl(Inline.pm) perl(Module/Build.pm) p
 %{bcond_without perl_Alien_Build_enables_optional_test}
 
 Name:           perl-Alien-Build
-Version:        1.46
+Version:        1.48
 Release:        alt1
 Summary:        Build external dependencies for use in CPAN
 License:        GPL+ or Artistic
@@ -195,6 +195,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Jul 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.48-alt1
+- automated CPAN update
+
 * Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.46-alt1
 - automated CPAN update
 
