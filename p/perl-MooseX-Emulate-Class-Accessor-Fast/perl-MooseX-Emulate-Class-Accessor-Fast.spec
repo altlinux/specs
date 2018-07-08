@@ -1,14 +1,14 @@
 %define dist MooseX-Emulate-Class-Accessor-Fast
 Name: perl-%dist
-Version: 0.00903
-Release: alt1.1
+Version: 0.009032
+Release: alt1
 
 Summary: Emulate Class::Accessor::Fast behavior using Moose attributes
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -23,7 +23,7 @@ as a tool to help you migrate your project from Class::Accessor::Fast,
 to MooseX::Emulate::Class::Accessor::Fast and ultimately, to Moose.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,6 +36,9 @@ to MooseX::Emulate::Class::Accessor::Fast and ultimately, to Moose.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Sun Jul 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.009032-alt1
+- automated CPAN update
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.00903-alt1.1
 - rebuild to restore role requires
 
