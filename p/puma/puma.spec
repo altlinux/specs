@@ -1,6 +1,6 @@
 Name:    puma
 Version: 3.11.4
-Release: alt1
+Release: alt2
 
 Summary: A Ruby/Rack web server built for concurrency
 License: BSD 3-Clause
@@ -51,10 +51,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/%{name}*
 %ruby_sitelibdir/*
+%rubygem_specdir/*.gemspec
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Sun Jul 08 2018 Andrey Cherepanov <cas@altlinux.org> 3.11.4-alt2
+- Package as gem.
+
 * Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 3.11.4-alt1
 - Initial build for Sisyphus
