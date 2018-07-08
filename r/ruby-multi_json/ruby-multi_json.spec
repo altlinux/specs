@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.13.1
-Release: alt1
+Release: alt2
  
 Summary: A common interface to multiple JSON libraries
 License: MIT/Ruby
@@ -56,11 +56,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
- 
+%rubygem_specdir/*.gemspec
+
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Sun Jul 08 2018 Andrey Cherepanov <cas@altlinux.org> 1.13.1-alt2
+- Package as gem.
+
 * Thu Jan 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.13.1-alt1
 - New version.
 
