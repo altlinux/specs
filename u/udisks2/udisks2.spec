@@ -20,7 +20,7 @@
 %def_enable bcache
 
 Name: %{_name}2
-Version: 2.7.6
+Version: 2.7.7
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
@@ -34,9 +34,6 @@ Source: https://github.com/storaged-project/%_name/releases/download/%_name-%ver
 Source: %_name-%version.tar
 %endif
 Source1: %name.control
-# https://bugzilla.altlinux.org/show_bug.cgi?id=33180
-# fixed in 2.7.2 by upstream
-Patch: udisks-2.6.4-alt-rules.patch
 
 Obsoletes: %_name
 
@@ -187,8 +184,8 @@ This package contains UDisks module for iSCSI configuration.
 
 %prep
 %setup -n %_name-%version
-#%%patch -b .isohibryd
-subst 's/mkfs\.vfat/mkfs.fat/' src/udiskslinuxfsinfo.c
+subst 's/mkfs\.vfat/mkfs.fat/
+       s/dosfslabel/fatlabel/' src/udiskslinuxfsinfo.c
 
 %build
 %autoreconf
@@ -209,7 +206,7 @@ subst 's/mkfs\.vfat/mkfs.fat/' src/udiskslinuxfsinfo.c
 %install
 %makeinstall_std
 
-mkdir -p %buildroot%_localstatedir/run/%name
+#mkdir -p %buildroot%_localstatedir/run/%name
 touch %buildroot%_localstatedir/lib/%name/mtab
 
 # use /media for mounting by default
@@ -253,7 +250,7 @@ fi
 %_man8dir/*
 %attr(0700,root,root) %dir %_localstatedir/lib/%name
 %ghost %_localstatedir/lib/%name/mtab
-%attr(0700,root,root) %dir %_localstatedir/run/%name
+#%attr(0700,root,root) %dir %_localstatedir/run/%name
 %config %systemd_unitdir/udisks2.service
 %config %systemd_unitdir/clean-mount-point@.service
 %config %_controldir/%name
@@ -318,6 +315,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Mon Jul 09 2018 Yuri N. Sedunov <aris@altlinux.org> 2.7.7-alt1
+- 2.7.7
+
 * Fri Feb 09 2018 Yuri N. Sedunov <aris@altlinux.org> 2.7.6-alt1
 - 2.7.6
 
