@@ -1,20 +1,19 @@
-Name: libbrotli
-Version: 1.0.4
+%define _name brotli
+%def_enable check
+
+Name: lib%_name
+Version: 1.0.5
 Release: alt1
 
 Summary: Library implementing the Brotli compression algorithm
-
-License: Apache-2.0 and MIT
 Group: Development/C++
+License: Apache-2.0 and MIT
 Url: http://daniel.haxx.se/blog/2015/09/30/libbrotli-is-brotli-in-lib-form/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/google/brotli/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
-
 BuildRequires: rpm-macros-cmake cmake ctest
 
 %description
@@ -23,47 +22,53 @@ compresses data using a combination of a modern variant of the LZ77
 algorithm, Huffman coding and 2nd order context modeling. It is
 similar in speed with "DEFLATE" but offers more dense compression.
 
-%package -n brotli
+%package -n %_name
 Summary: CLI to the Brotli compression
 License: Apache-2.0
 Group: File tools
 
-%description -n brotli
+%description -n %_name
 Brotli is a generic-purpose lossless compression algorithm that
 compresses data using a combination of a modern variant of the LZ77
 algorithm, Huffman coding and 2nd order context modeling. It is
 similar in speed with "DEFLATE" but offers more dense compression.
 
-%package -n libbrotlicommon0
+%package -n %{name}common
 Summary: Library implementing the Brotli common functions
 License: Apache-2.0
 Group: System/Libraries
+Obsoletes: %{name}common0 <= 1.0.4
+Provides: %{name}common0 = %version-%release
 
-%description -n libbrotlicommon0
+%description -n %{name}common
 Brotli is a generic-purpose lossless compression algorithm that
 compresses data using a combination of a modern variant of the LZ77
 algorithm, Huffman coding and 2nd order context modeling. It is
 similar in speed with "DEFLATE" but offers more dense compression.
 
-%package -n libbrotlidec0
+%package -n %{name}dec
 Summary: Library implementing the Brotli decompressor
 License: Apache-2.0
 Group: System/Libraries
-Requires: libbrotlicommon0 = %version-%release
+Requires: %{name}common = %version-%release
+Obsoletes: %{name}dec0 <= 1.0.4
+Provides: %{name}dec0 = %version-%release
 
-%description -n libbrotlidec0
+%description -n %{name}dec
 Brotli is a generic-purpose lossless compression algorithm that
 compresses data using a combination of a modern variant of the LZ77
 algorithm, Huffman coding and 2nd order context modeling. It is
 similar in speed with "DEFLATE" but offers more dense compression.
 
-%package -n libbrotlienc0
+%package -n %{name}enc
 Summary: Library implementing the Brotli compressor
 License: Apache-2.0
 Group: System/Libraries
-Requires: libbrotlicommon0 = %version-%release
+Requires: %{name}common = %version-%release
+Obsoletes: %{name}enc0 <= 1.0.4
+Provides: %{name}enc0 = %version-%release
 
-%description -n libbrotlienc0
+%description -n %{name}enc
 Brotli is a generic-purpose lossless compression algorithm that
 compresses data using a combination of a modern variant of the LZ77
 algorithm, Huffman coding and 2nd order context modeling. It is
@@ -73,9 +78,9 @@ similar in speed with "DEFLATE" but offers more dense compression.
 Summary: Library implementing the Brotli compression algorithm
 License: Apache-2.0
 Group: Development/C++
-Requires: libbrotlidec0 = %version-%release
-Requires: libbrotlienc0 = %version-%release
-Requires: libbrotlicommon0 = %version-%release
+Requires: %{name}dec = %version-%release
+Requires: %{name}enc = %version-%release
+Requires: %{name}common = %version-%release
 
 %description devel
 Brotli is a generic-purpose lossless compression algorithm that
@@ -90,7 +95,8 @@ applications that want to make use of libcerror.
 %setup
 
 %build
-%cmake_insource
+%add_optflags -D_FILE_OFFSET_BITS=64
+%cmake_insource -DCMAKE_BUILD_TYPE="Release"
 %make_build
 
 %install
@@ -99,30 +105,34 @@ applications that want to make use of libcerror.
 rm -f %buildroot%_libdir/*.a
 
 %check
-LD_LIBRARY_PATH=$(pwd) make test
+%make test
 
 %files -n brotli
 %_bindir/brotli
 
-%files -n libbrotlicommon0
-%_libdir/libbrotlicommon.so.1
-%_libdir/libbrotlicommon.so.%version
+%files -n %{name}common
+%_libdir/%{name}common.so.1
+%_libdir/%{name}common.so.%version
 
-%files -n libbrotlidec0
-%_libdir/libbrotlidec.so.1
-%_libdir/libbrotlidec.so.%version
+%files -n %{name}dec
+%_libdir/%{name}dec.so.1
+%_libdir/%{name}dec.so.%version
 
-%files -n libbrotlienc0
-%_libdir/libbrotlienc.so.1
-%_libdir/libbrotlienc.so.%version
+%files -n %{name}enc
+%_libdir/%{name}enc.so.1
+%_libdir/%{name}enc.so.%version
 
 %files devel
 %_includedir/brotli/
-%_libdir/libbrotli*.so
+%_libdir/%{name}*.so
 %_pkgconfigdir/*.pc
 %doc README.md LICENSE CONTRIBUTING.md
 
 %changelog
+* Mon Jul 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
+- 1.0.5
+- removed bad "0" suffix from library names
+
 * Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt1
 - new version 1.0.4 (with rpmrb script)
 
