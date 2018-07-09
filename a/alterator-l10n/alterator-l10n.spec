@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.41
+Version: 2.9.42
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -114,6 +114,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Jul 09 2018 Michael Shigorin <mike@altlinux.org> 2.9.42-alt1
+- Fix typos
+
 * Fri Jun 01 2018 Andrey Cherepanov <cas@altlinux.org> 2.9.41-alt1
 - Update translations for alterator-auth 0.36.
 
