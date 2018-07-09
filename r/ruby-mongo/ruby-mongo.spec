@@ -1,7 +1,7 @@
 %define  pkgname mongo-ruby-driver
 
 Name: 	 ruby-mongo
-Version: 2.5.3
+Version: 2.6.0
 Release: alt1
 
 Summary: Ruby driver for MongoDB
@@ -50,11 +50,16 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/mongo_console
 %ruby_sitelibdir/*
+%rubygem_specdir/*.gemspec
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Sun Jul 08 2018 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
+- New version.
+- Package as gem.
+
 * Sat May 05 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.3-alt1
 - New version.
 
