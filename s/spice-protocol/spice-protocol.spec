@@ -1,12 +1,13 @@
 Name: spice-protocol
-Version: 0.12.13
+Version: 0.12.14
 Release: alt1%ubt
 Summary: Spice protocol header files
 Group: Development/C
 License: BSD
 Url: http://www.spice-space.org/
 
-Source: http://www.spice-space.org/download/releases/%name-%version.tar
+# VCS-git: https://gitlab.freedesktop.org/spice/spice-protocol.git
+Source: %name-%version.tar
 Patch: %name-%version.patch
 
 BuildArch: noarch
@@ -34,6 +35,9 @@ Header files describing the spice protocol and the para-virtual graphics card QX
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Mon Jul 09 2018 Alexey Shabalin <shaba@altlinux.ru> 0.12.14-alt1%ubt
+- 0.12.4
+
 * Mon Sep 04 2017 Alexey Shabalin <shaba@altlinux.ru> 0.12.13-alt1%ubt
 - 0.12.13
 
