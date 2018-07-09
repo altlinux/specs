@@ -1,25 +1,31 @@
 %define _localstatedir /var
+#Use GTK+ instead of Xlib
+%def_with gtk
 
 Name: spice-vdagent
-Version: 0.17.0
-Release: alt1
+Version: 0.18.0
+Release: alt1%ubt
 Summary: Agent for Spice guests
 Group: Networking/Remote access
 License: GPLv3+
 Url: http://spice-space.org/
 
-Source: http://spice-space.org/download/releases/%name-%version.tar
+# VCS-git: https://gitlab.freedesktop.org/spice/linux/vd_agent.git
+Source: %name-%version.tar
 Source2: spice-vdagentd.init-alt
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
-BuildRequires: pkgconfig(glib-2.0) >= 2.28
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: pkgconfig(glib-2.0) >= 2.34
+%{?_with_gtk:BuildRequires: pkgconfig(gtk+-3.0) >= 3.10}
 BuildRequires: pkgconfig(xfixes) pkgconfig(xrandr) >= 1.3 pkgconfig(xinerama) pkgconfig(x11)
-BuildRequires: pkgconfig(spice-protocol) >= 0.12.8
+BuildRequires: pkgconfig(spice-protocol) >= 0.12.13
 BuildRequires: pkgconfig(alsa) >= 1.0.22
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(pciaccess) >= 0.10
 BuildRequires: desktop-file-utils
 BuildRequires: pkgconfig(systemd) pkgconfig(libsystemd) >= 209
+BuildRequires: pkgconfig(udev)
 
 %description
 Spice agent for Linux guests offering the following features:
@@ -40,6 +46,7 @@ Features:
 %build
 %autoreconf
 %configure \
+    %{subst_with gtk} \
 	--with-session-info=auto \
 	--with-init-script=systemd+redhat
 
@@ -70,6 +77,10 @@ install -m 0755 %SOURCE2 %buildroot%_initdir/spice-vdagentd
 %_man1dir/*
 
 %changelog
+* Mon Jul 09 2018 Alexey Shabalin <shaba@altlinux.ru> 0.18.0-alt1%ubt
+- 0.18.0
+- Use GTK+ instead of Xlib
+
 * Thu Jun 16 2016 Alexey Shabalin <shaba@altlinux.ru> 0.17.0-alt1
 - 0.17.0
 
