@@ -12,7 +12,7 @@
 
 Name: ring-daemon
 Version: 4.0.0
-Release: alt2%ubt
+Release: alt3%ubt
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
@@ -190,6 +190,9 @@ __EOF__
 #%_libdir/libring.a
 
 %changelog
+* Mon Jul 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.0-alt3%ubt
+- fix build on arm
+
 * Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 4.0.0-alt2%ubt
 - fix to build with new ffmpeg
 
