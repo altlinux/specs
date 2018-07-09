@@ -7,8 +7,8 @@
 %define ROOT %_localstatedir/mysql
 
 Name: MySQL
-Version: 5.7.21
-Release: alt8%ubt
+Version: 5.7.22
+Release: alt1%ubt
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -682,6 +682,10 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Mon Jul 09 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.22-alt1%ubt
+- 5.7.22
+- new version (some bug fixes)
+
 * Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.7.21-alt8%ubt
 - NMU: updated provides (Closes: #35004).
 
