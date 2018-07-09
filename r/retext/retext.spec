@@ -1,7 +1,7 @@
 %def_without tests
 
 Name:           retext
-Version:        7.0.1
+Version:        7.0.3
 Release:        alt1
 License:        GPLv3+
 Summary:        Text editor for Markdown and reStructuredText
@@ -11,7 +11,6 @@ URL: 		https://github.com/retext-project/retext
 
 Source0:        %name-%version.tar
 Source1:        %name.1
-Patch:		fix-setup-desktop-file.patch
 
 BuildArch:      noarch
 
@@ -45,7 +44,6 @@ für Markdown und reStructuredText.
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 %python3_build_debug
@@ -67,6 +65,8 @@ popd
 
 install -Dm 0644 data/*.desktop %buildroot%_desktopdir/%name.desktop
 
+mv %buildroot%_datadir/{metainfo,appdata}
+
 %find_lang retext --with-man
 
 %check
@@ -87,6 +87,9 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Mon Jul 09 2018 Andrey Cherepanov <cas@altlinux.org> 7.0.3-alt1
+- New version.
+
 * Wed May 16 2018 Andrey Cherepanov <cas@altlinux.org> 7.0.1-alt1
 - New version
 
