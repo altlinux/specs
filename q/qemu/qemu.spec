@@ -104,7 +104,7 @@
 
 Name: qemu
 Version: 2.12.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -275,7 +275,6 @@ the PC or to debug system code.
 %package kvm
 Summary: QEMU metapackage for KVM support
 Group: Emulators
-BuildArch: noarch
 Requires: qemu-%kvm_package = %EVR
 
 %description kvm
@@ -286,7 +285,6 @@ will install qemu-system-x86
 %package kvm-core
 Summary: QEMU metapackage for KVM support
 Group: Emulators
-BuildArch: noarch
 Requires: qemu-%kvm_package-core = %EVR
 
 %description kvm-core
@@ -309,7 +307,6 @@ cross-debugging.
 %package user-binfmt
 Summary: QEMU user mode emulation of qemu targets
 Group: Emulators
-BuildArch: noarch
 Requires: %name-user = %EVR
 # qemu-user-binfmt + qemu-user-static both provide binfmt rules
 Conflicts: %name-user-static-binfmt
@@ -325,8 +322,6 @@ This package provides the user mode emulation of qemu targets
 Summary: QEMU user mode emulation of qemu targets static build
 Group: Emulators
 Requires: %name-aux = %EVR
-Provides: %name-user-binfmt_misc = %EVR
-Obsoletes: %name-user-binfmt_misc < %EVR
 
 %description user-static
 QEMU is a generic and open source processor emulator which achieves a good
@@ -338,10 +333,11 @@ static binaries
 %package user-static-binfmt
 Summary: QEMU user mode emulation of qemu targets static build
 Group: Emulators
-BuildArch: noarch
 Requires: %name-user-static
 Conflicts: %name-user-binfmt
 Conflicts: %name-user < 2.10.1-alt1
+Provides: %name-user-binfmt_misc = %EVR
+Obsoletes: %name-user-binfmt_misc < %EVR
 
 %description user-static-binfmt
 QEMU is a generic and open source processor emulator which achieves a good
@@ -1594,6 +1590,10 @@ fi
 %_man1dir/qemu-system-nios2.1*
 
 %changelog
+* Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 2.12.0-alt2
+- rebuilt against libnfs.so.12
+- set arch for qemu-kvm,qemu-user-binfmt,qemu-user-static-binfmt packages
+
 * Fri Apr 27 2018 Alexey Shabalin <shaba@altlinux.ru> 2.12.0-alt1
 - 2.12.0
 - use python3 for build
