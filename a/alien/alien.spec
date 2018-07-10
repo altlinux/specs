@@ -1,6 +1,6 @@
 Name: alien
 Version: 8.95
-Release: alt5
+Release: alt6
 
 Summary: Install Debian and Slackware Packages with RPM
 
@@ -15,7 +15,7 @@ BuildArch: noarch
 # Source-url: http://ftp.debian.org/debian/pool/main/a/alien/%{name}_%version.tar.bz2
 Source: %name-%version.tar
 Patch: %name-Makefile.PL.patch
-Patch1: %name-data-tar.patch
+Patch1: alien-dpkg-tar.xz.patch
 
 # Automatically added by buildreq on Mon Feb 13 2006
 BuildRequires: perl-devel perl-podlators
@@ -29,6 +29,8 @@ into RPM packages. It can also convert RPM packages into Slackware,
 Debian and Stampede packages.
 
 This is a tool only suitable for binary packages.
+
+It is recommended install dpkg package to full dpkg support.
 
 %prep
 %setup
@@ -48,6 +50,9 @@ This is a tool only suitable for binary packages.
 %_man3dir/*
 
 %changelog
+* Tue Jul 10 2018 Vitaly Lipatov <lav@altlinux.ru> 8.95-alt6
+- add control.tar.xz support (ALT bug 35145)
+
 * Sun Aug 06 2017 Vitaly Lipatov <lav@altlinux.ru> 8.95-alt5
 - add /usr/bin/ar requires (ALT bug 30604)
 
