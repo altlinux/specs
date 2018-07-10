@@ -1,6 +1,6 @@
 Name:		lxcfs
 Version:	3.0.1
-Release:	alt1
+Release:	alt2
 Summary:	FUSE filesystem for LXC
 
 Group:		Development/Other
@@ -10,6 +10,7 @@ URL:		https://github.com/lxc/lxcfs
 Packager:	Denis Pynkin <dans@altlinux.ru>
 
 Source0:	%name-%version.tar
+Source1:	lxcfs.sysvinit
 
 Requires: libfuse
 
@@ -38,6 +39,8 @@ FUSE filesystem for LXC, offering the following features:
 %install
 %makeinstall_std
 mkdir -p %buildroot%_localstatedir/%name
+#mkdir -p %buildroot%_initdir
+install -Dm0755 %SOURCE1 %buildroot%_initdir/lxcfs
 
 %post
 [ -d "%_localstatedir/%name" ] || mkdir -p %_localstatedir/%name
@@ -51,6 +54,7 @@ mkdir -p %buildroot%_localstatedir/%name
 %_bindir/*
 %_libdir/%name/*
 %_man1dir/*
+%_initdir/*
 %_unitdir/*
 %_datadir/lxc/config/common.conf.d/*
 %dir %_datadir/%name
@@ -58,6 +62,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %ghost %dir %_localstatedir/%name
 
 %changelog
+* Tue Jul 10 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.1-alt2
+- packaged with SysVinit script
+
 * Sun Jun 24 2018 Denis Pynkin <dans@altlinux.org> 3.0.1-alt1
 - Update
 - pam moved to lxc package
