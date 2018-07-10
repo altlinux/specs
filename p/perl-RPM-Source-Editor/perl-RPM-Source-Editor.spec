@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.9214
+Version: 0.9215
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -74,12 +74,17 @@ mkdir -p %buildroot%_datadir/srpmtools/hooks
 %dir %_datadir/srpmtools
 %dir %_datadir/srpmtools/hooks
 %_man1dir/srpm-spec-inject-patches*
+%_man1dir/srpmtool*
+%_man1dir/srpmnmu*
 
 #files -n hashertarbuild
 %_bindir/hashertarbuild
 %_man1dir/hashertarbuild*
 
 %changelog
+* Wed Jul 11 2018 Igor Vlasenko <viy@altlinux.ru> 0.9215-alt1
+- new version
+
 * Mon Jul 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.9214-alt1
 - repocop diff writer support
 
