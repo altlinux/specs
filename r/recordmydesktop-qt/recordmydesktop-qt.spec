@@ -3,7 +3,7 @@
 
 Name: %lcname-qt
 Version: 0.3.8
-Release: alt2.1
+Release: alt3
 
 Summary: qt frontend for recordmydesktop, screencasting program
 Group: Video
@@ -13,7 +13,7 @@ Url: http://sourceforge.net/projects/recordmydesktop/
 Packager: Sergey Kurakin <kurakin@altlinux.org>
 
 Source: qt-%lcname-%version.tar.gz
-Patch1: %name-0.3.7.2-alt-freedesktop.patch
+Patch1: %name-0.3.8-alt-freedesktop.patch
 Patch2: %name-0.3.8-alt-x86_64-build.patch
 Patch3: %name-0.3.8-alt-jack_lsp.patch
 
@@ -61,6 +61,9 @@ install -D -m 644 src/qt-%lcname.svg %buildroot%_iconsdir/hicolor/scalable/apps/
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Tue Jul 10 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.3.8-alt3
+- Complete localization into Russian (thanks Olesya Gerasimenko).
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.8-alt2.1
 - Rebuild with Python-2.7
 
