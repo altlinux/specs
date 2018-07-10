@@ -1,12 +1,15 @@
+# some online tests
+%def_disable check
+
 Name: libgit2
-Version: 0.26.3
+Version: 0.26.5
 Release: alt1
 
 Summary: linkable library for Git
 License: GPLv2 with linking exception
 
 Group: System/Libraries
-URL: http://libgit2.github.com
+Url: http://libgit2.github.com
 
 Source: %name-%version.tar.gz
 
@@ -45,6 +48,9 @@ sed -i 's/@CMAKE_INSTALL_PREFIX@\///' %name.pc.in
 %install
 %cmakeinstall_std
 
+%check
+%make -C BUILD test
+
 %files
 %_libdir/%name.so.*
 %doc README.md AUTHORS COPYING
@@ -59,6 +65,9 @@ sed -i 's/@CMAKE_INSTALL_PREFIX@\///' %name.pc.in
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Jul 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.26.5-alt1
+- 0.26.5 (fixed CVE-2018-11235, CVE-2018-10887, CVE-2018-10888)
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 0.26.3-alt1
 - 0.26.3
 
