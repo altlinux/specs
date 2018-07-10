@@ -1,6 +1,6 @@
 Summary:        Creates a common metadata repository
 Name:           createrepo_c
-Version:        0.10.0
+Version:        0.11.0
 Release:        alt1
 Group:          System/Configuration/Packaging
 License:        GPLv2+
@@ -26,7 +26,9 @@ BuildRequires:  libsqlite3-devel
 BuildRequires:  bzip2-devel
 BuildRequires:  liblzma-devel
 BuildRequires:  zlib-devel
-BuildRequires:  python-module-nose
+
+BuildRequires:  python3-devel
+BuildRequires:  python3-module-nose
 
 Requires:   lib%name = %version-%release
 
@@ -61,7 +63,7 @@ These development files are for easy manipulation with a repodata.
 %build
 export CMAKE_CXX_FLAGS="%optflags"
 
-%cmake
+%cmake -DPYTHON_DESIRED=3
 %cmake_build
 
 %install
@@ -80,6 +82,9 @@ export CMAKE_CXX_FLAGS="%optflags"
 %_includedir/%name
 
 %changelog
+* Tue Jul 10 2018 Alexey Gladkov <legion@altlinux.ru> 0.11.0-alt1
+- New version (0.11.0)
+
 * Thu Sep 28 2017 Alexey Gladkov <legion@altlinux.ru> 0.10.0-alt1
 - First build for ALTLinux.
 
