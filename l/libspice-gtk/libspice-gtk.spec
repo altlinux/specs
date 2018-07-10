@@ -15,14 +15,14 @@
 %def_enable epoxy
 
 Name: libspice-gtk
-Version: 0.34
-Release: alt1
+Version: 0.35
+Release: alt1%ubt
 Summary: A GTK widget for SPICE clients
 
 Group: System/Libraries
 License: LGPLv2+
 Url: http://spice-space.org/page/Spice-Gtk
-
+# VCS-git: https://gitlab.freedesktop.org/spice/spice-gtk.git
 Source: %name-%version.tar
 Source2: spice-common.tar
 Source3: keycodemapdb.tar
@@ -33,14 +33,11 @@ Source3: keycodemapdb.tar
 
 Requires: libspice-glib = %version-%release
 
-# use pnp.ids from hwdatabase package
-Requires: hwdatabase >= 0.3.31-alt1
-BuildRequires: hwdatabase >= 0.3.31-alt1
-
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ gtk-doc intltool
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 libssl-devel zlib-devel
-BuildRequires: spice-protocol >= 0.12.13
-BuildRequires: glib2-devel >= 2.36 libgio-devel >= 2.36 libcairo-devel >= 1.2.0
+BuildRequires: spice-protocol >= 0.12.14
+BuildRequires: glib2-devel >= 2.46 libgio-devel >= 2.36 libcairo-devel >= 1.2.0
 BuildRequires: libopus-devel >= 0.9.14
 %{?_enable_webdav:BuildRequires: libphodav-devel >= 2.0 glib2-devel >= 2.43.90 libsoup-devel >= 2.49.91}
 %{?_with_sasl:BuildRequires: libsasl2-devel}
@@ -181,7 +178,6 @@ echo "%version" > .tarball-version
 	--enable-polkit \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--with-usb-acl-helper-dir=%_libexecdir/spice-gtk/ \
-	--with-pnp-ids-path=%_datadir/misc \
 	--with-usb-ids-path=%_datadir/misc \
 	--with-gtk=3.0
 
@@ -203,18 +199,13 @@ echo "%version" > .tarball-version
 
 %files -n libspice-glib  -f %_name.lang
 %_libdir/libspice-client-glib-2.0.so.*
-%_libdir/libspice-controller.so.*
 %_libexecdir/spice-gtk/spice-client-glib-usb-acl-helper
 %_datadir/polkit-1/actions/org.spice-space.lowlevelusbaccess.policy
 
 %files -n libspice-glib-devel
 %_libdir/libspice-client-glib-2.0.so
-%_libdir/libspice-controller.so
 %_includedir/spice-client-glib-2.0
-%_includedir/spice-controller/*
 %_pkgconfigdir/spice-client-glib-2.0.pc
-%_pkgconfigdir/spice-controller.pc
-%_datadir/vala/vapi/spice-protocol.vapi
 %_datadir/vala/vapi/spice-client-glib-2.0.vapi
 %_datadir/vala/vapi/spice-client-glib-2.0.deps
 
@@ -243,6 +234,9 @@ echo "%version" > .tarball-version
 %endif
 
 %changelog
+* Mon Jul 09 2018 Alexey Shabalin <shaba@altlinux.ru> 0.35-alt1%ubt
+- 0.35
+
 * Tue Mar 06 2018 Alexey Shabalin <shaba@altlinux.ru> 0.34-alt1
 - 0.34
 

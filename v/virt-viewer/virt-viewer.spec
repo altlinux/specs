@@ -1,6 +1,7 @@
+
 Name: virt-viewer
-Version: 6.0
-Release: alt1
+Version: 7.0
+Release: alt0.1
 
 Summary: Virtual Machine Viewer
 Group: System/Configuration/Other
@@ -58,6 +59,10 @@ intltoolize --force
 %_iconsdir/hicolor/*/devices/*
 
 %changelog
+* Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 7.0-alt0.1
+- upstream/master snapshot
+- build without spice-controller
+
 * Tue Mar 06 2018 Alexey Shabalin <shaba@altlinux.ru> 6.0-alt1
 - 6.0
 
