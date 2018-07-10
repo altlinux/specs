@@ -1,5 +1,5 @@
 Name: unibilium
-Version: 1.2.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Unibilium is a very basic terminfo library
@@ -8,17 +8,15 @@ Group: System/Legacy libraries
 
 Url: https://github.com/mauke/unibilium/
 Source: %name-%version.tar
-Patch0: libdir.patch
 Packager:Konstantin Artyushkin <akv@altlinux.org>
 
-#PreReq:
-#Requires:
-#Provides:
-#Conflicts:
-
-#BuildPreReq:
-BuildRequires:perl-podlators
-#BuildArch:
+BuildRequires:  gcc
+BuildRequires:  make
+BuildRequires:  libtool
+# For docs
+BuildRequires:  %{_bindir}/pod2man
+# For tests
+BuildRequires:  %{_bindir}/prove
 
 %description
 Unibilium is a very basic terminfo library. It doesn't depend on curses
@@ -43,32 +41,32 @@ Static libs for building statically linked software that uses %name
 
 %prep
 %setup
-%patch 
 
 %build
-#%%configure
-%make_build PREFIX=/usr 
+%make_build PREFIX=%{_prefix} LIBDIR=%{_libdir}
 
 %install
-%makeinstall_std PREFIX=/usr 
-#%%makeinstall 
+%makeinstall_std PREFIX=%{_prefix} LIBDIR=%{_libdir}
+
+%check
+make test
 
 %files
-%doc  README LICENSE Changes
-%_libdir/libunibilium.so.0
-%_libdir/libunibilium.so.0.3.0
-%_man3dir/unibi*
+%doc README.md LICENSE Changes
+%_libdir/lib%name.so.*
+%_man3dir/*
 
 %files devel
-%_includedir/unibilium.h
-%_libdir/libunibilium.so
-%_pkgconfigdir/unibilium.pc
+%_includedir/*
+%_libdir/lib%name.so
+%_pkgconfigdir/%name.pc
 
 %files devel-static
-%_libdir/libunibilium.a
+%_libdir/lib%name.a
 
 %changelog
+* Wed Jul 10 2018 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1
+- new version
 
 * Mon Dec 14 2015 Konstantin Artyushkin <akv@altlinux.org> 1.2.0-alt1
 - initial build for ALT Linux Sisyphus
-

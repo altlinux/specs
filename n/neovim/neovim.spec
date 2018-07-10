@@ -1,5 +1,5 @@
 Name: neovim
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: heavily refactored vim fork
@@ -82,6 +82,11 @@ install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 %_datadir/nvim/runtime/*
 
 %changelog
+* Thu Jun 28 2018 Vladimir Didenko <cow@altlinux.org> 0.3.0-alt1
+- New version
+
+* Mon Jun 04 2018 Vladimir Didenko <cow@altlinux.org> 0.2.2-alt1
+- New version
+
 * Wed May 03 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus.
-

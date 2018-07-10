@@ -12,7 +12,7 @@ BuildRequires:  lua-devel >= 5.3
 
 Name:           lua-mpack
 Version:        1.0.4
-Release:        alt1_2
+Release:        alt2_2
 
 License:        MIT
 Summary:        Implementation of MessagePack for Lua
@@ -59,6 +59,8 @@ popd
 %{lua_libdir}/mpack.so
 
 %changelog
+* Tue Jul 10 2018 Vladimir Didenko <cow@altlinux.ru> 1.0.4-alt2_2
+- rebuild for aarch architecture
+
 * Sat May 06 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_2
 - new version
-

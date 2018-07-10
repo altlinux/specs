@@ -1,6 +1,6 @@
 Name: libtermkey
 Version: 0.20
-Release: alt1
+Release: alt2
 
 Summary: terminal keypress reading library
 License: MIT
@@ -58,6 +58,9 @@ Static libs for building statically linked software that uses %name
 %_libdir/%name.a
 
 %changelog
+* Tue Jul 10 2018 Vladimir Didenko <cow@altlinux.org> 0.20-alt2
+- rebuild for aarch architecture
+
 * Sat Jan 06 2018 Michael Shigorin <mike@altlinux.org> 0.20-alt1
 - 0.20
   + NB: this library is officially deprecated in vafour of libtickit
@@ -66,7 +69,3 @@ Static libs for building statically linked software that uses %name
 
 * Fri Dec 18 2015 Konstantin Artyushkin <akv@altlinux.org> 0.18-alt1
 - initial build for ALT Linux Sisyphus
-
-
-
-
