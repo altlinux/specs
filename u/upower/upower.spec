@@ -1,9 +1,9 @@
 %define _libexecdir %_prefix/libexec/upower
 %def_enable gtk_doc
-%def_disable check
+%def_enable check
 
 Name: upower
-Version: 0.99.7
+Version: 0.99.8
 Release: alt1
 
 Summary: Power Management Service
@@ -25,7 +25,7 @@ BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: gtk-doc intltool libusb-devel libgudev-devel
 BuildRequires: libpolkit1-devel libudev-devel gobject-introspection-devel
 BuildRequires: libimobiledevice-devel libsystemd-devel
-%{?_enable_check:BuildRequires: /proc python3 python3-module-dbusmock libumockdev-gir}
+%{?_enable_check:BuildRequires: /proc python3 python3-module-dbusmock libumockdev-gir python3-module-dbus}
 
 %description
 UPower provides a daemon, API and command line tools for
@@ -92,7 +92,7 @@ rm -f acinclude.m4
 %find_lang %name
 
 %check
-%{?_enable_check:%make check}
+%{?_enable_check:PYTHON=%__python3 %make check}
 
 %files -f %name.lang
 %doc AUTHORS NEWS README
@@ -118,12 +118,16 @@ rm -f acinclude.m4
 %_datadir/gtk-doc/html/*
 
 %files -n lib%name-gir
-%_libdir/girepository-1.0/*.typelib
+%_typelibdir/*.typelib
 
 %files -n lib%name-gir-devel
-%_datadir/gir-1.0/*.gir
+%_girdir/*.gir
 
 %changelog
+* Tue Jul 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.99.8-alt1
+- 0.99.8
+- enabled %%check
+
 * Mon Dec 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.99.7-alt1
 - 0.99.7
 
