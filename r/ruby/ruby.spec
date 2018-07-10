@@ -13,7 +13,7 @@ Name: ruby
 %define branch 2.5
 %define ver_teeny 1
 Version: %branch.%ver_teeny
-Release: alt2
+Release: alt3
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -95,12 +95,12 @@ Summary: Standard Ruby libraries
 Group: Development/Ruby
 Requires: %lname = %version-%release
 Provides: %name-libs = %version-%release
-Provides: %name-json = 1.7.7
+Provides: %name-json = %version
 Obsoletes: %name-json
-Provides: %name-minitest = 4.3.2
+Provides: %name-minitest = 5.10.3
 Obsoletes: %name-minitest
-Provides: %name-racc-runtime = 1.4.6
-Provides: %{name}gems = 2.6.13
+Provides: %name-racc-runtime = %version
+Provides: %{name}gems = 2.7.6
 %mobsolete English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
 %mobsolete erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
 %mobsolete optparse patterns pty readline rexml rss sdbm shell socket stringio
@@ -136,15 +136,13 @@ Summary: Ruby tools
 Group: Development/Ruby
 BuildArch: noarch
 Requires: %name-stdlibs = %version
-Provides: gem = 2.6.13
-Provides: %name-rake = 12.0.0
-Provides: rake = 12.0.0
+Provides: gem = 2.7.6
+Provides: %name-rake = 12.3.1
+Provides: rake = 12.3.1
 Obsoletes: %name-rake
 Provides: rdoc = %version-%release
 Obsoletes: rdoc < %version-%release
 %obsolete %name-tool-rdoc
-Provides: %{name}gems = 2.6.13
-Obsoletes: %{name}gems
 
 %description tools
 Ruby tools: rake, rdoc, gem.
@@ -356,6 +354,9 @@ mkdir -p %buildroot%_datadir/ri/site
 %endif
 
 %changelog
+* Tue Jul 10 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt3
+- Fix version in provides.
+
 * Mon May 28 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt2
 - Package %ruby_ridir and %ruby_ri_sitedir directories in ruby.
 
