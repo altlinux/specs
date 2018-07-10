@@ -1,27 +1,36 @@
 %define _unpackaged_files_terminate_build 1
+%def_with check
+%def_enable ecc
 
 %define apache_nssdb_dir %apache2_confdir/nss
+%define _libexecdir %_usr/libexec
 %define modname mod_nss
 
 Name: apache2-%modname
+Version: 1.0.17
+Release: alt1
+
 Summary: Apache 2.0 module for implementing crypto using the Mozilla NSS crypto libraries
-Version: 1.0.14
-Release: alt3%ubt
 License: ASL 2.0
 Group: System/Servers
 Url: https://pagure.io/mod_nss
 
 Source: %name-%version.tar
-Patch1: %name-include-alt.patch
-Patch2: %name-gencert-alt.patch
-Patch3: %name-gencert-password-fedora.patch
-Patch4: %name-apache-paths-alt.patch
-BuildRequires(pre): rpm-build-ubt
+Patch: %name-%version-alt.patch
+
 BuildRequires(pre): apache2-devel
 BuildRequires: libapr1-devel
 BuildRequires: libaprutil1-devel
 BuildRequires: libnss-devel
 BuildRequires: libnspr-devel
+
+%if_with check
+BuildRequires: nss-utils
+BuildRequires: openssl
+BuildRequires: python-module-nose
+BuildRequires: python-module-requests
+BuildRequires: flex
+%endif
 
 Provides: %modname = %EVR
 Requires: nss-utils
@@ -37,35 +46,60 @@ of PKCS11 devices.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p2
+%patch -p1
 
 %build
+NSPR_INCLUDE_DIR=`/usr/bin/pkg-config --variable=includedir nspr`
+NSPR_LIB_DIR=`/usr/bin/pkg-config --variable=libdir nspr`
+NSS_INCLUDE_DIR=`/usr/bin/pkg-config --variable=includedir nss`
+NSS_LIB_DIR=`/usr/bin/pkg-config --variable=libdir nss`
+NSS_BIN=`/usr/bin/pkg-config --variable=exec_prefix nss`
+
 %autoreconf
-%configure --with-apr-config --with-apxs=%apache2_apxs
+%configure \
+	--with-nss-lib=$NSS_LIB_DIR \
+	--with-nss-inc=$NSS_INCLUDE_DIR \
+	--with-nspr-lib=$NSPR_LIB_DIR \
+	--with-nspr-inc=$NSPR_INCLUDE_DIR \
+	--with-apxs=%apache2_apxs \
+	--with-apr-config %{subst_enable ecc}
+	
 %make_build all
 
 %install
-mkdir -p %buildroot/%_sbindir
+mkdir -p %buildroot%_man8dir
+mkdir -p %buildroot%_sbindir
+mkdir -p %buildroot%_libexecdir
 mkdir -p %buildroot%apache2_moduledir
 mkdir -p %buildroot%apache2_mods_available
 mkdir -p %buildroot%apache_nssdb_dir
 echo "LoadModule nss_module modules/mod_nss.so" > %buildroot%apache2_mods_available/nss.load
 
-install -m 755 .libs/libmodnss.so %buildroot/%apache2_moduledir/mod_nss.so
-install -m 755 nss_pcache %buildroot/%_sbindir
+install -m 644 gencert.8 %buildroot%_man8dir/
+install -m 644 nss_pcache.8 %buildroot%_man8dir/
+install -m 755 nss_pcache %buildroot%_libexecdir/
+# compatibility link
+ln -s %_libexecdir/nss_pcache %buildroot%_sbindir/nss_pcache
+install -m 755 .libs/libmodnss.so %buildroot%apache2_moduledir/mod_nss.so
 install -m 644 nss.conf %buildroot%apache2_mods_available/nss.conf
 install -m 755 gencert %buildroot%apache2_confdir/nss-gencert
+# dbm files
 touch %buildroot%apache_nssdb_dir/secmod.db
 touch %buildroot%apache_nssdb_dir/cert8.db
 touch %buildroot%apache_nssdb_dir/key3.db
+# sql files
+touch %buildroot%apache_nssdb_dir/pkcs11.txt
+touch %buildroot%apache_nssdb_dir/cert9.db
+touch %buildroot%apache_nssdb_dir/key4.db
+
 touch %buildroot%apache_nssdb_dir/install.log
+
+%check
+%make check
 
 %post
 if [ "$1" -eq 1 ] ; then
-	if [ ! -e %apache_nssdb_dir/key3.db ]; then
+	if [ ! -e %apache_nssdb_dir/key3.db -a ! -e %apache_nssdb_dir/key4.db ]; then
 		umask 077
 		%apache2_confdir/nss-gencert %apache_nssdb_dir > %apache_nssdb_dir/install.log 2>&1
 		echo ""
@@ -78,20 +112,30 @@ if [ "$1" -eq 1 ] ; then
 fi
 
 %files
-%apache2_moduledir/mod_nss.so
+%doc docs/mod_nss.html README
+%_man8dir/*
 %_sbindir/nss_pcache
+%_libexecdir/nss_pcache
 %config(noreplace) %apache2_mods_available/nss.conf
 %config(noreplace) %apache2_mods_available/nss.load
 %dir %apache_nssdb_dir
 %apache2_confdir/nss-gencert
+%apache2_moduledir/mod_nss.so
 %ghost %attr(0640,root,apache2) %config(noreplace) %apache_nssdb_dir/secmod.db
 %ghost %attr(0640,root,apache2) %config(noreplace) %apache_nssdb_dir/cert8.db
 %ghost %attr(0640,root,apache2) %config(noreplace) %apache_nssdb_dir/key3.db
+%ghost %attr(0640,root,apache2) %config(noreplace) %apache_nssdb_dir/pkcs11.txt
+%ghost %attr(0640,root,apache2) %config(noreplace) %apache_nssdb_dir/cert9.db
+%ghost %attr(0640,root,apache2) %config(noreplace) %apache_nssdb_dir/key4.db
 %ghost %config(noreplace) %apache_nssdb_dir/install.log
-%doc docs/mod_nss.html README
 
 %changelog
-* Wed Nov 29 2017 Stanislav Levin <slev@altlinux.org> 1.0.14-alt3%ubt
+* Mon Jul 09 2018 Stanislav Levin <slev@altlinux.org> 1.0.17-alt1
+- 1.0.14 -> 1.0.17
+- Enable tests
+- Remove dependency on net-tools (closes: #34784)
+
+* Wed Nov 29 2017 Stanislav Levin <slev@altlinux.org> 1.0.14-alt3
 - Fix nss.conf to use it by freeipa server installer
 - Don't set remote user in fixup hook (patch from Fedora)
 
