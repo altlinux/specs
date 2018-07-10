@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: jss
-Version: 4.4.4
-Release: alt2%ubt
+Version: 4.4.5
+Release: alt1
 
 Summary: Java Security Services (JSS)
 License: MPLv1.1 or GPLv2+ or LGPLv2+
@@ -10,15 +10,22 @@ Group: System/Libraries
 # Source-git: https://github.com/dogtagpki/jss.git
 Url: http://www.dogtagpki.org/wiki/JSS
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: jss.watch
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 BuildRequires: libnss-devel
 BuildRequires: libnspr-devel
+BuildRequires: apache-commons-lang
+BuildRequires: apache-commons-codec
+BuildRequires: ldapjdk
+
+Requires: apache-commons-lang
+Requires: apache-commons-codec
+Requires: ldapjdk
 
 %description
 Network Security Services for Java (JSS) is a Java interface to NSS. JSS
@@ -114,16 +121,19 @@ cp -p %name/jss.html $RPM_BUILD_ROOT%_javadocdir/%name-%version
 %_javadocdir/%name-%version
 
 %changelog
-* Fri Jun 01 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.4.4-alt2%ubt
+* Tue Jul 10 2018 Stanislav Levin <slev@altlinux.org> 4.4.5-alt1
+- 4.4.4 -> 4.4.5
+
+* Fri Jun 01 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.4.4-alt2
 - fixed packaging on aarch64
 
-* Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 4.4.4-alt1%ubt
+* Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 4.4.4-alt1
 - 4.4.3 -> 4.4.4
 
-* Wed May 23 2018 Stanislav Levin <slev@altlinux.org> 4.4.3-alt1%ubt
+* Wed May 23 2018 Stanislav Levin <slev@altlinux.org> 4.4.3-alt1
 - 4.4.2 -> 4.4.3
 
-* Wed Sep 20 2017 Levin Stanislav <slev@altlinux.org> 4.4.2-alt1%ubt
+* Wed Sep 20 2017 Levin Stanislav <slev@altlinux.org> 4.4.2-alt1
 - Update to upstream 4.4.2 version
 
 * Tue Jan 24 2017 Mikhail Efremov <sem@altlinux.org> 4.2.6-alt6_41jpp8.M80P.1
