@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%modname
-Version: 0.28.3
+Version: 0.28.4
 Release: alt1
 
 Summary: C-extensions for Python
@@ -223,6 +223,9 @@ mv %buildroot/%_bindir/cygdb %buildroot/%_bindir/cygdb3
 %endif
 
 %changelog
+* Tue Jul 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.4-alt1
+- 0.28.4
+
 * Mon Jun 04 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.3-alt1
 - 0.28.3
 
