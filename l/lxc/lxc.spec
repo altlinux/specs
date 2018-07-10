@@ -29,7 +29,7 @@
 
 Name: lxc
 Version: 3.0.1
-Release: alt2
+Release: alt3
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -184,12 +184,16 @@ install -pm644 %SOURCE1 %buildroot/%_sysconfdir/sysconfig/lxc-net
 %_pam_modules_dir/*
 
 %changelog
+* Tue Jul 10 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.1-alt3
+- tuned SysVinit scripts for ALT
+- disable SysVinit scripts by default (according to services policy)
+
 * Tue Jun 26 2018 Michael Shigorin <mike@altlinux.org> 3.0.1-alt2
 - Worked around FTBFS on e2k
 - Minor spec cleanup
 
 * Sun Jun 24 2018 Denis Pynkin <dans@altlinux.org> 3.0.1-alt1
-- Version updated 
+- Version updated
 
 * Wed May 09 2018 Denis Pynkin <dans@altlinux.org> 3.0.0-alt1
 - New major version
