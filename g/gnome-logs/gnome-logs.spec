@@ -2,8 +2,11 @@
 %define ver_major 3.28
 %define _name org.gnome.Logs
 
+%def_with man
+%def_enable tests
+
 Name: gnome-logs
-Version: %ver_major.3
+Version: %ver_major.5
 Release: alt1
 
 Summary: The GNOME logfile viewer
@@ -21,31 +24,37 @@ Requires: gsettings-desktop-schemas
 %define glib_ver 2.44
 %define gtk_ver 3.22
 
-BuildPreReq: rpm-build-gnome gnome-common libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires(pre): meson
+BuildRequires: rpm-build-gnome gnome-common libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: gsettings-desktop-schemas-devel libsystemd-journal-devel
-BuildRequires: docbook-dtds docbook-style-xsl xsltproc desktop-file-utils
-BuildRequires: libappstream-glib-devel yelp-tools
+BuildRequires: libappstream-glib-devel yelp-tools desktop-file-utils
+%{?_with_man:BuildRequires: docbook-dtds docbook-style-xsl xsltproc}
 
 %description
 GNOME Logs is a log viewer for the systemd journal.
 
 %prep
 %setup
+subst "s/'appdata'/'metainfo'/" data/meson.build
 
 %build
-%autoreconf
-%configure
+%meson %{?_with_man:-Dman=true} \
+	%{?_enable_tests:-Dtests=true}
 
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
+
+%check
+%meson_test
 
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%_name.desktop
+%_datadir/%name/
 %_datadir/dbus-1/services/%_name.service
 %_datadir/glib-2.0/schemas/%_name.enums.xml
 %_datadir/glib-2.0/schemas/%_name.gschema.xml
@@ -56,6 +65,9 @@ GNOME Logs is a log viewer for the systemd journal.
 %doc NEWS README
 
 %changelog
+* Wed Jul 11 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.5-alt1
+- 3.28.5
+
 * Thu Jun 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
 - 3.28.3
 
