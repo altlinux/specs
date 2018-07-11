@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.5
-Release: alt1.1
+Version: 0.7.4
+Release: alt1
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
@@ -83,6 +83,10 @@ rm -f %buildroot%_bindir/nosetests
 %endif
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.4-alt1
+- New version.
+- Build from upstream tag.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6.5-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
