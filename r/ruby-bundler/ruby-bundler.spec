@@ -1,8 +1,9 @@
 %define  pkgname bundler
+%def_disable man
 
 Name:    ruby-%pkgname
 Version: 1.16.2
-Release: alt3
+Release: alt3.1
 
 Summary: Manage your Ruby application's gem dependencies
 License: MIT/Ruby
@@ -16,12 +17,15 @@ Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
+%if_enabled man
 BuildRequires: ronn groff-base
+%endif
 
 Conflicts: golang-tools
 
 %add_findreq_skiplist *.tt
-%add_ruby_req_skip rubygems/builder rubygems/format
+#%%add_ruby_req_skip rubygems/builder rubygems/format
+%filter_from_requires /^ruby(/d
 
 %description
 Bundler makes sure Ruby applications run the same code on every machine.
@@ -70,12 +74,14 @@ rm -f %buildroot%_bindir/{rake,rspec,rubocop,bundle1,bundle2}
 # Remove unnecessary files
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
+%if_enabled man
 # Generate man page
 ronn --roff %buildroot%_mandir/*.ronn
 mkdir -p %buildroot%_man1dir
 mv %buildroot%_mandir/*.1 %buildroot%_man1dir
 mkdir -p %buildroot%_man5dir
 mv %buildroot%_mandir/*.5 %buildroot%_man5dir
+%endif
 rm -rf %buildroot%_mandir/*.ronn
 
 %check
@@ -85,14 +91,20 @@ rm -rf %buildroot%_mandir/*.ronn
 %doc README*
 %_bindir/*
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
+%if_enabled man
 %_man1dir/*
 %_man5dir/*
+%endif
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.16.2-alt3.1
+- Disable all ruby(*) autoreqs for bootstrap.
+- Disable man page generation for bootstrap.
+
 * Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 1.16.2-alt3
 - Fix gemspec name.
 
