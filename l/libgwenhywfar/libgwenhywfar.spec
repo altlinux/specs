@@ -2,8 +2,8 @@
 %def_with qt5
 
 Name:     libgwenhywfar
-Version:  4.20.0
-Release:  alt2
+Version:  4.20.1
+Release:  alt1
 
 Summary:  A multi-platform helper library for other libraries
 Group:    System/Libraries
@@ -14,7 +14,6 @@ URL:      http://www2.aquamaniac.de/sites/download/packages.php
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %origname-%version.tar
-Source1:  %name.watch
 Patch1:   %name-pthread.patch
 Patch2:   %name-fix-build-with-qt5.patch
 
@@ -165,6 +164,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_libdir/cmake/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 4.20.1-alt1
+- New version.
+
 * Mon Apr 02 2018 Andrey Cherepanov <cas@altlinux.org> 4.20.0-alt2
 - Build gtk3 bindings.
 
