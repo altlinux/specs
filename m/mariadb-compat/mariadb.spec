@@ -36,7 +36,7 @@
 %def_without jemalloc
 
 Name: mariadb-compat
-Version: 10.1.33
+Version: 10.1.34
 Release: alt1%ubt
 
 Summary: A very fast and reliable SQL database engine
@@ -813,6 +813,9 @@ fi
 %endif
 
 %changelog
+* Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 10.1.34-alt1%ubt
+- 10.1.34
+
 * Wed May 23 2018 Alexey Shabalin <shaba@altlinux.ru> 10.1.33-alt1%ubt
 - build legacy library only
 
