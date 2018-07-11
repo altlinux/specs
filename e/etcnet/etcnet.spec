@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.15
-Release:	alt2
+Release:	alt3
 #Url:		http://etcnet.org/
 Url:		https://www.altlinux.org/Etcnet
 
@@ -141,6 +141,10 @@ fi
 %files full
 
 %changelog
+* Tue Jul 10 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.15-alt3
+- add example for wireguard iface
+- add example for vti iface
+
 * Tue Jul 03 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.15-alt2
 - fix typo for DEFAULT_WG
 
