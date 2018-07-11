@@ -5,7 +5,7 @@
 Summary: A set of tools to gather troubleshooting information from a system
 Name: sos
 Version: 3.5
-Release: alt5%ubt
+Release: alt6%ubt
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Source: %name-%version.tar
@@ -53,6 +53,10 @@ rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
 %doc %_defaultdocdir/sos/html
 
 %changelog
+* Thu Jul 05 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt6%ubt
+- Do not create special nodes in archive
+- Do not change path in symlinks to special nodes to relative
+
 * Fri Jun 08 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt5%ubt
 - Change group of result files to wheel and add reading permissions
 
