@@ -2,6 +2,11 @@
 %add_findreq_skiplist %_bindir/wsrep_sst_xtrabackup
 %add_findreq_skiplist %_bindir/wsrep_sst_xtrabackup-v2
 
+%define embedded_soname 19
+%define soname 3
+# default plugin dir is %_libdir/mysql/plugin
+%define plugindir %_lib/%name/plugin
+
 %def_with server
 %def_with libs
 %def_with devel
@@ -39,8 +44,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.2.15
-Release: alt3%ubt
+Version: 10.3.8
+Release: alt1%ubt
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -95,7 +100,7 @@ Patch1: mariadb-10.2.7-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
 Patch4: mariadb-10.1.8-alt-client.patch
 #Patch5: mariadb-10.0.21-alt-load_defaults.patch
-Patch7: mariadb-10.1.8-alt-config-libs.patch
+Patch7: mariadb-10.3.8-alt-config-libs.patch
 
 # Patches specific for this mysql package
 Patch30: mariadb-errno.patch
@@ -113,6 +118,8 @@ BuildRequires: libaio-devel libedit-devel perl-GD perl-threads perl-Memoize perl
 BuildRequires: liblz4-devel zlib-devel bzlib-devel liblzma-devel liblzo2-devel libsnappy-devel libzstd-devel
 BuildRequires: chrooted control
 BuildRequires: libxml2-devel
+BuildRequires: libnuma-devel
+BuildRequires: libcurl-devel
 %{?_with_libwrap:BuildRequires: libwrap-devel}
 %{?_with_cassandra:BuildRequires: boost-devel}
 %{?_with_oqgraph:BuildRequires: boost-devel}
@@ -127,9 +134,6 @@ Provides: %name-galera = %EVR
 Obsoletes: %name-galera < %EVR
 %endif
 
-%define soname 19
-# default plugin dir is %_libdir/mysql/plugin
-%define plugindir %_libdir/%name/plugin
 
 %description
 The MariaDB software delivers a very fast, multi-threaded, multi-user,
@@ -168,7 +172,7 @@ mariadb-obsolete package:
 %package server
 Summary: A very fast and reliable MariaDB database server
 Group: Databases
-Requires: lib%name = %EVR %name-client = %EVR
+Requires: lib%name%soname = %EVR %name-client = %EVR
 Requires: %name-common = %EVR
 Provides: mysql-server = %EVR
 Provides: mysql = %version
@@ -225,7 +229,7 @@ This package contents perl utils for MySQL-server.
 %package client
 Summary: Client
 Group: Databases
-Requires: lib%name = %EVR %name-common = %EVR
+Requires: lib%name%soname = %EVR %name-common = %EVR
 Provides: mysql-client = %EVR
 Conflicts: MySQL-client
 
@@ -245,6 +249,7 @@ This package contains the common files for MariaDB client and servers.
 %package bench
 Summary: Benchmarks and test system
 Group: System/Servers
+BuildArch: noarch
 Requires: %name-client = %EVR
 Provides: mysql-bench = %EVR
 Conflicts: MySQL-bench
@@ -261,33 +266,37 @@ MariaDB Backup is an open source tool provided by MariaDB for performing
 physical online backups of InnoDB, Aria and MyISAM tables.
 For InnoDB, hot online backups are possible.
 
-%package -n lib%name
+%package -n lib%name%soname
 Summary: Shared libraries
 Group: System/Libraries
 License: LGPLv2.1
+Provides: lib%name = %EVR
+Obsoletes: lib%name < %EVR
 
-%description -n lib%name
+%description -n lib%name%soname
 This package contains the shared libraries (*.so*) which certain languages
-and applications need to dynamically load and use MariaDB/MySQL.
+and applications need to dynamically load and use MariaDB.
 
 %package -n lib%name-devel
 Summary: Development header files and libraries
 Group: Development/Other
 # see also #28676
 Requires: libssl-devel zlib-devel
-Requires: lib%name = %EVR
+Requires: lib%name%soname = %EVR
 
 %description -n lib%name-devel
 This package contains the development header files and libraries necessary
-to develop MariaDB/MySQL client applications.
+to develop MariaDB client applications.
 
-%package -n libmysqld%soname
+%package -n lib%{name}d%embedded_soname
 Summary: MariaDB as an embeddable library
 Group: System/Libraries
 Requires: %name-common = %EVR
 Obsoletes: libmariadbembedded < %EVR
+Provides: libmysqld%embedded_soname = %EVR
+Obsoletes: libmysqld%embedded_soname < %EVR
 
-%description -n libmysqld%soname
+%description -n lib%{name}d%embedded_soname
 MariaDB is a multi-user, multi-threaded SQL database server. This
 package contains a version of the MariaDB server that can be embedded
 into a client application instead of running as a separate process.
@@ -295,14 +304,15 @@ into a client application instead of running as a separate process.
 The API is identical for the embedded MariaDB version
 and the client/server version.
 
-%package -n libmysqld%soname-devel
-Summary: Development files for MySQL as an embeddable library
+%package -n lib%{name}d-devel
+Summary: Development files for MariaDB as an embeddable library
 Group: Development/Other
-Requires: libmysqld%soname = %EVR
+Requires: libmariadbd%embedded_soname = %EVR
 Obsoletes: libmariadbembedded-devel < %EVR
-Provides: libmysqld-devel = %EVR
+Provides: libmysqld%embedded_soname-devel = %EVR
+Obsoletes: libmysqld%embedded_soname-devel < %EVR
 
-%description -n libmysqld%soname-devel
+%description -n lib%{name}d-devel
 MariaDB is a multi-user, multi-threaded SQL database server. This
 package contains files needed for developing and testing with
 the embedded version of the MariaDB server.
@@ -406,7 +416,7 @@ export LDFLAGS
 
 %install
 mkdir -p %buildroot{%_bindir,%_sbindir,%_includedir,%_mandir,%_infodir,%_datadir/sql-bench,%_logdir/mysql}
-mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%plugindir,%_libdir/galera,dev,log,tmp,run/systemd,/var/{nis,yp/binding},db/mysql,usr/share/mysql/charsets}
+mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%prefix/%plugindir,%_libdir/galera,dev,log,tmp,run/systemd,/var/{nis,yp/binding},db/mysql,usr/share/mysql/charsets}
 touch %buildroot%ROOT{%_sysconfdir/{hosts,services,{host,nsswitch,resolv}.conf},/dev/urandom,/var/nis/NIS_COLD_START,/run/systemd/notify}
 
 # don't fiddle with the initscript!
@@ -445,14 +455,6 @@ install -pD -m644 %SOURCE26 %buildroot%_sysconfdir/my.cnf.d/server.cnf
 install -pD -m644 %SOURCE27 %buildroot%_sysconfdir/my.cnf.d/mysql-clients.cnf
 install -pD -m644 %SOURCE28 %buildroot%_sysconfdir/my.cnf.server/server-chroot.cnf
 install -pD -m644 %SOURCE29 %buildroot%_sysconfdir/my.cnf.server/server-no-chroot.cnf
-%if_with galera
-# install galera config file
-install -p -m 0644 BUILD/support-files/wsrep.cnf %buildroot%_sysconfdir/my.cnf.d/galera.cnf
-%endif
-
-%if_with tokudb
-install -pD -m644 BUILD/storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/tokudb.cnf
-%endif
 
 install -pD -m644 %SOURCE20 %buildroot%_tmpfilesdir/mysql.conf
 install -pD -m644 %SOURCE21 %buildroot%_unitdir/mysqld.service
@@ -460,12 +462,17 @@ install -pD -m644 %SOURCE22 %buildroot%_sysconfdir/systemd/system/mysqld.service
 install -pD -m644 %SOURCE23 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/notify.conf
 install -pD -m644 %SOURCE24 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/notify-chroot.conf
 
-ln -s mysqld.service %buildroot%_unitdir/mariadb.service
+%if_with tokudb
+install -pD -m644 BUILD/storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/tokudb.cnf
+mv %buildroot/etc/systemd/system/mariadb.service.d/tokudb.conf %buildroot%_sysconfdir/systemd/system/mysqld.service.d/tokudb.conf
+%endif
+
 %if_with galera
+# install galera config file
+install -p -m 0644 BUILD/support-files/wsrep.cnf %buildroot%_sysconfdir/my.cnf.d/galera.cnf
 # rm upstream script
 rm -f %buildroot%_bindir/galera_new_cluster
 install -pD -m755 %SOURCE19 %buildroot%_bindir/galera_new_cluster
-%endif
 
 # install the clustercheck script
 install -pD -m755 %SOURCE70 %buildroot%_bindir/clustercheck
@@ -473,7 +480,9 @@ install -pD -m644 %SOURCE71 %buildroot%_sysconfdir/sysconfig/clustercheck
 install -pD -m644 %SOURCE72 %buildroot%_unitdir/mariadbcheck.socket
 install -pD -m644 %SOURCE73 %buildroot%_unitdir/mariadbcheck@.service
 install -pD -m644 %SOURCE74 %buildroot%_sysconfdir/xinetd.d/mariadbcheck
+%endif
 
+ln -s mysqld.service %buildroot%_unitdir/mariadb.service
 
 # Backwards compatibility symlinks (ALT #14863)
 mkdir -p %buildroot%_bindir
@@ -493,6 +502,10 @@ popd
 # but the server subpackage obtains /usr/sbin/mysql_install_db autoreq
 ln -sf {../bin,%buildroot%_sbindir}/mysql_install_db
 
+# move pkgconfig file to arch dep path
+mkdir -p %buildroot%_pkgconfigdir
+mv %buildroot%_datadir/pkgconfig/mariadb.pc %buildroot%_pkgconfigdir/
+
 # Fix libmysqlclient_r symlinks
 (
         cd %buildroot%_libdir
@@ -505,13 +518,6 @@ ln -sf {../bin,%buildroot%_sbindir}/mysql_install_db
         done
 )
 
-#rm -f %buildroot%_libdir/libmysqlclient_r.so*
-#ln -s libmysqlclient.so %buildroot%_libdir/libmysqlclient_r.so
-
-# remove static libs
-rm -f %buildroot%_libdir/libmysqlclient.a
-rm -f %buildroot%_libdir/libmysqlclient_r.a
-rm -f %buildroot%_libdir/libmariadbclient.a
 
 # Populate chroot with data to some extent.
 install -pD -m644 %buildroot%_datadir/mysql/charsets/* \
@@ -537,8 +543,8 @@ rm -f %buildroot%_datadir/mysql/mysql{-*.spec,-log-rotate,.server}
 
 
 rm -rf %buildroot%_datadir/mysql-test
-rm -f %buildroot%plugindir/*.la
-#rmdir %buildroot%plugindir/debug
+rm -f %buildroot%prefix/%plugindir/*.la
+#rmdir %buildroot%prefix/%plugindir/debug
 
 # broken manpages referencing missing paths
 #rm -f %buildroot%_man1dir/mysql{_client_,}test_embedded.1
@@ -552,11 +558,11 @@ DATADIR=`/usr/bin/my_print_defaults mysqld |sed -ne 's/^--datadir=\\(.*\\)/\\1/p
 # and oh yeah, mysql must be stopped... => useless
 rm -f %buildroot%_bindir/mysql_plugin
 rm -f %buildroot%_mandir/man1/mysql_plugin.1*
-rm -f %buildroot%plugindir/daemon_example.ini
+rm -f %buildroot%prefix/%plugindir/daemon_example.ini
 
 # remove more useless plugins
-#rm -f %buildroot%plugindir/auth_test_plugin.so
-#rm -f %buildroot%plugindir/dialog_examples.so
+#rm -f %buildroot%prefix/%plugindir/auth_test_plugin.so
+#rm -f %buildroot%prefix/%plugindir/dialog_examples.so
 
 
 # house cleaning
@@ -574,13 +580,28 @@ rm -f %buildroot%_datadir/mysql/mysql-log-rotate
 rm -f %buildroot%_datadir/mysql/mysql.server
 rm -f %buildroot%_datadir/mysql/magic
 
+# cleanup
+rm -f %buildroot/etc/my.cnf.d/enable_encryption.preset
+rm -f %buildroot%_bindir/galera_recovery
+rm -f %buildroot%_bindir/mariadb-service-convert
+rm -f %buildroot%_bindir/mysqld_safe_helper
+rm -f %buildroot%_bindir/test-connect-t
+rm -f %buildroot/usr/lib/systemd/system/mariadb.service
+rm -f %buildroot/usr/lib/systemd/system/mariadb@.service
+rm -f %buildroot/usr/lib/systemd/system/mariadb@bootstrap.service.d/use_galera_new_cluster.conf
+rm -f %buildroot/usr/lib/sysusers.d/sysusers.conf
+rm -f %buildroot/usr/lib/tmpfiles.d/tmpfiles.conf
+rm -f %buildroot%_libdir/libmariadbd.a
+rm -f %buildroot%_libdir/libmysqlclient.a
+rm -f %buildroot%_libdir/libmysqlclient_r.a
+rm -f %buildroot%_libdir/libmariadbclient.a
 
 ################################################################################
 # run the tests
 %if_enabled build_test
 %check
 pushd BUILD
-    ctest -VV
+    make test-force
 popd
 %endif
 
@@ -624,6 +645,7 @@ fi
 %config(noreplace) %_sysconfdir/my.cnf.server/*.cnf
 %if_with tokudb
 %config(noreplace) %_sysconfdir/my.cnf.d/tokudb.cnf
+%config(noreplace) %_sysconfdir/systemd/system/mysqld.service.d/tokudb.conf
 %endif
 %_tmpfilesdir/mysql.conf
 %_unitdir/mysqld.service
@@ -667,11 +689,11 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/mariadbcheck
 
 %_sbindir/*
-%plugindir/*
-%exclude %plugindir/auth_gssapi_client.so
-%exclude %plugindir/client_ed25519.so
-%exclude %plugindir/dialog.so
-%exclude %plugindir/mysql_clear_password.so
+%prefix/%plugindir/*
+%exclude %prefix/%plugindir/auth_gssapi_client.so
+%exclude %prefix/%plugindir/client_ed25519.so
+%exclude %prefix/%plugindir/dialog.so
+%exclude %prefix/%plugindir/mysql_clear_password.so
 
 %attr(3770,root,mysql) %dir %_logdir/mysql
 %dir %_docdir/%name-%version
@@ -681,7 +703,7 @@ fi
 %attr(710,root,mysql) %dir %ROOT/%_lib
 %attr(710,root,mysql) %dir %ROOT/%_libdir
 %attr(710,root,mysql) %dir %ROOT/%_libdir/%name
-%attr(710,root,mysql) %dir %ROOT/%plugindir
+%attr(710,root,mysql) %dir %ROOT/%prefix/%plugindir
 %if_with galera
 %attr(710,root,mysql) %dir %ROOT/%_libdir/galera
 %endif
@@ -773,21 +795,19 @@ fi
 %endif
 
 %if_with libs
-%files -n lib%name
-%_libdir/*.so.*
+%files -n lib%name%soname
+%_libdir/lib%name.so.%soname
 # Clients plugin
-%dir %plugindir
-%plugindir/auth_gssapi_client.so
-%plugindir/client_ed25519.so
-%plugindir/dialog.so
-%plugindir/mysql_clear_password.so
+%dir %prefix/%plugindir
+%prefix/%plugindir/auth_gssapi_client.so
+%prefix/%plugindir/client_ed25519.so
+%prefix/%plugindir/dialog.so
+%prefix/%plugindir/mysql_clear_password.so
 
 %if_with server
-%exclude %_libdir/libmysqld.so.*
 
-%files -n libmysqld%soname
-%_libdir/libmysqld.so.*
-#%_libdir/libmysqld.so.%%libmysqlembedded_major*
+%files -n lib%{name}d%embedded_soname
+%_libdir/lib%{name}d.so.%embedded_soname
 %endif
 
 %if_with devel
@@ -795,19 +815,21 @@ fi
 %doc INSTALL-SOURCE
 %_bindir/mysql_config
 %_bindir/mariadb_config
-%_libdir/*.so
-%exclude %_libdir/libmysqld.so
+%_libdir/lib%name.so
+%_libdir/libmysqlclient.so
+%_libdir/libmysqlclient_r.so
 %_includedir/*
 #_mandir/man1/comp_err.1*
 %_man1dir/mysql_config.1*
 %_aclocaldir/mysql.m4
-%_datadir/pkgconfig/mariadb.pc
+%_pkgconfigdir/mariadb.pc
 # mysqlservices library is static, because it doesn't contain any code
 # itself, and is meant to be statically linked to all plugins.
 %_libdir/libmysqlservices.a
 
 %if_with server
-%files -n libmysqld%soname-devel
+%files -n lib%{name}d-devel
+%_libdir/lib%{name}d.so
 %_libdir/libmysqld.so
 %_bindir/mysql_client_test_embedded
 %_bindir/mysqltest_embedded
@@ -818,6 +840,9 @@ fi
 %endif
 
 %changelog
+* Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 10.3.8-alt1%ubt
+- 10.3.8
+
 * Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 10.2.15-alt3%ubt
 - NMU: reverted provides update.
 
