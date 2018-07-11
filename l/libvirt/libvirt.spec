@@ -125,7 +125,7 @@
 %def_without bash_completion 
 
 Name: libvirt
-Version: 4.4.0
+Version: 4.5.0
 Release: alt1%ubt
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -184,7 +184,7 @@ BuildRequires(pre): rpm-build-ubt
 %{?_with_bash_completion:BuildRequires: pkgconfig(bash-completion) >= 2.0}
 
 BuildRequires: bridge-utils libblkid-devel
-BuildRequires: libgcrypt-devel libgnutls-devel >= 2.2.0 libp11-kit-devel
+BuildRequires: libgcrypt-devel libgnutls-devel >= 3.2.0 libp11-kit-devel
 BuildRequires: libreadline-devel
 BuildRequires: libtasn1-devel
 BuildRequires: libattr-devel attr
@@ -350,9 +350,6 @@ Requires: libvirt-daemon-driver-storage-rbd = %EVR
 %endif
 %if_with storage_sheepdog
 Requires: libvirt-daemon-driver-storage-sheepdog = %EVR
-%endif
-%if_with storage_zfs
-Requires: libvirt-daemon-driver-storage-zfs = %EVR
 %endif
 
 %description daemon-driver-storage
@@ -629,7 +626,6 @@ required to manage the virtualization capabilities of Xen.
 %package vbox
 Summary: Server side daemon, driver & default configs required to run VirtualBox guests
 Group: System/Servers
-BuildArch: noarch
 Requires: %name-daemon-config-network = %EVR
 Requires: %name-daemon-config-nwfilter = %EVR
 %if_with driver_modules
@@ -1186,8 +1182,10 @@ fi
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd.qemu
 %dir %attr(0750, root, root) %_runtimedir/%name/qemu
 %dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu
-%dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/cache/libvirt/qemu
-%dir %attr(0700, root, root) %_localstatedir/log/libvirt/qemu
+%dir %attr(0750, %qemu_user, %qemu_group) %_cachedir/libvirt/qemu
+%dir %attr(0700, root, root) %_logdir/libvirt/qemu
+%dir %attr(0700, root, root) %_localstatedir/lib/libvirt/swtpm
+%dir %attr(0700, root, root) %_logdir/swtpm/libvirt/qemu
 %_datadir/augeas/lenses/libvirtd_qemu.aug
 %_datadir/augeas/lenses/tests/test_libvirtd_qemu.aug
 
@@ -1289,6 +1287,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 4.5.0-alt1%ubt
+- 4.5.0
+- not install zfs storage support by default
+
 * Tue Jun 05 2018 Alexey Shabalin <shaba@altlinux.ru> 4.4.0-alt1%ubt
 - 4.4.0
 

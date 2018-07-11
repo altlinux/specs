@@ -1,7 +1,7 @@
 
 Summary: Python bindings for the libvirt library
 Name: python-module-libvirt
-Version: 4.4.0
+Version: 4.5.0
 Release: alt1%ubt
 Url: http://libvirt.org
 #git://libvirt.org/libvirt-python.git
@@ -57,6 +57,9 @@ of recent versions of Linux (and other OSes).
 %doc  NEWS README COPYING COPYING.LESSER examples
 
 %changelog
+* Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 4.5.0-alt1%ubt
+- 4.5.0
+
 * Tue Jun 05 2018 Alexey Shabalin <shaba@altlinux.ru> 4.4.0-alt1%ubt
 - 4.4.0
 
