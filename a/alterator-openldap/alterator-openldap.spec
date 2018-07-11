@@ -2,19 +2,19 @@
 
 Name: alterator-openldap
 Version: 0.9
-Release: alt1
+Release: alt2
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.ru>
 BuildArch: noarch
 
-Source:%name-%version.tar
+Source: %name-%version.tar
 
 Summary: alterator module for OpenLDAP server
 License: GPL
 Group: System/Configuration/Other
 Requires: libshell 
 Requires: alterator-services
-Requires: ldap-user-tools >= 0.2-alt3.1
+Requires: ldap-user-tools >= 0.9.4-alt1
 Requires: alterator-openldap-functions >= 0.2-alt2
 
 Requires: alterator >= 3.5 gettext 
@@ -45,6 +45,15 @@ Alterator module for OpenLDAP server.
 %_alterator_backend3dir/*
 
 %changelog
+* Sun Jul  8 2018 Leonid Krivoshein <klark@altlinux.org> 0.9-alt2
+- added support both database backends: deprecated HDB and new MDB
+- deprecated backend template renamed to slapd-hdb-template.conf
+- before create DN may set key SLAPD_BACKEND in /etc/sysconfig/ldap
+- conditional creation DB_CONFIG for deprecated BDB/HDB backends
+- added check and setup required backend modules to main slapd.conf
+- changed access permissions to $db_dir for ldap group
+- attention: new MDB backend template now used by default
+
 * Tue Jun 07 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9-alt1
 - no more direct /etc/init.d/slapd calls
 
