@@ -1,6 +1,6 @@
 Name: make-initrd-propagator
 Version: 0.33
-Release: alt1
+Release: alt2
 
 Summary: Put propagator into make-initrd generated image
 
@@ -39,6 +39,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Wed Jul 11 2018 Anton Midyukov <antohami@altlinux.org> 0.33-alt2
+- Fix ACL access for livecd (Closes: 34793)
+
 * Thu Jul 05 2018 Arseny Maslennikov <arseny@altlinux.org> 0.33-alt1
 - netboot: Fixed busybox support.
 
