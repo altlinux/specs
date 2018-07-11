@@ -24,7 +24,7 @@
 
 Name: libuniset2
 Version: 2.7
-Release: alt12
+Release: alt13
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -544,6 +544,10 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Wed Jul 11 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt13
+- (UActivator): refactoring the program termination process
+- minor fixes 
+
 * Sun Jun 10 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt12
 - spec cleanup
 
