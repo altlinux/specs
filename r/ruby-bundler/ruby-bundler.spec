@@ -2,28 +2,26 @@
 %def_disable man
 
 Name:    ruby-%pkgname
-Version: 1.17.1
+Version: 2.0.1
 Release: alt1
 
 Summary: Manage your Ruby application's gem dependencies
-License: MIT/Ruby
+License: MIT
 Group:   Development/Ruby
-Url:     https://github.com/bundler/bundler
+Url:     https://bundler.io/
+# VCS:   https://github.com/bundler/bundler.git
 
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
 Source:  %pkgname-%version.tar
 
+Requires: bundle = %version-%release
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
+#BuildRequires: gem(rake) gem(rdiscount) gem(ronn) gem(rspec) gem(rubocop) gem(mustache) gem(automatiek)
 %if_enabled man
 BuildRequires: ronn groff-base
 %endif
-
-Conflicts: golang-tools
-
-%add_findreq_skiplist *.tt
 
 %description
 Bundler makes sure Ruby applications run the same code on every machine.
@@ -46,9 +44,30 @@ BuildArch: noarch
 %description doc
 Documentation files for %{name}.
 
+%description doc -l ru_RU.UTF-8
+Документация для %{name}.
+
+
+%package -n bundle
+Summary: Bundle is the executable file for bundler.
+Group: Development/Ruby
+
+BuildArch: noarch
+
+Requires: gem(bundler) = %version
+Conflicts: golang-tools
+
+
+%description -n bundle
+Bundle is the executable file for bundler.
+
+%description -n bundle -l ru_RU.UTF-8
+Исполняемый файл для утилиты bundler.
+
 %prep
 %setup -n %pkgname-%version
 %update_setup_rb
+rm -f bin/{rake,rspec,rubocop,bundle,bundle1,bundle2,with_rubygems}
 
 %build
 %ruby_config
@@ -56,21 +75,10 @@ Documentation files for %{name}.
 
 %install
 %ruby_install
-
-# Install exe files
-cp -a exe %buildroot%ruby_sitelibdir/%pkgname
-
-# Replace wrapper /usr/bin/bundle by symlink to real executable
-rm -f %buildroot%_bindir/bundle
-ln -svr %buildroot%ruby_sitelibdir/%pkgname/exe/bundle %buildroot%_bindir/bundle
-
-# Remove non-working executables
-rm -f %buildroot%_bindir/{rake,rspec,rubocop,bundle1,bundle2}
-
-# Generate documentation
 %rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+install -p -m 755 exe/{bundle,bundler} %buildroot/%_bindir
+mkdir -p %buildroot%rubygem_gemdir/%pkgname-%version/lib/
+mv %buildroot%ruby_sitelibdir/* %buildroot%rubygem_gemdir/%pkgname-%version/lib/
 
 %if_enabled man
 # Generate man page
@@ -83,22 +91,29 @@ mv %buildroot%_mandir/*.5 %buildroot%_man5dir
 rm -rf %buildroot%_mandir/*.ronn
 
 %check
-%ruby_test_unit -Ilib:test test
+#%rake spec:deps
+#%rake_spec
 
 %files
-%doc README*
-%_bindir/*
-%ruby_sitelibdir/*
+%rubygem_gemdir/*
 %rubygem_specdir/*
+
+%files doc
+%doc README*
+%ruby_ri_sitedir/*
+
+%files -n bundle
+%_bindir/*
 %if_enabled man
 %_man1dir/*
 %_man5dir/*
 %endif
 
-%files doc
-%ruby_ri_sitedir/*
-
 %changelog
+* Wed Jan 9 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.1-alt1
+- Bump to 2.0.1.
+- Place library files into gem folder.
+
 * Tue Oct 30 2018 Pavel Skrylev <majioa@altlinux.org> 1.17.1-alt1
 - Bump to 1.17.1.
 

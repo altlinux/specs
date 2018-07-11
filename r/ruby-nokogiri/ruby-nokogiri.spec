@@ -1,103 +1,86 @@
-%define Name Nokogiri
-%define bname nokogiri
-Name: ruby-%bname
-Version: 1.8.5
-Release: alt1
-Summary: Ruby libraries for %Name (HTML, XML, SAX, and Reader parser)
-Group: Development/Ruby
-License: MIT/Ruby
-URL: http://%bname.org
-Source: %bname-%version.tar
-Patch:  shutdown-libxml2-warning.patch
+%define   pkgname nokogiri
+Name:     ruby-%pkgname
+Version:  1.10.1
+Release:  alt1
+Summary:  Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
+Group:    Development/Ruby
+License:  MIT
+URL:      http://%pkgname.org
+Source:   %pkgname-%version.tar
+Patch:    shutdown-libxml2-warning.patch
 
-BuildRequires(pre): rpm-build-ruby
-BuildRequires: libruby-devel ruby-racc ruby-rexical
+BuildRequires(pre): rpm-build-ruby vim
+BuildRequires: ruby-racc ruby-rexical
 BuildRequires: libxml2-devel libxslt-devel java-devel ruby-pkg-config
 BuildRequires: ruby-hoe rake-compiler ruby-concourse
 #BuildRequires: db2latex-xsl xhtml1-dtds
-
-Requires: ruby-mini_portile2
-
-%filter_from_requires /^ruby(.*\.jar)/d
+BuildRequires: gem(mini_portile2)
 
 %description
-%Name parses and searches XML/HTML very quickly, and also has correctly
+Nokogiri parses and searches XML/HTML very quickly, and also has correctly
 implemented CSS3 selector support as well as XPath support.
 This package contanis Ruby libraries for Nokogiri.
 
-%package -n %bname
+%package -n %pkgname
 Summary: HTML, XML, SAX, and Reader parser
 Group: Development/Other
 BuildArch: noarch
-Requires: ruby >= 1.8
 Requires: %name = %version-%release
 
-%description -n %bname
-%Name parses and searches XML/HTML very quickly, and also has correctly
+%description -n %pkgname
+Nokogiri parses and searches XML/HTML very quickly, and also has correctly
 implemented CSS3 selector support as well as XPath support.
 This package contanis Ruby libraries for Nokogiri.
 
 %package doc
-Summary: Documentation for %Name
+Summary: Documentation for Nokogiri
 Group: Development/Documentation
 BuildArch: noarch
 
 %description doc
-Documentation for %Name.
+Documentation for Nokogiri.
 
 %prep
-%setup -q -n %bname-%version
+%setup -q -n %pkgname-%version
 %patch -p1
-
-DisableTest()
-{
-	local f="$1"
-
-	shift
-	while [ -n "$1" ]; do
-		sed -i -r \
-			-e "/^[[:blank:]]*def[[:blank:]]+test_$1[[:blank:]]*$/iif false" \
-			-e "/^[[:blank:]]*def[[:blank:]]+test_$1[[:blank:]]*$/,/^[[:blank:]]*$/s/^[[:blank:]]*$/end\n&/" \
-			"test/$f.rb"
-		shift
-	done
-}
-
-DisableTest test_convert_xpath multiple_filters
-DisableTest css/test_nthiness last_of_type nth_last_of_type nth_of_type
-
 %update_setup_rb
 
 %build
 export CFLAGS="$CFLAGS -Wno-unused-parameter"
 %ruby_config -- --use-system-libraries
 %ruby_build
-rake debug_gem > %bname-%version.gemspec
+rake debug_gem > %pkgname-%version.gemspec
 echo "gemspec" >> Gemfile
 
 %install
 %ruby_install
 %rdoc lib/
-ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/%Name$' | xargs rm -rf
+ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/Nokogiri$' | xargs rm -rf
+mkdir -p %buildroot%rubygem_gemdir/%pkgname-%version/lib/
+mv %buildroot%ruby_sitelibdir/%pkgname/* %buildroot%ruby_sitelibdir/%pkgname.rb %buildroot%rubygem_gemdir/%pkgname-%version/lib/
+find  %buildroot%ruby_sitearchdir/
 
 %check
-%ruby_test_unit -Ilib:ext:test test
+%rake_test
 
 %files
-%ruby_sitelibdir/%bname
+%rubygem_gemdir/*
+%rubygem_specdir/*
 %ruby_sitelibdir/xsd
 %ruby_sitelibdir/*.jar
-%ruby_sitelibdir/*.rb
 %ruby_sitearchdir/*
-%rubygem_specdir/*
 
-%files -n %bname
+%files -n %pkgname
 %_bindir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jan 16 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.1-alt1
+- Bump to 1.10.1;
+- Place library files into gem folder.
+
 * Fri Oct 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.8.5-alt1
 - New version.
 
