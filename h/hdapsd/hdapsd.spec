@@ -1,6 +1,6 @@
 Name: hdapsd
 Version: 20090401
-Release: alt1
+Release: alt1.qa1
 
 Summary: HardDrive Active Protection System
 License: GPL v2
@@ -56,15 +56,20 @@ uderzeniu o podłoże.
 install -pDm755 src/%name %buildroot%_sbindir/%name
 install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 install -pDm644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
-install -pDm644 %SOURCE3 %buildroot%_sysconfdir/udev/rules.d/51-hdaps.rules
+install -pDm644 %SOURCE3 %buildroot%_udevrulesdir/51-hdaps.rules
 
 %files
 %_sbindir/*
 %_initdir/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
-%config(noreplace) %_sysconfdir/udev/rules.d/51-hdaps.rules
+%config(noreplace) %_udevrulesdir/51-hdaps.rules
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 20090401-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for hdapsd
+
 * Sat Oct 08 2011 Michael Shigorin <mike@altlinux.org> 20090401-alt1
 - 20081004 -> 20090401 (thx fedorawatch)
 
