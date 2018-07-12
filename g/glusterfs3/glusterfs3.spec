@@ -29,7 +29,7 @@
 
 Name: glusterfs3
 Version: %major.12
-Release: alt1
+Release: alt2
 
 Summary: Cluster File System
 
@@ -575,6 +575,10 @@ rm -fv %buildroot%_sharedstatedir/glusterd/hooks/1/delete/pre/S10selinux-del-fco
 %preun_service glusterd
 
 %changelog
+* Thu Jul 12 2018 Vitaly Lipatov <lav@altlinux.ru> 3.12.12-alt2
+- add check if no matching password record was found with getpwuid_r(uid) (eterbug #13021)
+- use GF_MAX_AUX_GROUPS instead FUSE_MAX_AUX_GROUPS in frame_fill_groups (RH bug 1299203)
+
 * Thu Jul 12 2018 Vitaly Lipatov <lav@altlinux.ru> 3.12.12-alt1
 - new version 3.12.12 (with rpmrb script)
 - CVE-2018-10841
