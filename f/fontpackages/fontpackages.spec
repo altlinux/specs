@@ -2,7 +2,8 @@ Group: System/Configuration/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 # END SourceDeps(oneline)
-%define fedora 27
+%define _unpackaged_files_terminate_build 0
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -15,7 +16,7 @@ BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 
 Name:    fontpackages
 Version: 1.44
-Release: alt5_21.qa1
+Release: alt6_21
 Summary: Common directory and macro definitions used by font packages
 
 # Mostly means the scriptlets inserted via this package do not change the
@@ -29,6 +30,7 @@ Patch1:    %{name}-drop-fccache.patch
 BuildArch: noarch
 BuildRequires: rpm-build-perl
 Source44: import.info
+Patch33: macros.fonts.diff
 
 
 %description
@@ -52,7 +54,6 @@ Summary: Templates and macros used to create font packages
 
 Requires: fontconfig
 Requires: rpm-macros-fontpackages rpm-build-fonts xorg-font-encodings
-Requires: rpm-macros-%{name} = %{version}-%{release}
 
 %description devel
 This package contains spec templates, rpm macros and other materials used to
@@ -77,19 +78,19 @@ Requires: fedora-packager
 %description tools
 This package contains tools used to check fonts and font packages.
 
-
-
 %package -n rpm-macros-%{name}
 Summary: Set of RPM macros for packaging %name-based applications
 Group: Development/Other
-# uncomment if macroses are platform-neutral
-#BuildArch: noarch
-# helps old apt to resolve file conflict at dist-upgrade (thanks to Stanislav Ievlev)
-Conflicts: fontpackages-devel <= 1.44-alt5_21
+BuildArch: noarch
 
 %description -n rpm-macros-%{name}
 Set of RPM macros for packaging %name-based applications for ALT Linux.
 Install this package if you want to create RPM packages that use %name.
+
+%files -n rpm-macros-%{name}
+%_rpmmacrosdir/*
+
+
 
 %prep
 %setup -q
@@ -102,6 +103,7 @@ sed -i 's|/usr/bin/fedoradev-pkgowners|""|g' bin/repo-font-audit
 
 # Drop obosolete %defattr (#1047031)
 sed -i '/^%%defattr/d' rpm/macros.fonts
+%patch33 -p0
 
 %build
 sed -i "s|^DATADIR\([[:space:]]*\)\?=\(.*\)$|DATADIR=%{_datadir}/%{name}|g" \
@@ -142,21 +144,20 @@ cat <<EOF > %{name}-%{version}.files
 %dir ${_fontconfig_templatedir}
 EOF
 rm -rf %buildroot%{spectemplatedir}
+# rename macros.xxx
+mv %buildroot%_rpmmacrosdir/macros.fonts  %buildroot%_rpmmacrosdir/%name
 
 %files devel
 %doc --no-dereference license.txt
 %doc readme.txt
-#%_rpmmacrosdir/macros*
 %dir %{ftcgtemplatedir}
 %{ftcgtemplatedir}/*conf
 %{ftcgtemplatedir}/*txt
-%exclude %_rpmmacrosdir/*
-
-%files -n rpm-macros-%{name}
-%_rpmmacrosdir/*
-
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1.44-alt6_21
+- merged repocop patch
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1.44-alt5_21.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
