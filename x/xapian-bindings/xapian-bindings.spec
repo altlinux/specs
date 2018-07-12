@@ -5,7 +5,7 @@
 
 Name: xapian-bindings
 Version: 1.4.5
-Release: alt2
+Release: alt2.qa1
 
 Summary: Xapian search engine bindings
 License: GPL
@@ -21,7 +21,7 @@ Patch1: %name-%version-alt-no-docs.patch
 
 # Automatically added by buildreq on Thu Dec 05 2013
 # optimized out: elfutils gnu-config libncurses-devel libstdc++-devel libtinfo-devel pam0_userpass python-base python-modules python-modules-compiler ruby ruby-stdlibs xz
-BuildRequires: gcc-c++ libruby-devel libxapian-devel python-dev
+BuildRequires: gcc-c++ libruby-devel libxapian-devel python-devel
 %if_with doc
 BuildRequires: python-module-sphinx-devel python-module-sphinx
 %endif
@@ -137,6 +137,11 @@ rm -rf %buildroot%_defaultdocdir/%name/
 #   I use watch file and it's more convenient to do that with srpms
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.5-alt2.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * altlinux-python-obsolete-buildreq-python-dev for xapian-bindings
+
 * Sun Jul 01 2018 Michael Shigorin <mike@altlinux.org> 1.4.5-alt2
 - support e2kv4 through %%e2k macro (grenka@)
 - merged my changes back
