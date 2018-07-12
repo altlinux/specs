@@ -7,7 +7,7 @@
 
 Name: lib%oname
 Version: 3.1.0
-Release: alt7.3
+Release: alt7.3.qa1
 Summary: The GLE Tubing and Extrusion Library for OpenGL
 License: GPL
 Group: System/Libraries
@@ -49,6 +49,7 @@ Group: Books/Computer books
 Conflicts: %name > %version-%release
 Conflicts: %name < %version-%release
 Obsoletes: gle-doc <= 3.1.0-alt3
+BuildArch: noarch
 
 %description doc
 The GLE Tubing and Extrusion Library consists of a number of "C"
@@ -92,6 +93,11 @@ mv %buildroot%_docdir/%oname %buildroot%_docdir/%name-%version
 %doc %_docdir/%name-%version/html
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt7.3.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for libgle-doc
+
 * Fri Jan 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 3.1.0-alt7.3
 - rebuild
 
