@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/Pod.pm) perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl-Filter
 Name:           perl-YAML-LibYAML
-Version:        0.71
-Release:        alt1_1.1.1.1
+Version:        0.72
+Release:        alt1
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/YAML-LibYAML/
-Source0:        http://search.cpan.org/CPAN/authors/id/R/RU/RURBAN/YAML-LibYAML-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/T/TI/TINITA/YAML-LibYAML-%{version}.tar.gz
 
 # Build
 BuildRequires:  coreutils
@@ -91,6 +92,9 @@ make test
 %{perl_vendor_archlib}/YAML/
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.72-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.71-alt1_1.1.1.1
 - rebuild with new perl 5.26.1
 
