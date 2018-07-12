@@ -11,7 +11,7 @@
 Summary:       %{languageenglazy} files for aspell
 Name:          aspell-%{languagecode}
 Version:       0.50.1
-Release:       alt2_16
+Release:       alt2_16.qa1
 Group:         Text tools
 Source:	       http://ftp.gnu.org/gnu/aspell/dict/%{languagecode}/aspell-%{languagecode}-%{src_ver}.tar.bz2
 URL:		   http://aspell.net/
@@ -45,6 +45,12 @@ A %{languageenglazy} dictionary for use with aspell, a spelling checker.
 
 chmod 644 Copyright README* doc/*
 
+# It is the file in the package whose name matches the format emacs or vim uses 
+# for backup and autosave files. It may have been installed by  accident.
+find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+# failsafe cleanup if the file is declared as %%doc
+find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+
 %files
 %doc README* Copyright doc/*
 %{_libdir}/aspell*/*
@@ -52,6 +58,11 @@ chmod 644 Copyright README* doc/*
 
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.50.1-alt2_16.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * backup-file-in-package for aspell-nn
+
 * Tue Oct 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.50.1-alt2_16
 - fixed rpm Group:
 
