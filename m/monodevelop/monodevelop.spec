@@ -3,7 +3,7 @@
 %def_disable tests
 
 Name: monodevelop
-Version: 6.3.0.864
+Version: 7.5.3.7
 Release: alt1%ubt
 
 Summary: MonoDevelop is a project to port SharpDevelop to Gtk#
@@ -11,33 +11,50 @@ License: LGPLv2.1
 Group: Development/Other
 Url: http://www.monodevelop.com/
 
+ExclusiveArch: %ix86 x86_64
+
+# https://github.com/mono/monodevelop.git
 Source: %name-%version.tar
 Source1: external.tar.xz
 Source2: version.config
+
+# Following data is obtained after running autogen, configure and make
 Source3: buildinfo
 Source4: nuget-core.tar
 Source5: nuget-external-fsharpbinding.tar
+Source6: nuget-home.tar
+Source7: restored-targets-external.tar
 
 Patch1: %name-fix-rpm-autoreq.patch
 Patch2: %name-disable-nuget-and-git.patch
 Patch3: %name-update-rpm-autoreq.patch
+Patch4: %name-upstream-pullrequest-5015.patch
 
-# based on https://github.com/mono/t4
-Patch4: %name-t4-fix-running-on-recent-mono-versions.patch
+# monodis fails to process following files
+%add_findprov_skiplist %_libexecdir/%name/AddIns/MonoDevelop.Refactoring/System.Text.Encoding.CodePages.dll
+%add_findprov_skiplist %_libexecdir/%name/AddIns/MonoDevelop.UnitTesting/VsTestConsole/*
+%add_findprov_skiplist %_libexecdir/%name/bin/System.IO.Compression.dll
+%add_findprov_skiplist %_libexecdir/%name/bin/System.Runtime.InteropServices.RuntimeInformation.dll
+%add_findprov_skiplist %_libexecdir/%name/bin/System.Text.Encoding.CodePages.dll
+
+%add_findreq_skiplist  %_libexecdir/%name/AddIns/MonoDevelop.Refactoring/System.Text.Encoding.CodePages.dll
+%add_findreq_skiplist  %_libexecdir/%name/AddIns/MonoDevelop.UnitTesting/VsTestConsole/*
+%add_findreq_skiplist  %_libexecdir/%name/bin/System.IO.Compression.dll
+%add_findreq_skiplist  %_libexecdir/%name/bin/System.Runtime.InteropServices.RuntimeInformation.dll
+%add_findreq_skiplist  %_libexecdir/%name/bin/System.Text.Encoding.CodePages.dll
 
 # Remove missing dependencies
-%define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | sed "/mono\(System\.Web\.DataVisualization\).*/d"'
+%define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | \
+	sed -e "/mono\(System\.Web\.DataVisualization\).*/d" \\\
+	-e "/mono\(Microsoft\.VisualStudio\.ImageCatalog\).*/d" \\\
+	-e "/mono\(PresentationCore\).*/d"'
 
 BuildRequires(pre): rpm-build-ubt rpm-build-xdg
-BuildPreReq: rpm-build-mono >= 2.0.0
-BuildPreReq: mono-core >= 5.0.0.0
-BuildPreReq: mono-devel >= 5.0.0.0
-BuildPreReq: mono-monodoc-devel >= 1.0
-
-BuildRequires: mono-core mono-web-devel mono-devel-full
+BuildRequires(pre): rpm-build-mono >= 2.0.0
+BuildRequires: mono-devel-full msbuild
 BuildRequires: intltool /usr/bin/msgfmt
 BuildRequires: desktop-file-utils perl-XML-Parser shared-mime-info
-BuildRequires: zip unzip
+BuildRequires: /usr/bin/7z
 BuildRequires: /proc
 BuildRequires: xsp
 BuildRequires: autoconf automake cmake
@@ -53,6 +70,7 @@ Requires: xsp
 Requires: git
 Requires: fsharp
 Requires: referenceassemblies-pcl
+Requires: msbuild
 
 %description
 This is MonoDevelop which is intended to be a full-featured
@@ -60,7 +78,7 @@ integrated development environment (IDE) for mono and Gtk#.
 It was originally a port of SharpDevelop 0.98.
 
 %prep
-%setup -q -n %name-%version
+%setup
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
@@ -82,7 +100,7 @@ for i in ../nuget-core/*.nupkg ; do
     name=$(basename ${i%%.nupkg})
     mkdir $name
     pushd $name
-    unzip ../$i
+    7z x ../$i
     cp ../$i ./
     popd
 done
@@ -102,8 +120,9 @@ for i in ../../../nuget-external-fsharpbinding/*.version.txt ; do
     dir=$(dirname $i)
     mkdir $name
     pushd $name
-    unzip ../$dir/${name}.${version}.nupkg
-    cp ../$dir/${name}.${version}.nupkg ./
+    7z x ../$dir/${name}.${version}.nupkg
+    # these nupkg file names are usually lowercase
+    cp ../$dir/${name}.${version}.nupkg ./$(echo $name | tr A-Z a-z).${version}.nupkg
     popd
 done
 
@@ -113,10 +132,41 @@ find . -iname '*%%2B*' | while read file ; do
 done
 popd
 
+tar xf %SOURCE6
+mkdir -p nuget/packages
+pushd nuget/packages
+for i in ../../nuget-home/*.version.txt ; do
+    name=$(basename ${i%%.version.txt})
+    dir=$(dirname $i)
+    for version in $(cat $i) ; do
+        mkdir -p $name/$version
+        pushd $name/$version
+        7z x ../../$dir/${name}.${version}.nupkg
+        # copy additionally required files
+        cp ../../$dir/${name}.${version}.nupkg ./
+        cp ../../$dir/${name}.${version}.nupkg.sha512 ./
+        # nuspec file names are usually lowercase
+        for nuspec in ./*nuspec ; do
+            mv $nuspec $(echo $nuspec | tr A-Z a-z)
+        done
+        popd
+    done
+done
+
+# unzip unpacks filenames with %% sign as is. Convert it. TODO: make a more generic solution when necessary
+find . -iname '*%%2B*' | while read file ; do
+    mv $file $(echo $file | sed -e 's:%%2B:+:g') ||:
+done
+popd
+
+tar xf %SOURCE7
+
 find . -type f -print0 | xargs -0 \
     sed -i \
         -e 's:../version.config:version.config:g' \
-        -e 's:..\\version.config:version.config:g'
+        -e 's:..\\version.config:version.config:g' \
+        -e "s:@NUGETDIR@:$(pwd)/nuget/packages:g" \
+        -e "s:@RPMPROJECTDIR@:$(pwd):g"
 
 %__subst '/^Encoding=/d;
 	s/^Exec=monodevelop$/Exec=monodevelop %%F/;
@@ -147,7 +197,10 @@ NOCONFIGURE=yes sh ./autogen.sh
 %make
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
+
+# Following plugin causes monodevelop to crash, remove it
+rm -f %buildroot%_libexecdir/%name/bin/libe_sqlite3.so
 
 %find_lang %name
 
@@ -164,6 +217,9 @@ NOCONFIGURE=yes sh ./autogen.sh
 %_man1dir/*
 
 %changelog
+* Thu Jul 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 7.5.3.7-alt1%ubt
+- Updated to upstream version 7.5.3.7.
+
 * Wed Mar 21 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.3.0.864-alt1%ubt
 - Updated to stable upstream version 6.3.0.864.
 

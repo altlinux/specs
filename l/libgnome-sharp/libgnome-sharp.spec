@@ -1,9 +1,11 @@
+%define _unpackaged_files_terminate_build 1
+
 %define realname gnome-sharp
 
 Summary: GNOME bindings for Mono
 Name: lib%{realname}
 Version: 2.24.2
-Release: alt3%ubt
+Release: alt4%ubt
 License: LGPLv2+
 Group: Development/Other
 Packager: Mono Maintainers Team <mono@packages.altlinux.org>
@@ -71,6 +73,9 @@ to parse and bind Gnome libraries.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Jul 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.24.2-alt4%ubt
+- Rebuilt for additional architectures.
+
 * Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.24.2-alt3%ubt
 - Rebuilt with support of %%ubt macro.
 
