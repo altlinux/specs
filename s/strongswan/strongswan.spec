@@ -63,7 +63,7 @@
 
 Name: strongswan
 Version: 5.6.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: strongSwan IPsec implementation
 License: GPLv2+
@@ -183,6 +183,12 @@ rm -f %buildroot%_libdir/lib%name.{a,so}
 rm -f testing/do-tests* testing/Makefile.*
 cp -a testing/ %buildroot%pkgdocdir/
 
+# It is the file in the package whose name matches the format emacs or vim uses 
+# for backup and autosave files. It may have been installed by  accident.
+find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+# failsafe cleanup if the file is declared as %%doc
+find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+
 %files
 %dir %pkgdocdir
 %pkgdocdir/[A-Z]*
@@ -221,6 +227,11 @@ cp -a testing/ %buildroot%pkgdocdir/
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 5.6.3-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * backup-file-in-package for strongswan-testing
+
 * Mon May 28 2018 Michael Shigorin <mike@altlinux.org> 5.6.3-alt1
 - new version (watch file uupdate)
 
