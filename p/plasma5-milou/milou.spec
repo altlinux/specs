@@ -5,7 +5,7 @@
 
 Name: plasma5-%rname
 Version: 5.12.6
-Release: alt2%ubt
+Release: alt3%ubt
 Epoch: 1
 %K5init altplace
 
@@ -15,6 +15,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch: %rname-alt-timer.patch
 
 # Automatically added by buildreq on Tue Apr 07 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs
@@ -59,6 +60,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch -p2
 
 %build
 %K5build
@@ -89,6 +91,9 @@ KF5 library
 %_K5lib/libmilou.so.%milou_sover
 
 %changelog
+* Thu Jul 12 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.6-alt3%ubt
+- resetTimer: 0.5 -> 5 secs
+
 * Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.6-alt2%ubt
 - fix version
 
