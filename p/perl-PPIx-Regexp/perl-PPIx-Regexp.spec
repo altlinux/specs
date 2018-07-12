@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist PPIx-Regexp
 Name: perl-PPIx-Regexp
-Version: 0.060
+Version: 0.061
 Release: alt1
 
 Summary: Represent a regular expression of some sort
@@ -11,7 +11,7 @@ Group: Development/Perl
 Url: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/W/WY/WYANT/%{dist}-%{version}.tar.gz
 
-BuildRequires: perl-Task-Weaken perl-Readonly perl-PPI perl-Module-Build perl-List-MoreUtils perl-Params-Util
+BuildRequires: perl-Task-Weaken perl-Readonly perl-PPI perl-Module-Build perl-List-MoreUtils perl-Params-Util perl(charnames.pm)
 BuildArch: noarch
 
 %description
@@ -33,6 +33,9 @@ parses a Perl script, and navigable in much the same way.
 %doc Changes README
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.061-alt1
+- automated CPAN update
+
 * Wed Jun 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.060-alt1
 - automated CPAN update
 
