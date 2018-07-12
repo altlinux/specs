@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jdepend
 Version:        2.9.1
-Release:        alt3_18jpp8
+Release:        alt3_18jpp8.qa1
 Epoch:          0
 Summary:        Java Design Quality Metrics
 License:        BSD
@@ -71,7 +71,7 @@ Javadoc for %{name}.
 %package demo
 Group: Development/Java
 Summary:        Demos for %{name}
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{EVR}
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -107,6 +107,11 @@ cp -pr sample $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt3_18jpp8.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for jdepend
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt3_18jpp8
 - java update
 
