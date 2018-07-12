@@ -7,8 +7,8 @@
 
 Name: httrack
 Version: 3.45.3
-Release: alt1.1
-Serial: 1
+Release: alt1.1.qa1
+Epoch: 1
 
 Summary: An easy-to-use offline browser utility
 License: %gpl2plus
@@ -53,7 +53,7 @@ This package contains shared library for %Name.
 %package -n %lname-devel
 Summary: Development files for %Name
 Group: Development/C
-Requires: %lname%{?_disable_shared:-devel-static} = %version-%release
+Requires: %lname%{?_disable_shared:-devel-static} = %EVR
 
 %description -n %lname-devel
 This package contains development files required for packaging
@@ -64,7 +64,7 @@ This package contains development files required for packaging
 %package -n %lname-devel-static
 Summary: Static libraries for %Name
 Group: Development/C
-Requires: %lname-devel = %version-%release
+Requires: %lname-devel = %EVR
 
 %description -n %lname-devel-static
 This package contains development libraries required for packaging
@@ -75,7 +75,7 @@ statically linked %Name-based software.
 %package -n web%name
 Summary: Offline browser - %name and htsserver frontend
 Group: Networking/File transfer
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n web%name
 Offline browser: copy websites to a local directory.
@@ -154,6 +154,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.45.3-alt1.1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for httrack
+
 * Mon Jun 23 2014 Michael Shigorin <mike@altlinux.org> 1:3.45.3-alt1.1
 - rebuild working package (reworked one got overworked thus broken)
 
