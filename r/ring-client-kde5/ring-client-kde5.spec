@@ -5,7 +5,7 @@
 
 Name: ring-client-kde5
 Version: 2.3.0
-Release: alt0.5%ubt
+Release: alt0.6%ubt
 %K5init no_altplace
 
 Group: Communications
@@ -83,6 +83,9 @@ __EOF__
 %_K5dbus_iface/cx.ring.ring-kde.xml
 
 %changelog
+* Thu Jul 12 2018 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt0.6%ubt
+- update russian translation
+
 * Tue Jul 25 2017 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt0.5%ubt
 - rebuild
 
