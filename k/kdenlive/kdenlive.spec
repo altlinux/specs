@@ -3,7 +3,7 @@
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 Name: kdenlive
-Version: 18.04.1
+Version: 18.04.2
 Release: alt1%ubt
 %K5init no_altplace man
 
@@ -85,6 +85,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 %_man1dir/kdenlive*
 
 %changelog
+* Thu Jul 12 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- new version
+
 * Wed May 16 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - new version
 
