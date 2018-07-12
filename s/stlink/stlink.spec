@@ -1,7 +1,7 @@
 Summary: STM32 microcontrolles programmer and debuger, using STLINKv1/v2
 Name: stlink
 Version: 2018.04.18
-Release: alt2
+Release: alt2.qa1
 License: Other
 Group: Development/Other
 URL: https://github.com/texane/stlink.git
@@ -44,13 +44,16 @@ Development files for libstlink
 
 %install
 %makeinstall DESTDIR=%buildroot -C build/Release
+# sysconf/udev policy - /etc is for user
+mkdir -p %buildroot%_udevrulesdir/
+mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 
 %files
 %doc ChangeLog.md LICENSE README.md
 %dir %_datadir/%name
 
 %_sysconfdir/modprobe.d/*
-%_sysconfdir/udev/rules.d/*
+%_udevrulesdir/*
 
 %_bindir/*
 
@@ -70,6 +73,11 @@ Development files for libstlink
 %_pkgconfigdir/*
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 2018.04.18-alt2.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for stlink
+
 * Fri Apr 20 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2018.04.18-alt2
 - fix insane BRs
 - fix packaging on 64bit arches other than x86_64
