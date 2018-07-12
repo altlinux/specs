@@ -1,6 +1,6 @@
 Name: kqemu
 Version: 1.4.0
-Release: alt0.1.pre1
+Release: alt0.1.pre1.qa1
 %define upstream_version	1.4.0pre1
 
 Summary: QEMU x86 virtualization module
@@ -65,7 +65,7 @@ tar --owner=root --group=root --mode=u+w,go-w,go+rX -cjf \
 install -Dp %name-extra/%name.control %buildroot%_controldir/%name
 install -Dp %name-extra/%name.init %buildroot%_initdir/%name
 install -Dp -m644 %name-extra/%name.rules \
-	%buildroot%_sysconfdir/udev/rules.d/90-%name.rules
+	%buildroot%_udevrulesdir/90-%name.rules
 
 %pre common
 /usr/sbin/groupadd -r -f kqemu
@@ -88,7 +88,7 @@ mountpoint -q /dev || {
 %files common
 %_controldir/%name
 %_initdir/%name
-%config %_sysconfdir/udev/rules.d/90-%name.rules
+%config %_udevrulesdir/90-%name.rules
 %doc %name-extra/README.ALT
 %doc kernel-source-%name-%version/LICENSE
 %doc kernel-source-%name-%version/Changelog
@@ -98,6 +98,11 @@ mountpoint -q /dev || {
 %_usrsrc/*
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt0.1.pre1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for kqemu-common
+
 * Mon Oct 06 2008 Michail Yakushin <silicium@altlinux.ru> 1.4.0-alt0.1.pre1
 - 1.4.0.pre1 
 
