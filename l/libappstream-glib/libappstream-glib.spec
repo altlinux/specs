@@ -12,7 +12,7 @@
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -201,6 +201,9 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Wed Jul 11 2018 Yuri N. Sedunov <aris@altlinux.org> 0.7.10-alt1
+- 0.7.10
+
 * Tue Jun 05 2018 Yuri N. Sedunov <aris@altlinux.org> 0.7.9-alt1
 - 0.7.9
 
