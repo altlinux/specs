@@ -1,6 +1,6 @@
 Name: fetchmail
 Version: 6.3.26
-Release: alt4
+Release: alt4.qa1
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
 Group: Networking/Mail
@@ -29,7 +29,7 @@ Requires: service >= 0.5.28-alt1
 BuildPreReq: rpm-build-python
 %_python_set_noarch
 
-BuildPreReq: flex libssl-devel python-dev
+BuildPreReq: flex libssl-devel python-devel
 
 %define rtdir %_runtimedir/%name
 
@@ -188,6 +188,11 @@ usermod -d %rtdir %name ||:
 
 %files -f %name.lang locales
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 6.3.26-alt4.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * altlinux-python-obsolete-buildreq-python-dev for fetchmail
+
 * Mon Jan 22 2018 Terechkov Evgenii <evg@altlinux.org> 6.3.26-alt4
 - Fix fetchmail-daemon startup with service-0.5.28-alt1
 
