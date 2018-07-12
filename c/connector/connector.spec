@@ -1,6 +1,6 @@
 Name: connector
-Version: 1.6.3
-Release: alt2
+Version: 1.6.4
+Release: alt1
 
 Summary: Remote desktop chooser
 License: GPL
@@ -46,6 +46,11 @@ install -pDm644 kiosk.access %buildroot%_sysconfdir/%name/kiosk.access
 %config(noreplace) %_sysconfdir/%name/kiosk.access
 
 %changelog
+* Thu Jul 12 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.6.4-alt1
+- Disabled start of multiple copies
+- Fixed creating label if exist of the same name
+- Fixed open Citrix/WEB tab from main menu
+
 * Fri Jul 06 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.6.3-alt2
 - Fixed open preferences window for FS
 
