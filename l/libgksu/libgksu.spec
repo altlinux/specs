@@ -1,6 +1,6 @@
 Name: libgksu
 Version: 2.0.12
-Release: alt9
+Release: alt10
 
 Summary: A 'su' and 'sudo' wrapper library for GTK+/GNOME applications
 License: %lgpl2plus
@@ -69,12 +69,14 @@ touch README NEWS
 %autoreconf
 %configure \
     --disable-static \
-    --enable-gtk-doc
+    --disable-gtk-doc
 
-%make
+%make_build
 
 %install
 %make_install install DESTDIR=%buildroot
+install -pDt %buildroot%_datadir/gtk-doc/html/%name docs/html/*
+
 # Fix icons location
 mkdir -p %buildroot%_liconsdir
 cp -a %buildroot%_pixmapsdir/gksu.png %buildroot%_liconsdir
@@ -111,6 +113,9 @@ fi
 %_datadir/gtk-doc/html/%name/*
 
 %changelog
+* Thu Jul 12 2018 Ivan A. Melnikov <iv@altlinux.org> 2.0.12-alt10
+- (NMU) fix FTBFS by using pre-build documentation
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.12-alt9
 - rebuilt against libgtop-2.0.so.11
 
