@@ -1,8 +1,8 @@
-%define dist Proc-PID-File
 %define _unpackaged_files_terminate_build 1
+%define dist Proc-PID-File
 
 Name: perl-%dist
-Version: 1.28
+Version: 1.29
 Release: alt1
 
 Summary: functions for manipulations with pidfiles
@@ -10,7 +10,7 @@ License: %perl_license
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DM/DMITRI/Proc-PID-File-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DM/DMITRI/%{dist}-%{version}.tar.gz
 
 Patch1: Proc-PID-File-1.27-108434.patch
 
@@ -29,7 +29,7 @@ which are files that store a process identifier.
 
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %patch1 -p1
 
@@ -45,6 +45,9 @@ which are files that store a process identifier.
 %perl_vendor_privlib/Proc*
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
+- automated CPAN update
+
 * Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
 - automated CPAN update
 
