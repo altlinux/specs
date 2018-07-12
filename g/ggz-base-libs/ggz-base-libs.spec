@@ -6,7 +6,7 @@ Group: System/Libraries
 Summary: Base libraries for GGZ gaming zone
 Name:    ggz-base-libs
 Version: 0.99.5
-Release: alt3_22
+Release: alt3_22.qa1
 
 License: LGPLv2+ and GPLv2+
 URL: http://www.ggzgamingzone.org/
@@ -48,10 +48,24 @@ Provides: libggz-devel = 1:%{version}-%{release}
 Provides: ggz-client-libs-devel = 1:%{version}-%{release}
 Requires: %{name} = %{version}-%{release}
 Requires: pkg-config
+Requires: rpm-macros-%{name} = %{version}-%{release}
 # %{_sysconfdir}/rpm ownership
 %description devel
 %{summary}.
 
+
+
+%package -n rpm-macros-%{name}
+Summary: Set of RPM macros for packaging %name-based applications
+Group: Development/Other
+# uncomment if macroses are platform-neutral
+#BuildArch: noarch
+# helps old apt to resolve file conflict at dist-upgrade (thanks to Stanislav Ievlev)
+Conflicts: ggz-base-libs-devel <= 0.99.5-alt3_22
+
+%description -n rpm-macros-%{name}
+Set of RPM macros for packaging %name-based applications for ALT Linux.
+Install this package if you want to create RPM packages that use %name.
 
 %prep
 %setup -q -n %{name}-snapshot-%{version}
@@ -127,7 +141,7 @@ make check ||:
 %{_datadir}/desktop-directories/ggz*.directory
 
 %files devel
-%{_rpmmacrosdir}/ggz
+#%_rpmmacrosdir/ggz
 # GPLv2+
 %{_includedir}/ggzmod.h
 %{_libdir}/libggzmod.so
@@ -143,9 +157,19 @@ make check ||:
 %{_libdir}/libggzcore.so
 %{_libdir}/pkgconfig/ggzcore.pc
 %{_mandir}/man3/ggzcore_h.3*
+%exclude %_rpmmacrosdir/*
+
+%files -n rpm-macros-%{name}
+%_rpmmacrosdir/*
+
 
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt3_22.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * altlinux-policy-rpm-macros-packaging for ggz-base-libs-devel
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt3_22
 - update to new release by fcimport
 
