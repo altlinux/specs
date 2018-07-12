@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 %global snapshot 20060225
 Name:           duel3
 Version:        0.1
-Release:        alt3_0.24.%{snapshot}
+Release:        alt3_0.24.%{snapshot}.qa1
 Summary:        One on one spaceship duel in a 2D arena
 Group:          Games/Other
 License:        BSD
@@ -83,6 +83,12 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
 install -p -m 644 %{SOURCE3} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
 
+# It is the file in the package named Thumbs.db or Thumbs.db.gz, 
+# which is normally a Windows image thumbnail database. 
+# Such databases are generally useless in packages and were usually 
+# accidentally included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
+
 
 %files
 %doc Source/readme.txt license.txt music-credits.txt
@@ -93,6 +99,11 @@ install -p -m 644 %{SOURCE3} \
 
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.24.20060225.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * windows-thumbnail-database-in-package for duel3
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.24.20060225
 - update to new release by fcimport
 
