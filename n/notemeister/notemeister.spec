@@ -1,6 +1,6 @@
 Name: notemeister
 Version: 0.1.7
-Release: alt7.qa4.1
+Release: alt7.qa5
 
 Summary: NOTEMEISTER is a notes organizing tool for the GNOME2 desktop.
 
@@ -21,7 +21,7 @@ Requires: PyXML
 Requires: python-module-pygnome-gconf, python-module-pygtk-libglade, python-module-pygnome-bonobo
 
 # Automatically added by buildreq on Sun Jun 20 2004
-BuildRequires: python-base python-dev python-modules-encodings
+BuildRequires: python-base python-devel python-modules-encodings
 
 %description
 NOTEMEISTER is a notes organizing tool for the GNOME2 desktop.
@@ -33,8 +33,8 @@ NOTEMEISTER - программа для хранения заметок, предназначенная
 %prep
 %setup
 %patch
-%__subst "s|doc/%name|share/doc/%name|" setup.py
-%__subst "s|ICON_SIZE_POPUP|#ICON_SIZE_POPUP|" src/lib/Stock.py
+sed -i "s|doc/%name|share/doc/%name|" setup.py
+sed -i "s|ICON_SIZE_POPUP|#ICON_SIZE_POPUP|" src/lib/Stock.py
 
 %build
 python setup.py build
@@ -66,6 +66,12 @@ EOF
 %_liconsdir/*
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.7-alt7.qa5
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * altlinux-python-obsolete-buildreq-python-dev for notemeister
+  * postclean-03-private-rpm-macros for the spec file
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.7-alt7.qa4.1
 - Rebuild with Python-2.7
 
