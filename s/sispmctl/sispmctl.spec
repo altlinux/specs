@@ -1,6 +1,6 @@
 Name: sispmctl
 Version: 3.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: GEMBIRD Silver Shield PM Control
 License: GPL
@@ -31,12 +31,12 @@ Add users who need to control the device to _sispm group.
 
 %install
 %makeinstall
-install -pDm644 %SOURCE1 %buildroot%_sysconfdir/udev/rules.d/74-sispmctl.rules
+install -pDm644 %SOURCE1 %buildroot%_udevrulesdir/74-sispmctl.rules
 
 %files
 %_bindir/*
 %_man1dir/*
-%config(noreplace) %_sysconfdir/udev/rules.d/74-sispmctl.rules
+%config(noreplace) %_udevrulesdir/74-sispmctl.rules
 %doc AUTHORS ChangeLog README
 
 %pre
@@ -46,6 +46,11 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/udev/rules.d/74-sispmctl.rules
 # - consider web part
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 3.1-alt2.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for sispmctl
+
 * Wed May 09 2012 Michael Shigorin <mike@altlinux.org> 3.1-alt2
 - added watch file
 
