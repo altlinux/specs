@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
+Release: alt1.qa1
 %define oname ndg-httpsclient
 
 %def_with python3
@@ -86,6 +86,7 @@ This package contains tests for ndg-httpsclient.
 %package docs
 Summary: Documentation for ndg-httpsclient
 Group: Development/Documentation
+BuildArch: noarch
 
 %description docs
 This is a HTTPS client implementation for httplib and urllib2 based on
@@ -193,6 +194,11 @@ rm -f documentation/Makefile
 %endif
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for python-module-ndg-httpsclient-docs
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1
 - automated PyPI update
 
