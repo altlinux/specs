@@ -3,7 +3,7 @@
 
 Name: pilot-link
 Version: 0.12.5
-Release: alt3.1.1.1.1
+Release: alt3.1.1.1.1.qa1
 
 Summary: File transfer utilities between Linux and PalmPilots
 License: GPL
@@ -125,8 +125,8 @@ This package contains pilot-link python bindings.
 %make_install DESTDIR=%buildroot install
 # mandir1='$(mandir)/man1' mandir7='$(mandir)/man7' INSTALL="./libtool /usr/bin/install -p"
 
-mkdir -p %buildroot%_sysconfdir/udev/rules.d
-install -p -m644 doc/60-libpisock.rules %buildroot%_sysconfdir/udev/rules.d/75-lib%name.rules
+mkdir -p %buildroot%_udevrulesdir
+install -p -m644 doc/60-libpisock.rules %buildroot%_udevrulesdir/75-lib%name.rules
 
 %files
 %_bindir/pilot-*
@@ -138,7 +138,7 @@ install -p -m644 doc/60-libpisock.rules %buildroot%_sysconfdir/udev/rules.d/75-l
 %doc AUTHORS NEWS doc/*
 
 %files -n lib%name
-%_sysconfdir/udev/rules.d/*
+%_udevrulesdir/*
 %_libdir/libpisock.so.*
 %_libdir/libpisync.so.*
 %if_with tcl
@@ -169,6 +169,11 @@ install -p -m644 doc/60-libpisock.rules %buildroot%_sysconfdir/udev/rules.d/75-l
 %endif
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.12.5-alt3.1.1.1.1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for libpilot-link
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.12.5-alt3.1.1.1.1
 - rebuild with new perl 5.26.1
 
