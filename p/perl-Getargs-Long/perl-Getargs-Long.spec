@@ -2,7 +2,7 @@
 %define module_name Getargs-Long
 
 Name: perl-%module_name
-Version: 1.1010
+Version: 1.1012
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -39,6 +39,9 @@ common cases of all-mandatory and all-optional parameter lists.
 %perl_vendor_privlib/Getargs/
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1.1012-alt1
+- automated CPAN update
+
 * Sun Jul 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.1010-alt1
 - automated CPAN update
 
