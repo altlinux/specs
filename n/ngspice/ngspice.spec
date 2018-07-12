@@ -1,8 +1,11 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define _pkgdocdir %_docdir/%name-%version
 
 Name: ngspice
 Version: 27
-Release: alt1
+Release: alt2
 Summary: A mixed level/signal circuit simulator
 
 License: BSD
@@ -18,12 +21,16 @@ Source1: https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/%vers
 # not (bug 1047056, debian bug 737279)
 Patch: ngspice-26-blt-linkage-workaround.patch
 
-# Automatically added by buildreq on Sat Oct 07 2017
-# optimized out: glibc-kernheaders-x86 gnu-config libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel perl python-base python-modules xorg-xproto-devel
-BuildRequires: flex glibc-kernheaders-generic libXaw-devel libXext-devel libtinfo-devel mot-adms
+BuildRequires: gcc libgomp-devel flex glibc-kernheaders-generic
+BuildRequires: libXaw-devel
+BuildRequires: libXext-devel
+BuildRequires: libtinfo-devel
+BuildRequires: mot-adms
+BuildRequires: libfftw3-devel
+BuildRequires: readline-devel libncurses-devel
+Requires: %name-data = %EVR
+Requires: lib%name = %EVR
 
-Requires: %name-data = %version-%release
-    
 %description
 Ngspice is a general-purpose circuit simulator program.
 It implements three classes of analysis:
@@ -53,11 +60,18 @@ Buildarch: noarch
 %description data
 Data files for %name, a circuit simulator.
 
+%package -n lib%name
+Summary: Main library for %name
+Group: System/Libraries
+
+%description -n lib%name
+This package contains the library needed to run programs dynamically
+linked with %name.
+
 %package devel
 Group: Engineering
 Summary: Header files for %name, a circuit simulator
-Buildarch: noarch
-Requires: %name = %version-%release
+Requires: lib%name = %EVR
 
 %description devel
 Header files for %name, a circuit simulator.
@@ -94,12 +108,11 @@ export ACLOCAL_FLAGS=-Im4
 chmod +x configure
 
 %build
-# Adding BLT support
-export CFLAGS="%optflags -I%_includedir/blt"
-
+for opt in without-ngshared with-ngshared
+do
 %configure \
     --disable-silent-rules \
-    --${opt} \
+    --$opt \
     --disable-xgraph \
     --enable-adms \
     --enable-xspice \
@@ -114,18 +127,29 @@ export CFLAGS="%optflags -I%_includedir/blt"
     --enable-predictor \
     --enable-numparam \
     --enable-dot-global \
-    --enable-shared \
     --enable-ndev \
-    %nil
+    --enable-shared \
+    --with-readline=yes
+
+make clean
 %make_build
 
-%install
-%makeinstall_std
+# Once install to the temp dir
+rm -rf $(pwd)/INST-NGSPICE-${opt}
+make INSTALL="install -p" install DESTDIR=$(pwd)/INST-NGSPICE-${opt}
 
-# ADMS support
-# It seems that the below is not needed, compiled into binary already
-# (mtasaka, 20160628)
-cp -pr ./src/spicelib/devices/adms/ %buildroot%_datadir/%name
+done
+
+%install
+mkdir -p %buildroot%prefix
+for opt in without-ngshared with-ngshared
+do
+
+pushd INST-NGSPICE-${opt}
+cp -a * %buildroot
+popd
+
+done
 
 # Ensuring that all docs are under %%_pkgdocdir
 mkdir -p %buildroot%_pkgdocdir
@@ -149,14 +173,24 @@ cp -a \
 %files
 %_bindir/*
 
+%files -n lib%name
+%_libdir/*.so.*
+%_libdir/%name/
+
 %files data
 %_datadir/%name/
 %_man1dir/*
 %doc %_pkgdocdir
 
 %files devel
+%_libdir/*.so
 %_includedir/%name
 
 %changelog
+* Thu Jul 12 2018 Anton Midyukov <antohami@altlinux.org> 27-alt2
+- build shared library
+- fix buildrequires
+- enable unpackaged files in buildroot should terminate build
+
 * Thu Nov 02 2017 Anton Midyukov <antohami@altlinux.org> 27-alt1
 - Initial build for ALT Sisyphus.
