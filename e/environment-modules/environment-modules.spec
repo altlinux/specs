@@ -7,7 +7,7 @@ BuildRequires: imake libXt-devel xorg-cf-files
 
 Name:           environment-modules
 Version:        3.2.10
-Release:        alt1_23
+Release:        alt1_23.qa1
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -51,6 +51,7 @@ BuildRequires:  man-db
 Requires:       procps sysvinit-utils
 Provides:	environment(modules)
 Source44: import.info
+Requires: rpm-macros-%{name} = %{version}-%{release}
 
 %description
 The Environment Modules package provides for the dynamic modification of
@@ -76,6 +77,19 @@ suite of different applications.
 NOTE: You will need to get a new shell after installing this package to
 have access to the module alias.
 
+
+
+%package -n rpm-macros-%{name}
+Summary: Set of RPM macros for packaging %name-based applications
+Group: Development/Other
+# uncomment if macroses are platform-neutral
+#BuildArch: noarch
+# helps old apt to resolve file conflict at dist-upgrade (thanks to Stanislav Ievlev)
+Conflicts: environment-modules <= 3.2.10-alt1_23
+
+%description -n rpm-macros-%{name}
+Set of RPM macros for packaging %name-based applications for ALT Linux.
+Install this package if you want to create RPM packages that use %name.
 
 %prep
 %setup -q -n modules-%{version}
@@ -147,10 +161,20 @@ EOF
 %{_datadir}/modulefiles
 %{_mandir}/man1/module-c.1*
 %{_mandir}/man4/modulefile-c.4*
-%{_rpmmacrosdir}/%{name}
+%exclude %_rpmmacrosdir/*
+#%_rpmmacrosdir/%{name}
+
+%files -n rpm-macros-%{name}
+%_rpmmacrosdir/*
+
 
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_23.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * altlinux-policy-rpm-macros-packaging for environment-modules
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_23
 - update to new release by fcimport
 
