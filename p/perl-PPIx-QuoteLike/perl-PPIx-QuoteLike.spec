@@ -1,20 +1,19 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(Carp.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(Exporter.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(PPI/Document.pm) perl(PPI/Dumper.pm) perl(PPIx/Regexp.pm) perl(Pod/Usage.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(Test/Without/Module.pm) perl(base.pm) perl(constant.pm) perl(strict.pm) perl(warnings.pm)
-# END SourceDeps(oneline)
-%define module_version 0.005
-%define module_name PPIx-QuoteLike
 %define _unpackaged_files_terminate_build 1
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Carp.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(Exporter.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(PPI/Document.pm) perl(PPI/Dumper.pm) perl(PPIx/Regexp.pm) perl(Pod/Usage.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(Test/Without/Module.pm) perl(base.pm) perl(constant.pm) perl(strict.pm) perl(warnings.pm) perl(charnames.pm)
+# END SourceDeps(oneline)
+%define module_name PPIx-QuoteLike
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.005
-Release: alt2
+Version: 0.006
+Release: alt1
 Summary: Parse Perl string literals and string-literal-like things.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/W/WY/WYANT/%{module_name}-%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/W/WY/WYANT/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -23,7 +22,7 @@ reasonably like string literals. Its real reason for being is to find
 interpolated variables for Perl::Critic policies and
 similar code.
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,6 +35,9 @@ similar code.
 %perl_vendor_privlib/P*
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1
+- automated CPAN update
+
 * Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.005-alt2
 - to Sisyphus as perl-Perl-Critic dep
 
