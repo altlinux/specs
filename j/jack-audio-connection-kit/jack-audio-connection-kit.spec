@@ -1,7 +1,7 @@
 Summary: The Jack Audio Connection Kit
 Name: jack-audio-connection-kit
 Version: 1.9.12
-Release: alt1
+Release: alt1.qa1
 Epoch: 1
 License: GPLv2 and GPLv2+ and LGPLv2+
 Group: Sound
@@ -52,7 +52,7 @@ necessary for developing programs which will use JACK
 %package utils
 Summary: Utilities for JACK
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Provides: jackit-utils = %epoch:%version-%release
 Obsoletes: jackit-utils < %epoch:%version
 
@@ -131,6 +131,11 @@ export RPM_FILES_TO_LD_PRELOAD_jack=%_libdir/jack/*.so
 %_man1dir/jackrec.1*
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.9.12-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for jack-audio-connection-kit
+
 * Mon May 07 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.9.12-alt1
 - Updated to 1.9.12.
 
