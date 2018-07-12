@@ -55,7 +55,7 @@
 
 Name: pve-%rname
 Version: 2.11.1
-Release: alt5%ubt.1
+Release: alt5%ubt.1.qa1
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
 Group: Emulators
@@ -415,9 +415,9 @@ ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/qemu
 install -m 0755 vma %buildroot%_bindir/vma
 
 rm -f %buildroot%_bindir/check-*
-rm -f %buildroot%_sysconfdir/udev/rules.d/*
+rm -f %buildroot%_udevrulesdir/*
 
-install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/udev/rules.d/%rulenum-%rname-kvm.rules
+install -D -m 0644 %SOURCE4 %buildroot%_udevrulesdir/%rulenum-%rname-kvm.rules
 install -D -m 0755 %rname-kvm.control.in %buildroot%_controldir/kvm
 
 %if_enabled vnc_sasl
@@ -474,7 +474,7 @@ fi
 %_datadir/kvm
 %_man1dir/qemu*
 %_man8dir/qemu*
-%_sysconfdir/udev/rules.d/%rulenum-%rname-kvm.rules
+%_udevrulesdir/%rulenum-%rname-kvm.rules
 %_controldir/*
 %if_enabled vnc_sasl
 %config(noreplace) %_sysconfdir/sasl2/%rname.conf
@@ -500,6 +500,11 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 2.11.1-alt5%ubt.1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for pve-qemu-common
+
 * Thu May 17 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.1-alt5%ubt.1
 - remove problematic 'evdev 86' key from en-us keymap (closes: #34856)
 
