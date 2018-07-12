@@ -11,7 +11,7 @@
 %define bugfix 2
 Name: qt5-tools
 Version: 5.9.6
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -203,7 +203,7 @@ done
 # icons
 install -m644 -p -D src/assistant/assistant/images/assistant.png %buildroot/%_iconsdir/hicolor/32x32/apps/assistant-qt5.png
 install -m644 -p -D src/assistant/assistant/images/assistant-128.png %buildroot/%_iconsdir/hicolor/128x128/apps/assistant-qt5.png
-install -m644 -p -D src/designer/src/designer/images/designer.png %buildroot/%_iconsdir/hicolor/32x32/apps/designer-qt5.png
+install -m644 -p -D src/designer/src/designer/images/designer.png %buildroot/%_iconsdir/hicolor/128x128/apps/designer-qt5.png
 install -m644 -p -D src/qdbus/qdbusviewer/images/qdbusviewer.png %buildroot/%_iconsdir/hicolor/32x32/apps/qdbusviewer-qt5.png
 install -m644 -p -D src/qdbus/qdbusviewer/images/qdbusviewer-128.png %buildroot/%_iconsdir/hicolor/128x128/apps/qdbusviewer-qt5.png
 %if_enabled qtconfig
@@ -212,7 +212,7 @@ convert -resize 32x32 src/qtconfig/images/appicon.png %buildroot/%_iconsdir/hico
 # linguist icons
 for icon in src/linguist/linguist/images/icons/linguist-*-32.png ; do
   size=$(echo $(basename ${icon}) | cut -d- -f2)
-  install -p -m644 -D ${icon} %buildroot/%_iconsdir/hicolor/${size}x${size}/apps/linguist.png
+  install -p -m644 -D ${icon} %buildroot/%_iconsdir/hicolor/${size}x${size}/apps/linguist-qt5.png
 done
 
 %files common
@@ -327,6 +327,9 @@ done
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Thu Jul 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt2%ubt
+- fix menu items russian translation, icons
+
 * Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
 - new version
 
