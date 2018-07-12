@@ -15,7 +15,7 @@ BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 
 Name:    fontpackages
 Version: 1.44
-Release: alt5_21
+Release: alt5_21.qa1
 Summary: Common directory and macro definitions used by font packages
 
 # Mostly means the scriptlets inserted via this package do not change the
@@ -52,6 +52,7 @@ Summary: Templates and macros used to create font packages
 
 Requires: fontconfig
 Requires: rpm-macros-fontpackages rpm-build-fonts xorg-font-encodings
+Requires: rpm-macros-%{name} = %{version}-%{release}
 
 %description devel
 This package contains spec templates, rpm macros and other materials used to
@@ -76,6 +77,19 @@ Requires: fedora-packager
 %description tools
 This package contains tools used to check fonts and font packages.
 
+
+
+%package -n rpm-macros-%{name}
+Summary: Set of RPM macros for packaging %name-based applications
+Group: Development/Other
+# uncomment if macroses are platform-neutral
+#BuildArch: noarch
+# helps old apt to resolve file conflict at dist-upgrade (thanks to Stanislav Ievlev)
+Conflicts: fontpackages-devel <= 1.44-alt5_21
+
+%description -n rpm-macros-%{name}
+Set of RPM macros for packaging %name-based applications for ALT Linux.
+Install this package if you want to create RPM packages that use %name.
 
 %prep
 %setup -q
@@ -132,12 +146,22 @@ rm -rf %buildroot%{spectemplatedir}
 %files devel
 %doc --no-dereference license.txt
 %doc readme.txt
-%{_rpmmacrosdir}/macros*
+#%_rpmmacrosdir/macros*
 %dir %{ftcgtemplatedir}
 %{ftcgtemplatedir}/*conf
 %{ftcgtemplatedir}/*txt
+%exclude %_rpmmacrosdir/*
+
+%files -n rpm-macros-%{name}
+%_rpmmacrosdir/*
+
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1.44-alt5_21.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * altlinux-policy-rpm-macros-packaging for fontpackages-devel
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.44-alt5_21
 - update to new release by fcimport
 
