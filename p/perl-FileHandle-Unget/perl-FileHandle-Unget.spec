@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist FileHandle-Unget
 Name: perl-%dist
-Version: 0.1631
+Version: 0.1634
 Release: alt1
 
 Summary: FileHandle which supports multi-byte unget
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/D/DC/DCOPPIT/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Dec 20 2010
-BuildRequires: perl-Devel-Leak perl-Module-Install perl(File/Slurp.pm) perl(Test/Compile.pm)
+BuildRequires: perl-Devel-Leak perl-Module-Install perl(File/Slurp.pm) perl(Test/Compile.pm) perl(File/Slurper.pm)
 
 %description
 FileHandle::Unget operates exactly the same as FileHandle, except that
@@ -36,6 +36,9 @@ character.  It also provides ungets to unget a string.
 %perl_vendor_privlib/FileHandle/Unget.pm
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.1634-alt1
+- automated CPAN update
+
 * Sun Jul 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.1631-alt1
 - automated CPAN update
 
