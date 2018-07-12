@@ -19,7 +19,7 @@ BuildRequires: /proc
 
 Name:           openni-primesense
 Version:        5.1.6.6
-Release:        alt2_11%{?gitrev}
+Release:        alt2_11%{?gitrev}.qa1
 Summary:        PrimeSensor/Kinect Modules for OpenNI
 Group:          System/Libraries
 License:        ASL 2.0
@@ -74,13 +74,13 @@ sed -i 's|make -j$(calc_jobs_number) -C ../Build|make -j$(calc_jobs_number) -C .
 
 %install
 pushd Platform/Linux/Redist/Sensor-Bin-Linux-%{niarch}-v%{version}
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/
+mkdir -p $RPM_BUILD_ROOT%_udevrulesdir/
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
 INSTALL_LIB=$RPM_BUILD_ROOT%{_libdir}/ \
 INSTALL_BIN=$RPM_BUILD_ROOT%{_bindir}/ \
 INSTALL_ETC=$RPM_BUILD_ROOT%{_sysconfdir}/openni/primesense/ \
 SERVER_LOGS_DIR=$RPM_BUILD_ROOT%{_var}/log/primesense/ \
-INSTALL_RULES=$RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/ \
+INSTALL_RULES=$RPM_BUILD_ROOT%_udevrulesdir/ \
 ./install.sh -n
 popd
 
@@ -89,8 +89,8 @@ popd
 
 rm -rf $RPM_BUILD_ROOT%{_var}/log/primesense
 
-rm $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/55-primesense-usb.rules
-install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/55-primesense-usb.rules
+rm $RPM_BUILD_ROOT%_udevrulesdir/55-primesense-usb.rules
+install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%_udevrulesdir/55-primesense-usb.rules
 
 
 
@@ -112,11 +112,16 @@ fi
 %doc LICENSE 
 %dir %{_sysconfdir}/openni/primesense
 %config(noreplace) %{_sysconfdir}/openni/primesense/*
-%config(noreplace) %{_sysconfdir}/udev/rules.d/55-primesense-usb.rules
+%config(noreplace) %_udevrulesdir/55-primesense-usb.rules
 %{_libdir}/*.so
 %{_bindir}/XnSensorServer
 
 %changelog
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 5.1.6.6-alt2_11.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for openni-primesense
+
 * Wed May 09 2018 Igor Vlasenko <viy@altlinux.ru> 5.1.6.6-alt2_11
 - fixed build - added BR: /proc
 
