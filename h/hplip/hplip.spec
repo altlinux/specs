@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %def_enable cupstifffilter
 %def_enable sane_backend
 %def_enable autostart
@@ -28,7 +29,7 @@
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
 Epoch: 1
-Version: 3.17.10
+Version: 3.18.6
 Release: alt1
 %if_without ernie
 License: GPLv2+/MIT/BSD
@@ -37,7 +38,8 @@ License: GPLv2+/MIT/BSD/hardware specific
 %endif
 Group: Publishing
 #URL: http://hplip.sourceforge.net -- old
-URL: http://hplipopensource.com/
+#URL: http://hplipopensource.com/ -- old
+URL: https://developers.hp.com/hp-linux-imaging-and-printing
 Packager: Igor Vlasenko <viy@altlinux.org>
 
 %define hpijsname hpijs
@@ -60,7 +62,10 @@ Requires: %name-hpcups = %{?epoch:%epoch:}%version-%release
 Requires: wget
 
 # for hplip/base/validation.py (fc bug #1118724).
-Requires: gnupg
+#Requires: gnupg
+# set require directly to /usr/bin/gpg, because gnupg2 and gnupg ships it,
+# but gnupg will be deprecated in the future
+Requires: %{_bindir}/gpg
 
 %if_enabled python_code
 ###Requires: python
@@ -78,7 +83,7 @@ Requires: service => 0.5.9-alt1
 
 BuildPreReq: libsane-devel
 # Automatically added by buildreq on Thu Sep 22 2005
-BuildRequires: gcc-c++ libcups-devel libjpeg-devel libnet-snmp-devel libssl-devel libstdc++-devel libusb-devel libusb-compat-devel libdbus-devel
+BuildRequires: gcc-c++ libcups-devel libjpeg-devel libnet-snmp-devel libssl-devel libstdc++-devel libusb-devel libusb-compat-devel libdbus-devel zlib-devel
 
 %if_enabled python_code
 %if_enabled qt3
@@ -132,11 +137,11 @@ Patch1: hplip-3.12.9-alt-urlhandler.patch
 # dead patch 2
 Patch2: hplip-3.9.12-alt-fix-udev-rules-ppdev.patch
 Patch4: hplip-3.9.12-alt-hplip-desktop.patch
-Patch5: hplip-3.15.9-alt-link-libhpipp.patch
+Patch5: hplip-3.17.11-alt-link-libhpipp.patch
 Patch6: hplip-3.15.9-alt-systemd.patch
 Patch7: hplip-3.16.7-alt-link-python2.patch
 Patch8: hplip-3.16.7-alt-link-python3.patch
-Patch9: hplip-3.16.11-alt-auth.patch
+Patch9: hplip-3.18.6-alt-auth.patch
 
 Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.patch
 # it is patch 10 rediffed
@@ -172,6 +177,14 @@ Patch125: hplip-noernie.patch
 %endif
 Patch126: hplip-appdata.patch
 Patch127: hplip-check-cups.patch
+Patch130: hplip-typo.patch
+# python3 - recent HP release removed encoding/decoding to utf-8 in fax/pmlfax.py -
+# that results in text string going into translate function in base/utils.py, which
+# expects binary string because of parameters. Remove this patch if base/utils.py
+# code gets fixed.
+Patch131: hplip-use-binary-str.patch
+# m278-m281 doesn't work correctly again
+Patch132: hplip-colorlaserjet-mfp-m278-m281.patch
 # end fedora patches
 
 # ubuntu patches
@@ -546,6 +559,12 @@ rm prnt/hpcups/ErnieFilter.{cpp,h} prnt/hpijs/ernieplatform.h
 
 # hp-check shows 'CUPS incompatible or not running' even if CUPS is running (bug #1456467)
 %patch127 -p1 -b .check-cups
+ 
+# hp-firmware:NameError: name 'INTERACTIVE_MODE4' is not defined (bug #1533869)
+%patch130 -p1 -b .typo
+
+%patch131 -p1 -b .use-binary-str
+%patch132 -p1 -b .colorlaserjet-mfp-m278-m281
 
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
@@ -566,11 +585,11 @@ tar -xf %SOURCE6
 
 fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python,#!/usr/bin/python%{pysuffix},'
 
+# ELF binary, if found
+rm -f hpps hpcups dat2drv
+
 %build
 
-for i in ppd/hpijs/*.ppd ppd/hpcups/*.ppd ; do
-    sed -i s,foomatic-rip-hplip,foomatic-rip,g $i
-done
 # we use source that is not pristine; in upstream they gzipped it :(
 gzip_n_mov_ppd() {
 #	mkdir tmp1; cp -a $1/*.ppd tmp1
@@ -578,11 +597,10 @@ gzip_n_mov_ppd() {
 #	mv tmp1/*.ppd $1/; rmdir tmp1
 }
 
-gzip -9 fax/ppd/HP-Fax*-hpcups.ppd fax/ppd/HP-Fax*-hpijs.ppd
-#gzip -9 prnt/ps/*.ppd
-#gzip -9 ppd/*.ppd
+gzip_n_mov_ppd fax/ppd
 gzip_n_mov_ppd prnt/ps
-gzip_n_mov_ppd ppd/hpijs
+gzip_n_mov_ppd ppd/classppd/hpcups
+gzip_n_mov_ppd ppd/classppd/ps
 gzip_n_mov_ppd ppd/hpcups
 
 # Work-around Makefile.am imperfections.
@@ -794,6 +812,11 @@ python%{pysuffix} -m compileall $RPM_BUILD_ROOT%_datadir/%name
 pushd $RPM_BUILD_ROOT
 #rm  usr/share/hplip/hplip-install usr/share/hplip/install.*
 popd
+
+# ELF object out of allowed directory tree
+rm -rf \
+   %{buildroot}%{_datadir}/hplip/locatedriver* \
+   %{buildroot}%{_datadir}/hplip/dat2drv*
 
 # Regenerate hpcups PPDs on upgrade if necessary (bug #579355).
 install -p -m755 %{SOURCE101} %{buildroot}%{_bindir}/hpcups-update-ppds
@@ -1042,12 +1065,18 @@ fi
 
 %files common
 # HPIP
-%_libdir/libhpip*so.*
-%_libdir/libhpdiscovery.so.*
+%{_libdir}/libhpip.so.0
+%{_libdir}/libhpip.so.0.0.1
+%{_libdir}/libhpipp.so.0
+%{_libdir}/libhpipp.so.0.0.1
+%{_libdir}/libhpdiscovery.so.0
+%{_libdir}/libhpdiscovery.so.0.0.1
 %exclude %_libdir/libhpip*so
 %exclude %_libdir/libhpdiscovery.so
 # The so symlink is required here (see RH bug #489059).
-%_libdir/libhpmud*so*
+%{_libdir}/libhpmud.so
+%{_libdir}/libhpmud.so.0
+%{_libdir}/libhpmud.so.0.0.6
 %{_udevrulesdir}/56-hpmud.rules
 %{_tmpfilesdir}/hplip.conf
 
@@ -1080,6 +1109,12 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Fri Jul 13 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.18.6-alt1
+- new version
+
+* Tue Mar 13 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.17.11-alt1
+- new version
+
 * Wed Oct 25 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.17.10-alt1
 - new version
 
