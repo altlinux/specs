@@ -1,7 +1,7 @@
 # see LIBTGVOIP_VERSION in VoIPController.h for a version
 %define soname 0.2
 Name: libtgvoip
-Version: 2.1
+Version: 2.1.1
 Release: alt1
 
 Summary: VoIP library for Telegram clients
@@ -87,6 +87,12 @@ cp -a audio/*.h %buildroot%_includedir/tgvoip/audio/
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Jul 13 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- new version (2.1.1) with rpmgs script
+ + Enabled delay-agnostic AEC on Windows & Linux, it seems to make a difference after all (telegramdesktop/tdesktop#4881)
+ + Fixed PulseAudio crashes, at least I hope so (closes #42)
+ + Fixed parsing of floating-point server config values in some locales in Linux
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1-alt1
 - build new version
 
