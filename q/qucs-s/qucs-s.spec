@@ -1,6 +1,6 @@
 Name: qucs-s
 Version: 0.0.20
-Release: alt2
+Release: alt2.1
 
 Summary: Circuit simulator
 License: GPLv2+
@@ -62,6 +62,9 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Fri Jul 13 2018 Anton Midyukov <antohami@altlinux.org> 0.0.20-alt2.1
+- rebuilt for aarch64
+
 * Tue Nov 14 2017 Anton Midyukov <antohami@altlinux.org> 0.0.20-alt2
 - Fix path to xspice
 
