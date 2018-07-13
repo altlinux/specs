@@ -1,8 +1,8 @@
-%def_with quicktime
+%def_without quicktime
 
 Name: kino
 Version: 1.3.4
-Release: alt9
+Release: alt10
 
 Summary: Non-linear DV editor
 Group: Video
@@ -144,6 +144,9 @@ fi
 #_datadir/%name/scripts/dvdauthor/
 
 %changelog
+* Fri Jul 13 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.4-alt10
+- rebuild with quicktime disabled
+
 * Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.4-alt9
 - build without obsoleted dvdauthor subpackage
 
