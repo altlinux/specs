@@ -45,7 +45,7 @@
 
 Name: mariadb
 Version: 10.3.8
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -118,7 +118,6 @@ BuildRequires: libaio-devel libedit-devel perl-GD perl-threads perl-Memoize perl
 BuildRequires: liblz4-devel zlib-devel bzlib-devel liblzma-devel liblzo2-devel libsnappy-devel libzstd-devel
 BuildRequires: chrooted control
 BuildRequires: libxml2-devel
-BuildRequires: libnuma-devel
 BuildRequires: libcurl-devel
 %{?_with_libwrap:BuildRequires: libwrap-devel}
 %{?_with_cassandra:BuildRequires: boost-devel}
@@ -128,12 +127,9 @@ BuildRequires: libcurl-devel
 %{?_with_systemd:BuildRequires: libsystemd-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel}
 %{?_with_libarchive: BuildRequires: libarchive-devel}
-
-%if_with galera
-Provides: %name-galera = %EVR
-Obsoletes: %name-galera < %EVR
+%ifnarch %arm
+BuildRequires: libnuma-devel
 %endif
-
 
 %description
 The MariaDB software delivers a very fast, multi-threaded, multi-user,
@@ -185,16 +181,37 @@ Provides: %name-engine-tokudb = %EVR
 Obsoletes: %name-engine-tokudb < %EVR
 %endif
 Conflicts: MySQL-server
-%if_with galera
-Provides: %name-galera-server = %EVR
-Obsoletes: %name-galera-server < %EVR
-Requires: libgalera_smm rsync lsof
-%endif
 PreReq: chrooted %name-server-control
 
 %description server
-Core mysqld server. For a full MariaDB database server, install
-package 'mariadb'.
+MariaDB is a multi-user, multi-threaded SQL database server. It is a
+client/server implementation consisting of a server daemon (mysqld)
+and many different client programs and libraries. This package contains
+the MariaDB server and some accompanying files and directories.
+MariaDB is a community developed branch of MySQL.
+
+%package server-galera
+Summary: The configuration files and scripts for galera replication
+Group: Databases
+Requires: %name-common = %EVR
+Requires: %name-server = %EVR
+# wsrep requirements
+Requires: libgalera_smm rsync lsof
+# obsoletion of mariadb-galera-server
+Provides: %name-galera-server = %EVR
+Obsoletes: %name-galera-server < %EVR
+Provides: %name-galera = %EVR
+Obsoletes: %name-galera < %EVR
+Conflicts: %name-server < 10.3.8-alt2%ubt
+
+%description server-galera
+MariaDB is a multi-user, multi-threaded SQL database server. It is a
+client/server implementation consisting of a server daemon (mysqld)
+and many different client programs and libraries. This package contains
+the MariaDB server and some accompanying files and directories.
+MariaDB is a community developed branch of MySQL.
+
+This package contains configuration files and scripts for galera replication.
 
 %package server-control
 Summary: MariaDB database server facility control
@@ -469,6 +486,7 @@ mv %buildroot/etc/systemd/system/mariadb.service.d/tokudb.conf %buildroot%_sysco
 
 %if_with galera
 # install galera config file
+sed -i -r 's|^wsrep_provider=none|wsrep_provider=%_libdir/galera/libgalera_smm.so|' BUILD/support-files/wsrep.cnf
 install -p -m 0644 BUILD/support-files/wsrep.cnf %buildroot%_sysconfdir/my.cnf.d/galera.cnf
 # rm upstream script
 rm -f %buildroot%_bindir/galera_new_cluster
@@ -639,9 +657,6 @@ fi
 %config %_sysconfdir/chroot.d/*
 %config(noreplace) %_sysconfdir/my.cnf
 %config(noreplace) %_sysconfdir/my.cnf.d/server.cnf
-%if_with galera
-%config(noreplace) %_sysconfdir/my.cnf.d/galera.cnf
-%endif
 %config(noreplace) %_sysconfdir/my.cnf.server/*.cnf
 %if_with tokudb
 %config(noreplace) %_sysconfdir/my.cnf.d/tokudb.cnf
@@ -672,21 +687,11 @@ fi
 %_datadir/mysql/mroonga
 %endif
 
-%if_with galera
-%_bindir/wsrep_*
-%_bindir/galera_new_cluster
-%endif
-
 %if_with rocksdb
 %_bindir/myrocks_hotbackup
 %_bindir/mysql_ldb
 %_bindir/sst_dump
 %endif
-
-%_bindir/clustercheck
-%_unitdir/mariadbcheck.socket
-%_unitdir/mariadbcheck@.service
-%config(noreplace) %_sysconfdir/xinetd.d/mariadbcheck
 
 %_sbindir/*
 %prefix/%plugindir/*
@@ -729,6 +734,17 @@ fi
 %dir %ROOT/run/systemd
 %ghost %ROOT/run/systemd/notify
 
+%if_with galera
+%files server-galera
+%doc Docs/README-wsrep
+%_bindir/wsrep_*
+%_bindir/galera_new_cluster
+%_bindir/clustercheck
+%_unitdir/mariadbcheck.socket
+%_unitdir/mariadbcheck@.service
+%config(noreplace) %_sysconfdir/xinetd.d/mariadbcheck
+%config(noreplace) %_sysconfdir/my.cnf.d/galera.cnf
+%endif
 
 %if_with common
 %files common
@@ -840,6 +856,9 @@ fi
 %endif
 
 %changelog
+* Fri Jul 13 2018 Alexey Shabalin <shaba@altlinux.ru> 10.3.8-alt2%ubt
+- split galera to mariadb-server-galera package
+
 * Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 10.3.8-alt1%ubt
 - 10.3.8
 
