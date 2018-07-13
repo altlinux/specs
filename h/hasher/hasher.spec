@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.3.31
+Version: 1.3.32
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -58,6 +58,15 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Fri Jul 13 2018 Dmitry V. Levin <ldv@altlinux.org> 1.3.32-alt1
+- hsh-rebuild --query-repackage (by Ivan Zakharyaschev):
+  + changed to use make_srpm_from_pkgtar(),
+    this fixes --query-repackage option for some use cases;
+  + made --query-repackage option more lightweight by using .nosrc.rpm.
+- hsh-initroot: create a cutdown version of system /proc/cpuinfo
+  inside chroot so that some cpu information could be obtained
+  when /proc is not mounted.
+
 * Wed Nov 22 2017 Dmitry V. Levin <ldv@altlinux.org> 1.3.31-alt1
 - hsh-initroot: if /.host/postin hook is available, execute it
   after ldconfig and adjust_kernel_headers the same way
