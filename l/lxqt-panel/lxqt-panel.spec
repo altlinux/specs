@@ -1,6 +1,6 @@
 Name: lxqt-panel
 Version: 0.13.0
-Release: alt1
+Release: alt1.1
 
 Summary: Desktop panel
 License: LGPL
@@ -10,6 +10,7 @@ Url: https://lxqt.org
 Source: %name-%version.tar
 Patch: alt-settings.patch
 
+BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: liblxqt-devel
 BuildRequires: libqtxdg-devel qt5-base-devel qt5-tools-devel
@@ -44,7 +45,7 @@ Requires: udisks2 gvfs
 Summary: Development headers for %name
 Group: Development/C++
 BuildArch: noarch
-Requires: %name = %version
+Requires: %name = %EVR
 
 %description devel
 This package provides the development files for %name.
@@ -75,6 +76,9 @@ This package provides the development files for %name.
 %_includedir/*/*.h
 
 %changelog
+* Fri Jul 13 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1.1
+- fix buildrequires
+
 * Thu May 24 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
 - new version 0.13.0
 
