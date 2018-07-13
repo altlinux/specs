@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 7.3.1
-Release: alt4
+Release: alt5
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -16,7 +16,7 @@ Url: http://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20180130
+%define snapshot 20180712
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -127,8 +127,7 @@ Patch110: gcc-foffload-default.patch
 Patch111: gcc-Wno-format-security.patch
 # Patch112: gcc-aarch64-sanitizer-fix.patch
 Patch113: gcc-rh1512529-aarch64.patch
-Patch114: gcc-pr84524.patch
-Patch115: gcc-pr84128.patch
+Patch114: gcc-pr84128.patch
 
 # Debian patches.
 Patch201: gcc-textdomain.diff
@@ -775,6 +774,20 @@ fortran%psuffix
 in order to explicitly use the GNU Fortran compiler version %version.
 
 ####################################################################
+# The GNU Fortran Compiler documentation
+
+%package fortran-doc
+Summary: The GNU Fortran Compiler documentation
+Group: Development/Other
+# This is not a noarch subpackage because of libquadmath_arches.
+#BuildArch: noarch
+Requires: %name-doc = %EVR
+
+%description fortran-doc
+This package contains documentation for the GNU Fortran Compiler
+version %version.
+
+####################################################################
 # Ada 95 Libraries
 
 %package -n libgnat%gcc_branch
@@ -815,7 +828,7 @@ package includes the static libraries needed for Ada 95 development.
 # Ada 95 Compiler
 
 %package gnat
-Summary: Ada 95 support for gcc
+Summary: The GNU Ada Compiler
 Group: Development/Other
 Obsoletes: gcc6-gnat gcc5-gnat gcc4.9-gnat gcc4.8-gnat gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
 PreReq: gcc-gnat-common
@@ -830,6 +843,20 @@ If you have multiple versions of the GNU Compiler Collection
 installed on your system, you may want to execute
 gnat%psuffix
 in order to explicitly use the GNU Ada compiler version %version.
+
+####################################################################
+# The GNU Ada Compiler documentation
+
+%package gnat-doc
+Summary: The GNU Ada Compiler documentation
+Group: Development/Other
+# This is not a noarch subpackage because of gnat_arches.
+#BuildArch: noarch
+Requires: %name-doc = %EVR
+
+%description gnat-doc
+This package contains documentation for the GNU Ada Compiler
+version %version.
 
 ####################################################################
 # Go Libraries
@@ -864,9 +891,9 @@ Requires: libgo%gcc_branch-devel = %EVR
 This package includes the static libraries needed for Go development.
 
 ####################################################################
-# Go Compiler
+# The GNU compiler for the Go programming language
 %package go
-Summary: Go support for GCC
+Summary: The GNU compiler for the Go programming language
 Group: Development/Other
 PreReq: gcc-go-common >= 1.4.15
 Requires: %name = %EVR
@@ -880,6 +907,20 @@ If you have multiple versions of the GNU Compiler Collection
 installed on your system, you may want to execute
 go%psuffix
 in order to explicitly use the GNU Go compiler version %version.
+
+####################################################################
+# Documentation for the GNU compiler for the Go programming language
+
+%package go-doc
+Summary: Documentation for the GNU compiler for the Go programming language
+Group: Development/Other
+# This is not a noarch subpackage because of go_arches.
+#BuildArch: noarch
+Requires: %name-doc = %EVR
+
+%description go-doc
+This package contains documentation for the GNU compiler version %version
+for the Go programming language.
 
 ####################################################################
 # GCC sources
@@ -948,7 +989,6 @@ version %version.
 %patch111 -p0
 %patch113 -p0
 %patch114 -p0
-%patch115 -p0
 
 # Debian patches.
 %patch201 -p2
@@ -1887,7 +1927,13 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %gcc_target_libdir/libcaf_single.a
 %dir %gcc_target_libexecdir/
 %gcc_target_libexecdir/f951
+
+%files fortran-doc
+%_infodir/gfortran.info*
 %endif #with_fortran
+%ifarch %libquadmath_arches
+%{?_with_fortran:%_infodir/libquadmath.info*}
+%endif
 
 %if_with ada
 %files gnat
@@ -1915,6 +1961,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %config %_sysconfdir/buildreqs/packages/substitute.d/libgnat%gcc_branch-devel-static
 %dir %gcc_target_libdir/
 %gcc_target_libdir/libgna*.a
+
+%files gnat-doc
+%_infodir/gnat*.info*
 %endif #with_ada
 
 %if_with go
@@ -1930,6 +1979,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %dir %gcc_target_libexecdir/
 %gcc_target_libexecdir/go1
 %gcc_target_libexecdir/cgo
+
+%files go-doc
+%_infodir/gccgo.info*
 
 %files -n libgo11
 %_libdir/libgo.so.11*
@@ -1987,11 +2039,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif
 %_infodir/libgomp*.info*
 %{?_with_jit:%_infodir/libgccjit.info*}
-%{?_with_fortran:%_infodir/gfortran.info*}
-%ifarch %libquadmath_arches
-%{?_with_fortran:%_infodir/libquadmath.info*}
-%endif
-%{?_with_ada:%_infodir/gnat*.info*}
+%{?_with_go:%exclude %_infodir/gccgo.info*}
 
 %if_with pdf
 %doc gcc/doc/cpp*.pdf
@@ -2001,6 +2049,12 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Fri Jul 13 2018 Dmitry V. Levin <ldv@altlinux.org> 7.3.1-alt5
+- Updated to redhat/gcc-7-branch r262599 (closes: #35089).
+- Synced with Fedora gcc 7.3.1-6.
+- Moved documentation for Fortran, Ada, and Go compilers from %name-doc
+  to %name-fortran-doc, %name-gnat-doc, and %name-go-doc subpackages.
+
 * Thu May 24 2018 Dmitry V. Levin <ldv@altlinux.org> 7.3.1-alt4
 - Updated to redhat/gcc-7-branch r258210.
 - Synced with Fedora gcc 7.3.1-5.
