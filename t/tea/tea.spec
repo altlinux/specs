@@ -1,5 +1,5 @@
 Name: tea
-Version: 44.1.1
+Version: 45.0.2
 Release: alt1
 
 Summary: Powerful text editor with many HTML editing and text processing functions
@@ -10,23 +10,22 @@ License: GPL
 Group: Text tools
 Url: http://semiletov.org/tea/
 
-Source: http://semiletov.org/tea/dloads/tea-%version.tar
+#Source: http://semiletov.org/tea/dloads/tea-%version.tar
+# Source-url: https://github.com/psemiletov/tea-qt/archive/%version.tar.gz
+Source: %name-%version.tar
 
-# Automatically added by buildreq on Sun Apr 26 2009
-BuildRequires: gcc-c++ libaspell-devel libqt4-devel
+BuildRequires(pre): rpm-macros-qt5
+BuildRequires: gcc-c++ zlib-devel libaspell-devel qt5-base-devel qt5-declarative-devel
 
 %description
-Tea is a useful and simple in use GTK-based editor for GNU/Linux and
-FreeBSD, released under GPL. It has not any deps except GTK+ 2.6 (or
-higher), GnomeVFS, LibGconf and modern version of GCC (you have it with
-your Linux-distro).
+Tea is a useful and simple in use Qt-based editor for GNU/Linux and
+FreeBSD, released under GPL.
 
 %prep
 %setup
-%__subst "s|.*Ягодная.*||" rlvn.qrc
 
 %build
-%qmake_qt4
+%qmake_qt5
 %make_build
 
 %install
@@ -60,6 +59,10 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Jul 13 2018 Vitaly Lipatov <lav@altlinux.ru> 45.0.2-alt1
+- new version (45.0.2) with rpmgs script
+- build with Qt5
+
 * Sun Dec 10 2017 Vitaly Lipatov <lav@altlinux.ru> 44.1.1-alt1
 - new version 44.1.1 (with rpmrb script)
 
