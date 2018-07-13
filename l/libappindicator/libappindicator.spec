@@ -5,7 +5,7 @@
 
 Name: libappindicator
 Version: %ver_major.0
-Release: alt8
+Release: alt8.1
 Summary: Application indicators library
 
 Group: System/Libraries
@@ -152,7 +152,8 @@ mkdir build-gtk2 build-gtk3
 pushd build-gtk2
 export CFLAGS="%optflags $CFLAGS -Wno-deprecated-declarations"
 %configure %opts --with-gtk=2
-%make_build
+#make_build
+%make
 popd
 
 pushd build-gtk3
@@ -247,6 +248,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Fri Jul 13 2018 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt8.1
+- Build Compile into one process (Fix FTBFS on a multiprocessor system)
+
 * Thu Mar 22 2018 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt8
 - Disable -Werror (Fix FTBFS)
 
