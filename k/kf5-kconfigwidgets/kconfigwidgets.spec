@@ -3,7 +3,7 @@
 
 Name: kf5-%rname
 Version: 5.47.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -96,15 +96,15 @@ Sip files for python3-module-%rname
 %setup -n %rname-%version
 
 %build
-%K5cmake \
-    -Dlibclang_LIBRARY=%_libdir/libclang.so
-    #
+%K5cmake
 
 %install
 %K5install
 %K5install_move data locale
 %find_lang %name --all-name --with-kde
 %K5find_qtlang %name --all-name
+rm -rf %buildroot%_libdir/*/*/*/__*
+
 
 mkdir -p %buildroot/%_K5data/kconfigwidgets/
 
@@ -142,6 +142,14 @@ mkdir -p %buildroot/%_K5data/kconfigwidgets/
 %endif
 
 %changelog
+* Fri Jul 13 2018 Oleg Solovyov <mcpain@altlinux.org> 5.47.0-alt2%ubt
+- cleanup
+
+
+* Fri Jul 13 2018 Oleg Solovyov <mcpain@altlinux.org> 5.47.0-alt2%ubt
+
+- cleanup
+
 * Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1%ubt
 - new version
 

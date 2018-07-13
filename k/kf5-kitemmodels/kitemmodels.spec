@@ -5,7 +5,7 @@
 
 Name: kf5-%rname
 Version: 5.47.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -94,6 +94,8 @@ KF5 library
 %K5install
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
+rm -rf %buildroot%_libdir/*/*/*/__*
+
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
@@ -120,6 +122,14 @@ KF5 library
 %_K5lib/libKF5ItemModels.so.*
 
 %changelog
+* Fri Jul 13 2018 Oleg Solovyov <mcpain@altlinux.org> 5.47.0-alt2%ubt
+- cleanup
+
+
+* Fri Jul 13 2018 Oleg Solovyov <mcpain@altlinux.org> 5.47.0-alt2%ubt
+
+- cleanup
+
 * Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1%ubt
 - new version
 

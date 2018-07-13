@@ -3,7 +3,7 @@
 
 Name: kf5-%rname
 Version: 5.47.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -115,7 +115,6 @@ Sip files for python3-module-%rname
 %K5build \
     -DKDE4_DEFAULT_HOME=".kde4" \
     -D_KDE4_DEFAULT_HOME_POSTFIX=4 \
-    -Dlibclang_LIBRARY=%_libdir/libclang.so \
     #
 
 %install
@@ -166,6 +165,14 @@ Sip files for python3-module-%rname
 %endif
 
 %changelog
+* Fri Jul 13 2018 Oleg Solovyov <mcpain@altlinux.org> 5.47.0-alt2%ubt
+- cleanup
+
+
+* Fri Jul 13 2018 Oleg Solovyov <mcpain@altlinux.org> 5.47.0-alt2%ubt
+
+- cleanup
+
 * Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1%ubt
 - new version
 
