@@ -1,6 +1,6 @@
 Name: connector
 Version: 1.6.4
-Release: alt1
+Release: alt2
 
 Summary: Remote desktop chooser
 License: GPL
@@ -46,6 +46,9 @@ install -pDm644 kiosk.access %buildroot%_sysconfdir/%name/kiosk.access
 %config(noreplace) %_sysconfdir/%name/kiosk.access
 
 %changelog
+* Fri Jul 13 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.6.4-alt2
+- Fixed start programm if FS - new function (after update e.g)
+
 * Thu Jul 12 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.6.4-alt1
 - Disabled start of multiple copies
 - Fixed creating label if exist of the same name
