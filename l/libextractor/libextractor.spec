@@ -1,8 +1,9 @@
+%def_enable ffmpeg
 # test_rpm failed
 %def_disable check
 
 Name: libextractor
-Version: 1.6
+Version: 1.7
 Release: alt1
 
 Summary: libextractor is a simple library for keyword extraction
@@ -21,9 +22,11 @@ BuildRequires: libmpeg2-devel libtiff-devel libmp4v2-devel libqt4-devel librpm-d
 BuildRequires: libopus-devel libvorbis-devel libflac-devel
 BuildRequires: iso-codes-devel libgif-devel libarchive-devel libtidy-devel
 # requires libjpeg-8 API (jpeg_mem_src()) -- plugin disabled
-BuildRequires: libjpeg-devel
-BuildRequires: gst-plugins1.0-devel libavcodec-devel libavutil-devel
+BuildRequires: libjpeg-devel gst-plugins1.0-devel
+%if_enabled ffmpeg
+BuildRequires: libavcodec-devel libavutil-devel
 BuildRequires: libavformat-devel libavresample-devel libswscale-devel
+%endif
 BuildRequires: makeinfo
 
 %description
@@ -57,7 +60,8 @@ This package contains the files needed to build packages that depend on %name.
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static \
+	%{subst_enable ffmpeg}
 %make_build
 
 %install
@@ -92,6 +96,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Fri Jul 13 2018 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
+- 1.7
+
 * Tue Oct 17 2017 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
 - 1.6
 
