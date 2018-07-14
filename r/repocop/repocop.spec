@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.77
+Version: 0.78
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -17,7 +17,7 @@ Provides: repocop-collector-rpm = 0.01
 Requires: fakeroot >= 1.9
 # pax is preferred over cpio due to correct unpacking for unreadable directories
 Requires: pax
-BuildRequires: perl-devel perldoc
+BuildRequires: perl-devel perldoc perl-autodie
 BuildRequires: perl(Data/Array2ArrayMap/Hash/XSTree.pm)
 BuildRequires: perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-DBD-SQLite
 BuildRequires: perl-RPM-Source-Editor
@@ -48,7 +48,8 @@ repocop-report-html with whe same arguments as repocop-run.
 %package tools
 Group: Development/Other
 Summary: repocop tools for auto repairing repocop packages
-Requires: perl-RPM-Source-Editor > 0.9210
+Conflicts: repocop < 0.78
+Requires: perl-RPM-Source-Editor > 0.9214
 Requires: %name = %version-%release
 
 %description tools
@@ -57,6 +58,7 @@ Requires: %name = %version-%release
 %package report-html
 Group: Development/Other
 Summary: repocop report in HTML form.
+Conflicts: repocop < 0.78
 
 %description report-html
 Repocop is a repository unit tests platform.
@@ -100,14 +102,19 @@ done
 #doc README ChangeLog
 %_bindir/repocop-*
 %_man1dir/repocop-*
-%exclude %_bindir/repocop-fix*
-%exclude %_man1dir/repocop-fix*
+%exclude %_bindir/repocop-report-html
+%exclude %_man1dir/repocop-report-html.*
 %exclude %_bindir/repocop-report-diff
 %exclude %_man1dir/repocop-report-diff.*
-%exclude %_bindir/repocop-report-html
 %exclude %_bindir/repocop-tools-*
 %exclude %_man1dir/repocop-tools-*
+%exclude %_bindir/repocop-nmu-*
+%exclude %_man1dir/repocop-nmu-*
+%exclude %_bindir/repocop-fix*
+%exclude %_man1dir/repocop-fix*
 %exclude %perl_vendor_privlib/Test/Repocop/Fixscripts.pm
+%exclude %perl_vendor_privlib/Test/Repocop/RepocopResource.pm
+%exclude %perl_vendor_privlib/Test/Repocop/FixscriptFactory.pm
 %dir %_datadir/repocop/pkgtests
 %dir %_datadir/repocop/srctests
 %dir %_datadir/repocop/pkgcollectors
@@ -121,20 +128,29 @@ done
 
 %files tools
 #doc fixscripts/*.pl
-%_bindir/repocop-fix*
-%_man1dir/repocop-fix*
+%dir %_datadir/repocop/fixscripts
 %_bindir/repocop-tools-*
 %_man1dir/repocop-tools-*
 %_bindir/repocop-report-diff
 %_man1dir/repocop-report-diff.*
+%_bindir/repocop-nmu-*
+%_man1dir/repocop-nmu-*
+%perl_vendor_privlib/Test/Repocop/RepocopResource.pm
+%perl_vendor_privlib/Test/Repocop/FixscriptFactory.pm
+# deprecated
+%_bindir/repocop-fix*
+%_man1dir/repocop-fix*
 %perl_vendor_privlib/Test/Repocop/Fixscripts.pm
-%dir %_datadir/repocop/fixscripts
 
 %files report-html
 %_bindir/repocop-report-html
 %_datadir/repocop/html
+%_man1dir/repocop-report-html.*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.78-alt1
+- new version
+
 * Fri Jul 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.77-alt1
 - new version; new API
 
