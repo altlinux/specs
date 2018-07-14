@@ -6,12 +6,12 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:           perl-Module-Package
 Version:        0.30
-Release:        alt2_16
+Release:        alt2_17
 Summary:        Postmodern Perl Module Packaging
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Module-Package/
-Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Module-Package-%{version}.tar.gz
+URL:            https://metacpan.org/release/Module-Package
+Source0:        https://cpan.metacpan.org/authors/id/I/IN/INGY/Module-Package-%{version}.tar.gz
 # Fix building on Perl without "." in @INC, CPAN RT#121748
 Patch0:         Module-Package-0.30-Fix-building-on-Perl-without-.-in-INC.patch
 BuildArch:      noarch
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.30-alt2_17
+- update to new release by fcimport
+
 * Fri Apr 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.30-alt2_16
 - to Sisyphus as perl-Dancer2 dep
 
