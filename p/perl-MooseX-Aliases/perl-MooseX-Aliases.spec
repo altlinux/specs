@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-MooseX-Aliases
 Version:        0.11
-Release:        alt1_10
+Release:        alt1_12
 Summary:        Easy aliasing of methods and attributes in Moose
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/MooseX-Aliases/
-Source0:        http://www.cpan.org/authors/id/D/DO/DOY/MooseX-Aliases-%{version}.tar.gz
+URL:            https://metacpan.org/release/MooseX-Aliases
+Source0:        https://cpan.metacpan.org/authors/id/D/DO/DOY/MooseX-Aliases-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -49,7 +49,7 @@ in the constructor via their aliased names.
 %setup -q -n MooseX-Aliases-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -68,6 +68,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/MooseX/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_12
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_10
 - update to new release by fcimport
 
