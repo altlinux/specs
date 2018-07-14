@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Meta-Builder
 Version:        0.003
-Release:        alt2_12
+Release:        alt2_14
 Summary:        Tools for creating Meta objects to track custom metrics
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Meta-Builder/
-Source0:        http://www.cpan.org/authors/id/E/EX/EXODIST/Meta-Builder-%{version}.tar.gz
+URL:            https://metacpan.org/release/Meta-Builder
+Source0:        https://cpan.metacpan.org/authors/id/E/EX/EXODIST/Meta-Builder-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
@@ -31,7 +31,7 @@ Class:MOP which is used by Moose to track class metadata.
 %setup -q -n Meta-Builder-%{version}
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -46,6 +46,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.003-alt2_14
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.003-alt2_12
 - update to new release by fcimport
 
