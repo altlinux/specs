@@ -7,8 +7,8 @@
 
 Summary:      SOPE is an extensive set of frameworks which form a complete Web application server environment
 Name:         sope
-Version:      3.2.10
-Release:      alt2
+Version:      4.0.1
+Release:      alt1
 License:      GPL
 URL:          http://sogo.nu/
 Group:        Development/Objective-C
@@ -17,10 +17,15 @@ Packager:     Andrey Cherepanov <cas@altlinux.org>
 Source:       SOPE-%version.tar.gz
 Patch:	      %name-%version-%release.patch
 
-BuildRequires(pre): gnustep-make-devel 
-BuildRequires(pre): rpm-build-apache2
-BuildRequires: gcc-objc
+# TODO Exclude: aarch64
+ExclusiveArch: %ix86 x86_64
+
+%ifarch %ix86 x86_64
+BuildRequires: gnustep-make-devel 
 BuildRequires: gnustep-base-devel
+BuildRequires: gcc-objc
+%endif
+BuildRequires(pre): rpm-build-apache2
 BuildRequires: postgresql-devel
 BuildRequires: libffi-devel
 BuildRequires: libgcrypt-devel
@@ -35,6 +40,7 @@ BuildRequires: libxml2-devel
 BuildRequires: libxslt-devel
 BuildRequires: apache2-devel
 BuildRequires: libapr1-devel
+BuildRequires: zlib-devel
 BuildRequires: /proc
 
 %description
@@ -282,6 +288,12 @@ if [ "$1" = "0" ] ; then # last uninstall
 fi
 
 %changelog
+* Tue Jul 10 2018 Andrey Cherepanov <cas@altlinux.org> 4.0.1-alt1
+- New version.
+
+* Thu Mar 08 2018 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
+- New version.
+
 * Mon Oct 09 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.2.10-alt2
 - mUTF7 corrections (RFC3501) for non-ASCII IMAP folder names
   (ALT: #33722, #32426)

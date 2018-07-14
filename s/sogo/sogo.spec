@@ -1,12 +1,12 @@
-%def_with openchange
+%def_without openchange
 %define sogo_user _sogo
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo
 # Use the same version as in the "nightly" packages at
 # http://v2.sogo.nu/downloads/backend_v3_nightly.html:
-Version:      3.2.10.20171010
-Release:      alt3
+Version:      4.0.1
+Release:      alt1
 
 License:      GPL
 URL:          https://sogo.nu/
@@ -16,7 +16,11 @@ Packager:     Andrey Cherepanov <cas@altlinux.org>
 
 Source:       SOGo-%version.tar.gz
 Source1:      sogo.init
+Source2:      angular-material.tar
 Patch:        %name-%version-alt.patch
+
+# TODO Exclude: aarch64
+ExclusiveArch: %ix86 x86_64
 
 Requires:      stmpclean
 Requires:      tzdata
@@ -28,11 +32,14 @@ Obsoletes:     sogo3 < %EVR
 %filter_from_requires /^\/usr\/%_lib\/samba-dc\/lib/d
 %{!?sogo_major_version: %global sogo_major_version %(/bin/echo %version | /bin/cut -f 1 -d .)}
 
-BuildPreReq:   gnustep-make-devel rpm-build-apache2
+%ifarch %ix86 x86_64
+BuildRequires: gnustep-make-devel
+BuildRequires: gnustep-base-devel
+%endif
+BuildRequires(pre): rpm-build-apache2
 # To ignore a patched submodule:
 BuildPreReq: patchutils
 BuildRequires: gcc-objc
-BuildRequires: gnustep-base-devel
 BuildRequires: sope-appserver-devel sope-core-devel sope-ldap-devel sope-mime-devel sope-xml-devel sope-gdl1-devel sope-sbjson-devel
 BuildRequires: libcurl-devel
 BuildRequires: libffi-devel
@@ -76,7 +83,6 @@ SOGo configuration for Apache2
 %package -n task-sogo
 Summary: SOGo is a groupware server (version 3.x)
 Group: System/Servers
-BuildArch: noarch
 Requires: %name
 Requires: %name-activesync
 Requires: %name-tool
@@ -238,6 +244,7 @@ SOGo backend for OpenChange
 
 %prep
 %setup -q -n SOGo-%version
+tar xf %SOURCE2
 < %PATCH0 filterdiff -p1 -x UI/WebServerResources/angular-material | patch -p1
 # Workaround for wrong beahaviour call of timeZoneWithAbbreviation with GMT or UTC
 subst 's/timeZoneWithAbbreviation/timeZoneWithName/g' $(grep -Rl timeZoneWithAbbreviation *)
@@ -417,6 +424,11 @@ fi
 %preun_service sogo
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 4.0.1-alt1
+- New version.
+- Package angular/material from submodule.
+- Drop OpenChange support by upstream.
+
 * Wed Apr 25 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.10.20171010-alt3
 - Rename to sogo.
 - Require PostgreSQL server with any version.
