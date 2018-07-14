@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-syntax
 Version:        0.004
-Release:        alt2_15
+Release:        alt2_17
 Summary:        Activate syntax extensions
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/syntax/
-Source0:        http://www.cpan.org/authors/id/P/PH/PHAYLON/syntax-%{version}.tar.gz
+URL:            https://metacpan.org/release/syntax
+Source0:        https://cpan.metacpan.org/authors/id/P/PH/PHAYLON/syntax-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
@@ -33,7 +33,7 @@ dispatching system will load and install the extension in your package.
 %setup -q -n syntax-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.004-alt2_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.004-alt2_15
 - update to new release by fcimport
 
