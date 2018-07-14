@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Tiny
 Version:        1.07
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Date object, with as little code as possible
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/DateTime-Tiny/
-Source0:        http://search.cpan.org/CPAN/authors/id/D/DA/DAGOLDEN/DateTime-Tiny-%{version}.tar.gz
+URL:            https://metacpan.org/release/DateTime-Tiny
+Source0:        https://cpan.metacpan.org/authors/id/D/DA/DAGOLDEN/DateTime-Tiny-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl-devel
@@ -55,6 +55,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1_2
+- update to new release by fcimport
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1_1
 - update to new release by fcimport
 
