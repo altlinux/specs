@@ -7,11 +7,11 @@ BuildRequires: perl(AnyEvent.pm) perl(AnyEvent/Handle.pm) perl(AnyEvent/Socket.p
 %define _localstatedir %{_var}
 Name:           perl-AnyEvent-I3
 Version:        0.17
-Release:        alt1_3
+Release:        alt1_5
 Summary:        Communicate with the i3 window manager
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/anyevent-i3/
-Source0:        http://search.cpan.org/CPAN/authors/id/M/MS/MSTPLBG/AnyEvent-I3-%{version}.tar.gz
+URL:            https://metacpan.org/release/anyevent-i3
+Source0:        https://cpan.metacpan.org/authors/id/M/MS/MSTPLBG/AnyEvent-I3-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  coreutils
@@ -52,7 +52,7 @@ rm -rf inc
 sed -i -e '/^inc\//d' MANIFEST
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -68,6 +68,9 @@ find %{buildroot} -type f -name .packlist -delete
 %{perl_vendor_privlib}/AnyEvent/I3.pm
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_5
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_3
 - update to new release by fcimport
 
