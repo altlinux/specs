@@ -1,12 +1,13 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           autoarchive
 Version:        1.3.0
-Release:        alt1_3
+Release:        alt1_5
 Summary:        A simple backup tool that uses tar
 
 License:        GPLv3
@@ -19,11 +20,11 @@ BuildArch:      noarch
 BuildRequires:  python3-devel
 BuildRequires:  python3-module-mock
 
-Requires:       gzip-utils less xz
+Requires:       xz
 Requires:       tar
-Requires:       gzip gzip-utils less
-Requires:       bzip2 gzip-utils less
-Requires:       gzip-utils less xz
+Requires:       gzip gzip-utils
+Requires:       bzip2
+Requires:       xz
 Source44: import.info
 
 %description
@@ -57,7 +58,7 @@ popd
 
 %files
 %doc NEWS README README.sk
-%doc COPYING
+%doc --no-dereference COPYING
 %config(noreplace) %{_sysconfdir}/aa/
 %{_mandir}/man?/*.*
 %{_bindir}/autoarchive
@@ -66,6 +67,9 @@ popd
 %{python3_sitelibdir_noarch}/%{name}*.egg-info
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_5
+- update to new release by fcimport
+
 * Sun Nov 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_3
 - fixed build
 
