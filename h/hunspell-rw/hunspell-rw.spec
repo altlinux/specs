@@ -8,8 +8,8 @@ Name: hunspell-rw
 Summary: Kinyarwanda hunspell dictionaries
 %global upstreamid 20050109
 Version: 0.%{upstreamid}
-Release: alt2_14
-Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/rw_RW.zip
+Release: alt2_16
+Source: http://download.services.openoffice.org/contrib/dictionaries/rw_RW.zip
 URL: http://borel.slu.edu/crubadan/apps.html
 License: GPLv2+
 BuildArch: noarch
@@ -23,6 +23,7 @@ Kinyarwanda hunspell dictionaries.
 %prep
 %setup -q -c -n hunspell-rw
 
+
 %build
 
 %install
@@ -35,6 +36,9 @@ cp -p rw_RW.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20050109-alt2_16
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050109-alt2_14
 - update to new release by fcimport
 
