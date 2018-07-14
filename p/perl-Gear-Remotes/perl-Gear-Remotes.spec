@@ -1,7 +1,7 @@
 %define module Gear-Remotes
 
 Name: perl-%module
-Version: 0.016
+Version: 0.017
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -56,6 +56,9 @@ Requires: gear-uupdate
 %_man1dir/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.017-alt1
+- check for misspelled remotes/*-tag
+
 * Fri Feb 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1
 - submodules support
 
