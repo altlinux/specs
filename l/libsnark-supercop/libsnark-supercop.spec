@@ -8,19 +8,21 @@ BuildRequires: swig unzip
 
 Name:           libsnark-supercop
 Version:        20141014
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Subset of the supercop sources used in the libsnark
 Group:		System/Libraries
 License:        MIT
 URL:            https://github.com/mbbarbosa/libsnark-supercop
 Source0:        https://github.com/mbbarbosa/libsnark-supercop/archive/libsnark-supercop-master.zip
+BuildRequires:  pkgconfig(openssl) < 1.1
+ExclusiveArch:  x86_64
 Source44: import.info
 
 %description
-Supercop permits automatically detecting the best compilation options for each 
+Supercop permits automatically detecting the best compilation options for each
 of these algorithms in any given platform.
 
-For optimal performance, Supercop should be used to determine the compilation 
+For optimal performance, Supercop should be used to determine the compilation
 options for each specific file in the target machine.
 
 
@@ -29,10 +31,10 @@ Group: System/Libraries
 Summary:        Development files for %{name}
 
 %description    -n %libnamedev
-Supercop permits automatically detecting the best compilation options for each 
+Supercop permits automatically detecting the best compilation options for each
 of these algorithms in any given platform.
 
-For optimal performance, Supercop should be used to determine the compilation 
+For optimal performance, Supercop should be used to determine the compilation
 options for each specific file in the target machine.
 
 
@@ -54,8 +56,10 @@ install -p lib/libsupercop.a  %{buildroot}%{_libdir}
 %{_libdir}/libsupercop.a
 
 
-
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 20141014-alt1_4
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 20141014-alt1_3
 - new version
 
