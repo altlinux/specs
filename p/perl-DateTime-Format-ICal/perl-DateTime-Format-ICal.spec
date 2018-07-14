@@ -7,11 +7,11 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-ICal
 Version:        0.09
-Release:        alt2_25
+Release:        alt2_27
 Summary:        Parse and format iCal datetime and duration strings
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/DateTime-Format-ICal/
-Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Format-ICal-%{version}.tar.gz
+URL:            https://metacpan.org/release/DateTime-Format-ICal
+Source0:        https://cpan.metacpan.org/authors/id/D/DR/DROLSKY/DateTime-Format-ICal-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl-devel
@@ -38,9 +38,9 @@ Requires:       perl(Params/Validate.pm) >= 0.590
 
 
 Source44: import.info
-%filter_from_requires /^perl\\(DateTime.pm\\)$/d
-%filter_from_requires /^perl\\(DateTime.Event.ICal.pm\\)$/d
-%filter_from_requires /^perl\\(Params.Validate.pm\\)$/d
+%filter_from_requires /^perl(DateTime\\)$/d
+%filter_from_requires /^perl(DateTime.Event.ICal\\)$/d
+%filter_from_requires /^perl(Params.Validate\\)$/d
 
 %description
 This module understands the ICal date/time and duration formats, as defined
@@ -51,7 +51,7 @@ appropriate objects.
 %setup -q -n DateTime-Format-ICal-%{version}
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -62,11 +62,14 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 ./Build test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes TODO
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2_27
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2_25
 - update to new release by fcimport
 
