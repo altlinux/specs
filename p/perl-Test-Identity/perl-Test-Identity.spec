@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-Identity
 Version:        0.01
-Release:        alt2_15
+Release:        alt2_17
 Summary:        Assert the referential identity of a reference
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Test-Identity/
-Source0:        http://www.cpan.org/authors/id/P/PE/PEVANS/Test-Identity-%{version}.tar.gz
+URL:            https://metacpan.org/release/Test-Identity
+Source0:        https://cpan.metacpan.org/authors/id/P/PE/PEVANS/Test-Identity-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
@@ -32,7 +32,7 @@ test are objects that overload stringification or numification.
 %setup -q -n Test-Identity-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+/usr/bin/perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -49,6 +49,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_15
 - update to new release by fcimport
 
