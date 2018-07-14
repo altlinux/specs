@@ -8,8 +8,8 @@ Name: hunspell-ny
 Summary: Chichewa hunspell dictionaries
 #Epoch: 1
 Version: 0.01
-Release: alt2_13
-Source: http://extensions.services.openoffice.org/e-files/4052/0/hunspell-chichewa-ny-dict-%{version}.oxt
+Release: alt2_14
+Source: https://downloads.sourceforge.net/project/aoo-extensions/4052/0/hunspell-chichewa-ny-dict-%{version}.oxt
 URL: http://extensions.services.openoffice.org/en/project/chicspell
 License: GPLv3+
 BuildArch: noarch
@@ -23,6 +23,7 @@ Chichewa hunspell dictionaries.
 
 %prep
 %setup -q -c
+
 
 %build
 for i in dictionaries/README_ny_MW.txt; do
@@ -42,10 +43,14 @@ cp -p dictionaries/ny_MW.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 
 
 %files
-%doc LICENSES-en.txt dictionaries/README_ny_MW.txt
+%doc dictionaries/README_ny_MW.txt
+%doc --no-dereference LICENSES-en.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_14
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_13
 - update to new release by fcimport
 
