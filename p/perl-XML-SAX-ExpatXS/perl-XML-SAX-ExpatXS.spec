@@ -7,12 +7,13 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-XML-SAX-ExpatXS
 Version:        1.33
-Release:        alt3_18.1
+Release:        alt3_20
 Summary:        Perl SAX 2 XS extension to Expat parser
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/XML-SAX-ExpatXS/
-Source0:        http://www.cpan.org/authors/id/P/PC/PCIMPRICH/XML-SAX-ExpatXS-%{version}.tar.gz
+URL:            https://metacpan.org/release/XML-SAX-ExpatXS
+Source0:        https://cpan.metacpan.org/authors/id/P/PC/PCIMPRICH/XML-SAX-ExpatXS-%{version}.tar.gz
+BuildRequires:  gcc-c++
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
@@ -41,7 +42,7 @@ specification are considered as bugs.
 chmod -x ExpatXS.xs
 
 %build
-echo n | %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
+echo n | /usr/bin/perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
 %make_build
 
 %install
@@ -72,6 +73,9 @@ fi
 %{perl_vendor_archlib}/XML*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.33-alt3_20
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.33-alt3_18.1
 - rebuild with new perl 5.26.1
 
