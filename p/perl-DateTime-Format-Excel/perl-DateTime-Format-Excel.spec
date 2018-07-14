@@ -11,11 +11,11 @@ Summary:	Convert between DateTime and Excel dates
 Name:		perl-DateTime-Format-Excel
 Epoch:		1
 Version:	0.31
-Release:	alt2_22
+Release:	alt2_23
 # lib/DateTime/Format/Excel.pm -> GPL+ or Artistic
 License:	GPL+ or Artistic
-URL:		http://search.cpan.org/dist/%{pkgname}/
-Source:		http://search.cpan.org/CPAN/authors/id/A/AB/ABURS/%{pkgname}-%{version}.tar.gz
+URL:		https://metacpan.org/release/%{pkgname}
+Source:		https://cpan.metacpan.org/authors/id/A/AB/ABURS/%{pkgname}-%{version}.tar.gz
 Patch0:		perl-DateTime-Format-Excel-0.31-versioning.patch
 BuildRequires:	coreutils
 BuildRequires:	perl-devel
@@ -66,6 +66,9 @@ make test
 %{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.31-alt2_23
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.31-alt2_22
 - update to new release by fcimport
 
