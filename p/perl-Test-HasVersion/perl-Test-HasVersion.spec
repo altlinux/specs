@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-HasVersion
 Version:        0.014
-Release:        alt1_6
+Release:        alt1_8
 Summary:        Check Perl modules have version numbers
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Test-HasVersion/
-Source0:        http://www.cpan.org/authors/id/F/FE/FERREIRA/Test-HasVersion-%{version}.tar.gz
+URL:            https://metacpan.org/release/Test-HasVersion
+Source0:        https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/Test-HasVersion-%{version}.tar.gz
 BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
@@ -47,7 +47,7 @@ you.
 %setup -q -n Test-HasVersion-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -59,12 +59,15 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{_bindir}/test_version
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_8
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_6
 - update to new release by fcimport
 
