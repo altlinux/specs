@@ -1,7 +1,7 @@
 
 
 %global import_path github.com/kubernetes/kubernetes
-%global commit 81753b10df112992bf51bbc2c2f85208aad78335
+%global commit 91e7b4fd31fcd3d5f436da26c980becec37ceefe
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -11,7 +11,7 @@
 %brp_strip_none %_bindir/*
 
 Name: kubernetes
-Version: 1.10.4
+Version: 1.11.0
 Release: alt1%ubt
 Summary: Container cluster management
 
@@ -152,7 +152,7 @@ export KUBE_GIT_VERSION="v%version"
 pushd .gopath/src/%import_path
 export KUBE_EXTRA_GOPATH=$(pwd)/Godeps/_workspace
 
-GOMAXPROCS=10 make WHAT="--use_go_build cmd/hyperkube cmd/kubeadm"
+GOMAXPROCS=10 make WHAT="cmd/hyperkube cmd/kubeadm"
 
 # convert md to man
 ./hack/generate-docs.sh || true
@@ -306,6 +306,9 @@ install -p -m 0644 -t %buildroot/%_sysconfdir/systemd/system.conf.d %SOURCE3
 %_datadir/bash-completion/completions/kubectl
 
 %changelog
+* Fri Jul 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.11.0-alt1%ubt
+- 1.11.0
+
 * Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.10.4-alt1%ubt
 - 1.10.4
 
