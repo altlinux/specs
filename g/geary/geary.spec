@@ -6,7 +6,7 @@
 %def_enable contractor
 
 Name: geary
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Email client
@@ -79,6 +79,9 @@ Geary's development.
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Sat Jul 14 2018 Yuri N. Sedunov <aris@altlinux.org> 0.12.3-alt1
+- 0.12.3
+
 * Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.12.2-alt1
 - 0.12.2
 
