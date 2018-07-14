@@ -6,12 +6,12 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:           perl-DBIx-Class-Cursor-Cached
 Version:        1.001004
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Cursor class with built-in caching support
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/DBIx-Class-Cursor-Cached/
-Source0:        http://www.cpan.org/authors/id/A/AR/ARCANEZ/DBIx-Class-Cursor-Cached-%{version}.tar.gz
+URL:            https://metacpan.org/release/DBIx-Class-Cursor-Cached
+Source0:        https://cpan.metacpan.org/authors/id/A/AR/ARCANEZ/DBIx-Class-Cursor-Cached-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  findutils
@@ -70,6 +70,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.001004-alt1_6
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.001004-alt1_5
 - update to new release by fcimport
 
