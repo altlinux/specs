@@ -8,8 +8,8 @@ Name: hunspell-ss
 Summary: Swati hunspell dictionaries
 %global upstreamid 20091030
 Version: 0.%{upstreamid}
-Release: alt2_12
-Source: http://extensions.services.openoffice.org/e-files/3137/0/dict-ss_ZA-2009.10.30.oxt
+Release: alt2_14
+Source: https://downlaods.sourceforge.net/project/aoo-extensions/3137/0/dict-ss_za-2009.10.30.oxt
 URL: http://www.translate.org.za/
 License: LGPLv2+
 BuildArch: noarch
@@ -22,6 +22,7 @@ Swati hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-ss
+
 
 %build
 for i in README-ss_ZA.txt release-notes-ss_ZA.txt package-description.txt; do
@@ -45,6 +46,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20091030-alt2_14
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20091030-alt2_12
 - update to new release by fcimport
 
