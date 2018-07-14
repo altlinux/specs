@@ -1,6 +1,6 @@
 Name: tiptop
 Version: 2.3.1
-Release: alt1
+Release: alt2
 
 Summary: Tiptop is a performance monitoring tool for Linux
 License: GPLv2
@@ -25,7 +25,7 @@ comes from hardware counters.
 %build
 %autoreconf
 %configure
-%make_build
+make
 
 %install
 %makeinstall_std
@@ -38,6 +38,9 @@ comes from hardware counters.
 %doc README AUTHORS tiptoprc
 
 %changelog
+* Sat Jul 14 2018 Terechkov Evgenii <evg@altlinux.org> 2.3.1-alt2
+- Test build without SMP
+
 * Thu Jun 28 2018 Terechkov Evgenii <evg@altlinux.org> 2.3.1-alt1
 - 2.3.1
 
