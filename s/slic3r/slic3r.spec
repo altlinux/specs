@@ -1,15 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: /usr/bin/desktop-file-install perl(Class/Accessor.pm) perl(Encode.pm) perl(ExtUtils/CppGuess.pm) perl(IO/All.pm) perl(Math/Trig.pm) perl(OpenGL.pm) perl(PDF/API2.pm) perl(WebService/Prowl.pm) perl(XML/SAX/Base.pm) perl-podlators
+BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel perl(Class/Accessor.pm) perl(Encode.pm) perl(IO/All.pm) perl(IO/Uncompress/Unzip.pm) perl(LWP/UserAgent.pm) perl(Math/Trig.pm) perl(OpenGL.pm) perl(PDF/API2.pm) perl(WebService/Prowl.pm) perl-podlators
 # END SourceDeps(oneline)
 %set_perl_req_method relaxed
 
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global use_system_admesh 0
+%global use_system_expat 1
+%global use_system_polyclipping 1
+%global use_system_poly2tri 1
+
 Name:           slic3r
-Version:        1.2.9
-Release:        alt1_18
+Version:        1.3.0
+Release:        alt1_3
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -24,22 +29,8 @@ Patch0:         %{name}-buildpl.patch
 Patch1:         %{name}-datadir.patch
 Patch2:         %{name}-english-locale.patch
 Patch3:         %{name}-linker.patch
-#Patch4:         %{name}-clipper.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1306668
-# https://github.com/alexrj/Slic3r/issues/3117#issuecomment-187767676
-Patch5:         %{name}-boost160.patch
-
-# Patch to manually cast too bool, fix FTBFS
-# Will report upstream
-Patch6:         %{name}-boolcast.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1285807
-# https://github.com/alexrj/Slic3r/commit/1a09ae81db06602050ae83620268efa33ed14da1
-Patch7:         %{name}-wxclose.patch
-
-# https://github.com/alexrj/Slic3r/pull/3575
-Patch8:         %{name}-opengl070.patch
+Patch4:         %{name}-clipper.patch
+Patch5:         %{name}-1.3.0-fixtest.patch
 
 Source1:        %{name}.desktop
 Source2:        %{name}.appdata.xml
@@ -48,7 +39,10 @@ BuildRequires:  gcc-c++
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Class/XSAccessor.pm)
+BuildRequires:  perl(Devel/CheckLib.pm)
+BuildRequires:  perl(Devel/Peek.pm)
 BuildRequires:  perl(Encode/Locale.pm)
+BuildRequires:  perl(ExtUtils/CppGuess.pm)
 BuildRequires:  perl(ExtUtils/CBuilder.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(ExtUtils/ParseXS.pm)
@@ -60,6 +54,7 @@ BuildRequires:  perl(Getopt/Long.pm)
 BuildRequires:  perl(Growl/GNTP.pm)
 BuildRequires:  perl(IO/Scalar.pm)
 BuildRequires:  perl(List/Util.pm)
+BuildRequires:  perl(local/lib.pm)
 BuildRequires:  perl(Math/PlanePath.pm)
 BuildRequires:  perl(Module/Build/WithXSpp.pm)
 BuildRequires:  perl(Moo.pm)
@@ -70,26 +65,60 @@ BuildRequires:  perl(Storable.pm)
 BuildRequires:  perl(SVG.pm)
 BuildRequires:  perl(Test/Harness.pm)
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Thread/Queue.pm)
 BuildRequires:  perl(Thread/Semaphore.pm)
 BuildRequires:  perl(threads.pm)
+BuildRequires:  perl(threads/shared.pm)
 BuildRequires:  perl(Time/HiRes.pm)
 BuildRequires:  perl(Unicode/Normalize.pm)
 BuildRequires:  perl(Wx.pm)
 BuildRequires:  perl(XML/SAX.pm)
 BuildRequires:  perl(XML/SAX/ExpatXS.pm)
 
+%if %{use_system_admesh}
 BuildRequires:  libadmesh-devel >= 0.98.1
-BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel
-BuildRequires:  desktop-file-utils
-BuildRequires:  libpoly2tri-devel
-#BuildRequires:  polyclipping-devel >= 6.2.0
-BuildRequires:  ImageMagick-tools
-
-Requires:       perl(XML/SAX.pm)
 Requires:       libadmesh >= 0.98.1
-Provides:       bundled(polyclipping) = 6.2.9
-Source44: import.info
+%else
+Provides:       bundled(admesh) = 0.98
+# Bundled admesh FTBFS with:
+# error "admesh works correctly on little endian machines only!"
+ExcludeArch:    ppc ppc64 s390 s390x
+%endif
 
+%if %{use_system_expat}
+BuildRequires:  libexpat-devel >= 2.2.0
+%else
+Provides:       bundled(expat) = 2.2.0
+%endif
+
+%if %{use_system_polyclipping}
+BuildRequires:  libpolyclipping-devel >= 6.4.2
+%else
+Provides:       bundled(polyclipping) = 6.4.2
+%endif
+
+%if %{use_system_poly2tri}
+BuildRequires:  libpoly2tri-devel
+%else
+Provides:       bundled(poly2tri) = 0.0
+%endif
+
+BuildRequires:  boost-complete
+#BuildRequires:  boost-nowide-devel
+BuildRequires:  libleatherman-devel
+BuildRequires:  desktop-file-utils
+BuildRequires:  ImageMagick-tools
+Requires:       perl(Growl/GNTP.pm) >= 0.150
+Requires:       perl(XML/SAX.pm)
+Requires:       perl(OpenGL.pm)
+Requires:       perl(Class/Accessor.pm)
+Requires:       perl(Math/Trig.pm)
+Requires:       perl-Wx-GLCanvas
+
+# Optional dependency. Not packaged in Fedora yet.
+# It's only used for magically finding octoprint servers.
+#Requires:     perl(Net/Bonjour.pm)
+Source44: import.info
 
 %description
 Slic3r is a G-code generator for 3D printers. It's compatible with RepRaps,
@@ -103,21 +132,57 @@ for more information.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-#%%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
+%patch3 -p1 -b .linker
+%if %{use_system_polyclipping}
+%patch4 -p1
+%endif
+%patch5 -p1 -b .fixtest
 
-# Remove bundled admesh, clipper, poly2tri and boost
+# Optional removals
+%if %{use_system_admesh}
 rm -rf xs/src/admesh
+sed -i '/src\/admesh/d' xs/MANIFEST
+%endif
+
+%if %{use_system_expat}
+rm -rf xs/src/expat
+sed -i '/src\/expat/d' xs/MANIFEST
+# These are the files with hardcoded expat/expat.h includes
+sed -i 's|expat/expat.h|expat.h|g' xs/src/libslic3r/IO/AMF.cpp
+sed -i 's|expat/expat.h|expat.h|g' xs/src/libslic3r/IO/TMF.hpp
+%endif
+
+%if %{use_system_polyclipping}
 #rm xs/src/clipper.*pp
+export SYSTEM_LIBS="${SYSTEM_LIBS} -lpolyclipping"
+%endif
+
+%if %{use_system_poly2tri}
 rm -rf xs/src/poly2tri
+sed -i '/src\/poly2tri/d' xs/MANIFEST
+%endif
+
+# We always do boost.
 rm -rf xs/src/boost
+sed -i '/src\/boost\/nowide/d' xs/MANIFEST
+
+sed -i 's|\(ExtUtils::ParseXS\s\+\)3.35|\13.34|' Build.PL xs/Build.PL
 
 %build
+%if %{use_system_admesh}
+export SYSTEM_LIBS="${SYSTEM_LIBS} -ladmesh"
+%endif
+
+%if %{use_system_expat}
+export SYSTEM_LIBS="${SYSTEM_LIBS} -lexpat"
+%endif
+
+%if %{use_system_poly2tri}
+export SYSTEM_LIBS="${SYSTEM_LIBS} -lpoly2tri"
+%endif
+
 cd xs
+[[ ! -z "${SYSTEM_LIBS}" ]] && echo "SYSTEM_LIBS is ${SYSTEM_LIBS}"
 perl ./Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
 ./Build
 cd -
@@ -188,6 +253,10 @@ SLIC3R_NO_AUTO=1 perl Build.PL installdirs=vendor
 %{_datadir}/%{name}
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_3
+- new version
+- added bliser@ patch (closes: #34434)
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.9-alt1_18
 - update to new release by fcimport
 
