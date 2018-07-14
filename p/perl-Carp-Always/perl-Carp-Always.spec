@@ -7,12 +7,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Carp-Always
 Version:        0.13
-Release:        alt2_11
+Release:        alt2_13
 Summary:        Warn and die in Perl noisily with stack backtraces
 License:        GPL+ or Artistic
 
-URL:            http://search.cpan.org/dist/Carp-Always/
-Source0:        http://www.cpan.org//authors/id/F/FE/FERREIRA/Carp-Always-%{version}.tar.gz
+URL:            https://metacpan.org/release/Carp-Always
+Source0:        https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/Carp-Always-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -38,7 +38,7 @@ complain loudly with stack backtraces when warn()ing or die()ing.
 
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 # Recode
@@ -62,6 +62,9 @@ make test
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_13
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_11
 - update to new release by fcimport
 
