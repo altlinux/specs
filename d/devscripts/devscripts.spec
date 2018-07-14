@@ -12,7 +12,7 @@ BuildRequires: perl(Authen/SASL.pm) perl(Date/Format.pm) perl(Date/Parse.pm) per
 %define _localstatedir %{_var}
 Name:           devscripts
 Version:        2.18.3
-Release:        alt1_1
+Release:        alt1_4
 Summary:        Scripts for Debian Package maintainers
 
 License:        GPLv2+
@@ -118,7 +118,7 @@ This package contains the devscripts checkbashisms script.
 %package compat
 Group: Development/Other
 Summary:        Compatibility package for devscripts-minimal
-Requires:       devscripts perl-App-Licensecheck
+Requires:       perl-App-Licensecheck
 Requires:       checkbashisms = %{version}-%{release}
 Obsoletes:      devscripts-minimal < 2.16.6-1
 
@@ -186,6 +186,9 @@ touch %buildroot%_sysconfdir/cvsdeb.conf
 %{_mandir}/man1/checkbashisms.1*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.18.3-alt1_4
+- update to new release by fcimport
+
 * Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.18.3-alt1_1
 - new version - checkbashisms that works
 
