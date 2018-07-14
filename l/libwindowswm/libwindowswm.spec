@@ -6,18 +6,17 @@ BuildRequires: gcc-c++
 %define major		7
 %define libname		libwindowswm%{major}
 %define develname	libwindowswm-devel
-%define staticname	libwindowswm-devel-static
 
 Name:		libwindowswm
 Summary:	The WindowsWM Library
 Version:	1.0.1
-Release:	alt1_7
+Release:	alt1_8
 Group:		Development/C
 License:	MIT
 URL:		http://xorg.freedesktop.org
 Source0:	http://xorg.freedesktop.org/releases/individual/lib/libWindowsWM-%{version}.tar.bz2
-BuildRequires: libX11-devel >= 1.0.0
-BuildRequires: libXext-devel >= 1.0.0
+BuildRequires: pkgconfig(x11) >= 1.0.0
+BuildRequires: pkgconfig(xext) >= 1.0.0
 BuildRequires: xorg-proto-devel >= 1.0.0
 BuildRequires: xorg-util-macros >= 1.0.1
 Source44: import.info
@@ -30,7 +29,6 @@ The WindowsWM Library
 %package -n %{libname}
 Summary:  The WindowsWM Library
 Group: Development/C
-Conflicts: libxorg-x11 < 7.0
 Provides: %{name} = %{version}
 
 %description -n %{libname}
@@ -46,8 +44,8 @@ Summary: Development files for %{name}
 Group: Development/C
 Requires: %{libname} = %{version}
 Provides: %{name}-devel = %{version}-%{release}
-Conflicts: libxorg-x11-devel < 7.0
 Obsoletes: libwindowswm7-devel
+Obsoletes: %{_lib}windowswm-static-devel < 1.0.1-8
 
 %description -n %{develname}
 Development files for %{name}
@@ -57,38 +55,28 @@ Development files for %{name}
 %{_libdir}/pkgconfig/windowswm.pc
 %{_mandir}/man3/WindowsWM.3*
 
-
-#-----------------------------------------------------------
-
-%package -n %{staticname}
-Summary: Static development files for %{name}
-Group: Development/C
-Requires: %{develname} = %{version}
-Provides: %{name}-static-devel = %{version}-%{release}
-Conflicts: libxorg-x11-devel-static < 7.0
-Obsoletes: libwindowswm7-devel-static
-
-%description -n %{staticname}
-Static development files for %{name}
-
-%files -n %{staticname}
-%{_libdir}/libWindowsWM.a
-
 #-----------------------------------------------------------
 
 %prep
 %setup -q -n libWindowsWM-%{version}
 
 %build
-%configure
-%make
+# fix build on aarch64
+autoreconf -vfi
+
+%configure --disable-static
+%make_build
 
 %install
 %makeinstall_std
-rm -f %{buildroot}%{_libdir}/*.la
+
+find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_8
+- update by mgaimport
+
 * Thu Jun 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_7
 - new version
 
