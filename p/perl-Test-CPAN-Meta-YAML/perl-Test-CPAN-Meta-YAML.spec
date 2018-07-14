@@ -6,12 +6,12 @@ BuildRequires: perl(YAML.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-CPAN-Meta-YAML
 Version:	0.25
-Release:	alt1_8
+Release:	alt1_10
 Summary:	Validate a META.yml file within a CPAN distribution
 Group:		Development/Other
 License:	Artistic 2.0
-URL:		http://search.cpan.org/dist/Test-CPAN-Meta-YAML/
-Source0:	http://search.cpan.org/CPAN/authors/id/B/BA/BARBIE/Test-CPAN-Meta-YAML-%{version}.tar.gz
+URL:		https://metacpan.org/release/Test-CPAN-Meta-YAML
+Source0:	https://cpan.metacpan.org/authors/id/B/BA/BARBIE/Test-CPAN-Meta-YAML-%{version}.tar.gz
 Patch0:		Test-CPAN-Meta-YAML-0.25-utf8.patch
 BuildArch:	noarch
 # Module Build
@@ -53,7 +53,7 @@ See CPAN::Meta for further details of the CPAN Meta Specification.
 %patch0
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -66,7 +66,7 @@ make test AUTOMATED_TESTING=1
 
 %files
 %if 0%{?_licensedir:1}
-%doc LICENSE
+%doc --no-dereference LICENSE
 %else
 %doc LICENSE
 %endif
@@ -74,6 +74,9 @@ make test AUTOMATED_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_10
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_8
 - update to new release by fcimport
 
