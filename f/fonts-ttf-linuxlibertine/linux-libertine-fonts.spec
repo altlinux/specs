@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname linux-libertine-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -17,10 +18,9 @@ proprietary standard fonts.
 
 Name:           fonts-ttf-linuxlibertine
 Version:        5.3.0
-Release:        alt1_10.%{posttag}
+Release:        alt1_12.%{posttag}
 Summary:        Linux Libertine Open Fonts
 
-Group:          System/Fonts/True type
 License:        GPLv2+ with exceptions or OFL
 URL:            http://linuxlibertine.sf.net
 Source0:        http://download.sourceforge.net/sourceforge/linuxlibertine/LinLibertineOTF_%{version}_%{posttag}.tgz
@@ -42,9 +42,9 @@ Source44: import.info
 This package contains Serif fonts.
 
 %package -n fonts-ttf-linuxlibertine-biolinum
+Group: System/Fonts/True type
 Summary:        Sans-serif fonts from Linux Libertine Open Fonts
 Requires:       fonts-ttf-linuxlibertine-common = %{version}-%{release}
-Group:          System/Fonts/True type
 
 %description -n fonts-ttf-linuxlibertine-biolinum
 %common_desc
@@ -52,8 +52,8 @@ Group:          System/Fonts/True type
 This package contains Sans fonts.
 
 %package -n fonts-ttf-linuxlibertine-common
+Group: System/Fonts/True type
 Summary:        Common files for Linux Libertine Open Fonts
-Group:          System/Fonts/True type
 
 %description -n fonts-ttf-linuxlibertine-common
 %common_desc
@@ -73,7 +73,6 @@ sed -i -e 's/\r//' OFL-1.1.txt
 #mv scripts/*.ttf .
 
 %install
-rm -fr %{buildroot}
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.otf %{buildroot}%{_fontdir}
 
@@ -133,11 +132,13 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %files -n fonts-ttf-linuxlibertine-common
-%doc Bugs.txt ChangeLog.txt GPL.txt LICENCE.txt OFL-1.1.txt Readme-TEX.txt README
+%doc --no-dereference GPL.txt LICENCE.txt OFL-1.1.txt
+%doc Bugs.txt ChangeLog.txt Readme-TEX.txt README
 
 %files
 %{_fontconfig_templatedir}/%{fontconf_libertine}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf_libertine}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/LinLibertine*.otf
 %{_datadir}/appdata/libertine.metainfo.xml
 
@@ -147,10 +148,14 @@ fi
 %files -n fonts-ttf-linuxlibertine-biolinum
 %{_fontconfig_templatedir}/%{fontconf_biolinum}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf_biolinum}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/LinBiolinum*.otf
 %{_datadir}/appdata/biolinum.metainfo.xml
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.3.0-alt1_12.2012_07_02
+- update to new release by fcimport
+
 * Sun Oct 29 2017 Igor Vlasenko <viy@altlinux.ru> 5.3.0-alt1_10.2012_07_02
 - update to new release by fcimport
 
