@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-MooseX-MarkAsMethods
 Version:        0.15
-Release:        alt1_14
+Release:        alt1_16
 Summary:        Mark overload code symbols as methods
 License:        LGPLv2+
 Group:          Development/Other
 URL:            http://metacpan.org/release/MooseX-MarkAsMethods/
-Source0:        http://www.cpan.org/authors/id/R/RS/RSRCHBOY/MooseX-MarkAsMethods-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/R/RS/RSRCHBOY/MooseX-MarkAsMethods-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(B/Hooks/EndOfScope.pm)
@@ -40,7 +40,7 @@ overloads will "just work".
 %setup -q -n MooseX-MarkAsMethods-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_16
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_14
 - update to new release by fcimport
 
