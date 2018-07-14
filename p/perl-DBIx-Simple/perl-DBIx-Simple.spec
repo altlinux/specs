@@ -8,10 +8,10 @@ BuildRequires: perl(DBIx/XHTML_Table.pm) perl(SQL/Abstract.pm) perl(Text/Table.p
 Name:           perl-DBIx-Simple
 Summary:        Easy-to-use OO interface to DBI
 Version:        1.37
-Release:        alt1_2
+Release:        alt1_3
 License:        Public Domain
-Source0:        http://search.cpan.org/CPAN/authors/id/J/JU/JUERD/DBIx-Simple-%{version}.tar.gz
-URL:            http://search.cpan.org/dist/DBIx-Simple/
+Source0:        https://cpan.metacpan.org/authors/id/J/JU/JUERD/DBIx-Simple-%{version}.tar.gz
+URL:            https://metacpan.org/release/DBIx-Simple
 BuildArch:      noarch
 
 BuildRequires:  rpm-build-perl
@@ -65,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.37-alt1_3
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.37-alt1_2
 - update to new release by fcimport
 
