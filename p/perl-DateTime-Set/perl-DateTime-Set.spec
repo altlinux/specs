@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Set
 Version:        0.3900
-Release:        alt1_4
+Release:        alt1_6
 Summary:        Datetime sets and set math
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/DateTime-Set/
-Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Set-%{version}.tar.gz
+URL:            https://metacpan.org/release/DateTime-Set
+Source0:        https://cpan.metacpan.org/authors/id/F/FG/FGLOCK/DateTime-Set-%{version}.tar.gz
 Patch0:         DateTime-Set-0.32-version.patch
 BuildArch:      noarch
 # Build
@@ -51,7 +51,7 @@ time", or "every Wednesday between 2003-03-05 and 2004-01-07".
 %patch0
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -62,11 +62,14 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 ./Build test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README TODO
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.3900-alt1_6
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.3900-alt1_4
 - update to new release by fcimport
 
