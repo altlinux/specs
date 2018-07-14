@@ -8,9 +8,9 @@ Name: hunspell-nso
 Summary: Northern Sotho hunspell dictionaries
 %global upstreamid 20091201
 Version: 0.%{upstreamid}
-Release: alt2_12
-Source: http://extensions.services.openoffice.org/files/3139/1/dict-ns_ZA-2009.12.01.oxt
-URL: http://www.translate.org.za/
+Release: alt2_14
+Source: https://downloads.sourceforge.net/project/aoo-extensions/3139/1/dict-ns_za-2009.12.01.oxt
+URL: https://extensions.openoffice.org/en/project/northern-sotho-spell-checker
 License: LGPLv2+
 BuildArch: noarch
 
@@ -22,6 +22,7 @@ Northern Sotho hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-nso
+
 
 %build
 for i in README-ns_ZA.txt package-description.txt release-notes-ns_ZA.txt; do
@@ -46,6 +47,9 @@ cp -p ns_ZA.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/nso_ZA.aff
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20091201-alt2_14
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20091201-alt2_12
 - update to new release by fcimport
 
