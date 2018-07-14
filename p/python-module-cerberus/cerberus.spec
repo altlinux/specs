@@ -3,15 +3,14 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1
-Release: alt1.1
+Version: 1.2
+Release: alt1
 Summary: Extensible validation for Python dictionaries
 License: ISCL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/Cerberus/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/nicolaiarocci/cerberus.git
+# https://github.com/pyeve/cerberus.git
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -111,7 +110,7 @@ popd
 %endif
 
 %files
-%doc AUTHORS CHANGES LICENSE *.rst docs/*.rst
+%doc AUTHORS LICENSE *.rst docs/*.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -120,7 +119,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS CHANGES LICENSE *.rst docs/*.rst
+%doc AUTHORS LICENSE *.rst docs/*.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -129,6 +128,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 14 2018 Terechkov Evgenii <evg@altlinux.org> 1.2-alt1
+- 1.2 (ALT #35154)
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
