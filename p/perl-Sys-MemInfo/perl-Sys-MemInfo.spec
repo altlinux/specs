@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Sys-MemInfo
 Version:        0.99
-Release:        alt3_5.1
+Release:        alt3_7
 Summary:        Memory information as Perl module
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Sys-MemInfo/
-Source0:        http://www.cpan.org/authors/id/S/SC/SCRESTO/Sys-MemInfo-%{version}.tar.gz
+URL:            https://metacpan.org/release/Sys-MemInfo
+Source0:        https://cpan.metacpan.org/authors/id/S/SC/SCRESTO/Sys-MemInfo-%{version}.tar.gz
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -36,7 +36,7 @@ bytes in totalmem and freemem variables.
 %setup -q -n Sys-MemInfo-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
 %make_build
 
 %install
@@ -49,12 +49,15 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_archlib}/auto/*
 %{perl_vendor_archlib}/Sys*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.99-alt3_7
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.99-alt3_5.1
 - rebuild with new perl 5.26.1
 
