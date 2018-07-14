@@ -7,13 +7,13 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Convert-UU
 Version:        0.5201
-Release:        alt3_18
+Release:        alt3_20
 Summary:        Perl module for uuencode and uudecode
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Convert-UU/
-Source0:        http://www.cpan.org/authors/id/A/AN/ANDK/Convert-UU-%{version}.tar.gz
+URL:            https://metacpan.org/release/Convert-UU
+Source0:        https://cpan.metacpan.org/authors/id/A/AN/ANDK/Convert-UU-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl-DBM perl-I18N-Collate perl-I18N-LangTags perl-NEXT perl-POSIX-1003 perl-Term-ReadLine-Gnu perl-Tie-File perl-Tie-RefHash perl-base perl-devel perl-threads perl-unicore
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  sed
@@ -39,7 +39,7 @@ Source44: import.info
 sed -i 's|local\/perl5\.002_01\/||' puudecode
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=perl NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=perl NO_PACKLIST=1
 %make_build
 
 %install
@@ -57,6 +57,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.5201-alt3_20
+- update to new release by fcimport
+
 * Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.5201-alt3_18
 - fixed build with new perl 5.26
 
