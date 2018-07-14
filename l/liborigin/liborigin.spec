@@ -6,7 +6,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 %define _localstatedir %{_var}
 Name:      liborigin
 Version:   20080225
-Release:   alt1_23
+Release:   alt1_24
 Summary:   Library for reading OriginLab OPJ project files
 
 License:   GPLv2
@@ -58,6 +58,10 @@ install -pm 644 OPJFile.h tree.hh %{buildroot}%{_includedir}/%{name}/
 #W: spurious-executable-perm 
 chmod 0644 ws4.opj
 
+
+
+
+
 %files
 %doc COPYING README ws4.opj import.qs
 %{_bindir}/opj2dat
@@ -68,6 +72,9 @@ chmod 0644 ws4.opj
 %{_libdir}/%{name}.so
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 20080225-alt1_24
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 20080225-alt1_23
 - update to new release by fcimport
 
