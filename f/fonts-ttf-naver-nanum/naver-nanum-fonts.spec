@@ -13,12 +13,17 @@ publisher is Naver Corporation.
 
 Name:       fonts-ttf-naver-nanum
 Version:    3.020
-Release:    alt2_20.20140930
+Release:    alt2_21.20140930
 Summary:    Nanum family of Korean TrueType fonts
 
 License:    OFL
 URL:        http://hangeul.naver.com
-Source0:    http://appdown.naver.com/naver/font/NanumFont/setup/NanumFontSetup_TTF_ALL_hangeulcamp.exe
+# Need to convert from Windows executable to tar ball to avoid to use p7zip
+#Source:    http://appdown.naver.com/naver/font/NanumFont/setup/NanumFontSetup_TTF_ALL_hangeulcamp.exe
+# wget http://appdown.naver.com/naver/font/NanumFont/setup/NanumFontSetup_TTF_ALL_hangeulcamp.exe
+# 7z x NanumFontSetup_TTF_ALL_hangeulcamp.exe
+# tar zcvf NanumFont.tar.gz -C \$WINDIR/Fonts/ .
+Source0:    NanumFont.tar.gz
 Source1:    %{oldname}-barun-gothic-fontconfig.conf
 Source2:    %{oldname}-barun-pen-fontconfig.conf
 Source3:    %{oldname}-brush-fontconfig.conf
@@ -38,7 +43,6 @@ Source14:   %{fontname}-pen.metainfo.xml
 
 BuildArch: noarch
 BuildRequires: fontpackages-devel
-BuildRequires: p7zip
 
 Provides:   nhn-nanum-fonts = %{version}-%{release}
 Obsoletes:  nhn-nanum-fonts < %{version}-%{release}
@@ -187,9 +191,7 @@ This package consists of the Nanum fonts Pen font faces.
 %{_datadir}/appdata/%{fontname}-pen.metainfo.xml
 
 %prep
-%setup -n %{oldname}-%{version} -c -T
-7z x %{SOURCE0}
-mv \$WINDIR/Fonts/*.ttf .
+%setup -n %{oldname}-%{version} -c
 cp -p %{SOURCE7} COPYING
 
 
@@ -281,6 +283,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.020-alt2_21.20140930
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 3.020-alt2_20.20140930
 - update to new release by fcimport
 
