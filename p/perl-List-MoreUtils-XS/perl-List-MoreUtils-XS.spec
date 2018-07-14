@@ -7,15 +7,15 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-List-MoreUtils-XS
 Version:	0.428
-Release:	alt1_2
+Release:	alt1_3
 Summary:	Provide compiled List::MoreUtils functions
 # Code from List-MoreUtils < 0.417 is GPL+ or Artistic
 # Anything after that is ASL 2.0
 # "git blame" on the upstream repo will probably be needed to
 # determine the license of any particular chunk of code
 License:	(GPL+ or Artistic) and ASL 2.0
-URL:		http://search.cpan.org/dist/List-MoreUtils-XS/
-Source0:	http://search.cpan.org/CPAN/authors/id/R/RE/REHSACK/List-MoreUtils-XS-%{version}.tar.gz
+URL:		https://metacpan.org/release/List-MoreUtils-XS
+Source0:	https://cpan.metacpan.org/authors/id/R/RE/REHSACK/List-MoreUtils-XS-%{version}.tar.gz
 Patch0:		List-MoreUtils-XS-0.428-unbundle.patch
 # Module Build
 BuildRequires:	coreutils
@@ -83,6 +83,9 @@ make test
 %{perl_vendor_archlib}/List/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.428-alt1_3
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.428-alt1_2
 - update to new release by fcimport
 
