@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Event-ICal
 Version:        0.13
-Release:        alt1_6
+Release:        alt1_8
 Summary:        Perl DateTime extension for computing rfc2445 recurrences
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/DateTime-Event-ICal/
-Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-ICal-%{version}.tar.gz
+URL:            https://metacpan.org/release/DateTime-Event-ICal
+Source0:        https://cpan.metacpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-ICal-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl-devel
@@ -43,7 +43,7 @@ DateTime::Set objects for rfc2445 style recurrences.
 %setup -q -n DateTime-Event-ICal-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -54,11 +54,14 @@ make pure_install DESTDIR=%{buildroot}
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README TODO
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_8
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_6
 - update to new release by fcimport
 
