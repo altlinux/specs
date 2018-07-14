@@ -6,12 +6,12 @@ BuildRequires: perl(Test/Pod.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-XXX
 Version:        0.31
-Release:        alt1_4
+Release:        alt1_6
 Summary:        See Your Data in the Nude
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/XXX/
-Source0:        http://search.cpan.org/CPAN/authors/id/I/IN/INGY/XXX-%{version}.tar.gz
+URL:            https://metacpan.org/release/XXX
+Source0:        https://cpan.metacpan.org/authors/id/I/IN/INGY/XXX-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -47,7 +47,7 @@ To use Data::Dumper instead of YAML:
 %setup -q -n XXX-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=true
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=true
 %make_build
 
 %install
@@ -58,11 +58,14 @@ make pure_install DESTDIR=%{buildroot}
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1_6
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1_4
 - update to new release by fcimport
 
