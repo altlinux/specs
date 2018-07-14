@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-Reporter
 Version:        1.62
-Release:        alt1_8
+Release:        alt1_10
 Summary:        Sends test results to cpan-testers@perl.org
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Test-Reporter/
-Source0:        http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Test-Reporter-%{version}.tar.gz
+URL:            https://metacpan.org/release/Test-Reporter
+Source0:        https://cpan.metacpan.org/authors/id/D/DA/DAGOLDEN/Test-Reporter-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -51,7 +51,7 @@ and platforms.
 %setup -q -n Test-Reporter-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -63,11 +63,14 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes CONTRIBUTING.mkdn README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.62-alt1_10
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.62-alt1_8
 - update to new release by fcimport
 
