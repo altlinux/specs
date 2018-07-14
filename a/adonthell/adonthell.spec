@@ -7,7 +7,7 @@ BuildRequires: pkgconfig(cairo) pkgconfig(gtk+-2.0) zlib-devel
 Name:           adonthell
 Summary:        A 2D graphical RPG game
 Version:        0.3.6
-Release:        alt1_8
+Release:        alt1_9
 License:        GPLv2+
 URL:            http://adonthell.nongnu.org/
 Source0:        http://savannah.nongnu.org/download/%{name}/%{name}-src-%{version}.tar.gz
@@ -73,6 +73,9 @@ sed -i "s|ac_precious_vars='build_alias|'ac_precious_vars=build_alias|g" configu
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.6-alt1_9
+- update to new release by fcimport
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.6-alt1_8
 - update to new release by fcimport
 
