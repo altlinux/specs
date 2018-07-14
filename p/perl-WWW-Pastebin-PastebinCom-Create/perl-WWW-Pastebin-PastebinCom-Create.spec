@@ -7,12 +7,12 @@ BuildRequires: perl(overload.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-WWW-Pastebin-PastebinCom-Create
 Version:        1.003
-Release:        alt1_10
+Release:        alt1_12
 Summary:        Paste to http://pastebin.com from Perl
 License:        GPL+ or Artistic
 
-URL:            http://search.cpan.org/dist/WWW-Pastebin-PastebinCom-Create/
-Source0:        http://www.cpan.org/authors/id/Z/ZO/ZOFFIX/WWW-Pastebin-PastebinCom-Create-%{version}.tar.gz
+URL:            https://metacpan.org/release/WWW-Pastebin-PastebinCom-Create
+Source0:        https://cpan.metacpan.org/authors/id/Z/ZO/ZOFFIX/WWW-Pastebin-PastebinCom-Create-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(LWP/UserAgent.pm)
@@ -39,7 +39,7 @@ pastebin site.
 rm t/01-paste.t
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+/usr/bin/perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -56,6 +56,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1_12
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1_10
 - update to new release by fcimport
 
