@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-HTML-Form
 Version:        6.03
-Release:        alt1_16
+Release:        alt1_18
 Summary:        Class that represents an HTML form element
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/HTML-Form/
-Source0:        http://www.cpan.org/authors/id/G/GA/GAAS/HTML-Form-%{version}.tar.gz
+URL:            https://metacpan.org/release/HTML-Form
+Source0:        https://cpan.metacpan.org/authors/id/G/GA/GAAS/HTML-Form-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -49,7 +49,7 @@ passed to the request() method of LWP::UserAgent.
 %setup -q -n HTML-Form-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -68,6 +68,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1_18
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1_16
 - update to new release by fcimport
 
