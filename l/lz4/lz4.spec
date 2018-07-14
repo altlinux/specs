@@ -1,7 +1,7 @@
 Name: lz4
 Epoch: 1
 Version: 1.8.2
-Release: alt1
+Release: alt2
 Summary: Fast LZ compression algorithm library and tools
 License: GPLv2+ and BSD
 Group: Archiving/Compression
@@ -80,7 +80,7 @@ export CFLAGS='%optflags'
 %install
 export CC=false CXX=false # nothing should be compiled or linked during install
 %makeinstall_std BUILD_STATIC=%BUILD_STATIC \
-	PREFIX=%prefix LIBDIR=%_libdir MANDIR=%_man1dir
+	PREFIX=%prefix LIBDIR=%_libdir
 
 # Relocate shared libraries from %_libdir/ to /%_lib/ (ALT#30628).
 mkdir -p %buildroot/%_lib
@@ -117,6 +117,9 @@ export CC=false CXX=false # nothing should be compiled or linked during check
 %endif
 
 %changelog
+* Sat Jul 14 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.8.2-alt2
+- Fixed location of manpages that was broken in 1.8.2.
+
 * Wed Jul 11 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.8.2-alt1
 - v1.8.1.2 -> v1.8.2.
 
