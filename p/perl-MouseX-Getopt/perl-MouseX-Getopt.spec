@@ -8,10 +8,10 @@ BuildRequires: perl-podlators
 Name:		perl-MouseX-Getopt
 Summary:	Mouse role for processing command line options
 Version:	0.37
-Release:	alt1_5
+Release:	alt1_8
 License:	GPL+ or Artistic
-URL:		http://search.cpan.org/dist/MouseX-Getopt/
-Source0:	http://search.cpan.org/CPAN/authors/id/G/GF/GFUJI/MouseX-Getopt-%{version}.tar.gz
+URL:		https://metacpan.org/release/MouseX-Getopt
+Source0:	https://cpan.metacpan.org/authors/id/G/GF/GFUJI/MouseX-Getopt-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	perl-devel
@@ -47,7 +47,7 @@ Requires:	perl(Mouse/Meta/Attribute.pm)
 # Filter under-specified dependency
 
 Source44: import.info
-%filter_from_requires /^perl\\(Mouse.pm\\)$/d
+%filter_from_requires /^perl(Mouse\\)$/d
 
 %description
 This is a Mouse role that provides an alternate constructor for creating
@@ -57,7 +57,7 @@ objects using parameters passed in from the command line.
 %setup -q -n MouseX-Getopt-%{version}
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
+perl Build.PL --installdirs=vendor
 ./Build
 
 %install
@@ -73,6 +73,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/MouseX/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1_8
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1_5
 - update to new release by fcimport
 
