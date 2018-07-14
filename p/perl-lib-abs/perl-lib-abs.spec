@@ -6,12 +6,12 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:           perl-lib-abs
 Version:        0.93
-Release:        alt2_10
+Release:        alt2_12
 Summary:        Module lib that makes relative path absolute to caller
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/lib-abs/
-Source0:        http://www.cpan.org/authors/id/M/MO/MONS/lib-abs-%{version}.tar.gz
+URL:            https://metacpan.org/release/lib-abs
+Source0:        https://cpan.metacpan.org/authors/id/M/MO/MONS/lib-abs-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -50,7 +50,7 @@ relative to current working directory.
 %setup -q -n lib-abs-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -66,6 +66,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2_12
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2_10
 - update to new release by fcimport
 
