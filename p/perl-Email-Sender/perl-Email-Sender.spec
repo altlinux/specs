@@ -7,12 +7,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Email-Sender
 Version:        1.300031
-Release:        alt1_3
+Release:        alt1_5
 Summary:        A library for sending email
 License:        GPL+ or Artistic
 
-URL:            http://search.cpan.org/dist/Email-Sender/
-Source0:        http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Sender-%{version}.tar.gz
+URL:            https://metacpan.org/release/Email-Sender
+Source0:        https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Email-Sender-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Capture/Tiny.pm)
@@ -72,7 +72,7 @@ suitable for serious use, for a variety of reasons.
 %setup -q -n Email-Sender-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -84,10 +84,13 @@ RELEASE_TESTING=1 make test
 
 %files
 %doc Changes README
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/Email*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.300031-alt1_5
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.300031-alt1_3
 - update to new release by fcimport
 
