@@ -6,12 +6,12 @@ BuildRequires: perl(DBD/mysql.pm) perl(Pod/Coverage/TrustPod.pm) perl(SQL/Statem
 %define _localstatedir %{_var}
 Name:           perl-Test-Database
 Version:        1.113
-Release:        alt1_8
+Release:        alt1_10
 Summary:        Database handles ready for testing
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Test-Database/
-Source0:        http://www.cpan.org/authors/id/B/BO/BOOK/Test-Database-%{version}.tar.gz
+URL:            https://metacpan.org/release/Test-Database
+Source0:        https://cpan.metacpan.org/authors/id/B/BO/BOOK/Test-Database-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -47,7 +47,7 @@ Requires:       perl(YAML/Tiny.pm) >= 1.620
 # Remove under-specified dependencies
 
 Source44: import.info
-%filter_from_requires /^perl\\(YAML.Tiny.pm\\)$/d
+%filter_from_requires /^perl(YAML.Tiny\\)$/d
 
 %description
 Test::Database Perl module provides a simple way for test authors to request
@@ -59,7 +59,7 @@ configuration.
 rm -f t/pod.t
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -75,6 +75,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.113-alt1_10
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.113-alt1_8
 - update to new release by fcimport
 
