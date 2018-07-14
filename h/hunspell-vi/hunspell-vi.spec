@@ -6,12 +6,12 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name: hunspell-vi
 Summary: Vietnamese hunspell dictionaries
-%global upstreamid 20080604
+%global upstreamid 20120418
 Version: 0.%{upstreamid}
-Release: alt2_14
-Source: http://hunspell-spellcheck-vi.googlecode.com/files/vi_VN.zip
-URL: http://code.google.com/p/hunspell-spellcheck-vi
-License: GPL+
+Release: alt1_1
+Source: https://downloads.sourceforge.net/project/aoo-extensions/917/3/vi_spellchecker_ooo3.oxt
+URL: https://extensions.openoffice.org/en/project/vietnamese-spellchecker
+License: GPLv2
 BuildArch: noarch
 
 Requires: hunspell
@@ -23,18 +23,22 @@ Vietnamese hunspell dictionaries.
 %prep
 %setup -q -c -n hunspell-vi
 
+
 %build
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+cp -p dictionaries/*.dic dictionaries/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
 
 %files
-%doc README_vi_VN.txt Copyright
+%doc --no-dereference LICENSES-en.txt LICENSES-vi.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20120418-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20080604-alt2_14
 - update to new release by fcimport
 
