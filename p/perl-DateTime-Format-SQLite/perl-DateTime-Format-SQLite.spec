@@ -8,10 +8,10 @@ BuildRequires: perl(DBD/SQLite.pm) perl-podlators
 Name:           perl-DateTime-Format-SQLite 
 Summary:        Parse and format SQLite dates and times 
 Version:        0.11
-Release:        alt2_22
+Release:        alt2_24
 License:        GPL+ or Artistic 
-Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFAERBER/DateTime-Format-SQLite-%{version}.tar.gz
-URL:            http://search.cpan.org/dist/DateTime-Format-SQLite/
+Source0:        https://cpan.metacpan.org/authors/id/C/CF/CFAERBER/DateTime-Format-SQLite-%{version}.tar.gz
+URL:            https://metacpan.org/release/DateTime-Format-SQLite
 BuildArch:      noarch
 # Build
 BuildRequires:  perl-devel
@@ -29,7 +29,7 @@ Requires:       perl(DateTime/Format/Builder.pm) >= 0.600
 
 
 Source44: import.info
-%filter_from_requires /^perl\\(DateTime.Format.Builder.pm\\)$/d
+%filter_from_requires /^perl(DateTime.Format.Builder\\)$/d
 
 %description
 This module understands the formats used by SQLite for its 'date',
@@ -46,7 +46,7 @@ in one of these formats.
 %setup -q -n DateTime-Format-SQLite-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -57,11 +57,14 @@ make pure_install DESTDIR=%{buildroot}
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2_24
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2_22
 - update to new release by fcimport
 
