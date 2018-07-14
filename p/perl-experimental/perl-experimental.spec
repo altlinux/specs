@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-experimental
 Version:        0.020
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/experimental/
-Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/experimental-%{version}.tar.gz
+URL:            https://metacpan.org/release/experimental
+Source0:        https://cpan.metacpan.org/authors/id/L/LE/LEONT/experimental-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl-devel
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.020-alt1_2
+- update to new release by fcimport
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.020-alt1_1
 - update to new release by fcimport
 
