@@ -5,13 +5,14 @@ BuildRequires: pkgconfig(libusb-1.0)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define build_docs 1
+
 %define major   0
 %define libname libmirisdr%{major}
 %define devname libmirisdr-devel
 
 Name:           libmirisdr
 Version:        0.0.20130608
-Release:        alt1_3
+Release:        alt1_5
 Summary:        Support programs for MRi2500
 License:        GPLv2
 Group:          Communications
@@ -63,33 +64,36 @@ Documentation for libmirisdr driver. HTML and PDF formats.
 # remove buildtime from documentation
 sed -i 's|^HTML_TIMESTAMP         = YES|HTML_TIMESTAMP         = NO|' Doxyfile.in
 
+# fix version in .pc
+sed -i -e 's,\(^Version:\).*,\1 %{version},' libmirisdr.pc.in
+
+# fix libdir in .pc
+sed -i -e 's,\(^set(libdir \\${exec_prefix}/lib\),\1${LIB_SUFFIX},' CMakeLists.txt
+
 %build
-%{mageia_cmake} ../
-%make
-cd ..
+%{mageia_cmake}
+%make_build
 
 #create documentation
 %if %{build_docs}
+cd ..
 cp Doxyfile.in Doxyfile
 sed -i "s\@VERSION@\%{version}\1" Doxyfile
 doxygen
-cd doc/latex
-make pdf
+make pdf -C doc/latex
 %endif
 
 %install
-cd build
-%makeinstall_std  DESTDIR=%{buildroot}
+%makeinstall_std -C build
+
 rm %{buildroot}%{_libdir}/libmirisdr.a
 
-%ifarch x86_64
+%ifarch x86_64 aarch64
 mv %{buildroot}/usr/lib/pkgconfig %{buildroot}%{_libdir}
 %endif
 
 #install udev rules
-mkdir -p %{buildroot}%{_udevrulesdir}
-cp ../mirisdr.rules %{buildroot}%{_udevrulesdir}/10-mirisdr.rules
-cd ..
+install -Dpm644 mirisdr.rules %{buildroot}%{_udevrulesdir}/10-mirisdr.rules
 
 #install documentation
 %if %{build_docs}
@@ -124,6 +128,9 @@ cp -r doc/latex/*.pdf %{buildroot}%{_docdir}/%{name}/pdf
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.20130608-alt1_5
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.20130608-alt1_3
 - new version
 
