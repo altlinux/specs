@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Term-Size-Any
 Version:        0.002
-Release:        alt2_22
+Release:        alt2_24
 Summary:        Retrieve terminal size
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Term-Size-Any/
-Source0:        http://www.cpan.org/authors/id/F/FE/FERREIRA/Term-Size-Any-%{version}.tar.gz
+URL:            https://metacpan.org/release/Term-Size-Any
+Source0:        https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/Term-Size-Any-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Devel/Hide.pm)
@@ -36,7 +36,7 @@ on behalf of Term::Size::Any.
 %setup -q -n Term-Size-Any-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2_24
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2_22
 - update to new release by fcimport
 
