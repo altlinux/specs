@@ -7,11 +7,11 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-BOM
 Version:        0.15
-Release:        alt2_6
+Release:        alt2_8
 Summary:        Utilities for handling Byte Order Marks
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/File-BOM/
-Source0:        http://www.cpan.org/authors/id/M/MA/MATTLAW/File-BOM-%{version}.tar.gz
+URL:            https://metacpan.org/release/File-BOM
+Source0:        https://cpan.metacpan.org/authors/id/M/MA/MATTLAW/File-BOM-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl-devel
@@ -43,8 +43,8 @@ Requires:       perl(Readonly.pm) >= 0.060
 
 
 Source44: import.info
-%filter_from_requires /^perl\\(Encode.pm\\)$/d
-%filter_from_requires /^perl\\(Readonly.pm\\)$/d
+%filter_from_requires /^perl(Encode\\)$/d
+%filter_from_requires /^perl(Readonly\\)$/d
 
 %description
 This module provides functions for handling Unicode byte order marks, which
@@ -69,6 +69,9 @@ perl Build.PL installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_8
+- update to new release by fcimport
+
 * Fri Dec 29 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_6
 - to Sisyphus
 
