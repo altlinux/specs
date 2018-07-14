@@ -6,8 +6,8 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libisds
-Version:        0.10.7
-Release:        alt1_4
+Version:        0.10.8
+Release:        alt1_1
 Summary:        Library for accessing the Czech Data Boxes
 License:        LGPLv3
 URL:            http://xpisar.wz.cz/%{name}/
@@ -79,6 +79,9 @@ rm -rf client/.deps client/Makefile{,.in}
 %doc client specification
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.10.8-alt1_1
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.10.7-alt1_4
 - update to new release by fcimport
 
