@@ -2,7 +2,7 @@
 
 Name: gimagereader
 Version: 3.2.99
-Release: alt1
+Release: alt2
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -17,7 +17,7 @@ Source: http://sourceforge.net/projects/gimagereader/files/%version/%name-%versi
 
 BuildRequires(pre): rpm-macros-cmake
 
-BuildRequires: cmake intltool gcc-c++ ccmake git-core
+BuildRequires: cmake intltool gcc-c++
 BuildRequires: libgomp-devel libjson-glib-devel libsane-devel libxml++2-devel libleptonica-devel libpcre-devel libpixman-devel libexpat-devel libdrm-devel libpodofo-devel libdjvu-devel libzip-devel libuuid-devel tesseract-devel
 
 BuildRequires: python3 python3-module-pygobject3
@@ -184,6 +184,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat Jul 14 2018 Vitaly Lipatov <lav@altlinux.ru> 3.2.99-alt2
+- drop ccmake and git-core buildreqs
+
 * Tue Mar 20 2018 Vitaly Lipatov <lav@altlinux.ru> 3.2.99-alt1
 - new version 3.2.99 (with rpmrb script)
 
