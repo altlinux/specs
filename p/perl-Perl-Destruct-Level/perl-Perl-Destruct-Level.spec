@@ -7,15 +7,15 @@ BuildRequires: perl-podlators
 Name:		perl-Perl-Destruct-Level
 Summary:	Allows you to change perl's internal destruction level
 Version:	0.02
-Release:	alt4_19.1
+Release:	alt4_21
 Group:		Development/Other
 License:	GPL+ or Artistic
-URL:		http://search.cpan.org/dist/Perl-Destruct-Level/
-Source0:	http://search.cpan.org/CPAN/authors/id/R/RG/RGARCIA/Perl-Destruct-Level-%{version}.tar.gz
+URL:		https://metacpan.org/release/Perl-Destruct-Level
+Source0:	https://cpan.metacpan.org/authors/id/R/RG/RGARCIA/Perl-Destruct-Level-%{version}.tar.gz
 # Module Build
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	gcc-common
+BuildRequires:	gcc
 BuildRequires:	perl-devel
 BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
@@ -49,7 +49,7 @@ destruction level for their own purposes: mod_perl does that, for example.
 %setup -q -n Perl-Destruct-Level-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
 %make_build
 
 %install
@@ -66,6 +66,9 @@ make test
 %{perl_vendor_archlib}/Perl/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.02-alt4_21
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt4_19.1
 - rebuild with new perl 5.26.1
 
