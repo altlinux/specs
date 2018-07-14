@@ -8,8 +8,8 @@ Name: hunspell-is
 Summary: Icelandic hunspell dictionaries
 %global upstreamid 20090823
 Version: 0.%{upstreamid}
-Release: alt2_12
-Source: http://extensions.services.openoffice.org/files/2829/1/Icelandic-dict-2009-08-23.oxt
+Release: alt2_14
+Source: https://downloads.sourceforge.net/project/aoo-extensions/2829/1/icelandic-dict-2009-08-23.oxt
 URL: http://extensions.services.openoffice.org/project/dict-is
 License: GPLv2+
 BuildArch: noarch
@@ -22,6 +22,7 @@ Icelandic hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-is
+
 
 %build
 for i in LICENSE_en_US.txt; do
@@ -45,6 +46,9 @@ cp -p dictionaries/is_IS.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20090823-alt2_14
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20090823-alt2_12
 - update to new release by fcimport
 
