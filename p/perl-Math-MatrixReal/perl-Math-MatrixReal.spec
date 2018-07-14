@@ -6,12 +6,12 @@ BuildRequires: perl(Data/Dump.pm) perl(List/MoreUtils.pm) perl(OpenGL.pm) perl-p
 %define _localstatedir %{_var}
 Name:           perl-Math-MatrixReal
 Version:        2.13
-Release:        alt1_4
+Release:        alt1_6
 Summary:        Manipulate matrix of reals
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Math-MatrixReal/
-Source0:        http://www.cpan.org/authors/id/L/LE/LETO/Math-MatrixReal-%{version}.tar.gz
+URL:            https://metacpan.org/release/Math-MatrixReal
+Source0:        https://cpan.metacpan.org/authors/id/L/LE/LETO/Math-MatrixReal-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  perl-devel
@@ -57,7 +57,7 @@ does what you would like it to do.
 chmod -x example/*
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -72,6 +72,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1_6
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1_4
 - update to new release by fcimport
 
