@@ -1,7 +1,7 @@
 Group: Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: gcc-c++ perl(Class/Accessor/Fast.pm) perl(ExtUtils/MY_Metafile.pm) perl(Math/Trig.pm) perl(OpenGL.pm) perl-podlators
+BuildRequires: perl(Class/Accessor/Fast.pm) perl(ExtUtils/MY_Metafile.pm) perl(Math/Trig.pm) perl(OpenGL.pm) perl-podlators
 # END SourceDeps(oneline)
 #
 %add_findreq_skiplist %{perl_vendor_archlib}/Wx/DemoModules/*
@@ -13,12 +13,13 @@ BuildRequires: libGL-devel libGLU-devel
 %define _localstatedir %{_var}
 Name:           perl-Wx-GLCanvas
 Version:        0.09
-Release:        alt1_15.1
+Release:        alt1_17
 Summary:        Interface to wxWidgets' OpenGL canvas
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Wx-GLCanvas/
-Source0:        http://www.cpan.org/authors/id/M/MB/MBARBON/Wx-GLCanvas-%{version}.tar.gz
+URL:            https://metacpan.org/release/Wx-GLCanvas
+Source0:        https://cpan.metacpan.org/authors/id/M/MB/MBARBON/Wx-GLCanvas-%{version}.tar.gz
 
+BuildRequires:  gcc-c++
 BuildRequires:  perl-devel
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -51,7 +52,7 @@ rm -rf wx
 chmod -x Changes README.txt
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags} -I/usr/include/wx-2.8"
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags} -I/usr/include/wx-2.8"
 %make_build
 
 %install
@@ -73,6 +74,9 @@ DISPLAY=:0.0 make test
 %{perl_vendor_archlib}/Wx*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_17
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_15.1
 - rebuild with new perl 5.26.1
 
