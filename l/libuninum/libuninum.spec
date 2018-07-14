@@ -1,22 +1,21 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: swig
+BuildRequires: gcc-c++ swig
 # END SourceDeps(oneline)
+Group: Development/Other
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:       Library for converting unicode strings to numbers
 Name:          libuninum
 Version:       2.7
-Release:       alt3_20.1
+Release:       alt3_22
 # numconv is GPLv2, lib is LGPLv2
 License:       GPLv2 and LGPLv2
-Group:         Development/Other
 URL:           http://billposer.org/Software/libuninum.html
-Source0:       http://billposer.org/Software/Downloads/%{name}-%{version}.tar.bz2
+Source0:       http://billposer.org/Software/Downloads/libuninum-%{version}.tar.bz2
 Patch0:        libuninum-2.7-64bit-clean.patch
 BuildRequires: libgmp-devel libgmpxx-devel
 Source44: import.info
-
 %description
 libuninum is a library for converting Unicode strings to
 numbers. Internal computation is done using arbitrary precision
@@ -27,15 +26,14 @@ system is provided. The number systems supported include Arabic,
 Armenian, Balinese, Bengali, Burmese, Chinese, Cyrillic, Devanagari,
 Egyptian, Ethiopic, Glagolitic, Greek, Gujarati, Gurmukhi, Hebrew,
 Kannada, Khmer, Klingon, Lao, Limbu, Malayalam, Mongolian, New Tai
-Lue, Nko, Old Italic, Old Persian, Oriya, Osmanya, Perso-Arabic,
+Lue, Nko, Old Italic, Old Persian, Odia, Osmanya, Perso-Arabic,
 Phoenician, Roman Numerals, Tamil, Telugu, Tengwar, Thai, and Tibetan.
 
-%package devel
-Summary:  Header files, libraries and development documentation for %{name}
-Group:    Development/Other
-Requires: %{name} = %{version}-%{release}
-
-%description devel
+%package       devel
+Group: Development/Other
+Summary:       Header files, libraries and development documentation for %{name}
+Requires:      %{name} = %{version}-%{release}
+%description   devel
 This package contains the header files, static libraries and
 development documentation for %{name}. If you like to develop programs
 using %{name}, you will need to install %{name}-devel.
@@ -48,25 +46,31 @@ using %{name}, you will need to install %{name}-devel.
 %configure --disable-static --disable-rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-%{__make} %{?_smp_mflags}
+%make_build
 
 %install
-%{__make} install DESTDIR=%{buildroot}
-%{__install} -p -D -m 0644 numconv.1 %{buildroot}/%{_mandir}/man1/numconv.1
-%{__rm} -f %{buildroot}%{_bindir}/NumberConverter.tcl
+make install DESTDIR=%{buildroot}
+install -p -D -m 0644 numconv.1 %{buildroot}/%{_mandir}/man1/numconv.1
+rm -f %{buildroot}%{_bindir}/NumberConverter.tcl
+rm -f %{buildroot}%{_libdir}/libuninum.la
 
 %files
-%doc AUTHORS ChangeLog COPYING CREDITS NEWS README README_NUMBERCONVERTER TODO 
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog CREDITS NEWS README README_NUMBERCONVERTER TODO
 %doc Examples
 %{_bindir}/numconv
 %{_libdir}/libuninum.so.*
 %{_mandir}/man1/numconv.1*
 
 %files devel
+%doc --no-dereference COPYING
 %{_includedir}/uninum
 %{_libdir}/libuninum.so
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.7-alt3_22
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.7-alt3_20.1
 - update to new release by fcimport
 
