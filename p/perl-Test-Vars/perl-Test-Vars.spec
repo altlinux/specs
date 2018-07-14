@@ -7,17 +7,17 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-Vars
 Version:	0.014
-Release:	alt1_3
+Release:	alt1_7
 Summary:	Detects unused variables
 License:	GPL+ or Artistic
-URL:		http://search.cpan.org/dist/Test-Vars/
-Source0:	http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/Test-Vars-%{version}.tar.gz
+URL:		https://metacpan.org/release/Test-Vars
+Source0:	https://cpan.metacpan.org/authors/id/D/DR/DROLSKY/Test-Vars-%{version}.tar.gz
 BuildArch:	noarch
 # ===================================================================
 # Build requirements
 # ===================================================================
 BuildRequires:	coreutils
-BuildRequires:	perl
+BuildRequires:	perl-devel >= 5.10.0
 BuildRequires:	rpm-build-perl
 BuildRequires:	perl(Module/Build/Tiny.pm)
 BuildRequires:	sed
@@ -69,7 +69,7 @@ Test::Vars finds unused variables in order to keep the source code tidy.
 sed -i -e '1s|^#!perl|#!/usr/bin/perl|' example/*.t
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
+perl Build.PL --installdirs=vendor
 ./Build
 
 %install
@@ -82,7 +82,7 @@ prove -Ilib $(echo $(find xt/ -name '*.t'))
 
 %files
 %if 0%{?_licensedir:1}
-%doc LICENSE
+%doc --no-dereference LICENSE
 %else
 %doc LICENSE
 %endif
@@ -90,6 +90,9 @@ prove -Ilib $(echo $(find xt/ -name '*.t'))
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_7
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_3
 - update to new release by fcimport
 
