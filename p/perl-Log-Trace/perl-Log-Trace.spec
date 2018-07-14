@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Log-Trace
 Version:        1.070
-Release:        alt2_24
+Release:        alt2_26
 License:        GPLv2+
 Summary:        A unified approach to tracing
-Source:         http://search.cpan.org/CPAN/authors/id/B/BB/BBC/Log-Trace-%{version}.tar.gz
-Url:            http://search.cpan.org/dist/Log-Trace
+Source:         https://cpan.metacpan.org/authors/id/B/BB/BBC/Log-Trace-%{version}.tar.gz
+Url:            https://metacpan.org/release/Log-Trace
 BuildArch:      noarch
 # Build
 BuildRequires:  perl-devel
@@ -37,7 +37,7 @@ Requires:     perl(Time/HiRes.pm)
 
 
 Source44: import.info
-%filter_from_provides /^perl\\(DB.pm\\)$/d
+%filter_from_provides /^perl(DB\\)$/d
 
 %description
 This module provides a unified approach to tracing. A script can 'use
@@ -50,7 +50,7 @@ option. See the "OPTIONS" manpage for more information.
 %setup -q -n Log-Trace-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -61,11 +61,14 @@ make pure_install DESTDIR=%{buildroot}
 make test
 
 %files
-%doc COPYING
+%doc --no-dereference COPYING
 %doc README Changes
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_26
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_24
 - update to new release by fcimport
 
