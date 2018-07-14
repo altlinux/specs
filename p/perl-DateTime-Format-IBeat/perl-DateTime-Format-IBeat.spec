@@ -6,11 +6,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-IBeat
 Version:        0.161
-Release:        alt2_29
+Release:        alt2_31
 Summary:        Format times in .beat notation 
 Group:          Development/Other
 License:        GPL+ or Artistic 
-URL:            http://search.cpan.org/dist/DateTime-Format-IBeat
+URL:            https://metacpan.org/release/DateTime-Format-IBeat
 Source0:        http://backpan.perl.org/authors/id/E/EM/EMARTIN/DateTime-Format-IBeat-0.161.tar.gz
 BuildArch:      noarch 
 # Build
@@ -44,7 +44,7 @@ seconds. That means that 12 noon in the old time system is the equivalent of
 %setup -q -n DateTime-Format-IBeat-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -56,11 +56,14 @@ find %{buildroot} -type f -name .packlist -delete
 make test
 
 %files
-%doc Artistic COPYING LICENCE
+%doc --no-dereference Artistic COPYING LICENCE
 %doc Changes README
 %{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.161-alt2_31
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.161-alt2_29
 - update to new release by fcimport
 
