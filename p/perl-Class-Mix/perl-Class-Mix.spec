@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 Name:           perl-Class-Mix
 Summary:        Dynamic class mixing
 Version:        0.006
-Release:        alt1_1
+Release:        alt1_3
 License:        GPL+ or Artistic
 Group:          Development/Other
-Source0:        http://search.cpan.org/CPAN/authors/id/Z/ZE/ZEFRAM/Class-Mix-%{version}.tar.gz
-URL:            http://search.cpan.org/dist/Class-Mix/
+Source0:        https://cpan.metacpan.org/authors/id/Z/ZE/ZEFRAM/Class-Mix-%{version}.tar.gz
+URL:            https://metacpan.org/release/Class-Mix
 BuildArch:      noarch
 
 BuildRequires:  coreutils
@@ -48,7 +48,7 @@ The mix_class function provided by this module dynamically generates
 %setup -q -n Class-Mix-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+/usr/bin/perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -64,6 +64,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1_3
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1_1
 - update to new release by fcimport
 
