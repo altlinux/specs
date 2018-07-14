@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Devel-Comments
 Version:        1.1.4
-Release:        alt2_16
+Release:        alt2_18
 Summary:        Debug with executable smart comments to logs
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Devel-Comments/
-Source0:        http://www.cpan.org/authors/id/X/XI/XIONG/developer-tools/Devel-Comments-v%{version}.tar.gz
+URL:            https://metacpan.org/release/Devel-Comments
+Source0:        https://cpan.metacpan.org/authors/id/X/XI/XIONG/developer-tools/Devel-Comments-v%{version}.tar.gz
 BuildArch:      noarch
 # Compile-time:
 BuildRequires:  rpm-build-perl
@@ -39,7 +39,7 @@ Requires:       perl(Text/Balanced.pm) >= 2
 # Remove under-specifed dependencies
 
 Source44: import.info
-%filter_from_requires /^perl\\(Filter.Simple|Text.Balanced.pm\\)\\s*$/d
+%filter_from_requires /^perl(Filter.Simple\|Text.Balanced\\)\\s*$/d
 
 %description
 Devel::Comments is a source filter for your Perl code, intended to be used
@@ -54,7 +54,7 @@ guaranteed harmless, ready for the next development cycle.
 %setup -q -n Devel-Comments-v%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+/usr/bin/perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -70,6 +70,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt2_18
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt2_16
 - update to new release by fcimport
 
