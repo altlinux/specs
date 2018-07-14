@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 Name:		perl-CPAN-Changes
 Summary:	Read and write Changes files
 Version:	0.400002
-Release:	alt1_6
+Release:	alt1_8
 License:	GPL+ or Artistic
 Group:		Development/Other
-URL:		http://search.cpan.org/dist/CPAN-Changes/
-Source0:	http://search.cpan.org/CPAN/authors/id/H/HA/HAARG/CPAN-Changes-%{version}.tar.gz
+URL:		https://metacpan.org/release/CPAN-Changes
+Source0:	https://cpan.metacpan.org/authors/id/H/HA/HAARG/CPAN-Changes-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	perl-devel
@@ -55,7 +55,7 @@ that conform to the specification.
 %setup -q -n CPAN-Changes-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -75,6 +75,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{_mandir}/man1/tidy_changelog.1*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.400002-alt1_8
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.400002-alt1_6
 - update to new release by fcimport
 
