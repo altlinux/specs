@@ -7,7 +7,7 @@ Group: System/Fonts/True type
 
 Name:       fonts-ttf-open-sans
 Version:    1.10
-Release:    alt1_6
+Release:    alt1_8
 Summary:    Open Sans is a humanist sans-serif typeface designed by Steve Matteson
 
 License:    ASL 2.0
@@ -90,10 +90,14 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc LICENSE.txt
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_8
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_6
 - update to new release by fcimport
 
