@@ -6,12 +6,12 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-DateManip
 Version:        0.04
-Release:        alt2_25
+Release:        alt2_27
 Summary:        Convert Date::Manip to DateTime and vice versa
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/DateTime-Format-DateManip/
-Source0:        http://www.cpan.org/authors/id/B/BB/BBENNETT/dt-fmt-datemanip/DateTime-Format-DateManip-%{version}.tar.gz
+URL:            https://metacpan.org/release/DateTime-Format-DateManip
+Source0:        https://cpan.metacpan.org/authors/id/B/BB/BBENNETT/dt-fmt-datemanip/DateTime-Format-DateManip-%{version}.tar.gz
 # Use full time zone name instead of an ambiguous abbreviation, CPAN RT#55771
 Patch0:         DateTime-Format-DateManip-01conversion.patch
 # Pass test with Date-Manip-6.49, bug #1199969, CPAN RT#102670
@@ -43,7 +43,7 @@ objects. Recurrences are note yet supported.
 %patch1 -p1
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -54,11 +54,14 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 ./Build test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_27
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_25
 - update to new release by fcimport
 
