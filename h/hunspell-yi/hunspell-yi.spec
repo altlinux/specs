@@ -7,8 +7,8 @@ BuildRequires: unzip
 Name: hunspell-yi
 Summary: Yiddish hunspell dictionaries
 Version: 1.1
-Release: alt2_13
-Source: http://extensions.services.openoffice.org/e-files/3975/1/%{name}-%{version}.oxt
+Release: alt2_15
+Source: https://downloads.sourceforge.net/project/aoo-extensions/3975/1/%{name}-%{version}.oxt
 URL: http://extensions.services.openoffice.org/en/project/dict-yi
 License: LGPLv2+ or GPLv2+ or MPLv1.1
 BuildArch: noarch
@@ -22,6 +22,7 @@ Yiddish hunspell dictionaries.
 %prep
 %setup -q -c
 
+
 %build
 
 %install
@@ -31,10 +32,14 @@ cp -p dictionaries/yi.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/yi_US.dic
 
 
 %files
-%doc gpl-2.0.txt MPL-1.1.txt README_yi.txt LICENSES-en.txt HACKING lgpl-2.1.txt
+%doc README_yi.txt
+%doc --no-dereference gpl-2.0.txt MPL-1.1.txt LICENSES-en.txt HACKING lgpl-2.1.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_15
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_13
 - update to new release by fcimport
 
