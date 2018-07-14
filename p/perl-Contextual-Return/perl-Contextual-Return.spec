@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Contextual-Return
 Version:        0.004014
-Release:        alt1_3
+Release:        alt1_5
 Summary:        Create context-sensitive return values
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Contextual-Return
-Source0:        http://search.cpan.org/CPAN/authors/id/D/DC/DCONWAY/Contextual-Return-%{version}.tar.gz
+URL:            https://metacpan.org/release/Contextual-Return
+Source0:        https://cpan.metacpan.org/authors/id/D/DC/DCONWAY/Contextual-Return-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  coreutils
@@ -35,7 +35,7 @@ Requires:       perl(Data/Dumper.pm)
 
 
 Source44: import.info
-%filter_from_provides /^perl\\(DB.pm\\)$/d
+%filter_from_provides /^perl(DB\\)$/d
 
 %description
 This module allows you to define return values of a perl sub that are
@@ -45,7 +45,7 @@ appropriate given the calling context.
 %setup -q -n Contextual-Return-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
 %make_build
 
 %install
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/Contextual/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.004014-alt1_5
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.004014-alt1_3
 - update to new release by fcimport
 
