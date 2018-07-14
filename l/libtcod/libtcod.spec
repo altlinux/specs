@@ -11,7 +11,7 @@ BuildRequires: gcc-c++
 
 Name:           libtcod
 Version:        1.6.6
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Color console, input management and other tools for roguelike games
 Group:          System/Libraries
 License:        BSD
@@ -20,6 +20,7 @@ URL:            https://bitbucket.org/libtcod/libtcod
 Source0:        https://bitbucket.org/libtcod/libtcod/get/%{version}.tar.bz2
 # TODO: Have upstream handle their soname properly
 Patch0:         libtcod-1.6.6-mga-soname.patch
+Patch1:		Add-console_rexpaint.h.patch
 
 BuildRequires:  pkgconfig(sdl2)
 BuildRequires:  pkgconfig(zlib)
@@ -69,6 +70,7 @@ This package contains development headers and libraries for %{name}.
 %prep
 %setup -q -n %{name}-%{name}-%{hash}
 %patch0 -p1
+%patch1 -p1
 rm -rf src/zlib
 
 %build
@@ -101,6 +103,9 @@ EOF
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt1_2
+- update by mgaimport
+
 * Thu Jun 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt1_1
 - update by mgaimport
 
