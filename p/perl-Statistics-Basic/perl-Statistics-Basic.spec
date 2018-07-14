@@ -6,12 +6,12 @@ BuildRequires: perl(Test/Perl/Critic.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Statistics-Basic
 Version:        1.6611
-Release:        alt1_8
+Release:        alt1_10
 Summary:        A collection of very basic statistics modules
 License:        LGPLv2+
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Statistics-Basic/
-Source0:        http://www.cpan.org/authors/id/J/JE/JETTERO/Statistics-Basic-%{version}.tar.gz
+URL:            https://metacpan.org/release/Statistics-Basic
+Source0:        https://cpan.metacpan.org/authors/id/J/JE/JETTERO/Statistics-Basic-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -33,7 +33,7 @@ Requires:       perl(Number/Format.pm) >= 1.420
 # Remove underspecified dependecies
 
 Source44: import.info
-%filter_from_requires /perl\\(Number.Format.pm\\)$/d
+%filter_from_requires /perl(Number.Format\\)$/d
 
 %description
 use Statistics::Basic qw(:all);
@@ -51,7 +51,7 @@ my $correlation = correlation( [1 .. 3], [1 .. 3] );
 %setup -q -n Statistics-Basic-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=perl NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=perl NO_PACKLIST=1
 %make_build
 
 %install
@@ -66,6 +66,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.6611-alt1_10
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.6611-alt1_8
 - update to new release by fcimport
 
