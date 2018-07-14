@@ -1,16 +1,19 @@
 Group: Text tools
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: hunspell-mt
 Summary: Maltese hunspell dictionaries
-%global upstreamid 20020708
+%global upstreamid 20110414
 Version: 0.%{upstreamid}
-Release: alt2_15
-Source: http://linux.org.mt/downloads/spellcheck-mt-0.3.tar.gz
+Release: alt1_1
+Source: https://downloads.sourceforge.net/project/aoo-extensions/5039/0/dict-mt-2011-04-14.oxt
 URL: http://linux.org.mt/node/62
 License: LGPLv2+
 BuildArch: noarch
-BuildRequires: libhunspell-devel hunspell-utils
+BuildRequires: hunspell-utils libhunspell-devel
 
 Requires: hunspell
 Source44: import.info
@@ -21,21 +24,24 @@ Maltese hunspell dictionaries.
 %prep
 %setup -q -c
 
+
 %build
-export LANG=mt_MT.utf8
-iconv -f ISO-8859-3 -t UTF-8 words.iso8859-3 > maltese.words
-wordlist2hunspell maltese.words mt_MT
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p mt_MT.dic mt_MT.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+cp -p mt.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/mt_MT.dic
+cp -p mt.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/mt_MT.aff
 
 
 %files
-%doc readme.txt
+%doc README_en.txt
+%doc --no-dereference licence.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20110414-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20020708-alt2_15
 - update to new release by fcimport
 
