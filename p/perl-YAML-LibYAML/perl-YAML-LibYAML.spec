@@ -1,30 +1,42 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/Pod.pm) perl-podlators
+BuildRequires: perl(LWP/Simple.pm) perl(Test/Deep.pm) perl(Test/Pod.pm) perl(Text/Diff.pm) perl(YAML.pm) perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl-Filter
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# Run optional test
+%if ! 0%{?rhel}
+%bcond_without perl_YAML_LibYAML_enables_optional_test
+%else
+%bcond_with perl_YAML_LibYAML_enables_optional_test
+%endif
+
 Name:           perl-YAML-LibYAML
+Epoch:          1
 Version:        0.72
-Release:        alt1
+Release:        alt1_1
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
-Group:          Development/Other
-URL:            http://search.cpan.org/dist/YAML-LibYAML/
-Source0:        http://www.cpan.org/authors/id/T/TI/TINITA/YAML-LibYAML-%{version}.tar.gz
+URL:            https://metacpan.org/release/YAML-LibYAML
+Source0:        https://cpan.metacpan.org/authors/id/T/TI/TINITA/YAML-LibYAML-%{version}.tar.gz
 
 # Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
-%ifnarch e2k
-BuildRequires:  gcc-common
-%endif
-BuildRequires:  perl
+BuildRequires:  gcc
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(Config.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  libyaml2, libyaml-devel
 
 # Module
 BuildRequires:  perl(B/Deparse.pm)
@@ -36,29 +48,39 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(XSLoader.pm)
 
-%if_without check
-%else
 # Tests
+BuildRequires:  perl(B.pm)
 BuildRequires:  perl(blib.pm)
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(Devel/Peek.pm)
 BuildRequires:  perl(Encode.pm)
 BuildRequires:  perl(File/Find.pm)
 BuildRequires:  perl(File/Path.pm)
+BuildRequires:  perl(Filter/Util/Call.pm)
+BuildRequires:  perl(FindBin.pm)
 BuildRequires:  perl(IO/File.pm)
 BuildRequires:  perl(IO/Pipe.pm)
 BuildRequires:  perl(lib.pm)
-BuildRequires:  perl(Test/Base.pm)
-BuildRequires:  perl(Test/Base/Filter.pm)
+BuildRequires:  perl(Test/Builder.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Tie/Array.pm)
 BuildRequires:  perl(Tie/Hash.pm)
 BuildRequires:  perl(utf8.pm)
 
+%if %{with perl_YAML_LibYAML_enables_optional_test}
 # Optional Tests
 BuildRequires:  perl(Path/Class.pm)
 %endif
 
 # Dependencies
+Requires:       perl(B/Deparse.pm)
+
+# libyaml is tweaked and bundled
+# https://github.com/ingydotnet/yaml-libyaml-pm/issues/49
+# version number determined by comparing commits in upstream repo:
+# https://bitbucket.org/xi/libyaml/commits/branch/default
+Provides:       bundled(libyaml) = 0.1.7
 
 # Avoid provides for perl shared objects
 
@@ -73,25 +95,27 @@ bound to Python and was later bound to Ruby.
 %setup -q -n YAML-LibYAML-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
-make %{?_smp_mflags}
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -delete
 find %{buildroot} -type f -name '*.bs' -empty -delete
-# %{_fixperms} %{buildroot}
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes CONTRIBUTING README
 %{perl_vendor_archlib}/auto/YAML/
 %{perl_vendor_archlib}/YAML/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.72-alt1_1
+- update to new release by fcimport
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.72-alt1
 - automated CPAN update
 
