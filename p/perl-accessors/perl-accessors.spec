@@ -6,14 +6,14 @@ BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Cwd.pm) perl(Exporter.pm) p
 %define _localstatedir %{_var}
 Name:           perl-accessors
 Version:        1.01
-Release:        alt1_23
+Release:        alt1_25
 Summary:        Create accessor methods in caller's package
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/accessors/
-Source0:        http://www.cpan.org/authors/id/S/SP/SPURKIS/accessors-%{version}.tar.gz
+URL:            https://metacpan.org/release/accessors
+Source0:        https://cpan.metacpan.org/authors/id/S/SP/SPURKIS/accessors-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl-devel >= 1:5.6.0
+BuildRequires:  perl-devel >= 5.6.0
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Test/More.pm)
@@ -26,7 +26,7 @@ The accessors pragma lets you create simple accessors at compile-time.
 %setup -q -n accessors-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+/usr/bin/perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -47,6 +47,9 @@ find $RPM_BUILD_ROOT%{perl_vendor_privlib} -name *.pm | xargs chmod a-x
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_25
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_23
 - update to new release by fcimport
 
