@@ -7,12 +7,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-Map
 Version:        0.65
-Release:        alt1.1_3
+Release:        alt1.1_4
 Summary:        Memory mapping made simple and safe
 License:        GPL+ or Artistic
 
-URL:            http://search.cpan.org/dist/File-Map/
-Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/File-Map-%{version}.tar.gz
+URL:            https://metacpan.org/release/File-Map
+Source0:        https://cpan.metacpan.org/authors/id/L/LE/LEONT/File-Map-%{version}.tar.gz
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  perl-devel >= 5.008
@@ -84,6 +84,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1.1_4
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1.1_3
 - update to new release by fcimport
 
