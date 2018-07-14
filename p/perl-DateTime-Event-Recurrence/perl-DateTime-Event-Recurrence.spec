@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Event-Recurrence
 Version:        0.19
-Release:        alt1_3
+Release:        alt1_5
 Summary:        DateTime::Set extension for create basic recurrence sets
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/DateTime-Event-Recurrence/
-Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-Recurrence-%{version}.tar.gz
+URL:            https://metacpan.org/release/DateTime-Event-Recurrence
+Source0:        https://cpan.metacpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-Recurrence-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl-devel
@@ -36,8 +36,8 @@ Requires:       perl(DateTime/Set.pm) >= 0.360.0
 
 
 Source44: import.info
-%filter_from_requires /^perl\\(DateTime.pm\\)$/d
-%filter_from_requires /^perl\\(DateTime.Set.pm\\)$/d
+%filter_from_requires /^perl(DateTime\\)$/d
+%filter_from_requires /^perl(DateTime.Set\\)$/d
 
 %description
 This module provides convenience methods that let you easily create
@@ -49,7 +49,7 @@ DateTime::Set objects for various recurrences, such as "once a month" or
 %setup -q -n DateTime-Event-Recurrence-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -60,11 +60,14 @@ make pure_install DESTDIR=%{buildroot}
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes CREDITS README TODO
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_5
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_3
 - update to new release by fcimport
 
