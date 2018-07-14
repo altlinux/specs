@@ -7,10 +7,10 @@ BuildRequires: unzip
 Name: hunspell-el
 Summary: Greek hunspell dictionaries
 #Epoch: 1
-Version: 0.8
-Release: alt2_14
+Version: 0.9
+Release: alt1_1
 Source: http://ispell.math.upatras.gr/files/ooffice/el_GR-%{version}.zip
-URL: http://ispell.math.upatras.gr/?section=oofficespell&subsection=howto
+URL: http://www.elspell.gr/
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 BuildArch: noarch
 
@@ -22,6 +22,7 @@ Greek hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-el
+
 
 %build
 chmod -x *
@@ -43,6 +44,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_1
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_14
 - update to new release by fcimport
 
