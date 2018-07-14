@@ -9,15 +9,15 @@ BuildRequires: perl(CPAN.pm) perl(Filter/Util/Call.pm) perl(JSON.pm) perl(LWP/Si
 
 Name:           perl-Array-Diff
 Version:        0.07
-Release:        alt2_26
+Release:        alt2_27
 # Because 0.07 compares newer than 0.05002 in Perl world
 # but not in RPM world :-(
 Epoch:          1
 Summary:        Find the differences between two arrays
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Array-Diff/
-Source0:        http://www.cpan.org/authors/id/T/TY/TYPESTER/Array-Diff-%{version}.tar.gz
+URL:            https://metacpan.org/release/Array-Diff
+Source0:        https://cpan.metacpan.org/authors/id/T/TY/TYPESTER/Array-Diff-%{version}.tar.gz
 Patch0:         Array-Diff-0.07-Fix-building-on-Perl-without-dot-in-INC.patch
 BuildArch:      noarch
 # Module Build
@@ -91,6 +91,9 @@ make test
 %{perl_vendor_privlib}/Array/Diff.pm
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.07-alt2_27
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.07-alt2_26
 - update to new release by fcimport
 
