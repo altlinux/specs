@@ -7,16 +7,16 @@ BuildRequires: libuuid-devel libXext-devel libedit-devel libdb6-devel
 Summary:	Prolog interpreter and compiler
 Name:		swi-prolog
 Version:	7.4.2
-Release:	alt2_2
+Release:	alt2_3
 License:	LGPLv2+
 Group:		Development/Other
-Url:		http://www.swi-prolog.org
 Requires:	%{name}-nox
 Requires:	%{name}-xpce
 Source44: import.info
 # pl is not perl
 AutoReq: yes,noperl
 AutoProv: yes,noperl
+Url: http://www.swi-prolog.org
 
 #Recommends:	%{name}-doc
 
@@ -110,7 +110,7 @@ Documentation for SWI-Prolog.
 %setup -n swipl-%{version} -q
 
 %build
-%add_optflags %optflags_shared
+export CFLAGS="%{optflags} -fPIC"
 %configure
 %make
 
@@ -120,10 +120,12 @@ pushd packages
 popd
 
 %install
+%add_optflags %optflags_shared
 make install DESTDIR=%buildroot
 
 pushd packages
-make install DESTDIR=%buildroot
+# %%makeinstall_std overrides INSTALL
+make install DESTDIR=%{?buildroot}
 %make html-install PLBASE=%{buildroot}%{_libdir}/swipl-%{version}
 popd
 
@@ -173,6 +175,9 @@ popd
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 7.4.2-alt2_3
+- update by mgaimport
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 7.4.2-alt2_2
 - added Url:
 
