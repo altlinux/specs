@@ -16,7 +16,7 @@ BuildRequires: gcc-c++ swig
 Summary:        A Commodore 64 music player and SID chip emulator library
 Name:           sidplay-libs
 Version:        2.1.1
-Release:        alt1_22
+Release:        alt1_23
 Source:         http://prdownloads.sourceforge.net/sidplay2/%{name}-%version.tar.bz2
 Patch:		sidplay-libs-2.1.1-gcc4.3.patch
 #gw from xsidplay 2.0.3
@@ -81,6 +81,7 @@ for developing applications to use %{libname}.
 Summary:        General utility library for use in sidplayers
 Requires:	%libname = %version
 Group:          System/Libraries
+
 %description -n %libnamesu
 This library provides general utilities that are not considered core
 to the C64 emulation.  Utilities include decoding and obtaining tune
@@ -100,24 +101,25 @@ This package includes the header and library files necessary
 for developing applications to use %libnamesu.
 
 %prep
-%setup -q 
-%patch -p1 -b .gcc
+%setup -q
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-autoreconf -fi -Iunix
-pushd resid
-autoreconf -fi
-popd
 
 %build
-export CFLAGS="%optflags -fPIC"
-export CXXFLAGS="%optflags -fPIC"
+for dir in . resid libsidutils libsidplay builders/resid-builder builders/hardsid-builder; do
+  autoreconf -vfi -Iunix $dir
+done
+
+export CFLAGS="%optflags -Wno-narrowing -fPIC"
+export CXXFLAGS="%optflags -Wno-narrowing -fPIC"
 %configure --disable-static --enable-shared
-%make
+%make_build
 
 %install
 %makeinstall_std
+
 find %{buildroot} -name '*.la' -delete
 rm -f %buildroot%_libdir/lib*.a
 chrpath -d %buildroot%_libdir/libsidutils.so
@@ -158,6 +160,9 @@ echo #multiarch_includes %buildroot%_includedir/sidplay/sidconfig.h
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_23
+- update by mgaimport
+
 * Sat Apr 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_22
 - new version
 
