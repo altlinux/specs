@@ -6,12 +6,12 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Crypt-Eksblowfish
 Version:        0.009
-Release:        alt5_21
+Release:        alt5_22
 Summary:        Eksblowfish block cipher
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Crypt-Eksblowfish/
-Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Crypt-Eksblowfish-%{version}.tar.gz
+URL:            https://metacpan.org/release/Crypt-Eksblowfish
+Source0:        https://cpan.metacpan.org/authors/id/Z/ZE/ZEFRAM/Crypt-Eksblowfish-%{version}.tar.gz
 BuildRequires:  findutils
 BuildRequires:  gcc
 BuildRequires:  perl-devel
@@ -65,6 +65,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 %{perl_vendor_archlib}/Crypt*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.009-alt5_22
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.009-alt5_21
 - update to new release by fcimport
 
