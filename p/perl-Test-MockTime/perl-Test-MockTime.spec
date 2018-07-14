@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-MockTime
 Version:        0.17
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Replaces actual time with simulated time
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Test-MockTime/
-Source0:        http://www.cpan.org/authors/id/D/DD/DDICK/Test-MockTime-%{version}.tar.gz
+URL:            https://metacpan.org/release/Test-MockTime
+Source0:        https://cpan.metacpan.org/authors/id/D/DD/DDICK/Test-MockTime-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  %{__perl}
@@ -61,6 +61,9 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_2
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_1
 - update to new release by fcimport
 
