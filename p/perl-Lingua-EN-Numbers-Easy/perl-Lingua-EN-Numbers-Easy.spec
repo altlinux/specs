@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Lingua-EN-Numbers-Easy
 Version:        2014120401
-Release:        alt1_8
+Release:        alt1_10
 Summary:        Hash access to Lingua::EN::Numbers objects
 License:        MIT
-URL:            http://search.cpan.org/dist/Lingua-EN-Numbers-Easy/
-Source0:        http://www.cpan.org/authors/id/A/AB/ABIGAIL/Lingua-EN-Numbers-Easy-%{version}.tar.gz
+URL:            https://metacpan.org/release/Lingua-EN-Numbers-Easy
+Source0:        https://cpan.metacpan.org/authors/id/A/AB/ABIGAIL/Lingua-EN-Numbers-Easy-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl-devel
@@ -37,7 +37,7 @@ to words using a tied hash, which can be interpolated.
 %setup -q -n Lingua-EN-Numbers-Easy-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -52,6 +52,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2014120401-alt1_10
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2014120401-alt1_8
 - update to new release by fcimport
 
