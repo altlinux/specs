@@ -10,6 +10,7 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 /usr/bin/runtest gcc-c++ texinfo
 %global build_all		1
 %global build_aarch64		%{build_all}
 %global build_alpha		%{build_all}
+%global build_arc		%{build_all}
 %global build_arm		%{build_all}
 %global build_avr32		%{build_all}
 %global build_blackfin		%{build_all}
@@ -62,7 +63,7 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 /usr/bin/runtest gcc-c++ texinfo
 
 # Disable the default generation of GNU Build notes by the assembler.
 # This has turned out to be problematic for the i686 architecture.
-# although the extact reason has not been determined.  (See BZ 1572485)
+# although the exact reason has not been determined.  (See BZ 1572485)
 # It also breaks building EFI binaries on AArch64, as these cannot have
 # relocations against absolute symbols.
 %define default_generate_notes 0
@@ -70,7 +71,7 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 /usr/bin/runtest gcc-c++ texinfo
 Summary: A GNU collection of cross-compilation binary utilities
 Name: %{cross}-binutils
 Version: 2.30
-Release: alt1_2
+Release: alt1_4
 License: GPLv3+
 Group: Development/Tools
 URL: https://sourceware.org/binutils
@@ -187,7 +188,7 @@ Patch15: binutils-speed-up-objdump.patch
 #           GOLD maintainers seem to be reluctant to address the issue.
 Patch16: binutils-2.28-ignore-gold-duplicates.patch
 
-# Purpose:  Treat relosc against STT_GNU_IFUNC symbols in note sections as
+# Purpose:  Treat relocs against STT_GNU_IFUNC symbols in note sections as
 #           if they were relocs against STT_FUNC symbols instead.
 # Lifetime: Fixed in 2.31.
 Patch17: binutils-ifunc-relocs-in-notes.patch
@@ -281,6 +282,23 @@ Patch34: binutils-linkonce-notes.patch
 # Lifetime: Fixed in 2.31
 Patch35: binutils-CVE-2018-8945.patch
 
+# Purpose:  Fix handling of local version symbols by the x86 linker.
+# Lifetime: Fixed in 2.31
+Patch36: binutils-x86-local-version.patch
+
+# Purpose:  Fix linker testsuite failures
+# Lifetime: Fixed in 2.31 (probably)
+Patch37: binutils-fix-testsuite-failures.patch
+
+# Purpose:  Correct warning messages about incompatible PowerPC IEEE
+#           long double sizes in different binaries.
+# Lifetime: Fixed in 2.31.
+Patch38: binutils-PowerPC-IEEE-long-double-warnings.patch
+
+# Purpose:  Fix the generation of relocations for assembler generated notes.
+# Lifetime: Fixed in 2.31.
+Patch39: binutils-missing-notes.patch
+
 # NOTE!!! Don't add cross-binutils patches here as "binutils-xxx".  Name them
 # cross-binutils-xxx instead!
 
@@ -345,9 +363,10 @@ Provides: /usr/lib/%3 \
 Cross-build binary image generation, manipulation and query tools. \
 %endif
 
-%do_package alpha-linux-gnu	%{build_alpha}
-%do_package arm-linux-gnu	%{build_arm}
 %do_package aarch64-linux-gnu	%{build_aarch64}
+%do_package alpha-linux-gnu	%{build_alpha}
+%do_package arc-linux-gnu	%{build_arc}
+%do_package arm-linux-gnu	%{build_arm}
 %do_package avr32-linux-gnu	%{build_avr32}
 %do_package bfin-linux-gnu	%{build_blackfin}
 %do_package c6x-linux-gnu	%{build_c6x}
@@ -436,6 +455,10 @@ cd %{srcdir}
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
+%patch36 -p1
+%patch37 -p1
+%patch38 -p1
+%patch39 -p1
 
 # We cannot run autotools as there is an exact requirement of autoconf-2.59.
 
@@ -475,9 +498,10 @@ function prep_target () {
 
 cd ..
 (
-    prep_target alpha-linux-gnu		%{build_alpha}
-    prep_target arm-linux-gnu		%{build_arm}
     prep_target aarch64-linux-gnu	%{build_aarch64}
+    prep_target alpha-linux-gnu		%{build_alpha}
+    prep_target arc-linux-gnu		%{build_arc}
+    prep_target arm-linux-gnu		%{build_arm}
     prep_target avr32-linux-gnu		%{build_avr32}
     prep_target bfin-linux-gnu		%{build_blackfin}
     prep_target c6x-linux-gnu		%{build_c6x}
@@ -540,8 +564,9 @@ function config_target () {
     build_dir=${1%%%%-*}
 
     case $arch in
-	arm-*)		target=arm-linux-gnueabi;;
 	aarch64-*)	target=aarch64-linux-gnu;;
+	arc-*)		target=arc-linux-uclibc;;
+	arm-*)		target=arm-linux-gnueabi;;
 	avr32-*)	target=avr-linux;;
 	bfin-*)		target=bfin-uclinux;;
 	c6x-*)		target=c6x-uclinux;;
@@ -769,14 +794,8 @@ function build_file_list () {
     (
 	echo %{_bindir}/$arch-[!l]\*
 	echo %{_bindir}/$arch-ld\*
-	if [ -L %{buildroot}%{auxbin_prefix}/$target_cpu-* ]
-	then
-	    echo %{auxbin_prefix}/$target_cpu-*
-	else
-	    echo %{auxbin_prefix}/$target_cpu-*/bin/\*
-	fi
 	echo %{_mandir}/man1/$arch-\*
-	echo '%%attr(0755,root,root)' %{auxbin_prefix}/$arch/sys-root
+	echo %{auxbin_prefix}/$target_cpu-\*
     ) >files.$arch
 }
 
@@ -854,9 +873,10 @@ sed -i -e /sys-root/d files.ppc64*-linux-gnu
 %files -n %{rpmprefix}binutils-%1 -f files.%1 \
 %endif
 
-%do_files alpha-linux-gnu	%{build_alpha}
-%do_files arm-linux-gnu		%{build_arm}
 %do_files aarch64-linux-gnu	%{build_aarch64}
+%do_files alpha-linux-gnu	%{build_alpha}
+%do_files arc-linux-gnu		%{build_arc}
+%do_files arm-linux-gnu		%{build_arm}
 %do_files avr32-linux-gnu	%{build_avr32}
 %do_files bfin-linux-gnu	%{build_blackfin}
 %do_files c6x-linux-gnu		%{build_c6x}
@@ -897,6 +917,9 @@ sed -i -e /sys-root/d files.ppc64*-linux-gnu
 %do_files xtensa-linux-gnu	%{build_xtensa}
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.30-alt1_4
+- update to new release by fcimport
+
 * Sat Jun 09 2018 Igor Vlasenko <viy@altlinux.ru> 2.30-alt1_2
 - update to new release by fcimport
 
