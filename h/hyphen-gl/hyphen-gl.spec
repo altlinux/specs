@@ -7,8 +7,8 @@ BuildRequires: unzip
 Name: hyphen-gl
 Summary: Galician hyphenation rules
 Version: 0.99
-Release: alt1_13
-Source: http://extensions.services.openoffice.org/files/2004/0/hyph_gl.oxt
+Release: alt1_15
+Source: https://forxa.mancomun.org/frs/download.php/534/hyph_gl.oxt
 URL: https://forxa.mancomun.org/projects/hyphenation-gl
 License: GPLv3
 BuildArch: noarch
@@ -20,6 +20,7 @@ Galician hyphenation rules.
 
 %prep
 %setup -q -c -n hyphen-gl
+
 
 %build
 chmod -x *
@@ -34,6 +35,9 @@ cp -p hyph_gl_ANY.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_gl_ES.dic
 %{_datadir}/hyphen/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1_15
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1_13
 - update to new release by fcimport
 
