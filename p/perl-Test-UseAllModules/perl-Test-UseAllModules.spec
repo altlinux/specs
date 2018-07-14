@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-UseAllModules
 Version:        0.17
-Release:        alt1_8
+Release:        alt1_10
 Summary:        Do use_ok() for all the MANIFESTed modules
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Test-UseAllModules/
-Source0:        http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Test-UseAllModules-%{version}.tar.gz
+URL:            https://metacpan.org/release/Test-UseAllModules
+Source0:        https://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/Test-UseAllModules-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -37,7 +37,7 @@ Requires:       perl(Test/More.pm) >= 0.600
 # Remove underspecifies dependencies
 
 Source44: import.info
-%filter_from_requires /perl\\(Test.More.pm\\)/d
+%filter_from_requires /perl(Test.More.pm)/d
 
 %description
 I'm sick of writing 00_load.t (or something like that) that will do use_ok()
@@ -55,7 +55,7 @@ for F in Changes README; do
 done
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -71,6 +71,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_10
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_8
 - update to new release by fcimport
 
