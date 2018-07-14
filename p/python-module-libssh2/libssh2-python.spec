@@ -1,6 +1,7 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-build-python3
+BuildRequires: python-module-setuptools python3-module-setuptools
 # END SourceDeps(oneline)
 %define oldname libssh2-python
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -11,7 +12,7 @@ BuildRequires(pre): rpm-build-python rpm-build-python3
 Summary:        Python binding for the libssh2 library
 Name:           python-module-libssh2
 Version:        0.7.1
-Release:        alt1_18.1
+Release:        alt1_20
 License:        LGPLv2+
 URL:            https://github.com/wallunit/ssh4py
 # The source for the package was pulled from upstream's vcs.  Use the
@@ -32,8 +33,9 @@ libssh2-python is a python binding for the libssh2 library\
 Source44: import.info
 
 
-%description %_description
+%description 
 
+%_description
 %package -n python3-module-libssh2
 Group: Development/Other
 Summary:        %summary
@@ -43,9 +45,10 @@ Provides:       libssh2-python = %{version}-%{release}
 Provides:       libssh2-python = %{version}-%{release}
 Obsoletes:      libssh2-python < %{version}-%{release}
 
-%description -n python3-module-libssh2 %_description
+%description -n python3-module-libssh2 
 
 
+%_description
 %prep
 %setup -n %{oldname}-%{version} -q
 
@@ -73,6 +76,9 @@ mv %{buildroot}%{python3_sitelibdir}/libssh2.*.so %{buildroot}%{python3_sitelibd
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_20
+- update to new release by fcimport
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.1-alt1_18.1
 - (NMU) Rebuilt with python-3.6.4.
 
