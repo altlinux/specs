@@ -7,10 +7,10 @@ BuildRequires: unzip
 Name: hunspell-br
 Summary: Breton hunspell dictionaries
 #Epoch: 1
-Version: 0.8
-Release: alt1_12
+Version: 0.15
+Release: alt1_1
 URL: http://www.drouizig.org/
-Source: http://extensions.services.openoffice.org/e-files/2207/6/dict-br_0.8.oxt
+Source: https://downloads.sourceforge.net/project/aoo-extensions/2207/7/dict-br-0.15.oxt
 License: LGPLv2+
 BuildArch: noarch
 
@@ -23,6 +23,7 @@ Breton hunspell dictionaries.
 %prep
 %setup -q -c -n hunspell-br-%{version}
 
+
 %build
 chmod -x dictionaries/*
 
@@ -32,10 +33,14 @@ cp -p dictionaries/br_FR.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 
 
 %files
-%doc LICENSES-en.txt package-description.txt
+%doc package-description.txt
+%doc --no-dereference LICENSES-en.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_1
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_12
 - update to new release by fcimport
 
