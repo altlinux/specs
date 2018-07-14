@@ -13,7 +13,7 @@ BuildRequires(pre): rpm-build-ubt
 %def_without libcxx
 
 Name: telegram-desktop
-Version: 1.3.7
+Version: 1.3.10
 Release: alt1
 
 Summary: Telegram is a messaging app with a focus on speed and security
@@ -38,11 +38,17 @@ Patch8: 0008_add_locales.patch
 Patch14: 0014-get-language-name-and-country-name-from-QLocale.patch
 Patch15: 0015-disable-resource-fonts.patch
 Patch16: 0016-fix-lzma.patch
+Patch17: 0017-ligsl-microsoft-fix.patch
 
 #ExclusiveArch: %ix86 x86_64
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-qt5 rpm-macros-cmake
 BuildRequires(pre): rpm-macros-kde-common-devel
+
+BuildRequires(pre): rpm-build-compat >= 2.1.5
+BuildRequires(pre): rpm-build-intro >= 2.1.5
+# use no more than system_memory/1700 build procs (see https://bugzilla.altlinux.org/show_bug.cgi?id=35112)
+%_tune_parallel_build_by_procsize 1700
 
 BuildRequires: gcc-c++ libstdc++-devel gyp cmake
 
@@ -62,8 +68,6 @@ BuildRequires: libzip-devel
 BuildRequires: zlib-devel >= 1.2.8
 
 BuildRequires: libminizip-devel libpcre-devel libexpat-devel libssl-devel bison
-BuildRequires: libpixman-devel
-#BuildRequires:  libpixman-devel libz3-devel 
 #BuildRequires: libxkbcommon-devel libxkbcommon-x11-devel
 #BuildRequires: libXi-devel libSM-devel libICE-devel libdbus-devel libXfixes-devel
 BuildRequires: libX11-devel
@@ -80,7 +84,7 @@ BuildRequires: libopenal-devel >= 1.17.2
 BuildRequires: libva-devel libdrm-devel
 
 BuildRequires: libtgvoip-devel >= 2.1
-BuildRequires: libcrl-devel >= 0.2
+BuildRequires: libcrl-devel >= 0.3
 # C++ sugar
 BuildRequires: libmicrosoft-gsl-devel >= 20180615
 BuildRequires: libvariant-devel librange-v3-devel
@@ -137,7 +141,7 @@ $ XDG_CURRENT_DESKTOP=NONE tdesktop
 #patch9 -p1
 %patch14 -p1
 %patch15 -p1
-#patch16 -p1
+%patch17 -p2
 
 cp %SOURCE2 Telegram/
 # MacOS things will conflicts with binary name, so delete Telegram dir
@@ -202,6 +206,19 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Sat Jul 14 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.10-alt1
+- new version 1.3.10 (with rpmrb script)
+
+* Sat Jul 14 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.9-alt2
+- restrict __nprocs with _tune_parallel_build_by_procsize
+- drop libpixman-devel buildreq
+
+* Tue Jul 10 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.9-alt1
+- new version 1.3.9 (with rpmrb script)
+
+* Mon Jun 25 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.8-alt1
+- new version 1.3.8 (with rpmrb script)
+
 * Thu Jun 14 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.7-alt1
 - new version 1.3.7 (with rpmrb script)
 
