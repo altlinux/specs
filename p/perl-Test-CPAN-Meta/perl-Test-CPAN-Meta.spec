@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-CPAN-Meta
 Version:        0.25
-Release:        alt1_11
+Release:        alt1_14
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        Artistic 2.0
-URL:            http://search.cpan.org/dist/Test-CPAN-Meta/
-Source0:        http://www.cpan.org/authors/id/B/BA/BARBIE/Test-CPAN-Meta-%{version}.tar.gz
+URL:            https://metacpan.org/release/Test-CPAN-Meta
+Source0:        https://cpan.metacpan.org/authors/id/B/BA/BARBIE/Test-CPAN-Meta-%{version}.tar.gz
 Patch0:         Test-CPAN-Meta-0.25-utf8.patch
 BuildArch:      noarch
 # Module Build
@@ -53,7 +53,7 @@ Module::Install.
 %patch0
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -65,11 +65,14 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 make test AUTOMATED_TESTING=1
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README examples/
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_14
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_11
 - update to new release by fcimport
 
