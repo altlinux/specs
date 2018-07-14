@@ -6,14 +6,14 @@ BuildRequires: perl(Alien/SeleniumRC.pm) perl(CPAN.pm) perl(Cwd.pm) perl(Fcntl.p
 %define _localstatedir %{_var}
 Name:           perl-TAP-Formatter-HTML
 Version:        0.11
-Release:        alt1_13
+Release:        alt1_15
 Summary:        TAP Test Harness output delegate for html output
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/TAP-Formatter-HTML/
-Source0:        http://www.cpan.org/authors/id/S/SP/SPURKIS/TAP-Formatter-HTML-%{version}.tar.gz
+URL:            https://metacpan.org/release/TAP-Formatter-HTML
+Source0:        https://cpan.metacpan.org/authors/id/S/SP/SPURKIS/TAP-Formatter-HTML-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl-devel >= 1:5.6.0
+BuildRequires:  perl-devel >= 5.6.0
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(accessors.pm)
 BuildRequires:  perl(Module/Build.pm)
@@ -37,7 +37,7 @@ this module). For sample output, see:
 %setup -q -n TAP-Formatter-HTML-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+/usr/bin/perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -55,6 +55,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_15
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_13
 - update to new release by fcimport
 
