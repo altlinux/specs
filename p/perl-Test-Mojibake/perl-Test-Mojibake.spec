@@ -2,7 +2,7 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Encode.pm) perl-podlators
 # END SourceDeps(oneline)
-%define fedora 25
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # We need to patch the test suite if we have an old version of Test::More and/or Test::Pod
@@ -14,12 +14,12 @@ BuildRequires: perl(Encode.pm) perl-podlators
 
 Name:		perl-Test-Mojibake
 Version:	1.3
-Release:	alt1_4
+Release:	alt1_7
 Summary:	Check your source for encoding misbehavior
 Group:		Development/Other
 License:	GPL+ or Artistic
-URL:		http://search.cpan.org/dist/Test-Mojibake/
-Source0:	http://search.cpan.org/CPAN/authors/id/S/SY/SYP/Test-Mojibake-%{version}.tar.gz
+URL:		https://metacpan.org/release/Test-Mojibake
+Source0:	https://cpan.metacpan.org/authors/id/S/SY/SYP/Test-Mojibake-%{version}.tar.gz
 Patch1:		Test-Mojibake-1.3-old-Test::More.patch
 Patch2:		Test-Mojibake-1.3-old-Test::Pod.patch
 Patch3:		Test-Mojibake-1.3-no-Test::Version.patch
@@ -142,7 +142,7 @@ Enter the Test::Mojibake ;)
 %endif
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -158,7 +158,7 @@ make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1} \
 
 %files
 %if 0%{?_licensedir:1}
-%doc LICENSE
+%doc --no-dereference LICENSE
 %else
 %doc LICENSE
 %endif
@@ -168,6 +168,9 @@ make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1} \
 %{_mandir}/man1/scan_mojibake.1*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_7
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_4
 - update to new release by fcimport
 
