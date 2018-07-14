@@ -3,17 +3,15 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(fftw3f)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name libosmo-dsp
 %define major   0
-%define libname lib%{name}%{major}
-%define devname lib%{name}-devel
+%define libname libosmodsp%{major}
+%define devname libosmodsp-devel
 %define uname   Osmo-DSP
 
 Name:             libosmo-dsp
 Summary:          A library with SDR DSP primitives
 Version:          0.3
-Release:          alt1_2
+Release:          alt1_3
 License:          GPLv2+
 Group:            Communications
 URL:              http://cgit.osmocom.org/libosmo-dsp/
@@ -33,6 +31,7 @@ A library with SDR DSP primitives.
 %package -n %{libname}
 Summary:          A library with SDR DSP primitives
 Group:            Communications
+Obsoletes:        %{_lib}libosmo-dsp0 < 0.3-3
 
 %description -n %{libname}
 Library files for libosmo-dsp.
@@ -43,6 +42,7 @@ Group:            Communications
 Requires:         %{libname} = %{version}-%{release}
 Provides:         %{name}-devel = %{version}-%{release}
 Provides:         osmo-dsp-devel = %{version}-%{release}
+Obsoletes:        %{_lib}libosmo-dsp-devel < 0.3-3
 
 %description -n %{devname}
 Development files for libosmo-dsp.
@@ -57,18 +57,18 @@ HTML documentation for osmo-dsp.
 
 %prep
 %setup -q
-autoreconf -fi
 
 %build
+autoreconf -fi
 %configure --disable-static
 
-%make LDFLAGS="${LDFLAGS} -lm"
+%make_build LDFLAGS="${LDFLAGS} -lm"
 
 %install
 %makeinstall_std
 
 # remove libtool
-rm -f %{buildroot}%{_libdir}/*.la
+find %{buildroot} -name '*.la' -delete
 
 # fix docs location
 mkdir -p %{buildroot}%{_docdir}/%{name}
@@ -106,6 +106,9 @@ desktop-file-install \
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_3
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_2
 - new version
 
