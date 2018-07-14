@@ -12,7 +12,7 @@ BuildRequires: gcc-c++
 
 Name:           libvoikko
 Version:        3.8
-Release:        alt1_9
+Release:        alt1_10
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
 Group:          System/Libraries
@@ -127,6 +127,9 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %endif
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1_10
+- update to new release by fcimport
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1_9
 - update to new release by fcimport
 
