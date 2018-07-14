@@ -8,11 +8,11 @@ BuildRequires: perl(Sub/Identify.pm)
 %define _localstatedir %{_var}
 Name:           perl-Devel-REPL
 Version:        1.003028
-Release:        alt2_7
+Release:        alt2_8
 Summary:        Modern perl interactive shell
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Devel-REPL/
-Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Devel-REPL-%{version}.tar.gz
+URL:            https://metacpan.org/release/Devel-REPL
+Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETHER/Devel-REPL-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl-devel
@@ -286,6 +286,9 @@ make test
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.003028-alt2_8
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.003028-alt2_7
 - update to new release by fcimport
 
