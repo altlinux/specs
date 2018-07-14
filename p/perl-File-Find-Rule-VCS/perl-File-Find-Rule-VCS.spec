@@ -7,11 +7,11 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:           perl-File-Find-Rule-VCS
 Version:        1.08
-Release:        alt3_19
+Release:        alt3_21
 Summary:        Exclude files/directories for Version Control Systems
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/File-Find-Rule-VCS/
-Source0:        http://www.cpan.org/authors/id/A/AD/ADAMK/File-Find-Rule-VCS-%{version}.tar.gz
+URL:            https://metacpan.org/release/File-Find-Rule-VCS
+Source0:        https://cpan.metacpan.org/authors/id/A/AD/ADAMK/File-Find-Rule-VCS-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -41,7 +41,7 @@ sed -i -e '/^inc\// d' MANIFEST
 find -type f -exec chmod -x {} +
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -53,11 +53,14 @@ find $RPM_BUILD_ROOT -type f -name .packlist -delete
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.08-alt3_21
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.08-alt3_19
 - update to new release by fcimport
 
