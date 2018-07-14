@@ -9,15 +9,15 @@ BuildRequires: gcc-c++ imake libXt-devel xorg-cf-files
 
 Name:             libsvg-cairo
 Summary:          A SVG library based on cairo
-Version:	0.1.6
-Release:	alt2_19
+Version:          0.1.6
+Release:          alt2_20
 License:          BSD
 Group:            System/Libraries
 Source:           %{name}-%{version}.tar.bz2
 URL:              http://cairographics.org/snapshots/
-BuildRequires:    libsvg-devel
-BuildRequires:    libcairo libcairo-devel libcairo-gobject-devel libcairo-tools
-BuildRequires:    libjpeg-devel libturbojpeg-devel
+BuildRequires:    pkgconfig(libsvg)
+BuildRequires:    pkgconfig(cairo)
+BuildRequires:    pkgconfig(libjpeg)
 Source44: import.info
 
 %description
@@ -47,13 +47,19 @@ files to allow you to develop with libsvg-cairo.
 %prep
 %setup -q
 
+# make autoreconf more happy
+sed -i -e 's,LT_,_,g' configure.in
+
 %build
+# fix build on aarch64
+autoreconf -vfi
+
 export LIBS="-lm"
 %configure --disable-static
-%make
+%make_build
 
 %install
-%makeinstall
+%makeinstall_std
 find $RPM_BUILD_ROOT -type f -name "*.la" -delete
 
 %files -n %{lib_name}
@@ -71,6 +77,9 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -delete
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.6-alt2_20
+- update by mgaimport
+
 * Mon Apr 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.6-alt2_19
 - new version
 
