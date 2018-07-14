@@ -7,12 +7,12 @@ BuildRequires: perl(CPAN.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.p
 %define _localstatedir %{_var}
 Name:           perl-Regexp-Common-net-CIDR
 Version:        0.03
-Release:        alt1_7
+Release:        alt1_9
 Summary:        Provide patterns for CIDR blocks
 License:        GPLv2
 
-URL:            http://search.cpan.org/dist/Regexp-Common-net-CIDR/
-Source0:        http://www.cpan.org/authors/id/B/BP/BPS/Regexp-Common-net-CIDR-%{version}.tar.gz
+URL:            https://metacpan.org/release/Regexp-Common-net-CIDR
+Source0:        https://cpan.metacpan.org/authors/id/B/BP/BPS/Regexp-Common-net-CIDR-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(inc/Module/Install.pm)
@@ -42,7 +42,7 @@ done
 %build
 # --skipdeps causes ExtUtils::AutoInstall not to try auto-installing
 # missing modules
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor --skipdeps NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor --skipdeps NO_PACKLIST=1
 %make_build
 
 %install
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_9
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_7
 - update to new release by fcimport
 
