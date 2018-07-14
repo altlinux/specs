@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Module/CoreList.pm) perl-podlators
@@ -11,63 +12,71 @@ BuildRequires: perl(Module/CoreList.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Run optional tests
+%if ! (0%{?rhel})
 %bcond_without perl_Devel_Hide_enables_optional_test
+%else
+%bcond_with perl_Devel_Hide_enables_optional_test
+%endif
 
 Name:           perl-Devel-Hide
 Version:        0.0010
-Release:        alt1
+Release:        alt1_2
 Summary:        Forces the unavailability of specified Perl modules (for testing)
 License:        GPL+ or Artistic
-Group:          Development/Other
-URL:            http://search.cpan.org/dist/Devel-Hide/
-Source0:        http://www.cpan.org/authors/id/F/FE/FERREIRA/Devel-Hide-%{version}.tar.gz
+URL:            https://metacpan.org/release/Devel-Hide
+Source0:        https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/Devel-Hide-%{version}.tar.gz
 BuildArch:      noarch
+# Module Build
+BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-# Run-time:
+# Module Runtime
 # File::Temp not used on perl >= 5.008
 BuildRequires:  perl(lib.pm)
 # Module::CoreList is used from a private subroutine that is never called
 BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
 BuildRequires:  perl(warnings.pm)
-# Tests:
+# Test Suite
 BuildRequires:  perl(Test/More.pm)
 %if %{with perl_Devel_Hide_enables_optional_test}
-# Optional tests:
+# Optional Tests
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 %endif
 Source44: import.info
+# Dependencies
 
 %description
-Given a list of Perl modules/filenames, this module makes require and
-use statements fail (no matter the specified files/modules are
+Given a list of Perl modules/filenames, this module makes require and use
+statements fail (regardless of whether the specified files/modules are
 installed or not).
 
 %prep
 %setup -q -n Devel-Hide-%{version}
 
 %build
-/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -delete
-
-# %{_fixperms} $RPM_BUILD_ROOT/*
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
 
 %files
 %doc Changes README
-%{perl_vendor_privlib}/*
+%{perl_vendor_privlib}/Devel/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.0010-alt1_2
+- update to new release by fcimport
+
 * Wed Jun 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.0010-alt1
 - automated CPAN update
 
