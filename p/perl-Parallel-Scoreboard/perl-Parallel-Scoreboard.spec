@@ -6,12 +6,12 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Capture/Tiny.pm) perl(Ext
 %define _localstatedir %{_var}
 Name:           perl-Parallel-Scoreboard
 Version:        0.08
-Release:        alt1_4
+Release:        alt1_6
 Summary:        Scoreboard for monitoring status of many processes
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Parallel-Scoreboard/
-Source0:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Parallel-Scoreboard-%{version}.tar.gz
+URL:            https://metacpan.org/release/Parallel-Scoreboard
+Source0:        https://cpan.metacpan.org/authors/id/K/KA/KAZUHO/Parallel-Scoreboard-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  %{__perl}
@@ -51,12 +51,12 @@ sed -i -e '/^inc\/.*$/d' MANIFEST
 
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-%{__make} %{?_smp_mflags}
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
+make %{?_smp_mflags}
 
 
 %install
-%{__make} pure_install DESTDIR=$RPM_BUILD_ROOT
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -67,6 +67,9 @@ sed -i -e '/^inc\/.*$/d' MANIFEST
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_6
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_4
 - update to new release by fcimport
 
