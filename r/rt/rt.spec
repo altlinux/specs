@@ -71,7 +71,7 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 
 Name:		rt
 Version:	4.4.2
-Release:	alt1_1
+Release:	alt1_3
 Summary:	Request tracker
 
 Group:		Networking/WWW
@@ -310,11 +310,11 @@ Requires: rt-mailgate
 
 
 Source44: import.info
-%filter_from_requires /^perl\\(FCGI.ProcManager.pm\\)/d
-%filter_from_requires /^perl\\(DBIx.SearchBuilder.Handle..pm\\)/d
-%filter_from_provides /^perl\\(RT.pm\\)$/d
-%filter_from_provides /^perl\\(HTML.Mason/d
-%filter_from_provides /^perl\\(IO.Handle.CRLF.pm\\)$/d
+%filter_from_requires /^perl(FCGI.ProcManager.pm)/d
+%filter_from_requires /^perl(DBIx.SearchBuilder.Handle..pm)/d
+%filter_from_provides /^perl(RT\\)$/d
+%filter_from_provides /^perl(HTML.Mason/d
+%filter_from_provides /^perl(IO.Handle.CRLF\\)$/d
 Patch33: rt-4.4.1-alt-buildroot.patch
 Conflicts: request-tracker < 4
 #Obsoletes: request-tracker < 4
@@ -587,7 +587,7 @@ fi
 
 %files
 %{_docdir}/%{name}
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/*
 %{_sbindir}/*
 %exclude %{_bindir}/rt-mailgate
@@ -630,7 +630,7 @@ fi
 %attr(0770,apache,apache) %{RT_CACHEDIR}/session_data
 
 %files mailgate
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/rt-mailgate
 %{_mandir}/man1/rt-mailgate*
 
@@ -644,12 +644,15 @@ fi
 %{_sysconfdir}/%{name}/*.SQLite
 
 %files -n perl-RT-Test
-%doc COPYING
+%doc --no-dereference COPYING
 %dir %{RT_LIBDIR}/RT
 %{RT_LIBDIR}/RT/Test*
 %endif
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.4.2-alt1_3
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 4.4.2-alt1_1
 - update to new release by fcimport
 
