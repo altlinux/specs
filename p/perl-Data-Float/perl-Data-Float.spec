@@ -12,15 +12,15 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Run optional test
-%{bcond_without perl_Data_Float_enabled_optional_test}
+%{bcond_without perl_Data_Float_enables_optional_test}
 
 Name:           perl-Data-Float
 Version:        0.013
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Details of the floating point data type
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Data-Float/
-Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Data-Float-%{version}.tar.gz
+URL:            https://metacpan.org/release/Data-Float
+Source0:        https://cpan.metacpan.org/authors/id/Z/ZE/ZEFRAM/Data-Float-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl-devel
@@ -35,7 +35,7 @@ BuildRequires:  perl(integer.pm)
 BuildRequires:  perl(parent.pm)
 # Tests:
 BuildRequires:  perl(Test/More.pm)
-%if %{with perl_Data_Float_enabled_optional_test}
+%if %{with perl_Data_Float_enables_optional_test}
 # Optional tests:
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
@@ -70,6 +70,9 @@ perl Build.PL installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1_3
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1_2
 - update to new release by fcimport
 
