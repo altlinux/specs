@@ -7,10 +7,10 @@ BuildRequires: unzip
 Name: mythes-pl
 Summary: Polish thesaurus
 Version: 1.5
-Release: alt1_19
-Source: http://downloads.sourceforge.net/synonimy/OOo2-Thesaurus-%{version}.zip
+Release: alt1_20
+Source: httip://downloads.sourceforge.net/synonimy/OOo2-Thesaurus-%{version}.zip
+# URL is dead now, please don't file bugs to fix it
 URL: http://synonimy.ux.pl/
-BuildRequires: python, perl-devel
 License: LGPLv2
 BuildArch: noarch
 Requires: libmythes
@@ -21,6 +21,7 @@ Polish thesaurus.
 
 %prep
 %setup -q -c
+
 
 %build
 for i in README_th_pl_PL_v2.txt; do
@@ -44,6 +45,9 @@ cp -p th_pl_PL_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_20
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_19
 - update to new release by fcimport
 
