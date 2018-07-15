@@ -8,9 +8,12 @@ Name: hunspell-zu
 Summary: Zulu hunspell dictionaries
 %global upstreamid 20100126
 Version: 0.%{upstreamid}
-Release: alt2_14
-Source: http://releases.mozilla.org/pub/mozilla.org/addons/46490/zulu__south_africa__dictionary-20100125-fx+tb.xpi
-URL: http://www.translate.org.za/
+Release: alt2_16
+Source: https://downloads.sourceforge.net/project/aoo-extensions/3132/3/dict-zu_za-2010.01.26.oxt
+URL: https://extensions.openoffice.org/en/project/zulu-spell-checker
+# There is no License information in this new sourceforge Source: archive
+# Based on old gone upstream archive, Let's keep GPLv3+ license
+# old and new archive .dic and .aff contents are same
 License: GPLv3+
 BuildArch: noarch
 
@@ -23,8 +26,9 @@ Zulu hunspell dictionaries.
 %prep
 %setup -q -c
 
+
 %build
-for i in README-zu-ZA.txt; do
+for i in README-zu_ZA.txt; do
   if ! iconv -f utf-8 -t utf-8 -o /dev/null $i > /dev/null 2>&1; then
     iconv -f ISO-8859-2 -t UTF-8 $i > $i.new
     touch -r $i $i.new
@@ -37,16 +41,18 @@ done
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p dictionaries/zu-ZA.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/zu.aff
-cp -p dictionaries/zu-ZA.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/zu.dic
+cp -p zu_ZA.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/zu.aff
+cp -p zu_ZA.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/zu.dic
 
 
 %files
-%doc README-zu-ZA.txt
-
+%doc README-zu_ZA.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20100126-alt2_16
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20100126-alt2_14
 - update to new release by fcimport
 
