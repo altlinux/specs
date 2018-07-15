@@ -1,27 +1,25 @@
+Group: Development/Python
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
-BuildRequires: gcc-c++ python-devel
+BuildRequires(pre): rpm-build-python rpm-build-python3
+BuildRequires: gcc-c++ python-devel python-module-setuptools python3-module-setuptools
 # END SourceDeps(oneline)
-# sitelib for noarch packages, sitearch for others (remove the unneeded one)
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
-
+%define oldname pybox2d
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           python-module-pybox2d
 Version:        2.3.2
-Release:        alt1.1
+Release:        alt1.1_5
 Summary:        A 2D rigid body simulation library for Python
 
-Group:          Development/Python
 License:        zlib
-URL:            http://code.google.com/p/pybox2d/
-Source0:        https://pypi.python.org/packages/cc/7b/ddb96fea1fa5b24f8929714ef483f64c33e9649e7aae066e5f5023ea426a/Box2D-%{version}.tar.gz
+URL:            https://github.com/pybox2d/%{oldname}
+Source0:        https://github.com/pybox2d/%{oldname}/archive/%{version}.tar.gz#/%{oldname}-%{version}.tar.gz
 
-# Fix comments for SWIG 3.0.3 and higher
-#Patch0:         pybox2d-Fix_comments_for_swig_3.0.3.patch
+# Replace deprecated use of _swigconstant
+# Upstream pull request: https://github.com/pybox2d/pybox2d/pull/90
+Patch0:			replace-deprecated-swigconstant.patch
 
 BuildRequires:  gcc
-BuildRequires:  python-devel
-BuildRequires:  python-module-setuptools
 BuildRequires:  swig
 Source44: import.info
 
@@ -29,40 +27,52 @@ Source44: import.info
 Programmer's can use Box2D in their games to make objects move in
 believable ways and make the world seem more interactive. From the
 game's point of view a physics engine is just a system for procedural
-animation. Rather than paying (or begging) an animator to move your
-actors around, you can let Sir Isaac Newton do the directing.
+animation.
+
+%package -n python3-module-pybox2d
+Group: Development/Python
+Summary:        %{summary}
+
+BuildRequires:  python3-devel
+BuildRequires:  python3-module-distribute
+
+%{?python_provide:%python_provide python3-%{oldname}}
+
+%description -n python3-module-pybox2d
+Programmer's can use Box2D in their games to make objects move in
+believable ways and make the world seem more interactive. From the
+game's point of view a physics engine is just a system for procedural
+animation.
+
+This package provides the Python 3 build of %{oldname}.
 
 %prep
-%setup -q -n Box2D-%{version}
-
-
-
-#%patch0 -p1
-
-# calm rpmlint down
-sed -i LICENSE -e 's/\r//'
+%setup -q -n %{oldname}-%{version}
+%patch0 -p1
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
-
+%python_build
+%python3_build
 
 %install
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
-
-# copy missing files
-#cp library/Box2D.py %{buildroot}%{python_sitelibdir}/Box2D/
-
-# calm rpmlint down
-sed -i %{buildroot}%{python_sitelibdir}/Box2D/__init__.py -e 1d
-sed -i %{buildroot}%{python_sitelibdir}/Box2D/__init__.py -e 's/\r//'
+%python_install
+%python3_install
 
  
-%files
-%doc LICENSE examples/*
+%files -n python-module-pybox2d
+%doc --no-dereference LICENSE
+%doc README.md examples/*
 %{python_sitelibdir}/*
 
+%files -n python3-module-pybox2d
+%doc --no-dereference LICENSE
+%doc README.md examples/*
+%{python3_sitelibdir}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1.1_5
+- update to new release by fcimport
+
 * Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1.1
 - applied repocop patch
 
