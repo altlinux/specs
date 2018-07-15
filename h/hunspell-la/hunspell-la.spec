@@ -8,10 +8,10 @@ Name: hunspell-la
 Summary: Latin hunspell dictionaries
 %global upstreamid 20130331
 Version: 0.%{upstreamid}
-Release: alt1_8
-Source: http://extensions.services.openoffice.org/e-files/ext/1141/3/dict-la_2013-03-31.oxt
+Release: alt1_11
+Source: https://downloads.sourceforge.net/project/aoo-extensions/1141/3/dict-la_2013-03-31.oxt
 URL: http://extensions.services.openoffice.org/project/dict-la
-License: GPLv2+ and LGPLv2+
+License: GPLv2+
 BuildArch: noarch
 
 Requires: hunspell
@@ -22,6 +22,7 @@ Latin hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-la
+
 
 %build
 for i in README_extension_owner-la.txt la/README_la.txt la/COPYING*; do
@@ -42,10 +43,14 @@ cp -p la/la.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/la.aff
 
 
 %files
-%doc README_extension_owner-la.txt la/README_la.txt la/COPYING_*
+%doc README_extension_owner-la.txt la/README_la.txt
+%doc --no-dereference la/COPYING_*
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20130331-alt1_11
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20130331-alt1_8
 - update to new release by fcimport
 
