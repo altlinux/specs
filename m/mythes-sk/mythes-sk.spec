@@ -8,10 +8,9 @@ Name: mythes-sk
 Summary: Slovak thesaurus
 %global upstreamid 20130130
 Version: 0.%{upstreamid}
-Release: alt1_10
+Release: alt1_11
 Source: http://www.sk-spell.sk.cx/thesaurus/download/OOo-Thesaurus2-sk_SK.zip
 URL: http://www.sk-spell.sk.cx/thesaurus/
-BuildRequires: python, perl-devel
 License: MIT
 BuildArch: noarch
 Requires: libmythes
@@ -22,6 +21,7 @@ Slovak thesaurus.
 
 %prep
 %setup -q -c
+
 
 %build
 for i in README_th_sk_SK_v2.txt; do
@@ -40,6 +40,9 @@ cp -p th_sk_SK_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20130130-alt1_11
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.20130130-alt1_10
 - update to new release by fcimport
 
