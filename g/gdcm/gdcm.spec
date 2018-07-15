@@ -1,14 +1,14 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: /usr/bin/castxml /usr/bin/latex /usr/bin/openssl java-devel-default libcurl-devel libqt4-devel rpm-build-java rpm-build-perl zlib-devel
+BuildRequires: /usr/bin/latex java-devel-default libcurl-devel libqt4-devel rpm-build-java rpm-build-perl zlib-devel
 # END SourceDeps(oneline)
 BuildRequires: xsltproc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		gdcm
 Version:	2.8.4
-Release:	alt1_7
+Release:	alt1_8
 Summary:	Grassroots DiCoM is a C++ library to parse DICOM medical files
 License:	BSD
 URL:		http://gdcm.sourceforge.net/wiki/index.php/Main_Page
@@ -95,6 +95,7 @@ compile applications based on gdcm
 Group: Development/Other
 Summary:	CSharp, C++, Java, PHP and Python example programs for GDCM
 Requires:	%{name} = %{version}-%{release}
+BuildArch: noarch
 
 %description examples
 GDCM examples
@@ -300,6 +301,10 @@ make test -C %{_target_platform} || exit 0
 %{python3_sitelibdir}/__pycache__/%{name}*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.8.4-alt1_8
+- applied repocop patch
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.8.4-alt1_7
 - update to new release by fcimport
 
