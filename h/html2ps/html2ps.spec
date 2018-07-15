@@ -25,7 +25,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define my_subversion b7
 Name:           html2ps
 Version:        1.0
-Release:        alt2_0.29.%{my_subversion}
+Release:        alt2_0.30.%{my_subversion}
 Summary:        HTML to PostScript converter
 License:        GPLv2+
 URL:            http://user.it.uu.se/~jan/%{name}.html
@@ -160,6 +160,9 @@ desktop-file-install \
 %{_datadir}/applications/*xhtml2ps.desktop
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.30.b7
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.29.b7
 - update to new release by fcimport
 
