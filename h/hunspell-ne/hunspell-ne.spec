@@ -7,9 +7,11 @@ BuildRequires: unzip
 Name: hunspell-ne
 Summary: Nepali hunspell dictionaries
 Version: 20080425
-Release: alt2_15
+Release: alt2_17
+# Upstream Source and URL is down now, please don't report FTBFS bugs
 Source: http://nepalinux.org/downloads/ne_NP_dict.zip
 URL: http://nepalinux.org/downloads
+# License is given in README_ne_NP.txt file
 License: LGPLv2
 BuildArch: noarch
 
@@ -21,6 +23,7 @@ Nepali hunspell dictionaries.
 
 %prep
 %setup -q -c -n ne_NP_dict
+
 sed -i 's|चलन/चल्ती/15,22|चलनचल्ती/15,22|g' ne_NP.dic
 sed -i 's|निजामती/I15,22|निजामती/15,22|g' ne_NP.dic
 
@@ -46,6 +49,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 20080425-alt2_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 20080425-alt2_15
 - update to new release by fcimport
 
