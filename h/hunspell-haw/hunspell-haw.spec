@@ -6,9 +6,9 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name: hunspell-haw
 Summary: Hawaiian hunspell dictionaries
-Version: 0.02
-Release: alt1_10
-Source: http://releases.mozilla.org/pub/mozilla.org/addons/204309/hawaiian_spell_checker-%{version}-tb+fx+sm.xpi
+Version: 0.03
+Release: alt1_1
+Source: https://addons.mozilla.org/firefox/downloads/file/248540/hawaiian_spell_checker-%{version}-tb+fx+fn+sm.xpi
 URL: http://borel.slu.edu/crubadan/
 License: GPLv2+
 BuildArch: noarch
@@ -20,6 +20,7 @@ Hawaiian hunspell dictionaries.
 
 %prep
 %setup -q -c
+
 
 %build
 
@@ -34,6 +35,9 @@ cp -p dictionaries/haw-US.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/haw.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_10
 - update to new release by fcimport
 
