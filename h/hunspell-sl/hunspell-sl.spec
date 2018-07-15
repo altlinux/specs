@@ -8,8 +8,8 @@ Name: hunspell-sl
 Summary: Slovenian hunspell dictionaries
 %global upstreamid 20070127
 Version: 0.%{upstreamid}
-Release: alt2_16
-Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/sl_SI.zip
+Release: alt2_18
+Source: http://download.services.openoffice.org/contrib/dictionaries/sl_SI.zip
 URL: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/
 License: GPL+ or LGPLv2+
 BuildArch: noarch
@@ -22,6 +22,7 @@ Slovenian hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-sl
+
 
 %build
 chmod -x *
@@ -36,6 +37,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20070127-alt2_18
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20070127-alt2_16
 - update to new release by fcimport
 
