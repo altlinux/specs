@@ -7,10 +7,10 @@ BuildRequires: unzip
 Name: mythes-it
 Summary: Italian thesaurus
 Version: 2.0.9l
-Release: alt1_16
+Release: alt1_18
 Source: http://downloads.sourceforge.net/sourceforge/linguistico/thesaurus2_it_02_09_l_2008_11_29.zip
 URL: http://linguistico.sourceforge.net/pages/thesaurus_italiano.html
-License: AGPLv3
+License: AGPLv3+
 BuildArch: noarch
 Requires: libmythes
 Source44: import.info
@@ -20,6 +20,7 @@ Italian thesaurus.
 
 %prep
 %setup -q -c
+
 
 %build
 for i in th_it_IT_README th_it_IT_ChangeLog th_it_IT_AUTHORS; do
@@ -48,10 +49,14 @@ done
 
 
 %files
-%doc th_it_IT_README th_it_IT_ChangeLog th_it_IT_COPYING th_it_IT_INSTALL th_it_IT_copyright_licenza.txt th_it_IT_lettera_in_inglese.txt  th_it_IT_AUTHORS
+%doc th_it_IT_README th_it_IT_ChangeLog th_it_IT_INSTALL th_it_IT_copyright_licenza.txt th_it_IT_lettera_in_inglese.txt  th_it_IT_AUTHORS
+%doc --no-dereference th_it_IT_COPYING
 %{_datadir}/mythes/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.9l-alt1_18
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.9l-alt1_16
 - update to new release by fcimport
 
