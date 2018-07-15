@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -21,10 +22,9 @@ They were created by Danh Hong of the Cambodian Open Institute.
 
 Name:           fonts-ttf-khmeros
 Version:        5.0
-Release:        alt3_23
+Release:        alt3_25
 Summary:        Khmer font set created by Danh Hong of the Cambodian Open Institute
 
-Group:          System/Fonts/True type
 License:        LGPLv2+
 URL:            http://www.khmeros.info/en/fonts
 Source0:        http://downloads.sourceforge.net/khmer/%{archivename}.zip
@@ -53,8 +53,8 @@ Source44: import.info
 
 
 %package -n fonts-ttf-khmeros-common
+Group: System/Fonts/True type
 Summary:        Common files of %{oldname}
-Group:          System/Fonts/True type
 
 %description -n fonts-ttf-khmeros-common
 %common_desc
@@ -63,8 +63,8 @@ This package consists of files used by other %{oldname} packages.
 
 
 %package -n fonts-ttf-khmeros-base
+Group: System/Fonts/True type
 Summary:        Base KhmerOS font
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-khmeros-base
@@ -75,6 +75,7 @@ Base KhmerOS fonts.
 %files -n fonts-ttf-khmeros-base
 %{_fontconfig_templatedir}/65-0-khmeros-base.conf
 %config(noreplace) %{_fontconfig_confdir}/65-0-khmeros-base.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/KhmerOS.ttf
 %{_fontbasedir}/*/%{_fontstem}/KhmerOS_content.ttf
 %{_fontbasedir}/*/%{_fontstem}/KhmerOS_sys.ttf
@@ -82,8 +83,8 @@ Base KhmerOS fonts.
 
 
 %package -n fonts-ttf-khmeros-battambang
+Group: System/Fonts/True type
 Summary:        Battambang font
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-khmeros-battambang
@@ -94,13 +95,14 @@ Battambang font.
 %files -n fonts-ttf-khmeros-battambang
 %{_fontconfig_templatedir}/65-0-khmeros-battambang.conf
 %config(noreplace) %{_fontconfig_confdir}/65-0-khmeros-battambang.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/KhmerOS_battambang.ttf
 %{_datadir}/appdata/%{fontname}-battambang.metainfo.xml
 
 
 %package -n fonts-ttf-khmeros-bokor
+Group: System/Fonts/True type
 Summary:        Bokor font
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-khmeros-bokor
@@ -111,12 +113,13 @@ Bokor font.
 %files -n fonts-ttf-khmeros-bokor
 %{_fontconfig_templatedir}/65-0-khmeros-bokor.conf
 %config(noreplace) %{_fontconfig_confdir}/65-0-khmeros-bokor.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/KhmerOS_bokor.ttf
 %{_datadir}/appdata/%{fontname}-bokor.metainfo.xml
 
 %package -n fonts-ttf-khmeros-handwritten
+Group: System/Fonts/True type
 Summary:        Freehand and fasthand fonts
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-khmeros-handwritten
@@ -127,13 +130,14 @@ Freehand and fasthand - handwritten fonts.
 %files -n fonts-ttf-khmeros-handwritten
 %{_fontconfig_templatedir}/65-0-khmeros-handwritten.conf
 %config(noreplace) %{_fontconfig_confdir}/65-0-khmeros-handwritten.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/KhmerOS_freehand.ttf
 %{_fontbasedir}/*/%{_fontstem}/KhmerOS_fasthand.ttf
 %{_datadir}/appdata/%{fontname}-handwritten.metainfo.xml
 
 %package -n fonts-ttf-khmeros-metal-chrieng
+Group: System/Fonts/True type
 Summary:        Metal Chrieng font
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-khmeros-metal-chrieng
@@ -144,12 +148,13 @@ Metal Chrieng font.
 %files -n fonts-ttf-khmeros-metal-chrieng
 %{_fontconfig_templatedir}/65-0-khmeros-metal-chrieng.conf
 %config(noreplace) %{_fontconfig_confdir}/65-0-khmeros-metal-chrieng.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/KhmerOS_metalchrieng.ttf
 %{_datadir}/appdata/%{fontname}-metal-chrieng.metainfo.xml
 
 %package -n fonts-ttf-khmeros-muol
+Group: System/Fonts/True type
 Summary:        Muol fonts - normal, light and Pali
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-khmeros-muol
@@ -160,14 +165,15 @@ Muol fonts - normal, light and Pali.
 %files -n fonts-ttf-khmeros-muol
 %{_fontconfig_templatedir}/65-0-khmeros-muol.conf
 %config(noreplace) %{_fontconfig_confdir}/65-0-khmeros-muol.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/KhmerOS_muol.ttf
 %{_fontbasedir}/*/%{_fontstem}/KhmerOS_muollight.ttf
 %{_fontbasedir}/*/%{_fontstem}/KhmerOS_muolpali.ttf
 %{_datadir}/appdata/%{fontname}-muol.metainfo.xml
 
 %package -n fonts-ttf-khmeros-siemreap
+Group: System/Fonts/True type
 Summary:        Siemreap font
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-khmeros-siemreap
@@ -178,12 +184,14 @@ Siemreap font.
 %files -n fonts-ttf-khmeros-siemreap
 %{_fontconfig_templatedir}/65-0-khmeros-siemreap.conf
 %config(noreplace) %{_fontconfig_confdir}/65-0-khmeros-siemreap.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/KhmerOS_siemreap.ttf
 %{_datadir}/appdata/%{fontname}-siemreap.metainfo.xml
 
 
 %prep
 %setup -q -n %{archivename}
+
 install -p %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} .
 install -p %{SOURCE5} %{SOURCE6} %{SOURCE7} %{SOURCE8} .
 
@@ -259,10 +267,13 @@ fi
 
 
 %files -n fonts-ttf-khmeros-common
-%doc License.txt
+%doc --no-dereference License.txt
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.0-alt3_25
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 5.0-alt3_23
 - update to new release by fcimport
 
