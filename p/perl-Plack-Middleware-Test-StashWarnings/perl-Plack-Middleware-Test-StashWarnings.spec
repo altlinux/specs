@@ -7,11 +7,11 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) p
 %define _localstatedir %{_var}
 Name:           perl-Plack-Middleware-Test-StashWarnings
 Version:        0.08
-Release:        alt2_12
+Release:        alt2_14
 Summary:        Test your application's warnings
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Plack-Middleware-Test-StashWarnings/
-Source0:        http://www.cpan.org/authors/id/A/AL/ALEXMV/Plack-Middleware-Test-StashWarnings-%{version}.tar.gz
+URL:            https://metacpan.org/release/Plack-Middleware-Test-StashWarnings
+Source0:        https://cpan.metacpan.org/authors/id/A/AL/ALEXMV/Plack-Middleware-Test-StashWarnings-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  %{__perl}
@@ -40,11 +40,11 @@ make sure your application complains about the right things.
 rm -r inc/
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-%{__make} %{?_smp_mflags}
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
+make %{?_smp_mflags}
 
 %install
-%{__make} pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -55,6 +55,9 @@ rm -r inc/
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2_14
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2_12
 - update to new release by fcimport
 
