@@ -8,7 +8,8 @@ Name: hunspell-af
 Summary: Afrikaans hunspell dictionary
 %global upstreamid 20080825
 Version: 0.%{upstreamid}
-Release: alt2_14
+Release: alt2_16
+# Following URL is dead now
 Source: http://downloads.translate.org.za/spellchecker/afrikaans/myspell-af_ZA-0.%{upstreamid}.zip
 URL: http://www.translate.org.za/
 License: LGPLv2+
@@ -43,6 +44,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20080825-alt2_16
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20080825-alt2_14
 - update to new release by fcimport
 
