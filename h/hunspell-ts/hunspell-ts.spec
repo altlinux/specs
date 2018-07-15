@@ -6,11 +6,11 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name: hunspell-ts
 Summary: Tsonga hunspell dictionaries
-%global upstreamid 20091101
+%global upstreamid 20110323.1
 Version: 0.%{upstreamid}
-Release: alt2_12
-Source: http://releases.mozilla.org/pub/mozilla.org/addons/46611/tsonga__south_africa__dictionary-%{upstreamid}-fx+tb.xpi
-URL: http://www.translate.org.za/
+Release: alt1_1
+Source:https://addons.mozilla.org/firefox/downloads/file/376225/tsonga_spell_checker-20110323.1-typefix-fn+sm+tb+fx.xpi
+URL: https://addons.mozilla.org/en-US/firefox/addon/tsonga-spell-checker/
 License: LGPLv2+
 BuildArch: noarch
 
@@ -22,6 +22,7 @@ Tsonga hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-ts
+
 
 %build
 
@@ -36,6 +37,9 @@ cp -p dictionaries/ts-ZA.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/ts_ZA.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20110323.1-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20091101-alt2_12
 - update to new release by fcimport
 
