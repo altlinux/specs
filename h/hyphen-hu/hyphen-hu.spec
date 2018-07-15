@@ -5,12 +5,13 @@ Name: hyphen-hu
 Summary: Hungarian hyphenation rules
 %global upstreamid 20090612
 Version: 0.%{upstreamid}
-Release: alt1_17
-Source: http://download.github.com/nagybence-huhyphn-aa3fc85.tar.gz
+Release: alt1_19
+# Source URL is dead now
+# Source: http://download.github.com/nagybence-huhyphn-aa3fc85.tar.gz
+Source: nagybence-huhyphn-aa3fc85.tar.gz
 URL: http://www.tipogral.hu/
 License: GPLv2
 BuildArch: noarch
-#BuildRequires: eruby, texlive
 Requires: libhyphen
 Source44: import.info
 
@@ -32,10 +33,14 @@ cp -p hyph_hu.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_hu_HU.dic
 
 
 %files
-%doc gpl.txt README doc/huhyphn.pdf
+%doc README doc/huhyphn.pdf
+%doc --no-dereference gpl.txt
 %{_datadir}/hyphen/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20090612-alt1_19
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20090612-alt1_17
 - update to new release by fcimport
 
