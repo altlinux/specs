@@ -8,8 +8,8 @@ Name: hunspell-sr
 Summary: Serbian hunspell dictionaries
 %global upstreamid 20130330
 Version: 0.%{upstreamid}
-Release: alt1_8
-Source: http://extensions.services.openoffice.org/e-files/ext/1572/10/dict-sr.oxt
+Release: alt1_10
+Source: https://downloads.sourceforge.net/project/aoo-extensions/1572/10/dict-sr.oxt
 URL: http://extensions.services.openoffice.org/project/dict-sr
 License: LGPLv3
 BuildArch: noarch
@@ -31,6 +31,7 @@ Serbian hyphenation rules.
 
 %prep
 %setup -q -c
+
 
 %build
 
@@ -78,6 +79,9 @@ popd
 %{_datadir}/hyphen/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20130330-alt1_10
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20130330-alt1_8
 - update to new release by fcimport
 
