@@ -6,12 +6,12 @@ BuildRequires: perl(List/Util.pm) perl(base.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Convert-Color
 Version:        0.11
-Release:        alt1_11
+Release:        alt1_13
 Summary:        Color space conversions and named lookups
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Convert-Color/
-Source0:        http://www.cpan.org/authors/id/P/PE/PEVANS/Convert-Color-%{version}.tar.gz
+URL:            https://metacpan.org/release/Convert-Color
+Source0:        https://cpan.metacpan.org/authors/id/P/PE/PEVANS/Convert-Color-%{version}.tar.gz
 # Workaround to a source-code trick, which break rpm's perl-module deptracking
 Patch0:         Convert-Color-0.09.patch
 BuildArch:      noarch
@@ -38,7 +38,7 @@ and it provides ways to look up colors by a name.
 %patch0 -p1
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+/usr/bin/perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -52,10 +52,13 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %files
 %doc Changes examples README
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_13
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_11
 - update to new release by fcimport
 
