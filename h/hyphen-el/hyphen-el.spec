@@ -8,8 +8,8 @@ Name: hyphen-el
 Summary: Greek hyphenation rules
 %global upstreamid 20051018
 Version: 0.%{upstreamid}
-Release: alt1_15
-Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_el_GR.zip
+Release: alt1_17
+Source:  http://download.services.openoffice.org/contrib/dictionaries/hyph_el_GR.zip
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
 License: LGPLv2+
 BuildArch: noarch
@@ -22,6 +22,7 @@ Greek hyphenation rules.
 
 %prep
 %setup -q -c
+
 
 %build
 
@@ -41,6 +42,9 @@ done
 %{_datadir}/hyphen/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20051018-alt1_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20051018-alt1_15
 - update to new release by fcimport
 
