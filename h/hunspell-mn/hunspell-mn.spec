@@ -8,10 +8,12 @@ Name: hunspell-mn
 Summary: Mongolian hunspell dictionaries
 %global upstreamid 20080709
 Version: 0.%{upstreamid}
-Release: alt2_14
-Source: http://extensions.services.openoffice.org/files/1408/0/dict-mn_0.06-5.oxt
+Release: alt2_16
+# Another Upstream https://extensions.openoffice.org/en/project/mongolian-spell-checking-dictionary
+# gives below Source URL
+Source: https://downloads.sourceforge.net/project/aoo-extensions/1408/0/dict-mn_0.06-5.oxt
 URL: http://mnspell.openmn.org
-License: GPLv2 and LGPLv2+
+License: GPLv2
 BuildArch: noarch
 
 Requires: hunspell
@@ -22,6 +24,7 @@ Mongolian hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-mn
+
 
 %build
 
@@ -35,6 +38,9 @@ cp -p mn_MN.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20080709-alt2_16
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20080709-alt2_14
 - update to new release by fcimport
 
