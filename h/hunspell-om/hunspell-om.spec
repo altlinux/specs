@@ -8,10 +8,12 @@ Name: hunspell-om
 Summary: Oromo hunspell dictionaries
 #Epoch: 1
 Version: 0.04
-Release: alt2_13
+Release: alt2_15
+# Following links are dead now
+# Please don't report any bugs for it
 Source: http://borel.slu.edu/obair/%{name}-%{version}.oxt
 URL: http://borel.slu.edu/crubadan/apps.html
-License: LGPLv3+
+License: GPLv3+
 BuildArch: noarch
 Requires: hunspell
 Source44: import.info
@@ -21,6 +23,7 @@ Oromo hunspell dictionaries.
 
 %prep
 %setup -q -c
+
 
 %build
 
@@ -37,10 +40,14 @@ done
 
 
 %files
-%doc dictionaries/README_om_ET.txt LICENSES-en.txt
+%doc dictionaries/README_om_ET.txt
+%doc --no-dereference LICENSES-en.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_15
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_13
 - update to new release by fcimport
 
