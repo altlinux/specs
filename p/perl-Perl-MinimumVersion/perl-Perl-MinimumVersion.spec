@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Perl-MinimumVersion
 Version:        1.38
-Release:        alt1_15
+Release:        alt1_18
 Summary:        Find a minimum required version of perl for Perl code
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Perl-MinimumVersion/
-Source0:        http://search.cpan.org/CPAN/authors/id/N/NE/NEILB/Perl-MinimumVersion-%{version}.tar.gz
+URL:            https://metacpan.org/release/Perl-MinimumVersion
+Source0:        https://cpan.metacpan.org/authors/id/N/NE/NEILB/Perl-MinimumVersion-%{version}.tar.gz
 
 BuildArch:      noarch
 
@@ -44,8 +44,8 @@ BuildRequires: perl(Test/Script.pm)
 
 
 Source44: import.info
-%filter_from_requires /^perl\\(version.pm\\)$/d
-%filter_from_requires /^perl\\(Params.Util.pm\\)$/d
+%filter_from_requires /^perl(version\\)$/d
+%filter_from_requires /^perl(Params.Util\\)$/d
 %filter_from_requires /^perl >= 0:5.005$/d
 
 %description
@@ -55,7 +55,7 @@ Find a minimum required version of perl for Perl code
 %setup -q -n Perl-MinimumVersion-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -69,12 +69,15 @@ make test
 
 %files
 %doc Changes
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{_bindir}/*
 %{perl_vendor_privlib}/Perl
 %{_mandir}/man1/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1_18
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1_15
 - update to new release by fcimport
 
