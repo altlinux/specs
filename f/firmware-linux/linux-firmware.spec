@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180606
+Version: 20180706
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,10 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun Jul 15 2018 Cronbuild Service <cronbuild@altlinux.org> 20180706-alt1
+- upstream changes (GIT 6213586):
+  + cxgb4: update firmware to revision 1.20.8.0 (thx Ganesh Goudar)
+
 * Mon Jun 11 2018 Cronbuild Service <cronbuild@altlinux.org> 20180606-alt1
 - upstream changes (GIT d114732):
   + brcm: update firmware for bcm4356 pcie (thx Chi-Hsien Lin)
