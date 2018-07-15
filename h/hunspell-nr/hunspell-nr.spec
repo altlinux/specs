@@ -8,9 +8,9 @@ Name: hunspell-nr
 Summary: Southern Ndebele hunspell dictionaries
 %global upstreamid 20091030
 Version: 0.%{upstreamid}
-Release: alt2_12
-Source: http://extensions.services.openoffice.org/e-files/3141/0/dict-nr_ZA-2009.10.30.oxt
-URL: http://www.translate.org.za/
+Release: alt2_14
+Source: https://downloads.sourceforge.net/project/aoo-extensions/3141/0/dict-nr_za-2009.10.30.oxt
+URL: https://extensions.openoffice.org/en/project/ndebele-south-spell-checker
 License: LGPLv2+
 BuildArch: noarch
 
@@ -22,6 +22,7 @@ Southern Ndebele hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-nr
+
 
 %build
 for i in README-nr_ZA.txt release-notes-nr_ZA.txt package-description.txt; do
@@ -45,6 +46,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20091030-alt2_14
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20091030-alt2_12
 - update to new release by fcimport
 
