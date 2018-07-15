@@ -7,12 +7,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Const-Fast
 Version:        0.014
-Release:        alt2_12
+Release:        alt2_14
 Summary:        Facility for creating read-only scalars, arrays, and hashes
 License:        GPL+ or Artistic
 
-URL:            http://search.cpan.org/dist/Const-Fast/
-Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/Const-Fast-%{version}.tar.gz
+URL:            https://metacpan.org/release/Const-Fast
+Source0:        https://cpan.metacpan.org/authors/id/L/LE/LEONT/Const-Fast-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -47,7 +47,7 @@ read-only. Arrays and hashes will be made deeply read-only.
 
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir --installdirs vendor
+/usr/bin/perl Build.PL --installdirs vendor
 ./Build
 
 
@@ -69,6 +69,9 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.014-alt2_14
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.014-alt2_12
 - update to new release by fcimport
 
