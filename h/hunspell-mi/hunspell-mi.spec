@@ -1,13 +1,16 @@
 Group: Text tools
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: hunspell-mi
 Summary: Maori hunspell dictionaries
 %global upstreamid 20080630
 Version: 0.%{upstreamid}
-Release: alt2_14
-Source: http://packages.papakupu.maori.nz/hunspell/hunspell-mi-0.1.%{upstreamid}-beta.tar.gz
-URL: http://papakupu.maori.nz/
+Release: alt2_16
+Source: http://download.services.openoffice.org/contrib/dictionaries/mi_NZ.zip
+URL: https://wiki.openoffice.org/wiki/Dictionaries
 License: GPLv3+
 BuildArch: noarch
 
@@ -20,19 +23,29 @@ Maori hunspell dictionaries.
 %prep
 %setup -q -c -n hunspell-mi-%{version}
 
+
 %build
+for i in README_mi_NZ.txt; do
+  tr -d '\r' < $i > $i.new
+  touch -r $i $i.new
+  mv -f $i.new $i
+done
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p mi.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/mi_NZ.aff
-cp -p mi.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/mi_NZ.dic
+cp -p mi_NZ.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/mi_NZ.aff
+cp -p mi_NZ.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/mi_NZ.dic
 
 
 %files
-%doc mi.AUTHORS mi.LICENSE mi.README
+%doc README_mi_NZ.txt
+%doc --no-dereference LICENSE_mi_NZ.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20080630-alt2_16
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20080630-alt2_14
 - update to new release by fcimport
 
