@@ -7,13 +7,13 @@ BuildRequires: unzip
 Name: hunspell-fj
 Summary: Fijian hunspell dictionaries
 Version: 1.2
-Release: alt2_13
+Release: alt2_15
 #Source: http://www.foss.usp.ac.fj/OOo_fj/OOo_fj_FJ.zip
-Source: http://releases.mozilla.org/pub/mozilla.org/addons/12115/fijian_spelling_dictionary-%{version}-fx+tb+sm.xpi
+Source: https://addons.mozilla.org/firefox/downloads/file/84397/fijian_spelling_dictionary-%{version}-fx+tb+sm.xpi
 URL: http://www.iosn.net/pacific-islands/usp-microgrants/fijian-spellchecker
 License: LGPLv2+ or GPLv2+ or MPLv1.1
 BuildArch: noarch
-BuildRequires: libhunspell-devel hunspell-utils
+BuildRequires: hunspell-utils libhunspell-devel
 
 Requires: hunspell
 Source44: import.info
@@ -23,6 +23,7 @@ Fijian hunspell dictionaries.
 
 %prep
 %setup -q -c
+
 
 %build
 cd dictionaries
@@ -44,6 +45,9 @@ cp -p dictionaries/fj_FJ.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/fj.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_15
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_13
 - update to new release by fcimport
 
