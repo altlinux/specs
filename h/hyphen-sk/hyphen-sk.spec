@@ -8,8 +8,8 @@ Name: hyphen-sk
 Summary: Slovak hyphenation rules
 %global upstreamid 20031227
 Version: 0.%{upstreamid}
-Release: alt1_16
-Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_sk_SK.zip
+Release: alt1_18
+Source: http://download.services.openoffice.org/contrib/dictionaries/hyph_sk_SK.zip
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
 License: GPL+
 BuildArch: noarch
@@ -22,6 +22,7 @@ Slovak hyphenation rules.
 
 %prep
 %setup -q -c
+
 
 %build
 chmod -x *
@@ -46,6 +47,9 @@ cp -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20031227-alt1_18
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20031227-alt1_16
 - update to new release by fcimport
 
