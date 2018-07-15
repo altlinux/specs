@@ -1,7 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate glib2-devel pkgconfig(gtk+-3.0)
 # END SourceDeps(oneline)
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %if 0%{!?_with_xfce:1} && 0%{!?_without_xfce:1}
@@ -14,7 +14,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate glib
 
 Name:		im-chooser
 Version:	1.7.1
-Release:	alt1_4
+Release:	alt1_5
 License:	GPLv2+ and LGPLv2+
 URL:		http://pagure.io/im-chooser/
 %{?_with_gtk2:BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel}
@@ -103,6 +103,8 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/applications/im-chooser-panel.desktop
 %find_lang %{name}
 
 
+
+
 %files
 %{_bindir}/im-chooser
 %if 0%{?fedora} && 0%{?fedora} < 19
@@ -127,6 +129,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/applications/im-chooser-panel.desktop
 %endif
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt1_5
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt1_4
 - update to new release by fcimport
 
