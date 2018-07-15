@@ -7,12 +7,12 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           perl-Boost-Geometry-Utils
 Version:        0.15
-Release:        alt1_19
+Release:        alt1_20
 Summary:        Boost::Geometry::Utils Perl module
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Boost-Geometry-Utils/
-Source0:        http://www.cpan.org/authors/id/A/AA/AAR/Boost-Geometry-Utils-%{version}.tar.gz
+URL:            https://metacpan.org/release/Boost-Geometry-Utils
+Source0:        https://cpan.metacpan.org/authors/id/A/AA/AAR/Boost-Geometry-Utils-%{version}.tar.gz
 # Fix for RT#96145
 Patch0:         Boost-Geometry-Utils-0.15-multi_linestring2perl-only-extend-the-array-if-needed.patch
 BuildRequires:  gcc-c++
@@ -56,6 +56,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Boost*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_20
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_19
 - update to new release by fcimport
 
