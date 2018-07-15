@@ -6,21 +6,23 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name: hunspell-oc
 Summary: Occitan hunspell dictionaries
-Version: 0.5
-Release: alt2_13
-Source: https://addons.mozilla.org/en-US/firefox/downloads/file/34604/occitan-languedocien-%{version}-fx+tb+sm.xpi
+Version: 0.6.2
+Release: alt1_1
+Source: https://addons.mozilla.org/firefox/downloads/file/233710/correcteur_occitan_languedocien-%{version}-tb+sm+fx.xpi
 URL: https://addons.mozilla.org/en-US/firefox/addon/8235
 License: GPLv3+
 BuildArch: noarch
 BuildRequires: libredland
 
 Requires: hunspell
+Source44: import.info
 
 %description
 Occitan hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-oc
+
 
 %build
 rdfproc hunspell-oc parse install.rdf
@@ -37,6 +39,9 @@ cp -p dictionaries/oc-FR.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/oc_FR.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.2-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.5-alt2_13
 - update to new release by fcimport
 
