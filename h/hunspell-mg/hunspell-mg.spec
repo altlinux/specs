@@ -8,8 +8,8 @@ Name: hunspell-mg
 Summary: Malagasy hunspell dictionaries
 %global upstreamid 20050109
 Version: 0.%{upstreamid}
-Release: alt2_16
-Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/mg_MG.zip
+Release: alt2_18
+Source: http://download.services.openoffice.org/contrib/dictionaries/mg_MG.zip
 URL: http://borel.slu.edu/crubadan/apps.html
 License: GPLv2+
 BuildArch: noarch
@@ -22,6 +22,7 @@ Malagasy hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-mg
+
 
 %build
 for i in README_mg_MG.txt; do
@@ -54,6 +55,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20050109-alt2_18
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050109-alt2_16
 - update to new release by fcimport
 
