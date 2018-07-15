@@ -1,21 +1,19 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libfplll-devel libgmp-devel
+BuildRequires: libfplll-devel libgmp-devel mpir-devel
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libfplll
-Version:        5.1.0
+Version:        5.2.1
 Release:        alt1_1
 Summary:        LLL-reduces euclidean lattices
 License:        LGPLv2+
-URL:            https://github.com/dstehle/fplll
+URL:            https://github.com/fplll/fplll
 Source0:        https://github.com/fplll/fplll/releases/download/%{version}/fplll-%{version}.tar.gz
-# On i386 only, one test fails due to rounding error
-Patch0:         %{name}-rounding.patch
 
-BuildRequires:  gcc-c++-common
+BuildRequires:  gcc-c++
 BuildRequires:  libmpfr-devel
 BuildRequires:  libqd-devel
 Source44: import.info
@@ -63,7 +61,6 @@ the functionality of %{name}.
 
 %prep
 %setup -q -n fplll-%{version}
-%patch0
 
 # Fix broken test for a bool type
 sed -e '/#ifndef bool/,/#endif/d' \
@@ -98,9 +95,12 @@ export LD_LIBRARY_PATH=$PWD/src/.libs
 make check
 
 
+
+
+
 %files
 %doc NEWS README.md
-%doc COPYING
+%doc --no-dereference COPYING
 %{_libdir}/*.so.*
 %{_datadir}/fplll/
 
@@ -118,6 +118,9 @@ make check
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.2.1-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.0-alt1_1
 - update to new release by fcimport
 
