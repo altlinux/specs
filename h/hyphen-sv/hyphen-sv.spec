@@ -7,8 +7,8 @@ BuildRequires: unzip
 Name: hyphen-sv
 Summary: Swedish hyphenation rules
 Version: 1.00.1
-Release: alt1_16
-Source: http://extensions.services.openoffice.org/files/1966/4/hyph_sv_SE.oxt
+Release: alt1_18
+Source: https://downloads.sourceforge.net/project/aoo-extensions/1966/4/hyph_sv_se.oxt
 URL: http://extensions.services.openoffice.org/node/1968
 License: LGPLv2+ or GPLv2+
 BuildArch: noarch
@@ -20,6 +20,7 @@ Swedish hyphenation rules.
 
 %prep
 %setup -q -c -n hyphen-sv
+
 
 %build
 chmod -x *
@@ -51,6 +52,9 @@ popd
 %{_datadir}/hyphen/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.00.1-alt1_18
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.00.1-alt1_16
 - update to new release by fcimport
 
