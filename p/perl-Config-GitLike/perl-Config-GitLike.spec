@@ -8,12 +8,12 @@ BuildRequires: perl(Moose.pm)
 %define _localstatedir %{_var}
 Name:           perl-Config-GitLike
 Version:        1.17
-Release:        alt1_2
+Release:        alt1_4
 Summary:        Git-compatible config file parsing
 License:        GPL+ or Artistic
 
-URL:            http://search.cpan.org/dist/Config-GitLike/
-Source0:        http://search.cpan.org/CPAN/authors/id/A/AL/ALEXMV/Config-GitLike-%{version}.tar.gz
+URL:            https://metacpan.org/release/Config-GitLike
+Source0:        https://cpan.metacpan.org/authors/id/A/AL/ALEXMV/Config-GitLike-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  perl-devel
@@ -54,7 +54,7 @@ rm -r inc
 sed -i -e '/^inc\// d' MANIFEST
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -70,6 +70,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_4
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_2
 - update to new release by fcimport
 
