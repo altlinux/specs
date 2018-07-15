@@ -8,10 +8,9 @@ Name: mythes-sl
 Summary: Slovenian thesaurus
 %global upstreamid 20130130
 Version: 0.%{upstreamid}
-Release: alt1_10
-Source: http://193.2.66.133:85/download/thes_sl_SI_v2.zip
+Release: alt1_11
+Source: http://88.200.20.8:85/download/thes_sl_SI_v2.zip
 URL: http://www.tezaver.si/
-BuildRequires: python, perl-devel
 License: LGPLv2+
 BuildArch: noarch
 Requires: libmythes
@@ -22,6 +21,7 @@ Slovenian thesaurus.
 
 %prep
 %setup -q -c
+
 
 %build
 chmod -x *
@@ -42,6 +42,9 @@ cp -p th_sl_SI_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20130130-alt1_11
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.20130130-alt1_10
 - update to new release by fcimport
 
