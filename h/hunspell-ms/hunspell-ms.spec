@@ -8,9 +8,11 @@ Name: hunspell-ms
 Summary: Malay hunspell dictionaries
 %global upstreamid 20050117
 Version: 0.%{upstreamid}
-Release: alt2_15
-Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/ms_MY.zip
-URL: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/
+Release: alt2_17
+Source: http://download.services.openoffice.org/contrib/dictionaries/ms_MY.zip
+URL: https://wiki.openoffice.org/wiki/Dictionaries
+# affix file is under GPL+
+# rest package under GFDL
 License: GFDL and GPL+
 BuildArch: noarch
 
@@ -22,6 +24,7 @@ Malay hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-ms
+
 
 %build
 chmod -x *
@@ -43,6 +46,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20050117-alt2_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050117-alt2_15
 - update to new release by fcimport
 
