@@ -8,14 +8,14 @@ Name: hunspell-sc
 Summary: Sardinian hunspell dictionaries
 %global upstreamid 20081101
 Version: 0.%{upstreamid}
-Release: alt2_17
-Source: http://extensions.services.openoffice.org/files/1446/2/Dict_sc_IT03.oxt
+Release: alt2_19
+Source: https://ayera.dl.sourceforge.net/project/aoo-extensions/1446/2/dict_sc_it03.oxt
 URL: http://extensions.services.openoffice.org/project/Dict_sc
 #The license included is AGPLv3 and pkg-desc/pkg-description.txt
 #says AGPLv3 or later, but the sc_IT.aff header states "GPLv2"
 License: AGPLv3+ and GPLv2
 BuildArch: noarch
-BuildRequires: libhunspell-devel hunspell-utils
+BuildRequires: hunspell-utils libhunspell-devel
 
 Requires: hunspell
 Source44: import.info
@@ -26,6 +26,7 @@ Sardinian hunspell dictionaries.
 %prep
 %setup -q -c -n hunspell-sc
 
+
 %build
 
 %install
@@ -35,10 +36,13 @@ cp -p sc_it.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/sc_IT.dic
 
 
 %files
-%doc registration/agpl3-en.txt
+%doc --no-dereference registration/agpl3-en.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20081101-alt2_19
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20081101-alt2_17
 - update to new release by fcimport
 
