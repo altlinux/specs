@@ -3,14 +3,15 @@
 %def_with pam
 %def_with cbcp
 %def_with chapms
-%def_with crypt
 %def_with mppe
 %def_with libatm
 %def_with inet6
+# https://bugzilla.redhat.com/1556132
+%def_without crypt
 
 Name: ppp
 Version: 2.4.7
-Release: alt3
+Release: alt4
 
 Summary: The PPP daemon and documentation
 License: distributable
@@ -33,7 +34,8 @@ PreReq: %_lockdir/serial
 Obsoletes: ppp-cbcp, ppp-mppe
 Obsoletes: ppp-extra
 
-BuildRequires: glibc-devel libatm-devel libpam-devel libpcap-devel libssl-devel perl-IPC-Signal perl-Proc-Daemon perl-Proc-WaitStat libudev-devel
+BuildRequires: libpam-devel libpcap-devel libssl-devel perl-IPC-Signal perl-Proc-Daemon perl-Proc-WaitStat libudev-devel
+%{?_with_libatm:BuildRequires: libatm-devel}
 Requires: ppp-common libssl
 Requires: kmod >= 14
 Requires: udev >= 204-alt2
@@ -164,8 +166,8 @@ touch %buildroot%_var/run/%name/resolv.conf
 ln -s ../..%_logdir/%name/connect-errors %buildroot%_sysconfdir/%name/connect-errors
 ln -s ../..%_var/run/%name/resolv.conf %buildroot%_sysconfdir/%name/resolv.conf
 
-install -Dpm 644 %SOURCE6 %buildroot/%_tmpfilesdir/%name.conf
-install -Dpm 644 %SOURCE7 %buildroot/%_udevrulesdir/95-%name.rules
+install -pDm644 %SOURCE6 %buildroot/%_tmpfilesdir/%name.conf
+install -pDm644 %SOURCE7 %buildroot/%_udevrulesdir/95-%name.rules
 
 # Logrotate script
 install -pDm644 %SOURCE5 %buildroot%_sysconfdir/logrotate.d/%name
@@ -200,7 +202,7 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 %_libdir/pppd
 %_var/run/%name
 %_logdir/%name/*
-%exclude %_libdir/pppd/%version/pppoatm.so
+%{?_with_libatm:%exclude %_libdir/pppd/%version/pppoatm.so}
 %exclude %_libdir/pppd/%version/rp-pppoe.so
 %exclude %_libdir/pppd/%version/rad*
 %exclude %_libdir/pppd/%version/dhcpc.so
@@ -212,8 +214,10 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 %files devel
 %_includedir/pppd
 
+%if_with libatm
 %files pppoatm
 %_libdir/pppd/%version/pppoatm.so
+%endif
 
 %files pppoe
 %_libdir/pppd/%version/rp-pppoe.so
@@ -232,6 +236,10 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 %_libdir/pppd/%version/dhcpc.so
 
 %changelog
+* Sun Jul 15 2018 Michael Shigorin <mike@altlinux.org> 2.4.7-alt4
+- fixed ftbfs against current libcrypt with fedora patch (thx ldv@)
+- fixed libatm knob
+
 * Mon Jan 29 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.7-alt3
 - Fixed build with modern kernel headers.
 
