@@ -6,12 +6,12 @@ BuildRequires: perl(Exporter.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(Pod/Usage.
 %define _localstatedir %{_var}
 Name:           perl-App-Daemon
 Version:        0.22
-Release:        alt1_8
+Release:        alt1_10
 Summary:        Start an Application as a Daemon
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/App-Daemon/
-Source0:        http://www.cpan.org/authors/id/M/MS/MSCHILLI/App-Daemon-%{version}.tar.gz
+URL:            https://metacpan.org/release/App-Daemon
+Source0:        https://cpan.metacpan.org/authors/id/M/MS/MSCHILLI/App-Daemon-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -33,7 +33,7 @@ chmod 644 eg/*
 sed -i -e 's!/usr/local!/usr!' eg/*
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -48,6 +48,9 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_10
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_8
 - update to new release by fcimport
 
