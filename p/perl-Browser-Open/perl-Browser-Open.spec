@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Browser-Open
 Version:        0.04
-Release:        alt2_17
+Release:        alt2_19
 Summary:        Open a browser in a given URL
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Browser-Open/
-Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFRANKS/Browser-Open-%{version}.tar.gz
+URL:            https://metacpan.org/release/Browser-Open
+Source0:        https://cpan.metacpan.org/authors/id/C/CF/CFRANKS/Browser-Open-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  findutils
 BuildRequires:  perl-devel
@@ -38,7 +38,7 @@ the user browser.
 %setup -q -n Browser-Open-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_19
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_17
 - update to new release by fcimport
 
