@@ -6,12 +6,12 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.
 %define _localstatedir %{_var}
 Name:           perl-Parallel-Prefork
 Version:        0.18
-Release:        alt1_5
+Release:        alt1_7
 Summary:        Simple prefork server framework
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Parallel-Prefork/
-Source0:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Parallel-Prefork-%{version}.tar.gz
+URL:            https://metacpan.org/release/Parallel-Prefork
+Source0:        https://cpan.metacpan.org/authors/id/K/KA/KAZUHO/Parallel-Prefork-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  rpm-build-perl
@@ -45,7 +45,7 @@ rm -r inc
 sed -i -e '/^inc\/*$/d' MANIFEST
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_7
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_5
 - update to new release by fcimport
 
