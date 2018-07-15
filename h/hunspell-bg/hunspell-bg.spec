@@ -7,7 +7,7 @@ BuildRequires: unzip
 Name: hunspell-bg
 Summary: Bulgarian hunspell dictionaries
 Version: 4.3
-Release: alt2_12
+Release: alt2_14
 Source: http://downloads.sourceforge.net/bgoffice/OOo-spell-bg-%{version}.zip
 URL: http://bgoffice.sourceforge.net/
 License: GPLv2+ or LGPLv2+ or MPLv1.1
@@ -21,6 +21,7 @@ Bulgarian hunspell dictionaries.
 
 %prep
 %setup -q -n OOo-spell-bg-%{version}
+
 
 %build
 for i in README.bulgarian GPL-2.0.txt MPL-1.1.txt ChangeLog Copyright LGPL-2.1.txt; do
@@ -46,10 +47,14 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
 
 %files
-%doc ChangeLog Copyright GPL-2.0.txt LGPL-2.1.txt MPL-1.1.txt README.bulgarian
+%doc ChangeLog Copyright README.bulgarian
+%doc --no-dereference GPL-2.0.txt LGPL-2.1.txt MPL-1.1.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.3-alt2_14
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.3-alt2_12
 - update to new release by fcimport
 
