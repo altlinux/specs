@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-CPAN-DistnameInfo
 Version:        0.12
-Release:        alt2_10
+Release:        alt2_12
 Summary:        Extract distribution name and version from a distribution filename
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/CPAN-DistnameInfo/
-Source0:        http://www.cpan.org/authors/id/G/GB/GBARR/CPAN-DistnameInfo-%{version}.tar.gz
+URL:            https://metacpan.org/release/CPAN-DistnameInfo
+Source0:        https://cpan.metacpan.org/authors/id/G/GB/GBARR/CPAN-DistnameInfo-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -37,7 +37,7 @@ developer release.
 %setup -q -n CPAN-DistnameInfo-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/CPAN/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_12
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_10
 - update to new release by fcimport
 
