@@ -15,7 +15,7 @@ License:       LGPLv2
 
 # There's no versioning upstream, it's all about the Git hash
 Version:       0
-Release:       alt2_0.14.git%{shortcommit}
+Release:       alt2_0.16.git%{shortcommit}
 
 # There aren't any release yet, I'm downloading straight from the last commit
 Source0:       https://github.com/psykoyiko/pycanberra/archive/%{commit}/%{oldname}-%{version}-%{shortcommit}.tar.gz
@@ -68,6 +68,9 @@ install -p -m 0644 pycanberra.py %{buildroot}%{python3_sitelibdir_noarch}
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.16.git88c53cd
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.14.git88c53cd
 - update to new release by fcimport
 
