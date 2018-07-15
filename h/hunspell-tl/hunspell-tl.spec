@@ -8,8 +8,8 @@ Name: hunspell-tl
 Summary: Tagalog hunspell dictionaries
 %global upstreamid 20050109
 Version: 0.%{upstreamid}
-Release: alt2_15
-Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/tl_PH.zip
+Release: alt2_17
+Source: http://download.services.openoffice.org/contrib/dictionaries/tl_PH.zip
 URL: http://borel.slu.edu/crubadan/apps.html
 License: GPLv2+
 BuildArch: noarch
@@ -22,6 +22,7 @@ Tagalog hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-tl
+
 
 %build
 for i in README_tl_PH.txt; do
@@ -52,6 +53,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20050109-alt2_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050109-alt2_15
 - update to new release by fcimport
 
