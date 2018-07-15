@@ -8,9 +8,9 @@ Name: hunspell-xh
 Summary: Xhosa hunspell dictionaries
 %global upstreamid 20091030
 Version: 0.%{upstreamid}
-Release: alt2_12
-Source: http://extensions.services.openoffice.org/e-files/3133/0/dict-xh_ZA-2009.10.30.oxt
-URL: http://www.translate.org.za/
+Release: alt2_14
+Source: https://downloads.sourceforge.net/project/aoo-extensions/3133/0/dict-xh_za-2009.10.30.oxt
+URL: https://extensions.openoffice.org/en/project/xhosa-spell-checker
 License: LGPLv2+
 BuildArch: noarch
 
@@ -22,6 +22,7 @@ Xhosa hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-xh
+
 
 %build
 for i in README-xh_ZA.txt release-notes-xh_ZA.txt package-description.txt; do
@@ -45,6 +46,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20091030-alt2_14
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20091030-alt2_12
 - update to new release by fcimport
 
