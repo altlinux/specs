@@ -8,10 +8,10 @@ Name: hunspell-hil
 Summary: Hiligaynon hunspell dictionaries
 #Epoch: 1
 Version: 0.14
-Release: alt2_13
-Source: http://borel.slu.edu/obair/%{name}-%{version}.oxt
+Release: alt2_14
+Source: https://addons.mozilla.org/firefox/downloads/file/108895/litreoir_hiligaynon-%{version}-tb+fx+sm.xpi
 URL: http://extensions.services.openoffice.org/project/hunspell-hil
-License: GPLv3+
+License: GPLv2+
 BuildArch: noarch
 
 Requires: hunspell
@@ -22,6 +22,7 @@ Hiligaynon hunspell dictionaries.
 
 %prep
 %setup -q -c
+
 
 %build
 for i in dictionaries/README_hil_PH.txt; do
@@ -37,14 +38,18 @@ done
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p dictionaries/hil_PH.* $RPM_BUILD_ROOT/%{_datadir}/myspell
+cp -p dictionaries/hil.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/hil_PH.dic
+cp -p dictionaries/hil.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/hil_PH.aff
 
 
 %files
-%doc LICENSES-en.txt dictionaries/README_hil_PH.txt
+%doc dictionaries/README_hil_PH.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_14
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_13
 - update to new release by fcimport
 
