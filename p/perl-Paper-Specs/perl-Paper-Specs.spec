@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Paper-Specs
 Version:        0.10
-Release:        alt2_15
+Release:        alt2_17
 Summary:        Size and layout information for paper stock, forms, and labels
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Paper-Specs/
-Source0:        http://www.cpan.org/authors/id/J/JO/JONALLEN/Paper-Specs-%{version}.tar.gz
+URL:            https://metacpan.org/release/Paper-Specs
+Source0:        https://cpan.metacpan.org/authors/id/J/JO/JONALLEN/Paper-Specs-%{version}.tar.gz
 # https://rt.cpan.org/Public/Bug/Display.html?id=78027
 Patch0:         %{name}-0.10-fix_Avery_5393.patch
 BuildArch:      noarch
@@ -34,7 +34,7 @@ This package provides features such as:
 %patch0 -p1 
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2_15
 - update to new release by fcimport
 
