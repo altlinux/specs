@@ -7,9 +7,9 @@ BuildRequires: unzip
 Name: hunspell-as
 Summary: Assamese hunspell dictionaries
 Version: 1.0.3
-Release: alt2_15
-Source: http://extensions.services.openoffice.org/files/2318/4/as_IN.oxt
-URL: http://extensions.services.openoffice.org/project/AssameseDict
+Release: alt2_17
+Source: https://downloads.sourceforge.net/project/aoo-extensions/2318/4/as_in.oxt
+URL: https://extensions.openoffice.org/en/project/assamese-dictionaryspell-checker
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 BuildArch: noarch
 
@@ -22,6 +22,7 @@ Assamese hunspell dictionaries.
 %prep
 %setup -q -c -n hunspell-as
 
+
 %build
 
 %install
@@ -29,11 +30,14 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p as_IN.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 
 %files
-%doc README_as_IN.txt COPYING COPYING.MPL COPYING.GPL COPYING.LGPL
-
+%doc README_as_IN.txt
+%doc --no-dereference COPYING COPYING.MPL COPYING.GPL COPYING.LGPL
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_15
 - update to new release by fcimport
 
