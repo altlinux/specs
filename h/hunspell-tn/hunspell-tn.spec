@@ -6,12 +6,12 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name: hunspell-tn
 Summary: Tswana hunspell dictionaries
-%global upstreamid 20091101
+%global upstreamid 20150904
 Version: 0.%{upstreamid}
-Release: alt2_12
-Source: http://releases.mozilla.org/pub/mozilla.org/addons/46617/tswana__south_africa__dictionary-%{upstreamid}-fx+tb.xpi
-URL: http://www.translate.org.za/
-License: GPLv2+
+Release: alt1_1
+Source: https://addons.mozilla.org/firefox/downloads/file/347396/tswana_spell_checker-%{upstreamid}-sm+tb+fx+an+fn.xpi
+URL: https://addons.mozilla.org/en-US/firefox/addon/tswana-spell-checker/
+License: GPLv3+
 BuildArch: noarch
 
 Requires: hunspell
@@ -22,6 +22,7 @@ Tswana hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-tn
+
 
 %build
 
@@ -39,10 +40,13 @@ popd
 
 
 %files
-%doc README-tn-ZA.txt
+%doc dictionaries/README_tn_ZA.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20150904-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20091101-alt2_12
 - update to new release by fcimport
 
