@@ -6,11 +6,11 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name: hunspell-cv
 Summary: Chuvash hunspell dictionaries
-Version: 1.02
-Release: alt2_12
-Source: http://hunspell.chv.su/files/dict-cv.oxt
+Version: 1.06
+Release: alt1_1
+Source: http://hunspell.chv.su/files/Chuvash_Spell-1.06.oxt
 URL: http://hunspell.chv.su/download.shtml
-License: LGPLv2+
+License: GPLv3+ or LGPLv3+ or MPLv1.1
 BuildArch: noarch
 Requires: hunspell
 Source44: import.info
@@ -20,6 +20,7 @@ Chuvash hunspell dictionaries.
 
 %prep
 %setup -q -c
+
 
 %build
 for i in README_cv_RU.txt; do
@@ -35,9 +36,13 @@ cp -p cv_RU.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 
 %files
 %doc README_cv_RU.txt
+%doc --no-dereference GPLv3.txt LGPLv3.txt MPL-1.1.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.02-alt2_12
 - update to new release by fcimport
 
