@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ imake libXt-devel xorg-cf-f
 %define _localstatedir %{_var}
 Name:           abe
 Version:        1.1
-Release:        alt5_32
+Release:        alt5_33
 
 Summary:        Scrolling, platform-jumping, ancient pyramid exploring game
 License:        GPL+
@@ -37,8 +37,6 @@ BuildRequires:  libSDL-devel
 BuildRequires:  libSDL_mixer-devel
 
 Requires:       icon-theme-hicolor
-
-%global icondir %{_datadir}/icons/hicolor
 Source44: import.info
 
 %description
@@ -70,9 +68,9 @@ make DESTDIR=$RPM_BUILD_ROOT install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{name}
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/appdata/
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/applications/
-mkdir -p $RPM_BUILD_ROOT/%{icondir}
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/
 cp -p -r images maps sounds $RPM_BUILD_ROOT/%{_datadir}/%{name}
-tar xJf %{SOURCE1} -C $RPM_BUILD_ROOT%{icondir}
+tar xJf %{SOURCE1} -C $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/
 install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT/%{_datadir}/appdata/
 
 cat << EOF > %{name}.desktop
@@ -98,6 +96,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT/%{_datadir}/applications/ %{name}.des
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_33
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_32
 - update to new release by fcimport
 
