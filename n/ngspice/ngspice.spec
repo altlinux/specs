@@ -4,8 +4,8 @@
 %define _pkgdocdir %_docdir/%name-%version
 
 Name: ngspice
-Version: 27
-Release: alt2
+Version: 28
+Release: alt1
 Summary: A mixed level/signal circuit simulator
 
 License: BSD
@@ -129,7 +129,8 @@ do
     --enable-dot-global \
     --enable-ndev \
     --enable-shared \
-    --with-readline=yes
+    --with-readline=yes \
+    --enable-oldapps
 
 make clean
 %make_build
@@ -185,8 +186,12 @@ cp -a \
 %files devel
 %_libdir/*.so
 %_includedir/%name
+%_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Jul 13 2018 Anton Midyukov <antohami@altlinux.org> 28-alt1
+- new version 28
+
 * Thu Jul 12 2018 Anton Midyukov <antohami@altlinux.org> 27-alt2
 - build shared library
 - fix buildrequires
