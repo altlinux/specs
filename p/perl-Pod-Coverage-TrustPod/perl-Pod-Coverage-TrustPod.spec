@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Pod-Coverage-TrustPod
 Version:        0.100005
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Allow a module's pod to contain Pod::Coverage hints
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Pod-Coverage-TrustPod/
-Source0:        http://search.cpan.org/CPAN/authors/id/R/RJ/RJBS/Pod-Coverage-TrustPod-%{version}.tar.gz
+URL:            https://metacpan.org/release/Pod-Coverage-TrustPod
+Source0:        https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Pod-Coverage-TrustPod-%{version}.tar.gz
 BuildArch:      noarch
 # Build:
 BuildRequires:  coreutils
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/Pod/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.100005-alt1_2
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.100005-alt1_1
 - update to new release by fcimport
 
