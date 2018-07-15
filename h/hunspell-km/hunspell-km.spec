@@ -6,9 +6,9 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name: hunspell-km
 Summary: Khmer hunspell dictionaries
-Version: 1.1
-Release: alt2_13
-Source: http://extensions.services.openoffice.org/files/2250/0/SBBIC-spellingchecker-OOo.1.1.oxt
+Version: 1.82
+Release: alt1_1
+Source: https://downloads.sourceforge.net/project/aoo-extensions/2250/6/sbbic-khmer-spelling-checker-1.82.oxt
 URL: http://www.sbbic.org/
 License: GPLv3
 BuildArch: noarch
@@ -22,18 +22,33 @@ Khmer hunspell dictionaries.
 %prep
 %setup -q -c -n hunspell-km
 
+
 %build
+for i in CHANGELOG; do
+  if ! iconv -f utf-8 -t utf-8 -o /dev/null $i > /dev/null 2>&1; then
+    iconv -f ISO-8859-1 -t UTF-8 $i > $i.new
+    touch -r $i $i.new
+    mv -f $i.new $i
+  fi
+  tr -d '\r' < $i > $i.new
+  touch -r $i $i.new
+  mv -f $i.new $i
+done
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p dictionaries/km_KH.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
+cp -p km_KH.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 
 
 %files
-%doc dictionaries/CHANGELOG LICENCES-*.txt
+%doc CHANGELOG
+%doc --no-dereference LICENCES-*.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.82-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_13
 - update to new release by fcimport
 
