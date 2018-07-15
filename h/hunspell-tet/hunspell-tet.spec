@@ -8,8 +8,8 @@ Name: hunspell-tet
 Summary: Tetum hunspell dictionaries
 %global upstreamid 20050108
 Version: 0.%{upstreamid}
-Release: alt2_16
-Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/tet_ID.zip
+Release: alt2_18
+Source: http://download.services.openoffice.org/contrib/dictionaries/tet_ID.zip
 URL: http://borel.slu.edu/crubadan/apps.html
 License: GPLv2+
 BuildArch: noarch
@@ -52,6 +52,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20050108-alt2_18
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050108-alt2_16
 - update to new release by fcimport
 
