@@ -7,10 +7,10 @@ BuildRequires: unzip
 Name: hyphen-ku
 Summary: Kurdish hyphenation rules
 Version: 1.71.2
-Release: alt1_12
-Source: http://extensions.services.openoffice.org/e-files/2445/12/kitandin.oxt
+Release: alt1_14
+Source: https://downloads.sourceforge.net/project/aoo-extensions/2445/12/kitandin.oxt
 URL: http://extensions.services.openoffice.org/project/kitandin
-License: LGPLv2+
+License: GPLv2+ or LGPLv2+
 BuildArch: noarch
 Requires: libhyphen
 Source44: import.info
@@ -20,6 +20,7 @@ Kurdish hyphenation rules.
 
 %prep
 %setup -q -c -n hyphen-ku
+
 
 %build
 chmod -x *
@@ -41,6 +42,9 @@ popd
 %{_datadir}/hyphen/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.71.2-alt1_14
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.71.2-alt1_12
 - update to new release by fcimport
 
