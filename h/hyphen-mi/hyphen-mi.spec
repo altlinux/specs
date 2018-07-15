@@ -5,8 +5,10 @@ Name: hyphen-mi
 Summary: Maori hyphenation rules
 %global upstreamid 20080630
 Version: 0.%{upstreamid}
-Release: alt1_14
-Source: http://packages.papakupu.maori.nz/hunspell-hyphen/hunspell-hyphen-mi-0.1.%{upstreamid}-beta.tar.gz
+Release: alt1_16
+# Source is dead now
+# Source: http://packages.papakupu.maori.nz/hunspell-hyphen/hunspell-hyphen-mi-0.1.%%{upstreamid}-beta.tar.gz
+Source: hunspell-hyphen-mi-0.1.%%{upstreamid}-beta.tar.gz
 URL: http://papakupu.maori.nz/
 License: GPLv3+
 BuildArch: noarch
@@ -20,6 +22,7 @@ Maori hyphenation rules.
 %prep
 %setup -q -c
 
+
 %build
 
 %install
@@ -32,6 +35,9 @@ cp -p mi.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_mi_NZ.dic
 %{_datadir}/hyphen/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20080630-alt1_16
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20080630-alt1_14
 - update to new release by fcimport
 
