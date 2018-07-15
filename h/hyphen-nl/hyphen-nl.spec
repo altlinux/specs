@@ -8,8 +8,8 @@ Name: hyphen-nl
 Summary: Dutch hyphenation rules
 %global upstreamid 20050617
 Version: 0.%{upstreamid}
-Release: alt1_16
-Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_nl_NL.zip
+Release: alt1_18
+Source: http://download.services.openoffice.org/contrib/dictionaries/hyph_nl_NL.zip
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
 License: GPLv2
 BuildArch: noarch
@@ -21,6 +21,7 @@ Dutch hyphenation rules.
 
 %prep
 %setup -q -c -n hyphen-nl
+
 
 %build
 for i in README_hyph_nl_NL.txt; do
@@ -45,6 +46,9 @@ done
 %{_datadir}/hyphen/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20050617-alt1_18
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050617-alt1_16
 - update to new release by fcimport
 
