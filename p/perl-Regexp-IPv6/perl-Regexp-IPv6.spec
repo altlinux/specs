@@ -6,12 +6,12 @@ BuildRequires: perl(Exporter.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Regexp-IPv6
 Version:        0.03
-Release:        alt1_19
+Release:        alt1_21
 Summary:        Regular expression for IPv6 addresses
 License:        GPLv2+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Regexp-IPv6/
-Source0:        http://www.cpan.org/authors/id/S/SA/SALVA/Regexp-IPv6-%{version}.tar.gz
+URL:            https://metacpan.org/release/Regexp-IPv6
+Source0:        https://cpan.metacpan.org/authors/id/S/SA/SALVA/Regexp-IPv6-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -27,7 +27,7 @@ Addresses" but ::. Any string not compliant with such RFC will be rejected.
 %setup -q -n Regexp-IPv6-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -44,6 +44,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_21
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_19
 - update to new release by fcimport
 
