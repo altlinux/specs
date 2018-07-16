@@ -1,8 +1,8 @@
 Summary: Driver for the Alps Micro-Dry printers and similars
 
 Name: ppmtomd
-Version: 1.5
-Release: alt1.qa1
+Version: 1.6
+Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -11,7 +11,6 @@ Group: Publishing
 
 URL: http://www.stevens-bradfield.com/ppmtomd/
 Source: http://www.stevens-bradfield.com/ppmtomd/%name-%version.tar
-Patch: ppmtomd-1.3-alt-build.patch
 
 # Automatically added by buildreq on Wed Nov 07 2007
 BuildRequires: libnetpbm-devel
@@ -33,7 +32,6 @@ colours.
 %prep
 
 %setup -q
-%patch -p1
 
 chmod a+r *
 
@@ -41,9 +39,8 @@ chmod a+r *
 %make CFLAGS="%optflags"
 
 %install
-
-%__install -d %buildroot%_bindir
-%__install -d %buildroot%_man1dir
+install -d %buildroot%_bindir
+install -d %buildroot%_man1dir
 
 %make BINDIR=$RPM_BUILD_ROOT%_bindir MANDIR=$RPM_BUILD_ROOT%_man1dir install
 
@@ -54,6 +51,9 @@ chmod a+r *
 
 
 %changelog
+* Tue May 29 2018 Oleg Solovyov <mcpain@altlinux.org> 1.6-alt1
+- Build version 1.6
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5-alt1.qa1
 - NMU: rebuilt for debuginfo.
 

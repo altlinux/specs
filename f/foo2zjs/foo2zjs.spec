@@ -1,15 +1,17 @@
 Name: foo2zjs
-Version: 20140519
-Release: alt1.qa1
+Version: 20180519
+Release: alt1
 
 Summary: ZJS (some HP/Minolta) printer driver
 Summary(ru_RU.UTF8): ZJS драйвер для некоторых принтеров HP/Minolta
 License: GPL
-Group: System/Configuration/Hardware
+Group: System/Configuration/Printing
 
 Url: http://foo2zjs.rkkda.com
 
-Requires: wget, cups, foomatic-db-%name, %name-PPD, udev, foomatic-filters, psutils
+Requires: wget cups udev foomatic-filters psutils
+Requires: foomatic-db-%name = %version-%release
+Requires: %name-PPD = %version-%release
 
 Source0: %name.tar.gz
 Source1: README-UTF8.ALT
@@ -35,30 +37,30 @@ BuildRequires: libcups-devel
 BuildArch: noarch
 Summary: foo2zjs utilities
 Summary(ru_RU.UTF8): foo2zjs утилиты
-Group: System/Configuration/Hardware
-Requires: %name = %version-%release tcl-tix tk >= 8.4
+Group: System/Configuration/Printing
+Requires: %name = %version-%release
+Requires: tcl-tix
+Requires: tk >= 8.4
 
 %package -n %name-fwdownloader
-
 BuildArch: noarch
 Summary: foo2zjs firmware auto downloader from Internet
 Summary(ru_RU.UTF8): foo2zjs автозагрузчик прошивок c интернета
-Group: System/Configuration/Hardware
-Requires: %name = %version-%release, iputils
+Group: System/Configuration/Printing
+Requires: %name = %version-%release
+Requires: iputils
 
 %package -n foomatic-db-%name
 BuildArch: noarch
 Summary: Printers database which supports foo2zjs
 Summary(ru_RU.UTF8): База данных принтеров, которые поддерживает foo2zjs
-Group: System/Configuration/Hardware
-Requires: %name = %version-%release
+Group: System/Configuration/Printing
 
 %package -n %name-PPD
 BuildArch: noarch
 Summary: PostScript Printer Description (PPD) files foo2zjs
 Summary(ru_RU.UTF8): Файлы PostScript Printer Description (PPD) foo2zjs
-Group: System/Configuration/Hardware
-Requires: %name = %version-%release
+Group: System/Configuration/Printing
 
 %description -n %name-apps
 Application HP LaserJet 10xx Replaced Paper
@@ -249,6 +251,9 @@ rm -rf %buildroot%_docdir/%name/
 %exclude %_localstatedir/foo2zjs/hplj10xx_gui.tcl
 
 %changelog
+* Fri Jul 13 2018 Oleg Solovyov <mcpain@altlinux.org> 20180519-alt1
+- 2018-05-19 tarball
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 20140519-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
