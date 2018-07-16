@@ -1,10 +1,10 @@
-%define ver_major 3.28
+%define ver_major 3.30
 %define xdg_name org.gnome.gnome-latex
 
 %def_enable gtk_doc
 
 Name: gnome-latex
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated LaTeX Environment for the GNOME desktop
@@ -18,13 +18,15 @@ Requires: %_bindir/latexmk dconf
 
 %define gtk_ver 3.22
 %define gtksource_ver 3.99.7
-%define tepl_ver 4.0.0
+%define tepl_ver 4.2.0
+%define amtk_ver 5.0.0
 
 BuildRequires: libappstream-glib-devel yelp-tools intltool
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgtksourceview4-devel >= %gtksource_ver
 BuildRequires: libtepl-devel >= %tepl_ver
+BuildRequires: libamtk-devel >= %amtk_ver
 BuildRequires: libgspell-devel libgee0.8-devel
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libdconf-devel vala-tools
@@ -83,6 +85,9 @@ This package contains documentation for %name.
 
 
 %changelog
+* Mon Jul 16 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Sun May 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 
