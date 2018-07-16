@@ -7,12 +7,12 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:       perl-DBIx-Class-DynamicDefault 
 Version:    0.04
-Release:    alt2_17
+Release:    alt2_19
 # lib/DBIx/Class/DynamicDefault.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Summary:    Automatically set and update fields 
-Url:        http://search.cpan.org/dist/DBIx-Class-DynamicDefault
-Source:     http://search.cpan.org/CPAN/authors/id/M/MS/MSTROUT/DBIx-Class-DynamicDefault-%{version}.tar.gz
+Url:        https://metacpan.org/release/DBIx-Class-DynamicDefault
+Source:     https://cpan.metacpan.org/authors/id/M/MS/MSTROUT/DBIx-Class-DynamicDefault-%{version}.tar.gz
 BuildArch:  noarch
 BuildRequires:  coreutils
 BuildRequires:  perl-devel
@@ -41,7 +41,7 @@ Requires:       perl(DBIx/Class.pm) >= 0.081.270
 # Remove under-specified dependencies
 
 Source44: import.info
-%filter_from_requires /^perl\\(DBIx.Class.pm\\)$/d
+%filter_from_requires /^perl(DBIx.Class\\)$/d
 
 %description
 Automatically set and update fields with values calculated at run time.
@@ -54,7 +54,7 @@ rm -r inc
 sed -i -e '/^inc\// d' MANIFEST
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -69,6 +69,9 @@ make test
 %{perl_vendor_privlib}/DBIx/Class/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_19
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_17
 - update to new release by fcimport
 
