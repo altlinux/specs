@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-Find-Iterator
 Version:        0.4
-Release:        alt3_15
+Release:        alt3_17
 Summary:        Iterator interface for search files
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/File-Find-Iterator/
-Source0:        http://www.cpan.org/authors/id/T/TE/TEXMEC/File-Find-Iterator-%{version}.tar.gz
+URL:            https://metacpan.org/release/File-Find-Iterator
+Source0:        https://cpan.metacpan.org/authors/id/T/TE/TEXMEC/File-Find-Iterator-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -29,7 +29,7 @@ Requires:       perl(Storable.pm) >= 2.040
 # Remove under-specified dependencies
 
 Source44: import.info
-%filter_from_requires /^perl\\((Class.Iterator|Storable).pm\\)$/d
+%filter_from_requires /^perl(\(Class.Iterator\|Storable\)\\)$/d
 
 %description
 Find::File::Iterator is an iterator object for searching through directory
@@ -41,7 +41,7 @@ search later.
 %setup -q -n File-Find-Iterator-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -58,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_15
 - update to new release by fcimport
 
