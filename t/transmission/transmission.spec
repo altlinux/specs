@@ -6,8 +6,8 @@
 %define dname transmission-daemon
 
 Name: transmission
-Version: 2.92
-Release: alt5%ubt
+Version: 2.94
+Release: alt1%ubt
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -30,17 +30,17 @@ Source: http://download.m0k.org/%name/files/%name-%version.tar
 Patch0: %name-%version-alt.patch
 Source1: %dname.init
 Source2: %dname.logrotate
-Patch1: transmission-2.92-fix_dns_rebinding_vuln.patch
+Source3: %dname.service
 
 BuildPreReq: desktop-file-utils
 
 BuildRequires: gcc-c++ glibc-devel intltool libcurl-devel libevent-devel libnotify-devel libcanberra-devel libdbus-glib-devel libgtk+3-devel
-BuildRequires(pre): rpm-utils desktop-file-utils libalternatives-devel rpm-build-ubt
+BuildRequires(pre): rpm-utils desktop-file-utils libalternatives-devel rpm-build-ubt openssl-devel
 %if "%(rpmvercmp '%{get_version glibc-core}' '2.9')" >= "0"
 BuildRequires: libgio-devel
 %endif
 %if_enabled qt
-BuildRequires: libqt4-devel
+BuildRequires: qt5-base-devel qt5-tools
 %endif
 
 %if_enabled wxgtk
@@ -122,7 +122,6 @@ Daemonised BitTorrent client
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
 sed -i "s|\(^CONFIG.*\+=.*[[:space:]]\)debug\([[:space:]].*$\)|\1release\2|" qt/qtr.pro
 sed -i "s|^LIBS.*\+=.*libevent\.a$|LIBS += -levent|" qt/qtr.pro
 rm -f m4/glib-gettext.m4
@@ -143,7 +142,7 @@ rm -f m4/glib-gettext.m4
 
 %if_enabled qt
 pushd qt
-qmake-qt4 "QMAKE_CXXFLAGS+=%optflags -std=c++11"
+qmake-qt5 "QMAKE_CXXFLAGS+=%optflags -std=c++11"
 popd
 %endif
 
@@ -152,7 +151,7 @@ popd
 %if_enabled qt
 pushd qt
 %make_build
-for f in translations/*.ts; do lrelease-qt4 $f; done
+for f in translations/*.ts; do lrelease-qt5 $f; done
 popd
 %endif
 
@@ -185,17 +184,17 @@ cat >%buildroot/%_altdir/%name-qt <<__EOF__
 %_bindir/%name %_bindir/%name-qt 20
 __EOF__
 # install translations
-mkdir -p %buildroot/%_datadir/qt4/translations/
-for f in qt/translations/*.qm; do install -m 0644 $f %buildroot/%_datadir/qt4/translations/; done
+mkdir -p %buildroot/%_datadir/qt5/translations/
+for f in qt/translations/*.qm; do install -m 0644 $f %buildroot/%_datadir/qt5/translations/; done
 %endif
 
 %find_lang %name-gtk
 
 # install daemonic stuff
 
-install -pD -m640 %dname.logrotate %buildroot%_sysconfdir/logrotate.d/%dname
-install -pD -m755 %dname.init %buildroot%_initdir/%dname
-install -pD -m644 %dname.service %buildroot%systemd_unitdir/transmission-daemon.service
+install -pD -m640 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%dname
+install -pD -m755 %SOURCE1 %buildroot%_initdir/%dname
+install -pD -m644 %SOURCE3 %buildroot%systemd_unitdir/transmission-daemon.service
 
 mkdir -p %buildroot/%_sysconfdir/transmission-daemon/
 daemon/transmission-daemon -d 2> %buildroot/%_sysconfdir/transmission-daemon/settings.json
@@ -236,7 +235,7 @@ fi
 %doc AUTHORS COPYING NEWS README ChangeLog
 %_bindir/%name-qt
 %_altdir/%name-qt
-%_datadir/qt4/translations/%{name}_*.qm
+%_datadir/qt5/translations/%{name}_*.qm
 %_man1dir/%name-qt.1*
 %endif
 
@@ -275,6 +274,13 @@ fi
 %attr(770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Mon Jul 16 2018 Anton Farygin <rider@altlinux.ru> 2.94-alt1%ubt
+- 2.94
+- build transmission-qt with qt5
+
+* Mon Apr 09 2018 Anton Farygin <rider@altlinux.ru> 2.93-alt1%ubt
+- 2.93
+
 * Mon Jan 15 2018 Anton Farygin <rider@altlinux.ru> 2.92-alt5%ubt
 - added fix for security flaw in RPC (closes: #34459)
 
