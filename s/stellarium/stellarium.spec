@@ -1,7 +1,7 @@
 %define _optlevel s
 
 Name: stellarium
-Version: 0.18
+Version: 0.18.1
 Release: alt1
 
 Group: Education
@@ -44,7 +44,7 @@ find %buildroot -name DejaVuSansMono.ttf -delete
 %find_lang %name-skycultures
 
 %files -f %name.lang
-%doc ChangeLog README
+%doc ChangeLog README*
 %_bindir/%name
 %_datadir/%name
 %_mandir/man1/%name.1.xz
@@ -54,6 +54,9 @@ find %buildroot -name DejaVuSansMono.ttf -delete
 %_datadir/pixmaps/%name.xpm
 
 %changelog
+* Mon Jul 16 2018 Grigory Ustinov <grenka@altlinux.org> 0.18.1-alt1
+- Build new version.
+
 * Fri Jun 01 2018 Grigory Ustinov <grenka@altlinux.org> 0.18-alt1
 - Build new version (Closes: #34976).
 - Remove fonts, packaged in fonts-ttf-dejavu (Closes: #25353).
