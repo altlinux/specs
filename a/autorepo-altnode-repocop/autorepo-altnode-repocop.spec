@@ -2,7 +2,7 @@
 
 #BuildRequires: 
 Name: autorepo-altnode-repocop
-Version: 0.23
+Version: 0.24
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -14,7 +14,9 @@ License: GPL2+
 Source: %name-%version.tar
 
 BuildRequires: repocop perl(Pod/Text.pm)
-Requires: repocop > 0.76
+Requires: repocop > 0.77
+Requires: pigz
+Conflicts: repocop-unittest-unmet-dependency < 0.10
 
 %description
 %summary
@@ -35,6 +37,9 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Mon Jul 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
+- support for repocop-unittest-unmet-dependency >= 0.10
+
 * Sun Jul 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
 - extended mail reports
 
