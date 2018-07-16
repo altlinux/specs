@@ -1,11 +1,11 @@
 %define testname unmet-dependency
 
 Name: repocop-unittest-%testname
-Version: 0.09
+Version: 0.11
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
-Requires: repocop >= 0.19
+Requires: repocop >= 0.77
 Url: http://repocop.altlinux.org
 
 Summary: %testname integration tests for repocop test platform.
@@ -13,6 +13,8 @@ Group: Development/Other
 License: GPLv2+
 
 Source: %name-%version.tar
+
+Conflicts: autorepo-altnode-repocop < 0.24
 
 %description
 The test warns packages that contain unmet dependencies.
@@ -34,6 +36,12 @@ install -m 755 archdiff %buildroot%_datadir/repocop/pkgtests/unmet-dependency-bu
 %_datadir/repocop/pkgtests/%testname-*/
 
 %changelog
+* Mon Jul 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- archhack use files/list/bin.list
+
+* Mon Jul 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- optimized archhack, added aarch64 support
+
 * Mon Jul 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - introduced distrotests
 
