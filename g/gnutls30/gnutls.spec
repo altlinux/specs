@@ -3,7 +3,7 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.5.18
+Version: 3.5.19
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -30,7 +30,7 @@ BuildRequires: libnettle-devel autogen libopts-devel libidn2-devel libunistring-
 # Unfortunately we have different version
 # on e2k and don't have guile-devel.
 # See https://bugzilla.altlinux.org/34496
-%ifarch e2k
+%ifarch %e2k
 BuildRequires: guile20-devel
 BuildRequires: libguile20-devel
 %else
@@ -48,7 +48,7 @@ BuildRequires: guile22-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: socat}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: ppp}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
-%ifnarch e2k
+%ifnarch %e2k
 # no libseccomp on e2k for now
 %{?!_without_check:%{?!_disable_check:BuildRequires: libseccomp-devel}}
 %endif
@@ -251,7 +251,7 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %define _unpackaged_files_terminate_build 1
 
 %check
-%ifarch e2k
+%ifarch %e2k
 # This library can't be dlopened for some reason.
 # Just preload it for pksc11 tests.
 export LD_PRELOAD=libcxa.so.2
@@ -312,6 +312,10 @@ export LD_PRELOAD=libcxa.so.2
 %endif
 
 %changelog
+* Mon Jul 16 2018 Mikhail Efremov <sem@altlinux.org> 3.5.19-alt1
+- Use %%e2k macro.
+- Updated to 3.5.19.
+
 * Mon Feb 19 2018 Mikhail Efremov <sem@altlinux.org> 3.5.18-alt1
 - Updated to 3.5.18.
 - Fix guile BR on e2k.
