@@ -6,14 +6,14 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Co
 %define _localstatedir %{_var}
 Name:           perl-HTML-FormatText-WithLinks-AndTables
 Version:        0.07
-Release:        alt1_4
+Release:        alt1_6
 Summary:        Converts HTML to Text with tables in tact
 License:        Artistic 2.0
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/HTML-FormatText-WithLinks-AndTables/
+URL:            https://metacpan.org/release/HTML-FormatText-WithLinks-AndTables
 BuildArch:      noarch
 
-Source0:        http://www.cpan.org/authors/id/D/DA/DALEEVANS/HTML-FormatText-WithLinks-AndTables-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/D/DA/DALEEVANS/HTML-FormatText-WithLinks-AndTables-%{version}.tar.gz
 
 BuildRequires:  findutils
 BuildRequires:  perl-devel
@@ -43,7 +43,7 @@ using <BR/> tags.
 %setup -q -n HTML-FormatText-WithLinks-AndTables-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -55,11 +55,14 @@ find $RPM_BUILD_ROOT -type f -name .packlist -delete
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README.pod
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_6
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_4
 - update to new release by fcimport
 
