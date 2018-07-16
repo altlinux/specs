@@ -1,5 +1,5 @@
 Name: libtomcrypt
-Version: 1.18.1
+Version: 1.18.2
 Release: alt1
 Summary: A comprehensive, portable cryptographic toolkit
 Group: System/Libraries
@@ -97,6 +97,9 @@ find %buildroot -name 'libtomcrypt_prof*' -exec rm -f {} ';'
 %doc LICENSE doc/crypt.pdf
 
 %changelog
+* Mon Jul 16 2018 Grigory Ustinov <grenka@altlinux.org> 1.18.2-alt1
+- Build new version.
+
 * Tue Apr 03 2018 Grigory Ustinov <grenka@altlinux.org> 1.18.1-alt1
 - Build new version.
 - Fix BuildRequires.
