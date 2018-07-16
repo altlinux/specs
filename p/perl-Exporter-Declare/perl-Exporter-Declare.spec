@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Exporter-Declare
 Version:        0.114
-Release:        alt2_6
+Release:        alt2_8
 Summary:        Exporting done right
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Exporter-Declare/
-Source0:        http://www.cpan.org/authors/id/E/EX/EXODIST/Exporter-Declare-%{version}.tar.gz
+URL:            https://metacpan.org/release/Exporter-Declare
+Source0:        https://cpan.metacpan.org/authors/id/E/EX/EXODIST/Exporter-Declare-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -35,7 +35,7 @@ Requires:       perl(Meta/Builder.pm) >= 0.003
 # Remove underspecified dependencies
 
 Source44: import.info
-%filter_from_requires /^perl\\(Meta.Builder.pm\\)\s*$/d
+%filter_from_requires /^perl(Meta.Builder\\)\s*$/d
 
 
 %description
@@ -49,7 +49,7 @@ meta-driven system allows for top-notch introspection.
 %setup -q -n Exporter-Declare-%{version}
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -64,6 +64,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.114-alt2_8
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.114-alt2_6
 - update to new release by fcimport
 
