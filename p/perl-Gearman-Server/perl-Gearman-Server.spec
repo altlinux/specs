@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Gearman-Server
 Version:        1.130.1
-Release:        alt1_5
+Release:        alt1_7
 Summary:        Function call router and load balancer
 License:        GPL+ or Artistic
 Group:          System/Servers
-URL:            http://search.cpan.org/dist/Gearman-Server/
-Source0:        http://search.cpan.org/CPAN/authors/id/P/PA/PALIK/Gearman-Server-v%{version}.tar.gz
+URL:            https://metacpan.org/release/Gearman-Server
+Source0:        https://cpan.metacpan.org/authors/id/P/PA/PALIK/Gearman-Server-v%{version}.tar.gz
 # Use absolute interpreter
 Patch0:         Gearman-Server-v1.130.0-Do-not-use-usr-bin-env.patch
 # Load IO::Socket::INET in Gearman/Server.pm
@@ -47,7 +47,7 @@ BuildRequires:  perl(Test/Script.pm)
 
 
 Source44: import.info
-%filter_from_requires /^perl\\(Danga.Socket.pm\\)$/d
+%filter_from_requires /^perl(Danga.Socket\\)$/d
 
 %description
 You run a Gearman server (or more likely, many of them for both high-
@@ -63,7 +63,7 @@ one of the Gearman servers.
 %patch1 -p1
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -81,6 +81,9 @@ make test
 %{_mandir}/man1/gearmand.*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.130.1-alt1_7
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.130.1-alt1_5
 - update to new release by fcimport
 
