@@ -2,17 +2,17 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
-%define fedora 25
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-Env-Sanctify
 Summary:	Lexically scoped sanctification of %%ENV
 Version:	1.12
-Release:	alt1_10
+Release:	alt1_12
 License:	GPL+ or Artistic
 Group:		Development/Other
-URL:		http://search.cpan.org/dist/Env-Sanctify/
-Source0:	http://search.cpan.org/CPAN/authors/id/B/BI/BINGOS/Env-Sanctify-%{version}.tar.gz
+URL:		https://metacpan.org/release/Env-Sanctify
+Source0:	https://cpan.metacpan.org/authors/id/B/BI/BINGOS/Env-Sanctify-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	rpm-build-perl
@@ -44,7 +44,7 @@ inherit.
 %setup -q -n Env-Sanctify-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -65,6 +65,9 @@ make test AUTHOR_TESTING=1
 %{perl_vendor_privlib}/Env/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_12
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_10
 - update to new release by fcimport
 
