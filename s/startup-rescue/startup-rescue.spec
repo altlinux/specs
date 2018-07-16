@@ -1,6 +1,6 @@
 Name: startup-rescue
 Version: 0.29
-Release: alt1
+Release: alt2
 
 Summary: The system startup scripts for rescue disk
 License: GPL
@@ -9,8 +9,6 @@ Group: System/Base
 Url: http://en.altlinux.org/rescue
 Source: rescue-%version.tar
 Packager: Anton V. Boyarshinov <boyarsh@altlinux.ru>
-
-BuildArch: noarch
 
 Requires(post): %post_service
 Requires(preun): %preun_service
@@ -63,6 +61,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Mon Jul 16 2018 Anton Midyukov <antohami@altlinux.org> 0.29-alt2
+- package not noarch
+
 * Mon May 21 2018 Michael Shigorin <mike@altlinux.org> 0.29-alt1
 - restrict dmidecode, ddcprobe and fixmbr to x86
 - hackaround for suddenly "missing" /sbin/find-fstab self-dependency
