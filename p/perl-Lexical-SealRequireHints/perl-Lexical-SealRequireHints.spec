@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Lexical-SealRequireHints
 Version:        0.011
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Prevent leakage of lexical hints
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Lexical-SealRequireHints/
-Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-SealRequireHints-%{version}.tar.gz
+URL:            https://metacpan.org/release/Lexical-SealRequireHints
+Source0:        https://cpan.metacpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-SealRequireHints-%{version}.tar.gz
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  perl-devel
@@ -66,6 +66,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -empty -delete
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_7
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_6
 - update to new release by fcimport
 
