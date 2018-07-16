@@ -2,8 +2,8 @@
 
 Name: gnuplot
 Epoch: 1
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: A program for plotting mathematical expressions and data
 Summary (ru_RU.UTF-8): Программа для построения графиков математических выражений и данных
@@ -258,6 +258,9 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Mon Jul 16 2018 Grigory Ustinov <grenka@altlinux.org> 1:5.2.4-alt1
+- Build new version.
+
 * Fri May 25 2018 Grigory Ustinov <grenka@altlinux.org> 1:5.2.3-alt2
 - Removed PDFLib-Lite from build requires (Closes: #33946).
 
