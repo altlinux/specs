@@ -6,12 +6,12 @@ BuildRequires: perl(B.pm) perl(Exporter.pm) perl(Scalar/Util.pm) perl(Symbol.pm)
 %define _localstatedir %{_var}
 Name:           perl-Devel-Refcount
 Version:        0.10
-Release:        alt3_14.1
+Release:        alt3_16
 Summary:        Obtain the REFCNT value of a referent
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Devel-Refcount/
-Source0:        http://www.cpan.org/authors/id/P/PE/PEVANS/Devel-Refcount-%{version}.tar.gz
+URL:            https://metacpan.org/release/Devel-Refcount
+Source0:        https://cpan.metacpan.org/authors/id/P/PE/PEVANS/Devel-Refcount-%{version}.tar.gz
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/CBuilder.pm)
@@ -30,7 +30,7 @@ the object being pointed to by the passed reference value.
 %setup -q -n Devel-Refcount-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor optimize="$RPM_OPT_FLAGS"
+/usr/bin/perl Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
 ./Build
 
 %install
@@ -50,6 +50,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/Devel*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_16
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_14.1
 - rebuild with new perl 5.26.1
 
