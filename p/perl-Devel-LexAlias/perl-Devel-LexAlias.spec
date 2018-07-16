@@ -6,16 +6,16 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Devel-LexAlias
 Version:        0.05
-Release:        alt2_15.1
+Release:        alt2_17
 Summary:        Alias lexical variables
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Devel-LexAlias/
-Source0:        http://www.cpan.org/authors/id/R/RC/RCLAMP/Devel-LexAlias-%{version}.tar.gz
+URL:            https://metacpan.org/release/Devel-LexAlias
+Source0:        https://cpan.metacpan.org/authors/id/R/RC/RCLAMP/Devel-LexAlias-%{version}.tar.gz
 # Module Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  gcc-common
+BuildRequires:  gcc
 BuildRequires:  perl-devel
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -39,7 +39,7 @@ subroutines scope to one of your choosing.
 %setup -q -n Devel-LexAlias-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
 %make_build
 
 %install
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_archlib}/Devel/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_17
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_15.1
 - rebuild with new perl 5.26.1
 
