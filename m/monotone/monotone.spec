@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_disable check
 
 Name: monotone
 Version: 1.2
-Release: alt3.dev.mtn20150211.1.1
+Release: alt4.dev.mtn20150211
 
 Summary: Distributed version control system
 License: GPL
@@ -13,6 +15,8 @@ Url: http://monotone.ca
 # get: mtn clone mtn://code.monotone.ca/monotone?net.venge.monotone
 # update: mtn pull --update
 Source: %name-%version.tar
+
+Patch1: %name-1.1-fedora-pcre.patch
 
 BuildRequires: pcre-devel boost-devel libbotan-devel pkg-config
 BuildRequires: libidn-devel lua-devel libsqlite3-devel texinfo
@@ -28,6 +32,7 @@ functions to client-side RSA certificates.
 
 %prep
 %setup
+%patch1 -p1
 
 rm -fR Attic/botan
 
@@ -44,18 +49,24 @@ DISABLE_NETWORK_TESTS=1 make check
 
 %install
 %makeinstall
+
+# consider packing it when bash4 becomes default - see bug #30775
+rm -rf %buildroot%_sysconfdir/bash_completion.d
+
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/*
 %_infodir/*
 %_man1dir/*
-#_sysconfdir/bash_completion.d/*
 %_datadir/%name
 %doc %_docdir/%name
 %doc AUTHORS NEWS README UPGRADE HACKING INSTALL ChangeLog notes/*
 
 %changelog
+* Mon Jul 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2-alt4.dev.mtn20150211
+- Rebuilt with new pcre.
+
 * Wed Apr 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2-alt3.dev.mtn20150211.1.1
 - (NMU) rebuilt with new libbotan.
 
