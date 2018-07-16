@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-ExtUtils-InstallPaths
 Version:	0.012
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Build.PL install path logic made easy
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/ExtUtils-InstallPaths
@@ -70,6 +70,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1_2
+- update to new release by fcimport
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1_1
 - update to new release by fcimport
 
