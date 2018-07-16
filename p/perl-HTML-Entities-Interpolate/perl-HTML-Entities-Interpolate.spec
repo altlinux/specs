@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-HTML-Entities-Interpolate
 Version:        1.10
-Release:        alt1_4
+Release:        alt1_6
 Summary:        Call HTML::Entities::encode_entities via a hash within a string
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/HTML-Entities-Interpolate/
-Source0:        http://www.cpan.org/authors/id/R/RS/RSAVAGE/HTML-Entities-Interpolate-%{version}.tgz
+URL:            https://metacpan.org/release/HTML-Entities-Interpolate
+Source0:        https://cpan.metacpan.org/authors/id/R/RS/RSAVAGE/HTML-Entities-Interpolate-%{version}.tgz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Capture/Tiny.pm)
@@ -35,7 +35,7 @@ via a hash within a string.
 %setup -q -n HTML-Entities-Interpolate-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/HTML*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_6
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_4
 - update to new release by fcimport
 
