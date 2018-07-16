@@ -2,7 +2,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.4
-Release: alt1
+Release: alt2
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -90,7 +90,6 @@ ranging from networking to HTML display and image manipulation.
 Summary: Development files for wxGTK library
 Group: Development/C++
 Requires: lib%name = %EVR
-Requires: python-module-PyDSTool
 %add_python_req_skip utils
 Conflicts: libwxGTK2.9-devel
 Conflicts: wxGTK-devel
@@ -218,6 +217,9 @@ cat wxmsw3.lang >> wxstd3.lang
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Mon Jul 16 2018 Ivan A. Melnikov <iv@altlinux.org> 3.0.4-alt2
+- remove python-module-PyDSTool requires from -devel subpackage (ALT#35158)
+
 * Fri Mar 23 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.4-alt1
 - Version 3.0.4
 
