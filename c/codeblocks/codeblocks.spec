@@ -1,6 +1,6 @@
 Name: codeblocks
 Version: 17.12
-Release: alt3
+Release: alt4
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -109,7 +109,7 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_bindir/cb_console_runner
 %_libdir/lib%name.so.*
 %_desktopdir/%name.desktop
-%_xdgmimedir/packages/%name.xml
+%_datadir/mime/packages/%name.xml
 %_man1dir/*
 %exclude %_man1dir/codesnippets.1.xz
 %exclude %_datadir/%name/images/16x16/fproject*
@@ -281,6 +281,10 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Mon Jul 16 2018 Grigory Ustinov <grenka@altlinux.org> 17.12-alt4
+- Fixed FTBFS (removed xdg macro).
+- Fixed bogus date in changelog.
+
 * Thu Jun 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 17.12-alt3
 - NMU: rebuilt with boost-1.67.0.
 
@@ -530,7 +534,7 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 * Fri Oct 06 2006 Denis Kirienko <dk@altlinux.ru> 1.0-alt0.svn3025
 - New SVN snapshot
 
-* Sat Sep 14 2006 Denis Kirienko <dk@altlinux.ru> 1.0-alt0.svn2975
+* Thu Sep 14 2006 Denis Kirienko <dk@altlinux.ru> 1.0-alt0.svn2975
 - New maintainer
 - New SVN snapshot
 - Fixed Icon parameter in the desktop file
