@@ -9,7 +9,7 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Co
 
 Name:		perl-ExtUtils-Config
 Version:	0.008
-Release:	alt1_9
+Release:	alt1_11
 Summary:	A wrapper for perl's configuration
 Group:		Development/Other
 License:	GPL+ or Artistic
@@ -43,7 +43,7 @@ ExtUtils::Config is an abstraction around the %%Config hash.
 %endif
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_11
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_9
 - update to new release by fcimport
 
