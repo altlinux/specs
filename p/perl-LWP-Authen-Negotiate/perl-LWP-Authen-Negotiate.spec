@@ -6,12 +6,12 @@ BuildRequires: perl(AutoLoader.pm) perl(Exporter.pm) perl(MIME/Base64.pm) perl-p
 %define _localstatedir %{_var}
 Name:           perl-LWP-Authen-Negotiate
 Version:        0.08
-Release:        alt2_13
+Release:        alt2_15
 Summary:        GSSAPI based Authentication Plugin for LWP
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/LWP-Authen-Negotiate/
-Source0:        http://www.cpan.org/modules/by-module/LWP/LWP-Authen-Negotiate-%{version}.tar.gz
+URL:            https://metacpan.org/release/LWP-Authen-Negotiate
+Source0:        https://cpan.metacpan.org/modules/by-module/LWP/LWP-Authen-Negotiate-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -31,7 +31,7 @@ mod_auth_kerb for example.
 %setup -q -n LWP-Authen-Negotiate-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -51,6 +51,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2_15
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2_13
 - update to new release by fcimport
 
