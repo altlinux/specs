@@ -8,6 +8,7 @@
 %def_with team
 %def_without selinux
 %def_with gcr
+%def_with libnm_gtk
 
 %ifarch %e2k
 %define more_warnings no
@@ -16,8 +17,8 @@
 %endif
 
 Name: NetworkManager-applet-gtk
-Version: 1.8.12
-Release: alt2%git_date
+Version: 1.8.14
+Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -32,11 +33,13 @@ BuildPreReq: libdbus-devel libdbus-glib libgtk+3-devel intltool libtool libpolki
 
 BuildRequires: libwireless-devel
 BuildRequires: libnotify-devel
+%if_with libnm_gtk
 BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-util-devel >= %nm_version
 BuildRequires: libnm-glib-devel >= %nm_version
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: NetworkManager-glib-gir-devel >= %nm_version
+%endif
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnm-gir-devel >= %nm_version
 BuildRequires: iso-codes-devel
@@ -64,6 +67,7 @@ Provides: NetworkManager-gnome = %version-%release
 This package contains GNOME utilities and applications for use with
 NetworkManager, including a panel applet for wireless networks.
 
+%if_with libnm_gtk
 %package -n libnm-gtk
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -110,6 +114,7 @@ Requires: libnm-gtk-devel = %version-%release
 
 %description -n libnm-gtk-gir-devel
 GObject introspection devel data for the libnm-gtk.
+%endif
 
 %package -n libnma
 License: %gpl2plus
@@ -176,7 +181,11 @@ This package contains development documentation for libnma-devel-doc.
 	%{subst_with appindicator} \
 	%{subst_with team} \
 	--enable-introspection \
+%if_with libnm_gtk
 	--with-libnm-gtk \
+%else
+	--without-libnm-gtk \
+%endif
 	--enable-gtk-doc \
 	--enable-more-warnings=%more_warnings
 
@@ -201,9 +210,10 @@ make check
 %doc %_man1dir/*.*
 
 %_datadir/applications/*.desktop
-%_datadir/appdata/*.xml
+%_datadir/metainfo/*.xml
 %dir %_datadir/gnome-vpn-properties
 
+%if_with libnm_gtk
 %files -n libnm-gtk
 %_libdir/libnm-gtk.so.*
 
@@ -217,6 +227,7 @@ make check
 
 %files -n libnm-gtk-gir-devel
 %_datadir/gir-1.0/NMGtk-1.0.gir
+%endif
 
 %files -n libnma
 %_libdir/libnma.so.*
@@ -236,6 +247,14 @@ make check
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Mon Jul 16 2018 Mikhail Efremov <sem@altlinux.org> 1.8.14-alt1
+- Drop "Don't allow to create new connection for missing device plugins"
+  patch (closes: #35139).
+- Patches from upstream:
+  + connection-editor: don't defer creation of vpn connection to idle
+  + c-e: fix leak in update_relabel_list_filename() (clear_name_if_present())
+- Updated to 1.8.14.
+
 * Mon Jun 04 2018 Mikhail Efremov <sem@altlinux.org> 1.8.12-alt2
 - Patch from upstream:
     + Don't double-free priv->dupes (closes: #34980).
