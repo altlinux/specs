@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: mixxx
-Version: 2.0.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Free digital DJ software
@@ -11,25 +13,23 @@ Url: http://mixxx.org
 # https://github.com/mixxxdj/mixxx.git
 Source: %name-%version.tar
 
-Patch1: %name-%version-upstream-gcc6.patch
-Patch2: %name-%version-alt-find-shout2.patch
-Patch3: %name-%version-gentoo-sqlite3.patch
-Patch4: %name-%version-gentoo-chromaprint-1.4.patch
-Patch5: %name-%version-alt-rpath.patch
+Patch1: %name-%version-alt-find-shout2.patch
+Patch2: %name-%version-alt-rpath.patch
 
 BuildPreReq: rpm-macros-qt5
 BuildRequires: flex gcc-c++ libflac-devel libid3tag-devel libmad-devel
-BuildRequires: libportaudio2-devel libportmidi libportmidi-devel
-BuildRequires: libshout2-devel libsndfile-devel libtag-devel python-devel
+BuildRequires: libportaudio2-devel libportmidi-devel
+BuildRequires: libsndfile-devel libtag-devel python-devel
 BuildRequires: python-module-Reportlab python-module-bzr-fastimport scons
 BuildRequires: swig libvamp-devel libprotobuf-devel
 BuildRequires: libchromaprint-devel libusb-devel libfftw3-devel
 BuildRequires: protobuf-compiler
 BuildRequires: libGLU-devel librubberband-devel libshout2-devel libopus-devel libopusfile-devel libsqlite3-devel
 BuildRequires: libwavpack-devel libfaad-devel libmp4v2-devel
+BuildRequires: libupower-devel
 BuildRequires: qt5-base-devel qt5-script-devel qt5-svg-devel qt5-xmlpatterns-devel qt5-tools-devel
 
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 Requires: qt5-sql-sqlite3
 
 %description
@@ -62,9 +62,6 @@ This package contains %name plugin for Vamp.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
 scons \
@@ -90,11 +87,13 @@ mv %buildroot%_libexecdir/mixxx/plugins/vamp \
 
 %files
 %_bindir/%name
+%_libexecdir/%name
 
 %files data
 %exclude %_datadir/doc
 %doc README README.md COPYING LICENSE Mixxx-Manual.pdf
 %_datadir/%name
+%_datadir/appdata/*
 %_desktopdir/%name.desktop
 %_pixmapsdir/%name-icon.png
 
@@ -102,6 +101,9 @@ mv %buildroot%_libexecdir/mixxx/plugins/vamp \
 %_libdir/vamp
 
 %changelog
+* Mon Jul 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.1-alt1
+- Updated to upstream release version 2.1.1.
+
 * Thu Sep 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt1
 - Updated to upstream release version 2.0.0.
 
