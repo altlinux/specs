@@ -8,11 +8,11 @@ BuildRequires: perl(Encode/JP.pm)
 %define _localstatedir %{_var}
 Name:           perl-HTML-FormFu
 Version:        2.06
-Release:        alt1_1
+Release:        alt1_2
 Summary:        HTML Form Creation, Rendering and Validation Framework
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/HTML-FormFu/
-Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFRANKS/HTML-FormFu-%{version}.tar.gz
+URL:            https://metacpan.org/release/HTML-FormFu
+Source0:        https://cpan.metacpan.org/authors/id/C/CF/CFRANKS/HTML-FormFu-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -128,6 +128,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1_2
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1_1
 - update to new release by fcimport
 
