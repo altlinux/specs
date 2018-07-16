@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-JavaScript-Minifier-XS
 Version:        0.11
-Release:        alt3_12
+Release:        alt3_13
 Summary:        XS based JavaScript minifier
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/JavaScript-Minifier-XS/
-Source0:        http://search.cpan.org/CPAN/authors/id/G/GT/GTERMARS/JavaScript-Minifier-XS-%{version}.tar.gz
+URL:            https://metacpan.org/release/JavaScript-Minifier-XS
+Source0:        https://cpan.metacpan.org/authors/id/G/GT/GTERMARS/JavaScript-Minifier-XS-%{version}.tar.gz
 BuildRequires:  findutils
 BuildRequires:  gcc
 BuildRequires:  perl-devel
@@ -63,6 +63,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 %{perl_vendor_archlib}/JavaScript*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt3_13
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt3_12
 - update to new release by fcimport
 
