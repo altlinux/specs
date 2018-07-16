@@ -6,12 +6,12 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.
 %define _localstatedir %{_var}
 Name:           perl-HTML-Quoted
 Version:        0.04
-Release:        alt1_15
+Release:        alt1_16
 Summary:        Extract structure of quoted HTML mail message
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/HTML-Quoted/
-Source0:        http://www.cpan.org/authors/id/T/TS/TSIBLEY/HTML-Quoted-0.04.tar.gz
+URL:            https://metacpan.org/release/HTML-Quoted
+Source0:        https://cpan.metacpan.org/authors/id/T/TS/TSIBLEY/HTML-Quoted-0.04.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -52,6 +52,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_16
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_15
 - update to new release by fcimport
 
