@@ -6,7 +6,7 @@
 Summary: Tool for fitting and analyzing data
 Name: fityk
 Version: 1.3.0
-Release: alt4.git20141119.2.1
+Release: alt5.git20141119
 License: GPL
 Group: Sciences/Other
 Url: https://github.com/wojdyr/fityk
@@ -14,8 +14,8 @@ Url: https://github.com/wojdyr/fityk
 Source0: %name-%version.tar.bz2
 Source1: %name.desktop
 Source2: x-%name.desktop
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+BuildRequires(pre): rpm-build-xdg
 # Automatically added by buildreq on Mon Aug 04 2008
 BuildRequires: gcc-c++ gcc-fortran libreadline-devel rpm-build-python
 
@@ -23,10 +23,10 @@ BuildPreReq: boost-devel libxylib-devel libwxGTK3.1-devel zlib-devel
 BuildPreReq: liblua5.1-devel python-module-sphinx-devel swig dvipng
 BuildPreReq: libcmpfit-devel
 BuildPreReq: texlive-collection-latexrecommended tex(preview.sty) gnuplot
+BuildRequires: python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -140,7 +140,7 @@ install -m 644 %name.png %buildroot%_niconsdir/
 install -m 644 %name.png %buildroot%_miconsdir/
 rm -f %buildroot%_datadir/%name/samples/*.pl
 
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %endif
 
@@ -148,7 +148,7 @@ mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 pushd ../python3/build3
 install -d %buildroot%python3_sitelibdir
 mv $PWD%python3_sitelibdir/* %buildroot%python3_sitelibdir/
-%ifarch x86_64
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 mv $PWD%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 popd
@@ -172,17 +172,17 @@ popd
 
 %files
 %doc COPYING NEWS TODO
+%dir %_datadir/%name
 %if_with docs
 %doc %_datadir/%name/html
 %_man1dir/*
 %endif
 %_bindir/*
-%_datadir/%name/samples/*
+%_datadir/%name/samples
 %exclude %_datadir/%name/samples/*.rb
-/usr/share/fityk/samples/
-%_datadir/mime/packages/*
+%_xdgmimedir/packages/*
 %_datadir/mimelnk/application/*.desktop
-%_datadir/applications/fityk.desktop
+%_desktopdir/fityk.desktop
 %_niconsdir/*.png
 %_miconsdir/*.png
 %_libdir/*.so.*
@@ -200,6 +200,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.0-alt5.git20141119
+- Updated build dependencies.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.0-alt4.git20141119.2.1
 - (NMU) Rebuilt with python-3.6.4.
 
