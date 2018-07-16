@@ -7,7 +7,7 @@ operating systems.
 
 Name: %fname
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 %if ""==""
 Summary: A python module for accessing filesystem Extended Attributes
@@ -22,7 +22,7 @@ Url: http://pyxattr.sourceforge.net/
 # https://github.com/iustin/pyxattr.git
 Source: %name-%version.tar
 
-BuildPreReq: libattr-devel python-module-sphinx-devel python3-devel
+BuildPreReq: libattr-devel python-module-sphinx-devel python-devel
 BuildRequires(pre): rpm-build-python3
 
 %if ""!=""
@@ -68,6 +68,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Mon Jul 16 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt2
+- Fixed FTBFS (fixed BR).
+
 * Wed May 30 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
 - Build new version.
 

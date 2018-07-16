@@ -7,7 +7,7 @@ operating systems.
 
 Name: %fname-docs
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 %if "-docs"==""
 Summary: A python module for accessing filesystem Extended Attributes
@@ -68,6 +68,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Mon Jul 16 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt2
+- Fixed FTBFS (fixed BR).
+
 * Wed May 30 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
 - Build new version.
 
