@@ -7,12 +7,12 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           perl-ExtUtils-CppGuess
 Version:        0.12
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Guess C++ compiler and flags
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/ExtUtils-CppGuess/
-Source0:        http://www.cpan.org/authors/id/E/ET/ETJ/ExtUtils-CppGuess-%{version}.tar.gz
+URL:            https://metacpan.org/release/ExtUtils-CppGuess
+Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETJ/ExtUtils-CppGuess-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  findutils
 BuildRequires:  gcc-c++
@@ -61,6 +61,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_4
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_3
 - update to new release by fcimport
 
