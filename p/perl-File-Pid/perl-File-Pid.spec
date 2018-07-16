@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-Pid
 Version:        1.01
-Release:        alt3_24
+Release:        alt3_26
 Summary:        Pid File Manipulation
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/File-Pid/
-Source0:        http://www.cpan.org/authors/id/C/CW/CWEST/File-Pid-%{version}.tar.gz
+URL:            https://metacpan.org/release/File-Pid
+Source0:        https://cpan.metacpan.org/authors/id/C/CW/CWEST/File-Pid-%{version}.tar.gz
 Patch0:         File-Pid-1.01-RT-18960-Fixed-using-of-uninitialized-value.patch
 BuildArch:      noarch
 # Build
@@ -31,7 +31,7 @@ Requires:       perl(Class/Accessor/Fast.pm) >= 0.190
 
 
 Source44: import.info
-%filter_from_requires /^perl\\(Class.Accessor.Fast.pm\\)$/d
+%filter_from_requires /^perl(Class.Accessor.Fast\\)$/d
 
 %description
 This software manages a pid file for you. It will create a pid file,
@@ -43,7 +43,7 @@ the pid file.
 %patch0 -p1
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -58,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_26
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_24
 - update to new release by fcimport
 
