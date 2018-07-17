@@ -6,12 +6,12 @@ BuildRequires: perl(base.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-Email
 Version:        0.07
-Release:        alt2_11
+Release:        alt2_13
 Summary:        Test Email Contents
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Test-Email/
-Source0:        http://www.cpan.org/authors/id/J/JA/JAMES/Test-Email-%{version}.tar.gz
+URL:            https://metacpan.org/release/Test-Email
+Source0:        https://cpan.metacpan.org/authors/id/J/JA/JAMES/Test-Email-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -33,7 +33,7 @@ If you want the messages fetched from a POP3 account, use Test::POP3.
 find -type f -exec chmod -x {} \;
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2_13
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2_11
 - update to new release by fcimport
 
