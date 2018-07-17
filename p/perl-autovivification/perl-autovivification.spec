@@ -7,11 +7,11 @@ BuildRequires: perl(Fatal.pm) perl(Text/Balanced.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-autovivification
 Version:        0.18
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Lexically disable autovivification
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/autovivification/
-Source0:        http://search.cpan.org/CPAN/authors/id/V/VP/VPIT/autovivification-%{version}.tar.gz
+URL:            https://metacpan.org/release/autovivification
+Source0:        https://cpan.metacpan.org/authors/id/V/VP/VPIT/autovivification-%{version}.tar.gz
 # Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -78,6 +78,9 @@ make test
 %{perl_vendor_archlib}/auto/autovivification/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_3
+- update to new release by fcimport
+
 * Sun Jan 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_1
 - to Sisyphus as biber dependency
 
