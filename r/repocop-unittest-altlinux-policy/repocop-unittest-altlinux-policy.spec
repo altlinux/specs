@@ -1,5 +1,5 @@
 Name: repocop-unittest-altlinux-policy
-Version: 0.38
+Version: 0.39
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -44,6 +44,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Tue Jul 17 2018 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
+- updated list of exceptions
+
 * Wed Jun 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
 - bugfix in altlinux-policy-policykit-bad-location.posttest
 - added altlinux-policy-unknown-summary.posttest
