@@ -7,11 +7,11 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Te
 %define _localstatedir %{_var}
 Name:           perl-Test-Portability-Files
 Version:        0.09
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Check file names portability
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Test-Portability-Files/
-Source0:        http://www.cpan.org/authors/id/A/AB/ABRAXXA/Test-Portability-Files-%{version}.tar.gz
+URL:            https://metacpan.org/release/Test-Portability-Files
+Source0:        https://cpan.metacpan.org/authors/id/A/AB/ABRAXXA/Test-Portability-Files-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  coreutils
@@ -64,6 +64,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_3
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_2
 - update to new release by fcimport
 
