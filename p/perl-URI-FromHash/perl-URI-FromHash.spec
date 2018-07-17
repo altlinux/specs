@@ -7,13 +7,13 @@ BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(IO/Handle.pm) perl(IPC/Open3
 %define _localstatedir %{_var}
 Name:          perl-URI-FromHash 
 Version:       0.05
-Release:       alt1_6
+Release:       alt1_8
 Summary:       Build a URI from a set of named parameters 
 # see lib/URI/FromHash.pm
 License:       GPL+ or Artistic
 
-Url:           http://search.cpan.org/dist/URI-FromHash
-Source0:        http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/URI-FromHash-%{version}.tar.gz
+Url:           https://metacpan.org/release/URI-FromHash
+Source0:        https://cpan.metacpan.org/authors/id/D/DR/DROLSKY/URI-FromHash-%{version}.tar.gz
 
 BuildArch:     noarch
 BuildRequires: rpm-build-perl
@@ -45,7 +45,7 @@ TT2.
 %setup -q -n URI-FromHash-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -57,10 +57,13 @@ make test
 
 %files
 %doc Changes
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/URI*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_8
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_6
 - update to new release by fcimport
 
