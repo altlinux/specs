@@ -5,8 +5,8 @@
 %def_enable lua_factory
 
 Name: grilo-plugins
-Version: %ver_major.5
-Release: alt2
+Version: %ver_major.6
+Release: alt1
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -25,7 +25,7 @@ Requires: tracker
 BuildRequires: gnome-common intltool >= 0.40.0 gperf
 BuildRequires: gtk-doc yelp-tools
 BuildRequires: libgio-devel >= 2.36
-BuildRequires: libgrilo-devel >= %ver_major.3
+BuildRequires: libgrilo-devel >= %ver_major.5
 BuildRequires: libxml2-devel
 BuildRequires: libgupnp-devel >= 0.13
 BuildRequires: libgupnp-av-devel >= 0.5
@@ -96,6 +96,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %endif
 
 %changelog
+* Tue Jul 17 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
+- 0.3.6
+
 * Fri Aug 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt2
 - rebuilt against tracker-sparql-2.0
 
