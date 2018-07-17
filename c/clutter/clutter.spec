@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define ver_major 1.26
 
 %def_enable x11_backend
@@ -18,7 +18,7 @@
 
 Name: clutter
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Clutter Core Library
 License: LGPLv2+
@@ -31,18 +31,18 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.44
+%define glib_ver 2.54
 %define cogl_ver 1.21.2
 %define json_glib_ver 0.12.0
 %define atk_ver 2.5.3
-%define cairo_ver 1.12
+%define cairo_ver 1.14
 %define pango_ver 1.30
 %define gi_version 1.40
 %define uprof_ver 0.3
-%define gtk_doc_ver 1.15
+%define gtk_doc_ver 1.20
 %define xfixes_ver 3
 %define xcomposite_ver 0.4
-%define gdk_ver 3.3.18
+%define gdk_ver 3.22.6
 %define libinput_ver 0.19
 
 BuildRequires: libGL-devel
@@ -160,7 +160,7 @@ gtkdocize
 #%%make check
 
 %files -n lib%name -f clutter-1.0.lang
-%doc NEWS README
+%doc NEWS README*
 %_libdir/lib%name-*.so.*
 
 %files -n lib%name-devel
@@ -185,8 +185,13 @@ gtkdocize
 %_datadir/installed-tests/%name/
 %endif
 
+%exclude %_datadir/%name-1.0/valgrind
+
 
 %changelog
+* Tue Jun 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.26.2-alt2
+- updated to 1.26.2-56-g401ea54
+
 * Fri May 12 2017 Yuri N. Sedunov <aris@altlinux.org> 1.26.2-alt1
 - 1.26.2
 
