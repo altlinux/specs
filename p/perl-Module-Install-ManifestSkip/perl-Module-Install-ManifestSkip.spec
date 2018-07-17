@@ -6,12 +6,12 @@ BuildRequires: perl(Module/Manifest/Skip.pm) perl(Test/Pod.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Module-Install-ManifestSkip
 Version:        0.24
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Generate a MANIFEST.SKIP file
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Module-Install-ManifestSkip/
-Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Module-Install-ManifestSkip-%{version}.tar.gz
+URL:            https://metacpan.org/release/Module-Install-ManifestSkip
+Source0:        https://cpan.metacpan.org/authors/id/I/IN/INGY/Module-Install-ManifestSkip-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -55,6 +55,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.24-alt2_11
+- update to new release by fcimport
+
 * Fri Apr 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.24-alt2_10
 - to Sisyphus as perl-Dancer2 dep
 
