@@ -19,12 +19,12 @@ BuildRequires: perl(parent.pm) perl-podlators
 
 Name:           perl-Test-MockModule
 Version:        0.15
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Override subroutines in a module for unit testing
 Group:          Development/Other
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Test-MockModule/
-Source0:        http://search.cpan.org/CPAN/authors/id/G/GF/GFRANKS/Test-MockModule-%{version}.tar.gz
+URL:            https://metacpan.org/release/Test-MockModule
+Source0:        https://cpan.metacpan.org/authors/id/G/GF/GFRANKS/Test-MockModule-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  rpm-build-perl
@@ -71,6 +71,9 @@ chmod -R u+w $RPM_BUILD_ROOT/*
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_2
+- update to new release by fcimport
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_1
 - update to new release by fcimport
 
