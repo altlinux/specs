@@ -1,34 +1,46 @@
+%define _libexecdir /usr/libexec
+%set_compress_method skip
+
 Name: shorewall6
-Version: 4.4.23.3
-Release: alt3.1
+Version: 5.2.1
+Release: alt0.Beta2
 Summary: Shoreline Firewall 6 is an ip6tables-based firewall for Linux systems.
 License: GPLv2
 Group: Security/Networking
 Url: http://www.shorewall.net/
-Source0: %name-%version.tar.bz2
-Source1: shorewall6.init
+Source: %name-%version-Beta2.tar.bz2
 Source3: shorewall6-control
 Source4: shorewall6-README.ALT.RU.UTF8
 
-Packager: Alexey Shabalin <shaba@altlinux.ru>
-
 BuildArch: noarch
-Requires: iptables iproute2 iptables-ipv6 
-Requires: shorewall >= 4.4
+Requires: shorewall-core iptables-ipv6
+Requires: shorewall >= 5.2.0
+
+BuildRequires: perl-Digest-SHA
 
 %description
 The Shoreline Firewall 6, more commonly known as "Shorewall6", is a Netfilter
 (ip6tables) based IPv6 firewall that can be used on a dedicated firewall system,
 a multi-function gateway/ router/server or on a standalone GNU/Linux system.
 
-%prep
-%setup -q
 
+%prep
+%setup -n %name-%version-Beta2
+
+%build
 %install
-PREFIX=%buildroot DEST=%_initdir SYSTEMD=Yes %_buildshell install.sh
-install -m 0755 -p %SOURCE1 %buildroot%_initdir/%name
+./configure.pl --host=%_vendor \
+               --prefix=%prefix \
+               --perllibdir=%perl_vendorlib \
+               --libexecdir=%_libexecdir \
+               --sbindir=%_sbindir
+
+DESTDIR=%buildroot ./install.sh
+
 install -D -m 0755 %SOURCE3 %buildroot%_controldir/%name
 install -m 0644 %SOURCE4 README.ALT.RU.UTF8
+touch %buildroot%_sysconfdir/%name/isusable
+touch %buildroot%_sysconfdir/%name/notrack
 
 %post
 %post_service %name
@@ -37,24 +49,27 @@ install -m 0644 %SOURCE4 README.ALT.RU.UTF8
 %preun_service %name
 
 %files
-%doc COPYING INSTALL changelog.txt releasenotes.txt Samples6
+%doc COPYING INSTALL changelog.txt releasenotes.txt tunnel ipsecvpn ipv6 Samples6
 %doc README.ALT.RU.UTF8
-/sbin/%name
-%config %_initdir/%name
-%systemd_unitdir/*.service
+%_sbindir/%name
+%_initdir/%name
+%_unitdir/%name.service
 %dir %_sysconfdir/%name
-%attr(0600,root,root) %config(noreplace) %_sysconfdir/%name/[a-z]*
-%attr(0600,root,root) %_sysconfdir/%name/Makefile
-%config(noreplace) %_sysconfdir/logrotate.d/%name
+%attr(0600,root,root) %config(noreplace) %_sysconfdir/%name/*
+%config(noreplace) %_logrotatedir/%name
+%config(noreplace) %_sysconfdir/sysconfig/%name
+%ghost %_sysconfdir/%name/isusable
 %_controldir/%name
 %dir %_datadir/%name
-%dir %_datadir/%name/configfiles
 %_datadir/%name/*
 %dir %_localstatedir/%name
 %_man5dir/*
 %_man8dir/*
 
 %changelog
+* Sat Jul 14 2018 Alexey Shabalin <shaba@altlinux.ru> 5.2.1-alt0.Beta2
+- 5.2.1-Beta2
+
 * Fri Apr 27 2018 Grigory Ustinov <grenka@altlinux.org> 4.4.23.3-alt3.1
 - Rebuilt for e2k.
 

@@ -1,26 +1,27 @@
+%define _libexecdir /usr/libexec
+
 Name: shorewall
-Version: 4.4.23.3
-Release: alt3.1
+Version: 5.2.1
+Release: alt0.Beta2
 Summary: Shoreline Firewall is an iptables-based firewall for Linux systems.
 License: GPLv2
 Group: Security/Networking
 Url: http://www.shorewall.net/
-Source0: %name-%version.tar.bz2
-Source1: shorewall.init
+Source: %name-%version-Beta2.tar.bz2
 Source3: shorewall-control
 Source4: shorewall-README.ALT.RU.UTF8
 
-Packager: Alexey Shabalin <shaba@altlinux.ru>
-
 BuildArch: noarch
-Requires: iptables iproute2
+Requires: shorewall-core
 Provides: shorewall-common = %version-%release
 Obsoletes: shorewall-common < %version-%release
 Provides: shorewall-compiler = %version-%release
 Obsoletes: shorewall-compiler < %version-%release
 Obsoletes: shorewall-compiler-perl < %version-%release
 Obsoletes: shorewall-compiler-shell < %version-%release
+Provides: shoreline_firewall = %version-%release
 
+BuildRequires: perl-Digest-SHA
 
 %description
 The Shoreline Firewall, more commonly known as "Shorewall", is a Netfilter
@@ -28,16 +29,21 @@ The Shoreline Firewall, more commonly known as "Shorewall", is a Netfilter
 a multi-function gateway/ router/server or on a standalone GNU/Linux system.
 
 %prep
-%setup -q
+%setup -n %name-%version-Beta2
 
+%build
 %install
-PREFIX=%buildroot DEST=%_initdir SYSTEMD=Yes %_buildshell install.sh
-install -m 0755 -p %SOURCE1 %buildroot%_initdir/%name
+./configure.pl --host=%_vendor \
+               --prefix=%prefix \
+               --perllibdir=%perl_vendorlib \
+               --libexecdir=%_libexecdir \
+               --sbindir=%_sbindir
+
+DESTDIR=%buildroot ./install.sh
+
 install -D -m 0755 %SOURCE3 %buildroot%_controldir/%name
 install -m 0644 %SOURCE4 README.ALT.RU.UTF8
-
-mkdir -p %buildroot%perl_vendor_privlib
-mv -f %buildroot%_datadir/%name/Shorewall %buildroot%perl_vendor_privlib/
+touch %buildroot%_sysconfdir/%name/isusable
 
 %post
 %post_service %name
@@ -48,25 +54,25 @@ mv -f %buildroot%_datadir/%name/Shorewall %buildroot%perl_vendor_privlib/
 %files
 %doc COPYING INSTALL changelog.txt releasenotes.txt Samples Contrib
 %doc README.ALT.RU.UTF8
-/sbin/%name
-%config %_initdir/%name
-%systemd_unitdir/*.service
+%_initdir/%name
+%_unitdir/%name.service
 %dir %_sysconfdir/%name
-%attr(0600,root,root) %config(noreplace) %_sysconfdir/%name/[a-z]*
-%attr(0600,root,root) %_sysconfdir/%name/Makefile
-%config(noreplace) %_sysconfdir/logrotate.d/%name
+%attr(0600,root,root) %config(noreplace) %_sysconfdir/%name/*
+%config(noreplace) %_logrotatedir/%name
+%config(noreplace) %_sysconfdir/sysconfig/%name
+%ghost %_sysconfdir/%name/isusable
 %_controldir/%name
-%dir %_datadir/%name
-%dir %_datadir/%name/configfiles
 %_datadir/%name/*
 %dir %_localstatedir/%name
 %perl_vendor_privlib/Shorewall
-%_datadir/%name/compiler.pl
-
+%_libexecdir/%name/*
 %_man5dir/*
 %_man8dir/*
 
 %changelog
+* Sat Jul 14 2018 Alexey Shabalin <shaba@altlinux.ru> 5.2.1-alt0.Beta2
+- 5.2.1-Beta2
+
 * Fri Apr 27 2018 Grigory Ustinov <grenka@altlinux.org> 4.4.23.3-alt3.1
 - Rebuilt for e2k.
 
