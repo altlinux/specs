@@ -7,11 +7,11 @@ BuildRequires: perl(Data/Dumper.pm) perl(Module/Build.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-MooseX-AttributeHelpers
 Version:        0.25
-Release:        alt1_6
+Release:        alt1_8
 Summary:        Extended Moose attribute interfaces
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/MooseX-AttributeHelpers/
-Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/MooseX-AttributeHelpers-%{version}.tar.gz
+URL:            https://metacpan.org/release/MooseX-AttributeHelpers
+Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETHER/MooseX-AttributeHelpers-%{version}.tar.gz
 
 BuildArch:      noarch
 Requires:       sed
@@ -38,7 +38,7 @@ used attribute helper methods for more specific types of data.
 %setup -q -n MooseX-AttributeHelpers-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
+/usr/bin/perl Build.PL --installdirs=vendor
 ./Build
 sed -i '1s,#!perl,#!%{__perl},' t/*.t
 
@@ -51,10 +51,13 @@ sed -i '1s,#!perl,#!%{__perl},' t/*.t
 
 %files
 %doc Changes README t/
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/MooseX*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_8
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_6
 - update to new release by fcimport
 
