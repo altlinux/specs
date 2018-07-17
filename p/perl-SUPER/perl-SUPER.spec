@@ -7,11 +7,11 @@ BuildRequires: perl(Module/Build.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-SUPER
 Version:	1.20141117
-Release:	alt2_9
+Release:	alt2_11
 Summary:	Sane superclass method dispatcher
 License:	GPL+ or Artistic
-URL:		http://search.cpan.org/dist/SUPER/
-Source0:	http://search.cpan.org/CPAN/authors/id/C/CH/CHROMATIC/SUPER-%{version}.tar.gz
+URL:		https://metacpan.org/release/SUPER
+Source0:	https://cpan.metacpan.org/authors/id/C/CH/CHROMATIC/SUPER-%{version}.tar.gz
 BuildArch:	noarch
 # =============== Module Build =================
 BuildRequires:	coreutils
@@ -44,7 +44,7 @@ implementation.
 %setup -q -n SUPER-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -57,7 +57,7 @@ make test
 
 %files
 %if 0%{?_licensedir:1}
-%doc LICENSE
+%doc --no-dereference LICENSE
 %else
 %doc LICENSE
 %endif
@@ -65,6 +65,9 @@ make test
 %{perl_vendor_privlib}/SUPER.pm
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.20141117-alt2_11
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.20141117-alt2_9
 - update to new release by fcimport
 
