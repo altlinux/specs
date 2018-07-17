@@ -6,12 +6,12 @@ BuildRequires: perl(Test/Pod.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Module-Manifest-Skip
 Version:        0.23
-Release:        alt1_9
+Release:        alt1_11
 Summary:        MANIFEST.SKIP Manangement for Modules
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Module-Manifest-Skip/
-Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Module-Manifest-Skip-%{version}.tar.gz
+URL:            https://metacpan.org/release/Module-Manifest-Skip
+Source0:        https://cpan.metacpan.org/authors/id/I/IN/INGY/Module-Manifest-Skip-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -37,7 +37,7 @@ Requires:       perl(warnings.pm)
 # Remove under-speficied dependencies
 
 Source44: import.info
-%filter_from_requires /^perl\\(Moo.pm\\)$/d
+%filter_from_requires /^perl(Moo\\)$/d
 
 %description
 CPAN module authors use a MANIFEST.SKIP file to exclude certain well known
@@ -54,7 +54,7 @@ possible.
 %setup -q -n Module-Manifest-Skip-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -70,6 +70,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_11
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_9
 - update to new release by fcimport
 
