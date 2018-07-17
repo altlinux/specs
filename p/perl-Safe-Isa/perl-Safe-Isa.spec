@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Safe-Isa
 Version:        1.000010
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Call isa, can, does and DOES safely on things that may not be objects
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Safe-Isa/
-Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Safe-Isa-%{version}.tar.gz
+URL:            https://metacpan.org/release/Safe-Isa
+Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETHER/Safe-Isa-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  coreutils
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/Safe/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.000010-alt1_2
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.000010-alt1_1
 - update to new release by fcimport
 
