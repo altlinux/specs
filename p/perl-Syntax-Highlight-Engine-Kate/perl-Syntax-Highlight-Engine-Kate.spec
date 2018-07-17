@@ -6,12 +6,12 @@ BuildRequires: gcc-c++ perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Modu
 %define _localstatedir %{_var}
 Name:           perl-Syntax-Highlight-Engine-Kate
 Version:        0.14
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Port to Perl of the syntax highlight engine of the Kate text editor
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Syntax-Highlight-Engine-Kate/
-Source0:        http://www.cpan.org/authors/id/M/MA/MANWAR/Syntax-Highlight-Engine-Kate-%{version}.tar.gz
+URL:            https://metacpan.org/release/Syntax-Highlight-Engine-Kate
+Source0:        https://cpan.metacpan.org/authors/id/M/MA/MANWAR/Syntax-Highlight-Engine-Kate-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -77,6 +77,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_3
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_2
 - update to new release by fcimport
 
