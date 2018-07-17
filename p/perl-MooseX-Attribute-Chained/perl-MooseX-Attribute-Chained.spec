@@ -6,12 +6,12 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Te
 %define _localstatedir %{_var}
 Name:           perl-MooseX-Attribute-Chained
 Version:        1.0.3
-Release:        alt1_4
+Release:        alt1_6
 Summary:        Attribute that returns the instance to allow for chaining
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/MooseX-Attribute-Chained/
-Source0:        http://www.cpan.org/authors/id/T/TO/TOMHUKINS/MooseX-Attribute-Chained-%{version}.tar.gz
+URL:            https://metacpan.org/release/MooseX-Attribute-Chained
+Source0:        https://cpan.metacpan.org/authors/id/T/TO/TOMHUKINS/MooseX-Attribute-Chained-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(File/Find.pm)
@@ -46,7 +46,7 @@ chaining on accessors by returning $self on write/set operations.
 %setup -q -n MooseX-Attribute-Chained-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+/usr/bin/perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -63,6 +63,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_6
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_4
 - update to new release by fcimport
 
