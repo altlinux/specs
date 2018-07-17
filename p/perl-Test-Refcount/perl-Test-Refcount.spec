@@ -6,13 +6,13 @@ BuildRequires: perl(B.pm) perl(Module/Build.pm) perl(Scalar/Util.pm) perl(Symbol
 %define _localstatedir %{_var}
 Name:           perl-Test-Refcount
 Version:        0.08
-Release:        alt1_10
+Release:        alt1_12
 Summary:        Assert reference counts on objects
 
 Group:          Development/Other
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Test-Refcount/
-Source0:        http://search.cpan.org/CPAN/authors/id/P/PE/PEVANS/Test-Refcount-%{version}.tar.gz
+URL:            https://metacpan.org/release/Test-Refcount
+Source0:        https://cpan.metacpan.org/authors/id/P/PE/PEVANS/Test-Refcount-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
@@ -40,7 +40,7 @@ properly DESTROYed when it drops all of its references to it.
 
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 
@@ -60,6 +60,9 @@ make test
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_12
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_10
 - update to new release by fcimport
 
