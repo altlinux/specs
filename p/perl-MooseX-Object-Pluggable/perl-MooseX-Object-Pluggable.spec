@@ -7,12 +7,12 @@ BuildRequires: perl(Module/Build.pm) perl(Module/Runtime.pm) perl(Scalar/Util.pm
 %define _localstatedir %{_var}
 Name:           perl-MooseX-Object-Pluggable
 Version:        0.0014
-Release:        alt2_8
+Release:        alt2_10
 Summary:        Make your Moose classes pluggable
 License:        GPL+ or Artistic
 
-URL:            http://search.cpan.org/dist/MooseX-Object-Pluggable/
-Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/MooseX-Object-Pluggable-%{version}.tar.gz
+URL:            https://metacpan.org/release/MooseX-Object-Pluggable
+Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETHER/MooseX-Object-Pluggable-%{version}.tar.gz
 
 BuildArch:      noarch
 
@@ -48,7 +48,7 @@ this behavior.
 perl -pi -e 's|^#!perl|#!/usr/bin/perl|; s|^#!/usr/local|#!/usr|' t/*.t
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -64,10 +64,13 @@ AUTHOR_TESTING=1 make test
 
 %files
 %doc Changes README
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.0014-alt2_10
+- update to new release by fcimport
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0.0014-alt2_8
 - to Sisyphus as perl-PDL dep
 
