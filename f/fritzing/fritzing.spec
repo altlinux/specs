@@ -1,6 +1,6 @@
 Name: fritzing
 Version: 0.9.3b.0.31.git701e3a3
-Release: alt2
+Release: alt3
 
 Summary: Intuitive EDA platform featuring from prototype to product
 License: GPLv3, CC-BY-SA-3.0
@@ -59,12 +59,15 @@ cp -r %name-parts %buildroot/%_datadir/%name
 %_iconsdir/%name.png
 %_desktopdir/fritzing.desktop
 %_man1dir/Fritzing.*
-%_xdgmimedir/packages/%name.xml
+%_datadir/mime/packages/%name.xml
 
 %files data
 %_datadir/%name
 
 %changelog
+* Tue Jul 17 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.3b.0.31.git701e3a3-alt3
+- Fixed FTBFS (removed xdg macro).
+
 * Thu Feb 01 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.3b.0.31.git701e3a3-alt2
 - Add missing part definitions.
 
