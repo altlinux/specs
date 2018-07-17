@@ -6,12 +6,13 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Math-Factor-XS
 Version:        0.40
-Release:        alt3_19.1
+Release:        alt3_21
 Summary:        Factorize numbers and calculate matching multiplications
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Math-Factor-XS/
-Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-Factor-XS-%{version}.tar.gz
+URL:            https://metacpan.org/release/Math-Factor-XS
+Source0:        https://cpan.metacpan.org/authors/id/K/KR/KRYDE/Math-Factor-XS-%{version}.tar.gz
+BuildRequires:  gcc-c++
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(boolean.pm)
@@ -39,7 +40,7 @@ Math::Factor::XS factorizes numbers by applying trial divisions.
 %setup -q -n Math-Factor-XS-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor optimize="$RPM_OPT_FLAGS"
+/usr/bin/perl Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
 
 ./Build
 
@@ -58,6 +59,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.40-alt3_21
+- update to new release by fcimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.40-alt3_19.1
 - rebuild with new perl 5.26.1
 
