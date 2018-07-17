@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-EOL
 Version:	2.00
-Release:	alt1_3
+Release:	alt1_5
 Summary:	Check the correct line endings in your project
 License:	GPL+ or Artistic
-URL:		http://search.cpan.org/dist/Test-EOL/
-Source0:	http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Test-EOL-%{version}.tar.gz
+URL:		https://metacpan.org/release/Test-EOL
+Source0:	https://cpan.metacpan.org/authors/id/E/ET/ETHER/Test-EOL-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	coreutils
@@ -46,7 +46,7 @@ whitespace.
 %setup -q -n Test-EOL-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -59,7 +59,7 @@ make test
 
 %files
 %if 0%{?_licensedir:1}
-%doc LICENCE
+%doc --no-dereference LICENCE
 %else
 %doc LICENCE
 %endif
@@ -67,6 +67,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1_5
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1_3
 - update to new release by fcimport
 
