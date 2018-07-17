@@ -2,17 +2,30 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
-%define fedora 25
+%define fedora 28
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Run optional test
+%if ! (0%{?rhel})
+%bcond_without perl_Test_Warnings_enables_optional_test
+%else
+%bcond_with perl_Test_Warnings_enables_optional_test
+%endif
+
 Name:		perl-Test-Warnings
 Version:	0.026
-Release:	alt1_6
+Release:	alt1_8
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
 Group:		Development/Other
-URL:		http://search.cpan.org/dist/Test-Warnings
-Source0:	http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
+URL:		https://metacpan.org/release/Test-Warnings
+Source0:	https://cpan.metacpan.org/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	coreutils
@@ -34,6 +47,7 @@ BuildRequires:	perl(if.pm)
 BuildRequires:	perl(lib.pm)
 BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/Tester.pm)
+%if %{with perl_Test_Warnings_enables_optional_test}
 # Optional Tests
 BuildRequires:	perl(CPAN/Meta.pm)
 %if 0%{?fedora} || 0%{?rhel} > 7
@@ -42,6 +56,7 @@ BuildRequires:	perl(CPAN/Meta/Check.pm)
 BuildRequires:	perl(CPAN/Meta/Prereqs.pm)
 BuildRequires:	perl(CPAN/Meta/Requirements.pm)
 BuildRequires:	perl(PadWalker.pm)
+%endif
 # Runtime
 Requires:	perl(Carp.pm)
 Source44: import.info
@@ -72,7 +87,7 @@ with use Test::Warnings; whether or not your tests have a plan.
 %setup -q -n Test-Warnings-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -84,11 +99,14 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 make test
 
 %files
-%doc LICENCE
+%doc --no-dereference LICENCE
 %doc Changes CONTRIBUTING README examples/
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1_8
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1_6
 - update to new release by fcimport
 
