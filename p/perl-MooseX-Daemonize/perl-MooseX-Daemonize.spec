@@ -7,12 +7,12 @@ BuildRequires: perl(Cwd.pm) perl(Data/Dumper.pm) perl(File/Spec/Functions.pm) pe
 %define _localstatedir %{_var}
 Name:           perl-MooseX-Daemonize
 Version:        0.21
-Release:        alt1_5
+Release:        alt1_7
 Summary:        Role for daemonizing your Moose based application
 License:        GPL+ or Artistic
 
-URL:            http://search.cpan.org/dist/MooseX-Daemonize/
-Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/MooseX-Daemonize-%{version}.tar.gz
+URL:            https://metacpan.org/release/MooseX-Daemonize
+Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETHER/MooseX-Daemonize-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Devel/AssertOS.pm)
@@ -39,7 +39,7 @@ roles as an infrastructure to do that.
 %setup -q -n MooseX-Daemonize-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
+/usr/bin/perl Build.PL --installdirs=vendor
 ./Build
 
 %install
@@ -51,11 +51,14 @@ roles as an infrastructure to do that.
 
 %files
 %doc Changes README
-%doc LICENCE
+%doc --no-dereference LICENCE
 %{perl_vendor_privlib}/MooseX*
 %{perl_vendor_privlib}/Test*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_7
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_5
 - update to new release by fcimport
 
