@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Sub-Info
 Version:        0.002
-Release:        alt1_4
+Release:        alt1_6
 Summary:        Tool for inspecting Perl subroutines
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Sub-Info/
-Source0:        http://www.cpan.org/authors/id/E/EX/EXODIST/Sub-Info-%{version}.tar.gz
+URL:            https://metacpan.org/release/Sub-Info
+Source0:        https://cpan.metacpan.org/authors/id/E/EX/EXODIST/Sub-Info-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  findutils
 BuildRequires:  perl-devel
@@ -30,7 +30,7 @@ Requires:       perl(Importer.pm) >= 0.024
 
 
 Source44: import.info
-%filter_from_requires /^perl\\(Importer.pm\\)$/d
+%filter_from_requires /^perl(Importer\\)$/d
 
 %description
 This allows to inspect Perl subroutines.
@@ -51,11 +51,14 @@ find $RPM_BUILD_ROOT -type f -name .packlist -delete
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.002-alt1_6
+- update to new release by fcimport
+
 * Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.002-alt1_4
 - new version
 
