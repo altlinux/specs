@@ -1,5 +1,5 @@
 Name: repocop-unittest-systemd
-Version: 0.06
+Version: 0.07
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -43,6 +43,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Tue Jul 17 2018 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- added exception for pve-qemu
+
 * Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - fixed build with new perl 5.26
 
