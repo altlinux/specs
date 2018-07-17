@@ -7,13 +7,13 @@ BuildRequires: perl-podlators
 Summary:	Parser that builds a tree of XML::Element objects
 Name:		perl-XML-TreeBuilder
 Version:	5.4
-Release:	alt1_9
+Release:	alt1_11
 License:	GPL+ or Artistic
 Group:		Development/Other
-URL:		http://search.cpan.org/dist/XML-TreeBuilder/
+URL:		https://metacpan.org/release/XML-TreeBuilder
 # have to:
 #  push the patch upstream
-Source:		http://www.cpan.org/modules/by-module/XML/XML-TreeBuilder-%{version}.tar.gz
+Source:		https://cpan.metacpan.org/modules/by-module/XML/XML-TreeBuilder-%{version}.tar.gz
 BuildArch:	noarch
 BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
@@ -43,7 +43,7 @@ that builds a tree of XML::Element objects.
 %setup -q -n XML-TreeBuilder-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+/usr/bin/perl Build.PL installdirs=vendor
 ./Build
 
 %check
@@ -58,6 +58,9 @@ find $RPM_BUILD_ROOT -type d -depth -exec rmdir {} 2>/dev/null ';'
 %{perl_vendor_privlib}/XML/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.4-alt1_11
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 5.4-alt1_9
 - update to new release by fcimport
 
