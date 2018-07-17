@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-MinimumVersion
 Version:	0.101082
-Release:	alt1_7
+Release:	alt1_9
 Summary:	Check whether your code requires a newer perl
 License:	GPL+ or Artistic
 Group:		Development/Other
-URL:		http://search.cpan.org/dist/Test-MinimumVersion/
-Source0:	http://search.cpan.org/CPAN/authors/id/R/RJ/RJBS/Test-MinimumVersion-%{version}.tar.gz
+URL:		https://metacpan.org/release/Test-MinimumVersion
+Source0:	https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Test-MinimumVersion-%{version}.tar.gz
 
 BuildArch:	noarch
 
@@ -40,7 +40,7 @@ Check whether your code requires a newer perl than you think.
 find -type f -exec chmod -x {} \;
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
@@ -52,10 +52,13 @@ make test
 
 %files
 %doc Changes
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.101082-alt1_9
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.101082-alt1_7
 - update to new release by fcimport
 
