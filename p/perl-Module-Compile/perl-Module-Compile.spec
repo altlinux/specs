@@ -7,12 +7,12 @@ BuildRequires: perl-Filter
 %define _localstatedir %{_var}
 Name:           perl-Module-Compile
 Version:        0.37
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Perl Module Compilation
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Module-Compile/
-Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Module-Compile-%{version}.tar.gz
+URL:            https://metacpan.org/release/Module-Compile
+Source0:        https://cpan.metacpan.org/authors/id/I/IN/INGY/Module-Compile-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  coreutils
@@ -67,6 +67,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1_2
+- update to new release by fcimport
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1_1
 - update to new release by fcimport
 
