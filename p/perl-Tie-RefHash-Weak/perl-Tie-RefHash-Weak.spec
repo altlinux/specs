@@ -6,12 +6,12 @@ BuildRequires: perl(threads.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Tie-RefHash-Weak
 Version:	0.09
-Release:	alt3_24
+Release:	alt3_26
 Summary:	Tie::RefHash subclass with weakened references in the keys
 License:	GPL+ or Artistic
 Group:		Development/Other
-URL:		http://search.cpan.org/dist/Tie-RefHash-Weak/
-Source0:	http://search.cpan.org/CPAN/authors/id/N/NU/NUFFIN/Tie-RefHash-Weak-%{version}.tar.gz
+URL:		https://metacpan.org/release/Tie-RefHash-Weak
+Source0:	https://cpan.metacpan.org/authors/id/N/NU/NUFFIN/Tie-RefHash-Weak-%{version}.tar.gz
 BuildArch:	noarch
 BuildRequires:	rpm-build-perl
 BuildRequires:	perl(base.pm)
@@ -32,7 +32,7 @@ useful when you index by object, for example.
 %setup -q -n Tie-RefHash-Weak-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_privlib}/Tie/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt3_26
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt3_24
 - update to new release by fcimport
 
