@@ -3,12 +3,12 @@
 
 Name: purple-plugin-vk
 Version: 0.9
-Release: alt1.hg.r402
+Release: alt2.git20180608
 Summary: vk.com plugin for pidgin
 
 Group: Networking/Instant messaging
 License: %gpl3only
-Url: https://bitbucket.org/olegoandreev/purple-vk-plugin
+Url: https://github.com/SergeyDjam/purple-vk-plugin
 Packager: Vladimir Didenko <cow@altlinux.org>
 
 Source0: %name-%version.tar
@@ -42,6 +42,9 @@ and send personal messages from web site Vk.com(VKontakte)
 %_datadir/pixmaps/pidgin/protocols/*/vkontakte.png
 
 %changelog
+* Tue Jul 17 2018 Vladimir Didenko <cow@altlinux.org> 0.9-alt2.git20180608
+- switch to fork
+
 * Tue Nov 25 2014 Vladimir Didenko <cow@altlinux.org> 0.9-alt1.hg.r402
 - r402
 
