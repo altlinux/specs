@@ -7,11 +7,11 @@ BuildRequires: perl(MooseX/AttributeHelpers.pm) perl(MooseX/Role/Strict.pm) perl
 Name:           perl-MooseX-ClassAttribute
 Summary:        Declare class attributes Moose-style
 Version:        0.29
-Release:        alt1_4
+Release:        alt1_6
 License:        Artistic 2.0
 Group:          Development/Other
-Source0:        http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/MooseX-ClassAttribute-%{version}.tar.gz
-URL:            http://search.cpan.org/dist/MooseX-ClassAttribute/
+Source0:        https://cpan.metacpan.org/authors/id/D/DR/DROLSKY/MooseX-ClassAttribute-%{version}.tar.gz
+URL:            https://metacpan.org/release/MooseX-ClassAttribute
 BuildArch:      noarch
 
 BuildRequires:  rpm-build-perl
@@ -55,7 +55,7 @@ not set it.
 sed -i '1s,#!.*perl,#!%{__perl},' t/*.t
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 
@@ -70,11 +70,14 @@ make test
 
 %files
 %doc Changes t/
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/*
 
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1_6
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1_4
 - update to new release by fcimport
 
