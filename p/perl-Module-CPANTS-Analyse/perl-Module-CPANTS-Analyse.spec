@@ -9,11 +9,11 @@ BuildRequires: perl-podlators
 
 Name:           perl-Module-CPANTS-Analyse
 Version:        0.96
-Release:        alt1_8
+Release:        alt1_10
 Summary:        Generate Kwalitee ratings for a distribution
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Module-CPANTS-Analyse/
-Source0:        http://search.cpan.org/CPAN/authors/id/I/IS/ISHIGAKI/Module-CPANTS-Analyse-%{version}.tar.gz
+URL:            https://metacpan.org/release/Module-CPANTS-Analyse
+Source0:        https://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/Module-CPANTS-Analyse-%{version}.tar.gz
 BuildArch:      noarch
 # Module Build
 BuildRequires:  perl-devel
@@ -94,15 +94,15 @@ Requires:       perl(version.pm) >= 0.730
 
 
 Source44: import.info
-%filter_from_requires /:__requires_exclude|}^perl\\(Archive.Any.Lite.pm\\)$/d
-%filter_from_requires /^perl\\(Array.Diff.pm\\)$/d
-%filter_from_requires /^perl\\(Class.Accessor.pm\\)$/d
-%filter_from_requires /^perl\\(CPAN.DistnameInfo.pm\\)$/d
-%filter_from_requires /^perl\\(CPAN.Meta.Validator.pm\\)$/d
-%filter_from_requires /^perl\\(CPAN.Meta.YAML.pm\\)$/d
-%filter_from_requires /^perl\\(File.Find.Object.pm\\)$/d
-%filter_from_requires /^perl\\(Module.Pluggable.pm\\)$/d
-%filter_from_requires /^perl\\(version.pm\\)$/d
+%filter_from_requires /:__requires_exclude\|}^perl(Archive.Any.Lite\\)$/d
+%filter_from_requires /^perl(Array.Diff\\)$/d
+%filter_from_requires /^perl(Class.Accessor\\)$/d
+%filter_from_requires /^perl(CPAN.DistnameInfo\\)$/d
+%filter_from_requires /^perl(CPAN.Meta.Validator\\)$/d
+%filter_from_requires /^perl(CPAN.Meta.YAML\\)$/d
+%filter_from_requires /^perl(File.Find.Object\\)$/d
+%filter_from_requires /^perl(Module.Pluggable\\)$/d
+%filter_from_requires /^perl(version\\)$/d
 
 %description
 CPANTS is an acronym for CPAN Testing Service. The goals of the CPANTS project
@@ -113,7 +113,7 @@ metadata for all distributions on CPAN.
 %setup -q -n Module-CPANTS-Analyse-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -131,6 +131,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 %{perl_vendor_privlib}/Module/CPANTS/Kwalitee/*.pm
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1_10
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1_8
 - update to new release by fcimport
 
