@@ -1,5 +1,5 @@
 %def_without	milter
-%def_without	systemllvm
+%def_without	llvm
 
 %def_with ownconfdir
 
@@ -12,7 +12,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.99.4
+Version: 0.100.1
 Release: alt1
 %define abiversion 7
 
@@ -51,7 +51,7 @@ Patch2: freshclam-config.patch
 Patch20: clamav-0.99-pkgconfig.patch
 Patch21: clamav-AC_SYS_LARGEFILE.patch
 
-BuildRequires: rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses
 
 # Package with clamd should require libclamav, not vice versa.
 # Corresponding libclamav version need to be updated before, or clamd restart may fail!
@@ -66,12 +66,14 @@ Requires(post): sed >= 1:3.02-alt1
 # sed used by configure script
 BuildRequires: sed
 
-BuildRequires: gcc-c++ bzlib-devel libcheck-devel libncurses-devel zlib-devel libcurl-devel libssl-devel libxml2-devel libpcre-devel
+BuildRequires: bzlib-devel libcheck-devel libncurses-devel zlib-devel libssl-devel libxml2-devel libpcre-devel
 BuildRequires: git-core graphviz groff-extra gv zip doxygen flex
 
-%{?_with_systemllvm:BuildRequires: llvm-devel}
+# for clamsubmit
+BuildRequires: libcurl-devel libjson-c-devel
 
-# ...and edited manually to separate conditional buildreqs
+%{?_with_llvm:BuildRequires: gcc-c++ llvm-devel }
+
 %{?_with_milter:BuildRequires: sendmail-devel}
 
 # for snapshots
@@ -144,7 +146,7 @@ database automatically. It uses the freshclam(1) utility for this task.
 %{!?snap: aclocal --force -I m4}
 %{!?snap: %autoreconf}
 
-%add_optflags -std=gnu++98
+#add_optflags -std=gnu++98
 
 # --disable-clamav: Disable test for clamav user/group
 %configure \
@@ -155,7 +157,7 @@ database automatically. It uses the freshclam(1) utility for this task.
 	--with-user=mail \
 	--with-group=mail \
 	--with-dbdir=/var/lib/%name \
-	%{?_with_systemllvm: --with-system-llvm} \
+	%{?_without_llvm: --disable-llvm} \
 	%{?_with_milter: --enable-milter} \
 #
 
@@ -173,6 +175,10 @@ sed "s|pcre\.h|pcre/pcre.h|" -i libclamav/regex_pcre.h  # include <pcre.h>
 %make_build
 
 install -m644 %_sourcedir/virusstat* .
+
+%check
+
+%make check
 
 %install
 %makeinstall_std
@@ -230,6 +236,10 @@ EOF
 rm -f %buildroot/%_man8dir/clamav-milter.*
 %endif
 
+%pre
+# SubmitDetectionStats removed in 0.100
+subst "s/^SubmitDetectionStats/# SubmitDetectionStats/" %_sysconfdir/clamav/freshclam.conf
+
 %post
 ## Format of database changing occasionally. So removing database.
 #for FNAME in `ls --ignore=*.socket /var/lib/clamav`; do
@@ -238,11 +248,12 @@ rm -f %buildroot/%_man8dir/clamav-milter.*
 #    [ -f /var/lib/clamav/$FNAME ] && rm -f /var/lib/clamav/$FNAME
 #done
 
+%post_service clamd
+
+%post freshclam
 # randomize time of database updating (in order to distribute load on servers evenly)
 RNDM=$[$RANDOM/555]
-subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
-
-%post_service clamd
+subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/freshclam
 
 %preun
 %preun_service clamd
@@ -258,7 +269,7 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %files
 %doc docs/signatures.*
 %doc virusstat*
-%doc COPYING COPYING.* README
+%doc COPYING COPYING.* README.md
 
 %_bindir/clamdscan
 %_bindir/clamscan
@@ -323,6 +334,13 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Tue Jul 17 2018 Sergey Y. Afonin <asy@altlinux.ru> 0.100.1-alt1
+- 0.100.1 (ALT #35096)
+- built without LLVM (look to ALT #35096)
+- removed -std=gnu++98 flag
+- moved post script for freshclam to clamav-freshclam subpackage
+- added %%check section
+
 * Sun Mar 04 2018 Sergey Y. Afonin <asy@altlinux.ru> 0.99.4-alt1
 - 0.99.4 (CVE-2012-6706, CVE-2017-6419, CVE-2017-11423,
   CVE-2018-0202, and CVE-2018-1000085)
