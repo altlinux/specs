@@ -7,12 +7,12 @@ BuildRequires: perl(Pod/Markdown.pm) perl(Pod/Readme.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-Without-Module
 Version:        0.20
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Test fallback behavior in absence of modules
 License:        GPL+ or Artistic
 
-URL:            http://search.cpan.org/dist/Test-Without-Module/
-Source0:        http://www.cpan.org/modules/by-module/Test/Test-Without-Module-%{version}.tar.gz
+URL:            https://metacpan.org/release/Test-Without-Module
+Source0:        https://cpan.metacpan.org/modules/by-module/Test/Test-Without-Module-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  findutils
 BuildRequires:  rpm-build-perl
@@ -58,6 +58,9 @@ make test
 %{perl_vendor_privlib}/Test*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_6
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_5
 - update to new release by fcimport
 
