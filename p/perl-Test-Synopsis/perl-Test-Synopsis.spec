@@ -9,12 +9,12 @@ BuildRequires: perl-podlators
 
 Name:		perl-Test-Synopsis
 Version:	0.15
-Release:	alt1_7
+Release:	alt1_10
 Summary:	Test your SYNOPSIS code
 Group:		Development/Other
 License:	GPL+ or Artistic
-URL:		http://search.cpan.org/dist/Test-Synopsis/
-Source0:	http://search.cpan.org/CPAN/authors/id/Z/ZO/ZOFFIX/Test-Synopsis-%{version}.tar.gz
+URL:		https://metacpan.org/release/Test-Synopsis
+Source0:	https://cpan.metacpan.org/authors/id/Z/ZO/ZOFFIX/Test-Synopsis-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	coreutils
@@ -73,7 +73,7 @@ sub) and doesn't actually run the code.
 %setup -q -n Test-Synopsis-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -89,7 +89,7 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 
 %files
 %if 0%{?_licensedir:1}
-%doc LICENSE
+%doc --no-dereference LICENSE
 %else
 %doc LICENSE
 %endif
@@ -97,6 +97,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_10
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_7
 - update to new release by fcimport
 
