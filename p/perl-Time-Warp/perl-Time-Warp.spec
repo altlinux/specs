@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:       perl-Time-Warp 
 Version:    0.52
-Release:    alt1_10
+Release:    alt1_11
 License:    GPL+ or Artistic 
 Summary:    Control over the flow of time
-Source:     http://search.cpan.org/CPAN/authors/id/S/SZ/SZABGAB/Time-Warp-%{version}.tar.gz
-Url:        http://search.cpan.org/dist/Time-Warp
+Source:     https://cpan.metacpan.org/authors/id/S/SZ/SZABGAB/Time-Warp-%{version}.tar.gz
+Url:        https://metacpan.org/release/Time-Warp
 BuildRequires:  findutils
 BuildRequires:  gcc
 BuildRequires:  perl-devel
@@ -55,6 +55,9 @@ make test
 %{perl_vendor_archlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1_11
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1_10
 - update to new release by fcimport
 
