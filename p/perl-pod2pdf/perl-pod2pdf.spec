@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-pod2pdf
 Version:        0.42
-Release:        alt2_15
+Release:        alt2_17
 Summary:        Converts Pod to PDF format
 License:        Artistic 2.0
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/pod2pdf/
-Source0:        http://www.cpan.org/authors/id/J/JO/JONALLEN/pod2pdf-%{version}.tar.gz
+URL:            https://metacpan.org/release/pod2pdf
+Source0:        https://cpan.metacpan.org/authors/id/J/JO/JONALLEN/pod2pdf-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -43,7 +43,7 @@ format to PDF files.
 %setup -q -n pod2pdf-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -65,6 +65,9 @@ make test
 %{_bindir}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.42-alt2_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.42-alt2_15
 - update to new release by fcimport
 
