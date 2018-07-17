@@ -2,7 +2,7 @@
 
 Name:	 	php5-%php5_extension
 Version:	%php5_version
-Release:	%php5_release
+Release:	%php5_release.1
 
 Summary:	PHP5 module for support XML
 Group:		System/Servers
