@@ -9,11 +9,11 @@ BuildRequires: perl-podlators
 
 Name:           perl-Tie-Function
 Version:        0.02
-Release:        alt1_13
+Release:        alt1_15
 Summary:        Wrap functions in tied hash sugar
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Tie-Function/
-Source0:        http://www.cpan.org/authors/id/D/DA/DAVIDNICO/handy_tied_functions/%{pkgname}-%{version}.tar.gz
+URL:            https://metacpan.org/release/Tie-Function
+Source0:        https://cpan.metacpan.org/authors/id/D/DA/DAVIDNICO/handy_tied_functions/%{pkgname}-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -37,7 +37,7 @@ variables.
 %setup -qn %{pkgname}-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_15
+- update to new release by fcimport
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_13
 - update to new release by fcimport
 
