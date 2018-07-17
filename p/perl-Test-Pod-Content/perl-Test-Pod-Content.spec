@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-Pod-Content
 Version:        0.0.6
-Release:        alt2_16
+Release:        alt2_18
 Summary:        Test a Pod's content
 License:        GPL+ or Artistic
 Group:          Development/Other
-URL:            http://search.cpan.org/dist/Test-Pod-Content/
-Source0:        http://www.cpan.org/authors/id/M/MK/MKUTTER/Test-Pod-Content-v%{version}.tar.gz
+URL:            https://metacpan.org/release/Test-Pod-Content
+Source0:        https://cpan.metacpan.org/authors/id/M/MK/MKUTTER/Test-Pod-Content-v%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
@@ -36,7 +36,7 @@ all files contain the same copyright notice.
 %setup -q -n Test-Pod-Content-v%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+/usr/bin/perl Build.PL installdirs=vendor
 ./Build
 
 %install
@@ -53,6 +53,9 @@ RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt2_18
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt2_16
 - update to new release by fcimport
 
