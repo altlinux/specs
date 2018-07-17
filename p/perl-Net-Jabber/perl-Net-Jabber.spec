@@ -6,12 +6,12 @@ BuildRequires: perl(threads.pm) perl(threads/shared.pm) perl-pod perl-podlators 
 %define _localstatedir %{_var}
 Name:           perl-Net-Jabber
 Version:        2.0
-Release:        alt3_32
+Release:        alt3_34
 Summary:        Net::Jabber - Jabber Perl Library
 Group:          Development/Other
 License:        (GPL+ or Artistic) or LGPLv2+
-URL:            http://search.cpan.org/dist/Net-Jabber/
-Source0: http://search.cpan.org/CPAN/authors/id/R/RE/REATMON/Net-Jabber-%{version}.tar.gz
+URL:            https://metacpan.org/release/Net-Jabber
+Source0: https://cpan.metacpan.org/authors/id/R/RE/REATMON/Net-Jabber-%{version}.tar.gz
 Source1:        LICENSING.correspondance
 Patch0:         Net-Jabber-2.0-timezone.patch
 BuildArch:      noarch
@@ -55,7 +55,7 @@ perldoc perlartistic > LICENSE.Artistic
 chmod -x examples/*
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
 %make_build
 
 %install
@@ -79,6 +79,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_34
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_32
 - update to new release by fcimport
 
