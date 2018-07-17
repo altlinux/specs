@@ -7,11 +7,11 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 Name:           perl-MouseX-Types
 Summary:        Organize your Mouse types in libraries
 Version:        0.06
-Release:        alt2_17
+Release:        alt2_19
 License:        GPL+ or Artistic
 Group:          Development/Other
-Source0:        http://search.cpan.org/CPAN/authors/id/G/GF/GFUJI/MouseX-Types-%{version}.tar.gz
-URL:            http://search.cpan.org/dist/MouseX-Types
+Source0:        https://cpan.metacpan.org/authors/id/G/GF/GFUJI/MouseX-Types-%{version}.tar.gz
+URL:            https://metacpan.org/release/MouseX-Types
 BuildArch:      noarch
 
 BuildRequires:  rpm-build-perl
@@ -63,7 +63,7 @@ find lib -type f -name '*.pm' -print0 | xargs -0 chmod 0644
 chmod 0644 t/*.t
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
@@ -81,6 +81,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_19
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_17
 - update to new release by fcimport
 
