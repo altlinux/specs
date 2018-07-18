@@ -3,8 +3,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 4.0
-Release: alt2
+Version: 4.1
+Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
 
@@ -14,7 +14,7 @@ Source:%name-%version.tar
 Summary: alterator module for date/time setup
 License: GPL
 Group: System/Configuration/Other
-Requires: alterator >= 4.7-alt1 alterator-sh-functions >= 0.6-alt5
+Requires: alterator >= 5.2-alt1 alterator-sh-functions >= 0.6-alt5
 Requires: alterator-service-functions >= 2.0.0-alt1
 Requires: alterator-l10n >= 1.5-alt5
 Requires: ntp-server glibc-timezones
@@ -64,6 +64,9 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Wed Jul 18 2018 Paul Wolneykien <manowar@altlinux.org> 4.1-alt1
+- Use hostname-or-ip field type for NTP pool address.
+
 * Tue Jan 16 2018 Paul Wolneykien <manowar@altlinux.org> 4.0-alt2
 - Adapt for the E2K arch build.
 
