@@ -6,7 +6,7 @@
 
 Name: wireshark
 Version: 2.6.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -35,7 +35,7 @@ BuildRequires: libcares-devel
 BuildRequires: libsmi-devel
 BuildRequires: libGeoIP-devel
 BuildRequires: qt5-base-devel qt5-tools qt5-multimedia-devel
-BuildRequires(pre):rpm-build-ubt
+BuildRequires(pre):rpm-build-ubt rpm-build-xdg
 
 %package base
 Summary: Wireshark base package
@@ -289,6 +289,9 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Wed Jul 18 2018 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt2%ubt
+- Fix FTBFS (Add missing rpm-build-xdg).
+
 * Thu May 24 2018 Anton Farygin <rider@altlinux.ru> 2.6.1-alt1%ubt
 - 2.6.1 (fixes: CVE-2018-11359, CVE-2018-11361, CVE-2018-11358, CVE-2018-11360, CVE-2018-11356, CVE-2018-11357, CVE-2018-11355, CVE-2018-11354, CVE-2018-11362)
 
