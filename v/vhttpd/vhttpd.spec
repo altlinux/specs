@@ -1,6 +1,6 @@
 Name: vhttpd
 Version: 0.7.8
-Release: alt1
+Release: alt2
 
 Summary: simple embedded web server
 License: LGPL
@@ -8,7 +8,7 @@ Group: System/Servers
 
 Source:%name-%version.tar
 
-%ifarch e2k
+%ifarch %e2k
 Buildrequires: guile20-devel libguile20-devel /proc
 %else
 BuildRequires: guile22-devel >= 2.2.0-alt2
@@ -61,7 +61,7 @@ guile bindings for %name
 
 %prep
 %setup
-%ifarch e2k
+%ifarch %e2k
 sed -i 's:guile/2.2:guile/2.0:g' guile/Makefile
 %endif
 
@@ -93,6 +93,9 @@ sed -i 's:guile/2.2:guile/2.0:g' guile/Makefile
 %guile_ccachedir/vhttpd.go
 
 %changelog
+* Wed Jul 18 2018 Michael Shigorin <mike@altlinux.org> 0.7.8-alt2
+- support e2kv4 through %%e2k macro (grenka@).
+
 * Wed Dec 27 2017 Paul Wolneykien <manowar@altlinux.org> 0.7.8-alt1
 - Fix: Make the Guile library locale-independent: use
   scm_from/to_utf8_string() instead of from/to_locale.
