@@ -3,7 +3,7 @@
 
 Name: musescore
 Version: 2.1.0
-Release: alt2
+Release: alt3
 
 Summary: Music notation and composition software
 
@@ -14,7 +14,7 @@ Url: https://musescore.org
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildPreReq: chrpath
+BuildPreReq: chrpath rpm-build-xdg
 
 # Automatically added by buildreq on Thu Jan 06 2011
 BuildRequires: ccmake doxygen gcc-c++ ghostscript-utils graphviz latex2html
@@ -90,6 +90,9 @@ chrpath -d %buildroot%_bindir/mscore
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Jul 18 2018 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt3
+- Fix FTBFS (Add missing rpm-build-xdg).
+
 * Thu Nov 23 2017 Fr. Br. George <george@altlinux.ru> 2.1.0-alt2
 - Fix sf3 coredump
 
