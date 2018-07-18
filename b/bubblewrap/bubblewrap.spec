@@ -1,5 +1,7 @@
+%def_enable selinux
+
 Name: bubblewrap
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 
 Summary: Unprivileged sandboxing tool
@@ -8,18 +10,16 @@ Group: System/Base
 License: LGPLv2+
 Url: https://github.com/projectatomic/bubblewrap
 
-BuildPreReq: gcc-c++ binutils-devel libelf-devel
-
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/projectatomic/bubblewrap/releases/download/v%version/bubblewrap-%version.tar.xz
+# VCS: https://github.com/projectatomic/bubblewrap.git
 Source: %name-%version.tar
 #Source: https://github.com/projectatomic/%name/releases/download/v%version/%name-%version.tar.xz
 
-# manually removed: python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs 
-# Automatically added by buildreq on Sun Aug 14 2016
-# optimized out: docbook-dtds libgpg-error perl pkg-config python-base python-modules python3 python3-base xml-common
+BuildRequires: gcc-c++ binutils-devel libelf-devel
 BuildRequires: db2latex-xsl docbook-style-xsl libcap-devel xsltproc
+%{?_enable_selinux:BuildRequires: libselinux-devel}
 
 %description
 Many container runtime tools like systemd-nspawn, docker, etc. focus on providing
@@ -33,7 +33,10 @@ because it is trivial to turn such access into to a fully privileged root shell 
 
 %build
 %autoreconf
-%configure --with-priv-mode=none
+%configure --with-priv-mode=none \
+	--enable-require-userns=yes \
+	%{subst_enable selinux}
+
 %make_build
 
 %install
@@ -51,6 +54,10 @@ _EOF_
 %_datadir/bash-completion/completions/bwrap
 
 %changelog
+* Wed Jul 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- updated to v0.3.0-1-gb3906bb
+- enabled selinux support
+
 * Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 0.2.1-alt1
 - new version 0.2.1 (with rpmrb script)
 
