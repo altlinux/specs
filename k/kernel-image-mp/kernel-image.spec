@@ -1,5 +1,5 @@
 %define kernel_base_version	4.17
-%define kernel_sublevel        .4
+%define kernel_sublevel        .8
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -260,6 +260,9 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Wed Jul 18 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.17.8-alt1
+- 4.17.8
+
 * Wed Jul 04 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.17.4-alt1
 - 4.17.4
 
