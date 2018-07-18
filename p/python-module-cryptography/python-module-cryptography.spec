@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.2.2
-Release: alt2
+Version: 2.3.0
+Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
@@ -14,30 +14,14 @@ Packager: Vladimir Didenko <cow@altlinux.org>
 # Source-url: https://pypi.python.org/packages/source/c/cryptography/%oname-%version.tar.gz
 Source: %oname-%version.tar
 
-#BuildPreReq: rpm-build-python rpm-build-licenses
-BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
-# optimized out: elfutils libcom_err-devel libkrb5-devel python-base python-devel python-module-pycparser python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pycparser python3-module-pytest python3-module-setuptools
-BuildRequires: libssl-devel python-dev python-module-cffi python-module-enum34 python-module-pyasn1 python-module-setuptools python3-dev python3-module-cffi python3(enum) python3-module-setuptools rpm-build-python3
+BuildRequires(pre): rpm-build-python rpm-build-licenses
+BuildRequires: libssl-devel python-module-cffi python-module-enum34 python-module-pyasn1 python-module-setuptools
 
-#BuildRequires: python-devel python-module-distribute python-module-setuptools
-#BuildRequires: python-module-six python-module-cffi python-module-pycparser
-#BuildRequires: libssl-devel
-#BuildRequires: python-module-pyasn1
-#BuildRequires: python-module-enum34
-#BuildRequires: python-module-ipaddress
-#BuildRequires: python-module-idna
 %if_with python3
-BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-distribute python3-module-setuptools
-#BuildRequires: python3-module-six python3-module-cffi python3-module-pycparser
-#BuildRequires: python3-module-pyasn1
-#BuildRequires: python3-module-enum34
-#BuildRequires: python3-module-idna
+BuildRequires(pre): rpm-build-python3 python3-devel python3-module-cffi python3-module-setuptools
 %endif
 
-Requires: python-module-cffi
-
+%py_requires cffi
 %py_requires enum34
 
 %setup_python_module %oname
@@ -53,7 +37,7 @@ digests and key derivation functions.
 %package -n python3-module-%oname
 Summary: Cryptographic recipes and primitives to Python developers (Python 3).
 Group: Development/Python3
-Requires: python3-module-cffi
+%py3_requires cffi
 
 %description -n python3-module-%oname
 cryptography is a package which provides cryptographic recipes and primitives to Python developers.
@@ -106,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 18 2018 Vladimir Didenko <cow@altlinux.ru> 2.3.0-alt1
+- 2.3.0
+
 * Thu May 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.2-alt2
 - NMU: fixed buildtime and runtime dependencies.
 
