@@ -7,7 +7,7 @@
 
 Name: transmission
 Version: 2.94
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -274,6 +274,9 @@ fi
 %attr(770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Wed Jul 18 2018 Anton Farygin <rider@altlinux.ru> 2.94-alt2%ubt
+- fixed exec section in  desktop file
+
 * Mon Jul 16 2018 Anton Farygin <rider@altlinux.ru> 2.94-alt1%ubt
 - 2.94
 - build transmission-qt with qt5
