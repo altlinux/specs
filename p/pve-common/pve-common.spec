@@ -2,7 +2,7 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 5.0.23
+Version: 5.0.31
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -31,6 +31,9 @@ BuildRequires: perl(JSON.pm)
 BuildRequires: perl(MIME/Base32.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm)
 BuildRequires: perl(Crypt/OpenSSL/RSA.pm)
+BuildRequires: perl(Date/Parse.pm)
+BuildRequires: perl(Net/SSLeay.pm)
+BuildRequires: perl(HTTP/Daemon.pm)
 # alt regressive tests
 BuildRequires: perl(TAP/Harness.pm)
 
@@ -60,6 +63,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Wed Jul 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.31-alt1
+- 5.0-31
+
 * Tue Dec 12 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.23-alt1
 - 5.0-23
 

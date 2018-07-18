@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 5.0.19
-Release: alt3%ubt
+Version: 5.0.27
+Release: alt1%ubt
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -13,12 +13,16 @@ Requires: sqlite3 vixie-cron faketime tzdata openssh-server openssh-clients
 
 Source0: %name.tar.xz
 Source1: pve-access-control.tar.xz
+Source2: pve-apiclient.tar.xz
+
 Patch0: %name.patch
 Patch1: pve-access-control.patch
 Patch2: pve-cluster-install_vzdump_cron_config.patch
 Patch3: pve-cluster-corosync.patch
+Patch4: pve-cluster-pmxcfs-open.patch
+Patch5: pve-cluster-alt-perl.patch
 
-Source2: pve-firsttime
+Source3: pve-firsttime
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: pve-common pve-doc-generator libcheck-devel librrd-devel glib2-devel libfuse-devel libcorosync2-devel libsqlite3-devel xmlto
@@ -33,7 +37,7 @@ on all nodes.
 
 %package -n pve-access-control
 Summary: PVE access control library
-Version: 5.0.7
+Version: 5.0.8
 Group: Development/Perl
 
 %description -n pve-access-control
@@ -41,11 +45,13 @@ This package contains the role based user management and access
 control function used by PVE.
 
 %prep
-%setup -q -n %name -a1
+%setup -q -n %name -a1 -a2
 %patch0 -p1
 %patch1 -p0
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 cd data
@@ -60,9 +66,11 @@ cd data
 %make DESTDIR=%buildroot install
 cd ../pve-access-control
 %make DESTDIR=%buildroot install
+cd ../pve-apiclient
+%make DESTDIR=%buildroot install
 
 mkdir -p %buildroot%_datadir/doc/%name
-install -m644 %SOURCE2 %buildroot%_datadir/doc/%name/
+install -m644 %SOURCE3 %buildroot%_datadir/doc/%name/
 
 mkdir -p %buildroot%_sysconfdir/cron.d
 touch %buildroot%_sysconfdir/cron.d/vzdump
@@ -123,6 +131,9 @@ fi
 %perl_vendor_privlib/PVE/IPCC.pm
 %dir %perl_vendor_privlib/PVE/CLI
 %perl_vendor_privlib/PVE/CLI/pvecm.pm
+%dir %perl_vendor_privlib/PVE/APIClient
+%perl_vendor_privlib/PVE/APIClient/Exception.pm
+%perl_vendor_privlib/PVE/APIClient/LWP.pm
 %dir %_localstatedir/%name
 %_man1dir/pvecm.1*
 %_man5dir/datacenter.cfg.5*
@@ -145,6 +156,10 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Wed Jul 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.27-alt1%ubt
+- pve-cluster 5.0-27
+- pve-access-control 5.0-8
+
 * Wed Jan 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.19-alt3%ubt
 - fixed corosync.conf parce
 
