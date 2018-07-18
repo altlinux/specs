@@ -4,7 +4,7 @@
 
 Name: alterator-datetime
 Version: 4.1
-Release: alt1
+Release: alt2
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
 
@@ -34,7 +34,7 @@ BuildPreReq: alterator >= 4.7-alt1
 BuildPreReq: alterator >= 5.0
 BuildRequires: alterator-fbi
 
-%ifarch e2k
+%ifarch %e2k
 BuildRequires: guile20-devel libguile20-devel
 %else
 BuildRequires: guile22-devel
@@ -46,7 +46,7 @@ BuildRequires: guile22-devel
 alterator module for date/time setup
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
@@ -64,6 +64,9 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Wed Jul 18 2018 Michael Shigorin <mike@altlinux.org> 4.1-alt2
+- support e2kv4 through %e2k macro (grenka@).
+
 * Wed Jul 18 2018 Paul Wolneykien <manowar@altlinux.org> 4.1-alt1
 - Use hostname-or-ip field type for NTP pool address.
 
