@@ -1,6 +1,6 @@
 Name: autofs
-Version: 5.1.3
-Release: alt1%ubt
+Version: 5.1.4
+Release: alt1
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPL
@@ -120,6 +120,9 @@ fi
 %_libdir/%name/lookup_ldap.so
 
 %changelog
+* Wed Jul 18 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.4-alt1
+- 5.1.4 released
+
 * Fri May 26 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.3-alt1%ubt
 - 5.1.3 released
 
