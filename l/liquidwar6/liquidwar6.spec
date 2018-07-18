@@ -1,9 +1,7 @@
 Name: liquidwar6
 Version: 0.6.3902
 Summary: A unique multiplayer wargame
-Summary(fr): Un "wargame" multijoueur inédit.
-Summary(de): Ein einzigartiges Kriegspiel für mehrere Spieler.
-Release: alt1.1.qa1
+Release: alt2
 License: GPL
 Group: Games/Strategy
 Source: %name-%version.tar
@@ -11,9 +9,9 @@ Url: http://www.gnu.org/software/liquidwar6
 
 Patch: liquidwar6-0.6.3902-alt-Wno-error=deprecated-declarations.patch
 
-# Automatically added by buildreq on Thu Nov 17 2016
-# optimized out: fontconfig fontconfig-devel glib2-devel guile18 libGL-devel libGLU-devel libSDL-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgmp-devel libgpg-error libjson-c libltdl7-devel libncurses-devel libpango-devel libpng-devel libtinfo-devel libwayland-client libwayland-server perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore pkg-config python-base python-modules xz zlib-devel
-BuildRequires: glibc-devel-static guile18-devel lcov libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libcurl-devel libexpat-devel libgtk+2-devel libjpeg-devel libolpcsound-devel libreadline-devel libsqlite3-devel makeinfo
+# Automatically added by buildreq on Wed Jul 18 2018
+# optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 guile18 libGL-devel libGLU-devel libSDL-devel libatk-devel libcairo-devel libcrypt-devel libfreetype-devel libfribidi-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgmp-devel libgpg-error libltdl7-devel libpango-devel libpng15-devel libtinfo-devel libwayland-client libwayland-server perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent pkg-config python-base python-modules xz zlib-devel
+BuildRequires: doxygen glibc-devel-static guile18-devel lcov libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libcurl-devel libexpat-devel libgtk+2-devel libjpeg-devel libncurses-devel libolpcsound-devel libreadline-devel libsqlite3-devel makeinfo
 
 %description
 Liquid War 6 is a unique multiplayer wargame. Your army is a blob of
@@ -23,29 +21,6 @@ is possible to play alone against the computer but the game is really
 designed to be played with friends, on a single computer, on a LAN, or
 on Internet.
 
-%description -l fr
-Liquid War 6 est un wargame multijoueurs unique en son genre. Votre
-armée est une masse informe de liquide, et vous devez essayer de
-manger votre adversaire. La règle est très simple mais originale, elle
-a été inventée par Thomas Colcombet. Il est possible de jouer seul
-contre l'ordinateur mais le jeu est vraiment conçu pour être joué à
-plusieurs, sur une seule machine, sur un réseau local, ou sur
-Internet.
-
-%description -l de
-Liquid War 6 ist ein einzigartiges Kriegsspiel für mehrere Spieler. Die
-Regeln sind wahrhaft neuartig und wurden von Thomas Colcombet entwickelt.
-Man steuert eine flüssige Armee und muss versuchen die Gegner aufzufressen.
-Es gibt einen Einzelspielermodus, aber das Spiel ist eindeutig auf mehrere
-Spieler ausgelegt und unterstützt das Spielen über Netzwerk.
-
-%description -l dk
-Liquid war 6 er et unikt multiplayer krigsspil. Reglerne er
-uhyre originale og er opfundet af Thomas Colcombet. Du styrer
-en hær af væske og skal prøve at æde dine modstandere.
-Liquid War kan spilles alene, men er helt afgjort designet
-til multiplayer, og har netværks-support.
-
 # Preparation of the package
 %prep
 %setup
@@ -54,7 +29,7 @@ til multiplayer, og har netværks-support.
 # Building the package
 %build
 %autoreconf
-%configure --docdir=%_defaultdocdir/%name-%version --enable-allinone --disable-mod-csound
+%configure --docdir=%_defaultdocdir/%name-%version --enable-allinone --disable-mod-csound --enable-console
 %make_build
 ( cd doc; make liquidwar6.html )
 
@@ -78,6 +53,9 @@ rm -rf %buildroot%prefix/libexec
 %_desktopdir/%{name}*
 
 %changelog
+* Wed Jul 18 2018 Fr. Br. George <george@altlinux.ru> 0.6.3902-alt2
+- Fix buildreqs
+
 * Thu Nov 17 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.3902-alt1.1.qa1
 - Fixed build with glibc >= 2.24.
 
@@ -105,9 +83,6 @@ rm -rf %buildroot%prefix/libexec
 * Wed Aug 24 2011 Fr. Br. George <george@altlinux.ru> 0.0.10beta-alt1
 - Initial build from upstream spec
 
-* Fri Jul 23 2010 Christian Mauduit <ufoot@ufoot.org>
-- Added GTK dependency.
-
 * Fri Jul 09 2010 Christian Mauduit <ufoot@ufoot.org>
 - Added applications directory (contains .desktop file).
 
@@ -117,7 +92,7 @@ rm -rf %buildroot%prefix/libexec
 * Mon Oct 05 2009 Christian Mauduit <ufoot@ufoot.org>
 - Fixed info postinstall script.
 
-* Tue Sep 09 2009 Christian Mauduit <ufoot@ufoot.org>
+* Wed Sep 09 2009 Christian Mauduit <ufoot@ufoot.org>
 - Added Requires and BuildRequires declarations.
 
 * Sat Jan 10 2009 Christian Mauduit <ufoot@ufoot.org>
