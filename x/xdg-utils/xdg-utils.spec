@@ -1,6 +1,6 @@
 Name: xdg-utils
 Version: 1.1.3
-Release: alt2
+Release: alt3%ubt
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -22,10 +22,12 @@ Patch9: xdg-su-kde5.patch
 Patch10: xdg-common-detect-de-generic.patch
 Patch11: xdg-open-added_open_lxqt.patch
 Patch12: xdg-open-fix-open-url-in-lxde.patch
+Patch13: xdg-desktop-menu-dummy.patch
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Apr 25 2007
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: xmlto w3m
 
 AutoReq: no
@@ -73,6 +75,7 @@ popd
 %patch10 -p2
 %patch11 -p2
 %patch12 -p2
+%patch13 -p1
 
 %build
 %autoreconf
@@ -97,6 +100,9 @@ popd
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Wed Jul 18 2018 Sergey V Turchin <zerg@altlinux.org> 1.1.3-alt3%ubt
+- fix wrong xdg-desktop-menu-dummy.menu
+
 * Fri Jul 06 2018 Anton Midyukov <antohami@altlinux.org> 1.1.3-alt2
 - fix xdg-open url in LXDE (regression of the new version)
 
