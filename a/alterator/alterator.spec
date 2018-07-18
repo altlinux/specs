@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.2
-Release: alt1
+Release: alt2
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -20,7 +20,7 @@ Obsoletes: %name-common, %name-menu, %name-help, %name-sdk, %name-autoinstall
 Requires: rpm-macros-%name = %version-%release
 Requires: alterator-l10n >= 2.0-alt2
 Requires: alterator-sh-functions
-%ifarch e2k
+%ifarch %e2k
 Requires: guile20 libguile20
 %else
 Requires: guile22
@@ -38,7 +38,7 @@ Conflicts: alterator-vm <= 0.3-alt31
 Conflicts: installer-stage2 <= 0.8-alt1
 
 BuildRequires: /proc
-%ifarch e2k
+%ifarch %e2k
 BuildRequires: guile20-devel libguile20-devel libexpat-devel pam_userpass-devel
 %else
 BuildRequires: guile22-devel >= 2.2.0-alt2 libexpat-devel pam_userpass-devel
@@ -77,7 +77,7 @@ Install this package if you want to create RPM packages that use %name.
 %prep
 %setup
 %patch -p2
-%ifarch e2k
+%ifarch %e2k
 sed -i "s:guile/2.2:guile/2.0:g" build/guile-ext.mak
 %patch1 -p2
 %patch2 -p2
@@ -167,6 +167,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Jul 18 2018 Michael Shigorin <mike@altlinux.org> 5.2-alt2
+- support e2kv4 through %e2k macro (grenka@).
+
 * Wed Jul 18 2018 Paul Wolneykien <manowar@altlinux.org> 5.2-alt1
 - Added new "hostname-or-ip" and "hostname-or-ip-list" field types.
 
