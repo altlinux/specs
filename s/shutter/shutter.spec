@@ -1,8 +1,6 @@
 Name: shutter
-Version: 0.93.1
+Version: 0.94
 Release: alt1
-
-Packager: Radik Usupov <radik@altlinux.org>
 
 Summary: Shutter is a feature-rich screenshot program
 License: GPLv3+
@@ -36,7 +34,6 @@ Requires: perl-XML-Simple
 Requires: perl-libwww-perl
 Requires: perl-podlators
 Requires: procps
-
 
 # not autodetected:
 Requires: xdg-utils
@@ -93,6 +90,9 @@ cp -a share %buildroot/usr
 %_iconsdir/hicolor/scalable/*/*
 
 %changelog
+* Wed Jul 18 2018 Grigory Ustinov <grenka@altlinux.org> 0.94-alt1
+- Build new version.
+
 * Sat Jul 09 2016 Andrey Cherepanov <cas@altlinux.org> 0.93.1-alt1
 - 0.93.1 (ALT #32228)
 - Add requires of perl-podlators (ALT #31413)
