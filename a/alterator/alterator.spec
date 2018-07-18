@@ -1,6 +1,6 @@
 Name: alterator
-Version: 5.1
-Release: alt11
+Version: 5.2
+Release: alt1
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -167,6 +167,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Jul 18 2018 Paul Wolneykien <manowar@altlinux.org> 5.2-alt1
+- Added new "hostname-or-ip" and "hostname-or-ip-list" field types.
+
 * Thu Apr 26 2018 Paul Wolneykien <manowar@altlinux.org> 5.1-alt11
 - Fix: Check that the system was booted with systemd (closes: #34844).
 
