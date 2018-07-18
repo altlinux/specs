@@ -3,7 +3,7 @@
 
 Name: kf5-%rname
 Version: 5.47.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -94,13 +94,13 @@ Sip files for python3-module-%rname
 %build
 %K5build \
     -DKAUTH_BACKEND_NAME=PolkitQt5-1 \
-    -Dlibclang_LIBRARY=%_libdir/libclang.so \
     #
 
 %install
 %K5install
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
+rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %files common -f %name.lang
@@ -137,6 +137,9 @@ Sip files for python3-module-%rname
 %endif
 
 %changelog
+* Fri Jul 13 2018 Oleg Solovyov <mcpain@altlinux.org> 5.47.0-alt2%ubt
+- cleanup
+
 * Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1%ubt
 - new version
 
