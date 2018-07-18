@@ -4,7 +4,7 @@
 
 Name: httpie
 Version: 0.9.8
-Release: alt2
+Release: alt3
 Summary: A Curl-like tool for humans
 
 Group: Networking/WWW
@@ -19,7 +19,8 @@ Requires: python-module-requests >= 2.11.0
 Requires: python-module-Pygments >= 2.1.3
 
 %if_with python3
-BuildRequires: python3-dev python3-module-Pygments python3-module-requests rpm-build-python3
+BuildRequires: python3-dev python3-module-Pygments python3-module-requests
+BuildRequires: python3-module-setuptools rpm-build-python3
 %endif
 
 %description
@@ -104,6 +105,9 @@ help2man --no-discard-stderr %buildroot/%_bindir/http.python3 > %buildroot/%_man
 %endif
 
 %changelog
+* Wed Jul 18 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.8-alt3
+- Fixed FTBFS (Add BR python3-module-setuptools).
+
 * Wed Jul 19 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.9.8-alt2
 - Update requires
 - Added patch - fixed import 'urllib3'
