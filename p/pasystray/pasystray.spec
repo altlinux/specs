@@ -1,6 +1,6 @@
 Name:		pasystray
 Version:	0.6.0
-Release:	alt1.1
+Release:	alt2
 
 Summary:	a replacement for the deprecated padevchooser
 License:	GPLv2.1
@@ -12,6 +12,7 @@ Source:		%name-%version.tar
 # http://git.altlinux.org/gears/p/pasystray.git
 Patch1:		%name-%version-%release.patch
 
+BuildRequires(pre): rpm-build-xdg
 # Automatically added by buildreq on Sun Mar 05 2017
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libavahi-devel libavahi-glib libcairo-devel libdbusmenu-devel libdbusmenu-gtk2 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+2-devel libpango-devel libwayland-client libwayland-server perl pkg-config python-base python-modules xorg-xproto-devel
 BuildRequires: libappindicator-devel libavahi-glib-devel libnotify-devel libpulseaudio-devel
@@ -58,6 +59,9 @@ applications.
 %_iconsdir/hicolor/scalable/*
 
 %changelog
+* Wed Jul 18 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt2
+- Fixed FTBS (Add missing rpm-build-xdg).
+
 * Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1.1
 - NMU: added URL
 
