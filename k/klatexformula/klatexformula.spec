@@ -1,6 +1,6 @@
 Name: klatexformula
 Version: 3.2.11
-Release: alt2
+Release: alt3
 License: GPLv2
 Group: Publishing
 Summary: Generating images from LaTeX equations
@@ -8,6 +8,7 @@ Source: %name-%version.tar.gz
 Patch: klatexformula-3.2.9-setlocale.patch
 Url: http://klatexformula.sourceforge.net/
 
+BuildRequires(pre): rpm-build-xdg
 # Automatically added by buildreq on Tue Oct 11 2011
 # optimized out: automoc cmake cmake-modules fontconfig fontconfig-devel kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-xml libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 BuildRequires: doxygen fonts-ttf-xorg gcc-c++ graphviz kde4libs-devel qt4-designer
@@ -62,6 +63,9 @@ sed -i '/Uninstall target/,$s/^/#/' cmake/klfinstallpaths.cmake
 %_libdir/lib*.so
 
 %changelog
+* Wed Jul 18 2018 Grigory Ustinov <grenka@altlinux.org> 3.2.11-alt3
+- Fix FTBFS (Add missing rpm-build-xdg).
+
 * Mon Jan 25 2016 Fr. Br. George <george@altlinux.ru> 3.2.11-alt2
 - Fix build
 
