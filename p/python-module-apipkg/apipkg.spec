@@ -7,8 +7,8 @@ Python3.1, Jython and PyPy. It co-operates well with Python's help() system,\
 custom importers (PEP302) and common command line completion tools.
 
 Name:           %fname
-Version:        1.4
-Release:        alt3
+Version:        1.5
+Release:        alt1
 
 Summary:        A Python namespace control and lazy-import mechanism
 
@@ -20,7 +20,7 @@ Source0:        %name-%version.tar
 
 BuildArch:      noarch
 
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-setuptools python-module-setuptools_scm
 
 %description
 %descr
@@ -35,10 +35,13 @@ BuildRequires: python-module-setuptools
 %python_install
 
 %files
-%python_sitelibdir/%oname.*
+%python_sitelibdir/%oname
 %python_sitelibdir/*.egg-info*
 
 %changelog
+* Mon Jul 16 2018 Grigory Ustinov <grenka@altlinux.org> 1.5-alt1
+- Build new version.
+
 * Tue Jun 19 2018 Grigory Ustinov <grenka@altlinux.org> 1.4-alt3
 - Raise release to allow the safe upgrade from "Autoimports/Sisyphus".
 
