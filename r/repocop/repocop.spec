@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.78
+Version: 0.79
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -102,16 +102,20 @@ done
 #doc README ChangeLog
 %_bindir/repocop-*
 %_man1dir/repocop-*
+# not supported yet
+%exclude %_bindir/repocop-check-against-repository
+# report-html
 %exclude %_bindir/repocop-report-html
 %exclude %_man1dir/repocop-report-html.*
+# tools
 %exclude %_bindir/repocop-report-diff
 %exclude %_man1dir/repocop-report-diff.*
 %exclude %_bindir/repocop-tools-*
 %exclude %_man1dir/repocop-tools-*
 %exclude %_bindir/repocop-nmu-*
 %exclude %_man1dir/repocop-nmu-*
-%exclude %_bindir/repocop-fix*
-%exclude %_man1dir/repocop-fix*
+%exclude %_bindir/repocop-fix-srpm
+%exclude %_man1dir/repocop-fix-srpm*
 %exclude %perl_vendor_privlib/Test/Repocop/Fixscripts.pm
 %exclude %perl_vendor_privlib/Test/Repocop/RepocopResource.pm
 %exclude %perl_vendor_privlib/Test/Repocop/FixscriptFactory.pm
@@ -138,9 +142,9 @@ done
 %perl_vendor_privlib/Test/Repocop/RepocopResource.pm
 %perl_vendor_privlib/Test/Repocop/FixscriptFactory.pm
 # deprecated
-%_bindir/repocop-fix*
-%_man1dir/repocop-fix*
-%perl_vendor_privlib/Test/Repocop/Fixscripts.pm
+#%_bindir/repocop-fix-srpm
+#%_man1dir/repocop-fix-srpm*
+#%perl_vendor_privlib/Test/Repocop/Fixscripts.pm
 
 %files report-html
 %_bindir/repocop-report-html
@@ -148,6 +152,9 @@ done
 %_man1dir/repocop-report-html.*
 
 %changelog
+* Wed Jul 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.79-alt1
+- new version; added new TestDb Status API
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.78-alt1
 - new version
 
