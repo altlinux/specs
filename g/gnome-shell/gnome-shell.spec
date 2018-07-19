@@ -5,10 +5,11 @@
 %define ver_major 3.28
 %define gst_api_ver 1.0
 %def_enable gtk_doc
+%def_disable check
 
 Name: gnome-shell
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -31,7 +32,7 @@ AutoReqProv: nopython
 %define session_ver 3.26
 %define clutter_ver 1.21.5
 %define gjs_ver 1.47.0
-%define mutter_ver %ver_major.2
+%define mutter_ver %ver_major.3
 %define gtk_ver 3.16.0
 %define gio_ver 2.56.0
 %define gstreamer_ver 1.0
@@ -192,7 +193,7 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %find_lang %name
 
 %check
-#%%meson_test
+%meson_test
 
 %files
 %_bindir/*
@@ -237,6 +238,9 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %endif
 
 %changelog
+* Thu Jul 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
+- 3.28.3
+
 * Tue Jul 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt2
 - updated to 3.28.2-10-gda96408
 
