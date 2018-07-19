@@ -5,7 +5,7 @@
 
 Name: ring-client-kde5
 Version: 3.0.0
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init no_altplace
 
 Group: Communications
@@ -15,7 +15,7 @@ Url: http://www.kde.org
 License: GPLv2+
 
 PreReq(post,preun): alternatives >= 0.2
-Requires: ring-daemon
+Requires: ring-daemon kf5-kirigami
 
 Source: %rname-%version.tar
 Source1: add-po
@@ -114,6 +114,9 @@ __EOF__
 %_K5dbus_iface/cx.ring.ring-kde.xml
 
 %changelog
+* Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt3%ubt
+- fix requires
+
 * Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt2%ubt
 - load libringqt translations
 
