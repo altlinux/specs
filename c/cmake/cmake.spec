@@ -2,7 +2,7 @@
 %def_without check
 Name: cmake
 Version: 3.11.2
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, open-source make system
 
@@ -19,6 +19,7 @@ Source2: CMakeCache.txt
 Patch: %name-%version-%release.patch
 Patch1: alt-fallback-modules-dir.patch
 
+BuildRequires(pre): rpm-build-xdg
 BuildRequires: bzlib-devel gcc-c++ libarchive-devel >= 2.8.4
 BuildRequires: libcurl-devel libexpat-devel libncurses-devel qt5-base-devel libxml2-devel
 BuildRequires: liblzma-devel jsoncpp-devel doxygen graphviz zlib-devel
@@ -261,6 +262,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Thu Jul 19 2018 Grigory Ustinov <grenka@altlinux.org> 3.11.2-alt2
+- Fixed FTBS (Add missing rpm-build-xdg).
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.11.2-alt1
 - Updated to upstream version 3.11.2.
 
