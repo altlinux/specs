@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 2.1.5
+Version: 2.1.6
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -60,7 +60,7 @@ Summary: New macros for ALT Linux rpm build
 Group: Development/Other
 Requires: %_rpmmacrosdir
 # we will use distr_vendor from it
-# Requires: rpm-build-compat
+Requires: rpm-build-compat = %version-%release
 
 %description -n rpm-build-intro
 This package contains new macros introduced for
@@ -73,7 +73,7 @@ package to build requires.
 Summary: Conflicts macros for ALT Linux rpm build
 Group: Development/Other
 Requires: %_rpmmacrosdir
-Requires: rpm-build-intro = %EVR
+Requires: rpm-build-intro = %version-%release
 
 %description -n rpm-macros-intro-conflicts
 This package contains conflicts macros for
@@ -128,6 +128,10 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Tue Jul 17 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt1
+- add EVR macros
+- add rpm-build-compat require to rpm-build-intro (due distr_vendor)
+
 * Sat Jul 14 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.5-alt1
 - introduce _tune_parallel_build_by_procsize
   (set __nprocs limited in depend of system memory and suggested size)
