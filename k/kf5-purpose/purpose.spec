@@ -5,7 +5,7 @@
 %define libreviewboardhelpers libreviewboardhelpers%sover
 
 Name: kf5-%rname
-Version: 5.47.0
+Version: 5.48.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -99,6 +99,7 @@ KF5 library
 %files
 %_K5exec/purpose*
 %_K5plug/kf5/purpose/
+%_K5plug/kf5/kfileitemaction/*.so
 %_K5qml/org/kde/purpose/
 %_K5data/purpose/
 %_K5data/kpackage/Purpose/
@@ -126,6 +127,9 @@ KF5 library
 %_K5lib/libKF5PurposeWidgets.so.*
 
 %changelog
+* Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
+- new version
+
 * Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1%ubt
 - new version
 

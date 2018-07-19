@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: kf5-%rname
-Version: 5.47.0
-Release: alt2%ubt
+Version: 5.48.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -136,6 +136,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
+- new version
+
 * Fri Jul 13 2018 Oleg Solovyov <mcpain@altlinux.org> 5.47.0-alt2%ubt
 - cleanup
 
