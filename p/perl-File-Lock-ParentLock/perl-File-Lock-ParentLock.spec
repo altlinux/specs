@@ -1,7 +1,7 @@
 %define module File-Lock-ParentLock
 
 Name: perl-%module
-Version: 0.06
+Version: 0.08
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,12 @@ parent - child relationship.
 %_man1dir/*
 
 %changelog
+* Thu Jul 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- new version
+
+* Thu Jul 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- new version
+
 * Mon Jul 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - new version
 
