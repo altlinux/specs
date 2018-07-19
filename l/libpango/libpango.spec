@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -41,7 +41,7 @@ Obsoletes: gscript
 %define fontconfig_ver 2.10.91
 %define freetype_ver 2.1.4
 %define gi_ver 0.9.5
-%define hb_ver 0.9.30
+%define hb_ver 1.4.2
 %define thai_ver 0.1.9
 %define fribidi_ver 1.0.1
 
@@ -128,6 +128,7 @@ the functionality of the installed Pango library.
 install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
     %{subst_enable static} \
@@ -143,6 +144,7 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 %make check
 
 %files
+%_bindir/%_name-list
 %_bindir/%_name-view
 %_libdir/%name-%api_ver.so.*
 %_libdir/%{name}cairo-%api_ver.so.*
@@ -184,6 +186,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Thu Jul 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.42.2-alt1
+- 1.42.2
+
 * Sat Apr 07 2018 Yuri N. Sedunov <aris@altlinux.org> 1.42.1-alt1
 - 1.42.1
 
