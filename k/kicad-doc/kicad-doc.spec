@@ -1,12 +1,15 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Summary: Documentation and tutorials for kicad
 Name: kicad-doc
-Version: 4.0.7
+Version: 5.0.0
 Epoch: 1
-Release: alt1
+Release: alt1.rc3
 Group: Documentation
 License: GPLv3
 Url: https://github.com/KiCad/kicad-doc
-Source:	%name-%version.tar
+Source: %name-%version.tar
 BuildArch: noarch
 BuildRequires(pre): cmake rpm-macros-cmake
 BuildRequires: dblatex po4a asciidoc-a2x source-highlight git
@@ -23,7 +26,7 @@ Enlish and Russian translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description ca
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -36,7 +39,7 @@ Canadian translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description de
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -49,7 +52,7 @@ German translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description es
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -62,7 +65,7 @@ Spanish translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description fr
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -75,7 +78,7 @@ French translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description id
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -88,7 +91,7 @@ Indonesian translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description it
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -101,7 +104,7 @@ Italian translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description ja
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -114,7 +117,7 @@ Japan translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description nl
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -127,7 +130,7 @@ Netherlandish translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description pl
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -136,13 +139,26 @@ This is the documentation package for kicad. It contains documentation,
 tutorials and files localization.
 Polish translation.
 
+%package zh
+Summary: Documentation and tutorials for kicad
+Group: Documentation
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description zh
+KiCad is a open source (GPL) integrated package for schematic circuit capture
+and PCB layout.
+This is the documentation package for kicad. It contains documentation,
+tutorials and files localization.
+Chinese translation.
+
 %prep
 %setup
 
 %build
 %cmake_insource \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DBUILD_FORMATS=html
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_FORMATS=html
 %make_build
 
 %install
@@ -180,7 +196,13 @@ Polish translation.
 %files pl
 %_datadir/doc/kicad/help/pl
 
+%files zh
+%_datadir/doc/kicad/help/zh
+
 %changelog
+* Tue Jul 17 2018 Anton Midyukov <antohami@altlinux.org> 1:5.0.0-alt1.rc3
+- Release candidate 5.0.0-rc3
+
 * Wed Aug 30 2017 Anton Midyukov <antohami@altlinux.org> 1:4.0.7-alt1
 - new version 4.0.7
 
