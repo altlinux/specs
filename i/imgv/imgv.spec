@@ -1,6 +1,6 @@
 Name: imgv
 Version: 3.1.6
-Release: alt1.1
+Release: alt2
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -10,6 +10,8 @@ Group: Graphics
 
 Url: http://imgv.sourceforge.net/
 Source: http://download.sourceforge.net/imgv/imgv-%version-src.tar.gz
+
+Requires: fonts-ttf-vera
 
 BuildArch: noarch
 
@@ -44,11 +46,18 @@ chmod 755 %buildroot%_bindir/imgv
 # Avoid bytecompile :)
 unset RPM_PYTHON
 
+# remove bundled font (see ALT 25326)
+rm -f %buildroot%_datadir/imgv/data/Vera.ttf
+ln -srf %buildroot%_datadir/fonts/ttf/TrueType-vera/Vera.ttf %buildroot%_datadir/imgv/data/Vera.ttf
+
 %files
 %_bindir/*
 %_datadir/*
 
 %changelog
+* Thu Jul 19 2018 Grigory Ustinov <grenka@altlinux.org> 3.1.6-alt2
+- Remove bundled font (Closes: #25326).
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.1.6-alt1.1
 - Rebuild with Python-2.7
 
