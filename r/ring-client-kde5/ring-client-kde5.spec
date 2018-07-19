@@ -5,7 +5,7 @@
 
 Name: ring-client-kde5
 Version: 3.0.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init no_altplace
 
 Group: Communications
@@ -114,6 +114,9 @@ __EOF__
 %_K5dbus_iface/cx.ring.ring-kde.xml
 
 %changelog
+* Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt2%ubt
+- load libringqt translations
+
 * Wed Jul 18 2018 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt1%ubt
 - fix requires
 
