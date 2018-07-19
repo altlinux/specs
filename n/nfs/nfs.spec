@@ -1,5 +1,5 @@
 Name: nfs
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 Epoch: 1
 
@@ -261,6 +261,7 @@ touch /var/lock/subsys/rpc.svcgssd
 /sbin/sm-notify
 /sbin/blkmapd
 /sbin/nfsidmap
+%_sbindir/nfsconf
 
 %_man5dir/nfs.conf.*
 %_man7dir/nfs.systemd.*
@@ -272,6 +273,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/sm-notify.*
 %_man8dir/rpc.sm-notify.*
 %_man8dir/nfsidmap.*
+%_man8dir/nfsconf.*
 
 #-------------------------------------------------------------------------------
 %files utils
@@ -297,6 +299,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Thu Jul 19 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.3.2-alt1
+- 2.3.2 released
+
 * Tue Mar 27 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.3.1-alt1
 - 2.3.1 released
 
