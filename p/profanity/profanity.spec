@@ -1,19 +1,21 @@
 Name: profanity
-Version: 0.4.6
+Version: 0.5.1
 Release: alt1
 Summary: A console based jabber client inspired by irssi
 Group: Networking/Instant messaging
 License: GPLv3
-Source: %name-%version.tar.gz
+Source: %version.tar.gz
 # wget -q -O- http://www.profanity.im/configuration.html | sed -n '/\[ui]/,/<\/code>/{s@ *</\?.*>@@g;p}' > profrc
 Source1: profrc
+Patch: no_acx_pthread.patch
 Url: http://www.profanity.im
 
 BuildRequires: libcmocka-devel
 
 # Automatically added by buildreq on Wed Nov 05 2014
 # optimized out: glib2-devel libX11-devel libcloog-isl4 libgcrypt-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgpg-error-devel libncurses-devel libtinfo-devel pkg-config xorg-scrnsaverproto-devel xorg-xproto-devel
-BuildRequires: libXScrnSaver-devel libcurl-devel libncursesw-devel libnotify-devel libotr-devel libssl-devel libstrophe-devel libxml2-devel
+BuildRequires: libXScrnSaver-devel libcurl-devel libncursesw-devel libnotify-devel libotr-devel libssl-devel libmesode-devel libxml2-devel libreadline-devel
+# libmesode vs libstrophe
 
 %description
 %summary
@@ -33,8 +35,15 @@ Requires: %name = %version-%release
 %description X11
 XScrnSaver and notify support for %name
 
+%package devel
+Group: Development/C
+Summary: A console based jabber client library
+%description devel
+A console based jabber client development suite
+
 %prep
 %setup
+%patch -p1
 touch NEWS README AUTHORS ChangeLog
 cp %SOURCE1 profrc.exmaple2
 
@@ -42,21 +51,19 @@ cp %SOURCE1 profrc.exmaple2
 %autoreconf
 %configure --with-libxml2 --enable-notifications --enable-otr
 
-%make_build
+%make_build LDFLAGS=-pthread
 mv %name %name.app
 
 make distclean
 %configure --with-libxml2 --disable-notifications --enable-otr --without-xscreensaver
-%make_build
+%make_build LDFLAGS=-pthread
 
 %install
 %makeinstall
 install %name.app %buildroot%_bindir/%name.app
 
 %check
-# XXX this probably will be there
-touch tests/ui/stub_ui.h
-%make check
+LC_ALL=C.UTF8 make check
 
 %files
 %doc themes profrc.example*
@@ -67,7 +74,16 @@ touch tests/ui/stub_ui.h
 %files X11
 %_bindir/%name.app
 
+%files devel
+%_includedir/*
+%_libdir/*.so
+
 %changelog
+* Thu Jul 19 2018 Fr. Br. George <george@altlinux.ru> 0.5.1-alt1
+- Autobuild version bump to 0.5.1
+- Use autor's fork of libstrophe (libmesode)
+- Introduce SDK
+
 * Tue Apr 21 2015 Fr. Br. George <george@altlinux.ru> 0.4.6-alt1
 - Autobuild version bump to 0.4.6
 
