@@ -1,6 +1,6 @@
 Name: nfs
 Version: 2.3.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -180,6 +180,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %files -n libnfsidmap-devel
 %_libdir/libnfsidmap.so
 %_includedir/nfsidmap.h
+%_includedir/nfsidmap_plugin.h
 %_pkgconfigdir/libnfsidmap.pc
 %_man3dir/nfs4_uid_to_name.3*
 
@@ -299,6 +300,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Thu Jul 19 2018 Stanislav Levin <slev@altlinux.org> 1:2.3.2-alt2
+- add lost header file
+
 * Thu Jul 19 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.3.2-alt1
 - 2.3.2 released
 
