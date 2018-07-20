@@ -5,7 +5,7 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.14.0
-Release: alt1%ubt
+Release: alt2%ubt
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel
@@ -43,8 +43,10 @@ Source10: nginx-rtmp-module.tar
 Source11: mime.types
 Source12: nginx.filetrigger
 Source13: ngx_http_auth_pam_module.tar
+Source14: spnego-http-auth-nginx-module.tar
 Source100: %name.watch
 Patch1: nginx-0.8-syslog.patch
+Patch2: nginx-1.14.0-glibc-2.3.2-upstream.patch
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 BuildRequires(pre): rpm-build-ubt
 %if_with debug
@@ -121,10 +123,11 @@ Fast HTTP server, extremely useful as an Apache frontend
 
 
 %prep
-%setup -a 7 -a 10 -a 13
+%setup -a 7 -a 10 -a 13 -a 14
 %if_with syslog
 %patch1 -p2
 %endif
+%patch2 -p1
 sed -i 's/INSTALLSITEMAN3DIR=.*/INSTALLDIRS=vendor/' auto/lib/perl/make
 cp -f %SOURCE11 conf/mime.types
 
@@ -358,6 +361,11 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Fri Jul 20 2018 Anton Farygin <rider@altlinux.ru> 1.14.0-alt2%ubt
+- fixed build with glibc-2.3.2
+- spenego module moved to tarball
+- updated auth_pam module
+
 * Tue Jun 05 2018 Denis Smirnov <mithraen@altlinux.ru> 1.14.0-alt1.S1
 - Updated to 1.14.0
 - Updated nginx-rtmp-module
