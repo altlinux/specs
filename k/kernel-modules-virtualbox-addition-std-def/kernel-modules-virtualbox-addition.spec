@@ -1,9 +1,9 @@
 %define module_name	virtualbox-addition
-%define module_version  5.1.30
-%define module_release	alt2.k
+%define module_version  5.2.16
+%define module_release	alt1
 
 %define flavour		std-def
-%define karch x86_64 i586
+%define karch %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
 BuildRequires(pre): kernel-headers-modules-std-def
 
@@ -76,15 +76,15 @@ tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
 %make -C kernel-source-%guest_module_name-%module_version \
-    KERN_DIR=%_usrsrc/linux-%kversion-%flavour/
+    KERN_DIR=%_usrsrc/linux-%kversion-%flavour/ KERN_VER=%kversion
 cp kernel-source-%guest_module_name-%module_version/Module.symvers \
     kernel-source-%vfs_module_name-%module_version
 %make -C kernel-source-%vfs_module_name-%module_version \
-    KERN_DIR=%_usrsrc/linux-%kversion-%flavour/
+    KERN_DIR=%_usrsrc/linux-%kversion-%flavour/ KERN_VER=%kversion
 cp kernel-source-%guest_module_name-%module_version/Module.symvers \
     kernel-source-%video_module_name-%module_version
 %make -C kernel-source-%video_module_name-%module_version \
-    KERN_DIR=%_usrsrc/linux-%kversion-%flavour/
+    KERN_DIR=%_usrsrc/linux-%kversion-%flavour/ KERN_VER=%kversion
 
 %install
 mkdir -p %buildroot/%module_dir
@@ -102,6 +102,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Jul 20 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.16-alt1
+- Updated template for virtualbox 5.2.16
 
 * Tue Dec 26 2017 Denis Medvedev <nbr@altlinux.org> 5.1.30-alt2
 - Fixed build for un-def

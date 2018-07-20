@@ -1,9 +1,12 @@
 %def_disable    bootstrap
 %define         short_version 0.1.9998
+%define         svn_revision 3178
+
+ExclusiveArch: %ix86 x86_64
 
 Name:           kBuild
-Version:        %short_version.r3178
-Release:        alt1%ubt
+Version:        %short_version.r%svn_revision
+Release:        alt3%ubt
 License:        %gpl3plus
 Group:          Development/Other
 Summary:        A cross-platform build environment framework for complex tasks
@@ -55,6 +58,7 @@ chmod a+x src/sed/configure
 %build
 %define bootstrap_mflags %_smp_mflags   \\\
         CFLAGS="%optflags"              \\\
+        KBUILD_SVN_REV=%svn_revision    \\\
         KBUILD_VERBOSE=1
 
 %define mflags %bootstrap_mflags        \\\
@@ -83,6 +87,12 @@ chmod a-x %buildroot%_datadir/%name/*/*kmk
 %_datadir/%name
 
 %changelog
+* Wed Jul 11 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3178-alt3%ubt
+- Exclusive build for x86 architectures only
+
+* Thu May 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3178-alt2%ubt
+- Fixed kBuild svn revision output for kmk --version detect
+
 * Thu Mar 22 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3178-alt1%ubt
 - Update to last unstable release from svn trunk (r3178) for VirtualBox-5.2.x
 
