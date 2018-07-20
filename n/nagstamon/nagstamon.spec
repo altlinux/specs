@@ -10,7 +10,7 @@ BuildRequires: python3-module-keyring python3-module-dbus
 %define _localstatedir %{_var}
 Name:           nagstamon
 Version:        3.0.1
-Release:        alt2
+Release:        alt3
 Summary:        Nagios status monitor for the desktop
 License:        GPLv2
 Group:          Monitoring
@@ -19,6 +19,7 @@ Source:         %name-%version.tar
 %py3_requires   secretstorage sip
 BuildArch:      noarch
 Patch1:         nagstamon-2.1-alt-translation-in-QUI-__init__.patch
+Patch2:         nagstamon-3.0.1-alt-default-values-in-config.patch
 Source44:       import.info
 Source1:        all.ts
 Source2:        all.qm
@@ -33,6 +34,7 @@ servers.
 %prep
 %setup
 %patch1 -p2
+%patch2 -p1
 
 cp %SOURCE1 %SOURCE2 Nagstamon/QUI/
 
@@ -72,6 +74,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue May 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt3
+- Fix default values (Closes: #33585).
+
 * Thu Apr 05 2018 Mikhail Gordeev <obirvalger@altlinux.org> 3.0.1-alt2
 - fix rebuild (add BuildReq to python3-module-dbus)
 
