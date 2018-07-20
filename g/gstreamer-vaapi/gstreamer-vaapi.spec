@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define ver_major 1.14
 %define api_ver 1.6
 %define gst_api_ver 1.0
@@ -6,17 +8,20 @@
 %def_enable gtk_doc
 
 Name: gstreamer-vaapi
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: GStreamer plugins to use VA-API video acceleration
 Group: System/Libraries
 License: LGPLv2.1
 Url: http://gstreamer.freedesktop.org/modules/gstreamer-vaapi.html
 
-# VCS: git://anongit.freedesktop.org/gstreamer/gstreamer-vaapi
-# Source: %name/%name-%version.tar
+%if_disabled snapshot
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
+%else
+# VCS: git://anongit.freedesktop.org/gstreamer/gstreamer-vaapi
+Source: %name/%name-%version.tar
+%endif
 
 %define glib_ver 2.28
 %define gst_ver 1.6
@@ -76,6 +81,9 @@ GStreamer applications.
 %endif
 
 %changelog
+* Fri Jul 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt1
+- 1.14.2
+
 * Mon Jun 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt2
 - rebuilt against libva*.so.2
 

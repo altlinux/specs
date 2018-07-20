@@ -11,8 +11,8 @@
 %def_enable pulse
 
 Name: %_name-good%api_ver
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
@@ -77,6 +77,9 @@ This package contains development documentation for GStreamer Good Plugins
 %_gtk_docdir/*
 
 %changelog
+* Fri Jul 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt1
+- 1.14.2
+
 * Tue Jun 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt2
 - rebuild against libvpx.so.5
 

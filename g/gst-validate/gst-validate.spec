@@ -6,7 +6,7 @@
 %def_enable python3
 
 Name: gst-validate
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GStreamer Validate Tools and Library
@@ -28,11 +28,15 @@ AutoReqProv: nopython
 %add_python3_path %_libdir/%name-launcher/python
 %endif
 
+BuildRequires(pre): rpm-build-gir
 BuildRequires: gcc-c++ gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver libxml2-devel
 BuildRequires: libcairo-devel gobject-introspection-devel gst-plugins%gst_api_ver-gir-devel
 BuildRequires: libjson-glib-devel
 BuildRequires: gtk-doc
-%{?_enable_python3:BuildRequires: rpm-build-python3 python3-devel}
+%if_enabled python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+%endif
 
 %description
 The goal of GstValidate is to be able to detect when elements are not
@@ -146,6 +150,9 @@ GObject introspection devel data for the Gst Validate library.
 %_datadir/gtk-doc/html/%name-plugins-%api_ver/
 
 %changelog
+* Fri Jul 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt1
+- 1.14.2
+
 * Thu May 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
 - 1.14.1
 
