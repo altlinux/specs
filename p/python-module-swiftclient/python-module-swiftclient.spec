@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.3.0
-Release: alt1.1
+Version: 3.5.0
+Release: alt1
 Summary: Client Library for OpenStack Object Storage API
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/python-%oname
@@ -141,6 +141,9 @@ rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Jul 20 2018 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
+- new version 3.5.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
