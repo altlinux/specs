@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Parallel-ForkManager
 Name: perl-%dist
-Version: 1.19
+Version: 1.20
 Release: alt1
 
 Summary: A simple parallel processing fork manager
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/Y/YA/YANICK/Parallel-ForkManager-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/Y/YA/YANICK/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ where the number of processes to be forked off should be limited. Typical
 use is a downloader which will be retrieving hundreds/thousands of files.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,11 +31,14 @@ use is a downloader which will be retrieving hundreds/thousands of files.
 %perl_vendor_install
 
 %files
-%doc Changes
+%doc Changes CODE_OF_CONDUCT.md CONTRIBUTORS README.mkdn examples
 %dir %perl_vendor_privlib/Parallel
 %perl_vendor_privlib/Parallel/ForkManager.pm
 
 %changelog
+* Fri Jul 20 2018 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
+- automated CPAN update
+
 * Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
 - automated CPAN update
 
