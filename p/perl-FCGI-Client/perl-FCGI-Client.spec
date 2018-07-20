@@ -1,5 +1,5 @@
 Name: perl-FCGI-Client
-Version: 0.08
+Version: 0.09
 Release: alt1
 Summary: FCGI::Client - client library for fastcgi protocol
 
@@ -11,7 +11,7 @@ Url: %CPAN FCGI-Client
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: perl-devel perl-Any-Moose perl-Moose
+BuildRequires: perl-devel perl-Any-Moose perl-Moose perl-Module-Build-Tiny perl(Types/Standard.pm)
 
 %description
 %summary
@@ -26,10 +26,14 @@ BuildRequires: perl-devel perl-Any-Moose perl-Moose
 %perl_vendor_install
 
 %files
+%doc README.md Changes LICENSE
 %perl_vendor_privlib/FCGI/Client*
-%doc Changes README 
+%doc Changes
 
 %changelog
+* Fri Jul 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Thu Dec 15 2011 Vladimir Lettiev <crux@altlinux.ru> 0.08-alt1
 - New version 0.08
 
