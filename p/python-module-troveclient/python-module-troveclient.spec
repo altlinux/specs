@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.8.0
-Release: alt1.1
+Version: 2.14.0
+Release: alt1
 Summary: Client library for OpenStack DBaaS API
 Group: Development/Python
 License: ASL 2.0
@@ -29,6 +29,7 @@ BuildRequires: python-module-simplejson >= 2.2.0
 BuildRequires: python-module-swiftclient >= 3.2.0
 BuildRequires: python-module-mistralclient >= 2.0.0
 BuildRequires: python-module-osc-lib >= 1.2.0
+BuildRequires: python-module-openstackdocstheme
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -46,6 +47,7 @@ BuildRequires: python3-module-keystoneauth1 >= 2.17.0
 BuildRequires: python3-module-swiftclient >= 3.2.0
 BuildRequires: python3-module-mistralclient >= 2.0.0
 BuildRequires: python3-module-osc-lib >= 1.2.0
+BuildRequires: python3-module-openstackdocstheme
 %endif
 
 
@@ -155,6 +157,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Fri Jul 20 2018 Grigory Ustinov <grenka@altlinux.org> 2.14.0-alt1
+- new version 2.14.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.8.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
