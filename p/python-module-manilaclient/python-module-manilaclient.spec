@@ -2,8 +2,8 @@
 %def_with python3
 
 Name:       python-module-%oname
-Version:    1.14.0
-Release:    alt1.1
+Version:    1.21.0
+Release:    alt1
 Summary:    Client Library for OpenStack Manila shared file system service API
 License:    ASL 2.0
 Group:      Development/Python
@@ -30,6 +30,7 @@ BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-keystoneclient >= 3.8.0
 
 BuildRequires: python-module-openstackclient >= 3.3.0
+BuildRequires: python-module-openstackdocstheme
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -46,6 +47,7 @@ BuildRequires: python3-module-simplejson >= 2.2.0
 BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-keystoneclient >= 2.0.0
+BuildRequires: python3-module-openstackdocstheme
 %endif
 
 %description
@@ -148,6 +150,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Fri Jul 20 2018 Grigory Ustinov <grenka@altlinux.org> 1.21.0-alt1
+- new version 1.21.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.14.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
