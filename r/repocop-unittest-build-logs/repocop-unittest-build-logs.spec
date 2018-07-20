@@ -4,7 +4,7 @@ BuildRequires: perl(Test/Repocop/ExternalTest.pm)
 %define testname build-logs
 
 Name: repocop-unittest-%testname
-Version: 0.09
+Version: 0.10
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -51,6 +51,9 @@ done
 %_datadir/repocop/srccollectors/*
 
 %changelog
+* Fri Jul 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- support for zst/gz/xz compressed logs
+
 * Mon Jul 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - fix for mangled logs
 
