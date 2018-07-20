@@ -8,7 +8,7 @@
 
 Name: exaile
 Version: 4.0.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: a music player aiming to be similar to KDE's Amarok, but for GTK+ and written in Python
 License: GPLv2
@@ -31,6 +31,7 @@ Source: %name-%version.tar
 # remove ubuntu and Mac-specific dependency
 %add_typelib_req_skiplist typelib(GtkosxApplication)
 
+BuildRequires(pre): rpm-build-gir rpm-build-python
 BuildRequires: python-devel python-module-pygobject3 rpm-build-gir
 BuildRequires: help2man bash-completion
 
@@ -118,6 +119,9 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %endif
 
 %changelog
+* Fri Jul 20 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt0.2
+- updated to 4.0.0-rc1-14-g15b337f
+
 * Thu Mar 22 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt0.1
 - updated to 4.0.0-beta3-7-g6c83c2a (ported to GTK+3, GStreamer-1.0)
 
