@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.0
-Release: alt1.1
+Version: 1.5.0
+Release: alt1
 Summary: Python API and CLI for OpenStack  Sahara
 
 Group: Development/Python
@@ -29,6 +29,7 @@ BuildRequires: python-module-oslo.i18n >= 2.1.0
 BuildRequires: python-module-oslo.utils >= 3.18.0
 BuildRequires: python-module-openstackclient >= 3.3.0
 BuildRequires: python-module-requests >= 2.10.0
+BuildRequires: python-module-openstackdocstheme
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -45,6 +46,7 @@ BuildRequires: python3-module-oslo.i18n >= 2.1.0
 BuildRequires: python3-module-oslo.utils >= 3.18.0
 BuildRequires: python3-module-openstackclient >= 3.3.0
 BuildRequires: python3-module-requests >= 2.10.0
+BuildRequires: python3-module-openstackdocstheme
 %endif
 
 %description
@@ -145,6 +147,9 @@ sphinx-build -b html doc/source html
 %doc html
 
 %changelog
+* Fri Jul 20 2018 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
+- new version 1.5.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
