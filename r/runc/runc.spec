@@ -4,7 +4,7 @@
 
 %global provider_prefix %{provider}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          4fc53a81fb7c994640722ac585fa9ca548971871
+%global commit          69663f0bd4b60df09991c08812a60108003fa340
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -16,7 +16,7 @@
 
 Name:           runc
 Version:        1.0.0
-Release:        alt4.rc5
+Release:        alt5.git%shortcommit
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache 2.0
@@ -48,7 +48,7 @@ export GOPATH="%go_path:$BUILDDIR"
 # TODO: Looks ugly. Definetly should be fixed.
 rm -fr "$BUILDDIR/src/$IMPORT_PATH/vendor"
 cp -alv -- vendor/* "$BUILDDIR/src"
-make
+make COMMIT=%commit
 
 %install
 mkdir -p -- %buildroot/%_bindir
@@ -65,6 +65,9 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Fri Jul 20 2018 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt5.git69663f0
+- New version (for docker 18.06.0-ce).
+
 * Thu Mar 22 2018 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt4.rc5
 - New version (for docker 18.03.0-ce).
 
