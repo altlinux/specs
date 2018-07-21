@@ -5,8 +5,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.6.1
-Release: alt2%ubt
+Version: 2.6.2
+Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -289,6 +289,9 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Sat Jul 21 2018 Anton Farygin <rider@altlinux.ru> 2.6.2-alt1%ubt
+- 2.6.2  (fixes: CVE-2018-14370, CVE-2018-14367, CVE-2018-14369, CVE-2018-14368, CVE-2018-14341, CVE-2018-14339, CVE-2018-14343, CVE-2018-14340, CVE-2018-14344, CVE-2018-14342)
+
 * Wed Jul 18 2018 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt2%ubt
 - Fix FTBFS (Add missing rpm-build-xdg).
 
