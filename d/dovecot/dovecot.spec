@@ -6,7 +6,7 @@
 
 Name: dovecot
 Version: 2.2.36
-Release: alt2
+Release: alt3
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
 Group: System/Servers
@@ -27,7 +27,6 @@ Patch2: dovecot-2.0-defaultconfig.patch
 #Patch3: dovecot-2.1-privatetmp.patch
 Patch4: dovecot-2.1.4-postreleasefix.patch
 Patch5: dovecot-2.2-systemd_firsttime.patch
-Patch6: dovecot-2.2.36-libcrypt.patch
 
 PreReq: mailboxes-control
 
@@ -66,12 +65,12 @@ Libraries and headers for Dovecot
 #patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p2
 
 sed -i 's@/usr/local@/usr@g' src/plugins/fts/decode2text.sh
 sed -i 's@/usr/local@/usr@g' doc/example-config/conf.d/90-quota.conf
 
 %build
+%add_optflags -D_DEFAULT_SOURCE=1
 export ACLOCAL='aclocal -I .'
 %autoreconf
 %configure \
@@ -191,6 +190,9 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Sat Jul 21 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.2.36-alt3
+- More correct fix (thnx ldv@)
+
 * Sat Jul 21 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.2.36-alt2
 - Fixed auth crash
 
