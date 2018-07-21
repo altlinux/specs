@@ -1,5 +1,5 @@
 Name: repocop-unittest-rpm-filesystem
-Version: 0.17
+Version: 0.18
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -42,6 +42,9 @@ install -m 755 -D repocop-unittest-rpm-filesystem-conflict-file-file-message-fil
 #%_datadir/repocop/fixscripts/*
 
 %changelog
+* Sat Jul 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- optimized by speed
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - restored warning as file-file conflict priority
 
