@@ -1,6 +1,6 @@
 Name: libsearpc
-Version: 3.0.7
-Release: alt2
+Version: 3.1
+Release: alt1
 
 Summary: RPC library for Seafile
 
@@ -10,13 +10,10 @@ Url: https://github.com/haiwen/libsearpc
 
 Packager: Konstantin Artyushkin <akv@altlinux.org>
 
-# Source-url: https://github.com/haiwen/libsearpc/archive/v%version.tar.gz
+# Source-url: https://github.com/haiwen/libsearpc/archive/v%version-latest.tar.gz
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Sun Aug 24 2014
-# optimized out: libcloog-isl4 pkg-config python-base python-devel python-module-distribute python-module-zope python-modules python3-base
-BuildRequires: glib2-devel glibc-devel libjansson-devel
-# python-module-cmd2 python-module-mwlib python-module-protobuf
+BuildRequires: glib2-devel libjansson-devel
 
 BuildRequires: libgio-devel
 
@@ -57,6 +54,9 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Jul 21 2018 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt1
+- new version (3.1-latest) with rpmgs script
+
 * Sat Feb 13 2016 Vitaly Lipatov <lav@altlinux.ru> 3.0.7-alt2
 - move searpc-codegen.py to devel subpackage
 - fix build requires
