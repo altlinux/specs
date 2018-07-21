@@ -1,8 +1,8 @@
 %define gecko_version 2.47
-%define mono_version 4.7.1
+%define mono_version 4.7.3
 
 Name: wine-vanilla
-Version: 3.12
+Version: 3.13
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -423,6 +423,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sat Jul 21 2018 Vitaly Lipatov <lav@altlinux.ru> 3.13-alt1
+- new version 3.13
+
 * Tue Jul 10 2018 Vitaly Lipatov <lav@altlinux.ru> 3.12-alt1
 - new version 3.12
 
