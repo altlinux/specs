@@ -1,5 +1,5 @@
 Name: e2fsprogs
-Version: 1.44.2
+Version: 1.44.3
 Release: alt1
 
 Summary: The filesystem utilities for the ext2/ext3 filesystems
@@ -388,6 +388,9 @@ mv tests/m_no_opt/expect.1{.ext2,}
 %endif # libuuid
 
 %changelog
+* Tue Jul 10 2018 Dmitry V. Levin <ldv@altlinux.org> 1.44.3-alt1
+- v1.44.2 -> v1.44.3.
+
 * Wed Jun 06 2018 Dmitry V. Levin <ldv@altlinux.org> 1.44.2-alt1
 - v1.44.1-10-gd5bd126 -> v1.44.2 (closes: #34987).
 
