@@ -67,8 +67,8 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	4.0.1
-Release:	alt2
+Version:	4.0.2
+Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -665,6 +665,9 @@ xz Changelog
 %endif
 
 %changelog
+* Sat Jul 21 2018 Anton Farygin <rider@altlinux.ru> 2:4.0.2-alt1
+- 4.0.2
+
 * Mon Jun 25 2018 Anton Farygin <rider@altlinux.ru> 2:4.0.1-alt2
 - enabled documentation build
 
