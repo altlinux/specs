@@ -4,7 +4,7 @@
 
 %global provider_prefix %{provider}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          c15b372ef22125880d378167dde44f4b134e1a77
+%global commit          3ac297bc7fd0afec9051bbb47024c9bc1d75bf5b
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -16,7 +16,7 @@
 
 Name:           libnetwork
 Version:        0.8.0
-Release:        alt5.git%shortcommit
+Release:        alt6.git%shortcommit
 Summary:        Networking for containers
 Group:          Development/Other
 License:        Apache 2.0
@@ -61,6 +61,9 @@ install -p -m 755 bin/docker-proxy %buildroot/%_bindir
 %_bindir/*
 
 %changelog
+* Fri Jul 20 2018 Vladimir Didenko <cow@altlinux.org> 0.8.0-alt6.git3ac297b
+- New version (for docker 18.06.0-ce).
+
 * Mon May 14 2018 Alexey Shabalin <shaba@altlinux.ru> 0.8.0-alt5.gitc15b372
 - define ExclusiveArch as %%go_arches
 

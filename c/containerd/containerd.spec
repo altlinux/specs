@@ -1,5 +1,5 @@
 %global import_path github.com/containerd/containerd
-%global commit 9b55aab90508bd389d7654c4baf173a981477d55
+%global commit 468a545b9edcd5932818eb9de8e72413e616e86e
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %global __find_debuginfo_files %nil
@@ -10,7 +10,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	1.0.3
+Version:	1.1.2
 Release:	alt1
 Summary:	A daemon to control runC
 
@@ -31,6 +31,7 @@ ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
 BuildRequires: libbtrfs-devel
+BuildRequires: libseccomp-devel
 
 Provides: docker-%name = %version-%release
 Obsoletes: docker-%name <= 1.0.0
@@ -44,15 +45,14 @@ support as well as checkpoint and restore for cloning and live migration of cont
 %setup -q
 
 %build
-export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
-export GOPATH="%go_path:$BUILDDIR"
+export GOPATH="%go_path:$PWD"
 
-%golang_prepare
-# TODO: Looks ugly. Definetly should be fixed.
-rm -fr "$BUILDDIR/src/$IMPORT_PATH/vendor"
-cp -alv -- vendor/* "$BUILDDIR/src"
-make
+mkdir -p src/github.com/containerd
+ln -rTsf $PWD src/github.com/containerd/containerd
+pushd src/github.com/containerd/containerd
+make VERSION=v%version REVISION=%commit
+popd
 
 %install
 mkdir -p -- \
@@ -83,6 +83,9 @@ install -p -D -m 644 %SOURCE4 %{buildroot}%{_sysconfdir}/%{name}/config.toml
 %_unitdir/%name.service
 
 %changelog
+* Fri Jul 20 2018 Vladimir Didenko <cow@altlinux.org> 1.1.2-alt1
+- New version (for docker 18.06.0-ce)
+
 * Thu May 10 2018 Vladimir Didenko <cow@altlinux.org> 1.0.3-alt1
 - New version (for docker 18.03.1-ce)
 
