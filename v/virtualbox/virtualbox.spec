@@ -1,3 +1,9 @@
+%define if_branch_lt() %if "%(rpmvercmp '%ubt_id' '%1')" < "0"
+%define if_branch_le() %if "%(rpmvercmp '%ubt_id' '%1')" <= "0"
+%define if_branch_eq() %if "%(rpmvercmp '%ubt_id' '%1')" == "0"
+%define if_branch_ge() %if "%(rpmvercmp '%ubt_id' '%1')" >= "0"
+%define if_branch_gt() %if "%(rpmvercmp '%ubt_id' '%1')" > "0"
+
 %define oldmodname kernel-source-virtualbox
 %define oldmodnamenetflt kernel-source-virtualbox-netfilter
 %define oldmodnamenetadp kernel-source-virtualbox-netadaptor
@@ -49,15 +55,22 @@
 
 %define vboxdatadir %_datadir/virtualbox
 %define vboxadddir %vboxdir/additions
+%define ld_so_conf %_sysconfdir/ld.so.conf.d/%name-%_arch.conf
+
+%filter_from_provides '/^lib[E]\\?GL\\.so\\./d'
 
 %set_verify_elf_method textrel=relaxed
 %add_findprov_lib_path %vboxdir
 
-%define gcc_version 6
+%if_branch_le M80P
+%define gcc_version 5
+%else
+%define gcc_version 7
+%endif
 
 Name: virtualbox
-Version: 5.1.30
-Release: alt3
+Version: 5.2.16
+Release: alt1%ubt
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -66,6 +79,7 @@ Url: http://www.virtualbox.org/
 
 ExclusiveArch: %ix86 x86_64
 
+BuildRequires(pre): rpm-build-ubt
 
 Source: %distarchive.tar
 
@@ -88,7 +102,7 @@ Source23:	virtualbox.conf
 Source99:	%vboxdbg.in
 %endif
 
-Patch0:		%name-%version-alt.patch
+Patch:		%name-%version-alt.patch
 
 BuildPreReq: dev86 iasl gcc%gcc_version-c++ libstdc++%gcc_version-devel-static
 BuildPreReq: libIDL-devel libSDL-devel libpng-devel
@@ -115,6 +129,7 @@ BuildRequires: qt5-sensors-devel
 BuildRequires: qt5-serialbus-devel
 BuildRequires: qt5-x11extras-devel
 
+BuildRequires: libopus-devel
 BuildRequires: libssl-devel
 BuildRequires: libxml2-devel libxslt-devel
 BuildRequires: qt5-base-devel libalsa-devel
@@ -125,7 +140,7 @@ BuildRequires: libXdamage-devel libXcomposite-devel libXcomposite
 BuildRequires: xorg-xf86driproto-devel xorg-glproto-devel
 BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
 BuildRequires(pre): xorg-sdk
-BuildPreReq: yasm kBuild >= 0.1.9998.r2689
+BuildPreReq: yasm kBuild >= 0.1.9998.r3178
 %if_with webservice
 BuildRequires: libgsoap-devel libgsoap-devel-static > 2.8.0
 %endif
@@ -258,15 +273,6 @@ Provides: %oldmodnamevideo = %version-%release
 %description -n %modnamevideo
 Sources for VirtualBox kernel module for OSE Video DRM.
 
-%package -n xorg-drv-vboxvideo
-Summary: The X.org driver for video in VirtualBox guests
-Group: System/X11
-Provides: xorg-x11-drv-vboxvideo = %version-%release
-Obsoletes: xorg-x11-drv-vboxvideo < %version
-
-%description -n xorg-drv-vboxvideo
-The X.org driver for video in VirtualBox guests
-
 %package common
 Summary: VirtualBox module support files
 Group: System/Configuration/Other
@@ -341,8 +347,10 @@ export GCC_VERSION=%gcc_version
 %if_without manual
     --disable-docs \
 %endif    
-    --with-qt-dir=%_qt5_prefix \
-
+%ifarch x86_64
+    --disable-vmmraw \
+%endif
+    --enable-qt5 \
 
 kbuild=%_bindir
 
@@ -365,8 +373,21 @@ echo "VBOX_VENDOR                := ALT Linux Team" >> LocalConfig.kmk
 echo "VBOX_VENDOR_SHORT          := ALT" >> LocalConfig.kmk
 echo "VBOX_PRODUCT               := VM VirtualBox OSE" >> LocalConfig.kmk
 
-
+# disable build with bundled xorg/mesa headers
 echo "VBOX_USE_SYSTEM_XORG_HEADERS := 1" >> LocalConfig.kmk
+echo "VBOX_USE_SYSTEM_GL_HEADERS := 1" >> LocalConfig.kmk
+# do not build legacy xorg driver
+echo "VBOX_NO_LEGACY_XORG_X11 := 1" >> LocalConfig.kmk
+
+echo "VBOX_WITH_REGISTRATION_REQUEST :=" >> LocalConfig.kmk
+echo "VBOX_WITH_UPDATE_REQUEST :=" >> LocalConfig.kmk
+echo "KBUILD_VERBOSE := 2" >> LocalConfig.kmk
+echo "VBOX_WITH_EXTPACK_VBOXDTRACE :=" >> LocalConfig.kmk
+
+# respect RPM optflags
+echo "TOOL_GCC3_CFLAGS := %optflags" >> LocalConfig.kmk
+echo "TOOL_GCC3_CXXFLAGS := %optflags" >> LocalConfig.kmk
+echo "VBOX_GCC_OPT := %optflags" >> LocalConfig.kmk
 
 %if_with manual
 echo "VBOX_WITH_DOCS_SDKREF      := 1" >> LocalConfig.kmk
@@ -375,7 +396,10 @@ echo "VBOX_CHMCMD                := 1" >> LocalConfig.kmk
 %endif
 
 #source env.sh
-[ -n "$NPROCS" ] || NPROCS=%__nprocs; kmk -j$NPROCS  VBOXDIR=%vboxdir
+[ -n "$NPROCS" ] || NPROCS=%__nprocs
+# Set NPROCS=1 due build server constraints:
+# https://lists.altlinux.org/pipermail/devel/2018-July/204964.html
+NPROCS=1; kmk -j$NPROCS  VBOXDIR=%vboxdir
 
 %if_enabled debug
 sed 's|@VBOX_BUILD_DIR@|%vboxdir|g' %SOURCE99 >%vboxdbg_file
@@ -434,7 +458,6 @@ cp -a \
     VirtualBox \
     iPxeBaseBin \
     xpidl \
-    *.rc \
     *.r0 \
     *.so \
     *.fd \
@@ -538,8 +561,16 @@ cd additions >/dev/null
   install -d %buildroot/%_bindir
   install -m755 VBoxClient VBoxControl VBoxService %buildroot/%_bindir/
 
-  install -d %buildroot/%vboxadddir
-  install -m644 VBoxOGL*.so %buildroot/%vboxadddir/
+# OpenGL/EGL part
+  mv {VBoxOGLcrutil,VBoxOGL*spu}.so %buildroot%_libdir/
+  install -d %buildroot%vboxadddir
+  ld_so_conf=%ld_so_conf
+  install -d %buildroot${ld_so_conf%%/*}
+  echo %vboxadddir > %buildroot%ld_so_conf
+  install -m644 VBoxOGL*.so %buildroot%vboxadddir
+  install -m644 VBoxEGL.so %buildroot%vboxadddir
+  ln -s VBoxOGL.so %buildroot%vboxadddir/libGL.so.1
+  ln -s VBoxEGL.so %buildroot%vboxadddir/libEGL.so.1
 
 # create links
   ln -s $(relative %_bindir/VBoxService %_sbindir/) %buildroot%_sbindir/vboxadd-service
@@ -554,13 +585,6 @@ cd additions >/dev/null
 
   install -d %buildroot%_sysconfdir/security/console.perms.d/
   install -m644 %SOURCE5 %buildroot%_sysconfdir/security/console.perms.d/
-
-# install x11 drivers
-  install -d %buildroot%_x11modulesdir/drivers
-  install vboxvideo_drv_system.so %buildroot%_x11modulesdir/drivers/vboxvideo_drv.so
-
-  mkdir -p %buildroot%_x11modulesdir/dri/
-  ln -s $(relative %vboxadddir/VBoxOGL.so %_x11modulesdir/dri/) %buildroot%_x11modulesdir/dri/vboxvideo_dri.so
 
   mkdir -p %buildroot%_pam_modules_dir/
   install -m644 pam_vbox.so %buildroot%_pam_modules_dir/
@@ -660,7 +684,7 @@ mountpoint -q /dev || {
 %exclude %_bindir/VBoxClient
 %exclude %_bindir/VBoxControl
 %exclude %_bindir/VBoxService
-%exclude %vboxadddir
+%exclude %vboxadddir 
 %endif
 %if_with webservice
 %exclude %_bindir/vboxwebsrv
@@ -710,9 +734,6 @@ mountpoint -q /dev || {
 %kernel_src/%modnamevideo-%version.tar.bz2
 
 %if_with additions
-%files -n xorg-drv-vboxvideo
-%_x11modulesdir/drivers/vboxvideo_drv.so
-
 %files guest-utils
 /sbin/mount.vboxsf
 %_initrddir/vboxadd
@@ -729,9 +750,11 @@ mountpoint -q /dev || {
 %files guest-additions
 %_sysconfdir/X11/xinit.d/98vboxadd-xclient
 %_bindir/VBoxClient
+%_libdir/VBoxOGLcrutil.so
+%_libdir/VBoxOGL*spu.so
 %dir %vboxadddir
-%vboxadddir/VBoxOGL*.so
-%_x11modulesdir/dri/vboxvideo_dri.so
+%vboxadddir/*
+%config %ld_so_conf
 %endif
 
 %if_with webservice
@@ -779,6 +802,33 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Wed Jul 18 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.16-alt1%ubt
+- Build second summer release
+- guest-addition: fix OGL/EGL provides (thanks to lakostis@)
+
+* Tue Jul 10 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.14-alt1%ubt
+- Build latest summer release
+
+* Thu May 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.12-alt1%ubt
+- Build latest version with ubt macros (aka universal build tag)
+
+* Sat May 19 2018 L.A. Kostis <lakostis@altlinux.ru> 5.2.12-alt0.3
+- fix OGL/EGL guest libs.
+- respect RPM optflags.
+
+* Fri May 18 2018 L.A. Kostis <lakostis@altlinux.ru> 5.2.12-alt0.2
+- .spec: sync with debian:
+    + VBOX_WITH_REGISTRATION_REQUEST=
+    + VBOX_WITH_UPDATE_REQUEST=
+    + KBUILD_VERBOSE=2
+    + VBOX_WITH_EXTPACK_VBOXDTRACE=
+    + use system xorg libs again.
+    + remove obsoleted xorg vbox drv.
+    + rework OGL/EGL support.
+
+* Thu May 17 2018 L.A. Kostis <lakostis@altlinux.ru> 5.2.12-alt0.1
+- try build of 5.2.12.
+
 * Thu Jan 11 2018 Denis Medvedev <nbr@altlinux.org> 5.1.30-alt3
 - add missed altlinux type handling routines
 
