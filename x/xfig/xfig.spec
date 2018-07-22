@@ -1,10 +1,10 @@
 Name:         xfig
-Version:      3.2.6a
+Version:      3.2.7a
 Release:      alt1
 
 Summary:      An X Window System tool for drawing basic vector graphics.
 Group:        Graphics
-URL:          http://epb.lbl.gov/xfig/
+URL:          https://sourceforge.net/projects/mcj/
 License:      Freeware
 
 Packager:     Vladislav Zavjalov <slazav@altlinux.org>
@@ -64,6 +64,7 @@ install -D -m 644 xfig.desktop %buildroot/%_desktopdir/xfig.desktop
 %_liconsdir/xfig.png
 %_niconsdir/xfig.png
 %_miconsdir/xfig.png
+%_pixmapsdir/xfig.png
 %dir /usr/share/xfig/
 /usr/share/xfig/CompKeyDB
 
@@ -74,6 +75,9 @@ install -D -m 644 xfig.desktop %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Sun Jul 22 2018 Vladislav Zavjalov <slazav@altlinux.org> 3.2.7a-alt1
+- 3.2.7a
+
 * Sat Feb 18 2017 Vladislav Zavjalov <slazav@altlinux.org> 3.2.6a-alt1
 - update 3.2.6-beta -> 3.2.6a
 
