@@ -1,5 +1,5 @@
 Name: mapsoft
-Version: 20160202
+Version: 20180722
 Release: alt1
 License: GPL
 Summary: mapsoft - programs for working with maps and geodata
@@ -13,6 +13,7 @@ BuildRequires: boost-devel gcc-c++ libcurl-devel libzip-devel zlib-devel
 BuildRequires: libcairomm-devel libpixman-devel libgtkmm2-devel
 BuildRequires: libpng-devel libjpeg-devel libtiff-devel libgif-devel
 BuildRequires: libusb-devel libyaml-devel libxml2-devel proj-devel
+BuildRequires: libjansson-devel libshape-devel
 BuildRequires: python-devel scons swig m4
 BuildRequires: /usr/bin/gs netpbm transfig ImageMagick-tools /usr/bin/pod2man
 
@@ -68,6 +69,12 @@ scons -Q minimal=1 -Q prefix=%buildroot install
 %_mandir/man1/mapsoft_vmap.*
 
 %changelog
+* Sun Jul 22 2018 Vladislav Zavjalov <slazav@altlinux.org> 20180722-alt1
+- current snapshot
+
+* Wed Feb 03 2016 Vladislav Zavjalov <slazav@altlinux.org> 20160202-alt1.1
+- rebuild with new libproj
+
 * Tue Feb 02 2016 Vladislav Zavjalov <slazav@altlinux.org> 20160202-alt1
 - build fix (man page extensions, .gz -> .*)
 
