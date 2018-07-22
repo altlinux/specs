@@ -1,19 +1,19 @@
-%define soversion 11
-%def_disable static
+%define pkgname mbedtls
+%define soversion 10
 
-Name: mbedtls
-Version: 2.11.0
-Release: alt1%ubt
+Name: %pkgname%soversion
+Version: 2.8.0
+Release: alt3%ubt
 
 Summary: Light-weight cryptographic and SSL/TLS library
 License: Apache
-Group: System/Libraries
+Group: System/Legacy libraries
 
 Url: https://tls.mbed.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
-Source: https://tls.mbed.org/download/%name-%version-apache.tgz
+Source: https://tls.mbed.org/download/%pkgname-%version-apache.tgz
 
-Patch0: %name-threading-alt.patch
+Patch0: %pkgname-threading-alt.patch
 
 BuildRequires(pre): rpm-build-ubt
 
@@ -27,45 +27,19 @@ library written in C. mbed TLS makes it easy for developers to include
 cryptographic and SSL/TLS capabilities in their (embedded)
 applications with as little hassle as possible.
 
-%package -n lib%name%soversion
+%package -n lib%pkgname%soversion
 Summary: Light-weight cryptographic and SSL/TLS library
-Group: System/Libraries
+Group: System/Legacy libraries
 Conflicts: hiawatha
 
-%description -n lib%name%soversion
+%description -n lib%pkgname%soversion
 mbed TLS is a light-weight open source cryptographic and SSL/TLS
 library written in C. mbed TLS makes it easy for developers to include
 cryptographic and SSL/TLS capabilities in their (embedded)
 applications with as little hassle as possible.
 
-%package -n lib%name-devel
-Summary: Development files for mbed TLS
-Group: Development/C
-Conflicts: hiawatha
-
-%description -n lib%name-devel
-Contains libraries and header files for
-developing applications that use mbed TLS
-
-%if_enabled static
-%package -n lib%name-devel-static
-Summary: Static libraries for mbed TLS
-Group: Development/C
-
-%description -n lib%name-devel-static
-Static libraries for developing applications
-that use mbed TLS
-%endif
-
-%package utils
-Summary: Utilities for PolarSSL
-Group: Development/Tools
-
-%description utils
-Cryptographic utilities based on mbed TLS 
-
 %prep
-%setup
+%setup -n %pkgname-%version
 %patch0 -p1
 
 %build
@@ -87,37 +61,18 @@ popd
 
 %install
 %makeinstall_std -C %_target_platform
-%__mkdir_p %buildroot%_libexecdir/%name
-%__mv %buildroot%_bindir/* %buildroot%_libexecdir/%name
-%__rm -rf %buildroot%_bindir
+%__rm -rf %buildroot{%_bindir,%_includedir}
+%__rm -rf %buildroot%_libdir/*.{so,a}
 
-%files -n lib%name%soversion
+%files -n lib%pkgname%soversion
 %doc apache-2.0.txt ChangeLog LICENSE README.md
 %_libdir/libmbedcrypto.so.*
-%_libdir/lib%name.so.*
+%_libdir/lib%pkgname.so.*
 %_libdir/libmbedx509.so.*
 
-%files -n lib%name-devel
-%dir %_includedir/%name
-%_includedir/%name/*.h
-%_libdir/libmbedcrypto.so
-%_libdir/lib%name.so
-%_libdir/libmbedx509.so
-
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/libmbedcrypto.a
-%_libdir/lib%name.a
-%_libdir/libmbedx509.a
-%endif
-
-%files utils
-%dir %_libexecdir/%name
-%_libexecdir/%name/*
-
 %changelog
-* Sun Jul 22 2018 Nazarov Denis <nenderus@altlinux.org> 2.11.0-alt1%ubt
-- Version 2.11.0
+* Sun Jul 22 2018 Nazarov Denis <nenderus@altlinux.org> 2.8.0-alt3%ubt
+- Build as legacy library
 
 * Thu Apr 12 2018 Nazarov Denis <nenderus@altlinux.org> 2.8.0-alt2%ubt
 - Build with with MBEDTLS_THREADING_PTHREAD and MBEDTLS_THREADING_C enabled
