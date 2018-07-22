@@ -1,5 +1,5 @@
 Name: tig
-Version: 2.3.2
+Version: 2.4.0
 Release: alt1
 
 Summary: text-mode interface for git
@@ -48,6 +48,9 @@ install -pD -m644 doc/tigmanual.7 %buildroot%_man7dir/tigmanual.7
 %_man7dir/tigmanual.7*
 
 %changelog
+* Sun Jul 22 2018 Alexey Tourbin <at@altlinux.ru> 2.4.0-alt1
+- 2.3.2 -> 2.4.0
+
 * Wed Dec 27 2017 Alexey Tourbin <at@altlinux.ru> 2.3.2-alt1
 - 2.3.1 -> 2.3.2
 
