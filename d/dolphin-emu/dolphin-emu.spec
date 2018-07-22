@@ -1,6 +1,6 @@
 Name: dolphin-emu
 Version: 5.0
-Release: alt6%ubt
+Release: alt7%ubt
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -11,8 +11,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
 
-#https://github.com/%name/dolphin/archive/%version.tar.gz
-Source: dolphin-%version.tar.gz
+Source: https://github.com/%name/dolphin/archive/%version/dolphin-%version.tar.gz
 Patch0: %name-git-alt.patch
 Patch1: %name-gcc-alt.patch
 
@@ -92,6 +91,9 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Sun Jul 22 2018 Nazarov Denis <nenderus@altlinux.org> 5.0-alt7%ubt
+- Rebuilt with new mbedTLS
+
 * Sun Jun 17 2018 Nazarov Denis <nenderus@altlinux.org> 5.0-alt6%ubt
 - Rebuilt with new libva
 
