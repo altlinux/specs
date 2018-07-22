@@ -1,6 +1,6 @@
 Name: texmf-latex-obsolete
 Version: 0.1
-Release: alt2
+Release: alt3
 Summary: Collection of obsolete LaTeX packages, kept for compatibility with old documents
 License: %lppl
 Group: Publishing
@@ -10,7 +10,7 @@ Packager: Kirill Maslinsky <kirill@altlinux.org>
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-tex rpm-build-licenses
-BuildRequires: ctanify texlive-collection-latex
+BuildRequires: texlive-collection-latex
 
 Source0: %name-%version.tar
 
@@ -41,6 +41,9 @@ install -pD -m644 mathtime/mathtime.sty %buildroot/%_texmfmain/tex/latex/mathtim
 %_texmfmain/*
 
 %changelog
+* Sun Jul 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3
+- NMU: removed ctanify from BR: (closes: #35168)
+
 * Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2
 - NMU:
 - removed pst-char as it is included even in texlive 2017
