@@ -1,16 +1,24 @@
-%define		git 20120505
-
 Name:		screengrab
-Version:	0.9.92
-Release:	alt1.%git
+Version:	1.99
+Release:	alt1
 Summary:	ScreenGrab is a tool for geting screenshots
 License:	GPLv2
-Source0:	%name-%version.tar.gz
-Url:		http://code.google.com/p/screengrab-qt/
+Source0:	%name-%version.tar.xz
+Source1:	%name.sh
+Url:		https://github.com/lxqt/screengrab/releases
 Group:		Graphics
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 
-BuildRequires: /usr/bin/convert cmake gcc-c++ libqt4-devel
+BuildRequires: /usr/bin/convert cmake kf5-kwindowsystem-devel libqtxdg-devel qt5-tools qt5-x11extras-devel
+
+Patch0:		%name-1.99-check_ling_tools_off.patch
+
+Requires:	libkf5windowsystem
+
+%add_findprov_lib_path %_libdir/%name
+%brp_strip_none %_libdir/%name/%name
+%add_verify_elf_skiplist %_libdir/%name/%name
+%set_verify_elf_method textrel=relaxed
 
 %description
 ScreenGrab is a crossplatform tool for geting screenshots
@@ -19,39 +27,50 @@ independent of any desktop environment.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-cmake \
+%cmake \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_C_FLAGS:STRING="%optflags"
+lrelease-qt5 ./translations/*.ts
+cd BUILD
 %make_build
 
 %install
+cd BUILD
 %make DESTDIR=%buildroot install
-rm -rf %buildroot%_docdir/%name
-ln -s %_docdir/%name-%version %buildroot%_docdir/%name
+mv %buildroot%_bindir/%name %buildroot%_libdir/%name/%name
+install -m 0775 %SOURCE1 %buildroot%_bindir/%name
+subst 's|/lib|/%_lib|g' %buildroot%_bindir/%name
 
 # Icons
-%__mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
-convert -resize 48x48 img/%name.png %buildroot%_liconsdir/%name.png
-convert -resize 32x32 img/%name.png %buildroot%_niconsdir/%name.png
-convert -resize 16x16 img/%name.png %buildroot%_miconsdir/%name.png
+%__mkdir -p %buildroot/{%_miconsdir,%_liconsdir}
+convert -resize 48x48 ../img/%name.png %buildroot%_liconsdir/%name.png
+convert -resize 16x16 ../img/%name.png %buildroot%_miconsdir/%name.png
 
 %files
 %dir %_datadir/%name
-%dir %_datadir/%name/localize
 %dir %_docdir/%name
-%doc docs/*
+%dir %_libdir/%name
 %_bindir/*
+%_libdir/%name/*
+
 %_desktopdir/%name.desktop
+%_docdir/%name
 %_datadir/%name
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
-%_pixmapsdir/%name.png
 
 %changelog
+* Sun Jul 22 2018 Motsyo Gennadi <drool@altlinux.ru> 1.99-alt1
+- 1.99 (#altbug 35169)
+
+* Sun Jan 12 2014 Motsyo Gennadi <drool@altlinux.ru> 1.0-alt1
+- 1.0
+
 * Thu Jun 14 2012 Motsyo Gennadi <drool@altlinux.ru> 0.9.92-alt1.20120505
 - git snapshot 20120505
 
