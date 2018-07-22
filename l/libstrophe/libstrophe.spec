@@ -1,16 +1,16 @@
-Name:		libstrophe
+Name: libstrophe
 # configure.ac:AC_INIT([libstrophe], [0.8-snapshot], [jack@metajack.im])
-Version:	0.8
-Release:	alt1
-Summary:	A lightweight XMPP client library written in C
-Group:		System/Libraries
-License:	GPLv3
+Version: 0.9.2
+Release: alt1
+Summary: A lightweight XMPP client library written in C
+Group: System/Libraries
+License: GPLv3
 # TODO update from git
-Source:		%name-%version.tar
+Source: %version.tar.gz
 
-# Automatically added by buildreq on Thu Dec 13 2012
-# optimized out: libcom_err-devel libkrb5-devel pkg-config
-BuildRequires: doxygen libssl-devel libxml2-devel zlib-devel libcheck-devel
+# Automatically added by buildreq on Sun Jul 22 2018
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel perl pkg-config python-base
+BuildRequires: doxygen libexpat-devel libssl-devel
 
 %description
 libstrophe is a lightweight XMPP client library written in C. It has
@@ -24,20 +24,25 @@ Its goals are:
 - reliable
 
 %package devel
-Group:		Development/C
-Summary:	Development environment for %name
+Group: Development/C
+Summary: Development environment for %name
 Requires: %name = %version-%release
 %description devel
 Development environment for %name
 
+%package static
+Group: System/Libraries
+Summary: A lightweight XMPP client library written in C
+%description static
+Static version of %name
+
 %prep
 %setup
-sed -i 's/^CFLAGS/AM_CFLAGS/' Makefile.am
 
 %build
 %autoreconf
+%configure
 %make_build
-# TODO: CFLAGS=-fPIC + .so, pkgconfig -lxml2 -lssl -lcrypto -lz -lresolv
 doxygen
 
 %install
@@ -47,13 +52,22 @@ doxygen
 make check
 
 %files
-%_libdir/*.a
+%_libdir/*.so.*
 
 %files devel
 %doc README.markdown docs
 %_includedir/*
+%_libdir/*.so
+%_pkgconfigdir/*
+
+%files static
+%_libdir/*.a
 
 %changelog
+* Sun Jul 22 2018 Fr. Br. George <george@altlinux.ru> 0.9.2-alt1
+- Autobuild version bump to 0.9.2
+- Introduce .so
+
 * Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 0.8-alt1
 Initial build
 
