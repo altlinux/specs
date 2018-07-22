@@ -1,6 +1,6 @@
 Name: transfig
 Version: 3.2.7a
-Release: alt1
+Release: alt2
 
 Summary: A utility for converting FIG files (made by xfig) to other formats
 Group: Graphics
@@ -9,7 +9,8 @@ License: Freeware
 
 Source: %name-%version.tar.gz
 
-BuildRequires: libXpm-devel libpng-devel
+# gs program is checked during build
+BuildRequires: /usr/bin/gs libXpm-devel libpng-devel
 
 # fig2dev MAY calls gs and utilities from netpbm package for some outputs:
 Requires: /usr/bin/gs netpbm
@@ -38,6 +39,9 @@ PostScript).  Transfig is used to create TeX documents which are portable
 %_datadir/fig2dev
 
 %changelog
+* Sun Jul 22 2018 Vladislav Zavjalov <slazav@altlinux.org> 3.2.7a-alt2
+- add /usr/bin/gs to BuildRequires (configure script wants to see it)
+
 * Sun Jul 22 2018 Vladislav Zavjalov <slazav@altlinux.org> 3.2.7a-alt1
 - 3.2.7a
 
