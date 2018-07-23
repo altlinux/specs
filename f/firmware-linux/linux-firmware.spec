@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180706
+Version: 20180710
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,27 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Mon Jul 23 2018 Cronbuild Service <cronbuild@altlinux.org> 20180710-alt1
+- upstream changes (GIT 8d69bab):
+  + amdgpu: update copyright date (thx Alex Deucher)
+  + amdgpu: add initial VegaM firmware (thx Alex Deucher)
+  + amdgpu: sync up vega10 firmware with 18.20 release (thx Alex Deucher)
+  + amdgpu: sync up raven firmware with 18.20 release (thx Alex Deucher)
+  + amdgpu: sync up polaris12 firmware with 18.20 release (thx Alex Deucher)
+  + amdgpu: sync up polaris11 firmware with 18.20 release (thx Alex Deucher)
+  + amdgpu: sync up polaris10 firmware with 18.20 release (thx Alex Deucher)
+  + amdgpu: sync up verde firmware with 18.20 release (thx Alex Deucher)
+  + amdgpu: sync up pitcairn firmware with 18.20 release (thx Alex Deucher)
+  + amdgpu: sync up tahiti firmware with 18.20 release (thx Alex Deucher)
+  + amdgpu: sync up oland firmware with 18.20 release (thx Alex Deucher)
+  + amdgpu: sync up hainan firmware with 18.20 release (thx Alex Deucher)
+  + amdgpu: sync up kaveri firmware with 18.20 release (thx Alex Deucher)
+  + amdgpu: sync up mullins firmware with 18.20 release (thx Alex Deucher)
+  + amdgpu: sync up kabini firmware with 18.20 release (thx Alex Deucher)
+  + amdgpu: sync up hawaii firmware with 18.20 release (thx Alex Deucher)
+  + amdgpu: sync up bonaire firmware with 18.20 release (thx Alex Deucher)
+  + WHENCE: Fix typo Version (thx Sedat Dilek)
+
 * Sun Jul 15 2018 Cronbuild Service <cronbuild@altlinux.org> 20180706-alt1
 - upstream changes (GIT 6213586):
   + cxgb4: update firmware to revision 1.20.8.0 (thx Ganesh Goudar)
