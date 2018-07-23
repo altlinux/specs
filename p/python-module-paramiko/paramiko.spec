@@ -1,32 +1,39 @@
 %define _unpackaged_files_terminate_build 1
 %define oname paramiko
 
-%def_with python3
+%def_with check
+
+Name: python-module-%oname
+Version: 2.4.1
+Release: alt1
 
 Summary: SSH2 protocol for python
-Name: python-module-%oname
-Version: 2.4.0
-Release: alt1.1
 License: GPL
 Group: Development/Python
-BuildArch: noarch
-Url: http://www.lag.net/%oname
+# Source-git: https://github.com/paramiko/paramiko.git
+Url: http://www.paramiko.org/
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-ecdsa python-module-pycrypto python-module-pyasn1
-BuildRequires: python-module-cryptography python-module-bcrypt python-module-pynacl
-BuildRequires: python-module-pytest-relaxed
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-ecdsa python3-module-pycrypto python3-module-pyasn1
-BuildRequires: python3-module-cryptography python3-module-bcrypt python3-module-pynacl
-BuildRequires: python3-module-pytest-relaxed
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python-module-pytest
+BuildRequires: python-module-cryptography
+BuildRequires: python-module-pyasn1
+BuildRequires: python-module-bcrypt
+BuildRequires: python-module-pynacl
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-cryptography
+BuildRequires: python3-module-pyasn1
+BuildRequires: python3-module-bcrypt
+BuildRequires: python3-module-pynacl
 %endif
 
-Requires: python-module-bcrypt
+BuildArch: noarch
 
 %description
 paramiko is a module for python that implements the SSH2 protocol for secure
@@ -35,11 +42,9 @@ entirely in python (no C or platform-dependent code).
 
 This module is built for python 2
 
-%if_with python3
 %package -n python3-module-%oname
-Summary: SSH2 protocol for python
+Summary: SSH2 protocol for python3
 Group: Development/Python3
-Requires: python3-module-bcrypt
 
 %description -n python3-module-%oname
 paramiko is a module for python that implements the SSH2 protocol for secure
@@ -47,70 +52,48 @@ paramiko is a module for python that implements the SSH2 protocol for secure
 entirely in python (no C or platform-dependent code).
 
 This module is built for python 3
-%endif
-
-%package doc
-Summary: %oname documentation and example programs
-Group: Development/Python
-
-%description doc
-paramiko is a module for python that implements the SSH2 protocol
-for secure (encrypted and authenticated) connections to remote machines. This
-package contain API documentation and examples for python-%oname module.
 
 %prep
 %setup
+%patch -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
+cp -a . ../python3
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%python_install --install-lib %python_sitelibdir
+%python_install
 
-%if_with python3
 pushd ../python3
-%python3_install --install-lib %python3_sitelibdir
+%python3_install
 popd
-%endif
 
 %check
-rm -fv tests/test_sftp.py
-rm -fv tests/test_sftp_big.py
-python setup.py build_ext -i
-PYTHONPATH=%buildroot%python_sitelibdir py.test -vv
-%if_with python3
+LC_ALL=en_US.UTF-8 py.test -vv
+
 pushd ../python3
-rm -fv tests/test_sftp.py
-rm -fv tests/test_sftp_big.py
-python3 setup.py build_ext -i
-PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv
+LC_ALL=en_US.UTF-8 py.test3 -vv
 popd
-%endif
 
 %files
 %doc README.rst LICENSE
-%python_sitelibdir/*
+%python_sitelibdir/paramiko/
+%python_sitelibdir/paramiko-*.egg-info/
 
-%files doc
-%doc demos
-
-%if_with python3
 %files -n python3-module-%oname
 %doc README.rst LICENSE
-%python3_sitelibdir/*
-%endif
+%python3_sitelibdir/paramiko/
+%python3_sitelibdir/paramiko-*.egg-info/
 
 %changelog
+* Mon Jul 23 2018 Stanislav Levin <slev@altlinux.org> 2.4.1-alt1
+- 2.4.0 -> 2.4.1
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.4.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
