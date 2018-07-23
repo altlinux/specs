@@ -1,22 +1,20 @@
-%define dovecot_version 2.2
-%define dovecot_version_max 2.3
+%define _unpackaged_files_terminate_build 1
+%define dovecot_version 2.3
 
 Name: dovecot-pigeonhole
-Version: 0.4.24
+Version: 0.5.2
 Epoch: 1
 Release: alt1
 Summary: Sieve language and the ManageSieve protocol for the Dovecot Secure IMAP Server
 Group: System/Servers
 License: LGPL v2.1
-Source: dovecot-2.2-pigeonhole-%version.tar.gz
+Source: dovecot-%dovecot_version-pigeonhole-%version.tar.gz
 Source1: postfix+sieve.patch
 Url: http://pigeonhole.dovecot.org/
 
 Requires: dovecot >= %dovecot_version
-Requires: dovecot < %dovecot_version_max
 
 BuildRequires: dovecot-devel >= %dovecot_version
-BuildRequires: dovecot-devel < %dovecot_version_max
 
 
 %description
@@ -65,9 +63,11 @@ install -pD -m 644 %buildroot/%_defaultdocdir/dovecot-%dovecot_version/example-c
 
 %files
 %doc README AUTHORS NEWS TODO *.patch examples
-%doc %_defaultdocdir/dovecot-%dovecot_version/example-config/conf.d/*
-%doc %_defaultdocdir/dovecot-%dovecot_version/example-config/*.conf
+%doc %_defaultdocdir/dovecot-%dovecot_version/
+%doc %_defaultdocdir/dovecot-%dovecot_version/example-config/
+%doc %_defaultdocdir/dovecot-%dovecot_version/example-config/*
 %doc %_defaultdocdir/dovecot-%dovecot_version/sieve
+%doc %_defaultdocdir/dovecot-%dovecot_version/*
 %exclude %_libdir/dovecot/*.la
 %exclude %_libdir/dovecot/modules/*.la
 %_bindir/*
@@ -79,6 +79,7 @@ install -pD -m 644 %buildroot/%_defaultdocdir/dovecot-%dovecot_version/example-c
 %_libdir/dovecot/modules/doveadm/lib*_doveadm_sieve_plugin.*
 %_libdir/dovecot/modules/lib*_sieve*
 %_libdir/dovecot/modules/sieve
+%_libdir/dovecot/modules/settings
 %_libdir/dovecot/modules/settings/lib*
 
 %config(noreplace) %_sysconfdir/dovecot/conf.d/20-managesieve.conf
@@ -87,10 +88,15 @@ install -pD -m 644 %buildroot/%_defaultdocdir/dovecot-%dovecot_version/example-c
 %files devel
 %dir %_includedir/dovecot/sieve
 %_includedir/dovecot/sieve/*
+%_includedir/dovecot/
+%_includedir/dovecot/*
 %_libdir/dovecot/lib*.so
 %_aclocaldir/dovecot-pigeonhole.m4
 
 %changelog
+* Fri Jul 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:0.5.2-alt1
+- Update version to 0.5.2 from src
+
 * Fri Jul 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:0.4.24-alt1
 - Update version to 0.4.24 from src
 
