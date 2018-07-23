@@ -2,7 +2,7 @@
 
 Name: pcsx2
 Version: 1.4.0
-Release: alt1.1
+Release: alt2%ubt
 
 Summary: Playstation 2 console emulator
 License: GPLv3
@@ -13,8 +13,10 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: %ix86
 
-#https://codeload.github.com/PCSX2/%name/tar.gz/v%version
-Source: %name-%version.tar.gz
+Source: https://github.com/PCSX2/%name/archive/v%version/%name-%version.tar.gz
+Patch0: %name-gcc6-alt.patch
+
+BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: bzlib-devel
 BuildRequires: cmake
@@ -151,6 +153,7 @@ zzogl plugin for PCSX2
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %__mkdir_p %_target_platform
@@ -234,6 +237,9 @@ popd
 %_libdir/%name/libzzogl-0.4.0.so
 
 %changelog
+* Mon Jul 23 2018 Nazarov Denis <nenderus@altlinux.org> 1.4.0-alt2%ubt
+- Rebuilt with new GLEW
+
 * Sat Feb 20 2016 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1.1
 - rebuilt against libSoundTouch.so.1
 
