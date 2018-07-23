@@ -2,7 +2,7 @@
 %define rev %nil
 
 Name: lib%_name
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 
 Summary: TNEF Stream Parser Library
@@ -71,6 +71,10 @@ popd
 
 
 %changelog
+* Mon Jul 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1.9.3-alt1
+- 1.9.3 (fixed CVE-2017-9470, CVE-2017-9471, CVE-2017-9474, CVE-2017-9058,
+  CVE-2017-12142, CVE-2017-12141, CVE-2017-12144)
+
 * Wed Mar 08 2017 Yuri N. Sedunov <aris@altlinux.org> 1.9.2-alt1
 - 1.9.2 (fixed CVE-2017-6306, CVE-2017-6305, CVE-2017-6304, CVE-2017-6303
   CVE-2017-6302, CVE-2017-6301, CVE-2017-6300, CVE-2017-6299, CVE-2017-6298)
