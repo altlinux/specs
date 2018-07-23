@@ -24,6 +24,7 @@
 %def_with libnetapi
 %def_without pam_smbpass
 %def_with doc
+%def_with python3
 
 %def_with mitkrb5
 %def_without dc
@@ -54,7 +55,7 @@
 
 Name: samba
 Version: 4.8.3
-Release: alt1%ubt
+Release: alt2%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -112,6 +113,10 @@ BuildRequires: perl-devel
 BuildRequires: perl-Parse-Yapp
 BuildRequires: libpopt-devel
 BuildRequires: python-devel
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+%endif
 BuildRequires: libreadline-devel
 BuildRequires: libldap-devel
 BuildRequires: libpopt-devel
@@ -124,10 +129,38 @@ BuildRequires: libiniparser-devel
 BuildRequires: libkrb5-devel libssl-devel libcups-devel
 BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
 %{?_with_doc:BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-xsl}
-%{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.11 libpytalloc-devel}
-%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.36 python-module-tevent}
-%{?_without_tdb:BuildRequires: libtdb-devel >= 1.3.15  python-module-tdb}
-%{?_without_ldb:BuildRequires: libldb-devel >= 1.3.4 python-module-pyldb-devel}
+%if_without talloc
+BuildRequires: libtalloc-devel >= 2.1.14
+BuildRequires: python-module-talloc-devel
+    %if_with python3
+BuildRequires: python3-module-talloc-devel
+    %endif
+%endif
+
+%if_without tevent
+BuildRequires: libtevent-devel >= 0.9.37
+BuildRequires: python-module-tevent
+    %if_with python3
+BuildRequires: python3-module-tevent
+    %endif
+%endif
+
+%if_without tdb
+BuildRequires: libtdb-devel >= 1.3.16
+BuildRequires: python-module-tdb
+    %if_with python3
+BuildRequires: python3-module-tdb
+    %endif
+%endif
+
+%if_without ldb
+BuildRequires: libldb-devel >= 1.3.4
+BuildRequires: python-module-pyldb-devel
+    %if_with python3
+BuildRequires: python3-module-pyldb-devel
+    %endif
+%endif
+
 #{?_with_clustering_support:BuildRequires: ctdb-devel}
 %{?_with_testsuite:BuildRequires: ldb-tools}
 %if_branch_le M70P
@@ -343,6 +376,39 @@ Obsoletes: python-module-samba4 < %version-%release
 The %name-python package contains the Python libraries needed by programs
 that use SMB, RPC and other Samba provided protocols in Python programs.
 
+%if_with python3
+%package -n python3-module-%name
+Summary: Samba Python3 libraries
+Group: Networking/Other
+Requires: %name-libs = %EVR
+
+# these modules currently don't support Python3 and aren't packaged
+%add_python3_req_skip dsdb
+%add_python3_req_skip param
+%add_python3_req_skip passdb
+%add_python3_req_skip samba.dbchecker
+%add_python3_req_skip samba.drs_utils
+%add_python3_req_skip samba.dsdb
+%add_python3_req_skip samba.kcc
+%add_python3_req_skip samba.kcc.kcc_utils
+%add_python3_req_skip samba.kcc.graph_utils
+%add_python3_req_skip samba.messaging
+%add_python3_req_skip samba.ms_schema
+%add_python3_req_skip samba.netcmd
+%add_python3_req_skip samba.netbios
+%add_python3_req_skip samba.netcmd.common
+%add_python3_req_skip samba.netcmd.fsmo
+%add_python3_req_skip samba.xattr_native
+
+# Python3 not fully migrated yet
+%add_python3_req_skip ConfigParser
+%add_python3_req_skip StringIO
+
+%description -n python3-module-%name
+The %name-python3 package contains the Python3 libraries needed by programs
+that use SMB, RPC and other Samba provided protocols in Python3 programs.
+%endif
+
 %package devel
 Summary: Developer tools for Samba libraries
 Group: Development/C
@@ -361,7 +427,7 @@ libraries in the Samba suite.
 Summary: Perl IDL compiler
 Group: Development/Tools
 BuildArch: noarch
-# Requires: perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
+# Requires: perl(:MODULE_COMPAT_%%(eval "`perl -V:version`"; echo $version))
 Provides: samba4-pidl = %version-%release
 Obsoletes: samba4-pidl < %version-%release
 
@@ -609,6 +675,9 @@ Samba suite.
 %if_with profiling_data
 	--with-profiling-data \
 %endif
+%if_with python3
+        --extra-python=python3 \
+%endif
 	%{subst_enable avahi} \
 	%{subst_enable glusterfs} \
 	--disable-rpath \
@@ -730,14 +799,65 @@ ln -s %_bindir/smbspool %buildroot%{cups_serverbin}/backend/smb
 
 # remove tests form python modules
 rm -rf %buildroot%python_sitelibdir/samba/{tests,external/subunit,external/testtool}
+%if_with python3
+rm -rf %buildroot%python3_sitelibdir/samba/{tests,external/subunit,external/testtool}
+# remove python files with bad syntax because samba hasn't full Python3 support
+filenames=$(echo "
+dbchecker.py
+drs_utils.py
+join.py
+kcc/graph_utils.py
+kcc/__init__.py
+kcc/kcc_utils.py
+kcc/ldif_import_export.py
+ms_display_specifiers.py
+ms_schema.py
+netcmd/common.py
+netcmd/delegation.py
+netcmd/dns.py
+netcmd/domain.py
+netcmd/drs.py
+netcmd/fsmo.py
+netcmd/gpo.py
+netcmd/group.py
+netcmd/__init__.py
+netcmd/ldapcmp.py
+netcmd/ntacl.py
+netcmd/rodc.py
+netcmd/sites.py
+netcmd/testparm.py
+netcmd/user.py
+ntacls.py
+provision/backend.py
+provision/__init__.py
+provision/sambadns.py
+remove_dc.py
+sites.py
+subnets.py
+upgradehelpers.py
+upgrade.py
+web_server/__init__.py
+")
+
+for file in $filenames; do
+    filename="%buildroot%python3_sitelibdir/samba/$file"
+    if python3 -c "with open('$filename') as f: compile(f.read(), '$file', 'exec')"; then
+        echo "python3 compilation of $file succeeded unexpectedly"
+        exit 1
+    else
+        echo "python3 compilation of $file failed, removing"
+        rm "$filename"
+    fi
+done
+%endif
 
 # remove cmocka library
 rm -f %buildroot%_libdir/samba/libcmocka-samba4.so
 
 # Install documentation
 %if_with doc
-#mkdir -p %buildroot%_defaultdocdir/%name/
-#cp -a docs-xml/output/htmldocs %buildroot%_defaultdocdir/%name/
+#mkdir -p %%buildroot%%_defaultdocdir/%%name/
+#cp -a docs-xml/output/htmldocs %%buildroot%%_defaultdocdir/%%name/
 %endif
 
 # Cleanup man pages
@@ -1313,7 +1433,12 @@ TDB_NO_FSYNC=1 %make_build test
 %perl_vendor_privlib/*
 
 %files -n python-module-%name
-%python_sitelibdir/*
+%python_sitelibdir/samba/
+
+%if_with python3
+%files -n python3-module-%name
+%python3_sitelibdir/samba/
+%endif
 
 %if_with doc
 #%files doc
@@ -1459,6 +1584,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Wed Jul 25 2018 Stanislav Levin <slev@altlinux.org> 4.8.3-alt2%ubt
+- Build package for Python3
+
 * Thu Jul 05 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.8.3-alt1%ubt
 - Update to new summer release of Samba 4.8
 - Add winbind-krb5-localauth package with plugin for mapping user accounts

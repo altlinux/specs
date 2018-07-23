@@ -1,8 +1,10 @@
-%def_enable tests
-%def_without python3
+%define _unpackaged_files_terminate_build 1
+
+%def_with check
+%def_with python3
 
 Name: libtdb
-Version: 1.3.15
+Version: 1.3.16
 Release: alt1%ubt
 
 Summary: A trivial database system
@@ -11,11 +13,13 @@ Group: System/Libraries
 Url: http://tdb.samba.org/
 
 Source: http://samba.org/ftp/tdb/tdb-%{version}.tar.gz
+Patch: tdb-alt-fix-python-ldflags.patch
 
 BuildRequires: docbook-dtds docbook-style-xsl xsltproc
-BuildRequires: rpm-build-python python-devel 
+BuildRequires: rpm-build-python python-devel
 %if_with python3
-BuildRequires: rpm-build-python3 python3-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
 %endif
 
 BuildRequires(pre):rpm-build-ubt
@@ -84,7 +88,7 @@ Python bindings for libtdb
 %package -n python3-module-tdb
 Group: Development/Python3
 Summary: Python3 bindings for the Tdb library
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n python3-module-tdb
 Python3 bindings for libtdb
@@ -92,10 +96,12 @@ Python3 bindings for libtdb
 
 %prep
 %setup -n tdb-%version
+%patch -p1
 
 %build
 %undefine _configure_gettext
-%configure --disable-rpath \
+%configure \
+           --disable-rpath \
 %if_with python3
 	   --extra-python=python3 \
 %endif
@@ -109,10 +115,8 @@ Python3 bindings for libtdb
 
 rm -f %buildroot%_libdir/libtdb.a
 
-%if_enabled tests
 %check
 make test
-%endif
 
 %files
 %_libdir/libtdb.so.*
@@ -133,10 +137,16 @@ make test
 
 %if_with python3
 %files -n python3-module-tdb
-%python3_sitelibdir/tdb.so
+%python3_sitelibdir/tdb.cpython-*.so
+%python3_sitelibdir/_tdb_text.py*
+%python3_sitelibdir/__pycache__/_tdb_text.cpython*.py*
 %endif
 
 %changelog
+* Sat Jul 21 2018 Stanislav Levin <slev@altlinux.org> 1.3.16-alt1%ubt
+- 1.3.15 -> 1.3.16
+- Build package for Python3
+
 * Tue Sep 19 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.15-alt1%ubt
 - Update to latest release for samba-4.7 and samba-4.8
 

@@ -1,9 +1,11 @@
-%def_enable tests
+%define _unpackaged_files_terminate_build 1
+%def_with check
+%def_with python3
 
 Name: libtalloc
-Version: 2.1.12
+Version: 2.1.14
 Release: alt1%ubt
-Epoch:   1
+Epoch: 1
 
 Summary: The talloc library
 
@@ -12,11 +14,15 @@ Group: System/Libraries
 Url: http://talloc.samba.org/
 
 Source: http://samba.org/ftp/talloc/talloc-%version.tar.gz
-Patch1: talloc-fix-tests.patch
+Patch: talloc-alt-fix-python-ldflags.patch
 
 BuildRequires: docbook-dtds docbook-style-xsl libacl-devel libcap-devel python-devel xsltproc
 
 BuildRequires(pre):rpm-build-ubt
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+%endif
 
 %description
 A library that implements a hierarchical allocator with destructors.
@@ -24,31 +30,54 @@ A library that implements a hierarchical allocator with destructors.
 %package devel
 Group: Development/C
 Summary: Developer tools for the Talloc library
-Requires: %name = %version-%release
-
-%package -n libpytalloc
-Group: Development/Tools
-Summary: Developer tools for the Talloc library
-Requires: libtalloc = %version-%release
-
-%description -n libpytalloc
-Pytalloc libraries for creating python bindings using talloc
-
-%package -n libpytalloc-devel
-Group: Development/C
-Summary: Developer tools for the Talloc library
-Requires: libpytalloc = %version-%release
-
-%description -n libpytalloc-devel
-Development libraries for libpytalloc
+Requires: %name = %EVR
 
 %description devel
-Header files needed to develop programs that link against the Talloc
-library.
+Header files needed to develop programs that link against the Talloc library.
+
+%package -n python-module-talloc
+Group: Development/Python
+Summary: Python bindings for the Talloc library
+Requires: libtalloc = %EVR
+
+Provides: libpytalloc = %EVR
+Obsoletes: libpytalloc < 2.1.14
+
+%description -n python-module-talloc
+Python libraries for creating bindings using talloc
+
+%package -n python-module-talloc-devel
+Group: Development/Python
+Summary: Development libraries for python-module-talloc
+Requires: python-module-talloc = %EVR
+
+Provides: libpytalloc-devel = %EVR
+Obsoletes: libpytalloc-devel < 2.1.14
+
+%description -n python-module-talloc-devel
+Development libraries for python-module-talloc
+
+%if_with python3
+%package -n python3-module-talloc
+Group: Development/Python3
+Summary: Python3 bindings for the Talloc library
+Requires: libtalloc = %EVR
+
+%description -n python3-module-talloc
+Python 3 libraries for creating bindings using talloc
+
+%package -n python3-module-talloc-devel
+Group: Development/Python3
+Summary: Development libraries for python3-module-talloc
+Requires: python3-module-talloc = %EVR
+
+%description -n python3-module-talloc-devel
+Development libraries for python3-module-talloc
+%endif
 
 %prep
-%setup -q -n talloc-%version
-%patch1 -p2
+%setup -n talloc-%version
+%patch -p1
 
 %build
 %undefine _configure_gettext
@@ -56,6 +85,9 @@ library.
 		--disable-rpath-install \
 		--bundled-libraries=NONE \
 		--builtin-libraries=replace \
+%if_with python3
+                --extra-python=python3 \
+%endif
 		--disable-silent-rules
 %make_build
 
@@ -65,11 +97,8 @@ library.
 rm -f %buildroot%_libdir/*.a
 rm -f %buildroot%_datadir/swig/*/talloc.i
 
-%if_enabled tests
 %check
-export LD_LIBRARY_PATH=./bin/shared:$LD_LIBRARY_PATH
 make test
-%endif
 
 %files
 %_libdir/libtalloc.so.*
@@ -80,17 +109,31 @@ make test
 %_pkgconfigdir/talloc.pc
 %_man3dir/talloc.3.*
 
-%files -n libpytalloc
+%files -n python-module-talloc
 %_libdir/libpytalloc-util.so.*
 %python_sitelibdir/talloc.so
 
-%files -n libpytalloc-devel
+%files -n python-module-talloc-devel
 %_includedir/pytalloc.h
 %_pkgconfigdir/pytalloc-util.pc
 %_libdir/libpytalloc-util.so
 
+%if_with python3
+%files -n python3-module-talloc
+%_libdir/libpytalloc-util.cpython*.so.*
+%python3_sitelibdir/talloc.cpython*.so
+
+%files -n python3-module-talloc-devel
+%_includedir/pytalloc.h
+%_pkgconfigdir/pytalloc-util.cpython-*.pc
+%_libdir/libpytalloc-util.cpython*.so
+%endif
 
 %changelog
+* Sun Jul 22 2018 Stanislav Levin <slev@altlinux.org> 1:2.1.14-alt1%ubt
+- 2.1.12 -> 2.1.14
+- Build package for Python3
+
 * Fri Mar 23 2018 Evgeny Sinelnikov <sin@altlinux.org> 1:2.1.12-alt1%ubt
 - Update to latest release for samba-4.8
 
