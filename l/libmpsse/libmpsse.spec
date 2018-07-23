@@ -1,6 +1,6 @@
 Name:         libmpsse
 Version:      1.3.2
-Release:      alt1
+Release:      alt2
 
 Summary:      Open source library for SPI/I2C control via FTDI chips
 Group:        System/Libraries
@@ -11,7 +11,7 @@ License:      BSD
 Packager:     Vladislav Zavjalov <slazav@altlinux.org>
 
 Source:       %name-%version.tar
-BuildRequires: libftdi1-devel swig python-dev
+BuildRequires: libftdi1-devel swig python-devel
 Requires:      libftdi1
 
 %description
@@ -33,18 +33,25 @@ cd src
 autoreconf
 %configure
 %make_build
-%makeinstall_std
+
+%install
+%makeinstall_std -C src
 
 %files
 %_libdir/*.so
 %python_sitelibdir/*.so
-%python_sitelibdir/*.py
+%python_sitelibdir/*.py*
+%exclude %_libdir/*.a
 
 %files devel
 %_includedir/*
-%_libdir/*.a
 
 %changelog
+* Mon Jul 23 2018 Vladislav Zavjalov <slazav@altlinux.org> 1.3.2-alt2
+- fix Repocop warnings:
+  altlinux-python-obsolete-buildreq-python-dev
+  library-pkgnames-static
+
 * Sun Jul 22 2018 Vladislav Zavjalov <slazav@altlinux.org> 1.3.2-alt1
 - v.1.3.2, switch to new upstream (devttys0@github -> l29ah@github)
 - turn on python bindings
