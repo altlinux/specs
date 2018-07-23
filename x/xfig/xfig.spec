@@ -1,6 +1,6 @@
 Name:         xfig
 Version:      3.2.7a
-Release:      alt1
+Release:      alt2
 
 Summary:      An X Window System tool for drawing basic vector graphics.
 Group:        Graphics
@@ -47,8 +47,10 @@ XFig documentation
 %build
 %autoreconf
 %configure --with-appdefaultdir=%_x11appconfdir
-%make install DESTDIR=%buildroot
+%make
 
+%install
+%makeinstall_std
 install -D -m 755 xfig.sh      %buildroot/%_bindir/xfig.sh
 install -D -m 644 xfig48.png   %buildroot/%_liconsdir/xfig.png
 install -D -m 644 xfig32.png   %buildroot/%_niconsdir/xfig.png
@@ -75,6 +77,9 @@ install -D -m 644 xfig.desktop %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Mon Jul 23 2018 Vladislav Zavjalov <slazav@altlinux.org> 3.2.7a-alt2
+- fix Repocop warnings (add desktop additional category, use compressed man)
+
 * Sun Jul 22 2018 Vladislav Zavjalov <slazav@altlinux.org> 3.2.7a-alt1
 - 3.2.7a
 
