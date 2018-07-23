@@ -38,7 +38,7 @@
 %define bugfix 1
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2%ubt
+Release: alt3%ubt
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -52,7 +52,7 @@ Release: alt2%ubt
 %define poppler_cpp_devel_name lib%rname%somajor-cpp-devel
 %define poppler_glib_devel_name lib%rname%somajor-glib-devel
 %define poppler_qt_devel_name lib%rname%somajor-qt-devel
-%define poppler_qt4_devel_name lib%rname%somajor-qt4-devel
+%define poppler_qt4_devel_name lib%rname-qt4-devel
 %define poppler_qt5_devel_name lib%rname%somajor-qt5-devel
 %endif
 
@@ -239,9 +239,6 @@ Requires: lib%rname%somajor_qt4-qt4 = %version-%release
 %if_enabled xpdfheaders
 Requires: %poppler_devel_name = %version-%release
 %endif
-%if_enabled compat
-Conflicts: lib%rname-qt4-devel
-%endif
 %description -n %poppler_qt4_devel_name
 Libraries, include files, etc you can use to develop
 poppler applications with Qt4
@@ -396,6 +393,9 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
+* Mon Jul 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.61.1-alt3%ubt
+- rename qt4 devel package
+
 * Mon Jul 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.61.1-alt2%ubt
 - build only compat library and Qt4-plugin
 
