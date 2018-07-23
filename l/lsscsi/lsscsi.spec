@@ -1,5 +1,7 @@
+%define origver 030r154
+
 Name: lsscsi
-Version: 0.29
+Version: 0.30
 Release: alt1
 
 Summary: List SCSI devices (or hosts) and associated information
@@ -7,7 +9,7 @@ License: GPL
 Group: System/Kernel and hardware
 
 Url: http://sg.danny.cz/scsi/lsscsi.html
-Source0: %{name}-%{version}.tgz
+Source0: %name-%version.tgz
 Source100: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -23,7 +25,7 @@ Author:
     Doug Gilbert <dgilbert at interlog dot com>
 
 %prep
-%setup
+%setup -n %name-%origver
 
 %build
 %configure
@@ -37,6 +39,10 @@ Author:
 %_man8dir/*
 
 %changelog
+* Mon Jul 23 2018 Michael Shigorin <mike@altlinux.org> 0.30-alt1
+- new version (watch file uupdate)
+- upstream has screwed up the version in tarball, *sigh*
+
 * Thu Jun 07 2018 Michael Shigorin <mike@altlinux.org> 0.29-alt1
 - new version (watch file uupdate)
 
