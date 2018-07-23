@@ -4,13 +4,13 @@
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable static
-%def_enable compat
+%def_disable compat
 
 %if_disabled compat
 %def_enable cpp
 %def_enable glib
 %def_enable qt5
-%def_enable qt4
+%def_disable qt4
 %def_enable devel
 %def_enable utils
 %def_enable xpdfheaders
@@ -19,26 +19,26 @@
 %def_disable cpp
 %def_disable glib
 %def_disable qt5
-%def_enable qt4
-%def_enable devel
+%def_disable qt4
+%def_disable devel
 %def_disable utils
 %def_disable xpdfheaders
 %def_disable gir
 %endif
 
 %define rname poppler
-%define somajor 72
+%define somajor 78
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_glib 8
 %define major 0
-%define minor 61
-%define bugfix 1
+%define minor 67
+%define bugfix 0
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2%ubt
+Release: alt1%ubt
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -194,9 +194,7 @@ Libraries, include files, etc you can use to develop poppler applications
 Summary: Development files for C++ wrapper
 Group: Development/C++
 Requires: lib%rname%somajor_cpp-cpp = %version-%release
-%if_enabled xpdfheaders
 Requires: %poppler_devel_name = %version-%release
-%endif
 %if_enabled compat
 Conflicts: lib%rname-cpp-devel
 %endif
@@ -208,9 +206,7 @@ poppler applications with pure C++
 Summary: Development files for %rname-glib
 Group: Development/GNOME and GTK+
 Requires: lib%rname%somajor_glib-glib = %version-%release
-%if_enabled xpdfheaders
 Requires: %poppler_devel_name = %version-%release
-%endif
 %if_enabled compat
 Conflicts: lib%rname-glib-devel
 %endif
@@ -222,9 +218,7 @@ poppler applications with Glib/Gtk+
 Summary: Development files for %rname-qt5
 Group: Development/KDE and QT
 Requires: lib%rname%somajor_qt5-qt5 = %version-%release
-%if_enabled xpdfheaders
 Requires: %poppler_devel_name = %version-%release
-%endif
 %if_enabled compat
 Conflicts: lib%rname-qt5-devel
 %endif
@@ -236,9 +230,7 @@ poppler applications with Qt5
 Summary: Development files for %rname-qt4
 Group: Development/KDE and QT
 Requires: lib%rname%somajor_qt4-qt4 = %version-%release
-%if_enabled xpdfheaders
 Requires: %poppler_devel_name = %version-%release
-%endif
 %if_enabled compat
 Conflicts: lib%rname-qt4-devel
 %endif
@@ -375,7 +367,6 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %if_enabled devel
-%if_enabled xpdfheaders
 %files -n %poppler_devel_name
 %dir %_includedir/poppler
 %_includedir/poppler/*.h
@@ -393,11 +384,10 @@ make install DESTDIR=%buildroot -C BUILD
 %_libdir/*.a
 %endif
 %endif
-%endif
 
 %changelog
-* Mon Jul 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.61.1-alt2%ubt
-- build only compat library and Qt4-plugin
+* Mon Jul 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.67.0-alt1%ubt
+- new version
 
 * Mon Apr 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.61.1-alt1%ubt
 - new version
