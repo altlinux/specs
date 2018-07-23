@@ -1,10 +1,11 @@
-%define unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 1
 
 %define mname jwcrypto
+%def_with check
 
 Name: python-module-%mname
-Version: 0.4.2
-Release: alt2%ubt
+Version: 0.5.0
+Release: alt1
 Summary: JWCrypto is an implementation of the Javascript Object Signing and Encryption (JOSE) Web Standards
 
 Group: Development/Python
@@ -12,22 +13,24 @@ License: %lgpl3only
 Url: https://github.com/latchset/jwcrypto
 
 BuildArch: noarch
-%py_provides %mname
 
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-cryptography
-BuildRequires: python2.7(pytest)
 BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python-module-tox
+BuildRequires: python-module-coverage
+BuildRequires: python-module-cryptography
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-coverage
 BuildRequires: python3-module-cryptography
-BuildRequires: python3(pytest)
+%endif
 
 %description
 An implementation of the JOSE Working Group documents:
@@ -42,7 +45,6 @@ RFC 7520 - Examples of Protecting Content Using JSON Object Signing and
 %package -n python3-module-%mname
 Summary: JWCrypto is an implementation of the Javascript Object Signing and Encryption (JOSE) Web Standards
 Group: Development/Python3
-%py3_provides %mname
 
 %description -n python3-module-%mname
 An implementation of the JOSE Working Group documents:
@@ -57,7 +59,6 @@ This is a Python3 module.
 
 %prep
 %setup
-rm -rfv ../python3
 cp -a . ../python3
 
 %build
@@ -67,9 +68,11 @@ pushd ../python3
 popd
 
 %check
-python -bb -m pytest --verbose %mname/test*.py
+export PIP_INDEX_URL=http://host.invalid./
+tox --sitepackages -e py%{python_version_nodots python} -v -- -v
+
 pushd ../python3
-python3 -bb -m pytest --verbose %mname/test*.py
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
 
 %install
@@ -91,10 +94,13 @@ rm -rfv %buildroot%python3_sitelibdir/%mname/tests*
 %python3_sitelibdir/%mname-%version-py*.egg-info
 
 %changelog
-* Mon Mar 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt2%ubt
+* Mon Jul 23 2018 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1
+- 0.4.2 -> 0.5.0
+
+* Mon Mar 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt2
 - Updated build dependencies.
 
-* Tue Oct 24 2017 Stanislav Levin <slev@altlinux.org> 0.4.2-alt1%ubt
+* Tue Oct 24 2017 Stanislav Levin <slev@altlinux.org> 0.4.2-alt1
 - New 0.4.2 version
 
 * Tue May 10 2016 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
