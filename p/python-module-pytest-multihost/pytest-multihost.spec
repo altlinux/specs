@@ -1,38 +1,31 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest-multihost
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 1.1
-Release: alt1.1
+Version: 3.0
+Release: alt1
+
 Summary: Utility for writing multi-host tests for pytest
 License: GPLv3
 Group: Development/Python
+# Source-git: https://github.com/encukou/pytest-multihost.git
 Url: https://pypi.python.org/pypi/pytest-multihost
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://git.fedorahosted.org/git/python-pytest-multihost.git
-Source0: https://pypi.python.org/packages/6b/ad/d71a4e8cbcd0d5dfcca90562e17dddb0d1a137d9f35baa048fa7f08d6208/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %name-%version.tar
 
-#BuildPreReq: python-modules-json
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-yaml python-module-paramiko
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python3-module-yaml python3-module-paramiko
-%endif
 
-%py_provides pytest_multihost
+%if_with check
+BuildRequires: python-module-tox
+BuildRequires: python-module-paramiko
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-paramiko
+%endif
 %py_requires yaml paramiko
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-ecdsa python-module-pycrypto python-module-setuptools python-module-yaml python3-module-ecdsa python3-module-pycrypto python3-module-setuptools python3-module-yaml rpm-build-python3
-BuildRequires: python-module-pytest
-BuildRequires: python3-module-pytest
+BuildArch: noarch
 
 %description
 A pytest plugin for multi-host testing.
@@ -40,56 +33,53 @@ A pytest plugin for multi-host testing.
 %package -n python3-module-%oname
 Summary: Utility for writing multi-host tests for pytest
 Group: Development/Python3
-%py3_provides pytest_multihost
 %py3_requires yaml paramiko
 
 %description -n python3-module-%oname
 A pytest plugin for multi-host testing.
 
 %prep
-%setup -q -n %{oname}-%{version}
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup
+# skip tests which require SSH connection
+sed -i '/commands = python -m pytest/s/$/ -m "not needs_ssh"/g' tox.ini
+cp -a . ../python3
 
 %build
-%python_build_debug
+%python_build
 
-%if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
+export PIP_INDEX_URL=http://host.invalid./
+tox --sitepackages -e py%{python_version_nodots python} -v
+
 pushd ../python3
-python3 setup.py test
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 popd
-%endif
 
 %files
-%doc *.rst
-%python_sitelibdir/*
+%doc README.rst COPYING
+%python_sitelibdir/pytest_multihost/
+%python_sitelibdir/pytest_multihost-*.egg-info/
 
-%if_with python3
 %files -n python3-module-%oname
-%doc *.rst
-%python3_sitelibdir/*
-%endif
+%doc README.rst COPYING
+%python3_sitelibdir/pytest_multihost/
+%python3_sitelibdir/pytest_multihost-*.egg-info/
 
 %changelog
+* Mon Jul 23 2018 Stanislav Levin <slev@altlinux.org> 3.0-alt1
+- 1.1 -> 3.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
