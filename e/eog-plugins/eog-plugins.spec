@@ -5,8 +5,8 @@
 %def_enable postasa
 
 Name: %_name-plugins
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.3
+Release: alt1
 
 Summary: EOG plugins
 License: %gpl2plus
@@ -20,13 +20,14 @@ Requires: eog >= %ver_major libpeas-python3-loader
 AutoReqProv: nopython
 %define __python %nil
 %add_python3_path %_libdir/%_name/plugins
-BuildPreReq: rpm-build-python3 python3-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
 Requires: libpeas-python3-loader
 
 %define libchamplain_ver 0.12
 %define gdata_ver 0.6.0
 
-BuildPreReq: rpm-build-licenses rpm-build-gnome
+BuildRequires(pre): rpm-build-licenses rpm-build-gnome rpm-build-gir
 BuildPreReq: eog-devel >= %ver_major
 BuildRequires: libpeas-devel libgnome-desktop3-devel
 %{?_enable_map:BuildRequires: libchamplain-gtk3-devel >= %libchamplain_ver}
@@ -102,6 +103,9 @@ export ac_cv_path_POSTR=%_bindir/postr
 %exclude %_libdir/%_name/plugins/*.la
 
 %changelog
+* Mon Jul 23 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
+- 3.26.3
+
 * Fri Mar 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.26.2-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
