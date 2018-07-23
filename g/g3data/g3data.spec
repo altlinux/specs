@@ -1,6 +1,6 @@
 Name: g3data
 Version: 1.5.4
-Release: alt1
+Release: alt2
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
 
@@ -41,6 +41,9 @@ sed -i -e 's/g3data-icon.xpm/g3data-icon/'\
 %_liconsdir/*
 
 %changelog
+* Mon Jul 23 2018 Vladislav Zavjalov <slazav@altlinux.org> 1.5.4-alt2
+- fix g3data.desktop categories (to remove Repocop warning)
+
 * Sat Aug 24 2013 Vladislav Zavjalov <slazav@altlinux.org> 1.5.4-alt1
 - first build for altlinux
 
