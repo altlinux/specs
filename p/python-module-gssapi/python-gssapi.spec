@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 1.5.0
-Release: alt1%ubt
+Version: 1.5.1
+Release: alt1
 
 Summary: Python Bindings for GSSAPI (RFC 2743/2744 and extensions)
 License: ISC
@@ -16,7 +16,6 @@ Url: https://pypi.python.org/pypi/gssapi
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
@@ -80,7 +79,6 @@ This is a Python3 module.
 %setup
 %patch -p1
 
-rm -rf ../python3
 cp -a . ../python3
 
 %build
@@ -97,15 +95,11 @@ pushd ../python3
 popd
 
 %check
-%define python_version_nodots() %(%1 -Esc "import sys; sys.stdout.write('{0.major}{0.minor}'.format(sys.version_info))")
-
 export PIP_INDEX_URL=http://host.invalid./
-export PYTHONPATH=%python_sitelibdir_noarch:%python_sitelibdir
-TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py%{python_version_nodots python} -v
+tox --sitepackages -e py%{python_version_nodots python} -v
 
 pushd ../python3
-export PYTHONPATH=%python3_sitelibdir_noarch:%python3_sitelibdir
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -v
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 popd
 
 %files
@@ -123,16 +117,19 @@ popd
 %exclude %python3_sitelibdir/%mname/tests/
 
 %changelog
-* Wed Apr 11 2018 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1%ubt
+* Mon Jul 23 2018 Stanislav Levin <slev@altlinux.org> 1.5.1-alt1
+- 1.5.0 -> 1.5.1
+
+* Wed Apr 11 2018 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1
 - 1.4.1 -> 1.5.0
 
-* Fri Mar 30 2018 Stanislav Levin <slev@altlinux.org> 1.4.1-alt1%ubt
+* Fri Mar 30 2018 Stanislav Levin <slev@altlinux.org> 1.4.1-alt1
 - 1.3.0 -> 1.4.1
 
-* Thu Dec 07 2017 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1%ubt
+* Thu Dec 07 2017 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
 - 1.2.2 -> 1.3.0
 
-* Thu Nov 16 2017 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1%ubt
+* Thu Nov 16 2017 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1
 - 1.2.0 -> 1.2.2
 - Build Python3 package
 - Enable tests
