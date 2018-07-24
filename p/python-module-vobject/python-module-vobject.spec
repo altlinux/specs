@@ -1,4 +1,4 @@
-%define version 0.9.6
+%define version 0.9.6.1
 %define release alt1
 %setup_python_module vobject
 
@@ -67,6 +67,9 @@ popd
 %python3_sitelibdir/%{modulename}*
 
 %changelog
+* Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.6.1-alt1
+- New version.
+
 * Sun Jul 08 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.6-alt1
 - New version.
 
