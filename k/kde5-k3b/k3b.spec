@@ -25,7 +25,7 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 18.04.2
+Version: 18.04.3
 Release: alt1%ubt
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -182,6 +182,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+- new version
+
 * Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
 - new version
 
