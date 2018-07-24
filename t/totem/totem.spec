@@ -19,7 +19,7 @@
 
 
 %def_disable static
-%def_disable vala
+%def_enable vala
 
 %if_enabled vala
 %def_enable rotation
@@ -37,7 +37,7 @@
 %def_disable gromit
 
 Name: totem
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -76,7 +76,8 @@ AutoReqProv: nopython
 %define __python %nil
 %add_python3_compile_include %_libdir/%name/plugins
 
-BuildPreReq: meson gcc-c++ rpm-build-gnome gtk-doc perl-podlators
+BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
+BuildRequires: gcc-c++ gtk-doc perl-podlators
 BuildRequires: desktop-file-utils db2latex-xsl yelp-tools
 BuildPreReq: intltool >= 0.40.0
 BuildRequires: libappstream-glib-devel
@@ -98,7 +99,10 @@ BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildPreReq: libclutter-gst3.0-devel >= %clutter_gst_ver
 BuildRequires: libgrilo-devel >= %grilo_ver
 BuildRequires: libgnome-desktop3-devel
-%{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel pylint-py3}
+%if_enabled python
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-pygobject3-devel pylint-py3
+%endif
 %{?_enable_vala:BuildRequires: libvala-devel >= 0.14 vala-tools}
 BuildRequires: libdbus-devel gsettings-desktop-schemas-devel
 %{?_enable_lirc:BuildRequires: liblirc-devel}
@@ -406,6 +410,9 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Tue Jul 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
+- 3.26.2
+
 * Fri Jun 15 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 
