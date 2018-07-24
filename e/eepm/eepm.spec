@@ -1,5 +1,5 @@
 Name: eepm
-Version: 2.5.0
+Version: 2.5.2
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -88,6 +88,16 @@ rm -f %buildroot%_datadir/%name/tools_eget
 %_sysconfdir/bash_completion.d/cerv
 
 %changelog
+* Tue Jul 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2.5.2-alt1
+- distr_info: add OpenWrt detection
+- distr_info: drop obsoleted systems
+- fix inputistty (implement via test -t)
+- distr_info: use awk instead tr (broken in busybox on OpenWrt), cleanup code
+
+* Tue Jul 17 2018 Vitaly Lipatov <lav@altlinux.ru> 2.5.1-alt1
+- distr_info: small fixes
+- epm-query: fix __print_suffix (skip for empty arg)
+
 * Wed Jul 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
 - epm autoremove: skip manually installed packages on ALT
 
