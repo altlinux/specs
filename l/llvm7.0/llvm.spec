@@ -1,7 +1,7 @@
-%global v_major 6.0
+%global v_major 7.0
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt0.12
+%global rel alt1
 %global llvm_name llvm%v_major
 %global clang_name clang%v_major
 %global lld_name lld
@@ -10,12 +10,11 @@
 %define optflags_debug -g1
 
 %def_disable tests
-%def_with clang
-%def_enable compat
+%def_without clang
 
 Name: %llvm_name
-Version: 6.0.0
-Release: %rel.rel
+Version: 7.0.1
+Release: %rel.rel.1
 Summary: The Low Level Virtual Machine
 
 Group: Development/C
@@ -32,13 +31,10 @@ Patch3: llvm-alt-fix-linking.patch
 Patch4: llvm-alt-triple.patch
 Patch5: compiler-rt-alt-i586-arch.patch
 Patch6: RH-0001-CMake-Split-static-library-exports-into-their-own-ex.patch
-Patch7: 0001-DebugInfo-Discard-invalid-DBG_VALUE-instructions-in-.patch
-Patch8: 0001-Fixup-for-rL326769-RegState-Debug-is-being-truncated.patch
-Patch9: 0001-Implement-push-pop-state.patch
-Patch10: clang-alt-aarch64-dynamic-linker-path.patch
-# needed to apply next patch correctly
-Patch11: 0001-On-Windows-expansion-of-regex-file-name-patterns-is-.patch
-Patch12: 0001-llvm-ar-Support-multiple-dashed-options.patch 
+Patch7: clang-alt-aarch64-dynamic-linker-path.patch
+Patch8: 0001-unittests-Don-t-install-TestPlugin.so.patch
+Patch9: 0001-Don-t-set-rpath-when-installing.patch
+Patch10: 0001-Filter-out-cxxflags-not-supported-by-clang.patch
 
 # ThinLTO requires /proc/cpuinfo to exists so the same does llvm
 BuildPreReq: /proc
@@ -62,7 +58,7 @@ BuildRequires: gcc-c++
 %endif #with clang
 
 Provides: llvm = %EVR
-Obsoletes: llvm <= 4.0.1
+Obsoletes: llvm <= 6.0.0
 
 %description
 LLVM is a compiler infrastructure designed for compile-time, link-time,
@@ -74,7 +70,7 @@ of programming tools as well as libraries with equivalent functionality.
 Group: Development/C
 Summary: Libraries and header files for LLVM
 Provides: llvm-devel = %EVR
-Obsoletes: llvm-devel <= 4.0.1
+Obsoletes: llvm-devel <= 6.0.0
 Requires: %name = %EVR
 
 %description devel
@@ -85,7 +81,7 @@ native programs that use the LLVM infrastructure.
 Summary: Static libraries for LLVM
 Group: Development/C
 Provides: llvm-devel-static = %EVR
-Obsoletes: llvm-devel-static <= 4.0.1
+Obsoletes: llvm-devel-static <= 6.0.0
 Requires: %name-devel = %EVR
 
 %description devel-static
@@ -104,7 +100,7 @@ Summary: Documentation for LLVM
 Group: Documentation
 BuildArch: noarch
 Provides: llvm-doc = %EVR
-Obsoletes: llvm-doc <= 4.0.1
+Obsoletes: llvm-doc <= 6.0.0
 
 %description doc
 Documentation for the LLVM compiler infrastructure.
@@ -115,7 +111,7 @@ License: NCSA
 Group: Development/C
 Requires: gcc
 Provides: clang = %EVR
-Obsoletes: clang <= 4.0.1
+Obsoletes: clang <= 6.0.0
 
 %description -n %clang_name
 clang: noun
@@ -138,7 +134,7 @@ Shared libraries for the clang compiler.
 Summary: Header files for clang
 Group: Development/C
 Provides: clang-devel = %EVR
-Obsoletes: clang-devel <= 4.0.1
+Obsoletes: clang-devel <= 6.0.0
 Requires: %clang_name = %EVR
 
 %description -n %clang_name-devel
@@ -148,8 +144,8 @@ This package contains header files for the Clang compiler.
 Summary: Static libraries for clang
 Group: Development/C
 Provides: clang-devel-static = %EVR
-Obsoletes: clang-devel-static <= 4.0.1
-Requires: %clang_name = %EVR
+Obsoletes: clang-devel-static <= 6.0.0
+Requires: %clang_name-devel = %EVR
 
 %description -n %clang_name-devel-static
 This package contains static libraries for the Clang compiler.
@@ -160,7 +156,7 @@ License: NCSA
 Group: Development/C
 BuildArch: noarch
 Provides: clang-analyzer = %EVR
-Obsoletes: clang-analyzer <= 4.0.1
+Obsoletes: clang-analyzer <= 6.0.0
 Requires: %clang_name = %EVR
 
 %description -n %clang_name-analyzer
@@ -174,7 +170,7 @@ Summary: Documentation for Clang
 Group: Documentation
 BuildArch: noarch
 Provides: clang-doc = %EVR
-Obsoletes: clang-doc <= 4.0.1
+Obsoletes: clang-doc <= 6.0.0
 
 %description -n %clang_name-doc
 Documentation for the Clang compiler front-end.
@@ -225,14 +221,12 @@ mv compiler-rt-%version projects/compiler-rt
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch11 -p1
-%patch12 -p1
 
 %build
 %cmake -G Ninja \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
-	-DLLVM_TARGETS_TO_BUILD="host;AMDGPU;BPF;" \
+	-DLLVM_TARGETS_TO_BUILD="host;AMDGPU;BPF;NVPTX;" \
 	-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
 	-DLLVM_ENABLE_LIBCXX:BOOL=OFF \
 	-DLLVM_ENABLE_ZLIB:BOOL=ON \
@@ -314,7 +308,6 @@ ninja -C BUILD check-all || :
 %endif
 
 %files
-%if_disabled compat
 %doc CREDITS.TXT LICENSE.TXT README.txt
 %_bindir/*
 %_man1dir/*
@@ -328,7 +321,6 @@ ninja -C BUILD check-all || :
 %exclude %_bindir/lld*
 %exclude %_bindir/ld*.lld
 %exclude %_bindir/wasm-ld
-%endif
 
 %files libs
 %_libdir/libLLVM-*.so
@@ -336,7 +328,6 @@ ninja -C BUILD check-all || :
 %exclude %_libdir/LLVMgold.so
 %exclude %_libdir/libclang.so.*
 
-%if_disabled compat
 %files devel
 %_bindir/llvm-config
 %_man1dir/llvm-config.1.*
@@ -349,10 +340,12 @@ ninja -C BUILD check-all || :
 %_libdir/BugpointPasses.so
 %exclude %_libdir/libclang.so
 %_datadir/cmake/Modules/llvm
+%exclude %_datadir/cmake/Modules/llvm/LLVMStaticExports.cmake
 
 %files devel-static
 %_libdir/*.a
 %exclude %_libdir/libclang*.a
+%_datadir/cmake/Modules/llvm/LLVMStaticExports.cmake
 
 %files doc
 %doc %_docdir/llvm
@@ -363,12 +356,10 @@ ninja -C BUILD check-all || :
 %_bindir/c-index-test
 %_libdir/clang
 %_man1dir/clang.1*
-%endif
 
 %files -n %clang_name-libs
 %_libdir/libclang.so.*
 
-%if_disabled compat
 %files -n %clang_name-devel
 %_includedir/clang
 %_includedir/clang-c
@@ -400,11 +391,18 @@ ninja -C BUILD check-all || :
 
 %files -n %lld_name-doc
 %doc %_docdir/lld
-%endif
 
 %changelog
-* Sat Dec 22 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.12.rel
-- Enable compat build for llvm7 transistion.
+* Fri Dec 21 2018 L.A. Kostis <lakostis@altlinux.ru> 7.0.1-alt1.rel.1
+- Bootstrap w/ gcc.
+
+* Mon Dec 17 2018 L.A. Kostis <lakostis@altlinux.ru> 7.0.1-alt1.rel
+- Updated to 7.0.1.
+- Split static library exports in cmake (patch from RH).
+- Build with clang.
+
+* Sat Sep 22 2018 L.A. Kostis <lakostis@altlinux.ru> 7.0.0-alt1.rel
+- First try of 7.0.0.
 
 * Wed Sep 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.0-alt0.11.rel
 - NMU: updated build with clang for aarch64.
@@ -422,11 +420,19 @@ ninja -C BUILD check-all || :
 - aarch64: temporarily rebuilt with gcc to fix build from source.
 - clang-alt-triple.patch: added mipsel and mips64el triplets.
 
+* Wed Mar 28 2018 L.A. Kostis <lakostis@altlinux.ru> 7.0.0-alt0.3.r328699
+- Rebased to llvm master SVN r328699.
+
 * Tue Mar 20 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.7.rel
 - Reduce debuginfo for x86_64.
 - Use 'Release' build on x86_64.
 - Fix provides/obsoletes.
 - Move clang libs to separate pkg (to ease future migrations).
+
+* Sun Mar 18 2018 L.A. Kostis <lakostis@altlinux.ru> 7.0.0-alt0.2.r327779
+- Rebased to llvm master SVN r327779.
+- Build w/ clang and lld.
+- .spec: sync changes with llvm6.0.
 
 * Thu Mar 15 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.6.rel
 - Bootstrap with clang, lld and ThinLTO.
@@ -462,6 +468,13 @@ ninja -C BUILD check-all || :
   + use LTO by default.
   + enabled gold linker.
   + use ninja build.
+
+* Tue Feb 27 2018 L.A. Kostis <lakostis@altlinux.ru> 7.0.0-alt0.1.r326101
+- Rebased to llvm master SVN r326101.
+
+* Thu Feb 15 2018 L.A. Kostis <lakostis@altlinux.ru> 7.0.0-alt0.1.r325294
+- Rebased to llvm master SVN r325294.
+- Use host as build target (tnx to glebfm@).
 
 * Sun Feb 04 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.1-alt1.3.rel
 - Replaced X86 with native in the list of targets.
