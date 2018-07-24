@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define mname pyasn1-modules
 
+%def_with check
+
 Name: python-module-%mname
-Version: 0.2.1
-Release: alt1%ubt
+Version: 0.2.2
+Release: alt1
 
 Summary: ASN.1 modules for Python
 License: %bsdstyle
@@ -12,19 +14,22 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/pyasn1-modules
 
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: python-module-pyasn1 >= 0.4.1
-BuildRequires: python3-module-pyasn1 >= 0.4.1
 BuildRequires: python-module-setuptools
+BuildRequires: python3-module-pyasn1 >= 0.4.1
 BuildRequires: python3-module-setuptools
 
+%if_with check
+BuildRequires: pytest
+BuildRequires: pytest3
+%endif
+
 Requires: python-module-pyasn1 >= 0.4.1
+BuildArch: noarch
 
 %description
 This is a small but growing collection of ASN.1 data structures
@@ -45,14 +50,13 @@ It's thought to be useful to protocol developers and testers.
 
 %prep
 %setup
-rm -rf ../python3
 cp -a . ../python3
 
 %build
-%python_build_debug
+%python_build
 
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
 
 %install
@@ -63,27 +67,30 @@ pushd ../python3
 popd
 
 %check
-python setup.py test -v
+pytest -v
 
 pushd ../python3
-python3 setup.py test -v
+pytest3 -v
 popd
 
 %files
 %doc LICENSE.txt README.md
-%python_sitelibdir/pyasn1_modules
+%python_sitelibdir/pyasn1_modules/
 %python_sitelibdir/pyasn1_modules-%version-*.egg-info/
 
 %files -n python3-module-%mname
 %doc LICENSE.txt README.md
-%python3_sitelibdir/pyasn1_modules
+%python3_sitelibdir/pyasn1_modules/
 %python3_sitelibdir/pyasn1_modules-%version-*.egg-info/
 
 %changelog
-* Tue Mar 13 2018 Stanislav Levin <slev@altlinux.org> 0.2.1-alt1%ubt
+* Tue Jul 24 2018 Stanislav Levin <slev@altlinux.org> 0.2.2-alt1
+- 0.2.1 -> 0.2.2
+
+* Tue Mar 13 2018 Stanislav Levin <slev@altlinux.org> 0.2.1-alt1
 - 0.1.5 -> 0.2.1
 
-* Thu Nov 09 2017 Stanislav Levin <slev@altlinux.org> 0.1.5-alt1%ubt
+* Thu Nov 09 2017 Stanislav Levin <slev@altlinux.org> 0.1.5-alt1
 - 0.0.8 -> 0.1.5
 
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt1
