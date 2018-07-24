@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.3.3 
-Release: alt1
+Release: alt1.1
  
 Summary: The Ruby CookieJar is a library to help manage client-side cookies in pure Ruby
 License: MIT/Ruby
@@ -54,6 +54,7 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 # For arch-specific files
 #%%ruby_sitearchdir/*
  
@@ -61,6 +62,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.3-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Aug 21 2017 Andrey Cherepanov <cas@altlinux.org> 0.3.3-alt1
 - New version
 

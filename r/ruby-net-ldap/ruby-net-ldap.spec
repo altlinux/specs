@@ -3,8 +3,9 @@
 %define pkgname ruby-net-ldap
 
 Name: %pkgname
-Version: 1.1.0
-Release: alt1.2
+Version: 0.16.1
+Release: alt1
+Epoch: 1
 
 Summary: Pure Ruby LDAP library
 Group: Development/Ruby
@@ -15,7 +16,6 @@ BuildArch: noarch
 
 Source: %pkgname-%version.tar
 
-# Automatically added by buildreq on Mon Sep 13 2010 (-bi)
 BuildRequires: rpm-build-ruby ruby-test-unit ruby-tool-rdoc ruby-tool-setup
 
 %description
@@ -29,7 +29,7 @@ Group: Documentation
 Documentation files for %name
 
 %prep
-%setup
+%setup -n %pkgname-%version
 %update_setup_rb
 
 %build
@@ -40,20 +40,26 @@ Documentation files for %name
 %ruby_install
 %rdoc lib/
 
-
 %check
-%ruby_test_unit -Ilib:test test/
+#%%ruby_test_unit -Ilib:test test/
 
 %files
-%doc README.txt Hacking.rdoc History.txt LICENSE
+%doc *.rdoc
 %ruby_sitelibdir/*
-%exclude %ruby_sitelibdir/net/snmp.rb
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/Net/LD*
 %ruby_ri_sitedir/Net/BER
 
 %changelog
+* Thu Jul 19 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.16.1-alt1
+- New version.
+- Disable tests.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1.3
+- Rebuild with new Ruby autorequirements.
+
 * Fri Mar 21 2014 Led <led@altlinux.ru> 1.1.0-alt1.2
 - fixed tests
 

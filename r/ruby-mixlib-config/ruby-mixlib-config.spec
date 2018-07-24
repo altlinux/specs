@@ -1,7 +1,7 @@
 %define  pkgname mixlib-config
  
 Name: 	 ruby-%pkgname
-Version: 2.1.0 
+Version: 2.2.14
 Release: alt1
  
 Summary: A simple class based Config mechanism, similar to the one found in Chef
@@ -49,10 +49,20 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 2.2.14-alt1
+- New version.
+
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1.2
+- Rebuild for new Ruby autorequirements.
+
+* Mon Aug 27 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Mon Feb 16 2015 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
 - Initial build for ALT Linux

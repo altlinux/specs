@@ -4,7 +4,7 @@
 
 Name: %pkgname
 Version: 0.17.0
-Release: alt1.2
+Release: alt1.3
 
 Summary: Fast code profiler for Ruby
 Group: Development/Ruby
@@ -44,12 +44,16 @@ Documentation files for %name
 %doc README.rdoc
 %_bindir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 %ruby_sitearchdir/*
 
 %files doc
 %ruby_ri_sitedir/RubyProf*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.17.0-alt1.3
+- Rebuild with new Ruby autorequirements.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.17.0-alt1.2
 - Rebuild with Ruby 2.5.1
 

@@ -3,7 +3,7 @@
 Summary: The complete solution for Ruby command-line executable
 Name: ruby-%orig_name
 Version: 4.1.5
-Release: alt1
+Release: alt1.1
 Group: Development/Ruby
 License: MIT
 URL: http://visionmedia.github.com/commander
@@ -34,9 +34,13 @@ The complete solution for Ruby command-line executable
 %doc Manifest History.rdoc README.rdoc
 %_bindir/commander
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.5-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Tue Aug 13 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.5-alt1
 - Update to new release
 

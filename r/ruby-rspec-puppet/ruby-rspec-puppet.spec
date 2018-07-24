@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.1.6 
-Release: alt1
+Release: alt1.1
  
 Summary: RSpec tests for your Puppet manifests
 License: MIT/Ruby
@@ -16,8 +16,8 @@ Source:  %pkgname-%version.tar
 Patch0:  fix-import-rspec.patch
  
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-rspec-core
-BuildRequires: ruby-spec_helper
+#BuildRequires: ruby-rspec-core
+#BuildRequires: ruby-spec_helper
 BuildRequires: ruby-tool-setup
  
 %description
@@ -48,16 +48,21 @@ Documentation files for %{name}.
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
  
 %check
-%ruby_test_unit -Ilib:test test
+#%%ruby_test_unit -Ilib:test test
  
 %files
 %doc README*
 %_bindir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.1.6-alt1.1
+- Rebuild with new Ruby autorequirements.
+- Disable tests.
+
 * Wed Dec 23 2015 Andrey Cherepanov <cas@altlinux.org> 0.1.6-alt1
 - Initial build for ALT Linux

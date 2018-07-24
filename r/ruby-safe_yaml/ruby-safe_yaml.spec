@@ -1,7 +1,7 @@
 
 Name:    ruby-safe_yaml
 Version: 1.0.4
-Release: alt1
+Release: alt1.1
 
 Summary: Parse YAML safely
 Group:   Development/Ruby
@@ -51,6 +51,7 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README.md
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %doc CHANGES.md
@@ -58,6 +59,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/YAML/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt1
 - New version
 

@@ -1,7 +1,7 @@
 
 Name:    ruby-em-http-request
 Version: 1.1.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: EventMachine based, async HTTP Request client
 Group:   Development/Ruby
@@ -66,11 +66,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README.md
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt1.2
+- Rebuild with new Ruby autorequirements.
+
 * Sat Sep 09 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt1.1
 - Rebuild with Ruby 2.4.1
 

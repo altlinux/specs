@@ -1,6 +1,6 @@
 Name:    redcloth
 Version: 4.3.2
-Release: alt1
+Release: alt1.1
 
 Summary: RedCloth is a Ruby library for converting Textile into HTML.
 License: MIT
@@ -48,10 +48,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/%name
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 4.3.2-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 4.3.2-alt1
 - Initial build for Sisyphus

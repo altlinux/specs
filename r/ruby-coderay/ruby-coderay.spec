@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 1.1.2
-Release: alt1
+Release: alt1.1
 
 Summary: Fast and easy syntax highlighting for selected languages, written in Ruby
 License: MIT
@@ -52,11 +52,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Sat Oct 21 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.2-alt1
 - new version 1.1.2
 

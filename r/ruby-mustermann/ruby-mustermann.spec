@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 1.0.0 
-Release: alt1.1
+Release: alt1.2
 
 Summary: Your personal string matching expert
 License: MIT
@@ -52,11 +52,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1.2
+- Rebuild with new Ruby autorequirements.
+
 * Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1.1
 - Rebuild with Ruby 2.4.1
 

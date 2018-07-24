@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 0.0.0.0.20100301
-Release: alt1.1
+Release: alt1.2
 
 Summary: A collection of strategies for Warden
 Group: Development/Ruby
@@ -40,7 +40,6 @@ Documentation files for %name
 %ruby_install
 %rdoc lib/
 
-
 %files
 %doc README.rdoc
 %ruby_sitelibdir/*
@@ -49,6 +48,9 @@ Documentation files for %name
 %ruby_ri_sitedir/WardenStrategies
 
 %changelog
+* Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.0.0.20100301-alt1.2
+- Rebuild with new Ruby autorequirements.
+
 * Tue Dec 04 2012 Led <led@altlinux.ru> 0.0.0.0.20100301-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 

@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 3.1.5
-Release: alt1
+Release: alt2.git587f4a7
 
 Summary: The Listen gem listens to file modifications and notifies you about the changes.
 License: MIT
@@ -16,8 +16,6 @@ Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
-
-%filter_from_requires /^ruby(\(wdm\|rb-fsevent\))/d
 
 %description
 %summary
@@ -33,6 +31,7 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
+sed -i '/rb-fsevent/d' %pkgname.gemspec
 %update_setup_rb
 
 %build
@@ -52,10 +51,17 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/%pkgname
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Jul 16 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.5-alt2.git587f4a7
+- Upgrade to git 587f4a7.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.5-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Jun 18 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.5-alt1
 - Initial build for Sisyphus

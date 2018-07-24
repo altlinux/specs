@@ -1,6 +1,6 @@
 Name:    ruby-opengl
 Version: 0.9.2
-Release: alt2.4
+Release: alt2.5
 Epoch:   1
 Summary: OpenGL Interface for Ruby
 License: MIT
@@ -8,8 +8,9 @@ Group: Development/Ruby
 Url: https://github.com/larskanis/opengl
 Source: ruby-opengl-%{version}.tar
 
-BuildRequires: libGL-devel libX11-devel libfreeglut-devel libruby-devel ruby-mkrf
+BuildRequires: libGL-devel libX11-devel libfreeglut-devel libruby-devel
 BuildRequires: ruby-tool-setup
+BuildRequires: ruby-hoe rake-compiler
 
 %filter_from_requires /^ruby(glu/d
 %description
@@ -24,15 +25,20 @@ for -- and uses the code from -- Yoshi's ruby-opengl.
 %build
 %ruby_config
 %ruby_build
+rake debug_gem > opengl.gemspec
  
 %install
 %ruby_install
 
 %files
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 %ruby_sitearchdir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.9.2-alt2.5
+- Rebuild with new Ruby autorequirements.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.9.2-alt2.4
 - Rebuild with Ruby 2.5.1
 

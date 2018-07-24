@@ -2,7 +2,7 @@
 
 Name: 	 ruby-gnome2
 Version: 3.2.7
-Release: alt1
+Release: alt1.1
  
 Summary: Ruby bindings for GNOME
 License: MIT/Ruby
@@ -115,6 +115,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %endif
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.7-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Thu Jun 07 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.7-alt1
 - New version.
 

@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 0.5.2 
-Release: alt1
+Release: alt1.1
 
 Summary: dump windows PE files using ruby
 License: MIT
@@ -31,6 +31,7 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
+subst 's/progressbar/ruby-progressbar/' %pkgname.gemspec
 %update_setup_rb
 
 %build
@@ -50,10 +51,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/%pkgname
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.2-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Sun Sep 24 2017 Andrey Cherepanov <cas@altlinux.org> 0.5.2-alt1
 - Initial build for Sisyphus

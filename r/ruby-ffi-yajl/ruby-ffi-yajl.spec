@@ -3,7 +3,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 2.3.1
-Release: alt2
+Release: alt2.1
  
 Summary: ffi-yajl is a Ruby adapter for the yajl JSON parser/generator library
 License: MIT/Ruby
@@ -23,8 +23,6 @@ BuildRequires: ruby-ffi
 BuildRequires: ruby-mime-types
 BuildRequires: yajl-ruby
 BuildRequires: libyajl-devel
-
-%filter_from_requires /^ruby(active_support)/d
 
 %description
 ffi-yajl is a Ruby adapter for the yajl JSON parser/generator library.
@@ -46,6 +44,7 @@ Documentation files for %{name}.
 %setup -n %pkgname-%version
 %patch -p1
 %patch1 -p1
+sed -i '/libyajl2/d' ffi-yajl.gemspec.shared
 %update_setup_rb
  
 %build
@@ -71,11 +70,15 @@ rm -rf %buildroot%_bindir/ffi-yajl-bench %buildroot%ruby_sitelibdir/ffi_yajl/ben
 %endif
 %ruby_sitearchdir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt2.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Jun 04 2018 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt2
 - Fix yajl-ruby library name.
 

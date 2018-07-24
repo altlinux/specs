@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 2.0.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: RightScale Amazon Web Services Ruby Modules
 Group: Development/Ruby
@@ -69,11 +69,15 @@ Documentation files for %name
 %files
 %doc README.txt
 %ruby_sitelibdir/*
+#%%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/RightAws
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1.2
+- Rebuild with new Ruby autorequirements.
+
 * Wed Dec 05 2012 Led <led@altlinux.ru> 2.0.1-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 

@@ -3,8 +3,8 @@
 %define pkgname daemons
 
 Name: ruby-%pkgname
-Version: 1.1.0
-Release: alt1.1
+Version: 1.2.6
+Release: alt1
 
 Summary: A toolkit to create and control daemons in different ways
 Group: Development/Ruby
@@ -14,9 +14,7 @@ Url: http://rubyforge.org/projects/daemons/
 BuildArch: noarch
 
 Source: %pkgname-%version.tar
-Patch: %pkgname-%version-%release.patch
 
-# Automatically added by buildreq on Wed Aug 27 2008 (-bi)
 BuildRequires: rpm-build-ruby ruby-tool-rdoc ruby-tool-setup
 
 %description
@@ -41,7 +39,6 @@ Documentation files for %name
 
 %prep
 %setup -q -n %pkgname-%version
-%patch -p1
 %update_setup_rb
 
 %build
@@ -53,14 +50,21 @@ Documentation files for %name
 %rdoc lib/
 
 %files
-%doc README TODO
+%doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %doc examples
 %ruby_ri_sitedir/Daemon*
 
 %changelog
+* Fri Aug 31 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.6-alt1
+- New version.
+
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1.2
+- Rebuild for new Ruby autorequirements.
+
 * Wed Dec 05 2012 Led <led@altlinux.ru> 1.1.0-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 

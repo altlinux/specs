@@ -1,6 +1,6 @@
 Name:    ruby-libvirt
 Version: 0.7.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: Ruby bindings for libvirt
 License: LGPLv2+
@@ -33,6 +33,7 @@ Documentation files for %{name}.
 %build
 %ruby_config
 %ruby_build
+ruby -e 'load "Rakefile";puts SPEC.to_ruby()' > %name.gemspec
 
 %install
 %ruby_install
@@ -46,11 +47,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.1-alt1.2
+- Rebuild for new Ruby autorequirements.
+
 * Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.1-alt1.1
 - Rebuild for aarch64.
 

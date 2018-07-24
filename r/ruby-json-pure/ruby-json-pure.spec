@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 2.1.0
-Release: alt1.4
+Release: alt1.5
  
 Summary: This is a JSON implementation in pure Ruby
 License: MIT/Ruby
@@ -36,6 +36,7 @@ Documentation files for %{name}.
 %build
 %ruby_config
 %ruby_build
+rm -f Gemfile
  
 %install
 %ruby_install
@@ -50,11 +51,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %ruby_sitearchdir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1.5
+- Rebuild with new Ruby autorequirements.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1.4
 - Rebuild with Ruby 2.5.1
 

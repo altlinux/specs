@@ -2,7 +2,7 @@
  
 Name: 	 %pkgname
 Version: 0.20.0
-Release: alt1
+Release: alt1.1
  
 Summary: Thor is a toolkit for building powerful command-line interfaces.
 License: MIT/Ruby
@@ -55,11 +55,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/%name
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.20.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Aug 21 2017 Andrey Cherepanov <cas@altlinux.org> 0.20.0-alt1
 - New version
 

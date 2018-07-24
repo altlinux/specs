@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 2.3.6
-Release: alt1
+Release: alt1.1
 
 Summary: Simple mock object library for Ruby unit testing
 Group: Development/Ruby
@@ -50,11 +50,15 @@ rm -f lib/flexmock/rails.rb
 %files
 %doc CHANGES README.md
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/FlexMock*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.3.6-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Oct 02 2017 Andrey Cherepanov <cas@altlinux.org> 2.3.6-alt1
 - New version
 

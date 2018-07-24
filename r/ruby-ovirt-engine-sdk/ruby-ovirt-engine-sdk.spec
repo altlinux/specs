@@ -2,7 +2,7 @@
 
 Name:    ruby-ovirt-engine-sdk
 Version: 4.2.4
-Release: alt1.1
+Release: alt1.2
 
 Summary: This is a mirror from gerrit.ovirt.org http://www.ovirt.org, for issues use http://bugzilla.redhat.com
 License: Apache 2.0
@@ -33,17 +33,15 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
-pushd sdk
+%patch -p2
 %update_setup_rb
+echo -e "module OvirtSDK4\nVERSION = \"%version\"\nend" > lib/ovirtsdk4/version.rb
 
 %build
-pushd sdk
 %ruby_config
 %ruby_build
 
 %install
-pushd sdk
 %ruby_install
 %rdoc lib/
 # Remove unnecessary files
@@ -52,11 +50,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 4.2.4-alt1.2
+- Rebuild with new Ruby autorequirements.
+
 * Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 4.2.4-alt1.1
 - Rebuild for aarch64.
 

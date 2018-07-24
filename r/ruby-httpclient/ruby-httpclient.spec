@@ -3,7 +3,7 @@
 Summary: HTTP accessing library for Ruby
 Name: ruby-%orig_name
 Version: 2.8.2.4
-Release: alt1.1
+Release: alt1.2
 Group: Development/Ruby
 License: GPLv2 or Ruby License
 URL: https://github.com/nahi/httpclient
@@ -52,11 +52,15 @@ Documentation for %name
 %_bindir/httpclient
 %_bindir/jsonclient
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.8.2.4-alt1.2
+- Rebuild with new Ruby autorequirements.
+
 * Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 2.8.2.4-alt1.1
 - Rebuild with Ruby 2.4.1
 

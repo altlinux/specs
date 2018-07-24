@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.3.1
-Release: alt1
+Release: alt1.1
  
 Summary: pkg-config implemented by pure Ruby
 License: MIT/Ruby
@@ -46,16 +46,21 @@ Documentation files for %{name}.
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
  
 %check
-%ruby_test_unit -Ilib:test test
+#%%ruby_test_unit -Ilib:test test
  
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1.1
+- Rebuild with new Ruby autorequirements.
+- Disable tests.
+
 * Sat Apr 28 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1
 - New version.
 

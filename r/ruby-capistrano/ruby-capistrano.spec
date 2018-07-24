@@ -1,6 +1,6 @@
 Name: ruby-capistrano
 Version: 2.5.10
-Release: alt1.2
+Release: alt1.3
 
 Summary: Capistrano -- Welcome to easy deployment with Ruby over SSH
 Group: Development/Ruby
@@ -47,6 +47,9 @@ rm -f %buildroot%ruby_sitelibdir/capistrano/recipes/compat.rb
 %ruby_ri_sitedir/Capistrano
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.10-alt1.3
+- Rebuild with new Ruby autorequirements.
+
 * Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 2.5.10-alt1.2
 - Rebuild with Ruby 2.4.1
 

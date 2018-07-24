@@ -1,6 +1,6 @@
 Name: ruby-mechanize
 Version: 0.9.3
-Release: alt1.3
+Release: alt1.4
 
 Summary: WWW::Mechanize, a handy web browsing ruby object
 License: GPLv2
@@ -45,6 +45,7 @@ Documentation files for %name.
 %files
 %doc CHANGELOG.rdoc EXAMPLES.rdoc FAQ.rdoc GUIDE.rdoc LICENSE.rdoc README.rdoc
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %doc examples
@@ -52,6 +53,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/WWW
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.3-alt1.4
+- Rebuild with new Ruby autorequirements.
+
 * Sat Mar 15 2014 Led <led@altlinux.ru> 0.9.3-alt1.3
 - fixed encoding without iconv
 

@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.2.4
-Release: alt2.1
+Release: alt2.2
 
 Summary: Robust HTTP/S Ruby library
 Group: Development/Ruby
@@ -46,12 +46,16 @@ Documentation files for %name
 %files
 %doc README.txt History.txt
 %ruby_sitelibdir/*
+#%%rubygem_specdir/*
 
 %files doc
 %dir %ruby_ri_sitedir/Rightscale
 %ruby_ri_sitedir/Rightscale/HttpConnection
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.4-alt2.2
+- Rebuild with new Ruby autorequirements.
+
 * Wed Dec 05 2012 Led <led@altlinux.ru> 1.2.4-alt2.1
 - Rebuilt with ruby-1.9.3-alt1
 

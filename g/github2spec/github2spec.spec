@@ -1,7 +1,7 @@
 Name:     github2spec
 # NOTE update version in github2spec
 Version:  1.4.4
-Release:  alt1
+Release:  alt1.1
 
 Summary:  Script for generation RPM spec file from github using genspec
 License:  GPLv3+
@@ -34,6 +34,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.4.4-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Tue Jun 05 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.4-alt1
 - (ALT#34983) use version to change tag
 

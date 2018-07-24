@@ -1,7 +1,7 @@
 %define  pkgname mixlib-shellout
  
 Name: 	 ruby-%pkgname
-Version: 2.0.1 
+Version: 2.4.0
 Release: alt1
  
 Summary: mixin library for subprocess management, output collection
@@ -33,11 +33,6 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-
-# Remove windows support
-subst 's/\(require .*windows\)/#\1/' lib/mixlib/shellout.rb
-rm -rf lib/mixlib/shellout/windows*
-
 %update_setup_rb
  
 %build
@@ -56,10 +51,17 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Aug 31 2018 Andrey Cherepanov <cas@altlinux.org> 2.4.0-alt1
+- New version.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Feb 16 2015 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
 - Initial build for ALT Linux

@@ -2,7 +2,7 @@
 
 Name: 	  pcs
 Version:  0.9.165
-Release:  alt1
+Release:  alt1.1
 Epoch:    1
 
 Summary:  Pacemaker/Corosync configuration system
@@ -23,8 +23,6 @@ BuildRequires: rpm-build-python rpm-build-ruby ruby python-devel corosync python
 #BuildRequires: python3-devel python3-module-setuptools
 Requires: pacemaker
 
-%filter_from_requires /^ruby(\(auth\|bootstrap\|cfgsync\|cluster\|cluster_entity\|config\|corosyncconf\|fenceagent\|pcs\|pcsd\|pcsd_file\|permissions\|remote\|resource\|session\|settings\|ssl\|wizard\|pcsd_test_utils\|test_auth\|test_cfgsync\|test_cluster\|test_cluster_entity\|test_config\|test_corosyncconf\|test_pcs\|test_permissions\|test_session\|pcsd_action_command\|pcsd_exchange_format\|pcsd_remove_file\))/d
-
 %description
 Pacemaker/Corosync configuration system with remote access
 
@@ -35,7 +33,7 @@ Group: Other
 BuildArch: noarch
 Requires: corosync
 Requires: openssl
-Requires: ruby-rack-handler-webrick < 2.0.0
+#Requires: ruby-rack-handler-webrick < 2.0.0
 
 %description pcsd
 Pacemaker/Corosync gui/cli configuration system and daemon
@@ -135,6 +133,9 @@ rm -rf %buildroot/%ruby_sitelibdir/pcsd/*{.service,.logrotate,debian,orig}*
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.9.165-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Tue Jun 26 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.9.165-alt1
 - New version.
 

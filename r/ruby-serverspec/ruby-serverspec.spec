@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 2.41.3
-Release: alt1
+Release: alt1.1
 
 Summary: RSpec tests for your servers configured by CFEngine, Puppet, Chef, Ansible, Itamae or anything else even by hand
 License: MIT
@@ -53,10 +53,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/serverspec-init
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.41.3-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 2.41.3-alt1
 - Initial build for Sisyphus

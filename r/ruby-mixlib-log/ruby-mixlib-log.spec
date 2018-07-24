@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 2.0.5
-Release: alt1
+Release: alt1.1
  
 Summary: A simple class based Log mechanism, similar to Merb and Chef, that you can mix in to your project
 License: MIT/Ruby
@@ -50,12 +50,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Aug 24 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.5-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.5-alt1
 - New version.
 - Package as gem.

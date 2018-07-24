@@ -1,6 +1,6 @@
 Name:    rdiscount
 Version: 2.2.0.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: Discount (For Ruby) Implementation of John Gruber's Markdown
 License: BSD-3-Clause
@@ -58,11 +58,15 @@ rm -f %buildroot%_mandir/*.*
 %ruby_sitelibdir/*
 %_man1dir/*.1*
 %_man7dir/*.7*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 03 2018 Andrey Cherepanov <cas@altlinux.org> 2.2.0.1-alt1.2
+- Rebuild for new Ruby autorequirements.
+
 * Sat Jun 09 2018 Alexey Shabalin <shaba@altlinux.ru> 2.2.0.1-alt1.1
 - NMU: rebuild for aarch64
 

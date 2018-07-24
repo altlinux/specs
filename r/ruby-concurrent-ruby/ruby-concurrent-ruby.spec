@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.0.5
-Release: alt1
+Release: alt1.1
 
 Summary: Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more. Inspired by Erlang, Clojure, Scala, Go, Java, JavaScript, and classic concurrency patterns.
 License: MIT
@@ -16,8 +16,6 @@ Source:  %pkgname-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 BuildRequires: libruby-devel
-
-%filter_from_requires /^ruby(\(atomic\|concurrent_ruby_ext\|jruby\|win32ole\)/d
 
 %description
 %summary
@@ -33,6 +31,7 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
+rm -f Gemfile
 %update_setup_rb
 
 %build
@@ -51,10 +50,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.5-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri Jun 01 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.5-alt1
 - Initial build for Sisyphus

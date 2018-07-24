@@ -2,7 +2,7 @@
  
 Name: 	 %pkgname
 Version: 4.0.0 
-Release: alt1.gita5aef20
+Release: alt1.gita5aef20.1
  
 Summary: Collection of shared software descriptions, for use by any Omnibus project that needs them
 License: MIT/Ruby
@@ -16,7 +16,6 @@ Source:  %pkgname-%version.tar
  
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
-BuildRequires: omnibus
 
 %description
 Collection of shared software descriptions, for use by any Omnibus
@@ -57,11 +56,15 @@ cp -a config %buildroot%_libexecdir/%name
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 %_libexecdir/%name
 
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1.gita5aef20.1
+- Rebuild with new Ruby autorequirements.
+
 * Wed May 27 2015 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1.gita5aef20
 - Initial build for ALT Linux

@@ -2,7 +2,7 @@
 
 Name: ruby-%pkgname
 Version: 2.11.2
-Release: alt1.2
+Release: alt1.3
 
 Summary: kinder, gentler I/O for Ruby
 Group: Development/Ruby
@@ -10,9 +10,8 @@ License: LGPL
 Url: http://bogomips.org/kgio/
 
 Source: %pkgname-%version.tar.gz
+Source1: %pkgname-%version.gemspec
 
-# Automatically added by buildreq on Wed Aug 10 2011
-# optimized out: ruby ruby-stdlibs ruby-tool-rdoc
 BuildRequires: libruby-devel ruby-tool-setup strace
 
 %description
@@ -20,7 +19,6 @@ kgio provides non-blocking I/O methods for Ruby without raising
 exceptions on EAGAIN and EINPROGRESS. It is intended for use with the
 Unicorn and Rainbows! Rack servers, but may be used by other
 applications (that run on Unix-like platforms).
-
 
 %package doc
 Summary: Documentation files for %name
@@ -32,23 +30,26 @@ Documentation files for %name.
 
 %prep
 %setup -q -n %pkgname-%version
+rm -rf setup.rb *.gemspec
+cp %SOURCE1 %pkgname-%version.gemspec
 %update_setup_rb
 
 %build 
 %ruby_config 
 %ruby_build
-#for t in test/test_*.rb; do
-#ruby_test_unit -Iext/kgio:lib "$t"
-#done
-
 
 %install
+export VERSION=%version
 %ruby_install
 %rdoc lib/
+
+%check
+#%%ruby_test_unit -Iext/kgio:lib test
 
 %files
 %doc README TODO
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 %ruby_sitearchdir/*
 
 %files doc
@@ -56,6 +57,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/Kgio*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.11.2-alt1.3
+- Rebuild with new Ruby autorequirements.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.11.2-alt1.2
 - Rebuild with Ruby 2.5.1
 

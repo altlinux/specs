@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 2.3.0
-Release: alt2
+Release: alt2.1
  
 Summary: Simple autoconf builder for developers
 License: MIT/Ruby
@@ -54,12 +54,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt2.1
+- Rebuild for new Ruby autorequirements.
+
 * Thu Jul 05 2018 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt2
 - Package as gem.
 - Disable tests.

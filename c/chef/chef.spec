@@ -1,6 +1,6 @@
 
 Name:    chef
-Version: 14.3.20
+Version: 14.4.63
 Release: alt1
 
 Summary: Clients for the chef systems integration framework
@@ -13,9 +13,6 @@ Packager:  Andrey Cherepanov <cas@altlinux.org>
 
 BuildArch: noarch
 
-# Filter automatic requirements
-%filter_from_requires /^ruby(\(win32\|windows\|wmi-lite\|appscript\).*)/d;/^python2.7(yum)/d
-
 Source:  %name-%version.tar
 Source1: chef-client.init
 Source2: chef-client.service
@@ -24,26 +21,6 @@ Source4: chef-client.rb
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
-BuildRequires: chef-zero >= 4.2.2
-BuildRequires: erubis >= 2.7
-BuildRequires: ohai >= 8.6
-BuildRequires: ohai
-BuildRequires: ruby-diff-lcs >= 1.2.4
-BuildRequires: ruby-highline >= 1.6.9
-BuildRequires: ruby-mixlib-cli >= 1.4
-BuildRequires: ruby-mixlib-log >= 1.3
-BuildRequires: ruby-mixlib-authentication >= 1.3
-BuildRequires: ruby-mixlib-shellout >= 2.0.0
-BuildRequires: ruby-net-ssh >= 2.6
-BuildRequires: ruby-net-ssh-multi >= 1.1
-BuildRequires: ruby-plist >= 3.1.0
-BuildRequires: ruby-proxifier >= 1.0
-BuildRequires: ruby-rack
-BuildRequires: ruby-rest-client
-BuildRequires: ruby-rspec-core ruby-rspec-expectations ruby-rspec-mocks
-BuildRequires: ruby-syslog-logger >= 1.6.0
-BuildRequires: ruby-ucf
-BuildRequires: ruby-ffi-yajl >= 2.2
 
 Requires: chef-config
 Requires: ruby-highline
@@ -80,6 +57,7 @@ Documentation for %{name}.
 
 %prep
 %setup
+rm -f Gemfile chef-config/Gemfile
 %update_setup_rb
 pushd chef-config
 %update_setup_rb
@@ -131,10 +109,13 @@ mkdir -p %buildroot/run/chef
 %dir %attr(0750, _chef, _chef) %_var/lib/chef
 %dir %attr(0750, _chef, _chef) %_var/cache/chef
 %ruby_sitelibdir/*
+%rubygem_specdir/chef-*
+%exclude %rubygem_specdir/chef-config-*
 %exclude %ruby_sitelibdir/chef-config/*
 
 %files config
 %ruby_sitelibdir/chef-config/*
+%rubygem_specdir/chef-config-*
 
 %files doc
 %ruby_ri_sitedir/*
@@ -144,6 +125,12 @@ getent group _chef  >/dev/null || groupadd -r _chef
 getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbin/nologin -c "Opscode Chef Daemon" _chef
 
 %changelog
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 14.4.63-alt1
+- New version.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 14.3.20-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri Jun 22 2018 Andrey Cherepanov <cas@altlinux.org> 14.3.20-alt1
 - New version.
 

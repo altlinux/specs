@@ -3,7 +3,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.16.2
-Release: alt3.1
+Release: alt3.2
 
 Summary: Manage your Ruby application's gem dependencies
 License: MIT/Ruby
@@ -24,8 +24,6 @@ BuildRequires: ronn groff-base
 Conflicts: golang-tools
 
 %add_findreq_skiplist *.tt
-#%%add_ruby_req_skip rubygems/builder rubygems/format
-%filter_from_requires /^ruby(/d
 
 %description
 Bundler makes sure Ruby applications run the same code on every machine.
@@ -101,6 +99,9 @@ rm -rf %buildroot%_mandir/*.ronn
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.16.2-alt3.2
+- Rebuild with new Ruby autorequirements.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.16.2-alt3.1
 - Disable all ruby(*) autoreqs for bootstrap.
 - Disable man page generation for bootstrap.

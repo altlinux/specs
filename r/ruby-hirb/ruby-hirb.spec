@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 0.7.3
-Release: alt1
+Release: alt1.1
 
 Summary: A mini view framework for console/irb that's easy to use, even while under its influence. Console goodies include a no-wrap table, auto-pager, tree and menu.
 License: MIT
@@ -36,6 +36,7 @@ Documentation files for %{name}.
 %build
 %ruby_config
 %ruby_build
+rake generate > %pkgname.gemspec
 
 %install
 %ruby_install
@@ -49,10 +50,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.3-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Wed Jun 13 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.3-alt1
 - Initial build for Sisyphus

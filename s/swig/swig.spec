@@ -2,7 +2,7 @@
 Name: swig
 Epoch: 1
 Version: 3.0.12
-Release: alt4%ubt
+Release: alt4%ubt.1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
 License: Open Source
@@ -20,9 +20,12 @@ Patch5: fix-chicken-tests.patch
 %def_disable testsuite
 
 BuildRequires(pre): rpm-build-python3 rpm-build-ubt
-BuildPreReq: python-devel yodl chicken libracket-devel
-BuildPreReq: racket R-devel libpcre-devel boost-devel
+BuildPreReq: python-devel yodl chicken
+BuildPreReq: R-devel libpcre-devel boost-devel
 BuildPreReq: python3-devel python-tools-2to3 zlib-devel
+%ifarch %ix86 x86_64
+BuildRequires: libracket-devel racket
+%endif
 # Automatically added by buildreq on Thu Sep 04 2008
 BuildRequires: ocaml-findlib gcc-c++ guile22-devel imake java-devel
 BuildRequires: libXt-devel liblua5-devel libruby-devel lua5.3
@@ -238,6 +241,10 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1:3.0.12-alt4%ubt.1
+- (NMU) Rebuild with new Ruby autorequirements.
+- Build with racket only on %ix86 and x86_64.
+
 * Tue Sep 26 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:3.0.12-alt4%ubt
 - Fix import package (https://github.com/swig/swig/issues/769)
 

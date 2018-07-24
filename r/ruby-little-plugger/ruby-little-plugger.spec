@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.1.4
-Release: alt1
+Release: alt1.1
 
 Summary: A gems based plugin framework for Ruby
 License: MIT/Ruby
@@ -13,6 +13,7 @@ Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
 Source:  %pkgname-%version.tar
+Source1: %pkgname.gemspec
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
@@ -33,6 +34,7 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
+cp %SOURCE1 %pkgname.gemspec
 %update_setup_rb
 
 %build
@@ -51,11 +53,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.4-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Wed May 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.4-alt1
 - New version.
 

@@ -2,20 +2,22 @@
 Name: opennebula-context
 Summary: OpenNebula Contextualization Package
 Version: 5.4.2.1
-Release: alt1%ubt
+Release: alt1%ubt.1
 License: Apache
 Group: System/Servers
 Url: http://opennebula.org
 # https://github.com/OpenNebula/addon-context-linux.git
 Source0: %name-%version.tar
-BuildArch: noarch
 
 Provides: one-context = %EVR
 Conflicts: cloud-init udev-rule-generator-net udev-rule-generator-cdrom
 
 Requires: util-linux bind-utils cloud-utils-growpart 
 Requires: ruby ruby-json-pure 
-Requires: open-vm-tools qemu-guest-agent
+%ifarch %ix86 x86_64
+Requires: open-vm-tools
+%endif
+Requires: qemu-guest-agent
 Requires: sudo
 
 BuildRequires(pre): rpm-build-ubt rpm-build-ruby
@@ -115,6 +117,10 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 %_unitdir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 5.4.2.1-alt1%ubt.1
+- Rebuild with new Ruby autorequirements.
+- Do not require open-vm-tools for aarch64.
+
 * Tue Apr 10 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.2.1-alt1%ubt
 - 5.4.2.1
 

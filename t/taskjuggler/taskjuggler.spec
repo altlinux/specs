@@ -1,7 +1,7 @@
 
 Name:          taskjuggler
 Version:       3.6.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Project management tool
 
 Group:         Office
@@ -53,10 +53,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README.rdoc TODO
 %_bindir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 %ruby_ri_sitedir/*
 %_datadir/%name/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Sep 11 2017 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1
 - New version
 

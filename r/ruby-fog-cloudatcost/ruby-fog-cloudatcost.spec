@@ -1,8 +1,9 @@
 %define  pkgname fog-cloudatcost
 
 Name:    ruby-%pkgname
-Version: 0.4.0
+Version: 0.1.2
 Release: alt1
+Epoch:   1
 
 Summary: Module for the 'fog' gem to support CloudAtCost Services http://panel.cloudatcost.com/
 License: MIT
@@ -49,11 +50,18 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Aug 31 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.1.2-alt1
+- Reset to old version for fog.
+
+* Fri Aug 31 2018 Andrey Cherepanov <cas@altlinux.org> 0.4.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Jun 25 2018 Andrey Cherepanov <cas@altlinux.org> 0.4.0-alt1
 - New version.
 

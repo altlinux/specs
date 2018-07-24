@@ -2,8 +2,8 @@
 
 Name: rpm-build-ruby
 Epoch: 1
-Version: 0.6
-Release: alt1
+Version: 0.7
+Release: alt5
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
 Group: Development/Ruby
@@ -18,6 +18,7 @@ Requires: %_bindir/rdoc
 Requires: %_bindir/rake
 Requires: rpm-macros-ruby = %EVR
 Requires: ruby-test-unit = %EVR
+Requires: ruby-bundler
 
 %{!?_disable_check:BuildRequires: ruby >= 1.9 ruby-stdlibs >= 1.9}
 
@@ -68,6 +69,24 @@ install -D -m 0755 testrb %buildroot%_bindir/testrb
 %_bindir/testrb
 
 %changelog
+* Mon Aug 20 2018 Pavel Skrylev <majioa@altlinux.org> 1:0.7-alt5
+- Condition "!=" is being converted to ">", ruby version detection for .gemspec
+  is rolled back.
+
+* Mon Aug 20 2018 Pavel Skrylev <majioa@altlinux.org> 1:0.7-alt4
+- Fixed ruby versions detection in Gemfile, blown out ruby version detection for .gemspec.
+
+* Fri Aug 17 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.7-alt3
+- Pass requirements without %%add_ruby_req_skip use.
+
+* Fri Aug 17 2018 Pavel Skrylev <majioa@altlinux.org> 1:0.7-alt2
+- Fixed ruby deps detection, now deps in Gemfile and gemspec are separately
+  determined, prioritizing for gemspec.
+
+* Tue Jul 10 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.7-alt1
+- Competely replace Require/Provides automatic detection based on code parse
+  by gemspec specification (thanks majioa@).
+
 * Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.6-alt1
 - Require ruby-tool-setup used in macros.
 - ruby-tool-setup requires git-core so remove git requirements from rpm-build-ruby.

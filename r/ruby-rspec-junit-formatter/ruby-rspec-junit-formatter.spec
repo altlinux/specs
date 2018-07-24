@@ -1,13 +1,13 @@
-%define  pkgname dm-aggregates
+%define  pkgname rspec_junit_formatter
 
-Name:    ruby-%pkgname
-Version: 1.2.0
+Name:    ruby-rspec-junit-formatter
+Version: 0.2.3
 Release: alt1
 
-Summary: DataMapper plugin providing support for aggregates on collections
+Summary: RSpec results that your CI can read
 License: MIT
 Group:   Development/Ruby
-Url:     http://github.com/datamapper/dm-aggregates
+Url:     https://github.com/sj26/rspec_junit_formatter
 
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
@@ -15,7 +15,6 @@ BuildArch: noarch
 Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 
 %description
 %summary
@@ -49,10 +48,11 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
-* Tue May 29 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
-- Initial build for Sisyphus
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.3-alt1
+- Initial build for Sisyphus.

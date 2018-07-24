@@ -1,7 +1,7 @@
 %define  pkgname plist
  
 Name: 	 ruby-%pkgname
-Version: 3.1.0 
+Version: 3.4.0
 Release: alt1
  
 Summary: All-purpose Property List manipulation library for Ruby
@@ -51,11 +51,18 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 18 2018 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1
+- New version.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Sep 21 2015 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
 - New version
 

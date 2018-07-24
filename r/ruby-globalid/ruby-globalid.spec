@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 0.4.1
-Release: alt1
+Release: alt1.1
 
 Summary: Identify app models with a URI
 License: MIT
@@ -49,11 +49,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Mon Jun 18 2018 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt1
 - Initial build for Sisyphus

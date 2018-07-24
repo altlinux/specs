@@ -1,13 +1,13 @@
-%define  pkgname em-mongo
+%define  pkgname scrub_rb
 
-Name: 	 ruby-%pkgname
-Version: 0.6.0
+Name:    ruby-%pkgname
+Version: 1.0.1
 Release: alt1
 
-Summary: EventMachine MongoDB Driver (based off of RMongo)
-License: MIT/Ruby
+Summary: Pure-ruby polyfill of MRI 2.1 String#scrub, for ruby 1.9 and 2.0 any interpreter
+License: MIT
 Group:   Development/Ruby
-Url:     https://github.com/bcg/em-mongo
+Url:     https://github.com/jrochkind/scrub_rb
 
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
@@ -15,9 +15,6 @@ BuildArch: noarch
 Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-
-%filter_from_requires /^ruby(bson_ext)/d
 
 %description
 %summary
@@ -51,16 +48,11 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
-* Thu Mar 08 2018 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt1
-- New version.
-
-* Wed Oct 25 2017 Andrey Cherepanov <cas@altlinux.org> 0.5.1-alt1
-- New version
-
-* Wed Oct 18 2017 Andrey Cherepanov <cas@altlinux.org> 0.5.0-alt1
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus

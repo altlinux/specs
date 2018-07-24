@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 2.0.1
-Release: alt2.1
+Release: alt2.2
 
 Summary: Ruby library for retrieving facts from operating systems
 Group:   Development/Ruby
@@ -19,8 +19,6 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 
 Requires: coreutils dmidecode net-tools pciutils bind-utils
-
-%filter_from_requires /^ruby(.*\(win32\|windows\/\|cfpropertylist\|sys\/admin\|augeas\|puppet\).*/d
 
 %description
 A cross-platform Ruby library for retrieving facts from
@@ -50,6 +48,8 @@ Documentation files for %{name}.
 %build
 %ruby_config
 %ruby_build
+cp .gemspec facter.gemspec
+rm -f Gemfile
 
 %install
 #./install.rb --destdir=%buildroot
@@ -65,12 +65,16 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc *.md
 %_bindir/%pkgname
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 %doc %_man8dir/%{pkgname}.*
 
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt2.2
+- Rebuild with new Ruby autorequirements.
+
 * Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt2.1
 - Rebuild with Ruby 2.4.1
 

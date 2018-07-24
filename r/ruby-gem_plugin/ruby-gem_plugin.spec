@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 0.2.3
-Release: alt2.2
+Release: alt2.3
 
 Summary: Gem Based Plugin System
 Group: Development/Ruby
@@ -60,11 +60,15 @@ cp -dpR resources %buildroot%_datadir/%pkgname/gem_plugin/
 %dir %_datadir/%pkgname
 %_datadir/%pkgname/gem_plugin
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/GemPlugin*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.3-alt2.3
+- Rebuild with new Ruby autorequirements.
+
 * Fri Mar 21 2014 Led <led@altlinux.ru> 0.2.3-alt2.2
 - disabled %%check
 

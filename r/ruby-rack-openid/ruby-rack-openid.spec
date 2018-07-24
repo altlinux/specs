@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.4.2
-Release: alt1
+Release: alt1.1
 
 Summary: Provides a more HTTPish API around the ruby-openid library
 License: MIT
@@ -49,10 +49,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc Readme.md
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri Jun 01 2018 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
 - Initial build for Sisyphus (without tests).

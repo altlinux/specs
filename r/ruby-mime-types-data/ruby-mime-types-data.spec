@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 3.2016.0521 
-Release: alt1
+Release: alt1.1
  
 Summary: MIME Type registry data
 License: MIT/Ruby
@@ -55,10 +55,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %ruby_sitelibdir/*
 %_datadir/%name
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/MIME/Types/Data
  
 %changelog
+* Wed Aug 22 2018 Andrey Cherepanov <cas@altlinux.org> 3.2016.0521-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Fri Mar 31 2017 Andrey Cherepanov <cas@altlinux.org> 3.2016.0521-alt1
 - Initial build in Sisyphus

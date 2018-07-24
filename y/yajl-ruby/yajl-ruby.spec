@@ -4,7 +4,7 @@
 
 Name: %pkgname
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: YAJL C Bindings for Ruby
 Group: Development/Ruby
@@ -47,12 +47,16 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README.md CHANGELOG.md
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 %ruby_sitearchdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Sat Apr 28 2018 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt1
 - New version.
 

@@ -2,7 +2,7 @@
  
 Name: 	 %pkgname
 Version: 5.6.12
-Release: alt1
+Release: alt1.1
  
 Summary: Easily create full-stack installers for your Ruby project across a variety of platforms
 License: MIT/Ruby
@@ -54,11 +54,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/%name
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 5.6.12-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Tue May 29 2018 Andrey Cherepanov <cas@altlinux.org> 5.6.12-alt1
 - New version.
 

@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: A ruby interface for GraphViz graph visualisation toolkit
 License: MIT/Ruby
@@ -49,10 +49,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README* examples/
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Wed May 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus

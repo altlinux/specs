@@ -2,7 +2,7 @@
 
 Name: 	 ruby-license-scout
 Version: 1.0.10
-Release: alt1
+Release: alt1.1
 
 Summary: Discovers license information of the dependencies of a project.
 License: Apache-2.0
@@ -51,10 +51,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %_bindir/%pkgname
 %_bindir/rebar_lock_json
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.10-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Tue Jun 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.10-alt1
 - Initial build for Sisyphus

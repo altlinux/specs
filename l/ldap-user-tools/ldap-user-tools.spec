@@ -3,7 +3,7 @@
 
 Name:    ldap-user-tools
 Version: 0.9.4
-Release: alt1
+Release: alt1.1
 
 Summary: Utilities to work with LDAP users
 Group:   Development/Other
@@ -14,7 +14,7 @@ Source:  %name-%version.tar
 BuildArch: noarch
 
 BuildRequires: gettext-tools
-Requires: ruby(ldap) ruby(ldap/ldif) openldap-servers perl-Crypt-SmbHash alterator-kdc
+Requires: ruby-ldap openldap-servers perl-Crypt-SmbHash alterator-kdc
 Requires: alterator-openldap-functions >= 0.3
 
 %description
@@ -50,6 +50,9 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 %dir %_sysconfdir/alterator/openldap
 
 %changelog
+* Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Sun Jul  8 2018 Leonid Krivoshein <klark@altlinux.org> 0.9.4-alt1
 - deprecated backend template renamed to slapd-hdb-template.conf
 - added new MDB template for work with openldap >= 2.4.45-alt3

@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 14.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Resources and tools for testing and interacting with Chef and Chef Server.
 License: Apache-2.0
@@ -51,10 +51,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 14.0.1-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 14.0.1-alt1
 - Initial build for Sisyphus

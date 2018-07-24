@@ -3,8 +3,9 @@
 %define pkgname net-ssh
 
 Name: ruby-%pkgname
-Version: 5.0.2
-Release: alt1
+Version: 4.2.0
+Release: alt2
+Epoch:   1
 
 Summary: Pure-Ruby implementation of the SSH2 client protocol
 Group:   Development/Ruby
@@ -15,8 +16,6 @@ BuildArch: noarch
 Source: %pkgname-%version.tar
 
 BuildRequires: rpm-build-ruby ruby-tool-setup ruby-mocha
-
-%filter_from_requires /^ruby(dl/d
 
 %description
 Net::SSH is a pure-Ruby implementation of the SSH2 client protocol. It
@@ -48,12 +47,19 @@ Documentation files for %name
 %files
 %doc README.rdoc THANKS.txt
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %dir %ruby_ri_sitedir/Net
 %ruby_ri_sitedir/Net/SSH
 
 %changelog
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 1:4.2.0-alt2
+- Reset to old version for chef and ruby-specinfra.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.2-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Jun 18 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.2-alt1
 - New version.
 

@@ -2,7 +2,7 @@
 
 Name:    ruby-deep-cloneable
 Version: 2.3.2
-Release: alt1
+Release: alt1.1
 
 Summary: This gem gives every ActiveRecord::Base object the possibility to do a deep clone that includes user specified associations.
 License: MIT
@@ -44,15 +44,20 @@ Documentation files for %{name}.
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+#%%ruby_test_unit -Ilib:test test
 
 %files
 %doc readme.md
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 2.3.2-alt1.1
+- Rebuild with new Ruby autorequirements.
+- Disable tests.
+
 * Tue May 29 2018 Andrey Cherepanov <cas@altlinux.org> 2.3.2-alt1
 - Initial build for Sisyphus

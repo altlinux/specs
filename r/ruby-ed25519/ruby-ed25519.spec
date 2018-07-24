@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.2.4
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby library for the Ed25519 public-key signature system
 License: MIT
@@ -52,10 +52,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.4-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Jun 18 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.4-alt1
 - Initial build for Sisyphus

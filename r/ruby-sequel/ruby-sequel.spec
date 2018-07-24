@@ -21,7 +21,7 @@
 
 Name: ruby-%pkgname
 Version: 5.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: Sequel is a simple, flexible, and powerful SQL database access toolkit for Ruby
 License: MIT
@@ -77,11 +77,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 5.5.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Wed Feb 14 2018 Alexey Shabalin <shaba@altlinux.ru> 5.5.0-alt1
 - 5.5.0
 

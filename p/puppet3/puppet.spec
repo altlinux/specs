@@ -2,7 +2,7 @@
 
 Name:    puppet3
 Version: 3.8.7
-Release: alt3.1
+Release: alt3.2
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
@@ -209,6 +209,9 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.8.7-alt3.2
+- Rebuild with new Ruby autorequirements.
+
 * Sun Sep 10 2017 Andrey Cherepanov <cas@altlinux.org> 3.8.7-alt3.1
 - Rebuild with Ruby 2.4.1
 

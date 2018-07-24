@@ -1,6 +1,6 @@
 Name: libstfl0
 Version: 0.24
-Release: alt5
+Release: alt5.1
 
 %define oname stfl
 
@@ -101,6 +101,9 @@ rm %buildroot%_libdir/*.a
 %ruby_sitearchdir/stfl.so
 
 %changelog
+* Thu Jul 26 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.24-alt5.1
+- Rebuilt for new Ruby autoreq.
+
 * Mon Apr 16 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.24-alt5
 - added explicit dependency on libstfl0 to perl-, python- and ruby- subpackages
 

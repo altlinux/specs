@@ -1,8 +1,9 @@
 %define  pkgname fog-dynect
 
 Name:    ruby-%pkgname
-Version: 0.3.0
+Version: 0.0.3
 Release: alt1
+Epoch:   1
 
 Summary: Module for the 'fog' gem to support Dyn Managed DNS http://dyn.com/
 License: MIT
@@ -49,10 +50,20 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Aug 31 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.0.3-alt1
+- Reset to old version for fog.
+
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1.2
+- Rebuild for new Ruby autorequirements.
+
+* Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Thu May 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus

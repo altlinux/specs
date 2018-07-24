@@ -1,6 +1,6 @@
 Name: libxml-ruby
 Version: 3.1.0
-Release: alt1.2
+Release: alt1.3
 Summary: Ruby language bindings for the GNOME Libxml2 XML toolkit
 Group: Development/Ruby
 License: MIT
@@ -46,12 +46,16 @@ gzip -9c HISTORY > %buildroot%_docdir/%name-%version/HISTORY.gz
 %files
 %ruby_sitearchdir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %doc %_docdir/%name-%version
 %doc %ruby_ri_sitedir/*
 
 %changelog
+* Thu Jul 26 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1.3
+- Rebuild with new Ruby autorequirements.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1.2
 - Rebuild with Ruby 2.5.1
 

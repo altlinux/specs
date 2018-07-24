@@ -2,7 +2,7 @@
 
 Name:    puppet
 Version: 5.5.2
-Release: alt1
+Release: alt1.1
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
@@ -58,18 +58,18 @@ and file server.
 %patch -p1
 chmod +x ext/regexp_nodes/regexp_nodes.rb
 # remove vendor copy of libraries and support non-Linux platforms
-subst 's/require /#require /' \
-       lib/puppet/util/windows.rb
-#      lib/puppet/vendor/require_vendored.rb \
+#subst 's/require /#require /' \
+#       lib/puppet/util/windows.rb
+##      lib/puppet/vendor/require_vendored.rb \
 
-rm -rf \
-       ext/windows \
-       ext/puppet-test \
-       lib/puppet/feature/cfacter.rb \
-       lib/puppet/util/rdoc \
-       lib/puppet/util/windows \
-       lib/puppet/vendor/safe_yaml/spec \
-       lib/puppet/module_tool/skeleton/templates/generator/spec
+#rm -rf \
+#       ext/windows \
+#       ext/puppet-test \
+#       lib/puppet/feature/cfacter.rb \
+#       lib/puppet/util/rdoc \
+#       lib/puppet/util/windows \
+#       lib/puppet/vendor/safe_yaml/spec \
+#       lib/puppet/module_tool/skeleton/templates/generator/spec
 
 echo "require 'rdoc'" > lib/puppet/util/rdoc.rb
 
@@ -203,6 +203,9 @@ END.
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 5.5.2-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Jun 11 2018 Andrey Cherepanov <cas@altlinux.org> 5.5.2-alt1
 - New version.
 

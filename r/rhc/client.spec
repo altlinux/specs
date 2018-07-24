@@ -1,6 +1,6 @@
 Summary:       Multi-tenant cloud management system client tools
 Name:          rhc
-Version:       1.38.6
+Version:       1.38.7
 Release:       alt1
 Group:         System/Servers
 License:       ASL 2.0
@@ -80,6 +80,7 @@ cp autocomplete/rhc_bash %buildroot%_sysconfdir/bash_completion.d/rhc
 %_man1dir/rhc*
 %_man5dir/express*
 %ruby_sitelibdir/*
+#%%rubygem_specdir/*
 %config(noreplace) %_sysconfdir/openshift/express.conf
 %_sysconfdir/bash_completion.d/rhc
 
@@ -89,6 +90,12 @@ cp autocomplete/rhc_bash %buildroot%_sysconfdir/bash_completion.d/rhc
 %endif
 
 %changelog
+* Thu Jul 19 2018 Andrey Cherepanov <cas@altlinux.org> 1.38.7-alt1
+- (NMU) New version.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.38.6-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Sun Sep 25 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.38.6-alt1
 - update to last release
 

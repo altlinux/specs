@@ -1,5 +1,3 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
 %define pkgname eventmachine
 
 #	disable if you do not have direct connection to internet
@@ -9,7 +7,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.2.7
-Release: alt1.1
+Release: alt1.2
 
 Summary: Fast, simple event-processing library for Ruby programs
 Group:   Development/Ruby
@@ -23,8 +21,6 @@ Source:  %pkgname-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libruby-devel ruby-tool-setup ruby-tool-rdoc
 BuildRequires: gcc-c++ libssl-devel net-tools /proc
-
-%filter_from_requires \,^ruby(\(java\|jeventmachine\|win32/resolv\|em/spec\)),d
 
 %description
 EventMachine implements a fast, single-threaded engine for arbitrary network
@@ -77,6 +73,7 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README.md docs examples
 %ruby_sitearchdir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/BufferedTokenizer*
@@ -86,6 +83,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/TestConnection/*
 
 %changelog
+* Mon Sep 03 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.7-alt1.2
+- Rebuild with new Ruby autorequirements.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.2.7-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 

@@ -1,6 +1,6 @@
 Name:    mustache
 Version: 1.0.5
-Release: alt1
+Release: alt1.1
 
 Summary: Logic-less Ruby templates
 License: MIT
@@ -54,6 +54,7 @@ rm -f %buildroot%_mandir/*.*
 %doc README*
 %_bindir/%name
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 %_man1dir/*.1*
 %_man5dir/*.5*
 
@@ -61,5 +62,8 @@ rm -f %buildroot%_mandir/*.*
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.5-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Wed May 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.5-alt1
 - Initial build for Sisyphus

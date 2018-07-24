@@ -1,8 +1,8 @@
 %define  pkgname mcollective-client
 
 Name: 	 ruby-%pkgname
-Version: 2.11.0 
-Release: alt1.1
+Version: 2.12.1
+Release: alt1
 
 Summary: Client libraries for the Mcollective Application Server
 License: MIT/Ruby
@@ -43,7 +43,6 @@ Documentation files for %{name}.
 
 %install
 %ruby_install
-#install -Dm0755 bin/mco %%buildroot%%_bindir/mco
 %rdoc lib/
 # Remove unnecessary files
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
@@ -53,12 +52,19 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %files
 %ruby_sitelibdir/*
-#%%_bindir/mco
+%_bindir/mco
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Jul 17 2018 Andrey Cherepanov <cas@altlinux.org> 2.12.1-alt1
+- New version.
+- Package mco executable.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.11.0-alt1.2
+- Rebuild with new Ruby autorequirements.
+
 * Sat Sep 09 2017 Andrey Cherepanov <cas@altlinux.org> 2.11.0-alt1.1
 - Rebuild with Ruby 2.4.1
 

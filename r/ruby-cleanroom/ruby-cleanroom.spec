@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.0.0 
-Release: alt1
+Release: alt1.1
  
 Summary: (More) safely evaluate Ruby DSLs with cleanroom
 License: MIT/Ruby
@@ -60,10 +60,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon Aug 27 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Thu May 21 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
 - Initial build for ALT Linux

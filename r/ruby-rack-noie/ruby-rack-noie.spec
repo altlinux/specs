@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 0.1.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: A Rack middleware to redirect (*cough* kick) IE6 users out of your website
 Group: Development/Ruby
@@ -49,11 +49,15 @@ Documentation files for %name
 %files
 %doc README.markdown
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/Rack/NoIE
 
 %changelog
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt1.2
+- Rebuild for new Ruby autorequirements.
+
 * Fri Dec 07 2012 Led <led@altlinux.ru> 0.1.0-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 

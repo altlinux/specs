@@ -1,22 +1,19 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
 %define pkgname net-ssh-gateway
 
 Name: ruby-%pkgname
-Version: 1.0.1
-Release: alt2.2
+Version: 2.0.0
+Release: alt1
 
 Summary: A simple library to assist in establishing tunneled Net::SSH connections
 Group: Development/Ruby
 License: MIT
-Url: http://rubyforge.org/projects/net-ssh/
+Url: https://github.com/net-ssh/net-ssh-gateway
 
 BuildArch: noarch
 
-Source0: %pkgname-%version.tar.gz
+Source0: %pkgname-%version.tar
 
-# Automatically added by buildreq on Sat Dec 05 2009 (-bi)
-BuildRequires: rpm-build-ruby ruby-tool-rdoc ruby-tool-setup
+BuildRequires(pre): rpm-build-ruby
 
 %description
 A simple library to assist in establishing tunneled Net::SSH connections.
@@ -41,13 +38,20 @@ Documentation files for %name
 %rdoc lib/
 
 %files
-%doc CHANGELOG.rdoc README.rdoc
+%doc CHANGES.txt README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/Net/SSH/Gateway
 
 %changelog
+* Wed Sep 05 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
+- New version.
+
+* Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt2.3
+- Rebuild with new Ruby autorequirements.
+
 * Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt2.2
 - Rebuild with Ruby 2.4.1
 

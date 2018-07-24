@@ -2,7 +2,7 @@
 
 Name:    ruby-sfl
 Version: 2.1
-Release: alt1
+Release: alt1.1
 
 Summary: spawn! spawn! spawn! spawn! spawn! spawn!
 License: MIT/Ruby
@@ -15,7 +15,6 @@ BuildArch: noarch
 Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 
 %description
 %summary
@@ -49,10 +48,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 2.1-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Mon May 28 2018 Andrey Cherepanov <cas@altlinux.org> 2.1-alt1
 - Initial build for Sisyphus

@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 0.3.3
-Release: alt1
+Release: alt1.1
 
 Summary: A dynamically generated parsing system using JSON Schema.
 License: Apache-2.0
@@ -49,10 +49,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.3-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.3-alt1
 - Initial build for Sisyphus

@@ -1,7 +1,7 @@
 %define  pkgname zip-container
  
 Name: 	 ruby-%pkgname
-Version: 3.0.1 
+Version: 3.0.2
 Release: alt1
  
 Summary: A Ruby library for working with ZIP Container Format files
@@ -57,10 +57,17 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc Changes.rdoc Licence.rdoc ReadMe.rdoc
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Sep 05 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt1
+- New version.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Tue Feb 17 2015 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1
 - Initial build for ALT Linux (without tests)

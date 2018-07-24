@@ -1,7 +1,7 @@
 %define  pkgname mimemagic
 
 Name:    ruby-%pkgname
-Version: 0.3.0
+Version: 0.3.2
 Release: alt1
 
 Summary: Mime type detection in ruby via file extension or file content
@@ -49,10 +49,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.2-alt1
+- New version.
+
 * Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus

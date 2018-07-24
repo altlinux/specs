@@ -1,19 +1,17 @@
 %define pkgname xml-simple
 
 Name: ruby-%pkgname
-Version: 1.0.12
-Release: alt1.1
+Version: 1.1.5
+Release: alt1
 Summary: A very simple API for XML processing
 License: Ruby license
 Group: Development/Ruby
-Url: http://rubyforge.org/projects/xml-simple/
+Url: https://github.com/maik/xml-simple
 
 Source: %pkgname-%version.tar
-Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Mon Mar 31 2008 (-bi)
 BuildRequires: rpm-build-ruby ruby-tool-rdoc ruby-tool-setup
 
 %description
@@ -31,7 +29,6 @@ Documentation files for %name
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
 %update_setup_rb
 
 %build
@@ -44,11 +41,18 @@ Documentation files for %name
 
 %files
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/XmlSimple*
 
 %changelog
+* Fri Aug 31 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt1
+- New version.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.12-alt1.2
+- Rebuild with new Ruby autorequirements.
+
 * Tue Dec 04 2012 Led <led@altlinux.ru> 1.0.12-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 
