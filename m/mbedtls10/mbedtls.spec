@@ -3,7 +3,7 @@
 
 Name: %pkgname%soversion
 Version: 2.8.0
-Release: alt3%ubt
+Release: alt4%ubt
 
 Summary: Light-weight cryptographic and SSL/TLS library
 License: Apache
@@ -68,9 +68,11 @@ popd
 %doc apache-2.0.txt ChangeLog LICENSE README.md
 %_libdir/libmbedcrypto.so.*
 %_libdir/lib%pkgname.so.*
-%_libdir/libmbedx509.so.*
 
 %changelog
+* Tue Jul 24 2018 Nazarov Denis <nenderus@altlinux.org> 2.8.0-alt4%ubt
+- Fix file conflict
+
 * Sun Jul 22 2018 Nazarov Denis <nenderus@altlinux.org> 2.8.0-alt3%ubt
 - Build as legacy library
 
