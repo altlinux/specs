@@ -1,11 +1,12 @@
 %define pkgname mbedtls
-%define soversion 10
+%define so_tls_version 10
+%define so_crypto_version 1
 
-Name: %pkgname%soversion
+Name: %pkgname%so_tls_version
 Version: 2.8.0
-Release: alt4%ubt
+Release: alt5%ubt
 
-Summary: Light-weight cryptographic and SSL/TLS library
+Summary: Transport Layer Security protocol suite
 License: Apache
 Group: System/Legacy libraries
 
@@ -18,7 +19,8 @@ Patch0: %pkgname-threading-alt.patch
 BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: cmake
-BuildRequires: pkcs11-helper-devel
+BuildRequires: libmbedx509-0
+BuildRequires: libpkcs11-helper-devel
 BuildRequires: zlib-devel
 
 %description
@@ -27,16 +29,25 @@ library written in C. mbed TLS makes it easy for developers to include
 cryptographic and SSL/TLS capabilities in their (embedded)
 applications with as little hassle as possible.
 
-%package -n lib%pkgname%soversion
-Summary: Light-weight cryptographic and SSL/TLS library
+%package -n lib%pkgname%so_tls_version
+Summary: Transport Layer Security protocol suite
 Group: System/Legacy libraries
 Conflicts: hiawatha
 
-%description -n lib%pkgname%soversion
+%description -n lib%pkgname%so_tls_version
 mbed TLS is a light-weight open source cryptographic and SSL/TLS
 library written in C. mbed TLS makes it easy for developers to include
 cryptographic and SSL/TLS capabilities in their (embedded)
 applications with as little hassle as possible.
+
+%package -n libmbedcrypto%so_crypto_version
+Summary: Cryptographic base library for mbedtls
+Group: System/Legacy libraries
+
+%description -n libmbedcrypto%so_crypto_version
+This subpackage of mbedtls contains a library that exposes
+cryptographic ciphers, hashes, algorithms and format support such as
+AES, MD5, SHA, Elliptic Curves, BigNum, PKCS, ASN.1, BASE64.
 
 %prep
 %setup -n %pkgname-%version
@@ -52,6 +63,7 @@ cmake .. \
 	-DENABLE_ZLIB_SUPPORT:BOOL=TRUE \
 	-DLIB_INSTALL_DIR:PATH=%_libdir \
 	-DUSE_SHARED_MBEDTLS_LIBRARY:BOOL=TRUE \
+	-DUSE_STATIC_MBEDTLS_LIBRARY:BOOL=FALSE \
 	-DUSE_PKCS11_HELPER_LIBRARY:BOOL=TRUE \
 	-DCMAKE_BUILD_TYPE:STRING="Release"
 
@@ -63,13 +75,19 @@ popd
 %makeinstall_std -C %_target_platform
 %__rm -rf %buildroot{%_bindir,%_includedir}
 %__rm -rf %buildroot%_libdir/*.{so,a}
+%__rm -rf %buildroot%_libdir/libmbedx509.so.*
 
-%files -n lib%pkgname%soversion
+%files -n lib%pkgname%so_tls_version
 %doc apache-2.0.txt ChangeLog LICENSE README.md
-%_libdir/libmbedcrypto.so.*
 %_libdir/lib%pkgname.so.*
 
+%files -n libmbedcrypto%so_crypto_version
+%_libdir/libmbedcrypto.so.*
+
 %changelog
+* Tue Jul 24 2018 Nazarov Denis <nenderus@altlinux.org> 2.8.0-alt5%ubt
+- Separate subpackages
+
 * Tue Jul 24 2018 Nazarov Denis <nenderus@altlinux.org> 2.8.0-alt4%ubt
 - Fix file conflict
 
