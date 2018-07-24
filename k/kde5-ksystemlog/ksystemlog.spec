@@ -1,8 +1,8 @@
 %define rname ksystemlog
 
 Name: kde5-%rname
-Version: 18.04.2
-Release: alt2%ubt
+Version: 18.04.3
+Release: alt1%ubt
 %K5init
 
 Group: Graphical desktop/KDE
@@ -50,6 +50,9 @@ who want to quickly see problems occuring on their server.
 %_K5xmlgui/ksystemlog/
 
 %changelog
+* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+- new version
+
 * Thu Jul 12 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt2%ubt
 - update russian translation
 

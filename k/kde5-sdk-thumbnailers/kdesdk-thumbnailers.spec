@@ -1,7 +1,7 @@
 %define rname kdesdk-thumbnailers
 
 Name: kde5-sdk-thumbnailers
-Version: 18.04.2
+Version: 18.04.3
 Release: alt1%ubt
 %K5init
 
@@ -43,6 +43,9 @@ BuildRequires: kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel
 %_K5srv/*thumbnail*.desktop
 
 %changelog
+* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+- new version
+
 * Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
 - new version
 

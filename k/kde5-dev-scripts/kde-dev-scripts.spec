@@ -5,7 +5,7 @@
 %add_findreq_skiplist %_K5bin/kde-systemsettings-tree.py
 
 Name: kde5-dev-scripts
-Version: 18.04.2
+Version: 18.04.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -60,6 +60,9 @@ popd
 %_K5data/*/
 
 %changelog
+* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+- new version
+
 * Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
 - new version
 
