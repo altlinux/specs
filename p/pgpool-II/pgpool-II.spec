@@ -1,112 +1,168 @@
-%def_with	devel
-%def_with       lib
-%define		pgpool_configdir    %_sysconfdir/pgpool.d
-%define		pgpool_piddir    %_var/run/pgpool
-%define		pgpool_logdir    %_logdir/pgpool
-%define		PGSQL   pgsql
+%define pg_ver 10
+%def_with devel
+%def_with lib
+%define pgpool_configdir %_sysconfdir/pgpool.d
+%define pgpool_piddir %_var/run/pgpool
+%define pgpool_logdir %_logdir/pgpool
+%define PGSQL pgsql
 
-Name:		pgpool-II 
-Version:	3.1.2
-Release:    	alt2
-Summary:	pgpool is a connection pool/replication server for PostgreSQL	
-License: 	BSD
-Group: 		Databases
-Url:		http://pgfoundry.org/projects/pgpool
-Source:		%name-%version.tar.gz
-Source1:    pgpool.init
-Source2:	pgpool.conf
+Name: pgpool-II
+Version: 3.7.4
+Release: alt1
+Summary: Pgpool is a connection pooling/replication server for PostgreSQL
+License: BSD
+Group: Databases
+Url: http://www.pgpool.net
+Source: %name-%version.tar
 
-BuildRequires: flex gcc-c++ postgresql-devel
+Source1: pgpool.service
+Source2: pgpool.tmpfiles
+Source3: pgpool.init
 
+Patch: 0001-pgpool-alt-config.patch
 
-%package        devel
-Summary:        header files for  %name.
-Group:          Databases
+BuildRequires: flex
+BuildRequires: postgresql-devel
+BuildRequires: pam-devel
+BuildRequires: libmemcached-devel
+BuildRequires: libssl-devel
 
-%package        lib
-Summary:        lib files for  %name.
-Group:          Databases
+Requires: libpcp = %EVR
+Requires: postgresql%pg_ver-%name = %EVR
 
+%description
+pgpool-II is a inherited project of pgpool (to classify from
+pgpool-II, it is sometimes called as pgpool-I). For those of
+you not familiar with pgpool-I, it is a multi-functional
+middle ware for PostgreSQL that features connection pooling,
+replication and load balancing functions. pgpool-I allows a
+user to connect at most two PostgreSQL servers for higher
+availability or for higher search performance compared to a
+single PostgreSQL server.
 
+%package -n libpcp
+Summary: lib files for  %name
+Group: System/Libraries
+Provides: %name-lib = %EVR
+Obsoletes: %name-lib < %EVR
+
+%description -n libpcp
+lib files for %name.
+
+%package -n libpcp-devel
+Summary: The development files for pgpool-II
+Group: Development/C
+Provides: %name-devel = %EVR
+Obsoletes: %name-devel < %EVR
+Requires: libpcp = %EVR
+
+%description -n libpcp-devel
+Development headers and libraries for pgpool-II.
+
+%package -n postgresql%pg_ver-%name
+Summary: Postgresql extensions for pgpool-II
+Group: Databases
+Requires: postgresql%pg_ver-server
+
+%description -n postgresql%pg_ver-%name
+Postgresql extensions libraries and sql files for pgpool-II.
 
 %prep
 %setup -q
-%autoreconf
+%patch -p2
 
 %build
-%configure   --includedir=/usr/include/pgsql 
+%autoreconf
+%configure \
+    --disable-static \
+    --with-pam \
+    --with-openssl \
+    --disable-rpath \
+    --with-memcached=%_includedir/libmemcached
+
 %make_build
+%make_build -C src/sql/pgpool-recovery
+%make_build -C src/sql/pgpool-regclass
 
 %install
-/usr/sbin/groupadd -g 46 postgres || :
-/usr/sbin/useradd -M -o -r -d %_localstatedir/%PGSQL -s /dev/null \
-        -c "PostgreSQL Server, slony1, pgpool daemon" -u 46 postgres -g postgres || :
-
 %make DESTDIR=%buildroot install
-%__install -p -m755 -D %SOURCE1 %buildroot%_initdir/pgpool
-%__install -p -m755 -D %SOURCE2 %buildroot%_sysconfdir/pgpool.conf 
-%__mkdir_p %buildroot{%pgpool_piddir,%pgpool_logdir}
+%make DESTDIR=%buildroot install -C src/sql/pgpool-recovery
+%make DESTDIR=%buildroot install -C src/sql/pgpool-regclass
 
+mkdir -p %buildroot{%pgpool_piddir,%pgpool_logdir,%_unitdir,%_initdir,%_tmpfilesdir,%_man1dir,%_man8dir}
+
+install -p -m644 %SOURCE1 %buildroot%_unitdir/pgpool.service
+install -p -m644 %SOURCE2 %buildroot%_tmpfilesdir/pgpool.conf
+install -p -m755 %SOURCE3 %buildroot%_initdir/pgpool
 
 mv %buildroot%_sysconfdir/pcp.conf.sample %buildroot%_sysconfdir/pcp.conf
+mv %buildroot%_sysconfdir/pgpool.conf.sample %buildroot%_sysconfdir/pgpool.conf
 mv %buildroot%_sysconfdir/pool_hba.conf.sample  %buildroot%_sysconfdir/pool_hba.conf
+rm -f %buildroot%_sysconfdir/pgpool.conf.sample-*
+
+# Copy man pages
+cp doc/src/sgml/man1/* %buildroot%_man1dir/
+cp doc/src/sgml/man8/* %buildroot%_man8dir/
 
 mkdir %buildroot%_sysconfdir/cron.d
 /bin/cat << __EOF__ > %buildroot%_sysconfdir/cron.d/pgpool
 20	10	*	*	*	root	find /var/log/pgpool/ -type f -mtime +90 -delete
 __EOF__
 
-%pre
-/usr/sbin/groupadd -g 46 postgres || :
-/usr/sbin/useradd -M -o -r -d %_localstatedir/%PGSQL -s /dev/null \
-	-c "PostgreSQL Server and slony1 daemon" -u 46 postgres -g postgres || :
 
 %post
 %post_service pgpool
 
-%files
-%attr(0755,root,root) %_bindir/*
+%preun
+%preun_service pgpool
 
-%_man8dir/*
+%files
+%doc NEWS COPYING src/sample
+%_bindir/*
 %_datadir/%name
 %_initdir/pgpool
+%_unitdir/pgpool.service
+%_tmpfilesdir/pgpool.conf
 %config(noreplace) %_sysconfdir/pgpool.conf
 %config(noreplace) %_sysconfdir/pcp.conf
 %config(noreplace) %_sysconfdir/pool_hba.conf
-
 %config %_sysconfdir/cron.d/pgpool
+%_man1dir/*
+%_man8dir/*
 
-%attr(770,root,postgres) %dir %pgpool_piddir
-%attr(770,root,postgres) %dir %pgpool_logdir
+%attr(775,root,postgres) %dir %pgpool_piddir
+%attr(775,root,postgres) %dir %pgpool_logdir
 
-%files devel
-%_includedir/%PGSQL
-
-%files lib
+%files -n libpcp-devel
+%_includedir/*
 %_libdir/libpcp.so
-%_libdir/libpcp.so.0
-%_libdir/libpcp.so.0.0.0
 
+%files -n libpcp
+%_libdir/libpcp.so.*
 
-%description
-pgpool-II is a middleware that works between PostgreSQL servers and a PostgreSQL database client
-%description    devel
-header files for %name.
-%description    lib
-lib files for %name.
+%files -n postgresql%pg_ver-%name
+%_libdir/pgsql/pgpool-recovery.so
+%_libdir/pgsql/pgpool-regclass.so
+%_datadir/pgsql/extension/*
 
 %changelog
+* Tue Jul 24 2018 Alexey Shabalin <shaba@altlinux.org> 3.7.4-alt1
+- 3.7.4
+- rename package pgpool-II-lib to libpcp
+- rename package pgpool-II-devel to libpcp-devel
+- add package postgresql10-pgpool-II with postgresql extension
+
 * Mon Feb 06 2012 Alexander V Openkin <open@altlinux.ru> 3.1.2-alt2
 - 3.1.2 init script fixed
 
 * Thu Feb 02 2012 Alexander V Openkin <open@altlinux.ru> 3.1.2-alt1
-- 3.1.2 release 
+- 3.1.2 release
 
 * Thu Jul 28 2011 Alexander V Openkin <open@altlinux.ru> 3.0.4-alt1
-- 3.0.4 release 
+- 3.0.4 release
 
 * Wed Mar 09 2011 Alexander V Openkin <open@altlinux.ru> 3.0.3-alt1
-- 3.0.3 release 
+- 3.0.3 release
 
 * Fri Sep 24 2010 Konstantin Pavlov <thresh@altlinux.org> 2.3.3-alt0.M40.7
 - Apply patch fixing EINTR problem with pgpool health check.
