@@ -70,7 +70,7 @@
 
 Name: virtualbox
 Version: 5.2.16
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -183,6 +183,16 @@ This packages contains full package of additions for VirtualBox OSE
 guest systems. It consists basic utils, which allows to share files and
 sync time with host system, and intergrates with xorg-server for mouse
 and video driver with OpenGL support, copy/paste between guest and host.
+
+%package guest-additions-gl
+Summary: OpenGL support of guest additions for VirtualBox OSE guest systems
+Group: Emulators
+Requires: %name-guest-additions
+
+%description guest-additions-gl
+This packages contains OpenGL support of guest additions for VirtualBox OSE
+guest systems. It also consists ldconfig settings to enable Virtualbox OpenGL
+libraries by default.
 
 %package guest-utils
 Summary: Additions for VirtualBox OSE guest systems
@@ -750,6 +760,8 @@ mountpoint -q /dev || {
 %files guest-additions
 %_sysconfdir/X11/xinit.d/98vboxadd-xclient
 %_bindir/VBoxClient
+
+%files guest-additions-gl
 %_libdir/VBoxOGLcrutil.so
 %_libdir/VBoxOGL*spu.so
 %dir %vboxadddir
@@ -802,6 +814,11 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Tue Jul 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.16-alt2%ubt
+- Replace VirtualBox OpenGL libraries and settings to separate package due
+  it conflicts with drivers on host systems, where virtualbox-guest-additions
+  already installed (closes: #35170)
+
 * Wed Jul 18 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.16-alt1%ubt
 - Build second summer release
 - guest-addition: fix OGL/EGL provides (thanks to lakostis@)
