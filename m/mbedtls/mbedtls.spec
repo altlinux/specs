@@ -1,11 +1,13 @@
-%define soversion 11
+%define so_tls_version 11
+%define so_crypto_version 3
+%define so_x509_version 0
 %def_disable static
 
 Name: mbedtls
 Version: 2.11.0
-Release: alt1%ubt
+Release: alt2%ubt
 
-Summary: Light-weight cryptographic and SSL/TLS library
+Summary: Transport Layer Security protocol suite
 License: Apache
 Group: System/Libraries
 
@@ -27,16 +29,34 @@ library written in C. mbed TLS makes it easy for developers to include
 cryptographic and SSL/TLS capabilities in their (embedded)
 applications with as little hassle as possible.
 
-%package -n lib%name%soversion
-Summary: Light-weight cryptographic and SSL/TLS library
+%package -n lib%name%so_tls_version
+Summary: Transport Layer Security protocol suite
 Group: System/Libraries
 Conflicts: hiawatha
 
-%description -n lib%name%soversion
+%description -n lib%name%so_tls_version
 mbed TLS is a light-weight open source cryptographic and SSL/TLS
 library written in C. mbed TLS makes it easy for developers to include
 cryptographic and SSL/TLS capabilities in their (embedded)
 applications with as little hassle as possible.
+
+%package -n libmbedcrypto%so_crypto_version
+Summary: Cryptographic base library for mbedtls
+Group: System/Libraries
+
+%description -n libmbedcrypto%so_crypto_version
+This subpackage of mbedtls contains a library that exposes
+cryptographic ciphers, hashes, algorithms and format support such as
+AES, MD5, SHA, Elliptic Curves, BigNum, PKCS, ASN.1, BASE64.
+
+%package -n libmbedx509-%so_x509_version
+Summary: Library to work with X.509 certificates
+Group: System/Libraries
+
+%description -n libmbedx509-%so_x509_version
+This subpackage of mbedtls contains a library that can read, verify
+and write X.509 certificates, read/write Certificate Signing Requests
+and read Certificate Revocation Lists.
 
 %package -n lib%name-devel
 Summary: Development files for mbed TLS
@@ -78,6 +98,11 @@ cmake .. \
 	-DENABLE_ZLIB_SUPPORT:BOOL=TRUE \
 	-DLIB_INSTALL_DIR:PATH=%_libdir \
 	-DUSE_SHARED_MBEDTLS_LIBRARY:BOOL=TRUE \
+%if_enabled static
+    -DUSE_STATIC_MBEDTLS_LIBRARY:BOOL=TRUE \
+%else
+    -DUSE_STATIC_MBEDTLS_LIBRARY:BOOL=FALSE \
+%endif
 	-DUSE_PKCS11_HELPER_LIBRARY:BOOL=TRUE \
 	-DCMAKE_BUILD_TYPE:STRING="Release"
 
@@ -91,13 +116,17 @@ popd
 %__mv %buildroot%_bindir/* %buildroot%_libexecdir/%name
 %__rm -rf %buildroot%_bindir
 
-%files -n lib%name%soversion
-%doc apache-2.0.txt ChangeLog LICENSE README.md
-%_libdir/libmbedcrypto.so.*
+%files -n lib%name%so_tls_version
 %_libdir/lib%name.so.*
+
+%files -n libmbedcrypto%so_crypto_version
+%_libdir/libmbedcrypto.so.*
+
+%files -n libmbedx509-%so_x509_version
 %_libdir/libmbedx509.so.*
 
 %files -n lib%name-devel
+%doc apache-2.0.txt ChangeLog LICENSE README.md
 %dir %_includedir/%name
 %_includedir/%name/*.h
 %_libdir/libmbedcrypto.so
@@ -116,6 +145,9 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Tue Jul 24 2018 Nazarov Denis <nenderus@altlinux.org> 2.11.0-alt2%ubt
+- Separate subpackages
+
 * Sun Jul 22 2018 Nazarov Denis <nenderus@altlinux.org> 2.11.0-alt1%ubt
 - Version 2.11.0
 
