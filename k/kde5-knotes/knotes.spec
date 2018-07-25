@@ -5,8 +5,8 @@
 %define libnotesharedprivate libnotesharedprivate%pim_sover
 
 Name: kde5-%rname
-Version: 18.04.2
-Release: alt2%ubt
+Version: 18.04.3
+Release: alt1%ubt
 %K5init
 
 Group: Graphical desktop/KDE
@@ -116,6 +116,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libnotesharedprivate.so.*
 
 %changelog
+* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+- new version
+
 * Wed Jul 18 2018 Oleg Solovyov <mcpain@altlinux.org> 18.04.2-alt2%ubt
 - fix: duplicated notes
 
