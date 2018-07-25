@@ -1,5 +1,5 @@
 Name: alt-gpgkeys
-Version: 0.7.146
+Version: 0.7.147
 Release: alt1
 
 Summary: ALT GnuPG keys
@@ -61,6 +61,12 @@ install -pm755 alt-gpgkey-check alt-gpgkey-strip \
 %_bindir/*
 
 %changelog
+* Wed Jul 25 2018 Dmitry V. Levin <ldv@altlinux.org> 0.7.147-alt1
+- Added key: arei@ (A564E495; see #35093).
+- Removed keys:
+  + zoros@ (72D56A88; see #33331);
+  + stark@ (A846BEC7; see #33635).
+
 * Tue Jun 19 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.146-alt1
 - Updated expired key: darktemplar@ (D4C6316F; closes: #35057).
 
