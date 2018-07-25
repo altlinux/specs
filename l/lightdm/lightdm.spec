@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt20
+Release: alt20.E2K.1
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -141,12 +141,15 @@ manager via D-Bus.
 %patch1 -p1
 %patch2 -p1
 
-%ifarch e2k
+%ifarch %e2k
 # until apx. lcc-1.23.01
 sed -i 's,-Werror=pointer-arith,,' configure.ac
 %endif
 
 %build
+%ifarch %e2k
+export CXXFLAGS="%optflags -std=gnu++11"
+%endif
 %autoreconf
 %configure \
 	%{subst_enable introspection} \
@@ -288,6 +291,10 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Fri May 11 2018 Mikhail Efremov <sem@altlinux.org> 1.16.7-alt20.E2K.1
+- Fix build on e2k.
+- Use %%e2k macro.
+
 * Tue Mar 27 2018 Arseny Maslennikov <arseny@altlinux.org> 1.16.7-alt20
 - Re-apply -alt18 changes accidentally lost in -alt19.
 
