@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.79
+Version: 0.80
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -49,16 +49,26 @@ repocop-report-html with whe same arguments as repocop-run.
 Group: Development/Other
 Summary: repocop tools for auto repairing repocop packages
 Conflicts: repocop < 0.78
-Requires: perl-RPM-Source-Editor > 0.9214
+Requires: perl-RPM-Source-Editor > 0.9215
 Requires: %name = %version-%release
 
 %description tools
 %summary
 
+%package resource-html
+Group: Development/Other
+Summary: repocop report in HTML form.
+Conflicts: repocop < 0.79
+
+%description resource-html
+Repocop is a repository unit tests platform.
+This package provides common resources for various repocop based HTML reports.
+
 %package report-html
 Group: Development/Other
 Summary: repocop report in HTML form.
-Conflicts: repocop < 0.78
+Conflicts: repocop < 0.79
+Requires: repocop-resource-html = %EVR
 
 %description report-html
 Repocop is a repository unit tests platform.
@@ -107,6 +117,8 @@ done
 # report-html
 %exclude %_bindir/repocop-report-html
 %exclude %_man1dir/repocop-report-html.*
+# resource-html
+%exclude %perl_vendor_privlib/Test/Repocop/Report/HTML.pm
 # tools
 %exclude %_bindir/repocop-report-diff
 %exclude %_man1dir/repocop-report-diff.*
@@ -114,9 +126,6 @@ done
 %exclude %_man1dir/repocop-tools-*
 %exclude %_bindir/repocop-nmu-*
 %exclude %_man1dir/repocop-nmu-*
-%exclude %_bindir/repocop-fix-srpm
-%exclude %_man1dir/repocop-fix-srpm*
-%exclude %perl_vendor_privlib/Test/Repocop/Fixscripts.pm
 %exclude %perl_vendor_privlib/Test/Repocop/RepocopResource.pm
 %exclude %perl_vendor_privlib/Test/Repocop/FixscriptFactory.pm
 %dir %_datadir/repocop/pkgtests
@@ -141,17 +150,19 @@ done
 %_man1dir/repocop-nmu-*
 %perl_vendor_privlib/Test/Repocop/RepocopResource.pm
 %perl_vendor_privlib/Test/Repocop/FixscriptFactory.pm
-# deprecated
-#%_bindir/repocop-fix-srpm
-#%_man1dir/repocop-fix-srpm*
-#%perl_vendor_privlib/Test/Repocop/Fixscripts.pm
+
+%files resource-html
+%_datadir/repocop/html
+%perl_vendor_privlib/Test/Repocop/Report/HTML.pm
 
 %files report-html
 %_bindir/repocop-report-html
-%_datadir/repocop/html
 %_man1dir/repocop-report-html.*
 
 %changelog
+* Fri Jul 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.80-alt1
+- new version
+
 * Wed Jul 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.79-alt1
 - new version; added new TestDb Status API
 
