@@ -8,7 +8,7 @@
 
 Name: lib%_name
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: HarfBuzz is an OpenType text shaping engine
 Group: System/Libraries
@@ -152,6 +152,9 @@ export CXXFLAGS="${CXXFLAGS} -Dnullptr=0"
 
 
 %changelog
+* Wed Jul 25 2018 Yuri N. Sedunov <aris@altlinux.org> 1.8.4-alt2
+- rebuilt against libicu*.so.62
+
 * Wed Jul 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.8.4-alt1
 - 1.8.4
 

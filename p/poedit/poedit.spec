@@ -7,7 +7,7 @@
 
 Name: poedit
 Version: 2.1
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform translation files editor
 Summary(ru_RU.UTF-8): Кроссплатформенный редактор файлов переводов
@@ -74,6 +74,9 @@ wxLocale библиотеки wxWindows.
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Wed Jul 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt2
+- rebuilt against libicu*.so.62
+
 * Tue Jul 24 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1
 - 2.1
 

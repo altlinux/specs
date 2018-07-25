@@ -17,7 +17,7 @@
 
 Name: tracker
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -46,7 +46,8 @@ Requires: lib%name = %version-%release
 
 Requires: libsqlite3 >= %sqlite_ver
 
-BuildPreReq: gcc-c++ gnome-common rpm-build-gnome
+BuildRequires(pre): rpm-build-gnome rpm-build-gir
+BuildRequires: gcc-c++ gnome-common
 BuildPreReq: gtk-doc docbook-utils python3
 BuildPreReq: libxml2-devel
 BuildPreReq: libdbus-devel >= %dbus_ver
@@ -230,6 +231,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 
 
 %changelog
+* Wed Jul 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt2
+- rebuilt against libicu*.so.62
+
 * Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt1
 - 2.0.4
 
