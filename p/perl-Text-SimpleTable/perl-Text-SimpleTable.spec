@@ -12,7 +12,7 @@
 %def_enable test
 
 Name: perl-Text-SimpleTable
-Version: 2.05
+Version: 2.07
 Release: alt1
 
 Summary: %m_name - Simple Eyecandy ASCII Tables
@@ -50,6 +50,9 @@ export LANG=en_US.UTF-8
 %doc Changes README
 
 %changelog
+* Wed Jul 25 2018 Igor Vlasenko <viy@altlinux.ru> 2.07-alt1
+- automated CPAN update
+
 * Sat Jun 09 2018 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1
 - automated CPAN update
 
