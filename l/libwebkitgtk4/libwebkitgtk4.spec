@@ -20,7 +20,7 @@
 
 Name: libwebkitgtk4
 Version: 2.20.3
-Release: alt1
+Release: alt2
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -304,6 +304,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Wed Jul 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.20.3-alt2
+- rebuilt against libicu*.so.62
+
 * Mon Jun 11 2018 Yuri N. Sedunov <aris@altlinux.org> 2.20.3-alt1
 - 2.20.3 (fixed  CVE-2018-4190, CVE-2018-4199, CVE-2018-4218,
   CVE-2018-4222, CVE-2018-4232, CVE-2018-4233, CVE-2018-4246,
