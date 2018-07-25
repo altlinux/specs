@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 17.12.2
+Version: 18.04.0
 Release: alt1%ubt
 
 Group: Graphical desktop/KDE
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-build-ubt
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: qt5-phonon-backend qt5-quickcontrols qt5-quickcontrols2 qt5-graphicaleffects qt5-imageformats qt5-translations
-Requires: kf5-kio kf5-kded kf5-kinit plasma5-kwayland-integration
+Requires: kf5-kio kf5-kded kf5-kinit plasma5-kwayland-integration kf5-qqc2-desktop-style
 %description -n kde5-runtime
 %summary
 
@@ -184,6 +184,9 @@ Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-g
 %files -n kde5-pim
 
 %changelog
+* Wed Jul 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.0-alt1%ubt
+- update requires
+
 * Fri Mar 16 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
 - update requires
 
