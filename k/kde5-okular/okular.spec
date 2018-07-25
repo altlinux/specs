@@ -6,7 +6,7 @@
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 18.04.2
+Version: 18.04.3
 Release: alt1%ubt
 %K5init
 
@@ -36,7 +36,7 @@ BuildRequires: kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-stati
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-kjs-devel kf5-knotifications-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
-BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-threadweaver-devel
+BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-threadweaver-devel kf5-purpose-devel
 %if_enabled msits
 BuildRequires: libchm-devel libzip-devel
 %endif
@@ -148,6 +148,9 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+- new version
+
 * Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
 - new version
 

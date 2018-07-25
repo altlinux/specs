@@ -1,7 +1,7 @@
 %define rname kdialog
 
 Name: kde5-%rname
-Version: 18.04.2
+Version: 18.04.3
 Release: alt1%ubt
 %K5init
 
@@ -43,6 +43,9 @@ The syntax is very much inspired from the "dialog" command
 #%_K5dbus_iface/org.kde.kdialog.ProgressDialog.xml
 
 %changelog
+* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+- new version
+
 * Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
 - new version
 
