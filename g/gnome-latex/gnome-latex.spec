@@ -4,7 +4,7 @@
 %def_enable gtk_doc
 
 Name: gnome-latex
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Integrated LaTeX Environment for the GNOME desktop
@@ -85,6 +85,9 @@ This package contains documentation for %name.
 
 
 %changelog
+* Wed Jul 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
+- 3.30.1
+
 * Mon Jul 16 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 
