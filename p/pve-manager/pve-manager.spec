@@ -1,15 +1,15 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 5.1.39
-Release: alt3%ubt
+Version: 5.2.2
+Release: alt1%ubt
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
-Requires: cstream lzop pve-vncterm pve-novnc pve-spiceterm pve-docs
-Requires: pve-cluster >= 4.0.48-alt7
+Requires: cstream lzop pve-vncterm pve-novnc pve-spiceterm pve-xtermjs pve-docs
+Requires: perl-LWP-Protocol-https pve-cluster >= 5.0.27
 
 Source0: pve-manager.tar.xz
 Source1: pve-container.tar.xz
@@ -20,6 +20,8 @@ Source4: qemu-server.tar.xz
 Source10: pve-guest-common.tar.xz
 Source11: pve-http-server.tar.xz
 Source12: extjs.tar.xz
+Source13: pve-widget-toolkit.tar.xz
+Source14: pve-i18n.tar.xz
 
 Source5: pve-manager-ru.po
 Source6: basealt_logo.png
@@ -52,15 +54,14 @@ Patch23: qemu-server-migrate-local-devices.patch
 Patch24: pve-manager-postfix-ntpd.patch
 Patch25: pve-manager-gettext.patch
 Patch26: pve-ha-manager-watchdog.patch
-
-Patch100: 0001-add-flags-property-to-cpu-option.patch
-Patch101: 0001-add-PCID-checkbox-to-ProcessorEdit.patch
-Patch102: 0002-readability-fixup.patch
+Patch27: pve-widget-toolkit-alt.patch
+Patch28: pve-widget-toolkit-alt-utils.patch
+Patch29: pve-manager-widgettoolkit.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
-BuildRequires: perl-IO-Multiplex perl-Locale-PO perl-UUID unzip xmlto
+BuildRequires: perl-IO-Multiplex perl-Locale-PO perl-UUID unzip xmlto pve-lxc
 BuildRequires: perl(File/Sync.pm) perl(Net/DNS/Resolver.pm) perl(Pod/Select.pm) perl(Crypt/Eksblowfish/Bcrypt.pm)
 BuildRequires: perl(Template.pm) perl(IPC/Run.pm)
 
@@ -69,7 +70,7 @@ This package contains the PVE management tools
 
 %package -n pve-container
 Summary: PVE Container management tool
-Version: 2.0.17
+Version: 2.0.24
 Group: Development/Perl
 PreReq: shadow-submap
 Requires: pve-lxc >= 2.1.0 dtach perl-Crypt-Eksblowfish >= 0.009-alt5_15
@@ -79,16 +80,16 @@ Tool to manage Linux Containers on PVE
 
 %package -n pve-firewall
 Summary: PVE Firewall
-Version: 3.0.5
+Version: 3.0.10
 Group: System/Servers
-Requires: ipset iptables iptables-ipv6 shorewall shorewall6 iproute2 >= 4.10.0
+Requires: ebtables ipset iptables iptables-ipv6 shorewall shorewall6 iproute2 >= 4.10.0
 
 %description -n pve-firewall
 This package contains the PVE Firewall
 
 %package -n pve-ha-manager
 Summary: PVE HA Manager
-Version: 2.0.4
+Version: 2.0.5
 Group: System/Servers
 
 %description -n pve-ha-manager
@@ -96,9 +97,9 @@ HA Manager PVE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 5.0.17
+Version: 5.0.26
 Group: System/Servers
-Requires: socat pve-qemu-system >= 2.6.1-alt4
+Requires: socat genisoimage cloud-init pve-qemu-system >= 2.6.1-alt4
 Provides: qemu-server = %version-%release
 Obsoletes: qemu-server < %version-%release
 
@@ -107,7 +108,7 @@ This package contains the Qemu Server tools used by PVE
 
 %package -n pve-guest-common
 Summary: PVE common guest-related modules
-Version: 2.0.13
+Version: 2.0.17
 Group: System/Servers
 
 %description -n pve-guest-common
@@ -115,18 +116,17 @@ This package contains a common code base used by pve-container and qemu-server
 
 %package -n pve-http-server
 Summary: PVE Asynchrounous HTTP Server Implementation
-Version: 2.0.8
+Version: 2.0.9
 Group: System/Servers
 Requires: fonts-font-awesome
 
 %description -n pve-http-server
 This is used to implement the PVE REST API
 
-%add_findreq_skiplist %_datadir/cluster/pvevm
 %add_findreq_skiplist %perl_vendor_privlib/PVE/HA/Env/PVE2.pm
 
 %prep
-%setup -q -c -n pve -a1 -a2 -a3 -a4 -a10 -a11 -a12
+%setup -q -c -n pve -a1 -a2 -a3 -a4 -a10 -a11 -a12 -a13 -a14
 %patch0 -p0 -b .altwww
 %patch1 -p0 -b .alt
 %patch2 -p0 -b .alt
@@ -152,22 +152,21 @@ This is used to implement the PVE REST API
 %patch24 -p0 -b .postfix-3
 %patch25 -p0 -b .gettext
 %patch26 -p0 -b .watchdog
+%patch27 -p0 -b .alt
+%patch28 -p0 -b .alt
+%patch29 -p0 -b .widgettoolkit
 
-%patch100 -p0
-%patch101 -p0
-%patch102 -p0
-
-install -m0644 %SOURCE5 pve-manager/po/ru.po
+install -m0644 %SOURCE5 pve-i18n/ru.po
 
 %build
-for d in pve-manager pve-firewall/src pve-ha-manager/src; do
+for d in pve-manager pve-firewall/src pve-ha-manager/src pve-widget-toolkit; do
     pushd $d
     %make
     popd
 done
 
 %install
-for d in pve-manager pve-firewall/src pve-ha-manager/src pve-container/src qemu-server pve-guest-common pve-http-server extjs; do
+for d in pve-manager pve-firewall/src pve-ha-manager/src pve-container/src qemu-server pve-guest-common pve-http-server extjs pve-widget-toolkit pve-i18n; do
     pushd $d
     %make DESTDIR=%buildroot install
     popd
@@ -228,6 +227,7 @@ __EOF__
 %_sysconfdir/bash_completion.d/pvesr
 %_sysconfdir/bash_completion.d/pveceph
 %_sysconfdir/bash_completion.d/pvedaemon
+%_sysconfdir/bash_completion.d/pvenode
 %_sysconfdir/bash_completion.d/pveproxy
 %_sysconfdir/bash_completion.d/pvestatd
 %_sysconfdir/bash_completion.d/pvesubscription
@@ -253,20 +253,20 @@ __EOF__
 %_bindir/pvedaemon
 %_bindir/pvemailforward
 %_bindir/pvemailforward.pl
+%_bindir/pvenode
 %_bindir/pveperf
 %_bindir/pveproxy
 %_bindir/pvereport
 %_bindir/pvesh
 %_bindir/pvestatd
-%_bindir/pvesubscription
+#_bindir/pvesubscription
 %_bindir/pveupdate
 #_bindir/pveupgrade
 %_bindir/pveversion
 %_bindir/spiceproxy
 %_bindir/vzdump
-%dir %_datadir/cluster
-%attr(0755,root,root) %_datadir/cluster/pvevm
 %_datadir/javascript
+%_datadir/pve-i18n
 %dir %perl_vendor_privlib/PVE
 %dir %perl_vendor_privlib/PVE/API2
 %dir %perl_vendor_privlib/PVE/CLI
@@ -278,16 +278,22 @@ __EOF__
 %perl_vendor_privlib/PVE/APLInfo.pm
 %perl_vendor_privlib/PVE/AutoBalloon.pm
 %perl_vendor_privlib/PVE/CephTools.pm
+%perl_vendor_privlib/PVE/CertHelpers.pm
 %perl_vendor_privlib/PVE/HTTPServer.pm
+%perl_vendor_privlib/PVE/NodeConfig.pm
 %perl_vendor_privlib/PVE/pvecfg.pm
 %perl_vendor_privlib/PVE/Report.pm
 %perl_vendor_privlib/PVE/VZDump.pm
+%perl_vendor_privlib/PVE/API2/ACME.pm
+%perl_vendor_privlib/PVE/API2/ACMEAccount.pm
 %perl_vendor_privlib/PVE/API2/APT.pm
 %perl_vendor_privlib/PVE/API2/Backup.pm
 %perl_vendor_privlib/PVE/API2/Ceph.pm
+%perl_vendor_privlib/PVE/API2/Certificates.pm
 %perl_vendor_privlib/PVE/API2/Cluster.pm
 %perl_vendor_privlib/PVE/API2/HAConfig.pm
 %perl_vendor_privlib/PVE/API2/Network.pm
+%perl_vendor_privlib/PVE/API2/NodeConfig.pm
 %perl_vendor_privlib/PVE/API2/Nodes.pm
 %perl_vendor_privlib/PVE/API2/Pool.pm
 %perl_vendor_privlib/PVE/API2/Services.pm
@@ -297,6 +303,7 @@ __EOF__
 %perl_vendor_privlib/PVE/API2/Replication.pm
 %perl_vendor_privlib/PVE/API2/ReplicationConfig.pm
 %perl_vendor_privlib/PVE/CLI/pveceph.pm
+%perl_vendor_privlib/PVE/CLI/pvenode.pm
 %perl_vendor_privlib/PVE/CLI/pvesr.pm
 %perl_vendor_privlib/PVE/CLI/pvesubscription.pm
 %perl_vendor_privlib/PVE/CLI/vzdump.pm
@@ -315,11 +322,12 @@ __EOF__
 %dir %_localstatedir/vz/template/qemu
 %attr(0770,root,www-data) %_logdir/pveproxy
 %_man1dir/pveceph.1*
+%_man1dir/pvenode.1*
 %_man1dir/pveperf.1*
 %_man1dir/pvereport.1*
 %_man1dir/pvesh.1*
 %_man1dir/pvesr.1*
-%_man1dir/pvesubscription.1*
+#_man1dir/pvesubscription.1*
 #_man1dir/pveupgrade.1*
 %_man1dir/pveversion.1*
 %_man1dir/vzdump.1*
@@ -336,7 +344,6 @@ __EOF__
 %systemd_unitdir/pve-container@.service
 %systemd_unitdir/system-pve*container.slice
 %_sbindir/pct
-%_sbindir/pve-update-lxc-config
 %_datadir/lxc
 %dir %perl_vendor_privlib/PVE
 %dir %perl_vendor_privlib/PVE/API2
@@ -420,6 +427,7 @@ __EOF__
 %_sbindir/qmrestore
 %dir %perl_vendor_privlib/PVE
 %dir %perl_vendor_privlib/PVE/API2
+%dir %perl_vendor_privlib/PVE/API2/Qemu
 %dir %perl_vendor_privlib/PVE/CLI
 %dir %perl_vendor_privlib/PVE/VZDump
 %dir %perl_vendor_privlib/PVE/QemuServer
@@ -427,6 +435,7 @@ __EOF__
 %perl_vendor_privlib/PVE/QemuServer.pm
 %perl_vendor_privlib/PVE/QemuConfig.pm
 %perl_vendor_privlib/PVE/QMPClient.pm
+%perl_vendor_privlib/PVE/API2/Qemu/Agent.pm
 %perl_vendor_privlib/PVE/API2/Qemu.pm
 %perl_vendor_privlib/PVE/CLI/qm.pm
 %perl_vendor_privlib/PVE/CLI/qmrestore.pm
@@ -436,6 +445,7 @@ __EOF__
 %perl_vendor_privlib/PVE/QemuServer/USB.pm
 %perl_vendor_privlib/PVE/QemuServer/ImportDisk.pm
 %perl_vendor_privlib/PVE/QemuServer/OVF.pm
+%perl_vendor_privlib/PVE/QemuServer/Cloudinit.pm
 %_datadir/qemu-server
 %_localstatedir/qemu-server
 %_man1dir/qm.1*
@@ -456,6 +466,15 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Wed Jul 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.2-alt1%ubt
+- pve-manager 5.2-2
+- pve-container 2.0-24
+- pve-firewall 3.0-10
+- pve-ha-manager 2.0-5
+- qemu-server 5.0-26
+- pve-guest-common 2.0-17
+- pve-http-server 2.0-9
+
 * Wed Jan 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.1.39-alt3%ubt
 - merged patches PCID flags from upstream
 

@@ -1,6 +1,6 @@
 Name: pve-docs
 Summary: PVE Documentation
-Version: 5.0.12
+Version: 5.2.3
 Release: alt1
 License: GPLv3
 Group: Documentation
@@ -33,7 +33,7 @@ grep 'proxmox.com' * -rl | while read f; do
 	sed -i 's|proxmox.com|basealt.ru|' $f
 done
 
-rm -f getting-help.adoc howto-improve-pve-docs.adoc pve-package-repos.adoc
+rm -f getting-help.adoc howto-improve-pve-docs.adoc pve-package-repos.adoc pve-faq.adoc
 
 %build
 %make
@@ -45,7 +45,7 @@ cp asciidoc/*pve*.conf %buildroot%_datadir/pve-doc-generator/asciidoc/
 install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 
 mkdir -p %buildroot%_datadir/%name/{api-viewer,images/screenshot}
-install -m644 *.{html,epub} %buildroot%_datadir/%name/
+install -m644 *.html %buildroot%_datadir/%name/
 install -m644 api-viewer/apidoc.js %buildroot%_datadir/%name/api-viewer/
 install -m644 api-viewer/index.html %buildroot%_datadir/%name/api-viewer/
 install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screenshot/
@@ -58,6 +58,9 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %_datadir/pve-doc-generator
 
 %changelog
+* Wed Jul 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt1
+- 5.2-3
+
 * Tue Dec 12 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.12-alt1
 - 5.0-12
 
