@@ -1,70 +1,88 @@
-Name:		screengrab
-Version:	1.99
-Release:	alt1
-Summary:	ScreenGrab is a tool for geting screenshots
-License:	GPLv2
-Source0:	%name-%version.tar.xz
-Source1:	%name.sh
-Url:		https://github.com/lxqt/screengrab/releases
-Group:		Graphics
-Packager:	Motsyo Gennadi <drool@altlinux.ru>
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
 
-BuildRequires: /usr/bin/convert cmake kf5-kwindowsystem-devel libqtxdg-devel qt5-tools qt5-x11extras-devel
+%set_verify_elf_method relaxed
 
-Patch0:		%name-1.99-check_ling_tools_off.patch
+Name: screengrab
+Version: 1.99
+Release: alt2
+Summary: ScreenGrab is a tool for geting screenshots
+License: GPLv2
+Source0: %name-%version.tar.xz
+Url: https://github.com/lxqt/screengrab/releases
+Group: Graphics
 
-Requires:	libkf5windowsystem
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: /proc
+BuildRequires: /usr/bin/convert
+BuildRequires: cmake
+BuildRequires: pkgconfig(Qt5Core)
+BuildRequires: pkgconfig(Qt5Gui)
+BuildRequires: pkgconfig(Qt5Help)
+BuildRequires: pkgconfig(Qt5Network)
+BuildRequires: pkgconfig(Qt5Widgets)
+BuildRequires: pkgconfig(Qt5X11Extras)
+BuildRequires: pkgconfig(Qt5Xdg)
+BuildRequires: kf5-kwindowsystem-devel
 
-%add_findprov_lib_path %_libdir/%name
-%brp_strip_none %_libdir/%name/%name
-%add_verify_elf_skiplist %_libdir/%name/%name
-%set_verify_elf_method textrel=relaxed
+Patch0: screengrab-1.99-CMakeLists.patch
+Patch1: core-cli-upload-option.patch
+Patch2: disable-cli-upload-option.patch
 
 %description
-ScreenGrab is a crossplatform tool for geting screenshots
-working in Linux and Windows. The program uses Qt and is
-independent of any desktop environment.
+ScreenGrab -- program getting screenshots working in Linux and Windows.
+The program uses Qt5 and is independent from any desktop environment.
+Main features:
+    * grab screenshot of desktop
+    * working on Window and Linux operating systems
+    * save screenshots in PNG and JPEG format
+    * grab screenshot with delay (1 - 90 sec)
+    * hide its window
+    * minimize to system tray and work from at (tray menu)
 
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+
+find . -type f | xargs chmod 644
+
+# fix docs directories
+sed -i 's|${CMAKE_INSTALL_FULL_DOCDIR}|${CMAKE_INSTALL_FULL_DOCDIR}-%version|g' CMakeLists.txt
 
 %build
-%cmake \
-	-DCMAKE_INSTALL_PREFIX=%prefix \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_C_FLAGS:STRING="%optflags"
-lrelease-qt5 ./translations/*.ts
-cd BUILD
-%make_build
+%cmake
+
+%cmake_build
 
 %install
-cd BUILD
-%make DESTDIR=%buildroot install
-mv %buildroot%_bindir/%name %buildroot%_libdir/%name/%name
-install -m 0775 %SOURCE1 %buildroot%_bindir/%name
-subst 's|/lib|/%_lib|g' %buildroot%_bindir/%name
+%cmakeinstall_std
+
+# remove unneeded devel files
+find %buildroot -name '*.so' -delete
 
 # Icons
 %__mkdir -p %buildroot/{%_miconsdir,%_liconsdir}
-convert -resize 48x48 ../img/%name.png %buildroot%_liconsdir/%name.png
-convert -resize 16x16 ../img/%name.png %buildroot%_miconsdir/%name.png
+convert -resize 48x48 img/%name.png %buildroot%_liconsdir/%name.png
+convert -resize 16x16 img/%name.png %buildroot%_miconsdir/%name.png
 
 %files
-%dir %_datadir/%name
-%dir %_docdir/%name
-%dir %_libdir/%name
-%_bindir/*
-%_libdir/%name/*
-
+%_bindir/%name
+%_libdir/*.so.*
 %_desktopdir/%name.desktop
-%_docdir/%name
-%_datadir/%name
+%_docdir/%name-%version/
+%_datadir/%name/
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Thu Jul 26 2018 Anton Midyukov <antohami@altlinux.org> 1.99-alt2
+- Fix update conflict
+- Update buildrequires
+- Fix library location
+
 * Sun Jul 22 2018 Motsyo Gennadi <drool@altlinux.ru> 1.99-alt1
 - 1.99 (#altbug 35169)
 
