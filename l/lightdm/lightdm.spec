@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt20.E2K.1
+Release: alt21
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -30,7 +30,7 @@ Patch1: %name-%version-%release.patch
 Patch2: %name-%version-%release-advanced.patch
 
 # Requires: %name-greeter
-# Requires: accountsservice
+Requires: accountsservice
 Requires: dbus-tools-gui
 Requires: dm-tool = %EVR
 
@@ -291,6 +291,10 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Thu Jul 26 2018 Michael Shigorin <mike@altlinux.org> 1.16.7-alt21
+- Drop E2K suffix, this package has no e2k-specific patches.
+- Uncommented R: accountsservice (closes: #32670)
+
 * Fri May 11 2018 Mikhail Efremov <sem@altlinux.org> 1.16.7-alt20.E2K.1
 - Fix build on e2k.
 - Use %%e2k macro.
