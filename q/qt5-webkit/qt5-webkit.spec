@@ -6,7 +6,7 @@
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt5%ubt
+Release: alt6%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -15,7 +15,8 @@ Url: http://qt.io/
 Source: %qt_module-opensource-src-%version.tar
 
 # FC
-Patch1: qtwebkit-5.212.0_cmake_cmp0071.patch 
+Patch1: 0012-cmake-Fix-include-dir-in-the-generated-pkg-config-fi.patch
+Patch2: qtwebkit-5.212.0_cmake_cmp0071.patch
 # ALT
 Patch10: alt-flags.patch
 
@@ -87,6 +88,7 @@ Requires: %name-common = %EVR
 %prep
 %setup -n %qt_module-opensource-src-%version
 %patch1 -p1
+%patch2 -p1
 #
 %patch10 -p1
 syncqt.pl-qt5 Source -version %version -private
@@ -193,6 +195,9 @@ done
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Fri Jul 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt6%ubt
+- fix includes dir in .pc (ALT#35184)
+
 * Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt5%ubt
 - rebuild with new Qt
 

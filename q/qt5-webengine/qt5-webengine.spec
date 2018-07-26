@@ -29,7 +29,7 @@
 
 Name: qt5-webengine
 Version: 5.11.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -235,6 +235,7 @@ ln -s ../src/core/Release/lib/libv8.so %_target_platform/lib/libv8.so
 %endif
 NUM_PROCS="%__nprocs"
 [ -n "$NUM_PROCS" -a "$NUM_PROCS" != "1"  ] || NUM_PROCS=6
+[ -n "$NUM_PROCS" -a "$NUM_PROCS" -le "24" ] || NUM_PROCS=24
 export NPROCS=$NUM_PROCS
 export STRIP=strip
 export NINJAFLAGS="-v -j $NUM_PROCS"
@@ -344,6 +345,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Thu Jul 26 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt2%ubt
+- rebuild with new icu
+
 * Tue Jun 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
 - new version
 
