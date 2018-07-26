@@ -1,14 +1,13 @@
 %set_compress_method none
-%define bash_version 3
+%define bash_version 4
 
 Name: bash-defaults
-Version: 3.2.57
-Release: alt4
+Version: 4.4.23
+Release: alt1
 
 Summary: %vendor setup for the GNU Bourne Again SHell (Bash)
 License: None
 Group: System/Configuration/Other
-BuildArch: noarch
 
 %description
 This package provides default %summary.
@@ -16,6 +15,7 @@ This package provides default %summary.
 %package -n sh
 Summary: The GNU Bourne Again SHell (/bin/sh)
 Group: Shells
+BuildArch: noarch
 Provides: /bin/sh, /usr/lib/bash
 
 %description -n sh
@@ -24,6 +24,7 @@ This package provides default setup for the GNU Bourne Again SHell (/bin/sh).
 %package -n bash
 Summary: The GNU Bourne Again SHell (/bin/bash)
 Group: Shells
+BuildArch: noarch
 Provides: /bin/bash
 Requires: sh = %EVR
 
@@ -39,9 +40,10 @@ Requires: bash = %EVR
 This package provides default setup for the GNU Bourne Again SHell (development files).
 
 %install
-mkdir -p %buildroot{/bin,/usr/lib/bash,%_bindir,%_includedir,%_infodir,%_man1dir}
+mkdir -p %buildroot{/bin,/usr/lib/bash,%_bindir,%_includedir,%_infodir,%_man1dir,%_pkgconfigdir}
 
-for i in /bin/sh /bin/bash /bin/rbash %_bindir/bashbug %_includedir/bash; do
+for i in /bin/sh /bin/bash /bin/rbash %_bindir/bashbug %_includedir/bash \
+	 %_pkgconfigdir/bash.pc; do
 	ln -rs %buildroot"${i/sh/sh%bash_version}" %buildroot"$i"
 done
 
@@ -82,8 +84,12 @@ done
 
 %files -n bash-devel
 %_includedir/bash
+%_pkgconfigdir/bash.pc
 
 %changelog
+* Tue Dec 18 2018 Dmitry V. Levin <ldv@altlinux.org> 4.4.23-alt1
+- Changed default sh and bash to sh4 and bash4, respectively (closes: #31399).
+
 * Fri Aug 03 2018 Dmitry V. Levin <ldv@altlinux.org> 3.2.57-alt4
 - sh: turned into setup package for /bin/sh.
 - bash: turned into setup package for /bin/bash.
