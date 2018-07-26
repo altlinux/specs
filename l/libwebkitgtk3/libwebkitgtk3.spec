@@ -18,7 +18,7 @@
 
 Name: libwebkitgtk3
 Version: 2.4.11
-Release: alt4
+Release: alt5
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -31,13 +31,16 @@ Patch1: webkitgtk-2.4.0-alt-link.patch
 Patch2: webkitgtk-2.4.9-fc-abs.patch
 # https://bugs.webkit.org/show_bug.cgi?id=171612
 Patch3: webkitgtk-2.4.11-icu59.patch
+# https://bugs.webkit.org/show_bug.cgi?id=126985
+Patch4: webkitgtk-x86-assembler-fix.patch
+Patch5: webkitgtk-2.4.10-suse-aarch64.patch
 
 Obsoletes: %name-webinspector
 Provides: %name-webinspector = %EVR
 
 Requires: libjavascriptcoregtk3 = %version-%release
-BuildPreReq: rpm-build-licenses
 
+BuildRequires(pre): rpm-build-licenses rpm-build-gir
 BuildRequires: gcc-c++ libicu-devel bison perl-Switch zlib-devel
 BuildRequires: chrpath
 BuildRequires: flex >= 2.5.33
@@ -217,16 +220,17 @@ GObject introspection data for the Webkit2 library
 %patch1
 %patch2 -p1
 %patch3
+%patch4 -p2
+%patch5 -p1
 
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
 rm -f Source/autotools/{compile,config.guess,config.sub,depcomp,install-sh,ltmain.sh,missing,libtool.m4,ltoptions.m4,ltsugar.m4,ltversion.m4,lt~obsolete.m4,gsettings.m4,gtk-doc.m4}
 
 %build
-%ifarch %arm ppc
-# Use linker flags to reduce memory consumption on low-mem architectures
+%add_optflags -Wno-expansion-to-defined -Wno-implicit-fallthrough
+# Use linker flags to reduce memory consumption
 %add_optflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
-%endif
 
 # Build with -g1 on all platforms to avoid running into 4 GB ar format limit
 # https://bugs.webkit.org/show_bug.cgi?id=91154
@@ -235,7 +239,6 @@ rm -f Source/autotools/{compile,config.guess,config.sub,depcomp,install-sh,ltmai
 echo "GTK_DOC_CHECK([1.10])" >> configure.ac
 gtkdocize --copy
 %autoreconf -I Source/autotools
-
 %configure \
 	--enable-video \
 	--with-acceleration-backend=%acceleration_backend \
@@ -338,6 +341,9 @@ chrpath --delete %buildroot%_libexecdir/%_name/MiniBrowser
 
 
 %changelog
+* Wed Jul 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt5
+- rebuilt against libicu*.so.62
+
 * Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt4
 - rebuilt against libicu*.so.60
 
