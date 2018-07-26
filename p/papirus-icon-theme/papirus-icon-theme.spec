@@ -1,5 +1,5 @@
 Name:     papirus-icon-theme
-Version:  20180601
+Version:  20180720
 Release:  alt1
 
 Summary:  All Papirus icon themes
@@ -112,5 +112,8 @@ cp -a Papirus Papirus-Adapta Papirus-Adapta-Nokto Papirus-Dark Papirus-Light ePa
 %_iconsdir/ePapirus
 
 %changelog
+* Thu Jul 26 2018 Andrey Cherepanov <cas@altlinux.org> 20180720-alt1
+- New version.
+
 * Mon Jul 16 2018 Andrey Cherepanov <cas@altlinux.org> 20180601-alt1
 - Initial build for Sisyphus
