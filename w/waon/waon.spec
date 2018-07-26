@@ -1,18 +1,21 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: waon
 Version: 0.10
-Release: alt3
+Release: alt4
 License: GPLv2
 Group: Sound
 URL: http://sourceforge.net/projects/waon/
 Summary: A Wave-to-Notes (MIDI) transcriber
 
-Source0: %{name}-%{version}.tar
+Source: %name-%version.tar
 
 BuildRequires: libfftw3-devel
 BuildRequires: libsndfile-devel
 BuildRequires: libao-devel
 BuildRequires: libsamplerate-devel
 BuildRequires: libgtk+2-devel
+BuildRequires: libncurses-devel
 
 %description
 WaoN is a Wave-to-Notes transcriber (converts an audio file into MIDI
@@ -37,11 +40,14 @@ install -D -m0644 gwaon.1 %buildroot%_man1dir/gwaon.1
 %_bindir/waon
 %_bindir/waon-pv
 %_bindir/gwaon
-%_man1dir/waon.1.*
-%_man1dir/waon-pv.1.*
-%_man1dir/gwaon.1.*
+%_man1dir/waon.1*
+%_man1dir/waon-pv.1*
+%_man1dir/gwaon.1*
 
 %changelog
+* Thu Jul 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10-alt4
+- Updated build dependencies.
+
 * Mon Sep 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10-alt3
 - Updated spec to allow any man pages compression.
 
