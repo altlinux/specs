@@ -3,7 +3,7 @@
 
 Name: tcl-%teaname
 Version: 2.5
-Release: alt5
+Release: alt6
 
 Summary: A Tk toolkit extension, including widgets, geometry managers etc.
 License: MIT
@@ -25,6 +25,7 @@ Group: Development/Other
 Requires: %name = %version-%release
 
 %package demos
+BuildArch: noarch
 Summary: demos for %teaname toolkit.
 Group: Development/Other
 Requires: %name = %version-%release
@@ -97,6 +98,10 @@ rm -f %buildroot%_mandir/mann/{bitmap,graph,tabset,watch}.n*
 %_tcldatadir/%teaname%major/demos
 
 %changelog
+* Thu Jul 26 2018 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt6
+- generic/shared/Makefile.in: do not use same intermediate file
+  in two rules (fix build with -j32)
+
 * Tue May 16 2017 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt5
 - one more fix for tcl 8.6.6: add missing TkCopyAndGlobalEval()
 
