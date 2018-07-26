@@ -5,7 +5,7 @@
 
 Name: dhcpcd
 Epoch: 1
-Version: 7.0.6
+Version: 7.0.7
 Release: alt1
 
 Summary: DHCP Client
@@ -91,6 +91,9 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Thu Jul 26 2018 Mikhail Efremov <sem@altlinux.org> 1:7.0.7-alt1
+- Updated to 7.0.7.
+
 * Fri Jun 22 2018 Mikhail Efremov <sem@altlinux.org> 1:7.0.6-alt1
 - Drop obsoleted patch.
 - Updated to 7.0.6.
