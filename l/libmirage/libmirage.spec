@@ -1,8 +1,8 @@
 %define soversion 11
 
 Name: libmirage
-Version: 3.1.0
-Release: alt2%ubt
+Version: 3.2.0
+Release: alt1%ubt
 
 Summary: A CD-ROM image access library
 License: GPLv2+
@@ -89,23 +89,26 @@ popd
 %files -n %name%soversion -f %name.lang
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 %_libdir/libmirage.so.*
-%dir %_libdir/libmirage-3.1
-%_libdir/libmirage-3.1/*.so
+%dir %_libdir/libmirage-3.2
+%_libdir/libmirage-3.2/*.so
 %_datadir/mime/packages/*.xml
 
 %files devel
 %_libdir/libmirage.so
 %_libdir/girepository-1.0/*
 %_pkgconfigdir/%name.pc
-%dir %_includedir/%name-3.1
-%dir %_includedir/%name-3.1/mirage
-%_includedir/%name-3.1/mirage/*.h
+%dir %_includedir/%name-3.2
+%dir %_includedir/%name-3.2/mirage
+%_includedir/%name-3.2/mirage/*.h
 %_datadir/gir-1.0/*
 %dir %_datadir/gtk-doc
 %dir %_datadir/gtk-doc/html
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Fri Jul 27 2018 Nazarov Denis <nenderus@altlinux.org> 3.2.0-alt1%ubt
+- Version 3.2.0
+
 * Thu Aug 03 2017 Nazarov Denis <nenderus@altlinux.org> 3.1.0-alt2%ubt
 - Add conflicts on libmirage10 (ALT #33724)
 
