@@ -4,7 +4,7 @@
 %define libiris_ksirk libiris_ksirk%iris_ksirk_sover
 
 Name: kde5-%rname
-Version: 18.04.2
+Version: 18.04.3
 Release: alt1%ubt
 %K5init
 
@@ -84,6 +84,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libiris_ksirk.so.*
 
 %changelog
+* Fri Jul 27 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+- new version
+
 * Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
 - new version
 

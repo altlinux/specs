@@ -1,7 +1,7 @@
 %define rname kshisen
 
 Name: kde5-%rname
-Version: 18.04.2
+Version: 18.04.3
 Release: alt1%ubt
 %K5init
 
@@ -46,6 +46,9 @@ BuildRequires: kf5-kxmlgui-devel kf5-kcrash-devel
 %_K5cfg/kshisen.kcfg
 
 %changelog
+* Fri Jul 27 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+- new version
+
 * Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
 - new version
 
