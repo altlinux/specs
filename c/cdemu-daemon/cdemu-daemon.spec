@@ -1,5 +1,5 @@
 Name: cdemu-daemon
-Version: 3.1.0
+Version: 3.2.1
 Release: alt1%ubt
 
 Summary: CDEmu daemon
@@ -19,7 +19,7 @@ BuildRequires: cmake
 BuildRequires: glibc-kernheaders-generic
 BuildRequires: intltool
 BuildRequires: libao-devel >= 0.8.0
-BuildRequires: libmirage-devel >= 3.1.0
+BuildRequires: libmirage-devel >= 3.2.0
 
 %description
 This is CDEmu daemon, the userspace daemon part of the userspace-cdemu suite, a 
@@ -81,6 +81,9 @@ popd
 %_unitdir/vhba.service
 
 %changelog
+* Fri Jul 27 2018 Nazarov Denis <nenderus@altlinux.org> 3.2.1-alt1%ubt
+- Version 3.2.1
+
 * Wed Aug 02 2017 Nazarov Denis <nenderus@altlinux.org> 3.1.0-alt1%ubt
 - Version 3.1.0
 
