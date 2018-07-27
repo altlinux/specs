@@ -2,24 +2,37 @@
 
 #BuildRequires: 
 Name: autorepo-altnode-repocop
-Version: 0.24
+Version: 0.25
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
-Summary: repocop scripts for an automated packaging node
-Group: Development/Other
+Summary: scripts for an automated repocop node
+Group: Other
 License: GPL2+
 #Url: 
 Source: %name-%version.tar
 
-BuildRequires: repocop perl(Pod/Text.pm)
-Requires: repocop > 0.77
-Requires: pigz
+BuildRequires: perl(Pod/Text.pm) repocop-resource-html repocop > 0.79
+Requires: repocop > 0.79
+Requires: pigz pzstd
 Conflicts: repocop-unittest-unmet-dependency < 0.10
 
 %description
-%summary
+scripts for an automated repocop node
+in `autorepo' Automated Package Maintainance Cluster.
+
+%package tasktest
+Summary: scripts for an automated "repocop for tasks" node
+Group: Other
+# tasktest
+Requires: perl-File-Lock-ParentLock >= 0.08
+Requires: repocop-resource-html
+BuildRequires: perl(HTML/Template/Pro.pm)
+
+%description tasktest
+scripts for an automated "repocop for tasks" node
+in `autorepo' Automated Package Maintainance Cluster.
 
 %prep
 %setup
@@ -33,10 +46,18 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 
 %files
 %doc daily.conf.*
-%doc crontab
+%doc crontab.repocop
 %_bindir/*
+%exclude %_bindir/repocop-tasktest-*
+
+%files tasktest
+%doc crontab.tasktest*
+%_bindir/repocop-tasktest-*
 
 %changelog
+* Fri Jul 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- repocop for tasks added (tasktest scripts)
+
 * Mon Jul 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - support for repocop-unittest-unmet-dependency >= 0.10
 
