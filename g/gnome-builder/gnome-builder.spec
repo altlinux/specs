@@ -14,7 +14,7 @@
 %def_without autotools_templates
 
 Name: gnome-builder
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -61,7 +61,7 @@ Requires: devhelp uncrustify ctags
 Requires: libpeas-python3-loader
 #%%{?_with_jedi:Requires: python3-module-jedi}
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
 BuildRequires: /proc gcc-c++ flex mm-common yelp-tools gtk-doc
 BuildRequires: ctags
 BuildRequires: libappstream-glib-devel desktop-file-utils
@@ -71,7 +71,7 @@ BuildRequires: libgit2-glib-devel >= %git2_ver libdevhelp-devel >= %devhelp_ver
 BuildRequires: libpcre-devel libgjs-devel >= %gjs_ver libwebkit2gtk-devel
 BuildRequires: libxml2-devel >= %xml_ver libpeas-devel >= %peas_ver libvte3-devel >= %vte_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
-BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
+BuildRequires: python3-devel python3-module-pygobject3-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libvte3-gir-devel
 BuildRequires: libgtksourceview3-gir-devel libgit2-glib-gir-devel libpeas-gir-devel
 BuildRequires: libjson-glib-gir-devel
@@ -211,6 +211,9 @@ This package provides noarch data needed for Gnome Builder to work.
 %endif
 
 %changelog
+* Fri Jul 27 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.4-alt1
+- 3.28.4
+
 * Thu Jun 21 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
 - 3.28.3
 
