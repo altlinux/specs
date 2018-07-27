@@ -1,6 +1,6 @@
 Name: shiboken
 Version: 1.2.2
-Release: alt3.git20140422
+Release: alt4.git20140422
 
 Summary: Generates bindings for C++ libraries using CPython source code
 License: GPLv2, LGPLv2.1
@@ -14,8 +14,9 @@ BuildPreReq: cmake libqt4-devel gcc-c++ libgeneratorrunner-devel
 BuildPreReq: phonon-devel generatorrunner qt4-designer xml-utils
 BuildPreReq: python-module-sphinx-devel xsltproc
 BuildPreReq: libxml2-devel libxslt-devel libqt4-assistant-devel
+BuildRequires: python-devel
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description
 Shiboken is a plugin (front-end) for Generator Runner. It generates
@@ -34,7 +35,7 @@ This package contains shared libraries of Shiboken.
 %package -n lib%name-devel
 Summary: Development files of Shiboken
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Shiboken is a plugin (front-end) for Generator Runner. It generates
@@ -45,7 +46,7 @@ This package contains development files of Shiboken.
 %package -n python-module-%name
 Summary: Python module of Shiboken
 Group: Development/Python
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n python-module-%name
 Shiboken is a plugin (front-end) for Generator Runner. It generates
@@ -111,6 +112,9 @@ popd
 %python_sitelibdir/*
 
 %changelog
+* Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt4.git20140422
+- Updated build dependencies.
+
 * Fri Apr 06 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.2-alt3.git20140422
 - fix packaging on 64bit arches other than x86_64
 
