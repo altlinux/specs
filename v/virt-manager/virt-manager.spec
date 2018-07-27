@@ -1,20 +1,21 @@
-%add_python_req_skip guestfs
+
 %define _libexecdir /usr/libexec
 %define qemu_user  _libvirt
 %define preferred_distros "altlinux,fedora,rhel"
 %define kvm_packages ""
-%define libvirt_packages "libvirt"
+%define libvirt_packages "libvirt-daemon-qemu,libvirt-daemon-config-network"
 %define askpass_package "openssh-askpass"
 
 Name: virt-manager
-Version: 1.5.1
-Release: alt1%ubt
+Version: 1.6.0
+Release: alt0.git4484f473%ubt
 Summary: Virtual Machine Manager
 
 Group: Emulators
 License: GPLv2+
-Url: http://virt-manager.org/
+Url: https://virt-manager.org/
 BuildArch: noarch
+AutoReqProv: nopython
 
 # https://github.com/virt-manager/virt-manager
 Source: %name-%version.tar
@@ -23,11 +24,10 @@ Source: %name-%version.tar
 Requires: virt-manager-common = %version-%release
 Requires: libvirt-client
 Requires: virt-install = %version-%release
-Requires: python-module-pygobject3 >= 3.14
-Requires: python-module-libxml2
+Requires: python3-module-pygobject3 >= 3.14
+Requires: python3-module-libxml2
 Requires: vte3
 Requires: dconf
-Requires: dbus-tools-gui
 Requires: libosinfo >= 0.2.10
 Requires: librsvg
 Requires: genisoimage
@@ -47,16 +47,18 @@ Requires: typelib(SpiceClientGLib)
 Requires: typelib(Vte) = 2.91
 Requires: typelib(Libosinfo) = 1.0
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: python-devel python-module-distribute
+BuildRequires(pre): rpm-build-ubt rpm-build-python3
+BuildRequires: python3-devel
 BuildRequires: libgio
 BuildRequires: intltool
 BuildRequires: /usr/bin/pod2man
 
-%add_python_req_skip virtconv
-%add_python_req_skip virtinst
-%add_python_req_skip virtcli
-%add_python_req_skip virtxml
+%add_python3_req_skip guestfs
+%add_python3_req_skip virtconv
+%add_python3_req_skip virtinst
+%add_python3_req_skip virtinst.cli
+%add_python3_req_skip virtcli
+%add_python3_req_skip virtxml
 
 %description
 Virtual Machine Manager provides a graphical tool for administering
@@ -69,6 +71,7 @@ Uses libvirt as the backend management API.
 Summary: Common files used by the different Virtual Machine Manager interfaces
 Group: Emulators
 Conflicts: %name < %version-%release
+AutoReqProv: nopython
 
 %description common
 Common files used by the different virt-manager interfaces, as well as
@@ -77,6 +80,7 @@ virt-install related tools.
 %package -n virt-install
 Summary: Utilities for installing virtual machines
 Group: Emulators
+AutoReqProv: nopython
 
 Requires: virt-manager-common = %version-%release
 
@@ -84,7 +88,6 @@ Provides: virt-install
 Provides: virt-clone
 Provides: virt-convert
 Provides: virt-xml
-Obsoletes: python-module-virtinst
 
 %description -n virt-install
 Package includes several command line utilities, including virt-install
@@ -96,7 +99,7 @@ machine).
 #%%patch -p1
 
 %build
-python setup.py configure \
+python3 setup.py configure \
 	--qemu-user=%qemu_user \
 	--libvirt-package-names=%libvirt_packages \
 	--kvm-package-names=%kvm_packages \
@@ -107,17 +110,17 @@ python setup.py configure \
 
 %install
 #%%python_install
-python setup.py \
+python3 setup.py \
 	--no-update-icon-cache --no-compile-schemas \
 	install --root=%buildroot
 
 %find_lang --with-gnome %name
 
-# Replace '#!/usr/bin/env python2' with '#!/usr/bin/python2'
+# Replace '#!/usr/bin/env python3' with '#!/usr/bin/python3'
 # The format is ideal for upstream, but not a distro. See:
 # https://fedoraproject.org/wiki/Features/SystemPythonExecutablesUseSystemPython
 for f in $(find %buildroot -type f -executable -print); do
-    sed -i "1 s|^#!/usr/bin/env python2|#!%__python|" $f || :
+    sed -i "1 s|^#!/usr/bin/env python3|#!/usr/bin/python3|" $f || :
 done
 
 %files
@@ -130,7 +133,6 @@ done
 %_datadir/appdata/%name.appdata.xml
 %_datadir/icons/hicolor/*/apps/%name.png
 %_datadir/glib-2.0/schemas/*.gschema.xml
-%_datadir/GConf/gsettings/org.virt-manager.virt-manager.convert
 
 %_man1dir/%name.1*
 %doc README.md COPYING NEWS.md
@@ -156,6 +158,10 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Fri Jul 27 2018 Alexey Shabalin <shaba@altlinux.org> 1.6.0-alt0.git4484f473%ubt
+- pre release 1.6.0
+- migrate to python3
+
 * Tue Mar 06 2018 Alexey Shabalin <shaba@altlinux.ru> 1.5.1-alt1%ubt
 - 1.5.1
 
