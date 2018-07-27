@@ -1,15 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: xsp
 Url: http://go-mono.com/
 License: X11/MIT
 Group: System/Servers
 Version: 4.4
-Release: alt4%ubt
+Release: alt5%ubt
 Summary: Small Web Server Hosting ASP.NET
 
 Source: %name-%version.tar.bz2
 
-BuildRequires(pre): rpm-build-mono  sqlite3 mono-devel-full mono-full pkg-config /proc
+BuildRequires(pre): rpm-build-mono
 BuildRequires(pre): rpm-build-ubt
+BuildRequires: sqlite3 mono-full mono-devel-full pkg-config /proc
+
 %define xspConfigsLocation %_sysconfdir/xsp/4.0
 %define xspAvailableApps %xspConfigsLocation/applications-available
 %define xspEnabledApps %xspConfigsLocation/applications-enabled
@@ -18,63 +22,65 @@ Conflicts: mono4-xsp
 Obsoletes: mono4-xsp
 Provides: mono4-xsp = %version-%release
 
+Provides: mono(fastcgi-mono-server4) = 4.4.0.0
+
 %description
 The XSP server is a small Web server that hosts the Mono System.Web
 classes for running what is commonly known as ASP.NET.
 
-
 %prep
 %setup
-#%patch0
 
 %build
-cd xsp
+pushd xsp
 %define _configure_script ./autogen.sh
 %configure
-make
+%make
+popd
 
 %install
-cd xsp
+pushd xsp
 %makeinstall_std
+
 rm -rf %buildroot%_libdir/xsp/unittests
-mkdir -p %buildroot%_datadir
-mv %buildroot%_pkgconfigdir %buildroot%_datadir
-mkdir -p %buildroot/%_fwdefdir
+rm -rf %buildroot%_libdir/xsp/test
+rm -f %buildroot%_libdir/*.a
+
 mkdir -p %buildroot/%xspAvailableApps
 mkdir -p %buildroot/%xspEnabledApps
-mkdir -p %buildroot/etc/init.d/
-mkdir -p %buildroot/etc/logrotate.d/
-mkdir -p %buildroot/srv/xsp2
-mkdir -p %buildroot/var/adm/fillup-templates
+mkdir -p %buildroot%_logrotatedir
 mkdir -p %buildroot%_runtimedir/xsp2
 install -m 644 man/mono-asp-apps.1 %buildroot%_man1dir/mono-asp-apps.1
-install -m 644 packaging/opensuse/sysconfig.xsp2 %buildroot/var/adm/fillup-templates
-install -m 644 packaging/opensuse/xsp2.fw %buildroot/%_fwdefdir/xsp2
-install -m 644 packaging/opensuse/xsp2.logrotate %buildroot/etc/logrotate.d/xsp2
-install -m 755 packaging/opensuse/xsp2.init %buildroot/etc/init.d/xsp2
+install -m 644 packaging/opensuse/xsp2.logrotate %buildroot%_logrotatedir/xsp2
 install -m 755 tools/mono-asp-apps/mono-asp-apps %buildroot%_bindir/mono-asp-apps
-
-
-
+popd
 
 
 %files
+%config (noreplace) %_logrotatedir/*
 %_bindir/*
-%_datadir/pkgconfig/*
+%_libdir/*.so
+%_libdir/*.so.*
+%_pkgconfigdir/*
 %_monodir/4.5/Mono.WebServer2.dll
 %_monodir/4.5/fastcgi-mono-server4.exe
 %_monodir/4.5/mod-mono-server4.exe
 %_monodir/4.5/xsp4.exe
+%_monodir/4.5/mono-fpm.exe
 %_monogacdir/Mono.WebServer2
 %_monogacdir/fastcgi-mono-server4
 %_monogacdir/mod-mono-server4
 %_monogacdir/xsp4
 %_monodocdir/Mono.WebServer.*
 %_monodocdir/Mono.FastCGI.*
+%_monogacdir/mono-fpm
 %_libexecdir/xs*
-%_mandir/*/*
+%_man1dir/*
 
 %changelog
+* Fri Jul 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt5%ubt
+- Rebuilt for additional architectures.
+
 * Mon Sep 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt4%ubt
 - Rebuilt with corrected monodoc directory.
 
