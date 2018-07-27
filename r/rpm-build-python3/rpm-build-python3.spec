@@ -1,6 +1,6 @@
 Name: rpm-build-python3
-Version: 0.1.13
-Release: alt1
+Version: 0.1.13.1
+Release: alt2
 
 Summary: RPM helper macros to rebuild python3 packages
 License: GPL
@@ -22,6 +22,9 @@ Conflicts: binutils < 1:2.20.51.0.7
 Requires: %_rpmlibdir/python3-site-packages-files.req.list
 # (The lib64 variant must be owned by the same package; thus it must be detected as well.)
 
+# For convenience of the developers:
+Requires: tests-for-installed-python3-pkgs
+
 Conflicts: python3 < 3.5
 
 AutoReqProv: yes, nopython
@@ -30,6 +33,30 @@ BuildRequires: python3-dev
 
 %description
 These helper macros provide possibility to build python3 modules.
+
+%package -n tests-for-installed-python3-pkgs
+Summary: Tests that can be run to test any installed Python3 package
+Group: Development/Other
+
+Requires: /usr/bin/python3
+
+%description -n tests-for-installed-python3-pkgs
+The included scripts are primarily to be run by package maintainers
+(or automated testing systems) to test any Python3 package
+in an environment where it has been installed by RPM.
+
+Contents:
+
+* check-python3-provs-importable -- a script to test installed Python3 packages
+* py3-* -- helper scripts (for such tests)
+
+Example:
+
+apt-repo --hsh-apt-config="$HOME"/.hasher/sisyphus/apt.conf test NNNNNN python3-module-FOOBAR \
+&& hsh-run /usr/lib/rpm/check-python3-provs-importable python3-module-FOOBAR; echo $?
+
+will report which modules provided by python3-module-FOOBAR are not importable
+(if any) in the minimal environment. This is a packaging error if there are any.
 
 %prep
 %setup
@@ -46,6 +73,9 @@ install -pD -m0755 python3.req.py -t %buildroot%_rpmlibdir/
 install -pD -m0755 python3.req.constraint.py -t %buildroot%_rpmlibdir/
 install -pD -m0755 python3.req.files -t %buildroot%_rpmlibdir/
 install -pD -m0755 python3.compileall.py -t %buildroot%_rpmlibdir/
+install -pD -m0755 check-python3-provs-importable -t %buildroot%_rpmlibdir/
+install -pD -m0755 py3-scan-reqprovs -t %buildroot%_rpmlibdir/
+install -pD -m0755 py3-check-importable -t %buildroot%_rpmlibdir/
 install -pD -m0755 brp-bytecompile_python3 -T %buildroot%_rpmlibdir/brp.d/096-bytecompile_python3.brp
 # It's like brp.d/128-hardlink_pyo_pyc.brp from rpm-build (but for python3-3.5):
 install -pD -m0755 brp-hardlink_opt_pyc -T %buildroot%_rpmlibdir/brp.d/128-hardlink_opt_pyc.brp
@@ -67,7 +97,8 @@ install -pD -m0755 brp-fix_python3_site-packages_location -T %buildroot%_rpmlibd
 rpm_builddir="$PWD"
 pushd %buildroot/%_rpmlibdir
 # It calls ./python3.req, therefore we've changed the CWD:
-"$rpm_builddir"/test.sh
+"$rpm_builddir"/test_req.sh
+"$rpm_builddir"/test_check-provs-importable.sh
 popd
 
 %files
@@ -86,7 +117,20 @@ popd
 %_rpmlibdir/python3.prov.py
 %_rpmlibdir/python3.prov.files
 
+%files -n tests-for-installed-python3-pkgs
+%_rpmlibdir/check-python3-provs-importable
+%_rpmlibdir/py3-scan-reqprovs
+%_rpmlibdir/py3-check-importable
+
 %changelog
+* Fri Jul 27 2018 Alexey Shabalin <shaba@altlinux.org> 0.1.13.1-alt2
+- define %%__python3 as full path /usr/bin/python3
+
+* Wed Jul 18 2018 Ivan Zakharyaschev <imz@altlinux.org> 0.1.13.1-alt1
+- check-python3-provs-importable.sh included
+  (to manually check Python3 packages, say, in hasher;
+  https://lists.altlinux.org/pipermail/devel/2017-February/202384.html )
+
 * Mon Jul 02 2018 Ivan Zakharyaschev <imz@altlinux.org> 0.1.13-alt1
 - Assume that setuptools are required if the traditional Python3 build/install
   macros are used (overridable through %%python3_setup_buildrequires).
