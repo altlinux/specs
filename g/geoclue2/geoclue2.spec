@@ -10,7 +10,7 @@
 %def_disable gtk_doc
 
 Name: %{_name}2
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -33,7 +33,7 @@ BuildRequires(pre): rpm-build-xdg
 BuildRequires: intltool yelp-tools gtk-doc libgio-devel >= %glib_ver
 BuildRequires: libjson-glib-devel libsoup-devel >= %soup_ver
 BuildRequires: libdbus-devel libavahi-glib-devel libnotify-devel systemd-devel
-BuildRequires: gobject-introspection-devel
+BuildRequires: gobject-introspection-devel vala-tools
 %{?_enable_3g:BuildRequires: libmm-glib-devel >= %mm_ver}
 # for check
 BuildRequires: /proc dbus-tools-gui
@@ -122,7 +122,6 @@ rm -f demo/*.desktop.in
 	--with-dbus-service-user=%_name \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{?_enable_network_manager:--enable-network-manager} \
-	--with-dbus-service-user=%_name \
 	--enable-demo-agent \
 	%{?_disable_3g:--disable-3g-source}
 %make_build
@@ -164,6 +163,8 @@ mkdir -p %buildroot%_localstatedir/%_name
 %_includedir/lib%_name-%api_ver/
 %_libdir/lib%_name-2.so
 %_pkgconfigdir/lib%_name-%api_ver.pc
+%_vapidir/lib%_name-%api_ver.deps
+%_vapidir/lib%_name-%api_ver.vapi
 
 %files -n lib%name-gir
 %_typelibdir/Geoclue-%api_ver.typelib
@@ -181,10 +182,13 @@ mkdir -p %buildroot%_localstatedir/%_name
 
 %files demo
 %_libexecdir/%_name-%api_ver/demos/
-%_datadir/applications/*.desktop
+%_desktopdir/*.desktop
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Fri Jul 27 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt1
+- 2.4.11
+
 * Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.10-alt1
 - 2.4.10
 
