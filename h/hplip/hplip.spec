@@ -30,7 +30,7 @@ Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet
 Name: hplip
 Epoch: 1
 Version: 3.18.6
-Release: alt1
+Release: alt2
 %if_without ernie
 License: GPLv2+/MIT/BSD
 %else
@@ -147,6 +147,7 @@ Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.
 # it is patch 10 rediffed
 Patch11: hpijs-1.4.1-rss-alt-for-2.7.7.patch
 Patch12: hplip-3.16.11-alt-fax-setup.patch
+Patch13: hplip-3.18.6-alt-add-translation.patch
 
 # fedora patches
 Patch101: hplip-pstotiff-is-rubbish.patch
@@ -582,6 +583,7 @@ tar -xf %SOURCE6
 # it is patch 10 rediffed
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python,#!/usr/bin/python%{pysuffix},'
 
@@ -1109,6 +1111,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Fri Jul 27 2018 Pavel Akopov <pak@altlinux.ru> 1:3.18.6-alt2
+- added translation patch
+
 * Fri Jul 13 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.18.6-alt1
 - new version
 
