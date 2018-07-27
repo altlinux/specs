@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: grilo
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Content discovery framework
@@ -150,6 +150,9 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %endif
 
 %changelog
+* Fri Jul 27 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
+- 0.3.6
+
 * Tue Jul 17 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
 - 0.3.5
 
