@@ -1,6 +1,6 @@
 Name:     qslave
 Version:  1.0.2
-Release:  alt2%ubt
+Release:  alt3%ubt
 
 Summary:  Modbus network emulator
 License:  GPL-2.0
@@ -10,6 +10,7 @@ Url:      https://github.com/maisvendoo/qslave
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source:   %name-%version.tar
+Patch:    fix-registers-functions.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ qt5-base-devel pkgconfig(Qt5SerialPort)
@@ -20,6 +21,7 @@ BuildRequires: libmodbus-devel
 
 %prep
 %setup
+%patch -p1
 
 %build
 %qmake_qt5
@@ -52,6 +54,9 @@ install -Dm755 %name-gui %buildroot%_bindir/%name
 %_pixmapsdir/%name.png
 
 %changelog
+* Fri Jul 27 2018 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt3%ubt
+- Fix FTBFS
+
 * Tue Jul 24 2018 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt2%ubt
 - Added missing buildrequires (libmodbus-devel)
 
