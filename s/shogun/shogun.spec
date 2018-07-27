@@ -1,14 +1,22 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: shogun
-Version: 6.0.0
+Version: 6.1.3
 Release: alt1
 Summary: A Large Scale Machine Learning Toolbox
 Group: Sciences/Mathematics
 License: GPL v3 or later
 URL: http://www.shogun-toolbox.org/
 
+ExclusiveArch: %ix86 x86_64
+
 %set_verify_elf_method fhs=relaxed
 
+# https://github.com/shogun-toolbox/shogun
 Source: %name-%version.tar
+Source1: %name-data-%version.tar
+Source2: %name-gpl-%version.tar
+
 Patch1: %name-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -18,13 +26,16 @@ BuildRequires: libglpk36-devel libnumpy-devel libreadline-devel
 BuildRequires: liblpsolve-devel liblzma-devel swig doxygen graphviz
 BuildRequires: liblzo2-devel bzlib-devel zlib-devel boost-devel libjson-c-devel
 BuildRequires: texlive-latex-extra python-module-docutils ghostscript-classic
-BuildRequires: libarpack-devel libsuperlu-devel libhdf5-devel libxml2-devel
+BuildRequires: libsuperlu-devel libhdf5-devel libxml2-devel
 BuildRequires: libnlopt-devel libcolpack-devel libarprec-devel
 BuildRequires: libcurl-devel ccache
-BuildRequires: ctags python2.7(ply) eigen3 pandoc python-module-sphinx-bootstrap-theme
+BuildRequires: ctags python2.7(ply) eigen3 python-module-sphinx-bootstrap-theme
+BuildRequires: rxcpp-devel
 
-#Requires: lib%name = %EVR
-#Requires: %name-data = %version-%release
+%ifarch %ix86 x86_64
+BuildRequires: libarpack-devel
+BuildRequires: pandoc
+%endif
 
 %description
 The machine learning toolbox's focus is on large scale kernel methods and
@@ -78,7 +89,7 @@ This package contains shared libraries of SHOGUN.
 %package -n lib%name-devel
 Summary: Development files of SHOGUN
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 The machine learning toolbox's focus is on large scale kernel methods and
@@ -102,7 +113,7 @@ This package contains development files of SHOGUN.
 %package -n python-module-%name
 Summary: Python interface for SHOGUN
 Group: Development/Python
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n python-module-%name
 The machine learning toolbox's focus is on large scale kernel methods and
@@ -220,7 +231,11 @@ Learning.
 This package contains tests for SHOGUN.
 
 %prep
-%setup
+%setup -b1 -b2
+
+mv ../%name-data-%version/* data/
+mv ../%name-gpl-%version/* src/gpl/
+
 %patch1 -p1
 
 %build
@@ -234,10 +249,10 @@ export ARCH=x86_64
 	-DDISABLE_SSE=ON \
 %endif
 	-DBLAS_goto2_LIBRARY:FILEPATH=%_libdir/libopenblas.so \
+%ifarch %ix86 x86_64
 	-DARPACK_LIB:FILEPATH=%_libdir/libarpack_LINUX.so \
-	-DPythonModular=ON \
-	-DCmdLineStatic=ON \
-	-DPythonStatic=ON
+%endif
+	-DINTERFACE_PYTHON=ON
 
 %make_build VERBOSE=1
 
@@ -276,6 +291,9 @@ chmod +x %buildroot%_libdir/%name/examples/libshogun/*
 %doc tests
 
 %changelog
+* Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.3-alt1
+- Updated to upstream version 6.1.3.
+
 * Tue Sep 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.0-alt1
 - Updated to upstream version 6.0.0.
 
