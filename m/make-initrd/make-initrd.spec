@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -204,6 +204,9 @@ fi
 %endif
 
 %changelog
+* Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.2-alt1
+- Improve compatibility with bash-4.4
+
 * Thu May 17 2018 Alexey Gladkov <legion@altlinux.ru> 2.1.1-alt1
 - Runtime changes:
   + Move functions that check real root existance into common place
