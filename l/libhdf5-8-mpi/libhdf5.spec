@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -6,7 +8,7 @@
 %define priority 40
 Name: lib%{oname}-%sover-mpi
 Version: 1.8.13
-Release: alt3
+Release: alt4
 
 Summary: Hierarchical Data Format 5 library, parallel version
 
@@ -30,7 +32,7 @@ Provides: lib%{oname}_hl.so.%sover
 
 # Automatically added by buildreq on Sat Sep 15 2007
 BuildRequires: gcc-c++ libssl-devel zlib-devel %mpiimpl-devel
-BuildPreReq: libmpe2-devel libsz2-devel
+BuildPreReq: libsz2-devel
 
 %description
 HDF5 is a completely new Hierarchical Data Format product consisting
@@ -74,7 +76,6 @@ mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-%add_optflags -DH5_HAVE_MPE
 %autoreconf
 %configure \
 	--bindir=%mpidir/bin \
@@ -90,7 +91,6 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 	--enable-fortran \
 	--enable-parallel \
 	--enable-trace \
-	--with-mpe=%prefix \
 	MPIDIR=%mpidir
 
 subst "s|^LT=.*|LT=../libtool|g" c++/src/Makefile c++/test/Makefile
@@ -146,6 +146,11 @@ EOF
 echo "%_pkgconfigdir/%oname.pc %_pkgconfigdir/%oname-mpi.pc %priority" >> \
 	%buildroot%_altdir/%name-devel.alternatives
 
+rm -f %buildroot%_libdir/lib%{oname}-%sover.settings
+rm -f %buildroot%mpidir/lib/*.a
+rm -f %buildroot%mpidir/lib/*.la
+rm -rf %buildroot%_datadir/hdf5_examples
+
 %files
 %doc COPYING README.txt release_docs/{HISTORY*,RELEASE.txt}
 %ghost %_libdir/lib*.so.*
@@ -165,6 +170,9 @@ echo "%_pkgconfigdir/%oname.pc %_pkgconfigdir/%oname-mpi.pc %priority" >> \
 %_altdir/%oname-mpi-tools.alternatives
 
 %changelog
+* Wed Jul 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.13-alt4
+- Rebuilt without libmpe2.
+
 * Wed Sep 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.13-alt3
 - Rebuilt with new libmpe2.
 

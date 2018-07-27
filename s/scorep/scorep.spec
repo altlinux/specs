@@ -5,19 +5,19 @@
 
 Name: scorep
 Version: 3.1
-Release: alt1
+Release: alt2
 Summary: Score-P (Scalable Performance Measurement Infrastructure for Parallel Codes)
 License: BSD
 Group: Development/Tools
 Url: http://www.vi-hps.org/projects/score-p/
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Patch1: %name-%version-alt-build.patch
 
 BuildRequires(pre): %mpiimpl-devel
 BuildRequires: libotf2-devel opari2-devel libcube-devel
 BuildRequires: libbfd-devel uncrustify doxygen libpapi-devel flex
-BuildRequires: libopenpdt-devel libcube-devel graphviz texlive-base-bin
+BuildRequires: libcube-devel graphviz texlive-base-bin
 BuildRequires: lockfile-progs binutils-devel otf2 libgomp-devel
 
 %description
@@ -66,7 +66,6 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 	--with-otf2 \
 	--with-opari2 \
 	--with-cube \
-	--with-pdt=%_bindir \
 	--disable-openmp \
 	--with-libbfd=yes
 
@@ -107,6 +106,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %_docdir/%name
 
 %changelog
+* Wed Aug 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1-alt2
+- Updated build dependencies.
+
 * Thu Sep 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1-alt1
 - Updated to upstream version 3.1.
 

@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %set_verify_elf_method unresolved=relaxed
 
 %define mpiimpl openmpi
@@ -9,7 +11,7 @@
 %define sover %somver.%over
 Name: scalasca
 Version: %over
-Release: alt1
+Release: alt2
 Summary: Scalable performance Analysis of Large-Scale parallel Applications
 License: MIT
 Group: Development/Tools
@@ -30,8 +32,6 @@ Obsoletes: kojak < 2.2p1_%over-%release
 
 BuildRequires(pre): %mpiimpl-devel
 BuildRequires: libgomp-devel libqt4-devel libpapi-devel
-#BuildRequires: libopenpdt-devel openpdt tau
-BuildRequires: libopenpdt-devel openpdt
 BuildRequires: doxygen binutils-devel
 BuildRequires: texlive-latex-base ghostscript-utils chrpath
 BuildRequires: libotf2-devel opari2-devel libcube-devel
@@ -201,6 +201,9 @@ done
 %_includedir/*
 
 %changelog
+* Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.1-alt2
+- Updated build dependencies.
+
 * Fri Sep 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.1-alt1
 - Updated to upstream version 2.3.1.
 
