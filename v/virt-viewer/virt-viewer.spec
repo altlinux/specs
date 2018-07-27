@@ -1,7 +1,7 @@
 
 Name: virt-viewer
 Version: 7.0
-Release: alt0.1
+Release: alt1
 
 Summary: Virtual Machine Viewer
 Group: System/Configuration/Other
@@ -17,7 +17,7 @@ BuildRequires: libxml2-devel
 BuildRequires: libvirt-devel >= 0.9.7 libvirt-glib-devel >= 0.1.8
 BuildRequires: libgtk+3-devel >= 3.12
 BuildRequires: perl-podlators intltool
-BuildRequires: libspice-gtk3-devel >= 0.33 libspice-glib-devel spice-protocol >= 0.12.7
+BuildRequires: libspice-gtk3-devel >= 0.35 libspice-glib-devel spice-protocol >= 0.12.7
 BuildRequires: libgtk3vnc-devel >= 0.4.0
 BuildRequires: libgovirt-devel >= 0.3.2
 
@@ -59,6 +59,9 @@ intltoolize --force
 %_iconsdir/hicolor/*/devices/*
 
 %changelog
+* Fri Jul 27 2018 Alexey Shabalin <shaba@altlinux.org> 7.0-alt1
+- 7.0 release
+
 * Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 7.0-alt0.1
 - upstream/master snapshot
 - build without spice-controller
