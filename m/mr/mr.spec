@@ -1,12 +1,12 @@
 Name: mr
-Version: 1.20170129
+Version: 1.20180726
 Release: alt1
 
 Summary: A tool to manage all your version control repos
 License: GPLv2+
 Group: Development/Tools
 
-Url: http://myrepos.branchable.com/
+Url: https://myrepos.branchable.com/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Packager: Pavel Nakonechnyi <zorg@altlinux.org>
@@ -73,12 +73,16 @@ install -d %buildroot%_docdir/%name-%version
 %doc mrconfig
 %doc mrconfig.complex
 %doc README
+%_docdir/myrepos
 
 %files -n mr-webcheckout
 %_bindir/webcheckout
 %_man1dir/webcheckout*
 
 %changelog
+* Sat Jul 28 2018 Pavel Nakonechnyi <zorg@altlinux.org> 1.20180726-alt1
+- updated to 1.20180726 from git://myrepos.branchable.com/
+
 * Mon Jun 05 2017 Pavel Nakonechnyi <zorg@altlinux.org> 1.20170129-alt1
 - updated to 1.20170129
 
