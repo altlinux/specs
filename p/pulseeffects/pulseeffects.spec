@@ -2,7 +2,7 @@
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 4.2.0
+Version: 4.2.1
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -34,6 +34,7 @@ BuildRequires: pkgconfig(gstreamer-webrtc-1.0)
 BuildRequires: libbs2b-devel
 BuildRequires: liblilv-devel
 BuildRequires: zita-convolver-devel
+BuildRequires: libebur128-devel
 
 %description
 PulseEffects is a limiter, compressor, reverberation, stereo equalizer and auto volume
@@ -55,6 +56,7 @@ effects for Pulseaudio applications.
 %_bindir/%name
 %_libdir/gstreamer-%gst_api_ver/libgstpeconvolver.so
 %_libdir/gstreamer-%gst_api_ver/libgstpecrystalizer.so
+%_libdir/gstreamer-%gst_api_ver/libgstpeautogain.so
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/com.github.wwmm.%name.*gschema.xml
 %_iconsdir/hicolor/scalable/apps/%name.svg
@@ -62,6 +64,9 @@ effects for Pulseaudio applications.
 %doc README* CHANGELOG.*
 
 %changelog
+* Sun Jul 29 2018 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
+- 4.2.1
+
 * Wed Jul 25 2018 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
 - 4.2.0
 
