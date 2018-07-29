@@ -5,8 +5,8 @@
 %define rdn_name io.elementary.terminal
 
 Name: pantheon-terminal
-Version: %ver_major
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Pantheon Terminal
 Group: Terminals
@@ -19,8 +19,6 @@ Source: %url/archive/%version/terminal-%version.tar.gz
 #VCS: https://github.com/elementary/terminal.git
 Source: %name-%version.tar
 %endif
-# https://git.archlinux.org/svntogit/community.git/tree/trunk?h=packages/pantheon-terminal
-Patch: pantheon-terminal-0.5-arch-vte0.52.patch
 
 Provides: %rdn_name = %version-%release
 
@@ -52,7 +50,6 @@ This package provides Vala language bindings for the %name.
 %else
 %setup
 %endif
-%patch -p1
 
 %build
 %meson
@@ -80,6 +77,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Sat Jul 28 2018 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
+- 0.5.1
+
 * Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.5-alt2
 - rebuilt against libgranite.so.5
 
