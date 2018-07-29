@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180710
+Version: 20180722
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,14 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun Jul 29 2018 Cronbuild Service <cronbuild@altlinux.org> 20180722-alt1
+- upstream changes (GIT b01151b):
+  + Mellanox: Add new mlxsw_spectrum firmware 13.1702.6 (thx Nir Dotan)
+  + WHENCE: Remove reference to amdgpu/vegam_me_2.bin (thx Josh Boyer)
+  + mediatek: add MT7622 Bluetooth firmwares and license file (thx Sean Wang)
+  + brcm: add 43430 based AP6212 and 1DX NVRAM (thx Ryan Harkin)
+  + update Marvell USB8801 B0 firmware image (thx Ganapathi Bhat)
+
 * Mon Jul 23 2018 Cronbuild Service <cronbuild@altlinux.org> 20180710-alt1
 - upstream changes (GIT 8d69bab):
   + amdgpu: update copyright date (thx Alex Deucher)
