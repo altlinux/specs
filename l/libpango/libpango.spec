@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -128,7 +128,6 @@ the functionality of the installed Pango library.
 install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
     %{subst_enable static} \
@@ -186,6 +185,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Mon Jul 30 2018 Yuri N. Sedunov <aris@altlinux.org> 1.42.3-alt1
+- 1.42.3
+
 * Thu Jul 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.42.2-alt1
 - 1.42.2
 

@@ -28,8 +28,8 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.5
+Release: alt1
 
 Summary: Evolution Data Server
 License: %lgpl2plus
@@ -261,6 +261,9 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Mon Jul 30 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.5-alt1
+- 3.28.5
+
 * Wed Jul 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.4-alt2
 - rebuilt against libicu*.so.62
 
