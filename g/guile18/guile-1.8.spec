@@ -6,7 +6,7 @@
 Summary: A GNU implementation of Scheme for application extensibility
 Name: %{iname}18
 Version: %sversion.7
-Release: alt4
+Release: alt5
 Serial: 1
 Url: http://www.gnu.org/software/guile/
 
@@ -17,8 +17,6 @@ Obsoletes: %iname <= 1.4.1
 Provides: %iname = %serial:%version-%release
 Provides: /usr/bin/guile
 
-Packager: Alex Karpov <karpov@altlinux.org>
-
 Source: ftp://alpha.gnu.org/gnu/%iname/%iname-%version.tar
 Source1: %name.alternatives
 
@@ -27,9 +25,10 @@ Patch: guile18-snarf-check-and-output-texi.scm.patch
 Patch2: guile-1.8.7-testsuite.patch
 Patch3: guile-1.8.7-testsuite2.patch
 Patch4: guile-1.8.7-mkdir-umask.patch
+Patch5: guile-1.8.7-overflow.patch
 
-# Automatically added by buildreq on Wed Feb 07 2007
-BuildRequires: gcc-c++ glibc-devel-static libgmp-devel libltdl-devel libncurses-devel libreadline-devel sendmail-common 
+BuildRequires(pre): /proc /dev/pts
+BuildRequires: libgmp-devel libltdl-devel libncurses-devel libreadline-devel
 
 %add_findreq_skiplist %_datadir/%iname/%sversion/scripts/*
 
@@ -44,8 +43,6 @@ Summary: A GNU implementation of Scheme for application extensibility
 Group: Development/Scheme
 Requires: %name = %serial:%version-%release
 Requires: libgmp-devel
-Obsoletes: %iname-devel <= 1.4.1
-Provides: %iname-devel = %serial:%version-%release
 Conflicts: guile14-devel guile16-devel
 
 %description devel
@@ -56,21 +53,6 @@ as a library during the building of extensible programs.
 
 Install this package if you are going to develop extendable programs.
 
-%package devel-static
-Summary: A GNU implementation of Scheme for application extensibility
-Group: Development/Scheme
-Requires: %name-devel = %serial:%version-%release
-Obsoletes: %iname-devel-static <= 1.4.1
-Provides: %iname-devel-static = %serial:%version-%release
-
-%description devel-static
-GUILE (GNU's Ubiquitous Intelligent Language for Extension) is a library
-implementation of the Scheme programming language, written in C.  GUILE
-provides a machine-independent execution platform that can be linked in
-as a library during the building of extensible programs.
-
-Install this package if you need to statically link your program with guile.
-
 %prep
 %setup -q -n %iname-%version
 %patch -p1
@@ -78,17 +60,14 @@ Install this package if you need to statically link your program with guile.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %__subst -p 's/^libguile_la_LDFLAGS = .*/& $(GUILE_CFLAGS)/' libguile/Makefile*
 
 %build
-#ifarch x86_64
-#define _optlevel 0
-#endif
-
 %autoreconf
 
-%configure --with-threads --enable-error-on-warning=no
+%configure --with-threads --enable-error-on-warning=no --disable-static
 #NO SMP
 %make
 
@@ -124,10 +103,11 @@ make check
 %_datadir/info/*.info*
 %_libdir/pkgconfig/%iname-%sversion.pc
 
-%files devel-static
-%_libdir/lib*.a
-
 %changelog
+* Mon Jul 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.8.7-alt5
+- stop providing guile-devel
+- drop devel-static subpackage
+
 * Tue Oct 11 2016 Mikhail Efremov <sem@altlinux.org> 1:1.8.7-alt4
 - Remove 'umask' calls from 'mkdir'.
 

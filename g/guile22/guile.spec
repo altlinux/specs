@@ -1,5 +1,5 @@
 Name: guile22
-Version: 2.2.2
+Version: 2.2.4
 Release: alt1
 
 Summary: A GNU implementation of Scheme
@@ -25,6 +25,7 @@ users of Guile-based applications a choice of languages.
 Summary: A Guile development package
 Group: Development/Scheme
 Requires: %name = %version-%release
+Provides: guile-devel = %version-%release
 Conflicts: guile14-devel guile16-devel guile18-devel guile20-devel
 
 %description devel
@@ -75,6 +76,9 @@ install -pm0644 -D guile.macros %buildroot%_rpmmacrosdir/guile
 %_infodir/*.info*
 
 %changelog
+* Mon Jul 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.4-alt1
+- 2.2.4 released
+
 * Fri May 12 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.2-alt1
 - 2.2.2 released
 
