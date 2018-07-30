@@ -1,8 +1,11 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define _localstatedir %_var
 %global src_name chirp-daily
 
 Name: chirp
-Version: 20171104
+Version: 20180707
 Release: alt1
 Summary: A tool for programming two-way radio equipment
 
@@ -55,5 +58,8 @@ desktop-file-install \
 %_pixmapsdir/%name.png
 
 %changelog
+* Mon Jul 30 2018 Anton Midyukov <antohami@altlinux.org> 20180707-alt1
+- new version (20180707) with rpmgs script
+
 * Tue Nov 14 2017 Anton Midyukov <antohami@altlinux.org> 20171104-alt1
 - Initial build for ALT Sisyphus.
