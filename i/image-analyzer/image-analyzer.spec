@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: image-analyzer
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 Summary: Simple Gtk+ application that displays tree structure of disc image
 Summary(ru_RU.UTF-8): Простое GTK+ приложение для просмотра структуры образа диска
@@ -9,7 +12,10 @@ Url: http://cdemu.sourceforge.net/
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake intltool gcc-c++ libmirage-devel >= 3.0.0 libxml2-devel pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) desktop-file-utils
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-gir
+BuildRequires: cmake intltool
+
 Buildarch: noarch
 
 %description
@@ -30,6 +36,9 @@ libMirage, тем не менее он может также использов�
 %prep
 %setup
 
+#fix PATH to python3
+sed 's|/usr/bin/env python3|/usr/bin/python3|' -i src/%name
+
 %build
 %cmake_insource
 %make_build
@@ -45,6 +54,9 @@ libMirage, тем не менее он может также использов�
 %_pixmapsdir/*.svg
 
 %changelog
+* Mon Jul 30 2018 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt1
+- new version (3.2.0) with rpmgs script
+
 * Thu Aug 03 2017 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt1
 - new version (3.1.0) with rpmgs script
 
