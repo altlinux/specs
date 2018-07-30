@@ -1,7 +1,7 @@
 %define module Gear-Remotes
 
 Name: perl-%module
-Version: 0.017
+Version: 0.018
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -10,7 +10,8 @@ Summary: %module - Perl extension for quering Gear remotes files
 Group: Development/Perl
 License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
-Url: http://search.cpan.org/dist/%module
+# TODO: upload to http://search.cpan.org/dist/%module
+Url: https://www.altlinux.org/Gear/remotes
 
 # Automatically added by buildreq on Wed Nov 06 2002
 BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm) perl(RPM/uscan.pm) perl(Gear/Rules.pm) perl(RPM/Source/Editor.pm)
@@ -18,7 +19,15 @@ Requires: gear perl(Pod/Text.pm)
 Provides: gear-remotes = %version
 
 %description
-%summary
+Perl library and tools to work with .gear/upstream/remotes files.
+Gear is a tool for storing, building and maintaining rpm packages
+in a git repository for ALT Linux team.
+
+Gear, however, lack means to store essential parts of local configuration,
+such as location of upstream VCS it was cloned from or updated.
+.gear/upstream/remotes is an extension to Gear to cover this weakness.
+
+See more on www.altlinux.org/Gear/remotes .
 
 %if_with utils
 %package -n gear-remotes-utils
@@ -56,6 +65,9 @@ Requires: gear-uupdate
 %_man1dir/*
 
 %changelog
+* Mon Jul 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.018-alt1
+- added man pages
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.017-alt1
 - check for misspelled remotes/*-tag
 
