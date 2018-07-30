@@ -53,7 +53,7 @@
 %endif
 
 Name: samba
-Version: 4.7.8
+Version: 4.8.3
 Release: alt1%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -73,14 +73,13 @@ Source11: pam_winbind.conf
 Source12: ctdb.init
 Source13: samba.limits
 
+Source21: smbusers
+
 Source200: README.dc
 Source201: README.downgrade
 
 Patch: %name-%version-alt.patch
 Patch10: samba-grouppwd.patch
-
-# fedora patches
-Patch100:         samba-4.4.2-s3-winbind-make-sure-domain-member-can-talk-to-trust.patch
 
 Provides: samba4 = %version-%release
 Obsoletes: samba4 < %version-%release
@@ -119,15 +118,16 @@ BuildRequires: libpopt-devel
 BuildRequires: zlib-devel
 BuildRequires: glibc-devel glibc-kernheaders
 # BuildRequires: libbsd-devel
-BuildRequires: setproctitle-devel
+# https://bugzilla.samba.org/show_bug.cgi?id=9863
+BuildConflicts: setproctitle-devel
 BuildRequires: libiniparser-devel
 BuildRequires: libkrb5-devel libssl-devel libcups-devel
 BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
 %{?_with_doc:BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-xsl}
-%{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.10 libpytalloc-devel}
+%{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.11 libpytalloc-devel}
 %{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.36 python-module-tevent}
 %{?_without_tdb:BuildRequires: libtdb-devel >= 1.3.15  python-module-tdb}
-%{?_without_ldb:BuildRequires: libldb-devel >= 1.2.3 python-module-pyldb-devel}
+%{?_without_ldb:BuildRequires: libldb-devel >= 1.3.4 python-module-pyldb-devel}
 #{?_with_clustering_support:BuildRequires: ctdb-devel}
 %{?_with_testsuite:BuildRequires: ldb-tools}
 %if_branch_le M70P
@@ -438,6 +438,20 @@ Obsoletes: samba4-winbind-krb5-locator < %version-%release
 The winbind krb5 locator is a plugin for the system kerberos library to allow
 the local kerberos library to use the same KDC as samba and winbind use
 
+%package winbind-krb5-localauth
+Summary: Samba winbind krb5 plugin for mapping user accounts
+Group: System/Servers
+%if_with libwbclient
+Requires: libwbclient = %version-%release
+Requires: %name-winbind = %version-%release
+%else
+Requires: %name-libs = %version-%release
+%endif
+
+%description winbind-krb5-localauth
+The winbind krb5 localauth is a plugin that permits the MIT Kerberos libraries
+that Kerberos principals can be validated against local user accounts.
+
 %package winbind-devel
 Summary: Developer tools for the winbind library
 Group: Development/C
@@ -502,7 +516,6 @@ Samba suite.
 %setup -q
 %patch -p1
 %patch10 -p1
-%patch100 -p 1 -b .samba-4.4.2-s3-winbind-make-sure-domain-member-can-talk-to-trust.patch
 
 %build
 
@@ -555,12 +568,12 @@ Samba suite.
 %endif
 
 %define _samba4_private_libraries %{_libsmbclient}%{_libwbclient}%{_libnetapi}
-
+%define _samba_piddir /var/run
 
 %undefine _configure_gettext
 %configure \
 	--enable-fhs \
-	--with-piddir=/var/run \
+	--with-piddir=%_samba_piddir \
 	--with-sockets-dir=/var/run/samba \
 	--with-modulesdir=%_libdir/samba \
 	--with-pammodulesdir=%_lib/security \
@@ -655,9 +668,10 @@ mkdir -p %buildroot%_sysconfdir/openldap/schema
 install -m644 examples/LDAP/samba.schema %buildroot%_sysconfdir/openldap/schema/samba.schema
 install -m755 packaging/printing/smbprint %buildroot%_bindir/smbprint
 
-
-install -m644 packaging/systemd/samba.sysconfig %buildroot%_sysconfdir/sysconfig/samba
-install -m644 packaging/RHEL/setup/smbusers %buildroot%_sysconfdir/samba/smbusers
+cp packaging/systemd/samba.sysconfig packaging/systemd/samba.sysconfig.alt
+echo "KRB5CCNAME=FILE:/run/samba/krb5cc_samba" >>packaging/systemd/samba.sysconfig.alt
+install -m644 packaging/systemd/samba.sysconfig.alt %buildroot%_sysconfdir/sysconfig/samba
+install -m644 %SOURCE21 %buildroot%_sysconfdir/samba/smbusers
 
 install -m755 %SOURCE10 %buildroot%_initrddir/nmb
 install -m755 %SOURCE5 %buildroot%_initrddir/smb
@@ -672,8 +686,9 @@ install -m 644 %SOURCE200 %buildroot%_defaultdocdir/%name/README.dc-libs
 %endif
 
 for i in nmb smb winbind ; do
-    cat packaging/systemd/$i.service | sed -e 's@\[Service\]@[Service]\nEnvironment=KRB5CCNAME=FILE:/run/samba/krb5cc_samba@g' >tmp$i.service
-    install -m 0644 tmp$i.service %buildroot%_unitdir/$i.service
+    cat packaging/systemd/$i.service.in | sed -e 's|@PIDDIR@|%_samba_piddir|g' -e 's|@SYSCONFDIR@|%_sysconfdir|g' -e 's|@SBINDIR@|%_sbindir|g' \
+        -e '/@systemd_smb_extra@/d' -e '/@systemd_nmb_extra@/d' -e '/@systemd_winbind_extra@/d' -e '/@systemd_samba_extra@/d'  >packaging/systemd/$i.service
+    install -m 0644 packaging/systemd/$i.service %buildroot%_unitdir/$i.service
 done
 subst 's,Type=notify,Type=forking,' %buildroot%_unitdir/*.service
 %if_with clustering_support
@@ -703,6 +718,7 @@ ln -sf ..%_libdir/libnss_wins.so    %buildroot/%_lib/libnss_wins.so.2
 
 mkdir -p  %buildroot%_libdir/krb5/plugins/libkrb5
 mv %buildroot%_libdir/winbind_krb5_locator.so %buildroot%_libdir/krb5/plugins/libkrb5/
+mv %buildroot%_libdir/winbind-krb5-localauth.so %buildroot%_libdir/krb5/plugins/libkrb5/
 
 #cups backend
 %define cups_serverbin %(cups-config --serverbin 2>/dev/null)
@@ -735,6 +751,11 @@ cp -a pidl/lib/Parse/Pidl/Samba3/Template.pm %buildroot%_datadir/perl5/Parse/Pid
 # Install limits
 mkdir -p %buildroot%_sysconfdir/security/limits.d/
 install -m644 %SOURCE13 %buildroot%_sysconfdir/security/limits.d/90-samba.conf
+
+# Install traffic tools
+install -m755 script/traffic_learner %buildroot%_bindir/traffic_learner
+install -m755 script/traffic_replay %buildroot%_bindir/traffic_replay
+#install -m755 script/traffic_summary.pl %buildroot%_bindir/traffic_summary (perl-XML-Twig requires)
 
 %find_lang pam_winbind
 %find_lang net
@@ -808,6 +829,12 @@ TDB_NO_FSYNC=1 %make_build test
 %exclude %_man8dir/vfs_glusterfs.8*
 %endif #doc
 %endif # ! glusterfs
+
+%if_without dc
+%_sbindir/samba_gpoupdate
+%if_with doc
+%_man8dir/samba_gpoupdate.8*
+%endif #doc
 
 %files client
 %_bindir/cifsdd
@@ -943,7 +970,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libflag-mapping-samba4.so
 %_libdir/samba/libgenrand-samba4.so
 %_libdir/samba/libgensec-samba4.so
-%_libdir/samba/libgpo-samba4.so
+%_libdir/samba/libgpext-samba4.so
 %_libdir/samba/libgse-samba4.so
 %_libdir/samba/libhttp-samba4.so
 %_libdir/samba/libinterfaces-samba4.so
@@ -1083,6 +1110,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_sbindir/samba
 %_sbindir/samba_kcc
 %_sbindir/samba_dnsupdate
+%_sbindir/samba_gpoupdate
 %_sbindir/samba_spnupdate
 %_sbindir/samba_upgradedns
 %_sbindir/upgradeprovision
@@ -1097,12 +1125,14 @@ TDB_NO_FSYNC=1 %make_build test
 %if_with doc
 %_man8dir/samba.8*
 %_man8dir/samba-tool.8*
+%_man8dir/samba_gpoupdate.8*
 %endif #doc
 %else
 %doc %_defaultdocdir/%name/README.dc
 %if_with doc
 %exclude %_man8dir/samba.8*
 %exclude %_man8dir/samba-tool.8*
+%exclude %_man8dir/samba_gpoupdate.8*
 %endif #doc
 %exclude %_libdir/samba/ldb/ildap.so
 %exclude %_libdir/samba/ldb/ldbsamba_extensions.so
@@ -1296,6 +1326,8 @@ TDB_NO_FSYNC=1 %make_build test
 %_bindir/masktest
 %_bindir/ndrdump
 %_bindir/smbtorture
+%_bindir/traffic_learner
+%_bindir/traffic_replay
 %if_with doc
 %_man1dir/gentest.1*
 %_man1dir/locktest.1*
@@ -1303,6 +1335,8 @@ TDB_NO_FSYNC=1 %make_build test
 %_man1dir/ndrdump.1*
 %_man1dir/smbtorture.1*
 %_man1dir/vfstest.1*
+%_man7dir/traffic_learner.7*
+%_man7dir/traffic_replay.7*
 %endif #doc
 
 %if_with testsuite
@@ -1354,6 +1388,10 @@ TDB_NO_FSYNC=1 %make_build test
 %if_with doc
 %_man7dir/winbind_krb5_locator.7*
 %endif #doc
+%endif
+
+%files winbind-krb5-localauth
+%_libdir/krb5/plugins/libkrb5/winbind-krb5-localauth.so
 %endif
 
 %if_with clustering_support
@@ -1421,6 +1459,10 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Thu Jul 05 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.8.3-alt1%ubt
+- Update to new summer release of Samba 4.8
+- Add winbind-krb5-localauth package with plugin for mapping user accounts
+
 * Fri Jun 22 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.7.8-alt1%ubt
 - Update to first summer release of Samba 4.7
 - Rebuild for e2k with missing SYS_setgroups32
