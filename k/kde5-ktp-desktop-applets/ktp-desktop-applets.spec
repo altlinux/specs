@@ -1,7 +1,7 @@
 %define rname ktp-desktop-applets
 
 Name: kde5-%rname
-Version: 18.04.2
+Version: 18.04.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -13,6 +13,7 @@ License: GPLv2+ / LGPLv2+
 Requires: kde5-ktp-common-internals-core
 
 Source: %rname-%version.tar
+Patch1: alt-person-applet.patch
 
 # Automatically added by buildreq on Wed Jun 17 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-network libqt5-qml libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs
@@ -50,6 +51,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -76,6 +78,12 @@ KF5 library
 #%_K5lib/libktp-desktop-applets.so.*
 
 %changelog
+* Wed Jul 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+- new version
+
+* Wed Jul 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt2%ubt
+- fix unconfigured Person applet (thanks pak@alt)
+
 * Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
 - new version
 
