@@ -1,7 +1,7 @@
 %define  pkgname faraday
 
 Name: 	 ruby-%pkgname
-Version: 0.13.1
+Version: 0.15.2
 Release: alt1
 
 Summary: Simple, but flexible HTTP client library, with support for multiple backends.
@@ -56,6 +56,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Jul 30 2018 Mikhail Gordeev <obirvalger@altlinux.org> 0.15.2-alt1
+- new version 0.15.2
+
 * Sat Oct 21 2017 Mikhail Gordeev <obirvalger@altlinux.org> 0.13.1-alt1
 - new version 0.13.1
 
