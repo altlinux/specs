@@ -1,5 +1,5 @@
 Name: libm17n-db
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Multilingualization datafiles for m17n-lib
@@ -41,7 +41,7 @@ This package contains development files for m17n-db.
 %find_lang m17n-db
 
 %files -f m17n-db.lang
-%doc AUTHORS COPYING README
+%doc AUTHORS COPYING README NEWS
 %_datadir/m17n
 
 %files devel
@@ -50,6 +50,10 @@ This package contains development files for m17n-db.
 
 
 %changelog
+* Mon Jul 30 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.0-alt1
+- 1.8.0
+- packaged NEWS file
+
 * Thu May 18 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.0-alt1
 - 1.7.0
 
