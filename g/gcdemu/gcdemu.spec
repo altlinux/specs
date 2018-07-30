@@ -1,19 +1,28 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Summary: GTK+ based GUI for controlling CDEmu daemon
 Summary(ru_RU.UTF-8): Основанная на GTK+ GUI для управления CDEmu
 Name: gcdemu
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 Group: Emulators
 License: GPLv2+
 Url: http://cdemu.sourceforge.net/
 Packager: Anton Midyukov <antohami@altlinux.org>
+
 Source: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
 Patch1: autostart.patch
-Patch2: enabled_ru_translation.patch
 Patch3: fix_desktop.patch
+
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake intltool rpm-build-gir
-Requires: cdemu-daemon cdemu-client
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-gir
+BuildRequires: cmake intltool
+
+Requires: cdemu-daemon >= %version
+Requires: cdemu-client >= %version
+
 BuildArch: noarch
 
 %description
@@ -42,8 +51,10 @@ gCDEmu - базирующийся на Gtk+ и Appindicator апплет в об
 %prep
 %setup
 %patch1 -p1
-#patch2
 %patch3 -p2
+
+#fix PATH to python3
+sed 's|/usr/bin/env python3|/usr/bin/python3|' -i src/%name
 
 %build
 %cmake_insource
@@ -63,6 +74,9 @@ mv %buildroot/%_desktopdir/%name.desktop %buildroot/%_sysconfdir/xdg/autostart/
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Mon Jul 30 2018 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt1
+- new version (3.2.0) with rpmgs script
+
 * Thu Aug 03 2017 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt1
 - new version (3.1.0) with rpmgs script
 
