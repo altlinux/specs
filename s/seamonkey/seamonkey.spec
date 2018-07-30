@@ -14,7 +14,7 @@
 %define sm_develdir     %sm_prefix-devel
 
 Name: 	 seamonkey
-Version: 2.49.3
+Version: 2.49.4
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
@@ -395,6 +395,9 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Mon Jul 30 2018 Michael Shigorin <mike@altlinux.org> 1:2.49.4-alt1
+- 2.49.4
+
 * Fri May 04 2018 Michael Shigorin <mike@altlinux.org> 1:2.49.3-alt1
 - 2.49.3
 
