@@ -1,9 +1,9 @@
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.30
+%define major 1.31
 
 Name: mediawiki
 Version: %major.0
-Release: alt2
+Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
 
@@ -25,7 +25,7 @@ Source6: AdminSettings.sample
 Source7: 99-read-user-configs.php
 
 Patch: %name-%major-alt.patch
-#Patch1: 0001-disable-skin-using-autodiscovery-mechanism-warning.patch
+Patch1: %name-%major-config-path.patch
 
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-licenses
@@ -60,7 +60,7 @@ If you wish pure %name, install only %name-common package.
 Summary: Common files for %name
 Group: Networking/WWW
 PreReq: webserver-common
-Requires: php7-libs >= 7.0
+Requires: php7-libs >= 7.0.0
 Requires: diffutils
 
 AutoProv:no
@@ -116,6 +116,18 @@ Provides: mediawiki-extensions-Gadgets
 Provides: mediawiki-extensions-PdfHandler
 Conflicts: mediawiki-extensions-PdfHandler < 1.24
 
+# since 1.31
+Provides: mediawiki-extensions-CategoryTree
+Obsoletes: mediawiki-extensions-CategoryTree
+Provides: mediawiki-extensions-CodeEditor
+Obsoletes: mediawiki-extensions-CodeEditor
+Provides: mediawiki-extensions-MultimediaViewer
+Obsoletes: mediawiki-extensions-MultimediaViewer
+Provides: mediawiki-extensions-OATHAuth
+Obsoletes: mediawiki-extensions-OATHAuth
+Provides: mediawiki-extensions-ReplaceText
+Obsoletes: mediawiki-extensions-ReplaceText
+
 %description -n %name-common
 %summary
 
@@ -126,7 +138,7 @@ Requires: %name-common = %version-%release
 Requires: apache2-common >= 2.2.0
 Requires: %_initdir/%apache2_dname
 Requires: apache2-httpd-prefork
-Requires: apache2-mod_php7 >= 7
+Requires: apache2-mod_php7 >= 7.0.0
 
 %description -n %name-apache2
 Install this package, if you wish to run %name under apache2 webserver
@@ -163,7 +175,7 @@ Requires: %name-common = %version-%release
 %prep
 %setup
 %patch -p2
-#patch1 -p2
+%patch1 -p2
 
 %install
 mkdir -p %buildroot%_mediawikidir/
@@ -308,6 +320,9 @@ exit 0
 
 
 %changelog
+* Mon Jul 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.31.0-alt1
+- new version 1.31.0 (with rpmrb script)
+
 * Sun Apr 29 2018 Vitaly Lipatov <lav@altlinux.ru> 1.30.0-alt2
 - switch to php7 using
 
