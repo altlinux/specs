@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt114
+Release: alt115
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -305,8 +305,8 @@ chmod a+x scripts/find-lang
 RPMCONFIGDIR=./scripts ./scripts/find-lang %oname rpm2cpio --output %oname.lang
 
 pushd %buildroot%_rpmlibdir
-	for f in *-alt-%_target_os%{?_gnueabi:%_gnueabi}; do
-		n=`echo "$f" |sed -e 's/-alt//' %{?_gnueabi:-e 's/%_gnueabi$//'}`
+	for f in *-alt-%_target_os; do
+		n=`echo "$f" |sed -e 's/-alt//'`
 		[ -e "$n" ] || ln -s "$f" "$n"
 	done
 popd
@@ -512,6 +512,11 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %endif #with python
 
 %changelog
+* Thu Jul 26 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt115
+- rpmrc: added mips64* and mips*r6 support.
+- verify-elf: disabled stack verification and elflint on mips* (iv@).
+- Fixed installation of platform macros on armh arch.
+
 * Sat Jun 30 2018 Alexey Tourbin <at@altlinux.ru> 4.0.4-alt114
 - cpio.c: Fixed the conversion of 8-digit hex file sizes from cpio header.
   Packages with a 2GB+ file should now be installable.
