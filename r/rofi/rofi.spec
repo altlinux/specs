@@ -1,7 +1,7 @@
 
 Name: rofi
 Version: 1.5.1
-Release: alt1
+Release: alt2
 Summary: A window switcher, run dialog and dmenu replacement
 License: MIT
 Group: Graphical desktop/Other
@@ -11,6 +11,7 @@ Packager: Konstantin Artyushkin <akv@altlinux.org>
 Source: https://github.com/DaveDavenport/%name/releases/download/%version/%name-%version.tar.gz
 #It tries to use x-terminal-emulator which is only available on debian systems, I replace it with xdg-terminal.
 #Patch: 0001-Replace-x-terminal-emulator-with-xdg-terminal.patch
+Patch: 0002-Workaround-for-ALT-flex-changes-ALT-35141.patch
 
 # Automatically added by buildreq on Mon Sep 21 2015
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libXft-devel libXrender-devel libfreetype-devel pkg-config python3-base xorg-kbproto-devel xorg-renderproto-devel xorg-xproto-devel
@@ -52,7 +53,7 @@ Requires: %name
 
 %prep
 %setup
-#%%patch0 -p1
+%patch0 -p1
 
 %build
 %autoreconf
@@ -76,6 +77,9 @@ Requires: %name
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Jul 03 2018 Konstantin Artyushkin <akv@altlinux.org> 1.5.1-alt2
+- add workaround for segfault ALTBUG-35141
+
 * Tue Jul 03 2018 Konstantin Artyushkin <akv@altlinux.org> 1.5.1-alt1
 - update
 
