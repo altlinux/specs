@@ -2,7 +2,7 @@
 
 Name: pychess
 Version: 0.12.4
-Release: alt1
+Release: alt2
 
 Summary: Chess game for GNOME
 
@@ -16,27 +16,12 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 # needed:
-Requires: gnome-icon-theme librsvg-gir
-Requires: python-module-pygobject3
-%py_requires cairo
-#py_requires gobject3
-
-%py_requires libglade
-%py_requires pysqlite2
-#py_requires gtksourceview2
-
-#gobject-introspection
-#glib2
-#gtk3
-#pango
-#gdk-pixbuf2
-#gtksourceview3
-#gstreamer1
-#gstreamer1-plugins-base
-
+Requires: gnome-icon-theme
+Requires: typelib(GtkSource) = 3.0
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-python rpm-build-gir
 # Automatically added by buildreq on Tue Dec 25 2007
 BuildRequires: python-devel python-modules-compiler
 
@@ -79,6 +64,9 @@ rm -rf %buildroot%_datadir/menu/
 %_man1dir/*
 
 %changelog
+* Mon Jul 30 2018 Anton Midyukov <antohami@altlinux.org> 0.12.4-alt2
+- fix buildrequires and requires (Closes: 33434)
+
 * Tue Jan 03 2017 Vitaly Lipatov <lav@altlinux.ru> 0.12.4-alt1
 - new version 0.12.4 (with rpmrb script)
 
