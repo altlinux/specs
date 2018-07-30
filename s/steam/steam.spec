@@ -1,6 +1,6 @@
 Name: steam
-Version: 1.0.0.54
-Release: alt6%ubt
+Version: 1.0.0.55
+Release: alt1%ubt
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -75,9 +75,14 @@ savegame and screenshot functionality, and many social features.
 %_pixmapsdir/*
 %config %_udevrulesdir/99-%name-controller-perms.rules
 %config %_udevrulesdir/60-HTC-Vive-perms.rules
+%dir %_sysconfdir/ssl
+%dir %_sysconfdir/ssl/certs
 %_sysconfdir/ssl/certs/ca-certificates.crt
 
 %changelog 
+* Mon Jul 30 2018 Nazarov Denis <nenderus@altlinux.org> 1.0.0.55-alt1%ubt
+- Version 1.0.0.55
+
 * Wed Sep 06 2017 Nazarov Denis <nenderus@altlinux.org> 1.0.0.54-alt6%ubt
 - Fix connection via SSL (ALT #33849)
 
