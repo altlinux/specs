@@ -1,5 +1,5 @@
 Name: nsd
-Version: 4.1.22
+Version: 4.1.23
 Release: alt1
 
 Summary: Name Server Daemon
@@ -42,7 +42,7 @@ NSD is an authoritative only, high performance, simple and open source name serv
   --with-difffile=%_localstatedir/%name/ixfr.db \
   --with-xfrdfile=%_localstatedir/%name/xfrd.state \
   --localstatedir=%_var
-%make_build
+%make_build -j1
 
 %install
 %makeinstall_std
@@ -81,6 +81,9 @@ install -Dpm 644 %SOURCE6 %buildroot%_tmpfilesdir/%name.conf
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Mon Jul 30 2018 Alexei Takaseev <taf@altlinux.org> 4.1.23-alt1
+- 4.1.23
+
 * Wed Jun 13 2018 Alexei Takaseev <taf@altlinux.org> 4.1.22-alt1
 - 4.1.22
 
