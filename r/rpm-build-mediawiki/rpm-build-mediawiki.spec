@@ -1,5 +1,5 @@
 Name: rpm-build-mediawiki
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: RPM helper scripts for packaging mediawiki extensions
@@ -28,6 +28,10 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/mediawiki
 %_rpmmacrosdir/mediawiki
 
 %changelog
+* Tue Jul 31 2018 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
+- support mediawiki 1.24 or newer
+- add setup_mediawiki_ext, mediawikiext_dir macros
+
 * Wed Apr 01 2015 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
 - remove ?> in the last config line
 
