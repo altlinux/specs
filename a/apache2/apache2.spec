@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.33
+Version: 2.4.34
 Release: alt1%ubt
 Epoch: 1
 
@@ -1513,6 +1513,12 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Tue Jul 31 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.34-alt1%ubt
+- 2.4.34
+- fixes:
+	* CVE-2018-1333 DoS for HTTP/2 connections by crafted requests
+	* CVE-2018-8011 mod_md, DoS via Coredumps on specially crafted requests
+
 * Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.33-alt1%ubt
 - 2.4.33
 - fixes:
