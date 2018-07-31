@@ -13,13 +13,15 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.0.7
+Version: 1.1.0
 Release: alt1%ubt
 License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://github.com/hughsie/fwupd
 Source0: %name-%version.tar
+Patch0: %name-%version-alt.patch
 BuildRequires(pre):rpm-build-ubt
+ExclusiveArch: %ix86 x86_64 aarch64
 
 BuildRequires: docbook-utils
 BuildRequires: gettext
@@ -59,16 +61,15 @@ BuildRequires: libcairo-devel libcairo-gobject-devel
 BuildRequires: libfreetype-devel
 BuildRequires: fontconfig
 BuildRequires: fonts-ttf-dejavu
+BuildRequires: gnu-efi libefivar-devel
+Provides: fwupdate
+Obsoletes: fwupdate
 %endif
 
 %if_enabled dell
-BuildRequires: libefivar-devel
 BuildRequires: libsmbios-devel
 %endif
 
-%if_enabled uefi
-BuildRequires: fwupdate-devel
-%endif
 Requires: fwupd-labels = %EVR
 Requires: bubblewrap
 
@@ -103,6 +104,7 @@ Data files for installed tests.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %meson \
@@ -121,10 +123,10 @@ Data files for installed tests.
     -Dplugin_thunderbolt=true \
 %if_enabled uefi
     -Dplugin_uefi=true \
-    -Dplugin_uefi_labels=true \
+    -Dplugin_redfish=true \
 %else
     -Dplugin_uefi=false \
-    -Dplugin_uefi_labels=false \
+    -Dplugin_redfish=false \
 %endif
 %if_enabled dell
     -Dplugin_dell=true \
@@ -133,7 +135,6 @@ Data files for installed tests.
     -Dplugin_dell=false \
     -Dplugin_synaptics=false \
 %endif
-    -Dplugin_colorhug=true
 
 %meson_build
 
@@ -155,6 +156,11 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %config(noreplace)%_sysconfdir/fwupd/daemon.conf
 %dir %_libexecdir/fwupd
 %_libexecdir/fwupd/fwupd
+%_libexecdir/fwupd/fwupdtool
+%if_enabled uefi
+%_libexecdir/fwupd/fwupdate
+%_libdir/efi/fwupd*.efi
+%endif
 %_bindir/dfu-tool
 %_bindir/fwupdmgr
 %dir %_sysconfdir/fwupd
@@ -173,10 +179,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/polkit-1/rules.d/org.freedesktop.fwupd.rules
 %_datadir/dbus-1/system-services/org.freedesktop.fwupd.service
 %_datadir/metainfo/org.freedesktop.fwupd.metainfo.xml
-%_datadir/metainfo/org.freedesktop.fwupd.remotes.lvfs.metainfo.xml
-%_datadir/metainfo/org.freedesktop.fwupd.remotes.lvfs-testing.metainfo.xml
+%_datadir/fwupd/metainfo/org.freedesktop.fwupd.remotes.lvfs-testing.metainfo.xml
+%_datadir/fwupd/metainfo/org.freedesktop.fwupd.remotes.lvfs.metainfo.xml
 %_datadir/fwupd/firmware-packager
-%_datadir/bash-completion/completions/fwupdmgr
 %_unitdir/fwupd-offline-update.service
 %_unitdir/fwupd.service
 %_unitdir/system-update.target.wants/
@@ -195,6 +200,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_colorhug.so
 %if_enabled dell
 %_libdir/fwupd-plugins-3/libfu_plugin_dell.so
+%_libdir/fwupd-plugins-3/libfu_plugin_dell_esrt.so
 %endif
 %_libdir/fwupd-plugins-3/libfu_plugin_dfu.so
 %_libdir/fwupd-plugins-3/libfu_plugin_ebitdo.so
@@ -211,10 +217,12 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_udev.so
 %if_enabled uefi
 %_libdir/fwupd-plugins-3/libfu_plugin_uefi.so
+%_libdir/fwupd-plugins-3/libfu_plugin_redfish.so
 %config(noreplace)%_sysconfdir/fwupd/uefi.conf
 %endif
 %_libdir/fwupd-plugins-3/libfu_plugin_unifying.so
 %_libdir/fwupd-plugins-3/libfu_plugin_upower.so
+%_libdir/fwupd-plugins-3/libfu_plugin_wacomhid.so
 %ghost %_localstatedir/fwupd/gnupg
 
 %files devel
@@ -239,6 +247,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Tue Jul 31 2018 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1%ubt
+- 1.1.0
+
 * Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 1.0.7-alt1%ubt
 - 1.0.7
 
