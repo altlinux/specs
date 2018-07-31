@@ -1,18 +1,12 @@
 Name: guile-evms
 Version: 0.5
-Release: alt6
+Release: alt7
 
 Summary: Guile bindings for EVMS
 License: GPL
 Group: Development/Scheme
 
-BuildRequires: libblkid-devel libe2fs-devel libevms-devel swig >= 3.0.12-alt2
-
-%ifarch e2k
-BuildRequires: guile20-devel libguile20-devel
-%else
-BuildPreReq: guile22-devel
-%endif
+BuildRequires: guile-devel >= 2.0 libblkid-devel libe2fs-devel libevms-devel swig >= 3.0.12-alt2
 
 Source: %name-%version-%release.tar
 
@@ -25,11 +19,6 @@ http://evms.sourceforge.net
 
 %prep
 %setup
-%ifarch e2k
-sed -i -e 's/^SWIGOPT[[:space:]]*=.*$/& -D__ptr64__/'          \
-       -e 's,guile\([/-]\)[0-9]\+\(\.[0-9]\+\)\+,guile\12.0,g' \
-    Makefile
-%endif
 
 %build
 make
@@ -42,6 +31,9 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Tue Jul 31 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5-alt7
+- require guile >= 2.0 for build
+
 * Tue Jan 16 2018 Paul Wolneykien <manowar@altlinux.org> 0.5-alt6
 - Adapt for the E2K arch build.
 
@@ -92,7 +84,7 @@ make install DESTDIR=%buildroot
 - allow / on lvm (#23801)
 
 * Mon Dec 21 2009 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4-alt7
-- buildreqs fixed 
+- buildreqs fixed
 
 * Wed Jun 17 2009 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4-alt6
 - offer `relatime' mount option by default
