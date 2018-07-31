@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:    python-module-%modulename
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
 
 Summary: More routines for operating on iterables, beyond itertools
@@ -74,5 +74,8 @@ popd
 %endif
 
 %changelog
+* Tue Jul 31 2018 Andrey Cherepanov <cas@altlinux.org> 4.3.0-alt1
+- New version.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt1
 - Initial build for Sisyphus
