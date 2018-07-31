@@ -1,4 +1,4 @@
-%define ver_major 1.15
+%define ver_major 1.16
 
 Name: wayland-protocols
 Version: %ver_major
@@ -13,7 +13,7 @@ Source: http://wayland.freedesktop.org/releases/%name-%version.tar.xz
 
 BuildArch: noarch
 # wayland-scanner required
-BuildRequires: wayland-devel
+BuildRequires: wayland-devel >= 1.15
 
 %description
 wayland-protocols contains Wayland protocols that adds functionality not
@@ -35,13 +35,15 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %check
 %make check
 
-
 %files -f %name.lang
 %_datadir/%name/
 %_datadir/pkgconfig/%name.pc
 %doc README
 
 %changelog
+* Tue Jul 31 2018 Yuri N. Sedunov <aris@altlinux.org> 1.16-alt1
+- 1.16
+
 * Fri Jul 06 2018 Yuri N. Sedunov <aris@altlinux.org> 1.15-alt1
 - 1.15
 
