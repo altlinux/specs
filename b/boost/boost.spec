@@ -55,7 +55,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt3
+Release: alt4
 
 Summary: Boost libraries
 License: Boost Software License
@@ -73,15 +73,17 @@ Patch30: boost-1.63.0-alt-python-paths.patch
 Patch82: boost-1.66.0-fedora-no-rpath.patch
 Patch84: boost-1.66.0-fedora-spirit-abs-overflow.patch
 Patch85: boost-1.67.0-upstream-python.patch
+Patch87: boost-1.66.0-fedora-numpy3.patch
 
 # we use %%requires_python_ABI, introduced in rpm-build-python-0.36.6-alt1
 BuildRequires(pre): rpm-build-python >= 0.36.6-alt1
+BuildRequires: python-devel libnumpy-devel
 
 %if_with python3
 # we use %%_python3_abiflags
 # we use %%requires_python_ABI, introduced in rpm-build-python3-0.1.9.3-alt1
 BuildRequires(pre): rpm-build-python3 >= 0.1.9.3-alt1
-BuildPreReq: python3-dev
+BuildRequires: python3-devel libnumpy-py3-devel
 %endif
 
 %if_with mpi
@@ -89,7 +91,7 @@ BuildRequires: %mpiimpl-devel
 %endif
 
 #buildreq doesn't do anything sane on this package
-BuildRequires: gcc-c++ libstdc++-devel zlib-devel bzlib-devel libicu-devel python-dev
+BuildRequires: gcc-c++ libstdc++-devel zlib-devel bzlib-devel libicu-devel
 #BuildRequires: libexpat-devel-static libexpat-devel
 
 %if_with devel
@@ -592,6 +594,7 @@ AutoReq: yes, nocpp
 Requires: python-devel = %_python_version
 Requires: %name-python-headers = %epoch:%version-%release
 Requires: libboost_python%version = %epoch:%version-%release
+Requires: libboost_numpy%version = %EVR
 PreReq: %name-devel = %epoch:%version-%release
 
 Obsoletes: boost-python-gcc2-devel, boost-python-gcc3-devel, boost-python-common-devel
@@ -619,6 +622,7 @@ AutoReq: yes, nocpp
 Requires: python3-devel = %_python3_abi_version
 Requires: %name-python-headers = %epoch:%version-%release
 Requires: libboost_python3-%version = %epoch:%version-%release
+Requires: libboost_numpy3-%version = %EVR
 PreReq: %name-devel = %epoch:%version-%release
 
 %description python3-devel
@@ -1102,6 +1106,21 @@ In most cases, you should not have to alter your C++ classes in any way
 in order to use them with Boost.Python. The system should simply
 ``reflect'' your C++ classes and functions into Python.
 
+%package -n libboost_numpy%version
+Summary: The Boost NumPy Library (Boost.NumPy)
+Group: Development/C++
+Requires: libboost_python%version = %EVR
+Requires: python-module-numpy
+
+%requires_python_ABI_for_files %_libdir/*boost_numpy2*.so.*
+
+%description -n libboost_numpy%version
+The Boost.Numpy library exposes quite a few methods to create ndarrays.
+ndarrays can be created in a variety of ways,
+include empty arrays and zero filled arrays.
+ndarrays can also be created from arbitrary python sequences
+as well as from data and dtypes.
+
 %if_with python3
 %package -n libboost_python3-%version
 Summary: The Boost Python Library (Boost.Python) for Python 3
@@ -1116,6 +1135,21 @@ interface. It is designed to be minimally intrusive on your C++ design.
 In most cases, you should not have to alter your C++ classes in any way
 in order to use them with Boost.Python. The system should simply
 ``reflect'' your C++ classes and functions into Python.
+
+%package -n libboost_numpy3-%version
+Summary: The Boost NumPy Library (Boost.NumPy) for Python 3
+Group: Development/C++
+Requires: libboost_python3-%version = %EVR
+Requires: python3-module-numpy
+
+%requires_python3_ABI_for_files %_libdir/*boost_numpy3*.so.*
+
+%description -n libboost_numpy3-%version
+The Boost.Numpy library exposes quite a few methods to create ndarrays.
+ndarrays can be created in a variety of ways,
+include empty arrays and zero filled arrays.
+ndarrays can also be created from arbitrary python sequences
+as well as from data and dtypes.
 %endif
 
 %package -n libboost_random%version
@@ -1320,6 +1354,8 @@ pushd libs/mpi
 %patch85 -p1
 popd
 
+%patch87 -p1
+
 COMPILER_FLAGS="%optflags -fno-strict-aliasing"
 
 %ifarch e2k
@@ -1467,6 +1503,7 @@ install_boost \
 %if_with python_compat_symlinks
 pushd %buildroot%_libdir
 ln -s libboost_python%{python_version_nodots python}.so libboost_python.so
+ln -s libboost_numpy%{python_version_nodots python}.so libboost_numpy.so
 popd
 %endif
 
@@ -1483,6 +1520,7 @@ install_boost \
 %if_with python_compat_symlinks
 pushd %buildroot%_libdir
 ln -s libboost_python%{python_version_nodots python3}.so libboost_python3.so
+ln -s libboost_numpy%{python_version_nodots python3}.so libboost_numpy3.so
 popd
 %endif
 
@@ -1713,14 +1751,18 @@ rm -f %buildroot%_libdir/*.a || :
 
 %files python-devel
 %_libdir/*boost_python2*.so
+%_libdir/*boost_numpy2*.so
 %if_with python_compat_symlinks
 %_libdir/libboost_python.so
 %_libdir/libboost_python-mt.so
+%_libdir/libboost_numpy.so
+%_libdir/libboost_numpy-mt.so
 %endif
 
 %if_with python3
 %files python3-devel
 %_libdir/*boost_python3*.so
+%_libdir/*boost_numpy3*.so
 %endif
 
 %files signals-devel
@@ -1831,9 +1873,15 @@ rm -f %buildroot%_libdir/*.a || :
 %files -n libboost_python%version
 %_libdir/*boost_python2*.so.*
 
+%files -n libboost_numpy%version
+%_libdir/*boost_numpy2*.so.*
+
 %if_with python3
 %files -n libboost_python3-%version
 %_libdir/*boost_python3*.so.*
+
+%files -n libboost_numpy3-%version
+%_libdir/*boost_numpy3*.so.*
 %endif
 
 %files -n libboost_random%version
@@ -1916,6 +1964,9 @@ done
 
 
 %changelog
+* Mon Jul 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.67.0-alt4
+- Rebuilt with numpy support (Closes: #35190).
+
 * Mon Jun 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.67.0-alt3
 - Provided compatibility symlinks for boost-python-devel and boost-python3-devel.
 
