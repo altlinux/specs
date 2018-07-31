@@ -1,8 +1,9 @@
+%define _libexecdir %_prefix/libexec
 %define ver_major 0.2
 %define rdn_name io.elementary.cerbere
 
 Name: cerbere
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: service to relaunch Pantheon apps
@@ -15,7 +16,7 @@ Source: %url/archive/%version/%name-%version.tar.gz
 Provides: %rdn_name = %version-%release
 Requires: dconf
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-build-xdg
 BuildRequires: vala-tools libgio-devel libgee0.8-devel
 
 %description
@@ -35,12 +36,15 @@ they crash or are killed by another process.
 %meson_install
 
 %files
-%_bindir/%rdn_name
-%_desktopdir/%rdn_name.desktop
+%_libexecdir/%rdn_name
+%_xdgconfigdir/autostart/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %doc README*
 
 %changelog
+* Tue Jul 31 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
+- 0.2.4
+
 * Tue Jun 05 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
 - 0.2.3
 
