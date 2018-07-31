@@ -2,8 +2,8 @@
 %add_findreq_skiplist %_sysconfdir/%name/restart.d/*
 
 Name: needrestart
-Version: 3.1
-Release: alt1
+Version: 3.3
+Release: alt2
 
 Summary: Restart daemons after library updates
 License: GPLv2
@@ -14,7 +14,6 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 Packager: %packager
-BuildArch: noarch
 
 BuildRequires: perl-devel perl-Module-Find perl-Proc-ProcessTable perl-Sort-Naturally perl-Term-ReadKey perl-libintl perl-Module-ScanDeps
 
@@ -27,6 +26,7 @@ package.
 Summary: Automaticaly list daemons needs restart after apt run
 Group: System/Servers
 Requires: %name = %version-%release
+BuildArch: noarch
 
 %description list
 List daemons needs to be restarted after apt run
@@ -66,6 +66,12 @@ EOF
 %config(noreplace) %_sysconfdir/apt/apt.conf.d/%name.conf
 
 %changelog
+* Tue Jul 31 2018 Terechkov Evgenii <evg@altlinux.org> 3.3-alt2
+- Make main package arch-dependent due to different Requires (iucode_tool)
+
+* Tue Jul 31 2018 Terechkov Evgenii <evg@altlinux.org> 3.3-alt1
+- 3.3
+
 * Fri Mar 30 2018 Terechkov Evgenii <evg@altlinux.org> 3.1-alt1
 - 3.1
 
