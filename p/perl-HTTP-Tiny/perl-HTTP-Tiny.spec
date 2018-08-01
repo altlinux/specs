@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTTP-Tiny
 Name: perl-%dist
-Version: 0.070
+Version: 0.074
 Release: alt1
 
 Summary: A small, simple, correct HTTP/1.1 client
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/HTTP-Tiny-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ simple GET requests without the overhead of a large framework like
 LWP::UserAgent.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ LWP::UserAgent.
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Wed Aug 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.074-alt1
+- automated CPAN update
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.070-alt1
 - automated CPAN update
 
