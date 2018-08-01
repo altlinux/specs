@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Mojolicious-Plugin-AssetPack
-Version: 2.04
+Version: 2.05
 Release: alt1
 Summary: Compress and convert CSS, Less, Sass, JavaScript and CoffeeScript files
 License: Artistic 2.0
@@ -78,6 +78,9 @@ rm -f %buildroot%perl_vendorlib/Mojolicious/Plugin/README.pod
 %perl_vendorlib/Mojolicious/Plugin/AssetPack*
 
 %changelog
+* Wed Aug 01 2018 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1
+- automated CPAN update
+
 * Wed Jul 25 2018 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1
 - automated CPAN update
 - removed Patch0: fixassetpack.patch - deprecated
