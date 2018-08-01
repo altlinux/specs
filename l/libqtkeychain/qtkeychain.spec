@@ -1,5 +1,5 @@
 Name: libqtkeychain
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1%ubt
 
 %define sover 1
@@ -7,18 +7,18 @@ Release: alt1%ubt
 %define libqt5keychain libqt5keychain%sover
 
 Group: Development/KDE and QT
-Summary: QtKeychain is a Qt API to store passwords and other secret data securely.
+Summary: QtKeychain is a Qt API to store passwords and other secret data securely
 License: 2-clause BSD
 Url: https://github.com/frankosterfeld/qtkeychain
 
 Source0: %name-%version.tar
 Patch1: alt-build-qt4.patch
-BuildRequires(pre): rpm-macros-fedora-compat rpm-build-ubt
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake gcc-c++ libqt4-devel qt5-tools-devel qt5-linguist pkgconfig(QtDBus) pkgconfig(Qt5DBus) libsecret-devel
 
 %description
 QtKeychain is a Qt API to store passwords and other secret data securely.
-If running, GNOME Keyring is used, otherwise  qtkeychain tries to use 
+If running, GNOME Keyring is used, otherwise  qtkeychain tries to use
 KWallet (via D-Bus), if available.
 
 %package -n qtkeychain-common
@@ -41,75 +41,75 @@ Conflicts: libqtkeychain-qt5 < 0.7
 
 %package -n %libqtkeychain
 Group: Development/KDE and QT
-Summary:        A password store library
-Provides:       qtkeychain = %version
-Requires:	qtkeychain-common
+Summary: A password store library
+Provides: qtkeychain = %version
+Requires: qtkeychain-common
 %description -n %libqtkeychain
 The qtkeychain library allows you to store passwords easy and secure.
 
 %package -n %libqt5keychain
 Group: Development/KDE and QT
-Summary:        A password store library
-Provides:       qtkeychain-qt5 = %version
-Requires:	qt5keychain-common
+Summary: A password store library
+Provides: qtkeychain-qt5 = %version
+Requires: qt5keychain-common
 %description -n %libqt5keychain
 The qt5keychain library allows you to store passwords easy and secure.
 
 %package devel
 Group: Development/KDE and QT
-Summary: QtKeychain devel files.
+Summary: QtKeychain devel files
 Provides: qtkeychain-devel = %version
 %description devel
 QtKeychain devel files.
 
 %package qt5-devel
 Group: Development/KDE and QT
-Summary:        Development files for %{name}-qt5
-Provides:       qtkeychain-qt5-devel = %version
+Summary: Development files for %name-qt5
+Provides: qtkeychain-qt5-devel = %version
 %description qt5-devel
 This package contains development files for qt5keychain.
 
-
 %prep
-%setup -q
+%setup
 %patch1 -p1
 
 %build
-mkdir -p build-qt4
-pushd build-qt4
-QTDIR="%_qt4_prefix" \
-%{fedora_cmake} .. \
+QTDIR="%_qt4dir" \
+%cmake .. \
     -DBUILD_WITH_QT4:BOOL=ON \
+    -DQTKEYCHAIN_STATIC=OFF \
     -DECM_MKSPECS_INSTALL_DIR=%_datadir/qt4/mkspecs \
     -DCMAKE_BUILD_TYPE=Release
-make %{?_smp_mflags}
-popd
+%cmake_build
+mv BUILD build-qt4
 
-mkdir -p build-qt5
-pushd build-qt5
-%{fedora_cmake} .. \
+QTDIR="%_qt5_prefix" \
+%cmake .. \
     -DBUILD_WITH_QT4:BOOL=OFF \
+    -DQTKEYCHAIN_STATIC=OFF \
     -DECM_MKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs \
     -DCMAKE_BUILD_TYPE=Release
-
-make %{?_smp_mflags}
-popd
+%cmake_build
+mv BUILD build-qt5
 
 %install
-make install DESTDIR=%{buildroot} -C build-qt4
-make install DESTDIR=%{buildroot} -C build-qt5
+rm -rf BUILD; ln -sf build-qt4 BUILD
+PATH=$PATH:%_qt4dir/bin \
+make install DESTDIR=%buildroot -C build-qt4
+rm -rf BUILD; ln -sf build-qt5 BUILD
+PATH=$PATH:%_qt5_bindir \
+make install DESTDIR=%buildroot -C build-qt5
 
 %find_lang --with-qt qtkeychain
 
-grep %{_qt4_translationdir} qtkeychain.lang > %{name}-qt4.lang
-grep %{_qt5_translationdir} qtkeychain.lang > %{name}-qt5.lang
+grep %_datadir/qt4/translations qtkeychain.lang > %name-qt4.lang
+grep %_qt5_translationdir qtkeychain.lang > %name-qt5.lang
 
-
-%files -n qtkeychain-common -f %{name}-qt4.lang
+%files -n qtkeychain-common -f %name-qt4.lang
 %doc ReadMe.txt
 %doc COPYING
 
-%files -n qt5keychain-common -f %{name}-qt5.lang
+%files -n qt5keychain-common -f %name-qt5.lang
 %doc ReadMe.txt
 %doc COPYING
 
@@ -134,6 +134,9 @@ grep %{_qt5_translationdir} qtkeychain.lang > %{name}-qt5.lang
 %_qt5_archdatadir/mkspecs/qt_Qt5Keychain.pri
 
 %changelog
+* Wed Aug 01 2018 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1%ubt
+- new version
+
 * Mon May 22 2017 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt1%ubt
 - new version
 
