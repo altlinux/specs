@@ -1,5 +1,5 @@
 Name: repocop-unittest-altlinux-policy
-Version: 0.40
+Version: 0.41
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -44,6 +44,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Wed Aug 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
+- altlinux-policy-description-too-much-space lowered to info
+
 * Tue Jul 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
 - added:
   altlinux-policy-description-has-tags.posttest
