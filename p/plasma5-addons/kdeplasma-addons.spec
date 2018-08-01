@@ -9,7 +9,7 @@
 
 Name: plasma5-addons
 Version: 5.12.6
-Release: alt3%ubt
+Release: alt4%ubt
 Epoch: 1
 %K5init altplace
 
@@ -135,6 +135,9 @@ KF5 library
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Wed Aug 01 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.6-alt4%ubt
+- fix dictionary translation
+
 * Thu Jul 12 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.6-alt3%ubt
 - fix dictionary search
 
