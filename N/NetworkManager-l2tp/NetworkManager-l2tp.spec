@@ -5,12 +5,12 @@
 %define git_date %nil
 %define ppp_version 2.4.7
 
-%def_with libnm_glib
+%def_without libnm_glib
 
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-l2tp
-Version: 1.2.8
+Version: 1.2.10
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -29,10 +29,10 @@ Requires: strongswan
 BuildRequires: libgnome-keyring-devel
 BuildRequires: ppp-devel
 BuildRequires: rpm-build-licenses
-BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnma-devel >= %nm_applet_version
 %if_with libnm_glib
+BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: libnm-gtk-devel >= %nm_applet_version
 %endif
@@ -96,7 +96,6 @@ NetworkManager panel applet.
 %_libdir/NetworkManager/libnm-l2tp-properties.so
 %endif
 %_libexecdir/NetworkManager/nm-l2tp-auth-dialog
-%_datadir/gnome-vpn-properties/l2tp
 %_libdir/NetworkManager/libnm-vpn-plugin-l2tp.so
 %_libdir/NetworkManager/libnm-vpn-plugin-l2tp-editor.so
 %_datadir/appdata/*.xml
@@ -105,6 +104,11 @@ NetworkManager panel applet.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Aug 01 2018 Mikhail Efremov <sem@altlinux.org> 1.2.10-alt1
+- Disable libnm-glib-* support.
+- Fix build without libnm-glib-*.
+- Updated to 1.2.10.
+
 * Mon Aug 14 2017 Mikhail Efremov <sem@altlinux.org> 1.2.8-alt1
 - Updated to 1.2.8.
 
