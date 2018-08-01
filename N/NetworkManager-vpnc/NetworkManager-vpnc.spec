@@ -4,12 +4,12 @@
 %define git_date %nil
 #define git_date .git20110510
 
-%def_with libnm_glib
+%def_without libnm_glib
 
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-vpnc
-Version: 1.2.4
+Version: 1.2.6
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -21,10 +21,10 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnma-devel >= %nm_applet_version
 %if_with libnm_glib
+BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: libnm-gtk-devel >= %nm_applet_version
 %endif
@@ -99,6 +99,11 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Aug 01 2018 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt1
+- Disable libnm-glib-* support.
+- Fix build without libnm-glib-*.
+- Updated to 1.2.6 (fixes CVE-2018-10900).
+
 * Mon Oct 03 2016 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
 - Updated to 1.2.4.
 
