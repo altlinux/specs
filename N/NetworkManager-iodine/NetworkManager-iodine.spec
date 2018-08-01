@@ -4,13 +4,13 @@
 %define git_date %nil
 #define git_date .git20111101
 
-%def_with libnm_glib
+%def_without libnm_glib
 
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-iodine
 Version: 1.2.0
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for iodine
@@ -22,10 +22,10 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: intltool
-BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnma-devel >= %nm_applet_version
 %if_with libnm_glib
+BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: libnm-gtk-devel >= %nm_applet_version
 %endif
@@ -92,6 +92,10 @@ NetworkManager panel applet.
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Aug 01 2018 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt2
+- Disable libnm-glib-* support.
+- Fix build without libnm-glib-*.
+
 * Thu Apr 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
 - Updated to 1.2.0.
 
