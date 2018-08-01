@@ -32,7 +32,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.9.6
-Release: alt1%ubt
+Release: alt2%ubt
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -60,7 +60,7 @@ Patch1002: alt-dont-require-plugin-file.patch
 Patch1003: alt-ca-certificates-path.patch
 Patch1004: alt-timezone.patch
 Patch1005: alt-hidpi_scale_at_192.patch
-Patch1006: e2k-qt-5.7.1.patch
+Patch1006: e2k-qt-5.9.6.patch
 Patch1007: alt-decrease-iconloader-fallback-depth.patch
 Patch1008: alt-mkspecs-features.patch
 
@@ -380,7 +380,7 @@ EGL integration library for the Qt%major toolkit
 %patch1003 -p1 -b .ca-bundle
 %patch1004 -p1 -b .timezone
 %patch1005 -p1 -b .dpi
-%ifarch e2k
+%ifarch %e2k
 %patch1006 -p1 -b .e2k
 %endif
 %patch1007 -p1
@@ -792,6 +792,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Jul 26 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt2%ubt
+- rebuild with new icu
+
 * Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
 - new version
 
