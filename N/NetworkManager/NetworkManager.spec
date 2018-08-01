@@ -59,7 +59,7 @@
 
 Name: NetworkManager
 Version: 1.12.2
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -769,6 +769,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Aug 01 2018 Mikhail Efremov <sem@altlinux.org> 1.12.2-alt2
+- Fix from upstream:
+  + fix compile error due to NM_AVAILABLE_IN_1_12_2 macro.
+
 * Thu Jul 26 2018 Mikhail Efremov <sem@altlinux.org> 1.12.2-alt1
 - Updated to 1.12.2.
 
