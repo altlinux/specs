@@ -1,9 +1,9 @@
-BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
+BuildRequires: perl-podlators
 Epoch: 2
 %define dist IO-AIO
 Name: perl-%dist
-Version: 4.4
+Version: 4.5
 Release: alt1
 
 Summary: Asynchronous Input/Output
@@ -59,6 +59,9 @@ scripts for %name
 
 
 %changelog
+* Wed Aug 01 2018 Igor Vlasenko <viy@altlinux.ru> 2:4.5-alt1
+- automated CPAN update
+
 * Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 2:4.4-alt1
 - automated CPAN update
 
