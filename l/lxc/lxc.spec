@@ -29,7 +29,7 @@
 
 Name: lxc
 Version: 3.0.1
-Release: alt3
+Release: alt4
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -78,6 +78,7 @@ manage and debug your containers.
 Summary:	%{name} init scripts for SysVinit
 Group:		System/Configuration/Other
 Requires:	%{name}
+Requires:	/sbin/chkconfig
 BuildArch:	noarch
 %description	sysvinit
 The %{name}-sysvinit package contains init scripts for SysVinit
@@ -137,6 +138,18 @@ mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_cachedir/%name
 install -pm644 %SOURCE1 %buildroot/%_sysconfdir/sysconfig/lxc-net
 
+%post sysvinit
+if [ $1 -eq 1 ]; then
+	/sbin/chkconfig --add lxc
+	/sbin/chkconfig --add lxc-net
+fi
+
+%preun sysvinit
+if [ $1 -eq 0 ]; then
+	/sbin/chkconfig --del lxc
+	/sbin/chkconfig --del lxc-net
+fi
+
 %files
 %defattr(-,root,root)
 %{_bindir}/*
@@ -184,6 +197,9 @@ install -pm644 %SOURCE1 %buildroot/%_sysconfdir/sysconfig/lxc-net
 %_pam_modules_dir/*
 
 %changelog
+* Wed Aug 01 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.1-alt4
+- really disable SysVinit scripts by default
+
 * Tue Jul 10 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.1-alt3
 - tuned SysVinit scripts for ALT
 - disable SysVinit scripts by default (according to services policy)
