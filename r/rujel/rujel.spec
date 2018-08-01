@@ -1,8 +1,8 @@
 %define backup_dir %_localstatedir/%{name}/previous_versions/`date +%%F_%%H%%M`
 
 Name:		rujel
-Version:	1.1
-Release:	alt2
+Version:	1.2
+Release:	alt1
 
 Summary:	RUJEL is a web-portal application for maintaining online markbook in schools.
 Summary(ru_RU.UTF-8): РУЖЭЛЬ — веб-приложение для ведения классного журнала.
@@ -213,6 +213,8 @@ fi
 %config %wo_configdir/rujel/RujelReports
 
 %changelog
+* Wed Aug 01 2018 Gennady Kushnir <baywind@altlinux.org> 1.2-alt1
+- upstream update (aa919ef9...)
 * Tue Aug 23 2016 Gennady Kushnir <baywind@altlinux.org> 1.1-alt2
 - upstream update (e4eb659d...)
 * Mon Aug 15 2016 Gennady Kushnir <baywind@altlinux.org> 1.1-alt1
