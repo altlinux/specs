@@ -1,6 +1,6 @@
 Name:		webobjects
 Version:	5.4.3
-Release:	alt2
+Release:	alt3
 
 Summary:	WebObjects runtime environment scripts
 Summary(ru_RU.UTF-8): Среда исполнения web-приложений WebObjects
@@ -66,6 +66,8 @@ install -m640 -pD SiteConfig.xml %buildroot%wo_configdir/SiteConfig.xml
 %_initdir/womonitor
 
 %changelog
+* Wed Aug 01 2018 Gennady Kushnir <baywind@altlinux.org> 5.4.3-alt3
+- added java attribute to prefer use of IPv4 stack
 * Thu Oct 07 2010 Gennady Kushnir <baywind@altlinux.org> 5.4.3-alt2
 - removed Vendor tag
 * Mon Sep 13 2010 Gennady Kushnir <baywind@altlinux.org> 5.4.3-alt1
