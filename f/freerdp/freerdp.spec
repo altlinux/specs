@@ -1,10 +1,12 @@
 %def_without ffmpeg
 %def_without x264
 %def_without directfb
+# see https://github.com/FreeRDP/FreeRDP/issues/4348
+%def_without gss
 
 Name: freerdp
 Version: 2.0.0
-Release: alt1.git20180411%ubt
+Release: alt1.git20180801%ubt
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -186,6 +188,7 @@ the RDP protocol.
     %{?_without_ffmpeg:-DWITH_FFMPEG=OFF} \
     %{?_without_x264:-DWITH_X264=OFF} \
     -DWITH_GSM=OFF \
+    %{?_without_gss:-DWITH_GSSAPI=OFF} \
     -DWITH_GSTREAMER_1_0=ON \
     -DWITH_IPP=OFF \
     -DWITH_JPEG=ON \
@@ -290,6 +293,9 @@ ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Thu Aug 02 2018 Pavel Nakonechnyi <zorg@altlinux.org> 2.0.0-alt1.git20180801%ubt
+- Fourth release candidate for 2.0.0
+
 * Tue Apr 17 2018 Pavel Nakonechnyi <zorg@altlinux.org> 2.0.0-alt1.git20180411%ubt
 - Third release candidate for 2.0.0
 - Fix gstreamer-1.0 detection is not needed now
