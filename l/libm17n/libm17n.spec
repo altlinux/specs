@@ -1,6 +1,6 @@
 %define oname m17n-lib
 Name: libm17n
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Multilingual text processing library
@@ -75,16 +75,18 @@ Libraries/include files for development with %name.
 
 %files -n m17n-utils
 %_bindir/*
-%exclude %_bindir/m17n-config
 
 %files devel
 %doc README TODO ChangeLog
-%_bindir/m17n-config
 %_includedir/*
 %_libdir/lib*.so
 %_pkgconfigdir/*
 
 %changelog
+* Mon Jul 30 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.0-alt1
+- 1.8.0
+- libm17n-devel: didn't package m17n-config because we have pkg-config
+
 * Thu May 18 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.0-alt1
 - 1.7.0
 
