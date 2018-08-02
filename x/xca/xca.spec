@@ -1,18 +1,20 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: xca
-Version: 1.3.2
-Release: alt2.git1584579
+Version: 2.1.0
+Release: alt1
 
 Summary: A GUI for handling X509 certificates, RSA keys, PKCS#10 Requests
 Group: Security/Networking
 License: BSD
-Url: http://xca.ovh/
+Url: https://hohnstaedt.de/xca/
+# sources: https://github.com/chris2511/xca/
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ libqt4-devel libltdl-devel openssl-devel linuxdoc-tools rpm-build-xdg OpenSP groff-base
+BuildRequires: qt5-base-devel qt5-tools
+BuildRequires: libltdl-devel openssl-devel linuxdoc-tools rpm-build-xdg OpenSP groff-base
 
 %description
 Graphical certification authority is an interface for managing RSA
@@ -31,7 +33,8 @@ presented.
 ./bootstrap
 CFLAGS="%optflags" \
 CXXFLAGS="%optflags" \
-./configure --prefix="%_prefix"
+./configure --prefix="%_prefix" \
+      docdir=%_docdir/%name-%version
 %make_build
 
 %install
@@ -51,6 +54,12 @@ mkdir -p %buildroot{%_bindir,%_datadir/xca,%_desktopdir,%_man1dir}
 %_pixmapsdir/xca*.xpm
 
 %changelog
+* Thu Aug 02 2018 Pavel Nakonechnyi <zorg@altlinux.ru> 2.1.0-alt1
+- update to 2.1.0 release
+- databases are incompatible with 1.x versions!
+- switched to Github upstream: https://github.com/chris2511/xca/
+- upstream switched to Qt5
+
 * Thu Dec 29 2016 Pavel Nakonechnyi <zorg@altlinux.ru> 1.3.2-alt2.git1584579
 - fix data lookup path
 
@@ -64,4 +73,3 @@ mkdir -p %buildroot{%_bindir,%_datadir/xca,%_desktopdir,%_man1dir}
 
 * Tue Mar 29 2011 Alexey I. Froloff <raorn@altlinux.org> 0.9.0-alt1
 - Initial build
-
