@@ -1,5 +1,5 @@
 Name: xfwm4
-Version: 4.12.4
+Version: 4.12.5
 Release: alt1
 
 Summary: Window manager for Xfce
@@ -23,6 +23,8 @@ BuildPreReq: libexo-devel
 BuildRequires: gnome-doc-utils xml-utils xsltproc
 BuildRequires: intltool libSM-devel libXcomposite-devel libXdamage-devel libXext-devel libXrandr-devel libglade-devel libdrm-devel
 BuildRequires: libstartup-notification-devel libwnck-devel xorg-cf-files
+BuildRequires: libdbus-devel libdbus-glib-devel
+BuildRequires: libXinerama-devel
 
 Requires: xfce4-common
 
@@ -72,6 +74,10 @@ Xfce. Совместим с окружениями рабочего стола G
 %_libdir/xfce4/*
 
 %changelog
+* Thu Aug 02 2018 Mikhail Efremov <sem@altlinux.org> 4.12.5-alt1
+- Updated BR.
+- Updated to 4.12.5.
+
 * Thu Mar 16 2017 Mikhail Efremov <sem@altlinux.org> 4.12.4-alt1
 - Use _unpackaged_files_terminate_build.
 - Fix changelog entry.
