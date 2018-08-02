@@ -1,7 +1,7 @@
 Summary: pip installs packages.  Python packages.  An easy_install replacement
 Name: python-module-pip
-Version: 10.0.1
-Release: alt2
+Version: 18.0
+Release: alt1
 Source0: pip-%version.tar.gz
 Patch: pip-1.5.6-alt-python3.patch
 License: MIT
@@ -77,7 +77,6 @@ s/pypa_theme/default/
 /.issues_url.:/s/^/#/
 ' docs/conf.py
 
-
 %prepare_sphinx .
 ln -s ../objects.inv docs/
 
@@ -124,6 +123,9 @@ cp -fR docs/build2/pickle %buildroot%python3_sitelibdir/%modulename/
 %doc docs/build3/html/*
 
 %changelog
+* Thu Aug 02 2018 Fr. Br. George <george@altlinux.ru> 18.0-alt1
+- Autobuild version bump to 18.0
+
 * Tue Jun 12 2018 Fr. Br. George <george@altlinux.ru> 10.0.1-alt2
 - Autobuild version bump to 10.0.1
 - Introduce python3 generated documentation
