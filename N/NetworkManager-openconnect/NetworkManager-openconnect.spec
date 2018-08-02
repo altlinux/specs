@@ -2,13 +2,13 @@
 %define nm_applet_version 1.1.90
 %define nm_applet_name NetworkManager-applet-gtk
 
-%def_with libnm_glib
+%def_without libnm_glib
 
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-openconnect
 Version: 1.2.4
-Release: alt2
+Release: alt3
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN integration for openconnect
@@ -22,10 +22,10 @@ Requires: openconnect
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libopenconnect-devel >= 3.02
-BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnma-devel >= %nm_applet_version
 %if_with libnm_glib
+BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: libnm-gtk-devel >= %nm_applet_version
 %endif
@@ -96,6 +96,10 @@ NetworkManager panel applet.
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Wed Aug 01 2018 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt3
+- Disable libnm-glib-* support.
+- Fix build without libnm-glib-*.
+
 * Wed Jan 10 2018 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt2
 - Fix build.
 

@@ -3,13 +3,13 @@
 %define nm_applet_name NetworkManager-applet-gtk
 %define ppp_version %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 
-%def_with libnm_glib
+%def_without libnm_glib
 
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-sstp
 Version: 1.2.2
-Release: alt2
+Release: alt3
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for SSTP
@@ -22,10 +22,10 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: ppp-devel libsstp-devel >= 1.0.8
-BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnma-devel >= %nm_applet_version
 %if_with libnm_glib
+BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: libnm-gtk-devel >= %nm_applet_version
 %endif
@@ -90,9 +90,7 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %config %_libexecdir/NetworkManager/VPN/nm-sstp-service.name
 
 %files gtk -f %name.lang
-%if_with libnm_glib
 %_libdir/NetworkManager/lib*.so*
-%endif
 %_libexecdir/NetworkManager/nm-sstp-auth-dialog
 %_datadir/gnome-vpn-properties/*
 %_datadir/appdata/*.xml
@@ -101,6 +99,10 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Aug 01 2018 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt3
+- Disable libnm-glib-* support.
+- Fix build without libnm-glib-*.
+
 * Mon Feb 06 2017 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt2
 - Require NetworkManager-ppp.
 
