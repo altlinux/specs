@@ -6,12 +6,11 @@
 
 Name: python-module-%oname
 Version: 2.0.0
-Release: alt1.a0.git20150528.1.1.1
+Release: alt2.a0.git20150528
 Summary: MPI bindings for Python
 License: Public
 Group: Development/Python
 Url: http://www.cimec.org.ar/python/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://bitbucket.org/mpi4py/mpi4py.git
 Source: %oname-%version.tar.gz
@@ -24,7 +23,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-make
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: elfutils gcc-c++ libstdc++-devel openmpi python-base python-devel python-module-future python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python-modules-xml python3 python3-base
-BuildRequires: libmpe2-devel openmpi-devel python-module-Cython python3-devel python3-module-zope rpm-build-python3
+BuildRequires: openmpi-devel python-module-Cython python3-devel python3-module-zope rpm-build-python3
 
 #BuildRequires: python3-devel python3-module-Cython
 %endif
@@ -164,6 +163,9 @@ cp -fR docs/source %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt2.a0.git20150528
+- Updated build dependencies.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt1.a0.git20150528.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 

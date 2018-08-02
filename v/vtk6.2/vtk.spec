@@ -5,7 +5,7 @@
 %define ver 6.2
 Name: %oname%ver
 Version: %ver.0
-Release: alt3
+Release: alt4
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -21,9 +21,6 @@ Requires: lib%name = %version-%release
 BuildRequires(pre): rpm-build-tcl rpm-build-python /proc
 BuildPreReq: gcc-c++ tcl-devel tk-devel cmake libGLU-devel libXt-devel
 BuildPreReq: libmysqlclient-devel postgresql-devel
-%ifarch i586 or x86_64
-BuildPreReq: libopenpdt-devel
-%endif
 BuildPreReq: boost-devel boost-filesystem-devel python-module-matplotlib
 BuildPreReq: boost-graph-parallel-devel vtk-data%ver
 BuildPreReq: libfreetype-devel libnetcdf-devel libjpeg-devel
@@ -505,6 +502,9 @@ install -p -m644 Common/Core/vtkArrayIteratorIncludes.h \
 %python_sitelibdir/*/test
 
 %changelog
+* Wed Aug 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.0-alt4
+- Rebuilt without openpdt.
+
 * Sun Jun 24 2018 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt3
 - Rebuilt for aarch64
 - Fix FTBFS

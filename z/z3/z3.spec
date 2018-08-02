@@ -2,7 +2,7 @@
 
 Name: z3
 Version: 4.5.0
-Release: alt1.1
+Release: alt2
 Summary: High-performance theorem prover
 License: MIT
 Group: Sciences/Mathematics
@@ -11,8 +11,10 @@ Url: https://github.com/Z3Prover/z3
 # https://github.com/Z3Prover/z3.git
 Source: %name-%version.tar
 
+Patch1: %name-%version-alt-aarch64-pthread.patch
+
 BuildRequires(pre): rpm-macros-make
-BuildRequires: python-devel gcc-c++ doxygen graphviz libtau-devel
+BuildRequires: python-devel gcc-c++ doxygen graphviz
 BuildRequires: python2.7(pkg_resources)
 
 %if_with python3
@@ -86,6 +88,7 @@ This package contains Python bindings of %name.
 
 %prep
 %setup
+%patch1 -p1
 
 # fix path to file
 sed -i 's|../src/api/python/z3.py|../src/api/python/z3/z3.py|' doc/mk_api_doc.py
@@ -160,6 +163,9 @@ python3 build/python3/example.py
 %endif
 
 %changelog
+* Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.0-alt2
+- Updated build dependencies.
+
 * Mon Mar 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.0-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 

@@ -15,19 +15,18 @@
 
 Name: h5part-%otype
 Version: 1.6.6
-Release: alt4
+Release: alt5
 Summary: API that simplifies the reading/writing of the data to the HDF5 file format
 License: BSD
 Group: Sciences/Other
 Url: https://codeforge.lbl.gov/projects/h5part/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: H5Part-%version.tar.gz
 
 BuildPreReq: gcc-c++ gcc-fortran doxygen graphviz python-devel
 BuildPreReq: zlib-devel libsz2-devel
 %if %otype == "mpi"
-BuildPreReq: %mpiimpl-devel libhdf5-mpi-devel libmpe2-devel chrpath
+BuildPreReq: %mpiimpl-devel libhdf5-mpi-devel chrpath
 %else
 BuildPreReq: libhdf5-devel
 %endif
@@ -180,6 +179,9 @@ done
 %endif
 
 %changelog
+* Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.6-alt5
+- Updated build dependencies.
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.6-alt4
 - Rebuilt wuth new libhdf5
 

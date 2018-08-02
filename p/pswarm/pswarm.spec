@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -7,19 +9,19 @@
 Name: pswarm
 %define pyname %{name}_py
 Version: 1.5
-Release: alt10
+Release: alt11
 Summary: Global optimization solver for bound and linear constrained problems
 License: LGPL v2.1
 Group: Sciences/Mathematics
 Url: http://www.norg.uminho.pt/aivaz/pswarm/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://www.norg.uminho.pt/aivaz/pswarm/software/PPSwarm_v1_5.zip
+# http://www.norg.uminho.pt/aivaz/pswarm/software/PPSwarm_v1_5.zip
+Source: %name-%version.tar
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
-BuildPreReq: unzip liblapack-devel python-devel R-devel
-BuildPreReq: %mpiimpl-devel gcc-fortran libnumpy-devel libmpe2-devel
+BuildPreReq: liblapack-devel python-devel R-devel
+BuildPreReq: %mpiimpl-devel gcc-fortran libnumpy-devel
 
 %description
  PSwarm is a global optimization solver for bound and linear constrained
@@ -57,8 +59,8 @@ This package contains shared libraries of PSwarm.
 %package -n lib%name-devel
 Summary: Development files of PSwarm
 Group: Development/C
-Requires: lib%name = %version-%release
-Requires: python-module-%pyname = %version-%release
+Requires: lib%name = %EVR
+Requires: python-module-%pyname = %EVR
 
 %description -n lib%name-devel
  PSwarm is a global optimization solver for bound and linear constrained
@@ -74,7 +76,7 @@ This package contains development files of PSwarm.
 %package -n lib%name-devel-static
 Summary: Static libraries of PSwarm
 Group: Development/C
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
  PSwarm is a global optimization solver for bound and linear constrained
@@ -106,7 +108,7 @@ This package contains Python interface of PSwarm.
 %package -n python-module-%{name}_test
 Summary: Test for Python interface of PSwarm
 Group: Development/Python
-Requires: python-module-%pyname = %version-%release
+Requires: python-module-%pyname = %EVR
 %setup_python_module %{name}_test
 
 %description -n python-module-%{name}_test
@@ -209,6 +211,9 @@ install -p -m644 *.py %buildroot%python_sitelibdir/pswarm_test
 %doc *.r
 
 %changelog
+* Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5-alt11
+- Updated build dependencies.
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt10
 - Built with OpenBLAS instead of GotoBLAS2
 
