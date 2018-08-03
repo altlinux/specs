@@ -1,5 +1,5 @@
 Name: connector
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 
 Summary: Remote desktop chooser
@@ -52,6 +52,10 @@ install -pDm644 emblem %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Fri Aug 03 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.7.2-alt1
+- Added on/off for version checking
+- Minor changes in the GUI
+
 * Wed Jul 25 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.7.1-alt1
 - Added tray icon
 - Disabled start of multiple copies via GTK
