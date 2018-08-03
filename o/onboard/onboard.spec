@@ -1,6 +1,6 @@
 Name:           onboard
 Version:        1.4.1
-Release:        alt1.1
+Release:        alt2
 
 Summary:        Simple on-screen Keyboard
 License:        GPLv3
@@ -26,6 +26,8 @@ BuildRequires:  libappindicator-gtk3-gir-devel
 BuildRequires:  libudev-devel
 
 Requires:  python3-module-dbus
+# see ALT bug #35174
+Requires:  iso-codes
 
 %filter_from_requires /^python3(pypredict.lm)/d
 
@@ -90,6 +92,9 @@ rm -rf %buildroot%_iconsdir/ubuntu-mono-*
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Fri Aug 03 2018 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt2
+- Added requires to iso-codes (ALT#35174)
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.1-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
