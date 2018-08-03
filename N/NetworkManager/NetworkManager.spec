@@ -26,7 +26,7 @@
 %def_enable nmtui
 %def_enable bluez5dun
 %def_enable vala
-%ifnarch %e2k
+%ifnarch %e2k %mips
 %def_enable ovs
 %else
 %def_disable ovs
@@ -59,7 +59,7 @@
 
 Name: NetworkManager
 Version: 1.12.2
-Release: alt2%git_date
+Release: alt3%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -769,6 +769,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Aug 03 2018 Mikhail Efremov <sem@altlinux.org> 1.12.2-alt3
+- Disable ovs plugin for mips.
+
 * Wed Aug 01 2018 Mikhail Efremov <sem@altlinux.org> 1.12.2-alt2
 - Fix from upstream:
   + fix compile error due to NM_AVAILABLE_IN_1_12_2 macro.
