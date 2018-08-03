@@ -1,6 +1,6 @@
 Name: libqtkeychain
 Version: 0.9.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 %define sover 1
 %define libqtkeychain libqtkeychain%sover
@@ -59,6 +59,7 @@ The qt5keychain library allows you to store passwords easy and secure.
 Group: Development/KDE and QT
 Summary: QtKeychain devel files
 Provides: qtkeychain-devel = %version
+Requires: libsecret-devel
 %description devel
 QtKeychain devel files.
 
@@ -134,6 +135,9 @@ grep %_qt5_translationdir qtkeychain.lang > %name-qt5.lang
 %_qt5_archdatadir/mkspecs/qt_Qt5Keychain.pri
 
 %changelog
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt2%ubt
+- fix requires
+
 * Wed Aug 01 2018 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1%ubt
 - new version
 
