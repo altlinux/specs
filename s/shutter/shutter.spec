@@ -1,6 +1,6 @@
 Name: shutter
 Version: 0.94
-Release: alt1
+Release: alt2
 
 Summary: Shutter is a feature-rich screenshot program
 License: GPLv3+
@@ -8,6 +8,8 @@ Group: Graphics
 
 Url: http://shutter-project.org/
 Source: http://shutter-project.org/wp-content/uploads/releases/tars/shutter-%version.tar.gz
+
+Patch: shutter-0.94-fix_desktop_names_encoding.patch
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-perl
@@ -46,6 +48,7 @@ hosting site, all within one window.
 
 %prep
 %setup
+%patch -p2
 
 subst 's/Application;/Graphics;2DGraphics;RasterGraphics;/' share/applications/shutter.desktop
 
@@ -70,6 +73,7 @@ cp -a share %buildroot/usr
 %doc COPYING README
 %_bindir/*
 %_datadir/shutter
+%_datadir/appdata/shutter.appdata.xml
 %_man1dir/*
 %_desktopdir/*
 %_pixmapsdir/*
@@ -88,8 +92,12 @@ cp -a share %buildroot/usr
 %_iconsdir/ubuntu-mono-dark/*
 %_iconsdir/ubuntu-mono-light/*
 %_iconsdir/hicolor/scalable/*/*
+%_iconsdir/HighContrast/scalable/apps/shutter*
 
 %changelog
+* Fri Aug 03 2018 Grigory Ustinov <grenka@altlinux.org> 0.94-alt2
+- Fix desktop names (Closes: #35149).
+
 * Wed Jul 18 2018 Grigory Ustinov <grenka@altlinux.org> 0.94-alt1
 - Build new version.
 
