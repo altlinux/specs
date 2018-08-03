@@ -1,6 +1,6 @@
 Name: git
-Version: 2.10.5
-Release: alt1
+Version: 2.17.1
+Release: alt2
 
 Summary: Git core and tools
 License: GPLv2
@@ -23,27 +23,26 @@ Source: %name-%version-%release.tar
 %def_without python
 %def_with svn
 
+# List of architectures worthy of running the test suite.
+%define check_arches x86_64 %ix86
+%ifarch %check_arches
+%def_with check
+%else
+%def_without check
+%endif
+
 %define _libexecdir /usr/libexec
 %define gitexecdir %_libexecdir/git-core
 %define pkgdocdir %_docdir/%name
 
-Requires: %name-core = %version-%release, %name-server = %version-%release
-%{!?_without_arch:Requires: %name-arch = %version-%release}
-%{!?_without_cvs:Requires: %name-cvs = %version-%release}
-%{!?_without_email:Requires: %name-email = %version-%release}
-%{!?_without_svn:Requires: %name-svn = %version-%release}
-%{!?_without_tk:Requires: gitk = %version-%release}
-%{!?_without_gui:Requires: %name-gui = %version-%release}
-%{!?_without_doc:Requires: %name-doc = %version-%release}
-%{!?_without_emacs:Requires: emacs-%name = %version-%release}
-%{!?_without_gitweb:Requires: gitweb = %version-%release}
+Requires: %name-core = %EVR, perl-Git = %EVR
 
-BuildRequires: hardlink, libssl-devel, perl-devel, perl(Error.pm), zlib-devel >= 0:1.2
+BuildRequires: hardlink, libssl-devel, perl-devel, perl-podlators, perl(Error.pm), zlib-devel >= 0:1.2
 %{!?_without_python:BuildRequires: python-modules-encodings >= 0:2.4}
 %{!?_without_cvs:BuildRequires: cvs perl(DBI.pm)}
 %{!?_disable_curl:BuildRequires: libcurl-devel}
 %{!?_disable_expat:BuildRequires: libexpat-devel}
-%{!?_without_email:BuildRequires: perl(Error.pm) perl(Net/SMTP/SSL.pm) perl(Term/ReadLine.pm)}
+%{!?_without_email:BuildRequires: perl(Error.pm) perl(Mail/Address.pm) perl(Net/SMTP/SSL.pm) perl(Term/ReadLine.pm)}
 %{!?_without_svn:BuildRequires: perl(Encode.pm) perl(Memoize.pm) perl(SVN/Core.pm) perl(Term/ReadKey.pm) perl(YAML/Any.pm) subversion subversion-server-common}
 %{!?_without_doc:BuildRequires: asciidoc > 0:6.0.3, xmlto}
 %{?!_without_emacs:BuildRequires: emacs-devel emacs-nox}
@@ -72,7 +71,7 @@ This package contains core set of Git tools with minimal dependencies.
 %package server
 Summary: Simple TCP git server for git repositories
 Group: System/Servers
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 PreReq: shadow-utils
 
 %description server
@@ -89,7 +88,7 @@ pulling from git repositories.
 Summary: Git tools for importing Arch repositories
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-core = %version-%release, tla
+Requires: %name-core = %EVR, tla
 
 %description arch
 Git is a fast, scalable, distributed revision control system with an
@@ -102,7 +101,7 @@ This package contains Git tools for importing Arch repositories.
 Summary: Git tools for importing CVS repositories
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-core = %version-%release, perl-Git = %version-%release, cvs, cvsps
+Requires: %name-core = %EVR, perl-Git = %EVR, cvs, cvsps
 
 %description cvs
 Git is a fast, scalable, distributed revision control system with an
@@ -115,7 +114,7 @@ This package contains Git tools for importing CVS repositories.
 Summary: Perl interface to Git
 Group: Development/Perl
 BuildArch: noarch
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 
 %description -n perl-Git
 Git is a fast, scalable, distributed revision control system with an
@@ -128,7 +127,7 @@ This package contains Perl interface to Git.
 Summary: Git tools for sending email
 Group: Development/Other
 BuildArch: noarch
-Requires: perl-Git = %version-%release
+Requires: perl-Git = %EVR
 # Workaround for ALT#23407.
 Requires: perl(MIME/Base64.pm) perl(Authen/SASL.pm)
 
@@ -142,7 +141,7 @@ This package contains Git tools for sending email.
 %package svn
 Summary: Git tools for importing Subversion repositories
 Group: Development/Other
-Requires: %name-core = %version-%release, perl-Git = %version-%release, subversion
+Requires: %name-core = %EVR, perl-Git = %EVR, subversion
 
 %description svn
 Git is a fast, scalable, distributed revision control system with an
@@ -155,7 +154,7 @@ This package contains Git tools for importing Subversion repositories.
 Summary: Git revision tree visualiser ('gitk')
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-core = %version-%release, tk >= 8.4
+Requires: %name-core = %EVR, tk >= 8.4
 
 %description -n gitk
 Git is a fast, scalable, distributed revision control system with an
@@ -168,7 +167,7 @@ This package contains Git revision tree visualiser ('gitk').
 Summary: Git GUI tool
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-core = %version-%release, tk >= 8.4
+Requires: %name-core = %EVR, tk >= 8.4
 
 %description gui
 Git is a fast, scalable, distributed revision control system with an
@@ -181,7 +180,7 @@ This package contains Git GUI tool.
 Summary: Git web interface
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 Requires: perl(charnames.pm)
 
 %description -n gitweb
@@ -208,7 +207,7 @@ header files.
 Summary: Git documentation
 Group: Development/Documentation
 BuildArch: noarch
-Provides: %name-docs = %version-%release
+Provides: %name-docs = %EVR
 Obsoletes: %name-docs
 
 %description doc
@@ -223,7 +222,7 @@ Summary: Git contrib files
 Group: Development/Other
 BuildArch: noarch
 AutoReq: no
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 
 %description contrib
 Git is a fast, scalable, distributed revision control system with an
@@ -244,19 +243,41 @@ and full access to internals.
 
 This package contains Emacs modes for Git.
 
+%package full
+Summary: Git core and tools
+Group: Development/Other
+BuildArch: noarch
+Requires: %name-core = %EVR, perl-Git = %EVR, %name-server = %EVR
+%{!?_without_arch:Requires: %name-arch = %EVR}
+%{!?_without_cvs:Requires: %name-cvs = %EVR}
+%{!?_without_email:Requires: %name-email = %EVR}
+%{!?_without_svn:Requires: %name-svn = %EVR}
+%{!?_without_tk:Requires: gitk = %EVR}
+%{!?_without_gui:Requires: %name-gui = %EVR}
+%{!?_without_doc:Requires: %name-doc = %EVR}
+%{!?_without_emacs:Requires: emacs-%name = %EVR}
+%{!?_without_gitweb:Requires: gitweb = %EVR}
+
+%description full
+Git is a fast, scalable, distributed revision control system with an
+unusually rich command set that provides both high-level operations
+and full access to internals.
+
+This package contains the full set of Git tools.
+
 %prep
 %setup -n %name-%version-%release
 cat >config.mak <<'EOF'
 V = 1
 CFLAGS = %optflags
 NO_GETTEXT = 1
-BLK_SHA1 = 1
 GNU_ROFF = 1
 ETC_GITCONFIG = /etc/gitconfig
 prefix = %_prefix
 libdir = %_libdir
 mandir = %_mandir
 htmldir = %pkgdocdir
+NO_PERL_CPAN_FALLBACKS = 1
 %{?_disable_curl:NO_CURL = 1}
 %{?_disable_expat:NO_EXPAT = 1}
 %{?_without_python:NO_PYTHON = 1}
@@ -267,11 +288,6 @@ EOF
 touch git-gui/credits
 %make_build -C Documentation doc.dep
 %make_build all %{!?_without_doc:man html}
-pushd perl
-rm Makefile
-ln -s perl.mak Makefile
-%perl_vendor_build
-popd
 %{!?_without_emacs:%make_build -C contrib/emacs EMACS="%__emacs --eval \"(provide 'message)\""}
 
 %check
@@ -293,9 +309,6 @@ tr / '\n' < headers.list |
 	sort -u |
 	xargs -i ln -s . %buildroot%_includedir/git/'{}'
 xargs install -pm644 -t %buildroot%_includedir/git -- < headers.list
-find %buildroot%_includedir -type f -print0 |
-	xargs -0 grep -lZ 'include.*SHA1_HEADER' -- |
-	xargs -0 sed -i '/include/ s/SHA1_HEADER/"sha1.h"/' --
 
 chmod a-x %buildroot%gitexecdir/git-sh-setup
 install -pDm644 contrib/completion/git-completion.bash \
@@ -307,11 +320,6 @@ install -pDm644 contrib/completion/git-completion.bash \
 		%buildroot%gitexecdir/git-sh-setup |
 		LC_COLLATE=C sort -u
 ) > %buildroot%gitexecdir/.provides.sh
-
-pushd perl
-%perl_vendor_install
-find %buildroot -type f -name perllocal.pod -delete
-popd
 
 # git-server.
 mkdir -p %buildroot%_sbindir
@@ -336,6 +344,8 @@ __EOF
 find %buildroot%_mandir -type f -print0 |
 	xargs -r0 grep -lZ '^.\+\.sp$' -- |
 	xargs -r0 sed -i 's/^\(.\+\)\(\.sp\)$/\1\n\2/' --
+
+find %buildroot%_datadir/git-core/ -name '*watchman*' -delete -print
 
 # Install docs and contrib.
 mkdir -p %buildroot%pkgdocdir/
@@ -370,6 +380,8 @@ popd
 
 %files
 
+%files full
+
 %files core
 %config /etc/bash_completion.d/git
 %_bindir/*
@@ -379,8 +391,6 @@ popd
 %exclude %gitexecdir/git-gui*
 %exclude %gitexecdir/git-citool
 %exclude %gitexecdir/git-add--interactive
-%exclude %gitexecdir/git-difftool
-%exclude %gitexecdir/git-relink
 %exclude %_bindir/gitk
 %{!?_without_arch:%exclude %gitexecdir/git-archimport}
 %{!?_without_email:%exclude %gitexecdir/git-*email*}
@@ -394,9 +404,8 @@ popd
 %exclude %_man1dir/git-cvs*.1*
 %exclude %_man1dir/git-archimport.1*
 %exclude %_man1dir/git-*email*.1*
-%exclude %_man1dir/git-difftool.*
-%exclude %_man1dir/git-relink.*
 %exclude %_man1dir/gitk*.1*
+%exclude %_man3dir/Git.3*
 %exclude %_mandir/man?/gitweb.*
 %endif #doc
 
@@ -426,10 +435,7 @@ popd
 
 %files -n perl-Git
 %gitexecdir/git-add--interactive
-%gitexecdir/git-difftool
-%gitexecdir/git-relink
-%_man1dir/git-difftool.*
-%_man1dir/git-relink.*
+%_man3dir/Git.3*
 %perl_vendor_privlib/Git/
 %perl_vendor_privlib/Git.pm
 %exclude %perl_vendor_privlib/Git/SVN*
@@ -499,6 +505,32 @@ popd
 %endif #emacs
 
 %changelog
+* Fri Aug 03 2018 Dmitry V. Levin <ldv@altlinux.org> 2.17.1-alt2
+- Renamed git subpackage to git-full (closes: #34254).
+- Created new git subpackage that pulls in git-core and perl-Git
+  subpackages only (closes: #34716).
+
+* Tue May 22 2018 Dmitry V. Levin <ldv@altlinux.org> 2.17.1-alt1
+- 2.16.4 -> 2.17.1.
+
+* Tue May 22 2018 Dmitry V. Levin <ldv@altlinux.org> 2.16.4-alt1
+- 2.15.2 -> 2.16.4.
+
+* Tue May 22 2018 Dmitry V. Levin <ldv@altlinux.org> 2.15.2-alt1
+- 2.14.4 -> 2.15.2.
+
+* Tue May 22 2018 Dmitry V. Levin <ldv@altlinux.org> 2.14.4-alt1
+- 2.13.7 -> 2.14.4.
+
+* Tue May 22 2018 Dmitry V. Levin <ldv@altlinux.org> 2.13.7-alt1
+- 2.12.5 -> 2.13.7.
+
+* Fri Sep 22 2017 Dmitry V. Levin <ldv@altlinux.org> 2.12.5-alt1
+- 2.11.4 -> 2.12.5.
+
+* Fri Sep 22 2017 Dmitry V. Levin <ldv@altlinux.org> 2.11.4-alt1
+- 2.10.5 -> 2.11.4.
+
 * Fri Sep 22 2017 Dmitry V. Levin <ldv@altlinux.org> 2.10.5-alt1
 - 2.10.4 -> 2.10.5 (fixes: CVE-2017-14867).
 
