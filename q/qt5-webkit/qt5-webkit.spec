@@ -6,7 +6,7 @@
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt6%ubt
+Release: alt7%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -91,7 +91,7 @@ Requires: %name-common = %EVR
 %patch2 -p1
 #
 %patch10 -p1
-syncqt.pl-qt5 Source -version %version -private
+syncqt.pl-qt5 Source -version %version
 
 # remove rpath
 #find ./ -type f -name \*.pr\* | \
@@ -195,6 +195,9 @@ done
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Tue Aug 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt7%ubt
+- rebuild with new Qt
+
 * Fri Jul 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt6%ubt
 - fix includes dir in .pc (ALT#35184)
 

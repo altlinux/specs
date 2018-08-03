@@ -1,6 +1,6 @@
 Name: lxqt-qtplugin
 Version: 0.13.0
-Release: alt1
+Release: alt2
 
 Summary: LxQt platform integration plugin for Qt
 License: LGPL
@@ -32,6 +32,9 @@ BuildRequires: libfm-qt-devel
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Tue Aug 14 2018 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt2
+- rebuild with new Qt
+
 * Thu May 24 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
 - new version 0.13.0
 
