@@ -1,6 +1,6 @@
 Name: git
 Version: 2.17.1
-Release: alt2
+Release: alt3
 
 Summary: Git core and tools
 License: GPLv2
@@ -115,6 +115,7 @@ Summary: Perl interface to Git
 Group: Development/Perl
 BuildArch: noarch
 Requires: %name-core = %EVR
+Requires: perl(Error.pm) perl(Mail/Address.pm)
 
 %description -n perl-Git
 Git is a fast, scalable, distributed revision control system with an
@@ -505,6 +506,10 @@ popd
 %endif #emacs
 
 %changelog
+* Fri Aug 03 2018 Dmitry V. Levin <ldv@altlinux.org> 2.17.1-alt3
+- perl-Git: explicitly added perl(Error.pm) and perl(Mail/Address.pm)
+  to dependencies.
+
 * Fri Aug 03 2018 Dmitry V. Levin <ldv@altlinux.org> 2.17.1-alt2
 - Renamed git subpackage to git-full (closes: #34254).
 - Created new git subpackage that pulls in git-core and perl-Git
