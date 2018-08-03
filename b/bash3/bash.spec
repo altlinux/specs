@@ -1,8 +1,10 @@
-Name: bash
+%define _unpackaged_files_terminate_build 1
+
+Name: bash3
 %define bash_version 3.2
 %define bash_patchlevel 57
 Version: %bash_version.%bash_patchlevel
-Release: alt3
+Release: alt4
 
 Summary: The GNU Bourne Again SHell (Bash)
 Group: Shells
@@ -15,33 +17,31 @@ Source0: bash-%version.tar
 # ftp://ftp.gnu.org/gnu/bash/bash-doc-%bash_version.tar.bz2
 Source1: bash-doc-%version.tar
 
-Source2: bash_alias
-Source3: bashrc
-
 Patch: bash-%version-%release.patch
 
 # bashbug produces a lot of unneeded dependencies.
 AutoReq: yes, noshell
 
-Requires: sh = %version-%release
-Provides: bash2 = %version-%release
+Requires: sh3 = %EVR
+Provides: bash2 = %EVR
 Obsoletes: bash2
+Conflicts: bash < %EVR
 
 BuildPreReq: libreadline-devel >= 5.1, mktemp >= 1:1.3.1
 BuildRequires: makeinfo texi2dvi
 
-%package -n sh
+%package -n sh3
 Summary: The GNU Bourne Again SHell (/bin/sh)
 Group: Shells
-Provides: /bin/sh, /usr/lib/bash
-Conflicts: %name < %version-%release
+Requires: bashrc
+Conflicts: sh < %EVR
 AutoReq: yes
 
 %package doc
 Group: Shells
 Summary: Documentation for the GNU Bourne Again SHell
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Obsoletes: bash2-doc
 AutoReq: yes
 
@@ -49,14 +49,14 @@ AutoReq: yes
 Group: Development/Other
 Summary: Examples for the GNU Bourne Again SHell
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Obsoletes: bash2-examples
 AutoReq: yes
 
 %package devel
 Group: Development/Other
 Summary: Bash loadable builtins development files
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description
 Bash is an sh-compatible command language interpreter that executes
@@ -67,7 +67,7 @@ Most sh scripts can be run by bash without modification.
 Bash is ultimately intended to be a conformant implementation of the
 IEEE POSIX Shell and Tools specification (IEEE Working Group 1003.2).
 
-%description -n sh
+%description -n sh3
 Bash is an sh-compatible command language interpreter that executes
 commands read from the standard input or from a file.  Bash also
 incorporates useful features from the Korn and C shells (ksh and csh).
@@ -105,7 +105,7 @@ Bash can dynamically load new builtin commands.
 Included are the necessary headers to compile custom builtins.
 
 %prep
-%setup -q -a1
+%setup -q -n bash-%version -a1
 %patch -p1
 
 # Remove files which should be regenerated during build.
@@ -186,43 +186,28 @@ popd
 %install
 %makeinstall -C build-bash
 
-install -pD -m755 build-sh/bash %buildroot/bin/sh
-mv %buildroot%_bindir/%name %buildroot/bin/%name
-ln -s %name %buildroot/bin/bash2
+install -pD -m755 build-sh/bash %buildroot/bin/sh3
+ln -s bash3.1 %buildroot%_man1dir/sh3.1
 
-# Make manpages for bash builtins as per suggestion in doc/README.
-pushd doc
-	sed -e '
-/^\.SH NAME/, /\\- bash built-in commands$/{
-/^\.SH NAME/d
-s/^bash, //
-s/\\- bash built-in commands$//
-s/,//g
-b
-}
-d
-' builtins.1 > man.pages
-	for f in `cat man.pages` ; do
-		ln -s builtins.1 "%buildroot%_man1dir/$f.1"
-	done
-popd
+mv %buildroot%_bindir/bash %buildroot/bin/bash3
+mv %buildroot%_man1dir/bash{,3}.1
 
-# Those conflicts with real manpages from coreutils.
-rm %buildroot%_man1dir/{echo,kill,printf,pwd,test}.1
+ln -s bash3 %buildroot/bin/bash2
+ln -s bash3.1 %buildroot%_man1dir/bash2.1
 
-ln -s %name %buildroot/bin/r%name
-ln -s %name.1 %buildroot%_man1dir/sh.1
-ln -s %name.1 %buildroot%_man1dir/bash2.1
+ln -s bash3 %buildroot/bin/rbash3
+mv %buildroot%_man1dir/rbash{,3}.1
 
-install -pD -m755 %_sourcedir/bash_alias %buildroot%_sysconfdir/bashrc.d/alias.sh
-install -p -m755 %_sourcedir/bashrc %buildroot%_sysconfdir/
+mv %buildroot%_bindir/bash{,3}bug
+mv %buildroot%_man1dir/bash{,3}bug.1
 
-# Directory for builtins
-mkdir -p %buildroot/usr/lib/bash
+mv %buildroot%_infodir/bash{,3}.info
+
+mv %buildroot%_man1dir/{,bash3_}builtins.1
 
 # Include files for building custom builtins.
 pushd build-bash
-mkdir -p %buildroot%_includedir/bash
+mkdir -p %buildroot%_includedir/%name
 for f in ../examples/loadables/*.c; do
 	%__cc -MM -DHAVE_CONFIG_H -DSHELL -Iexamples/loadables -I. -I.. -I../lib -I../builtins -I../include "$f"
 done |
@@ -232,7 +217,7 @@ done |
 	fgrep -v examples/loadables/ |
 	sort -u |
 	while read f; do
-		install -pm644 "$f" %buildroot%_includedir/bash/
+		install -pm644 "$f" %buildroot%_includedir/%name/
 	done
 popd
 
@@ -252,7 +237,7 @@ find %buildroot%docdir/examples/ -type f -name 'Makefile*' -delete -print
 
 cat >%buildroot%docdir/examples/loadables/Makefile <<'EOF'
 CC = %__cc
-CPPFLAGS = -DHAVE_CONFIG_H -I. -I%_includedir/bash
+CPPFLAGS = -DHAVE_CONFIG_H -I. -I%_includedir/%name
 CFLAGS = %optflags_default %optflags_shared
 LDFLAGS = -shared -Wl,-soname,$@
 
@@ -262,16 +247,13 @@ EOF
 
 %find_lang %name
 
-%files -n sh
-/bin/sh
-/usr/lib/bash
+%files -n sh3
+/bin/sh3
 
 %files -f %name.lang
-%config(noreplace) %_sysconfdir/bashrc*
-/bin/*%{name}*
+/bin/*bash*
 %_bindir/*
-%_datadir/%name
-%_mandir/man?/..?*
+%_datadir/%name/
 %_mandir/man?/*
 %_infodir/*.info*
 %dir %docdir
@@ -291,6 +273,10 @@ EOF
 %_includedir/*
 
 %changelog
+* Fri Aug 03 2018 Dmitry V. Levin <ldv@altlinux.org> 3.2.57-alt4
+- Moved bashrc files to a separate package.
+- Renamed to bash3 (by Aleksei Nikiforov and me).
+
 * Tue Oct 24 2017 Dmitry V. Levin <ldv@altlinux.org> 3.2.57-alt3
 - Changed compression method applied to documentation files
   from bzip2 to xz.
