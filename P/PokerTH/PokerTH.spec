@@ -2,7 +2,7 @@
 
 Name: PokerTH
 Version: 1.1.2
-Release: alt3.1
+Release: alt4
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
@@ -67,6 +67,9 @@ qmake-qt5 \
 mkdir -p %buildroot%_bindir
 install -pm755 pokerth bin/pokerth_server %buildroot%_bindir
 
+# remove bundled font (see ALT 25328)
+rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
+
 %files
 %_bindir/*
 
@@ -76,6 +79,9 @@ install -pm755 pokerth bin/pokerth_server %buildroot%_bindir
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Fri Jul 20 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt4
+- Remove bundled font (Closes: #25328).
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.2-alt3.1
 - NMU: rebuilt with boost-1.67.0
 
