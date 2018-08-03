@@ -8,7 +8,7 @@ BuildRequires: xsltproc
 %define _localstatedir %{_var}
 Name:		gdcm
 Version:	2.8.4
-Release:	alt1_8
+Release:	alt2_8
 Summary:	Grassroots DiCoM is a C++ library to parse DICOM medical files
 License:	BSD
 URL:		http://gdcm.sourceforge.net/wiki/index.php/Main_Page
@@ -24,6 +24,7 @@ Patch5: gdcm-2.4.0-find-python27.patch
 Patch6: gdcm-2.6-fix-cmake-config-paths.patch
 Patch7: gdcm-2.8.4-fix-manpage-gen.patch
 Patch8: gdcm-2.8.4-fix-poppler.patch
+Patch9: gdcm-2.8.4-alt-correct-const.patch
 
 BuildRequires:	libCharLS-devel >= 1.0
 BuildRequires:	ctest cmake
@@ -133,6 +134,7 @@ used this library with python
 %patch6 -p 1
 %patch7 -p 1
 %patch8 -p 1
+%patch9 -p 2
 
 # Fix cmake command
 sed -i.backup 's/add_dependency/add_dependencies/' Utilities/doxygen/CMakeLists.txt
@@ -301,6 +303,9 @@ make test -C %{_target_platform} || exit 0
 %{python3_sitelibdir}/__pycache__/%{name}*
 
 %changelog
+* Fri Aug 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.4-alt2_8
+- Fixed build.
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.8.4-alt1_8
 - applied repocop patch
 - update to new release by fcimport
