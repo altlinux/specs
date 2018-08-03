@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.48.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -83,6 +83,9 @@ KF5 library
 %_K5lib/libKF5XmlGui.so.*
 
 %changelog
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt2%ubt
+- add upstream fix against autosaving mainwindow
+
 * Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
 - new version
 
