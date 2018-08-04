@@ -1,7 +1,7 @@
 Name: fvwm
-Version: 2.6.5
+Version: 2.6.8
 #define cvsdate 20031019
-Release: alt4
+Release: alt1
 
 %def_with fribidi
 %def_with libstroke
@@ -13,7 +13,6 @@ Summary(ru_RU.UTF-8): Мощный оконный менеджер для X Wind
 License: GPLv2+
 Group: Graphical desktop/FVWM based
 Url: http://www.fvwm.org/
-Packager: Sergey Vlasov <vsu@altlinux.ru>
 
 %ifdef cvsdate
 Source: %name-%cvsdate.tar
@@ -43,17 +42,14 @@ Patch8: fvwm-2.6.5-alt-perl-requires.patch
 Patch9: fvwm-2.5.16-alt-configure-gdk_imlib.patch
 Patch11: fvwm-2.5.23-alt-configure-datarootdir.patch
 Patch12: fvwm-2.5.26-alt-bound.patch
-Patch13: fvwm-2.5.27-alt-format.patch
-Patch14: fvwm-2.5.27-alt-fvwm_msg-echo.patch
-Patch15: fvwm-2.6.5-alt-perl-syntax.patch
-Patch16: fvwm-git-manpage-error.patch
-Patch17: fvwm-rh-FvwmPager-be-more-careful-with-window-labels.patch
-Patch18: fvwm-rh-Change-html-viewer-to-xdg-open.patch
+Patch13: fvwm-2.6.5-alt-perl-syntax.patch
+Patch14: fvwm-rh-FvwmPager-be-more-careful-with-window-labels.patch
+Patch15: fvwm-rh-Change-html-viewer-to-xdg-open.patch
 
 %{?_with_fribidi:BuildPreReq: fribidi libfribidi-devel}
 %{?_with_libstroke:BuildPreReq: libstroke-devel}
 
-BuildRequires: imlib-devel libXcursor-devel libXft-devel libXinerama-devel libXpm-devel libXt-devel libncurses-devel libreadline-devel perl-GTK perl-Gtk2 perl-Tk perl-X11-Protocol perl-XML-Parser xsltproc
+BuildRequires: imlib-devel libXcursor-devel libXft-devel libXinerama-devel libXpm-devel libXt-devel libncurses-devel libreadline-devel perl-Tk perl-X11-Protocol perl-XML-Parser xsltproc
 
 %description
 Fvwm is an ICCCM-compliant X window manager providing a 3D look for
@@ -77,7 +73,6 @@ Summary(ru_RU.UTF-8): Fvwm с полным набором модулей
 Group: Graphical desktop/FVWM based
 Requires: %name-base = %version-%release
 Requires: %name-perl = %version-%release
-Requires: %name-gtk  = %version-%release
 Provides: fvwm95 = %version-%release
 Provides: fvwm2  = %version-%release
 Provides: fvwm   = %version-%release
@@ -119,8 +114,8 @@ degree of configurability, and an external module interface for
 implementing functional extensions.
 
 This package contains base parts of fvwm, enough for many
-configurations.  You may additionally install the %name-perl and
-%name-gtk packages to get more features.
+configurations.  You may additionally install the %name-perl package
+to get more features.
 
 %description -l ru_RU.UTF-8 base
 Fvwm - мощный оконный менеджер для X Window System, соответствующий
@@ -132,8 +127,8 @@ Fvwm - мощный оконный менеджер для X Window System, со
 переработанный код меню, поддержка stroke, Xft2 и многое другое.
 
 Этот пакет содержит базовый набор модулей fvwm, достаточный для многих
-конфигураций.  При необходимости можно установить пакеты с
-дополнительными модулями: %name-perl и %name-gtk.
+конфигураций.  При необходимости можно установить пакет с
+дополнительными модулями: %name-perl.
 
 
 %package doc
@@ -148,35 +143,6 @@ This package contains documentation for the fvwm window manager.
 
 %description -l ru_RU.UTF-8 doc
 Этот пакет содержит документацию для оконного менеджера fvwm.
-
-%package gtk
-Summary: F(?) Virtual Window Manager - FvwmGtk module
-Summary(ru_RU.UTF-8): Модуль FvwmGtk для fvwm
-Group: Graphical desktop/FVWM based
-PreReq: %name-base = %version-%release
-
-%description gtk
-Fvwm is an ICCCM-compliant X window manager providing a 3D look for
-window decorations, multiple discontiguous virtual desktops, a high
-degree of configurability, and an external module interface for
-implementing functional extensions.
-
-This package contains the FvwmGtk module, which implements GTK-based
-alternatives to the GUI elements in fvwm, namely the builtin menus and
-the FvwmForm dialogs.
-
-%description -l ru_RU.UTF-8 gtk
-Fvwm - мощный оконный менеджер для X Window System, соответствующий
-стандартам ICCCM, с поддержкой множественных виртуальных десктопов.
-
-Эта версия включает в себя новые особенности, такие как цветовые
-комплекты (colorsets), соответствие ICCCM2 и совместимость с GNOME,
-управление сессий, улучшения во всех модулях, несколько новых модулей,
-переработанный код меню, поддержка stroke, Xft2 и многое другое.
-
-Этот пакет содержит модуль FvwmGtk, который позволяет использовать меню
-и диалоговые окна в стиле GTK вместо встроенного стиля fvwm.
-
 
 %package perl
 Summary: F(?) Virtual Window Manager - Perl parts
@@ -228,8 +194,8 @@ fvwm.
 %setup %{?cvsdate:-n fvwm} -a1 -a11
 
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
+#%patch2 -p1
+#%patch3 -p1
 %patch4 -p1
 %patch6 -p1
 %patch7 -p1
@@ -240,9 +206,6 @@ fvwm.
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
 
 # Fix default fonts.
 find -type f -print0 |
@@ -270,22 +233,20 @@ export FVWM_BUGADDR='%packager'
 	--enable-htmldoc \
 	--without-gnome
 
-%make_build GTK_LIBS="$(pkg-config --libs gtk+)"
-
 %install
 %makeinstall_std
 
 # Prepare sample configs.
-rm -rf fvwmrc.sample
-cp -a sample.fvwmrc fvwmrc.sample
-rm -f fvwmrc.sample/Makefile*
+#rm -rf fvwmrc.sample
+#cp -a sample.fvwmrc fvwmrc.sample
+#rm -f fvwmrc.sample/Makefile*
 
 # Install default config.
-install -pD -m644 $RPM_BUILD_ROOT%_datadir/fvwm/ConfigFvwmSetup \
+install -pD -m644 $RPM_BUILD_ROOT%_datadir/fvwm/default-config/config \
 	$RPM_BUILD_ROOT%_sysconfdir/X11/%name/system.fvwm2rc
 
 # Fake generated menu file.
-install -m644 /dev/null $RPM_BUILD_ROOT%_sysconfdir/X11/%name/menu
+install -D -m644 /dev/null $RPM_BUILD_ROOT%_sysconfdir/X11/%name/menu
 
 # Install icons.
 rm -rf $RPM_BUILD_ROOT%_iconsdir
@@ -325,9 +286,8 @@ mkdir -p $RPM_BUILD_ROOT/%_docdir/%name
 mv $RPM_BUILD_ROOT/%_docdir/%name $RPM_BUILD_ROOT%_docdir/%name-%version
 
 # install additional docs
-install -p -m644 AUTHORS COPYING NEWS README \
-	docs/ANNOUNCE docs/BUGS docs/FAQ docs/TODO \
-	docs/error_codes docs/fvwm.lsm \
+install -p -m644 COPYING NEWS \
+	docs/COMMANDS docs/DEVELOPERS.md docs/PARSING.md \
 	$RPM_BUILD_ROOT%_docdir/%name-%version/
 
 find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
@@ -343,7 +303,6 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %_sysconfdir/X11/wmsession.d/*
 %_sysconfdir/menu-methods/*
 %_bindir/*
-%exclude %_bindir/fvwm-convert-2.4
 %exclude %_bindir/fvwm-convert-2.6
 %exclude %_bindir/fvwm-menu-desktop
 %exclude %_bindir/fvwm-menu-directory
@@ -353,29 +312,16 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %_libexecdir/fvwm
 %exclude %_libexecdir/fvwm/%version/FvwmCommand.pm
 %exclude %_libexecdir/fvwm/%version/FvwmConsoleC.pl
-%exclude %_libexecdir/fvwm/%version/FvwmDebug
-%exclude %_libexecdir/fvwm/%version/FvwmGtk
-%exclude %_libexecdir/fvwm/%version/FvwmGtkDebug
 %exclude %_libexecdir/fvwm/%version/FvwmPerl
-%exclude %_libexecdir/fvwm/%version/FvwmTabs
-%exclude %_libexecdir/fvwm/%version/FvwmWindowMenu
 %_datadir/fvwm/
 %exclude %_datadir/fvwm/perllib/
-%exclude %_datadir/fvwm/ConfigFvwmTabs
-%exclude %_datadir/fvwm/FvwmTabs-DefaultSetup
 %exclude %_datadir/fvwm/fvwm-script-ComExample.pl
-%exclude %_datadir/fvwm/fvwm-script-setup95.pl
 %_menudir/*
 
 %files doc
 %_mandir/man?/*
 %exclude %_mandir/man1/FvwmConsoleC.pl.1*
-%exclude %_mandir/man1/FvwmDebug.1*
-%exclude %_mandir/man1/FvwmGtkDebug.1*
 %exclude %_mandir/man1/FvwmPerl.1*
-%exclude %_mandir/man1/FvwmTabs.1*
-%exclude %_mandir/man1/FvwmWindowMenu.1*
-%exclude %_mandir/man1/fvwm-convert-2.4.1*
 %exclude %_mandir/man1/fvwm-convert-2.6.1*
 %exclude %_mandir/man1/fvwm-menu-desktop.1*
 %exclude %_mandir/man1/fvwm-menu-directory.1*
@@ -387,11 +333,7 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %files full
 # virtual package
 
-%files gtk
-%_libexecdir/fvwm/%version/FvwmGtk
-
 %files perl
-%_bindir/fvwm-convert-2.4
 %_bindir/fvwm-convert-2.6
 %_bindir/fvwm-menu-desktop
 %_bindir/fvwm-menu-directory
@@ -400,35 +342,21 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %_bindir/fvwm-perllib
 %_libexecdir/fvwm/%version/FvwmCommand.pm
 %_libexecdir/fvwm/%version/FvwmConsoleC.pl
-%_libexecdir/fvwm/%version/FvwmDebug
-%_libexecdir/fvwm/%version/FvwmGtkDebug
 %_libexecdir/fvwm/%version/FvwmPerl
-%_libexecdir/fvwm/%version/FvwmTabs
-%_libexecdir/fvwm/%version/FvwmWindowMenu
 %_datadir/fvwm/perllib/
-%_datadir/fvwm/ConfigFvwmTabs
-%_datadir/fvwm/FvwmTabs-DefaultSetup
 %_datadir/fvwm/fvwm-script-ComExample.pl
-%_datadir/fvwm/fvwm-script-setup95.pl
 %_mandir/man1/FvwmConsoleC.pl.1*
-%_mandir/man1/FvwmDebug.1*
-%_mandir/man1/FvwmGtkDebug.1*
 %_mandir/man1/FvwmPerl.1*
-%_mandir/man1/FvwmTabs.1*
-%_mandir/man1/FvwmWindowMenu.1*
-%_mandir/man1/fvwm-convert-2.4.1*
 %_mandir/man1/fvwm-convert-2.6.1*
-%_mandir/man1/fvwm-menu-desktop.1*
-%_mandir/man1/fvwm-menu-directory.1*
-%_mandir/man1/fvwm-menu-headlines.1*
-%_mandir/man1/fvwm-menu-xlock.1*
-%_mandir/man1/fvwm-perllib.1*
 
 %files icons
 %_iconsdir/*.xpm
 %_miconsdir/*.xpm
 
 %changelog
+* Sat Aug 04 2018 Vladislav Zavjalov <slazav@altlinux.org> 2.6.8-alt1
+- Updated to 2.6.8
+
 * Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 2.6.5-alt4
 - fvwm-perllib, FvwmConsoleC.pl: fixed perl syntax.
 - Merged several fixes from Debian and Fedora.
