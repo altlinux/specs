@@ -4,7 +4,7 @@
 
 Name: %realname%dialect
 Version: 2.69
-Release: alt3
+Release: alt4
 Epoch: 2
 
 Summary: A GNU tool for automatically configuring source code
@@ -20,16 +20,13 @@ BuildArch: noarch
 # git://git.altlinux.org/gears/a/autoconf_2.60.git
 Source: %srcname.tar
 
-Provides: %realname = %epoch:%version-%release
-Obsoletes: %realname
-
-PreReq: autoconf-common, alternatives >= 0:0.4
+PreReq: autoconf-common
 # GNU m4 version 1.4.6 or later is required; 1.4.14 or later is recommended.
 Requires: m4 >= 1.4.14
 # portable mktemp, later obsoleted by coreutils.
 Requires: mktemp >= 1:1.3.1
 
-BuildRequires: help2man, makeinfo, alternatives >= 0:0.4
+BuildRequires: help2man, makeinfo
 %{!?__buildreqs:%{!?_without_check:%{!?_disable_check:BuildRequires: gcc-c++ gcc-g77 libgomp-devel}}}
 
 %description
@@ -93,32 +90,11 @@ done
 
 %define _perl_lib_path %perl_vendor_privlib:%_datadir/%realname%suff
 
-mkdir -p %buildroot%_altdir
-
-cat >%buildroot%_altdir/%name <<EOF
-%_bindir/%realname-default	%_bindir/%realname%suff	40
-%_datadir/%realname	%_datadir/%realname%suff	%_bindir/%realname%suff
-%_infodir/%realname.info.xz	%_infodir/%realname%suff.info.xz	%_bindir/%realname%suff
-EOF
-
-for i in autoheader autom4te autoreconf autoscan autoupdate ifnames; do
-cat >>%buildroot%_altdir/%name <<EOF
-%_bindir/$i-default	%_bindir/$i%suff	%_bindir/%realname%suff
-EOF
-done
-
-for i in %realname autoheader autom4te autoreconf autoscan autoupdate config.guess config.sub ifnames; do
-cat >>%buildroot%_altdir/%name <<EOF
-%_man1dir/$i.1.xz	%_man1dir/$i%suff.1.xz	%_bindir/%realname%suff
-EOF
-done
-
 %check
 %make_build -k check
 
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
-%_altdir/*
 %_bindir/*
 %_datadir/%realname%suff
 %_man1dir/*
@@ -126,6 +102,9 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 2:2.69-alt4
+- Dropped alternatives in favour of autoconf-defaults setup.
+
 * Mon Dec 07 2015 Dmitry V. Levin <ldv@altlinux.org> 2:2.69-alt3
 - Backported yet more upstream fixes.
 - Changed compress method from gzip to xz.
