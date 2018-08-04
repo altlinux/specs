@@ -1,11 +1,10 @@
 %define ltversion 1.4
 %define libtool libtool-%ltversion
 %define libltdl libltdl
-%define priority 140
 
 Name: libtool_%ltversion
 Version: 1.4.3
-Release: alt12
+Release: alt13
 Epoch: 3
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
@@ -19,11 +18,10 @@ Url: http://www.gnu.org/software/libtool/libtool.html
 %set_automake_version 1.4
 %set_autoconf_version 2.13
 
-Provides: libtool = %epoch:%version-%release
-PreReq: libtool-common, alternatives >= 0.4
-Requires: %libltdl >= %epoch:%version-%release
-Requires: aclocal(libtool)
-Obsoletes: libtool < %epoch:%version
+PreReq: libtool-common
+Requires: %libltdl >= %EVR
+Requires: automake
+Requires: autoconf
 
 Source: ftp://ftp.gnu.org/gnu/libtool/libtool-1.4.3.tar
 Source1: %name-buildreq.ignore
@@ -46,9 +44,8 @@ Patch17: libtool-1.4.3-rh-nostdlib.patch
 # ALT patches
 Patch20: libtool-1.5-alt-sys_lib_dlsearch.patch
 Patch21: libtool-1.4.2-alt-ltmain-cpp-linkage.patch
-Patch22: libtool-1.5-alt-texinfo.patch
-Patch23: libtool-1.5-alt-makefile.patch
-Patch24: libtool-1.5-alt-libtoolize-libtool.m4.patch
+Patch22: libtool-1.5-alt-makefile.patch
+Patch23: libtool-1.5-alt-libtoolize-libtool.m4.patch
 
 # Automatically added by buildreq on Tue Aug 19 2003
 BuildRequires: gcc-c++ gcc-g77 libstdc++-devel makeinfo
@@ -84,7 +81,6 @@ should install libtool.
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
-%patch24 -p1
 
 # Hack in the version-specific package data dir and aclocal dir variables.
 perl -pi -e 's|^(pkgdatadir=.*?)\s*$|$1-%ltversion\n|;' configure.in
@@ -122,6 +118,7 @@ done
 
 %configure --program-suffix=-%ltversion
 
+# Rename due to alternative editions.
 perl -pi -e '/^\@direntry/../^\@end direntry/ and s/^\*\s*(libtool(ize)?):\s*\(libtool\)/* $1-%ltversion: (%libtool)/i' doc/libtool.texi
 
 # SMP-incompatible build.
@@ -152,14 +149,6 @@ done
 
 mv %buildroot%_infodir/libtool{,-%ltversion}.info
 
-mkdir -p %buildroot%_altdir
-cat >%buildroot%_altdir/%name <<EOF
-%_bindir/libtool-default	%_bindir/%libtool	%priority
-%_bindir/libtoolize-default	%_bindir/libtoolize-%ltversion	%_bindir/%libtool
-%_datadir/libtool	%_datadir/%libtool	%_bindir/%libtool
-%_infodir/libtool.info.xz	%_infodir/%libtool.info.xz	%_bindir/%libtool
-EOF
-
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 echo libtool >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 
@@ -170,35 +159,32 @@ install -p -m644 %SOURCE1 \
 %define ltdocdir %_docdir/libtool-%version
 %define ltdldocdir %_docdir/libltdl-%version
 
-rln()
-{
-	local target=$1 && shift
-	local source=$1 && shift
-	target=`relative "$target" "$source"`
-	ln -snf "$target" "%buildroot$source"
-}
-
 mkdir -p %buildroot%ltdocdir
 install -p -m644 AUTHORS NEWS README THANKS TODO ChangeLog*.bz2 \
     %buildroot%ltdocdir/
-rln %_licensedir/GPL-2 %ltdocdir/COPYING
+ln -rsnf %buildroot%_licensedir/GPL-2 \
+	%buildroot%ltdocdir/COPYING
 mkdir -p %buildroot%ltdldocdir
 install -p -m644 libltdl/README %buildroot%ltdldocdir/
 rm -f %buildroot%_datadir/%libtool/libltdl/COPYING.LIB
-rln %_licensedir/LGPL-2.1 %_datadir/%libtool/libltdl/COPYING.LIB
-rln %_licensedir/LGPL-2.1 %ltdldocdir/COPYING.LIB
+ln -rsnf %buildroot%_licensedir/LGPL-2.1 \
+	%buildroot%_datadir/%libtool/libltdl/COPYING.LIB
+ln -rsnf %buildroot%_licensedir/LGPL-2.1 \
+	%buildroot%ltdldocdir/COPYING.LIB
 
 %files
 %_bindir/*
 %_datadir/%libtool
 %_infodir/%libtool.info*
-%_altdir/%name
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
 %config %_sysconfdir/buildreqs/files/ignore.d/%name
 %dir %ltdocdir
 %ltdocdir/[A-Z]*
 
 %changelog
+* Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 3:1.4.3-alt13
+- Dropped alternatives in favour of libtool-defaults setup.
+
 * Mon Dec 14 2015 Dmitry V. Levin <ldv@altlinux.org> 3:1.4.3-alt12
 - Changed compress method to xz.
 

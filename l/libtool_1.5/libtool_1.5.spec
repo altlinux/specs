@@ -2,11 +2,10 @@
 %define ltsoname 3
 %define libtool libtool-%ltversion
 %define libltdl libltdl%ltsoname
-%define priority 150
 
 Name: libtool_%ltversion
 Version: 1.5.26
-Release: alt11
+Release: alt12
 Epoch: 3
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
@@ -17,11 +16,9 @@ Url: http://www.gnu.org/software/libtool/libtool.html
 %add_findreq_skiplist %_datadir/%libtool/config.guess
 %set_compress_method xz
 
-Provides: libtool = %epoch:%version-%release
-Obsoletes: libtool
-PreReq: libtool-common >= 0.2, alternatives >= 0:0.4
-Requires: aclocal(libtool)
-Requires: autoconf_2.60
+PreReq: libtool-common >= 0.2
+Requires: autoconf
+Requires: automake
 
 # ftp://ftp.gnu.org/gnu/libtool/libtool-%version.tar.gz
 Source: libtool-%version.tar
@@ -34,26 +31,26 @@ BuildRequires: gcc-c++ gcc-g77 makeinfo
 Summary: dlopen wrapper for GNU libtool
 License: LGPLv2+
 Group: System/Legacy libraries
-Provides: libltdl = %epoch:%version-%release
-Obsoletes: libltdl < %epoch:%version-%release
+Provides: libltdl = %EVR
+Obsoletes: libltdl < %EVR
 
 %package -n %libltdl-devel
 Summary: Development files for %libltdl
 License: LGPLv2+
 Group: Development/C
-Requires: %name = %epoch:%version-%release
-Requires: %libltdl = %epoch:%version-%release
-Provides: libltdl-devel = %epoch:%version-%release
-Obsoletes: libltdl-devel < %epoch:%version-%release
+Requires: %name = %EVR
+Requires: %libltdl = %EVR
+Provides: libltdl-devel = %EVR
+Obsoletes: libltdl-devel < %EVR
 Conflicts: libltdl7-devel
 
 %package -n %libltdl-devel-static
 Summary: Static %libltdl library
 License: LGPLv2+
 Group: Development/C
-Requires: %libltdl-devel = %epoch:%version-%release
-Provides: libltdl-devel-static = %epoch:%version-%release
-Obsoletes: libltdl-devel-static < %epoch:%version-%release
+Requires: %libltdl-devel = %EVR
+Provides: libltdl-devel-static = %EVR
+Obsoletes: libltdl-devel-static < %EVR
 Conflicts: libltdl7-devel-static
 
 %package demos
@@ -61,7 +58,7 @@ Summary: Samples for Libtool
 License: GPLv2+
 Group: Development/Other
 BuildArch: noarch
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description
 The libtool package contains the GNU libtool, a set of shell scripts
@@ -115,6 +112,7 @@ for f in config.guess config.sub; do
 	ln -snf ../"$f" libltdl/
 done
 
+# Rename due to alternative editions.
 sed -i '/@direntry/,/@end direntry/ s/^\(\*[[:space:]]\+[[:alnum:].]\+\)\(:[[:space:]]\+\)(libtool)/\1-%ltversion\2(%libtool)/' \
 	doc/libtool.texi
 rm -f doc/*.info*
@@ -160,14 +158,6 @@ for f in config.guess config.sub ltmain.sh; do
 	ln -snf ../"$f" %buildroot%_datadir/%libtool/libltdl/
 done
 
-mkdir -p %buildroot%_altdir
-cat >%buildroot%_altdir/%name <<EOF
-%_bindir/libtool-default	%_bindir/%libtool	%priority
-%_bindir/libtoolize-default	%_bindir/libtoolize-%ltversion	%_bindir/%libtool
-%_datadir/libtool	%_datadir/%libtool	%_bindir/%libtool
-%_infodir/libtool.info.xz	%_infodir/%libtool.info.xz	%_bindir/%libtool
-EOF
-
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 echo libtool >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
@@ -176,23 +166,18 @@ echo '^/usr/share/libtool(-1\.5)?/aclocal/.+\.m4$' >%buildroot%_sysconfdir/build
 %define ltdocdir %_docdir/libtool-%version
 %define ltdldocdir %_docdir/libltdl-%version
 
-rln()
-{
-	local target=$1 && shift
-	local source=$1 && shift
-	target=`relative "$target" "$source"`
-	ln -snf "$target" "%buildroot$source"
-}
-
 mkdir -p %buildroot%ltdocdir
 install -p -m644 acinclude.m4 aclocal.m4 AUTHORS NEWS README THANKS TODO \
     %buildroot%ltdocdir/
-rln %_licensedir/GPL-2 %ltdocdir/COPYING
+ln -rsnf %buildroot%_licensedir/GPL-2 \
+	%buildroot%ltdocdir/COPYING
 mkdir -p %buildroot%ltdldocdir
 install -p -m644 libltdl/README %buildroot%ltdldocdir/
 rm -f %buildroot%_datadir/%libtool/libltdl/COPYING.LIB
-rln %_licensedir/LGPL-2.1 %_datadir/%libtool/libltdl/COPYING.LIB
-rln %_licensedir/LGPL-2.1 %ltdldocdir/COPYING.LIB
+ln -rsnf %buildroot%_licensedir/LGPL-2.1 \
+	%buildroot%_datadir/%libtool/libltdl/COPYING.LIB
+ln -rsnf %buildroot%_licensedir/LGPL-2.1 \
+	%buildroot%ltdldocdir/COPYING.LIB
 for d in *demo*; do
 	cp -a "$d" %buildroot%ltdocdir/
 	rm -rf %buildroot%ltdocdir/"$d"/autom4te.cache
@@ -203,7 +188,6 @@ cp -p install-sh missing %buildroot%ltdocdir/demo/
 %_bindir/*
 %_datadir/%libtool
 %_infodir/%libtool.info*
-%_altdir/%name
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
 %config %_sysconfdir/buildreqs/files/ignore.d/%name
 %dir %ltdocdir
@@ -229,6 +213,9 @@ cp -p install-sh missing %buildroot%ltdocdir/demo/
 %ltdocdir/*demo*
 
 %changelog
+* Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 3:1.5.26-alt12
+- Dropped alternatives in favour of libtool-defaults setup.
+
 * Mon Dec 14 2015 Dmitry V. Levin <ldv@altlinux.org> 3:1.5.26-alt11
 - Changed compress method to xz.
 

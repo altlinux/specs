@@ -2,11 +2,10 @@
 %define ltsoname 7
 %define libtool libtool-%ltversion
 %define libltdl libltdl%ltsoname
-%define priority 242
 
 Name: libtool_%ltversion
 Version: 2.4.2
-Release: alt5
+Release: alt6
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
 License: GPLv2+
@@ -16,11 +15,9 @@ Url: http://www.gnu.org/software/libtool/libtool.html
 %add_findreq_skiplist %_datadir/%libtool/config.guess
 %set_compress_method xz
 
-Provides: libtool = 3:%version-%release
-Obsoletes: libtool
-PreReq: libtool-common >= 0.2, alternatives >= 0:0.4
-Requires: aclocal(libtool)
-Requires: autoconf_2.60
+PreReq: libtool-common >= 0.2
+Requires: autoconf
+Requires: automake
 
 # git://git.altlinux.org/gears/l/%name.git
 Source: libtool-%version-%release.tar
@@ -38,8 +35,8 @@ Group: System/Libraries
 Summary: Development files for %libltdl
 License: LGPLv2+
 Group: Development/C
-Requires: %name = %version-%release
-Requires: %libltdl = %version-%release
+Requires: %name = %EVR
+Requires: %libltdl = %EVR
 Provides: libltdl-devel = 3:%version-%release
 Conflicts: libltdl-devel < 3:%version
 
@@ -47,7 +44,7 @@ Conflicts: libltdl-devel < 3:%version
 Summary: Static %libltdl library
 License: LGPLv2+
 Group: Development/C
-Requires: %libltdl-devel = %version-%release
+Requires: %libltdl-devel = %EVR
 Provides: libltdl-devel-static = 3:%version-%release
 Conflicts: libltdl-devel-static < 3:%version
 
@@ -56,7 +53,7 @@ Summary: Samples for Libtool
 License: GPLv2+
 Group: Development/Other
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description
 The libtool package contains the GNU libtool, a set of shell scripts
@@ -89,7 +86,7 @@ Sample programs and libraries to build with libtool.
 find -type f -name missing -print0|
 	xargs -r0 sed -i 's/gnutar /gnutar=gnutar \&\& \$&/' --
 
-# Rename due to alternatives.
+# Rename due to alternative editions.
 sed -i '/@direntry/,/@end direntry/ s/^\(\*[[:space:]]\+[[:alnum:].]\+\)\(:[[:space:]]\+\)(libtool)/\1-%ltversion\2(%libtool)/' \
 	doc/libtool.texi
 
@@ -105,7 +102,8 @@ sed -i -e 's/^\(predep_objects\|postdep_objects\|compiler_lib_search_path\)=.*/\
 
 %check
 # Testsuite is SMP-compatible but the output is hard to read.
-make -k check
+# Remove -frecord-gcc-switches because it confuses demo-hardcode.test.
+make -k check CFLAGS="${RPM_OPT_FLAGS/-frecord-gcc-switches/}"
 find tests -maxdepth 1 -type d -name '*demo*' |
 	xargs -rn1 make distclean -C
 
@@ -116,14 +114,6 @@ mv %buildroot%_infodir/libtool{,-%ltversion}.info
 out="\$(\$CC -print-search-dirs |\$SED -e '/^libraries: *=/!d;s///;s!/:!:!g;s!/\$!!;s/:/ /g')"
 sed -i 's#^\(compiler_lib_search_dirs="\)/.*#\1'"$out"'"#' %buildroot%_bindir/%libtool
 
-mkdir -p %buildroot%_altdir
-cat >%buildroot%_altdir/%name <<EOF
-%_bindir/libtool-default	%_bindir/%libtool	%priority
-%_bindir/libtoolize-default	%_bindir/libtoolize-%ltversion	%_bindir/%libtool
-%_datadir/libtool	%_datadir/%libtool	%_bindir/%libtool
-%_infodir/libtool.info.xz	%_infodir/%libtool.info.xz	%_bindir/%libtool
-EOF
-
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 echo libtool >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
@@ -132,22 +122,17 @@ echo '^/usr/share/libtool(-2\.2)?/aclocal/.+\.m4$' >%buildroot%_sysconfdir/build
 %define ltdocdir %_docdir/libtool-%version
 %define ltdldocdir %_docdir/libltdl-%version
 
-rln()
-{
-	local target=$1 && shift
-	local source=$1 && shift
-	target=`relative "$target" "$source"`
-	ln -snf "$target" "%buildroot$source"
-}
-
 mkdir -p %buildroot%ltdocdir
 install -p -m644 AUTHORS NEWS README THANKS TODO %buildroot%ltdocdir/
-rln %_licensedir/GPL-2 %ltdocdir/COPYING
+ln -rsnf %buildroot%_licensedir/GPL-2 \
+	%buildroot%ltdocdir/COPYING
 mkdir -p %buildroot%ltdldocdir
 install -p -m644 libltdl/README %buildroot%ltdldocdir/
 rm %buildroot%_datadir/%libtool/libltdl/COPYING.LIB
-rln %_licensedir/LGPL-2.1 %_datadir/%libtool/libltdl/COPYING.LIB
-rln %_licensedir/LGPL-2.1 %ltdldocdir/COPYING.LIB
+ln -rsnf %buildroot%_licensedir/LGPL-2.1 \
+	%buildroot%_datadir/%libtool/libltdl/COPYING.LIB
+ln -rsnf %buildroot%_licensedir/LGPL-2.1 \
+	%buildroot%ltdldocdir/COPYING.LIB
 
 for d in `find tests -maxdepth 1 -type d -name '*demo*'`; do
 	cp -a "$d" %buildroot%ltdocdir/
@@ -160,11 +145,14 @@ done
 # This config.guess file usually emits tons of unwanted deps.
 %add_findreq_skiplist %_datadir/%libtool/config/config.guess
 
+%define _unpackaged_files_terminate_build 1
+
 %files
 %_bindir/*
 %_datadir/%libtool
 %_infodir/%libtool.info*
-%_altdir/%name
+%_man1dir/%libtool.1*
+%_man1dir/libtoolize-%ltversion.1*
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
 %config %_sysconfdir/buildreqs/files/ignore.d/%name
 %dir %ltdocdir
@@ -188,6 +176,12 @@ done
 %ltdocdir/*demo*
 
 %changelog
+* Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 2.4.2-alt6
+- %%check: removed -frecord-gcc-switches from $RPM_OPT_FLAGS
+  because it confuses demo-hardcode.test.
+- Dropped alternatives in favour of libtool-defaults setup.
+- Packages manual pages.
+
 * Mon Dec 14 2015 Dmitry V. Levin <ldv@altlinux.org> 2.4.2-alt5
 - Changed compress method to xz.
 

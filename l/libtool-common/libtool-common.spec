@@ -1,10 +1,11 @@
 Name: libtool-common
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Wrapper and common files for different versions of libtool
 Group: Development/Other
 License: GPLv2+
+Url: http://git.altlinux.org/gears/l/libtool-common.git
 
 Conflicts: libtool < 3:1.4.2-alt1
 
@@ -12,7 +13,7 @@ Source: libtool_wrapper
 Source1: libtool-ldconfig-dump.c
 
 %description
-This package contains files that provide co-existance of various
+This package contains files that provide co-existence of various
 versions of GNU Libtool.
 
 %prep
@@ -34,6 +35,9 @@ install -pm755 libtool-ldconfig-dump %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 0.2.2-alt1
+- Cleaned up libtool_wrapper.
+
 * Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 0.2.1-alt1
 - Built with LFS support enabled.
 
