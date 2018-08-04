@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt21
+Release: alt22
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -291,6 +291,9 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Sat Aug 04 2018 Fr. Br. George <george@altlinux.ru> 1.16.7-alt22
+- Fix lightdm-greeter-hide-users typo
+
 * Thu Jul 26 2018 Michael Shigorin <mike@altlinux.org> 1.16.7-alt21
 - Drop E2K suffix, this package has no e2k-specific patches.
 - Uncommented R: accountsservice (closes: #32670)
