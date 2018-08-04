@@ -1,5 +1,5 @@
 Name: libzio
-Version: 1.04
+Version: 1.06
 Release: alt1
 
 Summary: A library for accessing compressed text files
@@ -35,7 +35,7 @@ building libzio-aware applications.
 
 %build
 %def_enable Werror
-%make_build libdir=/%_lib noweak tests testt testw
+%make_build libdir=/%_lib noweak tests testt testx
 
 %install
 %make_install install-shared install-data \
@@ -53,35 +53,36 @@ done
 %define _unpackaged_files_terminate_build 1
 
 %check
+rm -f sample* out
 for s in gz bz2 lzma xz; do
 	ln -s sample sample.$s
 done
 for f in *; do
 	[ -f "$f" -a ! -L "$f" ] || continue
 	for comp in gzip bzip2 lzma xz; do
-		$comp -c <"$f" >sample
+		$comp -c < "$f" > sample
 		for s in '' .gz .bz2 .lzma .xz; do
-			LD_LIBRARY_PATH=%buildroot/%_lib ./testt sample$s |
-				cmp "$f" -
+			LD_LIBRARY_PATH=%buildroot/%_lib ./testt sample$s > out
+				cmp "$f" out
 			cat sample$s |
-				LD_LIBRARY_PATH=%buildroot/%_lib ./tests ${comp:0:1} |
-				cmp "$f" -
+				LD_LIBRARY_PATH=%buildroot/%_lib ./tests ${comp:0:1} > out
+				cmp "$f" out
 		done
 	done
 done
-rm sample*
+rm sample* out
 for f in *; do
 	[ -f "$f" -a ! -L "$f" ] || continue
 	rm -f sample*
-	LD_LIBRARY_PATH=%buildroot/%_lib ./testw sample <"$f"
+	LD_LIBRARY_PATH=%buildroot/%_lib ./testx < "$f" > sample ''
 	cmp "$f" sample
-	LD_LIBRARY_PATH=%buildroot/%_lib ./testw sample.gz <"$f"
+	LD_LIBRARY_PATH=%buildroot/%_lib ./testx < "$f" > sample.gz g
 	gzip -dc <sample.gz |cmp "$f" -
-	LD_LIBRARY_PATH=%buildroot/%_lib ./testw sample.bz2 <"$f"
+	LD_LIBRARY_PATH=%buildroot/%_lib ./testx < "$f" > sample.bz2 b
 	bzip2 -dc <sample.bz2 |cmp "$f" -
-	LD_LIBRARY_PATH=%buildroot/%_lib ./testw sample.xz <"$f"
+	LD_LIBRARY_PATH=%buildroot/%_lib ./testx < "$f" > sample.xz x
 	xz -dc <sample.xz |cmp "$f" -
-	LD_LIBRARY_PATH=%buildroot/%_lib ./testw sample.lzma <"$f"
+	LD_LIBRARY_PATH=%buildroot/%_lib ./testx < "$f" > sample.lzma l
 	lzma -dc <sample.lzma |cmp "$f" -
 done
 
@@ -95,6 +96,11 @@ done
 %_man3dir/*
 
 %changelog
+* Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 1.06-alt1
+- 1.04 -> 1.06.
+- Fixed build without libio.h.
+- Fixed lzma support broken upstream.
+
 * Fri Mar 17 2017 Dmitry V. Levin <ldv@altlinux.org> 1.04-alt1
 - 1.02 -> 1.04.
 
