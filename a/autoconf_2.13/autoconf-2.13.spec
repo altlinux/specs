@@ -4,7 +4,7 @@
 
 Name: %realname%dialect
 Version: 2.13
-Release: alt12
+Release: alt13
 Serial: 2
 
 %set_compress_method xz
@@ -32,10 +32,7 @@ Patch9: %realname-2.13-alt-dnet.patch
 Patch10: %realname-2.13-alt-ac_extension.patch
 Patch11: %realname-2.13-alt-autoscan-perl.patch
 
-Provides: %realname = %serial:%version-%release
-Obsoletes: %realname
-
-PreReq: autoconf-common, alternatives >= 0:0.4
+PreReq: autoconf-common
 Requires: m4 >= 1.4, mktemp >= 1:1.3.1
 BuildRequires: makeinfo
 
@@ -119,29 +116,8 @@ for f in %buildroot%_bindir/*%suff; do
 	ln -s "${f##*/}" "${f%%%suff}%dialect"
 done
 
-mkdir -p %buildroot%_altdir
-
-cat >%buildroot%_altdir/%name <<EOF
-%_bindir/%realname-default	%_bindir/%realname%suff	20
-%_datadir/%realname	%_datadir/%realname%suff	%_bindir/%realname%suff
-%_infodir/%realname.info.xz	%_infodir/%realname%suff.info.xz	%_bindir/%realname%suff
-EOF
-
-for i in autoheader autom4te autoreconf autoscan autoupdate ifnames; do
-cat >>%buildroot%_altdir/%name <<EOF
-%_bindir/$i-default	%_bindir/$i%suff	%_bindir/%realname%suff
-EOF
-done
-
-for i in %realname autoheader autom4te autoreconf autoscan autoupdate config.guess config.sub ifnames; do
-cat >>%buildroot%_altdir/%name <<EOF
-%_man1dir/$i.1.xz	%_man1dir/$i%suff.1.xz	%_bindir/%realname%suff
-EOF
-done
-
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
-%_altdir/*
 %_bindir/*
 %_datadir/%realname%suff
 %_man1dir/*
@@ -149,6 +125,9 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 2:2.13-alt13
+- Dropped alternatives in favour of autoconf-defaults setup.
+
 * Mon Dec 07 2015 Dmitry V. Levin <ldv@altlinux.org> 2:2.13-alt12
 - Changed compress method from gzip to xz.
 - autoscan: fixed perl regexp syntax.

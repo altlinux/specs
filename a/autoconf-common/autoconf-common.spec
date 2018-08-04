@@ -1,11 +1,11 @@
 Name: autoconf-common
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 
-Summary: Common files for different versions of autoconf
-License: GPL
+Summary: Wrapper and common files for different versions of the GNU Autoconf
+License: GPLv2+
 Group: Development/Other
-Packager: Dmitry V. Levin <ldv@altlinux.org>
+Url: http://git.altlinux.org/gears/a/autoconf-common.git
 BuildArch: noarch
 
 Source: autoconf_wrapper
@@ -15,11 +15,12 @@ Conflicts: autoconf_2.13 < 2:2.13-alt8
 Conflicts: autoconf < 2:2.13-alt8
 
 %description
-This package contains files shared by various versions of GNU autoconf.
+This package contains files that provide co-existence of various
+versions of the GNU Autoconf.
 
 %install
-mkdir -p %buildroot%_bindir
-install -pm755 %SOURCE0 %buildroot%_bindir/
+install -pD -m755 %_sourcedir/autoconf_wrapper \
+	%buildroot%_bindir/autoconf_wrapper
 for n in autoconf autoheader autom4te autoreconf autoscan autoupdate ifnames; do
 	ln -s autoconf_wrapper %buildroot%_bindir/$n
 done
@@ -28,6 +29,9 @@ done
 %_bindir/*
 
 %changelog
+* Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 0.3.1-alt1
+- Cleaned up autoconf_wrapper.
+
 * Tue Aug 25 2009 Dmitry V. Levin <ldv@altlinux.org> 0.3-alt1
 - Removed obsolete %%pre script and all its requirements.
 

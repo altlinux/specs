@@ -4,7 +4,7 @@
 
 Name: %realname%dialect
 Version: 2.59
-Release: alt11
+Release: alt12
 Epoch: 2
 
 Summary: A GNU tool for automatically configuring source code
@@ -29,15 +29,13 @@ Patch8: autoconf-2.59-owl-tmp.patch
 Patch9: autoconf-2.59-alt-intltool.patch
 Patch10: autoconf-2.59-alt-stubs.patch
 
-Provides: %realname = %epoch:%version-%release
-Obsoletes: %realname
-Provides: %{realname}_2.5 = %epoch:%version-%release
+Provides: %{realname}_2.5 = %EVR
 Obsoletes: %{realname}_2.5
 
-PreReq: autoconf-common, alternatives >= 0:0.4
+PreReq: autoconf-common
 Requires: m4 >= 1.4, mktemp >= 1:1.3.1
 
-BuildRequires: help2man, makeinfo, alternatives >= 0:0.4
+BuildRequires: help2man, makeinfo
 
 %description
 GNU's Autoconf is a tool for configuring source code and Makefiles.
@@ -104,29 +102,8 @@ done
 
 %define _perl_lib_path %perl_vendor_privlib:%_datadir/%realname%suff
 
-mkdir -p %buildroot%_altdir
-
-cat >%buildroot%_altdir/%name <<EOF
-%_bindir/%realname-default	%_bindir/%realname%suff	30
-%_datadir/%realname	%_datadir/%realname%suff	%_bindir/%realname%suff
-%_infodir/%realname.info.xz	%_infodir/%realname%suff.info.xz	%_bindir/%realname%suff
-EOF
-
-for i in autoheader autom4te autoreconf autoscan autoupdate ifnames; do
-cat >>%buildroot%_altdir/%name <<EOF
-%_bindir/$i-default	%_bindir/$i%suff	%_bindir/%realname%suff
-EOF
-done
-
-for i in %realname autoheader autom4te autoreconf autoscan autoupdate config.guess config.sub ifnames; do
-cat >>%buildroot%_altdir/%name <<EOF
-%_man1dir/$i.1.xz	%_man1dir/$i%suff.1.xz	%_bindir/%realname%suff
-EOF
-done
-
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
-%_altdir/*
 %_bindir/*
 %_datadir/%realname%suff
 %_man1dir/*
@@ -134,6 +111,9 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 2:2.59-alt12
+- Dropped alternatives in favour of autoconf-defaults setup.
+
 * Mon Dec 07 2015 Dmitry V. Levin <ldv@altlinux.org> 2:2.59-alt11
 - Changed compress method from gzip to xz.
 
