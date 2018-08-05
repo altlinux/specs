@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180722
+Version: 20180728
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,11 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun Aug 05 2018 Cronbuild Service <cronbuild@altlinux.org> 20180728-alt1
+- upstream changes (GIT 7b5835f):
+  + add firmware for mt76x2u (thx Lorenzo Bianconi)
+  + wl18xx: update firmware file 8.9.0.0.79 (thx Guy Mishol)
+
 * Sun Jul 29 2018 Cronbuild Service <cronbuild@altlinux.org> 20180722-alt1
 - upstream changes (GIT b01151b):
   + Mellanox: Add new mlxsw_spectrum firmware 13.1702.6 (thx Nir Dotan)
