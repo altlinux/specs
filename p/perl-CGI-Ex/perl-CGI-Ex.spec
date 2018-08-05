@@ -3,7 +3,7 @@
 %define real_name CGI-Ex
 
 Name: perl-CGI-Ex
-Version: 2.45
+Version: 2.46
 Release: alt1
 
 Summary: CGI utility suite
@@ -22,9 +22,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildPreReq: rpm-build-licenses
 
-# Automatically added by buildreq on Tue Oct 11 2011
-# optimized out: perl-JSON-XS perl-YAML perl-common-sense
-BuildRequires: perl-CGI perl-JSON perl-Template-Alloy perl-devel
+# Automatically added by buildreq on Sun Aug 05 2018
+# optimized out: perl perl-CPAN-Meta-Requirements perl-Encode perl-JSON perl-JSON-PP perl-JSON-XS perl-Parse-CPAN-Meta perl-Sub-Uplevel perl-Types-Serialiser perl-common-sense perl-devel perl-parent python-base python-modules python3 python3-base python3-dev ruby
+BuildRequires: perl-CGI perl-CPAN-Meta perl-Template-Alloy perl-Test-Warn perl-YAML
 
 %description
 Perl module CGI::Ex provides a suite of utilities to make
@@ -65,6 +65,9 @@ This package sample application and examples for CGI::Ex.
 %doc samples
 
 %changelog
+* Sun Aug 05 2018 Nikolay A. Fetisov <naf@altlinux.org> 2.46-alt1
+- New version
+
 * Sun Jul 30 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.45-alt1
 - New version
 
