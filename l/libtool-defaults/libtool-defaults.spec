@@ -3,7 +3,7 @@
 
 Name: libtool-defaults
 Version: 2.4.2
-Release: alt6
+Release: alt7
 Epoch: 3
 
 Summary: %vendor setup for the GNU libtool
@@ -28,25 +28,19 @@ Conflicts: libtool_1.4 < 3:1.4.3-alt13
 This package provides default %summary.
 
 %install
-mkdir -p %buildroot{%_bindir,%_datadir,%_infodir,%_man1dir}
+mkdir -p %buildroot{%_bindir,%_datadir,%_infodir}
 
 for i in %_bindir/libtool{,ize}-default; do
 	ln -rs %buildroot"${i/default/%libtool_version}" \
 		%buildroot"$i"
 done
 
-for i in %_datadir/libtool %_infodir/libtool.info.xz %_man1dir/libtool.1.xz; do
+for i in %_datadir/libtool %_infodir/libtool.info.xz; do
 	ln -rs %buildroot"${i/libtool/libtool-%libtool_version}" \
 		%buildroot"$i"
 done
 
-for i in %_man1dir/libtoolize.1.xz; do
-	ln -rs %buildroot"${i/libtoolize/libtoolize-%libtool_version}" \
-		%buildroot"$i"
-done
-
 %add_findreq_skiplist %_infodir/*
-%add_findreq_skiplist %_man1dir/*
 
 %define _unpackaged_files_terminate_build 1
 
@@ -55,9 +49,11 @@ done
 %_bindir/libtoolize-default
 %_datadir/libtool
 %_infodir/libtool.info.xz
-%_man1dir/libtool.1.xz
-%_man1dir/libtoolize.1.xz
 
 %changelog
+* Sun Aug 05 2018 Dmitry V. Levin <ldv@altlinux.org> 3:2.4.2-alt7
+- Dropped symlinks to libtool manual pages in favour of man-pages package
+  (ALT#35211).
+
 * Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 3:2.4.2-alt6
 - Initial revision (replaces libtool alternatives).
