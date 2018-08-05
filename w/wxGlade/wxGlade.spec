@@ -3,17 +3,15 @@
 Name: wxGlade
 Summary: A GUI builder for wxWindows/wxPython
 Version: 0.7.2
-Release: alt1
+Release: alt2
 License: MIT
 Group: Development/Other
 Url: http://wxglade.sourceforge.net/
 Packager: Konstantin Artyushkin <akv@altlinux.org>
 
 Source: http://heanet.dl.sourceforge.net/project/wxglade/wxglade/%version/%name-%version.tar.gz
-Requires: python-base >= 2.3
-Requires: python-module-wx >= 2.6
 BuildRequires: ImageMagick-tools
-BuildRequires: python-dev python-devel-static
+BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: rpm-build-python
 BuildArch: noarch
@@ -43,6 +41,7 @@ chmod a-x docs/src/manual.xml
 
 %install
 %__python setup.py install --prefix=%prefix -O1 --skip-build --root=%buildroot
+
 # icons
 mkdir -p %buildroot{%_iconsdir,%_miconsdir,%_liconsdir}
 convert -resize 32x32 icons/icon.xpm %buildroot%_iconsdir/%name.png
@@ -59,7 +58,7 @@ Exec=wxglade
 Icon=%name
 Terminal=false
 Type=Application
-Categories=X-MandrivaLinux-MoreApplications-Development-Tools;GUIDesigner;
+Categories=Development;GUIDesigner;
 EOF
 
 # docs handled by doc section
@@ -82,6 +81,10 @@ chmod a+x %buildroot%python_sitelibdir/wxglade/{xrc2wxg,wxglade,templates_ui,msg
 %_datadir/wxglade/templates/*
 
 %changelog
+* Sun Aug 05 2018 Anton Midyukov <antohami@altlinux.org> 0.7.2-alt2
+- Cleanup no actual requires
+- fix desktop categories
+
 * Tue Jul 19 2016 Konstantin Artyushkin <akv@altlinux.org> 0.7.2-alt1
 - new version
 
@@ -91,5 +94,3 @@ chmod a+x %buildroot%python_sitelibdir/wxglade/{xrc2wxg,wxglade,templates_ui,msg
 * Fri Jul 25 2014 Denis Silakov <denis.silakov@rosalab.ru> 0.6.8-2
 + Revision: 0083787
 - MassBuild#464: Increase release tag
-
-
