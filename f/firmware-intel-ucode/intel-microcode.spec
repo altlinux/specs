@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20180425
+%define orig_timestamp 20180703
 
 Name: firmware-intel-ucode
-Version: 5
-Release: alt2.%orig_timestamp
+Version: 6
+Release: alt1.%orig_timestamp
 Epoch: 2
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
@@ -49,6 +49,25 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Mon Aug 06 2018 L.A. Kostis <lakostis@altlinux.ru> 2:6-alt1.20180703
+- Sync with Debian 3.20180703.2:
+  + Updated Microcodes:
+      sig 0x000206d6, pf_mask 0x6d, 2018-05-08, rev 0x061d, size 18432
+      sig 0x000206d7, pf_mask 0x6d, 2018-05-08, rev 0x0714, size 19456
+      sig 0x000306e4, pf_mask 0xed, 2018-04-25, rev 0x042d, size 15360
+      sig 0x000306e7, pf_mask 0xed, 2018-04-25, rev 0x0714, size 17408
+      sig 0x000306f2, pf_mask 0x6f, 2018-04-20, rev 0x003d, size 33792
+      sig 0x000306f4, pf_mask 0x80, 2018-04-20, rev 0x0012, size 17408
+      sig 0x000406f1, pf_mask 0xef, 2018-04-19, rev 0xb00002e, size 28672
+      sig 0x00050654, pf_mask 0xb7, 2018-05-15, rev 0x200004d, size 31744
+      sig 0x00050665, pf_mask 0x10, 2018-04-20, rev 0xe00000a, size 18432
+  + First batch of fixes for: Intel SA-00115, CVE-2018-3639, CVE-2018-3640
+  + SSBD support (Spectre-v4 mitigation) and fix Spectre-v3a for:
+      Sandybridge server, Ivy Bridge server, Haswell server, Skylake server,
+      Broadwell server, a few HEDT Core i7/i9 models that are actually gimped
+      server dies.
+  - source: update symlinks to reflect id of the latest release, 20180703
+
 * Mon Jun 18 2018 L.A. Kostis <lakostis@altlinux.ru> 2:5-alt2.20180425
 - Make package %%ix86/x86_64 only.
 
