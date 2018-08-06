@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.2.19
+Version: 1.2.20
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,9 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Aug 06 2018 Michael Shigorin <mike@altlinux.org> 1.2.20-alt1
+- isoboot/isodata; apt-conf feature; dual-seat e801
+
 * Mon Jul 23 2018 Michael Shigorin <mike@altlinux.org> 1.2.19-alt1
 - alt-workstation: x86 (sem@), e2k (me)
 
