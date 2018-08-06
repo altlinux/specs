@@ -1,5 +1,5 @@
 Name: texworks
-Version: 0.6.2
+Version: 0.6.2.0.115.git67caf97
 Release: alt1
 
 Summary: A simple IDE for authoring TeX documents
@@ -11,8 +11,8 @@ Url: http://tug.org/texworks/
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
-BuildPreReq: gcc-c++ libqt4-devel libhunspell-devel libdbus-devel libpoppler-qt4-devel unzip cmake
-Requires: libqt4-core
+BuildRequires: gcc-c++ qt5-base-devel qt5-script-devel qt5-tools-devel-static zlib-devel
+BuildRequires: libhunspell-devel libdbus-devel libpoppler-qt5-devel unzip cmake
 
 Source0: %name-%version.tar
 Source1: texworks-alt-icons.tar
@@ -55,15 +55,11 @@ User manual for TeXworks editor.
 %patch1 -p1
 
 %build
-%cmake
-cd BUILD
+%cmake_insource -DDESIRED_QT_VERSION=5
 %make
-cd ..
 
 %install
-cd BUILD
 %makeinstall_std
-cd ..
 install -m 644 -D texworks-alt-icons/TeXworks-16x16.png %buildroot%_miconsdir/TeXworks.png
 install -m 644 -D texworks-alt-icons/TeXworks-32x32.png %buildroot%_niconsdir/TeXworks.png
 install -m 644 -D texworks-alt-icons/TeXworks-48x48.png %buildroot%_liconsdir/TeXworks.png
@@ -85,6 +81,10 @@ install -m 644 -D %SOURCE2 %buildroot/%_docdir/%name
 %_docdir/%name/TeXworks-manual-*.pdf
 
 %changelog
+* Fri Aug 03 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.2.0.115.git67caf97-alt1
+- Build from last commit.
+- Transfer package to qt5.
+
 * Thu Jan 18 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.2-alt1
 - Build new version.
 
