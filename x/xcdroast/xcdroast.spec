@@ -1,7 +1,7 @@
 Name: xcdroast
-Version: 0.98alpha16
-Release: alt1.qa5
-Serial: 6
+Epoch: 6
+Version: 1.18
+Release: alt1
 
 %define _xcdroastlibdir %_prefix/lib/%name
 
@@ -9,8 +9,7 @@ Summary: A GUI program for burning CDs
 Summary(ru_RU.UTF-8): Графическая программа для создания CD
 License: GPL
 Group: Archiving/Cd burning
-Url: http://www.%name.org
-Packager: Aleksandr Blokhin 'Sass' <sass@altlinux.ru>
+Url: http://www.xcdroast.org
 
 Requires: cdrecord >= 2.0-alt4, mkisofs >= 2.0-alt4, cdda2wav >= 2.0-alt4, readcd
 
@@ -18,20 +17,13 @@ Provides: %name-manual
 Obsoletes: %name-manual < 0.98alpha15
 
 BuildRequires: fontconfig freetype2 glib2-devel libatk-devel libcairo-devel libgtk+2-devel
-BuildRequires: libpango-devel pkg-config gdk-pixbuf-devel gtk+-devel
+BuildRequires: libpango-devel pkg-config gtk+-devel
 
 # http://prdownloads.sourceforge.net/xcdroast/%name-%version.tar.gz
 Source: %name-%version.tar
 Source2: %name-16.xpm
 Source3: %name-32.xpm
 Source4: %name-48.xpm
-
-Patch1: xcdroast-0.98alpha15-rh-linebuffer.patch
-Patch2: xcdroast-0.98alpha15-rh-nogtk1.patch
-
-Patch11: xcdroast-0.98alpha15-alt-non-root-msg.patch
-Patch12: xcdroast-0.98alpha15-alt-ru_po.patch
-Patch13: xcdroast-0.98alpha16-alt-fixes.patch
 
 %description
 Graphical frontend for the CD-recording program cdrecord.
@@ -59,12 +51,7 @@ Features:
 + Интерфейс пользователя более чем на 10 языках.
 
 %prep
-%setup -q
-%patch1 -p1
-%patch2 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
+%setup
 
 # Replace all hard-coded "xcdrgtk" by "%name".
 find -type f -print0 |
@@ -78,11 +65,14 @@ find -type f -print0 |
 
 %build
 %autoreconf
-%configure --enable-gtk2 --disable-nonrootmode
+%configure
 %make_build
 
 %install
-%make install DESTDIR=%buildroot
+%makeinstall_std
+
+chmod 4711 %buildroot%_xcdroastlibdir/bin/xcdrwrap
+
 install -p -m644 -D %SOURCE2 %buildroot%_miconsdir/%name.xpm
 install -p -m644 -D %SOURCE3 %buildroot%_niconsdir/%name.xpm
 install -p -m644 -D %SOURCE4 %buildroot%_liconsdir/%name.xpm
@@ -99,9 +89,8 @@ install -p -m644 contrib/{roast-dinner.sh,*.pl} %buildroot%_datadir/%name/contri
 install -d %buildroot/etc
 touch %buildroot/etc/xcdroast.conf
 
-
-mkdir -p $RPM_BUILD_ROOT%_desktopdir
-cat > $RPM_BUILD_ROOT%_desktopdir/%{name}.desktop <<EOF
+mkdir -p %buildroot%_desktopdir
+cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
@@ -138,9 +127,10 @@ mkdir -p %buildroot%_xcdroastlibdir/{lang,xpms}
 %_datadir/%name/contrib/*
 %_man1dir/%name.1*
 
-#%doc README doc/DOCUMENTATION doc/README.AIX doc/README.HPUX doc/README.nonroot doc/README.setup-bulgarian.html doc/FAQ doc/README.atapi doc/README.MacOSX doc/README.ProDVD doc/TRANSLATION.HOWTO
-
 %changelog
+* Mon Aug 06 2018 Grigory Ustinov <grenka@altlinux.org> 6:1.18-alt1
+- Build new version (Closes: #26958).
+
 * Thu Jan 07 2016 Andrey Cherepanov <cas@altlinux.org> 6:0.98alpha16-alt1.qa5
 - Do not use strict extension for compressed man page
 
