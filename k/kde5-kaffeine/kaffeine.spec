@@ -2,7 +2,7 @@
 %define rname kaffeine
 Name: kde5-%rname
 Version: 2.0.15
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Video
@@ -75,6 +75,9 @@ mv .gear/po ./
 %_K5xdgapp/org.kde.kaffeine.desktop
 
 %changelog
+* Mon Aug 06 2018 Sergey V Turchin <zerg@altlinux.org> 2.0.15-alt2%ubt
+- update russian translation
+
 * Wed Jul 11 2018 Sergey V Turchin <zerg@altlinux.org> 2.0.15-alt1%ubt
 - new version
 
