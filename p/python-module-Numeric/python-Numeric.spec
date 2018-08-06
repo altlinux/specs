@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 %define name numeric
 %define version 24.2
-%define release alt6
+%define release alt7
 %setup_python_module Numeric
 
 Summary: Numerical Extension to Python
@@ -11,7 +13,6 @@ Source0: Numeric-%version.tar.gz
 Source1: numpy.pdf.bz2
 License: Python License
 Group: Development/Python
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Prefix: _prefix
 Provides: python-module-Numeric 
@@ -98,6 +99,10 @@ env CFLAGS="$RPM_OPT_FLAGS" python setup.py build
 %install
 %python_install --optimize=2 --record=INSTALLED_FILES
 
+cp INSTALLED_FILES INSTALLED_FILES_ORIG
+cat INSTALLED_FILES_ORIG | while read file ; do if [ -n "$file" ] ; then dirname $file ; fi ; done | sort -u | \
+	while read dir ; do if [ "$dir" != "%python_sitelibdir" ] ; then echo "%dir $dir" >> INSTALLED_FILES ; fi ; done
+
 sed -i 's|.*arrayfns\.so$||' INSTALLED_FILES
 
 #find $RPM_BUILD_ROOT -type f | sed -e "s|$RPM_BUILD_ROOT||g" >>INSTALLED_FILES
@@ -113,16 +118,13 @@ install -D -m 755 Demo/*py $RPM_BUILD_ROOT/%python_sitelibdir/Numeric/tools/nume
 install -D -m 644 Demo/NumTut/* $RPM_BUILD_ROOT/%python_sitelibdir/Numeric/tools/numeric/NumTut 
 install -D -m 755 Test/*test.py $RPM_BUILD_ROOT/%python_sitelibdir/Numeric/tools/numeric
 
+find %buildroot%python_sitelibdir -name '*arrayfns.so' -delete
+
 %add_python_lib_path  %_libdir/python%_python_version/site-packages/Numeric
 
 %files -f INSTALLED_FILES
 %config %_sysconfdir/buildreqs/files/ignore.d/%name
 %doc MANIFEST *README PKG-INFO
-%dir %python_sitelibdir/Numeric
-%dir %python_sitelibdir/Numeric/FFT
-%dir %python_sitelibdir/Numeric/MA
-%dir %python_sitelibdir/Numeric/Numeric_headers
-%dir %python_sitelibdir/Numeric/RNG
 %exclude %python_includedir/Numeric
 
 %files devel
@@ -134,6 +136,9 @@ install -D -m 755 Test/*test.py $RPM_BUILD_ROOT/%python_sitelibdir/Numeric/tools
 %python_sitelibdir/Numeric/tools/numeric
 
 %changelog
+* Mon Aug 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 24.2-alt7
+- Fixed build.
+
 * Mon Feb 29 2016 Denis Medvedev <nbr@altlinux.org> 24.2-alt6
 - Moved demo stuff to python_sitelibdir.
 
