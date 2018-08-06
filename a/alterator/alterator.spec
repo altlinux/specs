@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.2
-Release: alt2
+Release: alt3
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -167,6 +167,10 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Mon Aug 06 2018 Paul Wolneykien <manowar@altlinux.org> 5.2-alt3
+- Use late signal-handling initialization to workaround some new
+  Guile issues.
+
 * Wed Jul 18 2018 Michael Shigorin <mike@altlinux.org> 5.2-alt2
 - support e2kv4 through %e2k macro (grenka@).
 
