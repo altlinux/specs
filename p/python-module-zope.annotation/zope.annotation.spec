@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.6.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Object annotation mechanism
 License: ZPLv2.1
@@ -113,11 +113,11 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 export PIP_INDEX_URL=http://host.invalid./
 
 export PYTHONPATH=%python_sitelibdir_noarch:%python_sitelibdir:src
-TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py27 -v
+TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e py%{python_version_nodots python} -v
 
 pushd ../python3
 export PYTHONPATH=%python3_sitelibdir_noarch:%python3_sitelibdir:src
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py35 -v
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 popd
 
 %files
@@ -139,6 +139,9 @@ popd
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Mon Aug 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.0-alt2%ubt
+- Fixed tests.
+
 * Thu Feb 15 2018 Stanislav Levin <slev@altlinux.org> 4.6.0-alt1%ubt
 - 4.4.2 -> 4.6.0
 
