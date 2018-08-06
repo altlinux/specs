@@ -11,14 +11,11 @@ License:	PHP Licence
 Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
 
-Patch0:		php-mysql-force-libmysqlclient_r.patch
-
 BuildRequires(pre): rpm-build-php5
 BuildRequires:	php5-devel = %php5_version
 Conflicts: php5-mysqlnd-mysql
 
-# Automatically added by buildreq on Fri Jul 01 2005
-BuildRequires: libMySQL-devel
+BuildRequires: libmysqlclient20-devel
 
 %description
 The %name package includes a dynamic shared object (DSO) that adds MySQL
@@ -30,8 +27,6 @@ install this package in addition to the main php package.
 %prep
 %setup -T -c
 cp -pr %php5_extsrcdir/%php5_extension/* .
-
-%patch0 -p1
 
 %build
 phpize

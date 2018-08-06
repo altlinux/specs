@@ -10,6 +10,7 @@ License:	PHP Licence
 
 Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
+Patch0: 	php5-intl-5.6.37.20181907-icu6.patch
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires:	php5-devel = %php5_version
@@ -52,6 +53,7 @@ match(lookup and filter) locale identifiers.
 %prep
 %setup -T -c
 cp -pr %php5_extsrcdir/%php5_extension/* .
+%patch0 -p1
 
 %build
 phpize

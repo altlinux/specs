@@ -13,7 +13,6 @@ URL:		http://www.php.net/manual/en/ref.mysqli.php
 #Source0:	standart PHP module
 Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
-Patch0: php5-force_libmysqlclient_r.patch
 Conflicts: php5-mysqlnd-mysqli
 
 BuildRequires(pre): rpm-build-php5 
@@ -26,7 +25,6 @@ MySQLi (improved) - new MySQL interface for PHP 5 and MySQL 4.1.3+
 %prep
 %setup -T -c
 cp -pr -- %php5_extsrcdir/%php5_extension/* .
-%patch0 -p0
 
 %build
 phpize
