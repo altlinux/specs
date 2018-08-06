@@ -19,7 +19,7 @@
 %def_enable gigacage
 
 Name: libwebkitgtk4
-Version: 2.20.3
+Version: 2.20.4
 Release: alt2
 
 Summary: Web browser engine
@@ -33,11 +33,8 @@ Source1: webkit2gtk.env
 Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav
 Requires: hyphen-en hyphen-ru
 
-BuildPreReq: rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses rpm-build-gir
 BuildRequires: /proc gcc-c++ cmake ccache libicu-devel >= 5.6.1 bison perl-Switch perl-JSON-PP zlib-devel
-%ifarch x86_64
-BuildRequires: llvm-devel >= 3.7
-%endif
 BuildRequires: chrpath
 BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel
@@ -304,6 +301,12 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Mon Aug 06 2018 Yuri N. Sedunov <aris@altlinux.org> 2.20.4-alt2
+- 2.20.4 (fixed CVE-2018-4261, CVE-2018-4262, CVE-2018-4263,
+  CVE-2018-4264, CVE-2018-4265, CVE-2018-4266, CVE-2018-4267,
+  CVE-2018-4270, CVE-2018-4272, CVE-2018-4273, CVE-2018-4278,
+  CVE-2018-4284)
+
 * Wed Jul 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.20.3-alt2
 - rebuilt against libicu*.so.62
 
