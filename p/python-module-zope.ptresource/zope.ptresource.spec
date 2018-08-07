@@ -1,41 +1,42 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20150613.1.1.1
+%define _unpackaged_files_terminate_build 1
+
 %define oname zope.ptresource
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.1
-#Release: alt1.dev0.git20150613.1.1
+Version: 4.1.0
+Release: alt1
 Summary: Page template resource plugin for zope.browserresource
 License: ZPL
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.ptresource/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/zope.ptresource.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-zope.browserresource
-#BuildPreReq: python-module-zope.pagetemplate
-#BuildPreReq: python-module-zope.publisher python-module-zope.security
-#BuildPreReq: python-module-zope.testing
+Patch1: %oname-%version-alt-tests.patch
+
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-tox
+BuildRequires: python-module-zope.browserresource
+BuildRequires: python-module-zope.pagetemplate
+BuildRequires: python-module-zope.publisher python-module-zope.security
+BuildRequires: python-module-zope.testing
+BuildRequires: python-module-zope.testrunner
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-zope.browserresource
-#BuildPreReq: python3-module-zope.pagetemplate
-#BuildPreReq: python3-module-zope.publisher python3-module-zope.security
-#BuildPreReq: python3-module-zope.testing
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-zope.browserresource
+BuildRequires: python3-module-zope.pagetemplate
+BuildRequires: python3-module-zope.publisher python3-module-zope.security
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
 %endif
 
 %py_requires zope.browserresource zope.interface zope.pagetemplate
 %py_requires zope.publisher zope.security
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-RestrictedPython python-module-persistent python-module-pluggy python-module-py python-module-pytz python-module-setuptools python-module-six python-module-transaction python-module-zope python-module-zope.browser python-module-zope.component python-module-zope.configuration python-module-zope.contenttype python-module-zope.event python-module-zope.exceptions python-module-zope.hookable python-module-zope.i18n python-module-zope.i18nmessageid python-module-zope.interface python-module-zope.location python-module-zope.proxy python-module-zope.publisher python-module-zope.schema python-module-zope.security python-module-zope.tal python-module-zope.tales python-module-zope.traversing python-module-zope.untrustedpython python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python3 python3-base python3-module-pytz python3-module-setuptools python3-module-transaction python3-module-zope python3-module-zope.browser python3-module-zope.component python3-module-zope.configuration python3-module-zope.contenttype python3-module-zope.event python3-module-zope.exceptions python3-module-zope.i18n python3-module-zope.i18nmessageid python3-module-zope.interface python3-module-zope.location python3-module-zope.proxy python3-module-zope.publisher python3-module-zope.schema python3-module-zope.security python3-module-zope.tal python3-module-zope.tales python3-module-zope.traversing
-BuildRequires: python-module-pytest python-module-zope.browserresource python-module-zope.pagetemplate python-module-zope.testing python3-module-pytest python3-module-zope.browserresource python3-module-zope.pagetemplate python3-module-zope.testing rpm-build-python3 time
 
 %description
 This package is at present not reusable without depending on a large
@@ -49,6 +50,7 @@ client.
 The resource factory class is registered for "pt", "zpt" and "html" file
 extensions in package's configure.zcml file.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Page template resource plugin for zope.browserresource
 Group: Development/Python3
@@ -86,6 +88,7 @@ The resource factory class is registered for "pt", "zpt" and "html" file
 extensions in package's configure.zcml file.
 
 This package contains tests for zope.ptresource.
+%endif
 
 %package tests
 Summary: Tests for zope.ptresource
@@ -109,6 +112,7 @@ This package contains tests for zope.ptresource.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -143,13 +147,15 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-py.test -vv src/zope/ptresource/tests.py
-#if_with python3
-%if 0
+export PIP_INDEX_URL=http://host.invalid./
+
+export PYTHONPATH=%python_sitelibdir_noarch:%python_sitelibdir:src
+TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e py%{python_version_nodots python} -v
+
 pushd ../python3
-py.test-%_python3_version -vv src/zope/ptresource/tests.py
+export PYTHONPATH=%python3_sitelibdir_noarch:%python3_sitelibdir:src
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 popd
-%endif
 
 %files
 %doc *.txt *.rst
@@ -174,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.0-alt1
+- Updated to upstream version 4.1.0.
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.1-alt1.dev0.git20150613.1.1.1
 - (AUTO) subst_x86_64.
 
