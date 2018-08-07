@@ -4,7 +4,7 @@
 
 Name: gimp
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: The GNU Image Manipulation Program
 License: GPLv3, LGPL
@@ -114,6 +114,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Tue Aug 07 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.10.4-alt2
+- update russian translation
+
 * Thu Jul 05 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.10.4-alt1
 - 2.10.4
 
