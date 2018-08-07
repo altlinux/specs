@@ -1,6 +1,6 @@
 Name: qucs
 Version: 0.0.19
-Release: alt1
+Release: alt2
 Summary: Circuit simulator
 License: GPL
 Group: Education
@@ -59,7 +59,7 @@ tar -xjf %SOURCE2 -C qucs
 #patch1 -p2
 
 %build
-#autoreconf
+./bootstrap
 %configure --disable-doc
 %make_build RCC=rcc-qt4
 
@@ -116,6 +116,9 @@ chrpath -d %buildroot%_bindir/qucsator
 %_includedir/qucs-core
 
 %changelog
+* Tue Aug 07 2018 Vladislav Zavjalov <slazav@altlinux.org> 0.0.19-alt2
+- github/master snapshot 2018-08-07 (Closes: 35217)
+
 * Sun Aug 06 2017 Anton Midyukov <antohami@altlinux.org> 0.0.19-alt1
 - New version 0.0.19
 
