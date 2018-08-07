@@ -1,9 +1,10 @@
 %def_enable video
 %def_enable webready
+%def_disable check
 
 Name: exiv2
 Version: 0.26
-Release: alt1
+Release: alt2
 
 Summary: Command line tool to access EXIF data in image files
 License: GPLv2+
@@ -11,8 +12,30 @@ Group: Graphics
 Url: http://www.exiv2.org
 
 #VCS: https://github.com/Exiv2/exiv2.git
-Source: %url/builds/%name-%version-trunk.tar.gz
+Source: https://github.com/Exiv2/%name/archive/%name-%version.tar.gz
 Patch: %name-0.23-alt-lfs.patch
+
+# fc
+## upstream patches (lookaside cache)
+Patch6:  0006-1296-Fix-submitted.patch
+
+# Security fixes
+Patch10: exiv2-CVE-2017-17723.patch
+Patch11: exiv2-wrong-brackets.patch
+Patch12: exiv2-CVE-2017-11683.patch
+Patch13: exiv2-CVE-2017-14860.patch
+Patch14: exiv2-CVE-2017-14864-CVE-2017-14862-CVE-2017-14859.patch
+Patch15: exiv2-CVE-2017-17725.patch
+Patch16: exiv2-CVE-2017-17669.patch
+Patch17: exiv2-additional-security-fixes.patch
+Patch18: exiv2-CVE-2018-10958.patch
+Patch19: exiv2-CVE-2018-10998.patch
+Patch20: exiv2-CVE-2018-11531.patch
+Patch21: exiv2-CVE-2018-12264-CVE-2018-12265.patch
+Patch22: exiv2-CVE-2018-14046.patch
+Patch23: exiv2-CVE-2018-5772.patch
+Patch24: exiv2-CVE-2018-8976.patch
+Patch25: exiv2-CVE-2018-8977.patch
 
 Requires: lib%name = %version-%release
 
@@ -43,8 +66,26 @@ This package contains all files which one needs to compile programs using the
 exiv2 library.
 
 %prep
-%setup -n %name-trunk
+%setup -n %name-%version
 %patch -b .lfs
+%patch6 -p1
+
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+%patch25 -p1
 
 %build
 %make -C config -f config.make
@@ -63,6 +104,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %makeinstall_std
 %find_lang exiv2
 
+%check
+%make check
+
 %files
 %_bindir/%name
 %_man1dir/*
@@ -76,7 +120,17 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_includedir/%name/
 %_pkgconfigdir/%name.pc
 
+
 %changelog
+* Tue Aug 07 2018 Yuri N. Sedunov <aris@altlinux.org> 0.26-alt2
+- applied set of fc/upstream patches (fixed CVE-2017-11683,
+  CVE-2017-14859, CVE-2017-14860, CVE-2017-14862,
+  CVE-2017-14864, CVE-2017-17669, CVE-2017-17723,
+  CVE-2017-17725, CVE-2018-10958, CVE-2018-10998,
+  CVE-2018-11531, CVE-2018-12264, CVE-2018-12265,
+  CVE-2018-14046, CVE-2018-5772, CVE-2018-8976,
+  CVE-2018-8977)
+
 * Sun May 07 2017 Yuri N. Sedunov <aris@altlinux.org> 0.26-alt1
 - 0.26
 
