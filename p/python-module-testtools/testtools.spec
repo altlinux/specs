@@ -1,28 +1,32 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname testtools
 
-%def_disable check
-
 Name: python-module-%oname
-Version: 1.8.0
-Release: alt3
-
+Version: 2.3.0
+Release: alt1
 Summary: extensions to the Python standard library's unit testing framework
 Group: Development/Python
 License: MIT
 Url: http://pypi.python.org/pypi/testtools
 BuildArch: noarch
 
+# https://github.com/testing-cabal/testtools.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-linecache2 python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-traceback2 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-linecache2 python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools python3-module-six python3-module-traceback2
-BuildRequires: git-core python-module-alabaster python-module-docutils
+Patch1: %oname-1.8.0-fedora-py3.patch
+
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-alabaster python-module-docutils
 BuildRequires: python-module-extras python-module-html5lib python-module-mimeparse
 BuildRequires: python-module-objects.inv python-module-pbr python-module-pytest
-BuildRequires: python-module-unittest2 time
-BuildPreReq: python3-module-extras python3-module-html5lib python3-module-mimeparse
-BuildPreReq: python3-module-pbr python3-module-pytest python3-module-unittest2
+BuildRequires: python-module-unittest2
+BuildRequires: python2.7(testscenarios) python2.7(fixtures) python-module-twisted-core-test
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-extras python3-module-html5lib python3-module-mimeparse
+BuildRequires: python3-module-pbr python3-module-pytest python3-module-unittest2
+BuildRequires: python3(testscenarios) python3(fixtures) python3-module-twisted-core-test
 
 %py_requires mimeparse traceback2
 
@@ -70,22 +74,18 @@ sources.
 %prep
 %setup
 
-sed -i 's|python-mimeparse|mimeparse|' setup.py requirements.txt
+cp -a . ../python3
 
-git config --global user.email "real at altlinux.org"
-git config --global user.name "REAL"
-git init-db
-git add . -A
-git commit -a -m "%version"
-git tag -m "%version" %version
+pushd ../python3
+%patch1 -p1
+popd
 
 %prepare_sphinx .
 ln -s ../objects.inv doc/
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
+export PBR_VERSION=%version
+
 %python_build
 
 pushd ../python3
@@ -97,6 +97,8 @@ export PYTHONPATH=$PWD
 %make -C doc html
 
 %install
+export PBR_VERSION=%version
+
 %python_install
 
 pushd ../python3
@@ -106,10 +108,12 @@ popd
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-python setup.py test
+export PBR_VERSION=%version
+
+%make check
 
 pushd ../python3
-python3 setup.py test
+%make check PYTHON=python3
 popd
 
 %files
@@ -129,6 +133,9 @@ popd
 
 
 %changelog
+* Mon Aug 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt1
+- Updated to upstream version 2.3.0.
+
 * Mon May 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.8.0-alt3
 - rebuild with python3.6
 
