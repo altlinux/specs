@@ -12,8 +12,6 @@ License:	%asl 2.0
 Group:		System/Servers
 URL:		http://pecl.php.net/package/xhprof
 
-Packager:	Nikolay A. Fetisov <naf@altlinux.ru>
-
 Source0:	%real_name-%real_version.tar
 Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
@@ -24,6 +22,7 @@ BuildRequires(pre): rpm-build-php5 rpm-build-licenses rpm-macros-webserver-commo
 # optimized out: gnu-config libcloog-isl4 php5-libs
 BuildRequires: glibc-devel-static
 BuildRequires: php5-devel = %php5_version
+ExclusiveArch: %ix86 x86_64
 
 %description
 XHProf is a function-level hierarchical profiler for PHP and has a
