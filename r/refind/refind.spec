@@ -1,6 +1,6 @@
 Name: refind
-Version: 0.11.2
-Release: alt2%ubt
+Version: 0.11.3
+Release: alt1%ubt
 
 Summary: EFI boot manager software
 License: GPLv3
@@ -87,6 +87,9 @@ install -pDm644 %SOURCE4 %buildroot%refind_data/icons/os_altlinux.png
 %refind_data
 
 %changelog
+* Tue Aug 07 2018 Anton Farygin <rider@altlinux.ru> 0.11.3-alt1%ubt
+- 0.11.3
+
 * Wed Jun 20 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.11.2-alt2%ubt
 - include both ia32 and x64 EFI binaries into single x86_64 package
 
