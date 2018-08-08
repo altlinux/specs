@@ -1,6 +1,6 @@
 
 Name: kf5-rpm-build
-Version: 5.11.0
+Version: 5.12.0
 Release: alt1%ubt
 
 Group: Development/KDE and QT
@@ -40,6 +40,9 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 %_bindir/rpm-build-kf5-*
 
 %changelog
+* Wed Aug 08 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1%ubt
+- don't remove appdata by default
+
 * Thu Nov 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.0-alt1%ubt
 - add new macros:
   _K5if_ver_eq _K5if_ver_not_gt _K5if_ver_not_gteq _K5if_ver_not_lt _K5if_ver_not_lteq _K5if_ver_not_eq
