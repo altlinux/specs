@@ -17,7 +17,7 @@
 %endif
 
 Name: NetworkManager-applet-gtk
-Version: 1.8.14
+Version: 1.8.16
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -48,6 +48,7 @@ BuildRequires: libgudev-devel
 BuildRequires: libmm-glib-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsecret-devel
+BuildRequires: mobile-broadband-provider-info
 BuildRequires: gtk-doc
 %{?_with_appindicator:BuildRequires: libappindicator-gtk3-devel}
 %{?_with_team:BuildRequires: libjansson-devel}
@@ -186,6 +187,7 @@ This package contains development documentation for libnma-devel-doc.
 %else
 	--without-libnm-gtk \
 %endif
+	--enable-mobile-broadband-provider-info \
 	--enable-gtk-doc \
 	--enable-more-warnings=%more_warnings
 
@@ -247,6 +249,10 @@ make check
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Wed Aug 08 2018 Mikhail Efremov <sem@altlinux.org> 1.8.16-alt1
+- Add mobile-broadband-provider-info to BR.
+- Updated to 1.8.16.
+
 * Mon Jul 16 2018 Mikhail Efremov <sem@altlinux.org> 1.8.14-alt1
 - Drop "Don't allow to create new connection for missing device plugins"
   patch (closes: #35139).
