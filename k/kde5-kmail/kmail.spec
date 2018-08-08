@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 18.04.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Networking/Mail
@@ -126,6 +126,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkmailprivate.so.*
 
 %changelog
+* Tue Aug 07 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2%ubt
+- update russian translation
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 
