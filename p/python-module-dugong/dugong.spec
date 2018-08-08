@@ -5,8 +5,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.7.1
-Release: alt1.1
+Version: 3.7.3
+Release: alt1
 Summary: Provides an API for communicating with HTTP 1.1 servers
 License: PSFLv2
 Group: Development/Python
@@ -108,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.7.3-alt1
+- Updated to upstream version 3.7.3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.7.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
