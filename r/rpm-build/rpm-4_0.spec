@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt115
+Release: alt116
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -46,7 +46,6 @@ Requires: mktemp >= 1:1.3.1
 Requires: patch >= 2.5
 Requires: tar >= 0:1.13.22-alt1
 Requires: %_bindir/subst
-Requires: alternatives >= 0.3.2
 Requires: elfutils >= 0.143-alt1
 Requires: info-install >= 4.11
 Requires: pkgconfig-reqprov pkgconfig-recursion
@@ -512,6 +511,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %endif #with python
 
 %changelog
+* Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt116
+- Removed alternatives from requirements.
+
 * Thu Jul 26 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt115
 - rpmrc: added mips64* and mips*r6 support.
 - verify-elf: disabled stack verification and elflint on mips* (iv@).

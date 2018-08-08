@@ -2,7 +2,7 @@
 
 Name: binutils
 Version: 2.30.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -15,7 +15,8 @@ Source: %name-%version.tar
 Source1: bfd.h
 Source2: gcc.sh
 Source3: g++.sh
-Source4: output-format.sed
+Source4: ld.sh
+Source5: output-format.sed
 
 Patch: binutils-2_30-branch.patch
 
@@ -33,12 +34,18 @@ Patch0011: 0011-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
 Patch0012: 0012-bfd-elflink.c-bfd_elf_final_link-check-all-objects-f.patch
 Patch0013: 0013-pr22269-1.c-disable-Wreturn-type-warning.patch
 
-PreReq: alternatives >= 0:0.4
+# List of architectures worthy of running the test suite by default.
+%define check_arches x86_64 %ix86
+%ifarch %check_arches
+%def_with check
+%else
+%def_without check
+%endif
+
 Conflicts: libbfd
 # due to c++filt
 Conflicts: gcc-common < 0:1.2.1-alt4
 
-BuildRequires: alternatives >= 0:0.4
 BuildRequires: flex makeinfo perl-Pod-Parser zlib-devel
 BuildRequires: gcc-c++ libstdc++-devel-static
 BuildRequires: makeinfo
@@ -146,13 +153,9 @@ done
 %install
 %makeinstall_std tooldir=%_prefix install-info
 
-# Add alternatives files
-install -d %buildroot%_altdir
-echo "%_bindir/ld	%_bindir/ld.bfd	50" >  %buildroot%_altdir/ld-bfd
-echo "%_bindir/ld	%_bindir/ld.gold	10" >  %buildroot%_altdir/ld-gold
-
-# Remove /usr/bin/ld to avoid conflicts with alternatives
-rm %buildroot%_bindir/ld
+# Install ld.default and ld wrapper.
+ln -snf ld.bfd %buildroot%_bindir/ld.default
+install -pm755 %_sourcedir/ld.sh %buildroot%_bindir/ld
 
 # Install PIC version of the libiberty.a
 install -pm644 libiberty/pic/libiberty.a %buildroot%_libdir/
@@ -161,9 +164,6 @@ install -pm644 libiberty/pic/libiberty.a %buildroot%_libdir/
 find %buildroot%_man1dir -type f |while read f; do
 	n="${f##*/}"
 	n="${n%%.1*}"
-
-	# ld uses alternatives
-	[ "$n" != "ld" ] || continue
 
 	[ -f "%buildroot%_bindir/$n" ] || rm -v "$f"
 done
@@ -266,7 +266,6 @@ XFAIL_TESTS="$XFAIL_TESTS icf_safe_so_test.sh"
 
 %files -f files.lst
 %_bindir/*
-%_altdir/ld-*
 %_prefix/lib/ldscripts/
 %_mandir/man?/*
 %_libdir/*-*.so
@@ -278,6 +277,10 @@ XFAIL_TESTS="$XFAIL_TESTS icf_safe_so_test.sh"
 %binutils_sourcedir
 
 %changelog
+* Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 1:2.30.0-alt2
+- Dropped ld.bfd/ld.gold alternatives in favour of ld wrapper setup:
+  use LD_FLAVOUR=bfd/gold to control the flavour of ld.
+
 * Mon May 28 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.30.0-alt1
 - Updated to 2.30.0 20180528.
 - Packaged binutils sources as separate package.
