@@ -1,9 +1,9 @@
 Name: automake-common
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 
-Summary: Common files for different versions of automake
-License: GPL
+Summary: Wrapper and common files for different versions of the GNU Automake
+License: GPLv2+
 Group: Development/Other
 BuildArch: noarch
 
@@ -15,21 +15,26 @@ Conflicts: automake_1.4 < 1:1.4-alt7.p5
 Conflicts: automake < 1:1.4-alt7.p5
 
 %description
-This package contains files shared by various versions of GNU automake.
+This package contains files that provide co-existence of various
+versions of the GNU Automake.
 
 %install
-mkdir -p %buildroot{%_bindir,%_datadir/aclocal}
-install -pm755 %_sourcedir/automake_wrapper %buildroot%_bindir/
+install -pD -m644 %_sourcedir/README \
+	%buildroot%_datadir/aclocal/README
+install -pD -m755 %_sourcedir/automake_wrapper \
+	%buildroot%_bindir/automake_wrapper
 for n in aclocal automake; do
 	ln -s automake_wrapper %buildroot%_bindir/$n
 done
-install -pm644 %_sourcedir/README %buildroot%_datadir/aclocal/
 
 %files
 %_bindir/*
-%_datadir/aclocal
+%_datadir/aclocal/
 
 %changelog
+* Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 0.4.1-alt1
+- Cleaned up automake_wrapper.
+
 * Mon Oct 28 2013 Dmitry V. Levin <ldv@altlinux.org> 0.4-alt1
 - Packaged /usr/share/aclocal/README.
 
