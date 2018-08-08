@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname guessit
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.1.4
-Release: alt1.1
+Version: 3.0.0
+Release: alt1
 Summary: GuessIt - a library for guessing information from video files
 License: LGPLv3
 Group: Development/Python
@@ -25,7 +27,6 @@ BuildRequires: python-module-pbr python-module-pip pylint
 BuildRequires: python-module-alabaster python-module-chardet python-module-html5lib python-module-ndg-httpsclient
 BuildRequires: python-module-objects.inv python-module-unittest2
 BuildRequires: python-module-pytest-runner python2.7(rebulk) python2.7(pytest_capturelog) python2.7(pytest_benchmark)
-BuildRequires: python2.7(guessit)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -135,6 +136,8 @@ This package contains documentation for %oname.
 # TODO: consider removing following line on next release after 2.1.4
 sed -i -e '/mimetype:/d' guessit/test/*.yml
 
+sed -i -e "s:@VERSION@:%version:g" docs/conf.py
+
 %if_with python3
 cp -fR . ../python3
 %endif
@@ -216,6 +219,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt1
+- Updated to upstream version 3.0.0.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.1.4-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
