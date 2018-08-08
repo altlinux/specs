@@ -2,13 +2,13 @@
 %define sname mojo-pg
 
 Name: perl-Mojo-Pg
-Version: 4.08
+Version: 4.09
 Release: alt1
 Summary: Mojolicious PostgreSQL
 License: Artistic-2.0
 Group: Development/Perl
 Url: http://search.cpan.org/dist/Mojo-Pg/
-Source: %sname-%version.tar
+Source0: http://www.cpan.org/authors/id/S/SR/SRI/Mojo-Pg-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: perl-devel
@@ -30,7 +30,7 @@ schema with migrations and build scalable real-time web applications with
 the publish/subscribe pattern.
 
 %prep
-%setup -n %sname-%version
+%setup -q -n Mojo-Pg-%{version}
 
 %build
 %perl_vendor_build
@@ -39,10 +39,14 @@ the publish/subscribe pattern.
 %perl_vendor_install
 
 %files
+%doc Changes LICENSE README.md examples
 %perl_vendorlib/Mojo*
 %perl_vendorlib/SQL/Abstract/Pg.pm
 %doc Changes LICENSE README.md
 
 %changelog
+* Wed Aug 08 2018 Igor Vlasenko <viy@altlinux.ru> 4.09-alt1
+- automated CPAN update
+
 * Tue Jun 19 2018 Alexandr Antonov <aas@altlinux.org> 4.08-alt1
 - initial build for ALT
