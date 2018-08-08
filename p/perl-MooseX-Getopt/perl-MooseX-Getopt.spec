@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: perl(Module/Build/Tiny.pm) perl(Module/Build.pm) perl(Module/Build.pm)
+BuildRequires: perl(Module/Build/Tiny.pm) perl(Module/Build.pm) perl(Module/Build.pm) perl(Test/Needs.pm)
 %define dist MooseX-Getopt
 Name: perl-%dist
-Version: 0.71
+Version: 0.72
 Release: alt1
 
 Summary: A Moose role for processing command line options
@@ -10,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Getopt-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ This is a role which provides an alternate constructor for creating
 objects using parameters passed in from the command line.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,10 +31,13 @@ objects using parameters passed in from the command line.
 %perl_vendor_install
 
 %files
-%doc README
+%doc README CONTRIBUTING Changes
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Wed Aug 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.72-alt1
+- automated CPAN update
+
 * Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.71-alt1
 - automated CPAN update
 
