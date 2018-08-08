@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Filter
 Name: perl-%dist
-Version: 1.58
-Release: alt1.1
+Version: 1.59
+Release: alt1
 
 Summary: Source Filters
 License: GPL or Artistic
@@ -38,6 +38,9 @@ mv t/pod.t t/pod.t.orig
 %perl_vendor_autolib/Filter
 
 %changelog
+* Wed Aug 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.59-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.58-alt1.1
 - rebuild with new perl 5.26.1
 
