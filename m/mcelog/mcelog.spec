@@ -1,18 +1,19 @@
 Name: mcelog
-Version: 138
-Release: alt1
+Version: 159
+Release: alt1%ubt
 
 Summary: Tool to translate x86_64 CPU Machine Check Exception data
 License: GPLv2
 Group: System/Kernel and hardware
 
 Url: https://github.com/andikleen/mcelog.git
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: mcelog.conf
 Source2: mcelog.init
 Source3: mcelog.service
 Source4: mcelog.cron
 Source5: mcelog.logrotate
+BuildRequires(pre): rpm-build-ubt
 
 ExclusiveArch: x86_64 %ix86
 
@@ -21,7 +22,6 @@ ExclusiveArch: x86_64 %ix86
 %package cron
 Summary: Optional cronjob for mcelog
 Group: System/Kernel and hardware
-BuildArch: noarch
 
 %description
 mcelog is a utility that collects and decodes Machine Check Exception
@@ -53,7 +53,7 @@ install -pDm600 %SOURCE5 %buildroot%_sysconfdir/logrotate.d/mcelog
 install -pDm644 mcelog.8 %buildroot%_man8dir/mcelog.8
 
 %files
-%doc README CHANGES
+%doc README.md
 %_sbindir/mcelog
 %dir %_sysconfdir/mcelog
 %config(noreplace) %_sysconfdir/mcelog/mcelog.conf
@@ -67,6 +67,10 @@ install -pDm644 mcelog.8 %buildroot%_man8dir/mcelog.8
 %_sysconfdir/logrotate.d/mcelog
 
 %changelog
+* Wed Aug 08 2018 Anton Farygin <rider@altlinux.ru> 159-alt1%ubt
+- version up to 159
+- built from upstream git
+
 * Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 138-alt1
 - Autobuild version bump to 138
 
