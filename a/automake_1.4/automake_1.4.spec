@@ -6,7 +6,7 @@
 Name: %realname%dialect
 %define patchlevel p6
 Version: %realver%patchlevel
-Release: alt7
+Release: alt8
 Epoch: 1
 
 %add_findreq_skiplist %_datadir/%realname%suff/config.guess
@@ -33,12 +33,9 @@ Patch5: automake-1.4-alt-texinfo.patch
 Patch6: automake-1.4-alt-aclocal_libtool.patch
 Patch7: 0001-automake.in-finish_languages-Use-not-do-.-From-Pavel.patch
 
-BuildRequires: makeinfo
+PreReq: automake-common
 
-Provides: %realname = %epoch:%realver-%{release}0.%patchlevel
-Provides: aclocal(libtool)
-Obsoletes: %realname
-PreReq: automake-common, alternatives >= 0.4
+BuildRequires: makeinfo
 
 %description
 Automake is a tool for automatically generating Makefiles compliant with the
@@ -71,18 +68,9 @@ install -p -m644 %realname%suff.info %buildroot%_infodir/
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 echo %realname >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 
-mkdir -p %buildroot%_altdir
-cat <<EOF >%buildroot%_altdir/%name
-%_bindir/%realname-default	%_bindir/%realname%suff	20
-%_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%realname%suff
-%_datadir/%realname	%_datadir/%realname%suff	%_bindir/%realname%suff
-%_infodir/%realname.info.xz	%_infodir/%realname%suff.info.xz	%_bindir/%realname%suff
-EOF
-
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
 %config %_sysconfdir/buildreqs/files/ignore.d/*
-%_altdir/%name
 %_bindir/*%suff
 %_datadir/aclocal%suff
 %_datadir/%realname%suff
@@ -90,6 +78,9 @@ EOF
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.4p6-alt8
+- Dropped alternatives in favour of automake-defaults setup.
+
 * Mon Dec 07 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.4p6-alt7
 - Added BR: makeinfo.
 - Switched to compress_method xz.

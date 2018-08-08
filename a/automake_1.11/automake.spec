@@ -2,11 +2,10 @@
 %define dialect _1.11
 %define dialect_regex _1\\.11
 %define suff -1.11
-%define altver 1115
 
 Name: %realname%dialect
 Version: 1.11.6
-Release: alt7
+Release: alt8
 
 %define mydatadir %_datadir/%realname%suff
 %set_compress_method xz
@@ -25,10 +24,7 @@ BuildArch: noarch
 # git://git.altlinux.org/gears/a/%name.git
 Source: %srcname.tar
 
-Provides: %realname = 1:%version-%release
-Provides: aclocal(libtool)
-Obsoletes: %realname
-PreReq: automake-common, alternatives >= 0:0.4
+PreReq: automake-common
 Requires: autoconf >= 2:2.62
 
 BuildPreReq: autoconf >= 2:2.68, gnu-config, help2man, makeinfo, perl-threads
@@ -40,7 +36,7 @@ files compliant with the GNU Coding Standards.
 
 %prep
 %setup -n %srcname
-bzip2 -9fk NEWS TODO
+xz -k9 NEWS TODO
 
 # patch texinfo file
 sed -i '/@direntry/,/@end direntry/ s/^\(\*[[:space:]]\+[[:alnum:].]\+\)\(:[[:space:]]\+\)(%realname)/\1%suff\2(%realname%suff)/' \
@@ -74,17 +70,7 @@ EOF
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 echo %realname >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 
-mkdir -p %buildroot%_altdir
-cat <<EOF >%buildroot%_altdir/%name
-%_bindir/%realname-default	%_bindir/%realname%suff	%altver
-%_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%realname%suff
-%_man1dir/%realname.1.xz	%_man1dir/%realname%suff.1.xz	%_bindir/%realname%suff
-%_man1dir/aclocal.1.xz	%_man1dir/aclocal%suff.1.xz	%_bindir/%realname%suff
-%_datadir/%realname	%mydatadir	%_bindir/%realname%suff
-%_infodir/%realname.info.xz	%_infodir/%realname%suff.info.xz	%_bindir/%realname%suff
-EOF
-
-install -pm644 AUTHORS README THANKS NEWS.bz2 TODO.bz2 \
+install -pm644 AUTHORS README THANKS NEWS.* TODO.* \
 	%buildroot%docdir/
 
 # reenable perl-threads dependencies
@@ -96,7 +82,6 @@ install -pm644 AUTHORS README THANKS NEWS.bz2 TODO.bz2 \
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
 %config %_sysconfdir/buildreqs/files/ignore.d/*
-%_altdir/%name
 %_bindir/*%suff
 %_man1dir/*%suff.1*
 %_datadir/aclocal%suff
@@ -105,6 +90,11 @@ install -pm644 AUTHORS README THANKS NEWS.bz2 TODO.bz2 \
 %docdir
 
 %changelog
+* Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 1.11.6-alt8
+- Dropped alternatives in favour of automake-defaults setup.
+- Changed the compression method applied to documentation files
+  from bzip2 to xz.
+
 * Mon Jul 03 2017 Ivan Zakharyaschev <imz@altlinux.org> 1.11.6-alt7
 - (.spec) Update version in BuildPreReq: autoconf.
 

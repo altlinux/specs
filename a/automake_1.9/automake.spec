@@ -2,12 +2,11 @@
 %define dialect _1.9
 %define dialect_regex _1\\.9
 %define suff -1.9
-%define altver 1096
 %define apiname %realname%suff
 
 Name: %realname%dialect
 Version: 1.9.6
-Release: alt6
+Release: alt7
 Epoch: 1
 
 %define mydatadir %_datadir/%apiname
@@ -37,10 +36,7 @@ Patch5: automake-1.9.6-git-20091201.patch
 Patch6: automake-1.9.6-git-20110113.patch
 Patch7: automake-1.9.6-makeinfo.patch
 
-Provides: %realname = %epoch:%version-%release
-Provides: aclocal(libtool)
-Obsoletes: %realname
-PreReq: automake-common, alternatives >= 0:0.4
+PreReq: automake-common
 Requires: autoconf_2.5 >= 2:2.58
 
 BuildPreReq: autoconf >= 2:2.58, makeinfo
@@ -92,14 +88,6 @@ EOF
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 echo %realname >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 
-mkdir -p %buildroot%_altdir
-cat <<EOF >%buildroot%_altdir/%name
-%_bindir/%realname-default	%_bindir/%apiname	%altver
-%_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%apiname
-%_datadir/%realname	%mydatadir	%_bindir/%apiname
-%_infodir/%realname.info.xz	%_infodir/%apiname.info.xz	%_bindir/%apiname
-EOF
-
 mkdir -p %buildroot%docdir
 install -pm644 AUTHORS README THANKS NEWS.* \
 	%buildroot%docdir/
@@ -110,7 +98,6 @@ install -pm644 AUTHORS README THANKS NEWS.* \
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
 %config %_sysconfdir/buildreqs/files/ignore.d/*
-%_altdir/%name
 %_bindir/*%suff
 %_datadir/aclocal%suff
 %mydatadir/
@@ -118,6 +105,9 @@ install -pm644 AUTHORS README THANKS NEWS.* \
 %docdir/
 
 %changelog
+* Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.9.6-alt7
+- Dropped alternatives in favour of automake-defaults setup.
+
 * Mon Dec 07 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.9.6-alt6
 - Changed BR: texinfo -> makeinfo.
 - Switched to compress_method xz.
