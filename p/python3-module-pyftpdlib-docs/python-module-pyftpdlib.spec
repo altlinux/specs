@@ -8,7 +8,7 @@ language.
 
 Name: %fname-docs
 Version: 1.5.4
-Release: alt1
+Release: alt2
 
 %if "-docs"==""
 Summary: Python FTP server library
@@ -99,6 +99,14 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %if "-docs"==""
+%if "3"=="3"
+pushd %buildroot%_bindir
+for i in $(ls); do
+    mv $i $i.py3
+done
+popd
+%endif
+
 %files
 %doc CREDITS LICENSE *.rst demo/
 %_bindir/*
@@ -120,6 +128,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Aug 08 2018 Grigory Ustinov <grenka@altlinux.org> 1.5.4-alt2
+- Rebuild with resolving file conflict between modules.
+
 * Wed May 30 2018 Grigory Ustinov <grenka@altlinux.org> 1.5.4-alt1
 - Build new version.
 
