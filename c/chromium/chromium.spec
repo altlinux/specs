@@ -8,7 +8,7 @@
 %def_enable  google_api_keys
 
 %ifndef build_parallel_jobs
-%global build_parallel_jobs 7
+%global build_parallel_jobs %__nprocs
 %endif
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        67.0.3396.87
+Version:        68.0.3440.84
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -70,14 +70,15 @@ Patch015: 0015-FEDORA-Fix-last-commit-position-issue.patch
 Patch016: 0016-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
 Patch017: 0017-ALT-gzip-does-not-support-the-rsyncable-option.patch
 Patch018: 0018-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch019: 0019-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-only.patch
+Patch019: 0019-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
 Patch020: 0020-ALT-allow-_FORTIFY_SOURCE-for-clang.patch
 Patch021: 0021-FEDORA-Fix-gcc-round.patch
 Patch022: 0022-FEDORA-Fix-memcpy.patch
 Patch023: 0023-GENTOO-chromium-ffmpeg-r1.patch
 Patch024: 0024-ARCHLINUX-chromium-widevine-r2.patch
 Patch025: 0025-ALT-openh264-always-pic-on-x86.patch
-Patch026: 0026-ALT-clang.patch
+Patch026: 0026-ALT-allow-to-override-clang-through-env-variables.patch
+Patch027: 0027-CORS-legacy-add-missing-string-include.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -234,6 +235,7 @@ tar -xf %SOURCE1
 %patch024 -p1
 %patch025 -p1
 %patch026 -p1
+%patch027 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -316,7 +318,11 @@ gn_arg clang_base_path=\"%_prefix\"
 gn_arg is_clang=true
 gn_arg clang_use_chrome_plugins=false
 gn_arg use_lld=true
+%ifarch x86_64
 gn_arg use_thin_lto=true
+%else
+gn_arg use_thin_lto=false
+%endif
 #gn_arg is_cfi=true
 %else
 gn_arg is_clang=false
@@ -346,9 +352,12 @@ tools/gn/bootstrap/bootstrap.py -v \
 	-v \
 	--args="$CHROMIUM_GN_DEFINES"
 
+n=%build_parallel_jobs
+[ "$n" -lt 16 ] || n=16
+
 ninja \
 	-vvv \
-	-j %build_parallel_jobs \
+	-j $n \
 	-C %target \
 	chrome \
 	chrome_sandbox \
@@ -471,6 +480,42 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Wed Aug 08 2018 Alexey Gladkov <legion@altlinux.ru> 68.0.3440.84-alt1
+- New version (68.0.3440.84).
+- Security fixes:
+  - CVE-2018-6153: Stack buffer overflow in Skia.
+  - CVE-2018-6154: Heap buffer overflow in WebGL.
+  - CVE-2018-6155: Use after free in WebRTC.
+  - CVE-2018-6156: Heap buffer overflow in WebRTC.
+  - CVE-2018-6157: Type confusion in WebRTC.
+  - CVE-2018-6158: Use after free in Blink.
+  - CVE-2018-6159: Same origin policy bypass in ServiceWorker.
+  - CVE-2018-6160: URL spoof in Chrome on iOS.
+  - CVE-2018-6161: Same origin policy bypass in WebAudio.
+  - CVE-2018-6162: Heap buffer overflow in WebGL.
+  - CVE-2018-6163: URL spoof in Omnibox.
+  - CVE-2018-6164: Same origin policy bypass in ServiceWorker.
+  - CVE-2018-6165: URL spoof in Omnibox.
+  - CVE-2018-6166: URL spoof in Omnibox.
+  - CVE-2018-6167: URL spoof in Omnibox.
+  - CVE-2018-6168: CORS bypass in Blink.
+  - CVE-2018-6169: Permissions bypass in extension installation .
+  - CVE-2018-6170: Type confusion in PDFium.
+  - CVE-2018-6171: Use after free in WebBluetooth.
+  - CVE-2018-6172: URL spoof in Omnibox.
+  - CVE-2018-6173: URL spoof in Omnibox.
+  - CVE-2018-6174: Integer overflow in SwiftShader.
+  - CVE-2018-6175: URL spoof in Omnibox.
+  - CVE-2018-6176: Local user privilege escalation in Extensions.
+  - CVE-2018-6177: Cross origin information leak in Blink.
+  - CVE-2018-6178: UI spoof in Extensions.
+  - CVE-2018-6179: Local file information leak in Extensions.
+  - CVE-2018-6044: Request privilege escalation in Extensions .
+  - CVE-2018-4117: Cross origin information leak in Blink.
+  - CVE-2018-6150: Cross origin information disclosure in Service Workers.
+  - CVE-2018-6151: Bad cast in DevTools.
+  - CVE-2018-6152: Local file write in DevTools.
+
 * Sun Jun 17 2018 Alexey Gladkov <legion@altlinux.ru> 67.0.3396.87-alt1
 - New version (67.0.3396.87).
 - Use ninja-build.
