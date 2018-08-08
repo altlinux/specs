@@ -1,11 +1,10 @@
 %define realname automake
 %define dialect _1.7
 %define suff -1.7
-%define altver 179
 
 Name: %realname%dialect
 Version: 1.7.9
-Release: alt3.1
+Release: alt4
 Serial: 1
 
 %add_findreq_skiplist %_datadir/%realname%suff/config.guess
@@ -26,10 +25,7 @@ Source1: %name.buildreq
 Patch1: automake-1.7.6-alt-texinfo.patch
 Patch2: automake-1.7.6-alt-aclocal_libtool.patch
 
-Provides: %realname = %serial:%version-%release
-Provides: aclocal(libtool)
-Obsoletes: %realname
-PreReq: automake-common, alternatives >= 0:0.4
+PreReq: automake-common
 
 BuildPreReq: autoconf >= 2.54, makeinfo
 
@@ -63,18 +59,9 @@ install -p -m644 %realname.info %buildroot%_infodir/%realname%suff.info
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 echo %realname >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 
-mkdir -p %buildroot%_altdir
-cat <<EOF >%buildroot%_altdir/%name
-%_bindir/%realname-default	%_bindir/%realname%suff	%altver
-%_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%realname%suff
-%_datadir/%realname	%_datadir/%realname%suff	%_bindir/%realname%suff
-%_infodir/%realname.info.xz	%_infodir/%realname%suff.info.xz	%_bindir/%realname%suff
-EOF
-
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
 %config %_sysconfdir/buildreqs/files/ignore.d/*
-%_altdir/%name
 %_bindir/*%suff
 %_datadir/aclocal%suff
 %_datadir/%realname%suff
@@ -82,6 +69,9 @@ EOF
 %doc AUTHORS ChangeLog NEWS README THANKS TODO
 
 %changelog
+* Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.9-alt4
+- Dropped alternatives in favour of automake-defaults setup.
+
 * Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.7.9-alt3.1
 - NMU: removed tetex from BR:
 

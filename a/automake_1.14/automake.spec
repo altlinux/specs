@@ -2,12 +2,11 @@
 %define dialect _1.14
 %define dialect_regex _1\\.14
 %define suff -1.14
-%define altver 1141
 %define apiname %realname%suff
 
 Name: %realname%dialect
 Version: 1.14.1
-Release: alt2
+Release: alt3
 
 %define mydatadir %_datadir/%apiname
 %set_compress_method xz
@@ -26,10 +25,7 @@ BuildArch: noarch
 # git://git.altlinux.org/gears/a/%name.git
 Source: %srcname.tar
 
-Provides: %realname = 1:%version-%release
-Provides: aclocal(libtool)
-Obsoletes: %realname
-PreReq: automake-common, alternatives >= 0:0.4
+PreReq: automake-common
 Requires: autoconf >= 2:2.65
 
 BuildPreReq: autoconf >= 2:2.65, gnu-config, help2man, makeinfo, perl-threads
@@ -76,16 +72,6 @@ EOF
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 echo %realname >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 
-mkdir -p %buildroot%_altdir
-cat <<EOF >%buildroot%_altdir/%name
-%_bindir/%realname-default	%_bindir/%apiname	%altver
-%_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%apiname
-%_man1dir/%realname.1.xz	%_man1dir/%apiname.1.xz	%_bindir/%apiname
-%_man1dir/aclocal.1.xz	%_man1dir/aclocal%suff.1.xz	%_bindir/%apiname
-%_datadir/%realname	%mydatadir	%_bindir/%apiname
-%_infodir/%realname.info.xz	%_infodir/%apiname.info.xz	%_bindir/%apiname
-EOF
-
 install -pm644 AUTHORS README THANKS NEWS.* \
 	%buildroot%docdir/
 
@@ -98,7 +84,6 @@ install -pm644 AUTHORS README THANKS NEWS.* \
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
 %config %_sysconfdir/buildreqs/files/ignore.d/*
-%_altdir/%name
 %_bindir/*%suff
 %_man1dir/*%suff.1*
 %_datadir/aclocal%suff
@@ -107,6 +92,9 @@ install -pm644 AUTHORS README THANKS NEWS.* \
 %docdir/
 
 %changelog
+* Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 1.14.1-alt3
+- Dropped alternatives in favour of automake-defaults setup.
+
 * Mon Dec 07 2015 Dmitry V. Levin <ldv@altlinux.org> 1.14.1-alt2
 - automake: fixed perl regexp syntax (gnu#21001).
 - Changed compress method from gzip to xz.

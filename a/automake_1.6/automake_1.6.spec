@@ -2,11 +2,10 @@
 %define dialect _1.6
 %define dialect_regex _1\.6
 %define suff -1.6
-%define altver 30
 
 Name: %realname%dialect
 Version: 1.6.3
-Release: alt9
+Release: alt10
 Epoch: 1
 
 %add_findreq_skiplist %_datadir/%realname%suff/config.guess
@@ -28,12 +27,9 @@ Patch1: automake-1.6.1-alt-texinfo.patch
 Patch2: automake-1.6.3-alt-aclocal_libtool.patch
 Patch3: automake-1.6-cvs-pythondir.patch
 
-BuildRequires: makeinfo
+PreReq: automake-common
 
-Provides: %realname = %epoch:%version-%release
-Provides: aclocal(libtool)
-Obsoletes: %realname
-PreReq: automake-common, alternatives >= 0:0.4
+BuildRequires: makeinfo
 
 %description
 Automake is a tool for automatically generating Makefiles compliant with the
@@ -48,7 +44,7 @@ you install Automake, you will also need to install GNU Autoconf package.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-bzip2 -9fk ChangeLog NEWS TODO
+xz -k9 ChangeLog NEWS TODO
 
 %build
 %set_autoconf_version 2.5
@@ -68,25 +64,21 @@ EOF
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 echo %realname >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 
-mkdir -p %buildroot%_altdir
-cat <<EOF >%buildroot%_altdir/%name
-%_bindir/%realname-default	%_bindir/%realname%suff	%altver
-%_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%realname%suff
-%_datadir/%realname	%_datadir/%realname%suff	%_bindir/%realname%suff
-%_infodir/%realname.info.xz	%_infodir/%realname%suff.info.xz	%_bindir/%realname%suff
-EOF
-
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
 %config %_sysconfdir/buildreqs/files/ignore.d/*
-%_altdir/%name
 %_bindir/*%suff
 %_datadir/aclocal%suff
 %_datadir/%realname%suff
 %_infodir/*.info*
-%doc AUTHORS README THANKS ChangeLog.bz2 NEWS.bz2 TODO.bz2
+%doc AUTHORS README THANKS ChangeLog.* NEWS.* TODO.*
 
 %changelog
+* Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.6.3-alt10
+- Dropped alternatives in favour of automake-defaults setup.
+- Changed the compression method applied to documentation files
+  from bzip2 to xz.
+
 * Mon Dec 07 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.6.3-alt9
 - Added BR: makeinfo.
 - Switched to compress_method xz.
