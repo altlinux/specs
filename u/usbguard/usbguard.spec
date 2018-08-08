@@ -8,13 +8,13 @@
 %define libusbguard libusbguard%sover
 
 Name: usbguard
-Version: 0.7.2
-Release: alt2%ubt
+Version: 0.7.4
+Release: alt1%ubt
 
 Group: System/Servers
 Summary: A tool for implementing USB device usage policy
 License: GPLv2+
-Url: https://dkopecek.github.io/usbguard
+Url: https://usbguard.github.io/
 
 #Requires: systemd
 #Requires(post): systemd
@@ -32,11 +32,12 @@ Patch1: alt-linking.patch
 #BuildRequires: aspell catch-devel glibc-devel-static libcap-ng-devel libdbus-glib-devel libgcrypt-devel libgio-devel libprotobuf-devel libqb-devel libseccomp-devel pegtl-devel protobuf-compiler python-module-google python3-dev python3-module-zope qt5-svg-devel qt5-tools rpm-build-ruby xsltproc
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: glibc-devel libcap-ng-devel libgcrypt-devel libseccomp-devel
-BuildRequires: catch
+#BuildRequires: catch pegtl-devel
 BuildRequires: xsltproc asciidoctor
 BuildRequires: libsystemd-devel libaudit-devel
 BuildRequires: qt5-svg-devel qt5-tools
-BuildRequires: libprotobuf-devel protobuf-compiler libqb-devel pegtl-devel
+BuildRequires: libprotobuf-devel protobuf-compiler libqb-devel
+BuildRequires: libumockdev-devel
 %if_enabled dbus
 BuildRequires: libdbus-glib-devel libgio-devel libpolkit-devel
 %endif
@@ -101,8 +102,7 @@ a D-Bus interface to the USBGuard daemon component.
 %prep
 %setup
 %patch1 -p1
-# clear from 3dpathy sources
-rm -rf src/ThirdParty/{Catch,PEGTL}
+mv .gear/ThirdParty/* src/ThirdParty/
 %autoreconf
 
 # systray want to show icon
@@ -116,8 +116,8 @@ done
     --disable-static \
     --enable-shared \
     --disable-silent-rules \
-    --without-bundled-catch \
-    --without-bundled-pegtl \
+    --with-bundled-catch \
+    --with-bundled-pegtl \
     --enable-systemd \
     --with-gui-qt=qt5 \
 %if_enabled dbus
@@ -151,10 +151,10 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %config(noreplace) %attr(0600,root,root) %_sysconfdir/usbguard/usbguard-daemon.conf
 %config(noreplace) %attr(0600,root,root) %_sysconfdir/usbguard/rules.conf
 %_unitdir/usbguard.service
-%_man8dir/usbguard-daemon.*
-%_man5dir/usbguard-daemon.conf.*
-%_man5dir/usbguard-rules.conf.*
-%_man1dir/usbguard.*
+#%_man8dir/usbguard-daemon.*
+#%_man5dir/usbguard-daemon.conf.*
+#%_man5dir/usbguard-rules.conf.*
+#%_man1dir/usbguard.*
 #%_datadir/bash-completion/completions/usbguard
 
 %files -n %libusbguard
@@ -171,7 +171,7 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 
 %files applet
 %_bindir/usbguard-applet-qt
-%_man1dir/usbguard-applet-qt.*
+#%_man1dir/usbguard-applet-qt.*
 %_datadir/applications/usbguard-applet-qt.desktop
 %_iconsdir/*/*/apps/usbguard-icon.*
 
@@ -182,10 +182,16 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %_datadir/dbus-1/system.d/org.usbguard.conf
 %_datadir/polkit-1/actions/org.usbguard.policy
 %_unitdir/usbguard-dbus.service
-%_man8dir/usbguard-dbus.*
+#%_man8dir/usbguard-dbus.*
 %endif
 
 %changelog
+* Wed Aug 08 2018 Sergey V Turchin <zerg@altlinux.org> 0.7.4-alt1%ubt
+- new version
+
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt3%ubt
+- merge upstream fix for audit backend
+
 * Wed Apr 04 2018 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt2%ubt
 - update default usbguard-daemon.conf
 
