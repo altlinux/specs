@@ -1,11 +1,14 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname pandas
 
 %def_with python3
 %def_disable check
+%def_without docs
 
 Name: python-module-%oname
-Version: 0.22.0
-Release: alt1.1
+Version: 0.23.4
+Release: alt1
 
 Summary: Python Data Analysis Library
 License: BSD
@@ -18,12 +21,10 @@ Source: %name-%version.tar
 Patch1: %oname-alt-docs.patch
 Patch2: %oname-alt-static-variables.patch
 
-BuildRequires(pre): rpm-macros-sphinx
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel
 BuildRequires: libnumpy-devel python-module-Cython python-module-notebook python-module-numpy-testing python-module-pathlib
-BuildRequires: python-module-objects.inv
-BuildRequires: gcc-c++ pandoc
+BuildRequires: gcc-c++
 BuildRequires: xvfb-run python2.7(nbsphinx)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -33,6 +34,11 @@ BuildRequires: xvfb-run python3(nbsphinx)
 BuildRequires: python3(scipy) python3(xlrd) python3(tables.tests)
 %if_enabled check
 BuildRequires: python3(openpyxl)
+%endif
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-objects.inv
+BuildRequires: pandoc
 %endif
 %endif
 
@@ -113,12 +119,15 @@ sed -i \
 
 %if_with python3
 cp -fR . ../python3
+
+%if_with docs
 pushd ../python3
 %prepare_sphinx doc
 ln -s ../objects.inv doc/source/
-
 sed -i 's|@PYPATH@|%buildroot%python3_sitelibdir|' doc/make.py
 popd
+%endif
+
 %endif
 
 %build
@@ -144,9 +153,12 @@ find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -d
 # failsafe cleanup if the file is declared as %%doc
 find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 
+%if_with docs
 pushd doc
 PYTHONPATH=$(echo ../build/lib.*) xvfb-run ./make.py html
 popd
+%endif
+
 popd
 %endif
 
@@ -183,13 +195,18 @@ popd
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/*/*/test*
 
+%if_with docs
 %files -n python3-module-%oname-docs
 %doc ../python3/doc/build/html
 #doc doc/source
 #doc examples
 %endif
+%endif
 
 %changelog
+* Wed Aug 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.23.4-alt1
+- Updated to upstream version 0.23.4.
+
 * Mon Mar 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.22.0-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
