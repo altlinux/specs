@@ -1,8 +1,8 @@
 %define _xconfdir %_sysconfdir/X11/xorg.conf.d
 
 Name: xorg-drv-evdev
-Version: 2.10.4
-Release: alt2
+Version: 2.10.6
+Release: alt1
 Epoch: 2
 Summary: Generic Linux input driver
 License: MIT/X11
@@ -18,8 +18,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
-BuildRequires: libevdev-devel libmtdev-devel libxkbfile-devel libudev-devel xorg-xextproto-devel xorg-resourceproto-devel
-BuildRequires: xorg-scrnsaverproto-devel xorg-inputproto-devel xorg-randrproto-devel xorg-xproto-devel
+BuildRequires: libevdev-devel libmtdev-devel libxkbfile-devel libudev-devel xorg-proto-devel
 
 %description
 evdev  is  an  Xorg  input  driver for Linux generic event devices.
@@ -62,6 +61,9 @@ install -m644 *.conf %buildroot%_xconfdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Aug 08 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:2.10.6-alt1
+- 2.10.6
+
 * Wed Nov 30 2016 Valery Inozemtsev <shrek@altlinux.ru> 2:2.10.4-alt2
 - requires XORG_ABI_XINPUT = 24.1
 
