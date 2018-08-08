@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Log-Any
-Version: 1.706
+Version: 1.707
 Release: alt1
 
 Summary: Log::Any - bringing loggers and listeners together
@@ -42,6 +42,9 @@ The application, in turn, may choose one or more logging mechanisms via Log::Any
 %perl_vendor_privlib/Log/Any*
 
 %changelog
+* Wed Aug 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.707-alt1
+- automated CPAN update
+
 * Sun Jul 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.706-alt1
 - automated CPAN update
 
