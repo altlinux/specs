@@ -1,6 +1,6 @@
-# Wait: https://github.com/haiwen/seafile/issues/1842
+%define ccnet_version 6.1.8
 Name: seafile
-Version: 6.1.8
+Version: 6.2.2
 Release: alt1
 
 Summary: Full-fledged cloud storage platform
@@ -9,7 +9,7 @@ Group: Networking/File transfer
 License: GPLv2 with permissions for OpenSSL
 Url: https://github.com/haiwen/seafile
 
-Packager: Konstantin Artyushkin <akv@altlinux.org>
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/haiwen/seafile/archive/v%version.tar.gz
 Source: %name-%version.tar
@@ -31,7 +31,7 @@ BuildRequires: zlib-devel libjson-glib-devel
 BuildRequires: vala
 
 BuildRequires: libsearpc-devel >= 3.0.4
-BuildRequires: libccnet-devel >= %version
+#BuildRequires: libccnet-devel >= %ccnet_version
 
 BuildRequires: libsqlite3-devel >= 3.7
 BuildRequires: libevent-devel >= 2.0
@@ -39,9 +39,9 @@ BuildRequires: libarchive-devel >= 2.8.5
 BuildRequires: libcurl-devel >= 7.17
 
 # server requires
-BuildRequires: libzdb-devel >= 2.12
+#BuildRequires: libzdb-devel >= 2.12
 
-Requires: ccnet >= %version
+Requires: ccnet >= %ccnet_version
 
 %description
 Seafile is a next-generation open source cloud storage system
@@ -89,9 +89,7 @@ cp %SOURCE1 .
 
 %build
 %autoreconf
-%configure --enable-client \
-           --enable-python --enable-fuse \
-           --disable-static
+%configure --disable-static
 # FIXME: breakes build
 %make_build || %make
 
@@ -114,6 +112,10 @@ cp %SOURCE1 .
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Sat Jul 21 2018 Vitaly Lipatov <lav@altlinux.ru> 6.2.2-alt1
+- new version 6.2.2 (with rpmrb script)
+- drop libccnet-devel, libzdb-devel build requires
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 6.1.8-alt1
 - new version 6.1.8 (with rpmrb script)
 
