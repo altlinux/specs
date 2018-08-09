@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 1.1
-Release: alt2%ubt
+Version: 1.2
+Release: alt1%ubt
 
 Summary: A library to grok configuration from Python code
 License: ZPLv2.1
@@ -83,12 +83,13 @@ popd
 
 %check
 export PIP_INDEX_URL=http://host.invalid./
+
 export PYTHONPATH=%buildroot%python_sitelibdir_noarch:%python_sitelibdir_noarch:%_libdir/python%_python_version/site-packages
-TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py27 -v
+TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py%{python_version_nodots python} -v
 
 pushd ../python3
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch:%python3_sitelibdir_noarch:%_libdir/python3/site-packages
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py35 -v
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -v
 popd
 
 %files
@@ -102,6 +103,9 @@ popd
 %python3_sitelibdir/%mname-%version-*.egg-info
 
 %changelog
+* Thu Aug 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2-alt1%ubt
+- Updated to upstream version 1.2.
+
 * Wed Feb 14 2018 Stanislav Levin <slev@altlinux.org> 1.1-alt2%ubt
 - Fix BuildRequires to run tests
 
