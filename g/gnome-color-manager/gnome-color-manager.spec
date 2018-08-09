@@ -8,7 +8,7 @@
 
 Name: gnome-color-manager
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Color profile manager for the GNOME desktop
 License: %gpl2plus
@@ -18,10 +18,7 @@ Url: http://www.gnome.org/projects/gnome-color-manager/
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 Obsoletes: libcolor-glib
-Requires: common-licenses gnome-session gnome-filesystem
-
-BuildPreReq: gnome-common rpm-build-gnome
-BuildPreReq: rpm-build-licenses
+Requires: common-licenses gnome-filesystem
 
 %define gio_ver 2.31.10
 %define gtk_ver 3.0
@@ -31,7 +28,7 @@ BuildPreReq: rpm-build-licenses
 %define colord_gtk_ver 0.1.20
 %define lcms_ver 2.2
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-build-licenses rpm-build-gnome
 BuildRequires: gcc-c++ yelp-tools libappstream-glib-devel
 BuildRequires: docbook-utils xsltproc
 BuildPreReq: libgio-devel >= %gio_ver
@@ -100,14 +97,15 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_datadir/applications/*.desktop
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
-#%_iconsdir/hicolor/*x*/mimetypes/*.png
-#%_iconsdir/hicolor/scalable/mimetypes/*.svg
 %_man1dir/*
 %_datadir/metainfo/org.gnome.ColorProfileViewer.appdata.xml
 %doc --no-dereference COPYING
 %doc README AUTHORS
 
 %changelog
+* Thu Aug 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt2
+- dropped obsolete gnome-session dependency (ALT #35237)
+
 * Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 
