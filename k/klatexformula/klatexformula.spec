@@ -1,6 +1,6 @@
 Name: klatexformula
-Version: 3.2.11
-Release: alt3
+Version: 4.0.0
+Release: alt1
 License: GPLv2
 Group: Publishing
 Summary: Generating images from LaTeX equations
@@ -9,16 +9,17 @@ Patch: klatexformula-3.2.9-setlocale.patch
 Url: http://klatexformula.sourceforge.net/
 
 BuildRequires(pre): rpm-build-xdg
-# Automatically added by buildreq on Tue Oct 11 2011
-# optimized out: automoc cmake cmake-modules fontconfig fontconfig-devel kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-xml libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: doxygen fonts-ttf-xorg gcc-c++ graphviz kde4libs-devel qt4-designer
 
-Requires: libqt4-sql-sqlite
+# Automatically added by buildreq on Thu Aug 09 2018
+# optimized out: cmake-modules fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libEGL-devel libGL-devel libX11-devel libgpg-error libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-server python-base python-modules qt5-base-devel qt5-tools qt5-tools-devel sh3 xorg-proto-devel
+BuildRequires: cmake doxygen fonts-ttf-xorg graphviz libssl-devel qt5-svg-devel qt5-tools-devel-static qt5-x11extras-devel
 
 %description
 KLatexFormula is an easy-to-use graphical application for generating
 images (that you can drag and drop, copy and paste or save to disk) from
 LaTeX equations.
+
+# TODO KLFOpenOfficeorg
 
 %package devel
 Group: Development/KDE and QT
@@ -29,40 +30,40 @@ TODO: make shared version of %name-devel.
 
 %prep
 %setup
-sed -i 's/target_link_libraries(\([^ ]*\)/target_link_libraries(\1 -lX11/' src/CMakeLists.txt
-%patch -p1
-sed -i '/Uninstall target/,$s/^/#/' cmake/klfinstallpaths.cmake
 
 %build
-%cmake -D QT_QMAKE_EXECUTABLE_FINDQT:path=/usr/bin/qmake-qt4 \
-       -D QT_QMAKE_EXECUTABLE:path=/usr/bin/qmake-qt4 \
-       -D KLF_LIBKLFBACKEND_STATIC=False \
-       -D KLF_LIBKLFTOOLS_STATIC=False \
-       -D KLF_LIBKLFAPP_STATIC=False \
-       ..
-# -D KLF_DEBUG=True ..
+%cmake	\
+	-D KLF_LIBKLFBACKEND_AUTO_STATIC=False \
+	..
+
 %cmake_build all doc
 
 %install
 %cmakeinstall_std
+for N in %buildroot/%_datadir/pixmaps/kla*.png; do
+  SZ="${N##*-}"; SZ="${SZ%%.*}"
+  install -D $N %buildroot%_iconsdir/hicolor/$SZ/apps/%name.png
+done
 
 %files
 %_bindir/*
-%_libdir/kde4/*
 %_libdir/lib*.so.*
 %_iconsdir/hicolor/*/apps/*.png
 %_pixmapsdir/*.png
 %_desktopdir/*
 %_xdgmimedir/*
-%_Kapps/*
-%_K4srv/*
 %_datadir/%name
 
 %files devel
+%doc %_defaultdocdir/%name
 %_includedir/*
 %_libdir/lib*.so
 
 %changelog
+* Thu Aug 09 2018 Fr. Br. George <george@altlinux.ru> 4.0.0-alt1
+- Autobuild version bump to 4.0.0
+- Switch to qt5
+
 * Wed Jul 18 2018 Grigory Ustinov <grenka@altlinux.org> 3.2.11-alt3
 - Fix FTBFS (Add missing rpm-build-xdg).
 
