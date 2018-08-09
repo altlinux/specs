@@ -1,9 +1,9 @@
 
 Name: adobe-flash-player
 %define bin_name mozilla-plugin-adobe-flash
-%define ver_fake   29
-%define ver_ix86   29.0.0.0
-%define ver_x86_64 29.0.0.0
+%define ver_fake   30
+%define ver_ix86   30.0.0.134
+%define ver_x86_64 30.0.0.134
 Release: alt1%ubt
 Epoch: 3
 
@@ -22,7 +22,7 @@ URL: http://www.adobe.com/products/flashplayer/
 License: GPL
 
 ExclusiveArch: %ix86 x86_64
-BuildArch: noarch
+#BuildArch: noarch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-macros-browser-plugins
@@ -59,6 +59,9 @@ fake
 %files -n %bin_name
 
 %changelog
+* Thu Aug 09 2018 Sergey V Turchin <zerg@altlinux.org> 3:30-alt1%ubt
+- bump version
+
 * Mon May 07 2018 Sergey V Turchin <zerg@altlinux.org> 3:29-alt1%ubt
 - bump version
 
