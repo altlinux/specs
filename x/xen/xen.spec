@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.10.1
-Release: alt2%ubt
+Release: alt3%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -198,25 +198,10 @@ which manage Xen virtual machines.
 Summary: Core Xen runtime environment
 Group: Emulators
 Requires: %name = %version-%release
-Requires: %name-runtime-common = %version-%release
 Requires: lib%name = %version-%release
 Requires: seabios ipxe-roms-qemu
 
 %description runtime
-The Xen Project hypervisor is an open-source type-1 or baremetal
-hypervisor, which makes it possible to run many instances of an
-operating system or indeed different operating systems in parallel on a
-single machine (or host).
-
-This package contains the runtime programs which form the core Xen
-userspace environment.
-
-
-%package runtime-common
-Summary: Core Xen runtime environment
-Group: Emulators
-
-%description runtime-common
 The Xen Project hypervisor is an open-source type-1 or baremetal
 hypervisor, which makes it possible to run many instances of an
 operating system or indeed different operating systems in parallel on a
@@ -729,8 +714,6 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 %attr(0700,root,root) %_logdir/%name
 
-
-%files runtime-common
 %_sbindir/xen-bugtool
 
 %dir %_libexecdir/%name/bin
@@ -746,6 +729,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 %exclude %_datadir/qemu-%name/qemu/s390-ccw.img
 %exclude %_datadir/qemu-%name/qemu/s390-netboot.img
+
 
 %if_with hypervisor
 %files hypervisor
@@ -806,7 +790,10 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
-* Thu Jun 07 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.1-alt2.S1
+* Thu Aug 09 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.1-alt3%ubt
+- upstream updates upto 87c83af333
+
+* Thu Jun 07 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.1-alt2%ubt
 - fix: xen-licenses package should be noarch
 
 * Thu May 24 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.1-alt1%ubt
