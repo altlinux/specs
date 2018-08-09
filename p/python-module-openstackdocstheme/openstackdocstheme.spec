@@ -14,7 +14,7 @@ export PBR_VERSION=$(pbr.py3 -v) \
 
 Name:    %fname
 Version: 1.21.1
-Release: alt1
+Release: alt2
 
 %if ""==""
 Summary:  Sphinx theme for RST-sourced documentation published to docs.openstack.org
@@ -52,6 +52,9 @@ docs.openstack.org. Intended for use by OpenStack projects.
 %if ""==""
 %exportPBRversion
 %python_install
+mkdir -p %buildroot%python_sitelibdir_noarch/%oname/theme
+cp -r %oname/theme/* \
+%buildroot%python_sitelibdir_noarch/%oname/theme
 %endif
 
 %if ""==""
@@ -64,5 +67,8 @@ docs.openstack.org. Intended for use by OpenStack projects.
 %endif
 
 %changelog
+* Thu Aug 09 2018 Grigory Ustinov <grenka@altlinux.org> 1.21.1-alt2
+- Fix copying missing theme files.
+
 * Wed Aug 08 2018 Grigory Ustinov <grenka@altlinux.org> 1.21.1-alt1
 - Initial build for Sisyphus (without docs).
