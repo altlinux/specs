@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 5.2.2
-Release: alt1%ubt
+Release: alt2%ubt
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -466,6 +466,9 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Thu Aug 09 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.2-alt2%ubt
+- updated russian translation
+
 * Wed Jul 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.2-alt1%ubt
 - pve-manager 5.2-2
 - pve-container 2.0-24
