@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: xchm
 Version: 1.23
-Release: alt3
+Release: alt4
 
 Summary: xCHM - the CHM viewer for UNIX
 License: GPLv2+
@@ -9,12 +12,12 @@ Group: Office
 URL: http://xchm.sourceforge.net
 Source: http://downloads.sourceforge.net/xchm/xchm-%version.tar.gz
 Source1: xchm.desktop
-Packager: Victor Forsiuk <force@altlinux.org>
 
-# Automatically added by buildreq on Wed Apr 27 2011
-# optimized out: fontconfig libgdk-pixbuf libstdc++-devel xz
-BuildRequires: gcc-c++ libchm-devel libwxGTK3.1-devel
-BuildPreReq: libxmlrpcxx-devel libssl-devel
+BuildRequires: gcc-c++
+BuildRequires: libchm-devel
+BuildRequires: compat-libwxGTK3.0-gtk2-devel
+BuildRequires: libxmlrpcxx-devel
+BuildRequires: libssl-devel
 
 %description
 xCHM - the CHM files viewer for UNIX.
@@ -40,14 +43,21 @@ install -pD -m644 art/xchm-48.xpm %buildroot%_liconsdir/xchm.xpm
 %find_lang %name
 
 %files -f %name.lang
+%doc AUTHORS COPYING ChangeLog README
 %_bindir/xchm
 %_desktopdir/xchm.desktop
 %_pixmapsdir/*.xpm
+%_pixmapsdir/*.png
 %_miconsdir/*
 %_niconsdir/*
 %_liconsdir/*
 
 %changelog
+* Thu Aug 09 2018 Anton Midyukov <antohami@altlinux.org> 1.23-alt4
+- Rebuilt with compat-wxGTK3.0-gtk2
+- enable unpackaged files terminate build
+- fix desktop categories
+
 * Sun Oct 04 2015 Anton Midyukov <antohami@altlinux.org> 1.23-alt3
 - Rebuilt for new gcc5 C++11 ABI.
 
