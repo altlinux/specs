@@ -4,23 +4,22 @@
 
 Name: python-module-%oname
 Version: 0.24.0
-Release: alt1.git20150218.1.1.1
+Release: alt2.git20150218
 Summary: A Python binding to Poppler-Qt4
 License: LGPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/python-poppler-qt4/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/wbsoft/python-poppler-qt4.git
 Source: %name-%version.tar
 
-BuildPreReq: libpoppler-qt4-devel gcc-c++ libqt4-devel
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sip-devel python-module-PyQt4-devel
+BuildRequires: libpoppler-qt4-devel gcc-c++ libqt4-devel
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-sip-devel python-module-PyQt4-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-sip-devel python3-module-PyQt4-devel
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-sip-devel python3-module-PyQt4-devel
 %endif
 
 %description
@@ -37,6 +36,9 @@ being actively maintained.
 
 %prep
 %setup
+
+# compatibility with new poppler version
+find . -type f | xargs sed -i -e 's:<qt4/poppler:<poppler:g'
 
 %if_with python3
 cp -fR . ../python3
@@ -79,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.24.0-alt2.git20150218
+- Rebuilt with new poppler.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.24.0-alt1.git20150218.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
