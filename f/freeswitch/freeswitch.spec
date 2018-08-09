@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.6.20
-Release: alt2%ubt
+Release: alt3%ubt
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -605,6 +605,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Thu Aug 09 2018 Anton Farygin <rider@altlinux.ru> 1:1.6.20-alt3%ubt
+- rebuilt with libcodec2-0.8
+
 * Tue Jun 19 2018 Anton Farygin <rider@altlinux.ru> 1:1.6.20-alt2%ubt
 - disabled sagoma support
 - rebuilt for ffmpeg-4.0
