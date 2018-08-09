@@ -1,7 +1,7 @@
 Name: x11-ssh-askpass
 Version: 1.2.4.1
-Release: alt4.qa1
-Serial: 1
+Release: alt5
+Epoch: 1
 
 Summary: An X11-based passphrase dialog for use with OpenSSH
 License: BSD-like
@@ -17,8 +17,10 @@ Source: %name-%version.tar
 PreReq: alternatives >= 0:0.4, %openssh_askpass_dir
 Provides: %openssh_askpass_dir/ssh-askpass
 Requires: openssh-askpass-common
-Provides: openssh-askpass-x11 = %serial:%version-%release
+Provides: openssh-askpass-x11 = %EVR
 Obsoletes: openssh-askpass-x11
+
+BuildRequires(pre): rpm-macros-alternatives
 
 # Automatically added by buildreq on Fri Dec 26 2008
 BuildRequires: gccmakedep imake libXt-devel xorg-cf-files
@@ -63,7 +65,7 @@ xmkmf -a
 rm %buildroot{%openssh_askpass_dir/ssh-askpass,%_man1dir/ssh-askpass.*}
 
 mkdir -p %buildroot%_altdir
-cat >%buildroot%_altdir/%name<<EOF
+cat >%buildroot%_altdir/%name<<'EOF'
 %openssh_askpass_dir/ssh-askpass	%openssh_askpass_dir/%name	20
 EOF
 
@@ -75,6 +77,9 @@ EOF
 %doc README TODO ChangeLog SshAskpass*.ad
 
 %changelog
+* Thu Aug 09 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.2.4.1-alt5
+- Updated build dependencies.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.2.4.1-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
