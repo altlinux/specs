@@ -1,6 +1,6 @@
 Name: pqiv
 Version: 2.8.5
-Release: alt3
+Release: alt4
 
 Summary: Minimalist Image Viewer
 License: GPL3+
@@ -10,7 +10,7 @@ Url: https://github.com/phillipberndt/pqiv
 Source: %name.tar
 Patch: %name-alt.patch
 
-BuildRequires: libgtk+2-devel libgtk+3-devel gdk-pixbuf-devel glib2-devel libcairo-devel libgio-devel
+BuildRequires: libgtk+2-devel libgtk+3-devel glib2-devel libcairo-devel libgio-devel
 BuildRequires: libavformat-devel libavcodec-devel libswscale-devel libavutil-devel
 BuildRequires: libpoppler-devel libpoppler-glib-devel
 BuildRequires: libspectre-devel
@@ -73,7 +73,7 @@ Backend for %name
 %prep
 %setup -n %name
 %patch -p1
-%ifarch x86_64
+%ifarch x86_64 aarch64
 subst 's|^LIBDIR=\$(PREFIX)/lib$|LIBDIR=%_libdir|' GNUmakefile
 %endif
 
@@ -135,6 +135,9 @@ _EOF_
 %_libdir/%name/%name-backend-wand.so
 
 %changelog
+* Thu Aug 09 2018 Anton Farygin <rider@altlinux.ru> 2.8.5-alt4
+- Rebuilt for ffmpeg-4.0.
+
 * Wed May 30 2018 Anton Farygin <rider@altlinux.ru> 2.8.5-alt3
 - Rebuilt for ImageMagick.
 
