@@ -9,7 +9,7 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 2.7.3
+Version: 2.7.4
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
@@ -249,6 +249,9 @@ gzip -9 %buildroot%docdir/ChangeLog
 %_man1dir/netcat.*
 
 %changelog
+* Thu Aug 09 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.4-alt1
+- 2.7.4
+
 * Wed Jun 06 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.3-alt1
 - 2.7.3
 - netcat-tls: provides netcat
