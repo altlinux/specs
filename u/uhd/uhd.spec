@@ -14,7 +14,7 @@
 Name: uhd
 Url: http://code.ettus.com/redmine/ettus/projects/uhd/wiki
 Version: 3.11.0.0
-Release: alt3
+Release: alt4
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -175,6 +175,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %_bindir/chdr_log
 
 %changelog
+* Thu Aug 09 2018 Anton Farygin <rider@altlinux.ru> 3.11.0.0-alt4
+- build for aarch64
+
 * Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.11.0.0-alt3
 - NMU: rebuilt with boost-1.67.0.
 
