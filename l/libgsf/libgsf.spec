@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: libgsf
-Version: %ver_major.43
+Version: %ver_major.44
 Release: alt1
 
 Summary: GNOME Structured file library
@@ -14,7 +14,7 @@ Url: http://www.gnumeric.org/
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses
+BuildRequires(pre): rpm-build-gnome rpm-build-licenses rpm-build-gir
 
 # From configure.ac
 BuildPreReq: intltool gtk-doc >= 1.0
@@ -144,6 +144,9 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
 
 
 %changelog
+* Thu Aug 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.44-alt1
+- 1.14.44
+
 * Fri Apr 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.43-alt1
 - 1.14.43
 
