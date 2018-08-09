@@ -1,6 +1,6 @@
 Name: git
 Version: 2.17.1
-Release: alt3
+Release: alt4
 
 Summary: Git core and tools
 License: GPLv2
@@ -232,6 +232,20 @@ and full access to internals.
 
 This package contains Git contributed software.
 
+%package diff-highlight
+Summary: Utility that highlights changes in diffs
+Group: Development/Other
+BuildArch: noarch
+Requires: %name-core = %EVR
+
+%description diff-highlight
+Git is a fast, scalable, distributed revision control system with an
+unusually rich command set that provides both high-level operations
+and full access to internals.
+
+This package contains diff-highlight utility, which is a part of Git
+contributed software.
+
 %package -n emacs-%name
 Summary: Emacs modes for Git
 Group: Development/Other
@@ -290,6 +304,7 @@ touch git-gui/credits
 %make_build -C Documentation doc.dep
 %make_build all %{!?_without_doc:man html}
 %{!?_without_emacs:%make_build -C contrib/emacs EMACS="%__emacs --eval \"(provide 'message)\""}
+%make_build -C contrib/diff-highlight
 
 %check
 %make_build -k test
@@ -351,9 +366,11 @@ find %buildroot%_datadir/git-core/ -name '*watchman*' -delete -print
 # Install docs and contrib.
 mkdir -p %buildroot%pkgdocdir/
 install -pm644 Documentation/SubmittingPatches %buildroot%pkgdocdir/
+install -Dm755 contrib/diff-highlight/diff-highlight %buildroot%_bindir
 cp -a contrib %buildroot%_datadir/git-core/
 rm -r %buildroot%_datadir/git-core/contrib/completion
 rm -r %buildroot%_datadir/git-core/contrib/emacs
+rm -r %buildroot%_datadir/git-core/contrib/diff-highlight
 
 # Remove unpackaged files.
 %{?_without_arch:rm %buildroot%gitexecdir/git-archimport}
@@ -393,6 +410,7 @@ popd
 %exclude %gitexecdir/git-citool
 %exclude %gitexecdir/git-add--interactive
 %exclude %_bindir/gitk
+%exclude %_bindir/diff-highlight
 %{!?_without_arch:%exclude %gitexecdir/git-archimport}
 %{!?_without_email:%exclude %gitexecdir/git-*email*}
 %{!?_without_svn:%exclude %gitexecdir/*svn*}
@@ -499,6 +517,10 @@ popd
 %dir %_datadir/git-core/
 %_datadir/git-core/contrib/
 
+%files diff-highlight
+%_bindir/diff-highlight
+%doc contrib/diff-highlight/README
+
 %if_with emacs
 %files -n emacs-%name
 %_emacs_sitestart_dir/*
@@ -506,6 +528,10 @@ popd
 %endif #emacs
 
 %changelog
+* Thu Aug 09 2018 Dmitry V. Levin <ldv@altlinux.org> 2.17.1-alt4
+- Packaged diff-highlight as a separate subpackage
+  (by Ivan A. Melnikov; closes: #35223).
+
 * Fri Aug 03 2018 Dmitry V. Levin <ldv@altlinux.org> 2.17.1-alt3
 - perl-Git: explicitly added perl(Error.pm) and perl(Mail/Address.pm)
   to dependencies.
