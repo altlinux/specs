@@ -1,6 +1,6 @@
 Summary: libcodec2 is a library for the codec2 low bit rate speech codec
 Name: libcodec2
-Version: 0.7
+Version: 0.8.1
 Release: alt1
 License: LGPL2.1
 Group: System/Libraries
@@ -54,6 +54,9 @@ EOF
 %_libdir/pkgconfig/codec2.pc
 
 %changelog
+* Thu Aug 09 2018 Anton Farygin <rider@altlinux.ru> 0.8.1-alt1
+- 0.8.1
+
 * Tue Oct 03 2017 Anton Farygin <rider@altlinux.ru> 0.7-alt1
 - 0.7
 

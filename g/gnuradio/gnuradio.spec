@@ -5,7 +5,7 @@
 
 Name: gnuradio
 Version: 3.7.12.0
-Release: alt2
+Release: alt3
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
@@ -193,6 +193,9 @@ rm -f %buildroot%_datadir/%name/examples/fcd/fcd_nfm_rx
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Aug 09 2018 Anton Farygin <rider@altlinux.ru> 3.7.12.0-alt3
+- rebuilt with libcodec2-0.8.1
+
 * Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.7.12.0-alt2
 - NMU: rebuilt with boost-1.67.0.
 
