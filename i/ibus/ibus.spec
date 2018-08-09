@@ -4,6 +4,7 @@
 %define _localstatedir %_var
 
 %def_enable python
+%def_enable python2
 %def_enable dconf
 %def_disable gconf
 %def_enable wayland
@@ -12,7 +13,7 @@
 %def_enable unicode_dict
 
 Name: ibus
-Version: 1.5.18
+Version: 1.5.19
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -40,12 +41,9 @@ Requires: lib%name-gir = %version-%release
 %{?_enable_dconf:Requires: dconf}
 
 BuildRequires: vala-tools >= 0.18
-BuildRequires: python-modules-compiler
-BuildRequires: rpm-build-python
 BuildPreReq: libgtk+2-devel
 BuildPreReq: libgtk+3-devel
 BuildRequires: libdbus-devel
-BuildRequires: python-module-dbus-devel
 BuildRequires: desktop-file-utils
 BuildRequires: gtk-doc
 BuildRequires: intltool
@@ -55,7 +53,7 @@ BuildRequires: gnome-icon-theme-symbolic
 BuildRequires: libXi-devel
 BuildRequires: libnotify-devel
 %{?_enable_unicode_dict:BuildRequires: unicode-ucd}
-%{?_enable_python:BuildRequires: rpm-build-python python-module-pygobject3-devel}
+%{?_enable_python2:BuildRequires: rpm-build-python python-modules-compiler  python-module-dbus-devel python-module-pygobject3-devel}
 %{?_enable_gconf:BuildRequires: libGConf-devel}
 # required if autoreconf used
 BuildRequires: libGConf-devel
@@ -133,7 +131,7 @@ Requires: %name = %version-%release
 %description -n lib%name-devel-docs
 This package contains developer documentation for IBus.
 
-%if_enabled python
+%if_enabled python2
 %package -n python-module-ibus
 Summary: IBus im module for python
 Group: Development/Python
@@ -165,6 +163,7 @@ override some functions in GObject-Introspection.
     --enable-xim \
     %{?_enable_snapshot:--enable-gtk-doc} \
     %{?_enable_python:--enable-python-library} \
+    %{?_disable_python2:--disable-python2} \
     %{subst_enable dconf} \
     %{?_enable_dconf:--disable-schemas-compile} \
     %{subst_enable gconf} \
@@ -234,6 +233,7 @@ fi
 %_man1dir/%name-daemon.1.*
 %_man1dir/%name-setup.1.*
 %_man1dir/%name.1.*
+%_man5dir/*
 %doc AUTHORS README
 
 %exclude %_datadir/bash-completion/completions/ibus.bash
@@ -262,17 +262,22 @@ fi
 %files -n lib%name-gir-devel
 %_girdir/IBus-%api_ver.gir
 
+%files -n lib%name-devel-docs
+%_datadir/gtk-doc/html/*
+
+%if_enabled python2
 %files -n python-module-ibus
 %dir %python_sitelibdir_noarch/ibus
 %python_sitelibdir_noarch/ibus/*
 
-%files -n lib%name-devel-docs
-%_datadir/gtk-doc/html/*
-
 %files -n python-module-ibus-overrides
 %python_sitelibdir/gi/overrides/IBus.py*
+%endif
 
 %changelog
+* Thu Aug 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1.5.19-alt1
+- 1.5.19
+
 * Fri Mar 02 2018 Yuri N. Sedunov <aris@altlinux.org> 1.5.18-alt1
 - 1.5.18
 
