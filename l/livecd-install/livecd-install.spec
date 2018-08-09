@@ -1,6 +1,6 @@
 Name: livecd-install
 Version: 0.9.10
-Release: alt3
+Release: alt4
 
 Summary: Permanently install Live system
 License: GPLv2
@@ -14,6 +14,7 @@ Url: http://www.altlinux.org/Alterator
 Packager: Andriy Stepanov <stanv@altlinux.ru>
 
 BuildArch: noarch
+BuildRequires(pre): rpm-macros-alternatives
 Requires: alterator-wizardface
 Requires: alterator-livecd >= 0.5-alt1
 Requires: alterator-vm alterator-users >= 10.2-alt1 alterator-root >= 0.9-alt1 alterator-datetime >= 2.6 alterator-notes
@@ -62,6 +63,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Thu Aug 09 2018 Michael Shigorin <mike@altlinux.org> 0.9.10-alt4
+- BR(pre): rpm-macros-alternatives (thx ldv@)
+
 * Tue Jan 23 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.10-alt3
 - Fix: Depend on alterator-notes.
 
