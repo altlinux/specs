@@ -1,7 +1,9 @@
+%def_enable snapshot
 %def_enable x11
+%def_disable check
 
 Name: libxkbcommon
-Version: 0.8.0
+Version: 0.8.2
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -9,22 +11,16 @@ Group: System/Libraries
 License: MIT
 Url: http://www.xkbcommon.org
 
+%if_disabled snapshot
 Source: %url/download/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
-BuildRequires: meson
-BuildRequires: xorg-util-macros bison flex bison
-BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel
-BuildRequires: xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel
-BuildRequires: xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel
-BuildRequires: xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel
-BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel
-BuildRequires: xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel
-BuildRequires: xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel
-BuildRequires: xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel
-BuildRequires: xorg-xproto-devel libX11-devel
+BuildRequires(pre): meson
+BuildRequires: bison flex
 BuildRequires: xkeyboard-config-devel
-BuildRequires: pkgconfig(xcb)
-BuildRequires: pkgconfig(xcb-xkb) >= 1.10
+%{?_enable_x11:BuildRequires: pkgconfig(xcb) pkgconfig(xcb-xkb) >= 1.10}
 BuildRequires: doxygen
 # since 7.0 for wayland utilities
 BuildRequires: wayland-devel >= 1.14 libwayland-client-devel wayland-protocols >= 1.10
@@ -71,6 +67,10 @@ X.Org X11 XKB keymap creation library development package
 %install
 %meson_install
 
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
+
 %files
 %doc LICENSE NEWS README*
 %_libdir/libxkbcommon.so.*
@@ -97,6 +97,9 @@ X.Org X11 XKB keymap creation library development package
 %endif
 
 %changelog
+* Mon Aug 06 2018 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
+- 0.8.2
+
 * Wed Dec 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
