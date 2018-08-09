@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_enable gui
 
 Name: calf
-Version: 0.90.0
-Release: alt1.1
+Version: 0.90.1
+Release: alt1
 
 Summary: Audio plugins pack
 Group: Sound
@@ -106,6 +106,9 @@ extensions.
 
 
 %changelog
+* Thu Aug 09 2018 Yuri N. Sedunov <aris@altlinux.org> 0.90.1-alt1
+- 0.90.1
+
 * Sat Jun 09 2018 Yuri N. Sedunov <aris@altlinux.org> 0.90.0-alt1.1
 - rebuilt for aarch64
 
