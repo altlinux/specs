@@ -1,6 +1,6 @@
 Name: spek
 Version: 0.8.3
-Release: alt2
+Release: alt3
 Summary: Acoustic Spectrum Analyser
 Group: Sound
 License: GPLv3
@@ -9,8 +9,8 @@ Source: %name-%version.tar.gz
 Patch1: spek-0.8.2-stdlib.patch
 Patch2: spek-0.8.3-ffmpeg.patch
 
-# Automatically added by buildreq on Thu Sep 18 2014
-# optimized out: fontconfig gnu-config libavcodec-devel libavutil-devel libcloog-isl4 libgdk-pixbuf libopencore-amrnb0 libopencore-amrwb0 libstdc++-devel libwayland-client libwayland-server perl-Encode perl-XML-Parser pkg-config xz
+# Automatically added by buildreq on Thu Aug 09 2018
+# optimized out: fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavutil-devel libgdk-pixbuf libopencore-amrnb0 libopencore-amrwb0 libp11-kit libstdc++-devel libwayland-client libwayland-server libx265-160 perl perl-Encode perl-XML-Parser perl-parent pkg-config python-base sh3 xz
 BuildRequires: gcc-c++ intltool libavformat-devel libwxGTK-devel
 
 %description
@@ -38,6 +38,9 @@ Spek helps to analyse your audio files by showing their spectrogram.
 %_iconsdir/*/*/*/*
 
 %changelog
+* Thu Aug 09 2018 Fr. Br. George <george@altlinux.ru> 0.8.3-alt3
+- fixed build with new ffmpeg
+
 * Tue Jun 13 2017 Anton Farygin <rider@altlinux.ru> 0.8.3-alt2
 - fixed build with new ffmpeg
 
