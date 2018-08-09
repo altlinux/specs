@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_disable check
 
 Name: libsepol
 Epoch: 1
-Version: 2.7
+Version: 2.8
 Release: alt1
 Summary: SELinux binary policy manipulation library
 License: LGPLv2+
@@ -20,7 +22,6 @@ It is used by checkpolicy (the policy compiler) and similar tools, as well
 as by programs like load_policy that need to perform specific transformations
 on binary policies such as customizing policy boolean settings.
 
-
 %package devel
 Summary: Development files for %name
 Group: Development/C
@@ -33,7 +34,6 @@ as by programs like load_policy that need to perform specific transformations
 on binary policies such as customizing policy boolean settings.
 
 This package contains development library and header files for %name.
-
 
 %package devel-static
 Summary: Static development files for %name
@@ -48,7 +48,6 @@ on binary policies such as customizing policy boolean settings.
 
 This package contains static library.
 
-
 %package utils
 Summary: Utils for checking and mainplating policy binaries Security-enhanced Linux
 Group: System/Configuration/Other
@@ -61,18 +60,14 @@ It is used by checkpolicy (the policy compiler) and similar tools, as well
 as by programs like load_policy that need to perform specific transformations
 on binary policies such as customizing policy boolean settings.
 
-
 %prep
-%setup -q
-
+%setup
 
 %build
-%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib all
-
+%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=/%_lib all
 
 %install
-%makeinstall_std LIBDIR=%buildroot%_libdir SHLIBDIR=%buildroot/%_lib
-
+%makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib
 
 %check
 %make_build test
@@ -80,17 +75,14 @@ on binary policies such as customizing policy boolean settings.
 %files
 /%_lib/*
 
-
 %files devel
 %_libdir/*.so
 %_includedir/sepol
 %_pkgconfigdir/*
 %_man3dir/*
 
-
 %files devel-static
 %_libdir/*.a
-
 
 %files utils
 %_bindir/*
@@ -98,6 +90,9 @@ on binary policies such as customizing policy boolean settings.
 %exclude %_man8dir/genpol*
 
 %changelog
+* Thu Aug 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt1
+- Updated to upstream version 2.8.
+
 * Mon Feb 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.7-alt1
 - Updated to upstream version 2.7.
 
