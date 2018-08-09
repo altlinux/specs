@@ -4,8 +4,8 @@
 %def_with python3
 
 Name:		python-module-%pypi_name
-Version:	3.1.1
-Release:	alt1.1
+Version:	4.2.0
+Release:	alt1
 Summary:	Python Build Reasonableness
 Group:		Development/Python
 BuildArch:	noarch
@@ -143,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 09 2018 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
+- Build new version.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
