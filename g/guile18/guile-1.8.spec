@@ -3,25 +3,19 @@
 
 %set_automake_version 1.11
 
-Summary: A GNU implementation of Scheme for application extensibility
 Name: %{iname}18
 Version: %sversion.7
-Release: alt5
+Release: alt6
 Serial: 1
-Url: http://www.gnu.org/software/guile/
 
+Summary: A GNU implementation of Scheme for application extensibility
 License: GPL
 Group: Development/Scheme
-
-Obsoletes: %iname <= 1.4.1
-Provides: %iname = %serial:%version-%release
-Provides: /usr/bin/guile
+Url: http://www.gnu.org/software/guile/
 
 Source: ftp://alpha.gnu.org/gnu/%iname/%iname-%version.tar
-Source1: %name.alternatives
 
-Patch: guile18-snarf-check-and-output-texi.scm.patch
-
+Patch0: guile18-snarf-check-and-output-texi.scm.patch
 Patch2: guile-1.8.7-testsuite.patch
 Patch3: guile-1.8.7-testsuite2.patch
 Patch4: guile-1.8.7-mkdir-umask.patch
@@ -55,8 +49,7 @@ Install this package if you are going to develop extendable programs.
 
 %prep
 %setup -q -n %iname-%version
-%patch -p1
-
+%patch0 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -75,10 +68,10 @@ Install this package if you are going to develop extendable programs.
 #export LD_LIBRARY_PATH=$RPM_BUILD_ROOT%_libdir
 #make install DESTDIR=$RPM_BUILD_ROOT LDFLAGS=-L$RPM_BUILD_ROOT%_libdir
 %makeinstall
-
 #alternatives stuff
-install -pD -m644 %SOURCE1 %buildroot%_altdir/%name
 mv %buildroot%_bindir/%iname %buildroot%_bindir/%name
+mv %buildroot%_man1dir/%iname.1 %buildroot%_man1dir/%name.1
+sed -i '/^#!/ s,guile[[:blank:]],%name ,' %buildroot%_bindir/guile-config
 
 %check
 make check
@@ -90,8 +83,7 @@ make check
 %_libdir/lib*.so.*
 %_libdir/lib%iname?*.so
 %_datadir/%iname/%sversion/*
-%_altdir/%name
-%_mandir/man1/%iname.1.*
+%_mandir/man1/%name.1.*
 
 %files devel
 %_bindir/%iname-snarf
@@ -104,6 +96,9 @@ make check
 %_libdir/pkgconfig/%iname-%sversion.pc
 
 %changelog
+* Thu Aug 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.8.7-alt6
+- get rid of alternatives
+
 * Mon Jul 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.8.7-alt5
 - stop providing guile-devel
 - drop devel-static subpackage

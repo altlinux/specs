@@ -1,6 +1,6 @@
 Name: guile22
 Version: 2.2.4
-Release: alt1
+Release: alt2
 
 Summary: A GNU implementation of Scheme
 License: GPL
@@ -8,8 +8,6 @@ Group: Development/Scheme
 Url: http://www.gnu.org/software/guile/ 
 
 Source: %name-%version-%release.tar
-
-Provides: /usr/bin/guile
 
 BuildRequires: libltdl-devel libgmp-devel libunistring-devel
 BuildRequires: libffi-devel libgc-devel libreadline-devel
@@ -49,13 +47,11 @@ echo %version > .tarball-version
 %makeinstall_std
 mv %buildroot%_bindir/guile %buildroot%_bindir/guile22
 mv %buildroot%_man1dir/guile.1 %buildroot%_man1dir/guile22.1
-install -pm0644 -D guile.alternatives %buildroot%_altdir/%name
 install -pm0644 -D guile.macros %buildroot%_rpmmacrosdir/guile
 
 %add_findreq_skiplist %_bindir/guile-config
 
 %files
-%_altdir/%name
 %_bindir/guile22
 %_libdir/libguile-2.2.so.*
 %exclude %_libdir/libguile-2.2.so.*-gdb.scm
@@ -76,6 +72,9 @@ install -pm0644 -D guile.macros %buildroot%_rpmmacrosdir/guile
 %_infodir/*.info*
 
 %changelog
+* Thu Aug 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.4-alt2
+- get rid of alternatives
+
 * Mon Jul 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.4-alt1
 - 2.2.4 released
 
