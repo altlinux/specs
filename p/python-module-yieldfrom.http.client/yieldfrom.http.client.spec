@@ -5,8 +5,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.2
-Release: alt2.git20150311.1
+Version: 0.1.3
+Release: alt1
 Summary: asyncio version of http.client
 License: PSFL
 Group: Development/Python
@@ -138,6 +138,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 10 2018 Ivan A. Melnikov <iv@altlinux.org> 0.1.3-alt1
+- Version 0.1.3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.2-alt2.git20150311.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
