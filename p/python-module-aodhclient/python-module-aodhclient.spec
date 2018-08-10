@@ -2,8 +2,8 @@
 %define oname aodhclient
 
 Name:       python-module-%oname
-Version:    0.8.0
-Release:    alt1.1
+Version:    1.0.0
+Release:    alt1
 Summary:    Python API and CLI for OpenStack Aodh
 Group:      Development/Python
 License:    ASL 2.0
@@ -29,6 +29,7 @@ BuildRequires: python-module-oslo.utils >= 2.0.0
 BuildRequires: python-module-keystoneauth1 >= 1.0.0
 BuildRequires: python-module-debtcollector
 BuildRequires: python-module-pyparsing
+BuildRequires: python-module-openstackdocstheme
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -46,6 +47,7 @@ BuildRequires: python3-module-oslo.utils >= 2.0.0
 BuildRequires: python3-module-keystoneauth1 >= 1.0.0
 BuildRequires: python3-module-debtcollector
 BuildRequires: python3-module-pyparsing
+BuildRequires: python3-module-openstackdocstheme
 %endif
 
 %description
@@ -145,6 +147,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Fri Jul 20 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
+- new version 1.0.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
