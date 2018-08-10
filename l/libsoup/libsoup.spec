@@ -11,8 +11,8 @@
 %def_disable debug
 
 Name: libsoup
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
@@ -231,6 +231,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Fri Aug 10 2018 Yuri N. Sedunov <aris@altlinux.org> 2.62.3-alt1
+- 2.62.3
+
 * Thu Jun 21 2018 Yuri N. Sedunov <aris@altlinux.org> 2.62.2-alt2
 - used -Wno-error=pointer-arith for %%e2k
 
