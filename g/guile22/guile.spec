@@ -1,6 +1,6 @@
 Name: guile22
 Version: 2.2.4
-Release: alt2
+Release: alt3
 
 Summary: A GNU implementation of Scheme
 License: GPL
@@ -23,8 +23,9 @@ users of Guile-based applications a choice of languages.
 Summary: A Guile development package
 Group: Development/Scheme
 Requires: %name = %version-%release
-Provides: guile-devel = %version-%release
 Conflicts: guile14-devel guile16-devel guile18-devel guile20-devel
+# should ease transition to default devel, to be removed soon
+Requires: guile-devel
 
 %description devel
 Guile is an implementation of the Scheme programming language, packaged
@@ -45,11 +46,17 @@ echo %version > .tarball-version
 
 %install
 %makeinstall_std
-mv %buildroot%_bindir/guile %buildroot%_bindir/guile22
-mv %buildroot%_man1dir/guile.1 %buildroot%_man1dir/guile22.1
-install -pm0644 -D guile.macros %buildroot%_rpmmacrosdir/guile
+sed -i 's,/usr/bin/guile,/usr/bin/guile22,' \
+   %buildroot%_bindir/guild %buildroot%_bindir/guile-config
 
-%add_findreq_skiplist %_bindir/guile-config
+mv %buildroot%_bindir/guild %buildroot%_bindir/guild22
+mv %buildroot%_bindir/guile %buildroot%_bindir/guile22
+mv %buildroot%_bindir/guile-config %buildroot%_bindir/guile22-config
+mv %buildroot%_bindir/guile-snarf %buildroot%_bindir/guile22-snarf
+rm %buildroot%_bindir/guile-tools
+mv %buildroot%_man1dir/guile.1 %buildroot%_man1dir/guile22.1
+
+%add_findreq_skiplist %_bindir/guile22-config
 
 %files
 %_bindir/guile22
@@ -60,18 +67,19 @@ install -pm0644 -D guile.macros %buildroot%_rpmmacrosdir/guile
 %_man1dir/guile22.1*
 
 %files devel
-%_bindir/guild
-%_bindir/guile-config
-%_bindir/guile-snarf
-%_bindir/guile-tools
+%_bindir/guild22
+%_bindir/guile22-config
+%_bindir/guile22-snarf
 %_includedir/guile/2.2
 %_libdir/libguile-2.2.so
 %_datadir/aclocal/guile.m4
 %_pkgconfigdir/guile-2.2.pc
-%_rpmmacrosdir/guile
 %_infodir/*.info*
 
 %changelog
+* Fri Aug 10 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.4-alt3
+- guile22-devel should not be included as direct BR, use guile-devel
+
 * Thu Aug 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.4-alt2
 - get rid of alternatives
 
