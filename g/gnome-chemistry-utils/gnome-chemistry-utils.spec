@@ -2,16 +2,18 @@
 %define api_ver 0.14
 %define _libexecdir %_prefix/libexec
 %def_disable mozilla
-%def_enable gnumeric
+%def_disable gnumeric
 %if_enabled gnumeric
-%define goffice_api_ver 0.10
 %define gnumeric_api_ver 1.12
 %define gnumeric_plugindir %(pkg-config --variable PluginDir libspreadsheet-%gnumeric_api_ver)
 %endif
 
+%define goffice_api_ver 0.10
+
+
 Name: gnome-chemistry-utils
 Version: %ver_major.17
-Release: alt7
+Release: alt8
 
 Summary: A set of chemical utilities
 Group: Sciences/Chemistry
@@ -133,6 +135,9 @@ spreadsheet program.
 %endif
 
 %changelog
+* Fri Aug 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.14.17-alt8
+- disabled gnumeric support incompatible with 1.12.42
+
 * Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 0.14.17-alt7
 - rebuilt for new gnumeric-1.12.39
 

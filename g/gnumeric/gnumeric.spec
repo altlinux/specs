@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.39
+Version: %ver_major.42
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -30,7 +30,7 @@ Provides: %name-light = %version-%release
 %define gsf_ver 1.14.42
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.39
+%define goffice_ver 0.10.42
 %if_with python
 # Provided by python_loader.so
 Provides: python%__python_version(Gnumeric)
@@ -41,14 +41,15 @@ Requires: libgnomeoffice%goffice_api_ver >= %goffice_ver
 Requires: libspreadsheet%{api_ver} = %version-%release
 Requires: %name-data = %version-%release
 
-BuildRequires: rpm-build-gnome bison flex help2man gtk-doc
+BuildRequires(pre): rpm-build-gnome rpm-build-gir rpm-build-python
+BuildRequires: bison flex help2man gtk-doc
 BuildRequires: libgnomeoffice%goffice_api_ver-devel >= %goffice_ver
 BuildRequires: libgsf-devel >= %gsf_ver
 BuildRequires: libgtk+3-devel
 BuildRequires: intltool yelp-tools zlib-devel librarian
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgsf-gir-devel libgnomeoffice%goffice_api_ver-gir-devel}
 %{?_with_perl:BuildRequires: perl-devel}
-%{?_with_python:BuildRequires: python-module-pygobject3-devel}
+%{?_with_python:BuildRequires: python-devel python-module-pygobject3-devel}
 %{?_with_gda:BuildRequires: libgda5-devel >= %gda_ver libgnomedb4-devel}
 %{?_enable_check:BuildRequires: xvfb-run}
 
@@ -117,10 +118,12 @@ GObject introspection devel data for the Gnumeric.
 %patch -p1
 %patch1
 #%patch2 -p1
-
 subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 
+subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
+
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
 	--disable-schemas-compile \
@@ -133,8 +136,22 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 
 %install
 %makeinstall_std
-
 %find_lang --with-gnome --output=%name.lang %name %name-%version %name-%version-functions
+
+# quick hack around includes
+# check it manually in the next version
+#find ./ -type f -name "*.h" -print0|xargs -r0 grep -h '<tools\/' --|sort|uniq|cut -f2 -d/|sed -e 's/>//'
+mkdir %buildroot%_includedir/libspreadsheet-%{api_ver}/spreadsheet/{tools,widgets}
+pushd %buildroot%_includedir/libspreadsheet-%{api_ver}/spreadsheet/tools
+for header in analysis-sign-test.h analysis-tools.h dao.h gnm-solver.h tools.h; do
+    ln -s ../$header  $header
+done
+#find ./ -type f -name "*.h" -print0|xargs -r0 grep -h '<widgets\/' --|sort|uniq|cut -f2 -d/|sed -e 's/>//'
+cd ../widgets
+for header in gnm-cell-renderer-text.h gnm-expr-entry.h gnm-notebook.h gnm-workbook-sel.h; do
+    ln -s ../$header  $header
+done
+popd
 
 %check
 %{?_enable_check:xvfb-run %make check}
@@ -142,12 +159,13 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 %files
 %_bindir/*
 %_libdir/%name/
-%_libdir/goffice/%goffice_api_ver/plugins/gnumeric/gnumeric.so
-%_libdir/goffice/%goffice_api_ver/plugins/gnumeric/plugin.xml
+%_libdir/goffice/%goffice_api_ver/plugins/%name/%name.so
+%_libdir/goffice/%goffice_api_ver/plugins/%name/plugin.xml
+%{?_with_python:%python_sitelibdir/gi/overrides/Gnm.py*}
 %doc AUTHORS ChangeLog NEWS BUGS README COPYING HACKING
 
 %exclude %_libdir/%name/%version/plugins/*/*.la
-%exclude %_libdir/goffice/%goffice_api_ver/plugins/gnumeric/gnumeric.la
+%exclude %_libdir/goffice/%goffice_api_ver/plugins/%name/%name.la
 # requires no more existing python(gsf)
 %exclude %_libdir/%name/%version/plugins/gnome-glossary
 
@@ -179,6 +197,9 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 %_pkgconfigdir/*
 
 %changelog
+* Fri Aug 10 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.42-alt1
+- 1.12.42
+
 * Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.39-alt1
 - 1.12.39
 
