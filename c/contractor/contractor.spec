@@ -1,7 +1,7 @@
 %define ver_major 0.3
 
 Name: contractor
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: service for sharing data between apps
@@ -12,7 +12,8 @@ Url: https://github.com/elementary/contractor
 # VCS: https://github.com/elementary/contractor.git
 Source: %name-%version.tar.gz
 
-BuildRequires: cmake gcc-c++ vala-tools libgee0.8-devel libgio-devel
+BuildRequires(pre): meson
+BuildRequires: vala-tools libdbus-devel libgee0.8-devel libgio-devel
 
 %description
 A sharing service that allows source apps to send their data to
@@ -23,11 +24,11 @@ have the destination apps hard coded into them.
 %setup
 
 %build
-%cmake
-%cmake_build VERBOSE=1
+%meson
+%meson_build
 
 %install
-%cmakeinstall_std
+%meson_install
 
 %files
 %_bindir/*
@@ -35,6 +36,9 @@ have the destination apps hard coded into them.
 %doc README*
 
 %changelog
+* Fri Aug 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
+- 0.3.4
+
 * Sun May 20 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
 - 0.3.3
 
