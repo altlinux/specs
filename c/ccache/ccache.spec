@@ -2,7 +2,7 @@
 
 Name: ccache
 Version: 3.4.2
-Release: alt1
+Release: alt2
 Summary: Compiler cache
 License: GPLv3+
 Group: Development/Tools
@@ -10,6 +10,7 @@ Url: http://ccache.samba.org/
 
 Source: %name-%version.tar
 Patch1: ccache-fedora-rounding.patch
+Patch2: ccache-alt-version.patch
 
 Provides: ccache3 = %version-%release
 Obsoletes: ccache3
@@ -25,11 +26,14 @@ a 5 to 10 times speedup in common compilations.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 rm -rfv zlib/
+
+sed -i -e "s:@VERSION@:%version:g" dev.mk.in
 
 %build
 %autoreconf
-%configure --enable-dev
+%configure
 %make_build all docs
 
 %install
@@ -47,6 +51,9 @@ EOF
 %_sysconfdir/buildreqs/packages/ignore.d/*
 
 %changelog
+* Fri Aug 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.2-alt2
+- Set ccache version info (Closes: #33939).
+
 * Thu May 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.2-alt1
 - Updated to upstream version 3.4.2.
 
