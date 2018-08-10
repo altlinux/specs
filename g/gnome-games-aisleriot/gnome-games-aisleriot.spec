@@ -7,7 +7,7 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: A collection of card games
 Group: Games/Cards
@@ -29,10 +29,11 @@ Requires: pysol-cardsets
 
 %define glib_ver 2.32.0
 %define gtk_ver 3.0.0
+%define guile_ver 22
 
 BuildRequires: intltool desktop-file-utils yelp-tools libappstream-glib-devel libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libGConf-devel librsvg-devel libcanberra-gtk3-devel
-BuildRequires: libICE-devel libSM-devel guile22 guile22-devel
+BuildRequires: libICE-devel libSM-devel guile%guile_ver guile%guile_ver-devel
 BuildRequires: /proc
 
 %description
@@ -43,6 +44,7 @@ which are easy to play with the aid of a mouse.
 %setup -n %_name-%version
 
 %build
+export ac_cv_path_GUILE=%_bindir/guile%guile_ver
 %autoreconf
 %configure \
     --with-pysol-card-theme-path=%_datadir/games/pysol
@@ -78,6 +80,9 @@ fi
 %exclude %_libdir/valgrind/aisleriot.supp
 
 %changelog
+* Fri Aug 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.5-alt2
+- fixed guile binary name
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.5-alt1
 - 3.22.5
 
