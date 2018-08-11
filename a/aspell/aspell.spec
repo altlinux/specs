@@ -1,6 +1,6 @@
 Name: aspell
 Version: 0.60.6.1
-Release: alt2
+Release: alt3
 
 Summary: An Open Source interactive spelling checker program
 License: LGPL
@@ -13,6 +13,7 @@ Source101: %name-ispell.alternatives
 
 Patch1: %name-0.60.6.1-gcc7-fixes.patch
 
+BuildRequires(pre): rpm-macros-alternatives
 BuildRequires: gcc-c++ libncursesw-devel
 Requires: lib%name = %version-%release
 
@@ -127,6 +128,9 @@ rm -rf %buildroot%_libdir/%name/*.la
 %_man1dir/*.1.*
 
 %changelog
+* Sat Aug 11 2018 Alexei Takaseev <taf@altlinux.org> 0.60.6.1-alt3
+- Add BR: rpm-macros-alternatives
+
 * Sat Jun 09 2018 Alexei Takaseev <taf@altlinux.org> 0.60.6.1-alt2
 - Fix build with gcc7 (patch from Fedora)
 
