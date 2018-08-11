@@ -62,7 +62,11 @@
 %def_with storage_scsi
 %def_with storage_iscsi
 %def_with storage_disk
+%ifarch x86_64 aarch64
 %def_with storage_rbd
+%else
+%def_without storage_rbd
+%endif
 %def_with storage_mpath
 %def_with storage_gluster
 %def_with storage_zfs
@@ -79,7 +83,7 @@
 %def_without netcf
 %def_with udev
 %def_without hal
-%def_with yajl
+%def_with jansson
 %def_with sanlock
 %if_enabled lxc
 %def_with fuse
@@ -125,7 +129,7 @@
 %def_without bash_completion 
 
 Name: libvirt
-Version: 4.5.0
+Version: 4.6.0
 Release: alt1%ubt
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -149,7 +153,7 @@ BuildRequires(pre): rpm-build-ubt
 %{?_with_libxl:BuildRequires: xen-devel}
 %{?_with_hal:BuildRequires: libhal-devel}
 %{?_with_udev:BuildRequires: libudev-devel libpciaccess-devel}
-%{?_with_yajl:BuildRequires: libyajl-devel}
+%{?_with_jansson:BuildRequires: libjansson-devel >= 2.5}
 %{?_with_sanlock:BuildRequires: sanlock-devel >= 1.8}
 %{?_with_libpcap:BuildRequires: libpcap-devel}
 %{?_with_libnl:BuildRequires: libnl-devel}
@@ -201,7 +205,7 @@ BuildRequires: /sbin/rmmod
 BuildRequires: openvswitch
 BuildRequires: radvd
 BuildRequires: dnsmasq
-
+BuildRequires: libxfs-devel
 
 %description
 Libvirt is a C toolkit to interact with the virtualization capabilities
@@ -323,7 +327,6 @@ an implementation of the secret key APIs.
 %package daemon-driver-storage
 Summary: Storage driver plugin including all backends for the libvirtd daemon
 Group: System/Libraries
-BuildArch: noarch
 %if_with storage_fs
 Requires: libvirt-daemon-driver-storage-fs = %EVR
 %endif
@@ -648,6 +651,8 @@ Requires: gettext
 # For virConnectGetSysinfo
 Requires: dmidecode
 # Needed by virt-pki-validate script
+# We dlopen(libjansson.so.4), so need an explicit dep
+Requires: libjansson
 Requires: gnutls-utils
 # Needed for probing the power management features of the host.
 Conflicts: %name < 0.9.11
@@ -791,7 +796,7 @@ LOADERS="$LOADERS_OLD:$LOADERS_NEW"
 		%{subst_with netcf} \
 		%{subst_with udev} \
 		%{subst_with hal} \
-		%{subst_with yajl} \
+		%{subst_with jansson} \
 		%{subst_with sanlock} \
 		%{subst_with fuse} \
 		%{subst_with dbus} \
@@ -1287,6 +1292,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Sat Aug 11 2018 Alexey Shabalin <shaba@altlinux.org> 4.6.0-alt1%ubt
+- 4.6.0
+- build with ceph storage support only for x86_64 and aarch64
+
 * Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 4.5.0-alt1%ubt
 - 4.5.0
 - not install zfs storage support by default
