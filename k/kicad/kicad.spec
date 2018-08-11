@@ -1,31 +1,47 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
+%define majver 5.0
+
+Name: kicad
 Summary: An open source software for the creation of electronic schematic diagrams
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
-Name: kicad
-Version: 4.0.7
-Release: alt2.1
+Version: %majver.0
+Release: alt1
 Epoch: 1
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-# Source-url: https://github.com/KiCad/kicad-source-mirror/archive/%version.tar.gz
-Patch: kicad-boost-1_61-boost-context-changes.patch
+Patch: fix_python_sitepackages_path.patch
+Patch1: %name-%version-nostrip.patch
+Patch2: %name-%version-freerouting.patch
 License: GPLv2+
-Group: Sciences/Computer science
+Group: Engineering
 Url: https://code.launchpad.net/kicad
 #Url: https://github.com/KiCad/kicad-source-mirror.git
 
 BuildRequires(pre): cmake rpm-macros-cmake
-# Automatically added by buildreq on Mon Sep 28 2015
-# optimized out: at-spi2-atk boost-devel boost-devel-headers boost-polygon-devel cmake cmake-modules fontconfig libGL-devel libGLU-devel libX11-devel libat-spi2-core libcairo-gobject libcom_err-devel libgdk-pixbuf libkrb5-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server pkg-config python-base python-devel python-modules swig-data xorg-xproto-devel xz
-BuildRequires: boost-devel boost-asio-devel boost-asio-devel boost-context-devel boost-filesystem-devel boost-geometry-devel boost-interprocess-devel boost-locale-devel boost-program_options-devel ccmake doxygen gcc-c++ libGLEW-devel libcairo-devel libssl-devel swig libwxGTK3.1-gtk2-devel pkgconfig(gobject-2.0) libpcre-devel libpixman-devel pkgconfig(harfbuzz) pkgconfig(expat) pkgconfig(libdrm) pkgconfig(xdmcp) pkgconfig(xdamage) pkgconfig(xxf86vm) dos2unix libcurl-devel
-BuildRequires: openmpi-devel 
+BuildRequires(pre): rpm-build-python
+BuildRequires: boost-devel boost-asio-devel boost-asio-devel boost-context-devel boost-filesystem-devel boost-geometry-devel boost-interprocess-devel boost-locale-devel boost-program_options-devel
+BuildRequires: ccmake gcc-c++
+BuildRequires: compat-libwxGTK3.0-gtk2-devel python-module-wx3.0-gtk2-devel
+BuildRequires: libGLEW-devel libcairo-devel libssl-devel swig pkgconfig(gobject-2.0) libpcre-devel libpixman-devel pkgconfig(harfbuzz) pkgconfig(expat) pkgconfig(libdrm) pkgconfig(xdmcp) pkgconfig(xdamage) pkgconfig(xxf86vm) libcurl-devel
+BuildRequires: doxygen
+BuildRequires: dos2unix
+BuildRequires: python-devel
+BuildRequires: libglm-devel
+BuildRequires: ngspice-devel
+BuildRequires: OCE-devel
+BuildRequires: openmpi-devel
 BuildRequires: ImageMagick-tools
 BuildRequires: desktop-file-utils
-Requires: %name-data = %version
-Requires: %name-library
-Requires: %name-doc
-Requires: %name-i18n
-%add_python_req_skip kicad
+Requires: %name-data = %EVR
+Requires: kicad-packages3D >= %majver
+Requires: kicad-symbols >= %majver
+Requires: kicad-footprints >= %majver
+Requires: kicad-templates >= %majver
+Requires: %name-doc >= %epoch:%majver
+Requires: %name-i18n >= %majver
 
 %description
 Kicad is an open source (GPL) software for the creation of electronic
@@ -43,6 +59,18 @@ Gerbview: GERBER viewer (photoplotter documents).
 Kicad - это программное обеспечение с открытым исходным кодом для
 проектирования электронных схем и получения на их основе печатных плат.
 
+Включает в себя редактор схем, средство трассировки печатных плат,
+средства трёхмерного просмотра печатных плат в конечном виде.
+
+Kicad состоит из 5 основных компонентов:
+
+ * kicad — менеджер проектов
+ * eeschema — редактор схем
+ * pcbnew — редактор печатных плат
+ * gerbview — просмотр GERBER
+ * cvpcb — выбор мест для компонентов
+
+На заметку:
 Для использования рамки ГОСТ необходимо выбрать шаблон
 gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом окне
 "Настройки страницы" в поле "Файл описания разметки листа".
@@ -84,15 +112,19 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 %prep
 %setup -n %name-%version
 %patch -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %cmake \
-    -DBUILD_SHARED_LIBS:BOOL=OFF \
-    -DDEFAULT_INSTALL_PATH=/usr \
+    -DUSE_WX_GRAPHICS_CONTEXT=OFF \
+    -DUSE_WX_OVERLAY=OFF \
+    -DDEFAULT_INSTALL_PATH=%prefix \
     -DBUILD_GITHUB_PLUGIN=ON \
     -DKICAD_SCRIPTING=ON \
     -DKICAD_SCRIPTING_MODULES=ON \
-    -DKICAD_SCRIPTING_WXPYTHON=OFF \
+    -DKICAD_SCRIPTING_WXPYTHON=ON \
+    -DKICAD_SCRIPTING_ACTION_MENU=OFF \
     -DKICAD_SKIP_BOOST=ON
 
 %cmake_build
@@ -102,27 +134,30 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 
 #fix line ending
 dos2unix %buildroot%_desktopdir/*.desktop
-dos2unix %buildroot%_datadir/mimelnk/application/*.desktop
 
 #validate desktop files
 desktop-file-validate %buildroot%_desktopdir/*.desktop
-#desktop-file-validate %buildroot%_datadir/mimelnk/application/*.desktop
 
 %files
 %_bindir/*
 %_desktopdir/*.desktop
-%exclude %_desktopdir/cvpcb.desktop
-%_libexecdir/%name
-%_datadir/mimelnk/application/*.desktop
+%_libdir/*.so*
+%_libdir/%name/
+%python_sitelibdir/*
 
 %files data
 %doc %_docdir/%name
-%_datadir/mime/packages/kicad.xml
+%_datadir/appdata/%name.appdata.xml
 %_iconsdir/hicolor/*/mimetypes/application-x-*.*
 %_iconsdir/hicolor/*/apps/*.*
 %_datadir/%name/
+%_datadir/mime/packages/*
 
 %changelog
+* Thu Jul 19 2018 Anton Midyukov <antohami@altlinux.org> 1:5.0.0-alt1
+- New version 5.0.0
+- Change group Engineering
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.0.7-alt2.1
 - NMU: rebuilt with boost-1.67.0
 
