@@ -6,21 +6,20 @@
 %def_without ver_old
 
 %define prog_name            postgresql
-%define postgresql_major     9
-%define postgresql_minor     6
-%define postgresql_subminor  10
+%define postgresql_major     10
+%define postgresql_minor     5
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
-%define libpq_minor          9
+%define libpq_minor          10
 
 # Look at: src/interfaces/ecpg/ecpglib/Makefile
 %define libecpg_major        6
-%define libecpg_minor        8
+%define libecpg_minor        10
 
-Name: %prog_name%postgresql_major.%postgresql_minor-1C
-Version: %postgresql_major.%postgresql_minor.%postgresql_subminor
+Name: %prog_name%postgresql_major-1C
+Version: %postgresql_major.%postgresql_minor
 Release: alt%postgresql_altrel
 
 %define PGSQL pgsql
@@ -52,14 +51,12 @@ Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
 Patch9: 0008-ALT-SeLinux-user-name.patch
 
 # 1C
-Patch100: 00001-1c_FULL_96.patch
+Patch100: 00001-1c_FULL_100_EXT.patch
 Patch102: 00002-online_analyze.patch
 Patch103: 00003-plantuner.patch
-Patch104: 00004-postgresql-1c-9.6.patch
-Patch105: 00005-exists_opt-2.patch
-Patch106: 00006-coalesce_cost-1.patch
-Patch107: 00007-drop-orphan-tt.patch
-Patch108: 00008-receivexlog-umask.patch
+Patch104: 00004-postgresql-1c-10.patch
+Patch105: 00005-coalesce_cost.patch
+Patch106: 00006-pg_receivewal.patch
 
 Requires: libpq%libpq_major >= %version-%release
 
@@ -295,8 +292,6 @@ database.
 %patch104 -p1
 %patch105 -p1
 %patch106 -p1
-%patch107 -p1
-%patch108 -p1
 
 
 %build
@@ -366,7 +361,7 @@ install -m 755 postgresql-check-db-dir %buildroot%_bindir/postgresql-check-db-di
 
 # Fix initscript versions
 
-sed -i 's,@VERSION@,%postgresql_major.%postgresql_minor,' %buildroot%_initdir/%prog_name
+sed -i 's,@VERSION@,%postgresql_major,' %buildroot%_initdir/%prog_name
 sed -i 's,@FULLVERSION@,%version,' %buildroot%_initdir/%prog_name
 
 # PGDATA needs removal of group and world permissions due to pg_pwd hole.
@@ -394,28 +389,27 @@ cp -a COPYRIGHT README \
     doc/{KNOWN_BUGS,MISSING_FEATURES,TODO,bug.template} \
     src/tutorial %buildroot%docdir/
 
-%find_lang libpq%libpq_major-%postgresql_major.%postgresql_minor
-%find_lang pg_dump-%postgresql_major.%postgresql_minor
-%find_lang postgres-%postgresql_major.%postgresql_minor
-%find_lang psql-%postgresql_major.%postgresql_minor
-%find_lang pg_resetxlog-%postgresql_major.%postgresql_minor
-%find_lang pg_controldata-%postgresql_major.%postgresql_minor
-%find_lang pgscripts-%postgresql_major.%postgresql_minor
-%find_lang initdb-%postgresql_major.%postgresql_minor
-%find_lang pg_config-%postgresql_major.%postgresql_minor
-%find_lang pg_ctl-%postgresql_major.%postgresql_minor
-%find_lang ecpg-%postgresql_major.%postgresql_minor
-%find_lang ecpglib%libecpg_major-%postgresql_major.%postgresql_minor
-%find_lang plperl-%postgresql_major.%postgresql_minor
-%find_lang plpgsql-%postgresql_major.%postgresql_minor
-%find_lang plpython-%postgresql_major.%postgresql_minor
-%find_lang pltcl-%postgresql_major.%postgresql_minor
-%find_lang pg_basebackup-%postgresql_major.%postgresql_minor
+%find_lang libpq%libpq_major-%postgresql_major
+%find_lang pg_dump-%postgresql_major
+%find_lang postgres-%postgresql_major
+%find_lang psql-%postgresql_major
+%find_lang pg_controldata-%postgresql_major
+%find_lang pgscripts-%postgresql_major
+%find_lang initdb-%postgresql_major
+%find_lang pg_config-%postgresql_major
+%find_lang pg_ctl-%postgresql_major
+%find_lang ecpg-%postgresql_major
+%find_lang ecpglib%libecpg_major-%postgresql_major
+%find_lang plperl-%postgresql_major
+%find_lang plpgsql-%postgresql_major
+%find_lang plpython-%postgresql_major
+%find_lang pltcl-%postgresql_major
+%find_lang pg_basebackup-%postgresql_major
 
-cat psql-%postgresql_major.%postgresql_minor.lang pg_dump-%postgresql_major.%postgresql_minor.lang pgscripts-%postgresql_major.%postgresql_minor.lang pg_basebackup-%postgresql_major.%postgresql_minor.lang > main.lang
-cat postgres-%postgresql_major.%postgresql_minor.lang pg_resetxlog-%postgresql_major.%postgresql_minor.lang pg_controldata-%postgresql_major.%postgresql_minor.lang initdb-%postgresql_major.%postgresql_minor.lang pg_ctl-%postgresql_major.%postgresql_minor.lang plpgsql-%postgresql_major.%postgresql_minor.lang > server.lang
-cat pg_config-%postgresql_major.%postgresql_minor.lang> devel.lang
-cat ecpg-%postgresql_major.%postgresql_minor.lang ecpglib%libecpg_major-%postgresql_major.%postgresql_minor.lang > ecpg.lang
+cat psql-%postgresql_major.lang pg_dump-%postgresql_major.lang pgscripts-%postgresql_major.lang pg_basebackup-%postgresql_major.lang > main.lang
+cat postgres-%postgresql_major.lang pg_controldata-%postgresql_major.lang initdb-%postgresql_major.lang pg_ctl-%postgresql_major.lang plpgsql-%postgresql_major.lang > server.lang
+cat pg_config-%postgresql_major.lang> devel.lang
+cat ecpg-%postgresql_major.lang ecpglib%libecpg_major-%postgresql_major.lang > ecpg.lang
 
 # buildreq substitution rules.
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
@@ -507,10 +501,8 @@ fi
 %files -f main.lang
 %_bindir/clusterdb
 %_bindir/createdb
-%_bindir/createlang
 %_bindir/createuser
 %_bindir/dropdb
-%_bindir/droplang
 %_bindir/dropuser
 %_bindir/pg_dump
 %_bindir/pg_dumpall
@@ -522,13 +514,11 @@ fi
 %_bindir/pg_test_fsync
 %_bindir/pg_test_timing
 %_bindir/pg_isready
-%_bindir/pg_xlogdump
+%_bindir/pg_recvlogical
 %_man1dir/clusterdb.1*
 %_man1dir/createdb.1*
-%_man1dir/createlang.1*
 %_man1dir/createuser.1*
 %_man1dir/dropdb.1*
-%_man1dir/droplang.1*
 %_man1dir/dropuser.1*
 %_man1dir/pg_dump.1*
 %_man1dir/pg_restore.1*
@@ -539,6 +529,8 @@ fi
 %_man1dir/reindexdb.1*
 %_man1dir/vacuumdb.1*
 %_man1dir/pg_basebackup.1*
+%_man1dir/pg_isready.1*
+%_man1dir/pg_recvlogical.1*
 %_man7dir/*
 %dir %docdir
 %docdir/KNOWN_BUGS
@@ -574,6 +566,7 @@ fi
 %dir %_libdir/pgsql
 %_libdir/pgsql/_int.so
 %_libdir/pgsql/adminpack.so
+%_libdir/pgsql/amcheck.so
 %_libdir/pgsql/auto_explain.so
 %_libdir/pgsql/autoinc.so
 %_libdir/pgsql/bloom.so
@@ -602,6 +595,7 @@ fi
 %_libdir/pgsql/pg_trgm.so
 %_libdir/pgsql/pg_visibility.so
 %_libdir/pgsql/pgcrypto.so
+%_libdir/pgsql/pgoutput.so
 %_libdir/pgsql/postgres_fdw.so
 %_libdir/pgsql/pgrowlocks.so
 %_libdir/pgsql/pgstattuple.so
@@ -613,7 +607,6 @@ fi
 %_libdir/pgsql/tcn.so
 %_libdir/pgsql/test_decoding.so
 %_libdir/pgsql/timetravel.so
-%_libdir/pgsql/tsearch2.so
 %_libdir/pgsql/tsm_system_rows.so
 %_libdir/pgsql/tsm_system_time.so
 %_libdir/pgsql/passwordcheck.so
@@ -627,7 +620,7 @@ fi
 %_libdir/pgsql/online_analyze.so
 %_libdir/pgsql/plantuner.so
 
-%files -f libpq%libpq_major-%postgresql_major.%postgresql_minor.lang -n %libpq_name
+%files -f libpq%libpq_major-%postgresql_major.lang -n %libpq_name
 %_libdir/libpq.so.%libpq_major
 %_libdir/libpq.so.%libpq_major.*
 
@@ -644,20 +637,24 @@ fi
 %_bindir/postgresql-check-db-dir
 %_bindir/pg_controldata
 %_bindir/pg_ctl
-%_bindir/pg_receivexlog
-%_bindir/pg_resetxlog
 %_bindir/postgres
 %_bindir/postmaster
 %_bindir/pg_upgrade
+%_bindir/pg_rewind
+%_bindir/pg_receivewal
+%_bindir/pg_resetwal
+%_bindir/pg_waldump
 
 %_man1dir/initdb.1*
 %_man1dir/pg_controldata.1*
-%_man1dir/pg_receivexlog.1*
-%_man1dir/pg_resetxlog.1*
 %_man1dir/pg_ctl.1*
 %_man1dir/pg_upgrade.1*
 %_man1dir/postgres.1*
 %_man1dir/postmaster.1*
+%_man1dir/pg_rewind.1*
+%_man1dir/pg_receivewal.1*
+%_man1dir/pg_resetwal.1*
+%_man1dir/pg_waldump.1*
 %dir %_libdir/%PGSQL
 %_libdir/%PGSQL/plpgsql.so
 %_libdir/%PGSQL/dict_snowball.so
@@ -680,7 +677,6 @@ fi
 %_datadir/%PGSQL/sql_features.txt
 %_datadir/%PGSQL/system_views.sql
 %_datadir/%PGSQL/snowball_create.sql
-%_datadir/%PGSQL/unknown.pltcl
 %_datadir/%PGSQL/extension
 %_localstatedir/%PGSQL
 #_sysconfdir/syslog.d/%prog_name
@@ -749,19 +745,16 @@ fi
 %_sysconfdir/buildreqs/packages/substitute.d/%libecpg_name-devel-static
 %endif
 
-%files -f pltcl-%postgresql_major.%postgresql_minor.lang tcl
+%files -f pltcl-%postgresql_major.lang tcl
 %dir %_libdir/%PGSQL
-%_bindir/pltcl_delmod
-%_bindir/pltcl_listmod
-%_bindir/pltcl_loadmod
 %_libdir/%PGSQL/pltcl.so
 
-%files -f plperl-%postgresql_major.%postgresql_minor.lang perl
+%files -f plperl-%postgresql_major.lang perl
 %dir %_libdir/%PGSQL
 %_libdir/%PGSQL/plperl.so
 %_libdir/%PGSQL/hstore_plperl.so
 
-%files -f plpython-%postgresql_major.%postgresql_minor.lang python
+%files -f plpython-%postgresql_major.lang python
 %dir %docdir
 %dir %_libdir/%PGSQL
 %_libdir/%PGSQL/plpython2.so
@@ -769,9 +762,23 @@ fi
 %_libdir/%PGSQL/ltree_plpython2.so
 
 %changelog
-* Sat Aug 11 2018 Alexei Takaseev <taf@altlinux.org> 9.6.10-alt1
-- 9.6.10
+* Sat Aug 11 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt1
+- 10.5
 - Fix CVE-2018-10915, CVE-2018-10925
+
+* Mon Jul 16 2018 Alexei Takaseev <taf@altlinux.org> 10.4-alt1
+- 10.4
+- Re-applay patches from 1C:
+    * 00001-1c_FULL_100_EXT.patch
+    * 00004-postgresql-1c-10.patch
+    * 00005-coalesce_cost.patch
+- Remove patches:
+    * 00005-exists_opt-2.patch
+    * 00006-coalesce_cost-1.patch
+    * 00007-drop-orphan-tt.patch
+    * 00008-receivexlog-umask.patch
+- Add patch:
+    * 00006-pg_receivewal.patch
 
 * Wed May 09 2018 Alexei Takaseev <taf@altlinux.org> 9.6.9-alt1
 - 9.6.9
