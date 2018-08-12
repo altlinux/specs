@@ -1,4 +1,4 @@
-%define ver_major 0.30
+%define ver_major 0.31
 %def_disable static
 
 Name: libwacom
@@ -72,6 +72,7 @@ developing applications that use %name.
 %files
 %_bindir/%name-list-local-devices
 %_libdir/*.so.*
+%_man1dir/libwacom-list-local-devices.1*
 %doc NEWS README COPYING
 
 %files devel
@@ -89,6 +90,9 @@ developing applications that use %name.
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Sat Aug 11 2018 Yuri N. Sedunov <aris@altlinux.org> 0.31-alt1
+- 0.31
+
 * Tue May 22 2018 Yuri N. Sedunov <aris@altlinux.org> 0.30-alt1
 - 0.30 (new %%url)
 
