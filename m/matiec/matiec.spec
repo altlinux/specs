@@ -1,6 +1,6 @@
 Name: matiec
 Version: 20180420
-Release: alt1.1
+Release: alt2
 
 Summary: IEC 61131-3 compiler
 Summary(ru_RU.UTF-8): МЭК 61131-3 компилятор
@@ -12,6 +12,10 @@ Url: https://bitbucket.org/mjsousa/matiec
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+
+# see http://beremiz-devel.2374573.n4.nabble.com/Beremiz-devel-The-output-file-of-beremiz-is-real-machine-code-td361.html#a383
+Patch: alt.patch
+
 BuildPreReq: gcc-c++ flex
 
 %description
@@ -64,6 +68,7 @@ This standard defines 5 programming languages:
 
 %prep
 %setup
+%patch -p2
 
 %build
 %autoreconf
@@ -82,6 +87,9 @@ cp -r lib/* %buildroot/%_libexecdir/%name
 %exclude %_libdir/*.a
 
 %changelog
+* Sun Aug 12 2018 Anton Midyukov <antohami@altlinux.org> 20180420-alt2
+- Revert commits 2228799, ce81fa6, 0b275a2
+
 * Sat Jun 16 2018 Anton Midyukov <antohami@altlinux.org> 20180420-alt1.1
 - Rebuilt for aarch64
 
