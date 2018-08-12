@@ -1,10 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name blockdev
-%define ver_major 2.18
+%define ver_major 2.19
 %define rev 1
 
+%ifnarch %ix86 x86_64
 %def_without vdo
+%else
+%def_without vdo
+%endif
 
 %def_with dmraid
 
@@ -479,6 +483,7 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %_includedir/blockdev/sizes.h
 %_includedir/blockdev/exec.h
 %_includedir/blockdev/module.h
+%_includedir/blockdev/dbus.h
 %_pkgconfigdir/blockdev-utils.pc
 
 %files btrfs
@@ -614,6 +619,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 
 
 %changelog
+* Sat Aug 11 2018 Yuri N. Sedunov <aris@altlinux.org> 2.19-alt1
+- 2.19
+
 * Thu Jun 21 2018 Yuri N. Sedunov <aris@altlinux.org> 2.18-alt1
 - 2.18 with
 - prepared optional vdo* subpackages (vdo and kvdo required)
