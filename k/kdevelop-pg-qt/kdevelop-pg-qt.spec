@@ -1,34 +1,21 @@
-%define _unpackaged_files_terminate_build 1
-%define unstable 0
-%if %unstable
-%define pkg_sfx -unstable
-%else
-%define pkg_sfx %nil
-%endif
-%define first_unstable_ver 0.9.80
-%define obsoleted_unstable_version 1.0.0
-
-Name: kdevelop%pkg_sfx-pg-qt
-Version: 1.0.0
-Release: alt4.git
-%if %unstable
-Conflicts: kdevelop-pg-qt <= %first_unstable_ver
-Provides: kdevelop-pg-qt = %version-%release
-%else
-Obsoletes: kdevelop-unstable-pg-qt <= %obsoleted_unstable_version
-%endif
+Name: kdevelop-pg-qt
+Version: 2.1.0
+Release: alt1
+Obsoletes: kdevelop-unstable-pg-qt
 
 Group: Development/Other
 Summary: KDevelop parser generator
 Url: http://techbase.kde.org/Development/KDevelop-PG-Qt_Introduction
 License: GPLv2+
 
-Source: kdevelop-pg-qt-%version.tar.gz
-Patch0: %name-post-%version.patch
+Source: v%version.tar.gz
+Provides: kdevelop-pg-qt-devel
+Obsoletes: kdevelop-unstable-pg-qt-devel < %version
 
-# Automatically added by buildreq on Tue Oct 26 2010 (-bi)
-#BuildRequires: flex gcc-c++ glib2-devel glibc-devel-static kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libqt3-devel libxkbfile-devel qt4-designer
-BuildRequires: flex gcc-c++ glibc-devel kde4libs-devel kde-common-devel
+# Automatically added by buildreq on Sun Aug 12 2018
+# optimized out: cmake cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libqt5-core libqt5-test libstdc++-devel python-base python-modules python3-base sh3
+BuildRequires: extra-cmake-modules flex git-core libssl-devel python3 qt5-base-devel
+BuildRequires(pre): rpm-build-kf5
 
 %description
 KDevelop-PG-Qt is a parser generator written in readable source-code and
@@ -36,44 +23,36 @@ generating readable source-code. Its syntax was inspirated by AntLR. It
 implements the visitor-pattern and uses the Qt library. That is why it
 is ideal to be used in Qt-/KDE-based applications like KDevelop.
 
-%package devel
-Summary: KDevelop-PG-Qt development files
-Group: Development/Other
-Requires: %name = %version
-%if %unstable
-Conflicts: kdevelop-pg-qt-devel <= %first_unstable_ver
-Provides: kdevelop-pg-qt-devel = %version-%release
-%else
-Obsoletes: kdevelop-unstable-pg-qt-devel <= %obsoleted_unstable_version
-%endif
-%description devel
-This package contains development files of KDevelop-PG-Qt.
-
 %prep
-%setup -q -n kdevelop-pg-qt-%version
-%patch0 -p1
+%setup -n kdevelop-pg-qt-%version
 
 %build
-%K4build
+%K5build
 
 %install
-%K4install
+%K5install
 
 %files
-%_K4bindir/kdev-pg-qt
-
-%files devel
+%doc README AUTHORS
+%_bindir/kdev-pg-qt
 %_includedir/kdevelop-pg-qt
 %_libdir/cmake/*
 
 %changelog
+* Sun Aug 12 2018 Fr. Br. George <george@altlinux.ru> 2.1.0-alt1
+- Autobuild version bump to 2.1.0
+
+* Sun Aug 12 2018 Automated package hasher <george@altlinux.org> 2.0.0-alt1
+- New major version (using qt5)
+- Join -devel package (see PACKAGING)
+
 * Tue Apr 30 2013 Alexey Morozov <morozov@altlinux.org> 1.0.0-alt4.git
 - new post-1.0 git snapshot (97e140477e7247ec8c823cdc54500b5691d9a896)
 
 * Thu Oct 18 2012 Alesey Morozov <morozov@altlinux.org> 1.0.0-alt3.git
 - new post-1.0 git snapshot (2d403c527a697e91441d2ecb94a947d04c55bafb)
 
-* Thu Mar 21 2012 Alexey Morozov <morozov@altlinux.org> 1.0.0-alt2
+* Wed Mar 21 2012 Alexey Morozov <morozov@altlinux.org> 1.0.0-alt2
 - Dropped -unstable suffix because of the official release
 
 * Sun Jan 29 2012 Alexey Morozov <morozov@altlinux.org> 1.0.0-alt1
