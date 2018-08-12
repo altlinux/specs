@@ -1,19 +1,15 @@
 Name: cudd
 Version: 2.5.1
-Release: alt2
+Release: alt3
 Summary: CUDD: Colorado University Decision Diagram Package
 License: BSD
 Group: Sciences/Mathematics
 Url: http://vlsi.colorado.edu/~fabio/CUDD/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# ftp://vlsi.colorado.edu/pub/cudd-2.5.1.tar.gz
 Source: %name-%version.tar
-
 Requires: lib%name = %EVR
 
 BuildRequires(pre): rpm-macros-make
-BuildPreReq: gcc-c++
+BuildPreReq: gcc-c++ libstdc++-devel
 
 %description
 The CUDD package provides functions to manipulate Binary Decision
@@ -100,8 +96,12 @@ This package contains development documentation for %name.
 
 %ifarch x86_64
 sed -i 's|#@x86_64@||' Makefile
-%else
+%endif
+%ifarch i586
 sed -i 's|#@i586@||' Makefile
+%endif
+%ifarch aarch64
+sed -i 's|#@aarch64@||' Makefile
 %endif
 
 %build
@@ -143,6 +143,9 @@ ln -s st/doc st.doc
 %doc *.doc
 
 %changelog
+* Sun Aug 12 2018 Vladislav Zavjalov <slazav@altlinux.org> 2.5.1-alt3
+- fix aarch64 build (do not use -malign-double compiler flag)
+
 * Mon Mar 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt2
 - Added all symbols from libutil.a into libmtr.so
 
