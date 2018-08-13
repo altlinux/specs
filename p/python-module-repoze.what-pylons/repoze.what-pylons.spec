@@ -1,17 +1,14 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20110412.1.1.1.1
 %define oname repoze.what-pylons
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 1.0.1
-#Release: alt2.git20110412.1.1
+Release: alt3.git20110412
 Summary: The repoze.what v1 plugin for Pylons/TG2 integration
 License: BSD
 Group: Development/Python
 Url: https://github.com/repoze/repoze.what-pylons
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/repoze/repoze.what-pylons.git
 Source: %name-%version.tar
@@ -125,7 +122,6 @@ pushd docs
 popd
 
 %install
-export PYTHONPATH=%python_sitelibdir:%python_sitelibdir_noarch:$PWD
 %python_install
 %if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
@@ -169,6 +165,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Aug 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt3.git20110412
+- NMU: fixed build.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.1-alt2.git20110412.1.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
