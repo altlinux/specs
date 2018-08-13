@@ -1,12 +1,11 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 8.2
-Release: alt1
+Release: alt2
 
 Summary: Installer files for Centaurus distro 
 License: GPL
 Group: System/Configuration/Other
-BuildArch: noarch
 
 Source: %name-%version.tar
 
@@ -17,7 +16,7 @@ Installer files for Centaurus distro.
 Summary: Installer stage2
 License: GPL
 Group: System/Configuration/Other
-Provides: installer-%distro-stage2 = %name-%version
+Provides: installer-%distro-stage2 = %version
 Requires: installer-stage2
 #modules
 Requires: alterator-sysconfig
@@ -34,7 +33,7 @@ Centaurus Installer stage2.
 Summary: Installer stage3
 License: GPL
 Group: System/Configuration/Other
-Provides: installer-%distro-stage3 = %name-%version
+Provides: installer-%distro-stage3 = %version
 Requires: installer-stage3
 #modules
 Requires: alterator-users
@@ -43,8 +42,10 @@ Requires: alterator-net-eth dhcpcd
 Requires: alterator-net-general
 Requires: alterator-net-bond alterator-net-bridge
 Requires: installer-feature-nfs-server-stage3
+%ifnarch %e2k
 Requires: installer-feature-powerbutton-stage3
 Requires: alterator-grub
+%endif
 Requires: alterator-luks
 
 %description stage3
@@ -68,6 +69,11 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Mon Aug 13 2018 Michael Shigorin <mike@altlinux.org> 8.2-alt2
+- E2K: avoid R: alterator-grub, installer-feature-powerbutton-stage3
+  + thus no more noarch
+- fix Provides:' version
+
 * Fri Oct 27 2017 Mikhail Efremov <sem@altlinux.org> 8.2-alt1
 - Enable cpufreq-simple.service.
 
