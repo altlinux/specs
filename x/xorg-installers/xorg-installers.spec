@@ -1,6 +1,6 @@
 Name: xorg-installers
 Version: 7.8
-Release: alt8
+Release: alt9
 
 Summary: Set of various Xorg-related installers
 License: MIT/X11
@@ -34,8 +34,12 @@ Group: System/X11
 %ifarch %e2k
 Requires: xorg-drv-radeon
 #Requires: xorg-drv-siliconmotion
-%else
+%endif
+%ifarch x86_64 %ix86
 Requires: xorg-drv-ati xorg-drv-intel xorg-drv-cirrus xorg-drv-nouveau xorg-drv-qxl xorg-drv-amdgpu
+%endif
+%ifarch mipsel
+Requires: xorg-drv-ati xorg-drv-nouveau
 %endif
 
 %description -n xorg-drv-video
@@ -56,6 +60,11 @@ xorg-drv-input requires all input drivers for X Window System
 %files -n xorg-drv-input
 
 %changelog
+* Mon Aug 13 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.8-alt9
+- xorg-drv-video:
+  + Removed unmet R: on mipsel;
+  + Removed all R: on armh/aarch64 (sbolshakov@).
+
 * Thu May 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 7.8-alt8
 - xorg-drv-video: remove nv, openchrome
 
