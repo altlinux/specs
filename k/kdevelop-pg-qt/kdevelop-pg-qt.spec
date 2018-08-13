@@ -1,6 +1,6 @@
 Name: kdevelop-pg-qt
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Obsoletes: kdevelop-unstable-pg-qt
 
 Group: Development/Other
@@ -9,7 +9,7 @@ Url: http://techbase.kde.org/Development/KDevelop-PG-Qt_Introduction
 License: GPLv2+
 
 Source: v%version.tar.gz
-Provides: kdevelop-pg-qt-devel
+Provides: kdevelop-pg-qt-devel = %EVR
 Obsoletes: kdevelop-unstable-pg-qt-devel < %version
 
 # Automatically added by buildreq on Sun Aug 12 2018
@@ -39,6 +39,9 @@ is ideal to be used in Qt-/KDE-based applications like KDevelop.
 %_libdir/cmake/*
 
 %changelog
+* Mon Aug 13 2018 Fr. Br. George <george@altlinux.ru> 2.1.0-alt2
+- Fix provides
+
 * Sun Aug 12 2018 Fr. Br. George <george@altlinux.ru> 2.1.0-alt1
 - Autobuild version bump to 2.1.0
 
