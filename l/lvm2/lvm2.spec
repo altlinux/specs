@@ -1,5 +1,5 @@
-%define lvm2version 2.02.180
-%define dmversion 1.02.149
+%define lvm2version 2.02.181
+%define dmversion 1.02.150
 
 %define _sbindir /sbin
 %define _runtimedir /run
@@ -43,7 +43,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt0.1
+Release: alt1
 License: GPL
 
 Group: System/Base
@@ -608,6 +608,9 @@ __EOF__
 %endif
 
 %changelog
+* Mon Aug 13 2018 Alexey Shabalin <shaba@altlinux.org> 2.02.181-alt1
+- 2.02.181
+
 * Wed Jun 27 2018 Alexey Shabalin <shaba@altlinux.ru> 2.02.180-alt0.1
 - 2.02.180(2)-git (2018-06-18)
 - disable build python2 and python3 bindings based on deprecated liblvm2app
