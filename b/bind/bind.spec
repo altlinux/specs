@@ -1,6 +1,6 @@
 Name: bind
-Version: 9.11.3
-%define src_version 9.11.3
+Version: 9.11.4.P1
+%define src_version 9.11.4-P1
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -437,6 +437,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Mon Aug 13 2018 Stanislav Levin <slev@altlinux.org> 9.11.4.P1-alt1
+- 9.11.3 -> 9.11.4.P1 (fixes: CVE-2018-5738, CVE-2018-5740).
+
 * Wed Apr 04 2018 Stanislav Levin <slev@altlinux.org> 9.11.3-alt1
 - 9.11.2.P1 -> 9.11.3
 

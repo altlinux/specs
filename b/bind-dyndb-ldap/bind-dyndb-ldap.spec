@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define bind_version 9.11.3
+%define bind_version 9.11.4.P1
 
 Name: bind-dyndb-ldap
 Version: 11.1
-Release: alt2%ubt
+Release: alt3
 
 Summary: LDAP back-end plug-in for BIND
 License: %gpl2plus
@@ -13,7 +13,6 @@ URL: https://pagure.io/bind-dyndb-ldap
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: bind-devel >= %bind_version
@@ -56,7 +55,10 @@ systemctl is-enabled --quiet bind && systemctl restart bind 2>&1 ||:
 %exclude %_libdir/bind/*.la
 
 %changelog
-* Wed Apr 04 2018 Stanislav Levin <slev@altlinux.org> 11.1-alt2%ubt
+* Tue Aug 14 2018 Stanislav Levin <slev@altlinux.org> 11.1-alt3
+- Rebuild with new bind 9.11.4.P1
+
+* Wed Apr 04 2018 Stanislav Levin <slev@altlinux.org> 11.1-alt2
 - Rebuild with new bind 9.11.3
 
 * Tue Nov 07 2017 Stanislav Levin <slev@altlinux.org> 11.1-alt1
