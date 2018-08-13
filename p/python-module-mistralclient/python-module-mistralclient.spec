@@ -2,8 +2,8 @@
 %define oname mistralclient
 
 Name:       python-module-%oname
-Version:    3.0.0
-Release:    alt1.1
+Version:    3.3.0
+Release:    alt1
 Summary:    Client Library for OpenStack Mistral Workflow Service API
 License:    ASL 2.0
 Group:      Development/Python
@@ -27,6 +27,7 @@ BuildRequires: python-module-requests >= 2.10.0
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-stevedore >= 1.17.1
 BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-openstackdocstheme
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -42,6 +43,7 @@ BuildRequires: python3-module-yaml >= 3.10.0
 BuildRequires: python3-module-requests >= 2.10.0
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-stevedore >= 1.17.1
+BuildRequires: python3-module-openstackdocstheme
 %endif
 
 %description
@@ -96,6 +98,8 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
+sed -i 's/^warning-is-error.*/warning-is-error = 0/g' setup.cfg
+
 %build
 %python_build
 %if_with python3
@@ -143,6 +147,9 @@ rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Jul 20 2018 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
+- new version 3.3.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
