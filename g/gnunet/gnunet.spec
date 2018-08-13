@@ -3,7 +3,7 @@ BuildRequires: %_bindir/git %_bindir/svnversion glib2-devel libICE-devel libSM-d
 # END SourceDeps(oneline)
 Name: gnunet
 Version: 0.10.1
-Release: alt2
+Release: alt3
 
 Summary: Peer-to-peer framework
 
@@ -19,7 +19,7 @@ Source2: gnunetd.service
 
 # manually removed: libqt3-devel libqt4-devel  xorg-cf-files
 # Automatically added by buildreq on Mon Feb 01 2010
-BuildRequires: gcc-c++ glibc-devel-static guile18-devel imake libmariadb-devel libcurl-devel libextractor-devel libgcrypt-devel libglade-devel libncursesw-devel libsqlite3-devel zlib-devel
+BuildRequires: gcc-c++ glibc-devel-static imake libmariadb-devel libcurl-devel libextractor-devel libgcrypt-devel libglade-devel libncursesw-devel libsqlite3-devel zlib-devel
 BuildRequires: libpulseaudio-devel libopus-devel libogg-devel
 
 %description
@@ -224,6 +224,9 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_libdir/pkgconfig/gnunetspeaker.pc
 
 %changelog
+* Mon Aug 13 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.10.1-alt3
+- drop excessive guile18-devel BR
+
 * Thu May 31 2018 Alexey Shabalin <shaba@altlinux.ru> 0.10.1-alt2
 - rebuilld with libmariadb
 - fix sysvinit script
