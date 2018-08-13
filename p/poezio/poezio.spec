@@ -1,6 +1,6 @@
 Name: poezio
 Version: 0.9
-Release: alt4.1
+Release: alt5
 Summary: A console Jabber/XMPP client
 Group: Networking/Instant messaging
 Url: http://poez.io/en
@@ -9,9 +9,10 @@ License: BSD-like
 BuildRequires(pre): rpm-build-python3
 # Automatically added by buildreq on Wed Jul 20 2016
 # optimized out: python-base python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-cssselect python3-module-docutils python3-module-jinja2 python3-module-markupsafe python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer python3-module-sphinx python3-module-sphinx_rtd_theme xz
-BuildRequires: ctags git-core python3-dev python3-module-html5lib python3-module-jinja2-tests python3-module-sphinx-sphinx-build-symlink
+BuildRequires: ctags git-core python3-module-html5lib python3-module-jinja2-tests python3-module-sphinx-sphinx-build-symlink
 
 BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
 Requires: python3-module-aiodns
 Requires: python3-module-%name = %version
 Requires: python3-module-%name-themes = %version
@@ -108,6 +109,9 @@ mv %buildroot%python3_sitelibdir_noarch/poezio/poopt* %buildroot%python3_sitelib
 %python3_sitelibdir_noarch/%{name}_themes
 
 %changelog
+* Mon Aug 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9-alt5
+- NMU: updated build dependencies.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9-alt4.1
 - (NMU) Rebuilt with python-3.6.4.
 
