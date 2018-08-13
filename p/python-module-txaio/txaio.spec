@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname txaio
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.8.1
-Release: alt1.1
+Version: 18.7.1
+Release: alt1
 Summary: Compatibility API between asyncio/Twisted/Trollius
 License: MIT
 Group: Development/Python
@@ -14,6 +16,7 @@ Url: https://pypi.python.org/pypi/txaio/
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-docs.patch
 Patch2: python-txaio-skip-packaging-tests.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
@@ -25,6 +28,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-html5lib python3-module-pytest-cov python3-module-setuptools python3-module-sphinx
 BuildRequires: python3-module-twisted-core python3-tools-pep8
 BuildRequires: python3-module-mock
+BuildRequires: python3-test
 %endif
 
 %py_provides %oname
@@ -182,6 +186,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 18.7.1-alt1
+- Updated to upstream version 18.7.1.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.8.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
