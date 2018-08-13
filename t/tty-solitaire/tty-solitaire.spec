@@ -1,8 +1,8 @@
 %def_enable Werror
 
 Name:     tty-solitaire
-Version:  1.0.0
-Release:  alt3
+Version:  1.1.0
+Release:  alt1
 
 Summary:  Play solitaire in your terminal!
 
@@ -13,7 +13,6 @@ Url:      https://github.com/mpereira/tty-solitaire
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 Source:   %name-%version.tar
-Patch0:   tty-solitaire-1.0.0-fix_non_critical_unused_result_warning.patch
 
 Buildrequires: libncursesw-devel
 
@@ -22,7 +21,6 @@ Buildrequires: libncursesw-devel
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %make_build CFLAGS='%optflags -std=gnu11'
@@ -35,6 +33,9 @@ Buildrequires: libncursesw-devel
 %doc README.md
 
 %changelog
+* Mon Aug 13 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Build new version.
+
 * Wed May 23 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt3
 - Force building with gnu11 standart for e2k arch.
 
