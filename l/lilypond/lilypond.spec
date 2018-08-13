@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define ver_major 2.18
 %define ver_minor 2
 %define _lily_dir %_datadir/%name/%version
@@ -5,7 +7,7 @@
 
 Name: lilypond
 Version: %ver_major.%ver_minor
-Release: alt0.2
+Release: alt0.3
 
 Group: Publishing
 Summary: A program for printing sheet music
@@ -19,7 +21,7 @@ Source1: russian-lirycs-test.ly
 Requires: ghostscript
 
 BuildRequires: texi2html >= 1.82 
-BuildRequires: dblatex convert zip rsync zlib-devel fontforge guile-devel
+BuildRequires: dblatex convert zip rsync zlib-devel fontforge
 BuildRequires: perl-Math-Complex perl-podlators
 BuildRequires: emacs-devel emacs
 BuildRequires: makeinfo texi2dvi
@@ -83,6 +85,7 @@ emacs-mode-%name code or see some Lisp examples.
 subst 's|package_infodir = $(infodir)/$(package)|package_infodir = $(infodir)|' config.make.in
 
 %build
+export GUILE=guile18
 %configure \
 	--with-ncsb-dir=/usr/share/fonts/type1/urw \
 	--enable-documentation 
@@ -94,7 +97,7 @@ subst 's|package_infodir = $(infodir)/$(package)|package_infodir = $(infodir)|' 
 #%make_build webdir=%_docdir/%name-%version web
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 #%make_install web-install out=www
 
 # Move TeX dependent files into system TeX tree locations
@@ -157,6 +160,9 @@ done
 #%_datadir/omf/*
 
 %changelog
+* Mon Aug 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.18.2-alt0.3
+- Updated build dependencies
+
 * Mon Jul 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.18.2-alt0.2
 - Updated build dependencies
 
