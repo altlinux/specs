@@ -1,4 +1,4 @@
-%define kernel_base_version 4.17
+%define kernel_base_version 4.18
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -30,9 +30,11 @@ Patch14: 0014-uapi-fix-asm-signal.h-userspace-compilation-errors.patch
 Patch15: 0015-uapi-introduce-__kernel_uapi_size_t.patch
 Patch16: 0016-x86-uapi-fix-asm-signal.h-userspace-compilation-erro.patch
 Patch17: 0017-uapi-fix-linux-kexec.h-userspace-compilation-errors.patch
-Patch18: 0018-uapi-fix-linux-ncp_fs.h-userspace-compilation-errors.patch
-Patch19: 0019-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
-Patch20: 0020-uapi-fix-linux-fsmap.h-userspace-compilation-error.patch
+Patch18: 0018-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
+Patch19: 0019-uapi-fix-linux-fsmap.h-userspace-compilation-error.patch
+Patch20: 0020-uapi-fix-linux-netfilter-nf_osf.h-userspace-compilat.patch
+Patch21: 0021-uapi-fix-linux-usb-audio.h-userspace-compilation-err.patch
+Patch22: 0022-uapi-fix-sound-skl-tplg-interface.h-userspace-compil.patch
 
 BuildRequires: rpm-build-kernel
 BuildRequires: %kernel_source = 1.0.0
@@ -112,6 +114,8 @@ cd %kernel_source
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
+%patch22 -p1
 
 sed -i 's/^headers_install:.*/&\n\t@echo SRCARCH=$(SRCARCH)/' Makefile
 
@@ -163,6 +167,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Mon Aug 13 2018 Dmitry V. Levin <ldv@altlinux.org> 4.18-alt1
+- v4.17 -> v4.18.
+
 * Thu Jun 07 2018 Dmitry V. Levin <ldv@altlinux.org> 4.17-alt1
 - v4.16 -> v4.17.
 
