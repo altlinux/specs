@@ -19,8 +19,8 @@
 %def_enable gigacage
 
 Name: libwebkitgtk4
-Version: 2.20.4
-Release: alt2
+Version: 2.20.5
+Release: alt1
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -301,6 +301,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Mon Aug 13 2018 Yuri N. Sedunov <aris@altlinux.org> 2.20.5-alt1
+- 2.20.5
+
 * Mon Aug 06 2018 Yuri N. Sedunov <aris@altlinux.org> 2.20.4-alt2
 - 2.20.4 (fixed CVE-2018-4261, CVE-2018-4262, CVE-2018-4263,
   CVE-2018-4264, CVE-2018-4265, CVE-2018-4266, CVE-2018-4267,
