@@ -2,8 +2,8 @@
 %define oname heatclient
 
 Name: python-module-%oname
-Version: 1.8.1
-Release: alt1.1
+Version: 1.14.0
+Release: alt1
 Summary: Python API and CLI for OpenStack Heat
 
 Group: Development/Python
@@ -34,6 +34,7 @@ BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-openstackdocstheme
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -53,6 +54,7 @@ BuildRequires: python3-module-swiftclient >= 3.2.0
 BuildRequires: python3-module-yaml >= 3.10.0
 BuildRequires: python3-module-requests >= 2.10.0
 BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-openstackdocstheme
 %endif
 
 %description
@@ -107,6 +109,8 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
+sed -i 's/^warning-is-error.*/warning-is-error = 0/g' setup.cfg
+
 %build
 %python_build
 %if_with python3
@@ -155,6 +159,9 @@ rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
 %doc doc/build/html
 
 %changelog
+* Fri Jul 20 2018 Grigory Ustinov <grenka@altlinux.org> 1.14.0-alt1
+- new version 1.14.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.8.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
