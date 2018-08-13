@@ -2,8 +2,8 @@
 %def_disable isbc
 
 Name: pkcs11-profiles
-Version: 0.1.4
-Release: alt1
+Version: 0.1.5
+Release: alt2
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -25,6 +25,7 @@ BuildArch: noarch
 %description common
 Control scripts for profile-based PAM PKCS11 configuration.
 
+%ifnarch aarch64
 %package rutokenecp
 Summary: RuToken ECP PAM PKCS11 module configuration
 License: GPLv3+
@@ -35,6 +36,7 @@ Requires: librtpkcs11ecp >= 1.5.3.0-alt4
 
 %description rutokenecp
 RuToken ECP PAM PKCS11 module configuration
+%endif
 
 %package isbc
 Summary: ESMART PAM PKCS11 module configuration
@@ -113,9 +115,11 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %dir %confdir/param-set.d
 %config(noreplace) %confdir/param-set.d/default
 
+%ifnarch aarch64
 %files rutokenecp
 %config(noreplace) %confdir/modules.avail/rutokenecp
 %config(noreplace) %confdir/profiles/rutokenecp
+%endif
 
 %files p11-kit-proxy
 %config(noreplace) %confdir/modules.avail/p11_kit_proxy
@@ -135,6 +139,17 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/message.profiles/zastava
 
 %changelog
+* Wed Aug 22 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.5-alt2
+- Skip "rutokenecp" profile for the "aarch64" arch.
+
+* Mon Aug 13 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.5-alt1
+- Added Russian translations for "prompt_so_pin_change_err" and
+  "prompt_so_pin_change_err_locked" ("Zastava" profile).
+
+* Mon Aug 06 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.4-alt2
+- Increase the default PIN expiration timeout in "Zastava" profile
+  up to 6 months.
+
 * Mon Dec 04 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.4-alt1
 - Fix: Substitute @syslibdir@ in the profiles.
 - Fixed processing of multi-section profiles.
