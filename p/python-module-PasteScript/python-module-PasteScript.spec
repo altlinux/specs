@@ -1,21 +1,23 @@
-%define version 1.7.5
+%define _unpackaged_files_terminate_build 1
+
 %define oname PasteScript
 
 %def_without bootstrap
 
 Name: python-module-%oname
-Version:%version
-Release: alt4.2
-Serial: 1
-
+Epoch:   1
+Version: 2.0.2
+Release: alt1
 Summary: A pluggable command-line frontend
 License: MIT/X11
 Group: Development/Python
-Url: http://pythonpaste.org
-# hg clone http://bitbucket.org/ianb/pastescript
+Url: https://pypi.org/project/PasteScript/
+
 BuildArch: noarch
 
-Source: %name-%version.tar
+Source: %oname-%version.tar
+
+Patch1: %oname-%version-alt-deps.patch
 
 Conflicts: python-module-paste.script
 Obsoletes: python-module-paste.script
@@ -23,17 +25,21 @@ Obsoletes: python-module-paste.script
 
 %if_without bootstrap
 BuildRequires: python-module-PasteDeploy
-BuildPreReq: python3-module-PasteDeploy
+BuildRequires: python3-module-PasteDeploy
 BuildRequires: python-module-paste
-BuildPreReq: python3-module-paste
+BuildRequires: python3-module-paste
+BuildRequires: python2.7(Cheetah)
+BuildRequires: python3(Cheetah)
 %endif
 
 BuildRequires: python-module-sphinx python-module-Pygments
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-sphinx python3-module-Pygments
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-sphinx python3-module-Pygments
 
+%if_without bootstrap
+%py_requires Cheetah
+%endif
 
 %description
 A pluggable command-line frontend, including commands to setup
@@ -49,14 +55,18 @@ Group: Development/Python3
 %add_python3_req_skip paste.util paste.util.template paste.wsgilib
 %endif
 
+%if_without bootstrap
+%py3_requires Cheetah
+%endif
+
 %description -n python3-module-%oname
 A pluggable command-line frontend, including commands to setup
 package file layouts.
 
 %prep
-%setup -n %name-%version
+%setup -n %oname-%version
+%patch1 -p2
 
-rm -rf ../python3
 cp -a . ../python3
 
 %build
@@ -64,8 +74,6 @@ export PYTHONPATH=$PWD
 pushd ../python3
 sed -i 's|%_bindir/env python|%_bindir/env python3|' \
 	tests/test_logging_config.py scripts/paster
-2to3 -w -n scripts/paster
-find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 popd
 
@@ -85,16 +93,16 @@ popd
 %python_sitelibdir/paste/script
 %python_sitelibdir/%oname-*
 %_bindir/paster
-%exclude %python_sitelibdir/tests
 
 %files -n python3-module-%oname
 %_bindir/paster3
 %python3_sitelibdir/paste/script
 %python3_sitelibdir/%oname-*
-%exclude %python3_sitelibdir/tests
-
 
 %changelog
+* Thu Aug 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.0.2-alt1
+- Updated to upstream version 2.0.2.
+
 * Mon May 28 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.7.5-alt4.2
 - fix requires
 
