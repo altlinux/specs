@@ -1,7 +1,7 @@
 %def_with qt5
 
 Name: octave
-Version: 4.4.0
+Version: 4.4.1
 Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
@@ -182,6 +182,9 @@ mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Mon Aug 13 2018 Cronbuild Service <cronbuild@altlinux.org> 4.4.1-alt1
+- repocop cronbuild 20180813. At your service.
+
 * Thu May 03 2018 Andrey Cherepanov <cas@altlinux.org> 4.4.0-alt1
 - New version.
 - Build with Qt5.
