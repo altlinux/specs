@@ -1,13 +1,14 @@
 Name: liquidwar6
 Version: 0.6.3902
 Summary: A unique multiplayer wargame
-Release: alt2
+Release: alt3
 License: GPL
 Group: Games/Strategy
 Source: %name-%version.tar
 Url: http://www.gnu.org/software/liquidwar6
 
 Patch: liquidwar6-0.6.3902-alt-Wno-error=deprecated-declarations.patch
+Patch2: %name-%version-alt-guile18.patch
 
 # Automatically added by buildreq on Wed Jul 18 2018
 # optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 guile18 libGL-devel libGLU-devel libSDL-devel libatk-devel libcairo-devel libcrypt-devel libfreetype-devel libfribidi-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgmp-devel libgpg-error libltdl7-devel libpango-devel libpng15-devel libtinfo-devel libwayland-client libwayland-server perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent pkg-config python-base python-modules xz zlib-devel
@@ -25,6 +26,7 @@ on Internet.
 %prep
 %setup
 %patch -p1
+%patch2 -p2
 
 # Building the package
 %build
@@ -53,6 +55,9 @@ rm -rf %buildroot%prefix/libexec
 %_desktopdir/%{name}*
 
 %changelog
+* Mon Aug 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.3902-alt3
+- NMU: fixed build.
+
 * Wed Jul 18 2018 Fr. Br. George <george@altlinux.ru> 0.6.3902-alt2
 - Fix buildreqs
 
