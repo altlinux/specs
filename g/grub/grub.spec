@@ -1,6 +1,6 @@
 Name: grub
 Version: 2.02
-Release: alt11%ubt
+Release: alt12%ubt
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -22,6 +22,7 @@ Source8: update-grub
 Source9: update-grub.8
 
 Source10: grub-efi-autoupdate
+Source11: embedded_grub.cfg
 
 Patch0: grub-2.02-os-alt.patch
 Patch1: grub-2.00-sysconfig-path-alt.patch
@@ -38,6 +39,7 @@ Patch11: grub-2.02-shift-interrupt-timeout.patch
 Patch12: grub-2.02-ubuntu-efi-setup.patch
 Patch13: grub-2.02-check_writes-alt.patch
 Patch14: grub-2.02-alt-luks-use-uuid.patch
+Patch15: grub-2.02-alt-fedora-linuxefi.patch
 
 BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
 BuildRequires: liblzma-devel help2man zlib-devel
@@ -70,15 +72,12 @@ Requires: gettext
 
 %ifarch %ix86
 %global grubefiarch i386-efi
-%global grubefiname grubia32.efi
 %endif
 %ifarch x86_64
 %global grubefiarch x86_64-efi
-%global grubefiname grubx64.efi
 %endif
 %ifarch aarch64
 %global grubefiarch arm64-efi
-%global grubefiname grubaa64.efi
 %endif
 
 %package common
@@ -161,14 +160,19 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch12 -p1
 %patch13 -p2
 %patch14 -p2
+%patch15 -p2
 
-sed -i 's,@GRUB_EFI_NAME@,%grubefiname,' %SOURCE10
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version[^]]\+/%version-%release/" configure.ac
 
 %ifarch %ix86 x86_64
 cd ..
 rm -rf %name-pc-%version
 cp -a %name-%version %name-pc-%version
+%ifarch x86_64
+rm -rf %name-ia32-%version
+cp -a %name-%version %name-ia32-%version
+cp -a %SOURCE11 %name-ia32-%version
+%endif
 %endif
 
 %build
@@ -182,6 +186,21 @@ pushd ../%name-pc-%version
 
 %make_build
 popd
+
+#add forced ia32 version build to be bundled with x86_64 EFI
+%ifarch x86_64
+pushd ../%name-ia32-%version
+./autogen.sh
+%configure \
+        TARGET_LDFLAGS=-static \
+        --with-platform=efi \
+        --disable-werror \
+	--target=i386
+
+%make_build
+
+popd
+%endif
 %endif
 
 ./autogen.sh
@@ -192,15 +211,40 @@ popd
 
 %make_build
 
-./grub-mkimage -O %grubefiarch -o grub.efi -d grub-core -p "" \
-	part_gpt part_apple part_msdos hfsplus fat ext2 btrfs xfs squash4 normal chain boot configfile linux diskfilter \
+./grub-mkimage -O %grubefiarch -o grubx64.efi -d grub-core -p "" \
+	part_gpt part_apple part_msdos hfsplus fat ext2 btrfs xfs squash4 normal chain boot configfile diskfilter \
+%ifarch x86_64
+linuxefi \
+%else
+linux \
+%endif
 	minicmd reboot halt search search_fs_uuid search_fs_file search_label sleep test syslinuxcfg all_video video \
 	font gfxmenu gfxterm gfxterm_background lvm lsefi efifwsetup cat gzio iso9660 loadenv loopback mdraid09 mdraid1x \
 	png jpeg
 
+%ifarch x86_64
+pushd ../%name-ia32-%version
+../%name-%version/grub-mkimage -O i386-efi -o ./grubia32.efi -d ./grub-core -p "" \
+        -c embedded_grub.cfg \
+        part_gpt part_apple part_msdos hfsplus fat ext2 btrfs xfs squash4 normal chain boot configfile linuxefi diskfilter \
+        minicmd reboot halt search search_fs_uuid search_fs_file search_label sleep test syslinuxcfg all_video video \
+        font gfxmenu gfxterm gfxterm_background lvm lsefi efifwsetup cat gzio iso9660 loadenv loopback mdraid09 mdraid1x \
+        png jpeg
+popd
+%endif
+
 %install
 %ifarch %ix86 x86_64
 %makeinstall_std -C ../%name-pc-%version
+%ifarch x86_64
+pushd ../%name-ia32-%version
+#"cherry pick" only i386 executable
+install -pDm644 grubia32.efi %buildroot%_efi_bindir/grubia32.efi
+
+#install ia32 version in parallel with x64 for x86_64 platforms with ia32 EFI
+%makeinstall_std -C ../%name-ia32-%version
+popd
+%endif
 %endif
 %makeinstall_std
 
@@ -236,11 +280,12 @@ ln -s ../boot/grub/grub.cfg %buildroot%_sysconfdir/grub.cfg
 mkdir -p %buildroot%_sysconfdir/default
 ln -s ../sysconfig/grub2 %buildroot%_sysconfdir/default/grub
 
-install -pDm644 grub.efi %buildroot%_efi_bindir/grub.efi
+install -pDm644 grubx64.efi %buildroot%_efi_bindir/grubx64.efi
 
 # NB: UEFI GRUB2 image gets signed when build environment is set up that way
 %ifarch x86_64
-%pesign -s -i %buildroot%_efi_bindir/grub.efi
+%pesign -s -i %buildroot%_efi_bindir/grubx64.efi
+%pesign -s -i %buildroot%_efi_bindir/grubia32.efi
 %endif
 
 # Remove headers
@@ -315,7 +360,11 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %endif
 
 %files efi
-%_efi_bindir/grub.efi
+%_efi_bindir/grubx64.efi
+%ifarch x86_64
+%_efi_bindir/grubia32.efi
+%_libdir/grub/i386-efi
+%endif
 %_sbindir/grub-efi-autoupdate
 %_libdir/grub/%grubefiarch
 
@@ -344,6 +393,14 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Mon Jun 25 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.02-alt12%ubt
+- add ia32 EFI binary to x86_64 package
+- add a patch adopted from fedora one introducing linuxefi/initrdefi commands
+- add ia32 grub modules to package
+  + add embedded config into ia32 EFI coreimage
+  + rename x64 EFI binary to grubx64.efi
+  + add grub-efi-autoupdate ia32 EFI compatibility
+
 * Wed May 30 2018 Oleg Solovyov <mcpain@altlinux.org> 2.02-alt11%ubt
 - LVM+LUKS fixes:
   + write UUID to grub.cfg after installation
