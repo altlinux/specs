@@ -13,7 +13,7 @@
 
 Name: graphviz
 Version: 2.40.1
-Release: alt3
+Release: alt4
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -38,7 +38,7 @@ BuildRequires: flex gcc-c++ groff-base imake libXaw-devel libXpm-devel libann-de
 
 %{?!_with_bootstrap:BuildRequires: ghostscript-utils libfreeglut-devel libglade-devel libgs-devel libgtkglext-devel libgts-devel liblasi-devel librsvg-devel}
 %{?_enable_lua:BuildRequires: liblua5-devel}
-%{?_enable_guile:BuildRequires: guile18-devel}
+%{?_enable_guile:BuildRequires: guile-devel}
 %{?_enable_python:BuildRequires: python-devel}
 
 %define gvdatadir %_datadir/%name
@@ -339,6 +339,9 @@ rm -fv %buildroot%_datadir/graphviz/demo/modgraph.py
 # - enable/fix/test language bindings
 
 %changelog
+* Mon Aug 13 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.40.1-alt4
+- rebuilt with recent guile
+
 * Sat Jul 07 2018 Vitaly Lipatov <lav@altlinux.ru> 2.40.1-alt3
 - disable build gvedit (uses qt4 and was packed in the main package)
 
