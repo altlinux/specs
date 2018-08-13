@@ -2,7 +2,7 @@
 %def_with selinux
 
 Name: iproute2
-Version: 4.17.0
+Version: 4.18.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
@@ -120,6 +120,9 @@ done
 %_man3dir/*
 
 %changelog
+* Mon Aug 13 2018 Dmitry V. Levin <ldv@altlinux.org> 4.18.0-alt1
+- 4.17.0 -> 4.18.0.
+
 * Fri Jun 29 2018 Dmitry V. Levin <ldv@altlinux.org> 4.17.0-alt1
 - 4.16.0 -> 4.17.0.
 
