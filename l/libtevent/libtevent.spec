@@ -1,7 +1,9 @@
-%def_enable tests
+%define _unpackaged_files_terminate_build 1
+%def_with check
+%def_with python3
 
 Name: libtevent
-Version: 0.9.36
+Version: 0.9.37
 Release: alt1%ubt
 Summary: The tevent library
 License: LGPLv3+
@@ -9,14 +11,20 @@ Group: System/Libraries
 Url: http://tevent.samba.org/
 
 Source: http://samba.org/ftp/tevent/tevent-%{version}.tar.gz
+Patch: tevent-alt-fix-python-ldflags.patch
 
-BuildRequires: libtalloc-devel >= 2.0.11
-BuildRequires: libpytalloc-devel >= 2.0.11
+BuildRequires: libtalloc-devel >= 2.1.14
+BuildRequires: python-module-talloc-devel >= 2.1.14
 BuildRequires: python-devel zlib-devel
 
 BuildRequires(pre):rpm-build-ubt
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-talloc-devel
+%endif
 
-Requires: libtalloc >= 2.0.11
+Requires: libtalloc >= 2.1.14
 
 %description
 Tevent is an event system based on the talloc memory management library.
@@ -41,14 +49,28 @@ Requires: %name = %version-%release
 %description -n python-module-tevent
 Python bindings for libtevent
 
+%if_with python3
+%package -n python3-module-tevent
+Group: Development/Python3
+Summary: Python3 bindings for the Tevent library
+Requires: %name = %EVR
+
+%description -n python3-module-tevent
+Python3 bindings for libtevent
+%endif
+
 %prep
 %setup -n tevent-%version
+%patch -p1
 
 %build
 %undefine _configure_gettext
 %configure \
 	--disable-rpath \
 	--bundled-libraries=NONE \
+%if_with python3
+        --extra-python=python3 \
+%endif
 	--builtin-libraries=replace
 
 %make_build
@@ -58,25 +80,33 @@ Python bindings for libtevent
 
 rm -f %buildroot%_libdir/*.a
 
-%if_enabled tests
 %check
-export LD_LIBRARY_PATH=./bin/shared:$LD_LIBRARY_PATH
 make test
-%endif
 
 %files
-%_libdir/*.so.*
+%_libdir/libtevent.so.*
 
 %files devel
-%_includedir/*.h
-%_libdir/*.so
-%_pkgconfigdir/*.pc
+%_includedir/tevent.h
+%_libdir/libtevent.so
+%_pkgconfigdir/tevent.pc
 
 %files -n python-module-tevent
 %python_sitelibdir/_tevent.so
 %python_sitelibdir/tevent.py*
 
+%if_with python3
+%files -n python3-module-tevent
+%python3_sitelibdir/_tevent.cpython*.so
+%python3_sitelibdir/tevent.py
+%python3_sitelibdir/__pycache__/tevent.*
+%endif
+
 %changelog
+* Sun Jul 22 2018 Stanislav Levin <slev@altlinux.org> 0.9.37-alt1%ubt
+- 0.9.36 -> 0.9.37
+- Build package for Python3
+
 * Fri Mar 23 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.9.36-alt1%ubt
 - New version for samba-4.8
 

@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define libwbc_alternatives_version 0.14.0
 %def_with kcm
-%def_without python3_bindings
+%def_with python3
+%def_with check
 %define if_branch_le() %if "%(rpmvercmp '%ubt_id' '%1')" <= "0"
 %define if_branch_eq() %if "%(rpmvercmp '%ubt_id' '%1')" == "0"
 %define if_branch_ge() %if "%(rpmvercmp '%ubt_id' '%1')" >= "0"
@@ -17,11 +19,11 @@
 
 Name: sssd
 Version: 1.16.2
-Release: alt1%ubt
+Release: alt2%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
-Url: http://fedorahosted.org/sssd/
+Url: https://pagure.io/SSSD/sssd
 Source: %name-%version.tar
 Source2: %name.init
 Source3: system-auth-sss.pam
@@ -55,9 +57,11 @@ Requires: libkrb5 >= 1.14.4-alt2
 %endif
 
 BuildRequires(pre):rpm-build-ubt
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+%endif
 
 ### Build Dependencies ###
-BuildRequires: /proc
 BuildRequires: libpopt-devel
 BuildRequires: libtalloc-devel
 BuildRequires: libtevent-devel
@@ -79,6 +83,9 @@ BuildRequires: docbook-dtds docbook-style-xsl xsltproc xml-utils
 BuildRequires: libkrb5-devel
 BuildRequires: libcares-devel
 BuildRequires: python-devel
+%if_with python3
+BuildRequires: python3-devel
+%endif
 BuildRequires: libcheck-devel
 BuildRequires: doxygen
 BuildRequires: libselinux-devel
@@ -112,12 +119,21 @@ BuildRequires: libnfsidmap-devel >= 1:2.2.1-alt1
 %endif
 %endif
 BuildRequires: libaugeas-devel
-BuildRequires: libcmocka-devel >= 1.0.0
 BuildRequires: nscd
 BuildRequires: libjansson-devel
 BuildRequires: libhttp-parser-devel
 %if_with kcm
 BuildRequires: libuuid-devel libcurl-devel
+%endif
+
+%if_with check
+BuildRequires: /proc
+BuildRequires: openssl
+BuildRequires: openssh
+BuildRequires: nss-utils
+BuildRequires: libcmocka-devel >= 1.0.0
+BuildRequires: uid_wrapper
+BuildRequires: nss_wrapper
 %endif
 
 %description
@@ -162,8 +178,13 @@ Summary: Userspace tools for use with the SSSD
 Group: System/Configuration/Networking
 License: GPLv3+
 Requires: %name = %version-%release
+%if_with python3
+Requires: python3-module-sss = %EVR
+Requires: python3-module-sssdconfig = %EVR
+%else
 Requires: python-module-sssdconfig = %version-%release
 Requires: python-module-sss = %version-%release
+%endif
 
 %description tools
 Provides userspace tools for manipulating users, groups, and nested groups in
@@ -441,6 +462,54 @@ The libnfsidmap sssd module provides a way for rpc.idmapd to call SSSD to map
 UIDs/GIDs to names and vice versa. It can be also used for mapping principal
 (user) name to IDs(UID or GID) or to obtain groups which user are member of.
 
+%if_with python3
+%package -n python3-module-sssdconfig
+Summary: SSSD and IPA configuration file manipulation classes and functions
+Group: Development/Python3
+License: GPLv3+
+BuildArch: noarch
+
+%description -n python3-module-sssdconfig
+Provides python3 files for manipulation SSSD and IPA configuration files.
+
+%package -n python3-module-ipa_hbac
+Summary: Python3 bindings for the FreeIPA HBAC Evaluator library
+Group: Development/Python3
+License: LGPLv3+
+Requires: libipa_hbac = %EVR
+
+%description -n python3-module-ipa_hbac
+The python3-module-libipa_hbac contains the bindings so that libipa_hbac can be
+used by Python3 applications.
+
+%package -n python3-module-sss_nss_idmap
+Summary: Python3 bindings for libsss_nss_idmap
+Group: Development/Python3
+License: LGPLv3+
+Requires: libsss_nss_idmap = %EVR
+
+%description -n python3-module-sss_nss_idmap
+The python3-module-libsss_nss_idmap contains the bindings so that
+libsss_nss_idmap can be used by Python applications.
+
+%package -n python3-module-sss
+Summary: Python3 bindings for sss
+Group: Development/Python3
+License: LGPLv3+
+Requires: %name = %EVR
+
+%description -n python3-module-sss
+The python3-module-sss contains the bindings so that sss can be used by Python3
+applications.
+
+%package -n python3-module-sss-murmur
+Summary: Python3 bindings for murmur hash function
+Group: Development/Python3
+License: LGPLv3+
+
+%description -n python3-module-sss-murmur
+Provides python3 module for calculating the murmur hash version 3
+%endif
 
 %prep
 %setup
@@ -466,6 +535,9 @@ UIDs/GIDs to names and vice versa. It can be also used for mapping principal
 %if_branch_eq N.M80P
     --enable-nfsidmaplibdir=%nfsidmapdir \
 %endif
+%if_branch_ge M80P
+    --enable-nfsidmaplibdir=%nfsidmapdir \
+%endif
     --with-syslog=journald \
     --with-test-dir=/dev/shm \
     --enable-krb5-locator-plugin \
@@ -475,7 +547,7 @@ UIDs/GIDs to names and vice versa. It can be also used for mapping principal
     --disable-rpath \
     --disable-static \
     %{subst_with kcm} \
-%if_without python3_bindings
+%if_without python3
     --without-python3-bindings \
 %endif
     #
@@ -484,6 +556,10 @@ UIDs/GIDs to names and vice versa. It can be also used for mapping principal
 %make docs
 
 %install
+%if_with python3
+sed -i -e 's:/usr/bin/python:/usr/bin/python3:' src/tools/sss_obfuscate
+%endif
+
 %make install DESTDIR=%buildroot
 
 if [ ! -f %buildroot%_libdir/%name/modules/libwbclient.so.%libwbc_alternatives_version]
@@ -531,10 +607,9 @@ ln -s ../..%_libdir/%name/modules/libwbclient.so %buildroot%_libdir/
 mkdir -p %buildroot/%_altdir
 printf '%_libdir/cifs-utils/idmap-plugin\t%_libdir/cifs-utils/cifs_idmap_sss.so\t20\n' > %buildroot%_altdir/cifs-idmap-plugin-sss
 
-
 %check
 export CK_TIMEOUT_MULTIPLIER=10
-%make check VERBOSE=yes ||:
+%make check VERBOSE=yes
 unset CK_TIMEOUT_MULTIPLIER
 
 %pre
@@ -605,7 +680,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 # 3rd party application libraries
 %dir %_libdir/%name/modules
 
-
 %ldb_modulesdir/memberof.so
 %_bindir/sss_ssh_authorizedkeys
 %_bindir/sss_ssh_knownhostsproxy
@@ -640,6 +714,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %dir %_datadir/%name/sssd.api.d
 %_datadir/%name/sssd.api.d/sssd-local.conf
 %_datadir/%name/sssd.api.d/sssd-simple.conf
+%_datadir/%name/sssd.api.d/sssd-files.conf
 %_man1dir/sss_ssh_*
 %_man5dir/sssd.conf.5*
 %_man5dir/sssd-files.5*
@@ -653,11 +728,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 
 %files -n python-module-sss
 %python_sitelibdir/pysss.so
-
-%if_with python3_bindings
-%files -n python3-module-sss
-%python3_sitelibdir/pysss.so
-%endif
 
 %files -n python-module-sss-murmur
 %python_sitelibdir/pysss_murmur.so
@@ -733,15 +803,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %files -n python-module-sssdconfig
 %dir %python_sitelibdir_noarch/SSSDConfig
 %python_sitelibdir_noarch/SSSDConfig*.egg-info
-%python_sitelibdir_noarch/SSSDConfig/*.py
-
-%if_with python3_bindings
-%files -n python3-sssdconfig
-%dir %python3_sitelibdir_noarch/SSSDConfig
-%python3_sitelibdir_noarch/SSSDConfig/*.py*
-%dir %python3_sitelibdir_noarch/SSSDConfig/__pycache__
-%python3_sitelibdir_noarch/SSSDConfig/__pycache__/*.py*
-%endif
+%python_sitelibdir_noarch/SSSDConfig/*.py*
 
 %files -n libsss_idmap
 %_libdir/libsss_idmap.so.*
@@ -834,7 +896,33 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %files nfs-idmap
 %nfsidmapdir/sss.so
 
+%if_with python3
+
+%files -n python3-module-sss
+%python3_sitelibdir/pysss.so
+
+%files -n python3-module-sss-murmur
+%python3_sitelibdir/pysss_murmur.so
+
+%files -n python3-module-ipa_hbac
+%python3_sitelibdir/pyhbac.so
+
+%files -n python3-module-sss_nss_idmap
+%python3_sitelibdir/pysss_nss_idmap.so
+
+%files -n python3-module-sssdconfig
+%dir %python3_sitelibdir_noarch/SSSDConfig
+%python3_sitelibdir_noarch/SSSDConfig/*.py*
+%python3_sitelibdir_noarch/SSSDConfig*.egg-info
+%dir %python3_sitelibdir_noarch/SSSDConfig/__pycache__
+%python3_sitelibdir_noarch/SSSDConfig/__pycache__/*.py*
+
+%endif
+
 %changelog
+* Thu Jul 19 2018 Stanislav Levin <slev@altlinux.org> 1.16.2-alt2%ubt
+- build with Python3 bindings
+
 * Wed Jul 04 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.16.2-alt1%ubt
 - New upstream release 1.16.2
 

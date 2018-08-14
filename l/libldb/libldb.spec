@@ -1,8 +1,10 @@
-%def_enable tests
+%define _unpackaged_files_terminate_build 1
+%def_with check
+%def_with python3
 
 Name: libldb
 Version: 1.3.4
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -13,17 +15,24 @@ Patch: ldb-samba-modules.patch
 Patch1: ldb-alt-fix-python-ldflags.patch
 Patch2: null-terminator-in-ldb_mod_op_test.patch
 
-BuildRequires: python-devel python-module-tdb libpytalloc-devel python-module-tevent
+BuildRequires: python-devel python-module-tdb python-module-talloc-devel python-module-tevent
 BuildRequires: libpopt-devel libldap-devel libcmocka-devel xsltproc docbook-style-xsl docbook-dtds
-BuildRequires: libtdb-devel >= 1.3.15
-BuildRequires: libtalloc-devel >= 2.1.11
-BuildRequires: libtevent-devel >= 0.9.36
+BuildRequires: libtdb-devel >= 1.3.16
+BuildRequires: libtalloc-devel >= 2.1.14
+BuildRequires: libtevent-devel >= 0.9.37
 
 BuildRequires(pre):rpm-build-ubt
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-tdb
+BuildRequires: python3-module-talloc-devel
+BuildRequires: python3-module-tevent
+%endif
 
-Requires: libtdb >= 1.3.15
-Requires: libtalloc >= 2.1.11
-Requires: libtevent >= 0.9.36
+Requires: libtdb >= 1.3.16
+Requires: libtalloc >= 2.1.14
+Requires: libtevent >= 0.9.37
 
 %description
 An extensible library that implements and LDAP like API to access remote LDAP
@@ -62,6 +71,25 @@ Requires: %name-devel = %version-%release
 %description -n python-module-pyldb-devel
 Development files for the Python bindings for the LDB library
 
+%if_with python3
+%package -n python3-module-pyldb
+Group: Development/Python3
+Summary: Python3 bindings for the LDB library
+Requires: %name = %EVR
+
+%description -n python3-module-pyldb
+Python3 bindings for the LDB library
+
+%package -n python3-module-pyldb-devel
+Group: Development/Python3
+Summary: Development files for the Python3 bindings for the LDB library
+Requires: python3-module-pyldb = %EVR
+Requires: %name-devel = %EVR
+
+%description -n python3-module-pyldb-devel
+Development files for the Python3 bindings for the LDB library
+%endif
+
 %prep
 %setup -n ldb-%version
 %patch -p2
@@ -77,6 +105,9 @@ Development files for the Python bindings for the LDB library
 		--builtin-libraries=replace \
 		--with-modulesdir=%_libdir/ldb/modules \
 		--with-samba-modulesdir=%_libdir/samba-dc \
+%if_with python3
+                --extra-python=python3 \
+%endif
 		--with-privatelibdir=%_libdir/ldb
 %make
 
@@ -86,30 +117,48 @@ Development files for the Python bindings for the LDB library
 rm -f %buildroot%_libdir/*.a
 rm -f %buildroot/%_man3dir/_*
 
-%if_enabled tests
 %check
 make test
-%endif
 
 %files
 %_libdir/libldb.so.*
 %dir %_libdir/ldb
 %dir %_libdir/ldb/modules
 %dir %_libdir/ldb/modules/ldb
-%_libdir/ldb/modules/ldb/*.so
+
+%_libdir/ldb/modules/ldb/asq.so
+%_libdir/ldb/modules/ldb/ldap.so
+%_libdir/ldb/modules/ldb/paged_results.so
+%_libdir/ldb/modules/ldb/paged_searches.so
+%_libdir/ldb/modules/ldb/rdn_name.so
+%_libdir/ldb/modules/ldb/sample.so
+%_libdir/ldb/modules/ldb/server_sort.so
+%_libdir/ldb/modules/ldb/skel.so
+%_libdir/ldb/modules/ldb/tdb.so
 
 %files devel
-%_includedir/*.h
-%_libdir/*.so
+%_includedir/ldb.h
+%_includedir/ldb_errors.h
+%_includedir/ldb_handlers.h
+%_includedir/ldb_module.h
+%_includedir/ldb_version.h
+%_libdir/libldb.so
 %_pkgconfigdir/ldb.pc
-%_man3dir/*
-
-%exclude %_includedir/pyldb.h
-%exclude %_libdir/libpyldb-util.so
+%_man3dir/ldb.3.*
 
 %files -n ldb-tools
-%_bindir/*
-%_man1dir/*
+%_bindir/ldbadd
+%_bindir/ldbdel
+%_bindir/ldbedit
+%_bindir/ldbmodify
+%_bindir/ldbrename
+%_bindir/ldbsearch
+%_man1dir/ldbadd.1.*
+%_man1dir/ldbdel.1.*
+%_man1dir/ldbedit.1.*
+%_man1dir/ldbmodify.1.*
+%_man1dir/ldbrename.1.*
+%_man1dir/ldbsearch.1.*
 %_libdir/ldb/libldb-cmdline.so
 
 %files -n python-module-pyldb
@@ -122,7 +171,23 @@ make test
 %_libdir/libpyldb-util.so
 %_pkgconfigdir/pyldb-util.pc
 
+%if_with python3
+%files -n python3-module-pyldb
+%python3_sitelibdir/ldb.cpython-*.so
+%python3_sitelibdir/_ldb_text.py
+%python3_sitelibdir/__pycache__/_ldb_text.cpython-*.py*
+%_libdir/libpyldb-util.cpython-*.so.1*
+
+%files -n python3-module-pyldb-devel
+%_includedir/pyldb.h
+%_libdir/libpyldb-util.cpython-*.so
+%_pkgconfigdir/pyldb-util.cpython-*.pc
+%endif
+
 %changelog
+* Sat Jul 21 2018 Stanislav Levin <slev@altlinux.org> 1.3.4-alt3%ubt
+- Build package for Python3
+
 * Tue Jul 17 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.3.4-alt2%ubt
 - Fix missing NULL terminator in ldb_mod_op_test testsuite from master
   due build for aarch64

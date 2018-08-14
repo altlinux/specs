@@ -1,5 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+%def_with check
+
 Name: liblmdb
-Version: 0.9.18
+Version: 0.9.22
 Release: alt1
 
 Summary: Symas Lightning Memory-Mapped Database
@@ -67,6 +70,9 @@ make -C %name test
 %_man1dir/mdb_*
 
 %changelog
+* Mon Jul 23 2018 Stanislav Levin <slev@altlinux.org> 0.9.22-alt1
+- 0.9.18 -> 0.9.22
+
 * Wed Apr 27 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.18-alt1
 - Updated to 0.9.18.
 
