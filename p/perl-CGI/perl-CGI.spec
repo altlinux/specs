@@ -4,7 +4,7 @@ BuildRequires: perl(Carp.pm) perl(Config.pm) perl(Encode.pm) perl(Encode/CN.pm) 
 # END SourceDeps(oneline)
 %define module_name CGI
 Name: perl-CGI
-Version: 4.38
+Version: 4.39
 Release: alt1
 
 Summary: Simple CGI class for Perl
@@ -66,6 +66,9 @@ chmod -c -x examples/*
 %perl_vendor_privlib/Fh.pm
 
 %changelog
+* Tue Aug 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.39-alt1
+- automated CPAN update
+
 * Mon Dec 18 2017 Igor Vlasenko <viy@altlinux.ru> 4.38-alt1
 - automated CPAN update
 
