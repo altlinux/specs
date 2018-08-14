@@ -1,6 +1,6 @@
 Name: lrzip
 Version: 0.631
-Release: alt1
+Release: alt2
 
 Summary: Long Range ZIP or Lzma RZIP
 License: GPLv2+
@@ -51,11 +51,7 @@ install -pDm644 Lrzip.h %buildroot%_includedir/Lrzip.h
 
 %files
 %doc README.md README-NOT-BACKWARD-COMPATIBLE WHATS-NEW doc/lrzip.conf.example
-%_bindir/lrunzip
-%_bindir/lrzcat
-%_bindir/lrzip
-%_bindir/lrztar
-%_bindir/lrzuntar
+%_bindir/*
 %_man1dir/*
 %_man5dir/*
 %exclude %_docdir/lrzip
@@ -69,6 +65,9 @@ install -pDm644 Lrzip.h %buildroot%_includedir/Lrzip.h
 %_libdir/*.so
 
 %changelog
+* Tue Aug 14 2018 Fr. Br. George <george@altlinux.ru> 0.631-alt2
+- Add /usr/bin/lrz (closes: #34395)
+
 * Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 0.631-alt1
 - Autobuild version bump to 0.631
 
