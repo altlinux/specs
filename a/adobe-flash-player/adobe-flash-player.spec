@@ -2,9 +2,9 @@
 Name: adobe-flash-player
 %define bin_name mozilla-plugin-adobe-flash
 %define ver_fake   30
-%define ver_ix86   30.0.0.134
-%define ver_x86_64 30.0.0.134
-Release: alt1%ubt
+%define ver_ix86   30.0.0.154
+%define ver_x86_64 30.0.0.154
+Release: alt2%ubt
 Epoch: 3
 
 %define ver_real %ver_fake
@@ -37,8 +37,8 @@ Version: %ver_real
 Group: Networking/WWW
 Summary: Adobe Flash Player NPAPI compatibility
 Requires: freshplayerplugin ppapi-plugin-adobe-flash
-Provides: flash-plugin = %version-%release
-Obsoletes: flash-plugin <= %version
+Provides: flash-plugin = %version
+Obsoletes: flash-plugin < %version
 Provides: mozilla-plugin-macromedia-flash = %version-%release
 Obsoletes: mozilla-plugin-macromedia-flash < %version-%release
 %description -n %bin_name
@@ -59,6 +59,10 @@ fake
 %files -n %bin_name
 
 %changelog
+* Tue Aug 14 2018 Sergey V Turchin <zerg@altlinux.org> 3:30-alt2%ubt
+- bump version
+- fix to obsolete only old adobe package (ALT#35244)
+
 * Thu Aug 09 2018 Sergey V Turchin <zerg@altlinux.org> 3:30-alt1%ubt
 - bump version
 
