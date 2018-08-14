@@ -1,7 +1,7 @@
 Name: gforth
 %define Name GNU Forth
 Version: 0.7.3
-Release: alt2
+Release: alt3
 License: %gpl3plus
 Group: Development/Other
 Summary: GNU implementation of the ANS Forth language
@@ -28,11 +28,11 @@ Patch11: 11-static-newline.patch
 BuildRequires(pre): rpm-build-licenses
 Requires: %name-doc-txt
 
-# Automatically added by buildreq on Wed Jan 20 2016
-# optimized out: emacs-base emacs-common gnu-config libX11-locales libp11-kit perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended
-BuildRequires: emacs-nox emacs24-speedbar libffi-devel libltdl7-devel makeinfo openssh-clients texi2dvi
+# Automatically added by buildreq on Tue Aug 14 2018
+# optimized out: emacs-base emacs-common fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libX11-locales libp11-kit perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent python-base python-modules python3 python3-base sh3 tex-common texlive texlive-collection-basic texlive-dist
+BuildRequires: emacs-nox emacs26-speedbar libffi-devel libltdl7-devel makeinfo openssh-clients texi2dvi
 
-BuildRequires: texlive-latex-recommended
+BuildRequires: texlive-latex-recommended texlive-texmf
 
 %description
 %Name is a fast and portable implementation of the ANS Forth
@@ -356,7 +356,8 @@ cd %buildroot%_datadir/%name/%version
 %_includedir/gforth/%version
 
 %files info
-%_infodir/*
+%_infodir/[^d]*
+%exclude %_infodir/dir
 
 %files doc-ps
 %docdir/*.ps
@@ -379,6 +380,9 @@ cd %buildroot%_datadir/%name/%version
 %_emacslispdir/*.el
 
 %changelog
+* Tue Aug 14 2018 Fr. Br. George <george@altlinux.ru> 0.7.3-alt3
+- Fix info (closes: #34310)
+
 * Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 0.7.3-alt2
 - Fix build
 
