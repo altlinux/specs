@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 3.5.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Python API and CLI for OpenStack Cinder
 
@@ -30,6 +30,7 @@ BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
 BuildRequires: python-module-oslo.utils
+BuildRequires: python-module-openstackdocstheme
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -44,6 +45,7 @@ BuildPreReq: python3-module-babel >= 2.3.4
 BuildPreReq: python3-module-six >= 1.9.0
 BuildPreReq: python3-module-oslo.i18n >= 2.1.0
 BuildPreReq: python3-module-oslo.utils
+BuildPreReq: python3-module-openstackdocstheme
 %endif
 
 
@@ -75,9 +77,7 @@ This package contains tests for %oname.
 
 %prep
 %setup -n %oname-%version
-pushd doc/source
 %patch0 -p0
-popd
 
 # Remove bundled egg-info
 rm -rf python_cinderclient.egg-info
@@ -149,6 +149,9 @@ install -p -D -m 644 tools/cinder.bash_completion %buildroot%_sysconfdir/bash_co
 
 
 %changelog
+* Tue Aug 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:3.5.0-alt2
+- Rebuild with openstackdocstheme
+
 * Wed Mar 28 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:3.5.0-alt1
 - Updated to version 3.5.0
   Fixed sphinx_doc errors
