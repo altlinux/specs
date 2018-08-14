@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.28
 %define api_ver 1.0
@@ -26,8 +26,8 @@
 %def_enable user_display_server
 
 Name: gdm
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -212,7 +212,12 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%defaul
 	%{?_enable_xsession:--enable-gdm-xsession} \
 	--with-pam-mod-dir=%_pam_modules_dir \
 	%{?_disable_user_display_server:--disable-user-display-server}
+
+%ifarch aarch64
+%make
+%else
 %make_build
+%endif
 
 %install
 mkdir -p %buildroot%_sysconfdir/X11/sessions
@@ -320,6 +325,10 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Mon Aug 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
+- 3.28.3 (fixed CVE-2018-14424)
+- disabled parallel build on aarch64
+
 * Wed Jun 06 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt2
 - updated to 3.28.2-15-g909d417
 
