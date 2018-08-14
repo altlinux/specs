@@ -1,5 +1,5 @@
 Name: volumes-profile-cliff-server
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: Volumes description for Centaurus distribution
@@ -28,6 +28,9 @@ install -pm755 20-*.sh %buildroot%hook2dir/
 %hook2dir/*
 
 %changelog
+* Tue Aug 14 2018 Michael Shigorin <mike@altlinux.org> 0.15-alt1
+- e2k support (/boot)
+
 * Tue Nov 14 2017 Mikhail Efremov <sem@altlinux.org> 0.14-alt1
 - Rename profile workstation -> server.
 - Don't create separate /var if disk size <=120Gb.
