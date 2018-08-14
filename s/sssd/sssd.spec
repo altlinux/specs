@@ -18,8 +18,8 @@
 %endif
 
 Name: sssd
-Version: 1.16.2
-Release: alt2%ubt
+Version: 1.16.3
+Release: alt1%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -920,6 +920,12 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %endif
 
 %changelog
+* Tue Aug 14 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.16.3-alt1%ubt
+- New upstream version 1.16.3
+  + Dropped patch `nss: skip incomplete groups instead of bailing out',
+    included by upstream
+  + Refreshed become_user patch (unit test passes now)
+
 * Thu Jul 19 2018 Stanislav Levin <slev@altlinux.org> 1.16.2-alt2%ubt
 - build with Python3 bindings
 
