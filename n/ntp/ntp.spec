@@ -1,6 +1,6 @@
 Name: ntp
 Version: 4.2.8p11
-Release: alt1
+Release: alt2
 %define srcname %name-%version%{?patchlevel:%patchlevel}
 
 Summary: The Network Time Protocol (NTP)
@@ -140,7 +140,10 @@ This package contains standard NTP query program
 This package contains Network Time Protocol daemon.
 
 %prep
-%setup -q -n %srcname
+%setup -n %srcname
+%ifarch %e2k
+sed -i 's,-Wnormalized=id,,' sntp/libevent/configure*
+%endif
 
 %patch1 -p1
 
@@ -164,8 +167,8 @@ find -type f -print0 |
 %build
 %add_optflags -D_GNU_SOURCE
 %define _bindir %_sbindir
-#autoreconf --force --verbose
 
+%autoreconf
 %configure \
 	--enable-ntp-signd \
 	--enable-linuxcaps \
@@ -337,6 +340,10 @@ fi
 %ghost %ROOT/%_lib/libresolv.so.2
 
 %changelog
+* Tue Aug 14 2018 Michael Shigorin <mike@altlinux.org> 4.2.8p11-alt2
+- E2K: avoid lcc-unsupported option
+- autoreconf
+
 * Sun Mar 04 2018 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8p11-alt1
 - 4.2.8p11 (CVE-2018-7185, CVE-2018-7184, CVE-2018-7170, CVE-2018-7183,
   CVE-2018-7182, CVE-2016-1549)
