@@ -2,7 +2,7 @@
 %define module Text-CSV
 
 Name: perl-%module
-Version: 1.95
+Version: 1.96
 Release: alt1
 
 Summary: Text::CSV - comma-separated values manipulation routines
@@ -36,6 +36,9 @@ fields into a CSV string and parse a CSV string into fields.
 %perl_vendor_privlib/Text
 
 %changelog
+* Tue Aug 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.96-alt1
+- automated CPAN update
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.95-alt1
 - automated CPAN update
 
