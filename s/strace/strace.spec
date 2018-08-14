@@ -1,5 +1,5 @@
 Name: strace
-Version: 4.23
+Version: 4.24
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -57,6 +57,7 @@ libc="$(ldd /bin/sh |sed -n 's|^[^/]*\(/[^ ]*/libc\.so[^ ]*\).*|\1|p' |head -1)"
 $libc |head -1
 file -L /bin/sh
 gcc --version |head -1
+ld --version |head -1
 kver="$(printf '%%s\n%%s\n' '#include <linux/version.h>' 'LINUX_VERSION_CODE' | gcc -E -P -)"
 printf 'kernel-headers %%s.%%s.%%s\n' $(($kver/65536)) $(($kver/256%%256)) $(($kver%%256))
 echo 'END OF BUILD ENVIRONMENT INFORMATION'
@@ -65,6 +66,7 @@ echo 'END OF BUILD ENVIRONMENT INFORMATION'
 mkdir build
 cd build
 %define _configure_script ../configure
+CFLAGS_FOR_BUILD="$RPM_OPT_FLAGS"; export CFLAGS_FOR_BUILD
 %configure --enable-gcc-Werror %mpers_check #--enable-maintainer-mode
 %make_build
 
@@ -93,6 +95,9 @@ echo 'END OF TEST SUITE INFORMATION'
 %_bindir/strace-graph
 
 %changelog
+* Tue Aug 14 2018 Dmitry V. Levin <ldv@altlinux.org> 4.24-alt1
+- v4.23 -> v4.24.
+
 * Thu Jun 14 2018 Dmitry V. Levin <ldv@altlinux.org> 4.23-alt1
 - v4.22-55-g2e5167c -> v4.23.
 
