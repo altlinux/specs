@@ -1,5 +1,5 @@
 Name: volumes-profile-jeos
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Volumes description for JeOS distribution
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Aug 14 2018 Michael Shigorin <mike@altlinux.org> 0.2-alt1
+- e2k support (/boot)
+
 * Mon Mar 09 2015 Michael Shigorin <mike@altlinux.org> 0.1-alt1
 - initial build (derived from volumes-profile-lite)
 
