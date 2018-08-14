@@ -1,5 +1,5 @@
 Name: zsh
-Version: 5.4.2
+Version: 5.5.1
 Release: alt1
 Epoch: 1
 
@@ -16,7 +16,7 @@ Obsoletes: zsh-doc < %epoch:%version
 
 # Automatically added by buildreq on Thu Jan 16 2014
 # optimized out: gnu-config groff-base less libncurses-devel libtinfo-devel makeinfo
-BuildRequires: git-core libcap-devel libgdbm-devel libncursesw-devel libpcre-devel man yodl makeinfo
+BuildRequires: libcap-devel libgdbm-devel libncursesw-devel libpcre-devel man yodl makeinfo
 
 # For make check
 BuildPreReq: /dev/pts
@@ -111,6 +111,9 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Tue Aug 14 2018 Fr. Br. George <george@altlinux.ru> 1:5.5.1-alt1
+- Autobuild version bump to 5.5.1 (closes: #34248)
+
 * Mon Sep 04 2017 Fr. Br. George <george@altlinux.ru> 1:5.4.2-alt1
 - Autobuild version bump to 5.4.2
 - ALT: improve _hasher completion (thanks to @arseny)
