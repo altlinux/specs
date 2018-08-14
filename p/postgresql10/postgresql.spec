@@ -4,7 +4,7 @@
 %define prog_name            postgresql
 %define postgresql_major     10
 %define postgresql_minor     5
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -49,7 +49,7 @@ Conflicts: %{prog_name}9.4
 Conflicts: %{prog_name}9.5
 Conflicts: %{prog_name}9.6
 # 1C
-Conflicts: %{prog_name}9.6-1C
+Conflicts: %{prog_name}10-1C
 
 BuildRequires: OpenSP chrooted docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel
@@ -747,6 +747,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Tue Aug 14 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt2
+- Change conflict 1C 9.6 -> 1C 10
+
 * Sat Aug 11 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt1
 - 10.5
 - Fix CVE-2018-10915, CVE-2018-10925
