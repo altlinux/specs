@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 0.3.3
+Version: 0.4
 Release: alt1
 
 Summary: A kerberos KDC HTTP proxy WSGI module
@@ -25,15 +25,15 @@ BuildRequires: python3-module-setuptools
 %if_with check
 BuildRequires: python-module-tox
 BuildRequires: python-module-mock
-BuildRequires: python-module-pyasn1
 BuildRequires: python-module-dns
 BuildRequires: python-module-coverage
 BuildRequires: python-module-webtest
+BuildRequires: python-module-asn1crypto
 BuildRequires: python3-module-tox
-BuildRequires: python3-module-pyasn1
 BuildRequires: python3-module-dns
 BuildRequires: python3-module-coverage
 BuildRequires: python3-module-webtest
+BuildRequires: python3-module-asn1crypto
 %endif
 
 BuildArch: noarch
@@ -76,10 +76,11 @@ popd
 
 %check
 export PIP_INDEX_URL=http://host.invalid./
-tox --sitepackages -e py%{python_version_nodots python} -v -- -v
+export KDCPROXY_ASN1MOD=asn1crypto
+TOX_TESTENV_PASSENV=KDCPROXY_ASN1MOD tox --sitepackages -e py%{python_version_nodots python} -v -- -v
 
 pushd ../python3
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
+TOX_TESTENV_PASSENV=KDCPROXY_ASN1MOD tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
 
 %files
@@ -93,6 +94,9 @@ popd
 %python3_sitelibdir/%mname-*.egg-info
 
 %changelog
+* Tue Aug 14 2018 Stanislav Levin <slev@altlinux.org> 0.4-alt1
+- 0.3.3 -> 0.4.
+
 * Thu Jul 26 2018 Stanislav Levin <slev@altlinux.org> 0.3.3-alt1
 - 0.3.2 -> 0.3.3
 - Build package for Python3
