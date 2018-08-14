@@ -1,13 +1,14 @@
 Name: volumes-profile-centaurus
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: Volumes description for Centaurus distribution
 License: GPL
 Group: System/Configuration/Other
+
 Url: http://www.altlinux.org/Installer/beans
-BuildArch: noarch
 Source: %name-%version.tar
+BuildArch: noarch
 
 %description
 Volumes description for Centaurus distribution
@@ -28,6 +29,9 @@ install -pm755 20-*.sh %buildroot%hook2dir/
 %hook2dir/*
 
 %changelog
+* Tue Aug 14 2018 Michael Shigorin <mike@altlinux.org> 0.12-alt1
+- e2k support (/boot)
+
 * Wed Dec 14 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.11-alt1
 - even space for rootfs and even more on real hardware for desktops
 
