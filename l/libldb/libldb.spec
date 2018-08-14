@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: libldb
-Version: 1.3.4
-Release: alt3%ubt
+Version: 1.3.5
+Release: alt1%ubt
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -185,6 +185,9 @@ make test
 %endif
 
 %changelog
+* Tue Aug 14 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.3.5-alt1%ubt
+- Update to security release (Fixes: CVE-2018-1140)
+
 * Sat Jul 21 2018 Stanislav Levin <slev@altlinux.org> 1.3.4-alt3%ubt
 - Build package for Python3
 
