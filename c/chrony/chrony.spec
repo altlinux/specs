@@ -2,7 +2,7 @@
 
 Name: chrony
 Version: 3.3
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Chrony clock synchronization program
 License: GPLv2 only
@@ -17,7 +17,7 @@ Source2: chrony.sh
 BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: libcap-devel libncurses-devel libreadline-devel
-BuildRequires: libnss-devel asciidoctor lynx
+BuildRequires: libnss-devel asciidoctor lynx libseccomp-devel
 BuildRequires: makeinfo control
 
 Provides: ntp-server
@@ -61,6 +61,8 @@ sed -i -e 's/OPTIONS/CHRONYD_ARGS/' examples/chronyd.service
 %configure \
 	--with-user=_chrony \
 	--with-hwclockfile=%_sysconfdir/adjtime \
+	--enable-ntp-signd \
+	--enable-scfilter \
 	--with-sendmail=%_sbindir/sendmail
 
 %make_build all docs 
@@ -123,6 +125,9 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 %_man8dir/*
 
 %changelog
+* Wed Aug 15 2018 Anton Farygin <rider@altlinux.ru> 3.3-alt2%ubt
+- enabled seccomp filter and signd features
+
 * Tue Apr 10 2018 Anton Farygin <rider@altlinux.ru> 3.3-alt1%ubt
 - 3.3
 
