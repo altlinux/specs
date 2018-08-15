@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.48.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Source10: ru-kio5.po
 Patch1: alt-def-trash.patch
 Patch2: alt-kio-help-fallback-kde4.patch
 Patch3: alt-places-add-dirs.patch
@@ -94,6 +95,8 @@ KF5 library
 %patch2 -p1
 %patch3 -p1
 
+cat %SOURCE10 >po/ru/kio5.po
+
 %build
 %K5build
 
@@ -148,6 +151,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Wed Aug 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt2%ubt
+- update russian translation
+
 * Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
 - new version
 
