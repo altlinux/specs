@@ -6,18 +6,22 @@
 
 Name:		schat
 Version:	0.8.6
-Release:	alt1.svn%svn
+Release:	alt1.svn%svn.1
 Summary:	IMPOMEZIA Simple Chat
 Url:		http://impomezia.com/project/schat
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 License:	GPLv3+
 Group:		Networking/Chat
+
+Epoch:		1
+
 Source0:	%name-%version.%svn.tar.bz2
 Source1:	schatd-logrotate
 Source2:	%name.desktop
 Source3:	%{name}d
 Source4:	%name.conf
 Source5:	%{name}d.sh
+Source6:	%{name}d.service
 
 BuildRequires: /usr/bin/convert gcc-c++ libqt4-devel
 
@@ -47,6 +51,7 @@ install -Dp -m 0755 out/release/%{name}d %buildroot/%_sbindir/%{name}d
 install -Dp -m 0755 %SOURCE3 %buildroot%_initdir/%{name}d
 install -Dp -m 0644 %SOURCE4 %buildroot%_sysconfdir/%name/%name.conf
 install -Dp -m 0755 %SOURCE5 %buildroot/%_sbindir/%{name}d.sh
+install -Dp -m 0644 %SOURCE6 %buildroot/%_unitdir/%{name}d.service
 install -Dp -m 0644 %SOURCE1 %buildroot/%_sysconfdir/logrotate.d/%name
 install -Dp -m 0644 %SOURCE2 %buildroot/%_desktopdir/%name.desktop
 
@@ -94,6 +99,7 @@ service %{name}d condstop
 %files -n %name-server
 %_sbindir/*
 %_initdir/%{name}d
+%_unitdir/%{name}d.service
 %_sysconfdir/logrotate.d/%name
 %attr(770,root,%privgroup) %_sysconfdir/%name
 %attr(2660,root,%privgroup) %config(noreplace) %_sysconfdir/%name/%name.conf
@@ -104,6 +110,9 @@ service %{name}d condstop
 %dir %attr(2770,root,%privgroup) %_localstatedir/%name
 
 %changelog
+* Wed Aug 15 2018 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.6-alt1.svn3549.1
+- add systemd support
+
 * Sun Mar 03 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.6-alt1.svn3549
 - 0.8.6.3549
 
