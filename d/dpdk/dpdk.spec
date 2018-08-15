@@ -16,14 +16,16 @@
 
 
 Name: dpdk
-Version: 16.11.1
+Version: 18.02.1
 Release: alt1%ubt
 Url: http://dpdk.org
 Packager: Lenar Shakirov <snejok@altlinux.ru>
 
 Source: %name-%version.tar
 
-Patch0: %name-16.11-move-to-libdir.patch
+Patch0: dpdk-16.11-move-to-libdir.patch
+Patch1: dpdk-18.02-aarch64-link-fix.patch
+Patch3: dpdk-alt-pci.ids.patch
 
 Summary: Set of libraries and drivers for fast packet processing
 Group: System/Libraries
@@ -54,7 +56,7 @@ ExclusiveArch: x86_64 %{ix86} aarch64 ppc64le
 %ifarch %{ix86}
 %define machine_arch i686
 %define machine_tmpl native
-%define machine atm
+%define machine default
 %endif
 %ifarch aarch64
 %define machine_arch arm64
@@ -135,6 +137,8 @@ as L2 and L3 forwarding.
 %prep
 %setup
 %patch0 -p2
+%patch1 -p2
+%patch3 -p2
 
 %build
 # set up a method for modifying the resulting .config file
@@ -165,7 +169,6 @@ make V=1 O=%target T=%target %{?_smp_mflags} config
 setconf CONFIG_RTE_MACHINE '"%machine"'
 # Disable experimental features
 setconf CONFIG_RTE_NEXT_ABI n
-setconf CONFIG_RTE_LIBRTE_CRYPTODEV n
 setconf CONFIG_RTE_LIBRTE_MBUF_OFFLOAD n
 # Disable unmaintained features
 setconf CONFIG_RTE_LIBRTE_POWER n
@@ -181,6 +184,10 @@ setconf CONFIG_RTE_EAL_IGB_UIO n
 setconf CONFIG_RTE_LIBRTE_KNI n
 setconf CONFIG_RTE_KNI_KMOD n
 setconf CONFIG_RTE_KNI_PREEMPT_DEFAULT n
+
+setconf CONFIG_RTE_APP_EVENTDEV n
+
+setconf CONFIG_RTE_LIBRTE_NFP_PMD y
 
 %if_with shared
 setconf CONFIG_RTE_BUILD_SHARED_LIB y
@@ -202,10 +209,12 @@ unset RTE_SDK RTE_INCLUDE RTE_TARGET
 %makeinstall_std O=%target prefix=%_usr libdir=%_libdir
 
 %if_without tools
-rm -rf %buildroot%sdkdir/tools
+rm -rf %buildroot%sdkdir/usertools
 rm -rf %buildroot%_sbindir/dpdk_nic_bind
+rm -f %buildroot%_bindir/dpdk-test-crypto-perf
+rm -f %buildroot%_bindir/testbbdev
 %endif
-rm -f %buildroot%sdkdir/tools/setup.sh
+rm -f %buildroot%sdkdir/usertools/setup.sh
 
 %if_with examples
 find %target/examples/ -name "*.map" | xargs rm -f
@@ -263,7 +272,7 @@ EOF
 %incdir/
 %sdkdir
 %if_with tools
-%exclude %sdkdir/tools/
+%exclude %sdkdir/usertools/
 %endif
 %if_with examples
 %exclude %sdkdir/examples/
@@ -277,10 +286,12 @@ EOF
 
 %if_with tools
 %files tools
-%sdkdir/tools/
+%sdkdir/usertools/
 %_sbindir/dpdk-devbind
 %_bindir/dpdk-pdump
+%_bindir/testbbdev
 %_bindir/dpdk-pmdinfo
+%_bindir/dpdk-test-crypto-perf
 %endif
 
 %if_with examples
@@ -290,6 +301,9 @@ EOF
 %endif
 
 %changelog
+* Fri Jun 01 2018 Anton Farygin <rider@altlinux.ru> 18.02.1-alt1%ubt
+- 18.02.1
+
 * Wed Apr 26 2017 Alexey Shabalin <shaba@altlinux.ru> 16.11.1-alt1%ubt
 - 16.11.1
 
