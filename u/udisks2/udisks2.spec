@@ -18,9 +18,14 @@
 %def_enable zram
 %def_disable lsm
 %def_enable bcache
+%ifarch %ix86
+%def_disable vdo
+%else
+%def_disable vdo
+%endif
 
 Name: %{_name}2
-Version: 2.7.7
+Version: 2.8.0
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
@@ -43,7 +48,8 @@ Obsoletes: %_name
 %define udev_ver 165
 %define libatasmart_ver 0.17
 %define dbus_ver 1.4.0
-%define blockdev_ver 2.14
+%define blockdev_ver 2.19
+%define libmount_ver 2.30
 
 Requires(pre): control
 Requires: lib%name = %version-%release
@@ -65,7 +71,7 @@ BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpolkit-devel >= %polkit_ver
 BuildRequires: libatasmart-devel >= %libatasmart_ver
 BuildRequires: libudev-devel libgudev-devel >= %udev_ver
-BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel
+BuildRequires: libsystemd-devel libmount-devel >= %libmount_ver
 BuildRequires: libblockdev-devel >= %blockdev_ver libblockdev-loop-devel
 BuildRequires: libblockdev-mdraid-devel libblockdev-fs-devel libblockdev-crypto-devel
 BuildRequires: libblockdev-kbd-devel libblockdev-part-devel
@@ -76,6 +82,7 @@ BuildRequires: libblockdev-kbd-devel libblockdev-part-devel
 %{?_enable_btrfs:BuildRequires: libblockdev-btrfs-devel}
 %{?_enable_zram:BuildRequires: libblockdev-kbd-devel libblockdev-swap-devel}
 %{?_enable_lsm:BuildRequires: libstoragemgmt-devel libconfig-devel}
+%{?_enable_vdo:BuildRequires: libblockdev-vdo-devel}
 
 %description
 The udisks project provides a daemon, tools and libraries to access
@@ -181,6 +188,15 @@ Requires: iscsi-initiator-utils
 %description module-iscsi
 This package contains UDisks module for iSCSI configuration.
 
+%package module-vdo
+Summary: UDisks module for VDO
+Group: System/Servers
+Requires: %name = %version-%release
+Requires: libblockdev-vdo
+
+%description module-vdo
+This package contains UDisks module for VDO management.
+
 
 %prep
 %setup -n %_name-%version
@@ -199,7 +215,8 @@ subst 's/mkfs\.vfat/mkfs.fat/
 	%{subst_enable btrfs} \
 	%{subst_enable zram} \
 	%{subst_enable lsm} \
-	%{subst_enable bcache}
+	%{subst_enable bcache} \
+	%{subst_enable vdo}
 
 %make_build
 
@@ -312,9 +329,18 @@ fi
 %_datadir/polkit-1/actions/org.freedesktop.UDisks2.iscsi.policy
 %endif
 
+%if_enabled vdo
+%files module-vdo
+%_libdir/%name/modules/lib%{name}_vdo.so
+%_datadir/polkit-1/actions/org.freedesktop.UDisks2.vdo.policy
+%endif
+
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Wed Aug 15 2018 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Mon Jul 09 2018 Yuri N. Sedunov <aris@altlinux.org> 2.7.7-alt1
 - 2.7.7
 
