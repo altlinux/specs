@@ -1,16 +1,21 @@
+%def_enable snapshot
 %define _name ibus-qt
 
 Name: %{_name}4
 Version: 1.3.3
-Release: alt1
+Release: alt2
 
 Summary: Qt IBus library and Qt input method plugin
 License: GPLv2+
 Group: System/Libraries
 Url: https://github.com/ibus/%_name
 
-#VCS: https://github.com/ibus/ibus-qt.git
+%if_disabled snapshot
 Source: %url/releases/download/%version/%_name-%version-Source.tar.gz
+%else
+#VCS: https://github.com/ibus/ibus-qt.git
+Source: %_name-%version.tar
+%endif
 Patch1: ibus-qt-alt-build.patch
 
 %define ibus_ver 1.3.7
@@ -45,7 +50,11 @@ This package provides development documentation for iBus Qt
 library.
 
 %prep
+%if_disabled snapshot
 %setup -n %_name-%version-Source
+%else
+%setup -n %_name-%version
+%endif
 %patch1
 
 %build
@@ -69,6 +78,10 @@ library.
 #%doc docs/html
 
 %changelog
+* Wed Aug 15 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt2
+- updated to 1.3.3-1-gdc8f7cb
+- build against libicu*.so.62
+
 * Thu Feb 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt1
 - 1.3.3
 
