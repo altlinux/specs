@@ -6,7 +6,7 @@
 
 Name: kde5-%rname
 Version: 18.04.3
-Release: alt3%ubt
+Release: alt4%ubt
 %K5init
 
 Group: File tools
@@ -126,6 +126,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Wed Aug 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt4%ubt
+- update russian translation
+
 * Thu Aug 09 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt3%ubt
 - update russian translation
 
