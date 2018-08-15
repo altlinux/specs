@@ -103,8 +103,8 @@
 # }}}
 
 Name: qemu
-Version: 2.12.0
-Release: alt2
+Version: 3.0.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -138,6 +138,7 @@ Requires: %name-system = %EVR
 Requires: %name-user = %EVR
 
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
+BuildRequires: glib2-devel >= 2.40
 BuildRequires: texinfo perl-podlators libattr-devel-static libcap-devel libcap-ng-devel
 BuildRequires: libxfs-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
@@ -162,9 +163,9 @@ BuildRequires: libpcre-devel-static
 %{?_enable_aio:BuildRequires: libaio-devel}
 %{?_enable_spice:BuildRequires: libspice-server-devel >= 0.12.0 spice-protocol >= 0.12.3}
 BuildRequires: libuuid-devel
-%{?_enable_smartcard:BuildRequires: libcacard-devel >= 2.5.0}
+%{?_enable_smartcard:BuildRequires: libcacard-devel >= 2.5.1}
 %{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.5}
-%{?_enable_opengl:BuildRequires: libepoxy-devel libdrm-devel libgbm-devel}
+%{?_enable_opengl:BuildRequires: libepoxy-devel libgbm-devel}
 %{?_enable_guest_agent:BuildRequires: glib2-devel >= 2.38}
 %{?_enable_rbd:BuildRequires: ceph-devel}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.9.0}
@@ -1590,6 +1591,9 @@ fi
 %_man1dir/qemu-system-nios2.1*
 
 %changelog
+* Wed Aug 15 2018 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
 * Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 2.12.0-alt2
 - rebuilt against libnfs.so.12
 - set arch for qemu-kvm,qemu-user-binfmt,qemu-user-static-binfmt packages
