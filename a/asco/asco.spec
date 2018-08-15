@@ -1,5 +1,5 @@
 Name: asco
-Version: 0.4.9
+Version: 0.4.10
 Release: alt1
 
 Summary: A SPICE Circuit Optimizer
@@ -39,6 +39,9 @@ install -D -m755 %name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Wed Aug 15 2018 Vitaly Lipatov <lav@altlinux.ru> 0.4.10-alt1
+- new version 0.4.10 (with rpmrb script)
+
 * Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 0.4.9-alt1
 - new version (0.4.9) with rpmgs script
 
