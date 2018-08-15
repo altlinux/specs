@@ -17,7 +17,7 @@
 
 Name: plasma5-workspace
 Version: 5.12.6
-Release: alt2%ubt
+Release: alt3%ubt
 Epoch: 1
 %K5init altplace
 
@@ -29,9 +29,9 @@ License: GPLv2+ / LGPLv2+
 Requires: /usr/share/design/current xdg-user-dirs
 Requires: iso-codes
 Requires: qt5-dbus qt5-tools qt5-quickcontrols qt5-virtualkeyboard dbus-tools-gui
-Requires: kf5-kinit kf5-kconfig kf5-kded kf5-kglobalaccel kf5-kactivitymanagerd kf5-kdeclarative
+Requires: kf5-kinit kf5-kconfig kf5-kded kf5-kglobalaccel kf5-kdeclarative
 Requires: kf5-kwallet kf5-solid kf5-kimageformats kf5-kdbusaddons kf5-kio kf5-kio-extras
-Requires: plasma5-polkit-kde-agent plasma5-kwin kf5-kdeclarative
+Requires: plasma5-polkit-kde-agent plasma5-kwin plasma5-kactivitymanagerd
 
 Source: %rname-%version.tar
 Patch100: alt-startkde.patch
@@ -323,6 +323,9 @@ done
 
 
 %changelog
+* Wed Aug 15 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.6-alt3%ubt
+- fix requires
+
 * Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.6-alt2%ubt
 - fix version
 
