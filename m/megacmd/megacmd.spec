@@ -1,6 +1,6 @@
 Name: megacmd
-Version: 0.9.7
-Release: alt2
+Version: 0.9.9
+Release: alt1
 
 Summary: Command Line Interactive and Scriptable Application to access MEGA
 
@@ -11,7 +11,7 @@ Url: https://github.com/meganz/MEGAcmd
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/meganz/MEGAcmd/archive/%version.tar.gz
-Source: %name-%version.tar
+Source: %version.tar.gz
 
 Patch1: 0001-build-with-external-libmegasdk.patch
 
@@ -60,6 +60,9 @@ cp -a %_datadir/libmegasdk/m4/ sdk/
 %doc README.md LICENSE
 
 %changelog
+* Wed Aug 15 2018 Fr. Br. George <george@altlinux.ru> 0.9.9-alt1
+- Autobuild version bump to 0.9.9
+
 * Sun Jun 10 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt2
 - rebuild with libmegasdk-devel 3.3.8
 
