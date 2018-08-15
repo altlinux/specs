@@ -8,10 +8,11 @@
 %def_enable check
 %def_enable docs
 %def_with cxx
+%def_with system_tzdata
 
 Name: libical
-Version: 3.0.3
-Release: alt3
+Version: 3.0.4
+Release: alt1
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -25,9 +26,11 @@ Source: %name-%version.tar
 %endif
 Patch: %name-1.0.1-alt-libdir.patch
 
-Requires: tzdata
+%define tzdata_ver 2018e
+%{?_with_system_tzdata:Requires: tzdata >= %tzdata_ver}
 
-BuildRequires: cmake gcc-c++ ctest gtk-doc libicu-devel icu-utils tzdata
+BuildRequires: cmake gcc-c++ ctest gtk-doc libicu-devel icu-utils
+%{?_with_system_tzdata:BuildRequires: tzdata}
 %{?_with_bdb:BuildRequires: libdb4-devel}
 %{?_enable_ical_glib:BuildRequires: libgio-devel libxml2-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -125,7 +128,9 @@ library.
 	%{?_with_cxx:-DWITH_CXX_BINDINGS:BOOL=ON} \
 	%{?_enable_ical_glib:-DICAL_GLIB:BOOL=ON} \
 	%{?_enable_introspection:-DGOBJECT_INTROSPECTION:BOOL=ON} \
-	%{?_disable_docs:-DICAL_BUILD_DOCS:BOOL=OFF}
+	%{?_disable_docs:-DICAL_BUILD_DOCS:BOOL=OFF} \
+	%{?_with_system_tzdata:-DUSE_BUILTIN_TZDATA:BOOL=OFF}
+
 %cmake_build
 
 %install
@@ -186,6 +191,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 
 
 %changelog
+* Wed Aug 15 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt1
+- 3.0.4
+
 * Wed Jul 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt3
 - rebuilt against libicu*.so.62
 
