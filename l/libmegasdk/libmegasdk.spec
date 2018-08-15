@@ -1,5 +1,5 @@
 Name: libmegasdk
-Version: 3.3.8
+Version: 3.4.0
 Release: alt1
 
 Summary: MEGA SDK - Client Access Engine Coverity Scan Build Status
@@ -9,7 +9,7 @@ Group: System/Libraries
 Url: https://github.com/meganz/sdk
 
 # Source-url: https://github.com/meganz/sdk/archive/v%version.tar.gz
-Source: %name-%version.tar
+Source: v%version.tar.gz
 
 #Source1: %name
 #Source2: %name.service
@@ -18,8 +18,8 @@ Source: %name-%version.tar
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# manually removed: cppcheck glibc-devel-static glibc-kernheaders-generic 
-# manually removed: openssl-engines python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs selinux-policy sssd texlive-latex-base 
+# manually removed: cppcheck glibc-devel-static glibc-kernheaders-generic
+# manually removed: openssl-engines python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs selinux-policy sssd texlive-latex-base
 # Automatically added by buildreq on Sat Dec 23 2017
 # optimized out: glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libpcre-devel libstdc++-devel perl python-base python-module-google python-modules python3 python3-base sssd-client texlive-base-bin
 BuildRequires: doxygen gcc-c++ libcares-devel libcryptopp-devel libcurl-devel libfreeimage-devel libfuse-devel libpcrecpp-devel libreadline-devel libsodium-devel libsqlite3-devel libssl-devel libuv-devel zlib-devel
@@ -129,6 +129,9 @@ cp include/mega/{mega_glob.h,mega_http_parser.h} %buildroot/%_includedir/mega/
 %_bindir/megasimplesync
 
 %changelog
+* Wed Aug 15 2018 Fr. Br. George <george@altlinux.ru> 3.4.0-alt1
+- Autobuild version bump to 3.4.0
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 3.3.8-alt1
 - new version 3.3.8 (with rpmrb script)
 - rebuild with libcryptopp-6.1.0
