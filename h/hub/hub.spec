@@ -3,7 +3,7 @@
 # TODO: build with external sources
 
 Name: hub
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: A command-line wrapper for git with github shortcuts
@@ -113,6 +113,9 @@ find . -maxdepth 2 -name '*.go' '!' -name '*_test.go' | \
 %_datadir/zsh/site-functions/_hub
 
 %changelog
+* Wed Aug 15 2018 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
+- new version 2.5.0 (with rpmrb script)
+
 * Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
 - new version 2.4.0 (with rpmrb script)
 
