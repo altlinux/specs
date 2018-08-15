@@ -1,27 +1,26 @@
-%global pkgname		dirsrv
-%global groupname	%pkgname.target
+%define _unpackaged_files_terminate_build 1
+
+%global pkgname	dirsrv
+%global groupname %pkgname.target
+
 %def_without selinux
 
+Name: 389-ds-base
+Version: 1.3.8.5
+Release: alt1
+
 Summary: 389 Directory Server (base)
-Name: 	 389-ds-base
-Version: 1.3.7.1
-Release: alt2
-License: GPLv3+ with exceptions
-Url: 	 http://port389.org
-Group: 	 System/Servers
+License: GPLv3+
+Group: System/Servers
+# Source-git:   https://pagure.io/389-ds-base.git
+Url: http://port389.org
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source:  %name-%version.tar
-# VCS:   https://git@pagure.io/389-ds-base.git
-Patch1:  alt-fix-initscripts.patch
-Patch2:  alt-bash3-support.patch
-Patch3:  alt-fix-sasl2.patch
-Patch4:  alt-fix-const-declatations.patch
-Patch5:  alt-link-libsds-with-pthread.patch
-Patch6:  alt-link-ldaputil-with-libslapd.patch
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
-BuildRequires: 389-adminutil-devel gcc-c++ libdb4-devel libicu-devel 
-BuildRequires: libldap-devel libnet-snmp-devel libnl-devel libpam-devel 
+BuildRequires: 389-adminutil-devel gcc-c++ libdb4-devel libicu-devel
+BuildRequires: libldap-devel libnet-snmp-devel libnl-devel libpam-devel
 BuildRequires: libpcre-devel libsasl2-devel libsensors3-devel libsvrcore-devel >= 4.1.2
 BuildRequires: perl-devel
 BuildRequires: perl-Mozilla-LDAP perl-libnet perl-bignum
@@ -32,10 +31,14 @@ BuildRequires: perl-Socket6
 BuildRequires: libsystemd-devel
 BuildRequires: libevent-devel
 BuildRequires: doxygen
+BuildRequires: libgperftools-devel
 
-Provides:  fedora-ds = %version-%release
+BuildRequires: python3-module-setuptools
+BuildRequires(pre): rpm-build-python3
+
+Provides: fedora-ds = %version-%release
 Obsoletes: fedora-ds < %version-%release
-Provides:  ldif2ldbm
+Provides: ldif2ldbm
 Conflicts: lprng
 
 # AutoReq: yes, noperl
@@ -70,9 +73,9 @@ administration.
 %package devel
 Summary: Development libraries for 389 Directory Server
 Group: Development/C
-Requires: %name = %version-%release
-Provides:  389-ds-devel = %version-%release
-Obsoletes: 389-ds-devel < %version-%release
+Requires: %name = %EVR
+Provides: 389-ds-devel = %EVR
+Obsoletes: 389-ds-devel < %EVR
 
 %description devel
 Development Libraries and heades for 389 Directory Server.
@@ -80,8 +83,8 @@ Development Libraries and heades for 389 Directory Server.
 %package libs
 Summary: Core libraries for 389 Directory Server
 Group: System/Libraries
-Provides:  389-ds-libs = %version-%release
-Obsoletes: 389-ds-libs < %version-%release
+Provides: 389-ds-libs = %EVR
+Obsoletes: 389-ds-libs < %EVR
 
 %description libs
 Core libraries for the 389 Directory Server base package.  These
@@ -89,29 +92,62 @@ libraries are used by the main package and the -devel package.  This
 allows the -devel package to be installed with just the -libs package
 and without the main package.
 
+%package -n python3-module-lib389
+Summary: A library for accessing, testing, and configuring the 389 Directory Server
+BuildArch: noarch
+Group: Development/Python3
+Requires: krb5-server
+Requires: openssl
+Requires: iproute
+
+%description -n python3-module-lib389
+This module contains tools and libraries for accessing, testing, and
+configuring the 389 Directory Server.
+
+%package -n python3-module-389-ds-tests
+Summary: The lib389 Continuous Integration Tests
+Group: Development/Python3
+BuildArch: noarch
+
+%description -n  python3-module-389-ds-tests
+The python3-module-389-ds CI tests that can be run against the Directory Server.
+
 %prep
-%setup -n %name-%version
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+%setup
+%patch -p1
+# ALTLinux has bash3 only, thus operation '|&' is not supported
+find -name db2index.in -exec sed -i 's/|\&/2>\&1 |/g' {} \;
+
+# Link libsds.so with pthread
+sed -i '/SDS_LDFLAGS[[:space:]]*=/s/$/ -lpthread/g' Makefile.am
+
+# Fix linking of libldaputil
+sed -i '/libldaputil_la_CPPFLAGS[[:space:]]*=/a\
+libldaputil_la_LIBADD = libslapd.la -L.libs' Makefile.am
+
+# Fix sasl path
+sed -i 's|saslpath = "/usr/lib/aarch64-linux-gnu"|saslpath = "/usr/lib64/aarch64-linux-gnu"|g; s|saslpath = "/usr/lib64/sasl2"|saslpath = "/usr/lib64/sasl2-3"|g; s|saslpath = "/usr/lib/sasl2"|saslpath = "/usr/lib/sasl2-3"|g' ldap/servers/slapd/ldaputil.c
+
+sed -i 's|"$libdir/sasl2"|"$libdir/sasl2-3"|g' configure.ac
+
+# tests
+find -name "*.py" -exec sed -i 's@/usr/bin/systemctl@/sbin/systemctl@g' {} \;
 
 %autoreconf
 # Install SysVInit scripts anyway
 subst 's/@\(INITDDIR_TRUE\|SYSTEMD_FALSE\)@//g' Makefile.in
 
-# For starnge cleanup before documentation build
+# For strange cleanup before documentation build
 mkdir -p man/man3
 touch man/man3/_file
+
+sed -r -i '1s|#!/usr/bin/python[[:space:]]+|#!/usr/bin/python3|' ldap/admin/src/scripts/{*.py,ds-replcheck}
 
 %build
 %configure  \
 	--with-openldap \
-%if_with selinux
-	--with-selinux \
-%endif
+        %{subst_with selinux} \
+        --enable-tcmalloc \
 	--localstatedir=/var \
  	--enable-autobind \
 	--with-systemd \
@@ -124,25 +160,34 @@ touch man/man3/_file
 	--with-nss-lib=%_libdir \
 	--with-nss-inc=%_includedir/nss
 
-export XCFLAGS=$RPM_OPT_FLAGS
+%make
+%make setup.py
+pushd ./src/lib389
+%python3_build
+popd
 
-#USE_ADMSERV to avoid strange get_mag_var unresolved symbol
-echo "#define USE_ADMSERV 1" >>config.h
-
-%make_build
+%python3_build
 
 %install
 %makeinstall_std
+pushd ./src/lib389
+%python3_install
+popd
+
+%python3_install
+
+# do not package lib389's tests
+rm -rf %buildroot%python3_sitelibdir_noarch/lib389/tests
 
 mkdir -p %buildroot/{%_lockdir,%_localstatedir,%_logdir,%_var/tmp}/%pkgname
 
 # for systemd
-mkdir -p %buildroot%{_sysconfdir}/systemd/system/%{groupname}.wants
+mkdir -p %buildroot%_sysconfdir/systemd/system/%groupname.wants
 
 # remove libtool and static libs
 rm -f %buildroot%_libdir/%pkgname/{,plugins/}*.{a,la}
 
-# make sure perl scripts have a proper shebang 
+# make sure perl scripts have a proper shebang
 subst 's|#{{PERL-EXEC}}|#!%_bindir/perl|' %buildroot%_datadir/%pkgname/script-templates/template-*.pl
 subst 's|File::Spec->tmpdir|"/tmp"|' %buildroot%_libdir/%pkgname/perl/DSCreate.pm
 
@@ -156,9 +201,8 @@ cp man/man3/* %buildroot%_man3dir
 # Fix path to systemctl in scripts
 subst 's,%_bindir/systemctl,/bin/systemctl,' %buildroot%_sbindir/*-dirsrv
 
-
 %files
-%doc LICENSE LICENSE.GPLv3+ LICENSE.openssl README 
+%doc LICENSE LICENSE.GPLv3+ LICENSE.openssl README
 %dir %_sysconfdir/%pkgname
 %dir %_sysconfdir/%pkgname/schema
 %config(noreplace)%_sysconfdir/%pkgname/schema/*.ldif
@@ -171,9 +215,15 @@ subst 's,%_bindir/systemctl,/bin/systemctl,' %buildroot%_sbindir/*-dirsrv
 %config(noreplace)%_sysconfdir/sysconfig/%pkgname
 %config(noreplace)%_sysconfdir/sysconfig/%pkgname.systemd
 %_datadir/%pkgname
-%_unitdir/*
+%_unitdir/dirsrv-snmp.service
+%_unitdir/dirsrv.target
+%_unitdir/dirsrv@.service
 %_bindir/*
 %_sbindir/*
+%exclude %_sbindir/dsconf
+%exclude %_sbindir/dscreate
+%exclude %_sbindir/dsctl
+%exclude %_sbindir/dsidm
 %_libdir/%pkgname/perl
 %_libdir/%pkgname/python
 %_libdir/%pkgname/plugins/*.so
@@ -188,7 +238,6 @@ subst 's,%_bindir/systemctl,/bin/systemctl,' %buildroot%_sbindir/*-dirsrv
 %_man8dir/*
 
 %files -n 389-ds
-
 %files devel
 %_includedir/%pkgname
 %_libdir/*.so
@@ -203,6 +252,18 @@ subst 's,%_bindir/systemctl,/bin/systemctl,' %buildroot%_sbindir/*-dirsrv
 %_libdir/libsds.so.*
 %_libdir/libslapd.so.*
 %_libdir/libldaputil.so.*
+
+%files -n python3-module-lib389
+%_sbindir/dsconf
+%_sbindir/dscreate
+%_sbindir/dsctl
+%_sbindir/dsidm
+%python3_sitelibdir_noarch/lib389/
+%python3_sitelibdir_noarch/lib389-*.egg-info
+
+%files -n python3-module-389-ds-tests
+%python3_sitelibdir_noarch/dirsrvtests/
+%python3_sitelibdir_noarch/dirsrvtests-*.egg-info
 
 %triggerpostun -- 389-ds < 1.2.10.0-alt1
 echo "Upgrading 389-ds < 1.2.10.0, manual Offline upgrade is required!
@@ -224,8 +285,11 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun
 %preun_service %pkgname
 %preun_service %pkgname-snmp
-
 %changelog
+* Fri Jul 27 2018 Stanislav Levin <slev@altlinux.org> 1.3.8.5-alt1
+- 1.3.7.1 -> 1.3.8.5
+- Build package for Python3
+
 * Mon Nov 27 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.7.1-alt2
 - Add dirsrv user during pre install step (thanks slev@) (ALT #34240)
 
@@ -537,7 +601,7 @@ Turn 389-ds off and make 'setup-ds -u' then"
 - use INTERNAL_BUILD=1 for internal builds - change rev to 1
 
 * Tue Mar  8 2005 Richard Megginson <rmeggins@redhat.com> 7.1-0
-- use ${prefix} instead of /opt/ldapserver - prefix is defined as /opt/%{name}
+- use ${prefix} instead of /opt/ldapserver - prefix is defined as /opt/%name
 
 * Thu Jan 20 2005 Richard Megginson <rmeggins@redhat.com>
 - Initial build.
