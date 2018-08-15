@@ -4,7 +4,7 @@
 
 Name: accountsservice
 Version: 0.6.50
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: D-Bus interfaces for querying and manipulating user account information
 
 Group: System/Base
@@ -113,6 +113,9 @@ GObject introspection devel data for the accountsservice library
 %_girdir/*.gir
 
 %changelog
+* Tue Aug 14 2018 Fr. Br. George <george@altlinux.ru> 0.6.50-alt2%ubt
+- Ignore ALT-specific empty /etc/shadow (closes: #35210)
+
 * Fri Jul 27 2018 Alexey Shabalin <shaba@altlinux.org> 0.6.50-alt1%ubt
 - 0.6.50
 
