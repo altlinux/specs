@@ -1,10 +1,9 @@
 %define _name graphite2
-# since 1.3.10 newer latex required
 %def_disable docs
 %def_enable check
 
 Name: lib%_name
-Version: 1.3.11
+Version: 1.3.12
 Release: alt1
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
@@ -21,9 +20,8 @@ Provides: %_name = %version-%release
 Patch1: graphite2-1.2.0-cmakepath.patch
 
 BuildRequires: gcc-c++ cmake ctest libfreetype-devel
-%{?_enable_docs:BuildRequires: doxygen asciidoc-a2x texmf-latex-tabu}
-# for tests
-BuildRequires: python-modules-json python-module-fonttools
+%{?_enable_docs:BuildRequires: doxygen asciidoc-a2x dblatex %_bindir/pdflatex}
+%{?_enable_check:BuildRequires: python3-module-fonttools}
 
 %description
 Graphite2 is a project within SIL's Non-Roman Script Initiative and
@@ -45,14 +43,16 @@ Includes and definitions for developing with Graphite2.
 %prep
 %setup -n %_name-%version
 %patch1 -p1 -b .cmake
-%ifarch e2k
+%ifarch %e2k
 # unsupported as of lcc 1.21.20
 sed -i 's,-Wdouble-promotion,,' src/CMakeLists.txt
 %add_optflags -lcxa
 %endif
 
 %build
-%cmake -DGRAPHITE2_COMPARE_RENDERER=OFF
+%add_optflags -D_FILE_OFFSET_BITS=64
+%cmake -DGRAPHITE2_COMPARE_RENDERER=OFF \
+	-DPYTHON_EXECUTABLE:FILEPATH=%_bindir/python3
 %cmake_build
 
 %if_enabled docs
@@ -81,6 +81,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Thu Aug 16 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.12-alt1
+- 1.3.12
+
 * Sun May 13 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.11-alt1
 - 1.3.11
 
