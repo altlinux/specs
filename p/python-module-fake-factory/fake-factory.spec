@@ -1,35 +1,37 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20150222.1.1.1
+%define _unpackaged_files_terminate_build 1
+
 %define oname fake-factory
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.5.0
-#Release: alt1.git20150222.1.1
+Version: 0.8.17
+Release: alt1
 Summary: Faker is a Python package that generates fake data for you
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/fake-factory/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/joke2k/faker.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-sphinx-devel
+Patch1: %oname-%version-alt-docs.patch
+Patch2: %oname-%version-alt-unidecode.patch
+
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-pytest
+BuildRequires: python2.7(mock) python2.7(unidecode) python2.7(dateutil)
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-pytest
+BuildRequires: python3(mock) python3(unidecode) python3(dateutil)
 %endif
 
 %py_provides faker
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-pytest python3-module-pytest rpm-build-python3 time
 
 %description
 Faker is a Python package that generates fake data for you. Whether you
@@ -37,16 +39,18 @@ need to bootstrap your database, create good-looking XML documents,
 fill-in your persistence to stress test it, or anonymize data taken from
 a production service, Faker is for you.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Faker is a Python package that generates fake data for you
 Group: Development/Python3
-%py_provides faker
+%py3_provides faker
 
 %description -n python3-module-%oname
 Faker is a Python package that generates fake data for you. Whether you
 need to bootstrap your database, create good-looking XML documents,
 fill-in your persistence to stress test it, or anonymize data taken from
 a production service, Faker is for you.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -74,6 +78,8 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -118,10 +124,17 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 export LC_ALL=en_US.UTF-8
-python setup.py test
+
+rm -f tests/providers/test_address.py
+rm -f tests/providers/test_internet.py
+py.test
+
 %if_with python3
 pushd ../python3
-python3 setup.py test
+
+rm -f tests/providers/test_address.py
+rm -f tests/providers/test_internet.py
+py.test3
 popd
 %endif
 
@@ -148,6 +161,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.17-alt1
+- Updated to upstream version 0.8.17.
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.0-alt1.git20150222.1.1.1
 - (AUTO) subst_x86_64.
 

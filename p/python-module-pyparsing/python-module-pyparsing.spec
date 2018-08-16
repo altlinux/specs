@@ -1,26 +1,29 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname pyparsing
+
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.1.10
+Version: 2.2.0
 Release: alt1
 
 Summary: Python parsing module
 
 License: MIT
 Group: Development/Python
-URL: http://pyparsing.wikispaces.com/
+URL: https://pypi.org/project/pyparsing
 Packager: Python Development Team <python at packages.altlinux.org>
 BuildArch: noarch
 
-BuildPreReq: python-devel
-BuildRequires: python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 %endif
 
-Source: http://prdownloads.sourceforge.net/%oname/%oname-%version.tar.gz
+# http://prdownloads.sourceforge.net/%oname/%oname-%version.tar.gz
+Source: %oname-%version.tar
 
 %description
 The parsing module is an alternative approach to creating and executing
@@ -74,6 +77,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Wed Aug 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.0-alt1
+- Updated to upstream version 2.2.0.
+
 * Wed May 24 2017 Alexey Shabalin <shaba@altlinux.ru> 2.1.10-alt1
 - 2.1.10
 - build python and python3 packages from one spec
