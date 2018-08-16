@@ -3,7 +3,7 @@
 
 Name: zygrib
 Version: 8.0.1
-Release: alt2
+Release: alt3
 
 Summary: Visualisation of meteo data from files in GRIB formats
 
@@ -17,7 +17,8 @@ Source2: %binname.desktop
 Requires: fonts-ttf-liberation
 Requires: %name-data = %{version}-%{release}
 
-BuildRequires: qt5-base-devel bzlib-devel libjasper-devel libnova-devel libpng-devel libproj-devel
+BuildRequires: qt5-base-devel bzlib-devel libnova-devel libpng-devel libproj-devel
+BuildRequires: libjasper-devel >= 2.0
 
 %if_with system_qwt
 BuildRequires: libqwt6-qt5-devel
@@ -28,7 +29,7 @@ BuildRequires: rpm-build-licenses
 %description
 Visualization of meteo data from files in GRIB formats v1 and v2.
 GRIB data are used to display weather data in detailed format for
-a certain area of sea or land. ZYGrib is a QT5 program to display
+a certain area of sea or land. ZYGrib is a Qt5 program to display
 and use GRIB data on Linux.
 
 %package data
@@ -59,6 +60,10 @@ sed 's|cd ..QWTDIR./src|# cd \$(QWTDIR)/src|' -i Makefile
 
 sed -i "s|^CFLAGS= -O3 -g -m64 .*$|CFLAGS= -O3 -g \$(INC) \$(DEFS)|" src/g2clib/makefile
 sed -i "s|QMAKE=/usr/bin/qmake|QMAKE=%_qt5_qmake|" Makefile
+
+# fix build with libjasper 2.x
+# enc_jpeg2000.c:124:10: error: 'jas_image_t {aka struct <anonymous>}' has no member named 'inmem_' image.inmem_=1;
+sed -i 's|\(^.*image.inmem_=1.*$\)|// \1|' src/g2clib/enc_jpeg2000.c
 
 %build
 %make QTBIN=%_qt5_bindir
@@ -111,11 +116,15 @@ fi
 %_datadir/%binname
 
 %changelog
+* Thu Aug 16 2018 Sergey Y. Afonin <asy@altlinux.ru> 8.0.1-alt3
+- fixed build with libjasper 2.x:
+  http://www.zygrib.org/forum/viewtopic.php?f=3&t=1066
+
 * Tue Apr 17 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.0.1-alt2
-- fix build on arm
+- fixed build on arm
 
 * Wed Nov 30 2016 Sergey Y. Afonin <asy@altlinux.ru> 8.0.1-alt1
-- New version (switched to QT5; added GRIB v2 support)
+- New version (switched to Qt5; added GRIB v2 support)
 
 * Thu Feb 04 2016 Sergey Y. Afonin <asy@altlinux.ru> 7.0.0-alt3
 - rebuilt with libproj 4.9.2
