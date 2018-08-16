@@ -1,6 +1,6 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 2.5.2
+Version: 2.6.2
 Release: alt1
 
 Group: System/Libraries
@@ -53,9 +53,12 @@ cp -v docs/man/man1/*.1 %buildroot/%_man1dir/
 %_man1dir/%{name}*
 %python_sitelibdir/%{name}*
 %doc examples/playbooks examples/scripts examples/hosts
-%doc README.rst CONTRIBUTING.md CHANGELOG.rst RELEASES.txt CODING_GUIDELINES.md MODULE_GUIDELINES.md
+%doc README.rst CONTRIBUTING.md CHANGELOG.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Thu Aug 16 2018 Terechkov Evgenii <evg@altlinux.org> 2.6.2-alt1
+- 2.6.2 (ALT#35245)
+
 * Wed May  2 2018 Terechkov Evgenii <evg@altlinux.org> 2.5.2-alt1
 - 2.5.2
 
