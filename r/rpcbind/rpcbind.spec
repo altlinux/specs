@@ -1,5 +1,5 @@
 Name: rpcbind
-Version: 0.2.4
+Version: 1.2.5
 Release: alt1
 
 Summary: RPC port mapper
@@ -87,6 +87,9 @@ fo=/var/run/control/portmap
 %dir %attr(770,root,rpc) %_localstatedir/rpcbind
 
 %changelog
+* Thu Aug 16 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.5-alt1
+- 1.2.5 released
+
 * Tue Dec 20 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.4-alt1
 - 0.2.4 released
 
