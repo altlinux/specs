@@ -3,14 +3,14 @@
 %def_with perl
 
 Name: lib%_name
-Version: 4.12.0
-Release: alt1.1.1.1
+Version: 4.13.5
+Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
 Summary (ru_RU.UTF-8): Система конфигурации Xfce
 License: %gpl2only
 Group: Graphical desktop/XFce
-Url: http://www.xfce.org/
+Url: https://www.xfce.org/
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/xfconf
@@ -19,12 +19,15 @@ Patch: %_name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
+%define _unpackaged_files_terminate_build 1
+
 Requires: dbus-tools-gui
 BuildPreReq: rpm-build-xfce4 libxfce4util-devel xfce4-dev-tools
+BuildRequires: libgio-devel libdbus-devel
 %if_with perl
 BuildPreReq: rpm-build-perl perl-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Glib-devel
 %endif
-BuildRequires: gtk-doc libdbus-glib-devel intltool
+BuildRequires: gtk-doc intltool
 
 %description
 Xfconf is a hierarchical (tree-like) configuration system where the
@@ -40,7 +43,7 @@ PreReq: %name = %version-%release
 Header files for the %name library.
 
 %package -n %_name-utils
-Summary: Utils for xfce 4.6 configuration system
+Summary: Utils for Xfce configuration system
 Group: Graphical desktop/XFce
 PreReq: %name = %version-%release
 
@@ -79,7 +82,7 @@ interact with xfconf using perl.
 	--enable-maintainer-mode \
 	--with-perl-options=INSTALLDIRS="vendor" \
 	--enable-gtk-doc \
-	--enable-debug=no
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -111,6 +114,14 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml
 %endif
 
 %changelog
+* Tue Aug 07 2018 Mikhail Efremov <sem@altlinux.org> 4.13.5-alt1
+- xfconf-utils: Fix summary.
+- Update url.
+- Update BR.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Updated to 4.13.5.
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.12.0-alt1.1.1.1
 - rebuild with new perl 5.26.1
 

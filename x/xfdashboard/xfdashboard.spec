@@ -1,11 +1,11 @@
 Name: xfdashboard
-Version: 0.3.91
+Version: 0.7.5
 Release: alt1
 
 Summary: A Gnome shell like dashboard for Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/applications/xfdashboard/start
+Url: https://goodies.xfce.org/projects/applications/xfdashboard/start
 
 # Upstream: git://git.xfce.org/apps/xfdashboard
 Source: %name-%version.tar
@@ -15,8 +15,11 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 BuildRequires(pre): rpm-build-licenses rpm-build-xdg
 
 BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
-BuildPreReq: libxfconf-devel libgarcon-devel libxfce4util-devel
+BuildPreReq: libxfconf-devel libgarcon-devel libxfce4util-devel libxfce4ui-gtk3-devel
 BuildRequires: libgtk+3-devel libwnck3-devel libclutter-devel libdbus-glib-devel
+BuildRequires: libXinerama-devel
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 xfdashboard provides a GNOME shell dashboard like interface for use with
@@ -25,6 +28,22 @@ when executed provides an overview of applications currently open
 enabling the user to switch between different applications. The search
 feature works like Xfce's app finder which makes it convenient to search
 for and start applications.
+
+%package -n lib%name
+Summary: Shared libraries for %name
+Group: Graphical desktop/XFce
+
+%description -n lib%name
+This package contains libraries for %name.
+
+%package -n lib%name-devel
+Summary: Devel files for %name
+Group: Graphical desktop/XFce
+Requires: lib%name = %version-%release
+
+%description -n lib%name-devel
+This package contains development files required to build
+%name-based software.
 
 %prep
 %setup
@@ -37,7 +56,8 @@ for and start applications.
 %configure \
 	--disable-static \
 	--enable-maintainer-mode \
-	--enable-debug=no
+	--disable-silent-rules \
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -46,6 +66,7 @@ for and start applications.
 
 %files -f %name.lang
 %_bindir/%{name}*
+%_libdir/%name/
 %_xdgconfigdir/autostart/*.desktop
 %_datadir/appdata/*.xml
 %_desktopdir/*.desktop
@@ -53,7 +74,31 @@ for and start applications.
 %_datadir/themes/%{name}*/
 %_datadir/%name/
 
+%files -n lib%name
+%_libdir/*.so.*
+
+%files -n lib%name-devel
+%_pkgconfigdir/*.pc
+%_includedir/%name/
+%_libdir/*.so
+
 %changelog
+* Mon Aug 20 2018 Mikhail Efremov <sem@altlinux.org> 0.7.5-alt1
+- Updated to 0.7.5.
+
+* Tue Aug 14 2018 Mikhail Efremov <sem@altlinux.org> 0.7.4-alt1
+- Add libXinerama-devel to BR.
+- Package plugins.
+- Package libxfdashboard.
+- Disable silent rules.
+- Enable debug (minimum level).
+- Update url.
+- Use _unpackaged_files_terminate_build.
+- Updated to 0.7.4.
+
+* Fri Jun 19 2015 Mikhail Efremov <sem@altlinux.org> 0.4.2-alt1
+- Updated to 0.4.2.
+
 * Mon Mar 30 2015 Mikhail Efremov <sem@altlinux.org> 0.3.91-alt1
 - Updated url.
 - Updated to 0.3.91.

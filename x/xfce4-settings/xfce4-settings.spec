@@ -1,11 +1,11 @@
 Name: xfce4-settings
-Version: 4.12.4
+Version: 4.13.4
 Release: alt1
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
 License: %gpl2plus
-Url: http://www.xfce.org/
+Url: https://www.xfce.org/
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
@@ -16,8 +16,9 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools > 4.5 libxfce4ui-devel libexo-devel >= 0.6.0 libxfconf-devel libgarcon-devel >= 0.1.10
-BuildRequires: intltool libICE-devel libXcursor-devel libXi-devel libXrandr-devel libglade-devel libnotify-devel libwnck-devel libxklavier-devel libupower-devel >= 0.99.4-alt2
+BuildPreReq: rpm-build-xfce4 xfce4-dev-tools > 4.5
+BuildRequires: libxfce4ui-gtk3-devel libexo-gtk3-devel libxfconf-devel libgarcon-devel >= 0.1.10
+BuildRequires: intltool libICE-devel libXcursor-devel libXi-devel libXrandr-devel libglade-devel libnotify-devel libxklavier-devel libupower-devel >= 0.99.4-alt2
 BuildRequires: xorg-drv-libinput-devel
 
 Requires: libgarcon-settings-manager-menu
@@ -70,6 +71,10 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Thu Aug 02 2018 Mikhail Efremov <sem@altlinux.org> 4.13.4-alt1
+- Updated url.
+- Updated to 4.13.4.
+
 * Fri Jun 22 2018 Mikhail Efremov <sem@altlinux.org> 4.12.4-alt1
 - Disabled silent rules.
 - Enabled debug (minimum level).

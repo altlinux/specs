@@ -1,12 +1,12 @@
 Name: xfdesktop
-Version: 4.12.4
+Version: 4.13.2
 Release: alt1
 
 Summary: Desktop manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Менеджер рабочего стола Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://www.xfce.org/
+Url: https://www.xfce.org/
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/xfdesktop
@@ -16,9 +16,11 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libthunar-devel libgarcon-devel libxfce4panel-devel libxfconf-devel libexo-devel libxfce4ui-devel
-BuildRequires: intltool libSM-devel libglade-devel libwnck-devel time xorg-cf-files
-BuildRequires: libICE-devel libnotify-devel libdbus-glib-devel
+BuildPreReq: libthunar-devel libgarcon-devel libgarcon-gtk3-devel libxfce4panel-gtk3-devel libxfconf-devel libexo-gtk3-devel libxfce4ui-gtk3-devel
+BuildRequires: intltool libSM-devel libglade-devel libwnck3-devel time xorg-cf-files
+BuildRequires: libICE-devel libnotify-devel
+
+Requires: exo-utils
 
 %define _unpackaged_files_terminate_build 1
 
@@ -63,6 +65,11 @@ BuildRequires: libICE-devel libnotify-devel libdbus-glib-devel
 %_datadir/backgrounds/xfce
 
 %changelog
+* Tue Aug 07 2018 Mikhail Efremov <sem@altlinux.org> 4.13.2-alt1
+- Update url.
+- Require exo-utils.
+- Updated to 4.13.2.
+
 * Mon Jun 26 2017 Mikhail Efremov <sem@altlinux.org> 4.12.4-alt1
 - Enabled debug (minimum level).
 - Updated to 4.12.4.

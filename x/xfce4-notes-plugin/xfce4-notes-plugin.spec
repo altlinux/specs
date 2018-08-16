@@ -1,6 +1,6 @@
 Name: xfce4-notes-plugin
 Version: 1.8.1
-Release: alt1
+Release: alt2
 
 Summary: Sticky notes plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Липкие записки для Xfce.
@@ -8,7 +8,7 @@ License: %gpl2plus
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 # git://git.xfce.org/panel-plugins/xfce4-notes-plugin
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -18,6 +18,8 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfconf-devel xfce4-vala
 BuildRequires: libunique-devel
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 %name is the sticky notes plugin for the Xfce panel.
@@ -31,11 +33,12 @@ BuildRequires: libunique-devel
 
 %build
 %xfce4reconf
+# GTK+3 build seems broken for now
 %configure \
     --disable-static \
 	--disable-gtk3 \
 	--enable-maintainer-mode \
-    --enable-debug=no
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -54,6 +57,12 @@ BuildRequires: libunique-devel
 %_desktopdir/xfce4-notes.desktop
 
 %changelog
+* Fri Aug 17 2018 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt2
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Update translations from upstream git.
+
 * Thu Jun 25 2015 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt1
 - Updated to 1.8.1.
 

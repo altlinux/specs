@@ -1,14 +1,14 @@
 %define _name exo
 
 Name: lib%_name
-Version: 0.10.7
-Release: alt2
+Version: 0.12.2
+Release: alt1
 
 Summary: Extension library to Xfce
 Summary (ru_RU.UTF-8): Библиотека расширений Xfce
 License: %lgpl2plus, %gpl2plus
 Group: System/Libraries
-Url: http://www.xfce.org
+Url: https://www.xfce.org
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/exo
@@ -17,13 +17,13 @@ Patch: %_name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildPreReq: rpm-build-xfce4  xfce4-dev-tools > 4.9 libxfce4util-devel libxfce4ui-devel
-BuildPreReq: libICE-devel glib2-devel >= 2.27 libgtk+2-devel
+BuildRequires: rpm-build-xfce4  xfce4-dev-tools > 4.9 libxfce4util-devel libxfce4ui-devel
+BuildRequires: libgtk+3-devel libxfce4ui-gtk3-devel
+BuildRequires: libICE-devel glib2-devel >= 2.27 libgtk+2-devel
 BuildRequires: gtk-doc intltool perl-URI time
 
-Requires: xfce4-common
+Requires: %name-common = %version-%release
 Requires: libgtk+2-common
-
 # There is no longer python bindings for exo.
 Conflicts: python-module-exo < 0.7.0
 
@@ -38,14 +38,62 @@ development, libexo is targeted at application development.
 Libexo - библиотека расширений Xfce предназначенная для использования в
 приложениях разрабатываемых под Xfce.
 
+%package common
+Summary: Common files for %name
+Group: Graphical desktop/XFce
+Requires: xfce4-common
+BuildArch: noarch
+
+%description common
+Common files used by all %name variants.
+
+%package -n %_name-utils
+Summary: Utility files for %name
+Group: Graphical desktop/XFce
+
+%description -n %_name-utils
+This package conteins utility files for %name.
+
+%package -n %_name-csource
+Summary: C code generation utility for arbitrary data
+Group: Development/C
+
+%description -n %_name-csource
+This package contains %_name-csource utility.
+It is a small utility that generates C code containing arbitrary data,
+useful for compiling texts or other data directly into programs.
+
 %package devel
 Summary: Development files for %name
 Group: Development/C
 PreReq: %name = %version-%release  libxfce4util-devel > 4.5
+Requires: %_name-csource = %version-%release
 
 %description devel
 This package contains development files required for packaging
 %name-based software.
+
+%package gtk3
+Summary: Extension library to Xfce (GTK+3 version)
+Group: System/Libraries
+Requires: %name-common = %version-%release
+
+%description gtk3
+Libexo is an extension library to Xfce, developed by os-cillation.
+While Xfce comes with a quite few libraries that are targeted at desktop
+development, libexo is targeted at application development.
+This is a GTK+3 version.
+
+%package gtk3-devel
+Summary: Development files for %name-gtk3
+Group: Development/C
+Requires: %name-gtk3 = %version-%release
+Requires: %_name-csource = %version-%release
+
+%description gtk3-devel
+This package contains development files required for packaging
+%name-based software.
+This is a GTK+3 version.
 
 %package devel-doc
 Summary: Documentation files for %name
@@ -70,7 +118,10 @@ This package contains documentation files required for packaging
 	--disable-static \
 	--enable-maintainer-mode \
 	--enable-gtk-doc \
-	--enable-debug=no
+	--enable-debug=minimum
+
+# Seems there is race in desktop files processing
+export NPROCS=1
 %make_build
 
 %install
@@ -80,37 +131,56 @@ This package contains documentation files required for packaging
 %check
 make check
 
-%files -f %_name-1.lang
+%files
+%_libdir/%name-1.so.*
+
+%files common -f %_name-1.lang
 %doc AUTHORS NEWS TODO README
-%_bindir/*
-%exclude %_bindir/exo-csource
-%_libdir/*.so.*
-%_libdir/xfce4/*
-%_datadir/xfce4/*
 %config(noreplace) %_sysconfdir/xdg/xfce4/helpers.rc
-%_man1dir/*
-%exclude %_man1dir/exo-csource.1.*
+%_datadir/xfce4/*
+%exclude %_datadir/xfce4/helpers/debian-*.desktop
 %_desktopdir/*
 %_iconsdir/hicolor/*/*/*
 %_pixmapsdir/%_name-*/
 
-# Due to conflict with altlinux-freedesktop-menu-icon-theme-default
-%exclude %_iconsdir/hicolor/48x48/categories/applications-internet.png
-%exclude %_iconsdir/hicolor/48x48/categories/applications-other.png
+%files -n %_name-utils
+%_bindir/*
+%exclude %_bindir/exo-csource
+%_libdir/xfce4/*
+%_man1dir/*
+%exclude %_man1dir/exo-csource.1.*
 
-%exclude %_datadir/xfce4/helpers/debian-*.desktop
+%files -n %_name-csource
+%_bindir/exo-csource
+%_man1dir/exo-csource.1.*
 
 %files devel
-%_bindir/exo-csource
-%_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/*
-%_man1dir/exo-csource.1.*
+%_includedir/%_name-1/
+%_libdir/%name-1.so
+%_pkgconfigdir/%_name-1.pc
+
+%files gtk3
+%_libdir/%name-2.so.*
+
+%files gtk3-devel
+%_includedir/%_name-2/
+%_libdir/%name-2.so
+%_pkgconfigdir/%_name-2.pc
 
 %files devel-doc
 %_datadir/gtk-doc/html/%{_name}*
 
 %changelog
+* Tue Aug 07 2018 Mikhail Efremov <sem@altlinux.org> 0.12.2-alt1
+- Set NPROCS=1 for build.
+- Update url.
+- Enable debug (minimum level).
+- Move translations to common subpackage.
+- Split out common and utils subpackages from libexo.
+- Drop %%exclude for categories icons.
+- Build GTK+3 version.
+- Updated to 0.12.2.
+
 * Sat Apr 28 2018 Mikhail Efremov <sem@altlinux.org> 0.10.7-alt2
 - Added helper New Moon Web browser (by Anton Midyukov)
     (closes: #34637).

@@ -1,12 +1,12 @@
 Name: libxfce4util
-Version: 4.12.1
+Version: 4.13.2
 Release: alt1
 
 Summary: Utility library for the Xfce desktop environment
 Summary(ru_RU.UTF-8): Библиотека утилит для рабочего стола Xfce
 License: %lgpl2plus
 Group: Graphical desktop/XFce
-Url: http://www.xfce.org/
+Url: https://www.xfce.org/
 
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
@@ -18,6 +18,8 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 # Automatically added by buildreq on Wed Jan 13 2010
 BuildRequires: glib2-devel gtk-doc intltool
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Basic utility non-GUI functions for Xfce.
@@ -44,7 +46,7 @@ Header files for the %name library.
 	--disable-static \
 	--enable-maintainer-mode \
 	--enable-gtk-doc \
-	--enable-debug=no
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -64,6 +66,12 @@ Header files for the %name library.
 %_libdir/*.so
 
 %changelog
+* Tue Aug 07 2018 Mikhail Efremov <sem@altlinux.org> 4.13.2-alt1
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Updated to 4.13.2.
+
 * Thu Mar 05 2015 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt1
 - Updated to 4.12.1.
 

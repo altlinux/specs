@@ -1,25 +1,27 @@
 Name: thunar-archive-plugin
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
 
 Summary: Thunar archive plugin
 Summary (ru_RU.UTF8): Дополнение к Thunar позволяющее работать с архивами
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/thunar-plugins/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Url: https://goodies.xfce.org/projects/thunar-plugins/%name
+Packager: Xfce Team <xfce@packages.altlinux.org>
 # git://git.xfce.org/thunar-plugins/thunar-archive-plugin
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4util-devel libthunar-devel libexo-devel
-BuildRequires: libgtk+2-devel intltool libxml2-devel
+BuildPreReq: libxfce4util-devel libthunar-devel libexo-gtk3-devel
+BuildRequires: libgtk+3-devel intltool libxml2-devel
 
 Requires: thunar
 
 %add_findreq_skiplist %_libexecdir/%name/*.tap
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 The thunar-archive-plugin is a plugin for the Thunar File Manager, which
@@ -40,7 +42,7 @@ using a single click.
 %build
 %xfce4reconf
 %configure \
-    --enable-debug=no
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -54,7 +56,18 @@ using a single click.
 %_libexecdir/%name/
 %_miconsdir/*.png
 
+# Seems glibc doesn't support uz@Latn
+%exclude %_datadir/locale/uz@Latn/LC_MESSAGES/thunar-archive-plugin.mo
+
 %changelog
+* Tue Aug 21 2018 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
+- Don't package uz@Latn translation.
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Fix Xfce name (XFCE -> Xfce).
+- Updated to 0.4.0.
+
 * Mon May 13 2013 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt1
 - Updated to 0.3.1.
 

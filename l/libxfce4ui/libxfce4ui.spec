@@ -1,12 +1,12 @@
 Name: libxfce4ui
-Version: 4.12.1
+Version: 4.13.4
 Release: alt1
 
 Summary: Various GTK+2 widgets for Xfce
 Summary (ru_RU.UTF-8): Набор виджетов GTK+2 для Xfce
 License: %lgpl2plus
 Group: Graphical desktop/XFce
-Url: http://www.xfce.org/
+Url: https://www.xfce.org/
 
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
@@ -27,6 +27,8 @@ Requires: %name-common = %version-%release
 %define libxfce4kbd_name_gtk3 libxfce4kbd-private-3
 %define libxfce4ui_name_gtk3 %name-2
 
+%define _unpackaged_files_terminate_build 1
+
 %description
 Various GTK+2 widgets for Xfce.
 
@@ -44,6 +46,7 @@ Development files for the %name library (GTK+2 variant).
 %package devel-doc
 Summary: Development documentation for %name
 Group: Development/Documentation
+BuildArch: noarch
 Conflicts: %name-devel < %version-%release
 
 %description devel-doc
@@ -94,7 +97,7 @@ This package contains the 'About Xfce' dialog.
 	--enable-gtk-doc \
 	--enable-startup-notification \
 	--enable-gladeui \
-	--enable-debug=no
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -113,7 +116,6 @@ This package contains the 'About Xfce' dialog.
 %_libdir/%libxfce4kbd_name_gtk2.so
 %_libdir/%libxfce4ui_name_gtk2.so
 %_datadir/glade3/catalogs/*.xml
-%exclude %_datadir/glade3/catalogs/*.xml.in
 %_datadir/glade3/pixmaps/*/*/*/*
 %_libdir/glade3/modules/*.so
 %exclude %_libdir/glade3/modules/*.la
@@ -143,6 +145,13 @@ This package contains the 'About Xfce' dialog.
 %_desktopdir/xfce4-about.desktop
 
 %changelog
+* Mon Aug 06 2018 Mikhail Efremov <sem@altlinux.org> 4.13.4-alt1
+- Make devel-doc subpackage noarch.
+- Use _unpackaged_files_terminate_build.
+- Updated url.
+- Enabled debug (minimum level).
+- Updated to 4.13.4.
+
 * Mon Mar 16 2015 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt1
 - Updated to 4.12.1.
 

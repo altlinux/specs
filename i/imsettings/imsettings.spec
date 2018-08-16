@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/desktop-file-validate /usr/bin/gtkdocize gcc-c++ glib2-d
 %define _localstatedir %{_var}
 Name:		imsettings
 Version:	1.7.3
-Release:	alt1_2.1
+Release:	alt1_2.2
 License:	LGPLv2+
 URL:		https://tagoh.bitbucket.org/%{name}/
 BuildRequires:	desktop-file-utils
@@ -16,6 +16,7 @@ BuildRequires:	libtool automake autoconf
 BuildRequires:	libgio >= 2.32.0, gobject-introspection-devel gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:	libnotify-devel libnotify-gir-devel
 BuildRequires:	libX11-devel, libgxim-devel >= 0.5.0
+BuildRequires:  libdbus-devel
 %if !0%{?rhel}
 BuildRequires:	libxfconf-devel
 %endif
@@ -329,6 +330,10 @@ EOF
 %endif
 
 %changelog
+* Mon Aug 20 2018 Mikhail Efremov <sem@altlinux.org> 1.7.3-alt1_2.2
+- Fix build: add libdbus-devel to BR.
+- Rebuild with libxfconf-0.so.3.
+
 * Thu Mar 01 2018 Grigory Ustinov <grenka@altlinux.org> 1.7.3-alt1_2.1
 - NMU: Disable cinnamon section for e2k.
 
