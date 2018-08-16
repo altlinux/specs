@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -66,7 +66,7 @@ Requires: typelib(Zpj)
 %set_girdir %pkgdatadir
 
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-build-gir
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils docbook-style-xsl
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgnome-desktop3-devel libgdata-devel >= %gdata_ver
@@ -168,6 +168,9 @@ GObject introspection devel data for the %name library.
 %_datadir/metainfo/%xdg_name1.appdata.xml
 
 %changelog
+* Thu Aug 16 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
+- 3.28.2
+
 * Thu Jun 07 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 
