@@ -3,7 +3,7 @@
 
 Name: tcl-%teaname
 Version: 2.5
-Release: alt6
+Release: alt7
 
 Summary: A Tk toolkit extension, including widgets, geometry managers etc.
 License: MIT
@@ -98,6 +98,9 @@ rm -f %buildroot%_mandir/mann/{bitmap,graph,tabset,watch}.n*
 %_tcldatadir/%teaname%major/demos
 
 %changelog
+* Thu Aug 16 2018 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt7
+- Fix rotated text (patch by V.Eltsov)
+
 * Thu Jul 26 2018 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt6
 - generic/shared/Makefile.in: do not use same intermediate file
   in two rules (fix build with -j32)
