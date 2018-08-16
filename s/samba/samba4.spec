@@ -54,8 +54,8 @@
 %endif
 
 Name: samba
-Version: 4.8.3
-Release: alt2%ubt
+Version: 4.8.4
+Release: alt1%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -154,7 +154,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-BuildRequires: libldb-devel >= 1.3.4
+BuildRequires: libldb-devel >= 1.3.5
 BuildRequires: python-module-pyldb-devel
     %if_with python3
 BuildRequires: python3-module-pyldb-devel
@@ -1584,6 +1584,16 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Tue Aug 14 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.8.4-alt1%ubt
+- Update to summer security release
+- Security fixes:
+  + CVE-2018-1139 Weak authentication protocol allowed
+  + CVE-2018-1140 Denial of Service Attack on DNS and LDAP server
+  + CVE-2018-10858 Insufficient input validation on client directory
+    listing in libsmbclient
+  + CVE-2018-10918 Denial of Service Attack on AD DC DRSUAPI server
+  + CVE-2018-10919 Confidential attribute disclosure from the AD LDAP server
+
 * Wed Jul 25 2018 Stanislav Levin <slev@altlinux.org> 4.8.3-alt2%ubt
 - Build package for Python3
 
