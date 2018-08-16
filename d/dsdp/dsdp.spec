@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -5,16 +7,18 @@
 %define sover %somver.5.8
 Name: dsdp
 Version: 5.8
-Release: alt11
+Release: alt12
 Summary: Implementation of an interior-point method for semidefinite programming
 License: BSD-like
 Group: Sciences/Mathematics
 Url: http://www.mcs.anl.gov/hs/software/DSDP/
 
+ExclusiveArch: %ix86 x86_64
+
 Source: http://www.mcs.anl.gov/hs/software/DSDP/DSDP5.8.tar.gz
 
 BuildPreReq: liblapack-devel libscalapack-devel
-BuildPreReq: %mpiimpl-devel unzip pblas-devel libplapack-devel
+BuildPreReq: %mpiimpl-devel unzip pblas-devel
 
 %description
 The DSDP software is a free open source implementation of an interior-point
@@ -129,12 +133,6 @@ pushd pdsdp/ScaLAPACK
 %make_build maxcut
 mv pdsdp5.scalapack pmaxcut ../../bin/
 popd
-%ifarch %ix86
-pushd pdsdp/PLAPPACK
-%make_build all
-mv pdsdp5.plapack ../../bin/
-popd
-%endif
 pushd examples
 %make_build stable color
 popd
@@ -187,6 +185,8 @@ ln -s lib%name.so.%sover lib%name.so.%somver
 ln -s lib%name.so.%somver lib%name.so
 popd
 
+rm -f %buildroot%_libdir/*.a
+
 %files
 %doc dsdp-license
 %_bindir/*
@@ -206,6 +206,9 @@ popd
 %_docdir/lib%name-devel
 
 %changelog
+* Wed Aug 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.8-alt12
+- Rebuilt without plapack
+
 * Tue Nov 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.8-alt11
 - Fixed build with gcc-6.
 
