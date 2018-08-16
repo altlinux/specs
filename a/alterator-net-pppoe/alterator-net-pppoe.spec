@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-pppoe
-Version: 0.9
+Version: 0.10
 Release: alt1
 
 Summary: alterator module for pppoe connections configuration
@@ -45,6 +45,9 @@ alterator module for pppoe connections configuration
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Aug 16 2018 Paul Wolneykien <manowar@altlinux.org> 0.10-alt1
+- Use strict data types for "name" and "new_name" parameters.
+
 * Fri Jan 15 2010 Mikhail Efremov <sem@altlinux.org> 0.9-alt1
 - use setsid for ifup comand (closes #21445).
 

@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-mirror
-Version: 0.4.4
-Release: alt1.1.1
+Version: 0.4.6
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -53,11 +53,21 @@ install -Dpm640 %name.logrotate %buildroot%_sysconfdir/logrotate.d/%name
 %_sbindir/*
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*
+%_datadir/alterator/type/*
 %_alterator_libdir/ui/*
+%_alterator_libdir/type/*
 %_alterator_backend3dir/*
 %attr(700,root,adm) %_logdir/%name
 
 %changelog
+* Thu Aug 23 2018 Paul Wolneykien <manowar@altlinux.org> 0.4.6-alt1
+- Fix: Use "hostname" type for the branch name (can contain periods).
+
+* Tue Aug 21 2018 Paul Wolneykien <manowar@altlinux.org> 0.4.5-alt1
+- Fixed the reported time value: only hours and mins.
+- Use strict data types for "name", "arch", "weekday" and "time"
+  parameters.
+
 * Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 0.4.4-alt1.1.1
 - NMU: Replace BuildRequires for guile on e2k arch.
 

@@ -1,8 +1,8 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-ldap-groups
-Version: 0.6.6
-Release: alt2.1.1
+Version: 0.6.7
+Release: alt1
 
 Source: %name-%version.tar
 
@@ -24,13 +24,12 @@ Conflicts: netcmdplus < 0.1.1
 Obsoletes: alterator-ldap-groups-school-server < %version
 Provides:  alterator-ldap-groups-school-server = %version-%release
 
-
 %ifarch %e2k
 BuildRequires: guile20-devel libguile20-devel
 %else
 BuildRequires: guile22-devel
 %endif
-BuildRequires: rpm-build >= 4.0.4-alt103
+
 BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
 
 %description
@@ -56,6 +55,13 @@ Alterator module for LDAP groups administration
 %_hooksdir/91-ldap-groups
 
 %changelog
+* Tue Aug 21 2018 Paul Wolneykien <manowar@altlinux.org> 0.6.7-alt1
+- Use strict data types for the "group", "member_in" and "member_out"
+  parameters.
+
+* Thu May 31 2018 Paul Wolneykien <manowar@altlinux.org> 0.6.6-alt3
+- Don't require a particular rpm-build version.
+
 * Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.6-alt2.1.1
 - NMU: Replace BuildRequires for guile on e2k arch.
 
