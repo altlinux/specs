@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 
 %define _libexecdir %prefix/libexec
 
@@ -7,19 +8,20 @@
 
 Name: libsemanage
 Epoch: 1
-Version: 2.7
+Version: 2.8
 Release: alt1
 Summary: Library, which provides an interface for SELinux management
 Group: System/Libraries
 License: LGPLv2.1+
 Url: http://userspace.selinuxproject.org
+
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 %{?_with_python:BuildPreReq: rpm-build-python}
-BuildRequires: bzlib-devel flex libustr-devel libsepol-devel >= 2.7 libselinux-devel >= 2.7 libaudit-devel
+BuildRequires: bzlib-devel flex libustr-devel libsepol-devel >= 2.8 libselinux-devel >= 2.8 libaudit-devel
 %{?_with_python:BuildRequires: swig python-dev}
-%{!?_disable_check:BuildRequires: CUnit-devel libsepol-devel-static >= 2.7 libselinux-devel-static >= 2.7}
+%{!?_disable_check:BuildRequires: CUnit-devel libsepol-devel-static >= 2.8 libselinux-devel-static >= 2.8}
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -106,9 +108,9 @@ binary policies.
 
 %install
 %if_with python3
-%makeinstall_std LIBDIR=%buildroot/%_libdir SHLIBDIR=%buildroot/%_lib %{?_with_python:install-pywrap} PYTHON=python3
+%makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib %{?_with_python:install-pywrap} PYTHON=python3
 %endif
-%makeinstall_std LIBDIR=%buildroot/%_libdir SHLIBDIR=%buildroot/%_lib %{?_with_python:install-pywrap}
+%makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib %{?_with_python:install-pywrap}
 ln -sf $(relative /%_lib/libsemanage.so.1 %_libdir/libsemanage.so) %buildroot/%_libdir/libsemanage.so
 
 %check
@@ -132,8 +134,9 @@ ln -sf $(relative /%_lib/libsemanage.so.1 %_libdir/libsemanage.so) %buildroot/%_
 %if_with python
 %files -n python-module-semanage
 %python_sitelibdir/*
+
 %files utils
-#%%_libexecdir/selinux/*
+%_libexecdir/selinux/*
 %endif
 
 %if_with python3
@@ -142,6 +145,9 @@ ln -sf $(relative /%_lib/libsemanage.so.1 %_libdir/libsemanage.so) %buildroot/%_
 %endif
 
 %changelog
+* Thu Aug 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt1
+- Updated to upstream version 2.8.
+
 * Mon Feb 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.7-alt1
 - Updated to upstream version 2.7.
 

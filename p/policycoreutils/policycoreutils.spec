@@ -7,12 +7,14 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
-Version: 2.7
-Release: alt3
+Version: 2.8
+Release: alt1
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
+
 Source0: %name-%version.tar
+
 Source1: restorecond.init
 Source2: sandbox.init
 Source3: system-config-selinux.pam
@@ -39,7 +41,7 @@ Requires: python-module-semanage python-module-audit
 BuildPreReq: rpm-build-xdg
 BuildRequires: libaudit-devel libcap-devel libpam-devel
 BuildRequires: libselinux-devel libsemanage-devel libsepol-devel libsepol-devel-static
-BuildRequires: python-dev
+BuildRequires: python-devel
 BuildRequires: python-module-pygnome
 BuildRequires: desktop-file-utils
 BuildRequires: glib2-devel libdbus-glib-devel
@@ -47,7 +49,7 @@ BuildRequires: libcap-ng-devel libpcre-devel libcgroup-devel
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
+BuildRequires: python3-devel
 %endif
 
 %description
@@ -188,25 +190,32 @@ popd
 %make_build -C mcstrans-%version LIBDIR=%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre)" LIBSEPOLA="%_libdir/libsepol.a"
 
 %install
-%makeinstall_std -C policycoreutils-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%buildroot%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C policycoreutils-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
 %if_with python3
-%makeinstall_std -C selinux-python-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%buildroot%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" PYTHON=python3
+%makeinstall_std -C selinux-python-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" PYTHON=python3
 %endif
-%makeinstall_std -C selinux-python-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%buildroot%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
-%makeinstall_std -C selinux-gui-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%%buildroot_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
-%makeinstall_std -C selinux-sandbox-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%buildroot%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
-%makeinstall_std -C selinux-dbus-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%buildroot%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
-%makeinstall_std -C semodule-utils-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%buildroot%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
-%makeinstall_std -C restorecond-%version LSPP_PRIV=y LIBDIR="%buildroot%_libdir" LIBEXECDIR="%buildroot%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" SYSTEMDDIR="%buildroot/lib/systemd"
-%makeinstall_std -C mcstrans-%version LIBDIR=%buildroot%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre)" LIBSEPOLA="%_libdir/libsepol.a" SYSTEMDDIR="%buildroot/lib/systemd"
+%makeinstall_std -C selinux-python-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C selinux-gui-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C selinux-sandbox-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C selinux-dbus-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C semodule-utils-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C restorecond-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" SYSTEMDDIR="/lib/systemd"
+%makeinstall_std -C mcstrans-%version LIBDIR=%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre)" LIBSEPOLA="%_libdir/libsepol.a" SYSTEMDDIR="/lib/systemd"
 
 %if "%python_sitelibdir_noarch" != "%python_sitelibdir"
+mkdir -pv %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 rm -rf %buildroot%_prefix/lib/python2*
 %if_with python3
+mkdir -pv %buildroot%python3_sitelibdir
 mv  %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 rm -rf %buildroot%_prefix/lib/python3*
 %endif
+%endif
+
+chmod -x %buildroot%python_sitelibdir/seobject.py
+%if_with python3
+chmod -x %buildroot%python3_sitelibdir/seobject.py
 %endif
 
 install -d -m 0755 %buildroot%_localstatedir/selinux
@@ -226,6 +235,9 @@ done
 
 install -d -m 0755 %buildroot{%_datadir/mcstrans,%_sysconfdir/selinux/mls/setrans.d}
 cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
+
+# TODO: compatibility for policy packages. remove later
+ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 
 %find_lang %name
 
@@ -257,7 +269,8 @@ cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 /sbin/restorecon_xattr
 /sbin/fixfiles
 /sbin/setfiles
-/sbin/load_policy
+%_sbindir/fixfiles
+%_sbindir/load_policy
 %_sbindir/genhomedircon
 %_sbindir/setsebool
 %_sbindir/semodule
@@ -370,7 +383,6 @@ cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 %_bindir/sepolgen-ifgen
 %_bindir/sepolgen-ifgen-attr-helper
 %_bindir/sepolicy
-%_bindir/semodule_deps
 %_bindir/semodule_expand
 %_bindir/semodule_link
 %_bindir/semodule_unpackage
@@ -388,7 +400,6 @@ cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 %_man8dir/sepolicy-communicate.*
 %_man8dir/sepolicy-manpage.*
 %_man8dir/sepolicy-transition.*
-%_man8dir/semodule_deps.*
 %_man8dir/semodule_expand.*
 %_man8dir/semodule_link.*
 %_man8dir/semodule_unpackage.*
@@ -406,7 +417,7 @@ cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 %dir %_datadir/system-config-selinux
 %_datadir/system-config-selinux/*.py*
 %_datadir/system-config-selinux/*png
-%_datadir/system-config-selinux/*.glade
+%_datadir/system-config-selinux/*.ui
 
 %_datadir/system-config-selinux/selinux-polgengui.desktop
 %_datadir/system-config-selinux/sepolicy.desktop
@@ -438,10 +449,14 @@ cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 %python3_sitelibdir/sepolicy
 %python3_sitelibdir/sepolgen
 %python3_sitelibdir/sepolicy-*.egg-info
-%python3_sitelibdir/seobject.py*
+%python3_sitelibdir/seobject.py
+%python3_sitelibdir/__pycache__/*
 %endif
 
 %changelog
+* Thu Aug 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.8-alt1
+- Updated to upstream version 2.8.
+
 * Mon Jun 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.7-alt3
 - Obsoleted package python-module-sepolgen (Closes: #34981).
 
