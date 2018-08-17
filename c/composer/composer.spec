@@ -1,21 +1,32 @@
-#!!! Create new vendor cache for new composer version by get_vendor_cache.sh !!!
+# To update package, grub new sources
+#
+#   gear-remotes-restore
+#   git fetch upstream
+#   git merge upstream/1.7
+#
+# and create new vendor cache for new composer version
+# 
+#   cd .gear
+#   ./get_vendor_cache.sh
 
 Name: composer
-Version: 1.6.5
+Version: 1.7.2
 Release: alt1
 
-Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere.
+Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere
 
-License: MIT
+License: %mit
 Group: System/Configuration/Packaging
-Url: https://github.com/composer/composer
+Url: https://getcomposer.org/
 
 # Source-git: https://github.com/composer/composer
 Source: %name-%version.tar
 
 Packager: Danil Mikhailov <danil@altlinux.org>
 
-Requires: php7-openssl php7 php7-curl
+Requires: /usr/bin/php
+
+BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: git-core php7-openssl php7
 
@@ -48,18 +59,24 @@ mkdir -p %buildroot/%_datadir/
 cp composer.phar %buildroot/%_datadir/
 
 mkdir -p %buildroot/%_bindir/
-cat >%buildroot/%_bindir/%name <<EOF
-#!/bin/sh
-php -d suhosin.executor.include.whitelist=phar -d memory_limit=256M %_datadir/composer.phar "\$@"
-EOF
+install -m 0755 .gear/composer.sh  %buildroot/%_bindir/%name
 
-%pre
+mkdir -p %buildroot/%_sysconfdir/sysconfig
+install -m 0644 .gear/composer.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 
 %files
+%doc .gear/README.ALT
+
 %attr(755,root,root) %_bindir/%name
 %attr(755,root,root) %_datadir/%name.phar
+%config(noreplace)  %_sysconfdir/sysconfig/%name
 
 %changelog
+* Fri Aug 17 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.7.2-alt1
+- new version
+- configurable memory_limit PHP setting (Closes: 33520)
+- remove PHP7 requirements - composer can be used with PHP5 too
+
 * Fri May 18 2018 Vitaly Lipatov <lav@altlinux.ru> 1.6.5-alt1
 - build new version
 - switch to php7
