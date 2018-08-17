@@ -1,6 +1,6 @@
 Name: borgmatic
 Version: 1.2.2
-Release: alt0.1
+Release: alt1
 
 Summary: borgmatic (formerly atticmatic) is a simple Python wrapper script for the Borg
 
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-python3
 # optimized out: python-base python-modules python3 python3-base python3-dev python3-module-greenlet python3-module-pycparser python3-module-setuptools
 BuildRequires: python3-dev python3-module-zmq
 
-BuildRequires: libssl-devel python3-dev
+BuildRequires: libssl-devel python3-dev python3-module-setuptools
 
 %description
 borgmatic (formerly atticmatic) is a simple Python wrapper script for the Borg backup software 
@@ -44,5 +44,8 @@ rather than having to put them all on the command-line, and handles common error
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Aug 17 2018 Pavel Vainerman <pv@altlinux.ru> 1.2.2-alt1
+- update build requires
+
 * Thu Aug 16 2018 Pavel Vainerman <pv@altlinux.ru> 1.2.2-alt0.1
 - new version (1.2.2) with rpmgs script
