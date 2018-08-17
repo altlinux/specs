@@ -2,7 +2,7 @@
 
 Name: cryptote
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: encrypting text editor
 
@@ -19,10 +19,11 @@ Patch0:  %name-%version-%release.patch
 Source1: %name-16.png
 Source2: %name-32.png
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses rpm-build-xdg
 
-# Automatically added by buildreq on Fri Aug 28 2009
-BuildRequires: bzlib-devel gcc-c++ wxGTK-devel zlib-devel
+# Automatically added by buildreq on Fri Aug 17 2018
+# optimized out: fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libgdk-pixbuf libstdc++-devel libwayland-client libwayland-server python-base python-modules python3 python3-base python3-dev ruby sh3
+BuildRequires: bzlib-devel gcc-c++ libwxGTK-devel zlib-devel
 
 %description
 CryptoTE is a text editor with integrated strong cryptography.
@@ -74,6 +75,9 @@ mv -- %buildroot%_pixmapsdir/%{name}* %buildroot%_liconsdir/
 %_liconsdir/%{name}*
 
 %changelog
+* Fri Aug 17 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.6.0-alt2
+- Fix build: update BuildRequires
+
 * Thu Jan 26 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.6.0-alt1
 - New version
 
