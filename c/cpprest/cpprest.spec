@@ -5,7 +5,7 @@
 %define ver_major 2.10
 
 Name: cpprest
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: C++ REST library
@@ -69,7 +69,8 @@ export CXXFLAGS="%optflags -Wl,--as-needed"
 %cmake .. -DCMAKE_BUILD_TYPE=Release \
 	  -DCPPREST_EXPORT_DIR=%_lib/%_name \
 	  -DCMAKE_INSTALL_DO_STRIP=false \
-	  -DCMAKE_INCLUDE_PATH=%_datadir/cmake/websocketpp/
+	  -DCMAKE_INCLUDE_PATH=%_datadir/cmake/websocketpp/ \
+	  -DWEBSOCKETPP_INCLUDE_DIR=%_includedir
 %cmake_build
 
 %install
@@ -92,6 +93,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make -C BUILD test
 %doc README.md
 
 %changelog
+* Fri Aug 17 2018 Yuri N. Sedunov <aris@altlinux.org> 2.10.4-alt1
+- 2.10.4
+
 * Fri Aug 03 2018 Yuri N. Sedunov <aris@altlinux.org> 2.10.3-alt1
 - 2.10.3
 
