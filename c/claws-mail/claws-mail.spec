@@ -31,14 +31,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:   	claws-mail
-Version:	3.16.0
-Release: 	alt3
+Version:	3.17.0
+Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
 Group: 		Networking/Mail
 
-Url:		http://www.claws-mail.org
+Url:		https://www.claws-mail.org
 
 Source: %name-%version.tar
 Patch:	%name-%version-%release.patch
@@ -50,7 +50,7 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq:	autoconf-common gettext-tools
 
-BuildRequires: flex libSM-devel libcompface-devel libdbus-glib-devel libenchant-devel libetpan-devel libgnutls-devel libgpgme-devel libldap-devel libpilot-link-devel libstartup-notification-devel libgcrypt-devel zlib-devel
+BuildRequires: flex libSM-devel libcompface-devel libdbus-glib-devel libenchant2-devel libetpan-devel libgnutls-devel libgpgme-devel libldap-devel libpilot-link-devel libstartup-notification-devel libgcrypt-devel zlib-devel
 BuildRequires: libnettle-devel
 %if_enabled gtk3
 BuildRequires: libgtk+3-devel
@@ -586,7 +586,7 @@ additional tools for %name.
 
 subst "s,\#\!/usr/bin/perl,\#\!/usr/bin/perl -w," tools/OOo2claws-mail.pl
 subst "s,%%f,%%N," ./src/prefs_quote.c
-echo "Libs: -lenchant -lgnutls" >>%name.pc.in
+echo "Libs: -lenchant-2 -lgnutls" >>%name.pc.in
 
 # set version
 echo 'echo "%version"' >./version
@@ -678,7 +678,7 @@ install -p -m644 %name.png %buildroot%_pixmapsdir/
 %files plugins
 
 %files plugin-spamassassin
-%doc src/plugins/spamassassin/README*
+%doc src/plugins/spamassassin/README* src/plugins/spamassassin/NOTICE
 %_claws_plugins_path/spamassassin.so
 %if_enabled appdata
 %_datadir/appdata/claws-mail-spamassassin.metainfo.xml
@@ -881,6 +881,9 @@ install -p -m644 %name.png %buildroot%_pixmapsdir/
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Fri Aug 17 2018 Mikhail Efremov <sem@altlinux.org> 3.17.0-alt1
+- Updated to 3.17.0.
+
 * Thu Jun 28 2018 Mikhail Efremov <sem@altlinux.org> 3.16.0-alt3
 - Add libnettle-devel to BR.
 - Require libnm-devel instead of NetworkManager-devel.
