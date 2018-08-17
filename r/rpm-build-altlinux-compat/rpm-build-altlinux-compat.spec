@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 2.1.7
+Version: 2.1.8
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -128,6 +128,14 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Fri Aug 17 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.8-alt1
+- distr_info: use awk instead tr (broken in busybox on OpenWrt)
+- distr_info: drop obsoleted systems, cleanup code
+- distr_info: use hascommand instead which
+- distr_info: add OpenWrt detection
+- fix _lib32dir for Astra (eterbug #12915)
+- macros.intro: add LDFLAGS in configure32
+
 * Mon Aug 06 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.7-alt1
 - add /proc buildreq in _tune_parallel_build_by_procsize
 
