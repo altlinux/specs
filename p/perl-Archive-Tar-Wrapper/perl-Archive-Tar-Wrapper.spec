@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Archive::Tar::Wrapper
 
 Name: perl-Archive-Tar-Wrapper
-Version: 0.30
+Version: 0.33
 Release: alt1
 
 Summary: Perl wrapper around the 'tar' utility
@@ -20,8 +20,11 @@ Patch0: %real_name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sun Sep 14 2014
-BuildRequires: perl-File-Which perl-IPC-Run perl-Log-Log4perl perl-devel
+# Automatically added by buildreq on Fri Aug 17 2018
+# optimized out: perl perl-CPAN-Meta-Requirements perl-Class-XSAccessor perl-Encode perl-File-Which perl-JSON-PP perl-Number-WithError perl-Params-Util perl-Parse-CPAN-Meta perl-Statistics-CaseResampling perl-devel perl-parent perl-prefork python-base python-modules python3 python3-base python3-dev ruby sh3
+BuildRequires: libnss-mymachines perl-CPAN-Meta perl-Dumbbench perl-IPC-Run perl-Log-Log4perl
+
+BuildRequires: perl-File-Which
 
 %description
 Archive::Tar::Wrapper is an API wrapper around the 'tar' command
@@ -46,6 +49,9 @@ files in the temporary directory on disk.
 
 
 %changelog
+* Fri Aug 17 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.33-alt1
+- New version
+
 * Mon Jul 02 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.30-alt1
 - New version
 
