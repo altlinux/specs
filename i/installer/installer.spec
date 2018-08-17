@@ -1,6 +1,6 @@
 Name: installer
-Version: 1.8.41
-Release: alt2
+Version: 1.8.42
+Release: alt1
 
 Summary: Installer common parts
 License: GPLv2+
@@ -110,6 +110,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Aug 17 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.8.42-alt1
+- Copying .disk/info into destination added
+
 * Sat Jun 09 2018 Sergey Bubnov <omg@altlinux.org> 1.8.41-alt2
 - Fix for DHCP waiting loop
 
