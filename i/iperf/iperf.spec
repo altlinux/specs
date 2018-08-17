@@ -3,14 +3,14 @@
 %define iperf_home %_localstatedir/%name
 
 Name: iperf
-Version: 2.0.5
-Release: alt6
+Version: 2.0.12
+Release: alt1
 
 Summary: Iperf was developed as a modern alternative for measuring TCP and UDP bandwidth performance
 License: BSD
 Group:  Monitoring
 
-URL: http://iperf.sourceforge.net
+URL: https://sourceforge.net/projects/iperf2/
 Packager: Evgenii Terechkov <evg@altlinux.org>
 Source0: %name-%version-source.tar
 Source1: iperf-tcp.init
@@ -40,15 +40,15 @@ datagram loss.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p2
-%patch9 -p2
+#patch1 -p1
+#patch2 -p1
+#patch3 -p1
+#patch4 -p1
+#patch5 -p1
+#patch6 -p1
+#patch7 -p1
+#patch8 -p2
+#patch9 -p2
 
 %build
 %autoreconf
@@ -93,6 +93,12 @@ rm -f doc/Makefile*
 %doc README doc/* ChangeLog AUTHORS
 
 %changelog
+* Thu May 31 2018 Sergey Y. Afonin <asy@altlinux.ru> 2.0.12-alt1
+- 2.0.12 (ALT #33251)
+- changed URL (ALT #33251)
+- disabled all patches
+- added lsb init header to init scripts
+
 * Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.5-alt6
 - Fixed build.
 
