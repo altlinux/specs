@@ -4,8 +4,9 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 15.01
-Release: alt2.git20150117.2
+Version: 1.6.1
+Release: alt1
+Epoch: 1
 Summary: Python lib/cli for JSON/YAML schema validation
 License: MIT
 Group: Development/Python
@@ -96,7 +97,7 @@ popd
 %endif
 
 %files
-%doc *.md *.rst docs/*
+%doc *.md docs/*
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -105,12 +106,18 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md *.rst docs/*
+%doc *.md docs/*
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Fri Aug 17 2018 Pavel Vainerman <pv@altlinux.ru> 1:1.6.1-alt1
+- The version is synchronized with upstream (used Epoch)
+
+* Fri Aug 17 2018 Pavel Vainerman <pv@altlinux.ru> 18.03-alt1.git20180314
+- build new version
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 15.01-alt2.git20150117.2
 - (NMU) rebuild with python3.6
 
@@ -124,4 +131,3 @@ popd
 
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 15.01-alt1.git20150117
 - Initial build for Sisyphus
-
