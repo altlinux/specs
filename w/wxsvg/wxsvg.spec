@@ -1,6 +1,6 @@
 Name: wxsvg
 Version: 1.5.14
-Release: alt1%ubt
+Release: alt2%ubt
 Epoch: 1
 
 Summary: wxSVG is viewer SVG files
@@ -10,7 +10,7 @@ Url: http://wxsvg.sourceforge.net
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++ libart_lgpl-devel libpango-devel
-BuildRequires: libwxGTK3.1-devel libavformat-devel libswscale-devel
+BuildRequires: compat-libwxGTK3.0-gtk2-devel libavformat-devel libswscale-devel
 BuildRequires: libexpat-devel libexif-devel
 BuildRequires(pre): rpm-build-ubt
 
@@ -72,6 +72,9 @@ rm -f ./configure
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Aug 16 2018 Anton Midyukov <antohami@altlinux.org> 1:1.5.14-alt2%ubt
+- Rebuilt with compat-libwxGTK3.0-gtk2
+
 * Thu Aug 09 2018 Anton Farygin <rider@altlinux.ru> 1:1.5.14-alt1%ubt
 - 1.5.14
 
