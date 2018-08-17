@@ -1,11 +1,11 @@
 Name:		uget
-Version:	2.2.0
+Version:	2.2.1
 Release:	alt1
 Summary:	Download manager using GTK+ and libcurl
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group:		Networking/File transfer
 License:	LGPLv2+
-URL:		http://urlget.sourceforge.net/
+URL:		http://ugetdm.com/
 Source0:	http://downloads.sourceforge.net/urlget/%{name}-%{version}.tar.gz
 
 
@@ -53,6 +53,10 @@ desktop-file-install \
 
 
 %changelog
+* Sat Aug 18 2018 Ilya Mashkin <oddity@altlinux.ru> 2.2.1-alt1
+- 2.2.1
+- update URL
+
 * Mon Jan 15 2018 Ilya Mashkin <oddity@altlinux.ru> 2.2.0-alt1
 - 2.2.0
 
