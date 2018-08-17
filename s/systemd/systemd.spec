@@ -21,7 +21,9 @@
 %def_enable networkd
 %def_enable timesyncd
 %def_enable resolve
-%def_disable gnuefi
+%ifarch %{ix86} x86_64 aarch64
+%def_enable gnuefi
+%endif
 %def_enable utmp
 %def_enable xz
 %def_enable zlib
@@ -53,8 +55,8 @@
 
 Name: systemd
 Epoch: 1
-Version: 238
-Release: alt8
+Version: 239
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -423,6 +425,15 @@ Systemd tools to spawn and manage containers and virtual machines.
 This package contains systemd-nspawn, machinectl, systemd-machined,
 and systemd-importd.
 
+%package portable
+Summary: Tools for Portable Services
+Group: System/Configuration/Other
+Requires: %name = %EVR
+
+%description portable
+A portable service is ultimately just an OS tree, either inside of a directory
+tree, or inside a raw disk image containing a Linux file system.
+
 %package analyze
 Group: System/Configuration/Boot and Init
 Summary: Analyze tool for systemd.
@@ -591,6 +602,8 @@ Shared library and headers for libudev
 %build
 
 %meson \
+	-Dlink-udev-shared=false \
+	-Dlink-systemctl-shared=false \
 	-Drpmmacrosdir=no \
 	-Drootlibdir=/%_lib \
 	-Dpamlibdir=/%_lib/security \
@@ -605,7 +618,6 @@ Shared library and headers for libudev
 	-Dkill-path=/bin/kill \
 	-Dkmod-path=/bin/kmod \
 	-Dkexec-path=/sbin/kexec \
-	-Dsetcap-path=/sbin/setcap \
 	-Dsulogin-path=/sbin/sulogin \
 	-Dmount-path=/bin/mount \
 	-Dumount-path=/bin/umount \
@@ -664,7 +676,6 @@ Shared library and headers for libudev
 
 %install
 %meson_install
-
 
 # remove .so file for the shared library, it's not supposed to be used
 rm -f %buildroot/lib/systemd/libsystemd-shared.so
@@ -1194,7 +1205,16 @@ fi
 
 /bin/systemd-notify
 /sbin/systemd-tty-ask-password-agent
+
+%if_enabled efi
 %_bindir/bootctl
+%if_enabled gnuefi
+%dir /lib/systemd/boot
+%dir /lib/systemd/boot/efi
+/lib/systemd/boot/efi/*
+%endif
+%endif
+
 %_bindir/busctl
 %_bindir/systemd-socket-activate
 %_bindir/systemd-cat
@@ -1234,6 +1254,7 @@ fi
 /lib/systemd/systemd-socket-proxyd
 /lib/systemd/systemd-update-done
 /lib/systemd/systemd-update-utmp
+/lib/systemd/systemd-user-runtime-dir
 /lib/systemd/systemd-user-sessions
 /lib/systemd/systemd-vconsole-setup
 /lib/systemd/systemd-volatile-root
@@ -1257,6 +1278,7 @@ fi
 %endif
 %if_enabled timesyncd
 %exclude %_unitdir/*timesyncd*
+%exclude %_unitdir/*time-wait-sync*
 %endif
 %if_enabled microhttpd
 %exclude %_unitdir/systemd-journal-gatewayd*
@@ -1275,6 +1297,7 @@ fi
 
 %exclude %_unitdir/*.machine1.*
 %exclude %_unitdir/*.import1.*
+%exclude %_unitdir/*.portable1.*
 %exclude %_unitdir/systemd-machined.service
 %exclude %_unitdir/systemd-importd.service
 %exclude %_unitdir/machine.slice
@@ -1285,6 +1308,7 @@ fi
 %exclude %_unitdir/systemd-nspawn@.service
 %exclude %_unitdir/*/systemd-sysusers.service
 %exclude %_unitdir/systemd-sysusers.service
+%exclude %_unitdir/systemd-portabled.service
 
 %_man1dir/bootctl.*
 %_man1dir/busctl.*
@@ -1304,6 +1328,7 @@ fi
 %_mandir/*/systemd-tty-ask-password*
 %_man1dir/systemd.*
 %_mandir/*/*journald*
+%_man5dir/loader*
 %_man5dir/localtime*
 %_man5dir/os-release*
 %_man5dir/*sleep.conf*
@@ -1530,13 +1555,14 @@ fi
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.network1.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.machine1.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.import1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.portable1.service
 %if_enabled polkit
 %_datadir/polkit-1/actions/*.policy
 %exclude %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
 %exclude %_datadir/polkit-1/actions/org.freedesktop.import1.policy
 %exclude %_datadir/polkit-1/actions/org.freedesktop.machine1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.portable1.policy
 %endif
-
 
 /bin/loginctl
 /lib/systemd/systemd-logind
@@ -1575,7 +1601,10 @@ fi
 /lib/systemd/systemd-resolved
 /lib/systemd/resolv.conf
 /lib/modprobe.d/systemd.conf
+%_bindir/resolvectl
 %_bindir/systemd-resolve
+# TODO: Provides: /sbin/resolvconf ?
+%exclude /sbin/resolvconf
 %_tmpfilesdir/systemd-network.conf
 %_unitdir/systemd-networkd.*
 %_unitdir/systemd-resolved.*
@@ -1589,7 +1618,8 @@ fi
 %_mandir/*/*netdev*
 %_mandir/*/*resolved*
 %_mandir/*/*dnssd*
-%_man1dir/systemd-resolve.*
+%_man1dir/resolvectl.*
+%_man1dir/resolvconf.*
 %_man5dir/dnssec-trust-anchors.d.*
 %_man5dir/systemd.negative.*
 %_man5dir/systemd.positive.*
@@ -1632,13 +1662,31 @@ fi
 %exclude %_man8dir/*mymachines.*
 %exclude %_man8dir/systemd-machine-id-*
 
+%files portable
+%_tmpfilesdir/portables.conf
+%_unitdir/systemd-portabled.service
+%_unitdir/*.portable1.*
+%dir /lib/systemd/portable
+%dir /lib/systemd/portable/profile
+/lib/systemd/portable/profile/*
+/lib/systemd/portablectl
+/lib/systemd/systemd-portabled
+%_datadir/dbus-1/system-services/org.freedesktop.portable1.service
+%if_enabled polkit
+%_datadir/polkit-1/actions/org.freedesktop.portable1.policy
+%endif
+%_mandir/*/*portable*
+
 %if_enabled timesyncd
 %files timesyncd
 %config(noreplace) %_sysconfdir/systemd/timesyncd.conf
 /lib/systemd/system-preset/85-timesyncd.preset
 /lib/systemd/systemd-timesyncd
+/lib/systemd/systemd-time-wait-sync
 %_unitdir/systemd-timesyncd.service
+%_unitdir/systemd-time-wait-sync.service
 %_mandir/*/*timesyncd*
+%_mandir/*/*time-wait-sync*
 %endif
 
 %files analyze
@@ -1784,6 +1832,16 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Fri Jun 22 2018 Alexey Shabalin <shaba@altlinux.ru> 1:239-alt1
+- 239
+- backport some patches from master
+- add portable package
+- mount /run/user/500 with noexec
+- static link systemd-udev and systemctl with libsystemd-shared
+- build with gnu-efi suuport (systemd boot loader)
+- Revert "Make hostnamed/localed/logind/machined/timedated D-Bus activatable"
+- Revert "Start logind on demand via libpam-systemd"
+
 * Wed May 16 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt8
 - merge with v238-stable branch
 - add "noexec" for /run/lock mount option
