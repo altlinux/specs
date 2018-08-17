@@ -1,6 +1,6 @@
 Name: python3-module-ruamel-yaml
 Version: 0.15.57
-Release: alt0.1
+Release: alt1
 
 Summary: is a YAML 1.2 loader/dumper package for Python
 
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-python3
 # optimized out: python-base python-modules python3 python3-base python3-dev python3-module-greenlet python3-module-pycparser python3-module-setuptools
 # BuildRequires: python3-module-zmq
 
-BuildRequires: libssl-devel python3-dev
+BuildRequires: libssl-devel python3-dev python3-module-setuptools
 
 %description
 ruamel.yaml is a YAML 1.2 loader/dumper package for Python
@@ -41,5 +41,8 @@ export RUAMEL_NO_PIP_INSTALL_CHECK="1"
 %python3_sitelibdir/*
 
 %changelog
+* Fri Aug 17 2018 Pavel Vainerman <pv@altlinux.ru> 0.15.57-alt1
+- update build requires
+
 * Thu Aug 16 2018 Pavel Vainerman <pv@altlinux.ru> 0.15.57-alt0.1
 - new version (0.15.57) with rpmgs script
