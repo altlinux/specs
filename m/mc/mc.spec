@@ -3,10 +3,10 @@
 
 Name: mc
 Version: 4.8.21
-Release: alt1
+Release: alt2
 
 # '-gitYYYYMMDD' or ''
-%define ver_date '-git20180620'
+%define ver_date '-git20180819'
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -29,7 +29,6 @@ Patch0: %name-%version-%release.patch
 Patch1: mc-4.8.16-alt-wrapper.patch
 Patch2: mc-4.7.5.1-alt-defaults.patch
 Patch3: mc-4.8.20-alt-menu.patch
-Patch4: mc-4.8.19-alt-rpm-select.patch
 
 # Misc
 
@@ -51,6 +50,8 @@ Conflicts: %name-doc
 Obsoletes: %name-data
 Obsoletes: %name-locales
 Obsoletes: %name-doc
+
+Requires: rpm >= 4.13
 
 BuildPreReq: glib2-devel libe2fs-devel
 BuildPreReq: groff-base cvs libX11-devel unzip
@@ -94,7 +95,6 @@ needed for working additional components (some vfs for example).
 %patch1 -p1
 %patch2 -p1
 %patch3 -p0
-%patch4 -p1
 
 # Misc
 #patch101 -p1
@@ -204,6 +204,11 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Mon Aug 20 2018 Sergey Y. Afonin <asy@altlinux.ru> 4.8.21-alt2
+- updated to 20180819 git snapshot (ALT #35188)
+- rebuilt with S-Lang 2.3.2 (ALT #34343)
+- removed alt-rpm-select.patch, added "Requires: rpm >= 4.13"
+
 * Wed Jun 20 2018 Sergey Y. Afonin <asy@altlinux.ru> 4.8.21-alt1
 - 4.8.21 (updated to 20180620 git snapshot)
 
