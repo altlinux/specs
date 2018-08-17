@@ -10,7 +10,7 @@
 %def_disable gtk_doc
 
 Name: %{_name}2
-Version: %ver_major.11
+Version: %ver_major.12
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -186,6 +186,9 @@ mkdir -p %buildroot%_localstatedir/%_name
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Fri Aug 17 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.12-alt1
+- 2.4.12
+
 * Fri Jul 27 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt1
 - 2.4.11
 
