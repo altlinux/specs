@@ -4,7 +4,7 @@
 %define major 3.13
 
 Name: wine
-Version: %major.1
+Version: %major.3
 Release: alt1
 Epoch: 1
 
@@ -474,6 +474,12 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Wed Aug 15 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.13.3-alt1
+- ntdll: Don't allow blocking on a critical section during (eterbug #12662)
+
+* Tue Jul 31 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.13.2-alt1
+- add patch kernel32: Set environment variable PUBLIC on the process (eterbug #13054)
+
 * Sat Jul 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.13.1-alt1
 - new version 3.13.1 (with rpmrb script)
 
