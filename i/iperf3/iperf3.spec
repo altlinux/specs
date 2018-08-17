@@ -2,8 +2,8 @@
 %define abiversion 0
 
 Name: iperf3
-Version: 3.3
-Release: alt2
+Version: 3.6
+Release: alt1
 
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
 License: %bsd
@@ -14,6 +14,8 @@ Source0: http://downloads.es.net/pub/iperf/%native-%version.tar.gz
 Source1: iperf3.sysconfig
 Source2: iperf3.init
 Source3: iperf3.service
+
+Patch0: no-iperf3_profile.patch
 
 BuildRequires: rpm-build-licenses
 
@@ -55,6 +57,8 @@ This package contains development files of iperf3
 
 %prep
 %setup -q -n %native-%version
+
+%patch0 -p2
 
 %build
 
@@ -101,6 +105,10 @@ install -pDm0644 %SOURCE3 %buildroot/%_unitdir/%name.service
 
 
 %changelog
+* Fri Aug 17 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.6-alt1
+- New version
+- disabled iperf3_profile building by external patch
+
 * Wed Nov 15 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.3-alt2
 - do not build profiled iperf
 
