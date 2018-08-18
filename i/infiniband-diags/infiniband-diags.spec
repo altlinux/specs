@@ -2,7 +2,7 @@
 
 Summary: OpenFabrics InfiniBand Diagnostic Tools
 Name: infiniband-diags
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 License: GPLv2 or BSD
 Group: System/Base
@@ -146,10 +146,6 @@ chmod 644 %buildroot%_sysconfdir/infiniband-diags/ibdiag.conf
 %_man8dir/dump_lfts.*
 %_sbindir/dump_mfts.sh
 %_man8dir/dump_mfts.*
-%_sbindir/ibclearerrors
-%_man8dir/ibclearerrors.*
-%_sbindir/ibclearcounters
-%_man8dir/ibclearcounters.*
 %_sbindir/ibstatus
 %_man8dir/ibstatus.*
 # and the rest
@@ -189,6 +185,10 @@ chmod 644 %buildroot%_sysconfdir/infiniband-diags/ibdiag.conf
 %_man8dir/ibcheckstate.*
 %_sbindir/ibcheckerrors
 %_man8dir/ibcheckerrors.*
+%_sbindir/ibclearerrors
+%_man8dir/ibclearerrors.*
+%_sbindir/ibclearcounters
+%_man8dir/ibclearcounters.*
 %_sbindir/ibdatacounts
 %_man8dir/ibdatacounts.*
 %_sbindir/ibdatacounters
@@ -208,6 +208,9 @@ chmod 644 %buildroot%_sysconfdir/infiniband-diags/ibdiag.conf
 %_sbindir/set_nodedesc.sh
 
 %changelog
+* Sat Aug 18 2018 Alexey Shabalin <shaba@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Thu Apr 12 2018 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
 - 2.0.0
 - disable build static libs
