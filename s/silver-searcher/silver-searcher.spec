@@ -1,5 +1,5 @@
 Name: silver-searcher
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: A code searching tool similar to ack, with a focus on speed
@@ -26,6 +26,7 @@ The command name is 33%% shorter than ack, and all keys are on the home row!
 %setup -q
 
 %build
+%autoreconf
 %configure
 make
 
@@ -40,6 +41,9 @@ make
 %doc README.md
 
 %changelog
+* Sat Aug 18 2018 Mikhail Gordeev <obirvalger@altlinux.org> 2.2.0-alt1
+- new version 2.2.0
+
 * Sun Oct 01 2017 Mikhail Gordeev <obirvalger@altlinux.org> 2.1.0-alt1
 - new version 2.1.0
 
