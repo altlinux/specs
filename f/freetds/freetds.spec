@@ -2,27 +2,26 @@
 
 %define	TDSVER 7.0
 %define	name freetds
-%define	release alt3
-%define	version 0.91
+%define	release alt1
+%define	version 1.00.94
 
 Name:		%name
 Version:	%version
 Release:	%release
 
-Summary:	An OpenSource implementation of the tubular data stream protocol. 
+Summary:	An OpenSource implementation of the tubular data stream protocol
 License:	GPL/LGPL
 Group:		System/Libraries
 URL:		http://www.freetds.org/
 Packager: Dmitry Lebkov <dlebkov@altlinux.ru>
 
-Source0:	ftp://ftp.ibiblio.org/pub/Linux/ALPHA/freetds/current/%name-%version.tar.bz2
+Source0:	%name-%version.tar
 Source1:	%name.sh
 Source2:	%name.csh
 
-Patch0:		%name-0.82-alt-includes.patch
-
-# Automatically added by buildreq on Tue Jun 10 2008
-BuildRequires: libssl-devel libncurses-devel libreadline-devel libunixODBC-devel
+# Automatically added by buildreq on Sun Aug 19 2018
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libncurses-devel libtinfo-devel libunixODBC-devel-compat perl pkg-config python-base python-modules python3 python3-base python3-dev ruby sh3
+BuildRequires: doxygen glibc-devel-static libgnutls-devel libreadline-devel libssl-devel libunixODBC-devel
 
 %if_enabled static
 BuildRequires: glibc-devel-static
@@ -31,21 +30,23 @@ BuildRequires: glibc-devel-static
 
 %description
 FreeTDS is a free (open source) implementation of Sybase's db-lib,
-ct-lib, and ODBC libraries. Currently, dblib and ctlib are most mature.  Both
-of these libraries have several programs know to compile and run against them.
+ct-lib, and ODBC libraries. Currently, dblib and ctlib are most mature.
+Both of these libraries have several programs know to compile and run
+against them.
 
 This package is built with support of TDS version %TDSVER.
 
 %package -n lib%name
-Summary:	An OpenSource implementation of the tubular data stream protocol. 
+Summary:	An OpenSource implementation of the tubular data stream protocol
 License:	GPL/LGPL
 Group:		System/Libraries
 Provides:	%name
 
 %description -n lib%name
 FreeTDS is a free (open source) implementation of Sybase's db-lib,
-ct-lib, and ODBC libraries. Currently, dblib and ctlib are most mature.  Both
-of these libraries have several programs know to compile and run against them.
+ct-lib, and ODBC libraries. Currently, dblib and ctlib are most mature.
+Both of these libraries have several programs know to compile and run
+against them.
 
 This package is built with support for TDS version %TDSVER.
 
@@ -64,7 +65,7 @@ and run against them.
 This package is built with support for TDS version %TDSVER.
 
 %package -n lib%name-devel
-Summary: 	An OpenSource implementation of the TDS protocol. Development files.
+Summary: 	An OpenSource implementation of the TDS protocol. Development files
 License:	GPL/LGPL
 Group: 		Development/C
 PreReq:		lib%name = %version-%release
@@ -78,7 +79,7 @@ applications with freetds libraries.
 This package is built with support for TDS version %TDSVER.
 
 %package -n lib%name-devel-static
-Summary: 	An OpenSource implementation of the TDS protocol. Static libraries.
+Summary: 	An OpenSource implementation of the TDS protocol. Static libraries
 License:	GPL/LGPL
 Group: 		Development/C
 PreReq:		lib%name-devel = %version-%release
@@ -93,7 +94,7 @@ This package is built with support for TDS version %TDSVER.
 
 
 %package -n %name-utils
-Summary:	An OpenSource implementation of the TDS protocol. Utilities.
+Summary:	An OpenSource implementation of the TDS protocol. Utilities
 License:	GPL/LGPL
 Group:		Databases
 PreReq:		lib%name = %version-%release
@@ -109,9 +110,7 @@ useful utilities.
 
 
 %prep
-
 %setup
-#patch0 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -151,6 +150,7 @@ useful utilities.
 %endif
 
 %files -n %name-utils
+%doc %_docdir/%name/*
 %config(noreplace) %_sysconfdir/%name/pool.conf
 %_bindir/bsqlodbc
 %_bindir/fisql
@@ -161,20 +161,15 @@ useful utilities.
 %_bindir/bsqldb
 %_bindir/defncopy
 %_bindir/datacopy
-%_man1dir/datacopy.1*
-%_man1dir/bsqldb.1*
-%_man1dir/bsqlodbc.1
-%_man1dir/defncopy.1*
-%_man1dir/fisql.1
-%_man1dir/freebcp.1*
-%_man1dir/osql.1
-%_man1dir/tsql.1*
-%_man5dir/freetds.conf.5*
-%dir %_docdir/%name-%version
-%doc %_docdir/%name-%version/*
+%_man1dir/*
+%_man5dir/*
+%dir %_docdir/%name
 
 
 %changelog
+* Sun Aug 19 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.00.94-alt1
+- New version (Closes: 32354)
+
 * Mon Jun 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.91-alt3
 - Rebuild with unixODBC 2.3.1
 
