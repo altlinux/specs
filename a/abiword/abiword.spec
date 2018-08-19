@@ -1,6 +1,7 @@
 %define abi_ver 3.0
 %define ver_major 3.0
 %def_enable spell
+%def_disable ots
 %def_with goffice
 %def_with champlain
 %def_with libical
@@ -10,7 +11,7 @@
 
 Name: abiword
 Version: %ver_major.2
-Release: alt3.1
+Release: alt4
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -40,7 +41,7 @@ Requires: %name-data = %version-%release
 
 BuildRequires: gcc-c++ boost-devel libreadline-devel flex
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgsf-gir-devel
-BuildRequires: libgtk+3-devel librsvg-devel libfribidi-devel libredland-devel libots-devel
+BuildRequires: libgtk+3-devel librsvg-devel libfribidi-devel libredland-devel
 BuildRequires: liblink-grammar-devel libgsf-devel bzlib-devel zlib-devel libjpeg-devel libpng-devel libxslt-devel
 BuildRequires: libwv-devel libwpd10-devel libwpg-devel libwmf-devel libwps-devel libexpat-devel
 BuildRequires: telepathy-glib-devel libdbus-glib-devel
@@ -52,6 +53,7 @@ BuildRequires: telepathy-glib-devel libdbus-glib-devel
 %{?_with_eds:BuildRequires: evolution-data-server-devel}
 %{?_with_python:BuildRequires: python-module-pygobject3-devel python-module-setuptools}
 %{?_enable_collabnet:BuildRequires: libgnutls-devel libsoup-devel libgcrypt-devel asio-devel}
+%{?_enable_ots:BuildRequires: libots-devel}
 
 %description
 AbiWord is a cross-platform, Open Source Word Processor developed
@@ -136,7 +138,7 @@ Python bindings for developing with AbiWord library
 %patch14 -p1 -b .black
 
 %build
-%add_optflags -std=c++11
+%add_optflags -std=c++11 -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
 	--enable-print \
@@ -192,6 +194,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python_sitelibdir/gi/overrides/*
 
 %changelog
+* Sun Aug 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt4
+- disabled Open Text Summarizer support (ALT #35266)
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt3.1
 - rebuilt for e2kv4
 
