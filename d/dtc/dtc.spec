@@ -1,7 +1,7 @@
 %def_without docs
 
 Name: dtc
-Version: 1.4.4
+Version: 1.4.7
 Release: alt1
 
 Summary: Device Tree Compiler for Flat Device Trees
@@ -13,24 +13,10 @@ Source: %name-%version.tar
 
 BuildPreReq: rpm-build-licenses
 BuildRequires: flex bison
+BuildRequires: swig python-devel
 %if_with docs
 BuildRequires: texlive-base texlive-latex-extra
 %endif
-
-%package -n libfdt
-Summary: Flat Device Trees manipulation library
-Group: System/Libraries
-
-%package -n libfdt-devel
-Summary: Flat Device Trees manipulation library - development files
-Group: Development/C
-Requires: libfdt = %version-%release
-
-%package -n libfdt-doc
-Summary: Documentation for Device Tree Compiler for Flat Device Trees 
-Group: Development/Other
-BuildArch: noarch
-Requires: libfdt-devel = %version-%release
 
 %description
 Device Tree Compiler, dtc, takes as input a device-tree in a given
@@ -38,19 +24,49 @@ format and outputs a device-tree in another format for booting kernels
 on embedded systems. Typically, the input format is "dts", a human
 readable source format, and creates a "dtb", or binary format as output.
 
+%package -n libfdt
+Summary: Flat Device Trees manipulation library
+Group: System/Libraries
+
 %description -n libfdt
 This is a library containing functions for manipulating Flat Device
 Trees.
+
+%package -n libfdt-devel
+Summary: Flat Device Trees manipulation library - development files
+Group: Development/C
+Requires: libfdt = %EVR
 
 %description -n libfdt-devel
 This is a library containing functions for manipulating Flat Device
 Trees.
 This package contains the files needed for development against libfdt.
 
+%package -n libfdt-devel-static
+Summary: Static version of device tree library
+Group: Development/C
+Requires: libfdt-devel = %EVR
+
+%description -n libfdt-devel-static
+This package provides the static library of libfdt
+
+%package -n libfdt-doc
+Summary: Documentation for Device Tree Compiler for Flat Device Trees 
+Group: Development/Other
+BuildArch: noarch
+
 %description -n libfdt-doc
 This is a library containing functions for manipulating Flat Device
 Trees.
-his package contains documentation for development against libfdt.
+This package contains documentation for development against libfdt.
+
+%package -n python-module-libfdt
+Summary: Python 2 bindings for device tree library
+Group: Development/Python
+Requires: libfdt = %EVR
+
+%description -n python-module-libfdt
+This package provides python2 bindings for libfdt
 
 %prep
 %setup
@@ -67,7 +83,8 @@ popd
 %endif
 
 %install
-%makeinstall_std PREFIX=%_usr LIBDIR=%_libdir
+%makeinstall_std PREFIX=%_usr LIBDIR=%_libdir SETUP_PREFIX=%buildroot%_usr
+rm -f %buildroot%_bindir/ftdump
 
 %files
 %doc README.license
@@ -85,6 +102,12 @@ popd
 %_libdir/libfdt.so
 %_includedir/*
 
+%files -n libfdt-devel-static
+%_libdir/libfdt.a
+
+%files -n python-module-libfdt
+%python_sitelibdir/*
+
 %if_with docs
 %files -n libfdt-doc
 %doc README.license
@@ -94,6 +117,11 @@ popd
 %endif
 
 %changelog
+* Sat Aug 18 2018 Alexey Shabalin <shaba@altlinux.org> 1.4.7-alt1
+- 1.4.7
+- add python package
+- add devel-static package
+
 * Fri Apr 21 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.4-alt1
 - 1.4.4
 
