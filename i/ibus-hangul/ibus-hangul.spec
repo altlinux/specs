@@ -2,13 +2,13 @@
 %global require_libhangul_version 0.1.0
 
 Name:       ibus-hangul
-Version:    1.5.0
+Version:    1.5.1
 Release:    alt1
 Summary:    The Hangul engine for IBus input platform
 License:    GPLv2+
 Group:      System/Libraries
 URL:        http://code.google.com/p/ibus/
-Source0:    http://ibus.googlecode.com/files/%{name}-%{version}.tar.gz
+Source0:    %name-%version.tar
 # VCS: git://github.com/choehwanjin/ibus-hangul.git
 # upstreamed patches
 #Patch0:     ibus-hangul-HEAD.patch
@@ -65,6 +65,9 @@ desktop-file-validate ${RPM_BUILD_ROOT}%{_datadir}/applications/ibus-setup-hangu
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Aug 19 2018 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt1
+- New version.
+
 * Fri Nov 28 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
 - New version
 - Build from upstream Git repository
