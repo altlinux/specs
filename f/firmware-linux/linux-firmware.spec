@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180728
+Version: 20180730
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,18 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun Aug 19 2018 Cronbuild Service <cronbuild@altlinux.org> 20180730-alt1
+- upstream changes (GIT f1b95fe):
+  + linux-firmware:Update firmware patch for Intel Bluetooth 7265
+    (D1) (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth,9560 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth,9260 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth,8265 (thx Amit K Bag)
+  + Update firmware patch for Intel Bluetooth 8260 (thx Amit K Bag)
+  + add firmware for mt76x0 (thx Stanislaw Gruszka)
+  + qcom: update venus firmware files for v5.2 (thx Vikash Garodia)
+  + nfp: update Agilio SmartNIC flower firmware to rev AOTC-2.9.A.31 (thx Louis Peens)
+
 * Sun Aug 05 2018 Cronbuild Service <cronbuild@altlinux.org> 20180728-alt1
 - upstream changes (GIT 7b5835f):
   + add firmware for mt76x2u (thx Lorenzo Bianconi)
