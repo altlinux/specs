@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
@@ -9,7 +9,7 @@
 
 Name: gnome-shell
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -50,14 +50,13 @@ AutoReqProv: nopython
 %define desktop_ver 3.8
 %define json_glib_ver 0.13.2
 %define nm_ver 0.9.8
-%define caribou_ver 0.4.8
 %define ibus_ver 1.5.2
 
 Requires: %name-data = %version-%release
 Requires: mutter-gnome >= %mutter_ver libmutter-gir >= %mutter_ver
 Requires: gnome-session >= %session_ver
 Requires: dconf gnome-icon-theme gnome-icon-theme-symbolic
-Requires: at-spi2-atk ca-certificates polkit caribou
+Requires: at-spi2-atk ca-certificates polkit
 # since 3.11.x requires org.gnome.login-screen schema
 Requires: gdm-data
 # gkbd-keyboard-display required to show keyboard layouts
@@ -66,6 +65,8 @@ Requires: libgnomekbd
 Requires: gnome-control-center
 # since 3.16
 Requires: polari
+# for OSK
+Requires: ibus ibus-gtk3
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(AccountsService)
@@ -104,8 +105,9 @@ Requires: typelib(TelepathyLogger)
 Requires: typelib(UPowerGlib)
 Requires: typelib(WebKit2)
 
-BuildRequires: meson gcc-c++ gnome-common intltool gtk-doc sassc
-BuildRequires: python3-devel rpm-build-python3
+BuildRequires(pre): meson rpm-build-gir rpm-build-python3
+BuildRequires: gcc-c++ gnome-common intltool gtk-doc sassc
+BuildRequires: python3-devel
 BuildRequires: libX11-devel libXfixes-devel
 BuildRequires: libclutter-devel >= %clutter_ver libclutter-gir-devel
 BuildRequires: libdbus-glib-devel
@@ -138,7 +140,6 @@ BuildRequires: libtelepathy-glib-devel >= %telepathy_ver libtelepathy-glib-gir-d
 BuildRequires: libtelepathy-logger-devel >= %telepathy_logger_ver
 BuildRequires: libfolks-devel >= %folks_ver libfolks-gir-devel
 BuildRequires: libnm-gtk-devel >= %nm_ver libnm-devel libnm-gir-devel
-BuildRequires: libcaribou-devel >= %caribou_ver
 BuildRequires: libcanberra-gtk3-devel
 BuildRequires: libgudev-devel libgudev-gir-devel
 BuildRequires: gsettings-desktop-schemas-devel >= 3.21.3
@@ -238,6 +239,10 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %endif
 
 %changelog
+* Sun Aug 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt2
+- updated to 3.28.3-7-g721ce5403
+- removed obsolete deps on caribou
+
 * Thu Jul 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
 - 3.28.3
 

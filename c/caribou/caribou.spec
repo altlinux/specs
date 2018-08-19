@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _libexecdir %prefix/libexec
 %define ver_major 0.4
 %define api_ver 1.0
@@ -5,16 +7,22 @@
 %def_enable gtk3_module
 
 Name: caribou
-Version: %ver_major.21
-Release: alt1
+Version: %ver_major.22
+Release: alt0.1
 
 Summary: A simplified in-place on-screen keyboard
 Group: Graphical desktop/GNOME
 License: LGPLv2+
 Url: https://live.gnome.org/Caribou
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch2: %name-0.4.20-alt-russian_layouts.patch
+%else
+Source: %name-%version.tar
+%endif
+Patch:  %name-0.4.22-change_autostart_cinnamon.patch
+Patch1: %name-0.4.20-fix-python-exec.patch
+Patch2: %name-0.4.22-alt-russian_layouts.patch
 Patch4: %name-0.4.2-use-reserved-bar-keycode.patch
 Patch5: %name-0.4.2-fix-keys.patch
 
@@ -24,11 +32,12 @@ Requires: lib%name-gir = %version-%release
 
 %define gee_ver 0.8
 
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
 %{?_enable_gtk2_module:BuildRequires: libgtk+2-devel}
 %{?_enable_gtk3_module:BuildRequires: libgtk+3-devel libgtk+3-gir-devel}
 BuildPreReq: libgee-devel >= %gee_ver
 BuildRequires: libat-spi2-core-devel libclutter-devel libxklavier-devel libXtst-devel
-BuildRequires: gobject-introspection-devel python-module-pygobject3-devel libxml2-devel
+BuildRequires: gobject-introspection-devel python3-module-pygobject3-devel libxml2-devel
 BuildRequires: intltool xsltproc gnome-doc-utils vala-tools >= 0.13
 
 %description
@@ -74,18 +83,21 @@ GObject introspection devel data for the Caribou library.
 
 %prep
 %setup
+%patch -p1 -b .cinnamon
+%patch1 -p1 -b .python_exec
 %patch2 -p1 -b .rus
-%patch4 -p2
+%patch4 -p2 -b .res_keycode
 #%%patch5 -p2
 
 %build
 %autoreconf
 %configure --disable-static \
 	%{?_disable_gtk2_module:--disable-gtk2-module} \
-	%{?_disable_gtk3_module:--disable-gtk3-module}
+	%{?_disable_gtk3_module:--disable-gtk3-module} \
+	PYTHON=%__python3
 
 # Clean generated C files:
-make clean
+%make clean
 
 %make_build
 
@@ -108,7 +120,7 @@ make clean
 %_libdir/gnome-settings-daemon-3.0/gtk-modules/%name-gtk-module.desktop
 %{?_enable_gtk2_module:%_libdir/gtk-2.0/modules/lib%name-gtk-module.so}
 %{?_enable_gtk3_module:%_libdir/gtk-3.0/modules/lib%name-gtk-module.so}
-%python_sitelibdir_noarch/%name/
+%python3_sitelibdir_noarch/%name/
 %doc NEWS README
 
 %exclude %_libdir/gtk-*/modules/lib%name-gtk-module.la
@@ -130,6 +142,10 @@ make clean
 %_girdir/Caribou-%api_ver.gir
 
 %changelog
+* Sat Aug 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.4.22-alt0.1
+- updated to 0.4.21-60-gec9041b, switched to Python3
+- caribou-autostart.desktop changed as gnome-shell has it's own OSK
+
 * Fri Jul 22 2016 Yuri N. Sedunov <aris@altlinux.org> 0.4.21-alt1
 - 0.4.21
 
