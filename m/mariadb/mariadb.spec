@@ -44,8 +44,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.3.8
-Release: alt2%ubt
+Version: 10.3.9
+Release: alt1%ubt
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -708,9 +708,9 @@ fi
 %attr(710,root,mysql) %dir %ROOT/%_lib
 %attr(710,root,mysql) %dir %ROOT/%_libdir
 %attr(710,root,mysql) %dir %ROOT/%_libdir/%name
-%attr(710,root,mysql) %dir %ROOT/%prefix/%plugindir
+%attr(750,root,mysql) %dir %ROOT/%prefix/%plugindir
 %if_with galera
-%attr(710,root,mysql) %dir %ROOT/%_libdir/galera
+%attr(750,root,mysql) %dir %ROOT/%_libdir/galera
 %endif
 %attr(710,root,mysql) %dir %ROOT%_sysconfdir
 %ghost %ROOT%_sysconfdir/hosts
@@ -856,6 +856,17 @@ fi
 %endif
 
 %changelog
+* Sun Aug 19 2018 Alexey Shabalin <shaba@altlinux.org> 10.3.9-alt1%ubt
+- 10.3.9
+- Fixes for the following security vulnerabilities:
+  + CVE-2018-3060
+  + CVE-2018-3064
+  + CVE-2018-3063
+  + CVE-2018-3058
+  + CVE-2018-3066
+- fix path to plugin dir in chroot (ALT #35242)
+- change mode of plugin dir in chroot (ALT #33259)
+
 * Fri Jul 13 2018 Alexey Shabalin <shaba@altlinux.ru> 10.3.8-alt2%ubt
 - split galera to mariadb-server-galera package
 
