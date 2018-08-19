@@ -1,19 +1,19 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
 %def_enable zart
 
-%define gmic_git_ver v.2.3.2
+%define gmic_git_ver v.2.3.4
 # https://github.com/c-koi/zart
 # no tags
-%define zart_ver 20180628git59bcb7d
+%define zart_ver 20180718git7430d41
 # https://github.com/c-koi/gmic-qt
-# v.2.3.2
-%define gmic_qt_ver 20180628gitf6e904d
+# v.2.3.3-16-ge1f2980
+%define gmic_qt_ver 20180718gitge1f2980
 # https://github.com/dtschump/gmic-community.git
-# 1.6.3.2-791-gccfb319
-%define gmic_comm_ver 20180628gitccfb319
+# 1.6.3.2-811-g31d3d30
+%define gmic_comm_ver 20180818gitg31d3d30
 
 Name: gmic
-Version: 2.3.2
+Version: 2.3.4
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -69,6 +69,7 @@ This package provides development files for GREYC's Magic Image Converter Librar
 %package zart
 Summary: GREYC's image processing language demo
 Group: Graphics
+Provides: zart = %version-%release
 Requires: lib%name = %version-%release
 
 %description zart
@@ -177,6 +178,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Sun Aug 19 2018 Yuri N. Sedunov <aris@altlinux.org> 2.3.4-alt1
+- 2.3.4
+
 * Fri Jun 29 2018 Yuri N. Sedunov <aris@altlinux.org> 2.3.2-alt1
 - 2.3.2
 
