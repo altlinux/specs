@@ -27,7 +27,7 @@
 
 Name: gdm
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -77,8 +77,6 @@ Requires: %name-data = %version-%release
 Requires: gnome-shell >= %shell_ver
 Requires: accountsservice >= %accountsservice_ver
 Requires: coreutils xinitrc iso-codes lsb-release shadow-utils
-# since 3.11.92
-Requires: caribou
 Requires: gnome-session >= 3.7.1
 Requires: gnome-session-wayland
 
@@ -325,6 +323,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Sun Aug 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt2
+- removed obsolete deps on caribou
+
 * Mon Aug 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
 - 3.28.3 (fixed CVE-2018-14424)
 - disabled parallel build on aarch64
