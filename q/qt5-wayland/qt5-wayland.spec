@@ -2,7 +2,7 @@
 %global qt_module qtwayland
 
 Name: qt5-wayland
-Version: 5.9.6
+Version: 5.11.1
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -82,9 +82,9 @@ Requires: %name-common = %EVR
 %setup -qn %qt_module-opensource-src-%version
 #for d in gl nogl; do
 #mkdir $d
-#syncqt.pl-qt5 -version %version -private -outdir $d
+#syncqt.pl-qt5 -version %version -outdir $d
 #done
-syncqt.pl-qt5 -version %version -private
+syncqt.pl-qt5 -version %version 
 
 %build
 #qmake_qt5 CONFIG+=wayland-compositor
@@ -132,6 +132,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+- new version
+
 * Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
 - new version
 

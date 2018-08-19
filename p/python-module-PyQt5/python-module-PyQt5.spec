@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.9.2
-Release: alt3%ubt
+Release: alt4%ubt
 
 Summary: Python bindings for Qt 5
 License: GPL
@@ -15,6 +15,7 @@ Group: Development/Python
 # Source0-url: https://prdownloads.sourceforge.net/pyqt/%oname/PyQt-%version/PyQt5_gpl-%version.tar.gz
 Source0: PyQt-gpl-%version.tar
 Patch0: PyQt-gpl-5.9-gles.patch
+Patch1: alt-qt-5.11.patch
 URL: http://www.riverbankcomputing.co.uk/software/pyqt
 
 #BuildPreReq: %py_package_dependencies sip-devel >= 4.8.1
@@ -135,6 +136,7 @@ This package contains PyQt5 docs
 %prep
 %setup -qn PyQt-gpl-%version
 #patch0 -p1
+%patch1 -p1
 subst 's|/lib/libpython|/%_lib/libpython|g' configure.py
 subst 's|/lib" |/%_lib" |g' configure.py
 subst 's|#include <QTextStream>|#include <QTextStream>\n#define QT_SHARED\n|g' \
@@ -153,7 +155,7 @@ cp -R . ../python3
 %endif
 
 # add missing Qt versions to list of supported
-for v in Qt_5_9_4 Qt_5_9_5 Qt_5_9_6 Qt_5_9_7 Qt_5_10_1 Qt_5_11_1 Qt_5_11_2
+for v in Qt_5_9_4 Qt_5_9_5 Qt_5_9_6 Qt_5_9_7 Qt_5_9_8 Qt_5_10_1 Qt_5_11_1 Qt_5_11_2
 do
     grep -qe "[[:space:]]$v" sip/QtCore/QtCoremod.sip \
 	|| sed -i "s|Qt_5_9_3|$v Qt_5_9_3|" sip/QtCore/QtCoremod.sip
@@ -258,6 +260,9 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %endif
 
 %changelog
+* Tue Aug 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt4%ubt
+- fix to build with Qt-5.11
+
 * Mon Jun 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt3%ubt
 - add missing Qt versions to list of supported
 

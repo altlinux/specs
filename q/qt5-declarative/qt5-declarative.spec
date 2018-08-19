@@ -1,9 +1,9 @@
 
 %define qt_module qtdeclarative
-%def_disable bootstrap
+%def_enable bootstrap
 
 Name: qt5-declarative
-Version: 5.9.6
+Version: 5.11.1
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -18,9 +18,7 @@ Source3: find-provides.sh
 Source4: find-requires.sh
 # FC
 Patch10: qtdeclarative-opensource-src-5.9.0-no_sse2.patch
-Patch11: qtdeclarative-QQuickShaderEffectSource_deadlock.patch
-Patch12: qtdeclarative-kdebug346118.patch
-Patch13: Do-not-make-lack-of-SSE2-support-on-x86-32-fatal.patch
+Patch11: Do-not-make-lack-of-SSE2-support-on-x86-32-fatal.patch
 
 %include %SOURCE1
 %qml_req_skipall 0
@@ -117,10 +115,8 @@ QML modules by some Alt Linux Team Policy compatible way.
 %include %SOURCE2
 %setup -n %qt_module-opensource-src-%version
 %patch10 -p1
-%patch11 -p1
-%patch12 -p0
-%patch13 -p1
-syncqt.pl-qt5 -version %version -private
+#%patch11 -p1
+syncqt.pl-qt5 -version %version 
 
 %build
 %qmake_qt5
@@ -176,12 +172,14 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_qt5_libdir/libQt5Qml.so.*
 %_qt5_qmldir/builtins.qmltypes
 %_qt5_qmldir/Qt/labs/folderlistmodel/
+%_qt5_qmldir/Qt/labs/handlers/
 %_qt5_qmldir/Qt/labs/settings/
 %_qt5_qmldir/Qt/labs/sharedimage/
 %_qt5_qmldir/QtQml/*
 %_qt5_qmldir/QtQuick/LocalStorage/
 %_qt5_qmldir/QtQuick/XmlListModel/
 %_qt5_qmldir/QtQuick/Layouts/
+%_qt5_qmldir/QtQuick/Shapes/
 
 %files -n libqt5-quick
 %_qt5_libdir/libQt5Quick.so.*
@@ -238,6 +236,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+- new version
+
 * Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
 - new version
 

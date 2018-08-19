@@ -1,9 +1,9 @@
 
 %global qt_module qtxmlpatterns
-%def_disable bootstrap
+%def_enable bootstrap
 
 Name: qt5-xmlpatterns
-Version: 5.9.6
+Version: 5.11.1
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -64,7 +64,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -qn %qt_module-opensource-src-%version
-syncqt.pl-qt5 -version %version -private
+syncqt.pl-qt5 -version %version 
 
 %build
 %qmake_qt5
@@ -82,7 +82,7 @@ export QT_HASH_SEED=0
 
 %files common
 %files -n libqt5-xmlpatterns
-%doc LGPL_EXCEPTION.txt LICENSE*EXCEPT*
+%doc LICENSE*EXCEPT*
 %_qt5_libdir/libQt?XmlPatterns.so.*
 
 %files devel
@@ -103,6 +103,9 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+- new version
+
 * Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
 - new version
 

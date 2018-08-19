@@ -4,8 +4,8 @@
 %def_enable pulse
 
 Name: qt5-multimedia
-Version: 5.9.6
-Release: alt2%ubt
+Version: 5.11.1
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - Multimedia support
@@ -83,7 +83,7 @@ Provides: qt5-multimedia = %EVR
 
 %prep
 %setup -n %qt_module-opensource-src-%version
-syncqt.pl-qt5 -version %version -private
+syncqt.pl-qt5 -version %version 
 
 %build
 %qmake_qt5 GST_VERSION=1.0
@@ -105,9 +105,9 @@ export QT_HASH_SEED=0
 %files -n libqt5-multimedia
 %doc LICENSE*EXCEPT*
 %_qt5_libdir/libQt?Multimedia.so.*
-%_qt5_libdir/libQt?MultimediaQuick_p.so.*
+%_qt5_libdir/libQt?MultimediaQuick.so.*
 %_qt5_libdir/libQt?MultimediaWidgets.so.*
-%_qt5_libdir/libqgsttools_p.so.*
+%_qt5_libdir/libQt?MultimediaGstTools.so.*
 %_qt5_archdatadir/qml/QtAudioEngine/
 %_qt5_archdatadir/qml/QtMultimedia/
 %_qt5_plugindir/audio/
@@ -130,6 +130,9 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+- new version
+
 * Mon Jun 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt2%ubt
 - rebuild with new ffmpeg
 

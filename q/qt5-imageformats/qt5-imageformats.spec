@@ -5,7 +5,7 @@
 %def_enable fmt_jp2
 
 Name: qt5-imageformats
-Version: 5.9.6
+Version: 5.11.1
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -51,7 +51,7 @@ This package contains documentation for Qt5 %qt_module
 
 %prep
 %setup -qn %qt_module-opensource-src-%version
-syncqt.pl-qt5 -version %version -private
+syncqt.pl-qt5 -version %version 
 
 %if_disabled fmt_jp2
 rm -rf config.tests/jasper
@@ -81,6 +81,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+- new version
+
 * Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
 - new version
 

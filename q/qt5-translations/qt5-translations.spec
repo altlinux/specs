@@ -2,7 +2,7 @@
 %global qt_module qttranslations
 
 Name: qt5-translations
-Version: 5.9.6
+Version: 5.11.1
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -25,7 +25,7 @@ BuildRequires: qt5-base-devel qt5-tools
 
 %prep
 %setup -qn %qt_module-opensource-src-%version
-syncqt.pl-qt5 -version %version -private
+syncqt.pl-qt5 -version %version 
 
 %build
 %qmake_qt5
@@ -45,6 +45,9 @@ done
 %files -f %name.lang
 
 %changelog
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+- new version
+
 * Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
 - new version
 

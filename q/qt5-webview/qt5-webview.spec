@@ -1,7 +1,7 @@
 %define qt_module qtwebview
 
 Name: qt5-webview
-Version: 5.9.6
+Version: 5.11.1
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -42,7 +42,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -n %qt_module-opensource-src-%version
-syncqt.pl-qt5 -version %version -private
+syncqt.pl-qt5 -version %version 
 
 %build
 %qmake_qt5
@@ -55,6 +55,7 @@ syncqt.pl-qt5 -version %version -private
 
 %files -n libqt5-webview
 %_qt5_libdir/libQt5WebView.so.*
+%_qt5_plugindir/webview/
 %_qt5_qmldir/QtWebView/
 
 %files devel
@@ -68,6 +69,9 @@ syncqt.pl-qt5 -version %version -private
 %_pkgconfigdir/Qt?WebView.pc
 
 %changelog
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+- new version
+
 * Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
 - new version
 

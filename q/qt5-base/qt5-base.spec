@@ -10,7 +10,7 @@
 %define IF_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 
 #def_enable qtchooser
-%def_disable bootstrap
+%def_enable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -31,8 +31,8 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.9.6
-Release: alt2%ubt
+Version: 5.11.1
+Release: alt1%ubt
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -52,7 +52,6 @@ Patch12: xcberror_filter.patch
 # upstream
 # SuSE
 Patch100: disable-rc4-ciphers-bnc865241.diff
-Patch101: libqt5-do-not-use-shm-if-display-name-doesnt-look-local.patch
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
 Patch1001: alt-enable-ft-lcdfilter.patch
@@ -370,10 +369,10 @@ EGL integration library for the Qt%major toolkit
 %patch2 -p1
 #
 %patch11 -p1 -b .QTBUG
-%patch12 -p1
+#%patch12 -p1
 #
 %patch100 -p1
-%patch101 -p1
+#
 %patch1000 -p1 -b .ibase
 #%patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
@@ -385,7 +384,7 @@ EGL integration library for the Qt%major toolkit
 %endif
 %patch1007 -p1
 %patch1008 -p1
-bin/syncqt.pl -version %version -private
+bin/syncqt.pl -version %version
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
 
 # install optflags
@@ -533,7 +532,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.9.6
+Version: 5.11.1
 __EOF__
 
 # rpm macros
@@ -672,6 +671,8 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 %_qt5_bindir/uic*
 %_bindir/qlalr*
 %_qt5_bindir/qlalr*
+%_bindir/qvkgen*
+%_qt5_bindir/qvkgen*
 %dir %_qt5_headerdir
 %dir %_qt5_prefix/include/
 %_qt5_headerdir/Qt*/
@@ -792,6 +793,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+- new version
+
 * Thu Jul 26 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt2%ubt
 - rebuild with new icu
 

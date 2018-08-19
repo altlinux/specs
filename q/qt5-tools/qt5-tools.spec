@@ -1,7 +1,7 @@
 
 %define qt_module qttools
 %define gname qt5
-%def_disable bootstrap
+%def_enable bootstrap
 %def_disable qtconfig
 
 %define kf5_bindir %prefix/lib/kf5/bin
@@ -10,8 +10,8 @@
 %define minor 9
 %define bugfix 2
 Name: qt5-tools
-Version: 5.9.6
-Release: alt2%ubt
+Version: 5.11.1
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -37,6 +37,7 @@ Patch10: alt-build-qtconfig.patch
 # optimized out: elfutils libGL-devel libgst-plugins libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs
 #BuildRequires: desktop-file-utils gcc-c++ glibc-devel-static python-module-distribute qt5-webkit-devel rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-ubt
+BuildRequires: clang-devel llvm-devel
 BuildRequires: desktop-file-utils gcc-c++ glibc-devel libicu-devel /usr/bin/convert
 BuildRequires: qt5-base-devel qt5-declarative-devel-static qt5-xmlpatterns-devel
 #BuildRequires: qt5-webkit-devel
@@ -156,11 +157,12 @@ Requires: %name-common = %EVR
 %if_enabled qtconfig
 %patch10 -p1
 %endif
-syncqt.pl-qt5 -version %version -private
+syncqt.pl-qt5 -version %version 
 %qmake_qt5
 
 %build
 %make_build
+%make_build -C src/qdoc
 %if_disabled bootstrap
 export QT_HASH_SEED=0
 %make docs
@@ -327,6 +329,9 @@ done
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+- new version
+
 * Thu Jul 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt2%ubt
 - fix menu items russian translation, icons
 

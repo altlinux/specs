@@ -3,7 +3,7 @@
 %def_disable bootstrap
 
 Name: qt5-location
-Version: 5.9.6
+Version: 5.11.1
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -72,6 +72,16 @@ Requires: qt5-quickcontrols
 %description -n libqt5-positioning
 %summary
 
+%package -n libqt5-positioningquick
+Summary: Qt5 library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%if_disabled bootstrap
+Requires: qt5-quickcontrols
+%endif
+%description -n libqt5-positioningquick
+%summary
+
 %package -n libqt5-location
 Summary: Qt5 library
 Group: System/Libraries
@@ -84,7 +94,7 @@ Requires: qt5-quickcontrols
 
 %prep
 %setup -n %qt_module-opensource-src-%version
-syncqt.pl-qt5 -version %version -private
+syncqt.pl-qt5 -version %version 
 
 %ifarch e2k
 sed -i 's|-ftree-vectorize||' src/3rdparty/*/*.pro
@@ -108,15 +118,20 @@ export QT_HASH_SEED=0
 %files -n libqt5-positioning
 %_qt5_libdir/libQt?Positioning.so.*
 %_qt5_plugindir/position/
-%_qt5_archdatadir/qml/QtPositioning/
+%_qt5_qmldir/QtPositioning/
+
+%files -n libqt5-positioningquick
+%_qt5_libdir/libQt?PositioningQuick.so.*
 
 %files -n libqt5-location
 %_qt5_libdir/libQt?Location.so.*
 %_qt5_plugindir/geoservices/
-%_qt5_archdatadir/qml/QtLocation/
+%_qt5_qmldir/QtLocation/
+%_qt5_qmldir/Qt/labs/location/
 
 %files devel
 %_qt5_headerdir/QtPositioning/
+%_qt5_headerdir/QtPositioningQuick/
 %_qt5_headerdir/QtLocation/
 %_qt5_libdir/libQt*.so
 %_qt5_libdatadir/libQt*.so
@@ -132,6 +147,9 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+- new version
+
 * Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
 - new version
 
