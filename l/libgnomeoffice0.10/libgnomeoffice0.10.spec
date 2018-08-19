@@ -9,7 +9,7 @@
 %endif
 
 Name: libgnomeoffice%api_ver
-Version: %ver_major.42
+Version: %ver_major.43
 Release: alt1
 
 Summary: Library for writing gnome office programs
@@ -140,6 +140,9 @@ GObject introspection devel data for the Goffice library.
 
 
 %changelog
+* Sun Aug 19 2018 Yuri N. Sedunov <aris@altlinux.org> 0.10.43-alt1
+- 0.10.43
+
 * Fri Aug 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.10.42-alt1
 - 0.10.42
 
