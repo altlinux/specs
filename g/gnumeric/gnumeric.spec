@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.42
+Version: %ver_major.43
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -22,12 +22,11 @@ Url: http://www.gnumeric.org/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: gnumeric-desktop-alt.patch
 Patch1: gnumeric-1.12.1-alt-locale_dir.patch
-Patch2: gnumeric-1.12.33-docbook.patch
 
 Obsoletes: %name-light
 Provides: %name-light = %version-%release
 
-%define gsf_ver 1.14.42
+%define gsf_ver 1.14.43
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
 %define goffice_ver 0.10.42
@@ -117,7 +116,7 @@ GObject introspection devel data for the Gnumeric.
 %setup
 %patch -p1
 %patch1
-#%patch2 -p1
+
 subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 
 subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
@@ -137,21 +136,6 @@ subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
 %install
 %makeinstall_std
 %find_lang --with-gnome --output=%name.lang %name %name-%version %name-%version-functions
-
-# quick hack around includes
-# check it manually in the next version
-#find ./ -type f -name "*.h" -print0|xargs -r0 grep -h '<tools\/' --|sort|uniq|cut -f2 -d/|sed -e 's/>//'
-mkdir %buildroot%_includedir/libspreadsheet-%{api_ver}/spreadsheet/{tools,widgets}
-pushd %buildroot%_includedir/libspreadsheet-%{api_ver}/spreadsheet/tools
-for header in analysis-sign-test.h analysis-tools.h dao.h gnm-solver.h tools.h; do
-    ln -s ../$header  $header
-done
-#find ./ -type f -name "*.h" -print0|xargs -r0 grep -h '<widgets\/' --|sort|uniq|cut -f2 -d/|sed -e 's/>//'
-cd ../widgets
-for header in gnm-cell-renderer-text.h gnm-expr-entry.h gnm-notebook.h gnm-workbook-sel.h; do
-    ln -s ../$header  $header
-done
-popd
 
 %check
 %{?_enable_check:xvfb-run %make check}
@@ -197,6 +181,9 @@ popd
 %_pkgconfigdir/*
 
 %changelog
+* Sun Aug 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.43-alt1
+- 1.12.43
+
 * Fri Aug 10 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.42-alt1
 - 1.12.42
 
