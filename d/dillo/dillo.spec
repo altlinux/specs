@@ -1,79 +1,62 @@
 # Spec file for Dillo
 
 Name: dillo
-Version: 3.0.4.1
-Release: alt1.qa1
+Version: 3.0.5
+Release: alt1
 
-Summary: a small GTK+ web browser
-Summary(ru_RU.UTF-8): компактный веб-браузер, написанный на GTK+
+Summary: a small FLTK-based web browser
 Group: Networking/WWW
 License: %gpl2plus
 Url: http://www.dillo.org
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 # Patch for i18n:  http://teki.jpn.ph/pc/software/index-e.shtml
-Source0: %name-%version.tar.bz2
+Source0: %name-%version.tar
 Source1: %name-16.png
 Source2: %name-32.png
 Source3: %name-48.png
 Source4: %name.desktop
 
-Patch6: dillo-3.0.4.1-alt-libfltk13-x11-dso.patch
+Patch1:  %name-3.0.5-debian-fix-OpenSSL-1.1-detection.patch
+Patch2:  %name-3.0.5-alt-ca_location_fix.patch
 
-AutoReqProv: yes
-BuildPreReq: rpm-build-licenses
-BuildPreReq: gcc-c++ gtk+-devel libfltk-devel libjpeg-devel libpng-devel
-BuildPreReq: libssl-devel libXft-devel linux-libc-headers
-BuildPreReq: glib-devel zlib-devel
-BuildPreReq: libcairo-devel libpixman-devel
-BuildPreReq: libXinerama-devel libXfixes-devel libXcursor-devel
-BuildPreReq: perl-libnet
+BuildRequires(pre): rpm-build-licenses
+
+
+# Automatically added by buildreq on Sun Aug 19 2018
+# optimized out: fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libX11-devel libcom_err-devel libkrb5-devel libstdc++-devel python-base python-modules python3 python3-base python3-dev ruby sh3 xorg-proto-devel zlib-devel
+BuildRequires: gcc-c++ libfltk-devel libjpeg-devel libpng-devel libssl-devel
+
+BuildRequires: perl-libnet
 
 %description
-Dillo  is a small GTK+ based  (GNOME is NOT required!) web browser.
-Dillo aims to be a multi-platform browser alternative that's small,
-stable, developer-friendly, usable, fast, and extensible.
+Dillo 3 is a graphical multi-platform web browser known for its
+speed and small footprint. It is based on FLTK 1.3,
+the Fast and Light Toolkit (FLTK).
 
-This build incorporated  an Dillo internationalization (i18n) patch
-from   http://teki.jpn.ph/pc/software/index-e.shtml   and  provides
-support for viewing pages  in different charsets, automatic charset
-recognition, tabbed browsing,  GUI tool for configuration and a lot
-of other improvements over original Dillo.
-
-%description -l ru_RU.UTF-8
-Dillo - основанный на GTK+ (но не требующий GNOME) небольшой
-веб-браузер. Dillo стремиться быть альтернативным браузером,
-кросс-платформенным, небольшим, стабильным, быстрым, простым
-в использовании и легко расширяемым.
-
-Данная сборка  включает в себя патч  для интернационализации Dillo
-(Dillo i18n patch,   http://teki.jpn.ph/pc/software/index-e.shtml)
-и обеспечивает поддержку просмотра страниц в различных кодировках,
-автоматическое  распознавание кодировки страниц, табы, графическую
-утилиту настройки  и много прочих улучшений по сравнению с простым
-Dillo.
+Dillo aims to be small in resources, stable, developer-friendly,
+usable, very fast, and extensible.
 
 %prep
 %setup -q
-%patch6 -p2
+
+%patch1 -p1
+%patch2
 
 %build
 %autoreconf
-%configure --sysconfdir=%_sysconfdir/%name \
-	    --enable-meta-refresh \
-	    --enable-ipv6 \
-	    --enable-ssl
+%configure  --enable-ipv6 \
+            --enable-ssl \
+            %nil
+
 %make_build
 
 %install
 %makeinstall
 
 mkdir -p -- %buildroot%_sysconfdir/%name
-mv -- %buildroot%_sysconfdir/dillorc %buildroot/%_sysconfdir/%name/
-mv -- %buildroot%_sysconfdir/dpidrc %buildroot/%_sysconfdir/%name/
-%__subst 's@dpi_dir=.*$@dpi_dir=%_libdir/%name/dpi@' %buildroot/%_sysconfdir/%name/dpidrc
-
+mv -- %buildroot%_sysconfdir/*rc %buildroot/%_sysconfdir/%name/
 
 mkdir -p -- %buildroot%_miconsdir %buildroot%_liconsdir %buildroot%_niconsdir
 install -m0644 -- %SOURCE1 %buildroot%_miconsdir/%name.png
@@ -98,8 +81,8 @@ rm -f -- doc/Makefile*
 %doc %_defaultdocdir/%name/user_help.html
 
 %dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/domainrc
-%config(noreplace) %_sysconfdir/keysrc
+%config(noreplace) %_sysconfdir/%name/domainrc
+%config(noreplace) %_sysconfdir/%name/keysrc
 %config(noreplace) %_sysconfdir/%name/dpidrc
 %config(noreplace) %_sysconfdir/%name/dillorc
 
@@ -110,6 +93,10 @@ rm -f -- doc/Makefile*
 %_man1dir/dillo.1*
 
 %changelog
+* Sun Aug 19 2018 Nikolay A. Fetisov <naf@altlinux.org> 3.0.5-alt1
+- New version
+- Fix configuration error (Closes: 33289)
+
 * Thu Apr 28 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.4.1-alt1.qa1
 - Fixed build with libfltk13-1.3.3-alt1.
 
