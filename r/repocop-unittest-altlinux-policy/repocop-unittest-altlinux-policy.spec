@@ -1,5 +1,5 @@
 Name: repocop-unittest-altlinux-policy
-Version: 0.41
+Version: 0.42
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -18,7 +18,7 @@ Obsoletes: repocop-unittest-unknown-summary < 0.02
 # Requires: pcregrep
 Requires: repocop-collector-specfile
 Requires: repocop-collector-description > 0.02
-Requires: repocop > 0.73
+Requires: repocop > 0.79
 
 %description
 The test warns packages that contain rpm macros, but are not named
@@ -44,6 +44,15 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Mon Aug 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1
+- added:
+  %%__autoreconf fixscript
+  specfile-macros-post_fonts-is-deprecated
+  specfile-macros-post_ldconfig-is-deprecated
+  specfile-macros-__autoreconf-is-obsolete
+  specfile-macros-update_menus-is-deprecated
+  specfile-macros-update_vimhelp-is-deprecated
+
 * Wed Aug 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
 - altlinux-policy-description-too-much-space lowered to info
 
