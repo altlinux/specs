@@ -1,14 +1,16 @@
 Name: SpamOracle
 Version: 1.4
-Release: alt1.qa1
+Release: alt2
 
 Group: Networking/Mail
 Summary: Spam filter
 License: GPL2
-Url: http://pauillac.inria.fr/~xleroy/software.html#spamoracle
+Url: https://github.com/xavierleroy/spamoracle
 Packager: Evgenii Terechkov <evg@altlinux.ru>
-Source: spamoracle-%version.tar.gz
-Patch0: spamoracle-%version-russian.patch
+Source: spamoracle-%version.tar
+Patch1: lowercase_ascii.patch
+Patch2: bytes.patch
+
 BuildRequires: ocaml
 
 %description
@@ -25,14 +27,17 @@ Recommends: procmail
 
 %prep
 %setup -nspamoracle-%version
-%patch0 -p1
+# %%patch1 -p1
+# %%patch2 -p1
 
 %build
+# workaround for unsafe strings handing (changed in ocaml-4.06.0):
+export OCAMLPARAM="safe-string=0,_"
 make
 
 %install
 mkdir -p %buildroot%_bindir %buildroot%_man1dir %buildroot%_man5dir
-make install BINDIR=%buildroot%_bindir MANDIR=%buildroot%_mandir
+make install BINDIR=%buildroot%_bindir MANDIR=%buildroot%_mandir LANGUAGES="-DFRENCH -DRUSSIAN -DGERMAN"
 
 %files
 %_bindir/spamoracle
@@ -42,6 +47,10 @@ make install BINDIR=%buildroot%_bindir MANDIR=%buildroot%_mandir
 %doc README* Changes
 
 %changelog
+* Mon Jul  2 2018 Terechkov Evgenii <evg@altlinux.org> 1.4-alt2
+- 0fc9993
+- Update URL tag
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
