@@ -1,16 +1,16 @@
 Name: slang2
-Version: 2.2.4
-Release: alt2
+Version: 2.3.2
+Release: alt1
 
 Summary: The shared library for the S-Lang extension language
 License: GPLv2+
 Group: System/Libraries
 Url: http://www.jedsoft.org/slang/
 
-# ftp://space.mit.edu/pub/davis/slang/v2.2/slang-%version.tar.bz2
+# https://www.jedsoft.org/releases/slang/slang-2.3.2.tar.bz2
 Source: slang-%version.tar
 
-Patch1: slang-2.2.4-alt-makefile.patch
+Patch1: slang-2.3.2-alt-makefile.patch
 Patch2: slang-2.2.4-owl-alt-fixes.patch
 Patch3: slang-2.2.4-alt-doc.patch
 
@@ -114,8 +114,11 @@ rmdir %buildroot%_docdir/slsh
 %set_verify_elf_method strict
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%make_build -k -C src/test CFLAGS='%optflags' OTHERLIBS=-lm SLANGLIB=%buildroot%_libdir
+#export LD_LIBRARY_PATH=%buildroot%_libdir
+#make_build -k -C src/test CFLAGS='%optflags' OTHERLIBS=-lm SLANGLIB=%buildroot%_libdir
+
+export TERM="xterm"
+%make check
 
 %files slsh
 %_sysconfdir/slsh.rc
@@ -140,6 +143,11 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/*.a
 
 %changelog
+* Fri Aug 17 2018 Sergey Y. Afonin <asy@altlinux.ru> 2.3.2-alt1
+- Updated to 2.3.2 (closes: #33982)
+- Adapted alt-makefile.patch for slang 2.3.2
+- Used %%make check instead %%make_build in %%check section
+
 * Wed Sep 26 2012 Dmitry V. Levin <ldv@altlinux.org> 2.2.4-alt2
 - Changed libslang2-devel dependencies to replace libslang-devel.
 
