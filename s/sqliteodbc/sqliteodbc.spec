@@ -1,8 +1,8 @@
 Name: sqliteodbc
 Summary: ODBC driver for SQLite
-Version: 0.993
+Version: 0.9996
 Release: alt1
-Source: http://www.ch-werner.de/sqliteodbc/%name-%version.tar.gz
+Source: %name-%version.tar.gz
 Patch: sqliteodbc-0.993-alt-odbcinstext.patch
 Group: Databases
 Url: http://www.ch-werner.de/sqliteodbc
@@ -100,6 +100,9 @@ fi
 %_libdir/*.so*
 
 %changelog
+* Mon Aug 20 2018 Fr. Br. George <george@altlinux.ru> 0.9996-alt1
+- Autobuild version bump to 0.9996
+
 * Tue Jun 18 2013 Fr. Br. George <george@altlinux.ru> 0.993-alt1
 - Initial build from upstream srpm
 - Fix build for using ODBCINSTGetProperties
