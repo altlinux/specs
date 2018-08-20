@@ -1,6 +1,6 @@
 %define oname uriparser
 Name: liburiparser
-Version: 0.8.5
+Version: 0.8.6
 Release: alt1
 
 Summary: A strictly RFC 3986 compliant URI parsing library
@@ -52,6 +52,9 @@ touch doc/html/FIXME.map
 %_pkgconfigdir/*
 
 %changelog
+* Mon Aug 20 2018 Vitaly Lipatov <lav@altlinux.ru> 0.8.6-alt1
+- new version 0.8.6 (with rpmrb script)
+
 * Wed Feb 07 2018 Vitaly Lipatov <lav@altlinux.ru> 0.8.5-alt1
 - new version (0.8.5) with rpmgs script
 - change URL and source URL
