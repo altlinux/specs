@@ -1,6 +1,6 @@
 %define pkg nodejs
 Name: rpm-build-%pkg
-Version: 0.6
+Version: 0.6.1
 Release: alt1
 
 Summary: RPM helper scripts for building %pkg packages
@@ -11,6 +11,7 @@ URL: http://www.altlinux.org/Node.JS_Policy
 
 Source: %name-%version.tar
 Patch: macros.nodejs-alt.patch
+Patch1: nodejs.req-alt.patch
 
 BuildArch: noarch
 Provides: nodejs-packaging = %version
@@ -35,6 +36,7 @@ See %url for detailed %pkg packaging policy.
 %prep
 %setup
 %patch0 -p2
+%patch1 -p2
 
 %install
 mkdir -p %buildroot/%_rpmmacrosdir/
@@ -67,6 +69,9 @@ install -Dpm0644 multiver_modules %{buildroot}%{_datadir}/node/multiver_modules
 %_rpmmacrosdir/%pkg
 
 %changelog
+* Mon Aug 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt1
+- fixed warning in nodejs.req
+
 * Thu Sep 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1
 - provides nodejs-packaging
 
