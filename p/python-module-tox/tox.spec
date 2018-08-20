@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.0.0
-Release: alt1%ubt
+Version: 3.2.1
+Release: alt1
 
 Summary: virtualenv-based automation of test activities
 License: MIT
@@ -16,12 +16,9 @@ Url: https://pypi.python.org/pypi/tox/
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python-module-setuptools
 BuildRequires: python-module-setuptools_scm
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
 
 %if_with check
@@ -34,8 +31,6 @@ BuildRequires: python-module-pytest-timeout
 BuildRequires: python-module-pytest-xdist
 BuildRequires: python-module-virtualenv
 BuildRequires: python-module-six
-BuildRequires: python-module-pluggy
-BuildRequires: python-module-py
 BuildRequires: pytest3
 BuildRequires: python3-module-pip
 BuildRequires: python3-module-pytest
@@ -45,8 +40,6 @@ BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-pytest-xdist
 BuildRequires: python3-module-virtualenv
 BuildRequires: python3-module-six
-BuildRequires: python3-module-pluggy
-BuildRequires: python3-module-py
 %endif
 
 BuildArch: noarch
@@ -82,7 +75,7 @@ can use for:
 %prep
 %setup
 %patch -p1
-cp -fr . ../python3
+cp -a . ../python3
 
 %build
 # SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
@@ -109,45 +102,49 @@ popd
 %python_install
 
 %check
-%define python_version_nodots() %(%1 -Esc "import sys; sys.stdout.write('{0.major}{0.minor}'.format(sys.version_info))")
-
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_INDEX_URL=http://host.invalid./
-export PATH=$PATH:%buildroot%_bindir
 
 export PYTHONPATH=%buildroot%python_sitelibdir_noarch
 # copy nessecary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e py%{python_version_nodots python} --notest
+TOX_TESTENV_PASSENV='PYTHONPATH RPM_BUILD_DIR' %buildroot%_bindir/tox \
+--sitepackages -e py%{python_version_nodots python} --notest
 cp -f %_bindir/pytest .tox/py%{python_version_nodots python}/bin/
 
-TOX_TESTENV_PASSENV='PYTHONPATH RPM_BUILD_DIR' tox --sitepackages -e py%{python_version_nodots python} -v -- -v
+TOX_TESTENV_PASSENV='PYTHONPATH RPM_BUILD_DIR' %buildroot%_bindir/tox \
+--sitepackages -e py%{python_version_nodots python} -v -- -v
 
 pushd ../python3
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 # copy nessecary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
+TOX_TESTENV_PASSENV='PYTHONPATH RPM_BUILD_DIR' %buildroot%_bindir/tox.py3 \
+--sitepackages -e py%{python_version_nodots python3} --notest
 cp -f %_bindir/pytest3 .tox/py%{python_version_nodots python3}/bin/pytest
 
-TOX_TESTENV_PASSENV='PYTHONPATH RPM_BUILD_DIR' tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
+TOX_TESTENV_PASSENV='PYTHONPATH RPM_BUILD_DIR' %buildroot%_bindir/tox.py3 \
+--sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
 
 %files
-%_bindir/%oname
-%_bindir/%oname-quickstart
-%python_sitelibdir/%oname
-%python_sitelibdir/%oname-%version-py2.?.egg-info
+%_bindir/tox
+%_bindir/tox-quickstart
+%python_sitelibdir/tox/
+%python_sitelibdir/tox-*.egg-info/
 
 %files -n python3-module-%oname
-%_bindir/%oname.py3
-%_bindir/%oname-quickstart.py3
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%_bindir/tox.py3
+%_bindir/tox-quickstart.py3
+%python3_sitelibdir/tox/
+%python3_sitelibdir/tox-*.egg-info/
 
 %changelog
-* Wed Apr 11 2018 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1%ubt
+* Mon Aug 20 2018 Stanislav Levin <slev@altlinux.org> 3.2.1-alt1
+- 3.0.0 -> 3.2.1.
+
+* Wed Apr 11 2018 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1
 - 2.9.1 -> 3.0.0
 
-* Thu Oct 19 2017 Stanislav Levin <slev@altlinux.org> 2.9.1-alt1%ubt
+* Thu Oct 19 2017 Stanislav Levin <slev@altlinux.org> 2.9.1-alt1
 - Version 2.9.1
 
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.1.1-alt1.1.1

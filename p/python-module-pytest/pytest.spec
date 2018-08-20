@@ -1,12 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest
 
-%def_with docs
 %def_with check
 
 Name: python-module-%oname
-Version: 3.4.2
-Release: alt1%ubt
+Version: 3.7.2
+Release: alt1
 
 Summary: py.test, a simple and popular testing tool for Python
 License: MIT
@@ -15,57 +14,41 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/pytest
 
 Source: %name-%version.tar
-Patch: %oname-3.2.1-alt-docs.patch
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools
 BuildRequires: python-module-setuptools_scm
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
 
 %if_with check
 BuildRequires: /dev/pts
-BuildRequires: python-module-argcomplete
-BuildRequires: python-module-attrs
-BuildRequires: python-module-decorator
+BuildRequires: python-module-pathlib2
 BuildRequires: python-module-funcsigs
+BuildRequires: python-module-pluggy
+BuildRequires: python-module-atomicwrites
+BuildRequires: python-module-more-itertools
+BuildRequires: python-module-json
 BuildRequires: python-module-hypothesis
 BuildRequires: python-module-mock
-BuildRequires: python-module-nose
+BuildRequires: python-module-decorator
 BuildRequires: python-module-numpy
 BuildRequires: python-module-pexpect
-BuildRequires: python-module-pluggy
-BuildRequires: python-module-requests
-BuildRequires: python-module-tox
-BuildRequires: python-module-virtualenv
+BuildRequires: python-module-nose
 BuildRequires: python3-module-argcomplete
-BuildRequires: python3-module-attrs
 BuildRequires: python3-module-decorator
+BuildRequires: python3-module-atomicwrites
+BuildRequires: python3-module-more-itertools
 BuildRequires: python3-module-funcsigs
 BuildRequires: python3-module-hypothesis
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-nose
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-pexpect
-BuildRequires: python3-module-pluggy
-BuildRequires: python3-module-tox
 BuildRequires: python3-module-requests
-BuildRequires: python3-module-virtualenv
-%endif
-
-%if_with docs
-BuildRequires: python-module-attrs
-BuildRequires: python-module-numpy
-BuildRequires: python-module-funcsigs
-BuildRequires: python-module-pluggy
-BuildRequires(pre): rpm-macros-sphinx
-BuildPreReq: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-py
 %endif
 
 %py_requires py
 %py_requires funcsigs
+%py_requires pathlib2
 
 BuildArch: noarch
 
@@ -130,47 +113,13 @@ before (as /usr/bin/py.test-3.N).
 This separate package has been made to track the dependencies on this
 additional executable.
 
-%package docs
-Summary: Documentation for py.test
-Group: Development/Documentation
-
-%description docs
-py.test is a command line tool to collect, run and report about
-automated tests. It runs well on Linux, Windows and OSX and on Python
-2.4 through to 3.1 versions. It is used in many projects, ranging from
-running 10 thousands of tests to a few inlined tests on a command line
-script. As of version 1.2 you can also generate a
-no-dependency py.test-equivalent standalone script that you can
-distribute along with your application.
-
-This package contains documentation for py.test.
-
-%package pickles
-Summary: Pickles for py.test
-Group: Development/Python
-
-%description pickles
-py.test is a command line tool to collect, run and report about
-automated tests. It runs well on Linux, Windows and OSX and on Python
-2.4 through to 3.1 versions. It is used in many projects, ranging from
-running 10 thousands of tests to a few inlined tests on a command line
-script. As of version 1.2 you can also generate a
-no-dependency py.test-equivalent standalone script that you can
-distribute along with your application.
-
-This package contains pickles for py.test.
-
 %prep
 %setup
-%patch0 -p1
+# adjust timeouts for aarch64 tests
+sed -i '/child\.expect(.*)/s/)[[:space:]]*$/, timeout=60)/g' \
+testing/{test_pdb.py,test_terminal.py,test_unittest.py}
 
-rm -rf ../python3
 cp -a . ../python3
-
-%if_with docs
-%prepare_sphinx doc
-ln -s ../objects.inv doc/en/
-%endif
 
 %build
 # SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
@@ -194,27 +143,24 @@ popd
 
 %python_install
 
-%if_with docs
-export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C doc/en html
-%make -C doc/en pickle
-
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR doc/en/_build/pickle %buildroot%python_sitelibdir/%oname/
-%endif
-
 %check
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PYTHONPATH=%buildroot%python_sitelibdir
-%buildroot%_bindir/pytest -v testing
-
-pushd ../python3
-export PYTHONPATH=%buildroot%python3_sitelibdir
 # due to
 # https://github.com/pytest-dev/pytest/issues/2673
 # run pdb/terminal tests separately from other
+%buildroot%_bindir/pytest -v testing \
+--ignore=testing/test_pdb.py --ignore=testing/test_terminal.py \
+--ignore=testing/test_unittest.py
+
+%buildroot%_bindir/pytest -v \
+testing/test_pdb.py testing/test_terminal.py testing/test_unittest.py
+
+pushd ../python3
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %buildroot%_bindir/pytest3 -v testing \
---ignore=testing/test_pdb.py --ignore=testing/test_terminal.py --ignore=testing/test_unittest.py
+--ignore=testing/test_pdb.py --ignore=testing/test_terminal.py \
+--ignore=testing/test_unittest.py
 %buildroot%_bindir/pytest3 -v \
 testing/test_pdb.py testing/test_terminal.py testing/test_unittest.py
 popd
@@ -222,34 +168,29 @@ popd
 %files
 %doc AUTHORS LICENSE *.rst
 %_bindir/py.test
-%python_sitelibdir/*
-%if_with docs
-%exclude %python_sitelibdir/%oname/pickle
-%endif
+%python_sitelibdir/pytest.py*
+%python_sitelibdir/_pytest/
+%python_sitelibdir/pytest-*.egg-info/
 
 %files -n pytest
 %_bindir/pytest
 
-%if_with docs
-
-%files pickles
-%python_sitelibdir/%oname/pickle
-
-%files docs
-%doc doc/en/_build/html/*
-
-%endif
-
 %files -n python3-module-%oname
 %doc AUTHORS LICENSE *.rst
 %_bindir/py.test3
-%python3_sitelibdir/*
+%python3_sitelibdir/pytest.py
+%python3_sitelibdir/_pytest/
+%python3_sitelibdir/__pycache__/
+%python3_sitelibdir/pytest-*.egg-info/
 
 %files -n pytest3
 %_bindir/pytest3
 
 %changelog
-* Tue Mar 20 2018 Stanislav Levin <slev@altlinux.org> 3.4.2-alt1%ubt
+* Mon Aug 20 2018 Stanislav Levin <slev@altlinux.org> 3.7.2-alt1
+- 3.4.2 -> 3.7.2.
+
+* Tue Mar 20 2018 Stanislav Levin <slev@altlinux.org> 3.4.2-alt1
 - 3.2.1 -> 3.4.2
 
 * Wed Aug 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.1-alt1
