@@ -7,8 +7,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: A cute little game that has no short description
 Group: Games/Boards
@@ -61,9 +61,12 @@ it.
 %_iconsdir/hicolor/symbolic/apps/%__name-symbolic.svg
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Tue Aug 21 2018 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
+- 3.24.1
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt2
 - rebuilt against libgnome-games-support-1.so.3
 
