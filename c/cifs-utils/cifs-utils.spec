@@ -1,5 +1,5 @@
 Name: cifs-utils
-Version: 6.7
+Version: 6.8
 Release: alt1%ubt
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
@@ -14,6 +14,7 @@ BuildRequires(pre):rpm-build-ubt
 Requires: keyutils
 
 BuildRequires: libcap-ng-devel libkeyutils-devel libkrb5-devel libtalloc-devel libwbclient-devel libpam-devel
+BuildRequires: python-module-docutils
 
 Conflicts: samba-client < 3.6.0-alt1
 
@@ -98,6 +99,9 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %_man8dir/pam_cifscreds.*
 
 %changelog
+* Tue Aug 21 2018 Evgeny Sinelnikov <sin@altlinux.org> 6.8-alt1%ubt
+- Update to latest release 6.8
+
 * Mon Apr 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 6.7-alt1%ubt
 - 6.7
 - Build package with unified build tag aka ubt macros
