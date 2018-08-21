@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Lingua-EN-Sentence
-Version: 0.30
+Version: 0.31
 Release: alt1
 
 Summary: Lingua-EN-Sentence - Module for splitting text into sentences
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/K/KI/KIMRYAN/Lingua-EN-Sentence-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KI/KIMRYAN/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Jun 07 2005
 BuildRequires: perl-devel
@@ -44,7 +44,7 @@ causing the get_sentences() to fail, you can add those to the module,
 so it notices them.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -53,10 +53,13 @@ so it notices them.
 %perl_vendor_install
 
 %files
-%doc Changes
+%doc Changes README examples
 %perl_vendor_privlib/Lingua/
 
 %changelog
+* Tue Aug 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
 - automated CPAN update
 
