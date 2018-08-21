@@ -32,7 +32,7 @@
 
 Name: gnome-vfs
 Version: %ver_major.4
-Release: alt11
+Release: alt12
 Epoch: 1
 
 Summary: The GNOME virtual file-system libraries
@@ -44,6 +44,8 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
 Patch: gnome-vfs-2.24.4-enable-deprecated.patch
+# https://bugzilla.suse.com/show_bug.cgi?id=1042650
+Patch1: gnome-vfs-2.24-openssl11.patch
 
 Patch2: gnome-vfs-2.24.1-gnutls.patch
 
@@ -85,6 +87,7 @@ Patch300: gnome-vfs-2.20.0-ignore-certain-mountpoints.patch
 # gnome-vfs-daemon exits on dbus, and constantly restarted causing dbus/hal to hog CPU
 # https://bugzilla.redhat.com/show_bug.cgi?id=486286
 Patch404: gnome-vfs-2.24.xx-utf8-mounts.patch
+
 
 Obsoletes: %oldname-extras < 2.14.2
 Provides: %oldname-extras = %version-%release
@@ -235,7 +238,8 @@ This package contains command line tools for GNOME VFS.
 %prep
 %setup -q
 %patch -p1
-%patch2 -p1
+%patch1 -p1 -b .ssl11
+%patch2 -p1 -b .gnutls
 
 %patch3 -p1 -b .modules-conf
 %patch4 -p1 -b .mime-data
@@ -368,6 +372,9 @@ fi
 %exclude %vfsmodulesdir/*.la
 
 %changelog
+* Tue Aug 21 2018 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt12
+- rebuilt with openssl-1.1 (suse patch)
+
 * Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt11
 - disabled doc regeneration
 
