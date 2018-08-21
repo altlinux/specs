@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+Epoch: 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl rpm-macros-fedora-compat
@@ -6,14 +8,14 @@ BuildRequires: perl(AnyEvent/AIO.pm) perl(AnyEvent/BDB.pm) perl(BDB.pm) perl(IO/
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Coro
-Version:        6.514
-Release:        alt1_4
+Version:        6.52
+Release:        alt1_4.1
 Summary:        The only real threads in perl
 # Coro/libcoro:    GPLv2 or BSD
 # Rest of package: GPL+ or Artistic
 License:        (GPL+ or Artistic) and (GPLv2 or BSD)
 URL:            https://metacpan.org/release/Coro
-Source0:        https://cpan.metacpan.org/authors/id/M/ML/MLEHMANN/Coro-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/M/ML/MLEHMANN/Coro-%{version}.tar.gz
 Patch0:         %{name}-5.25-ucontext-default.patch
 # Do not disable hardening
 Patch1:         Coro-6.512-Disable-disabling-FORTIFY_SOURCE.patch
@@ -146,7 +148,7 @@ find %{buildroot} -type f -name '*.bs' -size 0 -delete
 make test
 
 %files
-%doc --no-dereference COPYING
+%doc COPYING
 %doc Changes README README.linux-glibc
 %doc doc/* eg
 %{perl_vendor_archlib}/auto/Coro
@@ -154,6 +156,9 @@ make test
 %{perl_vendor_archlib}/Coro.pm
 
 %changelog
+* Tue Aug 21 2018 Igor Vlasenko <viy@altlinux.ru> 1:6.52-alt1_4.1
+- automated CPAN update
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 6.514-alt1_4
 - update to new release by fcimport
 
