@@ -2,7 +2,7 @@
 %define module Lingua-EN-NameParse
 
 Name: perl-%module
-Version: 1.36
+Version: 1.37
 Release: alt1
 
 Summary: Routines for manipulating a person's name
@@ -10,7 +10,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/K/KI/KIMRYAN/Lingua-EN-NameParse-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KI/KIMRYAN/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 # Automatically added by buildreq on Tue Jul 06 2010
@@ -25,7 +25,7 @@ free format text such as,
 and attempts to parse it.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,9 +34,13 @@ and attempts to parse it.
 %perl_vendor_install
 
 %files
+%doc surname_prefs.txt Changes README examples
 %perl_vendor_privlib/Lingua
 
 %changelog
+* Tue Aug 21 2018 Igor Vlasenko <viy@altlinux.ru> 1.37-alt1
+- automated CPAN update
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.36-alt1
 - automated CPAN update
 
