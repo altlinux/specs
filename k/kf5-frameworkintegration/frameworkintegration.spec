@@ -1,7 +1,7 @@
 %define rname frameworkintegration
 
 Name: kf5-%rname
-Version: 5.48.0
+Version: 5.49.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -87,6 +87,9 @@ KF5 library
 %_K5notif/*.notifyrc
 
 %changelog
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
+- new version
+
 * Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
 - new version
 

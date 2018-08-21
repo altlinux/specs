@@ -1,8 +1,12 @@
 %define rname kcompletion
-%def_with python3
+%def_disable python
+%if_enabled python
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
+%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
+%endif
 
 Name: kf5-%rname
-Version: 5.48.0
+Version: 5.49.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -46,8 +50,7 @@ Requires: %name-common = %version-%release
 %description -n libkf5completion
 KF5 library
 
-%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
-
+%if_enabled python
 %package -n python-module-%rname
 Summary: Python bindings for KCompletion
 License: GPLv2+ / LGPLv2+
@@ -64,9 +67,6 @@ Group: Development/Python
 BuildArch: noarch
 %description -n python-module-%rname-devel
 Sip files for python-module-%rname
-
-%if_with python3
-%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 
 %package -n python3-module-%rname
 Summary: Python3 bindings for KCompletion
@@ -112,21 +112,21 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %files -n libkf5completion
 %_K5lib/libKF5Completion.so.*
 
+%if_enabled python
 %files -n python-module-%rname
 %python_sitelibdir/PyKF5/*.so
-
 %files -n python-module-%rname-devel
 %_datadir/sip/PyKF5/KCompletion/
-
-%if_with python3
 %files -n python3-module-%rname
 %python3_sitelibdir/PyKF5/*.so
-
 %files -n python3-module-%rname-devel
 %_datadir/sip3/PyKF5/KCompletion/
 %endif
 
 %changelog
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
+- new version
+
 * Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
 - new version
 

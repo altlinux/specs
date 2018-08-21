@@ -1,8 +1,12 @@
 %define rname kdbusaddons
-%def_with python3
+%def_disable python
+%if_enabled python
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
+%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
+%endif
 
 Name: kf5-%rname
-Version: 5.48.0
+Version: 5.49.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -16,10 +20,12 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Tue Jan 20 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-x11extras libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google qt5-tools-devel qt5-x11extras-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt python-module-sip-devel
-BuildRequires(pre): python3-module-sip-devel
-BuildRequires: extra-cmake-modules gcc-c++ qt5-tools-devel qt5-x11extras-devel
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+%if_enabled python
+BuildRequires(pre): python3-module-sip-devel python-module-sip-devel
 BuildRequires: python-module-PyQt5-devel
+%endif
+BuildRequires: extra-cmake-modules gcc-c++ qt5-tools-devel qt5-x11extras-devel
 
 %description
 KDBusAddons provides convenience classes on top of QtDBus, as well as an API to
@@ -47,8 +53,7 @@ Requires: %name-common = %version-%release
 %description -n libkf5dbusaddons
 KF5 library
 
-%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
-
+%if_enabled python
 %package -n python-module-%rname
 Summary: Python bindings for KDBusAddons
 License: GPLv2+ / LGPLv2+
@@ -65,9 +70,6 @@ Group: Development/Python
 BuildArch: noarch
 %description -n python-module-%rname-devel
 Sip files for python-module-%rname
-
-%if_with python3
-%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 
 %package -n python3-module-%rname
 Summary: Python3 bindings for KDBusAddons
@@ -118,21 +120,21 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %files -n libkf5dbusaddons
 %_K5lib/libKF5DBusAddons.so.*
 
+%if_enabled python
 %files -n python-module-%rname
 %python_sitelibdir/PyKF5/*.so
-
 %files -n python-module-%rname-devel
 %_datadir/sip/PyKF5/KDBusAddons/
-
-%if_with python3
 %files -n python3-module-%rname
 %python3_sitelibdir/PyKF5/*.so
-
 %files -n python3-module-%rname-devel
 %_datadir/sip3/PyKF5/KDBusAddons/
 %endif
 
 %changelog
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
+- new version
+
 * Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
 - new version
 

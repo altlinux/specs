@@ -1,8 +1,8 @@
 %define rname kio
 
 Name: kf5-%rname
-Version: 5.48.0
-Release: alt2%ubt
+Version: 5.49.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -151,6 +151,9 @@ cat %SOURCE10 >po/ru/kio5.po
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
+- new version
+
 * Wed Aug 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt2%ubt
 - update russian translation
 

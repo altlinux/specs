@@ -1,8 +1,12 @@
 %define rname kcoreaddons
-%def_with python3
+%def_disable python
+%if_enabled python
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
+%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
+%endif
 
 Name: kf5-%rname
-Version: 5.48.0
+Version: 5.49.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -17,11 +21,13 @@ Patch1: alt-simplify-kde4home.patch
 # Automatically added by buildreq on Thu Dec 25 2014 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-gui libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs shared-mime-info
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google qt5-tools-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt python-module-sip-devel
-BuildRequires(pre): python3-module-sip-devel
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+%if_enabled python
+BuildRequires(pre): python3-module-sip-devel python-module-sip-devel
+BuildRequires: python-module-PyQt5-devel
+%endif
 BuildRequires: gcc-c++ extra-cmake-modules qt5-base-devel qt5-tools-devel
 BuildRequires: shared-mime-info
-BuildRequires: python-module-PyQt5-devel
 
 %description
 KCoreAddons provides classes built on top of QtCore to perform various tasks
@@ -52,6 +58,7 @@ Requires: %name-common = %version-%release
 %description -n libkf5coreaddons
 KF5 library
 
+%if_enabled python
 %package -n python-module-pykf5
 Summary: common package for KF5 python bindings
 License: GPLv2+ / LGPLv2+
@@ -59,8 +66,6 @@ Group: Development/Python
 Requires: %name-common = %version-%release
 %description -n python-module-pykf5
 common package for KF5 python bindings
-
-%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
 
 %package -n python-module-%rname
 Summary: Python bindings for KCoreAddons
@@ -79,7 +84,6 @@ BuildArch: noarch
 %description -n python-module-%rname-devel
 Sip files for python-module-%rname
 
-%if_with python3
 %package -n python3-module-pykf5
 Summary: common package for KF5 python3 bindings
 License: GPLv2+ / LGPLv2+
@@ -87,8 +91,6 @@ Group: Development/Python3
 Requires: %name-common = %version-%release
 %description -n python3-module-pykf5
 common package for KF5 python3 bindings
-
-%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 
 %package -n python3-module-%rname
 Summary: Python3 bindings for KCoreAddons
@@ -139,32 +141,30 @@ Sip files for python3-module-%rname
 %files -n libkf5coreaddons
 %_K5lib/libKF5CoreAddons.so.*
 
+%if_enabled python
 %files -n python-module-pykf5
 %dir %python_sitelibdir/PyKF5/
 %python_sitelibdir/PyKF5/__init__.py*
 %dir %_datadir/sip/PyKF5/
-
 %files -n python-module-%rname
 %python_sitelibdir/PyKF5/*.so
-
 %files -n python-module-%rname-devel
 %_datadir/sip/PyKF5/KCoreAddons/
-
-%if_with python3
 %files -n python3-module-pykf5
 %dir %python3_sitelibdir/PyKF5/
 %python3_sitelibdir/PyKF5/__init__.py
 %python3_sitelibdir/PyKF5/__pycache__/
 %dir %_datadir/sip3/PyKF5/
-
 %files -n python3-module-%rname
 %python3_sitelibdir/PyKF5/*.so
-
 %files -n python3-module-%rname-devel
 %_datadir/sip3/PyKF5/KCoreAddons/
 %endif
 
 %changelog
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
+- new version
+
 * Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
 - new version
 

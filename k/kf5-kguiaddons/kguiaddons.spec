@@ -1,8 +1,12 @@
 %define rname kguiaddons
-%def_with python3
+%def_disable python
+%if_enabled python
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
+%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
+%endif
 
 Name: kf5-%rname
-Version: 5.48.0
+Version: 5.49.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -16,13 +20,15 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Fri Dec 26 2014 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libqt5-core libqt5-gui libqt5-test libqt5-widgets libqt5-x11extras libstdc++-devel libxcb-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
 #BuildRequires: extra-cmake-modules gcc-c++ libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel python-module-google qt5-x11extras-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt python-module-sip-devel
-BuildRequires(pre): python3-module-sip-devel
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+%if_enabled python
+BuildRequires(pre): python3-module-sip-devel python-module-sip-devel
+BuildRequires: python-module-PyQt5-devel
+%endif
 BuildRequires: extra-cmake-modules gcc-c++ qt5-x11extras-devel
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel
 BuildRequires: libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel
 BuildRequires: libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel
-BuildRequires: python-module-PyQt5-devel
 
 %description
 The KDE GUI addons provide utilities for graphical user interfaces in the areas
@@ -50,8 +56,7 @@ Requires: %name-common = %version-%release
 %description -n libkf5guiaddons
 KF5 library
 
-%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
-
+%if_enabled python
 %package -n python-module-%rname
 Summary: Python bindings for KGuiAddons
 License: GPLv2+ / LGPLv2+
@@ -68,9 +73,6 @@ Group: Development/Python
 BuildArch: noarch
 %description -n python-module-%rname-devel
 Sip files for python-module-%rname
-
-%if_with python3
-%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 
 %package -n python3-module-%rname
 Summary: Python3 bindings for KGuiAddons
@@ -116,21 +118,21 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %files -n libkf5guiaddons
 %_K5lib/libKF5GuiAddons.so.*
 
+%if_enabled python
 %files -n python-module-%rname
 %python_sitelibdir/PyKF5/*.so
-
 %files -n python-module-%rname-devel
 %_datadir/sip/PyKF5/KGuiAddons/
-
-%if_with python3
 %files -n python3-module-%rname
 %python3_sitelibdir/PyKF5/*.so
-
 %files -n python3-module-%rname-devel
 %_datadir/sip3/PyKF5/KGuiAddons/
 %endif
 
 %changelog
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
+- new version
+
 * Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
 - new version
 

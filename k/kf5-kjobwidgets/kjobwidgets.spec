@@ -1,8 +1,12 @@
 %define rname kjobwidgets
-%def_with python3
+%def_disable python
+%if_enabled python
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
+%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
+%endif
 
 Name: kf5-%rname
-Version: 5.48.0
+Version: 5.49.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -16,8 +20,11 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Tue Feb 10 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kcoreaddons-devel kf5-kwidgetsaddons-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel python-module-google qt5-tools-devel qt5-x11extras-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt python-module-sip-devel
-BuildRequires(pre): python3-module-sip-devel
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+%if_enabled python
+BuildRequires(pre): python3-module-sip-devel python-module-sip-devel
+BuildRequires: python-module-kcoreaddons-devel python-module-PyQt5-devel
+%endif
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: kf5-kcoreaddons-devel kf5-kwidgetsaddons-devel qt5-tools-devel
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel
@@ -25,7 +32,6 @@ BuildRequires: libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm
 BuildRequires: libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
 BuildRequires: libxkbfile-devel
 BuildRequires: qt5-x11extras-devel
-BuildRequires: python-module-kcoreaddons-devel python-module-PyQt5-devel
 
 %description
 KJobWIdgets provides widgets for showing progress of asynchronous jobs.
@@ -53,8 +59,7 @@ Requires: %name-common = %version-%release
 %description -n libkf5jobwidgets
 KF5 library
 
-%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
-
+%if_enabled python
 %package -n python-module-%rname
 Summary: Python bindings for KJobWidgets
 License: GPLv2+ / LGPLv2+
@@ -71,9 +76,6 @@ Group: Development/Python
 BuildArch: noarch
 %description -n python-module-%rname-devel
 Sip files for python-module-%rname
-
-%if_with python3
-%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 
 %package -n python3-module-%rname
 Summary: Python3 bindings for KJobWidgets
@@ -121,21 +123,21 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %files -n libkf5jobwidgets
 %_K5lib/libKF5JobWidgets.so.*
 
+%if_enabled python
 %files -n python-module-%rname
 %python_sitelibdir/PyKF5/*.so
-
 %files -n python-module-%rname-devel
 %_datadir/sip/PyKF5/KJobWidgets/
-
-%if_with python3
 %files -n python3-module-%rname
 %python3_sitelibdir/PyKF5/*.so
-
 %files -n python3-module-%rname-devel
 %_datadir/sip3/PyKF5/KJobWidgets/
 %endif
 
 %changelog
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
+- new version
+
 * Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
 - new version
 
