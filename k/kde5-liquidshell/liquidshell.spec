@@ -5,7 +5,7 @@
 
 Name: kde5-liquidshell
 Version: 0.1.0
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -103,6 +103,9 @@ Requires: %name-common = %version-%release
 %_K5notif/*liquidshell*
 
 %changelog
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt3%ubt
+- update from master branch
+
 * Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt2%ubt
 - set default wallpaper
 - set start menu icon
