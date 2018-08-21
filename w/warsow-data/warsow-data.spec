@@ -1,5 +1,7 @@
+ExclusiveArch: %ix86 x86_64 
+
 Name: warsow-data
-Version: 2.1
+Version: 2.1.2
 Release: alt1
 
 Summary: Data files for Warsow
@@ -31,6 +33,9 @@ cp -a basewsw %buildroot%_datadir/warsow
 %_datadir/warsow/
 
 %changelog
+* Thu Aug 21 2018 Pavel Moseev <mars@altlinux.org> 2.1.2-alt1
+- Updated to upstream version 2.1.2
+
 * Fri Aug 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1-alt1
 - Updated to upstream version 2.1.
 
