@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: openorienteering-mapper
-Version: 0.8.1
-Release: alt3%ubt
+Version: 0.8.2
+Release: alt1%ubt
 
 Summary: OpenOrienteering Mapper program for orienteering mapmaking
 License: GPLv3
@@ -83,6 +83,9 @@ popd
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Aug 21 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.8.2-alt1%ubt
+- New version
+
 * Thu Apr 19 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.8.1-alt3%ubt
 - Fix Qt Assistant search by default paths
 
