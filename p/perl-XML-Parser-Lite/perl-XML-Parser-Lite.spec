@@ -1,27 +1,26 @@
-%define module_version 0.721
+%define _unpackaged_files_terminate_build 1
 %define module_name XML-Parser-Lite
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(XMLRPC/Lite.pm) perl(diagnostics.pm) perl(re.pm) perl(strict.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.721
+Version: 0.722
 Release: alt1
 Summary: Lightweight regexp-based XML parser
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/P/PH/PHRED/%{module_name}-%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PH/PHRED/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/X*
 
 %changelog
+* Tue Aug 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.722-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.721-alt1
 - regenerated from template by package builder
 
