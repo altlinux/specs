@@ -1,6 +1,6 @@
 Name: android-tools
 Version: 5.1.1
-Release: alt1
+Release: alt2
 
 Summary: Android Debug CLI tools
 License: APL
@@ -59,8 +59,8 @@ in a special format which can be used with fastboot.
 #%patch10 -p1
 #%patch11 -p1
 # for openssl 1.1:
-#%patch12 -p1
-#%patch13 -p1
+%patch12 -p1
+%patch13 -p1
 
 # use system libselinux
 sed -i -e 's/\(LIBS.*\) libselinux.a \(.*\)/\1 -lselinux \2/' debian/makefiles/fastboot.mk
@@ -83,8 +83,9 @@ done
 for i in adb fastboot; do
     install -pm0644 debian/$i.1 %buildroot%_man1dir
 done
+mkdir -p %buildroot%_sysconfdir/bash_completion.d
 for i in adb fastboot; do
-    install -pm0644 debian/bash_completion.d/$i %buildroot%_sysconfdir
+    install -pm0644 debian/bash_completion.d/$i %buildroot%_sysconfdir/bash_completion.d
 done
 
 %files
@@ -93,8 +94,13 @@ done
 %_bindir/mkbootimg
 %_man1dir/adb.1*
 %_man1dir/fastboot.1*
+%_sysconfdir/bash_completion.d/*
 
 %changelog
+* Tue Aug 21 2018 Pavel Nakonechnyi <zorg@altlinux.org> 5.1.1-alt2
+- patches to support OpenSSL 1.1.x are enabled
+- fixed bash completions installation
+
 * Wed Mar 15 2017 Pavel Nakonechnyi <zorg@altlinux.org> 5.1.1-alt1
 - updated to Debian 5.1.1_r38 release
 
