@@ -2,12 +2,12 @@
 %def_enable mpv
 
 %define rname smplayer
-%define svn 8992
+%define svn 9075
 %define xde kde5
 %define XDE KDE5
 %define xapp kf5
 Name: %xde-%rname
-Version: 18.4.0.%svn
+Version: 18.6.0.%svn
 Release: alt1%ubt
 
 %define qt_bin_dir %_qt5_bindir
@@ -171,6 +171,9 @@ done
 
 
 %changelog
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 18.6.0.9075-alt1%ubt
+- new version
+
 * Thu Apr 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.4.0.8992-alt1%ubt
 - new version
 
