@@ -1,6 +1,6 @@
 Name: perl
 Version: 5.26.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -205,7 +205,6 @@ Patch384:        perl-5.27.10-PATCH-perl-133074-5.26.1-some-coverity-fixes.patch
 %add_findprov_skiplist */unicore/*/*
 
 BuildRequires: /proc
-BuildRequires: libdb4-devel libgdbm-devel
 
 %package base
 Summary: Pathologically Eclectic Rubbish Lister
@@ -238,6 +237,11 @@ Conflicts: perl-Test-use-ok < 0.12
 Provides: perl-Test2 = 0.000045
 Obsoletes: perl-Test2 < 0.000045
 Conflicts: perl-Test2 < 0.000045
+
+BuildRequires: libdb4-devel libgdbm-devel
+# perl IO-AIO module pass perl link options to configure.
+# without those devel libs configure fails.
+Requires: libdb4-devel libgdbm-devel
 
 %package pod
 Summary: Perl documentation
@@ -402,7 +406,7 @@ find -name '*.orig' -delete
 %define site_privlib %site_prefix/share/perl/%ver
 %define site_archlib %site_prefix/%_lib/perl/%ver
 
-%ifarch e2k
+%ifarch %e2k
 # mcst#2279
 %add_optflags -D_FORTIFY_SOURCE=0
 %endif
@@ -422,7 +426,7 @@ sh Configure -ders \
 	-Dcf_by='%vendor' -Dcf_email='%packager' \
 	-Dmyhostname=localhost -Dperladmin=root@localhost
 
-%ifarch e2k
+%ifarch %e2k
 # till apx. lcc-1.23
 echo '-lcxa' >> ./ext.libs
 %endif
@@ -1054,6 +1058,9 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%autolib/Unicode
 
 %changelog
+* Tue Aug 21 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.26.2-alt2
+- added Requires: libdb4-devel libgdbm-devel to support perl-IO-AIO
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.26.2-alt1
 - 5.26.1 -> 5.26.2
 
