@@ -2,7 +2,7 @@
 BuildRequires: perl-podlators
 %define dist File-MimeInfo
 Name: perl-%dist
-Version: 0.28
+Version: 0.29
 Release: alt1
 
 Summary: Determine file type
@@ -10,10 +10,10 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MI/MICHIELB/File-MimeInfo-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MI/MICHIELB/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
-
+BuildRequires: desktop-file-utils shared-mime-info
 # Automatically added by buildreq on Tue Oct 25 2011
 BuildRequires: perl-File-DesktopEntry perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage
 
@@ -34,7 +34,7 @@ scripts for %name
 
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build --install_path bindoc=%_man1dir
@@ -51,6 +51,9 @@ scripts for %name
 %_man1dir/*
 
 %changelog
+* Tue Aug 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- automated CPAN update
+
 * Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - automated CPAN update
 
