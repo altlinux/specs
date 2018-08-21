@@ -1,8 +1,8 @@
 Name: kernel-image-std-pae
-Release: alt1
+Release: alt1.1
 epoch:1 
 %define kernel_base_version	4.4
-%define kernel_sublevel .142
+%define kernel_sublevel .150
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -611,6 +611,27 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Tue Aug 21 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.150-alt1.1
+- modules building fixed
+
+* Tue Aug 21 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.150-alt1
+- v4.4.150  (Fixes: CVE-2018-9363)
+
+* Thu Aug 16 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.148-alt1
+- v4.4.148
+
+* Thu Aug 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.147-alt1
+- v4.4.147
+
+* Tue Aug 07 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.146-alt1
+- v4.4.146
+
+* Sat Aug 04 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.145-alt1
+- v4.4.145
+
+* Sun Jul 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.143-alt1
+- v4.4.143
+
 * Fri Jul 20 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.142-alt1
 - v4.4.142
 
