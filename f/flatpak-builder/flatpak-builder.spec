@@ -5,7 +5,7 @@
 %def_enable docs
 
 Name: flatpak-builder
-Version: 0.10.10
+Version: 1.0.0
 Release: alt1
 Epoch:1
 
@@ -19,7 +19,7 @@ Source: https://github.com/flatpak/flatpak-builder/releases/download/%version/%n
 
 %define glib_ver 2.44
 %define ostree_ver 2017.14
-%define flatpak_ver 0.10.2
+%define flatpak_ver 0.99.1
 
 Requires: flatpak >= %flatpak_ver
 Requires: libostree >= %ostree_ver
@@ -45,6 +45,7 @@ BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: pkgconfig(ostree-1) >= %ostree_ver
 BuildRequires: pkgconfig(yaml-0.1)
 BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: libcurl-devel
 BuildRequires: xsltproc
 %{?_enable_docs:BuildRequires: xmlto docbook-dtds docbook-style-xsl}
 
@@ -73,6 +74,9 @@ See http://flatpak.org/ for more information.
 %{?_enable_docs:%doc %_docdir/%name}
 
 %changelog
+* Wed Aug 22 2018 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.0-alt1
+- 1.0.0
+
 * Sun May 27 2018 Yuri N. Sedunov <aris@altlinux.org> 1:0.10.10-alt1
 - first build for Sisyphus
 
