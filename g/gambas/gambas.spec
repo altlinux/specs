@@ -1,10 +1,14 @@
-%define appdir  %_datadir/%name
+%define appdir  %_datadir/gambas3
 %def_enable     opengl
 # jit.h is only available prior to llvm 3.6 and gb.jit can only be compiled with those versions.
 %def_without   	jit
+%define prov3() \
+Provides:  gambas3-%{*} = %EVR \
+Obsoletes: gambas3-%{*} < %EVR \
+%nil
 
-Name:		gambas3
-Version:	3.10.0
+Name:		gambas
+Version:	3.11.4
 Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
@@ -12,10 +16,10 @@ Group:		Development/Tools
 License:	GPLv2+
 
 URL:		http://gambas.sourceforge.net/
-Source0:	http://downloads.sourceforge.net/gambas/%name-%version.tar.bz2
+Source0:	%name-%version.tar
 Source1:	%name.desktop
-Source2:	%name.watch
 
+BuildRequires:	rpm-build-xdg
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bzlib-devel
@@ -51,7 +55,7 @@ BuildRequires:	libopenal-devel
 BuildRequires:	libpcre-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libpoppler-devel
-BuildRequires:	libqt4-webkit
+BuildRequires:	libqt4-webkit-devel
 BuildRequires:	librsvg-devel
 BuildRequires:	libSDL-devel
 BuildRequires:	libSDL_image-devel
@@ -83,6 +87,12 @@ BuildRequires:  qt5-x11extras-devel
 BuildRequires:	xdg-utils
 BuildRequires:	zlib-devel
 
+BuildRequires:  dumb-devel
+BuildRequires:  libmodplug-devel
+BuildRequires:  libmpg123-devel
+BuildRequires:  libfluidsynth-devel
+BuildRequires:  libncurses-devel
+
 Patch1:		%name-2.99.1-nolintl.patch
 Patch2:		%name-2.99.1-noliconv.patch
 # Use libv4l1
@@ -99,6 +109,7 @@ on...
 %package runtime
 Summary:	Runtime environment for Gambas3
 Group:		Development/Tools
+%prov3 runtime
 
 %description runtime
 Gambas3 is a free development environment based on a Basic interpreter
@@ -109,6 +120,7 @@ runtime components necessary to run programs designed in Gambas3.
 Summary:	Development environment for Gambas3
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 devel
 
 %description devel
 The gambas3-devel package contains the tools needed to compile Gambas3
@@ -120,6 +132,7 @@ Summary:	Scripter program that allows the creation of Gambas3 scripts
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 Requires:	%name-devel = %version-%release
+%prov3 scripter
 
 %description scripter
 This package includes the scripter program that allows the user to
@@ -130,6 +143,10 @@ Summary:	The complete Gambas3 Development Environment
 Group:		Development/Tools
 License:	GPLv2+
 Provides:	%name = %version-%release
+Provides:       gambas3 = %EVR
+Obsoletes:      gambas3 < %EVR
+%prov3 ide
+
 Requires:	tar, gzip, rpm-build, gettext
 Requires:	%name-runtime = %version-%release
 Requires:	%name-devel = %version-%release
@@ -168,6 +185,8 @@ Group:         Development/Tools
 BuildArch:     noarch
 Provides:      %name-examples = %version-%release
 Obsoletes:     %name-examples < %version-%release
+%prov3 examples
+%prov3 full
 
 Requires:      %name-runtime = %version-%release
 Requires:      %name-ide = %version-%release
@@ -272,6 +291,7 @@ Gambas3 with all components.
 Summary:	Gambas3 component package for args
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-args
 
 %description gb-args
 This package contains the Gambas3 component package for args.
@@ -280,6 +300,7 @@ This package contains the Gambas3 component package for args.
 Summary:	Gambas3 component package for cairo
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-cairo
 
 %description gb-cairo
 This package contains the Gambas3 Cario components.
@@ -288,6 +309,7 @@ This package contains the Gambas3 Cario components.
 Summary:	Gambas3 component package for chart
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-chart
 
 %description gb-chart
 This package contains the Gambas3 Chart components.
@@ -296,6 +318,7 @@ This package contains the Gambas3 Chart components.
 Summary:	Gambas3 component package for clipper
 Group:		Development/Tools
 Requires:	%{name}-runtime = %{version}-%{release}
+%prov3 gb-clipper
 
 %description gb-clipper
 %{summary}
@@ -304,6 +327,7 @@ Requires:	%{name}-runtime = %{version}-%{release}
 Summary:	Gambas3 component package for complex
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-complex
 
 %description gb-complex
 This component brings complex numbers support to the interpreter.
@@ -312,6 +336,7 @@ This component brings complex numbers support to the interpreter.
 Summary:	Gambas3 component package for compress
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-compress
 
 %description gb-compress
 This component allows you to compress/uncompress data or files
@@ -321,6 +346,7 @@ with the bzip2 and zip algorithms.
 Summary:	Gambas3 component package for crypt
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-crypt
 
 %description gb-crypt
 This component contains cryptography support.
@@ -329,6 +355,7 @@ This component contains cryptography support.
 Summary:	Gambas3 component package for data
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-data
 
 %description gb-data
 The gb.data component provides Abstract Datatypes (ADT) which are data
@@ -338,6 +365,7 @@ containers with a well-defined interface but variable implementation.
 Summary:	Gambas3 component package for db
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-db
 
 %description gb-db
 This component allows you to access many databases management
@@ -347,6 +375,7 @@ systems, provided that you install the needed driver packages.
 Summary:	Gambas3 component package for db.form
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-db-form
 
 %description gb-db-form
 This package contains the Gambas3 Database form components.
@@ -355,6 +384,7 @@ This package contains the Gambas3 Database form components.
 Summary:	Gambas3 component package for db.mysql
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-db-mysql
 
 %description gb-db-mysql
 This component allows you to access MySQL databases.
@@ -363,6 +393,7 @@ This component allows you to access MySQL databases.
 Summary:	Gambas3 component package for db.odbc
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-db-odbc
 
 %description gb-db-odbc
 This component allows you to access ODBC databases.
@@ -371,6 +402,7 @@ This component allows you to access ODBC databases.
 Summary:	Gambas3 component package for db.postgresql
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-db-postgresql
 
 %description gb-db-postgresql
 This component allows you to access PostgreSQL databases.
@@ -379,6 +411,7 @@ This component allows you to access PostgreSQL databases.
 Summary:	Gambas3 component package for db.sqlite2
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-db-sqlite2
 
 %description gb-db-sqlite2
 This component allows you to access SQLite 2 databases.
@@ -387,6 +420,7 @@ This component allows you to access SQLite 2 databases.
 Summary:	Gambas3 component package for db.sqlite3
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-db-sqlite3
 
 %description gb-db-sqlite3
 This component allows you to access SQLite 3 databases.
@@ -395,6 +429,7 @@ This component allows you to access SQLite 3 databases.
 Summary:	Gambas3 component package for desktop
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-desktop
 
 %description gb-desktop
 This Gambas3 component allows you to operate with XDG-compliant desktop
@@ -404,6 +439,7 @@ environmnents.
 Summary:	Gambas3 component package for GNOME desktop
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-desktop-gnome
 
 %description gb-desktop-gnome
 This Gambas3 component allows you to operate with GNOME desktop
@@ -413,6 +449,7 @@ environmnents.
 Summary:	Gambas3 component package for dbus
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-dbus
 
 %description gb-dbus
 This package contains the Gambas3 D-bus components.
@@ -421,6 +458,7 @@ This package contains the Gambas3 D-bus components.
 Summary:	Gambas3 component package for eval highlight
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-eval-highlight
 
 %description gb-eval-highlight
 This component implements the eval-highlight componet.
@@ -429,6 +467,7 @@ This component implements the eval-highlight componet.
 Summary:	Gambas3 component package for form
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-form
 
 %description gb-form
 This component implements the form control.
@@ -437,6 +476,7 @@ This component implements the form control.
 Summary:	Gambas3 component package for form.dialog
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-form-dialog
 
 %description gb-form-dialog
 This component implements the form-dialog control.
@@ -445,6 +485,7 @@ This component implements the form-dialog control.
 Summary:	Gambas3 component package for form.mdi
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-form-mdi
 
 %description gb-form-mdi
 This component implements the form-mdi control.
@@ -453,6 +494,7 @@ This component implements the form-mdi control.
 Summary:	Gambas3 component package for form.stock
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-form-stock
 
 %description gb-form-stock
 This component implements the form-stock control.
@@ -461,6 +503,7 @@ This component implements the form-stock control.
 Summary:	Gambas3 component package for httpd
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-httpd
 
 %description gb-httpd
 Gambas3 component package for httpd.
@@ -469,6 +512,7 @@ Gambas3 component package for httpd.
 Summary:	Gambas3 component package for gmp
 Group:		Development/Tools
 Requires:	%{name}-runtime = %{version}-%{release}
+%prov3 gb-gmp
 
 %description gb-gmp
 %{summary}
@@ -477,6 +521,7 @@ Requires:	%{name}-runtime = %{version}-%{release}
 Summary:	Gambas3 component package for gsl
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-gsl
 
 %description gb-gsl
 This component aims at providing most of the features
@@ -486,6 +531,7 @@ of the Gnu Scientific Library.
 Summary:	Gambas3 component package for gtk
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-gtk
 
 %description gb-gtk
 This package includes the Gambas3 GTK2 GUI component.
@@ -494,6 +540,7 @@ This package includes the Gambas3 GTK2 GUI component.
 Summary:	Gambas3 component package for gtk3
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-gtk3
 
 %description gb-gtk3
 This package includes the Gambas3 GTK3 GUI component.
@@ -503,6 +550,7 @@ This package includes the Gambas3 GTK3 GUI component.
 Summary:	Gambas3 component package for gtk.opengl
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-gtk-opengl
 
 %description gb-gtk-opengl
 This component allows to use the gb.opengl component in
@@ -513,6 +561,7 @@ GTK+ applications.
 Summary:	Gambas3 component package for gui
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-gui
 
 %description gb-gui
 This is a component that just loads gb.qt if you are running KDE or
@@ -523,6 +572,7 @@ Summary:	Gambas3 component package for image
 License:	GPLv2 or QPL
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-image
 
 %description gb-image
 Image processing component for Gambas3.
@@ -531,6 +581,7 @@ Image processing component for Gambas3.
 Summary:	Gambas3 component package for image.effect
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-image-effect
 
 %description gb-image-effect
 This component allows you to apply various effects to images.
@@ -539,6 +590,7 @@ This component allows you to apply various effects to images.
 Summary:	Gambas3 component package for image.imlib
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-image-imlib
 
 %description gb-image-imlib
 This component allows you to manipulate images with imlibs.
@@ -547,6 +599,7 @@ This component allows you to manipulate images with imlibs.
 Summary:	Gambas3 component package for image.io
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-image-io
 
 %description gb-image-io
 This component allows you to perform images input output operations.
@@ -555,6 +608,7 @@ This component allows you to perform images input output operations.
 Summary:	Gambas3 component package for inotify (unstable)
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-inotify
 
 %description gb-inotify
 This component allows you to perform inotify operations.
@@ -564,6 +618,7 @@ This component allows you to perform inotify operations.
 Summary:	Gambas3 Just In Time compiler
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-jit
 
 %description gb-jit
 Gambas3 Just In Time compiler.
@@ -573,6 +628,7 @@ Gambas3 Just In Time compiler.
 Summary:	Gambas3 component package for logging
 Group:		Development/Tools
 Requires:	%{name}-runtime = %{version}-%{release}
+%prov3 gb-logging
 
 %description gb-logging
 %{summary}
@@ -581,6 +637,7 @@ Requires:	%{name}-runtime = %{version}-%{release}
 Summary:    Gambas3 component package for map
 Group:      Development/Tools
 Requires:   %name-runtime = %version-%release
+%prov3 gb-map
 
 %description gb-map
 Gambas3 component package for map
@@ -589,6 +646,7 @@ Gambas3 component package for map
 Summary:    Gambas3 component package for markup syntax
 Group:      Development/Tools
 Requires:   %name-runtime = %version-%release
+%prov3 gb-markdown
 
 %description gb-markdown
 Gambas3 component package for markup syntax
@@ -597,6 +655,7 @@ Gambas3 component package for markup syntax
 Summary:    Gambas3 component package for media
 Group:      Development/Tools
 Requires:   %name-runtime = %version-%release
+%prov3 gb-media
 
 %description gb-media
 Gambas3 component package for media
@@ -605,6 +664,7 @@ Gambas3 component package for media
 Summary:    Gambas3 component package for memcached
 Group:      Development/Tools
 Requires:   %name-runtime = %version-%release
+%prov3 gb-memcached
 
 %description gb-memcached
 Gambas3 component package for memcached
@@ -613,6 +673,7 @@ Gambas3 component package for memcached
 Summary:    Gambas3 component package for mime
 Group:      Development/Tools
 Requires:   %name-runtime = %version-%release
+%prov3 gb-mime
 
 %description gb-mime
 Gambas3 component package for mime
@@ -621,6 +682,7 @@ Gambas3 component package for mime
 Summary:    Gambas3 component package for ncurses
 Group:      Development/Tools
 Requires:   %name-runtime = %version-%release
+%prov3 gb-ncurses
 
 %description gb-ncurses
 Gambas3 component package for ncurses
@@ -629,6 +691,7 @@ Gambas3 component package for ncurses
 Summary:	Gambas3 component package for net
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-net
 
 %description gb-net
 This Gambas3 component allows you to use TCP/IP and UDP sockets, and to
@@ -638,6 +701,7 @@ access any serial ports.
 Summary:	Gambas3 component package for net.curl
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-net-curl
 
 %description gb-net-curl
 This Gambas3 component allows your programs to easily become FTP or HTTP
@@ -647,6 +711,7 @@ clients.
 Summary:	Gambas3 component package for net.pop3
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-net-pop3
 
 %description gb-net-pop3
 This component implements a POP3 client. It allows to retrieve mails by
@@ -657,6 +722,7 @@ that openssl is installed on your system.
 Summary:	Gambas3 component package for net.smtp
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-net-smtp
 
 %description gb-net-smtp
 This component allows to send mails by using the SMTP protocol.
@@ -668,6 +734,7 @@ system.
 Summary:       Gambas3 component package for openal
 Group:         Development/Tools
 Requires:      %name-runtime = %version-%release
+%prov3 gb-openal
 
 %description gb-openal
 Gambas3 component package for openal.
@@ -677,6 +744,7 @@ Gambas3 component package for openal.
 Summary:	Gambas3 component package for opengl
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-opengl
 
 %description gb-opengl
 This component allows you to use the Mesa libraries to do 3D operations.
@@ -685,6 +753,7 @@ This component allows you to use the Mesa libraries to do 3D operations.
 Summary:	Gambas3 component package for opengl.glu
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-opengl-glu
 
 %description gb-opengl-glu
 This component allows you to use the Mesa libraries to do 3D operations.
@@ -693,6 +762,7 @@ This component allows you to use the Mesa libraries to do 3D operations.
 Summary:	Gambas3 component package for opengl.glsl
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-opengl-glsl
 
 %description gb-opengl-glsl
 This component allows you to use the Mesa libraries to do 3D operations.
@@ -703,6 +773,7 @@ Summary:	Gambas3 component package for opengl-sge
 Group:		Development/Tools
 Requires:	%{name}-runtime = %{version}-%{release}
 Requires:	%{name}-gb-opengl = %{version}-%{release}
+%prov3 gb-opengl-sge
 
 %description gb-opengl-sge
 %{summary}
@@ -711,6 +782,7 @@ Requires:	%{name}-gb-opengl = %{version}-%{release}
 Summary:	Gambas3 component package for openssl
 Group:		Development/Tools
 Requires:	%{name}-runtime = %{version}-%{release}
+%prov3 gb-openssl
 
 %description gb-openssl
 %{summary}
@@ -719,6 +791,7 @@ Requires:	%{name}-runtime = %{version}-%{release}
 Summary:	Gambas3 component package for option
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-option
 
 %description gb-option
 This component allows you to interpret command-line options.
@@ -727,6 +800,7 @@ This component allows you to interpret command-line options.
 Summary:	Gambas3 component package for pcre
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-pcre
 
 %description gb-pcre
 This component allows you to use Perl compatible regular expresions
@@ -736,6 +810,7 @@ within Gambas code.
 Summary:	Gambas3 component package for pdf
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-pdf
 
 %description gb-pdf
 This component allows you to manipulate pdf files with Gambas code.
@@ -744,6 +819,7 @@ This component allows you to manipulate pdf files with Gambas code.
 Summary:	Gambas3 component package for qt4
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-qt4
 
 %description gb-qt4
 This package includes Gambas3 QT4 GUI component.
@@ -752,6 +828,7 @@ This package includes Gambas3 QT4 GUI component.
 Summary:	Gambas3 component package for qt4.ext
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-qt4-ext
 
 %description gb-qt4-ext
 This package contains the Gambas3 qt-ext components.
@@ -760,6 +837,7 @@ This package contains the Gambas3 qt-ext components.
 Summary:	Gambas3 component package for qt4-opengl
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-qt4-opengl
 
 %description gb-qt4-opengl
 This package contains the Gambas3 qt-opengl components.
@@ -768,6 +846,7 @@ This package contains the Gambas3 qt-opengl components.
 Summary:	Gambas3 component package for qt4-webkit
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-qt4-webkit
 
 %description gb-qt4-webkit
 This package contains the Gambas3 qt-webkit components.
@@ -776,6 +855,7 @@ This package contains the Gambas3 qt-webkit components.
 Summary:	Gambas3 component package for report
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-report
 
 %description gb-report
 This package contains the Gambas3 Report components.
@@ -784,6 +864,7 @@ This package contains the Gambas3 Report components.
 Summary:	Gambas3 new component package for report
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-report2
 
 %description gb-report2
 This package contains the new and better implementation of the Gambas3
@@ -794,6 +875,7 @@ Summary:	Gambas3 component package for work with scanners
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 Requires:	sane
+%prov3 gb-scanner
 
 %description gb-scanner
 This package contains the component based on SANE to help dealing with
@@ -804,6 +886,7 @@ Summary:	Gambas3 component package for sdl
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 Requires:	fonts-ttf-dejavu
+%prov3 gb-sdl
 
 %description gb-sdl
 This component use the sound, image and TTF fonts parts of the SDL
@@ -815,6 +898,7 @@ accelerate 2D and 3D drawing.
 Summary:	Gambas3 component package for sdl.sound
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-sdl-sound
 
 %description gb-sdl-sound
 This component allows you to play sounds in Gambas. This component
@@ -826,6 +910,7 @@ in real time.
 Summary:	Gambas3 component for sdl2
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-sdl2
 
 %description gb-sdl2
 Gambas3 component for sdl2
@@ -834,6 +919,7 @@ Gambas3 component for sdl2
 Summary:	Gambas3 component for sdl2-audio
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-sdl2-audio
 
 %description gb-sdl2-audio
 Gambas3 component for sdl2-audio.
@@ -842,6 +928,7 @@ Gambas3 component for sdl2-audio.
 Summary:	Gambas3 component package for settings
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-settings
 
 %description gb-settings
 This components allows you to deal with configuration files.
@@ -850,6 +937,7 @@ This components allows you to deal with configuration files.
 Summary:	Gambas3 component package for signal
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-signal
 
 %description gb-signal
 This package contains the Gambas3 Signal components.
@@ -858,6 +946,7 @@ This package contains the Gambas3 Signal components.
 Summary:	Component written in Gambas3 that provides utility functions to the interpreter
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-util
 
 %description gb-util
 Component written in Gambas3 that provides utility functions to the
@@ -867,6 +956,7 @@ interpreter.
 Summary:	Component written in Gambas3 that provides utility functions to web applications
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-util-web
 
 %description gb-util-web
 Component written in Gambas3 that provides utility functions to the
@@ -876,6 +966,7 @@ web applications.
 Summary:	Gambas3 component package for v4l
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-v4l
 
 %description gb-v4l
 This component allows access to Video4Linux devices.
@@ -884,6 +975,7 @@ This component allows access to Video4Linux devices.
 Summary:	Gambas3 component package for vb
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-vb
 
 %description gb-vb
 This Gambas3 component aims at including some functions that imitate
@@ -894,6 +986,7 @@ to port some VB projects.
 Summary:	Gambas3 component package for web
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-web
 
 %description gb-web
 This components allows you to make CGI web applications using Gambas,
@@ -903,6 +996,7 @@ with an ASP-like interface.
 Summary:	Gambas3 component package for xml
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-xml
 
 %description gb-xml
 These components brings the power of the libxml and libxslt libraries to
@@ -912,6 +1006,7 @@ Gambas3 for XML processing.
 Summary:	Gambas3 component package for xml.html
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-xml-html
 
 %description gb-xml-html
 These component allows to process XHTML documents.
@@ -920,6 +1015,7 @@ These component allows to process XHTML documents.
 Summary:	Gambas3 component package for libxml
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-xml-libxml
 
 %description gb-xml-libxml
 Gambas3 component package for libxml.
@@ -928,6 +1024,7 @@ Gambas3 component package for libxml.
 Summary:	Gambas3 component package for xml.rpc
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-xml-rpc
 
 %description gb-xml-rpc
 This component allows you to use xml-rpc.
@@ -936,6 +1033,7 @@ This component allows you to use xml-rpc.
 Summary:	Gambas3 component package for xml.xslt
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-xml-xslt
 
 %description gb-xml-xslt
 This component allows you to use xml-xslt.
@@ -944,6 +1042,7 @@ This component allows you to use xml-xslt.
 Summary:	Gambas3 component package for form.editor
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-form-editor
 
 %description gb-form-editor
 This package contains form.editor component.
@@ -952,6 +1051,7 @@ This package contains form.editor component.
 Summary:	Gambas3 component package for qt5
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-qt5
 
 %description gb-qt5
 This package includes Gambas3 QT5 GUI component.
@@ -960,6 +1060,7 @@ This package includes Gambas3 QT5 GUI component.
 Summary:	Gambas3 component package for qt5-opengl
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-qt5-opengl
 
 %description gb-qt5-opengl
 This package contains the Gambas3 qt5-opengl components.
@@ -968,6 +1069,7 @@ This package contains the Gambas3 qt5-opengl components.
 Summary:	Gambas3 component package for qt5-webkit
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-qt5-webkit
 
 %description gb-qt5-webkit
 This package contains the Gambas3 qt5-webkit components.
@@ -976,6 +1078,7 @@ This package contains the Gambas3 qt5-webkit components.
 Summary:	Gambas3 component package for qt5 (additional)
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-qt5-ext
 
 %description gb-qt5-ext
 This package contains the Gambas3 qt5 component with additional stuff.
@@ -984,6 +1087,7 @@ This package contains the Gambas3 qt5 component with additional stuff.
 Summary:	Gambas3 component package for terminal in forms
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-form-terminal
 
 %description gb-form-terminal
 This package contains the Gambas3 component for terminal in form.
@@ -992,11 +1096,11 @@ This package contains the Gambas3 component for terminal in form.
 Summary:	Gambas3 component package for making the GUI of terminal applications
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
+%prov3 gb-term
 
 %description gb-term
 This package contains the Gambas3 component for making the GUI of
 terminal applications.
-
 
 %prep
 %setup -q
@@ -1040,39 +1144,9 @@ MY_CFLAGS=`echo $RPM_OPT_FLAGS | sed -e 's/-Wp,-D_FORTIFY_SOURCE=2//g'`
 	--enable-sdl \
 	--enable-vb \
 	--enable-pdf \
-	--with-bzlib2-libraries=%_libdir \
-	--with-crypt-libraries=%_libdir \
-	--with-curl-libraries=%_libdir \
-	--with-desktop-libraries=%_libdir \
 	--with-ffi-includes=`pkg-config libffi --variable=includedir` \
 	--with-ffi-libraries=`pkg-config libffi --variable=libdir` \
-	--with-intl-libraries=%_libdir \
-	--with-conv-libraries=%_libdir \
-	--with-gettext-libraries=%_libdir \
-	--with-gtk-libraries=%_libdir \
-	--with-gtk_svg-libraries=%_libdir \
-	--with-image-libraries=%_libdir \
-	--with-kde-libraries=%_libdir \
 	--with-mysql-libraries=%_libdir/mysql \
-	--with-net-libraries=%_libdir \
-	--with-odbc-libraries=%_libdir \
-%if_enabled opengl
-	--with-opengl-libraries=%_libdir \
-%endif
-	--with-pcre-libraries=%_libdir \
-	--with-poppler-libraries=%_libdir \
-	--with-postgresql-libraries=%_libdir \
-	--with-qt4-libraries=%_libdir \
-	--with-qtopengl-libraries=%_libdir \
-	--with-sdl-libraries=%_libdir \
-	--with-sdl_sound-libraries=%_libdir \
-	--with-smtp-libraries=%_libdir \
-	--with-sqlite2-libraries=%_libdir \
-	--with-sqlite3-libraries=%_libdir \
-	--with-v4l-libraries=%_libdir \
-	--with-xml-libraries=%_libdir \
-	--with-xslt-libraries=%_libdir \
-	--with-zlib-libraries=%_libdir \
 	--disable-static \
 	AM_CFLAGS="$MY_CFLAGS" AM_CXXFLAGS="$MY_CFLAGS"
 # rpath removal
@@ -1090,15 +1164,15 @@ make LIBTOOL=%_bindir/libtool %{?_smp_mflags}
 export PATH=%buildroot%_bindir:$PATH
 make LIBTOOL=%_bindir/libtool DESTDIR=%buildroot INSTALL="install -p" install
 # Yes, I know. Normally we'd nuke the .la files, but Gambas is retar^Wspecial.
-# rm -rf %%buildroot%%_libdir/%%name/*.la
-install -m644 -pD ./app/src/%name/.icon.png %buildroot%_pixmapsdir/%name.png
-install -m644 -pD %SOURCE1 %buildroot%_desktopdir/%name.desktop
+# rm -rf %%buildroot%%_libdir/gambas3/*.la
+install -m644 -pD ./app/desktop/gambas3.png %buildroot%_pixmapsdir/gambas3.png
+install -m644 -pD %SOURCE1 %buildroot%_desktopdir/gambas3.desktop
 
 # Upstream says we don't need those files. Not sure why they install them then. :/
-rm -rf %buildroot%_libdir/%name/gb.la %buildroot%_libdir/%name/gb.so*
+rm -rf %buildroot%_libdir/gambas3/gb.la %buildroot%_libdir/gambas3/gb.so*
 
 # No need for the static libs
-rm -rf %buildroot%_libdir/%name/*.a
+rm -rf %buildroot%_libdir/gambas3/*.a
 
 # Mime types.
 mkdir -p %buildroot%_datadir/mime/packages/
@@ -1107,22 +1181,22 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 
 %files runtime
 %doc COPYING INSTALL README
-%dir %_libdir/%name/
-%_libdir/%name/gb.component
-%_libdir/%name/gb.debug.*
-%_libdir/%name/gb.draw.*
-%_libdir/%name/gb.geom.*
-%_libdir/%name/gb.eval.component
-%_libdir/%name/gb.eval.so*
-%_libdir/%name/gb.eval.la
+%dir %_libdir/gambas3/
+%_libdir/gambas3/gb.component
+%_libdir/gambas3/gb.debug.*
+%_libdir/gambas3/gb.draw.*
+%_libdir/gambas3/gb.geom.*
+%_libdir/gambas3/gb.eval.component
+%_libdir/gambas3/gb.eval.so*
+%_libdir/gambas3/gb.eval.la
 #_bindir/gbh3
 #_bindir/gbh3.gambas
 %_bindir/gbr3
 %_bindir/gbx3
-%_datadir/pixmaps/%name.png
-%_datadir/applications/*.desktop
-%_datadir/%name/template/
-%_datadir/appdata/%name.appdata.xml
+%_datadir/pixmaps/gambas3.png
+%_desktopdir/*.desktop
+%_datadir/gambas3/template/
+%_datadir/appdata/gambas3.appdata.xml
 %dir %appdir/
 %dir %appdir/info/
 %appdir/info/gb.debug.*
@@ -1149,433 +1223,442 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_xdgmimedir/packages/application-x-gambasscript.xml
 
 %files ide
-%_bindir/%name
-%_bindir/%name.gambas
+%_bindir/gambas3
+%_bindir/gambas3.gambas
 
 %files full
 
 %files gb-args
-%_libdir/%name/gb.args.*
+%_libdir/gambas3/gb.args.*
 %appdir/info/gb.args.*
 
 %files gb-cairo
-%_libdir/%name/gb.cairo.*
+%_libdir/gambas3/gb.cairo.*
 %appdir/info/gb.cairo.*
 
 %files gb-chart
-%_libdir/%name/gb.chart.*
+%_libdir/gambas3/gb.chart.*
 %appdir/info/gb.chart.*
 
 %files gb-clipper
-%{_libdir}/%{name}/gb.clipper.*
-%{_datadir}/%{name}/info/gb.clipper.*
+%_libdir/gambas3/gb.clipper.*
+%appdir/info/gb.clipper.*
 
 %files gb-complex
-%_libdir/%name/gb.complex.*
+%_libdir/gambas3/gb.complex.*
 %appdir/info/gb.complex.*
 
 %files gb-compress
-%_libdir/%name/gb.compress.*
+%_libdir/gambas3/gb.compress.*
 %appdir/info/gb.compress.*
 
 %files gb-crypt
-%_libdir/%name/gb.crypt.*
+%_libdir/gambas3/gb.crypt.*
 %appdir/info/gb.crypt.*
 
 %files gb-data
-%_libdir/%name/gb.data.*
+%_libdir/gambas3/gb.data.*
 %appdir/info/gb.data.*
 
 %files gb-db
-%_libdir/%name/gb.db.component
-%_libdir/%name/gb.db.gambas
-%_libdir/%name/gb.db.la
-%_libdir/%name/gb.db.so*
+%_libdir/gambas3/gb.db.component
+%_libdir/gambas3/gb.db.gambas
+%_libdir/gambas3/gb.db.la
+%_libdir/gambas3/gb.db.so*
 %appdir/info/gb.db.info
 %appdir/info/gb.db.list
 
 %files gb-db-form
-%_libdir/%name/gb.db.form.*
+%_libdir/gambas3/gb.db.form.*
 %appdir/control/gb.db.form/
 %appdir/info/gb.db.form.*
 
 %files gb-db-mysql
-%_libdir/%name/gb.db.mysql.*
-%_libdir/%name/gb.mysql.*
+%_libdir/gambas3/gb.db.mysql.*
+%_libdir/gambas3/gb.mysql.*
 %appdir/info/gb.db.mysql.*
 %appdir/info/gb.mysql.*
 
 %files gb-db-odbc
-%_libdir/%name/gb.db.odbc.*
+%_libdir/gambas3/gb.db.odbc.*
 %appdir/info/gb.db.odbc.*
 
 %files gb-db-postgresql
-%_libdir/%name/gb.db.postgresql.*
+%_libdir/gambas3/gb.db.postgresql.*
 %appdir/info/gb.db.postgresql.*
 
 %files gb-db-sqlite2
-%_libdir/%name/gb.db.sqlite2.*
+%_libdir/gambas3/gb.db.sqlite2.*
 %appdir/info/gb.db.sqlite2.*
 
 %files gb-db-sqlite3
-%_libdir/%name/gb.db.sqlite3.*
+%_libdir/gambas3/gb.db.sqlite3.*
 %appdir/info/gb.db.sqlite3.*
 
 %files gb-dbus
-%_libdir/%name/gb.dbus.*
+%_libdir/gambas3/gb.dbus.*
 %appdir/info/gb.dbus.*
 
 %files gb-desktop
-%_libdir/%name/gb.desktop.*
-%exclude %_libdir/%name/gb.desktop.gnome.*
+%_libdir/gambas3/gb.desktop.*
+%exclude %_libdir/gambas3/gb.desktop.gnome.*
 %appdir/control/gb.desktop/
 %appdir/info/gb.desktop.*
 
 %files gb-desktop-gnome
-%_libdir/%name/gb.desktop.gnome.*
+%_libdir/gambas3/gb.desktop.gnome.*
 
 %files gb-eval-highlight
-%_libdir/%name/gb.eval.highlight.*
+%_libdir/gambas3/gb.eval.highlight.*
 %appdir/info/gb.eval.highlight.*
 
 %files gb-form
-%_libdir/%name/gb.form.component
-%_libdir/%name/gb.form.gambas
+%_libdir/gambas3/gb.form.component
+%_libdir/gambas3/gb.form.gambas
 %appdir/control/gb.form/
 %appdir/info/gb.form.info
 %appdir/info/gb.form.list
 
 %files gb-form-dialog
-%_libdir/%name/gb.form.dialog.component
-%_libdir/%name/gb.form.dialog.gambas
+%_libdir/gambas3/gb.form.dialog.component
+%_libdir/gambas3/gb.form.dialog.gambas
 %appdir/info/gb.form.dialog.info
 %appdir/info/gb.form.dialog.list
 
 %files gb-form-mdi
-%_libdir/%name/gb.form.mdi.component
-%_libdir/%name/gb.form.mdi.gambas
+%_libdir/gambas3/gb.form.mdi.component
+%_libdir/gambas3/gb.form.mdi.gambas
 %appdir/control/gb.form.mdi/
 %appdir/info/gb.form.mdi.info
 %appdir/info/gb.form.mdi.list
 
 %files gb-form-stock
-%_libdir/%name/gb.form.stock.component
-%_libdir/%name/gb.form.stock.gambas
+%_libdir/gambas3/gb.form.stock.component
+%_libdir/gambas3/gb.form.stock.gambas
 %appdir/info/gb.form.stock.info
 %appdir/info/gb.form.stock.list
 
 %files gb-httpd
-%_libdir/%name/gb.httpd.*
+%_libdir/gambas3/gb.httpd.*
 %appdir/info/gb.httpd.*
 
 %files gb-gmp
-%{_libdir}/%{name}/gb.gmp.*
-%{_datadir}/%{name}/info/gb.gmp.*
+%_libdir/gambas3/gb.gmp.*
+%appdir/info/gb.gmp.*
 
 %files gb-gsl
-%_libdir/%name/gb.gsl.*
+%_libdir/gambas3/gb.gsl.*
 %appdir/info/gb.gsl.*
 
 %files gb-gtk
-%_libdir/%name/gb.gtk.component
-%_libdir/%name/gb.gtk.so*
-%_libdir/%name/gb.gtk.la
+%_libdir/gambas3/gb.gtk.component
+%_libdir/gambas3/gb.gtk.so*
+%_libdir/gambas3/gb.gtk.la
 %appdir/info/gb.gtk.info
 %appdir/info/gb.gtk.list
 
 %files gb-gtk3
-%_libdir/%name/gb.gtk3.component
-%_libdir/%name/gb.gtk3.so*
-%_libdir/%name/gb.gtk3.la
+%_libdir/gambas3/gb.gtk3.component
+%_libdir/gambas3/gb.gtk3.so*
+%_libdir/gambas3/gb.gtk3.la
 %appdir/info/gb.gtk3.info
 %appdir/info/gb.gtk3.list
 
 %if_enabled opengl
 %files gb-gtk-opengl
-%_libdir/%name/gb.gtk.opengl.*
+%_libdir/gambas3/gb.gtk.opengl.*
 %appdir/info/gb.gtk.opengl.*
 %endif
 
 %files gb-gui
-%_libdir/%name/gb.gui.*
+%_libdir/gambas3/gb.gui.*
 %appdir/info/gb.gui.*
 
 %files gb-image
-%_libdir/%name/gb.image.component
-%_libdir/%name/gb.image.so*
-%_libdir/%name/gb.image.la
+%_libdir/gambas3/gb.image.component
+%_libdir/gambas3/gb.image.so*
+%_libdir/gambas3/gb.image.la
 %appdir/info/gb.image.info
 %appdir/info/gb.image.list
 
 %files gb-image-effect
-%_libdir/%name/gb.image.effect.*
+%_libdir/gambas3/gb.image.effect.*
 %appdir/info/gb.image.effect.*
 
 %files gb-image-imlib
-%_libdir/%name/gb.image.imlib.*
+%_libdir/gambas3/gb.image.imlib.*
 %appdir/info/gb.image.imlib.*
 
 %files gb-image-io
-%_libdir/%name/gb.image.io.*
+%_libdir/gambas3/gb.image.io.*
 %appdir/info/gb.image.io.*
 
 %files gb-inotify
-%_libdir/%name/gb.inotify.*
+%_libdir/gambas3/gb.inotify.*
 %appdir/info/gb.inotify.*
 
 %if_with jit
 %files gb-jit
-%_libdir/%name/gb.jit.*
+%_libdir/gambas3/gb.jit.*
 %appdir/info/gb.jit.*
 %endif
 
 %files gb-logging
-%{_libdir}/%{name}/gb.logging.*
-%{_datadir}/%{name}/info/gb.logging.*
+%_libdir/gambas3/gb.logging.*
+%appdir/info/gb.logging.*
 
 %files gb-map
-%_libdir/%name/gb.map.*
+%_libdir/gambas3/gb.map.*
 %appdir/info/gb.map.*
 %appdir/control/gb.map/
 
 %files gb-markdown
-%_libdir/%name/gb.markdown.*
+%_libdir/gambas3/gb.markdown.*
 %appdir/info/gb.markdown.*
 
 %files gb-media
-%_libdir/%name/gb.media.*
+%_libdir/gambas3/gb.media.*
 %appdir/info/gb.media.*
 %appdir/control/gb.media.form/
 
 %files gb-memcached
-%_libdir/%name/gb.memcached.*
+%_libdir/gambas3/gb.memcached.*
 %appdir/info/gb.memcached.*
 
 %files gb-mime
-%_libdir/%name/gb.mime.*
+%_libdir/gambas3/gb.mime.*
 %appdir/info/gb.mime.*
 
 %files gb-ncurses
-%_libdir/%name/gb.ncurses.*
+%_libdir/gambas3/gb.ncurses.*
 %appdir/info/gb.ncurses.*
 
 %files gb-net
-%_libdir/%name/gb.net.component
-%_libdir/%name/gb.net.so*
-%_libdir/%name/gb.net.la
+%_libdir/gambas3/gb.net.component
+%_libdir/gambas3/gb.net.so*
+%_libdir/gambas3/gb.net.la
 %appdir/info/gb.net.info
 %appdir/info/gb.net.list
 %appdir/control/gb.net.pop3/
 %appdir/control/gb.net.smtp/
 
 %files gb-net-curl
-%_libdir/%name/gb.net.curl.*
+%_libdir/gambas3/gb.net.curl.*
 %appdir/info/gb.net.curl.*
 
 %files gb-net-pop3
-%_libdir/%name/gb.net.pop3.*
+%_libdir/gambas3/gb.net.pop3.*
 %appdir/info/gb.net.pop3.*
 
 %files gb-net-smtp
-%_libdir/%name/gb.net.smtp.*
+%_libdir/gambas3/gb.net.smtp.*
 %appdir/info/gb.net.smtp.*
 
 %files gb-openal
-%_libdir/%name/gb.openal.*
+%_libdir/gambas3/gb.openal.*
 %appdir/info/gb.openal.*
 
 %if_enabled opengl
 %files gb-opengl
-%_libdir/%name/gb.opengl.component
-%_libdir/%name/gb.opengl.so*
-%_libdir/%name/gb.opengl.la
+%_libdir/gambas3/gb.opengl.component
+%_libdir/gambas3/gb.opengl.so*
+%_libdir/gambas3/gb.opengl.la
 %appdir/info/gb.opengl.info
 %appdir/info/gb.opengl.list
 
 %files gb-opengl-sge
-%{_libdir}/%{name}/gb.opengl.sge.*
-%{_datadir}/%{name}/info/gb.opengl.sge.*
+%_libdir/gambas3/gb.opengl.sge.*
+%appdir/info/gb.opengl.sge.*
 
 %files gb-opengl-glu
-%_libdir/%name/gb.opengl.glu.*
+%_libdir/gambas3/gb.opengl.glu.*
 %appdir/info/gb.opengl.glu.*
 
 %files gb-opengl-glsl
-%_libdir/%name/gb.opengl.glsl.*
+%_libdir/gambas3/gb.opengl.glsl.*
 %appdir/info/gb.opengl.glsl.*
 %endif
 
 %files gb-openssl
-%{_libdir}/%{name}/gb.openssl.*
-%{_datadir}/%{name}/info/gb.openssl.*
-
+%_libdir/gambas3/gb.openssl.*
+%appdir/info/gb.openssl.*
 
 %files gb-option
-%_libdir/%name/gb.option.*
+%_libdir/gambas3/gb.option.*
 %appdir/info/gb.option.*
 
 %files gb-pcre
-%_libdir/%name/gb.pcre.*
+%_libdir/gambas3/gb.pcre.*
 %appdir/info/gb.pcre.*
 
 %files gb-pdf
-%_libdir/%name/gb.pdf.component
-%_libdir/%name/gb.pdf.so*
-%_libdir/%name/gb.pdf.la
+%_libdir/gambas3/gb.pdf.component
+%_libdir/gambas3/gb.pdf.so*
+%_libdir/gambas3/gb.pdf.la
 %appdir/info/gb.pdf.info
 %appdir/info/gb.pdf.list
 
 %files gb-qt4
-%_libdir/%name/gb.qt4.component
-%_libdir/%name/gb.qt4.so*
-%_libdir/%name/gb.qt4.la
+%_libdir/gambas3/gb.qt4.component
+%_libdir/gambas3/gb.qt4.so*
+%_libdir/gambas3/gb.qt4.la
 %appdir/info/gb.qt4.info
 %appdir/info/gb.qt4.list
 
 %files gb-qt4-ext
-%_libdir/%name/gb.qt4.ext.*
+%_libdir/gambas3/gb.qt4.ext.*
 %appdir/info/gb.qt4.ext.*
 
 %files gb-qt4-opengl
-%_libdir/%name/gb.qt4.opengl.*
+%_libdir/gambas3/gb.qt4.opengl.*
 %appdir/info/gb.qt4.opengl.*
 
 %files gb-qt4-webkit
-%_libdir/%name/gb.qt4.webkit.*
+%_libdir/gambas3/gb.qt4.webkit.*
 %appdir/info/gb.qt4.webkit.*
+%appdir/control/gb.qt4.webkit/webview.png
 
 %files gb-report
-%_libdir/%name/gb.report.*
+%_libdir/gambas3/gb.report.*
 %appdir/control/gb.report/
 %appdir/info/gb.report.*
 
 %files gb-report2
-%_libdir/%name/gb.report2.*
+%_libdir/gambas3/gb.report2.*
 %appdir/control/gb.report2/
 %appdir/info/gb.report2.*
 
 %files gb-scanner
-%_libdir/%name/gb.scanner.*
+%_libdir/gambas3/gb.scanner.*
 %appdir/info/gb.scanner.*
 
 %files gb-sdl
-%_libdir/%name/gb.sdl.component
-%_libdir/%name/gb.sdl.so
-%_libdir/%name/gb.sdl.so.*
-%_libdir/%name/gb.sdl.la
+%_libdir/gambas3/gb.sdl.component
+%_libdir/gambas3/gb.sdl.so
+%_libdir/gambas3/gb.sdl.so.*
+%_libdir/gambas3/gb.sdl.la
 %appdir/info/gb.sdl.info
 %appdir/info/gb.sdl.list
 
 %files gb-sdl-sound
-%_libdir/%name/gb.sdl.sound.*
+%_libdir/gambas3/gb.sdl.sound.*
 %appdir/info/gb.sdl.sound.*
 
 %files gb-sdl2
-%_libdir/%name/gb.sdl2.component
-%_libdir/%name/gb.sdl2.so
-%_libdir/%name/gb.sdl2.so.*
-%_libdir/%name/gb.sdl2.la
+%_libdir/gambas3/gb.sdl2.component
+%_libdir/gambas3/gb.sdl2.so
+%_libdir/gambas3/gb.sdl2.so.*
+%_libdir/gambas3/gb.sdl2.la
 %appdir/info/gb.sdl2.info
 %appdir/info/gb.sdl2.list
 
 %files gb-sdl2-audio
-%_libdir/%name/gb.sdl2.audio.component
-%_libdir/%name/gb.sdl2.audio.so
-%_libdir/%name/gb.sdl2.audio.so.*
-%_libdir/%name/gb.sdl2.audio.la
+%_libdir/gambas3/gb.sdl2.audio.component
+%_libdir/gambas3/gb.sdl2.audio.so
+%_libdir/gambas3/gb.sdl2.audio.so.*
+%_libdir/gambas3/gb.sdl2.audio.la
 %appdir/info/gb.sdl2.audio.info
 %appdir/info/gb.sdl2.audio.list
 
 %files gb-settings
-%_libdir/%name/gb.settings.*
+%_libdir/gambas3/gb.settings.*
 %appdir/info/gb.settings.*
 
 %files gb-signal
-%_libdir/%name/gb.signal.*
+%_libdir/gambas3/gb.signal.*
 %appdir/info/gb.signal.*
 
 %files gb-util
-%_libdir/%name/gb.util.component
-%_libdir/%name/gb.util.gambas
+%_libdir/gambas3/gb.util.component
+%_libdir/gambas3/gb.util.gambas
 %appdir/info/gb.util.info
 %appdir/info/gb.util.list
 
 %files gb-util-web
-%_libdir/%name/gb.util.web.*
+%_libdir/gambas3/gb.util.web.*
 %appdir/info/gb.util.web.*
 %appdir/control/gb.util.web/
 
 %files gb-v4l
-%_libdir/%name/gb.v4l.*
+%_libdir/gambas3/gb.v4l.*
 %appdir/info/gb.v4l.*
 
 %files gb-vb
-%_libdir/%name/gb.vb.*
+%_libdir/gambas3/gb.vb.*
 %appdir/info/gb.vb.*
 
 %files gb-web
-%_libdir/%name/gb.web.*
+%_libdir/gambas3/gb.web.*
 %appdir/info/gb.web.*
 %appdir/control/gb.web.*
 
 %files gb-xml
-%_libdir/%name/gb.xml.component
-%_libdir/%name/gb.xml.gambas
-%_libdir/%name/gb.xml.so*
-%_libdir/%name/gb.xml.la
+%_libdir/gambas3/gb.xml.component
+%_libdir/gambas3/gb.xml.gambas
+%_libdir/gambas3/gb.xml.so*
+%_libdir/gambas3/gb.xml.la
 %appdir/info/gb.xml.info
 %appdir/info/gb.xml.list
 
 %files gb-xml-html
-%_libdir/%name/gb.xml.html.*
+%_libdir/gambas3/gb.xml.html.*
 %appdir/info/gb.xml.html.*
 
 %files gb-xml-libxml
-%_libdir/%name/gb.libxml.*
+%_libdir/gambas3/gb.libxml.*
 %appdir/info/gb.libxml.*
 
 %files gb-xml-rpc
-%_libdir/%name/gb.xml.rpc.*
+%_libdir/gambas3/gb.xml.rpc.*
 %appdir/info/gb.xml.rpc.*
 
 %files gb-xml-xslt
-%_libdir/%name/gb.xml.xslt.*
+%_libdir/gambas3/gb.xml.xslt.*
 %appdir/info/gb.xml.xslt.*
 
 %files gb-form-editor
-%_libdir/%name/gb.form.editor.*
+%_libdir/gambas3/gb.form.editor.*
 %appdir/info/gb.form.editor.*
 %appdir/control/gb.form.editor/
 
 %files gb-qt5
-%_libdir/%name/gb.qt5.component
-%_libdir/%name/gb.qt5.so*
-%_libdir/%name/gb.qt5.la
+%_libdir/gambas3/gb.qt5.component
+%_libdir/gambas3/gb.qt5.so*
+%_libdir/gambas3/gb.qt5.la
 %appdir/info/gb.qt5.info
 %appdir/info/gb.qt5.list
 
 %files gb-qt5-opengl
-%_libdir/%name/gb.qt5.opengl.*
+%_libdir/gambas3/gb.qt5.opengl.*
 %appdir/info/gb.qt5.opengl.*
 
 %files gb-qt5-webkit
-%_libdir/%name/gb.qt5.webkit.*
+%_libdir/gambas3/gb.qt5.webkit.*
 %appdir/info/gb.qt5.webkit.*
+%appdir/control/gb.qt5.webkit/webview.png
 
 %files gb-qt5-ext
-%_libdir/%name/gb.qt5.ext.*
+%_libdir/gambas3/gb.qt5.ext.*
 %appdir/info/gb.qt5.ext.*
 
 %files gb-form-terminal
-%_libdir/%name/gb.form.terminal.*
+%_libdir/gambas3/gb.form.terminal.*
 %appdir/info/gb.form.terminal.*
 %appdir/control/gb.form.terminal/
+%appdir/control/gb.term.form/
 
 %files gb-term
-%_libdir/%name/gb.term.*
+%_libdir/gambas3/gb.term.*
 %appdir/info/gb.term.*
 
 %changelog
+* Tue Aug 21 2018 Andrey Cherepanov <cas@altlinux.org> 3.11.4-alt1
+- New version.
+
+* Wed Jul 25 2018 Andrey Cherepanov <cas@altlinux.org> 3.11.3-alt1
+- New version.
+- Rename from gambas3 to gambas.
+
 * Thu Jul 20 2017 Andrey Cherepanov <cas@altlinux.org> 3.10.0-alt1
 - New version (http://gambaswiki.org/wiki/doc/release/3.10.0)
 - New component gambas3-gb-term
