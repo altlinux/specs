@@ -1,9 +1,17 @@
 # ISBC package is disabled because the module is not packaged
 %def_disable isbc
 
+%ifarch %ix86 x86_64
+%def_enable rutokenecp
+%else
+%def_disable rutokenecp
+%endif
+
+
+
 Name: pkcs11-profiles
 Version: 0.1.5
-Release: alt3
+Release: alt4
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -25,7 +33,7 @@ BuildArch: noarch
 %description common
 Control scripts for profile-based PAM PKCS11 configuration.
 
-%ifnarch aarch64
+%if_enabled rutokenecp
 %package rutokenecp
 Summary: RuToken ECP PAM PKCS11 module configuration
 License: GPLv3+
@@ -115,7 +123,7 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %dir %confdir/param-set.d
 %config(noreplace) %confdir/param-set.d/default
 
-%ifnarch aarch64
+%if_enabled rutokenecp
 %files rutokenecp
 %config(noreplace) %confdir/modules.avail/rutokenecp
 %config(noreplace) %confdir/profiles/rutokenecp
@@ -139,6 +147,9 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/message.profiles/zastava
 
 %changelog
+* Wed Aug 22 2018 Ivan A. Melnikov <iv@altlinux.org> 0.1.5-alt4
+- Explicitly enable rutokenecp on %%ix86 and x86_64 only.
+
 * Wed Aug 22 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.5-alt3
 - Depend on libp11-kit >= 0.23.8 (no release version).
 
