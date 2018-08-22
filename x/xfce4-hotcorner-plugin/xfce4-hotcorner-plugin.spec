@@ -1,5 +1,5 @@
 Name: xfce4-hotcorner-plugin
-Version: 0.0.1
+Version: 0.0.2
 Release: alt1
 
 Summary: Hot corner plugin for Xfce4
@@ -19,6 +19,8 @@ BuildPreReq: libxfce4panel-devel libxfce4ui-devel
 BuildRequires: libwnck3-devel
 
 Requires: xfce4-panel >= 4.11
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 %name is a simple panel plugin, provide an easy way to set
@@ -43,5 +45,9 @@ sed -i 's;lib/xfce4/panel/plugins/;%_lib/xfce4/panel/plugins/;' CMakeLists.txt
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Wed Aug 22 2018 Mikhail Efremov <sem@altlinux.org> 0.0.2-alt1
+- Use _unpackaged_files_terminate_build.
+- Updated to 0.0.2.
+
 * Mon Jun 29 2015 Mikhail Efremov <sem@altlinux.org> 0.0.1-alt1
 - Initial build.
