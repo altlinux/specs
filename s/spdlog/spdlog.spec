@@ -1,6 +1,6 @@
 Name: spdlog
 Version: 0.17.0
-Release: alt1
+Release: alt2
 
 Summary: Super fast C++ logging library
 
@@ -12,6 +12,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/gabime/%name/archive/v%version.tar.gz
 Source: %name-%version.tar
+
+BuildRequires: ctest gcc-c++
 
 %description
 This is a packaged version of the gabime/spdlog header-only C++
@@ -30,17 +32,28 @@ applications that use %name.
 %setup
 %__subst "s|CHAR_WIDTH|SPDLOG_CHAR_WIDTH|g" include/spdlog/fmt/bundled/format.h
 
+%build
+%cmake
+%cmake_build
+
 %install
-find ./example -name '.gitignore' -exec rm {} \;
-mkdir -p %buildroot%_includedir
-cp -pvR include/spdlog %buildroot%_includedir/
+%cmakeinstall_std
+
+%check
+%cmake_build test
 
 %files -n lib%name-devel
 %doc README.md example/
 %doc LICENSE
 %_includedir/spdlog/
+%_libdir/cmake/spdlog/*.cmake
+%_pkgconfigdir/*.pc
 
 %changelog
+* Wed Aug 22 2018 Paul Wolneykien <manowar@altlinux.org> 0.17.0-alt2
+- Build the package. Install missing development configuration
+  files. Run tests.
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.17.0-alt1
 - new version 0.17.0 (with rpmrb script)
 
