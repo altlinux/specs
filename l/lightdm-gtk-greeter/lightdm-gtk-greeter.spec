@@ -3,7 +3,7 @@
 
 Name: lightdm-gtk-greeter
 Version: 2.0.1
-Release: alt9
+Release: alt10
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -68,6 +68,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Wed Aug 22 2018 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt10
+- Fixed rebuilding: Ignore the "format-nonliteral" warning/error.
+
 * Fri Sep 08 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt9
 - Fixed switch-to-user with newly created greeter.
 
