@@ -3,7 +3,7 @@
 
 Name: pkcs11-profiles
 Version: 0.1.5
-Release: alt2
+Release: alt3
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -56,7 +56,7 @@ License: GPLv3+
 Group: System/Configuration/Other
 Requires: %name-common = %version-%release
 Requires: pam_pkcs11 >= 0.6.9-alt17
-Requires: libp11-kit >= 0.23.8-alt2
+Requires: libp11-kit >= 0.23.8
 
 %description p11-kit-proxy
 PKCS#11 Kit Proxy module configuration
@@ -139,6 +139,9 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/message.profiles/zastava
 
 %changelog
+* Wed Aug 22 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.5-alt3
+- Depend on libp11-kit >= 0.23.8 (no release version).
+
 * Wed Aug 22 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.5-alt2
 - Skip "rutokenecp" profile for the "aarch64" arch.
 
