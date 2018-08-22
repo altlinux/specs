@@ -10,7 +10,7 @@
 %def_enable docs
 
 Name: flatpak
-Version: 0.11.8
+Version: 1.0.0
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -106,6 +106,7 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %files -f %name.lang
 %_bindir/%name
 %_bindir/%name-bisect
+%_bindir/%name-coredumpctl
 %_datadir/bash-completion
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/system-services/%xdg_name.SystemHelper.service
@@ -146,6 +147,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Wed Aug 22 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Fri Jun 08 2018 Yuri N. Sedunov <aris@altlinux.org> 0.11.8-alt1
 - 0.11.8
 
