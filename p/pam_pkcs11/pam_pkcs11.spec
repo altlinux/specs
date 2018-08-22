@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt32
+Release: alt34
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -170,6 +170,13 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ll_isbc.so
 
 %changelog
+* Mon Aug 13 2018 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt34
+- Distinguish between entering a wrong user PIN and SO PIN during
+  the PIN change / initialization procedure.
+
+* Mon Aug 06 2018 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt33
+- Fixed: Distinguish between expired PIN and other cases to change it.
+
 * Fri Jun 15 2018 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt32
 - Build with a new LibreSSL version (2.7.3).
 
