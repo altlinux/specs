@@ -1,6 +1,6 @@
 Name: spdlog
-Version: 0.17.0
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: Super fast C++ logging library
 
@@ -50,6 +50,9 @@ applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Aug 22 2018 Paul Wolneykien <manowar@altlinux.org> 1.1.0-alt1
+- New version: 1.1.0.
+
 * Wed Aug 22 2018 Paul Wolneykien <manowar@altlinux.org> 0.17.0-alt2
 - Build the package. Install missing development configuration
   files. Run tests.
