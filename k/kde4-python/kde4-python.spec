@@ -10,7 +10,7 @@
 %define rname pykde4
 Name: kde4-python
 Version: 4.14.3
-Release: alt5%ubt
+Release: alt6%ubt
 
 Group: Development/KDE and QT
 Summary: Python bindings for KDE4
@@ -90,6 +90,7 @@ Python bindings for KDE4
 %files -n python-module-kde4
 %dir %python_sitelibdir/PyKDE4
 %python_sitelibdir/PyKDE4/*
+%exclude %python_sitelibdir/PyKDE4/pykdeconfig.*
 %python_sitelibdir/PyQt4/uic/widget-plugins/*
 %_K4apps/pykde4
 %_K4lib/kpythonpluginfactory.so
@@ -97,11 +98,15 @@ Python bindings for KDE4
 %files devel
 %_bindir/pykdeuic4*
 %python_sitelibdir/PyQt4/uic/pykdeuic4.py*
+%python_sitelibdir/PyKDE4/pykdeconfig.*
 #%_docdir/pykde4/examples/
 %_datadir/sip/PyKDE4/
 
 
 %changelog
+* Wed Aug 22 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt6%ubt
+- move pykdeconfig to devel subpackage
+
 * Mon Feb 26 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt5%ubt
 - add fixes against new sip
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.12.1
-Release: alt2.S1.1.1
+Release: alt3%ubt
 Summary: Python bindings for Qt4
 License: GPL
 Group: Development/Python
@@ -59,7 +59,6 @@ code generator for Qt4 Designer.
 %package -n python3-module-%oname-devel
 Requires: python3-module-%oname = %version-%release
 Summary:  Sip files for %name (Python 3)
-BuildArch: noarch
 Group: Development/Python3
 %py3_provides %oname-devel
 
@@ -70,7 +69,6 @@ Sip files for PyQt4 to build extension
 %package devel
 Requires: %name = %version-%release
 Summary:  Sip files for %name
-BuildArch: noarch
 Group: Development/Python
 %py_package_provides %modulename-devel = %version-%release
 
@@ -202,9 +200,11 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %exclude %_bindir/*.py3
 %endif
 %python_sitelibdir/*
-%_qt4dir/plugins/designer/libpyqt4.so
+%exclude %python_sitelibdir/PyQt4/pyqtconfig.*
 
 %files devel
+%_qt4dir/plugins/designer/libpyqt4.so
+%python_sitelibdir/PyQt4/pyqtconfig.*
 %dir %_datadir/sip
 %_datadir/sip/*
 %dir %_datadir/qt4
@@ -222,8 +222,10 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %files -n python3-module-%oname
 %_bindir/*.py3
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/PyQt4/pyqtconfig.*
 
 %files -n python3-module-%oname-devel
+%python3_sitelibdir/PyQt4/pyqtconfig.*
 %dir %_datadir/sip3
 %_datadir/sip3/*
 %dir %_datadir/qt4
@@ -231,6 +233,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Wed Aug 22 2018 Sergey V Turchin <zerg@altlinux.org> 4.12.1-alt3%ubt
+- move pyqtconfig to devel subpackage
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.12.1-alt2.S1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
