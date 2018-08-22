@@ -6,7 +6,7 @@
 Name: lightdm-gtk-greeter-pd
 Epoch: 1
 Version: 2.0.1.5
-Release: alt1
+Release: alt3
 Summary: LightDM GTK+ Greeter (prompt-driven)
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -76,6 +76,12 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Wed Aug 22 2018 Paul Wolneykien <manowar@altlinux.org> 1:2.0.1.5-alt3
+- Fixed rebuilding: Ignore the "format-nonliteral" warning/error.
+
+* Wed Aug 22 2018 Paul Wolneykien <manowar@altlinux.org> 1:2.0.1.5-alt2
+- Rebuild the package to make it available for the "aarch64" arch.
+
 * Fri Nov 17 2017 Paul Wolneykien <manowar@altlinux.org> 1:2.0.1.5-alt1
 - A better layout for error messages.
 
@@ -110,7 +116,7 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 - Fix/Improve: Leave the password change mode on cancel only,
   don\'t leave on error.
 
-* Wed Nov 01 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt5
+* Wed Nov 01 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt15
 - Make the login and cancel button labels configurable.
 - Use CSS to style the prompt and error messages.
 - Activate the change password function by the double click on
@@ -118,14 +124,14 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 - Activate the change password function by a configurable accelerator
   key.
 
-* Mon Oct 30 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt4
+* Mon Oct 30 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt14
 - Calculate the 'advanced' diff locally.
 - Read the patches/advanced tree into the master branch.
 
-* Wed Oct 25 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt3
+* Wed Oct 25 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt13
 - Fixed missing GtkBox object IDs.
 
-* Tue Oct 24 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt2
+* Tue Oct 24 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt12
 - Clear PAM errors on reset() or when a new username is selected
   from the list.
 - Show change pass button unconditionally when no trigger messages
@@ -133,7 +139,7 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
   shown.
 - Conditional change pass (PIN) button.
 
-* Mon Oct 23 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt1
+* Mon Oct 23 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt11
 - A prompt-driven greeter.
 - New dialog the layout!
 - Require lightdm >= 1.16.7-alt11.
