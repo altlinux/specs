@@ -2,7 +2,12 @@
 # obsileted koffice version
 %define koffice_ver 4:2.3.70
 
-%define sover 18
+%define sover 17
+%define libkritacommand libkritacommand%sover
+%define libkritaimpex libkritaimpex%sover
+%define libkritalibkis libkritalibkis%sover
+%define libkritalibkra libkritalibkra%sover
+%define libkritaqml libkritaqml%sover
 %define libkritawidgetutils libkritawidgetutils%sover
 %define libkritavectorimage libkritavectorimage%sover
 %define libkritaglobal libkritaglobal%sover
@@ -26,8 +31,8 @@
 %define libkritatext libkritatext%sover
 
 Name: krita
-Version: 3.3.2
-Release: alt2%ubt
+Version: 4.1.1
+Release: alt1%ubt
 %K5init no_altplace
 
 Group: Graphics
@@ -51,10 +56,12 @@ BuildRequires(pre): rpm-build-ubt rpm-build-kf5
 BuildRequires: zlib-devel libssl-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-multimedia-devel qt5-svg-devel qt5-wayland-devel qt5-x11extras-devel
-BuildRequires: boost-devel eigen3 libquadmath-devel libfftw3-devel libgomp-devel libgsl-devel
+BuildRequires: python-module-PyQt5-devel
+BuildRequires: boost-devel eigen3 libfftw3-devel libgomp-devel libgsl-devel
+#BuildRequires: libquadmath-devel
 BuildRequires: libXres-devel libxcbutil-devel
 BuildRequires: libjpeg-devel libpng-devel libpoppler-qt5-devel libraw-devel libtiff-devel openexr-devel
-BuildRequires: libexiv2-devel liblcms2-devel
+BuildRequires: libexiv2-devel liblcms2-devel libheif-devel
 BuildRequires: kf5-karchive-devel kf5-kcrash-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kwindowsystem-devel
 
 %description
@@ -224,6 +231,41 @@ Requires: %name-common = %EVR
 %description -n %libkritawidgetutils
 %name library
 
+%package -n %libkritacommand
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n %libkritacommand
+%name library
+
+%package -n %libkritaimpex
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n %libkritaimpex
+%name library
+
+%package -n %libkritalibkis
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n %libkritalibkis
+%name library
+
+%package -n %libkritalibkra
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n %libkritalibkra
+%name library
+
+%package -n %libkritaqml
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n %libkritaqml
+%name library
+
 %prep
 %setup
 
@@ -252,6 +294,7 @@ done
 %config(noreplace) %_K5xdgconf/kritarc
 %_K5bin/krita
 %_libdir/kritaplugins/
+%_K5qml/org/krita/
 %_datadir/krita/
 %_datadir/kritaplugins/
 %_datadir/color/icc/krita/
@@ -264,6 +307,22 @@ done
 #%_K5link/lib*.so
 #%_K5inc/krita/
 #%_K5inc/*.h
+
+%files -n %libkritacommand
+%_libdir/libkritacommand.so.%sover
+%_libdir/libkritacommand.so.*
+%files -n %libkritaimpex
+%_libdir/libkritaimpex.so.%sover
+%_libdir/libkritaimpex.so.*
+%files -n %libkritalibkis
+%_libdir/libkritalibkis.so.%sover
+%_libdir/libkritalibkis.so.*
+%files -n %libkritalibkra
+%_libdir/libkritalibkra.so.%sover
+%_libdir/libkritalibkra.so.*
+%files -n %libkritaqml
+%_libdir/libkritaqml.so.%sover
+%_libdir/libkritaqml.so.*
 
 %files -n %libkritatext
 %_libdir/libkritatext.so.%sover
@@ -305,9 +364,9 @@ done
 %_libdir/libkritatextlayout.so.%sover
 %_libdir/libkritatextlayout.so.*
 
-%files -n %libkritaundo2
-%_libdir/libkritaundo2.so.%sover
-%_libdir/libkritaundo2.so.*
+#%files -n %libkritaundo2
+#%_libdir/libkritaundo2.so.%sover
+#%_libdir/libkritaundo2.so.*
 
 %files -n %libkritaflake
 %_libdir/libkritaflake.so.%sover
@@ -350,6 +409,9 @@ done
 %_libdir/libkritawidgetutils.so.*
 
 %changelog
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 4.1.1-alt1%ubt
+- new version
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.2-alt2%ubt
 - NMU: rebuilt with boost-1.67.0
 
