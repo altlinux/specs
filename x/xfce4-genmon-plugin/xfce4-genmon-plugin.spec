@@ -1,12 +1,12 @@
 Name: xfce4-genmon-plugin
-Version: 3.4
-Release: alt2
+Version: 4.0.1
+Release: alt1
 
 Summary: Generic monitor plugin for the Xfce panel
 License: %lgpl2plus
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 
 # git://git.xfce.org/panel-plugins/xfce4-genmon-plugin
 Source: %name-%version.tar
@@ -15,10 +15,12 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfce4ui-devel
+BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
 BuildRequires: intltool perl-XML-Parser
 
 Requires: xfce4-panel >= 4.9
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 The GenMon plugin cyclically spawns the indicated script/program,
@@ -31,7 +33,7 @@ captures its output and displays it as a string into the panel.
 %build
 %xfce4reconf
 %configure \
-    --enable-debug=no
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -46,6 +48,13 @@ captures its output and displays it as a string into the panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Aug 22 2018 Mikhail Efremov <sem@altlinux.org> 4.0.1-alt1
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Drop obsoleted patch.
+- Updated to 4.0.1.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 3.4-alt2
 - Rebuild with libxfce4util-4.12.
 - Fix Xfce name (XFCE -> Xfce).
