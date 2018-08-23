@@ -1,7 +1,7 @@
 %define oname eigen
 Name: %{oname}3
-Version: 3.3.4
-Release: alt4
+Version: 3.3.5
+Release: alt1
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
 Group: Development/C++
@@ -81,10 +81,6 @@ cmake \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 	-DEIGEN_INCLUDE_INSTALL_DIR:PATH=%_includedir/%name \
-	-DPASTIX_INCLUDES:STRING="$(pastix-conf --incs)" \
-	-DPASTIX_LIBRARIES:STRING="$(pastix-conf --libs)" \
-	-DSCOTCH_INCLUDES:STRING="$(pkg-config scotch --cflags)" \
-	-DSCOTCH_LIBRARIES:STRING="$(pkg-config scotch --libs)" \
 	-DGOOGLEHASH_INCLUDES:PATH="%_includedir/google" \
 	-DGOOGLEHASH_COMPILE:STRING="g++ %optflags" \
 	-DPKGCONFIG_INSTALL_DIR=%_pkgconfigdir \
@@ -116,6 +112,9 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %doc BUILD/doc/html/*
 
 %changelog
+* Thu Aug 23 2018 Andrey Cherepanov <cas@altlinux.org> 3.3.5-alt1
+- New version.
+
 * Wed Jan 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.3.4-alt4
 - NMU: fixed FindEigen3.cmake (added fedora patches)
 - added -devel provides (TODO: eigen3 should be renamed to eigen3-devel)
