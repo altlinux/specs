@@ -1,11 +1,11 @@
 Name: xfce4-smartbookmark-plugin
-Version: 0.4.6
+Version: 0.5.0
 Release: alt1
 
 Summary: Smart bookmarks for the Xfce panel
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
@@ -14,11 +14,13 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfce4ui-devel
+BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
 
-BuildRequires: intltool libXt-devel libgtk+2-devel perl-XML-Parser xorg-cf-files
+BuildRequires: intltool libXt-devel libgtk+3-devel perl-XML-Parser xorg-cf-files
 
 Requires: xfce4-panel >= 4.8
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 A plugin which allows you to do a search directly on Internet on sites
@@ -33,7 +35,7 @@ directly to your browser and perform custom searches.
 %xfce4reconf
 %configure \
 	--disable-static \
-	--enable-debug=no
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -47,6 +49,12 @@ directly to your browser and perform custom searches.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Wed Aug 22 2018 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt1
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Updated to 0.5.0.
+
 * Wed Mar 25 2015 Mikhail Efremov <sem@altlinux.org> 0.4.6-alt1
 - Updated to 0.4.6.
 
