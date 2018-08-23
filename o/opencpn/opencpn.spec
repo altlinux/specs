@@ -1,13 +1,14 @@
-Name:		opencpn
-Version:	4.4.0
-Release:	alt1
-Summary:	A free and open source software for marine navigation
+Name: opencpn
+Version: 4.4.0
+Release: alt2
+Summary: A free and open source software for marine navigation
 
-Group:		Other
-License:	%gpl2only
-URL:		http://opencpn.org
-Source0:	OpenCPN-%{version}.tar.gz
-Source1:	%name.desktop
+Group: Other
+License: %gpl2only
+Url: http://opencpn.org
+Source0: OpenCPN-%version.tar.gz
+Source1: %name.desktop
+Patch: opencpn-4.4.0-fix_library_path.patch
 
 Requires: %name-data
 
@@ -29,7 +30,7 @@ developed by a team of active sailors using real world conditions for program
 testing and refinement.
 
 %package data
-Summary: Architecture independent files for OpenCPN.
+Summary: Architecture independent files for OpenCPN
 Group: Other
 BuildArch: noarch
 
@@ -37,7 +38,8 @@ BuildArch: noarch
 Architecture independent files for OpenCPN.
 
 %prep
-%setup -q -n OpenCPN-%{version}
+%setup -n OpenCPN-%version
+%patch -p2
 
 #patch100 -p1
 
@@ -52,50 +54,55 @@ make
 
 %install
 cd BUILD
-make install DESTDIR=%{buildroot}
-cp -f %{SOURCE1} %{buildroot}%{_datadir}/applications
+make install DESTDIR=%buildroot
+cp -f %SOURCE1 %buildroot%_datadir/applications
 
 # It is copied from %%_builddir by %%doc macro, so removed from %%buildroot
-rm -rf %{buildroot}/%{_datadir}/doc
-rm -rf %{buildroot}/%{_datadir}/%{name}/doc
-rm -f  %{buildroot}/%{_datadir}/%{name}/license.txt
+rm -rf %buildroot/%_datadir/doc
+rm -rf %buildroot/%_datadir/%name/doc
+rm -f  %buildroot/%_datadir/%name/license.txt
 
-%find_lang %{name}
-%find_lang --append --output=%{name}.lang %{name}-dashboard_pi
-%find_lang --append --output=%{name}.lang %{name}-grib_pi
-%find_lang --append --output=%{name}.lang %{name}-wmm_pi
-%find_lang --append --output=%{name}.lang %{name}-chartdldr_pi
+%find_lang %name
+%find_lang --append --output=%name.lang %name-dashboard_pi
+%find_lang --append --output=%name.lang %name-grib_pi
+%find_lang --append --output=%name.lang %name-wmm_pi
+%find_lang --append --output=%name.lang %name-chartdldr_pi
 
 %files
-%dir %{_libdir}/%{name}
+%dir %_libdir/%name
 
-%{_bindir}/opencpn
-%{_libdir}/opencpn/*_pi.so
+%_bindir/opencpn
+%_libdir/opencpn/*_pi.so
 
-%files data -f BUILD/%{name}.lang
+%files data -f BUILD/%name.lang
 %doc data/doc/*
 %doc data/license.txt
 
-%dir %{_datadir}/%{name}
-%dir %{_datadir}/%{name}/sounds
-#dir %{_datadir}/%{name}/gshhs
-#dir %{_datadir}/%{name}/tcdata
-%dir %{_datadir}/%{name}/s57data
-%dir %{_datadir}/%{name}/uidata
-%dir %{_datadir}/%{name}/plugins
+%dir %_datadir/%name
+%dir %_datadir/%name/sounds
+#dir %_datadir/%name/gshhs
+#dir %_datadir/%name/tcdata
+%dir %_datadir/%name/s57data
+%dir %_datadir/%name/uidata
+%dir %_datadir/%name/plugins
 
-%{_datadir}/%{name}/sounds/*
-#{_datadir}/%{name}/gshhs/*
-#{_datadir}/%{name}/tcdata/*
-%{_datadir}/%{name}/s57data/*
-%{_datadir}/%{name}/uidata/*
-%{_datadir}/%{name}/plugins/*
+%_datadir/%name/sounds/*
+#{_datadir}/%name/gshhs/*
+#{_datadir}/%name/tcdata/*
+%_datadir/%name/s57data/*
+%_datadir/%name/uidata/*
+%_datadir/%name/plugins/*
 
-%{_iconsdir}/hicolor/48x48/apps/*
-%{_iconsdir}/hicolor/scalable/apps/*
-%{_datadir}/applications/%{name}.desktop
+%_iconsdir/hicolor/48x48/apps/*
+%_iconsdir/hicolor/scalable/apps/*
+%_datadir/applications/%name.desktop
 
 %changelog
+* Wed Aug 22 2018 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt2
+- Fix library path.
+- Little cleanup spec.
+- Fix bogus date in changelog.
+
 * Thu Dec 01 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.4.0-alt1
 - New version
 
@@ -106,5 +113,5 @@ rm -f  %{buildroot}/%{_datadir}/%{name}/license.txt
 * Wed Apr 03 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.2.0-alt1
 - Initial build for ALT Linux
 
-* Sun Sep 22 2012 Eric 'Sparks' Christensen <sparks@fedoraproject.org> - 3.0.2-1
+* Sat Sep 22 2012 Eric 'Sparks' Christensen <sparks@fedoraproject.org> - 3.0.2-1
 - Initial package.
