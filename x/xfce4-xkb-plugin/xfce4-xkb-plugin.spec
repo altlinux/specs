@@ -1,12 +1,12 @@
 Name: xfce4-xkb-plugin
-Version: 0.7.1
+Version: 0.8.1
 Release: alt1
 
 Summary: XKB layout switch plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Дополнение для панели Xfce для работы с раскладками клавиатуры
-License: %bsdstyle
+License: %bsd
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/panel-plugins/xfce4-xkb-plugin
+Url: https://goodies.xfce.org/projects/panel-plugins/xfce4-xkb-plugin
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
@@ -15,10 +15,12 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfce4ui-devel libgarcon-devel
-BuildRequires: libSM-devel librsvg-devel libwnck-devel libxklavier-devel perl-XML-Parser xorg-cf-files intltool
+BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libgarcon-devel
+BuildRequires: libSM-devel librsvg-devel libwnck3-devel libxklavier-devel perl-XML-Parser xorg-cf-files intltool
 
 Requires: xfce4-panel
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 %name is the indicator and switcher of keyboard layout for XKB on the
@@ -39,10 +41,10 @@ XFce panel.
 
 %build
 # Don't use git tag in version.
-%xfce4_drop_gitvtag xkb_version_tag configure.in.in
+%xfce4_drop_gitvtag xkb_version_tag configure.ac.in
 %xfce4reconf
 %configure \
-    --enable-debug=no
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -51,13 +53,25 @@ XFce panel.
 
 %files -f %name.lang
 %doc README AUTHORS
-%_libexecdir/xfce4/panel-plugins/*
+%_libdir/xfce4/panel/plugins/*.so
 %dir %_datadir/xfce4/xkb
 %dir %_datadir/xfce4/xkb/flags
 %_datadir/xfce4/xkb/flags/*
 %_datadir/xfce4/panel/plugins/*.desktop
 
+%exclude %_libdir/xfce4/panel/plugins/*.la
+# Seems glibc doesn't support uz@Latn
+%exclude %_datadir/locale/uz@Latn/LC_MESSAGES/xfce4-xkb-plugin.mo
+
 %changelog
+* Thu Aug 23 2018 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
+- Don't package uz@Latn translation.
+- Fix license.
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Updated to 0.8.1.
+
 * Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 0.7.1-alt1
 - Fix Xfce name (XFce,XFCE -> Xfce).
 - Updated to 0.7.1.
