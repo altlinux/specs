@@ -1,11 +1,11 @@
 Name: xfce4-sensors-plugin
-Version: 1.2.6
+Version: 1.3.0
 Release: alt1
 
 Summary: Sensors plugin for Xfce Desktop
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
@@ -14,10 +14,12 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfce4util-devel
+BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: hddtemp intltool libsensors3-devel libnotify-devel
 
 Requires: xfce4-panel >= 4.8 hddtemp lm_sensors3
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 %name
@@ -36,7 +38,7 @@ Requires: xfce4-panel >= 4.8 hddtemp lm_sensors3
     --enable-procacpi \
     --enable-sysfsacpi \
     --enable-notification \
-    --enable-debug=no
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -48,14 +50,23 @@ Requires: xfce4-panel >= 4.8 hddtemp lm_sensors3
 %_bindir/*
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
-%_libexecdir/xfce4/panel-plugins/%name
+%_libdir/xfce4/panel/plugins/*.so
 %_libdir/xfce4/modules/libxfce4sensors.so*
 %_liconsdir/*.png
 %_datadir/xfce4/panel/plugins/*.desktop
+%_datadir/xfce4/panel/plugins/%name.css
+%_man1dir/xfce4-sensors.1*
 %exclude %_pkgconfigdir/*.pc
 %exclude %_libdir/xfce4/modules/libxfce4sensors.la
+%exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Aug 22 2018 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt1
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Updated to 1.3.0.
+
 * Fri Feb 27 2015 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt1
 - Fix Xfce name (XFce,XFCE -> Xfce).
 - Updated to 1.2.6.
