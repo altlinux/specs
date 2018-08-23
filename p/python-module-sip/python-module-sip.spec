@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.19.7
-Release: alt1.1
+Release: alt1.3
 
 Summary: Python bindings generator for C++ class libraries
 
@@ -56,7 +56,6 @@ generated bindings.
 Requires: python3-module-%oname = %version-%release
 Summary: Header files for sip (Python 3)
 Group: Development/Python3
-BuildArch: noarch
 Requires: python3-devel
 
 %description -n python3-module-%oname-devel
@@ -67,7 +66,6 @@ Header files for sip
 Requires: %name = %version-%release
 Summary: Header files for sip
 Group: Development/Python
-BuildArch: noarch
 Provides: %modulename-devel = %version-%release
 %py_package_provides %modulename-devel = %version-%release
 Obsoletes: %modulename-devel
@@ -125,13 +123,18 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %makeinstall_std
 
 %files
-%_bindir/*
-%exclude %_bindir/sip3
+%_bindir/sip
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*.pyi
+%exclude %python_sitelibdir/sipconfig.*
+%exclude %python_sitelibdir/sipdistutils.*
 %doc README NEWS LICENSE*
 
 %files devel
 %python_includedir/*
+%python_sitelibdir/*.pyi
+%python_sitelibdir/sipconfig.*
+%python_sitelibdir/sipdistutils.*
 #doc doc/*
 
 %if_with python3
@@ -139,14 +142,26 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %doc README NEWS LICENSE*
 %_bindir/sip3
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pyi
+%exclude %python3_sitelibdir/sipconfig.*
+%exclude %python3_sitelibdir/sipdistutils.*
 
 %files -n python3-module-%oname-devel
 # Here, we just use the same path as in the build system:
 %__python3_includedir/*
+%python3_sitelibdir/*.pyi
+%python3_sitelibdir/sipconfig.*
+%python3_sitelibdir/sipdistutils.*
 #doc doc/*
 %endif
 
 %changelog
+* Wed Aug 22 2018 Sergey V Turchin <zerg@altlinux.org> 4.19.7-alt1.3
+- move sipconfig and sipdistutils to devel subpackage
+
+* Wed Aug 22 2018 Sergey V Turchin <zerg@altlinux.org> 4.19.7-alt1.2
+- move .pyi to devel subpackage
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.19.7-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
