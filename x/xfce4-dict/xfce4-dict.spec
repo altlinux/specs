@@ -1,12 +1,12 @@
 Name: xfce4-dict
-Version: 0.7.2
+Version: 0.8.1
 Release: alt1
 
 Summary: Xfce4 Dictionary - A client program to query different dictionaries
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 # git://git.xfce.org/apps/xfce4-dict
 Source: %name-%version.tar
 
@@ -16,10 +16,13 @@ Provides: xfce4-dict-plugin
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfce4util-devel
+BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
+BuildRequires: libgio-devel
 BuildRequires: intltool
 
 Requires: enchant xdg-utils
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 This program allows you to search different kinds of dictionary services
@@ -37,7 +40,7 @@ panel plugin for the Xfce panel.
 %build
 %xfce4reconf
 %configure \
-    --enable-debug=no
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -56,6 +59,12 @@ panel plugin for the Xfce panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Aug 22 2018 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Updated to 0.8.1.
+
 * Wed Apr 27 2016 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1
 - Updated to 0.7.2.
 
