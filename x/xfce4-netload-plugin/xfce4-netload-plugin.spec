@@ -1,12 +1,12 @@
 Name: xfce4-netload-plugin
-Version: 1.2.4
-Release: alt2
+Version: 1.3.1
+Release: alt1
 
 Summary: Netload monitor plugin for the Xfce panel
-Summary(ru_RU.CP1251): Модуль для просмотра загрузки сети на панели Xfce
+Summary(ru_RU.UTF-8): РњРѕРґСѓР»СЊ РґР»СЏ РїСЂРѕСЃРјРѕС‚СЂР° Р·Р°РіСЂСѓР·РєРё СЃРµС‚Рё РЅР° РїР°РЅРµР»Рё Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 Packager: Xfce Team <xfce@packages.altlinux.org>
 # git://git.xfce.org/panel-plugins/xfce4-netload-plugin
 Source: %name-%version.tar
@@ -15,18 +15,20 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfce4util-devel
+BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 
-BuildRequires: glib2-devel libatk-devel libgtk+2-devel libpango-devel libxml2-devel pkgconfig
+BuildRequires: glib2-devel libatk-devel libgtk+3-devel libpango-devel libxml2-devel pkgconfig
 BuildRequires: perl-XML-Parser intltool
 
 Requires: xfce4-panel >= 4.8
 
+%define _unpackaged_files_terminate_build 1
+
 %description
 %name is the netload monitor plugin for the Xfce panel.
 
-%description -l ru_RU.CP1251
-%name -- это монитор загрузки сети для панели Xfce.
+%description -l ru_RU.UTF-8
+%name -- СЌС‚Рѕ РјРѕРЅРёС‚РѕСЂ Р·Р°РіСЂСѓР·РєРё СЃРµС‚Рё РґР»СЏ РїР°РЅРµР»Рё Xfce.
 
 %prep
 %setup
@@ -35,7 +37,7 @@ Requires: xfce4-panel >= 4.8
 %build
 %xfce4reconf
 %configure \
-    --enable-debug=no
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -51,6 +53,13 @@ Requires: xfce4-panel >= 4.8
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Aug 22 2018 Mikhail Efremov <sem@altlinux.org> 1.3.1-alt1
+- Convert Russian summary/description to UTF-8.
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Updated to 1.3.1.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt2
 - Rebuild with libxfce4util-4.12.
 
