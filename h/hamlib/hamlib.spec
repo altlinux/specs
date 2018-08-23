@@ -2,7 +2,7 @@
 %def_without winradio
 
 Name:           hamlib
-Version:        3.2
+Version:        3.3
 Release:        alt1
 Summary:        Run-time library to control radio transceivers and receivers
 
@@ -200,6 +200,9 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_libdir/tcl*/Hamlib/hamlibtcl*
 
 %changelog
+* Thu Aug 23 2018 Andrey Cherepanov <cas@altlinux.org> 3.3-alt1
+- New version.
+
 * Mon Apr 02 2018 Andrey Cherepanov <cas@altlinux.org> 3.2-alt1
 - New version.
 - Enable Lua and readline support.
