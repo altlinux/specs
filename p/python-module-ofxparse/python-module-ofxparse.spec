@@ -1,8 +1,8 @@
 %define  modulename ofxparse
 
 Name:    python-module-%modulename
-Version: 0.17
-Release: alt2
+Version: 0.19
+Release: alt1
 
 Summary: Tools for working with the OFX (Open Financial Exchange) file format
 License: MIT
@@ -68,6 +68,9 @@ popd
 
 
 %changelog
+* Thu Aug 23 2018 Andrey Cherepanov <cas@altlinux.org> 0.19-alt1
+- New version.
+
 * Wed Mar 21 2018 Andrey Cherepanov <cas@altlinux.org> 0.17-alt2
 - Build both for Python2 and Python3.
 
