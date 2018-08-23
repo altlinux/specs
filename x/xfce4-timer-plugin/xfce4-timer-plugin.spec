@@ -1,11 +1,11 @@
 Name: xfce4-timer-plugin
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: Timer plugin for Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # git.alt:packages/xfce4-timer-plugin.git
@@ -15,7 +15,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4util-devel libxfce4ui-devel libxfce4panel-devel
+BuildPreReq: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel
 BuildRequires: perl-XML-Parser intltool
 
 Requires: xfce4-panel
@@ -33,7 +33,8 @@ of them can be run at a time.
 
 %build
 %xfce4reconf
-%configure
+%configure \
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -42,11 +43,18 @@ of them can be run at a time.
 
 %files -f %name.lang
 %doc README ChangeLog AUTHORS
-%_libexecdir/xfce4/panel-plugins/*
+%_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
-%_liconsdir/*
+%_iconsdir/hicolor/*/apps/*.*
+
+%exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Aug 23 2018 Mikhail Efremov <sem@altlinux.org> 1.7.0-alt1
+- Update url.
+- Explicitly set debug level minimum.
+- Updated to 1.7.0.
+
 * Wed Jun 08 2016 Mikhail Efremov <sem@altlinux.org> 1.6.0-alt1
 - Updated translations from upstream git.
 - Updated to 1.6.0.
