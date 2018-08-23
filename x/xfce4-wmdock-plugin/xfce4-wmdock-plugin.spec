@@ -1,13 +1,16 @@
+%define git_hash .git4790d2c1d5
+#define git_hash %nil
+
 Name: xfce4-wmdock-plugin
-Version: 0.3.4
-Release: alt4
+Version: 0.6.0
+Release: alt1%git_hash
 
 Summary: Support WindowMaker dockapps for the Xfce panel
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -18,6 +21,8 @@ BuildPreReq: libxfce4util-devel libxfcegui4-devel libxfce4panel-devel
 BuildRequires: libwnck-devel intltool
 
 Requires: xfce4-panel >= 4.8
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 The WMdock plugin is a compatibility layer for running WindowMaker
@@ -32,7 +37,7 @@ respectively.
 %build
 %xfce4reconf
 %configure \
-    --enable-debug=no
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -46,6 +51,12 @@ respectively.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Thu Aug 23 2018 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1.git4790d2c1d5
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Upstream git snapshot.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.3.4-alt4
 - Rebuild with libxfce4util-4.12.
 - Fix Xfce name (XFce,XFCE -> Xfce).
