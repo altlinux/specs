@@ -36,7 +36,7 @@
 %def_without jemalloc
 
 Name: mariadb-compat
-Version: 10.1.34
+Version: 10.1.35
 Release: alt1%ubt
 
 Summary: A very fast and reliable SQL database engine
@@ -520,7 +520,7 @@ grep -EZl '^[[:space:]]*use the ' %buildroot%_bindir/* |
          xargs -r0 subst -p 's/\([[:space:]]*\)\(use the \)/\1then \2/g'
 
 
-subst -p 's/\(BUGmysql="\)\([^"]*\)"/\1\2,mysql@packages.altlinux.org"/g' %buildroot%_bindir/mysqlbug
+#subst -p 's/\(BUGmysql="\)\([^"]*\)"/\1\2,mysql@packages.altlinux.org"/g' %buildroot%_bindir/mysqlbug
 
 mkdir -p %buildroot%_docdir/%name-%version
 install -p -m644 README %SOURCE14 BUILD/support-files/*.cnf %buildroot%_docdir/%name-%version
@@ -813,6 +813,9 @@ fi
 %endif
 
 %changelog
+* Thu Aug 23 2018 Alexey Shabalin <shaba@altlinux.org> 10.1.35-alt1%ubt
+- 10.1.35
+
 * Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 10.1.34-alt1%ubt
 - 10.1.34
 
