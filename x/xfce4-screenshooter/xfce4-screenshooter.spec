@@ -2,14 +2,14 @@
 %define git_date %nil
 
 Name: xfce4-screenshooter
-Version: 1.8.2
-Release: alt2%git_date
+Version: 1.9.3
+Release: alt1%git_date
 
 Summary: Screenshot Xfce4 panel plugin
 Summary (ru_RU.UTF-8): Дополнение для панели Xfce позволяющее делать снимки экрана
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/applications/xfce4-screenshooter
+Url: https://goodies.xfce.org/projects/applications/xfce4-screenshooter
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/apps/xfce4-screenshooter
@@ -19,12 +19,14 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfce4util-devel libexo-devel
-BuildPreReq: libxml2-devel
+BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel
+BuildPreReq: libxml2-devel libXi-devel
 BuildRequires: intltool libsoup-devel libXext-devel libICE-devel libXfixes-devel libSM-devel
 
 Provides:  xfce4-screenshooter-plugin = %version-%release
 Obsoletes: xfce4-screenshooter-plugin < %version-%release
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 This application allows you to capture the entire screen, the active
@@ -52,7 +54,7 @@ mkdir m4/
 %build
 %xfce4reconf
 %configure \
-    --enable-debug=no
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -73,6 +75,12 @@ mkdir m4/
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Aug 22 2018 Mikhail Efremov <sem@altlinux.org> 1.9.3-alt1
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Updated to 1.9.3.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt2
 - Rebuild with libxfce4util-4.12.
 
