@@ -1,13 +1,13 @@
 Name: xfce4-mount-plugin
-Version: 0.6.7
-Release: alt3
+Version: 1.1.3
+Release: alt1
 
 Summary: Mount plugin for Xfce Desktop
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 # Upstream: git://git.xfce.org/panel-plugins/xfce4-mount-plugin
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -15,10 +15,12 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfce4ui-devel
+BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
 BuildRequires: perl-XML-Parser intltool
 
 Requires: xfce4-panel
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 %name this little plugin behaves like the "kwikdisk - removable media
@@ -36,7 +38,7 @@ information on each device.
 %build
 %xfce4reconf
 %configure \
-    --enable-debug=no
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -52,6 +54,12 @@ information on each device.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Aug 22 2018 Mikhail Efremov <sem@altlinux.org> 1.1.3-alt1
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Updated to 1.1.3.
+
 * Mon Apr 04 2016 Mikhail Efremov <sem@altlinux.org> 0.6.7-alt3
 - Patch from upstream:
   + Fixed autoconf and intltools bug 12470.
