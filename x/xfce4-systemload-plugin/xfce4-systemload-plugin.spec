@@ -1,12 +1,12 @@
 Name: xfce4-systemload-plugin
-Version: 1.1.2
-Release: alt2
+Version: 1.2.1
+Release: alt1
 
 Summary: System load plugin for the Xfce panel
-Summary(ru_RU.CP1251): Отображение использования ресурсов системы на панели Xfce
-License: %bsdstyle
+Summary(ru_RU.UTF-8): РћС‚РѕР±СЂР°Р¶РµРЅРёРµ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ СЂРµСЃСѓСЂСЃРѕРІ СЃРёСЃС‚РµРјС‹ РЅР° РїР°РЅРµР»Рё Xfce
+License: %bsd
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # git://git.xfce.org/panel-plugins/xfce4-systemload-plugin
@@ -16,18 +16,20 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4util-devel libxfce4ui-devel libxfce4panel-devel
+BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel
 
-BuildRequires: intltool fontconfig libX11-devel libgtk+2-devel libstartup-notification libupower-devel perl-XML-Parser
+BuildRequires: intltool fontconfig libX11-devel libgtk+3-devel libstartup-notification libupower-devel perl-XML-Parser
 
 Requires: xfce4-panel >= 4.9
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 %name is the system load plugin for the Xfce panel.
 
-%description -l ru_RU.CP1251
-%name -- это модуль, отображающий уровень использования системных ресурсов
-на панели графической среды Xfce.
+%description -l ru_RU.UTF-8
+%name -- СЌС‚Рѕ РјРѕРґСѓР»СЊ, РѕС‚РѕР±СЂР°Р¶Р°СЋС‰РёР№ СѓСЂРѕРІРµРЅСЊ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ СЃРёСЃС‚РµРјРЅС‹С… СЂРµСЃСѓСЂСЃРѕРІ
+РЅР° РїР°РЅРµР»Рё РіСЂР°С„РёС‡РµСЃРєРѕР№ СЃСЂРµРґС‹ Xfce.
 
 %prep
 %setup
@@ -37,7 +39,7 @@ Requires: xfce4-panel >= 4.9
 %xfce4reconf
 %configure \
 	--enable-upower \
-	--enable-debug=no
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -53,6 +55,14 @@ Requires: xfce4-panel >= 4.9
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Aug 22 2018 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt1
+- Convert Russian summary/description to UTF-8.
+- Fix license.
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Updated to 1.2.1.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.1.2-alt2
 - Rebuild with libxfce4util-4.12.
 
