@@ -1,6 +1,6 @@
 Name: conky-manager
 Version: 2.3.4
-Release: alt1
+Release: alt2
 Summary: A simple GUI for managing Conky config files
 Group: Monitoring
 License: GPLv3+
@@ -14,6 +14,7 @@ Requires: conky
 Requires: lm_sensors3
 Requires: hddtemp
 Requires: p7zip p7zip-standalone
+Requires: ImageMagick-tools
 
 # Automatically added by buildreq on Thu Nov 17 2016 (-bi)
 # optimized out: at-spi2-atk elfutils fontconfig glib2-devel libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libjson-glib libpango-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server pkg-config python-base python-modules
@@ -49,6 +50,9 @@ mkdir -p %buildroot%_libdir/%name/libs
 %_pixmapsdir/conky-manager.png
 
 %changelog
+* Thu Aug 23 2018 Grigory Ustinov <grenka@altlinux.org> 2.3.4-alt2
+- Add requires on ImageMagick-tools.
+
 * Thu Nov 17 2016 Motsyo Gennadi <drool@altlinux.ru> 2.3.4-alt1
 - 2.3.4
 
