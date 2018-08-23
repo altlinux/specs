@@ -1,5 +1,5 @@
 Name: xfce4-fsguard-plugin
-Version: 1.0.2
+Version: 1.1.0
 Release: alt1
 
 Summary: Plugin checks the chosen mountpoint for free disk space
@@ -7,7 +7,7 @@ License: %bsdstyle
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 # git://git.xfce.org/panel-plugins/xfce4-fsguard-plugin
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -15,10 +15,12 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfce4util-devel
+BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: libSM-devel perl-XML-Parser xorg-cf-files intltool
 
 Requires: xfce4-panel >= 4.8
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 A little Xfce plugin, which checks the free space on the chosen
@@ -34,7 +36,7 @@ directory in the file manager.
 %build
 %xfce4reconf
 %configure \
-    --enable-debug=no
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -50,6 +52,12 @@ directory in the file manager.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Aug 22 2018 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Updated to 1.1.0.
+
 * Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1
 - Fix Xfce name (XFCE -> Xfce).
 - Updated to 1.0.2.
