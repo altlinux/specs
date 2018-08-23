@@ -1,11 +1,11 @@
 Name: xfce4-datetime-plugin
-Version: 0.6.2
-Release: alt2
+Version: 0.7.0
+Release: alt1
 
 Summary: Datetime plugin for the Xfce panel
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 #git://git.xfce.org/panel-plugins/xfce4-datetime-plugin
@@ -15,11 +15,12 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfce4util
-# Automatically added by buildreq on Sat Jan 05 2008
+BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util
 BuildRequires: perl-XML-Parser intltool
 
 Requires: xfce4-panel >= 4.8
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 %name is the datetime plugin for the Xfce panel.
@@ -32,7 +33,7 @@ Requires: xfce4-panel >= 4.8
 %xfce4reconf
 %configure \
     --disable-static \
-    --enable-debug=no
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -46,6 +47,12 @@ Requires: xfce4-panel >= 4.8
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Mon Aug 20 2018 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Updated to 0.7.0.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.6.2-alt2
 - Rebuild with libxfce4util-4.12.
 - Fix Xfce name (XFCE,XFce -> Xfce).
