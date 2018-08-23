@@ -1,12 +1,12 @@
 Name: xfce4-taskmanager
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: Taskmanager for Xfce Desktop
 Summary(ru_RU.UTF-8): Системный монитор для Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/applications/xfce4-taskmanager
+Url: https://goodies.xfce.org/projects/applications/xfce4-taskmanager
 Packager: Xfce Team <xfce@packages.altlinux.org>
 # git://git.xfce.org/apps/xfce4-taskmanager
 Source: %name-%version.tar
@@ -16,9 +16,8 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: glib2-devel intltool libXmu-devel
-BuildRequires: libgtk+2-devel libcairo-devel libwnck-devel libgksu-devel
-# For exo-csource (needed in the maintainer mode)
-BuildRequires: libexo-devel
+BuildRequires: libgtk+3-devel libcairo-devel libwnck3-devel
+BuildRequires: exo-csource
 
 %define _unpackaged_files_terminate_build 1
 
@@ -37,9 +36,9 @@ mkdir m4/
 %xfce4reconf
 %configure \
 	--enable-maintainer-mode \
-	--enable-wnck \
-	--enable-gksu \
-	--enable-debug=minimal
+	--enable-gtk3 \
+	--enable-wnck3 \
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -53,6 +52,15 @@ mkdir m4/
 %_iconsdir/hicolor/*/*/*.*
 
 %changelog
+* Thu Aug 23 2018 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt2
+- Don't require GTK+2 for GTK+3 build.
+- Fix debug level.
+- Build with GTK+3.
+- Update url.
+- Patch from upstream:
+  + Better utf-8 normalization (bug 14172).
+- Drop obsoleted patch.
+
 * Mon Jun 04 2018 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt1
 - Revert upstream commit for UTF-8 strings, use old ALT patch
   instead.
