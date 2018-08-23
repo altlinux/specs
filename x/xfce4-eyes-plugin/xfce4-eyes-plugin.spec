@@ -1,11 +1,11 @@
 Name: xfce4-eyes-plugin
-Version: 4.4.5
+Version: 4.5.0
 Release: alt1
 
 Summary: Eyes plugin for Xfce Desktop
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # git://git.xfce.org/panel-plugins/xfce4-eyes-plugin
@@ -15,10 +15,12 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfce4util-devel
+BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: intltool libxml2-devel
 
 Requires: xfce4-panel >= 4.8
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Eyes is a xfce4 panel plugin that adds eyes which watch your every step.
@@ -34,7 +36,7 @@ Scary!
 %build
 %xfce4reconf
 %configure \
-    --enable-debug=no
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -46,11 +48,17 @@ Scary!
 %_libdir/xfce4/panel/plugins/*
 %_datadir/xfce4/eyes/
 %_datadir/xfce4/panel/plugins/*.desktop
-%_liconsdir/*.png
+%_iconsdir/hicolor/*/apps/*.png
 
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Aug 22 2018 Mikhail Efremov <sem@altlinux.org> 4.5.0-alt1
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Updated to 4.5.0.
+
 * Wed Apr 27 2016 Mikhail Efremov <sem@altlinux.org> 4.4.5-alt1
 - Updated to 4.4.5.
 
