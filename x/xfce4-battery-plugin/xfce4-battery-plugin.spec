@@ -1,11 +1,11 @@
 Name: xfce4-battery-plugin
-Version: 1.0.5
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: Battery monitor plugin for the Xfce panel
 License: %gpl2plus, %lgpl2plus
 Group: Graphical desktop/XFce
-Url:  http://goodies.xfce.org/projects/panel-plugins/%name
+Url:  https://goodies.xfce.org/projects/panel-plugins/%name
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/panel-plugins/xfce4-battery-plugin
@@ -16,9 +16,11 @@ Requires: xfce4-panel >= 4.9
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4util-devel libxfce4ui-devel libxfce4panel-devel
+BuildPreReq: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel
 
 BuildRequires: perl-XML-Parser intltool
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 %name is the battery monitor plugin for the Xfce panel.
@@ -30,7 +32,7 @@ BuildRequires: perl-XML-Parser intltool
 %xfce4reconf
 %configure \
     --disable-static \
-    --enable-debug=no
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -44,8 +46,17 @@ BuildRequires: perl-XML-Parser intltool
 %_iconsdir/*/*/*/*
 
 %exclude %_libdir/xfce4/panel/plugins/*.la
+# Seems glibc doesn't support uz@Latn
+%exclude %_datadir/locale/uz@Latn/LC_MESSAGES/xfce4-battery-plugin.mo
 
 %changelog
+* Mon Aug 20 2018 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
+- Don't package uz@Latn translation.
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Update to 1.1.0.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.0.5-alt2
 - Rebuild with libxfce4util-4.12.
 - Fix Xfce name (XFce,XFCE -> Xfce).
