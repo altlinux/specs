@@ -3,7 +3,7 @@
 %def_enable sasl
 
 Name: memcached
-Version: 1.5.9
+Version: 1.5.10
 Release: alt1%ubt
 
 Summary: memcached - memory caching daemon
@@ -105,6 +105,9 @@ fi
 %_man1dir/%name-tool.*
 
 %changelog
+* Fri Aug 24 2018 Alexey Shabalin <shaba@altlinux.org> 1.5.10-alt1%ubt
+- 1.5.10
+
 * Fri Jul 27 2018 Alexey Shabalin <shaba@altlinux.org> 1.5.9-alt1%ubt
 - 1.5.9
 
