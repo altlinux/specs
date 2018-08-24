@@ -59,7 +59,7 @@
 %endif
 
 Name:    samba-DC
-Version: 4.8.4
+Version: 4.8.5
 Release: alt1%ubt
 
 Group:   System/Servers
@@ -164,7 +164,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-BuildRequires: libldb-devel >= 1.3.5
+BuildRequires: libldb-devel >= 1.3.6
 BuildRequires: python-module-pyldb-devel
     %if_with python3
 BuildRequires: python3-module-pyldb-devel
@@ -779,9 +779,9 @@ ln -sf ..%_samba_libdir/libnss_winbind.so %buildroot/%_lib/libnss_winbind.so.2
 ln -sf ..%_samba_libdir/libnss_wins.so    %buildroot/%_lib/libnss_wins.so.2
 
 mkdir -p  %buildroot%_libdir/krb5/plugins/libkrb5
-mv %buildroot%_samba_libdir/winbind_krb5_locator.so %buildroot%_libdir/krb5/plugins/libkrb5/
+mv %buildroot%_samba_libdir/krb5/winbind_krb5_locator.so %buildroot%_libdir/krb5/plugins/libkrb5/
 %if_with mitkrb5
-mv %buildroot%_samba_libdir/winbind-krb5-localauth.so %buildroot%_libdir/krb5/plugins/libkrb5/
+mv %buildroot%_samba_libdir/krb5/winbind_krb5_localauth.so %buildroot%_libdir/krb5/plugins/libkrb5/
 %endif
 %endif
 
@@ -1488,13 +1488,16 @@ TDB_NO_FSYNC=1 %make_build test
 %files winbind-krb5-locator
 %_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so
 %if_with doc
-%_man7dir/winbind_krb5_locator.7*
+%_man8dir/winbind_krb5_locator.8*
 %endif #doc
 %endif
 
 %if_with mitkrb5
 %files winbind-krb5-localauth
-%_libdir/krb5/plugins/libkrb5/winbind-krb5-localauth.so
+%_libdir/krb5/plugins/libkrb5/winbind_krb5_localauth.so
+%if_with doc
+%_man8dir/winbind_krb5_locator.8*
+%endif #doc
 %endif
 
 %if_with clustering_support
@@ -1566,6 +1569,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Aug 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.8.5-alt1%ubt
+- Update to latest summer release
+
 * Tue Aug 14 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.8.4-alt1%ubt
 - Update to summer security release
 - Security fixes:
