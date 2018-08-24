@@ -1,12 +1,12 @@
 %def_disable static
 
 Name: usbredir
-Version: 0.7.1
+Version: 0.8.0
 Release: alt1
 Summary: USB network redirection protocol libraries
 Group: System/Libraries
 License: LGPLv2+
-Url: http://cgit.freedesktop.org/spice/usbredir
+Url: http://gitlab.freedesktop.org/spice/usbredir
 
 Source: %name-%version.tar
 BuildRequires: libusb-devel >= 1.0.9
@@ -94,6 +94,9 @@ A simple usb-host tcp server, using libusbredirhost.
 %_man1dir/usbredirserver.*
 
 %changelog
+* Fri Aug 24 2018 Alexey Shabalin <shaba@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Thu Jul 07 2016 Alexey Shabalin <shaba@altlinux.ru> 0.7.1-alt1
 - 0.7.1
 
