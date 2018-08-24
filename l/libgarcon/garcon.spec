@@ -3,13 +3,13 @@
 %def_without builtin_menu
 
 Name: lib%_name
-Version: 0.4.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
 License: %lgpl2plus
 Group: System/Libraries
-URL: http://xfce.org/
+URL: https://xfce.org/
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/garcon
@@ -19,14 +19,18 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
-BuildPreReq: libxfce4util-devel libxfce4ui-devel
+BuildPreReq: libxfce4util-devel libxfce4ui-devel libxfce4ui-gtk3-devel
 BuildRequires: glib2-devel >= 2.14
 BuildRequires: libgtk+2-devel >= 2.12.0
+BuildRequires: libgtk+3-devel
 BuildRequires: gtk-doc
 BuildRequires: intltool
 
 Obsoletes: libxfce4menu
 Requires: xfce-freedesktop-menu
+Requires: exo-utils
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Garcon is an implementation of the freedesktop.org menu specification
@@ -38,7 +42,6 @@ for legacy menus.
 Summary: Development files for %name
 Group: Development/C
 Requires: %name = %version-%release
-Requires: libgtk+2-devel >= 2.12.0
 
 %description devel
 This package contains libraries and header files for
@@ -67,9 +70,29 @@ Summary: Development files for %name-gtk2
 Group: Development/C
 Requires: %name-gtk2 = %version-%release
 Requires: %name-devel = %version-%release
+Requires: libgtk+2-devel >= 2.12.0
 Requires: libxfce4ui-devel
 
 %description gtk2-devel
+%summary
+
+%package gtk3
+Summary: Common GTK+3 part of %name
+Group: Graphical desktop/XFce
+Requires: %name = %version-%release
+
+%description gtk3
+%summary
+
+%package gtk3-devel
+Summary: Development files for %name-gtk3
+Group: Development/C
+Requires: %name-gtk3 = %version-%release
+Requires: %name-devel = %version-%release
+Requires: libgtk+3-devel >= 2.12.0
+Requires: libxfce4ui-gtk3-devel
+
+%description gtk3-devel
 %summary
 
 %package freedesktop-menu
@@ -102,8 +125,9 @@ BuildArch: noarch
 %xfce4reconf
 %configure \
     --disable-static \
+	--enable-gtk2 \
     --enable-gtk-doc \
-	--enable-debug=no
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -151,7 +175,26 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 %_libdir/%name-gtk2-1.so
 %_libdir/pkgconfig/%_name-gtk2-1.pc
 
+%files gtk3
+%_libdir/%name-gtk3-1.so.*
+
+%files gtk3-devel
+%_includedir/%_name-gtk3-1/
+%_libdir/%name-gtk3-1.so
+%_libdir/pkgconfig/%_name-gtk3-1.pc
+
 %changelog
+* Tue Aug 07 2018 Mikhail Efremov <sem@altlinux.org> 0.6.1-alt1
+- Patch from upstream:
+  + fix: some menu icons are too big (Bug #13785)
+- Update url.
+- Use _unpackaged_files_terminate_build.
+- gtk* subpackages: require exo-utils.
+- Enable debug (minimum level).
+- Build GTK+3 library.
+- Move libgtk+2-devel dependeces to gtk2-devel subpackage.
+- Updated to 0.6.1.
+
 * Thu Mar 05 2015 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
 - Updated to 0.4.0.
 

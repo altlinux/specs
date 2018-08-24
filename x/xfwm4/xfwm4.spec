@@ -1,12 +1,12 @@
 Name: xfwm4
-Version: 4.12.5
+Version: 4.13.1
 Release: alt1
 
 Summary: Window manager for Xfce
 Summary (ru_RU.UTF8): Менеджер окон для окружения рабочего стола Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://www.xfce.org/
+Url: https://www.xfce.org/
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/xfwm4
@@ -16,27 +16,27 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4ui-devel libxfconf-devel
-# For exo-csource (needed in maintainer mode)
-BuildPreReq: libexo-devel
+BuildPreReq: libxfce4ui-gtk3-devel libxfconf-devel
+BuildPreReq: exo-csource
 
 BuildRequires: gnome-doc-utils xml-utils xsltproc
 BuildRequires: intltool libSM-devel libXcomposite-devel libXdamage-devel libXext-devel libXrandr-devel libglade-devel libdrm-devel
-BuildRequires: libstartup-notification-devel libwnck-devel xorg-cf-files
-BuildRequires: libdbus-devel libdbus-glib-devel
+BuildRequires: libstartup-notification-devel libwnck3-devel xorg-cf-files
 BuildRequires: libXinerama-devel
+# For svg support in the glib-compile-resources
+BuildRequires: librsvg
 
 Requires: xfce4-common
 
 %define _unpackaged_files_terminate_build 1
 
 %description
-%name is a window manager compatable with GNOME, GNOME2, KDE2, KDE3 and
-XFce.
+%name is a window manager for Xfce which complies to the standards
+defined at http://www.freedesktop.org/.
 
 %description -l ru_RU.UTF8
 Данный пакет содержит в себе менеджер окон для окружения рабочего стола
-Xfce. Совместим с окружениями рабочего стола GNOME и KDE.
+Xfce.
 
 %prep
 %setup
@@ -54,7 +54,8 @@ Xfce. Совместим с окружениями рабочего стола G
 	--enable-render \
 	--enable-xsync \
 	--enable-compositor \
-	--enable-debug=no
+	--disable-silent-rules \
+	--enable-debug=minimum
 
 %make_build
 
@@ -74,6 +75,14 @@ Xfce. Совместим с окружениями рабочего стола G
 %_libdir/xfce4/*
 
 %changelog
+* Tue Aug 07 2018 Mikhail Efremov <sem@altlinux.org> 4.13.1-alt1
+- Update description.
+- Update url.
+- Add librsvg to BR.
+- Disable silent rules.
+- Enable debug (minimum level).
+- Updated to 4.13.1.
+
 * Thu Aug 02 2018 Mikhail Efremov <sem@altlinux.org> 4.12.5-alt1
 - Updated BR.
 - Updated to 4.12.5.

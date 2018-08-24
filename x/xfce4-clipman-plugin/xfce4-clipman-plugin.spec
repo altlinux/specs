@@ -1,12 +1,12 @@
 Name: xfce4-clipman-plugin
 Version: 1.2.6
-Release: alt2
+Release: alt3
 
 Summary: Clipboard history plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Менеджер буфера обмена для Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
@@ -17,8 +17,11 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-devel libexo-devel libxfce4ui-devel libxfconf-devel libxfce4util-devel
 BuildRequires: intltool libSM-devel libglade-devel xorg-cf-files libunique-devel libXtst-devel libqrencode-devel
+BuildRequires: rpm-build-xdg
 
 Requires: xfce4-panel
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Clipman is a clipboard manager for Xfce. It keeps the clipboard contents
@@ -48,7 +51,7 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 	--disable-static \
 	--enable-unique \
 	--enable-qrencode \
-	--enable-debug=no
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -74,6 +77,13 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Aug 17 2018 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt3
+- Fix BR.
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Rebuild with libxfconf-0.so.3.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt2
 - Rebuild with libxfce4util-4.12.
 

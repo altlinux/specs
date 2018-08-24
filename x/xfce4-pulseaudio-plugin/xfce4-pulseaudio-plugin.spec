@@ -1,11 +1,11 @@
 Name: xfce4-pulseaudio-plugin
 Version: 0.4.1
-Release: alt1
+Release: alt2
 
 Summary: A pulseaudio plugin for the Xfce panel
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # git://git.xfce.org/panel-plugins/xfce4-pulseaudio-plugin
@@ -18,8 +18,9 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
+BuildRequires: libxfconf-devel
 BuildRequires: libpulseaudio-devel libnotify-devel
-BuildRequires: libkeybinder3-devel
+BuildRequires: libkeybinder3-devel libdbus-glib-devel
 %{?_enable_wnck:BuildRequires: libwnck3-devel}
 
 Requires: xfce4-panel >= 4.11
@@ -42,7 +43,7 @@ A panel plugin for controlling PulseAudio mixer.
 	--enable-keybinder \
 	%{subst_enable wnck} \
 	--disable-silent-rules \
-	--enable-debug=minimal
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -58,6 +59,13 @@ A panel plugin for controlling PulseAudio mixer.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Aug 16 2018 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt2
+- Update url.
+- Use dbus-glib CFLAGS.
+- Add libdbus-glib-devel to BR.
+- Rebuild with libxfconf-0.so.3.
+- Fix debug level.
+
 * Thu Apr 12 2018 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
 - Updated to 0.4.1.
 

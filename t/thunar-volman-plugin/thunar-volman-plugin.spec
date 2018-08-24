@@ -1,13 +1,13 @@
 %define base thunar-volman
 Name: %base-plugin
-Version: 0.8.1
+Version: 0.9.0
 Release: alt1
 
 Summary: Thunar volume manager plugin
 Summary (ru): Дополнение Thunar для управления подключенными устройствами
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/thunar-plugins/thunar-volman
+Url: https://goodies.xfce.org/projects/thunar-plugins/thunar-volman
 Packager: XFCE Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/thunar-volman
@@ -17,10 +17,12 @@ Patch: %base-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfconf-devel libexo-devel libxfce4ui-devel libxfce4util-devel
-BuildRequires: libgtk+2-devel intltool libgudev-devel libnotify-devel
+BuildPreReq: libxfconf-devel libexo-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
+BuildRequires: libgtk+3-devel intltool libgudev-devel libnotify-devel
 
 Requires: gvfs
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 thunar-volman is an extension for the Thunar File Manager, which enables
@@ -53,7 +55,7 @@ gnome-volume-manager - менеджер управления томами для
 %xfce4reconf
 %configure \
     --enable-notifications \
-    --enable-debug=no
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -67,6 +69,12 @@ gnome-volume-manager - менеджер управления томами для
 %_desktopdir/*.desktop
 
 %changelog
+* Thu Aug 09 2018 Mikhail Efremov <sem@altlinux.org> 0.9.0-alt1
+- Enable debug (minimum level).
+- Update url.
+- Use _unpackaged_files_terminate_build.
+- Updated to 0.9.0.
+
 * Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
 = Drop obsoleted patch.
 - Updated to 0.8.1.

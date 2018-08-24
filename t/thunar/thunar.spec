@@ -1,12 +1,12 @@
 Name: thunar
-Version: 1.6.15
+Version: 1.8.1
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
 Group: Graphical desktop/XFce
 License: %gpl2plus
-Url: http://thunar.xfce.org
+Url: https://xfce.org
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/thunar
@@ -16,9 +16,8 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses rpm-build-xfce4 >= 0.1.0
 
 BuildPreReq: xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel >= 4.8 libxfconf-devel >= 4.8 libexo-devel >= 0.6.0 libxfce4ui-devel >= 4.8
-# Automatically added by buildreq on Thu Jan 22 2009
-BuildRequires: gtk-doc intltool libSM-devel libdbus-glib-devel libexif-devel libgamin-devel libpcre-devel time
+BuildPreReq: libxfce4panel-gtk3-devel >= 4.8 libxfconf-devel >= 4.8 libexo-gtk3-devel libxfce4ui-gtk3-devel
+BuildRequires: gtk-doc intltool libSM-devel libexif-devel libgamin-devel libpcre-devel time
 BuildRequires: libnotify4-devel libgudev-devel
 BuildRequires: desktop-file-utils
 
@@ -26,6 +25,7 @@ BuildRequires: desktop-file-utils
 
 Requires: lib%name = %version-%release
 Requires: eject
+Requires: exo-utils
 
 Obsoletes: Thunar < 1.3.1
 Provides: Thunar = %version-%release
@@ -44,8 +44,8 @@ Obsoletes: libThunar-devel < 1.3.1
 Provides: libThunar-devel = %version-%release
 
 %description -n lib%name-devel
-This package contains development files required to build build
-%name-based software..
+This package contains development files required to build
+%name-based software.
 
 %package -n lib%name
 Summary: Shared libraries for Thunar
@@ -71,7 +71,6 @@ mkdir -p m4/
 	--disable-static \
 	--enable-maintainer-mode \
 	--enable-largefile \
-	--enable-dbus \
 	--disable-gtk-doc \
 	--enable-exif \
 	--enable-pcre \
@@ -100,9 +99,10 @@ make check
 %_pixmapsdir/*
 %_datadir/dbus-1/services/*
 %_datadir/polkit-1/actions/org.xfce.thunar.policy
-%_datadir/appdata/thunar.appdata.xml
+%_datadir/metainfo/org.xfce.thunar.appdata.xml
 %_datadir/Thunar
 %_datadir/xfce4/panel/plugins/*.desktop
+/lib/systemd/user/thunar.service
 %_libdir/xfce4/panel/plugins/*.so
 %exclude %_libdir/xfce4/panel/plugins/*.la
 %dir %_libdir/thunarx-*/
@@ -122,6 +122,14 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Tue Aug 07 2018 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt1
+- Fix description for libthunar-devel.
+- Update url.
+- Require exo-utils.
+- Fix systemd userdir.
+- thunarx.symbols: Add missing symbols.
+- Updated to 1.8.1.
+
 * Fri Apr 06 2018 Mikhail Efremov <sem@altlinux.org> 1.6.15-alt1
 - Updated to 1.6.15.
 

@@ -1,12 +1,12 @@
 Name: xfce4-session
-Version: 4.12.1
-Release: alt4
+Version: 4.13.1
+Release: alt1
 
 Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://www.xfce.org/
+Url: https://www.xfce.org/
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/xfce4-session
@@ -22,11 +22,13 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfconf-devel libxfce4ui-devel
-# For gdk-pixbuf-csource and exo-csource (needed in maintainer mode)
-BuildRequires: libgdk-pixbuf-devel libexo-devel
+BuildRequires: libxfconf-devel libxfce4ui-gtk3-devel
+# gdk-pixbuf-csource needed in maintainer mode
+BuildRequires: libgdk-pixbuf-devel
+BuildRequires: exo-csource
 BuildRequires: libpolkit-devel
-BuildRequires: iceauth intltool libSM-devel libglade-devel libwnck-devel xorg-cf-files
+BuildRequires: libdbus-glib-devel
+BuildRequires: iceauth intltool libSM-devel libglade-devel libwnck3-devel xorg-cf-files
 
 Requires: wm-common-freedesktop
 Requires: xfce4-about
@@ -80,7 +82,7 @@ Additional splash screen engines for Xfce session manager.
 	--disable-static \
 	--enable-maintainer-mode \
 	--with-backend=linux \
-	--enable-debug=no
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -123,6 +125,17 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/polkit-gnome-authe
 %_libdir/xfce4/session/balou*
 
 %changelog
+* Mon Aug 06 2018 Mikhail Efremov <sem@altlinux.org> 4.13.1-alt1
+- Updated url.
+- Updated to 4.13.1.
+
+* Thu Aug 02 2018 Mikhail Efremov <sem@altlinux.org> 4.13.0-alt1
+- Require libxfce4ui-2 instead of libxfce4ui-1 in pc.in file.
+- Add libdbus-glib-devel to BR.
+- Use dbus-glib CFLAGS.
+- Enable debug (minimum level).
+- Updated to 4.13.0.
+
 * Wed Nov 30 2016 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt4
 - Use absolute path in the xsessions/xfce.desktop (closes: #32828).
 

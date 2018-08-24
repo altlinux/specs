@@ -1,16 +1,14 @@
 Name: parole
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 %def_enable clutter
-
-%define _unpackaged_files_terminate_build 1
 
 Summary: Media player for the Xfce desktop
 License: %gpl2plus
 Group: Video
 
-URL: http://goodies.xfce.org/projects/applications/parole
+URL: https://goodies.xfce.org/projects/applications/parole
 # git://git.xfce.org/apps/parole
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -28,6 +26,8 @@ BuildRequires: intltool gtk-doc
 
 Requires: gstreamer1.0
 Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-plugins-ugly1.0 gst-libav
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Parole is a modern simple media player based on the GStreamer framework
@@ -58,7 +58,7 @@ mkdir m4
 	--enable-taglib \
 	%{subst_enable clutter} \
 	--enable-gtk-doc \
-	--enable-debug=minimal
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -80,6 +80,11 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Aug 17 2018 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt2
+- Update url.
+- Fix debug level.
+- Rebuild with libxfconf-0.so.3.
+
 * Thu Apr 12 2018 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt1
 - Updated to 1.0.1.
 

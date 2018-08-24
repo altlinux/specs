@@ -1,14 +1,14 @@
 %define xfce_ver 4.12
 
 Name: xfce4-panel
-Version: 4.12.2
+Version: 4.13.3
 Release: alt1
 
 Summary: Panel for Xfce
 Summary(ru_RU.UTF-8): Панель для окружения рабочего стола Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://www.xfce.org/
+Url: https://www.xfce.org/
 
 # Upstream: git://git.xfce.org/xfce/xfce4-panel
 Source: %name-%version.tar
@@ -18,9 +18,10 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
-BuildPreReq: libxfce4ui-devel >= %xfce_ver libexo-devel >= 0.6.0 libgarcon-gtk2-devel
-BuildRequires: gtk-doc libwnck-devel libICE-devel libXext-devel libSM-devel
+BuildPreReq: libxfce4ui-gtk3-devel >= %xfce_ver libexo-gtk3-devel >= 0.6.0 libgarcon-gtk3-devel
+BuildRequires: gtk-doc libwnck3-devel libICE-devel libXext-devel libSM-devel
 BuildRequires: libgtk+3-devel
+BuildRequires: libgtk+2-devel
 
 Requires: libxfce4panel = %version-%release
 Requires: xfce4-common
@@ -102,8 +103,8 @@ This package contains files to develop plugins for Xfce panel
 	--disable-static \
 	--enable-maintainer-mode \
 	--enable-gtk-doc \
-	--enable-gtk3 \
-	--enable-debug=no
+	--enable-gtk2 \
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -151,6 +152,11 @@ mkdir -p %buildroot/%_datadir/xfce4/panel-plugins
 %_includedir/xfce4/%libxfce4panel_name_gtk3/
 
 %changelog
+* Tue Aug 07 2018 Mikhail Efremov <sem@altlinux.org> 4.13.3-alt1
+- Update url.
+- Enable debug (minimum level).
+- Updated to 4.13.3.
+
 * Thu Dec 14 2017 Mikhail Efremov <sem@altlinux.org> 4.12.2-alt1
 - Updated to 4.12.2.
 

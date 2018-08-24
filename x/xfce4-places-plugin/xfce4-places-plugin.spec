@@ -1,11 +1,11 @@
 Name: xfce4-places-plugin
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: This plugin is a menu with quick access to folders, documents, and removable media
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # git://git.xfce.org/panel-plugins/xfce4-places-plugin
@@ -16,10 +16,13 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfce4util-devel libexo-devel
+BuildRequires: libxfconf-devel
 BuildPreReq: libgio-devel libnotify-devel
 BuildRequires: libxml2-devel intltool
 
 Requires: xfce4-panel >= 4.8
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 This xfce4-places-plugin brings much of the functionality of GNOME's
@@ -42,7 +45,7 @@ so that it shares bookmarks with Thunar, Nautilus, the GNOME Panel, etc.
 %configure \
 	--enable-gio-unix \
 	--enable-notifications \
-	--enable-debug=no
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -58,6 +61,16 @@ so that it shares bookmarks with Thunar, Nautilus, the GNOME Panel, etc.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Aug 16 2018 Mikhail Efremov <sem@altlinux.org> 1.7.0-alt2
+- Patch from upstream:
+  + Bug 11939:  xfce4-places-plugin 1.7.0 crashes with undefined
+    symbol
+- Rebuild with libxfconf-0.so.3.
+- Add libxfconf-devel to BR.
+- Update url.
+- Use _unpackaged_files_terminate_build.
+- Enable debug (minimum level).
+
 * Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 1.7.0-alt1
 - Updated to 1.7.0.
 

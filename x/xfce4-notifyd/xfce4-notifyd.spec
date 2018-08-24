@@ -1,12 +1,12 @@
 Name:           xfce4-notifyd
-Version:        0.2.4
-Release:        alt2
+Version:        0.4.2
+Release:        alt1
 Summary:        Simple notification daemon for Xfce
 Summary(ru_RU.UTF-8): Менеджер уведомлений для Xfce
 
 Group:          Graphical desktop/XFce
 License:        %gpl2only
-URL:            http://spuriousinterrupt.org/projects/xfce4-notifyd
+URL:            https://docs.xfce.org/apps/notifyd/start
 Source0:        %name-%version.tar
 Patch:          %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
@@ -14,11 +14,11 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4ui-devel libxfconf-devel libxfce4util-devel
-BuildPreReq: libdbus-glib-devel libICE-devel libX11-devel libSM-devel
-BuildPreReq: desktop-file-utils libnotify-devel
-# For exo-csource which is needed wnen for --enable-maintainer-mode
-BuildPreReq: libexo-devel
+BuildRequires: libxfce4ui-gtk3-devel libxfconf-devel libxfce4util-devel
+BuildRequires: libxfce4panel-gtk3-devel
+BuildRequires: libgio-devel libICE-devel libX11-devel libSM-devel
+BuildRequires: desktop-file-utils libnotify-devel
+BuildRequires: exo-csource
 
 # Automatically added by buildreq on Mon Sep 21 2009
 BuildRequires: intltool libglade-devel
@@ -29,6 +29,8 @@ Requires:       notify-send
 Obsoletes:      notification-daemon-xfce <= 0.3.7
 
 Provides: desktop-notification-daemon
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Xfce4-notifyd is a simple, visually-appealing notification daemon for
@@ -47,6 +49,14 @@ freedesktop.org.
 * Поддержка скруглений для углов окон
 * Поддержка прозрачности и эффекта скрытия
 
+%package -n xfce4-notification-plugin
+Summary: Notification plugin for the Xfce panel
+Group: Graphical desktop/XFce
+Requires: %name
+
+%description -n xfce4-notification-plugin
+Notification plugin for the Xfce panel.
+
 %prep
 %setup
 %patch -p1
@@ -57,7 +67,8 @@ freedesktop.org.
 %xfce4reconf
 %configure \
     --enable-maintainer-mode \
-    --enable-debug=no
+	--enable-dbus-start-daemon \
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -70,13 +81,32 @@ freedesktop.org.
 %_libdir/xfce4/notifyd/
 %_desktopdir/*.desktop
 %_datadir/dbus-1/services/*
-%_liconsdir/*
+/lib/systemd/user/xfce4-notifyd.service
+%_iconsdir/hicolor/*/*/*.*
 %_datadir/themes/Default/xfce-notify-4.0/
+%_datadir/themes/Bright/
+%_datadir/themes/Retro/
 %_datadir/themes/Smoke/
 %_datadir/themes/ZOMG-PONIES!/
 %_man1dir/*
 
+%files -n xfce4-notification-plugin
+%_libdir/xfce4/panel/plugins/*
+%_datadir/xfce4/panel/plugins/*.desktop
+
+%exclude %_libdir/xfce4/panel/plugins/*.la
+
 %changelog
+* Thu Aug 16 2018 Mikhail Efremov <sem@altlinux.org> 0.4.2-alt1
+- Package panel plugin as separate subpackage.
+- Fix systemd userdir.
+- Don't require dbus-binding-tool.
+- Enable debug (minimum level).
+- Fix url.
+- Use _unpackaged_files_terminate_build.
+- Updated BR.
+- Updated to 0.4.2.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt2
 - Rebuild with libxfce4util-4.12.
 - Fix Xfce name (XFCE -> Xfce).

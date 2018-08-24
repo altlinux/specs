@@ -1,7 +1,7 @@
 %global		pkgname Xfce-Theme-Manager
 Name:		xfce-theme-manager
 Version:	0.3.8
-Release:	alt1
+Release:	alt2
 Summary:	A theme manager for Xfce
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Group:		Graphical desktop/XFce
@@ -49,6 +49,9 @@ find %buildroot -name 'xfce-theme-manager' | xargs chmod 0755
 %_mandir/pl/man1/%name.*
 
 %changelog
+* Mon Aug 20 2018 Mikhail Efremov <sem@altlinux.org> 0.3.8-alt2
+- Rebuild with libxfconf-0.so.3.
+
 * Tue Feb 14 2017 Motsyo Gennadi <drool@altlinux.ru> 0.3.8-alt1
 - 0.3.8
 

@@ -1,11 +1,11 @@
 Name: xfce4-appfinder
-Version: 4.12.0
+Version: 4.13.0
 Release: alt1
 
 Summary: Application finder for the Xfce4 Desktop Environment
 Summary (ru_RU.UTF-8): Утилита поиска приложений для Xfce
 License: %gpl2plus
-Url: http://www.xfce.org/
+Url: https://www.xfce.org/
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
@@ -16,13 +16,14 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4ui-devel libxfconf-devel >= 4.6.0 libgarcon-devel >= 0.1.2
-# For exo-csource (needed in maintainer mode)
-BuildPreReq: libexo-devel
+BuildPreReq: libxfce4ui-gtk3-devel libxfconf-devel >= 4.6.0 libgarcon-devel >= 0.1.2
+BuildPreReq: exo-csource
 BuildRequires: intltool libstartup-notification-devel
 
 # xfrun4 was replaced with xfce4-appfinder
 Conflicts: xfce-utils < 4.8.3-alt3
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 %name permits to find every application in the system supporting
@@ -42,7 +43,7 @@ Desktop entry format.
 %xfce4reconf
 %configure \
 	--enable-maintainer-mode \
-	--enable-debug=no
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -57,6 +58,12 @@ Desktop entry format.
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Fri Aug 17 2018 Mikhail Efremov <sem@altlinux.org> 4.13.0-alt1
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Updated to 4.13.0.
+
 * Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt1
 - Updated to 4.12.0.
 

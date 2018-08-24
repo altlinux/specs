@@ -1,19 +1,22 @@
 Name: thunar-media-tags-plugin
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 
 Summary: Thunar media tag plugin
 License: GPL
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/thunar-plugins/thunar-media-tags-plugin
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Url: https://goodies.xfce.org/projects/thunar-plugins/thunar-media-tags-plugin
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-# Automatically added by buildreq on Thu Nov 09 2006
-BuildRequires: libThunar-devel libexo-devel libgtk+2-devel libtag-devel libxfce4util-devel perl-XML-Parser intltool
+BuildRequires: libthunar-devel libexo-gtk3-devel libxfce4util-devel
+BuildRequires: libgtk+3-devel libtag-devel
+BuildRequires: perl-XML-Parser intltool
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 The thunar-media-tags-plugin is a plugin for the Thunar File Manager,
@@ -25,7 +28,8 @@ which adds ID3/OGG tag support to the bulk rename dialog.
 
 %build
 %xfce4reconf
-%configure
+%configure \
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -37,7 +41,18 @@ which adds ID3/OGG tag support to the bulk rename dialog.
 %exclude %_libdir/thunarx-*/*.la
 %_libdir/thunarx-*/*.so
 
+# Seems glibc doesn't support uz@Latn
+%exclude %_datadir/locale/uz@Latn/LC_MESSAGES/thunar-media-tags-plugin.mo
+
 %changelog
+* Tue Aug 21 2018 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
+- Don't package uz@Latn translation.
+- Update url.
+- Enable debug (minimum level).
+- Use _unpackaged_files_terminate_build.
+- Fix Xfce name (XFCE -> Xfce).
+- Updated to 0.3.0.
+
 * Mon May 13 2013 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
 - Updated to 0.2.1.
 

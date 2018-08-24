@@ -1,12 +1,12 @@
 Name: xfce4-power-manager
-Version: 1.4.4
-Release: alt2
+Version: 1.6.1
+Release: alt1
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
 
 Group: Graphical desktop/XFce
 License: %gpl2plus
-Url: http://goodies.xfce.org/projects/applications/%name
+Url: https://goodies.xfce.org/projects/applications/%name
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/xfce4-power-manager
@@ -16,17 +16,15 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfconf-devel libxfce4panel-devel libxfce4ui-devel
+BuildPreReq: libxfconf-devel libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
 BuildRequires: libXext-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libnotify-devel >= 0.4.1
 BuildRequires: libglade-devel > 2.0.0
 BuildRequires: libupower-devel
 BuildRequires: gettext intltool desktop-file-utils
-# For exo-csource (needed in maintainer mode)
-BuildPreReq: libexo-devel
+BuildPreReq: exo-csource
 
-Requires: xfce4-panel
 Requires: polkit
 Requires: upower
 
@@ -76,6 +74,11 @@ scaling.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Tue Aug 14 2018 Mikhail Efremov <sem@altlinux.org> 1.6.1-alt1
+- Don't requre xfce4-panel.
+- Updated url.
+- Updated to 1.6.1.
+
 * Mon May 30 2016 Mikhail Efremov <sem@altlinux.org> 1.4.4-alt2
 - Enable debug (minimum level).
 - Patch from upstream:

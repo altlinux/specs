@@ -1,13 +1,13 @@
-%define vala_api 0.34
+%define vala_api 0.40
 
 Name: xfce4-vala
 Version: 4.10.0
-Release: alt8
+Release: alt9
 
 Summary: Vala bindings for the Xfce framework
 License: %lgpl2only
 Group: Development/Other
-URL: http://xfce.org/
+URL: https://xfce.org/
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # git://git.xfce.org/bindings/xfce4-vala
@@ -33,6 +33,7 @@ Requires: libxfce4panel-devel libexo-devel
 %setup
 %patch -p1
 
+%build
 %xfce4reconf
 %configure \
 	--with-vala-api=%vala_api
@@ -47,6 +48,11 @@ Requires: libxfce4panel-devel libexo-devel
 /usr/share/vala-%vala_api/vapi/*
 
 %changelog
+* Fri Aug 17 2018 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt9
+- Update url.
+- Rebuild with vala-0.40 and libxfconf-0.so.3.
+- Restore %%build section.
+
 * Tue Oct 04 2016 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt8
 - Rebuild with vala-0.34.
 
