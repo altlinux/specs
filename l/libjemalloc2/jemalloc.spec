@@ -1,7 +1,7 @@
 %define title jemalloc
 Name: libjemalloc2
 Version: 5.1.0
-Release: alt1
+Release: alt2
 Summary: A general-purpose scalable concurrent malloc(3) implementation
 Group: System/Libraries
 License: BSD
@@ -66,9 +66,10 @@ install debug/* %buildroot%_libdir/debug
   install $N %buildroot%_libdir/${N%%.*}_profiler.${N##*.}
 done )
 #mv %buildroot%_bindir/pprof %buildroot%_bindir/pprof.%title
+mv %buildroot%_defaultdocdir/jemalloc %buildroot%_defaultdocdir/jemalloc2
 
 %files
-%doc %_defaultdocdir/jemalloc
+%doc %_defaultdocdir/jemalloc2
 %doc COPYING README INSTALL* TUNING* VERSION
 %_libdir/lib*.so.*
 %_bindir/jemalloc.sh
@@ -85,6 +86,9 @@ done )
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Aug 24 2018 Fr. Br. George <george@altlinux.ru> 5.1.0-alt2
+- Fix file conflict with libjemalloc1
+
 * Mon May 14 2018 Fr. Br. George <george@altlinux.ru> 5.1.0-alt1
 - Autobuild version bump to 5.1.0
 - Grand major version change
