@@ -1,7 +1,7 @@
 %define debug_level 1
 
 Name: seabios
-Version: 1.11.1
+Version: 1.11.2
 Release: alt1%ubt
 Summary: Open-source legacy BIOS implementation
 
@@ -28,6 +28,8 @@ Source16: config.coreboot
 Source17: config.seabios-128k
 Source18: config.seabios-256k
 Source19: config.vga.virtio
+Source20: config.vga.bochs-display
+Source21: config.vga.ramfb
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: python3
@@ -71,14 +73,11 @@ build_bios() {
 	make oldnoconfig V=1
 	make V=1 \
 		EXTRAVERSION="-%{release}" \
-        PYTHON=python3 \
+		PYTHON=python3 \
 		HOSTCC=gcc \
-		CC=x86_64-linux-gnu-gcc \
-		AS=x86_64-linux-gnu-as \
-		LD=x86_64-linux-gnu-ld \
-		OBJCOPY=x86_64-linux-gnu-objcopy \
-		OBJDUMP=x86_64-linux-gnu-objdump \
-		STRIP=x86_64-linux-gnu-strip $4
+        CC="x86_64-linux-gnu-gcc -B/usr/lib/x86_64-linux-gnu/bin" \
+		CROSS_PREFIX=x86_64-linux-gnu- \
+		$4
 
 	cp out/$2 binaries/$3
 }
@@ -90,7 +89,7 @@ build_bios %SOURCE17 bios.bin bios.bin
 build_bios %SOURCE18 bios.bin bios-256k.bin
 
 # seavgabios
-for config in %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE19; do
+for config in %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE19 %SOURCE20 %SOURCE21 ; do
 	name=${config#*config.vga.}
 	build_bios ${config} vgabios.bin vgabios-${name}.bin out/vgabios.bin
 done
@@ -116,6 +115,11 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Fri Aug 24 2018 Alexey Shabalin <shaba@altlinux.org> 1.11.2-alt1%ubt
+- 1.11.2
+- fixed VGA VID and DID for vmware and virtio
+- added VGA DISPLAY_BOCHS and RAMFB
+
 * Mon Apr 02 2018 Alexey Shabalin <shaba@altlinux.ru> 1.11.1-alt1%ubt
 - 1.11.1
 - Build with Python 3
