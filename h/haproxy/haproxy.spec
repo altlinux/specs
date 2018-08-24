@@ -7,7 +7,7 @@
 %def_enable lua
 
 Name: haproxy
-Version: 1.8.12
+Version: 1.8.13
 Release: alt1%ubt
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
@@ -107,6 +107,9 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Fri Aug 24 2018 Alexey Shabalin <shaba@altlinux.org> 1.8.13-alt1%ubt
+- 1.8.13
+
 * Thu Jun 28 2018 Alexey Shabalin <shaba@altlinux.ru> 1.8.12-alt1%ubt
 - 1.8.12
 
