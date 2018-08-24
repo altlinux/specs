@@ -1,5 +1,5 @@
 Name: catch
-Version: 1.11.0
+Version: 1.12.2
 Release: alt1
 
 Summary: C++ Unit Test framework ("all in one header")
@@ -11,7 +11,7 @@ Url: https://github.com/philsquared/Catch
 Packager: Pavel Vainerman <pv@altlinux.ru>
 BuildArch: noarch
 
-# Source-url: https://github.com/philsquared/Catch/raw/master/single_include/catch.hpp
+# Source-url: https://raw.githubusercontent.com/catchorg/Catch2/Catch1.x/single_include/catch.hpp
 Source: %name-%version.tar
 
 %description
@@ -48,6 +48,9 @@ mv -f catch.hpp %buildroot%_includedir
 %_includedir/*.hpp
 
 %changelog
+* Fri Aug 24 2018 Pavel Vainerman <pv@altlinux.ru> 1.12.2-alt1
+- build new version
+
 * Thu Dec 14 2017 Pavel Vainerman <pv@altlinux.ru> 1.11.0-alt1
 - build new version
 
