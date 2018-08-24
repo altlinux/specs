@@ -3,16 +3,20 @@
 %define _vardata %_var/lib/imap
 %define _spooldata %_var/spool/imap
 %define _cyrexecdir %_libexecdir/cyrus
-%define _confdir master/conf
 %define _contribdir %_datadir/%name/contrib
-%define _cyrusconf %_confdir/prefork.conf
 
 # http://bugzilla.altlinux.org/31381
 %def_without unit_tests
 
+# 3.0.8 with python-module-sphinx-1.4 (p8):
+# File "./docsrc/exts/sphinxlocal/builders/manpage.py", line 78, in write
+#     darkgreen, [docname])
+# TypeError: inline_all_toctrees() takes exactly 5 arguments (6 given)
+%def_with sphinx
+
 Name: cyrus-imapd
-Version: 2.5.11
-Release: alt3.1
+Version: 3.0.8
+Release: alt1
 
 Summary: A high-performance mail store with IMAP and POP3 support
 License: CMU License
@@ -43,6 +47,7 @@ Source18: inboxfer
 Source19: %name-README.HOWTO-recover-mailboxes.db
 Source20: %name-sendmail-8.12.9-cyrusv2.m4
 Source21: %name.init
+Source22: %name.cyrus-conf
 
 #Patch7: http://servercc.oakton.edu/~jwade/cyrus/cyrus-imapd-2.1.3/cyrus-imapd-2.1.3-flock.patch
 
@@ -64,7 +69,15 @@ BuildRequires: libjansson-devel libical-devel libxml2-devel libsqlite3-devel
 BuildRequires: perl-devel perl-Pod-Parser perl-Term-ReadLine-Gnu perl-Net-Server perl-Unix-Syslog
 
 # 2.5.11
-BuildRequires: perl-Pod-POM-View-Restructured python-module-sphinx
+# BuildRequires: python-module-sphinx
+BuildRequires: perl-Pod-POM-View-Restructured
+
+# 3.0.8
+BuildRequires: perl-JSON xxd
+%if_with sphinx
+BuildRequires: python-module-GitPython
+BuildRequires: python-module-sphinx >= 1.6
+%endif
 
 #BuildRequires: groff-extra groff-ps transfig
 
@@ -139,6 +152,7 @@ BuildArch: noarch
 The %name-doc package contains Here the documentation about
 Cyrus IMAP server.
 
+%if_with sphinx
 %package doc-full
 Group: System/Servers
 Summary: Cyrus documentation
@@ -147,10 +161,11 @@ BuildArch: noarch
 %description doc-full
 The %name-doc-full package contains complete Cyrus documentation
 for IMAP server and SASL library
-
+%endif
 
 %prep
 %setup
+echo %version > VERSION
 
 # kerberos include is needed (because of openssl-0.9.7 ?)
 #CPPFLAGS="`krb5-config --cflags` $CPPFLAGS"
@@ -175,12 +190,17 @@ autoreconf -v -i
 #echo '#define CYRUS_CVSDATE 20071211' > imap/xversion.h
 
 # set version since 2.5.9
-sed "s|^PACKAGE_VERSION=.*|PACKAGE_VERSION='%version'|" -i configure
-sed "s|^PACKAGE_STRING=.*|PACKAGE_STRING='cyrus-imapd %version'|" -i configure
+#sed "s|^PACKAGE_VERSION=.*|PACKAGE_VERSION='%version'|" -i configure
+#sed "s|^PACKAGE_STRING=.*|PACKAGE_STRING='cyrus-imapd %version'|" -i configure
 
 %add_optflags -lcrypto -lsasl2 -lssl
 
 %configure \
+  --with-extraident="%release" \
+  \
+  --sbindir=%_cyrexecdir \
+  --libexecdir=%_cyrexecdir \
+  \
   --enable-netscapehack \
   --enable-nntp \
   --enable-http \
@@ -189,18 +209,16 @@ sed "s|^PACKAGE_STRING=.*|PACKAGE_STRING='cyrus-imapd %version'|" -i configure
   --enable-idled \
   --enable-replication \
   --enable-pcre \
-%if_with unit_tests
-  --enable-unit-tests \
-%endif
+  %{?_with_unit_tests: --enable-unit-tests} \
+  \
   --with-snmp \
   --with-perl=perl \
   --with-ldap \
   --with-libwrap=%prefix \
-  --with-cyrus-prefix=%_cyrexecdir \
-  --with-service-path=%_cyrexecdir \
   --with-cyrus-user=%_cyrususer \
   --with-cyrus-group=%_cyrusgroup \
   --with-bdb-incdir=%_includedir/db4 \
+  %{?_without_sphinx: --with-sphinx-build=no} \
   #
 
 %build
@@ -210,7 +228,7 @@ sed "s|^PACKAGE_STRING=.*|PACKAGE_STRING='cyrus-imapd %version'|" -i configure
 pushd man
   sed -i 's/master(8)/cyrus-master(8)/' *5 *8
 popd
-pushd doc
+pushd doc/legacy
   sed -i 's/master/cyrus-master/g' man.html
 
   fig2dev -L png murder.fig murder.png
@@ -221,11 +239,11 @@ popd
 find . -type f -name \*.pl -print0 |
     xargs -r0 perl -pi -e 's@\/usr\/local\/bin\/perl@perl@' --
 
-# Cleanup of doc dir
-find doc perl -name CVS -type d | xargs -r rm -fr --
-find doc -name "*~" -type f | xargs -r rm -f --
-rm -f doc/Makefile.dist
-rm -f doc/text/htmlstrip.c
+## Cleanup of doc dir
+#find doc perl -name CVS -type d | xargs -r rm -fr --
+#find doc -name "*~" -type f | xargs -r rm -f --
+#rm -f doc/Makefile.dist
+#rm -f doc/text/htmlstrip.c
 
 %if_with unit_tests
 %check
@@ -263,7 +281,7 @@ install -d \
 install -m 755 %SOURCE11   %buildroot%_cyrexecdir/cvt_cyrusdb_all
 install -m 755 %SOURCE12   %buildroot%_datadir/%name/rpm/magic
 
-install -m 644 %_cyrusconf %buildroot%_sysconfdir/cyrus.conf
+install -m 644 %SOURCE22   %buildroot%_sysconfdir/cyrus.conf
 install -m 644 %SOURCE4    %buildroot%_sysconfdir/imapd.conf
 install -m 644 %SOURCE7    %buildroot%_sysconfdir/pam.d/pop
 install -m 644 %SOURCE7    %buildroot%_sysconfdir/pam.d/imap
@@ -279,7 +297,6 @@ install -m 755 %SOURCE14   %buildroot%_sysconfdir/cron.daily/%name
 install -pDm600 %SOURCE13 %buildroot%_sysconfdir/sasl2/Cyrus.conf
 
 install -m 755 -d doc/conf
-install -m 644 %_confdir/*.conf doc/conf/
 install -pD -m 755 %SOURCE6 %buildroot%_controldir/%name
 
 install -m 755 %SOURCE16 %SOURCE17 %SOURCE18  %buildroot%_contribdir
@@ -293,7 +310,8 @@ mv -f %buildroot%_mandir/man8/master.8 %buildroot%_mandir/man8/cyrus-master.8
 mv -f %buildroot%_man8dir/httpd.8 %buildroot%_man8dir/cyrus-httpd.8
 
 # Move utilites from /usr/libexec/cyrus to /usr/bin
-for i in arbitronsort.pl cyradm imtest mupdate-loadgen.pl convert-sieve.pl \
+# mupdate-loadgen.pl convert-sieve.pl
+for i in arbitronsort.pl cyradm imtest  \
 	 mknewsgroups config2header config2man masssievec
 do
     mv %buildroot%_cyrexecdir/$i %buildroot/%_bindir/
@@ -336,11 +354,13 @@ touch %buildroot%_vardata/ssl/cyrus.key
 
 # big doc section
 %add_findreq_skiplist %_cyrexecdir/perl2rst
+%if_with sphinx
 pushd docsrc
-    make html
+    DOCSRC=./docsrc make html
     mkdir -p %buildroot%_defaultdocdir/%name-doc-full-%version
     cp -r build/html/* %buildroot%_defaultdocdir/%name-doc-full-%version
 popd
+%endif
 
 %pre
 /usr/sbin/groupadd -r -f %_cyrusgroup ||:
@@ -390,8 +410,10 @@ done
 %dir %attr(1770,root,%_cyrusgroup) %_spooldata/*
 
 %_datadir/%name
+%if_with sphinx
 %_man5dir/*
 %_man8dir/*
+%endif
 
 # ssl-related
 %dir %attr(0750,root,%_cyrusgroup) %_vardata/ssl
@@ -411,14 +433,16 @@ done
 %_libdir/libcyrus*.so.*
 
 %files doc
-%doc COPYING README
+%doc COPYING README.md
 %doc $RPM_SOURCE_DIR/cyrus-procmailrc
 %doc $RPM_SOURCE_DIR/cyrus-user-procmailrc.template
 %doc $RPM_SOURCE_DIR/%name-procmail+cyrus.mc
 %doc doc/*
 
+%if_with sphinx
 %files doc-full
 %_defaultdocdir/%name-doc-full-%version
+%endif
 
 %files murder
 %config(noreplace) %_sysconfdir/pam.d/mupdate
@@ -436,7 +460,9 @@ done
 %_includedir/cyrus
 %_libdir/*.so
 #_libdir/lib*.a
+%if_with sphinx
 %_man3dir/*
+%endif
 %_libdir/pkgconfig/*
 
 %files -n perl-Cyrus
@@ -454,6 +480,12 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Fri Aug 24 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.0.8-alt1
+- 3.0.8
+- disabled altnamespace in imapd.conf (restored behaviour of Cyrus IMAP 2.5)
+- reverted patches:
+  patches/alt/004-configs (examples no modified now)
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.11-alt3.1
 - rebuild with new perl 5.26.1
 
