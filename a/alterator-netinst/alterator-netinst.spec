@@ -1,5 +1,5 @@
 Name: alterator-netinst
-Version: 1.9.0
+Version: 1.9.1
 Release: alt3
 
 Source:%name-%version.tar
@@ -10,7 +10,7 @@ Group: System/Configuration/Other
 Requires: alterator >= 4.11-alt1
 Requires: alterator-l10n >= 2.7-alt5
 Requires: tftp-server nfs-server
-Requires: syslinux
+Requires: syslinux-data
 Requires: alterator-net-iptables >= 1.6
 
 Conflicts: alterator-fbi < 5.19-alt4
@@ -40,6 +40,16 @@ alterator module for network installations management
 %_bindir/alterator-netinst
 
 %changelog
+* Mon Aug 27 2018 Paul Wolneykien <manowar@altlinux.org> 1.9.1-alt3
+- Make the package noarch again depending on syslinux-data.
+
+* Mon Aug 27 2018 Paul Wolneykien <manowar@altlinux.org> 1.9.1-alt2
+- Build exclusively for x86 (due to syslinux).
+
+* Mon Aug 20 2018 Paul Wolneykien <manowar@altlinux.org> 1.9.1-alt1
+- Restrict the "image" parameter to integer type.
+- Download files as the unprivileged user "nobody".
+
 * Wed Mar 19 2014 Fr. Br. George <george@altlinux.ru> 1.9.0-alt3
 - Do not delete all of the pxelinux.cfg
 
