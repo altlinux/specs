@@ -1,16 +1,14 @@
 #define git_date .git20140106
 %define git_date %nil
 
-%define _unpackaged_files_terminate_build 1
-
 Name: xfce4-whiskermenu-plugin
-Version: 1.7.5
+Version: 2.2.1
 Release: alt1%git_date
 
 Summary: Alternate Xfce menu
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://gottcode.org/xfce4-whiskermenu-plugin/
+Url: https://gottcode.org/xfce4-whiskermenu-plugin/
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # git://github.com/gottcode/xfce4-whiskermenu-plugin.git
@@ -20,12 +18,12 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools gcc-c++ rpm-macros-cmake cmake
-BuildRequires: libxfce4panel-devel libxfce4ui-devel libxfce4util-devel
-BuildRequires: libgarcon-devel libexo-devel
-BuildRequires: libpixman-devel libXdmcp-devel libXdamage-devel libXxf86vm-devel
-BuildRequires: libharfbuzz-devel libpng-devel libexpat-devel
+BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
+BuildRequires: libgarcon-devel libexo-gtk3-devel
 
 Requires: xfce4-panel >= 4.8
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Whisker Menu is an alternate application launcher for Xfce. When you
@@ -55,6 +53,10 @@ keeps a list of the last ten applications that you've launched from it.
 %_man1dir/*.1.*
 
 %changelog
+* Thu Aug 23 2018 Mikhail Efremov <sem@altlinux.org> 2.2.1-alt1
+- Updated url.
+- Updated to 2.2.1.
+
 * Fri Dec 29 2017 Mikhail Efremov <sem@altlinux.org> 1.7.5-alt1
 - Updated to 1.7.5.
 
