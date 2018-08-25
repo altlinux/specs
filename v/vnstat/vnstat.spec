@@ -1,7 +1,7 @@
 # SPEC file for vnStat package
 
 Name:    vnstat
-Version: 1.14
+Version: 1.18
 Release: alt1
 
 Summary: console-based network traffic monitor
@@ -14,16 +14,19 @@ URL:     http://humdi.net/vnstat/
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
 Source0: %name-%version.tar
+Patch0:  %name-%version-%release.patch
+
 Source1: %name.control
 Source2: %{name}d.init
+Source3: %name.cron
+Source4: %{name}d.tmpfiles
+Source5: %{name}-update.sh
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: libgd2-devel
-
-Requires(pre): vixie-cron
-Requires(post): control
-Requires(post): iproute2 sed
+# Automatically added by buildreq on Sat Aug 25 2018
+# optimized out: fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config pkg-config python-base python-modules python3 python3-base python3-dev ruby sh3 tzdata
+BuildRequires: libgd3-devel
 
 %define cron_freq    5
 %define cron_file    %_sysconfdir/cron.d/%name
@@ -82,32 +85,31 @@ output support for statistics collected using vnstat.
 
 %prep
 %setup -q
+%patch0 -p1
 
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 chmod a-x examples/vnstat.cgi
 
 %build
+%configure
 %make_build
-%make -C src vnstati
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall
 /bin/install -pD %SOURCE1  %buildroot%_controldir/%name
+/bin/install -pD %SOURCE3  %buildroot%cron_file
+/bin/sed -e 's#%%cron_freq#%{cron_freq}#' -i %buildroot%cron_file
+/bin/install -pD %SOURCE4  %buildroot%_tmpfilesdir/%{name}d.conf
 
-/bin/install -d %buildroot%_sysconfdir/cron.d/
-cat << __EOF__ > %buildroot%cron_file
-MAILTO=
-0-59/%cron_freq * * * * %name	[ -x %_bindir/%name ] && [ \`/bin/ls %data_dir/ | /bin/wc -l\` -ge 1 ] && %_bindir/%name -u
-__EOF__
+/bin/install -pD %SOURCE5  %buildroot%_sbindir/%{name}-update
 
-install -p -D -m 0755 -- %SOURCE2 %buildroot/%_initdir/%{name}d
+install -pD -m 0755 -- %SOURCE2 %buildroot/%_initdir/%{name}d
+install -pD -m 0755 examples/systemd/vnstat.service %buildroot%_unitdir/%{name}d.service
+
 mkdir -p %buildroot%piddir
-
-mkdir -p  %buildroot%_unitdir
-install -m 0755 examples/systemd/vnstat.service %buildroot%_unitdir/%{name}d.service
-
 mkdir -p %buildroot%data_dir
+
 
 %pre
 %_sbindir/groupadd -r -f %name &>/dev/null
@@ -117,26 +119,18 @@ mkdir -p %buildroot%data_dir
 # For upgrade from 1.4-alt1 
 /usr/bin/id -Gn %name | /bin/grep -qw proc || %_sbindir/usermod -G proc %name ||:
 
-
 %post
-echo Create %name databases for all found network interfaces...
-for iface in $(/sbin/ip link show | /bin/sed -ne '/^[0-9]\+:/ s/^[^:]*: \([^:]\+\):.*$/\1/ p'); do
-    %_bindir/%name -u -i "$iface"
-done
-/bin/chown :%name  %data_dir/*
-/bin/chmod 0664    %data_dir/*
-/sbin/service crond condreload
+# Replace unknown Interface in the configuration
+%_sbindir/%{name}-update config-unknown
 
-%postun
-if [ $1 = 0 ]; then
-    /sbin/service crond condreload
-    echo 'REMEMBER: %name databases still exists in %data_dir directory!'
-fi
 
 %post server
+# Create databases for all found network interfaces
+%_sbindir/%{name}-update bases
 %post_service %{name}d
 
-%preun server
+%postun server
+[ $1 = 0 ] && echo 'NOTE: %name databases still exists in %data_dir directory!'
 %preun_service %{name}d
 
 
@@ -148,10 +142,9 @@ fi
 %config(noreplace) %_sysconfdir/%name.conf
 
 %_bindir/%name
+%_sbindir/%{name}-update
 %_man1dir/%{name}.*
 %_man5dir/%{name}.*
-
-%_controldir/%name
 
 %attr(1770,root,%name) %data_dir
 
@@ -160,6 +153,8 @@ fi
 %_man1dir/%{name}d*
 %config   %_initdir/%{name}d
 %_unitdir/%{name}d.service
+%_tmpfilesdir/%{name}d.conf
+%_controldir/%name
 
 %ghost %attr(1775,root,%name) %dir %piddir
 
@@ -169,6 +164,11 @@ fi
 %_man1dir/%{name}i*
 
 %changelog
+* Sat Aug 25 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.18-alt1
+- New version
+- Move cron script to -server package and disable it by default (Closes: 31477)
+- Add vnstat-update script for databases and configuration updates
+
 * Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.14-alt1
 - New version 1.14
 
