@@ -1,6 +1,6 @@
 Name: libfm-qt
 Version: 0.13.1
-Release: alt1
+Release: alt1.1
 
 Summary: Core library of PCManFM-Qt file manager
 License: LGPLv2+
@@ -14,7 +14,7 @@ BuildRequires: rpm-build-xdg
 BuildRequires: gcc-c++
 BuildRequires: lxqt-build-tools >= 0.5.0
 BuildRequires: libexif-devel
-BuildRequires: qt5-base-devel 
+BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: pkgconfig(Qt5X11Extras)
 BuildRequires: pkgconfig(libfm) >= 1.2.0
@@ -62,6 +62,9 @@ find %buildroot -size 0 -delete
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sat Aug 25 2018 Anton Midyukov <antohami@altlinux.org> 0.13.1-alt1.1
+- Rebuilt with qt 5.11
+
 * Tue Jun 05 2018 Anton Midyukov <antohami@altlinux.org> 0.13.1-alt1
 - new version 0.13.1
 

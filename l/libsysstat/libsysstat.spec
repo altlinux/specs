@@ -1,6 +1,6 @@
 Name: libsysstat
 Version: 0.4.1
-Release: alt1
+Release: alt1.1
 
 Summary: Library used to query system info and statistics
 License: LGPL
@@ -48,6 +48,9 @@ which is used to query system info and statistics.
 %_datadir/cmake/*/
 
 %changelog
+* Sat Aug 25 2018 Anton Midyukov <antohami@altlinux.org> 0.4.1-alt1.1
+- Rebuilt with qt 5.11
+
 * Tue May 22 2018 Anton Midyukov <antohami@altlinux.org> 0.4.1-alt1
 - new version 0.4.1
 

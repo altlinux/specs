@@ -1,6 +1,6 @@
 Name: lxqt-build-tools
 Version: 0.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: Various packaging tools and scripts for LXQt applications
 License: BSD 3-clause
@@ -37,6 +37,9 @@ sed -i '/-flto/d' cmake/modules/LXQtCompilerSettings.cmake
 %_datadir/cmake/%name
 
 %changelog
+* Sat Aug 25 2018 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1.1
+- Rebuilt with qt 5.11
+
 * Tue May 22 2018 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
 - new version 0.5.0
 
