@@ -1,6 +1,6 @@
 Name: qtermwidget
 Version: 0.9.0
-Release: alt1
+Release: alt1.1
 
 Summary: unicode-enabled, embeddable QT4 terminal widget
 License: GPL
@@ -88,6 +88,9 @@ This package contains the development headers for %name library.
 # - build with libutf8proc (pkgconfig problem in 0.8.0 though)
 
 %changelog
+* Sat Aug 25 2018 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1.1
+- Rebuilt with qt 5.11s
+
 * Tue May 22 2018 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
 - 0.9.0
 

@@ -1,6 +1,6 @@
 Name: liblxqt
 Version: 0.13.0
-Release: alt1
+Release: alt1.1
 
 Summary: Core utility library for LXDE-Qt components
 License: LGPL
@@ -69,6 +69,9 @@ This package provides the development files for LXQt library.
 %_datadir/cmake/*/
 
 %changelog
+* Sat Aug 25 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1.1
+- Rebuilt with qt 5.11
+
 * Tue May 22 2018 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
 - new version 0.13.0
 
