@@ -1,9 +1,9 @@
 Name: man-pages-ru
-Version: 4.08
-Release: alt3
+Version: 4.16
+Release: alt1
 
-# man-pages-ru_4.08-2329-2329-20170422.tar.bz2
-%define lversion %version-2329-2329-20170422
+# man-pages-ru_4.16-2383-2383-20180422.tar.bz2
+%define lversion %version-2383-2383-20180422
 
 Summary: Russian translations of OS GNU/*/Linux manpages
 Summary(ru_RU.UTF-8): Русские переводы страниц руководства по ОС GNU/*/Linux
@@ -92,6 +92,9 @@ fi
 %_cachedir/man/ru/cat*
 
 %changelog
+* Sat Aug 25 2018 Sergey Y. Afonin <asy@altlinux.ru> 4.16-alt1
+- 4.16-2383-2383-20180422
+
 * Mon Apr 24 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.08-alt3
 - 4.08-2329-2329-20170422 (all translated)
 - added "Conflicts: man-pages-ru-extra < 0.1-alt3"
