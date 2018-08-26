@@ -13,7 +13,7 @@ BuildRequires(pre): rpm-build-ubt
 %def_without libcxx
 
 Name: telegram-desktop
-Version: 1.3.10
+Version: 1.3.12
 Release: alt1
 
 Summary: Telegram is a messaging app with a focus on speed and security
@@ -52,7 +52,7 @@ BuildRequires(pre): rpm-build-intro >= 2.1.5
 
 BuildRequires: gcc-c++ libstdc++-devel gyp cmake
 
-BuildRequires: qt5-base-devel libqt5-network libqt5-gui qt5-imageformats
+BuildRequires: qt5-base-devel libqt5-core libqt5-network libqt5-gui qt5-imageformats
 # needs for smiles and emojicons
 Requires: qt5-imageformats
 
@@ -83,7 +83,7 @@ BuildRequires: libopenal-devel >= 1.17.2
 # used by qt imageformats: libwebp-devel 
 BuildRequires: libva-devel libdrm-devel
 
-BuildRequires: libtgvoip-devel >= 2.1
+BuildRequires: libtgvoip-devel >= 2.2.2
 BuildRequires: libcrl-devel >= 0.3
 # C++ sugar
 BuildRequires: libmicrosoft-gsl-devel >= 20180615
@@ -206,6 +206,9 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Thu Aug 23 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.12-alt1
+- new version 1.3.12 (with rpmrb script)
+
 * Sat Jul 14 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.10-alt1
 - new version 1.3.10 (with rpmrb script)
 
