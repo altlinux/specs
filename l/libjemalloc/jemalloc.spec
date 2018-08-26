@@ -2,7 +2,7 @@
 %def_without devel
 Name: libjemalloc
 Version: 3.6.0
-Release: alt2
+Release: alt3
 Summary: A general-purpose scalable concurrent malloc(3) implementation
 Group: System/Libraries
 License: BSD
@@ -69,8 +69,9 @@ done )
 mv %buildroot%_bindir/pprof %buildroot%_bindir/pprof.%title
 mv %buildroot%_bindir/jemalloc.sh %buildroot%_bindir/%title.sh
 
+rm -rf %buildroot%_defaultdocdir/jemalloc
+
 %files
-%doc %_defaultdocdir/jemalloc
 %doc COPYING README INSTALL VERSION
 %_libdir/%name.so.*
 %_bindir/pprof.%title
@@ -87,6 +88,9 @@ mv %buildroot%_bindir/jemalloc.sh %buildroot%_bindir/%title.sh
 %endif
 
 %changelog
+* Sun Aug 26 2018 Vitaly Lipatov <lav@altlinux.ru> 3.6.0-alt3
+- drop /usr/share/doc/jemalloc (ALT bug 35259)
+
 * Wed May 16 2018 Fr. Br. George <george@altlinux.ru> 3.6.0-alt2
 - Freeze devel version in the name of libjemalloc 5.*
 
