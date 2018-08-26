@@ -1,7 +1,9 @@
+%def_disable static
 %define title jemalloc
+%define sorev 2
 Name: libjemalloc2
 Version: 5.1.0
-Release: alt2
+Release: alt3
 Summary: A general-purpose scalable concurrent malloc(3) implementation
 Group: System/Libraries
 License: BSD
@@ -50,42 +52,59 @@ CONF="--enable-swap --enable-xmalloc --enable-dss --enable-sysv --enable-autogen
 %make_build
 %make doc
 mkdir -p debug
-cp -p lib/lib* debug
+cp -a lib/lib* debug
 %configure $CONF --enable-prof --enable-stats
-%make_build
+%make_build install_suffix=_profiler
 mkdir -p prof
-cp -p lib/lib* prof
+cp -a lib/lib* prof
 %configure $CONF
 %make_build
 
 %install
 %makeinstall DESTDIR=%buildroot
 mkdir -p %buildroot%_libdir/debug %buildroot%_libdir/prof
-install debug/* %buildroot%_libdir/debug
-( cd prof; for N in *; do
-  install $N %buildroot%_libdir/${N%%.*}_profiler.${N##*.}
-done )
+cp -a debug/* %buildroot%_libdir/debug
+cp -a prof/* %buildroot%_libdir/
+
 #mv %buildroot%_bindir/pprof %buildroot%_bindir/pprof.%title
-mv %buildroot%_defaultdocdir/jemalloc %buildroot%_defaultdocdir/jemalloc2
+mv %buildroot%_defaultdocdir/jemalloc %buildroot%_defaultdocdir/jemalloc%sorev
+
+# add so.2 -> so.2.0
+mv %buildroot%_libdir/libjemalloc.so.%sorev %buildroot%_libdir/libjemalloc.so.%sorev.0
+ln -s libjemalloc.so.%sorev.0 %buildroot%_libdir/libjemalloc.so.%sorev
+mv %buildroot%_libdir/libjemalloc_profiler.so.%sorev %buildroot%_libdir/libjemalloc_profiler.so.%sorev.0
+ln -s libjemalloc_profiler.so.%sorev.0 %buildroot%_libdir/libjemalloc_profiler.so.%sorev
+
+%if_disabled static
+rm -rf %buildroot%_libdir/debug/*.a %buildroot%_libdir/*.a
+%endif
 
 %files
 %doc %_defaultdocdir/jemalloc2
-%doc COPYING README INSTALL* TUNING* VERSION
-%_libdir/lib*.so.*
+%doc COPYING README TUNING* VERSION
+%_libdir/libjemalloc.so.%sorev
+%_libdir/libjemalloc.so.%sorev.0
 %_bindir/jemalloc.sh
 
 %files -n libjemalloc-devel
 %_bindir/*prof
 %_includedir/*
 %_man3dir/*
-%exclude %_libdir/lib*.so.*
-%_libdir/lib*.so*
+%_libdir/libjemalloc.so
+%_libdir/libjemalloc_profiler.so*
+%if_enabled static
 %_libdir/lib*.a
+%endif
 %_libdir/debug/lib*
 %_bindir/*config
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Aug 26 2018 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt3
+- fix soname, fix libname for libjemalloc with prof and stats (ALT bug 31642)
+- fix duplicated files
+- disable static by default
+
 * Fri Aug 24 2018 Fr. Br. George <george@altlinux.ru> 5.1.0-alt2
 - Fix file conflict with libjemalloc1
 
