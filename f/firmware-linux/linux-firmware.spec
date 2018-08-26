@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180730
+Version: 20180822
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,18 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun Aug 26 2018 Cronbuild Service <cronbuild@altlinux.org> 20180822-alt1
+- upstream changes (GIT fea76a0):
+  + amdgpu: sync up polaris10 firmware with 18.30 release (thx Alex Deucher)
+  + amdgpu: sync up vega10 firmware with 18.30 release (thx Alex Deucher)
+  + amdgpu: sync up raven firmware with 18.30 release (thx Alex Deucher)
+  + amdgpu: sync up polaris12 firmware with 18.30 release (thx Alex Deucher)
+  + amdgpu: sync up tonga firmware with 18.30 release (thx Alex Deucher)
+  + amdgpu: sync up polaris11 firmware with 18.30 release (thx Alex Deucher)
+  + amdgpu: sync up fiji firmware with 18.30 release (thx Alex Deucher)
+  + add firmware for mhdp8546 (thx Damian Kos)
+  + qed: Add firmware 8.37.7.0 (thx Rahul Verma)
+
 * Sun Aug 19 2018 Cronbuild Service <cronbuild@altlinux.org> 20180730-alt1
 - upstream changes (GIT f1b95fe):
   + linux-firmware:Update firmware patch for Intel Bluetooth 7265
