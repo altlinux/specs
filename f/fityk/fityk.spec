@@ -5,13 +5,13 @@
 
 Summary: Tool for fitting and analyzing data
 Name: fityk
-Version: 1.3.0
-Release: alt5.git20141119
+Version: 1.3.1
+Release: alt1
 License: GPL
 Group: Sciences/Other
 Url: https://github.com/wojdyr/fityk
 # https://github.com/wojdyr/fityk.git
-Source0: %name-%version.tar.bz2
+Source0: %name-%version.tar
 Source1: %name.desktop
 Source2: x-%name.desktop
 
@@ -19,10 +19,11 @@ BuildRequires(pre): rpm-build-xdg
 # Automatically added by buildreq on Mon Aug 04 2008
 BuildRequires: gcc-c++ gcc-fortran libreadline-devel rpm-build-python
 
-BuildPreReq: boost-devel libxylib-devel libwxGTK3.1-devel zlib-devel
-BuildPreReq: liblua5.1-devel python-module-sphinx-devel swig dvipng
+BuildPreReq: boost-devel libxylib-devel compat-libwxGTK3.0-gtk2-devel zlib-devel
+BuildPreReq: python-module-sphinx-devel swig dvipng
 BuildPreReq: libcmpfit-devel
 BuildPreReq: texlive-collection-latexrecommended tex(preview.sty) gnuplot
+BuildRequires: liblua-devel
 BuildRequires: python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -200,6 +201,10 @@ popd
 %endif
 
 %changelog
+* Sun Aug 26 2018 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt1
+- Version 1.3.1
+- built with compat-libwxGTK3.0-gtk2-devel
+
 * Mon Jul 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.0-alt5.git20141119
 - Updated build dependencies.
 
