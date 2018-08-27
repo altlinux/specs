@@ -1,6 +1,6 @@
 Name: freedink-dfarc
 Version: 3.12
-Release: alt1.3
+Release: alt2
 Summary: Frontend and .dmod installer for GNU FreeDink
 
 Group: Games/Adventure
@@ -9,8 +9,8 @@ Url: http://www.freedink.org/
 Source0: ftp://ftp.gnu.org/gnu/freedink/dfarc-%version.tar.gz
 Packager: Fr. Br. George <george@altlinux.ru>
 
-# Automatically added by buildreq on Wed Sep 23 2009
-BuildRequires: bzlib-devel gcc-c++ intltool libwxGTK3.1-devel xdg-utils
+BuildRequires(pre): rpm-build-xdg
+BuildRequires: bzlib-devel gcc-c++ intltool libwxGTK3.0-devel xdg-utils
 
 %description
 DFArc2 makes it easy to play and manage the Dink Smallwood game and
@@ -42,6 +42,9 @@ install -D share/freedink-mime.xml %buildroot%_xdgmimedir/packages/freedink-mime
 %_mandir/man1/*
 
 %changelog
+* Mon Aug 27 2018 Anton Midyukov <antohami@altlinux.org> 3.12-alt2
+- rebuilt with wxGTK3.0
+
 * Sat Jun 02 2018 Vitaly Lipatov <lav@altlinux.ru> 3.12-alt1.3
 - rebuild with rebuilt wxGTK3.1
 
