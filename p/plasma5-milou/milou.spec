@@ -5,7 +5,7 @@
 
 Name: plasma5-%rname
 Version: 5.12.6
-Release: alt4%ubt
+Release: alt5%ubt
 Epoch: 1
 %K5init altplace
 
@@ -93,6 +93,9 @@ KF5 library
 %_K5lib/libmilou.so.%milou_sover
 
 %changelog
+* Mon Aug 27 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.6-alt5%ubt
+- krunner: fix width calculation
+
 * Tue Jul 17 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.6-alt4%ubt
 - wrap lines in krunner
 
