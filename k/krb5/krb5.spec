@@ -1,6 +1,6 @@
 
 Name: krb5
-Version: 1.16
+Version: 1.16.1
 Release: alt1%ubt
 
 %define _docdir %_defaultdocdir/%name-%version
@@ -224,7 +224,7 @@ autoreconf --verbose --force
 
 # dejagnu tests disabled
 # 	--with-tcl=%_libdir \
-%make
+%make_build
 popd
 
 # Sanity check the KDC_RUN_DIR.
@@ -470,6 +470,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Mon Aug 27 2018 Ivan A. Melnikov <iv@altlinux.org> 1.16.1-alt1%ubt
+- 1.16.1 (CVE-2018-5729, CVE-2018-5730)
+
 * Mon Jan 22 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16-alt1%ubt
 - Update to latest stable release 1.16
 
