@@ -1,10 +1,12 @@
 %define oname autobahn
 
+%def_disable check
+
 %def_with python3
 
 Name: python-module-%oname
-Version: 17.7.1
-Release: alt1.1
+Version: 18.5.2
+Release: alt1
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
 Group: Development/Python
@@ -172,6 +174,10 @@ popd
 %endif
 
 %changelog
+* Sun Aug 26 2018 Anton Midyukov <antohami@altlinux.org> 18.5.2-alt1
+- new version 18.5.2
+- disable check
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 17.7.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

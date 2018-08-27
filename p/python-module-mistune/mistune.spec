@@ -3,13 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7
-Release: alt3.git20150811.1.1.1
+Version: 0.8.3
+Release: alt1
 Summary: The fastest markdown parser in pure Python
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/mistune/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/lepture/mistune.git
 Source: %name-%version.tar
@@ -104,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 25 2018 Anton Midyukov <antohami@altlinux.org> 0.8.3-alt1
+- Version 0.8.3
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7-alt3.git20150811.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 

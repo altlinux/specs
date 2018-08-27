@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define origname TwistedCore
-%define major 17.5
+%define major 18.7
 
 %def_with python3
 
@@ -7,7 +10,7 @@
 %define prefx3 python3-module-twisted
 Name: %prefx-core
 Version: %major.0
-Release: alt2.1
+Release: alt1
 %setup_python_module twisted-core
 Summary: An asynchronous networking framework written in Python
 
@@ -289,6 +292,7 @@ This package contains classes and functions to do granular logging.
 Summary: An asynchronous networking framework written in Python 3
 Group: Development/Python3
 Requires: python3-module-OpenSSL
+%add_python3_req_skip win32com.shell
 
 %description -n %prefx3-core
 An extensible framework for Python programming, with special focus
@@ -613,7 +617,6 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 %python_sitelibdir/Twisted*.egg-info
 %dir %python_sitelibdir/twisted/
 %python_sitelibdir/twisted/*.py*
-%python_sitelibdir/twisted/python/*.c
 %python_sitelibdir/twisted/python/_pydoctortemplates/
 
 %python_sitelibdir/twisted/application/
@@ -798,8 +801,8 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 
 %python3_sitelibdir/Twisted*.egg-info
 %dir %python3_sitelibdir/twisted/
-%python3_sitelibdir/twisted/*.py*
-%python3_sitelibdir/twisted/python/*.c
+%python3_sitelibdir/twisted/*.py
+%python3_sitelibdir/twisted/__pycache__/
 %python3_sitelibdir/twisted/python/_pydoctortemplates/
 
 %python3_sitelibdir/twisted/application/
@@ -810,45 +813,44 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 %python3_sitelibdir/twisted/enterprise/
 %python3_sitelibdir/twisted/internet/
 %exclude %python3_sitelibdir/twisted/internet/test
-#exclude %python3_sitelibdir/twisted/internet/pyuisupport.py*
-%exclude %python3_sitelibdir/twisted/internet/wxreactor.py*
-%exclude %python3_sitelibdir/twisted/internet/wxsupport.py*
-#exclude %python3_sitelibdir/twisted/internet/gtk2reactor.py*
-#exclude %python3_sitelibdir/twisted/internet/glib2reactor.py*
-#exclude %python3_sitelibdir/twisted/internet/tksupport.py*
+%exclude %python3_sitelibdir/twisted/internet/wxreactor.py
+%exclude %python3_sitelibdir/twisted/internet/__pycache__/wxreactor.*
+%exclude %python3_sitelibdir/twisted/internet/wxsupport.py
+%exclude %python3_sitelibdir/twisted/internet/__pycache__/wxsupport.*
 
 %python3_sitelibdir/twisted/persisted/
 %exclude %python3_sitelibdir/twisted/persisted/test
 
 %dir %python3_sitelibdir/twisted/plugins/
 %python3_sitelibdir/twisted/plugins/*.py*
-%exclude %python3_sitelibdir/twisted/plugins/twisted_trial.py*
-#exclude %python3_sitelibdir/twisted/plugins/twisted_news.py*
-#exclude %python3_sitelibdir/twisted/plugins/twisted_runner.py*
-#exclude %python3_sitelibdir/twisted/plugins/twisted_mail.py*
-%exclude %python3_sitelibdir/twisted/plugins/twisted_conch.py*
-#exclude %python3_sitelibdir/twisted/plugins/twisted_words.py*
-%exclude %python3_sitelibdir/twisted/plugins/twisted_web.py*
-#exclude %python3_sitelibdir/twisted/plugins/twisted_names.py*
+%python3_sitelibdir/twisted/plugins/__pycache__/
+%exclude %python3_sitelibdir/twisted/plugins/twisted_trial.py
+%exclude %python3_sitelibdir/twisted/plugins/__pycache__/twisted_trial.*
+%exclude %python3_sitelibdir/twisted/plugins/twisted_conch.py
+%exclude %python3_sitelibdir/twisted/plugins/__pycache__/twisted_conch*
+%exclude %python3_sitelibdir/twisted/plugins/twisted_web.py
+%exclude %python3_sitelibdir/twisted/plugins/__pycache__/twisted_web.*
 
 %dir %python3_sitelibdir/twisted/protocols/
 %python3_sitelibdir/twisted/protocols/*.py*
+%python3_sitelibdir/twisted/protocols/__pycache__/
 
-#python3_sitelibdir/twisted/protocols/mice/
 %python3_sitelibdir/twisted/protocols/haproxy/
 %exclude %python3_sitelibdir/twisted/protocols/haproxy/test/
 
 %dir %python3_sitelibdir/twisted/python/
 %python3_sitelibdir/twisted/python/*.py*
-#python3_sitelibdir/twisted/python/*.so
+%python3_sitelibdir/twisted/python/__pycache__/
 
 
 %python3_sitelibdir/twisted/scripts/
 %exclude %python3_sitelibdir/twisted/scripts/test
-%exclude %python3_sitelibdir/twisted/scripts/trial.py*
+%exclude %python3_sitelibdir/twisted/scripts/trial.py
+%exclude %python3_sitelibdir/twisted/scripts/__pycache__/trial.*
 
 %dir %python3_sitelibdir/twisted/spread/
-%python3_sitelibdir/twisted/spread/*.py*
+%python3_sitelibdir/twisted/spread/*.py
+%python3_sitelibdir/twisted/spread/__pycache__/
 
 %python3_sitelibdir/twisted/tap/
 
@@ -861,8 +863,10 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 #python3_sitelibdir/twisted/internet/glib2reactor.py*
 
 %files -n %prefx3-core-gui-wx
-%python3_sitelibdir/twisted/internet/wxreactor.py*
-%python3_sitelibdir/twisted/internet/wxsupport.py*
+%python3_sitelibdir/twisted/internet/wxreactor.py
+%python3_sitelibdir/twisted/internet/__pycache__/wxreactor.*
+%python3_sitelibdir/twisted/internet/wxsupport.py
+%python3_sitelibdir/twisted/internet/__pycache__/wxsupport.*
 
 %files -n %prefx3-core-gui-tk
 #python3_sitelibdir/twisted/internet/tksupport.py*
@@ -879,12 +883,12 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 %python3_sitelibdir/twisted/protocols/test
 %python3_sitelibdir/twisted/protocols/haproxy/test
 %python3_sitelibdir/twisted/trial
-%python3_sitelibdir/twisted/plugins/twisted_trial.py*
-%python3_sitelibdir/twisted/scripts/trial.py*
+%python3_sitelibdir/twisted/plugins/twisted_trial.py
+%python3_sitelibdir/twisted/plugins/__pycache__/twisted_trial.*
+%python3_sitelibdir/twisted/scripts/trial.py
+%python3_sitelibdir/twisted/scripts/__pycache__/trial.*
 %python3_sitelibdir/twisted/application/test
-#python3_sitelibdir/twisted/news/test
 %python3_sitelibdir/twisted/runner/test
-#python3_sitelibdir/twisted/mail/test
 %python3_sitelibdir/twisted/web/test
 %python3_sitelibdir/twisted/conch/test
 %python3_sitelibdir/twisted/names/test
@@ -903,22 +907,17 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 %files -n %prefx3-runner
 %python3_sitelibdir/twisted/runner/
 %exclude %python3_sitelibdir/twisted/runner/test
-#python3_sitelibdir/twisted/plugins/twisted_runner.py*
 
 %files -n %prefx3-mail
 %doc docs/mail/*
-#_bindir/mailmail.py3
 %python3_sitelibdir/twisted/mail/
 %exclude %python3_sitelibdir/twisted/mail/test
-#python3_sitelibdir/twisted/plugins/twisted_mail.py*
-#_man1dir/mailmail.py3.1*
 
 %files -n %prefx3-web
 %doc docs/web/*
 %python3_sitelibdir/twisted/web
-%python3_sitelibdir/twisted/plugins/twisted_web.py*
-# There are no SOAPpy in ALT Linux Sisyphus - remove it support
-#exclude %python3_sitelibdir/twisted/web/soap.py*
+%python3_sitelibdir/twisted/plugins/twisted_web.py
+%python3_sitelibdir/twisted/plugins/__pycache__/twisted_web.*
 %exclude %python3_sitelibdir/twisted/web/test
 
 %files -n %prefx3-conch
@@ -932,26 +931,28 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 %_man1dir/conch.py3.1*
 %_man1dir/tkconch.py3.1*
 %python3_sitelibdir/twisted/conch/
-%python3_sitelibdir/twisted/plugins/twisted_conch.py*
+%python3_sitelibdir/twisted/plugins/twisted_conch.py
+%python3_sitelibdir/twisted/plugins/__pycache__/twisted_conch.*
 %exclude %python3_sitelibdir/twisted/conch/ui
 %exclude %python3_sitelibdir/twisted/conch/scripts/tkconch.py
+%exclude %python3_sitelibdir/twisted/conch/scripts/__pycache__/tkconch.*
+
 %exclude %python3_sitelibdir/twisted/conch/test
 
 %files -n %prefx3-conch-gui
 %python3_sitelibdir/twisted/conch/ui
 %python3_sitelibdir/twisted/conch/scripts/tkconch.py
+%python3_sitelibdir/twisted/conch/scripts/__pycache__/tkconch.*
 
 %files -n %prefx3-names
 %doc docs/names/*
 %python3_sitelibdir/twisted/names/
 %exclude %python3_sitelibdir/twisted/names/test
-#python3_sitelibdir/twisted/plugins/twisted_names.py*
 
 %files -n %prefx3-words
 %doc docs/words/*
 %python3_sitelibdir/twisted/words/
 %exclude %python3_sitelibdir/twisted/words/test
-#python3_sitelibdir/twisted/plugins/twisted_words.py*
 
 %files -n %prefx3-pair
 %doc docs/pair/*
@@ -968,6 +969,9 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 %endif
 
 %changelog
+* Sat Aug 25 2018 Anton Midyukov <antohami@altlinux.org> 18.7.0-alt1
+- new version (18.7.0) with rpmgs script
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 17.5.0-alt2.1
 - (NMU) Rebuilt with python-3.6.4.
 
