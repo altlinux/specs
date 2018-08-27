@@ -3,7 +3,6 @@
 %brp_strip_none %_bindir/*
 %brp_strip_none %browser_ppapi_plugins_path/*
 %set_verify_elf_method textrel=relaxed
-%def_enable include_x86_64
 %def_disable flash_props
 
 Name: adobe-flash-player-ppapi
@@ -11,7 +10,7 @@ Name: adobe-flash-player-ppapi
 %define ver_fake   30
 %define ver_ix86   30.0.0.154
 %define ver_x86_64 30.0.0.154
-Release: alt2%ubt
+Release: alt3%ubt
 Epoch: 3
 
 %define ver_real %ver_fake
@@ -72,9 +71,7 @@ fake
 %prep
 %setup -Tqcn flash_player_ppapi_%{version}_linux
 %ifarch x86_64
-%if_enabled include_x86_64
 tar xfv %SOURCE10
-%endif
 %else
 tar xfv %SOURCE11
 %endif
@@ -85,15 +82,9 @@ tar xfv %SOURCE11
 %install
 mkdir -p -m 0755 %buildroot/%browser_ppapi_plugins_path
 mkdir -p -m 0755 %buildroot/%browser_ppapi_plugins_path2
-%ifarch x86_64
-%if_enabled include_x86_64
 install -m 0644 libpepflashplayer.so %buildroot/%browser_ppapi_plugins_path
 ln -s `relative %browser_ppapi_plugins_path/libpepflashplayer.so %browser_ppapi_plugins_path2/libpepflashplayer.so`  %buildroot/%browser_ppapi_plugins_path2/libpepflashplayer.so
-%endif
-%else
-install -m 0644 libpepflashplayer.so %buildroot/%browser_ppapi_plugins_path
-ln -s `relative %browser_ppapi_plugins_path/libpepflashplayer.so %browser_ppapi_plugins_path2/libpepflashplayer.so`  %buildroot/%browser_ppapi_plugins_path2/libpepflashplayer.so
-%endif
+install -m 0644 manifest.json %buildroot/%browser_ppapi_plugins_path2/
 
 %if_enabled flash_props
 # install flash-player-properties
@@ -113,13 +104,6 @@ done
 mkdir -p -m0755 %buildroot/%_desktopdir
 install -m0644 %SOURCE0 %buildroot/%_desktopdir/
 
-%ifarch x86_64
-%if_disabled include_x86_64
-%post -n %bin_name
-echo "At this moment no x86 version of %name"
-%endif
-%endif
-
 %files -n %bin_name
 %if_enabled flash_props
 %_bindir/flash-player-properties
@@ -128,19 +112,14 @@ echo "At this moment no x86 version of %name"
 %endif
 #
 %dir %browser_ppapi_plugins_path2
-%ifarch x86_64
-%if_enabled include_x86_64
 %browser_ppapi_plugins_path/*
 %browser_ppapi_plugins_path2/*
 %_desktopdir/ppapi-plugin-adobe-flash.desktop
-%endif
-%else
-%browser_ppapi_plugins_path/*
-%browser_ppapi_plugins_path2/*
-%_desktopdir/ppapi-plugin-adobe-flash.desktop
-%endif
 
 %changelog
+* Mon Aug 27 2018 Sergey V Turchin <zerg@altlinux.org> 3:30-alt3%ubt
+- package manifest.json (ALT#34949)
+
 * Tue Aug 14 2018 Sergey V Turchin <zerg@altlinux.org> 3:30-alt2%ubt
 - new version
 
