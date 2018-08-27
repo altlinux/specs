@@ -1,5 +1,5 @@
 Name:           socket_wrapper
-Version:        1.1.8
+Version:        1.1.9
 Release:        alt2%ubt
 Group:          Development/Other
 License:        BSD
@@ -56,7 +56,7 @@ popd
 
 %check
 pushd obj
-ctest -V
+LD_LIBRARY_PATH=. ctest -V
 
 LD_PRELOAD=src/libsocket_wrapper.so bash -c '>/dev/null'
 
@@ -71,6 +71,12 @@ popd
 %_man1dir/socket_wrapper.1*
 
 %changelog
+* Mon Apr 09 2018 Evgeny Sinelikov <sin@altlinux.org> 1.1.9-alt2%ubt
+- Add LD_LIBRARY_PATH to libthread_deadlock.so for running tests on e2k
+
+* Mon Jan 29 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.1.9-alt1%ubt
+- Update to latest release with fixed thread - signal deadlock issue
+
 * Fri Nov 03 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.1.8-alt2%ubt
 - Disable ipv6 for test_socket_getsockname due girar error with:
   "Address family not supported by protocol"
