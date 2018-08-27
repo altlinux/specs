@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.19.2
+Version: 0.2.21
 Release: alt1
 
 Summary: Simple image creator
@@ -83,6 +83,13 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Mon Aug 27 2018 Alexey Gladkov <legion@altlinux.ru> 0.2.21-alt1
+- Sort packages list by default
+- Add README.md and LICENSE
+
+* Fri Jul 20 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.2.20-alt1
+- mki-copy-efiboot: add ia32 EFI boot support for x86_64 platforms
+
 * Sun Dec 03 2017 Anton Farygin <rider@altlinux.ru> 0.2.19.2-alt1
 - mki-copy-efiboot: adjusted for refind-0.11.2
 
