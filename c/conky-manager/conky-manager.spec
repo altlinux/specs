@@ -1,6 +1,6 @@
 Name: conky-manager
-Version: 2.3.4
-Release: alt2
+Version: 2.4
+Release: alt1
 Summary: A simple GUI for managing Conky config files
 Group: Monitoring
 License: GPLv3+
@@ -50,6 +50,9 @@ mkdir -p %buildroot%_libdir/%name/libs
 %_pixmapsdir/conky-manager.png
 
 %changelog
+* Mon Aug 27 2018 Grigory Ustinov <grenka@altlinux.org> 2.4-alt1
+- Build new version.
+
 * Thu Aug 23 2018 Grigory Ustinov <grenka@altlinux.org> 2.3.4-alt2
 - Add requires on ImageMagick-tools.
 
