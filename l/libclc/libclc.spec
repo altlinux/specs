@@ -1,6 +1,6 @@
 Name: libclc
 Version: 0.2.0
-Release: alt1
+Release: alt2
 Summary: An open source implementation of the OpenCL 1.1 library requirements
 License: BSD
 Group: System/Libraries
@@ -8,9 +8,8 @@ URL: https://libclc.llvm.org
 
 Source: %name-%version.tar
 
-ExclusiveArch: %ix86 x86_64
 BuildPreReq: /proc
-BuildRequires: clang libstdc++-devel llvm-devel
+BuildRequires: clang libstdc++-devel llvm-devel lld
 
 %description
 libclc is an open source, BSD licensed implementation of the library
@@ -58,7 +57,9 @@ export CFLAGS=" -D__extern_always_inline=inline"
 	--libexecdir=%_prefix/libexec/clc \
 	--pkgconfigdir=%_pkgconfigdir
 
-sed -i 's|\ -flto=thin||' Makefile
+%ifarch aarch64
+sed -i 's|\ -frecord-gcc-switches||' Makefile
+%endif
 %make_build
 
 %install
@@ -73,6 +74,9 @@ sed -i 's|\ -flto=thin||' Makefile
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Aug 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.2.0-alt2
+- build for aarch64
+
 * Mon Jul 30 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.2.0-alt1
 - initial release
 
