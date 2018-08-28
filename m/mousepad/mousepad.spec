@@ -1,12 +1,12 @@
 Name: mousepad
 Version: 0.4.1
-Release: alt1
+Release: alt2
 
 Summary: Mousepad - A simple text editor for Xfce
 Summary (ru_RU.UTF-8): Простой текстовый редактор для Xfce
 License: %gpl2plus
 Group: Editors
-Url: http://www.xfce.org
+Url: https://www.xfce.org
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
@@ -15,12 +15,13 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-# For exo-csource
-BuildRequires: libexo-devel
-BuildRequires: libgtk+2-devel intltool libgtksourceview-devel libdbus-glib-devel
+BuildRequires: libgtk+3-devel intltool libgtksourceview3-devel libdbus-glib-devel
+BuildRequires: exo-csource
 
 Obsoletes: xfce-mousepad < %version
 Provides: xfce-mousepad = %version-%release
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Mousepad is a text editor for Xfce based on Leafpad. The initial reason
@@ -44,7 +45,8 @@ Mousepad - простой текстовый редактор для Xfce осн
 %xfce4reconf
 %configure --enable-dbus \
 	--enable-maintainer-mode \
-	--enable-debug=no
+	--enable-gtk3 \
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -58,6 +60,12 @@ Mousepad - простой текстовый редактор для Xfce осн
 %_desktopdir/*
 
 %changelog
+* Tue Aug 28 2018 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt2
+- Enable debug (minimum level).
+- Update url.
+- Use _unpackaged_files_terminate_build.
+- Build with GTK+3.
+
 * Mon Jun 04 2018 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
 - Updated to 0.4.1.
 
