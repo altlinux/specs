@@ -1,7 +1,7 @@
 Name: eric6
 Summary: Python IDE
 Version: 18.01
-Release: alt1%ubt
+Release: alt2%ubt
 
 License: GPLv3+
 Group: Development/Python
@@ -36,6 +36,8 @@ BuildRequires: python3-module-qscintilla2-qt5
 BuildRequires: libappstream-glib
 %py3_requires PyQt5.Qsci
 %py_requires json
+%add_python3_req_skip PyQt5.QtWebKit
+%add_python3_req_skip PyQt5.QtWebKitWidgets
 
 # ???
 %add_python3_req_skip __builtin__ mod_python
@@ -106,6 +108,9 @@ desktop-file-validate %buildroot%_desktopdir/eric6_webbrowser.desktop
 %_datadir/qt5/qsci/api/ruby/*
 
 %changelog
+* Tue Aug 28 2018 Sergey V Turchin <zerg@altlinux.org> 18.01-alt2%ubt
+- Don't require PyQt5.QtWebKit
+
 * Wed Jan 24 2018 Anton Midyukov <antohami@altlinux.org> 18.01-alt1%ubt
 - New version 18.01
 - Added missing requires python(json)
