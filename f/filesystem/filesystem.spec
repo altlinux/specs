@@ -1,5 +1,5 @@
 Name: filesystem
-Version: 2.3.16
+Version: 2.3.17
 Release: alt1
 
 Summary: The basic directory layout for a GNU/Linux system
@@ -9,6 +9,9 @@ Group: System/Base
 Source0: %name-dir.list
 Source1: %name-link.list
 Source2: %name-dir64.list
+source3: %name-dir-x32.list
+# Traditional MCST paths:
+Source4: %name-dir-e2k32.list
 
 PreReq: setup
 
@@ -32,34 +35,49 @@ permissions for the directories.
 %setup -cT
 
 %build
-install -p -m644 %_sourcedir/%name-dir.list list
+{
+	cat %_sourcedir/%name-dir.list
 %if "%_lib" == "lib64"
-cat %_sourcedir/%name-dir64.list >>list
+	cat %_sourcedir/%name-dir64.list
 %endif
-echo '%%defattr(-,root,root,-)' >>list
-cut -d' ' -f1 <%_sourcedir/%name-link.list >>list
+%ifarch x32
+	cat %_sourcedir/%name-dir64.list
+%endif
+%ifarch x86_64 x32
+	cat %_sourcedir/%name-dir-x32.list
+%endif
+%ifarch %e2k
+	cat %_sourcedir/%name-dir-e2k32.list
+%endif
+} > dir.list
+
+{
+	cat dir.list
+	echo '%%defattr(-,root,root,-)'
+	cut -d' ' -f1 < %_sourcedir/%name-link.list
+} > list
 
 %install
 mkdir %buildroot
-cd %buildroot
 
-cat %_sourcedir/%name-dir.list |while read attr dir name extra; do
-	mkdir ".$name"
-done
+while read attr dir name extra; do
+	mkdir "%buildroot$name"
+done < dir.list
 
-%if "%_lib" == "lib64"
-cat %_sourcedir/%name-dir64.list |while read attr dir name extra; do
-	mkdir ".$name"
-done
-%endif
-
-cat %_sourcedir/%name-link.list |while read source target; do
-	ln -s "$target" ".$source"
-done
+while read source target; do
+	ln -s "$target" "%buildroot$source"
+done < %_sourcedir/%name-link.list
 
 %files -f list
 
 %changelog
+* Tue Aug 28 2018 Dmitry V. Levin <ldv@altlinux.org> 2.3.17-alt1
+- Moved /etc/syslog.d from syslog-common to filesystem.
+- Made /lib/modules readable and executable by everybody (closes: #5969).
+- Added libx32 directories on x86_64 and x32 systems (by Ivan Zakharyaschev).
+- Added lib32 directories on %%e2k (thx Ivan Zakharyaschev).
+- Added %%ghost /run/lock/, marked /var/lock/ and /var/lock/* as %%ghost (by Alexey Shabalin).
+
 * Fri Dec 29 2017 Dmitry V. Levin <ldv@altlinux.org> 2.3.16-alt1
 - Added /etc/pki and /usr/share/pki directories.
 
