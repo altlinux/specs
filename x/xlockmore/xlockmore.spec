@@ -1,26 +1,25 @@
 Name: xlockmore
-Version: 5.46
-Release: alt2
+Version: 5.56
+Release: alt1
 
 Summary: An X terminal locking program
 License: MIT
 Group: Graphical desktop/Other
-Url: http://www.tux.org/~bagleyd/xlockmore.html
+Url: http://sillycycle.com/xlockmore.html
 
 Source: %name-%version.tar.xz
-Source1: %name-v5.27-icons.tar.gz
-Source2: %name-v5.27-pam.d.tar
+Source1: icons.tar.gz
+Source2: pam.d.tar
 Source3: po.tar.gz
 
-Patch: xlockmore-5.46-imode.patch
-Patch1: xlockmore-5.46-pam.patch
-Patch2: xlockmore-5.46-l10n.patch
-Patch3: xlockmore-5.46-kbdmon.patch
-Patch4: xlockmore-5.46-nologout.patch
-Patch5: xlockmore-5.46-droidfonts.patch
-Patch6: xlockmore-5.46-alt-BSD_SOURCE.patch
-Patch7: xlockmore-5.46-alt-build-freetype.patch
-
+Patch0001: 0001-Fix-install-modes.patch
+Patch0002: 0002-Use-PAM-for-authorization.patch
+Patch0003: 0003-Localize-and-translate.patch
+Patch0004: 0004-Use-KBD-monitoring.patch
+Patch0005: 0005-Provide-nologout-option-for-user-switching.patch
+Patch0006: 0006-Use-Droid-fonts-instead-of-legacy-ones.patch
+Patch0007: 0007-Switch-from-_BSD_SOURCE-to-_DEFAULT_SOURCE.patch
+Patch0008: 0008-Fix-freetype2-detection.patch
 
 PreReq: /etc/tcb
 Requires: fortune-mod
@@ -29,7 +28,7 @@ Requires: fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono fonts-ttf
 BuildPreReq: gcc-c++
 # Automatically added by buildreq on Sun Jun 29 2014
 # optimized out: gnu-config libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXt-devel libcloog-isl4 libfreetype-devel libstdc++-devel pkg-config xorg-kbproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ imake libXdmcp-devel libXext-devel libXinerama-devel libXmu-devel libXpm-devel libftgl-devel libpam-devel xorg-cf-files
+BuildRequires: gcc-c++ imake libXdmcp-devel libXext-devel libXinerama-devel libXmu-devel libXpm-devel libftgl-devel libpam-devel xorg-cf-files autoconf-archive
 
 %description
 The %name utility is an enhanced version of the standard xlock
@@ -41,27 +40,28 @@ Install the %name package if you need a locking program to secure
 X sessions.
 
 %prep
-%setup -b1 -b2 -a3
-%patch -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
+%setup -a1 -a2 -a3
+%patch0001 -p2
+#patch0002 -p2
+%patch0003 -p2
+%patch0004 -p2
+%patch0005 -p2
+%patch0006 -p2
+#patch0007 -p2
+%patch0008 -p2
 
 %build
+cp /usr/share/aclocal/ax_pthread.m4 .
 autoconf
 ftgl_includes=%_includedir/FTGL %configure \
 	--without-motif \
 	--without-gtk \
 	--without-esound \
+	--disable-def-play \
 	--enable-pam \
 	--enable-bad-pam \
 	--enable-vtlock \
 	--enable-button-logout=85 \
-	--enable-use_mb \
 	--enable-kbdmon
 # Hack a little
 echo '#define FTGL213' >> config.h
@@ -70,16 +70,16 @@ echo '#define FTGL213' >> config.h
 	xapploaddir=%_sysconfdir/X11/app-defaults
 
 %install
-install -p -m640 -D ../%name-v5.27-pam.d/xlock %buildroot%_sysconfdir/pam.d/xlock
+install -p -m640 -D pam.d/xlock %buildroot%_sysconfdir/pam.d/xlock
 install -p -m644 -D xlock/xlock.man %buildroot%_mandir/man1/xlock.1
 install -p -m644 -D xlock/XLock.ad %buildroot%_sysconfdir/X11/app-defaults/XLock
 install -p -m644 -D xlock/XLock-ja.ad %buildroot%_sysconfdir/X11/app-defaults/XLock.ja_JP.EUCJP
 install -p -m644 -D xlock/XLock-zh_TW.ad %buildroot%_sysconfdir/X11/app-defaults/XLock.zh_TW.UTF-8
 install -p -m644 -D xlock/XLock-ru.ad %buildroot%_sysconfdir/X11/app-defaults/XLock.ru_RU.UTF-8
 
-install -D -m 644 ../%name-v5.27-icons/xlock-16x16.xpm %buildroot%_miconsdir/%name.xpm
-install -D -m 644 ../%name-v5.27-icons/xlock-32x32.xpm %buildroot%_iconsdir/%name.xpm
-install -D -m 644 ../%name-v5.27-icons/xlock-48x48.xpm %buildroot%_liconsdir/%name.xpm
+install -D -m 644 icons/xlock-16x16.xpm %buildroot%_miconsdir/%name.xpm
+install -D -m 644 icons/xlock-32x32.xpm %buildroot%_iconsdir/%name.xpm
+install -D -m 644 icons/xlock-48x48.xpm %buildroot%_liconsdir/%name.xpm
 
 %make_install install \
 	prefix=%buildroot%prefix \
@@ -110,6 +110,14 @@ rm -rf %_datadir/xlock/fonts/
 %exclude %_mandir/xlock.1*
 
 %changelog
+* Tue Aug 28 2018 Fr. Br. George <george@altlinux.ru> 5.56-alt1
+- Autobuild version bump to 5.56
+- Drop some patches
+
+* Tue May 29 2018 Fr. Br. George <george@altlinux.ru> 5.55-alt1
+- Autobuild version bump to 5.55
+- Update patches
+
 * Wed Apr 20 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.46-alt2
 - Fixed build with freetype.
 - Switched from _BSD_SOURCE to _DEFAULT_SOURCE.
