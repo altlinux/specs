@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.8.1
+Version: 2.8.3
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,16 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Aug 28 2018 Vitaly Lipatov <lav@altlinux.ru> 2.8.3-alt1
+- rpmbs: add hacks for already backported releases
+
+* Tue Aug 28 2018 Vitaly Lipatov <lav@altlinux.ru> 2.8.2-alt1
+- loginhsh: add -s (skip stuffs)
+- add libwxGTK3.0 support
+- fix for --last-changelog and --last-version commands. Run before checking other commands
+- rpmlog: add -o option (just print git log)
+- fix increment release for backported releases
+
 * Fri Aug 10 2018 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt1
 - rpmgs: rewrite predownloaded node_modules support
 - rpmbps: disable rpmcs call for other systems (eterbug #13034)
