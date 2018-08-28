@@ -1,6 +1,6 @@
 Name: ntp
-Version: 4.2.8p11
-Release: alt2
+Version: 4.2.8p12
+Release: alt1
 %define srcname %name-%version%{?patchlevel:%patchlevel}
 
 Summary: The Network Time Protocol (NTP)
@@ -340,6 +340,9 @@ fi
 %ghost %ROOT/%_lib/libresolv.so.2
 
 %changelog
+* Tue Aug 28 2018 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8p12-alt1
+- 4.2.8p12 (CVE-2018-12327)
+
 * Tue Aug 14 2018 Michael Shigorin <mike@altlinux.org> 4.2.8p11-alt2
 - E2K: avoid lcc-unsupported option
 - autoreconf
