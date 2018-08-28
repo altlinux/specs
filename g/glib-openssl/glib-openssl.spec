@@ -6,7 +6,7 @@
 
 Name: glib-openssl
 Version: %ver_major.8
-Release: alt1
+Release: alt2
 
 Summary: Network-related giomodule for glib using openssl
 Group: System/Libraries
@@ -72,6 +72,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Wed Aug 29 2018 Yuri N. Sedunov <aris@altlinux.org> 2.50.8-alt2
+- rebuilt with openssl-1.1
+
 * Fri Mar 02 2018 Yuri N. Sedunov <aris@altlinux.org> 2.50.8-alt1
 - 2.50.8
 
