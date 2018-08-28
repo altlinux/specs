@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.9.3
-Release: alt3.1
+Version: 1.9.4
+Release: alt1
 
 Summary: A Python module for interfacing with the SDL multimedia library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой SDL
@@ -13,7 +13,7 @@ License: LGPL
 Url: http://www.pygame.org
 
 Source: %version.tar.gz
-Patch: pygame-1.9.3-2to3.patch
+Patch: pygame-1.9.4-2to3.patch
 %setup_python_module pygame
 %define python_includedir %_includedir/python%_python_version
 %define python3_includedir %_includedir/python%{_python3_version}m
@@ -138,7 +138,7 @@ programs.
 
 %prep
 %setup -n %oname-%version
-%patch -p2
+%patch -p1
 rm -f docs/LGPL
 # fix find SDL libs on x86_64
 subst "s|/lib|/%_lib|g" config_unix.py
@@ -191,6 +191,9 @@ python config.py
 %endif
 
 %changelog
+* Tue Aug 28 2018 Fr. Br. George <george@altlinux.ru> 1.9.4-alt1
+- Autobuild version bump to 1.9.4
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.3-alt3.1
 - (NMU) Rebuilt with python-3.6.4.
 
