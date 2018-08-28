@@ -3,8 +3,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 4.1
-Release: alt2
+Version: 4.2
+Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
 
@@ -59,11 +59,16 @@ alterator module for date/time setup
 %_sysconfdir/alterator/*
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*
+%_datadir/alterator/type/*
 %_alterator_backend3dir/*
 %_alterator_libdir/ui/*
+%_alterator_libdir/type/*
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Fri Aug 17 2018 Paul Wolneykien <manowar@altlinux.org> 4.2-alt1
+- Use strict data type for the "zone" parameter.
+
 * Wed Jul 18 2018 Michael Shigorin <mike@altlinux.org> 4.1-alt2
 - support e2kv4 through %e2k macro (grenka@).
 

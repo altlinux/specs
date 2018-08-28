@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-dhcp
-Version: 0.9.5
+Version: 0.9.6
 Release: alt1
 
 Summary: alterator module for dhcp conf file editing
@@ -49,6 +49,9 @@ DHCP configuration alterator module
 %_libexecdir/alterator/hooks/dhcp.d
 
 %changelog
+* Mon Aug 20 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.6-alt1
+- Use strict data type for "ipv" parameter.
+
 * Tue Dec 09 2014 Mikhail Efremov <sem@altlinux.org> 0.9.5-alt1
 - Only show IP version selector if more then one is available.
 
