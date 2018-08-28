@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		83229
+%define svnrev		84139
 
 %def_with pgsql
 %def_enable java
@@ -15,7 +15,7 @@
 %endif
 
 Name: zabbix
-Version: 3.4.12
+Version: 3.4.13
 Release: alt1%ubt
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -650,6 +650,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Aug 28 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.13-alt1%ubt
+- 3.4.13
+
 * Thu Aug 02 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.12-alt1%ubt
 - 3.4.12
 
