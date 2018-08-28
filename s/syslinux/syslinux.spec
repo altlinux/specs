@@ -1,6 +1,6 @@
 Name: syslinux
 Version: 4.04
-Release: alt12
+Release: alt13
 Serial: 2
 
 Summary: Simple kernel loader which boots from a FAT filesystem
@@ -8,7 +8,10 @@ License: GPL
 Group: System/Kernel and hardware
 Url: http://syslinux.zytor.com/
 
+ExclusiveArch: %ix86 x86_64
+
 Requires: mtools
+Requires: %name-data = %serial:%version-%release
 
 Source0: %name-%version.tar.bz2
 Source1: isolinux-config
@@ -65,7 +68,16 @@ Group: System/Kernel and hardware
 Requires: %name = %serial:%version
 
 %description devel
-Read main packages description 
+Read main packages description
+
+%package data
+Summary: Simple kernel loader which boots from a FAT filesystem, x86 loader binaries
+Group: System/Kernel and hardware
+BuildArch: noarch
+
+%description data
+This package contains a set of syslinux loader binaries for x86-compatible
+architectures.
 
 %prep
 %setup -q
@@ -126,15 +138,21 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir
 %doc NEWS README* doc/* sample/sample.*
 %_bindir/*
 %exclude %_bindir/extlinux
+%_man1dir/*.1.*
+
+%files data
 %dir %_libexecdir/%name/
 %_libexecdir/%name/*
-%_man1dir/*.1.*
 
 %files extlinux
 %_bindir/extlinux
 /boot/extlinux
 
 %changelog
+* Fri Aug 24 2018 Paul Wolneykien <manowar@altlinux.org> 2:4.04-alt13
+- Build exclusively for x86 providing the result to all platforms
+  in the form of noarch package syslinux-data.
+   
 * Wed Dec 02 2015 Michael Shigorin <mike@altlinux.org> 2:4.04-alt12
 - rebuilt with gcc4.7 (see #31534 again)
 
