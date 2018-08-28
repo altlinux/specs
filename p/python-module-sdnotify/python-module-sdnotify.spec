@@ -2,7 +2,7 @@
 
 Name:    python-module-%modulename
 Version: 0.3.2
-Release: alt1
+Release: alt2
 
 Summary: A pure Python implementation of systemd's service notification protocol (sd_notify)
 License: MIT
@@ -11,8 +11,11 @@ URL:     https://github.com/bb4242/sdnotify
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel python-module-setuptools
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools
 
 BuildArch: noarch
 
@@ -48,5 +51,8 @@ Group: Development/Python3
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Aug 28 2018 Anton Midyukov <antohami@altlinux.org> 0.3.2-alt2
+- fix buildrequires
+
 * Wed Aug 22 2018 Anton Midyukov <antohami@altlinux.org> 0.3.2-alt1
 - Initial build for Sisyphus
