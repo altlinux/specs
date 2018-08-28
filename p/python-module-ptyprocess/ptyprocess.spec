@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.5.2
-Release: alt1%ubt
+Version: 0.6.0
+Release: alt1
 
 Summary: Run a subprocess in a pseudo terminal
 License: ISCL
@@ -15,11 +15,7 @@ Url: https://pypi.python.org/pypi/ptyprocess
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools
-BuildRequires: python3-module-setuptools
 
 %if_with check
 BuildRequires: /dev/pts
@@ -39,14 +35,6 @@ it's going to a pipe rather than a terminal, or curses-style interfaces
 that rely on a terminal. If you need to automate these things, running
 the process in a pseudo terminal (pty) is the answer.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-This package contains tests for %oname.
-
 %package -n python3-module-%oname
 Summary: Run a subprocess in a pseudo terminal
 Group: Development/Python3
@@ -61,18 +49,9 @@ it's going to a pipe rather than a terminal, or curses-style interfaces
 that rely on a terminal. If you need to automate these things, running
 the process in a pseudo terminal (pty) is the answer.
 
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-This package contains tests for %oname.
-
 %prep
 %setup
 
-rm -rf ../python3
 cp -a . ../python3
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
@@ -88,11 +67,9 @@ popd
 
 %install
 %python_install
-cp -fR tests %buildroot%python_sitelibdir/%oname/
 
 pushd ../python3
 %python3_install
-cp -fR tests %buildroot%python3_sitelibdir/%oname/
 popd
 
 %check
@@ -103,23 +80,20 @@ py.test3 -v
 popd
 
 %files
-%doc *.rst docs/*.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
+%doc README.rst docs/*.rst
+%python_sitelibdir/ptyprocess/
+%python_sitelibdir/ptyprocess-*.egg-info
 
 %files -n python3-module-%oname
-%doc *.rst docs/*.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/tests
+%doc README.rst docs/*.rst
+%python3_sitelibdir/ptyprocess/
+%python3_sitelibdir/ptyprocess-*.egg-info
 
 %changelog
-* Wed Mar 21 2018 Stanislav Levin <slev@altlinux.org> 0.5.2-alt1%ubt
+* Mon Aug 20 2018 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
+- 0.5.2 -> 0.6.0.
+
+* Wed Mar 21 2018 Stanislav Levin <slev@altlinux.org> 0.5.2-alt1
 - 0.5 -> 0.5.2
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5-alt1.git20150617.2.1

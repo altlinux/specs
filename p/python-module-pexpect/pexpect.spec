@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 4.4
-Release: alt1%ubt
+Version: 4.6
+Release: alt1
 
 Summary: Pexpect is a pure Python Expect. It allows easy control of other applications
 License: Python Software Foundation License
@@ -16,14 +16,10 @@ Url: https://pypi.python.org/pypi/pexpect
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-objects.inv
-BuildRequires: python-module-setuptools
 BuildRequires: python-module-ptyprocess
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-ptyprocess
 
 %if_with check
@@ -95,24 +91,24 @@ This package contains pickles for Pexpect.
 %setup
 %patch0 -p1
 
-rm -rf ../python3
 cp -a . ../python3
 
 pushd ../python3
 # change shebang python -> python3
 find -type f -name '*.py' | \
-	xargs sed -i '1s|#!/usr/bin/env python|#!/usr/bin/env python3|'
-xargs sed -i '1s|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-	tests/fakessh/ssh
+xargs sed -i '1s|#!/usr/bin/env python[[:space:]]*$|#!/usr/bin/env python3|'
 
 # fix print functions and other for python3
 find tests -type f -name '*.py' -exec 2to3 -f print -f imports -w -n '{}' +
 
-# change python -> python3 calls
+# change python -> python3 callings
 find tests -type f -name '*.py' | \
 	xargs sed -i 's/\(.*pexpect.spawn(\x27python\)\(\(\x27\| \)\)/\13\2/'
 sed -i 's|self.runfunc(\x27python exit1.py\x27|self.runfunc(\x27python3 exit1.py\x27|' \
 	tests/test_run.py
+
+sed -i '1s|#!/usr/bin/env python[[:space:]]*$|#!/usr/bin/env python3|' \
+tests/fakessh/ssh
 popd
 
 %prepare_sphinx .
@@ -127,11 +123,11 @@ popd
 
 %install
 %python_install
-cp -fR tests %buildroot%python_sitelibdir/%oname/
+cp -fR tests %buildroot%python_sitelibdir/pexpect/
 
 pushd ../python3
 %python3_install
-cp -fR tests %buildroot%python3_sitelibdir/%oname/
+cp -fR tests %buildroot%python3_sitelibdir/pexpect/
 popd
 
 export PYTHONPATH=%buildroot%python_sitelibdir
@@ -151,7 +147,8 @@ popd
 
 %files
 %doc LICENSE *.rst
-%python_sitelibdir/*
+%python_sitelibdir/pexpect/
+%python_sitelibdir/pexpect-*.egg-info/
 %exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/tests
 
@@ -167,14 +164,18 @@ popd
 
 %files -n python3-module-%oname
 %doc LICENSE *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/pexpect/
+%python3_sitelibdir/pexpect-*.egg-info/
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
 
 %changelog
-* Wed Mar 21 2018 Stanislav Levin <slev@altlinux.org> 4.4-alt1%ubt
+* Mon Aug 20 2018 Stanislav Levin <slev@altlinux.org> 4.6-alt1
+- 4.4 -> 4.6.
+
+* Wed Mar 21 2018 Stanislav Levin <slev@altlinux.org> 4.4-alt1
 - 4.2.1 -> 4.4.0
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.1-alt1.1
