@@ -1,6 +1,6 @@
 Name: curl
 Version: 7.61.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -14,7 +14,7 @@ Patch0: curl-%version-alt.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires: glibc-devel-static groff-base libidn-devel libssh2-devel libssl-devel zlib-devel python-modules python-modules-logging python-modules-xml
+BuildRequires: glibc-devel-static groff-base libidn-devel libssh2-devel libssl-devel libkrb5-devel zlib-devel python-modules python-modules-logging python-modules-xml
 BuildRequires(pre):rpm-build-ubt
 
 %package -n lib%name
@@ -144,6 +144,10 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Thu Aug 16 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.61.0-alt2%ubt
+- Rebuilt with openssl 1.1.
+- Added BR: libkrb5-devel.
+
 * Tue Jul 17 2018 Anton Farygin <rider@altlinux.ru> 7.61.0-alt1%ubt
 - 7.61.0
 - fixes:

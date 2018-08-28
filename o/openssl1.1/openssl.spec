@@ -1,10 +1,8 @@
 %def_enable tsget
-%def_disable tools
-%def_disable devel
 
-Name: openssl10
-Version: 1.0.2p
-Release: alt2
+Name: openssl1.1
+Version: 1.1.0i
+Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
@@ -19,48 +17,52 @@ Source3: make-dummy-cert
 Source4: cc.sh
 
 Patch01: openssl-owl-alt-issetugid.patch
-Patch02: openssl-alt-krb5.patch
+# To match lib{crypto,ssl}10 1.0.2o-alt1
+# XXX: Do not forget to add conflicts if you change this.
 Patch03: openssl-alt-config.patch
-Patch04: openssl-alt-fips_premain_dso.patch
-Patch05: openssl-gosta-pkcs12-fix.patch
-Patch06: openssl-rh-alt-soversion.patch
-Patch07: openssl-rh-enginesdir.patch
-Patch08: openssl-rh-no-rpath.patch
-Patch09: openssl-rh-test-use-localhost.patch
-Patch11: openssl-rh-pod2man-timezone.patch
-Patch12: openssl-rh-perlpath.patch
-Patch13: openssl-rh-default-paths.patch
-Patch14: openssl-rh-issuer-hash.patch
-Patch15: openssl-rh-X509_load_cert_file.patch
-Patch16: openssl-rh-version-add-engines.patch
-Patch18: openssl-rh-ipv6-apps.patch
-Patch19: openssl-rh-env-zlib.patch
-Patch21: openssl-rh-algo-doc.patch
-Patch22: openssl-rh-apps-dgst.patch
-Patch23: openssl-rh-xmpp-starttls.patch
-Patch24: openssl-rh-chil-fixes.patch
-Patch25: openssl-rh-alt-secure-getenv.patch
-Patch27: openssl-rh-padlock64.patch
-Patch30: openssl-rh-disable-sslv2v3.patch
-Patch84: openssl-rh-trusted-first-doc.patch
-Patch87: openssl-rh-cc-reqs.patch
-Patch90: openssl-rh-enc-fail.patch
-Patch92: openssl-rh-system-cipherlist.patch
+Patch04: openssl-alt-engines-path.patch
+# Current /etc/openssl/cipher-list.conf (from libssl10) breaks IDEA tests
+Patch05: openssl-alt-disable-idea-test.patch
 
-%define shlib_soversion 10
+# Patches from Fedora
+# Build changes
+Patch101: openssl-rh-build.patch
+# Patch102: openssl-rh-defaults.patch (different config)
+Patch103: openssl-rh-no-html.patch
+# Bug fixes
+Patch121: openssl-rh-issuer-hash.patch
+Patch122: openssl-rh-algo-doc.patch
+Patch123: openssl-rh-manfix.patch
+# Functionality changes
+# Patch131: openssl-rh-ca-dir.patch (breaks tests; we do not have /etc/pki/CA/private/cakey.pem)
+Patch132: openssl-rh-version-add-engines.patch
+Patch133: openssl-rh-apps-dgst.patch
+Patch135: openssl-rh-chil-fixes.patch
+Patch136: openssl-rh-secure-getenv.patch
+# Patch137: openssl-rh-ec-curves.patch (breaks tests; we have no reason to disable this curves, right?)
+Patch138: openssl-rh-no-weak-verify.patch
+Patch139: openssl-rh-cc-reqs.patch
+Patch140: openssl-rh-disable-ssl3.patch
+Patch141: openssl-rh-system-cipherlist.patch
+# Patch142: openssl-rh-fips.patch (not needed)
+Patch144: openssl-rh-bio-fd-preserve-nl.patch
+Patch145: openssl-rh-weak-ciphers.patch
+Patch146: openssl-rh-silent-rnd-write.patch
+
+%define shlib_soversion 1.1
 %define openssldir /var/lib/ssl
 %define old_openssldir %_libdir/ssl
-%def_disable compat
-%def_with krb
 
 BuildRequires: /usr/bin/pod2man bc zlib-devel
 %if_enabled tsget
 BuildRequires: perl-WWW-Curl
 %endif
 
+%{?!_without_check:%{?!_disable_check:BuildRequires: perl-Module-Load-Conditional perl-devel perl-Math-BigInt}}
+
 %package -n libcrypto%shlib_soversion
 Summary: OpenSSL libcrypto shared library
-Group: System/Legacy libraries
+Group: System/Libraries
 Provides: libcrypto = %version-%release
 # due to openssl.cnf
 Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6
@@ -72,9 +74,8 @@ Requires: ca-certificates
 
 %package -n libssl%shlib_soversion
 Summary: OpenSSL libssl shared library
-Group: System/Legacy libraries
+Group: System/Libraries
 Provides: libssl = %version
-%{?_with_krb:Provides: openssl-krb = %version-%release}
 Requires: libcrypto%shlib_soversion = %version-%release
 
 %package -n libssl-devel
@@ -83,12 +84,10 @@ Group: Development/C
 Provides: openssl-devel = %version
 Obsoletes: openssl-devel < %version
 Requires: libssl%shlib_soversion = %version-%release
-%{?_with_krb:Requires: libkrb5-devel}
 # due to /usr/bin/openssl-config
 Conflicts: openssl < %version-%release, openssl > %version-%release
 # manpage clash: crypto(3).
 Conflicts: erlang <= 0:R9C.0-alt2
-%{?_with_krb:Provides: openssl-krb-devel = %version-%release}
 
 %package -n libssl-devel-static
 Summary: OpenSSL static libraries
@@ -96,7 +95,6 @@ Group: Development/C
 Provides: openssl-devel-static = %version
 Obsoletes: openssl-devel-static < %version
 Requires: libssl-devel = %version-%release
-%{?_with_krb:Provides: openssl-krb-devel-static = %version-%release}
 
 %package -n openssl
 Summary: OpenSSL tools
@@ -105,7 +103,6 @@ Provides: %openssldir
 # due to /usr/bin/openssl-config
 Conflicts: libssl-devel < %version-%release, libssl-devel > %version-%release
 Requires: libssl%shlib_soversion = %version-%release
-%{?_with_krb:BuildRequires: libkrb5-devel}
 
 %package -n openssl-doc
 Summary: OpenSSL documentation and demos
@@ -223,49 +220,38 @@ on the command line.
 %prep
 %setup -n openssl-%version
 %patch01 -p1
-%patch02 -p1
 %patch03 -p1
 %patch04 -p1
 %patch05 -p1
-%patch06 -p1
-%patch07 -p1
-%patch08 -p1
-%patch09 -p1
 
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch18 -p1
-%patch19 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-
-%patch24 -p1
-
-%patch25 -p1
-%patch27 -p1
-%patch30 -p1
-%patch84 -p1
-%patch87 -p1
-%patch90 -p1
-%patch92 -p1
+%patch101 -p1
+# %%patch102 -p1 (different config)
+%patch103 -p1
+%patch121 -p1
+%patch122 -p1
+%patch123 -p1
+# %%patch131 -p1 (breaks tests; we do not have /etc/pki/CA/private/cakey.pem)
+%patch132 -p1
+%patch133 -p1
+%patch135 -p1
+%patch136 -p1
+# %%patch137 -p1 (breaks tests; we have no reason to disable this curves, right?)
+%patch138 -p1
+%patch139 -p1
+%patch140 -p1
+%patch141 -p1
+# %%patch142 -p1 (not needed)
+%patch144 -p1
+%patch145 -p1
+%patch146 -p1
 
 find -type f -name \*.orig -delete
 
 # Correct shared library name.
 sed -i 's/@SHLIB_SOVERSION@/%shlib_soversion/g' Configure Makefile.*
 sed -i 's/\\\$(SHLIB_MAJOR)\.\\\$(SHLIB_MINOR)/\\$(VERSION)/g' Configure
-sed -i 's/\$(SHLIB_MAJOR)\.\$(SHLIB_MINOR)/\$(VERSION)/g' Makefile.org
-sed -i 's/\(^#define[[:space:]]\+SHLIB_VERSION_NUMBER[[:space:]]\+\).*/\1"%version"/' crypto/opensslv.h
-
-# Correct compilation options.
-%add_optflags -fno-strict-aliasing -Wa,--noexecstack
-sed -i 's/-O\([0-9s]\>\)\?\( -fomit-frame-pointer\)\?\( -m.86\)\?/\\\$(RPM_OPT_FLAGS)/' \
-	Configure
+#sed -i 's/\$(SHLIB_MAJOR)\.\$(SHLIB_MINOR)/\$(VERSION)/g' Makefile.org
+#sed -i 's/\(^#define[[:space:]]\+SHLIB_VERSION_NUMBER[[:space:]]\+\).*/\1"%version"/' crypto/opensslv.h
 
 # Be more verbose.
 sed -i 's/^\([[:space:]]\+\)@[[:space:]]*/\1/' Makefile*
@@ -291,7 +277,10 @@ ADD_ARGS=linux64-s390x
 ADD_ARGS=linux-mips32
 %endif
 %ifarch mips64 mips64el
-ADD_ARGS=linux-mips64
+ADD_ARGS=linux64-mips64
+%endif
+%ifarch riscv64
+ADD_ARGS=linux-generic64
 %endif
 
 if echo 'extern __uint128_t i;' |
@@ -299,44 +288,44 @@ if echo 'extern __uint128_t i;' |
 	ADD_ARGS="enable-ec_nistp_64_gcc_128 $ADD_ARGS"
 fi
 
+# Correct compilation options.
+%add_optflags -fno-strict-aliasing -Wa,--noexecstack
+
 ./Configure shared \
 	--prefix=%prefix \
 	--libdir=%_lib \
 	--openssldir=%openssldir \
-	--enginesdir=%_libdir/openssl/engines \
 	--system-ciphers-file=%_sysconfdir/openssl/cipher-list.conf \
-%if_with krb
-	--with-krb5-flavor=MIT \
-	--with-krb5-dir=%prefix \
-%endif
+	enable-egd \
 	enable-md2 \
 	enable-rfc3779 \
-	enable-ssl2 \
+	enable-ssl3 \
 	zlib \
-	$ADD_ARGS
+	$ADD_ARGS \
+	%optflags \
+#
 
-# SMP-incompatible build.
-make
+%make_build
 
 # Make soname symlinks.
 /sbin/ldconfig -nv .
 
 # Save library timestamps for later check.
-touch -r libcrypto.so.%version libcrypto-stamp
-touch -r libssl.so.%version libssl-stamp
+touch -r libcrypto.so.%shlib_soversion libcrypto-stamp
+touch -r libssl.so.%shlib_soversion libssl-stamp
 
-LD_LIBRARY_PATH=`pwd` make rehash
+#LD_LIBRARY_PATH=`pwd` make rehash
 
 %install
 # The make_install macro doesn't work here.
 make install \
 	CC=%_sourcedir/cc.sh \
-	INSTALL_PREFIX=%buildroot \
+	DESTDIR=%buildroot \
 	MANDIR=%_mandir
 
 # Fail if one of shared libraries was rebuit.
-if [ libcrypto.so.%version -nt libcrypto-stamp -o \
-     libssl.so.%version -nt libssl-stamp ]; then
+if [ libcrypto.so.%shlib_soversion -nt libcrypto-stamp -o \
+     libssl.so.%shlib_soversion -nt libssl-stamp ]; then
 	echo 'Shared library was rebuilt by "make install".'
 	exit 1
 fi
@@ -360,16 +349,13 @@ for f in %buildroot%_libdir/*.so; do
 done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
-# Relocate engines.
-mv %buildroot%_libdir/engines %buildroot%_libdir/openssl/
-
 # Relocate openssl.cnf from %%openssldir/ to %_sysconfdir/openssl/.
 mkdir -p %buildroot%_sysconfdir/openssl
 mv %buildroot%openssldir/openssl.cnf %buildroot%_sysconfdir/openssl/
 ln -s -r %buildroot%_sysconfdir/openssl/openssl.cnf %buildroot%openssldir/
 
 # Rename some man pages, fix references.
-for f in passwd.1 err.3 rand.3 threads.3 config.5; do
+for f in passwd.1 config.5; do
 	name="${f%%.*}"
 	sect="${f##*.}"
 	NAME=`printf %%s "$name" |tr '[:lower:]' '[:upper:]'`
@@ -383,7 +369,7 @@ for f in passwd.1 err.3 rand.3 threads.3 config.5; do
 		ln -sfv "ssl$f" "$link"
 	done
 done
-ln -s sslconfig.5 %buildroot%_mandir/man5/openssl.cnf.5
+# ln -s sslconfig.5 %buildroot%_mandir/man5/openssl.cnf.5
 
 # Make backwards-compatibility symlink to ssleay.
 ln -snf openssl %buildroot%_bindir/ssleay
@@ -398,41 +384,34 @@ install -pDm644 %_sourcedir/make-dummy-cert \
 ln -s -r %buildroot%_datadir/ca-certificates/ca-bundle.crt \
 	%buildroot%openssldir/cert.pem
 
-mv %buildroot%openssldir/misc/CA{.sh,}
-rm %buildroot%openssldir/misc/CA.pl
-
 %if_enabled tsget
 mv %buildroot%openssldir/misc/tsget %buildroot%_sbindir/
 %else
 rm %buildroot%openssldir/misc/tsget
 %endif
 
+rm %buildroot%openssldir/openssl.cnf.dist
+
 %define docdir %_docdir/openssl-%version
 mkdir -p %buildroot%docdir
-install -pm644 CHANGES* LICENSE NEWS README* engines/ccgost/README.gost \
+install -pm644 CHANGES* LICENSE NEWS README* \
 	%buildroot%docdir/
 bzip2 -9 %buildroot%docdir/CHANGES*
 cp -a demos doc %buildroot%docdir/
 rm -rf %buildroot%docdir/doc/{apps,crypto,ssl}
 
 # Create default cipher-list.conf from SSL_DEFAULT_CIPHER_LIST
-sed -n -r 's,^#.*SSL_DEFAULT_CIPHER_LIST[[:space:]]+"([^"]+)",\1,p' \
-	ssl/ssl.h > %buildroot%_sysconfdir/openssl/cipher-list.conf
+#sed -n -r 's,^#.*SSL_DEFAULT_CIPHER_LIST[[:space:]]+"([^"]+)",\1,p' \
+#	include/openssl/ssl.h
+
+# To match lib{crypto,ssl}10 1.0.2o-alt1
+# XXX: Do not forget to add conflicts if you change this.
+echo "ALL:!EXPORT:!LOW:!aNULL:!eNULL:!SSLv2" > \
+	%buildroot%_sysconfdir/openssl/cipher-list.conf
 
 %check
-LD_LIBRARY_PATH=%buildroot/%_lib make test
-
-%if_enabled compat
-%pre -n openssl
-[ $1 -gt 1 ] || exit 0
-if [ ! -e %_sysconfdir/openssl -a ! -L %_sysconfdir/openssl -a -e %old_openssldir/openssl.cnf ]; then
-	mkdir -p %_sysconfdir/openssl &&
-	cp -a %old_openssldir/openssl.cnf %_sysconfdir/openssl/
-fi
-if [ ! -e %openssldir -a ! -L %openssldir -a -d %old_openssldir ]; then
-	cp -a %old_openssldir %openssldir
-fi
-%endif #compat
+LD_LIBRARY_PATH=%buildroot/%_lib OPENSSL_ENABLE_MD5_VERIFY= \
+	make test
 
 %files -n libcrypto%shlib_soversion
 /%_lib/libcrypto*
@@ -449,7 +428,6 @@ fi
 %dir %_sysconfdir/openssl/
 /%_lib/libssl*
 
-%if_enabled devel
 %files -n libssl-devel
 %_bindir/openssl-config
 %_libdir/*.so
@@ -458,9 +436,7 @@ fi
 
 %files -n libssl-devel-static
 %_libdir/*.a
-%endif
 
-%if_enabled tools
 %files -n openssl
 %_bindir/*
 %dir %openssldir
@@ -487,14 +463,10 @@ fi
 %_man1dir/tsget.*
 %_man1dir/openssl-tsget.*
 %endif
-%endif
 
 %changelog
-* Tue Aug 28 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2p-alt2
-- Rebuilt as openssl 1.1.0 legacy libraries.
-
-* Thu Aug 16 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2p-alt1
-- Updated to 1.0.2p (fixes CVE-2018-0732 and CVE-2018-0737).
+* Tue Aug 28 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.0i-alt1
+- Updated to 1.1.0i.
 
 * Tue Mar 27 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2o-alt1
 - Updated to v1.0.2o (fixes CVE-2018-0739).
