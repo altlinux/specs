@@ -1,6 +1,6 @@
 Name:		boinc
 Version: 7.8.4
-Release: alt3
+Release: alt4
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 License:	GPLv3+/LGPLv3+
 Group:		Sciences/Other
@@ -38,7 +38,7 @@ Patch27: boinc-7.8.4-alt-glibc.patch
 %def_without server
 
 BuildRequires: docbook-dtds docbook2X gcc-c++ gcc-fortran libGL-devel libMySQL-devel libSM-devel libXi-devel libXmu-devel libcurl-devel libfreeglut-devel libjpeg-devel libsqlite3-devel libstdc++-devel-static python-devel xsltproc libssl-devel zlib-devel libgtk+3-devel libnotify-devel
-BuildRequires: libwxGTK3.1-devel
+BuildRequires: libwxGTK3.0-devel
 
 %description
 The Berkeley Open Infrastructure for Network Computing (BOINC) is an open-
@@ -228,7 +228,7 @@ This package contains a set of server libraires of the BOINC software.
 #%patch22 -p2
 %patch23 -p2
 %patch24 -p2
-%patch25 -p0
+#patch25 -p0
 #%patch26 -p0
 %patch27 -p2
 
@@ -507,6 +507,9 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 
 
 %changelog
+* Tue Aug 14 2018 Anton Midyukov <antohami@altlinux.org> 7.8.4-alt4
+- Rebuilt with wxGTK3.0
+
 * Sun May 13 2018 Ilya Mashkin <oddity@altlinux.ru> 7.8.4-alt3
 - Rebuild to remove cronbuild, it doesn't work for this package
 
