@@ -3,11 +3,14 @@
 # Use "--disable ldap" for build without LDAP support
 %def_enable ldap
 
+# p8: TypeError: inline_all_toctrees() takes exactly 5 arguments (6 given)
+%def_with sphinx
+
 %define abiversion 3
 
 Name: cyrus-sasl2
-Version: 2.1.26
-Release: alt7
+Version: 2.1.27
+Release: alt0.1
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: Freely Distributable
@@ -31,6 +34,10 @@ Patch1: bug_3920_rimap.patch
 Requires: libsasl2-%abiversion = %version-%release
 
 BuildRequires: libcom_err-devel libdb4-devel libkrb5-devel libpam-devel groff-base autoconf automake openssl-devel
+%if_with sphinx
+BuildRequires: perl-Pod-POM-View-Restructured
+BuildRequires: python-module-sphinx >= 1.6
+%endif
 
 %if_enabled sql
 BuildRequires: libMySQL-devel postgresql-devel
@@ -110,7 +117,7 @@ This package contains documentations for SASL2
 %prep
 %setup
 
-%patch1 -p0
+#patch1 -p0
 
 %build
 
@@ -120,17 +127,18 @@ export CPPFLAGS="`krb5-config --cflags` -I/usr/include/pgsql $CPPFLAG"
 export CPPFLAGS="`krb5-config --cflags` $CPPFLAG"
 %endif
 
+libtoolize -c -f
 aclocal -I cmulocal -I config
 autoheader
 autoconf
 automake -a -c -f
 
-pushd saslauthd
-aclocal -I ../cmulocal -I config -I ../config
-autoheader
-autoconf
-automake -a -c -f
-popd
+#pushd saslauthd
+#aclocal -I ../cmulocal -I config -I ../config
+#autoheader
+#autoconf
+#automake -a -c -f
+#popd
 
 %add_optflags %optflags_shared
 #version_script="$(readlink -ev libsasl2.map)"
@@ -165,7 +173,9 @@ popd
 		--enable-ntlm \
 		--enable-digest \
 		--enable-srp \
-		--enable-otp
+		--enable-otp \
+		%{?_without_sphinx: --with-sphinx-build=no} \
+		#
 
 sed -i 's,/usr/local/lib,%_libdir,g' saslauthd/Makefile
 
@@ -185,7 +195,7 @@ popd
 mkdir -p %buildroot{%_bindir,%_libdir}
 %makeinstall sasldir=%buildroot%_libdir/sasl2-%abiversion libdir=%buildroot/%_lib
 
-install -m 755 saslauthd/testsaslauthd %buildroot%_bindir
+#install -m 755 saslauthd/testsaslauthd %buildroot%_bindir
 
 pushd %buildroot/%_libdir
     ln -s -nf ../../%_lib/libsasl2.so.3 libsasl2.so
@@ -203,16 +213,10 @@ cp utils/.libs/dbconverter-2 %buildroot%_sbindir
 rm -fr %buildroot%_mandir/cat8
 
 mkdir -p %buildroot%_docdir/%name-%version
-mkdir -p %buildroot%_docdir/%name-%version/HTML
-mkdir -p %buildroot%_docdir/%name-%version/RFC
-install -p -m 0644 doc/*.html* %buildroot%_docdir/%name-%version/HTML
-install -p -m 0644 doc/rfc*.txt %buildroot%_docdir/%name-%version/RFC
-install -p -m 0644 doc/draft*.txt %buildroot%_docdir/%name-%version/RFC
-install -p -m 0644 %SOURCE7 %buildroot%_docdir/%name-%version/HTML/server-plugin-flow.jpg
 mkdir -p %buildroot%_docdir/%name-%version/saslauthd
-install -p -m 0644 saslauthd/{README,INSTALL,LDAP_SASLAUTHD,NEWS,COPYING,ChangeLog,AUTHORS} %buildroot%_docdir/%name-%version/saslauthd
+install -p -m 0644 saslauthd/{README.ipc,README.cache,LDAP_SASLAUTHD,COPYING,ChangeLog} %buildroot%_docdir/%name-%version/saslauthd
 
-install -p -m 0644 {%SOURCE8,COPYING,AUTHORS,INSTALL,NEWS,README,ChangeLog,doc/TODO} %buildroot%_docdir/%name-%version
+install -p -m 0644 {%SOURCE8,COPYING,AUTHORS,INSTALL.TXT,README.*,ChangeLog,doc/legacy/TODO} %buildroot%_docdir/%name-%version
 
 mkdir -p %buildroot%_initdir
 mkdir -p %buildroot%_sysconfdir/sysconfig
@@ -231,6 +235,10 @@ mv -f %buildroot/%_lib/pkgconfig/libsasl2.pc %buildroot%_pkgconfigdir/libsasl2.p
 
 rm -f %buildroot%_libdir/sasl2-%abiversion/*.la
 
+# show it in build's log
+ls -l %buildroot/%_lib/*
+ls -l %buildroot%_man3dir/*
+
 %post
 %post_service saslauthd
 %preun
@@ -244,7 +252,7 @@ rm -f %buildroot%_libdir/sasl2-%abiversion/*.la
 %config(noreplace) %attr(0640,root,root) %_sysconfdir/sasl2/saslauthd.conf
 %config(noreplace) %attr(0600,root,root) %_sysconfdir/sysconfig/saslauthd
 %attr(0755,root,root) %_initdir/saslauthd
-%_bindir/*
+#_bindir/*
 %_sbindir/*
 %_man8dir/*
 %attr(0711,root,root) %dir %_var/run/saslauthd
@@ -266,12 +274,14 @@ rm -f %buildroot%_libdir/sasl2-%abiversion/*.la
 %_libdir/sasl2-%abiversion/libscram.so*
 %_libdir/sasl2-%abiversion/libgs2.so*
 
-%doc COPYING AUTHORS INSTALL NEWS README ChangeLog doc/TODO
+%doc COPYING AUTHORS INSTALL.TXT README.* ChangeLog doc/legacy/TODO
 
 %files -n libsasl2-devel
 %dir %_includedir/sasl
 %_includedir/sasl/*
+%if_with sphinx
 %_mandir/man3/*
+%endif
 %_libdir/*.so
 /%_lib/*.so
 %_pkgconfigdir/*
@@ -288,6 +298,9 @@ rm -f %buildroot%_libdir/sasl2-%abiversion/*.la
 %endif
 
 %changelog
+* Mon Aug 27 2018 Sergey Y. Afonin <asy@altlinux.ru> 2.1.27-alt0.1
+- 2.1.27rc8 (openssl 1.1 supported since rc5)
+
 * Fri Nov 18 2016 Sergey Y. Afonin <asy@altlinux.ru> 2.1.26-alt7
 - applied patch for bug 3920 from bugzilla.cyrusimap.org:
   auth_rimap infinite loop (hang) when IMAP server closes connection
