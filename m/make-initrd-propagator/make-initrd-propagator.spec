@@ -1,6 +1,6 @@
 Name: make-initrd-propagator
-Version: 0.33
-Release: alt2
+Version: 0.40
+Release: alt1
 
 Summary: Put propagator into make-initrd generated image
 
@@ -39,6 +39,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Tue Aug 28 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.40-alt1
+- switch from aufs to overlayfs
+
 * Wed Jul 11 2018 Anton Midyukov <antohami@altlinux.org> 0.33-alt2
 - Fix ACL access for livecd (Closes: 34793)
 
