@@ -1,9 +1,9 @@
 Name: sendmail
 
-%define tarbolversion 8.15.2
+%define tarbolversion 8.16.0.29
 
 Version: %tarbolversion
-Release: alt6
+Release: alt1
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -500,6 +500,10 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Tue Aug 28 2018 Sergey Y. Afonin <asy@altlinux.ru> 8.16.0.29-alt1
+- New version (with openssl 1.1 support)
+- enabled the use of elliptic curve cryptography in STARTTLS
+
 * Wed Jul 04 2018 Sergey Y. Afonin <asy@altlinux.ru> 8.15.2-alt6
 - added configurable submit queue time in sendmail-submit init script
 - removed linker's flag with nsl (fixed FTBFS)
