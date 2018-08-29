@@ -1,7 +1,7 @@
 
 Name: krb5
 Version: 1.16.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -470,6 +470,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Wed Aug 29 2018 Alexey Shabalin <shaba@altlinux.org> 1.16.1-alt2.S1
+- rebuild with openssl-1.1
+
 * Mon Aug 27 2018 Ivan A. Melnikov <iv@altlinux.org> 1.16.1-alt1%ubt
 - 1.16.1 (CVE-2018-5729, CVE-2018-5730)
 
