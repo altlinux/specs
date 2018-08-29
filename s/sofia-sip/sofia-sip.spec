@@ -6,7 +6,7 @@
 
 Name: sofia-sip
 Version: 1.12.11
-Release: alt2
+Release: alt2.1
 
 Summary: Sofia SIP User-Agent library 
 License: LGPL v2.1+
@@ -132,6 +132,9 @@ cp -pr libsofia-sip-ua/docs/html manual
 %_man1dir/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.12.11-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sun Aug 21 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.12.11-alt2
 - added few bugfixes originated from freeswitch
 
