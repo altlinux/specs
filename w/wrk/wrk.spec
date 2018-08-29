@@ -1,13 +1,14 @@
 Summary: 	a HTTP benchmarking tool
 Name: 		wrk
 Version:	4.0.1
-Release: 	alt1
+Release: 	alt1.1
 Url: 		https://github.com/wg/wrk
 Source: 	%name-%version.tar
 Patch0:		wrk-3.1.1-alt1-install-fix.patch
 Packager: 	Valentin Rosavitskiy <valintinr@altlinux.org>
 License: 	Apache License
 Group: 		Networking/WWW
+ExclusiveArch: %ix86 x86_64
 
 BuildRequires:	libssl-devel
 
@@ -36,6 +37,9 @@ scripts/
 %doc LICENSE NOTICE README
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Tue Apr 28 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 4.0.1-alt1
 - New version
 
