@@ -1,6 +1,6 @@
 Name: sipsak
 Version: 0.9.6
-Release: alt2
+Release: alt2.1
 Summary: CLI tool for SIP developers and administrators
 License: GPL
 Group: Communications
@@ -33,6 +33,9 @@ simple tests on SIP applications and devices.
 %doc AUTHORS INSTALL COPYING README NEWS TODO
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.6-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Oct 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.6-alt2
 - Fixed build with gcc-6.
 
