@@ -3,7 +3,7 @@
 
 Name: pdns
 Version: 4.0.3
-Release: alt2.1
+Release: alt2.2
 Summary: A modern, advanced and high performance authoritative-only nameserver
 Group: System/Servers
 License: GPLv2
@@ -315,6 +315,9 @@ exit 0
 %{_libdir}/%{name}/libtinydnsbackend.so
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.0.3-alt2.2
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.3-alt2.1
 - NMU: rebuilt with boost-1.67.0
 
