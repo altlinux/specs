@@ -77,7 +77,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.5
-Release: alt1
+Release: alt1.1
 License: Python
 Group: Development/Python3
 
@@ -1099,6 +1099,9 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/asyncio/__pycache__/test_utils%bytecode_suffixes
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.6.5-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu Jun 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.5-alt1
 - Updated to upstream version 3.6.5.
 
