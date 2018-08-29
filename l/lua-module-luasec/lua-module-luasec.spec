@@ -4,7 +4,7 @@
 %define rockspec %oname-%oversion.rockspec
 Name: lua-module-%oname
 Version: 0.6
-Release: alt2
+Release: alt2.1
 Summary: A binding for OpenSSL library to provide TLS/SSL communication over LuaSocket.
 License: MIT
 Group: Development/Other
@@ -39,6 +39,9 @@ This version delegates to LuaSocket the TCP connection establishment between the
 %exclude %luarocks_dbdir/manifest
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.6-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu Jul 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6-alt2
 - Rebuild with new luarocks and lua-5.3
 
