@@ -15,7 +15,7 @@
 %def_enable ipv6
 %def_with xinerama
 %def_with xdmcp
-%def_with tcp_wrappers
+%def_without tcp_wrappers
 %def_with selinux
 %def_with libaudit
 %def_with plymouth
@@ -27,7 +27,7 @@
 
 Name: gdm
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -324,6 +324,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Wed Aug 29 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.4-alt2
+- rebuilt without tcp_wrappers
+
 * Wed Aug 29 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.4-alt1
 - 3.28.4
 
