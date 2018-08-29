@@ -2,7 +2,7 @@
 
 Name: msmtp
 Version: 1.6.6
-Release: alt1
+Release: alt1.1
 Summary: Minimal SMTP client
 License: GPL3+
 Group: Networking/Mail
@@ -79,6 +79,9 @@ ln -s ../bin/%{name} %{buildroot}%{sendmail}
 %{_infodir}/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.6.6-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Jun 23 2017  Alexey V. Vissarionov <gremlin@altlinux.org> 1.6.6-alt1
 - Updated to 1.6.6
 - Fixed RFC-821 violation by empty domain name
