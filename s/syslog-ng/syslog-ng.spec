@@ -13,7 +13,7 @@
 
 Name: syslog-ng
 Version: 3.13.2
-Release: alt1
+Release: alt1.1
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -410,6 +410,9 @@ fi
 %_pkgconfigdir/%name-test.pc
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.13.2-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Dec 11 2017 Alexey Shabalin <shaba@altlinux.ru> 3.13.2-alt1
 - 3.13.2
 - Exclude package debug bundle generator for avoid many requirements (ATL #34311)
