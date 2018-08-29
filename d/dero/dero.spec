@@ -1,6 +1,6 @@
 Name:		dero
 Version:	0.11.1.0
-Release:	alt1.1
+Release:	alt1.2
 Summary:	Dero Wallet
 Url:		http://dero.io
 Group:		Office
@@ -40,6 +40,9 @@ make DESTDIR=%buildroot install
 %_bindir/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.11.1.0-alt1.2
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.11.1.0-alt1.1
 - NMU: rebuilt with boost-1.67.0
 
