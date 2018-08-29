@@ -1,6 +1,6 @@
 Name: casync
 Version: 2.0.101.git8595b4d
-Release: alt1
+Release: alt1.1
 
 Summary: Content Addressable Data Synchronizer
 
@@ -108,6 +108,9 @@ meson test -C %_target_platform \
 %_udevrulesdir/75-casync.rules
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.0.101.git8595b4d-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Tue Feb 20 2018 Arseny Maslennikov <arseny@altlinux.org> 2.0.101.git8595b4d-alt1
 - 2-25-git6daefa8 -> 2-101-git8595b4d.
 - Built with libudev to leverage new functionality.
