@@ -1,15 +1,15 @@
-%ifarch %ix86 x86_64
-%def_enable botan
-%else
+#ifarch %ix86 x86_64
+#def_enable botan
+#else
 %def_disable botan
-%endif
+#endif
 
 Name: qca-qt5
 %define major 2
-%define minor 1
-%define bugfix 3
+%define minor 2
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt3%ubt.1
+Release: alt0.1%ubt
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
@@ -19,8 +19,6 @@ Url: https://userbase.kde.org/QCA
 Requires: lib%name = %version-%release
 
 Source: %name-%version.tar
-# SuSE
-Patch2: ansi.diff
 # ALT
 Patch10: qca-2.0.3-alt-paths.patch
 
@@ -208,7 +206,6 @@ This plugin provides features based on Botan. It implements:
 
 %prep
 %setup -q -n %name-%version
-%patch2 -p1
 %patch10 -p1
 
 
@@ -275,6 +272,10 @@ done
 #%_qt5_headerdir/Qca-qt5/QtCrypto
 
 %changelog
+* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.0-alt0.1%ubt
+- 2.2.0 snapshot
+- disable botan
+
 * Wed Apr 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.3-alt3%ubt.1
 - (NMU) rebuilt with new libbotan.
 
