@@ -1,6 +1,6 @@
 Name: vhttpd
 Version: 0.7.8
-Release: alt2
+Release: alt2.1
 
 Summary: simple embedded web server
 License: LGPL
@@ -93,6 +93,9 @@ sed -i 's:guile/2.2:guile/2.0:g' guile/Makefile
 %guile_ccachedir/vhttpd.go
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.7.8-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Jul 18 2018 Michael Shigorin <mike@altlinux.org> 0.7.8-alt2
 - support e2kv4 through %%e2k macro (grenka@).
 
