@@ -1,7 +1,7 @@
 %define dnh dnh
 Name: ctorrent
 Version: 3.3.2
-Release: alt1.1.qa1
+Release: alt1.1.qa1.1
 Summary: BitTorrent Client written in C
 Group: Networking/File transfer
 License: GPL
@@ -35,6 +35,9 @@ doesn't require any graphical component, such as an X server.
 %_bindir/ctorrent
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.3.2-alt1.1.qa1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.3.2-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
