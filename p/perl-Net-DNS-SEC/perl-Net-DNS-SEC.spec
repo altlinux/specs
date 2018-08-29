@@ -3,7 +3,7 @@
 
 Name: perl-%module_name
 Version: 1.09
-Release: alt1
+Release: alt1.1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -38,6 +38,9 @@ DNSSEC extensions to Net::DNS.
 %perl_vendor_autolib/Net/DNS
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.09-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Jun 06 2018 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
 - automated CPAN update
 
