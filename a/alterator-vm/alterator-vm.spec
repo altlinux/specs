@@ -1,6 +1,6 @@
 Name: alterator-vm
-Version: 0.4.5
-Release: alt3
+Version: 0.4.6
+Release: alt1
 
 Summary: Alterator module for volume management
 License: GPL
@@ -38,6 +38,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Tue Aug 28 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.6-alt1
+- added lvm autoinstall support
+
 * Tue Jul 31 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.5-alt3
 - require guile >= 2.0 for build
 
