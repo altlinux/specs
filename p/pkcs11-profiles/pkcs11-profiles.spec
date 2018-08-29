@@ -7,11 +7,9 @@
 %def_disable rutokenecp
 %endif
 
-
-
 Name: pkcs11-profiles
-Version: 0.1.5
-Release: alt4
+Version: 0.1.6
+Release: alt1
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -33,7 +31,6 @@ BuildArch: noarch
 %description common
 Control scripts for profile-based PAM PKCS11 configuration.
 
-%if_enabled rutokenecp
 %package rutokenecp
 Summary: RuToken ECP PAM PKCS11 module configuration
 License: GPLv3+
@@ -44,7 +41,6 @@ Requires: librtpkcs11ecp >= 1.5.3.0-alt4
 
 %description rutokenecp
 RuToken ECP PAM PKCS11 module configuration
-%endif
 
 %package isbc
 Summary: ESMART PAM PKCS11 module configuration
@@ -147,6 +143,11 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/message.profiles/zastava
 
 %changelog
+* Wed Aug 29 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.6-alt1
+- Fixed "cert" mapping profile: the mapping modules are in
+  /lib64/pam_pkcs11/.
+- Just skip the filelist for the disabled packages.
+  
 * Wed Aug 22 2018 Ivan A. Melnikov <iv@altlinux.org> 0.1.5-alt4
 - Explicitly enable rutokenecp on %%ix86 and x86_64 only.
 
