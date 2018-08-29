@@ -4,7 +4,7 @@
 
 Name: %_name
 Version: 2.2.15
-Release: alt1.1
+Release: alt1.2
 
 Summary: gnubiff is a mail notifier that displays headers when new mail has arrived.
 License: %gpl3plus w/exception for OpenSSL
@@ -81,6 +81,9 @@ install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
 %doc README ChangeLog COPYING THANKS TODO NEWS AUTHORS
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.2.15-alt1.2
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.15-alt1.1
 - NMU: added BR: texinfo
 
