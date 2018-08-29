@@ -1,6 +1,6 @@
 Name: mosh
 Version: 1.3.2
-Release: alt2
+Release: alt2.1
 Summary: Mobile shell that supports roaming and intelligent local echo
 
 License: GPLv3+
@@ -42,6 +42,9 @@ Mosh is a remote terminal application that supports:
 %_mandir/man1/mosh-server.1.*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.2-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sat Jun 23 2018 Terechkov Evgenii <evg@altlinux.org> 1.3.2-alt2
 - mosh-1.3.2-61-g60859e9
 
