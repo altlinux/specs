@@ -1,5 +1,5 @@
 Name: trousers
-Version: 0.3.13
+Version: 0.3.14
 Release: alt1
 
 Summary: Implementation of the TCG's Software Stack v1.1 Specification
@@ -70,6 +70,9 @@ applications.
 %_man3dir/Tspi_*.3*
 
 %changelog
+* Wed Aug 29 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.14-alt1
+- 0.3.14 released
+
 * Mon Aug 03 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.13-alt1
 - 0.3.13 released
 
