@@ -1,5 +1,5 @@
 Name: neomutt
-Version: 20180221
+Version: 20180716
 Release: alt1
 
 %define docdir %_docdir/%name-%version
@@ -12,7 +12,7 @@ Group: Networking/Mail
 Url: https://www.neomutt.org/
 
 # https://github.com/neomutt/neomutt.git
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: docbook-style-xsl xsltproc tcl elinks
 BuildRequires: liblua5-devel libnotmuch-devel libdb4.8-devel
@@ -27,7 +27,7 @@ support for color terminals, MIME, OpenPGP, and a threaded sorting
 mode.
 
 %prep
-%setup -n %name-%version-%release
+%setup -q -n %name-%version
 
 %build
 %configure \
@@ -54,5 +54,8 @@ mode.
 %docdir
 
 %changelog
+* Wed Aug 29 2018 Vitaly Chikunov <vt@altlinux.org> 20180716-alt1
+- NeoMutt release 20180716
+
 * Wed Feb 21 2018 Vitaly Chikunov <vt at altlinux.org> 20180221-alt1
 - initial build for ALT Linux Sisyphus
