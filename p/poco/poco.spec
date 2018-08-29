@@ -1,6 +1,6 @@
 Name: poco
 Version: 1.9.0
-Release: alt2
+Release: alt2.1
 Summary: POrtable COmponents C++ Libraries
 License: Boost Software License v1.0
 Group: Development/C++
@@ -262,6 +262,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 #files -n lib%name-devel-docs
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Jun 15 2018 Alexei Takaseev <taf@altlinux.org> 1.9.0-alt2
 - Build with MariaDB client libraries
 
