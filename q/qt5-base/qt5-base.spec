@@ -32,7 +32,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.11.1
-Release: alt2%ubt
+Release: alt3%ubt
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -444,7 +444,7 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -no-icu \
     -iconv \
 %endif
-    -openssl \
+    -openssl-linked \
     -nomake examples \
     -nomake tests \
     -make tools \
@@ -793,6 +793,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt3%ubt
+- link with openssl
+
 * Thu Aug 16 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt2%ubt
 - build docs
 
