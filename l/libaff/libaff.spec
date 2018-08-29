@@ -1,6 +1,6 @@
 Name: libaff
 Version: 3.7.16
-Release: alt1
+Release: alt1.1
 
 Summary: A set of programs for creating and manipulating AFF files
 
@@ -107,6 +107,9 @@ sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.7.16-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 3.7.16-alt1
 - new version 3.7.16 (with rpmrb script)
 
