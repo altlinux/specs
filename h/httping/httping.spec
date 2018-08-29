@@ -1,6 +1,6 @@
 Name: httping
 Version: 2.5
-Release: alt1
+Release: alt1.1
 
 Summary: Ping alike tool for http requests
 License: GPLv2
@@ -36,6 +36,9 @@ install -d %buildroot{%_bindir/,%_man1dir/}
 %_man1dir/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.5-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu Sep 15 2016 Michael Shigorin <mike@altlinux.org> 2.5-alt1
 - new version (watch file uupdate)
 
