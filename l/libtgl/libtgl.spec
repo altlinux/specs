@@ -1,6 +1,6 @@
 Name: libtgl
 Version: 2.0.3.0.ffb04caca71
-Release: alt2
+Release: alt3
 
 Summary: library that handles telegram api and protocol
 
@@ -15,7 +15,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-git: https://github.com/vysheng/tgl.git
 Source: %name-%version.tar
 
-Patch: %name-soname.patch
+Patch1: %name-soname.patch
+Patch2: libtgl-openssl11.patch
 
 # Automatically added by buildreq on Tue Mar 14 2017
 # optimized out: i586-glibc-devel i586-libcrypto10 i586-libssl10 i586-zlib libcom_err-devel libkrb5-devel libssl-devel pkg-config python-base python-modules python3 python3-base zlib-devel
@@ -44,7 +45,8 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch -p3
+%patch1 -p3
+%patch2 -p1
 
 %build
 %configure --enable-libevent
@@ -71,6 +73,9 @@ cp -a crypto/*.h %buildroot%_includedir/tgl/crypto/
 %_includedir/tgl/crypto/*.h
 
 %changelog
+* Wed Aug 29 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.3.0.ffb04caca71-alt3
+- fix build with OpenSSL 1.1
+
 * Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.3.0.ffb04caca71-alt2
 - fix error: __builtin___sprintf_chk may write a terminating nul past the end of the destination
 
