@@ -4,7 +4,7 @@
 
 Name: links2
 Version: 2.15
-Release: alt1
+Release: alt1.1
 
 Summary: Lynx-like text and graphics WWW browser
 License: GPL
@@ -126,6 +126,9 @@ chmod +x %buildroot%_bindir/x%name
 %doc README SITES mailcap.pl
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.15-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sun Mar 25 2018 Michael Shigorin <mike@altlinux.org> 2.15-alt1
 - new version (watch file uupdate)
 
