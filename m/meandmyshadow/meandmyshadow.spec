@@ -1,6 +1,6 @@
 Name: meandmyshadow
 Version: 0.4.1
-Release: alt3
+Release: alt3.1
 License: GPLv3
 Summary: Puzzle/platform game with two protagonists performing shared task
 Url: http://meandmyshadow.sourceforge.net/
@@ -58,6 +58,9 @@ done
 %_datadir/%name/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt3.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Jul 11 2016 Fr. Br. George <george@altlinux.ru> 0.4.1-alt3
 - Fix DSO build
 
