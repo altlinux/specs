@@ -1,6 +1,6 @@
 Name: ricochet
 Version: 1.1.4
-Release: alt1
+Release: alt1.1
 
 Summary: Anonymous peer-to-peer instant messaging
 
@@ -50,5 +50,8 @@ It's cross-platform and easy for non-technical users.
 %doc README.md AUTHORS.md
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.4-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Mar 09 2018 Vitaly Lipatov <lav@altlinux.ru> 1.1.4-alt1
 - initial build for ALT Linux Sisyphus
