@@ -1,6 +1,6 @@
 Name: warzone2100
 Version: 3.2.3
-Release: alt1
+Release: alt1.1
 
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
 License: GPLv2+ and CC-BY-SA
@@ -75,6 +75,9 @@ install -pD -m644 warzone2100_16x16.png %buildroot%_miconsdir/warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.2.3-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Aug 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.3-alt1
 - Updated to upstream version 3.2.3.
 
