@@ -1,6 +1,6 @@
 Name: unbound
 Version: 1.7.3
-Release: alt1
+Release: alt1.1
 License: BSD
 Url: http://unbound.net/
 Source: %name-%version.tar
@@ -195,6 +195,9 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.7.3-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Jun 22 2018 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt1
 - 1.7.3
 
