@@ -1,6 +1,6 @@
 Name: mtree
 Version: 3.7.20050808
-Release: alt2.qa1
+Release: alt2.qa1.1
 
 Summary: Map a directory hierarchy
 License: BSD
@@ -38,6 +38,9 @@ install -Dpm644 usr.sbin/mtree/mtree.8 %buildroot%_man8dir/mtree.8
 %_mandir/man?/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.7.20050808-alt2.qa1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.7.20050808-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
