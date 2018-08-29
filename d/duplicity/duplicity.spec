@@ -1,5 +1,5 @@
 Name: duplicity
-Version: 0.7.17
+Version: 0.7.18
 Release: alt1
 
 Summary: Untrusted/encrypted backup using rsync algorithm
@@ -13,6 +13,8 @@ Source: https://launchpad.net/duplicity/0.7-series/%version/+download/duplicity-
 # Automatically added by buildreq on Sat Nov 03 2007
 BuildRequires: librsync-devel python-devel python-modules-compiler python-module-setuptools
 BuildPreReq: rpm-build-compat >= 1.2
+
+Requires: python-module-fasteners
 
 # No required by default
 %add_python_req_skip dropbox
@@ -50,6 +52,9 @@ hard links.
 %python_sitelibdir/duplicity-*.egg-info
 
 %changelog
+* Wed Aug 29 2018 Vitaly Lipatov <lav@altlinux.ru> 0.7.18-alt1
+- new version 0.7.18 (with rpmrb script)
+
 * Sun Mar 11 2018 Vitaly Lipatov <lav@altlinux.ru> 0.7.17-alt1
 - new version 0.7.17 (with rpmrb script)
 
