@@ -21,7 +21,7 @@
 
 Name: mongo-tools
 Version: 4.0.0
-Release: alt1
+Release: alt1.1
 Summary: mongo client shell and tools
 License: ASL 2.0
 Url: https://github.com/mongodb/mongo-tools
@@ -120,6 +120,9 @@ sort -u -o devel.file-list devel.file-list
 %{gopath}/src/%{import_path}
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Jul 4 2018 Vladimir Didenko <cow@altlinux.org> 4.0.0-alt1
 - 4.0.0
 
