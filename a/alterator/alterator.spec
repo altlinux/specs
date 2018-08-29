@@ -1,6 +1,6 @@
 Name: alterator
-Version: 5.2
-Release: alt3
+Version: 5.3
+Release: alt1
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -167,6 +167,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Aug 29 2018 Paul Wolneykien <manowar@altlinux.org> 5.3-alt1
+- Allow semicolon-separated values for the *-list types.
+
 * Mon Aug 06 2018 Paul Wolneykien <manowar@altlinux.org> 5.2-alt3
 - Use late signal-handling initialization to workaround some new
   Guile issues.
