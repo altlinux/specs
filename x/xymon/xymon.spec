@@ -62,12 +62,12 @@ URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
 Version:	4.3.28
-Release:	alt2.1
+Release:	alt2.2
 Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-%{version}.tar.gz
 %else
 %define		trunkVersion	%(svn info ~/svn/xymon/trunk/ | grep ^Revision | awk '{print $2}')
 Version:	0.%{trunkVersion}
-Release:	alt1_alt1_1
+Release:	alt1_alt1_1.1
 Source0:	xymon-trunk-%{trunkVersion}.tgz
 %endif
 
@@ -1258,6 +1258,9 @@ done
 ################ end extra clients ################
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.3.28-alt2.2
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Mar 12 2018 Grigory Ustinov <grenka@altlinux.org> 4.3.28-alt2.1
 - NMU: Add patch for fix rebuild in Sisyphus.
 
