@@ -1,6 +1,6 @@
 Name: git
 Version: 2.17.1
-Release: alt4
+Release: alt4.1
 
 Summary: Git core and tools
 License: GPLv2
@@ -528,6 +528,9 @@ popd
 %endif #emacs
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.17.1-alt4.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu Aug 09 2018 Dmitry V. Levin <ldv@altlinux.org> 2.17.1-alt4
 - Packaged diff-highlight as a separate subpackage
   (by Ivan A. Melnikov; closes: #35223).
