@@ -3,7 +3,7 @@
 
 Name: lib%_name
 Version: 0.98
-Release: alt2.%git_ver
+Release: alt2.%git_ver.1
 
 Summary: Qt OAuth support library
 Group: System/Libraries
@@ -67,6 +67,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/qt4/mkspecs/features/%_name.prf
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.98-alt2.7c31a120.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Apr 17 2015 Yuri N. Sedunov <aris@altlinux.org> 0.98-alt2.7c31a120
 - updated to 0.98_7c31a120
 
