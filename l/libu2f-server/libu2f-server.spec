@@ -1,6 +1,6 @@
 Name: libu2f-server
 Version: 1.0.1
-Release: alt1
+Release: alt1.1
 Summary: Yubico Universal 2nd Factor (U2F) Server C Library
 
 Group: System/Libraries
@@ -70,5 +70,8 @@ find %buildroot -name '*.la' -delete
 %_includedir/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Tue Nov 01 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.1-alt1
 - Initial build.
