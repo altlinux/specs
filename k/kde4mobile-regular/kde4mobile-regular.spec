@@ -6,7 +6,7 @@
 
 Name:    kde4mobile-regular
 Version: 4.10
-Release: alt7
+Release: alt8
 
 Group: Graphical desktop/KDE
 Summary: KDE4 mobile common collection
@@ -25,9 +25,9 @@ Requires: fonts-ttf-google-droid-sans
 Requires: fonts-ttf-google-droid-sans-mono
 Requires: fonts-ttf-google-droid-serif
 
-Requires: soprano-backend-redland
-Requires: soprano-backend-virtuoso
-Requires: soprano
+#Requires: soprano-backend-redland
+#Requires: soprano-backend-virtuoso
+#Requires: soprano
 
 Requires: maliit-plugins
 Requires: kde4-plasma-active-maliit
@@ -79,6 +79,9 @@ KDE Active package to easy select packages during install
 %files
 
 %changelog
+* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 4.10-alt8
+- don't require soprano
+
 * Fri Mar 18 2016 Sergey V Turchin <zerg@altlinux.org> 4.10-alt7
 - change kamoso to kde4-kamerka
 
