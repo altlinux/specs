@@ -1,6 +1,6 @@
 Name: s3fs
 Version: 0.0.191
-Release: alt5
+Release: alt5.1
 
 Summary: Amazon S3 filesystem using FUSE
 Group: System/Kernel and hardware
@@ -35,6 +35,9 @@ BuildRequires: gcc-c++ libcurl-devel libfuse-devel libmpc libssl-devel libxml2-d
 %doc README
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.0.191-alt5.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Mar 21 2011 Denis Smirnov <mithraen@altlinux.ru> 0.0.191-alt5
 - fix build
 
