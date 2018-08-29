@@ -1,6 +1,6 @@
 Name: btpd
 Version: 0.16.0.16.gita7fb9a8
-Release: alt1
+Release: alt1.1
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
 Summary: Bittorrent download daemon.
@@ -35,6 +35,9 @@ Btpd is a bittorrent client consisting of a daemon and client commands.
 %_man1dir/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.16.0.16.gita7fb9a8-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Apr 23 2018 Grigory Ustinov <grenka@altlinux.org> 0.16.0.16.gita7fb9a8-alt1
 - Build new version.
 - Add url tag (Closes: #19030).
