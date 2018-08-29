@@ -37,7 +37,7 @@ BuildRequires: libvorbis-devel
 
 Name: wesnoth%wessuffix
 Version: 1.14.3
-Release: alt1
+Release: alt1.1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
@@ -710,6 +710,9 @@ rm -rf %buildroot%_bindir/wesnoth_addon_manager \
 %endif
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.14.3-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Jun 13 2018 Igor Vlasenko <viy@altlinux.ru> 1.14.3-alt1
 - 1.14.3
 
