@@ -21,7 +21,7 @@
 
 Name:		lib%{oname}
 Version:	0.1.12
-Release:	alt1_15
+Release:	alt1_15.1
 
 Summary:	C Prototyping Tools
 Group:		Development/C
@@ -146,6 +146,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.1.12-alt1_15.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.12-alt1_15
 - update by mgaimport
 
