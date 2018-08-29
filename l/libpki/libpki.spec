@@ -1,12 +1,13 @@
 Name: libpki
 Version: 0.8.9
-Release: alt1
+Release: alt3.git20180603
 
 Summary: Library for PKI enabled application development.
 License: %asl
 Group: System/Libraries
 Url: https://pki.openca.org/projects/libpki/
 Packager: Vladimir Didenko <cow@altlinux.ru>
+ExclusiveArch: i586 x86_64
 
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -82,12 +83,17 @@ rm -fr %buildroot%_includedir/%name/drivers/kmf
 %_bindir/*-config
 %_libdir/*.so
 %_includedir/*
-%_pkgconfigdir/*.pc
 
 %files devel-static
 %_libdir/*.a
 
 %changelog
+* Wed Aug 29 2018 Vladimir Didenko <cow@altlinux.ru> 0.8.9-alt3.git20180603
+- Specify build arches (aarch64 is not supported)
+
+* Wed Aug 29 2018 Vladimir Didenko <cow@altlinux.ru> 0.8.9-alt2.git20180603
+- New version (fixes build with openssl 1.1)
+
 * Mon Jan 25 2016 Vladimir Didenko <cow@altlinux.ru> 0.8.9-alt1
 - New version
 - Fix build deps

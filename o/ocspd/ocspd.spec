@@ -3,8 +3,8 @@
 
 
 Name: ocspd
-Version: 3.1.1
-Release: alt3.git20150326
+Version: 3.1.2
+Release: alt1.2
 
 Summary: OCSP Responder
 Group: System/Servers
@@ -17,11 +17,13 @@ Source1: %name.init
 Source2: %name.service
 Source3: %name.sysconf
 Patch: %name-%version-%release.patch
+ExclusiveArch: %{ix86} x86_64
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libpki-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: zlib-devel
+BuildRequires: libxml2-devel
 
 %description
 The OpenCA OCSPD project is aimed to develop a robust and easy-to-install
@@ -81,6 +83,15 @@ mv %buildroot%_sysconfdir/%name/ca.d/* %buildroot%_sysconfdir/%name/ca-samples.d
 %_man3dir/*.3.*
 
 %changelog
+* Wed Aug 29 2018 Vladimir Didenko <cow@altlinux.ru> 3.1.2-alt1.2
+- use ExclusiveArch instead of BuildArch
+
+* Wed Aug 29 2018 Vladimir Didenko <cow@altlinux.ru> 3.1.2-alt1.1
+- specify build arch (aarch64 is not supported)
+
+* Wed Aug 29 2018 Vladimir Didenko <cow@altlinux.ru> 3.1.2-alt1
+- new version
+
 * Mon Jan 25 2016 Vladimir Didenko <cow@altlinux.ru> 3.1.1-alt3.git20150326
 - new version
 
