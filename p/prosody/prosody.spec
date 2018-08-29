@@ -1,6 +1,6 @@
 Name: prosody
 Version: 0.9.10
-Release: alt3
+Release: alt3.1
 Summary: Modern XMPP communication server
 Group: System/Servers
 License: GPL
@@ -50,6 +50,9 @@ cp %SOURCE2 %buildroot/%systemd_unitdir
 %_man1dir/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.10-alt3.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu Aug 31 2017 Eugene Prokopiev <enp@altlinux.ru> 0.9.10-alt3
 - rebuild with lua5.3 fir sisyphus
 
