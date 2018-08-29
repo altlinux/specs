@@ -26,13 +26,17 @@
 
 %global libicu_abi 6.0
 %def_with systemicu
+# TODO: node has to use icu:: for ICU names
+%add_optflags -DU_USING_ICU_NAMESPACE=1
+
+%def_with systemnghttp2
 
 %def_disable check
 
 %define oversion %version
 
 Name: node
-Version: %major.3
+Version: %major.4
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -72,6 +76,10 @@ BuildRequires: libuv-devel >= %libuv_abi
 
 %if_with systemicu
 BuildRequires: libicu-devel >= %libicu_abi
+%endif
+
+%if_with systemnghttp2
+BuildRequires: libnghttp2-devel
 %endif
 
 BuildRequires: libhttp-parser-devel
@@ -156,13 +164,20 @@ rm -rf deps/v8/
 rm -rf deps/icu-small/
 %endif
 %if_with systemuv
+# TODO:
 #rm -rf deps/uv/
+%endif
+%if_with systemnghttp2
+rm -rf deps/nghttp2/
 %endif
 # TODO:
 # rm -rf deps/zlib deps/openssl deps/cares deps/http-parser deps/gtest
 %if_without npm
 rm -rf deps/npm/
 %endif
+
+# use rpm's cflags
+%__subst "s|'cflags': \[\],|'cflags': ['%optflags'],|" ./configure
 
 %build
 ./configure \
@@ -183,14 +198,14 @@ rm -rf deps/npm/
 %if_with systemuv
     --shared-libuv \
 %endif
+%if_with systemnghttp2
+    --shared-nghttp2
+%endif
 %if_with systemv8
     --without-bundled-v8
 %endif
 
-#mkdir -p ./tools/doc/node_modules/.bin
-#ln -s ../marked/bin/marked ./tools/doc/node_modules/.bin/marked
-
-%make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}" BUILDTYPE=Release
+%make_build BUILDTYPE=Release
 %make doc
 #%make jslint
 
@@ -280,6 +295,13 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Wed Aug 29 2018 Vitaly Lipatov <lav@altlinux.ru> 8.11.4-alt1
+- new version 8.11.4 (with rpmrb script)
+- 2018-08-15, Version 8.11.4 'Carbon' (LTS), @rvagg
+- CVE-2018-0732, CVE-2018-12115
+- build with external libnghttp2
+- fix build with ICU >= 61 (add -DU_USING_ICU_NAMESPACE=1)
+
 * Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 8.11.3-alt1
 - new version (8.11.3) with rpmgs script
 - 2018-06-12, Version 8.11.3 'Carbon' (LTS), @evanlucas
