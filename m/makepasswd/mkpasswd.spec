@@ -1,7 +1,7 @@
 Summary: Tool to generate password/passwords hash
 Name: makepasswd
 Version: 0.5.3
-Release: alt1.1
+Release: alt1.2
 Url: http://people.defora.org/~khorben/projects/makepasswd/
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 License: GPLv2
@@ -35,6 +35,9 @@ It is able to generate its crypted equivalent.
 
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.5.3-alt1.2
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1.1
 - NMU: cleaned up unused BR: docbook-xml
 
