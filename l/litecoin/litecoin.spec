@@ -2,7 +2,7 @@
 
 Name:		litecoin
 Version:	0.15.0.1
-Release:	alt2
+Release:	alt2.1
 Summary:	Litecoin Core
 Url:		https://litecoin.org/
 Group:		Office
@@ -61,6 +61,9 @@ convert -resize 128x128 %SOURCE2 %buildroot%_giconsdir/%name-core.png
 %_man1dir/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.15.0.1-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.15.0.1-alt2
 - NMU: rebuilt with boost-1.67.0.
 
