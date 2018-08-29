@@ -2,13 +2,13 @@
 %define _libexecdir %prefix/libexec
 
 Name: %_name-glib
-Version: 1.16.0
+Version: 1.16.2
 Release: alt1
 
 Summary: MBIM modem protocol helper library
 License: %lgpl2plus
 Group: System/Libraries
-URL: http://cgit.freedesktop.org/libmbim/libmbim/
+URL: https://cgit.freedesktop.org/libmbim/libmbim/
 # git://anongit.freedesktop.org/libmbim/libmbim
 Source: %name-%version.tar
 
@@ -65,7 +65,7 @@ This package contains development documentation for %name
 touch README ChangeLog
 
 %build
-%ifarch e2k
+%ifarch %e2k
 %define more_warnings no
 %else
 %define more_warnings error
@@ -107,6 +107,10 @@ make check
 
 
 %changelog
+* Wed Aug 29 2018 Mikhail Efremov <sem@altlinux.org> 1.16.2-alt1
+- Use %%e2k macro.
+- Updated to 1.16.2.
+
 * Fri Jan 26 2018 Mikhail Efremov <sem@altlinux.org> 1.16.0-alt1
 - Move mbim-proxy to %prefix/libexec.
 - Updated to 1.16.0.
