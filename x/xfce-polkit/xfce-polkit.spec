@@ -1,5 +1,5 @@
 Name: xfce-polkit
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Simple PolicyKit authentication agent for Xfce
@@ -14,11 +14,12 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-#BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4ui-devel
+BuildRequires: libxfce4ui-gtk3-devel
 BuildRequires: glib2-devel libpolkit-devel
 
 Requires: polkit
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 %summary
@@ -44,6 +45,10 @@ Requires: polkit
 %_sysconfdir/xdg/autostart/*.desktop
 
 %changelog
+* Wed Aug 29 2018 Mikhail Efremov <sem@altlinux.org> 0.3-alt1
+- Use _unpackaged_files_terminate_build.
+- 0.2 -> 0.3.
+
 * Mon Apr 11 2016 Mikhail Efremov <sem@altlinux.org> 0.2-alt1
 - Patch from upstream git:
   + fix Name/Comment fields.
