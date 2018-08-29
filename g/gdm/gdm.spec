@@ -26,8 +26,8 @@
 %def_enable user_display_server
 
 Name: gdm
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -260,6 +260,7 @@ xvfb-run %make check
 %_libexecdir/gdm-simple-chooser
 %_libexecdir/gdm-wayland-session
 %_libexecdir/gdm-x-session
+%_libexecdir/gdm-disable-wayland
 %_pam_modules_dir/pam_gdm.so
 %doc AUTHORS ChangeLog NEWS README TODO
 %_unitdir/gdm.service
@@ -323,6 +324,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Wed Aug 29 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.4-alt1
+- 3.28.4
+
 * Sun Aug 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt2
 - removed obsolete deps on caribou
 
