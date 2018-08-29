@@ -1,13 +1,11 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
-%def_disable debug
-
 %define oname mutt
 %define branch %nil
 Name: %oname%branch
 
 # hg log -r . --template '{latesttag}-{latesttagdistance}-{node|short}\n'
-Version: 1.8.3
+Version: 1.10.1
 Release: alt1
 Epoch: 3
 
@@ -47,7 +45,7 @@ Source9: mutt-apply.sh
 Patch: %name-%version-%release.patch
 
 BuildRequires: patchutils docbook-style-xsl xsltproc elinks
-BuildRequires: libgpgme-devel libncursesw-devel libssl-devel libsasl2-devel libidn-devel libdb4-devel
+BuildRequires: libgpgme-devel libncursesw-devel libkrb5-devel libssl-devel libsasl2-devel libidn-devel libdb4-devel
 
 Requires: urlview
 Requires: mailcap
@@ -131,10 +129,13 @@ mutt_apply()
 	%SOURCE9 $1
 }
 
-mutt_apply altlinux/patch-1.8.2.vvv.quote
-mutt_apply altlinux/patch-1.8.2.vvv.nntp
-mutt_apply altlinux/patch-1.8.2.vvv.nntp_ru
-mutt_apply altlinux/patch-1.8.2.vvv.initials
+mutt_apply altlinux/patch-1.10.0.vvv.quote
+mutt_apply altlinux/patch-1.10.0.vvv.nntp
+mutt_apply altlinux/patch-1.10.0.vvv.nntp_ru
+mutt_apply altlinux/patch-1.10.0.vvv.initials
+mutt_apply altlinux/patch-nntp-CVE-2018-14360
+mutt_apply altlinux/patch-nntp-CVE-2018-14361
+mutt_apply altlinux/patch-nntp-CVE-2018-14363
 
 %build
 export ac_cv_path_GDB=/usr/bin/gdb
@@ -319,6 +320,15 @@ find %buildroot%_sysconfdir -type f -print0 |
 %_bindir/mutt-Maxi
 
 %changelog
+* Wed Aug 29 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:1.10.1-alt1
+- Updated to mutt-1-10-1-rel (fixes CVE-2018-14349, CVE-2018-14350,
+  CVE-2018-14351, CVE-2018-14352, CVE-2018-14353, CVE-2018-14354,
+  CVE-2018-14355, CVE-2018-14356, CVE-2018-14357, CVE-2018-14358,
+  CVE-2018-14359, CVE-2018-14362)
+- Ported neomutt nntp patches (fixes CVE-2018-14360, CVE-2018-14361,
+  CVE-2018-14363).
+- Rebuilt with openssl 1.1.
+
 * Tue Jul 04 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:1.8.3-alt1
 - Updated to mutt-1-8-3-rel (ALT#33306).
 
