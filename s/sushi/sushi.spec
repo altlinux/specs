@@ -3,11 +3,11 @@
 %define api_ver 1.0
 %define gst_api_ver 1.0
 %def_enable introspection
-%define lo_bin %_bindir/libreoffice6.0
+%define lo_bin %_bindir/libreoffice
 
 Name: sushi
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: A quick previewer for Nautilus
 Group: Graphical desktop/GNOME
@@ -22,6 +22,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Requires: gst-plugins-base%gst_api_ver
 Requires: %lo_bin
 
+BuildRequires(pre): rpm-build-gir
 BuildRequires: intltool
 BuildRequires: libgtksourceview3-devel libgjs-devel libharfbuzz-devel
 BuildRequires: libclutter-devel >= %clutter_ver libclutter-gtk3-devel libclutter-gst3.0-devel
@@ -99,6 +100,9 @@ sed -i 's|\/usr\/bin\/libreoffice|%lo_bin|' src/libsushi/sushi-pdf-loader.c
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Wed Aug 29 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt2
+- requires %%_bindir/libreoffice
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
 - 3.28.3
 
