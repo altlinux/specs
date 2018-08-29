@@ -8,7 +8,7 @@
 
 Name: pgpool-II
 Version: 3.7.4
-Release: alt1
+Release: alt1.1
 Summary: Pgpool is a connection pooling/replication server for PostgreSQL
 License: BSD
 Group: Databases
@@ -146,6 +146,9 @@ __EOF__
 %_datadir/pgsql/extension/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.7.4-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Tue Jul 24 2018 Alexey Shabalin <shaba@altlinux.org> 3.7.4-alt1
 - 3.7.4
 - rename package pgpool-II-lib to libpcp
