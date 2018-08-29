@@ -1,6 +1,6 @@
 Name: tcplay
 Version: 2.0
-Release: alt1
+Release: alt1.1
 
 Summary: TrueCrypt implementation
 License: BSD-2-Clause
@@ -61,5 +61,8 @@ rm %buildroot/%_libdir/lib%{name}.a
 %_libdir/lib%{name}.so
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.0-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu Nov 02 2017 Alexey Appolonov <alexey@altlinux.org> 2.0-alt1
 - Initial ALT Linux release.
