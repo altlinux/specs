@@ -1,6 +1,6 @@
 Name: tcl-tls
 Version: 1.7.12
-Release: alt2
+Release: alt2.1
 
 Summary: A tcl extension, wich adds SSL ability to any Tcl channel
 License: BSD
@@ -44,6 +44,9 @@ install -m0644 tls.h %buildroot%_includedir
 %_tcldatadir/tcltls%version
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.7.12-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Oct 04 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.12-alt2
 - adapted for new tcl/tk extension policy
 - drop devel subpackage
