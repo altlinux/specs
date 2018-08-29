@@ -2,7 +2,7 @@
 
 Name: sstp-client
 Version: 1.0.11
-Release: alt1
+Release: alt1.1
 Summary: Secure Socket Tunneling Protocol (SSTP) Client
 Group: System/Servers
 License: GPLv2+
@@ -86,6 +86,9 @@ install -Dpm 644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.11-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Jan 09 2017 Alexey Shabalin <shaba@altlinux.ru> 1.0.11-alt1
 - 1.0.11
 
