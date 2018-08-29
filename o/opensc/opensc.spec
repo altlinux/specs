@@ -2,7 +2,7 @@
 
 Name: opensc
 Version: 0.17.0
-Release: alt1
+Release: alt1.1
 
 Group: System/Configuration/Hardware
 Summary: OpenSC library - for accessing SmartCard devices using PC/SC Lite
@@ -113,6 +113,9 @@ install -p -m644 etc/opensc.conf %buildroot/%_sysconfdir/opensc.conf
 %endif
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.17.0-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Tue Sep 12 2017 Paul Wolneykien <manowar@altlinux.org> 0.17.0-alt1
 - Fresh up to v0.17.0.
 
