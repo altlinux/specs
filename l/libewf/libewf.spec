@@ -1,6 +1,6 @@
 Name: libewf
 Version: 20140608
-Release: alt1.qa1
+Release: alt1.qa1.1
 
 Summary: Library and tools to support the Expert Witness Compression Format
 
@@ -80,6 +80,9 @@ find %buildroot -name '*.la' -delete
 %python_sitelibdir/*.so
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 20140608-alt1.qa1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu Apr 27 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 20140608-alt1.qa1
 - Fixed build with gcc >= 5.
 
