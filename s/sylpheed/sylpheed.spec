@@ -1,6 +1,6 @@
 Name: sylpheed
 Version: 3.7.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: a GTK+ based, lightweight, and fast e-mail client
 License: GPLv2+
@@ -158,6 +158,9 @@ autoconf
 %_includedir/sylpheed/
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt0.2
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Mar 23 2018 Ilya Mashkin <oddity@altlinux.ru> 3.7.0-alt0.1
 - 3.7.0 (Closes: #34601)
 
