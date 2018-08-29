@@ -1,6 +1,6 @@
 Name:     fastonosql
 Version:  1.15.0
-Release:  alt2
+Release:  alt2.1
 
 Summary:  FastoNoSQL is a crossplatform Redis, Memcached, SSDB, LevelDB, RocksDB, UnQLite, LMDB, UpscaleDB, ForestDB GUI management tool.
 
@@ -85,6 +85,9 @@ mv %buildroot%_bindir/FastoNoSQL %buildroot%_bindir/%name
 %doc CHANGELOG COPYRIGHT README.md
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.15.0-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sun Jan 28 2018 Vitaly Lipatov <lav@altlinux.ru> 1.15.0-alt2
 - fix build on i686
 - build with redis support
