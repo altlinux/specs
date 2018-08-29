@@ -1,6 +1,6 @@
 Name: riscvemu
 Version: 20170806
-Release: alt1
+Release: alt1.1
 License: MIT
 Url: http://bellard.org/riscvemu/
 Group: Emulators
@@ -49,6 +49,9 @@ install riscvemu riscvemu[0-9]*[0-9] %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 20170806-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu Sep 28 2017 Fr. Br. George <george@altlinux.ru> 20170806-alt1
 - Autobuild version bump to 20170806
 
