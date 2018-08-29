@@ -1,6 +1,6 @@
 Name:		taler
 Version:	0.15.0.1
-Release:	alt2
+Release:	alt2.1
 Summary:	Taler - first Belarus cryptocurrency
 Url:		https://taler.site/
 Group:		Office
@@ -62,6 +62,9 @@ convert -resize 16x16 %SOURCE1 %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.15.0.1-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.15.0.1-alt2
 - NMU: rebuilt with boost-1.67.0.
 
