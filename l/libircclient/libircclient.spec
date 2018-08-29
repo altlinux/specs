@@ -2,7 +2,7 @@
 %def_enable openssl
 
 Name: libircclient
-Version: 1.9
+Version: 1.10
 Release: alt1
 
 Summary: Library that implements the client-server IRC protocol
@@ -13,10 +13,14 @@ URL: http://www.ulduzsoft.com/linux/libircclient/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Patch2: libircclient-1.6-fedora-rfc.patch
+# https://sourceforge.net/p/libircclient/bugs/24/
+Patch3: debian-fix-ipv6-socaddr.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: gcc-c++
 %{?_enable_openssl:BuildRequires: libssl-devel}
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 libircclient is a small but powerful library that implements the
@@ -37,6 +41,7 @@ developing applications that use %name.
 %setup
 %patch -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export CFLAGS="%optflags -fPIC"
@@ -58,6 +63,11 @@ export CFLAGS="%optflags -fPIC"
 %_libdir/*.so
 
 %changelog
+* Wed Aug 29 2018 Mikhail Efremov <sem@altlinux.org> 1.10-alt1
+- Use _unpackaged_files_terminate_build.
+- Fix ipv6.
+- Updated to 1.10.
+
 * Mon May 16 2016 Mikhail Efremov <sem@altlinux.org> 1.9-alt1
 - Updated to 1.9.
 
