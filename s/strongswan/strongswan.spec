@@ -63,7 +63,7 @@
 
 Name: strongswan
 Version: 5.6.3
-Release: alt1.qa1
+Release: alt1.qa1.1
 
 Summary: strongSwan IPsec implementation
 License: GPLv2+
@@ -227,6 +227,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 5.6.3-alt1.qa1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 5.6.3-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
