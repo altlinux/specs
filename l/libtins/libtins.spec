@@ -16,7 +16,7 @@
 
 Name: libtins
 Version: 3.2
-Release: alt1
+Release: alt1.1
 
 Summary: C++ library for manipulating raw network packets
 License: BSD-2-Clause
@@ -79,6 +79,9 @@ application that use libtins.
 %_libdir/cmake/tins
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.2-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sat May 23 2015 Michael Shigorin <mike@altlinux.org> 3.2-alt1
 - built for ALT Linux (based on openSUSE package)
 
