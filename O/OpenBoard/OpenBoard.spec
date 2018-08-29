@@ -4,7 +4,7 @@
 %define dest_dir %_libdir/OpenBoard
 Name: OpenBoard
 Version: 1.3.6
-Release: alt3%ubt
+Release: alt3.1%ubt
 Summary: Interactive whiteboard for schools and universities
 License: GPL-3.0+
 Group: Education
@@ -131,6 +131,9 @@ cp -R resources/customizations %buildroot%dest_dir/
 %_bindir/%name
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.6-alt3.1%ubt
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Jul 27 2018 Anton Midyukov <antohami@altlinux.org> 1.3.6-alt3%ubt
 - Fix build with libpoppler >= 0.64
 
