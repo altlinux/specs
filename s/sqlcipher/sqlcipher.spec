@@ -4,7 +4,7 @@
 Summary: AES encryption for SQLite databases
 Name:    sqlcipher
 Version: 3.4.2
-Release: alt1
+Release: alt1.1
 License: BSD
 Group:   Databases
 Url:     http://sqlcipher.net/
@@ -123,6 +123,9 @@ make testfixture
 %_tcllibdir/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.4.2-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Dec 25 2017 Andrey Cherepanov <cas@altlinux.org> 3.4.2-alt1
 - New version.
 
