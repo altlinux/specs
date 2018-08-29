@@ -1,7 +1,7 @@
 Summary: IPsec-Tools package use the IPsec functionality in the linux-2.5+ kernels.
 Name: ipsec-tools
 Version: 0.8.2
-Release: alt1
+Release: alt2
 URL: http://ipsec-tools.sourceforge.net/
 License: BSD
 Group: Security/Networking
@@ -29,8 +29,6 @@ Patch14: ipsec-tools-0.7.2-moreleaks.patch
 Patch16: ipsec-tools-0.8.0-nodevel.patch
 # Use krb5 gssapi mechanism
 Patch18: ipsec-tools-0.7.3-gssapi-mech.patch
-# Drop -R from linker
-Patch19: ipsec-tools-0.7.3-build.patch
 # Silence strict aliasing warnings
 Patch20: ipsec-tools-0.8.0-aliasing.patch
 # CVE-2015-4047
@@ -45,8 +43,24 @@ Patch103: ipsec-tools-0.7.2-alt-unres.patch
 Patch104: ipsec-tools-0.7.2-alt-gcc44-warns.patch
 Patch105: ipsec-tools-0.8.0-alt-wildcard-psk.patch
 
-#optimized out: libcom_err-devel libkrb5-devel
-BuildRequires: flex libaudit-devel libpam-devel libreadline-devel libselinux-devel libssl-devel libldap-devel
+# Debian patches
+Patch201: ipsec-tools-0.8.2-make-peer_certfile-dnssec-validate-dnssec.patch
+Patch203: ipsec-tools-0.8.2-configure-pass-Wl-with-R.patch
+Patch204: ipsec-tools-0.8.2-include-stdint.patch
+Patch205: ipsec-tools-0.8.2-asn1_utf8.patch
+Patch206: ipsec-tools-0.8.2-ipv6literalaltname.patch
+Patch207: ipsec-tools-0.8.2-checkpoint-xauth.patch
+Patch209: ipsec-tools-0.8.2-implicit-int.patch
+Patch210: ipsec-tools-0.8.2-glibc-bsd-source-obsolete.patch
+Patch211: ipsec-tools-0.8.2-CVE-2016-10396.patch
+Patch212: ipsec-tools-0.8.2-gcc7-support.patch
+Patch213: ipsec-tools-0.8.2-shared-libfl.patch
+Patch214: ipsec-tools-0.8.2-openssl1.1.patch
+Patch215: ipsec-tools-0.8.2-fix-uninitialized-vars.patch
+Patch216: ipsec-tools-0.8.2-sprintf-sizes.patch
+
+#optimized out: libcom_err-devel
+BuildRequires: flex libaudit-devel libpam-devel libselinux-devel libssl-devel libldap-devel libkrb5-devel
 
 %description
 This is the IPsec-Tools package.  You need this package in order to
@@ -85,7 +99,6 @@ IPSec-Tools development files package.
 %patch14 -p1 -b .moreleaks
 #%patch16 -p1 -b .nodevel
 %patch18 -p1 -b .gssapi-mech
-%patch19 -p1 -b .build
 %patch20 -p1 -b .aliasing
 %patch21 -p1 -b .cve_2015_4047
 %patch22 -p1 -b .station_id
@@ -96,6 +109,21 @@ IPSec-Tools development files package.
 %patch103 -p1 -b .unres
 %patch104 -p1 -b .gcc4warn
 %patch105 -p1 -b .wildcard
+
+%patch201 -p1
+%patch203 -p1
+%patch204 -p1
+%patch205 -p1
+%patch206 -p1
+%patch207 -p1
+%patch209 -p1
+%patch210 -p1
+%patch211 -p1
+%patch212 -p1
+%patch213 -p1
+%patch214 -p1
+%patch215 -p1
+%patch216 -p1
 
 sed -i 's|-Werror||g' configure*
 
@@ -117,6 +145,7 @@ sed -i 's|-Werror||g' configure*
 	--enable-gssapi \
 	--with-libpam \
 	--with-libldap \
+	--without-readline \
 	--enable-adminport=yes
 
 %make
@@ -179,6 +208,11 @@ install -p -m0644 %SOURCE6 %buildroot%_unitdir/racoon.service
 
 
 %changelog
+* Wed Aug 29 2018 Alexey Shabalin <shaba@altlinux.org> 0.8.2-alt2
+- build with openssl-1.1
+- add patches from Debian
+- fixed CVE-2016-10396
+
 * Sun Feb 21 2016 Alexey Shabalin <shaba@altlinux.ru> 0.8.2-alt1
 - 0.8.2
 - fixed CVE-2015-4047
