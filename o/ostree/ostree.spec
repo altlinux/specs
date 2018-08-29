@@ -2,7 +2,7 @@
 
 Name: ostree
 Version: 2018.7
-Release: alt1
+Release: alt2
 
 Summary: Linux-based operating system develop/build/deploy tool
 License: LGPLv2+
@@ -121,6 +121,9 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_datadir/gtk-doc/html/ostree/
 
 %changelog
+* Wed Aug 29 2018 Yuri N. Sedunov <aris@altlinux.org> 2018.7-alt2
+- rebuilt with openssl-1.1
+
 * Mon Jul 23 2018 Yuri N. Sedunov <aris@altlinux.org> 2018.7-alt1
 - updated to v2018.7-2-g93da568
 - some spec cleanup
