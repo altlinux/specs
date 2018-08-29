@@ -9,7 +9,7 @@
 Name:           trustedqsl
 Version:        2.4
 # Warning: because libtqslver has different version, always increase release number
-Release:        alt6
+Release:        alt6.1
 Summary:        TrustedQSL ham-radio applications
 
 Group:		Communications
@@ -109,6 +109,9 @@ rm -f %buildroot%_datadir/locale/*/LC_MESSAGES/wxstd.mo
 %_libdir/libtqsllib.so
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.4-alt6.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Apr 02 2018 Andrey Cherepanov <cas@altlinux.org> 2.4-alt6
 - New version.
 
