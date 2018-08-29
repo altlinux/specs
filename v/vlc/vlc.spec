@@ -3,7 +3,7 @@
 
 Name: vlc
 Version: 3.0.6
-Release: alt4
+Release: alt5
 
 Summary: VLC media player
 License: GPLv2
@@ -1382,6 +1382,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Mon Mar 25 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.6-alt5
+- fixed build with libssh2-1.8.1
+
 * Sun Mar 10 2019 Anton Farygin <rider@altlinux.ru> 3.0.6-alt4
 - fixed FTBFS by removing build requires of the old libsidplay package
 

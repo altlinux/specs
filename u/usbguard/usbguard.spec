@@ -9,7 +9,7 @@
 
 Name: usbguard
 Version: 0.7.4
-Release: alt1%ubt
+Release: alt2
 
 Group: System/Servers
 Summary: A tool for implementing USB device usage policy
@@ -30,7 +30,6 @@ Patch1: alt-linking.patch
 # Automatically added by buildreq on Fri Aug 04 2017 (-bi)
 # optimized out: elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libcap-ng libdbus-devel libdbus-glib libgpg-error libgpg-error-devel libqt4-devel libqt5-core libqt5-gui libqt5-svg libqt5-widgets libqt5-xml libstdc++-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-common qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-utils xz
 #BuildRequires: aspell catch-devel glibc-devel-static libcap-ng-devel libdbus-glib-devel libgcrypt-devel libgio-devel libprotobuf-devel libqb-devel libseccomp-devel pegtl-devel protobuf-compiler python-module-google python3-dev python3-module-zope qt5-svg-devel qt5-tools rpm-build-ruby xsltproc
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: glibc-devel libcap-ng-devel libgcrypt-devel libseccomp-devel
 #BuildRequires: catch pegtl-devel
 BuildRequires: xsltproc asciidoctor
@@ -186,24 +185,28 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %endif
 
 %changelog
-* Wed Aug 08 2018 Sergey V Turchin <zerg@altlinux.org> 0.7.4-alt1%ubt
+* Tue Mar 26 2019 Alexey Shabalin <shaba@altlinux.org> 0.7.4-alt2
+- rebuild with new protobuf
+- do not use %%ubt macros
+
+* Wed Aug 08 2018 Sergey V Turchin <zerg@altlinux.org> 0.7.4-alt1
 - new version
 
-* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt3%ubt
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt3
 - merge upstream fix for audit backend
 
-* Wed Apr 04 2018 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt2%ubt
+* Wed Apr 04 2018 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt2
 - update default usbguard-daemon.conf
 
-* Tue Apr 03 2018 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt1%ubt
+* Tue Apr 03 2018 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt1
 - new version
 - fix systemtray icon (ALT#34752)
 
-* Tue Dec 26 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt1%ubt
+* Tue Dec 26 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt1
 - new version
 
-* Mon Aug 07 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt2%ubt
+* Mon Aug 07 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt2
 - fix configs permissions
 
-* Fri Aug 04 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt1%ubt
+* Fri Aug 04 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt1
 - initial build

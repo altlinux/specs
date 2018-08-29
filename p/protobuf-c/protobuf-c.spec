@@ -1,7 +1,7 @@
 %define soversion 1
 
 Name: protobuf-c
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 Summary: Google's Protocol Buffers implementation in C
 
@@ -12,7 +12,7 @@ Url: https://github.com/protobuf-c/protobuf-c
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
-BuildRequires: libprotobuf-devel >= 2.5.0 protobuf-compiler
+BuildRequires: libprotobuf-devel >= 2.6.0 protobuf-compiler
 
 %description
 Protocol Buffers are a way of encoding structured data in an efficient yet
@@ -76,6 +76,9 @@ This package contains development files required for packaging
 %doc TODO ChangeLog README.md LICENSE
 
 %changelog
+* Sun Mar 24 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.1-alt1
+- 1.3.1
+
 * Fri Jan 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.0-alt1
 - Updated to upstream version 1.3.0.
 
