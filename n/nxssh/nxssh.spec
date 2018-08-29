@@ -2,7 +2,7 @@
 
 Name: nxssh
 Version: 7.5
-Release: alt9
+Release: alt11
 
 Summary: Openssh portable (Etersoft edition) for using with NX in RX@Etersoft
 
@@ -32,7 +32,7 @@ Openssh portable (Etersoft edition) for using with NX in RX@Etersoft.
 %setup
 
 # fix build with openssl 1.1
-if [ -s %_libdir/libssl.so.1.1 ] ; then
+if [ -s %_libdir/libssl.so.1.1 ] || [ -s /%_lib/libssl.so.1.1 ] ; then
 %patch1 -p1
 fi
 
@@ -49,7 +49,7 @@ confdir=""
 %make_build || %make
 
 echo "checking ssh config path"
-grep "/etc${confdir}/ssh_config" nxssh
+grep -a "/etc${confdir}/ssh_config" nxssh
 
 %install
 mkdir -p %buildroot%_bindir/
@@ -59,6 +59,13 @@ install -m755 nxssh %buildroot%_bindir/
 %_bindir/nxssh
 
 %changelog
+* Wed Aug 29 2018 Pavel Vainerman <pv@altlinux.ru> 7.5-alt11
+- fix openssl 1.1 detection, use grep -a for check text in binary
+
+* Wed Aug 08 2018 Etersoft Builder <builder@etersoft.ru> 7.5-alt10
+- (CI): added build for c7
+- revert "(CI): added build for c7"
+
 * Fri Jul 06 2018 Vitaly Lipatov <lav@altlinux.ru> 7.5-alt9
 - fix bug with kerberos build missing
 - drop gcc-c++ and other image libs buildrequires
