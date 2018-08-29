@@ -1,21 +1,20 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt5.svn20140428.1
 Name:    libomniORB
 License: LGPL
 URL:     http://omniorb.sourceforge.net/
 
-Version: 4.2.0
-#Release: alt5.svn20140428
+Version: 4.2.2
+Release: alt0.1
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: omniORB-%version.tar.gz
+Source0: %name-%version.tar
 Source1: omniORB.cfg
 Source2: omninames
 Source3: omninames.sysconfig
 
 Patch0: libomniORB-non-strict.patch
 Patch1: libomniORB-all-cosifaces.patch
+Patch2: libomniORB-ziopdynamic-link.patch
 
 # Automatically added by buildreq on Wed Aug 26 2009
 BuildRequires: gcc-c++ libssl-devel python-devel python-modules-compiler
@@ -120,6 +119,7 @@ for the omniORB package (COS module).
 %setup
 %patch0 -p 1
 %patch1 -p 1
+%patch2 -p 0
 
 %build
 %configure \
@@ -212,6 +212,9 @@ mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %_libdir/libCOS*.a
 
 %changelog
+* Wed Aug 29 2018 Pavel Vainerman <pv@altlinux.ru> 4.2.2-alt0.1
+- new release
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.2.0-alt5.svn20140428.1
 - (AUTO) subst_x86_64.
 
