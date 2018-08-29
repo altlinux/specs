@@ -18,7 +18,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt1%ubt
+Release: alt2%ubt
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -71,6 +71,7 @@ Patch102: kdelibs-4.5.80-parallel_devel.patch
 Patch103: kdelibs-4.7.0-knewstuff_gpg2.patch
 Patch104: kdelibs-4.5.80-no_rpath.patch
 Patch105: kdelibs-4.7.4-SOLID_UPNP.patch
+Patch106: kdelibs-4.14.38-openssl-1.1.patch
 # Debian
 Patch201: 14_hardcode_ptm_device.diff
 Patch202: 30_kfileshare_kdesu_fileshareset.diff
@@ -178,6 +179,7 @@ applications for KDE 4.
 %if_enabled hupnp
 %patch105 -p1
 %endif
+%patch106 -p1
 #
 %patch201 -p1
 %patch202 -p1
@@ -361,6 +363,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.38-alt2%ubt
+- build with openssl-1.1
+
 * Wed Apr 25 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.38-alt1%ubt
 - new version
 
