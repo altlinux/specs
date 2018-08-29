@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-mirror
-Version: 0.4.6
+Version: 0.4.7
 Release: alt1
 
 Source:%name-%version.tar
@@ -12,7 +12,7 @@ Packager: Stanislav Ievlev <inger@altlinux.org>
 
 Group: System/Configuration/Other
 
-Requires: alterator >= 5.0 alterator-sh-functions >= 0.10-alt5 libshell
+Requires: alterator >= 5.3 alterator-sh-functions >= 0.10-alt5 libshell
 Requires: sisyphus-mirror >= 0.8.3
 Requires: alterator-l10n >= 2.4-alt9 altlinux-repos
 
@@ -60,6 +60,9 @@ install -Dpm640 %name.logrotate %buildroot%_sysconfdir/logrotate.d/%name
 %attr(700,root,adm) %_logdir/%name
 
 %changelog
+* Wed Aug 29 2018 Paul Wolneykien <manowar@altlinux.org> 0.4.7-alt1
+- Fix: Use (a fixed) keyword-list type for the "arch" parameter.
+
 * Thu Aug 23 2018 Paul Wolneykien <manowar@altlinux.org> 0.4.6-alt1
 - Fix: Use "hostname" type for the branch name (can contain periods).
 
