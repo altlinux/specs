@@ -1,6 +1,6 @@
 Name: celestia
 Version: 1.6.1
-Release: alt5
+Release: alt6
 License: GPL
 Group: Education
 Summary: A real-time visual space simulation
@@ -18,11 +18,11 @@ Patch9: celestia-1.6.1-alt-fix-build-2.patch
 
 BuildRequires: fontconfig freetype2 gcc-c++ kdelibs-devel libtqt-devel
 BuildRequires: libjpeg-devel libpng-devel libqt3-devel
-BuildRequires: libqt3-settings libstdc++-devel xml-utils 
+BuildRequires: libqt3-settings libstdc++-devel xml-utils
 BuildRequires: libICE-devel, libSM-devel, libX11-devel, libXau-devel, libXaw-devel, libXrandr-devel, libXdmcp-devel, libXext-devel, libXfixes-devel, libXfont-devel, libXft-devel, libXi-devel, libXmu-devel, libXpm-devel, libXrender-devel, libXres-devel, libXScrnSaver-devel, libXinerama-devel, libXt-devel, libXtst-devel, libXxf86dga-devel, libXcomposite-devel, libXxf86vm-devel, libdmx-devel, libfontenc-devel, libGLU-devel, libXdamage-devel, libxkbfile-devel, xcursorgen, xorg-font-utils, libXvMC-devel, libXcursor-devel, libXevie-devel, libXv-devel, xorg-xtrans-devel, xorg-util-macros, xorg-sgml-doctools
 BuildRequires: zlib-devel liblua5-devel libtheora-devel
 
-BuildRequires: libGConf2-devel GConf libgtk+2-devel glib-devel libgnomeui-devel libgtkglext-devel
+BuildRequires: libGConf2-devel GConf libgtk+2-devel glib-devel libgtkglext-devel
 
 %description
 Celestia is a free real-time space simulation that
@@ -85,7 +85,7 @@ travelthroughout the solar system, to any of over
 
 
 %prep
-%setup -q 
+%setup -q
 %patch1 -p0
 %patch2 -p2
 %patch3 -p2
@@ -113,7 +113,7 @@ popd
 
 mkdir build-gnome
 pushd build-gnome
-  %configure --disable-rpath --with-gnome --without-arts
+  %configure --disable-rpath --with-gtk --without-arts
   %make_build echo=echo
 popd
 
@@ -144,13 +144,6 @@ __EOF__
 %pre
 [ ! -d %_datadir/apps/%name ] || rm -fr %_datadir/apps/%name
 
-%post gnome
-export GCONF_CONFIG_SOURCE="$(gconftool-2 --get-default-source)"
-gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/celestia.schemas &>/dev/null || :
-
-%preun gnome
-export GCONF_CONFIG_SOURCE="$(gconftool-2 --get-default-source)"
-gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/celestia.schemas &>/dev/null || :
 
 %files -f %{name}.lang common
 %_datadir/apps/*
@@ -167,7 +160,6 @@ gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/celestia.sche
 
 %files gnome
 %_bindir/celestia-gnome
-/etc/gconf/schemas/celestia.schemas
 /etc/alternatives/packages.d/%name-gnome
 
 %files kde
@@ -175,6 +167,9 @@ gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/celestia.sche
 /etc/alternatives/packages.d/%name-kde
 
 %changelog
+* Wed Aug 29 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.6.1-alt6
+- build without ancient libgnome-ui
+
 * Fri Nov 17 2017 Oleg Solovyov <mcpain@altlinux.org> 1.6.1-alt5
 - fix build
 
