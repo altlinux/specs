@@ -1,6 +1,6 @@
 Name: hfsprogs
 Version: 540.1.linux3
-Release: alt1
+Release: alt1.1
 
 Summary: mkfs and fsck for Apple HFS and HFS+ file systems
 Summary(ru_RU.UTF-8): Утилиты для работы с файловыми системами Linux
@@ -95,6 +95,9 @@ ln -s fsck.hfsplus.8 fsck.hfs.8
 %_man8dir/fsck.hfs.*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 540.1.linux3-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 540.1.linux3-alt1
 - new version 540.1.linux3 (thanks, Fedora!)
 
