@@ -1,6 +1,6 @@
 Name: pam_mount
 Version: 2.16
-Release: alt1.2
+Release: alt1.3
 
 Summary: Pluggable Authentication Module that can mount volumes for a user session 
 License: GPLv2+ and LGPLv2+
@@ -45,6 +45,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %_mandir/man?/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.16-alt1.3
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.16-alt1.2
 - NMU: added URL
 
