@@ -7,7 +7,7 @@
 %def_enable ipv6
 %def_with xinerama
 %def_with xdmcp
-%def_with tcp_wrappers
+%def_without tcp_wrappers
 %def_without selinux
 %def_with consolekit
 %def_with libaudit
@@ -15,7 +15,7 @@
 
 Name: gdm2.20
 Version: %ver_major.8
-Release: alt10
+Release: alt11
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -56,7 +56,8 @@ Conflicts: gdm < %version
 Conflicts: gdm > %version
 
 # Automatically added by buildreq on Wed Dec 03 2008
-BuildRequires: docbook-dtds gcc-c++ gnome-doc-utils-xslt imake intltool libSM-devel libXau-devel libXdmcp-devel libXext-devel libXi-devel libXinerama-devel libdbus-glib-devel libdmx-devel libgnomecanvas-devel libpam-devel libpopt-devel librsvg-devel libwrap-devel xorg-cf-files xsltproc zenity xorg-server
+BuildRequires: docbook-dtds gcc-c++ gnome-doc-utils-xslt imake intltool libSM-devel libXau-devel libXdmcp-devel libXext-devel libXi-devel libXinerama-devel libdbus-glib-devel libdmx-devel libgnomecanvas-devel libpam-devel libpopt-devel librsvg-devel xorg-cf-files xsltproc zenity xorg-server
+%{?_with_tcp_wrappers:libwrap-devel}
 
 %description
 Gdm (the GNOME Display Manager) is a highly configurable
@@ -100,8 +101,10 @@ This package contains user documentation for Gdm.
 %patch33 -p1
 %patch43 -p1
 
+%if_with tcp_wrappers
 # This hack forces configure to use libwrap.
 subst 's,libwrap.a,libwrap.so,' configure
+%endif
 
 %build
 export ac_cv_path_CONSOLE_HELPER=%_bindir/consolehelper
@@ -116,6 +119,7 @@ export ac_cv_path_CONSOLE_HELPER=%_bindir/consolehelper
 		--enable-secureremote=yes \
 		--disable-scrollkeeper \
 		%{subst_enable static} \
+		%{subst_with tcp_wrappers} \
 		--disable-dependency-tracking
 
 %make_build
@@ -180,6 +184,9 @@ install -pDm755 %SOURCE4 %buildroot%_sbindir/gdm-termok-command
 %exclude %_libdir/gtk-2.0/modules/lib*.la
 
 %changelog
+* Wed Aug 29 2018 Mikhail Efremov <sem@altlinux.org> 2.20.8-alt11
+- Disable tcp_wrappers support.
+
 * Fri Mar 28 2014 Mikhail Efremov <sem@altlinux.org> 2.20.8-alt10
 - Fix DSO linking.
 
