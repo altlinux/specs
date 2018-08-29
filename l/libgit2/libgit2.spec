@@ -3,7 +3,7 @@
 
 Name: libgit2
 Version: 0.26.5
-Release: alt1
+Release: alt2
 
 Summary: linkable library for Git
 License: GPLv2 with linking exception
@@ -65,6 +65,9 @@ sed -i 's/@CMAKE_INSTALL_PREFIX@\///' %name.pc.in
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Aug 29 2018 Yuri N. Sedunov <aris@altlinux.org> 0.26.5-alt2
+- rebuilt with openssl-1.1
+
 * Tue Jul 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.26.5-alt1
 - 0.26.5 (fixed CVE-2018-11235, CVE-2018-10887, CVE-2018-10888)
 
