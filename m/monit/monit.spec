@@ -5,7 +5,7 @@
 
 Name: monit
 Version: 5.25.2
-Release: alt1
+Release: alt1.1
 
 Summary: Process monitor and restart utility
 License: AGPLv3
@@ -182,6 +182,9 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 5.25.2-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu May 31 2018 Michael Shigorin <mike@altlinux.org> 5.25.2-alt1
 - new version (watch file uupdate)
 
