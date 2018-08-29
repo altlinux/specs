@@ -3,7 +3,7 @@
 
 Name: mailfilter
 Version: 0.8.6
-Release: alt1
+Release: alt1.1
 
 Summary: A program that filters your incoming e-mail to help remove spam
 License: GPLv2+
@@ -48,6 +48,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_mandir/*/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.8.6-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.6-alt1
 - Updated to upstream version 0.8.6.
 
