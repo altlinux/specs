@@ -2,10 +2,10 @@
 
 Name: qca2
 %define major 2
-%define minor 1
-%define bugfix 1
+%define minor 2
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt0.1%ubt
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
@@ -18,8 +18,7 @@ Source: qca-%version.tar.bz2
 # ALT
 Patch10: qca-2.0.3-alt-paths.patch
 
-# Automatically added by buildreq on Fri Feb 25 2011 (-bi)
-#BuildRequires: cmake gcc-c++ glibc-devel-static libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libgcrypt-devel libnss-devel libqt4-devel libqt4-gui libqt4-network libsasl2-devel libxkbfile-devel rpm-build-ruby
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake gcc-c++ glibc-devel kde-common-devel ca-certificates
 BuildRequires: libgcrypt-devel libnss-devel libqt4-devel libsasl2-devel pkcs11-helper-devel
 
@@ -265,6 +264,9 @@ popd
 %_includedir/qt4/QtCrypto
 
 %changelog
+* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.0-alt0.1%ubt
+- 2.2.0 snapshot
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt2
 - NMU: added URL
 
