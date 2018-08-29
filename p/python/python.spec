@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.14
-Release: alt7
+Release: alt7.1
 
 %define package_name		%real_name
 %define weight			1001
@@ -1177,6 +1177,9 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.7.14-alt7.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Jul 02 2018 Ivan Zakharyaschev <imz@altlinux.org> 2.7.14-alt7
 - Made distutils install maximum Python minus python-dev
   to mitigate the separation from python-dev (for building packages).
