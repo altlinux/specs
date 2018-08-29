@@ -1,7 +1,7 @@
 Name: ssmtp
 Summary: ssmtp - extremely simple MTA to get mail off the system to a mail hub
 Version: 2.64
-Release: alt3
+Release: alt3.1
 License: GPL
 Group: System/Servers
 BuildRequires: libssl-devel
@@ -120,6 +120,9 @@ ln -sf %_sbindir/%name-ssl	%_sbindir/sendmail
 %_sbindir/%name-ssl
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.64-alt3.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Nov 16 2012 Dmitry V. Levin <ldv@altlinux.org> 2.64-alt3
 - %name-common: Removed %_sbindir/{mailq,newaliases},
   added sendmail-common requirements.
