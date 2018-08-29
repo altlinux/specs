@@ -13,12 +13,11 @@
 %def_enable overlay
 %def_enable aci 
 %def_enable yielding
-%def_disable aacls
 %def_enable ntlm
 
 Name: openldap
-Version: %_sover.45
-Release: alt5
+Version: %_sover.46
+Release: alt1
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -68,11 +67,6 @@ Source41: %_bname-olc-restore
 Source50: %_bname-addon-schemas.tar
 Source51: %_bname-ALT-rootdse.ldif
 
-%if_enabled aacls
-## AACLS patch
-Source60: %_bname-aacls-patch-1.6a.tgz
-%endif
-
 ### PATCHES
 Patch1: %_bname-alt-defaults.patch
 
@@ -121,7 +115,7 @@ BuildPreReq: libopenslp-devel
 %endif
 
 # Automatically added by buildreq on Tue Oct 18 2011 (-bi)
-BuildRequires: chrooted groff-base libdb4-devel libltdl-devel libssl-devel libwrap-devel shtool
+BuildRequires: chrooted groff-base libdb4-devel libltdl-devel libssl-devel shtool
 
 %package -n libldap
 Summary: OpenLDAP libraries
@@ -270,12 +264,6 @@ HTML and TXT versions
 
 %patch27 -p1
 
-### Extract AACLS patch
-%if_enabled aacls
-tar -zxf %SOURCE60 
-%__patch -p1 < ./patch-0.6/patch-2.2.11
-%endif
-
 # Add some more schema for the sake of migration scripts and others
 pushd servers/slapd
 tar -xf %SOURCE50
@@ -305,7 +293,6 @@ libtoolize --force --install
 	--enable-cleartext \
 	--enable-modules \
 	--enable-rewrite \
-	--enable-wrappers \
 	--enable-bdb=mod \
 	--enable-hdb=mod \
 	--enable-dnssrv=mod \
@@ -392,9 +379,7 @@ libtoolize --force --install
 %if_enabled debug
 	--enable-debug \
 %endif
-%if_enabled aacls
-	--enable-aacls \
-%endif
+
 
 %__subst 's/^AC_CFLAGS.*/& %optflags_shared/' libraries/librewrite/Makefile
 
@@ -427,37 +412,37 @@ popd
 ###
 
 # Create the /var/lib data directory and chroot enviroment.
-%__mkdir_p -m750 %buildroot%ldap_dir
+mkdir -p -m750 %buildroot%ldap_dir
 #__mkdir_p -m750 %buildroot%ldap_dir/bases
-%__mkdir_p -m770 %buildroot%ldap_dir/dblogs
+mkdir -p -m770 %buildroot%ldap_dir/dblogs
 #__mkdir_p -m750 %buildroot%ldap_dir/replica
-%__mkdir_p -m755 %buildroot%ldap_dir/dev
-%__mkdir_p -m750 %buildroot%ldap_dir/%_sysconfdir/ssl
-%__mkdir_p -m750 %buildroot%ldap_dir/%_sysconfdir/schema
-%__ln_s . %buildroot%ldap_dir/%_sysconfdir/%_bname
-%__mkdir_p -m775 %buildroot%ldap_dir/lib
-%__ln_s lib %buildroot%ldap_dir/lib64
-%__mkdir_p -m755 %buildroot%ldap_dir/usr/lib/%_bname
-%__mkdir_p -m755 %buildroot%ldap_dir/usr/lib/sasl2
-%__ln_s lib %buildroot%ldap_dir/usr/lib64
-%__mkdir_p -m775 %buildroot%ldap_dir/var/run
-%__mkdir_p -m775 %buildroot%ldap_dir%ldap_dir
-%__ln_s ../../../bases %buildroot%ldap_dir%ldap_dir/
-%__ln_s ../../../dblogs %buildroot%ldap_dir%ldap_dir/
+mkdir -p -m755 %buildroot%ldap_dir/dev
+mkdir -p -m750 %buildroot%ldap_dir/%_sysconfdir/ssl
+mkdir -p -m750 %buildroot%ldap_dir/%_sysconfdir/schema
+ln -s . %buildroot%ldap_dir/%_sysconfdir/%_bname
+mkdir -p -m775 %buildroot%ldap_dir/lib
+ln -s lib %buildroot%ldap_dir/lib64
+mkdir -p -m755 %buildroot%ldap_dir/usr/lib/%_bname
+mkdir -p -m755 %buildroot%ldap_dir/usr/lib/sasl2
+ln -s lib %buildroot%ldap_dir/usr/lib64
+mkdir -p -m775 %buildroot%ldap_dir/var/run
+mkdir -p -m775 %buildroot%ldap_dir%ldap_dir
+ln -s ../../../bases %buildroot%ldap_dir%ldap_dir/
+ln -s ../../../dblogs %buildroot%ldap_dir%ldap_dir/
 mksock %buildroot%ldap_dir/dev/log
 
 # Install init scripts.
-%__install -pD -m644 %SOURCE11 %buildroot/%_sysconfdir/sysconfig/ldap
-%__install -pD -m755 %SOURCE12 %buildroot/%_initdir/slapd
-%__mkdir_p -m750 %buildroot/%_sysconfdir/chroot.d
-%__install -pD -m750 %SOURCE15 %buildroot/%_sysconfdir/chroot.d/ldap.all
-%__install -pD -m750 %SOURCE16 %buildroot/%_sysconfdir/chroot.d/ldap.conf
-%__install -pD -m750 %SOURCE17 %buildroot/%_sysconfdir/chroot.d/ldap.lib
-%__install -pD -m644 %SOURCE14 %buildroot/%systemd_unitdir/slapd.service
+install -pD -m644 %SOURCE11 %buildroot/%_sysconfdir/sysconfig/ldap
+install -pD -m755 %SOURCE12 %buildroot/%_initdir/slapd
+mkdir -p -m750 %buildroot/%_sysconfdir/chroot.d
+install -pD -m750 %SOURCE15 %buildroot/%_sysconfdir/chroot.d/ldap.all
+install -pD -m750 %SOURCE16 %buildroot/%_sysconfdir/chroot.d/ldap.conf
+install -pD -m750 %SOURCE17 %buildroot/%_sysconfdir/chroot.d/ldap.lib
+install -pD -m644 %SOURCE14 %buildroot/%systemd_unitdir/slapd.service
 
 # Install OLC (cn=config) directory backup/restore scripts
-%__install -pD -m750 %SOURCE40 %buildroot%_sbindir/slapd-olc-backup
-%__install -pD -m750 %SOURCE41 %buildroot%_sbindir/slapd-olc-restore
+install -pD -m750 %SOURCE40 %buildroot%_sbindir/slapd-olc-backup
+install -pD -m750 %SOURCE41 %buildroot%_sbindir/slapd-olc-restore
 
 # log repository and logrotate config
 #__mkdir_p -m750 %buildroot/%_logdir/ldap
@@ -468,78 +453,78 @@ mkdir -pm700 %buildroot%_sysconfdir/syslog.d
 ln -s %ldap_dir/dev/log %buildroot%_sysconfdir/syslog.d/ldap
 
 # config files
-%__mkdir_p -m750 %buildroot/%_sysconfdir/%_bname/ssl
-%__install -pD -m640 %SOURCE18 %buildroot/%_sysconfdir/%_bname/slapd.conf
-%__install -pD -m640 %SOURCE19 %buildroot%ldap_dir/bases/DB_CONFIG
-%__install -pD -m640 %SOURCE20 %buildroot/%_sysconfdir/%_bname/slapd-access.conf
-%__install -pD -m640 %SOURCE21 %buildroot/%_sysconfdir/%_bname/slapd-mdb-db01.conf
-%__install -pD -m640 %SOURCE22 %buildroot/%_sysconfdir/%_bname/slapd-hdb-db01.conf
-%__install -pD -m640 %SOURCE23 %buildroot/%_sysconfdir/%_bname/slapd-hdb-db02.conf
-%__install -pD -m644 %SOURCE51 %buildroot/%_sysconfdir/%_bname/rootdse.ldif
+mkdir -p -m750 %buildroot/%_sysconfdir/%_bname/ssl
+install -pD -m640 %SOURCE18 %buildroot/%_sysconfdir/%_bname/slapd.conf
+install -pD -m640 %SOURCE19 %buildroot%ldap_dir/bases/DB_CONFIG
+install -pD -m640 %SOURCE20 %buildroot/%_sysconfdir/%_bname/slapd-access.conf
+install -pD -m640 %SOURCE21 %buildroot/%_sysconfdir/%_bname/slapd-mdb-db01.conf
+install -pD -m640 %SOURCE22 %buildroot/%_sysconfdir/%_bname/slapd-hdb-db01.conf
+install -pD -m640 %SOURCE23 %buildroot/%_sysconfdir/%_bname/slapd-hdb-db02.conf
+install -pD -m644 %SOURCE51 %buildroot/%_sysconfdir/%_bname/rootdse.ldif
 
 # We don't need the default files - let's move it.
-%__mkdir_p %buildroot/%_docdir/%_bname-servers-%version/default
-%__mv %buildroot/%_sysconfdir/%_bname/*.default \
+mkdir -p %buildroot/%_docdir/%_bname-servers-%version/default
+mv %buildroot/%_sysconfdir/%_bname/*.default \
 	%buildroot/%_docdir/%_bname-servers-%version/default/
-%__mv %buildroot/%_sysconfdir/%_bname/*.example \
+mv %buildroot/%_sysconfdir/%_bname/*.example \
 	%buildroot/%_docdir/%_bname-servers-%version/
 rm -f %buildroot%ldap_dir/bases/*.example
 
 # Documentations for servers
-%__mkdir_p %buildroot/%_docdir/%_bname-servers-%version/{back-{null,perl,sql},schema,slapi,overlays}/
-%__install -D -m644 servers/slapd/back-ldap/TODO.proxy \
+mkdir -p %buildroot/%_docdir/%_bname-servers-%version/{back-{null,perl,sql},schema,slapi,overlays}/
+install -D -m644 servers/slapd/back-ldap/TODO.proxy \
 	%buildroot/%_docdir/%_bname-servers-%version/back-ldap/TODO.proxy
-%__install -D -m644 servers/slapd/back-monitor/README \
+install -D -m644 servers/slapd/back-monitor/README \
 	%buildroot/%_docdir/%_bname-servers-%version/back-monitor/README
-%__install -D -m644 servers/slapd/back-null/README \
+install -D -m644 servers/slapd/back-null/README \
 	%buildroot/%_docdir/%_bname-servers-%version/back-null/README
 %if_enabled perl
-%__install -D -m644 servers/slapd/back-perl/{README,SampleLDAP.pm} \
+install -D -m644 servers/slapd/back-perl/{README,SampleLDAP.pm} \
 	%buildroot/%_docdir/%_bname-servers-%version/back-perl/
 %endif
 %if_enabled shell
-%__install -D -m644 servers/slapd/back-shell/searchexample.{conf,sh} \
+install -D -m644 servers/slapd/back-shell/searchexample.{conf,sh} \
 	%buildroot/%_docdir/%_bname-servers-%version/back-shell/
 %endif
 
 %if_enabled sql
-%__install -D -m644 servers/slapd/back-sql/docs/* \
+install -D -m644 servers/slapd/back-sql/docs/* \
 	%buildroot/%_docdir/%_bname-servers-%version/back-sql/
-%__cp -r servers/slapd/back-sql/rdbms_depend \
+cp -r servers/slapd/back-sql/rdbms_depend \
 	%buildroot/%_docdir/%_bname-servers-%version/back-sql/
 %endif
 
 %if_enabled slapi
-%__install -pD -m644 servers/slapd/slapi/TODO \
+install -pD -m644 servers/slapd/slapi/TODO \
         %buildroot/%_docdir/%_bname-servers-%version/slapi/TODO
 %endif
 
 %if_enabled overlay
-%__install -pD -m644 servers/slapd/overlays/README \
+install -pD -m644 servers/slapd/overlays/README \
         %buildroot/%_docdir/%_bname-servers-%version/overlays/README
-%__install -pD -m644 servers/slapd/overlays/slapover.txt \
+install -pD -m644 servers/slapd/overlays/slapover.txt \
         %buildroot/%_docdir/%_bname-servers-%version/overlays/slapover.txt
 %endif
 
-%__install -p -m644 servers/slapd/schema/README \
+install -p -m644 servers/slapd/schema/README \
 	%buildroot/%_docdir/%_bname-servers-%version/schema/README
 ##slapd
-%__install -p -m644 %SOURCE3 \
+install -p -m644 %SOURCE3 \
 	%buildroot/%_docdir/%_bname-servers-%version/README.ALT
-%__install -p -m644 %SOURCE4 \
+install -p -m644 %SOURCE4 \
 	%buildroot/%_docdir/%_bname-servers-%version/config-README.ALT
 
 %if_enabled doc
 ## Install Administration Guide 
-%__mkdir_p %buildroot/%_docdir/%_bname-doc-%version/images
-%__install -pD -m644 doc/guide/images/*.gif \
+mkdir -p %buildroot/%_docdir/%_bname-doc-%version/images
+install -pD -m644 doc/guide/images/*.gif \
 	%buildroot/%_docdir/%_bname-doc-%version/images
-%__mkdir_p %buildroot/%_docdir/%_bname-doc-%version/admin-guide
-#%__install -pD -m644 doc/guide/admin/*.gif \
+mkdir -p %buildroot/%_docdir/%_bname-doc-%version/admin-guide
+#install -pD -m644 doc/guide/admin/*.gif \
 #	%buildroot/%_docdir/%_bname-doc-%version/admin-guide/
-%__install -pD -m644 doc/guide/admin/*.html \
+install -pD -m644 doc/guide/admin/*.html \
 	%buildroot/%_docdir/%_bname-doc-%version/admin-guide/
-%__install -p -m644 doc/guide/admin/guide.txt \
+install -p -m644 doc/guide/admin/guide.txt \
 	%buildroot/%_docdir/%_bname-doc-%version/
 %endif
 
@@ -549,14 +534,14 @@ rm -f %buildroot%ldap_dir/bases/*.example
 
 #======
 # Relocate some shared libraries from %_libdir/ to /%_lib/.
-%__mkdir_p %buildroot/%_lib
+mkdir -p %buildroot/%_lib
 for n in ldap lber; do
 	for f in %buildroot/%_libdir/lib$n.so; do
 		t=`objdump -p "$f" |awk '/SONAME/ {print $2}'`
 		[ -n "$t" ]
-		%__ln_s -nf ../../%_lib/"$t" "$f"
+		ln -s -nf ../../%_lib/"$t" "$f"
 	done
-    %__mv %buildroot/%_libdir/lib$n-*.so.* %buildroot/%_lib/
+    mv %buildroot/%_libdir/lib$n-*.so.* %buildroot/%_lib/
 done
 
 %pre servers
@@ -565,7 +550,7 @@ done
 /usr/sbin/useradd  -rM -c "LDAP User" -g ldap -u 55 -s /dev/null -d %ldap_dir ldap &>/dev/null
 if [ -d "$ldap_ssl_dir" -a ! -L "$ldap_ssl_dir" ]; then
 	echo "Your certificates are moved to $ldap_ssl_dir.rpmsave, please CHECK!"
-	%__mv "$ldap_ssl_dir" "$ldap_ssl_dir".rpmsave
+	mv "$ldap_ssl_dir" "$ldap_ssl_dir".rpmsave
 fi	
 
 %post servers
@@ -705,6 +690,11 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Wed Aug 29 2018 Alexey Shabalin <shaba@altlinux.org> 2.4.46-alt1
+- 2.4.46
+- build with openssl-1.1
+- build without tcp_wrappers
+
 * Thu Jul  5 2018 Leonid Krivoshein <klark@altlinux.org> 2.4.45-alt5
 - /etc/sysconfig/ldap: use SLAPD_BACKEND= for ldap-dn create calls.
 
