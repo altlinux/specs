@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Version: 0.15
-Release: alt1
+Release: alt1.1
 
 Summary: Routines for accessing the OpenSSL pseudo-random number generator
 License: Perl
@@ -34,6 +34,9 @@ OpenSSL library's pseudo-random number generator.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.15-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
