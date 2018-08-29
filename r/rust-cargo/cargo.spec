@@ -1,7 +1,7 @@
 %def_without bootstrap
 Name: rust-cargo
 Version: 0.25.0
-Release: alt1
+Release: alt1.1
 Summary: The Rust package manager
 
 Group: Development/Other
@@ -103,6 +103,9 @@ CFG_DISABLE_CROSS_TESTS=1 cargo test || :
 %_man1dir/cargo*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.25.0-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Mar 26 2018 Vladimir Lettiev <crux@altlinux.org> 0.25.0-alt1
 - 0.25.0
 
