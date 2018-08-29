@@ -2,7 +2,7 @@
 
 Name: remmina
 Version: 1.2.0
-Release: alt4.rc21%ubt
+Release: alt5.rc21%ubt
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -11,6 +11,7 @@ Url: http://remmina.sourceforge.net
 Source: %name-%version.tar
 Patch0: remmina-1.2.0-rdp-passwordispin_option.patch
 Patch1: fix_plugins_search_v1.2.0-rc21.patch
+Patch2: alt-libssh0.8.patch
 
 Requires: icon-theme-hicolor
 
@@ -74,6 +75,7 @@ A set of plugins-gnome for %name remote desktop client
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 #? Hack: https://github.com/FreeRDP/Remmina/issues/292
 sed -i 's#install(DIRECTORY include/remmina DESTINATION include/remmina #install(DIRECTORY remmina/include/remmina DESTINATION include/ #' CMakeLists.txt
@@ -130,6 +132,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt5.rc21%ubt
+- fix to build with new libssh
+
 * Wed Jun 27 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt4.rc21%ubt
 - fix plugins search in version 1.2.0-rc21
 

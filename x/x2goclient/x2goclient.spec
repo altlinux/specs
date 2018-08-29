@@ -1,6 +1,6 @@
 Name:           x2goclient
 Version:        4.1.1.1
-Release:        alt8
+Release:        alt9
 Summary:        X2Go Client application (Qt)
 
 Group:          Communications
@@ -17,6 +17,7 @@ Patch2:         x2goclient-optflags.patch
 Patch3:  	x2goclient-alt-startkde.patch
 Patch4:		x2goclient-encoding.patch
 Patch5:		x2goclient-alt-no-pam.patch
+Patch6:		alt-qt5.11.patch
 
 BuildRequires(pre): rpm-build-apache2
 BuildRequires:  gcc-c++
@@ -107,6 +108,7 @@ the X2Go Plugin via an Apache webserver.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 # update russian translations
 cat %SOURCE1 >res/i18n/x2goclient_ru.ts
 # Fix up install issues
@@ -119,6 +121,8 @@ for f in Makefile config_linux_plugin.sh config_linux_static_plugin.sh config_li
     sed -i 's|-qt4|-qt5|g' $f
     sed -i 's|X2GO_CLIENT_TARGET=plugin|X2GO_CLIENT_TARGET=""|g' $f
 done
+# libssh-0.8
+sed -i -e '/^LIBS /s/-lssh_threads//' x2goclient.pro
 
 %build
 export PATH=%{_qt5_bindir}:$PATH
@@ -153,6 +157,10 @@ ln -s ../../x2go/x2goplugin-apache.conf %buildroot%_sysconfdir/httpd/conf.d/x2go
 %_datadir/x2go/
 
 %changelog
+* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 4.1.1.1-alt9
+- fix to build with Qt-5.11
+- fix to build with libssh-0.8
+
 * Thu Jun 21 2018 Oleg Solovyov <mcpain@altlinux.org> 4.1.1.1-alt8
 - fix remote printing
 
