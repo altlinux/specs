@@ -2,7 +2,7 @@
 
 Name: wget
 Version: 1.19.5
-Release: alt1
+Release: alt1.1
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
 License: GPLv3
@@ -135,6 +135,9 @@ find doc -type f -print0 |
 %doc AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.19.5-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon May 07 2018 Michael Shigorin <mike@altlinux.org> 1.19.5-alt1
 - 1.19.5
 
