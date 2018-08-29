@@ -1,6 +1,6 @@
 Name:           ike-scan
 Version:        1.9
-Release:        alt2
+Release:        alt2.1
 Summary:        IKE protocol tool to discover, fingerprint and test IPsec VPN servers
 
 Group:          Networking/Other
@@ -31,6 +31,9 @@ fingerprint and test IPsec VPN servers.
 %{_datadir}/ike-scan
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.9-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Nov 12 2014 Lenar Shakirov <snejok@altlinux.ru> 1.9-alt2
 - Fake version up for Autoimports
 
