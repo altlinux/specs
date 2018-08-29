@@ -8,7 +8,7 @@
 
 Name: exim
 Version: 4.90.1
-Release: alt1
+Release: alt1.1
 
 Summary: Exim Mail Transport Agent
 License: GPLv2+
@@ -451,6 +451,9 @@ ln -sf /usr/sbin/exim-ldap /usr/sbin/exim
 %_bindir/exipick
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.90.1-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Mar 06 2018 Aleksandr Antonov <aas@altlinux.org> 4.90.1-alt1
 - Updated to upstream version 4.90.1
 - Fixes:
