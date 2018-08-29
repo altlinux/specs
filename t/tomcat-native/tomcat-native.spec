@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           tomcat-native
 Version:        1.2.16
-Release:        alt1_2jpp8
+Release:        alt1_2jpp8.1
 Summary:        Tomcat native library
 
 Group:          System/Libraries
@@ -64,6 +64,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
 
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.2.16-alt1_2jpp8.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.16-alt1_2jpp8
 - java update
 
