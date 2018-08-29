@@ -4,7 +4,7 @@
 
 Name:       axel
 Version:    2.16
-Release:    alt1_1
+Release:    alt1_1.1
 Summary:    Light command line download accelerator for Linux and Unix
 
 Group:      Networking/WWW
@@ -53,6 +53,9 @@ install -m 644 -p -T doc/axelrc.example %{buildroot}%{_sysconfdir}/axelrc
 
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.16-alt1_1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.16-alt1_1
 - update to new release by fcimport
 
