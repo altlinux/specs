@@ -39,7 +39,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt12%ubt
+%define rlz alt13%ubt
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -132,6 +132,9 @@ Patch705: fix-build-icu59.patch
 #
 Patch706: qt-never-strip.diff
 Patch707: rcc-stable-dirlisting.diff
+Patch708: no-ssl3.patch
+Patch709: qt4-openssl-1.1.0pre-3.patch
+Patch710: qt-everywhere-opensource-src-4.8.7-openssl.patch
 # fixes for LibreOffice-kde QTBUG 37380,34614,38585
 Patch800: glib-honor-ExcludeSocketNotifiers-flag.diff
 Patch801: l-qclipboard_delay.patch
@@ -743,6 +746,9 @@ Install this package if you want to create RPM packages that use %name
 #
 %patch706 -p0
 %patch707 -p1
+%patch708 -p1
+%patch709 -p1
+%patch710 -p1
 
 %patch800 -p1
 %patch801 -p0
@@ -764,7 +770,7 @@ sed -i "s|^CFG_DEBUG=.*|CFG_DEBUG=no|" ./configure
 
 
 %build
-%add_optflags -std=gnu++98 -Wno-deprecated
+%add_optflags -std=gnu++98 -Wno-deprecated -DOPENSSL_LOAD_CONF -DOPENSSL_NO_SSL2
 # install %%optflags
 subst "s|^\s*QMAKE_CFLAGS\s*=.*$|QMAKE_CFLAGS = %optflags -DGLX_GLXEXT_LEGACY|" mkspecs/*/qmake.conf
 subst "s|^\s*QMAKE_CFLAGS\s*=.*$|QMAKE_CFLAGS = %optflags -DGLX_GLXEXT_LEGACY|" mkspecs/common/g++.conf
@@ -811,7 +817,7 @@ CNFGR="\
 %endif
 	\
 	-graphicssystem %graphicssystem -opengl %opengl_type \
-	-system-zlib -cups -openssl \
+	-system-zlib -cups -openssl-linked \
 	-no-webkit \
 	-xmlpatterns -scripttools \
 	-multimedia -declarative \
@@ -1459,6 +1465,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt13%ubt
+- link with openssl
+
 * Wed May 30 2018 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt12%ubt
 - update requires
 - fix to build
