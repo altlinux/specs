@@ -5,13 +5,13 @@
 
 Summary: Rutoken PKCS#11 Library
 Name: librtpkcs11ecp
-Version: 1.5.3.0
-Release: alt4
+Version: 1.8.2.0
+Release: alt1
 License: Proprietary
 Url: https://www.rutoken.ru/support/download/pkcs/
 Group: System/Configuration/Hardware
 Source0: %name-%version.tar
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 armh mips64el
 
 Requires: pcsc-lite-ccid
 
@@ -29,11 +29,20 @@ Allow users to work with Rutoken ECP through PKCS#11 standard.
 
 %install
 mkdir -p %buildroot%_libdir %buildroot%_libdir/pkcs11
+
 %ifarch %ix86
 cp %name-i586.so %buildroot%_libdir/pkcs11/librtpkcs11ecp.so
-%else
+%endif
+%ifarch x86_64
 cp %name-x86_64.so %buildroot%_libdir/pkcs11/librtpkcs11ecp.so
 %endif
+%ifarch armh
+cp %name-armv7hf.so %buildroot%_libdir/pkcs11/librtpkcs11ecp.so
+%endif
+%ifarch mips64el
+cp %name-mips64el.so %buildroot%_libdir/pkcs11/librtpkcs11ecp.so
+%endif
+
 ln -s pkcs11/librtpkcs11ecp.so %buildroot%_libdir/
 
 install -D -m0644 rutokenecp.module \
@@ -46,6 +55,9 @@ install -D -m0644 rutokenecp.module \
 %config(noreplace) %_sysconfdir/pkcs11/modules/rutokenecp.module
 
 %changelog
+* Thu Aug 30 2018 Paul Wolneykien <manowar@altlinux.org> 1.8.2.0-alt1
+- Updated to v1.8.2.0. New arches: armh, mips64el.
+
 * Wed Sep 06 2017 Paul Wolneykien <manowar@altlinux.org> 1.5.3.0-alt4
 - Add the module description for p11-kit.
 - Require pcsc-lite-ccid.
