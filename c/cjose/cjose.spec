@@ -8,7 +8,7 @@
 
 Name:		cjose
 Version:	0.5.1
-Release:	alt2_1
+Release:	alt2_1.1
 Summary:	C library implementing the Javascript Object Signing and Encryption (JOSE)
 Url:		https://github.com/cisco/cjose
 Source:		https://github.com/cisco/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -75,6 +75,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.5.1-alt2_1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Mar 28 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_1
 - added Url
 
