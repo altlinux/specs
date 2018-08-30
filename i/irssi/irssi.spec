@@ -1,6 +1,6 @@
 Name: irssi
 Version: 0.8.21
-Release: alt1.1.1
+Release: alt1.1.2
 
 Summary: Modular text mode IRC client with Perl scripting
 License: GPLv2+
@@ -113,6 +113,9 @@ export RPM_FILES_TO_LD_PRELOAD_libperl_core='%irssi_modules_dir/libfe_perl.so %p
 %_includedir/irssi/
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.8.21-alt1.1.2
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.21-alt1.1.1
 - rebuild with new perl 5.26.1
 
