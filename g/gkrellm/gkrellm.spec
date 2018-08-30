@@ -1,6 +1,6 @@
 Name: gkrellm
 Version: 2.3.10
-Release: alt1
+Release: alt1.1
 
 Summary: Multiple stacked system monitors
 License: GPLv3+
@@ -136,6 +136,9 @@ __EOF__
 
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.3.10-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu Dec 01 2016 L.A. Kostis <lakostis@altlinux.ru> 2.3.10-alt1
 - Updated to 2.3.10.
 - Update -aticonfig patch.
