@@ -1,16 +1,17 @@
 Name: slowhttptest
-Version: 1.6
-Release: alt2
+Version: 1.7
+Release: alt1
 
 Summary: SlowHTTPTest is a highly configurable tool that simulates some Application Layer Denial of Service attacks
 
 Group: File tools
 License: GPLv2+
-Url: http://code.google.com/p/slowhttptest/
+Url: https://github.com/shekyan/slowhttptest
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://slowhttptest.googlecode.com/files/%name-%version.tar
+# Source-url: https://github.com/shekyan/slowhttptest/archive/v%version.tar.gz
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Mon Jan 16 2012
 # optimized out: libcom_err-devel libkrb5-devel libstdc++-devel
@@ -30,6 +31,8 @@ the server.
 %setup
 
 %build
+# missed in upstream
+%autoreconf
 %configure
 %make_build
 
@@ -38,8 +41,12 @@ the server.
 
 %files
 %_bindir/%name
+%_man1dir/*
 
 %changelog
+* Thu Aug 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.7-alt1
+- new version (1.7) with rpmgs script
+
 * Fri Mar 21 2014 Vitaly Lipatov <lav@altlinux.ru> 1.6-alt2
 - new version 1.6 (with rpmrb script)
 
