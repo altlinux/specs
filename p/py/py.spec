@@ -3,8 +3,8 @@
 %def_with check
 
 Name: py
-Version: 1.5.3
-Release: alt1%ubt
+Version: 1.6.0
+Release: alt1
 
 Summary: Testing and distributed programming library
 License: MIT
@@ -15,11 +15,9 @@ Url: https://github.com/pytest-dev/py
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools
-BuildRequires: python3-module-setuptools
+BuildRequires: python-module-setuptools_scm
+BuildRequires: python3-module-setuptools_scm
 
 %if_with check
 BuildRequires: subversion
@@ -59,13 +57,6 @@ and distributing code across machines.
 
 This package contains python module of %name lib.
 
-%package -n python3-module-%name-testing
-Summary: Tests for %name (Python 3)
-Group: Development/Python3
-
-%description -n python3-module-%name-testing
-This package contains tests for %name lib.
-
 %package -n python-module-%name
 Summary: Python module of testing and distributed programming library
 Group: Development/Python
@@ -77,20 +68,6 @@ and distributing code across machines.
 
 This package contains python module of %name lib.
 
-%package -n python-module-%name-testing
-Summary: Tests for %name
-Group: Development/Python
-
-%description -n python-module-%name-testing
-This package contains tests for %name lib.
-
-%package doc
-Summary: Documentation for testing and distributed programming library
-Group: Development/Documentation
-
-%description doc
-This package contains documentation for %name lib.
-
 %prep
 %setup
 %patch0 -p1
@@ -99,6 +76,10 @@ rm -rf ../python3
 cp -a . ../python3
 
 %build
+# SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
+# its used as the primary source for the version number in which
+# case it will be a unparsed string
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python_build
 
 pushd ../python3
@@ -106,63 +87,53 @@ pushd ../python3
 popd
 
 %install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python_install
-
-# packing tests
-cp -fR testing %buildroot%python_sitelibdir/%name/
-
-for i in $(find %buildroot%python_sitelibdir/%name/testing -type d)
-do
-       touch $i/__init__.py
-done
-#
 
 pushd ../python3
 %python3_install
 
-# packing tests
-cp -fR testing %buildroot%python3_sitelibdir/%name/
-
-for i in $(find %buildroot%python3_sitelibdir/%name/testing -type d)
-do
-       touch $i/__init__.py
-done
-#
 popd
 
 %check
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export LC_ALL=en_US.UTF-8
 export PIP_INDEX_URL=http://host.invalid./
+export PYTHONPATH=`pwd`
 
-%define python_version_nodots() %(%1 -Esc "import sys; sys.stdout.write('{0.major}{0.minor}'.format(sys.version_info))")
+# copy necessary exec deps
+TOX_TESTENV_PASSENV='LC_ALL SETUPTOOLS_SCM_PRETEND_VERSION PYTHONPATH' tox \
+--sitepackages -e py%{python_version_nodots python} --notest
+cp -f %_bindir/py.test .tox/py%{python_version_nodots python}/bin/
 
-TOX_TESTENV_PASSENV=LC_ALL tox --sitepackages -e py%{python_version_nodots python}-pytest -v -- -v
+TOX_TESTENV_PASSENV='LC_ALL SETUPTOOLS_SCM_PRETEND_VERSION PYTHONPATH' tox \
+--sitepackages -e py%{python_version_nodots python} -v -- -v
 
 pushd ../python3
-TOX_TESTENV_PASSENV=LC_ALL tox.py3 --sitepackages -e py%{python_version_nodots python3}-pytest -v -- -v
+export PYTHONPATH=`pwd`
+TOX_TESTENV_PASSENV='LC_ALL SETUPTOOLS_SCM_PRETEND_VERSION PYTHONPATH' tox.py3\
+ --sitepackages -e py%{python_version_nodots python3} --notest
+cp -f %_bindir/py.test3 .tox/py%{python_version_nodots python3}/bin/py.test
+
+TOX_TESTENV_PASSENV='LC_ALL SETUPTOOLS_SCM_PRETEND_VERSION PYTHONPATH' tox.py3\
+ --sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
 
 %files -n python-module-%name
 %doc AUTHORS CHANGELOG LICENSE *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%name/testing
-
-%files -n python-module-%name-testing
-%python_sitelibdir/%name/testing
-
-%files doc
-%doc doc
+%python_sitelibdir/py/
+%python_sitelibdir/py-*.egg-info/
 
 %files -n python3-module-%name
 %doc AUTHORS CHANGELOG LICENSE *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%name/testing
-
-%files -n python3-module-%name-testing
-%python3_sitelibdir/%name/testing
+%python3_sitelibdir/py/
+%python3_sitelibdir/py-*.egg-info/
 
 %changelog
-* Fri Mar 23 2018 Stanislav Levin <slev@altlinux.org> 1.5.3-alt1%ubt
+* Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
+- 1.5.3 -> 1.6.0.
+
+* Fri Mar 23 2018 Stanislav Levin <slev@altlinux.org> 1.5.3-alt1
 - 1.4.34 -> 1.5.3
 
 * Thu Feb 08 2018 Alexey Appolonov <alexey@altlinux.org> 1.4.34-alt4
