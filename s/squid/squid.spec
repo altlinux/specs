@@ -8,9 +8,9 @@
 %def_with gnutls
 
 Name: squid
-Version: 3.5.26
-Release: alt3
-%define langpack_ver 20150704
+Version: 4.2
+Release: alt1
+%define langpack_ver 20170901 
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
@@ -56,7 +56,7 @@ BuildRequires: libnetfilter_conntrack-devel
 %{?_with_nettle:BuildRequires: libnettle-devel}
 %{?_with_gnutls:BuildRequires: libgnutls-devel >= 3.1.5}
 BuildRequires: perl-libnet perl-DBI
-BuildRequires: perl(Authen/Smb.pm) perl(Crypt/OpenSSL/X509.pm)
+BuildRequires: perl(Authen/Smb.pm) perl(Crypt/OpenSSL/X509.pm) perl(Digest/SHA.pm) perl(URI/URL.pm)
 
 %description
 Squid is a high-performance proxy caching server for Web clients,
@@ -104,7 +104,7 @@ sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
 
 RELEASE_TIME="$(date +%%s)"
 
-sed -i -e "s|%version-BZR|%version|" configure.ac
+sed -i -e "s|%version-VCS|%version|" configure.ac
 sed -i -e "s|squid_curtime|$RELEASE_TIME|" include/version.h
 
 %build
@@ -164,7 +164,7 @@ sed -i -e "s|squid_curtime|$RELEASE_TIME|" include/version.h
 	--enable-x-accelerator-vary \
 	--enable-auth \
 	--enable-auth-basic="DB LDAP NCSA PAM RADIUS SASL SMB SMB_LM fake getpwnam" \
-	--enable-auth-ntlm="fake smb_lm" \
+	--enable-auth-ntlm="fake SMB_LM" \
 	--enable-auth-digest="LDAP eDirectory file" \
 	--enable-auth-negotiate="kerberos wrapper" \
 	--enable-external-acl-helpers="LDAP_group delayer eDirectory_userip file_userip kerberos_ldap_group session unix_group wbinfo_group time_quota" \
@@ -194,8 +194,6 @@ install -pD -m 0644 %SOURCE3 %buildroot%_sysconfdir/logrotate.d/%name
 
 install -d -m 0755 %buildroot{%_logdir,%_spooldir,%_runtimedir}/%name
 
-install -p -m 0644 helpers/{external_acl/{AD,LM,kerberos_ldap}_group,negotiate_auth/kerberos}/*.8 %buildroot%_man8dir/
-
 install -p -m 0755 %SOURCE4 %buildroot%_libexecdir/%name/
 install -d -m 0755 %buildroot%_datadir/snmp/mibs
 mv %buildroot%_datadir/%name/mib.txt %buildroot%_datadir/snmp/mibs/SQUID-MIB.txt
@@ -205,20 +203,12 @@ install -pD -m 0644 %SOURCE6 %buildroot%_sysconfdir/pam.d/%name
 install -pD -m 0644 %SOURCE7 %buildroot%_unitdir/%name.service
 install -pD -m 0644 %SOURCE8 %buildroot%_tmpfilesdir/%name.conf
 
-install -d -m 0755 %buildroot%_docdir/%name-%version/{helpers,html,scripts}
+install -d -m 0755 %buildroot%_docdir/%name-%version/{html,scripts}
 #install -d -m 0755 %buildroot%_docdir/%name-%version/html/Programming-Guide
 #install -p -m 0644 doc/Programming-Guide/html/*{css,html,png} %buildroot%_docdir/%name-%version/html/Programming-Guide/
 #install -p -m 0644 doc/release-notes/*.html %buildroot%_docdir/%name-%version/html/
 install -p -m 0644 COPYING README ChangeLog QUICKSTART SPONSORS doc/debug-sections.txt %buildroot%_docdir/%name-%version/
 install -p -m 0644 scripts/*.pl %buildroot%_docdir/%name-%version/scripts/
-for i in LDAP_group file_userip kerberos_ldap_group; do
-	install -p -m 0644 helpers/external_acl/$i/README %buildroot%_docdir/%name-%version/helpers/README.$i
-done
-for i in kerberos; do
-	install -p -m 0644 helpers/negotiate_auth/$i/README %buildroot%_docdir/%name-%version/helpers/README.$i
-done
-install -p -m 0644 helpers/basic_auth/SMB/ChangeLog %buildroot%_docdir/%name-%version/helpers/ChangeLog.$i
-install -p -m 0644 helpers/basic_auth/SMB_LM/msntauth.conf.default %buildroot%_docdir/%name-%version/helpers/
 
 %check
 %make_build check
@@ -285,7 +275,6 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %doc %_docdir/%name-%version/SPONSORS
 %doc %_docdir/%name-%version/debug-sections.txt
 %doc %_docdir/%name-%version/html
-%doc %_docdir/%name-%version/helpers
 
 
 %files helpers
@@ -305,6 +294,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Thu Aug 30 2018 Alexey Shabalin <shaba@altlinux.org> 4.2-alt1
+- 4.2
+
 * Wed Jan 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.26-alt3
 - Rebuilt without NIS support.
 
