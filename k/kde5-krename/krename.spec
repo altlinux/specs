@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 5.0.0
-Release: alt4%ubt
+Release: alt5%ubt
 %K5init
 
 Summary: A powerful batch renamer for KDE5
@@ -50,6 +50,9 @@ It can also change access and modification dates, permissions, and file ownershi
 %_K5srv/ServiceMenus/*.desktop
 
 %changelog
+* Tue Sep 04 2018 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt5%ubt
+- NMU: rebuild with podofo 0.9.6
+
 * Wed Apr 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt4%ubt
 - fix conflict with kde4-krename
 

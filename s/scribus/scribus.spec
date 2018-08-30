@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.5.4
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -14,7 +14,8 @@ Packager: Paul Wolneykien <manowar@altlinux.ru>
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar
 
 Patch0: scribus-1.3.5.1-plugindir-alt.patch
-Patch2: scribus-1.3.5.1-poppler.patch
+Patch2: scribus-1.5.4-poppler-0.64.0.patch
+Patch3: scribus-1.5.4-podofo-0.9.6.patch
 
 BuildRequires: cmake zlib-devel libssl-devel
 BuildRequires: libpoppler-devel libpoppler-cpp-devel
@@ -39,7 +40,7 @@ BuildRequires: python-dev >= 2.3
 BuildRequires: python-modules-tkinter
 BuildRequires: python-module-Pillow
 BuildRequires: libhunspell-devel
-BuildRequires: libpodofo-devel > 0.7.0
+BuildRequires: libpodofo-devel >= 0.9.6
 # boost used only for 2geom
 BuildRequires: boost-devel-headers
 BuildRequires: GraphicsMagick
@@ -58,6 +59,7 @@ Requires: %name-doc >= %epoch:%version
 Requires: %name-data >= %epoch:%version
 Requires: aspell-en
 
+%add_verify_elf_skiplist %_libdir/%name/plugins/*.so
 %add_findreq_skiplist %_datadir/%name/samples/*
 %add_findreq_skiplist %_datadir/%name/scripts/*
 
@@ -102,7 +104,8 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %name-%version
-%patch0 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %cmake \
@@ -164,6 +167,10 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Thu Aug 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.4-alt3
+- rebuild with podofo 0.9.6
+- fix build with poppler 0.64.0
+
 * Sat Jul 07 2018 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.4-alt2
 - cleanup spec, fix build
 
