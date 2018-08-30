@@ -1,47 +1,35 @@
+%define _unpackaged_files_terminate_build 1
 %define oname six
-%def_with check
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
 Version: 1.11.0
-Release: alt1
+Release: alt2
+
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
+
 BuildArch: noarch
 Url: http://pypi.python.org/pypi/six
 
 # Url: https://github.com/benjaminp/six
 Source: %name-%version.tar
 Source2: move.list
-Patch: 0001-Fix-pytest-command.patch
 
 %define move_list %(echo `cat %{SOURCE2}`)
 
 %py_provides %move_list
 
-BuildRequires(pre): python-devel
-BuildRequires: python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-%endif
 
 # for test suite
 %if_with check
-BuildRequires: python-module-pytest
 BuildRequires: python-module-tox
-BuildRequires: python-module-virtualenv
 BuildRequires: python-modules-tkinter
-BuildRequires: python-module-py
-%if_with python3
-BuildRequires: python3-module-pytest
 BuildRequires: python3-module-tox
-BuildRequires: python3-module-virtualenv
 BuildRequires: python3-modules-tkinter
-%endif 
 %endif
 
 %description
@@ -65,53 +53,53 @@ provided.
 
 %prep
 %setup
-%patch -p1
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
-%python_build_debug
-%if_with python3
+%python_build
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
 export PIP_INDEX_URL=http://host.invalid./
 
-export PYTHONPATH=%python_sitelibdir_noarch
-TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py%{python_version_nodots python} -v -- -v
+# copy necessary exec deps
+tox --sitepackages -e py%{python_version_nodots python} --notest
+cp -f %_bindir/py.test .tox/py%{python_version_nodots python}/bin/
+tox --sitepackages -e py%{python_version_nodots python} -v -- -v
 
-%if_with python3
 pushd ../python3
-export PYTHONPATH=%python3_sitelibdir_noarch
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -v -- -v
+tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
+cp -f %_bindir/py.test3 .tox/py%{python_version_nodots python3}/bin/py.test
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
-%endif
 
 %files
-%doc README.rst documentation/*.rst
-%python_sitelibdir/*
+%doc README.rst documentation/index.rst
+%python_sitelibdir/six.py*
+%python_sitelibdir/six-*.egg-info/
 
-%if_with python3
 %files -n python3-module-%oname
-%doc README.rst documentation/*.rst
-%python3_sitelibdir/*
-%endif
+%doc README.rst documentation/index.rst
+%python3_sitelibdir/six.py
+%python3_sitelibdir/__pycache__/
+%python3_sitelibdir/six-*.egg-info/
 
 %changelog
+* Wed Aug 29 2018 Stanislav Levin <slev@altlinux.org> 1.11.0-alt2
+- Fix build with new pytest-3.7.
+
 * Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.0-alt1
 - Updated to upstream version 1.11.0.
 
