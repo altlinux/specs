@@ -1,6 +1,6 @@
 Name: rpcbind
 Version: 1.2.5
-Release: alt1
+Release: alt2
 
 Summary: RPC port mapper
 License: BSD
@@ -8,7 +8,7 @@ Group: Networking/Other
 
 Source: %name-%version-%release.tar
 
-BuildRequires: libtirpc-devel libwrap-devel libsystemd-devel
+BuildRequires: libtirpc-devel libsystemd-devel
 
 Provides: portmap = 2:%version-%release
 Obsoletes: portmap
@@ -25,7 +25,7 @@ to make RPC calls.
 %build
 [ ! -f ./autogen.sh ] || sh ./autogen.sh
 %configure \
-    --enable-libwrap \
+    --disable-libwrap \
     --enable-warmstarts \
     --with-statedir=%_localstatedir/rpcbind \
     --with-systemdsystemunitdir=%systemd_unitdir \
@@ -87,6 +87,9 @@ fo=/var/run/control/portmap
 %dir %attr(770,root,rpc) %_localstatedir/rpcbind
 
 %changelog
+* Thu Aug 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.5-alt2
+- rebuilt without libwrap
+
 * Thu Aug 16 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.5-alt1
 - 1.2.5 released
 
