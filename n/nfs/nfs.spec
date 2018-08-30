@@ -1,6 +1,6 @@
 Name: nfs
 Version: 2.3.2
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -10,10 +10,9 @@ Url: http://nfs.sourceforge.net/
 
 Source0: %name-%version-%release.tar
 
-BuildRequires: libblkid-devel libevent-devel libwrap-devel
+BuildRequires: libblkid-devel libevent-devel
 BuildRequires: libdevmapper-devel libkrb5-devel libsqlite3-devel
 BuildRequires: libcap-devel libtirpc-devel libkeyutils-devel libmount-devel
-BuildRequires: libkeyutils-devel
 
 %package -n libnfsidmap
 Summary: Name to user id mapping library
@@ -99,6 +98,7 @@ This package provides the Linux NFS stats utilities.
     --with-statdpath=%_localstatedir/nfs/statd \
     --with-systemd=%systemd_unitdir \
     --with-pluginpath=%_libdir/libnfsidmap \
+    --without-tcp-wrappers \
     --disable-static \
     #
 sed -i 's/#define[[:blank:]]\+START_STATD.\+$/#undef START_STATD/' support/include/config.h
@@ -300,6 +300,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Thu Aug 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.3.2-alt3
+- rebuilt without libwrap
+
 * Thu Jul 19 2018 Stanislav Levin <slev@altlinux.org> 1:2.3.2-alt2
 - add lost header file
 
