@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 2.1.8
+Version: 2.1.9
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -128,6 +128,9 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Thu Aug 30 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.9-alt1
+- introduced _metainfodir (like in Fedora)
+
 * Fri Aug 17 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.8-alt1
 - distr_info: use awk instead tr (broken in busybox on OpenWrt)
 - distr_info: drop obsoleted systems, cleanup code
