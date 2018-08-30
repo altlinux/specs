@@ -1,6 +1,6 @@
 Name: archiveopteryx
 Version: 3.1.3
-Release: alt2.1
+Release: alt2.2
 
 Summary: %name stores email in a database and provides access to it through IMAP and more.
 Group: System/Servers
@@ -52,6 +52,9 @@ mkdir -p %buildroot/var/lib/%name/
 #%_sbindir/tlsproxy
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.1.3-alt2.2
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.3-alt2.1
 - Fixed build
 
