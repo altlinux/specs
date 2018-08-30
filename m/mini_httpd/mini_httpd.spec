@@ -1,7 +1,7 @@
 Summary:	Small, simple HTTP daemon, supports SSL
 Name:		mini_httpd
 Version:	1.19
-Release:	alt2
+Release:	alt2.1
 License:	freely distributable
 Group:		Networking/WWW
 Source0:	%{name}-%{version}.tar
@@ -99,6 +99,9 @@ sed -e 's,@DOCROOT@,%{htmldir},' %{SOURCE2} > $RPM_BUILD_ROOT/%_sysconfdir/sysco
 %attr(755,root,root) %{_bindir}/%name-single
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.19-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Feb 17 2012 Andriy Stepanov <stanv@altlinux.ru> 1.19-alt2
 - Update init script
 
