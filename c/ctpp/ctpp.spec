@@ -1,6 +1,6 @@
 Name: ctpp
 Version: 2.7.1
-Release: alt2.qa1
+Release: alt2.qa1.1
 Summary: HTML templater
 License: BSD
 Group: Development/Other
@@ -75,6 +75,9 @@ mv %buildroot/usr/man/man1/* %buildroot%_man1dir/
 %_libdir/libctpp2-st.a
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.7.1-alt2.qa1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2.7.1-alt2.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
