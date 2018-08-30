@@ -3,7 +3,7 @@
 
 Name:     libgwenhywfar
 Version:  4.20.1
-Release:  alt1
+Release:  alt1.1
 
 Summary:  A multi-platform helper library for other libraries
 Group:    System/Libraries
@@ -164,6 +164,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_libdir/cmake/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.20.1-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 4.20.1-alt1
 - New version.
 
