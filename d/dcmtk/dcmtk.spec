@@ -2,7 +2,7 @@
 
 Name: dcmtk
 Version: 3.6.2
-Release: alt1
+Release: alt1.1
 
 Summary: DCMTK - DICOM Toolkit
 License: MIT license
@@ -81,6 +81,9 @@ Headers for building software that uses %name.
 %_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.6.2-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Nov 01 2017 Anton Farygin <rider@altlinux.ru> 3.6.2-alt1
 - new version
 - enabled build shared libraries
