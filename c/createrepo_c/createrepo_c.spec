@@ -1,7 +1,7 @@
 Summary:        Creates a common metadata repository
 Name:           createrepo_c
 Version:        0.11.0
-Release:        alt1
+Release:        alt1.1
 Group:          System/Configuration/Packaging
 License:        GPLv2+
 URL:            https://github.com/rpm-software-management/createrepo_c
@@ -82,6 +82,9 @@ export CMAKE_CXX_FLAGS="%optflags"
 %_includedir/%name
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.11.0-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Tue Jul 10 2018 Alexey Gladkov <legion@altlinux.ru> 0.11.0-alt1
 - New version (0.11.0)
 
