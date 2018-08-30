@@ -1,6 +1,6 @@
 Name: mtproto-proxy
 Version: 0.1
-Release: alt1
+Release: alt1.1
 
 Summary: MTProxy
 
@@ -37,5 +37,8 @@ install -D objs/bin/mtproto-proxy %buildroot%_bindir/mtproto-proxy
 
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.1-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu May 31 2018 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt1
 - initial build for ALT Sisyphus
