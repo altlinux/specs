@@ -11,7 +11,7 @@
 
 Name: tor
 Version: 0.3.3.9
-Release: alt1%ubt
+Release: alt1.S1.1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
 Group: System/Servers
@@ -143,6 +143,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Thu Aug 30 2018 Grigory Ustinov <grenka@altlinux.org> 0.3.3.9-alt1.S1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Jul 16 2018 Vladimir Didenko <cow@altlinux.ru> 0.3.3.9-alt1%ubt
 - new version
 
