@@ -8,7 +8,7 @@ BuildRequires: gcc-c++ perl(IO/Handle.pm)
 %define _hardened_build 1
 Name:             fuse-zfs
 Version:          0.7.2.2
-Release:          alt1_6
+Release:          alt1_6.1
 Summary:          ZFS ported to Linux FUSE
 License:          CDDL
 URL:              https://github.com/gordan-bobic/zfs-fuse
@@ -131,6 +131,9 @@ rm -rf /var/lock/zfs
 %config(noreplace) %_initdir/zfs-fuse
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.7.2.2-alt1_6.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.2.2-alt1_6
 - update to new release by fcimport
 
