@@ -4,7 +4,7 @@
 
 Name: certmonger
 Version: 0.79.6
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Certificate status monitor and PKI enrollment client
 
 Group: System/Base
@@ -39,6 +39,7 @@ BuildRequires: which
 BuildRequires: python-module-dbus
 BuildRequires: libpopt-devel
 BuildRequires: libsystemd-devel
+BuildRequires: libkrb5-devel
 
 Requires: dbus
 Requires(post): /usr/bin/dbus-send
@@ -100,6 +101,9 @@ mv %buildroot/usr%_tmpfilesdir/%name.conf %buildroot%_tmpfilesdir/%name.conf
 %_datadir/dbus-1/system-services/*
 
 %changelog
+* Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 0.79.6-alt2%ubt
+- Fix build with new openssl1.1.
+
 * Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.79.6-alt1%ubt
 - Updated to upstream version 0.79.6.
 
