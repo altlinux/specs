@@ -1,6 +1,6 @@
 Name: eresi
 Version: 0.83
-Release: alt2
+Release: alt2.1
 
 Summary: The ERESI Reverse Engineering Software Interface
 
@@ -92,6 +92,9 @@ rm -fv %buildroot%_bindir/kedbg*
 %_man1dir/eresi.*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.83-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Jul 06 2018 Vitaly Lipatov <lav@altlinux.ru> 0.83-alt2
 - fix underlinking
 
