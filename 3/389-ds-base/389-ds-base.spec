@@ -6,7 +6,7 @@
 %def_without selinux
 
 Name: 389-ds-base
-Version: 1.3.8.5
+Version: 1.3.8.8
 Release: alt1
 
 Summary: 389 Directory Server (base)
@@ -22,6 +22,7 @@ Patch: %name-%version-alt.patch
 BuildRequires: 389-adminutil-devel gcc-c++ libdb4-devel libicu-devel
 BuildRequires: libldap-devel libnet-snmp-devel libnl-devel libpam-devel
 BuildRequires: libpcre-devel libsasl2-devel libsensors3-devel libsvrcore-devel >= 4.1.2
+BuildRequires: libkrb5-devel
 BuildRequires: perl-devel
 BuildRequires: perl-Mozilla-LDAP perl-libnet perl-bignum
 BuildRequires: perl-DBM
@@ -286,6 +287,10 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun_service %pkgname
 %preun_service %pkgname-snmp
 %changelog
+* Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 1.3.8.8-alt1
+- 1.3.8.5 -> 1.3.8.8.
+- Fix build with new openssl1.1.
+
 * Fri Jul 27 2018 Stanislav Levin <slev@altlinux.org> 1.3.8.5-alt1
 - 1.3.7.1 -> 1.3.8.5
 - Build package for Python3
