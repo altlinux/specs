@@ -1,6 +1,6 @@
 Name:           librabbitmq-c
 Version:        0.5.2
-Release:        alt1.git20140830
+Release:        alt1.git20140830.1
 Summary:        This is a C-language AMQP client library for use with AMQP servers speaking protocol versions 0-9-1
 Group:          System/Libraries
 License:        MIT
@@ -62,6 +62,9 @@ popd
 %_man7dir/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.5.2-alt1.git20140830.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt1.git20140830
 - Version 0.5.2
 
