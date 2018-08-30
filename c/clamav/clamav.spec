@@ -13,7 +13,7 @@
 
 Name: clamav
 Version: 0.100.1
-Release: alt1
+Release: alt1.1
 %define abiversion 7
 
 Summary: Clam Antivirus scanner
@@ -334,6 +334,9 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.100.1-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Tue Jul 17 2018 Sergey Y. Afonin <asy@altlinux.ru> 0.100.1-alt1
 - 0.100.1 (ALT #35096)
 - built without LLVM (look to ALT #35096)
