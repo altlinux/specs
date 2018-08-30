@@ -4,7 +4,7 @@
 Name: pve-%sname
 Summary: SPICE Terminal Emulator
 Version: 3.0.4
-Release: alt1
+Release: alt1.1
 License: GPLv2
 Group: Networking/WWW
 Url: https://git.proxmox.com/
@@ -71,6 +71,9 @@ popd
 %_man1dir/%sname.1*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.0.4-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Jul 19 2017 Valery Inozemtsev <shrek@altlinux.ru> 3.0.4-alt1
 - 3.0-4
 
