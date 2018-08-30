@@ -6,7 +6,7 @@
 
 Name: cpprest
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: C++ REST library
 Group: System/Libraries
@@ -18,7 +18,7 @@ Source: https://github.com/Microsoft/%_name/archive/v%version.tar.gz#/%_name-%ve
 BuildRequires: gcc-c++ cmake
 BuildRequires: boost-devel >= 1.55 boost-interprocess-devel boost-filesystem-devel
 BuildRequires: boost-asio-devel boost-locale-devel
-BuildRequires: libssl-devel >= 1.0
+BuildRequires: pkgconfig(openssl) >= 1.0
 BuildRequires: websocketpp-devel >= 0.4
 BuildRequires: zlib-devel
 
@@ -65,7 +65,7 @@ subst 's|\(DESTINATION \)lib|\1%_lib|' Release/src/CMakeLists.txt
 
 %build
 cd Release
-export CXXFLAGS="%optflags -Wl,--as-needed"
+%add_optflags %optflags -D_FILE_OFFSET_BITS=64 -Wl,--as-needed
 %cmake .. -DCMAKE_BUILD_TYPE=Release \
 	  -DCPPREST_EXPORT_DIR=%_lib/%_name \
 	  -DCMAKE_INSTALL_DO_STRIP=false \
@@ -93,6 +93,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make -C BUILD test
 %doc README.md
 
 %changelog
+* Thu Aug 30 2018 Yuri N. Sedunov <aris@altlinux.org> 2.10.5-alt2
+- rebuilt with openssl-1.1
+
 * Sun Aug 19 2018 Yuri N. Sedunov <aris@altlinux.org> 2.10.5-alt1
 - 2.10.5
 
