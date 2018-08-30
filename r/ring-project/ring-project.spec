@@ -1,3 +1,14 @@
+%define IF_ver_gt() %if "%(rpmvercmp '%1' '%2')" > "0"
+%define IF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
+%define IF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
+%define IF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
+%define IF_ver_eq() %if "%(rpmvercmp '%1' '%2')" == "0"
+%define IF_ver_not_gt() %if "%(rpmvercmp '%1' '%2')" <= "0"
+%define IF_ver_not_gteq() %if "%(rpmvercmp '%1' '%2')" < "0"
+%define IF_ver_not_lt() %if "%(rpmvercmp '%2' '%1')" <= "0"
+%define IF_ver_not_lteq() %if "%(rpmvercmp '%2' '%1')" < "0"
+%define IF_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
+
 %ifarch %ix86
 %set_verify_elf_method textrel=relaxed
 %endif
@@ -14,7 +25,7 @@
 %define libringclient libringclient%ringclient_sover
 
 Name: ring-project
-Version: 20180712
+Version: 20180826
 Release: alt1%ubt
 
 Group: Networking/Instant messaging
@@ -31,11 +42,14 @@ Patch1: alt-fix-linking.patch
 Patch2: alt-pcre-include.patch
 
 BuildRequires(pre): rpm-build-ubt
+%IF_ver_gteq %ubt_id M90
+BuildRequires: asio-devel
+%endif
 BuildRequires: cmake gcc-c++ glibc-devel autoconf-archive
 BuildRequires: doxygen graphviz gtk-doc
 BuildRequires: qt5-tools-devel
 BuildRequires: chrpath
-BuildRequires: libalsa-devel libdbus-c++-devel libgnutls-devel libgsm-devel asio-devel
+BuildRequires: libalsa-devel libdbus-c++-devel libgnutls-devel libgsm-devel
 BuildRequires: libavdevice-devel libavformat-devel libswscale-devel libavutil-devel libavcodec-devel libavfilter-devel
 BuildRequires: libssl-devel libgpg-error-devel libgcrypt-devel
 BuildRequires: libnettle-devel libpcre-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel libvpx-devel
@@ -262,6 +276,12 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 #%_libdir/libring.a
 
 %changelog
+* Thu Aug 30 2018 Sergey V Turchin <zerg@altlinux.org> 20180826-alt1%ubt
+- new version
+
+* Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 20180712-alt1%ubt.1
+- fix build requires
+
 * Tue Jul 17 2018 Sergey V Turchin <zerg@altlinux.org> 20180712-alt1%ubt
 - using all-in-one tarball
 
