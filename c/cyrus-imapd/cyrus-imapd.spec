@@ -14,17 +14,17 @@
 # TypeError: inline_all_toctrees() takes exactly 5 arguments (6 given)
 %def_with sphinx
 
+%def_with snmp
+
 Name: cyrus-imapd
 Version: 3.0.8
-Release: alt1
+Release: alt2
 
-Summary: A high-performance mail store with IMAP and POP3 support
+Summary: A high-performance email, contacts and calendar server
 License: CMU License
 Group: System/Servers
 
-# old import was made by:
-# $ git-cvsimport -v -r git-cvs -i -k -d :pserver:anoncvs@cvs.andrew.cmu.edu:/cvs cyrus
-# fresh sources available via git at https://git.cyrus.foundation/diffusion/I/cyrus-imapd
+# fresh sources available at https://github.com/cyrusimap/cyrus-imapd
 Url: http://www.cyrusimap.org/
 
 Source0: %name-%version.tar
@@ -60,8 +60,12 @@ BuildRequires: CUnit-devel
 BuildRequires: valgrind-devel
 %endif
 
-BuildRequires: control flex gcc-c++ transfig libdb4-devel zlib-devel libwrap-devel libldap-devel libuuid-devel
-BuildRequires: libsasl2-devel libssl-devel libnet-snmp-devel libnl-devel libsensors3-devel libpcre-devel
+BuildRequires: control flex gcc-c++ transfig libdb4-devel zlib-devel libldap-devel libuuid-devel
+BuildRequires: libsasl2-devel libssl-devel libnl-devel libsensors3-devel libpcre-devel
+
+%if_with snmp
+BuildRequires: libnet-snmp-devel
+%endif
 
 # http (CalDAV, CardDAV e.t.c.)
 BuildRequires: libjansson-devel libical-devel libxml2-devel libsqlite3-devel
@@ -70,32 +74,31 @@ BuildRequires: perl-devel perl-Pod-Parser perl-Term-ReadLine-Gnu perl-Net-Server
 
 # 2.5.11
 # BuildRequires: python-module-sphinx
-BuildRequires: perl-Pod-POM-View-Restructured
+# BuildRequires: perl-Pod-POM-View-Restructured
 
 # 3.0.8
 BuildRequires: perl-JSON xxd
 %if_with sphinx
+BuildRequires: perl-Pod-POM-View-Restructured
 BuildRequires: python-module-GitPython
 BuildRequires: python-module-sphinx >= 1.6
 %endif
 
-#BuildRequires: groff-extra groff-ps transfig
-
 %description
-The %name package contains the core of the Cyrus IMAP server.
-It is a scaleable enterprise mail system designed for use from
-small to large enterprise environments using standards-based
-internet mail technologies.
+The Cyrus IMAP (Internet Message Access Protocol) server provides
+access to personal mail, system-wide bulletin boards, news-feeds,
+calendar and contacts through the IMAP, NNTP, CalDAV and CardDAV
+protocols. The Cyrus IMAP server is a scalable enterprise groupware
+system designed for use from small to large enterprise environments
+using technologies based on well-established Open Standards.
 
 A full Cyrus IMAP implementation allows a seamless mail and bulletin
-board environment to be set up across multiple servers. It differs from
-other IMAP server implementations in that it is run on "sealed"
-servers, where users are not normally permitted to log in. The mailbox
+board environment to be set up across one or more nodes. It differs
+from other IMAP server implementations in that it is run on "sealed
+nodes", where users are not normally permitted to log in. The mailbox
 database is stored in parts of the filesystem that are private to the
-Cyrus IMAP server. All user access to mail is through software using
-the IMAP, POP3, or KPOP protocols. TLS supported for security.
-
-CalDAV and CardDAV protocols are supported since Cyrus IMAP v2.5.
+Cyrus IMAP system. All user access to mail is through software using
+the IMAP, IMAPS, POP3, POP3S, KPOP, CalDAV and/or CardDAV protocols.
 
 %package murder
 Group: System/Servers
@@ -167,14 +170,6 @@ for IMAP server and SASL library
 %setup
 echo %version > VERSION
 
-# kerberos include is needed (because of openssl-0.9.7 ?)
-#CPPFLAGS="`krb5-config --cflags` $CPPFLAGS"
-#export CPPFLAGS
-#CFLAGS="$RPM_OPT_FLAGS -fPIC $CFLAGS"
-#export CFLAGS
-#LDFLAGS="`krb5-config --libs` $LDFLAGS"
-#export LDFLAGS
-
 # hack for really enable pcre
 sed "s|pcreposix\.h|pcre/pcreposix.h|g" -i configure.ac
 sed 's|if test "$ac_cv_header_pcreposix_h" = "yes"|ac_cv_header_pcreposix_h="yes"; if test "$ac_cv_header_pcreposix_h" = "yes"|' -i configure.ac
@@ -185,13 +180,6 @@ sed "s|@ZLIB@|@ZLIB@ -lpcreposix|" -i perl/imap/Makefile.PL.in
 sed "s|@ZLIB@|@ZLIB@ -lpcreposix|" -i perl/sieve/managesieve/Makefile.PL.in
 
 autoreconf -v -i
-
-# this is hack
-#echo '#define CYRUS_CVSDATE 20071211' > imap/xversion.h
-
-# set version since 2.5.9
-#sed "s|^PACKAGE_VERSION=.*|PACKAGE_VERSION='%version'|" -i configure
-#sed "s|^PACKAGE_STRING=.*|PACKAGE_STRING='cyrus-imapd %version'|" -i configure
 
 %add_optflags -lcrypto -lsasl2 -lssl
 
@@ -211,10 +199,10 @@ autoreconf -v -i
   --enable-pcre \
   %{?_with_unit_tests: --enable-unit-tests} \
   \
-  --with-snmp \
+  %{?_with_snmp: --with-snmp} \
+  %{?_without_snmp: --with-snmp=no} \
   --with-perl=perl \
   --with-ldap \
-  --with-libwrap=%prefix \
   --with-cyrus-user=%_cyrususer \
   --with-cyrus-group=%_cyrusgroup \
   --with-bdb-incdir=%_includedir/db4 \
@@ -238,12 +226,6 @@ popd
 # Modify path in perl scripts
 find . -type f -name \*.pl -print0 |
     xargs -r0 perl -pi -e 's@\/usr\/local\/bin\/perl@perl@' --
-
-## Cleanup of doc dir
-#find doc perl -name CVS -type d | xargs -r rm -fr --
-#find doc -name "*~" -type f | xargs -r rm -f --
-#rm -f doc/Makefile.dist
-#rm -f doc/text/htmlstrip.c
 
 %if_with unit_tests
 %check
@@ -480,6 +462,11 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Thu Aug 30 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.0.8-alt2
+- disabled tcpwrappers support
+- rebuilt with openssl 1.1
+- some cleanups of spec
+
 * Fri Aug 24 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.0.8-alt1
 - 3.0.8
 - disabled altnamespace in imapd.conf (restored behaviour of Cyrus IMAP 2.5)

@@ -3,7 +3,7 @@ Name: sendmail
 %define tarbolversion 8.16.0.29
 
 Version: %tarbolversion
-Release: alt1
+Release: alt2
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -80,7 +80,7 @@ BuildPreReq: libpam0-devel rpm-build-licenses
 # Not detected by buildreq
 BuildRequires: openssl
 # Automatically added by buildreq on Thu Apr 21 2005
-BuildRequires: glibc-devel groff-base libdb4-devel libgdbm-devel libldap-devel libsasl2-devel libssl-devel libwrap-devel
+BuildRequires: glibc-devel groff-base libdb4-devel libgdbm-devel libldap-devel libsasl2-devel libssl-devel
 
 # for cidrexpand
 BuildRequires: perl-Net-CIDR
@@ -500,6 +500,10 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Thu Aug 30 2018 Sergey Y. Afonin <asy@altlinux.ru> 8.16.0.29-alt2
+- disabled tcpwrappers support
+- rebuilt with openssl 1.1
+
 * Tue Aug 28 2018 Sergey Y. Afonin <asy@altlinux.ru> 8.16.0.29-alt1
 - New version (with openssl 1.1 support)
 - enabled the use of elliptic curve cryptography in STARTTLS

@@ -10,7 +10,7 @@
 
 Name: cyrus-sasl2
 Version: 2.1.27
-Release: alt0.1
+Release: alt0.2
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: Freely Distributable
@@ -40,7 +40,7 @@ BuildRequires: python-module-sphinx >= 1.6
 %endif
 
 %if_enabled sql
-BuildRequires: libMySQL-devel postgresql-devel
+BuildRequires: libMySQL-devel postgresql-devel libsqlite3-devel
 %endif
 
 %if_enabled ldap
@@ -163,6 +163,7 @@ automake -a -c -f
 %if_enabled sql
 		--with-mysql=%_prefix \
 		--with-pgsql=%_prefix \
+		--with-sqlite3==%_prefix \
 		--enable-sql \
 %endif
 		--enable-anon \
@@ -298,8 +299,12 @@ ls -l %buildroot%_man3dir/*
 %endif
 
 %changelog
+* Thu Aug 30 2018 Sergey Y. Afonin <asy@altlinux.ru> 2.1.27-alt0.2
+- added libsqlite3-devel to BuildRequires
+- rebuilt with openssl 1.1
+
 * Mon Aug 27 2018 Sergey Y. Afonin <asy@altlinux.ru> 2.1.27-alt0.1
-- 2.1.27rc8 (openssl 1.1 supported since rc5)
+- 2.1.27rc8 (openssl 1.1 supported since rc4)
 
 * Fri Nov 18 2016 Sergey Y. Afonin <asy@altlinux.ru> 2.1.26-alt7
 - applied patch for bug 3920 from bugzilla.cyrusimap.org:
