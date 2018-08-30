@@ -2,8 +2,8 @@
 %define rel %nil
 %define oname audacious
 Name: audacious-plugins
-Version: 3.9
-Release: alt3
+Version: 3.10
+Release: alt1
 
 Summary: Plugins for Audacious
 
@@ -21,7 +21,7 @@ BuildRequires: gcc-c++ libSDL-devel libXcomposite-devel libaudacious-devel libav
 
 BuildRequires: lib%oname-devel = %version
 
-BuildRequires: libglade-devel libprojectM-devel >= 1.1 libsidplayfp-devel libsoxr-devel
+BuildRequires: libglade-devel libprojectM-devel >= 1.1 libsidplayfp-devel libsoxr-devel libadplug-devel
 
 %description
 Base plugins for Audacious.
@@ -62,6 +62,10 @@ This package contains the base I/O plugins:
 %_libdir/%oname/*
 
 %changelog
+* Thu Aug 30 2018 Vitaly Lipatov <lav@altlinux.ru> 3.10-alt1
+- new version 3.10 (with rpmrb script)
+- build with libadplug-devel
+
 * Fri Jun 29 2018 Vitaly Lipatov <lav@altlinux.ru> 3.9-alt3
 - rebuild with ffmpeg 4.0
 - add missed libalsa-devel
