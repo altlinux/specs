@@ -3,7 +3,7 @@
 Summary: Gearman provides a generic application framework to farm out work to other machines.
 Name: gearmand
 Version: 1.1.18
-Release: alt1.1
+Release: alt1.2
 License: BSD
 Group: Development/C
 URL: http://gearman.org
@@ -69,6 +69,9 @@ popd
 %_man3dir/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.18-alt1.2
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.18-alt1.1
 - NMU: rebuilt with boost-1.67.0
 
