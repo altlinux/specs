@@ -5,8 +5,8 @@
 %define  oname sybil
 
 Name:    python-module-%oname
-Version: 1.0.7
-Release: alt2
+Version: 1.0.9
+Release: alt1
 
 Summary:  Automated testing for the examples in your documentation.
 License: MIT
@@ -29,7 +29,7 @@ BuildRequires: python3(pytest)
 # https://github.com/cjw296/sybil.git
 Source:  %oname-%version.tar
 
-Patch1: %oname-%version-alt-docs.patch
+Patch1: %oname-1.0.7-alt-docs.patch
 
 %description
 Automated testing for the examples in your documentation.
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 1.0.9-alt1
+- 1.0.7 -> 1.0.9.
+
 * Thu Jun 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.7-alt2
 - Fixed documentation build.
 
