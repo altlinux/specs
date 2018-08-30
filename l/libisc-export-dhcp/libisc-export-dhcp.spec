@@ -1,6 +1,6 @@
 Name: libisc-export-dhcp
 Version: 9.9.11
-Release: alt1
+Release: alt1.1
 
 Summary: ISC BIND 9.9.x exportable libraries to build ISC DHCP
 License: BSD-style
@@ -106,6 +106,9 @@ sed -i '/# Large File/iAC_SYS_LARGEFILE/' configure.in
 %_libdir/lib*-export.so
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 9.9.11-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Aug 30 2017 Mikhail Efremov <sem@altlinux.org> 9.9.11-alt1
 - Updated to 9.9.11.
 
