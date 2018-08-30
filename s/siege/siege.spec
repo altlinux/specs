@@ -1,6 +1,6 @@
 Name: siege
 Version: 2.72
-Release: alt1
+Release: alt1.1
 
 Summary: An HTTP regression testing/benchmarking utility
 
@@ -69,6 +69,9 @@ mkdir -p $RPM_BUILD_ROOT/%_sysconfdir/siege
 %_man7dir/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.72-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Feb 17 2012 Mykola Grechukh <gns@altlinux.ru> 2.72-alt1
 - update to 2.72
 
