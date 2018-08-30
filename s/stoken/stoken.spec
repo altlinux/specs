@@ -1,5 +1,5 @@
 Name: stoken
-Version: 0.91
+Version: 0.92
 Release: alt1
 Summary: Token code generator compatible with RSA SecurID 128-bit (AES) token
 License: %lgpl2plus
@@ -81,6 +81,9 @@ Graphical interface program for %name
 %_datadir/pixmaps/*.png
 
 %changelog
+* Wed Aug 30 2018 Vladimir Didenko <cow@altlinux.org> 0.92-alt1
+- New version
+
 * Wed Feb 1 2017 Vladimir Didenko <cow@altlinux.org> 0.91-alt1
 - New version
 
