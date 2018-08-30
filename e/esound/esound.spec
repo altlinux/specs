@@ -4,10 +4,11 @@
 %def_disable arts
 %def_disable static
 %def_disable doc
+%def_without libwrap
 
 Name: esound
 Version: %ver_major.41
-Release: alt9
+Release: alt10
 
 Summary: The Enlightened Sound Daemon
 License: GPL
@@ -24,7 +25,6 @@ Patch8: %name-0.2.41-link.patch
 %define audiofile_ver 0.2.3
 
 BuildPreReq: libaudiofile-devel >= %audiofile_ver
-BuildRequires: libwrap-devel
 %{?_enable_doc:BuildRequires: docbook-utils-print}
 
 %if_enabled alsa
@@ -37,6 +37,7 @@ BuildPreReq: libarts-devel
 %if_enabled static
 BuildPreReq: glibc-static-devel
 %endif
+%{?_with_libwrap:BuildRequires: libwrap-devel}
 
 %description
 EsounD (the Enlightened Sound Daemon) is a server process that allows multiple
@@ -116,13 +117,12 @@ applications.
 %build
 %autoreconf
 %configure \
-	--with-libwrap \
 	--enable-local-sound \
 	%{subst_enable alsa} \
 	%{subst_enable oss} \
 	%{subst_enable arts} \
+	%{subst_with libwrap} \
 	%{subst_enable static}
-
 %make_build
 
 %install
@@ -173,6 +173,9 @@ subst 's,/etc/esound,/etc,g' docs/esd.1
 %{?_enable_doc:%exclude %_datadir/doc/esound}
 
 %changelog
+* Thu Aug 30 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.41-alt10
+- rebuilt without tcp_wrappers support
+
 * Sun Apr 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.41-alt9
 - disabled documentation build
 
