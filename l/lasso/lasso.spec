@@ -8,7 +8,7 @@
 Summary: Liberty Alliance Single Sign On
 Name: 	 lasso
 Version: 2.5.1
-Release: alt2.1
+Release: alt2.2
 License: GPLv2+
 Group:   System/Libraries
 Url: 	 http://lasso.entrouvert.org/
@@ -234,6 +234,9 @@ make check
 %endif
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt2.2
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Apr 27 2018 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt2.1
 - NMU: e2k support
 
