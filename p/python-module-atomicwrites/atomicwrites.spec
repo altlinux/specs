@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.1.5
+Version: 1.2.0
 Release: alt1
 
 Summary: Python Atomic file writes on POSIX
@@ -63,7 +63,7 @@ export PIP_INDEX_URL=http://host.invalid./
 
 # copy nessecary exec deps
 tox --sitepackages -e py%{python_version_nodots python}-test --notest
-cp -f %_bindir/py.test .tox/py%{python_version_nodots python}-test/bin/
+cp -T %_bindir/py.test .tox/py%{python_version_nodots python}-test/bin/py.test
 
 export PYTHONPATH=build/lib
 TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e \
@@ -71,7 +71,7 @@ py%{python_version_nodots python}-test -v -- -v
 
 pushd ../python3
 tox.py3 --sitepackages -e py%{python_version_nodots python3}-test --notest
-cp -f %_bindir/py.test3 .tox/py%{python_version_nodots python3}-test/bin/py.test
+cp -T %_bindir/py.test3 .tox/py%{python_version_nodots python3}-test/bin/py.test
 
 TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e \
 py%{python_version_nodots python3}-test -v -- -v
@@ -88,6 +88,9 @@ popd
 %python3_sitelibdir/atomicwrites-*.egg-info/
 
 %changelog
+* Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.1.5 -> 1.2.0.
+
 * Mon Aug 20 2018 Stanislav Levin <slev@altlinux.org> 1.1.5-alt1
 - Initial build.
 
