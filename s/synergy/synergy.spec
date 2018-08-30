@@ -1,7 +1,7 @@
 Summary:	Mouse and keyboard sharing utility
 Name:		synergy
 Version:	2.0.0
-Release:	alt1
+Release:	alt1.1
 License:	GPL
 Group:		Accessibility
 URL:		http://synergy-project.org/
@@ -50,6 +50,9 @@ install -D -m0644 doc/synergyc.man %buildroot/%_man1dir/synergyc.1
 %_man1dir/synergyc*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu Jan 18 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.0-alt1
 - 2.0.0 released
 
