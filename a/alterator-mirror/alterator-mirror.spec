@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-mirror
-Version: 0.4.7
+Version: 0.4.8
 Release: alt1
 
 Source:%name-%version.tar
@@ -60,6 +60,9 @@ install -Dpm640 %name.logrotate %buildroot%_sysconfdir/logrotate.d/%name
 %attr(700,root,adm) %_logdir/%name
 
 %changelog
+* Thu Aug 30 2018 Paul Wolneykien <manowar@altlinux.org> 0.4.8-alt1
+- Fixed hour:minute parsing of the input time values.
+
 * Wed Aug 29 2018 Paul Wolneykien <manowar@altlinux.org> 0.4.7-alt1
 - Fix: Use (a fixed) keyword-list type for the "arch" parameter.
 
