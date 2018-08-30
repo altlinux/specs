@@ -19,7 +19,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -145,6 +145,9 @@ subst 's/\(opencv <= 3\.\)3.0/\14.0/' configure.ac
 %endif
 
 %changelog
+* Fri Aug 31 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt2
+- rebuilt with openssl-1.1
+
 * Fri Jul 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt1
 - 1.14.2
 
