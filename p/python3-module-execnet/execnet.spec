@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define oname execnet
 %define fname python3-module-%oname
 %define descr \
@@ -9,9 +10,15 @@ a minimal and fast API targetting the following uses: \
 * write and deploy hybrid multi-process applications \
 * write scripts to administer multiple hosts
 
+%if ""!=""
+%def_without check
+%else
+%def_with check
+%endif
+
 Name: %fname
-Version: 1.2.0
-Release: alt4
+Version: 1.5.0
+Release: alt1
 
 %if ""==""
 Summary: Rapid multi-Python deployment
@@ -24,6 +31,8 @@ Group: Development/Documentation
 License: MIT
 Url: https://pypi.python.org/pypi/execnet/
 Source: %name-%version.tar
+Patch0: fix_test_close_initiating_remote_no_error.patch
+Patch1: fix-test_popen_nice-test.patch
 BuildArch: noarch
 
 %if ""==""
@@ -53,9 +62,20 @@ Conflicts: %fname > %EVR
 
 BuildRequires(pre): rpm-macros-sphinx rpm-build-python3
 BuildRequires: python3-module-setuptools_scm
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-setuptools rpm-build-python3 time
+BuildRequires: python3-module-apipkg
+# one of the python3 tests requires python with 'apipkg' module
+BuildRequires: python-module-apipkg
+
+%if_with check
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-pytest-timeout
+%endif
+
+%if ""!=""
+BuildRequires: python-module-alabaster
+BuildRequires: python-module-html5lib
+BuildRequires: python-module-objects.inv
+%endif
 
 %description
 %descr
@@ -75,6 +95,8 @@ This package contains pickles for %oname.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p2
 %if ""!=""
 %prepare_sphinx .
 ln -s ../objects.inv doc/
@@ -94,10 +116,36 @@ mkdir -p %buildroot%python3_sitelibdir/%oname
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
+%check
+export PIP_INDEX_URL=http://host.invalid./
+export PYTHONPATH=`pwd`
+
+%if "3"=="3"
+
+# copy necessary exec deps
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages \
+-e py%{python_version_nodots python3} --notest
+cp -T %_bindir/py.test3 .tox/py%{python_version_nodots python3}/bin/py.test
+
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages \
+-e py%{python_version_nodots python3} -v -- -v
+
+%else
+
+# copy necessary exec deps
+TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages \
+-e py%{python_version_nodots python} --notest
+cp -T %_bindir/py.test .tox/py%{python_version_nodots python}/bin/py.test
+
+TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages \
+-e py%{python_version_nodots python} -v -- -v
+
+%endif
+
 %if ""==""
 
 %files
-%doc CHANGELOG *.txt
+%doc CHANGELOG.rst *.txt
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info*
 
@@ -111,6 +159,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1
+- 1.2.0 -> 1.5.0.
+
 * Mon Apr 16 2018 Stanislav Levin <slev@altlinux.org> 1.2.0-alt4
 - fix wrong Provides of pythonX.X(execnet) by docs packages
 
