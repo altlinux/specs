@@ -3,7 +3,7 @@
 
 Name: lib%origname
 Version: 0.9.3.0
-Release: alt1
+Release: alt2
 
 Summary: GTK+ widget for fast data display
 
@@ -66,6 +66,9 @@ find %buildroot -name '*.la' -exec rm -f {} ';'
 #%_datadir/gtk-doc/html/gtkdatabox/
 
 %changelog
+* Thu Aug 30 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.3.0-alt2
+- rebuild on aarch64
+
 * Fri Dec 29 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.3.0-alt1
 - new version 0.9.3.0 (with rpmrb script)
 
