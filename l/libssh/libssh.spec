@@ -2,7 +2,7 @@
 %def_disable gcrypt
 
 Name: libssh
-Version: 0.7.5
+Version: 0.8.1
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -75,18 +75,19 @@ install -m 0644 %SOURCE2 ./
 %Kinstall
 
 %files
-%_libdir/lib*.so.*
-%_libdir/lib*.so.4
-
+%_libdir/libssh.so.4
+%_libdir/libssh.so.*
 
 %files devel
 %_pkgconfigdir/%name.pc
-%_pkgconfigdir/libssh_threads.pc
 %_libdir/cmake/libssh*
 %_includedir/%name
 %_libdir/*.so
 
 %changelog
+* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt1%ubt
+- new version
+
 * Tue Aug 08 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.5-alt1%ubt
 - new version
 - security fix: CVE-2016-0739
