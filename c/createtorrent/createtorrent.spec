@@ -1,7 +1,7 @@
 %define Name CreateTorrent
 Name: createtorrent
 Version: 1.1.4
-Release: alt1.1.qa1
+Release: alt1.1.qa1.1
 Summary: Create BitTorrent files from the command line
 License: %gpl2only
 Group: Networking/File transfer
@@ -42,6 +42,9 @@ files that are grouped together into a directory.
 
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.4-alt1.1.qa1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.4-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
