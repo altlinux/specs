@@ -1,16 +1,19 @@
 Name: iputils
-%define timestamp 20161105
+%define timestamp 20180629
 Version: %timestamp
-Release: alt3
+Release: alt1
 
 Summary: Utilities for IPv4/IPv6 networking
-License: %bsdstyle, %gpl2plus
+License: %bsd, %gpl2plus, AS-IS (SUN MICROSYSTEMS license)
 Group: Networking/Other
-Url: http://www.skbuff.net/iputils
+Url: https://github.com/iputils/iputils
 
 Source0: %name-%version.tar
 Source1: ping.control
 Patch: %name-%version-%release.patch
+# Patch from upstream git.
+# Drop it when new version will be released.
+Patch1: 0001-tracepath-Fix-copying-input-IPv6-address.patch
 
 Conflicts: netkit-base
 
@@ -20,9 +23,10 @@ Requires: /var/resolv
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: OpenSP docbook-style-dsssl libcap-devel perl-SGMLSpm
+BuildRequires: libcap-devel
 BuildRequires: libsysfs-devel libssl-devel
 BuildRequires: libidn2-devel
+BuildRequires: docbook-style-xsl xsltproc
 
 %define _unpackaged_files_terminate_build 1
 
@@ -48,8 +52,9 @@ Node Information Query (RFC4620) daemon. Responds to IPv6 Node Information
 Queries.
 
 %prep
-%setup -n %name-%version
+%setup
 %patch -p1
+%patch1 -p1
 
 %build
 CFLAGS="%optflags -D_GNU_SOURCE -fno-strict-aliasing -Wstrict-prototypes"
@@ -129,7 +134,6 @@ fi
 %_bindir/*
 %_sbindir/*
 %_mandir/man?/*
-%doc RELNOTES
 %exclude %_sbindir/ninfod
 %exclude %_man8dir/ninfod.*
 
@@ -139,6 +143,13 @@ fi
 %_man8dir/ninfod.*
 
 %changelog
+* Thu Aug 30 2018 Mikhail Efremov <sem@altlinux.org> 20180629-alt1
+- Update licenses.
+- Update url.
+- Patch from upstream:
+  + tracepath: Fix copying input IPv6 address.
+- 20161105 -> 20180629.
+
 * Fri Jan 26 2018 Mikhail Efremov <sem@altlinux.org> 20161105-alt3
 - Add {public,netadmin}_caps facilities (closes: #34163).
 - Patches from upstream:
