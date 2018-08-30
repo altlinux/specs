@@ -1,7 +1,7 @@
 %def_with ffmpeg
 Name: qtox
-Version: 1.15.0
-Release: alt2
+Version: 1.16.3
+Release: alt1
 
 Summary: Powerful Tox client that follows the Tox design guidelines
 
@@ -15,7 +15,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/qTox/qTox/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildPreReq: rpm-macros-qt5
+BuildRequires(pre): rpm-build-intro >= 2.1.9
+BuildRequires(pre): rpm-macros-qt5
 BuildRequires(pre): rpm-macros-ubt
 
 BuildRequires: cmake
@@ -60,26 +61,18 @@ export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %make_build
 
 %install
-mkdir -p %buildroot%_bindir/
-install -m 0755 %name %buildroot%_bindir/%name
-mkdir -p %buildroot%_desktopdir/
-install -m 0644 qtox.desktop %buildroot%_desktopdir/%name.desktop
-
-# create icons tree
-mkdir -p %buildroot%_iconsdir/hicolor/scalable/apps/
-install -m 0644 img/icons/qtox.svg %buildroot%_iconsdir/hicolor/scalable/apps/
-
-for i in img/icons/*x*/*.png ; do
-    DNAME=$(basename $(dirname $i))
-    install -D -m 0644 $i %buildroot%_iconsdir/hicolor/$DNAME/apps/%name.png
-done
+%makeinstall_std
 
 %files
 %_bindir/%name
-%_desktopdir/%name.desktop
+%_desktopdir/*.desktop
+%_metainfodir/*
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Aug 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.16.3-alt1
+- new version 1.16.3 (with rpmrb script)
+
 * Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.15.0-alt2
 - rebuild with ffmeg 4.0
 
