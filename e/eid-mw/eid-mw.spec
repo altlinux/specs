@@ -2,7 +2,7 @@
 
 Name: eid-mw
 Version: %mainline_ver
-Release: alt1
+Release: alt1.1
 Summary: low-level support for Belgian Electronic Identity Card
 License: LGPLv3
 Group: Office
@@ -179,6 +179,9 @@ fi
 %_libdir/libeidviewer.so
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.4.1-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sat May 05 2018 Pavel Nakonechnyi <zorg@altlinux.org> 4.4.1-alt1
 - updated to version 4.4.1
 
