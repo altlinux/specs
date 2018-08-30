@@ -2,7 +2,7 @@
 
 Name: libgloox
 Version: 1.0.20
-Release: alt1
+Release: alt1.1
 
 Summary: A full-featured Jabber/XMPP client library
 License: GPLv3
@@ -65,6 +65,9 @@ export PTHREAD_LIBS="-lpthread"
 %_libdir/libgloox.so
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.20-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sun Nov 05 2017 Alexey Tourbin <at@altlinux.ru> 1.0.20-alt1
 - 1.0 -> 1.0.20
 - License changed from GPLv2 to GPLv3 in 1.0.3.
