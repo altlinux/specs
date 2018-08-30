@@ -1,5 +1,5 @@
 Name: pulseaudio
-Version: 12.0
+Version: 12.2
 Release: alt1
 
 Summary: PulseAudio is a networked sound server
@@ -15,11 +15,10 @@ BuildRequires: libavahi-devel libbluez-devel
 BuildRequires: libcap-devel libdbus-devel libgdbm-devel libudev-devel
 BuildRequires: liblirc-devel libltdl7-devel libsoxr-devel
 BuildRequires: libsndfile-devel libspeex-devel libspeexdsp-devel libwebrtc-devel
-BuildRequires: libssl-devel libwrap-devel
 BuildRequires: libSM-devel libX11-devel libXtst-devel libxcbutil-devel
 BuildRequires: libGConf-devel
 BuildRequires: libfftw3-devel libsbc-devel liborc-devel orc xmltoman
-BuildRequires: libsystemd-devel
+BuildRequires: libssl-devel libsystemd-devel
 
 Requires: %name-utils = %version-%release
 Requires: %name-daemon = %version-%release
@@ -336,6 +335,9 @@ find %buildroot%_libdir -name \*.la -delete
 %doc doxygen/html
 
 %changelog
+* Thu Aug 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.2-alt1
+- 12.2 released
+
 * Mon Jun 25 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.0-alt1
 - 12.0 released
 
