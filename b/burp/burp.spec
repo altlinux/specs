@@ -1,6 +1,6 @@
 Name:		burp
 Version:	2.2.4
-Release:	alt1
+Release:	alt1.1
 
 Summary:	Burp is a network-based backup and restore program
 License:	GPL
@@ -72,6 +72,9 @@ chmod go-rwx %{buildroot}%_sysconfdir/burp/*.conf
 %preun_service burp-server
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.2.4-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Jun 06 2018 Vitaly Chikunov <vt@altlinux.org> 2.2.4-alt1
 - Update to version 2.2.4
 
