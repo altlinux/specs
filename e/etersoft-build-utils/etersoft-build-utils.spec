@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.8.3
+Version: 2.8.4
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Thu Aug 30 2018 Vitaly Lipatov <lav@altlinux.ru> 2.8.4-alt1
+- rpm: fix get_pkgname_from_filename
+
 * Tue Aug 28 2018 Vitaly Lipatov <lav@altlinux.ru> 2.8.3-alt1
 - rpmbs: add hacks for already backported releases
 
