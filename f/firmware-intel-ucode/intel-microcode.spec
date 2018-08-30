@@ -1,9 +1,10 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20180703
+%define orig_timestamp 20180807
+%define orig_rev a
 
 Name: firmware-intel-ucode
-Version: 6
-Release: alt1.%orig_timestamp
+Version: 7
+Release: alt1.%{orig_timestamp}%{?orig_rev:.%orig_rev}
 Epoch: 2
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
@@ -15,7 +16,7 @@ Provides: microcode-data-intel = %version-%release
 Obsoletes: microcode-data-intel <= 20130222-alt2
 
 URL: https://anonscm.debian.org/cgit/users/hmh/intel-microcode.git/
-Source0: %{orig_name}-%{orig_timestamp}.tar
+Source0: %{orig_name}-%{orig_timestamp}%{orig_rev}.tar
 
 BuildRequires: iucode_tool
 
@@ -29,7 +30,7 @@ The microcode data file for Linux contains the latest microcode
 definitions for all Intel processors.
 
 %prep
-%setup -q -n %orig_name-%{orig_timestamp}
+%setup -q -n %orig_name-%{orig_timestamp}%{orig_rev}
 
 %build
 %make_build
@@ -49,6 +50,49 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Thu Aug 30 2018 L.A. Kostis <lakostis@altlinux.ru> 2:7-alt1.20180807.a
+- Sync with Debian 3.20180807a1:
+  + New Microcodes:
+    sig 0x000206c2, pf_mask 0x03, 2018-05-08, rev 0x001f, size 11264
+    sig 0x000206e6, pf_mask 0x04, 2018-05-15, rev 0x000d, size 9216
+    sig 0x000506c2, pf_mask 0x01, 2018-05-11, rev 0x0014, size 15360
+    sig 0x000506ca, pf_mask 0x03, 2018-05-11, rev 0x000c, size 14336
+    sig 0x000506f1, pf_mask 0x01, 2018-05-11, rev 0x0024, size 10240
+  + Updated Microcodes:
+    sig 0x000106a5, pf_mask 0x03, 2018-05-11, rev 0x001d, size 12288
+    sig 0x000106e5, pf_mask 0x13, 2018-05-08, rev 0x000a, size 9216
+    sig 0x00020652, pf_mask 0x12, 2018-05-08, rev 0x0011, size 9216
+    sig 0x00020655, pf_mask 0x92, 2018-04-23, rev 0x0007, size 4096
+    sig 0x000206a7, pf_mask 0x12, 2018-04-10, rev 0x002e, size 12288
+    sig 0x000206f2, pf_mask 0x05, 2018-05-16, rev 0x003b, size 14336
+    sig 0x000306a9, pf_mask 0x12, 2018-04-10, rev 0x0020, size 13312
+    sig 0x000306c3, pf_mask 0x32, 2018-04-02, rev 0x0025, size 23552
+    sig 0x000306d4, pf_mask 0xc0, 2018-03-22, rev 0x002b, size 18432
+    sig 0x00040651, pf_mask 0x72, 2018-04-02, rev 0x0024, size 22528
+    sig 0x00040661, pf_mask 0x32, 2018-04-02, rev 0x001a, size 25600
+    sig 0x00040671, pf_mask 0x22, 2018-04-03, rev 0x001e, size 13312
+    sig 0x000406e3, pf_mask 0xc0, 2018-04-17, rev 0x00c6, size 99328
+    sig 0x00050662, pf_mask 0x10, 2018-05-25, rev 0x0017, size 31744
+    sig 0x00050663, pf_mask 0x10, 2018-04-20, rev 0x7000013, size 22528
+    sig 0x00050664, pf_mask 0x10, 2018-04-20, rev 0xf000012, size 22528
+    sig 0x000506c9, pf_mask 0x03, 2018-05-11, rev 0x0032, size 16384
+    sig 0x000506e3, pf_mask 0x36, 2018-04-17, rev 0x00c6, size 99328
+    sig 0x000706a1, pf_mask 0x01, 2018-05-22, rev 0x0028, size 73728
+    sig 0x000806e9, pf_mask 0xc0, 2018-03-24, rev 0x008e, size 98304
+    sig 0x000806ea, pf_mask 0xc0, 2018-05-15, rev 0x0096, size 98304
+    sig 0x000906e9, pf_mask 0x2a, 2018-03-24, rev 0x008e, size 98304
+    sig 0x000906ea, pf_mask 0x22, 2018-05-02, rev 0x0096, size 97280
+    sig 0x000906eb, pf_mask 0x02, 2018-03-24, rev 0x008e, size 98304
+  + Implements L1D_FLUSH support (L1TF "Foreshadow/-NG" mitigation)
+    Intel SA-00161, CVE-2018-3615, CVE-2018-3620, CVE-2018-3646
+  + Implements SSBD support (Spectre v4 mitigation),
+    Disable speculation for (some) RDMSR/WRMSR (Spectre v3a fix)
+    Intel SA-00115, CVE-2018-3639, CVE-2018-3640
+  + Implements IBRS/IBPB/STIPB support, Spectre v2 mitigation for older
+    processors with signatures 0x106a5, 0x106e5, 0x20652, 0x20655.
+    Intel SA-0088, CVE-2017-5753, CVE-2017-5754
+  - source: update symlinks to reflect id of the latest release, 20180807a
+
 * Mon Aug 06 2018 L.A. Kostis <lakostis@altlinux.ru> 2:6-alt1.20180703
 - Sync with Debian 3.20180703.2:
   + Updated Microcodes:
