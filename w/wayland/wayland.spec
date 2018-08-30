@@ -1,7 +1,7 @@
 %def_disable snapshot
 %def_disable doc
 # since mesa-18.0 wayland-egl moved to this wayland package
-%define main_ver 1.15.0
+%define main_ver 1.16.0
 %define egl_ver 18.1.0
 %define mesa_epoch 4
 
@@ -177,6 +177,9 @@ Wayland-EGL development package
 
 
 %changelog
+* Thu Aug 30 2018 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0
+
 * Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt1
 - 1.15.0
 - new libwayland-egl* subpackages
