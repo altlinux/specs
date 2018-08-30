@@ -2,7 +2,7 @@
 
 Name: libwt
 Version: 4.0.2
-Release: alt2
+Release: alt2.1
 Summary: Wt (pronounced as witty) is a C++ library for developing web applications.
 License: GPL
 Group: Development/C++
@@ -207,6 +207,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir
 #files docs
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.2-alt2
 - NMU: rebuilt with boost-1.67.0.
 
