@@ -1,6 +1,6 @@
 Name:     suite3270
 Version:  3.5ga11
-Release:  alt2
+Release:  alt2.1
 
 Summary:  Terminal emulation 3270
 License:  BSD
@@ -54,6 +54,9 @@ find . -name html -type d -exec cp -ar {} %buildroot/%_docdir/%name-%version/ \;
 %_docdir/%name-%version/
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.5ga11-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Fri Oct 20 2017 Denis Medvedev <nbr@altlinux.org> 3.5ga11-alt2
 - fix packaging of config dir and added noarch for documentaion.
 
