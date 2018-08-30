@@ -15,8 +15,8 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-ce
-Version:    18.06.0
-Release: alt1.1
+Version:    18.06.1
+Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -169,6 +169,9 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Thu Aug 30 2018 Vladimir Didenko <cow@altlinux.org> 18.06.1-alt1
+- New version
+
 * Fri Jul 20 2018 Vladimir Didenko <cow@altlinux.org> 18.06.0-alt1.1
 - remove unused build requirements
 
