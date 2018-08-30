@@ -7,7 +7,7 @@ BuildRequires: libuuid-devel libXext-devel libedit-devel libdb6-devel
 Summary:	Prolog interpreter and compiler
 Name:		swi-prolog
 Version:	7.4.2
-Release:	alt2_3
+Release:	alt2_3.1
 License:	LGPLv2+
 Group:		Development/Other
 Requires:	%{name}-nox
@@ -175,6 +175,9 @@ popd
 
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 7.4.2-alt2_3.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 7.4.2-alt2_3
 - update by mgaimport
 
