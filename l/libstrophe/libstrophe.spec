@@ -1,7 +1,7 @@
 Name: libstrophe
 # configure.ac:AC_INIT([libstrophe], [0.8-snapshot], [jack@metajack.im])
 Version: 0.9.2
-Release: alt1
+Release: alt1.1
 Summary: A lightweight XMPP client library written in C
 Group: System/Libraries
 License: GPLv3
@@ -64,6 +64,9 @@ make check
 %_libdir/*.a
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.2-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sun Jul 22 2018 Fr. Br. George <george@altlinux.ru> 0.9.2-alt1
 - Autobuild version bump to 0.9.2
 - Introduce .so
