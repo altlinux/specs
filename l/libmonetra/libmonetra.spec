@@ -7,7 +7,7 @@
 Summary:	Library to allow credit card processing through MCVE
 Name:		libmonetra
 Version:	7.14.0
-Release:	alt1_1
+Release:	alt1_1.1
 Group:		System/Libraries
 License:	GPLv2+
 URL:		https://www.monetra.com/
@@ -71,6 +71,9 @@ libtoolize --copy --force; aclocal; autoconf; automake --add-missing --copy
 
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 7.14.0-alt1_1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sun May 06 2018 Igor Vlasenko <viy@altlinux.ru> 7.14.0-alt1_1
 - update by mgaimport
 
