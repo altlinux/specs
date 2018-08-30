@@ -8,7 +8,7 @@
 
 Name: %_name%abiversion
 Version: 5.7.3
-Release: alt3.1
+Release: alt4
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -29,6 +29,7 @@ Patch: %name-%version-%release.patch
 Patch6: net-snmp-5.7.3-systemd.patch
 Patch7: net-snmp-5.7.3-snmptrapd-gid.patch
 Patch8: net-snmp-5.7.3-systemd-fix.patch
+Patch9: net-snmp-5.7.3-openssl.patch
 
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -37,7 +38,7 @@ Patch8: net-snmp-5.7.3-systemd-fix.patch
 %def_enable static
 BuildPreReq: librpm-devel >= 4.0.4 libssl-devel
 # Automatically added by buildreq on Wed Oct 13 2010
-BuildRequires: libnl-devel librpm-devel libsensors3-devel libwrap-devel pdksh perl-devel python-module-setuptools perl-Tk perl-Term-ReadLine-Gnu perl-libnet perl-XML-Simple
+BuildRequires: libnl-devel librpm-devel libsensors3-devel pdksh perl-devel python-module-setuptools perl-Tk perl-Term-ReadLine-Gnu perl-libnet perl-XML-Simple
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 %{?_with_mysql:BuildRequires: libmysqlclient-devel}
 %{?_with_systemd:BuildRequires: systemd-devel}
@@ -116,7 +117,7 @@ Summary: The development environment for the Net-SNMP project
 Group: Development/C
 Requires: lib%_name = %version-%release lib%_name-snmptrapd = %version-%release %_name-common %_name-config
 Provides: lib%_name-devel = %version-%release lib%name-devel = %version-%release
-Requires: libwrap-devel libssl-devel libsensors3-devel libnl-devel
+Requires: libssl-devel libsensors3-devel libnl-devel
 
 %package -n lib%_name-devel-static
 Summary: static libraries for lib%_name
@@ -305,6 +306,7 @@ for run-time access to parsed MIB data.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 sed -i "s|LIB_LD_LIBS)|LIB_LD_LIBS) \$\{ADD_HELPER\}|g" agent/Makefile.in
 #Fix for compile with lmsensors_v3
@@ -320,7 +322,7 @@ sed -i 's/PyInt_AsVoidPtr/PyLong_AsVoidPtr/' python/netsnmp/client_intf.c
 %build
 %autoreconf
 #export NETSNMP_DONT_CHECK_VERSION=1
-export LIBS='-lcrypto -lwrap'
+export LIBS='-lcrypto'
 %configure %{subst_enable static} \
 	--with-defaults \
 	--enable-shared \
@@ -336,7 +338,6 @@ export LIBS='-lcrypto -lwrap'
 	--enable-ucd-snmp-compatibility \
 	--enable-mfd-rewrites \
 	--with-default-snmp-version="2" \
-	--with-libwrap \
 	--with-openssl \
 	--with-zlib \
 	--with-nl \
@@ -597,6 +598,10 @@ echo "===== start test ====="
 %doc python/README
 
 %changelog
+* Thu Aug 30 2018 Terechkov Evgenii <evg@altlinux.org> 5.7.3-alt4
+- Build without libwrap (tcp_wrappers)
+- Fix build with openssl1.1 (patch9)
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 5.7.3-alt3.1
 - rebuild with new perl 5.26.1
 
