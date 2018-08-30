@@ -1,13 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_disable docs
 
 %define _name granite
-%define ver_major 5.0
+%define ver_major 5.1
 %define api_ver 1.0
 %define sover 5
 
 Name: libgranite
-Version: %ver_major
+Version: %ver_major.0
 Release: alt1
 
 Summary: Extension of GTK+3 libraries
@@ -125,6 +125,9 @@ GObject introspection devel data for the granite library.
 %_datadir/vala/vapi/%_name.vapi
 
 %changelog
+* Thu Aug 30 2018 Yuri N. Sedunov <aris@altlinux.org> 5.1.0-alt1
+- 5.1.0
+
 * Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 5.0-alt1
 - updated to 5.0-21-g4e84fc7
 
