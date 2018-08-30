@@ -1,7 +1,7 @@
 Summary: PAM cached credentials module
 Name: pam_ccreds
 Version: 10
-Release: alt1
+Release: alt1.1
 Packager: Anton V. Boyarshinov <boyarsh@altlinux.ru>
 
 Source: ftp://ftp.padl.com/pub/%name-%version.tar
@@ -35,6 +35,9 @@ install pam_ccreds.so %buildroot/%{_lib}/security/
 %doc AUTHORS NEWS COPYING README ChangeLog
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 10-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Oct 08 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 10-alt1
 - initial build for ALT Linux Sisyphus
 
