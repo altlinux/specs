@@ -1,5 +1,5 @@
 Name: steam
-Version: 1.0.0.55
+Version: 1.0.0.56
 Release: alt1%ubt
 
 Summary: Launcher for the Steam software distribution service
@@ -45,8 +45,8 @@ savegame and screenshot functionality, and many social features.
 %install
 %makeinstall_std
 %__rm -rf %buildroot%_bindir/%{name}deps
-%__install -Dp -m0644 lib/udev/rules.d/99-%name-controller-perms.rules %buildroot%_udevrulesdir/99-%name-controller-perms.rules
-%__install -Dp -m0644 lib/udev/rules.d/60-HTC-Vive-perms.rules %buildroot%_udevrulesdir/60-HTC-Vive-perms.rules
+%__install -Dp -m0644 lib/udev/rules.d/60-%name-input.rules %buildroot%_udevrulesdir/60-%name-input.rules
+%__install -Dp -m0644 lib/udev/rules.d/60-%name-vr.rules %buildroot%_udevrulesdir/60-%name-vr.rules
 
 # Fix use bash4
 %__mkdir_p %buildroot%_libexecdir/%name/bin
@@ -73,13 +73,16 @@ savegame and screenshot functionality, and many social features.
 %_iconsdir/hicolor/256x256/apps/*
 %_man6dir/*
 %_pixmapsdir/*
-%config %_udevrulesdir/99-%name-controller-perms.rules
-%config %_udevrulesdir/60-HTC-Vive-perms.rules
+%config %_udevrulesdir/60-%name-input.rules
+%config %_udevrulesdir/60-%name-vr.rules
 %dir %_sysconfdir/ssl
 %dir %_sysconfdir/ssl/certs
 %_sysconfdir/ssl/certs/ca-certificates.crt
 
 %changelog 
+* Thu Aug 30 2018 Nazarov Denis <nenderus@altlinux.org> 1.0.0.56-alt1%ubt
+- Version 1.0.0.56
+
 * Mon Jul 30 2018 Nazarov Denis <nenderus@altlinux.org> 1.0.0.55-alt1%ubt
 - Version 1.0.0.55
 
