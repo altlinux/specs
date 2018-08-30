@@ -10,7 +10,7 @@
 Summary:	Apple RAOP server library
 Name:		libshairport
 Version:	1.2.1
-Release:	alt1_0.git%snap.%rel
+Release:	alt1_0.git%snap.%rel.1
 License:	MIT
 Group:		System/Libraries
 URL:		https://github.com/amejia1/libshairport
@@ -78,6 +78,9 @@ find %{buildroot} -name '*.la' | xargs rm
 
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1_0.git20120111.8.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_0.git20120111.8
 - new version
 
