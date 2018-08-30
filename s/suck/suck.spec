@@ -2,7 +2,7 @@
 
 Name: suck
 Version: 4.3.2
-Release: alt5
+Release: alt5.1
 
 Summary: download news from remote NNTP server
 License: Public Domain
@@ -60,6 +60,9 @@ mkdir -p %buildroot%_localstatedir/sucknews/tmp
 %attr (660,root,news) %config(noreplace) %_localstatedir/sucknews/active-ignore
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.3.2-alt5.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Feb 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.2-alt5
 - Updated build dependencies.
 
