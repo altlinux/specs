@@ -4,7 +4,7 @@
 %def_disable usermode
 
 Name: gparted
-Version: 0.31.0
+Version: 0.32.0
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -116,6 +116,9 @@ sed -i 's|%_sbindir|%_bindir|' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Thu Aug 30 2018 Yuri N. Sedunov <aris@altlinux.org> 0.32.0-alt1
+- 0.32.0
+
 * Tue Mar 20 2018 Yuri N. Sedunov <aris@altlinux.org> 0.31.0-alt1
 - 0.31.0
 - updated requires
