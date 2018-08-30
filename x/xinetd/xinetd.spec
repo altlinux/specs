@@ -1,6 +1,6 @@
 Name: xinetd
 Version: 2.3.15
-Release: alt3
+Release: alt4
 
 Summary: xinetd is a powerful replacement for inetd
 Group: System/Base
@@ -47,11 +47,9 @@ Patch24: xinetd-2.3.14-rh-readable-debuginfo.patch
 Patch25: xinetd-2.3.14-rh-ident-ipv6confusion.patch
 Patch26: xinetd-2.3.14-rh-signal-log-hang.patch
 Patch27: xinetd-2.3.15-rh-context-exepath.patch
+Patch28: xinetd-2.3.15-up-CVE-2013-4342.patch
 
 Provides: %_sysconfdir/%name.d
-
-# Automatically added by buildreq on Sun Nov 10 2002
-BuildRequires: libwrap-devel
 
 %package devel
 Summary: Libraries and header files for developing xinetd-aware applications
@@ -96,13 +94,14 @@ required for building xinetd-aware applications.
 %patch25 -p1
 %patch26 -p1
 %patch27 -p1
+%patch28 -p1
 
 install -p -m644 %_sourcedir/{faq.html,xinetd-tutorial.html} .
 find -type f -name \*.orig -delete
 
 %build
 %add_optflags -Wno-unused -Wno-switch
-%def_with libwrap
+%def_without libwrap
 %def_with loadavg
 autoconf
 export ac_cv_header_DNSServiceDiscovery_DNSServiceDiscovery_h=no
@@ -122,7 +121,7 @@ done
 mkdir -p %buildroot{%_libdir/%name,%_includedir/%name,%_mandir/man{3,5,8}}
 
 install -pD -m755 %_sourcedir/xinetd.init %buildroot%_initdir/%name
-install -pD -m755 %_sourcedir/xinetd.service %buildroot%_unitdir/%name.service
+install -pD -m644 %_sourcedir/xinetd.service %buildroot%_unitdir/%name.service
 install -pD -m640 %_sourcedir/xinetd.conf %buildroot%_sysconfdir/%name.conf
 install -pD -m640 %_sourcedir/xinetd.sysconf %buildroot%_sysconfdir/sysconfig/%name
 install -pD -m755 %_sourcedir/convert.pl %buildroot%_sbindir/inetdconvert
@@ -175,6 +174,11 @@ rm %buildroot%_mandir/*.3
 %doc README.*
 
 %changelog
+* Thu Aug 30 2018 Dmitry V. Levin <ldv@altlinux.org> 2.3.15-alt4
+- Applied upstream fix for TCPMUX services (fixes: CVE-2013-4342).
+- Stripped executable bit from xinetd.service (closes: #34566).
+- Disabled tcp_wrappers support.
+
 * Tue Jul 01 2014 Dmitry V. Levin <ldv@altlinux.org> 2.3.15-alt3
 - Packaged xinetd.service (closes: #27392, #28101).
 
