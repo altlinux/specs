@@ -14,7 +14,7 @@ BuildRequires: gcc-c++
 Summary:        asynchronous REST C++11 library
 Name:           restbed
 Version: 4.0
-Release:        alt1_%rel
+Release:        alt1_%rel.1
 License:        GPLv2+
 Group:          System/Base
 URL:            http://www.corvusoft.co.uk
@@ -84,6 +84,9 @@ sed -e 's,MGALIB,%{_libdir},g' -i CMakeLists.txt
 
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.0-alt1_4.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sat Apr 07 2018 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_4
 - new version
 
