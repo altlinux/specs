@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 2.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
@@ -90,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Wed Jul 18 2018 Vladimir Didenko <cow@altlinux.ru> 2.3.0-alt1
 - 2.3.0
 
