@@ -37,7 +37,7 @@
 
 Name: mariadb-compat
 Version: 10.1.35
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -97,6 +97,8 @@ Patch30: mariadb-errno.patch
 Patch32: mariadb-basedir.patch
 Patch33: mariadb-covscan-signexpr.patch
 #Patch34: mariadb-covscan-stroverflow.patch
+
+Patch50: mariadb-10.1-ssl-1.1.patch
 
 Requires: %name-server = %EVR
 Requires: %name-client = %EVR
@@ -319,6 +321,7 @@ version.
 %patch32 -p1
 #%patch33 -p1
 #%patch34 -p1
+%patch50 -p1
 
 # Replace that horror.
 sed 's,@datadir@,%_datadir,g' <%SOURCE15 >scripts/mysql_install_db.sh
@@ -813,6 +816,9 @@ fi
 %endif
 
 %changelog
+* Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 10.1.35-alt2%ubt
+- rebuild with openssl-1.1
+
 * Thu Aug 23 2018 Alexey Shabalin <shaba@altlinux.org> 10.1.35-alt1%ubt
 - 10.1.35
 
