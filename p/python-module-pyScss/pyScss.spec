@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.3.5
-Release: alt2
+Release: alt3
 Summary: pyScss, a Scss compiler for Python
 License: MIT
 Group: Development/Python
@@ -24,7 +24,7 @@ BuildRequires: python-module-alabaster python-module-docutils python-module-html
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools python3-module-six
-BuildRequires: python3-module-Pillow python3(enum) python3-module-pathlib python3-module-pytest-cov
+BuildRequires: python3-module-Pillow python3(enum) python3-module-pytest-cov
 %endif
 
 %py_provides %oname scss
@@ -40,7 +40,7 @@ programming capabilities and some other syntactic sugar.
 Summary: pyScss, a Scss compiler for Python
 Group: Development/Python3
 %py3_provides %oname scss
-%py3_requires six pathlib logging PIL
+%py3_requires six logging PIL
 
 %description -n python3-module-%oname
 pyScss is a compiler for the Sass language, a superset of CSS3 that adds
@@ -146,6 +146,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 31 2018 Stanislav Levin <slev@altlinux.org> 1.3.5-alt3
+- Fix build
+
 * Wed May 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.5-alt2
 - Updated build and runtime dependencies.
 
