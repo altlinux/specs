@@ -1,30 +1,36 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest-flakes
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 1.0.1
-Release: alt2.1
+Version: 4.0.0
+Release: alt1
+
 Summary: pytest plugin to check source code with pyflakes
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/pytest-flakes/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+Url: https://pypi.python.org/pypi/pytest-flakes
 
 # https://github.com/fschulze/pytest-flakes.git
-Source0: https://pypi.python.org/packages/73/2d/61b0b7159b477def3ebb95b05e2ec4240b070bbda9725efe88b3e040269a/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %name-%version.tar.gz
+Patch: %name-%version-alt.patch
 
-BuildPreReq: python-devel python-module-setuptools pyflakes
-BuildPreReq: python-module-pytest-cache python-module-pytest
-BuildPreReq: python-module-pytest-pep8
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-pytest-cache python3-module-pytest
-BuildPreReq: python3-pyflakes python3-module-pytest-pep8
+
+%if_with check
+BuildRequires: python-module-tox
+BuildRequires: python-module-coverage
+BuildRequires: python-module-pytest-pep8
+BuildRequires: pyflakes
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-pytest-pep8
+BuildRequires: python3-pyflakes
 %endif
+
+BuildArch: noarch
 
 %description
 py.test plugin for efficiently checking python source with pyflakes.
@@ -37,51 +43,61 @@ Group: Development/Python3
 py.test plugin for efficiently checking python source with pyflakes.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
+%patch -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
+rm -rf ../python3
+cp -a . ../python3
 
 %build
-%python_build_debug
+%python_build
 
-%if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
+export PIP_INDEX_URL=http://host.invalid./
 export PYTHONPATH=$PWD
-py.test
-%if_with python3
+# copy necessary exec deps
+TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages \
+-e py%{python_version_nodots python} --notest
+cp %_bindir/{py.test,coverage} .tox/py%{python_version_nodots python}/bin/
+TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages \
+-e py%{python_version_nodots python} -v -- -v
+
 pushd ../python3
 export PYTHONPATH=$PWD
-py.test3
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages \
+-e py%{python_version_nodots python3} --notest
+cp %_bindir/py.test3 .tox/py%{python_version_nodots python3}/bin/py.test
+cp %_bindir/coverage3 .tox/py%{python_version_nodots python3}/bin/coverage
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages \
+-e py%{python_version_nodots python3} -v -- -v
 popd
-%endif
 
 %files
-%doc *.rst
-%python_sitelibdir/*
+%doc README.rst
+%python_sitelibdir/pytest_flakes.py*
+%python_sitelibdir/pytest_flakes-*.egg-info/
 
-%if_with python3
 %files -n python3-module-%oname
-%doc *.rst
-%python3_sitelibdir/*
-%endif
+%doc README.rst
+%python3_sitelibdir/pytest_flakes.py
+%python3_sitelibdir/pytest_flakes-*.egg-info/
+%python3_sitelibdir/__pycache__/
 
 %changelog
+* Fri Aug 31 2018 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1
+- 1.0.1 -> 4.0.0.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.1-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
