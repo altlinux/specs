@@ -1,7 +1,7 @@
 %def_disable server
 Name: ccnet
 Version: 6.1.8
-Release: alt1
+Release: alt1.1
 
 Summary: Framework for writing networked applications in C
 
@@ -111,6 +111,9 @@ Ccnet python module.
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 6.1.8-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 6.1.8-alt1
 - new version 6.1.8 (with rpmrb script)
 
