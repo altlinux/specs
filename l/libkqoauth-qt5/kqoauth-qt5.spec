@@ -5,7 +5,7 @@
 
 Name: lib%_name-qt5
 Version: 0.98
-Release: alt1.%git_ver
+Release: alt1.%git_ver.1
 
 Summary: Qt OAuth support library
 Group: System/Libraries
@@ -76,6 +76,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %exclude %_libdir/qt5/mkspecs/features/%_name.prf
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.98-alt1.7c31a120.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Jun 27 2016 Yuri N. Sedunov <aris@altlinux.org> 0.98-alt1.7c31a120
 - first build for Sisyphus (0.98-6-g7c31a12)
 
