@@ -2,14 +2,15 @@
 
 Name: gssntlmssp
 Version: 0.7.0
-Release: alt2
+Release: alt3
 Summary: GSSAPI NTLMSSP Mechanism
 
 Group: System/Libraries
 License: LGPLv3+
-Url: https://fedorahosted.org/gss-ntlmssp
-Source: https://fedorahosted.org/released/gss-ntlmssp/%name-%version.tar
-Packager: Alexey Shabalin <shaba@altlinux.org>
+Url: https://pagure.io/gssntlmssp
+# Git-VCS: https://pagure.io/gssntlmssp.git
+Source: %name-%version.tar
+Patch: %name-%version.patch
 
 Requires: libkrb5 >= 1.13
 Requires: libwbclient
@@ -21,7 +22,7 @@ BuildRequires: libkrb5-devel >= 1.13
 BuildRequires: libunistring-devel
 BuildRequires: zlib-devel
 BuildRequires: libssl-devel
-%{?_with_wbclient:BuildRequires: pkgconfig(wbclient)}
+%{?_with_wbclient:BuildRequires: libwbclient-devel}
 
 %description
 A GSSAPI Mechanism that implements NTLMSSP
@@ -38,6 +39,7 @@ Adds a header file with definition for custom GSSAPI extensions for NTLMSSP
 
 %prep
 %setup
+%patch -p1
 
 %build
 mkdir -p m4
@@ -52,6 +54,8 @@ mkdir -p m4
 %makeinstall_std
 mkdir -p %buildroot%_sysconfdir/gss/mech.d
 install -pm644 examples/mech.ntlmssp %buildroot%_sysconfdir/gss/mech.d/ntlmssp.conf
+# Clenaup
+rm -rf %buildroot%_docdir/%name
 
 %find_lang %name
 
@@ -62,12 +66,15 @@ make test_gssntlmssp
 %config(noreplace) %_sysconfdir/gss/mech.d/ntlmssp.conf
 %_libdir/gssntlmssp
 %_man8dir/gssntlmssp.8*
-%doc COPYING
+%doc README.md COPYING doc/*
 
 %files devel
 %_includedir/gssapi/*
 
 %changelog
+* Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 0.7.0-alt3
+- build with openssl-1.1
+
 * Thu Dec 01 2016 Evgeny Sinelnikov <sin@altlinux.ru> 0.7.0-alt2
 - Strict requires for libwbclient, not for libwbclient-sssd
 
