@@ -3,7 +3,7 @@
 
 Name: libimobiledevice
 Version: 1.2.1
-Release: alt0.1
+Release: alt0.2
 
 Summary: Library for connecting to Apple iPhone and iPod touch
 Group: System/Libraries
@@ -77,6 +77,9 @@ Python bindings for libimobiledevice.
 %endif
 
 %changelog
+* Fri Aug 31 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt0.2
+- rebuilt with openssl-1.1
+
 * Wed Jun 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt0.1
 - updated to 1.2.0-75-g26373b3 (ALT #35060)
 
