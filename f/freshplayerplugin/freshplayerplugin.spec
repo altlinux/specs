@@ -2,7 +2,7 @@
 
 Name: freshplayerplugin
 Version: 0.3.9
-Release: alt2
+Release: alt2.1
 Summary: PPAPI-host NPAPI-plugin adapter
 License: MIT
 Group: System/Libraries
@@ -55,6 +55,9 @@ make -C BUILD check
 %config(noreplace) %_sysconfdir/freshwrapper.conf
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.3.9-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu Jun 14 2018 Sergey V Turchin <zerg@altlinux.org> 0.3.9-alt2
 - Add upstream fix against new ffmpeg.
 
