@@ -12,7 +12,7 @@
 
 Name: falkon
 Version: 3.0.1
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init no_altplace
 
 Summary: A very fast open source browser based on WebKit core
@@ -25,7 +25,8 @@ Source: %name-%version.tar
 # optimized out: fontconfig gcc-c++ libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel pkg-config python-base python-modules qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules
-BuildRequires: libssl-devel libxcbutil-devel qt5-multimedia-devel qt5-script-devel qt5-tools-devel qt5-webengine-devel qt5-websockets-devel qt5-x11extras-devel
+BuildRequires: libssl-devel libxcbutil-devel
+BuildRequires: qt5-multimedia-devel qt5-script-devel qt5-tools-devel qt5-webengine-devel qt5-websockets-devel qt5-x11extras-devel
 BuildRequires: kf5-kwallet-devel kf5-ki18n-devel libgnome-keyring-devel
 
 %description
@@ -122,6 +123,9 @@ __EOF__
 %_K5lib/libFalkonPrivate.so.%sover.*
 
 %changelog
+* Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 3.0.1-alt2%ubt
+- rebuild with new openssl (ALT# 35313)
+
 * Tue May 15 2018 Sergey V Turchin <zerg@altlinux.org> 3.0.1-alt1%ubt
 - new version
 
