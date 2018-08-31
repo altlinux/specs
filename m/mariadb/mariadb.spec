@@ -45,7 +45,7 @@
 
 Name: mariadb
 Version: 10.3.9
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -856,6 +856,9 @@ fi
 %endif
 
 %changelog
+* Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 10.3.9-alt2%ubt
+- rebuild with openssl-1.1
+
 * Sun Aug 19 2018 Alexey Shabalin <shaba@altlinux.org> 10.3.9-alt1%ubt
 - 10.3.9
 - Fixes for the following security vulnerabilities:
