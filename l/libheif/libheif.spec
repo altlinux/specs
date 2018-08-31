@@ -1,5 +1,5 @@
 Name: libheif
-Version: 1.2.0
+Version: 1.3.2
 Release: alt1%ubt
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
@@ -50,6 +50,9 @@ Development libraries for %name
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Aug 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.3.2-alt1%ubt
+- 1.3.2
+
 * Tue Jun 19 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.2.0-alt1%ubt
 - rebuild with libva 2.1.0
 
