@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: jss
-Version: 4.4.5
+Version: 4.5.0
 Release: alt1
 
 Summary: Java Security Services (JSS)
@@ -21,11 +21,13 @@ BuildRequires: libnss-devel
 BuildRequires: libnspr-devel
 BuildRequires: apache-commons-lang
 BuildRequires: apache-commons-codec
-BuildRequires: ldapjdk
+BuildRequires: slf4j
+BuildRequires: slf4j-jdk14
 
 Requires: apache-commons-lang
 Requires: apache-commons-codec
-Requires: ldapjdk
+Requires: slf4j
+Requires: java-headless
 
 %description
 Network Security Services for Java (JSS) is a Java interface to NSS. JSS
@@ -54,12 +56,12 @@ This package contains the API documentation for JSS.
 
 %prep
 %setup
-%patch0 -d %name -p1
+%patch0 -p1
 
 %build
-[ -z "$JAVA_HOME" ] && export JAVA_HOME=%_jvmdir/java
-[ -z "$USE_INSTALLED_NSPR" ] && export USE_INSTALLED_NSPR=1
-[ -z "$USE_INSTALLED_NSS" ] && export USE_INSTALLED_NSS=1
+export JAVA_HOME=%_jvmdir/java
+export USE_INSTALLED_NSPR=1
+export USE_INSTALLED_NSS=1
 
 # Enable compiler optimizations and disable debugging code
 # NOTE: If you ever need to create a debug build with optimizations disabled
@@ -91,36 +93,47 @@ export USE_64=1
 %endif
 
 # The Makefile is not thread-safe
-%make -C %name all
-%make -C %name javadoc
+rm -rf ../dist
+mkdir ../dist
+%make -C coreconf
+%make
+%make javadoc
+# actually must be at 'check' section, but requires all exports as 'build'
+%make test_jss
 
 %install
-install -d -m 0755 $RPM_BUILD_ROOT%_jnidir
-# NOTE: if doing a debug no opt build change xpclass.jar to xpclass_dbg.jar
-install -m 644 dist/xpclass.jar $RPM_BUILD_ROOT%_jnidir/jss4.jar
+install -d -m 0755 %buildroot%_jnidir
+install -m 644 ../dist/xpclass.jar %buildroot%_jnidir/jss4.jar
 
 # We have to use the name libjss4.so because this is dynamically
 # loaded by the jar file.
-install -d -m 0755 $RPM_BUILD_ROOT%_libdir/%name
-install -m 0755 dist/Linux*.OBJ/lib/libjss4.so $RPM_BUILD_ROOT%_libdir/%name/
-pushd  $RPM_BUILD_ROOT%_libdir/%name
+install -d -m 0755 %buildroot%_libdir/jss
+install -m 0755 ../dist/Linux*.OBJ/lib/libjss4.so %buildroot%_libdir/jss/
+pushd  %buildroot%_libdir/jss
     ln -fs %_jnidir/jss4.jar jss4.jar
 popd
 
 # javadoc
-install -d -m 0755 $RPM_BUILD_ROOT%_javadocdir/%name-%version
-cp -rp dist/jssdoc/* $RPM_BUILD_ROOT%_javadocdir/%name-%version
-cp -p %name/jss.html $RPM_BUILD_ROOT%_javadocdir/%name-%version
+install -d -m 0755 %buildroot%_javadocdir/%name-%version
+cp -rp ../dist/jssdoc/* %buildroot%_javadocdir/%name-%version
+cp -p jss.html %buildroot%_javadocdir/%name-%version
+cp -p *.txt %buildroot%_javadocdir/%name-%version
+
+%check
 
 %files
-%_libdir/%name/*
-%_jnidir/*
-%_libdir/%name/libjss4.so
+%dir %_libdir/jss
+%_libdir/jss/jss4.jar
+%_libdir/jss/libjss4.so
+%_jnidir/jss4.jar
 
 %files javadoc
 %_javadocdir/%name-%version
 
 %changelog
+* Mon Aug 13 2018 Stanislav Levin <slev@altlinux.org> 4.5.0-alt1
+- 4.4.5 -> 4.5.0.
+
 * Tue Jul 10 2018 Stanislav Levin <slev@altlinux.org> 4.4.5-alt1
 - 4.4.4 -> 4.4.5
 
