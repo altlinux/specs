@@ -6,27 +6,24 @@
 %def_disable manual
 
 Name: SPICE
-Version: 0.14.0
+Version: 0.14.1
 Release: alt1
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
 Url: http://www.spice-space.org/
 
-Source: http://www.spice-space.org/download/releases/%name-%version.tar
+# VCS: https://gitlab.freedesktop.org/spice/spice.git
+Source: %name-%version.tar
 Source2: spice-common.tar
-#Patch1: fix-alt.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=613529
-ExclusiveArch: %ix86 x86_64 armh
 
 BuildRequires: gcc-c++
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 zlib-devel
-BuildRequires: libssl-devel libsasl2-devel python-module-pyparsing openssl
+BuildRequires: libssl-devel >= 1.0.0 libsasl2-devel openssl
 BuildRequires: libcacard-devel >= 0.1.2
-BuildRequires: glib2-devel >= 2.28 libgio-devel >= 2.28
-BuildRequires: spice-protocol >= 0.12.13
 BuildRequires: python-module-six python-module-pyparsing
+BuildRequires: glib2-devel >= 2.32 libgio-devel >= 2.32
+BuildRequires: spice-protocol >= 0.12.14
 %{?_enable_manual:BuildRequires: asciidoc asciidoc-a2x}
 %{?_enable_celt051:BuildRequires: libcelt051-devel >= 0.5.1.1}
 %{?_enable_opus:BuildRequires: libopus-devel >= 0.9.14}
@@ -66,8 +63,10 @@ using spice-server, you will need to install spice-server-devel.
 
 %prep
 %setup
+mkdir -p subprojects
+pushd subprojects
 tar -xf %SOURCE2
-#%patch1 -p1
+popd
 # version in .tarball-version file
 echo "%version" > .tarball-version
 
@@ -96,6 +95,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 0.14.1-alt1
+- 0.14.1 (Fixes: CVE-2018-10873)
+
 * Fri Nov 03 2017 Alexey Shabalin <shaba@altlinux.ru> 0.14.0-alt1
 - 0.14.0
 
