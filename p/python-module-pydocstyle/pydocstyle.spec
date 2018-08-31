@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2.1.1
-Release: alt3
+Release: alt4
 Summary: Python docstring style checker
 License: MIT
 Group: Development/Python
@@ -23,7 +23,7 @@ BuildRequires: python-module-html5lib python-module-mock python-module-pytest py
 BuildRequires: python2.7(configparser) python2.7(snowballstemmer) python2.7(six)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-html5lib python3-module-mock python3-module-pytest python3-module-pathlib
+BuildRequires: python3-module-html5lib python3-module-mock python3-module-pytest
 BuildRequires: python3(configparser) python3(snowballstemmer) python3(six)
 %endif
 
@@ -150,6 +150,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 31 2018 Stanislav Levin <slev@altlinux.org> 2.1.1-alt4
+- Fix build.
+
 * Wed May 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.1-alt3
 - Fixed build dependencies.
 
