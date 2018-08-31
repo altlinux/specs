@@ -1,6 +1,6 @@
 Name: hostapd
 Version: 2.6
-Release: alt2
+Release: alt3
 
 Summary: User space daemon for extended IEEE 802.11 management
 License: BSD
@@ -69,6 +69,9 @@ mkdir -p %buildroot%_var/run/%name
 %_var/run/%name
 
 %changelog
+* Fri Aug 31 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6-alt3
+- rebuilt with recent openssl
+
 * Mon Oct 16 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6-alt2
 - multiple vulnerabilities (so-called KRACK attack) fixed:
   + CVE-2017-13077
