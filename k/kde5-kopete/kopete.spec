@@ -31,7 +31,7 @@
 
 Name: kde5-kopete
 Version: 18.04.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Networking/Instant messaging
@@ -58,7 +58,8 @@ BuildRequires: libqca-qt5-devel qt5-phonon-devel
 BuildRequires: libgpgme-devel
 BuildRequires: libexpat-devel libidn-devel libjasper-devel libjpeg-devel
 BuildRequires: libgadu-devel libgnutls-devel libtasn1-devel jsoncpp-devel
-BuildRequires: libmeanwhile-devel libotr5-devel libalsa-devel libmsn-devel
+BuildRequires: libmeanwhile-devel libalsa-devel
+BuildRequires: libotr-devel
 %if_enabled mediastreamer
 BuildRequires: libmediastreamer-devel libmediastreamer-ilbc
 %endif
@@ -321,6 +322,9 @@ done
 %_K5dbus_iface/*
 
 %changelog
+* Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2%ubt
+- fix build requires
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 
