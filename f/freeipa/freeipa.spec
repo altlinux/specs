@@ -27,7 +27,7 @@
 
 Name: freeipa
 Version: 4.6.3
-Release: alt6%ubt
+Release: alt7
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -37,7 +37,6 @@ Source0: %name-%version.tar
 Source1: freeipa-server.filetrigger
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires: /proc
@@ -1433,46 +1432,49 @@ fi
 %endif # with_python3
 
 %changelog
-* Fri Jun 29 2018 Ivan Zakharyaschev <imz@altlinux.org> 4.6.3-alt6%ubt
+* Fri Aug 31 2018 Stanislav Levin <slev@altlinux.org> 4.6.3-alt7
+- Build with new openssl1.1.
+
+* Fri Jun 29 2018 Ivan Zakharyaschev <imz@altlinux.org> 4.6.3-alt6
 - Improved formal deps (in python*-module-freeipa, dropped the
   unnecessary explicit dep on setuptools in favor of autoreqs) so that
   there is more flexibility in the base system where freeipa can be
   installed (i.e., gcc won't be required since the split of
   python*-module-setuptools-1:39.2.0-alt3).
 
-* Tue Apr 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.3-alt5%ubt
+* Tue Apr 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.3-alt5
 - Rebuilt due to selinux update.
 
-* Sat Mar 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.6.3-alt4%ubt
+* Sat Mar 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.6.3-alt4
 - Rebuild with samba-4.7
 
-* Wed Mar 14 2018 Stanislav Levin <slev@altlinux.org> 4.6.3-alt3%ubt
+* Wed Mar 14 2018 Stanislav Levin <slev@altlinux.org> 4.6.3-alt3
 - Fix WebUI translations
 - Fix upgrade process
 
-* Mon Feb 19 2018 Stanislav Levin <slev@altlinux.org> 4.6.3-alt2%ubt
+* Mon Feb 19 2018 Stanislav Levin <slev@altlinux.org> 4.6.3-alt2
 - Fix applying of ipa rewrite rules
 
-* Tue Feb 13 2018 Stanislav Levin <slev@altlinux.org> 4.6.3-alt1%ubt
+* Tue Feb 13 2018 Stanislav Levin <slev@altlinux.org> 4.6.3-alt1
 - v4.6.2 -> v4.6.3
 
-* Wed Jan 31 2018 Stanislav Levin <slev@altlinux.org> 4.6.2-alt2%ubt
+* Wed Jan 31 2018 Stanislav Levin <slev@altlinux.org> 4.6.2-alt2
 - Fix build against krb5-1.16 (new KDB DAL version 7.0)
 
-* Fri Jan 19 2018 Stanislav Levin <slev@altlinux.org> 4.6.2-alt1%ubt
+* Fri Jan 19 2018 Stanislav Levin <slev@altlinux.org> 4.6.2-alt1
 - 4.6.1 -> 4.6.2
 
-* Mon Dec 25 2017 Stanislav Levin <slev@altlinux.org> 4.6.1-alt3%ubt
+* Mon Dec 25 2017 Stanislav Levin <slev@altlinux.org> 4.6.1-alt3
 - Fix ipa-cacert-manage renew scenario
 
-* Tue Dec 12 2017 Stanislav Levin <slev@altlinux.org> 4.6.1-alt2%ubt
+* Tue Dec 12 2017 Stanislav Levin <slev@altlinux.org> 4.6.1-alt2
 - Add openntpd support (based on patches from Mikhail Efremov) (closes: #34307)
 - Save and restore state of apache modules during installation/uninstallation
 
-* Sat Oct 07 2017 Stanislav Levin <slev@altlinux.org> 4.6.1-alt1%ubt
+* Sat Oct 07 2017 Stanislav Levin <slev@altlinux.org> 4.6.1-alt1
 - 4.4.4 -> 4.6.1
 
-* Thu Oct 06 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt4%ubt
+* Thu Oct 06 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt4
 - Fix ipa client schema cache: Handle malformed server info data gracefully
 - Fix ipa client requirements
 - Import patches from 4.3.3-alt9
@@ -1481,10 +1483,10 @@ fi
 - selinux: Allow digits in SELinux user names (closes: #33838).
 - Require zip.
 
-* Thu Oct 4 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt3%ubt
+* Thu Oct 4 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt3
 - Fix ipa server upgrade
 
-* Thu Oct 2 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt2%ubt
+* Thu Oct 2 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt2
 - Import patches from 4.3.3-alt8
 
 * Wed Sep 27 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt8
@@ -1492,7 +1494,7 @@ fi
     + Don't try to use bundled urllib3 in the python-module-request.
     + Use ipa CA certificate for https checks.
 
-* Thu Sep 25 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt1%ubt
+* Thu Sep 25 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt1
 - Update to upstream's 4.4.4 version
 
 * Thu Aug 24 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt7
