@@ -4,7 +4,7 @@
 %def_enable telepathy
 
 Name: pidgin-sipe
-Version: 1.23.0
+Version: 1.23.3
 Release: alt1
 Summary: Pidgin plugin for connecting to MS Communications Server
 
@@ -20,16 +20,16 @@ Requires: pidgin
 Requires: gst-plugins-nice1.0 farstream0.2 gst-plugins-good1.0
 Requires: gssntlmssp
 
-BuildRequires: intltool libxml2-devel
-BuildRequires: glib2-devel >= 2.32.0 libgio-devel
-BuildRequires: libpurple-devel >= 2.8.0
-%{?_with_vv:BuildRequires: libnice-devel >= 0.1.0 gstreamer1.0-devel gst-plugins1.0-devel libfarstream0.2-devel}
+BuildRequires: intltool
+BuildRequires: pkgconfig(glib-2.0) >= 2.18.0 pkgconfig(gmodule-2.0) pkgconfig(gio-2.0) >= 2.32.0
+BuildRequires: pkgconfig(gmime-3.0) >= 3.0.0
+BuildRequires: pkgconfig(nss)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(purple) >= 2.8.0
+%{?_with_vv:BuildRequires: pkgconfig(nice) >= 0.1.0 pkgconfig(gstreamer-1.0) pkgconfig(gstreamer-rtp-1.0) pkgconfig(farstream-0.2)}
 %{?_with_krb5:BuildRequires: libkrb5-devel gssntlmssp-devel}
-%{?_enable_telepathy:BuildRequires: libtelepathy-glib-devel >= 0.18.0 libdbus-glib-devel libgio-devel >= 2.32.0}
-BuildRequires: libdbus-devel
-# BuildRequires: libssl-devel
-BuildRequires: libnss-devel
-BuildRequires: libgmime3.0-devel >= 3.0.0
+%{?_enable_telepathy:BuildRequires: pkgconfig(dbus-glib-1) pkgconfig(telepathy-glib) >= 0.18.0 pkgconfig(gobject-2.0)}
+BuildRequires: pkgconfig(dbus-1)
 
 %description
 A third-party plugin for the Pidgin multi-protocol instant messenger.
@@ -98,6 +98,9 @@ rm -f %buildroot%_libdir/purple-2/*.la
 %_datadir/telepathy/profiles/sipe.profile
 
 %changelog
+* Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 1.23.3-alt1
+- 1.23.3
+
 * Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.23.0-alt1
 - 1.23.0
 
