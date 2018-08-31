@@ -1,15 +1,18 @@
-# ISBC package is disabled because the module is not packaged
-%def_disable isbc
-
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 armh mips64el
 %def_enable rutokenecp
 %else
 %def_disable rutokenecp
 %endif
 
+%ifarch %ix86 x86_64 armh aarch64 e2k
+%def_enable isbc
+%else
+%def_disable isbc
+%endif
+
 Name: pkcs11-profiles
 Version: 0.1.6
-Release: alt1
+Release: alt2
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -143,6 +146,10 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/message.profiles/zastava
 
 %changelog
+* Fri Aug 31 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.6-alt2
+- Enable "rutokenecp" for %ix86 x86_64 armh mips64el. Enable "isbc"
+  for %ix86 x86_64 armh aarch64 e2k.
+	
 * Wed Aug 29 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.6-alt1
 - Fixed "cert" mapping profile: the mapping modules are in
   /lib64/pam_pkcs11/.
