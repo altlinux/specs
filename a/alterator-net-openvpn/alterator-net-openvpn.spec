@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-openvpn
-Version: 0.8.11
+Version: 0.8.12
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -9,7 +9,7 @@ Summary: Alterator module for openvpn connections configuration
 Packager: Mikhail Efremov <sem@altlinux.org>
 Source: %name-%version.tar
 
-Requires: alterator >= 4.7-alt3 alterator-sh-functions >= 0.6-alt5 libshell >= 0.0.1-alt4
+Requires: alterator >= 5.2-alt1 alterator-sh-functions >= 0.6-alt5 libshell >= 0.0.1-alt4
 Requires: alterator-net-functions >= 0.8-alt2
 Requires: alterator-sslkey
 Requires: cert-sh-functions
@@ -42,6 +42,10 @@ Alterator module for openvpn connections configuration
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Aug 31 2018 Paul Wolneykien <manowar@altlinux.org> 0.8.12-alt1
+- Fix: Allow to use either a hostname or an IP-address as the
+  server address.
+
 * Thu Aug 16 2018 Paul Wolneykien <manowar@altlinux.org> 0.8.11-alt1
 - Use strict data types for "dev" and "dev_type" parameters.
 
