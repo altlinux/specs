@@ -11,7 +11,7 @@
 %define bugfix 2
 Name: kde4base
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2%ubt
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment 4 - Core Files
@@ -46,10 +46,11 @@ Patch13: kdebase-15.4.3-alt-kfmclient-loop.patch
 Patch14: kdebase-15.08.0-alt-restore-dolphin.patch
 # upstream
 
-BuildRequires(pre): kde4libs-devel
+BuildRequires(pre): kde4libs-devel rpm-build-ubt
 BuildRequires: libalternatives-devel
 BuildRequires: bzlib-devel gcc-c++ libjpeg-devel libpcre-devel libtidy-devel
-BuildRequires: libqimageblitz-devel soprano soprano-backend-redland libsoprano-devel libstrigi-devel
+BuildRequires: libqimageblitz-devel libstrigi-devel
+#soprano soprano-backend-redland libsoprano-devel
 BuildRequires: libungif-devel xml-utils glib2-devel
 BuildRequires: kde4libs-devel
 BuildRequires: kde4pimlibs-devel
@@ -613,6 +614,9 @@ done
 
 
 %changelog
+* Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt2%ubt
+- fix build requires
+
 * Fri Mar 11 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - remove captions from desktop-files Exec
 
