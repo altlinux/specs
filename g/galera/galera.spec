@@ -1,6 +1,6 @@
 Name: galera
 Version: 25.3.23
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
 License: GPLv2
@@ -15,7 +15,7 @@ Source4: garbd.conf
 
 BuildPreReq: rpm-build-ubt
 BuildRequires: gcc-c++ scons
-BuildRequires: boost-devel boost-program_options-devel boost-asio-devel
+BuildRequires: boost-devel boost-program_options-devel asio-devel
 BuildRequires: libcheck-devel libssl-devel zlib-devel
 
 %description
@@ -51,7 +51,7 @@ replication engine see http://www.codership.com.
 
 %build
 export CPPFLAGS="%optflags"
-scons %{?_smp_mflags} strict_build_flags=0
+scons %{?_smp_mflags} strict_build_flags=0 boost=1 system_asio=1 boost_pool=1 
 
 %install
 install -D -m 755 %SOURCE1 %buildroot%_initdir/garbd
@@ -95,6 +95,10 @@ install -D -m 644 scripts/packages/README-MySQL %buildroot%_docdir/galera/README
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 25.3.23-alt2%ubt
+- rebuild with openssl-1.1
+- build with system asio-devel
+
 * Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 25.3.23-alt1%ubt
 - 25.3.23
 
