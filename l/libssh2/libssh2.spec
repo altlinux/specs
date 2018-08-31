@@ -1,16 +1,14 @@
 Name: libssh2
-Version: 1.4.3
-Release: alt2
+Version: 1.8.0
+Release: alt1
 
 Summary: A library implementing the SSH2 protocol
 Group: Networking/Remote access
 License: BSD
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Url: http://www.libssh2.org/
-# http://downloads.sourceforge.net/%name/%name-%version.tar.gz
+# Git-VCS: https://github.com/libssh2/libssh2.git 
 Source: %name-%version.tar
 BuildRequires: openssl-devel zlib-devel man
-Patch: CVE-2015-1782.patch
 
 %description
 libssh2 is a library implementing the SSH2 protocol as defined by
@@ -39,34 +37,26 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch -p1
 
 %build
 #autoreconf
 ./buildconf
 %configure --disable-static --enable-shared
-mkdir docdir
-cp -al AUTHORS COPYING HACKING README NEWS example docdir/
 %make_build
 
 %install
 %makeinstall_std
-%define docdir %_docdir/%name-%version
-mkdir -p %buildroot%docdir
-cp -a docdir/* %buildroot%docdir/
 
 %check
 %make_build -k check
 
 %files
-%dir %docdir/
-%docdir/[ACNR]*
+%doc docs/AUTHORS README RELEASE-NOTES COPYING
 %_libdir/*.so.*
 
 %files docs
-%dir %docdir/
-%docdir/[He]*
-%_mandir/man?/*
+%doc docs/BINDINGS docs/HACKING docs/TODO
+%_man3dir/*.3*
 
 %files devel
 %_includedir/*
@@ -74,6 +64,10 @@ cp -a docdir/* %buildroot%docdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 1.8.0-alt1
+- 1.8.0
+- build with openssl-1.1
+
 * Wed Nov 25 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.4.3-alt2
 - CVE-2015-1782 fixed
 
