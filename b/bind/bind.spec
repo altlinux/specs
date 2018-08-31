@@ -1,7 +1,7 @@
 Name: bind
 Version: 9.11.4.P1
 %define src_version 9.11.4-P1
-Release: alt1
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: MPLv2.0
@@ -437,6 +437,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Fri Aug 31 2018 Stanislav Levin <slev@altlinux.org> 9.11.4.P1-alt2
+- Build with new openssl1.1.
+
 * Mon Aug 13 2018 Stanislav Levin <slev@altlinux.org> 9.11.4.P1-alt1
 - 9.11.3 -> 9.11.4.P1 (fixes: CVE-2018-5738, CVE-2018-5740).
 
