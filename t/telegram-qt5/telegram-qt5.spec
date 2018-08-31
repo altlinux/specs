@@ -4,7 +4,7 @@ Summary: Qt library for Telegram network
 %define libtelegramqt5 lib%name
 
 Version: 0.1.0
-Release: alt1%ubt
+Release: alt2%ubt
 Group: System/Libraries
 License: LGPLv2.1
 URL: https://github.com/Kaffeine/telegram-qt
@@ -51,6 +51,9 @@ Group:      Development/KDE and QT
 %_libdir/cmake/TelegramQt5/
 
 %changelog
+* Fri Aug 31 2018 Oleg Solovyov <mcpain@altlinux.org> 0.1.0-alt2%ubt
+- rebuild with new libssl
+
 * Fri Apr 20 2018 Oleg Solovyov <mcpain@altlinux.org> 0.1.0-alt1%ubt
 - initial build for ALT
 
