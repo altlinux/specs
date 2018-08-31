@@ -22,7 +22,7 @@
 %define rname kopete
 Name: kde4-kopete
 Version: 17.08.3
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: Networking/Instant messaging
 Summary: Instant Messaging client
@@ -50,7 +50,7 @@ BuildRequires: kde4base-runtime-devel kde4pim-devel
 BuildRequires: kde4pimlibs-devel libgpgme-devel
 BuildRequires: libexpat-devel libidn-devel libjasper-devel libjpeg-devel
 BuildRequires: libgadu-devel libgnutls-devel libtasn1-devel jsoncpp-devel
-BuildRequires: libmeanwhile-devel libotr5-devel libalsa-devel libmsn-devel
+BuildRequires: libmeanwhile-devel libotr5-devel libalsa-devel
 %if_enabled mediastreamer
 BuildRequires: libmediastreamer-devel libmediastreamer-ilbc
 %endif
@@ -222,7 +222,7 @@ based on %name.
 %K4build \
     -DKDE4_ENABLE_FPIE:BOOL=ON \
     -DWITH_irc:BOOL=%{?_enable_kopete_irc:ON}%{!?_enable_kopete_irc:OFF} \
-    -DWITH_msn:BOOL=ON \
+    -DWITH_msn:BOOL=OFF \
     -DWITH_wlm:BOOL=OFF \
     -DMOZPLUGIN_INSTALL_DIR:PATH=%browser_plugins_path \
     #
@@ -325,6 +325,9 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt2%ubt
+- build without libmsn
+
 * Wed Feb 21 2018 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 
