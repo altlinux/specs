@@ -6,14 +6,13 @@
 %def_disable mbedtls
 
 Name: lib%_name
-Version: 1.22.0
+Version: 1.25.1
 Release: alt1
 Summary: A library for using PKCS#11 providers
 
 Group: Development/Other
 License: GPLv2 or BSD
 Url: https://github.com/OpenSC/pkcs11-helper
-Packager: Mykola Grechukh <gns@altlinux.ru>
 
 # https://github.com/OpenSC/pkcs11-helper.git
 Source: %name-%version.tar
@@ -68,9 +67,6 @@ programs using the pkcs11-helper library.
 %install
 %makeinstall_std INSTALL="install -p"
 
-# Use %%doc to install documentation in a standard location
-mkdir apidocdir
-mv doc/api/api.out/html/* apidocdir/
 rm -rf %buildroot%_docdir/%_name/
 
 # Remove libtool .la files
@@ -78,17 +74,19 @@ rm -f %buildroot%_libdir/*.la
 
 %files
 %doc AUTHORS ChangeLog COPYING* README THANKS
-%_libdir/libpkcs11-helper.so.*
+%_libdir/*.so.*
 
 %files devel
-%doc apidocdir/*
-%_includedir/pkcs11-helper-1.0/
-%_libdir/libpkcs11-helper.so
-%_pkgconfigdir/libpkcs11-helper-1.pc
-%_datadir/aclocal/pkcs11-helper-1.m4
-%_man8dir/pkcs11-helper-1.8*
+%_includedir/*
+%_libdir/*.so
+%_pkgconfigdir/*.pc
+%_aclocaldir/*.m4
+%_man8dir/*.8*
 
 %changelog
+* Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 1.25.1-alt1
+- 1.25.1
+
 * Fri Nov 10 2017 Alexey Shabalin <shaba@altlinux.ru> 1.22.0-alt1
 - 1.22
 
