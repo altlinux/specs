@@ -1,19 +1,20 @@
+%define _unpackaged_files_terminate_build 1
+
 Summary: OpenPGP Public Key Server
 Name: pks
 Version: 0.9.6
-Release: alt2
+Release: alt3
 License: BSD-like (with advertising clause)
 Url: http://pks.sourceforge.net/
 Group: System/Servers
 
-Source: http://dl.sf.net/sourceforge/pks/%name-%version.tar.bz2
+# http://dl.sf.net/sourceforge/pks/%name-%version.tar.bz2
+Source: %name-%version.tar
 Source1: %name.init
-Patch: mkpksdconf.in.patch
-Requires: %name-db = %version
-BuildPreReq: rpm-build-compat
+Patch1: mkpksdconf.in.patch
+Patch2: pks-alt-no-static-libs.patch
 
-# Automatically added by buildreq on Thu Apr 03 2008
-BuildRequires: libwrap-devel
+Requires: %name-db = %EVR
 
 %description
 This is a OpenPGP Public Key Server. It allows users to store and lookup
@@ -28,7 +29,8 @@ is provided to allow queries from a web page.
 %package utils
 Summary: OpenPGP Public Key Server Utilities
 Group: System/Configuration/Other
-Requires: %name = %version
+Requires: %name = %EVR
+
 %description utils
 This package contains optional utilities for use with the
 OpenPGP Public Key Server.
@@ -36,7 +38,8 @@ OpenPGP Public Key Server.
 %package db
 Summary: OpenPGP Public Key Server Database Engine
 Group: Databases
-Requires: %name = %version
+Requires: %name = %EVR
+
 %description db
 This package contains the database utilities for use with the
 OpenPGP Public Key Server.
@@ -44,35 +47,38 @@ OpenPGP Public Key Server.
 %package db-devel
 Summary: OpenPGP Public Key Server Database Libraries
 Group: Development/Databases
-Requires: %name = %version
+Requires: %name = %EVR
+
 %description db-devel
 This package contains the database headers and libraries for use with the
 OpenPGP Public Key Server.
 
 %prep
 %setup
-%patch -p0
+%patch1 -p0
+%patch2 -p2
 
 %build
 %configure  \
-            --datadir=%_datadir/pks \
-            --sharedstatedir=/var/lib/%name \
-            --localstatedir=/var/lib/%name \
-            --with-libwrap
+	--datadir=%_datadir/%name \
+	--sharedstatedir=%_localstatedir/%name \
+	--localstatedir=%_localstatedir/%name
+
 %make
 %make all-utils
 
 %install
-make DESTDIR="%buildroot" install
-make DESTDIR="%buildroot" install-utils
+%make DESTDIR="%buildroot" install
+%make DESTDIR="%buildroot" install-utils
+
 install -pm 0755 -D %SOURCE1 %buildroot%_initdir/%name
 cp db2-sleepycat/LICENSE db2-sleepycat-LICENSE
 cp db2-sleepycat/README db2-sleepycat-README
-mkdir -p  %buildroot%_var/run/pks %buildroot%_var/lib/pks/incoming %buildroot%_var/lib/pks/db
+mkdir -p  %buildroot%_runtimedir/%name %buildroot%_localstatedir/%name/incoming %buildroot%_localstatedir/%name/db
 
 %pre
-/usr/sbin/groupadd -f -r _pks >/dev/null 2>&1 || :
-/usr/sbin/useradd -r -g _pks -d /var/lib/%name -s /dev/null \
+%_sbindir/groupadd -f -r _pks >/dev/null 2>&1 || :
+%_sbindir/useradd -r -g _pks -d %_localstatedir/%name -s /dev/null \
     -c "PKS user" -M -n _pks >/dev/null 2>&1 || :
 
 %files
@@ -92,10 +98,10 @@ mkdir -p  %buildroot%_var/run/pks %buildroot%_var/lib/pks/incoming %buildroot%_v
 %_bindir/pks-queue-run.sh
 %_man5dir/*.5*
 %_man8dir/*.8*
-%_var/lib/pks/index.html
-%attr(2770,root,_pks) %dir %_var/run/pks
-%attr(2770,root,_pks) %dir %_var/lib/pks
-%attr(2770,root,_pks) %dir %_var/lib/pks/incoming
+%_localstatedir/%name/index.html
+%attr(2770,root,_pks) %dir %_runtimedir/%name
+%attr(2770,root,_pks) %dir %_localstatedir/%name
+%attr(2770,root,_pks) %dir %_localstatedir/%name/incoming
 
 %files utils
 %_bindir/pksmailreq
@@ -115,7 +121,7 @@ mkdir -p  %buildroot%_var/run/pks %buildroot%_var/lib/pks/incoming %buildroot%_v
 %_bindir/db_printlog
 %_bindir/db_recover
 %_bindir/db_stat
-%attr(2770,root,_pks) %dir %_var/lib/pks/db
+%attr(2770,root,_pks) %dir %_localstatedir/%name/db
 
 %files db-devel
 %_includedir/db2/db.h
@@ -123,6 +129,10 @@ mkdir -p  %buildroot%_var/run/pks %buildroot%_var/lib/pks/incoming %buildroot%_v
 %_includedir/db2/db_cxx.h
 
 %changelog
+* Fri Aug 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.6-alt3
+- Rebuilt without tcp wrappers support.
+- Spec cleanup.
+
 * Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.6-alt2
 - Fixed spec to allow any man pages compression.
 
