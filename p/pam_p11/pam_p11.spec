@@ -1,13 +1,15 @@
 Name: pam_p11
-Version: 0.1.5
-Release: alt4
+Version: 0.2.0
+Release: alt1
 
 Summary: Simple RSA authentication with PKCS#11 modules
 License: LGPLv2.1+
 Group: System/Base
 
 Url: https://github.com/OpenSC/pam_p11
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
+Patch: %name-%version.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: libp11-devel libssl-devel libpam-devel zlib-devel
@@ -37,21 +39,25 @@ Open Source software under the LGPL license.
 
 %prep
 %setup
+%patch -p1
 
 %build
-# NB: fails during install as of 0.1.5
-#autoreconf
-%configure --libdir=/%_lib
+%autoreconf
+%configure --with-pamdir=/%_lib/security
 %make_build
 
 %install
 %makeinstall_std
 
 %files
-%doc NEWS doc/README doc/ChangeLog doc/*.html doc/*.css
+%doc NEWS README.md
 /%_lib/security/*.so
 
 %changelog
+* Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 0.2.0-alt1
+- 0.2.0
+- build with openssl-1.1
+
 * Mon Sep 21 2015 Michael Shigorin <mike@altlinux.org> 0.1.5-alt4
 - built for ALT Linux again (bits based on openSUSE spec)
 

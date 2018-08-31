@@ -1,5 +1,8 @@
+
+%define engines_dir $(pkg-config --variable=enginesdir --silence-errors libcrypto)
+
 Name: libp11
-Version: 0.4.6
+Version: 0.4.8
 Release: alt1
 
 Summary: Library for using PKCS#11 modules
@@ -53,7 +56,7 @@ pkcs11 = pkcs11_section
 
 [pkcs11_section]
 engine_id = pkcs11
-dynamic_path = %_libdir/openssl/engines/pkcs11.so
+dynamic_path = %engines_dir/pkcs11.so
 MODULE_PATH = %_libdir/opensc-pkcs11.so
 init = 0
 
@@ -66,31 +69,34 @@ chmod 0644 README.ALT
 %configure \
         --disable-static \
         --enable-api-doc \
-        --with-enginesdir=%_libdir/openssl/engines
+        --with-enginesdir=%engines_dir
 
 %make_build
 
 %install
-mkdir -p %buildroot%_libdir/openssl/engines
 %makeinstall_std
 
-# Use %%doc to install documentation in a standard location
-mkdir __docdir
-mv %buildroot%_datadir/doc/%name/api/ __docdir/
-rm -rf %buildroot%_datadir/doc/%name/
+
+# Cleanup
+rm -f %buildroot%_libdir/*.la
+rm -f %buildroot%engines_dir/*.la
+rm -rf %buildroot%_docdir/%name
 
 %files
 %doc COPYING NEWS README.md README.ALT
 %_libdir/*.so.*
-%_libdir/openssl/engines/*.so*
+%_libdir/openssl/*/*.so*
 
 %files devel
-%doc examples/ __docdir/api/
 %_libdir/libp11.so
 %_pkgconfigdir/*.pc
 %_includedir/*
 
 %changelog
+* Wed Aug 29 2018 Alexey Shabalin <shaba@altlinux.org> 0.4.8-alt1
+- 0.4.8
+- build with openssl-1.1
+
 * Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 0.4.6-alt1
 - 0.4.6
 
