@@ -2,7 +2,7 @@
 %define api_ver 0.4
 
 Name: lib%rname
-Version: %api_ver.4
+Version: %api_ver.8
 Release: alt1%ubt
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
@@ -10,6 +10,7 @@ Group: System/Libraries
 Url: http://www.gimp.org
 
 Source: %rname-%version.tar
+Patch: %rname-%version-alt.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: asciidoc enscript gcc-c++ graphviz gtk-doc libSDL-devel libavformat-devel libbabl-devel libexiv2-devel
@@ -53,6 +54,7 @@ GObject introspection devel data for the GEGL library.
 
 %prep
 %setup -n %rname-%version
+%patch -p1
 
 %build
 %autoreconf
@@ -94,6 +96,9 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Fri Aug 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.8-alt1%ubt
+- 0.4.8
+
 * Thu Jul 05 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.4-alt1%ubt
 - 0.4.4
 

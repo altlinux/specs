@@ -3,8 +3,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gimp
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.6
+Release: alt1
 
 Summary: The GNU Image Manipulation Program
 License: GPLv3, LGPL
@@ -76,7 +76,7 @@ gtkdocize
 	--disable-gimp-console \
 	--enable-python
 
-%make_build
+%make V=1
 
 %install
 %make DESTDIR=%buildroot install
@@ -114,6 +114,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Fri Aug 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.10.6-alt1
+- 2.10.6
+
 * Tue Aug 07 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.10.4-alt2
 - update russian translation
 
