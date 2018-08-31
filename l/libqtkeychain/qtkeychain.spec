@@ -1,6 +1,6 @@
 Name: libqtkeychain
-Version: 0.9.0
-Release: alt2%ubt
+Version: 0.9.1
+Release: alt1%ubt
 
 %define sover 1
 %define libqtkeychain libqtkeychain%sover
@@ -14,7 +14,7 @@ Url: https://github.com/frankosterfeld/qtkeychain
 Source0: %name-%version.tar
 Patch1: alt-build-qt4.patch
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: cmake gcc-c++ libqt4-devel qt5-tools-devel qt5-linguist pkgconfig(QtDBus) pkgconfig(Qt5DBus) libsecret-devel
+BuildRequires: cmake gcc-c++ libqt4-devel qt5-tools-devel pkgconfig(QtDBus) pkgconfig(Qt5DBus) libsecret-devel
 
 %description
 QtKeychain is a Qt API to store passwords and other secret data securely.
@@ -135,6 +135,9 @@ grep %_qt5_translationdir qtkeychain.lang > %name-qt5.lang
 %_qt5_archdatadir/mkspecs/qt_Qt5Keychain.pri
 
 %changelog
+* Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 0.9.1-alt1%ubt
+- new version
+
 * Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt2%ubt
 - fix requires
 
