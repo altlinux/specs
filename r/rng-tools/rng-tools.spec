@@ -1,6 +1,6 @@
 Name: rng-tools
-Version: 3
-Release: alt1.qa1
+Version: 5
+Release: alt1
 
 Summary: Random number generator related utilities
 License: GPLv2+
@@ -29,7 +29,7 @@ Hardware random number generation tools.
 mkdir -p %buildroot{%_initdir,%_sysconfdir/sysconfig,%_sysconfdir/modutils.d}
 install -m755 %SOURCE1 %buildroot%_initdir/rngd
 install -m644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/rngd
-install -m644 %SOURCE3 %buildroot%_sysconfdir/modutils.d/%name
+#install -m644 %SOURCE3 %buildroot%_sysconfdir/modutils.d/%name
 
 %post
 %post_service rngd
@@ -39,7 +39,7 @@ install -m644 %SOURCE3 %buildroot%_sysconfdir/modutils.d/%name
 
 %files
 %config(noreplace) %_sysconfdir/sysconfig/rngd
-%_sysconfdir/modutils.d/%name
+#_sysconfdir/modutils.d/%name
 %_initdir/rngd
 %_bindir/rngtest
 %_sbindir/rngd
@@ -47,6 +47,12 @@ install -m644 %SOURCE3 %buildroot%_sysconfdir/modutils.d/%name
 %_man8dir/rngd.8*
 
 %changelog
+* Sat Sep 01 2018 Sergey Y. Afonin <asy@altlinux.ru> 5-alt1
+- Version 5
+- added LSB init header to init script
+- added example with /dev/urandom to /etc/sysconfig/rngd
+- do not pack deprecated modutils.d/rng-tools
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
