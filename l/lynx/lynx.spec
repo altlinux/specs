@@ -4,7 +4,7 @@
 
 Name: lynx
 Version: %ver
-Release: alt1.%subver
+Release: alt1.%subver.1
 
 Summary: Text based browser for the world wide web
 License: GPLv2
@@ -160,6 +160,9 @@ install -m 644 %SOURCE101 %buildroot/%_liconsdir/lynx.xpm
 %_datadir/%name
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.8.9-alt1.pre.1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Jul 02 2018 Alexei Takaseev <taf@altlinux.org> 2.8.9-alt1.pre.1
 - 2.8.8pre.1
 - Disable lynx2-8-5-alt-i18n.patch
