@@ -1,19 +1,24 @@
 Name: sdcv
-Version: 0.5.0
+Version: 0.5.2
 Release: alt1
 
 Summary: A console version of StarDict the international dictionary
 
 Group: System/Internationalization
 License: GPLv2
-Url: http://sdcv.sourceforge.net/
+Url: https://dushistov.github.io/sdcv/
 
 Packager: Paul Wolneykien <manowar@altlinux.org>
 
 Source: %name-%version.tar
+Patch0: %name-t_interactive.patch
+Patch1: %name-t_list.patch
 
+BuildPreReq: rpm-macros-cmake
 BuildRequires: gcc-c++
-BuildRequires: cmake
+BuildRequires: cmake >= 2.8
+BuildRequires: ctest >= 2.8
+BuildRequires: jq
 BuildRequires: zlib-devel
 BuildRequires: libreadline-devel
 BuildRequires: glib2-devel >= 2.6.1
@@ -23,24 +28,30 @@ The console version of StarDict the cross-platform and international
 dictionary.
 
 %prep
-%setup -q -n %name-%version
+%setup -q
+# fix tests to run in isolated environment
+%patch0 -p1
+%patch1 -p1
+# make output readable on dark terminals
+sed -i 's/;34m/;36m/' src/libwrapper.cpp
 
 %build
-cmake -DCMAKE_INSTALL_PREFIX=%_usr
+%cmake \
+    -DENABLE_NLS=YES \
+    -DWITH_READLINE=YES \
+    -DBUILD_TESTS=YES
 
-%make_build VERBOSE=1
-
-mkdir locale
-pushd po
-for f in *.po; do \
-    mkdir -m 0755 -p "../locale/${f%%.po}/LC_MESSAGES"; \
-    msgfmt -o "../locale/${f%%.po}/LC_MESSAGES/%name.mo" "$f"; \
-done
-popd
+%cmake_build VERBOSE=1
+%cmake_build VERBOSE=1 lang
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 %find_lang %name
+
+%check
+pushd BUILD
+ctest  %_smp_mflags
+popd
 
 %files -f %name.lang
 %_bindir/*
@@ -48,6 +59,10 @@ popd
 %_mandir/uk/man1/*
 
 %changelog
+* Fri Aug 31 2018 Andrew Savchenko <bircoph@altlinux.org> 0.5.2-alt1
+- Version bump, upstream relocated.
+- Enable tests.
+
 * Thu Dec 12 2013 Paul Wolneykien <manowar@altlinux.org> 0.5.0-alt1
 - Freshed up to v0.5.0 with the help of cronbuild and update-source-functions.
 
