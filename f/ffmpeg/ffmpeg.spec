@@ -47,7 +47,7 @@
 %def_enable libopus
 %def_enable libpulse
 %def_enable librsvg
-%def_enable librtmp
+%def_disable librtmp
 %def_enable libsoxr
 %def_enable libspeex
 %def_enable libtheora
@@ -90,7 +90,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	4.0.2
-Release:	alt3
+Release:	alt4
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -739,6 +739,9 @@ xz Changelog
 %endif
 
 %changelog
+* Sat Sep 01 2018 Anton Farygin <rider@altlinux.ru> 2:4.0.2-alt4
+- disabled build with librtmp (this library is not supported by anyone)
+
 * Mon Aug 13 2018 Anton Farygin <rider@altlinux.ru> 2:4.0.2-alt3
 - fixed build with disabled glpv3 codecs
 
