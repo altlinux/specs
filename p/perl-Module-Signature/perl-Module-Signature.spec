@@ -2,7 +2,7 @@
 %define module_name Module-Signature
 
 Name: perl-%module_name
-Version: 0.81
+Version: 0.83
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -12,7 +12,7 @@ License: CC0 1.0
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://www.cpan.org/authors/id/A/AU/AUDREYT/Module-Signature-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AU/AUDREYT/%{module_name}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -27,7 +27,7 @@ BuildRequires: perl-podlators
 Module::Signature, a module to check and create SIGNATURE files for CPAN distributions.
 
 %prep
-%setup -n %module_name-%version
+%setup -q -n %{module_name}-%{version}
 
 %build
 # Running _all_ tests successfully for our package build is tricky:
@@ -50,11 +50,15 @@ mv ../.perl.req .
 %perl_vendor_install
 
 %files
+%doc README Changes AUTHORS
 %_bindir/*
 %perl_vendor_privlib/Module*
 %_man1dir/*
 
 %changelog
+* Sun Sep 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.83-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.81-alt1
 - automated CPAN update
 
