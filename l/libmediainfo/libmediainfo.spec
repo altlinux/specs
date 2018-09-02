@@ -1,5 +1,5 @@
 Name: libmediainfo
-Version: 18.05
+Version: 18.08
 Release: alt1
 
 Group: System/Libraries
@@ -13,7 +13,6 @@ BuildRequires: gcc-c++
 BuildRequires: dos2unix
 BuildRequires: doxygen
 BuildRequires: zlib-devel
-BuildRequires: libmms-devel
 BuildRequires: id3lib-devel
 BuildRequires: libflac-devel
 BuildRequires: libmatroska-devel
@@ -85,6 +84,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Sun Sep 02 2018 Yuri N. Sedunov <aris@altlinux.org> 18.08-alt1
+- 18.08
+
 * Fri May 11 2018 Yuri N. Sedunov <aris@altlinux.org> 18.05-alt1
 - 18.05
 
