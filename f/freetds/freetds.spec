@@ -3,7 +3,7 @@
 %define	TDSVER 7.0
 %define	name freetds
 %define	release alt1
-%define	version 1.00.94
+%define	version 1.00.97
 
 Name:		%name
 Version:	%version
@@ -167,6 +167,9 @@ useful utilities.
 
 
 %changelog
+* Sun Sep 02 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.00.97-alt1
+- New version
+
 * Sun Aug 19 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.00.94-alt1
 - New version (Closes: 32354)
 
