@@ -18,13 +18,13 @@ BuildRequires: perl(parent.pm) perl-podlators
 %endif
 
 Name:           perl-Test-MockModule
-Version:        0.15
-Release:        alt1_2
+Version:        0.170.0
+Release:        alt1
 Summary:        Override subroutines in a module for unit testing
 Group:          Development/Other
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Test-MockModule
-Source0:        https://cpan.metacpan.org/authors/id/G/GF/GFRANKS/Test-MockModule-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/G/GF/GFRANKS/Test-MockModule-v%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  rpm-build-perl
@@ -52,7 +52,7 @@ Source44: import.info
 %{summary}.
 
 %prep
-%setup -q -n Test-MockModule-%{version}
+%setup -q -n Test-MockModule-v%{version}
 
 %build
 /usr/bin/perl Build.PL installdirs=vendor
@@ -67,10 +67,13 @@ chmod -R u+w $RPM_BUILD_ROOT/*
 
 %files
 %doc Changes README.md
-%doc --no-dereference LICENSE
+%doc LICENSE
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Sun Sep 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.170.0-alt1
+- automated CPAN update
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_2
 - update to new release by fcimport
 
