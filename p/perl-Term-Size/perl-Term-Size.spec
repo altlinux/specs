@@ -1,14 +1,14 @@
 %define dist Term-Size
 Name: perl-%dist
-Version: 0.207
-Release: alt3.1.1.1.1
+Version: 0.209
+Release: alt1
 
 Summary: Perl module for get the size of the terminal
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/F/FE/FERREIRA/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-Test-Pod
@@ -18,7 +18,7 @@ Term::Size is a Perl module which provides a straightforward way to get
 the size of the terminal (or window) on which a script is running.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -27,11 +27,14 @@ the size of the terminal (or window) on which a script is running.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README Copyright
 %perl_vendor_archlib/Term
 %perl_vendor_autolib/Term
 
 %changelog
+* Sun Sep 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.209-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.207-alt3.1.1.1.1
 - rebuild with new perl 5.26.1
 
