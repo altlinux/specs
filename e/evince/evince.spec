@@ -6,13 +6,14 @@
 %define so_ver 4
 
 %def_enable xps
+%def_enable ps
 %def_enable introspection
 %def_enable browser_plugin
 %def_enable multimedia
 %def_disable debug
 
 Name: evince
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A document viewer
@@ -113,6 +114,7 @@ via the Evince.
 [ ! -d m4 ] && mkdir m4
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 export BROWSER_PLUGIN_DIR=%browser_plugins_path
 %autoreconf
 %configure \
@@ -126,6 +128,7 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 	--enable-nautilus \
 	--enable-dbus \
 	%{subst_enable xps} \
+	%{subst_enable ps} \
 	%{subst_enable introspection} \
 	%{?_enable_browser_plugin:--enable-browser-plugin} \
 	%{subst_enable multimedia} \
@@ -151,7 +154,7 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %_libdir/evince/%so_ver/backends/libcomicsdocument.so
 %_libdir/evince/%so_ver/backends/libdjvudocument.so
 %_libdir/evince/%so_ver/backends/libpdfdocument.so
-%_libdir/evince/%so_ver/backends/libpsdocument.so
+%{?_enable_ps:%_libdir/evince/%so_ver/backends/libpsdocument.so}
 %_libdir/evince/%so_ver/backends/libtiffdocument.so
 %{?_enable_xps:%_libdir/evince/%so_ver/backends/libxpsdocument.so}
 %_libdir/evince/%so_ver/backends/*.evince-backend
@@ -162,7 +165,7 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %_datadir/metainfo/%name-comicsdocument.metainfo.xml
 %_datadir/metainfo/%name-djvudocument.metainfo.xml
 %_datadir/metainfo/%name-pdfdocument.metainfo.xml
-%_datadir/metainfo/%name-psdocument.metainfo.xml
+%{?_enable_ps:%_datadir/metainfo/%name-psdocument.metainfo.xml}
 %_datadir/metainfo/%name-tiffdocument.metainfo.xml
 %_datadir/metainfo/%name-xpsdocument.metainfo.xml
 %_datadir/metainfo/%name.appdata.xml
@@ -212,6 +215,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Sun Sep 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
+- 3.28.3
+
 * Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 
