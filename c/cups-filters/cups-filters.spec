@@ -4,8 +4,8 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.20.4
-Release: alt3
+Version: 1.21.1
+Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
 # For a breakdown of the licensing, see COPYING file
@@ -25,8 +25,7 @@ Source2: cups-browsed.init
 Patch0: %name-alt.patch
 Patch1: %name-alt-php-5.4.14-fix.patch
 Patch2: %name-braille-indexv4-path.patch
-Patch3: %name-alt-build-fix.patch
-Patch4: %name-pjl-as-ps.patch
+Patch3: %name-pjl-as-ps.patch
 
 Conflicts: cups < 1.6.1-alt1
 Conflicts: ghostscript-cups
@@ -122,7 +121,6 @@ serial backend for cups
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
-%patch4 -p2
 
 %build
 # work-around Rpath
@@ -229,6 +227,9 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Sun Sep 02 2018 Anton Farygin <rider@altlinux.ru> 1.21.1-alt1
+- new version 1.21.1
+
 * Mon Aug 20 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.20.4-alt3
 - handling Postscript with PJH heading fixed
 
