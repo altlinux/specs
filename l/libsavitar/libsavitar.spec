@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: libsavitar
-Version: 3.3.0
-Release: alt1%ubt
+Version: 3.4.1
+Release: alt1
 Summary: C++ implementation of 3mf loading with SIP Python bindings
 License: LGPLv3+
 Group: Development/Other
@@ -77,14 +80,17 @@ rm pugixml -rf
 %python3_sitelibdir/Savitar.so
 
 %changelog
-* Sun May 06 2018 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1%ubt
+* Mon Sep 03 2018 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt1
+- new version 3.4.1
+
+* Sun May 06 2018 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1.S1
 - new version 3.3.0
 
-* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.1-alt1%ubt.1
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.1-alt1.S1.1
 - (NMU) Rebuilt with python-3.6.4.
 
-* Sat Feb 24 2018 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1%ubt
+* Sat Feb 24 2018 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1.S1
 - new version 3.2.1
 
-* Sun Dec 31 2017 Anton Midyukov <antohami@altlinux.org> 3.0.3-alt1%ubt
+* Sun Dec 31 2017 Anton Midyukov <antohami@altlinux.org> 3.0.3-alt1.S1
 - Initial build for ALT Sisyphus.

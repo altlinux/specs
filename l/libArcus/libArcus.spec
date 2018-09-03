@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: libArcus
-Version: 3.3.0
-Release: alt1%ubt.1
+Version: 3.4.1
+Release: alt1
 
 Summary: Communication library between internal components for Ultimaker software
 License: LGPLv3+
@@ -59,20 +62,23 @@ Communication library between internal components for Ultimaker software
 %python3_sitelibdir/*
 
 %changelog
-* Mon May 21 2018 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1%ubt.1
+* Mon Sep 03 2018 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt1
+- New version 3.4.1
+
+* Mon May 21 2018 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1.S1.1
 - Rebuilt with protobuf-compiler 3.5.2
 
-* Sun May 06 2018 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1%ubt
+* Sun May 06 2018 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1.S1
 - New version 3.3.0
 
-* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.1-alt1%ubt.1
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.1-alt1.S1.1
 - (NMU) Rebuilt with python-3.6.4.
 
-* Fri Feb 23 2018 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1%ubt
+* Fri Feb 23 2018 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1.S1
 - New version 3.2.1
 
-* Sun Dec 31 2017 Anton Midyukov <antohami@altlinux.org> 3.0.3-alt1%ubt
+* Sun Dec 31 2017 Anton Midyukov <antohami@altlinux.org> 3.0.3-alt1.S1
 - New version 3.0.3
 
-* Wed Nov 22 2017 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1%ubt
+* Wed Nov 22 2017 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1.S1
 - Initial build for ALT Sisyphus.

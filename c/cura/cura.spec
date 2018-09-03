@@ -1,10 +1,13 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %global with_check 1
 %add_python3_compile_include %_libexecdir/cura
 
 Name: cura
 Epoch: 1
-Version: 3.3.0
-Release: alt1%ubt
+Version: 3.4.1
+Release: alt1
 Summary: 3D printer control software
 License: LGPLv3+
 
@@ -13,7 +16,6 @@ Url: https://github.com/Ultimaker/Cura
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-Patch: upstream-fix.patch
 
 BuildArch: noarch
 
@@ -50,7 +52,6 @@ needs. As it's open source, our community helps enrich it even more.
 
 %prep
 %setup
-%patch -p1
 
 # The setup.py is only useful for py2exe, remove it, so noone is tempted to use it
 rm setup.py
@@ -88,9 +89,6 @@ ln -s ../../locale cura/resources/i18n
 rm locale/*/*.po
 popd
 
-# fix interpretator
-sed 's|python3|/usr/bin/python3|' %buildroot%_bindir/cura -i 
-
 %find_lang cura fdmextruder.def.json fdmprinter.def.json --output=%name.lang
 
 # fix directories appdata
@@ -117,10 +115,13 @@ desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 %_libexecdir/%name
 
 %changelog
-* Mon May 07 2018 Anton Midyukov <antohami@altlinux.org> 1:3.3.0-alt1%ubt
+* Mon Sep 03 2018 Anton Midyukov <antohami@altlinux.org> 1:3.4.1-alt1
+- New version 3.4.1
+
+* Mon May 07 2018 Anton Midyukov <antohami@altlinux.org> 1:3.3.0-alt1.S1
 - New version 3.3.0
 
-* Sat Feb 24 2018 Anton Midyukov <antohami@altlinux.org> 1:3.2.1-alt1%ubt
+* Sat Feb 24 2018 Anton Midyukov <antohami@altlinux.org> 1:3.2.1-alt1.S1
 - New version 3.2.1
 - Disable tests
 

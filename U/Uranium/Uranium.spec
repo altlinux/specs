@@ -1,10 +1,13 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %global with_check 1
 
 %add_python3_compile_include %_libexecdir/uranium
 
 Name:    Uranium
-Version: 3.3.0
-Release: alt1.%ubt
+Version: 3.4.1
+Release: alt1
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -75,8 +78,9 @@ popd
 %check
 %if 0%{?with_check}
 pip3 freeze
-# https://github.com/Ultimaker/Uranium/issues/345
-python3 -m pytest -v -k "not test_emptyPlugin"
+
+# https://github.com/Ultimaker/Uranium/issues/394
+python3 -m pytest -v -k "not TestContainerStack and not TestContainerRegistry"
 %endif
 
 %files -f uranium.lang
@@ -90,10 +94,13 @@ python3 -m pytest -v -k "not test_emptyPlugin"
 %doc html LICENSE
 
 %changelog
-* Sun May 06 2018 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1.%ubt
+* Mon Sep 03 2018 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt1
+- New version 3.4.1
+
+* Sun May 06 2018 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1.S1
 - New version 3.3.0
 
-* Fri Feb 23 2018 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1.%ubt
+* Fri Feb 23 2018 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1.S1
 - New version 3.2.1
 
 * Sun Dec 31 2017 Anton Midyukov <antohami@altlinux.org> 3.0.3-alt1
