@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt117
+Release: alt118
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -511,6 +511,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %endif #with python
 
 %changelog
+* Mon Sep 03 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.4-alt118
+- Added support for RPM_ADD_CHANGELOG_{NAME,TEXT,TIME} environment variables.
+
 * Tue Aug 28 2018 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt117
 - 0common-files.req.list: removed /etc/syslog.d/.
 
