@@ -1,7 +1,9 @@
+%def_disable static
 %define _name libevent
-Name: %{_name}2
-Version: 2.0.22
-Release: alt2
+
+Name: %{_name}2.1
+Version: 2.1.8
+Release: alt1
 
 Summary: An asynchronous event notification library
 Group: System/Libraries
@@ -13,10 +15,22 @@ Source: %name-%version.tar
 Source1: Makefile.sample
 Source2: README.libevent
 # git://git.altlinux.org/gears/l/%name.git
-Patch: %_name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
-%def_disable static
 BuildRequires: libssl-devel zlib-devel
+# Need for test
+BuildRequires:  python-modules
+
+%package -n %_name-devel
+Summary: Development libevent library, its header files and documentation
+Group: Development/C
+Requires: %name = %version-%release
+Provides: libevent1.4-devel = %version-%release
+
+%package -n %_name-devel-static
+Summary: Static libevent library
+Group: Development/C
+Requires: %name-devel = %version-%release
 
 %description
 The libevent API provides a mechanism to execute a callback function
@@ -26,6 +40,31 @@ has been reached.
 libevent is meant to replace the asynchronous event loop found in
 event driven network servers.  Currently, libevent supports kqueue(2),
 select(2) and epoll(4).
+
+%description -n %_name-devel
+The libevent API provides a mechanism to execute a callback function
+when a specific event occurs on a file descriptor or after a timeout
+has been reached.
+
+libevent is meant to replace the asynchronous event loop found in
+event driven network servers.  Currently, libevent supports kqueue(2),
+select(2) and epoll(4).
+
+This package contains the header files, documentation, examples and
+development library for use in developing applications that use the
+libevent library.
+
+%description -n %_name-devel-static
+The libevent API provides a mechanism to execute a callback function
+when a specific event occurs on a file descriptor or after a timeout
+has been reached.
+
+libevent is meant to replace the asynchronous event loop found in
+event driven network servers.  Currently, libevent supports kqueue(2),
+select(2) and epoll(4).
+
+This package contains the static libevent library necessary to build
+statically-linkeed libevent-based applications.
 
 %prep
 %setup
@@ -68,10 +107,23 @@ make verify
 %dir %docdir
 %docdir/README
 
+%files -n %_name-devel
+%_bindir/event_rpcgen.py
+%_libdir/*.so
+%_includedir/*
+%_pkgconfigdir/*
+%_man3dir/*
+%dir %docdir
+%docdir/examples
+
+%if_enabled static
+%files -n %_name-devel-static
+%_libdir/*.a
+%endif
+
 %changelog
-* Mon Sep 03 2018 Alexei Takaseev <taf@altlinux.org> 2.0.22-alt2
-- Fix build with openssl 1.1.x
-- Disable -devel subpackages
+* Thu Aug 30 2018 Alexei Takaseev <taf@altlinux.org> 2.1.8-alt1
+- 2.1.8
 - Disable regress in make check
 
 * Wed Sep 28 2016 Alexei Takaseev <taf@altlinux.org> 2.0.22-alt1
