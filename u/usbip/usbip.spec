@@ -5,7 +5,7 @@
 Name: usbip
 Summary: Utility for manage usbip devices
 Version: 2.0.4
-Release: alt4
+Release: alt5
 
 %define lname lib%name
 
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 
 Packager: Pavel Vainerman <pv@altlinux.org>
 
-BuildRequires: libudev-devel libwrap-devel
+BuildRequires: libudev-devel
 
 BuildRequires: kernel-source-%kernel_version
 
@@ -114,6 +114,9 @@ install -D -m0644 usbip-client.modules.conf %buildroot%_sysconfdir/modules-load.
 %_libdir/*.a
 
 %changelog
+* Mon Sep 03 2018 Pavel Vainerman <pv@altlinux.ru> 2.0.4-alt5
+- removed 'libwrap-devel' from BuildRequires
+
 * Sat Mar 17 2018 Pavel Vainerman <pv@altlinux.ru> 2.0.4-alt4
 - up build
 
