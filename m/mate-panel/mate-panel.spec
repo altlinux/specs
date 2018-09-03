@@ -1,5 +1,5 @@
 Name: mate-panel
-Version: 1.20.2
+Version: 1.20.3
 Release: alt1
 Epoch: 2
 Summary: MATE Desktop panel and applets
@@ -45,12 +45,17 @@ Development files for mate-panel
 	--disable-gtk-doc \
 	--disable-schemas-compile \
 	--enable-introspection \
-	--with-in-process-applets=all
+	--with-in-process-applets=clock,notification-area,wncklet
 
 %make_build
 
 %install
 %make DESTDIR=%buildroot install
+
+rm -f %buildroot%_datadir/%name/applets/org.mate.panel.FishApplet.mate-panel-applet
+rm -f %buildroot%_datadir/glib-2.0/schemas/org.mate.panel.applet.fish.gschema.xml
+rm -fr %buildroot%_datadir/help/*/mate-fish
+rm -fr %buildroot%_datadir/%name/fish
 
 find %buildroot%_libdir -name \*.la -delete
 
@@ -78,6 +83,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/MatePanelApplet-4.0.gir
 
 %changelog
+* Mon Sep 03 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.3-alt1
+- 1.20.3
+
 * Fri Jun 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.2-alt1
 - 1.20.2
 
