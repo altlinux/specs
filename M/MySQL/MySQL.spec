@@ -7,7 +7,7 @@
 %define ROOT %_localstatedir/mysql
 
 Name: MySQL
-Version: 5.7.22
+Version: 5.7.23
 Release: alt1%ubt
 
 Summary: A very fast and reliable SQL database engine
@@ -443,6 +443,14 @@ rm -fr %buildroot/usr/share/info
 DATADIR=`/usr/bin/my_print_defaults mysqld |sed -ne 's/^--datadir=\\(.*\\)/\\1/pg' |tail -1` \
 [ -n "$DATADIR" ] || { echo "Failed to read configuration"; exit 1; }
 
+%postun server
+if [ $1 = 0 ]; then
+	rm -f %ROOT/lib/* %ROOT/var/yp/binding/*
+fi
+
+%preun server
+%preun_service mysqld
+
 %pre server
 /usr/sbin/groupadd -r -f %mysqld_user
 /usr/sbin/useradd -r -g %mysqld_user -d %ROOT -s /dev/null -c "MySQL server" -n %mysqld_user >/dev/null 2>&1 ||:
@@ -553,34 +561,10 @@ if [ -f /var/lib/mysql/my.cnf -a -f "%ROOT$DATADIR/ibdata1" ]; then
 	fi
 fi
 
-%triggerpostun server -- MySQL-server < 5.0
-%get_datadir
-[ -x /usr/bin/mysql_upgrade ] || exit 0
-if [ -f "%ROOT/mysql/db.frm" -a ! -f "%ROOT$DATADIR/mysql/db.frm" ]; then
-	%_initdir/mysqld status >/dev/null 2>&1 && NEED_RESTART=1 || NEED_RESTART=
-	/usr/bin/mysql_upgrade --datadir=%ROOT$DATADIR >/dev/null 2>&1
-fi
-
-if [ -n "$NEED_RESTART" ]; then 
-	%_initdir/mysqld condrestart ||:
-else
-	echo "mysqld service is not running so you should run " 
-	echo "/usr/bin/mysql_upgrade --datadir=%ROOT$DATADIR manually "
-	echo "after service mysql start!"
-	%_initdir/mysqld condrestart ||:
-fi
-
-%preun server
-%preun_service mysqld
-
-%postun server
-if [ $1 = 0 ]; then
-	rm -f %ROOT/lib/* %ROOT/var/yp/binding/*
-fi
-
 %if_with libs
 %files -n libmysqlclient%soname
 %_libdir/*.so.*
+%endif
 
 %if_with devel
 %files -n libmysqlclient%soname-devel
@@ -589,14 +573,13 @@ fi
 %_includedir/*
 %_aclocaldir/mysql.m4
 %_pkgconfigdir/*.pc
+%endif
 
 %if_enabled static
 %files -n libmysqlclient%soname-devel-static
 %_libdir/*.a
 %_libdir/mysql
 %_pkgconfigdir/*.pc
-%endif
-%endif
 %endif
 
 %files client
@@ -682,6 +665,10 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 5.7.23-alt1%ubt
+- 5.7.23
+- removed old and unused trigger with execution of the mysql_upgrade
+
 * Mon Jul 09 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.22-alt1%ubt
 - 5.7.22
 - new version (some bug fixes)
