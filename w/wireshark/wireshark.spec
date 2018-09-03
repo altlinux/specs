@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.6.2
+Version: 2.6.3
 Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -289,6 +289,9 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 2.6.3-alt1%ubt
+- 2.6.3 (fixes: CVE-2018-16056, CVE-2018-16057, CVE-2018-16058)
+
 * Sat Jul 21 2018 Anton Farygin <rider@altlinux.ru> 2.6.2-alt1%ubt
 - 2.6.2  (fixes: CVE-2018-14370, CVE-2018-14367, CVE-2018-14369, CVE-2018-14368, CVE-2018-14341, CVE-2018-14339, CVE-2018-14343, CVE-2018-14340, CVE-2018-14344, CVE-2018-14342)
 
