@@ -10,7 +10,7 @@
 
 Name: multipath-tools
 Version: 0.7.4
-Release: alt1
+Release: alt2
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPLv2+
@@ -182,6 +182,10 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Mon Sep 03 2018 Michael Shigorin <mike@altlinux.org> 0.7.4-alt2
+- applied patches suggested by Alex Moskalenko
+  (closes: #35286, #35287)
+
 * Fri Dec 15 2017 Alexey Shabalin <shaba@altlinux.ru> 0.7.4-alt1
 - 0.7.4
 - add devel packages
