@@ -1,5 +1,5 @@
 Name: micro
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 Summary: A modern and intuitive terminal-based text editor
 License: MIT/BSD/Apache-2.0/MPL-2.0
@@ -22,6 +22,7 @@ me), or because you need to (over ssh).
 
 %prep
 %setup -q
+sed -i.bak '9s/terminal;//' assets/packaging/micro.desktop
 
 %build
 mkdir -p "$PWD/_build/src/github.com/zyedidia"
@@ -34,7 +35,7 @@ export LDFLAGS="-s -w -X main.Version=%version"
 install -D -m 0755 ./micro %buildroot/%_bindir/micro
 install -D -m 0744 ./assets/packaging/micro.1 %buildroot/%_man1dir/micro.1
 install -D -m 0744 ./assets/logo.svg %buildroot/%_iconsdir/hicolor/scalable/apps/micro.svg
-desktop-file-install --dir=%buildroot%_desktopdir ./micro.desktop
+desktop-file-install --dir=%buildroot%_desktopdir ./assets/packaging/micro.desktop
 
 %files
 %doc LICENSE README.md LICENSE-THIRD-PARTY
@@ -44,5 +45,8 @@ desktop-file-install --dir=%buildroot%_desktopdir ./micro.desktop
 %_desktopdir/micro.desktop
 
 %changelog
+* Mon Sep 3 2018 Ivan Razzhivin <underwit@altlinux.org> 1.4.1-alt1
+- new version
+
 * Wed Jul 11 2018 Ivan Razzhivin <underwit@altlinux.org> 1.4.0-alt1
 - Build for ALT
