@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.48.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -13,6 +13,7 @@ License: GPLv2+ / LGPLv2+
 Source: %rname-%version.tar
 Patch1: alt-kwalletd4.patch
 Patch2: alt-def-blowfish.patch
+Patch3: alt-create-wallet.patch
 
 # Automatically added by buildreq on Fri Feb 13 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libgpg-error libgpg-error-devel libqt5-core libqt5-dbus libqt5-gui libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs
@@ -66,6 +67,7 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %K5build
@@ -102,6 +104,9 @@ KF5 library
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Mon Sep 03 2018 Oleg Solovyov <mcpain@altlinux.org> 5.48.0-alt2%ubt
+- kwallet: create a wallet when user refuses to do so
+
 * Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
 - new version
 
