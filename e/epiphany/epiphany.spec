@@ -9,8 +9,8 @@
 %def_disable libhttpseverywhere
 
 Name: epiphany
-Version: %ver_major.3.1
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
 Summary(ru_RU.UTF-8): Epiphany - интернет-браузер для графической оболочки GNOME.
@@ -113,6 +113,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.4-alt1
+- 3.28.4
+
 * Wed Jul 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3.1-alt2
 - rebuilt against libicu*.so.62
 
