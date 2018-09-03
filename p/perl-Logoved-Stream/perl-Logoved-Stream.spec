@@ -1,7 +1,7 @@
 %define module Logoved-Stream
 
 Name: perl-%module
-Version: 0.010
+Version: 0.011
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,7 +13,7 @@ Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 #Url: http://search.cpan.org/dist/%module
 Url: http://git.altlinux.org/people/viy/packages/Logoved-Stream.git
 
-BuildRequires: perl-devel perl(Moo.pm) perl(MooX/Singleton.pm) perl(autodie.pm)
+BuildRequires: perl-devel perl(Moo.pm) perl(MooX/Singleton.pm) perl(autodie.pm) perl(Source/Shared/CLI.pm)
 
 %description
 Perl stream parser library for rpmbuild -v, hasher, beehive logs.
@@ -54,6 +54,9 @@ Repocop listener for Logoved-Stream beehive log parser.
 %perl_vendor_privlib/Logoved/Stream/Out/Listener/Repocop*
 
 %changelog
+* Mon Sep 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1
+- added status of the main stream
+
 * Sun Sep 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
 - rpmbuild::write conflict fixed
 
