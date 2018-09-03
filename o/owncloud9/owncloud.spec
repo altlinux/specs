@@ -2,7 +2,7 @@
 
 Name: owncloud%major
 Version: 9.1.8
-Release: alt1
+Release: alt2
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -89,6 +89,7 @@ a2enmod headers
 %_initdir/httpd2 condreload
 
 %files
+%dir %installdir
 %installdir/3rdparty
 %dir %attr(0775,root,_webserver) %installdir/apps
 %installdir/apps/*
@@ -122,6 +123,9 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf 
 
 %changelog
+* Mon Sep 03 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.8-alt2
+- fixed unowned files
+
 * Mon Sep 03 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.8-alt1
 - 9.1.8
 - Updated requires for SQL DBs (closes: #35310)
