@@ -3,7 +3,7 @@
 
 Name: hunspell-ru-aot
 Version: 0.4.0
-Release: alt2
+Release: alt3
 
 Summary: Russian hunspell dictionaries
 
@@ -20,6 +20,8 @@ Requires: libhunspell
 Provides: hunspell-ru
 
 BuildArch: noarch
+
+BuildRequires: rpm-macros-alternatives
 
 %description
 Russian hunspell (Based on AOT) dictionaries with yo letter
@@ -57,6 +59,9 @@ EOF
 %_datadir/myspell/ru_RU-aot.*
 
 %changelog
+* Tue Sep 04 2018 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt3
+- add buildreq rpm-macros-alternatives
+
 * Wed Aug 03 2016 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt2
 - add alternatives
 
