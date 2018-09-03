@@ -1,19 +1,20 @@
 %def_disable tests
 
 Name: libmongoc
-Version: 1.9.3
+Version: 1.12.0
 Release: alt1%ubt
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
-License: ASL 2.0
+License: ASL 2.0 and ISC and MIT and zlib
 Url: https://github.com/mongodb/mongo-c-driver
 #vsc-git https://github.com/mongodb/mongo-c-driver.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
+BuildRequires: gcc-c++
+BuildRequires: cmake >= 3.1
 BuildRequires: python-module-sphinx
-BuildRequires: libbson-devel >= %version
-BuildRequires: libssl-devel libsasl2-devel gcc-c++
+BuildRequires: libssl-devel libsasl2-devel libicu-devel
 BuildRequires: zlib-devel libsnappy-devel
 
 %{?_enable_tests:BuildRequires: mongodb-server openssl}
@@ -30,42 +31,53 @@ Requires: %name = %EVR
 This package contains the header files and development libraries
 for mongo-c-driver
 
+%package -n libbson
+Group: System/Libraries
+License: ASLv2.0
+Summary: A BSON utility library
+
+%description -n libbson
+libbson is a library providing useful routines related to building,
+parsing, and iterating BSON documents. It is a useful base for those
+wanting to write high-performance C extensions to higher level languages
+such as python, ruby, or perl.
+
+%package -n libbson-devel
+Summary: Development files of libbson
+Group: Development/C
+Requires: libbson = %EVR
+
+%description -n libbson-devel
+libbson is a library providing useful routines related to building,
+parsing, and iterating BSON documents. It is a useful base for those
+wanting to write high-performance C extensions to higher level languages
+such as python, ruby, or perl.
+
+This package contains development files of libbson.
+
 %prep
 %setup
 
 %build
-mkdir -p src/libbson
-# Generate build scripts from sources
-%autoreconf -I build/autotools
-# delete bundled libbson sources
-rm -rf src/libbson
-mkdir -p src/libbson
-%configure \
-	--enable-shared \
-	--disable-static \
-	--disable-lto \
-	--disable-maintainer-flags \
-	--disable-optimizations \
-	--disable-silent-rules \
-	--enable-debug-symbols \
-	--enable-shm-counters \
-	--disable-automatic-init-and-cleanup \
-	%{subst_enable tests} \
-	--enable-sasl \
-	--enable-ssl \
-	--with-libbson=system \
-	--with-snappy=system \
-	--with-zlib=system \
-	--disable-html-docs \
-	--enable-man-pages
+%cmake \
+    -DENABLE_STATIC:STRING=OFF \
+    -DENABLE_BSON:STRING=ON \
+    -DENABLE_MONGOC:BOOL=ON \
+    -DENABLE_SHM_COUNTERS:BOOL=ON \
+    -DENABLE_SSL:STRING=OPENSSL \
+    -DENABLE_SASL:STRING=CYRUS \
+    -DENABLE_ICU:STRING=ON \
+    -DENABLE_AUTOMATIC_INIT_AND_CLEANUP:BOOL=OFF \
+    -DENABLE_CRYPTO_SYSTEM_PROFILE:BOOL=ON \
+    -DENABLE_MAN_PAGES:BOOL=ON \
+    %{?_disable_tests:-DENABLE_TESTS:BOOL=OFF} \
+    -DENABLE_EXAMPLES:BOOL=OFF
 
 
-rm -rf src/zlib-*
-
-%make_build all doc/man
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %check
 %if_enabled tests
@@ -91,15 +103,31 @@ exit $ret
 %files
 %doc COPYING NEWS *.md *.rst
 %_bindir/*
-%_libdir/*.so.*
+%_libdir/libmongoc*.so.*
 
 %files devel
-%_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/*
-%_man3dir/*
+%_includedir/libmongoc*
+%_libdir/libmongoc*.so
+%_pkgconfigdir/libmongoc*.pc
+%_man3dir/mongoc*
+%_libdir/cmake/libmongoc*
+
+%files -n libbson
+%doc NEWS README.rst
+%_libdir/libbson*.so.*
+
+%files -n libbson-devel
+%_includedir/libbson*
+%_libdir/libbson*.so
+%_pkgconfigdir/libbson*.pc
+%_man3dir/bson*
+%_libdir/cmake/libbson*
+
 
 %changelog
+* Tue Sep 04 2018 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt1%ubt
+- 1.12.0
+
 * Fri Mar 09 2018 Alexey Shabalin <shaba@altlinux.ru> 1.9.3-alt1%ubt
 - 1.9.3
 
