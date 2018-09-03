@@ -1,7 +1,8 @@
 %define oname cryfs
+%def_without system_spdlog
 Name: fuse-cryfs
 Version: 0.9.9
-Release: alt1
+Release: alt2
 
 Summary: Cryptographic filesystem for the cloud
 
@@ -26,8 +27,11 @@ BuildRequires: libssl-devel
 
 BuildRequires: gcc-c++
 
+# TODO: check when will req spdlog >= 1.1
+%if_with system_spdlog
 # instead builtin
-BuildRequires: libspdlog-devel
+BuildRequires: libspdlog-devel = 0.12.0
+%endif
 
 BuildRequires: python-modules-json
 
@@ -42,10 +46,12 @@ See https://www.cryfs.org.
 
 # conflicts with CHAR_WIDTH macro
 %__subst "s|CHAR_WIDTH|SPDLOG_CHAR_WIDTH|g" vendor/spdlog/spdlog/fmt/bundled/format.h
+%if_with system_spdlog
 # replaced with libspdlog-devel
 rm -rf vendor/spdlog/
 %__subst "s|.*spdlog.*||" vendor/CMakeLists.txt
 %__subst "s|spdlog||" src/cpp-utils/CMakeLists.txt
+%endif
 
 %build
 %cmake -DBUILD_TESTING=off -DBoost_INCLUDE_DIRS=%_includedir/boost -DBoost_USE_STATIC_LIBS=off -DCMAKE_BUILD_TYPE=RELEASE
@@ -59,6 +65,9 @@ rm -rf vendor/spdlog/
 %_man1dir/*
 
 %changelog
+* Mon Sep 03 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.9-alt2
+- disable build with external stdlog
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.9-alt1
 - new version 0.9.9 (with rpmrb script), rebuild with libcryptopp-6.1.0
 - enable dynamic boost build
