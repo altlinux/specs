@@ -1,8 +1,8 @@
 %define major 9
 
 Name: owncloud%major
-Version: 9.1.6
-Release: alt3
+Version: 9.1.8
+Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -20,10 +20,8 @@ Requires(pre): webserver-common
 #https://doc.owncloud.org/server/9.1/admin_manual/installation/source_installation.html
 Requires: php5 >= 5.4 php5-libs php5-dom php5-gd2 php5-mbstring php5-xmlreader php5-zip php5-curl php5-fileinfo
 Requires: memcached php5-memcache php5-memcached 
-#For SQLite:
-Requires: php5-pdo
-#For MySQL:
-#Requires: MySQL-server php5-pdo_mysql
+#For SQL DBs:
+Requires: php5-pdo-driver
 
 Source0: %name-%version.tar
 
@@ -124,6 +122,10 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf 
 
 %changelog
+* Mon Sep 03 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.8-alt1
+- 9.1.8
+- Updated requires for SQL DBs (closes: #35310)
+
 * Thu Jul 13 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.6-alt3
 - Fixed permissions - addition to previous release
 
