@@ -5,7 +5,7 @@
 
 Name: plasma5-%rname
 Version: 5.12.6
-Release: alt6%ubt
+Release: alt7%ubt
 Epoch: 1
 %K5init altplace
 
@@ -16,7 +16,7 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 Patch: %rname-alt-timer.patch
-Patch2: %rname-alt-wrap.patch
+Patch2: %rname-alt-tooltip.patch
 
 # Automatically added by buildreq on Tue Apr 07 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs
@@ -93,6 +93,9 @@ KF5 library
 %_K5lib/libmilou.so.%milou_sover
 
 %changelog
+* Mon Sep 03 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.6-alt7%ubt
+- krunner: don't wrap lines, use tooltips
+
 * Thu Aug 30 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.6-alt6%ubt
 - krunner: increase margin
 
