@@ -1,5 +1,5 @@
 Name: nextcloud
-Version: 13.0.4
+Version: 13.0.6
 Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
@@ -20,8 +20,8 @@ Requires(pre): webserver-common
 Requires: php7 php7-libs php7-dom php7-gd2 php7-mbstring php7-xmlreader php7-zip
 # Highly recommended:
 Requires: php7-curl php7-fileinfo php7-openssl
-# For SQLite (minimal installation)
-Requires: php7-pdo
+# For SQL DBs
+Requires: php7-pdo-driver
 
 Source0: %name-%version.tar
 
@@ -118,9 +118,13 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
 %files nginx
-%config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf 
+%config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Mon Sep 03 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 13.0.6-alt1
+- version 13.0.6 (Aug 30 2018)
+- update requires for SQL DBs
+
 * Tue Jun 19 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 13.0.4-alt1
 - version 13.0.4 (Jun 11 2018)
 - update requires: php5 > php7
