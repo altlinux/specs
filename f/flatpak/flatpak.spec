@@ -10,7 +10,7 @@
 %def_enable docs
 
 Name: flatpak
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -147,6 +147,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Wed Aug 22 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
