@@ -3,7 +3,7 @@
 Name: openipmi
 Summary: %name - Library interface to IPMI
 Version: 2.0.25
-Release: alt1%ubt
+Release: alt2
 License: LGPL
 Url: http://openipmi.sourceforge.net
 Group: System/Configuration/Hardware
@@ -161,6 +161,9 @@ rm -f %buildroot%_libdir/libOpenIPMIglib12.*
 
 
 %changelog
+* Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 2.0.25-alt2
+- rebuilt with libopenssl1.1
+
 * Tue May 08 2018 Anton Farygin <rider@altlinux.ru> 2.0.25-alt1%ubt
 - 2.0.25
 
