@@ -1,6 +1,6 @@
 Name: ddcal
 Version: 0.9
-Release: alt2
+Release: alt3
 Summary: BDD calculator based on CUDD
 License: BSD
 Group: Sciences/Mathematics
@@ -38,6 +38,9 @@ chmod +x %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Tue Sep 04 2018 Vladislav Zavjalov <slazav@altlinux.org> 0.9-alt3
+- fix building
+
 * Sun Aug 12 2018 Vladislav Zavjalov <slazav@altlinux.org> 0.9-alt2
 - fix building with make -jN
 
