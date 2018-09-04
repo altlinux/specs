@@ -1,5 +1,5 @@
 Name: u-boot-sunxi64
-Version: 2018.05
+Version: 2018.07
 Release: alt1
 
 Summary: Das U-Boot
@@ -11,7 +11,7 @@ ExclusiveArch: aarch64
 
 Source: %name-%version-%release.tar
 
-BuildRequires: bc ccache dtc >= 1.4
+BuildRequires: bc ccache dtc >= 1.4 flex
 BuildRequires: python-devel swig
 BuildRequires: python2.7(multiprocessing)
 BuildRequires: atf-sunxi
@@ -46,6 +46,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Sep 04 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2018.07-alt1
+- 2018.07 released
+
 * Fri Jun 29 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2018.05-alt1
 - 2018.05 released
 
