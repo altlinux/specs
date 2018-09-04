@@ -39,7 +39,7 @@
 
 Name: mnogosearch
 Version: 3.3.14
-Release: alt2
+Release: alt2.1
 
 Summary: a full-featured search engine for intranet and internet servers
 Summary(ru_RU.UTF-8): поисковая машина для серверов интернет и интранет
@@ -639,6 +639,9 @@ fi
 %endif
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.3.14-alt2.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Mon Jun 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 3.3.14-alt2
 - Rebuild with unixODBC 2.3.1
 
