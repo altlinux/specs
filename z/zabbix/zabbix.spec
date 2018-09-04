@@ -16,7 +16,7 @@
 
 Name: zabbix
 Version: 3.4.13
-Release: alt1%ubt
+Release: alt2%ubt
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -650,6 +650,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.13-alt2%ubt
+- Rebuild with OpenSSL 1.1.x
+
 * Tue Aug 28 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.13-alt1%ubt
 - 3.4.13
 
