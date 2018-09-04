@@ -1,6 +1,6 @@
 Name: android-tools
 Version: 5.1.1
-Release: alt2
+Release: alt3
 
 Summary: Android Debug CLI tools
 License: APL
@@ -97,6 +97,9 @@ done
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Tue Sep 04 2018 Pavel Nakonechnyi <zorg@altlinux.org> 5.1.1-alt3
+- rebuilt with OpenSSL 1.1.x
+
 * Tue Aug 21 2018 Pavel Nakonechnyi <zorg@altlinux.org> 5.1.1-alt2
 - patches to support OpenSSL 1.1.x are enabled
 - fixed bash completions installation
