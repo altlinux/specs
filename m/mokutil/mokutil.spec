@@ -1,6 +1,6 @@
 Name: mokutil
 Version: 0.3.0
-Release: alt1.dev.git20180724%ubt
+Release: alt2.dev.git20180724%ubt
 Epoch: 1
 
 Summary: Tool to manage UEFI Secure Boot MoK Keys
@@ -42,6 +42,9 @@ make PREFIX=%prefix LIBDIR=%_libdir DESTDIR=%buildroot install
 %_datadir/bash-completion/completions/mokutil
 
 %changelog
+* Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 1:0.3.0-alt2.dev.git20180724%ubt
+- rebuilt with openssl-1.1
+
 * Tue Jul 31 2018 Nikolai Kostrigin <nickel@altlinux.org> 1:0.3.0-alt1.dev.git20180724%ubt
 - first independent package for ALT Linux
   + raise epoch due to package unbundling from shim-unsigned-0.4
