@@ -5,7 +5,7 @@
 %define postgresql_major     9
 %define postgresql_minor     4
 %define postgresql_subminor  19
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -54,7 +54,7 @@ Conflicts: %{prog_name}9.6
 Conflicts: %{prog_name}10
 
 BuildRequires: OpenSP chrooted docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
-BuildRequires: libselinux-devel
+BuildRequires: libselinux-devel libkrb5-devel
 
 %description
 PostgreSQL is an advanced Object-Relational database management system
@@ -766,6 +766,10 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 9.4.19-alt2
+- Add BR: libkrb5-devel
+- Rebuild with OpenSSL 1.1.x
+
 * Sat Aug 11 2018 Alexei Takaseev <taf@altlinux.org> 9.4.19-alt1
 - 9.4.19
 - Fix CVE-2018-10915
