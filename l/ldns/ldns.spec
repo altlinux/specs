@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_with python
 # dane_ta_usage requires openssl >= 1.1.0
 %def_without dane_ta_usage
 
 Name: ldns
 Version: 1.7.0
-Release: alt1%ubt
+Release: alt2%ubt
 License: BSD
 Url: http://www.nlnetlabs.nl/%name/
 Group: System/Libraries
@@ -154,6 +156,9 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %endif
 
 %changelog
+* Tue Sep 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.0-alt2%ubt
+- Rebuilt with openssl 1.1.
+
 * Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.0-alt1%ubt
 - Updated to upstream release version 1.7.0.
 - Added %%ubt macro to release.
