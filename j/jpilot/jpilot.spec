@@ -4,7 +4,7 @@ Name: jpilot
 Summary: Palm pilot desktop for Linux
 Summary(ru_RU.UTF-8): Palm pilot desktop для Linux
 Version: 1.8.2
-Release: alt1
+Release: alt2
 
 License: GPL
 Group: Communications
@@ -51,6 +51,8 @@ The library and header file required for plugin development
 %patch1 -p1
 
 %build
+%add_optflags -DHEADER_NEW_DES_H=1
+
 NOCONFIGURE=1 ./autogen.sh
 export ABILIB=%_lib
 %configure \
@@ -98,6 +100,9 @@ rm -f %buildroot%_libdir/%name/plugins/*.la
 %_libdir/jpilot/plugins/prefs.h
 
 %changelog
+* Tue Sep 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt2
+- Rebuilt with openssl 1.1.
+
 * Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt1
 - Updated to upstream version 1.8.2.
 - Converted spec to UTF-8.
