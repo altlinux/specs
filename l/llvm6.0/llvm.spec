@@ -1,7 +1,7 @@
 %global v_major 6.0
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt0.10
+%global rel alt0.11
 %global llvm_name llvm%v_major
 %global clang_name clang%v_major
 %global lld_name lld
@@ -10,9 +10,7 @@
 %define optflags_debug -g1
 
 %def_disable tests
-%ifnarch aarch64
 %def_with clang
-%endif
 
 Name: %llvm_name
 Version: 6.0.0
@@ -398,6 +396,9 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Wed Sep 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.0-alt0.11.rel
+- NMU: updated build with clang for aarch64.
+
 * Tue Jun 19 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.10.rel
 - llvm-ar: backported support of dashed options (chromium build
   depends on it).
