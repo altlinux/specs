@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.48.0
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -104,6 +104,9 @@ KF5 library
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Tue Sep 04 2018 Oleg Solovyov <mcpain@altlinux.org> 5.48.0-alt3%ubt
+- kwallet: edit notification text
+
 * Mon Sep 03 2018 Oleg Solovyov <mcpain@altlinux.org> 5.48.0-alt2%ubt
 - kwallet: create a wallet when user refuses to do so
 
