@@ -1,7 +1,7 @@
 %define module ALTLinux-ACL
 
 Name: perl-%module
-Version: 0.18
+Version: 0.19
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl-IPC-Run3 perl(Data/Array2Array
 %_man1dir/*
 
 %changelog
+* Tue Sep 04 2018 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- added --nvr option
+
 * Wed Jul 04 2018 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - updated documentation, fixed Url
 
