@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 3.28.0
-Release: alt2
+Version: 3.29.0
+Release: alt1
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -167,6 +167,10 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Wed Aug 29 2018 Vitaly Lipatov <lav@altlinux.ru> 3.29.0-alt1
+- new version 3.29.0 (with rpmrb script)
+- rebuild with podofo 0.9.6
+
 * Thu Aug 16 2018 Sergey V Turchin <zerg@altlinux.org> 3.28.0-alt2
 - rebuild with new Qt
 
