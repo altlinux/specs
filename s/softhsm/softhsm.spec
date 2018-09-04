@@ -1,10 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define softhsm_module "SoftHSM PKCS #11 Module"
-%define nssdb %_sysconfdir/pki/nssdb
 
 Name: softhsm
-Version: 2.1.0
+Version: 2.4.0
 
-Release: alt3
+Release: alt1
 Summary: Software version of a PKCS#11 Hardware Security Module
 License: BSD
 Group: System/Configuration/Other
@@ -13,17 +13,16 @@ Url: http://www.opendnssec.org/
 
 # repacked https://dist.opendnssec.org/source/%name-%version.tar.gz
 Source0: %name-%version.tar
+Patch1: softhsm-2.3.0-reset-mutex-callbacks.patch
 
-Source2: softhsm.module
-# taken from coolkey which is not build on all arches we build on
-Source3: softhsm2-pk11install.c
-Patch1: softhsm2-1378800-openssl.patch
+BuildRequires: gcc-c++
+BuildRequires: libssl-devel
+BuildRequires: libnss-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: zlib-devel
+BuildRequires: sqlite3
 
-# Automatically added by buildreq on Wed Nov 02 2016
-# optimized out: libcom_err-devel libkrb5-devel libnspr-devel libstdc++-devel perl pkg-config python-base python-modules
-BuildRequires: gcc-c++ libnss-devel libsqlite3-devel libssl-devel sqlite3 zlib-devel
-
-%{?!_without_check:%{?!_disable_check:BuildRequires: cppunit-devel pkg-config}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: cppunit-devel}}
 
 Requires: lib%name = %EVR
 
@@ -44,6 +43,7 @@ This package contains development files for SoftHSM library.
 %package devel
 Summary: Development package of softhsm that includes the header files
 Group: Development/C
+BuildArch: noarch
 Requires: lib%name = %EVR
 
 %description devel
@@ -52,11 +52,6 @@ The devel package contains the libsofthsm include files.
 %prep
 %setup -n %name-%version
 %patch1 -p1
-
-find . -iname '*.am' -print0 | xargs -0 \
-    sed -i \
-        -e 's:cppunit-config --cflags:pkg-config --cflags cppunit:g' \
-        -e 's:cppunit-config --libs:pkg-config --libs cppunit:g'
 
 %build
 %autoreconf
@@ -74,29 +69,22 @@ sed -i "s:libdir)/@PACKAGE@:libdir):" Makefile.in
 	--disable-gost \
 	--with-migrate \
 	--enable-visibility \
+        --with-p11-kit=%_datadir/p11-kit/modules/ \
 	#
 
 %make_build
-# install our copy of pk11install taken from coolkey package
-cp %SOURCE3 .
-cc $(pkg-config --cflags nss) %optflags -c softhsm2-pk11install.c
-cc softhsm2-pk11install.o $(pkg-config --libs nss) \
-	-lpthread  -lsoftokn3 -ldl -lz %optflags \
-	-o softhsm2-pk11install
 
 %check
-make check
+%make check
 
 %install
 %makeinstall_std
-install -D %SOURCE2 %buildroot/%_datadir/p11-kit/modules/softhsm.module
 
 rm %buildroot/%_sysconfdir/softhsm2.conf.sample
 rm -f %buildroot/%_libdir/pkcs11/*a
 mkdir -p %buildroot%_includedir/softhsm
 cp src/lib/*.h %buildroot%_includedir/softhsm
 mkdir -p %buildroot/%_sharedstatedir/softhsm/tokens
-install -m0755 -D softhsm2-pk11install %buildroot/%_bindir/softhsm2-pk11install
 
 # leave a softlink where softhsm-1 installed its library. Programs like
 # opendnssec have that filename in their configuration file.
@@ -113,34 +101,33 @@ getent passwd ods >/dev/null || \
 exit 0
 
 %post
-isThere=`modutil -rawlist -dbdir %nssdb | grep %softhsm_module || echo NO`
-if [ "$isThere" = "NO" ]; then
-      softhsm2-pk11install -p %nssdb 'name=%softhsm_module library=libsofthsm2.so'
-fi
-if [ $1 -eq 0 ]; then
-   modutil -delete %softhsm_module -dbdir %nssdb -force || :
-fi
 
 %files
-%_bindir/*
-%dir %_libdir/softhsm
-%_libdir/softhsm/libsofthsm.so
-%_libdir/pkcs11/libsofthsm2.so
-%_datadir/p11-kit/modules/softhsm.module
+%doc LICENSE README.md NEWS
+%_bindir/softhsm2-dump-file
+%_bindir/softhsm2-keyconv
+%_bindir/softhsm2-migrate
+%_bindir/softhsm2-util
+%_datadir/p11-kit/modules/softhsm2.module
 %attr(0770,ods,ods) %dir %_sharedstatedir/softhsm
 %attr(0770,ods,ods) %dir %_sharedstatedir/softhsm/tokens
-%doc LICENSE README.md NEWS
 %_man1dir/*
 
 %files -n lib%name
+%dir %_libdir/softhsm
+%_libdir/softhsm/libsofthsm.so
 %_libdir/libsofthsm2.so
+%_libdir/pkcs11/libsofthsm2.so
 %config(noreplace) %_sysconfdir/softhsm2.conf
 %_man5dir/softhsm2.conf.5*
 
 %files devel
-%_includedir/softhsm
+%_includedir/softhsm/
 
 %changelog
+* Tue Sep 04 2018 Stanislav Levin <slev@altlinux.org> 2.4.0-alt1
+- 2.1.0 -> 2.4.0.
+
 * Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt3
 - Fix build with new cppunit
 
