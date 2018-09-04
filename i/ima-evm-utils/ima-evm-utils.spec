@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ima-evm-utils
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: IMA/EVM support utilities
@@ -85,5 +85,8 @@ sed 's|^MANPAGE_DOCBOOK_XSL *=.*|MANPAGE_DOCBOOK_XSL = %_datadir/xml/docbook/xsl
 %_libdir/libimaevm.so
 
 %changelog
+* Tue Sep 04 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1-alt1
+- Updated to 1.1.
+
 * Wed Sep 06 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0-alt1
 - Initial build.
