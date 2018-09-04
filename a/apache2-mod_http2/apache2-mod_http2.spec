@@ -1,6 +1,6 @@
 Name:		apache2-mod_http2
-Version:	1.10.20
-Release:	alt1.1%ubt
+Version:	1.11.0
+Release:	alt1%ubt
 Summary:	module implementing HTTP/2 for Apache 2
 Group:		System/Servers
 License:	ASL 2.0
@@ -9,7 +9,7 @@ Source0:	%name-%version.tar
 Source1:	%name.watch
 Patch0:		%name-%version-alt.patch
 BuildRequires(pre): apache2-devel > 2.4.27-alt1, rpm-build-ubt
-BuildRequires:	pkgconfig, libnghttp2-devel >= 1.7.0, libssl-devel >= 1.0.2, libaprutil1-devel
+BuildRequires:	pkgconfig, libnghttp2-devel >= 1.7.0, libssl-devel >= 1.0.2, libaprutil1-devel, libcurl-devel
 Provides: mod_h2 = %EVR
 Provides: mod_http2 = %EVR
 
@@ -48,6 +48,9 @@ echo "LoadModule proxy_http2_module modules/mod_proxy_http2.so" > %buildroot%apa
 %apache2_moduledir/mod_proxy_http2.so
 
 %changelog
+* Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 1.11.0-alt1%ubt
+- 1.11.0
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.10.20-alt1.1%ubt
 - NMU: Rebuild with new openssl 1.1.0.
 
