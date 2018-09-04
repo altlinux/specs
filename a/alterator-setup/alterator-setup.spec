@@ -2,7 +2,7 @@
 
 Name: alterator-setup
 Version: 0.3.3
-Release: alt1
+Release: alt2
 
 Summary: Perform initial setup of an OEM installation (warning!)
 License: GPLv2
@@ -84,6 +84,16 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Tue Sep 04 2018 Dmitry Terekhin <jqt4@altlinux.org> 0.3.3-alt2
+- closes: #35276
+
+* Tue Sep 04 2018 Dmitry Terekhin <jqt4@altlinux.org> 0.3.3-alt1.0.mips2
+- Deleted now unnecessary reboot commands
+
+* Tue Aug 21 2018 Dmitry Terekhin <jqt4@altlinux.org> 0.3.3-alt1.0.mips1
+- Added forcible reboot to work around the incompatibility problem with
+- systemd 238
+
 * Tue Apr 03 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.3.3-alt1
 - made service file more correct.
 
