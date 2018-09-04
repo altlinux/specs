@@ -15,7 +15,7 @@
 
 Name: lighttpd
 Version: 1.4.50
-Release: alt1
+Release: alt2
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -296,6 +296,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 1.4.50-alt2
+- Rebuild with OpenSSL 1.1.x
+
 * Tue Aug 21 2018 Alexei Takaseev <taf@altlinux.org> 1.4.50-alt1
 - 1.4.50
 
