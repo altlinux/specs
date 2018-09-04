@@ -3,7 +3,7 @@
 Name: http_post
 
 Version: 20180518
-Release: alt1
+Release: alt1.1
 
 Summary: utility to do POST to an HTTP/HTTPS URL
 
@@ -49,6 +49,9 @@ install -m 0644 %name.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 20180518-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Thu May 24 2018 Nikolay A. Fetisov <naf@altlinux.org> 20180518-alt1
 - New version
 
