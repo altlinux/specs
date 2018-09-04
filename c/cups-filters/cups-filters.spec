@@ -4,7 +4,7 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.21.1
+Version: 1.21.2
 Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
@@ -39,7 +39,7 @@ BuildRequires: cups-devel
 BuildRequires: libdbus-devel
 BuildRequires: libldap-devel
 # pdftopdf
-BuildRequires: libqpdf-devel
+BuildRequires: libqpdf-devel >= 8.1.0
 # pdftops
 BuildRequires: poppler-utils
 # pdftoijs, pdftoopvp, pdftoraster
@@ -227,6 +227,9 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 1.21.2-alt1
+- new version 1.21.2
+
 * Sun Sep 02 2018 Anton Farygin <rider@altlinux.ru> 1.21.1-alt1
 - new version 1.21.1
 
