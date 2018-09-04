@@ -24,7 +24,7 @@
 
 Name: libuniset2
 Version: 2.7
-Release: alt14
+Release: alt15
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -544,6 +544,16 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Tue Sep 04 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt15
+- (mtr): fix bug for read from 'serial device'
+- (UNet): added "undefined_value" property
+- (SM): added undefined value for IOController
+- (RTU): minor fixes (catch exceptions)
+- (UNetUDP): check byte order
+- (UNetUDP): encoding is not used if the byte order is the same as the system
+- (ComPort485F): added error handling for read
+- (mbrtutest): added 'polltime' option eterbug #13154
+
 * Thu Aug 02 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt14
 - remove deprecated classes
 - (SM): fixed bug 'uninitialized time value'
