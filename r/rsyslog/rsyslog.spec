@@ -1,6 +1,6 @@
 %def_enable gssapi
-%def_enable liblogging_stdlog
-%def_enable rfc3195
+%def_disable liblogging_stdlog
+%def_disable rfc3195
 %def_disable mmcount
 %def_disable ksi_ls12
 %def_disable omamqp1
@@ -8,11 +8,14 @@
 %def_enable ommongodb
 %def_enable omhttpfs
 %def_enable elasticsearch
+%def_enable openssl
+%def_enable gnutls
+%def_enable libgcrypt
 %def_enable libsystemd
 %def_enable mmkubernetes
 
 Name: rsyslog
-Version: 8.35.0
+Version: 8.37.0
 Release: alt1%ubt
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -30,8 +33,10 @@ BuildRequires: libdbi-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: postgresql-devel
 BuildRequires: libkrb5-devel
-BuildRequires: librelp-devel >= 1.2.14
-BuildRequires: libgnutls-devel libgcrypt-devel
+BuildRequires: librelp-devel >= 1.2.16
+%{?_enable_gnutls:BuildRequires: libgnutls-devel >= 1.4.0}
+%{?_enable_libgcrypt:BuildRequires: libgcrypt-devel}
+%{?_enable_openssl:BuildRequires: libssl-devel}
 BuildRequires: libnet-snmp-devel
 BuildRequires: libnet-devel
 BuildRequires: libestr-devel >= 0.1.9
@@ -171,6 +176,17 @@ The rsyslog-gnutls package contains dynamic shared objects that will add
 GNUTLS support to rsyslog.
 
  o lmnsd_gtls.so - This is a miscellaneous helper class for gnutls features.
+
+%package openssl
+Summary: Openssl support for rsyslog
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+
+%description openssl
+The rsyslog-openssl package contains dynamic shared objects that will add
+openssl support to rsyslog.
+
+ o lmnsd_ossl.so - This is a miscellaneous helper class for openssl features.
 
 %package relp
 Summary: RELP support for rsyslog
@@ -354,7 +370,9 @@ export HIREDIS_LIBS=-lhiredis
 	--disable-testbench \
 	%{subst_enable elasticsearch} \
 	%{subst_enable mmcount} \
-	--enable-gnutls \
+   	%{subst_enable libgcrypt} \
+	%{subst_enable openssl} \
+	%{subst_enable gnutls} \
 	%{?_enable_gssapi:--enable-gssapi-krb5} \
 	--enable-imdiag \
 	--enable-imfile \
@@ -452,7 +470,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/imkmsg.so
 %mod_dir/immark.so
 %mod_dir/imtcp.so
+%if_enabled rfc3195
 %mod_dir/im3195.so
+%endif
 %mod_dir/imudp.so
 %mod_dir/imuxsock.so
 %mod_dir/lmnet.so
@@ -512,6 +532,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %files gnutls
 %mod_dir/lmnsd_gtls.so
 
+%files openssl
+%mod_dir/lmnsd_ossl.so
+
 %files relp
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_relp.conf
 %mod_dir/imrelp.so
@@ -557,6 +580,7 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/omhiredis.so
 
 %files extra
+%mod_dir/fmhash.so
 %mod_dir/imdiag.so
 %mod_dir/imptcp.so
 %mod_dir/impstats.so
@@ -577,6 +601,11 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Mon Sep 03 2018 Alexey Shabalin <shaba@altlinux.org> 8.37.0-alt1%ubt
+- 8.37.0
+- add package with openssl TLS driver
+- build without liblogging (without rfc3195 too)
+
 * Wed May 16 2018 Alexey Shabalin <shaba@altlinux.ru> 8.35.0-alt1%ubt
 - 8.35.0
 
