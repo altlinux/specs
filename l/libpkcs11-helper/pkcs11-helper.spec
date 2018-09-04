@@ -1,5 +1,6 @@
 %define _name pkcs11-helper
 %def_enable openssl
+%def_disable LibreSSL # depends on openssl switch above
 %def_disable gnutls
 %def_disable nss
 %def_disable polarssl
@@ -7,7 +8,7 @@
 
 Name: lib%_name
 Version: 1.25.1
-Release: alt1
+Release: alt2
 Summary: A library for using PKCS#11 providers
 
 Group: Development/Other
@@ -21,7 +22,13 @@ Provides: %_name = %version-%release
 Obsoletes: %_name < %version-%release
 
 BuildRequires: doxygen graphviz
-%{?_enable_openssl:BuildRequires: libssl-devel}
+%if_enabled openssl
+%if_enabled LibreSSL
+BuildRequires: LibreSSL-devel
+%else
+BuildRequires: libssl-devel
+%endif
+%endif
 %{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 1.4}
 %{?_enable_nss:BuildRequires: pkgconfig(nss) >= 3.11}
 %{?_enable_polarssl:BuildRequires: libpolarssl-devel}
@@ -84,6 +91,9 @@ rm -f %buildroot%_libdir/*.la
 %_man8dir/*.8*
 
 %changelog
+* Tue Sep 04 2018 Paul Wolneykien <manowar@altlinux.org> 1.25.1-alt2
+- Add the option to build with LibreSSL (currently is off).
+
 * Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 1.25.1-alt1
 - 1.25.1
 
