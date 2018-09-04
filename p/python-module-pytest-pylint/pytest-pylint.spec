@@ -1,92 +1,104 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pytest-pylint
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 0.7.1
-Release: alt1.1
+Version: 0.12.3
+Release: alt1
 Summary: pytest plugin to check source code with pylint
 License: MIT
 Group: Development/Python
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/pytest-pylint/
+Url: https://pypi.org/project/pytest-pylint/
 
 # https://github.com/carsongee/pytest-pylint.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools pylint
-BuildRequires: python-module-pytest-pep8
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools pylint-py3
+%if_with check
+BuildRequires: pylint
+BuildRequires: python-module-pytest
+BuildRequires: python-module-pytest-pep8
+BuildRequires: python-module-mock
+BuildRequires: python-module-tox
+BuildRequires: python-module-coverage
+BuildRequires: python3-module-pylint
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-pep8
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-coverage
 %endif
-
-%py_provides pytest_pylint
-%py_requires pytest pylint pytest_pep8
 
 %description
 Run pylint with pytest and have configurable rule types (i.e.
 Convention, Warn, and Error) fail the build. You can also specify a
 pylintrc file.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: pytest plugin to check source code with pylint
 Group: Development/Python3
-%py3_provides pytest_pylint
-%py3_requires pytest pylint pytest_pep8
 
 %description -n python3-module-%oname
 Run pylint with pytest and have configurable rule types (i.e.
 Convention, Warn, and Error) fail the build. You can also specify a
 pylintrc file.
-%endif
 
 %prep
 %setup
 
-%if_with python3
+rm -rf ../python3
 cp -fR . ../python3
-%endif
 
 %build
-%python_build_debug
+%python_build
 
-%if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
+export PIP_INDEX_URL=http://host.invalid./
+
+# copy necessary exec deps
+export PYTHONPATH=`pwd`
+TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages \
+-e py%{python_version_nodots python} --notest
+cp -T %_bindir/coverage .tox/py%{python_version_nodots python}/bin/coverage
+TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages \
+-e py%{python_version_nodots python} -v -- -v
+
 pushd ../python3
-python3 setup.py test
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages \
+-e py%{python_version_nodots python3} --notest
+cp -T %_bindir/coverage3 .tox/py%{python_version_nodots python3}/bin/coverage
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages \
+-e py%{python_version_nodots python3} -v -- -v
 popd
-%endif
 
 %files
 %doc *.rst pylintrc
-%python_sitelibdir/*
+%python_sitelibdir/pytest_pylint.py*
+%python_sitelibdir/pytest_pylint-*.egg-info/
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.rst pylintrc
-%python3_sitelibdir/*
-%endif
+%python3_sitelibdir/pytest_pylint.py
+%python3_sitelibdir/pytest_pylint-*.egg-info/
+%python3_sitelibdir/__pycache__/
 
 %changelog
+* Mon Sep 03 2018 Stanislav Levin <slev@altlinux.org> 0.12.3-alt1
+- 0.7.1 -> 0.12.3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

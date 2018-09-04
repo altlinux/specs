@@ -1,32 +1,36 @@
 %define _unpackaged_files_terminate_build 1
+%define oname pylint
 
 %def_with check
 
-Name: pylint
-Version: 1.9.1
-Release: alt2
+Name: python3-module-%oname
+Version: 2.1.1
+Release: alt1
 
 Summary: Python code static checker
 License: GPLv2+
-Group: Development/Python
+Group: Development/Python3
 # https://github.com/PyCQA/pylint.git
 Url: http://www.pylint.org/
 
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pytest-runner
+BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python-module-pytest
-BuildRequires: python-module-astroid
-BuildRequires: python-module-mccabe
-BuildRequires: python-module-configparser
-BuildRequires: python-module-isort
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-runner
+BuildRequires: python3-module-astroid
+BuildRequires: python3-module-mccabe
+BuildRequires: python3-module-isort
+BuildRequires: python3-module-enchant
+BuildRequires: hunspell-en
 %endif
 
 BuildArch: noarch
-%py_requires mccabe
+Provides: pylint-py3 = %EVR
+Obsoletes: pylint-py3 < %EVR
+%py3_requires mccabe
 
 %description
 Pylint is a Python source code analyzer which looks for programming
@@ -46,28 +50,35 @@ Additionally, it is possible to write plugins to add your own checks.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
 
-%python_install
-# do not pack tests and hide from python.req
-rm -r %buildroot%python_sitelibdir/%name/test*
+%python3_install
+# do not pack tests
+rm -r %buildroot%python3_sitelibdir/pylint/test*
+
+pushd %buildroot%_bindir
+for i in $(ls); do
+       mv $i $i.py3
+done
 
 %check
-PYTHONPATH=$(pwd) py.test -v
+export PYTHONPATH=`pwd`
+py.test3 -vrs
 
 %files
 %doc ChangeLog README.rst doc/
-%_bindir/pylint
-%_bindir/epylint
-%_bindir/pyreverse
-%_bindir/symilar
-%python_sitelibdir/%name
-%python_sitelibdir/%name-%version-py2*.egg-info
+%_bindir/pylint.py3
+%_bindir/epylint.py3
+%_bindir/pyreverse.py3
+%_bindir/symilar.py3
+%python3_sitelibdir/pylint/
+%python3_sitelibdir/pylint-*.egg-info/
 
 %changelog
-* Mon Sep 03 2018 Stanislav Levin <slev@altlinux.org> 1.9.1-alt2
+* Mon Sep 03 2018 Stanislav Levin <slev@altlinux.org> 2.1.1-alt1
+- 1.9.1 -> 2.1.1.
 - Move Python3 module to a separated src package.
 
 * Fri May 25 2018 Stanislav Levin <slev@altlinux.org> 1.9.1-alt1
