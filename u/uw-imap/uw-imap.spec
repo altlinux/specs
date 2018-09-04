@@ -1,6 +1,6 @@
 Name: uw-imap
 Version: 2004g
-Release: alt3.1.qa1
+Release: alt4
 
 Summary: Server daemons for IMAP and POP network mail protocols
 License: BSD
@@ -80,17 +80,12 @@ Source13: uw-spop3.xinetd
 Source8: imap-c-client-maildir.tar.bz2
 Source9: uw-imap-2001a-README.IMAPS.ALT
 
-Patch: uw-imap-2001a-alt8-openssl.patch
-
 Patch1: uw-imap-2001a-alt7-ALT-custom.patch
-Patch4: uw-imap-2001a-alt7-flocksim.patch
+Patch2: uw-imap-2001a-alt7-flocksim.patch
 
-Patch9: uw-imap-2001a-glibc-time.patch
-Patch10: uw-imap-2001a-debian-portability.patch
-Patch11: uw-imap-2001a-debian-nonull.patch
-Patch12: uw-imap-2001a-debian-blackbox-inbox.patch
-Patch13: uw-imap-2001a-overflow.patch
-Patch14: uw-imap-2001a-IMAP4-overflow.patch
+Patch3: uw-imap-2001a-debian-portability.patch
+Patch4: uw-imap-2001a-debian-nonull.patch
+Patch5: uw-imap-2001a-overflow.patch
 
 # The maildir support (turned on by %WithMaildir)
 # is supplied by three source pieces:
@@ -101,6 +96,7 @@ Patch14: uw-imap-2001a-IMAP4-overflow.patch
 Patch20:uw-imap-2001a-maildir-embed.patch
 # for glibc 2.2.2
 Patch22: imap-maildir-glibc-time.patch
+Patch21: uw-imap-2001a-debian-openssl1.1_autoverify.patch
 
 # Automatically added by buildreq on Wed Dec 05 2001
 BuildRequires: libpam-devel
@@ -163,20 +159,17 @@ echo Using release number %release
 ln -s . imap
 tar jxvf %SOURCE8
 
-#patch9 -p1 -b .glibc-time
-#patch0 -p1 -b .ssl
 %patch1 -p1 -b .ALT
-%patch10 -p1 -b .deb-port
-%patch11 -p1 -b .deb-nonull
-#patch12 -p1 -b .deb-blackbox
-%patch13 -p1 -b .overflow
-#patch14 -p1 -b .imap4
-%patch4 -p1 -b .flock
+%patch2 -p1 -b .deb-port
+%patch3 -p1 -b .deb-nonull
+%patch4 -p1 -b .overflow
+%patch5 -p1 -b .flock
 
 %if %WithMaildir
 %patch20 -p1 -b .maildir
 %patch22 -p1 -b .glibc-time-maildir
 %endif
+%patch21 -p1
 
 # RH says:
 # It looks like this is required by the license (see COPYRIGHT), so here goes....
@@ -302,6 +295,10 @@ fi
 %endif
 
 %changelog
+* Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 2004g-alt4
+- fixed build with openssl-1.1 with path from debian
+- cleanup specfile from old and unused patches
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2004g-alt3.1.qa1
 - NMU: rebuilt for debuginfo.
 
