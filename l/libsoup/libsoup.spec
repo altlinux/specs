@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define api_ver 2.4
-%define ver_major 2.62
+%define ver_major 2.64
 %def_disable static
 %def_enable gtk_doc
 %def_with gnome
@@ -11,7 +11,7 @@
 %def_disable debug
 
 Name: libsoup
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -48,7 +48,7 @@ BuildRequires: libxml2-devel libsqlite3-devel zlib-devel
 
 BuildRequires: docbook-dtds docbook-style-xsl common-licenses
 BuildRequires: gtk-doc xml-common xsltproc intltool
-BuildRequires: glib-networking
+BuildRequires: glib-networking libpsl-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gi_ver}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_with_gssapi:BuildRequires: libkrb5-devel}
@@ -166,6 +166,7 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %patch1 -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %ifarch %e2k
 %add_optflags -Wno-error=pointer-arith
 %endif
@@ -231,6 +232,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 2.64.0-alt1
+- 2.64.0
+
 * Fri Aug 10 2018 Yuri N. Sedunov <aris@altlinux.org> 2.62.3-alt1
 - 2.62.3
 

@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 2
 %define xdg_name org.gnome.Sysprof2
 %define _libexecdir %_prefix/libexec
@@ -10,7 +10,7 @@
 %def_enable gtk
 
 Name: sysprof
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Sysprof kernel based performance profiler for Linux
@@ -83,7 +83,7 @@ developing applications that use GtkGHex library.
 
 %_datadir/mime/packages/%name-mime.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc AUTHORS NEWS README TODO
+%doc AUTHORS NEWS README* TODO
 
 %files devel
 %_libdir/lib%name-capture-%api_ver.a
@@ -93,6 +93,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%api_ver.pc
 
 %changelog
+* Wed Sep 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 

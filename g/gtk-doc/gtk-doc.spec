@@ -1,10 +1,10 @@
 %def_disable snapshot
 %def_with mkpdf
-%def_enable check
+%def_disable check
 
 Name: gtk-doc
-Version: 1.28
-Release: alt2
+Version: 1.29
+Release: alt1
 
 Summary: API documentation generation tool for GTK+ and GNOME
 Group: Development/Other
@@ -34,14 +34,14 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-Provides: python%__python_version(gtkdoc)
+Provides: python3(gtkdoc)
 
-%add_python_lib_path %_datadir/%name/python/gtkdoc
+%add_python3_path %_datadir/%name/python/gtkdoc
 
-BuildRequires: rpm-build-python python-devel >= %python_ver
-BuildRequires: python-module-six
+BuildRequires: rpm-build-python3 rpm-build-licenses
+BuildRequires: python3-devel >= %python_ver
 BuildRequires: docbook-dtds xml-common xml-utils
-BuildRequires: common-licenses rpm-build-licenses
+BuildRequires: common-licenses
 BuildRequires: docbook-dtds >= 1.0-alt7
 BuildRequires: docbook-style-xsl bc
 %{?_with_mkpdf:BuildRequires: rpm-build-gnome yelp-tools highlight dblatex >= %dblatex_ver}
@@ -80,7 +80,7 @@ used by GTK+, GLib and GNOME.
 %prep
 %setup
 # make cmake files arch-independent
-subst 's/libdir/datadir/' cmake/Makefile.am
+subst 's/libdir/datadir/' buildsystems/cmake/Makefile.am
 
 # Move this doc file to avoid name collisions
 mv doc/README doc/README.docs
@@ -89,6 +89,7 @@ rm -f examples/*~
 %build
 %autoreconf
 %undefine _configure_target
+export PYTHON=%_bindir/python3
 export ac_cv_path_JADE=%_bindir/openjade
 export ac_cv_path_XSLTPROC=%_bindir/xsltproc
 %{?_with_mkpdf:export ac_cv_path_DBLATEX=%_bindir/dblatex}
@@ -150,6 +151,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Tue Aug 28 2018 Yuri N. Sedunov <aris@altlinux.org> 1.29-alt1
+- 1.29
+
 * Tue May 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.28-alt2
 - enabled tests with dblatex-0.3.10
 - gtk-doc-mkpdf requires dblatex-0.3.10

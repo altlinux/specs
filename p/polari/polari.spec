@@ -1,8 +1,8 @@
-%define ver_major 3.28
+%define ver_major 3.30
 %define xdg_name org.gnome.Polari
 
 Name: polari
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Internet Relay Chat client for GNOME
@@ -36,11 +36,13 @@ Requires: typelib(TelepathyLogger)
 %set_typelibdir %_libdir/%name/girepository-1.0
 %define gtk_ver 3.22.0
 %define gspell_ver 1.3.2
+%define gjs_ver 1.53.90
 
-BuildRequires: meson gtk-doc yelp-tools
+BuildRequires(pre): meson rpm-build-gir
+BuildRequires: gtk-doc yelp-tools
 BuildRequires: desktop-file-utils libappstream-glib-devel
-BuildRequires: libgjs-devel libgtk+3-devel >= %gtk_ver libtelepathy-glib-devel
-BuildRequires: libgjs gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: libgjs-devel >= %gjs_ver libgtk+3-devel >= %gtk_ver libtelepathy-glib-devel
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsecret-gir-devel libsoup-gir-devel libgspell-gir-devel >= %gspell_ver
 BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel
 
@@ -52,7 +54,7 @@ with GNOME 3 Desktop.
 %setup
 
 %build
-%meson -Denable-schemas-compile=false
+%meson
 %meson_build
 
 %install
@@ -76,6 +78,9 @@ with GNOME 3 Desktop.
 
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Thu Jul 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 

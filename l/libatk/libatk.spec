@@ -1,11 +1,12 @@
 %define _name atk
-%define ver_major 2.28
+%define ver_major 2.29
 %def_disable static
-%def_disable gtk_doc
+%def_disable docs
 %def_enable introspection
+%def_disable check
 
 Name: libatk
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Accessibility features for Gtk+
@@ -16,7 +17,7 @@ Url: https://wiki.gnome.org/Accessibility
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Source1: atk-compat.map
 Source2: atk-compat.lds
-Patch: atk-2.25.90-alt-compat-version-script.patch
+Patch: atk-2.29.2-alt-compat-version-script.patch
 
 Requires: %name-locales = %version
 
@@ -26,9 +27,9 @@ Obsoletes: atk < %version
 %define glib_ver 2.32
 %define gtk_doc_ver 1.0
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses gnome-common
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: gtk-doc >= %gtk_doc_ver
+BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses rpm-build-gir
+BuildRequires: glib2-devel >= %glib_ver
+%{?_enable_docs:BuildRequires: gtk-doc >= %gtk_doc_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7}
 
 %description
@@ -106,22 +107,21 @@ GObject introspection devel data for the Atk library
 
 %prep
 %setup -n %_name-%version
-%patch -p1
+%patch -p1 -b .alt
 install -p -m644 %_sourcedir/atk-compat.map atk/compat.map
 install -p -m644 %_sourcedir/atk-compat.lds atk/compat.lds
 
 %build
-%autoreconf
-%configure %{subst_enable static} \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable introspection}
-
-%make_build
+%meson %{?_enable_docs:-Ddocs=true} \
+	%{?_enable_introspection:-Dintrospection=true}
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --output=%_name.lang %_name %{_name}10
+
+%check
+%meson_test
 
 %files
 %_libdir/*.so.*
@@ -134,8 +134,10 @@ install -p -m644 %_sourcedir/atk-compat.lds atk/compat.lds
 %_libdir/*.so
 %_pkgconfigdir/*
 
+%if_enabled docs
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled static
 %files devel-static
@@ -151,6 +153,9 @@ install -p -m644 %_sourcedir/atk-compat.lds atk/compat.lds
 %endif
 
 %changelog
+* Sat Aug 18 2018 Yuri N. Sedunov <aris@altlinux.org> 2.29.2-alt1
+- 2.29.2
+
 * Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 2.28.1-alt1
 - 2.28.1
 

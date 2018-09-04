@@ -1,13 +1,15 @@
 %def_disable snapshot
 
-%define ver_major 3.28
+%define _libexecdir %_prefix/libexec
+%define ver_major 3.30
 %define api_ver 1.0
 %def_with introspection
 %def_with vapi
 %def_disable gtk_doc
+%def_disable check
 
 Name: libdazzle
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library to delight your users with fancy features
@@ -83,7 +85,8 @@ This package contains development documentation for %name
 %meson_install
 
 %check
-#%%meson_test
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_bindir/dazzle-list-counters
@@ -110,6 +113,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Wed Sep 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Sat Jul 28 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.5-alt1
 - 3.28.5
 

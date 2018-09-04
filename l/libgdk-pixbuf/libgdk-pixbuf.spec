@@ -1,20 +1,22 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gdk-pixbuf
 %define api_ver 2.0
 %define binary_ver 2.10.0
-%define ver_major 2.36
+%define ver_major 2.38
 %define _libexecdir %_prefix/libexec
 
-%{?_enable_snapshot:%def_enable gtk_doc}
+%def_enable gtk_doc
+%def_enable man
 %def_enable introspection
-%def_with x11
-%def_with libjasper
+%def_enable x11
+%def_enable libjasper
 %def_enable installed_tests
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.12
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -26,6 +28,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %else
 Source: %_name-%version.tar
 %endif
+Patch: %_name-2.37.92-alt-compat-version-script.patch
 
 Source1: %_name.map
 Source2: %_name.lds
@@ -38,11 +41,14 @@ Requires: %name-locales = %version
 Provides: %name-loaders = %version
 Obsoletes: %name-loaders <= %version
 
+BuildRequires(pre): meson rpm-build-gir
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: docbook-utils gtk-doc libjpeg-devel libpng-devel libtiff-devel
-%{?_with_x11:BuildRequires: libX11-devel}
-%{?_with_libjasper:BuildRequires: libjasper-devel}
+BuildRequires: libjpeg-devel libpng-devel libtiff-devel
+BuildRequires: docbook-utils gtk-doc
+%{?_enable_x11:BuildRequires: libX11-devel}
+%{?_enable_libjasper:BuildRequires: libjasper-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
+%{?_enable_check:BuildRequires: /proc}
 
 %description
 The GdkPixBuf library provides a number of features:
@@ -127,6 +133,7 @@ the functionality of the installed GdkPixBuf library.
 
 %prep
 %setup -n %_name-%version
+%patch -p1 -b .alt
 install -p -m644 %_sourcedir/%_name.map %_name/compat.map
 install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
 
@@ -135,19 +142,19 @@ install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
 # till lcc ~1.23
 export LIBS=-lcxa
 %endif
-%autoreconf
-%configure \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable introspection} \
-	%{subst_with x11} \
-	%{subst_with libjasper} \
-	--with-included-loaders=png \
-	%{?_enable_installed_tests:--enable-installed-tests}
+%meson \
+	%{?_enable_gtk_doc:-Ddocs=true} \
+	%{?_enable_man:-Dman=true} \
+	%{?_enable_introspection:-Dgir=true} \
+	%{?_enable_x11:-Dx11=true} \
+	%{?_enable_libjasper:-Djasper=true} \
+	%{?_enable_installed_tests:-Dinstalled_tests=true} \
+	-Dbuiltin_loaders='png'
 
-%make_build LIBTOOL_EXPORT_OPTIONS=-Wl,--version-script=compat.map,compat.lds
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 ln %buildroot%_bindir/%_name-query-loaders %buildroot%_libdir/%_name-%api_ver/%binary_ver/
 
@@ -168,9 +175,8 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %find_lang %_name
 
 %check
-# due to version script
-echo : >>%_name/abicheck.sh
-%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_bindir/gdk-pixbuf-query-loaders
@@ -193,18 +199,17 @@ echo : >>%_name/abicheck.sh
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-tiff.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-xbm.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-xpm.so
-%{?_with_libjasper:%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-jasper.so}
-%exclude %_libdir/%_name-%api_ver/%binary_ver/loaders/*.la
+%{?_enable_libjasper:%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-jasper.so}
 %ghost %_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %_datadir/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
 %_man1dir/gdk-pixbuf-query-loaders*
 %_rpmlibdir/gdk-pixbuf-loaders.filetrigger
 
-%if_with x11
+%if_enabled x11
 %files xlib
 %_libdir/libgdk_pixbuf_xlib-2.0.so.*
 %endif
-%doc AUTHORS NEWS README
+%doc NEWS README.md
 
 %files locales -f %_name.lang
 
@@ -215,7 +220,7 @@ echo : >>%_name/abicheck.sh
 %dir %_includedir/%_name-%api_ver
 %_includedir/%_name-%api_ver/%_name
 %_pkgconfigdir/%_name-%api_ver.pc
-%if_with x11
+%if_enabled x11
 %_includedir/%_name-%api_ver/%_name-xlib
 %_pkgconfigdir/%_name-xlib-%api_ver.pc
 %endif
@@ -240,6 +245,9 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 2.38.0-alt1
+- 2.38.0
+
 * Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.36.12-alt2
 - rebuilt against libjasper.so.4
 

@@ -3,7 +3,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 3.0
 %define xdg_name org.gnome.SettingsDaemon
 
@@ -15,8 +15,8 @@
 %def_disable tests
 
 Name: gnome-settings-daemon
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A program that manages general GNOME settings
 License: GPLv2+
@@ -31,7 +31,7 @@ Source: %name-%version.tar
 
 %define glib_ver 2.53.0
 %define gtk_ver 3.16
-%define gnome_desktop_ver 3.27.90
+%define gnome_desktop_ver 3.29.90.1
 %define notify_ver 0.7.3
 %define pulse_ver 0.9.15
 %define gsds_ver 3.23.3
@@ -185,6 +185,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Wed Jun 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt2
 - fixed buildreqs
 

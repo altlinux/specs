@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name iagno
-%define ver_major 3.28
+%define ver_major 3.30
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -53,6 +53,9 @@ Othello.
 %_datadir/metainfo/%_name.appdata.xml
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Thu Mar 15 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

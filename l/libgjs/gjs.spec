@@ -1,15 +1,15 @@
 %def_disable snapshot
 
 %define _libexecdir %prefix/libexec
-%define ver_major 1.52
+%define ver_major 1.54
 %define _name gjs
 %define api_ver 1.0
-%define mozjs_ver_major 52
+%define mozjs_ver_major 60
 
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -26,13 +26,13 @@ Source: %_name-%version.tar
 %else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %endif
-Source1: pkg.m4
 
 %define glib_ver 2.50.0
 %define gi_ver 1.53.4
 
 Requires: gobject-introspection
 
+BuildRequires(pre): rpm-build-gir
 BuildRequires: gnome-common gcc-c++ libffi-devel libcairo-devel
 BuildRequires: libmozjs%mozjs_ver_major-devel
 BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
@@ -68,10 +68,9 @@ the functionality of the installed Gjs library package.
 
 %prep
 %setup -n %_name-%version
-[ ! -d m4 ] && mkdir m4
-cp %SOURCE1 m4/
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
     --disable-static \
@@ -117,6 +116,9 @@ cp %SOURCE1 m4/
 
 
 %changelog
+* Sat Sep 01 2018 Yuri N. Sedunov <aris@altlinux.org> 1.54.0-alt1
+- 1.54.0
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 1.52.3-alt1
 - 1.52.3
 

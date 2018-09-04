@@ -1,11 +1,12 @@
 %def_disable snapshot
-%define ver_major 1.56
+
+%define ver_major 1.58
 %def_enable doctool
 %def_disable check
 
 Name: gobject-introspection
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Introspection system for GObject-based libraries
 Group: System/Libraries
@@ -18,9 +19,9 @@ Obsoletes: gir-repository
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
-Patch: gobject-introspection-1.55.1-alt-shebang.patch
+Patch: gobject-introspection-1.58.0-alt-shebang.patch
 
 # use python3
 AutoReqProv: nopython
@@ -28,10 +29,13 @@ AutoReqProv: nopython
 %add_python3_path %_libdir/%name/giscanner
 %add_python3_req_skip distutils.msvccompiler
 
-BuildPreReq: libgio-devel >= 2.56.1
+%define glib_ver 2.58.0
+
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: autoconf-archive libgio-devel >= %glib_ver
 BuildRequires: flex gtk-doc libcairo-devel libcairo-gobject-devel libffi-devel
-BuildRequires: rpm-build-python3 python3-devel rpm-build-gir
-%{?_enable_doctool:BuildRequires: python3-module-mako}
+BuildRequires: python3-devel
+%{?_enable_doctool:BuildRequires: python3-module-mako python3-module-markdown}
 
 %description
 GObject introspection provides tools and libraries to help manage its
@@ -77,7 +81,7 @@ gobject-introspection.
 
 %prep
 %setup
-%patch -p1
+%patch -p1 -b .shebang
 
 %build
 %autoreconf
@@ -85,7 +89,7 @@ gobject-introspection.
 	--disable-static \
 	--enable-gtk-doc \
 	%{subst_enable doctool} \
-	--with-python=%_bindir/python3
+	--with-python=python3
 %make_build
 
 %install
@@ -133,6 +137,9 @@ gobject-introspection.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Aug 31 2018 Yuri N. Sedunov <aris@altlinux.org> 1.58.0-alt1
+- 1.58.0
+
 * Thu Apr 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.56.1-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 

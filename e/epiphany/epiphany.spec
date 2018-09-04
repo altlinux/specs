@@ -1,15 +1,13 @@
 %def_disable snapshot
-%define ver_major 3.28
+%define _libexecdir %_prefix/libexec
+
+%define ver_major 3.30
 %define api_ver 3.10
 %define ua_ver 3.24
 %define xdg_name org.gnome.Epiphany
 
-%define _libexecdir %_prefix/libexec
-
-%def_disable libhttpseverywhere
-
 Name: epiphany
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -27,35 +25,31 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Provides: webclient
 Obsoletes: %name-extensions
 
-%define webkit_ver 2.19.90
+%define webkit_ver 2.22.0
 %define gtk_ver 3.22.13
 %define libxml2_ver 2.6.12
 %define xslt_ver 1.1.7
 %define soup_ver 2.48.0
 %define secret_ver 0.14
 %define gcr_ver 3.5.5
+%define dazzle_ver 3.28.0
 
 Requires: %name-data = %version-%release indexhtml iso-codes
 
-BuildRequires: meson yelp-tools libappstream-glib-devel
-BuildPreReq: intltool >= 0.50.0
-BuildPreReq: libgio-devel
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libSM-devel
-BuildPreReq: libxml2-devel >= %libxml2_ver
-BuildPreReq: libxslt-devel >= %xslt_ver
-BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
-BuildPreReq: libsoup-devel >= %soup_ver
-BuildPreReq: libsecret-devel >= %secret_ver
-BuildPreReq: gcr-libs-devel >= %gcr_ver
-BuildRequires: libwnck3-devel libgnome-desktop3-devel libnotify-devel libnss-devel libsqlite3-devel
+BuildRequires(pre): meson
+BuildRequires: gcc-c++ yelp-tools libappstream-glib-devel
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libwebkit2gtk-devel >= %webkit_ver
+BuildRequires: libxml2-devel >= %libxml2_ver
+BuildRequires: libxslt-devel >= %xslt_ver
+BuildRequires: libsoup-devel >= %soup_ver
+BuildRequires: libsecret-devel >= %secret_ver
+BuildRequires: gcr-libs-devel >= %gcr_ver
+BuildRequires: libdazzle-devel >= %dazzle_ver
+BuildRequires: libnotify-devel libsqlite3-devel
 BuildRequires: libnettle-devel
-BuildPreReq: iso-codes-devel >= 0.35
+BuildRequires: iso-codes-devel >= 0.35
 BuildRequires: gcc-c++ gsettings-desktop-schemas-devel
-# Zeroconf support
-BuildPreReq: libavahi-devel libavahi-gobject-devel
-# since 3.23.x
-%{?_enable_libhttpseverywhere:BuildRequires: libhttpseverywhere-devel >= 0.8}
 BuildRequires: libicu-devel libjson-glib-devel
 
 %description
@@ -79,14 +73,11 @@ This package contains common noarch files needed for Epiphany.
 
 %build
 %meson \
-	-Denable-schemas-compile=false \
-	-Ddistributor_name="ALTLinux" \
-	%{?_enable_libhttpseverywhere:-Dhttps_everywhere=true}
+	-Ddistributor_name="ALTLinux"
 %meson_build
 
 %install
 %meson_install
-
 %find_lang --with-gnome --output=%name.lang %name
 
 %files
@@ -98,7 +89,7 @@ This package contains common noarch files needed for Epiphany.
 %_libdir/%name/*.so
 %dir %_libdir/%name/web-extensions
 %_libdir/%name/web-extensions/libephywebextension.so
-%doc NEWS README TODO
+%doc NEWS README* TODO
 
 %files data -f %name.lang
 %_desktopdir/%xdg_name.desktop
@@ -113,6 +104,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.4-alt1
 - 3.28.4
 

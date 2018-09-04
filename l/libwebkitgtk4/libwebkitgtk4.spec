@@ -18,8 +18,10 @@
 # To avoid it set GIGACAGE_ENABLED=0
 %def_enable gigacage
 
+%define smp %__nprocs
+
 Name: libwebkitgtk4
-Version: 2.20.5
+Version: 2.22.0
 Release: alt1
 
 Summary: Web browser engine
@@ -92,7 +94,7 @@ that we have built the process split model directly into the framework, allowing
 %package -n %_name-minibrowser
 Summary: Simple WebKit browser
 Group: Networking/WWW
-Requires: %name = %version-%release
+Requires: libwebkit2gtk = %version-%release
 
 %description -n %_name-minibrowser
 This package provides simple browser from webkitgtk project.
@@ -208,8 +210,10 @@ subst 's|Q\(unused-arguments\)|W\1|' Source/cmake/WebKitCompilerFlags.cmake
 %add_optflags -D_FILE_OFFSET_BITS=64
 %endif
 
-%if_disabled gigacage
 %ifarch x86_64
+n=%smp
+[  "$n"  -lt  16  ]  ||  n=16
+%if_disabled gigacage
 export GIGACAGE_ENABLED=0
 %endif
 %endif
@@ -233,7 +237,11 @@ export GIGACAGE_ENABLED=0
 #-DENABLE_BATTERY_STATUS:BOOL=ON \
 #-DENABLE_DEVICE_ORIENTATION:BOOL=ON \
 #-DENABLE_ORIENTATION_EVENTS:BOOL=ON
+%ifarch x86_64
+%make -j $n -C BUILD
+%else
 %cmake_build
+%endif
 
 %install
 %cmakeinstall_std
@@ -278,7 +286,8 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %_libdir/libjavascriptcoregtk-%api_ver.so.*
 
 %files -n libjavascriptcoregtk4-devel
-%_includedir/webkitgtk-%api_ver/JavaScriptCore
+%_includedir/webkitgtk-%api_ver/jsc/
+%_includedir/webkitgtk-%api_ver/JavaScriptCore/
 %_libdir/libjavascriptcoregtk-%api_ver.so
 %_pkgconfigdir/javascriptcoregtk-%api_ver.pc
 
@@ -301,6 +310,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 2.22.0-alt1
+- 2.22.0
+
 * Mon Aug 13 2018 Yuri N. Sedunov <aris@altlinux.org> 2.20.5-alt1
 - 2.20.5
 

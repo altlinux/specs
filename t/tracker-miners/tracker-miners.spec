@@ -1,12 +1,12 @@
 %set_verify_elf_method unresolved=relaxed
 
-%define ver_major 2.0
+%define ver_major 2.1
 %define ver_api 2.0
 %define _libexecdir %_prefix/libexec
 
 Name: tracker-miners
-Version: %ver_major.5
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -166,6 +166,9 @@ This package provides miners for TRacker.
 
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.4-alt1
+- 2.1.4
+
 * Wed Jul 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt2
 - rebuilt against libicu*.so.62
 

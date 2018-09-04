@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Builder
-%define ver_major 3.28
+%define ver_major 3.30
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
 
@@ -14,7 +14,7 @@
 %def_without autotools_templates
 
 Name: gnome-builder
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -32,20 +32,20 @@ Source: %name-%version.tar
 
 %define glib_ver 2.53.2
 %define gtk_ver 3.22.1
-%define gtksourceview_ver 3.20.0
+%define gtksourceview_ver 4.0.2
 %define git2_ver 0.25.0
-%define devhelp_ver 3.27.90
+%define devhelp_ver 3.30.0
 %define gjs_ver 1.42
 %define xml_ver 2.9.0
 %define vala_ver 0.37
-%define sysprof_ver 3.28.0
+%define sysprof_ver 3.30.0
 %define vte_ver 0.46
 %define gtkmm_ver 3.20
 %define gspell_ver 1.8.0
 %define peas_ver 1.21.0
 %define json_glib_ver 1.2.0
-%define dazzle_ver 3.28.0
-%define template_glib_ver 3.28.0
+%define dazzle_ver 3.30.0
+%define template_glib_ver 3.30.0
 
 # use python3
 AutoReqProv: nopython
@@ -66,14 +66,14 @@ BuildRequires: /proc gcc-c++ flex mm-common yelp-tools gtk-doc
 BuildRequires: ctags
 BuildRequires: libappstream-glib-devel desktop-file-utils
 BuildRequires: llvm-devel clang-devel libgtk+3-devel >= %gtk_ver
-BuildRequires: libgtksourceview3-devel >= %gtksourceview_ver
+BuildRequires: libgtksourceview4-devel >= %gtksourceview_ver
 BuildRequires: libgit2-glib-devel >= %git2_ver libdevhelp-devel >= %devhelp_ver
 BuildRequires: libpcre-devel libgjs-devel >= %gjs_ver libwebkit2gtk-devel
 BuildRequires: libxml2-devel >= %xml_ver libpeas-devel >= %peas_ver libvte3-devel >= %vte_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: python3-devel python3-module-pygobject3-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libvte3-gir-devel
-BuildRequires: libgtksourceview3-gir-devel libgit2-glib-gir-devel libpeas-gir-devel
+BuildRequires: libgtksourceview4-gir-devel libgit2-glib-gir-devel libpeas-gir-devel
 BuildRequires: libjson-glib-gir-devel
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 BuildRequires: libgspell-devel >= %gspell_ver libenchant2-devel
@@ -116,6 +116,7 @@ This package provides noarch data needed for Gnome Builder to work.
 
 %files -f %name.lang
 %_bindir/%name
+%_libexecdir/%name-clang
 %dir %_libdir/%name
 %_libdir/%name/libide-%api_ver.so
 %{?_enable_idemm:%_libdir/%name/libidemm-%api_ver.so.*}
@@ -142,6 +143,8 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/gjs_symbols.py
 %_libdir/%name/plugins/go-langserv.plugin
 %_libdir/%name/plugins/go_langserver_plugin.py
+%_libdir/%name/plugins/gradle.plugin
+%_libdir/%name/plugins/gradle_plugin.py
 %_libdir/%name/plugins/html-preview.plugin
 %_libdir/%name/plugins/html_preview.gresource
 %_libdir/%name/plugins/html_preview.py
@@ -153,6 +156,8 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/make.plugin
 %_libdir/%name/plugins/make_plugin.gresource
 %_libdir/%name/plugins/make_plugin.py
+%_libdir/%name/plugins/maven.plugin
+%_libdir/%name/plugins/maven_plugin.py
 %_libdir/%name/plugins/meson-templates.plugin
 %_libdir/%name/plugins/meson_templates.gresource
 %_libdir/%name/plugins/meson_templates.py
@@ -187,6 +192,7 @@ This package provides noarch data needed for Gnome Builder to work.
 %_desktopdir/%xdg_name.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/org.gnome.builder.build.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.clang.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.code-insight.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.plugins.color_picker_plugin.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.plugins.eslint.gschema.xml
@@ -200,17 +206,20 @@ This package provides noarch data needed for Gnome Builder to work.
 %_datadir/glib-2.0/schemas/org.gnome.builder.project-tree.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.terminal.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.workbench.gschema.xml
-%_datadir/gtksourceview-3.0/styles/*.xml
+%_datadir/gtksourceview-4/styles/*.xml
 %_datadir/%name/
 %_iconsdir/hicolor/*/*/*.*
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %if_with docs
 %_datadir/gtk-doc/html/libide/
-%_defaultdocdir/%name/
+#%_defaultdocdir/%name/
 %endif
 
 %changelog
+* Wed Sep 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Fri Jul 27 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.4-alt1
 - 3.28.4
 

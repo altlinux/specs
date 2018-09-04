@@ -1,4 +1,4 @@
-%define ver_major 3.28
+%define ver_major 3.30
 
 Name: yelp-xsl
 Version: %ver_major.0
@@ -42,6 +42,9 @@ This package contains XSLT stylesheets that are used by the Yelp.
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

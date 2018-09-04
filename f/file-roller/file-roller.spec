@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define xdg_name org.gnome.FileRoller
-%define ver_major 3.28
+%define ver_major 3.30
 %def_disable packagekit
 %def_disable magic
 %def_enable libarchive
@@ -9,7 +9,7 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -19,10 +19,9 @@ License: %gpl2plus
 Url: http://fileroller.sourceforge.net
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-2.28.2-alt-7z.patch
 Patch1: %name-3.3.90-alt-zip_command.patch
 # find ./ -type f -print0| xargs -r0 subst "s/x-lzop-compressed-tar/x-tzo/" --
-Patch2: %name-3.27.1-alt-tar.lzo_mime_type.patch
+Patch2: %name-3.29.91-alt-tar.lzo_mime_type.patch
 
 # From configure.in
 %define glib_ver 2.36.0
@@ -90,7 +89,6 @@ File Roller является графической оболочкой к раз
 
 %prep
 %setup
-%patch
 %patch1
 %patch2 -p1 -b .tzo
 
@@ -134,6 +132,9 @@ rm -f data/%xdg_name.desktop{,.in}
 
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Tue Jul 17 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 

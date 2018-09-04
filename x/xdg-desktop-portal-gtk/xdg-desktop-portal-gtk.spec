@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: xdg-desktop-portal-gtk
-Version: 0.11
+Version: 1.0.1
 Release: alt1
 
 Summary: Backend implementation for xdg-desktop-portal using GTK+
@@ -11,7 +11,7 @@ License: LGPLv2+
 Url: https://github.com/flatpak/%name
 Source: %url/releases/download/%version/%name-%version.tar.xz
 
-%define xdg_desktop_portal_ver 0.11
+%define xdg_desktop_portal_ver 1.0.1
 
 Requires: xdg-desktop-portal >= %xdg_desktop_portal_ver
 
@@ -46,6 +46,12 @@ org.gnome.SessionManager D-Bus interfaces.
 
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
+* Wed Aug 22 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
+- 1.0
+
 * Sun May 27 2018 Yuri N. Sedunov <aris@altlinux.org> 0.11-alt1
 - first build for Sisyphus
 

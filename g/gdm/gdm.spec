@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -26,8 +26,8 @@
 %def_enable user_display_server
 
 Name: gdm
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -80,20 +80,18 @@ Requires: coreutils xinitrc iso-codes lsb-release shadow-utils
 Requires: gnome-session >= 3.7.1
 Requires: gnome-session-wayland
 
-BuildPreReq: gcc-c++ desktop-file-utils gnome-common rpm-build-gnome
-BuildPreReq: intltool >= 0.40.0 yelp-tools itstool
-BuildPreReq: iso-codes-devel
-BuildPreReq: glib2-devel >= %glib_ver libgio-devel
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libaccountsservice-devel >= %accountsservice_ver
-BuildPreReq: dconf
-BuildRequires: systemd-devel libsystemd-devel
+BuildRequires: rpm-build-gnome rpm-build-gir
+BuildRequires: gcc-c++ desktop-file-utils gnome-common yelp-tools
+BuildRequires: iso-codes-devel
+BuildRequires: glib2-devel >= %glib_ver libgio-devel
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libaccountsservice-devel >= %accountsservice_ver
+BuildRequires: dconf libsystemd-devel libpam-devel
 %{?_with_selinux:BuildPreReq: libselinux-devel libattr-devel}
 %{?_with_libaudit:BuildPreReq: libaudit-devel}
 %{?_with_plymouth:BuildPreReq: plymouth-devel}
-BuildPreReq: libpam-devel
 %{?_with_tcp_wrappers:BuildPreReq: libwrap-devel}
-BuildPreReq: libcanberra-devel >= %libcanberra_ver libcanberra-gtk3-devel
+BuildRequires: libcanberra-devel >= %libcanberra_ver libcanberra-gtk3-devel
 BuildRequires: libXdmcp-devel
 
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXext-devel libXft-devel libSM-devel
@@ -262,7 +260,7 @@ xvfb-run %make check
 %_libexecdir/gdm-x-session
 %_libexecdir/gdm-disable-wayland
 %_pam_modules_dir/pam_gdm.so
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS NEWS README*
 %_unitdir/gdm.service
 
 %files data -f %name.lang
@@ -324,6 +322,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Wed Aug 29 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.4-alt2
 - rebuilt without tcp_wrappers
 

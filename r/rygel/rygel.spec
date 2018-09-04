@@ -19,7 +19,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A UPnP v2 Media Server
@@ -62,7 +62,7 @@ Requires: gst-libav
 Requires: tracker
 Requires: lsdvd
 
-BuildRequires: intltool autoconf-archive gtk-doc
+BuildRequires: autoconf-archive gtk-doc
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: pkgconfig(gssdp-1.0) >= %gssdp_ver
 BuildRequires: pkgconfig(gupnp-1.0) >= %gupnp_ver
@@ -205,7 +205,7 @@ gettextize -q -f
 %_man1dir/*
 %_man5dir/*
 %exclude %_libdir/%name-*/*/*.la
-%doc AUTHORS COPYING README TODO NEWS
+%doc AUTHORS TODO NEWS
 
 %files tracker
 %_libdir/%name-*/plugins/librygel-tracker.so
@@ -233,6 +233,9 @@ gettextize -q -f
 %_girdir/*.gir
 
 %changelog
+* Wed Sep 05 2018 Yuri N. Sedunov <aris@altlinux.org> 0.36.2-alt1
+- 0.36.2
+
 * Mon Feb 05 2018 Yuri N. Sedunov <aris@altlinux.org> 0.36.1-alt1
 - 0.36.1
 

@@ -1,11 +1,11 @@
-%define ver_major 3.28
+%define ver_major 3.30
 %define xdg_name org.gnome.DiskUtility
 %define _libexecdir %_prefix/libexec
 %def_enable gsd_plugin
 %def_enable libsystemd
 
 Name: gnome-disk-utility
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Disk management application
@@ -79,6 +79,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Thu May 31 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
 - 3.28.3
 

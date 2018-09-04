@@ -2,12 +2,12 @@
 
 %define xdg_name org.gnome.Documents
 %define xdg_name1 org.gnome.Books
-%define ver_major 3.28
+%define ver_major 3.29
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.2
+Version: %ver_major.91
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -168,6 +168,9 @@ GObject introspection devel data for the %name library.
 %_datadir/metainfo/%xdg_name1.appdata.xml
 
 %changelog
+* Thu Aug 16 2018 Yuri N. Sedunov <aris@altlinux.org> 3.29.91-alt1
+- 3.29.91
+
 * Thu Aug 16 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 

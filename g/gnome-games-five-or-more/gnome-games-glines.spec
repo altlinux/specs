@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name five-or-more
-%define ver_major 3.28
+%define ver_major 3.30
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -22,9 +22,10 @@ Provides:  gnome-games-glines = %version-%release
 %define glib_ver 2.32
 %define gtk_ver 3.12.0
 
-BuildRequires: gnome-common
-BuildRequires: intltool yelp-tools gsettings-desktop-schemas-devel libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: yelp-tools gsettings-desktop-schemas-devel libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
+BuildRequires: libgnome-games-support-devel
 
 %description
 Glines, is the GNOME port of the once popular Windows game called Color
@@ -36,12 +37,11 @@ possible, and be #1 in the High Scores.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure --disable-schemas-compile
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %_name
 
@@ -53,9 +53,12 @@ possible, and be #1 in the High Scores.
 %_iconsdir/hicolor/symbolic/apps/%_name-symbolic.svg
 %_man6dir/%_name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/appdata/%_name.appdata.xml
+%_datadir/metainfo/%_name.appdata.xml
 
 %changelog
+* Sun Sep 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

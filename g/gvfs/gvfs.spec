@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.36
+%define ver_major 1.38
 
 %def_disable gdu
 %def_disable gtk_doc
@@ -31,8 +31,8 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.2
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -44,7 +44,6 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
-Patch: gvfs-1.15.4-alt-tmpfiles_dir.patch
 # https://bugzilla.altlinux.org/show_bug.cgi?id=29047
 # https://bugzilla.altlinux.org/show_bug.cgi?id=29171
 # https://mail.gnome.org/archives/gvfs-list/2013-May/msg00014.html
@@ -58,7 +57,7 @@ Obsoletes: %name-utils < 1.31
 Obsoletes: bash-completion-gvfs < 1.31
 
 # From configure.ac
-%define glib_ver 2.51.0
+%define glib_ver 2.57.2
 %define libsoup_ver 2.42
 %define avahi_ver 0.6
 %define libcdio_paranoia_ver 10.2
@@ -79,8 +78,7 @@ Requires: dconf
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
 
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgio-devel >= %glib_ver
+BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libdbus-devel gtk-doc
 BuildRequires: openssh-clients
 # hotplug backend
@@ -289,7 +287,6 @@ The %name-tests package provides programms for testing GVFS.
 
 %prep
 %setup
-%patch -b .tmpfiles
 %patch1 -p2 -b .logind-state
 
 %build
@@ -334,7 +331,7 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %files -f %name.lang
-%doc AUTHORS NEWS README monitor/udisks2/what-is-shown.txt
+%doc NEWS README* monitor/udisks2/what-is-shown.txt
 %dir %_libdir/%name
 %_libdir/%name/libgvfs*.so
 %dir %_libexecdir
@@ -526,6 +523,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 1.38.0-alt1
+- 1.38.0
+
 * Sun Jul 08 2018 Yuri N. Sedunov <aris@altlinux.org> 1.36.2-alt3
 - rebuilt against libnfs.so.12
 

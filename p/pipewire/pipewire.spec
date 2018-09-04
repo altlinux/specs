@@ -1,8 +1,8 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.1
-%define api_ver 0.1
+%define ver_major 0.2
+%define api_ver 0.2
 %define gst_api_ver 1.0
 
 %def_enable gstreamer
@@ -12,8 +12,8 @@
 %def_disable jack
 
 Name: pipewire
-Version: %ver_major.9
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -147,6 +147,9 @@ This package contains command line utilities for the PipeWire media server.
 %_man1dir/%name-cli.1*
 
 %changelog
+* Sat Aug 04 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
+- 0.2.2
+
 * Mon Jun 04 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt2
 - rebuilt with ffmpeg-4.0
 

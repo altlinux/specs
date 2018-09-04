@@ -1,8 +1,8 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.56
-%define pcre_ver 8.13
+%define ver_major 2.58
+%define pcre_ver 8.31
 
 %set_verify_elf_method strict
 %add_verify_elf_skiplist %_libexecdir/installed-tests/glib/*
@@ -12,17 +12,12 @@
 %def_disable fam
 %def_disable systemtap
 %def_enable installed_tests
-
-%if_enabled snapshot
 %def_enable gtk_doc
-%else
-%def_disable gtk_doc
-%endif
-
 %def_disable debug
+%def_disable check
 
 Name: glib2
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -41,7 +36,7 @@ Source2: glib-compat.lds
 Source3: gobject-compat.map
 Source4: gobject-compat.lds
 Source5: gio-compat.map
-Source6: gio-compat.lds
+Source6: gio-compat-2.57.lds
 
 Source10: glib2.sh
 Source11: glib2.csh
@@ -67,8 +62,7 @@ Obsoletes: %name-core < %version
 # use python3
 #AutoReqProv: nopython
 #%define __python %nil
-#%%add_python3_lib_path %_datadir/glib-2.0/codegen
-%add_python_lib_path %_datadir/glib-2.0/codegen
+%add_python3_path %_datadir/glib-2.0/codegen
 
 %if_with sys_pcre
 BuildPreReq: libpcre-devel >= %pcre_ver
@@ -76,12 +70,10 @@ Requires: pcre-config(utf8) pcre-config(unicode-properties)
 BuildPreReq: pcre-config(utf8) pcre-config(unicode-properties)
 %endif
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses rpm-build-python3
 BuildRequires: gnome-common gtk-doc indent
-BuildRequires: glibc-kernheaders libdbus-devel libpcre-devel libffi-devel zlib-devel libelf-devel
-BuildRequires: rpm-build-python python-devel
-#BuildRequires: rpm-build-python3 python3-devel
-BuildRequires: libmount-devel
+BuildRequires: glibc-kernheaders libdbus-devel libpcre-devel
+BuildRequires: libffi-devel zlib-devel libelf-devel libmount-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?_enable_fam:BuildRequires: libgamin-devel}
 %{?_enable_systemtap:BuildRequires: libsystemtap-sdt-devel}
@@ -116,6 +108,9 @@ Requires: %name = %version-%release
 Requires: rpm-build-gir >= 0.5
 Provides: lib%name-devel = %version
 Obsoletes: lib%name-devel < %version
+
+# hack
+Provides: python3(codegen) < 0
 
 %description devel
 GLib is the low-level core library that forms the basis for projects
@@ -230,18 +225,13 @@ install -p -m644 %_sourcedir/glib-compat.lds glib/compat.lds
 install -p -m644 %_sourcedir/gobject-compat.map gobject/compat.map
 install -p -m644 %_sourcedir/gobject-compat.lds gobject/compat.lds
 install -p -m644 %_sourcedir/gio-compat.map gio/compat.map
-install -p -m644 %_sourcedir/gio-compat.lds gio/compat.lds
+install -p -m644 %_sourcedir/gio-compat-2.57.lds gio/compat.lds
 
 # abicheck always ok
 subst '/exit 1/d' check-abis.sh
 
 %build
-%if_enabled snapshot
 NOCONFIGURE=1 ./autogen.sh
-%else
-%autoreconf
-%endif
-
 %configure \
     --enable-static \
     %{subst_enable selinux} \
@@ -252,7 +242,8 @@ NOCONFIGURE=1 ./autogen.sh
     %{subst_enable fam} \
     %{subst_enable systemtap} \
     %{?_enable_installed_tests:--enable-installed-tests} \
-    %{?_enable_debug:--enable-debug=yes}
+    %{?_enable_debug:--enable-debug=yes} \
+    PYTHON=python3
 %make_build
 
 %install
@@ -296,7 +287,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %check
 # g_mapped_file_new fails on /dev/null in hasher
 # GLib:ERROR:mappedfile.c:52:test_device: assertion failed (error == (g-file-error-quark, 17)): Failed to map /dev/null' /dev/null': mmap() failed: No such device (g-file-error-quark, 7)
-#%make check
+%make check
 
 %files
 /%_lib/libglib-2.0.so.0*
@@ -361,6 +352,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %files -n libgio
 %_bindir/gapplication
 %_bindir/gio
+%_bindir/gio-launch-desktop
 %_bindir/gio-querymodules
 %_bindir/gsettings
 %_bindir/glib-compile-schemas
@@ -384,6 +376,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_man1dir/gio.1.*
 %_man1dir/gio-querymodules.*
 %_datadir/bash-completion/completions/gapplication
+%_datadir/bash-completion/completions/gio
 %_datadir/bash-completion/completions/gresource
 %_datadir/bash-completion/completions/gdbus
 %_datadir/bash-completion/completions/gsettings
@@ -420,6 +413,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Thu Aug 30 2018 Yuri N. Sedunov <aris@altlinux.org> 2.58.0-alt1
+- 2.58.0
+
 * Fri Aug 17 2018 Yuri N. Sedunov <aris@altlinux.org> 2.56.2-alt1
 - 2.56.2
 

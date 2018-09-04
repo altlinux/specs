@@ -1,10 +1,12 @@
 %def_disable snapshot
 
 %define libname mesonbuild
+# pkexec may be used to "gain elevated privileges" during install
+%def_without polkit
 %def_disable check
 
 Name: meson
-Version: 0.46.1
+Version: 0.47.2
 Release: alt1
 
 Summary: High productivity build system
@@ -17,23 +19,26 @@ Source: https://github.com/mesonbuild/meson/archive/%version/%name-%version.tar.
 %else
 Source: %name-%version.tar
 %endif
-
 Source1: %name.macros
 Source2: %name.env
 
 BuildArch: noarch
 
 %define python_ver 3.5
-
 Requires: python3 >= %python_ver
 Requires: ninja-build
 
+#grep -n "from __main__" -r *
+#mesonbuild/minstall.py:23:from __main__ import __file__ as main_file
+%add_python3_req_skip __main__
+%{?_with_polkit:Requires: polkit}
+
 BuildRequires: rpm-build-python3 python3-devel >= %python_ver python3-module-setuptools
-BuildRequires: ninja-build
+BuildRequires: ninja-build libpolkit-devel
 %if_enabled check
 BuildRequires: gcc gcc-c++ gcc-fortran gcc-objc gcc-objc++
 BuildRequires: java-devel /proc
-BuildRequires: mono4-core mono4-devel
+BuildRequires: mono-core mono-devel
 BuildRequires: boost-devel
 BuildRequires: libgtest-devel
 BuildRequires: libgmock-devel
@@ -44,7 +49,6 @@ BuildRequires: flex bison
 BuildRequires: gnustep-base-devel
 BuildRequires: git
 BuildRequires: pkgconfig(protobuf) protobuf-c-compiler
-BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gobject-introspection-1.0) python3-module-pygobject3 gtk-doc
 BuildRequires: pkgconfig(zlib)
 BuildRequires: python3-module-Cython
@@ -68,6 +72,7 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 install -Dpm 0755 %SOURCE2 %buildroot%_rpmmacrosdir/%name.env
 
 %check
+export LC_ALL=en_US.utf8
 MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 %files
@@ -78,6 +83,7 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %_bindir/wraptool
 %python3_sitelibdir/%libname/
 %python3_sitelibdir/%name-%version-*.egg-info/
+%{?_without_polkit:%exclude %_datadir/polkit-1/actions/com.mesonbuild.install.policy}
 %_man1dir/%name.1.*
 %_man1dir/%{name}conf.1.*
 %_man1dir/%{name}introspect.1.*
@@ -89,6 +95,12 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 
 %changelog
+* Thu Aug 30 2018 Yuri N. Sedunov <aris@altlinux.org> 0.47.2-alt1
+- 0.47.2
+
+* Wed Jul 11 2018 Yuri N. Sedunov <aris@altlinux.org> 0.47.1-alt1
+- 0.47.1
+
 * Thu May 17 2018 Yuri N. Sedunov <aris@altlinux.org> 0.46.1-alt1
 - 0.46.1
 

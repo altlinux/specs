@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 3.0
 %define xdg_name org.gnome.Nautilus
 
@@ -11,7 +11,7 @@
 %def_enable docs
 
 Name: nautilus
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -35,7 +35,6 @@ Source: %name-%version.tar
 %define libxml2_ver 2.4.7
 %define gexiv2_ver 0.10
 %define gir_ver 0.10.2
-%define notify_ver 0.7.0
 %define tracker_ver 0.18
 %define autoar_ver 0.1
 
@@ -61,9 +60,9 @@ BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgail3-devel
 BuildRequires: libxml2-devel >= %libxml2_ver
 BuildRequires: libgexiv2-devel >= %gexiv2_ver
-BuildRequires: libnotify-devel >= %notify_ver
 BuildRequires: libgnome-autoar-devel >= %autoar_ver
-BuildRequires: libX11-devel xorg-xproto-devel
+BuildRequires: libX11-devel
+BuildRequires: libseccomp-devel
 %{?_enable_docs:BuildRequires: docbook-utils gtk-doc}
 %{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-2.0)}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
@@ -130,9 +129,9 @@ rm -f data/*.desktop
 %build
 %meson \
     %{?_enable_docs:-Ddocs=true} \
-    %{?_enable_tracker:-Denable-tracker=true} \
+    %{?_enable_tracker:-Dtracker=true} \
     %{?_disable_packagekit:-Dpackagekit=false} \
-    -Dextension=true
+    -Dextensions=true
 %meson_build
 
 %install
@@ -152,7 +151,6 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 %_bindir/*
 %dir %_libdir/%name
 %_desktopdir/*.desktop
-#%_sysconfdir/xdg/autostart/nautilus-autostart.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager1.service
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
@@ -189,6 +187,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Mon Apr 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 

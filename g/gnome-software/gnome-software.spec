@@ -1,5 +1,5 @@
-%define ver_major 3.28
-%define plugins_ver 11
+%define ver_major 3.30
+%define plugins_ver 12
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Software
 
@@ -7,7 +7,11 @@
 %def_enable gudev
 %def_enable gnome_desktop
 %def_enable polkit
+%ifarch  %ix86  x86_64
 %def_enable fwupd
+%else
+%def_disable  fwupd
+%endif
 %def_enable flatpak
 %def_disable limba
 %def_disable packagekit
@@ -22,8 +26,8 @@
 %def_disable external_appstream
 
 Name: gnome-software
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -45,8 +49,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define ostree_ver 2018.4
 
 %{?_enable_fwupd:Requires: fwupd >= %fwupd_ver}
+%{?_enable_packagekit:Requires: appstream-data}
 
-BuildRequires: meson
+BuildRequires(pre): meson
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libappstream-glib-devel >= %appstream_glib_ver
@@ -62,7 +67,7 @@ BuildRequires: valgrind-tool-devel
 %{?_enable_fwupd:BuildRequires: fwupd-devel >= %fwupd_ver}
 %{?_enable_flatpak:BuildRequires: libflatpak-devel >= %flatpak_ver}
 %{?_enable_limba:BuildRequires: liblimba-devel >= %limba_ver}
-%{?_enable_packagekit:BuildRequires: libpackage-kit-devel >= %packagekit_ver}
+%{?_enable_packagekit:BuildRequires: libpackage-glib-devel >= %packagekit_ver}
 %{?_enable_valgrind:BuildRequires: valgrind}
 %{?_enable_rpm_ostree:BuildRequires: libostree-devel >= %ostree_ver}
 %{?_enable_rpm:BuildRequires: librpm-devel}
@@ -95,19 +100,19 @@ GNOME Software.
 
 %build
 %meson \
-	%{?_enable_gspell:-Denable-gspell=true} \
-	%{?_enable_gudev:-Denable-gudev=true} \
-	%{?_enable_gnome_desktop:-Denable-gnome-desktop=true} \
-	%{?_enable_polkit:-Denable-polkit=true} \
-	%{?_disable_fwupd:-Denable-fwupd=false} \
-	%{?_enable_flatpak:-Denable-flatpak=true} \
-	%{?_enable_ostree:-Denable-ostree=true} \
-	%{?_disable_limba:-Denable-limba=false} \
-	%{?_enable_rpm_ostree:-Denable-rpm-ostree=true} \
-	%{?_disable_packagekit:-Denable-packagekit=false} \
-	%{?_disable_valgrind:-Denable-valgrind=false} \
-	%{?_disable_tests:-Denable-tests=false} \
-	%{?_enable_external_appstream:-Denable-external-appstream=true}
+	%{?_enable_gspell:-Dgspell=true} \
+	%{?_enable_gudev:-Dgudev=true} \
+	%{?_enable_gnome_desktop:-Dgnome_desktop=true} \
+	%{?_enable_polkit:-Dpolkit=true} \
+	%{?_disable_fwupd:-Dfwupd=false} \
+	%{?_enable_flatpak:-Dflatpak=true} \
+	%{?_enable_ostree:-Dostree=true} \
+	%{?_disable_limba:-Dlimba=false} \
+	%{?_enable_rpm_ostree:-Drpm_ostree=true} \
+	%{?_disable_packagekit:-Dpackagekit=false} \
+	%{?_disable_valgrind:-Dvalgrind=false} \
+	%{?_disable_tests:-Dtests=false} \
+	%{?_enable_external_appstream:-Dexternal_appstream=true}
 %meson_build
 
 %install
@@ -128,6 +133,7 @@ GNOME Software.
 %_desktopdir/%xdg_name.Editor.desktop
 %_datadir/app-info/xmls/%xdg_name.Featured.xml
 %_datadir/dbus-1/services/%xdg_name.service
+%{?_enable_packagekit:%_datadir/dbus-1/services/org.freedesktop.PackageKit.service}
 %{?_enable_external_appstream:%_datadir/polkit-1/actions/org.gnome.software.external-appstream.policy}
 %_datadir/%name/
 %_datadir/gnome-shell/search-providers/%xdg_name-search-provider.ini
@@ -153,6 +159,9 @@ GNOME Software.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Fri Jun 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt2
 - enabled fwupd support
 

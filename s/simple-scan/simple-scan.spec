@@ -1,8 +1,8 @@
-%define ver_major 3.28
+%define ver_major 3.30
 %def_disable packagekit
 
 Name: simple-scan
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple scanning utility
@@ -14,10 +14,15 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 Requires: sane xdg-utils gnome-icon-theme colord
 
-BuildRequires: meson yelp-tools libappstream-glib-devel
-BuildRequires: libgtk+3-devel libgudev-devel libcolord-devel
-BuildRequires: libjpeg-devel libwebp-devel libsane-devel zlib-devel
+%define gtk_ver 3.22
+%define gusb_ver 0.2.7
+
+BuildRequires(pre): meson
+BuildRequires: yelp-tools libappstream-glib-devel
+BuildRequires: libgtk+3-devel >= %gtk_ver libgusb-devel >= %gusb_ver
+BuildRequires: libsane-devel zlib-devel
 BuildRequires: vala-tools libcolord-vala
+BuildRequires: libcolord-devel libwebp-devel 
 
 %description
 Simple Scan is an easy-to-use application, designed to let users connect their
@@ -45,6 +50,9 @@ find ./ -name "*.stamp" -delete
 %_man1dir/*
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Mon Apr 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 

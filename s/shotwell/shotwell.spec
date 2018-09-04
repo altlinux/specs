@@ -1,11 +1,12 @@
 %set_verify_elf_method unresolved=relaxed
 %def_disable snapshot
 
-%define ver_major 0.28
+%define ver_major 0.29
+%define api_ver 1.0
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.4
+Version: %ver_major.92
 Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
@@ -27,6 +28,7 @@ Requires: dconf
 # for video-thumbnailer
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-libav
 
+BuildRequires(pre): meson
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
@@ -35,7 +37,7 @@ BuildRequires: libgphoto2-devel libgudev-devel libjson-glib-devel
 BuildRequires: libraw-devel libexif-devel libgomp-devel
 BuildRequires: libsqlite3-devel libstdc++-devel libwebkit2gtk-devel
 BuildRequires: librest-devel libgee0.8-devel gcr-libs-devel
-BuildRequires: desktop-file-utils gnome-doc-utils yelp-tools libappstream-glib-devel
+BuildRequires: desktop-file-utils yelp-tools libappstream-glib-devel
 BuildRequires: vala gcr-libs-vala
 BuildRequires: libgdata-devel
 
@@ -49,19 +51,15 @@ mode, and export them to share with others.
 
 %prep
 %setup
-# always rebuild from vala sources
-find ./ -name "*.stamp" -delete
 
 %build
 %add_optflags -D_GIT_VERSION=%(echo %version | tr -d .)
-%autoreconf
-%configure \
-    --disable-static \
-    --disable-schemas-compile
-%make
+%meson -Dunity-support=false \
+       -Dinstall-apport-hook=false
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome --output=%name.lang %name %name-extras
 
@@ -71,7 +69,11 @@ find ./ -name "*.stamp" -delete
 %_libexecdir/%name/%name-video-thumbnailer
 %_libexecdir/%name/%name-settings-migrator
 %_libdir/lib%name-plugin-common.so.*
+%_libdir/lib%name-plugin-dev-%api_ver.so.*
 %_libdir/lib%name-authenticator.so.*
+
+%exclude %_libdir/lib%name-*.so
+
 %_libdir/%name/
 %_desktopdir/%{name}*
 %_iconsdir/hicolor/*x*/apps/%name.png
@@ -79,9 +81,16 @@ find ./ -name "*.stamp" -delete
 %_datadir/glib-2.0/schemas/*
 %_datadir/metainfo/%name.appdata.xml
 %_man1dir/%name.1.*
-%doc AUTHORS COPYING NEWS README THANKS
+%doc AUTHORS COPYING NEWS README* THANKS
+
 
 %changelog
+* Sun Sep 02 2018 Yuri N. Sedunov <aris@altlinux.org> 0.29.92-alt1
+- 0.29.92
+
+* Mon Aug 06 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.4-alt2
+- rebuilt against libraw.so.19
+
 * Sat Jul 14 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.4-alt1
 - 0.28.4
 

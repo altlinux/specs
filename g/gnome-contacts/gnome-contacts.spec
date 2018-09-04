@@ -1,11 +1,11 @@
-%define ver_major 3.28
+%define ver_major 3.30
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
 %define _name org.gnome.Contacts
 %def_with cheese
 
 Name: gnome-contacts
-Version: %ver_major.2
+Version: %ver_major
 Release: alt1
 
 Summary: Contacts manager for GNOME
@@ -43,7 +43,7 @@ BuildRequires: libfolks-vala
 %setup
 
 %build
-%meson %{?_with_cheese:-Dwith-cheese=yes}
+%meson %{?_without_cheese:-Dcheese=false}
 %meson_build
 
 %install
@@ -65,6 +65,9 @@ BuildRequires: libfolks-vala
 %doc AUTHORS NEWS README*
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30-alt1
+- 3.30
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 
