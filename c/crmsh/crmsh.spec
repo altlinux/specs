@@ -5,8 +5,8 @@
 
 Name: crmsh
 Summary: Pacemaker command line interface
-Version: 2.3.2
-Release: alt1%ubt
+Version: 3.0.3
+Release: alt1
 License: GPL-2.0+
 Url: http://crmsh.github.io
 Group: System/Configuration/Other
@@ -15,6 +15,7 @@ Source0: %name-%version.tar
 BuildArch: noarch
 
 Requires: pacemaker-cli
+Requires: csync2 >= 2.0
 Requires: %name-scripts = %version-%release
 BuildRequires: asciidoc-a2x libpacemaker-devel time
 #libcluster-glue-devel
@@ -105,6 +106,12 @@ mv %buildroot%_bindir/crm %buildroot%_sbindir/crm
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 3.0.3-alt1
+- 3.0.3
+
+* Tue Apr 18 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt1%ubt
+- new version
+
 * Mon Apr 17 2017 Anton Farygin <rider@altlinux.ru> 2.3.2-alt1%ubt
 - new version
 - fixed hostname resolution in crm init 
