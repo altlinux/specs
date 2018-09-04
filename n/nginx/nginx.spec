@@ -5,10 +5,10 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.14.0
-Release: alt2%ubt
+Release: alt3
 License: BSD
 Group: System/Servers
-BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel
+BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel libkrb5-devel
 %if_with debug
 BuildRequires: google-perftools-devel
 %endif
@@ -361,6 +361,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 1.14.0-alt3
+- rebuilt with openssl-1.1
+
 * Fri Jul 20 2018 Anton Farygin <rider@altlinux.ru> 1.14.0-alt2%ubt
 - fixed build with glibc-2.3.2
 - spenego module moved to tarball
