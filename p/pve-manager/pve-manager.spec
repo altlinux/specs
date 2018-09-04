@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 5.2.2
-Release: alt2%ubt
+Version: 5.2.3
+Release: alt3%ubt
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -57,6 +57,7 @@ Patch26: pve-ha-manager-watchdog.patch
 Patch27: pve-widget-toolkit-alt.patch
 Patch28: pve-widget-toolkit-alt-utils.patch
 Patch29: pve-manager-widgettoolkit.patch
+Patch30: qemu-server-perl-alt.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
@@ -97,7 +98,7 @@ HA Manager PVE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 5.0.26
+Version: 5.0.27
 Group: System/Servers
 Requires: socat genisoimage cloud-init pve-qemu-system >= 2.6.1-alt4
 Provides: qemu-server = %version-%release
@@ -155,6 +156,7 @@ This is used to implement the PVE REST API
 %patch27 -p0 -b .alt
 %patch28 -p0 -b .alt
 %patch29 -p0 -b .widgettoolkit
+%patch30 -p0
 
 install -m0644 %SOURCE5 pve-i18n/ru.po
 
@@ -466,6 +468,10 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Tue Sep 04 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt3%ubt
+- pve-manager 5.2-3
+- qemu-server 5.0-27
+
 * Thu Aug 09 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.2-alt2%ubt
 - updated russian translation
 
