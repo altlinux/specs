@@ -11,7 +11,7 @@
 
 Name: bacula9
 Version: 9.0.6
-Release: alt1%ubt
+Release: alt2%ubt
 
 License: AGPLv3
 Summary: Network based backup program
@@ -118,6 +118,7 @@ Conflicts: bacula7-director-sqlite3
 Summary: Network based backup program (PostgreSQL director only)
 Group: Archiving/Backup
 Requires(pre): %name-director-common = %version-%release
+Requires: postgresql10
 Provides: %name-dir = %version-%release
 Conflicts: bacula-director-postgresql
 Conflicts: bacula7-director-postgresql
@@ -820,6 +821,10 @@ fi
 %endif
 
 %changelog
+* Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 9.0.6-alt2%ubt
+- Rebuilt with openssl 1.1.
+- Add requires postgresql10 to bacula9-director-postgresql subpackage
+
 * Mon Dec 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.6-alt1%ubt
 - Updated to upstream version 9.0.6.
 - Reverted case change of VersionId for web-interface.
