@@ -4,7 +4,7 @@ Name: http_ping
 Summary: utility to send HTTP/HTTPS requests
 
 Version: 20160309
-Release: alt1
+Release: alt1.1
 
 License: %bsdstyle
 Group: Networking/WWW
@@ -48,6 +48,9 @@ install -m 0644 %name.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 20160309-alt1.1
+- NMU: Rebuild with new openssl 1.1.0.
+
 * Sat Mar 19 2016 Nikolay A. Fetisov <naf@altlinux.ru> 20160309-alt1
 - New version
 
