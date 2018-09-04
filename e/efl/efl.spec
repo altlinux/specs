@@ -37,7 +37,7 @@
 
 Name: efl
 Version: %ver_major.7
-Release: alt2
+Release: alt3
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
@@ -448,6 +448,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1.20.7-alt3
+- rebuilt with openssl-1.1
+
 * Tue Jun 12 2018 Yuri N. Sedunov <aris@altlinux.org> 1.20.7-alt2
 - mike:
   introduce emotion knob (on by default)
