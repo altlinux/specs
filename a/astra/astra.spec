@@ -1,6 +1,6 @@
 Name: astra
 Version: 4.4
-Release: alt6
+Release: alt7
 Summary: Astra is a highly-customizable software for processing IPTV streams
 Group: Networking/Other
 
@@ -11,7 +11,11 @@ Url: http://cesbo.com/astra
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: libssl-devel libdvbcsa-devel
+BuildRequires: libssl-devel
+
+%ifarch %ix86 x86_64
+BuildRequires: libdvbcsa-devel
+%endif
 
 %description
 Astra consists of the following components:
@@ -28,10 +32,12 @@ Astra consists of the following components:
 %patch0 -p1
 
 %build
-#pushd contrib
-#./ffmpeg.sh
-#popd
-./configure.sh --bin=%_bindir/astra --with-libdvbcsa
+./configure.sh \
+%ifarch %ix86 x86_64
+	--with-libdvbcsa \
+%endif
+	--bin=%_bindir/astra
+
 %make_build
 
 %install
@@ -48,6 +54,10 @@ install -m 0755 -D scripts/stream.lua %buildroot%_sysconfdir/%name/scripts/strea
 %_bindir/*
 
 %changelog
+* Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 4.4-alt7
+- Rebuild with OpenSSL-1.1.x
+- Support libdvbcsa only on x86 arches (fix build on ARM)
+
 * Sat Jul 25 2015 Alexei Takaseev <taf@altlinux.org> 4.4-alt6
 - update to 4.4.187
 
