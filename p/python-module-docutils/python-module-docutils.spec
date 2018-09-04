@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname docutils
 %def_with python3
+%def_disable check
 
 Summary: Docutils -- Python Documentation Utilities
 Version: 0.14
-Release: alt1.1
+Release: alt2
 %setup_python_module %oname
 Name: %packagename
 License: public domain, Python, BSD, GPL (see COPYING.txt)
@@ -12,13 +14,14 @@ Group: Development/Python
 BuildArch: noarch
 
 URL: http://docutils.sourceforge.net/
-Packager: Python Development Team <python@packages.altlinux.org>
 
 # git://repo.or.cz/docutils.git
-Source: %{oname}-%{version}.tar.gz
+Source: %oname-%version.tar
 Patch: docutils-ALT-disable_assert.patch
 
 Conflicts: Zope-docutils
+Conflicts: python-module-docutils-compat
+Obsoletes: python-module-docutils-compat
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -44,23 +47,10 @@ Docutils is a modular system for processing documentation
 into useful formats, such as HTML, XML, and LaTeX.  For
 input Docutils supports reStructuredText, an easy-to-read,
 what-you-see-is-what-you-get plaintext markup syntax.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for Docutils -- Python 3 Documentation Utilitie
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-Docutils is a modular system for processing documentation
-into useful formats, such as HTML, XML, and LaTeX.  For
-input Docutils supports reStructuredText, an easy-to-read,
-what-you-see-is-what-you-get plaintext markup syntax.
-
-This package contains tests for Docutils.
 %endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -q -n %oname-%version
 %patch -p2
 
 %if_with python3
@@ -86,11 +76,19 @@ pushd ../python3
 popd
 pushd %buildroot%_bindir
 for i in *; do
-	mv $i py3_$i
+	mv $i $(basename $i .py).py3
 done
 popd
 %endif
+
 %python_install --optimize=2
+
+pushd %buildroot%_bindir
+for i in *.py; do
+	mv $i $(basename $i .py)
+done
+popd
+
 mkdir -p %buildroot%_datadir/%modulename
 cp -a tools %buildroot%_datadir/%modulename
 
@@ -98,12 +96,13 @@ cp -a tools %buildroot%_datadir/%modulename
 #	%buildroot%python_sitelibdir
 
 %check
-#export LC_ALL=en_US.UTF-8
-#python test/alltests.py
-#if_with python3
-%if 0
+export LC_ALL=en_US.UTF-8
+
+python test/alltests.py
+
+%if_with python3
 pushd ../python3
-python3 %buildroot%python3_sitelibdir/test/alltests.py
+python3 test/alltests.py
 popd
 %endif
 
@@ -113,23 +112,18 @@ popd
 %python_sitelibdir/*
 %_bindir/rst*
 %if_with python3
-%exclude %_bindir/py3_*
+%exclude %_bindir/*.py3
 
 %files -n python3-module-%oname
-%_bindir/py3_*
+%_bindir/*.py3
 %python3_sitelibdir/*
-#exclude %python3_sitelibdir/test
-%exclude %python3_sitelibdir/%modulename/examples.py*
-#exclude %python3_sitelibdir/tools/editors/emacs/tests
-#exclude %python3_sitelibdir/tools/test
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/%modulename/examples.py*
-#python3_sitelibdir/tools/editors/emacs/tests
-#python3_sitelibdir/tools/test
 %endif
 
 %changelog
+* Fri Aug 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.14-alt2
+- Renamed resulting binaries, removed .py suffix (Closes: #35274).
+- Removed python3-module-docutils-tests subpackage.
+
 * Tue Feb 06 2018 Stanislav Levin <slev@altlinux.org> 0.14-alt1.1
 - (NMU) Fix Requires to pygments.formatter
 
