@@ -4,7 +4,7 @@
 
 Name: erlang-%realname
 Version: 1.0.21
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: TLS / SSL OpenSSL-based native driver for Erlang / Elixir
 Group: Development/Erlang
 License: ASL 2.0
@@ -44,5 +44,8 @@ It is designed for efficiency, speed and compliance.
 %_erllibdir/%realname-%version
 
 %changelog
+* Tue Sep 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.21-alt2%ubt
+- Rebuilt with openssl 1.1.
+
 * Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.21-alt1%ubt
 - Initial build for ALT.
