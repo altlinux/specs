@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-applets
-Version: 1.20.1
-Release: alt2
+Version: 1.20.2
+Release: alt1
 Epoch: 1
 Summary: MATE Desktop panel applets
 License: GPLv2+ and LGPLv2+
@@ -19,10 +19,6 @@ Patch: %name-%version-%release.patch
 BuildRequires: mate-common intltool itstool libSM-devel libdbus-glib-devel libgtksourceview3-devel
 BuildRequires: libgtop-devel libgucharmap-devel libmateweather-devel libnotify-devel libpolkit-devel libupower-devel
 BuildRequires: libwireless-devel libwnck3-devel libxml2-devel mate-panel-devel yelp-tools
-%ifnarch s390 s390x sparc64 %e2k
-# no cpupower as well if it's ever needed here
-BuildRequires: libapm-devel
-%endif
 
 %description
 MATE Desktop panel applets
@@ -38,9 +34,10 @@ MATE Desktop panel applets
 	--disable-static \
 	--enable-polkit \
 	--enable-ipv6 \
-	--enable-stickynotes \
 	--libexecdir=%_libexecdir/%name \
 	--disable-cpufreq \
+	--disable-battstat \
+	--disable-stickynotes \
 	--enable-frequency-selector=no
 
 %make_build
@@ -48,22 +45,26 @@ MATE Desktop panel applets
 %install
 %makeinstall_std
 
+rm -fr %buildroot%_datadir/help/*/mate-stickynotes-applet
+
 %find_lang %name --with-gnome --all-name
 
 %files -f %name.lang
 %doc AUTHORS COPYING README
-%_sysconfdir/sound/events/mate-battstat_applet.soundlist
 %_libexecdir/%name
 %_datadir/%name
 %_datadir/mate/ui/*.xml
 %_datadir/mate-panel/applets/*
-%_datadir/pixmaps/mate-accessx-status-applet
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/dbus-1/services/*.service
 %_iconsdir/hicolor/*/*/*
 %_man1dir/*.1*
 
 %changelog
+* Mon Sep 03 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
+- 1.20.2
+- disable battstat (closes: #35336)
+
 * Sat May 05 2018 Michael Shigorin <mike@altlinux.org> 1:1.20.1-alt2
 - avoid apm on platforms without it
 
