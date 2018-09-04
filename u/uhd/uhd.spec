@@ -14,7 +14,7 @@
 Name: uhd
 Url: http://code.ettus.com/redmine/ettus/projects/uhd/wiki
 Version: 3.11.0.0
-Release: alt4
+Release: alt5
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -29,7 +29,7 @@ Patch1: uhd-3.11.0.0-alt-boost-compat.patch
 BuildRequires: ctest cmake
 BuildRequires: boost-interprocess-devel gcc-c++ boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-program_options-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel libusb-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libgps-devel libudev-devel
 BuildRequires: python-module-Cheetah
-BuildRequires: python-module-docutils python-module-docutils-compat doxygen libpcap-devel libwiretap-devel
+BuildRequires: python-module-docutils doxygen libpcap-devel libwiretap-devel
 BuildRequires: python-module-mako
 Requires(pre): shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
 Requires: tkinter
@@ -175,6 +175,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %_bindir/chdr_log
 
 %changelog
+* Fri Aug 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.11.0.0-alt5
+- NMU: updated build dependencies.
+
 * Thu Aug 09 2018 Anton Farygin <rider@altlinux.ru> 3.11.0.0-alt4
 - build for aarch64
 

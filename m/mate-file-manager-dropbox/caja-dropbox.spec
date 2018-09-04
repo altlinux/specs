@@ -13,7 +13,7 @@ BuildRequires: xvfb-run
 Summary: 		Dropbox extension for caja
 Name: 			mate-file-manager-dropbox
 Version: 		1.18.0
-Release: 		alt1_2
+Release: 		alt1_2.1
 License: 		GPLv2+
 Group: 			Graphical desktop/MATE
 URL: 			http://git.mate-desktop.org/%{oldname}
@@ -23,9 +23,9 @@ ExclusiveArch:  i686 x86_64
 
 BuildRequires:  mate-file-manager-devel
 %if 0%{?fedora} >= 26
-BuildRequires:  python-module-docutils python-module-docutils-compat
+BuildRequires:  python-module-docutils
 %else
-BuildRequires:  python-module-docutils python-module-docutils-compat
+BuildRequires:  python-module-docutils
 %endif
 BuildRequires:  autoconf-common
 BuildRequires:  automake-common
@@ -72,6 +72,9 @@ rm -rf ${RPM_BUILD_ROOT}%{_datadir}
 
 
 %changelog
+* Fri Aug 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.18.0-alt1_2.1
+- NMU: updated build dependencies.
+
 * Fri Sep 15 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1_2
 - new fc release
 

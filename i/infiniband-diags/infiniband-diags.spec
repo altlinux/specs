@@ -3,7 +3,7 @@
 Summary: OpenFabrics InfiniBand Diagnostic Tools
 Name: infiniband-diags
 Version: 2.1.0
-Release: alt1
+Release: alt2
 License: GPLv2 or BSD
 Group: System/Base
 Url: https://github.com/linux-rdma/infiniband-diags
@@ -15,7 +15,7 @@ Packager: Timur Aitov <timonbl4@altlinux.org>
 BuildRequires: rdma-core-devel
 BuildRequires: libopensm-devel
 BuildRequires: pkgconfig(glib-2.0)
-BuildRequires: /usr/bin/rst2man.py
+BuildRequires: /usr/bin/rst2man
 Requires: lib%name = %version-%release
 # old names
 Provides: openib-diags = %version
@@ -208,6 +208,9 @@ chmod 644 %buildroot%_sysconfdir/infiniband-diags/ibdiag.conf
 %_sbindir/set_nodedesc.sh
 
 %changelog
+* Fri Aug 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt2
+- NMU: rebuilt with new python-module-docutils.
+
 * Sat Aug 18 2018 Alexey Shabalin <shaba@altlinux.org> 2.1.0-alt1
 - 2.1.0
 

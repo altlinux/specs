@@ -1,6 +1,6 @@
 Name: 	 be
 Version: 1.1.1
-Release: alt1
+Release: alt2
 Summary: Bugs Everywhere, a distributed bug tracker
 
 License: GPLv2+
@@ -22,7 +22,6 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel
 BuildRequires: python-module-distribute
 BuildRequires: python-module-docutils
-BuildRequires: python-module-docutils-compat
 BuildRequires: python-modules-json
 
 # for testing
@@ -80,6 +79,9 @@ python test.py libbe.storage.{base,util.{config,mapfile,properties,settings_obje
 
 
 %changelog
+* Fri Aug 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt2
+- NMU: rebuilt with new python-module-docutils.
+
 * Thu Nov 14 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
 - New version
 

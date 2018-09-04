@@ -1,13 +1,16 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: liblensfun
 Version: 0.3.2
-Release: alt2
+Release: alt3
 
 Summary: A library to rectifying the defects introduced by your photographic equipment
 Group: System/Libraries
 License: LGPLv3 and CC-BY-SA
 Url: http://sourceforge.net/projects/lensfun/
 
-Source: http://downloads.sourceforge.net/lensfun/lensfun-%version.tar.gz
+# http://downloads.sourceforge.net/lensfun/lensfun-%version.tar.gz
+Source: lensfun-%version.tar
 
 BuildRequires: cmake gcc-c++ glib2-devel libpng-devel
 BuildRequires: doxygen rpm-build-python3 python3-module-setuptools python3-module-docutils
@@ -18,7 +21,7 @@ A library to rectifying the defects introduced by your photographic equipment.
 %package devel
 Summary: Development tools for programs which will use the lensfun library
 Group: Development/C++
-Requires: liblensfun = %version-%release
+Requires: liblensfun = %EVR
 
 %description devel
 Development tools for programs which will use the lensfun library.
@@ -28,7 +31,7 @@ Summary: Tools for managing lensfun data
 Group: Graphics
 License: LGPLv3
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tools
 This package contains tools to fetch lens database, updates and manage lens
@@ -36,7 +39,7 @@ adapters in lensfun.
 
 %prep
 %setup -n lensfun-%version
-subst 's/rst2man/py3_rst2man.py/g' docs/CMakeLists.txt
+subst 's/rst2man/rst2man.py3/g' docs/CMakeLists.txt
 subst 's/\t/      /' apps/lensfun-add-adapter
 
 %build
@@ -55,7 +58,7 @@ subst 's/\t/      /' apps/lensfun-add-adapter
 %install
 %cmakeinstall_std
 pushd BUILD/apps/
-%__python3 setup.py install --skip-build --root=%buildroot --prefix=%_prefix
+%python3_install
 popd
 
 %files
@@ -76,8 +79,10 @@ popd
 %python3_sitelibdir_noarch/*
 %_man1dir/*
 
-
 %changelog
+* Fri Aug 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt3
+- NMU: rebuilt with new python3-module-docutils.
+
 * Tue Apr 12 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.2-alt2
 - fix build on non-x86 arches
 
