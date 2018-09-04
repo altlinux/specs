@@ -4,11 +4,10 @@
 %def_with compat
 
 %define wxbranch 3.1
-#set_gcc_version 5
 
 Name: wxGTK3.1
 Version: %wxbranch.1
-Release: alt1
+Release: alt2
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -20,7 +19,6 @@ Source: %name-%version.tar
 Source2: ld_shared_wrapper.pl
 Source3: wx-config
 Patch1: wxGTK3.0-disable-ABI-checking.patch
-#Patch2: wxGTK3.1-gstreamer1.0.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libGL-devel libGLU-devel libSM-devel
@@ -203,7 +201,6 @@ wxGTK example programs.
 %prep
 %setup
 %patch1 -p1
-#patch2 -p1
 
 # patch some installed files to avoid conflicts with 2.8.*
 #sed -i -e 's|aclocal)|aclocal/wxwin3.m4)|' Makefile.in
@@ -238,9 +235,7 @@ CONF_FLAG="--enable-shared \
 	--enable-gui \
 	--enable-graphics_ctx \
 	--with-libmspack \
-	--enable-stl \
-	--enable-std_containers \
-	--enable-std_string_conv_in_wxstring \
+	--disable-stl \
 	--enable-ipv6 \
 	--with-subdirs"
 
@@ -404,6 +399,9 @@ fi
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Wed Oct 24 2018 Anton Midyukov <antohami@altlinux.org> 3.1.1-alt2
+- Disabled build options: stl, std_containers, std_string_conv_in_wxstring
+
 * Sat Aug 04 2018 Anton Midyukov <antohami@altlinux.org> 3.1.1-alt1
 - New version 3.1.1 (build of a tag) (ALT#33929)
 - New separate packages compatible gtk2

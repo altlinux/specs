@@ -1,33 +1,69 @@
 Name: audacity
-Version: 2.1.1
-Release: alt4
-
+Version: 2.3.0
+Release: alt1.git20181205.2140
 Summary: Cross-platform audio editor
+Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
 License: GPL
 Group: Sound
 
 Url: http://audacity.sourceforge.net/
-
-# cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/audacity co -r audacity-1_3_0-branch audacity
+# Source0: https://github.com/audacity/audacity/archive/Audacity-%{version}.tar.gz
+# https://www.fosshub.com/Audacity.html/audacity-manual-%{version}.zip
 Source0: %name-minsrc-%version.tar
 Source2: %name-48x48.xpm
 Source3: %name-32x32.xpm
 Source4: %name-16x16.xpm
 Source6: %name-%version-help-en.tar
-Patch0: %name-installmo.patch
-Patch1: %name-%version-alt-build.patch
-Patch2: %name-%version-alt-e2k-fft.patch
 
-Packager: Alex Karpov <karpov@altlinux.ru>
+# Debian patches are from https://salsa.debian.org/multimedia-team/audacity/tree/master/debian/patches
+# NetBSD patches are from http://ftp.netbsd.org/pub/pkgsrc/current/pkgsrc/audio/audacity/patches/
+# openSUSE patches are from https://build.opensuse.org/package/show/openSUSE:Leap:15.0/audacity
+# ROSA patches are from https://abf.io/import/audacity/tree/rosa2016.1
+Patch20: Debian-0004-desktop.patch
+Patch50: NetBSD-ALT-Session-directory-in-home.patch
+Patch60: ALT-system-sbsms.patch
+# maybe useful when backporting to p8
+Patch130: NetBSD-ffmpeg3.patch
+Patch140: Fedora-libmp3lame-default.patch
+Patch150: Fedora-libdir.patch
 
-Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
-
-# Automatically added by buildreq on Fri Oct 09 2015
-# optimized out: fontconfig fontconfig-devel glib2-devel glibc-devel-static gnu-config libX11-devel libatk-devel libcairo-devel libflac-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libpango-devel libstdc++-devel libwayland-client libwayland-server pkg-config xorg-xproto-devel zlib-devel
-BuildRequires: gcc-c++ libalsa-devel libexpat-devel libflac++-devel libgtk+2-devel libid3tag-devel libjack-devel liblame-devel libmad-devel libportaudio2-devel libsndfile-devel libsoundtouch-devel libsoxr-devel libstdc++-devel-static libtwolame-devel libvamp-devel libvorbis-devel libwxGTK-devel
-
-BuildRequires: libopencore-amrnb0 libopencore-amrwb0
+# Patents on mp3 (liblame) expired in April 2017
+BuildRequires: gcc-c++ libportaudio2-devel libstdc++-devel-static libfftw3-devel gettext-devel libjpeg-devel ladspa_sdk liblame-devel
+BuildRequires: libflac++-devel >= 1.3.1
+BuildRequires: libflac-devel >= 1.3.1
+# pkconfig BuildRequires are based on ROSA's spec: https://abf.io/import/audacity/blob/rosa2016.1/audacity.spec
+# and OpenSUSE's spec: https://build.opensuse.org/package/view_file/openSUSE:Leap:15.0/audacity/audacity.spec
 BuildRequires: desktop-file-utils shared-mime-info
+BuildRequires: libopencore-amrnb0 libopencore-amrwb0
+BuildRequires: ImageMagick zip
+# For Audacity 2.2.2, we need wxWidgets 3.0, built without STL, either gtk3 or gtk2
+BuildRequires: libwxGTK3.1-devel >= 3.1.1-alt2
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(libavformat)
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(expat)
+BuildRequires: pkgconfig(fftw3)
+BuildRequires: pkgconfig(flac++)
+BuildRequires: pkgconfig(id3tag)
+BuildRequires: pkgconfig(jack)
+BuildRequires: pkgconfig(lilv-0)
+BuildRequires: pkgconfig(lv2)
+BuildRequires: pkgconfig(mad)
+BuildRequires: pkgconfig(ogg)
+BuildRequires: pkgconfig(samplerate)
+BuildRequires: pkgconfig(sndfile)
+BuildRequires: pkgconfig(soundtouch)
+BuildRequires: pkgconfig(soxr)
+BuildRequires: pkgconfig(speex)
+BuildRequires: pkgconfig(suil-0)
+BuildRequires: pkgconfig(twolame)
+BuildRequires: pkgconfig(udev)
+BuildRequires: pkgconfig(vamp-hostsdk)
+BuildRequires: pkgconfig(vorbis)
+BuildRequires: pkgconfig(vorbisenc)
+BuildRequires: pkgconfig(vorbisfile)
+BuildRequires: pkgconfig(zlib)
+BuildRequires: libsbsms-devel >= 2.0.2-alt2
 
 %description
 Audacity is a program that lets you manipulate digital audio waveforms.
@@ -57,70 +93,83 @@ For the most up to date manual content, use the on-line manual.
 
 %prep
 %setup -n %name-src-%version
-#patch0
-%patch1 -p2
-%patch2 -p1
-grep -Irl "libmp3lame.so" . | xargs sed -i "s/libmp3lame.so/libmp3lame.so.0.0/"
+
+%patch20 -p1
+%patch50 -p1
+%patch60 -p1
+%patch130 -p0
+%patch140 -p1
+%patch150 -p1
+grep -Irl "libmp3lame.so" . | xargs sed -i "s/libmp3lame.so/libmp3lame.so.0/" || true
 
 %build
-rm -f src/.depend
-rm -f src/.gchdepend
-# ffmpeg: http://forum.audacityteam.org/viewtopic.php?f=19&t=71586
+# src/RevisionIdent.h is in src/.gitignore and may be missing, what leads to build errors, but it's empty in release tarballs
+[ ! -f src/RevisionIdent.h ] && echo ' ' > src/RevisionIdent.h
+
+export CFLAGS="%{optflags} -fno-strict-aliasing"
+export CXXFLAGS="$CFLAGS -std=gnu++11"
+
+aclocal -I m4
+%autoreconf
+
+# From SUSE's spec about PortAudio:
+# 'This [using system PortAudio] would require to patch our portaudio package with "PortMixer"... an extra API that never got integrated in PortAudio'
 %configure \
-	--with-help \
+	--enable-sse \
+	--enable-dynamic-loading=no \
 	--disable-dynamic-loading \
+	--enable-nyquist \
+	--enable-ladspa \
+	--enable-vst \
 	--with-expat=system \
-	--without-ffmpeg \
+	--with-ffmpeg=system \
 	--with-lame=system \
 	--with-libflac=system \
 	--with-libid3tag=system \
 	--with-libmad=system \
-	--without-libresample \
-	--without-libsamplerate \
+	--with-sbsms=system \
 	--with-libsndfile=system \
+	--with-soundtouch=system \
+	--with-libsoxr=system \
 	--with-libtwolame=system \
 	--with-libvamp=system \
 	--with-libvorbis=system \
-	--with-soundtouch=system \
+	--with-lv2=system \
+	--with-portaudio=local \
+	--with-midi=local \
+	--without-xaudio \
+	--with-widgetextra=local \
 %ifnarch %ix86 x86_64 %e2k
-	--disable-sse \
+	--disable-sse
+%else
+	--enable-sse
 %endif
-#
-	#--enable-unicode=yes \
-	#--with-portmixer=no
-	#--with-portaudio=system \
-	#--with-libsoxr=system \
-	#--with-sbsms=system \
-	#
+
 %make_build
 
 %install
 %makeinstall_std
-install -pDm644 %SOURCE2 %buildroot%_liconsdir/%name.xpm
-install -pDm644 %SOURCE3 %buildroot%_niconsdir/%name.xpm
-install -pDm644 %SOURCE4 %buildroot%_miconsdir/%name.xpm
-
+[ ! -f %buildroot%_liconsdir/%name.xpm ] && install -pDm644 %SOURCE2 %buildroot%_liconsdir/%name.xpm
+[ ! -f %buildroot%_niconsdir/%name.xpm ] && install -pDm644 %SOURCE3 %buildroot%_niconsdir/%name.xpm
+[ ! -f %buildroot%_miconsdir/%name.xpm ] && install -pDm644 %SOURCE4 %buildroot%_miconsdir/%name.xpm
 tar -xf %SOURCE6 -C %buildroot%_datadir/%name
 rm -rf %buildroot%_defaultdocdir/%name
 %find_lang %name
 
 %files -f %name.lang
-%doc *.txt
-%doc lib-src/libnyquist/nyquist/license.txt
-%doc lib-src/libnyquist/nyquist/Readme.txt
+%doc CHANGELOG.txt CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.txt README.txt todo.txt
 %_bindir/*
 %_mandir/man?/*
 %_iconsdir/*/*/apps/%name.*
 %_liconsdir/*
-%_niconsdir/*.xpm
+%_niconsdir/*
 %_miconsdir/*
 %dir %_datadir/%name
-%_datadir/%name/*.xml
-%_datadir/%name/nyquist
-%_datadir/%name/plug-ins
+%_datadir/%name/*
 %_datadir/applications/%name.desktop
 %_datadir/mime/packages/%name.xml
-%_datadir/appdata/audacity.appdata.xml
+%_datadir/appdata/%name.appdata.xml
+%_datadir/icons/hicolor/*/apps/%name.*
 %_pixmapsdir/*.xpm
 
 %files manual
@@ -128,11 +177,23 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/%name/help
 
 %changelog
+* Mon Dec 05 2018 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3.0-alt1.git20181205.2140
+- New version 2.3.0 + git master from 05.12.2018 21:40 UTC+0300 (release 2.3.0 is officially buggy on Linux, so took git master)
+- Now Russian translation is better than in previous versions
+- Switched to no-STL wxGTK3.1 and GTK+3
+- Reworked and extended build flags (now Audacity supports working with more formats) (Closes: 31852)
+- Enable ffmpeg/avconv (Closes: 35366)
+- Build with system libsbsms (packaged it seperately, moved audacity-2.2.2-alt-e2k-fft.patch from Audacity to libsbsms)
+- Patched to move temporary files from tmpfs /tmp/.private/ to persistend storage in HOME
+- Added built-in icons to RPM files list
+- Install ALT's icons only if there are no upstream ones
+- Install more docs & don't install docs for bundled statically linked libraries
+
 * Fri Nov 23 2018 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt4
 - Fixed packaging documentation (Closes: #34427).
 - disable SSE for non-x86 and e2k arches.
 
-* Sun Mar 18 2018 Andrew Savchenkon <bircoph@altlinux.org> 2.1.1-alt3
+* Sun Mar 18 2018 Andrew Savchenko <bircoph@altlinux.org> 2.1.1-alt3
 - Fix SSE issue on E2K properly, revert SSE removal for non-x86.
 
 * Sat Mar 17 2018 Michael Shigorin <mike@altlinux.org> 2.1.1-alt2
@@ -400,4 +461,4 @@ rm -rf %buildroot%_defaultdocdir/%name
 - Fixed group tag.
 
 * Thu Oct 11 2001 Andrey Astafiev <andrei@altlinux.ru> 0.97-alt1
-- First version of RPM package.
+- First version of RPM package.l
