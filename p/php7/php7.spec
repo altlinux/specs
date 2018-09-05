@@ -3,7 +3,7 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.2.8
+Version: 7.2.9
 Release: alt1%ubt
 
 %define php7_name      %name
@@ -49,9 +49,9 @@ PreReq:  php7-libs = %version-%release
 Provides: php-engine = %version-%release
 Provides: %name = %rpm_build_version-%release
 
-BuildRequires: chrpath libmm-devel libxml2-devel ssmtp termutils zlib-devel re2c bison
+BuildRequires: chrpath libmm-devel libxml2-devel ssmtp termutils zlib-devel re2c bison alternatives
 
-BuildRequires(pre): rpm-build-php7
+BuildRequires(pre): rpm-build-php7 rpm-macros-alternatives
 BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: libtool_1.5 chrpath
@@ -404,6 +404,9 @@ subst 's,sbin/lsattr,bin/lsattr,' %buildroot/%php7_libdir/build/config.guess
 %doc tests run-tests.php 
 
 %changelog
+* Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 7.2.9-alt1%ubt
+- 7.2.9
+
 * Tue Jul 31 2018 Anton Farygin <rider@altlinux.ru> 7.2.8-alt1%ubt
 - 7.2.8 with fixes for multiple security issues
 
