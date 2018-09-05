@@ -1,5 +1,7 @@
+%def_enable check
+
 Name: iso-codes
-Version: 3.79
+Version: 4.1
 Release: alt1
 
 Group: System/Internationalization
@@ -43,8 +45,11 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 %makeinstall_std
 %find_lang --all-name iso --output=%name.lang
 
+%check
+%make check
+
 %files -f %name.lang
-%doc ChangeLog README.md TODO
+%doc ChangeLog.md README.md TODO
 %doc --no-dereference LICENSE
 %_datadir/xml/%name/
 %_datadir/%name/json/
@@ -53,6 +58,12 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 %_datadir/pkgconfig/iso-codes.pc
 
 %changelog
+* Wed Sep 05 2018 Yuri N. Sedunov <aris@altlinux.org> 4.1-alt1
+- 4.1
+
+* Fri Aug 31 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0-alt1
+- 4.0
+
 * Wed Feb 28 2018 Yuri N. Sedunov <aris@altlinux.org> 3.79-alt1
 - 3.79 (new urls)
 
