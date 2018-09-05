@@ -1,6 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+%def_with check
+
+%define _pseudouser_user     _opendnssec
+%define _pseudouser_group    _opendnssec
+%define _pseudouser_home     %_sysconfdir/opendnssec
+
 Name: opendnssec
 Version: 1.4.14
-Release: alt1
+Release: alt2
 
 Summary: DNSSEC key and zone management software
 License: %bsd
@@ -15,6 +22,7 @@ Source4: conf.xml
 Source5: tmpfiles-opendnssec.conf
 Source6: ods-enforcerd.init
 Source7: ods-signerd.init
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -24,12 +32,13 @@ BuildRequires: python-dev
 BuildRequires: doxygen sqlite3
 
 Requires: softhsm
+Requires: sqlite3
 
-%define _unpackaged_files_terminate_build 1
+%if_with check
+BuildRequires: CUnit-devel
+BuildRequires: softhsm
+%endif
 
-%define _pseudouser_user     _opendnssec
-%define _pseudouser_group    _opendnssec
-%define _pseudouser_home     %_sysconfdir/opendnssec
 
 %description
 OpenDNSSEC was created as an open-source turn-key solution for DNSSEC.
@@ -39,12 +48,16 @@ SoftHSM.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
 %configure \
         --localstatedir=/var \
         --with-ldns=%_libdir \
+%if_with check
+        --with-dbname=sqlite3 \
+%endif
         #
 
 %make_build
@@ -53,6 +66,7 @@ SoftHSM.
 %makeinstall_std
 mkdir -p %buildroot%_localstatedir/opendnssec/{tmp,signed,signconf}
 touch %buildroot%_localstatedir/opendnssec/{kasp.db,kasp.db.our_lock}
+touch %buildroot%_localstatedir/opendnssec/kasp.db.backup
 mkdir -p %buildroot%_runtimedir/opendnssec
 mkdir -p %buildroot%_localstatedir/softhsm/tokens
 install -Dm0644 %SOURCE1 %buildroot%_unitdir/ods-enforcerd.service
@@ -64,6 +78,7 @@ install -Dm0755 %SOURCE6 %buildroot%_initdir/ods-enforcerd
 install -Dm0755 %SOURCE7 %buildroot%_initdir/ods-signerd
 
 %check
+%make check
 
 %pre
 groupadd -r -f %_pseudouser_group ||:
@@ -112,8 +127,12 @@ ods-ksmutil update all >/dev/null 1>&2 ||:
 %_man5dir/*
 %_man7dir/*
 %_man8dir/*
-%attr(0755,%_pseudouser_user,%_pseudouser_group) %_localstatedir/opendnssec/
-%ghost %_localstatedir/opendnssec/kasp.db
+%dir %attr(0755,%_pseudouser_user,%_pseudouser_group) %_localstatedir/opendnssec/
+%_localstatedir/opendnssec/signconf/
+%_localstatedir/opendnssec/signed/
+%_localstatedir/opendnssec/tmp/
+%ghost %config(noreplace)%_localstatedir/opendnssec/kasp.db
+%ghost %config(noreplace)%_localstatedir/opendnssec/kasp.db.backup
 %ghost %_localstatedir/opendnssec/kasp.db.our_lock
 %ghost %_localstatedir/softhsm/tokens/
 %_datadir/opendnssec/
@@ -122,6 +141,10 @@ ods-ksmutil update all >/dev/null 1>&2 ||:
 %exclude %_sysconfdir/opendnssec/*.sample
 
 %changelog
+* Wed Sep 05 2018 Stanislav Levin <slev@altlinux.org> 1.4.14-alt2
+- Enable tests.
+- Fix requirements to sqlite3 in post script.
+
 * Tue Sep 04 2018 Stanislav Levin <slev@altlinux.org> 1.4.14-alt1
 - 1.4.12 -> 1.4.14.
 
