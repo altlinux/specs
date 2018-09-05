@@ -1,6 +1,6 @@
 Name: Pymacs
 Version: 0.24
-Release: alt1beta2.1
+Release: alt1beta2.2
 
 Summary: Two-way communication between Python and Emacs
 Source: %name-%version.tar
@@ -8,12 +8,12 @@ License: GPL
 Group: Development/Python
 Requires: python
 Requires: emacs
-Packager: Andrey Khavryuchenko <akhavr@altlinux.ru>
 Url: http://pymacs.progiciels-bpi.ca/
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-docutils
+BuildRequires: python-devel
 BuildRequires: emacs
+BuildRequires: /usr/bin/rst2html
 
 %description
 Pymacs is a powerful tool which, once started from Emacs, allows both-way
@@ -45,7 +45,7 @@ cat <<EOF > %buildroot/%_sysconfdir/emacs/site-start.d/pymacs.el
 EOF
 
 python pppp -C ppppconfig.py pymacs.rst.in
-rst2html.py --input-encoding=UTF-8 pymacs.rst pymacs.html
+rst2html --input-encoding=UTF-8 pymacs.rst pymacs.html
 
 %files -f INSTALLED_FILES
 %_sysconfdir/emacs/site-start.d/pymacs.el
@@ -54,6 +54,9 @@ rst2html.py --input-encoding=UTF-8 pymacs.rst pymacs.html
 %doc TODO README THANKS pymacs.html
 
 %changelog
+* Wed Sep 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.24-alt1beta2.2
+- NMU: fixed build with new python-module-docutils.
+
 * Mon Nov 14 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.24-alt1beta2.1
 - Rebuild with Python-2.7
 
