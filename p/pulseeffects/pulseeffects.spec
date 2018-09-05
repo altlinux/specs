@@ -2,7 +2,7 @@
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 4.2.8
+Version: 4.3.4
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -59,12 +59,16 @@ effects for Pulseaudio applications.
 %_libdir/gstreamer-%gst_api_ver/libgstpeautogain.so
 %_libdir/gstreamer-%gst_api_ver/libgstpeadapter.so
 %_desktopdir/%xdg_name.desktop
-%_datadir/glib-2.0/schemas/com.github.wwmm.%name.*gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.*gschema.xml
+%_datadir/dbus-1/services/%xdg_name.service
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc README* CHANGELOG.*
 
 %changelog
+* Wed Sep 05 2018 Yuri N. Sedunov <aris@altlinux.org> 4.3.4-alt1
+- 4.3.4
+
 * Wed Aug 15 2018 Yuri N. Sedunov <aris@altlinux.org> 4.2.8-alt1
 - 4.2.8
 
