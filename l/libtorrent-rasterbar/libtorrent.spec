@@ -9,9 +9,9 @@
 %define upname libtorrent-rasterbar
 
 Name: libtorrent-rasterbar
-Version: 1.1.7
 Epoch: 3
-Release: alt2
+Version: 1.1.9
+Release: alt1
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
@@ -56,14 +56,14 @@ that other clients and libraries suffer from. libTorrent features:
 %package -n %upname-devel
 Summary: Development libraries and header files for libTorrent
 Group: Development/C++
-Requires: %name = %epoch:%version-%release
-Provides: libtorrent-rasterbar8-devel = %epoch:%version-%release
-Conflicts: libtorrent-rasterbar8-devel < %epoch:%version-%release
-Obsoletes: libtorrent-rasterbar8-devel < %epoch:%version-%release
-Conflicts: libtorrent-rasterbar7-devel < %epoch:%version-%release
-Obsoletes: libtorrent-rasterbar7-devel < %epoch:%version-%release
-Conflicts: libtorrent-rasterbar-devel < %epoch:%version-%release
-Obsoletes: libtorrent-rasterbar-devel < %epoch:%version-%release
+Requires: %name = %EVR
+Provides: libtorrent-rasterbar8-devel = %EVR
+Conflicts: libtorrent-rasterbar8-devel < %EVR
+Obsoletes: libtorrent-rasterbar8-devel < %EVR
+Conflicts: libtorrent-rasterbar7-devel < %EVR
+Obsoletes: libtorrent-rasterbar7-devel < %EVR
+Conflicts: libtorrent-rasterbar-devel < %EVR
+Obsoletes: libtorrent-rasterbar-devel < %EVR
 Conflicts: libtorrent-devel
 
 %description -n %upname-devel
@@ -74,9 +74,9 @@ to develop applications using libTorrent.
 %package -n %upname-devel-static
 Summary: Development static libraries for libTorrent
 Group: Development/C++
-Requires: %name = %epoch:%version-%release
-Provides: libtorrent-rasterbar7-devel-static = %epoch:%version-%release
-Conflicts: libtorrent-rasterbar7-devel-static < %epoch:%version-%release
+Requires: %name = %EVR
+Provides: libtorrent-rasterbar7-devel-static = %EVR
+Conflicts: libtorrent-rasterbar7-devel-static < %EVR
 #Conflicts: libtorrent-devel
 
 %description -n %upname-devel-static
@@ -87,9 +87,9 @@ to develop applications using libTorrent.
 %package -n python-module-%upname
 Summary: libTorrent python bindings
 Group: Development/Python
-Requires: %name = %epoch:%version-%release
-Provides: python-module-libtorrent-rasterbar7 = %epoch:%version-%release
-Conflicts: python-module-libtorrent-rasterbar7 < %epoch:%version-%release
+Requires: %name = %EVR
+Provides: python-module-libtorrent-rasterbar7 = %EVR
+Conflicts: python-module-libtorrent-rasterbar7 < %EVR
 
 %description -n python-module-%upname
 The python-module-libtorrent-rasterbar contains
@@ -140,6 +140,9 @@ rm -f %buildroot%_libdir/*.a
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Sep 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.1.9-alt1
+- Updated to upstream version 1.1.9.
+
 * Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.1.7-alt2
 - Rebuilt with fixes pulled from upstream.
 
