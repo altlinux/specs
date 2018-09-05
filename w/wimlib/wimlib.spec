@@ -1,13 +1,15 @@
 %define libname libwim
 Name: wimlib
 Version: 1.12.0
-Release: alt1
+Release: alt1.1
 
 Summary: Library to extract, create, modify, and mount WIM files
 
 License: GPLv3+
 Group: System/Libraries
 Url: https://wimlib.net/
+
+ExclusiveArch: %ix86 x86_64
 
 #Source: http://prdownloads.sourceforge.net/wimlib/wimlib-%version.tar
 Source: https://wimlib.net/downloads/wimlib-%version.tar
@@ -89,6 +91,9 @@ make check
 %_pkgconfigdir/wimlib.pc
 
 %changelog
+* Wed Sep 05 2018 Grigory Ustinov <grenka@altlinux.org> 1.12.0-alt1.1
+- NMU: Rebuild with new openssl.
+
 * Sun Oct 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1.12.0-alt1
 - new version 1.12.0 (with rpmrb script)
 
