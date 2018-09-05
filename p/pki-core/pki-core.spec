@@ -2,16 +2,18 @@
 
 %def_with check
 %def_with python3_default
+%define nss_default_db_type sql
 
-%define java_home     %_jvmdir/jre
-%define resteasy_lib  %_javadir/resteasy
-%define jaxrs_api_jar %_javadir/jboss-jaxrs-2.0-api.jar
-%define app_server    tomcat-8.5
-%define nss_db_type   sql
+%define java_home           %_jvmdir/jre
+%define resteasy_lib        %_javadir/resteasy
+%define jaxrs_api_jar       %_javadir/jboss-jaxrs-2.0-api.jar
+
+%define tomcatjss_version   7.3.5
+%define jss_version         4.5.0
 
 Name: pki-core
-Version: 10.6.1
-Release: alt2%ubt
+Version: 10.6.6
+Release: alt1
 
 Summary: Certificate System - PKI Core Components
 License: %gpl2only
@@ -23,12 +25,10 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-java
 
 BuildRequires: java-devel
-BuildRequires: rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: sh4
@@ -46,117 +46,92 @@ BuildRequires: ldapjdk
 BuildRequires: resteasy-atom-provider
 BuildRequires: resteasy-client
 BuildRequires: libnuxwdog-java
-BuildRequires: tomcatjss
+BuildRequires: tomcatjss >= %tomcatjss_version
 BuildRequires: xalan-j2
 BuildRequires: slf4j-jdk14
+BuildRequires: idm-console-framework
+BuildRequires: junit
 
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-nss
-BuildRequires: python-module-ldap
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-nss
 
 %if_with check
-BuildRequires: junit
+
+BuildRequires: python-module-selinux
+BuildRequires: python-module-ldap
+BuildRequires: pylint
+BuildRequires: pyflakes
+BuildRequires: python-module-flake8
+
+BuildRequires: python3-module-selinux
+BuildRequires: python3-module-ldap
+BuildRequires: pylint-py3
+BuildRequires: python3-pyflakes
+BuildRequires: python3-module-flake8
+
 %endif
 
-%global overview                                                       \
-==================================                                     \
-||  ABOUT "CERTIFICATE SYSTEM"  ||                                     \
-==================================                                     \
-                                                                       \
-Certificate System (CS) is an enterprise software system designed      \
-to manage enterprise Public Key Infrastructure (PKI) deployments.      \
-                                                                       \
-PKI Core contains ALL top-level java-based Tomcat PKI components:      \
-                                                                       \
-  * pki-symkey                                                         \
-  * pki-base                                                           \
-  * pki-base-python2 (alias for pki-base)                              \
-  * pki-base-python3                                                   \
-  * pki-base-java                                                      \
-  * pki-tools                                                          \
-  * pki-server                                                         \
-  * pki-ca                                                             \
-  * pki-kra                                                            \
-  * pki-ocsp                                                           \
-  * pki-tks                                                            \
-  * pki-tps                                                            \
-  * pki-javadoc                                                        \
-                                                                       \
-which comprise the following corresponding PKI subsystems:             \
-                                                                       \
-  * Certificate Authority (CA)                                         \
-  * Key Recovery Authority (KRA)                                        \
-  * Online Certificate Status Protocol (OCSP) Manager                  \
-  * Token Key Service (TKS)                                            \
-  * Token Processing Service (TPS)                                     \
-                                                                       \
-Python clients need only install the pki-base package.  This           \
-package contains the python REST client packages and the client        \
-upgrade framework.                                                     \
-                                                                       \
-Java clients should install the pki-base-java package.  This package   \
-contains the legacy and REST Java client packages.  These clients      \
-should also consider installing the pki-tools package, which contain   \
-native and Java-based PKI tools and utilities.                         \
-                                                                       \
-Certificate Server instances require the fundamental classes and       \
-modules in pki-base and pki-base-java, as well as the utilities in     \
-pki-tools.  The main server classes are in pki-server, with subsystem  \
-specific Java classes and resources in pki-ca, pki-kra, pki-ocsp etc.  \
-                                                                       \
-Finally, if Certificate System is being deployed as an individual or   \
-set of standalone rather than embedded server(s)/service(s), it is     \
-strongly recommended (though not explicitly required) to include at    \
-least one PKI Theme package:                                           \
-                                                                       \
-  * dogtag-pki-theme (Dogtag Certificate System deployments)           \
-    * dogtag-pki-server-theme                                          \
-  * redhat-pki-server-theme (Red Hat Certificate System deployments)   \
-    * redhat-pki-server-theme                                          \
-  * customized pki theme (Customized Certificate System deployments)   \
-    * <customized>-pki-server-theme                                    \
-                                                                       \
-  NOTE:  As a convenience for standalone deployments, top-level meta   \
-         packages may be provided which bind a particular theme to     \
-         these certificate server packages.                            \
-                                                                       \
-%nil
+#### Meta package ####
+Requires: dogtag-pki-server-theme >= %EVR
+Requires: dogtag-pki-console-theme >= %EVR
+Requires: python-module-pki-base >= %EVR
+Requires: pki-base-java >= %EVR
+Requires: pki-tools >= %EVR
+Requires: pki-server >= %EVR
+Requires: pki-ca >= %EVR
+Requires: pki-kra >= %EVR
+Requires: pki-ocsp >= %EVR
+Requires: pki-tks >= %EVR
+Requires: pki-tps >= %EVR
+Requires: pki-console >= %EVR
 
-%description %overview
+%description
+Dogtag PKI is an enterprise software system designed
+to manage enterprise Public Key Infrastructure deployments.
+
+PKI consists of the following components:
+
+  * Certificate Authority (CA)
+  * Key Recovery Authority (KRA)
+  * Online Certificate Status Protocol (OCSP) Manager
+  * Token Key Service (TKS)
+  * Token Processing Service (TPS)
+
+
 %package -n pki-symkey
-Summary: Symmetric Key JNI Package
+Summary: Dogtag PKI Symmetric Key Package
 Group: System/Libraries
-Requires: jss
-Requires: java-headless
+Requires: jss >= %jss_version
 Requires: javapackages-tools
 Provides: symkey = %EVR
 Obsoletes: symkey < %EVR
 
 %description -n pki-symkey
-The Symmetric Key Java Native Interface (JNI) package supplies various native
+The Dogtag PKI Symmetric Key Java Package supplies various native
 symmetric key operations to Java programs.
 
-This package is a part of the PKI Core used by the Certificate System.
-
-%overview
-
 %package -n pki-base
-Summary: Certificate System - PKI Framework
+Summary: Dogtag PKI Base Package
 Group: System/Base
 BuildArch: noarch
+%if_with python3_default
+Requires: python3-module-pki-base >= %EVR
+%else
+Requires: python-module-pki-base >= %EVR
+%endif
 Provides: pki-common = %EVR
 Provides: pki-util = %EVR
 Obsoletes: pki-common < %EVR
 Obsoletes: pki-util < %EVR
 
 %description -n pki-base
-The PKI Framework contains the common and client libraries and utilities.
-This package is a part of the PKI Core used by the Certificate System.
-
-%overview
+The Dogtag PKI Base Package contains the common and client libraries
+and utilities written in Python.
 
 %package -n pki-base-java
-Summary: Certificate System - Java Framework
+Summary: Dogtag PKI Base Java Package
 Group: System/Base
 BuildArch: noarch
 Requires: pki-base = %EVR
@@ -167,44 +142,30 @@ Requires: xml-commons-apis
 Requires: xml-commons-resolver
 
 %description -n pki-base-java
-The PKI Framework contains the common and client libraries and utilities
-written in Java.  This package is a part of the PKI Core used by the
-Certificate System.
-
-This package is a part of the PKI Core used by the Certificate System.
-
-%overview
+The Dogtag PKI Base Java Package contains the common and client
+libraries and utilities written in Java.
 
 %package -n python-module-pki-base
-Summary: Certificate System - PKI Framework
+Summary: Dogtag PKI Python2 Package
 Group: Development/Python
 BuildArch: noarch
 Requires: pki-base = %EVR
 
 %description -n python-module-pki-base
-This package contains PKI client library for Python 3.
-
-This package is a part of the PKI Core used by the Certificate System.
-
-%overview
+This package contains Dogtag PKI client library for Python2.
 
 %package -n python3-module-pki-base
-Summary: Certificate System - PKI Framework
+Summary: Dogtag PKI Python3 Package
 Group: Development/Python3
 BuildArch: noarch
 Requires: pki-base = %EVR
 
 %description -n python3-module-pki-base
-This package contains PKI client library for Python 3.
-
-This package is a part of the PKI Core used by the Certificate System.
-
-%overview
+This package contains Dogtag PKI client library for Python3.
 
 %package -n pki-tools
-Summary: Certificate System - PKI Tools
+Summary: Dogtag PKI Tools Package
 Group: System/Base
-Requires: pki-base = %EVR
 Requires: pki-base-java = %EVR
 Requires: openldap-clients
 Requires: nss-utils
@@ -215,21 +176,15 @@ Obsoletes: pki-java-tools < %EVR
 Conflicts: strongswan
 
 %description -n pki-tools
-This package contains PKI executables that can be used to help make
+This package contains Dogtag PKI executables that can be used to help make
 Certificate System into a more complete and robust PKI solution.
 
-This package is a part of the PKI Core used by the Certificate System.
-
-%overview
-
 %package -n pki-server
-Summary: Certificate System - PKI Server Framework
+Summary: Dogtag PKI Server Package
 Group: System/Base
 BuildArch: noarch
 Requires: pki-symkey = %EVR
 Requires: pki-tools = %EVR
-Requires: pki-base = %EVR
-Requires: pki-base-java = %EVR
 Requires: openssl
 
 Provides: pki-deploy = %EVR
@@ -241,21 +196,17 @@ Obsoletes: pki-setup < %EVR
 Obsoletes: pki-silent < %EVR
 
 %description -n pki-server
-The PKI Server Framework is required by the following four PKI subsystems:
+The PKI Server Package contains libraries and utilities needed by the
+following PKI subsystems:
 
     the Certificate Authority (CA),
-    the Data Recovery Manager (DRM),
+    the Key Recovery Authority (KRA),
     the Online Certificate Status Protocol (OCSP) Manager,
     the Token Key Service (TKS), and
     the Token Processing Service (TPS).
 
-This package is a part of the PKI Core used by the Certificate System.
-The package contains scripts to create and remove PKI subsystems.
-
-%overview
-
 %package -n pki-ca
-Summary: Certificate System - Certificate Authority
+Summary: Dogtag PKI CA Package
 Group: System/Servers
 BuildArch: noarch
 Requires: pki-server = %EVR
@@ -269,13 +220,8 @@ The Certificate Authority can be configured as a self-signing Certificate
 Authority, where it is the root CA, or it can act as a subordinate CA,
 where it obtains its own signing certificate from a public CA.
 
-This package is one of the top-level java-based Tomcat PKI subsystems
-provided by the PKI Core used by the Certificate System.
-
-%overview
-
 %package -n pki-kra
-Summary: Certificate System - Data Recovery Manager
+Summary: Dogtag PKI KRA Package
 Group: System/Servers
 BuildArch: noarch
 Requires: pki-server = %EVR
@@ -295,13 +241,8 @@ protection of the public encryption keys for the users in the PKI deployment.
 Note that the KRA archives encryption keys; it does NOT archive signing keys,
 since such archival would undermine non-repudiation properties of signing keys.
 
-This package is one of the top-level java-based Tomcat PKI subsystems
-provided by the PKI Core used by the Certificate System.
-
-%overview
-
 %package -n pki-ocsp
-Summary: Certificate System - Online Certificate Status Protocol Manager
+Summary: Dogtag PKI OCSP Package
 Group: System/Servers
 BuildArch: noarch
 Requires: pki-server = %EVR
@@ -328,13 +269,8 @@ When an instance of OCSP Manager is set up with an instance of CA, and
 publishing is set up to this OCSP Manager, CRLs are published to it
 whenever they are issued or updated.
 
-This package is one of the top-level java-based Tomcat PKI subsystems
-provided by the PKI Core used by the Certificate System.
-
-%overview
-
 %package -n pki-tks
-Summary: Certificate System - Token Key Service
+Summary: Dogtag PKI TKS Package
 Group: System/Servers
 BuildArch: noarch
 Requires: pki-server = %EVR
@@ -355,13 +291,8 @@ TKS.  Tokens with older keys will get new token keys.
 Because of the sensitivity of the data that TKS manages, TKS should be set up
 behind the firewall with restricted access.
 
-This package is one of the top-level java-based Tomcat PKI subsystems
-provided by the PKI Core used by the Certificate System.
-
-%overview
-
 %package -n pki-tps
-Summary: Certificate System - Token Processing Service
+Summary: Dogtag PKI TPS Package
 Group: System/Servers
 Requires: pki-server = %EVR
 
@@ -390,10 +321,8 @@ The utility "tpsclient" is a test tool that interacts with TPS.  This
 tool is useful to test TPS server configs without risking an actual
 smart card.
 
-%overview
-
 %package -n pki-javadoc
-Summary: Certificate System - PKI Framework Javadocs
+Summary: Dogtag PKI Javadoc Package
 Group: Documentation
 BuildArch: noarch
 Requires: javapackages-tools
@@ -406,12 +335,40 @@ Obsoletes: pki-java-tools-javadoc < %EVR
 Obsoletes: pki-common-javadoc < %EVR
 
 %description -n pki-javadoc
-This documentation pertains exclusively to version %version of
-the PKI Framework and Tools.
+This package contains PKI API documentation.
 
-This package is a part of the PKI Core used by the Certificate System.
+%package -n pki-console
+Summary: PKI Console Package
+Group: Networking/Other
+BuildArch: noarch
+Requires: idm-console-framework
+Requires: pki-base-java >= %EVR
+Requires: dogtag-pki-console-theme >= %EVR
 
-%overview
+%description -n pki-console
+The PKI Console is a Java application used to administer PKI server.
+
+%package -n dogtag-pki-server-theme
+Summary: Dogtag PKI Server Theme Package
+Group: Networking/Other
+BuildArch: noarch
+Provides: pki-server-theme = %EVR
+Obsoletes: pki-server-theme < %EVR
+
+%description -n dogtag-pki-server-theme
+This PKI Server Theme Package contains textual and graphical user
+interface for PKI Server.
+
+%package -n dogtag-pki-console-theme
+Summary: Dogtag PKI Console Theme Package
+Group: Networking/Other
+BuildArch: noarch
+Provides: pki-console-theme = %EVR
+Obsoletes: pki-console-theme < %EVR
+
+%description -n dogtag-pki-console-theme
+This PKI Console Theme Package contains textual and graphical user
+interface for PKI Console.
 
 %prep
 %setup
@@ -426,37 +383,44 @@ xargs sed -i 's/#include \x22httpd\//#include \x22apache2\//g'
 # At least one script required bash4.
 # Just use sh4 for all scripts.
 egrep -rl '^#!/bin/(sh|bash)' | \
-	xargs sed -r -i 's;^#!/bin/(sh|bash)( -X)?;#!/bin/sh4;'
+    xargs sed -r -i 's;^#!/bin/(sh|bash)( -X)?;#!/bin/sh4;'
 
 %build
+# get Tomcat <major>.<minor> version number
+tomcat_version=`/usr/sbin/tomcat version | sed -n 's/Server number: *\([0-9]\+\.[0-9]\+\).*/\1/p'`
+if [ $tomcat_version == "9.0" ]; then
+    app_server=tomcat-8.5
+else
+    app_server=tomcat-$tomcat_version
+fi
+
 %add_optflags -I/usr/include/apu-1
-mkdir BUILD
-pushd BUILD
-%fedora_cmake -DVERSION=%version-%release \
-	-DVAR_INSTALL_DIR:PATH=%_var \
-	-DBUILD_PKI_CORE:BOOL=ON \
-	-DJAVA_HOME=%java_home \
-	-DJAVA_LIB_INSTALL_DIR=%_jnidir \
-	-DSYSTEMD_LIB_INSTALL_DIR=%_unitdir \
-	-DJAXRS_API_JAR=%jaxrs_api_jar \
-	-DRESTEASY_LIB=%resteasy_lib \
-	-DPKI_NSS_DB_TYPE=%nss_db_type \
-	-DAPP_SERVER=%app_server \
+%cmake \
+    --no-warn-unused-cli \
+    -DVERSION=%version-%release \
+    -DVAR_INSTALL_DIR:PATH=%_var \
+    -DJAVA_HOME=%java_home \
+    -DJAVA_LIB_INSTALL_DIR=%_jnidir \
+    -DSYSTEMD_LIB_INSTALL_DIR=%_unitdir \
+    -DAPP_SERVER=$app_server \
+    -DJAXRS_API_JAR=%jaxrs_api_jar \
+    -DRESTEASY_LIB=%resteasy_lib \
+    -DNSS_DEFAULT_DB_TYPE=%nss_default_db_type \
+    -DBUILD_PKI_CORE:BOOL=ON \
+    -DWITH_PYTHON3_DEFAULT:BOOL=ON \
 %if_with check
-	-DWITH_TEST:BOOL=ON \
+    -DWITH_TEST:BOOL=ON \
 %else
-	-DWITH_TEST:BOOL=OFF \
+    -DWITH_TEST:BOOL=OFF \
 %endif
-%if_with python3_default
-	-DWITH_PYTHON3_DEFAULT:BOOL=ON \
-%else
-	-DWITH_PYTHON3_DEFAULT:BOOL=OFF \
-%endif
-	-DWITH_PYTHON2:BOOL=ON \
-	-DWITH_PYTHON3:BOOL=ON \
-        ..
-popd
-%cmake_build VERBOSE=1 all
+    -DWITH_PYTHON2:BOOL=ON \
+    -DWITH_PYTHON3:BOOL=ON \
+    -DWITH_JAVADOC:BOOL=ON \
+    -DBUILD_PKI_CONSOLE:BOOL=ON \
+    -DTHEME=dogtag \
+     ..
+
+%cmake_build all
 
 %install
 %cmakeinstall_std
@@ -478,6 +442,63 @@ chmod -x %buildroot%_datadir/pki/scripts/operations
 touch %buildroot%_sysconfdir/pki/pki.version
 touch %buildroot%_logdir/pki/pki-upgrade-%version.log
 touch %buildroot%_logdir/pki/pki-server-upgrade-%version.log
+
+# files for native 'tpsclient'
+# REMINDER:  Remove this comment once 'tpsclient' is rewritten as a Java app
+rm %buildroot%_initdir/pki-tpsd
+rm %buildroot%_unitdir/pki-tpsd.target
+rm %buildroot%_unitdir/pki-tpsd@.service
+rm %buildroot%_libdir/httpd/modules/mod_tokendb.so
+rm %buildroot%_libdir/httpd/modules/mod_tps.so
+rm %buildroot%_libdir/tps/libldapauth.so
+rm -r %buildroot%_datadir/pki/tps/cgi-bin/
+rm -r %buildroot%_datadir/pki/tps/docroot/
+rm -r %buildroot%_datadir/pki/tps/lib/
+rm -r %buildroot%_datadir/pki/tps/samples/
+rm -r %buildroot%_datadir/pki/tps/scripts/
+
+ln -sf tps/libtps.so %buildroot%_libdir/libtps.so
+ln -sf tps/libtokendb.so %buildroot%_libdir/libtokendb.so
+
+%check
+
+echo "Scanning Python code with pylint"
+%if_with python3_default
+python3 tools/pylint-build-scan.py rpm --prefix %buildroot
+if [ $? -ne 0 ]; then
+    echo "pylint for Python 3 failed. RC: $?"
+    exit 1
+fi
+%else
+python tools/pylint-build-scan.py rpm --prefix %buildroot
+if [ $? -ne 0 ]; then
+    echo "pylint for Python 2 failed. RC: $?"
+    exit 1
+fi
+
+python tools/pylint-build-scan.py rpm --prefix %buildroot -- --py3k
+if [ $? -ne 0 ]; then
+    echo "pylint for Python 2 with --py3k failed. RC: $?"
+    exit 1
+fi
+%endif
+
+echo "Scanning Python code with flake8"
+%if_with python2
+flake8 --config tox.ini %buildroot
+if [ $? -ne 0 ]; then
+    echo "flake8 for Python 2 failed. RC: $?"
+    exit 1
+fi
+%endif
+
+%if_with python3
+python3-flake8 --config tox.ini %buildroot
+if [ $? -ne 0 ]; then
+    echo "flake8 for Python 3 failed. RC: $?"
+    exit 1
+fi
+%endif
 
 %pre -n pki-server
 %define pki_username pkiuser
@@ -514,24 +535,19 @@ echo "Upgrading PKI server configuration at `/bin/date`." >> %_logdir/pki/pki-se
  %_sbindir/pki-server-upgrade --silent >> %_logdir/pki/pki-server-upgrade-%version.log 2>&1
 echo >> %_logdir/pki/pki-server-upgrade-%version.log 2>&1
 
-# Migrate Tomcat configuration
- %_sbindir/pki-server migrate >> %_logdir/pki/pki-server-upgrade-%version.log 2>&1
-echo >> %_logdir/pki/pki-server-upgrade-%version.log 2>&1
-
 if [ "$1" == "2" ]
 then
     systemctl daemon-reload ||:
 fi
 
+%files
+
 %files -n pki-symkey
-%doc base/symkey/LICENSE
 %_jnidir/symkey.jar
 %_libdir/symkey/
 
 %files -n pki-base
-%doc base/common/LICENSE
-%doc base/common/LICENSE.LESSER
-%doc %_datadir/doc/pki-base
+%doc %_datadir/doc/pki-base/html
 %dir %_datadir/pki/etc
 %dir %_datadir/pki/scripts
 %dir %_datadir/pki/examples
@@ -559,23 +575,19 @@ fi
 %_javadir/pki/pki-certsrv.jar
 
 %files -n python-module-pki-base
-%doc base/common/LICENSE
-%doc base/common/LICENSE.LESSER
 %if_without python3_default
 %exclude %python_sitelibdir_noarch/pki/server
 %endif
 %python_sitelibdir_noarch/pki
 
 %files -n python3-module-pki-base
-%doc base/common/LICENSE
-%doc base/common/LICENSE.LESSER
 %if_with python3_default
 %exclude %python3_sitelibdir_noarch/pki/server
 %endif
 %python3_sitelibdir_noarch/pki
 
 %files -n pki-tools
-%doc base/native-tools/LICENSE base/native-tools/doc/README
+%doc base/native-tools/doc/README
 %_bindir/pki
 %_bindir/p7tool
 %_bindir/revoker
@@ -641,7 +653,6 @@ fi
 %doc base/common/THIRD_PARTY_LICENSES
 %doc base/server/LICENSE
 %doc base/server/README
-%_sysconfdir/pki/default.cfg
 %dir %_sysconfdir/sysconfig/pki
 %dir %_sysconfdir/sysconfig/pki/tomcat
 %_sbindir/pkispawn
@@ -683,92 +694,119 @@ fi
 %_man8dir/pki-server-nuxwdog.8.*
 %_man8dir/pki-server-migrate.8.*
 %_man8dir/pki-server-cert.8.*
+%_man8dir/pki-server-ca.8.*
+%_man8dir/pki-server-kra.8.*
+%_man8dir/pki-server-ocsp.8.*
+%_man8dir/pki-server-tks.8.*
+%_man8dir/pki-server-tps.8.*
 
 %_datadir/pki/setup/
-%_datadir/pki/server/
+%dir %_datadir/pki/server
+%_datadir/pki/server/common/
+%_datadir/pki/server/conf/
+%_datadir/pki/server/etc/
+%_datadir/pki/server/lib/
+%_datadir/pki/server/upgrade/
 
 %files -n pki-ca
-%doc base/ca/LICENSE
 %_javadir/pki/pki-ca.jar
 %_datadir/pki/ca/
 
 %files -n pki-kra
-%doc base/kra/LICENSE
 %_javadir/pki/pki-kra.jar
 %_datadir/pki/kra/
 
 %files -n pki-ocsp
-%doc base/ocsp/LICENSE
 %_javadir/pki/pki-ocsp.jar
 %_datadir/pki/ocsp/
 
 %files -n pki-tks
-%doc base/tks/LICENSE
 %_javadir/pki/pki-tks.jar
 %_datadir/pki/tks/
 
 %files -n pki-tps
-%doc base/tps/LICENSE
 %_javadir/pki/pki-tps.jar
 %_datadir/pki/tps/
 %_man5dir/pki-tps-connector.5.*
 %_man5dir/pki-tps-profile.5.*
 %_man1dir/tpsclient.1.*
-# files for native 'tpsclient'
-# REMINDER:  Remove this comment once 'tpsclient' is rewritten as a Java app
-%exclude %_initdir/pki-tpsd
-%exclude %_unitdir/pki-tpsd.target
-%exclude %_unitdir/pki-tpsd@.service
-%exclude %_libdir/httpd/modules/mod_tokendb.so
-%exclude %_libdir/httpd/modules/mod_tps.so
-%exclude %_libdir/tps/libldapauth.so
-%exclude %_datadir/pki/tps/cgi-bin/
-%exclude %_datadir/pki/tps/docroot/
-%exclude %_datadir/pki/tps/lib/
-%exclude %_datadir/pki/tps/samples/
-%exclude %_datadir/pki/tps/scripts/
 %_bindir/tpsclient
 %_libdir/tps/libtps.so
 %_libdir/tps/libtokendb.so
+%_libdir/libtps.so
+%_libdir/libtokendb.so
 
 %files -n pki-javadoc
 %_javadocdir/pki-%version/
 
+%files -n pki-console
+%_bindir/pkiconsole
+%_javadir/pki/pki-console.jar
+
+%files -n dogtag-pki-server-theme
+%_datadir/pki/common-ui/
+%dir %_datadir/pki/server
+%dir %_datadir/pki/server/webapps
+%dir %_datadir/pki/server/webapps/pki
+%dir %_datadir/pki/server/webapps/ROOT
+%_datadir/pki/server/webapps/ROOT/
+%_datadir/pki/server/webapps/pki/admin/
+%_datadir/pki/server/webapps/pki/ca/
+%_datadir/pki/server/webapps/pki/css/
+%_datadir/pki/server/webapps/pki/esc/
+%_datadir/pki/server/webapps/pki/fonts/
+%_datadir/pki/server/webapps/pki/images/
+%_datadir/pki/server/webapps/pki/js/
+%_datadir/pki/server/webapps/pki/index.jsp
+%_datadir/pki/server/webapps/pki/kra/
+%_datadir/pki/server/webapps/pki/ocsp/
+%_datadir/pki/server/webapps/pki/pki.properties/
+%_datadir/pki/server/webapps/pki/tks/
+%_datadir/pki/server/webapps/pki/tks/
+%_datadir/pki/server/webapps/pki/ui/
+%_datadir/pki/server/webapps/pki/WEB-INF/
+
+%files -n dogtag-pki-console-theme
+%_javadir/pki/pki-console-theme.jar
+
 %changelog
-* Thu Jun 21 2018 Igor Vlasenko <viy@altlinux.ru> 10.6.1-alt2%ubt
+* Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 10.6.6-alt1
+- 10.6.1 -> 10.6.6.
+
+* Thu Jun 21 2018 Igor Vlasenko <viy@altlinux.ru> 10.6.1-alt2
 - removed Requires: tomcat-servlet-3.1-api (useless)
 
-* Thu May 24 2018 Stanislav Levin <slev@altlinux.org> 10.6.1-alt1%ubt
+* Thu May 24 2018 Stanislav Levin <slev@altlinux.org> 10.6.1-alt1
 - 10.5.6 -> 10.6.1
 
-* Tue Feb 20 2018 Stanislav Levin <slev@altlinux.org> 10.5.6-alt1%ubt
+* Tue Feb 20 2018 Stanislav Levin <slev@altlinux.org> 10.5.6-alt1
 - 10.5.5 -> 10.5.6
 
-* Fri Feb 16 2018 Stanislav Levin <slev@altlinux.org> 10.5.5-alt1%ubt
+* Fri Feb 16 2018 Stanislav Levin <slev@altlinux.org> 10.5.5-alt1
 - 10.5.3 -> 10.5.5
 
-* Mon Jan 15 2018 Stanislav Levin <slev@altlinux.org> 10.5.3-alt1%ubt
+* Mon Jan 15 2018 Stanislav Levin <slev@altlinux.org> 10.5.3-alt1
 - 10.4.8 -> 10.5.3
 
-* Fri Jan 12 2018 Stanislav Levin <slev@altlinux.org> 10.4.8-alt5%ubt
+* Fri Jan 12 2018 Stanislav Levin <slev@altlinux.org> 10.4.8-alt5
 - Fix package build broken due to new ca-certificates system
   Directory /etc/pki and /usr/share/pki belong to
   filesystem package
 
-* Mon Oct 02 2017 Stanislav Levin <slev@altlinux.org> 10.4.8-alt4%ubt
+* Mon Oct 02 2017 Stanislav Levin <slev@altlinux.org> 10.4.8-alt4
 - Fix Java CLASSPATH on RPM package upgrade
 
-* Fri Sep 29 2017 Stanislav Levin <slev@altlinux.org> 10.4.8-alt3%ubt
+* Fri Sep 29 2017 Stanislav Levin <slev@altlinux.org> 10.4.8-alt3
 - Fix Java CLASSPATH by Evgeny Sinelnikov <sin@altlinux.org>
 - Clean up spec
 
-* Mon Sep 25 2017 Stanislav Levin <slev@altlinux.org> 10.4.8-alt2%ubt
+* Mon Sep 25 2017 Stanislav Levin <slev@altlinux.org> 10.4.8-alt2
 - Fix version compare for sphinx python module
 
 * Mon Sep 25 2017 Igor Vlasenko <viy@altlinux.ru> 10.2.6-alt6_19jpp8
 - added Conflicts: strongswan (closes: #33037)
 
-* Thu Sep 21 2017 Stanislav Levin <slev@altlinux.org> 10.4.8-alt1%ubt
+* Thu Sep 21 2017 Stanislav Levin <slev@altlinux.org> 10.4.8-alt1
 - Update to upstream's 10.4.8 version
 
 * Wed Feb 15 2017 Mikhail Efremov <sem@altlinux.org> 10.2.6-alt4_19jpp8.M80P.1

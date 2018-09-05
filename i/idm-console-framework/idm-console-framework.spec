@@ -1,42 +1,44 @@
-%define major_version 1.1
-%define minor_version 14
+%define _unpackaged_files_terminate_build 1
 
-Name:    idm-console-framework
-Version: 1.1.17
+%define jss_version 4.5.0
+
+Name: idm-console-framework
+Version: 1.2.0
 Release: alt1
-Group:   Networking/Other
-Url:     http://port389.org
-# VCS:   https://git.fedorahosted.org/git/idm-console-framework.git
+Group: Networking/Other
+Url: http://port389.org
+# VCS:   https://github.com/dogtagpki/idm-console-framework.git
 License: LGPLv2
 Summary: Identity Management Console Framework
 BuildArch: noarch
 Packager: Andrey Cherepanov <cas@altlinux.ru>
 
 Source: %name-%version.tar
-#Patch: %name-alt-classnames.patch
+
 BuildRequires(Pre): rpm-build-java
 BuildRequires: java-devel
 BuildRequires: ant
 BuildRequires: ldapsdk
-BuildRequires: jss
+BuildRequires: jss >= %jss_version
 
-Requires: java
 Requires: ldapjdk
-Requires: jss
+Requires: jss >= %jss_version
 
 %description
 A Java Management Console framework used for remote server management.
 
 %prep
-%setup -q
-#patch -p1
+%setup
 
 %build
-%ant -Dldapjdk.jar.name=ldapsdk.jar -Djss.local.location=%_javadir -Dlib.dir=%_libdir -Dbuilt.dir=`pwd`/built -Dclassdest=%_javadir
+%ant \
+    -Dlib.dir=%_libdir \
+    -Dbuilt.dir=`pwd`/built \
+    -Dclassdest=%_javadir
 
 %install
 install -d %buildroot%_javadir
-install -m777 built/release/jars/idm-console-* %buildroot%_javadir
+install -m644 built/release/jars/idm-console-* %buildroot%_javadir
 
 %files
 %_javadir/idm-console-base.jar
@@ -46,6 +48,9 @@ install -m777 built/release/jars/idm-console-* %buildroot%_javadir
 %_javadir/idm-console-nmclf_en.jar
 
 %changelog
+* Fri Aug 31 2018 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.1.17 -> 1.2.0.
+
 * Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.17-alt1
 - new version 1.1.17
 
@@ -74,7 +79,7 @@ install -m777 built/release/jars/idm-console-* %buildroot%_javadir
 
 * Tue Jan 08 2008 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.0-alt1
 - Fedora-DS 1.1 Final release
-- Resolve bug 379211: Removed unused labels, corrected CRL file label, and added help dialog 
+- Resolve bug 379211: Removed unused labels, corrected CRL file label, and added help dialog
 - to LoginDialog class.
 - Resolve bug 393461: Move documentation home link to theme package.
 - Resolve bug 192022: Admin Server fails to bring up Config DS

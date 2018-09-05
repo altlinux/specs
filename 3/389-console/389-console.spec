@@ -1,14 +1,14 @@
 %define major_version 1.1
 %define minor_version 18
 
-Name:    389-console
+Name: 389-console
 Version: 1.1.18
-Release: alt1
+Release: alt2
 Summary: Fedora Management Console
 
-Group:   Networking/Other
+Group: Networking/Other
 License: LGPL
-Url:     http://port389.org
+Url: http://port389.org
 # VCS:	 https://pagure.io/389-console.git
 BuildArch: noarch
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -20,7 +20,6 @@ BuildRequires(Pre): rpm-build-java
 BuildRequires: java-devel
 BuildRequires: ant
 BuildRequires: ldapsdk
-BuildRequires: jss
 BuildRequires: idm-console-framework
 
 Requires: which
@@ -33,11 +32,12 @@ A Java based remote management console used for Managing Fedora
 Administration Server and Fedora Directory Server.
 
 %prep
-%setup -q
+%setup
 
 %build
-%ant -Dlib.dir=%_libdir -Dbuilt.dir=`pwd`/built -Dldapjdk.jar.name=ldapsdk.jar \
-     -Djss.local.location=%_javadir -Dman.dir=%_mandir
+%ant \
+    -Dlib.dir=%_libdir \
+    -Dbuilt.dir=`pwd`/built
 
 %install
 install -d %buildroot%_javadir
@@ -61,6 +61,9 @@ popd
 %_man8dir/*
 
 %changelog
+* Fri Aug 31 2018 Stanislav Levin <slev@altlinux.org> 1.1.18-alt2
+- Fix build.
+
 * Sat Mar 18 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.18-alt1
 - New version
 
