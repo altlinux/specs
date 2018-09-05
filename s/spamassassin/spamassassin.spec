@@ -5,7 +5,7 @@
 
 Name: spamassassin
 Version: 3.4.1
-Release: alt1
+Release: alt2
 
 Summary: Spam filter for email written in perl
 License: Apache License v2.0
@@ -20,16 +20,17 @@ Source3: spamd.sysconfig
 # from Debian:
 Patch10: spamassassin-3.4.0-debian-change_config_paths.patch
 Patch11: spamassassin-3.4.0-sa-check_spamd-man.patch
+Patch12: spamassassin-3.4.1-disable_sslv3.patch
 
 %def_without test
 # normal method nukes on errors :(
 %define _perl_req_method relaxed
 
-%{?_enable_ssl:BuildRequires: libssl-devel}
+%{?_enable_ssl:BuildRequires: LibreSSL-devel}
 
 # Automatically added by buildreq on Thu Jul 21 2011
 # optimized out: libcom_err-devel libkrb5-devel perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-Digest-SHA perl-Digest-SHA1 perl-Encode perl-Error perl-HTML-Parser perl-HTTP-Date perl-HTTP-Message perl-IO-Compress perl-IO-Socket-INET6 perl-IO-String perl-IO-Zlib perl-Net-DNS perl-Net-SSLeay perl-NetAddr-IP perl-Package-Constants perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Socket6 perl-URI perl-libnet perl-podlators
-BuildRequires: libssl-devel perl-Archive-Tar perl-DBI perl-DBM perl-Encode-Detect perl-IO-Socket-SSL perl-IP-Country perl-Mail-DKIM perl-Mail-SPF perl-Razor perl-devel perl-libwww zlib-devel perl(Pod/Man.pm)
+BuildRequires: perl-Archive-Tar perl-DBI perl-DBM perl-Encode-Detect perl-IO-Socket-SSL perl-IP-Country perl-Mail-DKIM perl-Mail-SPF perl-Razor perl-devel perl-libwww zlib-devel perl(Pod/Man.pm)
 
 # Was needed by sa-stats from tools/ (currently not shipped in tarball so)
 BuildRequires: perl-Parse-Syslog
@@ -140,6 +141,7 @@ subpackages versions with.
 %setup -n %pname-%version
 %patch10 -p1
 %patch11 -p0
+%patch12 -p1
 
 %build
 cp -f spamc/spamc.pod spamc/spamc
@@ -256,6 +258,10 @@ sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev
 #%_man3dir/*
 
 %changelog
+* Wed Sep 05 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.4.1-alt2
+- rebuilt with LibreSSL-devel
+- disabled SSL v3 (applied Debian's patch)
+
 * Sun Nov 15 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.4.1-alt1
 - NMU: 3.4.1
 - added cron's rule for sa-update (ALT #26682)
