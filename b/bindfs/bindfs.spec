@@ -1,7 +1,8 @@
 Name: bindfs
-Version: 1.12.6
+Version: 1.13.9
 Release: alt1
 License: GPLv2
+
 Summary: %name is a FUSE filesystem for mounting a directory to another location, similarly to mount --bind
 Group: System/Base
 URL: http://bindfs.org/
@@ -28,11 +29,14 @@ rules.
 %makeinstall_std
 
 %files
-%doc COPYING ChangeLog README TODO
+%doc COPYING ChangeLog README.md TODO
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Mon Sep 03 2018 Pavel Moseev <mars@altlinux.org> 1.13.9-alt1
+- Updated to upstream version 1.13.9
+
 * Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.6-alt1
 - Version 1.12.6
 
