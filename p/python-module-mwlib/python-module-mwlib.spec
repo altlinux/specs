@@ -2,7 +2,7 @@
 
 Name: python-module-mwlib
 Version: 0.15.14
-Release: alt1.2
+Release: alt2
 
 Summary: MediaWiki conversion library for Python
 Group: Development/Python
@@ -42,6 +42,7 @@ MediaWiki articles.
 %patch -p2
 
 %build
+export RST2HTML=rst2html
 %python_build
 %__make -C docs
 
@@ -80,6 +81,9 @@ install -m 0640 -- mwserve.logrotate %buildroot%_sysconfdir/logrotate.d/mwserve
 
 
 %changelog
+* Wed Sep 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.15.14-alt2
+- NMU: fixed build with new python-module-docutils.
+
 * Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.15.14-alt1.2
 - NMU: added python-module-setuptools to BRs.
 
