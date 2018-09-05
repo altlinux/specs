@@ -1,6 +1,6 @@
 Name: pound
-Version: 2.6
-Release: alt1.1
+Version: 2.8
+Release: alt1
 
 Summary: Reverse proxy, load balancer and HTTPS front-end for Web servers
 License: GPLv3+
@@ -12,9 +12,14 @@ Source1: pound.init
 Source2: pound.cfg
 Source3: pound.sysconfig
 
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=926365
+# it can help possible: https://github.com/graygnuorg/pound
+ExclusiveArch: %ix86 x86_64
+
 # Automatically added by buildreq on Wed Feb 27 2013
 # optimized out: libcom_err-devel libkrb5-devel
-BuildRequires: libgperftools-devel libpcre-devel libssl-devel openssl
+BuildRequires: libgperftools-devel libpcre-devel LibreSSL-devel openssl
 
 %description
 Pound was developed to enable distributing the load among several Web-servers
@@ -57,6 +62,10 @@ install -p -m0644 pound.8 poundctl.8 %buildroot%_man8dir
 %_man8dir/*
 
 %changelog
+* Wed Sep 05 2018 Sergey Y. Afonin <asy@altlinux.ru> 2.8-alt1
+- 2.8
+- Added ExclusiveArch: %%ix86 x86_64
+
 * Wed Feb 27 2013 Fr. Br. George <george@altlinux.ru> 2.6-alt1.1
 - Rebuild with renamed gperftools
 
