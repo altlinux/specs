@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.3.4
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: Core of Hachoir framework: parse and edit binary files
@@ -24,7 +24,8 @@ BuildRequires(pre): rpm-build-python
 #BuildPreReq: python-module-setuptools python-module-PyQt4
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: libqt4-core python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytz python-module-sip python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-xml python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
-BuildRequires: python-module-PyQt4 python-module-docutils python-module-html5lib python-module-setuptools python3-module-html5lib python3-module-sphinx rpm-build-python3 time
+BuildRequires: python-module-PyQt4 python-module-html5lib python-module-setuptools python3-module-html5lib python3-module-sphinx rpm-build-python3
+BuildRequires: /usr/bin/rst2html
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -286,7 +287,7 @@ popd
 pushd hachoir-regex
 %python_build --setuptools
 for i in regex regression; do
-	rst2html.py $i.rst >$i.html
+	rst2html $i.rst >$i.html
 done
 popd
 
@@ -317,7 +318,7 @@ popd
 pushd hachoir-regex
 %python3_build --setuptools
 for i in regex regression; do
-	rst2html.py $i.rst >$i.html
+	rst2html $i.rst >$i.html
 done
 popd
 
@@ -333,8 +334,8 @@ popd
 %endif
 
 pushd doc
-rst2html.py hachoir-api.rst >hachoir-api.html
-rst2html.py internals.rst >internals.html
+rst2html hachoir-api.rst >hachoir-api.html
+rst2html internals.rst >internals.html
 popd
 
 %install
@@ -483,6 +484,9 @@ popd
 %endif
 
 %changelog
+* Wed Sep 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.3.4-alt5
+- NMU: fixed build with new python-module-docutils.
+
 * Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.3.4-alt4
 - rebuild with python3.6
 
