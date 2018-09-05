@@ -1,5 +1,5 @@
 Name: u-boot-meson
-Version: 2018.05
+Version: 2018.07
 Release: alt1
 
 Summary: Das U-Boot
@@ -10,7 +10,7 @@ ExclusiveArch: aarch64
 
 Source: %name-%version-%release.tar
 
-BuildRequires: bc dtc >= 1.4
+BuildRequires: bc dtc >= 1.4 flex
 
 %description
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
@@ -33,6 +33,9 @@ cp -p board/amlogic/odroid-c2/README README.odroid-c2
 %_datadir/u-boot/*
 
 %changelog
+* Wed Sep 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2018.07-alt1
+- 2018.07 released
+
 * Thu Jun 21 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2018.05-alt1
 - 2018.05 released
 
