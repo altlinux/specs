@@ -1,6 +1,6 @@
 Name: opendnssec
-Version: 1.4.12
-Release: alt2
+Version: 1.4.14
+Release: alt1
 
 Summary: DNSSEC key and zone management software
 License: %bsd
@@ -15,13 +15,12 @@ Source4: conf.xml
 Source5: tmpfiles-opendnssec.conf
 Source6: ods-enforcerd.init
 Source7: ods-signerd.init
-Patch: %name-%version-%release.patch
-
 
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: xml-utils xsltproc
 BuildRequires: libxml2-devel libsqlite3-devel libldns-devel
+BuildRequires: python-dev
 BuildRequires: doxygen sqlite3
 
 Requires: softhsm
@@ -40,18 +39,22 @@ SoftHSM.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
 %configure \
-	--with-ldns=%_libdir
+        --localstatedir=/var \
+        --with-ldns=%_libdir \
+        #
+
 %make_build
 
 %install
 %makeinstall_std
 mkdir -p %buildroot%_localstatedir/opendnssec/{tmp,signed,signconf}
+touch %buildroot%_localstatedir/opendnssec/{kasp.db,kasp.db.our_lock}
 mkdir -p %buildroot%_runtimedir/opendnssec
+mkdir -p %buildroot%_localstatedir/softhsm/tokens
 install -Dm0644 %SOURCE1 %buildroot%_unitdir/ods-enforcerd.service
 install -Dm0644 %SOURCE2 %buildroot%_unitdir/ods-signerd.service
 install -Dm0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/ods
@@ -59,6 +62,8 @@ install -Dm0644 %SOURCE4 %buildroot%_sysconfdir/opendnssec/conf.xml
 install -Dm0644 %SOURCE5 %buildroot%_tmpfilesdir/opendnssec.conf
 install -Dm0755 %SOURCE6 %buildroot%_initdir/ods-enforcerd
 install -Dm0755 %SOURCE7 %buildroot%_initdir/ods-signerd
+
+%check
 
 %pre
 groupadd -r -f %_pseudouser_group ||:
@@ -89,21 +94,37 @@ ods-ksmutil update all >/dev/null 1>&2 ||:
 %config(noreplace) %_sysconfdir/opendnssec/
 %config(noreplace) %_sysconfdir/sysconfig/ods
 %config %_tmpfilesdir/opendnssec.conf
-%config %_unitdir/*.service
-%_initdir/ods-*
-%_bindir/ods-*
-%_sbindir/ods-*
+%config %_unitdir/ods-enforcerd.service
+%config %_unitdir/ods-signerd.service
+%_initdir/ods-enforcerd
+%_initdir/ods-signerd
+%_bindir/ods-getconf
+%_bindir/ods-hsmspeed
+%_bindir/ods-hsmutil
+%_bindir/ods-kasp2html
+%_bindir/ods-kaspcheck
+%_bindir/ods-ksmutil
+%_sbindir/ods-control
+%_sbindir/ods-enforcerd
+%_sbindir/ods-signer
+%_sbindir/ods-signerd
 %_man1dir/*
 %_man5dir/*
 %_man7dir/*
 %_man8dir/*
 %attr(0755,%_pseudouser_user,%_pseudouser_group) %_localstatedir/opendnssec/
+%ghost %_localstatedir/opendnssec/kasp.db
+%ghost %_localstatedir/opendnssec/kasp.db.our_lock
+%ghost %_localstatedir/softhsm/tokens/
 %_datadir/opendnssec/
 %dir %attr(0755,%_pseudouser_user,%_pseudouser_group) %_runtimedir/opendnssec/
 
 %exclude %_sysconfdir/opendnssec/*.sample
 
 %changelog
+* Tue Sep 04 2018 Stanislav Levin <slev@altlinux.org> 1.4.14-alt1
+- 1.4.12 -> 1.4.14.
+
 * Tue Dec 13 2016 Mikhail Efremov <sem@altlinux.org> 1.4.12-alt2
 - Fix dirs owner.
 - Fix pidfile location.

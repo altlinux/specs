@@ -27,7 +27,7 @@
 
 Name: freeipa
 Version: 4.6.3
-Release: alt7
+Release: alt8
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -1432,6 +1432,9 @@ fi
 %endif # with_python3
 
 %changelog
+* Wed Sep 05 2018 Stanislav Levin <slev@altlinux.org> 4.6.3-alt8
+- Build with new softhsm.
+
 * Fri Aug 31 2018 Stanislav Levin <slev@altlinux.org> 4.6.3-alt7
 - Build with new openssl1.1.
 
