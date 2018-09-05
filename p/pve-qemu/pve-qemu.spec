@@ -54,8 +54,8 @@
 %define _localstatedir /var
 
 Name: pve-%rname
-Version: 2.11.1
-Release: alt5%ubt.1.qa2
+Version: 2.11.2
+Release: alt1%ubt
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
 Group: Emulators
@@ -72,8 +72,6 @@ Source5: qemu-kvm.sh
 Source100: Logo.bmp
 
 Patch0: qemu-alt.patch
-
-Patch100: memfd-fix-configure-test.diff
 
 Patch10: 0001-block-file-change-locking-default-to-off.patch
 Patch11: 0002-Adjust-network-script-path-to-etc-kvm.patch
@@ -105,12 +103,11 @@ Patch36: 0027-adding-old-vma-files.patch
 Patch37: 0028-vma-add-throttling-options-to-drive-mapping-fifo-pro.patch
 Patch38: 0029-qemu-img-dd-add-isize-parameter.patch
 Patch39: 0030-qemu-img-dd-add-n-skip_create.patch
-Patch42: 0031-vma-add-cache-option-to-device-map.patch
-Patch43: 0032-rbd-fix-cache-mode-behavior.patch
-Patch44: 0033-vma-remove-forced-NO_FLUSH-option.patch
-Patch40: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
-Patch41: 0002-ratelimit-don-t-align-wait-time-with-slices.patch
-Patch45: 0001-Remove-problematic-evdev-86-key-from-en-us-keymap.patch
+Patch40: 0031-vma-add-cache-option-to-device-map.patch
+Patch41: 0032-rbd-fix-cache-mode-behavior.patch
+Patch42: 0033-vma-remove-forced-NO_FLUSH-option.patch
+Patch43: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
+Patch44: 0002-ratelimit-don-t-align-wait-time-with-slices.patch
 
 ExclusiveArch: x86_64
 BuildRequires(pre): rpm-build-ubt
@@ -289,8 +286,6 @@ This package provides client and server tools for QEMU's ivshmem device.
 %setup -n %rname-%version
 %patch -p1
 
-%patch100 -p1
-
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -321,12 +316,11 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch37 -p1
 %patch38 -p1
 %patch39 -p1
+%patch40 -p1
+%patch41 -p1
 %patch42 -p1
 %patch43 -p1
 %patch44 -p1
-%patch40 -p1
-%patch41 -p1
-%patch45 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -500,6 +494,9 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Tue Sep 04 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.2-alt1%ubt
+- 2.11.2-1
+
 * Mon Jul 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.11.1-alt5%ubt.1.qa2
 - reverted repocop patch (closes: #35115)
 
