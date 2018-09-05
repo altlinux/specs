@@ -1,6 +1,6 @@
 Name:     genspec
-Version:  1.2.15
-Release:  alt2
+Version:  1.2.16
+Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
 License:  GPLv3+
@@ -32,6 +32,9 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.16-alt1
+- Update Ruby templates: remove ruby-tool-setup, add %%rubygem_specdir/*.
+
 * Fri Apr 06 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.15-alt2
 - (ALT #34778) Add build requires to setuptools in python3* templates
 
