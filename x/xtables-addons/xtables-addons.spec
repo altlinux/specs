@@ -1,6 +1,6 @@
 Name: xtables-addons
 Version: 2.14
-Release: alt3
+Release: alt4
 Summary: IP tables addons
 Group: System/Kernel and hardware
 
@@ -42,10 +42,10 @@ XTable addons module sources for Linux kernel.
 
 %prep
 %setup
-%autoreconf
-%configure --libdir=/%_lib --with-kbuild=no --with-xtlibdir=/%_lib/iptables
 
 %build
+%autoreconf
+%configure --libdir=/%_lib --with-kbuild=no --with-xtlibdir=/%_lib/iptables
 %make_build
 
 %install
@@ -72,6 +72,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %kernel_src/*
 
 %changelog
+* Wed Sep 05 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.14-alt4
+- autoreconf moved to build section
+
 * Wed Aug 15 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.14-alt3
 - support for 4.18 kernel added
 
