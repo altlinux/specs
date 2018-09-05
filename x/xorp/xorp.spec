@@ -9,7 +9,7 @@ Name: xorp
 %define baseversion 1.8.6
 
 %if %snapshot
-%define snapshotdate 20130830
+%define snapshotdate 20180423
 Version: %baseversion
 Release: alt0.%snapshotdate.1
 %else
@@ -32,12 +32,14 @@ Source2:	xorp.sysconfig
 Source3:	xorp.logrotate
 Source4:	xorp.conf
 
+# Invalid configuration `aarch64-alt-linux': machine `aarch64-alt' not recognized
+ExclusiveArch: %ix86 x86_64
+
 BuildRequires:    rpm-build-licenses
 
 # Automatically added by buildreq on Tue Apr 08 2014
 # optimized out: libstdc++-devel libtinfo-devel python-base python-modules python-modules-compiler python-modules-email xz
-BuildRequires:    cvs flex gcc4.5-c++ libncurses-devel libpcap-devel libpcre-devel libssl-devel scons
-
+BuildRequires:    cvs flex gcc-c++ libncurses-devel libpcap-devel libpcre-devel libssl-devel scons
 
 %description
 XORP is an extensible open-source routing platform. Designed for extensibility
@@ -52,11 +54,11 @@ functionality, including support for custom hardware and software forwarding.
 
 # build with gcc 4.7 (latest in p7/t7) fail with "internal compiler error"
 # gcc 4.5 exist in branches 6/7 and Sicyphus.
-%set_gcc_version 4.5
-
+#set_gcc_version 4.5
 
 %build
 [ -n "$NPROCS" ] || NPROCS='%{__nprocs}'; scons -j$NPROCS \
+	CXXFLAGS="-Wno-error=deprecated" \
 	DESTDIR=${RPM_BUILD_ROOT}     \
 	sbindir=%{_sbindir}           \
 	prefix=%{prefixdir}           \
@@ -73,7 +75,6 @@ functionality, including support for custom hardware and software forwarding.
 	optimize=yes \
 %endif
 
-
 %install
 %{__mkdir_p} ${RPM_BUILD_ROOT}%{_initrddir}
 %{__mkdir_p} ${RPM_BUILD_ROOT}%{_sysconfdir}/{logrotate.d,sysconfig,xorp}
@@ -82,6 +83,7 @@ functionality, including support for custom hardware and software forwarding.
 %{__mkdir_p} ${RPM_BUILD_ROOT}%{_logdir}/xorp
 
 scons \
+	CXXFLAGS="-Wno-error=deprecated" \
 	DESTDIR=${RPM_BUILD_ROOT}     \
 	sbindir=%{_sbindir}           \
 	prefix=%{prefixdir}           \
@@ -126,7 +128,7 @@ exit 0
 
 
 %files
-%doc README RELEASE_NOTES
+%doc RELEASE_NOTES
 %doc BUGS ERRATA LICENSE*
 %{_initrddir}/xorp
 %config(noreplace) %{_sysconfdir}/logrotate.d/xorp
@@ -143,6 +145,11 @@ exit 0
 %_libexecdir/%name/*
 
 %changelog
+* Wed Sep 05 2018 Sergey Y. Afonin <asy@altlinux.ru> 1.8.6-alt0.20180423.1
+- 20180423 git snapshot
+- removed %%set_gcc_version 4.5, added "-Wno-error=deprecated"
+- added ExclusiveArch: %%ix86 x86_64
+
 * Thu Apr 10 2014 Sergey Y. Afonin <asy@altlinux.ru> 1.8.6-alt0.20130830.1
 - Initial version for ALT Linux (20130830 git snapshot).
   SPEC file based on xorp-1.8.3-1.fc14.src.rpm,
