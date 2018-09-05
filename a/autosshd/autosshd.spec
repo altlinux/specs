@@ -4,8 +4,8 @@
 %define autossh_dir      /var/lib/autosshd
 
 Name: autosshd
-Version: 0.0.3
-Release: alt11
+Version: 0.0.4
+Release: alt1
 
 Summary: System administration - AutoSSH system level service
 
@@ -46,8 +46,6 @@ EOF
 mkdir -p %buildroot/%autossh_dir/.ssh/
 #echo "StrictHostKeyChecking no" > %buildroot%autossh_dir/.ssh/config
 
-mkdir -p %buildroot%_docdir/%name/
-
 install -D -m754 etc/rc.d/init.d/autosshd %buildroot%_initdir/%name
 # TODO: we need automate filling of this config
 install -D -m644 etc/sysconfig/autosshd %buildroot%_sysconfigdir/%name
@@ -75,7 +73,7 @@ cp lib/systemd/system/autosshd.service %buildroot/lib/systemd/system/autosshd.se
 %preun_service %name
 
 %files
-%doc doc/*
+%doc doc/README.md
 %attr(750,%autossh_user,%autossh_group) %dir %autossh_dir/
 %config(noreplace) %attr(750,%autossh_user,%autossh_group) %autossh_dir/.ssh/
 %config(noreplace) %_sysconfigdir/%name
@@ -89,9 +87,13 @@ cp lib/systemd/system/autosshd.service %buildroot/lib/systemd/system/autosshd.se
 %_datadir/%name/autosshd.setup
 %_datadir/%name/autosshd.setup.user
 %_bindir/autosshd-ssh
-/lib/systemd/system/autosshd.service 
+/lib/systemd/system/autosshd.service
 
 %changelog
+* Wed Sep 05 2018 Vitaly Lipatov <lav@altlinux.ru> 0.0.4-alt1
+- remove obsoleted anyssh.ru.conf, fix template for it
+- example.conf.template: example config (ALT bug #35349)
+
 * Mon Oct 12 2015 Danil Mikhailov <danil@altlinux.org> 0.0.3-alt11
 - Fix inheritance error
 
