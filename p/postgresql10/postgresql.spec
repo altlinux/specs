@@ -4,7 +4,7 @@
 %define prog_name            postgresql
 %define postgresql_major     10
 %define postgresql_minor     5
-%define postgresql_altrel    3
+%define postgresql_altrel    4
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -33,11 +33,16 @@ Packager: PostgreSQL Maintainers Team <pgsql@packages.altlinux.org>
 
 Source0: %name-%version.tar
 
+Source100: online_analyze.tar
+Source101: plantuner.tar
+
 Patch2: 0002-Fix-search-for-setproctitle.patch
 Patch3: 0003-Use-terminfo-not-termcap.patch
 Patch4: 0004-Fix-includedirs.patch
 Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
 Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
+
+Patch100: 0100-Add-contribs.patch
 
 Requires: libpq%libpq_major >= %version-%release
 
@@ -282,6 +287,13 @@ database.
 %patch4 -p2
 %patch6 -p2
 %patch8 -p1
+%patch100 -p1
+
+mkdir -p contrib/online_analyze
+tar xf %SOURCE100 -C contrib/online_analyze
+
+mkdir -p contrib/plantuner
+tar xf %SOURCE101 -C contrib/plantuner
 
 %build
 %autoreconf
@@ -556,6 +568,7 @@ fi
 %docdir/extension
 
 %files -f contrib.lang contrib
+%docdir/contrib/
 %_bindir/oid2name
 %_bindir/pg_standby
 %_bindir/pgbench
@@ -622,6 +635,8 @@ fi
 %_libdir/pgsql/test_decoding.so
 %_libdir/pgsql/tsm_system_rows.so
 %_libdir/pgsql/tsm_system_time.so
+%_libdir/pgsql/online_analyze.so
+%_libdir/pgsql/plantuner.so
 
 %files -f libpq%libpq_major-%postgresql_major.lang -n %libpq_name
 %_libdir/libpq.so.%libpq_major
@@ -747,6 +762,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Wed Sep 05 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt4
+- Add online_analyze and plantuner contribs
+
 * Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt3
 - Add BR: libkrb5-devel
 - Rebuild with OpenSSL 1.1.x
