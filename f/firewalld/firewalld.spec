@@ -1,12 +1,12 @@
 Name: firewalld
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
 License: %gpl2plus
 Group: System/Configuration/Networking
 
-URL: http://www.firewalld.org/
+URL: https://www.firewalld.org/
 # git://git.fedorahosted.org/firewalld.git
 Source: %name-%version.tar
 Source1: %name.init
@@ -33,6 +33,7 @@ customizable firewall with a D-BUS interface.
 Summary: Firewall configuration application
 Group: System/Configuration/Networking
 Requires: %name = %version-%release
+Requires: libnm-gir
 
 %description -n firewall-config
 The firewall configuration application provides an configuration interface
@@ -42,7 +43,7 @@ for firewalld.
 Summary: Firewall panel applet
 Group: System/Configuration/Networking
 Requires: firewall-config = %version-%release
-Requires: NetworkManager-glib-gir
+Requires: libnm-gir
 Requires: libnotify-gir
 
 %description -n firewall-applet
@@ -144,6 +145,10 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %python3_sitelibdir_noarch/firewall
 
 %changelog
+* Wed Sep 05 2018 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt1
+- Updated to 0.5.4.
+- Fix requires.
+
 * Mon May 14 2018 Mikhail Efremov <sem@altlinux.org> 0.5.3-alt1
 - Updated to 0.5.3.
 
