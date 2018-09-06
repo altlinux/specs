@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 3.28
+%define ver_major 3.30
 %define _libexecdir %_prefix/libexec
 %def_with compiz
 
 Name: gnome-flashback
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: GNOME Flashback session
 License: GPLv3
@@ -120,6 +120,7 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %_datadir/glib-2.0/schemas/org.gnome.%name.desktop-background.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.%name.input-sources.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.%name.workarounds.gschema.xml
+%_datadir/glib-2.0/schemas/00_gnome-flashback.gschema.override
 %_xdgmenusdir/%name-applications.menu
 %_datadir/xsessions/%name-metacity.desktop
 %_xdgconfigdir/autostart/%name-nm-applet.desktop
@@ -133,6 +134,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Sun Sep 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Tue Jul 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt2
 - fixed buildreqs
 

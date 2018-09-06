@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 3.30
 %define api_ver 1.0
@@ -18,7 +18,7 @@
 %def_without tcp_wrappers
 %def_with selinux
 %def_with libaudit
-%def_with plymouth
+%def_without plymouth
 %def_without xevie
 %def_enable wayland
 %def_enable xsession
@@ -27,7 +27,7 @@
 
 Name: gdm
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -51,6 +51,9 @@ Source12: gdm-password.pam
 Source13: gdm-launch-environment.pam
 Source14: gdm-smartcard.pam
 Source15: gdm-fingerprint.pam
+
+# revert this
+Patch: gdm-3.30-up-70861874.patch
 
 Patch2: gdm-3.19.4-alt-Xsession.patch
 Patch7: gdm-3.1.92-alt-Init.patch
@@ -103,7 +106,7 @@ BuildPreReq: libcheck-devel >= %check_ver
 BuildRequires: libdmx-devel
 BuildRequires: librsvg-devel perl-XML-Parser docbook-dtds xsltproc zenity
 BuildRequires: gobject-introspection-devel
-BuildRequires: libdaemon-devel
+BuildRequires: libdaemon-devel libudev-devel
 # for check
 BuildRequires: /proc dbus-tools-gui xvfb-run
 
@@ -173,6 +176,7 @@ This package contains user documentation for Gdm.
 
 %prep
 %setup
+%patch -p1 -R
 %patch2 -p1 -b .Xsession
 %patch7 -p1 -b .Init
 %patch11 -p1 -b .lfs
@@ -322,6 +326,12 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Fri Sep 07 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt2
+- updated to 3.30.0-4-g839c9501
+- reverted "gdm-wayland-session,gdm-x-session: register after delay"
+  (https://gitlab.gnome.org/GNOME/gdm/issues/419)
+- temporarily disabled plymouth support
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

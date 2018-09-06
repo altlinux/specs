@@ -1,14 +1,15 @@
 %define _name libwnck
-%define ver_major 3.24
+%define ver_major 3.30
 %define api_ver 3.0
 
 %def_enable introspection
+%def_enable startup_notification
 %def_disable static
 %def_disable debug
 
 Name: %{_name}3
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: libwnck is a Window Navigator Construction Kit
 License: %lgpl2plus
@@ -17,15 +18,13 @@ URL: ftp://ftp.gnome.org
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses
-# From configure.in
-BuildPreReq: intltool >= 0.40.0
-BuildPreReq: gnome-common
-BuildPreReq: libstartup-notification-devel >= 0.4
-BuildPreReq: libX11-devel libXres-devel libXext-devel libXt-devel libXi-devel
-BuildPreReq: libgtk+3-devel >= 3.22.0
-BuildPreReq: glib2-devel >= 2.32.0
-BuildPreReq: gtk-doc >= 1.9
+BuildRequires(pre): rpm-build-gnome rpm-build-licenses
+# From configure.ac
+BuildRequires: libX11-devel libXres-devel libXext-devel libXt-devel libXi-devel
+BuildRequires: libgtk+3-devel >= 3.22.0
+BuildRequires: glib2-devel >= 2.32.0
+BuildRequires: gtk-doc >= 1.9
+%{?_enable_startup_notification:BuildRequires: libstartup-notification-devel >= 0.4}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgtk+3-gir-devel}
 
 %description
@@ -90,8 +89,8 @@ libraries and objects.
 %autoreconf
 %configure \
     %{subst_enable static} \
+    %{?_disable_startup_notification:--disable-startup-notification} \
     --program-suffix=-3
-
 %make_build
 
 %check
@@ -99,7 +98,6 @@ libraries and objects.
 
 %install
 %makeinstall_std
-
 %find_lang --output=%_name.lang %_name-%api_ver
 
 %files -f %_name.lang
@@ -130,6 +128,9 @@ libraries and objects.
 %endif
 
 %changelog
+* Tue Sep 11 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Fri May 04 2018 Grigory Ustinov <grenka@altlinux.org> 3.24.1-alt1.1
 - NMU: Rebuilt for e2k.
 

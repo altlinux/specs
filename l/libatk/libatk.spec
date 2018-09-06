@@ -1,12 +1,12 @@
 %define _name atk
-%define ver_major 2.29
+%define ver_major 2.30
 %def_disable static
 %def_disable docs
 %def_enable introspection
 %def_disable check
 
 Name: libatk
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Accessibility features for Gtk+
@@ -153,6 +153,9 @@ install -p -m644 %_sourcedir/atk-compat.lds atk/compat.lds
 %endif
 
 %changelog
+* Sat Sep 08 2018 Yuri N. Sedunov <aris@altlinux.org> 2.30.0-alt1
+- 2.30.0
+
 * Sat Aug 18 2018 Yuri N. Sedunov <aris@altlinux.org> 2.29.2-alt1
 - 2.29.2
 

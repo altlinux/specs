@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.28
+%define ver_major 3.30
 %define panel_api_ver 5.0
 %define xdg_name org.gnome.gnome-applets
 
@@ -33,8 +33,8 @@ Patch1: %name-3.22.0-alt-cpufreq_libs.patch
 # From configure.ac
 %define gtk_ver 3.20.0
 %define glib_ver 2.44.0
-%define gnome_panel_ver 3.22.0
-%define libgtop_ver 2.11.92
+%define gnome_panel_ver 3.30.0
+%define libgtop_ver 2.12.0
 %define libgail_ver 3.0
 %define libxklavier_ver 4.0
 %define libwnck_ver 2.9.3
@@ -365,6 +365,7 @@ window title.
 %patch1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
     %{?_enable_mini_commander:--enable-mini-commander} \
@@ -554,6 +555,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %gnome_appletsdir/*.la
 
 %changelog
+* Sun Sep 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 
