@@ -11,8 +11,8 @@
 %def_disable epub
 
 Name:           %_name-gtk
-Version:        1.16.1
-Release:        alt2
+Version:        1.21.0
+Release:        alt1
 Summary:        Document viewer
 
 License:        GPLv2+ and GFDL
@@ -21,12 +21,11 @@ URL:            http://pub.mate-desktop.org
 Source0:        %name-%version.tar
 Patch:          %_name-%version-%release.patch
 
-BuildRequires:  gtk2-devel
+BuildRequires:  libgtk+3-devel
 BuildRequires:  glib2-devel
+BuildRequires:  libgio-devel
 BuildRequires:  libpoppler-glib-devel
 BuildRequires:  libXt-devel
-#BuildRequires:  mate-keyring-devel
-BuildRequires:  libglade2-devel
 BuildRequires:  libtiffxx-devel libtiff-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  libspectre-devel
@@ -35,13 +34,22 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  libtool
 BuildRequires:  intltool
 BuildRequires:  t1lib-devel
+BuildRequires:  xml-utils
 BuildRequires:  yelp-tools
+BuildRequires:  gtk-doc
+BuildRequires:  gcc-c++
 %{?_enable_introspection:BuildRequires:  gobject-introspection-devel}
-%{?_enable_epub:BuildRequires: libwebkitgtk2-devel}
+%{?_enable_epub:BuildRequires: libwebkit2gtk-devel}
 
 BuildRequires:  mate-common
+BuildRequires:  libcairo-devel
 BuildRequires:  libcairo-gobject-devel
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libgdk-pixbuf-gir-devel libgio-devel libgtk+2-gir-devel pkgconfig(cairo) pkgconfig(cairo-pdf) pkgconfig(cairo-ps) pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtk+-unix-print-2.0) pkgconfig(gtk+-unix-print-3.0) pkgconfig(gtk+-x11-2.0) pkgconfig(gtk+-x11-3.0) pkgconfig(libgxps) pkgconfig(libxml-2.0) pkgconfig(sm) pkgconfig(x11) zlib-devel
+BuildRequires:  libgail3-devel
+BuildRequires:  libxml2-devel
+BuildRequires:  libX11-devel
+BuildRequires:  zlib-devel
+BuildRequires:  libSM-devel
+BuildRequires:  libgxps-devel
 
 # for the caja properties page
 #BuildRequires: mate-file-manager-devel
@@ -159,7 +167,6 @@ NOCONFIGURE=1 ./autogen.sh
 	--enable-pixbuf=yes \
 	--enable-xps=yes \
 	%{subst_enable epub} \
-	--with-gtk=2.0 \
 	%{subst_enable introspection} \
 	--without-keyring \
 	--disable-caja \
@@ -191,7 +198,6 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %_desktopdir/%_name.desktop
 %{_datadir}/icons/hicolor/*/apps/atril.*
 %{_mandir}/man1/atril*.1.*
-%{_libexecdir}/atril-convert-metadata
 %if_enabled dbus
 %{_libexecdir}/atrild
 %{_datadir}/dbus-1/services/org.mate.atril.Daemon.service
@@ -268,6 +274,11 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %endif
 
 %changelog
+* Thu Sep 06 2018 Mikhail Efremov <sem@altlinux.org> 1.21.0-alt1
+- Patch from upstream:
+  + libview: fix build without epub.
+- Updated to 1.21.0.
+
 * Mon Apr 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.16.1-alt2
 - fix parallel build
 
