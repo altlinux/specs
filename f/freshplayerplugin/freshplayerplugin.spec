@@ -2,7 +2,7 @@
 
 Name: freshplayerplugin
 Version: 0.3.9
-Release: alt2.1
+Release: alt3%ubt
 Summary: PPAPI-host NPAPI-plugin adapter
 License: MIT
 Group: System/Libraries
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 ExclusiveArch: %ix86 x86_64
 
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake rpm-build-ubt
 
 # Automatically added by buildreq on Wed Oct 26 2016
 # optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libXrender-devel libavutil-devel libcairo-devel libfreetype-devel libgpg-error libjson-c libopencore-amrnb0 libopencore-amrwb0 libstdc++-devel libvdpau-devel libwayland-client libwayland-server pkg-config python-base python-modules python3 python3-base xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel
@@ -55,6 +55,9 @@ make -C BUILD check
 %config(noreplace) %_sysconfdir/freshwrapper.conf
 
 %changelog
+* Thu Sep 06 2018 Sergey V Turchin <zerg@altlinux.org> 0.3.9-alt3%ubt
+- rebuild with new libevent
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.3.9-alt2.1
 - NMU: Rebuild with new openssl 1.1.0.
 
