@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define oname base
 Name: ocaml-%oname
-Version: 0.11.0
-Release: alt1%ubt
+Version: 0.11.1
+Release: alt1
 Summary: Full standard library replacement for OCaml
 License: Apache 2.0
 Group: Development/ML
@@ -83,6 +83,9 @@ jbuilder runtest
 %_libdir/ocaml/%oname/internalhash.h
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 0.11.1-alt1
+- 0.11.1
+
 * Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 0.11.0-alt1%ubt
 - first build for Sisyphus, based on specfile from Mageia 
 

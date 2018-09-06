@@ -1,6 +1,6 @@
 Name: ocaml-opam-file-format
 Version: 2.0.0
-Release: alt1%ubt.rc2
+Release: alt2
 Summary: Parser and printer for the opam file syntax
 Group: Development/ML
 
@@ -59,6 +59,9 @@ cp -a src/*.mli %buildroot%_libdir/ocaml/%libname/
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 2.0.0-alt2
+- up to 2.0.0 release
+
 * Wed May 23 2018 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1%ubt.rc2
 - first build for ALT, based on RH spec
 

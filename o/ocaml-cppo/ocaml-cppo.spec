@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-cppo
 Version: 1.6.4
-Release: alt1%ubt
+Release: alt2
 Summary: Equivalent of the C preprocessor for OCaml programs
 License: BSD
 Group: Development/ML
@@ -39,6 +39,9 @@ jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_bindir/cppo
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.6.4-alt2
+- rebuilt with ocaml 4.07
+
 * Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 1.6.4-alt1%ubt
 - 1.6.4
 

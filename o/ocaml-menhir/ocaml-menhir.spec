@@ -1,6 +1,6 @@
 Name: ocaml-menhir
 Version: 20180530
-Release: alt1%ubt
+Release: alt2
 Summary: LR(1) parser generator for the OCaml programming language.
 
 Group: Development/ML
@@ -65,6 +65,9 @@ bzip2 -z9 %buildroot%_man1dir/menhir.1
 %_libdir/ocaml/menhirSdk/*
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 20180530-alt2
+- rebuilt with ocaml-4.07
+
 * Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 20180530-alt1%ubt
 - 20180530 (closes: #34902)
 

@@ -1,17 +1,18 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-re
-Version: 1.7.1
-Release: alt2%ubt
+Version: 1.8.0
+Release: alt1
 Summary: A regular expression library for OCaml
 
 License: LGPLv2 with exceptions
 Url: https://github.com/ocaml/ocaml-re
 Source0: ocaml-re-%version.tar
+Patch0: %name-%version-alt.patch
 Group: Development/ML
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamldoc
-BuildRequires: ocaml-ocamlbuild
+BuildRequires: dune
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -33,23 +34,18 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-./configure --prefix %prefix --disable-docs
 make 
-make doc
 
 %install
 export OCAMLFIND_DESTDIR=$RPM_BUILD_ROOT%_libdir/ocaml
 mkdir -p $OCAMLFIND_DESTDIR
-make install DESTDIR=%buildroot
-
-# We want to manually get the documentation anyway especially
-# since documentation gets put in _docdir/re by buildsystem.
-rm -rf %buildroot%_docdir/re/
+jbuilder install --destdir %buildroot
 
 %files
-%doc CHANGES README.md
+%doc CHANGES.md README.md
 %_libdir/ocaml/re
 %exclude %_libdir/ocaml/re/*.a
 %exclude %_libdir/ocaml/re/*.cmxa
@@ -63,6 +59,9 @@ rm -rf %buildroot%_docdir/re/
 %_libdir/ocaml/re/*.mli
 
 %changelog
+* Sat Aug 11 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1
+- 1.8.0
+
 * Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.7.1-alt2%ubt
 - rebuilt for ocaml 4.06.1
 

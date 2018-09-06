@@ -1,6 +1,6 @@
 Name: ocaml-ssl
 Version: 0.5.5
-Release: alt1%ubt
+Release: alt2
 Summary: OCaml bindings for the OpenSSL library
 License: LGPLv2.1 with exemptions
 Group: Development/ML
@@ -57,6 +57,9 @@ make install
 %_libdir/ocaml/ssl/*.mli
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 0.5.5-alt2
+- rebuilt with ocaml 4.07
+
 * Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 0.5.5-alt1%ubt
 - 0.5.5
 

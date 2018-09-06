@@ -7,7 +7,7 @@
 
 Name: ocaml-%pkgname
 Version: 1.7
-Release: alt1%ubt
+Release: alt2
 Summary: OCaml interface to GMP
 Group: Development/ML
 # The license has a static linking exception
@@ -93,6 +93,9 @@ make install INSTALLDIR=%buildroot%_libdir/ocaml
 %ocamlsitelib/%pkgname/*.h
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.7-alt2
+- rebuilt with ocaml 4.07
+
 * Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.7-alt1%ubt
 - new version
 

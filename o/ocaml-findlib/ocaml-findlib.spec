@@ -1,7 +1,7 @@
 %define _name findlib
 Name: ocaml-%_name
 Version: 1.8.0
-Release: alt1%ubt
+Release: alt2
 
 Summary: A module packaging tool for OCaml
 License: Distributable
@@ -125,6 +125,9 @@ rm -f %buildroot%_libdir/ocaml/findlib/*.cmxs
 
 
 %changelog
+* Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt2
+- rebuilt with ocaml-4.07
+
 * Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1%ubt
 - 1.8.0
 

@@ -1,5 +1,5 @@
 Name: ocaml-camlp4
-Version: 4.06.1
+Version: 4.07.1
 Release: alt1%ubt
 
 Summary: Preprocessor for OCaml
@@ -81,6 +81,9 @@ make install BINDIR=%buildroot%_bindir LIBDIR=%buildroot%_libdir/ocaml MANDIR=%b
 %_libdir/ocaml/camlp4/Camlp4Top/*.o
 
 %changelog
+* Mon Aug 13 2018 Anton Farygin <rider@altlinux.ru> 4.07.1-alt1%ubt
+- up to 4.07+1
+
 * Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 4.06.1-alt1%ubt
 - up to 4.06+1
 

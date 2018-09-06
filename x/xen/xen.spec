@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.10.1
-Release: alt3%ubt
+Release: alt4%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -790,6 +790,9 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 4.10.1-alt4%ubt
+- rebuilt with ocaml 4.07
+
 * Thu Aug 09 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.1-alt3%ubt
 - upstream updates upto 87c83af333
 

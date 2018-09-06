@@ -1,7 +1,7 @@
 %define pkgname zip
 Name: ocaml-%pkgname
 Version: 1.07
-Release: alt5%ubt
+Release: alt6
 Summary: OCaml library for reading and writing zip, jar and gzip files
 
 Group: Development/ML
@@ -72,6 +72,9 @@ ocamlfind install %pkgname *.cma *.cmxa *.a *.cmx *.cmi *.mli dll*.so META
 %_libdir/ocaml/%pkgname/*.mli
 
 %changelog
+* Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 1.07-alt6
+- rebuilt with ocaml-4.07
+
 * Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.07-alt5%ubt
 - rebuilt for ocaml 4.06.1
 

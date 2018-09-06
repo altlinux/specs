@@ -9,7 +9,7 @@
 %remove_optflags -fomit-frame-pointer
 
 Name: ocaml
-Version: 4.06.1
+Version: 4.07.0
 Release: alt1%ubt
 
 Summary: The Objective Caml compiler and programming environment
@@ -197,6 +197,12 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_libdir/ocaml/stublibs/dllthreads.so
 %_libdir/ocaml/stublibs/dllunix.so
 %_libdir/ocaml/stublibs/dllvmthreads.so
+%ifarch x86_64 aarch64
+%_libdir/ocaml/stublibs/dllraw_spacetime_lib.so
+%endif
+%_libdir/ocaml/target_camlheaderd
+%_libdir/ocaml/target_camlheaderi
+
 %dir %_libdir/ocaml/stublibs
 %_rpmlibdir/ocaml-reqprov
 
@@ -212,6 +218,9 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Mon Aug 13 2018 Anton Farygin <rider@altlinux.ru> 4.07.0-alt1%ubt
+- 4.07.0
+
 * Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 4.06.1-alt1%ubt
 - 4.06.1
 

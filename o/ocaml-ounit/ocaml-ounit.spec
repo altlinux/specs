@@ -2,7 +2,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-ounit
 Version: 2.0.8
-Release: alt1%ubt
+Release: alt2
 Summary: Unit test framework for OCaml
 Group: Development/ML
 License: MIT
@@ -60,6 +60,9 @@ make install
 %_libdir/ocaml/oUnit/*.mli
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 2.0.8-alt2
+- rebuilt with ocaml 4.07
+
 * Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 2.0.8-alt1%ubt
 - 2.0.8
 
