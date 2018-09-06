@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.11.2
-Release: alt10.1
+Release: alt11
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -103,6 +103,12 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu Sep 06 2018 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt11
+- update upstream to git:20da79b5ee071e4eda75645d1f812f4137e81062
+    * triton: fixed improper locking
+    * ipoe: lua: introduced hwaddr field to session object
+    * ipoe: use lua function to generate username for UP sessions too
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.11.2-alt10.1
 - NMU: Rebuild with new openssl 1.1.0.
 
