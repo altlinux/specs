@@ -8,9 +8,10 @@
 %def_enable libiptc
 %def_enable libipset
 %def_enable libnl
+%def_enable regex
 
 Name: keepalived
-Version: 1.4.5
+Version: 2.0.7
 Release: alt1%ubt
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
@@ -30,6 +31,7 @@ BuildRequires: libpopt-devel libssl-devel
 %{?_enable_libnl:BuildRequires: pkgconfig(libnl-genl-3.0) pkgconfig(libnl-route-3.0)}
 BuildRequires: libnfnetlink-devel
 %{?_enable_snmp:BuildRequires: libnet-snmp-devel}
+%{?_enable_regex:BuildRequires: pkgconfig(libpcre2-8)}
 
 %description
 The main goal of the keepalived project is to add a strong & robust keepalive
@@ -57,6 +59,7 @@ userspace daemon for LVS cluster nodes healthchecks and LVS directors failover.
         %{subst_enable libiptc} \
         %{subst_enable libipset} \
         %{subst_enable libnl} \
+        %{subst_enable regex} \
         %{?_enable_snmp:--enable-snmp --enable-snmp-rfc} \
         --with-init=systemd
 GIT_TIMESTAMP=`cat gitstamp`
@@ -103,6 +106,10 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 2.0.7-alt1%ubt
+- 2.0.7
+- enabled HTTP_GET regex support (by Alexey Shabalin)
+
 * Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 1.4.5-alt1%ubt
 - 1.4.5
 
