@@ -1,6 +1,6 @@
 Name: nsd
 Version: 4.1.24
-Release: alt1
+Release: alt2
 
 Summary: Name Server Daemon
 License: BSD
@@ -81,6 +81,9 @@ install -Dpm 644 %SOURCE6 %buildroot%_tmpfilesdir/%name.conf
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Thu Sep 06 2018 Alexei Takaseev <taf@altlinux.org> 4.1.24-alt2
+- Rebuild with OpenSSL 1.1.x
+
 * Wed Aug 22 2018 Alexei Takaseev <taf@altlinux.org> 4.1.24-alt1
 - 4.1.24
 
