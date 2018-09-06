@@ -1,7 +1,7 @@
 Summary: Generator Tools for Coding SOAP/XML Web Services in C and C++
 Name: gsoap
 Version: 2.8.42
-Release: alt2%ubt
+Release: alt2%ubt.1
 License: GPLv2+
 Group: Development/Tools
 URL: http://gsoap2.sourceforge.net
@@ -359,6 +359,9 @@ make check
 %_datadir/gsoap/plugin/wstapi.h
 
 %changelog
+* Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 2.8.42-alt2.S1.1
+- NMU: rebuild with new openssl.
+
 * Tue Dec 26 2017 Denis Medvedev <nbr@altlinux.org> 2.8.42-alt2%ubt
 - NMU: rebuild for new glibc: fixes bug with xlocale.h
 
