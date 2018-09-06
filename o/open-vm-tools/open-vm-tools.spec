@@ -30,7 +30,7 @@
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt1%ubt
+Release: alt1%ubt.1
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -47,6 +47,8 @@ Source6: %name-%vgauthdaemon.tmpfile
 Source99: 99-vmware-scsi-udev.rules
 
 Patch100: add-altlinux-open-vm-tools.patch
+
+ExclusiveArch: %ix86 x86_64
 
 # Need for vgauth
 Requires: libxmlsec1-openssl >= 1.2.24-alt2
@@ -285,6 +287,9 @@ fi
 %endif
 
 %changelog
+* Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 10.1.10-alt1.S1.1
+- NMU: rebuild with new openssl.
+
 * Sun Aug 06 2017 Alexey Shabalin <shaba@altlinux.ru> 10.1.10-alt1%ubt
 - 10.1.10
 - build with gtk3 to sisyphus, and with gtk2 to p8
