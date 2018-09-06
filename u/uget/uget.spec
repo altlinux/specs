@@ -1,6 +1,6 @@
 Name:		uget
 Version:	2.2.1
-Release:	alt1
+Release:	alt1.1
 Summary:	Download manager using GTK+ and libcurl
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group:		Networking/File transfer
@@ -53,6 +53,9 @@ desktop-file-install \
 
 
 %changelog
+* Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 2.2.1-alt1.1
+- NMU: rebuild with new openssl.
+
 * Sat Aug 18 2018 Ilya Mashkin <oddity@altlinux.ru> 2.2.1-alt1
 - 2.2.1
 - update URL
