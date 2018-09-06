@@ -7,7 +7,7 @@
 
 Name: SPICE
 Version: 0.14.1
-Release: alt1
+Release: alt2
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -19,7 +19,7 @@ Source2: spice-common.tar
 
 BuildRequires: gcc-c++
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 zlib-devel
-BuildRequires: libssl-devel >= 1.0.0 libsasl2-devel openssl
+BuildRequires: libssl-devel >= 1.1.0 libsasl2-devel openssl
 BuildRequires: libcacard-devel >= 0.1.2
 BuildRequires: python-module-six python-module-pyparsing
 BuildRequires: glib2-devel >= 2.32 libgio-devel >= 2.32
@@ -95,6 +95,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Thu Sep 06 2018 Pavel Skrylev <majioa@altlinux.org> 0.14.1-alt2
+- Moved forward to opensll 1.1.
+
 * Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 0.14.1-alt1
 - 0.14.1 (Fixes: CVE-2018-10873)
 
