@@ -2,7 +2,7 @@
 
 Name: php5-imap
 Version: %php5_version
-Release: %php5_release.1
+Release: %php5_release.2
 
 Summary: IMAP module for PHP5
 Group: System/Servers
