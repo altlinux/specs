@@ -1,6 +1,6 @@
 Name:    msd_lite
 Version: 1.08
-Release: alt3
+Release: alt4
 License: BSD
 Group:	 Networking/Other
 URL: http://www.netlab.linkpc.net/wiki/ru:software:msd:lite
@@ -51,6 +51,9 @@ install -pDm0644 %name.service		%buildroot%_unitdir/%name.service
 %doc AUTHORS COPYING README
 
 %changelog
+* Thu Sep 06 2018 Alexei Takaseev <taf@altlinux.org> 1.08-alt4
+- Remove the deprecated sysctl system calls
+
 * Wed Jan 10 2018 Alexei Takaseev <taf@altlinux.org> 1.08-alt3
 - Fix crash with non-multicast address in request
 
