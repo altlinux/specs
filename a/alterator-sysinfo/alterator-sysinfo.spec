@@ -2,31 +2,29 @@
 
 Name: alterator-sysinfo
 Version: 0.8
-Release: alt5
-
-Packager: Vladislav Zavjalov <slazav@altlinux.org>
-
-BuildArch: noarch
-
-Source:%name-%version.tar
+Release: alt6
 
 Summary: alterator module to view general system information
 License: GPL
 Group: System/Configuration/Other
-Requires: alterator >= 2.9 gettext
+
+Url: http://altlinux.org/alterator
+Source:%name-%version.tar
+Packager: Vladislav Zavjalov <slazav@altlinux.org>
+
+BuildArch: noarch
 
 BuildPreReq: alterator >= 2.9-alt0.10
 BuildPreReq: alterator-fbi >= 5.22-alt2
 BuildPreReq: alterator-lookout
 
-# Automatically added by buildreq on Mon Jul 11 2005 (-bi)
-BuildRequires: alterator
+Requires: alterator >= 2.9 gettext
 
 %description
 alterator module to view general system information
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
@@ -40,6 +38,10 @@ alterator module to view general system information
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Sep 06 2018 Michael Shigorin <mike@altlinux.org> 0.8-alt6
+- ignore /run as well
+- minor spec cleanup
+
 * Mon Jun 04 2012 Andriy Stepanov <stanv@altlinux.ru> 0.8-alt5
 - Don't print "ALT Linux" keywords
 
