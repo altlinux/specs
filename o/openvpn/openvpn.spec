@@ -16,7 +16,7 @@
 
 Name: openvpn
 Version: 2.4.6
-Release: alt1
+Release: alt2
 
 Summary: a full-featured SSL VPN solution
 Summary(ru_RU.UTF-8): полнофункциональное решение VPN на базе SSL
@@ -338,6 +338,9 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Thu Sep 06 2018 Nikolay A. Fetisov <naf@altlinux.org> 2.4.6-alt2
+- Rebuild with openssl 1.1.0i
+
 * Thu May 03 2018 Nikolay A. Fetisov <naf@altlinux.org> 2.4.6-alt1
 - New version
 
