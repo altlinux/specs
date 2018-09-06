@@ -5,7 +5,7 @@
 
 Name: libreoffice-online
 Version: 6.0.2.3
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: LibreOffice Online WebSocket Daemon
 
@@ -30,11 +30,12 @@ Patch7: ru-translation.patch
 Patch8: npm-shrinkwrap.patch
 Patch9: package.patch
 Patch10: loleaflet-makefile.patch
+Patch11: fix-printing-size-type.patch
 
 Requires: LibreOffice python3 fonts-ttf-core
 
 BuildRequires(pre): rpm-build-ubt rpm-build-python3
-BuildRequires: libtool_2.4 automake_1.14 npm libcap-utils fontconfig
+BuildRequires: libtool automake npm libcap-utils fontconfig
 BuildRequires: libpoco-devel libpng-devel libcap-devel cppunit-devel
 BuildRequires: pam-devel libpcre-devel
 BuildRequires: python-module-polib python-module-lxml
@@ -73,7 +74,7 @@ Apache 2.x web-server default configuration for %name.
 %patch3 -p1
 %patch4 -p1
 
-%if %_arch != x86_64
+%if "%_lib" != "lib64"
 %patch5 -p1
 %patch6 -p1
 %endif
@@ -84,6 +85,7 @@ tar -xf %SOURCE4 -C loleaflet/
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 %build
 sh autogen.sh
@@ -93,7 +95,7 @@ sh autogen.sh
            --disable-setcap \
            --with-lo-path=%default_loroot \
            --localstatedir=%_var \
-%if %_arch != x86_64
+%ifnarch x86_64
            --disable-seccomp
 %endif
 
@@ -209,6 +211,9 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
 %changelog
+* Thu Sep 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.2.3-alt2%ubt
+- NMU: rebuilt with openssl 1.1.
+
 * Wed Apr 18 2018 Maxim Voronov <mvoronov@altlinux.org> 6.0.2.3-alt1%ubt
 - initial build for ALT
 
