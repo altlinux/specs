@@ -1,5 +1,5 @@
 Name: sqlite3
-Version: 3.22.0
+Version: 3.24.0
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
@@ -23,10 +23,6 @@ Patch4: sqlite3-fedora-percentile-test.patch
 Patch5: sqlite3-fedora-datetest-2.2c.patch
 
 Patch10: sqlite-3.7.7.1-fedora-stupid-openfiles-test.patch
-# https://www.sqlite.org/src/info/1b02731962c21bb0
-Patch11: sqlite3-3.22.0-fedora-int-float-compare.patch
-# https://www.sqlite.org/cgi/src/timeline?r=corrupt-schema
-Patch12: sqlite3-3.22.0-fedora-corrupt-schema.patch
 
 BuildRequires(Pre): tcl-devel
 BuildRequires: libreadline-devel
@@ -119,8 +115,6 @@ embedded controllers.
 %endif
 
 %patch10 -p1
-%patch11 -p0
-%patch12 -p0
 
 %build
 export TCLLIBDIR=%_tcllibdir
@@ -188,6 +182,14 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Thu Sep 06 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.24.0-alt1
+- 3.24.0
+- Drop patches that were based on upstream commits cause the are alredy in the
+  source code:
+  + sqlite3-3.22.0-fedora-int-float-compare.patch
+  + sqlite3-3.22.0-fedora-corrupt-schema.patch
+- Sync sqlite-3.7.7.1-fedora-stupid-openfiles-test.patch with Fedora
+
 * Sun Mar 25 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.22.0-alt1
 - 3.22.0
 - Patches from Fedora:
