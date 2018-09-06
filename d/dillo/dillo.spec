@@ -2,7 +2,7 @@
 
 Name: dillo
 Version: 3.0.5
-Release: alt1
+Release: alt2
 
 Summary: a small FLTK-based web browser
 Group: Networking/WWW
@@ -93,6 +93,9 @@ rm -f -- doc/Makefile*
 %_man1dir/dillo.1*
 
 %changelog
+* Thu Sep 06 2018 Nikolay A. Fetisov <naf@altlinux.org> 3.0.5-alt2
+- Rebuild with openssl 1.1.0i
+
 * Sun Aug 19 2018 Nikolay A. Fetisov <naf@altlinux.org> 3.0.5-alt1
 - New version
 - Fix configuration error (Closes: 33289)
