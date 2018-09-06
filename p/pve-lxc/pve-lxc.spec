@@ -1,8 +1,8 @@
 %define rname lxc
 
 Name: pve-%rname
-Version: 2.1.0
-Release: alt1
+Version: 3.0.2
+Release: alt1%ubt
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
 License: LGPL
@@ -13,23 +13,28 @@ ExclusiveArch: x86_64
 Requires: lxcfs
 Conflicts: %rname %rname-libs
 
-Source: %rname.tgz
+Source: %rname-%version.tar.gz
+Source1: %rname-config.tar
 
-Patch1: 0001-lxc.service-start-after-a-potential-syslog.service.patch
-Patch2: 0002-jessie-systemd-remove-Delegate-flag-to-silence-warni.patch
-Patch3: 0003-pve-run-lxcnetaddbr-when-instantiating-veths.patch
-Patch4: 0004-deny-rw-mounting-of-sys-and-proc.patch
-Patch5: 0005-separate-the-limiting-from-the-namespaced-cgroup-roo.patch
-Patch6: 0006-start-initutils-make-cgroupns-separation-level-confi.patch
-Patch7: 0007-rename-cgroup-namespace-directory-to-ns.patch
-Patch8: 0008-possibility-to-run-lxc-monitord-as-a-regular-daemon.patch
-Patch9: 0009-network-add-missing-checks-for-empty-links.patch
-Patch10: 0010-start-unshare-cgroup-after-setting-up-device-limits.patch
+Patch1: 0001-PVE-Config-lxc.service-start-after-a-potential-syslo.patch
+Patch2: 0002-PVE-Down-run-lxcnetaddbr-when-instantiating-veths.patch
+Patch3: 0003-PVE-Config-deny-rw-mounting-of-sys-and-proc.patch
+Patch4: 0004-PVE-Up-separate-the-limiting-from-the-namespaced-cgr.patch
+Patch5: 0005-PVE-Up-start-initutils-make-cgroupns-separation-leve.patch
+Patch6: 0006-PVE-Config-rename-cgroup-namespace-directory-to-ns.patch
+Patch7: 0007-PVE-Up-possibility-to-run-lxc-monitord-as-a-regular-.patch
+Patch8: 0008-PVE-Deprecated-Make-lxc-.service-forking.patch
+Patch9: 0001-confile-add-lxc.monitor.signal.pdeath.patch
+Patch10: 0002-tests-add-lxc.monitor.signal.pdeath.patch
+Patch11: 0003-doc-Translate-lxc.monitor.signal.pdeath-into-Japanes.patch
+Patch12: 0004-apparmor-profile-generation.patch
+Patch13: 0005-tests-add-test-for-generated-apparmor-profiles.patch
+Patch14: 0006-conf-fix-path-lxcpath-mixups-in-tty-setup.patch
 
 Patch20: lxc-alt.patch
 Patch21: lxc-altlinux-lxc.patch
-Patch22: lxc-run-lxcnetdelbr.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: docbook2X libcap-devel libdbus-devel libgnutls-devel libseccomp-devel libselinux-devel
 
 %description
@@ -43,7 +48,7 @@ an applications or a system.
 %add_findreq_skiplist %_datadir/%rname/templates/*
 
 %prep
-%setup -q -n %rname
+%setup -q -n %rname-%version -a1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -53,10 +58,13 @@ an applications or a system.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
 
 %patch20 -p1
 %patch21 -p1
-%patch22 -p1
 
 %build
 %autoreconf
@@ -67,19 +75,19 @@ an applications or a system.
     --disable-apparmor \
     --enable-selinux \
     --enable-bash \
-    --disable-cgmanager \
-    --disable-python \
-    --disable-lua \
     --disable-examples \
     --enable-seccomp \
     --localstatedir=%_var
-
-echo "#define MAJOR_IN_SYSMACROS 1" >> src/config.h
 
 %make_build
 
 %install
 %make DESTDIR=%buildroot install
+
+mkdir -p %buildroot%_datadir/lxc/config
+for i in config/*.conf.in; do
+	sed -e "s|@LXCTEMPLATECONFIG@|%_datadir/lxc/config|g" $i > %buildroot%_datadir/lxc/${i%.in};
+done
 
 rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 
@@ -100,6 +108,15 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Thu Sep 06 2018 Valery Inozemtsev <shrek@altlinux.ru> 3.0.2-alt1%ubt
+- 3.0.2+pve1-2
+
+* Mon Sep 25 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.1.0-alt0.M80C.1
+- backport to c8 branch
+
+* Tue Sep 19 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.1.0-alt0.M80P.1
+- backport to p8 branch
+
 * Tue Sep 19 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.1.0-alt1
 - 2.1.0-2
 
