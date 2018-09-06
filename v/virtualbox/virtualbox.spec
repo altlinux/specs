@@ -70,7 +70,7 @@
 
 Name: virtualbox
 Version: 5.2.16
-Release: alt2%ubt
+Release: alt2%ubt.1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -814,6 +814,9 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 5.2.16-alt2%ubt.1
+- NMU: rebuild with new openssl.
+
 * Tue Jul 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.16-alt2%ubt
 - Replace VirtualBox OpenGL libraries and settings to separate package due
   it conflicts with drivers on host systems, where virtualbox-guest-additions
