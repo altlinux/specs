@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: aircrack-ng
-Version: 1.1
-Release: alt2.qa1
+Version: 1.3
+Release: alt1
 
 Summary: 802.11 WEP and WPA-PSK key recovery program
 License: GPLv2+
@@ -8,12 +10,19 @@ Group: Networking/Other
 
 Url: http://aircrack-ng.org
 
-Packager: Timur Aitov <timonbl4@altlinux.org>
-
-BuildRequires: libssl-devel libsqlite3-devel
-Requires: iw
-
+# https://github.com/aircrack-ng/aircrack-ng.git
 Source: %name-%version.tar
+
+BuildRequires: gcc-c++
+BuildRequires: libssl-devel libsqlite3-devel
+BuildRequires: libnl-devel
+BuildRequires: libpcre-devel
+BuildRequires: libpcap-devel
+BuildRequires: zlib-devel
+BuildRequires: ethtool
+BuildRequires: python2.7(distutils)
+
+Requires: iw rfkill ethtool
 
 %description
 Aircrack is an 802.11 WEP and WPA-PSK keys cracking program that can
@@ -25,22 +34,33 @@ auditing wireless networks.
 
 %prep
 %setup
-sed -i 's,^\(CFLAGS\s\+?= \).*,\1%optflags,' common.mak
 
 %build
-%make_build sqlite=true prefix=%prefix mandir=%_man1dir
+%autoreconf
+%configure --with-sqlite3 --with-experimental --with-ext-scripts
+%make_build
 
 %install
-%makeinstall_std sqlite=true prefix=%prefix mandir=%_man1dir
-%make_build doc prefix=%prefix DESTDIR=%buildroot
+%makeinstall_std
+
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
+mkdir -pv %buildroot%python_sitelibdir
+mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
+%endif
 
 %files
 %_bindir/*
 %_sbindir/*
+%_libdir/*.so*
 %_man1dir/*
-%doc %_docdir/*
+%_man8dir/*
+%python_sitelibdir/*
+%_defaultdocdir/%name
 
 %changelog
+* Thu Sep 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3-alt1
+- Updated to upstream version 1.3.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
