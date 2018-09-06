@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.49.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch: alt-test.patch
 
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel qt5-quickcontrols2-devel qt5-x11extras-devel
@@ -29,6 +30,7 @@ developing applications that use %name.
 
 %prep
 %setup -n %rname-%version
+%patch -p2
 
 %build
 %K5build
@@ -45,6 +47,9 @@ developing applications that use %name.
 %_libdir/cmake/KF5QQC2DeskopStyle/
 
 %changelog
+* Thu Sep 06 2018 Oleg Solovyov <mcpain@altlinux.org> 5.49.0-alt2%ubt
+- fix: clipped text
+
 * Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
 - new version
 
