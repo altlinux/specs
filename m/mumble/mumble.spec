@@ -7,7 +7,7 @@
 
 Name: mumble
 Version: 1.2.19
-Release: alt1
+Release: alt2
 
 Summary: Low latency encrypted VoIP client
 
@@ -216,6 +216,10 @@ mkdir -p %buildroot%_logdir/murmur/
 %_datadir/kde4/services/mumble.protocol
 
 %changelog
+* Wed Sep 05 2018 Oleg Solovyov <mcpain@altlinux.org> 1.2.19-alt2
+- fix build
+- build with new openssl 1.1
+
 * Wed Jan 10 2018 Arseny Maslennikov <arseny@altlinux.org> 1.2.19-alt1
 - Arch-independent subpackages are now properly considered noarch.
 - Moved a Murmur dependency away from Mumble package.
