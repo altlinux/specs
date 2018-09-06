@@ -2,7 +2,7 @@
 
 Name: libevhtp
 Version: 1.2.16
-Release: alt1%ubt
+Release: alt1%ubt.1
 
 Summary: Libevhtp was created as a replacement API for Libevent's current HTTP API
 License: BSD
@@ -62,6 +62,9 @@ developing applications that use %name.
 %_pkgconfigdir/evhtp.pc
 
 %changelog
+* Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 1.2.16-alt1%ubt.1
+- NMU: rebuilt with new openssl.
+
 * Fri Apr 06 2018 Anton Farygin <rider@altlinux.ru> 1.2.16-alt1%ubt
 - 1.2.16
 - build with liboniguruma 6.8.1
