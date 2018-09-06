@@ -1,6 +1,6 @@
 Name: pound
 Version: 2.8
-Release: alt1
+Release: alt2
 
 Summary: Reverse proxy, load balancer and HTTPS front-end for Web servers
 License: GPLv3+
@@ -12,13 +12,6 @@ Source1: pound.init
 Source2: pound.cfg
 Source3: pound.sysconfig
 
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=926365
-# it can help possible: https://github.com/graygnuorg/pound
-ExclusiveArch: %ix86 x86_64
-
-# Automatically added by buildreq on Wed Feb 27 2013
-# optimized out: libcom_err-devel libkrb5-devel
 BuildRequires: libgperftools-devel libpcre-devel LibreSSL-devel openssl
 
 %description
@@ -30,6 +23,7 @@ offer it natively.
 %setup -n Pound-%version
 
 %build
+cp -pv /usr/share/gnu-config/config.* .
 # For rationale of MAXBUF increasing see:
 # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=293915
 CFLAGS="%optflags" ./configure --prefix="" --with-maxbuf=8192
@@ -62,6 +56,9 @@ install -p -m0644 pound.8 poundctl.8 %buildroot%_man8dir
 %_man8dir/*
 
 %changelog
+* Thu Sep 06 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.8-alt2
+- removed exclusivearch
+
 * Wed Sep 05 2018 Sergey Y. Afonin <asy@altlinux.ru> 2.8-alt1
 - 2.8
 - Added ExclusiveArch: %%ix86 x86_64
