@@ -3,7 +3,7 @@
 %define _localstatedir /var
 
 Name: gnupg2
-Version: 2.2.9
+Version: 2.2.10
 Release: alt1%ubt
 
 Group: Text tools
@@ -71,7 +71,7 @@ functionality up into several modules.
 %prep
 %setup -n gnupg-%version
 %patch11 -p1
-%patch12 -p1
+#%patch12 -p1
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
@@ -143,6 +143,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Thu Sep 06 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.10-alt1%ubt
+- new version
+
 * Fri Jul 13 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.9-alt1%ubt
 - new version (ALT#34602)
 
