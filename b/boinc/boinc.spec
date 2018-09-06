@@ -1,6 +1,6 @@
 Name:		boinc
 Version: 7.8.4
-Release: alt4
+Release: alt4.1
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 License:	GPLv3+/LGPLv3+
 Group:		Sciences/Other
@@ -507,6 +507,9 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 
 
 %changelog
+* Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 7.8.4-alt4.1
+- NMU: rebuild with new openssl.
+
 * Tue Aug 14 2018 Anton Midyukov <antohami@altlinux.org> 7.8.4-alt4
 - Rebuilt with wxGTK3.0
 
