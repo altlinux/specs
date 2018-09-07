@@ -1,5 +1,5 @@
 Name: mate-menus
-Version: 1.20.0
+Version: 1.20.1
 Release: alt1
 Epoch: 1
 Summary: Displays menus for MATE Desktop
@@ -11,7 +11,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Requires: altlinux-freedesktop-menu-mate
+Conflicts: altlinux-freedesktop-menu-mate
 
 BuildRequires: mate-common gobject-introspection-devel intltool python-devel
 
@@ -52,9 +52,9 @@ Development files for mate-menus
 
 %files -f %name.lang
 %doc AUTHORS COPYING README
-#_sysconfdir/xdg/menus/mate-preferences-categories.menu
-#_sysconfdir/xdg/menus/mate-applications.menu
-#_sysconfdir/xdg/menus/mate-settings.menu
+%_sysconfdir/xdg/menus/mate-preferences-categories.menu
+%_sysconfdir/xdg/menus/mate-applications.menu
+%_sysconfdir/xdg/menus/mate-settings.menu
 %_datadir/mate-menus
 %_datadir/mate/desktop-directories
 
@@ -70,6 +70,9 @@ Development files for mate-menus
 %_datadir/gir-1.0/MateMenu-2.0.gir
 
 %changelog
+* Fri Sep 07 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.1-alt1
+- 1.20.1
+
 * Tue Mar 06 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.0-alt1
 - initial build from git.mate-desktop.org
 
