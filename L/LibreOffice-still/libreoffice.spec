@@ -1,4 +1,4 @@
-# 5.4.7.2
+# 6.0.6.2
 # Get Source0-3 from http://download.documentfoundation.org/libreoffice/src/$ver/
 # Get Source10 (with selected components) from https://dev-www.libreoffice.org/src/
 
@@ -9,15 +9,15 @@
 %def_without lto
 
 Name: LibreOffice-still
-%define hversion 5.4
-%define urelease 7.2
+%define hversion 6.0
+%define urelease 6.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1.1
-Summary: LibreOffice Productivity Suite
+Release: alt1
+Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL
 Group: Office
 URL: http://www.libreoffice.org
@@ -45,19 +45,20 @@ Source2:	libreoffice-help-%version.tar.xz
 Source3:	libreoffice-translations-%version.tar.xz
 
 Source10:	libreoffice-ext_sources.%version.tar
-Source11:	libreoffice-ext_sources.%version.sisyphus.tar
 Source100:	forky.c
 Source200:	key.gpg
 Source300:	libreoffice.unused
 Source400:	images_oxygen.zip
+Source401:      libreoffice6.1-scalable-desktop-icons.tar
 
 ## FC patches
 Patch1: FC-0001-don-t-suppress-crashes.patch
 Patch2: FC-0001-Related-tdf-106100-recover-mangled-svg-in-presentati.patch
 Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
 Patch4: FC-0001-gtk3-only-for-3.20.patch
-Patch5: FC-0001-fix-includes-in-aarch64-bridge.patch
-Patch6: FC-0001-disable-libe-book-support.patch
+Patch5: FC-0001-Related-tdf-105998-except-cut-and-paste-as-bitmap-in.patch
+Patch6: FC-0001-request-installation-of-langpack-via-packagekit.patch
+Patch7: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
@@ -70,8 +71,6 @@ Patch403: alt-002-tmpdir.patch
 %add_findreq_skiplist %lodir/share/config/webcast/*
 %add_findreq_skiplist %lodir/sdk/examples/python/toolpanel/toolpanel.py 
 
-# Automatically added by buildreq on Mon Nov 10 2014
-# optimized out: ant-testutil apache-commons-codec apache-commons-logging boost-devel boost-devel-headers boost-interprocess-devel boost-intrusive-devel cppunit flute fontconfig fontconfig-devel fonts-type1-xorg glib2-devel gstreamer1.0-devel icu-utils java java-devel jpackage-utils junit4 kde4libs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcloog-isl4 libclucene-contribs-lib libclucene-core libclucene-shared libcurl-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgpg-error libgraphite2-devel libgst-plugins1.0 libharfbuzz-icu libicu-devel libnspr-devel libpango-devel libpng-devel libpoppler-devel libpq-devel libqt4-core libqt4-devel libqt4-gui libqt4-network librasqal-devel librevenge-devel libsasl2-3 libssl-devel libstdc++-devel libunixODBC-devel libwayland-client libwayland-server libxml2-devel pentaho-libxml perl-Compress-Raw-Zlib pkg-config poppler-data python-base python-devel python-modules python3 python3-base raptor2-devel sac tzdata tzdata-java xerces-j2 xml-common xml-commons-jaxp-1.4-apis xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz zlib-devel
 BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake kde4libs-devel libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel liborcus-devel libpoppler-cpp-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel pentaho-reporting-flow-engine perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
 
 # 4.4
@@ -82,15 +81,15 @@ BuildRequires: junit xsltproc java-1.8.0-openjdk-devel
 # 5.1.2
 BuildRequires: libgtk+3-gir-devel
 # 5.2.0
-BuildRequires: libCoinMP-devel
+#BuildRequires: libCoinMP-devel
 # 5.3.0
 BuildRequires: libzmf-devel libstaroffice-devel libepoxy-devel libmysqlcppconn-devel libmysqlclient-devel libtelepathy-devel
 # 5.3.3
 BuildRequires: doxygen e2fsprogs
 # 5.4.0
 BuildRequires: libxmlsec1-nss-devel libgpgme-devel
-# 5.4.7.2 with bundled liborcus
-BuildRequires: boost-devel-headers boost-interprocess-devel boost-program_options-devel gcc-c++ zlib-devel boost-filesystem-devel mdds-devel
+# 6.0.1
+BuildRequires: libepubgen-devel libqxp-devel boost-locale-devel boost-filesystem-devel
 
 %if_without python
 BuildRequires: python3-dev
@@ -194,7 +193,7 @@ This package installs them.
 
 %package sdk
 Group: Development/Other
-Summary: Software Development Kit for LibreOffice
+Summary: Software Development Kit for LibreOffice (Still version)
 Conflicts: LibreOffice-sdk
 
 %description sdk
@@ -239,7 +238,7 @@ echo Using forky
 %else
 echo Direct build
 %endif
-%setup -q -n libreoffice-%version -a10 -a11 -b1 -b2 -b3
+%setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
 
 ## FC apply patches
 %patch1 -p1
@@ -247,7 +246,8 @@ echo Direct build
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-#patch6 -p1
+%patch6 -p1
+#patch7 -p1
 
 ## Long-term FC patches applying
 
@@ -255,6 +255,8 @@ echo Direct build
 %patch401 -p0
 ##patch402 -p1
 %patch403 -p1
+
+tar xf %SOURCE401
 
 # Hack in proper LibreOffice PATH in libreofficekit
 sed -i 's@/libreoffice/@/LibreOffice/@g' libreofficekit/Library_libreofficekitgtk.mk
@@ -300,15 +302,13 @@ export CXX=%_target_platform-g++
         --enable-odk \
         --enable-systray \
 	--disable-firebird-sdbc \
-	--disable-gltf \
-	--enable-coinmp \
+	--disable-coinmp \
         --enable-dbus \
         --enable-evolution2 \
         --enable-gio \
         --with-alloc=system \
         --without-fonts \
         --without-myspell-dicts \
-        --without-system-orcus \
 	\
         --with-external-dict-dir=%_datadir/myspell \
         --with-external-hyph-dir=%_datadir/hyphen \
@@ -516,6 +516,11 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Sep 07 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.6.2-alt1
+- New version 6.0.6.2 (Still).
+- Disable CoinMP.
+- Use simplified scalable desktop icons from LibreOffice 6.1.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.4.7.2-alt1.1
 - NMU: rebuilt with boost-1.67.0
 
