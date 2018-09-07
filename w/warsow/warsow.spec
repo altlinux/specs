@@ -1,5 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
+ExclusiveArch: %ix86 x86_64 
+
 %define _user _warsow
 %define _group _warsow
 %define _home %_localstatedir/%name
@@ -11,7 +13,7 @@
 %endif
 
 Name: warsow
-Version: 2.1
+Version: 2.1.2
 Release: alt1
 
 Summary: Free online multiplayer competitive FPS based on the Qfusion engine.
@@ -100,6 +102,9 @@ ln -sf %_datadir/warsow/basewsw %buildroot%_libdir/warsow/basewsw
 %_iconsdir/hicolor/*/apps/warsow.png
 
 %changelog
+* Thu Aug 21 2018 Pavel Moseev <mars@altlinux.org> 2.1.2-alt1
+- Updated to upstream version 2.1.2
+
 * Fri Aug 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1-alt1
 - Updated to upstream version 2.1.
 
