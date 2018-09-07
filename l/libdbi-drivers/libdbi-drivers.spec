@@ -1,14 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+
 %define builddoc 0
+
 Summary: Database drivers for libdbi
 Name: libdbi-drivers
 Epoch: 1
 Version: 0.9.0
-Release: alt2
+Release: alt3
 License: LGPL
 Group: System/Libraries
 Url: http://libdbi-drivers.sourceforge.net/
 
 Source: %name-%version.tar
+
+Patch1: 0001-freetds-resolve-compile-error-with-1.0.patch
 
 # Automatically added by buildreq on Mon Feb 09 2009
 BuildRequires: docbook-style-dsssl gcc-c++ libMySQL-devel libdbi-devel zlib-devel
@@ -151,6 +156,7 @@ This package contains the doc.
 
 %prep
 %setup
+%patch1 -p1
 
 # lib64 fix
 %__subst "s|/lib\b|/%_lib|g" acinclude.m4
@@ -193,6 +199,9 @@ cp drivers/sqlite/TODO TODO.sqlite
 cp drivers/sqlite3/TODO TODO.sqlite3
 cp drivers/firebird/TODO TODO.firebird
 
+# remove unpackaged files
+rm -f %buildroot%_libdir/dbd/*.la
+
 %files dbd-mysql
 %doc drivers/mysql/README
 %_libdir/dbd/libdbdmysql.so
@@ -230,6 +239,9 @@ cp drivers/firebird/TODO TODO.firebird
 %endif
 
 %changelog
+* Fri Sep 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.9.0-alt3
+- Fixed build with new freetds.
+
 * Tue Oct 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.9.0-alt2
 - Fixed localstatedir/sharedstatedir location.
 
