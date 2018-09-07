@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        68.0.3440.84
+Version:        69.0.3497.81
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -54,31 +54,28 @@ Obsoletes:      chromium-stable <= %version
 ### Start Patches
 Patch001: 0001-OPENSUSE-enables-reading-of-the-master-preference.patch
 Patch002: 0002-OPENSUSE-Compile-the-sandbox-with-fPIE-settings.patch
-Patch003: 0003-ALT-Fix-krb5-includes-path.patch
-Patch004: 0004-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
-Patch005: 0005-DEBIAN-manpage-fixes.patch
-Patch006: 0006-DEBIAN-change-icon.patch
-Patch007: 0007-ALT-gcc6-fixes.patch
-Patch008: 0008-DEBIAN-disable-third-party-cookies-by-default.patch
-Patch009: 0009-DEBIAN-add-ps-printing-capability-gtk2.patch
-Patch010: 0010-ALT-fix-shrank-by-one-character.patch
-Patch011: 0011-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
-Patch012: 0012-FEDORA-path-max.patch
-Patch013: 0013-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
-Patch014: 0014-FEDORA-Use-libusb_interrupt_event_handler-from-curre.patch
-Patch015: 0015-FEDORA-Fix-last-commit-position-issue.patch
-Patch016: 0016-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
-Patch017: 0017-ALT-gzip-does-not-support-the-rsyncable-option.patch
-Patch018: 0018-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch019: 0019-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
-Patch020: 0020-ALT-allow-_FORTIFY_SOURCE-for-clang.patch
-Patch021: 0021-FEDORA-Fix-gcc-round.patch
-Patch022: 0022-FEDORA-Fix-memcpy.patch
-Patch023: 0023-GENTOO-chromium-ffmpeg-r1.patch
-Patch024: 0024-ARCHLINUX-chromium-widevine-r2.patch
-Patch025: 0025-ALT-openh264-always-pic-on-x86.patch
-Patch026: 0026-ALT-allow-to-override-clang-through-env-variables.patch
-Patch027: 0027-CORS-legacy-add-missing-string-include.patch
+Patch003: 0003-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
+Patch004: 0004-DEBIAN-manpage-fixes.patch
+Patch005: 0005-DEBIAN-change-icon.patch
+Patch006: 0006-ALT-gcc6-fixes.patch
+Patch007: 0007-DEBIAN-disable-third-party-cookies-by-default.patch
+Patch008: 0008-DEBIAN-add-ps-printing-capability-gtk2.patch
+Patch009: 0009-ALT-fix-shrank-by-one-character.patch
+Patch010: 0010-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
+Patch011: 0011-FEDORA-path-max.patch
+Patch012: 0012-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
+Patch013: 0013-FEDORA-Use-libusb_interrupt_event_handler-from-curre.patch
+Patch014: 0014-ALT-Fix-last-commit-position-issue.patch
+Patch015: 0015-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
+Patch016: 0016-ALT-gzip-does-not-support-the-rsyncable-option.patch
+Patch017: 0017-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch018: 0018-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
+Patch019: 0019-ALT-allow-_FORTIFY_SOURCE-for-clang.patch
+Patch020: 0020-FEDORA-Fix-gcc-round.patch
+Patch021: 0021-FEDORA-Fix-memcpy.patch
+Patch022: 0022-ARCHLINUX-chromium-widevine-r2.patch
+Patch023: 0023-ALT-openh264-always-pic-on-x86.patch
+Patch024: 0024-ALT-allow-to-override-clang-through-env-variables.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -88,6 +85,8 @@ BuildRequires:  bzlib-devel
 BuildRequires:  flex
 BuildRequires:  chrpath
 BuildRequires:  gcc%gcc_version-c++
+BuildRequires:  libstdc++-devel
+BuildRequires:  libstdc++-devel-static
 BuildRequires:  glibc-kernheaders
 %if_enabled clang
 BuildRequires:  clang6.0
@@ -233,9 +232,6 @@ tar -xf %SOURCE1
 %patch022 -p1
 %patch023 -p1
 %patch024 -p1
-%patch025 -p1
-%patch026 -p1
-%patch027 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -265,6 +261,8 @@ export CXX="g++"
 export AR="ar"
 %endif
 
+bits=$(getconf LONG_BIT)
+
 export RANLIB="ranlib"
 export PATH="$PWD/.rpm/depot_tools:$PATH"
 export CHROMIUM_RPATH="%_libdir/%name"
@@ -284,7 +282,6 @@ gn_arg use_aura=true
 gn_arg use_cups=true
 gn_arg use_kerberos=true
 gn_arg use_gold=false
-gn_arg use_pulseaudio=true
 gn_arg use_vaapi=true
 gn_arg optimize_webui=false
 gn_arg use_system_freetype=false
@@ -318,11 +315,11 @@ gn_arg clang_base_path=\"%_prefix\"
 gn_arg is_clang=true
 gn_arg clang_use_chrome_plugins=false
 gn_arg use_lld=true
-%ifarch x86_64
-gn_arg use_thin_lto=true
-%else
-gn_arg use_thin_lto=false
-%endif
+if [ "$bits" = 64 ]; then
+    gn_arg use_thin_lto=true
+else
+    gn_arg use_thin_lto=false
+fi
 #gn_arg is_cfi=true
 %else
 gn_arg is_clang=false
@@ -342,15 +339,10 @@ unbundle="$unbundle ffmpeg opus"
 %endif
 
 [ -z "$unbundle" ] ||
-	build/linux/unbundle/replace_gn_files.py \
-		--system-libraries $unbundle
+	build/linux/unbundle/replace_gn_files.py --system-libraries $unbundle
 
-tools/gn/bootstrap/bootstrap.py -v \
-	--gn-gen-args "$CHROMIUM_GN_DEFINES"
-
-%target/gn gen %target \
-	-v \
-	--args="$CHROMIUM_GN_DEFINES"
+tools/gn/bootstrap/bootstrap.py --gn-gen-args="$CHROMIUM_GN_DEFINES" --build-path=%target
+%target/gn gen --args="$CHROMIUM_GN_DEFINES" %target
 
 n=%build_parallel_jobs
 [ "$n" -lt 16 ] || n=16
@@ -480,6 +472,32 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Wed Sep 05 2018 Alexey Gladkov <legion@altlinux.ru> 69.0.3497.81-alt1
+- New version (69.0.3497.81).
+- Security fixes:
+  - CVE-2018-16065: Out of bounds write in V8.
+  - CVE-2018-16066: Out of bounds read in Blink.
+  - CVE-2018-16067: Out of bounds read in WebAudio.
+  - CVE-2018-16068: Out of bounds write in Mojo.
+  - CVE-2018-16069: Out of bounds read in SwiftShader.
+  - CVE-2018-16070: Integer overflow in Skia.
+  - CVE-2018-16071: Use after free in WebRTC.
+  - CVE-2018-16072: Cross origin pixel leak in Chrome's interaction with Android's MediaPlayer.
+  - CVE-2018-16073: Site Isolation bypass after tab restore.
+  - CVE-2018-16074: Site Isolation bypass using Blob URLS.
+  - CVE-2018-16075: Local file access in Blink.
+  - CVE-2018-16076: Out of bounds read in PDFium.
+  - CVE-2018-16077: Content security policy bypass in Blink.
+  - CVE-2018-16078: Credit card information leak in Autofill.
+  - CVE-2018-16079: URL spoof in permission dialogs.
+  - CVE-2018-16080: URL spoof in full screen mode.
+  - CVE-2018-16081: Local file access in DevTools.
+  - CVE-2018-16082: Stack buffer overflow in SwiftShader.
+  - CVE-2018-16083: Out of bounds read in WebRTC.
+  - CVE-2018-16084: User confirmation bypass in external protocol handling.
+  - CVE-2018-16085: Use after free in Memory Instrumentation.
+  - Out of bounds read in Little-CMS.
+
 * Wed Aug 08 2018 Alexey Gladkov <legion@altlinux.ru> 68.0.3440.84-alt1
 - New version (68.0.3440.84).
 - Security fixes:
