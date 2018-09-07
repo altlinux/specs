@@ -1,32 +1,29 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname m2crypto
 
-%def_without python3
+%def_with python3
 %def_disable check
 
-Summary: Support for using OpenSSL in python scripts.
-Version: 0.22
-Release: alt2.git20140728.1
-%setup_python_module %oname
 Name: python-module-%oname
-# https://github.com/tempbottle/M2Crypto.git
-Source0: %name-%version.tar.gz
+Version: 0.30.1
+Release: alt1
+Summary: Support for using OpenSSL in python scripts.
 License: BSD
 Group: Development/Python
 URL: http://wiki.osafoundation.org/bin/view/Projects/MeTooCrypto
+
+# https://gitlab.com/m2crypto/m2crypto.git
+Source: %name-%version.tar
+
 # Automatically added by buildreq on Thu Aug 26 2010
 BuildRequires: libssl-devel python-module-py python-module-setuptools swig
-
-BuildPreReq: python-module-setuptools libnumpy-devel
-Requires: python
-%add_findreq_skiplist %python_sitelibdir/M2Crypto/SSL/TwistedProtocolWrapper.py
-Packager: Fr. Br. George <george@altlinux.ru>
-
-# Fore test
-BuildRequires: python-module-setuptools openssl
+BuildRequires: libnumpy-devel
+BuildRequires: /usr/bin/openssl
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-py python-tools-2to3 libnumpy-py3-devel
+BuildRequires: python3-module-py libnumpy-py3-devel
 %endif
 
 %description
@@ -36,7 +33,12 @@ This package allows you to call OpenSSL functions from python scripts.
 %package -n python3-module-%oname
 Summary: Support for using OpenSSL in python 3 scripts
 Group: Development/Python3
-%add_python3_req_skip twisted __m2crypto
+%add_python3_req_skip M2Crypto.six.moves.http_client
+%add_python3_req_skip M2Crypto.six.moves.http_cookies
+%add_python3_req_skip M2Crypto.six.moves.socketserver
+%add_python3_req_skip M2Crypto.six.moves.urllib_parse
+%add_python3_req_skip M2Crypto.six.moves.urllib_response
+%add_python3_req_skip M2Crypto.six.moves.xmlrpc_client
 
 %description -n python3-module-%oname
 This package allows you to call OpenSSL functions from python scripts.
@@ -44,76 +46,66 @@ This package allows you to call OpenSSL functions from python scripts.
 
 %prep
 %setup
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
 %endif
 
-sed -i 's|.*\-py3.*||' setup.py
-
 %build
 if pkg-config openssl ; then
-	FLAGS="`pkg-config --cflags openssl`"
+	FLAGS="$(pkg-config --cflags openssl)"
 	%add_optflags $FLAGS
 	LDFLAGS="$LDFLAGS`pkg-config --libs-only-L openssl`" ; export LDFLAGS
 fi
 
-# -cpperraswarn is necessary for including opensslconf-${basearch} directly
-export SWIG_FEATURES=-cpperraswarn
 %python_build_debug
+
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
-sed -i 's|from urllib2|from urllib|' M2Crypto/m2urllib2.py
-%python3_build_debug
-rm -fR build
-sed -i \
-	's|#if PY_VERSION_HEX < 0x02010000|#if PY_VERSION_HEX > 0x02010000|' \
-	SWIG/_m2crypto_wrap.c
 %python3_build_debug
 popd
 %endif
 
 %install
-CFLAGS="%optflags" ; export CFLAGS
 if pkg-config openssl ; then
-	CFLAGS="$CFLAGS `pkg-config --cflags openssl`" ; export CFLAGS
+	FLAGS="$(pkg-config --cflags openssl)"
+	%add_optflags $FLAGS
 	LDFLAGS="$LDFLAGS`pkg-config --libs-only-L openssl`" ; export LDFLAGS
 fi
 
 %python_build_install
-install -m644 SWIG/_m2crypto.py %buildroot%python_sitelibdir/M2Crypto/
 
 %if_with python3
 pushd ../python3
 %python3_build_install
-install -m644 SWIG/_m2crypto.py %buildroot%python3_sitelibdir/M2Crypto/
 popd
 %endif
 
 %check
-install -m644 SWIG/_m2crypto.py M2Crypto/
 python setup.py test -v
+
 %if_with python3
 pushd ../python3
-install -m644 SWIG/_m2crypto.py M2Crypto/
 python3 setup.py test -v
 popd
 %endif
 
 %files
-%doc CHANGES LICENCE README demo tests doc/*
+%doc CHANGES LICENCE README.rst tests doc/*
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CHANGES LICENCE README demo tests doc/*
+%doc CHANGES LICENCE README.rst tests doc/*
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Sep 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.30.1-alt1
+- Updated to upstream version 0.30.1
+- Enabled python3 build from same sources.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.22-alt2.git20140728.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
