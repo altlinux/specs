@@ -1,9 +1,11 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname check-manifest
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.36
+Version: 0.37
 Release: alt1
 Summary: Check MANIFEST.in in a Python source package for completeness
 License: MIT
@@ -77,6 +79,7 @@ python setup.py test
 
 %if_with python3
 pushd ../python3
+sed -i -e "s|python='python'|python='python3'|g" tests.py
 python3 setup.py test
 popd
 %endif
@@ -97,5 +100,8 @@ popd
 %endif
 
 %changelog
+* Fri Sep 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.37-alt1
+- Updated to upstream version 0.37.
+
 * Tue Mar 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.36-alt1
 - Initial build for ALT.
