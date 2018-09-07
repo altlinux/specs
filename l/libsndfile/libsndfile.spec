@@ -1,6 +1,6 @@
 Name: libsndfile
 Version: 1.0.28
-Release: alt1
+Release: alt2
 
 Summary: A library to handle various audio file formats
 Group: System/Libraries
@@ -10,7 +10,14 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %url/files/%name-%version.tar.gz
 
-BuildRequires: gcc-c++ libalsa-devel libflac-devel libsqlite3-devel libvorbis-devel
+Patch0: libsndfile-1.0.25-system-gsm.patch
+Patch1: libsndfile-1.0.25-zerodivfix.patch
+Patch2: revert.patch
+Patch3: libsndfile-1.0.28-flacbufovfl.patch
+Patch4: libsndfile-1.0.29-cve2017_6892.patch
+Patch5: libsndfile-1.0.28-cve2017_12562.patch
+
+BuildRequires: gcc-c++ libalsa-devel libflac-devel libsqlite3-devel libvorbis-devel libgsm-devel
 # for check
 BuildRequires: python-modules
 
@@ -40,11 +47,19 @@ Requires: %name = %version-%release
 This package contains utilities for %name
 
 %prep
-%setup
+%setup -q
+%patch0 -p1 -b .systemgsm
+%patch1 -p1 -b .zerodivfix
+%patch2 -p1 -b .revert
+%patch3 -p1 -b .flacbufovfl
+%patch4 -p1 -b .cve2017_6892
+%patch5 -p1 -b .cve2017_12562
+rm -r src/GSM610
 
 %build
 %autoreconf
-%configure --disable-static
+%configure \
+	--disable-static
 %make_build
 
 %install
@@ -67,9 +82,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %files utils
 %_bindir/*
-%_man1dir/*
+%_man1dir/*.1*
 
 %changelog
+* Fri Sep 07 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.0.28-alt2
+- fixes: CVE-2017-6892, CVE-2017-12562
+
 * Wed Sep 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.0.28-alt1
 - 1.0.28 (Fixes: CVE-2017-7585, CVE-2017-7586, CVE-2017-7741, CVE-2017-7742)
 
