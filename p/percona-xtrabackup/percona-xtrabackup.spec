@@ -8,7 +8,7 @@
 
 Summary: XtraBackup online backup for MySQL / InnoDB
 Name: percona-xtrabackup
-Version: 2.4.5
+Version: 2.4.12
 Release: alt2
 Group: Databases
 License: GPLv2
@@ -18,7 +18,7 @@ Url: https://github.com/percona/percona-xtrabackup.git
 Source: %name-%version.tar
 Source1: boost.tar
 
-BuildRequires: libaio-devel libgcrypt-devel gcc-c++ cmake bzr bison libtool libncurses-devel zlib-devel python-module-sphinx perl-podlators libev-devel libssl-devel libcurl-devel xxd texlive-latex-base texlive-latex-recommended
+BuildRequires: libaio-devel libgcrypt-devel gcc-c++ cmake bzr bison libtool libncurses-devel zlib-devel python-module-sphinx perl-podlators libev-devel libssl-devel libcurl-devel xxd texlive-latex-base texlive-latex-recommended latexmk
 
 BuildRequires: /proc
 
@@ -76,12 +76,21 @@ install -m 644 storage/innobase/xtrabackup/doc/source/build/man/innobackupex.1 %
 %_bindir/xbcloud
 %_bindir/xbcloud_osenv
 %_man1dir/*.1.*
-%doc storage/innobase/xtrabackup/contrib/backup_mysql_cron.sh storage/innobase/xtrabackup/doc/source/build/latex/PerconaXtraBackup-2.4.pdf
+%doc storage/innobase/xtrabackup/contrib/backup_mysql_cron.sh
+%doc storage/innobase/xtrabackup/doc/source/build/latex/PerconaXtraBackup-2.4.pdf
 
 %files tests
 %_datadir/xtrabackup-test
 
 %changelog
+* Fri Sep  7 2018 Terechkov Evgenii <evg@altlinux.org> 2.4.12-alt2
+- 2.4.12
+- Debundle pdf documentation (generate it during build)
+
+* Wed Nov  8 2017 Terechkov Evgenii <evg@altlinux.org> 2.4.8-alt1
+- 2.4.8
+- Bundle pdf document from website (waiting for ALT#34119)
+
 * Mon Jan 30 2017 Terechkov Evgenii <evg@altlinux.org> 2.4.5-alt2
 - Fix build by bundling boost headers
 
