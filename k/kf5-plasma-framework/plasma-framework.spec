@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_K5data/plasma/plasma_scriptengine_ruby/*.rb
 
 Name: kf5-%rname
-Version: 5.48.0
+Version: 5.49.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -108,7 +108,7 @@ cat %SOURCE10 >po/ru/libplasma5.po
 %files -n libkf5plasma
 %_K5lib/libKF5Plasma.so.*
 #%_K5plug/kf5/kded/platformstatus.so
-%_K5plug/plasma_engine_testengine.so
+#%_K5plug/plasma_engine_testengine.so
 
 %files -n libkf5plasmaquick
 %dir %_K5plug/plasma/scriptengines/
@@ -127,6 +127,9 @@ cat %SOURCE10 >po/ru/libplasma5.po
 %_K5srvtyp/*.desktop
 
 %changelog
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
+- new version
+
 * Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
 - new version
 

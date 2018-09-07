@@ -1,8 +1,11 @@
 %define rname kitemviews
-%def_with python3
+%if_enabled python
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
+%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
+%endif
 
 Name: kf5-%rname
-Version: 5.48.0
+Version: 5.49.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -16,10 +19,12 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Wed Dec 24 2014 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-gui libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google qt5-tools-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt python-module-sip-devel
-BuildRequires(pre): python3-module-sip-devel
-BuildRequires: gcc-c++ extra-cmake-modules qt5-base-devel qt5-tools-devel
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+%if_enabled python
+BuildRequires(pre): python3-module-sip-devel python-module-sip-devel
 BuildRequires: python-module-PyQt5-devel
+%endif
+BuildRequires: gcc-c++ extra-cmake-modules qt5-base-devel qt5-tools-devel
 
 %description
 KItemViews includes a set of views, which can be used with item models. It
@@ -48,8 +53,7 @@ Requires: %name-common = %version-%release
 %description -n libkf5itemviews
 KF5 library
 
-%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
-
+%if_enabled python
 %package -n python-module-%rname
 Summary: Python bindings for KItemViews
 License: GPLv2+ / LGPLv2+
@@ -66,9 +70,6 @@ Group: Development/Python
 BuildArch: noarch
 %description -n python-module-%rname-devel
 Sip files for python-module-%rname
-
-%if_with python3
-%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 
 %package -n python3-module-%rname
 Summary: Python3 bindings for KItemViews
@@ -114,21 +115,21 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %files -n libkf5itemviews
 %_K5lib/libKF5ItemViews.so.*
 
+%if_enabled python
 %files -n python-module-%rname
 %python_sitelibdir/PyKF5/*.so
-
 %files -n python-module-%rname-devel
 %_datadir/sip/PyKF5/KItemViews/
-
-%if_with python3
 %files -n python3-module-%rname
 %python3_sitelibdir/PyKF5/*.so
-
 %files -n python3-module-%rname-devel
 %_datadir/sip3/PyKF5/KItemViews/
 %endif
 
 %changelog
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
+- new version
+
 * Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
 - new version
 

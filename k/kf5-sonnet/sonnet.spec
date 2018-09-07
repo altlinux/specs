@@ -1,7 +1,7 @@
 %define rname sonnet
 
 Name: kf5-%rname
-Version: 5.48.0
+Version: 5.49.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-revert-new-hunspell-api.patch
 
 # Automatically added by buildreq on Fri Dec 26 2014 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-gui libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs
@@ -55,6 +56,10 @@ KF5 library
 %prep
 %setup -n %rname-%version
 #sed -i -E 's|^FIND_LIBRARY\(HUNSPELL_LIBRARIES[[:space:]]+NAMES[[:space:]]+hunspell-|FIND_LIBRARY(HUNSPELL_LIBRARIES NAMES hunspell hunspell-|' cmake/FindHUNSPELL.cmake
+%define hunspell_ver %get_version libhunspell-devel
+%_K5if_ver_lt %hunspell_ver 1.6
+%patch1 -p1
+%endif
 
 %build
 %K5build
@@ -86,6 +91,9 @@ KF5 library
 %_K5lib/libKF5SonnetUi.so.*
 
 %changelog
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
+- new version
+
 * Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
 - new version
 

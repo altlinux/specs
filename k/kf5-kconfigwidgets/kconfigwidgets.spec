@@ -1,8 +1,12 @@
 %define rname kconfigwidgets
-%def_with python3
+%def_disable python
+%if_enabled python
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
+%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
+%endif
 
 Name: kf5-%rname
-Version: 5.48.0
+Version: 5.49.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -17,13 +21,16 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Thu Feb 12 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel python-base ruby ruby-stdlibs xml-common xml-utils
 #BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kguiaddons-devel kf5-ki18n-devel kf5-kwidgetsaddons-devel python-module-google qt5-base-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt python-module-sip-devel
-BuildRequires(pre): python3-module-sip-devel
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+%if_enabled python
+BuildRequires(pre): python3-module-sip-devel python-module-sip-devel
+BuildRequires: python-module-kcodecs-devel python-module-kwidgetsaddons-devel python-module-kconfig-devel python-module-kauth-devel python-module-kcoreaddons-devel
+BuildRequires: python-module-PyQt5-devel
+%endif
 BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kcoreaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static
-BuildRequires: python-module-kcodecs-devel python-module-kwidgetsaddons-devel python-module-kconfig-devel python-module-kauth-devel python-module-kcoreaddons-devel python-module-PyQt5-devel
 
 %description
 KConfigWidgets provides easy-to-use classes to create configuration dialogs, as
@@ -52,8 +59,7 @@ Requires: %name-common = %version-%release
 %description -n libkf5configwidgets
 KF5 library
 
-%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
-
+%if_enabled python
 %package -n python-module-%rname
 Summary: Python bindings for KConfigWidgets
 License: GPLv2+ / LGPLv2+
@@ -70,9 +76,6 @@ Group: Development/Python
 BuildArch: noarch
 %description -n python-module-%rname-devel
 Sip files for python-module-%rname
-
-%if_with python3
-%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 
 %package -n python3-module-%rname
 Summary: Python3 bindings for KConfigWidgets
@@ -127,21 +130,21 @@ mkdir -p %buildroot/%_K5data/kconfigwidgets/
 %files -n libkf5configwidgets
 %_K5lib/libKF5ConfigWidgets.so.*
 
+%if_enabled python
 %files -n python-module-%rname
 %python_sitelibdir/PyKF5/*.so
-
 %files -n python-module-%rname-devel
 %_datadir/sip/PyKF5/KConfigWidgets/
-
-%if_with python3
 %files -n python3-module-%rname
 %python3_sitelibdir/PyKF5/*.so
-
 %files -n python3-module-%rname-devel
 %_datadir/sip3/PyKF5/KConfigWidgets/
 %endif
 
 %changelog
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
+- new version
+
 * Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
 - new version
 
