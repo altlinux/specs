@@ -2,7 +2,7 @@
 
 Name: ocaml-ocamlnet
 Version: 4.1.6
-Release: alt1%ubt
+Release: alt2
 Summary: Network protocols for OCaml
 License: BSD
 Group: Development/ML
@@ -193,6 +193,9 @@ echo -e '-b /usr/bin/netplex-admin\n-b /usr/bin/ocamlrpcgen' \
 %_libdir/ocaml/nethttpd/*.mli
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 4.1.6-alt2
+- rebuilt with ocaml 4.07
+
 * Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 4.1.6-alt1%ubt
 - 4.1.6
 

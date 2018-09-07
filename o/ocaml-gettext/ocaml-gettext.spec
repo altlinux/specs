@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-gettext
 Version: 0.3.8
-Release: alt1%ubt
+Release: alt2
 Summary: OCaml library for i18n
 Group: Development/ML
 
@@ -116,6 +116,9 @@ chrpath --delete $OCAMLFIND_DESTDIR/stublibs/dll*.so
 %_bindir/ocaml-xgettext
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 0.3.8-alt2
+- rebuilt with ocaml 4.07
+
 * Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 0.3.8-alt1%ubt
 - 0.3.8
 

@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-cmdliner
 Version: 1.0.2
-Release: alt2%ubt
+Release: alt3
 Summary: Declarative definition of command line interfaces for OCaml
 
 # In order for this to work as a "global" macro it has to come after the
@@ -90,6 +90,9 @@ chmod -x %buildroot%_libdir/ocaml/%libname/opam
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt3
+- rebuilt with ocaml 4.07
+
 * Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt2%ubt
 - rebuilt for ocaml 4.06.1
 

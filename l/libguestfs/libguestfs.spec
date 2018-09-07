@@ -16,7 +16,7 @@
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
 Version: 1.36.9
-Release: alt1%ubt
+Release: alt2
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -159,7 +159,11 @@ Requires: %name = %version-%release
 Provides: %name-tools = %version-%release
 Obsoletes: %name-tools < %version-%release
 
+# TODO - build guestfs-data for aarch64
+%ifarch %ix86 x86_64
 Requires: guestfs-data
+%endif
+
 Requires: libosinfo
 
 # for virt-make-fs:
@@ -641,6 +645,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %endif
 
 %changelog
+* Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 1.36.9-alt2
+- rebuilt with ocaml 4.07
+
 * Mon May 21 2018 Anton Farygin <rider@altlinux.ru> 1.36.9-alt1%ubt
 - rebuilt for ocaml 4.06.1
 

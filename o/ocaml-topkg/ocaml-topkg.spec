@@ -2,7 +2,7 @@
 %define oname   topkg
 Name: ocaml-topkg
 Version: 0.9.1
-Release: alt1%ubt
+Release: alt2
 Summary: The transitory OCaml software packager
 License: ISC
 Group: Development/ML
@@ -68,6 +68,9 @@ rm -rf %buildroot%prefix/doc/%oname
 %_libdir/ocaml/topkg/*.cmti
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 0.9.1-alt2
+- rebuilt for ocaml 4.07
+
 * Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 0.9.1-alt1%ubt
 - first build for Sisyphus, based on Mageia spec
 

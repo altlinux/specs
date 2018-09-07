@@ -6,7 +6,7 @@ License: BSD
 Group: Development/ML
 Summary: Development files for %name-runtime
 Version: 0.8
-Release: alt5%ubt
+Release: alt6
 Url: https://github.com/vbmithr/ocaml-text
 Source: %name-%version.tar
 Patch0: ocaml-text-alt-fix-rpath.patch
@@ -77,6 +77,9 @@ mkdir -p %buildroot%_libdir/ocaml/stublibs
 %_libdir/ocaml/text/*.mli
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 0.8-alt6
+- rebuilt with ocaml 4.07
+
 * Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 0.8-alt5%ubt
 - rebuilt for ocaml 4.06.1
 

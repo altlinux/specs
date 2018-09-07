@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-curses
 Version: 1.0.3
-Release: alt5%ubt
+Release: alt6
 Summary: OCaml bindings for ncurses
 
 Group: System/Libraries
@@ -65,6 +65,9 @@ ocamlfind install curses META *.cmi *.cmx *.cma *.cmxa *.a *.so *.mli
 %_libdir/ocaml/curses/*.mli
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.0.3-alt6
+- rebuilt with ocaml 4.07
+
 * Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.0.3-alt5%ubt
 - rebuilt for ocaml 4.06.1
 

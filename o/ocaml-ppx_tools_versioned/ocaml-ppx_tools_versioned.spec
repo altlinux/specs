@@ -2,15 +2,15 @@
 
 %define oname ppx_tools_versioned
 Name: ocaml-%oname
-Version: 5.1
-Release: alt1%ubt
+Version: 5.2.1
+Release: alt1
 Summary: Tools for authors of ppx rewriters and other syntactic tools
 License: MIT
 Group: Development/ML
 Url: https://opam.ocaml.org/packages/ppx_tools_versioned/
 # https://github.com/let-def/ppx_tools_versioned
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib ocaml-migrate-parsetree-devel ocaml-result-devel
+BuildRequires: ocaml-findlib ocaml-migrate-parsetree-devel ocaml-result-devel jbuilder opam
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -38,10 +38,9 @@ developing applications that use %name.
 make all
 
 %install
-export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot/%_libdir/ocaml
 mkdir -p %buildroot/%_libdir/ocaml
-make install
+opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %oname.install
+
 
 %files
 %doc README.md
@@ -52,18 +51,22 @@ make install
 %_libdir/ocaml/%oname/*.a
 %_libdir/ocaml/%oname/*.cmxa
 %_libdir/ocaml/%oname/*.cmxs
-%_libdir/ocaml/%oname/ppx_metaquot_402
-%_libdir/ocaml/%oname/ppx_metaquot_403
-%_libdir/ocaml/%oname/ppx_metaquot_404
-%_libdir/ocaml/%oname/ppx_metaquot_405
-%_libdir/ocaml/%oname/ppx_metaquot_406
+%_libdir/ocaml/%oname/metaquot_402
+%_libdir/ocaml/%oname/metaquot_403
+%_libdir/ocaml/%oname/metaquot_404
+%_libdir/ocaml/%oname/metaquot_405
+%_libdir/ocaml/%oname/metaquot_406
 
 %files devel
 %_libdir/ocaml/%oname/*.cmx
 %_libdir/ocaml/%oname/*.cmt*
-%_libdir/ocaml/%oname/*.o
+%_libdir/ocaml/%oname/*.mli
+%_libdir/ocaml/%oname/*.ml
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 5.2.1-alt1
+- 5.2.1
+
 * Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 5.1-alt1%ubt
 - first build for ALT, based on specfile from Mageia
 

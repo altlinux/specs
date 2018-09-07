@@ -1,8 +1,8 @@
 # on i586: verify-elf: ERROR: ./usr/lib/ocaml/site-lib/lwt/lwt.cmxs: TEXTREL entry found: 0x00000000
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-lwt
-Version: 4.0.1
-Release: alt1%ubt
+Version: 4.1.0
+Release: alt1
 Summary: OCaml lightweight thread library
 
 Group: Development/ML
@@ -10,6 +10,7 @@ License: LGPLv2+ with exceptions
 Url: http://ocsigen.org/lwt/
 # https://github.com/ocsigen/lwt
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires: ocaml-findlib ocaml-ocamldoc termutils ocaml-ssl ocaml-camlp4-devel ocaml-react glib2-devel libev-devel chrpath
 BuildRequires: jbuilder opam ocaml-cppo
@@ -33,6 +34,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 make default-config
@@ -70,6 +72,9 @@ jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/lwt/unix/*.mli
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 4.1.0-alt1
+- 4.1.0
+
 * Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 4.0.1-alt1%ubt
 - 4.0.1
 

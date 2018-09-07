@@ -2,7 +2,7 @@
 %define oname ocamlbdb
 Name: ocaml-bdb
 Version: 4.3.21
-Release: alt7%ubt
+Release: alt8
 Summary: OCaml interface to Berkeley-DB
 Packager: Boris Savelev <boris@altlinux.org>
 Source: http://www.eecs.harvard.edu/~stein/%oname-%version.tar.gz
@@ -54,6 +54,9 @@ install -m 644 bdb.cma bdb.cmi libcamlbdb.a %buildroot%_libdir/ocaml/bdb/
 %exclude %_libdir/ocaml/bdb/*.cmi
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 4.3.21-alt8
+- rebuilt with ocaml 4.07
+
 * Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 4.3.21-alt7%ubt
 - rebuilt for ocaml 4.06.1
 

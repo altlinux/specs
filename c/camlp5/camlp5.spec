@@ -1,5 +1,5 @@
 Name: camlp5
-Version: 7.05
+Version: 7.06
 Release: alt1%ubt
 
 Summary: preprocessor-pretty-printer of OCaml
@@ -46,6 +46,9 @@ install -pD -m644 META %buildroot%_libdir/ocaml/site-lib/%name/META
 %_man1dir/*5*.1*
 
 %changelog
+* Mon Aug 13 2018 Anton Farygin <rider@altlinux.ru> 7.06-alt1%ubt
+- 7.06
+
 * Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 7.05-alt1%ubt
 - 7.05
 

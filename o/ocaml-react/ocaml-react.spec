@@ -2,8 +2,8 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-react
-Version: 1.2.0
-Release: alt4%ubt
+Version: 1.2.1
+Release: alt1
 Summary: Development files for %name
 License: BSD
 Group: Development/ML
@@ -14,7 +14,7 @@ Requires: %name-runtime = %version-%release
 Requires: rpm-build-ocaml >= 1.1.1
 
 BuildPreReq: rpm-build-ocaml >= 1.1.1
-BuildRequires: ocaml ocaml-ocamlbuild ocaml-findlib
+BuildRequires: ocaml ocaml-ocamlbuild ocaml-findlib opam ocaml-topkg
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -49,9 +49,7 @@ and provides time stamp events, delayed events and delayed signals.
 %setup 
 
 %build
-ocaml pkg/build.ml \
-  native=true \
-  native-dynlink=true
+ocaml pkg/pkg.ml build
 
 %install
 mkdir -p %buildroot%_libdir/ocaml/react
@@ -73,6 +71,9 @@ done
 %_libdir/ocaml/react/*.mli
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.2.1-alt1
+- 1.2.1
+
 * Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.2.0-alt4%ubt
 - rebuilt for ocaml 4.06.1
 

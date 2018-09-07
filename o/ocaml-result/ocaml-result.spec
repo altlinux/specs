@@ -1,7 +1,7 @@
 %define module result
 Name: ocaml-%module
 Version: 1.3
-Release: alt1%ubt
+Release: alt2
 Summary: Compat result type
 
 License: BSD
@@ -52,6 +52,9 @@ jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%module/*.ml
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.3-alt2
+- rebuilt for ocaml 4.07
+
 * Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.3-alt1%ubt
 - 1.3
 

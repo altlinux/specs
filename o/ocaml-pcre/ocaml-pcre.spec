@@ -3,7 +3,7 @@
 
 Name: ocaml-pcre
 Version: 7.3.4
-Release: alt1%ubt
+Release: alt2
 
 Summary: Perl compatibility regular expressions (PCRE) for OCaml
 License: LGPL
@@ -63,6 +63,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/pcre/*.mli
 
 %changelog
+* Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 7.3.4-alt2
+- rebuilt with ocaml 4.07
+
 * Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 7.3.4-alt1%ubt
 - 7.3.4
 
