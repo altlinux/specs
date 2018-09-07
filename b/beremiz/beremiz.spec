@@ -1,14 +1,17 @@
+%python_req_hier
+
 %def_with docs
 Name: beremiz
 Version: 1.2
-Release: alt1.20180523
+Release: alt2.20180816
 
 Summary: Integrated development environment for machine automation
 Summary(ru_RU.UTF-8): Интегрированная среда разработки для ПЛК
 
 License: GPLv3+
 Group: Engineering
-Url: https://bitbucket.org/skvorl/beremiz
+Url: https://bitbucket.org/automforge/beremiz
+#Url: https://bitbucket.org/skvorl/beremiz
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -19,7 +22,9 @@ Source3: %name-48x48.png
 Source4: poe-16x16.png
 Source5: poe-32x32.png
 Source6: poe-48x48.png
-Patch: CanFestival-PATH.patch
+Patch0: CanFestival-PATH.patch
+Patch1: Modbus-PATH.patch
+Patch2: BACnet-PATH.patch
 
 Buildarch: noarch
 BuildPreReq: rpm-build-python dos2unix desktop-file-utils
@@ -28,11 +33,15 @@ BuildPreReq: rpm-build-python dos2unix desktop-file-utils
 BuildRequires(pre): rpm-macros-sphinx python-module-sphinx
 %endif #docs
 
-%add_python_req_skip __pyjamas__ canfestival_config commondialogs eds_utils gen_cfile gluon gnosis networkeditortemplate nodeeditortemplate nodelist nodemanager subindextable
-Requires: python-module-%name = %version-%release
+Requires: python-module-%name = %EVR
+Requires: python-module-%name-tests = %EVR
 Requires: matiec
 Requires: gcc-c++
 Requires: CanFestival-3-source
+Requires: beremiz-modbus-source
+Requires: bacnet-stack-source
+Requires: avahi-daemon
+
 
 %description
 Beremiz is an integrated development environment for machine
@@ -47,6 +56,9 @@ to existing supervisions, databases, or fieldbuses.
 With Beremiz, you conform to standards, avoid vendor lock, and
 contribute to the better future of Automation.
 
+Examples of projects demonstrating the capabilities of Beremiz are in
+%python_sitelibdir/%name/tests/
+
 %description -l ru_RU.UTF-8
 Beremiz - это интегрированная среда разработки для ПЛК.
 Является свободным программным обеспечением, соответсвует стандарту
@@ -60,10 +72,17 @@ Beremiz опирается на открытые стандарты, котор�
 Используя Beremiz, вы отвечаете стандартам, избегаете вендорлока и
 вносите свой вклад в лучшее будущее автоматизации.
 
+Примеры проектов, демонстрирующие возможности Beremiz находятся в 
+%python_sitelibdir/%name/tests/
+
 %package -n python-module-%name
 Summary: Integrated development environment for machine automation
 Group: Development/Python
-%py_requires matplotlib.backends.backend_wx
+Requires: python-module-wx3.0-gtk2
+Requires: wxGlade
+Requires: python-module-twisted-core-test
+%py_requires cwiid umsgpack twisted.internet.wxsupport service_identity
+%add_python_req_skip __pyjamas__ canfestival_config commondialogs eds_utils gen_cfile gluon.contrib.simplejson gnosis.xml.pickle gnosis.xml.pickle.util networkeditortemplate nodeeditortemplate nodelist nodemanager subindextable targets.typemapping MotionLibrary
 
 %description -n python-module-%name
 Integrated development environment for machine automation
@@ -72,14 +91,20 @@ Integrated development environment for machine automation
 Summary: Tests for python-module-%name
 Group: Development/Python
 Requires: python-module-%name = %version-%release
-%add_python_req_skip Beremiz PLCOpenEditor controls
+%add_python_req_skip Beremiz PLCOpenEditor controls.CustomIntCtrl
 
 %description -n python-module-%name-tests
 Tests for python-module-%name
 
 %prep
 %setup -n %name-%version
-%patch -p2
+%patch0 -p2
+%patch1 -p2
+%patch2 -p2
+
+#fix PATH to python
+sed 's|/usr/bin/env python|%_bindir/python|g' -i *.py
+
 find . -type f -print0 | xargs -0 dos2unix
 
 %build
@@ -121,38 +146,52 @@ install -m 644 %SOURCE6 %buildroot/%_liconsdir/PLCOpenEditor.png
 ### == executable file beremiz
 cat>%name<<END
 #!/bin/sh
-if ! [ -d \$HOME/YAPLC/CanFestival-3 ]; then
-    mkdir -p \$HOME/YAPLC &&
-    cd \$HOME/YAPLC &&
-    cp -fr %_prefix/src/CanFestival-3 \$HOME/YAPLC/ &&
-    cd \$HOME/YAPLC/CanFestival-3/objdictgen &&
+if ! [ -d \$HOME/beremiz/CanFestival-3 ]; then
+    mkdir -p \$HOME/beremiz &&
+    cd \$HOME/beremiz &&
+    cp -fr %_prefix/src/CanFestival-3 \$HOME/beremiz/ &&
+    cd \$HOME/beremiz/CanFestival-3/objdictgen &&
     tar -xzf Gnosis_Utils-current.tar.gz &&
     mv Gnosis_Utils*/gnosis . &&
     rm -fr Gnosis_Utils* &&
-    cd \$HOME/YAPLC/CanFestival-3 &&
-    ./configure &&
+    cd \$HOME/beremiz/CanFestival-3 &&
+    ./configure  --can=virtual &&
     make
 fi
-%_bindir/python2 %python_sitelibdir/%name/Beremiz.py
+if ! [ -d \$HOME/beremiz/Modbus ]; then
+    mkdir -p \$HOME/beremiz &&
+    cd \$HOME/beremiz &&
+    cp -fr %_prefix/src/beremiz-modbus \$HOME/beremiz/Modbus &&
+    cd \$HOME/beremiz/Modbus &&
+    make
+fi
+if ! [ -d \$HOME/beremiz/BACnet ]; then
+    mkdir -p \$HOME/beremiz &&
+    cd \$HOME/beremiz &&
+    cp -fr %_prefix/src/bacnet-stack \$HOME/beremiz/BACnet &&
+    cd \$HOME/beremiz/BACnet &&
+    make
+fi
+cd \$HOME
+%_bindir/python %python_sitelibdir/%name/Beremiz.py $*
 END
-# xterm -T 'Building CanFestival-3' -e bash -c \
+
 mkdir -p %buildroot%_bindir/
 install -m 755 %name %buildroot%_bindir/%name
 
 ### == executable file beremiz-service
 cat>%name<<END
 #!/bin/sh
-%_bindir/python2 %python_sitelibdir/%name/Beremiz_service.py
+%_bindir/python %python_sitelibdir/%name/Beremiz_service.py $*
 END
 
 mkdir -p %buildroot%_bindir/
 install -m 755 %name %buildroot%_bindir/%name-service
 
-
 ### == executable file PLCOpenEditor
 cat>%name<<END
 #!/bin/sh
-%_bindir/python2 %python_sitelibdir/%name/PLCOpenEditor.py
+%_bindir/python %python_sitelibdir/%name/PLCOpenEditor.py $*
 END
 
 mkdir -p %buildroot%_bindir/
@@ -214,6 +253,11 @@ desktop-file-install --dir=%buildroot%_desktopdir PLCOpenEditor.desktop
 %python_sitelibdir/%name/tests
 
 %changelog
+* Fri Sep 07 2018 Anton Midyukov <antohami@altlinux.org> 1.2-alt2.20180816
+- New snapshot
+- Added support protocols: modbus and BACnet
+- Fix tests
+
 * Wed Jun 06 2018 Anton Midyukov <antohami@altlinux.org> 1.2-alt1.20180523
 - New snapshot
 
@@ -232,3 +276,4 @@ desktop-file-install --dir=%buildroot%_desktopdir PLCOpenEditor.desktop
 
 * Sat Jul 01 2017 Anton Midyukov <antohami@altlinux.org> 1.2-alt1.20170628
 - Initial build for ALT Linux Sisyphus.
+
