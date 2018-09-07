@@ -1,54 +1,104 @@
-Name: uim
-Version: 1.8.6
-Release: alt4.git89542ac.2
+# engines
+%def_with anthy
+%def_with m17nlib
+# lack of libraries
+%def_without canna
+%def_without mana
+%def_without prime
+%def_without sj3
+%def_without skk
+%def_without wnn
 
-Summary: useful input method metapackage
+# toolkits and helpers
+%def_enable emacs
+%def_enable fep
+%def_with gtk
+%def_with gtk3
+%def_with qt
+%def_with qt4
+%def_with qt5
+%def_with x
+%def_with xft
+%def_disable gnome-applet
+%def_disable gnome3-applet
+%def_disable kde-applet
+%def_disable kde4-applet
+
+# misc
+%def_enable dict
+%def_with libedit
+%def_with libnotify
+# not tested
+%def_disable curl
+%def_disable expat
+%def_disable ffi
+%def_disable openssl
+%def_disable sqlite3
+
+Name: uim
+Version: 1.8.8
+Release: alt1
+
+Summary: useful input method
 
 License: BSD
 Group: Text tools
-Url: https://code.google.com/p/uim/
+Url: https://github.com/uim/uim
 
-Packager: Vladimir D. Seleznev <vseleznv@altlinux.org>
-Source: %name.tar
-Source1: sigscheme.tar
-Source2: UimSystemConfiguration
-Source3: UIMFep
-Source4: UIMEl
+# git://git.altlinux.org/gears/u/uim.git
+Source: %name-%version-%release.tar
 
-# Automatically added by buildreq on Thu May 11 2017
-# optimized out: at-spi2-atk fontconfig fontconfig-devel gcc-c++ glib-networking glib2-devel gnu-config libGL-devel libICE-devel libX11-devel libXext-devel libXft-devel libXrender-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libm17n-gui libncurses-devel libpango-devel libqt3-settings libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-xml libqt5-core libqt5-gui libqt5-widgets libqt5-x11extras libstdc++-devel libtinfo-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl perl-Encode pkg-config python-base python-modules qt5-base-devel qt5-declarative-devel shared-mime-info xorg-kbproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: asciidoc intltool libanthy-devel libedit-devel libgcroots-devel libgtk+2-devel libgtk+3-devel libm17n-db libm17n-devel libnotify-devel libqt3-devel libqt4-webkit-devel librsvg-utils phonon-devel qt5-tools-devel qt5-wayland-devel qt5-x11extras-devel ruby ruby-stdlibs
+BuildPreReq: alternatives
+BuildRequires: asciidoc intltool ruby ruby-stdlibs libgcroots-devel librsvg-utils
+%{?_with_libnotify:BuildRequires: libnotify-devel}
+%{?_with_anthy:BuildRequires: libanthy-devel}
+%{?_with_libedit:BuildRequires: libedit-devel}
+%{?_enable_fep:BuildRequires: libncursesw-devel}
+%{?_with_gtk:BuildRequires: libgtk+2-devel}
+%{?_with_gtk3:BuildRequires: libgtk+3-devel}
+%{?_with_m17nlib:BuildRequires: libm17n-devel libm17n-db}
+%{?_with_qt:BuildRequires: libqt3-devel gcc-c++}
+%{?_with_qt4:BuildRequires: libqt4-devel gcc-c++}
+%{?_with_qt5:BuildRequires: qt5-base-devel qt5-x11extras-devel gcc-c++}
+%{?_with_xft:BuildRequires: libXft-devel}
+%{?_enable_emacs:BuildRequires: emacs-common emacs-devel}
 
-Requires: uim-fep   = %version-%release
-Requires: uim-gtk   = %version-%release
-Requires: uim-gtk3  = %version-%release
-Requires: uim-qt4   = %version-%release
-Requires: uim-qt5   = %version-%release
-Requires: uim-utils = %version-%release
-Requires: uim-xim   = %version-%release
-Requires: uim-m17nlib   = %version-%release
-Requires: libuim-plugin = %version-%release
+%{?_with_gtk:Requires: uim-gtk = %EVR}
+%{?_with_gtk3:Requires: uim-gtk3 = %EVR}
+%{?_with_qt4:Requires: uim-qt4 = %EVR}
+%{?_with_qt5:Requires: uim-qt5 = %EVR}
+%{?_with_x:Requires: uim-xim = %EVR}
+Requires: uim-plugins = %EVR
+Requires: uim-pref = %EVR
 
-%define common_descr uim is a multilingual input method library and environment. \
+%define common_descr uim is a multilingual input method library and environment.\
 \
-Its goal is to provide simple, easily extensible and high code-quality \
-input method development platform, and useful input method environment \
+Its goal is to provide simple, easily extensible and high code-quality\
+input method development platform, and useful input method environment\
 for users of desktop and embedded platforms.
 
 %description
 %common_descr
 
-This is metapackage.
+This is metapackage for install uim for basic graphical toolkit and
+plugins. You may want to install additional package with other tookits
+and modules support. For documentaion refer to library package
+libuim8.
 
-%package common
+%package data
 Summary: useful input method common files
 Group: Text tools
+Provides: uim-common
+Obsoletes: uim-common
+Provides: libuim-data
+Obsoletes: libuim-data
 BuildArch: noarch
+%{?_with_m17nlib:Requires: libm17n-db}
 
-%description common
+%description data
 %common_descr
 
-This package contains common files for the uim packages.
+This package contains the data files for uim.
 
 %package -n libuim-devel
 Summary: Development and header files for universal input method library
@@ -62,8 +112,9 @@ Development and header files for universal input method.
 %package -n libuim8
 Summary: universal input method library
 Group: Text tools
-Requires: libuim-data    = %version-%release
-Requires: uim-common     = %version-%release
+Requires: uim-data = %EVR
+Requires: uim-plugins = %EVR
+Requires: uim-utils = %EVR
 
 %description -n libuim8
 %common_descr
@@ -79,24 +130,32 @@ Group: Text tools
 
 This package contains universal input method uim-custom API library.
 
-%package -n libuim-data
+%package plugins
 Summary: universal input method data files
+Provides: libuim-plugin
+Obsoletes: libuim-plugin
+Provides: uim-m17nlib
+Obsoletes: uim-m17nlib
 Group: Text tools
-BuildArch: noarch
+Requires(post): uim-utils = %EVR
+Requires(preun): uim-utils = %EVR
+# needed for m17nlib engine
+%{?_with_m17nlib:Requires: libm17n, libm17n-db}
 
-%description -n libuim-data
-%common_descr
-
-This package contains the data files for uim.
-
-%package -n libuim-plugin
-Summary: universal input method data files
-Group: Text tools
-
-%description -n libuim-plugin
+%description plugins
 %common_descr
 
 This package contains the plugin files for uim.
+
+%package pref
+Summary: universal input method pref
+Group: Text tools
+Requires: uim-pref-gtk = %EVR
+
+%description pref
+%common_descr
+
+This package contains preferences tool for uim.
 
 %package -n libuim-scm0
 Summary: universal input method API uim-scm library
@@ -107,15 +166,70 @@ Group: Text tools
 
 This package contains universal input method API uim-scm library.
 
-%package emacs
+%if_enabled emacs
+%package -n emacs-uim
 Summary: EMACS module for universal input method
 Group: Text tools
+Provides: uim-emacs
+Obsoletes: uim-emacs
 
-%description emacs
+%description -n emacs-uim
 %common_descr
 
 EMACS module for universal input method.
+%endif # emacs
 
+%package pref-gtk
+Summary: universal input method preferences (GTK+ 2.0 UI)
+Group: Text tools
+Provides: /usr/bin/uim-pref = %EVR
+
+%description pref-gtk
+%common_descr
+
+Preferences used GTK+ 2.0 interface.
+
+%package pref-gtk3
+Summary: universal input method preferences (GTK+ 3.0 UI)
+Group: Text tools
+Provides: /usr/bin/uim-pref = %EVR
+
+%description pref-gtk3
+%common_descr
+
+Preferences used GTK+ 3.0 interface.
+
+%package pref-qt
+Summary: universal input method preferences (Qt 3 UI)
+Group: Text tools
+Provides: /usr/bin/uim-pref = %EVR
+
+%description pref-qt
+%common_descr
+
+Preferences used Qt 3 interface.
+
+%package pref-qt4
+Summary: universal input method preferences (Qt 4 UI)
+Group: Text tools
+Provides: /usr/bin/uim-pref = %EVR
+
+%description pref-qt4
+%common_descr
+
+Preferences used Qt 4 interface.
+
+%package pref-qt5
+Summary: universal input method preferences (Qt 5 UI)
+Group: Text tools
+Provides: /usr/bin/uim-pref = %EVR
+
+%description pref-qt5
+%common_descr
+
+Preferences used Qt 5 interface.
+
+%if_enabled fep
 %package fep
 Summary: fep module for universal input method
 Group: Text tools
@@ -124,105 +238,136 @@ Group: Text tools
 %common_descr
 
 fep module for universal input method.
+%endif # fep
 
+%if_with gtk
 %package gtk
 Summary: GTK+ 2.0 universal input method universal input method
 Group: Text tools
+Requires: uim-xim = %EVR
 
 %description gtk
 %common_descr
 
 This package contains an IM-module to support the use of uim on GTK+2.0
 applications.
+%endif # gtk
 
+%if_with gtk3
 %package gtk3
 Summary: GTK+3 module for universal input method
 Group: Text tools
+Requires: uim-xim = %EVR
 
 %description gtk3
 %common_descr
 
 This package contains an IM-module to support the use of uim on GTK+3.0
 applications.
+%endif # gtk3
 
-%package m17nlib
-Summary: m17nlib plugin for universal input method
-Group: Text tools
-
-%description m17nlib
-%common_descr
-
-m17nlib plugin for universal input method.
-
+%if_with qt
 %package qt
 Summary: Qt3 module for universal input method
 Group: Text tools
+Requires: uim-xim = %EVR
 
 %description qt
 %common_descr
 
 Qt3 module for universal input method.
+%endif # qt
 
+%if_with qt4
 %package qt4
 Summary: Qt4 module for universal input method
 Group: Text tools
+Requires: uim-xim = %EVR
 
 %description qt4
 %common_descr
 
 Qt4 module for universal input method.
+%endif # qt4
 
+%if_with qt5
 %package qt5
 Summary: Qt5 module for universal input method
 Group: Text tools
+Requires: uim-xim = %EVR
 
 %description qt5
 %common_descr
 
 Qt5 module for universal input method.
+%endif # qt5
 
 %package utils
-Summary: universal input method utilities
+Summary: utils for universal input method
+Requires: uim-data = %EVR
 Group: Text tools
 
 %description utils
 %common_descr
 
-This package contains a shell interpreter, IPC server, etc.
+This package contains additional utils for uim.
 
+%if_with x
 %package xim
 Summary: XIM module for universal input method
 Group: Text tools
+Requires: uim-gtk = %EVR
 
 %description xim
 %common_descr
 
 XIM module for universal input method.
+%endif # x
 
 %prep
-%setup -n %name -a 1
-cp %SOURCE2 .
-cp %SOURCE3 .
-cp %SOURCE4 .
+%setup -n %name-%version-%release
 
 %build
-./autogen.sh
-pushd sigscheme
-	./autogen.sh
-popd
-
+%autoreconf
 %configure \
-	--enable-dict \
-	--enable-notify=libnotify \
-	--enable-qt4-qt3support \
-	--with-m17nlib \
-	--with-qt \
-	--with-qt-immodule \
-	--with-qt4 \
-	--with-qt4-immodule \
-	--with-qt5 \
-	--with-qt5-immodule \
+	--disable-rpath \
+	--disable-static \
+	%{subst_enable dict} \
+	%{subst_enable emacs} \
+	%{subst_enable fep} \
+	%{subst_enable gnome3-applet} \
+	%{subst_enable gnome-applet} \
+	%{subst_enable kde4-applet} \
+	%{subst_enable kde-applet} \
+	%{subst_with anthy} \
+	%{subst_with canna} \
+	%{subst_with eb} \
+	%{subst_with expat} \
+	%{subst_with ffi} \
+	%{subst_with gtk} \
+	%{subst_with gtk3} \
+	%{subst_with libedit} \
+	%{subst_with m17nlib} \
+	%{subst_with mana} \
+	%{subst_with openssl} \
+	%{subst_with prime} \
+	%{subst_with qt} \
+	%{subst_with qt4} \
+	%{subst_with qt5} \
+	%{subst_with sj3} \
+	%{subst_with skk} \
+	%{subst_with sqlite3} \
+	%{subst_with wnn} \
+	%{subst_with x} \
+	%{subst_with xft} \
+	%{?_with_qt:%%{?_with_qt4:--enable-qt4-qt3support}} \
+	%{?_with_qt:--with-qt-immodule} \
+	%{?_with_qt4:--with-qt4-immodule} \
+	%{?_with_qt5:--with-qt5-immodule} \
+	--enable-pref \
+	--enable-nls \
 	--with-libgcroots=installed \
+	--enable-notify=stderr%{?_with_libnotify:,libnotify} \
 	--enable-conf=uim \
 	--enable-maintainer-mode \
 	#
@@ -236,36 +381,101 @@ export LC_ALL=en_US.UTF-8
 %makeinstall_std
 %find_lang %name
 
+mkdir -p %buildroot%_emacs_sitestart_dir
+install -m0644 alt/uim.el -t %buildroot%_emacs_sitestart_dir
+
+%if_with m17nlib
+install -pD -m755 alt/uim-m17nlib-icons.filetrigger -t %buildroot%_rpmlibdir
+%endif
+
+mkdir -p %buildroot%_sysconfdir/X11/xinit/xinput.d/
+install -pm644 alt/xinput %buildroot%_sysconfdir/X11/xinit/xinput.d/uim.conf
+
+# alternatives
+mkdir -p %buildroot%_altdir
+install -p -m644 alternatives/uim-pref-gtk %buildroot%_altdir/uim-pref-gtk
+install -p -m644 alternatives/uim-pref-gtk3 %buildroot%_altdir/uim-pref-gtk3
+install -p -m644 alternatives/uim-pref-qt %buildroot%_altdir/uim-pref-qt
+install -p -m644 alternatives/uim-pref-qt4 %buildroot%_altdir/uim-pref-qt4
+install -p -m644 alternatives/uim-pref-qt5 %buildroot%_altdir/uim-pref-qt5
+
+mkdir -p %buildroot%_localstatedir/uim
+touch %buildroot%_localstatedir/uim/installed-modules.scm
+touch %buildroot%_localstatedir/uim/loader.scm
+
+find %buildroot%_libdir -type f -name \*\.la -delete
+
+%post plugins
+# $1 is equal to 2 when package is upgrading
+if [ $1 -eq 2 ]; then
+        # We shouldn't remove all the modules but it's OK while every avalible
+	# modules are shipping in uim-plugins. Otherwise, it should be fixed.
+	/usr/bin/uim-module-manager --unregister-all
+fi
+/usr/bin/uim-module-manager --register
+
+%preun plugins
+# package is removing
+if [ $1 -eq 0 ]; then
+        # We shouldn't remove all the modules but it's OK while every avalible
+	# modules are shipping in uim-plugins. Otherwise, it should be fixed.
+	/usr/bin/uim-module-manager --unregister-all
+fi
+
 %files
 
-%files common
-%_datadir/uim/pixmaps/*
-%_datadir/uim/helperdata/*
-%_datadir/uim/byeoru-data/*
-%_datadir/uim/tables/*
+%files data -f %name.lang
 %dir %_datadir/uim
-%dir %_datadir/uim/pixmaps
-%dir %_datadir/uim/helperdata
-%dir %_datadir/uim/byeoru-data
-%dir %_datadir/uim/tables
-%dir %_datadir/uim/lib
-%doc AUTHORS
-%doc COPYING
-%doc NEWS
-%doc README
-%doc RELNOTE
-%doc UimSystemConfiguration
+%_datadir/uim
+%_rpmlibdir/uim-m17nlib-icons.filetrigger
+%exclude %_datadir/%name/m17nlib.scm
+%exclude %_datadir/%name/m17nlib-custom.scm
 
-%files emacs
+%if_enabled emacs
+%files -n emacs-uim
+%doc alt/UIMEl
 %_bindir/uim-el-agent
 %_bindir/uim-el-helper-agent
 %_datadir/emacs/*
-%doc UIMEl
+%_emacs_sitestart_dir/uim.el
+%endif # emacs
 
+%files pref
+%_datadir/applications/uim.desktop
+
+%files pref-gtk
+%_altdir/uim-pref-gtk
+%_bindir/uim-pref-gtk
+%_bindir/uim-toolbar-gtk
+%_bindir/uim-toolbar-gtk-systray
+
+%files pref-gtk3
+%_altdir/uim-pref-gtk3
+%_bindir/uim-pref-gtk3
+%_bindir/uim-toolbar-gtk3
+%_bindir/uim-toolbar-gtk3-systray
+
+%files pref-qt
+%_altdir/uim-pref-qt
+%_bindir/uim-pref-qt
+%_bindir/uim-toolbar-qt
+
+%files pref-qt4
+%_altdir/uim-pref-qt4
+%_bindir/uim-pref-qt4
+%_bindir/uim-toolbar-qt4
+
+%files pref-qt5
+%_altdir/uim-pref-qt5
+%_bindir/uim-pref-qt5
+%_bindir/uim-toolbar-qt5
+
+%if_enabled fep
 %files fep
 %_bindir/uim-fep
 %_bindir/uim-fep-tick
-%doc UIMFep
+%doc alt/UIMFep
+%endif # fep
 
 %files -n libuim-devel
 %_includedir/*
@@ -273,99 +483,114 @@ export LC_ALL=en_US.UTF-8
 %_libdir/pkgconfig/uim.pc
 
 %files -n libuim8
+%doc AUTHORS COPYING NEWS README RELNOTE
+%doc alt/UimSystemConfiguration
 %_libdir/libuim.so.8
 %_libdir/libuim.so.8.*
+%_localstatedir/uim
+%ghost %_localstatedir/uim/installed-modules.scm
+%ghost %_localstatedir/uim/loader.scm
 
 %files -n libuim-custom2
 %_libdir/libuim-custom.so.2
 %_libdir/libuim-custom.so.2.*
 
-%files -n libuim-data -f %name.lang
-%_datadir/uim/*.scm
-%_datadir/uim/lib/*
-%dir %_datadir/uim
-%dir %_datadir/uim/lib
-%exclude %_datadir/%name/m17nlib.scm
-%exclude %_datadir/%name/m17nlib-custom.scm
-
-%files -n libuim-plugin
-%_libdir/uim/notify/*.so
+%files plugins
+%doc AUTHORS COPYING NEWS README RELNOTE
+%if_with libnotify
+%_libdir/uim/notify
+%endif # libnotify
 %_libdir/uim/plugin/*.so
 %dir %_libdir/uim
-%dir %_libdir/uim/notify
 %dir %_libdir/uim/plugin
-%exclude %_libdir/%name/plugin/libuim-m17nlib.so
+%if_with m17nlib
+%_libdir/%name/plugin/libuim-m17nlib.so
+%_datadir/%name/m17nlib.scm
+%_datadir/%name/m17nlib-custom.scm
+%endif # m17nlib
 
 %files -n libuim-scm0
 %_libdir/libuim-scm.so.0
 %_libdir/libuim-scm.so.0.*
 
+%if_with gtk
 %files gtk
+%if_enabled dict
 %_bindir/uim-dict-gtk
+%endif # dict
 %_bindir/uim-im-switcher-gtk
 %_bindir/uim-input-pad-ja
-%_bindir/uim-pref-gtk
-%_bindir/uim-toolbar-gtk
-%_bindir/uim-toolbar-gtk-systray
-%_datadir/applications/uim.desktop
 %_libdir/gtk-2.0/2.10.0/immodules/im-uim.so
 %_libexecdir/uim-candwin-gtk
 %_libexecdir/uim-candwin-horizontal-gtk
 %_libexecdir/uim-candwin-tbl-gtk
+%endif # gtk
 
+%if_with gtk3
 %files gtk3
+%if_enabled dict
 %_bindir/uim-dict-gtk3
+%endif # dict
 %_bindir/uim-im-switcher-gtk3
 %_bindir/uim-input-pad-ja-gtk3
-%_bindir/uim-pref-gtk3
-%_bindir/uim-toolbar-gtk3
-%_bindir/uim-toolbar-gtk3-systray
 %_libdir/gtk-3.0/3.0.0/immodules/im-uim.so
 %_libexecdir/uim-candwin-gtk3
 %_libexecdir/uim-candwin-horizontal-gtk3
 %_libexecdir/uim-candwin-tbl-gtk3
+%endif # gtk3
 
-%files m17nlib
-%_bindir/uim-m17nlib-relink-icons
-%_libdir/%name/plugin/libuim-m17nlib.so
-%_datadir/%name/m17nlib.scm
-%_datadir/%name/m17nlib-custom.scm
-
+%if_with qt
 %files qt
 %_bindir/uim-chardict-qt
 %_bindir/uim-im-switcher-qt
-%_bindir/uim-pref-qt
-%_bindir/uim-toolbar-qt
 %_libexecdir/uim-candwin-qt
 %_libdir/qt3/plugins/inputmethods/libquiminputcontextplugin.so
+%endif # qt
 
+%if_with qt4
 %files qt4
 %_bindir/uim-chardict-qt4
 %_bindir/uim-im-switcher-qt4
-%_bindir/uim-pref-qt4
-%_bindir/uim-toolbar-qt4
 %_libdir/qt4/plugins/inputmethods/libuiminputcontextplugin.so
 %_libexecdir/uim-candwin-qt4
+%endif # qt4
 
+%if_with qt5
 %files qt5
 %_bindir/uim-chardict-qt5
 %_bindir/uim-im-switcher-qt5
-%_bindir/uim-pref-qt5
-%_bindir/uim-toolbar-qt5
 %_libdir/qt5/plugins/platforminputcontexts/libuimplatforminputcontextplugin.so
 %_libexecdir/uim-candwin-qt5
+%endif # qt5
 
 %files utils
 %_bindir/uim-help
+%{?_with_m17nlib:%_bindir/uim-m17nlib-relink-icons}
 %_bindir/uim-module-manager
 %_bindir/uim-sh
 %_libexecdir/uim-helper-server
 
+%if_with x
 %files xim
+%config %_sysconfdir/X11/xinit/xinput.d/uim.conf
 %_bindir/uim-xim
 %_mandir/man1/uim-xim.1.xz
+%endif
 
 %changelog
+* Sun May 20 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.8-alt1
+- 1.8.8
+- uim-emacs -> emacs-uim (Emacs packaging policy)
+- uim-plugin -> uim-plugins
+- uim-common, libuim-data -> uim-data
+- uim-m17nlib was included to uim-plugins
+- added uim.el site-start script to emacs-uim
+- added alternatives for uim-pref
+- added filetrigger to relink m17n-db icons
+- fixed modules location path
+- added xinput.d/uim.conf to uim-xim
+- revisited interpackage dependencies
+
 * Mon Oct 23 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.6-alt4.git89542ac.2
 - uim-qt5: rebuilt to work with new Qt5 version (5.9.2)
 
