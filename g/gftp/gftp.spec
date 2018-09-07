@@ -1,6 +1,6 @@
 Name: gftp
 Version: 2.0.19
-Release: alt2.qa1
+Release: alt3
 
 Summary: Multithreaded FTP client for X Window
 Summary(ru_RU.KOI8-R): Многопотоковый FTP-клиент для X Window
@@ -123,6 +123,9 @@ bzcat %SOURCE3 > $RPM_BUILD_ROOT%_miconsdir/%name.xpm
 %_miconsdir/*.xpm
 
 %changelog
+* Fri Sep 07 2018 Pavel Vainerman <pv@altlinux.ru> 2.0.19-alt3
+- rebuild with new openssl
+
 * Sat Apr 23 2011 Igor Vlasenko <viy@altlinux.ru> 2.0.19-alt2.qa1
 - NMU: dropped obsolete menu entry
 
