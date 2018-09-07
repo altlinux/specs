@@ -3,8 +3,8 @@
 %define lname     libmosquitto
 
 Name: mosquitto
-Version: 1.4.14
-Release: alt1
+Version: 1.5.1
+Release: alt2
 
 Summary: Mosquitto is an open source implementation of a server for version 3.1 and 3.1.1 of the MQTT protocol
 
@@ -22,7 +22,7 @@ Source3: %name.conf
 
 # Automatically added by buildreq on Mon Feb 01 2016
 # optimized out: libcom_err-devel libkrb5-devel libstdc++-devel
-BuildRequires: gcc-c++ libcares-devel libssl-devel libuuid-devel
+BuildRequires: gcc-c++ libcares-devel libssl-devel libuuid-devel docbook-style-xsl xsltproc
 Requires: %lname = %version-%release
 
 %description
@@ -49,16 +49,22 @@ Libraries needed to develop for mosquitto
 %prep
 %setup 
 
+%ifarch %ix86
+subst 's|Invalid memory_limit value (%%ld)|Invalid memory_limit value (%%d)|g' src/conf.c
+%endif
+
 %build
 subst 's|prefix=/usr/local|prefix=/usr|g' config.mk
+subst 's|stylesheet/docbook-xsl/manpages/docbook.xsl|xsl-stylesheets/manpages/docbook.xsl|g' man/manpage.xsl man/html.xsl
+
 %make_build
 
 %install
-%makeinstall_std
-%ifarch x86_64
-mkdir -p %buildroot%_libdir
-mv -f %buildroot/usr/lib/* %buildroot%_libdir/
+%ifarch x86_64 aarch64
+export LIB_SUFFIX=64
 %endif
+
+%makeinstall_std
 
 chmod a-x %buildroot%_includedir/*.h
 
@@ -102,6 +108,12 @@ cp %SOURCE3 %buildroot%_sysconfdir/%name
 %_libdir/*.so
 
 %changelog
+* Fri Sep 07 2018 Pavel Vainerman <pv@altlinux.ru> 1.5.1-alt2
+- fix libdir for build for x86_64
+
+* Sun Aug 26 2018 Pavel Vainerman <pv@altlinux.ru> 1.5.1-alt1
+- new version (1.5.1) with rpmgs script
+
 * Thu Jan 25 2018 Pavel Vainerman <pv@altlinux.ru> 1.4.14-alt1
 - new version (1.4.14) with rpmgs script
 - add LSB headers to init-scipt
