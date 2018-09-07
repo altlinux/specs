@@ -1,11 +1,11 @@
 %define _name apsw
 %define rel r1
-%define sqlite_ver 3.22.0
+%define sqlite_ver 3.24.0
 %def_with python3
 
 Name: python-module-%_name
-Version: 3.22.0
-Release: alt1.%rel.1
+Version: 3.24.0
+Release: alt1.%rel
 
 Summary: Another Python SQLite Wrapper
 License: zlib/libpng License
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Fri Sep 07 2018 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1.r1
+- 3.24.0
+
 * Tue Apr 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.22.0-alt1.r1.1
 - (NMU) Rebuilt with python-3.6.4.
 
