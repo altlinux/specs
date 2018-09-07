@@ -1,6 +1,6 @@
 Name: xorg-drv-intel
 Version: 2.99.917
-Release: alt7
+Release: alt8
 Epoch: 7
 Summary: Intel integrated graphics chipsets
 License: MIT/X11
@@ -8,7 +8,8 @@ Group: System/X11
 Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Requires: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv xorg-dri-intel
+Requires: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
+Requires: xorg-dri-intel
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -16,9 +17,9 @@ Patch: %name-%version-%release.patch
 ExclusiveArch: %ix86 x86_64
 BuildRequires(Pre): xorg-sdk
 BuildRequires: libGL-devel libX11-devel libXext-devel libXvMC-devel libXcursor-devel libXdamage-devel libXinerama-devel
-BuildRequires: libXrandr-devel libXtst-devel xorg-proto-devel libxshmfence-devel
-BuildRequires: libXrender-devel libxcbutil-devel xorg-util-macros libXfixes-devel libudev-devel intel-gen4asm
-BuildRequires: libXScrnSaver-devel libXcomposite-devel libXxf86vm-devel libXfont2-devel
+BuildRequires: libXrandr-devel libXtst-devel xorg-proto-devel libxshmfence-devel libXrender-devel libxcbutil-devel
+BuildRequires: xorg-util-macros libXfixes-devel libudev-devel intel-gen4asm libXScrnSaver-devel libXcomposite-devel
+BuildRequires: libXxf86vm-devel libXfont2-devel
 
 %description
 intel  is  an  Xorg  driver  for  Intel  integrated  graphics
@@ -56,6 +57,9 @@ and 24 for the 830M and later
 %_man4dir/i*.4*
 
 %changelog
+* Fri Sep 07 2018 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.917-alt8
+- git snapshot master.25c9a2f
+
 * Thu Jun 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.917-alt7
 - git snapshot master.3d39506
 
