@@ -3,7 +3,7 @@
 
 
 Name: golang-dep
-Version: 0.4.1
+Version: 0.5.0
 Release: alt1%ubt
 Summary: Go dependency management tool
 License: BSD
@@ -52,5 +52,8 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Sat Sep 08 2018 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt1%ubt
+- 0.5.0
+
 * Thu May 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.1-alt1%ubt
 - Initial build for ALT.
