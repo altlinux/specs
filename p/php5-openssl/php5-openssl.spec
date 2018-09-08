@@ -2,7 +2,7 @@
 
 Name:	 	php5-%php5_extension
 Version:	%php5_version
-Release:	%php5_release.1
+Release:	%php5_release.2
 
 Summary:	OpenSSL module for PHP5
 Group:		System/Servers
@@ -10,6 +10,7 @@ License:	PHP Licence
 
 Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
+Patch0: php56-openssl11.patch
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires:	php5-devel = %php5_version
@@ -26,6 +27,7 @@ Some of these may be added in the future.
 %prep
 %setup -T -c
 cp -pr %php5_extsrcdir/%php5_extension/* .
+%patch0 -p3
 
 # simple fix
 mv config0.m4 config.m4
