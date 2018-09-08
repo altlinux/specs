@@ -4,7 +4,7 @@
 
 Name: keyring-link
 Version: 2.0
-Release: alt2.pre1.1.1.1.qa1
+Release: alt3.pre1.1
 
 Summary: utility for export the Keyring for PalmOS database in text form
 Summary(ru_RU.UTF-8): утилита экспорта базы Keyring для PalmOS в текстовый вид
@@ -38,14 +38,14 @@ Keyring for PalmOS 1.0 и 2.0.
 
 %prep
 %setup -q -n %name-%realversion
-%patch0 
-%__subst 's@../openssl-0.9.7@@' Makefile
+%patch0
+sed -e 's@../openssl-0.9.7@@' -i Makefile
 
 %build
 OPENSSL_HOME=/usr %make
 
 %install
-%__mkdir_p %buildroot%_bindir
+mkdir -p %buildroot%_bindir
 %makeinstall DESTDIR=%buildroot 
 
 %files 
@@ -53,6 +53,9 @@ OPENSSL_HOME=/usr %make
 %_bindir/%name
 
 %changelog
+* Sat Sep 08 2018 Nikolay A. Fetisov <naf@altlinux.org> 2.0-alt3.pre1.1
+- Rebuild with openssl 1.1.0i
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0-alt2.pre1.1.1.1.qa1
 - NMU: rebuilt for debuginfo.
 
