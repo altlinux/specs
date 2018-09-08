@@ -1,24 +1,36 @@
-%define git_version 2dab17a455c09584f2a85e6b10888337d1ec8949
+%define git_version ae699615bac534ea496ee965ac6192cb7e0e07c0
 
 %def_with ocf
 %def_without tcmalloc
-%def_with libzfs
+%def_without libzfs
 %def_without selinux
+%ifarch x86_64 aarch64
 %def_with lttng
+%else
+%def_without lttng
+%endif
 %def_without cephfs_java
 %def_without check
 %def_with ceph_test_package
 %def_with python3
 %def_without system_lua
 %def_with system_rocksdb
+%def_with mgr_dashboard
+%def_with blustore
+
+#TODO: %%ifarch mips mipsel ppc %arm %ix86
+%def_without spdk
+%def_without pmem
+%def_without dpdk
+%def_without system_dpdk
 
 %ifndef build_parallel_jobs
-%define build_parallel_jobs 7
+%define build_parallel_jobs 8
 %endif
 
 Name: ceph
-Version: 12.2.5
-Release: alt2%ubt
+Version: 12.2.8
+Release: alt1%ubt
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -57,7 +69,7 @@ BuildRequires: boost-filesystem-devel boost-coroutine-devel boost-context-devel
 BuildRequires: gcc-c++ libaio-devel libblkid-devel libcurl-devel libexpat-devel
 BuildRequires: libfuse-devel libkeyutils-devel
 BuildRequires: libldap-devel libleveldb-devel libnss-devel libsnappy-devel
-BuildRequires: libssl-devel libudev-devel libxfs-devel libbtrfs-devel
+BuildRequires: libssl-devel libudev-devel libxfs-devel libbtrfs-devel libuuid-devel
 %{?_with_libzfs:BuildRequires: libzfs-devel}
 BuildRequires: yasm
 BuildRequires: zlib-devel bzlib-devel liblz4-devel
@@ -76,6 +88,9 @@ BuildRequires: python-sphinx-objects.inv python-module-sphinx
 BuildRequires: libsystemd-devel
 %{?_with_system_rocksdb:BuildRequires: librocksdb-devel}
 %{?_with_system_lua:BuildRequires: liblua5-devel >= 5.3  liblua5-devel-static >= 5.3}
+%{?_with_system_dpdk:BuildRequires: dpdk-devel dpdk-tools}
+%{?_with_dpdk:BuildRequires: libcryptopp-devel}
+%{?_with_spdk:BuildRequires: CUnit-devel libiscsi-devel libnuma-devel}
 %ifnarch %arm
 BuildRequires: rdma-core-devel
 %endif
@@ -520,6 +535,7 @@ tar -xf %SOURCE12 -C ceph-object-corpus
 tar -xf %SOURCE14 -C src/blkin
 tar -xf %SOURCE15 -C src/civetweb
 tar -xf %SOURCE16 -C src/crypto/isa-l/isa-l_crypto
+mkdir -p src/dpdk
 tar -xf %SOURCE17 -C src/dpdk
 tar -xf %SOURCE18 -C src/erasure-code/jerasure/gf-complete
 tar -xf %SOURCE19 -C src/erasure-code/jerasure/jerasure
@@ -575,6 +591,9 @@ cmake .. \
 %if_with python3
     -DWITH_PYTHON3=ON \
 %endif
+%if_without mgr_dashboard
+    -DWITH_MGR_DASHBOARD_FRONTEND=OFF \
+%endif
 %if_without ceph_test_package
     -DWITH_TESTS=OFF \
 %endif
@@ -597,12 +616,27 @@ cmake .. \
 %if_with libzfs
     -DWITH_ZFS=ON \
 %endif
-%ifarch aarch64 armv7hl mips mipsel ppc ppc64 ppc64le %{ix86} x86_64
+%ifarch aarch64 armv7hl mips mipsel ppc ppc64 ppc64le %ix86 x86_64
     -DWITH_BOOST_CONTEXT=ON \
 %else
     -DWITH_BOOST_CONTEXT=OFF \
 %endif
-%ifnarch %{arm}
+%if_with blustore
+    -DWITH_BLUESTORE=ON \
+%else
+    -DWITH_BLUESTORE=OFF \
+%endif
+%if_with dpdk
+    -DWITH_DPDK=ON \
+%else
+    -DWITH_DPDK=OFF \
+%endif
+%if_with spdk
+    -DWITH_SPDK=ON \
+%else
+    -DWITH_SPDK=OFF \
+%endif
+%ifarch %arm
    -DWITH_RDMA=OFF \
 %endif
    -DWITH_MANPAGE=ON
@@ -680,7 +714,7 @@ ctest %{?_smp_mflags}
 systemd-tmpfiles --create %_tmpfilesdir/ceph-common.conf
 %post_service rbdmap
 
-%postun common
+%preun common
 %preun_service rbdmap
 
 %post base
@@ -1251,6 +1285,14 @@ fi
 %endif
 
 %changelog
+* Sat Sep 08 2018 Alexey Shabalin <shaba@altlinux.org> 12.2.8-alt1%ubt
+- 12.2.8
+- fixed uninstall ceph-common (%%preun_service rbdmap)
+- Fixes for the following security vulnerabilities:
+  + CVE-2018-1128 auth: cephx authorizer subject to replay attack
+  + CVE-2018-1129 auth: cephx signature check is weak
+  + CVE-2018-10861 mon: auth checks not correct for pool ops
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 12.2.5-alt2%ubt
 - NMU: rebuilt with boost-1.67.0
 
