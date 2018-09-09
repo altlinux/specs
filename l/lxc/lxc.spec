@@ -28,8 +28,8 @@
 %define init_script systemd,sysvinit
 
 Name: lxc
-Version: 3.0.1
-Release: alt4
+Version: 3.0.2
+Release: alt1
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -51,6 +51,8 @@ BuildRequires: rpm-macros-alternatives
 BuildRequires: libnih-devel
 BuildRequires: libdbus-devel
 BuildRequires: libgnutls-devel
+BuildRequires: libseccomp-devel
+BuildRequires: libselinux-devel
 
 # Needed to disable auto requirements from distro templates
 %add_findreq_skiplist %_datadir/%name/*
@@ -127,7 +129,10 @@ sed -i 's,-Werror,,' configure.ac
     --localstatedir=%_var \
     --with-config-path=%_var/lib/lxc \
     --with-distro=altlinux \
+    --enable-capabilities \
     --enable-pam \
+    --enable-seccomp \
+    --enable-selinux \
     --with-init-script=%{init_script}
 
 %make_build
@@ -197,6 +202,12 @@ fi
 %_pam_modules_dir/*
 
 %changelog
+* Sun Sep 09 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.2-alt1
+- 3.0.2
+- rebuilt with seccomp and SELinux support
+- explicitly enabled capability support which was enabled automatically in
+  previous builds
+
 * Wed Aug 01 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.1-alt4
 - really disable SysVinit scripts by default
 
