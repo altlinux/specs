@@ -3,14 +3,14 @@
 
 Name: foobillard
 Version: 3.0a
-Release: alt1.2
+Release: alt2
 
 Summary: A game of playing billard
 License: GPL
 Group: Games/Boards
 
 Url: http://foobillard.sunsite.dk/
-Source0: %name-%{version}%beta.tar.bz2
+Source0: %name-%{version}%beta.tar
 Source1: %name
 Source3: %name.16.xpm
 Source4: %name.32.xpm
@@ -66,7 +66,7 @@ Type=Application
 Name=%title
 Comment=Free OpenGL-billard
 Icon=%name
-Exec=sound_wrapper.sh %_gamesbindir/%name
+Exec=%_gamesbindir/%name
 Terminal=false
 Categories=Game;SportsGame;
 EOF
@@ -84,6 +84,10 @@ install -pm0644 %SOURCE5 %buildroot/%_iconsdir/hicolor/48x48/apps/%name.xpm
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Sun Sep 09 2018 Michael Shigorin <mike@altlinux.org> 3.0a-alt2
+- drop sound_wrapper.sh from desktop file
+- avoid tarball recompression
+
 * Fri Mar 29 2013 Andrey Cherepanov <cas@altlinux.org> 3.0a-alt1.2
 - Fix build with new version of xorg
 
