@@ -2,7 +2,7 @@
 
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.38.0
+Version:	3.39.0
 Release:	alt1
 License:	MPL/GPL/LGPL
 Group:		System/Libraries
@@ -27,9 +27,10 @@ Patch5:		nss-fix-objdir.patch
 Patch10:	nss-enable-pem.patch
 
 BuildRequires:  gcc-c++
-BuildRequires:	chrpath zlib-devel libsqlite3-devel
-BuildRequires:	libnspr-devel >= %nspr_version
-Requires:	libnspr       >= %nspr_version
+BuildRequires:  chrpath zlib-devel libsqlite3-devel
+BuildRequires:  rpm-macros-alternatives
+BuildRequires:  libnspr-devel >= %nspr_version
+Requires:       libnspr       >= %nspr_version
 
 %description
 Network Security Services (NSS) is a set of libraries designed
@@ -273,6 +274,9 @@ EOF
 
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Sun Sep 09 2018 Alexey Gladkov <legion@altlinux.ru> 3.39.0-alt1
+- New version (3.39).
+
 * Tue Jul 03 2018 Alexey Gladkov <legion@altlinux.ru> 3.38.0-alt1
 - New version (3.38).
 

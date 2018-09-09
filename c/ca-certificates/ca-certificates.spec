@@ -1,6 +1,6 @@
 Name: ca-certificates
-Version: 2017.11.22
-Release: alt3
+Version: 2018.09.09
+Release: alt1
 
 Summary: Common CA Certificates
 License: MPL
@@ -43,6 +43,9 @@ install -pD -m 644 ca-bundle.trust.p11-kit \
 %_datadir/pki/ca-trust-source/ca-bundle.trust.p11-kit
 
 %changelog
+* Sun Sep 09 2018 Alexey Gladkov <legion@altlinux.ru> 2018.09.09-alt1
+- mozilla: sync with nss-3.39.
+
 * Thu Dec 28 2017 Mikhail Efremov <sem@altlinux.org> 2017.11.22-alt3
 - Split all but CA bundle itself to separate ca-trust package.
 - Use p11-kit for certificates bundle.
