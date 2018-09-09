@@ -1,5 +1,5 @@
 Name: megatools
-Version: 1.9.98
+Version: 1.10.2
 Release: alt1%ubt
 Summary: Command line client for MEGA
 License: GPLv3+
@@ -42,5 +42,8 @@ export LD_LIBRARY_PATH=$PWD/.libs
 %_mandir/man7/%name.7.*
 
 %changelog
+* Sun Sep 09 2018 Anton Farygin <rider@altlinux.ru> 1.10.2-alt1%ubt
+- 1.10.2
+
 * Mon Feb 06 2017 Anton Farygin <rider@altlinux.ru> 1.9.98-alt1%ubt
 - first build for ALT
