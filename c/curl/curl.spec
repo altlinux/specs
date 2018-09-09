@@ -1,6 +1,6 @@
 Name: curl
-Version: 7.61.0
-Release: alt2%ubt
+Version: 7.61.1
+Release: alt1%ubt
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -144,6 +144,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Sun Sep 09 2018 Anton Farygin <rider@altlinux.ru> 7.61.1-alt1%ubt
+- 7.61.1 (fixes: CVE-2018-14618)
+
 * Thu Aug 16 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.61.0-alt2%ubt
 - Rebuilt with openssl 1.1.
 - Added BR: libkrb5-devel.
