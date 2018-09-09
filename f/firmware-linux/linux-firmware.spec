@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180822
+Version: 20180903
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,11 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun Sep 09 2018 Cronbuild Service <cronbuild@altlinux.org> 20180903-alt1
+- upstream changes (GIT 85c5d90):
+  + nvidia: switch GP10[2467] to newer scrubber/ACR firmware
+    (from GP108) (thx Ben Skeggs)
+
 * Sun Aug 26 2018 Cronbuild Service <cronbuild@altlinux.org> 20180822-alt1
 - upstream changes (GIT fea76a0):
   + amdgpu: sync up polaris10 firmware with 18.30 release (thx Alex Deucher)
