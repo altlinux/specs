@@ -3,7 +3,7 @@
 
 Name: libalsa
 Version: 1.1.6
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -84,6 +84,9 @@ find include -type f -print0 |
 	xargs -r0 sed -i 's/ inline / __inline__ /g' --
 
 %build
+%ifarch %e2k
+cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
+%endif
 %autoreconf
 %configure \
 	--with-configdir=%_datadir/alsa \
@@ -175,6 +178,9 @@ done
 %_bindir/aserver
 
 %changelog
+* Sun Sep 09 2018 Michael Shigorin <mike@altlinux.org> 1:1.1.6-alt2
+- E2K: explicitly link with -lcxa
+
 * Wed Apr 04 2018 Michael Shigorin <mike@altlinux.org> 1:1.1.6-alt1
 - 1.1.6
 
