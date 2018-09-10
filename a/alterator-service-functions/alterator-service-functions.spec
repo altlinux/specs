@@ -1,6 +1,6 @@
 Name: alterator-service-functions
 Version: 3.0.0
-Release: alt3
+Release: alt4
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
@@ -27,6 +27,9 @@ Helpers for common service management
 %_bindir/*
 
 %changelog
+* Mon Sep 10 2018 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt4
+- Fixed for SysV systems (Closes: 34862)
+
 * Wed Aug 16 2017 Paul Wolneykien <manowar@altlinux.org> 3.0.0-alt3
 - Fixed typo in systemd version.
 
