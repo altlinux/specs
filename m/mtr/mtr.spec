@@ -1,10 +1,11 @@
 Name: mtr
 Version: 0.82
-Release: alt2
+Release: alt3
 
 Summary: Matt's Traceroute - network diagnostic tool
 License: GPL
 Group: Monitoring
+
 Url: http://www.bitwizard.nl/mtr/
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -26,15 +27,15 @@ Requires: /var/resolv
 
 BuildRequires: libgtk+2-devel libncurses-devel
 
-Summary(ru_RU.KOI8-R): Matt's Traceroute - утилита для диагностики сети
-Summary(uk_UA.KOI8-U): Matt's Traceroute - утил╕та для д╕агностики мереж╕
+Summary(ru_RU.UTF-8): Matt's Traceroute - я┐я┌п╦п╩п╦я┌п╟ п╢п╩я▐ п╢п╦п╟пЁп╫п╬я│я┌п╦п╨п╦ я│п╣я┌п╦
+Summary(uk_UA.UTF-8): Matt's Traceroute - я┐я┌п╦п╩я√я┌п╟ п╢п╩я▐ п╢я√п╟пЁп╫п╬я│я┌п╦п╨п╦ п╪п╣я─п╣п╤я√
 
 %define _sbindir %_bindir
 
 %package -n xmtr
 Summary: Ping/Traceroute network diagnostic tool - GTK Interface
-Summary(ru_RU.KOI8-R): Ping/Traceroute - утилита для диагностики сети - GTK интерфейс
-Summary(uk_UA.KOI8-U): Ping/Traceroute - утил╕та для д╕агностики мереж╕ - GTK ╕нтерфейс
+Summary(ru_RU.UTF-8): Ping/Traceroute - я┐я┌п╦п╩п╦я┌п╟ п╢п╩я▐ п╢п╦п╟пЁп╫п╬я│я┌п╦п╨п╦ я│п╣я┌п╦ - GTK п╦п╫я┌п╣я─я└п╣п╧я│
+Summary(uk_UA.UTF-8): Ping/Traceroute - я┐я┌п╦п╩я√я┌п╟ п╢п╩я▐ п╢я√п╟пЁп╫п╬я│я┌п╦п╨п╦ п╪п╣я─п╣п╤я√ - GTK я√п╫я┌п╣я─я└п╣п╧я│
 Group: Monitoring
 Provides: %name-gtk = %version-%release
 Obsoletes: %name-gtk
@@ -49,22 +50,22 @@ it sends a sequence ICMP ECHO requests to each one to determine the
 quality of the link to each machine.  As it does this, it prints running
 statistics about each machine.
 
-%description -l ru_RU.KOI8-R
-mtr - это traceroute и ping в одном флаконе.  При старте программа
-исследует сетевое соединение между машиной, на которой она запущена,
-и машиной, заданной пользователем.  После того, как она определит
-адреса каждого хопа между этими двумя машинами, программа посылает
-последовательность ICMP ECHO запросов на каждый из хопов для определения
-качества связи с каждой из машин.  По мере того, как она это делает,
-выводится текущая статистика по каждой машине.
+%description -l ru_RU.UTF-8
+mtr - я█я┌п╬ traceroute п╦ ping п╡ п╬п╢п╫п╬п╪ я└п╩п╟п╨п╬п╫п╣.  п÷я─п╦ я│я┌п╟я─я┌п╣ п©я─п╬пЁя─п╟п╪п╪п╟
+п╦я│я│п╩п╣п╢я┐п╣я┌ я│п╣я┌п╣п╡п╬п╣ я│п╬п╣п╢п╦п╫п╣п╫п╦п╣ п╪п╣п╤п╢я┐ п╪п╟я┬п╦п╫п╬п╧, п╫п╟ п╨п╬я┌п╬я─п╬п╧ п╬п╫п╟ п╥п╟п©я┐я┴п╣п╫п╟,
+п╦ п╪п╟я┬п╦п╫п╬п╧, п╥п╟п╢п╟п╫п╫п╬п╧ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩п╣п╪.  п÷п╬я│п╩п╣ я┌п╬пЁп╬, п╨п╟п╨ п╬п╫п╟ п╬п©я─п╣п╢п╣п╩п╦я┌
+п╟п╢я─п╣я│п╟ п╨п╟п╤п╢п╬пЁп╬ я┘п╬п©п╟ п╪п╣п╤п╢я┐ я█я┌п╦п╪п╦ п╢п╡я┐п╪я▐ п╪п╟я┬п╦п╫п╟п╪п╦, п©я─п╬пЁя─п╟п╪п╪п╟ п©п╬я│я▀п╩п╟п╣я┌
+п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌я▄ ICMP ECHO п╥п╟п©я─п╬я│п╬п╡ п╫п╟ п╨п╟п╤п╢я▀п╧ п╦п╥ я┘п╬п©п╬п╡ п╢п╩я▐ п╬п©я─п╣п╢п╣п╩п╣п╫п╦я▐
+п╨п╟я┤п╣я│я┌п╡п╟ я│п╡я▐п╥п╦ я│ п╨п╟п╤п╢п╬п╧ п╦п╥ п╪п╟я┬п╦п╫.  п÷п╬ п╪п╣я─п╣ я┌п╬пЁп╬, п╨п╟п╨ п╬п╫п╟ я█я┌п╬ п╢п╣п╩п╟п╣я┌,
+п╡я▀п╡п╬п╢п╦я┌я│я▐ я┌п╣п╨я┐я┴п╟я▐ я│я┌п╟я┌п╦я│я┌п╦п╨п╟ п©п╬ п╨п╟п╤п╢п╬п╧ п╪п╟я┬п╦п╫п╣.
 
-%description -l uk_UA.KOI8-U
-mtr - це traceroute та ping в одному флакон╕.  При запуску mtr
-досл╕джу╓ мережеве з'╓днання м╕ж машиною, на як╕й в╕н запущений та
-заданою користувачем.  П╕сля визначення адрес кожного хопу м╕ж цими
-двома машинами, mtr посила╓ посл╕довн╕сть ICMP ECHO запит╕в на кожний
-з хоп╕в для визначення якост╕ л╕нка до кожно╖ з машин.  В ход╕ цього
-процесу mtr виводить поточну статистику по кожн╕й машин╕.
+%description -l uk_UA.UTF-8
+mtr - я├п╣ traceroute я┌п╟ ping п╡ п╬п╢п╫п╬п╪я┐ я└п╩п╟п╨п╬п╫я√.  п÷я─п╦ п╥п╟п©я┐я│п╨я┐ mtr
+п╢п╬я│п╩я√п╢п╤я┐я■ п╪п╣я─п╣п╤п╣п╡п╣ п╥'я■п╢п╫п╟п╫п╫я▐ п╪я√п╤ п╪п╟я┬п╦п╫п╬я▌, п╫п╟ я▐п╨я√п╧ п╡я√п╫ п╥п╟п©я┐я┴п╣п╫п╦п╧ я┌п╟
+п╥п╟п╢п╟п╫п╬я▌ п╨п╬я─п╦я│я┌я┐п╡п╟я┤п╣п╪.  п÷я√я│п╩я▐ п╡п╦п╥п╫п╟я┤п╣п╫п╫я▐ п╟п╢я─п╣я│ п╨п╬п╤п╫п╬пЁп╬ я┘п╬п©я┐ п╪я√п╤ я├п╦п╪п╦
+п╢п╡п╬п╪п╟ п╪п╟я┬п╦п╫п╟п╪п╦, mtr п©п╬я│п╦п╩п╟я■ п©п╬я│п╩я√п╢п╬п╡п╫я√я│я┌я▄ ICMP ECHO п╥п╟п©п╦я┌я√п╡ п╫п╟ п╨п╬п╤п╫п╦п╧
+п╥ я┘п╬п©я√п╡ п╢п╩я▐ п╡п╦п╥п╫п╟я┤п╣п╫п╫я▐ я▐п╨п╬я│я┌я√ п╩я√п╫п╨п╟ п╢п╬ п╨п╬п╤п╫п╬я≈ п╥ п╪п╟я┬п╦п╫.  п▓ я┘п╬п╢я√ я├я▄п╬пЁп╬
+п©я─п╬я├п╣я│я┐ mtr п╡п╦п╡п╬п╢п╦я┌я▄ п©п╬я┌п╬я┤п╫я┐ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ п╨п╬п╤п╫я√п╧ п╪п╟я┬п╦п╫я√.
 
 %description -n xmtr
 mtr is a network diagnostic tool which combines Ping and Traceroute
@@ -72,20 +73,20 @@ into one program.
 
 This is the GTK interface for mtr.
 
-%description -l ru_RU.KOI8-R -n xmtr
-mtr - утилита для диагностики сети, сочетающая ping и traceroute
-в одном "флаконе".
+%description -l ru_RU.UTF-8 -n xmtr
+mtr - я┐я┌п╦п╩п╦я┌п╟ п╢п╩я▐ п╢п╦п╟пЁп╫п╬я│я┌п╦п╨п╦ я│п╣я┌п╦, я│п╬я┤п╣я┌п╟я▌я┴п╟я▐ ping п╦ traceroute
+п╡ п╬п╢п╫п╬п╪ "я└п╩п╟п╨п╬п╫п╣".
 
-Этот пакет содержит GTK-интерфейс к mtr.
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ GTK-п╦п╫я┌п╣я─я└п╣п╧я│ п╨ mtr.
 
-%description -l uk_UA.KOI8-U -n xmtr
-mtr - утил╕та для д╕агностики мереж╕, що по╓дну╓ ping та traceroute
-в одному "флакон╕".
+%description -l uk_UA.UTF-8 -n xmtr
+mtr - я┐я┌п╦п╩я√я┌п╟ п╢п╩я▐ п╢я√п╟пЁп╫п╬я│я┌п╦п╨п╦ п╪п╣я─п╣п╤я√, я┴п╬ п©п╬я■п╢п╫я┐я■ ping я┌п╟ traceroute
+п╡ п╬п╢п╫п╬п╪я┐ "я└п╩п╟п╨п╬п╫я√".
 
-Це GTK-╕нтерфейс до mtr.
+п╕п╣ GTK-я√п╫я┌п╣я─я└п╣п╧я│ п╢п╬ mtr.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -100,13 +101,13 @@ touch ChangeLog
 %define _configure_script ../configure
 
 mkdir -p build-xmtr
-	pushd build-xmtr
+pushd build-xmtr
 	%configure --with-gtk --enable-gtk2 --enable-ipv6
 	%make_build
 popd
 
 mkdir -p build-mtr
-	pushd build-mtr
+pushd build-mtr
 	%configure --without-gtk --enable-ipv6
 	%make_build
 popd
@@ -146,7 +147,6 @@ done
 %_bindir/mtr6
 %_man8dir/*
 %config %_controldir/mtr
-#attr(0644,root,man) %_mandir/ru_RU.KOI8-R/man8/*
 %doc AUTHORS FORMATS NEWS README SECURITY TODO
 
 %files -n xmtr
@@ -157,12 +157,17 @@ done
 %config %_controldir/xmtr
 
 # TODO:
+# - 0.92+
 # - update russian manpage and get it back into the package?
 # - change "mtruser" group to e.g. "_mtr"?
 # FIXME:
 # - netadmin group would get non-predictable gid if not pre-existed
 
 %changelog
+* Mon Sep 10 2018 Michael Shigorin <mike@altlinux.org> 0.82-alt3
+- recoded spec into UTF-8
+- minor spec cleanup
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 0.82-alt2
 - worked around file shortage for autoreconf
 
