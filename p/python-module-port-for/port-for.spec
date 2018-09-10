@@ -4,16 +4,16 @@
 
 Name: python-module-%oname
 Version: 0.4
-Release: alt1
+Release: alt2
 Summary: Utility that helps with local TCP ports managment
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/port-for/
+BuildArch: noarch
 
 # https://github.com/kmike/port-for.git
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
-BuildArch: noarch
 
 BuildRequires: python-module-mock python-module-pytest
 %if_with python3
@@ -97,10 +97,10 @@ popd
 %python_install
 
 %check
-py.test port_for/*.py
+python setup.py test
 %if_with python3
 pushd ../python3
-py.test3 port_for/*.py
+python3 setup.py test
 popd
 %endif
 
@@ -130,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4-alt2
+- Fixed build.
+
 * Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4-alt1
 - Updated to upstream version 0.4.
 
