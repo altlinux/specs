@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: gsl
-Version: 2.4
+Version: 2.5
 Release: alt1
 Summary: The GNU Scientific Library for numerical analysis
 License: GPL
@@ -10,8 +12,8 @@ URL: http://www.gnu.org/software/gsl/gsl.html
 Source: %name-%version.tar
 Patch1: %name-%version-alt-build.patch
 
-Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
+Requires: lib%name = %EVR
+Conflicts: lib%name-devel < %EVR
 
 # Automatically added by buildreq on Wed Jun 06 2007
 BuildRequires: ghostscript-module-X ghostscript-utils
@@ -19,7 +21,6 @@ BuildRequires: ghostscript-module-X ghostscript-utils
 BuildRequires: texinfo
 BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme
 
-#BuildPreReq: texlive-latex-recommended texlive-generic-recommended
 
 %package -n lib%name
 Summary: Shared librairies for Scientific Library
@@ -28,7 +29,7 @@ Group: System/Libraries
 %package -n lib%name-devel
 Summary: Development environment for Scientific Library
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package -n lib%name-doc
 Summary: book for Scientific Library
@@ -39,7 +40,7 @@ BuildArch: noarch
 Summary: Info pages for Scientific Library
 Group: Documentation
 BuildArch: noarch
-Conflicts: %name < %version-%release
+Conflicts: %name < %EVR
 
 %package -n lib%name-examples
 Summary: Examples sources for using with Scientific Library
@@ -94,20 +95,18 @@ Sources of examples for using with GSL
 %patch1 -p1
 
 %build
-./autogen.sh
+%autoreconf
 %configure
-#sed -i 's|\(GSL_MINOR_VERSION.*\)+|\1|' gsl_version.h
-#sed -i 's|\(GSL_VERSION.*\)+"|\1"|' gsl_version.h
 %make_build
 
 pushd doc
-    #make ps
-    #ps2pdf gsl-ref.ps
-		%make html
+%make html
 popd
 
 %install
 %makeinstall
+
+rm -f %buildroot%_libdir/*.a
 
 %files
 %_bindir/*
@@ -122,7 +121,7 @@ popd
 %files -n lib%name-devel
 %_bindir/%name-config
 %_libdir/*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*
 %_includedir/*
 %_datadir/aclocal/*
 %_man1dir/%name-config.1*
@@ -138,6 +137,9 @@ popd
 %doc doc/examples
 
 %changelog
+* Mon Sep 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5-alt1
+- Updated to upstream version 2.5.
+
 * Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4-alt1
 - Updated to upstream version 2.4.
 - Cleaned up spec.
