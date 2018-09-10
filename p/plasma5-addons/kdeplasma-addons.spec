@@ -9,7 +9,7 @@
 
 Name: plasma5-addons
 Version: 5.12.6
-Release: alt5%ubt
+Release: alt6%ubt
 Epoch: 1
 %K5init altplace
 
@@ -27,6 +27,7 @@ Patch1: alt-sover.patch
 Patch2: alt-dictionary-runner.patch
 Patch3: alt-weather-usability.patch
 Patch4: alt-fifteenpuzzle-fix-error.patch
+Patch5: alt-color-picker.patch
 
 # Automatically added by buildreq on Mon Mar 30 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils glib2-devel kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libdbusmenu-qt52 libgio-devel libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs scim-libs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -98,6 +99,7 @@ KF5 library
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 
 %build
 %K5build \
@@ -139,6 +141,9 @@ KF5 library
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Fri Sep 07 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.6-alt6%ubt
+- fix colorpicker widget layout
+
 * Wed Aug 08 2018 Ivan Razzhivin <underwit@altlinux.org> 1:5.12.6-alt5%ubt
 - improve weather widget usability 
 - fix fifteenpuzzle widget error
