@@ -1,25 +1,29 @@
+%define _unpackaged_files_terminate_build 1
+
 %define mname tlslite
 %define oname %mname-ng
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 0.5.0
-Release: alt2.beta4.git20150724
+Version: 0.7.5
+Release: alt1
 Summary: Pure python implementation of SSL and TLS
 License: BSD & LGPLv2
 Group: Development/Python
-Url: https://pypi.python.org/pypi/tlslite-ng
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://pypi.org/project/tlslite-ng/
+BuildArch: noarch
 
 # https://github.com/tomato42/tlslite-ng.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildRequires: graphviz python-module-coverage python-module-epydoc python-module-gmpy python-module-html5lib python-module-logilab-common python-module-m2crypto python-module-mock python-module-ndg-httpsclient python-module-pycrypto python-module-yaml /proc
+BuildRequires: /proc graphviz
+BuildRequires: python-module-coverage python-module-epydoc python-module-gmpy python-module-html5lib python-module-logilab-common python-module-m2crypto python-module-mock python-module-ndg-httpsclient python-module-pycrypto python-module-yaml
+BuildRequires: python2.7(ecdsa) python2.7(hypothesis)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests pylint-py3 python3-module-coverage python3-module-coveralls python3-module-pycrypto python3-module-m2crypto python3-module-gmpy python3-module-mock
+BuildRequires: python3-module-setuptools pylint-py3 python3-module-coverage python3-module-coveralls python3-module-pycrypto python3-module-m2crypto python3-module-gmpy python3-module-mock
+BuildRequires: python3(ecdsa) python3(hypothesis)
 %endif
 
 %py_provides %oname
@@ -102,6 +106,12 @@ popd
 
 %python_install
 
+pushd %buildroot%_bindir
+for i in $(ls *.py); do
+	mv $i ${i%.py}
+done
+popd
+
 %make docs
 
 %check
@@ -147,6 +157,10 @@ python3 -m unittest discover -v
 %endif
 
 %changelog
+* Mon Sep 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.5-alt1
+- Updated to upstream version 0.7.5.
+- Built modules for python3.
+
 * Tue Feb 02 2016 Sergey Alembekov <rt@altlinux.ru> 0.5.0-alt2.beta4.git20150724
 - cleanup buildreq
 
