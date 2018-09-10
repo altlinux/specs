@@ -7,8 +7,8 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define module_version	390.77
-%define module_release	alt2
+%define module_version	390.87
+%define module_release	alt1
 %define flavour		un-def
 %define karch %ix86 x86_64
 
@@ -253,7 +253,10 @@ fi
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Mon Aug 20 2018 Sergey V Turchin <zerg at altlinux dot org> 390.77-alt1
+* Mon Sep 10 2018 Sergey V Turchin <zerg at altlinux dot org> 390.87-alt1
+- new release (390.87)
+
+* Mon Aug 20 2018 Sergey V Turchin <zerg at altlinux dot org> 390.77-alt2
 - add karch specsubst
 
 * Fri Aug 17 2018 Sergey V Turchin <zerg at altlinux dot org> 390.77-alt1
