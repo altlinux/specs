@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 # clang 4.0.1 is not supported, only missing clang 3.9
 %def_with ClangCodeModel
 
@@ -6,38 +8,42 @@
 %add_findreq_skiplist %_datadir/qtcreator/templates/wizards/classes/python/file.py
 
 Name:    qt-creator
-Version: 4.6.2
+Version: 4.7.0
 Release: alt1
 Summary: Cross-platform IDE for Qt
 
 Group:   Development/Tools
-License: LGPLv2 with exceptions or LGPLv3 with exceptions
+License: GPLv3 with exceptions
 Url:     http://qt-project.org/wiki/Category:Tools::QtCreator
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:  %name-%version.tar
 # VCS:   git://code.qt.io/qt-creator/qt-creator.git
-Source1: qtcreator.desktop
-Source2: qtcreator.appdata.xml
 
 Patch:   %name-%version-%release.patch
 Patch1:  qt-creator_ninja-build.patch
 
-Requires: %name-data = %version-%release
-Provides: qtcreator = %version-%release
+Requires: %name-data = %EVR
+Provides: qtcreator = %EVR
+Obsoletes: qtcreator-clangcodemodel
+Provides: qtcreator-clangcodemodel = %EVR
 
-BuildRequires(pre): qt5-base-devel >= 5.5.0
+BuildRequires(pre): qt5-base-devel >= 5.9.0
 BuildRequires: gcc-c++
-BuildRequires: qt5-designer >= 5.5.0
-BuildRequires: qt5-script-devel >= 5.5.0
-BuildRequires: qt5-webkit-devel >= 5.5.0
-BuildRequires: qt5-x11extras-devel >= 5.5.0
-BuildRequires: qt5-xmlpatterns-devel >= 5.5.0
-BuildRequires: qt5-tools-devel >= 5.5.0
+BuildRequires: qt5-designer >= 5.9.0
+BuildRequires: qt5-script-devel >= 5.9.0
+BuildRequires: qt5-webkit-devel >= 5.9.0
+BuildRequires: qt5-x11extras-devel >= 5.9.0
+BuildRequires: qt5-xmlpatterns-devel >= 5.9.0
+BuildRequires: qt5-tools-devel >= 5.9.0
 BuildRequires: libbotan-devel
 %if_with ClangCodeModel
 BuildRequires: llvm-devel
+BuildRequires: llvm-devel-static
 BuildRequires: clang-devel
+BuildRequires: clang-devel-static
+BuildRequires: clang
+BuildRequires: lld
 %endif
 
 Requires: qt5-quickcontrols
@@ -53,7 +59,6 @@ Summary: %name docs
 Group: Documentation
 BuildArch: noarch
 Requires: %name
-Requires: libqt4-sql-sqlite
 
 %description doc
 Documentation for %name
@@ -67,27 +72,6 @@ Requires: %name
 %description data
 Data files for %name
 
-%if_with ClangCodeModel
-%package clangcodemodel
-Summary: ClangCodeModel plugin for Qt Creator
-Group: Development/Tools
-Requires: %name
-
-%description clangcodemodel
-The Clang project provides libraries for parsing C language family
-source files. The feedback you get through warning and error markers is
-the same as a compiler will give you, not an incomplete set or a close
-approximation, as when using the built-in Qt Creator code model. Clang
-focuses on detailed information for diagnostics, which is really useful
-if the code contains typos, for example.
-
-The following services are currently implemented in the Clang code model
-plugin:
-- Code completion
-- Syntactic and semantic highlighting
-- Diagnostics
-%endif
-
 %prep
 %setup
 subst 's,tools\/qdoc3,bin,' doc/doc.pri
@@ -100,30 +84,21 @@ export QTDIR=%_qt5_prefix
 export PATH="%{_qt5_bindir}:$PATH"
 %if_with ClangCodeModel
 export LLVM_INSTALL_DIR="%_prefix"
+%remove_optflags -frecord-gcc-switches
 %endif
-%qmake_qt5 -r IDE_LIBRARY_BASENAME=%_lib USE_SYSTEM_BOTAN=1 CONFIG+=disable_rpath QMAKE_STRIP=
+
+%qmake_qt5 -r IDE_LIBRARY_BASENAME=%_lib CONFIG+="disable_external_rpath use_system_botan" QMAKE_STRIP= \
+%if_with ClangCodeModel
+	-spec linux-clang \
+	QMAKE_LFLAGS+="-fuse-ld=lld" \
+%endif
+	%nil
+
 %make_build
 %make_build qch_docs
 
 %install
 %install_qt5 INSTALL_ROOT=%buildroot/%_prefix
-
-mkdir -p %buildroot%_desktopdir
-install %SOURCE1 %buildroot%_desktopdir
-
-mkdir -p %buildroot%_datadir/qtcreator/translations
-cp share/qtcreator/translations/*.qm %buildroot%_datadir/qtcreator/translations
-
-for i in 16 24 32 48 64 128 256 512; do
-    install -pD -m644 src/plugins/coreplugin/images/logo/${i}/QtProject-qtcreator.png \
-                      %buildroot%_iconsdir/hicolor/${i}x${i}/apps/QtProject-qtcreator.png
-#    mkdir -p %buildroot%_iconsdir/hicolor/${i}x${i}/apps
-#    ln -s %_pixmapsdir/qtcreator_logo_${i}.png \
-#          %buildroot%_iconsdir/hicolor/${i}x${i}/apps/%name.png
-done
-
-install -Dpm0644 %SOURCE2 %buildroot%_datadir/appdata/qtcreator.appdata.xml
-
 %install_qt5 INSTALL_ROOT=%buildroot/%_prefix install_inst_qch_docs
 
 # Remove Windows cdb debugger support to prevent unmet python2.7(cdbext)
@@ -134,14 +109,10 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_bindir/*
 %_libdir/qtcreator
 %dir %_libdir/qtcreator/plugins
-%if_with ClangCodeModel
-%exclude %_libdir/qtcreator/plugins/libClangCodeModel.so
-%endif
 %_prefix/libexec/qtcreator
-%exclude %_prefix/libexec/qtcreator/clangbackend
 %_iconsdir/hicolor/*/apps/QtProject-qtcreator.png
-%_desktopdir/qtcreator.desktop
-%_datadir/appdata/qtcreator.appdata.xml
+%_desktopdir/*.desktop
+%_datadir/metainfo/*.xml
 
 %files doc
 %_defaultdocdir/qtcreator
@@ -150,13 +121,13 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %dir %_datadir/qtcreator
 %_datadir/qtcreator/*
 
-%if_with ClangCodeModel
-%files clangcodemodel
-%_prefix/libexec/qtcreator/clangbackend
-%_libdir/qtcreator/plugins/libClangCodeModel.so
-%endif
-
 %changelog
+* Tue Sep 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.0-alt1
+- Updated to upstream version 4.7.0.
+- Applied patch from upstream for supporting libbotan-2.
+- Removed clangcodemodel subpackage.
+- Spec cleanup.
+
 * Mon Jun 11 2018 Andrey Cherepanov <cas@altlinux.org> 4.6.2-alt1
 - New version.
 
