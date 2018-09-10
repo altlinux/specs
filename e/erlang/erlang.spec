@@ -55,7 +55,7 @@ Epoch: 1
 %define subver 1.3
 Version: %ver.%subver
 %define plevel b
-Release: alt3%ubt
+Release: alt3%ubt.1
 Summary: A programming language developed by Ericsson
 License: %asl
 Group: Development/Erlang
@@ -1261,6 +1261,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 1:20.1.3-alt3%ubt.1
+- NMU: rebuild with new openssl.
+
 * Fri Jun 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:20.1.3-alt3%ubt
 - Rebuilt with %%ubt macro support, disabled parallel docs build.
 
