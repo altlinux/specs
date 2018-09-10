@@ -1,8 +1,8 @@
 %define rname qqc2-desktop-style
 
 Name: kf5-%rname
-Version: 5.49.0
-Release: alt2%ubt
+Version: 5.50.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -47,6 +47,9 @@ developing applications that use %name.
 %_libdir/cmake/KF5QQC2DeskopStyle/
 
 %changelog
+* Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1%ubt
+- new version
+
 * Thu Sep 06 2018 Oleg Solovyov <mcpain@altlinux.org> 5.49.0-alt2%ubt
 - fix: clipped text
 

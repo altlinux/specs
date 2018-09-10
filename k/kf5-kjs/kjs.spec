@@ -1,7 +1,7 @@
 %define rname kjs
 
 Name: kf5-%rname
-Version: 5.49.0
+Version: 5.50.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -88,6 +88,9 @@ KF5 library
 %_K5lib/libKF5JSApi.so.*
 
 %changelog
+* Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1%ubt
+- new version
+
 * Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
 - new version
 

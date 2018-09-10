@@ -1,7 +1,7 @@
 %define rname syntax-highlighting
 
 Name: kf5-%rname
-Version: 5.49.0
+Version: 5.50.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -55,7 +55,7 @@ KF5 library
 %K5find_qtlang %name --all-name
 
 %files common -f %name.lang
-%doc COPYING.LIB README.md
+%doc COPYING* README*
 %config(noreplace) %_K5xdgconf/*.categories
 
 %files
@@ -72,6 +72,9 @@ KF5 library
 %_K5lib/libKF5SyntaxHighlighting.so.*
 
 %changelog
+* Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1%ubt
+- new version
+
 * Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
 - new version
 

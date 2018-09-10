@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.49.0
+Version: 5.50.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -20,10 +20,12 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Tue Feb 10 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libpolkit-qt5-agent libpolkit-qt5-core libpolkit-qt5-gui libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kcoreaddons-devel libpolkitqt5-qt5-devel python-module-google qt5-tools-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt python-module-sip-devel
-BuildRequires(pre): python3-module-sip-devel
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+%if_enabled python
+BuildRequires(pre): python3-module-sip-devel python-module-sip-devel python-module-PyQt5-devel
+BuildRequires: python-module-kcoreaddons-devel
+%endif
 BuildRequires: extra-cmake-modules gcc-c++ kf5-kcoreaddons-devel libpolkitqt5-qt5-devel qt5-tools-devel
-BuildRequires: python-module-kcoreaddons-devel python-module-PyQt5-devel
 
 %description
 KAuth provides a convenient, system-integrated way to offload actions that need
@@ -134,6 +136,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1%ubt
+- new version
+
 * Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
 - new version
 
