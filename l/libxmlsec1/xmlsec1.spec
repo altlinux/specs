@@ -1,5 +1,5 @@
 Name: libxmlsec1
-Version: 1.2.25
+Version: 1.2.26
 Release: alt1%ubt
 License: MIT
 Summary: Library providing support for "XML Signature" and "XML Encryption" standards
@@ -178,6 +178,10 @@ true || LD_LIBRARY_PATH=%buildroot%_libdir make check
 %_libdir/pkgconfig/xmlsec1-nss.pc
 
 %changelog
+* Mon Sep 10 2018 Alexey Shabalin <shaba@altlinux.org> 1.2.26-alt1%ubt
+- 1.2.26
+- build with openssl-1.1
+
 * Wed Feb 28 2018 Alexey Shabalin <shaba@altlinux.ru> 1.2.25-alt1%ubt
 - 1.2.25
 

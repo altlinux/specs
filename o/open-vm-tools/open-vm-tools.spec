@@ -1,12 +1,13 @@
 
 %def_enable vgauth
 %def_enable xmlsec1
-%def_disable xml_security_c
+%def_disable xmlsecurity
 
 %def_enable grabbitmqproxy
 %def_disable deploypkg
 %def_enable multimon
 %def_with dnet
+%def_enable resolutionkms
 
 # build with gtk3 to sisyphus, and with gtk2 to p8
 %if %ubt_id == S1
@@ -21,16 +22,16 @@
 %def_without gtkmm3
 %endif
 
-%global majorversion    10.1
-%global minorversion    10
-%global toolsbuild      6082533
+%global majorversion    10.3
+%global minorversion    0
+%global toolsbuild      8931395
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt1%ubt.1
+Release: alt1%ubt
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -51,28 +52,29 @@ Patch100: add-altlinux-open-vm-tools.patch
 ExclusiveArch: %ix86 x86_64
 
 # Need for vgauth
-Requires: libxmlsec1-openssl >= 1.2.24-alt2
+%{?_enable_xmlsec1:Requires: libxmlsec1-openssl >= 1.2.24-alt2}
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++
 BuildRequires: doxygen
 # Fuse is optional and enables vmblock-fuse
 BuildRequires: libfuse-devel
-BuildRequires: glib2-devel >= 2.14.0
+BuildRequires: glib2-devel >= 2.34.0
 BuildRequires: gtk2-devel >= 2.4.0
 BuildRequires: libgtkmm2-devel libsigc++2-devel
 BuildRequires: libgtk+3-devel >= 2.4.0
 BuildRequires: libgtkmm3-devel libsigc++2-devel
 BuildRequires: libicu-devel
 BuildRequires: libpam0-devel
-BuildRequires: libprocps-devel
+BuildRequires: libtirpc-devel
 %{?_with_dnet:BuildRequires: libdnet-devel}
 %{?_enable_multimon:BuildRequires: libX11-devel libXext-devel libXinerama-devel libXi-devel libXrender-devel libXrandr-devel libXtst-devel libICE-devel libSM-devel libXcomposite-devel}
 %{?_enable_deploypkg:BuildRequires: libmspack-devel}
 %{?_enable_vgauth:BuildRequires: libssl-devel}
 %{?_enable_xmlsec1:BuildRequires: libxmlsec1-devel libxml2-devel}
-%{?_enable_xml_security_c:BuildRequires: libxml-security-c-devel libxerces-c-devel}
+%{?_enable_xmlsecurity:BuildRequires: libxml-security-c-devel libxerces-c-devel}
 %{?_enable_grabbitmqproxy:BuildRequires: libssl-devel}
+%{?_enable_resolutionkms:BuildRequires: libdrm-devel libudev-devel}
 
 #BuildRequires:          kernel-headers-modules-std-def
 
@@ -121,7 +123,7 @@ export CUSTOM_PROCPS_NAME=procps
     --without-root-privileges \
     %{subst_enable vgauth} \
     %{subst_enable xmlsec1} \
-    %{?_disable_xml_security_c:--disable-xml-security-c} \
+    %{subst_enable xmlsecurity} \
     %{subst_enable grabbitmqproxy} \
     %{subst_enable deploypkg} \
     %{subst_enable multimon} \
@@ -130,6 +132,7 @@ export CUSTOM_PROCPS_NAME=procps
     %{subst_with gtkmm} \
     %{subst_with gtk3} \
     %{subst_with gtkmm3} \
+    %{subst_enable resolutionkms} \
     --disable-static
 # sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 %make_build
@@ -270,6 +273,7 @@ fi
 
 %files desktop
 %_sysconfdir/xdg/autostart/*.desktop
+%_bindir/vmware-user
 %_bindir/vmware-user-suid-wrapper
 %_bindir/vmware-vmblock-fuse
 %_libdir/%name/plugins/vmusr/
@@ -287,6 +291,9 @@ fi
 %endif
 
 %changelog
+* Mon Sep 10 2018 Alexey Shabalin <shaba@altlinux.org> 10.3.0-alt1%ubt
+- 10.3.0
+
 * Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 10.1.10-alt1.S1.1
 - NMU: rebuild with new openssl.
 
