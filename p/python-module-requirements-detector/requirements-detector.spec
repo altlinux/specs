@@ -4,26 +4,25 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.2
-Release: alt1.1
+Version: 0.6
+Release: alt1
 Summary: Python tool to find and list requirements of a Python project
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/requirements-detector/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# https://github.com/landscapeio/requirements-detector.git
-Source0: https://pypi.python.org/packages/49/b2/375f6fb3544037089468f217f7ccfcd1cabc4ef88316ec74e602063f3da2/%{oname}-%{version}.tar.gz
+Url: https://pypi.org/project/requirements-detector/
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-astroid python-module-nose
-BuildPreReq: python-module-coverage
+# https://github.com/landscapeio/requirements-detector.git
+Source: %name-%version.tar
+
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-astroid python-module-nose
+BuildRequires: python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-astroid python3-module-nose
-BuildPreReq: python3-module-coverage
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-astroid python3-module-nose
+BuildRequires: python3-module-coverage
 %endif
 
 %py_provides requirements_detector
@@ -54,7 +53,7 @@ depends on.
 %endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -99,7 +98,7 @@ popd
 %endif
 
 %files
-%doc LICENSE PKG-INFO
+%doc *.md
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -108,12 +107,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE PKG-INFO
+%doc *.md
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Sep 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6-alt1
+- Updated to upstream version 0.6.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
