@@ -1,7 +1,7 @@
 %define oname iceB
 
 Name:    iceb
-Version: 18.8
+Version: 19.0
 Release: alt1
 
 Summary: Free financial accounting system (console)
@@ -52,6 +52,9 @@ cp desktop/pixmaps/*.png %buildroot%_pixmapsdir
 %_pixmapsdir/*.png
 
 %changelog
+* Mon Sep 10 2018 Andrey Cherepanov <cas@altlinux.org> 19.0-alt1
+- new version 19.0
+
 * Wed Aug 01 2018 Cronbuild Service <cronbuild@altlinux.org> 18.8-alt1
 - new version 18.8
 
