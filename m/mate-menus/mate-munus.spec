@@ -1,6 +1,6 @@
 Name: mate-menus
 Version: 1.20.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Displays menus for MATE Desktop
 License: GPLv2+ and LGPLv2+
@@ -70,6 +70,9 @@ Development files for mate-menus
 %_datadir/gir-1.0/MateMenu-2.0.gir
 
 %changelog
+* Mon Sep 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.1-alt2
+- show generic name instead of full name
+
 * Fri Sep 07 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.1-alt1
 - 1.20.1
 
