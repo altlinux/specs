@@ -4,7 +4,7 @@
 %define prog_name            postgresql
 %define postgresql_major     10
 %define postgresql_minor     5
-%define postgresql_altrel    5
+%define postgresql_altrel    6
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -86,8 +86,7 @@ Conflicts: libpq%libpq_major < %version-%release
 Conflicts: libpq%libpq_major > %version-%release
 Obsoletes: libpq5.3 < 8.3.4-alt2
 # 1C
-Conflicts: libpq%libpq_major-1C
-Obsoletes: libpq%libpq_major-1C
+Conflicts: %libpq_name-1C
 
 %description -n %libpq_name
 C and C++ libraries to enable user programs to communicate with the
@@ -763,6 +762,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Mon Sep 10 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt6
+- Another fix conflicts with libpq5.10-1C
+
 * Fri Sep 07 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt5
 - Add Obsolete to libpq-1C
 
