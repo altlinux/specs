@@ -1,34 +1,38 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname fs
 
 %def_with python3
 %def_without docs
 
 Name: python-module-%oname
-Version: 2.0.17
-Release: alt1.1
+Version: 2.1.0
+Release: alt1
 Summary: Filesystem abstraction layer
 License: BSD
 Group: Development/Python
-Url: https://pypi.python.org/pypi/fs/
+Url: https://pypi.org/project/fs/
 
 BuildArch: noarch
 
 # https://github.com/PyFilesystem/pyfilesystem2.git
 Source: %name-%version.tar
-Patch1: fs-alt-tests.patch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-chardet python-module-django python-module-ecdsa python-module-html5lib
-BuildRequires: python-module-ndg-httpsclient python-module-ntlm python-module-pycrypto python-module-setuptools
-BuildRequires: python-module-sphinxcontrib-spelling python-module-wx python-module-nose python-module-mock
+BuildRequires: /proc
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-nose python-module-mock
 BuildRequires: python-module-appdirs python-module-pyftpdlib-tests python2.7(pytz)
+BuildRequires: python2.7(backports.os)
+BuildRequires: python-module-sphinxcontrib-spelling
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-django python3-module-ecdsa python3-module-pycrypto python3-module-setuptools
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-nose python3-module-mock
 BuildRequires: python3-module-appdirs python3-module-pyftpdlib-tests python3(pytz)
 %endif
 
+%py_requires backports.os
 %py_provides %oname
 
 %description
@@ -82,7 +86,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup
-%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -128,7 +131,7 @@ popd
 %endif
 
 %files
-%doc LICENSE README.rst readme.md
+%doc LICENSE *.md
 %python_sitelibdir/*
 %if_with docs
 %exclude %python_sitelibdir/*/pickle
@@ -144,11 +147,14 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE README.rst readme.md
+%doc LICENSE *.md
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Sep 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt1
+- Updated to upstream version 2.1.0.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.17-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

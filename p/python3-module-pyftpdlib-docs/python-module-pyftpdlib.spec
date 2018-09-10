@@ -8,7 +8,7 @@ language.
 
 Name: %fname-docs
 Version: 1.5.4
-Release: alt2
+Release: alt3
 
 %if "-docs"==""
 Summary: Python FTP server library
@@ -23,6 +23,7 @@ License: MIT
 BuildArch: noarch
 Url: https://github.com/giampaolo/pyftpdlib
 Source: %name-%version.tar
+Patch1: %oname-alt-tests.patch
 
 BuildRequires(pre): rpm-macros-branch rpm-build-licenses
 BuildRequires: python-module-sphinx-devel python-module-sphinx_rtd_theme
@@ -34,6 +35,9 @@ Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
 %else
 %py3_provides %oname
+%if "3"==""
+%py_requires sendfile
+%endif
 %endif
 
 %if "-docs"==""
@@ -73,6 +77,9 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%if "-docs"==""
+%patch1 -p1
+%endif
 
 sed -i -e "s|^__ver__ = '[^']*'|__ver__ = '%version'|" pyftpdlib/__init__.py
 
@@ -128,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.4-alt3
+- Updated runtime dependencies.
+
 * Wed Aug 08 2018 Grigory Ustinov <grenka@altlinux.org> 1.5.4-alt2
 - Rebuild with resolving file conflict between modules.
 
