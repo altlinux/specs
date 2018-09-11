@@ -1,21 +1,23 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname backports.os
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1
+Release: alt2
 Summary: Backport of new features in Python's os module
 Group: Development/Python
 License: Python
-URL: https://pypi.python.org/pypi/backports.os
+URL: https://pypi.org/project/backports.os/
 
 # https://github.com/pjdelport/backports.os.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(pytest)
 BuildRequires: python2.7(future) python2.7(hypothesis)
 
-%py_requires backports
+%py_requires backports future.utils.surrogateescape
 %py_provides backports.os
 
 %description
@@ -51,5 +53,8 @@ PYTHONPATH=$(pwd)/src py.test
 %python_sitelibdir/*
 
 %changelog
+* Mon Sep 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt2
+- Updated runtime dependencies.
+
 * Mon Dec 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt1
 - Initial build for ALT.
