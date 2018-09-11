@@ -6,7 +6,7 @@
 
 Name: dovecot
 Version: 2.3.2.1
-Release: alt1
+Release: alt1.1
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
 Group: System/Servers
@@ -36,6 +36,7 @@ PreReq: mailboxes-control
 # Automatically added by buildreq on Tue Apr 24 2012
 # optimized out: libcom_err-devel libkrb5-devel libpq-devel libstdc++-devel pkg-config
 BuildRequires: bzlib-devel gcc-c++ libldap-devel libmysqlclient-devel libpam-devel libsasl2-devel libsqlite3-devel libssl-devel openssl postgresql-devel zlib-devel
+BuildRequires: libkrb5-devel
 
 %description
 Dovecot is an IMAP/POP3 server for Linux/UNIX-like systems, written with
@@ -190,6 +191,10 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Tue Sep 11 2018 Grigory Ustinov <grenka@altlinux.org> 2.3.2.1-alt1.1
+ - Rebuilt with openssl 1.1.
+ - Added BR: libkrb5-devel.
+
 * Mon Jul 23 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.3.2.1-alt1
 - Update version to 2.3.2.1 from src
 
