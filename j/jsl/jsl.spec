@@ -3,7 +3,7 @@
 
 Name: jsl
 Version: 0.3.0
-Release: alt1%ubt
+Release: alt2
 
 Summary: Check JavaScript code for common mistakes
 License: MPLv1.1
@@ -15,8 +15,8 @@ Source: %name-%version.tar
 Patch0: jsl-0.3.0-smash.patch
 Patch1: jsl-0.3.0-tests.patch
 Patch2: 0001-Disable-support-for-READLINE-and-EDITLINE.patch
+Patch3: 0002-Fix-build-for-aarch64.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: perl-devel
 
 %if_with check
@@ -38,6 +38,7 @@ practices.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p2
+%patch3 -p2
 
 %build
 
@@ -55,6 +56,9 @@ perl run_tests.pl ../BUILD/jsl
 %_bindir/jsl
 
 %changelog
-* Wed Feb 21 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1%ubt
+* Sun Sep 09 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt2
+- Build for aarch64.
+
+* Wed Feb 21 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1
 - Initial build
 
