@@ -1,6 +1,6 @@
 Name: openxcom
 Version: 1.0_2017.10.15
-Release: alt1
+Release: alt2
 Summary: OpenXcom is an open-source clone of the original X-COM
 License: GPL
 Group: Games/Strategy
@@ -46,6 +46,9 @@ install -pm 644 -D res/linux/openxcom.desktop %buildroot%_desktopdir/%name.deskt
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Sep 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0_2017.10.15-alt2
+- NMU: rebuilt with new yaml-cpp.
+
 * Sun Oct 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.0_2017.10.15-alt1
 - picked up orphaned package from nobody@
 - nightly 2017.06.15
