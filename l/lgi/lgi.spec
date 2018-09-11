@@ -1,13 +1,13 @@
 Summary: Lua bindings to GObject libraries
 Name: lgi
-Version: 0.9.1
-Release: alt2
+Version: 0.9.2
+Release: alt1
 License: MIT/X11
 Group: System/Libraries
 Url: http://github.com/pavouk/lgi
 Source0: %name-%version.tar
 
-BuildRequires: liblua5-devel gobject-introspection-devel
+BuildRequires: liblua5.3-devel gobject-introspection-devel
 
 %description
 Dynamic Lua binding to any library which is introspectable using
@@ -33,6 +33,9 @@ make
 %doc README.md docs samples
 
 %changelog
+* Tue Sep 11 2018 Terechkov Evgenii <evg@altlinux.org> 0.9.2-alt1
+- 0.9.2 (ALT #35382)
+
 * Sun Jan 29 2017 Terechkov Evgenii <evg@altlinux.org> 0.9.1-alt2
 - Fix build
 
