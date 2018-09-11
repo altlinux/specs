@@ -15,7 +15,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        60.1.0
+Version:        60.2.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -333,6 +333,16 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Mon Sep 10 2018 Andrey Cherepanov <cas@altlinux.org> 60.2.0-alt1
+- New ESR version (60.2.0).
+- Fixed:
+  + CVE-2018-12377 Use-after-free in refresh driver timers
+  + CVE-2018-12378 Use-after-free in IndexedDB
+  + CVE-2018-12379 Out-of-bounds write with malicious MAR file
+  + CVE-2017-16541 Proxy bypass using automount and autofs
+  + CVE-2018-12381 Dragging and dropping Outlook email message results in page navigation
+  + CVE-2018-12376 Memory safety bugs fixed in Firefox 62 and Firefox ESR 60.2
+
 * Tue Jun 26 2018 Andrey Cherepanov <cas@altlinux.org> 60.1.0-alt1
 - New ESR version (60.1.0).
 - Fixed:
