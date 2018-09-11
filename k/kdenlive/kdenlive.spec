@@ -3,7 +3,7 @@
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 Name: kdenlive
-Version: 18.08.0
+Version: 18.08.1
 Release: alt1%ubt
 %K5init no_altplace man
 
@@ -26,7 +26,7 @@ Requires: /usr/bin/avconv /usr/bin/avplay /usr/bin/avprobe
 Source: %name-%version.tar
 Patch1: alt-prefer-vlc.patch
 Patch2: alt-find-lumas.patch
-Patch3: alt-defaults.patch
+Patch3: alt-ffmpegaudiothumbnails.patch
 
 # Automatically added by buildreq on Mon Jul 27 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libmlt-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs shared-mime-info xml-common xml-utils
@@ -40,7 +40,7 @@ BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcode
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel
 BuildRequires: kf5-knotifyconfig-devel kf5-kplotting-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel
-BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kcrash-devel kf5-kfilemetadata-devel
+BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kcrash-devel kf5-kfilemetadata-devel kf5-purpose-devel
 
 %description
 Kdenlive is a non-linear video editor for GNU/Linux, which supports
@@ -56,7 +56,10 @@ DV, HDV and AVCHD(not complete yet) editing.
 %setup -q
 %patch1 -p1
 #%patch2 -p1
+%if %is_ffmpeg
+%else
 %patch3 -p1
+%endif
 
 %build
 %K5build
@@ -85,6 +88,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 %_man1dir/kdenlive*
 
 %changelog
+* Tue Sep 11 2018 Sergey V Turchin <zerg@altlinux.org> 18.08.1-alt1%ubt
+- new version
+
 * Thu Aug 23 2018 Sergey V Turchin <zerg@altlinux.org> 18.08.0-alt1%ubt
 - new version
 
