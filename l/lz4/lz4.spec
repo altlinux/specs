@@ -1,7 +1,7 @@
 Name: lz4
 Epoch: 1
-Version: 1.8.2
-Release: alt2
+Version: 1.8.3
+Release: alt1
 Summary: Fast LZ compression algorithm library and tools
 License: GPLv2+ and BSD
 Group: Archiving/Compression
@@ -117,6 +117,9 @@ export CC=false CXX=false # nothing should be compiled or linked during check
 %endif
 
 %changelog
+* Tue Sep 11 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.8.3-alt1
+- v1.8.2 -> v1.8.3.
+
 * Sat Jul 14 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.8.2-alt2
 - Fixed location of manpages that was broken in 1.8.2.
 
