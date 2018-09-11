@@ -1,6 +1,5 @@
-%define ccnet_version 6.1.8
 Name: seafile-client
-Version: 6.2.2
+Version: 6.2.5
 Release: alt1
 
 Summary: Seafile gui client on QT bassed
@@ -15,7 +14,6 @@ Packager: Denis Baranov <baraka@altlinux.ru>
 Source: %name-%version.tar
 
 Requires: seafile >= %version
-Requires: python-module-ccnet >= %ccnet_version
 
 # manually removed: git-core i586-libxcb libfreetype-infinality python-module-mwlib ruby ruby-stdlibs python-module-google python3-dev python3-module-yieldfrom python3-module-zope 
 # Automatically added by buildreq on Tue May 17 2016
@@ -27,7 +25,7 @@ BuildRequires: qt5-base-devel
 
 BuildRequires(pre): rpm-macros-cmake
 
-BuildRequires: libccnet-devel >= %ccnet_version
+BuildRequires: libevent-devel >= 2.0
 BuildRequires: libseafile-devel >= %version
 
 Conflicts: libseafile <= 2.0.4
@@ -57,6 +55,13 @@ ln -s seafile-applet %buildroot%_bindir/%name
 %_pixmapsdir/*
 
 %changelog
+* Tue Sep 11 2018 Vitaly Lipatov <lav@altlinux.ru> 6.2.5-alt1
+- new version 6.2.5 (with rpmrb script)
+
+* Wed Aug 15 2018 Vitaly Lipatov <lav@altlinux.ru> 6.2.4-alt1
+- new version 6.2.4 (with rpmrb script)
+- drop ccnet from buildreqs
+
 * Sat Jul 21 2018 Vitaly Lipatov <lav@altlinux.ru> 6.2.2-alt1
 - new version 6.2.2 (with rpmrb script)
 
