@@ -1,14 +1,14 @@
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 3.0
 %define xdg_name org.gnome.Devhelp
 
 Name: devhelp
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Developer's help program
 Group: Development/Other
-License: %gpl2plus
+License: %gpl3plus
 Url: https://wiki.gnome.org/Apps/Devhelp
 
 # VCS: git://git.gnome.org/devhelp
@@ -18,14 +18,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 Requires: lib%name = %version-%release
 
-BuildPreReq: rpm-build-gnome >= 0.6 gnome-common
-BuildPreReq: rpm-build-licenses
-BuildPreReq: gtk-doc yelp-tools libappstream-glib-devel
+BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
+BuildRequires: gtk-doc yelp-tools libappstream-glib-devel
 
-# From configure.ac
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.19.3
 BuildRequires: pkgconfig(webkit2gtk-4.0) >= 2.19.2
 BuildRequires: pkgconfig(gio-2.0) >= 2.40
+BuildRequires: pkgconfig(amtk-5)
 BuildRequires: zlib-devel
 # since 3.23.x
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libwebkit2gtk-gir-devel
@@ -94,14 +93,12 @@ This plugin for GEdit enables using DevHelp from inside the editor.
 %setup
 
 %build
-# newer libtool required
-#%%autoreconf
-%configure --disable-static
+%meson -Dgtk_doc=true
 
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 # Create some directories in %name hierarchy
 mkdir -p %buildroot%_devhelpdir/{specs,books}
@@ -113,8 +110,8 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %dir %_devhelpdir
 %_devhelpdir/*
 %_desktopdir/%xdg_name.desktop
-%_iconsdir/hicolor/*/apps/devhelp.*
-%_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
+%_iconsdir/hicolor/*/apps/%xdg_name.png
+%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/org.gnome.devhelp.gschema.xml
 %_man1dir/%name.1.*
@@ -123,6 +120,7 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 
 %files -n lib%name
 %_libdir/*.so.*
+%_datadir/glib-2.0/schemas/org.gnome.libdevhelp-3.gschema.xml
 
 %files -n lib%name-devel
 %_includedir/*
@@ -142,6 +140,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Mon Jul 16 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Sun Apr 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 

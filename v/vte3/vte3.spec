@@ -1,11 +1,11 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name vte
-%define ver_major 0.52
+%define ver_major 0.54
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
@@ -26,6 +26,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %else
 Source: %_name-%version.tar
 %endif
+
+# https://gitlab.gnome.org/GNOME/vte/issues/37
+# https://gitlab.gnome.org/dreamcat4/vte/raw/master/src/vte.sh
+Patch: vte-0.54.0-dreamcat4-vte.sh_preserve_custom_user_prompts.patch
 
 %define gtk3_ver 3.8.0
 %define glib_ver 2.40.0
@@ -122,6 +126,7 @@ GObject introspection devel data for the %name library
 
 %prep
 %setup -n %_name-%version
+#%%patch -b .prompt
 
 %build
 %autoreconf
@@ -140,12 +145,8 @@ GObject introspection devel data for the %name library
 chmod 755 %buildroot%_sysconfdir/profile.d/vte.sh
 
 install -d -m755 %buildroot%pkgdocdir
-install -p -m644 AUTHORS NEWS README %buildroot%pkgdocdir/
-ln -s %_licensedir/LGPL-2 %buildroot%pkgdocdir/COPYING
-
+install -p -m644 AUTHORS NEWS %buildroot%pkgdocdir/
 install -p -m644 doc/*.txt %buildroot%pkgdocdir/
-install -p -m644 src/iso2022.txt %buildroot%pkgdocdir/
-install -p -m644 doc/openi18n/*.txt %buildroot%pkgdocdir/
 
 # Remove unpackaged files
 find %buildroot -type f -name '*.la' -delete
@@ -158,9 +159,7 @@ find %buildroot -type f -name '*.la' -delete
 %files -n lib%name -f %name.lang
 %dir %pkgdocdir
 %pkgdocdir/AUTHORS
-%pkgdocdir/COPYING
 %pkgdocdir/NEWS
-%pkgdocdir/README
 %_libdir/*.so.*
 %_sysconfdir/profile.d/vte.sh
 
@@ -192,6 +191,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Sun Sep 02 2018 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt1
+- updated to 0.54.0-9-g8f4e3c19
+
 * Mon May 21 2018 Yuri N. Sedunov <aris@altlinux.org> 0.52.2-alt1
 - 0.52.2
 

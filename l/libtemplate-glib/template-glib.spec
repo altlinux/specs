@@ -3,7 +3,7 @@
 %define _name template-glib
 # probably meson bug
 %define libname libtemplate_glib
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 1.0
 
 %def_enable introspection
@@ -111,6 +111,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Wed Sep 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

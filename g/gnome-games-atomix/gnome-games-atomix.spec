@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name atomix
-%define ver_major 3.22
+%define ver_major 3.30
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.0
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Build molecules out of single atoms
@@ -20,9 +20,10 @@ Provides:  %_name = %version-%release
 %define glib_ver 2.36.0
 %define gtk_ver 3.14.0
 
-BuildRequires: gnome-common intltool yelp-tools libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: yelp-tools libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: libxml2-devel
+BuildRequires: libxml2-devel libgnome-games-support-devel
 
 %description
 Atomix is a puzzle game in which you have to build full molecules, from simple
@@ -34,12 +35,11 @@ other obstacles on the playfield.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure --disable-schemas-compile
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %_name
 
@@ -49,11 +49,14 @@ other obstacles on the playfield.
 %_datadir/%_name/
 %_iconsdir/hicolor/*x*/apps/%_name.png
 %_iconsdir/hicolor/symbolic/apps/%_name-symbolic.svg
-%_datadir/appdata/%_name.appdata.xml
+%_datadir/metainfo/%_name.appdata.xml
 %doc AUTHORS NEWS README
 
 
 %changelog
+* Wed Sep 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0.1-alt1
+- 3.30.0.1
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 

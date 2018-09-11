@@ -7,8 +7,8 @@
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.28
-%define ver_base 3.28
+%define ver_major 3.30
+%define ver_base 3.30
 %define ver_lib 1.2
 
 %def_disable debug
@@ -19,6 +19,7 @@
 %def_with krb5
 %def_enable goa
 %def_enable google
+%def_enable canberra
 # Ubuntu online accounts support
 %def_disable uoa
 %{?_enable_snapshot:%def_enable gtk_doc}
@@ -28,7 +29,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -61,7 +62,8 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 
 Requires: dconf
 
-BuildRequires: cmake gcc-c++ rpm-build-gnome rpm-build-licenses intltool
+BuildRequires(pre): cmake rpm-build-gnome rpm-build-licenses rpm-build-xdg rpm-build-gir
+BuildRequires: gcc-c++ intltool
 BuildRequires: gtk-doc >= 1.0
 BuildRequires: gnome-common
 BuildRequires: glib2-devel >= %glib_ver
@@ -82,6 +84,7 @@ BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libn
 %{?_with_libdb:BuildRequires: libdb4-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel}
 %{?_enable_vala:BuildRequires: vala >= %vala_ver vala-tools >= %vala_ver}
+%{?_enable_canberra:BuildRequires: libcanberra-gtk3-devel}
 
 # /usr/libexec/evolution-data-server/csv2vcard uses perl(diagnostics.pm)
 BuildRequires: perl-devel
@@ -177,6 +180,7 @@ the functionality of the installed EDS libraries.
 	%{?_with_krb5:-DWITH_KRB5:BOOL=ON} \
 	%{?_enable_goa:-DENABLE_GOA:BOOL=ON} \
 	%{?_disable_google:-DENABLE_GOOGLE_AUTH:BOOL=OFF} \
+	%{?_disable_canberra:-DENABLE_CANBERRA:BOOL=OFF} \
 	%{?_disable_uoa:-DENABLE_UOA:BOOL=OFF} \
 	%{?_enable_introspection:-DENABLE_INTROSPECTION:BOOL=ON} \
 	%{?_enable_gtk_doc:-DENABLE_GTK_DOC:BOOL=ON} \
@@ -192,6 +196,8 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %find_lang --with-gnome --output=%name.lang %name %name-%ver_base
 
 %files -f %name.lang
+%_xdgconfigdir/autostart/org.gnome.Evolution-alarm-notify.desktop
+%_desktopdir/org.gnome.Evolution-alarm-notify.desktop
 %_libexecdir/*
 %{?_enable_installed_tests:%exclude %_libexecdir/%name/installed-tests/}
 %dir %_libdir/%name/addressbook-backends
@@ -201,8 +207,6 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %_libdir/%name/*/*.urls
 %_libdir/*.so.*
 %_libdir/%name/libedbus-private.so
-# symlink to private library
-#%_libdir/libedbus-private.so
 %_datadir/%name/
 %_datadir/dbus-1/services/*
 %_prefix/lib/systemd/user/evolution-addressbook-factory.service
@@ -261,6 +265,9 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Mon Jul 30 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.5-alt1
 - 3.28.5
 

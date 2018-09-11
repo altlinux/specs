@@ -5,7 +5,7 @@
 
 %define xdg_name org.gnome.Evolution
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.28
+%define ver_major 3.30
 %define ver_base 3.28
 %define gst_api_ver 1.0
 
@@ -21,7 +21,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -45,7 +45,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.28.5
+%define eds_ver 3.30.0
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define libsoup_ver 2.42.0
@@ -206,7 +206,7 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 %files
 %_bindir/*
 %_libdir/%name/
-%_libexecdir/%name/evolution-alarm-notify
+%_libdir/evolution-data-server/ui-modules/module-evolution-alarm-notify.so
 %_libexecdir/%name/evolution-backup
 %_libexecdir/%name/killev
 %doc AUTHORS ChangeLog NEWS README
@@ -215,7 +215,6 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 %exclude %evo_module_dir/module-spamassassin.so
 
 %files data -f %name.lang
-%_sysconfdir/xdg/autostart/%xdg_name-alarm-notify.desktop
 %_desktopdir/*
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/org.gnome.evolution.addressbook.gschema.xml
@@ -265,6 +264,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Mon Jul 30 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.5-alt1
 - 3.28.5
 

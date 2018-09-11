@@ -1,15 +1,17 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
+%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define xdg_name org.gnome.Shell
-%define ver_major 3.28
+%define ver_major 3.30
 %define gst_api_ver 1.0
-%def_enable gtk_doc
+# broken with meson-0.47.x
+%def_disable gtk_doc
 %def_disable check
 
 Name: gnome-shell
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -31,8 +33,8 @@ AutoReqProv: nopython
 
 %define session_ver 3.26
 %define clutter_ver 1.21.5
-%define gjs_ver 1.47.0
-%define mutter_ver %ver_major.3
+%define gjs_ver 1.53.90
+%define mutter_ver %ver_major
 %define gtk_ver 3.16.0
 %define gio_ver 2.56.0
 %define gstreamer_ver 1.0
@@ -105,7 +107,7 @@ Requires: typelib(TelepathyLogger)
 Requires: typelib(UPowerGlib)
 Requires: typelib(WebKit2)
 
-BuildRequires(pre): meson rpm-build-gir rpm-build-python3
+BuildRequires(pre): meson rpm-build-gir rpm-build-python3 rpm-build-xdg
 BuildRequires: gcc-c++ gnome-common intltool gtk-doc sassc
 BuildRequires: python3-devel
 BuildRequires: libX11-devel libXfixes-devel
@@ -198,13 +200,14 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 
 %files
 %_bindir/*
-%_libexecdir/gnome-shell-calendar-server
-%_libexecdir/gnome-shell-perf-helper
-%_libexecdir/gnome-shell-hotplug-sniffer
+%_libexecdir/%name-calendar-server
+%_libexecdir/%name-perf-helper
+%_libexecdir/%name-hotplug-sniffer
 %_libexecdir/%name-portal-helper
+%_libexecdir/%name-overrides-migration.sh
 %dir %_libdir/%name
-%_libdir/%name/libgnome-shell.so
-%_libdir/%name/libgnome-shell-menu.so
+%_libdir/%name/lib%name.so
+%_libdir/%name/lib%name-menu.so
 %_libdir/%name/libgvc.so
 %_libdir/%name/libst-1.0.so
 %_libdir/%name/*.typelib
@@ -212,6 +215,7 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %browser_plugins_path/libgnome-shell-browser-plugin.so
 
 %files data -f %name.lang
+%_xdgconfigdir/autostart/%name-overrides-migration.desktop
 %_desktopdir/%xdg_name.desktop
 %_desktopdir/%name-extension-prefs.desktop
 %_desktopdir/evolution-calendar.desktop
@@ -229,8 +233,12 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %_datadir/gnome-control-center/keybindings/50-gnome-shell-system.xml
 %_datadir/xdg-desktop-portal/portals/%name.portal
 %config %_datadir/glib-2.0/schemas/org.gnome.shell.gschema.xml
+%config %_datadir/glib-2.0/schemas/00_org.gnome.shell.gschema.override
+%_userunitdir/%name-wayland.target
+%_userunitdir/%name-x11.target
+%_userunitdir/%name.service
 %_man1dir/*
-%doc README NEWS
+%doc README* NEWS
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -239,6 +247,9 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %endif
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Sun Aug 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt2
 - updated to 3.28.3-7-g721ce5403
 - removed obsolete deps on caribou

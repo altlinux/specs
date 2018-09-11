@@ -7,7 +7,7 @@
 
 Name: scratch-text-editor
 Version: %ver_major.1
-Release: alt5
+Release: alt6
 
 Summary: The text editor that works
 License: GPLv3
@@ -125,6 +125,9 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt6
+- rebuilt with vala-0.42
+
 * Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt5
 - rebuilt against libgranite.so.5
 

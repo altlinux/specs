@@ -1,4 +1,4 @@
-%define ver_major 0.14
+%define ver_major 0.16
 %define api_ver 0.14
 
 Name: retro-gtk
@@ -79,10 +79,11 @@ GObject introspection devel data for the %name library.
 %meson_install
 
 %files -n lib%name
-%_libdir/lib%name-%api_ver.so
+%_libdir/lib%name-%api_ver.so.*
 %doc README* AUTHORS NEWS
 
 %files -n lib%name-devel
+%_libdir/lib%name-%api_ver.so
 %_includedir/%name/
 %_pkgconfigdir/%name-%api_ver.pc
 %_vapidir/%name-%api_ver.deps
@@ -99,6 +100,9 @@ GObject introspection devel data for the %name library.
 
 
 %changelog
+* Sat Sep 01 2018 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
+- 0.16.0
+
 * Fri May 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
 - first build for Sisyphus
 

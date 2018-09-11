@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
@@ -13,7 +13,7 @@
 %def_enable udev
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
@@ -34,7 +34,7 @@ BuildPreReq: rpm-build-licenses rpm-build-gnome
 
 # From configure.ac
 BuildPreReq: gnome-common >= 2.8.0
-BuildPreReq: intltool >= 0.40.6 yelp-tools gtk-doc
+BuildPreReq: yelp-tools gtk-doc
 BuildPreReq: libgdk-pixbuf-devel >= 2.36.5
 BuildPreReq: libgtk+3-devel >= 3.3.6
 BuildPreReq: libgio-devel >= 2.53.0
@@ -140,7 +140,7 @@ the functionality of the Gnome 3 desktop library.
 %install
 %makeinstall_std
 
-%find_lang --with-gnome --output=%_name.lang %_name-%api_ver fdl gpl lgpl
+%find_lang --with-gnome --output=%_name.lang %_name-%api_ver gpl lgpl fdl
 
 %files
 
@@ -179,6 +179,9 @@ the functionality of the Gnome 3 desktop library.
 
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Thu May 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 

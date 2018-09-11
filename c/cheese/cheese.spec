@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 3.0
 %define xdg_name org.gnome.Cheese
 %define gst_api_ver 1.0
@@ -168,6 +168,9 @@ GObject introspection devel data for the Cheese library.
 %endif
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

@@ -1,16 +1,18 @@
 %def_disable snapshot
 
+%define _libexecdir %_prefix/libexec
 %define _name jsonrpc-glib
 # probably meson bug
 %define libname libjsonrpc-glib
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 1.0
 
 %def_enable introspection
 %def_enable gtk_doc
+%def_disable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A JSON-RPC library for GLib
@@ -80,7 +82,8 @@ This package contains development documentation for %name
 %meson_install
 
 %check
-#%%meson_test
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_libdir/%libname-%api_ver.so.*
@@ -107,6 +110,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Wed Sep 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Tue Jun 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 

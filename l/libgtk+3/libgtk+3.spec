@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk+
-%define ver_major 3.22
+%define ver_major 3.24
 %define api_ver 3.0
 %define binary_ver 3.0.0
 %define _libexecdir %_prefix/libexec
@@ -22,8 +22,8 @@
 %def_disable debug
 
 Name: libgtk+3
-Version: %ver_major.30
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -44,7 +44,7 @@ Patch1: gtk+-3.22.29-alt-build.patch
 %define glib_ver 2.50.2
 %define gi_ver 1.41.0
 %define cairo_ver 1.14.0
-%define pango_ver 1.38.0
+%define pango_ver 1.42.0
 %define atk_ver 2.15.1
 %define atspi_ver 2.8.1
 %define pixbuf_ver 2.36.3
@@ -54,7 +54,7 @@ Patch1: gtk+-3.22.29-alt-build.patch
 %define cups_ver 1.6
 %define wayland_ver 1.10.0
 %define wayland_protocols_ver 1.12
-%define epoxy_ver 1.0
+%define epoxy_ver 1.4
 %define cloudproviders_ver 0.2.5
 
 Provides: libgtk3-engine-adwaita = %version-%release
@@ -67,7 +67,7 @@ Requires: icon-theme-adwaita
 Requires: gtk+3-themes-incompatible
 %{?_enable_colord:Requires: colord}
 
-BuildRequires: rpm-build-licenses rpm-build-gnome
+BuildRequires(pre): rpm-build-licenses rpm-build-gnome rpm-build-gir
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libcairo-gobject-devel >= %cairo_ver
@@ -339,6 +339,7 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %fulllibpath/immodules/im-viqr.so
 %fulllibpath/immodules/im-multipress.so
 %fulllibpath/immodules/im-wayland.so
+%fulllibpath/immodules/im-waylandgtk.so
 %fulllibpath/immodules/im-xim.so
 %{?_enable_broadway:%fulllibpath/immodules/im-broadway.so}
 %dir %fulllibpath/printbackends
@@ -457,6 +458,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Fri Jun 29 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.30-alt3
 - downgraded to 3.22.30 release in anticipation of 3.24
 

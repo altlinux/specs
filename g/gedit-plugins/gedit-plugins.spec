@@ -1,12 +1,12 @@
-%define ver_major 3.28
+%define ver_major 3.30
 %def_enable python
 %def_enable zeitgeist
 %define gedit_pluginsdir %_libdir/gedit/plugins
 %add_python3_path %gedit_pluginsdir
 
 Name: gedit-plugins
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Plugins for GEdit
 License: GPL
@@ -32,9 +32,8 @@ Requires: libvte3-gir >= %vte_ver
 AutoReqProv: nopython
 %define __python %nil
 
-BuildPreReq: rpm-build-gnome >= 0.6
-
 # From configure.ac
+BuildRequires(pre): rpm-build-gir rpm-build-gnome
 BuildPreReq: gnome-common
 BuildPreReq: intltool >= 0.35.0
 BuildPreReq: glib2-devel >= %glib_ver
@@ -48,7 +47,10 @@ BuildRequires: libgit2-glib-devel >= %git2_ver
 # for Charmap plugin
 BuildPreReq: libgucharmap-devel >= 3.0.0 libgucharmap-gir-devel
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel libzeitgeist2.0-gir-devel}
-%{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel}
+%if_enabled python
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-pygobject3-devel
+%endif
 BuildRequires: libxml2-devel python3-module-dbus-devel libvte3-gir-devel
 
 %description
@@ -89,6 +91,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %exclude %gedit_pluginsdir/*.la
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Thu Apr 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.28.1-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 

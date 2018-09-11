@@ -1,8 +1,8 @@
 %def_disable snapshot
 
-%define ver_major 2.56
+%define ver_major 2.58
 %define _libexecdir %_prefix/libexec
-%define _userinitdir %(pkg-config systemd --variable systemduserunitdir)
+%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
 %def_enable libproxy
 %def_enable gnome_proxy
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: glib-networking
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Networking support for GIO
@@ -29,9 +29,9 @@ Source: %name-%version.tar
 %{?_enable_gnome_proxy:Requires: gsettings-desktop-schemas >= 3.2.0}
 %{?_enable_pkcs11:Requires: ca-certificates}
 
-%define glib_ver 2.55.1
+%define glib_ver 2.56.1
 %define gnutls_ver 2.12.8
-%define p11kit_ver 0.8
+%define p11kit_ver 0.20
 %define libproxy_ver 0.3.1
 
 BuildRequires: meson libgio-devel >= %glib_ver
@@ -82,7 +82,7 @@ the functionality of the installed %name package.
 %_libdir/gio/modules/libgiolibproxy.so
 %_libexecdir/glib-pacrunner
 %_datadir/dbus-1/services/org.gtk.GLib.PACRunner.service
-%_userinitdir/glib-pacrunner.service
+%_userunitdir/glib-pacrunner.service
 %endif
 %doc NEWS README
 
@@ -93,6 +93,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 2.58.0-alt1
+- 2.58.0
+
 * Tue May 22 2018 Yuri N. Sedunov <aris@altlinux.org> 2.56.1-alt1
 - 2.56.1
 

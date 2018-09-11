@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 2.0
 
 %def_disable debug
@@ -11,8 +11,8 @@
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: GNOME Control Center
 License: GPLv2+
@@ -34,7 +34,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define nm_ver 1.2
 %define goa_ver 3.21.5
 %define acc_ver 0.6.33
-%define sett_daemon_ver 3.28.0
+%define sett_daemon_ver 3.29.90
 %define cheese_ver 3.9.5
 %define bt_ver 3.18.2
 %define systemd_ver 40
@@ -86,6 +86,7 @@ BuildRequires: libwacom-devel >= %wacom_ver
 BuildRequires: libclutter-gtk3-devel
 BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel
 BuildRequires: libgrilo-devel >= %grilo_ver
+BuildRequires: libsecret-devel
 %{?_with_cheese:BuildPreReq: libcheese-devel >= %cheese_ver}
 %{?_with_bluetooth:BuildRequires: libgnome-bluetooth-devel >= %bt_ver}
 BuildRequires: libgudev-devel
@@ -167,7 +168,7 @@ NOCONFIGURE=1 ./autogen.sh
 %{?_enable_doc:%_man1dir/%name.1.*}
 %_datadir/bash-completion/completions/gnome-control-center
 %_datadir/metainfo/%name.appdata.xml
-%doc AUTHORS NEWS README
+%doc NEWS README*
 
 %files devel
 %_datadir/pkgconfig/gnome-keybindings.pc
@@ -178,6 +179,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Wed Jun 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt2
 - fixed buildreqs
 

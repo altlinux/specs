@@ -1,10 +1,10 @@
 %def_disable snapshot
-%define ver_major 3.28
+%define ver_major 3.30
 %define xdg_name org.gnome.Calculator
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -66,6 +66,9 @@ find ./ -name "*.stamp" -delete
 
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Mon Jun 18 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 

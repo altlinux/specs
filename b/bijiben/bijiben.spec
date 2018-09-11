@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 3.28
+%define ver_major 3.30
 %define xdg_name org.gnome.bijiben
 %define _libexecdir %_prefix/libexec
 %def_enable zeitgeist
 
 Name: bijiben
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Note editor for GNOME
@@ -46,12 +46,15 @@ desktop integration.
 %meson \
 	%{?_enable_zeitgeist:-Dzeitgeist=true} \
 	-Dupdate_mimedb=false
-%meson_build
+# SMP-incompatible build
+%meson_build -j 1
 
 %install
 %meson_install
-
 %find_lang --with-gnome %name
+
+%check
+%meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -69,6 +72,9 @@ desktop integration.
 %doc README AUTHORS NEWS
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Wed Jun 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
 - 3.28.3
 

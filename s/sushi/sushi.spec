@@ -1,13 +1,13 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 1.0
 %define gst_api_ver 1.0
 %def_enable introspection
 %define lo_bin %_bindir/libreoffice
 
 Name: sushi
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A quick previewer for Nautilus
 Group: Graphical desktop/GNOME
@@ -100,6 +100,9 @@ sed -i 's|\/usr\/bin\/libreoffice|%lo_bin|' src/libsushi/sushi-pdf-loader.c
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Wed Aug 29 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt2
 - requires %%_bindir/libreoffice
 

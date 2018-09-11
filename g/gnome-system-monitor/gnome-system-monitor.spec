@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.28
+%define ver_major 3.30
 %def_enable systemd
 %def_disable wnck
 
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple process monitor
@@ -17,10 +17,10 @@ Url: https://wiki.gnome.org/Apps/SystemMonitor
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-%define glib_ver 2.55.0
-%define gtk_ver 3.12
+%define glib_ver 2.56.0
+%define gtk_ver 3.22
 %define glibmm_ver 2.28.0
-%define libgtkmm3_ver 3.0.0
+%define libgtkmm3_ver 3.3.18
 %define libwnck_ver 3.0.0
 %define libgtop_ver 2.38.0
 %define libxml_ver 2.0
@@ -28,8 +28,8 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define gnome_icon_theme_ver 3.0.0
 %define systemd_ver 44
 
-BuildPreReq: rpm-build-gnome
-BuildRequires: gcc-c++ gnome-common libappstream-glib-devel
+BuildRequires(pre): meson rpm-build-gnome
+BuildRequires: gcc-c++ libappstream-glib-devel
 BuildRequires: yelp-tools
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libglibmm-devel >= %glibmm_ver
@@ -50,15 +50,13 @@ Gnome-system-monitor is a simple process and system monitor.
 %setup
 
 %build
-%autoreconf
-%configure \
-    --disable-schemas-compile \
-    %{subst_enable systemd} \
-    %{subst_enable wnck}
-%make_build
+%meson \
+    %{?_enable_systemd:-Dsystemd=true} \
+    %{?_enable_wnck:-Dwnck=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
 
@@ -72,10 +70,14 @@ Gnome-system-monitor is a simple process and system monitor.
 %_datadir/polkit-1/actions/org.gnome.%name.policy
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.enums.xml
+%_iconsdir/hicolor/*/apps/*
 %_datadir/metainfo/%name.appdata.xml
 
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Wed May 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 

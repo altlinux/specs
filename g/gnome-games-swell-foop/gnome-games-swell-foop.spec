@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name swell-foop
-%define ver_major 3.28
+%define ver_major 3.30
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -33,7 +33,7 @@ area in as few moves as possible.
 %setup -n %_name-%version
 
 %build
-%meson -Denable-schemas-compile=false
+%meson
 %meson_build
 
 %install
@@ -51,6 +51,9 @@ area in as few moves as possible.
 %_datadir/metainfo/%_name.appdata.xml
 
 %changelog
+* Sun Sep 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

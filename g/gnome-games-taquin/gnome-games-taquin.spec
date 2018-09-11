@@ -2,7 +2,7 @@
 
 %define _name org.gnome.taquin
 %define __name gnome-taquin
-%define ver_major 3.28
+%define ver_major 3.30
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-taquin
@@ -54,6 +54,9 @@ Move tiles so that they reach their places.
 %doc AUTHORS NEWS
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Thu Mar 15 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

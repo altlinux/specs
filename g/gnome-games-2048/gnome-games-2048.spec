@@ -2,12 +2,12 @@
 
 %define _name 2048
 %define __name gnome-%_name
-%define ver_major 3.26
+%define ver_major 3.30
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A 2048 clone for GNOME
 Group: Games/Boards
@@ -54,9 +54,12 @@ Move the tiles until you obtain the 2048 tile.
 %_iconsdir/hicolor/*x*/apps/%__name.png
 %_iconsdir/hicolor/symbolic/apps/%{__name}*.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/appdata/org.gnome.%__name.appdata.xml
+%_datadir/metainfo/org.gnome.%__name.appdata.xml
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt2
 - rebuilt against libgnome-games-support-1.so.3
 

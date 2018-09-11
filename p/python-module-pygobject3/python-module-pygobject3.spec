@@ -1,13 +1,14 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 3.0
 %define gtk_api_ver 3.0
 %def_disable devel_doc
+%def_disable check
 
 Name: python-module-%{_name}3
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Python bindings for GObject
@@ -37,8 +38,8 @@ Requires: typelib(GdkX11) = %gtk_api_ver
 %define gi_ver 1.46.0
 %define pycairo_ver 1.11.1
 
+BuildRequires(pre): meson rpm-build-gir
 BuildRequires: gnome-common gtk-doc
-BuildRequires(pre): rpm-build-gir
 BuildRequires: glib2-devel >= %glib_ver libgio-devel libffi-devel
 BuildRequires: python-devel python-modules-encodings
 BuildRequires: python-module-pycairo-devel >= %pycairo_ver libcairo-gobject-devel
@@ -144,38 +145,33 @@ Development documentation for %_name.
 mv %_name-%version py3build
 
 %build
-%define opts --with-pic --disable-static --enable-cairo
-export PYTHON=%__python
-%autoreconf
-%configure %opts
-%make_build
+%define opts -Dpycairo=true
+%meson %opts -Dpython=python
+%meson_build
 
 pushd py3build
 export PYTHON=python3
-%autoreconf
-%configure %opts
-%make_build
+%meson %opts
+%meson_build
 popd
 
 %install
-%makeinstall_std
+%meson_install
 
 pushd py3build
-%makeinstall_std
+%meson_install
 popd
 
 %check
-#xvfb-run %make check
+xvfb-run %meson_test
 
-#pushd py3build
-#xvfb-run %make check
-#popd
+pushd py3build
+xvfb-run %meson_test
+popd
 
 %files
 %python_sitelibdir/gi/
 %exclude %python_sitelibdir/gi/pygtkcompat.py*
-
-%exclude %python_sitelibdir/*/*.la
 
 %files pygtkcompat
 %python_sitelibdir/pygtkcompat/
@@ -198,14 +194,15 @@ popd
 
 %files -n python3-module-%{_name}3-devel
 
-%exclude %python3_sitelibdir/*/*.la
-
 %if_enabled devel_doc
 %files devel-doc
 %_datadir/gtk-doc/html/%_name/
 %endif
 
 %changelog
+* Fri Aug 31 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Thu May 31 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
 - 3.28.3
 

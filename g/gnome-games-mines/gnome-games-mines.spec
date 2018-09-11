@@ -2,7 +2,7 @@
 
 %define _name mines
 %define __name gnome-%_name
-%define ver_major 3.28
+%define ver_major 3.30
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -24,7 +24,7 @@ Provides:  gnome-games-gnomine = %version-%release
 %define gtk_ver 3.12.0
 
 BuildRequires(pre): meson
-BuildRequires: intltool yelp-tools vala-tools
+BuildRequires: yelp-tools vala-tools
 BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
 BuildRequires: libgnome-games-support-devel
@@ -55,6 +55,9 @@ NOME Mines is a variation of the popular logic puzzle minesweeper.
 %_datadir/metainfo/%__name.appdata.xml
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

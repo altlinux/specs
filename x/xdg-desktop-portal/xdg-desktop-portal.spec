@@ -1,9 +1,9 @@
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define _libexecdir %_prefix/libexec
-%def_enable docs
+%def_disable docs
 
 Name: xdg-desktop-portal
-Version: 0.11
+Version: 1.0.1
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
@@ -14,13 +14,13 @@ Url: https://github.com/flatpak/%name
 Source: %url/releases/download/%version/%name-%version.tar.xz
 
 Requires: dbus
-Requires: flatpak >= 0.11.1
+Requires: flatpak >= 1.0.1
 Requires: /usr/bin/fusermount
 
 BuildRequires: pkgconfig(flatpak)
 BuildRequires: pkgconfig(fuse)
 BuildRequires: pkgconfig(gio-unix-2.0)
-BuildRequires: pkgconfig(libpipewire-0.1)
+BuildRequires: pkgconfig(libpipewire-0.2)
 BuildRequires: libsystemd-devel
 %{?_enable_docs:BuildRequires: xmlto docbook-dtds docbook-style-xsl}
 
@@ -44,7 +44,7 @@ The pkg-config file for %name.
 
 %build
 %autoreconf
-%configure %{?_enable_docs:--enable-docbook-docs}
+%configure %{?_disable_docs:--disable-docbook-docs}
 %make_build
 
 %install
@@ -75,6 +75,12 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
+* Wed Aug 22 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
+- 1.0
+
 * Sun May 27 2018 Yuri N. Sedunov <aris@altlinux.org> 0.11-alt1
 - first build for Sisyphus
 

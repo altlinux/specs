@@ -4,11 +4,11 @@
 %def_disable snapshot
 %def_enable check
 %{?_enable_snapshot:%def_with bootstrap}
-%define ver_major 0.40
-%define api_ver 0.40
+%define ver_major 0.42
+%define api_ver 0.42
 
 Name: vala
-Version: %ver_major.9
+Version: %ver_major.0
 Release: alt1
 
 Summary: Vala is a programming language which makes GNOME programming easy
@@ -146,6 +146,7 @@ mkdir bootstrap-build
 %endif
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 
 # build an intermediate version of the compiler
@@ -262,6 +263,9 @@ mkdir -p %buildroot%_datadir/vala/vapi
 
 
 %changelog
+* Sat Sep 01 2018 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1
+- 0.42.0
+
 * Mon Aug 20 2018 Yuri N. Sedunov <aris@altlinux.org> 0.40.9-alt1
 - 0.40.9
 

@@ -2,12 +2,12 @@
 
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Photos
-%define ver_major 3.28
+%define ver_major 3.29
 %define _libexecdir %_prefix/libexec
-%define gegl_api_ver 0.3
+%define gegl_api_ver 0.4
 
 Name: gnome-photos
-Version: %ver_major.0
+Version: %ver_major.92
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
@@ -25,11 +25,11 @@ Source: %name-%version.tar
 %define gtk_ver 3.22.16
 %define tracker_ver 1.99.1
 %define gdata_ver 0.15.2
-%define gegl_ver 0.3.28
+%define gegl_ver 0.4.2
 %define grilo_ver 0.3
 %define png_ver 1.6
 %define gfbgraph_ver 0.2.1
-%define dazzle_ver 3.26
+%define dazzle_ver 3.28
 
 Requires: grilo-plugins >= %grilo_ver
 
@@ -40,7 +40,7 @@ BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: tracker-devel >= %tracker_ver
 BuildPreReq: libgdata-devel >= %gdata_ver
-BuildPreReq: libgegl%gegl_api_ver-devel >= %gegl_ver
+BuildPreReq: libgegl-devel >= %gegl_ver
 BuildPreReq: libgrilo-devel >= %grilo_ver
 BuildPreReq: libpng-devel >= %png_ver
 BuildRequires: libgexiv2-devel libexempi-devel liblcms2-devel librsvg-devel
@@ -86,6 +86,9 @@ rm -rf %buildroot/%_datadir/doc/%name
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Wed Sep 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.29.92-alt1
+- 3.29.92
+
 * Thu Mar 15 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

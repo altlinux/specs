@@ -1,10 +1,10 @@
-%define ver_major 2.0
+%define ver_major 2.1
 %define api_ver 2.0
 
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
 %set_verify_elf_method unresolved=relaxed
 
-%def_without bootstrap
+%def_with bootstrap
 %def_enable introspection
 %def_enable upower
 %def_enable network_manager
@@ -17,7 +17,7 @@
 
 Name: tracker
 Version: %ver_major.4
-Release: alt2
+Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -46,28 +46,27 @@ Requires: lib%name = %version-%release
 
 Requires: libsqlite3 >= %sqlite_ver
 
-BuildRequires(pre): rpm-build-gnome rpm-build-gir
+BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
 BuildRequires: gcc-c++ gnome-common
-BuildPreReq: gtk-doc docbook-utils python3
-BuildPreReq: libxml2-devel
-BuildPreReq: libdbus-devel >= %dbus_ver
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libicu-devel libunistring-devel
-BuildPreReq: libpango-devel >= %pango_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
+BuildRequires: intltool gtk-doc docbook-utils python3
+BuildRequires: libxml2-devel
+BuildRequires: libdbus-devel >= %dbus_ver
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libicu-devel libunistring-devel
+BuildRequires: libpango-devel >= %pango_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libsoup-devel >= %soup_ver libjson-glib-devel
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.9.5}
-%{?_enable_upower:BuildPreReq: libupower-devel >= %upower_ver}
-%{?_enable_network_manager:BuildPreReq: NetworkManager-glib-devel >= %nm_ver libnm-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5}
+%{?_enable_upower:BuildRequires: libupower-devel >= %upower_ver}
+%{?_enable_network_manager:BuildRequires: NetworkManager-glib-devel >= %nm_ver libnm-devel}
 BuildRequires: libstemmer-devel
 
-BuildPreReq: libuuid-devel
-BuildPreReq: vala >= 0.18.0
-BuildPreReq: intltool >= 0.35.0
-BuildPreReq: sqlite3 libsqlite3-devel >= %sqlite_ver
+BuildRequires: libuuid-devel
+BuildRequires: vala >= 0.18.0
+BuildRequires: sqlite3 libsqlite3-devel >= %sqlite_ver
 BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver
 BuildRequires: libgupnp-dlna-devel >= %gupnp_dlna_ver
-BuildRequires: systemd-devel libseccomp-devel
+BuildRequires: libsystemd-devel libseccomp-devel
 
 %description
 Tracker is a powerful desktop-neutral first class object
@@ -149,6 +148,7 @@ Included utilities for Tracker:
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
 	--disable-static \
@@ -231,6 +231,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.4-alt1
+- 2.1.4
+
 * Wed Jul 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt2
 - rebuilt against libicu*.so.62
 

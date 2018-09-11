@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.28
+%define ver_major 3.30
 %define _libexecdir %_prefix/libexec
 %def_enable kerberos
 %def_enable owncloud
@@ -10,7 +10,8 @@
 %def_enable flickr
 %def_enable imap_smtp
 %def_enable windows_live
-%def_enable telepathy
+# removed telepathy support in 3.29.1
+%def_disable telepathy
 %def_enable pocket
 %def_enable media_server
 %def_enable foursquare
@@ -18,6 +19,7 @@
 %def_enable todoist
 
 %def_enable gtk_doc
+%def_enable docs
 %define api_ver 1.0
 
 Name: gnome-online-accounts
@@ -130,7 +132,8 @@ NOCONFIGURE=1 ./autogen.sh
 	%{subst_enable foursquare} \
 	%{subst_enable lastfm} \
 	%{subst_enable todoist} \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
+	%{?_enable_docs:--enable-documentation}
 
 %make_build
 
@@ -142,13 +145,12 @@ NOCONFIGURE=1 ./autogen.sh
 %files -f %name.lang
 %_libexecdir/goa-daemon
 %_libexecdir/goa-identity-service
-%_datadir/%name/
 %_datadir/dbus-1/services/org.gnome.Identity.service
 %_datadir/dbus-1/services/org.gnome.OnlineAccounts.service
 %_datadir/glib-2.0/schemas/org.gnome.online-accounts.gschema.xml
 %_datadir/icons/hicolor/*/*/*.png
 %{?_enable_telepathy:%_iconsdir/hicolor/scalable/apps/im-*.svg}
-%_man8dir/goa-daemon.*
+%{?_enable_docs:%_man8dir/goa-daemon.*}
 %doc README NEWS
 
 %files -n lib%name
@@ -180,6 +182,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/goa/
 
 %changelog
+* Sat Sep 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Thu Mar 15 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

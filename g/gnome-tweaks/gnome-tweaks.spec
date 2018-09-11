@@ -1,11 +1,11 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.28
+%define ver_major 3.30
 %define old_name gnome-tweak-tool
 %define xdg_name org.gnome.tweaks
 
 Name: gnome-tweaks
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -27,9 +27,9 @@ Requires: gsettings-desktop-schemas-devel >= 3.27.90
 Provides: %old_name = %version-%release
 Obsoletes: %old_name < 3.27.4
 
-BuildRequires: meson rpm-build-gir
+BuildRequires(pre): meson rpm-build-gir rpm-build-python3
 BuildRequires: gsettings-desktop-schemas-devel >= 3.27.2
-BuildRequires: rpm-build-python3 python3-module-pygobject3-devel >= 3.10.0
+BuildRequires: python3-module-pygobject3-devel >= 3.10.0
 
 %description
 GNOME Tweaks is an application for changing the advanced settings
@@ -55,7 +55,7 @@ Features:
 %patch -b .desktop
 
 %build
-%meson -Denable-schemas-compile=false
+%meson
 %meson_build
 
 %install
@@ -75,6 +75,9 @@ Features:
 %doc AUTHORS NEWS README*
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Sun Apr 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 

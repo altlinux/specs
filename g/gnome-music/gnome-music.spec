@@ -1,8 +1,9 @@
-%define ver_major 3.28
+%define ver_major 3.30
 %define xdg_name org.gnome.Music
+%define gst_api_ver 1.0
 
 Name: gnome-music
-Version: %ver_major.2.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Music playing application for GNOME3
@@ -26,21 +27,33 @@ Requires: tracker >= %tracker_ver
 %define grilo_ver 0.3.1
 %define python_ver 3.3
 %define mediaart_ver 1.9
-%define pygobject_ver 3.21.1
+%define pygobject_ver 3.29.1
 %define pycairo_ver 1.14.0
 
 # gir-python.req doesn't recognize multiline expressions (see gnomemusic/albumartcache.py)
 Requires: typelib(MediaArt) = 2.0 typelib(GstTag)
 
-Requires: gst-plugins-base1.0 grilo-tools >= %grilo_ver tracker >= %tracker_ver
+# gnomemusic/widgets/songwidget.py:from gi.repository.Dazzle import BoldingLabel  # noqa: F401
+Requires: typelib(Dazzle)
 
-BuildRequires(pre): meson
-BuildRequires: yelp-tools libappstream-glib-devel libgtk+3-devel >= %gtk_ver
+# 3.30
+#python3(gi.repository.Dazzle) < 0
+#python3(gi.repository.Gd) < 0
+
+%add_python3_req_skip gi.repository.Dazzle gi.repository.Gd
+
+Requires: gst-plugins-base%gst_api_ver grilo-tools >= %grilo_ver tracker >= %tracker_ver
+
+BuildRequires(pre): meson rpm-build-gir rpm-build-python3
+BuildRequires: %_bindir/git
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: libgtk+3-devel >= %gtk_ver libdazzle-devel libsoup-devel
 BuildRequires: libgrilo-devel >= %grilo_ver libmediaart2.0-devel >= %mediaart_ver
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
-BuildRequires: rpm-build-python3 python3-devel >= %python_ver
+BuildRequires: python3-devel >= %python_ver
 BuildRequires: pkgconfig(tracker-sparql-2.0)
 BuildRequires: python3-module-pygobject3-devel >= %pygobject_ver python3-module-pycairo-devel >= %pycairo_ver
+BuildRequires: libgnome-online-accounts-devel
 
 %description
 Music playing application for GNOME3.
@@ -71,6 +84,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2.1-alt1
 - 3.28.2.1
 

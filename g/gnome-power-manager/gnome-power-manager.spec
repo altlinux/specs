@@ -1,4 +1,4 @@
-%define ver_major 3.26
+%define ver_major 3.30
 %define xdg_name org.gnome.PowerStats
 
 Name: gnome-power-manager
@@ -40,9 +40,7 @@ GNOME Power Manager comes in three parts:
 
 %build
 %meson \
-    -Denable-tests=true \
-    -Denable-schemas-compile=false
-
+    -Denable-tests=true
 %meson_build
 
 %check
@@ -70,6 +68,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Wed Jan 31 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

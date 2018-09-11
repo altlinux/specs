@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.28
+%define ver_major 3.30
 %def_disable packagekit
 # tests require colord running and g-c-m installed
 %def_disable check
 
 Name: gnome-color-manager
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Color profile manager for the GNOME desktop
 License: %gpl2plus
@@ -103,6 +103,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README AUTHORS
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Thu Aug 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt2
 - dropped obsolete gnome-session dependency (ALT #35237)
 

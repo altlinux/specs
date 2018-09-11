@@ -1,7 +1,8 @@
 %def_disable snapshot
+%define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 3
 %define so_ver 4
 
@@ -13,7 +14,7 @@
 %def_disable debug
 
 Name: evince
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document viewer
@@ -35,14 +36,16 @@ Requires: dconf
 
 %define poppler_ver 0.24.0
 %define gtk_ver 3.16.0
+%define spectre_ver 0.2.0
 
 BuildPreReq: libpoppler-glib-devel >= %poppler_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildRequires: gcc-c++ gnome-common gtk-doc
 BuildRequires: intltool yelp-tools itstool
-BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel libnautilus-devel libspectre-devel libtiff-devel
-BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel zlib-devel libsecret-devel
-BuildRequires: libarchive-devel
+BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel libnautilus-devel
+BuildRequires: libspectre-devel >= %spectre_ver libtiff-devel
+BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel
+BuildRequires: zlib-devel libsecret-devel libarchive-devel libgspell-devel
 BuildRequires: libgnome-desktop3-devel
 %{?_enable_xps:BuildRequires: libgxps-devel}
 %{?_enable_browser_plugin:BuildRequires:browser-plugins-npapi-devel}
@@ -138,15 +141,12 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 
 %install
 %makeinstall_std
-
-subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
-
 %find_lang %name --with-gnome
 
 %files -f %name.lang
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS
 %_bindir/evince*
-%_prefix/lib/systemd/user/%name.service
+%_prefix/lib/systemd/user/%xdg_name.service
 %_libdir/nautilus/extensions-3.0/libevince-properties-page.so
 %dir %_libdir/evince
 %dir %_libdir/evince/%so_ver
@@ -160,15 +160,15 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %_libdir/evince/%so_ver/backends/*.evince-backend
 %exclude %_libdir/evince/%so_ver/backends/dvidocument.evince-backend
 %_libexecdir/evince*
-%_desktopdir/%name.desktop
-%_desktopdir/%name-previewer.desktop
+%_desktopdir/%xdg_name.desktop
+%_desktopdir/%xdg_name-previewer.desktop
 %_datadir/metainfo/%name-comicsdocument.metainfo.xml
 %_datadir/metainfo/%name-djvudocument.metainfo.xml
 %_datadir/metainfo/%name-pdfdocument.metainfo.xml
 %{?_enable_ps:%_datadir/metainfo/%name-psdocument.metainfo.xml}
 %_datadir/metainfo/%name-tiffdocument.metainfo.xml
 %_datadir/metainfo/%name-xpsdocument.metainfo.xml
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %_datadir/dbus-1/services/org.gnome.evince.Daemon.service
 %_datadir/%name/
@@ -215,6 +215,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Sun Sep 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
 - 3.28.3
 

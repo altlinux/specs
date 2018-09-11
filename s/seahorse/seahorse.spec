@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.20
+%define ver_major 3.30
 
 %def_disable debug
 # ldap support broken (incomplete) now
@@ -17,8 +17,8 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major
+Release: alt1
 
 Summary: A password and encryption key manager
 License: %gpllgpl2plus
@@ -92,6 +92,9 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30-alt1
+- 3.30
+
 * Wed May 16 2018 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt2
 - updated to 3.20.0-312-g77df305 from master branch, 3.20 totally obsolete
 

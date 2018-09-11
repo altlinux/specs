@@ -2,7 +2,7 @@
 
 %define _name baobab
 %define xdg_name org.gnome.baobab
-%define ver_major 3.28
+%define ver_major 3.30
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 Name: gnome-disk-usage
@@ -21,7 +21,7 @@ Provides: baobab = %version-%release
 %define gtk_ver 3.20.0
 %define vala_ver 0.23.3
 
-BuildRequires(pre): meson rpm-build-gnome
+BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildRequires: yelp-tools xmllint libappstream-glib-devel
 BuildRequires: vala-tools >= %vala_ver gobject-introspection-devel libgtk+3-gir-devel
@@ -59,6 +59,9 @@ popd
 %doc README NEWS
 
 %changelog
+* Sun Sep 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

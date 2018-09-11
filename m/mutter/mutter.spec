@@ -3,16 +3,16 @@
 
 %def_disable snapshot
 
-%define ver_major 3.28
+%define ver_major 3.30
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
 %def_enable remote_desktop
 %def_disable egl_device
-%define api_ver 2
+%define api_ver 3
 
 Name: mutter
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -48,13 +48,13 @@ Source: %name-%version.tar
 %define libinput_ver 0.99.0
 %define gsds_ver 3.21.4
 %define gudev_ver 232
-%define pipewire_ver 0.1.8
+%define pipewire_ver 0.2.2
 
 Requires: lib%name = %EVR
 Requires: zenity
 %{?_enable_remote_desktop:Requires: pipewire >= %pipewire_ver}
 
-BuildPreReq: rpm-build-gnome gnome-common
+BuildRequires(pre): rpm-build-gnome rpm-build-gir gnome-common
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgio-devel >= %glib_ver
@@ -189,6 +189,9 @@ DATADIRNAME=share %configure \
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1:3.30.0-alt1
+- 3.30.0
+
 * Thu Jul 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1:3.28.3-alt1
 - 3.28.3
 

@@ -1,10 +1,10 @@
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
-%define _name org.gnome.Maps
+%define xdg_name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Maps is a map application for GNOME
@@ -51,7 +51,8 @@ Requires: typelib(Secret)
 Requires: typelib(Soup)
 Requires: typelib(WebKit2)
 
-BuildPreReq: libgio-devel >= %glib_ver
+BuildRequires(pre): meson rpm-build-gir
+BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgjs-devel >= %gjs_ver gobject-introspection-devel
 BuildRequires: gnome-common intltool yelp-tools
 BuildRequires: geoclue2-devel >= %geoclue_ver
@@ -66,35 +67,33 @@ Maps is a map application for GNOME.
 %setup
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	--disable-schemas-compile
-# SMP-incompatible build
-%make
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
 
 %files -f %name.lang
 %_bindir/*
 %_libdir/%name/
-%_datadir/applications/*
+%_desktopdir/%xdg_name.desktop
 %_datadir/%name/
-%_iconsdir/hicolor/*x*/*/%_name.png
-%_iconsdir/hicolor/symbolic/apps/%{_name}*.svg
-%_datadir/dbus-1/services/%_name.service
-%config %_datadir/glib-2.0/schemas/%_name.gschema.xml
-%_datadir/metainfo/%_name.appdata.xml
+%_iconsdir/hicolor/*x*/*/%xdg_name.png
+%_iconsdir/hicolor/symbolic/apps/%{xdg_name}*.svg
+%_datadir/dbus-1/services/%xdg_name.service
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc README NEWS
 
-%exclude %_libdir/%name/*.la
 %exclude %_libdir/%name/*.so
-%exclude %_girdir/GnomeMaps-%api_ver.gir
+%exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 

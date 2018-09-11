@@ -1,9 +1,10 @@
 %def_disable snapshot
 
-%define ver_major 0.28
+%define ver_major 0.30
 %def_disable introspection
 %def_enable gtk_doc
 %def_enable man
+%def_disable bash_completion
 
 Name: dconf
 Version: %ver_major.0
@@ -17,7 +18,7 @@ Url: https://wiki.gnome.org/Projects/dconf
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: http://download.gnome.org/sources/dconf/%ver_major/%name-%version.tar.xz
+Source: https://download.gnome.org/sources/dconf/%ver_major/%name-%version.tar.xz
 %endif
 Source1: update-dconf-database.filetrigger
 
@@ -31,6 +32,7 @@ BuildRequires: libdbus-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_man:BuildRequires: xsltproc}
+%{?_enable_bash_completion:BuildRequires: pkgconfig(bash-completion)}
 
 %description
 dconf is a low-level configuration system. Its main purpose is to
@@ -108,8 +110,9 @@ This package provides Vala language bindings  for the dconf library
 
 %build
 %meson \
-	%{?_enable_gtk_doc:-Denable-gtk-doc=true} \
-	-Denable-man=true
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
+	-Dman=true \
+	%{?_disable_bash_completion:-Dbash_completion=false}
 %meson_build
 
 %install
@@ -138,6 +141,7 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %_man1dir/%name.1.*
 %_man7dir/%name.7.*
 %endif
+%{?_enable_bash_completion:%_datadir/bash-completion/completions/dconf}
 %doc README NEWS
 
 %files -n lib%name
@@ -165,9 +169,11 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %_vapidir/dconf.deps
 %_vapidir/dconf.vapi
 
-%exclude %_datadir/bash-completion/completions/dconf
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt1
+- 0.30.0
+
 * Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.0-alt1
 - 0.28.0
 

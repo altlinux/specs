@@ -1,11 +1,11 @@
-%define ver_major 3.28
+%define ver_major 3.30
 %define xdg_name org.gnome.Terminal
 %define _libexecdir %_prefix/libexec
 
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
@@ -17,7 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.40
 %define gtk_ver 3.12.0
-%define vte_ver 0.52.2
+%define vte_ver 0.54.0
 
 Provides: xvt
 
@@ -25,6 +25,7 @@ PreReq: libvte3 >= %vte_ver
 Requires: common-licenses
 Requires: dconf gnome-icon-theme
 
+BuildRequires(pre): rpm-macros-alternatives
 BuildRequires: rpm-build-gnome gnome-common intltool
 BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
 BuildPreReq: libgio-devel >= %glib_ver
@@ -60,6 +61,7 @@ Nautilus file manager.
 %__ln_s -f %_licensedir/GPL-3 COPYING
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
 	--disable-static \
@@ -81,7 +83,7 @@ EOF
 
 %files -f %name.lang
 %_bindir/%name
-%_libexecdir/%name-migration
+#%_libexecdir/%name-migration
 %_libexecdir/%name-server
 %_prefix/lib/systemd/user/%name-server.service
 %_desktopdir/%xdg_name.desktop
@@ -101,6 +103,9 @@ EOF
 %endif
 
 %changelog
+* Sun Sep 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Mon May 21 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 

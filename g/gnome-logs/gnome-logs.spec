@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.28
+%define ver_major 3.30
 %define _name org.gnome.Logs
 
 %def_with man
 %def_enable tests
 
 Name: gnome-logs
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME logfile viewer
@@ -35,7 +35,6 @@ GNOME Logs is a log viewer for the systemd journal.
 
 %prep
 %setup
-subst "s/'appdata'/'metainfo'/" data/meson.build
 
 %build
 %meson %{?_with_man:-Dman=true} \
@@ -65,6 +64,9 @@ subst "s/'appdata'/'metainfo'/" data/meson.build
 %doc NEWS README
 
 %changelog
+* Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Wed Jul 11 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.5-alt1
 - 3.28.5
 

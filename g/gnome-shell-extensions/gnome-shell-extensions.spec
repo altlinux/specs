@@ -1,13 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 3.28
+%define ver_major 3.30
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
 
 %def_enable classic_mode
 
 Name: gnome-shell-extensions
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -25,8 +25,8 @@ Source: %name-%version.tar
 
 Requires: gnome-shell >= %ver_major
 
-BuildRequires(pre): meson
-BuildRequires: rpm-build-gir libgjs-devel libmozjs52-tools sassc
+BuildRequires(pre): meson rpm-build-gir
+BuildRequires: libgjs-devel libmozjs52-tools sassc
 
 %description
 GNOME Shell Extensions is a collection of extensions providing additional
@@ -64,7 +64,7 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/theme/classic-process-working.svg
 %_datadir/gnome-shell/theme/gnome-classic.css
 %_datadir/gnome-shell/theme/gnome-classic-high-contrast.css
-%_datadir/glib-2.0/schemas/org.gnome.shell.extensions.classic-overrides.gschema.xml
+%_datadir/glib-2.0/schemas/00_org.gnome.shell.extensions.classic.gschema.override
 %endif
 
 ## Extensions
@@ -171,6 +171,9 @@ See %_docdir/%name-%version/README for more information.
 %exclude %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.example.gschema.xml
 
 %changelog
+* Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Sat Apr 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 

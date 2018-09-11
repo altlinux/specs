@@ -1,4 +1,4 @@
-%define ver_major 3.28
+%define ver_major 3.29
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
@@ -7,8 +7,8 @@
 %def_enable cheese
 
 Name: gnome-initial-setup
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.92
+Release: alt1
 
 Summary: Bootstrapping your OS
 Group: Graphical desktop/GNOME
@@ -87,6 +87,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Wed Aug 29 2018 Yuri N. Sedunov <aris@altlinux.org> 3.29.92-alt1
+- 3.29.92
+
 * Wed Jun 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt2
 - fixed buildreqs
 
