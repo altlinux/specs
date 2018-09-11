@@ -4,10 +4,14 @@
 %def_with snappy
 %def_with lz4
 %def_with zlib
+%def_with bzip2
 %def_with zstd
+%def_with tbb
+%def_with numa
+%def_without rocksdb_lite
 
 Name: rocksdb
-Version: 5.7.5
+Version: 5.13.3
 Release: alt1%ubt
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: Databases
@@ -18,13 +22,16 @@ Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++
-#BuildRequires: libgtest-devel  cmake
+BuildRequires: libgtest-devel  cmake
 %{?_with_jemalloc:BuildRequires: libjemalloc-devel}
 %{?_with_java:BuildRequires: java-devel}
 %{?_with_snappy:BuildRequires: libsnappy-devel}
 %{?_with_lz4:BuildRequires: liblz4-devel}
 %{?_with_zlib:BuildRequires: zlib-devel}
+%{?_with_bzip2:BuildRequires: bzlib-devel}
 %{?_with_zstd:BuildRequires: libzstd-devel}
+%{?_with_tbb:BuildRequires: tbb-devel}
+%{?_with_numa:BuildRequires: libnuma-devel}
 
 %description
 Rocksdb is a library that forms the core building block for a fast key value
@@ -71,29 +78,28 @@ Static library for rocksdb
 rm build_tools/gnu_parallel
 
 %build
-#%%cmake \
-#%if_with jemalloc
-#    -DWITH_JEMALLOC:BOOL=ON \
-#%endif
-#%if_with java
-#    -DWITH_JNI:BOOL=ON \
-#%endif
-#%if_with snappy
-#    -DWITH_SNAPPY:BOOL=ON \
-#%endif
-#    -DPORTABLE:BOOL=OFF
+%cmake \
+    %{?_with_jemalloc:-DWITH_JEMALLOC:BOOL=ON} \
+    %{?_with_java:-DWITH_JNI:BOOL=ON} \
+    %{?_with_snappy:-DWITH_SNAPPY:BOOL=ON} \
+    %{?_with_zlib:-DWITH_ZLIB:BOOL=ON} \
+    %{?_with_lz4:-DWITH_LZ4:BOOL=ON} \
+    %{?_with_bzip2:-DWITH_BZ2:BOOL=ON} \
+    %{?_with_zstd:-DWITH_ZSTD:BOOL=ON} \
+    %{?_with_rocksdb_lite:-DROCKSDB_LITE:BOOL=ON} \
+    -DPORTABLE:BOOL=OFF
 
-#%%cmake_build
 #export EXTRA_CFLAGS="-fPIC"
 #export EXTRA_CXXFLAGS="-fPIC"
+%cmake_build
 
-export PORTABLE="1"
-%make_build static_lib
-%make_build shared_lib
+#export PORTABLE="1"
+#%%make_build static_lib
+#%%make_build shared_lib
 
 %install
-#%%cmakeinstall_std
-%makeinstall_std PREFIX=%_prefix LIBDIR=%_libdir
+%cmakeinstall_std
+#%%makeinstall_std PREFIX=%_prefix LIBDIR=%_libdir
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -106,6 +112,12 @@ export PORTABLE="1"
 %_libdir/*.a
 
 %changelog
+* Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 5.13.3-alt1%ubt
+- 5.13.3
+
+* Wed Jun 06 2018 Alexey Shabalin <shaba@altlinux.ru> 5.8.8-alt1%ubt
+- 5.8.8
+
 * Thu Dec 07 2017 Alexey Shabalin <shaba@altlinux.ru> 5.7.5-alt1%ubt
 - 5.7.5
 
