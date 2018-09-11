@@ -10,8 +10,8 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.3.3.9
-Release: alt1.S1.1
+Version: 0.3.4.8
+Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
 Group: System/Servers
@@ -27,8 +27,6 @@ Source3: %name.tmpfiles
 # Automatically added by buildreq on Fri Jun 24 2011
 # optimized out: fontconfig fonts-type1-urw ghostscript-classic libcom_err-devel libkrb5-devel tex-common texlive-base texlive-base-bin texlive-common texlive-latex-base texlive-latex-recommended
 BuildRequires: ghostscript-common libevent-devel libssl-devel texlive-fonts-recommended texlive-generic-recommended transfig zlib-devel
-
-BuildRequires(pre):rpm-build-ubt
 
 %description
 Tor is a connection-based low-latency anonymous communication system.
@@ -143,6 +141,10 @@ fi
 %_var/cache/%name
 
 %changelog
+* Tue Sep 11 2018 Vladimir Didenko <cow@altlinux.ru> 0.3.4.8-alt1
+- new version
+- get rid of ubt macros
+
 * Thu Aug 30 2018 Grigory Ustinov <grenka@altlinux.org> 0.3.3.9-alt1.S1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
