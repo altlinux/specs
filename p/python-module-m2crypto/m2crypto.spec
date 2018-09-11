@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 0.30.1
-Release: alt1
+Release: alt2
 Summary: Support for using OpenSSL in python scripts.
 License: BSD
 Group: Development/Python
@@ -26,6 +26,8 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-py libnumpy-py3-devel
 %endif
 
+%py_requires typing
+
 %description
 This package allows you to call OpenSSL functions from python scripts.
 
@@ -39,6 +41,7 @@ Group: Development/Python3
 %add_python3_req_skip M2Crypto.six.moves.urllib_parse
 %add_python3_req_skip M2Crypto.six.moves.urllib_response
 %add_python3_req_skip M2Crypto.six.moves.xmlrpc_client
+%py3_requires typing
 
 %description -n python3-module-%oname
 This package allows you to call OpenSSL functions from python scripts.
@@ -102,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Tue Sep 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.30.1-alt2
+- Updated runtime dependencies.
+
 * Thu Sep 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.30.1-alt1
 - Updated to upstream version 0.30.1
 - Enabled python3 build from same sources.
