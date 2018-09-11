@@ -5,7 +5,7 @@
 %def_enable tests
 
 Name: libinput
-Version: 1.11.3
+Version: 1.12.0
 Release: alt1
 
 Summary: Input devices library
@@ -14,6 +14,7 @@ License: MIT
 Url: http://www.freedesktop.org/wiki/Software/libinput/
 
 Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
+Patch: libinput-1.12.0-up-format.patch
 
 %add_python3_path %_libexecdir/%name
 
@@ -23,7 +24,8 @@ Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
 BuildRequires(pre): meson rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: libmtdev-devel >= %mtdev_ver libevdev-devel >= %evdev_ver
-BuildRequires: libudev-devel libcheck-devel libunwind-devel
+BuildRequires: libudev-devel libsystemd-devel
+BuildRequires: libcheck-devel libunwind-devel
 %{?_enable_libwacom:BuildRequires: libwacom-devel}
 %{?_enable_debug_gui:BuildRequires: libgtk+3-devel}
 %{?_enable_documentation:BuildRequires: doxygen graphviz}
@@ -69,6 +71,7 @@ This package contains visual debug helper for %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson %{?_enable_libwacom:-Dlibwacom=true} \
@@ -88,7 +91,7 @@ This package contains visual debug helper for %name.
 %_libdir/%name.so.*
 /lib/udev/%name-device-group
 /lib/udev/%name-model-quirks
-%_udevhwdbdir/90-%name-model-quirks.hwdb
+%_datadir/%name/
 %_udevrulesdir/80-%name-device-groups.rules
 %_udevrulesdir/90-%name-model-quirks.rules
 %doc COPYING README*
@@ -111,7 +114,9 @@ This package contains visual debug helper for %name.
 %_man1dir/%name-measure-touchpad-pressure.1.*
 %_man1dir/%name-measure-touchpad-tap.1.*
 %_man1dir/%name-measure-touch-size.1.*
-%_man1dir/%name-measure-trackpoint-range.1.*
+%_man1dir/%name-quirks.1.*
+%_man1dir/%name-quirks-list.1.*
+%_man1dir/%name-quirks-validate.1.*
 %_man1dir/%name-record.1.*
 %_man1dir/%name-replay.1.*
 
@@ -123,6 +128,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Tue Sep 11 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Thu Jul 26 2018 Yuri N. Sedunov <aris@altlinux.org> 1.11.3-alt1
 - 1.11.3
 
