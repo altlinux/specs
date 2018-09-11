@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 %define		branch 0.12
-%define		svn svn7877
+%define		svn svn8283
 
 Version:	%branch.0
 Name:		qmmp-plugin-pack
@@ -162,21 +162,24 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib D
 # #%_libdir/qmmp/Engines/libffvideo.so
 
 %files -n %name-in-ffap
-%_libdir/qmmp/Input/libffap.so
+%_libdir/qmmp-%branch/Input/libffap.so
 
 %files -n %name-in-xmp
-%_libdir/qmmp/Input/libxmp.so
+%_libdir/qmmp-%branch/Input/libxmp.so
 
 %files -n %name-eff-src
-%_libdir/qmmp/Effect/libsrconverter.so
+%_libdir/qmmp-%branch/Effect/libsrconverter.so
 
 %files -n %name-vis-goom
-%_libdir/qmmp/Visual/libgoom.so
+%_libdir/qmmp-%branch/Visual/libgoom.so
 
 %files -n %name-history
-%_libdir/qmmp/General/libhistory.so
+%_libdir/qmmp-%branch/General/libhistory.so
 
 %changelog
+* Tue Sep 11 2018 Motsyo Gennadi <drool@altlinux.ru> 0.12.0-alt1.svn8283
+- build svn8283
+
 * Sat Mar 17 2018 Motsyo Gennadi <drool@altlinux.ru> 0.12.0-alt1.svn7877
 - build svn7877
 
