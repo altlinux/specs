@@ -1,6 +1,5 @@
-%define ccnet_version 6.1.8
 Name: seafile
-Version: 6.2.2
+Version: 6.2.5
 Release: alt1
 
 Summary: Full-fledged cloud storage platform
@@ -31,7 +30,6 @@ BuildRequires: zlib-devel libjson-glib-devel
 BuildRequires: vala
 
 BuildRequires: libsearpc-devel >= 3.0.4
-#BuildRequires: libccnet-devel >= %ccnet_version
 
 BuildRequires: libsqlite3-devel >= 3.7
 BuildRequires: libevent-devel >= 2.0
@@ -40,8 +38,6 @@ BuildRequires: libcurl-devel >= 7.17
 
 # server requires
 #BuildRequires: libzdb-devel >= 2.12
-
-Requires: ccnet >= %ccnet_version
 
 %description
 Seafile is a next-generation open source cloud storage system
@@ -112,6 +108,12 @@ cp %SOURCE1 .
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Tue Sep 11 2018 Vitaly Lipatov <lav@altlinux.ru> 6.2.5-alt1
+- new version 6.2.5 (with rpmrb script)
+
+* Wed Aug 15 2018 Vitaly Lipatov <lav@altlinux.ru> 6.2.4-alt1
+- new version 6.2.4 (with rpmrb script)
+
 * Sat Jul 21 2018 Vitaly Lipatov <lav@altlinux.ru> 6.2.2-alt1
 - new version 6.2.2 (with rpmrb script)
 - drop libccnet-devel, libzdb-devel build requires
