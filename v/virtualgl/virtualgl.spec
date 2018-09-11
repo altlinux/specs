@@ -1,6 +1,6 @@
 Name: virtualgl
 Version: 2.5.90
-Release: alt1%ubt
+Release: alt2%ubt
 
 %define vgl_name vgl
 
@@ -32,6 +32,7 @@ BuildRequires: libXv-devel
 BuildRequires: libfltk-devel
 BuildRequires: libssl-devel
 BuildRequires: libturbojpeg-devel
+BuildRequires: boost-devel-headers
 
 Provides: VirtualGL = %version %name = %version
 Obsoletes: VirtualGL <= %version %name < %version
@@ -69,6 +70,11 @@ This package contains VirtualGL development libraries.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+
+# fix compute endian on aarch64
+cat <<__EOF__ >include/boost/endian.hpp
+#include <boost/detail/endian.hpp>
+__EOF__
 
 sed -i -e 's,"glx.h",<GL/glx.h>,' server/*.[hc]*
 # Remove bundled libraries
@@ -111,7 +117,7 @@ install -pD -m 644 vglgenkey %buildroot%_defaultdocdir/%name-%version/utils
 rm %buildroot%_bindir/vgl_glxinfo
 ln -sf %_libdir/libvglfaker.so %buildroot%_libdir/%vgl_name/libGL.so
 
-%ifarch x86_64
+%if "%_lib" == "lib64"
 mkdir %buildroot%_libexecdir
 mv %buildroot%_bindir/.vglrun.vars64 %buildroot%_libexecdir/vglrun.vars64
 %else 
@@ -141,6 +147,10 @@ chmod 2755 %_localstatedir/%vgl_name
 %_includedir/*.h
 
 %changelog
+* Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 2.5.90-alt2%ubt
+- rebuild with new openssl
+- fix compile on aarch64
+
 * Thu May 03 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.5.90-alt1%ubt
 - new version build
 - restore previous package spec changelog
