@@ -8,7 +8,7 @@
 
 Name: calligra
 Version: 3.1.0
-Release: alt3%ubt
+Release: alt4%ubt
 Epoch: 0
 %K5init no_altplace
 %define libname lib%name
@@ -32,6 +32,9 @@ Requires: %name-plan
 Requires: %name-okular-generators
 
 Source: http://download.kde.org/stable/calligra/%version/calligra-%version.tar
+# Upstream patches
+Patch1: 0001-Fix-build-with-Qt-5.11-missing-headers.patch
+Patch2: 0001-Missing-include-for-QFrame.patch
 # ALT
 Patch103: alt-disable-products.patch
 
@@ -179,6 +182,8 @@ Requires: %name-common = %EVR
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 %patch103 -p1
 
 %build
@@ -275,6 +280,7 @@ done
 %_K5bin/calligrageminithumbnailhelper
 %_K5xdgapp/org.kde.calligragemini.desktop
 %_datadir/calligragemini/
+%_datadir/metainfo/org.kde.calligragemini.appdata.xml
 
 %files sheets
 %config(noreplace) %_K5xdgconf/calligrasheetsrc
@@ -295,6 +301,7 @@ done
 %_K5tmpl/SpreadSheet.*
 %_K5tmpl/.source/SpreadSheet.*
 %_K5xdgapp/org.kde.calligrasheets.desktop
+%_datadir/metainfo/org.kde.calligrasheets.appdata.xml
 
 %files stage
 %config(noreplace) %_K5xdgconf/calligrastagerc
@@ -334,6 +341,7 @@ done
 %_K5tmpl/.source/Illustration.*
 %_K5xdgapp/org.kde.karbon.desktop
 %_K5srv/ServiceMenus/calligra/karbon_print.desktop
+%_datadir/metainfo/org.kde.karbon.appdata.xml
 
 %if_enabled plan
 %files plan
@@ -390,6 +398,7 @@ done
 %_K5srv/words_*_thumbnail.desktop
 %_K5srv/ServiceMenus/calligra/words_print.desktop
 %_K5xdgmime/wiki-format.xml
+%_datadir/metainfo/org.kde.calligrawords.appdata.xml
 
 %files okular-generators
 %_K5lib/libkookularGenerator_odp.so*
@@ -404,6 +413,9 @@ done
 %exclude %_K5lib/libkookularGenerator_odt.so*
 
 %changelog
+* Tue Sep 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0:3.1.0-alt4%ubt
+- Fixed build with new Qt.
+
 * Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 0:3.1.0-alt3%ubt
 - rebuild with new okular
 
