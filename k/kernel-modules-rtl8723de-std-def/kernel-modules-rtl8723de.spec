@@ -5,10 +5,10 @@
 
 %define module_name	rtl8723de
 %define module_version	5.1.1.8
-%define module_release alt5.k
+%define module_release alt10
 
 %define flavour		std-def
-%define karch x86_64 i586
+%define karch %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-def
 
@@ -29,17 +29,23 @@ License: GPLv2
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
-ExclusiveArch: %karch
+ExclusiveArch: %ix86 x86_64
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
+Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
+Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
+Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
-%IF_ver_lteq "%kversion" "4.10"
-BuildRequires: kernel-source-%module_name-4.10down = %module_version
-%else
-BuildRequires: kernel-source-%module_name = %module_version
+%define k_mod_src_suffix %nil
+%IF_ver_lt %kversion 4.15
+%define k_mod_src_suffix -4.11up
 %endif
+%IF_ver_lteq %kversion 4.10
+%define k_mod_src_suffix -4.10down
+%endif
+BuildRequires: kernel-source-%module_name%k_mod_src_suffix = %module_version
 
 %description
 These packages contain Realtek RTL8723DE module.
@@ -62,6 +68,21 @@ install -D -m 644 8723de.ko %buildroot/%module_dir/rtl8723de.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Sep 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt10
+- fix git inheritance
+
+* Tue Sep 11 2018 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt9
+- fix to build
+
+* Tue Sep 11 2018 Sergey V Turchin <zerg at altlinux dot org> 5.1.1.8-alt8
+- build only on x86
+
+* Tue Sep 11 2018 Sergey V Turchin <zerg at altlinux dot org> 5.1.1.8-alt7
+- define karch
+
+* Tue Sep 11 2018 Sergey V Turchin <zerg at altlinux dot org> 5.1.1.8-alt6
+- fix provides
 
 * Tue Jan 09 2018 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt5
 - use other sources branch for old kernels
