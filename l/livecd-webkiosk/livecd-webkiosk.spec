@@ -1,6 +1,6 @@
 Name: livecd-webkiosk
-Version: 0.4.3
-Release: alt3
+Version: 0.6.0
+Release: alt1
 
 Summary: start the browser for a suitable webkiosk environment
 License: Public domain
@@ -9,7 +9,7 @@ Group: System/X11
 Url: http://en.altlinux.org/starterkits
 Packager: Michael Shigorin <mike@altlinux.org>
 
-Requires: ratpoison xinit
+Requires: ratpoison xinit libshell
 BuildArch: noarch
 
 %define skeldir %_sysconfdir/skel
@@ -53,15 +53,15 @@ Requires: chromium
 (the browser == chromium)
 #endif
 
-%package qupzilla
-Summary: qupzilla webkiosk setup
+%package falkon
+Summary: falkon webkiosk setup
 Group: System/X11
 Requires: %name = %version-%release
-Requires: qupzilla >= 1.8.0
+Requires: falkon
 
-%description qupzilla
+%description falkon
 %summary
-(the browser == qupzilla)
+(the browser == falkon)
 
 %prep
 
@@ -72,8 +72,15 @@ mkdir -p %buildroot{%skeldir,%ifacedir}
 
 cat > %buildroot%xsfile << _EOF_
 #!/bin/sh
+
 ratpoison &
-[ -f /image/index.html ] && url=/image/index.html
+
+. shell-cmdline
+
+read cmdline < /proc/cmdline
+cmdline_get url url
+[ -n "\$url" -a -f /image/index.html ] && url=/image/index.html
+
 while :; do
 	xset s off; xset -dpms
 	webkiosk-browser \$url
@@ -117,10 +124,10 @@ _EOF_
 chmod +x %wrapper
 #endif
 
-%post qupzilla
+%post falkon
 cat > %wrapper << _EOF_
 #!/bin/sh
-exec qupzilla --fullscreen "\$@"
+exec falkon --fullscreen "\$@"
 _EOF_
 chmod +x %wrapper
 
@@ -129,17 +136,24 @@ chmod +x %wrapper
 %ifacedir/options
 %xsfile
 
-%files seamonkey
-
 %files firefox
 
+%ifarch %ix86 x86_64 aarch64
+%files seamonkey
 #ifarch x86_64
 %files chromium
 #endif
-
-%files qupzilla
+%files falkon
+%endif
 
 %changelog
+* Wed Sep 12 2018 Michael Shigorin <mike@altlinux.org> 0.6.0-alt1
+- replaced qupzilla with falkon following upstream decision
+- made all but firefox subpackages x86/aarch64-only
+
+* Wed Jun 22 2016 Michael Shigorin <mike@altlinux.org> 0.5.0-alt1
+- added "url" kernel boot parameter support
+
 * Wed Oct 14 2015 Michael Shigorin <mike@altlinux.org> 0.4.3-alt3
 - the whole livecd-webkiosk source package should be made noarch
 
