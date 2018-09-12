@@ -1,9 +1,9 @@
 %define rname mscore
-%define mversion 2.1
+%define mversion 2.3
 
 Name: musescore
-Version: 2.1.0
-Release: alt3
+Version: 2.3.2
+Release: alt1
 
 Summary: Music notation and composition software
 
@@ -22,7 +22,7 @@ BuildRequires: libalsa-devel libjack-devel libportaudio2-devel libsndfile-devel
 BuildRequires: qt5-designer qt5-base-devel libpulseaudio-devel libfreetype-devel
 BuildRequires: liblame-devel qt5-tools-devel qt5-webkit-devel qt5-declarative-devel
 BuildRequires: qt5-script-devel qt5-xmlpatterns-devel qt5-quick1-devel qt5-svg-devel
-BuildRequires: qt5-tools-devel-static zlib-devel libvorbis-devel
+BuildRequires: qt5-tools-devel-static zlib-devel libvorbis-devel libportmidi-devel
 
 %description
 Music notation and composition software
@@ -90,6 +90,9 @@ chrpath -d %buildroot%_bindir/mscore
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Sep 12 2018 Grigory Ustinov <grenka@altlinux.org> 2.3.2-alt1
+- 2.3.2
+
 * Wed Jul 18 2018 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt3
 - Fix FTBFS (Add missing rpm-build-xdg).
 
