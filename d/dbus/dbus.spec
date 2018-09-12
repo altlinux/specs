@@ -8,8 +8,8 @@
 %define systemdsessionunitdir %_prefix/lib/systemd/user
 
 Name: dbus
-Version: 1.10.24
-Release: alt4%ubt
+Version: 1.12.10
+Release: alt1
 
 Summary: D-BUS is a simple IPC framework based on messages.
 License: AFL/GPL
@@ -21,9 +21,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 PreReq: shadow-utils
 Requires: lib%name = %version-%release
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: doxygen gcc-c++ libexpat-devel libSM-devel libX11-devel xmlto libselinux-devel
-BuildRequires: libaudit-devel libcap-ng-devel
+BuildRequires: autoconf-archive doxygen gcc-c++ libexpat-devel libSM-devel libX11-devel xmlto libselinux-devel libaudit-devel libcap-ng-devel
 BuildRequires: libsystemd-daemon-devel libsystemd-login-devel libsystemd-journal-devel
 
 Source: %name-%version.tar
@@ -127,6 +125,8 @@ ln -sf ../../bin/dbus-launch %buildroot%_bindir/dbus-launch
 ln -sf ../../bin/dbus-send %buildroot%_bindir/dbus-send
 ln -sf dbus.service %buildroot/lib/systemd/system/messagebus.service
 
+install -pD -m0755 bus/messagebus.in %buildroot%_initdir/messagebus
+
 cp -a doc/api/html api
 
 mkdir -p %buildroot%_sysconfdir/dbus-1/system.d
@@ -220,26 +220,31 @@ fi
 %_includedir/dbus-1.*
 %_libdir/libdbus-1.so
 %_libdir/dbus-1.*
+%_libdir/cmake/DBus1
 %_pkgconfigdir/dbus-1.pc
 %dir %_datadir/dbus-1
 %dir %_datadir/dbus-1/interfaces
+%_datadir/xml/dbus-1
 %_man1dir/dbus-test-tool.1*
 
 %changelog
-* Fri Feb 16 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.24-alt4%ubt
+* Wed Sep 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.12.10-alt1
+- 1.12.10
+
+* Fri Feb 16 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.24-alt4.S1
 - dbus-tools-gui does not require /etc/X11/xinit.d (closes: #34549)
 
-* Wed Feb 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.24-alt3%ubt
+* Wed Feb 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.24-alt3.S1
 - fixed systemctl path (closes: #34515)
 
-* Thu Feb 08 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.24-alt2%ubt
+* Thu Feb 08 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.24-alt2.S1
 - reenable user session (closes: #34515)
 
-* Thu Feb 08 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.24-alt1%ubt
+* Thu Feb 08 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.24-alt1.S1
 - fix package version for previous release
 - disable user session because of problems in mate-session
 
-* Wed Feb 07 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.20-alt1%ubt
+* Wed Feb 07 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.20-alt1.S1
 - enable user session (closes: #34515)
 
 * Thu Jul 06 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.10.20-alt1
