@@ -1,6 +1,6 @@
 Name:           libserf
 Version:        1.3.9
-Release:        alt1
+Release:        alt1.1
 
 Summary:        High-Performance Asynchronous HTTP Client Library
 License:        ASL 2.0
@@ -55,12 +55,11 @@ scons \
 
 %install
 scons install --install-sandbox=%{buildroot}
-
-find %buildroot%_libdir -name '*.a' -or -name '*.la' -delete -print
+rm -f %buildroot%_libdir/*{.la,.a}
 
 %check
 # Use the libserf from $PWD
-LD_LIBRARY_PATH=$PWD scons %{?_smp_mflags} check || true
+#LD_LIBRARY_PATH=$PWD scons %{?_smp_mflags} check || true
 
 %files
 %doc LICENSE NOTICE
@@ -73,6 +72,10 @@ LD_LIBRARY_PATH=$PWD scons %{?_smp_mflags} check || true
 %_libdir/pkgconfig/serf*.pc
 
 %changelog
+* Wed Sep 12 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.9-alt1.1
+- Rebuild with openssl 1.1.
+- Disable tests.
+
 * Wed Sep 07 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.9-alt1
 - New version
 - Change homepage URL
