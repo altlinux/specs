@@ -1,16 +1,21 @@
 Name: tvheadend
-Version: 3.0
+Version: 4.2.6
 Release: alt1
 
 Summary: Tvheadend TV streaming server
 License: GPLv3
 Group: System/Servers
-Url: http://www.lonelycoder.com/hts/
+Url: https://tvheadend.org/
 
-Requires: pwgen
+Requires(post): pwgen
 
 Source: %name-%version-%release.tar
-BuildRequires: libavahi-devel libssl-devel
+
+BuildRequires: cmake gcc-c++ libdbus-devel
+BuildRequires: libssl-devel libsystemd-devel liburiparser-devel zlib-devel
+BuildRequires: libavfilter-devel libavresample-devel libswresample-devel
+BuildRequires: libswscale-devel libavformat-devel libavcodec-devel libavutil-devel
+BuildRequires: python2.7(encodings)
 
 %description
 Tvheadend is a combined DVB receiver, Digital Video Recorder and
@@ -21,13 +26,17 @@ through a modern web interface.
 %setup
 
 %build
-sh configure --bindir=%_sbindir --mandir=%_man1dir --datadir=%_datadir/%name --release
+export TVHEADEND_FILE_CACHE=${PWD}/.gear
+sh configure --bindir=%_sbindir --libdir=%_libdir \
+	     --mandir=%_mandir --datadir=%_datadir \
+	     --enable-libav --disable-ffmpeg_static
 make
 
 %install
 %make_install prefix=%_prefix DESTDIR=%buildroot install
 install -pm0755 -D tvheadend.init %buildroot%_initdir/tvheadend
 install -pm0644 -D tvheadend.sysconfig %buildroot%_sysconfdir/sysconfig/tvheadend
+install -pm0644 -D rpm/tvheadend.service %buildroot%_unitdir/tvheadend.service
 
 mkdir -p %buildroot%_sysconfdir/tvheadend %buildroot%_localstatedir/tvheadend
 touch %buildroot%_sysconfdir/tvheadend/superuser
@@ -46,11 +55,11 @@ f=%_sysconfdir/tvheadend/superuser
 %preun_service tvheadend
 
 %files
-%doc README QUICKSTART
-%doc docs/header.html docs/docresources docs/html
+%doc README.md QUICKSTART
 
 %_initdir/tvheadend
 %_sysconfdir/sysconfig/tvheadend
+%_unitdir/tvheadend.service
 
 %dir %attr(0770,root,_hts) %_sysconfdir/tvheadend
 %config(noreplace) %attr(0600,_hts,_hts) %_sysconfdir/tvheadend/superuser
@@ -62,6 +71,15 @@ f=%_sysconfdir/tvheadend/superuser
 %dir %attr(0770,root,_hts) %_localstatedir/tvheadend
 
 %changelog
+* Wed Sep 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2.6-alt1
+- 4.2.6 released
+
+* Sun Sep 15 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.4.1-alt1
+- 3.4p1 released
+
+* Tue Apr 30 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.4-alt1
+- 3.4 released
+
 * Tue Sep 11 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0-alt1
 - 3.0 released
 
