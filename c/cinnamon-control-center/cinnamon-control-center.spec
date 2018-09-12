@@ -9,7 +9,7 @@
 
 Name: cinnamon-control-center
 Version: %ver_major.0
-Release: alt3
+Release: alt4
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -148,7 +148,9 @@ you'll want to install this package.
 %dir %_datadir/%name
 %_datadir/%name/ui
 %_datadir/%name/datetime
-%_desktopdir/*.desktop
+# This desktop files are outdated and not usable/useful anymore
+# TODO: Notify upstream about this issue
+%exclude %_desktopdir/*.desktop
 %_sysconfdir/xdg/menus/cinnamoncc.menu
 %_datadir/desktop-directories/*
 %_iconsdir/hicolor/*/*/*
@@ -164,6 +166,9 @@ you'll want to install this package.
 
 
 %changelog
+* Wed Sep 12 2018 Vladimir Didenko <cow@altlinux.org> 3.8.0-alt4
+- don't pack outdated desktop files (closes: #35387)
+
 * Thu Jun 21 2018 Vladimir Didenko <cow@altlinux.org> 3.8.0-alt3
 - remove socialweb from buildrequires
 
