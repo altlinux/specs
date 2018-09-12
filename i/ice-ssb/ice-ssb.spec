@@ -2,7 +2,7 @@
 
 Name: ice-ssb
 Version: 5.3.4
-Release: alt1
+Release: alt2
 
 Summary: Application to easily add and remove Chromium site specific browsers.
 License: GPL
@@ -12,6 +12,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Patch0: fix-paths.patch
+Patch1: fix-chromium-name.patch
 
 Requires: python3-module-requests
 Requires: chromium
@@ -26,6 +27,7 @@ supported Google Chrome. Since version 5.1, Ice has supported Mozilla Firefox.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %install
 install -d -m 0755 %buildroot%_bindir
@@ -59,6 +61,9 @@ cp -fR %name/locale %buildroot%_datadir/%name
 
 
 %changelog
+* Wed Sep 12 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.4-alt2
+- Fixed chromium name
+
 * Tue Sep 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.4-alt1
 - Init build to Sisyphus
 
