@@ -1,5 +1,5 @@
 Name: libneon
-Version: 0.30.1
+Version: 0.30.2
 Release: alt1
 Summary: neon is an HTTP and WebDAV client library
 License: LGPLv2+
@@ -9,8 +9,10 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Obsoletes: %{name}0.25 %{name}0.26
 
-Source: neon-%version.tar
-Patch: neon-%version-%release.patch
+Source: neon-%version.tar.gz
+Patch1: neon-0.27.0-multilib.patch
+Patch2: neon-0.30.2-lockprintf.patch
+Patch3: neon-0.30.2-sysuioh.patch
 
 BuildRequires: libexpat-devel libkrb5-devel libssl-devel openssl zlib-devel libgssapi-devel xmlto
 
@@ -35,18 +37,16 @@ worry about the lower-level stuff.
 
 %prep
 %setup -n neon-%version
-%patch -p1
-
-echo %version > .version
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
-export ACLOCAL="aclocal -I macros"
-%autoreconf
 %configure \
 	--with-ssl \
 	--enable-shared \
 	--disable-static
-./.release.sh %version
+
 %make_build
 
 %check
@@ -69,9 +69,12 @@ install -pm644 AUTHORS BUGS NEWS README THANKS TODO doc/*.txt \
 %_pkgconfigdir/*
 %_man1dir/*
 %_man3dir/*
-%docdir/
+%docdir
 
 %changelog
+* Wed Sep 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.30.2-alt1
+- 0.30.2
+
 * Wed Oct 22 2014 Valery Inozemtsev <shrek@altlinux.ru> 0.30.1-alt1
 - 0.30.1
 
