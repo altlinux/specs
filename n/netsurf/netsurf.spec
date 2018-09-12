@@ -1,5 +1,5 @@
 Name: netsurf
-Version: 3.7
+Version: 3.8
 Release: alt1
 
 Summary: Lightweight Web Browser With Good HTML 4 And CSS Support
@@ -21,8 +21,9 @@ BuildRequires: gcc make glibc-devel perl libcurl-devel
 BuildRequires: libexpat-devel
 BuildRequires: libssl-devel
 BuildRequires: gperf flex
-BuildRequires: libmozjs-devel
+BuildRequires: libmozjs60-devel
 BuildRequires: perl-HTML-Parser
+BuildRequires: perl-IO-Compress
 
 # Версия 3.1 + 
 # git clone git://git.netsurf-browser.org/netsurf.git
@@ -124,6 +125,9 @@ export RPM_FIXUP_METHOD="binconfig pkgconfig libtool"
 %_datadir/pixmaps/*
 
 %changelog
+* Wed Sep 12 2018 Andrey Cherepanov <cas@altlinux.org> 3.8-alt1
+- New version.
+
 * Tue Apr 03 2018 Andrey Cherepanov <cas@altlinux.org> 3.7-alt1
 - New version.
 
