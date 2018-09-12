@@ -1,17 +1,16 @@
 Summary: Utility to administer the Linux Virtual Server
 Name: ipvsadm
-Version: 1.28
+Version: 1.29
 Release: alt1
 License: GPL
 Url: http://www.LinuxVirtualServer.org/
 Group: System/Kernel and hardware
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 Provides: %name-%version
 
 Source0: %name-%version.tar
 Source1: %name.init.alt
-#Patch0: ipvsadm-1.25-kernhdr-1.2.0.patch
+Source2: %name.service
 
 # Automatically added by buildreq on Sat May 16 2009
 BuildRequires: libnl-devel libpopt-devel
@@ -22,17 +21,16 @@ offered by the Linux kernel.
 
 %prep
 %setup -n %name-%version
-#%patch0 -p1
 
 %build
-#make INCLUDE="-Ikernheaders -I.. -I." CFLAGS="%optflags" POPT_LIB="-lpopt"
 %make POPT_LIB="-lpopt"
 
 %install
-%__mkdir_p $RPM_BUILD_ROOT/{sbin,%_man8dir,%_initrddir,%_sysconfdir/sysconfig}
+mkdir -p %buildroot/{sbin,%_man8dir,%_initrddir,%_sysconfdir/sysconfig}
 %makeinstall BUILD_ROOT=%buildroot MANDIR=%_mandir
-%__install -pD -m755 %SOURCE1 %buildroot%_initrddir/%name
-%__install -pD -m644 /dev/null %buildroot%_sysconfdir/sysconfig/%name
+install -pD -m755 %SOURCE1 %buildroot%_initrddir/%name
+install -pD -m644 %SOURCE2 %buildroot%_unitdir/%name.service
+install -pD -m644 /dev/null %buildroot%_sysconfdir/sysconfig/%name
 
 %files
 %doc README
@@ -40,6 +38,7 @@ offered by the Linux kernel.
 %config %_initrddir/ipvsadm
 /sbin/ipvsadm*
 %_man8dir/ipvsadm*
+%_unitdir/%name.service
 
 %post
 %post_service ipvsadm
@@ -48,6 +47,10 @@ offered by the Linux kernel.
 %preun_service ipvsadm
 
 %changelog
+* Wed Sep 12 2018 Terechkov Evgenii <evg@altlinux.org> 1.29-alt1
+- 1.29 (ALT #35385)
+- Spec cleanup
+
 * Tue Jan 12 2016 Mikhail Efremov <sem@altlinux.org> 1.28-alt1
 - Updated to 1.28.
 
