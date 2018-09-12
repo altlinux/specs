@@ -1,24 +1,25 @@
+%define _unpackaged_files_terminate_build 1
+
 %define origname yaml-cpp
 %define soversion 0
 
 Name: lib%origname%soversion
-Version: 0.5.1
-Release: alt4
+Version: 0.6.2
+Release: alt1
 
 Summary: A YAML parser and emitter for C++
 License: MIT
 Group: Development/Other
 
-Url: https://code.google.com/p/yaml-cpp/
-Packager: Andrew Clark <andyc@altlinux.org>
-Source: %origname-%version.tar.gz
+Url: https://github.com/jbeder/yaml-cpp
 
-# Automatically added by buildreq on Thu May 29 2014 (-ba)
-# optimized out: cmake-modules elfutils libcloog-isl4 libstdc++-devel pkg-config python-base
+# https://github.com/jbeder/yaml-cpp.git
+Source: %name-%version.tar
+
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: boost-devel-headers cmake gcc-c++
 
-Provides: %name = %version-%release
+Provides: %name = %EVR
 
 %description
 A YAML parser and emitter for C++
@@ -26,39 +27,43 @@ A YAML parser and emitter for C++
 %package -n lib%origname-devel
 Summary: YAML Development libraries
 Group: Development/Other
-Requires: lib%origname%soversion
-Provides: %name-devel = %version-%release
-Obsoletes: %name-devel < %version-%release
+Requires: lib%origname%soversion = %EVR
+Provides: %name-devel = %EVR
+Obsoletes: %name-devel < %EVR
 
 %description -n lib%origname-devel
 Development libraries for YAML.
 This package contains static development files for YAML.
 
 %prep
-%setup -n %origname-%version
+%setup
 
 %build
-%cmake_insource -DBUILD_SHARED_LIBS=ON -DYAML_CPP_BUILD_TOOLS=0
-%make_build
+%cmake \
+	-DBUILD_SHARED_LIBS=ON \
+	-DYAML_CPP_BUILD_TOOLS=OFF \
+	-DYAML_CPP_BUILD_TESTS=OFF \
+	%nil
+
+%cmake_build
 
 %install
-%makeinstall_std
-#mkdir -p %buildroot{%_libdir/pkgconfig,%_includedir}
-#mv include/* %buildroot%_includedir
-#install -pm 644 lib%origname.so* %buildroot%_libdir
-#install -pm 644 %origname.pc %buildroot%_libdir/pkgconfig
+%cmakeinstall_std
 
 %files
-%doc license.txt install.txt
+%doc LICENSE *.md
 %_libdir/*.so.*
 
 %files -n lib%origname-devel
-%_includedir/%origname/*
-%_libdir/pkgconfig/*.pc
+%_includedir/%origname
+%_pkgconfigdir/*.pc
 %_libdir/*.so
-
+%_libdir/cmake/%origname
 
 %changelog
+* Tue Sep 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.2-alt1
+- Updated to upstream version 0.6.2.
+
 * Tue Dec 1 2015 Vladimir Didenko <cow@altlinux.ru> 0.5.1-alt4
 - Rebuild with gcc5
 
