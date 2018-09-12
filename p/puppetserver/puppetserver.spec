@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    5.3.5
-Release:    alt1%ubt
+Release:    alt2%ubt
 
 Summary:    Server automation framework and application
 License:    Apache-2.0
@@ -107,6 +107,15 @@ getent group puppet > /dev/null || \
 	fi
 
 %post
+install --directory %_sysconfdir/puppet/ssl
+install --directory %_sysconfdir/puppet/code
+
+chown -R puppet:puppet %_sysconfdir/puppet/ssl
+chown -R puppet:puppet %_sysconfdir/puppet/code
+
+find %_sysconfdir/puppet/ssl -type d -print0 | xargs -0 chmod 770
+find %_sysconfdir/puppet/code -type d -print0 | xargs -0 chmod 770
+
 chown puppet:puppet /var/log/puppetserver
 chmod 700 /var/log/puppetserver
 chown puppet:puppet /var/lib/puppetserver
@@ -133,6 +142,9 @@ chmod 700 /var/lib/puppetserver/jars
 
 
 %changelog
+* Wed Sep 12 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.5-alt2%ubt
+- chown puppet/ssl for foreground
+
 * Mon Aug 09 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.5-alt1%ubt
 - Update version to 5.3.5
 
