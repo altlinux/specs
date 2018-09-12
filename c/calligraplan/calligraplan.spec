@@ -18,7 +18,7 @@
 
 Name: calligraplan
 Version: 3.1.0
-Release: alt3
+Release: alt4
 Epoch: 0
 %K5init
 
@@ -32,6 +32,8 @@ Requires: %oname-common = %version-%release
 Requires: kf5-kreport
 
 Source: http://download.kde.org/stable/calligra/%version/calligraplan-%version.tar
+# Upstream patches
+Patch1: 0001-Fix-build-with-Qt-5.11-missing-headers.patch
 
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++
@@ -163,6 +165,7 @@ Requires: %oname-common = %EVR
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %K5build \
@@ -208,6 +211,7 @@ rm -frv %buildroot/%_datadir/locale/x-test/
 %_K5cfg/calligraplanworksettings.kcfg
 %_K5xdgapp/org.kde.calligraplan.desktop
 %_K5xdgapp/org.kde.calligraplanwork.desktop
+%_datadir/metainfo/org.kde.calligraplan.appdata.xml
 
 %files -n %libkplatokernel
 %_K5lib/libkplatokernel.so.%sover
@@ -258,6 +262,9 @@ rm -frv %buildroot/%_datadir/locale/x-test/
 %_K5lib/libplanworkfactory.so.*
 
 %changelog
+* Tue Sep 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0:3.1.0-alt4
+- Fixed build with new Qt.
+
 * Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt3
 - NMU: added url
 

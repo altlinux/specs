@@ -5,7 +5,7 @@
 
 Name:    kf5-kreport
 Version: 3.1.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Development/KDE and QT
@@ -83,6 +83,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libKReport3.so.*
 
 %changelog
+* Tue Sep 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.0-alt2%ubt
+- Rebuilt for aarch64.
+
 * Wed Mar 21 2018 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt1%ubt
 - new version
 
