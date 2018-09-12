@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 3.0
 %define applet_api_ver 5.0
 %def_disable static
@@ -205,6 +205,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Sun Sep 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Sun Mar 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

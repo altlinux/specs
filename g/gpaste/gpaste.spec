@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.28
+%define ver_major 3.30
 %define api_ver 1.0
 %define _name GPaste
 %define xdg_name org.gnome.GPaste
@@ -9,7 +9,7 @@
 %def_disable applet
 
 Name: gpaste
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: GPaste is a clipboard management system
@@ -22,19 +22,18 @@ Source: http://www.imagination-land.org/files/%name/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
-# from pkg-config 0.29.1
-Source1: pkg.m4
 
 Requires: lib%name = %version-%release
 
-%define gtk_ver 3.22.0
-%define gi_ver 1.50.0
-%define vala_ver 0.32
-%define mutter_ver 3.24
+%define gtk_ver 3.24.0
+%define gi_ver 1.58.0
+%define vala_ver 0.42
+%define mutter_ver 3.30.0
+%define gjs_ver 1.54
 
 BuildRequires: libappstream-glib-devel desktop-file-utils
 BuildRequires: libdbus-devel libgtk+3-devel >= %gtk_ver
-BuildRequires: libgjs-devel libmutter-devel >= %mutter_ver
+BuildRequires: libgjs-devel >= %gjs_ver libmutter-devel >= %mutter_ver
 BuildRequires: gnome-control-center-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel
 BuildRequires: vala-tools >= %vala_ver libvala-devel
@@ -102,10 +101,8 @@ in notification area.
 
 %prep
 %setup -n %_name-%version
-# pkg-config-0.29, automake 1.15 required
-subst 's/0\.29/0.25/
-       s/1\.15/1.14/' configure.ac
-cp %SOURCE1 m4/
+# automake 1.15 required
+subst 's/1\.15/1.14/' configure.ac
 
 %build
 %autoreconf
@@ -165,6 +162,9 @@ cp %SOURCE1 m4/
 
 
 %changelog
+* Mon Sep 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
+- 3.30.1
+
 * Sat Apr 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt1
 - 3.28.2
 
