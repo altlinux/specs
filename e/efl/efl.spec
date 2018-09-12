@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.20
+%define ver_major 1.21
 %define beta %nil
 %define gst_api_ver 1.0
 %define wayland_ver 1.11.0
@@ -36,8 +36,8 @@
 %endif
 
 Name: efl
-Version: %ver_major.7
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
@@ -67,6 +67,7 @@ BuildRequires: libudev-devel systemd-devel libsystemd-journal-devel libsystemd-d
 BuildRequires: libX11-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXext-devel
 BuildRequires: libXfixes-devel libXinerama-devel libXrandr-devel libXrender-devel libXScrnSaver-devel
 BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel
+BuildRequires: libxkbcommon-x11-devel
 BuildRequires: libGL-devel
 
 %ifarch %e2k
@@ -255,8 +256,10 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 	%{subst_enable drm} \
 	%{?_enable_gl_drm:--enable-gl-drm} \
 	%{subst_enable ibus} \
-	%{subst_enable gstreamer1}
-
+	%{subst_enable gstreamer1} \
+	--with-mount=/bin/mount \
+	--with-umount=/bin/umount \
+	--with-eject=%_bindir/eject
 %make_build
 #%make doc
 
@@ -302,6 +305,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_libdir/ecore_con/
 %_libdir/ecore_evas/
 %_libdir/ecore_imf/
+%_libdir/ecore_wl2/
 %_libdir/edje/
 %_libdir/eeze/
 %_libdir/efreet/
@@ -373,8 +377,11 @@ find %buildroot%_libdir -name "*.la" -delete
 %_pkgconfigdir/eet-cxx.pc
 %_pkgconfigdir/eet.pc
 %_pkgconfigdir/eeze.pc
-%_pkgconfigdir/efl-cxx.pc
 %_pkgconfigdir/efl.pc
+%_pkgconfigdir/efl-core.pc
+%_pkgconfigdir/efl-cxx.pc
+%_pkgconfigdir/efl-net.pc
+%_pkgconfigdir/efl-ui.pc
 %_pkgconfigdir/%name-wl.pc
 %_pkgconfigdir/efreet-mime.pc
 %_pkgconfigdir/efreet-trash.pc
@@ -444,10 +451,13 @@ find %buildroot%_libdir -name "*.la" -delete
 %_datadir/elementary/
 %_desktopdir/elementary_config.desktop
 %_desktopdir/elementary_test.desktop
-%_iconsdir/elementary.png
+%_iconsdir/hicolor/*/apps/elementary.png
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Thu Sep 06 2018 Yuri N. Sedunov <aris@altlinux.org> 1.21.0-alt1
+- 1.21.0
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1.20.7-alt3
 - rebuilt with openssl-1.1
 

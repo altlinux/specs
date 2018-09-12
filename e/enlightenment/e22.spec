@@ -14,12 +14,13 @@
 %def_enable wl_x11
 %def_enable systemd
 %def_enable install_sysactions
-%def_with pam_helper
+%def_without pam_helper
+%def_with suid_binaries
 # for silly lightdm
 %def_enable wmsession
 
 Name: enlightenment
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 Epoch: 1
 
@@ -43,7 +44,7 @@ Source8: %name.desktop
 # revert it for patch enlightenment-0.19.0-alt-pam-helper.patch
 Patch: enlightenment-0.22.2-up-auth.patch
 Patch1: e17-0.17.0-alt-g-s-d_path.patch
-Patch2: enlightenment-0.19.99-alt-e_sys_nosuid.patch
+Patch2: enlightenment-0.22.4-alt-e_sys_nosuid.patch
 Patch3: auto-ptrace-disable.patch
 Patch4: enlightenment-0.19.0-alt-pam-helper.patch
 
@@ -103,13 +104,11 @@ Development headers for Enlightenment.
 
 %prep
 %setup -n %name-%version%beta
-%patch -p1 -R -b .auth
+#%patch -p1 -R -b .auth
 %patch1 -p1 -b .gsd
-%patch2 -p1 -b .nosuid
+%{?_without_suid_binaries:%patch2 -p1 -b .nosuid}
 %patch3 -p2 -b .ptrace
-%if_with pam_helper
-%patch4 -p1 -b .pam_helper
-%endif
+%{?_with_pam_helper:%patch4 -p1 -b .pam_helper}
 
 %build
 %autoreconf
@@ -181,24 +180,38 @@ sed -i 's/^\(Name\[.*\]=Enlightenment\)$/\1 on Wayland/' %buildroot%_datadir/way
 %config %_sysconfdir/%name/sysactions.conf
 %config(noreplace) %_sysconfdir/pam.d/%name
 %dir %_libdir/%name/
-%_libdir/%name/*
+%_libdir/%name/modules/
+%dir %_libdir/%name/utils
+%_libdir/%name/utils/%{name}_alert
+%_libdir/%name/utils/%{name}_elm_cfgtool
+%_libdir/%name/utils/%{name}_fm
+%_libdir/%name/utils/%{name}_fm_op
+%_libdir/%name/utils/%{name}_static_grabber
+%_libdir/%name/utils/%{name}_thumb
+# suid bit apps
+%_libdir/%name/utils/%{name}_backlight
+%_libdir/%name/utils/%{name}_sys
+%if_without pam_helper
+%_libdir/%name/utils/%{name}_ckpasswd
+%else
+%exclude %_libdir/%name/utils/%{name}_ckpasswd
+%endif
 %_liconsdir/*.png
 %_bindir/emixer
-%_bindir/enlightenment
-# see original 0.22.2/src/bin/e_auth.c
-%exclude %_bindir/enlightenment_askpass
-%_bindir/enlightenment_filemanager
-%_bindir/enlightenment_imc
-%_bindir/enlightenment_open
-%_bindir/enlightenment_remote
-%_bindir/enlightenment_start
-%{?_enable_wmsession:%_bindir/start_enlightenment}
+%_bindir/%name
+%_bindir/%{name}_askpass
+%_bindir/%{name}_filemanager
+%_bindir/%{name}_imc
+%_bindir/%{name}_open
+%_bindir/%{name}_remote
+%_bindir/%{name}_start
+%{?_enable_wmsession:%_bindir/start_%name}
 %_datadir/%name/
 %{?_enable_wmsession:%exclude %_datadir/xsessions/%name.desktop}
-%{?_enable_wayland:%_datadir/wayland-sessions/enlightenment.desktop}
+%{?_enable_wayland:%_datadir/wayland-sessions/%name.desktop}
 %_datadir/pixmaps/emixer.png
-%_pixmapsdir/enlightenment-askpass.png
-%_datadir/applications/*.desktop
+%_pixmapsdir/%name-askpass.png
+%_desktopdir/*.desktop
 %{?_enable_systemd:%_prefix/lib/systemd/user/%name.service}
 %_xdgmenusdir/e-applications.menu
 %doc AUTHORS COPYING README
@@ -212,6 +225,10 @@ sed -i 's/^\(Name\[.*\]=Enlightenment\)$/\1 on Wayland/' %buildroot%_datadir/way
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Sep 06 2018 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.4-alt1
+- 0.22.4
+- used own pam-helper
+
 * Thu Mar 15 2018 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.2-alt1
 - 0.22.2
 
