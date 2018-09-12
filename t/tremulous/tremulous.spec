@@ -1,6 +1,8 @@
 %define gver 4.7
 %set_gcc_version %gver
 
+ExclusiveArch: %ix86 x86_64
+
 %define _user _tremulous
 %define _group _tremulous
 %define _home %_localstatedir/%name
@@ -16,8 +18,8 @@
 %endif
 
 Name: tremulous
-Version: 1.1.0
-Release: alt4.2
+Version: 1.2.0
+Release: alt1
 
 Summary: Tremulous - 3D FPS Strategic Shooter
 License: GPL
@@ -31,7 +33,7 @@ Source3: tremulous.init
 
 #	fix for #14027
 Patch0: tremulous-alt-mmap.patch
-Patch1: tremulous-alt-debuginfo.patch
+Patch1: tremulous-alt-debuginfo-2.patch
 
 Requires: %name-server = %version-%release
 Requires: %name-client = %version-%release
@@ -185,6 +187,9 @@ install -d %buildroot%_home
 %attr(775,root,%_group) %dir %_home
 
 %changelog
+* Wed Sep 12 2018 Pavel Moseev <mars@altlinux.org> 1.2.0-alt1
+- Updated to upstream version 1.2.0-beta
+
 * Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt4.2
 - Built with gcc 4.7
 
