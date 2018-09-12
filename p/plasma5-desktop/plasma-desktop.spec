@@ -8,7 +8,7 @@
 
 Name: plasma5-desktop
 Version: 5.12.6
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -212,6 +212,9 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Tue Sep 4 2018 Ivan Razzhivin <underwit@altlinux.org> 5.12.6-alt3%ubt
+- fix tooltip for appentry
+
 * Fri Aug 31 2018 Ivan Razzhivin <underwit@altlinux.org> 5.12.6-alt2%ubt
 - add tooltip for appentry
 
