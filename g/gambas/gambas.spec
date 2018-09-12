@@ -9,7 +9,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 
 Name:		gambas
 Version:	3.11.4
-Release:	alt1
+Release:	alt1.1
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -1652,6 +1652,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.term.*
 
 %changelog
+* Wed Sep 12 2018 Andrey Cherepanov <cas@altlinux.org> 3.11.4-alt1.1
+- Rebuild with openssl 1.1.
+
 * Tue Aug 21 2018 Andrey Cherepanov <cas@altlinux.org> 3.11.4-alt1
 - New version.
 
