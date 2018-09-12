@@ -1,13 +1,14 @@
 Name: sg3_utils
-Version: 1.42
+Version: 1.44
 Release: alt1
 
 Summary: Utilities for devices that use SCSI command sets
 License: GPLv2+ and BSD
 Group: System/Kernel and hardware
 Url: http://sg.danny.cz/sg/sg3_utils.html
-# http://sg.danny.cz/sg/p/%name-%version.tgz
+# http://sg.danny.cz/sg/p/%name-%version.tar.xz
 Source: %name-%version.tar
+Patch: sg3_utils-alt-rescan-scsi-bus.patch
 Requires: libsgutils = %EVR
 
 %description
@@ -42,6 +43,7 @@ for developing applications.
 
 %prep
 %setup
+%patch -p1
 sed -i s/libsgutils2/libsgutils/g */Makefile.*
 sed -i s/2:0:0/1:0:0/ lib/Makefile.*
 
@@ -67,6 +69,9 @@ sed -i s/2:0:0/1:0:0/ lib/Makefile.*
 %_libdir/*.so
 
 %changelog
+* Wed Sep 12 2018 Dmitry V. Levin <ldv@altlinux.org> 1.44-alt1
+- 1.42 -> 1.44.
+
 * Thu Feb 18 2016 Dmitry V. Levin <ldv@altlinux.org> 1.42-alt1
 - 1.41 -> 1.42.
 
