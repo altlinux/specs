@@ -1,12 +1,13 @@
 Name: keepass
-Version: 2.39.1
-Release: alt1%ubt
+Version: 2.40
+Release: alt1
 
 Summary: Password manager
 
 Group: File tools
 License: GPLv2+
 URL: http://keepass.info/
+ExclusiveArch: %ix86 x86_64
 
 #source from: https://sourceforge.net/projects/keepass/files/KeePass 2.x/
 Source0: %name-%version.tar
@@ -28,6 +29,7 @@ BuildRequires: archmage
 BuildRequires: python-module-pychm
 BuildRequires: desktop-file-utils
 BuildRequires: libgdiplus-devel
+BuildRequires: msbuild
 BuildRequires: mono-devel
 BuildRequires: mono-winforms
 BuildRequires: mono-web
@@ -68,11 +70,11 @@ find -name \*.png -print0 | xargs -0 mogrify -define png:format=png32
 ( cd Build && sh PrepMonoDev.sh )
 find . -name "*.sln" -print -exec sed -i 's/Format Version 10.00/Format Version 11.00/g' {} \;
 find . -name "*.csproj" -print -exec sed -i 's#ToolsVersion="3.5"#ToolsVersion="5.0"#g; s#<TargetFrameworkVersion>.*</TargetFrameworkVersion>##g; s#<PropertyGroup>#<PropertyGroup><TargetFrameworkVersion>v4.5</TargetFrameworkVersion>#g' {} \;
-xbuild /target:KeePass /property:Configuration=Release
+msbuild /target:KeePass /property:Configuration=Release
 for subdir in Images_App_HighRes Images_Client_16 Images_Client_HighRes; do
     xvfb-run -a mono Build/KeePass/Release/KeePass.exe -d:`pwd`/Ext/$subdir --makexspfile `pwd`/KeePass/Resources/Data/$subdir.bin
 done
-xbuild /target:KeePass /property:Configuration=Release
+msbuild /target:KeePass /property:Configuration=Release
 %__python -c 'import archmod.CHM; archmod.CHM.CHMDir("Docs").process_templates("Docs/Chm")'
 
 %install
@@ -119,6 +121,10 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %doc %_docdir/%name/Chm/
 
 %changelog
+* Thu Sep 13 2018 Oleg Solovyov <mcpain@altlinux.org> 2.40-alt1
+- new version: 2.40
+- do not build for aarch64
+
 * Wed May 30 2018 Oleg Solovyov <mcpain@altlinux.org> 2.39.1-alt1%ubt
 - new version: 2.39.1
 
