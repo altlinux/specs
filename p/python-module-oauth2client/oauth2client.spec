@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname oauth2client
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.2
-Release: alt2.1
+Version: 4.1.3
+Release: alt1
 Summary: OAuth 2.0 client library
 License: Apache Software License
 Group: Development/Python
@@ -19,12 +21,14 @@ BuildRequires: python-module-docutils python-module-html5lib python-module-httpl
 BuildRequires: python-module-sphinx-devel
 BuildRequires: python-module-mock python-module-fasteners python-module-flask
 BuildRequires: python-module-pytest
+BuildRequires: python2.7(Crypto)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-httplib2 python3-module-keyring python3-module-mox python3-module-pyasn1-modules python3-module-rsa python3-module-setuptools
 BuildRequires: python3-module-mock python3-module-fasteners python3-module-flask
 BuildRequires: python3(sqlalchemy)
 BuildRequires: python3-module-pytest
+BuildRequires: python3(Crypto)
 %endif
 
 %setup_python_module %oname
@@ -59,7 +63,7 @@ This package contains documentation for %oname.
 %package -n python-module-django-%oname
 Summary:        Django extension
 Group: Development/Python
-PreReq: %name = %version-%release
+PreReq: %name = %EVR
 
 %description -n python-module-django-%oname
 OAuth 2.0 utilities for Django.
@@ -70,7 +74,7 @@ the Django datastore.
 %package flask
 Summary: Flask extension
 Group: Development/Python
-PreReq: %name = %version-%release
+PreReq: %name = %EVR
 
 %description flask
 Provides a Flask extension that makes using OAuth2 web server flow easier.
@@ -81,7 +85,7 @@ available.
 %package gce
 Summary: GCE extension
 Group: Development/Python
-PreReq: %name = %version-%release
+PreReq: %name = %EVR
 
 %description gce
 Utilities for Google Compute Engine
@@ -100,7 +104,7 @@ The oauth2client is a client library for OAuth 2.0.
 %package -n python3-module-django-%oname
 Summary:        Django extension
 Group: Development/Python3
-PreReq: python3-module-%oname = %version-%release
+PreReq: python3-module-%oname = %EVR
 
 %description -n python3-module-django-%oname
 OAuth 2.0 utilities for Django.
@@ -111,7 +115,7 @@ the Django datastore.
 %package -n python3-module-%oname-flask
 Summary: Flask extension
 Group: Development/Python3
-PreReq: python3-module-%oname = %version-%release
+PreReq: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-flask
 Provides a Flask extension that makes using OAuth2 web server flow easier.
@@ -122,7 +126,7 @@ available.
 %package -n python3-module-%oname-gce
 Summary: GCE extension
 Group: Development/Python3
-PreReq: python3-module-%oname = %version-%release
+PreReq: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-gce
 Utilities for Google Compute Engine
@@ -218,6 +222,9 @@ popd
 %endif
 
 %changelog
+* Thu Sep 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.3-alt1
+- Updated to upstream version 4.1.3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.1.2-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
