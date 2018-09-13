@@ -1,7 +1,7 @@
 
 Name: libvirt-glib
-Version: 1.0.0
-Release: alt1
+Version: 1.1.0
+Release: alt0.git.d70587
 Summary: libvirt glib integration for events
 Group: System/Libraries
 License: LGPLv2+
@@ -9,8 +9,8 @@ URL: http://libvirt.org/
 Source: %name-%version.tar
 
 # From configure.ac
-%define libvirt_ver 1.1.1
-%define glib_ver 2.36.0
+%define libvirt_ver 1.2.5
+%define glib_ver 2.38.0
 %define libxml2_ver 2.0.0
 
 BuildRequires: intltool
@@ -206,6 +206,9 @@ intltoolize --force
 %_vapidir/libvirt-gobject-*
 
 %changelog
+* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 1.1.0-alt0.git.d70587
+- build upstream master snapshot
+
 * Sat Nov 05 2016 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1
 - 1.0.0
 

@@ -16,7 +16,7 @@
 
 Name: libspice-gtk
 Version: 0.35
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: A GTK widget for SPICE clients
 
 Group: System/Libraries
@@ -234,6 +234,9 @@ echo "%version" > .tarball-version
 %endif
 
 %changelog
+* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 0.35-alt3%ubt
+- backport patches from upstream master
+
 * Tue Sep 04 2018 Alexey Shabalin <shaba@altlinux.org> 0.35-alt2%ubt
 - rebuild with openssl-1.1
 

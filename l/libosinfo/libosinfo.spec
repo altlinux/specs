@@ -1,7 +1,7 @@
 
 Summary: A library for managing OS information for virtualization
 Name: libosinfo
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1%ubt
 
 License: LGPLv2+
@@ -15,10 +15,9 @@ BuildRequires(pre): rpm-build-ubt
 BuildRequires: intltool >= 0.40.0
 BuildRequires: gnome-common gtk-doc
 BuildRequires: glib2-devel >= 2.36 libgio-devel
-BuildRequires: libsoup-devel >= 2.42
+BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel >= 2.6.0
 BuildRequires: libxslt-devel >= 1.0.0
-BuildRequires: libcheck-devel
 BuildRequires: gobject-introspection-devel >= 0.9.0
 BuildRequires: osinfo-db
 BuildRequires: perl-podlators
@@ -128,6 +127,9 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1%ubt
+- 1.2.0
+
 * Wed Oct 11 2017 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1%ubt
 - 1.1.0
 

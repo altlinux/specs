@@ -61,6 +61,7 @@
 %def_with storage_lvm
 %def_with storage_scsi
 %def_with storage_iscsi
+%def_with storage_iscsi_direct
 %def_with storage_disk
 %ifarch x86_64 aarch64
 %def_with storage_rbd
@@ -83,7 +84,7 @@
 %def_without netcf
 %def_with udev
 %def_without hal
-%def_with jansson
+%def_with yajl
 %def_with sanlock
 %if_enabled lxc
 %def_with fuse
@@ -129,7 +130,7 @@
 %def_without bash_completion 
 
 Name: libvirt
-Version: 4.6.0
+Version: 4.7.0
 Release: alt1%ubt
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -153,7 +154,7 @@ BuildRequires(pre): rpm-build-ubt
 %{?_with_libxl:BuildRequires: xen-devel}
 %{?_with_hal:BuildRequires: libhal-devel}
 %{?_with_udev:BuildRequires: libudev-devel libpciaccess-devel}
-%{?_with_jansson:BuildRequires: libjansson-devel >= 2.5}
+%{?_with_yajl:BuildRequires: libyajl-devel}
 %{?_with_sanlock:BuildRequires: sanlock-devel >= 1.8}
 %{?_with_libpcap:BuildRequires: libpcap-devel}
 %{?_with_libnl:BuildRequires: libnl-devel}
@@ -171,6 +172,7 @@ BuildRequires(pre): rpm-build-ubt
 %{?_with_storage_disk:BuildRequires: libparted-devel parted libuuid-devel dmsetup libdevmapper-devel}
 %{?_with_storage_rbd:BuildRequires: ceph-devel}
 %{?_with_storage_iscsi:BuildRequires: open-iscsi}
+%{?_with_storage_iscsi_direct:BuildRequires: libiscsi-devel >= 1.18.0}
 %{?_with_storage_mpath:BuildRequires: libdevmapper-devel}
 %{?_with_storage_gluster:BuildRequires: glusterfs3-devel >= 3.4.1}
 %{?_with_storage_zfs:BuildRequires: zfs-utils}
@@ -342,6 +344,9 @@ Requires: libvirt-daemon-driver-storage-scsi = %EVR
 %if_with storage_iscsi
 Requires: libvirt-daemon-driver-storage-iscsi = %EVR
 %endif
+%if_with storage_iscsi_direct
+Requires: libvirt-daemon-driver-storage-iscsi-direct = %EVR
+%endif
 %if_with storage_mpath
 Requires: libvirt-daemon-driver-storage-mpath = %EVR
 %endif
@@ -417,6 +422,15 @@ Requires: iscsi-initiator-utils
 %description daemon-driver-storage-iscsi
 The storage driver backend adding implementation of the storage APIs for iscsi
 volumes using the host iscsi stack.
+
+%package daemon-driver-storage-iscsi-direct
+Summary: Storage driver plugin for iscsi-direct
+Group: System/Libraries
+Requires: libvirt-daemon-driver-storage-core = %EVR
+
+%description daemon-driver-storage-iscsi-direct
+The storage driver backend adding implementation of the storage APIs for iscsi
+volumes using libiscsi direct connection.
 
 %package daemon-driver-storage-mpath
 Summary: Storage driver plugin for multipath volumes
@@ -650,9 +664,6 @@ Requires: %name-libs = %EVR
 Requires: gettext
 # For virConnectGetSysinfo
 Requires: dmidecode
-# Needed by virt-pki-validate script
-# We dlopen(libjansson.so.4), so need an explicit dep
-Requires: libjansson
 Requires: gnutls-utils
 # Needed for probing the power management features of the host.
 Conflicts: %name < 0.9.11
@@ -783,6 +794,7 @@ LOADERS="$LOADERS_OLD:$LOADERS_NEW"
 		%{?_with_storage_fs:--with-storage-fs} \
 		%{?_with_storage_lvm:--with-storage-lvm} \
 		%{?_with_storage_iscsi:--with-storage-iscsi} \
+		%{?_with_storage_iscsi_direct:--with-storage-iscsi-direct} \
 		%{?_with_storage_scsi:--with-storage-scsi} \
 		%{?_with_storage_disk:--with-storage-disk} \
 		%{?_with_storage_rbd:--with-storage-rbd} \
@@ -796,7 +808,7 @@ LOADERS="$LOADERS_OLD:$LOADERS_NEW"
 		%{subst_with netcf} \
 		%{subst_with udev} \
 		%{subst_with hal} \
-		%{subst_with jansson} \
+		%{subst_with yajl} \
 		%{subst_with sanlock} \
 		%{subst_with fuse} \
 		%{subst_with dbus} \
@@ -979,7 +991,7 @@ fi
 %dir %_datadir/libvirt/schemas
 %dir %_localstatedir/lib/libvirt
 %_datadir/libvirt/schemas/*.rng
-%_datadir/libvirt/cpu_map.xml
+%_datadir/libvirt/cpu_map
 
 %if_with sasl
 %config(noreplace) %_sysconfdir/sasl2/libvirt.conf
@@ -1127,6 +1139,11 @@ fi
 %if_with storage_iscsi
 %files daemon-driver-storage-iscsi
 %_libdir/%name/storage-backend/libvirt_storage_backend_iscsi.so
+%endif
+
+%if_with storage_iscsi_direct
+%files daemon-driver-storage-iscsi-direct
+%_libdir/%name/storage-backend/libvirt_storage_backend_iscsi-direct.so
 %endif
 
 %if_with storage_mpath
@@ -1292,6 +1309,11 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 4.7.0-alt1%ubt
+- 4.7.0
+- add daemon-driver-storage-iscsi-direct package
+  (instead of unsing iscsiadm, it uses libiscsi)
+
 * Sat Aug 11 2018 Alexey Shabalin <shaba@altlinux.org> 4.6.0-alt1%ubt
 - 4.6.0
 - build with ceph storage support only for x86_64 and aarch64
