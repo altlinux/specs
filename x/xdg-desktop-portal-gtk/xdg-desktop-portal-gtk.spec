@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: xdg-desktop-portal-gtk
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Backend implementation for xdg-desktop-portal using GTK+
@@ -11,13 +11,13 @@ License: LGPLv2+
 Url: https://github.com/flatpak/%name
 Source: %url/releases/download/%version/%name-%version.tar.xz
 
-%define xdg_desktop_portal_ver 1.0.1
+%define xdg_desktop_portal_ver 1.0.2
 
 Requires: xdg-desktop-portal >= %xdg_desktop_portal_ver
 
 BuildRequires: libgtk+3-devel
 BuildRequires: pkgconfig(xdg-desktop-portal) >= %xdg_desktop_portal_ver
-BuildRequires: libsystemd-devel
+BuildRequires: libdbus-devel libsystemd-devel
 
 %description
 A backend implementation for xdg-desktop-portal that is using GTK+ and various
@@ -46,6 +46,9 @@ org.gnome.SessionManager D-Bus interfaces.
 
 
 %changelog
+* Thu Sep 13 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 

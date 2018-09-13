@@ -10,7 +10,7 @@
 %def_enable docs
 
 Name: flatpak
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -28,6 +28,7 @@ Source: %name-%version.tar
 %define bwrap_ver 0.2.1
 %define libarchive_ver 2.8.0
 
+Requires: lib%name = %version-%release
 Requires: %_bindir/fusermount
 Requires: %_bindir/bwrap
 Requires: bubblewrap >= %bwrap_ver
@@ -71,7 +72,6 @@ This package contains libflatpak.
 Summary: Development files for %name
 Group: Development/Other
 License: LGPLv2+
-Requires: %name = %version-%release
 Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
@@ -147,6 +147,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Sun Sep 16 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
