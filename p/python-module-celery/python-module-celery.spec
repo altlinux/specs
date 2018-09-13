@@ -1,4 +1,6 @@
-%define module_name celery
+%define _unpackaged_files_terminate_build 1
+
+%define oname celery
 
 %add_python3_req_skip celery.utils.nodenames
 %add_python3_req_skip celery.utils.time
@@ -7,15 +9,23 @@
 %def_with python3
 %def_enable check
 
-Name: python-module-%module_name
-Version: 4.1.0
-Release: alt1.1
+Name: python-module-%oname
+Version: 4.2.1
+Release: alt1
 Group: Development/Python
 License: BSD License
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
 URL: https://github.com/celery/celery
 
+# https://github.com/celery/celery.git
 Source: %name-%version.tar
+
+Patch1: %oname-%version-alt-tests.patch
+
+# Patches from Debian
+Patch10: 0005-Disable-pytest-3.3-log-capturing-to-avoid-changing-l.patch
+Patch11: 0007-Set-shell-in-su-invocation.patch
+Patch12: privacy.patch
 
 BuildRequires: dvipng
 # /proc is required for some tests
@@ -26,6 +36,7 @@ BuildRequires: python-module-alabaster python-module-billiard python-module-komb
 BuildRequires: python-module-html5lib python-module-nose python-module-pbr
 BuildRequires: python-module-sphinxcontrib-issuetracker python-module-unittest2
 BuildRequires: python2.7(case) python2.7(eventlet)
+BuildRequires: python2.7(redis)
 BuildRequires(pre): rpm-macros-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -35,6 +46,7 @@ BuildRequires: python3-module-html5lib python3-module-nose python3-module-pbr
 BuildRequires: python3-module-pycrypto
 BuildRequires: python3-module-django python3-module-ecdsa python3-module-pytz python3-module-unittest2 python3(requests)
 BuildRequires: python3(case) python3(eventlet) python3(kombu) python3(billiard)
+BuildRequires: python3(redis)
 %endif
 
 %description
@@ -50,7 +62,7 @@ execute asynchronously (in the background) or synchronously
 Celery is used in production systems to process millions of tasks a day.
 
 %package docs
-Summary: Documentation for %module_name
+Summary: Documentation for %oname
 Group: Development/Documentation
 BuildArch: noarch
 
@@ -66,14 +78,14 @@ execute asynchronously (in the background) or synchronously
 
 Celery is used in production systems to process millions of tasks a day.
 
-This package contains documentation for %module_name.
+This package contains documentation for %oname.
 
 %if_with python3
-%package -n python3-module-%module_name
+%package -n python3-module-%oname
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
 Group: Development/Python3
 
-%description -n python3-module-%module_name
+%description -n python3-module-%oname
 Celery is an open source asynchronous task queue/job queue based on
 distributed message passing.  It is focused on real-time operation,
 but supports scheduling as well.
@@ -88,6 +100,10 @@ Celery is used in production systems to process millions of tasks a day.
 
 %prep
 %setup
+%patch1 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -127,9 +143,12 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C docs html
 
 %check
+rm -f t/unit/contrib/test_sphinx.py
 python setup.py test
+
 %if_with python3
 pushd ../python3
+rm -f t/unit/contrib/test_sphinx.py
 python3 setup.py test
 popd
 %endif
@@ -146,13 +165,16 @@ popd
 %doc docs/_build/html/*
 
 %if_with python3
-%files -n python3-module-%module_name
+%files -n python3-module-%oname
 %doc Changelog *.txt *.rst TODO
 %_bindir/*.py3
 %python3_sitelibdir/celery*
 %endif
 
 %changelog
+* Thu Sep 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.1-alt1
+- Updated to upstream version 4.2.1.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
