@@ -8,7 +8,7 @@
 
 Name: MySQL
 Version: 5.7.23
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -665,6 +665,10 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Thu Sep 13 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.23-alt2%ubt
+- fix mysqld init script charset initialization sequence (closes: #35298)
+- move tmpfiles to /run/mysqld (rider@)
+
 * Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 5.7.23-alt1%ubt
 - 5.7.23
 - removed old and unused trigger with execution of the mysql_upgrade
