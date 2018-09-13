@@ -1,8 +1,8 @@
 # vim: set ft=spec: -*- rpm -spec -*-
 
 Name: pam_pkcs11
-Version: 0.6.9
-Release: alt34
+Version: 0.6.10
+Release: alt1
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -170,6 +170,16 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ll_isbc.so
 
 %changelog
+* Thu Sep 13 2018 Paul Wolneykien <manowar@altlinux.org> 0.6.10-alt1
+- New version 0.6.10.
+- Cleanup passwords with `cleanse()` in the new code too.
+- README.md: removed license section (thx Frank Morgner).
+- Update README.md (thx Frank Morgner).
+- fixed wiping secrets with OpenSSL_cleanse() (thx Frank Morgner).
+- fixed buffer overflow with long home directory (thx Frank Morgner).
+- verify using a nonce from the system, not the card (thx Frank Morgner).
+- Fixed segfault and fetch problems when checking CRLs (thx Gil Kloepfer).
+
 * Mon Aug 13 2018 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt34
 - Distinguish between entering a wrong user PIN and SO PIN during
   the PIN change / initialization procedure.

@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: opensc
-Version: 0.17.0
-Release: alt1.1
+Version: 0.19.0
+Release: alt2.rc1
 
 Group: System/Configuration/Hardware
 Summary: OpenSC library - for accessing SmartCard devices using PC/SC Lite
@@ -12,6 +12,7 @@ License: LGPL
 Requires: lib%name = %version-%release
 
 Source: %name-%version.tar
+Patch:  %name-%version-alt.patch
 
 BuildRequires: db2latex-xsl docbook-dtds docbook-style-xsl libXt-devel libassuan-devel libltdl7-devel libpcsclite-devel libreadline-devel libssl-devel xsltproc zlib-devel
 
@@ -64,6 +65,7 @@ OpenSC module for PAM.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -87,7 +89,8 @@ install -p -m644 etc/opensc.conf %buildroot/%_sysconfdir/opensc.conf
 
 %files
 %doc NEWS README.md
-
+%exclude %_datadir/doc/%name/NEWS
+%_desktopdir/*.desktop
 %config %_sysconfdir/bash_completion.d/*
 %_bindir/*
 %doc %_mandir/*/*
@@ -113,8 +116,24 @@ install -p -m644 etc/opensc.conf %buildroot/%_sysconfdir/opensc.conf
 %endif
 
 %changelog
+* Fri Sep 14 2018 Paul Wolneykien <manowar@altlinux.org> 0.19.0-alt2.rc1
+- Workaround format-truncation error in card-gids.c using a larger
+  buffer (patch).
+
+* Thu Sep 13 2018 Paul Wolneykien <manowar@altlinux.org> 0.19.0-alt1.rc1
+- New pre-release version 0.19.0-rc1.
+- Fixed multiple security problems due to out of bound writes/reads
+  (Fixes: CVE-2018-16391, CVE-2018-16392, CVE-2018-16393, CVE-2018-16418,
+   CVE-2018-16419, CVE-2018-16420, CVE-2018-16421, CVE-2018-16422,
+   CVE-2018-16423, CVE-2018-16424, CVE-2018-16425, CVE-2018-16426,
+   CVE-2018-16427).
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.17.0-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
+
+* Fri Jun 08 2018 Paul Wolneykien <manowar@altlinux.org> 0.18.0-alt1
+- Freshed up to the upstream version 0.18.0.
+- New opensc-notify desktop util.
 
 * Tue Sep 12 2017 Paul Wolneykien <manowar@altlinux.org> 0.17.0-alt1
 - Fresh up to v0.17.0.
