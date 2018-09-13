@@ -1,6 +1,6 @@
 Name: tuxpaint
-Version: 0.9.22
-Release: alt2
+Version: 0.9.23
+Release: alt1
 
 Summary: A drawing program for young children
 Summary(ru_RU.UTF8): Простая детская программа для рисования
@@ -10,10 +10,9 @@ Group: Graphics
 Url: http://www.tuxpaint.org/
 Source: %name-%version.tar.gz
 Source1: %name.desktop
-Patch1: %name-0.9.19-default-size.patch
 
 BuildRequires: libSDL-devel >= 1.2.4 libSDL_image-devel libSDL_mixer-devel libSDL_pango-devel libSDL_ttf-devel
-BuildRequires: libpng-devel zlib-devel gettext librsvg-devel libpaper-devel libfribidi-devel
+BuildRequires: libpng-devel zlib-devel gettext librsvg-devel libpaper-devel libfribidi-devel kde4libs
 BuildPreReq: gperf
 
 %description
@@ -49,9 +48,8 @@ Development shared library for %name
 
 %prep
 %setup -n %name-%version
-%patch1 -p2
 
-subst "s|/share/doc/tuxpaint|/share/doc/tuxpaint-%version|g" Makefile
+#subst "s|/share/doc/tuxpaint|/share/doc/tuxpaint-%%version|g" Makefile
 subst "s|\$(PREFIX)/lib|%_libdir|g" Makefile
 subst "s|< \$(PLUGIN_LIBS)|< \$(PLUGIN_LIBS) \$(SDL_LIBS) \$(PNG)|g" Makefile
 sed -i '/^linux_ARCH_LINKS/s/\$(FRIBIDI_LIB)/\$(FRIBIDI_LIB) \$(PNG)/g' Makefile
@@ -90,7 +88,6 @@ rm -f /usr/share/tuxpaint/fonts/Free*.ttf
 # docs files
 %_docdir/%name-%version
 %_man1dir/tuxpaint*
-%exclude %_docdir/%name-%version/Makefile
 
 # data files
 %_datadir/%name
@@ -104,10 +101,12 @@ rm -f /usr/share/tuxpaint/fonts/Free*.ttf
 %_bindir/tp-magic-config
 %_includedir/%name
 %_docdir/%name-devel-%version
-%exclude %_docdir/%name-devel-%version/Makefile
 %_man1dir/tp-magic-config*
 
 %changelog
+* Thu Sep 13 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.23-alt1
+- Build new version.
+
 * Tue Jun 26 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.22-alt2
 - Remove fonts from package (Closes: #25339).
 
