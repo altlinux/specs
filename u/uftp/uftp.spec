@@ -1,5 +1,5 @@
 Name: uftp
-Version: 4.7
+Version: 4.9.8
 Release: alt1
 
 Summary: A multicast FTP
@@ -45,13 +45,14 @@ remote printing plants.
 
 %prep
 %setup
-%__subst "s|)/bin|)/usr/bin|g" makefile
 
 %build
 %make_build CFLAGS="%optflags"
 
 %install
 %makeinstall_std
+mkdir -p %buildroot%_sbindir/
+mv %buildroot%_bindir/{uftpd,uftpproxyd} %buildroot%_sbindir/
 
 %files
 %_bindir/uftp
@@ -68,6 +69,9 @@ remote printing plants.
 %doc ReadMe.txt
 
 %changelog
+* Thu Sep 13 2018 Vitaly Lipatov <lav@altlinux.ru> 4.9.8-alt1
+- new version 4.9.8 (with rpmrb script)
+
 * Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 4.7-alt1
 - new version 4.7 (with rpmrb script)
 
