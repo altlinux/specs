@@ -4,7 +4,7 @@
 
 Name: rpm-build-xen
 Version: 4.4.0
-Release: alt1
+Release: alt2
 Summary: Arch-specific requirement to build XEN
 License: GPLv3+
 Group: Development/Other
@@ -37,7 +37,7 @@ Requires: %_includedir/gnu/stubs-32.h
 %{?_with_xsm:Requires: checkpolicy m4}
 %{?_with_efi:Requires: rpm-macros-uefi mingw64-binutils}
 %{?_enable_stubdom:Requires: makeinfo libSDL-devel libXext-devel}
-%{?_with_hypervisor:Requires: flex libfdt-devel libgcrypt-devel liblzo2-devel libvde-devel perl-HTML-Parser}
+%{?_with_hypervisor:Requires: flex libfdt-devel libgcrypt-devel liblzo2-devel perl-HTML-Parser}
 
 %description
 Arch-specific requirement to build XEN.
@@ -47,6 +47,9 @@ Arch-specific requirement to build XEN.
 
 
 %changelog
+* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 4.4.0-alt2
+- drop libvde-devel from Requires
+
 * Tue Apr 15 2014 Led <led@altlinux.ru> 4.4.0-alt1
 - added requires rpm-macros-uefi
 

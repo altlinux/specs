@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.10.1
-Release: alt4%ubt
+Release: alt5%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -128,7 +128,7 @@ BuildRequires: libSDL-devel libXext-devel
 %{?_enable_xsmpolicy:BuildRequires: checkpolicy m4}
 %{?_enable_stubdom:BuildRequires: makeinfo}
 # with hypervisor
-BuildRequires: flex discount libfdt-devel libgcrypt-devel liblzo2-devel libvde-devel perl-HTML-Parser perl-devel
+BuildRequires: flex discount libfdt-devel libgcrypt-devel liblzo2-devel perl-HTML-Parser perl-devel
 # from 4.7.0
 BuildRequires: libnl-devel >= 3.2.8 libnl3 >= 3.2.8 libnl3-utils >= 3.2.8
 BuildRequires: libpixman-devel >= 0.21.8 libpixman >= 0.21.8
@@ -790,6 +790,9 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 4.10.1-alt5%ubt
+- disable vde support
+
 * Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 4.10.1-alt4%ubt
 - rebuilt with ocaml 4.07
 

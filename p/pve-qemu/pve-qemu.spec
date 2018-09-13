@@ -11,7 +11,7 @@
 %def_enable vnc_sasl
 %def_enable vnc_jpeg
 %def_enable vnc_png
-%def_enable vde
+%def_disable vde
 %def_enable alsa
 %def_disable pulseaudio
 %def_disable oss
@@ -55,7 +55,7 @@
 
 Name: pve-%rname
 Version: 2.11.2
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
 Group: Emulators
@@ -494,6 +494,9 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Thu Sep 13 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.2-alt2%ubt
+- disable vde support
+
 * Tue Sep 04 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.2-alt1%ubt
 - 2.11.2-1
 
