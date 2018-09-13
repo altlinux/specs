@@ -1,8 +1,8 @@
 %def_disable freerdp
 
 Name: vlc
-Version: 3.0.3.1
-Release: alt2
+Version: 3.0.4
+Release: alt1
 
 Summary: VLC media player
 License: GPLv2
@@ -701,6 +701,7 @@ export BUILDCC=gcc
 	--enable-vorbis \
 	--enable-x264 \
 	--enable-xcb \
+	--enable-wayland \
 	%{subst_enable freerdp} \
 	--disable-oss \
 	--disable-quicktime \
@@ -1369,6 +1370,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Sun Sep 09 2018 Anton Farygin <rider@altlinux.ru> 3.0.4-alt1
+- 3.0.4
+
 * Mon Jul 09 2018 Anton Farygin <rider@altlinux.ru> 3.0.3.1-alt2
 - rebuilt for libnfs-3.0
 
