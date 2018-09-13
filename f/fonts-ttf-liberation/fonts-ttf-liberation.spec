@@ -4,18 +4,19 @@
 %define oldname liberation-fonts
 
 Name: fonts-ttf-%fontname
-Version: 2.00.1
-Release: alt2
+Version: 2.00.3
+Release: alt1
 
 Summary: Fonts to replace commonly used Microsoft Windows Fonts
 
 License: SIL Open Font License Version 1.1
 Group: System/Fonts/True type
-Url: http://fedorahosted.org/liberation-fonts/
+Url: https://github.com/liberationfonts/liberation-fonts
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: https://fedorahosted.org/releases/l/i/%oldname/%oldname-ttf-%version.tar
+# Source-url: https://github.com/liberationfonts/liberation-fonts/archive/%version.tar.gz
+Source: %name-%version.tar
 Source2:          %{oldname}-mono.conf
 Source3:          %{oldname}-sans.conf
 Source4:          %{oldname}-serif.conf
@@ -30,6 +31,7 @@ Provides: fonts-ttf-liberation-sans = %version
 Provides: fonts-ttf-liberation-serif = %version
 
 BuildRequires: rpm-build-fonts rpm-macros-fontpackages
+BuildRequires: python3-module-fonttools fontforge fontpackages-devel
 
 %description
 The Liberation Fonts are intended to be replacements for the three
@@ -37,7 +39,15 @@ most commonly used fonts on Microsoft systems: Times New Roman,
 Arial, and Courier New.
 
 %prep
-%setup -n %oldname-ttf-%version
+%setup
+
+%build
+
+# Fedora fix for https://bugzilla.redhat.com/show_bug.cgi?id=1526510
+sed -i 's/OS2_UseTypoMetrics: 1/OS2_UseTypoMetrics: 0/g' src/*.sfd
+
+%make_build
+mv liberation-fonts-ttf-%version/*.ttf ./
 
 %install
 %ttf_fonts_install %fontname
@@ -64,6 +74,10 @@ done
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-*.conf
 
 %changelog
+* Thu Sep 13 2018 Vitaly Lipatov <lav@altlinux.ru> 2.00.3-alt1
+- new version 2.00.3 (with rpmrb script)
+- build from source sfd with fontforge
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 2.00.1-alt2
 - lowered priority to 60 (see ALT#30669 for details)
 
