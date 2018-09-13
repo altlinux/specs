@@ -1,8 +1,9 @@
+%def_with cifs
 %def_with shell
 %def_with splash
 
 Name: propagator
-Version: 20180606
+Version: 20180822
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -23,6 +24,7 @@ including init and various helpers for hw probing and bootstrapping.
 
 %build
 %make_build \
+	%{?_with_cifs:WITH_CIFS=t} \
 	%{?_with_shell:WITH_SHELL=t} \
 	%{?_with_splash:WITH_SPLASH=t} \
 	version=%version-%release \
@@ -37,6 +39,11 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Wed Aug 22 2018 Evgeny Sinelnikov <sin@altlinux.org> 20180822-alt1
+- add support cifs install method
+- replace HTTP request version from 1.0 to 1.1
+- increase DHCP tries and timeouts for DISCOVER request
+
 * Wed Jun 06 2018 Arseny Maslennikov <arseny@altlinux.org> 20180606-alt1
 - dhcp.c: Remove temporary default route properly (altbug:#34347).
 - dhcp.c: Provide DHCP vendor class identifier in requests (altbug:#34320).
