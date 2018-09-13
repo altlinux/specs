@@ -1,29 +1,32 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname sh
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 1.12.14
-Release: alt1.1
+Release: alt2
 Summary: Python subprocess interface
 License: MIT
+BuildArch: noarch
 Group: Development/Python
 Url: https://pypi.python.org/pypi/sh/
 
 # https://github.com/amoffat/sh.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: pep-0538-test-fix.patch
 
-BuildPreReq: python-devel python-module-setuptools /dev/pts
-buildprereq: python-module-coverage python-module-py
-buildprereq: python-module-tox python-module-virtualenv
-buildprereq: python-module-nose
+BuildRequires: python-devel python-module-setuptools /dev/pts
+BuildRequires: python-module-coverage python-module-py
+BuildRequires: python-module-tox python-module-virtualenv
+BuildRequires: python-module-nose
 %if_with python3
-buildrequires(pre): rpm-build-python3
-buildprereq: python3-devel python3-module-setuptools
-buildprereq: python3-module-coverage python3-module-py
-buildprereq: python3-module-tox python3-module-virtualenv
-buildprereq: python3-module-nose
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-coverage python3-module-py
+BuildRequires: python3-module-tox python3-module-virtualenv
+BuildRequires: python3-module-nose
 %endif
 
 %py_provides %oname
@@ -53,6 +56,7 @@ sh is not a collection of system commands implemented in python.
 
 %prep
 %setup
+%patch1 -p1
 
 sed -i -e 's:==:>=:g' \
 	requirements*.txt
@@ -81,6 +85,7 @@ popd
 
 %check
 python sh.py travis
+
 %if_with python3
 pushd ../python3
 python3 sh.py travis
@@ -94,10 +99,15 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %doc *.md
-%python3_sitelibdir/*
+%python3_sitelibdir/*.py
+%python3_sitelibdir/__pycache__/*
+%python3_sitelibdir/%oname-%version-py*.egg-info
 %endif
 
 %changelog
+* Wed Sep 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.14-alt2
+- Fixed build.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.12.14-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
