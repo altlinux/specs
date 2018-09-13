@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     otter-browser
-Version:  0.9.99.1
-Release:  alt1%ubt
+Version:  0.9.99.3
+Release:  alt1
 
 Summary:  Otter Browser aims to recreate the best aspects of the classic Opera (12.x) UI using Qt5
 License:  GPL-3.0
@@ -14,7 +14,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source:   %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-ubt
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5DBus)
@@ -52,14 +52,17 @@ BuildRequires: pkgconfig(hunspell)
 %doc CHANGELOG CONTRIBUTING.md COPYING README.md
 
 %changelog
-* Fri Jul 06 2018 Anton Midyukov <antohami@altlinux.org> 0.9.99.1-alt1%ubt
+* Thu Sep 13 2018 Anton Midyukov <antohami@altlinux.org> 0.9.99.3-alt1
+- new version 0.9.99.3
+
+* Fri Jul 06 2018 Anton Midyukov <antohami@altlinux.org> 0.9.99.1-alt1.S1
 - new version 0.9.99.1
 
-* Thu Jun 07 2018 Anton Midyukov <antohami@altlinux.org> 0.9.99-alt1%ubt
+* Thu Jun 07 2018 Anton Midyukov <antohami@altlinux.org> 0.9.99-alt1.S1
 - new version 0.9.99
 
-* Fri Mar 23 2018 Anton Midyukov <antohami@altlinux.org> 0.9.96-alt1%ubt
+* Fri Mar 23 2018 Anton Midyukov <antohami@altlinux.org> 0.9.96-alt1.S1
 - new version 0.9.96
 
-* Fri Jan 05 2018 Anton Midyukov <antohami@altlinux.org> 0.9.94-alt1%ubt
+* Fri Jan 05 2018 Anton Midyukov <antohami@altlinux.org> 0.9.94-alt1.S1
 - Initial build for Sisyphus

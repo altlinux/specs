@@ -9,7 +9,7 @@
 
 Name: %_name%api_ver
 Version: 2.2.3
-Release: alt1
+Release: alt2
 
 Summary: An Enchanting Spell Checking Program
 Group: Text tools
@@ -53,6 +53,7 @@ using libenchant.
 %setup -n %_name-%version
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure --disable-static \
 	%{subst_enable relocatable} \
@@ -85,6 +86,9 @@ using libenchant.
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Thu Sep 13 2018 Yuri N. Sedunov <aris@altlinux.org> 2.2.3-alt2
+- rebuilt with hunspell-1.6.2
+
 * Thu Feb 15 2018 Yuri N. Sedunov <aris@altlinux.org> 2.2.3-alt1
 - 2.2.3
 
