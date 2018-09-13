@@ -3,7 +3,7 @@
 
 %define rname kid3
 Name: kde5-%rname
-Version: 3.6.1
+Version: 3.6.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -172,7 +172,7 @@ done
 %doc AUTHORS NEWS README ChangeLog
 %_K5bin/%rname
 %_K5xmlgui/kid3/
-%_K5xdgapp/%rname.desktop
+%_K5xdgapp/net.sourceforge.kid3.desktop
 %_K5icon/hicolor/*/apps/%rname.*
 
 %files -n %rname-ui-qt5
@@ -198,6 +198,9 @@ done
 #%_K5dbus_iface/*id3*
 
 %changelog
+* Thu Sep 13 2018 Sergey V Turchin <zerg@altlinux.org> 3.6.2-alt1%ubt
+- new version
+
 * Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 3.6.1-alt1%ubt
 - new version
 
