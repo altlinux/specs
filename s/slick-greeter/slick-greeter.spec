@@ -3,7 +3,7 @@
 
 Name: slick-greeter
 Version: 1.2.2
-Release: alt2
+Release: alt3
 Summary: A slick-looking LightDM greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -11,6 +11,7 @@ Url: https://github.com/linuxmint/slick-greeter
 Source: %name-%version.tar
 Source1: %name.conf
 Source2: %name.gschema.override
+Patch: %name-%version-%release.patch
 
 Requires: lightdm
 Requires: gnome-icon-theme gnome-icon-theme-symbolic gnome-themes-standard
@@ -35,6 +36,7 @@ A cross-distro LightDM greeter based on unity-greeter.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -77,6 +79,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %{_mandir}/man1/slick-greeter-check-hidpi.1.*
 
 %changelog
+* Thu Sep 13 2018 Vladimir Didenko <cow@altlinux.org> 1.2.2-alt3
+- fix build with new vala
+
 * Fri Jul 6 2018 Vladimir Didenko <cow@altlinux.org> 1.2.2-alt2
 - Add lightdm-slick-greeter to provides (requested by @mike for m-p)
 
