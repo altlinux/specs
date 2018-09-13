@@ -1,4 +1,3 @@
-
 %def_without check
 %def_without ksrc
 %def_without xenserver
@@ -7,7 +6,7 @@
 %def_with python3
 
 Name: openvswitch
-Version: 2.9.2
+Version: 2.10.0
 Release: alt1%ubt
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -338,7 +337,7 @@ rm -f %buildroot%_bindir/ovs-benchmark \
 %preun_service %name
 
 %files
-%doc AUTHORS.rst COPYING NEWS NOTICE README.rst
+%doc AUTHORS.rst LICENSE NEWS NOTICE README.rst
 %_bindir/ovs-dpctl
 %_bindir/ovs-dpctl-top
 %_bindir/ovs-testcontroller
@@ -364,6 +363,7 @@ rm -f %buildroot%_bindir/ovs-benchmark \
 %_man8dir/ovs-ctl.8*
 %_man8dir/ovs-dpctl.8*
 %_man8dir/ovs-dpctl-top.8*
+%_man8dir/ovs-kmod-ctl.8*
 %_man8dir/ovs-testcontroller.8*
 %_man8dir/ovs-vsctl.8*
 %_man8dir/ovs-vswitchd.8*
@@ -372,6 +372,7 @@ rm -f %buildroot%_bindir/ovs-benchmark \
 %_datadir/%name/scripts/ovs-lib
 %_datadir/%name/scripts/ovs-ctl
 %_datadir/%name/scripts/ovs-check-dead-ifs
+%_datadir/%name/scripts/ovs-kmod-ctl
 %dir %_sysconfdir/openvswitch
 %config(noreplace) %ghost %_sysconfdir/openvswitch/conf.db
 %config(noreplace) %ghost %_sysconfdir/openvswitch/system-id.conf
@@ -421,22 +422,6 @@ rm -f %buildroot%_bindir/ovs-benchmark \
 # TODO
 #files ipsec
 #_initdir/openvswitch-ipsec
-
-#if_with xenserver
-#files xenserver
-#_initdir/openvswitch-xapi-update
-#dir %_sysconfdir/xapi.d
-#dir %dir %_sysconfdir/xapi.d/plugins
-#_sysconfdir/xapi.d/plugins/openvswitch-cfg-update
-#dir %_libdir/xsconsole/
-#dir %_libdir/xsconsole/plugins-base/
-#_libdir/xsconsole/plugins-base/XSFeatureVSwitch.py*
-#_datadir/%name/scripts/InterfaceReconfigure.py
-#_datadir/%name/scripts/InterfaceReconfigureBridge.py
-#_datadir/%name/scripts/InterfaceReconfigureVswitch.py
-#_datadir/%name/scripts/interface-reconfigure
-#_datadir/%name/scripts/vif
-#endif
 
 %files vtep
 %_bindir/vtep-ctl
@@ -506,6 +491,9 @@ rm -f %buildroot%_bindir/ovs-benchmark \
 %endif
 
 %changelog
+* Thu Sep 13 2018 Anton Farygin <rider@altlinux.ru> 2.10.0-alt1%ubt
+- 2.10.0
+
 * Fri Jun 01 2018 Anton Farygin <rider@altlinux.ru> 2.9.2-alt1%ubt
 - 2.9.2
 - removed selinux policy subpackage
