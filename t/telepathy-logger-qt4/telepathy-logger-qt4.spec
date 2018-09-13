@@ -1,7 +1,7 @@
 
 Name: telepathy-logger-qt4
 Version: 0.8.0
-Release: alt2
+Release: alt3%ubt
 %define sover 1
 %define libname lib%name%sover
 
@@ -18,8 +18,9 @@ Patch3: 0.1.0-alt-pkgconfig.patch
 # Automatically added by buildreq on Wed May 30 2012 (-bi)
 # optimized out: boost-devel-headers cmake-modules elfutils glib2-devel libdbus-devel libdbus-glib libdbus-glib-devel libgio-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-xml libstdc++-devel libtelepathy-glib libtelepathy-glib-devel libtelepathy-logger libtelepathy-qt4 libxml2-devel pkg-config python-base python-devel python-modules python-modules-encodings python-modules-xml qt-gstreamer qt4-designer xml-utils
 #BuildRequires: cmake doxygen flex gcc-c++ graphviz libqt3-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libtelepathy-logger-devel libtelepathy-qt4-devel phonon-devel python-module-distribute qt-gstreamer-devel
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake doxygen flex gcc-c++ graphviz libtelepathy-logger-devel libtelepathy-qt4-devel libqt4-devel phonon-devel kde-common-devel
-BuildRequires: pkgconfig(QtGLib-2.0)
+BuildRequires: pkgconfig(QtGLib-2.0) python-modules-distutils
 
 %description
 Telepathy-logger-qt4 is a Qt Wrapper around the TpLogger client library.
@@ -67,6 +68,9 @@ export QTDIR=%_qt4dir
 %_libdir/pkgconfig/TelepathyLoggerQt4.pc
 
 %changelog
+* Thu Sep 13 2018 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt3%ubt
+- fix build requires
+
 * Fri Sep 05 2014 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt2
 - fix requires
 
