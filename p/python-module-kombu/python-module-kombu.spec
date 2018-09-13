@@ -1,16 +1,26 @@
-%define module_name kombu
+%define _unpackaged_files_terminate_build 1
+
+%define oname kombu
 
 %def_with python3
 
-Name: python-module-%module_name
-Version: 4.1.0
-Release: alt2
+Name: python-module-%oname
 Epoch: 1
+Version: 4.2.1
+Release: alt1
 Group: Development/Python
 License: BSD License
 Summary: Kombu is an AMQP messaging framework for Python
 URL: https://github.com/celery/kombu/
+
+# https://github.com/celery/kombu.git
 Source: %name-%version.tar
+
+Patch1: %oname-%version-alt-tests.patch
+
+# Patches from Debian
+Patch11: 0001-Remove-image-from-remote-donation-site-privacy-issue.patch
+Patch12: 0003-Remove-pytest-sugar-from-test-requirements.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-anyjson python-module-boto python-module-django
@@ -18,11 +28,15 @@ BuildRequires: python-module-alabaster python-module-docutils python-module-html
 BuildRequires: python-module-pylibrabbitmq python-module-pymongo
 BuildRequires: python-module-amqp >= 1:1.4.9
 BuildRequires: python2.7(case) python2.7(unittest2) python2.7(mock) python2.7(pytest)
+BuildRequires: python2.7(pytest_cov) python2.7(redis) python2.7(msgpack) python2.7(boto3) python2.7(pycurl)
+BuildRequires: python-module-tox
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-amqp >= 1:1.4.9
 BuildRequires: python3(pytz) python3(case) python3(unittest2) python3(mock) python3(pytest)
+BuildRequires: python3(pytest_cov) python3(redis) python3(msgpack) python3(boto3) python3(pycurl)
+BuildRequires: python3-module-tox
 %endif
 
 %description
@@ -36,11 +50,11 @@ providing an idiomatic high-level interface for the AMQP protocol, and also
 provide proven and tested solutions to common messaging problems.
 
 %if_with python3
-%package -n python3-module-%module_name
+%package -n python3-module-%oname
 Summary: Kombu is an AMQP messaging framework for Python
 Group: Development/Python3
 
-%description -n python3-module-%module_name
+%description -n python3-module-%oname
 AMQP is the Advanced Message Queuing Protocol, an open standard protocol
 for message orientation, queuing, routing, reliability and security.
 
@@ -52,7 +66,7 @@ provide proven and tested solutions to common messaging problems.
 %endif
 
 %package docs
-Summary: Documentation for %module_name
+Summary: Documentation for %oname
 Group: Development/Documentation
 BuildArch: noarch
 
@@ -66,10 +80,13 @@ The aim of `Kombu` is to make messaging in Python as easy as possible by
 providing an idiomatic high-level interface for the AMQP protocol, and also
 provide proven and tested solutions to common messaging problems.
 
-This package contains documentation for %module_name.
+This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
+%patch11 -p1
+%patch12 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -120,12 +137,15 @@ popd
 %doc docs/_build/html/*
 
 %if_with python3
-%files -n python3-module-%module_name
+%files -n python3-module-%oname
 %doc AUTHORS Changelog FAQ LICENSE README.rst THANKS TODO
 %python3_sitelibdir/kombu*
 %endif
 
 %changelog
+* Thu Sep 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.2.1-alt1
+- Updated to upstream version 4.2.1.
+
 * Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.1.0-alt2
 - Updated build dependencies.
 
