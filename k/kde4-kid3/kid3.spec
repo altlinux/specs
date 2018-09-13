@@ -2,7 +2,7 @@
 %define rname kid3
 Name: kde4-%rname
 Version: 3.4.5
-Release: alt3%ubt
+Release: alt4%ubt
 
 Group: Sound
 Summary: ID3 tagger
@@ -22,6 +22,7 @@ BuildRequires(pre): kde4libs-devel
 #BuildRequires: gcc-c++ glib2-devel id3lib-devel kde4libs-devel libavdevice-devel libavformat-devel libchromaprint-devel libflac++-devel libicu libmpeg4ip-devel libqt3-devel libswscale-devel libtag-devel libvorbis-devel zlib-devel-static
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ glib2-devel id3lib-devel
+BuildRequires: python-modules
 BuildRequires: libavdevice-devel libavformat-devel libavresample-devel libswscale-devel
 BuildRequires: libchromaprint-devel libflac++-devel libtag-devel libvorbis-devel
 # libmpeg4ip-devel
@@ -168,6 +169,9 @@ Requires: %rname-common = %EVR
 %_libdir/libkid3-gui.so.*
 
 %changelog
+* Thu Sep 13 2018 Sergey V Turchin <zerg@altlinux.org> 3.4.5-alt4%ubt
+- fix build requires
+
 * Thu Jun 14 2018 Sergey V Turchin <zerg@altlinux.org> 3.4.5-alt3%ubt
 - rebuild with new ffmpeg
 
