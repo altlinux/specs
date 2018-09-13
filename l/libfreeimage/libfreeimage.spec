@@ -1,6 +1,6 @@
 Name: libfreeimage
-Version: 3.17.0
-Release: alt3
+Version: 3.18.0
+Release: alt1
 
 Summary: Multi-format image decoder library
 License: GPL and FIPL (see the license-fi.txt)
@@ -9,8 +9,12 @@ URL: http://freeimage.sourceforge.net/
 
 %define srcversion %(echo %version | tr -d .)
 Source: http://downloads.sourceforge.net/freeimage/FreeImage%srcversion.zip
-Patch: FreeImage-3.17.0-syslibs.patch
-Patch1: FreeImage-3.17.0_CVE-2015-0852.patch
+# Unbundle bundled libraries (based on fc patch)
+Patch: FreeImage_unbundle.patch
+# Fix incorrect path in doxyfile
+Patch1: FreeImage_doxygen.patch
+# Fix incorrect variable names in BIGENDIAN blocks
+Patch2: FreeImage_bigendian.patch
 
 BuildRequires: gcc-c++ libgomp-devel libmng-devel libpng-devel openexr-devel unzip
 BuildPreReq: rpm-macros-make libraw-devel zlib-devel libwebp-devel
@@ -33,13 +37,15 @@ developing applications that use %name.
 
 %prep
 %setup -n FreeImage
+# fix line endings
+find ./ -type f -print0| xargs -r0 dos2unix --
+
 %patch -p1
 %patch1 -p1
+%patch2 -p1
 
 # remove bundled libraries
 rm -r Source/Lib* Source/ZLib Source/OpenEXR
-# fix line endings
-find ./ -type f -print0| xargs -r0 dos2unix --
 # fix Makefile
 subst 's|\-o root -g root ||g' Makefile.*
 # we can't built due to dependencies on private headers
@@ -67,6 +73,9 @@ sh ./genfipsrclist.sh
 %_libdir/libfreeimage.so
 
 %changelog
+* Sat Aug 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0 with modified fc patches and some tricks
+
 * Mon Sep 18 2017 Yuri N. Sedunov <aris@altlinux.org> 3.17.0-alt3
 - rebuilt against libwebp.so.7
 
