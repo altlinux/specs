@@ -12,7 +12,7 @@
 %def_enable vnc_jpeg
 %def_enable vnc_png
 %def_enable xkbcommon
-%def_enable vde
+%def_disable vde
 %def_enable alsa
 %def_enable pulseaudio
 %def_enable oss
@@ -104,7 +104,7 @@
 
 Name: qemu
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -1591,6 +1591,9 @@ fi
 %_man1dir/qemu-system-nios2.1*
 
 %changelog
+* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt2
+- disable vde support
+
 * Wed Aug 15 2018 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt1
 - 3.0.0
 
