@@ -1,19 +1,21 @@
-%def_enable snapshot
+# since 3.29.x depends on modules in %_libdir/%name
+%set_verify_elf_method unresolved=relaxed
 
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.28
+%define ver_major 3.30
 %define xdg_name org.gnome.Boxes
 %def_disable ovirt
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Group: Emulators
-License: LGPLv2+
+License: LGPLv3+
 Url: https://wiki.gnome.org/Apps/Boxes
 
 %if_disabled snapshot
@@ -62,6 +64,7 @@ BuildRequires: libsoup-devel >= %libsoup_ver
 BuildRequires: libarchive-devel >= %libarchive_ver
 %{?_enable_ovirt:BuildRequires: pkgconfig(govirt-1.0) >= %govirt_ver}
 BuildRequires: libwebkit2gtk-devel
+BuildRequires: libfreerdp-devel
 
 # Need libvirtd and an hypervisor to do anything useful
 Requires: libvirt-daemon
@@ -107,8 +110,9 @@ the functionality of the Boxes.
 %find_lang %name --with-gnome
 
 %files -f %name.lang
-%doc AUTHORS COPYING README NEWS TODO
+%doc AUTHORS README NEWS TODO
 %_bindir/%name
+%_libdir/%name/
 %_datadir/%name
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/org.gnome.boxes.gschema.xml
@@ -124,8 +128,12 @@ the functionality of the Boxes.
 %_datadir/installed-tests/%name/
 %endif
 
+%exclude %_includedir/%name/
 
 %changelog
+* Thu Sep 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Fri Jun 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.5-alt1
 - updated to v3.28.5-5-ge8b9d5c
 
