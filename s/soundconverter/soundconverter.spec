@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: soundconverter
 Version: 3.0.0
-Release: alt1
+Release: alt3.20180902
 
 Summary: A simple sound converter application for GNOME
 License: GPLv3
@@ -9,16 +12,13 @@ Group: Sound
 Url: https://github.com/kassoulet/soundconverter
 Source: %name-%version.tar
 Patch: drop-unity.patch
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: intltool
 BuildRequires: python3-devel
-BuildRequires: typelib(Gtk) = 3.0
-BuildRequires: python3(gi)
+BuildRequires: python3-module-pygobject3
 BuildRequires: gir(Gst) = 1.0
 BuildRequires: desktop-file-utils
-Requires: typelib(Gtk) = 3.0
 Requires: gst-plugins-ugly1.0
 Requires: gst-plugins-good1.0
 Requires: GConf
@@ -40,6 +40,10 @@ mkdir -p m4
 %install
 %makeinstall_std
 %find_lang %name
+
+# remove unidentified locale
+rm -fr %buildroot%_datadir/locale/sr@Latn/
+
 desktop-file-install \
 	--dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/%name.desktop
@@ -54,12 +58,19 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/%name
 %_libdir/%name
 %_datadir/%name
-%_datadir/appdata/*
+%_datadir/metainfo/%name.appdata.xml
+%_datadir/glib-2.0/schemas/*
 %_desktopdir/*%name.desktop
 %_iconsdir/hicolor/48x48/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Fri Sep 14 2018 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt3.20180902
+- new snapshot
+
+* Sun May 13 2018 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt2.20180406.S1
+- new snapshot
+
 * Fri Feb 23 2018 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt1
 - 3.0.0 beta 1
 
