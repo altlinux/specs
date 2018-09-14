@@ -34,7 +34,7 @@
 
 Name: %{_name}5
 Version: %ver_major.4
-Release: alt7
+Release: alt8
 
 Summary: Library for writing gnome database programs
 Group: System/Libraries
@@ -54,7 +54,7 @@ Provides: libgda2 = %version-%release
 %define mdbtools_ver 0.7
 %define ldap_ver 2.2.27-alt1.1
 %define freetds_ver 0.63
-%define vala_ver 0.40
+%define vala_ver 0.42
 
 BuildPreReq: intltool >= 0.35.5
 BuildPreReq: gnome-common >= 2.8.0
@@ -633,6 +633,9 @@ export VALA_API_VERSION=%vala_ver
 %exclude %_datadir/%_name-%abi_ver/php
 
 %changelog
+* Fri Sep 14 2018 Yuri N. Sedunov <aris@altlinux.org> 5.2.4-alt8
+- rebuilt with vala-0.42
+
 * Mon Mar 19 2018 Yuri N. Sedunov <aris@altlinux.org> 5.2.4-alt7
 - updated to LIBGDA_5_2_4-44-gb9f0a9e
 - built with vala-0.40
