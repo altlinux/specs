@@ -1,8 +1,8 @@
 %def_disable check
 
 Name: ostree
-Version: 2018.7
-Release: alt2
+Version: 2018.8
+Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
 License: LGPLv2+
@@ -30,6 +30,7 @@ BuildRequires: zlib-devel libselinux-devel libcurl-devel libssl-devel
 BuildRequires: libgpgme-devel liblzma-devel libmount-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: libsoup-devel libattr-devel
+BuildRequires: libavahi-glib-devel libgjs-devel
 # For docs
 BuildRequires: gtk-doc
 
@@ -121,6 +122,9 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_datadir/gtk-doc/html/ostree/
 
 %changelog
+* Fri Sep 14 2018 Yuri N. Sedunov <aris@altlinux.org> 2018.8-alt1
+- updated to v2018.8-7-ge4e6d85e
+
 * Wed Aug 29 2018 Yuri N. Sedunov <aris@altlinux.org> 2018.7-alt2
 - rebuilt with openssl-1.1
 
