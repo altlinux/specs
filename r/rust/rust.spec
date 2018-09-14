@@ -1,20 +1,23 @@
+%define rust_ver 1.29.0
+%define cargo_ver 1.29.0
+
 Name: rust
 Epoch: 1
-Version: 1.24.1
-Release: alt2
+Version: %rust_ver
+Release: alt1
 Summary: The Rust Programming Language
 
 Group: Development/Other
-License: Apache 2.0, MIT
+License: Apache 2.0, MIT 
 URL: http://www.rust-lang.org/
 
-Source:  https://static.rust-lang.org/dist/%{name}c-%version-src.tar.xz
+Source: https://static.rust-lang.org/dist/%{name}c-%version-src.tar.xz
 
 BuildPreReq: /proc
-BuildRequires: curl gcc-c++ python-devel cmake libffi-devel
+BuildRequires: curl gcc-c++ python-devel cmake libffi-devel patchelf
 
-%def_with    bootstrap
-%def_with    bundled_llvm
+%def_with     bootstrap
+%def_without  bundled_llvm
 
 %if_without bundled_llvm
 
@@ -30,24 +33,35 @@ BuildRequires: rust rust-cargo
 
 %else
 
-%define r_ver 1.23.0
+%define r_ver 1.28.0
 Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
 Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
+Source4: https://static.rust-lang.org/dist/rust-%r_ver-aarch64-unknown-linux-gnu.tar.gz
 
 %ifarch %ix86
-%define r_arch i686
 %define r_src %SOURCE2
 %endif
 %ifarch x86_64
-%define r_arch x86_64
 %define r_src %SOURCE3
 %endif
+%ifarch aarch64
+%define r_src %SOURCE4
+%endif
 
-%define trbl rust-%r_ver-%r_arch-unknown-linux-gnu
-%define stage0 build/%r_arch-unknown-linux-gnu/stage0
-%define cargo %stage0/bin/cargo
-%define rustc %stage0/bin/rustc
+%define rustdir %_tmppath/rust
+%define cargo %rustdir/bin/cargo
+%define rustc %rustdir/bin/rustc
 
+%endif
+
+%ifarch %ix86
+%define r_arch i686
+%endif
+%ifarch x86_64
+%define r_arch x86_64
+%endif
+%ifarch aarch64
+%define r_arch aarch64
 %endif
 
 # Since 1.12.0: striping debuginfo damages *.so files
@@ -60,20 +74,114 @@ segfaults, and guarantees thread safety.
 %package gdb
 Group: Development/Other
 Summary: run rust compiler under gdb
-Requires: %name = %version-%release
+Requires: %name = %rust_ver-%release
 
 %description gdb
 %summary
 
+%package doc
+Summary: Documentation for Rust
+Group: Development/Documentation
+
+%description doc
+This package includes HTML documentation for the Rust programming language and
+its standard library.
+
+%package cargo
+Summary: The Rust package manager
+Version: %cargo_ver
+Group: Development/Tools
+Requires: rust
+BuildRequires: libssh2-devel libgit2-devel openssl-devel zlib-devel
+
+Obsoletes: rust-cargo < 1.29.0
+Provides: rust-cargo = %cargo_ver
+
+%description cargo
+Cargo is a tool that allows Rust projects to declare their various dependencies
+and ensure that you'll always get a repeatable build.
+
+%package cargo-doc
+Summary: Documentation for Cargo
+Version: 1.29.0
+Group: Development/Documentation
+Requires: rust-doc = %rust_ver-%release
+
+%description cargo-doc
+This package includes HTML documentation for Cargo.
+
+%package -n rustfmt
+Summary: Tool to find and fix Rust formatting issues
+Version: 0.99.1
+Group: Development/Tools
+Requires: rust-cargo = %cargo_ver-%release
+
+%description -n rustfmt
+A tool for formatting Rust code according to style guidelines.
+
+%package -n rls
+Summary: Rust Language Server for IDE integration
+Version: 0.130.0
+Group: Development/Tools
+Requires: rust-analysis
+Requires: %name = %rust_ver-%release
+
+%description -n rls
+The Rust Language Server provides a server that runs in the background,
+providing IDEs, editors, and other tools with information about Rust programs.
+It supports functionality such as 'goto definition', symbol search,
+reformatting, and code completion, and enables renaming and refactorings.
+
+%package -n clippy
+Summary: Lints to catch common mistakes and improve your Rust code
+Version: 0.0.212
+Group: Development/Tools
+License: MPLv2.0
+Requires: rust-cargo
+Requires: %name = %rust_ver-%release
+
+%description -n clippy
+A collection of lints to catch common mistakes and improve your Rust code.
+
+%package src
+Version: %rust_ver
+Summary: Sources for the Rust standard library
+Group: Development/Other
+AutoReq: no
+AutoProv: no
+
+%description src
+This package includes source files for the Rust standard library.  It may be
+useful as a reference for code completion tools in various editors.
+
+%package analysis
+Summary: Compiler analysis data for the Rust standard library
+Group: Development/Tools
+Requires: %name = %rust_ver-%release
+
+%description analysis
+This package contains analysis data files produced with rustc's -Zsave-analysis
+feature for the Rust standard library. The RLS (Rust Language Server) uses this
+data to provide information about the Rust standard library.
+
 %prep
-%setup -n %{name}c-%version-src
+%setup -n %{name}c-%rust_ver-src
 
 %if_with bootstrap
 tar xf %r_src
-mkdir -p %stage0
-cp -r %trbl/cargo/* %stage0
-cp -r %trbl/rustc/* %stage0
-cp -r %trbl/rust-std-%r_arch-unknown-linux-gnu/* %stage0
+mkdir -p %rustdir
+pushd rust-%r_ver-%r_arch-unknown-linux-gnu
+./install.sh --prefix=%rustdir
+popd
+
+%ifarch aarch64
+patchelf --set-interpreter /lib64/ld-linux-aarch64.so.1 %rustdir/bin/cargo
+patchelf --set-interpreter /lib64/ld-linux-aarch64.so.1 %rustdir/bin/rustc
+%endif
+
+%else
+# Fix libdir path for bootstrap
+sed -i 's/Path::new("lib")/Path::new("%_lib")/' src/bootstrap/builder.rs
 %endif
 
 %build
@@ -82,9 +190,10 @@ cat > config.toml <<EOF
 cargo = "%cargo"
 rustc = "%rustc"
 submodules = false
-docs = false
+docs = true
 verbose = 0
 vendor = true
+extended = true
 [install]
 prefix = "%prefix"
 libdir = "%_lib"
@@ -98,9 +207,7 @@ EOF
 
 %if_without bundled_llvm
 cat >> config.toml <<EOF
-[target.x86_64-unknown-linux-gnu]
-llvm-config = "./llvm-config-filtered"
-[target.i686-unknown-linux-gnu]
+[target.%r_arch-unknown-linux-gnu]
 llvm-config = "./llvm-config-filtered"
 EOF
 
@@ -115,12 +222,18 @@ export LLVM_LINK_SHARED=1
 %endif
 
 ./x.py build
+./x.py doc
 
 %install
 DESTDIR=%buildroot ./x.py install
 
 %check
 ./x.py test --no-fail-fast || :
+
+%clean
+%if_with bootstrap
+rm -rf %rustdir
+%endif
 
 %files
 %exclude %_datadir/doc/rust
@@ -129,7 +242,10 @@ DESTDIR=%buildroot ./x.py install
 %_bindir/rustdoc
 %_libdir/lib*
 %dir %_libdir/rustlib
-%_libdir/rustlib/*
+%dir %_libdir/rustlib/etc
+%dir %_libdir/rustlib/%r_arch-unknown-linux-gnu
+%_libdir/rustlib/%r_arch-unknown-linux-gnu/*
+%exclude %_libdir/rustlib/%r_arch-unknown-linux-gnu/analysis
 %exclude %_libdir/rustlib/etc/*
 %exclude %_libdir/rustlib/install.log
 %exclude %_libdir/rustlib/manifest-*
@@ -145,7 +261,46 @@ DESTDIR=%buildroot ./x.py install
 %_libdir/rustlib/etc/*
 %exclude %_libdir/rustlib/etc/lldb_*
 
+%files doc
+%_datadir/doc/%name
+%exclude %_datadir/doc/%name/html/cargo
+
+%files cargo
+%doc src/tools/cargo/{LICENSE-APACHE,LICENSE-MIT,LICENSE-THIRD-PARTY,README.md}
+%_bindir/cargo
+%_man1dir/cargo*.1*
+%_sysconfdir/bash_completion.d/cargo
+%_datadir/zsh/site-functions/_cargo
+
+%files cargo-doc
+%_datadir/doc/rust/html/cargo
+
+%files -n rustfmt
+%_bindir/rustfmt
+%_bindir/cargo-fmt
+%doc src/tools/rustfmt/{README.md,CHANGELOG.md,Configurations.md,LICENSE-APACHE,LICENSE-MIT}
+
+%files -n rls
+%_bindir/rls
+%doc src/tools/rls/{README.md,COPYRIGHT,debugging.md,LICENSE-APACHE,LICENSE-MIT}
+
+%files -n clippy
+%_bindir/cargo-clippy
+%_bindir/clippy-driver
+%doc src/tools/clippy/{README.md,CHANGELOG.md,LICENSE}
+
+%files src
+%_libdir/rustlib/src
+
+%files analysis
+%_libdir/rustlib/%r_arch-unknown-linux-gnu/analysis
+
 %changelog
+* Fri Sep 14 2018 Vladimir Lettiev <crux@altlinux.org> 1:1.29.0-alt1
+- 1.29.0
+- packaged extended rust tool set and docs
+- new arch: aarch64 (thanks to sbolshakov@ for help)
+
 * Mon Apr 02 2018 Vladimir Lettiev <crux@altlinux.org> 1:1.24.1-alt2
 - downgrade to 1.24.1 (1.25.0 unusable)
 
