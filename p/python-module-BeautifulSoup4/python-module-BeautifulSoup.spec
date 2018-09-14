@@ -2,8 +2,8 @@
 
 %define oname BeautifulSoup4
 Name: python-module-%oname
-Version: 4.5.3
-Release: alt2
+Version: 4.6.3
+Release: alt1
 
 Summary: HTML/XML parser for quick-turnaround applications like screen-scraping
 
@@ -126,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Fri Sep 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 4.6.3-alt1
+- update version to 4.6.3 from src
+
 * Mon Jul 02 2018 Ivan Zakharyaschev <imz@altlinux.org> 4.5.3-alt2
 - (.spec) use standard Python build/install macros
 - (.spec) re-arrange Python/Python3 BuildRequires
