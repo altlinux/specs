@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 %define pkg     epson-inkjet-printer-escpr
-%define ver     1.6.20
+%define ver     1.6.29
 %define rel     1
 
 # used in RPM macro set for the LSB Driver Development Kit
@@ -34,13 +34,16 @@ AutoReqProv: no
 
 Name: %{pkg}
 Version: %{ver}
-Release: alt2
+Release: alt1
 License: GPL
 URL: http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
 Group: System/Configuration/Hardware
 Summary: Epson Inkjet Printer Driver (ESC/P-R) for Linux
 
 Source0: %{name}-%{version}.tar.gz
+# PATCH-FIX-UPSTREAM bug_x86_64.patch -- fix a segfault on x64_64 (probably manifested with GCC7 use)
+# https://aur.archlinux.org/cgit/aur.git/plain/bug_x86_64.patch?h=epson-inkjet-printer-escpr
+Patch0:  bug_x86_64.patch
 
 BuildRequires: libcups-devel
 
@@ -58,6 +61,7 @@ http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
 # Packaging settings
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %undefine _configure_gettext
@@ -70,6 +74,8 @@ make pkgdatadir=%_datadir
 
 %install
 make install-strip DESTDIR=%buildroot pkgdatadir=%_datadir
+# Compress all ppds
+gzip -n9 %buildroot%_datadir/cups/model/%name/*.ppd
 
 %files
 %doc README README.ja COPYING AUTHORS NEWS
@@ -78,6 +84,25 @@ make install-strip DESTDIR=%buildroot pkgdatadir=%_datadir
 %_datadir/cups/model/%name
 
 %changelog
+* Fri Sep 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.29-alt1
+- New version.
+  * Supported new models:
+    + EP-711A_Series
+    + EP-811A_Series
+    + ET-2710_Series
+    + ET-M1100_Series
+    + ET-M1120_Series
+    + EW-M770T_Series
+    + L3100_Series
+    + L3110_Series
+    + L3150_Series
+    + L7160_Series
+    + M1100_Series
+    + M1120_Series
+    + XP-7100_Series
+- Fix a segfault on x64_64.
+- Compress all ppds.
+
 * Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.20-alt2
 - Increate release number to fix conflict with autoimports.
 
