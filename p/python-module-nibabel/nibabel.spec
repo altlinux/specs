@@ -1,19 +1,21 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname nibabel
 
 %def_enable docs
 %def_with python3
 
 Name: python-module-%oname
-URL:http://niftilib.sf.net/pynifti/
+URL: http://niftilib.sf.net/pynifti/
 Summary: Easy access to NIfTI images from within Python
-Version: 2.2.1
-Release: alt2
+Version: 2.3.0
+Release: alt1
 License: MIT
 BuildArch: noarch
 Group: Development/Python
 
 # https://github.com/nipy/nibabel.git
-Source: %oname-%version.tar.gz
+Source: %oname-%version.tar
 # https://github.com/yarikoptic/nitest-balls1
 Source1: nitest-balls1.tar
 # git://github.com/matthew-brett/nitest-minc2.git
@@ -21,7 +23,7 @@ Source2: nitest-minc2.tar
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-numpy-testing python-module-nose
-BuildRequires: python-module-pydicom python-modules-sqlite3
+BuildRequires: python-modules-sqlite3
 BuildRequires: python-module-alabaster python-module-html5lib python-module-numpydoc python-module-objects.inv python-module-sphinx-pickles
 BuildRequires: python2.7(matplotlib) python2.7(matplotlib.sphinxext.plot_directive) python2.7(texext)
 BuildRequires: python2.7(mock)
@@ -60,7 +62,7 @@ features of the NIfTI-1 data format and libniftiio capabilities.
 %package -n python3-module-%oname-tests
 Summary: Tests for NiBabel
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
 NiBabel aims to provide easy access to NIfTI images from within Python.
@@ -73,7 +75,7 @@ This package contains tests for NiBabel.
 %package tests
 Summary: Tests for NiBabel
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 NiBabel aims to provide easy access to NIfTI images from within Python.
@@ -218,6 +220,9 @@ rm -f %buildroot%python_sitelibdir/conf.py
 %endif
 
 %changelog
+* Fri Sep 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt1
+- Updated to upstream version 2.3.0.
+
 * Mon Mar 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.1-alt2
 - Fixed build dependencies.
 
