@@ -1,5 +1,5 @@
 %define branch 0.12
-%define svn svn7877
+%define svn svn8288
 
 %define rel alt1
 
@@ -725,7 +725,7 @@ Virtual package for full installation Qmmp (exclude %name-devel).
 export PATH=$PATH:%_qt4dir/bin
 qmake	"QMAKE_CFLAGS+=%optflags" \
 	"QMAKE_CXXFLAGS+=%optflags" \
-	LIB_DIR=/%_lib \
+	LIB_DIR=%_libdir \
 	'DISABLED_PLUGINS=OSS4_PLUGIN %PLUG_DISABLE' \
 	'CONFIG+=%PLUG_ENABLE QMMP_DEFAULT_OUTPUT=pulse' \
 	%name.pro
@@ -738,39 +738,38 @@ cd doc && doxygen Doxyfile
 # # %make DESTDIR=%buildroot install
 
 # # with QMake
-%make INSTALL_ROOT=%buildroot%prefix install
-cp src/qmmpui/{playlistheadermodel.h,metadataformatter.h} %buildroot%_includedir/qmmpui/
+%make INSTALL_ROOT=%buildroot install
 
-mkdir -p %buildroot%_datadir/%name
-ln -s %_wlskindir %buildroot%_datadir/%name/skins
+mkdir -p %buildroot%_datadir/%name-0
+ln -s %_wlskindir %buildroot%_datadir/%name-0/skins
 mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 
 %files
-%dir %_libdir/%name
-%dir %_libdir/%name/Input
-%dir %_libdir/%name/Ui
-%dir %_libdir/%name/Output
-%dir %_libdir/%name/Engines
-%dir %_libdir/%name/Transports
-%dir %_libdir/%name/PlayListFormats
-%dir %_libdir/%name/CommandLineOptions
-%dir %_libdir/%name/FileDialogs
-%dir %_libdir/%name/Effect
-%dir %_libdir/%name/General
-%dir %_libdir/%name/Visual
+%dir %_libdir/%name-%branch
+%dir %_libdir/%name-%branch/Input
+%dir %_libdir/%name-%branch/Ui
+%dir %_libdir/%name-%branch/Output
+%dir %_libdir/%name-%branch/Engines
+%dir %_libdir/%name-%branch/Transports
+%dir %_libdir/%name-%branch/PlayListFormats
+%dir %_libdir/%name-%branch/CommandLineOptions
+%dir %_libdir/%name-%branch/FileDialogs
+%dir %_libdir/%name-%branch/Effect
+%dir %_libdir/%name-%branch/General
+%dir %_libdir/%name-%branch/Visual
 %_bindir/*
 %_desktopdir/*
-%_libdir/%name/Input/libmpeg*
-%_libdir/%name/Input/libvorbis*
-%_libdir/%name/Ui/libskinned*
-%_libdir/%name/Output/libalsa*
-%_libdir/%name/PlayListFormats/*.so
-%_libdir/%name/CommandLineOptions/*.so
-%_libdir/%name/FileDialogs/*.so
-%_datadir/%name/
-%_miconsdir/%name.png
-%_niconsdir/%name.png
-%_liconsdir/%name.png
+%_libdir/%name-%branch/Input/libmpeg*
+%_libdir/%name-%branch/Input/libvorbis*
+%_libdir/%name-%branch/Ui/libskinned*
+%_libdir/%name-%branch/Output/libalsa*
+%_libdir/%name-%branch/PlayListFormats/*.so
+%_libdir/%name-%branch/CommandLineOptions/*.so
+%_libdir/%name-%branch/FileDialogs/*.so
+%_datadir/%name-0/
+%_miconsdir/*.png
+%_niconsdir/*.png
+%_liconsdir/*.png
 %_iconsdir/hicolor/scalable/apps/*
 
 %files -n lib%name
@@ -779,172 +778,173 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 
 # Output plugins
 %files -n %name-out-pulseaudio
-%_libdir/%name/Output/libpulseaudio*
+%_libdir/%name-%branch/Output/libpulseaudio*
 
 %files -n %name-out-oss
-%_libdir/%name/Output/liboss*
+%_libdir/%name-%branch/Output/liboss*
 
 %files -n %name-out-jack
-%_libdir/%name/Output/libjack*
+%_libdir/%name-%branch/Output/libjack*
 
 %files -n %name-out-qtmultimedia
-%_libdir/%name/Output/libqtmultimedia*
+%_libdir/%name-%branch/Output/libqtmultimedia*
 
 %files -n %name-out-null
-%_libdir/%name/Output/libnull*
+%_libdir/%name-%branch/Output/libnull*
 
 %files -n %name-out-icecast
-%_libdir/%name/Output/libshout*
+%_libdir/%name-%branch/Output/libshout*
 
 # Input plugins
 %files -n %name-in-ffmpeg
-%_libdir/%name/Input/libffmpeg*
+%_libdir/%name-%branch/Input/libffmpeg*
 
 %files -n %name-in-flac
-%_libdir/%name/Input/libflac*
+%_libdir/%name-%branch/Input/libflac*
 
 %files -n %name-in-musepack
-%_libdir/%name/Input/libmpc*
+%_libdir/%name-%branch/Input/libmpc*
 
 %files -n %name-in-sndfile
-%_libdir/%name/Input/libsndfile*
+%_libdir/%name-%branch/Input/libsndfile*
 
 %files -n %name-in-wavpack
-%_libdir/%name/Input/libwavpack*
+%_libdir/%name-%branch/Input/libwavpack*
 
 %files -n %name-in-cue
-%_libdir/%name/Input/libcue*
+%_libdir/%name-%branch/Input/libcue*
 
 %files -n %name-in-aac
-%_libdir/%name/Input/libaac*
+%_libdir/%name-%branch/Input/libaac*
 
 %files -n %name-in-modplug
-%_libdir/%name/Input/libmodplug*
+%_libdir/%name-%branch/Input/libmodplug*
 
 %files -n %name-in-mplayer
-%_libdir/%name/Engines/libmplayer*
+%_libdir/%name-%branch/Engines/libmplayer*
 
 %files -n %name-in-cdaudio
-%_libdir/%name/Input/libcdaudio*
+%_libdir/%name-%branch/Input/libcdaudio*
 
 %files -n %name-in-midi
-%_libdir/%name/Input/libwildmidi*
+%_libdir/%name-%branch/Input/libwildmidi*
 
 %files -n %name-in-gme
-%_libdir/%name/Input/libgme*
+%_libdir/%name-%branch/Input/libgme*
 
 %files -n %name-in-sid
-%_libdir/%name/Input/libsid*
+%_libdir/%name-%branch/Input/libsid*
 
 %if "%alt_over_8" != "libcdio-devel"
 # ALT >= 8 only
 %files -n %name-in-archive
-%_libdir/%name/Input/libarchive*
+%_libdir/%name-%branch/Input/libarchive*
 %endif
 
 %if "%rel" != "alt0.M51"
 # disable for 5.1
 %files -n %name-in-opus
-%_libdir/%name/Input/libopus*
+%_libdir/%name-%branch/Input/libopus*
 %endif
 
 # Visualization plugins
 %files -n %name-vis-analyzer
-%_libdir/%name/Visual/libanalyzer*
+%_libdir/%name-%branch/Visual/libanalyzer*
 
 %files -n %name-vis-projectm
-%_libdir/%name/Visual/libprojectm*
+%_libdir/%name-%branch/Visual/libprojectm*
 
 # Effects plugins
 %files -n %name-eff-soxr
-%_libdir/%name/Effect/libsoxr*
+%_libdir/%name-%branch/Effect/libsoxr*
 
 %files -n %name-eff-bs2b
-%_libdir/%name/Effect/libbs2b*
+%_libdir/%name-%branch/Effect/libbs2b*
 
 %files -n %name-eff-ladspa
-%_libdir/%name/Effect/libladspa*
+%_libdir/%name-%branch/Effect/libladspa*
 
 %files -n %name-eff-crossfade
-%_libdir/%name/Effect/libcrossfade*
+%_libdir/%name-%branch/Effect/libcrossfade*
 
 %files -n %name-eff-extrastereo
-%_libdir/%name/Effect/libstereo*
+%_libdir/%name-%branch/Effect/libstereo*
 
 %files -n %name-eff-filewriter
-%_libdir/%name/Effect/libfilewriter*
+%_libdir/%name-%branch/Effect/libfilewriter*
 
 # Transports plugins
 %files -n %name-http
-%_libdir/%name/Transports/libhttp*
+%_libdir/%name-%branch/Transports/libhttp*
 
 %files -n %name-mms
-%_libdir/%name/Transports/libmms*
+%_libdir/%name-%branch/Transports/libmms*
 
 # Interface plugins
 %if "%rel" != "alt0.M51"
 %files -n %name-qsui
-%_libdir/%name/Ui/libqsui*
+%_libdir/%name-%branch/Ui/libqsui*
 %endif
 
 # General plugins
 %files -n %name-converter
-%_libdir/%name/General/libconverter*
+%_libdir/%name-%branch/General/libconverter*
 
 %files -n %name-mpris
-%_libdir/%name/General/libmpris*
+%_libdir/%name-%branch/General/libmpris*
 
 %files -n %name-notifier
-%_libdir/%name/General/libnotifier*
+%_libdir/%name-%branch/General/libnotifier*
 
 %files -n %name-kdenotify
-%_libdir/%name/General/libkdenotify*
+%_libdir/%name-%branch/General/libkdenotify*
 
 %files -n %name-scrobbler
-%_libdir/%name/General/libscrobbler*
+%_libdir/%name-%branch/General/libscrobbler*
 
 %files -n %name-statusicon
-%_libdir/%name/General/libstatusicon*
+%_libdir/%name-%branch/General/libstatusicon*
 
 %files -n %name-lyrics
-%_libdir/%name/General/liblyrics*
+%_libdir/%name-%branch/General/liblyrics*
 
 %files -n %name-hal
-%_libdir/%name/General/libhal*
+%_libdir/%name-%branch/General/libhal*
 
 %files -n %name-hotkey
-%_libdir/%name/General/libhotkey*
+%_libdir/%name-%branch/General/libhotkey*
 
 %files -n %name-gnomehotkey
-%_libdir/%name/General/libgnomehotkey*
+%_libdir/%name-%branch/General/libgnomehotkey*
 
 %files -n %name-fileops
-%_libdir/%name/General/libfileops*
+%_libdir/%name-%branch/General/libfileops*
 
 %files -n %name-covermanager
-%_libdir/%name/General/libcovermanager*
+%_libdir/%name-%branch/General/libcovermanager*
 
 %files -n %name-udisks
-%_libdir/%name/General/libudisks*
+%_libdir/%name-%branch/General/libudisks*
 
 %files -n %name-streambrowser
-%_libdir/%name/General/libstreambrowser*
+%_libdir/%name-%branch/General/libstreambrowser*
 
 %files -n %name-trackchange
-%_libdir/%name/General/libtrackchange*
+%_libdir/%name-%branch/General/libtrackchange*
 
 %files -n %name-copypaste
-%_libdir/%name/General/libcopypaste*
+%_libdir/%name-%branch/General/libcopypaste*
 
 %files -n %name-rgscan
-%_libdir/%name/General/librgscan*
+%_libdir/%name-%branch/General/librgscan*
 
 %files -n lib%name-devel
-%dir %_includedir/%name
-%dir %_includedir/%{name}ui
+%dir %_includedir/%name-0
+%dir %_includedir/%name-0/qmmp
+%dir %_includedir/%name-0/qmmpui
 %_pkgconfigdir/*.pc
-%_includedir/%name/*.h
-%_includedir/%{name}ui/*.h
+%_includedir/%name-0/%name/*.h
+%_includedir/%name-0/%{name}ui/*.h
 %_libdir/*.so
 
 %files -n %name-docs
@@ -953,6 +953,15 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Fri Sep 14 2018 Motsyo Gennadi <drool@altlinux.ru> 1:0.12.0-alt1.svn8288.1
+- fix subdirectories packaging violation
+
+* Fri Sep 14 2018 Motsyo Gennadi <drool@altlinux.ru> 1:0.12.0-alt1.svn8288
+- 0.12.0 svn8288 version
+
+* Tue Sep 11 2018 Motsyo Gennadi <drool@altlinux.ru> 1:0.12.0-alt1.svn8283
+- 0.12.0 svn8283 version
+
 * Tue Jun 05 2018 Motsyo Gennadi <drool@altlinux.ru> 1:0.12.0-alt1.svn7877.1
 - build with new libva
 
