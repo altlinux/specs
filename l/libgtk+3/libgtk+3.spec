@@ -23,7 +23,7 @@
 
 Name: libgtk+3
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -458,6 +458,10 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Fri Sep 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt2
+- rebuilt against libatk-2.30.0
+  (see https://gitlab.gnome.org/GNOME/pygobject/issues/258)
+
 * Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 
