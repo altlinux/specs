@@ -9,7 +9,7 @@
 
 Name: lib%_name%api_ver
 Version: %ver_major.30
-Release: alt2
+Release: alt3
 
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
@@ -123,6 +123,9 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Mon Aug 06 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.30-alt3
+- rebuilt against libraw.so.19
+
 * Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.30-alt2
 - rebuilt against libjasper.so.4
 

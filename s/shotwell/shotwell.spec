@@ -7,7 +7,7 @@
 
 Name: shotwell
 Version: %ver_major.92
-Release: alt1
+Release: alt2
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -85,11 +85,11 @@ mode, and export them to share with others.
 
 
 %changelog
+* Thu Sep 13 2018 Yuri N. Sedunov <aris@altlinux.org> 0.29.92-alt2
+- rebuilt against libraw.so.19
+
 * Sun Sep 02 2018 Yuri N. Sedunov <aris@altlinux.org> 0.29.92-alt1
 - 0.29.92
-
-* Mon Aug 06 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.4-alt2
-- rebuilt against libraw.so.19
 
 * Sat Jul 14 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.4-alt1
 - 0.28.4

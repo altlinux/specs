@@ -2,7 +2,7 @@
 %define _name luminance
 Name: %_name-hdr
 Version: 2.5.1
-Release: alt4
+Release: alt5
 
 Summary: A graphical tool for creating and processing HDR images
 Group: Graphics
@@ -28,7 +28,7 @@ BuildRequires: boost-devel boost-program_options-devel
 BuildRequires: qt5-base-devel qt5-tools-devel qt5-webkit-devel qt5-declarative-devel qt5-quick1-devel
 BuildRequires: qt5-webengine-devel qt5-svg-devel
 BuildRequires: openexr-devel libexiv2-devel libfftw3-devel liblcms2-devel
-BuildRequires: libraw-devel-static libjpeg-devel libtiff-devel libpng-devel
+BuildRequires: libraw-devel libjpeg-devel libtiff-devel libpng-devel
 BuildRequires: libgsl-devel libgtest-devel zlib-devel
 BuildRequires: libcfitsio-devel libccfits-devel
 
@@ -63,6 +63,9 @@ provide a workflow for HDR imaging.
 %doc AUTHORS Changelog README* TODO BUGS
 
 %changelog
+* Mon Aug 06 2018 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt5
+- rebuilt against libraw.so.19
+
 * Fri Jun 01 2018 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt4
 - rebuilt with boost-1.67
 

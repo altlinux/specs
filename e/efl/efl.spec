@@ -37,7 +37,7 @@
 
 Name: efl
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
@@ -455,6 +455,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Thu Sep 13 2018 Yuri N. Sedunov <aris@altlinux.org> 1.21.1-alt2
+- rebuilt against libraw.so.19
+
 * Thu Sep 13 2018 Yuri N. Sedunov <aris@altlinux.org> 1.21.1-alt1
 - 1.21.1
 

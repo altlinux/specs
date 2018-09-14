@@ -3,7 +3,7 @@
 
 Name: lib%rname
 Version: %api_ver.8
-Release: alt1%ubt
+Release: alt2
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
 Group: System/Libraries
@@ -12,7 +12,6 @@ Url: http://www.gimp.org
 Source: %rname-%version.tar
 Patch: %rname-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: asciidoc enscript gcc-c++ graphviz gtk-doc libSDL-devel libavformat-devel libbabl-devel libexiv2-devel
 BuildRequires: libgexiv2-devel libgomp-devel libgtk+3-devel libjasper-devel libjpeg-devel libjson-glib-devel
 BuildRequires: libpoly2tri-c-devel libraw-devel librsvg-devel libspiro-devel libsuitesparse-devel libswscale-devel
@@ -96,13 +95,16 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
-* Fri Aug 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.8-alt1%ubt
+* Fri Sep 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.8-alt2
+- rebuild with libraw 0.19
+
+* Fri Aug 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.8-alt1.S1
 - 0.4.8
 
-* Thu Jul 05 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.4-alt1%ubt
+* Thu Jul 05 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.4-alt1.S1
 - 0.4.4
 
-* Tue Jun 19 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.2-alt1%ubt
+* Tue Jun 19 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.2-alt1.S1
 - rebuild with libva 2.1.0
 
 * Wed Jun 13 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.2-alt1

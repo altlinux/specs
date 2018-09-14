@@ -1,6 +1,6 @@
 Name: fotoxx
 Version: 18.07.1
-Release: alt1
+Release: alt2
 
 Summary: Software for digital image editing, HDR composites, and panoramas
 License: GPLv3+
@@ -79,6 +79,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %doc doc/README* doc/changelog doc/copyright
 
 %changelog
+* Mon Aug 06 2018 Yuri N. Sedunov <aris@altlinux.org> 18.07.1-alt2
+- rebuilt against libraw.so.19
+
 * Mon Jul 30 2018 Yuri N. Sedunov <aris@altlinux.org> 18.07.1-alt1
 - 18.07.1
 

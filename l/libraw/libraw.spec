@@ -4,7 +4,7 @@
 %define dmp_ver 0.18.8
 
 Name: libraw
-Version: 0.18.13
+Version: 0.19.0
 Release: alt1
 
 Summary: library for reading RAW files obtained from digital photo cameras
@@ -71,10 +71,18 @@ This package contains static library.
 
 %build
 %autoreconf
-%configure --docdir=%_datadir/doc/libraw-%version --enable-jasper --enable-lcms
+%configure --docdir=%_datadir/doc/libraw-%version \
+    --enable-jasper \
+    --enable-lcms \
+    --enable-jpeg \
+    --enable-openmp
+%make_build
 
 %install
 %makeinstall_std
+
+%check
+%make check
 
 %files
 %_libdir/libraw.so.*
@@ -88,14 +96,17 @@ This package contains static library.
 %_includedir/libraw
 %_libdir/libraw.so
 %_libdir/libraw_r.so
-%_libdir/pkgconfig/libraw.pc
-%_libdir/pkgconfig/libraw_r.pc
+%_pkgconfigdir/libraw.pc
+%_pkgconfigdir/libraw_r.pc
 
 %files devel-static
 %_libdir/libraw.a
 %_libdir/libraw_r.a
 
 %changelog
+* Sat Aug 04 2018 Yuri N. Sedunov <aris@altlinux.org> 0.19.0-alt1
+- 0.19.0
+
 * Sat Jun 30 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18.13-alt1
 - 0.18.13
 
