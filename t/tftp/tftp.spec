@@ -1,13 +1,12 @@
 %def_enable largefile
-%def_with tcpwrappers
 %def_with remap
 %def_with readline
 %def_with ipv6
 
 Name: tftp
 %define dname %{name}d
-Version: 5.0
-Release: alt4
+Version: 5.2
+Release: alt1
 Summary: The client for the Trivial File Transfer Protocol (TFTP)
 License: BSD
 Group: Networking/File transfer
@@ -20,9 +19,7 @@ Patch: %name-%version-%release.patch
 %define sys_user %name
 %define sys_group %name
 %define bootdir %_localstatedir/%{name}boot
-Packager: Led <led@altlinux.ru>
 
-%{?_with_tcpwrappers:BuildRequires: libwrap-devel}
 %{?_with_readline:BuildRequires: libreadline-devel}
 
 %description
@@ -107,7 +104,6 @@ install -m 0644 %SOURCE3 ./%dname.sysconfig.in
 %autoreconf
 %configure \
     %{subst_enable largefile} \
-    %{subst_with tcpwrappers} \
     %{subst_with remap} \
     %{subst_with readline} \
     %{subst_with ipv6}
@@ -167,6 +163,9 @@ install -m 0644 CHANGES.* README* %buildroot%_docdir/%name-%version/
 
 
 %changelog
+* Fri Sep 14 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.2-alt1
+- 5.2 released
+
 * Wed Jul 27 2011 Damir Shayhutdinov <damir@altlinux.ru> 5.0-alt4
 - Fixed possible buffer overflow, and compiler warning about
   buffer overflow (Closes: #25954)
