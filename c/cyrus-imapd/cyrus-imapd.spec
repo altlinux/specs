@@ -18,7 +18,7 @@
 
 Name: cyrus-imapd
 Version: 3.0.8
-Release: alt2
+Release: alt3
 
 Summary: A high-performance email, contacts and calendar server
 License: CMU License
@@ -61,7 +61,7 @@ BuildRequires: valgrind-devel
 %endif
 
 BuildRequires: control flex gcc-c++ transfig libdb4-devel zlib-devel libldap-devel libuuid-devel
-BuildRequires: libsasl2-devel libssl-devel libnl-devel libsensors3-devel libpcre-devel
+BuildRequires: libsasl2-devel libssl-devel libnl-devel libsensors3-devel libpcre-devel libkrb5-devel
 
 %if_with snmp
 BuildRequires: libnet-snmp-devel
@@ -179,6 +179,13 @@ sed "s|pcreposix\.h|pcre/pcreposix.h|" -i  lib/util.h	#  include <pcreposix.h>
 sed "s|@ZLIB@|@ZLIB@ -lpcreposix|" -i perl/imap/Makefile.PL.in
 sed "s|@ZLIB@|@ZLIB@ -lpcreposix|" -i perl/sieve/managesieve/Makefile.PL.in
 
+%if_with unit_tests
+# Suite: command
+#   Test: run ...FAILED
+#     1. cunit/unit.c:115  - CU_FAIL_FATAL("Code under test exited")
+sed "s|/usr/bin/touch|/bin/touch|" -i cunit/command.testc
+%endif
+
 autoreconf -v -i
 
 %add_optflags -lcrypto -lsasl2 -lssl
@@ -189,15 +196,18 @@ autoreconf -v -i
   --sbindir=%_cyrexecdir \
   --libexecdir=%_cyrexecdir \
   \
-  --enable-netscapehack \
-  --enable-nntp \
-  --enable-http \
-  --enable-murder \
   --enable-autocreate \
   --enable-idled \
+  --enable-nntp \
+  --enable-murder \
+  --enable-http \
+  --enable-calalarmd \
   --enable-replication \
-  --enable-pcre \
+  --enable-backup \
+  \
   %{?_with_unit_tests: --enable-unit-tests} \
+  \
+  --enable-pcre \
   \
   %{?_with_snmp: --with-snmp} \
   %{?_without_snmp: --with-snmp=no} \
@@ -247,9 +257,19 @@ install -m 755 imtest/imtest		%buildroot%_cyrexecdir/
 install -m 755 perl/imap/cyradm		%buildroot%_cyrexecdir/
 
 # Install tools
-for tool in tools/* ; do
-  test -f ${tool} && install -m 755 ${tool} %buildroot%_cyrexecdir/
+#rm -f tools/git-version.sh tools/jenkins-build.sh tools/build-with-cyruslibs.sh
+pushd tools
+for tool in * ; do
+  case "$tool" in
+    git-version.sh|jenkins-build.sh|build-with-cyruslibs.sh)
+	continue
+	;;
+    *)
+	test -f ${tool} && install -m 755 ${tool} %buildroot%_cyrexecdir/
+	;;
+  esac
 done
+popd
 
 install -d \
   %buildroot%_sysconfdir/{rc.d/init.d,logrotate.d,pam.d,sysconfig,cron.daily} \
@@ -462,6 +482,16 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Thu Sep 13 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.0.8-alt3
+- updated README.ALT.rus
+- do not installed build scripts from "tools" directory (dropped
+  auto dependency by git)
+- removed "--enable-netscapehack" (absent in configure in 3.0)
+- added "--enable-calalarmd"
+- added "--enable-backup"
+  (warning: backup and replication features remains experimental)
+- added libkrb5-devel to BuildRequires
+
 * Thu Aug 30 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.0.8-alt2
 - disabled tcpwrappers support
 - rebuilt with openssl 1.1
