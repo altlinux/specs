@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.12.6
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -25,14 +25,14 @@ Obsoletes: kf5-kwallet-pam < %EVR
 %package -n pam0_kwallet
 Summary: KDE4 PAM KWallet integration
 Group: System/Base
-Requires: /usr/bin/socat
+Requires: socat
 %description -n pam0_kwallet
 KDE4 PAM KWallet integration
 
 %package -n pam0_kwallet5
 Summary: KDE5 PAM KWallet integration
 Group: System/Base
-Requires: /usr/bin/socat
+Requires: socat
 %description -n pam0_kwallet5
 KDE5 PAM KWallet integration
 
@@ -107,6 +107,9 @@ sed -i '/^Exec=/s|/pam_kwallet_init|/pam_kwallet5_init|' \
 %_K5start/pam_kwallet5_init.desktop
 
 %changelog
+* Fri Sep 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt2%ubt
+- fix requires (ALT#35393)
+
 * Wed Jun 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt1%ubt
 - new version
 
