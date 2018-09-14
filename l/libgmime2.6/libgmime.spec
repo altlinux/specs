@@ -4,7 +4,7 @@
 
 Name: lib%_name%ver_major
 Version: %ver_major.23
-Release: alt2
+Release: alt3
 
 Summary: MIME library
 License: LGPLv2+
@@ -13,6 +13,7 @@ Url: http://spruce.sourceforge.net/%_name/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %name-%version.tar
+Patch: %name-alt-%version.patch
 
 BuildPreReq: rpm-build-gnome
 BuildRequires: glib2-devel >= 2.32.0 libgio-devel
@@ -75,6 +76,7 @@ statically linked libgmime-based software.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 gtkdocize --copy
@@ -88,7 +90,7 @@ gtkdocize --copy
 	    --enable-largefile \
 	    --enable-gtk-doc \
 	    --enable-smime
-%make
+%make_build
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -119,6 +121,9 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Fri Sep 14 2018 Ivan A. Melnikov <iv@altlinux.org> 2.6.23-alt3
+- (NMU) fix FTBFS
+
 * Wed Jul 19 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6.23-alt2
 - rebuilt without mono
 
