@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: platon
-Version: 20180808
+Version: 20180911
 Release: alt1
 
 Summary: PLATON is a versatile SHELX compatible multipurpose crystallographic tool
@@ -127,12 +127,15 @@ install -pm644 test/MULABS_EXAMPLE/* %buildroot%_datadir/%name/MULABS_EXAMPLE/
 install -pm644 test/PSICOR_EXAMPLE/* %buildroot%_datadir/%name/PSICOR_EXAMPLE/
 install -pm644 test/SQUEEZE_EXAMPLE/* %buildroot%_datadir/%name/SQUEEZE_EXAMPLE/
 
-install -d %buildroot%_defaultdocdir/%name/{images,PLATON-MANUAL.data}
-install -pm644 doc/{*.html,*.pdf,*.lis,*.spf,*.ps,*.res,*.mis,*.hkl,*.ins,*.dat,*.Z,*.fcf,*.acc,*.sup,*.lps,*.pdb,*.eps,*.jnl,*.cif} \
+install -d %buildroot%_defaultdocdir/%name/{images,PLATON-MANUAL.data,pl000314_files}
+#install -pm644 doc/{*.html,*.pdf,*.lis,*.spf,*.ps,*.res,*.mis,*.hkl,*.ins,*.dat,*.Z,*.fcf,*.acc,*.sup,*.lps,*.pdb,*.eps,*.jnl,*.cif} \
+#        %buildroot%_defaultdocdir/%name
+install -pm644 doc/{*.html,*.pdf,*.lis,*.spf,*.ps,*.res,*.mis,*.hkl,*.ins,*.Z,*.fcf,*.acc,*.sup,*.lps,*.pdb,*.eps,*.jnl,*.cif} \
         %buildroot%_defaultdocdir/%name
 ln -s pl000000.html %buildroot%_defaultdocdir/%name/index.html
 install -pm644 doc/images/* %buildroot%_defaultdocdir/%name/images
 install -pm644 doc/PLATON-MANUAL.data/* %buildroot%_defaultdocdir/%name/PLATON-MANUAL.data
+install -pm644 doc/pl000314_files/* %buildroot%_defaultdocdir/%name/pl000314_files
 
 %files
 # nothing to pack
@@ -149,6 +152,9 @@ install -pm644 doc/PLATON-MANUAL.data/* %buildroot%_defaultdocdir/%name/PLATON-M
 %_defaultdocdir/%name
 
 %changelog
+* Sat Sep 15 2018 Denis G. Samsonenko <ogion@altlinux.org> 20180911-alt1
+- new version
+
 * Thu Aug 16 2018 Denis G. Samsonenko <ogion@altlinux.org> 20180808-alt1
 - new version
 
