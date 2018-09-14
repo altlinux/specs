@@ -1,14 +1,14 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: gnofract4d
-Version: 3.14.1
-Release: alt2.git201802025
+Version: 4.0.1
+Release: alt1
 
 Summary: Gnofract 4D is a Gnome-based program to draw fractals
 
 Group: Sciences/Mathematics
 License: GPL
 Url: http://gnofract4d.sourceforge.net/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # Source-git: https://github.com/edyoung/gnofract4d.git
 Source: %name-%version.tar
@@ -24,10 +24,11 @@ Requires: gcc
 #BuildPreReq: desktop-file-utils 
 
 #add_python_req_skip fract4d _lsprof cProfile fractutils frm_docbook kid
-%add_python_req_skip frm_docbook
+%add_python3_req_skip frm_docbook
 
-# Automatically added by buildreq on Mon Feb 18 2008
-BuildRequires: gcc-c++ libGConf-devel libjpeg-devel libpng-devel python-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc-c++ libGConf-devel libjpeg-devel libpng-devel
+BuildRequires: python3-devel
 
 %description
 Gnofract 4D is a Gnome-based program to draw fractals. What sets it apart from
@@ -38,32 +39,29 @@ the two sets and explore their inter-relationships.
 
 %prep
 %setup
-# do not use gst 0.10
-rm -f fract4d/encoder.py
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
-# drop all tests (due removed encoder.py)
-rm -rf %buildroot%python_sitelibdir/fract*/test*
+# drop all tests
+rm -rf %buildroot%python3_sitelibdir/fract*/test*
 
 install -d %buildroot%_liconsdir
 mv %buildroot%_pixmapsdir/*.png %buildroot%_liconsdir/
 
-%find_lang %name --with-gnome
-
 rm -rf %buildroot/usr/share/doc/gnofract4d
+
+%find_lang %name --with-gnome
 
 %files -f %name.lang
 %doc README
 %_bindir/%name
-%python_sitelibdir/fract4d/
-%python_sitelibdir/*.egg-info
-%python_sitelibdir/fract4dgui/
-%python_sitelibdir/fractutils/
+%python3_sitelibdir/fract4d/
+%python3_sitelibdir/fract4dgui/
+%python3_sitelibdir/*.egg-info
 %_datadir/%name/
 %_datadir/mime/packages/*
 %_liconsdir/*
@@ -71,6 +69,9 @@ rm -rf %buildroot/usr/share/doc/gnofract4d
 %_desktopdir/*
 
 %changelog
+* Fri Sep 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.1-alt1
+- Updated to upstream version 4.0.1.
+
 * Sun Feb 25 2018 Vitaly Lipatov <lav@altlinux.ru> 3.14.1-alt2.git201802025
 - Snapshot from git
 - drop all tests and python gst using
