@@ -1,8 +1,12 @@
 # INFO: For update, do git merge -s ours with new tag rom upstream repo
+%ifndef e2k
+%define e2k e2k e2kv4 e2kv5 e2kv6 e2k4c e2k8c e2k1cp e2k8c2 e2k12c e2k16c e2k2c3
+%endif
+
 %define major 0.97
 Name: dia
 Version: %major.4
-Release: alt0.2
+Release: alt0.3
 
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
@@ -21,6 +25,7 @@ Obsoletes: %name-gnome %name-python
 Source: %name-%version.tar
 
 #Patch: %name-%version-%release.patch
+Patch: alt-dia-fix-help.patch
 
 BuildRequires: dblatex docbook-style-xsl docbook-utils gcc-c++ intltool libart_lgpl-devel libgtk+2-devel libxslt-devel
 BuildRequires: python-devel python-module-PyXML python-module-pygtk python-modules-email python-modules-encodings xsltproc
@@ -53,6 +58,7 @@ PostScript(TM), SVG, CGM или PNG.
 %prep
 %setup
 #patch -p1
+%patch -p1
 
 install -m644 data/icons/48x48/apps/%name.png app/pixmaps/%name-app.png
 
@@ -96,6 +102,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_mandir/fr/man1/*
 
 %changelog
+* Fri Sep 14 2018 Ivan Razzhivin <underwit@altlinux.org> 0.97.4-alt0.3
+- fix help
+
 * Wed May 30 2018 Michael Shigorin <mike@altlinux.org> 0.97.4-alt0.2
 - %%e2k: disable libEMF too (archdep)
 
