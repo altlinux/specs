@@ -1,6 +1,6 @@
 Name: xapps
-Version: 1.2.0
-Release: alt1.1
+Version: 1.2.2
+Release: alt1
 
 Summary: Libraries and common resources for XApps
 License: %gpl3only
@@ -150,6 +150,9 @@ Python3 Xapp overrides Library
 %python3_sitelibdir/gi/overrides/__pycache__/*
 
 %changelog
+* Fri Sep 14 2018 Vladimir Didenko <cow@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Thu Sep 6 2018 Vladimir Didenko <cow@altlinux.org> 1.2.0-alt1.1
 - Rebuild with pygobject 3.30
 

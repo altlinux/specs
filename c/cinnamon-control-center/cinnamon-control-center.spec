@@ -8,8 +8,8 @@
 %def_enable onlineaccounts
 
 Name: cinnamon-control-center
-Version: %ver_major.0
-Release: alt4
+Version: %ver_major.2
+Release: alt1
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -166,6 +166,9 @@ you'll want to install this package.
 
 
 %changelog
+* Fri Sep 14 2018 Vladimir Didenko <cow@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Wed Sep 12 2018 Vladimir Didenko <cow@altlinux.org> 3.8.0-alt4
 - don't pack outdated desktop files (closes: #35387)
 
