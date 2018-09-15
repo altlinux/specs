@@ -1,6 +1,6 @@
 Name: moneymanagerex
 Version: 1.3.3
-Release: alt2
+Release: alt2.1
 
 Summary: Simple to use financial management software
 License: GPLv2
@@ -23,7 +23,8 @@ AutoReq:yes,nomingw32
 # manually removed: i586-libgst-plugins1.0 i586-libxcb  python3 ruby ruby-stdlibs
 # Automatically added by buildreq on Thu Aug 13 2015
 # optimized out: at-spi2-atk fontconfig gnu-config libat-spi2-core libcairo-gobject libgdk-pixbuf libgpg-error libgst-plugins1.0 libharfbuzz-icu libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server python3-base
-BuildRequires: gcc-c++ libdb4-devel libwxGTK3.1-devel libwxGTK3.1-sqlite3-devel libsqlite3-devel
+BuildRequires: gcc-c++ libdb4-devel libsqlite3-devel
+BuildRequires: libwxGTK3.0-devel libwxGTK3.0-sqlite3-devel
 
 %description
 Simple to use financial management software
@@ -40,7 +41,7 @@ TODO: build with external lua, ccpunit
 
 %prep
 %setup
-%patch -p2
+#patch -p2
 %patch1 -p2
 
 %build
@@ -49,6 +50,10 @@ TODO: build with external lua, ccpunit
 
 %install
 %makeinstall_std
+
+# fix place locale. needed normal fix
+mkdir -p %buildroot%_datadir/mmex/po/en
+mv %buildroot%_datadir/mmex/po/*.mo %buildroot%_datadir/mmex/po/en
 
 %find_lang %name
 
@@ -63,6 +68,10 @@ TODO: build with external lua, ccpunit
 
 
 %changelog
+* Sat Sep 15 2018 Anton Midyukov <antohami@altlinux.org> 1.3.3-alt2.1
+- rebuilt with libwxGTK3.0
+- fix place locale
+
 * Sat May 26 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.3-alt2
 - rebuild with libwxGTK3.1-sqlite3 4.0.3
 
