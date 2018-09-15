@@ -2,7 +2,7 @@
 %define bname nokogiri
 Name: ruby-%bname
 Version: 1.8.4
-Release: alt1
+Release: alt1.1
 Summary: Ruby libraries for %Name (HTML, XML, SAX, and Reader parser)
 Group: Development/Ruby
 License: MIT/Ruby
@@ -73,6 +73,7 @@ export CFLAGS="$CFLAGS -Wno-unused-parameter"
 %ruby_config -- --use-system-libraries
 %ruby_build
 rake debug_gem > %bname-%version.gemspec
+echo "gemspec" >> Gemfile
 
 %install
 %ruby_install
@@ -88,7 +89,7 @@ ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/%Name$' | xargs rm -rf
 %ruby_sitelibdir/*.jar
 %ruby_sitelibdir/*.rb
 %ruby_sitearchdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
 
 %files -n %bname
 %_bindir/*
@@ -97,6 +98,9 @@ ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/%Name$' | xargs rm -rf
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Jul 26 2018 Andrey Cherepanov <cas@altlinux.org> 1.8.4-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Thu Jul 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.8.4-alt1
 - New version.
 - Package as gem.

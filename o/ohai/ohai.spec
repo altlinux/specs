@@ -2,7 +2,7 @@
  
 Name: 	 %pkgname
 Version: 14.2.4
-Release: alt1
+Release: alt1.1
  
 Summary: Ohai profiles your system and emits JSON
 License: MIT/Ruby
@@ -15,22 +15,8 @@ BuildArch: noarch
 Source:  %pkgname-%version.tar
  
 BuildRequires(pre): rpm-build-ruby
-#BuildRequires: chef-config
-BuildRequires: ruby-ffi >= 1.9
-BuildRequires: ruby-ffi-yajl >= 2.2
-BuildRequires: ruby-ipaddress
-BuildRequires: ruby-mime-types >= 2.0
-BuildRequires: ruby-mixlib-cli
-BuildRequires: ruby-mixlib-config >= 2.0
-BuildRequires: ruby-mixlib-log
-BuildRequires: ruby-mixlib-shellout >= 2.0
-#BuildRequires: ruby-net-dhcp
-BuildRequires: ruby-systemu >= 2.6.4
-BuildRequires: ruby-ipaddr_extensions
-BuildRequires: ruby-sigar
-BuildRequires: ruby-tool-setup
 
-%filter_from_requires \,^ruby(\(win32\|wmi\),d
+%filter_from_requires /wmi-lite/d
 
 %description
 Ohai is a tool that is used to detect attributes on a node, and then
@@ -68,12 +54,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/%pkgname
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon Aug 27 2018 Andrey Cherepanov <cas@altlinux.org> 14.2.4-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Sat Jul 07 2018 Andrey Cherepanov <cas@altlinux.org> 14.2.4-alt1
 - New version.
 

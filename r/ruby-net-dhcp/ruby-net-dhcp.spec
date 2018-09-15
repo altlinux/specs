@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.3.2 
-Release: alt1
+Release: alt1.1
  
 Summary: Net::DHCP library for ruby, originally written by etd
 License: MIT/Ruby
@@ -53,10 +53,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/%pkgname
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.2-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Feb 16 2015 Andrey Cherepanov <cas@altlinux.org> 1.3.2-alt1
 - Initial build for ALT Linux

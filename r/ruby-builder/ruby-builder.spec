@@ -1,26 +1,29 @@
-%def_disable check
-
 %define pkgname builder
 
 Name: ruby-%pkgname
-Version: 3.0.0
-Release: alt1.1
+Version: 3.2.3
+Release: alt1
 Summary: Provide a simple way to create XML markup and data structures
-License: MIT/X Consortium
+License: MIT
 Group: Development/Ruby
-Url: http://rubyforge.org/projects/builder/
+Url: https://github.com/tenderlove/builder
 
 Source: %pkgname-%version.tar
-Patch1: ruby-builder-3.0.0-alt-use-require_relative.patch
 
+Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
-# Automatically added by buildreq on Mon Mar 31 2008 (-bi)
-BuildRequires: rpm-build-ruby ruby-test-unit ruby-tool-rdoc ruby-tool-setup
+BuildRequires(pre): rpm-build-ruby
 
 %description
+Provide a simple way to create XML markup and data structures.
 Builder::XmlMarkup:: Generate XML markup notiation
 Builder::XmlEvents:: Generate XML events (i.e. SAX-like)
+
+%description -l ru_RU.UTF8
+Позволяет простым способом создавать XML разметку и структуры данных.
+Builder::XmlMarkup:: Создание записи с XML разметкою.
+Builder::XmlEvents:: Создание событий XML (т.е. подобные SAX)
 
 %package doc
 Summary: Documentation files for %name
@@ -29,9 +32,11 @@ Group: Documentation
 %description doc
 Documentation files for %name
 
+%description doc -l ru_RU.UTF8
+Файлы сведений для %name
+
 %prep
 %setup -n %pkgname-%version
-%patch1 -p1
 %update_setup_rb
 
 %build
@@ -39,25 +44,29 @@ Documentation files for %name
 %ruby_build
 # EPIC FAIL
 rm -f test/testblankslate.rb
+%ruby_test_unit -Ilib test/test*.rb
 
 %install
 %ruby_install
 %rdoc lib/
 
-%check
-%ruby_test_unit -Ilib test/test*.rb
-
 %files
-%doc CHANGES README
+%doc CHANGES README.md MIT-LICENSE
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/Builder*
 
 %changelog
-* Fri Dec 07 2012 Led <led@altlinux.ru> 3.0.0-alt1.1
+* Thu Aug 30 2018 Pavel Skrylev <majioa@altlinux.org> 3.2.3-alt1
+- new version 3.2.3
+
+* Thu Aug 30 2018 Pavel Skrylev <majioa@altlinux.org> 3.2.0-alt1.1
+- Built version 3.2.0
+
+* Wed Dec 05 2012 Led <led@altlinux.ru> 3.0.0-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
-- disabled check
 
 * Tue Mar 22 2011 Andriy Stepanov <stanv@altlinux.ru> 3.0.0-alt1
 - [3.0.0]

@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.1.0
-Release: alt3
+Release: alt3.1
  
 Summary: GetText but 3.5 x faster, 560 x less memory, simple, clean namespace (7 vs 34) and threadsafe!
 License: MIT/Ruby
@@ -57,12 +57,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc Readme*
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt3.1
+- Rebuild for new Ruby autorequirements.
+
 * Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt3
 - Fix package as gem.
 

@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.6.0
-Release: alt1
+Release: alt1.1
 
 Summary: This gem adds a Redis::Namespace class which can be used to namespace Redis keys.
 License: MIT
@@ -49,10 +49,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1
 - Initial build for Sisyphus

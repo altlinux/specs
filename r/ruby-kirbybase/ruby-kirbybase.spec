@@ -3,8 +3,8 @@
 %define pkgname kirbybase
 
 Name: ruby-%pkgname
-Version: 2.6
-Release: alt2.1
+Version: 2.6.1
+Release: alt1
 
 Summary: Small, plain-text, dbms written in Ruby
 Group: Development/Ruby
@@ -16,7 +16,6 @@ Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
 Source: %pkgname-%version.tar
-Patch: %pkgname-%version-%release.patch
 
 # Automatically added by buildreq on Thu Jul 02 2009 (-bi)
 BuildRequires: rpm-build-ruby ruby-test-unit ruby-tool-rdoc ruby-tool-setup
@@ -34,7 +33,6 @@ Documentation files for %name
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
 %update_setup_rb
 
 %build
@@ -48,13 +46,21 @@ Documentation files for %name
 
 %files
 %doc README
+%_bindir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %doc examples images kirbybaserubymanual.html
 %ruby_ri_sitedir/KirbyBase*
 
 %changelog
+* Thu Jul 19 2018 Andrey Cherepanov <cas@altlinux.org> 2.6.1-alt1
+- New version.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.6-alt2.2
+- Rebuild with new Ruby autorequirements.
+
 * Wed Dec 05 2012 Led <led@altlinux.ru> 2.6-alt2.1
 - Rebuilt with ruby-1.9.3-alt1
 

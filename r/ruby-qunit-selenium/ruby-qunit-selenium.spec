@@ -1,13 +1,13 @@
-%define  pkgname chef-provisioning
+%define  pkgname qunit-selenium
 
 Name:    ruby-%pkgname
-Version: 2.7.1
+Version: 0.0.4
 Release: alt1
 
-Summary: A library for creating machines and infrastructures idempotently in Chef.
-License: Apache-2.0
+Summary: QUnit test runner for Selenium WebDriver
+License: MIT
 Group:   Development/Ruby
-Url:     https://github.com/chef/chef-provisioning
+Url:     https://github.com/smontanari/qunit-selenium
 
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
@@ -31,8 +31,6 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-# Remove windows-specific transport to prevent unmet
-rm -f lib/chef/provisioning/transport/winrm.rb
 %update_setup_rb
 
 %build
@@ -50,11 +48,13 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %files
 %doc README*
+%_bindir/qunit-selenium
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
-* Tue May 29 2018 Andrey Cherepanov <cas@altlinux.org> 2.7.1-alt1
+* Thu Jul 26 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.4-alt1
 - Initial build for Sisyphus

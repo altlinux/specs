@@ -1,8 +1,9 @@
 %define  pkgname fog-core
 
 Name:    ruby-%pkgname
-Version: 2.1.0
+Version: 1.45.0
 Release: alt1
+Epoch:   1
 
 Summary: fog's core, shared behaviors without API and provider specifics
 License: MIT
@@ -49,10 +50,17 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Aug 29 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.45.0-alt1
+- Decrease version.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Wed May 23 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
 - Initial build for Sisyphus

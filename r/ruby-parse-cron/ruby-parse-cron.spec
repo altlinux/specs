@@ -2,7 +2,7 @@
 
 Name: ruby-%pkgname
 Version: 0.1.4
-Release: alt1
+Release: alt1.1
 
 Summary: Parse crontab syntax to determine scheduled run times
 License: MIT
@@ -49,11 +49,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.1.4-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri Sep 01 2017 Alexey Shabalin <shaba@altlinux.ru> 0.1.4-alt1
 - Initial build in Sisyphus
 

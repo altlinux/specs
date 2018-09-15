@@ -2,7 +2,7 @@
 
 Name: ruby-dbus
 Version: 0.2.12
-Release: alt1.2
+Release: alt1.3
 
 Summary: Ruby D-BUS library
 Group: Development/Ruby
@@ -49,6 +49,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/DBus*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.12-alt1.3
+- Rebuild with new Ruby autorequirements.
+
 * Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 0.2.12-alt1.2
 - Rebuild with Ruby 2.4.1
 

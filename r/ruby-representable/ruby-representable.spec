@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 3.0.4
-Release: alt1
+Release: alt1.1
 
 Summary: Maps representation documents from and to Ruby objects
 License: MIT
@@ -45,15 +45,20 @@ Documentation files for %{name}.
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+#%%ruby_test_unit -Ilib:test test
 
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.4-alt1.1
+- Rebuild with new Ruby autorequirements.
+- Disable tests.
+
 * Sat May 26 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.4-alt1
 - Initial build for Sisyphus

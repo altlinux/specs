@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 2.4.3
-Release: alt1
+Release: alt1.1
 
 Summary: A helper for launching cross-platform applications in a fire and forget manner.
 License: ISC
@@ -16,6 +16,7 @@ Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
+BuildRequires: ruby-simplecov
 
 %description
 %summary
@@ -36,6 +37,7 @@ Documentation files for %{name}.
 %build
 %ruby_config
 %ruby_build
+rake gemspec
 
 %install
 %ruby_install
@@ -48,11 +50,18 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %files
 %doc README*
+%_bindir/%pkgname
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.4.3-alt1.1
+- Rebuild with new Ruby autorequirements.
+- Package as gem.
+- Package executable.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 2.4.3-alt1
 - Initial build for Sisyphus

@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 0.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: libvirt provider for fog
 License: MIT
@@ -49,10 +49,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Wed May 23 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus

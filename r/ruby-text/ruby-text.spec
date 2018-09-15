@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.3.1 
-Release: alt4
+Release: alt4.1
  
 Summary: Collection of text algorithms
 License: MIT/Ruby
@@ -50,12 +50,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt4.1
+- Rebuild for new Ruby autorequirements.
+
 * Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt4
 - Use system way to package as gem.
 

@@ -2,7 +2,7 @@
 
 Name: 	 ruby-bson
 Version: 4.3.0
-Release: alt1.2
+Release: alt1.3
 
 Summary: Ruby Implementation of the BSON Specification (2.0.0+)
 License: Apache-2.0
@@ -16,8 +16,6 @@ Source:  %pkgname-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 BuildRequires: libruby-devel
-
-%filter_from_requires /^ruby(bson-ruby.jar)/d
 
 %description
 %summary
@@ -51,11 +49,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Aug 31 2018 Andrey Cherepanov <cas@altlinux.org> 4.3.0-alt1.3
+- Rebuild with new Ruby autorequirements.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 4.3.0-alt1.2
 - Rebuild with Ruby 2.5.1
 

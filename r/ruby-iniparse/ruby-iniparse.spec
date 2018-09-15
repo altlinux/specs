@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.4.4
-Release: alt1
+Release: alt1.1
 
 Summary: IniParse is a pure Ruby library for parsing INI configuration and data files.
 License: MIT
@@ -49,10 +49,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 1.4.4-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 1.4.4-alt1
 - Initial build for Sisyphus

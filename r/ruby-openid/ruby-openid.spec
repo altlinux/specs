@@ -1,6 +1,6 @@
 Name:    ruby-openid
 Version: 2.8.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenID library for Ruby
 License: MIT/Ruby and Apache 2.0
@@ -51,10 +51,14 @@ LANG=en_US.UTF-8 %ruby_test_unit -Ilib:test test
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri Jun 01 2018 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt1
 - Initial build for Sisyphus

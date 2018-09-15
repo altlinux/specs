@@ -1,25 +1,25 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
 %define pkgname i18n
+%def_disable tests
 
 Name: ruby-%pkgname
-Version: 0.3.7
-Release: alt2.2
+Version: 1.1.0
+Release: alt1
 
 Summary: I18n and localization solution for Ruby
 Group: Development/Ruby
 License: MIT/Ruby
-Url: http://rubyforge.org/projects/i18n/
+Url: https://github.com/svenfuchs/i18n
 
 Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
 Source: %pkgname-%version.tar
-Patch: %pkgname-%version-%release.patch
 
 BuildRequires: rpm-build-ruby ruby-tool-rdoc ruby-tool-setup tzdata
-%{!?_disable_check:BuildRequires: ruby-activerecord ruby-activerecord-sqlite3-adapter ruby-activesupport ruby-mocha}
+%if_enabled tests
+BuildRequires: ruby-activerecord ruby-activerecord-sqlite3-adapter ruby-activesupport ruby-mocha
+%endif
 
 %description
 I18n and localization solution for Ruby.
@@ -33,7 +33,6 @@ Documentation files for %name
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
 
 %build
 %update_setup_rb
@@ -45,16 +44,26 @@ Documentation files for %name
 %rdoc lib/
 
 %check
+%if_enabled tests
 %ruby_vendor test/all.rb
+%endif
 
 %files
-%doc README.textile
+%doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/I18n*
 
 %changelog
+* Fri Aug 31 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
+- New version.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.7-alt2.3
+- Rebuild with new Ruby autorequirements.
+- Disable tests.
+
 * Sat Mar 22 2014 Led <led@altlinux.ru> 0.3.7-alt2.2
 - add true to respond_to? for 1.9.3 compatibility
 - enabled %%check

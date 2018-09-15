@@ -1,13 +1,13 @@
-%define  pkgname berkshelf
+%define  pkgname kindlerb
 
 Name:    ruby-%pkgname
-Version: 7.0.4
+Version: 1.2.0
 Release: alt1
 
-Summary: A Chef Cookbook manager
-License: Apache 2.0
+Summary: Kindle periodical format ebook generation tool
+License: MIT
 Group:   Development/Ruby
-Url:     https://github.com/berkshelf/berkshelf
+Url:     https://github.com/danchoi/kindlerb
 
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
@@ -18,7 +18,12 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 
 %description
-%summary
+kindlerb is a Ruby Kindle periodical-format ebook generator. This tool
+was initially extracted from kindlefeeder.com. Kindlefodder was also
+built on top of kindlerb. kindlerb converts a file tree of sections,
+articles, images, and metadata into a MOBI periodical-formatted document
+for the Kindle. It is a wrapper around the kindlegen program from Amazon
+that hides the details for templating OPF and NCX files.
 
 %package doc
 Summary: Documentation files for %name
@@ -32,6 +37,7 @@ Documentation files for %{name}.
 %prep
 %setup -n %pkgname-%version
 %update_setup_rb
+echo "gemspec" >> Gemfile
 
 %build
 %ruby_config
@@ -48,18 +54,13 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %files
 %doc README*
-%_bindir/berks
+%_bindir/setupkindlerb
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
-* Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 7.0.4-alt1
-- New version.
-
-* Wed Jun 06 2018 Andrey Cherepanov <cas@altlinux.org> 7.0.3-alt1
-- New version.
-
-* Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 7.0.2-alt1
+* Thu Jul 26 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus

@@ -1,6 +1,6 @@
 Name: 	 erubis
 Version: 2.7.0 
-Release: alt3
+Release: alt3.1
  
 Summary: A fast and extensible eRuby implementation
 License: MIT/Ruby
@@ -11,13 +11,11 @@ Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
  
 Source:  %name-%version.tar
+Source1: %name-%version.gemspec
 Patch1:  %name-fix-syntax-errors.patch
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 
-%filter_from_requires /^ruby(compiler)$/d
- 
 %description
 Erubis is a fast, secure, and very extensible implementation of eRuby.
 It has the following features:
@@ -51,6 +49,7 @@ Documentation files for %{name}.
 
 %prep
 %setup
+cp %SOURCE1 %name-%version.gemspec
 %patch1 -p1
 # Remove Rails helper
 rm -f lib/erubis/helpers/rails_helper.rb
@@ -73,11 +72,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README* CHANGES*
 %_bindir/%name
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.7.0-alt3.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri Feb 09 2018 Andrey Cherepanov <cas@altlinux.org> 2.7.0-alt3
 - Fix ruby(compiler) unmet and remove Rails helper
 

@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 2.11.83
-Release: alt1
+Release: alt1.1
 
 Summary: The official AWS SDK for Ruby
 License: Apache-2.0
@@ -17,8 +17,6 @@ Source:  %pkgname-ruby-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 
-%filter_from_requires /^ruby(kramdown)$/d
-
 %description
 The official AWS SDK for Ruby. Provides both resource oriented
 interfaces and API clients for AWS services.
@@ -26,7 +24,6 @@ interfaces and API clients for AWS services.
 %package core
 Summary: AWS SDK for Ruby - Core
 Group:   Development/Ruby
-Requires: ruby-jmespath
 
 %description core
 Provides API clients for AWS. This gem is part of the official AWS SDK
@@ -87,6 +84,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/aws-sdk.rb
+%rubygem_specdir/aws-sdk*
+%exclude %rubygem_specdir/aws-sdk-core*
+%exclude %rubygem_specdir/aws-sdk-resources*
 
 %files core
 %_bindir/aws.rb
@@ -94,15 +94,20 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc aws-sdk-core/*.crt
 %ruby_sitelibdir/aws-sdk-core*
 %ruby_sitelibdir/seahorse*
+%rubygem_specdir/aws-sdk-core*
 
 %files resources
 %doc aws-sdk-resources/*.json
 %ruby_sitelibdir/aws-sdk-resources*
+%rubygem_specdir/aws-sdk-resources*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Aug 27 2018 Andrey Cherepanov <cas@altlinux.org> 2.11.83-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Sat Jul 07 2018 Andrey Cherepanov <cas@altlinux.org> 2.11.83-alt1
 - New version.
 

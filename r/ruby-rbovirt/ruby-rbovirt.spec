@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 0.1.6
-Release: alt1
+Release: alt1.1
 
 Summary: a ruby client for ovirt
 License: MIT
@@ -49,11 +49,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.1.6-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Tue Jun 19 2018 Andrey Cherepanov <cas@altlinux.org> 0.1.6-alt1
 - New version.
 

@@ -1,7 +1,7 @@
 %define  pkgname ISO8601
 
 Name:    ruby-iso8601
-Version: 0.10.1
+Version: 0.11.0
 Release: alt1
 
 Summary: Ruby parser to work with ISO8601 dateTimes and durations (http://en.wikipedia.org/wiki/ISO_8601)
@@ -49,10 +49,17 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 0.11.0-alt1
+- New version.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.10.1-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 0.10.1-alt1
 - Initial build for Sisyphus

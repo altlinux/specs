@@ -1,6 +1,6 @@
 Name:    ruby-parser
 Version: 3.11.0
-Release: alt1
+Release: alt1.1
 
 Summary: ruby_parser (RP) is a ruby parser written in pure ruby
 License: MIT
@@ -17,6 +17,7 @@ BuildRequires: ruby-tool-setup
 BuildRequires: ruby-hoe
 BuildRequires: ruby-racc
 BuildRequires: ruby-sexp-processor
+BuildRequires: ruby-oedipus-lex
 BuildRequires: unifdef
 
 %description
@@ -41,6 +42,7 @@ Documentation files for %{name}.
 %ruby_config
 rake repackage
 %ruby_build
+rake debug_gem > parser.gemspec
 
 %install
 %ruby_install
@@ -55,10 +57,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.11.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Wed Jun 06 2018 Andrey Cherepanov <cas@altlinux.org> 3.11.0-alt1
 - Initial build for Sisyphus

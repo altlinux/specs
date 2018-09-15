@@ -1,13 +1,8 @@
-%define _unpackaged_files_terminate_build 1
 %define  pkgname sass
-%define gem_dir %ruby_libdir/gems/%(%ruby_rubyconf RUBY_LIB_VERSION)
-%define gem_instdir %gem_dir/gems
-%define gem_docdir %gem_dir/doc
-%define gem_cache %gem_dir/cache
 
 Name:    ruby-%pkgname
 Version: 3.5.6
-Release: alt2
+Release: alt2.1
 
 Summary: Sass makes CSS fun again.
 License: MIT
@@ -22,9 +17,6 @@ Source:  %pkgname-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 
-%filter_from_requires /^ruby(compass)/d
-%filter_from_requires /^ruby(mock_importer)/d
-
 %description
 Sass makes CSS fun again. Sass is an extension of CSS, adding nested rules,
 variables, mixins, selector inheritance, and more. It's translated to
@@ -37,52 +29,50 @@ Group: Documentation
 
 BuildArch: noarch
 
-Requires: %name = %EVR
-
 %description doc
 Documentation files for %{name}.
 
-%package tests
-Summary: Tests for %name
-Group: Development/Ruby
-Requires: %name = %EVR
-
-%description tests
-Tests for %name.
-
 %prep
 %setup -n %pkgname-%version
-
+%update_setup_rb
 
 %build
-gem build %pkgname.gemspec
+%ruby_config
+%ruby_build
 
 %install
-# install first to temp directory instead of buildroot due to invalid file owner of some files installed by 'gem install'
-mkdir -p .%pkgname
-gem install -V --local --build-root .%pkgname --force --document=ri,rdoc %pkgname-%version.gem
-cp -a .%pkgname %buildroot
+%ruby_install
+# fix ROOT_DIR
+subst 's|\(ROOT_DIR = "\).*|\1%ruby_sitelibdir/%pkgname"|' %buildroot%ruby_sitelibdir/%pkgname/root.rb
+# install VERSION VERSION_NAME
+install -m644 VERSION* %buildroot%ruby_sitelibdir/%pkgname
+
+for i in sass sass-convert scss;do
+	mv %buildroot%_bindir/{,ruby-}$i
+done
+
+%rdoc lib/
+# Remove unnecessary files
+rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-pushd .%pkgname
-ruby -e 'Dir.glob "./test/**/*_test.rb", &method(:require)'
-popd
+%ruby_test_unit -Ilib test/**/*_test.rb
 
 %files
-%doc MIT-LICENSE README.md
-%_bindir/*
-%gem_dir
-%exclude %gem_cache
-%exclude %gem_instdir/%pkgname-%version/test
-%exclude %gem_docdir
-
-%files tests
-%gem_instdir/%pkgname-%version/test
+%doc README*
+%_bindir/ruby-sass
+%_bindir/ruby-sass-convert
+%_bindir/ruby-scss
+%ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
-%gem_docdir
+%ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 03 2018 Andrey Cherepanov <cas@altlinux.org> 3.5.6-alt2.1
+- Rebuild for new Ruby autorequirements.
+
 * Tue Jun 19 2018 Alexandr Antonov <aas@altlinux.org> 3.5.6-alt2
 - Rebuild as ruby gem for openqa
 

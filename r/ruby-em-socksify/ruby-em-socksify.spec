@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.3.2
-Release: alt2
+Release: alt2.1
  
 Summary: EventMachine SOCKSify shim: adds SOCKS support to any protocol
 License: MIT/Ruby
@@ -52,12 +52,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Sun Aug 26 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.2-alt2.1
+- Rebuild for new Ruby autorequirements.
+
 * Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.2-alt2
 - Build from upstream tag.
 - Use correct sources.

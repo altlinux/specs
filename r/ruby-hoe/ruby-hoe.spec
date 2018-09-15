@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 3.17.0
-Release: alt2
+Release: alt2.1
 
 Summary: Hoe is a rake/rubygems helper for project Rakefiles
 License: MIT
@@ -54,12 +54,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/sow
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.17.0-alt2.1
+- Rebuild with new Ruby autorequirements.
+
 * Thu Jul 05 2018 Andrey Cherepanov <cas@altlinux.org> 3.17.0-alt2
 - Clarify ignored modules.
 - Package as gem.

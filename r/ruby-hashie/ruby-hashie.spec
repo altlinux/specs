@@ -1,7 +1,7 @@
 
 Name:    ruby-hashie
 Version: 3.5.7
-Release: alt1
+Release: alt1.1
 
 Summary: Hashie is a simple collection of useful Hash extensions
 Group:   Development/Ruby
@@ -15,8 +15,7 @@ BuildRequires: ruby-test-unit
 BuildRequires: ruby-tool-setup
 
 Source: %name-%version.tar
-
-%filter_from_requires /^ruby(rails\/railtie)/d
+Patch:  alt-fix-gemfile.patch
 
 %description
 Hashie is a growing collection of tools that extend Hashes and make them
@@ -33,6 +32,7 @@ Documentation for %{name}.
 
 %prep
 %setup -n %name-%version
+%patch -p1
 %update_setup_rb
 
 %build
@@ -51,11 +51,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.5.7-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Wed Dec 20 2017 Andrey Cherepanov <cas@altlinux.org> 3.5.7-alt1
 - New version.
 

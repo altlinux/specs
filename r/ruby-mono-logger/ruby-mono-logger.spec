@@ -2,7 +2,7 @@
 
 Name:    ruby-mono-logger
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: A lock-free logger for Ruby 2.0
 License: MIT
@@ -51,10 +51,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus

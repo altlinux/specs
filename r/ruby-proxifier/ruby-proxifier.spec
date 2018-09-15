@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.0.3 
-Release: alt1
+Release: alt1.1
  
 Summary: Proxifier adds support for HTTP or SOCKS proxies and lets you force TCPSocket to use proxies
 License: MIT/Ruby
@@ -59,10 +59,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Tue Jan 19 2016 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt1
 - Initial build for ALT Linux

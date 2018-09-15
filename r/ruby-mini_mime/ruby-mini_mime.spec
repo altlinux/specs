@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Minimal mime type library for Ruby
 License: MIT
@@ -50,10 +50,14 @@ rm -f %buildroot%_bindir/*
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Aug 23 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1.1
+- Rebuild dor new Ruby autorequirements.
+
 * Thu Apr 12 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus

@@ -2,7 +2,7 @@
 
 Name:    ruby-fuzzyurl
 Version: 0.9.0
-Release: alt2
+Release: alt2.1
 
 Summary: A Ruby Gem for non-strict parsing, manipulation, and wildcard matching of URLs.
 License: MIT
@@ -15,7 +15,6 @@ BuildArch: noarch
 Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 
 %description
 %summary
@@ -49,11 +48,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.0-alt2.1
+- Rebuild for new Ruby autorequirements.
+
 * Wed Jul 04 2018 Dmitry Terekhin <jqt4@altlinux.org> 0.9.0-alt2
 - Tests disabled because "coveralls" is not available
 

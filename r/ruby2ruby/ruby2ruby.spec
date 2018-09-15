@@ -1,6 +1,6 @@
 Name:    ruby2ruby
 Version: 2.4.1
-Release: alt1
+Release: alt1.1
 
 Summary: ruby2ruby provides a means of generating pure ruby code easily from RubyParser compatible Sexps
 License: MIT
@@ -17,6 +17,7 @@ BuildRequires: ruby-tool-setup
 # For tests
 BuildRequires: ruby-sexp-processor
 BuildRequires: ruby-parser
+BuildRequires: ruby-hoe
 
 %description
 ruby2ruby provides a means of generating pure ruby code easily from
@@ -39,6 +40,7 @@ Documentation files for %{name}.
 %build
 %ruby_config
 %ruby_build
+rake debug_gem > ruby2ruby.gemspec
 
 %install
 %ruby_install
@@ -53,10 +55,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/r2r_show
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Wed Jun 06 2018 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt1
 - Initial build for Sisyphus

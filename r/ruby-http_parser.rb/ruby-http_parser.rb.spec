@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.6.0 
-Release: alt3.4
+Release: alt3.5
  
 Summary: A simple callback-based HTTP request/response parser for writing http servers, clients and proxies
 License: MIT/Ruby
@@ -56,11 +56,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %ruby_sitearchdir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Sun Aug 26 2018 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt3.5
+- Rebuild for new Ruby autorequirements.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt3.4
 - Rebuild with Ruby 2.5.1
 

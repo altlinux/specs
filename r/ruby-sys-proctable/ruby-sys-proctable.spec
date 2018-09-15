@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: A cross-platform Ruby interface for gathering process information on your operating system
 License: Apache 2.0
@@ -34,6 +34,7 @@ Documentation files for %{name}.
 %prep
 %setup -n %pkgname-%version
 %update_setup_rb
+subst 's/FileList/Dir/' *.gemspec
 
 %build
 %ruby_config
@@ -51,10 +52,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Wed Jun 06 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus

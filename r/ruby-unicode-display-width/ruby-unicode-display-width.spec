@@ -2,7 +2,7 @@
 
 Name:    ruby-unicode-display-width
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: Monospace Unicode character width in Ruby
 License: MIT
@@ -33,6 +33,8 @@ Documentation files for %{name}.
 %prep
 %setup -n %pkgname-%version
 %patch -p1
+mkdir data/%name
+cp data/*gz data/%name
 %update_setup_rb
 
 %build
@@ -41,6 +43,7 @@ Documentation files for %{name}.
 
 %install
 %ruby_install
+rm -rf %buildroot%_datadir/%name/%name
 %rdoc lib/
 # Remove unnecessary files
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
@@ -48,11 +51,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 %_datadir/%name
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Wed Jun 13 2018 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt1
 - Initial build for Sisyphus

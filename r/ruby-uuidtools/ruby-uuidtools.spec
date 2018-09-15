@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 2.1.5
-Release: alt1
+Release: alt1.1
 
 Summary: A simple universally unique ID generation library
 Group: Development/Ruby
@@ -47,11 +47,15 @@ Documentation files for %name
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/UUIDTools*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.5-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri Sep 08 2017 Andrey Cherepanov <cas@altlinux.org> 2.1.5-alt1
 - New version
 - Disable use deprecated thread module

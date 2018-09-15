@@ -2,7 +2,7 @@
 
 Name:    asciidoctor
 Version: 1.5.7.1
-Release: alt1
+Release: alt1.1
 
 Summary: A fast text processor and publishing toolchain for converting AsciiDoc content to different formats
 License: MIT
@@ -68,11 +68,15 @@ rm %buildroot%_datadir/locale/attributes.adoc
 %_man1dir/%name.1.xz
 %_datadir/%name/
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.5.7.1-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Thu Jun 21 2018 Grigory Ustinov <grenka@altlinux.org> 1.5.7.1-alt1
 - Build new version.
 

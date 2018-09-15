@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 0.3.2
-Release: alt1
+Release: alt1.1
 
 Summary: Find the mime type of files, examining file, filename and declared type
 License: MIT
@@ -52,10 +52,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.2-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.2-alt1
 - Initial build for Sisyphus

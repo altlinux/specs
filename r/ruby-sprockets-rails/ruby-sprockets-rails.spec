@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 3.2.1
-Release: alt2
+Release: alt2.1
 
 Summary: Sprockets Rails integration
 License: MIT
@@ -49,12 +49,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.1-alt2.1
+- Rebuild for new Ruby autorequirements.
+
 * Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.1-alt2
 - Package as gem.
 - Disable tests.

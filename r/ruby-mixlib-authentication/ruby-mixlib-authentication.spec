@@ -1,7 +1,7 @@
 %define  pkgname mixlib-authentication
  
 Name: 	 ruby-%pkgname
-Version: 1.3.0 
+Version: 2.1.4
 Release: alt1
  
 Summary: AuthN signing and verification. Appears in both the client and server
@@ -50,10 +50,17 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.4-alt1
+- New version.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Feb 16 2015 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1
 - Initial build for ALT Linux

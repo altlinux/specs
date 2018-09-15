@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 2.0.0 
-Release: alt1
+Release: alt1.1
  
 Summary: This is a Ruby library for working with UCF documents
 License: MIT/Ruby
@@ -58,10 +58,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc Changes.rdoc Licence.rdoc ReadMe.rdoc
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Tue Feb 17 2015 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - Initial build for ALT Linux (without tests)

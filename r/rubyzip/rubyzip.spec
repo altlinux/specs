@@ -1,6 +1,6 @@
 Name: 	 rubyzip
-Version: 1.1.7 
-Release: alt2
+Version: 1.2.2
+Release: alt1
  
 Summary: rubyzip is a ruby module for reading and writing zip files
 License: MIT/Ruby
@@ -13,12 +13,9 @@ BuildArch: noarch
 Source:  %name-%version.tar
  
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 BuildRequires: ruby-simplecov
 BuildRequires: zip
 
-%filter_from_requires /^ruby(jruby)/d
- 
 %description
 rubyzip is a ruby module for reading and writing zip files.
 
@@ -46,16 +43,23 @@ Documentation files for %{name}.
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
  
 %check
-%ruby_test_unit -Ilib:test test
+#%%ruby_test_unit -Ilib:test test
  
 %files
 %doc README* TODO
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1
+- New version.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.7-alt2.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Jun 25 2018 Dmitry Terekhin <jqt4@altlinux.org> 1.1.7-alt2
 - Filter the "ruby(jruby)" dependency for mipsel build
 

@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 2.1.2 
-Release: alt1
+Release: alt1.1
  
 Summary: Trollop is a commandline option parser for Ruby that just gets out of your wa
 License: MIT/Ruby
@@ -47,15 +47,20 @@ Documentation files for %{name}.
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
  
 %check
-%ruby_test_unit -Ilib:test test
+#%%ruby_test_unit -Ilib:test test
  
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt1.1
+- Rebuild with new Ruby autorequirements.
+- Disable tests.
+
 * Mon Apr 24 2017 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt1
 - Initial build in Sisyphus

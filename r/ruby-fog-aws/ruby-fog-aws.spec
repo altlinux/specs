@@ -1,8 +1,9 @@
 %define  pkgname fog-aws
 
 Name:    ruby-%pkgname
-Version: 3.0.0
+Version: 2.0.1
 Release: alt1
+Epoch:   1
 
 Summary: Module for the 'fog' gem to support Amazon Web Services http://aws.amazon.com/
 License: MIT
@@ -49,10 +50,17 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 1:2.0.1-alt1
+- Use old version for fog-core.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Thu May 24 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
 - Initial build for Sisyphus

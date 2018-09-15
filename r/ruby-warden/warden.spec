@@ -4,7 +4,7 @@
 
 Name: ruby-%plugname
 Version: 0.9.4
-Release: alt2.1
+Release: alt2.2
 
 Summary: General Rack Authentication Framework
 License: Unspecified
@@ -44,11 +44,15 @@ Documentation files for %name
 %files
 %doc README.textile History.rdoc TODO.textile
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/Warden
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt2.2
+- Rebuild with new Ruby autorequirements.
+
 * Tue Dec 04 2012 Led <led@altlinux.ru> 0.9.4-alt2.1
 - Rebuilt with ruby-1.9.3-alt1
 

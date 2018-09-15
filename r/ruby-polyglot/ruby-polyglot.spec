@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.3.5
-Release: alt1
+Release: alt1.1
  
 Summary: Augment 'require' to load non-ruby file types
 License: MIT/Ruby
@@ -13,6 +13,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 BuildArch: noarch
  
 Source:  %pkgname-%version.tar
+Source1: %pkgname.gemspec
  
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
@@ -36,6 +37,7 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
+cp %SOURCE1 .
 %update_setup_rb
  
 %build
@@ -54,11 +56,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.5-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 0.3.5-alt1
 - New version
 

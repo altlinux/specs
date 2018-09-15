@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 0.15.2
-Release: alt1
+Release: alt1.1
 
 Summary: Simple, but flexible HTTP client library, with support for multiple backends.
 License: MIT
@@ -51,11 +51,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 03 2018 Andrey Cherepanov <cas@altlinux.org> 0.15.2-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Mon Jul 30 2018 Mikhail Gordeev <obirvalger@altlinux.org> 0.15.2-alt1
 - new version 0.15.2
 

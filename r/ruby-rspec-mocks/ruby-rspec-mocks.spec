@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 3.7.0
-Release: alt1
+Release: alt1.1
  
 Summary: RSpec's 'test double' framework, with support for stubbing and mocking
 License: MIT/Ruby
@@ -33,6 +33,7 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
+rm -f Gemfile
 %update_setup_rb
  
 %build
@@ -51,11 +52,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Tue Oct 17 2017 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
 - New version
 

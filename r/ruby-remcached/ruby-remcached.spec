@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.4.1 
-Release: alt1
+Release: alt1.1
  
 Summary: Ruby EventMachine memcached client
 License: Apache 2.0
@@ -49,10 +49,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Tue Apr 25 2017 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt1
 - Initial build in Sisyphus

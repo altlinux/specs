@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.2.0 
-Release: alt1.gite47e416
+Release: alt2.gite47e416
  
 Summary: A iterations per second enhancement to Benchmark
 License: MIT/Ruby
@@ -16,6 +16,7 @@ Source:  %pkgname-%version.tar
  
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-test-unit ruby-tool-rdoc ruby-tool-setup
+BuildRequires: ruby-hoe
  
 %description
 Benchmark/ips benchmarks a blocks iterations/second. For short snippets
@@ -38,7 +39,9 @@ Documentation files for %{name}.
 %build
 %ruby_config
 %ruby_build
- 
+rake debug_gem > %pkgname-%version.gemspec
+subst 's/  s.version =.*/  s.version = "%version"/' %pkgname-%version.gemspec
+
 %install
 %ruby_install
 %rdoc lib/
@@ -52,10 +55,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/benchmark_ips
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon Aug 27 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt2.gite47e416
+- Rebuild for new Ruby autorequirements.
+
 * Tue Apr 22 2014 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1.gite47e416
 - Initial build for ALT Linux

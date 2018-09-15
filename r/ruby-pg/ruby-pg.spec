@@ -1,8 +1,8 @@
-# vim: set ft=spec: -*- rpm-spec -*-
+%global __find_debuginfo_files %nil
 
 Name: ruby-pg
 Version: 0.19.0
-Release: alt2.4
+Release: alt2.5
 
 Summary: Ruby interface to PostgreSQL RDBMS
 Group: Development/Ruby
@@ -50,12 +50,17 @@ Documentation files for %name
 %doc Contributors.rdoc README.rdoc LICENSE
 %ruby_sitearchdir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %doc sample
 %ruby_ri_sitedir/PG*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.19.0-alt2.5
+- Rebuild with new Ruby autorequirements.
+- Disable debuginfo.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.19.0-alt2.4
 - Rebuild with Ruby 2.5.1
 

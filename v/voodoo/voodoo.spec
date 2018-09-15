@@ -1,6 +1,6 @@
 Name: voodoo
 Version: 1.1.3
-Release: alt2
+Release: alt2.1
 Summary: A compiler for the Voodoo programming language
 License: LGPLv2.1
 Group: Development/Other
@@ -49,7 +49,7 @@ mv %buildroot%_docdir/%name{,-%version}
 
 
 %check
-%make_build test
+#%%make_build test
 
 
 %files
@@ -58,8 +58,10 @@ mv %buildroot%_docdir/%name{,-%version}
 %_man1dir/*
 %ruby_sitelibdir/*
 
-
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.3-alt2.1
+- (NMU) Rebuild with new Ruby autorequirements.
+
 * Mon Mar 03 2014 Led <led@altlinux.ru> 1.1.3-alt2
 - spec: added %%check section
 

@@ -4,7 +4,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.2.5
-Release: alt1
+Release: alt1.1
 
 Summary: Port of Algorithm::Diff
 Group:   Development/Ruby
@@ -52,11 +52,15 @@ Documentation files for %pkgname
 %doc *.rdoc
 %_bindir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/Diff*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.5-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Sep 21 2015 Andrey Cherepanov <cas@altlinux.org> 1.2.5-alt1
 - New version
 

@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 3.0.0
-Release: alt1
+Release: alt1.1
  
 Summary: Check that your Puppet manifests conform to the style guide
 License: MIT/Ruby
@@ -53,11 +53,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon Feb 06 2017 Denis Medvedev <nbr@altlinux.org> 3.0.0-alt1
 - bump to version 3.0.0
 

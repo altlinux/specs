@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.0.0 
-Release: alt1.git5bded6
+Release: alt1.git5bded6.1
  
 Summary: A set of enhancements to the standard library benchmark.rb
 License: MIT/Ruby
@@ -17,6 +17,7 @@ Source:  %pkgname-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-test-unit ruby-tool-rdoc ruby-tool-setup
 BuildRequires: ruby-benchmark-ips
+BuildRequires: ruby-hoe
  
 %description
 This package contains a command line tool for running multiple
@@ -39,7 +40,8 @@ Documentation files for %{name}.
 %build
 %ruby_config
 %ruby_build
- 
+rake debug_gem > %pkgname.gemspec
+
 %install
 %ruby_install
 %rdoc lib/
@@ -53,10 +55,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/benchmark
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1.git5bded6.1
+- Rebuild with new Ruby autorequirements.
+
 * Tue Apr 22 2014 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1.git5bded6
 - Initial build for ALT Linux

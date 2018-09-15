@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 0.0.4
-Release: alt1
+Release: alt1.1
 
 Summary: Adds a metaclass method to all Ruby objects
 License: MIT
@@ -15,8 +15,6 @@ BuildArch: noarch
 Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-BuildRequires: ruby-bundler
 
 %description
 Adds a __metaclass__ method to all Ruby objects.
@@ -47,10 +45,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Aug 20 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.4-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Thu Jun 14 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.4-alt1
 - Initial build for Sisyphus

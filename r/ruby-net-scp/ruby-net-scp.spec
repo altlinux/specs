@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.2.1
-Release: alt1
+Release: alt1.1
 
 Summary: A pure Ruby implementation of the SCP client protocol
 Group: Development/Ruby
@@ -53,12 +53,16 @@ Documentation files for %name
 %files
 %doc README.rdoc
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %dir %ruby_ri_sitedir/Net
 %ruby_ri_sitedir/Net/SCP
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Tue May 29 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1
 - New version.
 - Disable tests.

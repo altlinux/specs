@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 0.5.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: Library and command-line utility to deal with POSIX tar(1) archive files
 Group: Development/Ruby
@@ -50,6 +50,7 @@ Documentation files for %name
 %doc README
 %_bindir/minitar
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %dir %ruby_ri_sitedir/Archive
@@ -58,6 +59,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Archive/Tar/PosixHeader
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.2-alt1.2
+- Rebuild with new Ruby autorequirements.
+
 * Wed Dec 05 2012 Led <led@altlinux.ru> 0.5.2-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 

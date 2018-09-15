@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 2.3.1
-Release: alt1
+Release: alt1.1
 
 Summary: New I/O for Ruby: Cross-platform asynchronous I/O primitives for scalable network clients and servers
 License: MIT
@@ -56,10 +56,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri Jun 15 2018 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt1
 - Initial build for Sisyphus

@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.2.0 
-Release: alt1.3
+Release: alt1.4
  
 Summary: SSH connection multiplexing: execute commands simultaneously on multiple hosts via SSH
 License: MIT/Ruby
@@ -56,16 +56,21 @@ Documentation files for %{name}.
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
  
 %check
-#%ruby_test_unit -Ilib:test test
+#%%ruby_test_unit -Ilib:test test
  
 %files
 %doc README*
 %ruby_sitelibdir/*
- 
+%rubygem_specdir/*
+
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Sep 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1.4
+- Rebuild for new Ruby autorequirements.
+- Disable tests.
+
 * Thu Jul 05 2018 Dmitry Terekhin <jqt4@altlinux.org> 1.2.0-alt1.3
 - Tests disabled because is need an build for mipsel
 

@@ -13,7 +13,7 @@ Name: ruby
 %define branch 2.5
 %define ver_teeny 1
 Version: %branch.%ver_teeny
-Release: alt3
+Release: alt4
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -25,6 +25,7 @@ Source3: fakeruby.sh
 Source4: miniruby.sh
 Patch: %name-%version-%release.patch
 Requires: %lname = %version-%release
+Requires: ruby-stdlibs = %version-%release
 
 %define obsolete() \
 Provides: %1 = %version-%release \
@@ -106,6 +107,14 @@ Provides: %{name}gems = 2.7.6
 %mobsolete optparse patterns pty readline rexml rss sdbm shell socket stringio
 %mobsolete strscan syslog tracer uri wait webrick xmlrpc yaml zlib
 Provides: ruby(thread)
+Provides: ruby-gem(did_you_mean) = 1.2.0
+Provides: ruby-gem(minitest) = 5.10.3
+Provides: ruby-gem(net-telnet) = 0.1.1
+Provides: ruby-gem(power_assert) = 1.1.1
+Provides: ruby-gem(rake) = 12.3.0
+Provides: ruby-gem(test-unit) = 3.2.7
+Provides: ruby-gem(xmlrpc) = 0.3.0
+Provides: ruby-gem(json) = %version
 Requires: libyaml2 libgdbm libssl10 libcrypto10
 
 %description -n %name-stdlibs
@@ -140,8 +149,9 @@ Provides: gem = 2.7.6
 Provides: %name-rake = 12.3.1
 Provides: rake = 12.3.1
 Obsoletes: %name-rake
-Provides: rdoc = %version-%release
-Obsoletes: rdoc < %version-%release
+Provides: ruby-gem(rdoc) = 6.0.1
+Provides: rdoc = 6.0.1
+Obsoletes: rdoc < 6.0.1
 %obsolete %name-tool-rdoc
 
 %description tools
@@ -354,6 +364,11 @@ mkdir -p %buildroot%_datadir/ri/site
 %endif
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt4
+- Rebuild with new ruby autoreq.
+- ruby requires ruby-stdlibs.
+- Provides bundled gems.
+
 * Tue Jul 10 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt3
 - Fix version in provides.
 

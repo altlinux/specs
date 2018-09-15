@@ -1,6 +1,6 @@
 Name:    ruby-progressbar
 Version: 1.9.0
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby/ProgressBar is a text progress bar library for Ruby.
 License: MIT
@@ -47,10 +47,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Mon May 28 2018 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt1
 - Initial build for Sisyphus

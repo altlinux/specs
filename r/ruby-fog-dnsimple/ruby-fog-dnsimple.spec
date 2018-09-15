@@ -1,8 +1,9 @@
 %define  pkgname fog-dnsimple
 
 Name:    ruby-%pkgname
-Version: 2.1.0
+Version: 1.0.0
 Release: alt1
+Epoch:   1
 
 Summary: Module for the 'fog' gem to support DNSimple.
 License: MIT
@@ -44,15 +45,23 @@ Documentation files for %{name}.
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+#%%ruby_test_unit -Ilib:test test
 
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Aug 31 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.0.0-alt1
+- Reset to old version for fog.
+
+* Fri Aug 31 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+- Disable tests.
+
 * Thu May 24 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
 - Initial build for Sisyphus

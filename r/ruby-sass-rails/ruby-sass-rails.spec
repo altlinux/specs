@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 5.0.7
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby on Rails stylesheet engine for Sass
 License: MIT
@@ -50,11 +50,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Jul 26 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.7-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Sun Jul 08 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.7-alt1
 - Initial build for Sisyphus

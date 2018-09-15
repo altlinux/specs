@@ -1,8 +1,9 @@
 %define  pkgname fog-google
 
 Name:    ruby-%pkgname
-Version: 1.6.0
+Version: 0.0.9
 Release: alt1
+Epoch:   1
 
 Summary: Fog for Google Cloud Platform
 License: MIT
@@ -49,12 +50,18 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.0.9-alt1
+- Use old version for fog.
+
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Thu Jul 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1
 - New version.
 - Package as gem.

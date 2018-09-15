@@ -1,6 +1,6 @@
 Name: userblocker
 Version: 0.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Squid lightsquid based userblocker
 License: GPLv3
@@ -44,5 +44,8 @@ install -pm 644 %name.cron %buildroot%_sysconfdir/cron.d/%name
 %config %_sysconfdir/cron.d/%name
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.1-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Thu Jun 04 2009 Timur Batyrshin <erthad@altlinux.org> 0.0.1-alt1
 - initial package build

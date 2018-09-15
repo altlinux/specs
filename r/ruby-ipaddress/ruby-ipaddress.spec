@@ -1,7 +1,7 @@
 %define  pkgname ipaddress
  
 Name: 	 ruby-%pkgname
-Version: 0.8.0 
+Version: 0.8.3
 Release: alt1
  
 Summary: A library to handle IP (both IPv4 and IPv6) addresses for Ruby
@@ -15,7 +15,6 @@ BuildArch: noarch
 Source:  %pkgname-%version.tar
  
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
  
 %description
 IPAddress is a Ruby library designed to make the use of IPv4 and IPv6
@@ -52,11 +51,21 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
- 
+%rubygem_specdir/*
+
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Aug 31 2018 Pavel Skrylev <majioa@altlinux.org> 0.8.3-alt1
+- Bump to 0.8.3.
+
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.8.0-alt1.2
+- Rebuild for new Ruby autorequirements.
+
+* Mon Aug 27 2018 Andrey Cherepanov <cas@altlinux.org> 0.8.0-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Mon Feb 16 2015 Andrey Cherepanov <cas@altlinux.org> 0.8.0-alt1
 - Initial build for ALT Linux
 - Disable tests

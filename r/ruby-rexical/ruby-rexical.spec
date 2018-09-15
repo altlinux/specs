@@ -2,7 +2,7 @@
 
 Name: ruby-rexical
 Version: 1.0.5
-Release: alt3
+Release: alt3.1
 
 Summary: Lexical scanner generator for ruby
 Group: Development/Ruby
@@ -49,6 +49,7 @@ mv %buildroot%_bindir/rex{,ical}
 %files
 %_bindir/*
 %ruby_sitelibdir/*
+#%%rubygem_specdir/*
 %doc README.rdoc DOCUMENTATION.en.rdoc
 
 %files doc
@@ -56,6 +57,9 @@ mv %buildroot%_bindir/rex{,ical}
 %ruby_ri_sitedir/Rexical*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.5-alt3.1
+- Rebuild with new Ruby autorequirements.
+
 * Thu Dec 13 2012 Led <led@altlinux.ru> 1.0.5-alt3
 - rename %%_bindir/rex -> %%_bindir/rexical for avoid file conflict
   with (R)?ex (rex package)

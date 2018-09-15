@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 0.0.6 
-Release: alt1
+Release: alt1.1
 
 Summary: A fork/exec replacement for FFI-capable implementations
 License: Apache-2.0
@@ -48,10 +48,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %files
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.6-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Wed May 17 2017 Gordeev Mikhail <obirvalger@altlinux.org> 0.0.6-alt1
 - Initial build in Sisyphus

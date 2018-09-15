@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 1.0.0 
-Release: alt1
+Release: alt1.1
 
 Summary: Provides english inflection
 License: MIT/Ruby
@@ -49,10 +49,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Fri Sep 01 2017 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
 - Initial build in Sisyphus

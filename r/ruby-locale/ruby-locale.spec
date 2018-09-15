@@ -5,7 +5,7 @@
 
 Name: %pkgname
 Version: 2.1.2
-Release: alt4
+Release: alt4.1
 
 Summary: Pure ruby library which provides basic APIs for localization
 Group: Development/Ruby
@@ -61,13 +61,16 @@ rm -f test/test_driver_win32.rb
 %doc README.rdoc
 %ruby_sitelibdir/*
 %exclude %ruby_sitelibdir/locale/driver/win32*.rb
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
 
 %files doc
 %doc samples ChangeLog
 %ruby_ri_sitedir/Locale*
 
 %changelog
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt4.1
+- Rebuild for new Ruby autorequirements.
+
 * Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt4
 - Use system way  of gemspec installation.
 - Disable tests.

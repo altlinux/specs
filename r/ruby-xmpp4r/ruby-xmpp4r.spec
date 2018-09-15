@@ -3,8 +3,8 @@
 %define pkgname xmpp4r
 
 Name: ruby-%pkgname
-Version: 0.5
-Release: alt2.2
+Version: 0.5.6
+Release: alt1
 
 Summary: XMPP/Jabber library for Ruby
 License: GPLv2/Ruby
@@ -13,7 +13,6 @@ Group: Development/Ruby
 # see also https://github.com/ln/xmpp4r
 Url: http://home.gna.org/xmpp4r/
 Source: %pkgname-%version.tar
-Patch: %pkgname-%version-%release.patch
 
 Obsoletes: xmpp4r
 BuildArch: noarch
@@ -42,7 +41,6 @@ Documentation files for %name
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
 %update_setup_rb
 
 %build
@@ -56,12 +54,19 @@ Documentation files for %name
 %files
 %doc CHANGELOG README.rdoc
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %doc data/doc/xmpp4r/examples
 %ruby_ri_sitedir/Jabber*
 
 %changelog
+* Thu Jul 19 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.6-alt1
+- New version.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.5-alt2.3
+- Rebuild with new Ruby autorequirements.
+
 * Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 0.5-alt2.2
 - Rebuild with Ruby 2.4.1
 - Disable tests

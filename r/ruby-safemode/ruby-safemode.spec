@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.3.5
-Release: alt1
+Release: alt1.1
 
 Summary: A library for safe evaluation of Ruby code based on ParseTree/RubyParser and Ruby2Ruby. Provides Rails ActionView template handlers for ERB and Haml.
 License: MIT
@@ -46,15 +46,19 @@ Documentation files for %{name}.
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+#%%ruby_test_unit -Ilib:test test
 
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.5-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Thu May 31 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.5-alt1
 - Initial build for Sisyphus

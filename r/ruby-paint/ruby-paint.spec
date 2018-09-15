@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 2.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby gem for ANSI terminal colors
 License: MIT
@@ -39,6 +39,7 @@ Documentation files for %{name}.
 %build
 %ruby_config
 %ruby_build
+rm -f paint-shortcuts.gemspec Gemfile
 
 %install
 %ruby_install
@@ -52,11 +53,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 %_datadir/rgb_colors.marshal.gz
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Thu May 31 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
 - Initial build for Sisyphus

@@ -12,7 +12,7 @@
 
 Name:     davmail
 Version:  4.8.5
-Release:  alt1
+Release:  alt1.1
 Summary:  POP/IMAP/SMTP/Caldav/Carddav/LDAP gateway for Microsoft Exchange
 URL:      http://davmail.sourceforge.net/
 Group:    Networking/Other
@@ -74,6 +74,9 @@ sed -i 's/\r//' releaseguide.txt releasenotes.txt
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 4.8.5-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Wed Apr 25 2018 Andrey Cherepanov <cas@altlinux.org> 4.8.5-alt1
 - New version.
 

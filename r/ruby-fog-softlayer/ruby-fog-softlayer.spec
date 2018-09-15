@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.1.4
-Release: alt1
+Release: alt1.1
 
 Summary: SoftLayer module for fog
 License: MIT
@@ -13,6 +13,7 @@ Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
 Source:  %pkgname-%version.tar
+Patch1:  alt-fix-gemspec.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
@@ -31,6 +32,7 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
+%patch1 -p1
 %update_setup_rb
 
 %build
@@ -49,10 +51,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.4-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.4-alt1
 - Initial build for Sisyphus

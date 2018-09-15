@@ -3,8 +3,8 @@
 %define pkgname rack
 
 Name: ruby-%pkgname
-Version: 1.6.8
-Release: alt2.3
+Version: 2.0.4
+Release: alt1
 Epoch:   1
 
 Summary: Modular Ruby webserver interface
@@ -69,17 +69,23 @@ Documentation files for %name
 %rdoc lib/
 
 %files
-%doc README* KNOWN-ISSUES
+%doc README*
 %_bindir/rackup
 %ruby_sitelibdir/*
 %exclude %ruby_sitelibdir/rack/handler/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
 
 %files doc
 %doc example
 %ruby_ri_sitedir/Rack*
 
 %changelog
+* Fri Aug 24 2018 Andrey Cherepanov <cas@altlinux.org> 1:2.0.4-alt1
+- New version.
+
+* Fri Aug 24 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.6.8-alt2.4
+- Rebuild for new Ruby autorequirements.
+
 * Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.6.8-alt2.3
 - Use system way to install gemspec.
 

@@ -1,6 +1,6 @@
 Name:     puppetdb
 Version:  5.2.4
-Release:  alt1%ubt
+Release:  alt1%ubt.1
 
 Summary:  Centralized Puppet Storage
 License:  Apache-2.0
@@ -137,6 +137,9 @@ useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin)
 %ruby_sitelibdir/*
 
 %changelog
+* Mon Sep 03 2018 Andrey Cherepanov <cas@altlinux.org> 5.2.4-alt1.S1.1
+- Rebuild for new Ruby autorequirements.
+
 * Tue Jul 31 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.2.4-alt1%ubt
 - Update version to 5.2.4
 

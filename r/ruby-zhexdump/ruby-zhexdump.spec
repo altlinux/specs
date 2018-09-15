@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 0.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: A highly flexible hexdump implementation.
 License: MIT
@@ -49,10 +49,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Aug 27 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.2-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Mon May 28 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.2-alt1
 - Initial build for Sisyphus

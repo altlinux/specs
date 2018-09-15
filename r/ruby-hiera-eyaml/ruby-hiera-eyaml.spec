@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 2.1.0 
-Release: alt1
+Release: alt1.1
  
 Summary: A backend for Hiera that provides per-value asymmetric encryption of sensitive data
 License: MIT/Ruby
@@ -51,10 +51,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/eyaml
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri Apr 21 2017 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
 - Initial build in Sisyphus

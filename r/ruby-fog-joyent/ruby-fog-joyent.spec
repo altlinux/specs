@@ -1,8 +1,9 @@
 %define  pkgname fog-joyent
 
 Name:    ruby-%pkgname
-Version: 0.0.2
+Version: 0.0.1
 Release: alt1
+Epoch:   1
 
 Summary: Module for the 'fog' gem to support Joyent
 License: MIT
@@ -49,10 +50,17 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.0.1-alt1
+- Decrease version for fog-core.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.2-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Thu May 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.2-alt1
 - Initial build for Sisyphus

@@ -2,7 +2,7 @@
 
 Name: %pkgname
 Version: 5.4.0
-Release: alt1.2
+Release: alt1.3
 Summary: Unicorn: Rack HTTP server for fast clients and Unix
 License: GPL2
 Group: System/Servers
@@ -11,6 +11,8 @@ Url: http://unicorn.bogomips.org/
 Source: %pkgname-%version.tar.gz
 
 BuildRequires: libruby-devel ragel rubygems ruby-tool-setup
+
+ExclusiveArch: %ix86 x86_64
 
 %description
 Unicorn is an HTTP server for Rack applications designed to only serve
@@ -48,6 +50,7 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc ISSUES README TUNING KNOWN_ISSUES FAQ DESIGN examples*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 %ruby_sitearchdir/*
 %_bindir/*
 
@@ -55,6 +58,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/Unicorn*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 5.4.0-alt1.3
+- Rebuild with new Ruby autorequirements.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 5.4.0-alt1.2
 - Rebuild with Ruby 2.5.1
 

@@ -2,7 +2,7 @@
 
 Name: ruby-%pkgname
 Version: 1.9.25
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby foreign function interface
 Group: Development/Ruby
@@ -14,8 +14,6 @@ Patch1: %name-alt-fix-requires.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libffi-devel libruby-devel ruby-tool-setup
-
-%filter_from_requires \,^ruby(lib/ffi/.*generator),d
 
 %description
 A Ruby foreign function interface.
@@ -53,12 +51,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README.md LICENSE
 %ruby_sitelibdir/*
 %ruby_sitearchdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Aug 29 2018 Andrey Cherepanov <cas@altlinux.org> 1.9.25-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 1.9.25-alt1
 - New version.
 - Package as gem in form libraries+gemspec.

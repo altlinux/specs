@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 9.0.0
-Release: alt2
+Release: alt2.1
 
 Summary: A Relational Algebra
 License: MIT
@@ -49,12 +49,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt2.1
+- Rebuild for new Ruby autorequirements.
+
 * Sun Jul 08 2018 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt2
 - Package as gem.
 

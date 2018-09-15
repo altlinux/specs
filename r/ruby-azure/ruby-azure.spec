@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 0.7.10
-Release: alt2
+Release: alt2.1
 
 Summary: Microsoft Azure Client Library for Ruby
 License: MIT/Ruby
@@ -50,11 +50,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.10-alt2.1
+- Rebuild with new Ruby autorequirements.
+
 * Fri Jun 08 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.10-alt2
 - Disable tests.
 

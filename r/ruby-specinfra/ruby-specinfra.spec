@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 2.73.4
-Release: alt1
+Release: alt1.1
 
 Summary: Command Execution Framework for serverspec, itamae and so on
 License: MIT
@@ -49,12 +49,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.73.4-alt1.1
+- Rebuild for new Ruby autorequirements.
+
 * Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 2.73.4-alt1
 - New version.
 - Package as gem.

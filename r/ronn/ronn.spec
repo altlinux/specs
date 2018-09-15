@@ -1,6 +1,6 @@
 Name:    ronn
 Version: 0.7.3
-Release: alt1
+Release: alt1.1
 
 Summary: Ronn builds manuals from Markdown to roff format
 License: MIT/Ruby
@@ -65,6 +65,7 @@ chmod +x bin/ronn
 %doc README*
 %_bindir/%name
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 %_man1dir/*.1*
 %_man7dir/*.7*
 
@@ -72,5 +73,8 @@ chmod +x bin/ronn
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.3-alt1.1
+- Rebuild with new Ruby autorequirements.
+
 * Wed May 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.3-alt1
 - Initial build for Sisyphus

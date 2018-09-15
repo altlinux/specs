@@ -2,7 +2,7 @@
 
 Name: %pkgname
 Version: 2.4.1
-Release: alt1.2
+Release: alt1.3
 
 Summary: POSIX Message Queues for Ruby.
 Group: Development/Ruby
@@ -46,12 +46,16 @@ Documentation files for %name.
 %_bindir/*
 %ruby_sitearchdir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %doc LICENSE
 %ruby_ri_sitedir/POSIX_MQ*
 
 %changelog
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt1.3
+- Rebuild with new Ruby autorequirements.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt1.2
 - Rebuild with Ruby 2.5.1
 
