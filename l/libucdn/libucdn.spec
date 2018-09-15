@@ -1,6 +1,6 @@
 Name: libucdn
 Version: 0.0
-Release: alt1
+Release: alt1.1
 
 Summary: UCDN - Unicode Database and Normalization
 
@@ -58,5 +58,8 @@ LD_LIBRARY_PATH=$(pwd) ./ucdn-test 00FE
 
 
 %changelog
+* Sat Sep 15 2018 Anton Midyukov <antohami@altlinux.org> 0.0-alt1.1
+- initial build for aarch64
+
 * Tue Apr 25 2017 Vitaly Lipatov <lav@altlinux.ru> 0.0-alt1
 - initial build for ALT Linux Sisyphus
