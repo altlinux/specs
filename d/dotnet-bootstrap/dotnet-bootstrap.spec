@@ -1,8 +1,8 @@
-%define sdkversion 2.1.4
-%define coreversion 2.0.5
+%define sdkversion 2.1.402
+%define coreversion 2.1.4
 
 Name: dotnet-bootstrap
-Version: 2.0.5
+Version: 2.1.4
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -12,11 +12,11 @@ Url: https://github.com/dotnet
 Group: Development/Other
 
 # To check we manually update download url
-# broken due sdk/core versions mismatch
-%define downloadversion 2.1.4
-# from https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.5-download.md
-# SHA512 05fe90457a8b77ad5a5eb2f22348f53e962012a55077ac4ad144b279f6cad69740e57f165820bfd6104e88b30e93684bde3e858f781541d4f110f28cd52ce2b7
-# Source-url: https://download.microsoft.com/download/1/1/5/115B762D-2B41-4AF3-9A63-92D9680B9409/dotnet-sdk-%downloadversion-linux-x64.tar.gz
+# FIXME: broken due sdk/core versions mismatch
+#%define downloadversion 2.1.401
+# from https://www.microsoft.com/net/download/dotnet-core/2.1
+# SHA512 
+# Source-url: https://download.microsoft.com/download/8/A/7/8A765126-50CA-4C6F-890B-19AE47961E4B/dotnet-sdk-%sdkversion-linux-x64.tar.gz
 Source: %name-%version.tar
 
 ExclusiveArch: x86_64
@@ -38,7 +38,8 @@ BuildRequires: libkrb5
 #Requires: libcrypto10 libssl10
 
 # it is not linked directly (need the same version like in libicu-devel)
-Requires: libicu56
+# there are icu detection in a version range
+Requires: libicu
 
 Provides: dotnet-bootstrap-runtime = %coreversion
 Provides: dotnet-bootstrap-sdk = %sdkversion
@@ -55,13 +56,13 @@ https://github.com/dotnet/core/blob/master/release-notes/download-archives/%vers
 mkdir -p %buildroot%_libdir/%name/
 cp -a * %buildroot%_libdir/%name/
 
-# due missed lldb
+# due missed lldb (TODO)
 rm -f %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/libsosplugin.so
-%__subst "s|.*libsosplugin.so.*||g" %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/Microsoft.NETCore.App.deps.json
+%__subst "s|libsosplugin.so|libsos.so|g" %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/Microsoft.NETCore.App.deps.json
 
 %files
 %dir %_libdir/%name/
-%_libdir/%name/additionalDeps/
+#_libdir/%name/additionalDeps/
 %dir %_libdir/%name/host/
 %dir %_libdir/%name/host/fxr/
 %_libdir/%name/host/fxr/%coreversion/
@@ -70,12 +71,25 @@ rm -f %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/libsosplugin.so
 %dir %_libdir/%name/shared/
 %dir %_libdir/%name/shared/Microsoft.NETCore.App/
 %_libdir/%name/shared/Microsoft.NETCore.App/%coreversion/
-%_libdir/%name/store/
+# TODO: drop from bootstrap
+%dir %_libdir/%name/shared/Microsoft.AspNetCore.All/
+%dir %_libdir/%name/shared/Microsoft.AspNetCore.App/
+%_libdir/%name/shared/Microsoft.AspNetCore.All/%coreversion/
+%_libdir/%name/shared/Microsoft.AspNetCore.App/%coreversion/
+#_libdir/%name/store/
 %_libdir/%name/LICENSE.txt
 %_libdir/%name/ThirdPartyNotices.txt
 %_libdir/%name/dotnet
 
 %changelog
+* Sat Sep 15 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.4-alt1
+- new version (2.1.4) with rpmgs script
+- includes .NET Core 2.1.4, ASP.NET Core 2.1.4 and .NET Core SDK 2.1.402
+
+* Mon Sep 03 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.3-alt1
+- new version (2.1.3) with rpmgs script
+- includes .NET Core 2.1.3, ASP.NET Core 2.1.3 and .NET Core SDK 2.1.401
+
 * Mon Feb 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt1
 - new version (2.0.5) with rpmgs script
 - CVE-2018-0764, CVE-2018-0786
