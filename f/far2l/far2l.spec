@@ -1,6 +1,6 @@
 Name: far2l
 Version: 2.0
-Release: alt2.89d986a
+Release: alt3.89d986a
 
 Summary: Linux port of FAR v2
 
@@ -11,7 +11,8 @@ Url: https://github.com/elfmz/far2l
 # Source-git: https://github.com/elfmz/far2l.git
 Source: %name-%version.tar
 
-BuildRequires: cmake gcc-c++ libwxGTK3.1-devel glib2-devel
+BuildRequires: cmake gcc-c++ glib2-devel
+BuildRequires: libwxGTK3.0-devel
 
 %description
 Linux port of FAR v2
@@ -46,6 +47,9 @@ ln -s ../../%_libexecdir/%name/far2l %buildroot%_bindir/%name
 %_libexecdir/%name/
 
 %changelog
+* Sat Sep 15 2018 Anton Midyukov <antohami@altlinux.org> 2.0-alt3.89d986a
+- rebuilt with libwxGTK3.0
+
 * Sat Jul 07 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0-alt2.89d986a
 - new git build 89d986a
 
