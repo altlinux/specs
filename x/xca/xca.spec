@@ -1,8 +1,8 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: xca
-Version: 2.1.0
-Release: alt1.1
+Version: 2.1.1
+Release: alt1
 
 Summary: A GUI for handling X509 certificates, RSA keys, PKCS#10 Requests
 Group: Security/Networking
@@ -54,6 +54,9 @@ mkdir -p %buildroot{%_bindir,%_datadir/xca,%_desktopdir,%_man1dir}
 %_pixmapsdir/xca*.xpm
 
 %changelog
+* Sat Sep 15 2018 Pavel Nakonechnyi <zorg@altlinux.ru> 2.1.1-alt1
+- update to 2.1.1 release
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
