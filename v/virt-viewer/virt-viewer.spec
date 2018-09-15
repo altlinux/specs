@@ -1,7 +1,7 @@
 
 Name: virt-viewer
 Version: 7.0
-Release: alt1
+Release: alt2
 
 Summary: Virtual Machine Viewer
 Group: System/Configuration/Other
@@ -59,6 +59,10 @@ intltoolize --force
 %_iconsdir/hicolor/*/devices/*
 
 %changelog
+* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 7.0-alt2
+- app: Remove VirtViewerApp::has-focus
+- app: Always add guest name comment
+
 * Fri Jul 27 2018 Alexey Shabalin <shaba@altlinux.org> 7.0-alt1
 - 7.0 release
 

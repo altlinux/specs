@@ -1,6 +1,6 @@
 Name: libiscsi
 Version: 1.18.0
-Release: alt1
+Release: alt2
 
 Summary: iSCSI client library
 License: LGPLv2.1+
@@ -14,8 +14,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: bc
 BuildRequires: libgcrypt-devel
 BuildRequires: docbook-style-xsl xsltproc
-BuildRequires: libibverbs-devel
-BuildRequires: librdmacm-devel
+BuildRequires: rdma-core-devel
 
 %description
 libiscsi is a library for attaching to iSCSI resources
@@ -65,6 +64,10 @@ The libiscsi-devel package includes the header files for libiscsi.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 1.18.0-alt2
+- fixed build
+- rebuild with rdma-core-devel
+
 * Thu Dec 21 2017 Alexey Shabalin <shaba@altlinux.ru> 1.18.0-alt1
 - 1.18.0
 - build with iSER support

@@ -8,7 +8,7 @@
 
 Name: virt-manager
 Version: 1.6.0
-Release: alt0.git4484f473%ubt
+Release: alt1.git2549e6%ubt
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -158,6 +158,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 1.6.0-alt1.git2549e6%ubt
+- upstream master snapshot
+
 * Fri Jul 27 2018 Alexey Shabalin <shaba@altlinux.org> 1.6.0-alt0.git4484f473%ubt
 - pre release 1.6.0
 - migrate to python3
