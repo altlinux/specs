@@ -1,6 +1,6 @@
 Name: fontview
 Version: 0.2.3
-Release: alt1
+Release: alt2
 
 Summary: Demo app that displays fonts with a free/libre/open-source text rendering stack: FreeType, HarfBuzz and Raqm
 
@@ -17,7 +17,9 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Wed Apr 26 2017
 # optimized out: at-spi2-atk fontconfig i586-libxcb libat-spi2-core libcairo-gobject libfreetype-devel libgdk-pixbuf libgpg-error libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server pkg-config python-base python-modules python-modules-compiler python3 python3-base
-BuildRequires: gcc-c++ libfribidi-devel libharfbuzz-devel libwxGTK3.1-devel
+BuildRequires: gcc-c++ libfribidi-devel libharfbuzz-devel
+BuildRequires: compat-libwxGTK3.0-gtk2-devel
+BuildRequires: python-module-argparse
 
 BuildRequires: libucdn-devel
 BuildRequires: libraqm-devel >= 0.2.0
@@ -42,5 +44,8 @@ python2.7 build.py
 #%_desktopdir/%name.desktop
 
 %changelog
+* Sat Sep 15 2018 Anton Midyukov <antohami@altlinux.org> 0.2.3-alt2
+- Rebuilt with compat-libwxGTK3.0-gtk2
+
 * Tue Apr 25 2017 Vitaly Lipatov <lav@altlinux.ru> 0.2.3-alt1
 - initial build for ALT Sisyphus
