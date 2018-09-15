@@ -1,20 +1,22 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %define realname icewm
-%define gitrev .git54dcb3a
+%define gitrev .git47ff050
 
-Name: %realname-githubmod
+Name: %realname
 Version: 1.4.2
-Release: alt1
+Release: alt2%gitrev
+Epoch:3
 
 Summary: X11 Window Manager
 Group: Graphical desktop/Icewm
 License: LGPLv2
-Url: http://www.icewm.org
-Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
+Url: https://ice-wm.org
+Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
-Provides: %realname = %version-%release
+Provides: %realname-githubmod = %version-%release
 Provides: %realname-light = %version-%release
 Requires: design-%realname >= 1.0-alt6
+Obsoletes: %realname-githubmod < %version-%release
 Obsoletes: %realname-light < %version-%release
 
 Source0: %name.tar
@@ -32,10 +34,12 @@ Source12: icewm-old-changelog.bz2
 Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
-# Automatically added by buildreq on Sun Jul 30 2017
-BuildRequires: asciidoc cmake gcc-c++ glibc-kernheaders-generic libSM-devel
-BuildRequires: libXext-devel libXft-devel libXinerama-devel libXrandr-devel
-BuildRequires: libalsa-devel libesd-devel libgdk-pixbuf-devel libsndfile-devel time
+# Automatically added by buildreq on Sat Sep 15 2018
+BuildRequires: asciidoc cmake gcc-c++ libSM-devel libXext-devel libXft-devel
+BuildRequires: libXinerama-devel libXpm-devel libXrandr-devel libalsa-devel
+BuildRequires: libgio-devel libjpeg-devel libpng-devel libsndfile-devel
+BuildRequires: perl-Pod-Usage python-modules-compiler python-modules-encodings
+BuildRequires: time
 
 %description
  Window Manager for X Window System. Can emulate the look of Windows'95, OS/2
@@ -54,7 +58,7 @@ Recommends: iftop, mutt
 %build
 %cmake	-DCFGDIR=%_sysconfdir/X11/%realname -DPREFIX=%_prefix \
 	-DLIBDIR=%_x11x11dir/%realname -DDOCDIR=%_datadir/doc/%name-%version \
-	-DCONFIG_GUIEVENTS=on  -DICESOUND="ALSA,OSS,ESound"
+	-DCONFIG_GUIEVENTS=on  -DICESOUND="ALSA,OSS"
 pushd BUILD
 %make_build
 popd
@@ -112,11 +116,22 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_liconsdir/*
 %_pixmapsdir/*
 %_man1dir/*
+%_man5dir/*
 %_datadir/xsessions/*.desktop
 
-%doc AUTHORS NEWS README.ALT README.md BUILD/doc/*.html icewm-old-changelog.bz2
+%doc AUTHORS NEWS README.ALT README.md BUILD/*.html icewm-old-changelog.bz2
 
 %changelog
+* Sat Sep 15 2018 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.4.2-alt2.git47ff050
+- git snapshot 47ff050
+- changed package name back to icewm
+- added Epoch
+- altconf: src/bindkey.h: key bindings back to default settings
+- changed Url
+- build without esound
+- buildreq
+- fixed documentation
+
 * Sun Jul 30 2017 Dmitriy Khanzhin <jinn@altlinux.org> 1.4.2-alt1
 - 1.4.2 release
 - builreq
