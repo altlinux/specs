@@ -1,5 +1,5 @@
 Name: cinnamon
-Version: 3.8.8
+Version: 3.8.9
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -178,6 +178,7 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 
 %filter_from_requires /python3[(]gi.repository.Gtk[)]/d
 %filter_from_requires /typelib[(]CDesktopEnums.MediaKeyType[)]/d
+%filter_from_requires /typelib[(]MediaKeyType[)]/d
 %filter_from_requires /python3[(]JsonSettingsWidgets[)]/d
 
 %files
@@ -215,6 +216,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Fri Sep 14 2018 Vladimir Didenko <cow@altlinux.org> 3.8.9-alt1
+- 3.8.9
+
 * Wed Jul 4 2018 Vladimir Didenko <cow@altlinux.org> 3.8.8-alt1
 - 3.8.8-2-gb4338cb
 
