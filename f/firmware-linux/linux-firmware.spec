@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180903
+Version: 20180913
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,14 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun Sep 16 2018 Cronbuild Service <cronbuild@altlinux.org> 20180913-alt1
+- upstream changes (GIT 44d4fca):
+  + brcm: update firmware for bcm43362 sdio (thx Chi-Hsien Lin)
+  + Mellanox: Add new mlxsw_spectrum firmware 13.1703.4 (thx Petr Machata)
+  + rtl_bt: Add firmware and configuration files for the Bluetooth
+    part of RTL8822CU (thx Larry Finger)
+  + Mellanox: Add new mlxsw_spectrum firmware 13.1703.4 (thx Petr Machata)
+
 * Sun Sep 09 2018 Cronbuild Service <cronbuild@altlinux.org> 20180903-alt1
 - upstream changes (GIT 85c5d90):
   + nvidia: switch GP10[2467] to newer scrubber/ACR firmware
