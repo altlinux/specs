@@ -1,20 +1,27 @@
+%def_enable snapshot
+
 %define ver_major 3.12
 %def_disable static
-%def_disable gtk_doc
+%{?_enable_snapshot:%def_enable gtk_doc}
 %def_disable debug
 %def_enable introspection
-%def_enable vala
+%def_disable vala
+%def_disable check
 
 Name: libgnome-keyring
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Compatibility library for accessing secrets
 License: LGPL
 Group: System/Libraries
 Url: http://www.gnome.org
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 Source1: %name.map
 
 %define glib_ver 2.16.0
@@ -27,8 +34,8 @@ BuildPreReq: glib2-devel >= %glib_ver libgio-devel
 BuildPreReq: libdbus-devel >= %dbus_ver
 BuildPreReq: libgcrypt-devel >= %gcrypt_ver
 BuildRequires: gtk-doc
-BuildRequires: libvala-devel vala-tools rpm-build-vala
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_vala:BuildRequires: vala-tools}
 
 # for check
 BuildRequires: /proc xvfb-run
@@ -84,7 +91,7 @@ GObject introspection devel data for %name
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %prep
-%setup -q
+%setup
 
 install -p -m644 %SOURCE1 library/%name-altlinux.ver
 
@@ -95,7 +102,6 @@ install -p -m644 %SOURCE1 library/%name-altlinux.ver
 	%{subst_enable static} \
 	%{subst_enable debug} \
 	%{subst_enable vala}
-
 %make_build
 
 # X11 required for tests
@@ -103,7 +109,7 @@ install -p -m644 %SOURCE1 library/%name-altlinux.ver
 xvfb-run %make check
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
 
@@ -114,8 +120,8 @@ xvfb-run %make check
 %files devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/*
-%_vapidir/gnome-keyring-1.vapi
+%_pkgconfigdir/*
+%{?_enable_vala:%_vapidir/gnome-keyring-1.vapi}
 
 %if_enabled static
 %files devel-static
@@ -134,6 +140,10 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Fri Sep 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt3
+- updated to 3.12.0-8-gcabdbea
+- disabled vala support broken for vala-0.42
+
 * Sat Apr 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt2
 - rebuilt against libgcrypt.so.20
 
