@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt9
+Release: alt20
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -20,7 +20,7 @@ BuildRequires: gcc-c++ imake libSM-devel libXmu-devel
 BuildRequires: libopensc-devel libsmbclient-devel
 BuildRequires: xorg-cf-files zip libcups-devel
 BuildRequires: libXau-devel
-BuildRequires: libwxGTK3.1-devel xxd
+BuildRequires: libwxGTK3.0-devel xxd
 
 # due _ln_sr
 BuildRequires: rpm-build-intro >= 1.9.18
@@ -91,6 +91,45 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Sun Sep 16 2018 Pavel Vainerman <pv@altlinux.ru> 0.19-alt20
+- new release
+
+* Thu Sep 13 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt19
+- added rxclient-report util
+
+* Sat Sep 01 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt18
+- (CI): fix event bot message
+
+* Sat Sep 01 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt17
+- update build require: wxGTK3.1 --> wxGTK3.0 eterbug #12307
+
+* Thu Aug 16 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt16
+- (CI): new rpmlog --> new bot message
+
+* Wed Aug 15 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt15
+- the proxy for the font server is disabled. eterbug #13048
+
+* Thu Aug 09 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt14
+- (CI): disabled test build for i586.32 and build for p7
+- (CI): added cups-pdf to 'rxclient' test container
+- (CI): moved templates daas to a special project 'rx-daas-templates'
+
+* Thu Aug 09 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt13
+- (CI): added an event to the telegram channel
+
+* Tue Jul 31 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt12
+- (gitlab-ci): Added docker test after build (eterbug #13053)
+- (gitlab-ci): Added run test server (eterbug #13053)
+- (gitlab-ci): added a separate directory for each build (eterbug #13053)
+- (gitlab-ci): rename 'rx-etersoft' to 'rxserver'
+
+* Thu Jun 28 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt11
+- (CI): minor fixes in pipeline
+- (CI): test build
+
+* Thu Jun 28 2018 Pavel Vainerman <pv@altlinux.ru> 0.19-alt10
+- test build
+
 * Wed Jun 20 2018 Vitaly Lipatov <lav@altlinux.ru> 0.19-alt9
 - change Url to our page
 - drop nx buildreq
