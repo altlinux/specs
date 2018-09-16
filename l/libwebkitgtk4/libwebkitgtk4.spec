@@ -22,7 +22,7 @@
 
 Name: libwebkitgtk4
 Version: 2.22.0
-Release: alt1
+Release: alt1.1
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -310,6 +310,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Sun Sep 16 2018 Yuri N. Sedunov <aris@altlinux.org> 2.22.0-alt1.1
+- rebuilt with atk-2.30.0
+
 * Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 2.22.0-alt1
 - 2.22.0
 
