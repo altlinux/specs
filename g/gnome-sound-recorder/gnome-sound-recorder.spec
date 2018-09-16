@@ -5,7 +5,7 @@
 
 Name: gnome-sound-recorder
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Sound Recorder for GNOME
 Group: Sound
@@ -13,6 +13,8 @@ License: GPLv2+
 Url: https://wiki.gnome.org/Design/Apps/SoundRecorder
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+# https://gitlab.gnome.org/GNOME/gnome-sound-recorder/issues/35
+Patch: gnome-sound-recorder-3.28.1-up-gjs_1_54.patch
 
 BuildArch: noarch
 
@@ -52,6 +54,7 @@ The GNOME application for record and play sound files.
 
 %prep
 %setup
+%patch -p1 -b .gjs
 
 %build
 %autoreconf
@@ -76,6 +79,9 @@ The GNOME application for record and play sound files.
 
 
 %changelog
+* Sun Sep 16 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt2
+- fixed for gjs-1.54
+
 * Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 
