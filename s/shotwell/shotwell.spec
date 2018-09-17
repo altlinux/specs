@@ -1,13 +1,13 @@
 %set_verify_elf_method unresolved=relaxed
 %def_disable snapshot
 
-%define ver_major 0.29
+%define ver_major 0.30
 %define api_ver 1.0
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.92
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -85,6 +85,9 @@ mode, and export them to share with others.
 
 
 %changelog
+* Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt1
+- 0.30.0
+
 * Thu Sep 13 2018 Yuri N. Sedunov <aris@altlinux.org> 0.29.92-alt2
 - rebuilt against libraw.so.19
 
