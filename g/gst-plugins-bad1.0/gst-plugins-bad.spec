@@ -18,8 +18,8 @@
 %def_enable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -91,11 +91,6 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %prep
 %setup -n %_name-bad-%version
 
-%if_enabled opencv
-# allow build against 3.4.0
-subst 's/\(opencv <= 3\.\)3.0/\14.0/' configure.ac
-%endif
-
 %build
 %autoreconf
 %autoreconf
@@ -145,6 +140,9 @@ subst 's/\(opencv <= 3\.\)3.0/\14.0/' configure.ac
 %endif
 
 %changelog
+* Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.3-alt1
+- 1.14.3
+
 * Fri Aug 31 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt2
 - rebuilt with openssl-1.1
 
