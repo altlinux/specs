@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.2.16
+Version:  1.3.0
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -32,6 +32,12 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Mon Sep 17 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.0-alt1
+- Allow working without rpm and gear tools
+- Add here option to create spec in current directory
+- Add force option to overwrite existing directories or spec
+- Some refactoring
+
 * Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.16-alt1
 - Update Ruby templates: remove ruby-tool-setup, add %%rubygem_specdir/*.
 
