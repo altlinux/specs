@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.22
+Version: 0.2.23
 Release: alt1
 
 Summary: Simple image creator
@@ -83,6 +83,9 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Mon Sep 17 2018 Michael Shigorin <mike@altlinux.org> 0.2.23-alt1
+- mki-pack-isodata: drop extra quotes that hurt (closes: #35229)
+
 * Thu Sep 13 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.2.22-alt1
 - mki-copy-efiboot: reserve enough space for EFI fs(closes: #35270)
 
