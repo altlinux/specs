@@ -1,6 +1,7 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
+%define xdg_name org.gnome.Empathy
 
 %define ver_major 3.25
 %def_disable static
@@ -17,7 +18,7 @@
 
 Name: empathy
 Version: %ver_major.90
-Release: alt1
+Release: alt2
 
 Summary: Instant Messaging Client for GNOME
 License: GPL/LGPL
@@ -73,30 +74,29 @@ Requires: telepathy-logger >= %tp_logger_ver
 Requires: farstream0.2 >= %farstream_ver
 %{?_enable_location:Requires: geoclue2 >= %geoclue2_ver}
 
-BuildPreReq: intltool >= %intltool_ver gnome-common itstool
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libclutter-gtk3-devel >= %clutter_ver
-BuildPreReq: libclutter-gst3.0-devel >= %clutter_gst_ver
-BuildPreReq: libtelepathy-glib-devel >= %tp_glib_ver
-BuildPreReq: libfolks-devel >= %folks_ver
-BuildPreReq: libenchant-devel >= %enchant_ver
-BuildPreReq: libcheck-devel >= %check_ver
-BuildPreReq: iso-codes-devel >= %iso_codes_ver
-BuildPreReq: libnotify-devel >= %notify_ver
-BuildPreReq: libcanberra-gtk3-devel >= %canberra_ver
-BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
-BuildPreReq: libsecret-devel >= %secret_ver
-BuildPreReq: gcr-libs-devel >= %gcr_ver
-BuildPreReq: libtelepathy-logger-devel >= %tp_logger_ver
-BuildPreReq: libgnutls-devel >= %gnutls_ver
+BuildRequires: intltool >= %intltool_ver gnome-common itstool
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libclutter-gtk3-devel >= %clutter_ver
+BuildRequires: libclutter-gst3.0-devel >= %clutter_gst_ver
+BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver
+BuildRequires: libfolks-devel >= %folks_ver
+BuildRequires: libenchant-devel >= %enchant_ver
+BuildRequires: libcheck-devel >= %check_ver
+BuildRequires: iso-codes-devel >= %iso_codes_ver
+BuildRequires: libnotify-devel >= %notify_ver
+BuildRequires: libcanberra-gtk3-devel >= %canberra_ver
+BuildRequires: libwebkit2gtk-devel >= %webkit_ver
+BuildRequires: libsecret-devel >= %secret_ver
+BuildRequires: gcr-libs-devel >= %gcr_ver
+BuildRequires: libtelepathy-logger-devel >= %tp_logger_ver
+BuildRequires: libgnutls-devel >= %gnutls_ver
 BuildRequires: libgee0.8-devel gobject-introspection-devel libgtk+3-gir-devel
-# for gnome-control-center-3.0.x
-# BuildPreReq: gnome-control-center-devel
-BuildPreReq: NetworkManager-glib-devel >= %nm_ver libtelepathy-farstream-devel >= %farstream_ver
-%{?_enable_map:BuildPreReq: libchamplain-devel >= %champlain_ver  libchamplain-gtk3-devel >= %champlain_ver}
-%{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver libtelepathy-mission-control-devel}
-%{?_enable_location:BuildPreReq: geoclue2-devel >= %geoclue2_ver}
+BuildRequires: libtelepathy-farstream-devel >= %farstream_ver
+%{?_enable_map:BuildRequires: libchamplain-devel >= %champlain_ver  libchamplain-gtk3-devel >= %champlain_ver}
+%{?_enable_goa:BuildRequires(pre): libtelepathy-mission-control-devel >= %mission_control_ver}
+%{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver}
+%{?_enable_location:BuildRequires: geoclue2-devel >= %geoclue2_ver}
 %{?_enable_geocode:BuildRequires: libgeocode-glib-devel >= %geocode_ver}
 %{?_enable_gudev:BuildRequires: libgudev-devel}
 %{?_with_cheese:BuildRequires: libcheese-devel}
@@ -165,7 +165,7 @@ NOCONFIGURE=1 ./autogen.sh
 %endif
 
 %files data -f %name.lang
-%_datadir/applications/%name.desktop
+%_datadir/applications/%xdg_name.desktop
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Empathy.Chat.service
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Empathy.Call.service
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Empathy.Auth.service
@@ -187,11 +187,14 @@ NOCONFIGURE=1 ./autogen.sh
 %_man1dir/*
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/%name.convert
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc AUTHORS CONTRIBUTORS NEWS README TODO
 
 
 %changelog
+* Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 3.25.90-alt2
+- updated to 3.25.90-55-gade0be18e
+
 * Thu Aug 17 2017 Yuri N. Sedunov <aris@altlinux.org> 3.25.90-alt1
 - 3.25.90
 
