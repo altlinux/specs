@@ -60,7 +60,7 @@
 
 Name:    samba-DC
 Version: 4.8.5
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -1569,6 +1569,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Sep 14 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.8.5-alt2%ubt
+- Fixed the patch which allows joining to Windows based domain controllers
+
 * Fri Aug 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.8.5-alt1%ubt
 - Update to latest summer release
 
