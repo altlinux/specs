@@ -1,21 +1,21 @@
 %set_verify_elf_method unresolved=relaxed
 
-%define name2 ardour3
+%define name2 ardour5
 
 Name:    ardour
-Version: 3.2
-Release: alt2.1
+Version: 5.12
+Release: alt1
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
 Group:   Sound
 Url:     http://ardour.org
 
-Packager: Alex Karpov <karpov@altlinux.ru>
+Packager: Grigory Ustinov <grenka@altlinux.ru>
 
 Source:  %name-%version.tar
 Source1: ardour3.desktop
-Source2: ardour3-3.2-ru.po
+#Source2: ardour3-3.2-ru.po
 
 BuildRequires: boost-devel
 BuildRequires: cppunit-devel >= 1.12.0
@@ -23,6 +23,7 @@ BuildRequires: doxygen
 BuildRequires: gcc-c++
 BuildRequires: graphviz
 BuildRequires: libalsa-devel
+BuildRequires: libarchive-devel
 BuildRequires: libaubio-devel >= 0.3.2
 BuildRequires: libcurl-devel >= 7.0.0
 BuildRequires: libcwiid-devel
@@ -46,6 +47,7 @@ BuildRequires: libsratom-devel >= 0.4.0
 BuildRequires: libsuil-devel >= 0.6.0
 BuildRequires: libsqlite3-devel
 BuildRequires: libuuid-devel
+BuildRequires: libudev-devel
 BuildRequires: libusb-devel
 BuildRequires: libvamp-devel
 BuildRequires: libxml2-devel
@@ -54,6 +56,7 @@ BuildRequires: lv2-devel >= 1.0.15
 BuildRequires: /proc
 BuildRequires: python-devel
 BuildRequires: raptor2-devel
+BuildRequires: taglib-devel
 
 # FIXME
 #Requires:      jackit
@@ -80,12 +83,10 @@ If you are new to jackd, try qjackctl.
 See the online user manual at http://en.flossmanuals.net/ardour/index/
 
 %prep
-%setup -q
-cp %SOURCE2 gtk2_ardour/po/ru.po
-
+%setup
 # Generate revision number
-echo '#include "ardour/revision.h"' > libs/ardour/revision.cc
-echo 'namespace ARDOUR { const char* revision = "%version"; }' >> libs/ardour/revision.cc
+#echo '#include "ardour/revision.h"' > libs/ardour/revision.cc
+#echo 'namespace ARDOUR { const char* revision = "%%version"; }' >> libs/ardour/revision.cc
 
 %build
 ./waf configure \
@@ -117,34 +118,16 @@ cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png %buildroot%
 %files -f %name.lang
 %doc README
 %_bindir/*
-%dir %_datadir/%name2
-%_libdir/%name2/*.so
-%_libdir/%name2/sanityCheck
-%_libdir/%name2/ardour-%{version}
-%_libdir/%name2/*.so.*
-%_libdir/%name2/panners/*.so
-%_libdir/%name2/panners/*.so.*
-%_libdir/%name2/surfaces/*.so
-%_libdir/%name2/surfaces/*.so.*
-%_libdir/%name2/engines/*.so
-%_libdir/%name2/vamp/*.so
-%_libdir/%name2/vamp/*.so.*
+%_libdir/%name2
 %_datadir/%name2
 %_desktopdir/*.desktop
-%dir %_sysconfdir/%name2
-%config(noreplace) %_sysconfdir/%name2/%{name2}_ui_default.conf
-%config(noreplace) %_sysconfdir/%name2/%{name2}_ui_light.rc
-%config(noreplace) %_sysconfdir/%name2/%{name2}_ui_dark.rc
-%config(noreplace) %_sysconfdir/%name2/ardour.menus
-%config(noreplace) %_sysconfdir/%name2/ardour_system.rc
-%config(noreplace) %_sysconfdir/%name2/step_editing.bindings
-%config(noreplace) %_sysconfdir/%name2/mnemonic-us.bindings
-%config(noreplace) %_sysconfdir/%name2/mixer.bindings
-%dir %_sysconfdir/%name2/export
-%config(noreplace) %_sysconfdir/%name2/export/CD.format
+%_sysconfdir/%name2
 %_iconsdir/ardour3.png
 
 %changelog
+* Mon Sep 17 2018 Grigory Ustinov <grenka@altlinux.org> 5.12-alt1
+- Build new version.
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2-alt2.1
 - Rebuilt for gcc5 C++11 ABI.
 
