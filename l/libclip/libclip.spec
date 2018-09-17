@@ -8,7 +8,7 @@
 
 Name: libclip
 Version: 1.2.0cvs
-Release: alt5
+Release: alt6
 
 Summary: XBASE/Clipper compatible program compiler - runtime library
 Summary(ru_RU.KOI8-R): Совместимый с XBASE/Clipper компилятор программ -- дополнительные библиотеки
@@ -19,11 +19,14 @@ Url: http://www.itk.ru
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+ExclusiveArch: %ix86 x86_64
+
 Source: %name-%version.tar.bz2
 #Source10: %name-%version-2005-02-03.tar.bz2
 Patch: %name-%version-ezV24.patch
 Patch1: %name-1.2.0cvs-alt-linking.patch
 Patch2: %name-1.2.0cvs-alt-libpng15.patch
+Patch3: %name-openssl1.1.patch
 
 # TODO: fix linking
 %set_verify_elf_method unresolved=relaxed
@@ -230,6 +233,7 @@ This package provides fcgi runtime shared libraries for CLIP
 %patch1 -p2
 %patch
 %patch2 -p2
+%patch3 -p2
 # incorrect checking
 echo > clip-ui/configure
 cp clip-ui/Makefile.in clip-ui/Makefile
@@ -352,6 +356,9 @@ mv %buildroot%FCLIPDIR/locale.po %buildroot%VCLIPDIR
 %exclude %FCLIPDIR/lib/*.a
 
 %changelog
+* Wed Sep 12 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0cvs-alt6
+- Rebuild with openssl 1.1.
+
 * Thu Jun 06 2013 Andrey Cherepanov <cas@altlinux.org> 1.2.0cvs-alt5
 - Rebuild with new version of unixODBC
 

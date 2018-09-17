@@ -10,7 +10,7 @@
 
 Name: clip
 Version: 1.2.0cvs
-Release: alt3.qa4
+Release: alt3.qa5
 
 Summary: XBASE/Clipper compatible program compiler
 Summary(ru_RU.KOI8-R): Совместимый с XBASE/Clipper компилятор программ
@@ -18,6 +18,8 @@ Summary(ru_RU.KOI8-R): Совместимый с XBASE/Clipper компилятор программ
 License: GPL
 Group: Development/Other
 Url: http://www.itk.ru
+
+ExclusiveArch: %ix86 x86_64
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -173,6 +175,9 @@ subst "s,%FCLIPDIR/lib,," /etc/ld.so.conf
 
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0cvs-alt3.qa5
+- Do not build for aarch64.
+
 * Thu Oct 15 2015 Andrey Cherepanov <cas@altlinux.org> 1.2.0cvs-alt3.qa4
 - Fix build with gcc5
 
