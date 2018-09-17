@@ -6,7 +6,7 @@
 %def_enable python3
 
 Name: gstreamer-editing-services
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -16,7 +16,7 @@ Url: http://cgit.freedesktop.org/gstreamer/gst-editing-services/
 
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 
-%define gst_ver %ver_major
+%define gst_ver %version
 
 Requires: lib%_name = %version-%release
 Requires: gst-validate >= %gst_ver
@@ -99,22 +99,21 @@ library.
 %build
 %autoreconf
 %configure --enable-gtk-doc \
-	%{?_enable_python3:PYTHON=%__python3}
+	%{?_enable_python3:PYTHON=python3}
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std pyexecdir=%python3_sitelibdir
 
 %files
 %_bindir/%_name-launch-%api_ver
 %_datadir/gstreamer-%gst_api_ver/validate/scenarios/*.scenario
 %_libdir/gstreamer-%gst_api_ver/libgstnle.so
-#%_datadir/bash-completion/completions/%_name-launch-%api_ver
+%_datadir/bash-completion/completions/%_name-launch-%api_ver
 %_man1dir/%_name-launch-*
-%doc ChangeLog README RELEASE NEWS AUTHORS
-
 # gi overrides
-%exclude %python_sitelibdir/%name/
+%python3_sitelibdir/%name/
+%doc ChangeLog README RELEASE NEWS AUTHORS
 
 # for tests only?
 %exclude %_libdir/gst-validate-launcher/python/*
@@ -138,6 +137,9 @@ library.
 %_datadir/gtk-doc/html/%_name-%api_ver/
 
 %changelog
+* Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.3-alt1
+- 1.14.3
+
 * Fri Jul 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt1
 - 1.14.2
 
