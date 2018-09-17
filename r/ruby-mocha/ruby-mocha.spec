@@ -1,8 +1,8 @@
 %define pkgname mocha
 
 Name: ruby-%pkgname
-Version: 1.5.0
-Release: alt1.1
+Version: 1.7.0
+Release: alt1
 
 Summary: Library for mocking and stubbing in Ruby
 Group: Development/Ruby
@@ -55,6 +55,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Mocha*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 

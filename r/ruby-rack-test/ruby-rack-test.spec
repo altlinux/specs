@@ -1,8 +1,8 @@
 %define  pkgname rack-test
 
 Name: 	 ruby-%pkgname
-Version: 1.0.0
-Release: alt1.1
+Version: 1.1.0
+Release: alt1
 
 Summary: Rack::Test is a layer on top of Rack's MockRequest similar to Merb's RequestHelper
 License: MIT
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 

@@ -1,7 +1,7 @@
 %define  pkgname turbolinks-source-gem
 
 Name:    ruby-%pkgname
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Summary: Turbolinks JavaScript assets, packaged as a RubyGem
@@ -55,5 +55,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt1
+- New version.
+
 * Fri Jul 27 2018 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt1
 - Initial build for Sisyphus

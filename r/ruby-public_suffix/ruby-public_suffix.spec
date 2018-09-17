@@ -1,8 +1,8 @@
 %define  pkgname public_suffix
  
 Name: 	 ruby-%pkgname
-Version: 3.0.2
-Release: alt1.1
+Version: 3.0.3
+Release: alt1
  
 Summary: PublicSuffix can parse and decompose a domain name into top level domain, domain and subdomains
 License: MIT/Ruby
@@ -56,6 +56,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.3-alt1
+- New version.
+
 * Mon Aug 27 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt1.1
 - Rebuild with new Ruby autorequirements.
 - Disable tests.

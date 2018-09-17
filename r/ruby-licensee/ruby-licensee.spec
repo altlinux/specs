@@ -1,13 +1,13 @@
-%define  pkgname mongo-ruby-driver
+%define  pkgname licensee
 
-Name: 	 ruby-mongo
-Version: 2.6.2
+Name:    ruby-%pkgname
+Version: 9.9.4
 Release: alt1
 
-Summary: Ruby driver for MongoDB
-License: Apache-2.0
+Summary: A Ruby Gem to detect under what license a project is distributed.
+License: MIT
 Group:   Development/Ruby
-Url:     http://www.mongodb.org/
+Url:     https://github.com/benbalter/licensee
 
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
@@ -47,33 +47,19 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_test_unit -Ilib:test test
 
 %files
-%doc README*
-%_bindir/mongo_console
+%doc docs/README*
+%_bindir/%pkgname
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
-* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 2.6.2-alt1
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 9.9.4-alt1
 - New version.
 
-* Sun Jul 08 2018 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
-- New version.
-- Package as gem.
-
-* Sat May 05 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.3-alt1
+* Sat Jun 09 2018 Andrey Cherepanov <cas@altlinux.org> 9.9.1-alt1
 - New version.
 
-* Fri May 04 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.2-alt1
-- New version.
-
-* Wed Feb 21 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt1
-- New version.
-
-* Thu Jan 18 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
-- New version.
-
-* Tue Sep 19 2017 Andrey Cherepanov <cas@altlinux.org> 2.4.3-alt1
+* Wed May 30 2018 Andrey Cherepanov <cas@altlinux.org> 9.8.0-alt1
 - Initial build for Sisyphus

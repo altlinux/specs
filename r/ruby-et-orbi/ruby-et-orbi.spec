@@ -1,8 +1,8 @@
 %define  pkgname et-orbi
 
 Name:    ruby-%pkgname
-Version: 1.1.2
-Release: alt1.1
+Version: 1.1.6
+Release: alt1
 
 Summary: Time zones for fugit and rufus-scheduler. Urbi et Orbi.
 License: MIT
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.6-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1.1
 - Rebuild with new Ruby autorequirements.
 

@@ -1,8 +1,8 @@
 %define  pkgname mime-types-data
  
 Name: 	 ruby-%pkgname
-Version: 3.2016.0521 
-Release: alt1.1
+Version: 3.2018.0812
+Release: alt1
  
 Summary: MIME Type registry data
 License: MIT/Ruby
@@ -61,6 +61,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/MIME/Types/Data
  
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 3.2018.0812-alt1
+- New version.
+
 * Wed Aug 22 2018 Andrey Cherepanov <cas@altlinux.org> 3.2016.0521-alt1.1
 - Rebuild for new Ruby autorequirements.
 

@@ -1,7 +1,7 @@
 %define  pkgname w3c_validators
 
 Name:    ruby-w3c-validators
-Version: 1.3.3
+Version: 1.3.4
 Release: alt1
 
 Summary: A Ruby wrapper for the World Wide Web Consortium's online validation services. 
@@ -55,5 +55,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.4-alt1
+- New version.
+
 * Thu Jul 26 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.3-alt1
 - Initial build for Sisyphus

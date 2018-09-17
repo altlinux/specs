@@ -1,8 +1,8 @@
 %define  pkgname rspec-expectations
  
 Name: 	 ruby-%pkgname
-Version: 3.7.0
-Release: alt1.1
+Version: 3.8.1
+Release: alt1
  
 Summary: Provides a readable API to express expected outcomes of a code example
 License: MIT/Ruby
@@ -58,6 +58,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 3.8.1-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 

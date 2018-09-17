@@ -1,8 +1,8 @@
 %define  pkgname specinfra
 
 Name:    ruby-%pkgname
-Version: 2.73.4
-Release: alt1.1
+Version: 2.76.1
+Release: alt1
 
 Summary: Command Execution Framework for serverspec, itamae and so on
 License: MIT
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 2.76.1-alt1
+- New version.
+
 * Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.73.4-alt1.1
 - Rebuild for new Ruby autorequirements.
 

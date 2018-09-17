@@ -1,8 +1,8 @@
 %define  pkgname net-ping
 
 Name:    ruby-%pkgname
-Version: 2.0.4
-Release: alt1.1
+Version: 2.0.5
+Release: alt1
 
 Summary: A collection of classes that provide different ways to ping computers.
 License: Artistic 2.0
@@ -57,6 +57,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.5-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.4-alt1.1
 - Rebuild with new Ruby autorequirements.
 - Disable tests.
