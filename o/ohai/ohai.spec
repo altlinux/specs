@@ -1,8 +1,8 @@
 %define  pkgname ohai
  
 Name: 	 %pkgname
-Version: 14.2.4
-Release: alt1.1
+Version: 14.5.1
+Release: alt1
  
 Summary: Ohai profiles your system and emits JSON
 License: MIT/Ruby
@@ -60,6 +60,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 14.5.1-alt1
+- New version.
+
 * Mon Aug 27 2018 Andrey Cherepanov <cas@altlinux.org> 14.2.4-alt1.1
 - Rebuild for new Ruby autorequirements.
 
