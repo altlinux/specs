@@ -1,25 +1,25 @@
-Name: qrencode
-Version: 4.0.2
-Release: alt1
+Name: qrencode3
+Version: 3.4.4
+Release: alt2
 
 Summary: Generate QR 2D barcodes
 License: LGPLv2+
 Group: File tools
 
-URL: https://fukuchi.org/works/qrencode/index.html.en
+URL: http://megaui.net/fukuchi/works/qrencode/index.en.html
 Source: %name-%version.tar
-#Source: https://fukuchi.org/works/qrencode/qrencode-%version.tar.gz
+#Source: http://megaui.net/fukuchi/works/qrencode/qrencode-%version.tar.gz
 
 BuildRequires: glibc-devel libSDL-devel libpng-devel
 
 %description
 Qrencode is a utility to encode string data in a QR Code and save as a PNG image.
 
-%package -n libqrencode4
+%package -n libqrencode
 Summary: A C library for encoding data in a QR Code symbol
-Group: System/Libraries
+Group: System/Legacy libraries
 
-%description -n libqrencode4
+%description -n libqrencode
 Libqrencode is a C library for encoding data in a QR Code symbol, a kind of 2D
 symbology that can be scanned by handy terminals such as a mobile phone with
 CCD. The capacity of QR Code is up to 7000 digits or 4000 characters, and is
@@ -28,50 +28,38 @@ highly robustness.
 Libqrencode supports QR Code model 2, described in JIS (Japanese Industrial
 Standards) X0510:2004 or ISO/IEC 18004.
 
-%package -n libqrencode4-devel
+%package -n libqrencode-devel
 Summary: The development files for the qrencode library
 Group: Development/C
-Requires: libqrencode4 = %EVR
-Provides: libqrencode-devel = %EVR
+Requires: libqrencode = %version-%release
 
-%description -n libqrencode4-devel
+%description -n libqrencode-devel
 This package contains the development files for the qrencode library.
 
 %prep
 %setup
 echo -e "#! /bin/sh\n\ntrue" > use/config.rpath
 mkdir m4
+./autogen.sh
 
 %build
-%autoreconf
 %configure \
     --disable-rpath \
     --with-tests \
 
 %make_build
+cd ./tests
+./test_all.sh
 
 %install
 %makeinstall_std
 
-%check
-cd ./tests
-./test_all.sh
-
-%files
-%_bindir/*
-%_man1dir/*
-
-%files -n libqrencode4
+%files -n libqrencode
 %_libdir/libqrencode.so.*
 
-%files -n libqrencode4-devel
-%_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/*
-
 %changelog
-* Mon Sep 17 2018 Pavel Moseev <mars@altlinux.org> 4.0.2-alt1
-- Updated to upstream version 4.0.2
+* Mon Sep 17 2018 Pavel Moseev <mars@altlinux.org> 3.4.4-alt2
+- Legacy library.
 
 * Mon Aug 10 2015 Sergey V Turchin <zerg@altlinux.org> 3.4.4-alt1
 - new version
