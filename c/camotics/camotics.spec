@@ -1,6 +1,6 @@
 Name: camotics
 Version: 1.1.1
-Release: alt1.2
+Release: alt1.3
 
 Summary: Open-Source Simulation and Computer Aided Machining - A 3-axis CNC GCode simulator
 
@@ -11,10 +11,27 @@ Url: https://github.com/CauldronDevelopmentLLC/CAMotics
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+# libv8-3.15-devel needed build for other arch
+ExclusiveArch: %ix86 x86_64
 
-BuildRequires: gcc-c++ scons boost-filesystem-devel boost-program_options-devel boost-interprocess-devel libcairo-devel libqt4-devel bzlib-devel libsqlite3-devel libexpat-devel libv8-3.15-devel libevent-devel python-module-simplejson libssl-devel libre2-devel zlib-devel
+BuildRequires: gcc-c++
+BuildRequires: scons
+BuildRequires: boost-filesystem-devel
+BuildRequires: boost-program_options-devel
+BuildRequires: boost-interprocess-devel
+BuildRequires: libcairo-devel
+BuildRequires: qt4-devel
+BuildRequires: bzlib-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libexpat-devel
+BuildRequires: libv8-3.15-devel
+BuildRequires: libevent-devel
+BuildRequires: python-module-simplejson
+BuildRequires: libssl-devel
+BuildRequires: libre2-devel
+BuildRequires: zlib-devel
 BuildRequires: ImageMagick-tools desktop-file-utils
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 
 %description
 CAMotics is an Open-Source software which can simulate 3-axis NC machining. It
@@ -91,6 +108,10 @@ done
 %_datadir/%name
 
 %changelog
+* Sat Sep 15 2018 Anton Midyukov <antohami@altlinux.org> 1.1.1-alt1.3
+- rebuilt with openssl-1.1
+- exclusive arch %ix86 x86_64
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt1.2
 - NMU: rebuilt with boost-1.67.0
 
