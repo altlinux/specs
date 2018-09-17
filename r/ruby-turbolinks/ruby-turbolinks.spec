@@ -1,8 +1,8 @@
 %define  pkgname turbolinks
 
 Name:    ruby-%pkgname
-Version: 5.1.1
-Release: alt1.1
+Version: 5.2.0
+Release: alt1
 
 Summary: Turbolinks makes navigating your web application faster
 License: MIT
@@ -61,6 +61,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt1
+- New version.
+
 * Fri Jul 27 2018 Andrey Cherepanov <cas@altlinux.org> 5.1.1-alt1.1
 - Use appropriate source from https://github.com/turbolinks/turbolinks-rails.
 - Rebuild with new Ruby autorequirements.

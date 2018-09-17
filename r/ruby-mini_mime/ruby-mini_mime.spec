@@ -1,8 +1,8 @@
 %define  pkgname mini_mime
 
 Name:    ruby-%pkgname
-Version: 1.0.0
-Release: alt1.1
+Version: 1.0.1
+Release: alt1
 
 Summary: Minimal mime type library for Ruby
 License: MIT
@@ -56,6 +56,9 @@ rm -f %buildroot%_bindir/*
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
+- New version.
+
 * Thu Aug 23 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1.1
 - Rebuild dor new Ruby autorequirements.
 

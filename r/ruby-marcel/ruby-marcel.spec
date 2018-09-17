@@ -1,8 +1,8 @@
 %define  pkgname marcel
 
 Name:    ruby-%pkgname
-Version: 0.3.2
-Release: alt1.1
+Version: 0.3.3
+Release: alt1
 
 Summary: Find the mime type of files, examining file, filename and declared type
 License: MIT
@@ -58,6 +58,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.3-alt1
+- New version.
+
 * Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.2-alt1.1
 - Rebuild for new Ruby autorequirements.
 

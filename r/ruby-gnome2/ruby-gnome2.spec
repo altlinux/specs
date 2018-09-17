@@ -1,8 +1,8 @@
 %def_disable docs
 
 Name: 	 ruby-gnome2
-Version: 3.2.7
-Release: alt1.1
+Version: 3.2.9
+Release: alt1
  
 Summary: Ruby bindings for GNOME
 License: MIT/Ruby
@@ -115,6 +115,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %endif
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.9-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.7-alt1.1
 - Rebuild with new Ruby autorequirements.
 

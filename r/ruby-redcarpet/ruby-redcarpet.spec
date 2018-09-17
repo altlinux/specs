@@ -1,7 +1,7 @@
 %define  pkgname redcarpet
 
 Name:    ruby-%pkgname
-Version: 3.2.3
+Version: 3.4.0
 Release: alt1
 
 Summary: The safe Markdown parser, reloaded.
@@ -57,5 +57,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1
+- New version.
+
 * Thu Jul 26 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.3-alt1
 - Initial build for Sisyphus

@@ -1,8 +1,8 @@
 %define  pkgname scoped_search
 
 Name:    ruby-scoped-search
-Version: 4.1.3
-Release: alt1.1
+Version: 4.1.4
+Release: alt1
 
 Summary: Easily search you ActiveRecord models with a simple query language that converts to SQL.
 License: MIT
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.4-alt1
+- New version.
+
 * Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.3-alt1.1
 - Rebuild with new Ruby autorequirements.
 

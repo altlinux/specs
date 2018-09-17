@@ -1,8 +1,8 @@
 %define  pkgname sucker_punch
 
 Name:    ruby-sucker-punch
-Version: 2.0.4
-Release: alt1.1
+Version: 2.1.1
+Release: alt1
 
 Summary: Sucker Punch is a Ruby asynchronous processing library using concurrent-ruby, heavily influenced by Sidekiq and girl_friday.
 License: MIT
@@ -60,6 +60,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.1-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.4-alt1.1
 - Rebuild with new Ruby autorequirements.
 

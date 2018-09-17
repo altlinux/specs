@@ -1,8 +1,8 @@
 %define  pkgname redis-rb
 
 Name:    ruby-redis
-Version: 4.0.1
-Release: alt1.1
+Version: 4.0.2
+Release: alt1
 
 Summary: A Ruby client library for Redis
 License: MIT
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 4.0.2-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 4.0.1-alt1.1
 - Rebuild with new Ruby autorequirements.
 

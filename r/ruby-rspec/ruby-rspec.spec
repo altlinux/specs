@@ -1,8 +1,8 @@
 %define  pkgname rspec
 
 Name:    ruby-%pkgname
-Version: 3.7.0
-Release: alt1.1
+Version: 3.8.0
+Release: alt1
 
 Summary: RSpec meta-gem that depends on the other components
 License: MIT
@@ -40,6 +40,9 @@ BuildRequires: ruby-tool-setup
 %rubygem_specdir/*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt1
+- New version.
+
 * Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 
