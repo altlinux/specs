@@ -3,8 +3,8 @@
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
-Version: 0.65
-Release: alt3
+Version: 0.66
+Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
 License: BSD or GPL
@@ -229,7 +229,7 @@ install -Dm755 altlinux-freedesktop-menu.filetrigger %buildroot%_rpmlibdir/altli
 ln -s gnome3-applications.menu %buildroot%_sysconfdir/xdg/menus/gnome-applications.menu
 
 mkdir -p %buildroot%_sysconfdir/xdg/menus/{,enlightenment-,gnome-,gnome3-,cinnamon-,kde3-,lxde-,mate-,xfce-}applications-merged
-mkdir -p %buildroot%_sysconfdir/xdg/menus/{,mate-,cinnamon-}settings-merged
+mkdir -p %buildroot%_sysconfdir/xdg/menus/{,mate-,}settings-merged
 
 install -D -m644 layout/kde4-merged.menu %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/50-kde4-merged.menu
 
@@ -286,8 +286,6 @@ touch /etc/xdg/menus/lxde-applications.menu
 %files cinnamon
 %verify(not mtime) %config %_sysconfdir/xdg/menus/cinnamon-applications.menu
 %dir %_sysconfdir/xdg/menus/cinnamon-applications-merged
-%verify(not mtime) %config %_sysconfdir/xdg/menus/cinnamon-settings.menu
-%dir %_sysconfdir/xdg/menus/cinnamon-settings-merged
 
 %files mate
 %verify(not mtime) %config %_sysconfdir/xdg/menus/mate-applications.menu
@@ -317,6 +315,9 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/kde4/desktop-directories/altlinux-*.directory
 
 %changelog
+* Sun Sep 16 2018 Anton Midyukov <antohami@altlinux.org> 0.66-alt1
+- fix menu Settings for Cinnamon
+
 * Thu Sep 21 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt3
 - disabled kde3
 
