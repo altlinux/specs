@@ -1,6 +1,6 @@
 Name:    rake-compiler
-Version: 1.0.4
-Release: alt2
+Version: 1.0.5
+Release: alt1
 
 Summary: Provide a standard and simplified way to build and package Ruby C and Java extensions using Rake as glue.
 License: MIT
@@ -37,7 +37,6 @@ Documentation files for %{name}.
 %build
 %ruby_config
 %ruby_build
-sed -n '1,/^end$/p' tasks/gem.rake > rake-compiler.gemspec
 
 %install
 %ruby_install
@@ -58,6 +57,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.5-alt1
+- New version.
+
 * Wed Jul 18 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt2
 - Package as gem.
 
