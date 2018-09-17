@@ -1,5 +1,5 @@
 Name: xorg-drv-amdgpu
-Version: 18.0.1
+Version: 18.1.0
 Release: alt1
 Summary: AMD GPU video driver for the Xorg X server
 License: MIT/X11
@@ -7,6 +7,7 @@ Group: System/X11
 Url: http://cgit.freedesktop.org/xorg/driver/xf86-video-amdgpu
 
 PreReq: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
+Requires: xorg-dri-radeon
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -38,6 +39,9 @@ BuildRequires: libGL-devel libgbm-devel libudev-devel xorg-proto-devel
 %_man4dir/*
 
 %changelog
+* Mon Sep 17 2018 Valery Inozemtsev <shrek@altlinux.ru> 18.1.0-alt1
+- 18.1.0
+
 * Mon May 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 18.0.1-alt1
 - 18.0.1
 
