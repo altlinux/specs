@@ -1,5 +1,5 @@
 Name: upmpdcli
-Version: 1.2.10
+Version: 1.3.3
 Release: alt1
 
 Summary: UPnP front-end to the Music Player Daemon
@@ -16,6 +16,7 @@ BuildRequires: libmicrohttpd-devel jsoncpp-devel
 Summary: %name plugins
 Group: Sound
 Requires: %name = %version-%release
+BuildArch: noarch
 
 %description
 %name implements an UPnP Media Renderer, using MPD to perform
@@ -94,6 +95,9 @@ rm -rf %buildroot%_datadir/%name/web
 %_datadir/%name/src_scripts
 
 %changelog
+* Thu Sep 20 2018 Alexey Shabalin <shaba@altlinux.org> 1.3.3-alt1
+- 1.3.3 released
+
 * Mon Dec 26 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.10-alt1
 - 1.2.10 released
 

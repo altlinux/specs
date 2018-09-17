@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/git gcc-c++
 
 Name:       libjson-rpc-cpp
 Version:    1.0.0
-Release:    alt1_3
+Release:    alt1_3.1
 Summary:    C++ JSON Library
 License:    Public Domain
 Group:      System/Libraries
@@ -84,6 +84,9 @@ Files for building applications with %{name} support.
 
 
 %changelog
+* Mon Sep 17 2018 Alexey Shabalin <shaba@altlinux.org> 1.0.0-alt1_3.1
+- rebuild with libmicrohttpd-0.9.59
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_3
 - new version
 

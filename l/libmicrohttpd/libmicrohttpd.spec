@@ -1,16 +1,17 @@
 Name: libmicrohttpd
-Version: 0.9.44
-Release: alt2
+Version: 0.9.59
+Release: alt1
 
 Summary: Library providing compact API and implementation of an HTTP/1.1 webserver
 License: LGPL
 Group: System/Libraries
 Url: http://www.gnu.org/software/libmicrohttpd/
 
-Source: %name-%version-%release.tar
+# Git-VCS: https://gnunet.org/git/libmicrohttpd.git
+Source: %name-%version.tar
 
-BuildRequires: makeinfo
-BuildRequires: libcurl-devel libgcrypt-devel libgnutls-devel libssl-devel zlib-devel
+BuildRequires: curl
+BuildRequires: libcurl-devel libgnutls-devel >= 2.12.20 zlib-devel
 
 %description
 Library providing compact API and implementation of an HTTP/1.1 webserver
@@ -28,7 +29,7 @@ This package contains the headers and libraries for libmicrohttpd development.
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static --disable-doc --disable-examples
 %make_build
 
 %install
@@ -41,11 +42,13 @@ This package contains the headers and libraries for libmicrohttpd development.
 %files devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/*
-%_infodir/*.info*
-%_man3dir/*
+%_pkgconfigdir/*
 
 %changelog
+* Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 0.9.59-alt1
+- 0.9.59
+- disable build doc
+
 * Mon Jan 25 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.44-alt2
 - add makeinfo to buildreq
 

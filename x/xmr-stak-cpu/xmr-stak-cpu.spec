@@ -1,6 +1,6 @@
 Name:		xmr-stak-cpu
 Version:	1.5.0
-Release:	alt1.1
+Release:	alt2
 Summary:	Monero mining software (CPU)
 Url:		https://github.com/fireice-uk/xmr-stak-cpu
 Group:		Office
@@ -39,6 +39,9 @@ cp -a ../config.txt ../examples/
 %_bindir/*
 
 %changelog
+* Sat Sep 22 2018 Alexey Shabalin <shaba@altlinux.org> 1.5.0-alt2
+- rebuild with libmicrohttpd-0.9.59
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 

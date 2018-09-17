@@ -3,7 +3,7 @@ BuildRequires: %_bindir/git %_bindir/svnversion glib2-devel libICE-devel libSM-d
 # END SourceDeps(oneline)
 Name: gnunet
 Version: 0.10.1
-Release: alt3
+Release: alt4
 
 Summary: Peer-to-peer framework
 
@@ -224,6 +224,9 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_libdir/pkgconfig/gnunetspeaker.pc
 
 %changelog
+* Mon Sep 17 2018 Alexey Shabalin <shaba@altlinux.org> 0.10.1-alt4
+- rebuild with libmicrohttpd-0.9.59
+
 * Mon Aug 13 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.10.1-alt3
 - drop excessive guile18-devel BR
 
