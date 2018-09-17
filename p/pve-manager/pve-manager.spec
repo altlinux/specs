@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 5.2.3
-Release: alt3%ubt
+Release: alt4%ubt
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -58,6 +58,7 @@ Patch27: pve-widget-toolkit-alt.patch
 Patch28: pve-widget-toolkit-alt-utils.patch
 Patch29: pve-manager-widgettoolkit.patch
 Patch30: qemu-server-perl-alt.patch
+Patch31: qemu-server-qemu-3-0-0-alt.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
@@ -156,7 +157,8 @@ This is used to implement the PVE REST API
 %patch27 -p0 -b .alt
 %patch28 -p0 -b .alt
 %patch29 -p0 -b .widgettoolkit
-%patch30 -p0
+%patch30 -p0 -b .perl-compat
+%patch31 -p0 -b .qemu-3-0-0
 
 install -m0644 %SOURCE5 pve-i18n/ru.po
 
@@ -468,6 +470,9 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Wed Sep 19 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt4%ubt
+- fixed version check qemu 3.0.0
+
 * Tue Sep 04 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt3%ubt
 - pve-manager 5.2-3
 - qemu-server 5.0-27
