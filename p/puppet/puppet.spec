@@ -1,8 +1,8 @@
 %define confdir ext/redhat
 
 Name:    puppet
-Version: 5.5.2
-Release: alt1.1
+Version: 5.5.6
+Release: alt1
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
@@ -33,8 +33,6 @@ BuildRequires: ruby-safe_yaml
 
 Requires: shadow-change
 Conflicts: ruby-semantic
-
-%filter_from_requires /^ruby(.*\(win32\|windows\|wmi-lite\|semantic\|spec_helper\|#\).*)/d
 
 %description
 Puppet lets you centrally manage every important aspect of your
@@ -203,6 +201,9 @@ END.
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 5.5.6-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 5.5.2-alt1.1
 - Rebuild with new Ruby autorequirements.
 
