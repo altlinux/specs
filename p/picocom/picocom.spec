@@ -1,13 +1,13 @@
 Name: picocom
-Version: 1.7
-Release: alt1
+Version: 3.1
+Release: alt2
 
 Summary: Picocom is a minimal dumb-terminal emulation program
 Summary(ru_RU.UTF-8): Пикоком есть крошечная терминалка
 License: GPL2
 Group: Communications
-Url: http://picocom.googlecode.com
-Packager: Malo Skryleve <malo@altlinux.org>
+Url: https://github.com/npat-efault/picocom
+Packager: Pavel Skrylev <majioa@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -53,18 +53,25 @@ any Unix system with the termios(3) library.
 %setup
 
 %build
-%make UUCP_LOCK_DIR=/var/lock/uucp
+%make
+#%make "CPPFLAGS=${CPPFLAGS} -DUUCP_LOCK_DIR=/var/lock/uucp"
 
 %install
 install -pDm755 %name %buildroot%_bindir/%name
-install -pDm644 %name.8 %buildroot%_man8dir/%name.8
+install -pDm644 %name.1 %buildroot%_man8dir/%name.1
 
 %files
 %_bindir/%name
 %_man8dir/%{name}.*
-%doc CHANGES* CONTRIBUTORS LICENSE.txt README TODO %name.8.html pc*
+%doc CHANGES* CONTRIBUTORS LICENSE.txt README.md TODO %name.1.html pc*
 
 %changelog
+* Mon Aug 22 2018 Pavel Skrylev <majioa@altlinux.org> 3.1-alt2
+- Updated spec
+
+* Wed Aug 08 2018 Pavel Skrylev <majioa@altlinux.org> 3.1-alt1
+- 3.1
+
 * Wed Aug 29 2012 Terechkov Evgenii <evg@altlinux.org> 1.7-alt1
 - 1.7
 
