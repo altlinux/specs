@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.1.2
+Version: 2.2.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -204,6 +204,24 @@ fi
 %endif
 
 %changelog
+* Tue Sep 18 2018 Alexey Gladkov <legion@altlinux.ru> 2.2.0-alt1
+- Plymouth feature changes:
+  + Do not hardcode tty
+  + Fix service requires
+- QEMU feature changes:
+  + Add OF-based guess method (thx Sergey Bolshakov)
+- Ucode feature changes:
+  + Fix unbound function
+- modules-nfs feature changes:
+  + Fix pattern set
+- Utilities:
+  + initrd-cp: Speed up
+  + make-initrd: Do not check uid if --no-check specified
+  + Do not ignore error if no pattern is found
+  + Add KERNEL_MODULES_DIR and remove hardcode value
+  + Add /lib/udev/edd_id if exists
+  + Do not hardcode LIBNAME, use getconf instead (thx Sergey Bolshakov)
+
 * Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.2-alt1
 - Improve compatibility with bash-4.4
 
