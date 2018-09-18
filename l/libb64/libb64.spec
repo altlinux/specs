@@ -4,7 +4,7 @@
 
 Name: libb64
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: Base64 Encoding/Decoding Routines
 
@@ -84,6 +84,9 @@ ln -s %soname %shared_lib
 %_includedir/b64/*.h
 
 %changelog
+* Tue Sep 18 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt2
+- build on aarch64
+
 * Thu Jan 05 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
 - initial build for ALT Linux Sisyphus
 
