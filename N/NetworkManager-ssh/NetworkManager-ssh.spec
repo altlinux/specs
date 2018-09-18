@@ -10,7 +10,7 @@
 
 Name: NetworkManager-ssh
 Version: 1.2.7
-Release: alt2%git_date
+Release: alt3%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for SSH
@@ -67,7 +67,7 @@ NetworkManager panel applet.
 	--without-libnm-glib \
 %endif
 	--disable-silent-rules \
-	--enable-more-warnings=error
+	--enable-more-warnings=no
 %make_build
 
 %install
@@ -98,6 +98,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Tue Sep 18 2018 Mikhail Efremov <sem@altlinux.org> 1.2.7-alt3
+- Temporary don't treat warnings as errors.
+
 * Wed Aug 01 2018 Mikhail Efremov <sem@altlinux.org> 1.2.7-alt2
 - Disable libnm-glib-* support.
 - Fix build without libnm-glib-*.
