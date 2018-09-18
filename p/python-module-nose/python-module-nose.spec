@@ -5,7 +5,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 1.3.7
-Release: alt3.git20160316
+Release: alt4.git20160316
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
@@ -90,8 +90,10 @@ popd
 
 rm -f %buildroot%_bindir/nosetests
 ln -s nosetests-%_python_version %buildroot%_bindir/nosetests
+ln -s nosetests-%_python_version %buildroot%_bindir/nosetests-2
 %if_with python3
 ln -s nosetests-%_python3_version %buildroot%_bindir/nosetests3
+ln -s nosetests-%_python3_version %buildroot%_bindir/nosetests-3
 %endif
 
 %check
@@ -106,6 +108,7 @@ popd
 %files
 %doc AUTHORS CHANGELOG NEWS README.txt examples/
 %_bindir/nosetests
+%_bindir/nosetests-2
 %_bindir/nosetests-%_python_version
 %python_sitelibdir/%oname/
 %python_sitelibdir/*.egg-info
@@ -114,12 +117,16 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %_bindir/nosetests3
+%_bindir/nosetests-3
 %_bindir/nosetests-%_python3_version
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Tue Sep 18 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.3.7-alt4.git20160316
+- added nosetests-2/nosetests-3 for fedora compatibility
+
 * Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.3.7-alt3.git20160316
 - Rebuilt with python-3.6.
 
