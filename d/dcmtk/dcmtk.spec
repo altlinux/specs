@@ -1,8 +1,8 @@
 %add_optflags %optflags_shared
 
 Name: dcmtk
-Version: 3.6.2
-Release: alt1.1
+Version: 3.6.3
+Release: alt1
 
 Summary: DCMTK - DICOM Toolkit
 License: MIT license
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
 BuildPreReq: gcc-c++, zlib-devel, libpng-devel, libtiff-devel
-BuildPreReq: libxml2-devel, libwrap-devel, libssl-devel, cmake
+BuildPreReq: libxml2-devel, libssl-devel, cmake
 BuildRequires: libjpeg-devel
 
 %description
@@ -49,7 +49,8 @@ Headers for building software that uses %name.
 %cmake -DBUILD_SHARED_LIBS:BOOL=ON \
 	-DDCMTK_INSTALL_LIBDIR=%_lib \
 	-DDCMTK_INSTALL_CMKDIR=%_libdir/cmake/dcmtk \
-	-DDCMTK_INSTALL_ETCDIR=%_sysconfdir \
+	-DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
+	-DDCMTK_DEFAULT_CONFIGURATION_DIR=%_sysconfdir/dcmtk \
 	-DDCMTK_WITH_OPENSSL:BOOL=ON \
 	-DDCMTK_ENABLE_PRIVATE_TAGS:BOOL=ON \
 	-DDCMTK_WITH_XML:BOOL=ON \
@@ -81,6 +82,10 @@ Headers for building software that uses %name.
 %_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Tue Sep 18 2018 Anton Farygin <rider@altlinux.ru> 3.6.3-alt1
+- 3.6.3
+- disabled libwrap support
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.6.2-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
