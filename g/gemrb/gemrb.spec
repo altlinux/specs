@@ -8,8 +8,8 @@ BuildRequires: gcc-c++ libSDL-devel libpng-devel perl(Digest/MD5.pm) python-deve
 %define _cmake_skip_rpath %{nil}
 
 Name:          gemrb
-Version:       0.8.4
-Release:       alt2_3
+Version:       0.8.5
+Release:       alt1_1
 Summary:       Port of the original Infinity (Game) Engine
 Group:         Games/Adventure
 License:       GPLv2+
@@ -22,7 +22,7 @@ BuildRequires: pkgconfig(glew)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libvlc)
 BuildRequires: pkgconfig(openal)
-BuildRequires: pkgconfig(python)
+BuildRequires: pkgconfig(python2)
 BuildRequires: pkgconfig(sdl2)
 BuildRequires: pkgconfig(SDL2_mixer)
 BuildRequires: pkgconfig(SDL2_ttf)
@@ -49,19 +49,19 @@ supported games can be found at www.gemrb.org
 %build
 %{mageia_cmake} -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF -DCMAKE_SKIP_RPATH:BOOL=OFF  -DLAYOUT=fhs \
        -DLIB_DIR=%{_libdir}/%{name} \
-       -DUSE_SDL2=1 \
-       -DUSE_OPENGL=1
+       -DSDL_BACKEND=SDL2 \
+       -DOPENGL_BACKEND=OpenGL
 %make_build
 
 %install
 %makeinstall_std -C build
 
 rm -f %{buildroot}%{_sysconfdir}/gemrb/GemRB.cfg.noinstall.sample
+rm -f %{buildroot}%{_docdir}/%{name}/INSTALL
 
 %files
 %doc AUTHORS COPYING NEWS README
 %doc %{_docdir}/%{name}/en/
-%exclude %{_docdir}/%{name}/INSTALL
 %{_bindir}/%{name}
 %{_bindir}/extend2da.py
 %{_datadir}/%{name}/
@@ -75,6 +75,9 @@ rm -f %{buildroot}%{_sysconfdir}/gemrb/GemRB.cfg.noinstall.sample
 
 
 %changelog
+* Tue Sep 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1_1
+- update by mgaimport
+
 * Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt2_3
 - mga update
 
