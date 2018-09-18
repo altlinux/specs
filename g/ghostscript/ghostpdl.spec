@@ -1,6 +1,6 @@
 Name: ghostscript
-Version: 9.20
-Release: alt2
+Version: 9.25
+Release: alt1
 
 %define ijsver	0.35
 %global origver %version
@@ -15,41 +15,25 @@ License: GPLv3+ and Redistributable, no modification permitted
 Summary: PostScript interpreter and renderer, most printer drivers
 Group: Publishing
 
-Source: %name-%version.tar.gz
+Source: ghostpdl-%version.tar.gz
 Source1: repatch_spec.sh
 Source2: ghostscript.unused
 Source3: README.patches
+Source4: jpegxr-ref.zip
 
 ## FC patches
-Patch1: FC-9.20-fix-openjpeg-system-build.patch
-Patch2: FC-9.20-runlibfileifexists.patch
-Patch3: FC-9.20-run-dvipdf-securely.patch
-Patch4: FC-9.20-urw-fonts-naming.patch
-Patch5: FC-9.20-cve-2016-7979.patch
-Patch6: FC-9.20-cve-2016-7976.patch
-Patch7: FC-9.20-cve-2016-7978.patch
-Patch8: FC-9.20-cve-2016-8602.patch
-Patch9: FC-9.20-cve-2016-7977.patch
-Patch10: FC-9.20-handle-glyphdirectory-correctly.patch
+Patch1: FC-9.23-100-run-dvipdf-securely.patch
 
 ## Ubuntu patches
-Patch101: Ubuntu-020160929~273a133.patch
-Patch102: Ubuntu-020160929~727aeab.patch
-Patch103: Ubuntu-020161003~8abd220.patch
-Patch104: Ubuntu-020161005~6d444c2.patch
-Patch105: Ubuntu-020161005~6f749c0.patch
-Patch106: Ubuntu-020161005~875a009.patch
-Patch107: Ubuntu-020161008~f5c7555.patch
-Patch108: Ubuntu-1001_fix_openjp2_dynamic_linking.patch
-Patch109: Ubuntu-2001_docdir_fix_for_debian.patch
-Patch110: Ubuntu-2002_gs_man_fix_debian.patch
-Patch111: Ubuntu-2003_support_multiarch.patch
-Patch112: Ubuntu-2004_remove_non-Debian_paths_from_docs.patch
-Patch113: Ubuntu-2005_fix_Debian_paths_in_docs.patch
-Patch114: Ubuntu-2006_suggest_install_ghostscript-doc_in_docs.patch
-Patch115: Ubuntu-2007_suggest_install_ghostscript-doc_in_code.patch
-Patch116: Ubuntu-2008_mention_ghostscript-x_in_docs.patch
-Patch117: Ubuntu-2010_add_build_timestamp_setting.patch
+Patch101: Ubuntu-2001_docdir_fix_for_debian.patch
+Patch102: Ubuntu-2002_gs_man_fix_debian.patch
+Patch103: Ubuntu-2003_support_multiarch.patch
+Patch104: Ubuntu-2004_remove_non-Debian_paths_from_docs.patch
+Patch105: Ubuntu-2005_fix_Debian_paths_in_docs.patch
+Patch106: Ubuntu-2006_suggest_install_ghostscript-doc_in_docs.patch
+Patch107: Ubuntu-2007_suggest_install_ghostscript-doc_in_code.patch
+Patch108: Ubuntu-2008_mention_ghostscript-x_in_docs.patch
+Patch109: Ubuntu-2010_add_build_timestamp_setting.patch
 
 ## ALT patches
 Patch500: ghostscript-alt-ijs-version.patch
@@ -60,9 +44,9 @@ Requires: %name-classic = %version-%release
 Provides: %esp_name = %version, %gnu_name = %version
 Obsoletes: %gnu_name, %esp_name
 
-# Automatically added by buildreq on Tue Aug 23 2016
-# optimized out: at-spi2-atk fontconfig fontconfig-devel glib2-devel gnu-config libICE-devel libSM-devel libX11-devel libXext-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libpango-devel libpng12-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl pkg-config python-base python-modules xorg-xproto-devel zlib-devel
-BuildRequires: glibc-devel-static imake libXt-devel libcups-devel libgtk+3-devel libjpeg-devel liblcms2-devel libopenjpeg2.0-devel libpaper-devel libtiff-devel xorg-cf-files
+# Automatically added by buildreq on Mon Aug 27 2018
+# optimized out: at-spi2-atk fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libICE-devel libSM-devel libX11-devel libXext-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libpango-devel libpng-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl pkg-config python-base python-modules python3 python3-base sh3 xorg-proto-devel zlib-devel
+BuildRequires: docbook-utils-print ghostscript-utils glibc-devel-static imake libXt-devel libcups-devel libexpat-devel libgtk+3-devel libjpeg-devel libopenjpeg2.0-devel libpaper-devel libtiff-devel xorg-cf-files
 
 # Eliminate libpng12-devel
 BuildRequires: libpng-devel
@@ -186,50 +170,35 @@ Classic edition of %name
 Common files for the %name
 
 %prep
-%setup
+%setup -n ghostpdl-%version
+mkdir jpegxr && unzip %SOURCE4 -d jpegxr
 
 # force system library usage
 ##rm -rf -- libpng zlib jpeg jasper freetype
-rm -rf expat freetype icclib jasper jpeg jpegxr lcms lcms2 libpng openjpeg zlib cups/libs
+rm -rf expat freetype icclib jasper jpeg lcms lcms2 libpng openjpeg zlib cups/libs
 
 ## FC apply patches
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
 
 ## Ubuntu apply patches
 %patch101 -p1
-%patch102 -p1
+#patch102 -p1
 #patch103 -p1
-#patch104 -p1
+%patch104 -p1
 #patch105 -p1
 #patch106 -p1
 #patch107 -p1
 #patch108 -p1
 %patch109 -p1
-#patch110 -p1
-#patch111 -p1
-%patch112 -p1
-#patch113 -p1
-#patch114 -p1
-#patch115 -p1
-#patch116 -p1
-%patch117 -p1
 
 ## ALT apply patches
 %patch500 -p1
-##patch501 -p2
+%patch501 -p1
 
 %build
-%autoreconf
 export CFLAGS=-DA4
+%autoreconf
+cd ijs; %autoreconf; cd -
 
 %configure --enable-dynamic \
 	   --with-system-libtiff \
@@ -243,14 +212,12 @@ export CFLAGS=-DA4
 %_datadir/ghostscript/conf.d \
 #
 
+cd ijs; %configure --enable-shared --disable-static; cd -
+
 %make_build
 %make_build so
 
-cd ijs
-    ./autogen.sh
-    %configure --enable-shared --disable-static
-    %make_build
-cd -
+cd ijs; %make_build; cd -
 
 %install
 make install soinstall \
@@ -284,7 +251,7 @@ mkdir -p %buildroot/etc/buildreqs/packages/ignore.d
 echo %name-module-X >%buildroot/etc/buildreqs/packages/ignore.d/%name-module-X
 
 mkdir -p %buildroot/%_datadir/ghostscript/conf.d
-mv %buildroot/%_datadir/doc/ghostscript/examples %buildroot%_docdir/%name-%version/
+cp -a examples %buildroot%_docdir/%name-%version
 
 %files
 %files common
@@ -296,7 +263,11 @@ mv %buildroot/%_datadir/doc/ghostscript/examples %buildroot%_docdir/%name-%versi
 %_bindir/gsnd
 
 %files classic
+%doc pcl/examples
+%doc xps/tools
 %_bindir/gs
+%_bindir/gxps
+%_bindir/gpcl6
 
 %files gtk
 %_bindir/gsx
@@ -309,6 +280,8 @@ mv %buildroot/%_datadir/doc/ghostscript/examples %buildroot%_docdir/%name-%versi
 %exclude %_bindir/pdf2dsc
 %exclude %_bindir/pdf2ps
 %exclude %_bindir/gsnd
+%exclude %_bindir/gxps
+%exclude %_bindir/gpcl6
 %_man1dir/*
 
 %files module-X
@@ -332,6 +305,18 @@ mv %buildroot/%_datadir/doc/ghostscript/examples %buildroot%_docdir/%name-%versi
 %_includedir/ijs
 
 %changelog
+* Tue Sep 18 2018 Fr. Br. George <george@altlinux.ru> 9.25-alt1
+- Autobuild version bump to 9.25
+- Resurrect font renaming patch (Closes: #35361)
+
+* Wed Sep 05 2018 Fr. Br. George <george@altlinux.ru> 9.24-alt1
+- Autobuild version bump to 9.24
+
+* Thu Aug 23 2018 Fr. Br. George <george@altlinux.ru> 9.23-alt1
+- Autobuild version bump to 9.23
+- Switch to ghostpdl sources
+- Introduce gspcl6 and gxps
+
 * Thu Mar 09 2017 Fr. Br. George <george@altlinux.ru> 9.20-alt2
 - Rebuild with libpng15 (Closes: #33220)
 
