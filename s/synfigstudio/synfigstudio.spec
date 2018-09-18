@@ -1,8 +1,8 @@
 %def_without build_docs
 
 Name:    synfigstudio
-Version: 1.3.8
-Release: alt2.1
+Version: 1.3.10
+Release: alt1
 
 Summary: Synfig studio - animation program
 Group:   Office
@@ -12,6 +12,9 @@ Url:     http://www.synfig.org
 Source:  %name-%version.tar
 Patch0: %name-%version-%release.patch
 
+ExclusiveArch: %ix86 x86_64
+
+BuildRequires(pre): rpm-build-xdg
 BuildPreReq: fonts-ttf-liberation
 BuildRequires: gcc-c++
 BuildRequires: /proc
@@ -193,6 +196,13 @@ cat synfig.lang >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Sep 18 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.10-alt1
+- New version.
+
+* Tue Jun 26 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.9-alt1
+- New version.
+- Build only for i586 and x86_64.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.8-alt2.1
 - NMU: rebuilt with boost-1.67.0
 
