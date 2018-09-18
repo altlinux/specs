@@ -12,21 +12,21 @@ BuildRequires: /usr/bin/dot /usr/bin/doxygen gcc-c++
 Summary:	A free library providing windowing and widgets for graphics APIs / engines
 Name:		cegui0.7
 Version:	0.7.9
-Release:	alt1_13
+Release:	alt1_14
 License:	MIT
 Group:		Development/C++
 URL:		http://www.cegui.org.uk
 Source0:	http://prdownloads.sourceforge.net/crayzedsgui/CEGUI-%{version}.tar.gz
 Patch1:		cegui-0.7.9-gcc7.patch
 BuildRequires:	pkgconfig(libxml-2.0)
-BuildRequires:	libGL-devel
+BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
-BuildRequires:	libfreetype-devel
+BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(libpcre)
 BuildRequires:	libfreeimage-devel
 BuildRequires:	pkgconfig(expat)
 BuildRequires:	pkgconfig(xerces-c)
-BuildRequires:	gtk2-devel
+BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	libdevil-devel
 BuildRequires:	pkgconfig(glew)
 BuildRequires:	pkgconfig(tinyxml)
@@ -96,6 +96,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Tue Sep 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.9-alt1_14
+- update by mgaimport
+
 * Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.9-alt1_13
 - new version
 
