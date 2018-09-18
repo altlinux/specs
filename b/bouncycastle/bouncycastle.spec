@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 Summary:          Bouncy Castle Cryptography APIs for Java
 Name:             bouncycastle
 Version:          1.58
-Release:          alt1_3jpp8
+Release:          alt2_3jpp8
 License:          MIT
 URL:              http://www.bouncycastle.org
 
@@ -119,13 +119,20 @@ cp -p %{SOURCE3} bcpg.pom
 cp -p %{SOURCE4} bcmail.pom
 cp -p %{SOURCE5} bctls.pom
 
+%ifarch %e2k
+sed -i -e '/target..javadoc-/d' ant/jdk15+.xml
+%endif
+
 %build
 ant -f ant/jdk15+.xml \
   -Djunit.jar.home=$(build-classpath junit) \
   -Dmail.jar.home=$(build-classpath javax.mail) \
   -Dactivation.jar.home= \
   -Drelease.debug=true \
-  clean build-provider build test
+  clean build-provider build \
+%ifnarch %e2k
+  test
+%endif
 
 cat > bnd.bnd <<EOF
 -classpath=bcprov.jar,bcpkix.jar,bcpg.jar,bcmail.jar,bctls.jar
@@ -150,7 +157,9 @@ rm -rf build/artifacts/jdk1.5/javadoc/lcrypto
 install -dm 755 $RPM_BUILD_ROOT%{_sysconfdir}/java/security/security.d
 touch $RPM_BUILD_ROOT%{_sysconfdir}/java/security/security.d/2000-%{classname}
 
+%ifnarch %e2k
 %mvn_install -J build/artifacts/jdk1.5/javadoc
+%endif
 
 %post
 {
@@ -217,10 +226,15 @@ fi
 %files tls -f .mfiles-bctls
 %doc --no-dereference build/artifacts/jdk1.5/bctls-jdk15on-*/LICENSE.html
 
+%ifnarch %e2k
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.html
+%endif
 
 %changelog
+* Tue Sep 18 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.58-alt2_3jpp8
+- e2k build w/o javadoc & tests
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.58-alt1_3jpp8
 - java update
 
