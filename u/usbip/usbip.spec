@@ -1,11 +1,11 @@
-%define kernel_version   4.9
+%define kernel_version   4.18
 %define kernel_source /usr/src/kernel/sources/kernel-source-%kernel_version.tar
 %define source_dir tools/usb/usbip
 
 Name: usbip
 Summary: Utility for manage usbip devices
 Version: 2.0.4
-Release: alt5
+Release: alt6
 
 %define lname lib%name
 
@@ -114,6 +114,9 @@ install -D -m0644 usbip-client.modules.conf %buildroot%_sysconfdir/modules-load.
 %_libdir/*.a
 
 %changelog
+* Tue Sep 18 2018 Pavel Vainerman <pv@altlinux.ru> 2.0.4-alt6
+- rebuild for kernel 4.18.x
+
 * Mon Sep 03 2018 Pavel Vainerman <pv@altlinux.ru> 2.0.4-alt5
 - removed 'libwrap-devel' from BuildRequires
 
