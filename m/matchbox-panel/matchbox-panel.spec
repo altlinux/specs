@@ -1,20 +1,26 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/msgfmt /usr/bin/msgmerge /usr/bin/xgettext pkgconfig(libmb) pkgconfig(libstartup-notification-1.0)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/msgfmt /usr/bin/msgmerge /usr/bin/xgettext
 # END SourceDeps(oneline)
 BuildRequires: desktop-file-utils
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 0.9.3
+%define url_ver	%(echo %{version} | cut -d. -f1,2)
+
 Summary: 	Panel for the Matchbox Desktop
 Name: 		matchbox-panel
 Version: 	0.9.3
-Release: 	alt1_11
+Release: 	alt1_12
 Url: 		http://matchbox-project.org/
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
-Source0: 	http://matchbox-project.org/sources/%name/0.9/%name-%version.tar.bz2
+Source0: 	https://downloads.yoctoproject.org/releases/matchbox/%name/%url_ver/%name-%version.tar.bz2
 Patch0:		matchbox-panel-0.9.3-linking.patch
 Patch1:		matchbox-panel-0.9.3-automake-1.13.patch
-BuildRequires:	libmatchbox-devel 
-BuildRequires:	libapm-devel 
-BuildRequires:	libstartup-notification-devel 
+BuildRequires:	pkgconfig(libmb)
+BuildRequires:	libapm-devel
+BuildRequires:	pkgconfig(libstartup-notification-1.0)
 BuildRequires:	libwireless-devel
 Source44: import.info
 Patch33: matchbox-panel-0.9.3-alt-xvt.patch
@@ -64,10 +70,10 @@ desktop-file-install \
 %_datadir/applications/*
 
 
-
-
-
 %changelog
+* Tue Sep 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_12
+- update by mgaimport
+
 * Thu Feb 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_11
 - new release
 
