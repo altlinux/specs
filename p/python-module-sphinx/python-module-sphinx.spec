@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.6.5
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -275,7 +275,9 @@ ln -frs %buildroot%_datadir/python-sphinx/objects.inv \
 popd
 pushd %buildroot%_bindir
 for i in $(ls); do
-	mv $i py3_$i
+    mv $i py3_$i
+    ln -s py3_$i $i-3
+    ln -s py3_$i $i-%__python3_version
 done
 popd
 
@@ -346,6 +348,7 @@ PYTHONPATH=$(pwd) %make_build test
 %files
 %_bindir/*
 %exclude %_bindir/py3_*
+%exclude %_bindir/*-3*
 %sphinx_dir/
 %exclude %sphinx_dir/tests
 %exclude %sphinx_dir/pickle
@@ -370,6 +373,7 @@ PYTHONPATH=$(pwd) %make_build test
 
 %files -n python3-module-%oname
 %_bindir/py3_*
+%_bindir/*-3*
 %sphinx3_dir/
 %exclude %sphinx3_dir/tests
 %python3_sitelibdir/*.egg-info
@@ -385,6 +389,9 @@ PYTHONPATH=$(pwd) %make_build test
 
 
 %changelog
+* Tue Sep 18 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.6.5-alt3
+- added sphinx-build-3 for compatibility with fedora
+
 * Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:1.6.5-alt2
 - rebuild with python3.6
 
