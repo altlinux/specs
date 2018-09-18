@@ -1,21 +1,21 @@
 %define nm_version 1.1.90
 %define nm_applet_version 1.1.90
 %define nm_applet_name NetworkManager-applet-gtk
-%define git_date %nil
-#define git_date .git20111101
+#define git_date %nil
+%define git_date .git20180722
 
 %def_without libnm_glib
 
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-iodine
-Version: 1.2.0
-Release: alt2%git_date
+Version: 1.2.1
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for iodine
 Url: https://honk.sigxcpu.org/piki/projects/network-manager-iodine/
-# git://git.gnome.org/network-manager-iodine
+# https://gitlab.gnome.org/GNOME/network-manager-iodine.git
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -64,7 +64,7 @@ NetworkManager panel applet.
 %if_without libnm_glib
 	--without-libnm-glib \
 %endif
-	--enable-more-warnings=error
+	--enable-more-warnings=yes
 %make_build
 
 %install
@@ -87,11 +87,15 @@ NetworkManager panel applet.
 %_libexecdir/NetworkManager/nm-iodine-auth-dialog
 %_datadir/gnome-vpn-properties/*
 %_libdir/NetworkManager/libnm-vpn-plugin-iodine.so
-%_datadir/appdata/*.appdata.xml
+%_datadir/appdata/*.xml
 
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Tue Sep 18 2018 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt1.git20180722
+- Temporary don't treat warnings as errors.
+- Upstream git snapshot.
+
 * Wed Aug 01 2018 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt2
 - Disable libnm-glib-* support.
 - Fix build without libnm-glib-*.
