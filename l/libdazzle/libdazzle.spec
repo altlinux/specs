@@ -10,7 +10,7 @@
 
 Name: libdazzle
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A library to delight your users with fancy features
 Group: System/Libraries
@@ -113,6 +113,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue Sep 18 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt2
+- rebuilt for (ALT #35396)
+
 * Wed Sep 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 
