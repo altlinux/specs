@@ -1,6 +1,6 @@
 Name: flow-tools-ng
 Version: 0.68.5
-Release: alt1.1
+Release: alt2
 
 Summary: Tool set for working with NetFlow data version %version
 License: BSD
@@ -19,7 +19,7 @@ BuildPreReq: flex zlib-devel %{?_with_mysql: libMySQL-devel} %{?_with_pgsql: pos
 
 # Automatically added by buildreq on Tue Jul 02 2013
 # optimized out: OpenSP docbook-dtds docbook-style-dsssl libpq-devel openjade perl-SGMLSpm sgml-common zlib-devel
-BuildRequires: checkstyle docbook-utils flex glibc-devel libwrap-devel postgresql-devel w3c-markup-validator-libs
+BuildRequires: checkstyle docbook-utils flex postgresql-devel w3c-markup-validator-libs
 
 Requires: lib%name = %version-%release
 
@@ -75,8 +75,8 @@ find -type f | xargs subst "s|#!/bin/env|#/!/usr/bin/env|g"
 %autoreconf
 %configure --sysconfdir=%_sysconfdir/%name/ \
 		--disable-static \
-%{?_with_mysql:--with-mysql} \
-%{?_with_pgsql:--with-pgsql}
+		%{?_with_mysql:--with-mysql} \
+		%{?_with_pgsql:--with-pgsql}
 
 %make_build
 
@@ -117,6 +117,9 @@ rm -f %buildroot%_libdir/*.la
 %_bindir/flow-rptfmt
 
 %changelog
+* Tue Sep 18 2018 Vitaly Lipatov <lav@altlinux.ru> 0.68.5-alt2
+- rebuild without libwrap-devel
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.68.5-alt1.1
 - NMU: corrected java dependencies
 
