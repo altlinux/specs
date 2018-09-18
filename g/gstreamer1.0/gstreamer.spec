@@ -8,7 +8,7 @@
 
 Name: %_name%api_ver
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: GStreamer streaming media framework runtime
 License: LGPL
@@ -105,7 +105,7 @@ export LIBS=-lcxa
 	--disable-tests \
 	--disable-debug \
 	--disable-static \
-	--with-bash-completion-dir=no \
+	--with-bash-completion-dir=%_datadir/bash-completion \
 	--with-ptp-helper-permissions=capabilities
 %make_build
 
@@ -155,8 +155,16 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %files utils
 %_bindir/*
 %_man1dir/*
+# bash-completions
+%_libexecdir/%_name-%api_ver/gst-completion-helper
+%_datadir/bash-completion/completions/gst-inspect-%api_ver
+%_datadir/bash-completion/completions/gst-launch-%api_ver
+%_datadir/bash-completion/helpers/gst
 
 %changelog
+* Tue Sep 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.3-alt2
+- packaged bash-completions
+
 * Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.3-alt1
 - 1.14.3
 
