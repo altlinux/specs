@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		84139
+%define svnrev		84877
 
 %def_with pgsql
 %def_enable java
@@ -15,8 +15,8 @@
 %endif
 
 Name: zabbix
-Version: 3.4.13
-Release: alt2%ubt
+Version: 3.4.14
+Release: alt1%ubt
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -650,6 +650,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Sep 18 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.14-alt1%ubt
+- 3.4.14
+
 * Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.13-alt2%ubt
 - Rebuild with OpenSSL 1.1.x
 
