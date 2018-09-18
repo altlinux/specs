@@ -3,7 +3,7 @@
 
 Name: polkit
 Version: 0.115
-Release: alt2
+Release: alt3
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -142,6 +142,9 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Tue Sep 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.115-alt3
+- updated to 0.115-11-g6e1f826
+
 * Wed Jul 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.115-alt2
 - sem@: use -std=gnu++11 on %%e2k
 
