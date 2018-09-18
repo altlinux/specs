@@ -1,5 +1,8 @@
 %set_verify_elf_method unresolved=relaxed
 %def_disable snapshot
+%define _libexecdir %_prefix/libexec
+
+%def_enable face_detection
 
 %define ver_major 0.30
 %define api_ver 1.0
@@ -7,7 +10,7 @@
 
 Name: shotwell
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -20,7 +23,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define gtk_ver 3.14
+%define gtk_ver 3.22
 %define gexiv_ver 0.10.4
 %define soup_ver 2.42
 
@@ -40,6 +43,7 @@ BuildRequires: librest-devel libgee0.8-devel gcr-libs-devel
 BuildRequires: desktop-file-utils yelp-tools libappstream-glib-devel
 BuildRequires: vala gcr-libs-vala
 BuildRequires: libgdata-devel
+%{?_enable_face_detection:BuildRequires: gcc-c++ libopencv-devel}
 
 %description
 Shotwell is a digital photo organizer designed for the GNOME desktop
@@ -47,7 +51,7 @@ environment.  It allows you to import photos from disk or camera,
 organize them in various ways, view them in full-window or fullscreen
 mode, and export them to share with others.
 
-%define _libexecdir %_prefix/libexec/%name
+
 
 %prep
 %setup
@@ -55,7 +59,8 @@ mode, and export them to share with others.
 %build
 %add_optflags -D_GIT_VERSION=%(echo %version | tr -d .)
 %meson -Dunity-support=false \
-       -Dinstall-apport-hook=false
+       -Dinstall-apport-hook=false \
+       %{?_enable_face_detection:-Dface-detection=true}
 %meson_build
 
 %install
@@ -68,6 +73,11 @@ mode, and export them to share with others.
 %dir %_libexecdir/%name
 %_libexecdir/%name/%name-video-thumbnailer
 %_libexecdir/%name/%name-settings-migrator
+%if_enabled face_detection
+%_libexecdir/%name/%name-facedetect
+%dir %_datadir/%name
+%_datadir/%name/facedetect-haarcascade.xml
+%endif
 %_libdir/lib%name-plugin-common.so.*
 %_libdir/lib%name-plugin-dev-%api_ver.so.*
 %_libdir/lib%name-authenticator.so.*
@@ -85,6 +95,9 @@ mode, and export them to share with others.
 
 
 %changelog
+* Tue Sep 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt2
+- enabled face detection
+
 * Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt1
 - 0.30.0
 
