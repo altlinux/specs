@@ -2,7 +2,7 @@
 
 Name:     eviacam
 Version:  2.1.3
-Release:  alt2
+Release:  alt3
 
 Summary:  Mouse replacement software that moves the pointer as you move your head
 Group: 	  System/Base
@@ -14,7 +14,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:   %name-%version.tar
 Patch1:   %name-alt-compat.patch
 
-BuildRequires: compat-libwxGTK3.0-gtk2-devel libopencv-devel libXtst-devel libXext-devel libgtk+2-devel gcc-c++ libv4l-devel
+BuildRequires: libwxGTK3.0-devel libopencv-devel libXtst-devel libXext-devel libgtk+3-devel gcc-c++ libv4l-devel
 
 %description
 Mouse replacement software that moves the pointer as you move your head.
@@ -45,6 +45,9 @@ touch config.rpath
 %_man1dir/*
 
 %changelog
+* Tue Sep 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.3-alt3
+- Rebuilt with wxGTK-3.0 and gtk+-3.
+
 * Tue Sep 18 2018 Anton Midyukov <antohami@altlinux.org> 2.1.3-alt2
 - Rebuilt with compat-libwxGTK3.0-gtk2-devel
 
