@@ -1,3 +1,5 @@
+ExclusiveArch: %ix86 x86_64
+
 %ifarch x86_64
 %define MODEL 64
 %else
@@ -5,7 +7,7 @@
 %endif
 
 Name: dmd
-Version: 2.076.0
+Version: 2.082.0
 Release: alt1%ubt
 Summary: The D Programming Language
 Group: Development/Other
@@ -18,6 +20,8 @@ Source3: phobos-%version.tar
 Source4: tools-%version.tar
 
 Patch1: druntime-%version-alt-build.patch
+Patch2: posix-in-druntime.patch
+Patch3: dmd-2.082.0-alt-build-removed.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ curl-devel
@@ -62,28 +66,32 @@ Java, Python, Ruby, C#, and Eiffel.
 
 pushd ../druntime
 %patch1 -p2
+%patch2 -p2
 popd
+
+%patch3 -p2
 
 %build
 pushd src
 %make_build -f posix.mak MODEL=%MODEL
 popd
-
+  
 export CFLAGS=-fPIC
 export CXXFLAGS=-fPIC
+
 pushd ../druntime
 #sed -i 's|-m$(MODEL) -O|-m$(MODEL) -fPIC -O|g' posix.mak
-%make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL DRUNTIME_BASE=druntime PIC=1
+%make_build -f posix.mak MODEL=%MODEL DRUNTIME_BASE=druntime PIC=1
 #gcc lib/libdruntime.o obj/64/errno_c.o obj/64/complex.o -shared -o lib/libdruntime.so -m64 -lpthread -lm -lrt
 popd
 
 pushd ../phobos
 #sed -i 's|DFLAGS += -O -release|DFLAGS += -fPIC -O -release|g' posix.mak
-%make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL ROOT=out PIC=1
+%make_build -f posix.mak MODEL=%MODEL ROOT=out PIC=1
 popd
 
 pushd ../tools
-%make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL ROOT=out PIC=1 DFLAGS='-I../druntime/import -I../phobos -L-L../phobos/out'
+%make_build -f posix.mak MODEL=%MODEL ROOT=out PIC=1 DFLAGS='-I../druntime/import -I../phobos -L-L../phobos/out'
 #../dmd/src/dmd -c -O -w -d -fPIC -m%MODEL -property -release -I../druntime/import -I../phobos rdmd.d
 #gcc rdmd.o -o rdmd -m%MODEL -L../druntime/lib -L../phobos/out -ldruntime -lphobos2 -lpthread -lm -lrt
 #../dmd/src/dmd -c -O -w -d -m%MODEL -property -release -I../druntime/import -I../phobos catdoc.d
@@ -93,7 +101,7 @@ popd
 %install
 mkdir -p %buildroot{%_bindir,%_sysconfdir,%_libdir,%_includedir/d/etc/c,%_man1dir,%_man5dir}
 
-cp src/dmd %buildroot%_bindir/
+cp generated/linux/release/%MODEL/dmd %buildroot%_bindir/
 
 echo '; dmd.conf file for dmd' > %buildroot%_sysconfdir/dmd.conf
 echo '; Names enclosed by %%%% are searched for in the existing environment' >> %buildroot%_sysconfdir/dmd.conf
@@ -118,7 +126,6 @@ cp -r ../phobos/std %buildroot%_includedir/d/
 cp ../phobos/etc/c/*.d %buildroot%_includedir/d/etc/c/
 
 #tools
-
 #cp tools/catdoc %buildroot%_bindir/
 cp ../tools/out/rdmd %buildroot%_bindir/
 cp -r docs/man/man1/* %buildroot%_man1dir/
@@ -147,6 +154,9 @@ cp -r docs/man/man5/* %buildroot%_man5dir/
 %_libdir/libphobos2.a
 
 %changelog
+* Mon Sep 17 2018 Pavel Moseev <mars@altlinux.org> 2.082.0-alt1%ubt
+- Updated to upstream version 2.082.0.
+
 * Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.076.0-alt1%ubt
 - Updated to upstream version 2.076.0.
 - Added %%ubt macro to release.
