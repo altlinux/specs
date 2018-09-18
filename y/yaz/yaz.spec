@@ -1,6 +1,6 @@
 %def_disable static
 %def_enable threads
-%def_enable tcpd
+%def_disable tcpd
 %def_with ssl
 %def_with xml
 #-------------------------------------------------------------
@@ -8,7 +8,7 @@
 
 Name: yaz
 Version: 5.25.0
-Release: alt1
+Release: alt2
 
 Summary: Z39.50/SRW/SRU toolkit
 
@@ -142,6 +142,9 @@ bzip2 --best --force --keep NEWS
 %_docdir/%name/
 
 %changelog
+* Tue Sep 18 2018 Vitaly Lipatov <lav@altlinux.ru> 5.25.0-alt2
+- build without libwrap-devel
+
 * Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 5.25.0-alt1
 - new version 5.25.0 (with rpmrb script)
 - rebuild with libicu60
