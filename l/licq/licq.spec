@@ -11,6 +11,12 @@
 %define cvs 0
 %define no_some_docs 1
 
+#Licq is not adopted for openssl 1.1
+#
+#SSL used only for direct connections that are not available
+#since the IP addresses are hidden. So, disabled it.
+%def_without ssl
+
 #UI plugins
 %define with_qt4 1
 %define with_kde4 1
@@ -35,10 +41,11 @@
 # name-version-release
 %define rname licq
 %define ver 1.8.2
-%define rlz alt1
+%define rlz alt2
 
 %define common_summary Multi-protocol IM-client (icq,jabber,msn) written on C++
 
+%if_with ssl
 %define common_description Licq was written as ICQ clone but it is multi-protocol IM now.\
 Licq supports different interfaces, protocols and functions via plugins.\
 \
@@ -52,10 +59,23 @@ will have to run once "licq -p qt-gui". Alternatively you may be able to do\
 it in a plugin dialog box if your plugin supports this feature.\
 \
 This version of Licq has SSL support for those plugins that support it.
+%else
+%define common_description Licq was written as ICQ clone but it is multi-protocol IM now.\
+Licq supports different interfaces, protocols and functions via plugins.\
+\
+This package contains the base files for Licq (the Licq daemon) and the QT\
+plugin, which is written using the Qt widget set. Currently this UI plugin\
+is only available (since v1.8).\
+\
+This starts the QT plugin by default, so to run other plugins, you will have\
+to issue the command "licq -p <plugin>" once. To get back the Qt plugin, you\
+will have to run once "licq -p qt-gui". Alternatively you may be able to do\
+it in a plugin dialog box if your plugin supports this feature.
+%endif
 
 Name: %rname
 Version: %ver
-Release: %rlz.4
+Release: %rlz
 
 BuildRequires(pre): kde4libs-devel
 BuildRequires(pre): graphviz
@@ -63,9 +83,12 @@ BuildRequires(pre): graphviz
 BuildRequires: freetype2-devel gcc-c++ chrpath
 BuildRequires: libart_lgpl-devel libexpat-devel libjpeg-devel
 BuildRequires: liblcms-devel libmng-devel kde-common-devel
-BuildRequires: libncurses-devel libssl-devel libstdc++-devel libtinfo-devel
+BuildRequires: libncurses-devel libstdc++-devel libtinfo-devel
 BuildRequires: rpm-utils boost-devel doxygen libgloox-devel
 BuildRequires: libpixman-devel libharfbuzz-devel
+%if_with ssl
+BuildRequires: libssl-devel
+%endif
 %if %with_console
 BuildRequires: libcdk-devel
 %endif
@@ -197,7 +220,9 @@ Requires: %name-ui
 %package common
 Summary: Common binaries and data files  for Licq
 Group: Networking/Instant messaging
+%if_with ssl
 Obsoletes: %name-ssl < %version-release
+%endif
 Obsoletes: %name-data < %version-release
 Obsoletes: %name-update-hosts < %version-release
 Provides: %name-base = %version-release
@@ -288,6 +313,7 @@ Requires: %name-common = %version-%release
 Summary: Development files for Licq
 Group: Development/C
 Requires: %name-common = %version-%release
+BuildArch: noarch
 
 %description
 %common_description
@@ -379,6 +405,10 @@ Install this if you want to add this function to Licq.
 
 %setup -q -n %name
 
+%if_without ssl
+sed -i 's/"Enable secure communication channels" ON/"Enable secure communication channels" OFF/' CMakeLists.txt
+%endif
+
 #Errata
 #patch500 -p2
 
@@ -464,7 +494,9 @@ cd ../..
 rm -rf %buildroot/%_datadir/licq/translations
 
 #mkdir -p %buildroot/%_bindir
+%if_with ssl
 ln -fs licq %buildroot/%_bindir/licq-ssl
+%endif
 install -m755 %SOURCE10 %buildroot/%_bindir/licq-viewurl.sh
 
 mkdir -p %buildroot/%_miconsdir
@@ -541,7 +573,9 @@ popd
 ## licq base
 %files common -f %name.lang
 %_bindir/licq
+%if_with ssl
 %_bindir/licq-ssl
+%endif
 %dir %_libdir/licq/
 %dir %_datadir/licq/
 %_datadir/licq/utilities/
@@ -645,6 +679,10 @@ popd
 
 ########################################################
 %changelog
+* Tue Sep 18 2018 Sergey Y. Afonin <asy@altlinux.ru> 1.8.2-alt2
+- rebuilt without ssl
+- added noarch for devel subpackage
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt1.4
 - NMU: rebuilt with boost-1.67.0
 
