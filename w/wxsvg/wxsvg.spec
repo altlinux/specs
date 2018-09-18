@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: wxsvg
 Version: 1.5.14
-Release: alt2%ubt
+Release: alt3%ubt
 Epoch: 1
 
 Summary: wxSVG is viewer SVG files
@@ -13,6 +15,9 @@ BuildRequires: gcc-c++ libart_lgpl-devel libpango-devel
 BuildRequires: compat-libwxGTK3.0-gtk2-devel libavformat-devel libswscale-devel
 BuildRequires: libexpat-devel libexif-devel
 BuildRequires(pre): rpm-build-ubt
+
+# for older branches support
+%define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 
 %description
 wxSVG is viewer SVG files
@@ -45,9 +50,12 @@ Development shared library for wxSVG
 
 %prep
 %setup
-rm -f ./configure
 
 %build
+%qIF_ver_lt %ubt_id S1
+%add_optflags -std=c++11
+%endif
+
 %autoreconf
 %configure
 %make_build
@@ -60,18 +68,21 @@ rm -f ./configure
 %_bindir/*
 
 %files -n lib%name
-%_libdir/lib*so.*
-%exclude %_libdir/lib*.a
+%_libdir/*.so.*
+%exclude %_libdir/*.a
 
 %files -n lib%name-devel-static
-%_libdir/lib*.a
+%_libdir/*.a
 
 %files -n lib%name-devel
 %_includedir/wx*
-%_libdir/lib*so
-%_libdir/pkgconfig/*
+%_libdir/*.so
+%_pkgconfigdir/*
 
 %changelog
+* Tue Sep 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.5.14-alt3%ubt
+- Rebuilt with support for older branches.
+
 * Thu Aug 16 2018 Anton Midyukov <antohami@altlinux.org> 1:1.5.14-alt2%ubt
 - Rebuilt with compat-libwxGTK3.0-gtk2
 
