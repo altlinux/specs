@@ -5,10 +5,11 @@
 %define api_ver 1.0
 %def_disable docs
 %def_enable introspection
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.4
+Release: alt1
 
 Summary: GLib-based JSON manipulation library
 Group: System/Libraries
@@ -20,7 +21,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %define glib_ver 2.46.0
 %define gi_ver 0.10.5
 
-BuildRequires: meson glib2-devel >= %glib_ver
+BuildRequires(pre): meson
+BuildRequires: glib2-devel >= %glib_ver
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 %{?_enable_docs:BuildRequires: gtk-doc xsltproc docbook-dtds docbook-style-xsl}
@@ -83,7 +85,8 @@ the functionality of the installed %_name library.
 %find_lang --output=%_name.lang %_name-%api_ver
 
 %check
-#%%meson_test
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %_name.lang
 %_bindir/%_name-format
@@ -116,6 +119,9 @@ the functionality of the installed %_name library.
 %_datadir/installed-tests/%_name-%api_ver/
 
 %changelog
+* Tue Sep 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
+- 1.4.4
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1.1
 - rebuilt for e2kv4
 
