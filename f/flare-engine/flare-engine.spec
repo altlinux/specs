@@ -1,7 +1,7 @@
 %define _name flare
 
 Name: %_name-engine
-Version: 1.07
+Version: 1.08
 Release: alt1
 
 Summary: A simple game engine for single-player 2D action RPGs
@@ -50,6 +50,9 @@ cd -
 %_man6dir/*
 
 %changelog
+* Tue Sep 18 2018 Mikhail Efremov <sem@altlinux.org> 1.08-alt1
+- Updated to 1.08.
+
 * Wed Sep 05 2018 Mikhail Efremov <sem@altlinux.org> 1.07-alt1
 - Updated to 1.07.
 

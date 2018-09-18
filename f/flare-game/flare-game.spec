@@ -1,7 +1,7 @@
 %define _name flare
 
 Name: %_name-game
-Version: 1.07
+Version: 1.08
 Release: alt1
 
 Summary: Fantasy action RPG using the FLARE engine
@@ -49,9 +49,12 @@ cd -
 
 %files -f %_name.lang
 %_datadir/%_name/*
-%_datadir/appdata/*.xml
+%_datadir/metainfo/*.xml
 
 %changelog
+* Tue Sep 18 2018 Mikhail Efremov <sem@altlinux.org> 1.08-alt1
+- Updated to 1.08.
+
 * Wed Sep 05 2018 Mikhail Efremov <sem@altlinux.org> 1.07-alt1
 - Updated to 1.07.
 
