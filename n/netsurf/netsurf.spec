@@ -1,6 +1,6 @@
 Name: netsurf
 Version: 3.8
-Release: alt1
+Release: alt2
 
 Summary: Lightweight Web Browser With Good HTML 4 And CSS Support
 License: GNU General Public License v2 (GPL v2)
@@ -12,7 +12,7 @@ Source1: netsurf.desktop
 Source2: netsurf.png
 # перевод (дополнительно см.  netsurf-all/netsurf/resources/FatMessages)
 Source3: netsurf_Messages
-Packager: Michael Shigorin <mike@altlinux.org>
+Patch: netsurf-3.8-alt-e2k.patch
 
 BuildRequires: gtk2-devel libglade2-devel libjpeg-devel libpng-devel libmng-devel
 BuildRequires: libxml2-devel zlib-devel
@@ -21,7 +21,11 @@ BuildRequires: gcc make glibc-devel perl libcurl-devel
 BuildRequires: libexpat-devel
 BuildRequires: libssl-devel
 BuildRequires: gperf flex
+%ifarch %e2k
+BuildRequires: libmozjs52-devel
+%else
 BuildRequires: libmozjs60-devel
+%endif
 BuildRequires: perl-HTML-Parser
 BuildRequires: perl-IO-Compress
 
@@ -49,38 +53,18 @@ and comprehensive Web browsing solution.
 
 %prep
 %setup -c %name-%version
+%patch -p1
 
 mkdir -p netsurf/!NetSurf/Resources/ru
 cp -a %SOURCE3 netsurf/!NetSurf/Resources/ru/Messages
 
 # Скрипт запуска (начало)
-#cp -a SOURCE4 netsurf/netsurf
-
-MT=`uname -m`
-if [ ${MT} == 'x86_64' ]; then
-
-cat <<EOF > netsurf/netsurf
+cat > netsurf/netsurf << EOF
 #!/bin/sh
-
-cd /usr/lib64/netsurf
+cd %_libdir/netsurf
 ./nsgtk \$1
-
 EOF
-
-else
-
-cat <<EOF > netsurf/netsurf
-#!/bin/sh
-
-cd /usr/lib/netsurf
-./nsgtk \$1
-
-EOF
-
-fi
-
 chmod +x netsurf/netsurf
-
 # Скрипт запуска (конец)
 
 mkdir -p netsurf/gtk/res/ru
@@ -125,6 +109,10 @@ export RPM_FIXUP_METHOD="binconfig pkgconfig libtool"
 %_datadir/pixmaps/*
 
 %changelog
+* Tue Sep 18 2018 Michael Shigorin <mike@altlinux.org> 3.8-alt2
+- E2K: use libmozjs 52, recognize lcc
+- proper libdir detection
+
 * Wed Sep 12 2018 Andrey Cherepanov <cas@altlinux.org> 3.8-alt1
 - New version.
 
