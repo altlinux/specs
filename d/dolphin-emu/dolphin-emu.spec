@@ -1,6 +1,6 @@
 Name: dolphin-emu
 Version: 5.0
-Release: alt7%ubt
+Release: alt8%ubt
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -50,7 +50,7 @@ BuildRequires: libsoundtouch-devel
 BuildRequires: libswscale-devel
 BuildRequires: libudev-devel
 BuildRequires: libusb-devel
-BuildRequires: libwxGTK3.1-gtk2-devel
+BuildRequires: compat-libwxGTK3.0-gtk2-devel
 
 %description
 Dolphin-emu is a emulator for Gamecube, Wii, Triforce that lets
@@ -91,6 +91,9 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Tue Sep 18 2018 Anton Midyukov <antohami@altlinux.org> 5.0-alt8%ubt
+- Rebuilt with compat-libwxGTK3.0-gtk2-devel
+
 * Sun Jul 22 2018 Nazarov Denis <nenderus@altlinux.org> 5.0-alt7%ubt
 - Rebuilt with new mbedTLS
 
