@@ -1,6 +1,6 @@
 Name: sslh
 Version: 1.19c
-Release: alt3
+Release: alt4
 
 Summary: A ssl/ssh multiplexer
 
@@ -19,7 +19,7 @@ Source4: sslh.cfg
 
 # Automatically added by buildreq on Sat Aug 04 2012
 # optimized out: perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators
-BuildRequires: libconfig-devel perl-Pod-Parser libpcre-devel libwrap-devel libsystemd-devel libcap-devel
+BuildRequires: libconfig-devel perl-Pod-Parser libpcre-devel libsystemd-devel libcap-devel
 
 %description
 sslh lets one accept both HTTPS and SSH connections on the
@@ -33,7 +33,7 @@ Author: Yves Rutschle
 %setup
 
 %build
-%make_build USELIBWRAP=1 USESYSTEMD=1 USELIBCAP=1 CFLAGS="%optflags -I%_includedir/pcre"
+%make_build USELIBCONFIG=1 USESYSTEMD=1 USELIBCAP=1 CFLAGS="%optflags -I%_includedir/pcre"
 
 %install
 %makeinstall PREFIX=%buildroot%prefix
@@ -60,6 +60,9 @@ install -m 644 %SOURCE4 %buildroot%_sysconfdir/%name/sslh.cfg
 %config(noreplace) %_sysconfdir/%name/sslh.cfg
 
 %changelog
+* Tue Sep 18 2018 Vitaly Lipatov <lav@altlinux.ru> 1.19c-alt4
+- rebuild without libwrap-devel
+
 * Thu Jun 07 2018 Vitaly Lipatov <lav@altlinux.ru> 1.19c-alt3
 - add default config and use it in service file (redmine #1501)
 
