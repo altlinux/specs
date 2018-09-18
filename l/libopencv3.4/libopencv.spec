@@ -39,8 +39,8 @@
 %define sover 3.4
 Name: lib%bname%sover
 Epoch: 1
-Version: 3.4.1
-Release: alt3.1
+Version: 3.4.3
+Release: alt1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -63,7 +63,7 @@ BuildRequires: cmake libnumpy-devel eigen3 doxygen python2.7(bs4) zlib-devel
 BuildRequires: libucil-devel libv4l-devel libtbb-devel bzlib-devel
 BuildRequires: pkgconfig(glproto) pkgconfig(dri2proto) pkgconfig(xext)
 BuildRequires: pkgconfig(xdamage) pkgconfig(xxf86vm)
-BuildRequires: libGLU-devel libXau-devel libXdmcp-devel libgtkglext-devel
+BuildRequires: libGLU-devel libXau-devel libXdmcp-devel
 BuildRequires: python-module-sphinx-devel python-module-Pygments
 BuildRequires: texlive-latex-base
 BuildRequires: libprotobuf-devel protobuf-compiler libwebp-devel
@@ -75,7 +75,7 @@ BuildRequires: ceres-solver-devel libglog-devel
 %{?_with_unicap:BuildRequires: libunicap-devel}
 %{?_with_ffmpeg:BuildRequires: libavformat-devel libswscale-devel libavresample-devel}
 %{?_with_gstreamer:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel}
-%{?_with_gtk:BuildRequires: libgtk+2-devel}
+%{?_with_gtk:BuildRequires: libgtk+3-devel}
 %{?_with_xine:BuildRequires: libxine-devel}
 %{?_with_python:BuildRequires: python-devel}
 %{?_with_octave:BuildRequires: octave-devel}
@@ -246,7 +246,6 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 	-DWITH_FFMPEG:BOOL=%{?_with_ffmpeg:ON}%{!?_with_ffmpeg:OFF} \
 	-DWITH_GSTREAMER=%{?_with_gstreamer:ON}%{!?_with_gstreamer:OFF} \
 	-DWITH_OPENGL:BOOL=ON \
-	-DINSTALL_PYTHON_EXAMPLES:BOOL=ON \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DBUILD_opencv_ts:BOOL=OFF \
 	-DBUILD_PROTOBUF:BOOL=OFF \
@@ -259,8 +258,6 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 	-DBUILD_DOCS:BOOL=ON \
 	-DOPENCV_DOC_INSTALL_PATH=%_docdir/%name/ \
 
-# https://github.com/opencv/opencv/issues/10474
-%cmake_build VERBOSE=1 opencv_dnn
 %cmake_build VERBOSE=1
 %cmake_build VERBOSE=1 opencv_docs
 
@@ -271,6 +268,7 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %doc README.md
 %_libdir/*.so.*
 %dir %_datadir/%Name
+%_datadir/%Name/licenses
 
 %files -n lib%bname-devel
 %_libdir/*.so
@@ -297,6 +295,10 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %_datadir/%Name/lbpcascades
 
 %changelog
+* Mon Sep 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.3-alt1
+- Updated to upstream version 3.4.3.
+- Rebuilt with gtk+-3.
+
 * Mon Jun 25 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.4.1-alt3.1
 - NMU: autorebuild with libjpasper.so.4
 
