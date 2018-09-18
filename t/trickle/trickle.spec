@@ -2,7 +2,7 @@
 
 Name:    trickle
 Version: 1.07
-Release: alt2
+Release: alt3
 
 Summary: a portable lightweight userspace bandwidth shaper
 
@@ -48,7 +48,7 @@ trickle runs entirely in userspace and does not require root privileges.
 %autoreconf
 sed -e 's#/lib/trickle#/%_lib/trickle#' -i configure.in
 %configure
-%make_build
+%make
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -71,6 +71,9 @@ install -m 0644 %SOURCE1 %buildroot%_sysconfdir/%{name}d.conf
 %_libdir/%name
 
 %changelog
+* Mon Sep 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.07-alt3
+- NMU: fixed build.
+
 * Sat Jun 25 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.07-alt2
 - Fix build: updating BuildRequires
 - Updating URL
