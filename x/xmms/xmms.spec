@@ -9,8 +9,8 @@
 
 Name: xmms
 Version: 1.2.11
-Release: alt11
-Epoch: 20131206
+Release: alt12
+Epoch: 20180918
 
 Summary: X Multimedia System - as it was back then
 License: GPL
@@ -152,7 +152,7 @@ BuildRequires: librcc-devel librcd-devel librcc-gtk libguess-devel
 %{?!_desktopdir:%define _desktopdir %_datadir/applications}
 
 # Automatically added by buildreq on Sun Nov 25 2007
-BuildRequires: esound-devel gcc-c++ gtk+-devel imake libalsa-devel libmikmod-devel librcc-devel librcc-gtk libSM-devel libssl-devel libvorbis-devel ORBit-devel xorg-cf-files zlib-devel
+BuildRequires: esound-devel gcc-c++ gtk+-devel imake libalsa-devel libmikmod-devel librcc-devel librcc-gtk libSM-devel libvorbis-devel xorg-cf-files zlib-devel
 
 BuildRequires: libGL-devel libGLU-devel chrpath
 
@@ -170,38 +170,38 @@ support for input, output, and general plugins, and has also been GPLd.
 This package has been built with rusxmms.sf.net patches, see also
 http://dside.dyndns.org/rusxmms/wiki/FAQ
 
-%description -l ru_RU.KOI8-R
-X MultiMedia System - некогда популярный медиа-проигрыватель для UNIX-систем.
+%description -l ru_RU.UTF-8
+X MultiMedia System - п╫п╣п╨п╬пЁп╢п╟ п©п╬п©я┐п╩я▐я─п╫я▀п╧ п╪п╣п╢п╦п╟-п©я─п╬п╦пЁя─я▀п╡п╟я┌п╣п╩я▄ п╢п╩я▐ UNIX-я│п╦я│я┌п╣п╪.
 
-Поддерживает существенное количество форматов и эффектов благодаря большому
-количеству модулей расширения, доступных в отдельных пакетах.
+п÷п╬п╢п╢п╣я─п╤п╦п╡п╟п╣я┌ я│я┐я┴п╣я│я┌п╡п╣п╫п╫п╬п╣ п╨п╬п╩п╦я┤п╣я│я┌п╡п╬ я└п╬я─п╪п╟я┌п╬п╡ п╦ я█я└я└п╣п╨я┌п╬п╡ п╠п╩п╟пЁп╬п╢п╟я─я▐ п╠п╬п╩я▄я┬п╬п╪я┐
+п╨п╬п╩п╦я┤п╣я│я┌п╡я┐ п╪п╬п╢я┐п╩п╣п╧ я─п╟я│я┬п╦я─п╣п╫п╦я▐, п╢п╬я│я┌я┐п©п╫я▀я┘ п╡ п╬я┌п╢п╣п╩я▄п╫я▀я┘ п©п╟п╨п╣я┌п╟я┘.
 
-Этот пакет собран с патчами rusxmms.sf.net, см. тж.
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╠я─п╟п╫ я│ п©п╟я┌я┤п╟п╪п╦ rusxmms.sf.net, я│п╪. я┌п╤.
 http://dside.dyndns.org/rusxmms/wiki/FAQ
 
-%description -l uk_UA.KOI8-U
-X MultiMedia System - колись популярний мед╕а-програвач для UNIX-систем.
+%description -l uk_UA.UTF-8
+X MultiMedia System - п╨п╬п╩п╦я│я▄ п©п╬п©я┐п╩я▐я─п╫п╦п╧ п╪п╣п╢я√п╟-п©я─п╬пЁя─п╟п╡п╟я┤ п╢п╩я▐ UNIX-я│п╦я│я┌п╣п╪.
 
-П╕дтриму╓ величезну к╕льк╕сть формат╕в та ефект╕в завдяки велик╕й к╕лькост╕
-модул╕в розширення, що доступн╕ в окремих пакетах.
+п÷я√п╢я┌я─п╦п╪я┐я■ п╡п╣п╩п╦я┤п╣п╥п╫я┐ п╨я√п╩я▄п╨я√я│я┌я▄ я└п╬я─п╪п╟я┌я√п╡ я┌п╟ п╣я└п╣п╨я┌я√п╡ п╥п╟п╡п╢я▐п╨п╦ п╡п╣п╩п╦п╨я√п╧ п╨я√п╩я▄п╨п╬я│я┌я√
+п╪п╬п╢я┐п╩я√п╡ я─п╬п╥я┬п╦я─п╣п╫п╫я▐, я┴п╬ п╢п╬я│я┌я┐п©п╫я√ п╡ п╬п╨я─п╣п╪п╦я┘ п©п╟п╨п╣я┌п╟я┘.
 
-Цей пакунок з╕браний з патчами rusxmms.sf.net, див. також
+п╕п╣п╧ п©п╟п╨я┐п╫п╬п╨ п╥я√п╠я─п╟п╫п╦п╧ п╥ п©п╟я┌я┤п╟п╪п╦ rusxmms.sf.net, п╢п╦п╡. я┌п╟п╨п╬п╤
 http://dside.dyndns.org/rusxmms/wiki/FAQ
 
 %package -n libxmms
 Summary: Library needed for XMMS and its plugins
-Summary(ru_RU.KOI8-R): Библиотека для XMMS и модулей к нему
-Summary(uk_UA.KOI8-U): Б╕бл╕отека для XMMS та модул╕в до нього
+Summary(ru_RU.UTF-8): п▒п╦п╠п╩п╦п╬я┌п╣п╨п╟ п╢п╩я▐ XMMS п╦ п╪п╬п╢я┐п╩п╣п╧ п╨ п╫п╣п╪я┐
+Summary(uk_UA.UTF-8): п▒я√п╠п╩я√п╬я┌п╣п╨п╟ п╢п╩я▐ XMMS я┌п╟ п╪п╬п╢я┐п╩я√п╡ п╢п╬ п╫я▄п╬пЁп╬
 Group: System/Libraries
 
 %description -n libxmms
 This library is mandatory for xmms and for all its plugins to run.
 
-%description  -n libxmms -l ru_RU.KOI8-R
-Эта библиотека необходима для xmms и всех его модулей.
+%description  -n libxmms -l ru_RU.UTF-8
+п╜я┌п╟ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╟ п╫п╣п╬п╠я┘п╬п╢п╦п╪п╟ п╢п╩я▐ xmms п╦ п╡я│п╣я┘ п╣пЁп╬ п╪п╬п╢я┐п╩п╣п╧.
 
-%description  -n libxmms -l uk_UA.KOI8-U
-Ця б╕бл╕отека ╓ необх╕дною для xmms та ус╕х його модулей.
+%description  -n libxmms -l uk_UA.UTF-8
+п╕я▐ п╠я√п╠п╩я√п╬я┌п╣п╨п╟ я■ п╫п╣п╬п╠я┘я√п╢п╫п╬я▌ п╢п╩я▐ xmms я┌п╟ я┐я│я√я┘ п╧п╬пЁп╬ п╪п╬п╢я┐п╩п╣п╧.
 
 %package -n libxmms-devel
 Summary: Development package with headers
@@ -217,8 +217,8 @@ Header files required for compiling xmms plugins.
 
 %package in-mikmod
 Summary: Mikmod output plugin
-Summary(ru_RU.KOI8-R): Модуль поддержки воспроизведения MOD-файлов
-Summary(uk_UA.KOI8-U): Модуль п╕дтримки в╕дтворення MOD-файл╕в
+Summary(ru_RU.UTF-8): п°п╬п╢я┐п╩я▄ п©п╬п╢п╢п╣я─п╤п╨п╦ п╡п╬я│п©я─п╬п╦п╥п╡п╣п╢п╣п╫п╦я▐ MOD-я└п╟п╧п╩п╬п╡
+Summary(uk_UA.UTF-8): п°п╬п╢я┐п╩я▄ п©я√п╢я┌я─п╦п╪п╨п╦ п╡я√п╢я┌п╡п╬я─п╣п╫п╫я▐ MOD-я└п╟п╧п╩я√п╡
 Group: Sound
 Icon: xmms-mikmod-logo.xpm
 BuildPreReq: libmikmod-devel
@@ -230,16 +230,16 @@ Provides: xmms-mikmod = %version-%release
 %description in-mikmod
 Input plugin for XMMS to play MODs (.mod,.xm,.s3m, etc)
 
-%description in-mikmod -l ru_RU.KOI8-R
-Модуль ввода для проигрывания MOD-файлов (.mod, .xm, .s3m, ...)
+%description in-mikmod -l ru_RU.UTF-8
+п°п╬п╢я┐п╩я▄ п╡п╡п╬п╢п╟ п╢п╩я▐ п©я─п╬п╦пЁя─я▀п╡п╟п╫п╦я▐ MOD-я└п╟п╧п╩п╬п╡ (.mod, .xm, .s3m, ...)
 
-%description in-mikmod -l uk_UA.KOI8-U
-Модуль вводу для програвання MOD-файл╕в (.mod, .xm, .s3m, ...)
+%description in-mikmod -l uk_UA.UTF-8
+п°п╬п╢я┐п╩я▄ п╡п╡п╬п╢я┐ п╢п╩я▐ п©я─п╬пЁя─п╟п╡п╟п╫п╫я▐ MOD-я└п╟п╧п╩я√п╡ (.mod, .xm, .s3m, ...)
 
 %package in-vorbis
 Summary: Input plugin that uses the Vorbis library
-Summary(ru_RU.KOI8-R): Модуль поддержки воспроизведения Ogg Vorbis
-Summary(uk_UA.KOI8-U): Модуль п╕дтримки в╕дтворення Ogg Vorbis
+Summary(ru_RU.UTF-8): п°п╬п╢я┐п╩я▄ п©п╬п╢п╢п╣я─п╤п╨п╦ п╡п╬я│п©я─п╬п╦п╥п╡п╣п╢п╣п╫п╦я▐ Ogg Vorbis
+Summary(uk_UA.UTF-8): п°п╬п╢я┐п╩я▄ п©я√п╢я┌я─п╦п╪п╨п╦ п╡я√п╢я┌п╡п╬я─п╣п╫п╫я▐ Ogg Vorbis
 Group: Sound
 Requires: %name = %epoch:%version-%release, libvorbis >= 1.0rc2, libogg >= 1.0rc2
 BuildPreReq: libvorbis
@@ -249,16 +249,16 @@ Provides: xmms-vorbis = %version-%release
 %description in-vorbis
 Input plugins that use the Vorbis library
 
-%description in-vorbis -l ru_RU.KOI8-R
-Модуль ввода, использующий библиотеку Ogg Vorbis
+%description in-vorbis -l ru_RU.UTF-8
+п°п╬п╢я┐п╩я▄ п╡п╡п╬п╢п╟, п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╦п╧ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐ Ogg Vorbis
 
-%description in-vorbis -l uk_UA.KOI8-U
-Модуль вводу, що використову╓ б╕бл╕отеку Ogg Vorbis
+%description in-vorbis -l uk_UA.UTF-8
+п°п╬п╢я┐п╩я▄ п╡п╡п╬п╢я┐, я┴п╬ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я■ п╠я√п╠п╩я√п╬я┌п╣п╨я┐ Ogg Vorbis
 
 %package out-alsa
 Summary: ALSA output plugin
-Summary(ru_RU.KOI8-R): Модуль вывода для ALSA
-Summary(uk_UA.KOI8-U): Модуль виводу для ALSA
+Summary(ru_RU.UTF-8): п°п╬п╢я┐п╩я▄ п╡я▀п╡п╬п╢п╟ п╢п╩я▐ ALSA
+Summary(uk_UA.UTF-8): п°п╬п╢я┐п╩я▄ п╡п╦п╡п╬п╢я┐ п╢п╩я▐ ALSA
 Group: Sound
 BuildPreReq: libalsa-devel
 Requires: %name = %epoch:%version-%release
@@ -268,16 +268,16 @@ Provides: xmms-alsa = %version-%release
 %description out-alsa
 Output plugin for xmms to use with ALSA
 
-%description out-alsa -l ru_RU.KOI8-R
-Модуль вывода для использования с ALSA
+%description out-alsa -l ru_RU.UTF-8
+п°п╬п╢я┐п╩я▄ п╡я▀п╡п╬п╢п╟ п╢п╩я▐ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐ я│ ALSA
 
-%description out-alsa -l uk_UA.KOI8-U
-Модуль виводу для використання ╕з ALSA
+%description out-alsa -l uk_UA.UTF-8
+п°п╬п╢я┐п╩я▄ п╡п╦п╡п╬п╢я┐ п╢п╩я▐ п╡п╦п╨п╬я─п╦я│я┌п╟п╫п╫я▐ я√п╥ ALSA
 
 %package out-diskwriter
 Summary: DiskWriter output plugin
-Summary(ru_RU.KOI8-R): Модуль вывода в файл
-Summary(uk_UA.KOI8-U): Модуль виводу в файл
+Summary(ru_RU.UTF-8): п°п╬п╢я┐п╩я▄ п╡я▀п╡п╬п╢п╟ п╡ я└п╟п╧п╩
+Summary(uk_UA.UTF-8): п°п╬п╢я┐п╩я▄ п╡п╦п╡п╬п╢я┐ п╡ я└п╟п╧п╩
 Group: Sound
 Requires: %name = %epoch:%version-%release
 Obsoletes: xmms-diskwriter < 1.2.8-alt2
@@ -287,16 +287,16 @@ Provides: xmms-diskwriter = %version-%release
 Output plugin for xmms in order to output *.wav files instead of playing
 sound on the soundcard.
 
-%description out-diskwriter -l ru_RU.KOI8-R
-Модуль вывода для записи wav-файлов вместо воспроизведения
+%description out-diskwriter -l ru_RU.UTF-8
+п°п╬п╢я┐п╩я▄ п╡я▀п╡п╬п╢п╟ п╢п╩я▐ п╥п╟п©п╦я│п╦ wav-я└п╟п╧п╩п╬п╡ п╡п╪п╣я│я┌п╬ п╡п╬я│п©я─п╬п╦п╥п╡п╣п╢п╣п╫п╦я▐
 
-%description out-diskwriter -l uk_UA.KOI8-U
-Модуль виводу для запису wav-файл╕в зам╕сть в╕дтворення
+%description out-diskwriter -l uk_UA.UTF-8
+п°п╬п╢я┐п╩я▄ п╡п╦п╡п╬п╢я┐ п╢п╩я▐ п╥п╟п©п╦я│я┐ wav-я└п╟п╧п╩я√п╡ п╥п╟п╪я√я│я┌я▄ п╡я√п╢я┌п╡п╬я─п╣п╫п╫я▐
 
 %package out-esd
 Summary: ESound output plugin
-Summary(ru_RU.KOI8-R): Модуль вывода через ESound
-Summary(uk_UA.KOI8-U): Модуль виводу через ESound
+Summary(ru_RU.UTF-8): п°п╬п╢я┐п╩я▄ п╡я▀п╡п╬п╢п╟ я┤п╣я─п╣п╥ ESound
+Summary(uk_UA.UTF-8): п°п╬п╢я┐п╩я▄ п╡п╦п╡п╬п╢я┐ я┤п╣я─п╣п╥ ESound
 Group: Sound
 Icon: xmms-esd-logo.xpm
 BuildPreReq: esound-devel
@@ -308,16 +308,16 @@ Provides: xmms-esd = %version-%release
 %description out-esd
 Output plugin for xmms to use with the ESD
 
-%description out-esd -l ru_RU.KOI8-R
-Модуль вывода, применяемый при необходимости использования ESound
+%description out-esd -l ru_RU.UTF-8
+п°п╬п╢я┐п╩я▄ п╡я▀п╡п╬п╢п╟, п©я─п╦п╪п╣п╫я▐п╣п╪я▀п╧ п©я─п╦ п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬я│я┌п╦ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐ ESound
 
-%description out-esd -l uk_UA.KOI8-U
-Модуль виводу, що застосову╓ться при необх╕дност╕ використання ESound
+%description out-esd -l uk_UA.UTF-8
+п°п╬п╢я┐п╩я▄ п╡п╦п╡п╬п╢я┐, я┴п╬ п╥п╟я│я┌п╬я│п╬п╡я┐я■я┌я▄я│я▐ п©я─п╦ п╫п╣п╬п╠я┘я√п╢п╫п╬я│я┌я√ п╡п╦п╨п╬я─п╦я│я┌п╟п╫п╫я▐ ESound
 
 %package vis-mesa
 Summary: Visualization plugins that use the Mesa3D library
-Summary(ru_RU.KOI8-R): Модули визуализации с использованием Mesa3D
-Summary(uk_UA.KOI8-U): Модул╕ в╕зуал╕зац╕╖ з використанням Mesa3D
+Summary(ru_RU.UTF-8): п°п╬п╢я┐п╩п╦ п╡п╦п╥я┐п╟п╩п╦п╥п╟я├п╦п╦ я│ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣п╪ Mesa3D
+Summary(uk_UA.UTF-8): п°п╬п╢я┐п╩я√ п╡я√п╥я┐п╟п╩я√п╥п╟я├я√я≈ п╥ п╡п╦п╨п╬я─п╦я│я┌п╟п╫п╫я▐п╪ Mesa3D
 Group: Sound
 Icon: xmms-mesa-logo.xpm
 Requires: %name = %epoch:%version-%release
@@ -327,11 +327,11 @@ Provides: xmms-mesa = %version-%release
 %description vis-mesa
 3D Visualization plugins for XMMS that use the Mesa3d library
 
-%description vis-mesa -l ru_RU.KOI8-R
-Модуль визуализации с использованием 3D-эффектов
+%description vis-mesa -l ru_RU.UTF-8
+п°п╬п╢я┐п╩я▄ п╡п╦п╥я┐п╟п╩п╦п╥п╟я├п╦п╦ я│ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣п╪ 3D-я█я└я└п╣п╨я┌п╬п╡
 
-%description vis-mesa -l uk_UA.KOI8-U
-Модуль в╕зуал╕зац╕╖ з використанням 3D-ефект╕в
+%description vis-mesa -l uk_UA.UTF-8
+п°п╬п╢я┐п╩я▄ п╡я√п╥я┐п╟п╩я√п╥п╟я├я√я≈ п╥ п╡п╦п╨п╬я─п╦я│я┌п╟п╫п╫я▐п╪ 3D-п╣я└п╣п╨я┌я√п╡
 
 %package -n wmxmms
 Summary: XMMS applet for WindowMaker
@@ -343,21 +343,21 @@ XMMS applet for WindowMaker.
 
 You might also want to take a look at wmusic.
 
-%description -n wmxmms -l ru_RU.KOI8-R
-Аплет XMMS для WindowMaker.
+%description -n wmxmms -l ru_RU.UTF-8
+п░п©п╩п╣я┌ XMMS п╢п╩я▐ WindowMaker.
 
-В отличие от wmusic, не поддерживает кириллицу.
+п▓ п╬я┌п╩п╦я┤п╦п╣ п╬я┌ wmusic, п╫п╣ п©п╬п╢п╢п╣я─п╤п╦п╡п╟п╣я┌ п╨п╦я─п╦п╩п╩п╦я├я┐.
 
-%description -n wmxmms -l uk_UA.KOI8-U
-Аплет XMMS для WindowMaker.
+%description -n wmxmms -l uk_UA.UTF-8
+п░п©п╩п╣я┌ XMMS п╢п╩я▐ WindowMaker.
 
-На в╕дм╕ну в╕д wmusic, не п╕дтриму╓ кирилицю.
+п²п╟ п╡я√п╢п╪я√п╫я┐ п╡я√п╢ wmusic, п╫п╣ п©я√п╢я┌я─п╦п╪я┐я■ п╨п╦я─п╦п╩п╦я├я▌.
 
 %package cyr-setup
 Summary: Script to auto-tune XMMS for cyrillic tags
-Summary(ru_RU.KOI8-R): Скрипт для автонастройки XMMS под кириллицу
-Summary(uk_UA.KOI8-U): Скрипт для автоналаштування XMMS п╕д кирилицю
-Summary(be_BY.CP1251): яЖЩМЮП Ю╒РЮЛЮРШВМЮЕ МЮКЮДЙЁ ОПЮЖШ XMMS Г ЙЁПШКЁВМШЛЁ ЬПШТРЮЛЁ
+Summary(ru_RU.UTF-8): п║п╨я─п╦п©я┌ п╢п╩я▐ п╟п╡я┌п╬п╫п╟я│я┌я─п╬п╧п╨п╦ XMMS п©п╬п╢ п╨п╦я─п╦п╩п╩п╦я├я┐
+Summary(uk_UA.UTF-8): п║п╨я─п╦п©я┌ п╢п╩я▐ п╟п╡я┌п╬п╫п╟п╩п╟я┬я┌я┐п╡п╟п╫п╫я▐ XMMS п©я√п╢ п╨п╦я─п╦п╩п╦я├я▌
+Summary(be_BY.CP1251): я▐п√п╘п°п╝п÷ п╝Б∙▓п═п╝п⌡п╝п═п╗п▓п°п╝п∙ п°п╝п п╝п■п≥п│ п·п÷п╝п√п╗ XMMS п⌠ п≥п│п÷п╗п п│п▓п°п╗п⌡п│ п╛п÷п╗п╒п═п╝п⌡п│
 Requires: fonts-bitmap-cyr_rfx-koi8-u fonts-bitmap-cyr_rfx-cp1251
 Requires: fonts-bitmap-cyrillic fonts-bitmap-75dpi fonts-ttf-dejavu
 Requires: xmms
@@ -367,17 +367,17 @@ BuildArch: noarch
 %description cyr-setup
 This package is of use to Cyrillic users only.
 
-%description cyr-setup -l ru_RU.KOI8-R
-Этот пакет поможет пользователям XMMS настроить его для использования
-кириллицы "одним щелчком"
+%description cyr-setup -l ru_RU.UTF-8
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ п©п╬п╪п╬п╤п╣я┌ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐п╪ XMMS п╫п╟я│я┌я─п╬п╦я┌я▄ п╣пЁп╬ п╢п╩я▐ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐
+п╨п╦я─п╦п╩п╩п╦я├я▀ "п╬п╢п╫п╦п╪ я┴п╣п╩я┤п╨п╬п╪"
 
-%description cyr-setup -l uk_UA.KOI8-U
-Цей пакунок допоможе користувачам XMMS налаштувати його для використання
-кирилиц╕ "одним кл╕ком"
+%description cyr-setup -l uk_UA.UTF-8
+п╕п╣п╧ п©п╟п╨я┐п╫п╬п╨ п╢п╬п©п╬п╪п╬п╤п╣ п╨п╬я─п╦я│я┌я┐п╡п╟я┤п╟п╪ XMMS п╫п╟п╩п╟я┬я┌я┐п╡п╟я┌п╦ п╧п╬пЁп╬ п╢п╩я▐ п╡п╦п╨п╬я─п╦я│я┌п╟п╫п╫я▐
+п╨п╦я─п╦п╩п╦я├я√ "п╬п╢п╫п╦п╪ п╨п╩я√п╨п╬п╪"
 
 %description cyr-setup -l be_BY.CP1251
-цЩРШ ОЮЙЕР ДЮОЮЛНФЮ ЙЮПШЯРЮКЭМЁЙЮЛ XMMS МЮКЮДГЁЖЭ ЪЦН ДКЪ БШЙЮПШЯРЮМЭМЪ
-ЙЁПШКЁЖШ "ЮДМШЛ ЬВЮ╒ВЙНЛ"
+я├п╘п═п╗ п·п╝п≥п∙п═ п■п╝п·п╝п⌡п²п╓п╝ п≥п╝п÷п╗п╞п═п╝п п╜п°п│п≥п╝п⌡ XMMS п°п╝п п╝п■п⌠п│п√п╜ п╙п╕п² п■п п╙ п▒п╗п≥п╝п÷п╗п╞п═п╝п°п╜п°п╙
+п≥п│п÷п╗п п│п√п╗ "п╝п■п°п╗п⌡ п╛п▓п╝Б∙▓п▓п≥п²п⌡"
 
 
 %package -n rpm-macros-%name
@@ -439,7 +439,7 @@ msgfmt -c -o po/ru.gmo %SOURCE8
 
 %build
 FLAGS="`glib-config --cflags` -I%_x11includedir/GL"
-FLAGS="$FLAGS $(orbit-config --cflags client server)"
+#FLAGS="$FLAGS $(orbit-config --cflags client server)"
 %add_optflags $FLAGS
 
 export STRIP=echo
@@ -594,6 +594,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_rpmmacrosdir/*
 
 %changelog
+* Tue Sep 18 2018 Michael Shigorin <mike@altlinux.org> 20180918:1.2.11-alt12
+- build without openssl and ORBit
+- convert spec to UTF-8 while at that
+
 * Fri Dec 06 2013 Michael Shigorin <mike@altlinux.org> 20131206:1.2.11-alt11
 - re-merged the diverged alt10* specs
 - rebuilt with current librcc/librcd
