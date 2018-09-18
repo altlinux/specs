@@ -26,7 +26,7 @@
 
 Name: pere-%dict_name
 Version: 0.2.0
-Release: alt2
+Release: alt3
 
 Summary: %name_nam_en: %name_thm_en dictionary from %name_iln_en to %name_oln_en
 Summary(uk_UA.CP1251): %name_nam_uk: %name_thm_uk словник з %name_iln_uk на %name_oln_uk
@@ -52,10 +52,12 @@ Requires: perl-Lingua-Pere >= 0.2.0 perl(Pod/Text.pm)
 %prep
 %setup -q -n pere-dicsrc_%dict_name
 
-%install
+%build
+export LANG=en_US.UTF-8
 pere-src2dic -pfx=./ -csv=%dict_name.src -ovr -mem=100
 pere-dic2dmp -pfx=./ -csv=%dict_name.dmp -ovr -mem=100
 
+%install
 install -p -m644 -D %dict_name.dmp %buildroot%_datadir/dict/pere/%dict_name/%dict_name.dmp
 
 %post
@@ -73,6 +75,9 @@ pere-confupd -rut=%_datadir/dict/pere/ -cfg=/etc/pere-trans.config
 %_datadir/dict/pere/%dict_name
 
 %changelog
+* Tue Sep 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt3
+- NMU: fixed build
+
 * Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2
 - NMU: added missing Pod dependencies
 
