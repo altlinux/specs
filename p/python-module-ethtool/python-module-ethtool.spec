@@ -3,7 +3,7 @@
 %def_disable python3
 
 Name: python-module-%modname
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: Ethernet settings python bindings
@@ -72,6 +72,9 @@ popd
 %doc README.rst CHANGES.rst
 
 %changelog
+* Tue Sep 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.14-alt1
+- 0.14
+
 * Wed Jun 14 2017 Yuri N. Sedunov <aris@altlinux.org> 0.13-alt1
 - 0.13 (new url)
 
