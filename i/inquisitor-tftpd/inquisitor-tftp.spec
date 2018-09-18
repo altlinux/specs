@@ -2,7 +2,7 @@
 
 Name: inquisitor-tftpd
 Version: 0.48
-Release: alt1.qa1
+Release: alt2
 
 Summary: The server for the Trivial File Transfer Protocol (TFTP)
 License: BSD
@@ -20,8 +20,7 @@ PreReq: shadow-utils
 Requires: xinetd
 Conflicts: tftpd tftp-server tftp-server-xinetd
 
-# Automatically added by buildreq on Fri Apr 23 2004
-BuildRequires: libreadline-devel libwrap-devel
+BuildRequires: libreadline-devel
 
 %description
 The Trivial File Transfer Protocol (TFTP) is normally used
@@ -61,6 +60,9 @@ install -pDm640 %SOURCE1 %buildroot%_sysconfdir/xinetd.d/%origname
 %dir %_localstatedir/tftpboot
 
 %changelog
+* Tue Sep 18 2018 Michael Shigorin <mike@altlinux.org> 0.48-alt2
+- rebuilt without libwrap
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.48-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
