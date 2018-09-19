@@ -1,6 +1,6 @@
 Name: autofs
 Version: 5.1.4
-Release: alt1
+Release: alt2
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPL
@@ -16,11 +16,17 @@ BuildRequires(pre): rpm-build-ubt
 BuildRequires: bison flex
 BuildRequires: libkrb5-devel libldap-devel libsasl2-devel
 BuildRequires: libssl-devel libxml2-devel libtirpc-devel >= 1.0.1-alt1
+BuildRequires: libsss_autofs
 
 %package ldap
 Summary: A tool for automatically mounting and unmounting filesystems
 Group: System/Kernel and hardware
 Requires: %name = %version-%release 
+
+%package sss
+Summary: A tool for automatically mounting and unmounting filesystems
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
 
 # {{{ descriptions
 
@@ -40,6 +46,14 @@ period of inactivity.  Filesystems can include network filesystems, CD-ROMs,
 floppies and others.
 
 This package adds LDAP support to the %name package
+
+%description sss
+Autofs controls the operation of the automount daemons.  The automount daemons
+automatically mount filesystems when you use them and unmount them after a
+period of inactivity.  Filesystems can include network filesystems, CD-ROMs,
+floppies and others.
+
+This package adds SSSD support to the %name package
 
 # }}}
 
@@ -105,6 +119,7 @@ fi
 %_libdir/%name/*
 %exclude %_libdir/%name/lookup_ldap.so
 %exclude %_libdir/%name/lookup_ldaps.so
+%exclude %_libdir/%name/lookup_sss.so
 
 %_sbindir/*
 %_mandir/man?/*
@@ -119,7 +134,13 @@ fi
 %_libdir/%name/lookup_ldaps.so
 %_libdir/%name/lookup_ldap.so
 
+%files sss
+%_libdir/%name/lookup_sss.so
+
 %changelog
+* Wed Sep 19 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.4-alt2
+- sssd lookup module packaged
+
 * Wed Jul 18 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.4-alt1
 - 5.1.4 released
 
