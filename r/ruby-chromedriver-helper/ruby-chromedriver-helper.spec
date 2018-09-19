@@ -1,7 +1,7 @@
 %define  pkgname chromedriver-helper
 
 Name:    ruby-%pkgname
-Version: 1.2.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Easy installation and use of chromedriver, the Chromium project's selenium webdriver adapter. 
@@ -55,5 +55,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Sep 19 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
+- New version.
+
 * Thu Jul 26 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus
