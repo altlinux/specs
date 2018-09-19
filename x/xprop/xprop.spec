@@ -1,5 +1,5 @@
 Name: xprop
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 Summary: property displayer for X
 License: MIT/X11
@@ -7,8 +7,7 @@ Group: System/X11
 Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
 
 BuildRequires: libX11-devel xorg-util-macros
 
@@ -21,7 +20,6 @@ information.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -37,6 +35,9 @@ information.
 %_man1dir/*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.2.3-alt1
+- Autobuild version bump to 1.2.3
+
 * Thu Feb 19 2015 Fr. Br. George <george@altlinux.ru> 1.2.2-alt1
 - Autobuild version bump to 1.2.2
 
