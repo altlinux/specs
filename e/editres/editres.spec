@@ -1,5 +1,5 @@
 Name: editres
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 Summary: a dynamic resource editor for X Toolkit applications
@@ -38,6 +38,9 @@ Editres is a tool that allows users and application developers to view the full 
 %_x11appconfdir/*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.7-alt1
+- Autobuild version bump to 1.0.7
+
 * Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
 - Autobuild version bump to 1.0.6
 
