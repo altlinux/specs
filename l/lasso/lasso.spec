@@ -7,8 +7,8 @@
 
 Summary: Liberty Alliance Single Sign On
 Name: 	 lasso
-Version: 2.5.1
-Release: alt2.2
+Version: 2.6.0
+Release: alt1
 License: GPLv2+
 Group:   System/Libraries
 Url: 	 http://lasso.entrouvert.org/
@@ -16,8 +16,6 @@ Url: 	 http://lasso.entrouvert.org/
 Source:  http://dev.entrouvert.org/lasso/lasso-%{version}.tar.gz
 Source1: %name.watch
 Patch1:  lasso-export-symbols-from-logging.h.patch
-Patch2:  0001-replace-use-of-xmlsec-soap.h-which-is-deprecated-fix.patch
-Patch3:  0001-binding-java-add-inline-implementation-of-lasso_log.patch
 
 BuildRequires: gtk-doc
 BuildRequires: glib2-devel swig
@@ -126,8 +124,6 @@ library.
 %prep
 %setup -q -n %{name}-%{version}
 %patch1 -p2
-%patch2 -p1
-%patch3 -p1
 
 %build
 cp -at . -- /usr/share/gnu-config/config.{sub,guess}
@@ -234,6 +230,9 @@ make check
 %endif
 
 %changelog
+* Tue Sep 18 2018 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
+- New version.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt2.2
 - NMU: Rebuild with new openssl 1.1.0.
 
