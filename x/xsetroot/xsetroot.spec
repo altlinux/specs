@@ -1,14 +1,12 @@
 Name: xsetroot
-Version: 1.1.0
-Release: alt1.qa1
+Version: 1.1.2
+Release: alt1
 Summary: root window parameter setting utility for X
 License: MIT/X11
 Group: System/X11
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Url: http://xorg.freedesktop.org
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
 
 BuildRequires: libXcursor-devel libXmu-devel xorg-bitmaps xorg-util-macros
 
@@ -23,8 +21,7 @@ ified  along with other options and only the non-specified characteris-
 tics will be reset to the default state.
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
 %autoreconf
@@ -40,6 +37,9 @@ tics will be reset to the default state.
 %_man1dir/*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.1.2-alt1
+- Autobuild version bump to 1.1.2
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
