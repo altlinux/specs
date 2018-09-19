@@ -1,6 +1,6 @@
 Name: xrdb
-Version: 1.0.9
-Release: alt2
+Version: 1.1.1
+Release: alt1
 
 Summary: X server resource database utility
 License: MIT/X11
@@ -15,8 +15,7 @@ Requires: mcpp
 Requires: cpp
 %endif
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
 
 BuildRequires: libXmu-devel xorg-util-macros
 
@@ -30,7 +29,6 @@ You would normally run this program from your X startup file.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -51,6 +49,9 @@ You would normally run this program from your X startup file.
 %_man1dir/*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.1.1-alt1
+- Autobuild version bump to 1.1.1
+
 * Tue Jun 26 2018 Michael Shigorin <mike@altlinux.org> 1.0.9-alt2
 - E2K: depend on mcpp to avoid pulling whole lcc in
 - minor spec cleanup
