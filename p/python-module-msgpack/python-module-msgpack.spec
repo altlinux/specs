@@ -4,13 +4,13 @@
 
 Name: python-module-%oname
 Version: 0.5.6
-Release: alt1
+Release: alt2
 
 Summary: A Python MessagePack (de)serializer
 
 Group: Development/Python
 License: ASL 2.0
-URL: http://pypi.python.org/pypi/msgpack-python/
+URL: https://pypi.org/project/msgpack
 
 # https://github.com/msgpack/msgpack-python.git
 # Source-url: https://pypi.io/packages/source/m/%oname-python/%oname-python-%version.tar.gz
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Wed Sep 19 2018 Vladimir Didenko <cow@altlinux.org> 0.5.6-alt2
+- use msgpack from PyPI, not msgpack-python (deprecated)
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.5.6-alt1
 - new version 0.5.6 (with rpmrb script)
 
