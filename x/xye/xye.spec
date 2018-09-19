@@ -1,21 +1,16 @@
-Name:	xye
-Version:	0.12.1
-Release:	alt3
-Summary:	Puzzle game that reproduces and extends Kye
-License:	GPL
+Name:       xye
+Version:    0.12.2
+Release:    alt1
+Summary:    Puzzle game that reproduces and extends Kye
+License:    GPL
 
-Url:	http://xye.sourceforge.net
-Group:	Games/Puzzles
-Source:	http://heanet.dl.sourceforge.net/sourceforge/xye/%name-%version.tar.gz
-Source1: xye.xpm
-Source2: xye.desktop
-
-Patch: xye-0.12.1-alt-glibc-2.16.patch
-Patch1: xye-0.12.1-alt-gcc4.7.patch
-
+Url:        http://xye.sourceforge.net
+Group:      Games/Puzzles
+Source:     %name-%version.tar.gz
+Source1:    xye.xpm
+Source2:    xye.desktop
 
 BuildRequires: gcc-c++ libSDL-devel libSDL_image-devel libSDL_ttf-devel desktop-file-utils
-
 Requires: fonts-ttf-dejavu
 
 %description
@@ -28,18 +23,16 @@ reflexes and even speed. Yet it was a very simple game to understand the nice th
 was the way the objects interacted.
 
 %prep
-%setup -q
-%patch -p2
-%patch1 -p2
+%setup
 
 %build
 %add_optflags -Wno-error=narrowing
 %autoreconf
-%configure 
+%configure
 %make_build
 
 %install
-make docdir=%_defaultdocdir/%name-%version DESTDIR=%buildroot install
+%makeinstall_std
 
 install -pD -m644 %SOURCE1 %buildroot%_pixmapsdir/%name.xpm
 desktop-file-install --dir %buildroot%_desktopdir %SOURCE2
@@ -53,11 +46,15 @@ ln -srf %buildroot%_datadir/fonts/ttf/dejavu/DejaVuSans-Bold.ttf %buildroot%_dat
 %doc NEWS AUTHORS COPYING INSTALL README 
 %_bindir/%name
 %_datadir/%name
-#exclude %_datadir/%name/*.ttf
-%_pixmapsdir/%name.xpm
+%_pixmapsdir/*
 %_desktopdir/*.desktop
 
 %changelog
+* Wed Sep 19 2018 Grigory Ustinov <grenka@altlinux.org> 0.12.2-alt1
+- Build new version.
+- Drop old patches.
+- Cleanup spec.
+
 * Wed Jun 27 2018 Grigory Ustinov <grenka@altlinux.org> 0.12.1-alt3
 - Remove bundled fonts (Closes: #25355).
 
