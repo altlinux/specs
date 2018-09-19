@@ -1,5 +1,5 @@
 Name: xlsfonts
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: server font list displayer for X
@@ -35,6 +35,9 @@ given, "*" is assumed.
 %_man1dir/*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
