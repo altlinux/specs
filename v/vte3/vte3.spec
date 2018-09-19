@@ -6,13 +6,15 @@
 
 Name: %{_name}3
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 %def_disable static
 %def_enable introspection
 %def_enable gtk_doc
 %def_enable glade
 %def_enable pcre2
+# bash4 required for vte.sh
+%def_disable check
 
 Summary: Terminal emulator widget for use with GTK+
 License: LGPL
@@ -153,6 +155,9 @@ find %buildroot -type f -name '*.la' -delete
 
 %find_lang %_name-%api_ver --output=%name.lang
 
+%check
+%make check
+
 %files
 %_bindir/*
 
@@ -191,6 +196,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Wed Sep 19 2018 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt2
+- rebuild with atk-2.30.0
+
 * Sun Sep 02 2018 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt1
 - updated to 0.54.0-9-g8f4e3c19
 
