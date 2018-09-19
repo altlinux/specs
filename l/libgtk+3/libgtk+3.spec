@@ -22,8 +22,8 @@
 %def_disable debug
 
 Name: libgtk+3
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -458,6 +458,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Wed Sep 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
+- 3.24.1
+
 * Fri Sep 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt2
 - rebuilt against libatk-2.30.0
   (see https://gitlab.gnome.org/GNOME/pygobject/issues/258)
