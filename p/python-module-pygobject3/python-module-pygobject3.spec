@@ -9,7 +9,7 @@
 
 Name: python-module-%{_name}3
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for GObject
 Group: Development/Python
@@ -21,6 +21,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %else
 Source: %_name-%version.tar
 %endif
+Patch: pygobject-3.30.1-alt-fix-egg_info_install.patch
 
 %setup_python_module pygobject3
 
@@ -141,8 +142,12 @@ Development documentation for %_name.
 
 %prep
 %setup -n %_name-%version
+%patch -b .egg
 %setup -D -c -n %_name-%version
 mv %_name-%version py3build
+pushd py3build
+%patch -b .egg
+popd
 
 %build
 %define opts -Dpycairo=true
@@ -171,6 +176,7 @@ popd
 
 %files
 %python_sitelibdir/gi/
+%python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/gi/pygtkcompat.py*
 
 %files pygtkcompat
@@ -186,6 +192,7 @@ popd
 
 %files -n python3-module-%{_name}3
 %python3_sitelibdir/gi/
+%python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/gi/pygtkcompat.py*
 
 %files -n python3-module-%{_name}3-pygtkcompat
@@ -200,6 +207,9 @@ popd
 %endif
 
 %changelog
+* Wed Sep 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1.1
+- packaged *egg-info
+
 * Fri Sep 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 

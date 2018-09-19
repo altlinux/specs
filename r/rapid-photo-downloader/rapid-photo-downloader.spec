@@ -1,5 +1,5 @@
 Name: rapid-photo-downloader
-Version: 0.9.9
+Version: 0.9.11
 Release: alt1
 
 %define xdg_name net.damonlynch.%name
@@ -13,15 +13,16 @@ Source: http://launchpad.net/rapid/pyqt/%version/+download/%name-%version.tar.gz
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-gir rpm-build-python3
 BuildRequires: intltool perl-podlators
-BuildRequires: rpm-build-gir
-BuildRequires: rpm-build-python3 python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools
 
 %if "%(rpmvercmp '%{get_version python3}' '3.6.0')" <= "0"
 Requires: python3-module-typing >= 3.6.4
 %endif
 
 Requires: python3-module-PyQt5 >= 5.9.2
+Requires: python3-module-zmq >= 16.0.2
 Requires: python3-module-easygui
 Requires: python3-module-pymediainfo >= 2.2.0
 Requires: python3-module-rawkit >= 0.6.0
@@ -64,6 +65,9 @@ subst "s|'share\/solid\/actions'|'share/apps/solid/actions'|" setup.py
 
 
 %changelog
+* Wed Sep 19 2018 Yuri N. Sedunov <aris@altlinux.org> 0.9.11-alt1
+- 0.9.11
+
 * Mon Mar 26 2018 Yuri N. Sedunov <aris@altlinux.org> 0.9.9-alt1
 - 0.9.9
 
