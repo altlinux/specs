@@ -1,7 +1,7 @@
 %define  pkgname concourse-gem
 
 Name:    ruby-concourse
-Version: 0.18.0
+Version: 0.19.0
 Release: alt1
 
 Summary: Provide Rake tasks to ease management of Concourse pipelines. See https://concourse.ci/ to learn about Concourse.
@@ -55,5 +55,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Sep 19 2018 Andrey Cherepanov <cas@altlinux.org> 0.19.0-alt1
+- New version.
+
 * Thu Jul 05 2018 Andrey Cherepanov <cas@altlinux.org> 0.18.0-alt1
 - Initial build for Sisyphus
