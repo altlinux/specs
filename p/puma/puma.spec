@@ -1,6 +1,6 @@
 Name:    puma
-Version: 3.11.4
-Release: alt2
+Version: 3.12.0
+Release: alt1
 
 Summary: A Ruby/Rack web server built for concurrency
 License: BSD 3-Clause
@@ -12,7 +12,6 @@ Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:  %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
 BuildRequires: libruby-devel
 # For tests
 #BuildRequires: ruby-rack
@@ -51,12 +50,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %_bindir/%{name}*
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Sep 19 2018 Andrey Cherepanov <cas@altlinux.org> 3.12.0-alt1
+- New version.
+
 * Sun Jul 08 2018 Andrey Cherepanov <cas@altlinux.org> 3.11.4-alt2
 - Package as gem.
 
