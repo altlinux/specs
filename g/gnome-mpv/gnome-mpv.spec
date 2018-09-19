@@ -1,7 +1,7 @@
 %define xdg_name io.github.GnomeMpv
 
 Name: gnome-mpv
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: GNOME MPV is a simple GTK+ frontend for mpv
@@ -39,7 +39,7 @@ allowing access to mpv's powerful playback capabilities.
 %files -f %name.lang
 %doc COPYING README.md
 %_bindir/%name
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/*
 %_iconsdir/hicolor/*/apps/*.svg
@@ -47,6 +47,9 @@ allowing access to mpv's powerful playback capabilities.
 %_man1dir/*.1.*
 
 %changelog
+* Wed Sep 19 2018 Vladimir Didenko <cow@altlinux.org> 0.15-alt1
+- new version
+
 * Thu Mar 15 2018 Vladimir Didenko <cow@altlinux.org> 0.14-alt1
 - new version
 
