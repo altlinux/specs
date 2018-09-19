@@ -1,7 +1,7 @@
 Name: twm
-Version: 1.0.9
+Version: 1.0.10
 Release: alt1
-Serial: 1
+Epoch: 1
 Summary: Tab Window Manager for the X Window System
 License: MIT/X11
 Group: System/X11
@@ -52,6 +52,9 @@ EOF
 %_x11x11dir/twm/*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1:1.0.10-alt1
+- Autobuild version bump to 1.0.10
+
 * Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1:1.0.9-alt1
 - Autobuild version bump to 1.0.9
 
