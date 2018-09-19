@@ -1,7 +1,7 @@
 %define  pkgname mixlib-cli
  
 Name: 	 ruby-%pkgname
-Version: 1.7.5
+Version: 1.7.6
 Release: alt1
  
 Summary: A mixin for creating command line applications
@@ -56,6 +56,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Sep 19 2018 Andrey Cherepanov <cas@altlinux.org> 1.7.6-alt1
+- New version.
+
 * Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 1.7.5-alt1
 - New version.
 
