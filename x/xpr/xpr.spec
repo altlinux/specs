@@ -1,5 +1,5 @@
 Name: xpr
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 Summary: Dump an X window directly to a printer
 Group: System/X11
@@ -32,6 +32,9 @@ printer, the HP LaserJet (or other PCL printers), or the HP PaintJet.
 %_man1dir/*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
+- Autobuild version bump to 1.0.5
+
 * Tue Apr 17 2012 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
 - Autobuild version bump to 1.0.4
 
