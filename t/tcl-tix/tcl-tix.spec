@@ -1,6 +1,9 @@
+
+%define _unpackaged_files_terminate_build 1
+
 Name: tcl-tix
 Version: 8.4.3
-Release: alt2
+Release: alt3
 
 Summary: A set of capable widgets for Tk
 License: BSD
@@ -59,13 +62,17 @@ the features of the Tix widget set.
 %install 
 %makeinstall
 rm -f %buildroot%_tcldatadir/Tix%version/pref/WmDefault.py
+rm -f %buildroot%_tcllibdir/README.txt
+rm -f %buildroot%_tcllibdir/license.terms
+
 cp -a demos %buildroot%_tcldatadir/Tix%version
 
 %files
-%doc README.txt docs/FAQ.txt
+%doc README.txt docs/FAQ.txt license.terms
 %doc docs/html
 
 %_tcllibdir/libTix%version.so
+%_tcllibdir/Tix%version
 
 %_tcldatadir/Tix%version
 %exclude %_tcldatadir/Tix%version/demos
@@ -74,6 +81,9 @@ cp -a demos %buildroot%_tcldatadir/Tix%version
 %_tcldatadir/Tix%version/demos
 
 %changelog
+* Wed Sep 19 2018 Ivan A. Melnikov <iv@altlinux.org> 8.4.3-alt3
+- Package pkgIndex.tcl to fix provides
+
 * Tue Aug 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.4.3-alt2
 - Fixed building against Tcl/Tk 8.6
 
