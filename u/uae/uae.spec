@@ -1,6 +1,6 @@
 Name: uae
 Version: 0.8.29
-Release: alt2
+Release: alt3
 Group: Emulators
 Summary: UAE Amiga Emulator
 License: GPLv2
@@ -37,7 +37,7 @@ This version of UAE emulates:
 
 %build
 %configure  --with-sdl --with-x --with-sdl-gfx --with-alsa
-%make_build MATHLIB=-lm
+%make MATHLIB=-lm
 
 %install
 %makeinstall
@@ -50,6 +50,9 @@ install -sD readdisk %buildroot/%_bindir/%name-readdisk
 %_datadir/%name/*
 
 %changelog
+* Mon Sep 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.29-alt3
+- NMU: fixed build.
+
 * Wed Feb 12 2014 Fr. Br. George <george@altlinux.ru> 0.8.29-alt2
 - Fix build
 
