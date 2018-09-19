@@ -1,14 +1,12 @@
 Name: iceauth
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 Summary: ICE authority file utility
 License: MIT/X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
 
 BuildRequires: libICE-devel xorg-util-macros
 
@@ -22,7 +20,6 @@ on the iceauth command line, or in scripts.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -38,6 +35,9 @@ on the iceauth command line, or in scripts.
 %_man1dir/*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.8-alt1
+- Autobuild version bump to 1.0.8
+
 * Mon Sep 04 2017 Fr. Br. George <george@altlinux.ru> 1.0.7-alt1
 - Autobuild version bump to 1.0.7
 
