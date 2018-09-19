@@ -4,7 +4,6 @@
 
 %def_disable werror
 %def_enable sdl
-%def_disable sdl2
 %def_enable curses
 %def_enable bluez
 %def_enable vnc
@@ -54,8 +53,8 @@
 %define _localstatedir /var
 
 Name: pve-%rname
-Version: 2.11.2
-Release: alt2%ubt
+Version: 3.0.0
+Release: alt1%ubt
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
 Group: Emulators
@@ -73,41 +72,41 @@ Source100: Logo.bmp
 
 Patch0: qemu-alt.patch
 
-Patch10: 0001-block-file-change-locking-default-to-off.patch
-Patch11: 0002-Adjust-network-script-path-to-etc-kvm.patch
-Patch12: 0003-qemu-img-return-success-on-info-without-snapshots.patch
-Patch13: 0004-use-kvm-by-default.patch
-Patch14: 0005-virtio-balloon-fix-query.patch
-Patch15: 0006-set-the-CPU-model-to-kvm64-32-instead-of-qemu64-32.patch
-Patch16: 0007-qapi-modify-query-machines.patch
-Patch17: 0008-qapi-modify-spice-query.patch
-Patch18: 0009-ui-spice-default-to-pve-certs-unless-otherwise-speci.patch
-Patch19: 0010-internal-snapshot-async.patch
-Patch20: 0011-convert-savevm-async-to-threads.patch
-Patch21: 0012-qmp-add-get_link_status.patch
-Patch22: 0013-smm_available-false.patch
-Patch23: 0014-use-whitespace-between-VERSION-and-PKGVERSION.patch
-Patch24: 0015-vnc-altgr-emulation.patch
-Patch25: 0016-vnc-make-x509-imply-tls-again.patch
-Patch26: 0017-vnc-PVE-VNC-authentication.patch
-Patch27: 0018-block-rbd-disable-rbd_cache_writethrough_until_flush.patch
-Patch28: 0019-block-snapshot-qmp_snapshot_drive-add-aiocontext.patch
-Patch29: 0020-block-snapshot-qmp_delete_drive_snapshot-add-aiocont.patch
-Patch30: 0021-glusterfs-no-default-logfile-if-daemonized.patch
-Patch31: 0022-glusterfs-allow-partial-reads.patch
-Patch32: 0023-block-add-the-zeroinit-block-driver-filter.patch
-Patch33: 0024-qemu-img-dd-add-osize-and-read-from-to-stdin-stdout.patch
-Patch34: 0025-backup-modify-job-api.patch
-Patch35: 0026-backup-introduce-vma-archive-format.patch
-Patch36: 0027-adding-old-vma-files.patch
-Patch37: 0028-vma-add-throttling-options-to-drive-mapping-fifo-pro.patch
-Patch38: 0029-qemu-img-dd-add-isize-parameter.patch
-Patch39: 0030-qemu-img-dd-add-n-skip_create.patch
-Patch40: 0031-vma-add-cache-option-to-device-map.patch
-Patch41: 0032-rbd-fix-cache-mode-behavior.patch
-Patch42: 0033-vma-remove-forced-NO_FLUSH-option.patch
-Patch43: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
-Patch44: 0002-ratelimit-don-t-align-wait-time-with-slices.patch
+Patch10: 0001-PVE-Config-block-file-change-locking-default-to-off.patch
+Patch11: 0002-PVE-Config-Adjust-network-script-path-to-etc-kvm.patch
+Patch12: 0003-PVE-Config-use-kvm-by-default.patch
+Patch13: 0004-PVE-Config-set-the-CPU-model-to-kvm64-32-instead-of-.patch
+Patch14: 0005-PVE-Config-ui-spice-default-to-pve-certificates.patch
+Patch15: 0006-PVE-Config-smm_available-false.patch
+Patch16: 0007-PVE-Config-glusterfs-no-default-logfile-if-daemonize.patch
+Patch17: 0008-PVE-Config-rbd-block-rbd-disable-rbd_cache_writethro.patch
+Patch18: 0009-PVE-Up-qmp-add-get_link_status.patch
+Patch19: 0010-PVE-Up-glusterfs-allow-partial-reads.patch
+Patch20: 0011-PVE-Up-qemu-img-return-success-on-info-without-snaps.patch
+Patch21: 0012-PVE-Up-qemu-img-dd-add-osize-and-read-from-to-stdin-.patch
+Patch22: 0013-PVE-Up-qemu-img-dd-add-isize-parameter.patch
+Patch23: 0014-PVE-Up-qemu-img-dd-add-n-skip_create.patch
+Patch24: 0015-PVE-virtio-balloon-improve-query-balloon.patch
+Patch25: 0016-PVE-qapi-modify-query-machines.patch
+Patch26: 0017-PVE-qapi-modify-spice-query.patch
+Patch27: 0018-PVE-internal-snapshot-async.patch
+Patch28: 0019-PVE-convert-savevm-async-to-threads.patch
+Patch29: 0020-PVE-block-snapshot-qmp_snapshot_drive-add-aiocontext.patch
+Patch30: 0021-PVE-block-snapshot-qmp_delete_drive_snapshot-add-aio.patch
+Patch31: 0022-PVE-block-add-the-zeroinit-block-driver-filter.patch
+Patch32: 0023-PVE-backup-modify-job-api.patch
+Patch33: 0024-PVE-backup-introduce-vma-archive-format.patch
+Patch34: 0025-PVE-Deprecated-adding-old-vma-files.patch
+Patch35: 0026-PVE-vma-add-throttling-options-to-drive-mapping-fifo.patch
+Patch36: 0027-PVE-vma-add-cache-option-to-device-map.patch
+Patch37: 0028-PVE-vma-remove-forced-NO_FLUSH-option.patch
+Patch38: 0029-PVE-Add-dummy-id-command-line-parameter.patch
+Patch39: 0030-PVE-Config-Revert-target-i386-disable-LINT0-after-re.patch
+Patch40: 0001-seccomp-use-SIGSYS-signal-instead-of-killing-the-thr.patch
+Patch41: 0002-seccomp-prefer-SCMP_ACT_KILL_PROCESS-if-available.patch
+Patch42: 0003-configure-require-libseccomp-2.2.0.patch
+Patch43: 0004-seccomp-set-the-seccomp-filter-to-all-threads.patch
+Patch44: 0005-monitor-create-iothread-after-daemonizing.patch
 
 ExclusiveArch: x86_64
 BuildRequires(pre): rpm-build-ubt
@@ -118,8 +117,7 @@ BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d seavgabios seabios libfdt-devel >= 1.4.0
 BuildRequires: libpixman-devel >= 0.21.8
 BuildRequires: iasl
-%{?_enable_sdl:BuildRequires: libSDL-devel libX11-devel}
-%{?_enable_sdl2:BuildRequires: libSDL2-devel}
+%{?_enable_sdl:BuildRequires: libSDL2-devel libX11-devel}
 %{?_enable_curses:BuildRequires: libncurses-devel}
 %{?_enable_bluez:BuildRequires: libbluez-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
@@ -148,7 +146,7 @@ BuildRequires: libtasn1-devel
 %{?_enable_virglrenderer:BuildRequires: pkgconfig(virglrenderer)}
 %{?_enable_libssh2:BuildRequires: libssh2-devel >= 1.2.8}
 %{?_enable_libusb:BuildRequires: libusb-devel >= 1.0.13}
-%{?_enable_rdma:BuildRequires: librdmacm-devel libibverbs-devel}
+%{?_enable_rdma:BuildRequires: librdmacm-devel libibverbs-devel libibumad-devel}
 %{?_enable_numa:BuildRequires: libnuma-devel}
 %{?_enable_jemalloc:BuildRequires: libjemalloc-devel}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
@@ -337,8 +335,7 @@ export CFLAGS="%optflags"
 	--localstatedir=%_localstatedir \
 	--extra-cflags="%optflags" \
 	%{subst_enable werror} \
-	%{?_enable_sdl:--enable-sdl --with-sdlabi=1.2} \
-	%{?_enable_sdl2:--enable-sdl --with-sdlabi=2.0} \
+	%{?_enable_sdl:--enable-sdl --with-sdlabi=2.0} \
 	%{?_disable_curses:--disable-curses} \
 	%{subst_enable bluez} \
 	%{subst_enable vnc} \
@@ -480,6 +477,8 @@ fi
 %_bindir/kvm
 %_bindir/qemu*system*
 %_bindir/vma
+%_bindir/qemu-pr-helper
+%_libexecdir/qemu-bridge-helper
 
 %files img
 %_bindir/qemu-img
@@ -487,13 +486,15 @@ fi
 %_bindir/qemu-nbd
 %_bindir/virtfs-proxy-helper
 %_man1dir/virtfs-proxy-helper.*
-%_libexecdir/qemu-bridge-helper
 
 %files aux
 %dir %docdir/
 %docdir/LICENSE
 
 %changelog
+* Mon Sep 17 2018 Valery Inozemtsev <shrek@altlinux.ru> 3.0.0-alt1%ubt
+- 3.0.0-1
+
 * Thu Sep 13 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.2-alt2%ubt
 - disable vde support
 
