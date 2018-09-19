@@ -1,5 +1,5 @@
 Name: xwud
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: image displayer for X
@@ -33,6 +33,9 @@ dump file, such as produced by xwd(1).
 %_man1dir/*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
+- Autobuild version bump to 1.0.5
+
 * Tue Apr 17 2012 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
 - Autobuild version bump to 1.0.4
 
