@@ -1,14 +1,12 @@
 Name: xdriinfo
-Version: 1.0.4
+Version: 1.0.6
 Release: alt1
 Summary: query configuration information of DRI drivers
 License: MIT/X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
 
 BuildRequires: libGL-devel xorg-glproto-devel xorg-util-macros
 
@@ -18,7 +16,7 @@ dering drivers. If no command argument is specified it lists the  names
 of the direct rendering drivers for all screens
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -34,6 +32,9 @@ of the direct rendering drivers for all screens
 %_man1dir/*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Fri Apr 22 2011 Valery Inozemtsev <shrek@altlinux.ru> 1.0.4-alt1
 - 1.0.4
 
