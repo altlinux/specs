@@ -1,5 +1,5 @@
 Name: xwininfo
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 
 Summary: window information utility for X
@@ -35,6 +35,9 @@ information is displayed depending on which options are selected.
 %_man1dir/*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.1.4-alt1
+- Autobuild version bump to 1.1.4
+
 * Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 1.1.3-alt1
 - Autobuild version bump to 1.1.3
 
