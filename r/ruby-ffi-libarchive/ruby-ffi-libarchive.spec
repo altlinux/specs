@@ -1,8 +1,8 @@
 %define  pkgname ffi-libarchive
 
 Name:    ruby-%pkgname
-Version: 0.4.1
-Release: alt1.1
+Version: 0.4.2
+Release: alt1
 
 Summary: A Ruby FFI binding to libarchive.
 License: GPL-3.0
@@ -57,6 +57,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Sep 19 2018 Andrey Cherepanov <cas@altlinux.org> 0.4.2-alt1
+- New version.
+
 * Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt1.1
 - Rebuild with new Ruby autorequirements.
 
