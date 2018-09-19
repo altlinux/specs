@@ -1,13 +1,25 @@
-# 6.0.5.1
+# 6.1.1.2
 %def_without forky
 %def_without python
 %def_with parallelism
 %def_without fetch
 %def_without lto
 
+%ifarch mipsel
+%def_without java
+%def_disable kde4
+%def_disable qt5
+%else
+%def_with java
+%def_enable kde4
+%def_disable qt5
+%endif
+%def_disable mergelibs
+
+
 Name: LibreOffice
-%define hversion 6.0
-%define urelease 5.1
+%define hversion 6.1
+%define urelease 1.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -47,20 +59,11 @@ Source300:	libreoffice.unused
 
 ## FC patches
 Patch1: FC-0001-don-t-suppress-crashes.patch
-Patch2: FC-0001-Related-tdf-106100-recover-mangled-svg-in-presentati.patch
-Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
-Patch4: FC-0001-gtk3-only-for-3.20.patch
-Patch5: FC-0001-Related-tdf-105998-except-cut-and-paste-as-bitmap-in.patch
-Patch6: FC-0001-request-installation-of-langpack-via-packagekit.patch
-Patch7: FC-0001-Related-rhbz-1396729-use-cairo_surface_create_simila.patch
-Patch8: FC-0001-tdf-95843-Wait-for-fire_glxtest_process-also-in-head.patch
-Patch9: FC-0001-Related-tdf-116951-rhbz-1569331-end-should-be-in-ter.patch
-Patch10: FC-0001-Resolves-tdf-116951-rhbz-1569331-start-is-G_MAXINT.patch
-Patch11: FC-0001-set-Referer-on-link-mediadescriptor.patch
-Patch12: FC-0001-Resolves-tdf-117413-char-doubling-appearing-under-X-.patch
-Patch13: FC-0001-Missing-template-clone-in-configmgr-dconf-mode.patch
-Patch14: FC-0001-tdf-117601-a11y-crash-after-merging-cells.patch
-Patch15: FC-0001-disable-libe-book-support.patch
+Patch2: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
+Patch3: FC-0001-gtk3-only-for-3.20.patch
+Patch4: FC-0001-mdds-1.4.1-is-now-a-minimum-requirement.patch
+Patch5: FC-0001-Update-orcus-to-0.14.0.patch
+Patch6: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
@@ -75,17 +78,28 @@ Patch403: alt-002-tmpdir.patch
 
 # Automatically added by buildreq on Mon Nov 10 2014
 # optimized out: ant-testutil apache-commons-codec apache-commons-logging boost-devel boost-devel-headers boost-interprocess-devel boost-intrusive-devel cppunit flute fontconfig fontconfig-devel fonts-type1-xorg glib2-devel gstreamer1.0-devel icu-utils java java-devel jpackage-utils junit4 kde4libs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcloog-isl4 libclucene-contribs-lib libclucene-core libclucene-shared libcurl-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgpg-error libgraphite2-devel libgst-plugins1.0 libharfbuzz-icu libicu-devel libnspr-devel libpango-devel libpng-devel libpoppler-devel libpq-devel libqt4-core libqt4-devel libqt4-gui libqt4-network librasqal-devel librevenge-devel libsasl2-3 libssl-devel libstdc++-devel libunixODBC-devel libwayland-client libwayland-server libxml2-devel pentaho-libxml perl-Compress-Raw-Zlib pkg-config poppler-data python-base python-devel python-modules python3 python3-base raptor2-devel sac tzdata tzdata-java xerces-j2 xml-common xml-commons-jaxp-1.4-apis xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz zlib-devel
-BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake kde4libs-devel libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel liborcus-devel libpoppler-cpp-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel pentaho-reporting-flow-engine perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
+BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel liborcus-devel libpoppler-cpp-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel pentaho-reporting-flow-engine perl-Archive-Zip postgresql-devel unzip xorg-cf-files zip
+
+# Requirements that were previously brought in by kde4libs-devel
+BuildRequires: libunixODBC-devel
+BuildRequires: libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel
+BuildRequires: libssl-devel
+
+%if_enabled kde4
+BuildRequires: kde4libs-devel
+%endif
 
 # 4.4
 BuildRequires: libavahi-devel libpagemaker-devel boost-signals-devel
 BuildRequires: libe-book-devel
 # 5.1
-BuildRequires: junit xsltproc java-1.8.0-openjdk-devel
+BuildRequires: xsltproc
+%if_with java
+BuildRequires: junit java-1.8.0-openjdk-devel
+%endif
 # 5.1.2
 BuildRequires: libgtk+3-gir-devel
 # 5.2.0
-BuildRequires: libCoinMP-devel
 # 5.3.0
 BuildRequires: libzmf-devel libstaroffice-devel libepoxy-devel libmysqlcppconn-devel libmysqlclient-devel libtelepathy-devel
 # 5.3.3
@@ -95,7 +109,15 @@ BuildRequires: libxmlsec1-nss-devel libgpgme-devel
 # 6.0.1
 BuildRequires: libepubgen-devel libqxp-devel boost-locale-devel boost-filesystem-devel
 # 6.0.5
+%if_enabled qt5
 BuildRequires: qt5-base-devel
+%endif
+
+# 6.1.0
+BuildRequires: libnumbertext-devel
+
+# 6.1.1
+BuildRequires: python3-module-setuptools
 
 
 %if_without python
@@ -126,23 +148,24 @@ Requires: %name-common = %EVR
 %description integrated
 Wrapper scripts, icons and desktop files for running %name
 
-%package gnome
-Summary: GNOME Extensions for %name
+%package gtk
+Summary: GTK2 Extensions for %name
 Group:  Office
 Requires: %uname = %EVR
 Requires: %name-common = %EVR
-Obsoletes: LibreOffice4-gnome
-%description gnome
-GNOME extensions for %name
+%description gtk
+GTK2 extensions for %name
 
 %package gtk3
 Summary: GTK3 Extensions for %name
 Group:  Office
 Requires: %uname = %EVR
 Requires: %name-common = %EVR
+Provides: %name-gnome
 %description gtk3
 GTK3 extensions for %name
 
+%if_enabled qt5
 %package qt5
 Summary: Qt5 Extensions for %name
 Group:  Office
@@ -150,7 +173,9 @@ Requires: %uname = %EVR
 Requires: %name-common = %EVR
 %description qt5
 qt5 extensions for %name
+%endif
 
+%if_enabled kde4
 %package kde4
 Summary: KDE4 Extensions for %name
 Group:  Office
@@ -159,6 +184,7 @@ Requires: %name-common = %EVR
 Obsoletes: LibreOffice4-kde4
 %description kde4
 KDE4 extensions for %name
+%endif
 
 %package -n libreofficekit
 Summary: A library providing access to LibreOffice functionality
@@ -251,16 +277,7 @@ echo Direct build
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-#patch7 -p1
-#patch8 -p1
-##patch9 -p1
-#patch10 -p1
-#patch11 -p1
-#patch12 -p1
-#patch13 -p1
-#patch14 -p1
-#patch15 -p1
+#patch6 -p1
 
 ## Long-term FC patches applying
 
@@ -277,6 +294,9 @@ for f in `grep -rl '/usr/sbin/lsattr' *`; do sed -i 's@/usr/sbin/lsattr@/usr/bin
 
 # Hack in MimeType=application/vnd.ms-visio.drawing.main+xml
 fgrep -q "application/vnd.ms-visio.drawing.main+xml" sysui/desktop/menus/draw.desktop || sed -i 's@MimeType=@MimeType=application/vnd.ms-visio.drawing.main+xml;@' sysui/desktop/menus/draw.desktop
+
+# hack hardcoded libodbc version
+sed -i 's/libodbc.so.1/libodbc.so.2/g' connectivity/source/drivers/odbc/OFunctions.cxx
 
 rm -fr %name-tnslations/git-hooks
 
@@ -308,18 +328,24 @@ test -r %conffile && . %conffile ||:
 %build
 export CC=%_target_platform-gcc
 export CXX=%_target_platform-g++
+%ifarch mipsel
+export CFLAGS="-Os --param ggc-min-expand=20 --param ggc-min-heapsize=32768 -g0"
+export CXXFLAGS="$CFLAGS"
+%endif
+
 ./autogen.sh \
 	--prefix=%_prefix \
 	--libdir=%_libdir \
 	--disable-lto \
         --with-vendor="ALT Linux Team" \
+        %{subst_enable mergelibs} \
         --enable-odk \
-        --enable-systray \
 	--disable-firebird-sdbc \
-	--enable-coinmp \
+	--disable-coinmp \
         --enable-dbus \
         --enable-evolution2 \
         --enable-gio \
+        %{subst_with java} \
         --with-alloc=system \
         --without-fonts \
         --without-myspell-dicts \
@@ -340,8 +366,9 @@ export CXX=%_target_platform-g++
 	--enable-release-build \
 	--with-help \
   \
-	--enable-kde4 \
-	--enable-qt5 \
+	%{subst_enable kde4} \
+	%{subst_enable qt5} \
+	--enable-gtk \
 	--enable-gtk3 \
 	--disable-gstreamer-0-10 \
   \
@@ -391,7 +418,7 @@ export LD_PRELOAD=`pwd`/forky.so
 %make build-nocheck || { tail -100 $HOME/forky.log; head -1 $HOME/forky.log; wc $HOME/forky.log; false; }
 test -r $HOME/forky.log && echo "Fork() was `wc -l $HOME/forky.log` times delayed" || :
 %else
-%make build-nocheck
+%make verbose=true build-nocheck
 %endif
 
 # Generate typelib files
@@ -420,10 +447,10 @@ for l in %with_lang; do
 done
 
 # Create gnome plugin list
-find %buildroot%lodir -name "gnome*" -o -name "*_gtk*" | sed 's@^%buildroot@@' > files.gnome
+find %buildroot%lodir -o -name "*_gtk*" | sed 's@^%buildroot@@' > files.gtk2
 
 # Create gtk3 plugin list
-find %buildroot%lodir -name -o -name "*gtk3*" | sed 's@^%buildroot@@' > files.gtk3
+find %buildroot%lodir -name -o -name "*_gtk3*" | sed 's@^%buildroot@@' > files.gtk3
 
 # Create kde plugin list
 find %buildroot%lodir -name "*kde4*" | sed 's@^%buildroot@@' > files.kde4
@@ -432,7 +459,7 @@ find %buildroot%lodir -name "*kde4*" | sed 's@^%buildroot@@' > files.kde4
 find %buildroot%lodir -name "*qt5*" | sed 's@^%buildroot@@' > files.qt5
 
 # Generate base filelist by removing files from  separated packages
-{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gnome files.gtk3 files.kde4 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
+{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk2 files.gtk3 files.kde4 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
 
 unset RPM_PYTHON
 
@@ -497,13 +524,17 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_iconsdir/*/*/apps/*
 %exclude %_iconsdir/*/*/apps/libreoffice%{hversion}-*.*g
 
-%files gnome -f files.gnome
+%files gtk -f files.gtk2
 
 %files gtk3 -f files.gtk3
 
+%if_enabled kde4
 %files kde4 -f files.kde4
+%endif
 
+%if_enabled qt5
 %files qt5 -f files.qt5
+%endif
 
 %files extensions
 %lodir/share/extensions/*
@@ -533,6 +564,13 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Sep 17 2018 Fr. Br. George <george@altlinux.ru> 6.1.1.2-alt1
+- Update to 6.1.1.2
+
+* Mon Aug 20 2018 Fr. Br. George <george@altlinux.ru> 6.1.0.3-alt1
+- Update to 6.1.0.3 (Closes: #35135)
+- MIPS port, thanks to iv@ (Closes: #35171)
+
 * Wed Jun 06 2018 Fr. Br. George <george@altlinux.ru> 6.0.5.1-alt1
 - Update to 6.0.5.1 (Closes: #34765)
 - Introduce Qt5 chooser (Closes: #33136)

@@ -1,6 +1,7 @@
+%def_without python
 Name: liborcus
-Version: 0.13.4
-Release: alt1.1
+Version: 0.14.1
+Release: alt1
 Summary: Standalone file import filter library for spreadsheet documents
 
 Group: System/Libraries
@@ -8,11 +9,11 @@ License: MIT
 Url: http://gitorious.org/orcus
 Source: orcus-%version.tar.gz
 
-%define libver 0.13
+%define libver 0.14
 
 # Automatically added by buildreq on Thu Jul 25 2013
 # optimized out: boost-devel boost-intrusive-devel libstdc++-devel pkg-config
-BuildRequires: boost-devel-headers boost-interprocess-devel boost-program_options-devel gcc-c++ zlib-devel boost-filesystem-devel mdds-devel
+BuildRequires: boost-devel-headers boost-interprocess-devel boost-program_options-devel gcc-c++ zlib-devel boost-filesystem-devel mdds-devel python3-devel
 
 %description
 %name is a standalone file import filter library for spreadsheet
@@ -34,6 +35,13 @@ Group: Publishing
 %description tools
 Tools for working with Orcus.
 
+%package -n python3-module-orcus
+Summary: Python3 bindings for Orcus
+Group:Development/Python3
+
+%description -n python3-module-orcus
+Python3 bindings for Orcus
+
 %prep
 %setup
 
@@ -51,9 +59,11 @@ sed -i 's/liborcus_parser_.*_la_LIBADD = /& $(BOOST_SYSTEM_LIB) /' src/parser/Ma
 	--with-pic \
 	--with-boost \
 	--with-boost-system \
-	--disable-python \
 	--disable-spreadsheet-model \
-	#
+%if_without python
+	--disable-python \
+%endif
+#
 
 sed -i \
     -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
@@ -79,9 +89,16 @@ ln -s %name-%libver.pc %buildroot%_pkgconfigdir/%name.pc
 %files tools
 %_bindir/orcus-*
 
+%if_with python
+%files -n python3-module-orcus
+%python3_sitelibdir/*
+%python3_sitelibdir_noarch/*
+%endif
+
 %changelog
-* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.13.4-alt1.1
-- NMU: rebuilt with boost-1.67.0
+* Mon Sep 17 2018 Fr. Br. George <george@altlinux.ru> 0.14.1-alt1
+- Autobuild version bump to 0.14.1
+- Introduce python3 module
 
 * Wed May 23 2018 Fr. Br. George <george@altlinux.ru> 0.13.4-alt1
 - Autobuild version bump to 0.13.4

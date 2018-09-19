@@ -16,7 +16,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL
 Group: Office
@@ -295,6 +295,8 @@ test -r %conffile && . %conffile ||:
 export CC=%_target_platform-gcc
 export CXX=%_target_platform-g++
 ./autogen.sh \
+	--without-system-mdds \
+	--without-system-orcus \
 	--prefix=%_prefix \
 	--libdir=%_libdir \
 	--disable-lto \
@@ -516,6 +518,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Tue Sep 18 2018 Fr. Br. George <george@altlinux.ru> 6.0.6.2-alt2
+- Build with bundled old mdds/orcus
+
 * Fri Sep 07 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.6.2-alt1
 - New version 6.0.6.2 (Still).
 - Disable CoinMP.
