@@ -1,5 +1,5 @@
 Name: viewres
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 Summary: graphical class browser for Xt
 Group: System/X11
@@ -36,6 +36,9 @@ of the Athena Widget Set.
 %_mandir/man1/viewres.*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
+- Autobuild version bump to 1.0.5
+
 * Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
 - Autobuild version bump to 1.0.4
 
