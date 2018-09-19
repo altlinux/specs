@@ -2,7 +2,7 @@
 
 Name: aeskulap
 Version: 0.2.2
-Release: alt3.git2ac922d
+Release: alt4.git8787e95
 
 Summary: Medial image viewer for DICOM images
 License: GPL/LGPL
@@ -50,13 +50,16 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/aeskulap
 %_datadir/aeskulap/*
 %_datadir/applications/aeskulap.desktop
+%_datadir/glib-2.0/schemas/org.gnu.aeskulap.gschema.xml
 %_datadir/appdata/*
 %_libdir/aeskulap/*
 %_iconsdir/*/*/*
-%config %_sysconfdir/gconf/schemas/aeskulap.schemas
 %doc ABOUT-NLS AUTHORS ChangeLog COPYING COPYING.LIB NEWS README
 
 %changelog
+* Tue Sep 18 2018 Anton Farygin <rider@altlinux.ru> 0.2.2-alt4.git8787e95
+- up to 8787e95
+
 * Wed Nov 01 2017 Anton Farygin <rider@altlinux.ru> 0.2.2-alt3.git2ac922d
 - build from new upstream git
 
