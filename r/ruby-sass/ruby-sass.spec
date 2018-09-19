@@ -1,8 +1,8 @@
 %define  pkgname sass
 
 Name:    ruby-%pkgname
-Version: 3.5.6
-Release: alt2.1
+Version: 3.5.7
+Release: alt1
 
 Summary: Sass makes CSS fun again.
 License: MIT
@@ -70,6 +70,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Sep 19 2018 Andrey Cherepanov <cas@altlinux.org> 3.5.7-alt1
+- New version.
+
 * Mon Sep 03 2018 Andrey Cherepanov <cas@altlinux.org> 3.5.6-alt2.1
 - Rebuild for new Ruby autorequirements.
 
