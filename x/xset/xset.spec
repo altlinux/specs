@@ -1,14 +1,13 @@
 Name: xset
-Version: 1.2.1
-Release: alt1.qa1
+Version: 1.2.4
+Release: alt1
 Summary: user preference utility for X
 License: MIT/X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
 
 BuildRequires: libXext-devel libXmu-devel xorg-util-macros
 
@@ -16,8 +15,7 @@ BuildRequires: libXext-devel libXmu-devel xorg-util-macros
 This program is used to set various user preference options of the display
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
 %autoreconf
@@ -35,6 +33,9 @@ This program is used to set various user preference options of the display
 %_man1dir/*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.2.4-alt1
+- Autobuild version bump to 1.2.4
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
