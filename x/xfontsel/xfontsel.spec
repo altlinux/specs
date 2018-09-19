@@ -1,5 +1,5 @@
 Name: xfontsel
-Version: 1.0.4
+Version: 1.0.6
 Release: alt1
 Summary: point and click selection of X11 font names
 License: MIT/X11
@@ -7,8 +7,7 @@ Group: System/X11
 Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
 
 BuildRequires: libICE-devel libSM-devel libX11-devel libXau-devel libXaw-devel libXext-devel libXmu-devel
 BuildRequires: libXpm-devel libXt-devel xorg-proto-devel xorg-util-macros libXdmcp-devel
@@ -19,8 +18,7 @@ known  to  your  X  server, examine samples of each, and retrieve the X
 Logical Font Description ("XLFD") full name for a font.
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
 %autoreconf
@@ -37,6 +35,9 @@ Logical Font Description ("XLFD") full name for a font.
 %_man1dir/*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Fri Mar 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.0.4-alt1
 - 1.0.4
 
