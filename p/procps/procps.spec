@@ -1,6 +1,6 @@
 Name: procps
-Version: 3.3.7
-Release: alt2
+Version: 3.3.15
+Release: alt1.git2f79ff3bc6a7ad
 
 Summary: System and process monitoring utilities
 License: GPLv2+, LGPLv2+
@@ -25,6 +25,8 @@ Requires: coreutils >= 0:5.2.1-alt2
 
 BuildRequires: libncursesw-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu}}
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 This package contains a set of system utilities which provide system
@@ -56,22 +58,27 @@ applications.
 echo -n %version-%release > .tarball-version
 
 %build
+%add_optflags "-Werror"
 ./autogen.sh
 %configure \
 	--exec-prefix=/ \
-	--bindir=/bin \
 	--sbindir=/sbin \
 	--enable-watch8bit \
 	--enable-oomem \
 	--disable-static \
 	--disable-kill \
 	--enable-skill \
+	--disable-nls \
 	#
 %make_build
 
 %install
 %makeinstall_std
 rm -r %buildroot%_docdir/procps-ng
+
+# move ps to /bin
+mkdir -p %buildroot/bin
+mv %buildroot%_bindir/ps %buildroot/bin/
 
 # reduce redundancy
 ln -snf pgrep %buildroot%_bindir/pkill
@@ -93,7 +100,7 @@ make check
 /sbin/*
 %_bindir/*
 %_mandir/man?/*
-%doc AUTHORS Documentation/BUGS Documentation/FAQ NEWS README top/README.top Documentation/TODO
+%doc AUTHORS Documentation/bugs.md Documentation/FAQ NEWS README.md top/README.top Documentation/TODO
 
 %files -n lib%name
 /%_lib/*
@@ -102,8 +109,22 @@ make check
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
-
 %changelog
+* Fri Apr 26 2019 Mikhail Efremov <sem@altlinux.org> 3.3.15-alt1.git2f79ff3bc6a7ad
+- pmap: Fix build on i586.
+- top: Update "Protect scat() from buffer overflows" patch.
+- Re-applied Qualys patches:
+  + top: Protect scat() from buffer overflows.
+  + top: Prevent integer overflows in procs_refresh().
+- top: Fix warnings.
+- proc: Fix strings truncation warnings.
+- proc/sysinfo.c: Check return values.
+- watch: Initialize variable.
+- watch: Drop unused variable.
+- tests: Disable ps_sched_batch.
+- pwdx: Link against libprocps.
+- Updated to v3.3.15-88-g2f79ff3.
+
 * Thu Jan 29 2015 Mikhail Efremov <sem@altlinux.org> 3.3.7-alt2
 - Fix ps_sched_batch test.
 - Disable 'pmap with unreachable process' tests.
