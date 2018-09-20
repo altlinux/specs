@@ -1,8 +1,8 @@
 %define svn_rev r409
 
 Name: csync2
-Version: 1.34
-Release: alt10.%svn_rev
+Version: 2.0
+Release: alt1
 
 Summary: Csync2 is a cluster synchronization tool
 
@@ -10,18 +10,19 @@ License: GPL
 Group: File tools
 Url: http://oss.linbit.com/csync2/
 
-Packager: Mikhail Efremov <sem@altlinux.org>
-
+# https://github.com/LINBIT/csync2
 Source: %name-%version.tar
 Source1: http://www.clifford.at/papers/2005/csync2/paper.pdf
 Source2: %name.init
-Source3: gen-cert
-Patch: %name-%version-%release.patch
+Source3: csync2.socket
+Source4: csync2@.service
+Source5: gen-cert
 
 # Automatically added by buildreq on Fri Mar 31 2006
 BuildRequires: flex libgnutls-openssl-devel librsync-devel libtasn1-devel libsqlite3-devel xpdf-utils
 # for broken checking code (add libs depends)
 BuildRequires: zlib-devel
+BuildRequires: gcc-c++
 
 # we have incompatibility in ALT
 %define _localstatedir /var
@@ -33,11 +34,11 @@ much more than just 2 hosts, handle file deletions and can detect conflicts.
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 %autoreconf
-%configure --sysconfdir=%_sysconfdir/%name
+%configure --sysconfdir=%_sysconfdir/%name --enable-sqlite3
+sed -i 's,libmysqlclient.so,libmysqlclient.so.20,' db_mysql.c
 %make_build
 pdftotext %SOURCE1 paper.txt
 
@@ -45,7 +46,9 @@ pdftotext %SOURCE1 paper.txt
 %make_install DESTDIR=%buildroot install
 install -m 644 -D csync2.xinetd %buildroot%_sysconfdir/xinetd.d/%name
 install -m 755 -D %SOURCE2 %buildroot%_initrddir/%name
-install -m 755 -D %SOURCE3 %buildroot%_sysconfdir/%name/gen-cert
+install -p -m 644 -D %SOURCE3 %buildroot%_unitdir/csync2.socket
+install -p -m 644 -D %SOURCE4 %buildroot%_unitdir/csync2@.service
+install -m 755 -D %SOURCE5 %buildroot%_sysconfdir/%name/gen-cert
 mkdir -p %buildroot%_localstatedir/lib/%name
 touch %buildroot/etc/%name/csync2_ssl_cert.pem
 touch %buildroot/etc/%name/csync2_ssl_key.pem
@@ -57,7 +60,7 @@ touch %buildroot/etc/%name/csync2_ssl_key.pem
 %preun_service %name
 
 %files
-%doc ChangeLog README TODO AUTHORS paper.txt
+%doc ChangeLog README AUTHORS paper.txt
 %_sbindir/*
 %_man1dir/*
 %dir %_sysconfdir/%name
@@ -65,11 +68,16 @@ touch %buildroot/etc/%name/csync2_ssl_key.pem
 %config(noreplace) %_localstatedir/lib/%name
 %config(noreplace) %_sysconfdir/xinetd.d/%name
 %_initrddir/%name
+%_unitdir/%name.socket
+%_unitdir/%name@.service
 %_sysconfdir/%name/gen-cert
 %ghost /etc/%name/csync2_ssl_cert.pem
 %ghost /etc/%name/csync2_ssl_key.pem
 
 %changelog
+* Thu Sep 20 2018 Anton Farygin <rider@altlinux.ru> 2.0-alt1
+- up to 2.0
+
 * Fri Dec 04 2015 Mikhail Efremov <sem@altlinux.org> 1.34-alt10.r409
 - Rebuild with libgnutls30.
 
