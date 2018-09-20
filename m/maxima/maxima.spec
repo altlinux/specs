@@ -24,7 +24,7 @@
 Name: maxima
 Version: 5.41.0
 %define maxima_version 5.41.0
-Release: alt2.1
+Release: alt3
 Summary: Maxima Computer Algebra System
 License: GPL
 Group: Sciences/Mathematics
@@ -58,6 +58,10 @@ Source10: http://starship.python.net/crew/mike/TixMaxima/macref.pdf
 Source11: http://maxima.sourceforge.net/docs/maximabook/maximabook-19-Sept-2004.pdf
 
 
+ExcludeArch: aarch64
+
+
+
 %description
 Maxima is a full symbolic computation program.  It is full featured
 doing symbolic manipulation of polynomials, matrices, rational
@@ -75,7 +79,7 @@ Provides: maxima = %version-%release
 Requires: gnuplot >= 4.0.0 rlwrap maxima-bin = %version-%release
 BuildRequires: sed perl texlive-collection-latexrecommended texinfo automake_1.7
 AutoReq: yes, noshell
-
+ExcludeArch: aarch64
 %description common
 This package contains common files needed to run Maxima with
 any lisp interpreter, documentation etc.
@@ -88,7 +92,7 @@ Group: Sciences/Mathematics
 Provides: maxima-bin = %version-%release
 Requires: maxima-common = %version-%release 
 BuildRequires: clisp
-
+ExcludeArch: aarch64
 %description bin-clisp
 Maxima binaries compiled with clisp.
 %endif
@@ -100,7 +104,7 @@ Group: Sciences/Mathematics
 Provides: maxima-bin = %version-%release
 Requires: maxima-common = %version-%release libreadline libncurses terminfo libgpm
 BuildRequires: gcl >= 2.6.5
-
+ExcludeArch: aarch64
 %description bin-gcl
 Maxima binaries compiled with GCL (GNU Common Lisp).
 %endif
@@ -112,7 +116,7 @@ Group: Sciences/Mathematics
 Provides: maxima-bin = %version-%release
 Requires: maxima-common = %version-%release
 BuildRequires: cmucl
-
+ExcludeArch: aarch64
 %description bin-cmucl
 Maxima binaries compiled with CMUCL (CMU Common Lisp).
 %endif
@@ -122,10 +126,10 @@ Maxima binaries compiled with CMUCL (CMU Common Lisp).
 Summary: Maxima Symbolic Computation Program. SBCL binaries
 Group: Sciences/Mathematics
 Provides: maxima-bin = %version-%release
-Requires: maxima-common = %version-%release sbcl >= 1.4.2
-BuildRequires: sbcl >= 1.4.2
+Requires: maxima-common = %version-%release sbcl >= 1.4.10
+BuildRequires: sbcl >= 1.4.10
 BuildRequires: /proc
-
+ExcludeArch: aarch64
 %description bin-sbcl
 Maxima binaries compiled with SBCL (Steel Bank Common Lisp).
 %endif
@@ -134,9 +138,13 @@ Maxima binaries compiled with SBCL (Steel Bank Common Lisp).
 %package -n emacs-maxima
 Summary: Emacs Maxima modes
 Group: Editors
-Requires: maxima-common = %version-%release emacs emacs-mode-auctex 
+ExcludeArch: aarch64
+Requires:  emacs emacs-mode-auctex 
+#Requires: maxima-common = %version-%release
+
 Obsoletes: maxima-emacs
 BuildArch: noarch
+
 
 %description -n emacs-maxima
 Set of Maxima emacs modes.
@@ -147,7 +155,7 @@ Set of Maxima emacs modes.
 Summary: Maxima graphical frontend
 Group: Sciences/Mathematics
 Requires: maxima-common = %version-%release tk tcl
-
+ExcludeArch: aarch64
 %description xmaxima
 Maxima graphical frontend written in Tcl/Tk.
 %endif
@@ -156,7 +164,8 @@ Maxima graphical frontend written in Tcl/Tk.
 %package lang-es
 Summary: Maxima Spanish language pack
 Group: Sciences/Mathematics
-Requires: maxima-common = %version-%release
+ExcludeArch: aarch64
+#Requires: maxima-common = %version-%release
 BuildArch: noarch
 
 %description lang-es
@@ -167,7 +176,10 @@ Maxima Spanish language pack.
 %package lang-es-utf8
 Summary: Maxima Spanish language pack (UTF-8)
 Group: Sciences/Mathematics
-Requires: maxima-common = %version-%release
+ExcludeArch: aarch64
+
+#Requires: maxima-common = %version-%release
+
 BuildArch: noarch
 
 %description lang-es-utf8
@@ -178,7 +190,10 @@ Maxima Spanish language pack (UTF-8).
 %package lang-pt
 Summary: Maxima Portuguese language pack
 Group: Sciences/Mathematics
-Requires: maxima-common = %version-%release
+ExcludeArch: aarch64
+
+#Requires: maxima-common = %version-%release
+
 BuildArch: noarch
 
 %description lang-pt
@@ -189,7 +204,10 @@ Maxima Portuguese language pack.
 %package lang-pt-utf8
 Summary: Maxima Portuguese language pack (UTF-8)
 Group: Sciences/Mathematics
-Requires: maxima-common = %version-%release
+ExcludeArch: aarch64
+
+#Requires: maxima-common = %version-%release
+
 BuildArch: noarch
 
 %description lang-pt-utf8
@@ -200,7 +218,10 @@ Maxima Portuguese language pack (UTF-8).
 %package lang-pt_BR
 Summary: Maxima Brazilian Portuguese language pack
 Group: Sciences/Mathematics
-Requires: maxima-common = %version-%release
+ExcludeArch: aarch64
+
+#Requires: maxima-common = %version-%release
+
 BuildArch: noarch
 
 %description lang-pt_BR
@@ -211,7 +232,8 @@ Maxima Brazilian Portuguese language pack.
 %package lang-pt_BR-utf8
 Summary: Maxima Brazilian Portuguese language pack (UTF-8)
 Group: Sciences/Mathematics
-Requires: maxima-common = %version-%release
+ExcludeArch: aarch64
+#Requires: maxima-common = %version-%release
 BuildArch: noarch
 
 %description lang-pt_BR-utf8
@@ -224,7 +246,7 @@ Summary: Maxima book
 Group: Sciences/Mathematics
 BuildRequires: ghostscript
 BuildArch: noarch
-
+ExcludeArch: aarch64
 %description book
 Maxima book
 %endif
@@ -296,7 +318,7 @@ export GCL_ANSI=""
   --enable-cmucl  \
 %endif
 %if %BUILD_SBCL
-  --enable-sbcl   \
+  --enable-sbcl-exec   \
 %endif
 %if %BUILD_LANG_ES
   --enable-lang-es	\
@@ -576,6 +598,10 @@ cd %maxima_dir
 
 
 %changelog
+* Thu Sep 20 2018 Ilya Mashkin <oddity@altlinux.ru> 5.41.0-alt3
+- rebuild with sbcl 1.4.10 (Closes: #33271)
+- Try build with --enable-sbcl-exec instead of --enable-sbcl
+
 * Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 5.41.0-alt2.1
 - NMU: build with texlive 2017
 - packaged mime xml
