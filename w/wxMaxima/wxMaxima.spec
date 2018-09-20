@@ -1,6 +1,6 @@
 Name: wxMaxima
 Version: 17.05.0
-Release: alt1
+Release: alt2
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL
@@ -14,10 +14,12 @@ Source2: %name-32.xpm
 Source3: %name-48.xpm
 Source5: wxmaxima-ru.po.bz2
 
-Requires: maxima libwxGTK3.1
+ExcludeArch: aarch64
+
+Requires: maxima
 
 #BuildRequires: autoconf_2.60
-BuildRequires: gcc-c++ libwxGTK3.1 libwxGTK3.1-devel libpango-devel libxml2-devel zlib-devel wxGTK3.1-examples makeinfo
+BuildRequires: gcc-c++ libwxGTK3.0-devel libpango-devel libxml2-devel zlib-devel makeinfo
 
 %description
 wxMaxima is a wxWidgets GUI for the computer algebra system Maxima. 
@@ -81,6 +83,10 @@ install -D -m644 wxmaxima.info %buildroot%_infodir/wxmaxima.info
 
 
 %changelog
+* Fri Sep 21 2018 Anton Midyukov <antohami@altlinux.org> 17.05.0-alt2
+- rebuilt with libwxGTK3.0
+- exclude aarch64
+
 * Tue Jun 20 2017 Ilya Mashkin <oddity@altlinux.ru> 17.05.0-alt1
 - 17.05.0
 
