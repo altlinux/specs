@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Net-Server-Mail
-Version: 0.23
+Version: 0.26
 Release: alt1
 
 Summary: Class to easily create a mail server
@@ -28,7 +28,7 @@ Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
 #Source: http://cpan.org/modules/by-module/Net/%m_distro-%version.tar.gz
-Source: http://www.cpan.org/authors/id/G/GU/GUIMARD/Net-Server-Mail-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/G/GU/GUIMARD/%{module}-%{version}.tar.gz
 
 
 # Automatically added by buildreq on Fri Sep 05 2008 (-bi)
@@ -41,7 +41,7 @@ driven object-oriented API makes easy to incorporate the SMTP protocol
 to your programs.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -53,6 +53,9 @@ to your programs.
 %doc Changes README*
 
 %changelog
+* Thu Sep 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
+- automated CPAN update
+
 * Mon Jan 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
 - automated CPAN update
 
