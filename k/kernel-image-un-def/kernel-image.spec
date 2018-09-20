@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	4.18
-%define kernel_sublevel .8
+%define kernel_sublevel .9
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -613,6 +613,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Thu Sep 20 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.9-alt1
+- v4.18.9
+
 * Mon Sep 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.8-alt1
 - v4.18.8
 
