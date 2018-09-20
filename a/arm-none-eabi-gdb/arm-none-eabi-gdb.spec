@@ -2,7 +2,7 @@
 
 Name: arm-none-eabi-gdb
 Version: 7.9
-Release: alt1
+Release: alt1.1
 Summary: GDB for (remote) debugging %target binaries
 Group: Development/Debuggers
 License: GPLv3+
@@ -86,5 +86,8 @@ rm -rf %buildroot%_datadir/gdb/syscalls
 %_includedir/%target/gdb/jit-reader.h
 
 %changelog
+* Fri Sep 21 2018 Anton Midyukov <antohami@altlinux.org> 7.9-alt1.1
+- first build for aarch64
+
 * Sat Jul 01 2017 Anton Midyukov <antohami@altlinux.org> 7.9-alt1
 - Initial build for ALT Sisyphus.

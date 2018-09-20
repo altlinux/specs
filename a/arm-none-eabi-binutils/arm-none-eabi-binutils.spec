@@ -4,7 +4,7 @@
 
 Name: arm-none-eabi-binutils
 Version: 2.30
-Release: alt1
+Release: alt1.1
 Summary: GNU Binutils for cross-compilation for %target target
 Group: Development/Tools
 # Most of the sources are licensed under GPLv3+ with these exceptions:
@@ -82,6 +82,9 @@ rm -r %buildroot%_infodir
 %_man1dir/%target-*.1.*
 
 %changelog
+* Thu Sep 20 2018 Anton Midyukov <antohami@altlinux.org> 2.30-alt1.1
+- First build for aarch64
+
 * Tue Apr 17 2018 Anton Midyukov <antohami@altlinux.org> 2.30-alt1
 - New version 2.30
 
