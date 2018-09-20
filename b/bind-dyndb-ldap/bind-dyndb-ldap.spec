@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define bind_version 9.11.4.P1
+%define bind_version 9.11.4.P2
 
 Name: bind-dyndb-ldap
 Version: 11.1
-Release: alt3
+Release: alt4
 
 Summary: LDAP back-end plug-in for BIND
 License: %gpl2plus
@@ -55,6 +55,9 @@ systemctl is-enabled --quiet bind && systemctl restart bind 2>&1 ||:
 %exclude %_libdir/bind/*.la
 
 %changelog
+* Thu Sep 20 2018 Stanislav Levin <slev@altlinux.org> 11.1-alt4
+- Built with new bind 9.11.4.P2.
+
 * Tue Aug 14 2018 Stanislav Levin <slev@altlinux.org> 11.1-alt3
 - Rebuild with new bind 9.11.4.P1
 
