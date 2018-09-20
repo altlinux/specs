@@ -1,18 +1,44 @@
+%def_enable check
+
 Name: gpodder
-Version: 3.9.5
+Version: 3.10.5
 Release: alt1
 
 Summary: podcast receiver/catcher in PyGTK
 License: GPLv3
 Group: Sound
 Url: http://gpodder.org
-BuildArch: noarch
 
 # VCS: https://github.com/gpodder/gpodder.git
-Source: %url/src/%name-%version.tar.gz
+Source: %name-%version.tar.gz
 
-BuildRequires: python-devel rpm-build-python python-module-mygpoclient
-BuildRequires: python-module-feedparser help2man intltool desktop-file-utils
+BuildArch: noarch
+
+AutoReqProv: nopython
+%define __python %nil
+%add_python3_path %_datadir/%name
+
+# M$ and ubuntu specific
+%add_python3_req_skip comtypes pywintypes win32gui appindicator
+%filter_from_requires /win32ctypes/d
+%add_typelib_req_skiplist typelib(Unity)
+# Optional dependencies
+# https://github.com/SoCo/SoCo
+%add_python3_req_skip soco
+# https://github.com/freevo/kaa-metadata
+# last commit in 2015
+%add_python3_req_skip kaa.metadata
+
+Requires: %_bindir/ffmpeg xdg-utils
+Requires: python3-module-eyeD3
+
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: python3-devel python3-module-mygpoclient
+BuildRequires: python3-module-feedparser help2man intltool desktop-file-utils
+%if_enabled check
+BuildRequires: python3-module-podcastparser python3-modules-sqlite3
+BuildRequires: python3-module-minimock python3-module-coverage
+%endif
 
 %description
 gPodder enables you to subscribe to RSS feeds and download
@@ -35,9 +61,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Tuner \
 	%buildroot%_desktopdir/gpodder.desktop
 
+%check
+PYTHON=python3 %make unittest
+
 %files -f %name.lang
 %_bindir/*
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %_desktopdir/%name.desktop
 %_desktopdir/%name-url-handler.desktop
 %_datadir/dbus-1/services/org.gpodder.service
@@ -47,15 +76,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/hicolor/*/apps/%name.ico
 %_man1dir/*
 
-# non-linux os-specific stuff
-%exclude %python_sitelibdir/gpodder/gtkui/macosx.*
-%exclude %_datadir/%name/extensions/ubuntu_*
-%exclude %_datadir/%name/extensions/notification-win32.py*
-%exclude %_datadir/%name/extensions/taskbar_progress.py*
-# https://github.com/SoCo/SoCo
-%exclude %_datadir/%name/extensions/sonos.py*
 
 %changelog
+* Sun Sep 16 2018 Yuri N. Sedunov <aris@altlinux.org> 3.10.5-alt1
+- 3.10.5 (ported to Python3, GTK+3)
+
 * Thu Dec 28 2017 Yuri N. Sedunov <aris@altlinux.org> 3.9.5-alt1
 - 3.9.5
 
