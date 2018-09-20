@@ -1,8 +1,8 @@
 %define modulename OWSLib
 
 Name:           python-module-%modulename
-Version:        0.16.0
-Release:        alt1.1
+Version:        0.17.0
+Release:        alt1
 
 Summary:        Client library for OGC web services
 License:        BSD
@@ -37,11 +37,14 @@ models.
 %python_install
 
 %files
-%doc LICENSE.txt README.txt CHANGES.txt CREDITS.txt
+%doc *.rst
 %python_sitelibdir/owslib/
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Sep 20 2018 Andrey Cherepanov <cas@altlinux.org> 0.17.0-alt1
+- New version.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.16.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
