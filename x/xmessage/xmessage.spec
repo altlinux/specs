@@ -1,14 +1,13 @@
 Name: xmessage
-Version: 1.0.3
-Release: alt1.qa1
+Version: 1.0.5
+Release: alt1
 Summary: display a message or query in a window
 License: MIT/X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
 
 BuildRequires: libXaw-devel xorg-util-macros
 
@@ -21,8 +20,7 @@ returned  in  the  exit status and, optionally, by writing the label of
 the button to standard output.
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
 %autoreconf
@@ -39,6 +37,9 @@ the button to standard output.
 %_man1dir/*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
+- Autobuild version bump to 1.0.5
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
