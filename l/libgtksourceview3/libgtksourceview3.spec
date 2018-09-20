@@ -9,7 +9,7 @@
 
 Name: lib%{_name}3
 Version: %ver_major.9
-Release: alt1
+Release: alt2
 
 Summary: GtkSourceView text widget library
 License: LGPLv2+
@@ -128,6 +128,9 @@ GObject introspection devel data for the GtkSourceView library
 %endif
 
 %changelog
+* Thu Sep 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.24.9-alt2
+- rebuilt with atk-2.30.0
+
 * Thu Sep 06 2018 Yuri N. Sedunov <aris@altlinux.org> 3.24.9-alt1
 - 3.24.9
 
