@@ -1,7 +1,10 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %def_disable session
 Name: cairo-dock
 Version: 3.4.1
-Release: alt5%ubt
+Release: alt6
 
 Summary: A light and eye-candy dock to launch your programs easily
 Summary(ru_RU.UTF-8): Приятный глазу док для простого запуска ваших программ
@@ -16,7 +19,6 @@ Source1: cairo-dock-16x16.png
 Source2: cairo-dock-32x32.png
 Source3: cairo-dock-48x48.png
 
-Buildrequires(pre): rpm-build-ubt
 Buildrequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
@@ -146,7 +148,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pkgconfigdir/*.pc
 
 %changelog
-* Fri Jan 26 2018 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt5%ubt
+* Tue Sep 18 2018 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt6
+- drop ubt
+
+* Fri Jan 26 2018 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt5.S1
 - Fix FTBFS
 - Update buildrequires
 - Disabled session.
