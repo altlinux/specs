@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -15,11 +16,11 @@ BuildRequires: perl-podlators
 %bcond_with perl_DateTime_Format_Flexible_enables_extra_test
 
 Name:       perl-DateTime-Format-Flexible
-Version:    0.30
-Release:    alt1_1
+Version:    0.31
+Release:    alt1
 License:    GPL+ or Artistic
 Summary:    Flexibly parse strings and turn them into DateTime objects
-Source:     http://search.cpan.org/CPAN/authors/id/T/TH/THINC/DateTime-Format-Flexible-%{version}.tar.gz
+Source0:     http://www.cpan.org/authors/id/T/TH/THINC/DateTime-Format-Flexible-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/DateTime-Format-Flexible/
 BuildArch:  noarch
 BuildRequires:  rpm-build-perl
@@ -78,11 +79,14 @@ export TEST_POD=0
 make test
 
 %files
-%doc --no-dereference LICENSE
+%doc LICENSE example
 %doc Changes example/ README TODO
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Sep 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
+- automated CPAN update
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1_1
 - update to new release by fcimport
 
