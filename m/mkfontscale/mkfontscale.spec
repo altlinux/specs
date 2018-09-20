@@ -1,14 +1,12 @@
 Name: mkfontscale
-Version: 1.1.0
+Version: 1.1.3
 Release: alt1
 Summary: create an index of scalable font files for X
 License: MIT/X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
 
 BuildRequires: bzlib-devel libfontenc-devel libfreetype-devel xorg-xproto-devel xorg-util-macros zlib-devel
 
@@ -19,8 +17,7 @@ files in the directory.  For every font file found, an  X11  font  name
 file fonts.scale in the directory.
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
 %autoreconf
@@ -37,6 +34,9 @@ file fonts.scale in the directory.
 %_man1dir/*
 
 %changelog
+* Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.1.3-alt1
+- Autobuild version bump to 1.1.3
+
 * Fri Mar 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.1.0-alt1
 - 1.1.0
 
