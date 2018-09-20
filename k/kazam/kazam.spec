@@ -1,7 +1,7 @@
 Name: kazam
 Summary: A screen-casting program created with design in mind
 Version: 1.4.5
-Release: alt2
+Release: alt3
 Group: Video
 License: GPLv3
 Url: https://launchpad.net/kazam
@@ -9,6 +9,8 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: https://launchpad.net/kazam/unstable/%version/+download/%name-%version.tar.gz
 Patch0:	kazam-1.4.5-force-gtk-csd.patch
 Patch1: kazam-1.4.5-configparser_api_changes.patch
+Patch2: kazam-1.4.5-setlocale.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-gir
@@ -26,6 +28,7 @@ that is supported and visible by PulseAudio.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 sed -i s,"DISTRO='Ubuntu'","DISTRO='%vendor'",g kazam/version.py
 
 %build
@@ -51,6 +54,9 @@ cp -r build/mo/* %buildroot/%_datadir/locale
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Thu Sep 20 2018 Anton Midyukov <antohami@altlinux.org> 1.4.5-alt3
+- Fix setup locale (Closes: 35419)
+
 * Sun Mar 12 2017 Anton Midyukov <antohami@altlinux.org> 1.4.5-alt2
 - Added buildrequires rpm-build-gir.
 
