@@ -2,7 +2,7 @@
 %define post 4
 Name: 	  omi
 Version:  1.4.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Open Management Infrastructure
 License:  MIT
@@ -14,10 +14,12 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/Microsoft/omi/archive/v%version-%post.tar.gz
 Source: %name-%version.tar
 Patch: omi-1.4.2-4-include.patch
+Patch1: omi-1.4.2-4-alt-openssl.patch
 
 # Automatically added by buildreq on Fri Jun 02 2017
 # optimized out: libcom_err-devel libkrb5-devel libstdc++-devel lsb-release pkg-config python-base python-modules python3 python3-base
 BuildRequires: gcc-c++ libpam-devel libssl-devel openssl
+BuildRequires: libkrb5-devel
 
 # FIXME: aarcg64 is not supported by build script yet
 ExclusiveArch: x86_64
@@ -75,6 +77,7 @@ Internal development files for %name.
 %prep
 %setup
 %patch -p1
+%patch1 -p2
 
 %__subst "s|.*-rpath.*|true|g" Unix/buildtool
 
@@ -161,6 +164,9 @@ cp output/lib/*.a %buildroot%_libdir/%name/lib/
 %_includedir/omi/nits/
 
 %changelog
+* Thu Sep 20 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.2-alt2
+- NMU: rebuilt with openssl-1.1.
+
 * Thu Jun 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
 - new version (1.4.2) with rpmgs script
 - fix build on aarch64
