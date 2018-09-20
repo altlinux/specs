@@ -7,7 +7,7 @@
 
 Name: 389-ds-base
 Version: 1.3.8.8
-Release: alt1
+Release: alt2
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -134,6 +134,9 @@ sed -i 's|"$libdir/sasl2"|"$libdir/sasl2-3"|g' configure.ac
 # tests
 find -name "*.py" -exec sed -i 's@/usr/bin/systemctl@/sbin/systemctl@g' {} \;
 
+sed -r -i '1s|#!/usr/bin/python[[:space:]]+|#!/usr/bin/python3|' ldap/admin/src/scripts/{*.py,ds-replcheck}
+
+%build
 %autoreconf
 # Install SysVInit scripts anyway
 subst 's/@\(INITDDIR_TRUE\|SYSTEMD_FALSE\)@//g' Makefile.in
@@ -141,10 +144,6 @@ subst 's/@\(INITDDIR_TRUE\|SYSTEMD_FALSE\)@//g' Makefile.in
 # For strange cleanup before documentation build
 mkdir -p man/man3
 touch man/man3/_file
-
-sed -r -i '1s|#!/usr/bin/python[[:space:]]+|#!/usr/bin/python3|' ldap/admin/src/scripts/{*.py,ds-replcheck}
-
-%build
 %configure  \
 	--with-openldap \
         %{subst_with selinux} \
@@ -287,6 +286,9 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun_service %pkgname
 %preun_service %pkgname-snmp
 %changelog
+* Thu Sep 20 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.3.8.8-alt2
+- autoreconf moved inot %%build
+
 * Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 1.3.8.8-alt1
 - 1.3.8.5 -> 1.3.8.8.
 - Fix build with new openssl1.1.
