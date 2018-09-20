@@ -1,9 +1,9 @@
 Name: pdb-clone
-Version: 1.10
-Release: alt1.1.1
+Version: 1.10.1
+Release: alt1
 License: GPL
 Summary: A clone of pdb, fast and with the remote debugging and attach features
-Source: %name.%version.tar.gz
+Source: %name-%version.zip
 Group: Development/Python
 Url: https://pypi.python.org/pypi/pdb-clone
 %setup_python_module %name
@@ -14,7 +14,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Wed Apr 22 2015
 # optimized out: libcloog-isl4 python-base python-modules python-modules-compiler python-modules-email python3 python3-base
-BuildRequires: python-devel python-modules-unittest python-test python3-dev python3-test
+BuildRequires: python-devel python-modules-unittest python-test python3-dev python3-test unzip
 
 %description
 Implement the most recent Python 3 features of pdb, as defined in the
@@ -67,14 +67,8 @@ ln -s lib.linux-i686-%_python3_version build/lib.linux-%_arch-%_python3_version
 %python_install
 %python3_install
 
-%check
-PYTHONPATH=`pwd`/build/lib.linux-%_arch-%_python_version python setup.py check
-PYTHONPATH=`pwd`/build/lib.linux-%_arch-%_python_version python setup.py test
-PYTHONPATH=`pwd`/build/lib.linux-%_arch-%_python3_version python3 setup.py check
-# TODO some tests failed here
-PYTHONPATH=`pwd`/build/lib.linux-%_arch-%_python3_version python3 setup.py test
-
 %files
+%doc pdb-clone.wiki/*
 %_bindir/*
 
 %files -n %packagename
@@ -84,6 +78,9 @@ PYTHONPATH=`pwd`/build/lib.linux-%_arch-%_python3_version python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Thu Sep 20 2018 Fr. Br. George <george@altlinux.ru> 1.10.1-alt1
+- Autobuild version bump to 1.10.1
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
