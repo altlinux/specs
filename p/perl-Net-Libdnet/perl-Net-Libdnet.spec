@@ -1,16 +1,16 @@
-BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
+BuildRequires: perl-podlators
 %define dist Net-Libdnet
 Name: perl-%dist
-Version: 0.98
-Release: alt3
+Version: 0.99
+Release: alt1
 
 Summary: Binding for Dug Song's libdnet
 License: BSD
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/G/GO/GOMOR/Net-Libdnet-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/G/GO/GOMOR/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 11 2011
 BuildRequires: libdnet-devel perl-Class-Gomor perl-Test-Pod perl-Test-Pod-Coverage
@@ -33,7 +33,7 @@ scripts for %name
 
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -42,7 +42,7 @@ scripts for %name
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README examples
 %perl_vendor_archlib/Net
 %perl_vendor_autolib/Net
 
@@ -52,6 +52,9 @@ scripts for %name
 
 
 %changelog
+* Thu Sep 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1
+- automated CPAN update
+
 * Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.98-alt3
 - fixed unpackaged files
 
