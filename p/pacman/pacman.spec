@@ -2,7 +2,7 @@
 
 Name:     pacman
 Version:  0.9.0.19.git7cf259d
-Release:  alt2
+Release:  alt3
 
 Summary:  Yet another pacman clone in C/C++ and SDL
 License:  GPLv2, fonts of unknown license
@@ -15,7 +15,7 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 Source:   %name-%version.tar
 Patch:    pacman-0.9-alt1-fix_path.patch
 
-BuildRequires: gcc-c++ libSDL2-devel libSDL2_image-devel libSDL2_ttf-devel libSDL2_mixer-devel
+BuildRequires: gcc-c++ libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel
 
 %description
 This is a clone of the original pacman by Namco.
@@ -41,6 +41,10 @@ rm -r %buildroot/%_defaultdocdir/%name
 %_datadir/applications/pacman.desktop
 
 %changelog
+* Thu Sep 20 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.0.19.git7cf259d-alt3
+- Cleanup Build Requires.
+- Rebuild for aarch64.
+
 * Wed May 23 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.0.19.git7cf259d-alt2
 - Force building with optflags and c++11 standart for e2k.
 - Disable Werror flag.
