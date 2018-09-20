@@ -3,7 +3,7 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/EOL.pm) perl(Test/Pod.pm) perl-podlators perl(Hash/Merge.pm)
 # END SourceDeps(oneline)
-BuildRequires: perl(File/Slurp.pm)
+BuildRequires: perl(File/Slurp.pm) perl(Minion.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name    Tapper-PRC
@@ -12,14 +12,14 @@ BuildRequires: perl(File/Slurp.pm)
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    5.0.3
+Release:    alt1
 
 Summary:    Control running test programs
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Cwd.pm)
 BuildRequires: perl(Data/Dumper.pm)
@@ -57,7 +57,7 @@ Source44: import.info
 Tapper - Program run control for test program automation.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -71,17 +71,19 @@ Tapper - Program run control for test program automation.
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.json META.yml  README
+%doc Changes LICENSE META.json META.yml README
 %{_mandir}/man1/*
 %{perl_vendor_privlib}/*
 /usr/bin/tapper-automatic-test.pl
 /usr/bin/tapper-client
+/usr/bin/tapper-minion-worker
 %{_bindir}/tapper-client-no-fork
-/usr/share/man/man1/tapper-automatic-test.pl.1*
-/usr/share/man/man1/tapper-client.1*
-
+%_man1dir/tapper*
 
 %changelog
+* Thu Sep 20 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.3-alt1
+- automated CPAN update
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1_1
 - update by mgaimport
 
