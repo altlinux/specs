@@ -1,5 +1,5 @@
 Name: intel-gpu-tools
-Version: 1.19
+Version: 1.22
 Release: alt1
 
 Summary: tools for debugging the Intel graphics driver
@@ -8,7 +8,7 @@ Group: Development/Debug
 
 # http://cgit.freedesktop.org/xorg/app/intel-gpu-tools/
 Url: http://01.org/linuxgraphics/
-Source: %name-%version.tar
+Source: %name-%version.tar.xz
 
 # Automatically added by buildreq on Tue Dec 06 2016
 # optimized out: fontconfig libX11-devel libXext-devel libXrender-devel libwayland-client libwayland-server perl pkg-config python-base python-modules python3 python3-base xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
@@ -64,6 +64,7 @@ in the 2d driver.
 
 %prep
 %setup
+sed -i 's/NOT-GIT/%release/g' lib/Makefile.sources
 
 %build
 %autoreconf
@@ -91,6 +92,12 @@ in the 2d driver.
 %doc assembler/README assembler/TODO assembler/doc/examples/
 
 %changelog
+* Thu Sep 20 2018 Fr. Br. George <george@altlinux.ru> 1.22-alt1
+- Autobuild version bump to 1.22
+
+* Thu Sep 20 2018 Fr. Br. George <george@altlinux.ru> 1.20-alt1
+- Autobuild version bump to 1.20
+
 * Tue Jul 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.19-alt1
 - Updated to upstream version 1.19
 
