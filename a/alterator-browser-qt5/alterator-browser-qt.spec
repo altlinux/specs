@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.0.4
+Version: 3.0.5
 Release: alt1%ubt
 
 Source:%name-%version.tar
@@ -83,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Thu Sep 20 2018 Sergey V Turchin <zerg at altlinux dot org> 3.0.5-alt1%ubt
+- hide cursor on startup animation
+
 * Mon Jun 18 2018 Sergey V Turchin <zerg at altlinux dot org> 3.0.4-alt1%ubt
 - fix busy cursor on long alterator request
 
