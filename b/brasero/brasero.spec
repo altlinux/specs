@@ -18,7 +18,7 @@
 
 Name: brasero
 Version: %ver_major.2
-Release: alt4
+Release: alt4.1
 
 Summary: CD/DVD burning tool for GNOME.
 Group: Archiving/Cd burning
@@ -42,7 +42,7 @@ Requires: lib%name = %version-%release
 Requires: dvd+rw-tools
 Requires: cdrkit
 Requires: mkisofs
-%{?_enable_libburnia:Requires: libburn-devel >= %burn_ver libisofs-devel >= %isofs_ver}
+%{?_enable_libburnia:Requires: libburn >= %burn_ver libisofs >= %isofs_ver}
 %{?_enable_cdrdao:Requires: cdrdao}
 
 # to make vcd or video dvd
@@ -56,7 +56,7 @@ BuildRequires: libgtk+3-devel >= 3.0.0
 BuildRequires: gstreamer%gst_api_ver-devel >= 0.11.99
 BuildRequires: gst-plugins%gst_api_ver-devel >= 0.11.99
 BuildRequires: libxml2-devel >= 2.6.0
-%{?_enable_libburnia:BuildPreReq: libburn-devel >= %burn_ver libisofs-devel >= %isofs_ver}
+%{?_enable_libburnia:BuildRequires: libburn-devel >= %burn_ver libisofs-devel >= %isofs_ver}
 BuildRequires: libnotify-devel >= 0.7
 %{?_enable_search:BuildPreReq: pkgconfig(tracker-sparql-2.0)}
 %{?_enable_playlist:BuildPreReq: libtotem-pl-parser-devel >= 2.30.2}
@@ -238,6 +238,9 @@ GObject introspection devel data for the Brasero
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la
 
 %changelog
+* Thu Sep 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt4.1
+- fixed dependencies
+
 * Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt4
 - updated to 3.12.2-49-gedc40465
 
