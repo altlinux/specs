@@ -1,5 +1,5 @@
 %def_with inotify
-%def_with fam
+%def_without fam
 %def_enable qtgui
 %def_enable webkit
 
@@ -7,7 +7,7 @@
 
 Name: recoll
 Version: 1.24.1
-Release: alt1
+Release: alt2
 
 Summary: A personal full text search package
 License: %gpl2plus
@@ -19,7 +19,14 @@ Source1: recoll_ru.ts
 Source2: recoll_ru.qm
 Source3: recoll_uk.ts
 Source4: recoll_uk.qm
+# 1.24.1+ru
+Source5: recoll-searchgui.desktop
 Source100: recoll.watch
+
+# fix FTBFS against Qt 5.11
+# https://opensourceprojects.eu/p/recoll1/tickets/52/
+Patch: recoll-1.24.1-qt5.11-build.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ libaspell-devel ImageMagick
@@ -29,8 +36,8 @@ BuildRequires: rpm-build-licenses
 BuildRequires: perl-Image-ExifTool
 BuildRequires: python-devel
 BuildRequires: zlib-devel
+BuildRequires: libaspell-devel
 
-#{?_enable_qtgui:BuildRequires: libqt4-devel qt4-settings libXt-devel xorg-cf-files}
 %if_enabled qtgui
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel libXt-devel xorg-cf-files
 %if_enabled webkit
@@ -77,13 +84,22 @@ Requires: xpdf-utils ghostscript-utils
 This package contains just the requirements for additional packages
 that might be of use with Recoll.
 
+%package -n python-module-%name
+Summary: Python bindings for Recoll
+Group: Development/Python
+
+%description -n python-module-%name
+This package contains Python bindings for Recoll.
+
 %prep
 %setup -n %name-%version%pre
-subst 's/openoffice/ooffice/' sampleconf/mimeview
-subst '/^Categories=/s/=/=Qt;/' desktop/*.desktop
-# updated translations
-#cp -a %SOURCE1 %SOURCE2 qtgui/i18n/	# ru
-#cp -a %SOURCE3 %SOURCE4 qtgui/i18n/	# uk
+%patch -p2
+
+sed -i 's/openoffice/loffice/' sampleconf/mimeview
+sed -i '/^Categories=/s/=/=Qt;/' desktop/*.desktop
+# updated translations: ru
+cp -a %SOURCE1 %SOURCE2 qtgui/i18n/
+cp -a %SOURCE5 desktop/
 
 %build
 export CXXFLAGS="%optflags" PATH="$PATH:%_libdir/qt5/bin"
@@ -107,8 +123,8 @@ for s in 128 96 72 64 36 32 24 22 16; do
 done
 sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 
-# KDE+GNOME+whatever
-%add_findreq_skiplist %_datadir/%name/filters/xdg-open
+# use /usr/bin/xdg-open
+rm -f %buildroot%_datadir/%name/filters/xdg-open
 
 %files
 %_bindir/*
@@ -134,11 +150,21 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 
 %files full
 
-# TODO:
-# - consider packaging python bits
-#  ("small recoll integration and extension hacks")
+%files -n python-module-%name
+%python_sitelibdir/%name/
+%python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Sep 21 2018 Michael Shigorin <mike@altlinux.org> 1.24.1-alt2
+- merged underwit@'s work:
+  + updated Russian translations
+  + qt5.11 patch suggested by upstream
+- merged shaba@'s suggestions:
+  + added python-module-recoll subpackage
+  + disabled fam (inotify is enabled already)
+  + build with system aspell
+- s/ooffice/loffice/
+
 * Mon May 14 2018 Michael Shigorin <mike@altlinux.org> 1.24.1-alt1
 - new version (watch file uupdate)
 
