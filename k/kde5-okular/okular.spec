@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 18.04.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Office
@@ -19,6 +19,7 @@ Requires: %name-core = %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-chm-encoding.patch
+Patch2: alt-def-memory-level.patch
 
 # Automatically added by buildreq on Tue Jan 19 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libfreetype-devel libgpg-error libjson-c libpoppler1-qt5 libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xz zlib-devel
@@ -85,6 +86,7 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 
 %build
@@ -148,6 +150,9 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Fri Sep 21 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2%ubt
+- use low memory usage level profile by default (ALT#35091)
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 
