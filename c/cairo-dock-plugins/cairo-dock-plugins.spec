@@ -1,3 +1,6 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define packagename cairo-dock
 %add_findreq_skiplist %_datadir/%packagename/plug-ins/shared-files/scripts/lock-screen.sh
 
@@ -5,7 +8,7 @@ Summary: Plugins for cairo-dock
 Summary(ru_RU.UTF-8): Плагины для cairo-dock
 Name: cairo-dock-plugins
 Version: 3.4.1
-Release: alt10%ubt
+Release: alt11
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -19,17 +22,17 @@ Patch4: cairo-dock-plugins-3.4.1-lock-screen.sh-used-xdg-screensaver-if-availabl
 Patch5: cairo-dock-plugins-3.4.1-weather-update-URL.patch
 Patch6: cairo-dock-plugins-3.4.1-no-nv.patch
 
-Buildrequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
+BuildRequires: python-modules-distutils
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libetpan-devel
 BuildRequires: libsensors3-devel
 BuildRequires: libvte3-devel
 BuildRequires: lsb-release
-BuildRequires: python3-base
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xxf86vm)
@@ -1132,10 +1135,14 @@ binding for Cairo-Dock.
 %find_lang %name
 
 %changelog
-* Fri Feb 16 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.4.1-alt10%ubt
+* Thu Sep 20 2018 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt11
+- drop ubt
+- disable build python2 bindings
+
+* Fri Feb 16 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.4.1-alt10.S1
 - avoid nvidia-settings dependency on non-x86 arches
 
-* Fri Jan 26 2018 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt9%ubt
+* Fri Jan 26 2018 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt9.S1
 - Update buildrequires
 
 * Tue Jul 25 2017 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt8
