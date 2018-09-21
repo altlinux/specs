@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libmpdclient
-Version: 2.13
+Version: 2.15
 Release: alt1
 
 Summary: MPD client library
@@ -59,11 +59,10 @@ This package provides Vala language bindings for %name.
 
 %files
 %doc README.rst COPYING AUTHORS NEWS
-%_libdir/%name.so.*.*
-%ghost %_libdir/%name.so.?
+%_libdir/*.so.*
 
 %files devel
-%_libdir/%name.so
+%_libdir/*.so
 %_includedir/mpd/
 %_pkgconfigdir/%name.pc
 
@@ -74,6 +73,9 @@ This package provides Vala language bindings for %name.
 %_vapidir/*
 
 %changelog
+* Fri Sep 21 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.15-alt1
+- Updated to upstream version 2.15.
+
 * Fri Sep 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.13-alt1
 - Updated to upstream version 2.13.
 

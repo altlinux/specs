@@ -1,47 +1,57 @@
-%def_enable iconv
+%define _unpackaged_files_terminate_build 1
 
 Name: mpc
-Version: 0.26
-Release: alt1.git20140603
+Version: 0.30
+Release: alt1
 Summary: Command line tool to interface MPD
 License: %gpl2plus
 Group: Sound
-Url: http://mpd.wikia.com/?page=%name
-# git://git.musicpd.org/master/mpc.git
+Url: http://mpd.wikia.com/?page=mpc
+
+# https://github.com/MusicPlayerDaemon/mpc.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): meson
 BuildRequires: libmpdclient-devel
+BuildRequires: python3-module-sphinx
 
 %description
 Music Player Command (%name) is a client for MPD, the Music Player
 Daemon. %name connects to a MPD running on a machine via a network.
 
-
 %prep
 %setup
-
+sed -i -e "s,sphinx-build,sphinx-build-3,g" doc/meson.build
 
 %build
-%autoreconf
-%configure \
-    --docdir=%_docdir/%name-%version \
-    %{subst_enable iconv}
-%make_build
+%meson -D iconv=true
+%meson_build
 
+%check
+%meson_test
 
 %install
-%makeinstall_std docdir=%_docdir/%name-%version
-#install -m 0644 ChangeLog %buildroot%_docdir/%name-%version/
+%meson_install
 
+mkdir -p %buildroot%_sysconfdir/bash_completion.d
+
+install -p -D -m0644 contrib/mpc-completion.bash \
+    %buildroot%_sysconfdir/bash_completion.d/%name
+
+rm -f %buildroot%_defaultdocdir/%name/contrib/mpc-completion.bash
+rm -f %buildroot%_defaultdocdir/%name/html/.buildinfo
 
 %files
+%config(noreplace) %_sysconfdir/bash_completion.d/%name
 %_bindir/*
 %_man1dir/*
-%doc AUTHORS COPYING README
-
+%_defaultdocdir/%name
 
 %changelog
+* Fri Sep 21 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.30-alt1
+- Updated to upstream version 0.30.
+
 * Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.26-alt1.git20140603
 - Version 0.26
 
