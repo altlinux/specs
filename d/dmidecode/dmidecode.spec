@@ -1,5 +1,5 @@
 Name: dmidecode
-Version: 3.1
+Version: 3.2
 Release: alt1%ubt
 
 Summary: Dmidecode is a tool for dumping a computer's DMI table
@@ -37,6 +37,9 @@ subst 's/-O./%optflags/' Makefile
 %_man8dir/*
 
 %changelog
+* Fri Sep 21 2018 Anton Farygin <rider@altlinux.ru> 3.2-alt1%ubt
+- new version 3.2
+
 * Mon Oct 09 2017 Anton Farygin <rider@altlinux.ru> 3.1-alt1%ubt
 - new version 3.1
 
