@@ -2,7 +2,7 @@
 %define major 1.8
 Name: sword
 Version: %major.1
-Release: alt1
+Release: alt2
 
 Summary: The SWORD Project framework for manipulating Bible texts
 Summary(ru_RU.UTF-8): Проект SWORD - оболочка для работы с текстами Библии
@@ -24,6 +24,9 @@ BuildRequires: bc cppunit-devel gcc-c++ glibc-devel libclucene-core-devel libcur
 %if_with cmake
 BuildRequires: cmake
 %endif
+
+# http://site.icu-project.org/download/61#TOC-Migration-Issues
+%add_optflags -DU_USING_ICU_NAMESPACE=1
 
 %description
 The SWORD Project is an effort to create an ever expanding software package
@@ -104,6 +107,9 @@ make tests
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Sep 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt2
+- rebuild with libicu62
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt1
 - new version 1.8.1 (with rpmrb script)
 - build with cmake, use soname instead version
