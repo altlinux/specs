@@ -1,12 +1,12 @@
 Name: libetpan
-Version: 1.8
+Version: 1.9.1
 Release: alt1
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access
 License: %bsdstyle
 Group: Development/C
 
-Url: http://www.etpan.org/libetpan.html
+Url: https://www.etpan.org/libetpan.html
 
 # git://github.com/dinhviethoa/libetpan.git
 Source: %name-%version.tar
@@ -75,6 +75,12 @@ ln -s README.md README
 %_libdir/%name.so
 
 %changelog
+* Fri Sep 21 2018 Mikhail Efremov <sem@altlinux.org> 1.9.1-alt1
+- Fix 'may be used uninitialized' warning.
+- Fix from upstream:
+  + Fixed snprintf() output.
+- Updated to 1.9.1.
+
 * Mon Jun 19 2017 Mikhail Efremov <sem@altlinux.org> 1.8-alt1
 - Updated to 1.8.
 
