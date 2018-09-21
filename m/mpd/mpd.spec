@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_disable debug
 %def_disable prof
 %def_disable werror
@@ -57,7 +59,7 @@
 
 %define  Name MPD
 Name: 	 mpd
-Version: 0.20.15
+Version: 0.20.21
 Release: alt1
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 
@@ -66,7 +68,7 @@ Group:   Sound
 URL:     http://musicpd.org
 
 Source: %name-%version.tar
-# VCS:   git://git.musicpd.org/master/mpd.git
+# VCS:   https://github.com/MusicPlayerDaemon/MPD.git
 Source1: %name.conf
 Source2: %name.sys.conf.in
 Source3: %name.init.in
@@ -121,7 +123,6 @@ system that provides control for music playback over a local network.
 It is also makes a great desktop music player, especially if you are a
 console junkie, like frontend options, or restart X often.
 
-
 %if_enabled doc
 %package doc
 Summary: Music Player Daemon (%Name) documentation
@@ -138,7 +139,6 @@ It is also makes a great desktop music player, especially if you are a
 console junkie, like frontend options, or restart X often.
 This package contains %Name documentation.
 
-
 %package doc-api
 Summary: Music Player Daemon (%Name) documentation
 Group: Development/Documentation
@@ -153,7 +153,6 @@ It is also makes a great desktop music player, especially if you are a
 console junkie, like frontend options, or restart X often.
 This package contains %Name's API documentation.
 %endif
-
 
 %prep
 %setup
@@ -215,7 +214,6 @@ sed -i 's/\[mad\]/[libmad]/' configure.ac
 %make_build
 bzip2 --best --keep --force NEWS
 
-
 %install
 %makeinstall_std protocoldir=%_docdir/%name-%version/html
 ln -s html %buildroot%_docdir/%name-%version/protocol
@@ -237,14 +235,11 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
     -c "Music Player Daemon (%Name)" %mpd_user &>/dev/null ||:
 %_sbindir/usermod -g %mpd_group -G audio %mpd_user &>/dev/null ||:
 
-
 %post
 %post_service %name ||:
 
-
 %preun
 %preun_service %name ||:
-
 
 %files
 %doc %dir %_docdir/%name-%version
@@ -268,7 +263,6 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 %attr(775,root,%mpd_group) %dir %_localstatedir/%name/playlists
 %attr(775,root,%mpd_group) %dir %_logdir/%name
 
-
 %if_enabled doc
 %files doc
 %doc %dir %_docdir/%name-%version
@@ -278,7 +272,6 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 %doc %_docdir/%name-%version/user
 %doc %_docdir/%name-%version/developer
 
-
 %files doc-api
 %doc %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/api
@@ -286,6 +279,9 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 
 
 %changelog
+* Fri Sep 21 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.20.21-alt1
+- Updated to upstream version 0.20.21.
+
 * Wed Jan 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.20.15-alt1
 - Updated to upstream version 0.20.15.
 - Disabled iso9660 support since it isn't ported yet to new libcdio.

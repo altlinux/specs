@@ -1,18 +1,25 @@
-Name: ncmpc
-Version: 0.27
-Release: alt1
+%define _unpackaged_files_terminate_build 1
 
+Name: ncmpc
+Version: 0.31
+Release: alt1
 Summary: curses client for mpd
 License: GPL
 Group: Sound
 Url: https://www.musicpd.org/
 
+# https://github.com/MusicPlayerDaemon/ncmpc.git
 Source: %name-%version.tar
 Source1: %name.desktop
 
+BuildRequires(pre): meson
+BuildRequires: gcc-c++
 BuildRequires: glib2-devel libncursesw-devel libtinfo-devel pkg-config
+BuildRequires: liblirc-devel
 BuildRequires: libmpdclient-devel
 BuildRequires: desktop-file-utils
+BuildRequires: doxygen
+BuildRequires: python3-module-sphinx
 
 %description
 ncmpc is a curses client for the Music Player Daemon (MPD). ncmpc
@@ -23,33 +30,43 @@ with a remote control.
 
 %prep
 %setup
+sed -i -e "s,sphinx-build,sphinx-build-3,g" doc/meson.build
 
 %build
-%autoreconf
-%add_optflags -Wextra -Wno-unused
-%configure --enable-wide
-%make_build
+%meson \
+	-D lirc=true \
+	-D lyrics_screen=true \
+	-D lyrics_plugin_dir=%_datadir/%name/lyrics
+
+%meson_build
 
 %install
-%makeinstall_std
-%find_lang %name
-cp -f doc/{config.sample,keys.sample,ncmpc.lirc} ./
+%meson_install
 
-install -m 644 -D %SOURCE1 %buildroot/%_desktopdir/%name.desktop
+install -m 644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=AudioVideo \
 	--add-category=Player \
-	%buildroot%_desktopdir/ncmpc.desktop
+	%buildroot%_desktopdir/%name.desktop
 
+rm -f %buildroot%_defaultdocdir/%name/html/.buildinfo
+
+%find_lang %name
+
+%check
+%meson_test
 
 %files -f %name.lang
-%doc AUTHORS NEWS README COPYING config.sample keys.sample ncmpc.lirc
 %_bindir/*
 %_man1dir/*
 %_desktopdir/%name.desktop
-%exclude %_datadir/doc/ncmpc
+%_defaultdocdir/%name
+%_datadir/%name
 
 %changelog
+* Fri Sep 21 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.31-alt1
+- Updated to upstream version 0.31.
+
 * Fri Sep 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.27-alt1
 - Updated to upstream version 0.27.
 
