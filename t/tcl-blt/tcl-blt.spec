@@ -2,8 +2,8 @@
 %define	major 2.5
 
 Name: tcl-%teaname
-Version: 2.5
-Release: alt7
+Version: 2.5.3
+Release: alt1
 
 Summary: A Tk toolkit extension, including widgets, geometry managers etc.
 License: MIT
@@ -51,23 +51,21 @@ This package contains a collection of programs to demonstrate
 the features of the %teaname.
 
 %prep
-%setup -q %{?snapshot:-c}%{!?snapshot:-n %teaname%version}
+%setup -q -n %teaname%major
 
 %build
-#%set_autoconf_version 2.13
 %__autoconf
-%configure
+%configure --with-blt=%_tcldatadir --with-tcl=%_libdir --with-tk=%_libdir --libdir=%_tcllibdir
 %make_build
 
 %install
 %make_install INSTALL_ROOT=%buildroot install
+rm -f %buildroot%_tcllibdir/*.a
 %__ln_s tcl/libBLT25.so %buildroot%_libdir/libBLT.so
 %__ln_s tcl/libBLTlite25.so %buildroot%_libdir/libBLTlite.so
-%__mv -f examples/*.tcl %buildroot%_tcldatadir/%teaname%major/demos
 %__subst 's|^\#!../src/bltwish|\#!%_bindir/wish|' \
-	%buildroot%_tcldatadir/%teaname%major/demos/*.tcl
-%__subst 's|^\#!/usr/local/bin|\#!%_bindir|' \
-	%buildroot%_tcldatadir/%teaname%major/demos/scripts/page.tcl
+	%buildroot%_docdir/%teaname%major/demos/*.tcl
+rm -rf %buildroot%_bindir
 
 # bitmap.n is in tcl now
 # graph.n is in tcllib as well
@@ -76,28 +74,29 @@ the features of the %teaname.
 rm -f %buildroot%_mandir/mann/{bitmap,graph,tabset,watch}.n*
 
 %files
-%doc NEWS PROBLEMS README
+%_docdir/%teaname%major/NEWS
+%_docdir/%teaname%major/PROBLEMS
+%_docdir/%teaname%major/README
 %_tcllibdir/libBLT25.so
 %_tcllibdir/libBLTlite25.so
 %dir %_tcldatadir/%teaname%major
-%_tcldatadir/%teaname%major/dd_protocols
-%_tcldatadir/%teaname%major/*.tcl
-%_tcldatadir/%teaname%major/*.pro
-%_tcldatadir/%teaname%major/*.xbm
-%_tcldatadir/%teaname%major/tclIndex
+%_tcldatadir/%teaname%major/*
 %_mandir/mann/*
 
 %files devel
-%doc html/*.html
 %_includedir/*
 %_libdir/libBLT.so
 %_libdir/libBLTlite.so
 %_man3dir/*
 
 %files demos
-%_tcldatadir/%teaname%major/demos
+%dir %_docdir/%teaname%major/demos
+%_docdir/%teaname%major/demos/*
 
 %changelog
+* Fri Sep 21 2018 Vladislav Zavjalov <slazav@altlinux.org> 2.5.3-alt1
+- Version 2.5.3 from Debian (with all their and our patches)
+
 * Thu Aug 16 2018 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt7
 - Fix rotated text (patch by V.Eltsov)
 
