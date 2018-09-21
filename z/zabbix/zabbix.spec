@@ -16,7 +16,7 @@
 
 Name: zabbix
 Version: 3.4.14
-Release: alt1%ubt
+Release: alt2%ubt
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -34,7 +34,7 @@ Patch0: %name-%version-alt.patch
 
 %{?_enable_java:BuildPreReq: java-devel-default}
 BuildPreReq: libelf-devel
-BuildRequires(pre): rpm-build-webserver-common rpm-build-ubt
+BuildRequires(pre): rpm-build-webserver-common rpm-build-ubt rpm-macros-apache2
 
 # Automatically added by buildreq on Thu Nov 02 2017 (-bi)
 # optimized out: elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libnet-snmp30 libp11-kit libpq-devel libsasl2-3 libssl-devel net-snmp-config perl pkg-config python-base python3 rpm-build-python3 xz
@@ -514,6 +514,12 @@ bzip2 ChangeLog
 %preun_service zabbix_pgsql
 %endif
 
+%post phpfrontend-apache2
+%post_apache2_rpma2chkconfigfile
+
+%postun phpfrontend-apache2
+%post_apache2_rpma2chkconfigfile
+
 %post proxy
 %post_service zabbix_proxy
 
@@ -650,6 +656,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Sep 21 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.14-alt2%ubt
+- Add re-check apache2 config while
+  install/de-install zabbix-phpfrontend-apache2
+
 * Tue Sep 18 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.14-alt1%ubt
 - 3.4.14
 
