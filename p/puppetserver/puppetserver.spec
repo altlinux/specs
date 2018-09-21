@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:       puppetserver
-Version:    5.3.5
-Release:    alt2%ubt
+Version:    6.0.0
+Release:    alt1%ubt
 
 Summary:    Server automation framework and application
 License:    Apache-2.0
@@ -61,16 +61,16 @@ install -m 0644 puppetserver/config/conf.d/webserver.conf %buildroot%_sysconfdir
 install -m 0644 puppetserver/config/services.d/ca.cfg %buildroot%_sysconfdir/%name/services.d/ca.cfg
 
 install -d -m 0755 %buildroot%_datadir/%name/cli
-install -d -m 0755 %buildroot%_datadir/%name/apps
+install -d -m 0755 %buildroot%_datadir/%name/cli/apps
 install -d -m 0755 %buildroot%_bindir
 install -m 0755 puppetserver/bin/puppetserver %buildroot%_bindir/%name
-install -m 0755 puppetserver/cli/reload %buildroot%_datadir/%name/apps/reload
-install -m 0755 puppetserver/cli/stop %buildroot%_datadir/%name/apps/stop
-install -m 0755 puppetserver/cli/gem %buildroot%_datadir/%name/apps/gem
-install -m 0755 puppetserver/cli/irb %buildroot%_datadir/%name/apps/irb
-install -m 0755 puppetserver/cli/foreground %buildroot%_datadir/%name/apps/foreground
-install -m 0755 puppetserver/cli/ruby %buildroot%_datadir/%name/apps/ruby
-install -m 0755 puppetserver/cli/start %buildroot%_datadir/%name/apps/start
+install -m 0755 puppetserver/cli/reload %buildroot%_datadir/%name/cli/apps/reload
+install -m 0755 puppetserver/cli/stop %buildroot%_datadir/%name/cli/apps/stop
+install -m 0755 puppetserver/cli/gem %buildroot%_datadir/%name/cli/apps/gem
+install -m 0755 puppetserver/cli/irb %buildroot%_datadir/%name/cli/apps/irb
+install -m 0755 puppetserver/cli/foreground %buildroot%_datadir/%name/cli/apps/foreground
+install -m 0755 puppetserver/cli/ruby %buildroot%_datadir/%name/cli/apps/ruby
+install -m 0755 puppetserver/cli/start %buildroot%_datadir/%name/cli/apps/start
 
 install -m 0755 puppetserver/cli_defaults/cli-defaults.sh %buildroot%_datadir/%name/cli/
 
@@ -142,6 +142,9 @@ chmod 700 /var/lib/puppetserver/jars
 
 
 %changelog
+* Fri Sep 21 2018 Andrey Bychkov <mrdrew@altlinux.org> 6.0.0-alt1%ubt
+- updated version to 6.0.0 from src
+
 * Wed Sep 12 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.5-alt2%ubt
 - chown puppet/ssl for foreground
 
