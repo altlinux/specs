@@ -1,6 +1,6 @@
 Name: astra
 Version: 4.4
-Release: alt7
+Release: alt8
 Summary: Astra is a highly-customizable software for processing IPTV streams
 Group: Networking/Other
 
@@ -54,6 +54,9 @@ install -m 0755 -D scripts/stream.lua %buildroot%_sysconfdir/%name/scripts/strea
 %_bindir/*
 
 %changelog
+* Mon Sep 10 2018 Pavel Skrylev <majioa@altlinux.org> 4.4-alt8
+- Rebuild fix
+
 * Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 4.4-alt7
 - Rebuild with OpenSSL-1.1.x
 - Support libdvbcsa only on x86 arches (fix build on ARM)
