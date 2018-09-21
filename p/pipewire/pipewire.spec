@@ -1,8 +1,9 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.2
 %define api_ver 0.2
+%define spa_api_ver 0.1
 %define gst_api_ver 1.0
 
 %def_enable gstreamer
@@ -12,7 +13,7 @@
 %def_disable jack
 
 Name: pipewire
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Media Sharing Server
@@ -74,7 +75,7 @@ a PipeWire media server.
 Summary: PipeWire media server documentation
 Group: Documentation
 # https://bugzilla.altlinux.org/34101
-#BuildArch: noarch
+BuildArch: noarch
 Conflicts: %name-libs-devel < %version
 
 %description libs-devel-doc
@@ -93,9 +94,10 @@ This package contains command line utilities for the PipeWire media server.
 
 %build
 %meson \
-	%{?_enable_docs:-Denable_docs=true} \
-	%{?_enable_man:-Denable_man=true} \
-	%{?_enable_gstreamer:-Denable_gstreamer=true}
+	%{?_enable_docs:-Ddocs=true} \
+	%{?_enable_man:-Dman=true} \
+	%{?_enable_gstreamer:-Dgstreamer=true}
+	%{?_disable_systemd:-Dsystemd=false}
 %meson_build
 
 %install
@@ -119,21 +121,20 @@ This package contains command line utilities for the PipeWire media server.
 %_prefix/lib/systemd/user/pipewire.socket
 %endif
 %_man1dir/%name.1*
+%_man5dir/%name.conf.5*
 %doc README NEWS
 
 %files libs
 %_libdir/lib%name-%api_ver.so.*
-%_libdir/libspa-lib.so.*
 %_libdir/%name-%api_ver/
 %_libdir/spa/
 
 %files libs-devel
 %_libdir/lib%name-%api_ver.so
-%_libdir/libspa-lib.so
 %_includedir/%name/
 %_includedir/spa/
 %_pkgconfigdir/lib%name-%api_ver.pc
-%_pkgconfigdir/libspa-%api_ver.pc
+%_pkgconfigdir/libspa-%spa_api_ver.pc
 
 %files libs-devel-doc
 %_datadir/doc/%name/html
@@ -147,6 +148,9 @@ This package contains command line utilities for the PipeWire media server.
 %_man1dir/%name-cli.1*
 
 %changelog
+* Fri Sep 21 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
+- updated to 0.2.3-7-g58efa8c2
+
 * Sat Aug 04 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
 - 0.2.2
 
