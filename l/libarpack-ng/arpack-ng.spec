@@ -1,5 +1,5 @@
 Name:    libarpack-ng
-Version: 3.6.0
+Version: 3.6.3
 Release: alt1
 Summary: Fortran 77 subroutines for solving large scale eigenvalue problems
 
@@ -13,7 +13,9 @@ Source: arpack-ng-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: gcc-fortran
+%ifarch %ix86 x86_64
 BuildRequires: libatlas-devel
+%endif
 BuildRequires: liblapack-devel
 
 Provides:  arpack = %version-%release
@@ -89,6 +91,16 @@ rm -rf %buildroot%_libdir/*.la
 %_libdir/libarpack.a
 
 %changelog
+* Wed Sep 19 2018 Andrey Cherepanov <cas@altlinux.org> 3.6.3-alt1
+- New version.
+- Build with libatlas only for i586 and x86_64.
+
+* Sun Aug 26 2018 Andrey Cherepanov <cas@altlinux.org> 3.6.2-alt1
+- New version.
+
+* Mon Jun 25 2018 Andrey Cherepanov <cas@altlinux.org> 3.6.1-alt1
+- New version.
+
 * Wed Jun 06 2018 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1
 - New version.
 
