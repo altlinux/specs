@@ -1,6 +1,6 @@
 Name: kodi
 Version: 17.6
-Release: alt4
+Release: alt5
 
 Summary: Kodi Media Center
 License: GPL
@@ -139,6 +139,9 @@ E_O_F
 %_libdir/kodi/*.cmake
 
 %changelog
+* Tue Sep 18 2018 Alexey Shabalin <shaba@altlinux.org> 17.6-alt5
+- rebuilt with recent libmicrohttpd
+
 * Fri Aug 31 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.6-alt4
 - rebuilt with recent openssl
 

@@ -56,7 +56,7 @@
 Name: systemd
 Epoch: 1
 Version: 239
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1832,6 +1832,10 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Mon Sep 17 2018 Alexey Shabalin <shaba@altlinux.org> 1:239-alt2
+- merge with v239-stable
+- build with libmicrohttpd-0.9.59
+
 * Fri Jun 22 2018 Alexey Shabalin <shaba@altlinux.ru> 1:239-alt1
 - 239
 - backport some patches from master
