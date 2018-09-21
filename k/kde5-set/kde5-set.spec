@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 18.04.0
+Version: 18.04.1
 Release: alt1%ubt
 
 Group: Graphical desktop/KDE
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-build-ubt
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: qt5-phonon-backend qt5-quickcontrols qt5-quickcontrols2 qt5-graphicaleffects qt5-imageformats qt5-translations
-Requires: kf5-kio kf5-kded kf5-kinit plasma5-kwayland-integration kf5-qqc2-desktop-style
+Requires: kf5-kio kf5-kded kf5-kinit plasma5-kwayland-integration
 %description -n kde5-runtime
 %summary
 
@@ -53,6 +53,7 @@ Obsoletes: kde5-normal < %EVR kde5-default < %EVR
 ##Requires: pam0_kwallet5
 Requires: gtk3-theme-breeze
 Requires: gtk2-theme-breeze
+Requires: kf5-qqc2-desktop-style
 Requires: kde5-small
 Requires: kde5-video-player
 Requires: kde5-audio-player
@@ -82,7 +83,8 @@ Requires: kde5-konversation kde5-kate
 Requires: kde5-pim kde5-pim-addons kde5-kcron kde5-kruler kde5-ffmpegthumbs
 Requires: kde5-krfb
 Requires: kde5-kdf kde5-kfloppy
-Requires: kid3-ui-kde5 ring-client-kde5
+Requires: kid3-ui-kde5
+Requires: ring-client-kde5
 Requires: kde5-kipi-plugins-core
 %description -n kde5-big
 %summary
@@ -184,6 +186,9 @@ Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-g
 %files -n kde5-pim
 
 %changelog
+* Fri Sep 21 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+- clean requires
+
 * Wed Jul 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.0-alt1%ubt
 - update requires
 
