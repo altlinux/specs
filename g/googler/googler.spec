@@ -1,7 +1,7 @@
 %global _unpacked_files_terminate_build 1
 
 Name:    googler
-Version: 3.5
+Version: 3.7
 Release: alt1
 
 Summary: Google Search, Google Site Search, Google News from the terminal
@@ -30,14 +30,17 @@ install -Dm 644 auto-completion/bash/googler-completion.bash %buildroot/%_syscon
 install -Dm 644 auto-completion/fish/googler.fish %buildroot%_datadir/fish/vendor_completions.d/%name.fish
 
 %files
+%doc README*
+%doc %_man1dir/*
 %_bindir/%name
 %_sysconfdir/bash_completion.d/%name
 %_datadir/zsh/site-functions/_%name
 %_datadir/fish/vendor_completions.d/%name.fish
-%_man1dir/*
-%_docdir/%name/*
 
 %changelog
+* Fri Sep 21 2018 Mikhail Gordeev <obirvalger@altlinux.org> 3.7-alt1
+- new version 3.7
+
 * Fri Mar 23 2018 Mikhail Gordeev <obirvalger@altlinux.org> 3.5-alt1
 - new version 3.5
 
