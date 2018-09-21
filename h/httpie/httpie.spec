@@ -1,10 +1,11 @@
 %define py3bdir ../%name-%version-python3-build
+%define realversion 0.9.8
 
 %def_with python3
 
 Name: httpie
-Version: 0.9.8
-Release: alt3
+Version: 0.9.9
+Release: alt1
 Summary: A Curl-like tool for humans
 
 Group: Networking/WWW
@@ -91,7 +92,7 @@ help2man --no-discard-stderr %buildroot/%_bindir/http.python3 > %buildroot/%_man
 %files
 %_bindir/http
 %python_sitelibdir/%name
-%python_sitelibdir/%name-%{version}*
+%python_sitelibdir/%name-%{realversion}*
 %_man1dir/http.1.*
 %doc LICENSE README.rst
 
@@ -99,12 +100,15 @@ help2man --no-discard-stderr %buildroot/%_bindir/http.python3 > %buildroot/%_man
 %files -n httpie-python3
 %_bindir/http.python3
 %python3_sitelibdir/%name
-%python3_sitelibdir/%name-%{version}*
+%python3_sitelibdir/%name-%{realversion}*
 %_man1dir/http.python3.1.*
 %doc LICENSE README.rst
 %endif
 
 %changelog
+* Fri Sep 21 2018 Terechkov Evgenii <evg@altlinux.org> 0.9.9-alt1
+- 0.9.9
+
 * Wed Jul 18 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.8-alt3
 - Fixed FTBFS (Add BR python3-module-setuptools).
 
