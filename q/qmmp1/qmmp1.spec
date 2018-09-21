@@ -6,7 +6,7 @@
 %define rname qmmp
 Name: qmmp1
 Version: 1.2.3
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: Sound
 Summary: Qmmp - Qt-based multimedia player
@@ -16,8 +16,8 @@ Url: http://qmmp.ylsoftware.com/
 License: GPLv2
 
 Provides: qmmp = %version-%release
-Conflicts: qmmp
-Conflicts: qmmp-docs qmmp-qsui
+Conflicts: qmmp < 1:0.12.0-alt0.M80P.svn8288.1
+Conflicts: qmmp-docs < 1:0.12.0-alt0.M80P.svn8288.1 qmmp-qsui < 1:0.12.0-alt0.M80P.svn8288.1
 
 Requires: unzip winamplike-skins
 
@@ -213,8 +213,8 @@ Other features:
 %package devel
 Summary: Qmmp header files
 Group: Development/C++
-Provides: qmmp-devel = %version-%release
-Conflicts: qmmp-devel
+Provides: qmmp-devel = %version-%release libqmmp-devel = %version-%release
+Conflicts: qmmp-devel < 1:0.12.0-alt0.M80P.svn8288.1 libqmmp-devel < 1:0.12.0-alt0.M80P.svn8288.1
 %description devel
 %name-devel contains the header files needed to develop
 programs which make use of Qmmp.
@@ -273,6 +273,9 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_libdir/lib*.so
 
 %changelog
+* Fri Sep 21 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.3-alt2%ubt
+- resolve conflicts with current qmmp
+
 * Wed Sep 19 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.3-alt1%ubt
 - new version
 
