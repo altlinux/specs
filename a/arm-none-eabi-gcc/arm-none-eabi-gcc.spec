@@ -10,7 +10,7 @@
 
 Name: arm-none-eabi-gcc
 Version: %gcc_ver
-Release: alt2
+Release: alt3
 Summary: GNU GCC for cross-compilation for %target target
 Group: Development/Tools
 
@@ -45,7 +45,7 @@ Requires: %target-newlib
 %endif
 
 Requires: %target-binutils >= 2.21
-%add_python_req_skip libstdcxx
+%add_python_req_skip libstdcxx gdb
 
 %description
 This is a Cross Compiling version of GNU GCC, which can be used to
@@ -275,6 +275,10 @@ popd
 %endif
 
 %changelog
+* Thu Sep 20 2018 Anton Midyukov <antohami@altlinux.org> 7.3.1-alt3
+- first build for aarch64
+- skip requires python(gdb)
+
 * Thu Apr 19 2018 Anton Midyukov <antohami@altlinux.org> 7.3.1-alt2
 - Rebuild with newlib 3.0.0 (without bootstrap)
 
