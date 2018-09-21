@@ -2,13 +2,13 @@
 %define sname minion
 
 Name: perl-Minion
-Version: 9.03
+Version: 9.05
 Release: alt1
 Summary: Job queue
 License: Artistic-2.0
 Group: Development/Perl
 Url: http://search.cpan.org/dist/Minion/
-Source: %sname-%version.tar
+Source0: http://www.cpan.org/authors/id/S/SR/SRI/Minion-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: perl-devel
@@ -32,7 +32,7 @@ filtering, HTTP downloads, building tarballs, warming caches and basically
 everything else you can imagine that's not super fast.
 
 %prep
-%setup -q -n %sname-%version
+%setup -q -n Minion-%{version}
 
 %build
 %perl_vendor_build
@@ -41,10 +41,14 @@ everything else you can imagine that's not super fast.
 %perl_vendor_install
 
 %files
+%doc LICENSE Changes README.md examples
 %perl_vendorlib/Minion*
 %perl_vendorlib/Mojolicious*
 %doc LICENSE README.md Changes
 
 %changelog
+* Thu Sep 20 2018 Igor Vlasenko <viy@altlinux.ru> 9.05-alt1
+- automated CPAN update
+
 * Tue Jun 19 2018 Alexandr Antonov <aas@altlinux.org> 9.03-alt1
 - initial build for ALT
