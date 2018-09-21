@@ -3,12 +3,11 @@
 # clang 4.0.1 is not supported, only missing clang 3.9
 %def_with ClangCodeModel
 
-%add_findreq_skiplist *gdbmacros*
-%add_python_req_skip lldb
-%add_findreq_skiplist %_datadir/qtcreator/templates/wizards/classes/python/file.py
+%add_findreq_skiplist  %_datadir/qtcreator/*
+%add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 4.7.0
+Version: 4.7.1
 Release: alt1
 Summary: Cross-platform IDE for Qt
 
@@ -122,6 +121,10 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Fri Sep 21 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.1-alt1
+- Updated to upstream version 4.7.1.
+- Updated runtime dependencies.
+
 * Tue Sep 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.0-alt1
 - Updated to upstream version 4.7.0.
 - Applied patch from upstream for supporting libbotan-2.
