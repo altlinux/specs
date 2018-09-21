@@ -1,6 +1,6 @@
 Name: dwdiff
 Version: 2.1.1
-Release: alt1
+Release: alt2
 
 Summary: front-end for the diff program that operates at the word level
 
@@ -43,6 +43,9 @@ rm -rf %buildroot%_mandir/nl*
 %_docdir/%name-%version/
 
 %changelog
+* Fri Sep 21 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt2
+- rebuild with libicu 6.2.1
+
 * Fri Jan 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.1-alt1
 - Updated to upstream version 2.1.1.
 
