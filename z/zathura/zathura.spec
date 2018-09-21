@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -61,12 +61,17 @@ mkdir -p %buildroot%_libdir/zathura
 %_man1dir/*
 %_man5dir/*
 %_datadir/dbus-1/interfaces/org.pwmt.*
+%_datadir/bash-completion/completions/*
+%_datadir/zsh/vendor-completions/*
 
 %files devel
 %_includedir/*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Sep 21 2018 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
+- Updated to 0.4.1.
+
 * Fri May 25 2018 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
 - Updated to 0.4.0.
 
