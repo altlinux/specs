@@ -1,6 +1,6 @@
 %define soversion 5
 Name: oniguruma
-Version: 6.8.2
+Version: 6.9.0
 Release: alt1%ubt
 Summary: Regular expressions library
 
@@ -92,6 +92,9 @@ find $RPM_BUILD_ROOT -name '*.la' \
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Fri Sep 21 2018 Anton Farygin <rider@altlinux.ru> 6.9.0-alt1%ubt
+- 6.9.0 
+
 * Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 6.8.2-alt1%ubt
 - new version
 
