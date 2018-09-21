@@ -7,7 +7,7 @@
 %define xdg_name org.gnome.Epiphany
 
 Name: epiphany
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -25,7 +25,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Provides: webclient
 Obsoletes: %name-extensions
 
-%define webkit_ver 2.22.0
+%define webkit_ver 2.22.2
 %define gtk_ver 3.22.13
 %define libxml2_ver 2.6.12
 %define xslt_ver 1.1.7
@@ -104,6 +104,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sat Sep 22 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
+- 3.30.1
+
 * Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

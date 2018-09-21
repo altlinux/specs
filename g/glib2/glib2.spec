@@ -3,6 +3,7 @@
 %define _libexecdir %_prefix/libexec
 %define ver_major 2.58
 %define pcre_ver 8.31
+%define gio_module_dir %_libdir/gio/modules
 
 %set_verify_elf_method strict
 %add_verify_elf_skiplist %_libexecdir/installed-tests/glib/*
@@ -13,11 +14,13 @@
 %def_disable systemtap
 %def_enable installed_tests
 %def_enable gtk_doc
+%def_enable man
+%def_enable libmount
 %def_disable debug
 %def_disable check
 
 Name: glib2
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -41,7 +44,7 @@ Source6: gio-compat-2.57.lds
 Source10: glib2.sh
 Source11: glib2.csh
 
-Patch: glib-2.35.9-alt-compat-version-script.patch
+Patch: glib-2.58.1-alt-compat-version-script.patch
 # stop spam about deprecated paths in schemas
 Patch1: glib-2.53.5-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.53.7-alt-add-xvt.patch
@@ -70,10 +73,11 @@ Requires: pcre-config(utf8) pcre-config(unicode-properties)
 BuildPreReq: pcre-config(utf8) pcre-config(unicode-properties)
 %endif
 
-BuildRequires(pre): rpm-build-licenses rpm-build-python3
-BuildRequires: gnome-common gtk-doc indent
+BuildRequires(pre): meson rpm-build-licenses rpm-build-python3
+BuildRequires: gcc-c++ gtk-doc indent
 BuildRequires: glibc-kernheaders libdbus-devel libpcre-devel
-BuildRequires: libffi-devel zlib-devel libelf-devel libmount-devel
+BuildRequires: libffi-devel zlib-devel libelf-devel
+%{?_enable_libmount:BuildRequires: libmount-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?_enable_fam:BuildRequires: libgamin-devel}
 %{?_enable_systemtap:BuildRequires: libsystemtap-sdt-devel}
@@ -231,23 +235,22 @@ install -p -m644 %_sourcedir/gio-compat-2.57.lds gio/compat.lds
 subst '/exit 1/d' check-abis.sh
 
 %build
-NOCONFIGURE=1 ./autogen.sh
-%configure \
-    --enable-static \
-    %{subst_enable selinux} \
-    --enable-xattr \
-    %{?_enable_gtk_doc:--enable-gtk-doc} \
-    --enable-included-printf=no \
-    %{?_without_sys_pcre:--with-pcre=internal} \
-    %{subst_enable fam} \
-    %{subst_enable systemtap} \
-    %{?_enable_installed_tests:--enable-installed-tests} \
-    %{?_enable_debug:--enable-debug=yes} \
-    PYTHON=python3
-%make_build
+%meson \
+    --default-library=both \
+    -Dgio_module_dir='%gio_module_dir' \
+    %{?_disable_selinux:-Dselinux=false} \
+    %{?_disable_xattr:-Dxattr=false} \
+    %{?_disable_libmount:-Dlibmount=false} \
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{?_enable_man:-Dman=true} \
+    %{?_without_sys_pcre:-Dinternal_pcre=true} \
+    %{?_enable_fam:-Dfam=true} \
+    %{?_enable_systemtap:-Dsystemtap=true} \
+    %{?_enable_installed_tests:-Dinstalled_tests=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 # Relocate libgilb-2.0.so.0 to /%_lib.
 mkdir -p %buildroot/%_lib
@@ -261,7 +264,8 @@ install -pD -m755 %_sourcedir/glib2.csh %buildroot%_sysconfdir/profile.d/glib2.c
 chmod +x %buildroot%_bindir/gtester-report
 
 # GIO modules cache
-touch %buildroot%_libdir/gio/modules/giomodule.cache
+mkdir -p %buildroot%gio_module_dir
+touch %buildroot%gio_module_dir/giomodule.cache
 # filetrigger that updates GIO modules cache
 cat <<EOF > filetrigger
 #!/bin/sh -e
@@ -287,7 +291,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %check
 # g_mapped_file_new fails on /dev/null in hasher
 # GLib:ERROR:mappedfile.c:52:test_device: assertion failed (error == (g-file-error-quark, 17)): Failed to map /dev/null' /dev/null': mmap() failed: No such device (g-file-error-quark, 7)
-%make check
+%meson_test
 
 %files
 /%_lib/libglib-2.0.so.0*
@@ -405,14 +409,15 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %if_enabled installed_tests
 %files tests
 %_libexecdir/installed-tests/glib/
-%exclude %_libexecdir/installed-tests/glib/*.a
-%exclude %_libexecdir/installed-tests/glib/*.la
 # exclude empty
-%exclude %_libexecdir/installed-tests/glib/x-content/unix-software/autorun.sh
+#%exclude %_libexecdir/installed-tests/glib/x-content/unix-software/autorun.sh
 %_datadir/installed-tests/glib/
 %endif
 
 %changelog
+* Fri Sep 21 2018 Yuri N. Sedunov <aris@altlinux.org> 2.58.1-alt1
+- 2.58.1 (ported to meson build system)
+
 * Thu Aug 30 2018 Yuri N. Sedunov <aris@altlinux.org> 2.58.0-alt1
 - 2.58.0
 
@@ -821,7 +826,6 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 - New version (2.15.6).
 - Updated dependencies and version scripts.
 - New subpackages, libgio and libgio-devel.
-- %%__autoreconf -> %%autoreconf.
 
 * Thu Jan 10 2008 Alexey Rusakov <ktirf@altlinux.org> 2.14.5-alt1
 - New version (2.14.5).
@@ -831,7 +835,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 * Thu Nov 08 2007 Alexey Rusakov <ktirf@altlinux.org> 2.14.3-alt1
 - New version (2.14.3).
-- Added --enable-regex switch.
+- Added -Denable-regex=true switch.
 - Enforce usage of the system supplied printf (just to make sure).
 
 * Tue Oct 02 2007 Alexey Rusakov <ktirf@altlinux.org> 2.14.1-alt4
