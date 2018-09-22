@@ -55,7 +55,7 @@ Epoch: 1
 %define subver 1.3
 Version: %ver.%subver
 %define plevel b
-Release: alt3%ubt.1
+Release: alt4%ubt
 Summary: A programming language developed by Ericsson
 License: %asl
 Group: Development/Erlang
@@ -105,7 +105,7 @@ BuildRequires: rpm-build-%name
 BuildRequires: gcc-c++ flex libunixODBC-devel zlib-devel /proc symlinks
 #BuildRequires: wxGTK-contrib-stc-devel >= 2.8.4, wxGTK-devel >= 2.8.4
 #BuildRequires: wxGTK-contrib-stc >= 2.8.4, wxGTK >= 2.8.4
-BuildRequires: libwxGTK3.1-devel
+BuildRequires: libwxGTK3.0-devel
 BuildRequires: libGLU-devel
 BuildRequires: libsystemd-devel
 %{?_enable_sctp:BuildRequires: liblksctp-devel}
@@ -1261,6 +1261,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Sat Sep 22 2018 Anton Midyukov <antohami@altlinux.org> 1:20.1.3-alt4%ubt
+- Rebuilt with libwxGTK3.0
+
 * Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 1:20.1.3-alt3%ubt.1
 - NMU: rebuild with new openssl.
 
