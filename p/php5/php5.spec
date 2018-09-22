@@ -3,13 +3,13 @@
 
 Summary: The PHP5 scripting language
 Name:	 php5
-Version: 5.6.37
+Version: 5.6.38
 Release: alt1%ubt
 
 %define php5_name      %name
 %define _php5_version  %version
 %define _php5_major  5.6
-%define _php5_snapshot 20180719
+%define _php5_snapshot 20180912
 %define php5_release   %release
 %define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
 
@@ -60,9 +60,9 @@ Requires(post):  php5-suhosin
 Provides: php-engine = %version-%release
 Provides: %name = %rpm_build_version-%release
 
-BuildRequires: chrpath libmm-devel libxml2-devel ssmtp termutils zlib-devel re2c bison
+BuildRequires: chrpath libmm-devel libxml2-devel ssmtp termutils zlib-devel re2c bison alternatives
 
-BuildRequires(pre): rpm-build-php5
+BuildRequires(pre): rpm-build-php5 rpm-macros-alternatives
 BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: libtool_1.5 chrpath
@@ -434,8 +434,11 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Fri Sep 21 2018 Anton Farygin <rider@altlinux.ru> 5.6.38-alt1%ubt
+- 5.6.38
+
 * Tue Jul 31 2018 Anton Farygin <rider@altlinux.ru> 5.6.37-alt1%ubt
-- 5.6.47 with fixes for multiple security issues
+- 5.6.37 with fixes for multiple security issues
 
 * Tue May 08 2018 Anton Farygin <rider@altlinux.ru> 5.6.36-alt1%ubt
 - 5.6.33 (fixes: CVE-2018-10549, CVE-2018-10546, CVE-2018-10548, CVE-2018-10547, CVE-2018-10545, CVE-2018-7584)
