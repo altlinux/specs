@@ -3,13 +3,13 @@
 
 Name: gvpe
 Version: 3.0
-Release: alt3
+Release: alt4
 
 Summary: virtual ethernet SSL VPN
 
 License: %gpl3plus
 Group: System/Servers
-Url: http://software.schmorp.de/pck/gvpe.html
+Url: http://software.schmorp.de/pkg/gvpe.html
 
 Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
@@ -112,6 +112,9 @@ install -D -m 0644 -- %SOURCE6 %buildroot%_unitdir/%name.service
 %_unitdir/%{name}*.service
 
 %changelog
+* Sat Sep 22 2018 Nikolay A. Fetisov <naf@altlinux.org> 3.0-alt4
+- Fix URL in spec file (Closes: 35384)
+
 * Sat Sep 08 2018 Nikolay A. Fetisov <naf@altlinux.org> 3.0-alt3
 - Fix build with openssl 1.1.0i
 
