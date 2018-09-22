@@ -3,8 +3,8 @@
 %define real_name Net-IDN-Encode
 
 Name: perl-Net-IDN-Encode
-Version: 2.400
-Release: alt1.1.1
+Version: 2.401
+Release: alt1
 
 Summary: Encoding and decoding of Internationalized Domain Names
 
@@ -48,6 +48,9 @@ Net::IDN::Punycode - ASCII-compatible encoding of Unicode
 %perl_vendor_archlib/Net
 
 %changelog
+* Sat Sep 22 2018 Nikolay A. Fetisov <naf@altlinux.org> 2.401-alt1
+- New version
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.400-alt1.1.1
 - rebuild with new perl 5.26.1
 
