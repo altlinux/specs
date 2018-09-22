@@ -3,7 +3,7 @@
 
 Name: pecl-%pecl_name
 Version: 1.0.1
-Release: alt25%ubt
+Release: alt26%ubt
 # see commit a3d7db22eb7964ea9cb39ea2f866d10df26655d4
 # of git://github.com/do-aki/php-ext-perl.git
 Patch0: %name-1.0.1-alt-fix_php5.4.patch
@@ -56,6 +56,9 @@ phpize
 %pecl_files
 
 %changelog
+* Sat Sep 22 2018 Anton Farygin <rider@altlinux.ru> 1.0.1-alt26%ubt
+- rebuild with php5-5.6.38
+
 * Tue Jul 31 2018 Anton Farygin <rider@altlinux.ru> 1.0.1-alt25%ubt
 - rebuild with php5-5.6.37
 

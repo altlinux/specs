@@ -5,7 +5,7 @@
 
 Name: cups-filters
 Version: 1.21.2
-Release: alt1
+Release: alt2
 
 Summary: OpenPrinting CUPS filters and backends
 # For a breakdown of the licensing, see COPYING file
@@ -227,6 +227,9 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Sat Sep 22 2018 Anton Farygin <rider@altlinux.ru> 1.21.2-alt2
+- rebuilt with php5-5.6.38
+
 * Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 1.21.2-alt1
 - new version 1.21.2
 
