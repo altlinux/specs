@@ -4,6 +4,7 @@
 %define api_ver 4.0
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
 %define gtk_ver 3.0
+%define gst_ver 1.14.3
 
 %define oname webkit
 %define _name webkitgtk
@@ -21,7 +22,7 @@
 %define smp %__nprocs
 
 Name: libwebkitgtk4
-Version: 2.22.1
+Version: 2.22.2
 Release: alt1
 
 Summary: Web browser engine
@@ -32,7 +33,7 @@ Url: https://www.webkitgtk.org/
 Source: %url/releases/%_name-%version.tar.xz
 Source1: webkit2gtk.env
 
-Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav
+Requires: gst-plugins-base1.0 >= %gst_ver gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav
 Requires: hyphen-en hyphen-ru
 
 BuildRequires(pre): rpm-build-licenses rpm-build-gir
@@ -47,7 +48,7 @@ BuildRequires: libgail3-devel >= 3.0
 BuildRequires: libenchant2-devel >= 2.2.3
 BuildRequires: libsqlite3-devel >= 3.0
 BuildRequires: libxslt-devel >= 1.1.7
-BuildRequires: gstreamer1.0-devel >= 1.0.3 gst-plugins1.0-devel >= 1.0.3 gst-plugins-bad1.0-devel
+BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver gst-plugins-bad1.0-devel
 BuildRequires: librsvg-devel >= 2.2.0
 BuildRequires: gtk-doc >= 1.10
 BuildRequires: libsoup-devel >= 2.61.90
@@ -310,6 +311,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Sat Sep 22 2018 Yuri N. Sedunov <aris@altlinux.org> 2.22.2-alt1
+- 2.22.2
+
 * Thu Sep 20 2018 Yuri N. Sedunov <aris@altlinux.org> 2.22.1-alt1
 - 2.22.1
 
