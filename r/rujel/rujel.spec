@@ -2,7 +2,7 @@
 
 Name:		rujel
 Version:	1.2
-Release:	alt4
+Release:	alt5
 
 Summary:	RUJEL is a web-portal application for maintaining online markbook in schools.
 Summary(ru_RU.UTF-8): РУЖЭЛЬ — веб-приложение для ведения классного журнала.
@@ -213,6 +213,8 @@ fi
 %config %wo_configdir/rujel/RujelReports
 
 %changelog
+* Sat Sep 22 2018 Gennady Kushnir <baywind@altlinux.org> 1.2-alt5
+- upstream update (615a4303...)
 * Sat Sep 08 2018 Gennady Kushnir <baywind@altlinux.org> 1.2-alt4
 - upstream update (a048538d...)
 * Mon Aug 20 2018 Gennady Kushnir <baywind@altlinux.org> 1.2-alt3
