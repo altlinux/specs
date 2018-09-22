@@ -1,13 +1,13 @@
 Name:		xmrig
-Version:	2.6.3
-Release:	alt2
+Version:	2.8.0
+Release:	alt3
 Summary:	Monero (XMR) CPU miner
 Url:		https://github.com/xmrig/xmrig
 Group:		Office
 License:	GPLv3
 Source0:	%name.tar.xz
 
-BuildRequires: cmake gcc-c++ libmicrohttpd-devel libstdc++-devel-static libuv-devel
+BuildRequires: cmake gcc-c++ libmicrohttpd-devel libssl-devel-static libstdc++-devel-static libuv-devel libkrb5-devel zlib-devel
 
 %description
 XMRig is high performance Monero (XMR) CPU miner, with the official full Windows support.
@@ -34,6 +34,15 @@ install -Dp -m 0755 ./%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Sat Sep 22 2018 Motsyo Gennadi <drool@altlinux.ru> 2.8.0-alt3
+- upstream link fixing
+
+* Sat Sep 22 2018 Motsyo Gennadi <drool@altlinux.ru> 2.8.0-alt2
+- fix buildrequires
+
+* Sat Sep 22 2018 Motsyo Gennadi <drool@altlinux.ru> 2.8.0-alt1
+- 2.8.0
+
 * Tue Sep 18 2018 Alexey Shabalin <shaba@altlinux.org> 2.6.3-alt2
 - rebuild with libmicrohttpd-0.9.59
 
