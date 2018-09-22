@@ -1,20 +1,21 @@
 Name: httperf
 Version: 0.9.0
-Release: alt3.qa1
-
-Packager: Victor Forsiuk <force@altlinux.org>
+Release: alt4.git3209c7f9
 
 Summary: Tool for measuring web server performance
 License: GPLv2+ with exceptions
 Group: Networking/WWW
 
-Url: http://www.hpl.hp.com/research/linux/httperf
-Source0: ftp://ftp.hpl.hp.com/pub/httperf/httperf-%version.tar.gz
-Source1: ftp://ftp.hpl.hp.com/pub/httperf/httperf-paper-html.tar.gz
+URL:  https://github.com/httperf/httperf
+#URL: http://www.hpl.hp.com/research/linux/httperf
+Source0: %name-%version.tar
+Patch0:  %name-%version-%release.patch
+Source1: %name-paper-html.tar
 Source2: ftp://ftp.hpl.hp.com/pub/httperf/httperf-paper.ps
 
-# Automatically added by buildreq on Fri Dec 28 2007
-BuildRequires: libssl-devel
+# Automatically added by buildreq on Sat Sep 22 2018
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 perl python-base python-modules python3 python3-base python3-dev ruby ruby-stdlibs sh3
+BuildRequires: glibc-devel-static libssl-devel
 
 %define pkgdocdir %_docdir/%name-%version
 
@@ -38,27 +39,30 @@ HTML and PostScript documentation for it.
 
 %prep
 %setup
-tar zxf %SOURCE1
+%patch0 -p1
+tar xf %SOURCE1
 mv %name html
-gzip -9n < %SOURCE2 > httperf-paper.ps.gz
+install -m 0644 %SOURCE2 httperf-paper.ps
 
 %build
+%autoreconf
 %configure
-%make_build
+%make
 
 %install
 %makeinstall_std
 # now docs...
 install -d -m755 %buildroot%pkgdocdir
 # by hand to avoid using %%doc purging the above
-install -p -m644 README httperf-paper.ps.gz %buildroot%pkgdocdir
+gzip httperf-paper.ps
+install -p -m644 README.md httperf-paper.ps.gz %buildroot%pkgdocdir
 cp -a html icons %buildroot%pkgdocdir
 
 %files
 %_bindir/*
 %_man1dir/*
 %dir %pkgdocdir
-%pkgdocdir/README
+%pkgdocdir/README.md
 
 %files docs
 %dir %pkgdocdir
@@ -67,6 +71,9 @@ cp -a html icons %buildroot%pkgdocdir
 %pkgdocdir/httperf-paper.ps.gz
 
 %changelog
+* Thu Sep 20 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.9.0-alt4.git3209c7f9
+- Fix build with OpenSSL 1.1.0i
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.0-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
