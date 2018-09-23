@@ -1,7 +1,9 @@
+# option for bootstrap (possible circular dependency)
+%def_with RPMSourceEditor
 %define module Gear-Rules
 
 Name: perl-%module
-Version: 0.194
+Version: 0.195
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -12,9 +14,11 @@ License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
-# Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel  perl-RPM-Source-Editor perl(Pod/Usage.pm) perl(Pod/Text.pm)
+BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm)
 Requires: gear perl(Pod/Text.pm)
+%if_with RPMSourceEditor
+BuildRequires: perl-RPM-Source-Editor
+%endif
 
 %description
 %summary
@@ -34,8 +38,14 @@ Requires: gear perl(Pod/Text.pm)
 %perl_vendor_privlib/G*
 %_bindir/*
 %_man1dir/*
+%if_without RPMSourceEditor
+%exclude %_bindir/gear-rules-verify
+%endif
 
 %changelog
+* Sun Sep 23 2018 Igor Vlasenko <viy@altlinux.ru> 0.195-alt1
+- new version
+
 * Wed Oct 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.194-alt1
 - new version
 
