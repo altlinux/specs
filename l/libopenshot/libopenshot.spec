@@ -6,7 +6,7 @@
 %def_disable doc
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: OpenShot Video Library
@@ -20,14 +20,15 @@ Source: %url/%ver_major/%version/+download/%name-%version.tar.gz
 # VCS: https://github.com/OpenShot/libopenshot.git
 Source: %name-%version.tar
 %endif
-Patch: libopenshot-0.2.0-arch-ffmpeg4.patch
 
 %define __python %nil
-BuildRequires: gcc-c++ cmake libgomp-devel libunittest-cpp-devel jsoncpp-devel
-BuildRequires: %name-audio-devel qt5-multimedia-devel libzeromq-cpp-devel libImageMagick-devel
+BuildRequires(pre): cmake rpm-build-python3
+BuildRequires: %name-audio-devel >= 0.1.7
+BuildRequires: gcc-c++ libgomp-devel libunittest-cpp-devel jsoncpp-devel
+BuildRequires: qt5-multimedia-devel libzeromq-cpp-devel libImageMagick-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
-BuildRequires: libavresample-devel libswscale-devel libavdevice-devel
-BuildRequires: rpm-build-python3 python3-devel swig
+BuildRequires: libavresample-devel libswresample-devel libswscale-devel libavdevice-devel
+BuildRequires: python3-devel swig
 
 %description
 libopenshot is an open-source, cross-platform C++ library dedicated to
@@ -56,12 +57,6 @@ This package provides Python3 bindings for OpenShot Video Library.
 
 %prep
 %setup
-# ffmpeg-4.0 fixes
-%patch -p1
-sed -i \
-	-e 's#FF_INPUT_BUFFER_PADDING_SIZE#AV_INPUT_BUFFER_PADDING_SIZE#g' \
-	-e 's#CODEC_FLAG_GLOBAL_HEADER#AV_CODEC_FLAG_GLOBAL_HEADER#g' \
-	src/FFmpegWriter.cpp src/FFmpegReader.cpp
 
 %build
 %cmake  -DUSE_SYSTEM_JSONCPP:BOOL=ON \
@@ -84,6 +79,12 @@ sed -i \
 %python3_sitelibdir/*
 
 %changelog
+* Sun Sep 23 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
+- 0.2.2
+
+* Thu Sep 20 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
+- 0.2.1
+
 * Sat Jun 30 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0
 
