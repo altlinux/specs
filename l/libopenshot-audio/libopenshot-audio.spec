@@ -4,7 +4,7 @@
 %define libopenshot_ver %ver_major.3
 
 Name: %_name-audio
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: OpenShot Audio Library
@@ -15,7 +15,8 @@ Url: https://launchpad.net/%_name
 #VCS: https://github.com/OpenShot/libopenshot-audio.git
 Source: %url/%ver_major/%libopenshot_ver/+download/%name-%version.tar.gz
 
-BuildRequires: gcc-c++ cmake libalsa-devel libfreetype-devel
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++ libalsa-devel libfreetype-devel
 BuildRequires: libX11-devel libXrandr-devel libXext-devel libXinerama-devel libXcursor-devel
 
 %description
@@ -52,6 +53,9 @@ that are needed to write applications that use %name.
 %_libdir/%name.so
 
 %changelog
+* Thu Sep 20 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.7-alt1
+- 0.1.7
+
 * Sat Jun 30 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.6-alt1
 - 0.1.6
 

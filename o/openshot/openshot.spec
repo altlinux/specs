@@ -2,7 +2,7 @@
 %define ver_major 2.4
 
 Name: openshot
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Non Linear Video Editor using Python and MLT
@@ -19,16 +19,18 @@ Source: %name-%version.tar.gz
 
 BuildArch: noarch
 
-Requires: python3-module-%name >= 0.2.0
+Requires: python3-module-%name >= 0.2.2
 Requires: blender inkscape
 
+%add_typelib_req_skiplist typelib(Unity)
 # should be self-satisfied
 %add_python3_req_skip classes classes.legacy.openshot.classes images
 # should be provided by blender
 %add_python3_req_skip bpy.props
 
 %define __python %nil
-BuildRequires: rpm-build-python3 python3-devel python3-module-setuptools
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: python3-devel python3-module-setuptools python3-module-PyQt5
 
 %description
 OpenShot Video Editor is a free, open-source, non-linear video editor. It
@@ -54,10 +56,16 @@ Xbox, and many more common formats.
 %python3_sitelibdir_noarch/*.egg-info/
 %_pixmapsdir/*
 %_desktopdir/*
+%_iconsdir/hicolor/*/*/%{name}-qt.*
 %_datadir/mime/packages/*
+%_datadir/metainfo/%{name}-qt.appdata.xml
 %doc AUTHORS README*
 
+
 %changelog
+* Sun Sep 23 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt1
+- 2.4.3
+
 * Sat Jun 30 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
 - 2.4.2
 
