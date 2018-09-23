@@ -1,4 +1,5 @@
 Epoch: 1
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/doxygen boost-devel libGL-devel libGLU-devel libX11-devel libicu-devel python-devel rpm-build-python zlib-devel
@@ -15,14 +16,16 @@ Requires: fonts-ttf-wqy-microhei
 
 Name:           widelands
 Version:        0
-Release:        alt7_0.62.%{buildid}
+Release:        alt7_0.67.%{buildid}
 Summary:        Open source realtime-strategy game
 
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://www.widelands.org
 Source0:        https://launchpad.net/widelands/%{buildid}/%{buildid}/+download/widelands-%{buildid}-src-gcc7.tar.bz2
+Source1:        %{name}.desktop
+Source2:        %{name}.appdata.xml
 Patch0:         widelands-build19-ppc64le.patch
+Patch1:         widelands-build19-gcc82.patch
 
 BuildRequires: libSDL2-devel
 BuildRequires: libSDL2_image-devel
@@ -32,7 +35,7 @@ BuildRequires: libSDL2_ttf-devel
 BuildRequires: boost-complete >= 1.48.0
 BuildRequires: ctest cmake
 BuildRequires: ctags
-BuildRequires: desktop-file-utils
+BuildRequires: desktop-file-utils libappstream-glib
 BuildRequires: gettext gettext-tools
 BuildRequires: gcc
 BuildRequires: gcc-c++
@@ -58,10 +61,8 @@ perhaps will have a thought, what Widelands is all about.
 
 %prep
 %setup -q -n widelands-%{buildid}-src-gcc7
-
-%ifarch ppc64le
-%patch0 -p1 -b .ppc64le
-%endif
+%patch0 -p1
+%patch1 -p1
 
 
 %build
@@ -88,19 +89,11 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
 ln -s /usr/share/%{name}/images/logos/wl-logo-64.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-cat > widelands.desktop <<EOF
-[Desktop Entry]
-Type=Application
-Name=Widelands
-GenericName=Realtime Strategy Game
-Comment=Build a growing settlement and rule the world
-Icon=widelands
-Exec=widelands
-Categories=Game;StrategyGame;
-EOF
-
-desktop-file-install  \
-  --dir=$RPM_BUILD_ROOT%{_datadir}/applications/ %{name}.desktop
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata
+appstream-util validate-relax --nonet \
+  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 pushd $RPM_BUILD_ROOT
 # We don't want this development tool / utility
@@ -126,15 +119,20 @@ popd
 
 
 %files -f %{name}.files
-%doc ChangeLog COPYING CREDITS
+%doc ChangeLog CREDITS
+%doc --no-dereference COPYING
 %{_bindir}/%{name}
 %{_datadir}/icons/hicolor/64x64/apps/%{name}.png
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/locale
 
 
 %changelog
+* Sun Sep 23 2018 Igor Vlasenko <viy@altlinux.ru> 1:0-alt7_0.67.build19
+- rebuild with new libicu/ical
+
 * Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 1:0-alt7_0.62.build19
 - use boost-complete
 
