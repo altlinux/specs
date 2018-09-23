@@ -5,7 +5,7 @@ BuildRequires: glib2-devel pkgconfig(gio-2.0)
 %define _localstatedir %{_var}
 Name:		libtranslit
 Version:	0.0.3
-Release:	alt1_18
+Release:	alt1_20
 Summary:	ASCII to Unicode transliteration library with multiple backends
 
 License:	GPLv3+
@@ -88,6 +88,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f '{}' ';'
 
 
 %changelog
+* Sun Sep 23 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.3-alt1_20
+- rebuild with new libicu/ical
+
 * Sat Jun 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.3-alt1_18
 - rebuild with new icu
 
