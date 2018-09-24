@@ -2,7 +2,7 @@
 %global qt_module qtx11extras
 
 Name: qt5-x11extras
-Version: 5.11.1
+Version: 5.11.2
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -81,7 +81,7 @@ export QT_HASH_SEED=0
 
 %files common
 %files -n libqt5-x11extras
-%doc LGPL_EXCEPTION.txt LICENSE*EXCEPT*
+%doc LICENSE*EXCEPT*
 %_qt5_libdir/libQt?X11Extras.so.*
 
 %files doc
@@ -98,6 +98,9 @@ export QT_HASH_SEED=0
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+- new version
+
 * Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
 - new version
 

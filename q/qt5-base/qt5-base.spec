@@ -31,8 +31,8 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.11.1
-Release: alt3%ubt
+Version: 5.11.2
+Release: alt1%ubt
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -445,6 +445,7 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -iconv \
 %endif
     -openssl-linked \
+    -libproxy \
     -nomake examples \
     -nomake tests \
     -make tools \
@@ -532,7 +533,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.11.1
+Version: 5.11.2
 __EOF__
 
 # rpm macros
@@ -793,6 +794,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+- new version
+
 * Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt3%ubt
 - link with openssl
 

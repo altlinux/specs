@@ -2,13 +2,13 @@
 %global qt_module qtdoc
 
 Name: qt5-doc
-Version: 5.11.1
+Version: 5.11.2
 Release: alt1%ubt
 
 Group: Development/KDE and QT
 Summary: Main Qt5 Reference Documentation
 Url: http://qt.io/
-License: LGPLv2 / GPLv3
+License: FDL
 
 BuildArch: noarch
 
@@ -80,6 +80,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+- new version
+
 * Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
 - new version
 

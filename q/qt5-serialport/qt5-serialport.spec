@@ -2,7 +2,7 @@
 %global qt_module qtserialport
 
 Name: qt5-serialport
-Version: 5.11.1
+Version: 5.11.2
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -95,6 +95,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+- new version
+
 * Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
 - new version
 
