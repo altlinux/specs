@@ -1,11 +1,11 @@
 Name: xfce4-weather-plugin
-Version: 0.8.10
+Version: 0.9.0
 Release: alt1
 
 Summary: Weather plugin for the Xfce panel
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://goodies.xfce.org/projects/panel-plugins/%name
 Packager: Xfce Team <xfce@packages.altlinux.org>
 # git://git.xfce.org/panel-plugins/xfce4-weather-plugin
 Source: %name-%version.tar
@@ -14,11 +14,12 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4util-devel libxfce4ui-devel libxfce4panel-devel
+BuildPreReq: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel
 
 BuildRequires: intltool libxml2-devel libsoup-devel libupower-devel
+BuildRequires: exo-csource
 
-Requires: xfce4-panel >= 4.8.0
+Requires: xfce4-panel >= 4.12.0-alt2
 
 %define _unpackaged_files_terminate_build 1
 
@@ -34,7 +35,8 @@ mkdir m4
 %xfce4reconf
 %configure \
     --disable-static \
-    --enable-debug=no
+	--enable-maintainer-mode \
+    --enable-debug=minimum
 %make_build
 
 %install
@@ -51,6 +53,12 @@ mkdir m4
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Sep 24 2018 Mikhail Efremov <sem@altlinux.org> 0.9.0-alt1
+- Fix 'may be used uninitialized' warning.
+- Enable debug (minimum level).
+- Update url.
+- Updated to 0.9.0.
+
 * Thu Oct 12 2017 Mikhail Efremov <sem@altlinux.org> 0.8.10-alt1
 - Updated to 0.8.10.
 
