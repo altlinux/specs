@@ -1,6 +1,6 @@
 Name: libtntnet
 Version: 2.2.1
-Release: alt1
+Release: alt2
 
 Summary: Web application server for web applications written in C++
 License: LGPL
@@ -38,7 +38,7 @@ This package contains sample web server written with tntnet.
 
 %build
 %autoreconf
-%configure --disable-static
+%configure  --localstatedir=/var --disable-static
 %make_build
 
 %install
@@ -79,6 +79,9 @@ This package contains sample web server written with tntnet.
 %_man8dir/tntnet.8*
 
 %changelog
+* Mon Sep 24 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.1-alt2
+- rebuilt with openssl-1.1
+
 * Mon Mar 07 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.1-alt1
 - 2.2.1 released
 
