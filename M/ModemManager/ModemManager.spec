@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.8.0
+Version: 1.8.2
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -194,6 +194,7 @@ fi
 %_iconsdir/hicolor/*/apps/*
 %_datadir/polkit-1/actions/*.policy
 %_unitdir/*.service
+%doc %_man1dir/*.*
 %doc %_man8dir/*.*
 
 %exclude %_libdir/ModemManager/*.la
@@ -230,10 +231,14 @@ fi
 %endif
 
 %changelog
+* Mon Sep 24 2018 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt1
+- Fix changelog entry.
+- Updated to 1.8.2.
+
 * Mon Jun 04 2018 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt1
 - Drop init script.
 - Updated to 1.8.0.
-- Use %e2k macro.
+- Use %%e2k macro.
 
 * Tue Mar 27 2018 Mikhail Efremov <sem@altlinux.org> 1.7.991-alt1
 - Updated to 1.7.991 (1.8-rc2).
