@@ -1,6 +1,6 @@
 Name: cifs-utils
 Version: 6.8
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
 Group: System/Kernel and hardware
@@ -99,6 +99,9 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %_man8dir/pam_cifscreds.*
 
 %changelog
+* Mon Sep 24 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 6.8-alt2%ubt
+- build fixed
+
 * Tue Aug 21 2018 Evgeny Sinelnikov <sin@altlinux.org> 6.8-alt1%ubt
 - Update to latest release 6.8
 
