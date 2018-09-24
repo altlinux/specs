@@ -14,22 +14,23 @@
 %def_with builtin_squish
 %def_with builtin_thekla_atlas
 %def_without builtin_zlib
-%def_with builtin_zstd # need version >=1.3.0 to build against system library
+%def_without builtin_zstd
 
 Name: godot
-Version: 3.0.2
-Release: alt2%ubt
+Version: 3.0.6
+Release: alt1%ubt
 
 Summary: Godot Engine - Multi-platform 2D and 3D game engine
 License: %mit
 Group: Development/Tools
 Url: https://godotengine.org/
 
-Source: godot-%version.tar
+Source0: godot-%version.tar
+Source1: %name.desktop
+Source2: %name-icon-48.png
+Source3: %name.svg
 
 ExclusiveArch: x86_64 %ix86
-
-Requires: libenet libpcre2
 
 # optimized out: libX11-devel libXext-devel libXfixes-devel libXrender-devel libcom_err-devel libgpg-error libjson-c libkrb5-devel libstdc++-devel pkg-config python-base python-devel python-module-numpy python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python3 python3-base xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
 BuildRequires(pre): rpm-build-licenses
@@ -67,57 +68,59 @@ desktop platforms (Linux, Mac OSX, Windows) as well as mobile (Android, iOS) and
 web-based (HTML5) platforms.
 
 %prep
-%define buildsubdir godot-%version
-%setup -q -n %buildsubdir
+%setup
 %{!?_with_builtin_zstd:%patch1 -p2}
+cp %SOURCE1 .
+cp %SOURCE2 .
+cp %SOURCE3 .
 
 %build
-build() {
+%define subst_builtin() %{expand:%{1}=%%{?_with_%{1}:yes}}%{expand:%%{?_without_%{1}:no}}
+
+export GCC_USE_CCACHE=1
 scons \
-  builtin_bullet=%{!?_with_builtin_bullet:no}%{?_with_builtin_bullet:yes} \
-  builtin_enet=%{!?_with_builtin_enet:no}%{?_with_builtin_enet:yes} \
-  builtin_freetype=%{!?_with_builtin_freetype:no}%{?_with_builtin_freetype:yes} \
-  builtin_libogg=%{!?_with_builtin_libogg:no}%{?_with_builtin_libogg:yes} \
-  builtin_libpng=%{!?_with_builtin_libpng:no}%{?_with_builtin_libpng:yes} \
-  builtin_libtheora=%{!?_with_builtin_libtheora:no}%{?_with_builtin_libtheora:yes} \
-  builtin_libvorbis=%{!?_with_builtin_libvorbis:no}%{?_with_builtin_libvorbis:yes} \
-  builtin_libvpx=%{!?_with_builtin_libvpx:no}%{?_with_builtin_libvpx:yes} \
-  builtin_libwebp=%{!?_with_builtin_libwebp:no}%{?_with_builtin_libwebp:yes} \
-  builtin_mbedtls=%{!?_with_builtin_mbedtls:no}%{?_with_builtin_mbedtls:yes} \
-  builtin_opus=%{!?_with_builtin_opus:no}%{?_with_builtin_opus:yes} \
-  builtin_pcre2=%{!?_with_builtin_pcre2:no}%{?_with_builtin_pcre2:yes} \
-  builtin_recast=%{!?_with_builtin_recast:no}%{?_with_builtin_recast:yes} \
-  builtin_squish=%{!?_with_builtin_squish:no}%{?_with_builtin_squish:yes} \
-  builtin_thekla_atlas=%{!?_with_builtin_thekla_atlas:no}%{?_with_builtin_thekla_atlas:yes} \
-  builtin_zlib=%{!?_with_builtin_zlib:no}%{?_with_builtin_zlib:yes} \
-  builtin_zstd=%{!?_with_builtin_zstd:no}%{?_with_builtin_zstd:yes} \
-  $@
-}
-GCC_USE_CCACHE=1 build platform=x11 tools=yes target=release_debug
+	%{subst_builtin builtin_bullet} \
+	%{subst_builtin builtin_enet} \
+	%{subst_builtin builtin_freetype} \
+	%{subst_builtin builtin_libogg} \
+	%{subst_builtin builtin_libpng} \
+	%{subst_builtin builtin_libtheora} \
+	%{subst_builtin builtin_libvorbis} \
+	%{subst_builtin builtin_libvpx} \
+	%{subst_builtin builtin_libwebp} \
+	%{subst_builtin builtin_mbedtls} \
+	%{subst_builtin builtin_opus} \
+	%{subst_builtin builtin_pcre2} \
+	%{subst_builtin builtin_recast} \
+	%{subst_builtin builtin_squish} \
+	%{subst_builtin builtin_thekla_atlas} \
+	%{subst_builtin builtin_zlib} \
+	%{subst_builtin builtin_zstd} \
+	platform=x11 \
+	tools=yes \
+	target=release_debug \
+    -j %__nprocs
 
 %install
-%ifarch x86_64
-install -Dm 0755 bin/godot.x11.opt.tools.64 %buildroot%_bindir/godot
-%endif
-%ifarch %ix86
-install -Dm 0755 bin/godot.x11.opt.tools.32 %buildroot%_bindir/godot
-%endif
+install -Dm 0755 bin/godot.x11.opt.tools.* %buildroot%_bindir/godot
+install -m 644 -D %name-icon-48.png %buildroot%_liconsdir/%name.png
+mkdir -p %buildroot%_iconsdir/hicolor/scalable/apps/
+install -m 644 -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/
+mkdir -p %buildroot%_desktopdir/
+install -m 644 -D %name.desktop %buildroot%_desktopdir/
 
 %files
-%_bindir/*
+%_bindir/%name
+%_desktopdir/%name.desktop
+%_liconsdir/%name.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Sep 19 2018 Sergey Bubnov <omg@altlinux.org> 3.0.6-alt1%ubt
+- 3.0.6-stable
+
 * Sun Jun 10 2018 Sergey Bubnov <omg@altlinux.org> 3.0.2-alt2%ubt
 - restrict arch as x86 and x86_64
 
 * Sat Jun 9 2018 Sergey Bubnov <omg@altlinux.org> 3.0.2-alt1%ubt
 - 3.0.2-stable
-
-* Sat Jun 9 2018 Sergey Bubnov <omg@altlinux.org> 3.0-alt2%ubt
-- added %%ubt
-
-* Sat Jun 9 2018 Sergey Bubnov <omg@altlinux.org> 3.0-alt2
-- remove x86_64 arch restriction
-
-* Mon Feb 21 2018 Sergey Bubnov <omg@altlinux.org> 3.0-alt1
-- 3.0-stable
