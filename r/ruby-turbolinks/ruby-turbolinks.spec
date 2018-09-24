@@ -1,8 +1,9 @@
 %define  pkgname turbolinks
 
 Name:    ruby-%pkgname
-Version: 5.2.0
-Release: alt1
+Version: 2.5.4
+Release: alt2
+Epoch:   1
 
 Summary: Turbolinks makes navigating your web application faster
 License: MIT
@@ -61,6 +62,12 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 25 2018 Pavel Skrylev <majioa@altlinux.org> 1:2.5.4-alt2
+- Added new epoch.
+
+* Mon Sep 24 2018 Pavel Skrylev <majioa@altlinux.org> 2.5.4-alt1
+- Downgrade to 2.5.4 for foreman.
+
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt1
 - New version.
 

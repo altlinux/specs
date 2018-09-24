@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.30
-Release: alt1.3
+Release: alt2
  
 Summary: A gem that configures gettext for internationalization
 License: MIT/Ruby
@@ -13,6 +13,7 @@ Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
  
 Source:  %pkgname-%version.tar
+Patch1: update-fast-gettext-to-1.7.patch
  
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
@@ -40,6 +41,7 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
+%patch1 -p 1
 # Adapt gemspec for package
 subst 's,\(spec.version.*=\).*,\1 %version,' %pkgname.gemspec
 subst 's,\(spec.files.*=\).*,\1 Dir["%ruby_sitelibdir/%pkgname*"],' %pkgname.gemspec
@@ -78,6 +80,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Sep 25 2018 Pavel Skrylev <majioa@altlinux.org> 0.30-alt2
+- Update fastgettext to 1.7
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.30-alt1.3
 - Rebuild with new Ruby autorequirements.
 

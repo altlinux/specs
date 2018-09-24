@@ -1,8 +1,8 @@
 %define  pkgname fast_gettext
  
 Name: 	 ruby-%pkgname
-Version: 1.1.0
-Release: alt3.1
+Version: 1.7.0
+Release: alt1
  
 Summary: GetText but 3.5 x faster, 560 x less memory, simple, clean namespace (7 vs 34) and threadsafe!
 License: MIT/Ruby
@@ -15,9 +15,6 @@ BuildArch: noarch
 Source:  %pkgname-%version.tar
  
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-
-%filter_from_requires /^ruby(mathn)$/d
 
 %description
 GetText but 3.5 x faster, 560 x less memory, simple, clean namespace (7
@@ -27,6 +24,13 @@ It supports multiple backends (.mo, .po, .yml files,
 Database(ActiveRecord + any other), Chain, Loggers) and can easily be
 extended.
 
+%description -l ru_RU.UTF8
+Текущая GetText в 3,5 раза быстрее 560 раз потребляющая память, простая и ясная
+в употреблении (7 против 34 пространств имён) и потокобезопасная.
+
+Поддерживает различные конечные точки (.mo, .po, .yml файлы, базы данных
+ActiveRecord и другие, цепи и логеры), а также есть легко расширяемым.
+
 %package doc
 Summary: Documentation files for %name
 Group: Documentation
@@ -35,6 +39,9 @@ BuildArch: noarch
  
 %description doc
 Documentation files for %{name}.
+
+%description doc -l ru_RU.UTF8
+Файлы сведений для %name
 
 %prep
 %setup -n %pkgname-%version
@@ -63,6 +70,12 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Sep 21 2018 Pavel Skrylev <majioa@altlinux.org> 1.7.0-alt1
+- Bump to 1.7.0.
+
+* Thu Sep 20 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
+- New version.
+
 * Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt3.1
 - Rebuild for new Ruby autorequirements.
 

@@ -1,19 +1,18 @@
-%define  pkgname apipie-rails
+%define  pkgname dynflow
 
 Name:    ruby-%pkgname
-Version: 0.5.10
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
-Summary: Ruby on Rails API documentation tool
-License: MIT and Apache 2.0
+Summary: DYNamic workFLOW orchestration engine
+License: MIT
 Group:   Development/Ruby
-Url:     http://github.com/Apipie/apipie-rails
+Url:     https://github.com/Dynflow/dynflow
 
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
 Source:  %pkgname-%version.tar
-Patch:   alt-fix-module-name.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
@@ -22,7 +21,7 @@ BuildRequires: ruby-tool-setup
 %summary
 
 %description -l ru_RU.UTF8
-Утилита документирования Рельс
+Движок для управления динамического рабочего потока.
 
 %package doc
 Summary: Documentation files for %name
@@ -38,7 +37,6 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
 %update_setup_rb
 
 %build
@@ -52,7 +50,7 @@ Documentation files for %{name}.
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+#%ruby_test_unit -Ilib:test test
 
 %files
 %doc README*
@@ -63,15 +61,5 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
-* Fri Sep 21 2018 Pavel Skrylev <majioa@altlinux.org> 0.5.10-alt2
-- Gemify the package.
-
-* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.10-alt1
-- New version.
-
-* Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.9-alt1
-- New version.
-- Package as gem.
-
-* Fri Jun 01 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.8-alt1
-- Initial build for Sisyphus
+* Fri Sep 21 2018 Pavel Skrylev <majioa@altlinux.org> 1.1.0-alt1
+- Initial gemified build for Sisyphus
