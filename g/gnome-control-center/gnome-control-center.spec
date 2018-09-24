@@ -11,7 +11,7 @@
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Control Center
@@ -28,7 +28,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 %define gtk_ver 3.22.0
 %define glib_ver 2.44.0
-%define desktop_ver 3.27.90
+%define desktop_ver 3.30.1
 %define fontconfig_ver 1.0.0
 %define gsds_ver 3.28.0
 %define nm_ver 1.2
@@ -179,6 +179,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Wed Sep 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
+- 3.30.1
+
 * Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

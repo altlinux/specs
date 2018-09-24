@@ -9,7 +9,7 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -101,7 +101,7 @@ rm -f data/%xdg_name.desktop{,.in}
     %{?_enable_libarchive:-Dlibarchive=true} \
     %{?_disable_nautilus_actions:-Dnautilus-actions=false} \
     -Dnotification=true \
-    -Dcpio=/bin/cpio
+    -Dcpio='/bin/cpio'
 %meson_build
 
 %install
@@ -132,6 +132,9 @@ rm -f data/%xdg_name.desktop{,.in}
 
 
 %changelog
+* Mon Sep 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
+- 3.30.1
+
 * Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

@@ -3,7 +3,7 @@
 %define gst_api_ver 1.0
 
 Name: gnome-music
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Music playing application for GNOME3
@@ -16,19 +16,18 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 # use python3
 AutoReqProv: nopython
 %define __python %nil
-
 %add_typelib_req_skiplist typelib(Gd)
 
 %define tracker_ver 2.0
-
-Requires: tracker >= %tracker_ver
-
 %define gtk_ver 3.20.0
-%define grilo_ver 0.3.1
+%define grilo_ver 0.3.6
 %define python_ver 3.3
 %define mediaart_ver 1.9
 %define pygobject_ver 3.29.1
 %define pycairo_ver 1.14.0
+
+Requires: tracker >= %tracker_ver
+Requires: grilo-plugins
 
 # gir-python.req doesn't recognize multiline expressions (see gnomemusic/albumartcache.py)
 Requires: typelib(MediaArt) = 2.0 typelib(GstTag)
@@ -48,7 +47,8 @@ BuildRequires(pre): meson rpm-build-gir rpm-build-python3
 BuildRequires: %_bindir/git
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtk+3-devel >= %gtk_ver libdazzle-devel libsoup-devel
-BuildRequires: libgrilo-devel >= %grilo_ver libmediaart2.0-devel >= %mediaart_ver
+BuildRequires: libgrilo-devel >= %grilo_ver grilo-plugins-devel
+BuildRequires: libmediaart2.0-devel >= %mediaart_ver
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: python3-devel >= %python_ver
 BuildRequires: pkgconfig(tracker-sparql-2.0)
@@ -84,6 +84,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Mon Sep 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
+- 3.30.1
+
 * Mon Sep 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

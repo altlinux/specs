@@ -1,12 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name vte
 %define ver_major 0.54
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 %def_disable static
 %def_enable introspection
@@ -196,6 +196,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Tue Sep 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.54.1-alt1
+- 0.54.1
+
 * Wed Sep 19 2018 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt2
 - rebuild with atk-2.30.0
 

@@ -10,7 +10,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -34,7 +34,7 @@ AutoReqProv: nopython
 #%{?_enable_installed_tests:%_libexecdir/%name/installed-tests}
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-devel yelp-tools libappstream-glib-devel
 BuildPreReq: libgtk+3-devel >= 3.22
 BuildPreReq: libgio-devel >= 2.42.0
@@ -167,6 +167,9 @@ the functionality of the EOG GUI.
 
 
 %changelog
+* Mon Sep 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.4-alt1
+- 3.28.4
+
 * Mon Jul 23 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.3-alt1
 - 3.28.3
 

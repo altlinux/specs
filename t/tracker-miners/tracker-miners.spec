@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker-miners
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -166,6 +166,9 @@ This package provides miners for TRacker.
 
 
 %changelog
+* Wed Sep 26 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.5-alt1
+- 2.1.5
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.4-alt1
 - 2.1.4
 
