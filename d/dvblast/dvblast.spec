@@ -1,5 +1,5 @@
 Name: dvblast
-Version: 3.3
+Version: 3.4
 Release: alt1
 
 Summary: Video/Audio streaming application based on the linux-dvb API
@@ -47,6 +47,9 @@ install -pm0644 -D dvblast.1 %buildroot%_man1dir/dvblast.1
 %_man1dir/dvblast.1*
 
 %changelog
+* Mon Sep 24 2018 Alexei Takaseev <taf@altlinux.org> 3.4-alt1
+- 3.4
+
 * Mon Jul 02 2018 Alexei Takaseev <taf@altlinux.org> 3.3-alt1
 - 3.3
 
