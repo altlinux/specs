@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -24,13 +24,19 @@ Provides: make-initrd2 = %version-%release
 Obsoletes: make-initrd2
 
 Requires: sh libshell make sed module-init-tools coreutils findutils grep glibc-utils
-Requires: chrooted-resolv service util-linux
+Requires: chrooted-resolv service util-linux which file
+
+# Feature qemu
+Requires: pciutils
 
 # setsid, timeout
 Requires: make-initrd-busybox >= 1.24.2-alt2
 
 # depinfo
 Requires: libkmod >= 8-alt1
+
+# make bug-report
+Requires: tar
 
 # ipconfig -q: kinit-utils-1.5.15-alt3
 # run-init -e: kinit-utils-1.5.17-alt2
@@ -204,6 +210,11 @@ fi
 %endif
 
 %changelog
+* Mon Sep 24 2018 Alexey Gladkov <legion@altlinux.ru> 2.2.1-alt1
+- Add more requires
+- Feature changes:
+  + kbd: Fix path to consolefonts (ALT#35427)
+
 * Tue Sep 18 2018 Alexey Gladkov <legion@altlinux.ru> 2.2.0-alt1
 - Plymouth feature changes:
   + Do not hardcode tty
