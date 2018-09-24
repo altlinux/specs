@@ -1,6 +1,6 @@
 %define module_name	ipset
 %define module_version	6.38
-%define module_release	alt1.k
+%define module_release	alt3
 
 %define flavour		std-def
 %define karch x86_64 i586
@@ -8,6 +8,8 @@ BuildRequires(pre): kernel-headers-modules-std-def
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
+
+Patch: ipset-kernel4.17.patch
 
 Summary: ipset kernel modules
 Name: kernel-modules-%module_name-%flavour
@@ -41,9 +43,10 @@ ipset kernel modules.
 rm -rf kernel-source-%module_name-%module_version
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
-autoreconf -fisv
+%patch
 
 %build
+autoreconf -fisv
 %configure --with-kbuild=%_usrsrc/linux-%kversion-%flavour --with-ksource=%_usrsrc/linux-%kversion-%flavour
 make modules
 

@@ -1,6 +1,6 @@
 %define module_name	ipset
 %define module_version	6.38
-%define module_release	alt2
+%define module_release	alt3
 
 %define flavour		un-def
 %define karch x86_64 i586
@@ -44,9 +44,9 @@ rm -rf kernel-source-%module_name-%module_version
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
 %patch
-autoreconf -fisv
 
 %build
+autoreconf -fisv
 %configure --with-kbuild=%_usrsrc/linux-%kversion-%flavour --with-ksource=%_usrsrc/linux-%kversion-%flavour
 make modules
 
