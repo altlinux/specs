@@ -1,6 +1,6 @@
 Name: vdr
 Version: 2.2.0
-Release: alt2
+Release: alt3
 
 Summary: Digital satellite receiver box with advanced features
 License: GPL
@@ -9,15 +9,18 @@ Url: http://www.tvdr.de
 
 Source: %name-%version-%release.tar
 
-BuildRequires: gcc5-c++
-BuildRequires: fontconfig-devel libalsa-devel libcap-devel libfreetype-devel libjpeg-devel
-BuildRequires: libncursesw-devel libssl-devel libbluray-devel libalsa-devel libudev-devel
-BuildRequires: libGraphicsMagick-c++-devel libvdpau-devel libxine2-devel libzvbi-devel
+BuildRequires: gcc-c++ fontconfig-devel
+BuildRequires: libalsa-devel libbluray-devel libcap-devel libncursesw-devel
+BuildRequires: libfreetype-devel libjpeg-devel libssl-devel libudev-devel
+BuildRequires: libGraphicsMagick-c++-devel libxine2-devel libzvbi-devel
 BuildRequires: libGL-devel libGLU-devel libglut-devel libX11-devel libXext-devel
 BuildRequires: libXinerama-devel libXrandr-devel libXrender-devel libXv-devel
 BuildRequires: boost-devel libupnp-devel libtntnet-devel libtntdb-devel libdbus-glib-devel perl-Date-Manip
-BuildRequires: libxcb-devel libxcbutil-devel libxcbutil-icccm-devel
 BuildRequires: libcurl-devel libcxxtools-devel libpcrecpp-devel
+# vaapidevice
+BuildRequires: pkgconfig(libva) pkgconfig(libavcodec) pkgconfig(libswscale) pkgconfig(libswresample)
+BuildRequires: pkgconfig(x11) pkgconfig(x11-xcb) pkgconfig(xcb) pkgconfig(xcb-icccm) pkgconfig(xcb-screensaver)
+BuildRequires: pkgconfig(xcb-dpms)
 
 %description
 VDR, Video Disc Recorder, enables you to build a powerful set-top box on your own
@@ -80,7 +83,7 @@ Summary: VDR remote timers plugin
 Group: Video
 Requires: vdr = %version-%release
 
-%package plugin-softhddevice
+%package plugin-vaapidevice
 Summary: VDR HD-capable ffmpeg plugin
 Group: Video
 Requires: vdr = %version-%release
@@ -167,7 +170,7 @@ Remote OSD plugin for the Video Disk Recorder (VDR).
 %description plugin-remotetimers
 VDR timers manipulations across VDR instances
 
-%description plugin-softhddevice
+%description plugin-vaapidevice
 HD-capable (VDPAU) softdevice plugin for the Video Disk Recorder (VDR).
 
 %description plugin-streamdev
@@ -289,8 +292,8 @@ cp -p PLUGINS/src/remoteosd/README %buildroot%docdir/remoteosd
 mkdir -p %buildroot%docdir/remotetimers
 cp -p PLUGINS/src/remotetimers/README %buildroot%docdir/remotetimers
 
-#mkdir -p %buildroot%docdir/softhddevice %buildroot%confdir/plugins/softhddevice
-#cp -p PLUGINS/src/softhddevice/README.txt %buildroot%docdir/softhddevice/README
+mkdir -p %buildroot%docdir/vaapidevice
+cp -p PLUGINS/src/vaapidevice/README %buildroot%docdir/vaapidevice
 
 mkdir -p %buildroot%docdir/streamdev
 cp -p PLUGINS/src/streamdev/{README,PROTOCOL} %buildroot%docdir/streamdev
@@ -314,9 +317,9 @@ cp -a PLUGINS/src/vnsiserver/vnsiserver %buildroot%confdir/plugins
 mkdir -p %buildroot%docdir/wirbelscan
 cp -p PLUGINS/src/wirbelscan/README %buildroot%docdir/wirbelscan
 
-#make install -C PLUGINS/src/xineliboutput DESTDIR=%buildroot
-#mkdir -p %buildroot%docdir/xineliboutput
-#cp -p PLUGINS/src/xineliboutput/{README,examples/remote.conf.example} %buildroot%docdir/xineliboutput
+make install -C PLUGINS/src/xineliboutput DESTDIR=%buildroot
+mkdir -p %buildroot%docdir/xineliboutput
+cp -p PLUGINS/src/xineliboutput/{README,examples/remote.conf.example} %buildroot%docdir/xineliboutput
 
 touch %buildroot%confdir/setup.conf
 install -pD -m0755 vdr.init %buildroot%_initdir/vdr
@@ -341,7 +344,7 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %find_lang --output=live.lang vdr-live
 %find_lang --output=manager.lang vdr-manager
 %find_lang --output=pvrinput.lang vdr-pvrinput
-#find_lang --output=softhddevice.lang vdr-softhddevice
+%find_lang --output=vaapidevice.lang vdr-vaapidevice
 %find_lang --output=streamdev.lang --append vdr-streamdev-server vdr-streamdev-client
 %find_lang --output=text2skin.lang vdr-text2skin
 %find_lang --output=ttxtsubs.lang vdr-ttxtsubs
@@ -350,7 +353,7 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %find_lang --output=upnp.lang vdr-upnp
 %find_lang --output=vnsiserver.lang vdr-vnsiserver
 %find_lang --output=wirbelscan.lang vdr-wirbelscan
-#find_lang --output=xineliboutput.lang vdr-xineliboutput
+%find_lang --output=xineliboutput.lang vdr-xineliboutput
 
 mkdir -p %buildroot%_libexecdir/rpm
 cat << __EOF__ > %buildroot%_libexecdir/rpm/vdr.filetrigger
@@ -440,12 +443,10 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %plugindir/libsc-constcw-*.so.%version
 %plugindir/libsc-cryptoworks-*.so.%version
 %plugindir/libsc-irdeto-*.so.%version
-%plugindir/libsc-nagra-*.so.%version
 %plugindir/libsc-nds-*.so.%version
 %plugindir/libsc-sc_conax-*.so.%version
 %plugindir/libsc-sc_cryptoworks-*.so.%version
 %plugindir/libsc-sc_irdeto-*.so.%version
-%plugindir/libsc-sc_nagra-*.so.%version
 %plugindir/libsc-sc_seca-*.so.%version
 %plugindir/libsc-sc_viaccess-*.so.%version
 %plugindir/libsc-sc_videoguard2-*.so.%version
@@ -505,12 +506,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %docdir/remotetimers
 %plugindir/libvdr-remotetimers.so.%version
 
-%if 0
-%files plugin-softhddevice -f softhddevice.lang
-%docdir/softhddevice
-%dir %attr(0770,root,_vdr) %confdir/plugins/softhddevice
-%plugindir/libvdr-softhddevice.so.%version
-%endif
+%files plugin-vaapidevice -f vaapidevice.lang
+%docdir/vaapidevice
+%plugindir/libvdr-vaapidevice.so.%version
 
 %files plugin-streamdev -f streamdev.lang
 %docdir/streamdev
@@ -552,7 +550,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %docdir/wirbelscan
 %plugindir/libvdr-wirbelscan.so.%version
 
-%if 0
 %files plugin-xineliboutput -f xineliboutput.lang
 %docdir/xineliboutput
 %dir %attr(0770,root,_vdr) %confdir/plugins/xineliboutput
@@ -577,9 +574,13 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %_libdir/xine/plugins/*/post/xineplug_post_autocrop.so
 %_libdir/xine/plugins/*/post/xineplug_post_swscale.so
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
-%endif
 
 %changelog
+* Mon Sep 24 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt3
+- replaced softhddevice plugin with vaapidevice
+- xineliboputput plugin resurrected
+- live plugin updated to 2.3.1
+
 * Tue Jul 11 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt2
 - rebuilt without ffmpeg
 
