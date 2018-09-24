@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname traits
 
 %def_without python3
 
 Name:           python-module-%oname
 Version:        4.6.0
-Release:        alt1.git20150320
+Release:        alt2
 Summary:        Explicitly typed attributes for Python
 
 Group:          Development/Python
@@ -14,16 +16,19 @@ Group:          Development/Python
 # 3-clause license. Confirmed from upstream.
 License:        BSD and EPL and LGPLv2 and GPLv2+
 URL:            http://code.enthought.com/projects/traits/
-# https://github.com/enthought/traits.git
-Source0:        Traits-%version.tar.gz
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildRequires:  python-module-setuptools, libnumpy-devel, python-devel
-BuildPreReq: python-module-sphinx-devel python-module-Pygments
+# https://github.com/enthought/traits.git
+Source: Traits-%version.tar
+
+Patch1: %oname-alt-docs.patch
+
+BuildRequires(pre): python-module-sphinx-devel
+BuildRequires: python-module-setuptools libnumpy-devel python-devel
+BuildRequires: python-module-Pygments
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: libnumpy-py3-devel python-tools-2to3
+BuildRequires: libnumpy-py3-devel python-tools-2to3
 %endif
 
 %description
@@ -64,7 +69,7 @@ attributes, traits also have several additional characteristics:
 %package -n python3-module-%oname-tests
 Summary: Tests for Traits, explicitly typed attributes for Python 3
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
 The traits package developed by Enthought provides a special type
@@ -92,7 +97,7 @@ definition called a trait. This package contains pickles for it.
 %package tests
 Summary: Tests for Traits, explicitly typed attributes for Python
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 The traits package developed by Enthought provides a special type
@@ -100,17 +105,7 @@ definition called a trait. This package contains tests for it.
 
 %prep
 %setup -n Traits-%version
-
-# fix wrong-file-end-of-line-encoding
-find examples \( -type f -o -name '*py' \
- -o -name '*desc' -o -name '*txt' \) -print \
- | sed 's/\ /\\ /g' | xargs sed -i 's/\r//'
-ls *txt | sed 's/\ /\\ /g' | xargs sed -i 's/\r//'
-#sed -i 's/\r//' enthought/traits/protocols/unused_setup
-
-# scripts having 644 permission
-#chmod 755 enthought/traits/protocols/unused_setup
-#chmod 755 enthought/traits/ui/unused_setup
+%patch1 -p1
 
 # file not utf-8
 iconv -f iso8859-1 -t utf-8 image_LICENSE_Eclipse.txt \
@@ -126,7 +121,9 @@ cp -a . ../python3
 
 %build
 %add_optflags -fno-strict-aliasing
+
 %python_build_debug
+
 %if_with python3
 pushd ../python3
 for i in $(find ./ -name '*.py'); do
@@ -201,6 +198,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Sep 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.0-alt2
+- Updated to upstream release version 4.6.0.
+
 * Sun May 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.6.0-alt1.git20150320
 - New snapshot
 

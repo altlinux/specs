@@ -1,27 +1,35 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname traitsui
 
 %def_without python3
+%def_enable bootstrap
 
 Name: python-module-%oname
-Version: 4.5.0
-Release: alt1.git20150224
+Version: 6.0.0
+Release: alt1
 Summary: A set of user interface tools designed to complement Traits
-
 Group: Development/Python
 License: BSD, EPL and LGPL
 URL: http://www.enthought.com/
+BuildArch: noarch
+
 # https://github.com/enthought/traitsui.git
 Source: %oname-%version.tar
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildPreReq: python-module-setuptools python-devel
-BuildPreReq: python-module-setupdocs python-module-sphinx-devel
+Patch1: %oname-alt-docs.patch
+
+BuildRequires: python-module-setuptools python-devel
+%if_disabled bootstrap
+BuildRequires(pre): python-module-sphinx-devel
+BuildRequires: python-module-setupdocs
+BuildRequires: python-module-traits
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setupdocs
-BuildPreReq: python-tools-2to3
+BuildRequires: python-tools-2to3
 %endif
-BuildArch: noarch
 
 %description
 TraitsUI is a set of user interface tools designed to complement Traits.
@@ -45,7 +53,7 @@ Model-View-Controller (MVC) design pattern for Traits-based objects.
 %package -n python3-module-%oname-tests
 Summary: Tests for TraitsUI (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
 TraitsUI is a set of user interface tools designed to complement Traits.
@@ -60,8 +68,8 @@ This package contains tests for TraitsUI.
 %package tests
 Summary: Tests for TraitsUI
 Group: Development/Python
-Requires: %name = %version-%release
-Conflicts: %name < %version-%release
+Requires: %name = %EVR
+Conflicts: %name < %EVR
 
 %description tests
 TraitsUI is a set of user interface tools designed to complement Traits.
@@ -101,13 +109,17 @@ This package contains pickles for TraitsUI.
 
 %prep
 %setup
+%patch1 -p1
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
 %endif
 
+%if_disabled bootstrap
 %prepare_sphinx docs
 ln -s ../objects.inv docs/source/
+%endif
 
 %build
 %python_build_debug
@@ -120,32 +132,41 @@ done
 popd
 %endif
 
+%if_disabled bootstrap
 %make -C docs html
 %make -C docs pickle
+%endif
 
 %install
 %python_install
+
 %if_with python3
 pushd ../python3
 %python3_install
 popd
 %endif
 
+%if_disabled bootstrap
 # pickles
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/*/tests
+%if_disabled bootstrap
 %exclude %python_sitelibdir/%oname/pickle
+%endif
 
+%if_disabled bootstrap
 %files docs
-%doc docs/build/html docs/*.txt docs/*.ppt docs/*.pdf docs/*.doc
+%doc docs/build/html docs/*.txt docs/*.ppt docs/*.pdf
 
 %files pickles
 %python_sitelibdir/%oname/pickle
+%endif
 
 %files tests
 %python_sitelibdir/*/tests
@@ -162,6 +183,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Sep 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.0-alt1
+- Updated to upstream version 6.0.0.
+
 * Sun May 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.0-alt1.git20150224
 - New snapshot
 

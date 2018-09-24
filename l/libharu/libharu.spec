@@ -12,12 +12,18 @@ Group: System/Libraries
 
 Name:           libharu
 Version:        2.3.0
-Release:        alt1_3
+Release:        alt2_3
 Summary:        C library for generating PDF files
 License:        zlib with acknowledgement
 URL:            http://libharu.org
 Source0:        https://github.com/libharu/${name}/archive/%{gittag0}/%{name}-%{version}.tar.gz
 Patch0:         libharu-RELEASE_2_3_0_cmake.patch
+
+# Based on patches from Gentoo
+Patch10: libharu-2.3.0-1-Included-necessary-char-widths-in-generated-PDF.patch
+Patch11: libharu-2.3.0-2-Avoid-issue-with-libtiff-duplicate-symbols.patch
+Patch12: libharu-2.3.0-3-cmake-fixes.patch
+Patch13: libharu-2.3.0-4-Add-support-for-free-form-triangle-Shading-objects.patch
 
 BuildRequires:  gcc-common
 BuildRequires:  ctest cmake
@@ -43,6 +49,11 @@ developing applications that use %{name}.
 # fix cmake build
 %patch0 -p1 -b .cmake
 
+%patch10 -p1
+%patch11 -p1
+%patch12 -p2
+%patch13 -p1
+
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
@@ -57,13 +68,16 @@ make install/fast -C %{_target_platform}  DESTDIR=%{buildroot}
 %files
 %doc README
 %{_libdir}/libhpdf.so.*
-%{_datadir}/%{name}
+%_defaultdocdir/%{name}
 
 %files devel
 %{_includedir}/*
 %{_libdir}/libhpdf.so
 
 %changelog
+* Wed Sep 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt2_3
+- Applied patches from Gentoo.
+
 * Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_3
 - new version
 

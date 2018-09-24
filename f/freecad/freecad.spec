@@ -6,9 +6,11 @@
 %define build_parallel_jobs 7
 %endif
 
+%define vtkver 8.1
+
 Name:    freecad
 Version: 0.17
-Release: alt4.1
+Release: alt5
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
@@ -73,7 +75,7 @@ BuildRequires: python-module-pivy libnumpy-devel
 BuildRequires: boost-interprocess-devel libshiboken-devel shiboken
 BuildRequires: boost-python-devel
 BuildRequires: gdb
-BuildRequires: libvtk6.2-devel vtk6.2-examples vtk6.2-python
+BuildRequires: libvtk%{vtkver}-devel vtk%{vtkver}-examples vtk%{vtkver}-python
 BuildRequires: libhdf5-devel libhdf5-mpi-devel
 BuildRequires: libmed-devel libspnav-devel
 BuildRequires: python-module-matplotlib
@@ -215,6 +217,9 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/doc
 
 %changelog
+* Fri Sep 21 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.17-alt5
+- NMU: rebuilt with vtk-8.1.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.17-alt4.1
 - NMU: rebuilt with boost-1.67.0
 
