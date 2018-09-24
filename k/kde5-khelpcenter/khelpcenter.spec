@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 18.04.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -14,10 +14,9 @@ Provides: kf5-khelpcenter = %EVR kf5-khelpcenter-common = %EVR
 Obsoletes: kf5-khelpcenter < %EVR kf5-khelpcenter-common < %EVR
 
 Requires: kf5-kdoctools
-#Requires: %name-common = %version-%release
 
 Source: %rname-%version.tar
-Patch1: alt-fallback-kde4.patch
+#Patch1: alt-fallback-kde4.patch
 
 # Automatically added by buildreq on Mon Apr 25 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
@@ -36,7 +35,6 @@ KDE help center.
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build \
@@ -63,6 +61,9 @@ KDE help center.
 %_K5xmlgui/*
 
 %changelog
+* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2%ubt
+- don't look for kde4 docs
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 
