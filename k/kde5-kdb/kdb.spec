@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 3.1.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -20,7 +20,9 @@ Source: %rname-%version.tar
 #BuildRequires: appstream extra-cmake-modules git-core kf5-kcoreaddons-devel libicu-devel libmysqlclient-devel libmysqld-devel libsqlite3-devel postgresql-devel python-module-google python3-dev python3-module-zope qt5-wayland-devel rpm-build-ruby sqlite3
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-wayland-devel
-BuildRequires: libicu-devel libmysqlclient-devel libmysqld-devel libsqlite3-devel postgresql-devel sqlite3
+BuildRequires: libicu-devel libsqlite3-devel postgresql-devel sqlite3
+#BuildRequires: libmariadb-devel libmariadbd-devel
+BuildRequires: libmysqlclient-devel
 BuildRequires: kf5-kcoreaddons-devel
 
 %description
@@ -117,6 +119,9 @@ sed -i 's|[[:space:]]KF5CoreAddons||' %buildroot/%_pkgconfigdir/KDb3.pc
 %_K5lib/libKDb3.so.*
 
 %changelog
+* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt2%ubt
+- fix build requires
+
 * Fri Mar 23 2018 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt1%ubt
 - new version
 
