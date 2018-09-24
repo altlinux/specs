@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 5.2.0
-Release: alt1
+Release: alt2
 Summary: ZEO provides a client-server storage implementation for ZODB
 License: ZPL
 Group: Development/Python
@@ -16,6 +16,8 @@ Url: https://pypi.python.org/pypi/ZEO
 
 # https://github.com/zopefoundation/ZEO.git
 Source: %name-%version.tar
+
+Patch1: %oname-alt-build.patch
 
 BuildRequires: python-dev python-module-setuptools
 BuildRequires: python-module-zope.testing
@@ -109,6 +111,7 @@ This package contains tests for ZEO.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 rm -rf ../python3
@@ -177,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.0-alt2
+- Updated test dependencies.
+
 * Thu Jun 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.0-alt1
 - Updated to upstream version 5.2.0.
 - Updated runtime and build dependencies, enabled tests.
