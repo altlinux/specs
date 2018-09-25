@@ -36,8 +36,8 @@
 %def_without jemalloc
 
 Name: mariadb-compat
-Version: 10.1.35
-Release: alt2%ubt
+Version: 10.1.36
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -103,7 +103,6 @@ Patch50: mariadb-10.1-ssl-1.1.patch
 Requires: %name-server = %EVR
 Requires: %name-client = %EVR
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
 BuildRequires: libaio-devel libwrap-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
 BuildRequires: liblz4-devel zlib-devel bzlib-devel liblzma-devel liblzo2-devel libsnappy-devel
@@ -816,6 +815,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 25 2018 Alexey Shabalin <shaba@altlinux.org> 10.1.36-alt1
+- 10.1.36
+
 * Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 10.1.35-alt2%ubt
 - rebuild with openssl-1.1
 
