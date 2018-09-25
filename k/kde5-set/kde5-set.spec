@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 18.04.1
+Version: 18.04.3
 Release: alt1%ubt
 
 Group: Graphical desktop/KDE
@@ -94,7 +94,7 @@ Summary: %summary
 Group: Graphical desktop/KDE
 # webclient
 Requires: kde5-konqueror kde5-keditbookmarks
-Requires: kde5-dragon kde5-kmail
+Requires: kde5-dragon
 Requires: kde5-kmousetool kde5-kmag
 Requires: kde5-juk kde5-kmouth
 Requires: kde5-big
@@ -162,11 +162,15 @@ KDE image scanning support applications.
 %package -n kde5-pim
 Summary: %summary
 Group: Graphical desktop/KDE
+Requires: kde5-kontact kde5-pim-data-exporter
 ##Requires: kde5-akonadiconsole
-Requires: kde5-akonadi-calendar-tools kde5-akonadi-import-wizard kde5-kmail-account-wizard
-Requires: kde5-akregator kde5-kaddressbook kde5-kalarm kde5-kmail kde5-knotes kde5-kontact kde5-korganizer
+Requires: kde5-email-client
+Requires: kde5-akregator kde5-kalarm kde5-knotes
+Requires: kde5-korganizer kde5-akonadi-calendar-tools
+Requires: kde5-kaddressbook kde5-grantlee-editor
 ##Requires:  kde5-blogilo
-Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-grantlee-editor
+# akonadi based email client
+#Requires: kde5-akonadi-import-wizard kde5-mbox-importer kde5-pim-sieve-editor kde5-mbox-importer kde5-pim-sieve-editor
 %description -n kde5-pim
 %summary
 
@@ -186,6 +190,12 @@ Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-g
 %files -n kde5-pim
 
 %changelog
+* Tue Sep 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+- clean pim requires
+
+* Tue Sep 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+- clean kmail requires
+
 * Fri Sep 21 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
 - clean requires
 
