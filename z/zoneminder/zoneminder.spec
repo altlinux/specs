@@ -2,23 +2,25 @@
 %define zmgid_final _webserver
 
 Name: zoneminder
-Version: 1.30.4
-Release: alt3%ubt
+Version: 1.32.0
+Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPL
 Url: http://www.zoneminder.com
 Source: %name-%version-alt.tar
-Source2: zoneminder.conf
+Source1: Crud-%version.tar
+Source2: CakePHP-Enum-Behavior-%version.tar
+Source3: zoneminder.conf
 Source4: README.alt
 Source5: README-nginx-ru.alt
 Source6: nginx-zoneminder.conf.sample
 Source7: zm-fcgi.inc
 
 Conflicts: zm <= 1.22.3
-Requires: libgnutls libgnutls-openssl zlib perl-Class-Date perl-DateTime perl-Date-Manip perl-libwww ffmpeg perl-X10 perl-Sys-Mmap perl-DBD-mysql perl-Storable MySQL-client php5-mysql su perl-Sys-Mmap webserver
+Requires: libgnutls libgnutls-openssl zlib perl-Class-Date perl-DateTime perl-Date-Manip perl-libwww ffmpeg perl-X10 perl-Sys-Mmap perl-DBD-mysql perl-Storable MySQL-client php7-pdo_mysql su perl-Sys-Mmap webserver perl-Pod-Usage perl-Sys-MemInfo perl-Number-Bytes-Human perl-JSON-MaybeXS perl-Sys-CPU
 AutoReq: noperl
-BuildRequires: bzlib-devel ffmpeg gcc-c++ libavdevice-devel libavformat-devel libgcrypt-devel libgnutls-openssl-devel libjpeg-devel libmysqlclient-devel libpcre-devel libswscale-devel netpbm perl-Archive-Tar perl-Archive-Zip perl-DBD-mysql perl-Date-Manip perl-MIME-Lite perl-MIME-tools perl-Module-Load perl-Sys-Mmap perl-X10 perl-devel perl-libwww zlib-devel libpolkit-devel cmake libv4l-devel rpm-macros-cmake libvlc-devel libcurl-devel
+BuildRequires: bzlib-devel ffmpeg gcc-c++ libavdevice-devel libavformat-devel libgcrypt-devel libgnutls-openssl-devel libjpeg-devel libmysqlclient-devel libpcre-devel libswscale-devel netpbm perl-Archive-Tar perl-Archive-Zip perl-DBD-mysql perl-Date-Manip perl-MIME-Lite perl-MIME-tools perl-Module-Load perl-Sys-Mmap perl-X10 perl-devel perl-libwww zlib-devel libpolkit-devel cmake libv4l-devel rpm-macros-cmake libvlc-devel libcurl-devel libssl-devel libsystemd-devel libffi-devel libx264-devel libmount-devel libuuid-devel libselinux-devel libblkid-devel libmp4v2
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -44,13 +46,15 @@ Zones and Config.
 %package nginx
 Summary: Zoneminder configuration file and requires for nginx
 Group: Networking/WWW
-Requires: php5-fpm-fcgi fcgiwrap nginx
+Requires: php7-fpm-fcgi fcgiwrap nginx
 BuildArch: noarch
 %description nginx
 Zoneminder configuration file and requires for nginx
 
 %prep
 %setup -n %name-%version-alt
+tar xvf %SOURCE1 --strip 1 -C web/api/app/Plugin/Crud
+tar xvf %SOURCE2 --strip 1 -C web/api/app/Plugin/CakePHP-Enum-Behavior
 cp %SOURCE4 README.alt
 cp %SOURCE5 README-nginx-ru.alt
 
@@ -59,9 +63,7 @@ use mysql;
 grant select,insert,update,delete on zm.* to 'zmuser'@localhost identified by 'zmpass';
 EOF
 
-./utils/zmeditconfigdata.sh ZM_PATH_ZMS /cgi-bin/zm/nph-zms
 ./utils/zmeditconfigdata.sh ZM_OPT_CAMBOZOLA yes
-./utils/zmeditconfigdata.sh ZM_PATH_SWAP /dev/shm
 ./utils/zmeditconfigdata.sh ZM_UPLOAD_FTP_LOC_DIR /var/spool/zoneminder-upload
 ./utils/zmeditconfigdata.sh ZM_OPT_CONTROL yes
 ./utils/zmeditconfigdata.sh ZM_CHECK_FOR_UPDATES no
@@ -69,16 +71,13 @@ EOF
 ./utils/zmeditconfigdata.sh ZM_OPT_FAST_DELETE no
 
 %build
-%cmake -DZM_TARGET_DISTRO="alt" -DPCRE_INCLUDE_DIR=/usr/include/pcre
+%cmake -DZM_TARGET_DISTRO="alt" -DPCRE_INCLUDE_DIR=/usr/include/pcre -DZM_SYSTEMD=ON -DZM_WEB_USER=%{zmuid_final} -DZM_WEB_GROUP=%{zmgid_final}
 
 make %{?_smp_mflags} -C BUILD
-perl -pi -e 's/(ZM_WEB_USER=).*$/${1}%{zmuid_final}/;' \
-    -e 's/(ZM_WEB_GROUP=).*$/${1}%{zmgid_final}/;' zm.conf
 
 %install
 install -d %buildroot%_var/run
-%make_install -C BUILD install DESTDIR=%buildroot \
-	     INSTALLDIRS=vendor
+%make_install -C BUILD install DESTDIR=%buildroot
 rm -rf %buildroot%prefix/%_lib/perl5/vendor_perl/*.*/*-*
 rm -rf %buildroot%prefix/%_lib/perl5/*.*/*-*
 
@@ -88,12 +87,15 @@ do
 	install -m 755 -d %buildroot%_localstatedir/zoneminder/$dir
 done
 install -D -m 755 BUILD/scripts/zm %buildroot%_initdir/zoneminder
-install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/httpd/conf/addon-modules.d/zoneminder.conf
-install -D -m 644 BUILD/zm.conf %buildroot%_sysconfdir/zm.conf
+install -D -m 644 BUILD/misc/zoneminder.service %buildroot/%_unitdir/%name.service
+install -D -m 644 BUILD/misc/zoneminder-tmpfiles.conf %buildroot/%_tmpfilesdir/zoneminder.conf
+install -D -m 644 %SOURCE3 %buildroot%_sysconfdir/httpd/conf/addon-modules.d/zoneminder.conf
 install -D -m 644 %SOURCE6 %buildroot%_sysconfdir/nginx/sites-enabled.d/nginx-zoneminder.conf.sample
 install -D -m 644 %SOURCE7 %buildroot%_sysconfdir/nginx/sites-enabled.d/zm-fcgi.inc
+mkdir -p %buildroot/%_cachedir/%name
 
 cp -aR web/api %buildroot%_datadir/%name/www/api
+ln -s %_cachedir/%name %buildroot%_datadir/%name/www/cache
 
 
 rm -f %buildroot%perl_vendor_archlib/perllocal.pod
@@ -109,7 +111,12 @@ cp db/*.sql %buildroot%_datadir/%name/db
 
 %files
 %doc AUTHORS COPYING README.md README.alt
-%config(noreplace) %_sysconfdir/zm.conf
+%config(noreplace) %_sysconfdir/zm/zm.conf
+%config(noreplace) %_sysconfdir/zm/conf.d/*.conf
+%ghost %_cachedir/%name
+%_sysconfdir/zm/conf.d/README
+%_tmpfilesdir/zoneminder.conf
+%_unitdir/%name.service
 %_initdir/zoneminder
 %_bindir/*
 %_datadir/%name
@@ -129,6 +136,7 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/polkit-1/*/*
 %exclude %_datadir/%name/www/api
 
+
 %files nginx
 %doc README-nginx-ru.alt
 %config(noreplace) %_sysconfdir/nginx/sites-enabled.d/*
@@ -137,6 +145,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Tue Sep 25 2018 Anton Farygin <rider@altlinux.ru> 1.32.0-alt1
+- 1.32.0
+
 * Mon Oct 02 2017 Anton Farygin <rider@altlinux.ru> 1.30.4-alt3%ubt
 - removed spawn-fcgi requires for nginx 
 	(it does not need on configuration with systemd)
