@@ -1,4 +1,4 @@
-# 6.1.1.2
+# 6.1.2.1
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -19,7 +19,7 @@
 
 Name: LibreOffice
 %define hversion 6.1
-%define urelease 1.2
+%define urelease 2.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -61,7 +61,7 @@ Source300:	libreoffice.unused
 Patch1: FC-0001-don-t-suppress-crashes.patch
 Patch2: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
 Patch3: FC-0001-gtk3-only-for-3.20.patch
-Patch4: FC-0001-mdds-1.4.1-is-now-a-minimum-requirement.patch
+Patch4: FC-0001-Update-mdds-to-1.4.1.patch
 Patch5: FC-0001-Update-orcus-to-0.14.0.patch
 Patch6: FC-0001-disable-libe-book-support.patch
 
@@ -564,6 +564,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Tue Sep 25 2018 Fr. Br. George <george@altlinux.ru> 6.1.2.1-alt1
+- Update to 6.1.2.1
+
 * Mon Sep 17 2018 Fr. Br. George <george@altlinux.ru> 6.1.1.2-alt1
 - Update to 6.1.1.2
 
