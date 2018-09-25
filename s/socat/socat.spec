@@ -1,6 +1,6 @@
 Name: socat
 Version: 1.7.3.2
-Release: alt1.1
+Release: alt2
 
 Summary: 'socket cat' - multipurpose relay for bidirectional data transfer
 License: GPLv2
@@ -8,7 +8,7 @@ Group: Networking/Other
 Url: http://www.dest-unreach.org/socat/
 Source: %name-%version.tar.gz
 
-BuildRequires: libe2fs-devel libreadline-devel libssl-devel libwrap-devel
+BuildRequires: libe2fs-devel libreadline-devel libssl-devel
 
 %description
 socat is a relay for bidirectional data transfer between two independent
@@ -52,6 +52,9 @@ ln -s socat.1 %buildroot%_man1dir/procan.1
 %doc BUGREPORTS CHANGES EXAMPLES FAQ README SECURITY
 
 %changelog
+* Wed Sep 26 2018 Grigory Ustinov <grenka@altlinux.org> 1.7.3.2-alt2
+- Build without libwrap.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.7.3.2-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
