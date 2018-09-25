@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -210,6 +210,11 @@ fi
 %endif
 
 %changelog
+* Tue Sep 25 2018 Alexey Gladkov <legion@altlinux.ru> 2.2.2-alt1
+- Feature changes:
+  + plymouth: Plymouth requires udev
+  + Revert "plymouth: Do not hardcode tty"
+
 * Mon Sep 24 2018 Alexey Gladkov <legion@altlinux.ru> 2.2.1-alt1
 - Add more requires
 - Feature changes:
