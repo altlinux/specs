@@ -3,7 +3,7 @@
 
 Name: w3m
 Version: 0.5.3
-Release: alt1
+Release: alt2
 License: BSD
 Group: Networking/WWW
 Summary: w3m is a pager with Web browsing capability
@@ -64,6 +64,7 @@ Packager: Eugene Vlasov <eugvv@altlinux.ru>
 # Automatically added by buildreq on Fri Mar 25 2011
 BuildRequires: imlib2-devel libgc-devel libgpm-devel libgtk+2-devel libssl-devel man zlib-devel automake gcc-c++
 BuildRequires: lynx
+BuildRequires: libtinfo-devel
 # JP support, currently in autoimports
 #BuildRequires:  nkf
 
@@ -140,6 +141,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %_libexecdir/w3m/w3mimgdisplay
 
 %changelog
+* Tue Sep 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.3-alt2
+- NMU: updated build dependencies.
+
 * Tue Dec 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1
 - new version (QA NMU)
 
