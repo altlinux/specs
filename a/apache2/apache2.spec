@@ -12,8 +12,8 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.34
-Release: alt2
+Version: 2.4.35
+Release: alt1%ubt
 Epoch: 1
 
 License: %asl
@@ -1513,8 +1513,11 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Tue Sep 25 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.35-alt1%ubt
+- 2.4.35
+
 * Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.34-alt2
-- rebuilt with openssl-1.1
+- rebuilt with openssl-1.1 (Sisyphus)
 
 * Tue Jul 31 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.34-alt1%ubt
 - 2.4.34
