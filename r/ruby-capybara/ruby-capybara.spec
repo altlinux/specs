@@ -1,7 +1,7 @@
 %define  pkgname capybara
 
 Name:    ruby-%pkgname
-Version: 3.8.0
+Version: 3.8.1
 Release: alt1
 
 Summary: Acceptance test framework for web applications
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 25 2018 Andrey Cherepanov <cas@altlinux.org> 3.8.1-alt1
+- New version.
+
 * Fri Sep 21 2018 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt1
 - New version.
 
