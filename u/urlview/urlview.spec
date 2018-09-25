@@ -1,7 +1,8 @@
-# Emacs, look here: -*- coding: cyrillic-cp1251 -*-
+%define _unpackaged_files_terminate_build 1
+
 Name: urlview
 Version: 0.9
-Release: alt2
+Release: alt3
 Serial: 1
 
 Group: Networking/Other
@@ -16,8 +17,6 @@ Summary: %CommonSummary (ncurses variant).
 Summary(ru_RU.CP1251): %CommonSummaryRU (вариант на ncurses).
 %endif
 License: GPL
-
-Packager: Alexey Morsov <swi@altlinux.ru>
 
 Requires: url_handler
 Requires: common-licenses
@@ -49,8 +48,7 @@ BuildRequires(build): libslang-devel
 %else
 BuildRequires(build): libncurses-devel 
 %endif
-BuildRequires(build): automake = 1.4
-%set_automake_version 1.4
+BuildRequires(build): automake
 
 %description
 %name extracts URLs from a given text file, and presents a menu
@@ -81,7 +79,9 @@ of URLs to view using a user specified command.
 %patch6 -p1
 
 %build
-
+# autoreconf needs NEWS file
+touch NEWS
+%autoreconf
 %configure %{?_with_slang}
 
 %make_build
@@ -130,6 +130,9 @@ if [ "$moved" ]; then
 fi
 
 %changelog
+* Tue Sep 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.9-alt3
+- NMU: fixed build.
+
 * Fri Apr 08 2011 Alexey Morsov <swi@altlinux.ru> 1:0.9-alt2
 - fix build
 
