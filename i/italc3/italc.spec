@@ -1,5 +1,3 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
 # %%branch_switch set %%branch_release use
 #%%define branch_switch Mxx
 
@@ -18,14 +16,6 @@
 %define teacher_group %{program_name}-teachers
 %define other_group %{program_name}-others
 
-# macros for icons
-%define iconshicolordir %_iconsdir/hicolor
-%define icons128x128dir %iconshicolordir/128x128/apps
-%define icons64x64dir %iconshicolordir/64x64/apps
-%define icons48x48dir %iconshicolordir/48x48/apps
-%define icons32x32dir %iconshicolordir/32x32/apps
-%define icons16x16dir %iconshicolordir/16x16/apps
-
 # for filetriggers use
 %if "%{?branch_switch}" == "" || "%{?branch_switch}" == "M50"
 %define filetriggers yes
@@ -41,9 +31,9 @@
 %endif
 %endif
 
-Name: italc2
-Version: 2.0.2
-Release: alt2
+Name: italc3
+Version: 3.0.3
+Release: alt1
 
 Summary: Didactical software for teachers etc
 Summary(de_DE.UTF-8): Didaktische Software fuer Lehrer usw
@@ -52,28 +42,32 @@ License: %gpl2plus
 Group: Networking/Remote access
 
 Url: http://italc.sourceforge.net/
-Packager: Aleksey Avdeev <solo@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0: %name-%version.tar
+Source1: po-%version.tar
 Source10: iTALC.conf
+Source11: Italc_logo.png
 Source20: ica-launcher.sh
-Patch10: %name-alt-all.patch
-Patch11: italc2-2.0.1-alt-gcc4.7.patch
-Patch12: italc2-additional-de-support.patch
+Source30: italc-client-autostart.desktop
+Source31: italc-client.desktop
+Source32: italc-management-console.desktop
+Source33: italc-master.desktop
 
-Conflicts: %program_name < 2.0.0
+Patch12: italc3-additional-de-support.patch
+Patch13: italc3-fix-library-path.patch
 
-BuildRequires(pre): rpm-macros-branch
-BuildPreReq: /proc
-BuildPreReq: rpm-build-licenses
-BuildPreReq: cmake
-BuildPreReq: rpm-macros-cmake
-BuildPreReq: GraphicsMagick-ImageMagick-compat
-BuildPreReq: icoutils
+Conflicts: %program_name < 3.0.0
+Conflicts: italc2 < 3.0.0
 
-# Automatically added by buildreq on Sat May 12 2012 (-bi)
-# optimized out: cmake-modules elfutils fontconfig java libICE-devel libSM-devel libX11-devel libXau-devel libXcursor-devel libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXtst-devel libXv-devel libpng-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-xml libssl-devel libstdc++-devel pkg-config python-base tzdata tzdata-java xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
+BuildRequires(pre): rpm-macros-branch rpm-build-licenses rpm-macros-cmake
+BuildRequires: /proc
+BuildRequires: cmake
+BuildRequires: GraphicsMagick-ImageMagick-compat
+BuildRequires: icoutils
+
 BuildRequires: cmake gcc-c++ java-devel libXdamage-devel libjpeg-devel libpam-devel phonon-devel libpng-devel
+BuildRequires: qt5-base-devel qt5-tools-devel
 
 %description
 iTALC is a use- and powerful didactical tool for teachers. It lets you view
@@ -154,7 +148,7 @@ Summary(de_DE.UTF-8): Software fuer iTALC-Clients
 Summary(ru_RU.UTF-8): iTALC-клиент
 Group: Networking/Remote access
 Requires: %name = %version-%release
-Conflicts: %program_name-client < 2.0.0
+Conflicts: %program_name-client < 3.0.0
 
 
 %description client
@@ -189,13 +183,7 @@ Requires: rpm >= %rpm_min_ver
 %ifdef menu_min_ver
 Requires: menu >= %menu_min_ver
 %endif
-Conflicts: %program_name-master < 2.0.0
-
-Requires: %icons128x128dir
-Requires: %icons64x64dir
-Requires: %icons48x48dir
-Requires: %icons32x32dir
-Requires: %icons16x16dir
+Conflicts: %program_name-master < 3.0.0
 
 %description master
 This package contains the actual master-software for accessing clients.
@@ -219,21 +207,17 @@ Netzwerk finden Sie in /usr/share/italc/doc/INSTALL.
 
 %prep
 %setup
-%patch10 -p1
-%patch11 -p0
+tar xf %SOURCE1
 %patch12 -p1
+%patch13 -p1
 
 %build
 %cmake -DCMAKE_INSTALL_DOCDIR:PATCH='%docdir'
 %cmake_build update-locales VERBOSE=1
-%cmake_build finalize-locales VERBOSE=1
 %cmake_build VERBOSE=1
 
 %install
 %cmakeinstall_std
-pushd BUILD
-install -m 644 -pD italc.spec %buildroot%docdir/%name.origin.spec
-popd
 
 # Install iTALC.conf
 install -m 644 -pD %SOURCE10 "%buildroot%_sysconfdir/xdg/iTALC Solutions/iTALC.conf"
@@ -259,8 +243,30 @@ ln -snf $(relative %buildroot%_bindir/ica-launcher %buildroot%xinitdir/ica-launc
 find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 	| xargs -r0 -i touch "{}/key"
 
+# Move ica to %_libdir/italc
+mkdir -p %buildroot/%_libdir/italc
+mv %buildroot%_bindir/ica %buildroot/%_libdir/italc
+ln -s ../%_lib/italc/ica %buildroot%_bindir/ica
+
 # Move JavaViewer to %%docdir
+mkdir -p %buildroot%docdir
 mv %buildroot%_datadir/italc/JavaViewer %buildroot%docdir/
+
+# Install desktop file
+install -Dm644 %SOURCE30 %buildroot%_sysconfdir/xdg/autostart/italc-client-autostart.desktop
+install -Dm644 %SOURCE31 %buildroot%_desktopdir/italc-client.desktop
+install -Dm644 %SOURCE32 %buildroot%_desktopdir/italc-management-console.desktop
+install -Dm644 %SOURCE33 %buildroot%_desktopdir/italc-master.desktop
+
+# Install icons
+install -Dm644 %SOURCE11 %buildroot%_iconsdir/hicolor/256x256/apps/italc.png
+for size in 16 22 32 64 128; do
+    install -Dm644 lib/resources/icon${size}.png %buildroot%_iconsdir/hicolor/${size}x${size}/apps/italc.png
+done
+
+# Install man pages
+mkdir -p %buildroot%_man1dir
+cp imc/imc.1 ica/ica.1 ima/italc.1 %buildroot%_man1dir
 
 %find_lang %name
 
@@ -284,14 +290,15 @@ mv %buildroot%_datadir/italc/JavaViewer %buildroot%docdir/
 
 %files client
 %_bindir/ica
+%_libdir/italc/ica
 %attr(4711,root,root) %_bindir/italc_auth_helper
-%doc %_man1dir/italc_auth_helper.1.*
 %_bindir/imc
-%doc %_man1dir/imc.1.*
+%_man1dir/imc.1.*
 %_libdir/*.so
-%doc %_man1dir/ica.1.*
+%_man1dir/ica.1.*
 %_bindir/ica-launcher
 %xinitdir/ica-launcher
+%_sysconfdir/xdg/autostart/italc-client-autostart.desktop
 %dir %confdir
 %dir %keysdir
 %attr(0770,root,%master_group) %dir %keysdir/private
@@ -318,136 +325,10 @@ mv %buildroot%_datadir/italc/JavaViewer %buildroot%docdir/
 
 %files master
 %_bindir/italc
-%doc %_man1dir/italc.1.*
-%_desktopdir/italc.desktop
-%icons128x128dir/italc.png
-%icons128x128dir/imc.png
-%icons64x64dir/italc.png
-%icons48x48dir/italc.png
-%icons48x48dir/imc.png
-%icons32x32dir/italc.png
-%icons32x32dir/imc.png
-%icons16x16dir/italc.png
-%icons16x16dir/imc.png
+%_man1dir/italc.1.*
+%_desktopdir/*.desktop
+%_iconsdir/hicolor/*x*/apps/italc.png
 
 %changelog
-* Fri Mar 23 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt2
-- Add support for additional desktop environment and use systemd tools (ALT #34689).
-
-* Wed Apr 13 2016 Denis Medvedev <nbr@altlinux.org> 2.0.2-alt1
-- 2.0.2
-
-* Tue Nov 26 2013 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt11
-- Move imc to italc2-client package to configure clients
-- Mark all man pages as documentation
-
-* Fri Apr 19 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt10
-- Add ica-launcher
-
-* Fri Apr 19 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt9
-- Version 2.0.1 (commit f6a5dbd2199adaabf1f2f66f493d8df01e3de237)
-
-* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt8.1
-- Rebuilt with libpng15
-
-* Thu Aug 30 2012 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt8
-- Really fix ica autostart (ALT #27684)
-
-* Mon Jul 09 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt7
-- Fix ica autostart
-
-* Mon Jul 09 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt6
-- Add conflicts for italc < 2.0.0
-- Add JavaViewer to %%docdir
-
-* Sun Jul 08 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt5
-- Fix permissions for:
-  + key dirs and key files
-  + %%_sysconfdir/xdg/iTALC Solutions/iTALC.conf file
-- Fix %%{program_name}-* groups names
-- Fix Exec in italc.desktop file
-
-* Thu Jul 05 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt4
-- Fix %%other_group name
-
-* Thu Jul 05 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt3
-- Fix name italc master group
-- Set setuid for italc_auth_helper
-- Create %%{program_name}-* groups:
-  + %%admin_group
-  + %%supporter_group
-  + %%teacher_group
-  + %%other_group
-- Sets %%{program_name}-* groups for %%keysdir subdirs
-- Use Debian patches:
-  + 002_use-v4l-videodev2.patch
-  + 004_x2go-nx-noxdamage.patch
-  + 011_qt-signals.patch
-  + 021_man-page-patch-in.patch
-- Add %%_sysconfdir/xdg/iTALC Solutions/iTALC.conf config file
-- Add:
-  + italc.desktop
-  + man pages for ica, italc, imc and italc_auth_helper
-
-* Tue Jun 19 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt2
-- Add icons for:
-  + italc
-  + imc
-
-* Tue May 29 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt1
-- Version 2.0.1 build
-- Not done:
-  + italc-launcher
-  + ica-launcher
-  + italc.desktop
-  + icons
-
-* Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.13-alt1.1
-- Rebuild with Python-2.7
-
-* Fri Jan 21 2011 Aleksey Avdeev <solo@altlinux.ru> 1.0.13-alt1
-- Version 1.0.13 build
-
-* Tue Mar 02 2010 Aleksey Avdeev <solo@altlinux.ru> 1.0.9.1.6-alt2
-- Move docs to %%_defaultdocdir/%%name-%%version
-- Fix shutting down of clients using KDE4 (Closes: #23033) (thanks to
-  Flavio Moringa <flavio.moringa caixamagica pt>)
-
-* Wed Dec 02 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.9.1.6-alt1.1
-- Rebuilt with python 2.6
-
-* Tue Sep 22 2009 Aleksey Avdeev <solo@altlinux.ru> 1.0.9.1.6-alt1
-- Add multiX use to ica-launcher
-
-* Tue Sep 01 2009 Aleksey Avdeev <solo@altlinux.ru> 1.0.9.1.5-alt3
-- Fix permissions: keys generation root only
-
-* Tue Sep 01 2009 Aleksey Avdeev <solo@altlinux.ru> 1.0.9.1.5-alt2
-- Fix keys permissions
-
-* Sat Aug 29 2009 Aleksey Avdeev <solo@altlinux.ru> 1.0.9.1.5-alt1
-- Add %%xinitdir/ica-launcher for autostarting ica
-- Fix %%name-client installation: move createting %%master_group to this %%pre
-
-* Tue Aug 18 2009 Aleksey Avdeev <solo@altlinux.ru> 1.0.9.1.3-alt1
-- Add key dirs
-  %%_sysconfdir/%%name/keys/{private,public}/{teacher,admin,supporter,other}
-- Create %%{name}master group, for master using
-
-* Thu Aug 13 2009 Aleksey Avdeev <solo@altlinux.ru> 1.0.9.1.2-alt1
-- Support Freedesktop menu only
-
-* Sat Aug 08 2009 Aleksey Avdeev <solo@altlinux.ru> 1.0.9.1.1-alt1
-- Version 1.0.9 build
-
-* Fri Apr 25 2008 Denis Medvedev <nbr@altlinux.ru> 1.0.7-alt4
- - %post changed to fix
-
-* Fri Apr 25 2008 Denis Medvedev <nbr@altlinux.ru> 1.0.7-alt3
- - Russian translation, icon paths changed, some spec cleanup, .desktop
-
-* Thu Apr 24 2008 Denis Medvedev <nbr@altlinux.ru> 1.0.7-alt2
- - X86_64 fixes
-
-* Thu Mar 27 2008 Denis Medvedev <nbr@altlinux.ru> 1.0.7-alt1
-- Initial ALT release
+* Tue Sep 25 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.3-alt1
+- Initial build in Sisyphus (based on italc2 spec file).
