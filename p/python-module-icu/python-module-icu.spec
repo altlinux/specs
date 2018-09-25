@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %define modulename icu
 
 %def_with python3
 
 Name: python-module-%modulename
 Version: 2.0.2
-Release: alt1.1
+Release: alt2
 
 %setup_python_module %modulename
 
@@ -76,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Tue Sep 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt2
+- Rebuilt with new icu.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
