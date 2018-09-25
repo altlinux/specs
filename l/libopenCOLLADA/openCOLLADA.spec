@@ -19,7 +19,7 @@ Group: System/Libraries
 
 Name:           libopenCOLLADA
 Version:        0
-Release:        alt5.git%{shortcommit}
+Release:        alt6.git%{shortcommit}
 License:        MIT
 Summary:        Collada 3D import and export libraries
 Url:            https://collada.org/mediawiki/index.php/OpenCOLLADA
@@ -32,6 +32,9 @@ Patch0:         OpenCOLLADA-cmake.patch
 Patch1:         openCOLLADA-narrowing_gcc6.patch
 
 Patch2:         OpenCOLLADA-caad49c-alt-fix-libbuffer-link.patch
+
+# https://github.com/KhronosGroup/OpenCOLLADA/issues/570
+Patch3:         openCOLLADA-pcre.patch
 
 Source44: import.info
 Provides: openCOLLADA = %{version}-%{release}
@@ -88,6 +91,7 @@ XML validator for COLLADA files, based on the COLLADASaxFrameworkLoader.
 %patch0 -p1 -b .cmake
 %patch1 -p1 -b .gcc6
 %patch2 -p2
+%patch3 -p1
 
 # Remove unused bundled libraries
 rm -rf Externals/{Cg,expat,lib3ds,LibXML,MayaDataModel,pcre,zlib,zziplib}
@@ -110,6 +114,7 @@ find htdocs/ -name *.css -exec dos2unix -f {} \;
 
 
 %build
+%add_optflags $(pkg-config --cflags libpcre)
 rm -rf build && mkdir -p build && pushd build
 %{fedora_cmake} -DUSE_STATIC=OFF \
        -DUSE_SHARED=ON \
@@ -153,6 +158,9 @@ cp -a Externals/MathMLSolver/include/* %{buildroot}%{_includedir}/MathMLSolver/
 
 
 %changelog
+* Tue Sep 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0-alt6.gitcaad49c
+- NMU: fixed build with new pcre.
+
 * Tue Mar 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0-alt5.gitcaad49c
 - Updated to caad49c.
 
