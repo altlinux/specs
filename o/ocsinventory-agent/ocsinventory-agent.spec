@@ -1,6 +1,6 @@
 Name: ocsinventory-agent
-Version: 1.1.2
-Release: alt2
+Version: 2.4.2
+Release: alt1
 Serial: 1
 
 Summary: Hardware and software inventory tool (Agent)
@@ -12,14 +12,21 @@ Packager: Pavel Zilke <zidex at altlinux dot org>
 
 BuildArch: noarch
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: README.ALT
 
 Requires: smartmontools nmap pciutils perl-XML-Simple perl-libwww perl-Net-IP perl-Net-SSLeay
 
-# Automatically added by buildreq on Tue Nov 03 2009 (-bi)
-BuildRequires: smartmontools nmap pciutils perl-XML-Simple perl-devel perl-libwww perl-Net-IP perl-Net-SSLeay perl-Pod-Parser
-
+BuildRequires: smartmontools
+BuildRequires: nmap
+BuildRequires: pciutils
+BuildRequires: perl-XML-Simple
+BuildRequires: perl-devel
+BuildRequires: perl-libwww
+BuildRequires: perl-Net-IP
+BuildRequires: perl-Pod-Parser
+BuildRequires: perl-IO-Socket-SSL
+BuildRequires: perl-Parse-EDID
 
 %description
 Open Computer and Software Inventory Next Generation is an application
@@ -33,16 +40,11 @@ It also allows deploying softwares, commands or files on client computers.
 
 This package contains the 'Agent' part.
 
-
-
 %prep
 %setup
 
-
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
-
-
 
 %install
 mkdir -p %buildroot{%_sysconfdir/{ocsinventory,logrotate.d,cron.daily},%_datadir/%name,%_localstatedir/%name/{ipd,download},%_var/log/%name}
@@ -83,10 +85,9 @@ install -pD -m0644 %_sourcedir/README.ALT README.ALT
 # cleanup
 rm -f %buildroot%perl_vendorlib/Ocsinventory/postinst.pl
 
-
 %files
 %defattr(-,root, root)
-%doc AUTHORS Changes LICENSE README THANKS
+%doc AUTHORS Changes LICENSE README* THANKS
 %doc README.ALT
 %_man1dir/%name.*
 %config(noreplace) %attr(0750,root,root) %_sysconfdir/cron.daily/%name
@@ -97,8 +98,10 @@ rm -f %buildroot%perl_vendorlib/Ocsinventory/postinst.pl
 %_var/log/%name
 %_var/lib/%name
 
-
 %changelog
+* Tue Sep 25 2018 Andrey Cherepanov <cas@altlinux.org> 1:2.4.2-alt1
+- New version.
+
 * Wed Dec 01 2010 Pavel Zilke <zidex at altlinux dot org> 1:1.1.2-alt2
 - Fixed build
 
