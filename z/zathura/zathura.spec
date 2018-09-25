@@ -2,7 +2,7 @@
 
 Name: zathura
 Version: 0.4.1
-Release: alt1
+Release: alt2
 
 Summary: A lightweight document viewer
 License: %bsdstyle
@@ -62,13 +62,16 @@ mkdir -p %buildroot%_libdir/zathura
 %_man5dir/*
 %_datadir/dbus-1/interfaces/org.pwmt.*
 %_datadir/bash-completion/completions/*
-%_datadir/zsh/vendor-completions/*
+%_datadir/zsh/site-functions/*
 
 %files devel
 %_includedir/*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Sep 25 2018 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt2
+- Install zsh completions to site-functions.
+
 * Fri Sep 21 2018 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
 - Updated to 0.4.1.
 
