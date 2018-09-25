@@ -1,8 +1,8 @@
 ## %%define snapshot 20080311
 
 Name: docbook-style-xsl
-Version: 1.78.1
-Release: alt3
+Version: 1.79.1
+Release: alt1%ubt
 Group: Publishing
 
 Summary: Norman Walsh's XSL stylesheets for DocBook XML
@@ -52,6 +52,7 @@ Patch7: docbook-style-xsl-non-recursive-string-subst.patch
 
 
 BuildArch: noarch
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: xsltproc perl-base xml-utils unzip
 
 %package doc
@@ -157,6 +158,9 @@ if [ ! -d "%xmlbase/docbook/xsl-stylesheets-%version" ]; then
 fi
 
 %changelog
+* Tue Sep 25 2018 Sergey V Turchin <zerg@altlinux.org> 1.79.1-alt1%ubt
+- new version
+
 * Thu Nov 16 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.78.1-alt3
 - fix recursive implementation of string.subst (ALT #34215)
 
