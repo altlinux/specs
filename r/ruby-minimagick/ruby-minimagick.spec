@@ -1,7 +1,7 @@
 %define  pkgname minimagick
 
 Name:    ruby-%pkgname
-Version: 4.9.0
+Version: 4.9.2
 Release: alt1
 
 Summary: mini replacement for RMagick
@@ -59,6 +59,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 25 2018 Andrey Cherepanov <cas@altlinux.org> 4.9.2-alt1
+- New version.
+
 * Fri Sep 21 2018 Andrey Cherepanov <cas@altlinux.org> 4.9.0-alt1
 - New version.
 
