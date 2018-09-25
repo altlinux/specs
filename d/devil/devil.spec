@@ -1,19 +1,22 @@
+%define _unpackaged_files_terminate_build 1
+
 %define realname DevIL
 
 Name: devil
 Version: 1.7.8
-Release: alt2.qa4
+Release: alt3
 
 Summary: Cross-platform image loading and manipulation toolkit
 Group: System/Libraries
 License: LGPLv2+
 Url: http://openil.sourceforge.net
-Packager: Packager: ALT QA Team <qa@packages.altlinux.org>
+
 Source: %name-%version.tar
 
 Patch0: devil-1.7.8-alt-png_set_expand_gray.patch
 Patch1: devil-1.7.8-deb-CVE-2009-3994.patch
 Patch2: devil-deb-FTBFS-il.h.patch
+Patch3: devil-1.7.8-fedora-jasper2.patch
 
 BuildRequires: gcc-c++ libSDL-devel liballegro-devel libjpeg-devel
 BuildRequires: liblcms-devel libmng-devel libpng-devel libtiff-devel zlib-devel
@@ -46,7 +49,7 @@ variety of image formats.
 %package -n lib%name-devel
 Summary: DevIL development files.
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Developer's Image Library (DevIL) is a programmer's library to develop
@@ -56,7 +59,7 @@ for a developer to learn and use. This package contains development files.
 %package -n lib%name-devel-static
 Summary: DevIL development static files.
 Group: Development/C++
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
 DevIL development static files.
@@ -76,6 +79,7 @@ for a developer to learn and use. This package contains documentation
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %configure \
@@ -107,6 +111,9 @@ rm -rf %buildroot%_infodir/*
 %doc README Libraries.txt TODO CREDITS AUTHORS
 
 %changelog
+* Tue Sep 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.8-alt3
+- NMU: fixed build with new libjasper.
+
 * Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 1.7.8-alt2.qa4
 - NMU: rebuild with new libmng
 
