@@ -10,13 +10,14 @@ Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
 Version: 21.1.1
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: Video
 Url: https://github.com/jp9000/obs-studio.git
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Patch: obs-ffmpeg-mux.patch
+Patch1: %name-%version-upstream-qt5.11.patch
 
 # Arm gcc has no xmmintrin.h file
 ExclusiveArch: %ix86 x86_64
@@ -236,6 +237,7 @@ VLC video plugin for Open Broadcaster Software.
 %prep
 %setup
 %patch -p0
+%patch1 -p1
 
 # rpmlint reports E: hardcoded-library-path
 # replace OBS_MULTIARCH_SUFFIX by LIB_SUFFIX
@@ -347,6 +349,9 @@ mv -f %buildroot/%_datadir/obs/obs-plugins/obs-ffmpeg/ffmpeg-mux \
 %_datadir/obs/obs-plugins/vlc-video/
 
 %changelog
+* Tue Sep 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 21.1.1-alt2
+- NMU: fixed build with Qt-5.11.
+
 * Fri Jul 06 2018 Anton Midyukov <antohami@altlinux.org> 21.1.1-alt1
 - new version 21.1.1
 
