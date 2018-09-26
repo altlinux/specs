@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.20
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -15,6 +15,7 @@ Source: %module-%version.tar.gz
 Url: http://git.altlinux.org/people/viy/packages/%name
 
 BuildRequires: perl-devel perl(Pod/Usage.pm) perl-IPC-Run3 perl(Data/Array2ArrayMap/Hash/XSTree.pm) perl(Pod/Text.pm)
+Requires: perl-MooX-Singleton
 
 %description
 %summary
@@ -36,6 +37,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl-IPC-Run3 perl(Data/Array2Array
 %_man1dir/*
 
 %changelog
+* Wed Sep 26 2018 Grigory Ustinov <grenka@altlinux.org> 0.20-alt2
+- Add missing Requires on perl-MooX-Singleton.
+
 * Tue Sep 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - always remove dir/ suffix from name
 
