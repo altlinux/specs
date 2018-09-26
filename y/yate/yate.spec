@@ -1,5 +1,5 @@
 Name: yate
-Version: 6.0.0
+Version: 6.1.0
 Release: alt1
 
 Summary: Yet Another Telephony Engine
@@ -487,6 +487,9 @@ cp -p packing/yate.logrotate %buildroot%_sysconfdir/logrotate.d/yate
 %config(noreplace) %_sysconfdir/yate/zlibcompress.conf
 
 %changelog
+* Wed Sep 26 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.0-alt1
+- 6.1.0 released
+
 * Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt1
 - new version (6.0.0) with rpmgs script
 - cleanup spec, fix build on aarch64
