@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt14%ubt
+Release: alt15%ubt
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
 Url: http://sourceforge.net/projects/krb5ticketwatch
 License: %gpl2plus
@@ -15,9 +15,9 @@ Patch4: krb5-ticket-watcher-1.0.3-alt-fix-desktop-category.patch
 Patch5: alt-qt5-1.patch
 Patch6: alt-tray-icon.patch
 Patch7: alt-wait-for-tray.patch
-Patch8: alt-force-kinit.patch
 Patch9: alt-password-dialog-ontop.patch
 Patch10: krb5-ticket-watcher-add-pw-exp-notif.patch
+Patch11: fix-deprecated-krb5-api-meth.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kde-common-devel rpm-build-licenses rpm-build-xdg libkrb5-devel libkeyutils-devel
@@ -36,9 +36,9 @@ tickets.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 %build
 %add_optflags -DDEBUG -I%_includedir/krb5
@@ -63,6 +63,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Tue Sep 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.3-alt15%ubt
+- fixed methods in accordance with the new version
+
 * Tue Sep 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.3-alt14%ubt
 - add password expires notification
 
