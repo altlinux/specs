@@ -11,7 +11,7 @@ Group: Development/C
 
 Name:           libflann
 Version:        1.8.4
-Release:        alt1_15
+Release:        alt2_15
 Summary:        Fast Library for Approximate Nearest Neighbors
 
 License:        BSD
@@ -23,6 +23,9 @@ Source0:        http://www.cs.ubc.ca/~mariusm/uploads/FLANN/%{oldname}-%{version
 Patch0:         flann-1.8.4-fixpyflann.patch
 # Fix build failures with c++11/gcc6
 Patch1:         flann-1.8.4-gcc6.patch
+
+Patch10: flann-1.8.4-alt-cmake.patch
+
 BuildRequires:  ctest cmake
 BuildRequires:  zlib-devel
 
@@ -83,6 +86,7 @@ Python 3 bindings for flann
 %setup -q -n %{oldname}-%{version}-src
 %patch0 -p0 -b .fixpyflann
 %patch1 -p0 -b .gcc6
+%patch10 -p2
 
 # Fix library install directory
 sed -i 's/"lib"/"%{_lib}"/' cmake/flann_utils.cmake
@@ -142,6 +146,9 @@ rm -rf %{buildroot}%{_datadir}/doc/flann
 %{python3_sitelibdir}/flann-%{version}*.egg-info
 
 %changelog
+* Wed Sep 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.4-alt2_15
+- NMU: fixed build with new cmake.
+
 * Sun Oct 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt1_15
 - update to new release by fcimport
 
