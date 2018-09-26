@@ -3,7 +3,7 @@
 
 Name: wmmenu
 Version: 1.2
-Release: alt2
+Release: alt3
 
 Packager: Sir Raorn <raorn@altlinux.ru>
 
@@ -16,7 +16,7 @@ Source: http://www.fcoutant.freesurf.fr/download/%name-%version.tar.gz
 Source1: %name.defaults
 
 # Automatically added by buildreq on Mon Apr 11 2005
-BuildRequires: gdk-pixbuf-devel glib-devel gtk+-devel libdockapp-devel 
+BuildRequires: glib-devel gtk+-devel libdockapp-devel
 BuildRequires: libXt-devel libXext-devel
 
 %description
@@ -64,6 +64,9 @@ want; dunno what it's useful for...).
 %_x11mandir/man1/wmmenu.1*
 
 %changelog
+* Wed Sep 26 2018 Grigory Ustinov <grenka@altlinux.org> 1.2-alt3
+- Fix FTBFS.
+
 * Mon Jul 02 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt2
 - rebuild without gdk-pixbuf (TODO: update to 1.3 2015/01/24)
 
