@@ -1,9 +1,11 @@
 %define _ssldir %(openssl-config --openssldir)
 %define _unpackaged_files_terminate_build 1
 
+%def_enable check
+
 Summary: Universal SSL tunnel
 Name: stunnel4
-Version: 5.01
+Version: 5.49
 Release: alt1
 License: GPLv2+
 Group: Networking/Other
@@ -14,20 +16,30 @@ Source0: ftp://stunnel.mirt.net/stunnel/stunnel-%version.tar.gz
 Source1: stunnel.init
 Source3: stunnel.inetd
 
-Patch2: stunnel-ac_fixes.patch
-Patch3: stunnel-4.42-am.patch
-Patch4: stunnel-libwrap_srv_name_log.patch
-Patch5: stunnel-config.patch
+Patch1: stunnel-config.patch
+Patch2: stunnel-5.40-authpriv.patch
+Patch3: stunnel-5.40-systemd-service.patch
 
 Url: http://www.stunnel.org/
 
 Requires(pre): cert-sh-functions
 
-BuildRequires: libwrap-devel
 BuildRequires: libssl-devel >= 0.9.7d
 BuildRequires: openssl >= 0.9.7d
 
-Conflicts: stunnel
+# pod2man
+BuildRequires: perl-podlators
+
+# pod2html
+BuildRequires: perl-devel
+
+# for tests
+%if_enabled check
+BuildRequires: /proc
+BuildRequires: nmap
+BuildRequires: iproute2
+BuildRequires: lsof
+%endif
 
 %description
 The stunnel program is designed to work as SSL encryption wrapper
@@ -56,19 +68,17 @@ stunnel acts as inetd service.
 
 %prep
 %setup -q
+%patch1 -p1 -b .fix
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1 -b .fix
 
 %build
-%autoreconf
+#autoreconf
 
 %configure \
-	--with-tcp-wrappers \
-	--with-ipv6 \
 	--with-ssl=%_prefix \
-	--enable-shared
+	--enable-shared \
+	--disable-libwrap
 
 %make_build
 
@@ -99,6 +109,11 @@ touch %buildroot%_ssldir/private/stunnel.pem
 rm -rf -- %buildroot%_libdir/stunnel
 rm -rf -- %buildroot%_docdir/stunnel
 rm -f  -- %buildroot%_sysconfdir/stunnel/stunnel.pem
+
+%check
+%if_enabled check
+make check
+%endif
 
 %pre
 %_sbindir/groupadd -r -f stunnel &>/dev/null
@@ -132,6 +147,9 @@ rm -f  -- %buildroot%_sysconfdir/stunnel/stunnel.pem
 %config(noreplace) %verify(not md5 mtime size) /etc/xinetd.d/stunnel
 
 %changelog
+* Wed Sep 26 2018 Alexey Gladkov <legion@altlinux.ru> 5.49-alt1
+- New version (5.49).
+
 * Sun Apr 13 2014 Alexey Gladkov <legion@altlinux.ru> 5.01-alt1
 - New version (5.01).
 
