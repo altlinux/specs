@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 3.0.2
-Release: alt1
+Release: alt2
 
 Summary: Organise ActiveRecord model into a tree structure
 License: MIT
@@ -20,6 +20,9 @@ BuildRequires: ruby-tool-setup
 %description
 %summary
 
+%description -l ru_RU.UTF8
+Упорядочивание модели ActiveRecord в виде древовидной структуры
+
 %package doc
 Summary: Documentation files for %name
 Group: Documentation
@@ -28,6 +31,9 @@ BuildArch: noarch
 
 %description doc
 Documentation files for %{name}.
+
+%description doc -l ru_RU.UTF8
+Файлы сведений для %name
 
 %prep
 %setup -n %pkgname-%version
@@ -49,10 +55,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Sep 21 2018 Pavel Skrylev <majioa@altlinux.org> 3.0.2-alt2
+- Gemify the package.
+
 * Tue May 29 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt1
 - Initial build for Sisyphus

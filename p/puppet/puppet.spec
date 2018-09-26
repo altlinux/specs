@@ -1,8 +1,8 @@
 %define confdir ext/redhat
 
 Name:    puppet
-Version: 5.5.6
-Release: alt1
+Version: 6.0.0
+Release: alt2
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
@@ -14,9 +14,7 @@ BuildArch: noarch
 Source:  %name-%version.tar
 Patch:   %name-%version-%release.patch
 Source1: client.init
-Source2: server.init
 Source3: puppet.service
-Source4: puppetmaster.service
 Source5: puppet-nm-dispatcher
 
 BuildRequires(pre): rpm-build-ruby
@@ -34,22 +32,16 @@ BuildRequires: ruby-safe_yaml
 Requires: shadow-change
 Conflicts: ruby-semantic
 
+%filter_from_requires /CFPropertyList/d
+Requires: ruby-gem(pathspec)
+Requires: ruby-gem(deep_merge)
+
 %description
 Puppet lets you centrally manage every important aspect of your
 system using a cross-platform specification language that manages
 all the separate elements normally aggregated in different files,
 like users, cron jobs, and hosts, along with obviously discrete
 elements like packages, services, and files.
-
-%package  server
-Summary:  Server for the puppet system management tool
-Group:    System/Servers
-Requires: %name = %version-%release
-
-%description server
-Provides the central puppet server daemon which provides manifests
-to clients.  The server can also function as a certificate authority
-and file server.
 
 %prep
 %setup
@@ -87,16 +79,17 @@ rm -r lib/puppet/vendor/*{pathspec,deep_merge}*
 	     --logdir=%_logdir/puppet \
 	     --no-rdoc \
 	     --no-tests
+cp .gemspec %name-%version.gemspec
+%update_setup_rb
+%ruby_config
+%ruby_install
 
 # SysVInit files
 install -Dp -m0644 %confdir/client.sysconfig %buildroot%_sysconfdir/sysconfig/puppet
 install -Dp -m0755 %SOURCE1 %buildroot%_initrddir/puppet
-install -Dp -m0644 %confdir/server.sysconfig %buildroot%_sysconfdir/sysconfig/puppetmaster
-install -Dp -m0755 %SOURCE2 %buildroot%_initrddir/puppetmaster
 # Systemd files
 install -Dp -m0644 %SOURCE3 %buildroot%_unitdir/puppet.service
 ln -s %_unitdir/puppet.service %buildroot%_unitdir/puppetagent.service
-install -Dp -m0644 %SOURCE4 %buildroot%_unitdir/puppetmaster.service
 
 install -Dp -m0644 %confdir/logrotate %buildroot%_sysconfdir/logrotate.d/puppet
 install -Dp -m0644 conf/fileserver.conf %buildroot%_sysconfdir/puppet/fileserver.conf
@@ -111,7 +104,7 @@ mkdir -p %buildroot%_sysconfdir/puppet/{code,modules,environments/production/man
 
 # Setup tmpfiles.d config
 mkdir -p %buildroot%_sysconfdir/tmpfiles.d
-echo "D /var/run/%name 0755 _%name %name -" > \
+echo "D /run/%name 0755 _%name %name -" > \
     %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 
 # Create puppet modules directory for puppet module tool
@@ -141,6 +134,8 @@ cat >> %buildroot%_sysconfdir/puppet/puppet.conf << END.
 #reports = puppetdb
 END.
 
+rm -rf %buildroot%_sysconfdir/{*.conf,hiera.yaml}
+
 %pre
 %_sbindir/groupadd -r -f puppet
 %_sbindir/useradd -r -n -g puppet -d %_localstatedir/puppet -s /dev/null -c Puppet _puppet >/dev/null 2>&1 ||:
@@ -150,12 +145,6 @@ END.
 
 %preun
 %preun_service puppet
-
-%post server
-%post_service puppetmaster
-
-%preun server
-%preun_service puppetmaster
 
 %files
 %_initdir/puppet
@@ -183,6 +172,7 @@ END.
 %config(noreplace) %_sysconfdir/puppet/hiera.yaml
 %config(noreplace) %_sysconfdir/sysconfig/puppet
 %config(noreplace) %_sysconfdir/logrotate.d/puppet
+%config(noreplace) %_sysconfdir/puppet/fileserver.conf
 %_bindir/puppet
 %ruby_sitelibdir/*
 %_datadir/%name
@@ -193,14 +183,18 @@ END.
 %_localstatedir/puppet/
 %attr(1770,_puppet,puppet) %dir %_logdir/puppet
 %attr(1770,_puppet,puppet) %dir %_var/run/puppet
-
-%files server
-%_initdir/puppetmaster
-%_unitdir/puppetmaster.service
-%config(noreplace) %_sysconfdir/puppet/fileserver.conf
-%config(noreplace) %_sysconfdir/sysconfig/puppetmaster
+%rubygem_specdir/*
 
 %changelog
+* Tue Sep 25 2018 Pavel Skrylev <majioa@altlinux.org> 6.0.0-alt2
+- Updated deps of fast-gettext to 1.7.
+
+* Wed Sep 19 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt1
+- New version.
+- Package ad gem.
+- Use /run instead of /var/run in tmpfiles rules.
+- puppet-server is deprecated. To run puppet as a server you must use puppetserver.
+
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 5.5.6-alt1
 - New version.
 

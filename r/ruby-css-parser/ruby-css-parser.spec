@@ -1,28 +1,27 @@
-%define  pkgname apipie-rails
+%define  pkgname css-parser
 
 Name:    ruby-%pkgname
-Version: 0.5.10
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
-Summary: Ruby on Rails API documentation tool
-License: MIT and Apache 2.0
+Summary: Ruby CSS Parser
+License: MIT
 Group:   Development/Ruby
-Url:     http://github.com/Apipie/apipie-rails
+Url:     https://github.com/premailer/css_parser
 
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
 Source:  %pkgname-%version.tar
-Patch:   alt-fix-module-name.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 
 %description
-%summary
+Load, parse and cascade CSS rule sets in Ruby.
 
 %description -l ru_RU.UTF8
-Утилита документирования Рельс
+Загружает, разбирает и упорядочивает наборы правил CSS в Рубине.
 
 %package doc
 Summary: Documentation files for %name
@@ -38,7 +37,6 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
 %update_setup_rb
 
 %build
@@ -52,7 +50,7 @@ Documentation files for %{name}.
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+#%ruby_test_unit -Ilib:test test
 
 %files
 %doc README*
@@ -63,15 +61,5 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
-* Fri Sep 21 2018 Pavel Skrylev <majioa@altlinux.org> 0.5.10-alt2
-- Gemify the package.
-
-* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.10-alt1
-- New version.
-
-* Wed Jul 04 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.9-alt1
-- New version.
-- Package as gem.
-
-* Fri Jun 01 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.8-alt1
-- Initial build for Sisyphus
+* Tue Sep 25 2018 Pavel Skrylev <majioa@altlinux.org> 1.6.0-alt1
+- Initial gemified build for Sisyphus

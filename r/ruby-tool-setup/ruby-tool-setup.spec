@@ -2,7 +2,7 @@
 
 Name: ruby-tool-%pkgname
 Version: 3.4.1
-Release: alt12
+Release: alt13
 Summary: Generic installer for ruby scripts and libraries
 License: LGPLv2.1
 Group: Development/Ruby
@@ -58,6 +58,10 @@ Documentation files for %name
 %doc doc.* sample
 
 %changelog
+* Fri Sep 21 2018 Pavel Skrylev <majioa@altlinux.org> 3.4.1-alt13
+- Add copying Gemfile w/o .gemspec to spec folder. Now name of the spec
+  folder depends on the package name, not gem name,
+
 * Tue Aug 07 2018 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt12
 - Add missing gemspec call in Gemfile.
 
