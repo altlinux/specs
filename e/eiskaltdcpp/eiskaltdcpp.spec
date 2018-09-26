@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
 Version: 2.2.10
-Release: alt1.1
+Release: alt2
 
 Summary: EiskaltDC++ - Direct Connect client
 
@@ -9,6 +9,7 @@ Group: Networking/File transfer
 Url: http://code.google.com/p/eiskaltdc/
 
 Source: %name-%version.tar
+Patch: openssl-1.1.x.patch
 
 BuildRequires: boost-interprocess-devel bzlib-devel cmake gcc-c++ libaspell-devel libgtk+2-devel
 BuildRequires: libidn-devel liblua5.1-devel libnotify-devel libpcrecpp-devel qt5-phonon-devel
@@ -86,6 +87,7 @@ command line interface for XML-RPC Daemon
 
 %prep
 %setup
+%patch -p1
 
 %build
 %add_optflags -fno-strict-aliasing $(pkg-config libpcre --cflags)
@@ -168,6 +170,9 @@ command line interface for XML-RPC Daemon
 %_datadir/%name/cli
 
 %changelog
+* Wed Sep 26 2018 Grigory Ustinov <grenka@altlinux.org> 2.2.10-alt2
+- Fix build with openssl1.1.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.10-alt1.1
 - NMU: rebuilt with boost-1.67.0
 
