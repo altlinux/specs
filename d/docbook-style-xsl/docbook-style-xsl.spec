@@ -2,7 +2,7 @@
 
 Name: docbook-style-xsl
 Version: 1.79.1
-Release: alt1%ubt
+Release: alt2%ubt
 Group: Publishing
 
 Summary: Norman Walsh's XSL stylesheets for DocBook XML
@@ -158,6 +158,9 @@ if [ ! -d "%xmlbase/docbook/xsl-stylesheets-%version" ]; then
 fi
 
 %changelog
+* Wed Sep 26 2018 Sergey V Turchin <zerg@altlinux.org> 1.79.1-alt2%ubt
+- fix manpages xsl
+
 * Tue Sep 25 2018 Sergey V Turchin <zerg@altlinux.org> 1.79.1-alt1%ubt
 - new version
 
