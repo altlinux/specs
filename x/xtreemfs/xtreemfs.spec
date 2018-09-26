@@ -1,6 +1,6 @@
 Name: xtreemfs
 Version: 1.5.1
-Release: alt3.1
+Release: alt4
 
 Summary: XtreemFS base package
 
@@ -12,9 +12,13 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://www.xtreemfs.org/downloads/XtreemFS-%version.tar
 
-Patch1: boost-1.66.patch
+Patch0: boost-1.66.patch
+Patch1: openssl-1.1.patch
 
 BuildRequires: ant >= 1.6.5 java-devel >= 1.6.0
+
+# depends on old protobuf copy, feel free to improve
+ExclusiveArch: %ix86 x86_64
 
 # Client dependencies.
 BuildRequires: gcc-c++ >= 4.1 fuse >= 2.6 libfuse-devel >= 2.6 libssl-devel >= 0.9.8 cmake >= 2.6 boost-program_options-devel >= 1.35 libattr-devel >= 2
@@ -75,11 +79,12 @@ This package contains XtreemFS administration tools.
 
 %prep
 %setup -n XtreemFS-%version
-%patch1 -p1
+%patch0 -p1
+%patch1 -p2
 
 %build
 export ANT_OPTS=-D"file.encoding=UTF-8"
-export CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
+export CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -DBOOST_ASIO_ENABLE_OLD_SERVICES"
 export CXXFLAGS=$CFLAGS
 
 %make_build
@@ -237,6 +242,9 @@ fi
 %doc LICENSE
 
 %changelog
+* Wed Sep 26 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.1-alt4
+- rebuilt with openssl-1.1
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.1-alt3.1
 - NMU: rebuilt with boost-1.67.0
 
