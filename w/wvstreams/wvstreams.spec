@@ -1,6 +1,6 @@
 Name: wvstreams
 Version: 4.6.1
-Release: alt3
+Release: alt4
 
 %define soffix .so.4.6
 %def_disable kdoc
@@ -30,6 +30,7 @@ Patch5: wvstreams-4.6.1-gcc.patch
 Patch6: wvstreams-4.6.1-gcc47.patch
 Patch7: wvstreams-4.6.1-magic.patch
 Patch8: 0001-Use-explicit-cast-and-prevent-compiler-error.patch
+Patch9: wvstreams-4.6.1-openssl1.1.patch
 
 BuildPreReq: gcc-c++
 BuildPreReq: OpenSP /proc
@@ -182,6 +183,7 @@ install -m644 %SOURCE1 .
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 %autoreconf
@@ -277,6 +279,9 @@ mv %buildroot%_localstatedir/lib/uniconf/uniconfd.ini \
 %_libdir/pkgconfig/libwvqt.pc
 
 %changelog
+* Wed Sep 26 2018 Andrey Cherepanov <cas@altlinux.org> 4.6.1-alt4
+- Fix build with OpenSSL 1.1.
+
 * Sun Jun 04 2017 Andrey Cherepanov <cas@altlinux.org> 4.6.1-alt3
 - Use explicit cast and prevent compiler error (patch from Fedora)
 - Disable noarch for doc package
