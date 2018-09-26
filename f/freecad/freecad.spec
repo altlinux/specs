@@ -10,7 +10,7 @@
 
 Name:    freecad
 Version: 0.17
-Release: alt5
+Release: alt6
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
@@ -29,6 +29,9 @@ Source5: freecad.sharedmimeinfo
 Patch1: %name-remove-3rdParty.patch
 Patch2: %name-build-with-external-smesh.patch
 %endif
+
+# branch releases/FreeCAD-0-17 of 20180521
+Patch3: upstream.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -131,6 +134,8 @@ This package contains documentation for FreeCAD.
 rm -rf src/3rdParty
 %endif
 
+%patch3 -p1
+
 %build
 export PATH=$PATH:%qtbindir
 %add_optflags -Wl,-rpath,%ldir/lib
@@ -217,6 +222,9 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/doc
 
 %changelog
+* Wed Sep 26 2018 Anton Midyukov <antohami@altlinux.org> 1:0.17-alt6
+- Fix segfault (Closes: 35002)
+
 * Fri Sep 21 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.17-alt5
 - NMU: rebuilt with vtk-8.1.
 
