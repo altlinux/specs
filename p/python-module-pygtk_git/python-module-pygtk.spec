@@ -7,7 +7,7 @@
 %define major 2.24
 Name: python-module-%oname
 Version: %major.1
-Release: alt10.git20111002
+Release: alt11.git20111002
 
 Summary: Python bindings for the GTK+ widget set (from upstream git)
 
@@ -35,7 +35,7 @@ BuildPreReq: rpm-build-python python-devel gnome-common
 # Automatically added by buildreq on Wed Feb 21 2007
 BuildRequires: glibc-devel libglade-devel python-module-pycairo-devel
 BuildPrereq: python-module-pygobject-devel python-modules-encodings xsltproc
-BuildPreReq: libcairo-devel libatk-devel gdk-pixbuf-devel
+BuildPreReq: libcairo-devel libatk-devel
 
 # style.css from this package required to build documentation
 BuildRequires: python-module-pygobject-devel-doc
@@ -228,6 +228,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Sep 26 2018 Grigory Ustinov <grenka@altlinux.org> 2.24.1-alt11.git20111002
+- Fixed FTBFS.
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.24.1-alt10.git20111002
 - Rebuilt with updated NumPy
 
