@@ -10,7 +10,7 @@
 
 Name: xscreensaver
 Version: 5.39
-Release: alt2
+Release: alt3
 
 Summary: A screen saver and locker for the X window system
 License: BSD
@@ -48,7 +48,7 @@ BuildPrereq: gnome-screensaver-utils
 %endif
 # Automatically added by buildreq on Mon Apr 18 2011
 # optimized out: fontconfig fontconfig-devel glib2-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgtk+2-devel libpango-devel perl-XML-Parser pkg-config xorg-inputproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
-BuildRequires: bc imake intltool libGLU-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXxf86misc-devel libXxf86vm-devel libglade-devel libgle-devel libjpeg-devel libpam-devel libxml2-devel xorg-cf-files gdk-pixbuf-devel xsltproc
+BuildRequires: bc imake intltool libGLU-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXxf86misc-devel libXxf86vm-devel libglade-devel libgle-devel libjpeg-devel libpam-devel libxml2-devel xorg-cf-files xsltproc
 
 %description
 A modular screen saver and locker for the X Window System.
@@ -317,6 +317,9 @@ MkModuleFilelists %_sourcedir/xscreensaver-hacks-gl gl
 %files -n mate-screensaver-modules-xscreensaver-gl -f xscreensaver-mate-gl
 
 %changelog
+* Wed Sep 26 2018 Grigory Ustinov <grenka@altlinux.org> 5.39-alt3
+- Fixed FTBFS.
+
 * Wed Apr 18 2018 Michael Shigorin <mike@altlinux.org> 5.39-alt2
 - updated hack lists
 
