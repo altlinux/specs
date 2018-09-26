@@ -1,6 +1,6 @@
 Name: simage
 Version: 1.7.0
-Release: alt6
+Release: alt7
 Summary: Format loaders and front-ends to common import libraries
 License: Public domain
 Group: Video
@@ -13,7 +13,7 @@ BuildPreReq: gcc-c++ qt4-devel libX11-devel libXt-devel
 BuildPreReq: libungif-devel libjpeg-devel zlib-devel libpng-devel
 BuildPreReq: libtiff-devel ghostscript-utils libsndfile-devel
 BuildPrereq: libvorbis-devel gcc-fortran guile18-devel
-BuildPreReq: libquicktime-devel libqt4-uitools libqt4-opengl
+BuildPreReq: libqt4-uitools libqt4-opengl
 BuildPreReq: libqt4-gui jasper libjasper-devel
 
 %description
@@ -95,6 +95,9 @@ export QTDIR=%_qt4dir
 %_datadir/guile/coin/*
 
 %changelog
+* Wed Sep 26 2018 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt7
+- Fix FTBFS.
+
 * Fri May 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt6
 - Fixed build
 
