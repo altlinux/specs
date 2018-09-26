@@ -1,18 +1,21 @@
 Serial: 51104
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libmutil-devel
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Summary:		Minisip library providing various C++ utility classes
 Name:			libmutil
 Version:		0.8.0
-Release:		alt3_0.7.20100319svn3760.1
+Release:		alt4_0.7.20100319svn3760.1
 License:		LGPLv2+
 URL:			http://www.minisip.org/
 Group:			System/Libraries
 # svn export -r 3760  svn://svn.minisip.org/minisip/trunk/libmutil libmutil-0.8.0
-# tar cjf libmutil-0.8.0.tar.bz2 libmutil-0.8.0/
-Source0:		%{name}-%{version}.tar.bz2
+# tar cjf libmutil-0.8.0.tar libmutil-0.8.0/
+Source0:		%{name}-%{version}.tar
+
+Patch1: libmutil-0.8.0-alt-build.patch
+
 BuildRequires:		autoconf
 BuildRequires:		automake
 BuildRequires:		libtool
@@ -37,6 +40,7 @@ This package contains the development files for library %{name}.
 
 %prep
 %setup -q
+%patch1 -p2
 # Fix DOS line-endings
 for f in examples/*; do
 	sed "s|\r||g" $f > $f.new
@@ -71,6 +75,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 
 %changelog
+* Wed Sep 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 51104:0.8.0-alt4_0.7.20100319svn3760.1
+- NMU: fixed build with new automake.
+
 * Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 51104:0.8.0-alt3_0.7.20100319svn3760.1
 - applied repocop patches
 
