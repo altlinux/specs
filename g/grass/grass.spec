@@ -1,6 +1,6 @@
 Name:    grass
 Version: 7.4.0
-Release: alt1
+Release: alt2
 
 %def_with mysql
 %def_with postgres
@@ -63,7 +63,6 @@ BuildRequires: lesstif-devel
 BuildRequires: libGLw-devel
 BuildRequires: libunixODBC-devel
 BuildRequires: libwxGTK-devel
-BuildRequires: libmysqld-devel
 BuildRequires: python-module-simplejson
 BuildRequires: xorg-glproto-devel
 BuildRequires: desktop-file-utils
@@ -330,6 +329,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Wed Sep 26 2018 Grigory Ustinov <grenka@altlinux.org> 7.4.0-alt2
+- Fixed FTBFS.
+
 * Sat Feb 24 2018 Andrey Cherepanov <cas@altlinux.org> 7.4.0-alt1
 - New version.
 - Make switch for build witih python3 (disabled by default).
