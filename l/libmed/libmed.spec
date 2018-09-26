@@ -1,6 +1,6 @@
 Name:     libmed
 Version:  3.3.1
-Release:  alt1
+Release:  alt2
 
 Summary:  Library to store and exchange meshed data or computation result in MED format
 License:  GPLv3 and LGPLv3
@@ -10,6 +10,8 @@ Url:      https://www.salome-platform.org/downloads/current-version
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   med-%version.tar
+
+Patch1: med-3.0.7-fedora-tests.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libhdf5-devel
@@ -35,6 +37,11 @@ Utilities for work with MED format.
 
 %prep
 %setup -n med-%{version}_SRC
+%patch1 -p1
+
+# fix tests for aarch64
+find tests -name '*.sh' -print0 | xargs -0 \
+	sed -i -e 's:H5T_STD_\[IU\]I8\[LB\]E:H5T_STD_[IU]8[LB]E:g'
 
 %build
 %undefine _configure_gettext
@@ -64,5 +71,8 @@ rm -rf %buildroot%_datadir/doc/med
 %_bindir/*
 
 %changelog
+* Mon Sep 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.1-alt2
+- NMU: rebuilt for aarch64.
+
 * Wed Apr 25 2018 Andrey Cherepanov <cas@altlinux.org> 3.3.1-alt1
 - Initial build in Sisyphus.

@@ -1,20 +1,25 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname pyface
+
 Name: python-module-%oname
-Version: 5.1.0
+Version: 6.0.0
 Release: alt1
 Summary: Traits-capable windowing framework
 
 Group: Development/Python
 License: BSD, EPL and LGPL
 URL: http://www.enthought.com/
-# https://github.com/enthought/pyface.git
-Source0: https://pypi.python.org/packages/00/ec/04b1d7f1981107cde01bbc4a53ae2a234493e694cfa880fc00817e6c2a42/%{oname}-%{version}.tar.bz2
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-BuildPreReq: python-module-setuptools python-devel
-BuildPreReq: python-module-setupdocs python-module-sphinx-devel
 BuildArch: noarch
+
+# https://github.com/enthought/pyface.git
+Source: %name-%version.tar
+
+Patch1: %oname-alt-docs.patch
+
+BuildRequires(pre): python-module-sphinx-devel
+BuildRequires: python-module-setuptools python-devel
+BuildRequires: python-module-setupdocs
 
 %description
 The pyface project contains a toolkit-independent GUI abstraction layer,
@@ -52,7 +57,7 @@ This package contains pickles for pyface.
 %package tests
 Summary: Tests for pyface
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 The pyface project contains a toolkit-independent GUI abstraction layer,
@@ -64,7 +69,8 @@ back-end take care of the details of displaying them.
 This package contains tests for pyface.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
+%patch1 -p1
 
 %prepare_sphinx docs
 ln -s ../objects.inv docs/source/
@@ -101,6 +107,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/%oname/pickle
 
 %changelog
+* Mon Sep 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.0-alt1
+- Updated to upstream version 6.0.0.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.0-alt1
 - automated PyPI update
 

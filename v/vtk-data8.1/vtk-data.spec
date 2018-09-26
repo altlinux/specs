@@ -1,16 +1,16 @@
-%define ver 6.2
+%define _unpackaged_files_terminate_build 1
+
+%define ver 8.1
 Name: vtk-data%ver
-Version: %ver.0
+Version: %ver.1
 Release: alt1
 Summary: Data files for examples of The Visualization Toolkit (VTK)
 License: MIT
 Group: Development/Tools
-Url: http://www.vtk.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://www.vtk.org/
 
 Source: vtkdata-%version.tar
 
-#Requires: vtk >= %version
 BuildArch: noarch
 
 %description
@@ -30,6 +30,9 @@ tar -xf %SOURCE0
 %_datadir/vtk-%ver
 
 %changelog
+* Mon Sep 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 8.1.1-alt1
+- Updated to upstream version 8.1.1.
+
 * Wed Mar 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.2.0-alt1
 - Version 6.2.0
 

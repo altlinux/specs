@@ -1,47 +1,41 @@
-%define mpiimpl openmpi
-%define mpidir %_libdir/%mpiimpl
-%define vtkver 6.2
+%define _unpackaged_files_terminate_build 1
+
+%def_enable bootstrap
+
+%define vtkver 8.1
 
 %define oname mayavi
+
 Name:           Mayavi
-Version:        4.4.0
-Release:        alt1.git20150422
+Version:        4.6.2
+Release:        alt1
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
 License:        BSD and EPL and LGPLv2+ and LGPLv3+
 URL:            http://code.enthought.com/projects/mayavi/
+
 # https://github.com/enthought/mayavi.git
-Source:         %name-%version.tar.gz
+Source:         %name-%version.tar
 Source1:        Mayavi.desktop
 Source2:        tvtk_doc.desktop
-# Removes already generated tvtk class zip file
-# https://svn.enthought.com/enthought/ticket/1817
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+Patch1: %name-alt-reqs.patch
 
 BuildRequires: python-module-setuptools python-module-setupdocs
 BuildRequires: python-module-sphinx-devel libnumpy-devel
-BuildRequires: python-module-vtk%vtkver /proc strace
-BuildPreReq: desktop-file-utils
-BuildPreReq: python-module-sip-devel libpympi-devel
-BuildPreReq: python-module-PyQt4-devel /usr/bin/ssh vtk%vtkver-python
-BuildPreReq: libGL-devel libGLU-devel xvfb-run
-BuildPreReq: python-module-traits python%_python_version(traits.api)
+BuildRequires: python-module-vtk%vtkver /proc
+BuildRequires: desktop-file-utils
+BuildRequires: libpympi-devel
+BuildRequires: vtk%vtkver-python
+BuildRequires: libGL-devel libGLU-devel xvfb-run
+%if_disabled bootstrap
+BuildRequires: python-module-traits python2.7(traits.api)
+%endif
 
-Provides: %oname = %version-%release
-#py_requires %oname tvtk wx
-#Requires: python-module-%oname.tests = %version-%release
-Requires:       python-module-apptools
-#Requires:       python-module-EnthoughtBase
-Requires:       python-module-EnvisageCore
-Requires:       python-module-EnvisagePlugins
-Requires:       python-module-traits
-#Requires:       python-module-TraitsGUI
-#Requires:       python-module-TraitsBackendQt
-Requires: python-module-mayavi = %EVR
-Requires: python-module-mayavi.tests = %EVR
-Requires: python-module-tvtk = %EVR
-Requires: python-module-vtk%vtkver
+Provides: %oname = %EVR
+Requires: python-module-%oname = %EVR
+Requires: python-module-%oname.tests = %EVR
 
 %add_python_req_skip test tvtk_classes
 
@@ -62,8 +56,9 @@ module.
 %package -n python-module-%oname
 Summary: Python files for Mayavi, scientific data 3-dimensional visualizer
 Group: Development/Python
-Conflicts: %name < %version-%release
+Conflicts: %name < %EVR
 %add_python_req_skip wxversion
+Requires: python-module-tvtk = %EVR
 
 %description -n python-module-%oname
 This package contains Python files for Mayavi, scientific data
@@ -72,7 +67,7 @@ This package contains Python files for Mayavi, scientific data
 %package -n python-module-%oname.tests
 Summary: Tests for Mayavi, scientific data 3-dimensional visualizer
 Group: Development/Python
-Requires: python-module-%oname = %version-%release
+Requires: python-module-%oname = %EVR
 
 %description -n python-module-%oname.tests
 This package contains tests for Mayavi, scientific data
@@ -81,7 +76,12 @@ This package contains tests for Mayavi, scientific data
 %package -n python-module-tvtk
 Summary: TVTK: A Traits-based wrapper for the Visualization Toolkit
 Group: Development/Python
-Conflicts: %name < %version-%release
+Conflicts: %name < %EVR
+Requires: python-module-apptools
+Requires: python-module-EnvisageCore
+Requires: python-module-EnvisagePlugins
+Requires: python-module-traits
+Requires: python-module-vtk%vtkver
 
 %description -n python-module-tvtk
 TVTK: A Traits-based wrapper for the Visualization Toolkit, a
@@ -96,7 +96,7 @@ module.
 %package -n python-module-tvtk.tests
 Summary: Tests for TVTK
 Group: Development/Python
-Requires: python-module-tvtk = %version-%release
+Requires: python-module-tvtk = %EVR
 
 %description -n python-module-tvtk.tests
 TVTK: A Traits-based wrapper for the Visualization Toolkit, a
@@ -114,7 +114,7 @@ This package contains tests for TVTK.
 Summary: Documentation for Mayavi, scientific data 3-dimensional visualizer
 Group: Documentation
 BuildArch: noarch
-Conflicts: %name < %version-%release
+Conflicts: %name < %EVR
 
 %description doc
 This package contains documentation for Mayavi, scientific data
@@ -122,19 +122,14 @@ This package contains documentation for Mayavi, scientific data
 
 %prep
 %setup
+%patch1 -p1
 
 %build
-#source %mpidir/bin/mpivars.sh
-
 export PYTHONPATH=$PWD:$PWD/docs/source/mayavi/sphinxext
 xvfb-run --server-args="-screen 0 1024x768x24" \
 	python setup.py build
-#xvfb-run --server-args="-screen 0 1024x768x24" \
-#	pvtkpython setup.py build
 
 %install
-#source %mpidir/bin/mpivars.sh
-
 export PYTHONPATH=$PWD:$PWD/docs/source/mayavi/sphinxext
 xvfb-run --server-args="-screen 0 1024x768x24" \
 	python setup.py install --skip-build --root=%buildroot
@@ -161,7 +156,6 @@ ln -s %_liconsdir/mayavi2.png %buildroot%_niconsdir/
 %python_sitelibdir/*
 %exclude %python_sitelibdir/mayavi*
 %exclude %python_sitelibdir/tvtk
-#exclude %python_sitelibdir/examples
 %_man1dir/*
 %_desktopdir/*
 %_liconsdir/*
@@ -183,9 +177,15 @@ ln -s %_liconsdir/mayavi2.png %buildroot%_niconsdir/
 %python_sitelibdir/tvtk/tests
 
 %files doc
-%doc docs/*.txt docs/pdf examples docs/build/tvtk docs/build/mayavi
+%doc docs/*.txt docs/pdf examples docs/build/mayavi
+%if_disabled bootstrap
+%doc docs/build/tvtk
+%endif
 
 %changelog
+* Mon Sep 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.2-alt1
+- Updated to upstream version 4.6.2.
+
 * Mon May 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.0-alt1.git20150422
 - Version 4.4.0
 
