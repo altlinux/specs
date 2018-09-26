@@ -1,20 +1,22 @@
+%define _unpackaged_files_terminate_build 1
+
 %define _optlevel s
-%define abiversion 19
+%define abiversion 20
 
 Name: libtorrent%{abiversion}
 Epoch: 3
-Version: 0.13.6
-Release: alt2
+Version: 0.13.7
+Release: alt1
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
 License: GPLv2+
 Url: https://github.com/rakshasa/libtorrent
 
-%define full_version %version
-Source0: %name-%version.tar
-Patch0: libtorrent0.12-alt-gcc4.6.patch
-Patch1: libtorrent-%version-%release.patch
+# https://github.com/rakshasa/libtorrent.git
+Source: %name-%version.tar
+
+Patch1: libtorrent-0.13.7-upstream-openssl.patch
 
 BuildRequires: gcc-c++ libsigc++2.0-devel libssl-devel
 BuildRequires: cppunit-devel
@@ -47,7 +49,7 @@ that other clients and libraries suffer from. libTorrent features:
 %package -n libtorrent-devel
 Summary: Development libraries and header files for libTorrent
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Conflicts: libtorrent-rasterbar0.13-devel
 
 %description -n libtorrent-devel
@@ -55,9 +57,9 @@ The libtorrent-devel package contains libraries and header files needed
 to develop applications using libTorrent.
 
 %prep
-%setup -q -n %name-%full_version
-#patch0 -p1
+%setup
 %patch1 -p1
+
 mv -f COPYING COPYING.orig
 ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
@@ -68,7 +70,6 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %install
 %makeinstall_std
-rm %buildroot%_libdir/*.la
 
 %check
 %make_build check
@@ -76,15 +77,18 @@ rm %buildroot%_libdir/*.la
 %files
 %doc AUTHORS ChangeLog NEWS README
 %doc --no-dereference COPYING
-
 %_libdir/*.so.*
 
 %files -n libtorrent-devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*
 
 %changelog
+* Wed Sep 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3:0.13.7-alt1
+- Updated to upstream version 0.13.7.
+- Applied patch for support of openssl-1.1.
+
 * Wed Jan 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3:0.13.6-alt2
 - Fixed build with new cppunit.
 - Enabled tests.

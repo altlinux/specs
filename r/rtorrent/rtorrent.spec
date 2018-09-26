@@ -1,22 +1,23 @@
+%define _unpackaged_files_terminate_build 1
+
 %define _optlevel s
 
 Name: rtorrent
-Version: 0.9.6
-Release: alt2
+Version: 0.9.7
+Release: alt1
 
 Summary: rTorrent - rakshasa's ncurses BitTorrent client using librTorrent
 Group: Networking/File transfer
 License: GPL2
 Url: https://github.com/rakshasa/rtorrent/wiki
 
-Source0: %name-%version.tar
-Patch0: %name-man-alt.patch
+# https://github.com/rakshasa/rtorrent.git
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++ libcurl-devel libidn-devel libncursesw-devel libsigc++2.0-devel libssl-devel libstdc++-devel libtinfo-devel zlib-devel libgssapi-devel
 BuildRequires: cppunit-devel
 BuildRequires: libxmlrpc-devel >= 0.12.2 libxml2-devel
-
-BuildRequires: libtorrent-devel >= 0.13.6-alt1
+BuildRequires: libtorrent-devel >= 0.13.7-alt1
 
 %description
 rTorrent is a ncurses based client and is therefor ideal to use with
@@ -32,11 +33,9 @@ screen. rTorrent features:
 * Only one torrent at a time is checked.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
 mv -f COPYING COPYING.orig
 ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
-
 
 %build
 %autoreconf
@@ -48,11 +47,12 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %files
 %doc AUTHORS doc/rtorrent.rc
-
 %_bindir/%name
-#%_man1dir/*
 
 %changelog
+* Wed Sep 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.7-alt1
+- Updated to upstream version 0.9.7.
+
 * Mon Sep 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.6-alt2
 - Fixed build with new cppunit.
 
