@@ -1,7 +1,7 @@
 %define  pkgname chef-vault
 
 Name:    ruby-%pkgname
-Version: 3.4.0
+Version: 3.4.2
 Release: alt1
 
 Summary: Securely manage passwords, certs, and other secrets in Chef
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Sep 26 2018 Andrey Cherepanov <cas@altlinux.org> 3.4.2-alt1
+- New version.
+
 * Thu Sep 20 2018 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1
 - New version.
 
