@@ -9,8 +9,8 @@
 #
 
 Name: xscreensaver
-Version: 5.39
-Release: alt3
+Version: 5.40
+Release: alt1
 
 Summary: A screen saver and locker for the X window system
 License: BSD
@@ -317,6 +317,10 @@ MkModuleFilelists %_sourcedir/xscreensaver-hacks-gl gl
 %files -n mate-screensaver-modules-xscreensaver-gl -f xscreensaver-mate-gl
 
 %changelog
+* Wed Sep 26 2018 Grigory Ustinov <grenka@altlinux.org> 5.40-alt1
+- Build new version.
+- Fix displaying list of hacks (Closes: #35187).
+
 * Wed Sep 26 2018 Grigory Ustinov <grenka@altlinux.org> 5.39-alt3
 - Fixed FTBFS.
 
