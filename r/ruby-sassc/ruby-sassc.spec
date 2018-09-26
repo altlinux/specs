@@ -1,5 +1,5 @@
 Name:    ruby-sassc
-Version: 1.12.1
+Version: 2.0.0
 Release: alt1
 
 Summary: Use libsass with Ruby!
@@ -49,12 +49,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README*
 %ruby_sitelibdir/*
-%rubygem_specdir/*.gemspec
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Sep 26 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
+- New version.
+
 * Fri Jul 06 2018 Andrey Cherepanov <cas@altlinux.org> 1.12.1-alt1
 - New version.
 - Disable tests.
