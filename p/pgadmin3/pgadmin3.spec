@@ -2,13 +2,10 @@
 %define __xargs		/bin/xargs
 
 %def_enable databasedesigner
-# gcrypt or openssl
-%def_without libgcrypt
-%def_with openssl
 
 Name: pgadmin3
 Version: 1.22.2
-Release: alt1%ubt
+Release: alt2
 
 Summary: Powerful administration and development platform for PostgreSQL.
 License: BSD
@@ -22,13 +19,13 @@ Patch: %name-%version.patch
 
 Requires: %name-docs-en_US
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: gcc-c++ libxslt-devel postgresql-devel zlib-devel
+BuildRequires: gcc-c++ libxslt-devel postgresql-devel
 BuildRequires: libwxGTK-contrib-ogl-devel libwxGTK-contrib-stc-devel libwxGTK-devel
 BuildRequires: findutils ImageMagick-tools
 BuildRequires: python-module-sphinx
-%{?_with_libgcrypt:BuildRequires: libgcrypt-devel}
-%{?_with_openssl:BuildRequires: libssl-devel}
+BuildRequires: libssl-devel
+BuildRequires: libkrb5-devel
+BuildRequires: libssh2-devel
 
 %description
 pgAdmin III is a powerful administration and development platform for
@@ -63,10 +60,8 @@ All docs for %name.
 %build
 /bin/sh bootstrap
 %configure CPPFLAGS="-I./include" \
-	%{subst_with openssl} \
-	%{subst_with libgcrypt} \
 	%{subst_enable databasedesigner} \
-	--with-libz
+	--with-libssh2
 
 %make_build
 
@@ -137,6 +132,10 @@ mv -f %buildroot%_datadir/%name/i18n/??_?? %buildroot%_datadir/locale
 %doc %_datadir/%name/docs/sl_SI
 
 %changelog
+* Wed Sep 26 2018 Alexey Shabalin <shaba@altlinux.org> 1.22.2-alt2
+- build with system libssh2
+- support PG 10
+
 * Wed Sep 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1.22.2-alt1%ubt
 - 1.22.2
 
