@@ -4,7 +4,7 @@
 
 Name:           mintmenu
 Version:        5.9.0
-Release:        alt1
+Release:        alt2
 Epoch:          1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
@@ -53,7 +53,8 @@ Requires: mate-menu-editor
 
 Requires: apt
 
-BuildRequires: rpm-build-gir
+BuildRequires(pre): rpm-macros-alternatives
+BuildRequires(pre): rpm-build-gir
 BuildRequires: apt
 
 # due to apt: protocol
@@ -150,6 +151,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-baseal
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Wed Sep 26 2018 Andrey Cherepanov <cas@altlinux.org> 1:5.9.0-alt2
+- Rebuild with rpm-macros-alternatives.
+
 * Mon Jul 09 2018 Andrey Cherepanov <cas@altlinux.org> 1:5.9.0-alt1
 - New version.
 
