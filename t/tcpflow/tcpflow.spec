@@ -1,6 +1,6 @@
 Summary: Network traffic recorder
 Name: tcpflow
-Version: 1.4.5
+Version: 1.5.0
 Release: alt1
 License: GPLv3
 Group: Monitoring
@@ -56,7 +56,7 @@ sed -i -e 's:__BINARY__:%_bindir/%name:' %buildroot%_controldir/%name
 %post_control -s restricted %name
 
 %files
-%doc AUTHORS COPYING ChangeLog NEWS README
+%doc AUTHORS COPYING ChangeLog NEWS
 %attr(700,root,root) %verify(not mode group) %_bindir/%name
 %_man1dir/%name.1*
 
@@ -64,6 +64,9 @@ sed -i -e 's:__BINARY__:%_bindir/%name:' %buildroot%_controldir/%name
 %config %_controldir/%name
 
 %changelog
+* Wed Sep 26 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0-alt1
+- 1.5.0 released
+
 * Tue Oct 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.5-alt1
 - Updated to upstream version 1.4.5.
 
