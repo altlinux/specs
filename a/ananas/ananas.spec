@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: ananas
 Version: 0.9.5
-Release: alt9
+Release: alt10
 
 Summary: Runtime and development environment of Finance Applications
 Summary(ru_RU.UTF8): Среда разработки и исполнения прикладных решений автоматизации оперативного, бухгалтерского и других видов учета.
@@ -26,7 +26,7 @@ Obsoletes: ananas-extensions
 
 Requires: MySQL-client
 
-BuildRequires: gcc-c++ kdepim-devel libMySQL-devel libqt3-qsa-devel qt3-designer
+BuildRequires: gcc-c++ libMySQL-devel libqt3-qsa-devel qt3-designer
 
 %description
 Ananas is an Accounting Application Framework for Small Businesses.
@@ -264,6 +264,9 @@ mysql -u root -e "create database ananas_inventory_demo character set utf8" > /d
 %_datadir/ananas/inventory/
 
 %changelog
+* Thu Sep 27 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.5-alt10
+- Remove kdepim support.
+
 * Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 0.9.5-alt9
 - rebuilt against gcc5-built qt3
 
