@@ -6,7 +6,7 @@
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt7%ubt
+Release: alt8%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -195,6 +195,9 @@ done
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt8%ubt
+- rebuild with new Qt
+
 * Tue Aug 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt7%ubt
 - rebuild with new Qt
 

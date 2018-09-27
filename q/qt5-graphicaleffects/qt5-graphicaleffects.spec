@@ -2,7 +2,7 @@
 %global qt_module qtgraphicaleffects
 
 Name: qt5-graphicaleffects
-Version: 5.11.1
+Version: 5.11.2
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -58,14 +58,18 @@ export QT_HASH_SEED=0
 %make INSTALL_ROOT=%buildroot install_docs ||:
 
 %files common
-%files
 %doc LICENSE*EXCEPT*
+
+%files
 %_qt5_archdatadir/qml/QtGraphicalEffects/
 
 %files doc
 %_qt5_docdir/*
 
 %changelog
+* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+- new version
+
 * Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
 - new version
 
