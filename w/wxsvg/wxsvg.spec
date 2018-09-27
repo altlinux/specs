@@ -2,7 +2,7 @@
 
 Name: wxsvg
 Version: 1.5.14
-Release: alt3%ubt
+Release: alt4%ubt
 Epoch: 1
 
 Summary: wxSVG is viewer SVG files
@@ -10,6 +10,8 @@ License: GPL
 Group: Graphics
 Url: http://wxsvg.sourceforge.net
 Source: %name-%version.tar
+
+Patch1: %name-%version-alt.patch
 
 BuildRequires: gcc-c++ libart_lgpl-devel libpango-devel
 BuildRequires: compat-libwxGTK3.0-gtk2-devel libavformat-devel libswscale-devel
@@ -50,6 +52,7 @@ Development shared library for wxSVG
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %qIF_ver_lt %ubt_id S1
@@ -80,6 +83,9 @@ Development shared library for wxSVG
 %_pkgconfigdir/*
 
 %changelog
+* Wed Sep 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.5.14-alt4%ubt
+- svgview: fixed error messages on start without existing svg file specified as argument.
+
 * Tue Sep 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.5.14-alt3%ubt
 - Rebuilt with support for older branches.
 
