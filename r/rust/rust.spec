@@ -1,4 +1,4 @@
-%define rust_ver 1.29.0
+%define rust_ver 1.29.1
 %define cargo_ver 1.29.0
 
 Name: rust
@@ -16,8 +16,9 @@ Source: https://static.rust-lang.org/dist/%{name}c-%version-src.tar.xz
 BuildPreReq: /proc
 BuildRequires: curl gcc-c++ python-devel cmake libffi-devel patchelf
 
-%def_with     bootstrap
+%def_without  bootstrap
 %def_without  bundled_llvm
+%define abisuff %nil
 
 %if_without bundled_llvm
 
@@ -37,6 +38,7 @@ BuildRequires: rust rust-cargo
 Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
 Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
 Source4: https://static.rust-lang.org/dist/rust-%r_ver-aarch64-unknown-linux-gnu.tar.gz
+Source5: https://static.rust-lang.org/dist/rust-%r_ver-armv7-unknown-linux-gnueabihf.tar.gz
 
 %ifarch %ix86
 %define r_src %SOURCE2
@@ -46,6 +48,10 @@ Source4: https://static.rust-lang.org/dist/rust-%r_ver-aarch64-unknown-linux-gnu
 %endif
 %ifarch aarch64
 %define r_src %SOURCE4
+%endif
+%ifarch armh
+%define r_src %SOURCE5
+%define abisuff eabihf
 %endif
 
 %define rustdir %_tmppath/rust
@@ -63,6 +69,9 @@ Source4: https://static.rust-lang.org/dist/rust-%r_ver-aarch64-unknown-linux-gnu
 %ifarch aarch64
 %define r_arch aarch64
 %endif
+%ifarch armh
+%define r_arch armv7
+%endif
 
 # Since 1.12.0: striping debuginfo damages *.so files
 %add_debuginfo_skiplist %_libdir %_bindir
@@ -75,6 +84,8 @@ segfaults, and guarantees thread safety.
 Group: Development/Other
 Summary: run rust compiler under gdb
 Requires: %name = %rust_ver-%release
+Requires: gdb
+AutoReq: nopython
 
 %description gdb
 %summary
@@ -103,7 +114,7 @@ and ensure that you'll always get a repeatable build.
 
 %package cargo-doc
 Summary: Documentation for Cargo
-Version: 1.29.0
+Version: %cargo_ver
 Group: Development/Documentation
 Requires: rust-doc = %rust_ver-%release
 
@@ -170,7 +181,7 @@ data to provide information about the Rust standard library.
 %if_with bootstrap
 tar xf %r_src
 mkdir -p %rustdir
-pushd rust-%r_ver-%r_arch-unknown-linux-gnu
+pushd rust-%r_ver-%r_arch-unknown-linux-gnu%abisuff
 ./install.sh --prefix=%rustdir
 popd
 
@@ -207,7 +218,7 @@ EOF
 
 %if_without bundled_llvm
 cat >> config.toml <<EOF
-[target.%r_arch-unknown-linux-gnu]
+[target.%r_arch-unknown-linux-gnu%abisuff]
 llvm-config = "./llvm-config-filtered"
 EOF
 
@@ -243,9 +254,9 @@ rm -rf %rustdir
 %_libdir/lib*
 %dir %_libdir/rustlib
 %dir %_libdir/rustlib/etc
-%dir %_libdir/rustlib/%r_arch-unknown-linux-gnu
-%_libdir/rustlib/%r_arch-unknown-linux-gnu/*
-%exclude %_libdir/rustlib/%r_arch-unknown-linux-gnu/analysis
+%dir %_libdir/rustlib/%r_arch-unknown-linux-gnu%abisuff
+%_libdir/rustlib/%r_arch-unknown-linux-gnu%abisuff/*
+%exclude %_libdir/rustlib/%r_arch-unknown-linux-gnu%abisuff/analysis
 %exclude %_libdir/rustlib/etc/*
 %exclude %_libdir/rustlib/install.log
 %exclude %_libdir/rustlib/manifest-*
@@ -293,9 +304,15 @@ rm -rf %rustdir
 %_libdir/rustlib/src
 
 %files analysis
-%_libdir/rustlib/%r_arch-unknown-linux-gnu/analysis
+%_libdir/rustlib/%r_arch-unknown-linux-gnu%abisuff/analysis
 
 %changelog
+* Thu Sep 27 2018 Vladimir Lettiev <crux@altlinux.org> 1:1.29.1-alt1
+- 1.29.1
+- security fix: https://blog.rust-lang.org/2018/09/21/Security-advisory-for-std.html
+- added support for armv7 arch (thanks to sbolshakov@ for patch)
+- require gdb for rust-gdb
+
 * Fri Sep 14 2018 Vladimir Lettiev <crux@altlinux.org> 1:1.29.0-alt1
 - 1.29.0
 - packaged extended rust tool set and docs
