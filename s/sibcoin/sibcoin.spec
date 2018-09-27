@@ -2,11 +2,12 @@
 
 Name:		sibcoin
 Version:	0.16.1.2
-Release:	alt2
+Release:	alt2.qa1
 Summary:	Siberian Chervonets Wallet
 Url:		http://sibcoin.org/en/
 Group:		Office
 License:	MIT
+ExclusiveArch: %ix86 x86_64
 Source0:	%name.tar.xz
 
 Source1:	%name.png
@@ -60,6 +61,9 @@ convert -resize 128x128 %SOURCE1 %buildroot%_giconsdir/%name.png
 %_giconsdir/%name.png
 
 %changelog
+* Thu Sep 27 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.16.1.2-alt2.qa1
+- Added ExclusiveArch: %ix86 x86_64.
+
 * Wed Jun 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.16.1.2-alt2
 - NMU: rebuilt with boost-1.67.0.
 
