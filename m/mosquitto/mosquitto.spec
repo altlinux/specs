@@ -3,8 +3,8 @@
 %define lname     libmosquitto
 
 Name: mosquitto
-Version: 1.5.1
-Release: alt2
+Version: 1.5.3
+Release: alt1
 
 Summary: Mosquitto is an open source implementation of a server for version 3.1 and 3.1.1 of the MQTT protocol
 
@@ -54,9 +54,8 @@ subst 's|Invalid memory_limit value (%%ld)|Invalid memory_limit value (%%d)|g' s
 %endif
 
 %build
-subst 's|prefix=/usr/local|prefix=/usr|g' config.mk
+subst 's|prefix?=/usr/local|prefix=/usr|g' config.mk
 subst 's|stylesheet/docbook-xsl/manpages/docbook.xsl|xsl-stylesheets/manpages/docbook.xsl|g' man/manpage.xsl man/html.xsl
-
 %make_build
 
 %install
@@ -106,8 +105,13 @@ cp %SOURCE3 %buildroot%_sysconfdir/%name
 %files -n %lname-devel
 %_includedir/*.h
 %_libdir/*.so
+%_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Sep 27 2018 Pavel Vainerman <pv@altlinux.ru> 1.5.3-alt1
+- new version (1.5.3) with rpmgs script
+- fix CVE-2018-12543
+
 * Fri Sep 07 2018 Pavel Vainerman <pv@altlinux.ru> 1.5.1-alt2
 - fix libdir for build for x86_64
 
