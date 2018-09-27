@@ -1,45 +1,17 @@
-%define oname pjproject
 Name: libpjsip
-Version: 2.5.5
+Version: 2.8
 Release: alt1
 
 Summary: Libraries for building embedded/non-embedded VoIP applications
-
 License: GPLv2+
 Group: System/Libraries
 Url: http://www.pjsip.org
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: http://www.pjsip.org/release/%version/%oname-%version.tar
-#Source: %name-%version.tar
-
-# Nothing like carrying a 500k patch just to fix the FSF address :-)
-Patch: pjproject_fix_old_FSF_address.patch
-# Tell the build system not to use most of the third_party directory
-Patch1: pjproject_no_third_party.patch
-# Keep the .pc file clean
-# see https://bugzilla.redhat.com/show_bug.cgi?id=728302#c66
-Patch2: pjproject_fixup_pc_file.patch
-# Fix ARMv7 endianness
-Patch3: pjproject-armv7.patch
-# Add aarch64
-Patch4: pjproject-aarch64.patch
-# Fix ppc64 endiannes
-Patch5: pjproject-ppc64.patch
+Source: http://www.pjsip.org/release/%version/pjproject-%version.tar
 
 BuildRequires: gcc-c++
-BuildRequires: libalsa-devel
-BuildRequires: libgsm-devel
-BuildRequires: libsrtp-devel
-BuildRequires: libuuid-devel
-BuildRequires: libssl-devel
-BuildRequires: pkg-config
-BuildRequires: libportaudio2-devel
-# TODO: check for correct version
-#BuildRequires: libresample-devel
-BuildRequires: libspeex-devel
-BuildRequires: libspeexdsp-devel
+BuildRequires: libalsa-devel libgsm-devel libsrtp2-devel libuuid-devel
+BuildRequires: libssl-devel libspeex-devel libspeexdsp-devel libwebrtc-devel
 
 %description
 This package provides the Open Source, comprehensive, high performance,
@@ -67,79 +39,47 @@ Header information for:
 - PJLIB - Ultra Portable Base Framework Library
 
 %prep
-%setup -n %oname-%version
-#patch0 -p1 -b .fsf
-%patch1 -p1 -b .3rd
-%patch2 -p1 -b .pkg
-%patch3 -p1 -b .arm
-%patch4 -p1 -b .aarch64
-%patch5 -p1 -b .ppc64
-
-# make sure we don't bundle these third-party libraries
-# (They're excluded through ./configure, but this is an
-# additional safety net)
-rm -rf third_party/BaseClasses
-rm -rf third_party/bdsound
-rm -rf third_party/bin
-rm -rf third_party/g7221
-rm -rf third_party/gsm
-rm -rf third_party/milenage
-rm -rf third_party/mp3
-rm -rf third_party/portaudio
-#rm -rf third_party/resample
-rm -rf third_party/speex
-rm -rf third_party/srtp
-rm -rf third_party/ilbc
-rm -rf third_party/build/baseclasses
-rm -rf third_party/build/g7221
-rm -rf third_party/build/gsm
-rm -rf third_party/build/milenage
-rm -rf third_party/build/portaudio/src
-#rm -rf third_party/build/resample
-rm -rf third_party/build/samplerate
-rm -rf third_party/build/speex
-rm -rf third_party/build/srtp
-rm -rf third_party/build/ilbc
+%setup
 
 %build
-# We're building without audio or video support, as Asterisk isn't using
-# that functionality, and it made it easier to ensure that we don't
-# bundle any unnecessary libraries.  Please contact me if your project
-# needs this support, and I'll re-enable it
-export CFLAGS="-DPJ_HAS_IPV6=1 ${ARCHFLAGS} %optflags"
-
+%add_optflags -DPJ_HAS_IPV6=1
 %configure --enable-shared        \
-           --disable-static       \
            --with-external-gsm    \
-           --with-external-pa     \
            --with-external-speex  \
            --with-external-srtp   \
-           --disable-opencore-amr \
-           --enable-resample      \
            --enable-sound         \
+           --enable-resample      \
            --disable-video        \
            --disable-v4l2         \
-           --disable-ilbc-codec   \
            --disable-libyuv       \
-           --disable-g7221-codec
+           --disable-ilbc-codec   \
+           --disable-g7221-codec  \
+           --disable-opencore-amr \
+           --disable-libwebrtc    \
+           --enable-epoll
 
-%make_build dep
 %make_build
 
 %install
 %makeinstall_std
-
 # Remove the static libraries, as they aren't wanted
-find %buildroot -type f -name "*.a" -delete
-# random extras due to patching for the FSF address change
-find %buildroot -type f -name "*.fsf" -delete
-
-# rpmlint complains that this is an empty file, so let's fix that
-echo "" >> %buildroot%_includedir/pj/config_site.h
+find %buildroot%_libdir -type f -name '*.a' -delete
 
 %files
-%doc README.txt README-RTEMS
-%attr(755, root, root) %_libdir/lib*.so.*
+%doc README.txt
+%_libdir/libpj.so.2
+%_libdir/libpjlib-util.so.2
+%_libdir/libpjmedia-audiodev.so.2
+%_libdir/libpjmedia-codec.so.2
+%_libdir/libpjmedia-videodev.so.2
+%_libdir/libpjmedia.so.2
+%_libdir/libpjnath.so.2
+%_libdir/libpjsip-simple.so.2
+%_libdir/libpjsip-ua.so.2
+%_libdir/libpjsip.so.2
+%_libdir/libpjsua.so.2
+%_libdir/libpjsua2.so.2
+%_libdir/libresample.so.2
 
 %files devel
 %_libdir/lib*.so
@@ -161,6 +101,9 @@ echo "" >> %buildroot%_includedir/pj/config_site.h
 %_pkgconfigdir/libpjproject.pc
 
 %changelog
+* Thu Sep 27 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.8-alt1
+- 2.8 released
+
 * Fri Feb 10 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.5-alt1
 - new version 2.5.5 (with rpmrb script)
 
