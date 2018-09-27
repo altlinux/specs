@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.9.2
-Release: alt6
+Release: alt6.1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -17,6 +17,7 @@ Summary: GNU Compiler Collection
 License: GPLv3+, GPLv3+ with exceptions and GPLv2+ with exceptions
 Group: Development/C
 Url: http://gcc.gnu.org/
+ExcludeArch: aarch64
 
 %ifarch ppc
 # On ppc32, we build a 64-bit compiler with default 32-bit mode.
@@ -244,7 +245,7 @@ Requires: libtsan0 %REQ %EVR
 BuildPreReq: rpm-build >= 4.0.4-alt39, %binutils_deps
 %set_gcc_version 4.9
 BuildPreReq: gcc%_gcc_version-c++ coreutils flex makeinfo
-BuildPreReq: libcloog-isl-devel libelf-devel libmpc-devel libmpfr-devel
+BuildPreReq: libelf-devel libmpc-devel libmpfr-devel
 # due to manpages
 BuildPreReq: perl-Pod-Parser
 BuildPreReq: zlib-devel
@@ -1014,7 +1015,9 @@ in order to explicitly use the GNU Go compiler version %version.
 %package locales
 Summary: The GNU Compiler Collection native language support files
 Group: Development/C
-BuildArch: noarch
+#This version of gcc is not built on some architectures (read aarch64),
+#but locales subpackage has dependency on (non-noarch) gcc package.
+#BuildArch: noarch
 Requires: %name = %EVR
 
 %description locales
@@ -2248,6 +2251,10 @@ popd
 %endif # _cross_platform
 
 %changelog
+* Sat Sep 29 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.2-alt6.1
+- Dropped redundant libcloog-isl-devel build dependency.
+- Exclude aarch64 architecture.
+
 * Fri Jan 12 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.2-alt6
 - Rebuilt with gcc 4.9.
 - Fixed build with glibc 2.26.
