@@ -1,6 +1,6 @@
 Name:     librecad
 Version:  2.1.3
-Release:  alt1
+Release:  alt2
 
 Summary:  Computer-aided design (CAD) system
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -12,6 +12,7 @@ Group:    Graphics
 Source:   librecad-%version.tar
 Patch:    0001-Adding-DXF-.desktop-file.patch
 Patch1:   librecad-fix-desktop.patch
+Patch2:   librecad-fix-build-with-qt5.11.patch
 
 Requires: librecad-data
 
@@ -62,6 +63,7 @@ Contains the plugins files for LibreCAD.
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 find . -type f -executable -a \( -name '*.cpp' -o -name '*.h' \) | xargs -i{} chmod 644 {}
 
 %build
@@ -121,6 +123,9 @@ install -Dm 644 desktop/graphics_icons_and_splash/Icon\ LibreCAD/Icon_Librecad.s
 %_libdir/%name/plugins/
 
 %changelog
+* Wed Sep 26 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.3-alt2
+- Fix build with Qt 5.11.
+
 * Thu Oct 06 2016 Andrey Cherepanov <cas@altlinux.org> 2.1.3-alt1
 - new version 2.1.3
 
