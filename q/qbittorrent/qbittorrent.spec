@@ -2,7 +2,7 @@
 %define rel alt1
 
 Name: qbittorrent
-Version: 4.1.2
+Version: 4.1.3
 Epoch: 1
 Release: %rel
 
@@ -103,6 +103,9 @@ make clean
 %_datadir/appdata/*.xml
 
 %changelog
+* Thu Sep 27 2018 Motsyo Gennadi <drool@altlinux.ru> 1:4.1.3-alt1
+- 4.1.3
+
 * Fri Aug 17 2018 Motsyo Gennadi <drool@altlinux.ru> 1:4.1.2-alt1
 - 4.1.2
 
