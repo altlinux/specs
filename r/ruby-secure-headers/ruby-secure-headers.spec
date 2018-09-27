@@ -1,8 +1,8 @@
 %define  pkgname secure_headers
 
 Name:    ruby-secure-headers
-Version: 5.0.5
-Release: alt1
+Version: 6.0.0
+Release: alt2
 
 Summary: Manages application of security headers with many safe defaults
 License: MIT
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Sep 26 2018 Pavel Skrylev <majioa@altlinux.org> 6.0.0-alt2
+- Bump to v6.0.0
+
 * Mon Sep 24 2018 Pavel Skrylev <majioa@altlinux.org> 5.0.5-alt1
 - Downgrade to 5.0.5 for foreman.
 

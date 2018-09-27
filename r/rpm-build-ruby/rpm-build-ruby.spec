@@ -3,7 +3,7 @@
 Name: rpm-build-ruby
 Epoch: 1
 Version: 0.7
-Release: alt6
+Release: alt7
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
 Group: Development/Ruby
@@ -69,6 +69,9 @@ install -D -m 0755 testrb %buildroot%_bindir/testrb
 %_bindir/testrb
 
 %changelog
+* Wed Sep 26 2018 Pavel Skrylev <majioa@altlinux.org> 1:0.7-alt7
+- Fix absent pry gem require.
+
 * Fri Sep 21 2018 Pavel Skrylev <majioa@altlinux.org> 1:0.7-alt6
 - Fixed provides when no gemspec found.
 - Allow "5.x" in requirements defaulting to "5.0"

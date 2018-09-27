@@ -1,6 +1,6 @@
 Name:    foreman
 Version: 1.19.0
-Release: alt2
+Release: alt5
 
 Summary: An application that automates the lifecycle of servers
 License: GPLv3+ with exceptions
@@ -20,7 +20,7 @@ Source6: dynflowd.sysconfig
 Source7: dynflowd.service
 
 Patch1: alt-use-new-fog-google-gem.patch
-Patch2: patch-gemfile-to-change-rails-version-to-5.2.patch
+Patch2: fix-v1.19.0-to-support-rails-5.2.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
@@ -288,6 +288,9 @@ install -Dm0644 %SOURCE7 %buildroot%_unitdir/dynflowd.service
 
 install -d %buildroot%_logdir/%name
 
+mkdir -p %buildroot/%ruby_sitelibdir/tasks/%name
+mv %buildroot/%ruby_sitelibdir/tasks/*.rake %buildroot/%ruby_sitelibdir/tasks/%name/
+
 %pre
 # Add the "foreman" user and group
 getent group foreman >/dev/null || groupadd -r foreman
@@ -412,6 +415,11 @@ exit 0
 %_datadir/%name/bundler.d/sqlite.rb
 
 %changelog
+* Thu Sep 27 2018 Pavel Skrylev <majioa@altlinux.org> 1.19.0-alt5
+- Patch to support 5.2 rails from master.
+- Rake tasks moved to named subfolder.
+- Avoid aarch64
+
 * Fri Sep 21 2018 Pavel Skrylev <majioa@altlinux.org> 1.19.0-alt2
 - Bumped to 1.19 with Gemfile fix.
 - Enable auto req detection.
