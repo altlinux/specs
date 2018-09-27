@@ -1,10 +1,11 @@
 Name:		cpuminer-multi
 Version:	1.3.4
-Release:	alt1
+Release:	alt1.qa1
 Summary:	Multi-threaded CPU miner
 Url:		https://github.com/tpruvot/cpuminer-multi
 Group:		Office
 License:	GPLv2
+ExclusiveArch: %ix86 x86_64
 Source0:	%name-linux.tar.xz
 Source1:	README.txt
 Source2:	cpuminer-conf.json.axiom
@@ -41,6 +42,9 @@ install -Dp -m 644 {%SOURCE1,%SOURCE2,%SOURCE3,%SOURCE4} ./examples/
 %_man1dir/*
 
 %changelog
+* Thu Sep 27 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.4-alt1.qa1
+- Added ExclusiveArch: %%ix86 x86_64.
+
 * Tue Apr 10 2018 Motsyo Gennadi <drool@altlinux.ru> 1.3.4-alt1
 - 1.3.4
 
