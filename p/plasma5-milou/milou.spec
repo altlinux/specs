@@ -4,8 +4,8 @@
 %define libmilou libmilou%milou_sover
 
 Name: plasma5-%rname
-Version: 5.12.6
-Release: alt7%ubt
+Version: 5.12.7
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -93,6 +93,9 @@ KF5 library
 %_K5lib/libmilou.so.%milou_sover
 
 %changelog
+* Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.7-alt1
+- new version
+
 * Mon Sep 03 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.6-alt7%ubt
 - krunner: don't wrap lines, use tooltips
 

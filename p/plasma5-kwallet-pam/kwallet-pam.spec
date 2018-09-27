@@ -1,8 +1,8 @@
 %define rname kwallet-pam
 
 Name: plasma5-%rname
-Version: 5.12.6
-Release: alt2%ubt
+Version: 5.12.7
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -107,6 +107,9 @@ sed -i '/^Exec=/s|/pam_kwallet_init|/pam_kwallet5_init|' \
 %_K5start/pam_kwallet5_init.desktop
 
 %changelog
+* Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.7-alt1
+- new version
+
 * Fri Sep 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt2%ubt
 - fix requires (ALT#35393)
 

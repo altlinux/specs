@@ -16,8 +16,8 @@
 %def_disable qalculate
 
 Name: plasma5-workspace
-Version: 5.12.6
-Release: alt5%ubt
+Version: 5.12.7
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -325,6 +325,9 @@ done
 
 
 %changelog
+* Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.7-alt1
+- new version
+
 * Wed Aug 22 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.6-alt5%ubt
 - plasmashell: use KFreeSpaceJob
 - notify user when filesystem freezes

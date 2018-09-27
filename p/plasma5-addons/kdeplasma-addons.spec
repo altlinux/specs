@@ -8,8 +8,8 @@
 %define libplasmapotdprovidercore libplasmapotdprovidercore%plasmapotdprovidercore_sover
 
 Name: plasma5-addons
-Version: 5.12.6
-Release: alt6%ubt
+Version: 5.12.7
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -141,6 +141,9 @@ KF5 library
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.7-alt1
+- new version
+
 * Fri Sep 07 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.6-alt6%ubt
 - fix colorpicker widget layout
 

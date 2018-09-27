@@ -8,8 +8,8 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: plasma5-%rname
-Version: 5.12.6
-Release: alt1%ubt
+Version: 5.12.7
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -141,6 +141,9 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.7-alt1
+- new version
+
 * Wed Jun 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt1%ubt
 - new version
 

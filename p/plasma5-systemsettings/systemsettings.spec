@@ -4,8 +4,8 @@
 %define libsystemsettingsview libsystemsettingsview%systemsettingsview_sover
 
 Name: plasma5-%rname
-Version: 5.12.6
-Release: alt1%ubt
+Version: 5.12.7
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -16,7 +16,6 @@ License: GPLv2+ / LGPLv2+
 Requires: kf5-kirigami
 
 Source: %rname-%version.tar
-Patch1: alt-def-view.patch
 
 # Automatically added by buildreq on Wed Mar 25 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs xml-common xml-utils
@@ -69,7 +68,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-#%patch1 -p1
 
 sed -i 's|\(^Name.*=.*\)|\1 KDE5|' app/systemsettings.desktop
 sed -i '/^Name.*=/s/KDE/KDE5/' app/kdesystemsettings.desktop
@@ -114,6 +112,9 @@ mv %buildroot/%_kf5_xdgapp/kdesystemsettings.desktop %buildroot/%_desktopdir/kf5
 %_K5lib/libsystemsettingsview.so.%systemsettingsview_sover
 
 %changelog
+* Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.7-alt1
+- new version
+
 * Wed Jun 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt1%ubt
 - new version
 
