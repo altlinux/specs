@@ -2,8 +2,8 @@
 %def_disable openswan
 
 Name: plasma5-nm
-Version: 5.12.6
-Release: alt3%ubt
+Version: 5.12.7
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -277,6 +277,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.7-alt1
+- new version
+
 * Wed Aug 08 2018 Ivan Razzhivin <underwit@altlinux.org> 1:5.12.6-alt3%ubt
 - fix a text label in the password dialog
 

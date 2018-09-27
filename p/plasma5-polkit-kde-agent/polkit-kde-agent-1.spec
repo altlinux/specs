@@ -1,8 +1,8 @@
 %define rname polkit-kde-agent-1
 
 Name: plasma5-polkit-kde-agent
-Version: 5.12.6
-Release: alt2%ubt
+Version: 5.12.7
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -79,6 +79,9 @@ KF5 library
 %_K5notif/policykit1-kde.notifyrc
 
 %changelog
+* Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.7-alt1
+- new version
+
 * Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.6-alt2%ubt
 - fix version
 

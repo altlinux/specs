@@ -7,8 +7,8 @@
 
 
 Name: plasma5-desktop
-Version: 5.12.6
-Release: alt4%ubt
+Version: 5.12.7
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -214,6 +214,9 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.7-alt1
+- new version
+
 * Tue Sep 11 2018 Oleg Solovyov <mcpain@altlinux.org> 5.12.6-alt4%ubt
 - systemsettings: fix locales preview
 
