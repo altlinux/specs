@@ -1,7 +1,7 @@
 Name: pve-storage
 Summary: PVE storage management library
 Version: 5.0.23
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -14,6 +14,7 @@ Requires: multipath-tools ceph >= 12.2.1 zfs-utils >= 0.6.5.8-alt1.M80P.1
 
 Source: pve-storage.tar.xz
 Patch: pve-storage-alt.patch
+Patch1: pve-storage-RBD-size-format.patch
 
 BuildRequires: librados2-perl pve-common pve-cluster pve-doc-generator pve-access-control xmlto
 BuildRequires: perl(File/chdir.pm) perl(Net/DBus.pm)
@@ -24,6 +25,7 @@ This package contains the storage management library used by PVE
 %prep
 %setup -q -n %name
 %patch -p1
+%patch1 -p1 -b .iB
 
 %install
 %make DESTDIR=%buildroot install
@@ -41,6 +43,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Thu Sep 27 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.23-alt2
+- fixed parse RBD size format
+
 * Wed Jul 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.23-alt1
 - 5.0-23
 
