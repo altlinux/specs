@@ -1,11 +1,12 @@
 %def_disable snapshot
 
 %define ver_major 0.3
+%define api_ver %ver_major
 
 %def_enable lua_factory
 
 Name: grilo-plugins
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Plugins for the Grilo framework
@@ -19,12 +20,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-Requires: grilo-tools
+Requires: grilo-tools >= %ver_major
 Requires: tracker
 
-BuildRequires: gnome-common intltool >= 0.40.0 gperf
+BuildRequires(pre): meson
+BuildRequires: gperf
 BuildRequires: gtk-doc yelp-tools
-BuildRequires: libgio-devel >= 2.36
+BuildRequires: libgio-devel >= 2.44
 BuildRequires: libgrilo-devel >= %ver_major.6
 BuildRequires: libxml2-devel
 BuildRequires: libgupnp-devel >= 0.13
@@ -48,7 +50,6 @@ BuildRequires: librest-devel
 BuildRequires: libarchive-devel
 %{?_enable_lua_factory:BuildRequires: lua-devel >= 5.3}
 
-
 %description
 Grilo is a framework that provides access to different sources of
 multimedia content, using a pluggable system.
@@ -69,33 +70,68 @@ This package contains plugins to get information from theses sources:
 - Vimeo
 - Youtube
 
+%package devel
+Summary: Development files for Grilo flaugins
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description devel
+Grilo is a framework that provides access to different sources of
+multimedia content, using a pluggable system.
+
+This package contains the pkg-config file for Grilo plugins package.
+
 %prep
 %setup
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	%{?_enable_lua_factory:--enable-lua-factory}
-%make_build
+%meson %{?_enable_lua_factory:-Denable-lua-factory=yes}
+%meson_build
 
 %install
-%makeinstall_std
-
-# Remove files that will not be packaged
-rm -f %buildroot%_libdir/grilo-%ver_major/*.la
-
-%find_lang --with-gnome %name
+%meson_install
+%find_lang --with-gnome --output=%name.lang %name examples
 
 %files -f %name.lang
-%doc AUTHORS COPYING NEWS README
-%_libdir/grilo-%ver_major/*.so*
+%dir %_libdir/grilo-%ver_major
+%_libdir/grilo-%ver_major/libgrlbookmarks.so
+%_libdir/grilo-%ver_major/libgrlchromaprint.so
+%_libdir/grilo-%ver_major/libgrldaap.so
+%_libdir/grilo-%ver_major/libgrldleyna.so
+%_libdir/grilo-%ver_major/libgrldpap.so
+%_libdir/grilo-%ver_major/libgrlfilesystem.so
+%_libdir/grilo-%ver_major/libgrlflickr.so
+%_libdir/grilo-%ver_major/libgrlfreebox.so
+%_libdir/grilo-%ver_major/libgrlgravatar.so
+%_libdir/grilo-%ver_major/libgrljamendo.so
+%_libdir/grilo-%ver_major/libgrllocalmetadata.so
+%{?_enable_lua_factory:%_libdir/grilo-%ver_major/libgrlluafactory.so}
+%_libdir/grilo-%ver_major/libgrlmagnatune.so
+%_libdir/grilo-%ver_major/libgrlmetadatastore.so
+%_libdir/grilo-%ver_major/libgrlopensubtitles.so
+%_libdir/grilo-%ver_major/libgrlopticalmedia.so
+%_libdir/grilo-%ver_major/libgrlpodcasts.so
+%_libdir/grilo-%ver_major/libgrlraitv.so
+%_libdir/grilo-%ver_major/libgrlshoutcast.so
+%_libdir/grilo-%ver_major/libgrlthetvdb.so
+%_libdir/grilo-%ver_major/libgrltmdb.so
+%_libdir/grilo-%ver_major/libgrltracker.so
+%_libdir/grilo-%ver_major/libgrlvimeo.so
+%_libdir/grilo-%ver_major/libgrlyoutube.so
 %if_enabled lua_factory
-%dir %_datadir/%name/
+%dir %_datadir/%name
 %_datadir/%name/grl-lua-factory/
 %endif
+%doc AUTHORS NEWS README
+
+%files devel
+%_pkgconfigdir/%name-%api_ver.pc
+
 
 %changelog
+* Mon Sep 24 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.8-alt1
+- 0.3.8
+
 * Fri Jul 27 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.7-alt1
 - 0.3.7
 

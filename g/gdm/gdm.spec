@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.30
 %define api_ver 1.0
@@ -26,8 +26,8 @@
 %def_enable user_display_server
 
 Name: gdm
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -51,9 +51,6 @@ Source12: gdm-password.pam
 Source13: gdm-launch-environment.pam
 Source14: gdm-smartcard.pam
 Source15: gdm-fingerprint.pam
-
-# revert this
-Patch: gdm-3.30-up-70861874.patch
 
 Patch2: gdm-3.19.4-alt-Xsession.patch
 Patch7: gdm-3.1.92-alt-Init.patch
@@ -176,13 +173,9 @@ This package contains user documentation for Gdm.
 
 %prep
 %setup
-%patch -p1 -R
 %patch2 -p1 -b .Xsession
 %patch7 -p1 -b .Init
 %patch11 -p1 -b .lfs
-
-# fix hardcoded udevrulesdir
-subst 's|\(udevrulesdir = \).*|\1%_udevrulesdir|' data/Makefile.am
 
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%default_pam_config/
@@ -326,6 +319,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Wed Sep 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
+- 3.30.1
+
 * Fri Sep 07 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt2
 - updated to 3.30.0-4-g839c9501
 - reverted "gdm-wayland-session,gdm-x-session: register after delay"
