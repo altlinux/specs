@@ -20,8 +20,8 @@
 
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
-Version: 5.4.15
-Release: alt2%ubt
+Version: 5.6.1
+Release: alt1
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
@@ -32,7 +32,7 @@ Source0: %name-%version.tar
 # Build Requires
 ################################################################################
 
-BuildRequires(pre): rpm-build-ubt rpm-build-ruby
+BuildRequires(pre): rpm-build-ruby
 BuildRequires: gcc-c++
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel libxmlrpc-devel liblzma-devel
@@ -115,6 +115,7 @@ Requires: xmlrpc-c
 Requires: nfs-utils
 Requires: wget
 Requires: curl
+Requires: rsync
 Requires: iputils
 Obsoletes: %name-ozones
 #TODO: Requires http://rubygems.org/gems/net-ldap
@@ -258,6 +259,7 @@ Requires: nfs-utils
 Requires: bridge-utils
 Requires: ipset
 Requires: pciutils
+Requires: rsync
 Requires: %name-common = %EVR
 
 %description node-kvm
@@ -292,15 +294,21 @@ Configures an OpenNebula node providing kvm.
 %setup
 
 %build
-export PATH="$PATH:$PWD/src/sunstone/public/node_modules/grunt/bin"
+export PATH="$PATH:$PWD/src/sunstone/public/node_modules/.bin"
 export npm_config_devdir="$PWD/src/sunstone/public/node_modules/.node-gyp"
 
 pushd src/sunstone/public
 npm rebuild
+
+# from ./build.sh
+bower -o install
+grunt --gruntfile ./Gruntfile.js sass
+grunt --gruntfile ./Gruntfile.js requirejs
+mv -f dist/main.js dist/main-dist.js
 popd
 
 # Compile OpenNebula
-scons -j2 mysql=yes new_xmlrpc=yes sunstone=yes
+scons -j2 mysql=yes new_xmlrpc=yes sunstone=no
 
 # build man pages
 pushd share/man
@@ -315,36 +323,39 @@ popd
 %install
 export DESTDIR=%buildroot
 ./install.sh -p
+touch %buildroot%oneadmin_home/sunstone/main.js
+rm -f %buildroot%_libexecdir/one/sunstone/public/dist/main.js
+ln -r -s %buildroot%oneadmin_home/sunstone/main.js %buildroot%_libexecdir/one/sunstone/public/dist/main.js
 
 # systemd units
-install -p -D -m 644 share/pkgs/ALTLinux/opennebula.service %buildroot%_unitdir/opennebula.service
-install -p -D -m 644 share/pkgs/ALTLinux/opennebula-scheduler.service %buildroot%_unitdir/opennebula-scheduler.service
-install -p -D -m 644 share/pkgs/ALTLinux/opennebula-sunstone.service %buildroot%_unitdir/opennebula-sunstone.service
-install -p -D -m 644 share/pkgs/ALTLinux/opennebula-gate.service  %buildroot%_unitdir/opennebula-gate.service
-install -p -D -m 644 share/pkgs/ALTLinux/opennebula-econe.service %buildroot%_unitdir/opennebula-econe.service
-install -p -D -m 644 share/pkgs/ALTLinux/opennebula-flow.service  %buildroot%_unitdir/opennebula-flow.service
-install -p -D -m 644 share/pkgs/ALTLinux/opennebula-novnc.service %buildroot%_unitdir/opennebula-novnc.service
+install -p -D -m 644 share/pkgs/ALT/opennebula.service %buildroot%_unitdir/opennebula.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-scheduler.service %buildroot%_unitdir/opennebula-scheduler.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-sunstone.service %buildroot%_unitdir/opennebula-sunstone.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-gate.service  %buildroot%_unitdir/opennebula-gate.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-econe.service %buildroot%_unitdir/opennebula-econe.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-flow.service  %buildroot%_unitdir/opennebula-flow.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-novnc.service %buildroot%_unitdir/opennebula-novnc.service
 
 # Init scripts
-install -p -D -m 755 share/pkgs/ALTLinux/opennebula %buildroot%_initdir/opennebula
-install -p -D -m 755 share/pkgs/ALTLinux/opennebula-sunstone %buildroot%_initdir/opennebula-sunstone
-install -p -D -m 755 share/pkgs/ALTLinux/opennebula-gate  %buildroot%_initdir/opennebula-gate
-install -p -D -m 755 share/pkgs/ALTLinux/opennebula-econe %buildroot%_initdir/opennebula-econe
-install -p -D -m 755 share/pkgs/ALTLinux/opennebula-flow  %buildroot%_initdir/opennebula-flow
-install -p -D -m 755 share/pkgs/ALTLinux/opennebula-novnc %buildroot%_initdir/opennebula-novnc
+install -p -D -m 755 share/pkgs/ALT/opennebula %buildroot%_initdir/opennebula
+install -p -D -m 755 share/pkgs/ALT/opennebula-sunstone %buildroot%_initdir/opennebula-sunstone
+install -p -D -m 755 share/pkgs/ALT/opennebula-gate  %buildroot%_initdir/opennebula-gate
+install -p -D -m 755 share/pkgs/ALT/opennebula-econe %buildroot%_initdir/opennebula-econe
+install -p -D -m 755 share/pkgs/ALT/opennebula-flow  %buildroot%_initdir/opennebula-flow
+install -p -D -m 755 share/pkgs/ALT/opennebula-novnc %buildroot%_initdir/opennebula-novnc
 
-install -p -D -m 644 share/pkgs/ALTLinux/opennebula.conf %buildroot%_tmpfilesdir/opennebula.conf
-install -p -D -m 644 share/pkgs/ALTLinux/opennebula-node.conf %buildroot%_tmpfilesdir/opennebula-node.conf
+install -p -D -m 644 share/pkgs/ALT/opennebula.conf %buildroot%_tmpfilesdir/opennebula.conf
+install -p -D -m 644 share/pkgs/ALT/opennebula-node.conf %buildroot%_tmpfilesdir/opennebula-node.conf
 
-install -p -D -m 644 share/pkgs/ALTLinux/opennebula-polkit.rules %buildroot%_sysconfdir/polkit-1/rules.d/50-opennebula.rules
+install -p -D -m 644 share/pkgs/ALT/opennebula-polkit.rules %buildroot%_sysconfdir/polkit-1/rules.d/50-opennebula.rules
 
 # sudoers
 mkdir -p %buildroot%_sysconfdir/sudoers.d
-install -p -D -m 440 share/pkgs/ALTLinux/opennebula.sudoers %buildroot%_sysconfdir/sudoers.d/opennebula
+install -p -D -m 440 share/pkgs/ALT/opennebula.sudoers %buildroot%_sysconfdir/sudoers.d/opennebula
 
 # logrotate
 mkdir -p %buildroot%_logrotatedir
-install -p -D -m 644 share/pkgs/ALTLinux/opennebula.logrotate %buildroot%_logrotatedir/opennebula
+install -p -D -m 644 share/pkgs/ALT/opennebula.logrotate %buildroot%_logrotatedir/opennebula
 
 # Java
 install -p -D -m 644 src/oca/java/jar/org.opennebula.client.jar %buildroot%_javadir/org.opennebula.client.jar
@@ -463,6 +474,7 @@ fi
 %dir %attr(0770, root, oneadmin) %_logdir/one
 %dir %attr(0775, root, oneadmin) %_runtimedir/one
 %dir %attr(0775, root, oneadmin) %_lockdir/one
+%dir %attr(0750, oneadmin, oneadmin) %oneadmin_home
 
 ################################################################################
 # node-kvm - files
@@ -515,6 +527,7 @@ fi
 %files sunstone
 %_libexecdir/one/sunstone/*
 %_libexecdir/one/ruby/OpenNebulaVNC.rb
+%_libexecdir/one/ruby/OpenNebulaAddons.rb
 %_libexecdir/one/ruby/cloud/econe/*
 
 %_bindir/sunstone-server
@@ -552,6 +565,9 @@ fi
 
 %_datadir/one/websockify/*
 
+
+%dir %attr(0770, root, oneadmin) %oneadmin_home/sunstone
+%attr(0770, root, oneadmin) %oneadmin_home/sunstone/main.js
 
 %defattr(0640, root, oneadmin, 0750)
 %config(noreplace) %_sysconfdir/one/sunstone-server.conf
@@ -616,6 +632,7 @@ fi
 %_libexecdir/one/ruby/ec2_driver.rb
 %_libexecdir/one/ruby/onedb/*
 %_libexecdir/one/ruby/one_vnm.rb
+%_libexecdir/one/ruby/opennebula_driver.rb
 %_libexecdir/one/ruby/OpenNebulaDriver.rb
 %_libexecdir/one/ruby/scripts_common.rb
 %_libexecdir/one/ruby/ssh_stream.rb
@@ -625,13 +642,12 @@ fi
 %_man1dir/*
 %doc LICENSE NOTICE
 
-%dir %attr(0750, oneadmin, oneadmin) %_sharedstatedir/one
-%dir %attr(0750, oneadmin, oneadmin) %_sharedstatedir/one/datastores
-%dir %attr(0750, oneadmin, oneadmin) %_sharedstatedir/one/remotes
+%dir %attr(0750, oneadmin, oneadmin) %oneadmin_home/datastores
+%dir %attr(0750, oneadmin, oneadmin) %oneadmin_home/remotes
 
-%attr(-, oneadmin, oneadmin) %_sharedstatedir/one/datastores/*
-%attr(-, oneadmin, oneadmin) %_sharedstatedir/one/vms
-%config(noreplace) %attr(-, oneadmin, oneadmin) %_sharedstatedir/one/remotes/*
+%attr(-, oneadmin, oneadmin) %oneadmin_home/datastores/*
+%attr(-, oneadmin, oneadmin) %oneadmin_home/vms
+%config(noreplace) %attr(-, oneadmin, oneadmin) %oneadmin_home/remotes/*
 
 %defattr(0640, root, oneadmin, 0750)
 %config(noreplace) %_sysconfdir/one/defaultrc
@@ -643,6 +659,7 @@ fi
 %config(noreplace) %_sysconfdir/one/az_driver.conf
 %config %_sysconfdir/one/az_driver.default
 %config %_sysconfdir/one/vcenter_driver.default
+%config(noreplace) %_sysconfdir/one/vcenter_driver.conf
 %config(noreplace) %_sysconfdir/one/auth/server_x509_auth.conf
 %config(noreplace) %_sysconfdir/one/auth/ldap_auth.conf
 %config(noreplace) %_sysconfdir/one/auth/x509_auth.conf
@@ -688,63 +705,66 @@ fi
 ################################################################################
 
 %changelog
-* Tue Jun 26 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.15-alt2%ubt
+* Mon Sep 24 2018 Alexey Shabalin <shaba@altlinux.org> 5.6.1-alt1
+- 5.6.1
+
+* Tue Jun 26 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.15-alt2.S1
 - backport patches from upstream/one-5.4 branch
 
-* Tue Jun 19 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.15-alt1%ubt
+* Tue Jun 19 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.15-alt1
 - 5.4.15
 
-* Sat Jun 09 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.13-alt1%ubt
+* Sat Jun 09 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.13-alt1
 - 5.4.13
 - build man pages
 - add Restart=on-failure for services
 
-* Sat May 12 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.12-alt1%ubt
+* Sat May 12 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.12-alt1
 - 5.4.12
 
-* Tue Apr 03 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.10-alt1%ubt
+* Tue Apr 03 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.10-alt1
 - 5.4.10
 
-* Wed Feb 28 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.8-alt1%ubt
+* Wed Feb 28 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.8-alt1
 - 5.4.8
 
-* Sat Feb 17 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.7-alt1%ubt
+* Sat Feb 17 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.7-alt1
 - 5.4.7
 - rename ALT logo altlinux -> alt
 
-* Sat Jan 27 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.6-alt1%ubt
+* Sat Jan 27 2018 Alexey Shabalin <shaba@altlinux.ru> 5.4.6-alt1
 - 5.4.6
 
-* Thu Dec 14 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.5-alt1%ubt
+* Thu Dec 14 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.5-alt1
 - 5.4.5
 - fix install ALTLinux logo
 - update Requires: libvirt-qemu to libvirt-kvm in node-kvm package
 
-* Tue Dec 05 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.4-alt1%ubt
+* Tue Dec 05 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.4-alt1
 - 5.4.4
 
-* Wed Nov 08 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.3-alt1%ubt
+* Wed Nov 08 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.3-alt1
 - 5.4.3
 
-* Wed Oct 11 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.2-alt1%ubt
+* Wed Oct 11 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.2-alt1
 - 5.4.2
 
-* Tue Sep 19 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.1-alt1%ubt
+* Tue Sep 19 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.1-alt1
 - 5.4.1
 
-* Wed Sep 13 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt5%ubt
+* Wed Sep 13 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt5
 - update to one-5.4 branch
 
-* Fri Sep 08 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt4%ubt
+* Fri Sep 08 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt4
 - add user oneadmin to wheel group for allow run sudo
 
-* Tue Sep 05 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt3%ubt
+* Tue Sep 05 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt3
 - fix run sunstone (add nodejs and bower modules to source)
 
-* Tue Sep 05 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt2%ubt
+* Tue Sep 05 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt2
 - update to one-5.4 branch
 - fix post scripts
 - rename package client to tools
 
-* Wed Aug 30 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt1%ubt
+* Wed Aug 30 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt1
 - Initial build (based on upstream spec)
