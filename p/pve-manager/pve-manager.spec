@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 5.2.3
-Release: alt4%ubt
+Release: alt5
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -59,8 +59,8 @@ Patch28: pve-widget-toolkit-alt-utils.patch
 Patch29: pve-manager-widgettoolkit.patch
 Patch30: qemu-server-perl-alt.patch
 Patch31: qemu-server-qemu-3-0-0-alt.patch
+Patch32: pve-manager-alt-rm-pve-version.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
 BuildRequires: perl-IO-Multiplex perl-Locale-PO perl-UUID unzip xmlto pve-lxc
@@ -159,6 +159,7 @@ This is used to implement the PVE REST API
 %patch29 -p0 -b .widgettoolkit
 %patch30 -p0 -b .perl-compat
 %patch31 -p0 -b .qemu-3-0-0
+%patch32 -p0 -b .rm-version
 
 install -m0644 %SOURCE5 pve-i18n/ru.po
 
@@ -470,17 +471,20 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
-* Wed Sep 19 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt4%ubt
+* Fri Sep 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt5
+- removed ubt
+
+* Wed Sep 19 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt4.S1
 - fixed version check qemu 3.0.0
 
-* Tue Sep 04 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt3%ubt
+* Tue Sep 04 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt3.S1
 - pve-manager 5.2-3
 - qemu-server 5.0-27
 
-* Thu Aug 09 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.2-alt2%ubt
+* Thu Aug 09 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.2-alt2.S1
 - updated russian translation
 
-* Wed Jul 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.2-alt1%ubt
+* Wed Jul 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.2-alt1.S1
 - pve-manager 5.2-2
 - pve-container 2.0-24
 - pve-firewall 3.0-10
@@ -489,7 +493,7 @@ __EOF__
 - pve-guest-common 2.0-17
 - pve-http-server 2.0-9
 
-* Wed Jan 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.1.39-alt3%ubt
+* Wed Jan 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.1.39-alt3.S1
 - merged patches PCID flags from upstream
 
 * Thu Dec 14 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.1.39-alt1.M80P.3
