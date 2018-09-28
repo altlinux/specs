@@ -54,11 +54,11 @@
 
 Name: pve-%rname
 Version: 3.0.0
-Release: alt1%ubt
+Release: alt2
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
 Group: Emulators
-Requires: %name-system = %version-%release, %name-user = %version-%release
+Requires: %name-system = %version-%release %name-user = %version-%release
 Conflicts: %rname
 URL: http://www.nongnu.org/qemu/
 
@@ -109,7 +109,6 @@ Patch43: 0004-seccomp-set-the-seccomp-filter-to-all-threads.patch
 Patch44: 0005-monitor-create-iothread-after-daemonizing.patch
 
 ExclusiveArch: x86_64
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
 BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
 BuildRequires: libxfs-devel
@@ -440,6 +439,9 @@ ln -r -s %buildroot%_datadir/seabios/{bios,bios-256k}.bin %buildroot%_datadir/%r
 mkdir -p %buildroot%_datadir/kvm/
 ln -sf ../OVMF/OVMF_CODE.fd %buildroot%_datadir/kvm/OVMF_CODE-pure-efi.fd
 ln -sf ../OVMF/OVMF_VARS.fd %buildroot%_datadir/kvm/OVMF_VARS-pure-efi.fd
+mkdir -p %buildroot%_datadir/pve-edk2-firmware
+ln -sf ../OVMF/OVMF_CODE.fd %buildroot%_datadir/pve-edk2-firmware/OVMF_CODE.fd
+ln -sf ../OVMF/OVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/OVMF_VARS.fd
 
 %check
 # Disabled on aarch64 where it fails with several errors.  Will
@@ -463,6 +465,7 @@ fi
 %files common
 %_datadir/qemu
 %_datadir/kvm
+%_datadir/pve-edk2-firmware
 %_man1dir/qemu*
 %_man8dir/qemu*
 %_sysconfdir/udev/rules.d/%rulenum-%rname-kvm.rules
@@ -492,36 +495,39 @@ fi
 %docdir/LICENSE
 
 %changelog
-* Mon Sep 17 2018 Valery Inozemtsev <shrek@altlinux.ru> 3.0.0-alt1%ubt
+* Fri Sep 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 3.0.0-alt2
+- fixed efi roms path
+
+* Mon Sep 17 2018 Valery Inozemtsev <shrek@altlinux.ru> 3.0.0-alt1.S1
 - 3.0.0-1
 
-* Thu Sep 13 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.2-alt2%ubt
+* Thu Sep 13 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.2-alt2.S1
 - disable vde support
 
-* Tue Sep 04 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.2-alt1%ubt
+* Tue Sep 04 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.2-alt1.S1
 - 2.11.2-1
 
-* Mon Jul 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.11.1-alt5%ubt.1.qa2
+* Mon Jul 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.11.1-alt5.S1.1.qa2
 - reverted repocop patch (closes: #35115)
 
-* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 2.11.1-alt5%ubt.1.qa1
+* Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 2.11.1-alt5.S1.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
   * udev-files-in-etc for pve-qemu-common
 
-* Thu May 17 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.1-alt5%ubt.1
+* Thu May 17 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.1-alt5.S1.1
 - remove problematic 'evdev 86' key from en-us keymap (closes: #34856)
 
-* Mon Apr 09 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.1-alt5%ubt
+* Mon Apr 09 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.1-alt5.S1
 - 2.11.1-5
 
-* Fri Mar 23 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.1-alt4%ubt
+* Fri Mar 23 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.11.1-alt4.S1
 - 2.11.1-4
 
-* Tue Feb 20 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt9%ubt
+* Tue Feb 20 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt9.S1
 - 2.9.1-9
 
-* Wed Jan 17 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt6%ubt
+* Wed Jan 17 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt6.S1
 - 2.9.1-6
 
 * Fri Dec 22 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt4.1
