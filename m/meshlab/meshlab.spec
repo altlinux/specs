@@ -3,7 +3,7 @@
 Summary: A system for processing and editing unstructured 3D triangular meshes
 Name: meshlab
 Version: 2016.12
-Release: alt2%ubt
+Release: alt3%ubt
 Url: http://meshlab.sourceforge.net/
 License: GPLv2+ and BSD and Public Domain
 Group: Graphics
@@ -55,6 +55,9 @@ Patch16: meshlab-2016.12-arm-signed-char-fix.patch
 #Added missing include match.h
 Patch100: meshlab-2016.12-added_missing_include_math.patch
 
+# Additional FTBFS fixes
+Patch110: meshlab-2016.12-alt-qt5.11.patch
+
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libgomp-devel
 BuildRequires: bzlib-devel
@@ -97,6 +100,7 @@ these kinds of meshes.
 %patch16 -p0 -b .armfix
 pushd %name-%version
 %patch100 -p2
+%patch110 -p2
 popd
 
 # Turn of execute permissions on source files to avoid rpmlint
@@ -248,6 +252,9 @@ install -m 644 meshlab-%version/src/plugins_experimental/filter_segmentation/lic
 %_pixmapsdir/%name.png
 
 %changelog
+* Tue Sep 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2016.12-alt3%ubt
+- NMU: fixed build with Qt-5.11.
+
 * Sat Jun 16 2018 Anton Midyukov <antohami@altlinux.org> 2016.12-alt2%ubt
 - Rebuilt for aarch64
 
