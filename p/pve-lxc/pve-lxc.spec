@@ -2,7 +2,7 @@
 
 Name: pve-%rname
 Version: 3.0.2
-Release: alt1%ubt
+Release: alt2
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
 License: LGPL
@@ -34,7 +34,6 @@ Patch14: 0006-conf-fix-path-lxcpath-mixups-in-tty-setup.patch
 Patch20: lxc-alt.patch
 Patch21: lxc-altlinux-lxc.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: docbook2X libcap-devel libdbus-devel libgnutls-devel libseccomp-devel libselinux-devel
 
 %description
@@ -54,6 +53,7 @@ an applications or a system.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
@@ -108,7 +108,10 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
-* Thu Sep 06 2018 Valery Inozemtsev <shrek@altlinux.ru> 3.0.2-alt1%ubt
+* Fri Sep 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 3.0.2-alt2
+- fixed ns path
+
+* Thu Sep 06 2018 Valery Inozemtsev <shrek@altlinux.ru> 3.0.2-alt1.S1
 - 3.0.2+pve1-2
 
 * Mon Sep 25 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.1.0-alt0.M80C.1
