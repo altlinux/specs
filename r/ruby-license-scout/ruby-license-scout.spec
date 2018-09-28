@@ -1,7 +1,7 @@
 %define  pkgname license_scout
 
 Name: 	 ruby-license-scout
-Version: 1.0.15
+Version: 1.0.16
 Release: alt1
 
 Summary: Discovers license information of the dependencies of a project.
@@ -57,6 +57,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Sep 28 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.16-alt1
+- New version.
+
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.15-alt1
 - New version.
 
