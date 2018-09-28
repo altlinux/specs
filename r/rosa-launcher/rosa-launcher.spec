@@ -1,6 +1,6 @@
 Name:		rosa-launcher
 Version:	2.1.6
-Release:	alt1
+Release:	alt2
 Summary:	ROSA Desktop Application Launcher
 
 Group:		Graphical desktop/KDE
@@ -23,8 +23,6 @@ BuildRequires(pre):	kde-common-devel
 BuildRequires: gcc-c++
 BuildRequires: kde4base-workspace-devel
 BuildRequires: kde4base-devel
-BuildRequires: soprano-backend-redland
-BuildRequires: soprano
 BuildRequires: qjson-devel
 BuildRequires: kde4-baloo-devel
 
@@ -60,6 +58,9 @@ install -m0644 assets/rosa-icon.png  %buildroot%_iconsdir/hicolor/128x128/apps/r
 %_iconsdir/hicolor/128x128/apps/rosalauncher.png
 
 %changelog
+* Fri Sep 28 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.6-alt2
+- Rebuild without Soprano.
+
 * Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 2.1.6-alt1
 - New version
 
