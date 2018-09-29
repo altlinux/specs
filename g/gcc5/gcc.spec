@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 5.3.1
-Release: alt5
+Release: alt5.1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -240,7 +240,7 @@ Requires: libtsan0 %REQ %EVR
 %endif
 BuildPreReq: rpm-build >= 4.0.4-alt39, %binutils_deps
 BuildPreReq: gcc-c++ coreutils flex makeinfo
-BuildPreReq: libcloog-isl-devel libelf-devel libmpc-devel libmpfr-devel
+BuildPreReq: libelf-devel libmpc-devel libmpfr-devel
 # due to manpages
 BuildPreReq: perl-Pod-Parser
 BuildPreReq: zlib-devel
@@ -2340,9 +2340,6 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 %_infodir/libgomp*.info*
 %{?_with_jit:%_infodir/libgccjit.info*}
 %{?_with_fortran:%_infodir/gfortran.info*}
-%ifarch %libquadmath_arches
-%{?_with_fortran:%_infodir/libquadmath.info*}
-%endif
 %{?_with_java:%_infodir/gcj.info*}
 %{?_with_java:%_infodir/cp-tools.info*}
 %{?_with_ada:%_infodir/gnat*.info*}
@@ -2357,6 +2354,10 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 %endif # _cross_platform
 
 %changelog
+* Thu Sep 27 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.3.1-alt5.1
+- Dropped redundant libcloog-isl-devel build dependency.
+- doc: dropped libquadmath.info.
+
 * Wed Jan 10 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.3.1-alt5
 - Fixed build with glibc 2.26.
 - Disabled java support.
