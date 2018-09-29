@@ -1,6 +1,6 @@
 Name: card-actions
 Version: 1.10
-Release: alt7
+Release: alt8
 
 Summary: Smart card action handler scripts
 License: GPLv3+
@@ -18,6 +18,7 @@ Source100: card-actions.control
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-macros-alternatives
 Requires: pam_pkcs11 >= 0.6.9-alt23
 
 %description
@@ -45,6 +46,9 @@ sed -i -e 's,/usr/bin,%_bindir,g' \
 %_controldir/*
 
 %changelog
+* Sat Sep 29 2018 Andrey Cherepanov <cas@altlinux.org> 1.10-alt8
+- Fix build.
+
 * Fri Nov 03 2017 Paul Wolneykien <manowar@altlinux.org> 1.10-alt7
 - Fixed "terminate" profile.
 - Skip card identification on insert in the "terminate" mode.
