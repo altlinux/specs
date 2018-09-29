@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name blockdev
-%define ver_major 2.19
+%define ver_major 2.20
 %define rev 1
 
 %ifnarch %ix86 x86_64
@@ -10,7 +10,7 @@
 %def_without vdo
 %endif
 
-%def_with dmraid
+%def_without dmraid
 
 Name: lib%_name
 Version: %ver_major
@@ -436,7 +436,7 @@ subst 's/mkfs\.vfat/mkfs.fat/g
 	s/fsck\.vfat/fsck.fat/g' src/plugins/fs.c src/lib/plugin_apis/fs.api tests/fs_test.py
 
 %build
-%add_optflags -lm
+%add_optflags -D_FILE_OFFSET_BITS=64 -lm
 %autoreconf
 %configure \
 	%{subst_with vdo} \
@@ -619,6 +619,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 
 
 %changelog
+* Sat Sep 29 2018 Yuri N. Sedunov <aris@altlinux.org> 2.20-alt1
+- 2.20
+
 * Sat Aug 11 2018 Yuri N. Sedunov <aris@altlinux.org> 2.19-alt1
 - 2.19
 
