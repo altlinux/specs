@@ -2,7 +2,7 @@
 %define major 1.31
 
 Name: mediawiki
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
@@ -37,7 +37,7 @@ BuildPreReq: apache2-devel
 Requires: %name-common = %version-%release
 Requires: %name-apache2 %name-mysql
 
-Requires: php7-dom php7-fileinfo php7-mbstring ImageMagick
+Requires: ImageMagick
 
 %description
 MediaWiki is the software used for Wikipedia and the other Wikimedia
@@ -61,6 +61,7 @@ Summary: Common files for %name
 Group: Networking/WWW
 PreReq: webserver-common
 Requires: php7-libs >= 7.0.0
+Requires: php7-dom php7-fileinfo php7-mbstring
 Requires: diffutils
 
 AutoProv:no
@@ -320,6 +321,11 @@ exit 0
 
 
 %changelog
+* Sat Sep 29 2018 Vitaly Lipatov <lav@altlinux.ru> 1.31.1-alt1
+- new version 1.31.1 (with rpmrb script)
+- CVE-2018-0503, CVE-2018-0505, CVE-2018-1325
+- fix apache configs
+
 * Mon Jul 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.31.0-alt1
 - new version 1.31.0 (with rpmrb script)
 
