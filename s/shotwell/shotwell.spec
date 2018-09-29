@@ -9,8 +9,8 @@
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -95,6 +95,9 @@ mode, and export them to share with others.
 
 
 %changelog
+* Sat Sep 29 2018 Yuri N. Sedunov <aris@altlinux.org> 0.30.1-alt1
+- 0.30.1
+
 * Tue Sep 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt2
 - enabled face detection
 
