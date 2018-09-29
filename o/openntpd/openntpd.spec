@@ -1,6 +1,6 @@
 Name: openntpd
 Version: 3.9p1
-Release: alt12
+Release: alt13
 
 %define privuser  ntpd
 %define privgroup ntpd
@@ -21,6 +21,7 @@ Source3: ntpd.sysconfig
 Source4: ntpd.service
 # http://www.zip.com.au/~dtucker/openntpd/patches/openntpd-3.9p1-linux-adjtimex.patch
 Patch: openntpd-%version-%release.patch
+Patch1: openntpd-3.9p1-alt-openssl1.1.patch
 
 Provides: ntp-server
 
@@ -54,15 +55,18 @@ initially designed as part of OpenBSD.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 bzip2 -9k ChangeLog
 
 %build
 %add_optflags -DUSE_ADJTIMEX
 %{?_with_setproctitle:export LIBS=-lsetproctitle}
+%autoreconf
 %configure \
 	--with-mantype=doc \
 	--with-privsep-user=%privuser \
 	--with-privsep-path=%privpath \
+	--disable-strip \
 	#
 %make_build
 
@@ -94,6 +98,10 @@ install -pD -m644 %_sourcedir/ntpd.service %buildroot%systemd_unitdir/ntpd.servi
 %doc CREDITS ChangeLog.bz2 LICENCE README
 
 %changelog
+* Sat Sep 29 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.9p1-alt13
+- Fixed build and rebuilt with openssl 1.1.
+- Disabled ELF strip(1)ping to enable debuginfo subpackage.
+
 * Tue Apr 05 2011 Dmitry V. Levin <ldv@altlinux.org> 3.9p1-alt12
 - Added systemd service file (by Alexey Shabalin; closes: #25359).
 - ntpd: Changed default from -S to -s.
