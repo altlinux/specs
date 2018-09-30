@@ -1,5 +1,5 @@
 Name: smem
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Summary: Report application memory usage in a meaningful way
@@ -8,6 +8,8 @@ License: GPLv2+
 Group: Monitoring
 Url: http://www.selenic.com/smem
 
+# version 1.5 created from tag 1.5 at
+# https://selenic.com/repo/smem/rev/1.5
 Source0: http://www.selenic.com/smem/download/%name-%version.tar
 Source1: http://www.selenic.com/smem/index.html
 
@@ -49,6 +51,9 @@ install -pDm644 smem.8 %buildroot%_man8dir/smem.8
 %doc smem.html COPYING
 
 %changelog
+* Sun Sep 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt1
+- new version 1.5 (from tag 1.5 at https://selenic.com/repo/smem/rev/1.5)
+
 * Tue Feb 18 2014 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt1
 - new version 1.4 (with rpmrb script)
 
