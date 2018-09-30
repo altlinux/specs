@@ -2,7 +2,7 @@
 
 Name: spacefm
 Version: 1.0.6
-Release: alt1%ubt
+Release: alt2
 Summary: Multi-panel tabbed file and desktop manager
 License: GPLv3+ and LGPLv3+
 Group: File tools
@@ -11,9 +11,9 @@ Source0: %name-%version.tar
 Source1: %name.conf
 Source2: session
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: intltool libgtk+%gtkver-devel libudev-devel
 
+Requires: unzip zip
 # Mount without root requirement.
 Requires: udisks2
 
@@ -56,7 +56,10 @@ install -Dp -m 0644 %SOURCE2 %buildroot/%_sysconfdir/xdg/%name/session
 %_datadir/mime/packages/%name-mime.xml
 
 %changelog
-* Fri Apr 06 2018 Anton Midyukov <antohami@altlinux.org> 1.0.6-alt1%ubt
+* Sun Sep 30 2018 Anton Midyukov <antohami@altlinux.org> 1.0.6-alt2
+- Added support for zip archives
+
+* Fri Apr 06 2018 Anton Midyukov <antohami@altlinux.org> 1.0.6-alt1
 - New version 1.0.6 (Closes: 34754)
 
 * Thu Apr 30 2015 Motsyo Gennadi <drool@altlinux.ru> 1.0.0-alt1
