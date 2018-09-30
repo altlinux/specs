@@ -1,9 +1,11 @@
 %define ver_major 3.4
+%define xdg_name org.gnome.Goobox
 %define gst_api_ver 1.0
+
 %def_enable libcoverart
 
 Name: goobox
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: CD player and ripper for GNOME
@@ -47,16 +49,19 @@ subst 's|1\.0\.0beta1|1.0.0|' configure*
 
 %files -f %name.lang
 %_bindir/%name
-%_datadir/applications/%name.desktop
+%_datadir/applications/%xdg_name.desktop
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
 %_datadir/glib-2.0/schemas/org.gnome.Goobox.gschema.xml
 %_datadir/GConf/gsettings/goobox.convert
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc AUTHORS NEWS README TODO
 
 
 %changelog
+* Sun Sep 30 2018 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
+- 3.4.3
+
 * Mon Oct 17 2016 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 
