@@ -1,8 +1,8 @@
 %define vendorzone ru.
 
 Name: chrony
-Version: 3.3
-Release: alt2%ubt
+Version: 3.4
+Release: alt1
 
 Summary: Chrony clock synchronization program
 License: GPLv2 only
@@ -10,15 +10,16 @@ Group: System/Configuration/Other
 
 Url: http://chrony.tuxfamily.org
 Source0: http://download.tuxfamily.org/chrony/%name-%version.tar
+Source1: clknetsim-chrony-%version.tar
 Patch0: %name-%version-alt.patch
-Source1: chronyd.init
-Source2: chrony.sh
-
-BuildRequires(pre): rpm-build-ubt
+Source2: chronyd.init
+Source3: chrony.sh
 
 BuildRequires: libcap-devel libncurses-devel libreadline-devel
 BuildRequires: libnss-devel asciidoctor lynx libseccomp-devel
 BuildRequires: makeinfo control
+# for tests
+BuildRequires: /proc gcc-c++
 
 Provides: ntp-server
 
@@ -37,8 +38,9 @@ reference is present. chronyd's use of NTP servers can be switched on and off
 Internet. chronyd can also act as an RFC1305-compatible NTP server.
 
 %prep
-%setup
+%setup -a 1
 %patch0 -p1
+mv clknetsim-chrony-* test/simulation/clknetsim
 # prepare git sources (make_release)
 # version in version.txt file
 echo %version > version.txt
@@ -68,9 +70,13 @@ sed -i -e 's/OPTIONS/CHRONYD_ARGS/' examples/chronyd.service
 %make_build all docs 
 make -C doc txt
 
+%check
+%make_build -C test/simulation/clknetsim
+%make check
+
 %install
 %makeinstall_std
-install -pD -m755 %SOURCE1 %buildroot%_initrddir/chronyd
+install -pD -m755 %SOURCE2 %buildroot%_initrddir/chronyd
 install -pD -m644 chrony.conf %buildroot%_sysconfdir/chrony.conf
 install -pD -m644 chrony.keys %buildroot%_sysconfdir/chrony.keys
 install -pD -m755 examples/chrony.nm-dispatcher %buildroot%_sysconfdir/NetworkManager/dispatcher.d/20-chrony
@@ -78,7 +84,7 @@ install -pD -m644 examples/chrony.logrotate %buildroot%_sysconfdir/logrotate.d/c
 install -pD -m644 chronyd.sysconfig %buildroot%_sysconfdir/sysconfig/chronyd
 install -pD -m644 examples/chronyd.service %buildroot%_unitdir/chronyd.service
 install -pD -m644 examples/chrony-wait.service %buildroot%_unitdir/chrony-wait.service
-install -pD -m755 %SOURCE2 %buildroot%_sysconfdir/control.d/facilities/chrony
+install -pD -m755 %SOURCE3 %buildroot%_sysconfdir/control.d/facilities/chrony
 
 install -d %buildroot/lib/systemd/ntp-units.d
 
@@ -125,19 +131,23 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 %_man8dir/*
 
 %changelog
-* Wed Aug 15 2018 Anton Farygin <rider@altlinux.ru> 3.3-alt2%ubt
+* Mon Oct 01 2018 Anton Farygin <rider@altlinux.ru> 3.4-alt1
+- 3.4
+- enabled tests
+
+* Wed Aug 15 2018 Anton Farygin <rider@altlinux.ru> 3.3-alt2
 - enabled seccomp filter and signd features
 
-* Tue Apr 10 2018 Anton Farygin <rider@altlinux.ru> 3.3-alt1%ubt
+* Tue Apr 10 2018 Anton Farygin <rider@altlinux.ru> 3.3-alt1
 - 3.3
 
-* Mon Oct 02 2017 Anton Farygin <rider@altlinux.ru> 3.2-alt1%ubt
+* Mon Oct 02 2017 Anton Farygin <rider@altlinux.ru> 3.2-alt1
 - new version 
 
-* Tue Aug 01 2017 Anton Farygin <rider@altlinux.ru> 3.1-alt1%ubt
+* Tue Aug 01 2017 Anton Farygin <rider@altlinux.ru> 3.1-alt1
 - new version
 
-* Sun Mar 12 2017 Evgeny Sinelnikov <sin@altlinux.ru> 2.2-alt2%ubt
+* Sun Mar 12 2017 Evgeny Sinelnikov <sin@altlinux.ru> 2.2-alt2
 - Build with universal build tag
 
 * Fri Dec 23 2016 Denis Medvedev <nbr@altlinux.org> 2.2-alt2
