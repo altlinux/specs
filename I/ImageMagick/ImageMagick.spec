@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.10
-%define drelease	9
+%define drelease	12
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		6
@@ -174,6 +174,9 @@ perl Makefile.PL
 make
 popd
 
+%check
+%make check
+
 %install
 %make transform='' DESTDIR=%buildroot INSTALLDIRS=vendor install
 
@@ -249,6 +252,10 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Mon Oct 01 2018 Anton Farygin <rider@altlinux.ru> 6.9.10.12-alt1
+- new version 6.9.10.12
+- enabled tests
+
 * Tue Aug 07 2018 Anton Farygin <rider@altlinux.ru> 6.9.10.9-alt1
 - new version 6.9.10.9
 
