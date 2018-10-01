@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: labplot
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: Function and Data Plotter
 
@@ -27,7 +29,7 @@ BuildRequires: qt5-serialport-devel
 BuildRequires: kf5-syntax-highlighting-devel 
 
 Conflicts: labplot1.6
-Requires: ImageMagick >= 5.4.7 gsl pstoedit
+Requires: ImageMagick-tools gsl pstoedit
 
 %description
 This is a program for plotting of functions and data manipulation.
@@ -63,8 +65,12 @@ QSA.
 %_K5xmlgui/%{name}2/
 %_K5xdgmime/%{name}2.xml
 %_K5doc/*/%{name}2/
+%_datadir/metainfo/*.xml
 
 %changelog
+* Mon Oct 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.0-alt2
+- Updated runtime dependencies.
+
 * Mon Aug 29 2018 Pavel Moseev <mars@altlinux.org> 2.5.0-alt1
 - Updated to upstream version 2.5.0.
 
