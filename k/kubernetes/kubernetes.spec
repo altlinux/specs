@@ -11,8 +11,8 @@
 %brp_strip_none %_bindir/*
 
 Name: kubernetes
-Version: 1.11.2
-Release: alt1%ubt
+Version: 1.12.0
+Release: alt1
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -41,7 +41,7 @@ Source25: scheduler
 Source26: kubernetes.tmpfiles
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang rpm-build-ubt
+BuildRequires(pre): rpm-build-golang
 BuildRequires: /proc
 BuildRequires: rsync
 BuildRequires: go-md2man go-bindata
@@ -306,6 +306,9 @@ install -p -m 0644 -t %buildroot/%_sysconfdir/systemd/system.conf.d %SOURCE3
 %_datadir/bash-completion/completions/kubectl
 
 %changelog
+* Mon Oct 01 2018 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Fri Aug 17 2018 Alexey Shabalin <shaba@altlinux.org> 1.11.2-alt1%ubt
 - 1.11.2
 
