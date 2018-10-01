@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/guile /usr/bin/guile-config /usr/bin/indent guile18-devel libnlopt-devel libreadline-devel
+BuildRequires: /usr/bin/indent libnlopt-devel libreadline-devel
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 Group: System/Libraries
 %add_optflags %optflags_shared
 Name:           libctl
 Version:        3.2.2
-Release:        alt1_3
+Release:        alt2_3
 Summary:        Guile-based support for flexible control files
 # integrator.c and cintergrator.c contain code licensed under GPLv2+
 # The rest of the code is LGPLv2+, but most restrictive license wins
@@ -74,6 +74,9 @@ done
 %{_datadir}/libctl/
 
 %changelog
+* Fri Sep 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.2-alt2_3
+- NMU: updated build dependencies.
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.2-alt1_3
 - update to new release by fcimport
 
