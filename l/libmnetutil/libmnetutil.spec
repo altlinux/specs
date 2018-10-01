@@ -1,13 +1,12 @@
 Serial: 51104
-%set_gcc_version 4.6
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc4.6-c++
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Summary:		Minisip library providing various C++ network classes
 Name:			libmnetutil
 Version:		0.8.0
-Release:		alt4_0.3.20100629svn3775
+Release:		alt5_0.3.20100629svn3775
 License:		LGPLv2+
 URL:			http://www.minisip.org/
 Group:			System/Libraries
@@ -15,6 +14,7 @@ Group:			System/Libraries
 # tar cjf libmnetutil-0.8.0.tar.bz2 libmnetutil-0.8.0/
 Source0:		%{name}-%{version}.tar.bz2
 Patch0:			libmnetutil-0001-Remove-bundled-udns.patch
+Patch1:			libmnetutil-0.8.0-alt-build.patch
 BuildRequires:		autoconf
 BuildRequires:		automake
 BuildRequires:		libtool
@@ -39,6 +39,7 @@ This package contains the development files for library %{name}.
 %prep
 %setup -q
 %patch0 -p1 -b .udns
+%patch1 -p2
 
 %build
 sh ./bootstrap
@@ -65,6 +66,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 
 %changelog
+* Fri Sep 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 51104:0.8.0-alt5_0.3.20100629svn3775
+- NMU: fixed build with new automake and gcc.
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 51104:0.8.0-alt4_0.3.20100629svn3775
 - gcc46 build
 
