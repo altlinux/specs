@@ -1,12 +1,14 @@
 Name: xorg-drv-wizardpen
 Version: 0.8.1
-Release: alt2
+Release: alt3
 
 Summary: Genius WizardPen tablet driver for X.Org and XFree86
 License: GPLv2
 Group: System/X11
 Url: https://launchpad.net/wizardpen
 Packager: Paul Wolneykien <manowar@altlinux.ru>
+
+ExclusiveArch: x86_64 %ix86
 
 Source0: %name-%version.tar.gz
 
@@ -44,12 +46,15 @@ please report any experience with it, if you have one.
 %files
 %_libdir/X11/modules/input/wizardpen_drv.so
 %_bindir/wizardpen-calibrate
-%_mandir/man4/wizardpen.4.gz
+%_mandir/man4/wizardpen.4*
 %_udevlibdir/*.rules
 #%_udevdir/*.rules
 %_sysconfdir/X11/xorg.conf.d/*.conf
 
 %changelog
+* Fri Sep 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt3
+- NMU: allowed any man page compression.
+
 * Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 0.8.1-alt2
 - Fix build (add xorg-resourceproto-devel to build requires)
 
