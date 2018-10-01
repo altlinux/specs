@@ -1,6 +1,6 @@
 Name:    kmymoney
 Version: 5.0.1
-Release: alt1
+Release: alt2
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -12,6 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0: %name-%version.tar
 Source2: %name.watch
+Patch1:  %name-fix-build-with-qt5.11.patch
 
 AutoReq: yes, noperl
 
@@ -80,6 +81,7 @@ BuildRequires: libspeex-devel
 BuildRequires: libxml++2-devel 
 BuildRequires: libxml2-devel
 BuildRequires: libsqlcipher-devel
+BuildRequires: python-dev
 BuildRequires: python-module-weboob
 
 Requires: %name-i18n
@@ -248,6 +250,7 @@ Internationalization and documentation for KMyMoney
 
 %prep
 %setup -q -n %name-%version
+%patch1 -p1
 
 %build
 # Need to build in one thread, see https://bugs.kde.org/show_bug.cgi?id=364387 for details
@@ -279,6 +282,7 @@ Internationalization and documentation for KMyMoney
 %_K5icon/hicolor/*/apps/%name.png
 %_K5icon/hicolor/*/mimetypes/application-x-kmymoney.png
 %_datadir/kconf_update/%name.upd
+%_datadir/appdata/org.*.appdata.xml
 
 %files devel
 %dir %_includedir/%name
@@ -354,6 +358,10 @@ Internationalization and documentation for KMyMoney
 %exclude %_K5doc/en
 
 %changelog
+* Sat Sep 29 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.1-alt2
+- Fix build with Qt 5.11.
+- Package appdata file.
+
 * Wed Mar 21 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.1-alt1
 - New version.
 - Do not build API documentation.
