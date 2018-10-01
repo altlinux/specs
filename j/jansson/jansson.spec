@@ -1,8 +1,8 @@
 %def_with doc
 
 Name: jansson
-Version: 2.7
-Release: alt2
+Version: 2.10
+Release: alt1
 
 Summary: C library for encoding, decoding and manipulating JSON data
 License: MIT
@@ -82,6 +82,9 @@ It features:
 %endif
 
 %changelog
+* Tue Nov 20 2018 Oleg Solovyov <mcpain@altlinux.org> 2.10-alt1
+- 2.10
+
 * Wed May 23 2018 Michael Shigorin <mike@altlinux.org> 2.7-alt2
 - introduce doc knob (on by default)
 - minor spec cleanup
