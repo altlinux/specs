@@ -1,26 +1,24 @@
 
 Name: opennebula-context
 Summary: OpenNebula Contextualization Package
-Version: 5.4.2.1
-Release: alt1%ubt.1
+Version: 5.6.0
+Release: alt1
 License: Apache
 Group: System/Servers
 Url: http://opennebula.org
 # https://github.com/OpenNebula/addon-context-linux.git
 Source0: %name-%version.tar
+BuildArch: noarch
 
 Provides: one-context = %EVR
 Conflicts: cloud-init udev-rule-generator-net udev-rule-generator-cdrom
 
-Requires: util-linux bind-utils cloud-utils-growpart 
-Requires: ruby ruby-json-pure 
-%ifarch %ix86 x86_64
-Requires: open-vm-tools
-%endif
+Requires: util-linux bind-utils cloud-utils-growpart parted
+Requires: ruby ruby-json-pure
 Requires: qemu-guest-agent
 Requires: sudo
 
-BuildRequires(pre): rpm-build-ubt rpm-build-ruby
+BuildRequires(pre): rpm-build-ruby
 
 %description
 This package prepares a VM image for OpenNebula:
@@ -66,8 +64,6 @@ install -p -D -m 755 src/etc/one-context.d/loc-20-set-username-password \
 			%buildroot%_sysconfdir/one-context.d/loc-20-set-username-password
 install -p -D -m 755 src/etc/one-context.d/loc-22-ssh_public_key \
 			%buildroot%_sysconfdir/one-context.d/loc-22-ssh_public_key
-install -p -D -m 755 src/etc/one-context.d/loc-23-selinux-ssh##rpm \
-			%buildroot%_sysconfdir/one-context.d/loc-23-selinux-ssh
 install -p -D -m 755 src/etc/one-context.d/net-11-fix-loopback##one \
 			%buildroot%_sysconfdir/one-context.d/net-11-fix-loopback
 install -p -D -m 755 src/etc/one-context.d/net-15-hostname \
@@ -81,7 +77,7 @@ install -p -D -m 755 src/etc/one-context.d/net-99-report-ready \
 
 install -p -D -m 755 src/usr/bin/onegate %buildroot%_bindir/onegate
 install -p -D -m 755 src/usr/bin/onegate.rb %buildroot%_bindir/onegate.rb
-install -p -D -m 755 src/usr/sbin/one-context-reconfigure##one %buildroot%_sbindir/one-context-reconfigure
+install -p -D -m 755 src/usr/sbin/one-context-run##one %buildroot%_sbindir/one-context-run
 install -p -D -m 755 src/usr/sbin/one-contextd %buildroot%_sbindir/one-contextd
 
 install -p -D -m 644 src/lib/udev/rules.d/65-context.rules##rpm.systemd.one \
@@ -117,6 +113,9 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 %_unitdir/*
 
 %changelog
+* Mon Oct 01 2018 Alexey Shabalin <shaba@altlinux.org> 5.6.0-alt1
+- 5.6.0
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 5.4.2.1-alt1%ubt.1
 - Rebuild with new Ruby autorequirements.
 - Do not require open-vm-tools for aarch64.
