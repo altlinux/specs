@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -62,6 +62,18 @@ cp libcontrol++/src/*.h %buildroot%_includedir/libcontrol++
 %_includedir/libcontrol++/
 
 %changelog
+* Sun Sep 30 2018 Alexey Appolonov <alexey@altlinux.org> 0.13.0-alt1
+- New section for printing functionality;
+- API changes (CutExtension, FormatFilePath and GetHomeDir functions);
+- Ability to get feedback while changing permissions;
+- Function that gets the intersection of two vectors;
+- Function that gets vector that consist of elements of first given vector
+  that are not presented in the second given vector;
+- Function that gets sector of the conf by given name;
+- Ability to clean DOM of the TConf object;
+- Ability to add message at the top when rewriting conf;
+- Various small modifications.
+
 * Mon Sep 10 2018 Alexey Appolonov <alexey@altlinux.org> 0.12.0-alt1
 - New section for the filestat-related functions;
 - Function for opening the dir and performing the operation inside of it;
