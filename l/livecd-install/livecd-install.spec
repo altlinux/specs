@@ -1,6 +1,6 @@
 Name: livecd-install
 Version: 0.9.10
-Release: alt4
+Release: alt5
 
 Summary: Permanently install Live system
 License: GPLv2
@@ -21,7 +21,7 @@ Requires: alterator-vm alterator-users >= 10.2-alt1 alterator-root >= 0.9-alt1 a
 Requires: alterator-service-functions
 Requires: installer-scripts-remount-stage2 >= 0.3-alt1
 Requires: livecd-evms
-Requires: make-initrd-plymouth
+#Requires: make-initrd-plymouth
 Requires: consolehelper
 
 # Alterator-vm always allow to create an encrypted partition.
@@ -63,6 +63,10 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Mon Oct 01 2018 Michael Shigorin <mike@altlinux.org> 0.9.10-alt5
+- avoid R: make-initrd-plymouth, should be added in the profile
+  if needed (closes: #35461)
+
 * Thu Aug 09 2018 Michael Shigorin <mike@altlinux.org> 0.9.10-alt4
 - BR(pre): rpm-macros-alternatives (thx ldv@)
 
