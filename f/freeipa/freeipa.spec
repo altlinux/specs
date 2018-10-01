@@ -37,7 +37,7 @@
 
 Name: freeipa
 Version: 4.7.0
-Release: alt1
+Release: alt2
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -245,6 +245,7 @@ Group: System/Libraries
 BuildArch: noarch
 Requires: %name-server-common = %EVR
 Requires: python-module-ipaclient = %EVR
+Requires: python-module-ipaclient-ntp = %EVR
 Requires: python-module-augeas
 Requires: python-module-gssapi
 Requires: python-module-kdcproxy
@@ -412,7 +413,6 @@ Group: System/Libraries
 BuildArch: noarch
 Requires: %name-client-common = %EVR
 Requires: python-module-freeipa = %EVR
-Requires: python-module-%name-ntplib = %EVR
 Requires: python-module-dns
 
 %description -n python-module-ipaclient
@@ -434,7 +434,6 @@ Group: System/Libraries
 BuildArch: noarch
 Requires: %name-client-common = %EVR
 Requires: python3-module-freeipa = %EVR
-Requires: python3-module-%name-ntplib = %EVR
 Requires: python3-module-dns
 
 %description -n python3-module-ipaclient
@@ -529,25 +528,48 @@ If you are using IPA with Python 3, you need to install this package.
 ###############################################################################
 
 %if_with python2
-%package -n python-module-freeipa-ntplib
-Summary: Python IPA libraries for ntp services
+%package -n python-module-ipaserver-ntp
+Summary: Python IPA libraries for ntp services in IPA server
 Group: Development/Python
 BuildArch: noarch
 
-%description -n python-module-freeipa-ntplib
-IPA libraries for synchronization IPA server and IPA client with time&data servers.
+%description -n python-module-ipaserver-ntp
+IPA python libraries for synchronization IPA server with time&data servers.
 
 %endif
 
 ###############################################################################
 
-%package -n python3-module-freeipa-ntplib
-Summary: Python3 IPA libraries for ntp services
+%package -n python3-module-ipaserver-ntp
+Summary: Python3 IPA libraries for ntp services in IPA server
 Group: Development/Python3
 BuildArch: noarch
 
-%description -n python3-module-freeipa-ntplib
-IPA libraries for synchronization IPA server and IPA client with time&data servers.
+%description -n python3-module-ipaserver-ntp
+IPA python3 libraries for synchronization IPA server with time&data servers.
+
+###############################################################################
+
+%if_with python2
+%package -n python-module-ipaclient-ntp
+Summary: Python IPA libraries for ntp services in IPA client
+Group: Development/Python
+BuildArch: noarch
+
+%description -n python-module-ipaclient-ntp
+IPA python libraries for synchronization IPA client with time&data servers.
+
+%endif
+
+###############################################################################
+
+%package -n python3-module-ipaclient-ntp
+Summary: Python3 IPA libraries for ntp services in IPA client
+Group: Development/Python3
+BuildArch: noarch
+
+%description -n python3-module-ipaclient-ntp
+IPA python3 libraries for synchronization IPA client with time&data servers.
 
 ###############################################################################
 
@@ -1035,11 +1057,29 @@ fi
 %files -n python-module-ipaserver
 %python_sitelibdir_noarch/ipaserver/
 %python_sitelibdir_noarch/ipaserver-*.egg-info/
+
+%exclude %python_sitelibdir_noarch/ipaserver/install/servntpconf*
+%exclude %python_sitelibdir_noarch/ipaserver/install/servntplib*
+
 %endif
 
 %files -n python3-module-ipaserver
 %python3_sitelibdir_noarch/ipaserver/
 %python3_sitelibdir_noarch/ipaserver-*.egg-info/
+
+%exclude %python3_sitelibdir_noarch/ipaserver/install/servntpconf*
+%exclude %python3_sitelibdir_noarch/ipaserver/install/servntplib*
+
+%if_with python2
+%files -n python-module-ipaserver-ntp
+%python_sitelibdir_noarch/ipaserver/install/servntpconf*
+%python_sitelibdir_noarch/ipaserver/install/servntplib*
+
+%endif
+
+%files -n python3-module-ipaserver-ntp
+%python3_sitelibdir_noarch/ipaserver/install/servntpconf*
+%python3_sitelibdir_noarch/ipaserver/install/servntplib*
 
 %files server-common
 %dir %attr(0700,root,root) %_runtimedir/ipa
@@ -1141,11 +1181,29 @@ fi
 %files -n python-module-ipaclient
 %python_sitelibdir_noarch/ipaclient/
 %python_sitelibdir_noarch/ipaclient-*.egg-info/
+
+%exclude %python_sitelibdir_noarch/ipaclient/install/clientntpconf*
+%exclude %python_sitelibdir_noarch/ipaclient/install/clintplib*
+
 %endif
 
 %files -n python3-module-ipaclient
 %python3_sitelibdir_noarch/ipaclient/
 %python3_sitelibdir_noarch/ipaclient-*.egg-info/
+
+%exclude %python3_sitelibdir_noarch/ipaclient/install/clientntpconf*
+%exclude %python3_sitelibdir_noarch/ipaclient/install/clintplib*
+
+%if_with python2
+%files -n python-module-ipaclient-ntp
+%python_sitelibdir_noarch/ipaclient/install/clientntpconf*
+%python_sitelibdir_noarch/ipaclient/install/clintplib*
+
+%endif
+
+%files -n python3-module-ipaclient-ntp
+%python3_sitelibdir_noarch/ipaclient/install/clientntpconf*
+%python3_sitelibdir_noarch/ipaclient/install/clintplib*
 
 %files client-common
 %dir %attr(0755,root,root) %_sysconfdir/ipa/
@@ -1179,9 +1237,6 @@ fi
 %python_sitelibdir_noarch/ipaplatform-*.egg-info/
 %python_sitelibdir_noarch/ipaplatform-*-nspkg.pth
 
-%exclude %python_sitelibdir_noarch/ipalib/chrony*
-%exclude %python_sitelibdir_noarch/ipalib/ntpd*
-%exclude %python_sitelibdir_noarch/ipalib/ontpd*
 %endif
 
 %files common -f ipa.lang
@@ -1196,22 +1251,6 @@ fi
 %python3_sitelibdir_noarch/ipalib-*.egg-info/
 %python3_sitelibdir_noarch/ipaplatform-*.egg-info/
 %python3_sitelibdir_noarch/ipaplatform-*-nspkg.pth
-
-%exclude %python3_sitelibdir_noarch/ipalib/chrony*
-%exclude %python3_sitelibdir_noarch/ipalib/ntpd*
-%exclude %python3_sitelibdir_noarch/ipalib/ontpd*
-
-%if_with python2
-%files -n python-module-freeipa-ntplib
-%python_sitelibdir_noarch/ipalib/chrony*
-%python_sitelibdir_noarch/ipalib/ntpd*
-%python_sitelibdir_noarch/ipalib/ontpd*
-%endif
-
-%files -n python3-module-freeipa-ntplib
-%python3_sitelibdir_noarch/ipalib/chrony*
-%python3_sitelibdir_noarch/ipalib/ntpd*
-%python3_sitelibdir_noarch/ipalib/ontpd*
 
 %if_with python2
 %files -n python-module-ipatests
@@ -1249,6 +1288,10 @@ fi
 %endif
 
 %changelog
+* Mon Oct 01 2018 Stanislav Levin <slev@altlinux.org> 4.7.0-alt2
+- Fixed client's requirements to server modules (by mrdrew@).
+- Fixed JS errors on web pages(ssbrowser and unauthorized) at production mode.
+
 * Fri Sep 07 2018 Stanislav Levin <slev@altlinux.org> 4.7.0-alt1
 - 4.6.3 -> 4.7.0.
 
