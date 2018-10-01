@@ -4,7 +4,7 @@
 %set_verify_elf_method relaxed
 %define gver 7
 %set_gcc_version %gver
-%def_with qt5
+%def_with qt4
 
 #===== DB subsystem modules ======
 %def_enable DBF
@@ -77,7 +77,7 @@ Summary(uk_UA.UTF8): Відкрита SCADA система
 Summary(de_DE.UTF8): Open SCADA-System
 Name: openscada
 Version: 0.9.0
-Release: alt1
+Release: alt2
 Source: openscada-%version.tar
 Source1: openscada-res.tar.xz
 Patch: added_lsb_header.patch
@@ -1774,6 +1774,10 @@ ln -s %_defaultdocdir/%name-docUK-%version %buildroot/%_datadir/openscada/docs/u
 %endif
 
 %changelog
+* Mon Oct 01 2018 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt2
+- rebuilt with openssl-1.1
+- build with qt4 (with qt-5.11 FTBFS)
+
 * Fri Jun 22 2018 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
 - The build of 0.9.0 main update to the production release
 - build with gcc7
