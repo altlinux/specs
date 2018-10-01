@@ -3,8 +3,8 @@
 
 
 Name: accountsservice
-Version: 0.6.50
-Release: alt2%ubt
+Version: 0.6.54
+Release: alt1
 Summary: D-Bus interfaces for querying and manipulating user account information
 
 Group: System/Base
@@ -15,10 +15,13 @@ Url: http://www.fedoraproject.org/wiki/Features/UserAccountDialog
 Source: %name-%version.tar
 Patch1: %name-%version.patch
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: intltool gtk-doc
-BuildRequires: glib2-devel >= 2.44 libgio-devel >= 2.37.3
-BuildRequires: libpolkit-devel
+BuildRequires: meson
+BuildRequires: gtk-doc
+BuildRequires: pkgconfig(gio-2.0) >= 2.37.3
+BuildRequires: pkgconfig(gio-unix-2.0)
+BuildRequires: pkgconfig(glib-2.0) >= 2.44
+BuildRequires: pkgconfig(polkit-gobject-1)
+BuildRequires: pkgconfig(dbus-1)
 BuildRequires: gobject-introspection-devel
 BuildRequires: libsystemd-devel >= 186 systemd-devel
 
@@ -71,23 +74,21 @@ GObject introspection devel data for the accountsservice library
 %patch1 -p1
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	--enable-admin-group=wheel \
-	--enable-user-heuristics \
-	--with-minimum-uid=500 \
-	--enable-systemd \
-	--with-systemdsystemunitdir=%_unitdir
-%make_build
+%meson \
+    -Dadmin_group=wheel \
+    -Duser_heuristics=true \
+    -Dminimum_uid=500 \
+    -Dsystemd=true \
+    -Dsystemdsystemunitdir=%_unitdir
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
 %find_lang accounts-service
 
 %files -f accounts-service.lang
-%doc COPYING README AUTHORS NEWS
+%doc COPYING README.md AUTHORS NEWS
 %_sysconfdir/dbus-1/system.d/org.freedesktop.Accounts.conf
 %_libexecdir/accounts-daemon
 %_datadir/dbus-1/system-services/org.freedesktop.Accounts.service
@@ -113,6 +114,9 @@ GObject introspection devel data for the accountsservice library
 %_girdir/*.gir
 
 %changelog
+* Mon Oct 01 2018 Alexey Shabalin <shaba@altlinux.org> 0.6.54-alt1
+- 0.6.54
+
 * Tue Aug 14 2018 Fr. Br. George <george@altlinux.ru> 0.6.50-alt2%ubt
 - Ignore ALT-specific empty /etc/shadow (closes: #35210)
 
