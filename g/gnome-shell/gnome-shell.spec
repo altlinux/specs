@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
@@ -11,7 +11,7 @@
 
 Name: gnome-shell
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -149,6 +149,7 @@ BuildRequires: libsoup-gir-devel ca-certificates
 BuildRequires: gnome-control-center-devel
 BuildRequires: libsystemd-journal-devel
 BuildRequires: libibus-devel >= %ibus_ver
+BuildRequires: gcr-libs-gir-devel libpolkit-gir-devel
 # for browser plugin
 BuildRequires: browser-plugins-npapi-devel
 
@@ -189,6 +190,7 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %build
 %meson \
 	%{?_enable_gtk_doc:-Dgtk_doc=true}
+%{?_enable_snapshot:%meson_build %name-pot %name-update-po}
 %meson_build
 
 %install
@@ -228,6 +230,7 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %_datadir/dbus-1/interfaces/%xdg_name.Screenshot.xml
 %_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider2.xml
 %_datadir/dbus-1/interfaces/%xdg_name.Screencast.xml
+%_datadir/dbus-1/interfaces/org.gnome.Shell.Extensions.xml
 %_datadir/GConf/gsettings/gnome-shell-overrides.convert
 %_datadir/dbus-1/services/%xdg_name.PortalHelper.service
 %_datadir/gnome-control-center/keybindings/50-gnome-shell-system.xml
@@ -247,6 +250,9 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %endif
 
 %changelog
+* Sun Sep 30 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt2
+- updated to 3.30.0-50-gef5e195f3
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 
