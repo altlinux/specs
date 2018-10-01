@@ -4,7 +4,7 @@
 
 Name: arm-none-eabi-binutils
 Version: 2.30
-Release: alt1.1
+Release: alt1.2
 Summary: GNU Binutils for cross-compilation for %target target
 Group: Development/Tools
 # Most of the sources are licensed under GPLv3+ with these exceptions:
@@ -20,7 +20,6 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 
 Source1: README.alt
-BuildRequires: flex bison cloog
 BuildRequires: texinfo perl-podlators
 
 %description
@@ -82,6 +81,9 @@ rm -r %buildroot%_infodir
 %_man1dir/%target-*.1.*
 
 %changelog
+* Mon Oct 01 2018 Anton Midyukov <antohami@altlinux.org> 2.30-alt1.2
+- Update buildrequires
+
 * Thu Sep 20 2018 Anton Midyukov <antohami@altlinux.org> 2.30-alt1.1
 - First build for aarch64
 
