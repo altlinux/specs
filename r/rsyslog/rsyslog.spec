@@ -15,8 +15,8 @@
 %def_enable mmkubernetes
 
 Name: rsyslog
-Version: 8.37.0
-Release: alt1%ubt
+Version: 8.38.0
+Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: GPLv3+ ASL2.0
@@ -26,7 +26,6 @@ Url: http://www.rsyslog.com
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: flex
 BuildRequires: zlib-devel
 BuildRequires: libdbi-devel
@@ -601,6 +600,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Mon Oct 01 2018 Alexey Shabalin <shaba@altlinux.org> 8.38.0-alt1
+- new version 8.38.0
+
 * Mon Sep 03 2018 Alexey Shabalin <shaba@altlinux.org> 8.37.0-alt1%ubt
 - 8.37.0
 - add package with openssl TLS driver
