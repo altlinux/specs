@@ -1,7 +1,7 @@
 %define modname tap.py
 
 Name: python-module-tappy
-Version: 2.4
+Version: 2.5
 Release: alt1
 
 Summary: Test Anything Protocol (TAP) tools
@@ -68,6 +68,9 @@ popd
 %doc README.md LICENSE
 
 %changelog
+* Mon Oct 01 2018 Yuri N. Sedunov <aris@altlinux.org> 2.5-alt1
+- 2.5
+
 * Wed Jun 06 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt1
 - 2.4
 
