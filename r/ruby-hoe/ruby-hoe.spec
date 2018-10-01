@@ -1,8 +1,8 @@
 %define  pkgname hoe
 
 Name:    ruby-%pkgname
-Version: 3.17.0
-Release: alt2.1
+Version: 3.17.1
+Release: alt1
 
 Summary: Hoe is a rake/rubygems helper for project Rakefiles
 License: MIT
@@ -15,10 +15,6 @@ BuildArch: noarch
 Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-tool-setup
-
-%add_ruby_req_skip flay_task flog_task rake/extensiontask rake/gempackagetask
-%add_ruby_req_skip spec/rake/spectask
 
 %description
 %summary
@@ -60,6 +56,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Oct 01 2018 Andrey Cherepanov <cas@altlinux.org> 3.17.1-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.17.0-alt2.1
 - Rebuild with new Ruby autorequirements.
 
