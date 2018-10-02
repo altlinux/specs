@@ -1,5 +1,5 @@
 Name: mupdf
-Version: 1.8
+Version: 1.13.0
 Release: alt1
 Summary: A lightweight PDF viewer and toolkit
 Group: Office
@@ -12,7 +12,7 @@ Patch0: %name-upstream.patch
 
 # Automatically added by buildreq on Thu Aug 22 2013
 # optimized out: libX11-devel pkg-config xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: libXext-devel libfreetype-devel libjbig2dec-devel libjpeg-devel libssl-devel zlib-devel
+BuildRequires: libXext-devel libfreetype-devel libjbig2dec-devel libjpeg-devel libssl-devel zlib-devel libfreeglut-devel
 
 %description
 MuPDF is a lightweight PDF viewer and toolkit written in portable C.
@@ -72,6 +72,9 @@ install -D mupdf.pc %buildroot%_pkgconfigdir/mupdf.pc
 %_libdir/lib*.a
 
 %changelog
+* Tue Oct 02 2018 Fr. Br. George <george@altlinux.ru> 1.13.0-alt1
+- Autobuild version bump to 1.13.0
+
 * Wed Nov 18 2015 Fr. Br. George <george@altlinux.ru> 1.8-alt1
 - Autobuild version bump to 1.8
 
@@ -114,7 +117,7 @@ install -D mupdf.pc %buildroot%_pkgconfigdir/mupdf.pc
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
-* Wed Oct 27 2011 Pavel Zhukov <landgraf@fedoraproject.org> - 0.9-1
+* Thu Oct 27 2011 Pavel Zhukov <landgraf@fedoraproject.org> - 0.9-1
 - New release
 
 * Tue May 03 2011 Pavel Zhukov <landgraf@fedoraproject.org> - 0.8.165-2
