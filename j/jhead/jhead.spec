@@ -1,6 +1,6 @@
 Name: jhead
 Version: 3.00
-Release: alt1
+Release: alt2
 
 Summary: Tool for handling EXIF data in JPEG image files
 License: Public Domain
@@ -11,7 +11,7 @@ Source: %url/%name-%version.tar.gz
 
 # Without jpegtran from libjpeg-utils rotation feature will not work.
 # Exif thumbnail regeneration relies on 'mogrify' program from ImageMagick.
-Requires: libjpeg-utils ImageMagick
+Requires: libjpeg-utils ImageMagick-tools
 
 %description
 Jhead is a command line driven utility for extracting digital camera settings
@@ -36,6 +36,9 @@ install -pD -m644 jhead.1 %buildroot%_man1dir/jhead.1
 %_man1dir/*
 
 %changelog
+* Tue Oct 02 2018 Grigory Ustinov <grenka@altlinux.org> 3.00-alt2
+- Remove dependency on ImageMagick.
+
 * Mon Jun 01 2015 Yuri N. Sedunov <aris@altlinux.org> 3.00-alt1
 - 3.00
 
