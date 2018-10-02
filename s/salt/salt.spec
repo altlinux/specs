@@ -1,6 +1,6 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 2018.3.0
+Version: 2018.11
 Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
@@ -8,6 +8,8 @@ License: apache-2.0
 Group: System/Configuration/Other
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
+
+BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: master.logrotate
@@ -22,9 +24,9 @@ BuildRequires: python-module-nose libzeromq-devel
 BuildRequires: python-module-zmq-devel python-module-Crypto
 BuildRequires: python-module-msgpack python-module-yaml
 
-BuildArch: noarch
+#BuildArch: noarch
 
-%add_python_req_skip win32api win32event win32service win32serviceutil winerror pythoncom distutils
+%add_python_req_skip win32api win32event win32service win32serviceutil winerror pythoncom distutils ntsecuritycon win32con win32process win32security
 
 # For more detailed autoreqs (under jnpr.*), which can be satisfied;
 # this fixes the general UNMET python2.X(jnpr), which used to appear.
@@ -189,8 +191,7 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man7dir/salt.7.*
 
 %files -n python-module-salt-tests
-%dir %python_sitelibdir/salt/daemons/test
-%python_sitelibdir/salt/daemons/test/*
+%python_sitelibdir/salt/daemons/test
 
 %files master
 %config(noreplace) %_sysconfdir/salt/master
@@ -267,6 +268,15 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 2018.11-alt1
+- New version.
+
+* Fri Jun 22 2018 Andrey Cherepanov <cas@altlinux.org> 2018.3.2-alt1
+- New version.
+
+* Fri Jun 08 2018 Andrey Cherepanov <cas@altlinux.org> 2018.3.1-alt1
+- New version.
+
 * Mon Apr 02 2018 Andrey Cherepanov <cas@altlinux.org> 2018.3.0-alt1
 - New version.
 
