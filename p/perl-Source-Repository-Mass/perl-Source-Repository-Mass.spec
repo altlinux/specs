@@ -1,7 +1,7 @@
 %define module Source-Repository-Mass
 
 Name: perl-%module
-Version: 0.420
+Version: 0.421
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -12,9 +12,8 @@ License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar
 Url: http://search.cpan.org/dist/%module
 
-# Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel perl-RPM-Source-Editor perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-ShellQuote perl-RPM-Source-Convert perl-Source-Package perl-RPM-Source-BundleImport perl-Source-Repository perl-Source-Shared-Resource perl(Source/Shared/Utils/GlobList.pm)
-Requires: perl-RPM-Source-Editor > 0.9210
+BuildRequires: perl-devel perl-RPM-Source-Editor perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-ShellQuote perl-RPM-Source-Convert perl-Source-Package perl-RPM-Source-BundleImport perl-Source-Repository perl-Source-Shared-Resource perl(Source/Shared/Utils/GlobList.pm) perl(Source/Shared/FindLocalMirror.pm)
+Requires: perl-RPM-Source-Editor > 0.9219
 Conflicts: perl-Source-Repository < 0.391
 
 %description
@@ -36,6 +35,9 @@ Conflicts: perl-Source-Repository < 0.391
 %perl_vendor_privlib/Source*
 
 %changelog
+* Tue Oct 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.421-alt1
+- use Source::Shared::FindLocalMirror
+
 * Tue May 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.420-alt1
 - added sourcerepo-compare-mass
 
