@@ -1,6 +1,6 @@
 Name: xf86dga
 Version: 1.0.3
-Release: alt1
+Release: alt2
 
 Summary: test program for the XFree86-DGA extension
 License: MIT/X11
@@ -11,8 +11,8 @@ Source: %name-%version.tar.bz2
 
 BuildRequires: libICE-devel libSM-devel libX11-devel libXau-devel
 BuildRequires: libXaw-devel libXext-devel libXmu-devel libXpm-devel
-BuildRequires: libXt-devel libXxf86dga-devel pkg-config xf86dgaproto
-BuildRequires: xproto libXdmcp-devel xorg-util-macros
+BuildRequires: libXt-devel libXxf86dga-devel pkg-config
+BuildRequires: libXdmcp-devel xorg-util-macros
 
 %description
 Dga  is  a  simple test client for the XFree86-DGA extension.  It fills
@@ -39,6 +39,9 @@ takes one second each).
 %_man1dir/*
 
 %changelog
+* Tue Oct 02 2018 Fr. Br. George <george@altlinux.ru> 1.0.3-alt2
+- Fix build
+
 * Tue May 03 2011 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1
 - Autobuild version bump to 1.0.3
 
