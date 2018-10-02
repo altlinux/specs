@@ -1,12 +1,10 @@
 %define ppp_ver %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 
 %def_enable bcrelay
-%def_with libwrap
-
 
 Name: pptpd
 Version: 1.4.0
-Release: alt2
+Release: alt3
 
 Summary: A PPTP server daemon
 License: GPLv2+ and LGPLv2+
@@ -24,7 +22,6 @@ Patch: %name-%version-%release.patch
 
 Requires: ppp = %ppp_ver
 
-%{?_with_libwrap:BuildRequires: libwrap-devel}
 BuildRequires: ppp-devel
 
 #%%def_with libwrap
@@ -49,7 +46,6 @@ sed -i -e "s,/usr/lib/pptpd,%_libdir/pptpd,g" pptpctrl.c
 
 %autoreconf
 %configure \
-	%{subst_with libwrap} \
 	%{subst_enable bcrelay}
 
 %make_build
@@ -81,6 +77,10 @@ install -pD -m644 %SOURCE3 %buildroot%_unitdir/%name.service
 %doc AUTHORS NEWS README* TODO samples tools ChangeLog* html
 
 %changelog
+* Tue Oct 02 2018 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt3
+- rebuid without libwrap support
+- backport patches from upstream
+
 * Thu Jan 29 2015 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt2
 - revert "drop SysV init script"
 - add systemd unit
