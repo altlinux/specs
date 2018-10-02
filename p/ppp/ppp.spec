@@ -6,12 +6,13 @@
 %def_with mppe
 %def_with libatm
 %def_with inet6
+%def_with systemd
 # https://bugzilla.redhat.com/1556132
 %def_without crypt
 
 Name: ppp
 Version: 2.4.7
-Release: alt4
+Release: alt5
 
 Summary: The PPP daemon and documentation
 License: distributable
@@ -36,6 +37,7 @@ Obsoletes: ppp-extra
 
 BuildRequires: libpam-devel libpcap-devel libssl-devel perl-IPC-Signal perl-Proc-Daemon perl-Proc-WaitStat libudev-devel
 %{?_with_libatm:BuildRequires: libatm-devel}
+%{?_with_systemd:BuildRequires: libsystemd-devel}
 Requires: ppp-common libssl
 Requires: kmod >= 14
 Requires: udev >= 204-alt2
@@ -123,6 +125,7 @@ rm -f include/linux/if_pppol2tp.h
 	    %{?_with_mppe:MPPE=y} \
 	    %{?_with_libatm:HAVE_LIBATM=y} \
 	    %{?_with_inet6:HAVE_INET6=y} \
+	    %{?_with_systemd:SYSTEMD=y} \
 	    COPTS="%optflags" \
 	    CC="gcc" \
 	    libdir=%_libdir
@@ -236,6 +239,11 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 %_libdir/pppd/%version/dhcpc.so
 
 %changelog
+* Tue Oct 02 2018 Alexey Shabalin <shaba@altlinux.org> 2.4.7-alt5
+- update to ppp-2.4.7-eaptls-mppe-1.101.patch
+- backport patches from upstream master
+- build with libsystemd for option up_sdnotify
+
 * Sun Jul 15 2018 Michael Shigorin <mike@altlinux.org> 2.4.7-alt4
 - fixed ftbfs against current libcrypt with fedora patch (thx ldv@)
 - fixed libatm knob
