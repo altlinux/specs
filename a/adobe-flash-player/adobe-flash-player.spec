@@ -1,10 +1,10 @@
 
 Name: adobe-flash-player
 %define bin_name mozilla-plugin-adobe-flash
-%define ver_fake   30
-%define ver_ix86   30.0.0.154
-%define ver_x86_64 30.0.0.154
-Release: alt2%ubt
+%define ver_fake   31
+%define ver_ix86   31.0.0.108
+%define ver_x86_64 31.0.0.108
+Release: alt1%ubt
 Epoch: 3
 
 %define ver_real %ver_fake
@@ -59,6 +59,9 @@ fake
 %files -n %bin_name
 
 %changelog
+* Tue Oct 02 2018 Sergey V Turchin <zerg@altlinux.org> 3:31-alt1%ubt
+- bump version
+
 * Tue Aug 14 2018 Sergey V Turchin <zerg@altlinux.org> 3:30-alt2%ubt
 - bump version
 - fix to obsolete only old adobe package (ALT#35244)
