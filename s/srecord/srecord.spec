@@ -1,7 +1,7 @@
 Summary: srecord programs
 Name: srecord
-Version: 1.61
-Release: alt2
+Version: 1.64
+Release: alt1
 License: GPL
 Group: Development/Tools
 Source: http://srecord.sourceforge.net/%name-%version.tar.gz
@@ -77,6 +77,9 @@ that manipulate EPROM load files.
 %_man3dir/*
 
 %changelog
+* Tue Oct 02 2018 Grigory Ustinov <grenka@altlinux.org> 1.64-alt1
+- Build new version.
+
 * Wed Sep 26 2018 Grigory Ustinov <grenka@altlinux.org> 1.61-alt2
 - Fixed FTBFS.
 
