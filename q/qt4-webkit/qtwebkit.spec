@@ -1,7 +1,7 @@
 
 Name: qt4-webkit
 Version: 2.3.4
-Release: alt4%ubt
+Release: alt5%ubt
 Epoch: 1
 
 Group: System/Libraries
@@ -34,7 +34,8 @@ BuildRequires: pkgconfig(gstreamer-1.0) pkgconfig(gstreamer-app-1.0)
 BuildRequires: libjpeg-devel libwebp-devel libpng-devel
 BuildRequires: libpcre-devel libicu-devel libsqlite3-devel libxslt-devel zlib-devel
 BuildRequires: perl-Term-ANSIColor rpm-build-ruby python-modules-json
-BuildRequires: libqt4-devel qt4-mobility-devel phonon-devel
+BuildRequires: libqt4-devel phonon-devel
+#BuildRequires: qt4-mobility-devel
 
 %description
 %summary
@@ -71,9 +72,8 @@ Conflicts: qt4-devel <= 4.8.6-alt4
 %patch108 -p1
 
 %build
-%ifarch %arm aarch64
 %remove_optflags '-g'
-%endif
+%add_optflags -Wno-expansion-to-defined
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
 export PATH=`pwd`/bin:%_qt4dir/bin:$PATH
@@ -92,7 +92,7 @@ export WEBKITOUTPUTDIR=`pwd`
   --no-webkit2 \
   --release \
   --qmakearg="CONFIG+=production_build CONFIG+=use_system_icu QMAKE_CFLAGS+=\"%optflags\" QMAKE_CXXFLAGS+=\"%optflags\" DEFINES+=USE_GSTREAMER=1 DEFINES+=HAVE_LIBWEBP=1 $jitopts" \
-%ifnarch x86_64
+%ifarch %ix86
   --no-force-sse2 \
 %endif
   --system-malloc \
@@ -122,6 +122,10 @@ done
 %_pkgconfigdir/QtWebKit.pc
 
 %changelog
+* Tue Oct 02 2018 Sergey V Turchin <zerg@altlinux.org> 1:2.3.4-alt5%ubt
+- build without qtmobility
+- remove -g compile flag for all archs
+
 * Tue Oct 10 2017 Sergey V Turchin <zerg@altlinux.org> 1:2.3.4-alt4%ubt
 - rebuild with new libwebp
 
