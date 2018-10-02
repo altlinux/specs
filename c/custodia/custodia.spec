@@ -1,13 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
 
-# FreeIPA up to 4.4.4 are not compatible with custodia because the custodia
-# script now runs under Python 3. FreeIPA 4.4.5 and 4.4.4-2 on F26 are fixed.
-%define ipa_conflict 4.4.5
-
 Name: custodia
-Version: 0.5.0
-Release: alt4
+Version: 0.6.0
+Release: alt1
 
 Summary: A tool for managing secrets
 License: %gpl3plus
@@ -23,36 +19,24 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python-module-setuptools
-BuildRequires: python3-module-setuptools
-
 %if_with check
 BuildRequires: python-module-configparser
 BuildRequires: python-module-coverage
 BuildRequires: python-module-cryptography
-BuildRequires: python-module-etcd
 BuildRequires: python-module-jwcrypto
 BuildRequires: python-module-mock
-BuildRequires: python-module-pytest-runner
-BuildRequires: python-module-pytest-cov
-BuildRequires: python-module-requests
-BuildRequires: python-modules-sqlite3
+BuildRequires: python-module-requests-gssapi
 BuildRequires: python-module-tox
-BuildRequires: pytest
 BuildRequires: python3-module-coverage
 BuildRequires: python3-module-cryptography
-BuildRequires: python3-module-etcd
+BuildRequires: python3-module-ipaclient
 BuildRequires: python3-module-jwcrypto
-BuildRequires: python3-module-pytest-runner
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-requests
+BuildRequires: python3-module-requests-gssapi
 BuildRequires: python3-modules-sqlite3
 BuildRequires: python3-module-tox
-BuildRequires: pytest3
 %endif
 
 Requires: python3-module-%name = %EVR
-Conflicts: freeipa-server-common < %ipa_conflict
 
 %define overview                                                              \
 Custodia is a Secrets Service Provider, it stores or proxies access to keys,  \
@@ -70,8 +54,7 @@ authorization, storage and API plugins are combined and exposed.
 %package -n python-module-%name
 Summary: Subpackage with python custodia modules
 Group: Development/Python
-%py_requires configparser
-Conflicts: python-module-freeipa < %ipa_conflict
+%add_python_req_skip ipalib
 %py_provides %name
 
 %description -n python-module-%name
@@ -80,6 +63,12 @@ Conflicts: python-module-freeipa < %ipa_conflict
 %package -n python3-module-%name
 Summary: Subpackage with python3 custodia modules
 Group: Development/Python
+# module 'requests' doesn't contain 'urllib3', but imports within
+%add_python3_req_skip requests.packages.urllib3.connection
+%add_python3_req_skip requests.packages.urllib3.connectionpool
+%py3_requires requests.packages
+%py3_requires urllib3.connection
+%py3_requires urllib3.connectionpool
 %py3_provides %name
 
 %description -n python3-module-%name
@@ -88,13 +77,19 @@ Group: Development/Python
 %prep
 %setup
 %patch -p1
+
+# set the shebang to Python3
+sed -i \
+'s@ExecStart=/usr/sbin/custodia\($\|[[:space:]]\+\)@ExecStart=/usr/sbin/custodia.py3 @' \
+contrib/config/systemd/system/custodia@.service
+rm -rf ../python3
 cp -a . ../python3
 
 %build
-%python_build_debug
+%python_build
 
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
 
 %install
@@ -184,6 +179,10 @@ exit 0
 %_bindir/custodia-cli.py3
 
 %changelog
+* Wed Sep 26 2018 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
+- 0.5.0 -> 0.6.0.
+- Set Python3 as default within systemd service.
+
 * Mon Jul 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.0-alt4
 - Remove runtime requirements to setuptools (closes: #35114)
 
