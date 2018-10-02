@@ -21,7 +21,7 @@
 
 Name: glib2
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -246,7 +246,8 @@ subst '/exit 1/d' check-abis.sh
     %{?_without_sys_pcre:-Dinternal_pcre=true} \
     %{?_enable_fam:-Dfam=true} \
     %{?_enable_systemtap:-Dsystemtap=true} \
-    %{?_enable_installed_tests:-Dinstalled_tests=true}
+    %{?_enable_installed_tests:-Dinstalled_tests=true} \
+    -Diconv='libc'
 %meson_build
 
 %install
@@ -287,6 +288,10 @@ EOF
 install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 %find_lang glib20
+
+# fix glib-2.0.pc, libcharset always compiled in libglib
+sed -i -e 's/\ -lcharset//
+%{?_without_sys_pcre:s/\-lpcre//'} %buildroot/%_pkgconfigdir/glib-2.0.pc
 
 %check
 # g_mapped_file_new fails on /dev/null in hasher
@@ -415,6 +420,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Tue Oct 02 2018 Yuri N. Sedunov <aris@altlinux.org> 2.58.1-alt2
+- fixed glib-2.0.pc for static link
+
 * Fri Sep 21 2018 Yuri N. Sedunov <aris@altlinux.org> 2.58.1-alt1
 - 2.58.1 (ported to meson build system)
 
