@@ -1,9 +1,8 @@
-%def_disable snapshot
 %define ver_major 0.9.13
 
 Name: compiz
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
@@ -12,19 +11,13 @@ Url: http://www.compiz.org/
 # https://launchpad.net/compiz
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-ExclusiveArch: i586 x86_64
+#ExclusiveArch: i586 x86_64
 Provides: libcompizconfig compiz-fusion-plugins-extra compiz-gtk python-module-compizconfig compiz-gnome
 Provides: compiz-fusion-plugins-main compizconfig-backend-gconf ccsm emerald
 Obsoletes: libcompizconfig compiz-fusion-plugins-extra compiz-gtk python-module-compizconfig compiz-gnome
 Obsoletes: compiz-fusion-plugins-main compizconfig-backend-gconf ccsm emerald
 
-%if_disabled snapshot
 Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.bz2
-#Source: %name-%version.tar.xz
-%else
-# bzr export --format=tar --root=compiz-0.9.13.0 compiz-0.9.13.0.tar
-Source: %name-%version.tar
-%endif
 
 Patch0: compiz-0.9.13.0-alt-python_sitelibdir.patch
 Patch1: compiz-0.9.13.0-alt-mate-window-settings.patch
@@ -34,7 +27,7 @@ BuildRequires: boost-devel-headers cmake gcc-c++ intltool libGLU-devel libSM-dev
 BuildRequires: libXcursor-devel libXdamage-devel libXi-devel libXinerama-devel libXrandr-devel libdbus-devel
 BuildRequires: libglibmm-devel libjpeg-devel libmetacity3.0-devel libnotify-devel libprotobuf-devel librsvg-devel
 BuildRequires: libstartup-notification-devel libwnck3-devel libxslt-devel protobuf-compiler python-module-Pyrex xsltproc
-BuildRequires: pkgconfig(mate-window-settings-2.0) pkgconfig(gnome-desktop-2.0)
+BuildRequires: pkgconfig(mate-window-settings-2.0) pkgconfig(gnome-desktop-2.0) python-devel
 
 %description
 Compiz is an OpenGL compositing manager that use GLX_EXT_texture_from_pixmap
@@ -49,7 +42,7 @@ plug-in system and it is designed to run well on most graphics hardware.
 
 %build
 %define lib_suffix %nil
-%ifarch x86_64
+%if "%_lib" == "lib64"
 %define lib_suffix 64
 %endif
 mkdir -p %_target_platform
@@ -84,7 +77,7 @@ cat << __EOF__ > %buildroot%_sysconfdir/compizconfig/mate.ini
 s0_active_plugins = core;composite;opengl;decor;matecompat;move;resize;imgpng;wall;session;copytex;compiztoolbox;wobbly;switcher;scale;
 __EOF__
 
-%ifarch x86_64
+%if "%_lib" == "lib64"
 mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %endif
 
@@ -114,8 +107,10 @@ rm -fr %buildroot%_datadir/cmake*
 %_iconsdir/hicolor/*x*/apps/*.svg
 %_iconsdir/hicolor/scalable/apps/*.svg
 
-
 %changelog
+* Tue Oct 02 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.9.13.1-alt2
+- updated build dependencies
+
 * Sun Nov 13 2016 Yuri N. Sedunov <aris@altlinux.org> 0.9.13.1-alt1
 - 0.9.13.1
 
