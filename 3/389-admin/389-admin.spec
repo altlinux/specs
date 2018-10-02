@@ -5,7 +5,7 @@
 Summary: 389 Administration Server
 Name:    389-admin
 Version: 1.1.46
-Release: alt1
+Release: alt2
 License: GPLv2
 Url:     http://port389.org/
 # VCS:   https://git.fedorahosted.org/git/389/admin.git
@@ -64,6 +64,10 @@ subst 's|libmodnss.so|mod_nss.so|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/
 subst 's|%_sysconfdir/mime.types|%_sysconfdir/httpd2/conf/mime.types|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/*.conf
 subst 's|LoadModule file_cache_module|#LoadModule file_cache_module|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/*.conf
 subst 's|HostnameLookups off|HostnameLookups on|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/httpd.conf
+subst 's|LoadModule mpm_worker_module|# LoadModule mpm_worker_module|' \
+%buildroot%_sysconfdir/%{pkgname}/admin-serv/httpd.conf
+subst 's|LoadModule unixd_module|# LoadModule unixd_module|' \
+%buildroot%_sysconfdir/%{pkgname}/admin-serv/httpd.conf
 
 install -pDm755 %SOURCE1 %buildroot%_initdir/%{pkgname}-admin
 
@@ -89,6 +93,9 @@ rm -f %buildroot%_libdir/*.so
 %_man8dir/*
 
 %changelog
+* Tue Oct 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.46-alt2
+- Fixed dirsrv-admin.service.
+
 * Thu Nov 10 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.46-alt1
 - New version 1.1.46
 
