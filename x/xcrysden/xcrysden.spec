@@ -14,7 +14,7 @@
 
 Name: xcrysden
 Version: 1.5.21
-Release: alt5
+Release: alt6
 
 Summary: X-window CRYstalline Structure and DENsities
 License: GPLv2+
@@ -31,7 +31,7 @@ Patch6: xcrysden-1.5.21-alt-autoreq.patch
 Patch7: xcrysden-1.5.21-alt-tcltk8.6.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-Requires: bwidget gawk ImageMagick netpbm
+Requires: bwidget gawk ImageMagick-tools netpbm
 Requires: openbabel gifsicle
 
 # Automatically added by buildreq on Sun Dec 19 2010++
@@ -101,6 +101,9 @@ ln -s %_datadir/%name/examples %buildroot%_libdir/%name/examples
 %_datadir/%name/examples
 
 %changelog
+* Tue Oct 02 2018 Grigory Ustinov <grenka@altlinux.org> 1.5.21-alt6
+- Remove dependency on ImageMagick.
+
 * Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.5.21-alt5
 - Rebuild against Tcl/Tk 8.6
 - Added patch to build against Tcl/Tk 8.6
