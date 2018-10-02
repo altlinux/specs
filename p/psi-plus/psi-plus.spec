@@ -1,23 +1,28 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_enable webkit
 
 Name: psi-plus
 Version: 1.2.109
-Release: alt1
+Release: alt2
 
 Summary: Psi+ Jabber client
 Summary(ru_RU.UTF-8): Jabber-клиент Psi+
 License: GPLv2
 Group: Networking/Instant messaging
 
-Url: http://www.psi-plus.com/
-Packager: Nazarov Denis <nenderus@altlinux.org>
+Url: https://www.psi-plus.com/
 
-# https://github.com/%name/%name-snapshots/archive/%version.tar.gz
-Source: %name-snapshots-%version.tar.gz
+# https://github.com/psi-plus/psi-plus-snapshots/archive/%version.tar.gz
+Source: %name-snapshots-%version.tar
+
 Patch0: %name-qca2-alt.patch
 Patch1: %name-disable-sm-alt.patch
 Patch2: %name-doubleclick-alt.patch
 Patch3: %name-events-alt.patch
+Patch4: %name-alt-qt-version-detection.patch
+Patch5: %name-alt-qt-5.11-support.patch
+Patch6: %name-alt-qt-5.11-window-close-bug.patch
 
 Requires: qt5-translations
 Requires: qca-qt5-ossl
@@ -38,6 +43,7 @@ BuildRequires: libqt5-webkit qt5-webkit-devel
 %endif
 BuildRequires: qt5-x11extras-devel
 BuildRequires: zlib-devel
+BuildRequires: libminizip-devel
 
 %description
 Psi is a Jabber Instant Messaging client based on Qt.  Jabber supports
@@ -58,7 +64,7 @@ AIM.  Psi поддерживает такие возможности Jabber, к�
 %package plugin-attention
 Summary: Attention support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-attention
 This plugin is designed to send and receive special messages such as Attentions.
@@ -72,7 +78,7 @@ To work correctly, the plugin requires that the client of the other party suppor
 %package plugin-autoreply
 Summary: Autoreply support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-autoreply
 This plugin acts as an auto-answering machine. It has a number of simple configuration options, which you can use to:
@@ -110,7 +116,7 @@ The list of exceptions for jids has two operating modes:
 %package plugin-birthdayreminder
 Summary: Birthdayreminder support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-birthdayreminder
 This plugin is designed to show reminders of upcoming birthdays.
@@ -124,7 +130,7 @@ The first time you install this plugin, you need to log on to all of your accoun
 %package plugin-chess
 Summary: Chess forms support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-chess
 This plugin allows you to play chess with your friends.
@@ -142,7 +148,7 @@ To invite a friend for a game, you can use contact menu item or the button on th
 %package plugin-cleaner
 Summary: Cleaner support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-cleaner
 This plugin is designed to clear the avatar cache, saved local copies of vCards and history logs.
@@ -156,7 +162,7 @@ You can preview items before deleting them from your hard drive.
 %package plugin-clientswitcher
 Summary: Client switcher support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-clientswitcher
 This plugin is intended to spoof version of the Jabber client, the name and type of operating system. It is possible to manually specify the version of the client and the operating system or choose from a predefined list.
@@ -170,7 +176,7 @@ Note: It is recommended to use the plugin only when really necessary. Keep in mi
 %package plugin-conferencelogger
 Summary: Conference logger support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-conferencelogger
 This plugin is designed to save conference logs in which the Psi+ user sits.
@@ -186,7 +192,7 @@ Note: To work correctly, the option options.ui.chat.central-toolbar must be set 
 %package plugin-contentdownloader
 Summary: Content downloader support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-contentdownloader
 This plugin is designed to make it easy to download and install iconsets and other resources for Psi+.
@@ -200,7 +206,7 @@ This plugin can currently be used to download and install roster iconsets and em
 %package plugin-enummessages
 Summary: Enum messages support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-enummessages
 The plugin is designed to enumerate messages, adding the messages numbers in chat logs and notification of missed messages. 
@@ -214,7 +220,7 @@ Supports per contact on / off message enumeration via the buttons on the chats t
 %package plugin-extendedmenu
 Summary: Extended menu support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-extendedmenu
 This plugin adds roster submenu 'Extended Actions' to contact's context menu. At the moment we have the following items: 'Copy JID', 'Copy the nickname', 'Copy the status message' and 'Ping'.
@@ -226,7 +232,7 @@ This plugin adds roster submenu 'Extended Actions' to contact's context menu. At
 %package plugin-extendedoptions
 Summary: Extended options support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-extendedoptions
 This plugin is designed to allow easy configuration of some advanced options in Psi+.
@@ -242,7 +248,7 @@ Importantly: A large part of the options are important system settings. These re
 %package plugin-gnupg
 Summary: GnuPG support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-gnupg
 GnuPG support for %name
@@ -251,7 +257,7 @@ GnuPG support for %name
 %package plugin-gomokugame
 Summary: Gomoku game support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-gomokugame
 Gomoku game support plugin for %name
@@ -264,7 +270,7 @@ Gomoku game support plugin for %name
 %package plugin-historykeeper
 Summary: History keeper support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-historykeeper
 This plugin is designed to remove the history of selected contacts when the Psi+ is closed.
@@ -278,7 +284,7 @@ You can select or deselect a contact for history removal from the context menu o
 %package plugin-httpupload
 Summary: Http upload support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-httpupload
 This plugin allows uploading images and other files via XEP-0363.
@@ -290,7 +296,7 @@ This plugin allows uploading images and other files via XEP-0363.
 %package plugin-icqdie
 Summary: ICQ die support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-icqdie
 This plugin is designed to help you transfer as many contacts as possible from ICQ to Jabber.
@@ -316,7 +322,7 @@ The plugin has a number of simple settings that can help you:
 %package plugin-image
 Summary: Image support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-image
 This plugin is designed to send images to roster contacts.
@@ -332,7 +338,7 @@ Note: To work correctly, the option options.ui.chat.central-toolbar must be set 
 %package plugin-imagepreview
 Summary: Image preview support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-imagepreview
 This plugin shows the preview image for an image URL.
@@ -344,7 +350,7 @@ This plugin shows the preview image for an image URL.
 %package plugin-jabberdisk
 Summary: Jabber disk support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-jabberdisk
 Jabber disk support plugin for %name
@@ -359,7 +365,7 @@ Jabber disk support plugin for %name
 %package plugin-juick
 Summary: Juick support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-juick
 This plugin is designed to work efficiently and comfortably with the Juick microblogging service.
@@ -383,7 +389,7 @@ Currently, the plugin is able to:
 %package plugin-messagefilter
 Summary: Message filter support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-messagefilter
 Placeholder
@@ -395,7 +401,7 @@ Placeholder
 %package plugin-pepchangenotify
 Summary: PEP change notify support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-pepchangenotify
 The plugin is designed to display popup notifications on change of moods, activities and tunes at the contacts of the roster. In the settings you can choose which ones to include notification of events, specify the time within which a notice will appear, as well as play a sound specify.
@@ -407,7 +413,7 @@ The plugin is designed to display popup notifications on change of moods, activi
 %package plugin-otr
 Summary: Off-the-Record Messaging plugin for Psi+
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-otr
 Off-the-Record (OTR) Messaging allows you to have private conversations over instant messaging by providing:
@@ -424,7 +430,7 @@ If you lose control of your private keys, no previous conversation is compromise
 %package plugin-pstop
 Summary: Pstop support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-pstop
 Pstop support for %name
@@ -433,7 +439,7 @@ Pstop support for %name
 %package plugin-qipxstatuses
 Summary: QIP X-Statuses support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-qipxstatuses
 This plugin is designed to display X-statuses of contacts using the QIP Infium jabber client.
@@ -445,7 +451,7 @@ This plugin is designed to display X-statuses of contacts using the QIP Infium j
 %package plugin-redirector
 Summary: Redirect support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-redirector
 Redirect support for %name
@@ -454,7 +460,7 @@ Redirect support for %name
 %package plugin-screenshot
 Summary: Screenshot support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-screenshot
 This plugin allows you to make a snapshot (screenshot) of the screen, edit the visible aria to make a screenshot and save the image to a local drive or upload to HTTP/FTP server.
@@ -481,7 +487,7 @@ The address of FTP server is specified as ftp://ftp.domain.tld/path1/path2.
 %package plugin-skins
 Summary: Skins support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-skins
 This plugin is designed to create, store and apply skins to Psi+.
@@ -521,7 +527,7 @@ This will enable all settings (icons, toolbars, status) to pick up correctly.
 %package plugin-stopspam
 Summary: Stop spam support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-stopspam
 This plugin is designed to block spam messages and other unwanted information from Psi+ users.
@@ -574,7 +580,7 @@ WARNING!!! Before registering a new transport, it is recommended to add its jid 
 %package plugin-storagenotes
 Summary: Storage notes support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-storagenotes
 This plugin is an implementation of XEP-0049: Private XML Storage.
@@ -590,7 +596,7 @@ The plugin is designed to keep notes on the jabber server with the ability to ac
 %package plugin-translate
 Summary: Translation support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-translate
 This plugin allows you to convert selected text into another language.
@@ -602,7 +608,7 @@ This plugin allows you to convert selected text into another language.
 %package plugin-videostatus
 Summary: Video status support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-videostatus
 This plugin is designed to set the custom status when you see the video in selected video player.
@@ -628,7 +634,7 @@ Note: This plugin is designed to work in Linux family operating systems ONLY.
 %package plugin-watcher
 Summary: Watcher support for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-watcher
 This plugin is designed to monitor the status of specific roster contacts, as well as for substitution of standard sounds of incoming messages.
@@ -653,216 +659,61 @@ Each element can contain a regular expression to check for matches with JID, fro
 #%patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
+%patch5 -p2
+%patch6 -p2
+
+rm -rf src/libpsi/tools/zip/minizip
 
 %build
-./configure \
-	--prefix=%prefix \
-	--bindir=%_bindir \
-	--libdir=%_libdir \
-	--datadir=%_datadir \
+%configure \
 	%{subst_enable webkit} \
-	--release \
+	--debug \
+	--no-separate-debug-info \
 	--qtselect=5
 
 %make_build
 
-# Attention plugin
-pushd src/plugins/generic/attentionplugin
-%qmake_qt5 attentionplugin.pro
-%make_build
-popd
+for plugin in \
+	src/plugins/generic/attentionplugin \
+	src/plugins/generic/autoreplyplugin \
+	src/plugins/generic/birthdayreminderplugin \
+	src/plugins/generic/chessplugin \
+	src/plugins/generic/cleanerplugin \
+	src/plugins/generic/clientswitcherplugin \
+	src/plugins/generic/conferenceloggerplugin \
+	src/plugins/generic/contentdownloaderplugin \
+	src/plugins/generic/enummessagesplugin \
+	src/plugins/generic/extendedmenuplugin \
+	src/plugins/generic/extendedoptionsplugin \
+	src/plugins/generic/gnupgplugin \
+	src/plugins/generic/gomokugameplugin \
+	src/plugins/generic/historykeeperplugin \
+	src/plugins/generic/httpuploadplugin \
+	src/plugins/generic/icqdieplugin \
+	src/plugins/generic/imageplugin \
+	src/plugins/generic/imagepreviewplugin \
+	src/plugins/generic/jabberdiskplugin \
+	src/plugins/generic/juickplugin \
+	src/plugins/generic/messagefilterplugin \
+	src/plugins/generic/otrplugin \
+	src/plugins/generic/pepchangenotifyplugin \
+	src/plugins/dev/pstoplugin \
+	src/plugins/generic/qipxstatusesplugin \
+	src/plugins/dev/redirectorplugin \
+	src/plugins/generic/screenshotplugin \
+	src/plugins/generic/skinsplugin \
+	src/plugins/generic/stopspamplugin \
+	src/plugins/generic/storagenotesplugin \
+	src/plugins/generic/translateplugin \
+	src/plugins/generic/videostatusplugin \
+	src/plugins/generic/watcherplugin ; do
 
-# Autoreply plugin
-pushd src/plugins/generic/autoreplyplugin
-%qmake_qt5 autoreplyplugin.pro
-%make_build
-popd
-
-# Birthday reminder plugin
-pushd src/plugins/generic/birthdayreminderplugin
-%qmake_qt5 birthdayreminderplugin.pro
-%make_build
-popd
-
-# Chess plugin
-pushd src/plugins/generic/chessplugin
-%qmake_qt5 chessplugin.pro
-%make_build
-popd
-
-# Cleaner plugin
-pushd src/plugins/generic/cleanerplugin
-%qmake_qt5 cleanerplugin.pro
-%make_build
-popd
-
-# Client switcher plugin
-pushd src/plugins/generic/clientswitcherplugin
-%qmake_qt5 clientswitcherplugin.pro
-%make_build
-popd
-
-# Conference logger plugin
-pushd src/plugins/generic/conferenceloggerplugin
-%qmake_qt5 conferenceloggerplugin.pro
-%make_build
-popd
-
-# Content downloader plugin
-pushd src/plugins/generic/contentdownloaderplugin
-%qmake_qt5 contentdownloaderplugin.pro
-%make_build
-popd
-
-# Enum messages plugin
-pushd src/plugins/generic/enummessagesplugin
-%qmake_qt5 enummessagesplugin.pro
-%make_build
-popd
-
-# Extended menu plugin
-pushd src/plugins/generic/extendedmenuplugin
-%qmake_qt5 extendedmenuplugin.pro
-%make_build
-popd
-
-# Extended options plugin
-pushd src/plugins/generic/extendedoptionsplugin
-%qmake_qt5 extendedoptionsplugin.pro
-%make_build
-popd
-
-# GnuPG plugin
-pushd src/plugins/generic/gnupgplugin
-%qmake_qt5 gnupgplugin.pro
-%make_build
-popd
-
-# Gomoku game plugin
-pushd src/plugins/generic/gomokugameplugin
-%qmake_qt5 gomokugameplugin.pro
-%make_build
-popd
-
-# History keeper plugin
-pushd src/plugins/generic/historykeeperplugin
-%qmake_qt5 historykeeperplugin.pro
-%make_build
-popd
-
-# Http upload plugin
-pushd src/plugins/generic/httpuploadplugin
-%qmake_qt5 httpuploadplugin.pro
-%make_build
-popd
-
-# ICQ die plugin
-pushd src/plugins/generic/icqdieplugin
-%qmake_qt5 icqdieplugin.pro
-%make_build
-popd
-
-# Image plugin
-pushd src/plugins/generic/imageplugin
-%qmake_qt5 imageplugin.pro
-%make_build
-popd
-
-# Image preview plugin
-pushd src/plugins/generic/imagepreviewplugin
-%qmake_qt5 imagepreviewplugin.pro
-%make_build
-popd
-
-# Jabber disk plugin
-pushd src/plugins/generic/jabberdiskplugin
-%qmake_qt5 jabberdiskplugin.pro
-%make_build
-popd
-
-# Juick plugin
-pushd src/plugins/generic/juickplugin
-%qmake_qt5 juickplugin.pro
-%make_build
-popd
-
-# Message filter plugin
-pushd src/plugins/generic/messagefilterplugin
-%qmake_qt5 messagefilterplugin.pro
-%make_build
-popd
-
-# OTR plugin
-pushd src/plugins/generic/otrplugin
-%qmake_qt5 otrplugin.pro
-%make_build
-popd
-
-# PEP change notify plugin
-pushd src/plugins/generic/pepchangenotifyplugin
-%qmake_qt5 pepchangenotifyplugin.pro
-%make_build
-popd
-
-# Pstop plugin
-pushd src/plugins/dev/pstoplugin
-%qmake_qt5 pstoplugin.pro
-%make_build
-popd
-
-# QIP X-Statuses plugin
-pushd src/plugins/generic/qipxstatusesplugin
-%qmake_qt5 qipxstatusesplugin.pro
-%make_build
-popd
-
-# Redirector plugin
-pushd src/plugins/dev/redirectorplugin
-%qmake_qt5 redirectorplugin.pro
-%make_build
-popd
-
-# Screenshot plugin
-pushd src/plugins/generic/screenshotplugin
-%qmake_qt5 screenshotplugin.pro
-%make_build
-popd
-
-# Skins plugin
-pushd src/plugins/generic/skinsplugin
-%qmake_qt5 skinsplugin.pro
-%make_build
-popd
-
-# Stopspam plugin
-pushd src/plugins/generic/stopspamplugin
-%qmake_qt5 stopspamplugin.pro
-%make_build
-popd
-
-# Storagenotes plugin
-pushd src/plugins/generic/storagenotesplugin
-%qmake_qt5 storagenotesplugin.pro
-%make_build
-popd
-
-# Translate plugin
-pushd src/plugins/generic/translateplugin
-%qmake_qt5 translateplugin.pro
-%make_build
-popd
-
-# Video status plugin
-pushd src/plugins/generic/videostatusplugin
-%qmake_qt5 videostatusplugin.pro
-%make_build
-popd
-
-# Watcher plugin
-pushd src/plugins/generic/watcherplugin
-%qmake_qt5 watcherplugin.pro
-%make_build
-popd
+	pushd $plugin
+	%qmake_qt5 $(basename $plugin).pro
+	%make_build
+	popd
+done
 
 %install
 %makeinstall INSTALL_ROOT=%buildroot
@@ -914,8 +765,6 @@ done
 popd
 
 rm %buildroot%_datadir/%name/{COPYING,README}
-rm %buildroot%_bindir/%name.debug
-rm %buildroot%_datadir/appdata/psi-plus.appdata.xml
 rm -r %buildroot%_datadir/%name/plugins/include
 rm -f %buildroot%_datadir/%name/plugins/*.pri
 
@@ -940,6 +789,7 @@ rm -f %buildroot%_datadir/%name/plugins/*.pri
 %_datadir/%name/iconsets
 %_datadir/%name/sound
 %_datadir/%name/themes
+%_datadir/appdata/psi-plus.appdata.xml
 
 # Attention plugin
 %files plugin-attention
@@ -1070,6 +920,11 @@ rm -f %buildroot%_datadir/%name/plugins/*.pri
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Tue Oct 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.109-alt2
+- NMU: rebuilt for debuginfo.
+- Fixed main window blanking issue which appears on closing main window in a specific way.
+- Cleaned up spec.
+
 * Tue Dec 05 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.109-alt1
 - Version 1.2.109
 
