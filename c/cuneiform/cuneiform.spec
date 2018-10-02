@@ -1,5 +1,5 @@
 Name: cuneiform
-Version: 1.0
+Version: 1.1.0
 Release: alt4
 
 Summary: Cuneiform is an OCR system originally developed and open sourced by Cognitive technologies.
@@ -9,10 +9,9 @@ License: BSD-style
 Group: Graphics
 Url: https://launchpad.net/cuneiform-linux
 
-Packager: Sergey Alembekov <rt@altlinux.ru>
-
-Source: http://launchpad.net/%name-linux/%version/%version/+download/%name-%version.tar.bz2
-Patch: cuneiform-1.0-minmax.patch
+Source: http://launchpad.net/%name-linux/%version/%version/+download/%name-linux-%version.tar.bz2
+Patch: cuneiform-1.1.0-minmax.patch
+Patch1: cuneiform-1.1.0-types.patch
 
 Requires: %name-data
 BuildRequires: gcc-c++ libImageMagick-devel cmake
@@ -42,8 +41,9 @@ Language support and other data files required for Cuneiform OCR
 Поддержка различных языков и другие файлы с данными для OCR Cuneiform
 
 %prep
-%setup
+%setup -n %name-linux-%version
 %patch -p1
+%patch1 -p1
 
 %build
 mkdir build
@@ -66,6 +66,9 @@ cmake -DCMAKE_INSTALL_PREFIX=%buildroot%prefix -P cmake_install.cmake
 %_datadir/%name/*
 
 %changelog
+* Tue Oct 02 2018 Fr. Br. George <george@altlinux.ru> 1.1.0-alt4
+- Version up
+
 * Fri Aug 18 2017 Anton Farygin <rider@altlinux.ru> 1.0-alt4
 - Rebuilt for ImageMagick
 
