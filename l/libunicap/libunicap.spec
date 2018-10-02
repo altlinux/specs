@@ -1,7 +1,7 @@
 Summary: Library to access different kinds of (video) capture devices
 Name: libunicap
 Version: 0.9.8
-Release: alt3.1
+Release: alt4
 License: GPLv2+
 Group: Development/C
 Url: http://www.unicap-imaging.org/
@@ -32,9 +32,9 @@ contains the API documentation of the library, too.
 %prep
 %setup -q
 %patch -p2
-%autoreconf
 
 %build
+%autoreconf
 %configure --enable-libv4l
 %make_build
 
@@ -58,6 +58,9 @@ rm -f %buildroot%_libdir/{,unicap2/cpi/}*.{a,la}
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Oct 02 2018 Oleg Solovyov <mcpain@altlinux.org> 0.9.8-alt4
+- spec cleanup
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8-alt3.1
 - Fixed build
 

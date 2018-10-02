@@ -2,7 +2,7 @@
 
 Name: libxcb-render-util
 Version: 0.3.9
-Release: alt2.1
+Release: alt3
 
 Group: System/Libraries
 URL: http://xcb.freedesktop.org
@@ -32,10 +32,10 @@ Requires: %name = %version-%release
 Development and header files for %name
 
 %prep
-%setup -n %rname-%version
-install -m0644 altlinux/*.m4 m4/
+%setup -q -n %rname-%version
 
 %build
+install -m0644 altlinux/*.m4 m4/
 %autoreconf
 %configure --disable-static
 %make_build
@@ -53,6 +53,9 @@ install -m0644 altlinux/*.m4 m4/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Oct 02 2018 Oleg Solovyov <mcpain@altlinux.org> 0.3.9-alt3
+- spec cleanup
+
 * Fri Jan 13 2017 Michael Shigorin <mike@altlinux.org> 0.3.9-alt2.1
 - BOOTSTRAP: drop unused BR: doxygen
 

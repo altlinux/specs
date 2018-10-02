@@ -5,7 +5,7 @@
 %define sover 3
 Name: rasqal
 Version: 0.9.32
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Rasqal RDF Query Library
@@ -50,9 +50,9 @@ Static Rasqal library.
 %prep
 %setup -q
 %patch1 -p1
-%autoreconf
 
 %build
+%autoreconf
 cp -f %_datadir/automake/config.* .
 %configure \
 	--disable-static \
@@ -91,6 +91,9 @@ cp -f %_datadir/automake/config.* .
 #%_libdir/librasqal.a
 
 %changelog
+* Tue Oct 02 2018 Oleg Solovyov <mcpain@altlinux.org> 0.9.32-alt3
+- spec cleanup
+
 * Thu Mar 27 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.32-alt2
 - clean build requires
 

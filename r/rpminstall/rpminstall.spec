@@ -2,7 +2,7 @@ BuildRequires: desktop-file-utils
 
 Name:		rpminstall
 Version:	1.1.3
-Release:	alt1.qa1
+Release:	alt2
 Summary:	Graphical application for install RPM packages using apt-get
 
 License:	GPL
@@ -21,10 +21,11 @@ Graphical application for install RPM packages using apt-get.
 
 %prep
 %setup -q
+
+%build
 lrelease-qt4 %name.pro
 DESTDIR=%buildroot PREFIX=/usr qmake-qt4 %name.pro
 
-%build
 %make_build
 
 %install
@@ -47,6 +48,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_libdir/firefox/defaults/preferences/apturl.js
 
 %changelog
+* Tue Oct 02 2018 Oleg Solovyov <mcpain@altlinux.org> 1.1.3-alt2
+- spec cleanup
+
 * Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1.1.3-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
