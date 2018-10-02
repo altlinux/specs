@@ -15,7 +15,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        60.2.1
+Version:        60.2.2
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -45,7 +45,6 @@ Patch20:        bug1375074-save-restore-x28.patch
 Patch200:       mozilla-bug-256180.patch
 Patch201:       mozilla-bug-1196777.patch
 Patch202:       mozilla-bug-1430274.patch
-Patch203:       firefox-fix-build-wuith-new-rust.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -150,7 +149,6 @@ tar -xf %SOURCE2
 %patch200 -p1
 %patch201 -p1
 #patch202 -p1
-%patch203 -p1
 
 cp -f %SOURCE4 .mozconfig
 
@@ -335,6 +333,12 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Tue Oct 02 2018 Andrey Cherepanov <cas@altlinux.org> 60.2.2-alt1
+- New ESR version (60.2.2)
+- Fixed:
+  + CVE-2018-12386 Type confusion in JavaScript
+  + CVE-2018-12387 JavaScript JIT compiler inlines Array.prototype.push with multiple arguments
+
 * Mon Sep 24 2018 Andrey Cherepanov <cas@altlinux.org> 60.2.1-alt1
 - New ESR version (60.2.1).
 - Fixed:
