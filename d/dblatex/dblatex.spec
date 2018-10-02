@@ -1,6 +1,6 @@
 Name: dblatex
 Version: 0.3.10
-Release: alt1
+Release: alt2
 
 Summary: DocBook to LaTeX/ConTeXt Publishing
 License: %gpl2plus
@@ -14,11 +14,11 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python rpm-build-tex
 # Automatically added by buildreq on Thu Jun 26 2008
 BuildRequires: python-devel python-modules-encodings python-modules-logging texlive-latex-extra xsltproc
-BuildRequires: ImageMagick-tools transfig
+BuildRequires: transfig
 
 BuildArch: noarch
 
-Requires: ImageMagick xsltproc docbook-dtds 
+Requires: ImageMagick-tools xsltproc docbook-dtds
 #Requires: ImageMagick tetex-latex-listings tetex-latex-cmap tetex-latex tetex-context xsltproc docbook-dtds tetex-dvips ghostscript-utils fonts-type1-cm-super-tex
 #Requires: tetex-latex-unicode >= 20041017-alt1
 
@@ -90,6 +90,9 @@ mv %buildroot%_docdir/%name %buildroot%_docdir/%name-%version
 %_man1dir/dblatex.1.*
 
 %changelog
+* Tue Oct 02 2018 Grigory Ustinov <grenka@altlinux.org> 0.3.10-alt2
+- Remove dependency on ImageMagick.
+
 * Tue May 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.3.10-alt1
 - Build new version (Closes: #34675).
 
