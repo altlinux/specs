@@ -1,7 +1,7 @@
 
 Name: ubt-devel
 Version: 0.3.1
-Release: alt2
+Release: alt3
 
 Group: Development/Other
 Summary: Universal Branch Tag packaging
@@ -47,7 +47,7 @@ Set of utilities for building one tag for all binary package branches.
 %install
 install -D -m 0644 %SOURCE1 %buildroot/%_rpmmacrosdir/ubt-build
 cat <<__EOF__ >%buildroot/%_rpmmacrosdir/ubt-build
-%%ubt    %%{__ubt_branch_prefix}%%{__ubt_branch_id}%%{__ubt_branch_suffix}
+%%ubt    %%nil
 %%ubt_id %%{__ubt_branch_id}
 __EOF__
 mkdir -p %buildroot/%_bindir/
@@ -61,6 +61,9 @@ install -m 0755 %SOURCE3 %buildroot/%_bindir/
 %_bindir/ubt-*
 
 %changelog
+* Fri Sep 28 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.3.1-alt3
+- now %%ubt is expanding to %%nil.
+
 * Tue Oct 31 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.1-alt2
 - Move all utilities to new separate subpackage ubt-utils to avoid redundant
   dependencies.
