@@ -3,7 +3,7 @@
 
 Name: libe-book
 Version: 0.1.3
-Release: alt1
+Release: alt2
 Summary: A library for reading and converting reflowable e-book formats
 License: LGPL
 Url: http://sourceforge.net/projects/libebook/
@@ -92,6 +92,9 @@ Currently supported are:
 %_pkgconfigdir/*
 
 %changelog
+* Tue Oct 02 2018 Alexey Shabalin <shaba@altlinux.org> 0.1.3-alt2
+- rebuild with new icu
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 0.1.3-alt1
 - Autobuild version bump to 0.1.3
 
