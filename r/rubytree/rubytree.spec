@@ -1,23 +1,20 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
 %define pkgname rubytree
 
 Name: %pkgname
-Version: 0.5.2
-Release: alt1.1
+Version: 1.0.0
+Release: alt1
 
 Summary: Simple implementation of the generic Tree data structure
 Group: Development/Ruby
 License: MIT/Ruby
-Url: http://rubyforge.org/projects/rubytree/
+Url: http://rubytree.anupamsg.me/
 
 BuildArch: noarch
 
 Source: %pkgname-%version.tar
-Patch: %pkgname-%version-%release.patch
 
-# Automatically added by buildreq on Sat Nov 28 2009 (-bi)
-BuildRequires: rpm-build-ruby ruby-test-unit ruby-tool-rdoc ruby-tool-setup
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: ruby-gem(structured_warnings)
 
 %description
 Rubytree is a simple implementation of the generic Tree data structure.
@@ -33,26 +30,32 @@ Documentation files for %name
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
 %update_setup_rb
 
 %build
 %ruby_config
 %ruby_build
-%ruby_test_unit -Ilib:test test
 
 %install
 %ruby_install
 %rdoc lib/
 
+%check
+#%%ruby_test_unit -Ilib:test test
+
 %files
-%doc README
+%doc README*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/Tree*
 
 %changelog
+* Tue Oct 02 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
+- New version.
+- Disable tests.
+
 * Tue Dec 04 2012 Led <led@altlinux.ru> 0.5.2-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 
