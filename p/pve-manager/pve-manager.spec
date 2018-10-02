@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 5.2.3
-Release: alt5
+Release: alt6
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -60,6 +60,7 @@ Patch29: pve-manager-widgettoolkit.patch
 Patch30: qemu-server-perl-alt.patch
 Patch31: qemu-server-qemu-3-0-0-alt.patch
 Patch32: pve-manager-alt-rm-pve-version.patch
+Patch33: pve-container-pct-T.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -82,7 +83,7 @@ Tool to manage Linux Containers on PVE
 
 %package -n pve-firewall
 Summary: PVE Firewall
-Version: 3.0.10
+Version: 3.0.12
 Group: System/Servers
 Requires: ebtables ipset iptables iptables-ipv6 shorewall shorewall6 iproute2 >= 4.10.0
 
@@ -160,6 +161,7 @@ This is used to implement the PVE REST API
 %patch30 -p0 -b .perl-compat
 %patch31 -p0 -b .qemu-3-0-0
 %patch32 -p0 -b .rm-version
+%patch33 -p0 -b .T
 
 install -m0644 %SOURCE5 pve-i18n/ru.po
 
@@ -471,6 +473,9 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Tue Oct 02 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt6
+- pve-firewall 3.0-12
+
 * Fri Sep 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt5
 - removed ubt
 
