@@ -1,7 +1,8 @@
+%def_without utils
 %define module Gear-Remotes
 
 Name: perl-%module
-Version: 0.018
+Version: 0.019
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -17,6 +18,10 @@ Url: https://www.altlinux.org/Gear/remotes
 BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm) perl(RPM/uscan.pm) perl(Gear/Rules.pm) perl(RPM/Source/Editor.pm)
 Requires: gear perl(Pod/Text.pm)
 Provides: gear-remotes = %version
+%if_without utils
+Provides: gear-remotes-utils = %version
+Requires: gear-uupdate
+%endif
 
 %description
 Perl library and tools to work with .gear/upstream/remotes files.
@@ -27,22 +32,20 @@ Gear, however, lack means to store essential parts of local configuration,
 such as location of upstream VCS it was cloned from or updated.
 .gear/upstream/remotes is an extension to Gear to cover this weakness.
 
-See more on www.altlinux.org/Gear/remotes .
+See more on [www.altlinux.org/Gear/remotes].
 
 %if_with utils
 %package -n gear-remotes-utils
 Summary: utilities for manipulating Gear upstream/remotes files
 Group: Development/Other
-Requires: perl-Gear-Remotes = %version-%release
+Requires: perl-Gear-Remotes = %EVR
 Requires: gear-uupdate
+#Conflicts: perl-Gear-Remotes < %version
 
 %description -n gear-remotes-utils
 gear-remotes-utils are utils for managing .gear/upstream/remotes file.
 .gear/upstream/remotes file is used to save, share and restore local
 .git configuration to all maintainers.
-%else
-Provides: gear-remotes-utils = %version
-Requires: gear-uupdate
 %endif
 
 %prep
@@ -65,6 +68,9 @@ Requires: gear-uupdate
 %_man1dir/*
 
 %changelog
+* Tue Oct 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.019-alt1
+- better usability thanks to grenka@
+
 * Mon Jul 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.018-alt1
 - added man pages
 
