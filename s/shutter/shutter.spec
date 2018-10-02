@@ -1,6 +1,6 @@
 Name: shutter
 Version: 0.94.2
-Release: alt1
+Release: alt2
 
 Summary: Shutter is a feature-rich screenshot program
 License: GPLv3+
@@ -14,7 +14,7 @@ Patch: shutter-0.94-fix_desktop_names_encoding.patch
 BuildArch: noarch
 BuildRequires(pre): rpm-build-perl
 BuildRequires:	perl-Gtk2-Unique
-Requires: ImageMagick libgtkimageview
+Requires: ImageMagick-tools libgtkimageview
 Requires: perl-Sort-Naturally
 Requires: perl-Glib perl-File-Which perl-File-Copy-Recursive perl-File-BaseDir perl-IO-stringy
 Requires: perl-Gnome2 perl-File-DesktopEntry perl-File-MimeInfo perl-Proc-ProcessTable
@@ -95,6 +95,9 @@ cp -a share %buildroot/usr
 %_iconsdir/HighContrast/scalable/apps/shutter*
 
 %changelog
+* Tue Oct 02 2018 Grigory Ustinov <grenka@altlinux.org> 0.94.2-alt2
+- Remove dependency on ImageMagick.
+
 * Thu Sep 13 2018 Grigory Ustinov <grenka@altlinux.org> 0.94.2-alt1
 - Build new version.
 
