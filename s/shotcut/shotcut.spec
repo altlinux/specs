@@ -4,7 +4,7 @@
 %define _vstring %(echo %{version} |tr -d ".")
 
 Name: shotcut
-Version: 18.06.02
+Version: 18.10.01
 Release: alt1
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платфоорменный видеоредактор
@@ -13,7 +13,7 @@ Group: Video
 Url: http://www.shotcut.org/
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
-Patch: shotcut-18.07-nicepath.patch
+Patch: shotcut-18.10-nicepath.patch
 # Melt patch /usr/bin/melt
 Patch1: mlt_path.patch
 # shotcut-noupdatecheck.patch -- Disable automatic update check
@@ -112,8 +112,8 @@ Data files for %name
 %setup
 %patch -p1
 %patch1 -p0
-%patch2 -p0
-%patch3 -p0
+#patch2 -p0
+#patch3 -p0
 
 # Create version.json from current version
 echo "{" > version.json
@@ -130,6 +130,7 @@ rm -rf drmingw
 lrelease-qt5 translations/*.ts
 export _VSTRING="%{version}.02"
 %qmake_qt5 \
+    QMAKE_CXXFLAGS=-DSHOTCUT_NOUPGRADE \
     _VSTRING="%{version}.02" \
     PREFIX=%buildroot%_prefix
 
@@ -145,16 +146,6 @@ for i in 16 32 48; do
     %buildroot/%_iconsdir/hicolor/"$i"x"$i"/apps/org.shotcut.Shotcut.png
 done
 
-# fixes E: script-without-shebang
-chmod a-x %buildroot%_datadir/%name/qml/filters/webvfx_ruttetraizer/ruttetraizer.html
-chmod a-x %buildroot%_datadir/%name/qml/filters/webvfx_ruttetraizer/three.js
-
-# fixes E: wrong-script-end-of-line-encoding
-sed -i 's/\r$//' src/mvcp/{qconsole.h,qconsole.cpp}
-
-# fixes W: spurious-executable-perm
-chmod a-x src/mvcp/{qconsole.cpp,qconsole.h}
-
 %files
 %_bindir/%name
 %_desktopdir/org.shotcut.Shotcut.desktop
@@ -167,6 +158,9 @@ chmod a-x src/mvcp/{qconsole.cpp,qconsole.h}
 %_datadir/%name
 
 %changelog
+* Wed Oct 03 2018 Fr. Br. George <george@altlinux.ru> 18.10.01-alt1
+- new version 18.10.01
+
 * Tue Jul 03 2018 Anton Midyukov <antohami@altlinux.org> 18.06.02-alt1
 - new version 18.07
 - unpackaged files in buildroot should terminate build
