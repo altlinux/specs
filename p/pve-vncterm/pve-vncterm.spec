@@ -3,7 +3,7 @@
 Name: pve-%sname
 Summary: VNC Terminal Emulator
 Version: 1.5.2
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: Networking/WWW
 Url: https://git.proxmox.com/
@@ -14,6 +14,7 @@ Source1: wchardata.c
 Source2: unifont.hex
 Patch0: %sname-alt.patch
 
+ExclusiveArch: x86_64
 BuildRequires: libgnutls-devel libjpeg-devel perl-Pod-Usage zlib-devel libpng-devel
 
 %description
@@ -39,6 +40,15 @@ install -m0644 %SOURCE2 .
 %_man1dir/%sname.1*
 
 %changelog
+* Wed Oct 03 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.5.2-alt2
+- updated build dependencies
+
+* Mon Sep 25 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.5.2-alt0.M80C.1
+- backport to c8 branch
+
+* Thu Jul 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.5.2-alt0.M80P.1
+- backport to p8 branch
+
 * Tue Jul 18 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.5.2-alt1
 - 1.5-2
 
