@@ -1,12 +1,13 @@
+
 Name: ndisc6
-Version: 1.0.3
-Release: alt2
+Version: 1.0.4
+Release: alt1.git4c794b5512d2
 
 Summary: IPv6 diagnostic tools
 License: %gpl2plus
 Group: System/Configuration/Networking
 
-URL: http://www.remlab.net/ndisc6/
+URL: https://www.remlab.net/ndisc6/
 Source: %name-%version.tar
 Source1: rdnssd.init
 Source2: rdnssd.tmpfiles
@@ -14,6 +15,8 @@ Source3: rdnssd.service
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 This package gathers a few diagnostic tools for IPv6 networks:
@@ -23,7 +26,6 @@ This package gathers a few diagnostic tools for IPv6 networks:
  - tcptraceroute6, a TCP/IPv6-based traceroute implementation,
  - tracert6, a ICMPv6 Echo Request based traceroute,
  - tcpspray6, a TCP/IP Discard/Echo bandwidth metter.
-
 
 %package -n rdnssd
 Summary: Recursive DNS Servers discovery Daemon
@@ -40,9 +42,6 @@ autoconfiguration (RFC5006).
 %build
 #Hack for gettext_noop mainly
 find /usr/share/gettext -name gettext.h -exec ln -s '{}' include/gettext.h ';' -quit
-
-# gettext-0.18.3 should be enough
-sed -i 's/^AM_GNU_GETTEXT_VERSION(\[0.19.3\])/AM_GNU_GETTEXT_VERSION([0.18.3])/' configure.ac
 
 %autoreconf
 CFLAGS="%optflags -fno-strict-aliasing" \
@@ -90,6 +89,11 @@ useradd -r -g rdnssd -d %_runtimedir/rdnssd -s /dev/null -N rdnssd >/dev/null 2>
 %ghost %_runtimedir/rdnssd/resolv.conf
 
 %changelog
+* Wed Oct 03 2018 Mikhail Efremov <sem@altlinux.org> 1.0.4-alt1.git4c794b5512d2
+- Minor spec cleanup.
+- Use _unpackaged_files_terminate_build.
+- Upstream git snapshot.
+
 * Mon Jan 12 2015 Mikhail Efremov <sem@altlinux.org> 1.0.3-alt2
 - Allow build with gettext-0.18.3.
 - Updated to 1.0.3 release.
