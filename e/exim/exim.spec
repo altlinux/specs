@@ -8,7 +8,7 @@
 
 Name: exim
 Version: 4.90.1
-Release: alt1.1
+Release: alt2
 
 Summary: Exim Mail Transport Agent
 License: GPLv2+
@@ -53,7 +53,7 @@ Source44: exim.service
 # - to move non-core dependencies to separate lines
 # - to separate versioned build requirements
 # optimized out: libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel libcom_err-devel libkrb5-devel libpq-devel xorg-xproto-devel
-BuildRequires: libXaw-devel libXext-devel libdb4-devel libpam-devel libpcre-devel libsqlite3-devel libssl-devel libwrap-devel perl-devel
+BuildRequires: libXaw-devel libXext-devel libdb4-devel libpam-devel libpcre-devel libsqlite3-devel libssl-devel perl-devel
 
 BuildRequires: libspf2-devel > 1.0.4
 BuildRequires: libsrs_alt-devel > 0.5
@@ -451,6 +451,9 @@ ln -sf /usr/sbin/exim-ldap /usr/sbin/exim
 %_bindir/exipick
 
 %changelog
+* Tue Oct 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.90.1-alt2
+- NMU: Rebuilt without tcp_wrappers support.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.90.1-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
