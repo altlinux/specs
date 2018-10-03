@@ -2,7 +2,7 @@
 
 Name: couchdb
 Version: 1.7.1
-Release: alt1
+Release: alt2
 
 Summary: A peer based distributed database system
 
@@ -101,6 +101,9 @@ rm -f %buildroot/etc/rc.d/couchdb
 
 
 %changelog
+* Wed Oct 03 2018 Vitaly Lipatov <lav@altlinux.ru> 1.7.1-alt2
+- rebuild with libicu62
+
 * Thu Jun 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1.7.1-alt1
 - new version 1.7.1 (with rpmrb script)
 - disable build doc
