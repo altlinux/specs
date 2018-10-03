@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.36
+Version: 0.37
 Release: alt1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d
@@ -114,6 +114,10 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Oct 03 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.37-alt1
+- AD: configure sssd to obey the group policy
+- AD: correctly update the (A) DNS record of the newly joined host
+
 * Tue May 08 2018 Andrey Cherepanov <cas@altlinux.org> 0.36-alt1
 - Change entry files for ALT Domain from combobox to inputbox to support
   Astra Linux Directory.
