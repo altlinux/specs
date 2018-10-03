@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		84877
+%define svnrev		85308
 
 %def_with pgsql
 %def_enable java
@@ -15,8 +15,8 @@
 %endif
 
 Name: zabbix
-Version: 3.4.14
-Release: alt2%ubt
+Version: 4.0.0
+Release: alt1%ubt
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -39,7 +39,7 @@ BuildRequires(pre): rpm-build-webserver-common rpm-build-ubt rpm-macros-apache2
 # Automatically added by buildreq on Thu Nov 02 2017 (-bi)
 # optimized out: elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libnet-snmp30 libp11-kit libpq-devel libsasl2-3 libssl-devel net-snmp-config perl pkg-config python-base python3 rpm-build-python3 xz
 BuildRequires: libcurl-devel libelf-devel libevent-devel libiksemel-devel libldap-devel libmysqlclient-devel libnet-snmp-devel libopenipmi-devel libpcre-devel libsqlite3-devel libxml2-devel postgresql-devel python3-base
-BuildRequires: perl-Switch
+BuildRequires: perl-Switch zlib-devel
 %if_with ssh2
 BuildRequires: libssh2-devel
 %endif
@@ -388,12 +388,6 @@ mv src/%{name}_proxy/%{name}_proxy src/%{name}_proxy/%{name}_proxy_pgsql
 	--sysconfdir=/etc/zabbix
 %make
 
-# create database upgrades
-pushd upgrades
-mkdir dbpatches-final
-%make dist-hook distdir=dbpatches-final
-popd
-
 # adjust in several files /home/zabbix
 find conf -type f -print0 | xargs -0 sed -i \
 	-e "s,/home/zabbix/bin,/usr/sbin,g" \
@@ -461,15 +455,6 @@ install -pDm0644 sources/%{name}_java_gateway.service %buildroot%_unitdir/%{name
 
 # sudo entry
 install -pDm0400 sources/%name.sudo %buildroot%_sysconfdir/sudoers.d/%name
-
-# database upgrades
-mkdir -p upgrades-{mysql,postgresql}
-mv upgrades/dbpatches-final/dbpatches/1.6/mysql upgrades-mysql/1.6
-mv upgrades/dbpatches-final/dbpatches/1.8/mysql upgrades-mysql/1.8
-mv upgrades/dbpatches-final/dbpatches/2.0/mysql upgrades-mysql/2.0
-mv upgrades/dbpatches-final/dbpatches/1.6/postgresql upgrades-postgresql/1.6
-mv upgrades/dbpatches-final/dbpatches/1.8/postgresql upgrades-postgresql/1.8
-mv upgrades/dbpatches-final/dbpatches/2.0/postgresql upgrades-postgresql/2.0
 
 # include files
 cp include/* %buildroot%_includedir/%name
@@ -567,12 +552,10 @@ fi
 
 %files common-database-mysql
 %doc database/mysql/schema.sql database/mysql/data.sql database/mysql/images.sql
-%doc upgrades-mysql
 
 %if_with pgsql
 %files common-database-pgsql
 %doc database/postgresql/schema.sql database/postgresql/data.sql database/postgresql/images.sql
-%doc upgrades-postgresql
 %endif
 
 %files server-common
@@ -656,6 +639,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Oct 03 2018 Alexei Takaseev <taf@altlinux.org> 1:4.0.0-alt1
+- 4.0.0
+
 * Fri Sep 21 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.14-alt2%ubt
 - Add re-check apache2 config while
   install/de-install zabbix-phpfrontend-apache2
