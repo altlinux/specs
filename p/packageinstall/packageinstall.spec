@@ -1,7 +1,7 @@
 
 Name:		packageinstall
 Version:	1.1.1
-Release:	alt1.qa1
+Release:	alt2
 Summary:	GUI frontend for install packages using apt-get
 
 License:	GPL
@@ -21,10 +21,11 @@ This application is GUI frontend for install package(s) using apt-get.
 
 %prep
 %setup -q
+
+%build
 lrelease-qt4 %name.pro
 DESTDIR=%buildroot PREFIX=/usr qmake-qt4 %name.pro
 
-%build
 %make_build
 
 %install
@@ -45,6 +46,9 @@ install -pD -m640 %name.security %buildroot%_sysconfdir/security/console.apps/%n
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Tue Oct 02 2018 Oleg Solovyov <mcpain@altlinux.org> 1.1.1-alt2
+- spec cleanup
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.1.1-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
