@@ -1,21 +1,16 @@
 Name: hunspell
 Summary: Hunspell is a spell checker and morphological analyzer
-Version: 1.3.1
+Version: 1.6.2
 Release: alt1
 License: LGPL
 Group: Text tools
 URL: http://hunspell.sourceforge.net/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Requires: lib%name = %version-%release
-
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 
-Patch0: hunspell-1.2.7-alt-ncursesw.patch
-Patch1: hunspell-1.2.14-alt-dict-path.patch
-Patch2: hunspell-1.3.1-alt-soname.patch
+Patch1: hunspell-1.6.2-alt-soname.patch
 
-# Automatically added by buildreq on Tue Jul 24 2007
 BuildRequires: gcc-c++ libncursesw-devel libreadline-devel
 
 %description
@@ -35,7 +30,6 @@ languages with rich morphology and complex word compounding or character encodin
 %package -n lib%name-devel
 Summary: Files for developing with hunspell
 Group: Development/C++
-Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
 Includes and definitions for developing with hunspell
@@ -43,7 +37,6 @@ Includes and definitions for developing with hunspell
 %package utils
 Summary: Morphological utilities provided with hunspell
 Group: Text tools
-Requires: lib%name = %version-%release
 
 %description utils
 Morphological utilities and dictionary formatr converters provided with
@@ -51,11 +44,7 @@ hunspell.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch1 -p1
-%patch2 -p1
-
-subst '/AM_GNU_GETTEXT_VERSION/d' configure.ac
 
 %build
 %autoreconf
@@ -76,7 +65,6 @@ mkdir -p %buildroot%_datadir/myspell
 %doc AUTHORS AUTHORS.myspell license.hunspell license.myspell NEWS THANKS
 %_bindir/%name
 %_man1dir/%name.1*
-%_man4dir/%name.4*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -101,6 +89,9 @@ mkdir -p %buildroot%_datadir/myspell
 %_bindir/wordlist2hunspell
 
 %changelog
+* Tue Sep 11 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.6.2-alt1
+- 1.6.2 (closes: #35377)
+
 * Mon Feb 07 2011 Valery Inozemtsev <shrek@altlinux.ru> 1.3.1-alt1
 - 1.3.1
 

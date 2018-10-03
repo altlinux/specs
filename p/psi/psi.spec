@@ -1,6 +1,6 @@
 Name: psi
 Version: 1.3
-Release: alt2
+Release: alt3
 Group: Networking/Instant messaging
 Summary: Psi Jabber client
 Summary(ru_RU.UTF-8): Jabber клиент Psi
@@ -14,6 +14,7 @@ Source4: qhttp.tar
 Source5: plugins.tar
 Patch0: %name-%version-%release.patch
 Patch1: psi-0.14-alt-glibc-2.16.patch
+Patch2: psi-1.3-build-qt511.patch
 
 #BuildRequires: unzip
 Requires: sound_handler ca-certificates
@@ -200,6 +201,7 @@ Plugins without description yet:
 %setup -q -n %name-%version-%release -a1 -a2 -a3 -a4 -a5
 %patch0 -p1
 %patch1 -p0
+%patch2 -p1
 mv libpsi src/
 mv qhttp 3rdparty/
 mv http-parser 3rdparty/
@@ -265,6 +267,10 @@ install -Dm644 psi_ru.qm %buildroot%_datadir/psi/lang/psi_ru.qm
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Thu Sep 13 2018 Oleg Solovyov <mcpain@altlinux.org> 1.3-alt3
+- fix build with Qt 5.11
+- build with new libhunspell
+
 * Wed Apr 25 2018 Oleg Solovyov <mcpain@altlinux.org> 1.3-alt2
 - Built plugins
 - Used CMake to build
