@@ -6,7 +6,7 @@
 #set_compress_method none
 %set_compress_method %mansuff
 Name: girar-nmu
-Version: 1.996
+Version: 1.997
 Release: alt1
 
 Summary: git.alt client utilities for NMU automation
@@ -23,7 +23,7 @@ BuildRequires: m4
 BuildRequires: perl-devel perl-podlators perl(RPM/Header.pm) perl-RPM-Source-Editor perl-RPM-Source-Convert perl(Pod/Usage.pm) perl(Date/Parse.pm) /usr/bin/pod2man perl-Gear-Rules perl(Source/Shared/Utils/GlobList.pm)
 
 Requires: gear
-Requires: perl-RPM-Source-Editor >= 0.9210
+Requires: perl-RPM-Source-Editor >= 0.9220
 
 %description
 This package contains client utilities for git.alt
@@ -86,6 +86,9 @@ EOF
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Wed Oct 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.997-alt1
+- add girar-get-upload-method --missing mode
+
 * Mon Sep 24 2018 Igor Vlasenko <viy@altlinux.ru> 1.996-alt1
 - added --commit-no-edit (-C) option to girar-build-git
 
