@@ -1,64 +1,9 @@
 # -*- rpm-spec -*-
-
 %define _unpackaged_files_terminate_build 1
-
-# for set release
-%define release_pre alt1
-
-# for distr selected
-%def_without M24
-%def_without M30
-%def_without M40
-%def_without M41
-%def_without M50P
-%def_without M51
-%def_without M60P
-%def_without M60T
-
-# for set distr release
-%define release_distr_num 1
-%define release_distr_pl 1
-
-# %%distr_switch set
-%define distr_switch %nil
-%if_with M24
-%define distr_switch M24
-%endif
-%if_with M30
-%define distr_switch M30
-%endif
-%if_with M40
-%define distr_switch M40
-%endif
-%if_with M41
-%define distr_switch M41
-%endif
-%if_with M50P
-%define distr_switch M50P
-%endif
-%if_with M51
-%define distr_switch M51
-%endif
-%if_with M60P
-%define distr_switch M60P
-%endif
-%if_with M60T
-%define distr_switch M60T
-%endif
-
-# %%release_num and %%release_distr set
-%if "%distr_switch" == ""
-%define release_distr %nil
-%else
-%define release_distr .%distr_switch.%release_distr_num
-%endif
-
-# %%package_release set
-%define package_release %{release_pre}%{release_distr}
 
 Name: nut
 Version: 2.7.4
-Release: %package_release
+Release: alt2
 
 Summary: Network UPS Tools
 License: GPL
@@ -66,8 +11,8 @@ Group: System/Servers
 Url: http://networkupstools.org
 
 %define srcname nut-%version
-# %url/source/2.0/nut-%version.tar.gz
-Source: nut-%version.tar.gz
+# https://github.com/networkupstools/nut
+Source: nut-%version.tar
 Source1: upsdrv.init
 Source2: upsd.init
 Source3: upsmon.init
@@ -87,6 +32,8 @@ Patch23: nut-2.6.5-alt-systemd.patch
 Patch24: nut-2.6.5-bcmxcp.patch
 Patch25: nut-2.7.4-alt-gdlib.patch
 Patch26: nut-2.7.4-alt-linking.patch
+Patch27: nut-2.7.4-github-504-openssl.patch
+Patch28: nut-2.7.4-man-parralel-build.patch
 
 # Fedora patches
 Patch103: nut-2.6.5-quickfix.patch
@@ -99,18 +46,9 @@ Patch109: nut-2.6.5-rmpidf.patch
 %def_with cgi
 %def_with snmp
 %def_with usb
-%def_without hal
 %def_with avahi
 %def_with freeipmi
 %def_with systemd
-
-%if_with M24
-%def_with hotplug
-%def_without hal
-%else
-%def_without hotplug
-%def_with hal
-%endif
 
 %define docdir %_docdir/%name-%version
 %define cgidocdir %_docdir/%name-cgi-%version
@@ -128,6 +66,7 @@ PreReq: libupsclient = %version-%release
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig libtool-common
 BuildRequires: libltdl-devel
+BuildRequires: asciidoc-a2x
 %{?_with_systemd:BuildRequires: systemd-devel}
 
 %if_with ssl
@@ -136,9 +75,6 @@ BuildRequires: libssl-devel
 
 %if_with cgi
 BuildRequires: fontconfig-devel freetype2-devel libgd2-devel libjpeg-devel libpng-devel
-%if_without M24
-BuildRequires: libXpm-devel
-%endif
 %endif
 
 %if_with snmp
@@ -155,33 +91,15 @@ BuildRequires: libfreeipmi-devel
 
 %if_with usb
 %define libusb libusb-compat-devel
-%if_with M24
-%define libusb libusb-devel
-%endif
-%if_with M30
-%define libusb libusb-devel
-%endif
-%if_with M40
-%define libusb libusb-devel
-%endif
-%if_with M41
-%define libusb libusb-devel
-%endif
-%if_with M50
-%define libusb libusb-devel
-%endif
 %endif
 
 %add_findreq_skiplist /lib/systemd/system-shutdown/nutshutdown
 
 BuildRequires: %libusb
 
-%if_with hal
-BuildRequires: libhal-devel >= 0.5.8
 BuildRequires: libdbus-devel
 BuildRequires: libdbus-glib-devel
 BuildRequires: glib-devel
-%endif
 
 %package server
 Summary: The UPS information server
@@ -209,14 +127,6 @@ Summary: CGI utilities for the Network UPS Tools
 Group: System/Servers
 Requires: webserver
 Requires: libupsclient = %version-%release
-
-%package hal
-Summary: HAL addons and fdi info, for monitoring UPS state from KDE/GNOME/etc
-Group: System/Servers
-Conflicts: %name %name-server %name-driver %name-cgi 
-Requires: libhal >= 0.5.8
-Requires: libdbus
-Requires: libdbus-glib
 
 %package -n libupsclient
 Summary: Shared library libupsclient of nut
@@ -293,15 +203,6 @@ This package includes CGI programs for accessing UPS status via a web
 browser and can be installed on a separate machine to the rest of the
 %name packages.
 
-%description hal
-These programs are part of a developing project to monitor the assortment
-of UPSes that are found out there in the field.  Many models have serial
-serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns,
-live status tracking on web pages, and more.
-
-This package includes addon and fdi info for HAL for accessing UPS status via 
-GUI utils from DE KDE/GNOME and other.
 
 %description -n libupsclient
 These programs are part of a developing project to monitor the assortment 
@@ -346,14 +247,10 @@ This package includes header files and C programming manuals for nut.
 %patch6 -p1
 %patch7 -p1
 %patch10 -p2
-%if_with M24
-%patch20 -p0
-%endif
 %patch21 -p1
-%if_with M24
-%patch22 -p2
-%endif
 %patch24 -p1
+%patch27 -p1
+%patch28 -p1
 
 %patch103 -p1 -b .quickfix
 %patch105 -p1 -b .dlfix
@@ -369,12 +266,8 @@ This package includes header files and C programming manuals for nut.
 sed -i 's@/cgi-bin/nut/@/cgi-bin/@g' data/html/header.html.in
 
 %build
-%if_with M24
-	%define snmp_opts --with-snmp --with-snmp-libs="-lnetsnmp -lcrypto" --with-snmp-includes="%optflags"
-%else
-	%define snmp_opts --with-snmp
-%endif
-%autoreconf
+%define snmp_opts --with-snmp
+./autogen.sh
 %configure \
 	--disable-static \
 	--sysconfdir=%confdir --datadir=%confdir \
@@ -386,7 +279,6 @@ sed -i 's@/cgi-bin/nut/@/cgi-bin/@g' data/html/header.html.in
 	--with-drvpath=%drvdir \
 	--with-statepath=%_localstatedir/upsd \
 	%{subst_with usb} \
-	%{subst_with hal} \
 	--with-udev-dir=/lib/udev \
 	%{subst_with snmp} %snmp_opts \
 	--with-pkgconfig-dir=%_pkgconfigdir \
@@ -396,7 +288,6 @@ sed -i 's@/cgi-bin/nut/@/cgi-bin/@g' data/html/header.html.in
 	--disable-strip
 
 sh %SOURCE104 >>include/config.h
-test -f libtool && rm -f libtool && ln -s `which libtool` libtool
 
 %make_build
 
@@ -427,7 +318,6 @@ for f in %buildroot%confdir/*.sample ; do
     f=`basename $f`
     cp -p %buildroot%confdir/$f %buildroot%confdir/"${f/.sample/}"
 done
-#mv %buildroot%confdir/*html.sample %buildroot%cgidocdir/
 mv %buildroot%confdir/*.sample %buildroot%docdir/
 # Prepare chroot jail for upsd/upsdrv.
 mkdir -p %buildroot%ROOT{/dev,%confdir,%_localstatedir/upsd}
@@ -445,24 +335,6 @@ mksock %buildroot%ROOT/dev/log
 mkdir -p %buildroot%_sysconfdir/syslog.d
 ln -s %ROOT/dev/log %buildroot%_sysconfdir/syslog.d/%name
 
-cp -a ChangeLog COPYING MAINTAINERS NEWS README UPGRADING \
-      docs/*.txt docs/cables \
-	%buildroot%docdir/
-cp -a data/html/README %buildroot%cgidocdir/
-
-%if_with hal
-## Prepare files for hal subpackage.
-# Create dir and move hal-addon-*, *.fdi files from %drvdir to %buildroot/%_libexecdir/hal
-%define hal_addon_dir %_usr/_libexecdir/hal
-mkdir -p %buildroot%hal_addon_dir
-pushd %buildroot
-for f in hald-addon-bcmxcp_usb hald-addon-blazer_usb hald-addon-tripplite_usb hald-addon-usbhid-ups ; do
-	mv .%_libexecdir/hal/$f .%hal_addon_dir/
-done
-popd
-mkdir -p %buildroot%fdi_hal
-test -f scripts/hal/20-ups-nut-device.fdi && cp scripts/hal/20-ups-nut-device.fdi %buildroot%fdi_hal/
-%endif
 
 # Rename udev rules file
 %if_with usb
@@ -521,10 +393,9 @@ fi
 %preun_service upsd
 %preun_service upsdrv
 
-#post hal
-#post_service haldaemon
 
 %files
+%doc COPYING MAINTAINERS NEWS README UPGRADING docs/*.txt conf/upsmon.conf.sample conf/upssched.conf.sample conf/nut.conf.sample
 %dir %confdir
 %dir %attr(710,root,%runas) %confdir/certs
 %config(noreplace) %attr(640,root,%runas) %confdir/upsmon.conf
@@ -554,19 +425,8 @@ fi
 %_man8dir/upsrw.*
 %_man8dir/upssched.*
 
-%dir %docdir
-%docdir/[A-Z][A-Z]*[A-Z]
-%docdir/*.txt
-%docdir/ChangeLog
-%docdir/upsmon.conf.sample
-%docdir/upssched.conf.sample
-%docdir/nut.conf.sample
-%exclude %docdir/*driver*
-%exclude %docdir/ups.conf.sample
-%exclude %docdir/upsd.conf.sample
-%exclude %docdir/upsd.users.sample
-
 %files server
+%doc conf/upsd.conf.sample conf/upsd.users.sample conf/ups.conf.sample docs/cables
 %_sbindir/upsd
 %_bindir/nut-scanner
 %_sbindir/upsdrvctl
@@ -592,7 +452,6 @@ fi
 
 %_man5dir/upsd.conf.*
 %_man5dir/upsd.users.*
-%_man8dir/upsd.*
 
 %_sysconfdir/syslog.d/*
 %dir %attr(0710,root,upsdrv) %ROOT
@@ -610,14 +469,6 @@ fi
 %attr(640,root,upsdrv) %ROOT%confdir/ups.conf
 
 %_localstatedir/upsd
-%_sysconfdir/syslog.d/*
-
-%dir %docdir
-%docdir/upsd.conf.sample
-%docdir/upsd.users.sample
-%docdir/ups.conf.sample
-%docdir/*driver*
-%docdir/cables
 
 %config %confdir/driver.list
 %if_with usb
@@ -668,6 +519,7 @@ fi
 
 %if_with cgi
 %files cgi
+%doc conf/hosts.conf.sample conf/upsset.conf.sample  conf/upsstats.html.sample conf/upsstats-single.html.sample data/html/README
 %dir %confdir
 %config(noreplace) %confdir/hosts.conf
 %config(noreplace) %confdir/upsset.conf
@@ -677,30 +529,13 @@ fi
 %cgidir/upsset.cgi
 %cgidir/upsstats.cgi
 %htmldir
-%dir %cgidocdir
-%cgidocdir/README
 %_man5dir/hosts.conf.*
 %_man5dir/upsset.conf.*
 %_man5dir/upsstats.html.*
 %_man8dir/upsimage.cgi.*
 %_man8dir/upsset.cgi.*
 %_man8dir/upsstats.cgi.*
-%docdir/hosts.conf.sample
-%docdir/upsset.conf.sample
-%docdir/upsstats.html.sample
-%docdir/upsstats-single.html.sample
 %endif # with_cgi
-
-%if_with hotplug
-%config %_sysconfdir/hotplug/usb/*
-%endif
-
-%if_with hal
-%files hal
-%fdi_hal/20-ups-nut-device.fdi
-/usr/share/hal/fdi/information/20thirdparty/20-ups-nut-device.fdi
-%hal_addon_dir/hald-addon-*
-%endif
 
 %files -n libupsclient
 %_libdir/libupsclient.so.*
@@ -714,12 +549,15 @@ fi
 %files -n libupsclient-devel
 %_libdir/*.so
 %_includedir/*
-%if_without M24
 %_pkgconfigdir/*.pc
-%endif
 %_man3dir/*
 
 %changelog
+* Wed Oct 03 2018 Anton Farygin <rider@altlinux.ru> 2.7.4-alt2
+- added patch for build with openssl-1.1
+- build from upstream git
+- cleaned specfile from old master-2.4 knobs
+
 * Tue May 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.4-alt1
 - Updated to upstream version 2.7.4.
 
