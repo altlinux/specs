@@ -1,10 +1,10 @@
 Name: xcolors
 Version: 1.5a
-%define Level 6
-Release: alt6.2.qa1
+%define Level 8
+Release: alt8
 
 Summary: Display and select X11 named colors
-Summary(ru_RU.KOI8-R): Показывает все именованные цвета X11
+Summary(ru_RU.UTF-8): п÷п╬п╨п╟п╥я▀п╡п╟п╣я┌ п╡я│п╣ п╦п╪п╣п╫п╬п╡п╟п╫п╫я▀п╣ я├п╡п╣я┌п╟ X11
 Group: Monitoring
 License: BSD
 Packager: Fr. Br. George <george@altlinux.ru>
@@ -38,6 +38,9 @@ xmkmf
 
 
 %changelog
+* Wed Oct 03 2018 Fr. Br. George <george@altlinux.ru> 1.5a-alt8
+- Update debian patches
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5a-alt6.2.qa1
 - NMU: rebuilt for debuginfo.
 
