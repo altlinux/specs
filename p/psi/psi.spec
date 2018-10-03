@@ -1,11 +1,14 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: psi
 Version: 1.3
-Release: alt3
+Release: alt4
 Group: Networking/Instant messaging
 Summary: Psi Jabber client
 Summary(ru_RU.UTF-8): Jabber клиент Psi
 License: GPL
-Url: http://psi-im.org/
+Url: https://psi-im.org/
+
 Source: %name-%version-%release.tar
 Source1: iris.tar
 Source2: libpsi.tar
@@ -15,16 +18,18 @@ Source5: plugins.tar
 Patch0: %name-%version-%release.patch
 Patch1: psi-0.14-alt-glibc-2.16.patch
 Patch2: psi-1.3-build-qt511.patch
+Patch3: psi-plus-alt-qt-5.11-window-close-bug.patch
 
 #BuildRequires: unzip
 Requires: sound_handler ca-certificates
 # Automatically added by buildreq on Tue Nov 25 2008
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires: cmake gcc-c++ libXScrnSaver-devel libaspell-devel libcom_err-devel libqca-qt5-devel
-BuildREquires: libotr-devel libhunspell-devel
+BuildRequires: libotr-devel libhunspell-devel
 BuildRequires: libtidy-devel >= 1.2.0
 BuildRequires: libidn-devel zlib-devel
 BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-svg-devel qt5-tools qt5-webkit-devel qt5-x11extras-devel
+BuildRequires: libminizip-devel
 
 Conflicts: qssl < 2.0 psi0.11
 Obsoletes: psi0.11
@@ -49,7 +54,7 @@ AIM.  Psi поддерживает такие возможности Jabber, к�
 %package plugins
 Summary: Plugins pack for %name
 Group: Networking/Instant messaging
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins
 This package contains stable plugins for %name.
@@ -208,6 +213,9 @@ mv http-parser 3rdparty/
 rm -rf src/plugins/deprecated/
 mv -f plugins/* src/plugins/
 mkdir -p lang/
+rm -rf src/libpsi/tools/zip/minizip
+
+%patch3 -p2
 
 %build
 %cmake \
@@ -224,13 +232,17 @@ lrelease-qt5 psi_ru.ts
 mv %buildroot/%_libdir/%name{-plus,}/
 install -Dm644 psi_ru.qm %buildroot%_datadir/psi/lang/psi_ru.qm
 
+# remove unstable plugins
+rm -f %buildroot%_libdir/%name/plugins/libbattleshipgameplugin.so
+rm -f %buildroot%_libdir/%name/plugins/libripperccplugin.so
+
 %files
 %defattr(0644,root,root,0755)
 %doc README COPYING INSTALL TODO 
 %attr(0755,root,root) %_bindir/psi
 %dir %_datadir/psi
 %_datadir/psi/*
-%_datadir/applications/%name.desktop
+%_desktopdir/%name.desktop
 %_pixmapsdir/%name.png
 
 %files plugins
@@ -267,6 +279,9 @@ install -Dm644 psi_ru.qm %buildroot%_datadir/psi/lang/psi_ru.qm
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Wed Oct 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3-alt4
+- NMU: fixed main window blanking issue which appears on closing main window in a specific way.
+
 * Thu Sep 13 2018 Oleg Solovyov <mcpain@altlinux.org> 1.3-alt3
 - fix build with Qt 5.11
 - build with new libhunspell
