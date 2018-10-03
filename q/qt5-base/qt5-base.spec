@@ -32,7 +32,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.11.2
-Release: alt1%ubt
+Release: alt2%ubt
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -484,14 +484,14 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
 %endif
 
 %install
-# uninstall optflags
-sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE\s*=.*$|QMAKE_CFLAGS_OPTIMIZE = -O2|" mkspecs/common/gcc-base.conf
-sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE_FULL\s*=.*$|QMAKE_CFLAGS_OPTIMIZE_FULL = -O3|" mkspecs/common/gcc-base.conf
-
 make install INSTALL_ROOT=%buildroot
 %if_disabled bootstrap
 [ -d doc/qtcore ] && %make INSTALL_ROOT=%buildroot install_docs ||:
 %endif
+
+# uninstall optflags
+sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE\s*=.*$|QMAKE_CFLAGS_OPTIMIZE = -O2|" %buildroot%_qt5_archdatadir/mkspecs/common/gcc-base.conf
+sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE_FULL\s*=.*$|QMAKE_CFLAGS_OPTIMIZE_FULL = -O3|" %buildroot%_qt5_archdatadir/mkspecs/common/gcc-base.conf
 
 # create/own dirs
 mkdir -p %buildroot/{%_qt5_archdatadir/mkspecs/modules,%_qt5_importdir,%_qt5_qmldir,%_qt5_libexecdir,%_qt5_translationdir,%_qt5_docdir}
@@ -794,6 +794,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Wed Oct 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.11.2-alt2%ubt
+- NMU: fixed debuginfo generation.
+
 * Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
 - new version
 
