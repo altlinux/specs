@@ -15,7 +15,7 @@ Summary(pt): Um editor de esquemas eléctricos
 Summary(ru): Редактор электрических схем
 
 Version:     0.6
-Release:     alt1
+Release:     alt2
 Epoch:	     1
 
 Group:       Engineering
@@ -26,6 +26,7 @@ License:    GPLv2+
 Url:        http://qelectrotech.org/
 Source0:    qelectrotech-%version-src.tar.gz
 Source1:    %name.watch
+Patch1:     %name-fix-build-with-qt5.11.patch
 
 BuildRequires:    desktop-file-utils
 BuildRequires:    gcc-c++
@@ -130,9 +131,9 @@ Colecção de elementos para QElectroTech.
 %description -l ru symbols
 Коллекция элементов для QElectroTech.
 
-
 %prep
 %setup -q -n %name-%version-src
+%patch1 -p2
 
 sed -e s,/usr/local/,%_prefix/, \
     -e /QET_MAN_PATH/s,'man/','share/man', \
@@ -183,6 +184,9 @@ rm -f %buildroot%_datadir/%name/lang/qt_*.qm
 %_datadir/%name/titleblocks
 
 %changelog
+* Wed Oct 03 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.6-alt2
+- Fix build with Qt 5.11.
+
 * Mon Apr 02 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.6-alt1
 - New version.
 
