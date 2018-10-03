@@ -1,6 +1,6 @@
 Name: fail2ban
-Version: 0.9.6
-Release: alt1%ubt
+Version: 0.10.3.1
+Release: alt1
 
 Summary: Fail2Ban is an intrusion prevention framework
 
@@ -17,7 +17,6 @@ Source4: paths-altlinux.conf
 
 BuildArch: noarch
 BuildPreReq: help2man python-module-json
-BuildRequires(pre):rpm-build-ubt
 %setup_python_module %name
 %py_requires json
 
@@ -93,7 +92,10 @@ mkdir -p %buildroot%_var/lib/fail2ban/
 %_logrotatedir/%name
 
 %changelog
-* Wed Apr 12 2017 Anton Farygin <rider@altlinux.ru> 0.9.6-alt1%ubt
+* Wed Oct 03 2018 Anton Farygin <rider@altlinux.ru> 0.10.3.1-alt1
+- 0.10.3.1
+
+* Wed Apr 12 2017 Anton Farygin <rider@altlinux.ru> 0.9.6-alt1
 - new version
 
 * Mon Dec 05 2016 Anton Farygin <rider@altlinux.ru> 0.9.5-alt2
