@@ -1,14 +1,12 @@
 Name: spl
-Version: 0.7.9
-Release: alt1%ubt
+Version: 0.7.11
+Release: alt1
 Summary: Solaris Porting Layer (SPL)
-License: GPLv2+
+License: CDDL
 Group: System/Kernel and hardware
 URL: http://zfsonlinux.org
 Source: %name-%version.tar
-Patch: spl-0.7.0-conf-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kernel
 
 %description
@@ -33,16 +31,11 @@ This package contains SPL modules sources for Linux kernel.
 
 %prep
 %setup -q
-%patch -p1
 
 tar -C .. \
 	--exclude .gitignore \
-	--exclude 'include/*Makefile.*' \
 	-cJf %name-%version.tar.xz \
-	%name-%version/module \
-	%name-%version/config/{{install-,ltmain.}sh,config.{awk,guess,sub},missing} \
-	%name-%version/include \
-	%name-%version/{AUTHORS,COPYING,DISCLAIMER,META,configure,%name{.release,_config.h}.in}
+	.
 
 %build
 %autoreconf
@@ -58,6 +51,7 @@ install -pD -m0644 %name-%version.tar.xz %kernel_srcdir/%name-%version.tar.xz
 
 %files utils
 %doc AUTHORS DISCLAIMER META
+%_bindir/*
 %_sbindir/*
 %_man1dir/*.1*
 %_man5dir/*.5*
@@ -66,10 +60,13 @@ install -pD -m0644 %name-%version.tar.xz %kernel_srcdir/%name-%version.tar.xz
 %_usrsrc/kernel
 
 %changelog
-* Mon Jun 25 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.7.9-alt1%ubt
+* Thu Oct 04 2018 Anton Farygin <rider@altlinux.ru> 0.7.11-alt1
+- 0.7.11
+
+* Mon Jun 25 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.7.9-alt1
 - 0.7.9
 
-* Tue Dec 19 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.5-alt1%ubt
+* Tue Dec 19 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.5-alt1
 - 0.7.5
 
 * Sat Nov 18 2017 Anton Farygin <rider@altlinux.ru> 0.7.3-alt1
