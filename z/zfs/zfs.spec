@@ -2,8 +2,8 @@
 %global _localstatedir %_var
 
 Name: zfs
-Version: 0.7.9
-Release: alt2%ubt
+Version: 0.7.11
+Release: alt1
 Summary: ZFS on Linux
 License: CDDL
 Group: System/Kernel and hardware
@@ -12,10 +12,8 @@ Conflicts: fuse-zfs
 Requires: spl-utils
 
 Source0: %name-%version.tar
-Patch0: zfs-0.7.9-conf-alt.patch
 Patch1: zfs-0.7.9-import-by-disk-id.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libattr-devel libblkid-devel libuuid-devel zlib-devel rpm-build-kernel
 
 %description
@@ -63,20 +61,13 @@ This package contains ZFS modules sources for Linux kernel.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch1 -p1
 sed -i 's|datarootdir|libdir|' lib/libzfs/Makefile.am
 
 tar -C .. \
 	--exclude .gitignore \
-	--exclude 'include/*Makefile.*' \
 	-cJf %name-%version.tar.xz \
-	%name-%version/module \
-	%name-%version/scripts/enum-extract.pl \
-	%name-%version/config \
-	%name-%version/include \
-	%name-%version/{AUTHORS,COPYRIGHT,DISCLAIMER,META,OPENSOLARIS.LICENSE,configure,%name{.release,_config.h}.in,aclocal.m4}
-
+	.
 %build
 %autoreconf
 %configure \
@@ -194,16 +185,19 @@ fi
 %_usrsrc/kernel
 
 %changelog
-* Tue Jun 26 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.7.9-alt2%ubt
+* Thu Oct 04 2018 Anton Farygin <rider@altlinux.ru> 0.7.11-alt1
+- 0.7.11
+
+* Tue Jun 26 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.7.9-alt2
 - fixed build kernel modules
 
-* Mon Jun 25 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.7.9-alt1%ubt
+* Mon Jun 25 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.7.9-alt1
 - 0.7.9
 
-* Wed Dec 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.5-alt2%ubt
+* Wed Dec 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.5-alt2
 - update preset service
 
-* Tue Dec 19 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.5-alt1%ubt
+* Tue Dec 19 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.5-alt1
 - 0.7.5
 
 * Sat Nov 18 2017 Anton Farygin <rider@altlinux.ru> 0.7.3-alt1
