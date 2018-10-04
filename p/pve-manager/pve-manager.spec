@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 5.2.3
-Release: alt6
+Release: alt7
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -473,6 +473,9 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Thu Oct 04 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt7
+- updated russian translation
+
 * Tue Oct 02 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt6
 - pve-firewall 3.0-12
 
