@@ -1,4 +1,5 @@
 %define _name pkcs11-helper
+%def_disable LibreSSL
 %def_enable openssl
 %def_disable LibreSSL # depends on openssl switch above
 %def_disable gnutls
@@ -8,18 +9,21 @@
 
 Name: lib%_name
 Version: 1.25.1
-Release: alt2
+Release: alt3
 Summary: A library for using PKCS#11 providers
 
 Group: Development/Other
 License: GPLv2 or BSD
 Url: https://github.com/OpenSC/pkcs11-helper
 
-# https://github.com/OpenSC/pkcs11-helper.git
 Source: %name-%version.tar
 
 Provides: %_name = %version-%release
 Obsoletes: %_name < %version-%release
+
+%define vkoversion 1.0.0
+Patch0: %name-%version-gost-derive-%vkoversion.patch
+Provides: %name(vko) = %vkoversion
 
 BuildRequires: doxygen graphviz
 %if_enabled openssl
@@ -56,6 +60,7 @@ programs using the pkcs11-helper library.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
@@ -91,11 +96,21 @@ rm -f %buildroot%_libdir/*.la
 %_man8dir/*.8*
 
 %changelog
+* Wed Oct 03 2018 Paul Wolneykien <manowar@altlinux.org> 1.25.1-alt3
+- Build with GOST-derive patch. Generate it with gear.
+- Deversify the KEK.
+- GOST derive: Split the source on UKM and the public key.
+- Define the GOST derive mechs.
+- Add support for the KeyDerive operation.
+
 * Tue Sep 04 2018 Paul Wolneykien <manowar@altlinux.org> 1.25.1-alt2
 - Add the option to build with LibreSSL (currently is off).
 
 * Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 1.25.1-alt1
 - 1.25.1
+
+* Sat Mar 24 2018 Paul Wolneykien <manowar@altlinux.org> 1.22.0-alt2
+- Build with LibreSSL.
 
 * Fri Nov 10 2017 Alexey Shabalin <shaba@altlinux.ru> 1.22.0-alt1
 - 1.22

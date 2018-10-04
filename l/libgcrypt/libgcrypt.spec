@@ -6,8 +6,8 @@
 %define soversion 20
 
 Name: libgcrypt
-Version: 1.7.10
-Release: alt1%ubt
+Version: 1.8.3
+Release: alt3
 
 %define soname %{name}%{soversion}
 
@@ -16,8 +16,11 @@ Summary: The GNU crypto library
 License: LGPL
 URL: http://www.gnupg.org/
 
-Source: %name-%version.tar.bz2
-Patch1: libgcrypt-1.7.10.patch
+Source: %name-%version.tar
+
+# GOST patch
+%define vkoversion 1.0.0
+Patch0: %name-%version-vko-%vkoversion.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libgpg-error-devel >= %req_gpgerror_ver
@@ -39,6 +42,8 @@ Summary: The GNU crypto library
 Group: System/Libraries
 Requires: libgpg-error >= %req_gpgerror_ver
 Provides: %name = %version-%release
+# GOST provides
+Provides: %name(vko) = %vkoversion
 %description -n %soname
 Libgcrypt is a general purpose cryptographic library
 based on the code from GNU Privacy Guard.
@@ -87,7 +92,7 @@ Static libraries for the %name-devel package
 
 %prep
 %setup -q
-%patch1 -p1
+%patch0 -p1
 %if_enabled info_nogen
 sed -i "s|^info_TEXINFOS|#info_TEXINFOS|" doc/Makefile.am
 sed -i "s|^gcrypt_TEXINFOS|#gcrypt_TEXINFOS|" doc/Makefile.am
@@ -124,7 +129,9 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %check
+%ifnarch aarch64
 %make check
+%endif
 
 %files -n gcrypt-utils
 %_bindir/dumpsexp
@@ -155,21 +162,54 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
-* Thu Jun 14 2018 Sergey V Turchin <zerg@altlinux.org> 1.7.10-alt1%ubt
+* Thu Oct 04 2018 Paul Wolneykien <manowar@altlinux.org> 1.8.3-alt3
+- Skip check on aarch64.
+
+* Wed Oct 03 2018 Paul Wolneykien <manowar@altlinux.org> 1.8.3-alt2
+- Include the GOST (VKO, MAC/IMIT) patch into the main package version.
+- GOST VKO patch version 1.0.0 providing the virtual package.
+
+* Wed Oct 03 2018 Paul Wolneykien <manowar@altlinux.org> 1.8.3-alt1
+- Freshed up to v1.8.3.
+
+* Wed Oct 03 2018 Paul Wolneykien <manowar@altlinux.org> 1.8.2-alt2
+- Include v1.7.10 security fix version patch.
+
+* Tue Oct 02 2018 Paul Wolneykien <manowar@altlinux.org> 1.8.2-alt5.gost
+- Git rid of the %%ubt suffix.
+- Restored the original sources.
+
+* Fri Sep 07 2018 Paul Wolneykien <manowar@altlinux.org> 1.8.2-alt4.gost
+- Fixed changelog version.
+- Fixed gear rules.
+- GOST VKO patch version 1.0.0 providing the virtual package.
+
+* Fri Sep 07 2018 Paul Wolneykien <manowar@altlinux.org> 1.8.2-alt3.gost
+- Generate the patch with gear.
+- Remove the build-generated files (source package).
+- Fixed TAR format.
+
+* Wed Jul 25 2018 Paul Wolneykien <manowar@altlinux.org> 1.8.2-alt2.gost
+- Build with GOST (VKO, MAC/IMIT) patch.
+
+* Thu Jun 14 2018 Sergey V Turchin <zerg@altlinux.org> 1.7.10-alt1
 - new version
 - security fixes: CVE-2018-0495
 
-* Tue Dec 26 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.9-alt2%ubt
+* Thu Apr 19 2018 Paul Wolneykien <manowar@altlinux.org> 1.8.2-alt1
+- Freshed up to the upstream version 1.8.2.
+
+* Tue Dec 26 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.9-alt2
 - clean description (ALT#34383)
 
-* Mon Sep 18 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.9-alt1%ubt
+* Mon Sep 18 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.9-alt1
 - new version
 - security fixes: CVE-2017-0379
 
-* Thu Jul 13 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.8-alt1%ubt
+* Thu Jul 13 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.8-alt1
 - new version
 
-* Thu Jul 06 2017 Sergey V Turchin <zerg@altlinux.org> 1.6.6-alt2%ubt
+* Thu Jul 06 2017 Sergey V Turchin <zerg@altlinux.org> 1.6.6-alt2
 - security fixes: CVE-2017-7526
 
 * Thu Aug 18 2016 Sergey V Turchin <zerg@altlinux.org> 1.6.6-alt1

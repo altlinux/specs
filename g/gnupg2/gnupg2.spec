@@ -4,7 +4,7 @@
 
 Name: gnupg2
 Version: 2.2.10
-Release: alt1%ubt
+Release: alt2
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -49,6 +49,18 @@ Patch101: alt-xloadimage.patch
 Patch102: alt-agent-fix-password-request.patch
 Patch103: alt-texinfo.patch
 
+# GOST patch/requires/provides
+%define gostversion 1.0.0
+Patch18: %name-%version-gost-%gostversion.patch
+Requires: libgcrypt(vko) >= 1.0.0
+Requires: libksba(gost) >= 1.0.0
+Provides: %name(gost) = %gostversion
+
+# Issuers patch/provides
+%define issuersversion 1.0.0
+Patch19: %name-%version-issuers-%issuersversion.patch
+Provides: %name(issuersconf) = %issuersversion
+
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libgcrypt-devel libksba-devel libassuan-devel libksba-devel
 BuildRequires: libgnutls-devel libnpth-devel
@@ -77,6 +89,8 @@ functionality up into several modules.
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch18 -p1
+%patch19 -p1
 %patch101 -p1
 #%patch102 -p1
 %patch103 -p1
@@ -143,42 +157,76 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
-* Thu Sep 06 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.10-alt1%ubt
+* Wed Oct 03 2018 Paul Wolneykien <manowar@altlinux.org> 2.2.10-alt2
+- GOST Sign and verification work with GOST (2001) via
+  gnupg-pkcs11-scd (S/MIME).
+- GOST enc/deryption works via gnupg-pkcs11-scd (OpenPGP).
+- Sign and verification work with GOST (2001) via gnupg-pkcs11-scd (OpenPGP).
+- Add the GOST-related patches to the main package version.
+
+* Wed Oct 03 2018 Paul Wolneykien <manowar@altlinux.org> 2.2.10-alt1.gost
+- Update to version 2.2.10.
+
+* Tue Oct 02 2018 Paul Wolneykien <manowar@altlinux.org> 2.2.8-alt6.gost
+- Add GCRY_MD_GOSTR3411_CP to the set of known algorhithms.
+- Restore build-generated files and revert the corresponding changes
+  in the patches.
+
+* Mon Sep 10 2018 Paul Wolneykien <manowar@altlinux.org> 2.2.8-alt5.gost
+- Fixed from/to string conversion for "GOST28147".
+
+* Fri Sep 07 2018 Paul Wolneykien <manowar@altlinux.org> 2.2.8-alt4.gost
+- Fixed alt-texinfo.patch.
+- Use autoreconf to set up the build.
+- Update the insttools patch: don't patch the generated Makefile.in.
+- Mark release as GOST.
+- Issuers configuration patch version 1.0.0 providing the virtual
+  package.
+- GOST patch version 1.0.0 requiring and providing virtual packages.
+
+* Thu Sep 06 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.10-alt1
 - new version
 
-* Fri Jul 13 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.9-alt1%ubt
+* Wed Jul 25 2018 Paul Wolneykien <manowar@altlinux.org> 2.2.8-alt3.gost
+- GOST enc/deryption works via gnupg-pkcs11-scd.
+- Build with GOST patch.
+
+* Fri Jul 13 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.9-alt1
 - new version (ALT#34602)
 
-* Fri Jun 08 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.8-alt1%ubt
+* Thu Jun 21 2018 Paul Wolneykien <manowar@altlinux.org> 2.2.8-alt2.gost
+- Sign and verification work with GOST (2001) via gnupg-pkcs11-scd.
+
+* Fri Jun 08 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.8-alt1
 - new version
 - security fix: CVE-2018-12020
 
-* Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.7-alt1%ubt
+* Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.7-alt1
 - new version
 
-* Tue Apr 24 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.6-alt1%ubt
+* Tue Apr 24 2018 Sergey V Turchin <zerg@altlinux.org> 2.2.6-alt1
 - new version
 
-* Thu Jan 18 2018 Ivan Zakharyaschev <imz@altlinux.org> 2.1.23-alt6%ubt
+* Thu Jan 18 2018 Ivan Zakharyaschev <imz@altlinux.org> 2.1.23-alt6
 - Conflicts: pinentry < 0.9.2 (due to passing OPTION
   allow-external-password-cache).
 
-* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt5%ubt
+* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt5
 - package dirmngr systemd units
 
-* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt4%ubt
+* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt4
 - package systemd units
 
-* Tue Jan 16 2018 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt3%ubt
+* Tue Jan 16 2018 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt3
 - fix to export GPG_AGENT_INFO
 
-* Fri Dec 29 2017 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt2%ubt
+* Fri Dec 29 2017 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt2
 - specify path to ca-bundle.crt
 
-* Fri Dec 29 2017 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt1%ubt
+* Fri Dec 29 2017 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt1
 - new version
 
-* Thu Mar 02 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.30-alt1%ubt
+* Thu Mar 02 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.30-alt1
 - new version
 
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.29-alt1.1
