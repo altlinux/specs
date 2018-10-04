@@ -1,7 +1,7 @@
 
 Name:    chef
-Version: 14.5.28
-Release: alt1
+Version: 14.6.11
+Release: alt2
 
 Summary: Clients for the chef systems integration framework
 Group:   Networking/Other
@@ -110,12 +110,12 @@ mkdir -p %buildroot/run/chef
 %dir %attr(0750, _chef, _chef) %_var/cache/chef
 %ruby_sitelibdir/*
 %rubygem_specdir/chef-*
-%exclude %rubygem_specdir/chef-config-*
+%exclude %rubygem_specdir/chef-config*
 %exclude %ruby_sitelibdir/chef-config/*
 
 %files config
 %ruby_sitelibdir/chef-config/*
-%rubygem_specdir/chef-config-*
+%rubygem_specdir/chef-config*
 
 %files doc
 %ruby_ri_sitedir/*
@@ -125,6 +125,12 @@ getent group _chef  >/dev/null || groupadd -r _chef
 getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbin/nologin -c "Opscode Chef Daemon" _chef
 
 %changelog
+* Thu Oct 04 2018 Pavel Skrylev <majioa@altlinux.org> 14.6.11-alt2
+- Fix to files storing procedure.
+
+* Thu Oct 04 2018 Andrey Cherepanov <cas@altlinux.org> 14.6.11-alt1
+- New version.
+
 * Wed Sep 19 2018 Andrey Cherepanov <cas@altlinux.org> 14.5.28-alt1
 - New version.
 
