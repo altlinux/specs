@@ -5,7 +5,7 @@
 %def_enable tests
 
 Name: libinput
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 
 Summary: Input devices library
@@ -14,7 +14,6 @@ License: MIT
 Url: http://www.freedesktop.org/wiki/Software/libinput/
 
 Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
-Patch: libinput-1.12.0-up-format.patch
 
 %add_python3_path %_libexecdir/%name
 
@@ -71,7 +70,6 @@ This package contains visual debug helper for %name.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %meson %{?_enable_libwacom:-Dlibwacom=true} \
@@ -128,6 +126,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Thu Oct 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
+- 1.12.1
+
 * Tue Sep 11 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
 - 1.12.0
 
