@@ -22,9 +22,9 @@
 %define CVS_BUILD	0
 
 Name: maxima
-Version: 5.41.0
-%define maxima_version 5.41.0
-Release: alt3
+Version: 5.42.0
+%define maxima_version 5.42.0
+Release: alt1
 Summary: Maxima Computer Algebra System
 License: GPL
 Group: Sciences/Mathematics
@@ -126,8 +126,8 @@ Maxima binaries compiled with CMUCL (CMU Common Lisp).
 Summary: Maxima Symbolic Computation Program. SBCL binaries
 Group: Sciences/Mathematics
 Provides: maxima-bin = %version-%release
-Requires: maxima-common = %version-%release sbcl >= 1.4.10
-BuildRequires: sbcl >= 1.4.10
+Requires: maxima-common = %version-%release sbcl >= 1.4.12
+BuildRequires: sbcl >= 1.4.12
 BuildRequires: /proc
 ExcludeArch: aarch64
 %description bin-sbcl
@@ -265,7 +265,7 @@ Maxima book
 %endif
 
 %if %BUILD_BOOK
-%__tar jxf %SOURCE7 -C doc/maximabook
+tar jxf %SOURCE7 -C doc/maximabook
 %endif
 
 #patch1 -p1
@@ -598,6 +598,9 @@ cd %maxima_dir
 
 
 %changelog
+* Thu Oct 04 2018 Ilya Mashkin <oddity@altlinux.ru> 5.42.0-alt1
+- 5.42.0
+
 * Thu Sep 20 2018 Ilya Mashkin <oddity@altlinux.ru> 5.41.0-alt3
 - rebuild with sbcl 1.4.10 (Closes: #33271)
 - Try build with --enable-sbcl-exec instead of --enable-sbcl
