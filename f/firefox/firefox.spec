@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        61.0.1
+Version:        62.0.3
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -336,6 +336,21 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Thu Oct 04 2018 Alexey Gladkov <legion@altlinux.ru> 62.0.3-alt1
+- New release (62.0.3).
+  + CVE-2018-12386: Type confusion in JavaScript
+  + CVE-2018-12387: A vulnerability where the JavaScript JIT compiler
+  + CVE-2018-12385: Crash in TransportSecurityInfo due to cached data
+  + CVE-2018-12377: Use-after-free in refresh driver timers
+  + CVE-2018-12378: Use-after-free in IndexedDB
+  + CVE-2018-12379: Out-of-bounds write with malicious MAR file
+  + CVE-2017-16541: Proxy bypass using automount and autofs
+  + CVE-2018-12381: Dragging and dropping Outlook email message results in page navigation
+  + CVE-2018-12382: Addressbar spoofing with javascript URI on Firefox for Android
+  + CVE-2018-12383: Setting a master password post-Firefox 58 does not delete unencrypted previously stored passwords
+  + CVE-2018-12375: Memory safety bugs fixed in Firefox 62
+  + CVE-2018-12376: Memory safety bugs fixed in Firefox 62 and Firefox ESR 60.2
+
 * Fri Jul 06 2018 Alexey Gladkov <legion@altlinux.ru> 61.0.1-alt1
 - New release (61.0.1).
 
