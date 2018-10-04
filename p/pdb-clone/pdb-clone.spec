@@ -1,6 +1,6 @@
 Name: pdb-clone
 Version: 1.10.1
-Release: alt1
+Release: alt2
 License: GPL
 Summary: A clone of pdb, fast and with the remote debugging and attach features
 Source: %name-%version.zip
@@ -9,8 +9,10 @@ Url: https://pypi.python.org/pypi/pdb-clone
 %setup_python_module %name
 
 BuildRequires(pre): rpm-build-python3
-# XXX
+# XXX Modern gdb supports python3 only
+# There's no gdb module
 %add_python3_req_skip gdb
+%add_python_req_skip gdb
 
 # Automatically added by buildreq on Wed Apr 22 2015
 # optimized out: libcloog-isl4 python-base python-modules python-modules-compiler python-modules-email python3 python3-base
@@ -78,6 +80,9 @@ ln -s lib.linux-i686-%_python3_version build/lib.linux-%_arch-%_python3_version
 %python3_sitelibdir/*
 
 %changelog
+* Thu Oct 04 2018 Fr. Br. George <george@altlinux.ru> 1.10.1-alt2
+- Remove python*(gdb) dependency
+
 * Thu Sep 20 2018 Fr. Br. George <george@altlinux.ru> 1.10.1-alt1
 - Autobuild version bump to 1.10.1
 
