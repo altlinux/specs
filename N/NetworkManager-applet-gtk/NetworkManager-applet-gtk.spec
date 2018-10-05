@@ -17,7 +17,7 @@
 %endif
 
 Name: NetworkManager-applet-gtk
-Version: 1.8.16
+Version: 1.8.18
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -249,6 +249,9 @@ make check
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Mon Sep 10 2018 Mikhail Efremov <sem@altlinux.org> 1.8.18-alt1
+- Updated to 1.8.18.
+
 * Wed Aug 08 2018 Mikhail Efremov <sem@altlinux.org> 1.8.16-alt1
 - Add mobile-broadband-provider-info to BR.
 - Updated to 1.8.16.

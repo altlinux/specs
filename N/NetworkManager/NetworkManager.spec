@@ -1,5 +1,5 @@
-#define git_date .git20170629
-%define git_date %nil
+%define git_hash .gitcd3aacefdd0b
+#define git_hash %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -58,8 +58,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.12.2
-Release: alt3%git_date
+Version: 1.14.1
+Release: alt1%git_hash
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -82,6 +82,7 @@ BuildRequires(pre): rpm-build-licenses
 # For tests
 %{?!_without_check:%{?!_disable_check:BuildPreReq: dbus dhcpcd dhcp-client}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-pygobject3 python-module-dbus}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 
 BuildPreReq: intltool libgcrypt-devel libtool
 BuildRequires: iproute2 libnl-devel libwireless-devel ppp-devel
@@ -113,8 +114,6 @@ Requires: %name-bluetooth = %version-%release
 Requires: %name-wifi = %version-%release
 Requires: %name-wwan = %version-%release
 Requires: %name-ppp = %version-%release
-
-Provides: network-config-subsystem
 
 %description
 NetworkManager is a system service that manages network interfaces and
@@ -148,6 +147,8 @@ Conflicts: NetworkManager-gnome < 1.1.90
 Conflicts: dhcpcd < %dhcpcd_version
 
 Obsoletes: nmcli
+
+Provides: network-config-subsystem
 
 %description daemon
 NetworkManager is a system service that manages network interfaces and
@@ -769,6 +770,20 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Oct 05 2018 Mikhail Efremov <sem@altlinux.org> 1.14.1-alt1.gitcd3aacefdd0b
+- Upstream git snapshot (nm-1-14 branch).
+
+* Mon Sep 10 2018 Mikhail Efremov <sem@altlinux.org> 1.13.90-alt1
+- Require /proc for tests.
+- etcnet-alt tests: Fix interface name for test.
+- etcnet-alt: Don't try to unref NULL.
+- etcnet-alt: Use interface name instead of MAC to restrict connection.
+- etcnet-alt: Use nm_connection_get_setting_connection().
+- etcnet-alt: Fix nm_etcnet_connection_get_id().
+- etcnet-alt: Update for upstream changes.
+- Move network-config-subsystem provide to daemon subpackage.
+- Updated to 1.13.90 (1.14-rc1).
+
 * Fri Aug 03 2018 Mikhail Efremov <sem@altlinux.org> 1.12.2-alt3
 - Disable ovs plugin for mips.
 
