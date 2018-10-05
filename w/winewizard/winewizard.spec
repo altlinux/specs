@@ -1,6 +1,6 @@
 Name:	 winewizard
 Version: 3.0.2
-Release: alt1
+Release: alt2
 Summary: Wine Wizard is a new GUI for Wine written in Qt
 
 License: GPLv3+
@@ -10,6 +10,7 @@ URL:	 http://wwizard.net/
 Source0: %name-%version.tar
 #VCS:	 https://github.com/LLIAKAJL/WineWizard
 Patch1:	 WineWizard-2.0.0-desktop.patch
+Patch2:	 winewizard-alt-build-with-qt5.11.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  qt5-base-devel
@@ -42,6 +43,7 @@ executing(disabled by default).
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
 
 %build
 %qmake_qt5 PREFIX=%_prefix
@@ -57,6 +59,9 @@ executing(disabled by default).
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Fri Oct 05 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt2
+- Fix build with Qt 5.11.
+
 * Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt1
 - new version 3.0.2
 
