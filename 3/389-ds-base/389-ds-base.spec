@@ -7,7 +7,7 @@
 
 Name: 389-ds-base
 Version: 1.3.8.8
-Release: alt2
+Release: alt3
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -46,6 +46,7 @@ Conflicts: lprng
 %add_perl_lib_path %_libdir/%pkgname/perl
 %add_findprov_skiplist %_datadir/%pkgname/script-templates/*
 %add_findreq_skiplist %_datadir/%pkgname/script-templates/* %_sbindir/*-%pkgname
+%add_python_req_skip gdb
 
 %description
 389 Directory Server is an LDAPv3 compliant server. Use setup-ds.pl to
@@ -286,6 +287,9 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun_service %pkgname
 %preun_service %pkgname-snmp
 %changelog
+* Fri Oct 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.8.8-alt3
+- Remove python2.7(gdb) requirement.
+
 * Thu Sep 20 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.3.8.8-alt2
 - autoreconf moved inot %%build
 
