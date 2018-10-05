@@ -2,7 +2,7 @@
 
 Name:    playonlinux
 Version: 4.2.10
-Release: alt3.1
+Release: alt4
 
 Summary: Play your Windows games on Linux
 License: GPLv3
@@ -15,7 +15,7 @@ Source1: playonlinux.sh
 Source2: %oname.desktop
 
 BuildRequires: python-module-wx3.0
-Requires: ImageMagick
+Requires: ImageMagick-tools
 Requires: wget
 Requires: gettext
 Requires: unzip
@@ -74,6 +74,9 @@ ln -sf /lib/libnss_db.so.2 %buildroot%_libdir/%name/libnss_db.so.2
 %_libdir/%name/*
 
 %changelog
+* Tue Oct 02 2018 Grigory Ustinov <grenka@altlinux.org> 4.2.10-alt4
+- Remove dependency on ImageMagick.
+
 * Thu Apr 21 2016 Alexey Shabalin <shaba@altlinux.ru> 4.2.10-alt3.1
 - rebuild with python-module-wx3.0
 
