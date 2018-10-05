@@ -1,6 +1,6 @@
 Name: libsigrok
 Version: 0.5.0
-Release: alt2
+Release: alt3
 
 Summary: sigrok -- signal analysis software suite
 License: GPLv3
@@ -13,6 +13,7 @@ BuildRequires: glib2-devel libzip-devel libserialport-devel
 BuildRequires: libftdi1-devel libusb-devel libieee1284-devel
 # c++ bindings
 BuildRequires: gcc-c++ doxygen libcheck-devel libglibmm-devel
+BuildRequires: python2.7(xml.etree)
 # python bindings
 #BuildRequires: swig pkgconfig(pygobject-3.0)
 
@@ -95,6 +96,9 @@ install -pm0644 -D contrib/z60_libsigrok.rules %buildroot%_udevrulesdir/70-sigro
 %_pkgconfigdir/libsigrokcxx.pc
 
 %changelog
+* Fri Oct 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.0-alt3
+- buildreqs revised
+
 * Wed Jun 21 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.0-alt2
 - added udev rules file, uaccess and group based
 
