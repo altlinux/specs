@@ -2,7 +2,7 @@
 %def_disable man
 
 Name:    ruby-%pkgname
-Version: 1.16.4
+Version: 1.16.6
 Release: alt1
 
 Summary: Manage your Ruby application's gem dependencies
@@ -99,6 +99,12 @@ rm -rf %buildroot%_mandir/*.ronn
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Oct 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.16.6-alt1
+- New version.
+
+* Wed Sep 19 2018 Andrey Cherepanov <cas@altlinux.org> 1.16.5-alt1
+- New version.
+
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 1.16.4-alt1
 - New version.
 
