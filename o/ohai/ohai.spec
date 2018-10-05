@@ -1,7 +1,7 @@
 %define  pkgname ohai
  
 Name: 	 %pkgname
-Version: 14.5.7
+Version: 14.5.9
 Release: alt1
  
 Summary: Ohai profiles your system and emits JSON
@@ -60,6 +60,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Oct 05 2018 Andrey Cherepanov <cas@altlinux.org> 14.5.9-alt1
+- New version.
+
 * Thu Oct 04 2018 Andrey Cherepanov <cas@altlinux.org> 14.5.7-alt1
 - New version.
 
