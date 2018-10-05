@@ -1,7 +1,7 @@
 %define  modulename xcaplib
 
 Name:    python-module-%modulename
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: XCAP (RFC4825) client library
@@ -47,5 +47,8 @@ manage documents on an XCAP server.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Oct 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1
+- New version.
+
 * Fri Mar 02 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus
