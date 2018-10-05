@@ -1,7 +1,7 @@
 %define  modulename otr
 
 Name:    python-module-%modulename
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Off-The-Record Messaging protocol implementation for Python
@@ -43,5 +43,8 @@ SHA-1/SHA-256 hash functions.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Oct 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1
+- New version.
+
 * Fri Mar 02 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus
