@@ -7,21 +7,24 @@
 %def_enable gtk_doc
 
 Name: %_name%api_ver
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: GStreamer streaming media framework runtime
 License: LGPL
 Group: System/Libraries
-URL: http://gstreamer.freedesktop.org
+Url: http://gstreamer.freedesktop.org
+
+Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
+
+Provides: %_name = %version-%release
 
 PreReq: libcap-utils
 Requires: lib%name = %version-%release
 
-Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
-
 %define glib_ver 2.40.0
 
+BuildRequires(pre): rpm-build-gir
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: flex gcc-c++ ghostscript-utils gtk-doc libcheck-devel libxml2-devel
 BuildRequires: python-modules sgml-common transfig xml-utils gobject-introspection-devel
@@ -38,6 +41,7 @@ plugins.
 %package -n lib%name
 Summary: Shared libraries of GStreamer
 Group: System/Libraries
+Provides: lib%_name = %version-%release
 
 %description -n lib%name
 This package contains the shared libraries of the GStreamer media framework
@@ -45,6 +49,7 @@ This package contains the shared libraries of the GStreamer media framework
 %package -n lib%name-gir
 Summary: GObject introspection data for the GStreamer library
 Group: System/Libraries
+Provides: lib%_name-gir = %version-%release
 Requires: lib%name = %version-%release
 
 %description -n lib%name-gir
@@ -53,6 +58,7 @@ GObject introspection data for the GStreamer library
 %package devel
 Summary: Development files for GStreamer streaming-media framework
 Group: Development/C
+Provides: %_name-devel = %version-%release
 Requires: lib%name = %version-%release
 
 %description devel
@@ -63,6 +69,7 @@ develop applications and plugins for GStreamer
 Summary: GObject introspection devel data for the GStreamer library
 Group: System/Libraries
 BuildArch: noarch
+Provides: lib%_name-gir-devel = %version-%release
 Requires: lib%name-gir = %version-%release %name-devel = %version-%release
 
 %description -n lib%name-gir-devel
@@ -72,6 +79,7 @@ GObject introspection devel data for the GStreamer library
 Summary: Development documentation for GStreamer
 Group: Development/C
 BuildArch: noarch
+Provides: %_name-devel-doc = %version-%release
 
 %description devel-doc
 This package contains development documentation for GStreamer
@@ -79,6 +87,7 @@ This package contains development documentation for GStreamer
 %package utils
 Summary: GStreamer utilities
 Group: System/Libraries
+Provides: %_name-utils = %version-%release
 Requires: lib%name = %version-%release
 
 %description utils
@@ -162,6 +171,9 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_datadir/bash-completion/helpers/gst
 
 %changelog
+* Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
+- 1.14.4
+
 * Tue Sep 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.3-alt2
 - packaged bash-completions
 

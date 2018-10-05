@@ -8,13 +8,17 @@
 %def_disable gtk_doc
 
 Name: %_name-base%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
 Group: System/Libraries
 License: LGPL
 Url: http://gstreamer.freedesktop.org/
+
+Source: http://gstreamer.freedesktop.org/src/%_name-base/%_name-base-%version.tar.xz
+
+Provides: %_name-base = %version-%release
 
 Requires: lib%_name%api_ver = %version-%release
 Requires: gstreamer%api_ver >= %ver_major
@@ -23,18 +27,17 @@ Conflicts: gst-plugins-bad%api_ver < %ver_major
 Provides: gstreamer%api_ver(audio-hardware-sink) = %version
 Provides: gstreamer%api_ver(audio-hardware-source) = %version
 
-Source: http://gstreamer.freedesktop.org/src/%_name-base/%_name-base-%version.tar.xz
-
 %define opus_ver 0.9.4
 
+BuildRequires(pre): rpm-build-gir
 BuildRequires: gcc-c++ orc >= 0.4.18 liborc-test-devel gtk-doc
-BuildRequires: gstreamer%api_ver-devel >= %ver_major libgstreamer%api_ver-gir-devel
+BuildRequires: gstreamer%api_ver-devel >= %version libgstreamer%api_ver-gir-devel
 BuildRequires: libgudev-devel libGL-devel libGLES-devel libdrm-devel libgbm-devel
 BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 BuildRequires: libXext-devel libXv-devel libSM-devel libalsa-devel libgtk+3-devel libvisual0.4-devel iso-codes-devel
 BuildRequires: libcdparanoia-devel liboil-devel libtheora-devel libvorbis-devel libopus-devel >= %opus_ver
-BuildRequires: python-module-PyXML python-modules-encodings gobject-introspection-devel
-
+BuildRequires: python-module-PyXML python-modules-encodings python-modules-distutils
+BuildRequires: gobject-introspection-devel
 
 %description
 GStreamer Base Plug-ins is a well-groomed and well-maintained
@@ -46,6 +49,7 @@ included.
 %package -n lib%_name%api_ver
 Summary: GStreamer plugin libraries
 Group: System/Libraries
+Provides: lib%_name = %version-%release
 
 %description -n lib%_name%api_ver
 Helper libraries for GStreamer plugins, containing base classes useful for elements
@@ -53,6 +57,7 @@ Helper libraries for GStreamer plugins, containing base classes useful for eleme
 %package -n lib%_name%api_ver-gir
 Summary: GObject introspection data for the GStreamer library
 Group: System/Libraries
+Provides: lib%_name-gir = %version-%release
 Requires: lib%_name%api_ver = %version-%release
 
 %description -n lib%_name%api_ver-gir
@@ -61,6 +66,7 @@ GObject introspection data for the GStreamer library
 %package -n %_name%api_ver-tools
 Summary: GStreamer plugin tools
 Group: Development/Other
+Provides: %_name-tools = %version-%release
 Requires: %name = %version-%release
 
 %description -n %_name%api_ver-tools
@@ -70,6 +76,7 @@ GStreamer Base Plugins distribution.
 %package -n %_name%api_ver-devel
 Summary: Development files for GStreamer plugins
 Group: Development/C
+Provides: %_name-devel = %version-%release
 Requires: lib%_name%api_ver = %version-%release
 Requires: gstreamer%api_ver-devel
 
@@ -81,6 +88,7 @@ to develop GStreamer plugins.
 Summary: Development documentation for GStreamer Base plugins
 Group: Development/Documentation
 BuildArch: noarch
+Provides: %_name-devel-doc = %version-%release
 
 %description -n %_name%api_ver-devel-doc
 This package contains development documentation for GStreamer Base Plugins
@@ -89,6 +97,7 @@ This package contains development documentation for GStreamer Base Plugins
 Summary: GObject introspection devel data for the GStreamer library
 Group: System/Libraries
 BuildArch: noarch
+Provides: %_name-gir-devel = %version-%release
 Requires: lib%_name%api_ver-gir = %version-%release
 Requires: %_name%api_ver-devel = %version-%release
 
@@ -170,6 +179,9 @@ GObject introspection devel data for the GStreamer library
 
 
 %changelog
+* Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
+- 1.14.4
+
 * Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.3-alt1
 - 1.14.3
 

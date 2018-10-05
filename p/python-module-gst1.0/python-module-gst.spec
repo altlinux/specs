@@ -4,23 +4,25 @@
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 
 Name: python-module-gst%gst_api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: GStreamer overrides for PyGobject
 Group: Development/Python
-License: LGPL
+License: LGPL2+
 Url: http://gstreamer.freedesktop.org/
 
 Provides: %_name = %version-%release
+Provides: python-module-gst = %version-%release
 
 Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 Patch: %name-1.5.2-python-libs.patch
 
-BuildRequires: rpm-build-gir gst-plugins%gst_api_ver-devel
+BuildRequires(pre): rpm-build-gir rpm-build-python rpm-build-python3
+BuildRequires: gst-plugins%gst_api_ver-devel
 BuildRequires: python-devel python-module-pygobject3-devel python-modules-compiler
 # for python3
-BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
+BuildRequires: python3-devel python3-module-pygobject3-devel
 # for check
 BuildRequires: /proc gstreamer%gst_api_ver gst-plugins-base%gst_api_ver
 
@@ -29,8 +31,8 @@ This package provides GStreamer overrides for PyGobject.
 
 %package -n python3-module-gst%gst_api_ver
 Summary: GStreamer overrides for PyGobject
-Group: Development/Python
-License: LGPLv2+
+Group: Development/Python3
+Provides: python3-module-gst = %version-%release
 
 %description -n python3-module-gst%gst_api_ver
 This package provides GStreamer overrides for PyGobject.
@@ -75,6 +77,9 @@ popd
 
 
 %changelog
+* Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
+- 1.14.4
+
 * Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.3-alt1
 - 1.14.3
 

@@ -6,7 +6,7 @@
 %def_enable python3
 
 Name: gst-validate
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: GStreamer Validate Tools and Library
@@ -16,7 +16,7 @@ Url: http://cgit.freedesktop.org/gstreamer/gst-devtools/
 
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 
-%define gst_ver %ver_major
+%define gst_ver %version
 
 Requires: lib%name = %version-%release
 Requires: gst-plugins-base%gst_api_ver
@@ -150,6 +150,9 @@ GObject introspection devel data for the Gst Validate library.
 %_datadir/gtk-doc/html/%name-plugins-%api_ver/
 
 %changelog
+* Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
+- 1.14.4
+
 * Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.3-alt1
 - 1.14.3
 

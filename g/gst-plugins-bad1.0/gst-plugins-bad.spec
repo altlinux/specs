@@ -18,7 +18,7 @@
 %def_enable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -26,18 +26,22 @@ Group: System/Libraries
 License: LGPL
 Url: http://gstreamer.freedesktop.org/
 
+Source: http://gstreamer.freedesktop.org/src/%_name-bad/%_name-bad-%version.tar.xz
+
+Provides: %_name-bad = %version-%release
+
 Requires: lib%_name%api_ver >= %ver_major
 Requires: gstreamer%api_ver >= %ver_major
 
-Source: http://gstreamer.freedesktop.org/src/%_name-bad/%_name-bad-%version.tar.xz
-
-BuildRequires: gst-plugins%api_ver-devel >= %ver_major gst-plugins%api_ver-gir-devel
+BuildRequires(pre): rpm-build-gir
+BuildRequires: gst-plugins%api_ver-devel >= %version gst-plugins%api_ver-gir-devel
 BuildRequires: bzlib-devel gcc-c++ gtk-doc libSDL-devel libX11-devel
 BuildRequires: libalsa-devel libcdaudio-devel libdca-devel libdirac-devel libdvdnav-devel libexif-devel
 BuildRequires: libfaad-devel libgio-devel libgsm-devel libjasper-devel libmms-devel
 %{?_enable_mjpegtools:BuildRequires: libmjpegtools-devel}
 BuildRequires: libmpcdec-devel libneon-devel liboil-devel libsoundtouch-devel libssl-devel libmodplug-devel
-BuildRequires: libcelt-devel libxvid-devel python-module-PyXML python-modules-email python-modules-encodings
+BuildRequires: libcelt-devel libxvid-devel
+BuildRequires: python-module-PyXML python-modules-email python-modules-encodings python-modules-distutils
 %{?_enable_timidity:BuildRequires: libtimidity-devel timidity-instruments}
 %{?_enable_libkate:BuildRequires: libkate-devel libtiger-devel}
 %{?_enable_libdc1394:BuildRequires: libdc1394-devel}
@@ -74,6 +78,7 @@ on the other factors.
 %package devel
 Summary: Development files for GStreamer Bad Plug-ins
 Group: Development/C
+Provides: %_name-bad-devel = %version-%release
 Requires: %name = %version-%release
 
 %description devel
@@ -84,6 +89,7 @@ to develop GStreamer Bad Plug-ins.
 Summary: Documentation for %name
 Group: Documentation
 BuildArch: noarch
+Provides: %_name-bad-doc = %version-%release
 
 %description doc
 This package contains documentation for GStreamer Bad Plug-ins.
@@ -140,6 +146,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
+- 1.14.4
+
 * Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.3-alt1
 - 1.14.3
 

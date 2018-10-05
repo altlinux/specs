@@ -11,21 +11,24 @@
 %def_enable pulse
 
 Name: %_name-good%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
 License: LGPL
-URL: http://gstreamer.freedesktop.org/
+Url: http://gstreamer.freedesktop.org/
 
 Source: http://gstreamer.freedesktop.org/src/%_name-good/%_name-good-%version.tar.xz
 
-BuildRequires: bzlib-devel gcc-c++ gst-plugins%api_ver-devel >= %ver_major
+Provides: %_name-good = %version-%release
+
+BuildRequires: bzlib-devel gcc-c++ gst-plugins%api_ver-devel >= %version
 BuildRequires: gtk-doc libSM-devel libXdamage-devel libXext-devel libXfixes-devel
 BuildRequires: libXv-devel libavc1394-devel libcairo-devel libdv-devel libflac-devel libiec61883-devel libjpeg-devel
 BuildRequires: liboil-devel libshout2-devel libsoup-devel libtag-devel libv4l-devel libwavpack-devel
-BuildRequires: python-module-PyXML python-modules-email python-modules-encodings liborc-devel orc libgdk-pixbuf-devel
+BuildRequires: python-module-PyXML python-modules-email python-modules-encodings python-modules-distutils
+BuildRequires: liborc-devel orc libgdk-pixbuf-devel
 BuildRequires: libpng-devel libcairo-gobject-devel libgudev-devel libspeex-devel zlib-devel libvpx-devel
 BuildRequires: libmpg123-devel liblame-devel
 BuildRequires: libgtk+3-devel
@@ -42,6 +45,7 @@ library).
 Summary: Development documentation for GStreamer Good plugins
 Group: Development/Documentation
 BuildArch: noarch
+Provides: %_name-good-devel-doc = %version-%release
 
 %description devel-doc
 This package contains development documentation for GStreamer Good Plugins
@@ -77,6 +81,9 @@ This package contains development documentation for GStreamer Good Plugins
 %_gtk_docdir/*
 
 %changelog
+* Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
+- 1.14.4
+
 * Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.3-alt1
 - 1.14.3
 
