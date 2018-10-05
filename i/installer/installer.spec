@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.42
+Version: 1.8.43
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,11 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Oct 05 2018 Michael Shigorin <mike@altlinux.org> 1.8.43-alt1
+- Try harder to sync/umount rootfs before rebooting
+- Ensure /proc is mounted before checking for "poweroff" keyword
+- Avoid curl spam
+
 * Fri Aug 17 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.8.42-alt1
 - Copying .disk/info into destination added
 
