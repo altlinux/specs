@@ -9,13 +9,15 @@
 %def_enable gtk_doc
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
 Group: System/Libraries
 License: LGPL
-URL: http://gstreamer.freedesktop.org/
+Url: http://gstreamer.freedesktop.org/
+
+Provides: %_name-ugly = %version-%release
 
 Requires: gstreamer%api_ver >= %ver_major
 Requires: lib%_name%api_ver >= %ver_major
@@ -25,10 +27,11 @@ Provides: %_name%api_ver-mad = %version-%release
 
 Source: http://gstreamer.freedesktop.org/src/%_name-ugly/%_name-ugly-%version.tar.xz
 
-BuildRequires: gcc-c++ gst-plugins%api_ver-devel gtk-doc liba52-devel libcdio-devel libid3tag-devel
-BuildRequires: liborc-devel orc
-BuildRequires: libmad-devel libmpeg2-devel liboil-devel libx264-devel python-module-PyXML
-BuildRequires: python-modules-encodings libopencore-amrnb-devel libopencore-amrwb-devel libdvdread-devel
+BuildRequires: gcc-c++ liborc-devel orc gst-plugins%api_ver-devel >= %version
+BuildRequires: gtk-doc liba52-devel libcdio-devel libid3tag-devel
+BuildRequires: libmad-devel libmpeg2-devel liboil-devel libx264-devel
+BuildRequires: python-module-PyXML python-modules-encodings python-modules-distutils
+BuildRequires:  libopencore-amrnb-devel libopencore-amrwb-devel libdvdread-devel
 
 %description
 GStreamer Ugly Plug-ins is a set of plug-ins that have good quality
@@ -41,6 +44,7 @@ The code might be widely known to present patent problems.
 Summary: Development documentation for GStreamer Ugly plugins
 Group: Development/Documentation
 BuildArch: noarch
+Provides: %_name-ugly-devel-doc = %version-%release
 
 %description devel-doc
 This package contains development documentation for GStreamer Ugly plugin
@@ -61,7 +65,7 @@ collection.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %_name-ugly-%api_ver
 
@@ -75,6 +79,9 @@ collection.
 %_gtk_docdir/%_name-ugly-plugins-%api_ver/*
 
 %changelog
+* Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
+- 1.14.4
+
 * Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.3-alt1
 - 1.14.3
 

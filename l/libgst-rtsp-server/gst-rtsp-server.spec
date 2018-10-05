@@ -8,7 +8,7 @@
 %def_with tests_package
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: GStreamer-%api_ver RTSP server library
@@ -19,7 +19,7 @@ Url: http://gstreamer.freedesktop.org/modules/%_name-server.html
 Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 
 %define glib_ver 2.32.0
-%define gst_ver 1.6.1
+%define gst_ver %version
 
 Requires: gst-plugins-base%api_ver >= %gst_ver gst-plugins-good%api_ver gst-plugins-bad%api_ver
 
@@ -128,6 +128,9 @@ popd
 %endif
 
 %changelog
+* Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
+- 1.14.4
+
 * Mon Sep 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.3-alt1
 - 1.14.3
 
