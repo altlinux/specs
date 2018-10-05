@@ -17,7 +17,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt3
+Release: alt4
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -506,6 +506,10 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Fri Oct 05 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0.1-alt4
+- Add _allow_deps_with_beginning_dot macro to allow dependencies
+  beginning with a dot character in spec file (vseleznv@).
+
 * Tue Sep 18 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.13.0.1-alt3
 - write installed/removed package disttag if present to syslog.
 - fixed I18N string displaying (ALT#33190).
