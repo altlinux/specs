@@ -4,13 +4,13 @@
 %def_enable check
 
 Name: libepoxy
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Direct Rendering Manager runtime library
 Group: System/Libraries
 License: MIT
-Url: http://github.com/anholt/libepoxy
+Url: https://github.com/anholt/libepoxy
 
 Source: %url/releases/download/%version/%name-%version.tar.xz
 #Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -56,9 +56,12 @@ developing applications that use %name
 %_includedir/epoxy/
 %_libdir/%name.so
 %_pkgconfigdir/epoxy.pc
-%doc ChangeLog
+
 
 %changelog
+* Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.5.3-alt1
+- 1.5.3
+
 * Sun May 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
 - 1.5.2
 
