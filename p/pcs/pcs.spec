@@ -1,8 +1,8 @@
 %define pyagentx_version 0.4.pcs.1
 
 Name: 	  pcs
-Version:  0.9.165
-Release:  alt1.1
+Version:  0.9.166
+Release:  alt1
 Epoch:    1
 
 Summary:  Pacemaker/Corosync configuration system
@@ -133,6 +133,9 @@ rm -rf %buildroot/%ruby_sitelibdir/pcsd/*{.service,.logrotate,debian,orig}*
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Fri Oct 05 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.9.166-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.9.165-alt1.1
 - Rebuild with new Ruby autorequirements.
 
