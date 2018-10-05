@@ -16,8 +16,8 @@
 %endif
 
 Name: NetworkManager-pptp
-Version: 1.2.6
-Release: alt2%git_date
+Version: 1.2.8
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for pptp
@@ -107,6 +107,9 @@ NetworkManager panel applet.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Oct 05 2018 Mikhail Efremov <sem@altlinux.org> 1.2.8-alt1
+- Updated to 1.2.8.
+
 * Wed Aug 01 2018 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt2
 - Disable libnm-glib-* support.
 - Fix build without libnm-glib-*.
