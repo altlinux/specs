@@ -2,7 +2,7 @@
 
 Name: 	 ruby-gnome2
 Version: 3.2.9
-Release: alt1
+Release: alt2
  
 Summary: Ruby bindings for GNOME
 License: MIT/Ruby
@@ -24,6 +24,7 @@ BuildRequires: gstreamer1.0-devel
 BuildRequires: libexpat-devel
 BuildRequires: libharfbuzz-devel
 BuildRequires: libdrm-devel
+BuildRequires: libpcre-devel
 BuildRequires: libXdmcp-devel
 BuildRequires: libXdamage-devel
 BuildRequires: libXxf86vm-devel
@@ -115,6 +116,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %endif
 
 %changelog
+* Fri Oct 05 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.9-alt2
+- Fix build (add libpcre-devel).
+
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.9-alt1
 - New version.
 
