@@ -1,10 +1,10 @@
 # check deps/npm/package.json for it
-%define npmver 5.6.0
+%define npmver 6.4.1
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 8.11
+%define major 8.12
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -21,7 +21,7 @@
 %define openssl_version 1.0.2n
 %def_with systemssl
 
-%global libuv_abi 1.19.1
+%global libuv_abi 1.19.2
 %def_with systemuv
 
 %global libicu_abi 6.0
@@ -36,7 +36,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.4
+Version: %major.0
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -295,6 +295,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Sat Oct 06 2018 Vitaly Lipatov <lav@altlinux.ru> 8.12.0-alt1
+- new version 8.12.0 (with rpmrb script)
+- 2018-09-11, Version 8.12.0 'Carbon' (LTS)
+
 * Wed Aug 29 2018 Vitaly Lipatov <lav@altlinux.ru> 8.11.4-alt1
 - new version 8.11.4 (with rpmrb script)
 - 2018-08-15, Version 8.11.4 'Carbon' (LTS), @rvagg
