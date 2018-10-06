@@ -1,8 +1,8 @@
 %def_without qt4
 
 Name: gimagereader
-Version: 3.2.99
-Release: alt3
+Version: 3.3.0
+Release: alt1
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -18,7 +18,7 @@ Source: http://sourceforge.net/projects/gimagereader/files/%version/%name-%versi
 BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake intltool gcc-c++
-BuildRequires: libgomp-devel libjson-glib-devel libsane-devel libxml++2-devel libleptonica-devel libpcre-devel libpixman-devel libexpat-devel libdrm-devel libpodofo-devel libdjvu-devel libzip-devel libuuid-devel tesseract-devel
+BuildRequires: libgomp-devel libjson-glib-devel libsane-devel libxml++2-devel libleptonica-devel libpcre-devel libexpat-devel libdrm-devel libpodofo-devel libdjvu-devel libzip-devel libuuid-devel tesseract-devel
 
 BuildRequires: python3 python3-module-pygobject3
 
@@ -149,6 +149,7 @@ cp -al build-qt5 BUILD
 %cmakeinstall_std
 
 %find_lang %name
+rm -rfv %_datadir/locale/sr_Cyrl/ %_datadir/locale/sr_Latn/
 
 # make link to old base command
 ln -s %name-gtk %buildroot%_bindir/%name
@@ -184,6 +185,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat Oct 06 2018 Vitaly Lipatov <lav@altlinux.ru> 3.3.0-alt1
+- new version 3.3.0 (with rpmrb script)
+
 * Thu Aug 30 2018 Vitaly Lipatov <lav@altlinux.ru> 3.2.99-alt3
 - rebuild with podofo 0.9.6
 
