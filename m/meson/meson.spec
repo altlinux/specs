@@ -7,7 +7,7 @@
 
 Name: meson
 Version: 0.47.2
-Release: alt1
+Release: alt2
 
 Summary: High productivity build system
 Group: Development/Python3
@@ -33,8 +33,9 @@ Requires: ninja-build
 %add_python3_req_skip __main__
 %{?_with_polkit:Requires: polkit}
 
-BuildRequires: rpm-build-python3 python3-devel >= %python_ver python3-module-setuptools
-BuildRequires: ninja-build libpolkit-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: ninja-build python3-devel >= %python_ver python3-module-setuptools
+%{?_with_polkit:BuildRequires: libpolkit-devel}
 %if_enabled check
 BuildRequires: gcc gcc-c++ gcc-fortran gcc-objc gcc-objc++
 BuildRequires: java-devel /proc
@@ -95,6 +96,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 
 %changelog
+* Sat Oct 06 2018 Yuri N. Sedunov <aris@altlinux.org> 0.47.2-alt2
+- optional libpolkit-devel BR, disabled by default
+
 * Thu Aug 30 2018 Yuri N. Sedunov <aris@altlinux.org> 0.47.2-alt1
 - 0.47.2
 
