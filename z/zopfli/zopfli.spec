@@ -1,6 +1,6 @@
 Name: zopfli
 Version: 1.0.2
-Release: alt1.1
+Release: alt2
 
 Summary: Zlib compatible better compressor
 
@@ -19,6 +19,7 @@ Patch: 0001-Honor-user-C-XX-FLAGS.patch
 BuildRequires: gcc-c++
 
 %add_optflags -Wno-unused-function
+%add_optflags -D_FILE_OFFSET_BITS=64
 
 %description
 Zopfli is a compression algorithm bit-stream compatible with
@@ -103,6 +104,9 @@ ln -s libzopflipng.so.%version %buildroot%_libdir/libzopflipng.so.1
 
 
 %changelog
+* Sat Oct 06 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt2
+- build with -D_FILE_OFFSET_BITS=64
+
 * Sun Jun 10 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt1.1
 - Rebuild for aarch64.
 
