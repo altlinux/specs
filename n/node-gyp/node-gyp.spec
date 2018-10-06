@@ -1,5 +1,5 @@
 Name: node-gyp
-Version: 3.6.2
+Version: 3.8.0
 Release: alt1
 
 Summary: Node.js native addon build tool
@@ -102,6 +102,9 @@ ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %buildroot%_bindir/node-gyp
 %doc README.md LICENSE
 
 %changelog
+* Sat Oct 06 2018 Vitaly Lipatov <lav@altlinux.ru> 3.8.0-alt1
+- new version (3.8.0) with rpmgs script
+
 * Tue May 22 2018 Vitaly Lipatov <lav@altlinux.ru> 3.6.2-alt1
 - new version (3.6.2) with rpmgs script
 

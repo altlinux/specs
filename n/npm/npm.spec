@@ -1,5 +1,5 @@
 Name: npm
-Version: 5.6.0
+Version: 6.4.1
 Release: alt1
 
 Summary: A package manager for node
@@ -8,14 +8,14 @@ Group: Development/Tools
 License: MIT License
 Url: http://nodejs.org/
 
-# Source-url: https://github.com/npm/npm/archive/v%version.tar.gz
+# Source-url: https://github.com/npm/cli/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-nodejs
 
 #BuildRequires: node >= 6.9
 #Requires:	node >= 6.9
-Requires: npm(node-gyp) = 3.6.2
+Requires: npm(node-gyp) = 3.8.0
 
 BuildArch:	noarch
 
@@ -63,6 +63,9 @@ rm -rf %buildroot%nodejs_sitelib/%name/node_modules/request/node_modules/node-uu
 %nodejs_sitelib/%name/
 
 %changelog
+* Sat Oct 06 2018 Vitaly Lipatov <lav@altlinux.ru> 6.4.1-alt1
+- new version 6.4.1 (with rpmrb script)
+
 * Tue May 22 2018 Vitaly Lipatov <lav@altlinux.ru> 5.6.0-alt1
 - new version 5.6.0 (with rpmrb script)
 
