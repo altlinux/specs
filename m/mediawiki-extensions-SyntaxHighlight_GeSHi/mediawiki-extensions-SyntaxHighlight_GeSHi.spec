@@ -1,7 +1,10 @@
 %define ShortName SyntaxHighlight_GeSHi
 
+%define mwversion 1.31
+%setup_mediawiki_ext %mwversion %ShortName
+
 Name: mediawiki-extensions-%ShortName
-Version: 1.22.4
+Version: 2.0
 Release: alt1
 
 Summary: Extension for mediawiki to highlight source code with GeSHi.
@@ -15,11 +18,13 @@ Packager: Michael A. Kangin <prividen@altlinux.org>
 
 BuildArch: noarch
 
-BuildPreReq: rpm-build-mediawiki >= 0.3
+BuildRequires(pre): rpm-build-mediawiki >= 0.6
 
-Requires: geshi > 1.0.8.10
-Requires: mediawiki-common >= 1.22
+Requires: python3-module-Pygments >= 2.2.0
 
+Requires: mediawiki-common >= %mwversion
+
+# Source-url: https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/archive/%MWREL.zip
 Source: %ShortName-%version.tar
 
 %description
@@ -35,13 +40,18 @@ module exactly as it was typed.
 
 %install
 %mediawiki_ext_install 50 %ShortName
-ln -s %_datadir/geshi %buildroot%_datadir/mediawiki/extensions/%ShortName/
+rm -f %buildroot%_datadir/mediawiki/extensions/%ShortName/pygments/pygmentize
+ln -s %_bindir/pygmentize3 %buildroot%_datadir/mediawiki/extensions/%ShortName/pygments/pygmentize
 
 %files -f %ShortName.files
-%add_findreq_skiplist %_datadir/mediawiki/extensions/%ShortName/geshi/
+%add_findreq_skiplist %_datadir/mediawiki/extensions/%ShortName/pygments
 %doc README
 
 %changelog
+* Sat Oct 06 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0-alt1
+- new version (2.0) with rpmgs script, build for MW >= 1.31
+- use pygmentize instead geshi
+
 * Wed Mar 26 2014 Vitaly Lipatov <lav@altlinux.ru> 1.22.4-alt1
 - new version 1.22.4
 
