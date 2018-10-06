@@ -1,6 +1,6 @@
 Name: libsearpc
 Version: 3.1
-Release: alt2
+Release: alt3
 
 Summary: RPC library for Seafile
 
@@ -16,6 +16,8 @@ Source: %name-%version.tar
 BuildRequires: glib2-devel libjansson-devel
 
 BuildRequires: libgio-devel
+
+BuildRequires: python-dev
 
 %description
 Searpc is a simple C language RPC framework based on GObject system.
@@ -54,6 +56,9 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Oct 06 2018 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt3
+- fix build
+
 * Tue Sep 11 2018 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt2
 - build real 3.1
 
