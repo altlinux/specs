@@ -2,22 +2,23 @@
 %define oname ocamlbdb
 Name: ocaml-bdb
 Version: 4.3.21
-Release: alt8
+Release: alt9
 Summary: OCaml interface to Berkeley-DB
 Packager: Boris Savelev <boris@altlinux.org>
 Source: http://www.eecs.harvard.edu/~stein/%oname-%version.tar.gz
-Url: http://www.eecs.harvard.edu/~stein/
+#Url: http://www.eecs.harvard.edu/~stein/ is not valid anymore!
 License: GPL
 Group: Development/Other
 
 # Automatically added by buildreq on Sat Aug 23 2008
 BuildRequires: libdb4-devel ocaml
-BuildRequires(pre): rpm-build-ubt
 Requires: %name-runtime = %version-%release
 Obsoletes: %name-devel
 Provides: %name-devel = %version-%release
 
 %description
+OCaml interface to Berkeley-DB.
+
 This package contains the development files needed to build applications
 using %name-runtime.
 
@@ -26,10 +27,7 @@ Summary: OCaml interface to Berkeley-DB
 Group: Development/Other
 
 %description runtime
-CamlGI is a library to enable you to write CGI and FastCGI in OCaml. It is
-written 100%% in OCaml so should run on many platforms. The library supports
-multiple simultaneous connections and request multiplexing while presenting an
-easy to use interface.
+OCaml interface to Berkeley-DB.
 
 %prep
 %setup -n %oname-%version
@@ -54,13 +52,20 @@ install -m 644 bdb.cma bdb.cmi libcamlbdb.a %buildroot%_libdir/ocaml/bdb/
 %exclude %_libdir/ocaml/bdb/*.cmi
 
 %changelog
+* Sun Oct 07 2018 Ivan Zakharyaschev <imz@altlinux.org> 4.3.21-alt9
+- Removed the description, which used to be wrong.
+- Removed the project URL, which is not valid anymore.
+- (.spec) Dropped ubt tag, which is excessive since
+  https://www.altlinux.org/Binary_package_identity_change
+  was implemented.
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 4.3.21-alt8
 - rebuilt with ocaml 4.07
 
-* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 4.3.21-alt7%ubt
+* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 4.3.21-alt7.S1
 - rebuilt for ocaml 4.06.1
 
-* Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 4.3.21-alt6%ubt
+* Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 4.3.21-alt6.S1
 - added ubt tag
 - moved out from site-lib dir
 
