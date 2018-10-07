@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180913
+Version: 20180927
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,17 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun Oct 07 2018 Cronbuild Service <cronbuild@altlinux.org> 20180927-alt1
+- upstream changes (GIT 68a4930):
+  + nfp: update Agilio SmartNIC flower firmware to rev AOTC-2.9.A.37 (thx Louis Peens)
+  + nfp: update Agilio SmartNIC firmware to rev 2.1.13 (thx Edwin Peer)
+  + ti-connectivity: add firmware for CC2560(A) Bluetooth (thx David Lechner)
+  + mediatek: add firmware for mt7668u Bluetooth (thx Sean Wang)
+  + nvidia: add GV100 signed firmware (thx Gourav Samaiya)
+  + firmware/icl/dmc: Add v1.07 of DMC for Icelake (thx Anusha Srivatsa)
+  + add Marvell SD8997 firmware image (thx Ganapathi Bhat)
+  + qca: update BT firmware files for QCA ROME chip. (thx Balakrishna Godavarthi)
+
 * Sun Sep 16 2018 Cronbuild Service <cronbuild@altlinux.org> 20180913-alt1
 - upstream changes (GIT 44d4fca):
   + brcm: update firmware for bcm43362 sdio (thx Chi-Hsien Lin)
