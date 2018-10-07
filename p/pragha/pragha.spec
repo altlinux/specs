@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define rdnn_name io.github.pragha-music-player
+%define rdn_name io.github.pragha-music-player
 
 %def_disable libxfce4ui
 %def_enable grilo
@@ -8,7 +8,7 @@
 %def_disable rygel
 
 Name: pragha
-Version: 1.3.92
+Version: 1.3.99
 Release: alt1
 
 Summary: Pragha is a "Fork" of consonance Music manager
@@ -17,7 +17,7 @@ Group: Sound
 Url: http://pragha-music-player.github.io/
 
 %if_disabled snapshot
-Source: %name-%version.tar.gz
+Source: https://github.com/%name-music-player/%name/releases/download/%version/%name-%version.tar.bz2
 %else
 # VCS: https://github.com/pragha-music-player/pragha.git
 Source: %name-%version.tar
@@ -50,11 +50,11 @@ light, and simultaneously complete without obstructing the daily work.
 %prep
 %setup
 %patch
-subst 's/%name.appdata/%rdnn_name.metainfo/' data/Makefile.am
+subst 's/%name.appdata/%rdn_name.metainfo/' data/Makefile.am
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-. autogen.sh
+NOCONFIGURE=1 xdt-autogen
 %configure \
 	%{subst_enable libxfce4ui}
 %make_build V=1
@@ -76,6 +76,9 @@ subst 's/%name.appdata/%rdnn_name.metainfo/' data/Makefile.am
 
 
 %changelog
+* Sat Oct 06 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.99-alt1
+- 1.3.99
+
 * Sat May 12 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.92-alt1
 - updated to v1.3.92-11-gbd864d3
 
