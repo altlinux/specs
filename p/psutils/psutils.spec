@@ -1,20 +1,17 @@
 Name: psutils
-Version: p17
-Release: alt3
-Epoch: 1
+Version: 1.23
+Release: alt1
+Epoch: 2
 
 Summary: PostScript utilities
 License: freeware
 Group: Publishing
+BuildRequires: gnulib
+Requires: /usr/bin/paperconf
 
-Source0: http://www.ctan.org/tex-archive/support/psutils/%name-%version.tar.gz
-Patch0: psutils-make.patch
-Patch1: psutils-maketext.patch
-Patch2: psutils-p17-paper.patch
-Patch3: psutils-manpage.patch
-Patch4: psutils-flip.patch
-Patch5: psutils-perl-unescaped-regexp.patch
-Packager: Fr. Br. George <george@altlinux.ru>
+# https://github.com/rrthomas/psutils
+Source0: %name-%version.tar
+Patch0: psutils-1.23-paperconf.patch
 
 %description
 psutils contains some utilities for manipulating PostScript documents.
@@ -22,29 +19,27 @@ Page selections and rearrangement are supported, including arrengement
 into signatures for booklet printing, and page merging for n-up printing.
 
 %prep
-%setup -n psutils
+%setup 
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p2
+
 
 %build
-make -f Makefile.unix RPM_OPT_FLAGS="%optflags" \
-	BUILDROOT="%buildroot" PERL=/usr/bin/perl
+./bootstrap --skip-git --gnulib-srcdir=/usr/share/gnulib
+%configure
+%make_build
 
 %install
-mkdir -p %buildroot/usr/{bin,share/{man,psutils}}
-make -f Makefile.unix install BUILDROOT="%buildroot"
+%makeinstall 
 
 %files
 %doc LICENSE README
 %_bindir/*
-%_datadir/psutils
 %_man1dir/*
 
 %changelog
+* Fri Oct 05 2018 Anton Farygin <rider@altlinux.ru> 2:1.23-alt1
+- up to 1.23
+
 * Thu Dec 28 2017 Anton Farygin <rider@altlinux.ru> 1:p17-alt3
 - fixed build with  perl-5.26
 
