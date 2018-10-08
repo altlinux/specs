@@ -1,5 +1,5 @@
 Name: percona-toolkit
-Version: 3.0.3
+Version: 3.0.12
 Release: alt1
 
 Summary: Advanced MySQL and system command-line tools
@@ -14,6 +14,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires: perl-devel perl-podlators
+
+# tools are "fat"-packed with all perl packages built-it:
 AutoReq: yes, noperl
 
 Requires: perl-DBI, perl-DBD-mysql
@@ -48,9 +50,12 @@ cp -p blib/man1/*.1p %buildroot%_man1dir
 %files
 %_bindir/pt-*
 %_man1dir/*.1p.*
-%doc Changelog README
+%doc Changelog README.md
 
 %changelog
+* Sun Oct  7 2018 Terechkov Evgenii <evg@altlinux.org> 3.0.12-alt1
+- 3.0.12
+
 * Tue Jul  4 2017 Terechkov Evgenii <evg@altlinux.org> 3.0.3-alt1
 - 3.0.3
 
