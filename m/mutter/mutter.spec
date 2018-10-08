@@ -1,7 +1,7 @@
 # since 3.21.90 (libmutter-clutter-1.0.so private library)
 %set_verify_elf_method unresolved=relaxed
 
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.30
 %define xdg_name org.gnome.mutter
@@ -12,8 +12,8 @@
 %define api_ver 3
 
 Name: mutter
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
@@ -189,6 +189,9 @@ DATADIRNAME=share %configure \
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Tue Oct 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1:3.30.1-alt1
+- 3.30.1
+
 * Sun Sep 30 2018 Yuri N. Sedunov <aris@altlinux.org> 1:3.30.0-alt2
 - updated to 3.30.0-16-g0210b9510
 

@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
@@ -10,8 +10,8 @@
 %def_disable check
 
 Name: gnome-shell
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -34,7 +34,7 @@ AutoReqProv: nopython
 %define session_ver 3.26
 %define clutter_ver 1.21.5
 %define gjs_ver 1.53.90
-%define mutter_ver %ver_major
+%define mutter_ver %version
 %define gtk_ver 3.16.0
 %define gio_ver 2.56.0
 %define gstreamer_ver 1.0
@@ -250,6 +250,9 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %endif
 
 %changelog
+* Tue Oct 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
+- 3.30.1
+
 * Sun Sep 30 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt2
 - updated to 3.30.0-50-gef5e195f3
 

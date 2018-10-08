@@ -7,7 +7,7 @@
 %def_enable classic_mode
 
 Name: gnome-shell-extensions
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -171,6 +171,9 @@ See %_docdir/%name-%version/README for more information.
 %exclude %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.example.gschema.xml
 
 %changelog
+* Tue Oct 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
+- 3.30.1
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 
