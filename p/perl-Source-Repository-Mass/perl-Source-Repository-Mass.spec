@@ -1,7 +1,7 @@
 %define module Source-Repository-Mass
 
 Name: perl-%module
-Version: 0.421
+Version: 0.422
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -35,6 +35,9 @@ Conflicts: perl-Source-Repository < 0.391
 %perl_vendor_privlib/Source*
 
 %changelog
+* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.422-alt1
+- new version
+
 * Tue Oct 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.421-alt1
 - use Source::Shared::FindLocalMirror
 
