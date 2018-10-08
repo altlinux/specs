@@ -4,30 +4,56 @@
 %def_disable ibmlibs
 %set_verify_elf_method no
 
-# p8 support uses this macro
+# stable branches support uses this macro
 %define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 
 Name: mono
-Version: 5.10.0.157
-Release: alt4%ubt
+Version: 5.14.0.177
+Release: alt1
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
 License: MIT
 Url: http://www.mono-project.com
 
+# https://github.com/mono/mono.git
 Source: %name-%version.tar
-Source1: external.tar.xz
+
 # by running the following command:
 # sn -k mono.snk
 # Dec 2015 ALT
 Source2: mono.snk
 Source3: monolite.tar.gz
-# ALT: for packaging, manually pack all external/* subpackage stuff into external.tar.gz because those are submodules and cannot be added normally to git tree without losing history.
 Source4: mono-cert-sync.filetrigger
+
+# External dependencies (git submodules)
+Source5: Newtonsoft.Json-%version.tar
+Source6: api-doc-tools-%version.tar
+Source7: Lucene.Net.Light-%version.tar
+Source8: SharpZipLib-%version.tar
+Source9: api-snapshot-%version.tar
+Source10: aspnetwebstack-%version.tar
+Source11: binary-reference-assemblies-%version.tar
+Source12: bockbuild-%version.tar
+Source13: boringssl-%version.tar
+Source14: cecil-%version.tar
+Source15: cecil-legacy-%version.tar
+Source16: corefx-%version.tar
+Source17: corert-%version.tar
+Source18: ikdasm-%version.tar
+Source19: ikvm-%version.tar
+Source20: linker-%version.tar
+Source21: linker-cecil-%version.tar
+Source22: nuget-buildtasks-%version.tar
+Source23: nunit-lite-%version.tar
+Source24: roslyn-binaries-%version.tar
+Source25: rx-%version.tar
+Source26: xunit-binaries-%version.tar
+
 Patch1: %name-alt-linking1.patch
 Patch2: %name-alt-linking2.patch
 Patch3: %name-alt-monodoc-sourcesdir.patch
+Patch4: %name-alt-mcs-no-parallel-build.patch
 
 BuildRequires(pre): rpm-build-mono >= 2.0
 BuildRequires(pre): rpm-build-ubt
@@ -57,7 +83,7 @@ BuildRequires: /proc
 %if_enabled bootstrap
 # for bootstrap, use bundled monolite instead of local mono
 %else
-BuildRequires: %name-core >= 5.0
+BuildRequires: %name-devel-full >= 5.0
 %endif
 
 # Interfaces of slightly older versions are required, upstream corrects it by modifying 'Requires'
@@ -74,6 +100,7 @@ BuildRequires: %name-core >= 5.0
 	sed "s/mono\(System.Diagnostics.StackTrace\).*/mono\(System.Diagnostics.StackTrace\) = 4.1.1.0/" | \
 	sed "/mono\(System.Runtime.Loader\).*/d" | \
 	sed "s/mono\(System.Security.AccessControl\).*/mono\(System.Security.AccessControl\) = 4.1.0.0/" | \
+	sed "/mono\(System.IO.Pipes.AccessControl\).*/d" | \
 	sed "s/mono\(System.Security.Principal.Windows\).*/mono\(System.Security.Principal.Windows\) = 4.1.0.0/"'
 
 %description
@@ -88,13 +115,13 @@ Group: Development/Other
 Requires: libgdiplus
 Requires: /proc
 Requires: ca-certificates
-Conflicts: mono4-core < %version-%release
+Conflicts: mono4-core < %EVR
 Conflicts: mono < 3.0
 Conflicts: mono-mscorlib  < 3.0
 Conflicts: monodis < 3.0
 Conflicts: libmono < 3.0
 Obsoletes: mono4-core
-Provides: mono4-core = %version-%release
+Provides: mono4-core = %EVR
 
 %description core
 This package contains the core of the Mono runtime including its
@@ -106,9 +133,9 @@ I18N, Cairo and Mono.*).
 Summary: Mono implementation of core WinFX APIs
 Group: Development/Other
 Requires: %name-core = %EVR
-Conflicts: mono4-winfx < %version-%release
+Conflicts: mono4-winfx < %EVR
 Obsoletes: mono4-winfx
-Provides: mono4-winfx = %version-%release
+Provides: mono4-winfx = %EVR
 
 %description winfx
 Open source implementation of core WinFX APIs
@@ -117,9 +144,9 @@ Open source implementation of core WinFX APIs
 Summary: Mono implementation of ASP.NET MVC
 Group: Development/Other
 Requires: %name-dyndata = %EVR
-Conflicts: mono4-mvc < %version-%release
+Conflicts: mono4-mvc < %EVR
 Obsoletes: mono4-mvc
-Provides: mono4-mvc = %version-%release
+Provides: mono4-mvc = %EVR
 
 %description mvc
 This is the Mono implementation of ASP.NET MVC
@@ -128,9 +155,9 @@ This is the Mono implementation of ASP.NET MVC
 Summary: Development files for  ASP.NET MVC
 Group: Development/Other
 Requires: %name-core = %EVR
-Conflicts: mono4-mvc-devel < %version-%release
+Conflicts: mono4-mvc-devel < %EVR
 Obsoletes: mono4-mvc-devel
-Provides: mono4-mvc-devel = %version-%release
+Provides: mono4-mvc-devel = %EVR
 
 
 %description mvc-devel
@@ -140,9 +167,9 @@ This is the Mono implementation of ASP.NET MVC
 Summary: Dynamic data dll for both web and mvc
 Group: Development/Other
 Requires: %name-core = %EVR
-Conflicts: mono4-dyndata < %version-%release
+Conflicts: mono4-dyndata < %EVR
 Obsoletes: mono4-dyndata
-Provides: mono4-dyndata = %version-%release
+Provides: mono4-dyndata = %EVR
 
 %description dyndata
 This is dll needed for implementation of ASP.NET MVC and for web services too
@@ -167,9 +194,9 @@ Requires: %name-ibm-data-db2 = %EVR
 %endif
 Requires: %name-monodoc = %EVR
 Requires: %name-mono2-compat = %EVR
-Conflicts: mono4-full < %version-%release
+Conflicts: mono4-full < %EVR
 Obsoletes: mono4-full
-Provides: mono4-full = %version-%release
+Provides: mono4-full = %EVR
 
 %description full
 Virtual package containing all non-devel packages from mono
@@ -185,13 +212,13 @@ Requires: %name-mvc-devel = %EVR
 Requires: %name-monodoc-devel = %EVR
 Requires: %name-nunit = %EVR
 Requires: %name-mono2-compat-devel = %EVR
-Conflicts: mono4-devel-full < %version-%release
+Conflicts: mono4-devel-full < %EVR
 Obsoletes: mono4-devel-full
-Provides: mono4-devel-full = %version-%release
+Provides: mono4-devel-full = %EVR
 %qIF_ver_lt %ubt_id S1
-Conflicts: %name-nunit-devel < %version-%release
+Conflicts: %name-nunit-devel < %EVR
 Obsoletes: %name-nunit-devel
-Provides: %name-nunit-devel = %version-%release
+Provides: %name-nunit-devel = %EVR
 %endif
 
 %description devel-full
@@ -203,12 +230,12 @@ Group: Development/Other
 Requires: %name-core = %EVR
 Requires: pkg-config
 Requires: glib2-devel
-Conflicts: mono4-devel < %version-%release
+Conflicts: mono4-devel < %EVR
 Obsoletes: mono4-devel
-Provides: mono4-devel = %version-%release
+Provides: mono4-devel = %EVR
 %qIF_ver_lt %ubt_id S1
-Conflicts: mono-mcs < %version-%release
-Provides: mono-mcs = %version-%release
+Conflicts: mono-mcs < %EVR
+Provides: mono-mcs = %EVR
 Obsoletes: mono-mcs
 Requires: rpm-build-mono
 %endif
@@ -221,9 +248,9 @@ assembler and other various tools.
 Summary: Extra locale information for Mono
 Group: Development/Other
 Requires: %name-core = %EVR
-Conflicts: mono4-locale-extras < %version-%release
+Conflicts: mono4-locale-extras < %EVR
 Obsoletes: mono4-locale-extras
-Provides: mono4-locale-extras = %version-%release
+Provides: mono4-locale-extras = %EVR
 
 %description locale-extras
 This package contains assemblies to support I18N applications for
@@ -233,9 +260,9 @@ non-latin alphabets.
 Summary: Provides the infrastructure for running and building daemons and services with Mono as well as various stub assemblies
 Group: Development/Other
 Requires: %name-core = %EVR
-Conflicts: mono4-extras < %version-%release
+Conflicts: mono4-extras < %EVR
 Obsoletes: mono4-extras
-Provides: mono4-extras = %version-%release
+Provides: mono4-extras = %EVR
 
 %description extras
 This package provides the library and application to run services
@@ -248,9 +275,9 @@ License: MIT License (or similar) ; Apache License 2.0
 Summary: Reactive Extensions for Mono core libraries
 Group: Development/Other
 Requires: %name-core = %EVR
-Conflicts: mono4-reactive < %version-%release
+Conflicts: mono4-reactive < %EVR
 Obsoletes: mono4-reactive
-Provides: mono4-reactive = %version-%release
+Provides: mono4-reactive = %EVR
 
 %description reactive
 Reactive Extensions for Mono, this packages don't depend on
@@ -262,9 +289,9 @@ Summary: Reactive Extensions for Mono desktop-specific libraries
 Group: Development/Other
 Requires: %name-core = %EVR
 Requires: %name-reactive = %EVR
-Conflicts: mono4-reactive-winforms < %version-%release
+Conflicts: mono4-reactive-winforms < %EVR
 Obsoletes: mono4-reactive-winforms
-Provides: mono4-reactive-winforms = %version-%release
+Provides: mono4-reactive-winforms = %EVR
 
 %description reactive-winforms
 Reactive Extensions for Mono, desktop-specific packages (winforms,
@@ -276,9 +303,9 @@ Group: Development/Other
 Requires: %name-core = %EVR
 Requires: %name-reactive = %EVR
 Requires: pkg-config
-Conflicts: mono4-reactive-devel < %version-%release
+Conflicts: mono4-reactive-devel < %EVR
 Obsoletes: mono4-reactive-devel
-Provides: mono4-reactive-devel = %version-%release
+Provides: mono4-reactive-devel = %EVR
 
 %description reactive-devel
 This package provides the .pc file for %name-rx
@@ -287,9 +314,9 @@ This package provides the .pc file for %name-rx
 Summary: Windows Forms implementation for Mono
 Group: Development/Other
 Requires: %name-core = %EVR
-Conflicts: mono4-winforms < %version-%release
+Conflicts: mono4-winforms < %EVR
 Obsoletes: mono4-winforms
-Provides: mono4-winforms = %version-%release
+Provides: mono4-winforms = %EVR
 
 %description winforms
 This package provides a fully managed implementation of
@@ -300,9 +327,9 @@ applications.
 Summary: Mono implementation of Windows Communication Foundation
 Group: Development/Other
 Requires: %name-core = %EVR
-Conflicts: mono4-wcf < %version-%release
+Conflicts: mono4-wcf < %EVR
 Obsoletes: mono4-wcf
-Provides: mono4-wcf = %version-%release
+Provides: mono4-wcf = %EVR
 
 %description wcf
 This package provides an implementation of WCF, the Windows Communication
@@ -312,9 +339,9 @@ Foundation.
 Summary: ASP.NET, Remoting, and Web Services for Mono
 Group: Development/Other
 Requires: %name-dyndata = %EVR
-Conflicts: mono4-web < %version-%release
+Conflicts: mono4-web < %EVR
 Obsoletes: mono4-web
-Provides: mono4-web = %version-%release
+Provides: mono4-web = %EVR
 
 %description web
 This package provides the ASP.NET libraries and runtime for
@@ -326,9 +353,9 @@ Group: Development/Other
 Requires: %name-core = %EVR
 Requires: %name-web = %EVR
 Requires: pkg-config
-Conflicts: mono4-web-devel < %version-%release
+Conflicts: mono4-web-devel < %EVR
 Obsoletes: mono4-web-devel
-Provides: mono4-web-devel = %version-%release
+Provides: mono4-web-devel = %EVR
 
 %description web-devel
 This package provides the .pc file for %name-web
@@ -337,9 +364,9 @@ This package provides the .pc file for %name-web
 Summary: Database connectivity for Mono
 Group: Development/Other
 Requires: %name-core = %EVR
-Conflicts: mono4-data < %version-%release
+Conflicts: mono4-data < %EVR
 Obsoletes: mono4-data
-Provides: mono4-data = %version-%release
+Provides: mono4-data = %EVR
 
 %description data
 This package provides a Mono assembly to facilitate data access
@@ -354,9 +381,9 @@ Summary: sqlite database connectivity for Mono
 Group: Development/Other
 Requires: %name-core = %EVR
 Requires: sqlite
-Conflicts: mono4-data-sqlite < %version-%release
+Conflicts: mono4-data-sqlite < %EVR
 Obsoletes: mono4-data-sqlite
-Provides: mono4-data-sqlite = %version-%release
+Provides: mono4-data-sqlite = %EVR
 
 %description data-sqlite
 This package contains the ADO.NET Data provider for the sqlite
@@ -366,9 +393,9 @@ database.
 Summary: Oracle database connectivity for Mono
 Group: Development/Other
 Requires: %name-core = %EVR
-Conflicts: mono4-data-oracle < %version-%release
+Conflicts: mono4-data-oracle < %EVR
 Obsoletes: mono4-data-oracle
-Provides: mono4-data-oracle = %version-%release
+Provides: mono4-data-oracle = %EVR
 
 %description data-oracle
 This package contains the ADO.NET Data provider for the Oracle
@@ -379,9 +406,9 @@ database.
 Summary: IBM DB2 database connectivity for Mono
 Group: Development/Other
 Requires: %name-core = %EVR
-Conflicts: mono4-ibm-data-db2 < %version-%release
+Conflicts: mono4-ibm-data-db2 < %EVR
 Obsoletes: mono4-ibm-data-db2
-Provides: mono4-ibm-data-db2 = %version-%release
+Provides: mono4-ibm-data-db2 = %EVR
 
 %description ibm-data-db2
 This package contains the ADO.NET Data provider for the IBM DB2
@@ -392,12 +419,12 @@ Universal database.
 Summary: The %name documentation system
 Group: Documentation
 Requires: %name-core = %EVR
-Conflicts: mono4-monodoc < %version-%release
+Conflicts: mono4-monodoc < %EVR
 Obsoletes: mono4-monodoc
-Provides: mono4-monodoc = %version-%release
+Provides: mono4-monodoc = %EVR
 %qIF_ver_lt %ubt_id S1
-Conflicts: monodoc < %version-%release
-Provides: monodoc = %version-%release
+Conflicts: monodoc < %EVR
+Provides: monodoc = %EVR
 Obsoletes: monodoc
 %endif
 
@@ -410,12 +437,12 @@ Group: Documentation
 Requires: %name-core = %EVR
 Requires: %name-monodoc = %EVR
 Requires: pkg-config
-Conflicts: mono4-monodoc-devel < %version-%release
+Conflicts: mono4-monodoc-devel < %EVR
 Obsoletes: mono4-monodoc-devel
-Provides: mono4-monodoc-devel = %version-%release
+Provides: mono4-monodoc-devel = %EVR
 %qIF_ver_lt %ubt_id S1
-Conflicts: monodoc-devel < %version-%release
-Provides: monodoc-devel = %version-%release
+Conflicts: monodoc-devel < %EVR
+Provides: monodoc-devel = %EVR
 Obsoletes: monodoc-devel
 %endif
 
@@ -468,9 +495,6 @@ Development files for libmono.
 %define gac_dll(dll)  %_monogacdir/%1 \
 %_monodir/4.5/%1.dll \
 %nil
-%define gac_dll40(dll)  %_monogacdir/%1 \
-%_monodir/4.0/%1.dll \
-%nil
 %define mono_bin(bin) %_bindir/%1 \
 %_monodir/4.5/%1.exe \
 %_monodir/4.5/%1.pdb \
@@ -481,12 +505,36 @@ Development files for libmono.
 %nil
 
 %prep
-%setup -n %name-%version
+%setup
+
+pushd external/Newtonsoft.Json                         ; tar xf %SOURCE5  --strip-components=1 ; popd
+pushd external/api-doc-tools                           ; tar xf %SOURCE6  --strip-components=1 ; popd
+pushd external/api-doc-tools/external/Lucene.Net.Light ; tar xf %SOURCE7  --strip-components=1 ; popd
+pushd external/api-doc-tools/external/SharpZipLib      ; tar xf %SOURCE8  --strip-components=1 ; popd
+pushd external/api-snapshot                            ; tar xf %SOURCE9  --strip-components=1 ; popd
+pushd external/aspnetwebstack                          ; tar xf %SOURCE10 --strip-components=1 ; popd
+pushd external/binary-reference-assemblies             ; tar xf %SOURCE11 --strip-components=1 ; popd
+pushd external/bockbuild                               ; tar xf %SOURCE12 --strip-components=1 ; popd
+pushd external/boringssl                               ; tar xf %SOURCE13 --strip-components=1 ; popd
+pushd external/cecil                                   ; tar xf %SOURCE14 --strip-components=1 ; popd
+pushd external/cecil-legacy                            ; tar xf %SOURCE15 --strip-components=1 ; popd
+pushd external/corefx                                  ; tar xf %SOURCE16 --strip-components=1 ; popd
+pushd external/corert                                  ; tar xf %SOURCE17 --strip-components=1 ; popd
+pushd external/ikdasm                                  ; tar xf %SOURCE18 --strip-components=1 ; popd
+pushd external/ikvm                                    ; tar xf %SOURCE19 --strip-components=1 ; popd
+pushd external/linker                                  ; tar xf %SOURCE20 --strip-components=1 ; popd
+pushd external/linker/cecil                            ; tar xf %SOURCE21 --strip-components=1 ; popd
+pushd external/nuget-buildtasks                        ; tar xf %SOURCE22 --strip-components=1 ; popd
+pushd external/nunit-lite                              ; tar xf %SOURCE23 --strip-components=1 ; popd
+pushd external/roslyn-binaries                         ; tar xf %SOURCE24 --strip-components=1 ; popd
+pushd external/rx                                      ; tar xf %SOURCE25 --strip-components=1 ; popd
+pushd external/xunit-binaries                          ; tar xf %SOURCE26 --strip-components=1 ; popd
+
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
-tar xJf %SOURCE1
 %if_enabled bootstrap
 mkdir -p mcs/class/lib/monolite-linux
 pushd mcs/class/lib/monolite-linux
@@ -512,12 +560,7 @@ find . -type f -iname '*.cs' -print0 | xargs -0 \
 %__subst "s#mono/2.0#mono/4.5#g" data/mono-nunit.pc.in
 
 %if_enabled bootstrap
-# for bootstrap, keep monolite. Mono 2.10 is too old to compile Mono 4.0
 export PATH=$PATH:mcs/class/lib/monolite-linux/
-%else
-# Remove prebuilt binaries
-find . -name "*.exe" -not -path "./mcs/class/lib/monolite-linux/*" -print -delete
-rm -rf mcs/class/lib/monolite-linux/*
 %endif
 
 %build
@@ -526,24 +569,16 @@ rm -rf mcs/class/lib/monolite-linux/*
 NOCONFIGURE=yes sh ./autogen.sh
 %configure --disable-rpath \
            --with-moonlight=no \
+           --with-spectre-mitigation=yes \
            --enable-dynamic-btls
 
-# Profiler gives undef symbols, so it is temporarily disabled.
-
-##__subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-##__subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-
-%make_build
+%make
 
 %install
-#unpack external.tgz one more time. Its contents has been overwritten
-#tar xvzf /usr/src/RPM/SOURCES/external.tar.gz
 %if_enabled bootstrap
-# for bootstrap, keep monolite. Mono 2.10 is too old to compile Mono 4.0
 export PATH=$PATH:mcs/class/lib/monolite-linux/
-%else
-rm -rf mcs/class/lib/monolite-linux/*
 %endif
+
 %makeinstall_std
 
 # copy the mono.snk key into /etc/pki/mono
@@ -552,14 +587,9 @@ install -p -m0644 %SOURCE2 %buildroot%_sysconfdir/pki/mono/
 
 # C5 is not installed, see commit 0af35dd5
 
-# This was removed upstream:
-# remove .la files (they are generally bad news)
-#rm -f %buildroot%_libdir/*.la
 # remove Windows-only stuff
 rm -rf %buildroot%_monodir/*/Mono.Security.Win32*
 rm -f %buildroot%_libdir/libMonoSupportW.*
-# remove .a files for libraries that are really only for us
-#rm %buildroot%_libdir/*.a
 # remove libgc cruft
 rm -rf %buildroot%_datadir/libgc-mono
 # remove stuff that we don't package*
@@ -575,9 +605,6 @@ rm -f %buildroot%_monodir/*/gmcs.exe.so
 rm -f %buildroot%_monodir/4.0/dmcs.exe.so
 rm -rf %buildroot%_bindir/mono-configuration-crypto
 rm -rf %buildroot%_mandir/man?/mono-configuration-crypto*
-#temporarily remove profiler iomap -bad symbols
-#rm -rf %buildroot%_libdir/libmono-profiler-iomap.so.0.0.0
-
 
 %if_disabled ibmlibs
 rm -rf %buildroot%_monogacdir/IBM.Data.DB2
@@ -617,12 +644,11 @@ ln -s mcs %buildroot%_bindir/gmcs
 %qIF_ver_lt %ubt_id S1
 %_bindir/gmcs
 %endif
-%doc  CONTRIBUTING.md LICENSE COPYING.LIB  NEWS README.md PATENTS.TXT
+%doc .github/CONTRIBUTING.md LICENSE COPYING.LIB NEWS README.md PATENTS.TXT
 %_rpmlibdir/mono-cert-sync.filetrigger
 %_sysconfdir/mono-4.5/
 %_sysconfdir/mono-4.0/
 %dir %_sysconfdir/mono/4.5/
-#%dir %_libexecdir/mono/4.0/
 %dir %_monodir
 %dir %_monodir/4.5
 %dir %_monodir/4.0
@@ -642,7 +668,6 @@ ln -s mcs %buildroot%_bindir/gmcs
 %mono_bin gacutil
 %mono_bin ikdasm
 %mono_bin lc
-%_monodir/4.5/linkeranalyzer*
 %_bindir/gacutil2
 %mono_bin mcs
 %mono_bin mozroots
@@ -650,7 +675,9 @@ ln -s mcs %buildroot%_bindir/gmcs
 %mono_bin setreg
 %mono_bin sn
 %_bindir/csc
+%_bindir/csc-dim
 %_monodir/4.5/csc.*
+%_monodir/4.5/dim
 %_bindir/mono-heapviz
 %_bindir/mprof-report
 %_man1dir/certmgr.1*
@@ -703,10 +730,6 @@ ln -s mcs %buildroot%_bindir/gmcs
 %gac_dll System.Net
 %gac_dll System.Xml.Linq
 %gac_dll SMDiagnostics
-#gac_dll Mono.Security.Providers.DotNet
-#gac_dll Mono.Security.Providers.NewSystemSource
-#gac_dll Mono.Security.Providers.OldTls
-#gac_dll Mono.Security.Providers.NewTls
 %dir %_sysconfdir/mono
 %dir %_sysconfdir/mono/mconfig
 %config (noreplace) %_sysconfdir/mono/config
@@ -735,8 +758,6 @@ ln -s mcs %buildroot%_bindir/gmcs
 
 %dir %_monodir/mono-configuration-crypto/
 %dir %_monodir/mono-configuration-crypto/4.5/
-#%%_monodir/2.0/*
-#%%_monodir/4.0/*
 %_monodir/mono-configuration-crypto/4.5/*
 %gac_dll CustomMarshalers
 %gac_dll I18N.West
@@ -785,10 +806,10 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 
 %files devel-full
 
-
 %files devel
 %_sysconfdir/pki/mono/
 %mono_bin mono-api-info
+%mono_bin illinkanalyzer
 %_bindir/mono-package-runtime
 %_bindir/monograph
 %_bindir/sgen-grep-binprot
@@ -867,7 +888,6 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_man1dir/mono-xmltool.1*
 %_man1dir/monop.1*
 %_man1dir/permview.1*
-#_man1dir/prj2make.1*
 %_man1dir/secutil.1*
 %_man1dir/sgen.1*
 %_man1dir/signcode.1*
@@ -875,6 +895,7 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_man1dir/mono-api-info.1*
 %_man1dir/cccheck.1*
 %_man1dir/crlupdate.1*
+%_man1dir/illinkanalyzer.1*
 %gac_dll PEAPI
 %gac_dll Microsoft.Build
 %gac_dll Microsoft.Build.Engine
@@ -898,9 +919,6 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_monodir/xbuild/
 %_monodir/xbuild-frameworks/
 %_libdir/libikvm-native.so
-# disabled profiler right now
-#%%_libdir/libmono-profiler-*.so
-#%%_libdir/libmono*-2.0.so
 %_libdir/libmonosgen-2.0.so
 %ifarch %ix86 x86_64 armh
 %_libdir/libmonoboehm-2.0.so
@@ -1096,7 +1114,8 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_bindir/nunit-console
 %_bindir/nunit-console2
 %_bindir/nunit-console4
-%_monodir/4.5/nunit-console.exe*
+%_monodir/4.5/nunit-console.exe
+%_monodir/4.5/nunit-console.exe.config
 %_monodir/4.5/nunit-console.pdb
 %gac_dll nunit-console-runner
 %gac_dll nunit.core
@@ -1121,6 +1140,9 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Mon Oct 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.14.0.177-alt1
+- Updated to upstream version 5.14.0.177.
+
 * Wed May 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt4%ubt
 - Updated interpackage dependencies.
 
