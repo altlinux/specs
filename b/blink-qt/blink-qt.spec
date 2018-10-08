@@ -1,6 +1,6 @@
 Name:    blink-qt
-Version: 3.0.3
-Release: alt2
+Version: 3.1.0
+Release: alt1
 
 Summary: Blink SIP Client
 License: GPLv3+
@@ -63,6 +63,9 @@ install -Dm 0644 debian/blink.1 %buildroot%_man1dir/blink.1
 %_man1dir/blink.1*
 
 %changelog
+* Mon Oct 08 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+- New version.
+
 * Wed Mar 07 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.3-alt2
 - Add desktop file, pixmap and man page
 
