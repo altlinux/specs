@@ -2,7 +2,7 @@
 %define _emacs_startscriptsdir %_sysconfdir/emacs/site-start.d
 
 Name: desktop-file-utils
-Version: 0.22.0.patchset1
+Version: 0.23
 Release: alt1
 
 Summary: Utilities for manipulating .desktop files
@@ -11,6 +11,8 @@ License: GPL
 URL: http://www.freedesktop.org/software/desktop-file-utils
 
 Source: %name-%version.tar
+Patch0: desktop-file-utils-0.23-altlinux-add-de-to-main-categories.patch
+Patch1: desktop-file-utils-0.23-altlinux-fix-TextTools.patch
 
 BuildRequires: gcc glibc-devel emacs-cedet emacs-common emacs-leim glib2-devel libpopt-devel pkg-config automake
 
@@ -52,18 +54,20 @@ emacs-mode-%emacs_mode code or see some Lisp examples.
 
 %prep
 %setup -q
-#autoreconf
-sh autogen.sh
+%patch0 -p1 
+%patch1 -p1 
 
 %build
+#autoreconf
+sh autogen.sh
 %configure --disable-static --with-lispdir=%_emacslispdir
 %make_build
 
 %install
 %make install DESTDIR=$RPM_BUILD_ROOT
 
-%__mkdir_p %buildroot/%_rpmlibdir/
-%__cat <<__TRIGGER__ >%buildroot/%_rpmlibdir/update-desktop-database.filetrigger
+mkdir -p %buildroot/%_rpmlibdir/
+cat <<__TRIGGER__ >%buildroot/%_rpmlibdir/update-desktop-database.filetrigger
 #!/bin/sh -e
 export XDG_DATA_DIRS="/usr/share:/var/cache"
 grep -qs -e '^/usr/share/applications/' && update-desktop-database -q ||:
@@ -71,7 +75,7 @@ __TRIGGER__
 chmod 0755 %buildroot/%_rpmlibdir/update-desktop-database.filetrigger
 
 # Create %emacs_mode-init.el
-%__cat <<__INIT__ >%emacs_mode-init.el
+cat <<__INIT__ >%emacs_mode-init.el
 ;;; %emacs_mode-init.el --- Startup code for desktop-entry mode
 ;;;
     
@@ -83,7 +87,7 @@ chmod 0755 %buildroot/%_rpmlibdir/update-desktop-database.filetrigger
 
 __INIT__
 
-%__install -pD -m644 %emacs_mode-init.el %buildroot%_emacs_startscriptsdir/%emacs_mode-init.el
+install -pD -m644 %emacs_mode-init.el %buildroot%_emacs_startscriptsdir/%emacs_mode-init.el
 
 mkdir -p %buildroot/%_desktopdir/
 touch %buildroot/%_desktopdir/mimeinfo.cache
@@ -105,6 +109,9 @@ touch %buildroot/%_desktopdir/mimeinfo.cache
 %_emacslispdir/%emacs_mode-mode.el
 
 %changelog
+* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- sync with 23.0
+
 * Thu Oct 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.22.0.patchset1-alt1
 - sync with 22.0 (closes: #30359)
 
