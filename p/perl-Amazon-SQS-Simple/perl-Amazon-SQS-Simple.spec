@@ -16,7 +16,7 @@
 %define _without_test 1
 
 Name: perl-Amazon-SQS-Simple
-Version: 2.06
+Version: 2.07
 Release: alt1
 
 Summary: OO API for accessing the Amazon Simple Queue
@@ -72,6 +72,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Amazon/*
 
 %changelog
+* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 2.07-alt1
+- automated CPAN update
+
 * Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1
 - automated CPAN update
 
