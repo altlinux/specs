@@ -1,5 +1,5 @@
 Name: visualboyadvance-m
-Version: 2.0.1
+Version: 2.1.0
 Release: alt1
 
 Summary: Game Boy Advance Emulator
@@ -86,6 +86,9 @@ export NPROCS=1
 %_datadir/vbam/vba-over.ini
 
 %changelog
+* Mon Oct 08 2018 Anton Farygin <rider@altlinux.ru> 2.1.0-alt1
+- 2.1.0
+
 * Mon Oct 30 2017 Alexey Appolonov <alexey@altlinux.org> 2.0.1-alt1
 - First ALT Linux release.
 - Segmentation fault fixed in wxvbamApp::~wxvbamApp().
