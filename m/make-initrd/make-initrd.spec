@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.2.3
+Version: 2.2.4
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -210,6 +210,10 @@ fi
 %endif
 
 %changelog
+* Mon Oct 08 2018 Alexey Gladkov <legion@altlinux.ru> 2.2.4-alt1
+- Feature changes:
+  + plymouth: Add uaccess and seat rules without logind calls
+
 * Mon Oct 01 2018 Alexey Gladkov <legion@altlinux.ru> 2.2.3-alt1
 - Utilities:
   + initrd-cp: Fix definition of filetype and reading the symlink
