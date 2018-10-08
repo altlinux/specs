@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 0.4.3
-Release: alt1%ubt
+Version: 0.4.4
+Release: alt1
 
 Summary: Abstract Syntax Notation One (ASN.1), Python implementation
 License: %bsdstyle
@@ -13,15 +13,12 @@ Group: Development/Python
 # Source-git: https://github.com/etingof/pyasn1.git
 Url: https://pypi.python.org/pypi/pyasn1
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: pyasn1.watch
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-licenses
-
-BuildRequires: python-module-setuptools
-BuildRequires: python3-module-setuptools
 
 %if_with check
 BuildRequires: python-modules-unittest
@@ -40,7 +37,7 @@ Summary: Abstract Syntax Notation One (ASN.1), Python 3 implementation
 Group: Development/Python3
 
 %description -n python3-module-%mname
-This is an implementation of ASN.1 types and codecs in Python programming
+This is an implementation of ASN.1 types and codecs in Python3 programming
 language. It has been first written to support particular protocol (SNMP)
 but then generalized to be suitable for a wide range of protocols
 based on ASN.1 specification.
@@ -49,13 +46,14 @@ based on ASN.1 specification.
 %setup
 %patch0 -p1
 
+rm -rf ../python3
 cp -a . ../python3
 
 %build
-%python_build_debug
+%python_build
 
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
 
 %install
@@ -74,25 +72,28 @@ popd
 
 %files
 %doc LICENSE.rst README.md CHANGES.rst
-%python_sitelibdir/%mname
-%python_sitelibdir/%mname-%version-*.egg-info/
+%python_sitelibdir/pyasn1/
+%python_sitelibdir/pyasn1-%version-*.egg-info/
 
 %files -n python3-module-%mname
 %doc LICENSE.rst README.md CHANGES.rst
-%python3_sitelibdir/%mname
-%python3_sitelibdir/%mname-%version-*.egg-info/
+%python3_sitelibdir/pyasn1/
+%python3_sitelibdir/pyasn1-%version-*.egg-info/
 
 %changelog
-* Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 0.4.3-alt1%ubt
+* Sun Oct 07 2018 Stanislav Levin <slev@altlinux.org> 0.4.4-alt1
+- 0.4.3 -> 0.4.4.
+
+* Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 0.4.3-alt1
 - 0.4.2 -> 0.4.3
 
-* Thu Mar 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt2%ubt
+* Thu Mar 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt2
 - Marked docstrings with backslashes as raw strings.
 
-* Tue Mar 13 2018 Stanislav Levin <slev@altlinux.org> 0.4.2-alt1%ubt
+* Tue Mar 13 2018 Stanislav Levin <slev@altlinux.org> 0.4.2-alt1
 - 0.3.7 -> 0.4.2
 
-* Wed Nov 08 2017 Stanislav Levin <slev@altlinux.org> 0.3.7-alt1%ubt
+* Wed Nov 08 2017 Stanislav Levin <slev@altlinux.org> 0.3.7-alt1
 - 0.1.8 -> 0.3.7
 
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.8-alt2.1.1.1
