@@ -1,9 +1,12 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define _libexecdir %_prefix/libexec
 %define systemdsystemunitdir /lib/systemd/system
 %define oname ConsoleKit
 Name: ConsoleKit2
 Version: 1.2.1
-Release: alt1
+Release: alt2
 Summary: System daemon for tracking users, sessions and seats
 License: GPL
 Group: System/Libraries
@@ -62,7 +65,7 @@ Obsoletes: libConsoleKit-devel < %version-%release
 Headers, libraries and API docs for ConsoleKit
 
 %package -n pam-ck-connector2
-Summary: Register sessin with ConsoleKit
+Summary: Register session with ConsoleKit
 Group: System/Base
 Provides: pam-ck-connector = %version-%release
 Obsoletes: pam-ck-connector < %version-%release
@@ -81,24 +84,27 @@ are not always useful.
 touch gtk-doc.make
 %autoreconf
 %configure \
-	--libexecdir=%_libexecdir \
-	--localstatedir=%_var \
-	--with-pid-file=%_var/run/console-kit-daemon.pid \
-	--enable-pam-module \
-	--with-pam-module-dir=/%_lib/security \
-	--with-systemdsystemunitdir=%systemdsystemunitdir \
-	--enable-docbook-docs
+    --libexecdir=%_libexecdir \
+    --localstatedir=%_var \
+    --with-rundir=/run \
+    --with-pid-file=/run/lock/console-kit-daemon.pid \
+    --enable-pam-module \
+    --with-pam-module-dir=/%_lib/security \
+    --with-systemdsystemunitdir=%systemdsystemunitdir \
+    --enable-docbook-docs
 %make_build
 
 %install
 %makeinstall_std
 
-#touch %buildroot%_var/run/%oname/database
 mkdir -p %buildroot%_logdir/%oname
 touch %buildroot%_logdir/%oname/history
 for i in $(seq 1 5); do
-	touch %buildroot%_logdir/%oname/history.$i.bz2
+    touch %buildroot%_logdir/%oname/history.$i.bz2
 done
+
+rm -fr %buildroot/%_datadir/locale/es_419
+rm -fr %buildroot/%_lib/security/*.la
 
 %find_lang %name
 
@@ -106,8 +112,7 @@ done
 /sbin/chkconfig --del consolekit ||:
 
 %files -f %name.lang
-%doc README NEWS COPYING AUTHORS
-%exclude %_docdir/%name
+%_docdir/%name
 %_sysconfdir/dbus-1/system.d/*
 %_sysconfdir/X11/xinit/xinitrc.d/*
 %_sysconfdir/%oname
@@ -115,17 +120,9 @@ done
 %_logrotatedir/consolekit
 %_sbindir/*
 %_bindir/*
-%dir %_libdir/%oname
-%_libdir/%oname/scripts
-#%%_libexecdir/ck-collect-session-info
-#%%dir %_libexecdir/%oname
-#%%dir %_libexecdir/%oname/run-session.d
-#%%dir %_libexecdir/%oname/run-seat.d
-#%%_libexecdir/%oname/scripts
+%_libdir/%oname
 %_datadir/dbus-1/system-services/*.service
 %_datadir/polkit-1/actions/*.policy
-#%%dir %_var/run/%oname
-#%%ghost %_var/run/%oname/database
 %dir %_logdir/%oname
 %ghost %_logdir/%oname/history*
 
@@ -146,11 +143,13 @@ done
 
 %files -n pam-ck-connector2
 /%_lib/security/*.so
-%exclude /%_lib/security/*.la
 %_man8dir/*.8*
 %_man1dir/*.1*
 
 %changelog
+* Mon Oct 08 2018 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt2
+- fix unpackages directory
+
 * Wed Jan 10 2018 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt1
 - new version 1.2.1
 
