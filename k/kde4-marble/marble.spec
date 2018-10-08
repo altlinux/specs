@@ -7,7 +7,7 @@
 %define bugfix 3
 Name: kde4-marble
 Version: %major.%minor.%bugfix
-Release: alt3%ubt
+Release: alt4
 
 Group: Education
 Summary: A virtual globe and world atlas
@@ -25,7 +25,8 @@ Patch1: alt-clean-maps.patch
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libcloog-isl4 libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libgst-plugins libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-location libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libstdc++-devel libxkbfile-devel openssh-common phonon-devel pkg-config python-base qextserialport ruby ruby-stdlibs shared-mime-info xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: cvs gcc-c++ git-core glib2-devel kde4base-runtime-core kde4libs-devel libXxf86misc-devel libgps-devel libicu50 libqt3-devel libquazip-devel libshape-devel python-module-google qextserialport-devel qt4-designer qt4-mobility-devel rpm-build-ruby subversion valgrind zlib-devel-static
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: gcc-c++ kde4libs-devel libgps-devel libquazip-devel libshape-devel qextserialport-devel qt4-mobility-devel
+BuildRequires: gcc-c++ kde4libs-devel libgps-devel libquazip-devel libshape-devel qextserialport-devel
+#qt4-mobility-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -129,6 +130,9 @@ KDE 4 library
 
 
 %changelog
+* Mon Oct 08 2018 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt4
+- build without qtmobility
+
 * Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 15.4.3-alt3%ubt
 - NMU: rebuilt with new libshape.
 
