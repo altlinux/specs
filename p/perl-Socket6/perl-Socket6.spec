@@ -2,8 +2,8 @@
 %define module Socket6
 
 Name: perl-%module
-Version: 0.28
-Release: alt1.1.1
+Version: 0.29
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -12,7 +12,7 @@ License: BSD-like
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/U/UM/UMEMOTO/Socket6-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/U/UM/UMEMOTO/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -21,7 +21,7 @@ BuildRequires: perl-devel
 Socket6 is a module that implements a IPv6 API for Perl programs.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ Socket6 is a module that implements a IPv6 API for Perl programs.
 %perl_vendor_autolib/Socket6
 
 %changelog
+* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1.1.1
 - rebuild with new perl 5.26.1
 
