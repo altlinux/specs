@@ -1,12 +1,14 @@
 Name: openxcom
-Version: 1.0_2017.10.15
-Release: alt2
+Version: 1.0_2018.10.08
+Release: alt1
 Summary: OpenXcom is an open-source clone of the original X-COM
 License: GPL
 Group: Games/Strategy
 Url: http://openxcom.org/
 
 Source: https://github.com/SupSuper/OpenXcom/%name-%version.tar
+Source2: openxcom16.png
+Source3: openxcom32.png
 
 # Automatically added by buildreq on Sat May 31 2014
 # optimized out: boost-devel-headers cmake-modules libGL-devel libGLU-devel libSDL-devel libX11-devel libcloog-isl4 libstdc++-devel libyaml-cpp0 pkg-config xorg-kbproto-devel xorg-xproto-devel
@@ -31,8 +33,8 @@ cmake --debug-output -D CMAKE_INSTALL_PREFIX="/usr" -D CMAKE_CXX_FLAGS="%optflag
 %install
 %makeinstall_std
 
-install -pm 644 -D xcode/OpenXcom/Images.xcassets/AppIcon.appiconset/OpenXcom32.png %buildroot%_niconsdir/%name.png
-install -pm 644 -D xcode/OpenXcom/Images.xcassets/AppIcon.appiconset/OpenXcom16.png %buildroot%_miconsdir/%name.png
+install -pm 644 -D %{SOURCE3} %buildroot%_niconsdir/%name.png
+install -pm 644 -D %{SOURCE2} %buildroot%_miconsdir/%name.png
 install -pm 644 -D res/linux/icons/openxcom_48x48.png %buildroot%_liconsdir/%name.png
 install -pm 644 -D res/linux/icons/openxcom_128x128.png %buildroot%_iconsdir/hicolor/128x128/apps/%name.png
 install -pm 644 -D res/linux/icons/openxcom.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
@@ -46,6 +48,9 @@ install -pm 644 -D res/linux/openxcom.desktop %buildroot%_desktopdir/%name.deskt
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.0_2018.10.08-alt1
+- nightly 2018.10.08
+
 * Tue Sep 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0_2017.10.15-alt2
 - NMU: rebuilt with new yaml-cpp.
 
