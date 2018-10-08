@@ -2,7 +2,7 @@
 
 Name: SFML
 Version: 2.4.2
-Release: alt2
+Release: alt3
 
 Summary: Simple and Fast Multimedia Library
 License: zlib
@@ -66,7 +66,7 @@ cmake .. \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
-%ifarch x86_64	
+%ifarch x86_64 aarch64
 	-DLIB_SUFFIX="64" \
 %endif
 	-DCMAKE_SKIP_RPATH:BOOL=TRUE \
@@ -99,6 +99,9 @@ popd
 %_libdir/libsfml-*.so
 
 %changelog
+* Mon Oct 08 2018 Anton Farygin <rider@altlinux.ru> 2.4.2-alt3
+- fixed build on aarch64
+
 * Thu Apr 05 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt2
 - rebuilt with gcc7 especially for extreme-tuxracer
 
