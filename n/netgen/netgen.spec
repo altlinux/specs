@@ -11,8 +11,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: netgen
-Version: 6.2
-Release: alt1.1804%ubt
+Version: 6.2.1808
+Release: alt1
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
@@ -44,7 +44,6 @@ Patch8: 0008-Add-missing-ldl.patch
 Patch9: 0009-immintrin.patch
 
 BuildRequires(pre): rpm-build-tcl
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Wed Jun 13 2018
@@ -211,7 +210,7 @@ sed -i 's|@UINT64_C@|ULL|' ng/ngpkg.cpp
 #repair default (R)PATHs
 sed -i 's|NG_INSTALL_DIR_LIB_DEFAULT lib|NG_INSTALL_DIR_LIB_DEFAULT lib${LIB_SUFFIX}|' CMakeLists.txt
 #TODO: uncomment and apply if no MPI version to be assembled in future
-#sed -i 's|NG_INSTALL_DIR_CMAKE_DEFAULT lib/cmake/${NG_INSTALL_SUFFIX}|NG_INSTALL_DIR_CMAKE_DEFAULT share/cmake|' CMakeLists.txt
+sed -i 's|NG_INSTALL_DIR_CMAKE_DEFAULT lib/cmake/${NG_INSTALL_SUFFIX}|NG_INSTALL_DIR_CMAKE_DEFAULT %_libdir/cmake/%name|' CMakeLists.txt
 #sed -i 's|${NG_RPATH_TOKEN};${NG_RPATH_TOKEN}/${NETGEN_RPATH}|${NG_RPATH_TOKEN};${NG_RPATH_TOKEN}/${NETGEN_RPATH};%%mpidir/lib:%%_tcllibdir|' CMakeLists.txt
 #sed -i 's|${NG_RPATH_TOKEN};${NG_RPATH_TOKEN}/${NETGEN_RPATH}|%%_tcllibdir|' CMakeLists.txt
 #sed -i 's|${NG_RPATH_TOKEN}/../${NETGEN_PYTHON_RPATH}||' ng/CMakeLists.txt
@@ -348,7 +347,7 @@ rm -rf %buildroot%_datadir/%name/doc
 
 %files -n lib%name-devel
 %_includedir/*
-%_prefix/lib/cmake/%name/*.cmake
+%_libdir/cmake/%name/*.cmake
 
 %files doc
 %doc doc/ng4.pdf
@@ -374,6 +373,11 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Mon Oct 08 2018 Nikolai Kostrigin <nickel@altlinux.org> 6.2.1808-alt1
+- New version
+- Remove %%ubt
+- Change default *.cmake config files path to %%_libdir/cmake
+
 * Fri Jun 08 2018 Nikolai Kostrigin <nickel@altlinux.org> 6.2-alt1.1804%ubt
 - New version
 

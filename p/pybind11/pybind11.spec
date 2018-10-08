@@ -1,7 +1,7 @@
 #based on fedora spec
 Name: pybind11
-Version: 2.2.3
-Release: alt2%ubt
+Version: 2.2.4
+Release: alt1
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-style
@@ -10,7 +10,6 @@ Url: https://github.com/pybind/pybind11
 
 Source0: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 # Automatically added by buildreq on Thu May 10 2018
@@ -110,6 +109,10 @@ make -C python3/BUILD/tests check -j$NPROCS
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Mon Oct 08 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.2.4-alt1
+- New version
+- Remove %%ubt
+
 * Fri Jun 29 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.2.3-alt2%ubt
 - Fix build: add python(3)-module-setuptools build requirement
 
