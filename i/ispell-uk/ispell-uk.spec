@@ -2,14 +2,16 @@ Summary: ukrainian dictionary for ispell
 
 Name: ispell-uk
 Version: 1.2
-Release: alt2
+Release: alt3
 
 License: GPL and LGPL
 Group: Text tools
 %define sourcename spell-uk-%{version}
-Source: %{sourcename}.tgz
 Url: http://ispell-uk.sourceforge.net/ispell-uk/
 #Url: http://sourceforge.net/projects/ispell-uk
+
+Source: %{sourcename}.tgz
+Patch: ispell-uk-1.2-perlfix.diff
 
 Requires: ispell >= 3.2.06
 Provides: ispell-ua, ispell-dictionary
@@ -37,8 +39,10 @@ The dictionary is in cp1251 encoding.
 
 %prep
 %setup -n %{sourcename}
+%patch -p1
 
 %build
+export LANG=uk_UA.UTF-8
 %make ispell
 
 %install
@@ -65,6 +69,9 @@ mv dist/i%{sourcename}/ukrainian.hash $RPM_BUILD_ROOT%_libdir/ispell/ukrainianw.
 %_libdir/ispell/ukrainianw.hash
 
 %changelog
+* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3
+- fixed build
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2
 - applied repocop patches
 
