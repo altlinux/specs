@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Data/Show.pm) perl(IO/Prompter.pm) perl(Smart/Comments.pm) perl(charnames.pm) perl-podlators
@@ -5,13 +6,13 @@ BuildRequires: perl(Data/Show.pm) perl(IO/Prompter.pm) perl(Smart/Comments.pm) p
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-Regexp-Grammars
-Version:	1.048
-Release:	alt1_3
+Version:	1.049
+Release:	alt1
 Summary:	Add grammatical parsing features to perl regular expressions
 License:	GPL+ or Artistic
 Group:		Development/Other
 URL:		https://metacpan.org/release/Regexp-Grammars
-Source0:	https://cpan.metacpan.org/authors/id/D/DC/DCONWAY/Regexp-Grammars-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/D/DC/DCONWAY/Regexp-Grammars-%{version}.tar.gz
 BuildArch:	noarch
 BuildRequires:	rpm-build-perl
 BuildRequires:	perl(Module/Build.pm)
@@ -58,6 +59,9 @@ perl Build.PL installdirs=vendor
 %{perl_vendor_privlib}/Regexp/
 
 %changelog
+* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.049-alt1
+- automated CPAN update
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.048-alt1_3
 - update to new release by fcimport
 
