@@ -6,8 +6,8 @@ to the extended attributes for filesystem objects available in some \
 operating systems.
 
 Name: %fname
-Version: 0.6.0
-Release: alt2
+Version: 0.6.1
+Release: alt1
 
 %if ""==""
 Summary: A python module for accessing filesystem Extended Attributes
@@ -68,6 +68,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Mon Oct 08 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.1-alt1
+- Build new version.
+
 * Mon Jul 16 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt2
 - Fixed FTBFS (fixed BR).
 
