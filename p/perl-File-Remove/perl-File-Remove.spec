@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-Remove
 Name: perl-%dist
-Version: 1.57
+Version: 1.58
 Release: alt1
 
 Summary: Remove files and directories
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SH/SHLOMIF/File-Remove-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -27,7 +27,7 @@ the addition of an optional, infrequently used "other platforms"
 hashref.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -40,6 +40,9 @@ hashref.
 %perl_vendor_privlib/File
 
 %changelog
+* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.58-alt1
+- automated CPAN update
+
 * Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.57-alt1
 - automated CPAN update
 
