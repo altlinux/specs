@@ -5,7 +5,7 @@
 %define postgresql_major     9
 %define postgresql_minor     3
 %define postgresql_subminor  24
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -242,7 +242,7 @@ for the backend.
 Summary: The PL/Perl procedural language for PostgreSQL
 Group: Databases
 Requires: %name = %version-%release
-Provides: postgresql-perl = %version-%release
+#Provides: postgresql-perl = %version-%release
 
 %description perl
 PostgreSQL is an advanced Object-Relational database management
@@ -759,6 +759,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 9.3.24-alt3
+- NMU: removed Provides: postgresql-perl from old postgresses
+
 * Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 9.3.24-alt2
 - Add BR: libkrb5-devel
 - Rebuild with OpenSSL 1.1.x
