@@ -2,8 +2,8 @@
 %def_disable gcrypt
 
 Name: libssh
-Version: 0.8.1
-Release: alt1%ubt
+Version: 0.8.3
+Release: alt1
 
 Group: System/Libraries
 Summary: C library to authenticate in a simple manner to one or more SSH servers
@@ -20,6 +20,7 @@ BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake doxygen ghostscript-utils graphviz latex2html
 BuildRequires: gcc-c++ %{?_enable_gcrypt: libgcrypt-devel}
 BuildRequires: libssl-devel zlib-devel kde-common-devel
+BuildRequires: libkrb5-devel
 
 %description
 The ssh library was designed to be used by programmers needing a working
@@ -68,6 +69,7 @@ install -m 0644 %SOURCE2 ./
 %build
 %Kbuild \
     -DWITH_ZLIB=ON \
+    -DWITH_GSSAPI=ON \
     -DWITH_GCRYPT=%{?_enable_gcrypt:ON}%{!?_enable_gcrypt:OFF} \
     #
 
@@ -85,6 +87,9 @@ install -m 0644 %SOURCE2 ./
 %_libdir/*.so
 
 %changelog
+* Mon Oct 08 2018 Sergey V Turchin <zerg@altlinux.org> 0.8.3-alt1
+- new version
+
 * Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt1%ubt
 - new version
 
