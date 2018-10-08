@@ -59,7 +59,7 @@
 
 Name: NetworkManager
 Version: 1.14.1
-Release: alt1%git_hash
+Release: alt2%git_hash
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -770,6 +770,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Oct 08 2018 Mikhail Efremov <sem@altlinux.org> 1.14.1-alt2.gitcd3aacefdd0b
+- etcnet-alt: Fix setting of autoconnect property (closes: #35489).
+
 * Fri Oct 05 2018 Mikhail Efremov <sem@altlinux.org> 1.14.1-alt1.gitcd3aacefdd0b
 - Upstream git snapshot (nm-1-14 branch).
 
