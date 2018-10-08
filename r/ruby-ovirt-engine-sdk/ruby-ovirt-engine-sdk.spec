@@ -1,8 +1,8 @@
 %define  pkgname ovirt-engine-sdk-ruby
 
 Name:    ruby-ovirt-engine-sdk
-Version: 4.2.4
-Release: alt1.2
+Version: 4.2.5
+Release: alt1
 
 Summary: This is a mirror from gerrit.ovirt.org http://www.ovirt.org, for issues use http://bugzilla.redhat.com
 License: Apache 2.0
@@ -56,6 +56,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Oct 08 2018 Andrey Cherepanov <cas@altlinux.org> 4.2.5-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 4.2.4-alt1.2
 - Rebuild with new Ruby autorequirements.
 
