@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,7 +7,7 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:       perl-Time-Warp 
-Version:    0.53
+Version:    0.54
 Release:    alt1
 License:    GPL+ or Artistic 
 Summary:    Control over the flow of time
@@ -55,6 +56,9 @@ make test
 %{perl_vendor_archlib}/*
 
 %changelog
+* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1
+- automated CPAN update
+
 * Sun Sep 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1
 - automated CPAN update
 
