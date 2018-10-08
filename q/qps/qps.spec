@@ -1,5 +1,5 @@
 Name:		qps
-Version:	1.10.17
+Version:	1.10.18
 Release:	alt1
 Summary:	Visual process status monitor
 License:	GPLv2+
@@ -61,6 +61,9 @@ convert -resize 16x16 ../icon/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Mon Oct 08 2018 Motsyo Gennadi <drool@altlinux.ru> 1.10.18-alt1
+- 1.10.18
+
 * Fri Mar 30 2018 Motsyo Gennadi <drool@altlinux.ru> 1.10.17-alt1
 - 1.10.17 (altbug #34690)
 
