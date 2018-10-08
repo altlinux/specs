@@ -1,19 +1,21 @@
 %def_disable static
 
 Name: libksba
-Version: 1.3.5
-Release: alt1%ubt
+Version: 1.3.6
+Release: alt5
 
 Group: System/Libraries
 Summary: X.509 library
 URL: http://www.gnupg.org/
 License: LGPLv3 / GPLv2
 
-Source0: %name-%version.tar.bz2
+Source0: %name-%version.tar
 Patch1:		%{name}-info.patch
-Patch2:		%{name}-link.patch
-# ALT
-Patch10: libksba-1.0.2-alt-dont-req-new-tools.patch
+
+# GOST patch
+%define gostversion 1.0.0
+Patch2: %name-%version-gost-%gostversion.patch
+Provides: %name(gost) = %gostversion
 
 # Automatically added by buildreq on Tue Apr 06 2004 (-bi)
 #BuildRequires: gcc-c++ gcc-g77 libgcrypt-devel libgpg-error-devel libstdc++-devel
@@ -44,8 +46,7 @@ Static libraries for the %name-devel package
 %prep
 %setup -q
 %patch1 -p1
-#%patch2 -p1
-#%patch10 -p1
+%patch2 -p1
 
 #__aclocal
 #__autoconf
@@ -83,7 +84,29 @@ Static libraries for the %name-devel package
 %endif
 
 %changelog
-* Mon Sep 18 2017 Sergey V Turchin <zerg@altlinux.org> 1.3.5-alt1%ubt
+* Wed Oct 03 2018 Paul Wolneykien <manowar@altlinux.org> 1.3.6-alt5
+- Include GOST patches into the main package version.
+- Set the GOST CMS signature value.
+- Added GOST patch (thx Dmitry Eremin-Solenikov).
+
+* Tue Oct 02 2018 Paul Wolneykien <manowar@altlinux.org> 1.3.6-alt4.gost
+- Set the GOST CMS signature value.
+- Restore build-generated files and revert the corresponding changes
+  in the spec.
+
+* Fri Sep 07 2018 Paul Wolneykien <manowar@altlinux.org> 1.3.6-alt3.gost
+- GOST patch version 1.0.0 providing the virtual package.
+
+* Thu Sep 06 2018 Paul Wolneykien <manowar@altlinux.org> 1.3.6-alt2.gost
+- Added GOST patch (thx Dmitry Eremin-Solenikov).
+- Remove unused patches (source package).
+- Remove build-generated files (source package).
+- Use autoreconf for setup.
+
+* Tue Aug 07 2018 Paul Wolneykien <manowar@altlinux.org> 1.3.6-alt1
+- New version 1.3.6 (development).
+
+* Mon Sep 18 2017 Sergey V Turchin <zerg@altlinux.org> 1.3.5-alt1
 - new version
 
 * Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 1.3.3-alt2

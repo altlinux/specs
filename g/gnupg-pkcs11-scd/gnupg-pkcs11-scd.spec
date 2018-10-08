@@ -4,7 +4,7 @@
 
 Name: gnupg-pkcs11-scd
 Version: 0.9.2
-Release: alt1
+Release: alt5
 
 Summary: A GnuPG PKCS#11 token daemon
 Group: System/Configuration/Hardware
@@ -12,6 +12,7 @@ License: BSD
 Url: https://github.com/alonbl/gnupg-pkcs11-scd
 
 Source: %name-%version.tar
+Patch0: %name-%version-gost-1.0.0.patch
 
 %if_enabled LibreSSL
 BuildRequires: LibreSSL-devel
@@ -26,6 +27,8 @@ BuildRequires: libgcrypt-devel
 BuildRequires: libgpg-error-devel
 BuildRequires: libpkcs11-helper-devel
 
+Requires: libpkcs11-helper(vko) >= 1.0.0
+
 %description
 gnupg-pkcs11 is a project to implement a BSD-licensed smart-card daemon to
 enable the use of PKCS#11 tokens with GnuPG.
@@ -35,6 +38,7 @@ we strongly disagree with WK\'s attitude towards it.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
@@ -55,16 +59,35 @@ we strongly disagree with WK\'s attitude towards it.
 %_man1dir/*.1.*
 
 %changelog
+* Thu Oct 04 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.2-alt5
+- Fixed OpenSSL 1.1 build: Indirect access of EC GOST key using the
+  API function.
+- Fixed OpenSSL initialization.
+  
+* Wed Oct 03 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.2-alt4
+- Fix: Use OpenSSL general EC functions to get the key coords.
+- Require libpkcs11-helper(vko) >= 1.0.0.
+
+* Wed Oct 03 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.2-alt3
+- Generate the GOST patch with gear.
+
 * Tue Sep 04 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.2-alt1
 - Switch back to OpenSSL.
 - Update to version 0.9.2.
+
+* Wed Jul 25 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.2-alt2
+- Build with GOST patch (sign, crypt).
+
+* Wed Jul 25 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.2-alt1
+- Fresh up to the version 0.9.2.
 
 * Sat Mar 24 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.1-alt2
 - Build with LibreSSL.
 
 * Fri Mar 23 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.1-alt1
 - gnupg-pkcs11-scd-0.9.1 (thx Alon Bar-Lev).
-- proxy: systemd: enable user's group using SupplementaryGroups (thx Alon Bar-Lev).
+- proxy: systemd: enable user's group using SupplementaryGroups
+  (thx Alon Bar-Lev).
 - scdaemon: introduce GNUPG_PKCS11_SOCKETDIR environment (thx Alon Bar-Lev).
 - build: support freebsd usock creds (thx Alon Bar-Lev).
 - post gnupg-pkcs11-scd-0.9.0 (thx Alon Bar-Lev).
