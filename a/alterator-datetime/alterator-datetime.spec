@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 4.2
+Version: 4.2.1
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
@@ -66,6 +66,9 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Fri Oct 05 2018 Michael Shigorin <mike@altlinux.org> 4.2.1-alt1
+- Avoid touching nonexistent service.
+
 * Fri Aug 17 2018 Paul Wolneykien <manowar@altlinux.org> 4.2-alt1
 - Use strict data type for the "zone" parameter.
 
