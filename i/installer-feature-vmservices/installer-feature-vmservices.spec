@@ -1,6 +1,6 @@
 Name: installer-feature-vmservices
-Version: 0.2.1
-Release: alt1%ubt
+Version: 0.3.0
+Release: alt1
 
 Summary: Setup virtual machine services
 License: GPL
@@ -28,6 +28,9 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Oct 08 2018 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
+- using systemd-detect-virt
+
 * Fri Apr 13 2018 Sergey V Turchin <zerg@altlinux.org> 0.2.1-alt1%ubt
 - simplify script
 
