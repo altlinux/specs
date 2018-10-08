@@ -1,5 +1,5 @@
 Name: repocop-unittest-distribution-tag
-Version: 0.6
+Version: 0.7
 Release: alt1
 
 Summary: distribution-tag intergration tests for repocop test platform
@@ -37,6 +37,9 @@ install -p -m 644 %SOURCE1 %buildroot%_datadir/repocop/fixscripts/
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1
+- adapted to new ALT tag format
+
 * Wed Jun 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1
 - updated fixscript
 
