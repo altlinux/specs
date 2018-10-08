@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-validate /usr/bin/qmake-qt4 gcc-c++ libX11-devel libXext-devel lv2-devel pkgconfig(ogg) pkgconfig(zlib)
+BuildRequires: /usr/bin/desktop-file-validate libX11-devel libXext-devel lv2-devel pkgconfig(ogg) pkgconfig(zlib)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -16,8 +16,8 @@ BuildRequires: /usr/bin/desktop-file-validate /usr/bin/qmake-qt4 gcc-c++ libX11-
 
 Summary:       Audio/MIDI multi-track sequencer
 Name:          qtractor
-Version:       0.8.5
-Release:       alt1_2
+Version:       0.9.2
+Release:       alt1_1
 License:       GPLv2+
 Group:         Sound
 URL:           http://qtractor.sourceforge.net/
@@ -30,6 +30,7 @@ Patch3:        qtractor-0.6.4-secondary.patch
 BuildRequires: libalsa-devel
 BuildRequires: desktop-file-utils
 BuildRequires: dssi-devel
+BuildRequires: gcc-c++
 # for plugin GUI support:
 BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
 BuildRequires: libjack-devel
@@ -98,7 +99,8 @@ make install DESTDIR=%{buildroot}
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %files -f %{name}.lang
-%doc AUTHORS ChangeLog COPYING README TODO
+%doc AUTHORS ChangeLog README TODO
+%doc --no-dereference COPYING
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/mime/packages/%{name}.xml
@@ -108,6 +110,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_datadir}/metainfo/%{name}.appdata.xml
 
 %changelog
+* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt1_1
+- new version
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1_2
 - update to new release by fcimport
 
