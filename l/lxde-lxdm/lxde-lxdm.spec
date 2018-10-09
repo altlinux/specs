@@ -5,7 +5,7 @@
 %define gtkver 2
 Name: lxde-%upstreamname
 Version: 0.5.3
-Release: alt5.20160321.1
+Release: alt6.20180522
 
 Summary: Lightweight X11 Display Manager
 License: GPL
@@ -25,7 +25,10 @@ Source1: alt.lxdm.pam
 Source2: alt.lxdm.conf
 Source3: alt.Xsession
 
-BuildPreReq: imake intltool libXmu-devel libgtk+%gtkver-devel libpam-devel xinitrc xorg-cf-files pkgconfig(systemd)
+Buildrequires: imake intltool libXmu-devel libgtk+%gtkver-devel libpam-devel xinitrc xorg-cf-files
+Buildrequires: iso-codes-devel
+Buildrequires: pkgconfig(systemd)
+Buildrequires: libConsoleKit2-devel
 Requires: gtk3-theme-clearlooks-phenix
 %add_findreq_skiplist %_sbindir/%upstreamname
 
@@ -46,7 +49,7 @@ KDM in LXDE distros. It's still in very early stage of development.
 %autoreconf
 %configure \
         --enable-gtk%gtkver \
-        --disable-consolekit
+        --enable-consolekit
 
 %make_build
 
@@ -73,6 +76,9 @@ install -m644 systemd/lxdm.service %buildroot%_unitdir
 #fix name backgrouds for default settings
 ln -s %_datadir/%upstreamname/themes/%theme_name/wave.svg %buildroot%_datadir/%upstreamname/themes/%theme_name/default.svg
 
+# run on tty7
+sed 's/xserverrc vt1/xserverrc vt7/g' -i %buildroot%_sysconfdir/lxdm/lxdm.conf
+
 %files -f %upstreamname.lang
 %doc ChangeLog INSTALL README
 %_sysconfdir/%upstreamname
@@ -90,6 +96,11 @@ ln -s %_datadir/%upstreamname/themes/%theme_name/wave.svg %buildroot%_datadir/%u
 %_unitdir/lxdm.service
 
 %changelog
+* Tue Oct 09 2018 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt6.20180522
+- new snapshot
+- build with ConsoleKit2
+- update buildrequires
+
 * Sun Feb 26 2017 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt5.20160321.1
 - config(noreplace) lxdm.conf
 - disabled build with consolekt
