@@ -1,5 +1,5 @@
 Name: valgrind
-Version: 3.13.0
+Version: 3.14.0
 Release: alt1
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
@@ -12,14 +12,6 @@ Patch0: valgrind-alt-arm.patch
 Patch1: valgrind-rh-cachegrind-improvements.patch
 Patch2: valgrind-rh-helgrind-race-supp.patch
 Patch3: valgrind-rh-ldso-supp.patch
-Patch4: valgrind-rh-ppc64-check-no-vsx.patch
-Patch5: valgrind-rh-epoll_pwait.patch
-Patch6: valgrind-rh-ppc64-diag.patch
-Patch7: valgrind-rh-arm64-hwcap.patch
-Patch8: valgrind-rh-arm-index-hardwire.patch
-Patch9: valgrind-rh-ucontext_t.patch
-Patch10: valgrind-rh-gdb-8-testfix.patch
-Patch11: valgrind-rh-disable-vgdb-child.patch
 
 # valgrind needs /proc to work
 Requires: /proc
@@ -73,14 +65,6 @@ needed to compile Valgrind tools separately from the Valgrind core.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
 
 %build
 autoreconf -vi
@@ -171,6 +155,12 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Tue Oct 09 2018 Dmitry V. Levin <ldv@altlinux.org> 3.14.0-alt1
+- 3.13.0 -> 3.14.0.
+
+* Sun Nov 05 2017 Dmitry V. Levin <ldv@altlinux.org> 3.13.0-alt1
+- Merged with valgrind-3.13.0-10 from Fedora.
+
 * Thu Jul 20 2017 Dmitry V. Levin <ldv@altlinux.org> 3.13.0-alt1
 - Updated to 3.13.0.
 - Merged with valgrind-3.13.0-4 from Fedora.
