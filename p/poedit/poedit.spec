@@ -1,13 +1,14 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
+%define rdn_name net.poedit.Poedit
 
 %def_with cpprest
 %def_without cld2
 
 Name: poedit
-Version: 2.1.1
-Release: alt2
+Version: 2.2
+Release: alt1
 
 Summary: Cross-platform translation files editor
 Summary(ru_RU.UTF-8): Кроссплатформенный редактор файлов переводов
@@ -66,14 +67,17 @@ wxLocale библиотеки wxWindows.
 %_bindir/%name
 %_man1dir/%name.1.*
 %_datadir/%name/
-%_desktopdir/%name.desktop
-%_desktopdir/%name-uri.desktop
+%_desktopdir/%rdn_name.desktop
+%_desktopdir/net.poedit.PoeditURI.desktop
 %_pixmapsdir/%name.png
 %_iconsdir/hicolor/*x*/*/*.png
 #%_iconsdir/hicolor/scalable/*/*.svg
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%rdn_name.appdata.xml
 
 %changelog
+* Tue Oct 09 2018 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1
+- 2.2
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt2
 - rebuilt with openssl-1.1
 
