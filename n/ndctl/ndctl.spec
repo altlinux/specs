@@ -1,5 +1,9 @@
+%def_without bash
+# too old kernel in hasher
+%def_disable check
+
 Name: ndctl
-Version: 61.2
+Version: 63
 Release: alt1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
@@ -13,12 +17,13 @@ Source: %name-%version.tar.gz
 Requires: lib%name = %version-%release
 Requires: libdaxctl = %version-%release
 
-BuildRequires: asciidoc xmlto
 BuildRequires: pkgconfig(libkmod)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(json-c)
-BuildRequires: bash-completion
+BuildRequires: libsystemd-devel
+%{?_with_bash:BuildRequires: bash-completion >= 2.0}
+BuildRequires: asciidoctor asciidoc xmlto
 
 %description
 Utility library for managing the "libnvdimm" subsystem. The "libnvdimm"
@@ -85,7 +90,8 @@ mappings of performance / feature-differentiated memory.
 %build
 echo %version > version
 ./autogen.sh
-%configure --disable-static
+%configure --disable-static \
+	%{subst_with bash}
 %make_build
 
 %install
@@ -97,8 +103,9 @@ echo %version > version
 %files
 %_bindir/%name
 %_man1dir/%{name}*
-# bash3 incompatible (broken)
-%exclude %_datadir/bash-completion/completions/%name
+%_sysconfdir/%name/monitor.conf
+%_unitdir/%name-monitor.service
+%{?_with_bash:%_datadir/bash-completion/completions/%name}
 
 %files -n lib%name
 %_libdir/lib%name.so.*
@@ -123,6 +130,9 @@ echo %version > version
 %_pkgconfigdir/libdaxctl.pc
 
 %changelog
+* Tue Oct 09 2018 Yuri N. Sedunov <aris@altlinux.org> 63-alt1
+- 63
+
 * Wed Aug 01 2018 Yuri N. Sedunov <aris@altlinux.org> 61.2-alt1
 - 61.2
 
