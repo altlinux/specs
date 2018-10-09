@@ -31,19 +31,20 @@ BuildRequires: /proc
 %global project         BurntSushi
 %global repo            toml-test
 %global import_path     %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit          85f50d0991feaca39fd7c3ad1047acbf9df90859
+%global commit          39bb76d631ba103a94b377aaf52c979456677fb1
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0.2.0
-Release:        alt1_0.13.git%{shortcommit}
+Release:        alt2.git%{shortcommit}
 Summary:        Language agnostic test suite for TOML
-License:        WTFPL
+License:        MIT
 URL:            https://%{import_path}
 Source0:        https://%{import_path}/archive/%{commit}/%{repo}-%{commit}.tar.gz
 Provides:       toml-test = %{version}-%{release}
 BuildRequires:  golang >= 1.2.1
+BuildRequires:  golang-github-BurntSushi-toml-devel
 Source44: import.info
 
 %description
@@ -126,6 +127,9 @@ install -d -p %{buildroot}/%{go_path}/src/%{import_path}/
 
 
 %changelog
+* Tue Oct 09 2018 Stanislav Levin <slev@altlinux.org> 0.2.0-alt2.git39bb76d
+- Updated to the latest git snapshot (need for python-toml).
+
 * Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1_0.13.git85f50d0
 - fc update
 

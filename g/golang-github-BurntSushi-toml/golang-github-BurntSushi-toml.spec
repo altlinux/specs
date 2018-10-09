@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-golang
@@ -48,16 +50,16 @@ BuildRequires: /proc
 # https://github.com/BurntSushi/toml
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          2ceedfee35ad3848e49308ab0c9a4f640cfb5fb2
+%global commit          3012a1dbe2e4bd1391d42b32f0577cb7bbc7f005
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        0
-Release:        alt1_0.14.git%{shortcommit}
+Version:        0.3.1
+Release:        alt1
 Summary:        TOML parser and encoder for Go with reflection
-License:        BSD
+License:        MIT
 URL:            https://%{provider_prefix}
-Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{shortcommit}.tar.gz
+Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{commit}.tar.gz
 Provides:       tomlv = %{version}-%{release}
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
@@ -76,6 +78,7 @@ Summary:       %{summary}
 BuildArch:     noarch
 
 %if 0%{?with_check}
+BuildRequires: golang-github-BurntSushi-toml-test
 %endif
 
 Provides:      golang(%{import_path}) = %{version}-%{release}
@@ -123,6 +126,9 @@ export GOPATH=$(pwd):$(pwd)/Godeps/_workspace:%{go_path}
 %endif
 
 %gobuild -o bin/tomlv %{import_path}/cmd/tomlv
+# for tests only
+%gobuild -o bin/toml-test-decoder %{import_path}/cmd/toml-test-decoder
+%gobuild -o bin/toml-test-encoder %{import_path}/cmd/toml-test-encoder
 
 %install
 install -d %{buildroot}/%{_bindir}
@@ -182,8 +188,11 @@ export GOPATH=%{buildroot}/%{go_path}:$(pwd)/Godeps/_workspace:%{go_path}
 %if ! 0%{?gotest:1}
 %global gotest go test
 %endif
-
-%gotest %{import_path}
+export PATH=$PATH:$(pwd)/bin
+%gotest %{import_path} -v
+ln -s %_datadir/toml-test/tests tests
+toml-test toml-test-decoder ||:
+toml-test -encoder toml-test-encoder ||:
 %endif
 
 #define license tag if not already defined
@@ -206,6 +215,9 @@ export GOPATH=%{buildroot}/%{go_path}:$(pwd)/Godeps/_workspace:%{go_path}
 %endif
 
 %changelog
+* Tue Oct 09 2018 Stanislav Levin <slev@altlinux.org> 0.3.1-alt1
+- 0.1.0 -> 0.3.1.
+
 * Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.14.git2ceedfe
 - fc update
 
