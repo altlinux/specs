@@ -130,8 +130,8 @@
 %def_without bash_completion 
 
 Name: libvirt
-Version: 4.7.0
-Release: alt1%ubt
+Version: 4.8.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -1309,6 +1309,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Oct 09 2018 Alexey Shabalin <shaba@altlinux.org> 4.8.0-alt1
+- 4.8.0
+
 * Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 4.7.0-alt1%ubt
 - 4.7.0
 - add daemon-driver-storage-iscsi-direct package
