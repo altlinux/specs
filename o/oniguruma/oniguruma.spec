@@ -1,6 +1,6 @@
 %define soversion 5
 Name: oniguruma
-Version: 6.9.4
+Version: 6.9.5
 Release: alt1
 Summary: Regular expressions library
 
@@ -57,8 +57,9 @@ done
 %build
 autoreconf -fisv
 %configure \
-    --disable-silent-rules \
+        --disable-silent-rules \
 	--disable-static \
+	--enable-posix-api \
 	--with-rubydir=%_bindir
 %__make
 
@@ -84,6 +85,9 @@ find $RPM_BUILD_ROOT -name '*.la' \
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed May 13 2020 Anton Farygin <rider@altlinux.ru> 6.9.5-alt1
+- 6.9.5
+
 * Mon Dec 02 2019 Anton Farygin <rider@altlinux.ru> 6.9.4-alt1
 - 6.9.4
 - fixes:
