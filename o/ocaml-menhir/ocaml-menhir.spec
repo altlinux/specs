@@ -1,6 +1,7 @@
+%set_verify_elf_method textrel=relaxed
 Name: ocaml-menhir
-Version: 20180530
-Release: alt2
+Version: 20181005
+Release: alt1
 Summary: LR(1) parser generator for the OCaml programming language.
 
 Group: Development/ML
@@ -35,8 +36,6 @@ replacing all calls to module Parsing with new Menhir-specific keywords.
 make PREFIX=/usr all
 
 %install
-#mkdir -p %buildroot%ocamlsitelib/menhirLib
-#mkdir -p %buildroot%ocamlsitelib/menhirSdk
 mkdir -p %buildroot%_libdir/ocaml
 make OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml PREFIX=%buildroot/usr install
 
@@ -44,8 +43,6 @@ mkdir -p %buildroot%_datadir/doc/%name-%version
 mv %buildroot%_datadir/doc/menhir/* %buildroot%_datadir/doc/%name-%version/
 rm -rf %buildroot%_datadir/doc/menhir
 rm -rf %buildroot%_datadir/doc/%name-%version/src/
-
-bzip2 -z9 %buildroot%_man1dir/menhir.1
 
 %files
 %doc CHANGES.md
@@ -65,6 +62,9 @@ bzip2 -z9 %buildroot%_man1dir/menhir.1
 %_libdir/ocaml/menhirSdk/*
 
 %changelog
+* Tue Oct 09 2018 Anton Farygin <rider@altlinux.ru> 20181005-alt1
+- 20181005
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 20180530-alt2
 - rebuilt with ocaml-4.07
 
