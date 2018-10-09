@@ -1,10 +1,10 @@
-Release: alt2
 %define origname aubio
-%define sover 4
+%define sover 5
 %def_enable python
 
 Name: libaubio%sover
-Version: 0.4.6
+Version: 0.4.7
+Release: alt1
 Summary: Aubio is a library for real time audio labelling
 Url: http://www.aubio.org/
 License: GPL
@@ -119,7 +119,7 @@ waf install --destdir=%buildroot
 
 %files
 %doc AUTHORS ChangeLog README.md doc/*
-%_libdir/*.so.*
+%_libdir/*.so.%{sover}*
 
 %if_enabled python
 %files -n python-module-%origname
@@ -141,6 +141,9 @@ waf install --destdir=%buildroot
 %_docdir/lib%origname-doc
 
 %changelog
+* Tue Oct 09 2018 Anton Farygin <rider@altlinux.ru> 0.4.7-alt1
+- 0.4.7
+
 * Wed Jun 13 2018 Anton Farygin <rider@altlinux.ru> 0.4.6-alt2
 - rebuilt for ffmpeg-4.0
 
