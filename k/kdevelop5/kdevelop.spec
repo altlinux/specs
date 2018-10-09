@@ -2,7 +2,7 @@
 
 Name: kdevelop5
 Version: 5.2.80
-Release: alt1
+Release: alt2
 Summary: A cross-platform IDE for C, C++, Python, QML/JavaScript and PHP
 Group: Development/Tools
 License: GPLv2
@@ -38,6 +38,17 @@ sed -i '/.etc.bash[.]bashrc/s/^/#/' kdevplatform/util/kdevplatform_shell_environ
 %install
 %K5install
 %K5install_move data kdevelop kconf_update
+%K5install_move bin 'kdevelop!' kdevplatform_shell_environment.sh
+echo '#!/bin/sh
+exec '%_K5bin/'kdevelop!'' "$@"
+' > %buildroot/%_bindir/kdevelop!
+chmod +x %buildroot/%_bindir/kdevelop!
+
+echo '#!/bin/sh
+exec '%_K5bin/'kdevelop'' "$@"
+' > %buildroot/%_bindir/kdevelop5
+chmod +x %buildroot/%_bindir/kdevelop5
+
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
@@ -67,6 +78,9 @@ sed -i '/.etc.bash[.]bashrc/s/^/#/' kdevplatform/util/kdevplatform_shell_environ
 %_libdir/*.so
 
 %changelog
+* Tue Oct 09 2018 Fr. Br. George <george@altlinux.ru> 5.2.80-alt2
+- Fix user binary
+
 * Thu Oct 04 2018 Fr. Br. George <george@altlinux.ru> 5.2.80-alt1
 - Autobuild version bump to 5.2.80
 
