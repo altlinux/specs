@@ -1,7 +1,7 @@
 %def_with python3
-
+%add_python3_path %_datadir/waf3
 Name: waf
-Version: 1.9.15
+Version: 2.0.12
 Release: alt1
 
 Summary: A Python-based build system
@@ -9,15 +9,12 @@ License: BSD
 Group: Development/Other
 
 URL: http://code.google.com/p/waf/
-# Original tarfile can be found at
-# http://waf.googlecode.com/files/waf-%%{version}.tar.bz2
-# We remove:
-# - /docs/book, licensed CC BY-NC-ND
-# - Waf logos, licensed CC BY-NC
 # git https://github.com/waf-project/waf
-Source:         waf-%{version}.tar
+Source: %name-%version.tar
 Patch0: waf-1.6.2-libdir.patch
 Patch1: waf-1.6.9-logo.patch
+# with python-3 waf does not find the top_dir directory with wscript and this path try to fix it
+Patch2: waf-2.0.12-python3-build.patch
 
 # Automatically added by buildreq on Mon Aug 09 2010
 BuildRequires: python-devel python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging
@@ -25,7 +22,8 @@ BuildRequires: python-devel python-modules-compiler python-modules-ctypes python
 BuildArch: noarch
 
 %if_with python3
-BuildRequires: python3-devel rpm-build-python3
+BuildRequires: python3-devel 
+BuildRequires(pre): rpm-build-python3
 %endif
 
 %description
@@ -52,6 +50,7 @@ This package contains the Python 3 version of %{name}.
 %patch0 -p0
 # do not try to use the (removed) waf logos
 %patch1 -p1
+%patch2 -p1
 
 # remove BOM, causes trouble later
 sed -i -e '1s/^\xEF\xBB\xBF//' waflib/extras/dpapi.py
@@ -65,7 +64,16 @@ sed -i -e 's@fontname=\(Vera.*sans\),@fontname="\1",@g' \
 
 %build
 ./configure --prefix=/usr
-./waf-light --make-waf
+# skip build slow_qt4 extras
+rm -f waflib/extras/slow_qt4.py
+extras=
+for f in waflib/extras/*.py ; do
+  f=$(basename "$f" .py);
+  if [ "$f" != "__init__" ]; then
+    extras="${extras:+$extras,}$f" ;
+  fi
+done
+./waf-light --make-waf --strip --tools="$extras"
 
 %install
 #./waf install --yes --destdir=%buildroot
@@ -123,6 +131,12 @@ rm -f docs/sphinx/build/html/.buildinfo
 
 
 %changelog
+* Tue Oct 09 2018 Anton Farygin <rider@altlinux.ru> 2.0.12-alt1
+- 2.0.12
+
+* Wed May 30 2018 Anton Farygin <rider@altlinux.ru> 2.0.8-alt1
+- new version
+
 * Tue Apr 03 2018 Anton Farygin <rider@altlinux.ru> 1.9.15-alt1
 - new version
 
