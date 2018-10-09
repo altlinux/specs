@@ -4,7 +4,7 @@
 %define rname kid3
 Name: kde5-%rname
 Version: 3.6.2
-Release: alt1%ubt
+Release: alt2
 %K5init altplace
 
 Group: Sound
@@ -13,6 +13,7 @@ License: GPLv2
 Url: http://kid3.sourceforge.net/
 
 Source: kid3-%{version}.tar
+Source1: ru.po
 Patch1: kid3-3.0.2-alt-desktop_ru_uk.patch
 
 # Automatically added by buildreq on Fri Nov 13 2015 (-bi)
@@ -124,6 +125,8 @@ Requires: %name-common = %EVR
 %setup -q -n %rname-%version
 %patch1 -p1
 
+cat %SOURCE1 >po/ru.po
+
 find -type f -name CMakeLists.txt | \
 while read f ; do
     for l in kid3-gui kid3-core ; do
@@ -198,6 +201,9 @@ done
 #%_K5dbus_iface/*id3*
 
 %changelog
+* Tue Oct 09 2018 Sergey V Turchin <zerg@altlinux.org> 3.6.2-alt2
+- update russian translation
+
 * Thu Sep 13 2018 Sergey V Turchin <zerg@altlinux.org> 3.6.2-alt1%ubt
 - new version
 
