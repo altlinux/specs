@@ -1,6 +1,6 @@
 Name: mosml
 Version: 2.10.1
-Release: alt1
+Release: alt2
 
 Summary:  Moscow ML
 License: GPL
@@ -99,9 +99,13 @@ rm -f %buildroot/%_libdir/mosml/camlrunm
 %_bindir/*
 %_includedir/*
 %_libdir/mosml
+%_datadir/mosml/*
 %doc README copyrght doc/* examples
 
 %changelog
+* Tue Oct 09 2018 Andrey Bergman <vkni@altlinux.org> 2.10.1-alt2
+- Add unpackaged files.
+
 * Sat Sep 03 2016 Andrey Bergman <vkni@altlinux.org> 2.10.1-alt1
 - Initial release for Sisyphus.
 
