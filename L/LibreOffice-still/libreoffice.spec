@@ -1,4 +1,3 @@
-# 6.0.6.2
 # Get Source0-3 from http://download.documentfoundation.org/libreoffice/src/$ver/
 # Get Source10 (with selected components) from https://dev-www.libreoffice.org/src/
 
@@ -10,13 +9,13 @@
 
 Name: LibreOffice-still
 %define hversion 6.0
-%define urelease 6.2
+%define urelease 7.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt1
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL
 Group: Office
@@ -518,6 +517,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Oct 08 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.7.1-alt1
+- New version 6.0.7.1 (Still).
+
 * Tue Sep 18 2018 Fr. Br. George <george@altlinux.ru> 6.0.6.2-alt2
 - Build with bundled old mdds/orcus
 
