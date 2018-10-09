@@ -1,7 +1,7 @@
 
 Name: realmd
 Version: 0.16.3
-Release: alt1%ubt
+Release: alt2
 Summary: Kerberos realm enrollment service
 License: LGPLv2+
 Group: Security/Networking
@@ -18,6 +18,7 @@ BuildRequires: pkgconfig(libsystemd)
 BuildRequires: /usr/bin/krb5-config
 BuildRequires: libldap-devel
 BuildRequires: xsltproc xmlto
+BuildRequires: python-module-argparse
 
 %description
 realmd is a DBus system service which manages discovery and enrollment in realms
@@ -70,6 +71,9 @@ applications that use %name.
 %doc %_datadir/doc/realmd/
 
 %changelog
+* Tue Oct 09 2018 Alexey Shabalin <shaba@altlinux.org> 0.16.3-alt2
+- fix build (update BR:)
+
 * Sun Aug 06 2017 Alexey Shabalin <shaba@altlinux.ru> 0.16.3-alt1%ubt
 - 0.16.3
 
