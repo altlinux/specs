@@ -2,7 +2,7 @@
 %define rname kaffeine
 Name: kde5-%rname
 Version: 2.0.15
-Release: alt3%ubt
+Release: alt4
 %K5init
 
 Group: Video
@@ -35,6 +35,7 @@ Requires: vlc-plugin-taglib
 Source0: %name-%version.tar
 Patch1: alt-find-libdvbv5.patch
 Patch2: alt-qt5.11.patch
+Patch3: fix-playing-audiocd.patch
 
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-x11extras-devel
@@ -52,6 +53,7 @@ It also handles Video CDs, DVDs, and DVB cards.
 %setup -q
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 mv .gear/po ./
 
@@ -77,6 +79,9 @@ mv .gear/po ./
 %_K5xdgapp/org.kde.kaffeine.desktop
 
 %changelog
+* Tue Oct 09 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.0.15-alt4
+- fix playing audiocd
+
 * Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 2.0.15-alt3%ubt
 - fix to build
 
