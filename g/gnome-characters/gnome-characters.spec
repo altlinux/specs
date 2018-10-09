@@ -1,12 +1,12 @@
 %def_disable snapshot
 
 %define _name org.gnome.Characters
-%define ver_major 3.29
+%define ver_major 3.30
 %define _libexecdir %_prefix/libexec
 %def_without included_libunistring
 
 Name: gnome-characters
-Version: %ver_major.91
+Version: %ver_major.0
 Release: alt1
 
 Summary: Character map application for GNOME
@@ -28,8 +28,6 @@ Source: %name-%version.tar
 
 Requires: libgjs >= %gjs_ver
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
-# src/characterList.js:# const {Gc, Gdk, GLib, Gio,GObject,Gtk, Pango, PangoCairo} = imports.gi;
-# src/categoryList.js:const {Gc, GLib, GObject, Gtk, GnomeDesktop} = imports.gi;
 Requires: typelib(Gc)
 Requires: typelib(Gdk)
 Requires: typelib(Gio)
@@ -81,6 +79,9 @@ characters.
 
 
 %changelog
+* Tue Oct 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Sat Aug 18 2018 Yuri N. Sedunov <aris@altlinux.org> 3.29.91-alt1
 - 3.29.91
 
