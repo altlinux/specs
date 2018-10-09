@@ -5,8 +5,8 @@
 %def_without unittests
 
 Name: ngsolve
-Version: 6.2
-Release: alt1.1804%ubt
+Version: 6.2.1808
+Release: alt1
 Summary: NGSolve Finite Element Library
 License: GPL or LGPL
 Group: Sciences/Mathematics
@@ -14,7 +14,6 @@ Url: http://sourceforge.net/projects/ngsolve/
 #Git: https://github.com/NGSolve/ngsolve.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Wed Jun 13 2018
@@ -266,7 +265,7 @@ popd
 %_libdir/*.so
 
 %files -n lib%name-devel
-%_prefix/lib/cmake/%name/*.cmake
+%_libdir/cmake/%name/*.cmake
 %_includedir/*
 
 %files demos
@@ -295,6 +294,11 @@ popd
 
 
 %changelog
+* Mon Oct 08 2018 Nikolai Kostrigin <nickel@altlinux.org> 6.2.1808-alt1
+- New version
+- Remove %%ubt
+- Change default *.cmake config files path to %%_libdir/cmake
+
 * Sat Jun 09 2018 Nikolai Kostrigin <nickel@altlinux.org> 6.2-alt1.1804%ubt
 - New version
 
