@@ -1,6 +1,6 @@
 Name: elilo
 Version: 3.16
-Release: alt1
+Release: alt2
 
 Summary: EFI Linux Loader
 License: GPL v2+
@@ -19,6 +19,8 @@ ExclusiveArch: x86_64
 
 Obsoletes: elilo-signed
 
+Patch1: elilo-3.16-strncpy-clash.patch
+
 %description
 ELILO is an EFI Linux boot loader for IA-64 (IPF), IA-32 (x86)
 and x86_64 EFI-based platforms.
@@ -33,6 +35,7 @@ oraz x86_64 opartych na EFI.
 %prep
 %setup -c
 tar xf %name-%version-source.tar.gz
+%patch1 -p1
 mv elilo-%version-source elilo
 
 %build
@@ -62,6 +65,9 @@ install -pDm644 %SOURCE2 %buildroot%_man5dir/elilo.conf.5
 %_man5dir/elilo.conf.5*
 
 %changelog
+* Tue Oct 9 2018 Ermakov Nikita <arei@altlinux.org> 3.16-alt2
+- Patch strops.c and strops.h to fix StrnCpy clash.
+
 * Fri Nov 24 2017 Anton Farygin <rider@altlinux.ru> 3.16-alt1
 - 3.16
 
