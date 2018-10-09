@@ -21,7 +21,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.6.1
-Release: alt1
+Release: alt2
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
@@ -44,7 +44,7 @@ BuildRequires: ruby
 BuildRequires: scons
 BuildRequires: java-1.8.0-openjdk-devel rpm-build-java ws-commons-util xmlrpc-common xmlrpc-client
 BuildRequires: zlib-devel
-BuildRequires: npm
+BuildRequires: node node-gyp npm
 BuildRequires: ronn
 BuildRequires: groff-base
 
@@ -705,6 +705,9 @@ fi
 ################################################################################
 
 %changelog
+* Tue Oct 09 2018 Alexey Shabalin <shaba@altlinux.org> 5.6.1-alt2
+- rebuild with node-8.12.0
+
 * Mon Sep 24 2018 Alexey Shabalin <shaba@altlinux.org> 5.6.1-alt1
 - 5.6.1
 
