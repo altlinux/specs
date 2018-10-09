@@ -6,17 +6,20 @@
 
 Name: gnustep-%oname
 Version: 1.7.0
-Release: alt12.svn20140704
+Release: alt13.svn20140704
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+ExclusiveArch: %ix86 x86_64
+
 # http://svn.gna.org/svn/gnustep/libs/libobjc2/trunk/
 Source: %name-%version.tar
 Source1: Makefile
-Patch: gnustep-objc2-1.6.1-alt-i586.patch
+Patch:  gnustep-objc2-1.6.1-alt-i586.patch
+Patch1: gnustep-objc2-fix-build-gcc7.patch
 
 BuildRequires(pre): rpm-macros-make
 BuildPreReq: gnustep-make-devel gcc-c++ libstdc++-devel
@@ -83,10 +86,10 @@ This package contains development files of GNUstep Runtime Optimisations.
 
 %prep
 %setup
-
 #ifnarch x86_64
 #patch -p1
 #endif
+%patch1 -p1
 
 cp -fR objc objc2
 #chmod +x build_opts.sh
@@ -177,6 +180,10 @@ ln -s objc2 %buildroot%_includedir/objc
 %endif
 
 %changelog
+* Tue Oct 09 2018 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt13.svn20140704
+- Fix build with gcc 7.0.
+- Exclude aarch64 from supported platform.
+
 * Wed Oct 25 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt12.svn20140704
 - NMU: changed cmake modules location
 
