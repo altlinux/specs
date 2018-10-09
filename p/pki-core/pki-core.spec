@@ -8,11 +8,11 @@
 %define resteasy_lib        %_javadir/resteasy
 %define jaxrs_api_jar       %_javadir/jboss-jaxrs-2.0-api.jar
 
-%define tomcatjss_version   7.3.5
+%define tomcatjss_version   7.3.6
 %define jss_version         4.5.0
 
 Name: pki-core
-Version: 10.6.6
+Version: 10.6.7
 Release: alt1
 
 Summary: Certificate System - PKI Core Components
@@ -548,6 +548,7 @@ fi
 
 %files -n pki-base
 %doc %_datadir/doc/pki-base/html
+%doc %_datadir/pki/server/docs
 %dir %_datadir/pki/etc
 %dir %_datadir/pki/scripts
 %dir %_datadir/pki/examples
@@ -748,7 +749,6 @@ fi
 %dir %_datadir/pki/server
 %dir %_datadir/pki/server/webapps
 %dir %_datadir/pki/server/webapps/pki
-%dir %_datadir/pki/server/webapps/ROOT
 %_datadir/pki/server/webapps/ROOT/
 %_datadir/pki/server/webapps/pki/admin/
 %_datadir/pki/server/webapps/pki/ca/
@@ -762,7 +762,6 @@ fi
 %_datadir/pki/server/webapps/pki/ocsp/
 %_datadir/pki/server/webapps/pki/pki.properties/
 %_datadir/pki/server/webapps/pki/tks/
-%_datadir/pki/server/webapps/pki/tks/
 %_datadir/pki/server/webapps/pki/ui/
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
@@ -770,6 +769,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Wed Oct 10 2018 Stanislav Levin <slev@altlinux.org> 10.6.7-alt1
+- 10.6.6 -> 10.6.7.
+
 * Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 10.6.6-alt1
 - 10.6.1 -> 10.6.6.
 

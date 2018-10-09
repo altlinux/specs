@@ -1,23 +1,36 @@
+%define _unpackaged_files_terminate_build 1
+%def_with check
+
 Name: oddjob
-Version: 0.34.3
+Version: 0.34.4
 Release: alt1
 Summary: A D-Bus service which runs odd jobs on behalf of client applications
 
 Group: System/Servers
 License: %bsdstyle
-Url: http://www.fedorahosted.org/oddjob
+Url: https://pagure.io/oddjob
 
 Source: %name-%version.tar
 Source1: oddjobd.init
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: libdbus-devel libxml2-devel libpam0-devel libselinux-devel libsasl2-devel
-BuildRequires: libkrb5-devel libcom_err-devel libsystemd-devel libldap-devel
 BuildRequires: xmlto
+BuildRequires: libdbus-devel
+BuildRequires: libxml2-devel
+BuildRequires: libpam0-devel
+BuildRequires: libselinux-devel
+BuildRequires: libsasl2-devel
+BuildRequires: libkrb5-devel
+BuildRequires: libcom_err-devel
+BuildRequires: libsystemd-devel
+BuildRequires: libldap-devel
 
-%define _unpackaged_files_terminate_build 1
+%if_with check
+BuildRequires: dbus-tools-gui
+BuildRequires: /proc
+%endif
 
 %description
 oddjob is a D-Bus service which performs particular tasks for clients
@@ -27,7 +40,7 @@ bus.
 %package mkhomedir
 Summary: An oddjob helper which creates and populates home directories
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description mkhomedir
 This package contains the oddjob helper which can be used by the
@@ -37,7 +50,7 @@ at login-time.
 %package sample
 Summary: A sample oddjob service
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description sample
 This package contains a trivial sample oddjob service.
@@ -49,16 +62,16 @@ This package contains a trivial sample oddjob service.
 %build
 %autoreconf
 %configure \
-		--disable-static \
-		--enable-pie \
-		--enable-now \
-		--with-selinux-acls \
-		--with-selinux-labels \
-		--without-python \
-		--enable-xml-docs \
-		--enable-systemd \
-		--disable-sysvinit \
-		--enable-sample
+    --disable-static \
+    --enable-pie \
+    --enable-now \
+    --with-selinux-acls \
+    --with-selinux-labels \
+    --without-python \
+    --enable-xml-docs \
+    --enable-systemd \
+    --disable-sysvinit \
+    --enable-sample
 %make_build
 
 %install
@@ -75,10 +88,13 @@ install -m644 sample/oddjobd-sample.conf	%buildroot/%_sysconfdir/%{name}d.conf.d
 install -m644 sample/oddjob-sample.conf		%buildroot/%_sysconfdir/dbus-1/system.d/
 install -m755 sample/oddjob-sample.sh		%buildroot/%_libexecdir/%name/
 
+%check
+%make check
+
 %files
 %doc *.dtd COPYING NEWS QUICKSTART doc/oddjob.html src/reload
 %_unitdir/oddjobd.service
-%_initrddir/oddjobd
+%_initdir/oddjobd
 %_bindir/*
 %_sbindir/*
 %config(noreplace) %_sysconfdir/dbus-*/system.d/oddjob.conf
@@ -117,6 +133,9 @@ install -m755 sample/oddjob-sample.sh		%buildroot/%_libexecdir/%name/
 %preun_service oddjobd
 
 %changelog
+* Wed Oct 10 2018 Stanislav Levin <slev@altlinux.org> 0.34.4-alt1
+- 0.34.3 -> 0.34.4.
+
 * Mon Jun 27 2016 Mikhail Efremov <sem@altlinux.org> 0.34.3-alt1
 - Initial build.
 

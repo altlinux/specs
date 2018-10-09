@@ -2,18 +2,16 @@
 %define softhsm_module "SoftHSM PKCS #11 Module"
 
 Name: softhsm
-Version: 2.4.0
+Version: 2.5.0
 
 Release: alt1
 Summary: Software version of a PKCS#11 Hardware Security Module
 License: BSD
 Group: System/Configuration/Other
-
+# Source-git: https://github.com/opendnssec/SoftHSMv2.git
 Url: http://www.opendnssec.org/
 
-# repacked https://dist.opendnssec.org/source/%name-%version.tar.gz
 Source0: %name-%version.tar
-Patch1: softhsm-2.3.0-reset-mutex-callbacks.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libssl-devel
@@ -50,8 +48,7 @@ Requires: lib%name = %EVR
 The devel package contains the libsofthsm include files.
 
 %prep
-%setup -n %name-%version
-%patch1 -p1
+%setup
 
 %build
 %autoreconf
@@ -125,6 +122,9 @@ exit 0
 %_includedir/softhsm/
 
 %changelog
+* Wed Oct 10 2018 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1
+- 2.4.0 -> 2.5.0.
+
 * Tue Sep 04 2018 Stanislav Levin <slev@altlinux.org> 2.4.0-alt1
 - 2.1.0 -> 2.4.0.
 
