@@ -1,6 +1,6 @@
 Name: libetpan
 Version: 1.9.1
-Release: alt1
+Release: alt2
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access
 License: %bsdstyle
@@ -75,6 +75,9 @@ ln -s README.md README
 %_libdir/%name.so
 
 %changelog
+* Tue Oct 09 2018 Mikhail Efremov <sem@altlinux.org> 1.9.1-alt2
+- Disable TLS-1.3 for now.
+
 * Fri Sep 21 2018 Mikhail Efremov <sem@altlinux.org> 1.9.1-alt1
 - Fix 'may be used uninitialized' warning.
 - Fix from upstream:
