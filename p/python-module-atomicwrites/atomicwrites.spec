@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Python Atomic file writes on POSIX
@@ -88,6 +88,9 @@ popd
 %python3_sitelibdir/atomicwrites-*.egg-info/
 
 %changelog
+* Tue Oct 09 2018 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
+- 1.2.0 -> 1.2.1.
+
 * Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
 - 1.1.5 -> 1.2.0.
 
