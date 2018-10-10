@@ -1,22 +1,24 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(glib-2.0)
 # END SourceDeps(oneline)
+Group: Development/Other
 %add_optflags %optflags_shared
 %define oldname eris
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           liberis
 Version:        1.3.23
-Release:        alt2_11
+Release:        alt2_14
 Summary:        Client-side session layer for Atlas-C++
 
-Group:          Development/Other
 # All files untagged except for Eris/Operations.{cpp,h} which is labeled
 # LGPL with no version.
 License:        LGPLv2+
 URL:            http://worldforge.org/dev/eng/libraries/eris
 Source0:        http://downloads.sourceforge.net/worldforge/%{oldname}-%{version}.tar.bz2
 
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires: libmercator-devel doxygen
 BuildRequires: libatlascpp-devel >= 0.5.98
 BuildRequires: libwfmath-devel >= 0.3.2
@@ -34,9 +36,9 @@ quickly tie game objects to whatever output representation they are using.
 
 
 %package devel
+Group: Development/Other
 Summary:        Development files for Eris
-Group:          Development/Other
-Requires:       pkg-config %{oldname} = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 Provides: eris-devel = %{version}-%{release}
 
 
@@ -53,11 +55,20 @@ Libraries and header files for developing applications that use Eris.
 %make_build
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{oldname}-1.3.la
 
 # 2014-05-17 - Tests disabled because one of 42 failed, will work w/ upstream to fix
+%check
+# Run tests in debug mode so asserts won't be skipped
+#sed -i -e 's/-DNDEBUG/-DDEBUG/' test/Makefile
+#make %{?_smp_mflags} check
+
+
+
+
+
 %files
 %doc AUTHORS ChangeLog CHANGES-1.4 COPYING NEWS README TODO
 %{_libdir}/lib%{oldname}-1.3.so.*
@@ -70,6 +81,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{oldname}-1.3.la
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.23-alt2_14
+- update to new release by fcimport
+
 * Tue Oct 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.23-alt2_11
 - rebuild with libaltascpp
 
