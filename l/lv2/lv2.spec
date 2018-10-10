@@ -12,7 +12,7 @@ BuildRequires: waf
 
 Name:           lv2
 Version:        1.14.0
-Release:        alt1_5
+Release:        alt1_7
 Summary:        Audio Plugin Standard
 
 # lv2specgen template.html is CC-AT-SA
@@ -90,12 +90,12 @@ sed -i '1s|^#!.*|#!%{__python}|' lv2specgen/lv2specgen.py
 %build
 export CFLAGS="%{optflags}"
 export LDFLAGS="%{__global_ldflags}"
-./waf configure -vv --prefix=%{_prefix} --libdir=%{_libdir} --debug \
+%{__python} waf configure -vv --prefix=%{_prefix} --libdir=%{_libdir} --debug \
   --docs --docdir=%{_docdir}/%{name} --lv2dir=%{_libdir}/lv2
-./waf -vv %{?_smp_mflags}
+%{__python} waf -vv %{?_smp_mflags}
 
 %install
-DESTDIR=%buildroot ./waf -vv install
+DESTDIR=%buildroot %{__python} waf -vv install
 mv %{buildroot}%{_docdir}/%{name}/%{name}/lv2plug.in/* %{buildroot}%{_docdir}/%{name}
 find %{buildroot}%{_docdir}/%{name} -type d -empty | xargs rmdir
 for f in COPYING NEWS README.md ; do
@@ -131,6 +131,9 @@ done
 %{_docdir}/%{name}/
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.14.0-alt1_7
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.14.0-alt1_5
 - update to new release by fcimport
 
