@@ -1,6 +1,6 @@
 Name: wvstreams
 Version: 4.6.1
-Release: alt4
+Release: alt4.qa1
 
 %define soffix .so.4.6
 %def_disable kdoc
@@ -69,6 +69,7 @@ Summary: %summary
 Group: Development/Documentation
 Requires: lib%name-devel = %version-%release
 Provides: %name-doxy-manual = %version-%release
+BuildArch: noarch
 %description -n lib%name-devel-doc
 WvStreams aims to be an efficient, secure, and easy-to-use library
 for doing network applications development.
@@ -173,7 +174,7 @@ configuration back end for Qt and KDE.
 %prep
 %setup -n %name-%version
 install -m644 %SOURCE1 .
-%__bzip2 -9fk ChangeLog
+bzip2 -9fk ChangeLog
 %patch -p1
 %patch1 -p1
 %patch2 -p1
@@ -201,12 +202,12 @@ kdoc -f html -d Docs/kdoc-html --name %name --strip
 %make_install SOFFIX="%soffix" DESTDIR=%buildroot install
 
 %define pkgdocdir %_docdir/%name-%version
-%__mkdir_p %buildroot%pkgdocdir/html
-%__mkdir_p %buildroot%pkgdocdir/doxy-html
+mkdir -p %buildroot%pkgdocdir/html
+mkdir -p %buildroot%pkgdocdir/doxy-html
 install -p -m644 ChangeLog.bz2 README %buildroot%pkgdocdir
 install -p -m644 Docs/sgmlmanual/*/*.htm* %buildroot%pkgdocdir/html
 install -p -m644 Docs/doxy-html/* %buildroot%pkgdocdir/doxy-html
-%__mkdir_p %buildroot%_localstatedir/uniconf
+mkdir -p %buildroot%_localstatedir/uniconf
 mv %buildroot%_localstatedir/lib/uniconf/uniconfd.ini \
 	%buildroot%_localstatedir/uniconf/
 
@@ -279,6 +280,9 @@ mv %buildroot%_localstatedir/lib/uniconf/uniconfd.ini \
 %_libdir/pkgconfig/libwvqt.pc
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 4.6.1-alt4.qa1
+- NMU: applied repocop patch
+
 * Wed Sep 26 2018 Andrey Cherepanov <cas@altlinux.org> 4.6.1-alt4
 - Fix build with OpenSSL 1.1.
 
