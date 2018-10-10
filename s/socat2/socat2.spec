@@ -1,6 +1,6 @@
 Name: socat2
 Version: 2.0.0
-Release: alt5
+Release: alt6
 
 Summary: 'socket cat' - multipurpose relay for bidirectional data transfer
 License: GPL
@@ -13,7 +13,7 @@ Patch:	socat2-libssl1.1.patch
 
 Conflicts: socat
 
-BuildRequires: /proc libreadline-devel libssl-devel yodl libwrap-devel
+BuildRequires: /proc libreadline-devel libssl-devel yodl
 
 %description
 socat is a relay for bidirectional data transfer between two independent
@@ -48,6 +48,9 @@ echo '#define HAVE_DEV_PTMX 1' >> config.h
 %doc README* EXAMPLES FAQ SECURITY CHANGES doc/*.html doc/*.css
 
 %changelog
+* Wed Oct 10 2018 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt6
+- Rebuild without libwrap.
+
 * Tue Oct 02 2018 Fr. Br. George <george@altlinux.ru> 2.0.0-alt5
 - 2.0.0-b9
 - Build with libopenssl-1.1
