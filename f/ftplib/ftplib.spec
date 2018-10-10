@@ -4,13 +4,14 @@
 
 Name:		ftplib
 Version:	4.0
-Release:	alt1_6
+Release:	alt1_9
 Summary:	Library of FTP routines
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://nbpfaus.net/~pfau/ftplib-4/
 Source0:	http://nbpfaus.net/~pfau/ftplib-4/%{name}-%{version}-%{minorver}.tar.gz
 Patch0:		ftplib-3.1-1-modernize.patch
+BuildRequires:	gcc
 Source44: import.info
 
 %description
@@ -62,7 +63,7 @@ done
 
 %files
 %doc CHANGES
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{_libdir}/libftp*.so.*
 
 %files devel
@@ -80,6 +81,9 @@ done
 %{_bindir}/qftp
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_9
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_6
 - update to new release by fcimport
 
