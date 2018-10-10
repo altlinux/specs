@@ -3,7 +3,7 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.5.19
+Version: 3.6.4
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -14,10 +14,9 @@ Url: http://gnutls.org/
 # ftp://ftp.gnutls.org/pub/gnutls/gnutls-%version.tar.bz2
 Source: gnutls-%version.tar
 
-# Skip test-hash-large for overridden CPU flags
-Patch1: gnutls-patch-test-hash-large.patch
 Patch2: Fix-build-cipher-openssl-compat-test.patch
 Patch3: Fix-privkey-verify-broken-test.patch
+Patch4: tests-Use-IPv4-only-in-s_server.patch
 %define libcxx libgnutlsxx%libgnutlsxx28_soname
 %define libssl libgnutls%{libgnutls_openssl_soname}-openssl
 %def_enable guile
@@ -204,9 +203,9 @@ This package contains the GnuTLS API Reference Manual.
 
 %prep
 %setup -n gnutls-%version
-%patch1 -p1
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 touch doc/*.texi
 rm doc/*.info*
 rm aclocal.m4 m4/{libtool,lt*}.m4
@@ -312,6 +311,11 @@ export LD_PRELOAD=libcxa.so.2
 %endif
 
 %changelog
+* Wed Sep 26 2018 Mikhail Efremov <sem@altlinux.org> 3.6.4-alt1
+- tests: Use IPv4 only in s_server.
+- Drop test-hash-large.patch.
+- Updated to 3.6.4 (closes: #35414).
+
 * Mon Jul 16 2018 Mikhail Efremov <sem@altlinux.org> 3.5.19-alt1
 - Use %%e2k macro.
 - Updated to 3.5.19.
