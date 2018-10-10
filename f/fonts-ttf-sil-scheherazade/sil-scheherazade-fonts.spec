@@ -10,14 +10,12 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-sil-scheherazade
 Version:        2.100
-Release:        alt1_4
+Release:        alt1_7
 Summary:        An Arabic script unicode font
 
 License:        OFL
-URL:            http://scripts.sil.org/ArabicFonts
-# The file complete URL is as follows:
-# http://scripts.sil.org/cms/scripts/render_download.php?format=file&media_id=Scheherazade-2.000&filename=Scheherazade-2.000.zip
-Source0:        Scheherazade-%{version}.zip
+URL:            https://software.sil.org/scheherazade/
+Source0:        https://software.sil.org/downloads/r/scheherazade/Scheherazade-%{version}.zip
 Source1:        %{oldname}-fontconfig.conf
 Source2:        %{fontname}.metainfo.xml
 
@@ -95,11 +93,16 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc *.txt documentation/*
+%doc --no-dereference OFL.txt
+%doc FONTLOG.txt README.txt OFL-FAQ.txt documentation/*
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.100-alt1_7
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.100-alt1_4
 - update to new release by fcimport
 
