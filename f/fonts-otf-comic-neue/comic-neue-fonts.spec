@@ -14,8 +14,8 @@ and writing passive aggressive office memos.
 
 
 Name:           fonts-otf-comic-neue
-Version:        2.2
-Release:        alt1_5
+Version:        2.3
+Release:        alt1_1
 Summary:        A typeface family inspired by Comic Sans
 
 Group:          System/Fonts/True type
@@ -59,7 +59,7 @@ The Comic Neue Angular variant features angular terminals rather than round.
 
 
 %prep
-%setup -q -n %{fontname}-%{version}
+%setup -n %{oldname}-%{version} -q -c
 
 
 %build
@@ -121,21 +121,26 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/ComicNeue-Regular.otf
 %{_fontbasedir}/*/%{_fontstem}/ComicNeue_*.otf
 %files -n fonts-otf-comic-neue-angular
 %{_fontconfig_templatedir}/%{fontconf}-angular.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-angular.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/ComicNeue-Angular-Regular.otf
 %{_fontbasedir}/*/%{_fontstem}/ComicNeue-Angular_*.otf
 
 
 %files -n fonts-otf-comic-neue-common
 %doc Booklet-ComicNeue.pdf FONTLOG.txt
-%doc SIL-License.txt OFL-FAQ.txt
+%doc --no-dereference SIL-License.txt OFL-FAQ.txt
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_5
 - update to new release by fcimport
 
