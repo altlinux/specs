@@ -14,7 +14,7 @@
 
 Name: nagios-%realname
 Version: 3.1.1
-Release: alt1.1
+Release: alt2
 
 Summary: NRPE -- Nagios(R) Remote Plug-ins Execution daemon.
 Summary(ru_RU.UTF-8): NRPE -- Сервер выполнения команд Nagios(R) на удаленном хосте.
@@ -54,7 +54,7 @@ Patch2: %realname-2.12-alt-defpath.patch
 Prefix: %prefix
 
 # Automatically added by buildreq on Sat Jul 01 2006
-BuildRequires: libssl-devel libwrap-devel openssl
+BuildRequires: libssl-devel openssl
 
 %package -n nagios-addons-%realname
 Summary: Nagios(R) plug-in for NRPE.
@@ -161,6 +161,9 @@ install -m 0644 contrib/README.nrpe_check_control %buildroot/%plugin_docdir/
 %exclude %plugin_docdir/nrpe.xinetd
 
 %changelog
+* Wed Oct 10 2018 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt2
+- Rebuild without libwrap.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
