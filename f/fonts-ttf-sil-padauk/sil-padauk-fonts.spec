@@ -7,7 +7,6 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 %global fontname sil-padauk
 %global fontconf 65-%{fontname}
-%global archivename padauk-3.002
 
 %global common_desc \
 Padauk is a pan Burma font designed to support all Myanmar script based \
@@ -15,13 +14,13 @@ languages. It covers all of the Unicode Myanmar script blocks and works \
 on all OpenType and Graphite based systems.
 
 Name:    fonts-ttf-sil-padauk
-Version: 3.002
+Version: 3.003
 Release: alt1_2
 Summary: A font for Burmese and the Myanmar script
 
 License: OFL
-URL:     http://scripts.sil.org/Padauk
-Source0: http://software.sil.org/downloads/d/padauk/%{archivename}.zip
+URL:     https://software.sil.org/padauk/
+Source0: https://github.com/silnrsi/font-padauk/releases/download/v%{version}/padauk-%{version}.zip
 Source1: %{oldname}-fontconfig.conf
 Source2: %{oldname}-book-fontconfig.conf
 Source3: %{fontname}.metainfo.xml
@@ -29,7 +28,7 @@ Source4: %{fontname}-book.metainfo.xml
 
 BuildArch: noarch
 BuildRequires: fontpackages-devel
-BuildRequires: python-module-fonttools
+BuildRequires: fonttools
 Source44: import.info
 
 %description
@@ -38,6 +37,7 @@ Source44: import.info
 %files
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Padauk-Regular.ttf
 %{_fontbasedir}/*/%{_fontstem}/Padauk-Bold.ttf
 %doc *.txt documentation
@@ -55,12 +55,13 @@ Padauk Book family font.
 %files -n fonts-ttf-sil-padauk-book
 %{_fontconfig_templatedir}/%{fontconf}-book.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-book.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/PadaukBook*.ttf
 %{_datadir}/appdata/%{fontname}-book.metainfo.xml
 %doc *.txt documentation
 
 %prep
-%setup -q -n %{archivename}
+%setup -q -n padauk-%{version}
 
 sed -i 's/\r//' *.txt documentation/DOCUMENTATION.txt
 
@@ -126,6 +127,9 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 3.003-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 3.002-alt1_2
 - update to new release by fcimport
 
