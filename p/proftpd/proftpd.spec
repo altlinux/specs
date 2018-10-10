@@ -2,7 +2,7 @@
 
 Name: proftpd
 Version: %ver
-Release: alt4.rel.e
+Release: alt5.rel.e
 
 %define _libexecdir %{expand:%_libdir}
 %def_disable tests
@@ -12,7 +12,6 @@ Release: alt4.rel.e
 
 %def_static mod_auth_pam
 %def_static mod_readme
-%def_static mod_wrap
 
 %def_shared mod_ctrls_admin
 %def_shared mod_ifsession
@@ -86,7 +85,6 @@ BuildRequires: gcc-c++ libncurses-devel libtinfo-devel zlib-devel libltdl-devel 
 BuildRequires: perl-Mail-Sendmail
 
 %{?_with_mod_auth_pam:BuildRequires: pam-devel}
-%{?_with_mod_wrap:BuildRequires: libwrap-devel}
 
 %{?_with_mod_sql_mysql:BuildRequires: libMySQL-devel}
 %{?_with_mod_ldap:BuildRequires: libldap-devel}
@@ -664,6 +662,9 @@ fi
 %_controldir/%name
 
 %changelog
+* Wed Oct 10 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.5-alt5.rel.e
+- Rebuild without libwrap.
+
 * Tue Jan 02 2018 L.A. Kostis <lakostis@altlinux.ru> 1.3.5-alt4.rel.e
 - 1.3.5e release:
   + Backported fix for "AllowChrootSymlinks off" checking each component
