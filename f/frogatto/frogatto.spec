@@ -1,6 +1,6 @@
 Group: Games/Arcade
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ libGL-devel zlib-devel
+BuildRequires: /usr/bin/desktop-file-install libGL-devel zlib-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libGL-devel zlib-devel
 
 Name:           frogatto
 Version:        1.3.3
-Release:        alt2_10.1
+Release:        alt2_13
 Summary:        An old-school 2D platform game
 
 # Artwork and music not released under an open license
@@ -37,6 +37,7 @@ Patch4:         %{name}-1.3-comparison.patch
 # https://lists.rpmfusion.org/archives/list/rpmfusion-developers@lists.rpmfusion.org/thread/LQXC5S37G6S4NRZNB7KKGD2Q25OKXSEV/
 ExcludeArch:    ppc64 ppc64le aarch64
 
+BuildRequires:  gcc-c++
 BuildRequires:  libSDL-devel >= 1.2.7
 BuildRequires:  libSDL_image-devel
 BuildRequires:  libSDL_mixer-devel
@@ -45,7 +46,7 @@ BuildRequires:  libGLU-devel
 BuildRequires:  libGLEW-devel
 BuildRequires:  libpng-devel
 BuildRequires:  ccache
-BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires:  boost-complete
 BuildRequires:  perl-podlators
 BuildRequires:  libicns-utils
 BuildRequires:  desktop-file-utils 
@@ -153,6 +154,9 @@ pod2man --section=6 \
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt2_13
+- update to new release by fcimport
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.3-alt2_10.1
 - NMU: rebuilt with boost-1.67.0
 
