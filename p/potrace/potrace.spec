@@ -1,6 +1,6 @@
 Name: potrace
 Version: 1.15
-Release: alt1
+Release: alt2
 
 Summary: Potrace is a utility for transform bitmaps into vector graphics
 License: GPLv2+
@@ -49,6 +49,7 @@ Potrace library.
 
 %prep
 %setup
+subst 's/ 1200/ 1500/;s/ 1000/ 1200/' check/pdf-check.sh check/postscript-check.sh
 
 %build
 %autoreconf
@@ -83,6 +84,9 @@ Potrace library.
 
 
 %changelog
+* Wed Oct 10 2018 Andrey Cherepanov <cas@altlinux.org> 1.15-alt2
+- Increase diff level for tests.
+
 * Sat Aug 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1.15-alt1
 - 1.15 (fixed CVE-2017-12067)
 
