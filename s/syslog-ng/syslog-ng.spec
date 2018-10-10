@@ -13,7 +13,7 @@
 
 Name: syslog-ng
 Version: 3.13.2
-Release: alt1.1
+Release: alt2
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -42,7 +42,7 @@ BuildRequires: rpm-build-licenses
 # + SQL
 BuildRequires: flex autoconf-archive glib2-devel libcap-devel libdbi-devel
 BuildRequires: libnet2-devel libpcre-devel libpopt-devel
-BuildRequires: libssl-devel libuuid-devel libwrap-devel libivykis-devel
+BuildRequires: libssl-devel libuuid-devel libivykis-devel
 BuildRequires: xsltproc docbook-style-xsl python-devel
 
 %{?_enable_geoip:BuildRequires: libGeoIP-devel}
@@ -201,7 +201,6 @@ skip_submodules=1 ./autogen.sh
  --with-systemdsystemunitdir=%_unitdir \
  --enable-ipv6 \
  --enable-dynamic-linking \
- --enable-tcp-wrapper \
  --enable-spoof-source \
  --with-embedded-crypto \
  --enable-manpages \
@@ -410,6 +409,9 @@ fi
 %_pkgconfigdir/%name-test.pc
 
 %changelog
+* Wed Oct 10 2018 Grigory Ustinov <grenka@altlinux.org> 3.13.2-alt2
+- Rebuild without libwrap.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.13.2-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
