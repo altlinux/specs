@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 5.2.3
-Release: alt7
+Release: alt8
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -25,7 +25,9 @@ Source14: pve-i18n.tar.xz
 
 Source5: pve-manager-ru.po
 Source6: basealt_logo.png
-Source7: basealt_bootsplash.jpg
+Source70: basealt_bootsplash.svg
+Source71: basealt_bootsplash_yellow.jpg
+Source72: basealt_bootsplash_blue.jpg
 Source8: basealt_favicon.ico
 Source9: basealt_logo-128.png
 
@@ -61,6 +63,7 @@ Patch30: qemu-server-perl-alt.patch
 Patch31: qemu-server-qemu-3-0-0-alt.patch
 Patch32: pve-manager-alt-rm-pve-version.patch
 Patch33: pve-container-pct-T.patch
+Patch34: qemu-server-alt-bootsplash.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -119,7 +122,7 @@ This package contains a common code base used by pve-container and qemu-server
 
 %package -n pve-http-server
 Summary: PVE Asynchrounous HTTP Server Implementation
-Version: 2.0.9
+Version: 2.0.11
 Group: System/Servers
 Requires: fonts-font-awesome
 
@@ -162,6 +165,7 @@ This is used to implement the PVE REST API
 %patch31 -p0 -b .qemu-3-0-0
 %patch32 -p0 -b .rm-version
 %patch33 -p0 -b .T
+%patch34 -p0 -b .bootsplash
 
 install -m0644 %SOURCE5 pve-i18n/ru.po
 
@@ -182,7 +186,17 @@ done
 install -m0644 %SOURCE6 %buildroot%_datadir/pve-manager/images/basealt_logo.png
 install -m0644 %SOURCE8 %buildroot%_datadir/pve-manager/images/favicon.ico
 install -m0644 %SOURCE9 %buildroot%_datadir/pve-manager/images/logo-128.png
-install -m0644 %SOURCE7 %buildroot%_datadir/qemu-server/bootsplash.jpg
+
+install -m0644 %SOURCE71 %buildroot%_datadir/qemu-server/bootsplash.jpg
+install -m0644 %SOURCE72 %buildroot%_datadir/qemu-server/bootsplash_invert.jpg
+ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-cirrus.jpg
+ln -s bootsplash_invert.jpg %buildroot%_datadir/qemu-server/bootsplash-std.jpg
+ln -s bootsplash_invert.jpg %buildroot%_datadir/qemu-server/bootsplash-vmware.jpg
+ln -s bootsplash_invert.jpg %buildroot%_datadir/qemu-server/bootsplash-qxl.jpg
+ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-serial0.jpg
+ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-serial1.jpg
+ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-serial2.jpg
+ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-serial3.jpg
 
 install -m0644 pve-firewall/debian/*.service %buildroot%systemd_unitdir/
 install -m0644 pve-firewall/debian/pve-firewall.logrotate %buildroot%_sysconfdir/logrotate.d/pve-firewall
@@ -473,6 +487,9 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Wed Oct 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt8
+- pve-http-server 2.0-11
+
 * Thu Oct 04 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.2.3-alt7
 - updated russian translation
 
