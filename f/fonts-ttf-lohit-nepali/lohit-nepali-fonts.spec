@@ -7,7 +7,7 @@
 
 Name:           fonts-ttf-lohit-nepali
 Version:        2.94.2
-Release:        alt1_2
+Release:        alt1_5
 Summary:        Free TrueType fonts for Nepali language
 
 Group:          System/Fonts/True type
@@ -86,12 +86,16 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc ChangeLog COPYRIGHT OFL.txt AUTHORS README test-nepali.txt
 %{_datadir}/metainfo/%{metainfo}.xml
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.94.2-alt1_5
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.94.2-alt1_2
 - update to new release by fcimport
 
