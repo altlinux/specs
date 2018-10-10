@@ -1,18 +1,17 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: libfc14audiodecoder
 Version: 1.0.3
-Release: alt1_10
+Release: alt1_12
 
 Summary: C wrapper library for Future Composer audio decoding
 Group: System/Libraries
 License: GPLv2+
 URL: http://xmms-fc.sourceforge.net
 Source0: http://downloads.sourceforge.net/xmms-fc/%{name}-%{version}.tar.bz2
+
+BuildRequires: gcc-c++
 Source44: import.info
 
 %description
@@ -44,8 +43,12 @@ software that uses %{name}.
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
 
+
+
+
 %files
-%doc COPYING README
+%doc --no-dereference COPYING
+%doc README
 %{_libdir}/%{name}.so.*
 
 %files devel
@@ -54,6 +57,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_12
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_10
 - update to new release by fcimport
 
