@@ -8,8 +8,12 @@ BuildRequires: perl(DBIx/XHTML_Table.pm) perl(SQL/Abstract.pm) perl(Text/Table.p
 Name:           perl-DBIx-Simple
 Summary:        Easy-to-use OO interface to DBI
 Version:        1.37
-Release:        alt1_3
-License:        Public Domain
+Release:        alt1_5
+# This license is a little weird. It used to be in the Public Domain until after 1.32.
+# Now, it is released under any OSI approved license.
+# Since that is a sort of metalicense (and we do not want to encourage it), we will just choose
+# MIT for maximum compatibility.
+License:        MIT
 Source0:        https://cpan.metacpan.org/authors/id/J/JU/JUERD/DBIx-Simple-%{version}.tar.gz
 URL:            https://metacpan.org/release/DBIx-Simple
 BuildArch:      noarch
@@ -65,6 +69,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.37-alt1_5
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.37-alt1_3
 - update to new release by fcimport
 
