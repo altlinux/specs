@@ -16,9 +16,8 @@
 
 Name:           libcgi
 Version:        1.0
-Release:        alt3_23
+Release:        alt3_26
 Summary:        CGI easy as C
-
 Group:          System/Libraries
 License:        LGPLv2+
 URL:            http://libcgi.sourceforge.net/
@@ -26,6 +25,7 @@ Source:         http://prdownloads.sourceforge.net/libcgi/libcgi-%{version}.tar.
 Patch0:         libcgi-1.0-Makefile.in.patch
 Patch1:         libcgi-1.0-cgi.c-hextable.patch
 Patch2:         libcgi-1.0-string.c-make_string.patch
+BuildRequires:  gcc
 Source44: import.info
 
 %description
@@ -125,6 +125,9 @@ fi
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_26
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_23
 - update to new release by fcimport
 
