@@ -4,8 +4,8 @@ Group: System/Fonts/True type
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 20141206
-%global	priority	67
-%global	ppriority	66
+%global	priority	65-3
+%global	ppriority	65-2
 %global	fontname	vlgothic
 %global	archivename	VLGothic-%{version}
 %global	fontconf	%{priority}-%{fontname}-gothic
@@ -17,7 +17,7 @@ but some have also been improved by the project.
 
 Name:		fonts-ttf-vlgothic
 Version:	20141206
-Release:	alt2_9
+Release:	alt2_12
 Summary:	Japanese TrueType font
 
 License:	mplus and BSD
@@ -151,6 +151,9 @@ fi
 %{_datadir}/appdata/%{fontname}-proportional.metainfo.xml
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 20141206-alt2_12
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 20141206-alt2_9
 - update to new release by fcimport
 
