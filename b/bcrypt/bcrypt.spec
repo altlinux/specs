@@ -1,16 +1,16 @@
+Group: File tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           bcrypt
 Version:        1.1
-Release:        alt2_19
+Release:        alt2_22
 Summary:        File encryption utility
 
-Group:          File tools
 License:        BSD
 URL:            http://%{name}.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:         bcrypt-fencepost.patch
-BuildRequires:  zlib-devel
+BuildRequires:  zlib-devel gcc
 
 BuildRequires:  %{__perl}
 Source44: import.info
@@ -34,24 +34,27 @@ Bruce Schneier in 1993.
 
 %patch0 -p1 -b .fencepost
 
-%{__perl} -pi.orig -e 's|\/man/man1|\/share/man/man1|g' Makefile
+/usr/bin/perl -pi.orig -e 's|\/man/man1|\/share/man/man1|g' Makefile
 
 
 %build
-%{__make} %{?_smp_mflags} CFLAGS="%{optflags}"
+make %{?_smp_mflags} CFLAGS="%{optflags}"
 
 
 %install
-%{__make} install PREFIX="%{buildroot}%{_prefix}"
+make install PREFIX="%{buildroot}%{_prefix}"
 
 
 %files
 %doc README
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc %{_mandir}/man1/bcrypt.1*
 %{_bindir}/bcrypt
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_22
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_19
 - update to new release by fcimport
 
