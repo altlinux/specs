@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           wastesedge
 Version:        0.3.7
-Release:        alt1_2
+Release:        alt1_5
 Summary:        Official game package for Adonthell
 
 License:        GPL+
@@ -28,6 +28,7 @@ BuildArch:      noarch
 BuildRequires:  adonthell >= 0.3.6
 BuildRequires:  gettext gettext-tools
 BuildRequires:  desktop-file-utils
+BuildRequires:  gcc
 
 Requires:       adonthell >= 0.3.6
 Requires:       icon-theme-hicolor
@@ -82,6 +83,9 @@ desktop-file-install                               \
 %{_mandir}/man6/*
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.7-alt1_5
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.7-alt1_2
 - update to new release by fcimport
 
