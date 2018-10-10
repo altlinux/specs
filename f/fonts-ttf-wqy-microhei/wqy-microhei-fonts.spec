@@ -1,19 +1,19 @@
+Group: System/Fonts/True type
 %define oldname wqy-microhei-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 0.2.0
 %global fontname wqy-microhei
-%global fontconf 65-0-%{fontname}.conf
+%global fontconf 66-%{fontname}.conf
 
 %global archivename %{fontname}-%{version}-beta
 
 Name:           fonts-ttf-wqy-microhei
 Version:        0.2.0
-Release:        alt3_0.19.beta
+Release:        alt3_0.22.beta
 Summary:        Compact Chinese fonts derived from Droid
 
-Group:          System/Fonts/True type
 License:        ASL 2.0 or GPLv3 with exceptions
 URL:            http://wenq.org/enindex.cgi?MicroHei(en)
 Source0:        http://downloads.sourceforge.net/wqy/%{archivename}.tar.gz
@@ -30,6 +30,7 @@ and covers the entire GBK code points (20932 Han glyphs).
 %prep
 %setup -q -n %{fontname}
 
+
 mv README.txt{,.orig}
 iconv -f iso8859-1 -t utf8 README.txt.orig > README.txt
 
@@ -38,8 +39,6 @@ iconv -f iso8859-1 -t utf8 README.txt.orig > README.txt
 
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttc %{buildroot}%{_fontdir}
 
@@ -86,14 +85,20 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttc
-%doc LICENSE_Apache2.txt LICENSE_GPLv3.txt README.txt
+%doc --no-dereference LICENSE_Apache2.txt LICENSE_GPLv3.txt
+%doc README.txt
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt3_0.22.beta
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt3_0.19.beta
 - update to new release by fcimport
 
