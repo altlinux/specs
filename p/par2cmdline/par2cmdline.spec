@@ -1,17 +1,16 @@
 Group: Archiving/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: par2cmdline
-Version: 0.7.4
+Version: 0.8.0
 Release: alt1_1
 Summary: PAR 2.0 compatible file verification and repair tool
 
 License: GPLv2+
 URL: https://github.com/Parchive/par2cmdline/
 Source0: https://github.com/Parchive/par2cmdline/releases/download/v%{version}/par2cmdline-%{version}.tar.bz2
+
+BuildRequires: gcc-c++
 Source44: import.info
 Conflicts: par2 < 0.5
 Obsoletes: par2 < 0.5
@@ -43,11 +42,11 @@ chmod -x ChangeLog configure.ac INSTALL Makefile.am NEWS stamp-h.in
 
 
 %check
-%{__make} check-TESTS
+make check-TESTS
 
 
 %files
-%doc COPYING
+%doc --no-dereference COPYING
 %doc AUTHORS ChangeLog README
 %{_bindir}/par2
 %{_bindir}/par2create
@@ -57,6 +56,9 @@ chmod -x ChangeLog configure.ac INSTALL Makefile.am NEWS stamp-h.in
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_1
+- update to new release by fcimport
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.4-alt1_1
 - new version
 
