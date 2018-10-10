@@ -2,7 +2,7 @@
 Summary: A desktop wiki and outliner
 Name: zim-wiki
 Version: 0.67
-Release: alt1
+Release: alt1.qa1
 Packager: Pavel Vyazovoy <paulelms@altlinux.org>
 
 #Source: https://github.com/jaap-karssenberg/zim-desktop-wiki/archive/%version.tar.gz
@@ -11,7 +11,7 @@ License: GPLv2
 Group: Editors
 Url: http://www.zim-wiki.org/
 
-BuildRequires: python-dev
+BuildRequires: python-devel
 BuildRequires: python-module-pygobject-devel
 BuildRequires: python-modules-json python-module-pygtk python-module-pyxdg xdg-utils python-modules-sqlite3
 Requires: python
@@ -59,6 +59,9 @@ keep track of TODO lists or to serve as a personal scratch book.
 %_datadir/pixmaps/*
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.67-alt1.qa1
+- NMU: applied repocop patch
+
 * Sun Oct 15 2017 Pavel Vyazovoy <paulelms@altlinux.org> 0.67-alt1
 - Updated to 0.67.
 
