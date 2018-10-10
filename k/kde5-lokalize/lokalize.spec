@@ -3,8 +3,8 @@
 %add_findreq_skiplist %_K5data/lokalize/scripts/*.py
 
 Name: kde5-%rname
-Version: 18.04.3
-Release: alt1%ubt
+Version: 18.08.1
+Release: alt1
 %K5init altplace
 
 Group: Development/Tools
@@ -59,6 +59,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5notif/lokalize*
 
 %changelog
+* Wed Oct 10 2018 Sergey V Turchin <zerg@altlinux.org> 18.08.1-alt1
+- new version
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 
