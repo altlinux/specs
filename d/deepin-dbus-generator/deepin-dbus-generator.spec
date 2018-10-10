@@ -9,7 +9,7 @@ BuildRequires: rpm-build-golang
 
 Name:           deepin-dbus-generator
 Version:        0.6.6
-Release:        alt1_3
+Release:        alt1_5
 Summary:        Convert dbus interfaces to go-lang or qml wrapper code
 License:        GPLv3+
 URL:            https://github.com/linuxdeepin/go-dbus-generator
@@ -49,6 +49,9 @@ install -Dm755 dbus-generator %{buildroot}%{_bindir}/dbus-generator
 %{_bindir}/dbus-generator
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt1_5
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt1_3
 - update to new release by fcimport
 
