@@ -9,7 +9,7 @@ BuildRequires: perl(CPAN.pm) perl(Filter/Util/Call.pm) perl(JSON.pm) perl(LWP/Si
 
 Name:           perl-Array-Diff
 Version:        0.07
-Release:        alt2_27
+Release:        alt2_28
 # Because 0.07 compares newer than 0.05002 in Perl world
 # but not in RPM world :-(
 Epoch:          1
@@ -91,6 +91,9 @@ make test
 %{perl_vendor_privlib}/Array/Diff.pm
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.07-alt2_28
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.07-alt2_27
 - update to new release by fcimport
 
