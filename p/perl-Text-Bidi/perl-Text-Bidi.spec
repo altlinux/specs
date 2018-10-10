@@ -1,18 +1,20 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 %define dist Text-Bidi
 Name: perl-%dist
-Version: 2.12
-Release: alt1.1.1
+Version: 2.15
+Release: alt1
 
 Summary: Unicode bidi algorithm for Perl using libfribidi
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar
+Source0: http://www.cpan.org/authors/id/K/KA/KAMENSKY/%{dist}-%{version}.tar.gz
 Source1: %name.watch
 
 # Automatically added by buildreq on Wed Oct 19 2011
-BuildRequires: libfribidi-devel perl-Test-Pod perl-unicore
+BuildRequires: libfribidi-devel perl-Test-Pod perl-unicore perl(ExtUtils/PkgConfig.pm) perl(Pod/Man.pm)
 
 %description
 This is a perl interface to the libfribidi library that implements the
@@ -20,8 +22,17 @@ Unicode bidi algorithm.  The bidi algorithm is a specification for
 displaying text that consists of both left-to-right and right-to-left
 written languages.
 
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %name = %EVR
+
+%description scripts
+scripts for %name
+
+
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,11 +41,19 @@ written languages.
 %perl_vendor_install
 
 %files
-%doc Changes
+%doc Changes README
 %perl_vendor_archlib/Text
 %perl_vendor_autolib/Text
 
+%files scripts
+%_bindir/*
+%_man1dir/*
+
+
 %changelog
+* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 2.15-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.12-alt1.1.1
 - rebuild with new perl 5.26.1
 
