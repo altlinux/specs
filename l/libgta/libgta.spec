@@ -5,13 +5,14 @@ BuildRequires: /usr/bin/valgrind gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:      libgta
-Version:   1.0.7
-Release:   alt1_6
+Version:   1.0.9
+Release:   alt1_1
 Summary:   Library that implements the Generic Tagged Arrays file format
 Group:     System/Libraries
 License:   LGPLv2+
-URL:       http://gta.nongnu.org
-Source0:   http://download.savannah.nongnu.org/releases/gta/%{name}-%{version}.tar.xz
+URL:       https://marlam.de/gta/
+Source0:   https://marlam.de/gta/releases/%{name}-%{version}.tar.xz
+BuildRequires: gcc
 BuildRequires: doxygen
 BuildRequires: bzlib-devel
 BuildRequires: zlib-devel
@@ -27,7 +28,7 @@ file format. It provides interfaces for C and C++.
 Summary:  Development Libraries for %{name}
 Group:    Development/Other
 Requires: %{name} = %{version}-%{release}
-Requires: pkg-config
+Requires: pkgconfig
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -84,6 +85,9 @@ make check V=1
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt1_6
 - update to new release by fcimport
 
