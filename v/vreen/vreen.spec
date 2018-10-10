@@ -5,7 +5,7 @@ Name: vreen
 Version: 0.9.5
 # to replace old libvreen from qutim package
 Epoch: 8
-Release: alt5.git%git_version
+Release: alt5.git%git_version.qa1
 Summary: Qt wrapper library for vk.com API
 
 Group: System/Libraries
@@ -32,7 +32,7 @@ Qt wrapper library for VKontakte social network (vk.com) API.
 %package -n lib%name-devel
 Summary: vreen development libraries and includes
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Development files for vreen library
@@ -61,6 +61,9 @@ Development files for vreen library
 %_libdir/pkgconfig/vreenoauth.pc
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 8:0.9.5-alt5.git20140410.qa1
+- NMU: applied repocop patch
+
 * Fri Jan 20 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 8:0.9.5-alt5.git20140410
 - Rebuilt for new format of LTO object (gcc6).
 
