@@ -1,5 +1,5 @@
 Name: repocop-unittest-systemd
-Version: 0.07
+Version: 0.08
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -43,6 +43,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- disabled udev-files-in-etc (not relevant to actual usage)
+
 * Tue Jul 17 2018 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - added exception for pve-qemu
 
