@@ -1,6 +1,6 @@
 Group: System/Fonts/True type
 %define oldname julietaula-montserrat-fonts
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global fontname julietaula-montserrat
@@ -8,7 +8,7 @@ Group: System/Fonts/True type
 
 Name:		fonts-otf-julietaula-montserrat
 Version:	7.200
-Release:	alt1_2
+Release:	alt1_3
 # Override versioning to sync with upstream
 Epoch:		1
 Summary:	Sans-serif typeface created by Julieta Ulanovsky
@@ -107,6 +107,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/%{fontna
 %doc Montserrat-%{version}/README.md 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1:7.200-alt1_3
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:7.200-alt1_2
 - update to new release by fcimport
 
