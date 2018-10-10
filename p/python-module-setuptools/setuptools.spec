@@ -5,8 +5,8 @@
 
 Name: python-module-%mname
 Epoch: 1
-Version: 39.2.0
-Release: alt5%ubt
+Version: 40.4.3
+Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -24,7 +24,6 @@ Requires: python-dev
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python %py_dependencies distutils
@@ -40,6 +39,7 @@ BuildRequires: python-module-wheel
 BuildRequires: python-module-contextlib2
 BuildRequires: python-module-pytest-fixture-config
 BuildRequires: python-module-pytest-flake8
+BuildRequires: python3-module-Paver
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-virtualenv
 BuildRequires: python3-module-virtualenv
@@ -208,11 +208,14 @@ popd
 %python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
-* Mon Jul 02 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:39.2.0-alt5%ubt
+* Sun Oct 07 2018 Stanislav Levin <slev@altlinux.org> 1:40.4.3-alt1
+- 39.2.0 -> 40.4.3.
+
+* Mon Jul 02 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:39.2.0-alt5
 - (.spec) our setup.py won't require external setuptools,
   so we override this dep from rpm-build-python*. (Useful for bootstrap.)
 
-* Fri Jun 29 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:39.2.0-alt4%ubt
+* Fri Jun 29 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:39.2.0-alt4
 - put *.egg-info even in the uncomplete pkg_resources subpkg
   to fool the checking mechanism. (People declare that they use "setuptools",
   but actually they often just use pkg_resources. They shouldn't get an error.
@@ -220,22 +223,22 @@ popd
 - Requires: python*-dev (for commands for binary builds to work
   always)
 
-* Thu Jun 28 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:39.2.0-alt3%ubt
+* Thu Jun 28 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:39.2.0-alt3
 - pkg_resources packaged separately (needed at runtime; unlike setuptools)
 
-* Thu Jun 28 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:39.2.0-alt2%ubt
+* Thu Jun 28 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:39.2.0-alt2
 - (.spec) cleanup (for maintainer's convenience)
 
-* Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 1:39.2.0-alt1%ubt
+* Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 1:39.2.0-alt1
 - 39.0.1 -> 39.2.0
 
-* Thu Mar 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:39.0.1-alt2%ubt
+* Thu Mar 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:39.0.1-alt2
 - Marked docstrings with backslashes as raw strings.
 
-* Sat Mar 24 2018 Stanislav Levin <slev@altlinux.org> 1:39.0.1-alt1%ubt
+* Sat Mar 24 2018 Stanislav Levin <slev@altlinux.org> 1:39.0.1-alt1
 - 38.4.0 -> 39.0.1
 
-* Sat Mar 24 2018 Stanislav Levin <slev@altlinux.org> 1:38.4.0-alt4%ubt
+* Sat Mar 24 2018 Stanislav Levin <slev@altlinux.org> 1:38.4.0-alt4
 - Fix test command
 
 * Thu Mar 22 2018 Grigory Ustinov <grenka@altlinux.org> 1:38.4.0-alt3
