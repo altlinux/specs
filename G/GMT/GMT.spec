@@ -1,7 +1,7 @@
 Group: Engineering
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gm /usr/bin/gs /usr/bin/svn /usr/bin/xz libcurl-devel liblapack-devel openmpi-devel zlib-devel
+BuildRequires: /usr/bin/gm /usr/bin/gs /usr/bin/svn /usr/bin/xz libcurl-devel openmpi-devel zlib-devel
 # END SourceDeps(oneline)
 %add_findreq_skiplist /usr/share/gmt/tools/gmt5syntax
 BuildRequires: chrpath
@@ -28,8 +28,8 @@ BuildRequires: gcc-c++
 %global completion_dir /etc/bash_completion.d
 
 Name:           GMT
-Version:        5.4.2
-Release:        alt1_3
+Version:        5.4.4
+Release:        alt1_2
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
@@ -37,6 +37,7 @@ URL:            http://gmt.soest.hawaii.edu/
 Source0:        ftp://ftp.soest.hawaii.edu/gmt/gmt-%{version}-src.tar.xz
 
 BuildRequires:  ctest cmake
+BuildRequires:  gcc
 BuildRequires:  bash-completion
 BuildRequires:  libfftw3-devel
 BuildRequires:  libgdal-devel
@@ -140,7 +141,7 @@ applications that use %{name}.
 mkdir build
 pushd build
 %{fedora_cmake} \
-  -DGSHHG_ROOT=%{_prefix} \
+  -DGSHHG_ROOT=%{_datadir}/gshhg-gmt-nc4 \
   -DGMT_INSTALL_MODULE_LINKS=on \
   -DGMT_INSTALL_TRADITIONAL_FOLDERNAMES=off \
   -DGMT_MANDIR=%{_mandir} \
@@ -212,6 +213,9 @@ done
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 5.4.4-alt1_2
+- update to new release by fcimport
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 5.4.2-alt1_3
 - new version
 
