@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -10,7 +7,7 @@ BuildRequires: gcc-c++
 %global namesq3 libsq3
 Name:           libsqlite3x
 Version:        %{veryear}%{vermon}%{verday}
-Release:        alt3_22
+Release:        alt3_24
 Summary:        A C++ Wrapper for the SQLite3 embeddable SQL database engine
 
 Group:          System/Libraries
@@ -22,7 +19,7 @@ Source1:        libsqlite3x-autotools.tar.gz
 Patch1:         libsqlite3x-prep.patch
 Patch2:         libsqlite3x-includes.patch
 
-BuildRequires:  libsqlite3-devel dos2unix automake-common libtool-common doxygen
+BuildRequires:  libsqlite3-devel dos2unix automake libtool doxygen gcc-c++
 Source44: import.info
 
 %description
@@ -35,7 +32,7 @@ with sqlite3 databases that uses exceptions.
 Summary:        Development files for %{name}
 Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
-Requires:       pkg-config
+Requires:       pkgconfig
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -55,7 +52,7 @@ with sqlite3 databases that does not use exceptions.
 Summary:        Development files for %{name}
 Group:          Development/Other
 Requires:       %{namesq3} = %{version}-%{release}
-Requires:       pkg-config
+Requires:       pkgconfig
 
 %description -n %{namesq3}-devel
 The %{namesq3}-devel package contains libraries and header files for
@@ -106,6 +103,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/libsq3.pc
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 20071018-alt3_24
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 20071018-alt3_22
 - update to new release by fcimport
 
