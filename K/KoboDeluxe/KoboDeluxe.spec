@@ -1,7 +1,7 @@
 %define nam kobodl
 Name: KoboDeluxe
 Version: 0.5.1
-Release: alt5
+Release: alt6
 Summary: 3'rd person scrolling 2D shooter
 Group: Games/Arcade
 License: GPLv2+
@@ -10,6 +10,7 @@ Source0: http://olofson.net/kobodl/download/%name-%version.tar.bz2
 Source1: %name.png
 Source2: %name.desktop
 Patch: %name-gcc44.patch
+Patch1: KoboDeluxe-noautopause.patch
 
 # Automatically added by buildreq on Tue Apr 05 2011
 # optimized out: libGL-devel libGLU-devel libSDL-devel libX11-devel libstdc++-devel
@@ -30,10 +31,8 @@ to be dealt with successfully.
 %prep
 %setup -q
 %patch -p1
-#sed -i 's|$(sharedstatedir)/kobo-deluxe/scores|%_var/games/kobo-deluxe|g' \
-#  configure
-#iconv -f ISO-8859-1 -t UTF8 README > tmp;         mv tmp README
-#iconv -f ISO-8859-1 -t UTF8 ChangeLog > tmp;      mv tmp ChangeLog
+%patch1 -p1
+
 iconv -f ISO2022JP -t UTF8 README.jp > tmp;       mv tmp README.jp
 iconv -f ISO2022JP -t UTF8 README.xkobo.jp > tmp; mv tmp README.xkobo.jp
 
@@ -64,6 +63,10 @@ install -p -m 644 %SOURCE1 \
 %_niconsdir/%name.png
 
 %changelog
+* Wed Oct 10 2018 Fr. Br. George <george@altlinux.ru> 0.5.1-alt6
+- Rebuild to avoid SEGFAULT
+- Hack off permanent autopause
+
 * Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 0.5.1-alt5
 - Fix build
 
