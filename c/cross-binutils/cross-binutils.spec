@@ -71,7 +71,7 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 /usr/bin/runtest gcc-c++ texinfo
 Summary: A GNU collection of cross-compilation binary utilities
 Name: %{cross}-binutils
 Version: 2.30
-Release: alt1_4
+Release: alt1_6
 License: GPLv3+
 Group: Development/Tools
 URL: https://sourceware.org/binutils
@@ -565,7 +565,7 @@ function config_target () {
 
     case $arch in
 	aarch64-*)	target=aarch64-linux-gnu;;
-	arc-*)		target=arc-linux-uclibc;;
+	arc-*)		target=arc-linux-gnu;;
 	arm-*)		target=arm-linux-gnueabi;;
 	avr32-*)	target=avr-linux;;
 	bfin-*)		target=bfin-uclinux;;
@@ -917,6 +917,9 @@ sed -i -e /sys-root/d files.ppc64*-linux-gnu
 %do_files xtensa-linux-gnu	%{build_xtensa}
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.30-alt1_6
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.30-alt1_4
 - update to new release by fcimport
 
