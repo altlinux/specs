@@ -7,7 +7,7 @@
 %define ver 8.1
 Name: %oname%ver
 Version: %ver.1
-Release: alt1
+Release: alt2
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -38,7 +38,7 @@ BuildRequires: libgl2ps-devel
 BuildRequires: python-devel libXxf86misc-devel libimlxx-devel
 BuildRequires: libdc1394-devel libtheora-devel
 BuildRequires: libgsm-devel libvorbis-devel libtag-devel
-BuildRequires: libslurm-devel slurm-utils gnuplot
+BuildRequires: gnuplot
 BuildRequires: libcgns-seq-devel
 BuildRequires: inkscape texlive-latex-base
 BuildRequires: texlive-latex-extra texlive-science
@@ -523,6 +523,9 @@ cp -alL ExternalData/* %buildroot%_datadir/%oname-%ver
 %files tests -f testing.list
 
 %changelog
+* Wed Oct 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 8.1.1-alt2
+- Updated build dependencies.
+
 * Mon Sep 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 8.1.1-alt1
 - Updated to upstream version 8.1.1.
 
