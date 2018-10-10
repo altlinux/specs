@@ -5,17 +5,17 @@ Group: System/Fonts/True type
 %global fontname source-serif-pro
 %global fontconf 63-%{fontname}.conf
 
-%global version_roman  2.000
-#global version_italic x.yyy
+%global version_roman  2.007
+%global version_italic 1.007
 
 Name:           fonts-otf-adobe-source-serif-pro
-Version:        %{version_roman}
-Release:        alt1_3
+Version:        %{version_roman}.%{version_italic}
+Release:        alt1_1
 Summary:        A set of OpenType fonts designed to complement Source Sans Pro
 
 License:        OFL
 URL:            https://github.com/adobe-fonts/source-serif-pro
-Source0:        https://github.com/adobe-fonts/source-serif-pro/archive/%{version_roman}R.tar.gz#/SourceSerifPro-%{version_roman}R.tar.gz
+Source0:        https://github.com/adobe-fonts/source-serif-pro/archive/%{version_roman}R-ro/%{version_italic}R-it.tar.gz##/%{oldname}-%{version}.tar.gz
 Source1:        %{oldname}-fontconfig.conf
 Source2:        %{fontname}.metainfo.xml
 
@@ -29,7 +29,7 @@ Source Serif Pro is a set of OpenType fonts to complement the Source Sans Pro
 family.
 
 %prep
-%setup -q -n source-serif-pro-%{version_roman}R
+%setup -q -n source-serif-pro-%{version_roman}R-ro-%{version_italic}R-it
 sed -i 's/\r//' LICENSE.txt
 chmod 644 LICENSE.txt
 
@@ -92,13 +92,17 @@ appstream-util --nonet validate-relax \
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.otf
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %doc README.md
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.007.1.007-alt1_1
+- update to new release by fcimport
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.000-alt1_3
 - new version
 
