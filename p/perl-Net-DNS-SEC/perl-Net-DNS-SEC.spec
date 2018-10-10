@@ -1,18 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Net-DNS-SEC
+# unsupported in libcrypto
+%add_findreq_skiplist */perl5/Net/DNS/SEC/DSA.pm
+%add_findreq_skiplist */perl5/Net/DNS/SEC/ECCGOST.pm
+%add_findreq_skiplist */perl5/Net/DNS/SEC/EdDSA.pm
 
 Name: perl-%module_name
-Version: 1.09
-Release: alt1.1
-
-Packager: Victor Forsiuk <force@altlinux.org>
+Version: 1.10
+Release: alt1
 
 Summary: %module_name module for perl
 License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source0: http://www.cpan.org/authors/id/N/NL/NLNETLABS/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/W/WI/WILLEM/%{module_name}-%{version}.tar.gz
 
 #BuildArch: noarch
 
@@ -38,6 +40,9 @@ DNSSEC extensions to Net::DNS.
 %perl_vendor_autolib/Net/DNS
 
 %changelog
+* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
+- automated CPAN update
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.09-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
