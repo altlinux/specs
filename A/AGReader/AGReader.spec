@@ -2,13 +2,14 @@
 %define _localstatedir %{_var}
 Name:           AGReader
 Version:        1.2
-Release:        alt2_18
+Release:        alt2_21
 Summary:        Console reader for viewing AmigaGuide files
 Group:          Text tools
 License:        GPL+
 URL:            http://main.aminet.net/misc/unix/
 Source0:        http://main.aminet.net/misc/unix/%{name}.tar.bz2
 Source1:        agr.1
+BuildRequires:  gcc
 Source44: import.info
 
 %description
@@ -32,6 +33,7 @@ install -m0644 %{SOURCE1} %{buildroot}%{_mandir}/man1
 install -m0755 Sources/agr %{buildroot}%{_bindir}
 
 
+
 %files
 %{_bindir}/agr
 %{_mandir}/man1/agr.1*
@@ -39,6 +41,9 @@ install -m0755 Sources/agr %{buildroot}%{_bindir}
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_21
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_18
 - update to new release by fcimport
 
