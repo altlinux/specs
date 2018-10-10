@@ -8,11 +8,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Gearman
 Version:        2.004.015
-Release:        alt1
+Release:        alt1_1
 Summary:        Perl interface for Gearman distributed job system
 License:        GPL+ or Artistic
 URL:            http://danga.com/gearman/
-Source0:        http://www.cpan.org/authors/id/P/PA/PALIK/Gearman-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/P/PA/PALIK/Gearman-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl-devel
@@ -60,7 +60,7 @@ Requires:       perl(version.pm) >= 0.770
 # Remove under-specifed dependencies
 
 Source44: import.info
-%filter_from_requires /^perl(version\\)$/d
+%filter_from_requires /^perl(version.pm)/d
 
 %description
 Gearman provides a generic application framework to farm out work to other
@@ -80,6 +80,7 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
+unset AUTHOR_TESTING
 make test
 
 %files
@@ -87,6 +88,9 @@ make test
 %{perl_vendor_privlib}/Gearman
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.004.015-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 02 2018 Igor Vlasenko <viy@altlinux.ru> 2.004.015-alt1
 - automated CPAN update
 
