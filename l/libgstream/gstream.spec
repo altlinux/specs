@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname gstream
@@ -7,13 +7,13 @@ BuildRequires: gcc-c++ unzip
 %define _localstatedir %{_var}
 Name:           libgstream
 Version:        1.6
-Release:        alt2_17
+Release:        alt2_20
 Summary:        Simplified stream output/input for Allegro
 Group:          System/Libraries
 License:        Giftware
 URL:            http://allegro.molhanec.net/gstream.html
 Source0:        http://allegro.molhanec.net/gstrm16.zip
-BuildRequires:  liballegro-devel makeinfo
+BuildRequires:  liballegro-devel gcc-c++ makeinfo
 Source44: import.info
 Provides: gstream = %{version}-%{release}
 
@@ -43,7 +43,7 @@ touch -r gstream._tx README NEWS
 
 %build
 %make_build -f Makefile.unx MAKEDOC=%{_bindir}/allegro-makedoc \
-  OFLAGS="$RPM_OPT_FLAGS -fPIC"
+  OFLAGS="$RPM_OPT_FLAGS -fsigned-char -Wno-deprecated-declarations -fPIC"
 rm test.o
 # makefile makes a .a file, make a .so ourselves
 g++ -shared -o libgstrm.so.0 -Wl,-soname,libgstrm.so.0 $RPM_OPT_FLAGS *.o `allegro-config --libs`
@@ -81,6 +81,9 @@ done
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.6-alt2_20
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt2_17
 - update to new release by fcimport
 
