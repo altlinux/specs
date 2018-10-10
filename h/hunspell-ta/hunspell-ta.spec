@@ -1,11 +1,12 @@
+Epoch: 1
 Group: Text tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: hunspell-ta
 Summary: Tamil hunspell dictionaries
 Version: 1.0.0
-Release: alt1_9
-Epoch:   1
+Release: alt1_10
+#Epoch:   1
 Source: http://anishpatil.fedorapeople.org/ta_in.%{version}.tar.gz
 URL: https://gitorious.org/hunspell_dictionaries/hunspell_dictionaries.git
 License: GPLv2+
@@ -33,6 +34,9 @@ cp -p ta_IN/*.dic ta_IN/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.0-alt1_10
+- update to new release by fcimport
+
 * Sat Mar 24 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.0-alt1_9
 - new version
 
