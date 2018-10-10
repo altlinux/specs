@@ -3,7 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %if 0%{?fedora}
@@ -44,7 +44,7 @@ BuildRequires: rpm-build-golang
 
 Name:           go-bindata
 Version:        3.0.7
-Release:        alt2_11.git%{shortcommit}
+Release:        alt2_14.git%{shortcommit}
 Summary:        A small utility which generates Go code from any file
 License:        MIT
 URL:		https://%{provider_prefix}
@@ -87,6 +87,9 @@ install -m 755 bin/go-bindata %{buildroot}%{_bindir}/go-bindata
 %{_bindir}/go-bindata
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.7-alt2_14.gita0ff256
+- update to new release by fcimport
+
 * Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 3.0.7-alt2_11.gita0ff256
 - NMU: rebuild for aarch64
 
