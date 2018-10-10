@@ -9,16 +9,17 @@ BuildRequires: unzip
 %global archivename unikurdweb
 %global fontconf 65-%{fontname}.conf
 
-Name:    fonts-ttf-kurdit-unikurd-web
-Version: 20020502
-Release: alt3_17
-Summary: A widely used Kurdish font for Arabic-like scripts and Latin
+Name:          fonts-ttf-kurdit-unikurd-web
+Version:       20020502
+Release:       alt3_20
+Summary:       A widely used Kurdish font for Arabic-like scripts and Latin
 
-License:   GPLv3
-URL:       http://www.kurditgroup.org/node/1337
-Source0:   http://www.kurditgroup.org/files/%{archivename}.zip
-Source1:   65-kurdit-unikurd-web.conf
-Source2:        %{fontname}.metainfo.xml
+License:       GPLv3
+URL:           http://www.kurditgroup.org/node/1337
+# Below is only working Source URL
+Source0:       https://www.kurditgroup.org/sites/default/files/unikurdweb_0.zip
+Source1:       65-kurdit-unikurd-web.conf
+Source2:       %{fontname}.metainfo.xml
 
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
@@ -30,7 +31,8 @@ A widely used Kurdish font which supports various Arabic-like scripts
 (Arabic, Kurdish, Persian) and also Latin.
 
 %prep
-%setup -n %{oldname}-%{version} -q -c %{archivename}
+%setup -q -c -n %{archivename}
+
 
 %build
 #nothing to do
@@ -88,11 +90,15 @@ fi
 %files
 %{_fontconfig_templatedir}/65-kurdit-unikurd-web.conf
 %config(noreplace) %{_fontconfig_confdir}/65-kurdit-unikurd-web.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc gpl.txt
+%doc --no-dereference gpl.txt
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 20020502-alt3_20
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20020502-alt3_17
 - update to new release by fcimport
 
