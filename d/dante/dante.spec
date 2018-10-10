@@ -1,7 +1,7 @@
 Summary: A free SOCKS v4/v5 client implementation
 Name: dante
 Version: 1.4.2
-Release: alt1
+Release: alt2
 License: BSD-type
 Group: Security/Networking
 Url: http://www.inet.no/dante/
@@ -17,7 +17,7 @@ Patch1:	dante-build.patch
 Patch2:	dante-cpp.patch
 
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 perl python-base
-BuildRequires: flex libpam0-devel libwrap-devel db4.7-utils
+BuildRequires: flex libpam0-devel db4.7-utils
 
 %description
 Dante is a free implementation of the SOCKS proxy protocol, version 4,
@@ -111,6 +111,9 @@ test -r %_sharedstatedir/sockd/passwd.db || sockd.passwd -r
 %_includedir/socks.h
 
 %changelog
+* Wed Oct 10 2018 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt2
+- Rebuild without libwrap.
+
 * Thu Apr 19 2018 Fr. Br. George <george@altlinux.ru> 1.4.2-alt1
 - Initial build for ALT
 
