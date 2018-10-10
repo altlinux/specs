@@ -9,7 +9,7 @@ BuildRequires: /usr/bin/desktop-file-install libSDL-devel
 
 Name:           xu4
 Version:        1.1
-Release:        alt2_0.33.%{svndate}svn%{svnrev}
+Release:        alt2_0.36.%{svndate}svn%{svnrev}
 Summary:        Ultima IV recreated
 License:        GPLv2+
 URL:            http://xu4.sourceforge.net/
@@ -19,11 +19,11 @@ Source1:        xu4.sh
 Source2:        xu4.autodlrc
 Source3:        u4download.txt
 Patch0:         xu4-1.0beta3-desktop.patch
-Patch1:         xu4-1.1-unbundle.patch
-Patch2:         xu4-1.1-format-security.patch
-BuildRequires:  gcc-c++ libSDL_mixer-devel libxml2-devel libminizip-devel
+Patch1:         xu4-1.1-format-security.patch
+BuildRequires:  gcc-c++ libSDL_mixer-devel libxml2-devel
 BuildRequires:  libicns-utils libpng-devel desktop-file-utils
 Requires:       icon-theme-hicolor autodownloader
+Provides:       bundled(minizip) = 0.15
 Source44: import.info
 
 %description
@@ -43,7 +43,6 @@ spirit of the original game will be added.
 %setup -q -n u4
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 if [ "%{_lib}" = "lib64" ]; then
   sed -i 's|/usr/lib|%{_libdir}|g' src/u4file.cpp
 fi
@@ -52,7 +51,7 @@ cp %{SOURCE3} .
 
 %build
 pushd src
-make DEBUGCXXFLAGS="%{optflags}" EXTRALIBS=-lminizip\
+make DEBUGCXXFLAGS="%{optflags}" \
   bindir=%{_bindir} datadir=%{_datadir} libdir=%{_libdir} %{?_smp_mflags}
 popd
 
@@ -97,6 +96,9 @@ rm -rf %{buildroot}/%{_datadir}/pixmaps
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.36.20150221svn3087
+- update to new release by fcimport
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.33.20150221svn3087
 - update to new release by fcimport
 
