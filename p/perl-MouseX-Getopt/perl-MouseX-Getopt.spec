@@ -8,14 +8,15 @@ BuildRequires: perl-podlators
 Name:		perl-MouseX-Getopt
 Summary:	Mouse role for processing command line options
 Version:	0.37
-Release:	alt1_8
+Release:	alt1_10
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/MouseX-Getopt
 Source0:	https://cpan.metacpan.org/authors/id/G/GF/GFUJI/MouseX-Getopt-%{version}.tar.gz
+Patch0:		MouseX-Getopt-0.37-gld103.patch
 BuildArch:	noarch
 # Module Build
-BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
 BuildRequires:	perl(Module/Build/Tiny.pm)
 BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(warnings.pm)
@@ -47,7 +48,7 @@ Requires:	perl(Mouse/Meta/Attribute.pm)
 # Filter under-specified dependency
 
 Source44: import.info
-%filter_from_requires /^perl(Mouse\\)$/d
+%filter_from_requires /^perl(Mouse.pm)/d
 
 %description
 This is a Mouse role that provides an alternate constructor for creating
@@ -55,6 +56,9 @@ objects using parameters passed in from the command line.
 
 %prep
 %setup -q -n MouseX-Getopt-%{version}
+
+# Fix compatibility with GLD 0.103 (GH#12, GH#13)
+%patch0 -p1
 
 %build
 perl Build.PL --installdirs=vendor
@@ -67,12 +71,15 @@ perl Build.PL --installdirs=vendor
 ./Build test
 
 %files
-# Note: malformed LICENSE file in 0.35 .. 0.36 not shipped
+# Note: malformed LICENSE file in 0.35 .. 0.37 not shipped
 # https://github.com/gfx/mousex-getopt/issues/2
 %doc Changes README.md
 %{perl_vendor_privlib}/MouseX/
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1_10
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1_8
 - update to new release by fcimport
 
