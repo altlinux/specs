@@ -2,7 +2,7 @@
 
 Name: xmms-eff-normalize
 Version: 0.8.3
-Release: alt2.1.qa1
+Release: alt2.1.qa2
 
 Summary: Normalizing plugin for XMMS
 License: GPL2+
@@ -30,7 +30,7 @@ volume and you will not need to hit the volume knob for each song.
 %patch2 -p1 -b .orig
 
 %build
-%__autoreconf
+%autoreconf
 unset CC CXX
 %configure --enable-one-plugin-dir
 %make_build
@@ -44,6 +44,9 @@ install -m755 src/.libs/*.so %buildroot%xmms_effectdir
 %xmms_effectdir/*.so
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt2.1.qa2
+- NMU: applied repocop patch
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8.3-alt2.1.qa1
 - NMU: rebuilt for debuginfo.
 
