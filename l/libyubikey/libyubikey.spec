@@ -3,13 +3,14 @@
 %define _localstatedir %{_var}
 Name:           libyubikey
 Version:        1.13
-Release:        alt1_5
+Release:        alt1_8
 Summary:        C library for decrypting and parsing Yubikey One-time passwords
 
 Group:          Development/Other
 License:        BSD
 URL:            http://opensource.yubico.com/yubico-c
 Source0:        http://opensource.yubico.com/yubico-c/releases/%{name}-%{version}.tar.gz
+BuildRequires:  gcc
 Source44: import.info
 
 %description
@@ -31,20 +32,20 @@ libyubikey.
 %build
 %configure --disable-static --disable-silent-rules
 # --disable-rpath doesn't work for the configure script
-%{__sed} -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-%{__sed} -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-%{__make} %{?_smp_mflags}
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+make %{?_smp_mflags}
 
 %check
 export LD_LIBRARY_PATH=${RPM_BUILD_DIR}/%{name}-%{version}/.libs
 %{__make} check
 
 %install
-%{__make} install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
 %files
 %doc AUTHORS NEWS ChangeLog README
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/modhex
 %{_bindir}/ykparse
 %{_bindir}/ykgenerate
@@ -59,6 +60,9 @@ export LD_LIBRARY_PATH=${RPM_BUILD_DIR}/%{name}-%{version}/.libs
 %{_libdir}/libyubikey.so
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_8
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_5
 - update to new release by fcimport
 
