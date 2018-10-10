@@ -1,6 +1,6 @@
 Name: refind
 Version: 0.11.3
-Release: alt1%ubt
+Release: alt2
 
 Summary: EFI boot manager software
 License: GPLv3
@@ -14,7 +14,8 @@ Source2: altlinux_live.png
 Source3: altlinux_rescue.png
 Source4: os_altlinux.png
 
-BuildRequires(pre): rpm-build-ubt
+Patch1: refind-0.11.3-alt-split-cfg.patch
+
 BuildRequires(pre): rpm-macros-uefi
 BuildRequires: gnu-efi >= 3.0.6-alt1
 BuildRequires: unzip
@@ -47,6 +48,7 @@ when one can't disable it easily, doesn't want to, or needs not to.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 mkdir -p ../ia32_build
@@ -87,6 +89,10 @@ install -pDm644 %SOURCE4 %buildroot%refind_data/icons/os_altlinux.png
 %refind_data
 
 %changelog
+* Wed Oct 03 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.11.3-alt2
+- add patch splitting config files for x64 and ia32 EFI binaries
+- remove %%ubt
+
 * Tue Aug 07 2018 Anton Farygin <rider@altlinux.ru> 0.11.3-alt1%ubt
 - 0.11.3
 
