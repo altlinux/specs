@@ -1,5 +1,5 @@
 Name: libxcb
-Version: 1.13
+Version: 1.13.1
 Release: alt1
 Summary: The X C Binding (XCB) library
 License: MIT/X11
@@ -68,6 +68,9 @@ develop programs which make use of %name
 %_man3dir/*.3*
 
 %changelog
+* Wed Oct 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.13.1-alt1
+- 1.13.1
+
 * Wed May 30 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.13-alt1
 - 1.13
 
