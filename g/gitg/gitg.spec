@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 3.26
+%define ver_major 3.30
 %define api_ver 1.0
 %def_enable python
 
@@ -17,8 +17,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
-# hack to avoid break of non-SMP build
-Patch: gitg-3.18.0-alt-makefile.patch
 
 PreReq: lib%name = %version-%release
 # gitg/gitg-plugins-engine.vala: repo.require("PeasGtk", "1.0", 0);
@@ -40,6 +38,7 @@ AutoReqProv: nopython
 %define gtkspell_ver 3.0.3
 %define peas_ver 1.5.0
 
+BuildRequires(pre): rpm-build-gir
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgit2-glib-devel >= %git2_ver
@@ -51,9 +50,11 @@ BuildRequires: gnome-common intltool desktop-file-utils
 BuildRequires: libgee0.8-devel libjson-glib-devel libsecret-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxml2-devel
 BuildRequires: libgit2-glib-gir-devel libwebkit2gtk-gir-devel libgee0.8-gir-devel
+BuildRequires: libgtkspell3-gir-devel
 BuildRequires: vala-tools
 BuildRequires: gsettings-desktop-schemas-devel
-%{?_enable_python:BuildRequires: python3-devel rpm-build-python3 python3-module-pygobject3-devel}
+%{?_enable_python:BuildRequires(pre): rpm-build-python3}
+%{?_enable_python:BuildRequires: python3-devel python3-module-pygobject3-devel}
 
 %description
 Gitg is a graphical user interface for git. It aims at being a small,
@@ -109,7 +110,6 @@ library.
 
 %prep
 %setup
-%patch
 
 %build
 %autoreconf
@@ -151,8 +151,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_includedir/lib%name-ext-%api_ver/
 %_libdir/lib%name-%api_ver.so
 %_libdir/lib%name-ext-%api_ver.so
-%_libdir/pkgconfig/lib%name-%api_ver.pc
-%_libdir/pkgconfig/lib%name-ext-%api_ver.pc
+%_pkgconfigdir/lib%name-%api_ver.pc
+%_pkgconfigdir/lib%name-ext-%api_ver.pc
 %_vapidir/lib%name-%api_ver.vapi
 %_vapidir/lib%name-ext-1.0.vapi
 
@@ -165,6 +165,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Wed Oct 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
+- 3.30.0
+
 * Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

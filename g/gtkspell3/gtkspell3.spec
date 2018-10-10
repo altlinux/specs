@@ -3,8 +3,8 @@
 %def_enable introspection
 
 Name: gtkspell3
-Version: 3.0.9
-Release: alt1.1
+Version: 3.0.10
+Release: alt1
 
 Summary: On-the-fly spell checking for GtkTextView widgets, GTK+3 version
 License: GPLv2+
@@ -19,7 +19,7 @@ BuildRequires: gtk-doc intltool
 BuildRequires: vala vala-tools libvala-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: gir(GObject) = 2.0 gir(GLib) = 2.0 gir(Gtk) = 3.0
-BuildRequires: pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(enchant) pkgconfig(iso-codes)
+BuildRequires: pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(enchant-2) pkgconfig(iso-codes)
 
 %description
 This is the GTK+3 version of the library.
@@ -76,9 +76,10 @@ GObject introspection data for the %name library
 
 %package -n lib%name-gir-devel
 Summary: GObject introspection devel data for the %name library
-Group: System/Libraries
+Group: Development/Other
 BuildArch: noarch
 Requires: lib%name-gir = %version-%release
+Requires: lib%name-devel = %version-%release
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the %name library
@@ -129,6 +130,9 @@ sed -i 's,GTK_SPELL_CFLAGS,GTK_SPELL3_CFLAGS,' \
 %endif
 
 %changelog
+* Wed Oct 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.10-alt1
+- 3.0.10
+
 * Tue May 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.9-alt1.1
 - rebuilt for e2kv4
 
