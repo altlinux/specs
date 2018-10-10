@@ -1,12 +1,9 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		libgtextutils
 Version:	0.7
-Release:	alt1_19
+Release:	alt1_22
 Summary:	Assaf Gordon text utilities    
 
 Group:		System/Libraries
@@ -14,8 +11,9 @@ License:	AGPLv3+
 URL:		http://hannonlab.cshl.edu/fastx_toolkit/
 Source0:	https://github.com/agordon/%{name}/releases/download/%{version}/%{name}-%{version}.tar.gz
 Patch0:		libgtextutils-GCC6-iostream.patch
-Source44: import.info
 
+BuildRequires:  gcc-c++
+Source44: import.info
 
 %description
 Text utilities library used by the fastx_toolkit, from the Hannon Lab
@@ -24,7 +22,7 @@ Text utilities library used by the fastx_toolkit, from the Hannon Lab
 Summary:       Development files for %{name}
 Group:	       Development/Other
 Requires:      %{name} = %{version}-%{release}
-Requires:      pkg-config
+Requires:      pkgconfig
 
 %description   devel
 The %{name}-devel package contains libraries and header files for
@@ -49,6 +47,7 @@ make install DESTDIR=%{buildroot} INSTALL="install -p"
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
+
 %files
 %doc AUTHORS COPYING README THANKS NEWS
 %{_libdir}/libgtextutils-*.so.*
@@ -60,6 +59,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/gtextutils.pc
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_22
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_19
 - update to new release by fcimport
 
