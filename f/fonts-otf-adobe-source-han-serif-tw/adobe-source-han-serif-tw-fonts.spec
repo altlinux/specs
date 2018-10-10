@@ -6,13 +6,13 @@ BuildRequires: unzip
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global fontname adobe-source-han-serif-tw
-%global fontconf 66-%{fontname}.conf
+%global fontconf 65-2-%{fontname}.conf
 
 %global archivename SourceHanSerifTW
 
 Name:           fonts-otf-adobe-source-han-serif-tw
 Version:        1.001
-Release:        alt1_4
+Release:        alt1_6
 Summary:        Adobe OpenType Pan-CJK font family for Traditional Chinese
 
 License:        OFL
@@ -92,6 +92,9 @@ fi
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.001-alt1_6
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.001-alt1_4
 - update to new release by fcimport
 
