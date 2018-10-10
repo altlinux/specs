@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
@@ -5,10 +6,9 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name: bombardier
 Version:  0.8.3
-Release:  alt1_6
+Release:  alt1_9
 Summary: The GNU Bombing utility
 
-Group: Games/Other
 License: GPLv2+        
 URL: http://packages.debian.org/stable/source/bombardier
 Source0: http://http.debian.net/debian/pool/main/b/bombardier/bombardier_0.8.3+nmu1.tar.gz
@@ -18,7 +18,7 @@ Patch0: bombardier-height.patch
 Patch1: bombardier-rpm_opt_flags.patch
 #Patch2: bombardier-hof-open-mode.patch
 Patch3: bombardier-0.8.2-string-format.patch
-BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel, desktop-file-utils
+BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel, desktop-file-utils, gcc
 Requires: icon-theme-hicolor
 Source44: import.info
 
@@ -59,13 +59,17 @@ install -p -m 644 %{SOURCE2} \
 
 %files
 %{_bindir}/bombardier
-%doc README DEDICATION COPYING VERSION
+%doc --no-dereference COPYING
+%doc README DEDICATION VERSION
 %{_datadir}/applications/bombardier.desktop
 %{_datadir}/icons/hicolor/32x32/apps/bombardier-logo.png
 %{_mandir}/man6/bombardier.6*
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1_9
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1_6
 - update to new release by fcimport
 
