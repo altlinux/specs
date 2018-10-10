@@ -3,8 +3,8 @@
 %def_disable tests
 
 Name: monodevelop
-Version: 7.5.3.7
-Release: alt1%ubt
+Version: 7.6.9.22
+Release: alt1
 
 Summary: MonoDevelop is a project to port SharpDevelop to Gtk#
 License: LGPLv2.1
@@ -15,7 +15,6 @@ ExclusiveArch: %ix86 x86_64
 
 # https://github.com/mono/monodevelop.git
 Source: %name-%version.tar
-Source1: external.tar.xz
 Source2: version.config
 
 # Following data is obtained after running autogen, configure and make
@@ -25,10 +24,29 @@ Source5: nuget-external-fsharpbinding.tar
 Source6: nuget-home.tar
 Source7: restored-targets-external.tar
 
+# External dependencies (git submodules)
+Source10: RefactoringEssentials-%version.tar
+Source11: debugger-libs-%version.tar
+Source12: guiunit-%version.tar
+Source13: libgit-binary-%version.tar
+Source14: libgit-binary-libgit2-%version.tar
+Source15: libgit-binary-libssh2-%version.tar
+Source16: libgit2-%version.tar
+Source17: libgit2sharp-%version.tar
+Source18: macdoc-%version.tar
+Source19: mdtestharness-%version.tar
+Source20: mono-addins-%version.tar
+Source21: mono-tools-%version.tar
+Source22: monomac-%version.tar
+Source23: monomac-maccore-%version.tar
+Source24: nrefactory-%version.tar
+Source25: nuget-binary-%version.tar
+Source26: sharpsvn-binary-%version.tar
+Source27: xwt-%version.tar
+
 Patch1: %name-fix-rpm-autoreq.patch
 Patch2: %name-disable-nuget-and-git.patch
 Patch3: %name-update-rpm-autoreq.patch
-Patch4: %name-upstream-pullrequest-5015.patch
 
 # monodis fails to process following files
 %add_findprov_skiplist %_libexecdir/%name/AddIns/MonoDevelop.Refactoring/System.Text.Encoding.CodePages.dll
@@ -49,7 +67,7 @@ Patch4: %name-upstream-pullrequest-5015.patch
 	-e "/mono\(Microsoft\.VisualStudio\.ImageCatalog\).*/d" \\\
 	-e "/mono\(PresentationCore\).*/d"'
 
-BuildRequires(pre): rpm-build-ubt rpm-build-xdg
+BuildRequires(pre): rpm-build-xdg
 BuildRequires(pre): rpm-build-mono >= 2.0.0
 BuildRequires: mono-devel-full msbuild
 BuildRequires: intltool /usr/bin/msgfmt
@@ -79,12 +97,30 @@ It was originally a port of SharpDevelop 0.98.
 
 %prep
 %setup
+
+pushd external/RefactoringEssentials          ; tar xf %SOURCE10 --strip-components=1 ; popd
+pushd external/debugger-libs                  ; tar xf %SOURCE11 --strip-components=1 ; popd
+pushd external/guiunit                        ; tar xf %SOURCE12 --strip-components=1 ; popd
+pushd external/libgit-binary                  ; tar xf %SOURCE13 --strip-components=1 ; popd
+pushd external/libgit-binary/external/libgit2 ; tar xf %SOURCE14 --strip-components=1 ; popd
+pushd external/libgit-binary/external/libssh2 ; tar xf %SOURCE15 --strip-components=1 ; popd
+pushd external/libgit2                        ; tar xf %SOURCE16 --strip-components=1 ; popd
+pushd external/libgit2sharp                   ; tar xf %SOURCE17 --strip-components=1 ; popd
+pushd external/macdoc                         ; tar xf %SOURCE18 --strip-components=1 ; popd
+pushd external/mdtestharness                  ; tar xf %SOURCE19 --strip-components=1 ; popd
+pushd external/mono-addins                    ; tar xf %SOURCE20 --strip-components=1 ; popd
+pushd external/mono-tools                     ; tar xf %SOURCE21 --strip-components=1 ; popd
+pushd external/monomac                        ; tar xf %SOURCE22 --strip-components=1 ; popd
+pushd external/monomac/maccore                ; tar xf %SOURCE23 --strip-components=1 ; popd
+pushd external/nrefactory                     ; tar xf %SOURCE24 --strip-components=1 ; popd
+pushd external/nuget-binary                   ; tar xf %SOURCE25 --strip-components=1 ; popd
+pushd external/sharpsvn-binary                ; tar xf %SOURCE26 --strip-components=1 ; popd
+pushd external/xwt                            ; tar xf %SOURCE27 --strip-components=1 ; popd
+
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
-%patch4 -p2
 
-tar xJf %SOURCE1
 cp %SOURCE2 ./
 
 # Prepare build info: add current date to prebuilt file
@@ -116,13 +152,14 @@ mkdir -p external/fsharpbinding/packages
 pushd external/fsharpbinding/packages
 for i in ../../../nuget-external-fsharpbinding/*.version.txt ; do
     name=$(basename ${i%%.version.txt})
+    namelower=$(echo $name | tr A-Z a-z)
     version=$(cat $i)
     dir=$(dirname $i)
     mkdir $name
     pushd $name
-    7z x ../$dir/${name}.${version}.nupkg
     # these nupkg file names are usually lowercase
-    cp ../$dir/${name}.${version}.nupkg ./$(echo $name | tr A-Z a-z).${version}.nupkg
+    7z x ../$dir/${namelower}.${version}.nupkg
+    cp ../$dir/${namelower}.${version}.nupkg ./${namelower}.${version}.nupkg
     popd
 done
 
@@ -217,16 +254,19 @@ rm -f %buildroot%_libexecdir/%name/bin/libe_sqlite3.so
 %_man1dir/*
 
 %changelog
-* Thu Jul 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 7.5.3.7-alt1%ubt
+* Tue Oct 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 7.6.9.22-alt1
+- Updated to upstream version 7.6.9.22.
+
+* Thu Jul 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 7.5.3.7-alt1
 - Updated to upstream version 7.5.3.7.
 
-* Wed Mar 21 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.3.0.864-alt1%ubt
+* Wed Mar 21 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.3.0.864-alt1
 - Updated to stable upstream version 6.3.0.864.
 
-* Wed Sep 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.2.44-alt3%ubt
+* Wed Sep 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.2.44-alt3
 - Updated runtime dependencies.
 
-* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.2.44-alt2%ubt
+* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.2.44-alt2
 - Rebuilt with support of %%ubt macro.
 
 * Fri Jul 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.2.44-alt1
