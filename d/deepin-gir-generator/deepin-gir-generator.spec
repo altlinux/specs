@@ -9,7 +9,7 @@ BuildRequires: libgudev-gir
 %global repo go-gir-generator
 
 Name:           deepin-gir-generator
-Version:        1.0.2
+Version:        1.0.4
 Release:        alt1_1
 Summary:        Generate static golang bindings for GObject
 License:        GPLv3
@@ -47,11 +47,14 @@ export GOPATH="%{go_path}"
 
 %files
 %doc README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{_bindir}/gir-generator
 %{go_path}/src/gir/
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_1
+- update to new release by fcimport
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1
 - new version
 
