@@ -3,7 +3,7 @@ Group: System/Fonts/True type
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global fontname naver-nanum
-%global fontconf 66-%{fontname}
+%global fontconf 65-2-%{fontname}
 
 %global common_desc \
 Nanum fonts are collection of commonly-used Myeongjo and Gothic Korean \
@@ -13,7 +13,7 @@ publisher is Naver Corporation.
 
 Name:       fonts-ttf-naver-nanum
 Version:    3.020
-Release:    alt2_21.20140930
+Release:    alt2_23.20140930
 Summary:    Nanum family of Korean TrueType fonts
 
 License:    OFL
@@ -283,6 +283,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 3.020-alt2_23.20140930
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.020-alt2_21.20140930
 - update to new release by fcimport
 
