@@ -1,43 +1,48 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           grhino
 Version:        0.16.1
-Release:        alt1_2
+Release:        alt1_7
 Summary:        Reversi game for GNOME, supporting the Go/Game Text Protocol
 
 License:        GPLv2+
 URL:            http://rhino.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/rhino/grhino-%{version}.tar.gz
+# from https://packages.debian.org/sid/grhino
+Patch0:         %{name}-0.16.1-fix-format-security.patch
 
+BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext gettext-tools
 BuildRequires:  libgnomeui-devel
-BuildRequires:  librarian
+BuildRequires:  scrollkeeper
 #Requires:       
-Requires(post):         librarian
-Requires(postun):       librarian
+Requires(post):         scrollkeeper
+Requires(postun):       scrollkeeper
+Source44: import.info
 
 %description
-GRhino, or Rhino its former name, is a Reversi game on Linux and other
-UNIX-like systems as long as GNOME 2 libraries are installed. It is currently
-under development and a new version is available occasionally.
+GRhino, or Rhino its former name, is a Reversi game on Linux and other UNIX-like
+systems as long as GNOME 2 libraries are installed. It is currently under
+development and a new version is available occasionally.
 
 What distinguish GRhino from most other Reversi games is that GRhino will be
 targeted for experienced Reversi players. Strong AI is the main focus with some
 additional good, useful features (like an endgame solver) is planned. The
 ultimate target strength of the AI is that it should be able to beat the best
 human player at the highest difficulty level. Beating Logistello (the strongest
-program available) is not in the plan :) 
+program available) is not in the plan :)
 
-GRhino supports the Go/Game Text Protocol (GTP), allowing it to be used as
-an engine for a GTP-compliant controller like Quarry.
+GRhino supports the Go/Game Text Protocol (GTP), allowing it to be used as an
+engine for a GTP-compliant controller like Quarry.
 
 %prep
 %setup -q
+%patch0 -p1
 
 
 %build
@@ -46,7 +51,7 @@ an engine for a GTP-compliant controller like Quarry.
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
 # desktop file
 desktop-file-install \
@@ -60,7 +65,7 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc COPYING
+%doc --no-dereference COPYING
 %doc ChangeLog NEWS README TODO
 %{_bindir}/grhino
 %{_bindir}/gtp-rhino
@@ -72,6 +77,9 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.16.1-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.16.1-alt1_2
 - update to new release by fcimport
 
