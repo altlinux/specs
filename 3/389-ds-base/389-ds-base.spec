@@ -6,8 +6,8 @@
 %def_without selinux
 
 Name: 389-ds-base
-Version: 1.3.8.8
-Release: alt3
+Version: 1.3.8.10
+Release: alt1
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -17,7 +17,7 @@ Url: http://port389.org
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
+Patch: %name-alt.patch
 
 BuildRequires: 389-adminutil-devel gcc-c++ libdb4-devel libicu-devel
 BuildRequires: libldap-devel libnet-snmp-devel libnl-devel libpam-devel
@@ -287,6 +287,12 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun_service %pkgname
 %preun_service %pkgname-snmp
 %changelog
+* Thu Oct 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.8.10-alt1
+- New version.
+- Security fixes:
+  + Ticket 49969 - DOS caused by malformed search operation
+  + Ticket 49937 - Log buffer exceeded emergency logging msg is not thread-safe
+
 * Fri Oct 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.8.8-alt3
 - Remove python2.7(gdb) requirement.
 
