@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install libSDL-devel
 # END SourceDeps(oneline)
-%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           dd2
 Version:        0.2.2
-Release:        alt2_19
+Release:        alt2_22
 Summary:        Dodgin' Diamond 2 - Shoot'em up arcade game
 Group:          Games/Other
 License:        GPLv2+
@@ -16,6 +15,7 @@ Source1:        %{name}.desktop
 Source2:        %{name}.png
 Patch0:         dd2-0.2.1-glob-highscore.patch
 Patch1:         dd2-0.2.1-640x480-fullscreen.patch
+BuildRequires:  gcc
 BuildRequires:  libSDL_mixer-devel desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -41,7 +41,7 @@ touch src/data/Makefile.in
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 mkdir -p $RPM_BUILD_ROOT%{_var}/games
 mv $RPM_BUILD_ROOT%{_datadir}/%{name}/%{name}-hiscore \
@@ -50,9 +50,6 @@ mv $RPM_BUILD_ROOT%{_datadir}/%{name}/%{name}-hiscore \
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 desktop-file-install \
-%if 0%{?fedora} && 0%{?fedora} < 19
-              \
-%endif
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/24x24/apps
@@ -60,20 +57,21 @@ install -p -m 644 %{SOURCE2} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/24x24/apps/%{name}.png
 
 
+
+
 %files
 %doc AUTHORS ChangeLog COPYING NEWS README TODO
 %attr(2711,root,games) %{_bindir}/%{name}
 %{_datadir}/%{name}
-%if 0%{?fedora} && 0%{?fedora} < 19
 %{_datadir}/applications/%{name}.desktop
-%else
-%{_datadir}/applications/%{name}.desktop
-%endif
 %{_datadir}/icons/hicolor/24x24/apps/%{name}.png
 %config(noreplace) %attr (0664,root,games) %{_var}/games/%{name}-hiscore
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt2_22
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt2_19
 - update to new release by fcimport
 
