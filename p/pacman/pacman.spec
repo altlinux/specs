@@ -2,7 +2,7 @@
 
 Name:     pacman
 Version:  0.9.0.19.git7cf259d
-Release:  alt3
+Release:  alt4
 
 Summary:  Yet another pacman clone in C/C++ and SDL
 License:  GPLv2, fonts of unknown license
@@ -41,6 +41,9 @@ rm -r %buildroot/%_defaultdocdir/%name
 %_datadir/applications/pacman.desktop
 
 %changelog
+* Thu Oct 11 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.0.19.git7cf259d-alt4
+- Fix menu icon.
+
 * Thu Sep 20 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.0.19.git7cf259d-alt3
 - Cleanup Build Requires.
 - Rebuild for aarch64.
