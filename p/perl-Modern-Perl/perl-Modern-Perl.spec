@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Epoch: 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
@@ -9,16 +8,16 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Modern-Perl
 Version:        1.20180928
-Release:        alt1
+Release:        alt1_1
 Summary:        Enable all of the features of Modern Perl with one command
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Modern-Perl
-Source0:        http://www.cpan.org/authors/id/C/CH/CHROMATIC/Modern-Perl-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/C/CH/CHROMATIC/Modern-Perl-%{version}.tar.gz
 BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
-BuildRequires:  perl-devel >= 5.10.0
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel >= 5.10.0
 BuildRequires:  perl(autodie.pm)
 BuildRequires:  perl(Module/Build.pm)
 # Module Runtime
@@ -54,11 +53,14 @@ perl Build.PL --installdirs=vendor
 ./Build test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/Modern/
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.20180928-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.20180928-alt1
 - automated CPAN update
 
