@@ -5,14 +5,16 @@ Name: beesu
 Version: 2.7
 # Don't ever decrease this version (unless beesu update) or the subpackages will go backwards.
 # It is easier to do this than to track a separate release field.
-Release: alt2_31
+Release: alt2_34
 Summary: Graphical wrapper for su
 URL: http://www.honeybeenet.altervista.org
 Group: System/Base
 License: GPLv2+
 Source0: http://honeybeenet.altervista.org/beesu/files/beesu-sources/%{name}-%{version}.tar.bz2
 
-Requires: libpam0 pam pam0_console pam0_timestamp
+BuildRequires: gcc-c++
+
+Requires: libpam0 pam pam0_timestamp
 Requires: consolehelper
 Requires: userpasswd
 
@@ -55,18 +57,21 @@ EOF
 
 %files
 %doc README
-%doc COPYING
+%doc --no-dereference COPYING
 %config(noreplace) %{_sysconfdir}/%{name}.conf
 %config(noreplace) %{_sysconfdir}/pam.d/%{name}
 %config(noreplace) %{_sysconfdir}/security/console.apps/%{name}
 %{_sysconfdir}/bash_completion.d/%{name}-bash-completion.sh
 %{_sbindir}/%{name}
 %{_bindir}/%{name}
-%{_mandir}/man1/%{name}.1.*
+%{_mandir}/man1/%{name}.1*
 /etc/pam.d/config-util
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_34
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_31
 - update to new release by fcimport
 
