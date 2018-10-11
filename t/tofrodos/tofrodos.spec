@@ -6,11 +6,13 @@ BuildRequires(pre): rpm-macros-fedora-compat
 %define _localstatedir %{_var}
 Name:           tofrodos
 Version:        1.7.13
-Release:        alt1_9
+Release:        alt1_12
 Summary:        Converts text files between MSDOS and Unix file formats
 License:        GPLv2
 URL:            http://www.thefreecountry.com/tofrodos/
 Source0:        http://tofrodos.sourceforge.net/download/tofrodos-%{version}.tar.gz
+
+BuildRequires:	gcc
 Source44: import.info
 
 %description
@@ -42,6 +44,9 @@ make -C src/ install INSTALL="install -p" BINDIR="%{buildroot}%{_bindir}" MANDIR
 %{_mandir}/man1/todos.1*
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.13-alt1_12
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.13-alt1_9
 - update to new release by fcimport
 
