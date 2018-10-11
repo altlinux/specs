@@ -1,14 +1,13 @@
+Group: System/Base
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libggi-devel libpth-devel
+BuildRequires: libggi-devel libpth-devel
 # END SourceDeps(oneline)
-%define fedora 26
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: zhcon
-Summary: A Fast Console CJK System Using FrameBuffer
 Version: 0.2.6
-Release: alt1_32
-Group: System/Base
+Release: alt1_35
 License: GPLv2+
 URL:   http://zhcon.sourceforge.net/
 Source0: http://ftp.debian.org/debian/pool/main/z/zhcon/%{name}_%{version}.orig.tar.gz
@@ -28,7 +27,8 @@ Summary(zh_TW): Zhcon 是一個支援 Framebuffer 及多內碼 Linux 中日韓�
 %endif
 
 
-BuildRequires: autoconf-common automake 
+BuildRequires:  gcc-c++
+BuildRequires: autoconf automake 
 BuildRequires: gettext-tools libasprintf-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libgpm-devel
 Requires: gpm gpm-root termutils
 Source44: import.info
@@ -51,6 +51,7 @@ zhcon 是一個支援 Framebuffer 與多内碼的 Linux 中日韓文主控台。
 它能够在控制台上顯示簡體中文、繁體中文、日文、韓文
 等雙位元組字元。支援多种输入法。
 現支援的內碼有： UTF8, GB2312, GBK, BIG5, JIS 及 KSC。
+
 %prep
 %setup -q
 %patch0 -p1 -b .6-diff
@@ -79,11 +80,11 @@ autoreconf -ivf
 %make_build
 
 %install
-rm -rf ${RPM_BUILD_ROOT}
 make DESTDIR=${RPM_BUILD_ROOT} INSTALL="install -c -p" install
 
 %files
-%doc AUTHORS ChangeLog COPYING README README.utf8 THANKS TODO doc/bpsf.txt doc/README.html
+%doc AUTHORS ChangeLog README README.utf8 THANKS TODO doc/bpsf.txt doc/README.html
+%doc --no-dereference COPYING
 %lang(zh_CN) %doc doc/manual* doc/poem.gb doc/poem.gb.utf8
 %lang(zh_TW) %doc doc/poem.big5
 %{_mandir}/man1/*
@@ -92,6 +93,9 @@ make DESTDIR=${RPM_BUILD_ROOT} INSTALL="install -c -p" install
 %{_datadir}/%{name}/
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt1_35
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt1_32
 - update to new release by fcimport
 
