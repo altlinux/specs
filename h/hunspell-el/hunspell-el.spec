@@ -8,7 +8,7 @@ Name: hunspell-el
 Summary: Greek hunspell dictionaries
 #Epoch: 1
 Version: 0.9
-Release: alt1_1
+Release: alt1_2
 Source: http://ispell.math.upatras.gr/files/ooffice/el_GR-%{version}.zip
 URL: http://www.elspell.gr/
 License: GPLv2+ or LGPLv2+ or MPLv1.1
@@ -44,6 +44,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_2
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_1
 - update to new release by fcimport
 
