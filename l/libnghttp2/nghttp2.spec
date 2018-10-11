@@ -1,6 +1,6 @@
 Name: libnghttp2
-Version: 1.26.0
-Release: alt1.1
+Version: 1.34.0
+Release: alt1
 
 Summary: HTTP/2.0 C Library
 Group: System/Libraries
@@ -68,6 +68,9 @@ Requires: %name = %version-%release
 %exclude %_datadir/nghttp2/fetch-ocsp-response
 
 %changelog
+* Thu Oct 11 2018 Anton Farygin <rider@altlinux.ru> 1.34.0-alt1
+- 1.34.0
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.26.0-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
