@@ -1,32 +1,40 @@
 Name: maim
-Version: 3.3.41
+Version:  5.5.2
 Release: alt1
 
-Summary: Flexible screenshotting utility
-
-License: GPL-3.0+
+Summary:  maim (make image) takes screenshots of your desktop.
+License: GPLv3
 Group: Graphics
 Url: https://github.com/naelstrof/maim
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: https://github.com/naelstrof/%name/archive/v%version.tar.gz#/%name-%version.tar
+Source:   %name-%version.tar
 
-BuildRequires: cmake
-BuildRequires: gcc-c++
-BuildRequires: gengetopt
-BuildRequires: pkgconfig(imlib2)
-BuildRequires: pkgconfig(xfixes)
-BuildRequires: pkgconfig(xrandr)
-
-Requires: imlib2
-# Recommended
-#Requires: slop
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++
+BuildRequires: libslop-devel
+BuildRequires: zlib-devel
+BuildRequires: libpng-devel libjpeg-devel
+BuildRequires: libXrandr-devel libXfixes-devel libXcomposite-devel libglvnd-devel
+BuildRequires: libicu-devel libXext-devel libglm-devel
 
 %description
-maim (Make Image) is a utility that takes screenshots of your desktop
-using imlib2. It's meant to overcome shortcomings of scrot and performs
-better in several ways.
+maim (make image) takes screenshots of your desktop. It has options to take only
+a region, and relies on slop to query for regions. maim is supposed to be
+an improved scrot.
+
+Features:
+
+ * Takes screenshots of your desktop, and saves it in png or jpg format.
+ * Takes screenshots predetermined regions or windows, useful for automation.
+ * Allows a users to select a region, or window, before taking a screenshot
+   on the fly.
+ * Blends the system cursor to the screenshot. screenshot with cursor
+ * Masks off-screen pixels to be transparent or black.
+ * Maim cleanly pipes screenshots directly to standard output (unless otherwise
+   specified). Allowing for command chaining.
+ * Maim supports anything slop does, even selection shaders!
 
 %prep
 %setup
@@ -36,19 +44,17 @@ better in several ways.
 %make_build
 
 %install
-# install executable
-mkdir -p %buildroot%_bindir
-install -Dm 0755 %name %buildroot%_bindir/
-
-# install man
-install -Dm 0644 man-src/%name.1 %buildroot%_man1dir/%name.1
+%makeinstall_std
 
 %files
+%_bindir/*
+%_man1dir/*
 %doc COPYING README.md
-%_bindir/%name
-%_man1dir/%name.*
 
 %changelog
+* Wed Oct 11 2018 Pavel Skrylev <majioa@altlinux.org> 5.5.2-alt1
+- Bump to 5.5.2 with slop support.
+
 * Fri Jun 24 2016 Vitaly Lipatov <lav@altlinux.ru> 3.3.41-alt1
 - initial build for ALT Linux Sisyphus
 
