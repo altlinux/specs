@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -12,70 +13,46 @@ between multiple scripts. Noto family supports almost all scripts available\
 in Unicode.\
 %{nil}
 
-%global commit 86b2e553c3e3e4d6614dadd1fa0a7a6dafd74552
+%global commit db5c897c3954ab8dd49bfc3de4f3ef00a7ef6d06
 
 Name:           fonts-ttf-google-noto
-Version:        20161022
-Release:        alt2_7
+Version:        20180905
+Release:        alt1_1
 Summary:        Hinted and Non Hinted OpenType fonts for Unicode scripts
-Group:          System/Fonts/True type
 License:        OFL
 URL:            https://github.com/googlei18n/noto-fonts/
-# downloaded from https://github.com/googlei18n/noto-fonts/tree/86b2e553c3e3e4d6614dadd1fa0a7a6dafd74552 -> download [zip]
-# link https://codeload.github.com/googlei18n/noto-fonts/zip/86b2e553c3e3e4d6614dadd1fa0a7a6dafd74552
+# downloaded from https://github.com/googlei18n/noto-fonts/tree/db5c897c3954ab8dd49bfc3de4f3ef00a7ef6d06 -> download [zip]
+# link https://codeload.github.com/googlei18n/noto-fonts/zip/db5c897c3954ab8dd49bfc3de4f3ef00a7ef6d06
 Source0:        noto-fonts-%{commit}.zip
-Source2:        66-%{fontconf}-sans.conf
 Source3:        66-%{fontconf}-sans-armenian.conf
-Source4:        66-%{fontconf}-sans-avestan.conf
 Source5:        66-%{fontconf}-sans-bengali.conf
 Source6:        66-%{fontconf}-sans-bengali-ui.conf
-Source7:        66-%{fontconf}-sans-brahmi.conf
-Source8:        66-%{fontconf}-sans-carian.conf
 Source9:        66-%{fontconf}-sans-cherokee.conf
 Source10:       66-%{fontconf}-sans-coptic.conf
-Source11:       66-%{fontconf}-sans-deseret.conf
 Source12:       66-%{fontconf}-sans-devanagari.conf
 Source13:       66-%{fontconf}-sans-devanagari-ui.conf
-Source14:       66-%{fontconf}-sans-egyptian-hieroglyphs.conf
 Source15:       66-%{fontconf}-sans-ethiopic.conf
 Source16:       66-%{fontconf}-sans-georgian.conf
-Source17:       66-%{fontconf}-sans-glagolitic.conf
 Source18:       66-%{fontconf}-sans-hebrew.conf
-Source19:       66-%{fontconf}-sans-imperial-aramaic.conf
-Source20:       66-%{fontconf}-sans-kaithi.conf
 Source21:       66-%{fontconf}-sans-kannada.conf
-Source22:       66-%{fontconf}-sans-kayah-li.conf
-Source23:       66-%{fontconf}-sans-kharoshthi.conf
 Source24:       66-%{fontconf}-sans-khmer.conf
 Source25:       66-%{fontconf}-sans-khmer-ui.conf
 Source26:       66-%{fontconf}-sans-lao.conf
 Source27:       66-%{fontconf}-sans-lao-ui.conf
 Source28:       66-%{fontconf}-sans-lisu.conf
-Source29:       66-%{fontconf}-sans-lycian.conf
-Source30:       66-%{fontconf}-sans-lydian.conf
 Source31:       66-%{fontconf}-sans-malayalam.conf
 Source32:       66-%{fontconf}-sans-malayalam-ui.conf
-Source33:       66-%{fontconf}-sans-mandaic.conf
 Source34:       66-%{fontconf}-sans-meetei-mayek.conf
 Source35:       66-%{fontconf}-sans-nko.conf
-Source36:       66-%{fontconf}-sans-old-south-arabian.conf
-Source37:       66-%{fontconf}-sans-old-turkic.conf
-Source38:       66-%{fontconf}-sans-osmanya.conf
-Source39:       66-%{fontconf}-sans-phoenician.conf
 Source40:       66-%{fontconf}-sans-shavian.conf
-Source41:       66-%{fontconf}-sans-symbols.conf
 Source42:       66-%{fontconf}-sans-tagalog.conf
-Source43:       66-%{fontconf}-sans-tai-tham.conf
 Source44:       66-%{fontconf}-sans-tamil.conf
 Source45:       66-%{fontconf}-sans-tamil-ui.conf
 Source46:       66-%{fontconf}-sans-telugu.conf
 Source47:       66-%{fontconf}-sans-thai.conf
 Source48:       66-%{fontconf}-sans-thai-ui.conf
-Source49:       66-%{fontconf}-sans-ugaritic.conf
-Source50:       66-%{fontconf}-sans-ui.conf
 Source51:       66-%{fontconf}-sans-vai.conf
 Source52:       66-%{fontconf}-serif-armenian.conf
-Source53:       66-%{fontconf}-serif.conf
 Source54:       66-%{fontconf}-serif-georgian.conf
 Source55:       66-%{fontconf}-serif-khmer.conf
 Source56:       66-%{fontconf}-serif-lao.conf
@@ -85,7 +62,6 @@ Source59:       66-%{fontconf}-sans-telugu-ui.conf
 Source60:       66-%{fontconf}-sans-gujarati.conf
 Source61:       66-%{fontconf}-sans-gujarati-ui.conf
 Source62:       66-%{fontconf}-sans-hanunoo.conf
-Source63:       66-%{fontconf}-sans-tai-viet.conf
 Source64:       66-%{fontconf}-kufi-arabic.conf
 Source65:       66-%{fontconf}-naskh-arabic.conf
 Source66:       66-%{fontconf}-naskh-arabic-ui.conf
@@ -101,34 +77,24 @@ Source75:       66-%{fontconf}-sans-cypriot.conf
 Source76:       66-%{fontconf}-sans-gothic.conf
 Source77:       66-%{fontconf}-sans-gurmukhi.conf
 Source78:       66-%{fontconf}-sans-gurmukhi-ui.conf
-Source79:       66-%{fontconf}-sans-inscriptional-pahlavi.conf
-Source80:       66-%{fontconf}-sans-inscriptional-parthian.conf
 Source81:       66-%{fontconf}-sans-javanese.conf
 Source82:       66-%{fontconf}-sans-lepcha.conf
 Source83:       66-%{fontconf}-sans-limbu.conf
-Source84:       66-%{fontconf}-sans-linear-b.conf
 Source85:       66-%{fontconf}-sans-mongolian.conf
 Source86:       66-%{fontconf}-sans-myanmar.conf
 Source87:       66-%{fontconf}-sans-myanmar-ui.conf
 Source88:       66-%{fontconf}-sans-new-tai-lue.conf
 Source89:       66-%{fontconf}-sans-ogham.conf
 Source90:       66-%{fontconf}-sans-ol-chiki.conf
-Source91:       66-%{fontconf}-sans-old-italic.conf
-Source92:       66-%{fontconf}-sans-old-persian.conf
-Source93:       66-%{fontconf}-sans-phags-pa.conf
 Source94:       66-%{fontconf}-sans-rejang.conf
 Source95:       66-%{fontconf}-sans-runic.conf
-Source96:       66-%{fontconf}-sans-samaritan.conf
 Source97:       66-%{fontconf}-sans-saurashtra.conf
 Source98:       65-%{fontconf}-sans-sinhala.conf
 Source99:       66-%{fontconf}-sans-sundanese.conf
-Source100:      66-%{fontconf}-sans-syloti-nagri.conf
 Source101:      66-%{fontconf}-sans-syriac-eastern.conf
 Source102:      66-%{fontconf}-sans-syriac-estrangela.conf
 Source103:      66-%{fontconf}-sans-syriac-western.conf
-Source104:      66-%{fontconf}-sans-tai-le.conf
 Source105:      66-%{fontconf}-sans-tifinagh.conf
-Source106:      66-%{fontconf}-sans-yi.conf
 Source107:      66-%{fontconf}-sans-tagbanwa.conf
 Source108:      66-%{fontconf}-sans-thaana.conf
 
@@ -136,7 +102,6 @@ Source156:      66-%{fontconf}-sans-oriya.conf
 Source157:      66-%{fontconf}-sans-oriya-ui.conf
 Source158:      66-%{fontconf}-nastaliq-urdu.conf
 Source159:      66-%{fontconf}-sans-tibetan.conf
-Source160:      66-%{fontconf}-mono.conf
 Source161:      66-%{fontconf}-serif-bengali.conf
 Source162:      66-%{fontconf}-serif-devanagari.conf
 Source163:      66-%{fontconf}-serif-gujarati.conf
@@ -149,10 +114,9 @@ Source167:      66-%{fontconf}-serif-telugu.conf
 Source200:      %{fontname}.metainfo.xml
 
 BuildArch:      noarch
-BuildRequires:  fontforge libfontforge
 BuildRequires:  fontpackages-devel
 %global _fontdir  %_ttffontsdir/%{fontname}
-Source109: import.info
+Source49: import.info
 
 %description
 %common_desc
@@ -188,7 +152,7 @@ Noto font Kufi Arabic.
 Summary:	Naskh Arabic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-naskh-arabic fonts-ttf-google-noto-naskh-arabic-ui
+Conflicts:	fonts-ttf-google-noto-naskh-arabic = 20161022-alt1_4
 Obsoletes:	%{fontname}-naskh-arabic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-naskh-arabic
@@ -226,7 +190,7 @@ Noto font Naskh Arabic UI.
 Summary:	Sans font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans fonts-ttf-google-noto-sans-armenian fonts-ttf-google-noto-sans-avestan fonts-ttf-google-noto-sans-balinese fonts-ttf-google-noto-sans-bamum fonts-ttf-google-noto-sans-batak fonts-ttf-google-noto-sans-bengali fonts-ttf-google-noto-sans-bengali-ui fonts-ttf-google-noto-sans-brahmi fonts-ttf-google-noto-sans-buginese fonts-ttf-google-noto-sans-buhid fonts-ttf-google-noto-sans-canadian-aboriginal fonts-ttf-google-noto-sans-carian fonts-ttf-google-noto-sans-cham fonts-ttf-google-noto-sans-cherokee fonts-ttf-google-noto-sans-coptic fonts-ttf-google-noto-sans-cuneiform fonts-ttf-google-noto-sans-cypriot fonts-ttf-google-noto-sans-deseret fonts-ttf-google-noto-sans-devanagari fonts-ttf-google-noto-sans-devanagari-ui fonts-ttf-google-noto-sans-egyptian-hieroglyphs fonts-ttf-google-noto-sans-ethiopic fonts-ttf-google-noto-sans-georgian fonts-ttf-google-noto-sans-glagolitic fonts-ttf-google-noto-sans-gothic fonts-ttf-google-noto-sans-gujarati fonts-ttf-google-noto-sans-gujarati-ui fonts-ttf-google-noto-sans-gurmukhi fonts-ttf-google-noto-sans-gurmukhi-ui fonts-ttf-google-noto-sans-hanunno fonts-ttf-google-noto-sans-hebrew fonts-ttf-google-noto-sans-imperial-aramaic fonts-ttf-google-noto-sans-inscriptional-pahlavi fonts-ttf-google-noto-sans-inscriptional-parthian fonts-ttf-google-noto-sans-javanese fonts-ttf-google-noto-sans-kaithi fonts-ttf-google-noto-sans-kannada fonts-ttf-google-noto-sans-kannada-ui fonts-ttf-google-noto-sans-kayah-li fonts-ttf-google-noto-sans-kharoshthi fonts-ttf-google-noto-sans-khmer fonts-ttf-google-noto-sans-khmer-ui fonts-ttf-google-noto-sans-lao fonts-ttf-google-noto-sans-lao-ui fonts-ttf-google-noto-sans-lepcha fonts-ttf-google-noto-sans-limbu fonts-ttf-google-noto-sans-linearb fonts-ttf-google-noto-sans-lisu fonts-ttf-google-noto-sans-lycian fonts-ttf-google-noto-sans-lydian fonts-ttf-google-noto-sans-malayalam fonts-ttf-google-noto-sans-malayalam-ui fonts-ttf-google-noto-sans-mandaic fonts-ttf-google-noto-sans-meeteimayek fonts-ttf-google-noto-sans-mongolian fonts-ttf-google-noto-sans-myanmar fonts-ttf-google-noto-sans-myanmar-ui fonts-ttf-google-noto-sans-new-tai-lue fonts-ttf-google-noto-sans-nko fonts-ttf-google-noto-sans-ogham fonts-ttf-google-noto-sans-ol-chiki fonts-ttf-google-noto-sans-old-italic fonts-ttf-google-noto-sans-old-persian fonts-ttf-google-noto-sans-old-south-arabian fonts-ttf-google-noto-sans-old-turkic fonts-ttf-google-noto-sans-oriya fonts-ttf-google-noto-sans-oriya-ui fonts-ttf-google-noto-sans-osmanya fonts-ttf-google-noto-sans-phags-pa fonts-ttf-google-noto-sans-phoenician fonts-ttf-google-noto-sans-rejang fonts-ttf-google-noto-sans-runic fonts-ttf-google-noto-sans-samaritan fonts-ttf-google-noto-sans-saurashtra fonts-ttf-google-noto-sans-shavian fonts-ttf-google-noto-sans-sinhala fonts-ttf-google-noto-sans-sundanese fonts-ttf-google-noto-sans-syloti-nagri fonts-ttf-google-noto-sans-symbols fonts-ttf-google-noto-sans-syriac-eastern fonts-ttf-google-noto-sans-syriac-estrangela fonts-ttf-google-noto-sans-syriac-western fonts-ttf-google-noto-sans-tagalog fonts-ttf-google-noto-sans-tagbanwa fonts-ttf-google-noto-sans-tai-le fonts-ttf-google-noto-sans-tai-tham fonts-ttf-google-noto-sans-tai-viet fonts-ttf-google-noto-sans-tamil fonts-ttf-google-noto-sans-tamil-ui fonts-ttf-google-noto-sans-telugu fonts-ttf-google-noto-sans-telugu-ui fonts-ttf-google-noto-sans-thaana fonts-ttf-google-noto-sans-thai fonts-ttf-google-noto-sans-thai-ui fonts-ttf-google-noto-sans-tibetan fonts-ttf-google-noto-sans-tifinagh fonts-ttf-google-noto-sans-ugaritic fonts-ttf-google-noto-sans-ui fonts-ttf-google-noto-sans-vai fonts-ttf-google-noto-sans-yi
+Conflicts:	fonts-ttf-google-noto-sans = 20161022-alt1_4
 Obsoletes:	%{fontname}-sans-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans
@@ -241,23 +205,119 @@ Noto font Sans.
 %{_datadir}/appdata/%{fontname}-sans.metainfo.xml
 
 
-%package -n fonts-ttf-google-noto-sans-ui
-Summary:	Sans UI font
+%package -n fonts-ttf-google-noto-sans-display
+Summary:	Sans Display font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-ui = 20161022-alt1_4
-Obsoletes:	%{fontname}-sans-ui-fonts = 20161022-alt1_4
+Conflicts:	%{fontname}-sans-display-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-sans-display-fonts = 20161022-alt1_4
+Obsoletes:	fonts-ttf-%{fontname}-sans-ui < %EVR
 
-%description -n fonts-ttf-google-noto-sans-ui
+%description -n fonts-ttf-google-noto-sans-display
 %common_desc
-Noto font Sans UI.
+Noto font Sans Display.
 
-%files -n fonts-ttf-google-noto-sans-ui
+%files -n fonts-ttf-google-noto-sans-display
 %dir %{_fontdir}
-%{_fontdir}/NotoSansUI-*.*tf
-%{_fontconfig_templatedir}/66-%{fontconf}-sans-ui.conf
-%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-ui.conf
-%{_datadir}/appdata/%{fontname}-sans-ui.metainfo.xml
+%{_fontdir}/NotoSansDisplay-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-sans-display.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-display.conf
+%{_datadir}/appdata/%{fontname}-sans-display.metainfo.xml
+
+
+%package -n fonts-ttf-google-noto-sans-adlam
+Summary:	Sans Adlam font
+Group:		System/Fonts/True type
+Requires:	fonts-ttf-%{fontname}-common = %EVR
+Conflicts:	%{fontname}-sans-adlam-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-sans-adlam-fonts = 20161022-alt1_4
+
+%description -n fonts-ttf-google-noto-sans-adlam
+%common_desc
+Noto font Sans Adlam.
+
+%files -n fonts-ttf-google-noto-sans-adlam
+%dir %{_fontdir}
+%{_fontdir}/NotoSansAdlam-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-sans-adlam.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-adlam.conf
+%{_datadir}/appdata/%{fontname}-sans-adlam.metainfo.xml
+
+
+%package -n fonts-ttf-google-noto-sans-adlam-unjoined
+Summary:	Sans Adlam Unjoined font
+Group:		System/Fonts/True type
+Requires:	fonts-ttf-%{fontname}-common = %EVR
+Conflicts:	%{fontname}-sans-adlam-unjoined-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-sans-adlam-unjoined-fonts = 20161022-alt1_4
+
+%description -n fonts-ttf-google-noto-sans-adlam-unjoined
+%common_desc
+Noto font Sans Adlam Unjoined.
+
+%files -n fonts-ttf-google-noto-sans-adlam-unjoined
+%dir %{_fontdir}
+%{_fontdir}/NotoSansAdlamUnjoined-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-sans-adlam-unjoined.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-adlam-unjoined.conf
+%{_datadir}/appdata/%{fontname}-sans-adlam-unjoined.metainfo.xml
+
+
+%package -n fonts-ttf-google-noto-sans-anatolian-hieroglyphs
+Summary:	Sans Anatolian Hieroglyphs font
+Group:		System/Fonts/True type
+Requires:	fonts-ttf-%{fontname}-common = %EVR
+Conflicts:	%{fontname}-sans-anatolian-hieroglyphs-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-sans-anatolian-hieroglyphs-fonts = 20161022-alt1_4
+
+%description -n fonts-ttf-google-noto-sans-anatolian-hieroglyphs
+%common_desc
+Noto font Sans Anatolian Hieroglyphs.
+
+%files -n fonts-ttf-google-noto-sans-anatolian-hieroglyphs
+%dir %{_fontdir}
+%{_fontdir}/NotoSansAnatolianHieroglyphs-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-sans-anatolian-hieroglyphs.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-anatolian-hieroglyphs.conf
+%{_datadir}/appdata/%{fontname}-sans-anatolian-hieroglyphs.metainfo.xml
+
+
+%package -n fonts-ttf-google-noto-sans-arabic
+Summary:	Sans Arabic font
+Group:		System/Fonts/True type
+Requires:	fonts-ttf-%{fontname}-common = %EVR
+Conflicts:	%{fontname}-sans-arabic-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-sans-arabic-fonts = 20161022-alt1_4
+
+%description -n fonts-ttf-google-noto-sans-arabic
+%common_desc
+Noto font Sans Arabic.
+
+%files -n fonts-ttf-google-noto-sans-arabic
+%dir %{_fontdir}
+%{_fontdir}/NotoSansArabic-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-sans-arabic.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-arabic.conf
+%{_datadir}/appdata/%{fontname}-sans-arabic.metainfo.xml
+
+
+%package -n fonts-ttf-google-noto-sans-arabic-ui
+Summary:	Sans Arabic UI font
+Group:		System/Fonts/True type
+Requires:	fonts-ttf-%{fontname}-common = %EVR
+Conflicts:	%{fontname}-sans-arabic-ui-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-sans-arabic-ui-fonts = 20161022-alt1_4
+
+%description -n fonts-ttf-google-noto-sans-arabic-ui
+%common_desc
+Noto font Sans Arabic UI.
+
+%files -n fonts-ttf-google-noto-sans-arabic-ui
+%dir %{_fontdir}
+%{_fontdir}/NotoSansArabicUI-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-sans-arabic-ui.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-arabic-ui.conf
+%{_datadir}/appdata/%{fontname}-sans-arabic-ui.metainfo.xml
 
 
 %package -n fonts-ttf-google-noto-sans-armenian
@@ -359,7 +419,7 @@ Noto font Sans Batak.
 Summary:	Sans Bengali font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-bengali fonts-ttf-google-noto-sans-bengali-ui
+Conflicts:	fonts-ttf-google-noto-sans-bengali = 20161022-alt1_4
 Obsoletes:	%{fontname}-sans-bengali-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-bengali
@@ -488,6 +548,25 @@ Noto font Sans Carian.
 %{_datadir}/appdata/%{fontname}-sans-carian.metainfo.xml
 
 
+%package -n fonts-ttf-google-noto-sans-chakma
+Summary:	Sans Chakma font
+Group:		System/Fonts/True type
+Requires:	fonts-ttf-%{fontname}-common = %EVR
+Conflicts:	%{fontname}-sans-chakma-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-sans-chakma-fonts = 20161022-alt1_4
+
+%description -n fonts-ttf-google-noto-sans-chakma
+%common_desc
+Noto font Sans Chakma.
+
+%files -n fonts-ttf-google-noto-sans-chakma
+%dir %{_fontdir}
+%{_fontdir}/NotoSansChakma-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-sans-chakma.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-chakma.conf
+%{_datadir}/appdata/%{fontname}-sans-chakma.metainfo.xml
+
+
 %package -n fonts-ttf-google-noto-sans-cham
 Summary:	Sans Cham font
 Group:		System/Fonts/True type
@@ -606,7 +685,7 @@ Noto font Sans Deseret.
 Summary:	Sans Devanagari font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-devanagari fonts-ttf-google-noto-sans-devanagari-ui
+Conflicts:	fonts-ttf-google-noto-sans-devanagari = 20161022-alt1_4
 Obsoletes:	%{fontname}-sans-devanagari-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-devanagari
@@ -739,7 +818,7 @@ Noto font Sans Gothic.
 Summary:	Sans Gujarati font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-gujarati fonts-ttf-google-noto-sans-gujarati-ui
+Conflicts:	fonts-ttf-google-noto-sans-gujarati = 20161022-alt1_4
 Obsoletes:	%{fontname}-sans-gujarati-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-gujarati
@@ -777,7 +856,7 @@ Noto font Sans Gujarati UI.
 Summary:	Sans Gurmukhi font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-gurmukhi fonts-ttf-google-noto-sans-gurmukhi-ui
+Conflicts:	fonts-ttf-google-noto-sans-gurmukhi = 20161022-alt1_4
 Obsoletes:	%{fontname}-sans-gurmukhi-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-gurmukhi
@@ -949,7 +1028,7 @@ Noto font Sans Kaithi.
 Summary:	Sans Kannada font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-kannada fonts-ttf-google-noto-sans-kannada-ui
+Conflicts:	fonts-ttf-google-noto-sans-kannada = 20161022-alt1_4
 Obsoletes:	%{fontname}-sans-kannada-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-kannada
@@ -1025,7 +1104,7 @@ Noto font Sans Kharoshthi.
 Summary:	Sans Khmer font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-khmer fonts-ttf-google-noto-sans-khmer-ui
+Conflicts:	fonts-ttf-google-noto-sans-khmer = 20161022-alt1_4
 Obsoletes:	%{fontname}-sans-khmer-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-khmer
@@ -1063,7 +1142,7 @@ Noto font Sans Khmer UI.
 Summary:	Sans Lao font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-lao fonts-ttf-google-noto-sans-lao-ui
+Conflicts:	fonts-ttf-google-noto-sans-lao = 20161022-alt1_4
 Obsoletes:	%{fontname}-sans-lao-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-lao
@@ -1216,7 +1295,7 @@ Noto font Sans Lydian.
 Summary:	Sans Malayalam font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-malayalam fonts-ttf-google-noto-sans-malayalam-ui
+Conflicts:	fonts-ttf-google-noto-sans-malayalam = 20161022-alt1_4
 Obsoletes:	%{fontname}-sans-malayalam-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-malayalam
@@ -1312,7 +1391,7 @@ Noto font Sans Mongolian.
 Summary:	Sans Myanmar font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-myanmar fonts-ttf-google-noto-sans-myanmar-ui
+Conflicts:	fonts-ttf-google-noto-sans-myanmar = 20161022-alt1_4
 Obsoletes:	%{fontname}-sans-myanmar-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-myanmar
@@ -1498,6 +1577,25 @@ Noto font Sans Old Turkic.
 %{_datadir}/appdata/%{fontname}-sans-old-turkic.metainfo.xml
 
 
+%package -n fonts-ttf-google-noto-sans-osage
+Summary:	Sans Osage font
+Group:		System/Fonts/True type
+Requires:	fonts-ttf-%{fontname}-common = %EVR
+Conflicts:	%{fontname}-sans-osage-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-sans-osage-fonts = 20161022-alt1_4
+
+%description -n fonts-ttf-google-noto-sans-osage
+%common_desc
+Noto font Sans Osage.
+
+%files -n fonts-ttf-google-noto-sans-osage
+%dir %{_fontdir}
+%{_fontdir}/NotoSansOsage-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-sans-osage.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-osage.conf
+%{_datadir}/appdata/%{fontname}-sans-osage.metainfo.xml
+
+
 %package -n fonts-ttf-google-noto-sans-osmanya
 Summary:	Sans Osmanya font
 Group:		System/Fonts/True type
@@ -1669,6 +1767,25 @@ Noto font Sans Sinhala.
 %{_datadir}/appdata/%{fontname}-sans-sinhala.metainfo.xml
 
 
+%package -n fonts-ttf-google-noto-sans-sinhala-ui
+Summary:	Sans Sinhala UI font
+Group:		System/Fonts/True type
+Requires:	fonts-ttf-%{fontname}-common = %EVR
+Conflicts:	%{fontname}-sans-sinhala-ui-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-sans-sinhala-ui-fonts = 20161022-alt1_4
+
+%description -n fonts-ttf-google-noto-sans-sinhala-ui
+%common_desc
+Noto font Sans Sinhala UI.
+
+%files -n fonts-ttf-google-noto-sans-sinhala-ui
+%dir %{_fontdir}
+%{_fontdir}/NotoSansSinhalaUI-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-sans-sinhala-ui.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-sinhala-ui.conf
+%{_datadir}/appdata/%{fontname}-sans-sinhala-ui.metainfo.xml
+
+
 %package -n fonts-ttf-google-noto-sans-sundanese
 Summary:	Sans Sundanese font
 Group:		System/Fonts/True type
@@ -1724,6 +1841,25 @@ Noto font Sans Symbols.
 %{_fontconfig_templatedir}/66-%{fontconf}-sans-symbols.conf
 %config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-symbols.conf
 %{_datadir}/appdata/%{fontname}-sans-symbols.metainfo.xml
+
+
+%package -n fonts-ttf-google-noto-sans-symbols2
+Summary:	Sans Symbols2 font
+Group:		System/Fonts/True type
+Requires:	fonts-ttf-%{fontname}-common = %EVR
+Conflicts:	%{fontname}-sans-symbols2-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-sans-symbols2-fonts = 20161022-alt1_4
+
+%description -n fonts-ttf-google-noto-sans-symbols2
+%common_desc
+Noto font Sans Symbols2.
+
+%files -n fonts-ttf-google-noto-sans-symbols2
+%dir %{_fontdir}
+%{_fontdir}/NotoSansSymbols2-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-sans-symbols2.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-symbols2.conf
+%{_datadir}/appdata/%{fontname}-sans-symbols2.metainfo.xml
 
 
 %package -n fonts-ttf-google-noto-sans-syriac-eastern
@@ -1882,7 +2018,7 @@ Noto font Sans Tai Viet.
 Summary:	Sans Tamil font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-tamil fonts-ttf-google-noto-sans-tamil-ui
+Conflicts:	fonts-ttf-google-noto-sans-tamil = 20161022-alt1_4
 Obsoletes:	%{fontname}-sans-tamil-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-tamil
@@ -1920,7 +2056,7 @@ Noto font Sans Tamil UI.
 Summary:	Sans Telugu font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-telugu fonts-ttf-google-noto-sans-telugu-ui
+Conflicts:	fonts-ttf-google-noto-sans-telugu = 20161022-alt1_4
 Obsoletes:	%{fontname}-sans-telugu-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-telugu
@@ -1977,7 +2113,7 @@ Noto font Sans Thaana.
 Summary:	Sans Thai font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-thai fonts-ttf-google-noto-sans-thai-ui
+Conflicts:	fonts-ttf-google-noto-sans-thai = 20161022-alt1_4
 Obsoletes:	%{fontname}-sans-thai-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-thai
@@ -2091,7 +2227,7 @@ Noto font Sans Yi.
 Summary:	Serif font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-serif fonts-ttf-google-noto-serif-armenian fonts-ttf-google-noto-serif-bengali fonts-ttf-google-noto-serif-devanagari fonts-ttf-google-noto-serif-georgian fonts-ttf-google-noto-serif-gujarati fonts-ttf-google-noto-serif-kannada fonts-ttf-google-noto-serif-khmer fonts-ttf-google-noto-serif-lao fonts-ttf-google-noto-serif-malayalam fonts-ttf-google-noto-serif-tamil fonts-ttf-google-noto-serif-telugu fonts-ttf-google-noto-serif-thai
+Conflicts:	fonts-ttf-google-noto-serif = 20161022-alt1_4
 Obsoletes:	%{fontname}-serif-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif
@@ -2125,6 +2261,44 @@ Noto font Serif Armenian.
 %{_datadir}/appdata/%{fontname}-serif-armenian.metainfo.xml
 
 
+%package -n fonts-ttf-google-noto-serif-display
+Summary:	Serif Display font
+Group:		System/Fonts/True type
+Requires:	fonts-ttf-%{fontname}-common = %EVR
+Conflicts:	%{fontname}-serif-display-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-serif-display-fonts = 20161022-alt1_4
+
+%description -n fonts-ttf-google-noto-serif-display
+%common_desc
+Noto font Serif Display.
+
+%files -n fonts-ttf-google-noto-serif-display
+%dir %{_fontdir}
+%{_fontdir}/NotoSerifDisplay-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-serif-display.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-serif-display.conf
+%{_datadir}/appdata/%{fontname}-serif-display.metainfo.xml
+
+
+%package -n fonts-ttf-google-noto-serif-ethiopic
+Summary:	Serif Ethiopic font
+Group:		System/Fonts/True type
+Requires:	fonts-ttf-%{fontname}-common = %EVR
+Conflicts:	%{fontname}-serif-ethiopic-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-serif-ethiopic-fonts = 20161022-alt1_4
+
+%description -n fonts-ttf-google-noto-serif-ethiopic
+%common_desc
+Noto font Serif Ethiopic.
+
+%files -n fonts-ttf-google-noto-serif-ethiopic
+%dir %{_fontdir}
+%{_fontdir}/NotoSerifEthiopic-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-serif-ethiopic.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-serif-ethiopic.conf
+%{_datadir}/appdata/%{fontname}-serif-ethiopic.metainfo.xml
+
+
 %package -n fonts-ttf-google-noto-serif-georgian
 Summary:	Serif Georgian font
 Group:		System/Fonts/True type
@@ -2142,6 +2316,25 @@ Noto font Serif Georgian.
 %{_fontconfig_templatedir}/66-%{fontconf}-serif-georgian.conf
 %config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-serif-georgian.conf
 %{_datadir}/appdata/%{fontname}-serif-georgian.metainfo.xml
+
+
+%package -n fonts-ttf-google-noto-serif-hebrew
+Summary:	Serif Hebrew font
+Group:		System/Fonts/True type
+Requires:	fonts-ttf-%{fontname}-common = %EVR
+Conflicts:	%{fontname}-serif-hebrew-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-serif-hebrew-fonts = 20161022-alt1_4
+
+%description -n fonts-ttf-google-noto-serif-hebrew
+%common_desc
+Noto font Serif Hebrew.
+
+%files -n fonts-ttf-google-noto-serif-hebrew
+%dir %{_fontdir}
+%{_fontdir}/NotoSerifHebrew-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-serif-hebrew.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-serif-hebrew.conf
+%{_datadir}/appdata/%{fontname}-serif-hebrew.metainfo.xml
 
 
 %package -n fonts-ttf-google-noto-serif-khmer
@@ -2182,6 +2375,25 @@ Noto font Serif Lao.
 %{_datadir}/appdata/%{fontname}-serif-lao.metainfo.xml
 
 
+%package -n fonts-ttf-google-noto-serif-myanmar
+Summary:	Serif Myanmar font
+Group:		System/Fonts/True type
+Requires:	fonts-ttf-%{fontname}-common = %EVR
+Conflicts:	%{fontname}-serif-myanmar-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-serif-myanmar-fonts = 20161022-alt1_4
+
+%description -n fonts-ttf-google-noto-serif-myanmar
+%common_desc
+Noto font Serif Myanmar.
+
+%files -n fonts-ttf-google-noto-serif-myanmar
+%dir %{_fontdir}
+%{_fontdir}/NotoSerifMyanmar-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-serif-myanmar.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-serif-myanmar.conf
+%{_datadir}/appdata/%{fontname}-serif-myanmar.metainfo.xml
+
+
 %package -n fonts-ttf-google-noto-serif-thai
 Summary:	Serif Thai font
 Group:		System/Fonts/True type
@@ -2205,7 +2417,7 @@ Noto font Serif Thai.
 Summary:	Sans Oriya font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-oriya fonts-ttf-google-noto-sans-oriya-ui
+Conflicts:	fonts-ttf-google-noto-sans-oriya = 20161022-alt1_4
 Obsoletes:	%{fontname}-sans-oriya-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-oriya
@@ -2277,23 +2489,24 @@ Noto font Nastaliq Urdu.
 %{_datadir}/appdata/%{fontname}-nastaliq-urdu.metainfo.xml
 
 
-%package -n fonts-ttf-google-noto-mono
-Summary:	Mono font
+%package -n fonts-ttf-google-noto-sans-mono
+Summary:	Sans Mono font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-mono = 20161022-alt1_4
-Obsoletes:	%{fontname}-mono-fonts = 20161022-alt1_4
+Conflicts:	%{fontname}-sans-mono-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-sans-mono-fonts = 20161022-alt1_4
+Obsoletes:	fonts-ttf-%{fontname}-mono < %EVR
 
-%description -n fonts-ttf-google-noto-mono
+%description -n fonts-ttf-google-noto-sans-mono
 %common_desc
-Noto font Mono.
+Noto font Sans Mono.
 
-%files -n fonts-ttf-google-noto-mono
+%files -n fonts-ttf-google-noto-sans-mono
 %dir %{_fontdir}
-%{_fontdir}/NotoMono-*.*tf
-%{_fontconfig_templatedir}/66-%{fontconf}-mono.conf
-%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-mono.conf
-%{_datadir}/appdata/%{fontname}-mono.metainfo.xml
+%{_fontdir}/NotoSansMono-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-sans-mono.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-mono.conf
+%{_datadir}/appdata/%{fontname}-sans-mono.metainfo.xml
 
 
 %package -n fonts-ttf-google-noto-serif-bengali
@@ -2391,6 +2604,25 @@ Noto font Serif Malayalam.
 %{_datadir}/appdata/%{fontname}-serif-malayalam.metainfo.xml
 
 
+%package -n fonts-ttf-google-noto-serif-sinhala
+Summary:	Serif Sinhala font
+Group:		System/Fonts/True type
+Requires:	fonts-ttf-%{fontname}-common = %EVR
+Conflicts:	%{fontname}-serif-sinhala-fonts = 20161022-alt1_4
+Obsoletes:	%{fontname}-serif-sinhala-fonts = 20161022-alt1_4
+
+%description -n fonts-ttf-google-noto-serif-sinhala
+%common_desc
+Noto font Serif Sinhala.
+
+%files -n fonts-ttf-google-noto-serif-sinhala
+%dir %{_fontdir}
+%{_fontdir}/NotoSerifSinhala-*.*tf
+%{_fontconfig_templatedir}/66-%{fontconf}-serif-sinhala.conf
+%config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-serif-sinhala.conf
+%{_datadir}/appdata/%{fontname}-serif-sinhala.metainfo.xml
+
+
 %package -n fonts-ttf-google-noto-serif-tamil
 Summary:	Serif Tamil font
 Group:		System/Fonts/True type
@@ -2429,7 +2661,7 @@ Noto font Serif Telugu.
 %{_datadir}/appdata/%{fontname}-serif-telugu.metainfo.xml
 
 %prep
-%setup -q -n noto-fonts-86b2e553c3e3e4d6614dadd1fa0a7a6dafd74552
+%setup -q -n noto-fonts-%{commit}
 
 
 %build
@@ -2448,12 +2680,86 @@ install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
 install -Dm 0644 -p %{SOURCE200} \
         %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 
+%define fcconfbuild(a:g:p:)\
+%define pname %(echo %{*} | tr "A-Z " "a-z-")\
+%define fconf %{-p*}%{!-p:66}-%{fontconf}-%{pname}.conf\
+cat<<_EOL_>%{buildroot}%{_fontconfig_templatedir}/%{fconf}\
+<?xml version=\"1.0\" encoding=\"UTF-8\"?>\
+<!DOCTYPE fontconfig SYSTEM \"fonts.dtd\">\
+<fontconfig>\
+  <alias>\
+    <family>%{-g*}</family>\
+    <prefer>\
+      <family>Noto %{*}</family>\
+    </prefer>\
+  </alias>\
+  <alias>\
+    <family>Noto %{*}</family>\
+    <default>\
+      <family>%{-g*}</family>\
+    </default>\
+  </alias>\
+</fontconfig>\
+_EOL_
+
+%fcconfbuild -g sans-serif Sans Adlam
+%fcconfbuild -g sans-serif Sans Adlam Unjoined
+%fcconfbuild -g sans-serif Sans Anatolian Hieroglyphs
+%fcconfbuild -g sans-serif Sans Arabic
+%fcconfbuild -g sans-serif Sans Arabic UI
+%fcconfbuild -g sans-serif Sans Avestan
+%fcconfbuild -g sans-serif Sans Brahmi
+%fcconfbuild -g sans-serif Sans Carian
+%fcconfbuild -g sans-serif Sans Chakma
+%fcconfbuild -g sans-serif Sans Deseret
+%fcconfbuild -g sans-serif Sans Display
+%fcconfbuild -g sans-serif Sans Egyptian Hieroglyphs
+%fcconfbuild -g sans-serif Sans Glagolitic
+%fcconfbuild -g sans-serif Sans Imperial Aramaic
+%fcconfbuild -g sans-serif Sans Inscriptional Pahlavi
+%fcconfbuild -g sans-serif Sans Inscriptional Parthian
+%fcconfbuild -g sans-serif Sans Kaithi
+%fcconfbuild -g sans-serif Sans Kayah Li
+%fcconfbuild -g sans-serif Sans Kharoshthi
+%fcconfbuild -g sans-serif Sans Linear B
+%fcconfbuild -g sans-serif Sans Lycian
+%fcconfbuild -g sans-serif Sans Lydian
+%fcconfbuild -g sans-serif Sans Mandaic
+%fcconfbuild -g monospace Sans Mono
+%fcconfbuild -g sans-serif Sans Old Italic
+%fcconfbuild -g sans-serif Sans Old Persian
+%fcconfbuild -g sans-serif Sans Old South Arabian
+%fcconfbuild -g sans-serif Sans Old Turkic
+%fcconfbuild -g sans-serif Sans Osage
+%fcconfbuild -g sans-serif Sans Osmanya
+%fcconfbuild -g sans-serif Sans Phags Pa
+%fcconfbuild -g sans-serif Sans Phoenician
+%fcconfbuild -g sans-serif Sans Samaritan
+%fcconfbuild -g sans-serif Sans Sinhala UI
+%fcconfbuild -g sans-serif Sans Syloti Nagri
+%fcconfbuild -g fantasy Sans Symbols
+%fcconfbuild -g fantasy Sans Symbols2
+%fcconfbuild -g sans-serif Sans Tai Le
+%fcconfbuild -g sans-serif Sans Tai Tham
+%fcconfbuild -g sans-serif Sans Tai Viet
+%fcconfbuild -g sans-serif Sans Ugaritic
+%fcconfbuild -g sans-serif Sans Yi
+%fcconfbuild -g sans-serif Sans
+%fcconfbuild -g serif Serif Display
+%fcconfbuild -g serif Serif Ethiopic
+%fcconfbuild -g serif Serif Hebrew
+%fcconfbuild -g serif Serif Myanmar
+%fcconfbuild -g serif Serif Sinhala
+%fcconfbuild -g serif Serif
+
 for f in \
         kufi-arabic naskh-arabic naskh-arabic-ui \
-        sans sans-armenian sans-avestan sans-balinese sans-bamum \
+        sans sans-adlam sans-adlam-unjoined sans-anatolian-hieroglyphs \
+	sans-arabic sans-arabic-ui \
+	sans-armenian sans-avestan sans-balinese sans-bamum \
         sans-batak sans-bengali sans-bengali-ui sans-brahmi \
         sans-buginese sans-buhid sans-canadian-aboriginal sans-carian \
-        sans-cham sans-cherokee sans-coptic sans-cuneiform \
+        sans-chakma sans-cham sans-cherokee sans-coptic sans-cuneiform \
         sans-cypriot sans-deseret sans-devanagari sans-devanagari-ui \
         sans-egyptian-hieroglyphs sans-ethiopic sans-georgian \
         sans-glagolitic sans-gothic sans-gujarati sans-gujarati-ui \
@@ -2467,27 +2773,33 @@ for f in \
         sans-mandaic sans-meetei-mayek sans-mongolian sans-myanmar \
         sans-myanmar-ui sans-new-tai-lue sans-nko sans-ogham \
         sans-ol-chiki sans-old-italic sans-old-persian \
-        sans-old-south-arabian sans-old-turkic sans-osmanya \
+        sans-old-south-arabian sans-old-turkic sans-osage sans-osmanya \
         sans-phags-pa sans-phoenician sans-rejang sans-runic \
-        sans-samaritan sans-saurashtra sans-shavian sans-sinhala \
-        sans-sundanese sans-syloti-nagri sans-symbols sans-syriac-eastern \
+        sans-samaritan sans-saurashtra sans-shavian sans-sinhala sans-sinhala-ui \
+        sans-sundanese sans-syloti-nagri sans-symbols sans-symbols2 sans-syriac-eastern \
         sans-syriac-estrangela sans-syriac-western sans-tagalog \
         sans-tagbanwa sans-tai-le sans-tai-tham sans-tai-viet \
         sans-tamil sans-tamil-ui sans-telugu sans-telugu-ui \
         sans-thaana sans-thai sans-thai-ui sans-tifinagh \
-        sans-ugaritic sans-ui sans-vai sans-yi \
-        serif serif-armenian serif-georgian serif-khmer serif-lao serif-thai \
-        sans-oriya sans-oriya-ui sans-tibetan nastaliq-urdu mono \
+        sans-ugaritic sans-display sans-vai sans-yi \
+        serif serif-armenian serif-display serif-ethiopic serif-georgian \
+	serif-hebrew serif-khmer serif-lao serif-myanmar serif-sinhala serif-thai \
+        sans-oriya sans-oriya-ui sans-tibetan nastaliq-urdu sans-mono \
         serif-bengali serif-devanagari serif-gujarati serif-kannada \
         serif-malayalam serif-tamil serif-telugu \
         ; do
   fconf=$(basename -a %{_sourcedir}/*-%{fontconf}-$f.conf)
-  if [ "$(echo $fconf | wc -w)" -ne 1 ]; then
+  ifconf=$(basename -a %{buildroot}%{_fontconfig_templatedir}/*-%{fontconf}-$f.conf)
+  if [ "$(echo $fconf | wc -w)" -ne 1 -o "$(echo $ifconf | wc -w)" -ne 1 ]; then
      echo "Did not find unique \*-%{fontconf}-$f.conf file"
      exit 1
   fi
-  install -m 0644 -p %{_sourcedir}/${fconf} \
-        %{buildroot}%{_fontconfig_templatedir}/${fconf}
+  if [ -f %{_sourcedir}/${fconf} ]; then
+    install -m 0644 -p %{_sourcedir}/${fconf} \
+          %{buildroot}%{_fontconfig_templatedir}/${fconf}
+  else
+    fconf=$ifconf
+  fi
   ln -s %{_fontconfig_templatedir}/${fconf} \
         %{buildroot}%{_fontconfig_confdir}/${fconf}
 
@@ -2512,6 +2824,9 @@ done
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 20180905-alt1_1
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 20161022-alt2_7
 - update to new release by fcimport
 
