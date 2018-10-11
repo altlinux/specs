@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ perl(Shell.pm)
+BuildRequires: /usr/bin/desktop-file-install perl(Shell.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define apricotsdir %{_datadir}/apricots
 Name: apricots
 Version:  0.2.6
-Release:  alt2_20
+Release:  alt2_23
 Summary: 2D air combat game
 
 Group: Games/Other
@@ -22,6 +22,7 @@ Patch2: apricots-0.2.6-alut-configure.patch
 # alut patches sent upstream.
 Patch3: apricots-0.2.6-path.patch
 #Patch4: apricots-0.2.6-alincludes.patch
+BuildRequires: gcc gcc-c++
 BuildRequires: libSDL-devel
 BuildRequires: libalut-devel
 BuildRequires: desktop-file-utils
@@ -87,6 +88,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt2_23
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt2_20
 - update to new release by fcimport
 
