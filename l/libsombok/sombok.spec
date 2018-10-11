@@ -1,29 +1,23 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/doxygen
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname sombok
-%define fedora 25
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libsombok
 Version:        2.4.0
-Release:        alt1_5
+Release:        alt1_8
 Summary:        Unicode Text Segmentation Package
-
-Group:          System/Libraries
 License:        GPLv2+ or Artistic clarified
 URL:            http://sf.net/projects/linefold/
 Source0:        https://github.com/hatukanezumi/sombok/archive/%{oldname}-%{version}.tar.gz
 
-# libthai is available only in Fedora and EL6
-%if 0%{?rhel} > 5 || 0%{?fedora}
 BuildRequires:  libthai-devel
-%endif
-
-BuildRequires:  autoconf-common
-BuildRequires:  automake-common
-BuildRequires:  libtool-common
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
 Source44: import.info
 Provides: sombok = %{version}-%{release}
 
@@ -37,10 +31,10 @@ Annex #29 (UAX #29).
 
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{oldname}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
-Requires:       pkg-config
+Requires:       pkgconfig
 Provides: sombok-devel = %{version}-%{release}
 
 %description    devel
@@ -65,8 +59,12 @@ make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
+
+
+
 %files
-%doc AUTHORS ChangeLog ChangeLog.REL1 COPYING NEWS README README.ja_JP
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog ChangeLog.REL1 NEWS README README.ja_JP
 %{_libdir}/libsombok.so.*
 
 
@@ -77,6 +75,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_8
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_5
 - update to new release by fcimport
 
