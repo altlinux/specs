@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libGL-devel libGLU-devel libX11-devel
+BuildRequires: libGL-devel libGLU-devel libX11-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           opencsg
 Version:        1.4.2
-Release:        alt1_5
+Release:        alt1_8
 Summary:        Library for Constructive Solid Geometry using OpenGL
 Group:          System/Libraries
 # license.txt contains a linking exception for CGAL
@@ -13,7 +13,7 @@ License:        GPLv2 with exceptions
 URL:            http://www.opencsg.org/
 Source0:        http://www.opencsg.org/OpenCSG-%{version}.tar.gz
 Patch0:         %{name}-build.patch
-BuildRequires:  libqt4-declarative libqt4-devel qt4-designer, libfreeglut-devel, libGLEW-devel, dos2unix
+BuildRequires:  gcc-c++ libqt4-declarative libqt4-devel qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools, libfreeglut-devel, libGLEW-devel, dos2unix
 Source44: import.info
 
 %description
@@ -84,6 +84,9 @@ cp -p include/opencsg.h %{buildroot}/%{_includedir}/
 %{_libdir}/*so
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_8
+- update to new release by fcimport
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_5
 - new version
 
