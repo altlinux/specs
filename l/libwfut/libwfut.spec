@@ -1,19 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
-BuildRequires: gcc-c++
+BuildRequires: python-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 25
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
-%{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
-%endif
-
 Name:           libwfut
 Version:        0.2.3
-Release:        alt1_13
+Release:        alt1_17
 Summary:        Software updater tool for WorldForge applications
 
 Group:          Development/Other
@@ -25,7 +18,8 @@ Source0:        http://downloads.sourceforge.net/worldforge/%{name}-%{version}.t
 # Backport patch from upstream
 Patch0:         libwfut-0.2.3-Remove-reference-to-object_slot-h.patch
 
-BuildRequires:  libsigc++2-devel libcurl-devel zlib-devel tinyxml-devel python-devel swig
+BuildRequires:  gcc-c++
+BuildRequires:  libsigc++2-devel libcurl-devel zlib-devel tinyxml-devel swig
 Source44: import.info
 
 %description
@@ -36,34 +30,16 @@ for use directly by WorldForge clients.
 %package devel
 Summary: Development files for libwfut library
 Group:   Development/Other
-Requires: pkg-config %{name} = %{version}-%{release}
+Requires: pkgconfig %{name} = %{version}-%{release}
 
 
 %description devel
 Development libraries and headers for linking against the libwfut library.
 
 
-%package -n python-module-libwfut
-%{?python_provide:%python_provide python2-libwfut}
-# Remove before F30
-Provides: %{name}-python = %{version}-%{release}
-Provides: %{name}-python = %{version}-%{release}
-Obsoletes: %{name}-python < %{version}-%{release}
-Summary: Python interface for libwfut library
-Group:   Development/Other
-
-
-%description -n python-module-libwfut
-Python interface for libwfut library.
-
-
 %prep
 %setup -q
 %patch0 -p1
-
-echo "python_sitelib == %{python_sitelibdir_noarch}"
-echo "python_sitearch == %{python_sitelibdir}"
-
 
 %build
 %configure --disable-static
@@ -79,9 +55,6 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 #rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
-
-#rm -f $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/%{name}/*.a
-rm -f $RPM_BUILD_ROOT%{python_sitelibdir}/%{name}/*.la
 
 # remove wfut binary from package - will return it back when java wfut package will be obsoleted
 rm -f $RPM_BUILD_ROOT%{_bindir}/wfut
@@ -103,11 +76,11 @@ make check
 %{_libdir}/libwfut-0.2.so
 %{_libdir}/pkgconfig/*.pc
 
-%files -n python-module-libwfut
-%{python_sitelibdir}/%{name}
-
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt1_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt1_13
 - update to new release by fcimport
 
