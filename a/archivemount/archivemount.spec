@@ -1,17 +1,18 @@
+Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          archivemount
 Version:       0.8.12
-Release:       alt1_1
+Release:       alt1_3
 Summary:       FUSE based filesystem for mounting compressed archives
 
-Group:         System/Libraries
 License:       LGPLv2+
 URL:           http://www.cybernoia.de/software/archivemount/
 Source0:       http://www.cybernoia.de/software/archivemount/%{name}-%{version}.tar.gz
 Patch0:        fix-debuginfo.patch
 
 Requires:      fuse
+BuildRequires:  gcc
 BuildRequires: libfuse-devel
 BuildRequires: libarchive-devel
 Source44: import.info
@@ -23,7 +24,7 @@ and use it like an ordinary filesystem.
 
 %prep
 %setup -q
-%patch0 -p1 -b .fix-debuginfo
+%patch0 -p1
 
 %build
 %configure
@@ -31,14 +32,18 @@ and use it like an ordinary filesystem.
 
 %install
 rm -f archivemount.1
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
 %files
-%doc CHANGELOG COPYING README
+%doc CHANGELOG README
+%doc --no-dereference COPYING
 %{_mandir}/*/*
 %{_bindir}/archivemount
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.12-alt1_3
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.12-alt1_1
 - update to new release by fcimport
 
