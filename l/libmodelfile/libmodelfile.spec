@@ -8,7 +8,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libmodelfile
 Version:        0.1.92
-Release:        alt3_19
+Release:        alt3_22
 Summary:        Library for accessing various model file formats
 
 Group:          Development/Other
@@ -16,6 +16,7 @@ License:        zlib
 URL:            http://www.worldforge.org
 Source0:        http://downloads.sourceforge.net/worldforge/%{name}-%{version}.tar.gz
 
+BuildRequires:  gcc-c++
 BuildRequires:  libSDL_image-devel libGL-devel libGLU-devel
 Source44: import.info
 
@@ -27,7 +28,7 @@ models of various file formats. So far the range of model formats is limited.
 %package        devel
 Summary:        Development files for libmodelfile
 Group:          Development/Other
-Requires:       pkg-config %{name} = %{version}-%{release}
+Requires:       pkgconfig %{name} = %{version}-%{release}
 
 %description    devel
 This package contains libraries and header files for developing applications
@@ -47,7 +48,7 @@ that use libmodelfile.
 make install DESTDIR=$RPM_BUILD_ROOT
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 # kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
 done
 
@@ -66,6 +67,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.92-alt3_22
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.92-alt3_19
 - update to new release by fcimport
 
