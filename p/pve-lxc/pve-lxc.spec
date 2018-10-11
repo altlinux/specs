@@ -2,7 +2,7 @@
 
 Name: pve-%rname
 Version: 3.0.2
-Release: alt2
+Release: alt3
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
 License: LGPL
@@ -21,7 +21,7 @@ Patch2: 0002-PVE-Down-run-lxcnetaddbr-when-instantiating-veths.patch
 Patch3: 0003-PVE-Config-deny-rw-mounting-of-sys-and-proc.patch
 Patch4: 0004-PVE-Up-separate-the-limiting-from-the-namespaced-cgr.patch
 Patch5: 0005-PVE-Up-start-initutils-make-cgroupns-separation-leve.patch
-Patch6: 0006-PVE-Config-rename-cgroup-namespace-directory-to-ns.patch
+Patch6: 0006-PVE-Config-namespace-separation.patch
 Patch7: 0007-PVE-Up-possibility-to-run-lxc-monitord-as-a-regular-.patch
 Patch8: 0008-PVE-Deprecated-Make-lxc-.service-forking.patch
 Patch9: 0001-confile-add-lxc.monitor.signal.pdeath.patch
@@ -108,6 +108,9 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Thu Oct 11 2018 Valery Inozemtsev <shrek@altlinux.ru> 3.0.2-alt3
+- 3.0.2+pve1-3
+
 * Fri Sep 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 3.0.2-alt2
 - fixed ns path
 
