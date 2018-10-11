@@ -24,7 +24,7 @@
 
 Name: libuniset2
 Version: 2.7
-Release: alt15
+Release: alt16
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -544,6 +544,12 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Thu Oct 11 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt16
+- (codegen): reformat
+- (Modbus): modify genRegID(), update test, used 'using' instead 'typedef'
+- (UNet): set default prefix for log setup (default: "--unet-log")
+- (UNet): increased the maximum allowed number of analog values for node (2000)
+
 * Tue Sep 04 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt15
 - (mtr): fix bug for read from 'serial device'
 - (UNet): added "undefined_value" property
