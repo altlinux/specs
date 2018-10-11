@@ -1,12 +1,13 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libQGLViewer
-Version:        2.6.3
-Release:        alt1_5
+Version:        2.6.4
+Release:        alt1_1
 Summary:        Qt based OpenGL generic 3D viewer library
 
 Group:          System/Libraries
@@ -17,20 +18,12 @@ Source0:        http://www.libqglviewer.com/src/%{name}-%{version}.tar.gz
 # QGLViewer/VRender/gpc.cpp uses exit(0) to "abort" from a failure of malloc
 # Use abort() instead.
 Patch0:         libQGLViewer-2.6.3-exit.patch
-
 # libQGLViewer .pro files explicitely remove "-g" from compile flags. Make
 # them back.
 Patch1:         libQGLViewer-2.6.3-dbg.patch
+Patch2:         libQGLViewer-2.6.4-qreal.patch
 
-# libQGLViewer-2.6.3 does not compile on armv7:
-#    vec.h: In member function 'qglviewer::Vec::operator const double*() const':
-#    vec.h:175:10: error: cannot convert 'const qreal* {aka const float*}' to 'const double*' in return
-#       return v_;
-#              ^~
-Patch2:        libQGLViewer-2.6.3-qreal.patch
-
-
-BuildRequires:  libqt4-declarative libqt4-devel qt4-designer qt5-base-devel
+BuildRequires:  libqt4-declarative libqt4-devel qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools qt5-base-devel
 Source44: import.info
 Patch33: libQGLViewer-alt-glu.patch
 
@@ -61,7 +54,7 @@ complex applications, being fully customizable and easy to extend.
 Summary:        Development files for %{name}
 Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
-Requires:       libqt4-declarative qt4-designer
+Requires:       libqt4-declarative qt4-designer qt4-doc-html qt5-designer qt5-tools
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -89,7 +82,7 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .exit
 %patch1 -p1 -b .dbg
-%patch2 -p1 -b .qreal
+%patch2 -p0 -b .qreal
 
 # Fix permissions
 chmod a-x examples/*/*.vcproj
@@ -97,7 +90,6 @@ chmod a-x examples/*/*.vcproj
 %patch33 -p1
 rm -rf ../%{name}-%{version}-qt5
 cp -a ../%{name}-%{version} ../%{name}-%{version}-qt5
-sed -i -e 's/TARGET = QGLViewer/TARGET = QGLViewer-qt5/' ../%{name}-%{version}-qt5/QGLViewer/QGLViewer.pro
 
 %build
 
@@ -116,7 +108,7 @@ sed -i -e 's/TARGET = QGLViewer/TARGET = QGLViewer-qt5/' ../%{name}-%{version}-q
 }
 %{!?_qt5_qmake: %define _qt5_qmake /usr/bin/qmake-qt5}
 %{!?qmake_qt5: %define qmake_qt5 \
-  %{_qt5_qmake} \\\
+  qmake-qt5 \\\
   QMAKE_CFLAGS_DEBUG="${CFLAGS:-%optflags}" \\\
   QMAKE_CFLAGS_RELEASE="${CFLAGS:-%optflags}" \\\
   QMAKE_CXXFLAGS_DEBUG="${CXXFLAGS:-%optflags}" \\\
@@ -131,7 +123,7 @@ cd QGLViewer
           LIB_DIR=%{_libdir} \
           DOC_DIR=%{_docdir}/%{name} \
           INCLUDE_DIR=%{_includedir} \
-          TARGET_x=%{name}.so.%{version}
+          TARGET_x=%{name}-qt4.so.%{version}
 # The TARGET_x variable gives the SONAME. However, qmake behavior is not
 # correct when the SONAME is customized: it create wrong symbolic links
 # that must be cleaned after the installation.
@@ -143,7 +135,7 @@ cd ../designerPlugin
 %make_build
 
 cd ../../%{name}-%{version}-qt5/QGLViewer
-%{qmake_qt5} \
+qmake-qt5 \
     LIB_DIR=%{_libdir} \
     DOC_DIR=%{_docdir}/%{name} \
     INCLUDE_DIR=%{_includedir} \
@@ -158,11 +150,11 @@ cd ../../%{name}-%{version}-qt5/QGLViewer
 cd QGLViewer
 make -f Makefile -e INSTALL_ROOT=$RPM_BUILD_ROOT install_target install_include STRIP=/usr/bin/true
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
-rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer.prl
+rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer-qt4.prl
 
 # Clean symbolic links
-rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer.so.?.? \
-   $RPM_BUILD_ROOT%{_libdir}/libQGLViewer.so.%{version}\\*
+rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer-qt4.so.?.? \
+   $RPM_BUILD_ROOT%{_libdir}/libQGLViewer-qt4.so.%{version}\\*
 
 cd ../designerPlugin
 make -e INSTALL_ROOT=$RPM_BUILD_ROOT install STRIP=/usr/bin/true
@@ -175,13 +167,14 @@ rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer-qt5.prl
 rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer-qt5.so.?.?
 rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer-qt5.so.%{version}\\* || true
 
+
 %files
 %doc README LICENCE CHANGELOG GPL_EXCEPTION
-%{_libdir}/libQGLViewer.so.%{version}
+%{_libdir}/libQGLViewer-qt4.so.%{version}
 
 %files devel
 %{_includedir}/QGLViewer/
-%{_libdir}/libQGLViewer.so
+%{_libdir}/libQGLViewer-qt4.so
 %{_libdir}/qt4/plugins/designer/libqglviewerplugin.so
 
 %files qt5
@@ -197,6 +190,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer-qt5.so.%{version}\\* || true
 %doc examples
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.6.4-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_5
 - update to new release by fcimport
 
