@@ -1,7 +1,3 @@
-%define if_branch_le() %if "%(rpmvercmp '%ubt_id' '%1')" <= "0"
-%define if_branch_eq() %if "%(rpmvercmp '%ubt_id' '%1')" == "0"
-%define if_branch_ge() %if "%(rpmvercmp '%ubt_id' '%1')" >= "0"
-
 %set_verify_elf_method unresolved=relaxed
 %add_findprov_skiplist /%_lib/*
 %add_debuginfo_skiplist /%_lib
@@ -54,8 +50,8 @@
 %endif
 
 Name: samba
-Version: 4.8.5
-Release: alt1%ubt
+Version: 4.8.6
+Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -100,8 +96,6 @@ Requires: %name-common-tools = %version-%release
 %if_with libwbclient
 Requires: libwbclient = %version-%release
 %endif
-
-BuildRequires(pre):rpm-build-ubt
 
 BuildRequires: libe2fs-devel
 BuildRequires: libxfs-devel
@@ -163,11 +157,7 @@ BuildRequires: python3-module-pyldb-devel
 
 #{?_with_clustering_support:BuildRequires: ctdb-devel}
 %{?_with_testsuite:BuildRequires: ldb-tools}
-%if_branch_le M70P
-%{?_with_systemd:BuildRequires: systemd-devel}
-%else
 %{?_with_systemd:BuildRequires: libsystemd-devel}
-%endif
 %{?_enable_avahi:BuildRequires: libavahi-devel}
 %{?_enable_glusterfs:BuildRequires: glusterfs3-devel >= 3.4.0.16}
 %{?_with_libcephfs:BuildRequires: ceph-devel}
@@ -600,11 +590,6 @@ Samba suite.
 %define _tdb_lib ,!tdb,!pytdb
 %endif
 
-%define _ntdb_lib ,ntdb,pyntdb
-%if_without ntdb
-%define _ntdb_lib ,!ntdb,!pyntdb
-%endif
-
 %define _ldb_lib ,ldb,pyldb,pyldb-util
 %if_without ldb
 %define _ldb_lib ,!ldb,!pyldb,!pyldb-util
@@ -1007,19 +992,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_man8dir/cifsdd.8*
 %endif #doc
 
-%if_with ntdb
-%_bindir/ntdbbackup
-%_bindir/ntdbdump
-%_bindir/ntdbrestore
-%_bindir/ntdbtool
-%if_with doc
-%_man3dir/ntdb.3*
-%_man8dir/ntdbbackup.8*
-%_man8dir/ntdbdump.8*
-%_man8dir/ntdbrestore.8*
-%_man8dir/ntdbtool.8*
-%endif #doc
-%endif #ntdb
 %if_with tdb
 %_bindir/tdbbackup
 %_bindir/tdbdump
@@ -1587,6 +1559,11 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Thu Oct 11 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.8.6-alt1
+- Update to latest autumn release
+- Disable ubt macros due binary package identity changes
+- Remove depcrecated libntdb options from spec
+
 * Fri Aug 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.8.5-alt1%ubt
 - Update to latest summer release
 
