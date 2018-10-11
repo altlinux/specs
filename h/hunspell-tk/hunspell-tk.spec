@@ -8,7 +8,7 @@ Name: hunspell-tk
 Summary: Turkmen hunspell dictionaries
 Version: 0.02
 #Epoch: 1
-Release: alt1_12
+Release: alt1_13
 # Following link is dead now
 # Do not report bugs to fix it
 Source: http://releases.mozilla.org/pub/mozilla.org/addons/204314/turkmen_spell_checker-%{version}-tb+fx+sm.xpi
@@ -39,6 +39,9 @@ cp -p dictionaries/tk-TM.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/tk.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_13
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_12
 - update to new release by fcimport
 
