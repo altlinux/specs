@@ -7,7 +7,7 @@
 %define ver 8.1
 Name: %oname%ver
 Version: %ver.1
-Release: alt2
+Release: alt3
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 # https://gitlab.kitware.com/vtk/vtk-m.git
 Source1: vtkm-%version.tar
 
+Patch0: %oname-%version-alt-armh.patch
 Patch1: %oname-%version-alt-build.patch
 
 Requires: lib%name = %EVR
@@ -301,6 +302,9 @@ You need set environment variable VTK_DATA_ROOT=/usr/share/vtk-%ver.
 
 %prep
 %setup
+%ifarch armh
+%patch0 -p1
+%endif
 %patch1 -p1
 
 cp -rv %_datadir/vtk-%ver/.ExternalData/* ./.ExternalData/
@@ -523,6 +527,9 @@ cp -alL ExternalData/* %buildroot%_datadir/%oname-%ver
 %files tests -f testing.list
 
 %changelog
+* Thu Oct 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.1.1-alt3
+- fixed build on armh
+
 * Wed Oct 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 8.1.1-alt2
 - Updated build dependencies.
 
