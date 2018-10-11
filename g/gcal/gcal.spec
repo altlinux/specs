@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/less /usr/bin/perl /usr/sbin/zdump texinfo
 
 Name:		gcal
 Version:	4.1
-Release:	alt1_1
+Release:	alt1_4
 Summary:	GNU Gregorian calendar program
 
 Group:		Text tools
@@ -21,6 +21,8 @@ Source0:	ftp://ftp.gnu.org/gnu/gcal/%{name}-%{version}.tar.xz
 # $ git archive --format=tar v${gcalmantag} -- doc/en/man | \
 #     xz > gcal-man-v${gcalmantag}.tar.xz
 Source1:	gcal-man-v%{gcalmantag}.tar.xz
+Patch:		gcal-glibc-no-libio.patch
+BuildRequires:  gcc
 BuildRequires:	gettext gettext-tools libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:  libunistring-devel
 Requires(post): info info-install
@@ -38,6 +40,7 @@ It also displays holiday lists for many countries around the globe.
 
 %prep
 %setup -q
+%patch -p1
 tar xf %{SOURCE1}
 
 
@@ -73,6 +76,9 @@ rm -f %{buildroot}%{_infodir}/dir
 %{_mandir}/man1/*.1*
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_4
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_1
 - update to new release by fcimport
 
