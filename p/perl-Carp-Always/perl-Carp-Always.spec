@@ -7,12 +7,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Carp-Always
 Version:        0.16
-Release:        alt1
+Release:        alt1_1
 Summary:        Warn and die in Perl noisily with stack backtraces
 License:        GPL+ or Artistic
 
 URL:            https://metacpan.org/release/Carp-Always
-Source0:        http://www.cpan.org/authors/id/F/FE/FERREIRA/Carp-Always-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/Carp-Always-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -62,6 +62,9 @@ make test
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_1
+- update to new release by fcimport
+
 * Tue Aug 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 
