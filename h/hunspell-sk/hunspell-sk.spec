@@ -9,7 +9,7 @@ Summary: Slovak hunspell dictionaries
 #Epoch: 1
 %global upstreamid 20110228
 Version: 0.%{upstreamid}
-Release: alt2_12
+Release: alt2_13
 Source: http://www.sk-spell.sk.cx/files/hunspell-sk-%{upstreamid}.zip
 URL: http://www.sk-spell.sk.cx/
 License: LGPLv2 or GPLv2 or MPLv1.1
@@ -36,6 +36,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.20110228-alt2_13
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.20110228-alt2_12
 - update to new release by fcimport
 
