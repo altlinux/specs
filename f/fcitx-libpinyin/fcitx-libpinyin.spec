@@ -6,13 +6,14 @@ BuildRequires: gcc-c++ qt5-base-devel
 %define _localstatedir %{_var}
 Name:		fcitx-libpinyin
 Version:	0.5.3
-Release:	alt1_3
+Release:	alt1_5
 Summary:	Libpinyin Wrapper for Fcitx
 Group:		System/Libraries
 License:	GPLv2+
 URL:		https://fcitx-im.org/wiki/Libpinyin
 Source0:	http://download.fcitx-im.org/fcitx-libpinyin/%{name}-%{version}_dict.tar.xz
 
+BuildRequires:	gcc
 BuildRequires:	libpinyin-devel >= 1.9.91
 BuildRequires:	ctest cmake, fcitx-devel gettext gettext-tools, intltool, libpinyin-devel
 BuildRequires:	libpinyin-tools glib2-devel libgio libgio-devel, fcitx
@@ -59,6 +60,9 @@ popd
 %{_datadir}/icons/hicolor/48x48/status/fcitx-*.png
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_5
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_3
 - update to new release by fcimport
 
