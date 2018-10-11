@@ -49,13 +49,13 @@
 %{?_enable_smp_io_thread:%set_disable port_tasks}
 
 %define Name Erlang
-%define ver 20
+%define ver 21
 Name: erlang
 Epoch: 1
-%define subver 1.3
+%define subver 0.9
 Version: %ver.%subver
 %define plevel b
-Release: alt4%ubt
+Release: alt1
 Summary: A programming language developed by Ericsson
 License: %asl
 Group: Development/Erlang
@@ -92,6 +92,7 @@ Provides: erlang_mod(hipe_rtl_ssa_avail_expr)
 Provides: erlang_mod(hipe_rtl_ssa_const_prop)
 Provides: erlang_mod(hipe_rtl_ssapre)
 Provides: erlang_mod(hipe_rtl_symbolic)
+Provides: erlang_mod(hipe_rtl_verify_gcsafe)
 Provides: erlang_mod(hipe_sparc_main)
 Provides: erlang_mod(hipe_tagscheme)
 Provides: erlang_mod(hipe_x86_main)
@@ -244,7 +245,7 @@ ODBC support for %Name programming language.
 Summary: A portable framework for automatic testing %Name applications - common files
 Group: Development/Erlang
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %epoch:%version-%release
 
 %description common_test-common
 A portable framework for automatic testing %Name applications.
@@ -622,8 +623,8 @@ sed -i '/^include .*\/make\/otp_subdir.mk/iMAKEFLAGS += -j1' \
 sed -i  '/^include .*\/make\/run_make.mk/iMAKEFLAGS += -j1' \
 	lib/{tools,asn1}/c_src/Makefile
 sed -i '/^include .*\/make\/otp_release_targets.mk/iMAKEFLAGS += -j1' \
-	lib/{ssh,common_test,eunit,odbc,cos*}/src/Makefile \
-	lib/{{os_mon,snmp}/mibs,public_key/asn1,ic/examples/pre_post_condition,orber/examples/Stack,orber/COSS/CosNaming,megaco/src/binary}/Makefile*
+	lib/{ssh,common_test,eunit,odbc}/src/Makefile \
+	lib/{{os_mon,snmp}/mibs,public_key/asn1,megaco/src/binary}/Makefile*
 sed -i '/^bootstrap_setup_target:/s|:| $(BOOTSTRAP_ROOT)/bootstrap/target:|' Makefile.in
 subst "s/^.*ERL_COMPILE_FLAGS.*\+debug_info/#\0/g" make/otp.mk.in
 sed -i 's,armv7hl,armh,' erts/configure.in
@@ -743,8 +744,6 @@ done
 rm -f %buildroot%_otplibdir/erl_interface-*/src/{INSTALL,Makefile*,*.mk,*/*.c}
 rm -rf %buildroot%_otpdir/{lib/*/{{c,java}_src,*.mk,priv/obj},erts-*/src}
 rm -f %buildroot%_otplibdir/*/*/*.{asn1,erl}
-rm -f %buildroot%_otplibdir/orber-*/COSS/CosNaming/*.{erl,idl}
-rm -rf %buildroot%_otplibdir/orber-*/priv/{src,include}
 rm -f %buildroot%_otplibdir/*/priv/bin/*.bat
 rm -f %buildroot%_otplibdir/*/priv/*.in
 rm -f %buildroot%_otplibdir/*/info
@@ -889,7 +888,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %files otp-common
 %dir %_otplibdir/asn1-*
 %dir %_otplibdir/compiler-*
-%dir %_otplibdir/cos*-*
 %dir %_otplibdir/crypto-*
 %dir %_otplibdir/diameter-*
 %dir %_otplibdir/dialyzer-*
@@ -900,14 +898,11 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/erl_docgen-*/priv
 %dir %_otplibdir/eunit-*
 %dir %_otplibdir/hipe-*
-%dir %_otplibdir/ic-*
-%_otplibdir/ic-*/priv
 %dir %_otplibdir/inets-*
+
 %_otplibdir/inets-*/priv
 %dir %_otplibdir/kernel-*
 %dir %_otplibdir/mnesia-*
-%dir %_otplibdir/orber-*
-%_otplibdir/orber-*/priv
 %dir %_otplibdir/os_mon-*
 %dir %_otplibdir/os_mon-*/priv
 %_otplibdir/os_mon-*/mibs
@@ -938,8 +933,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/asn1-*/src
 %_otplibdir/compiler-*/include
 %_otplibdir/compiler-*/src
-%_otplibdir/cos*-*/include
-%_otplibdir/cos*-*/src
 %_otplibdir/diameter-*/include
 %_otplibdir/diameter-*/src
 %_otplibdir/edoc-*/include
@@ -955,17 +948,13 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/hipe-*/rtl
 %_otplibdir/hipe-*/llvm
 %endif
-%_otplibdir/ic-*/include
-%_otplibdir/ic-*/src
 %_otplibdir/inets-*/include
-%_otplibdir/inets-*/src
+%_otplibdir/tftp-*/include
+%_otplibdir/tftp-*/src
 %_otplibdir/kernel-*/include
 %_otplibdir/kernel-*/src
 %_otplibdir/mnesia-*/include
 %_otplibdir/mnesia-*/src
-%_otplibdir/orber-*/include
-%_otplibdir/orber-*/src
-%_otplibdir/orber-*/COSS
 %_otplibdir/os_mon-*/include
 %_otplibdir/os_mon-*/src
 %_otplibdir/otp_mibs-*/include
@@ -994,7 +983,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %files otp
 %_otplibdir/asn1-*/ebin
 %_otplibdir/compiler-*/ebin
-%_otplibdir/cos*-*/ebin
 %_otplibdir/crypto-*/ebin
 %_otplibdir/diameter-*/ebin
 %_otplibdir/edoc-*/ebin
@@ -1004,12 +992,12 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/eldap-*/ebin
 %_otplibdir/hipe-*/ebin
 ##%{?_enable_hipe:%exclude %_otplibdir/hipe-*/ebin/hipe_tool*}
-%_otplibdir/ic-*/ebin
 %_otplibdir/inets-*/ebin
+%_otplibdir/tftp-*/ebin
+%_otplibdir/ftp-*/ebin
 %_otplibdir/kernel-*/ebin
 %_otplibdir/mnesia-*/ebin
 %_otplibdir/observer-*/ebin/ttb.*
-%_otplibdir/orber-*/ebin
 %_otplibdir/os_mon-*/ebin
 %_otplibdir/otp_mibs-*/ebin
 %_otplibdir/parsetools-*/ebin
@@ -1261,11 +1249,17 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Thu Oct 11 2018 Denis Medvedev <nbr@altlinux.org> 1:21.0.9-alt1
+- new version
+
 * Sat Sep 22 2018 Anton Midyukov <antohami@altlinux.org> 1:20.1.3-alt4%ubt
 - Rebuilt with libwxGTK3.0
 
 * Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 1:20.1.3-alt3%ubt.1
 - NMU: rebuild with new openssl.
+
+* Mon Aug 13 2018 Denis Medvedev <nbr@altlinux.org>  1:20.1.3-alt4%ubt
+- rebuilding with wxGTK rebuild task.
 
 * Fri Jun 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:20.1.3-alt3%ubt
 - Rebuilt with %%ubt macro support, disabled parallel docs build.
