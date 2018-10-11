@@ -1,20 +1,30 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/python /usr/bin/time
+BuildRequires: /usr/bin/time
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
-%define fedora 27
+%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		coan
 Version:	6.0.1
-Release:	alt1_15
+Release:	alt1_17
 Summary:	A command line tool for simplifying the pre-processor conditionals in source code
 Group:		Development/Other
 License:	BSD
 URL:		http://coan2.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/coan2/%{name}-%{version}.tar.gz
+
+# https://sourceforge.net/p/coan2/bugs/92/
+Patch0:         expression_parser.patch
+
 BuildRequires:  gcc-c++
 BuildRequires:	python
+# Python 2 is needed for running the test suite. From Fedora 29, the
+# python package no longer provides /usr/bin/python, and so we need
+# this extra package for the unversioned binary.
+%if 0%{fedora} >= 29
+BuildRequires:  python-base
+%endif
 # For pod2man:
 BuildRequires:  perl-podlators
 # On Fedora 23 pod2html is included in the perl package, whereas in 24
@@ -49,6 +59,7 @@ redundant #if-logic from the code.
 
 %prep
 %setup -q
+%patch0 -p0
 
 for i in AUTHORS LICENSE.BSD README ChangeLog ; do
     sed -i -e 's/\r$//' $i
@@ -59,12 +70,15 @@ done
 %make_build
 
 %check
-#some tests are broken in armv7hl - disable until upstream fixes the issue
-#upstream bug report: https://sourceforge.net/p/coan2/bugs/83/
-#so for now we'll just allow the tests to fail
-#make check || (for f in test_coan/*.log ; do cat ${f} ; done ; false)
+# some tests are broken in armv7hl and ppc64le - disable until upstream
+# fixes the issue upstream bug report:
+#     https://sourceforge.net/p/coan2/bugs/83/
+# so for now we'll just allow the tests to fail
+%ifnarch %{arm} ppc64le
+make check || (for f in test_coan/*.log ; do cat ${f} ; done ; false)
+%else
 make check || (for f in test_coan/*.log ; do cat ${f} ; done ; true)
-
+%endif
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
@@ -72,9 +86,12 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 %files
 %doc AUTHORS LICENSE.BSD README ChangeLog
 %{_bindir}/%{name}
-%{_mandir}/man1/%{name}.1.*
+%{_mandir}/man1/%{name}.1*
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_17
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_15
 - update to new release by fcimport
 
