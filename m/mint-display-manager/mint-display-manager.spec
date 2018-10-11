@@ -14,7 +14,7 @@
 
 Name: mint-display-manager
 Version: 1.0.8
-Release: alt1.2
+Release: alt2
 
 Summary: The Mint Display Manager
 License: %gpl2plus
@@ -34,7 +34,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: desktop-file-utils intltool gnome-common gnome-doc-utils libglade-devel libxml2-devel
 
 # Automatically added by buildreq on Wed Dec 03 2008
-BuildRequires: docbook-dtds gcc-c++ gnome-doc-utils-xslt imake intltool libSM-devel libXau-devel libXdmcp-devel libXext-devel libXi-devel libXinerama-devel libdbus-glib-devel libdmx-devel libgnomecanvas-devel libpam-devel libpopt-devel librsvg-devel libwrap-devel xorg-cf-files xsltproc zenity xorg-server
+BuildRequires: docbook-dtds gcc-c++ gnome-doc-utils-xslt imake intltool libSM-devel libXau-devel libXdmcp-devel libXext-devel libXi-devel libXinerama-devel libdbus-glib-devel libdmx-devel libgnomecanvas-devel libpam-devel libpopt-devel librsvg-devel xorg-cf-files xsltproc zenity xorg-server
 
 Requires: coreutils consolehelper zenity xinitrc
 
@@ -153,6 +153,9 @@ useradd -r -N -c 'MDM' -g %base_name -d /var/lib/mdm -s /dev/null %base_name >/d
 %exclude %_datadir/xsessions/gnome.desktop
 
 %changelog
+* Thu Oct 11 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.8-alt2
+- Rebuild without libwrap.
+
 * Mon Apr 14 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.8-alt1.2
 - start X on vt1
 
