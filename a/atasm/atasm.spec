@@ -1,19 +1,18 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           atasm
-Version:        1.07d
-Release:        alt2_14
+Version:        1.08
+Release:        alt1_1
 Summary:        6502 cross-assembler
 
 Group:          Development/Tools
 License:        GPLv2+
 URL:            http://atari.miribilist.com/atasm/
-Source0:        http://atari.miribilist.com/atasm/%{name}107d.zip
-#Source0:        http://downloads.sourceforge.net/%{name}/%{name}106.zip
+# fedora-getsvn atasm https://svn.code.sf.net/p/atasm/code/trunk 100
+# svn rev 100 == version 1.08
+Source0:        atasm-svn100.tar.bz2
 
+BuildRequires:  gcc
 BuildRequires:  zlib-devel
 Source44: import.info
 
@@ -26,7 +25,7 @@ with lightning speed.
 
 
 %prep
-%setup -q -n %{name}107
+%setup -q -n %{name}
 
 
 %build
@@ -53,12 +52,15 @@ popd
 
 
 %files
-%doc LICENSE VERSION.TXT docs/atasm.blurb docs/atasm.pdf examples
+%doc LICENSE VERSION.TXT atasm.blurb atasm.txt
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.1*
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.07d-alt2_14
 - update to new release by fcimport
 
