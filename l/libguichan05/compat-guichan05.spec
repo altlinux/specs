@@ -1,23 +1,20 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
+Group: Development/Other
 %add_optflags %optflags_shared
 %define oldname compat-guichan05
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libguichan05
 Version:        0.5.0
-Release:        alt1_23
+Release:        alt1_26
 Summary:        Compatibility libraries for older guichan versions
 
-Group:          Development/Other
 License:        BSD
 URL:            http://guichan.sourceforge.net
 Source0:        http://downloads.sourceforge.net/guichan/guichan-%{version}-src.tar.gz
 Obsoletes:      guichan < 0.6.0
 
 BuildRequires:  liballegro-devel, libSDL-devel, libSDL_image-devel, libGL-devel
-BuildRequires:  libfreeglut-devel
+BuildRequires:  libfreeglut-devel, gcc-c++
 Source44: import.info
 Provides: guichan05 = %{version}-%{release}
 Patch33: guichan-0.5.0-alt-underlinkage.patch
@@ -31,8 +28,8 @@ displaying graphics and grabbing user input.
 This package contains compatibility libraries for guichan 0.5
 
 %package devel
+Group: Development/Other
 Summary:        Header and libraries for guichan development
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 Provides: guichan05-devel = %{version}-%{release}
 
@@ -71,7 +68,8 @@ done
 
 
 %files
-%doc AUTHORS ChangeLog COPYING NEWS README TODO
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog NEWS README TODO
 %{_libdir}/libguichan.so.*
 %{_libdir}/libguichan_allegro.so.*
 %{_libdir}/libguichan_glut.so.*
@@ -90,6 +88,9 @@ done
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_26
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_23
 - update to new release by fcimport
 
