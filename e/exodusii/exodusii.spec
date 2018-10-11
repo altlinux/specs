@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -5,19 +7,21 @@ Name: exodusii
 Version: 6.09.0
 %define somver 0
 %define sover %somver.%version
-Release: alt1.git20150119.2
+Release: alt2.git20150119
 Summary: A model developed to store and retrieve transient data for finite element analyses
 License: BSD
 Group: Sciences/Mathematics
 Url: http://sourceforge.net/projects/exodusii/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+ExclusiveArch: %ix86 x86_64
+
 # git://exodusii.git.sourceforge.net/gitroot/exodusii/exodusii
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Source1: CMakeCache.txt
 
 BuildPreReq: doxygen graphviz
 BuildPreReq: %mpiimpl-devel cmake libnetcdf-mpi-devel imake
-BuildPreReq: netcdf11-mpi-tools slurm-utils libhdf5-mpi-devel
+BuildPreReq: netcdf11-mpi-tools libhdf5-mpi-devel
 BuildPreReq: libcurl-devel
 
 %description
@@ -42,7 +46,7 @@ This package contains shared libraries of EXODUS II.
 %package -n lib%name-devel
 Summary: Development files of EXODUS II
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 EXODUS II is a model developed to store and retrieve transient data for
@@ -68,7 +72,7 @@ This package contains development documentation for EXODUS II.
 %package -n python-module-exodus
 Summary: Python binding for EXODUS II
 Group: Development/Python
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n python-module-exodus
 EXODUS II is a model developed to store and retrieve transient data for
@@ -155,6 +159,9 @@ mv nemesis/README README.Nemesis
 %python_sitelibdir/*
 
 %changelog
+* Wed Oct 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.09.0-alt2.git20150119
+- NMU: updated build dependencies.
+
 * Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.09.0-alt1.git20150119.2
 - Rebuilt with libnetcdf11.
 
