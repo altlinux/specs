@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           alex4
 Version:        1.0
-Release:        alt2_24
+Release:        alt2_28
 Summary:        Alex the Allegator 4 - Platform game
 Group:          Games/Other
 License:        GPL+
@@ -20,6 +20,7 @@ Patch2:         alex4-dot-files-endian-clean.patch
 Patch3:         alex4-fsf-address.patch
 Patch4:         alex4-ini-comment.patch
 Patch5:         alex4src-warnings.patch
+BuildRequires:  gcc
 BuildRequires:  liballegro-devel dumb-devel desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -47,7 +48,7 @@ sed -i -e 's,$(CC) $(LDFLAGS) -o $@ $^,$(CC) -o $@ $^ $(LDFLAGS),' src/Makefile
 %build
 pushd src
 %make_build PREFIX=%{_prefix} \
-  CFLAGS="$RPM_OPT_FLAGS -Wno-deprecated-declarations -Wno-unused-result"
+  CFLAGS="$RPM_OPT_FLAGS -Wno-deprecated-declarations -Wno-unused-result -DALLEGRO_FIX_ALIASES"
 popd
 
 
@@ -79,6 +80,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_28
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_24
 - update to new release by fcimport
 
