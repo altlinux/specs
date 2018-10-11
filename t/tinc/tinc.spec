@@ -1,6 +1,6 @@
 Name: tinc
-Version: 1.0.34
-Release: alt1.1
+Version: 1.0.35
+Release: alt1
 
 Summary: Virtual Private Network (VPN) daemon that uses tunnelling and encryption to create a secure private network between hosts on the Internet.
 Summary(ru_RU.UTF-8): Небольшой демон для создания шифрованных туннелей и частных виртуальных сетей между хостами в сети Интернет
@@ -21,7 +21,7 @@ PreReq(post,preun): chkconfig
 
 # Automatically added by buildreq on Thu Mar 23 2017
 # optimized out: perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl pkg-config python-base python-modules python3 tex-common texlive-base texlive-common texlive-latex-base
-BuildRequires: liblzo2-devel libpcap-devel libssl-devel libvde-devel perl-unicore zlib-devel
+BuildRequires: liblzo2-devel libpcap-devel libssl-devel perl-unicore zlib-devel
 
 # For PDF docs generation
 BuildRequires: makeinfo texi2dvi texlive-dist
@@ -76,7 +76,6 @@ Runs on many operating systems and supports IPv6
 	--disable-nls \
 	--disable-rpath \
 	--enable-uml \
-	--enable-vde \
 	--enable-tunemu \
 	--enable-jumbograms
 
@@ -123,6 +122,12 @@ install -pD -m755 -- %SOURCE3 %buildroot%_controldir/%name
 %_unitdir/%{name}*.service
 
 %changelog
+* Thu Oct 11 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.0.35-alt1
+- New version
+ * Prevent oracle attacks (CVE-2018-16737, CVE-2018-16738)
+ * Prevent a MITM from forcing a NULL cipher for UDP (CVE-2018-16758)
+- Disabling VDE support
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.34-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
