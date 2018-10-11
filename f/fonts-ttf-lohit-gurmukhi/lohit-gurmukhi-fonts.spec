@@ -10,7 +10,7 @@ Group: System/Fonts/True type
 
 Name:           fonts-ttf-lohit-gurmukhi
 Version:        2.91.2
-Release:        alt1_2
+Release:        alt1_5
 Summary:        Free Gurmukhi truetype font for Punjabi language
 
 License:        OFL
@@ -97,12 +97,16 @@ fi
 %files
 %{_fontconfig_templatedir}/*.conf
 %config(noreplace) %{_fontconfig_confdir}/*.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc ChangeLog COPYRIGHT OFL.txt AUTHORS README test-gurmukhi.txt
 %{_datadir}/metainfo/%{metainfo}.xml
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.91.2-alt1_5
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.91.2-alt1_2
 - update to new release by fcimport
 
