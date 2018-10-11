@@ -1,32 +1,30 @@
-%define major 3.0.2.32703
+%define _unpackaged_files_terminate_build 1
+
+%define major 3.0.4.33054
 %define minor 0
 %define pkgname Firebird
 %define pkgversion %major-%minor
 %define fbroot %_libdir/%name
-%define workdir %_builddir/work/%pkgname-%pkgversion
-# all binary utils exept isql. isql rename to fbsql.
-%define utilsbin gdef gbak gfix gstat qli
-%define serverbin gsec fb_lock_print fbsvcmgr
 
 Name: firebird
 Version: %major.%minor
-Release: alt4
+Release: alt1
 Summary: Firebird SQL Database, fork of InterBase
 Group: Databases
 License: IPL
 Url: https://www.firebirdsql.org/
 
-Source: %pkgname-%pkgversion.tar
+Source: %name-%version.tar
 Source1: %name.init
 
-Patch1: %name-%pkgversion-fedora-obsolete-syslogd.target.patch
-Patch2: %name-%pkgversion-fedora-no-copy-from-icu.patch
-Patch3: %name-%pkgversion-fedora-honour-buildflags.patch
-Patch4: %name-%pkgversion-fedora-cloop-honour-build-flags.patch
-Patch5: %name-%pkgversion-fedora-add-pkgconfig-files.patch
-Patch6: %name-%pkgversion-fedora-Provide-sized-global-delete-operators-when-compiled.patch
-Patch7: %name-%pkgversion-fedora-Make-the-generated-code-compatible-with-gcc-6-in-C-1.patch
-Patch8: %name-%pkgversion-alt-rpath.patch
+Patch1: %name-%version-fedora-obsolete-syslogd.target.patch
+Patch2: %name-%version-fedora-no-copy-from-icu.patch
+Patch3: %name-%version-fedora-honour-buildflags.patch
+Patch4: %name-%version-fedora-cloop-honour-build-flags.patch
+Patch5: %name-%version-fedora-add-pkgconfig-files.patch
+Patch6: %name-%version-fedora-Provide-sized-global-delete-operators-when-compiled.patch
+Patch7: %name-%version-alt-rpath.patch
+Patch8: %name-%version-alt-build-flags.patch
 
 Requires: libfbclient = %EVR
 
@@ -39,6 +37,7 @@ BuildRequires: bison
 BuildRequires: libtool
 BuildRequires: libncurses-devel
 BuildRequires: zlib-devel libtommath-devel
+BuildRequires: libtomcrypt-devel
 
 Obsoletes: %name-superserver
 Conflicts: %name-superserver < %EVR
@@ -120,15 +119,15 @@ Requires: %name-server = %EVR
 Examples for Firebird SQL server.
 
 %prep
-%setup -n %pkgname-%pkgversion
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
-%patch8 -p2
+%patch7 -p2
+%patch8 -p1
 
 # sed vs patch for portability and addtional location changes
 # based on FIREBIRD=%_libdir/firebird
@@ -148,16 +147,17 @@ check_sed "$(sed -i -e 's:--- ISQL:--- ISQL-FB:w /dev/stdout' \
 	src/msgs/messages2.sql | wc -l)" "6" "src/msgs/messages2.sql" # 6 lines
 
 find . -name \*.sh -exec chmod +x {} + || { echo "chmod failed" ; exit -1 ; }
-rm -rf ./extern/{editline,icu} || { echo "rm -rf failed" ; exit -1 ;}
+rm -rf ./extern/{editline,icu,libtomcrypt,libtommath,zlib} || { echo "rm -rf failed" ; exit -1 ;}
 
 %build
 %add_optflags -fno-sized-deallocation -fno-delete-null-pointer-checks -I%_includedir/tommath
+%add_optflags -fno-strict-aliasing
+%add_optflags -Wno-deprecated -Wno-switch
 
 %autoreconf
 %configure \
 	--prefix=%fbroot \
 	--with-system-editline \
-	--with-system-icu \
 	--with-fbbin=%_bindir \
 	--with-fbsbin=%_sbindir \
 	--with-fbconf=%_sysconfdir/%name \
@@ -166,21 +166,20 @@ rm -rf ./extern/{editline,icu} || { echo "rm -rf failed" ; exit -1 ;}
 	--with-fbdoc=%_defaultdocdir/%name \
 	--with-fbudf=%_libdir/%name/udf \
 	--with-fbsample=%_defaultdocdir/%name/sample \
-	--with-fbsample-db=%_var/lib/%name/data/ \
-	--with-fbhelp=%_var/lib/%name/system/ \
+	--with-fbsample-db=%_localstatedir/%name/data/ \
+	--with-fbhelp=%_localstatedir/%name/system/ \
 	--with-fbintl=%_libdir/%name/intl \
 	--with-fbmisc=%_datadir/%name/misc \
-	--with-fbsecure-db=%_var/lib/%name/secdb/ \
-	--with-fbmsg=%_var/lib/%name/system/ \
-	--with-fblog=%_var/log/%name \
-	--with-fbglock=%_var/run/%name \
+	--with-fbsecure-db=%_localstatedir/%name/secdb/ \
+	--with-fbmsg=%_localstatedir/%name/system/ \
+	--with-fblog=%_logdir/%name \
+	--with-fbglock=%_runtimedir/%name \
 	--with-fbplugins=%_libdir/%name/plugins
 
-# Can't use %%make as itsparallel build is broken
-make
+%make
 
 pushd gen
-make -f Makefile.install buildRoot
+%make -f Makefile.install buildRoot
 chmod -R u+w buildroot%{_docdir}/%{name}
 chmod u+rw,a+rx buildroot/usr/include/firebird/firebird/impl
 popd
@@ -195,8 +194,8 @@ mkdir -p %buildroot%_initdir
 mkdir -p %buildroot%fbroot/intl
 mkdir -p %buildroot%_datadir/%name
 mkdir -p %buildroot%_sysconfdir/profile.d
-mkdir -p %buildroot%_var/run/%name
-mkdir -p %buildroot%_var/lib/%name/backup
+mkdir -p %buildroot%_runtimedir/%name
+mkdir -p %buildroot%_localstatedir/%name/backup
 mkdir -p %buildroot%_logdir/%name/
 mkdir -p %buildroot%_unitdir
 mkdir -p %buildroot%_pkgconfigdir
@@ -237,6 +236,16 @@ mv %buildroot%_sysconfdir/%name/{WhatsNew,*.txt} %buildroot%_docdir/%name/
 
 rm -f %buildroot%_sbindir/FirebirdUninstall.sh
 rm -rf %buildroot%_datadir/%name/misc/upgrade
+rm -f %buildroot%_datadir/%name/misc/firebird-classic.socket
+rm -f %buildroot%_datadir/%name/misc/firebird-classic@.service
+rm -f %buildroot%_datadir/%name/misc/firebird-superserver.service
+rm -f %buildroot%_datadir/%name/misc/firebird.init.d.debian
+rm -f %buildroot%_datadir/%name/misc/firebird.init.d.generic
+rm -f %buildroot%_datadir/%name/misc/firebird.init.d.gentoo
+rm -f %buildroot%_datadir/%name/misc/firebird.init.d.mandrake
+rm -f %buildroot%_datadir/%name/misc/firebird.init.d.slackware
+rm -f %buildroot%_datadir/%name/misc/firebird.init.d.suse
+rm -f %buildroot%_datadir/%name/misc/rc.config.firebird
 
 # -----------------------------------------------------------------------------
 # server-common scripts
@@ -301,17 +310,17 @@ fi
 %_libdir/libfbclient.so.*
 
 %files server
-%dir %attr(2775,root,%name) %_var/run/%name
-%dir %attr(2775,root,%name) %_var/lib/%name
-%dir %attr(2775,root,%name) %_var/lib/%name/secdb
-%dir %attr(2775,root,%name) %_var/lib/%name/system
-%dir %attr(2775,root,%name) %_var/lib/%name/backup
+%dir %attr(2775,root,%name) %_runtimedir/%name
+%dir %attr(2775,root,%name) %_localstatedir/%name
+%dir %attr(2775,root,%name) %_localstatedir/%name/secdb
+%dir %attr(2775,root,%name) %_localstatedir/%name/system
+%dir %attr(2775,root,%name) %_localstatedir/%name/backup
 #ghost %_sysconfdir/gds_hosts.equiv
 %dir %fbroot/udf
 %dir %fbroot/intl
-%attr(0660,firebird,firebird) %config(noreplace) %_var/lib/%name/secdb/security3.fdb
-%attr(0664,firebird,firebird) %_var/lib/%name/system/help.fdb
-%attr(0664,firebird,firebird) %_var/lib/%name/system/firebird.msg
+%attr(0660,firebird,firebird) %config(noreplace) %_localstatedir/%name/secdb/security3.fdb
+%attr(0664,firebird,firebird) %_localstatedir/%name/system/help.fdb
+%attr(0664,firebird,firebird) %_localstatedir/%name/system/firebird.msg
 %config(noreplace) %_sysconfdir/%name/fbintl.conf
 %_sysconfdir/%name/libfbintl.so
 %attr(0755,root,root) %_initdir/%name
@@ -340,11 +349,14 @@ fi
 
 %files examples
 %_docdir/%name/sample
-%attr(0660,%name,%name) %_var/lib/%name/data/employee.fdb
+%attr(0660,%name,%name) %_localstatedir/%name/data/employee.fdb
 %dir %_datadir/%name/examples
 %_datadir/%name/examples/*
 
 %changelog
+* Wed Oct 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.4.33054.0-alt1
+- Updated to upstream version 3.0.4.33054-0.
+
 * Fri Jan 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.2.32703.0-alt4
 - Rebuilt with new libtommath.
 
@@ -386,15 +398,15 @@ fi
 - rebuild with icu 4.4
 
 * Sat Jan 23 2010 Boris Savelev <boris@altlinux.org> 2.1.3.18185.0-alt4
-- move %_var/run/%name to %name-server-common (closes: #17689)
-- fix permission on %_sysconfdir/xinet.d/%name
+- move %%_var/run/%%name to %%name-server-common (closes: #17689)
+- fix permission on %%_sysconfdir/xinet.d/%%name
 
 * Sat Jan 16 2010 Boris Savelev <boris@altlinux.org> 2.1.3.18185.0-alt3
-- fix owner on %utilsshell
+- fix owner on %%utilsshell
 
 * Sat Jan 16 2010 Boris Savelev <boris@altlinux.org> 2.1.3.18185.0-alt2
 - fix perm on fbscripts (closes: #22751)
-- move %utilsshell to %_bindir
+- move %%utilsshell to %%_bindir
 
 * Sat Jan 16 2010 Boris Savelev <boris@altlinux.org> 2.1.3.18185.0-alt1
 - new version
