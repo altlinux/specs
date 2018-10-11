@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fsharp
-Version: 4.1.34
-Release: alt1%ubt
+Version: 10.2.1
+Release: alt1
 
 Summary:        F# compiler, core library and core tools
-License:        Apache-2.0
+License:        MIT
 Group:          Development/Other
 Url:            http://fsharp.org
 
@@ -16,13 +16,10 @@ Source1: packages.tar
 
 Patch1: %name-debian-bootstrap.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-mono >= 2.0.0
 BuildRequires: mono-devel-full
 BuildRequires: msbuild
 BuildRequires: /proc
-BuildRequires: autoconf
-BuildRequires: automake
 BuildRequires: /usr/bin/7z
 
 # Interfaces of slightly older versions are required, upstream corrects it by modifying 'Requires'
@@ -59,26 +56,26 @@ done
 popd
 
 %build
-%autoreconf
-%configure
 %make
 
 %install
 %makeinstall_std
-rm -rf %buildroot%_monodir/monodroid
-rm -rf %buildroot%_monodir/monotouch
 
 %files
+%doc LICENSE License.txt README.md
 %_bindir/fsharp*
 %_monodir/fsharp*
 %_monodir/Microsoft*
 %_monodir/xbuild/Microsoft/VisualStudio/
 
 %changelog
-* Thu Jul 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.34-alt1%ubt
+* Thu Oct 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 10.2.1-alt1
+- Updated to upstream version 10.2.1.
+
+* Thu Jul 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.34-alt1
 - Updated to upstream version 4.1.34.
 
-* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0.4-alt2%ubt
+* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0.4-alt2
 - Rebuilt with support of %%ubt macro.
 
 * Mon Jul 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0.4-alt1
