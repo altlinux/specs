@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname wxsqlite3
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -13,7 +10,7 @@ BuildRequires: gcc-c++
 
 Name:           libwxsqlite3-wx3.0
 Version:        3.4.1
-Release:        alt1_0.5git%{shortcommit0}
+Release:        alt1_0.7git%{shortcommit0}
 Summary:        C++ wrapper around the SQLite 3.x database
 
 Group:          System/Libraries
@@ -22,6 +19,8 @@ URL:            https://github.com/utelle/wxsqlite3
 Source0:        https://github.com/utelle/wxsqlite3/archive/%{commit0}/%{oldname}-%{commit0}.tar.gz#/%{oldname}-%{shortcommit0}.tar.gz
 
 # don't %%build the included wxSQLite+ application
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires:  libwxGTK3.0-devel
 BuildRequires:  libsqlite3-devel
 BuildRequires:  doxygen
@@ -134,6 +133,9 @@ mv %{oldname}.pc %{buildroot}%{_libdir}/pkgconfig/%{oldname}.pc
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 3.4.1-alt1_0.7git91de286
+- update to new release by fcimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 3.4.1-alt1_0.5git91de286
 - new version
 
