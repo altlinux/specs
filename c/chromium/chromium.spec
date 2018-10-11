@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        69.0.3497.81
+Version:        69.0.3497.100
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -152,6 +152,7 @@ BuildRequires:  pkgconfig(xscrnsaver)
 BuildRequires:  pkgconfig(xt)
 BuildRequires:  python
 BuildRequires:  python-modules-json
+BuildRequires:  python-modules-distutils
 BuildRequires:  node
 BuildRequires:  usbids
 BuildRequires:  xdg-utils
@@ -242,6 +243,11 @@ for f in .rpm/blinkpy-common/*.py; do
 	[ -f "$t" ] || install -D "$f" "$t"
 done
 touch third_party/blink/tools/blinkpy/__init__.py
+
+# unknown warning option '-Wno-ignored-pragma-optimize'
+sed -i \
+	-e '/"-Wno-ignored-pragma-optimize"/d' \
+	build/config/compiler/BUILD.gn
 
 mkdir -p third_party/node/linux/node-linux-x64/bin
 ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/
@@ -365,6 +371,9 @@ mkdir -p -- \
 install -m 755 %SOURCE100 %buildroot%_libdir/%name/%name-generic
 install -m 644 %SOURCE200 %buildroot%_sysconfdir/%name/default
 
+# compatibility symlink
+ln -s %name %buildroot/%_bindir/chromium-browser
+
 # manpage
 .rpm/scripts/make-manpage.sh > %buildroot/%_man1dir/%name.1
 ln -s %name.1  %buildroot/%_man1dir/chrome.1
@@ -472,6 +481,10 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Thu Oct 11 2018 Alexey Gladkov <legion@altlinux.ru> 69.0.3497.100-alt1
+- New version (69.0.3497.100).
+- Add symlink /usr/bin/chromium -> chromium-browser.
+
 * Wed Sep 05 2018 Alexey Gladkov <legion@altlinux.ru> 69.0.3497.81-alt1
 - New version (69.0.3497.81).
 - Security fixes:
