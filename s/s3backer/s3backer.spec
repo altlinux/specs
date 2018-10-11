@@ -1,49 +1,45 @@
 Name: s3backer
-Version: 1.3.1
-Release: alt7
+Version: 1.5.0
+Release: alt1
 
 Summary: FUSE-based single file backing store via Amazon S3
-Group: System/Kernel and hardware
 License: GPL
-Url: http://code.google.com/p/s3backer/
-
-Packager: Denis Smirnov <mithraen@altlinux.ru>
-
-Source: %name-%version.tar
-Patch: %name-%version.patch
+Group: System/Kernel and hardware
+Url: https://github.com/archiecobbs/s3backer
 
 Requires: fuse
 
-# Automatically added by buildreq on Mon Mar 21 2011 (-bb)
+Source: %name-%version-%release.tar
 BuildRequires: libcurl-devel libexpat-devel libfuse-devel libssl-devel zlib-devel
 
 %description
-%summary
+s3backer is a filesystem that contains a single file backed by the Amazon S3.
+As a filesystem, it is very simple: it provides a single normal file having
+a fixed size.  Underneath, the file is divided up into blocks, and the content
+of each block is stored in a unique Amazon S3 object.  In other words, what
+s3backer provides is really more like an S3-backed virtual hard disk device,
+rather than a filesystem.
 
 %prep
 %setup
-#setup -q -n %%distname-%%version
-%patch0 -p1
 
 %build
-touch NEWS AUTHORS ChangeLog
-autoreconf -fisv
+%autoreconf
 %configure
-%make
+%make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 %files
+%doc COPYING README*
 %_bindir/s3backer
-%_docdir/packages/s3backer/CHANGES
-%_docdir/packages/s3backer/COPYING
-%_docdir/packages/s3backer/INSTALL
-%_docdir/packages/s3backer/README
-%_docdir/packages/s3backer/TODO
-%_man1dir/s3backer.1.bz2
+%_man1dir/s3backer.1*
 
 %changelog
+* Thu Oct 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0-alt1
+- 1.5.0 released
+
 * Tue May 22 2012 Denis Smirnov <mithraen@altlinux.ru> 1.3.1-alt7
 - fix build
 
