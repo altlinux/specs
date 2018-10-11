@@ -7,7 +7,7 @@
 
 Name:           fonts-ttf-lohit-malayalam
 Version:        2.92.2
-Release:        alt1_2
+Release:        alt1_5
 Summary:        Free Malayalam font
 Group:          System/Fonts/True type
 License:        OFL
@@ -84,12 +84,16 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc ChangeLog COPYRIGHT OFL.txt AUTHORS README std-test-out.txt test-malayalam.txt
 %{_datadir}/metainfo/%{metainfo}.xml
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.92.2-alt1_5
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.92.2-alt1_2
 - update to new release by fcimport
 
