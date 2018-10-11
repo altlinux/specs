@@ -1,6 +1,6 @@
 Name: mongo
-Version: 4.0.2
-Release: alt2
+Version: 4.0.3
+Release: alt1
 Summary: mongo client shell and tools
 License: AGPL 3.0
 Url: http://www.mongodb.org
@@ -189,6 +189,9 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Thu Oct 11 2018 Vladimir Didenko <cow@altlinux.org> 4.0.3-alt1
+- 4.0.3
+
 * Tue Sep 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.2-alt2
 - NMU: rebuilt with new yaml-cpp.
 
