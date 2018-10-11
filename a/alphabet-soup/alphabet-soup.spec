@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           alphabet-soup
 Version:        1.1
-Release:        alt2_20
+Release:        alt2_24
 Summary:        Guide your worm through the soup to spell words
 Group:          Games/Other
 License:        Crystal Stacker
@@ -15,6 +15,7 @@ Source1:        alphabet-soup.desktop
 Source2:        alphabet-soup.png
 Patch0:         alphabet-soup-1.1-linux.patch
 Patch1:         alphabet-soup-1.1-rhbz699425.patch
+BuildRequires:  gcc
 BuildRequires:  libalfont-devel dumb-devel desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -32,7 +33,7 @@ sed -i 's/\r//' readme.txt
 
 %build
 %make_build -f Makefile.unix PREFIX=%{_prefix} \
-  CFLAGS="$RPM_OPT_FLAGS -fsigned-char -Wno-deprecated-declarations"
+  CFLAGS="$RPM_OPT_FLAGS -fsigned-char -Wno-deprecated-declarations -DALLEGRO_FIX_ALIASES"
 
 %install
 make -f Makefile.unix install PREFIX=$RPM_BUILD_ROOT%{_prefix}
@@ -52,6 +53,9 @@ install -p -m 644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_24
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_20
 - update to new release by fcimport
 
