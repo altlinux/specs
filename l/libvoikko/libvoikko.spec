@@ -1,18 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-build-python3
+BuildRequires: libtinyxml2-devel python-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%if 0%{?fedora}
-%global with_python2 1
-%endif
-
 Name:           libvoikko
-Version:        3.8
-Release:        alt1_10
+Version:        4.1.1
+Release:        alt1_1
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
 Group:          System/Libraries
@@ -23,10 +18,8 @@ Source0:        http://www.puimula.org/voikko-sources/%{name}/%{name}-%{version}
 # The usual format of test release URLs
 #Source0:        http://www.puimula.org/htp/testing/%%{name}-%%{version}rc1.tar.gz
 
+BuildRequires:  gcc-c++
 BuildRequires:  python3-devel
-%if 0%{?with_python2}
-BuildRequires:  python-devel
-%endif
 # Require the Finnish morphology because Finnish is currently the only language
 # supported by libvoikko in Fedora.
 Requires:       malaga-suomi-voikko
@@ -64,20 +57,17 @@ This package contains voikkospell and voikkohyphenate, small command line
 tools for testing libvoikko. These tools may also be useful for shell
 scripts.
 
-%if 0%{?with_python2}
-%package -n python-module-libvoikko
+%package -n python3-module-libvoikko
 Summary:        Python interface to %{name}
 Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
-# Note: noarch subpackage, only works in Fedora >= 11
 BuildArch:      noarch
-%{?python_provide:%python_provide python2-libvoikko}
+%{?python_provide:%python_provide python3-libvoikko}
 
-%description -n python-module-libvoikko
+%description -n python3-module-libvoikko
 Python interface to libvoikko, library of Finnish language tools.
 This module can be used to perform various natural language analysis
 tasks on Finnish text.
-%endif
 
 %prep
 %setup -q
@@ -85,12 +75,13 @@ tasks on Finnish text.
 
 %build
 # The dictionary path must be the same where malaga-suomi-voikko is installed
-%configure --with-dictionary-path=%{_libdir}/voikko
+# Use malaga for now, no hfst or vfst. We need to package foma for the vfst dictionaries.
+%configure --with-dictionary-path=%{_libdir}/voikko --disable-hfst --disable-vfst --disable-buildtools --enable-malaga
 # Remove rpath,
 # https://fedoraproject.org/wiki/Packaging/Guidelines#Removing_Rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-%make_build CXXFLAGS="$CXXFLAGS -Wno-deprecated"
+%make_build CXXFLAGS="$CXXFLAGS"
 
 
 %install
@@ -98,11 +89,9 @@ make install INSTALL="install -p" DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 # Remove static archive
 find $RPM_BUILD_ROOT -name '*.a' -exec rm -f {} ';'
-%if 0%{?with_python2}
 # Install the Python interface
-install -d $RPM_BUILD_ROOT%{python_sitelibdir_noarch}
-install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
-%endif
+install -d $RPM_BUILD_ROOT%{python3_sitelibdir_noarch}
+install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python3_sitelibdir_noarch}/
 
 %files
 %doc ChangeLog COPYING README
@@ -121,12 +110,14 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/libvoikko.pc
 
-%if 0%{?with_python2}
-%files -n python-module-libvoikko
-%{python_sitelibdir_noarch}/%{name}.py*
-%endif
+%files -n python3-module-libvoikko
+%{python3_sitelibdir_noarch}/%{name}.py*
+%{python3_sitelibdir_noarch}/__pycache__/*
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_1
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1_10
 - update to new release by fcimport
 
