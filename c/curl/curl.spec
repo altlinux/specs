@@ -1,6 +1,6 @@
 Name: curl
 Version: 7.61.1
-Release: alt1%ubt
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -14,8 +14,7 @@ Patch0: curl-%version-alt.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires: glibc-devel-static groff-base libidn-devel libssh2-devel libssl-devel libkrb5-devel zlib-devel python-modules python-modules-logging python-modules-xml
-BuildRequires(pre):rpm-build-ubt
+BuildRequires: glibc-devel-static groff-base libidn-devel libssh2-devel libssl-devel libkrb5-devel zlib-devel python-modules python-modules-logging python-modules-xml libpsl-devel libnghttp2-devel
 
 %package -n lib%name
 Summary: The shared library for file transfer
@@ -109,6 +108,7 @@ applications that utilize lib%name.
 	--disable-rpat \
 	--disable-ldap \
 	--enable-threaded-resolver \
+	--with-ssl --enable-openssl-auto-load-config \
 	--with-gssapi \
 	--with-ca-bundle=%_datadir/ca-certificates/ca-bundle.crt
 
@@ -144,87 +144,90 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
-* Sun Sep 09 2018 Anton Farygin <rider@altlinux.ru> 7.61.1-alt1%ubt
+* Thu Oct 11 2018 Anton Farygin <rider@altlinux.ru> 7.61.1-alt2
+- enabled HTTP/2 support
+
+* Sun Sep 09 2018 Anton Farygin <rider@altlinux.ru> 7.61.1-alt1
 - 7.61.1 (fixes: CVE-2018-14618)
 
-* Thu Aug 16 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.61.0-alt2%ubt
+* Thu Aug 16 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.61.0-alt2
 - Rebuilt with openssl 1.1.
 - Added BR: libkrb5-devel.
 
-* Tue Jul 17 2018 Anton Farygin <rider@altlinux.ru> 7.61.0-alt1%ubt
+* Tue Jul 17 2018 Anton Farygin <rider@altlinux.ru> 7.61.0-alt1
 - 7.61.0
 - fixes:
   * CVE-2018-0500 SMTP send heap buffer overflow
 
-* Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 7.60.0-alt1%ubt
+* Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 7.60.0-alt1
 - 7.60.0 
 - fixes:
   * CVE-2018-1000300 FTP shutdown response buffer overflow
   * CVE-2018-1000301 RTSP bad headers buffer over-read 
 
-* Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 7.59.0-alt1%ubt
+* Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 7.59.0-alt1
 - new version 
 - fixes: 
   * CVE-2018-1000120 FTP path trickery leads to NIL byte out of bounds write
   * CVE-2018-1000121 LDAP NULL pointer dereference
   * CVE-2018-1000122  RTSP RTP buffer over-read
 
-* Wed Jan 24 2018 Anton Farygin <rider@altlinux.ru> 7.58.0-alt1%ubt
+* Wed Jan 24 2018 Anton Farygin <rider@altlinux.ru> 7.58.0-alt1
 - new version
 - fixes:
   * CVE-2018-1000005 HTTP/2 trailer out-of-bounds read
   * CVE-2018-1000007 HTTP authentication leak in redirects
 
-* Fri Dec 01 2017 Anton Farygin <rider@altlinux.ru> 7.57.0-alt1%ubt
+* Fri Dec 01 2017 Anton Farygin <rider@altlinux.ru> 7.57.0-alt1
 - new version
 - fixes:
   * CVE-2017-8818 SSL out of buffer access
   * CVE-2017-8817 FTP wildcard out of bounds read
   * CVE-2017-8816 NTLM buffer overflow via integer overflow
 
-* Mon Oct 23 2017 Anton Farygin <rider@altlinux.ru> 7.56.1-alt1%ubt
+* Mon Oct 23 2017 Anton Farygin <rider@altlinux.ru> 7.56.1-alt1
 - new version
 - fixes:
   * CVE-2017-1000257 libcurl contains a buffer overrun flaw in the IMAP handler
 
-* Wed Oct 04 2017 Anton Farygin <rider@altlinux.ru> 7.56.0-alt1%ubt
+* Wed Oct 04 2017 Anton Farygin <rider@altlinux.ru> 7.56.0-alt1
 - new version
 - fixes:
   * CVE-2017-1000254 libcurl may read outside of a heap allocated buffer when doing FTP.
   
-* Mon Aug 14 2017 Anton Farygin <rider@altlinux.ru> 7.55.1-alt1%ubt
+* Mon Aug 14 2017 Anton Farygin <rider@altlinux.ru> 7.55.1-alt1
 - new version
 
-* Wed Aug 09 2017 Anton Farygin <rider@altlinux.ru> 7.55.0-alt1%ubt
+* Wed Aug 09 2017 Anton Farygin <rider@altlinux.ru> 7.55.0-alt1
 - new version with following security fixes:
    * CVE-2017-1000101 glob: do not parse after a strtoul() overflow range
    * CVE-2017-1000100 tftp: reject file name lengths that don't fit
    * CVE-2017-1000099 file: output the correct buffer to the user
 
-* Wed Jun 14 2017 Anton Farygin <rider@altlinux.ru> 7.54.1-alt1%ubt
+* Wed Jun 14 2017 Anton Farygin <rider@altlinux.ru> 7.54.1-alt1
 - new version with security fixes:
   CVE-2017-9502: URL file scheme drive letter buffer overflow 
 
-* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 7.54.0-alt1%ubt
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 7.54.0-alt1
 - new version with security fixes:
   CVE-2016-5419: TLS session resumption client cert bypass (again) 
 
-* Mon Feb 27 2017 Anton Farygin <rider@altlinux.ru> 7.53.1-alt1%ubt
+* Mon Feb 27 2017 Anton Farygin <rider@altlinux.ru> 7.53.1-alt1
 - new version
 
-* Wed Feb 22 2017 Anton Farygin <rider@altlinux.ru> 7.53.0-alt1%ubt
+* Wed Feb 22 2017 Anton Farygin <rider@altlinux.ru> 7.53.0-alt1
 - new version with security fixes:
   CVE-2017-2629: SSL_VERIFYSTATUS ignored
 
-* Fri Dec 23 2016 Anton Farygin <rider@altlinux.ru> 7.52.1-alt1%ubt
+* Fri Dec 23 2016 Anton Farygin <rider@altlinux.ru> 7.52.1-alt1
 - new version with security fixes:
   CVE-2016-9594: uninitialized random
 
-* Wed Dec 21 2016 Anton Farygin <rider@altlinux.ru> 7.52.0-alt1%ubt
+* Wed Dec 21 2016 Anton Farygin <rider@altlinux.ru> 7.52.0-alt1
 - new version with security fixes:
   CVE-2016-9586: printf floating point buffer overflow
 
-* Wed Dec 07 2016 Anton Farygin <rider@altlinux.ru> 7.51.0-alt2%ubt
+* Wed Dec 07 2016 Anton Farygin <rider@altlinux.ru> 7.51.0-alt2
 - enabled gssapi (closes: #32862)
 
 * Wed Nov 02 2016 Anton Farygin <rider@altlinux.ru> 7.51.0-alt1
