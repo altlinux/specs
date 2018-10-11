@@ -1,6 +1,6 @@
 Name:		apache2-mod_http2
-Version:	1.11.0
-Release:	alt1%ubt
+Version:	1.11.3
+Release:	alt1
 Summary:	module implementing HTTP/2 for Apache 2
 Group:		System/Servers
 License:	ASL 2.0
@@ -8,7 +8,7 @@ URL:		https://icing.github.io/mod_h2/
 Source0:	%name-%version.tar
 Source1:	%name.watch
 Patch0:		%name-%version-alt.patch
-BuildRequires(pre): apache2-devel > 2.4.27-alt1, rpm-build-ubt
+BuildRequires(pre): apache2-devel > 2.4.27-alt1
 BuildRequires:	pkgconfig, libnghttp2-devel >= 1.7.0, libssl-devel >= 1.0.2, libaprutil1-devel, libcurl-devel
 Provides: mod_h2 = %EVR
 Provides: mod_http2 = %EVR
@@ -30,12 +30,6 @@ top of libnghttp2 for httpd 2.4 servers.
 make DESTDIR=%{buildroot} install
 rm -rf %buildroot/etc/httpd/share/doc/
 
-# remove links and rename SO files
-rm -r %buildroot%apache2_moduledir/mod_http2.so
-rm -r %buildroot%apache2_moduledir//mod_proxy_http2.so
-mv %buildroot%apache2_moduledir/mod_http2.so.0.0.0 %buildroot%apache2_moduledir/mod_http2.so
-mv %buildroot%apache2_moduledir/mod_proxy_http2.so.0.0.0 %buildroot%apache2_moduledir/mod_proxy_http2.so
-
 # create configuration
 mkdir -p %buildroot%apache2_mods_available
 echo "LoadModule http2_module modules/mod_http2.so" > %buildroot%apache2_mods_available/%name.load
@@ -48,26 +42,29 @@ echo "LoadModule proxy_http2_module modules/mod_proxy_http2.so" > %buildroot%apa
 %apache2_moduledir/mod_proxy_http2.so
 
 %changelog
-* Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 1.11.0-alt1%ubt
+* Thu Oct 11 2018 Anton Farygin <rider@altlinux.ru> 1.11.3-alt1
+- 1.11.3
+
+* Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 1.11.0-alt1
 - 1.11.0
 
-* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.10.20-alt1.1%ubt
+* Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.10.20-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
-* Tue May 08 2018 Anton Farygin <rider@altlinux.ru> 1.10.20-alt1%ubt
+* Tue May 08 2018 Anton Farygin <rider@altlinux.ru> 1.10.20-alt1
 - 1.10.20
 
-* Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 1.10.16-alt1%ubt
+* Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 1.10.16-alt1
 - new version
 
-* Wed Jan 10 2018 Anton Farygin <rider@altlinux.ru> 1.10.14-alt1%ubt
+* Wed Jan 10 2018 Anton Farygin <rider@altlinux.ru> 1.10.14-alt1
 - new version
 
-* Wed Nov 01 2017 Anton Farygin <rider@altlinux.ru> 1.10.13-alt1%ubt
+* Wed Nov 01 2017 Anton Farygin <rider@altlinux.ru> 1.10.13-alt1
 - new version
 
-* Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 1.10.12-alt1%ubt
+* Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 1.10.12-alt1
 - new version
 
-* Wed Jul 19 2017 Anton Farygin <rider@altlinux.ru> 1.10.7-alt1%ubt
+* Wed Jul 19 2017 Anton Farygin <rider@altlinux.ru> 1.10.7-alt1
 - first build for ALT
