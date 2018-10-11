@@ -22,11 +22,11 @@ BuildRequires: perl-Filter
 Name:           perl-YAML-LibYAML
 Epoch:          1
 Version:        0.74
-Release:        alt1
+Release:        alt1_1
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/YAML-LibYAML
-Source0:        http://www.cpan.org/authors/id/I/IN/INGY/YAML-LibYAML-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/modules/by-module/YAML/YAML-LibYAML-%{version}.tar.gz
 
 # Build
 BuildRequires:  coreutils
@@ -79,8 +79,8 @@ Requires:       perl(B/Deparse.pm)
 # libyaml is tweaked and bundled
 # https://github.com/ingydotnet/yaml-libyaml-pm/issues/49
 # version number determined by comparing commits in upstream repo:
-# https://bitbucket.org/xi/libyaml/commits/branch/default
-Provides:       bundled(libyaml) = 0.1.7
+# https://github.com/yaml/libyaml/
+Provides:       bundled(libyaml) = 0.2.1
 
 # Avoid provides for perl shared objects
 
@@ -107,12 +107,15 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes CONTRIBUTING README
 %{perl_vendor_archlib}/auto/YAML/
 %{perl_vendor_archlib}/YAML/
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.74-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 02 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.74-alt1
 - automated CPAN update
 
