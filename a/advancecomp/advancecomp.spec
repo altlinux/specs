@@ -1,16 +1,18 @@
 Group: Emulators
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/valgrind bzlib-devel gcc-c++
+BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/valgrind bzlib-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           advancecomp
 Version:        2.1
-Release:        alt1_4
+Release:        alt1_6
 Summary:        Recompression utilities for .PNG, .MNG and .ZIP files
 License:        GPLv3
 URL:            http://www.advancemame.it/
 Source0:        https://github.com/amadvance/advancecomp/releases/download/v%{version}/advancecomp-%{version}.tar.gz
+
+BuildRequires:  gcc gcc-c++
 BuildRequires:  tofrodos
 BuildRequires:  zlib-devel
 Source44: import.info
@@ -49,6 +51,9 @@ make install DESTDIR=%{buildroot}
 %{_mandir}/man1/*
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_6
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_4
 - update to new release by fcimport
 
