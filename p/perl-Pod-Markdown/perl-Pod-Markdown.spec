@@ -6,12 +6,12 @@ BuildRequires: perl(Pod/Usage.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Pod-Markdown
 Version:        3.101
-Release:        alt1
+Release:        alt1_1
 Summary:        Convert POD to Markdown
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            https://metacpan.org/release/Pod-Markdown
-Source0:        http://www.cpan.org/authors/id/R/RW/RWSTAUNER/Pod-Markdown-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/R/RW/RWSTAUNER/Pod-Markdown-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  findutils
 BuildRequires:  perl-devel
@@ -46,25 +46,27 @@ This module subclasses Pod::Parser and converts POD to Markdown.
 %setup -q -n Pod-Markdown-%{version}
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -delete
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/*
 %{_mandir}/man[13]/*
 %{_bindir}/*
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 3.101-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 08 2018 Igor Vlasenko <viy@altlinux.ru> 3.101-alt1
 - automated CPAN update
 
