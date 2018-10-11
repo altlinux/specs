@@ -1,14 +1,15 @@
+Group: Games/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           bsp
 Version:        5.2
-Release:        alt2_17
+Release:        alt2_21
 Summary:        The most popular node builder for Doom
 
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://games.moria.org.uk/doom/bsp/
 Source0:        http://games.moria.org.uk/doom/bsp/download/%{name}-%{version}.tar.bz2
+BuildRequires:  gcc
 Source44: import.info
 
 %description
@@ -45,12 +46,15 @@ install -D -p -m 644 bsp.6 $RPM_BUILD_ROOT/%{_mandir}/man6/bsp.6
 
 %files
 %doc AUTHORS ChangeLog INSTALL NEWS README visplane.txt test-wads/
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/bsp
 %{_mandir}/man6/bsp.6*
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 5.2-alt2_21
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 5.2-alt2_17
 - update to new release by fcimport
 
