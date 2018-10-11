@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname gubbi-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -5,33 +6,32 @@
 %global fontconf 65-0-%{fontname}.conf
 
 Name:           fonts-ttf-gubbi
-Version:        1.1
-Release:        alt2_8
+Version:        1.3
+Release:        alt1_3
 Summary:        Free Kannada Opentype serif font
 
-Group:          System/Fonts/True type
-License:        OFL
+License:        GPLv3+ with exceptions
 URL:            https://github.com/aravindavk/Gubbi
-Source0:        http://cloud.github.com/downloads/aravindavk/Gubbi/%{fontname}-%{version}.tar.gz
+Source0:        https://github.com/aravindavk/Gubbi/archive/v%{version}.tar.gz#/%{fontname}-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires: fontforge libfontforge
+BuildRequires:  fontforge libfontforge
 BuildRequires:  fontpackages-devel
-Source1: 65-0-gubbi.conf
+Source1:        65-0-gubbi.conf
+Source2:        %{fontname}.metainfo.xml
 Source44: import.info
-
 
 %description
 This package provides a free Kannada opentype serif font.
 
 
 %prep
-%setup -q -n %{fontname}-%{version} 
+%setup -q -n Gubbi-%{version}
+
 
 %build
 make
 
 %install
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -42,6 +42,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -77,16 +81,20 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
-%doc ChangeLog COPYING README
+%doc ChangeLog README
+%doc --no-dereference COPYING
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_3
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_8
 - update to new release by fcimport
 
