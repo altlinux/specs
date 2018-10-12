@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackcess
-Version:       2.1.3
-Release:       alt1_6jpp8
+Version:       2.2.0
+Release:       alt1_1jpp8
 Summary:       Java library for reading from and writing to MS Access databases
 License:       ASL 2.0
 URL:           http://jackcess.sourceforge.net/
@@ -51,7 +51,7 @@ find . -name "*.jar" -print -delete
 
 # com.healthmarketscience:openhms-parent:1.1.1
 %pom_remove_parent
-%pom_remove_plugin :cobertura-maven-plugin
+#%%pom_remove_plugin :cobertura-maven-plugin
 %pom_remove_plugin :maven-changes-plugin
 
 %pom_change_dep :log4j ::12
@@ -75,6 +75,9 @@ find . -name "*.jar" -print -delete
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Oct 16 2018 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1_1jpp8
+- New version (ALT #35509).
+
 * Sun Apr 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.3-alt1_6jpp8
 - java update
 
