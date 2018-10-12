@@ -9,7 +9,7 @@
 
 Name: plasma5-addons
 Version: 5.12.7
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -28,6 +28,7 @@ Patch2: alt-dictionary-runner.patch
 Patch3: alt-weather-usability.patch
 Patch4: alt-fifteenpuzzle-fix-error.patch
 Patch5: alt-color-picker.patch
+Patch6: alt-dictionary-fix.patch
 
 # Automatically added by buildreq on Mon Mar 30 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils glib2-devel kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libdbusmenu-qt52 libgio-devel libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs scim-libs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -100,6 +101,7 @@ KF5 library
 %patch3 -p2
 %patch4 -p2
 %patch5 -p2
+%patch6 -p1
 
 %build
 %K5build \
@@ -141,6 +143,9 @@ KF5 library
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Fri Oct 12 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.7-alt2
+- dictionary runner: allow dictionary to search the same word many times
+
 * Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.7-alt1
 - new version
 
