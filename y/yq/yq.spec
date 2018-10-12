@@ -1,6 +1,6 @@
 
 Name:    yq
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 
 Summary: Command-line YAML and XML processor
@@ -40,5 +40,8 @@ wrapper for YAML and XML documents.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Oct 12 2018 Ivan A. Melnikov <iv@altlinux.org> 2.7.0-alt1
+- 2.7.0
+
 * Fri Jun 08 2018 Ivan A. Melnikov <iv@altlinux.org> 2.6.0-alt1
 - Initial build for Sisyphus
