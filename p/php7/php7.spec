@@ -3,8 +3,8 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.2.10
-Release: alt1%ubt
+Version: 7.2.11
+Release: alt1
 
 %define php7_name      %name
 %define _php7_version  %version
@@ -186,6 +186,12 @@ sed -is 's,\(zend_module_entry \)\(.*= {\),zend_module_entry __attribute__ ((vis
 
 %build
 %php7_env
+
+# some plugins can be linked against lcxa (e.g. gd2); it can't be
+# loaded dynamically, so all binaries should be linked with it
+%ifarch %e2k
+cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
+%endif
 
 %configure \
 	--prefix=%_prefix \
@@ -404,56 +410,62 @@ subst 's,sbin/lsattr,bin/lsattr,' %buildroot/%php7_libdir/build/config.guess
 %doc tests run-tests.php 
 
 %changelog
-* Fri Sep 21 2018 Anton Farygin <rider@altlinux.ru> 7.2.10-alt1%ubt
+* Thu Oct 11 2018 Anton Farygin <rider@altlinux.ru> 7.2.11-alt1
+- 7.2.11
+
+* Wed Sep 26 2018 Michael Shigorin <mike@altlinux.org> 7.2.10-alt2
+- E2K: explicitly link with -lcxa
+
+* Fri Sep 21 2018 Anton Farygin <rider@altlinux.ru> 7.2.10-alt1
 - 7.2.10
 
-* Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 7.2.9-alt1%ubt
+* Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 7.2.9-alt1
 - 7.2.9
 
-* Tue Jul 31 2018 Anton Farygin <rider@altlinux.ru> 7.2.8-alt1%ubt
+* Tue Jul 31 2018 Anton Farygin <rider@altlinux.ru> 7.2.8-alt1
 - 7.2.8 with fixes for multiple security issues
 
-* Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 7.2.6-alt1%ubt
+* Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 7.2.6-alt1
 - 7.2.6
 
-* Fri May 11 2018 Anton Farygin <rider@altlinux.ru> 7.2.5-alt1%ubt
+* Fri May 11 2018 Anton Farygin <rider@altlinux.ru> 7.2.5-alt1
 - 7.2.5
 
-* Wed Feb 07 2018 Anton Farygin <rider@altlinux.ru> 7.1.14-alt1%ubt
+* Wed Feb 07 2018 Anton Farygin <rider@altlinux.ru> 7.1.14-alt1
 - 7.1.14
 
-* Sun Dec 10 2017 Anton Farygin <rider@altlinux.ru> 7.1.12-alt1%ubt
+* Sun Dec 10 2017 Anton Farygin <rider@altlinux.ru> 7.1.12-alt1
 - 7.1.12
 
-* Fri Nov 03 2017 Anton Farygin <rider@altlinux.ru> 7.1.11-alt1%ubt
+* Fri Nov 03 2017 Anton Farygin <rider@altlinux.ru> 7.1.11-alt1
 - 7.1.11 (Fixes: CVE-2016-1283)
 
-* Mon Oct 02 2017 Anton Farygin <rider@altlinux.ru> 7.1.10-alt1%ubt
+* Mon Oct 02 2017 Anton Farygin <rider@altlinux.ru> 7.1.10-alt1
 - 7.1.10
 
-* Tue Sep 19 2017 Anton Farygin <rider@altlinux.ru> 7.1.9-alt1%ubt
+* Tue Sep 19 2017 Anton Farygin <rider@altlinux.ru> 7.1.9-alt1
 - 7.1.9
 
-* Fri Aug 04 2017 Anton Farygin <rider@altlinux.ru> 7.1.8-alt1%ubt
+* Fri Aug 04 2017 Anton Farygin <rider@altlinux.ru> 7.1.8-alt1
 - new version
 
-* Fri Jul 07 2017 Anton Farygin <rider@altlinux.ru> 7.1.7-alt1%ubt
+* Fri Jul 07 2017 Anton Farygin <rider@altlinux.ru> 7.1.7-alt1
 - new version
 
-* Sun Jun 11 2017 Anton Farygin <rider@altlinux.ru> 7.1.6-alt1%ubt
+* Sun Jun 11 2017 Anton Farygin <rider@altlinux.ru> 7.1.6-alt1
 - new version
 
-* Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 7.1.5-alt1%ubt
+* Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 7.1.5-alt1
 - new version
 
-* Thu Apr 27 2017 Anton Farygin <rider@altlinux.ru> 7.1.4-alt1%ubt
+* Thu Apr 27 2017 Anton Farygin <rider@altlinux.ru> 7.1.4-alt1
 - new version
 
-* Sat Mar 18 2017 Anton Farygin <rider@altlinux.ru> 7.1.3-alt1%ubt
+* Sat Mar 18 2017 Anton Farygin <rider@altlinux.ru> 7.1.3-alt1
 - new version
 
-* Wed Feb 01 2017 Anton Farygin <rider@altlinux.ru> 7.1.1-alt1%ubt
+* Wed Feb 01 2017 Anton Farygin <rider@altlinux.ru> 7.1.1-alt1
 - new version
 
-* Wed Dec 7 2016 Anton Farygin <rider@altlinux.ru> 7.1.0-alt1%ubt
+* Wed Dec 7 2016 Anton Farygin <rider@altlinux.ru> 7.1.0-alt1
 - build PHP-7.1 for ALT
