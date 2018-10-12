@@ -18,7 +18,7 @@
 
 Name: seahorse
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: A password and encryption key manager
 License: %gpllgpl2plus
@@ -30,6 +30,9 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
+
+# https://gitlab.gnome.org/GNOME/seahorse/issues/108
+Patch: libseahorse-Fix-regression-where-progress-window-i.patch
 
 Requires: dconf
 Requires: gnupg2 gcr
@@ -59,6 +62,7 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson \
@@ -92,6 +96,10 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Fri Oct 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30-alt2
+- fixed regression where progress window is not shown, see
+  https://gitlab.gnome.org/GNOME/seahorse/issues/108 (ALT #35231)
+
 * Tue Sep 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30-alt1
 - 3.30
 
