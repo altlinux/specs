@@ -1,136 +1,127 @@
-%define build_static 0
-
 Name: netatalk
-Version: 2.2.4
-Release: alt2
+Version: 3.1.11
+Release: alt1
 
-Summary: AppleTalk networking programs
-License: GPL, BSD
+Summary: Open Source Apple Filing Protocol(AFP) File Server
+
+License: GPLv2+
 Group: Networking/Other
-
 Url: http://netatalk.sourceforge.net
-Source0: %name-%version.tar
-Source1: atalk.init
-Source2: netatalk.pamd
 
-BuildRequires: libdb4-devel libpam-devel libwrap-devel zlib-devel
-BuildRequires: libgcrypt-devel
-BuildRequires: libssl-devel
-BuildRequires: perl-bignum
+Source0: http://download.sourceforge.net/netatalk/netatalk-%version.tar.bz2
+Source1: netatalk.pam-system-auth
+Patch0: netatalk-3.0.1-basedir.patch
+
+BuildRequires: cracklib-devel flex libacl-devel libattr-devel libavahi-devel
+BuildRequires: libdb4-devel libdbus-glib-devel libevent-devel libgcrypt-devel
+BuildRequires: libkrb5-devel libldap-devel libmysqlclient20-devel libpam-devel
+BuildRequires: libssl-devel libtdb-devel perl-bignum perl-IO-Socket-INET6
 
 %description
-This package enables Linux to talk to Macintosh computers via the
-AppleTalk networking protocol. It allows Linux to act as a file server
-over AppleTalk or IP for Macs.
-
-Netatalk is available under the GPL and BSD licenses.
+Netatalk is a freely-available Open Source AFP file server. A *NIX/*BSD
+system running Netatalk is capable of serving many Macintosh clients
+simultaneously as an AppleShare file server (AFP).
 
 %package devel
-Summary: Headers and shared libraries for AppleTalk development
+Summary: Development files for %name
+Requires: %name = %EVR
 Group: Development/C
-Requires: %name = %version-%release
-Requires: libpam-devel libssl-devel libwrap-devel libacl-devel libattr-devel automake-common
-BuildArch: noarch
 
 %description devel
-This package contains the header files and shared libraries for building
-AppleTalk networking programs
-
-%if %build_static
-%package devel-static
-Summary: Static libraries for AppleTalk development
-Group: Development/C
-Requires: %name-devel = %version-%release
-
-%description devel-static
-This package contains static libraries for building
-AppleTalk networking programs
-%endif
+This package contains libraries and header files for
+developing applications that use %name.
 
 %prep
-%setup -n %name-%version
+%setup
 
-# rename uniconv -> uniconv_netatalk
-# to prevent filename conflict with uniconvertor
-sed -i "s|uniconv|uniconv_netatalk|" man/man1/uniconv.1.tmpl
+# use system libevent instead
+rm -frv libevent/
 
-#remove lp2pap
-#sed -i "s| lp2pap|#lp2pap|" contrib/shell_utils/Makefile.am
+%patch0 -p1
+
+# Avoid re-running the autotools
+touch -r aclocal.m4 configure configure.ac macros/gssapi-check.m4
+
+# fix permissions
+find include \( -name '*.h' -a -executable \) -exec chmod -x {} \;
 
 %build
-%autoreconf
 %configure \
-	--with-pam=yes \
-	--enable-ddp \
-	--enable-redhat-sysv \
-	--with-shadow \
-	--enable-fhs \
-	--with-cnid-cdb-backend \
-	--with-cnid-dbd-backend \
-	--with-cnid-last-backend \
-	--enable-acl \
-	--libexecdir=%_bindir \
-	--localstatedir=%_var \
-%if %build_static
-	--enable-static
-%else
-	--disable-static
-%endif
+        --localstatedir=%_localstatedir             \
+        --with-acl                                  \
+        --with-cracklib                             \
+        --with-docbook                              \
+        --with-kerberos                             \
+        --with-libgcrypt                            \
+        --with-pam                                  \
+        --with-pkgconfdir=%_sysconfdir/netatalk/    \
+        --with-shadow                               \
+        --with-tbd=no                               \
+        --with-uams-path=%_libdir/netatalk          \
+        --enable-pgp-uam                            \
+        --enable-shared                             \
+        --enable-krbV-uam                           \
+        --enable-overwrite                          \
+        --with-init-style=redhat-systemd            \
+        --with-spotlight                            \
+        --with-dbus-daemon=/usr/bin/dbus-daemon     \
+        --without-libevent                          \
+        --with-libevent-header=%_includedir         \
+        --with-libevent-lib=%_libdir                \
+        --without-tdb                               \
+        --with-bdb                                  \
+        --disable-silent-rules                      \
+        --disable-static
+
 %make_build
 
+# Build the local docs.
+make -C doc/manual html-local
+
 %install
-mkdir -p %buildroot{%_sysconfdir/{netatalk,pam.d},%_initdir,%_libdir/netatalk}
-mkdir -p %buildroot{%_man1dir,%_man3dir,%_man4dir,%_man8dir}
-%make_install install DESTDIR=%buildroot
-rm -f %buildroot%_bindir/acleandir.rc
-rm -f %buildroot%_includedir/netatalk/at.h
-# override RH-style initscript
-install -pD -m755 %SOURCE1 %buildroot%_initdir/atalk
-# ...and PAM configuration as well
-install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/pam.d/%name
-# rename uniconv -> uniconv_netatalk
-# to prevent filename conflict with uniconvertor
-mv %buildroot%_bindir/uniconv %buildroot%_bindir/uniconv_netatalk
-mv %buildroot%_man1dir/uniconv.1 %buildroot%_man1dir/uniconv_netatalk.1
+%makeinstall_std
+# Ghost lock dir.
+mkdir -p %buildroot/var/lock/netatalk
 
-%post
-%post_service atalk
+# Use specific pam conf.
+install -pm644 %SOURCE1 %buildroot%_sysconfdir/pam.d/netatalk
 
-%preun
-%preun_service atalk
+find %buildroot -name '*.la' -delete -print
+
+%check
+sh test/afpd/test.sh
 
 %files
-%dir %_sysconfdir/%name
-%dir %_libdir/%name
-%config(noreplace) %_sysconfdir/%name/*
-%config %_initdir/atalk
-%exclude %_initdir/netatalk
-%config %_sysconfdir/pam.d/%name
+%doc AUTHORS CONTRIBUTORS NEWS COPYING COPYRIGHT doc/manual/*.html
+%config(noreplace) %_sysconfdir/dbus-1/system.d/netatalk-dbus.conf
+%dir %_sysconfdir/netatalk
+%config(noreplace) %_sysconfdir/netatalk/afp.conf
+%config(noreplace) %_sysconfdir/netatalk/dbus-session.conf
+%config(noreplace) %_sysconfdir/netatalk/extmap.conf
+%config(noreplace) %_sysconfdir/pam.d/netatalk
 %_bindir/*
+%exclude %_bindir/netatalk-config
+%_libdir/netatalk/
+%_libdir/libatalk.so.*
+%_mandir/man*/*
+%exclude %_mandir/man*/netatalk-config*
 %_sbindir/*
-%_mandir/man?/*
-%_libdir/%name/*.so
-%_datadir/%name/
-%doc CONTRIBUTORS COPYING COPYRIGHT NEWS
-%doc doc/DEVELOPER doc/README.*
-%exclude %_libdir/libatalk.a
-%exclude %_libdir/%name/*.la
+%ghost %dir /var/lock/netatalk
+/usr/lib/systemd/system/netatalk.service
+%exclude %_localstatedir/netatalk/CNID/README
+%exclude %_localstatedir/netatalk/README
 
 %files devel
-%dir %_includedir/atalk
-%dir %_includedir/netatalk
-%_includedir/atalk/*
-%_includedir/netatalk/*
-%_datadir/aclocal/*
-
-%if %build_static
-%files devel-static
-%_libdir/libatalk.a
-%_libdir/%name/*.a
-%endif
-
+%_bindir/netatalk-config
+%_datadir/aclocal/netatalk.m4
+%_includedir/atalk/
+%_libdir/libatalk.so
+%_mandir/man*/netatalk-config.1*
 
 %changelog
+* Fri Oct 12 2018 Grigory Ustinov <grenka@altlinux.org> 3.1.11-alt1
+- Build new version.
+
 * Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.4-alt2
 - Fixed localstatedir location.
 
@@ -247,4 +238,3 @@ mv %buildroot%_man1dir/uniconv.1 %buildroot%_man1dir/uniconv_netatalk.1
 
 * Fri Oct 31 2003 Alexander Bokovoy <ab@altlinux.ru> 1.5.3-alt4
 - Build for ALT Linux Sisyphus
-
