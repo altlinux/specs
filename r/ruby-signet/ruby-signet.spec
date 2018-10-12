@@ -1,7 +1,7 @@
 %define  pkgname signet
 
 Name:    ruby-%pkgname
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: Signet is an OAuth 1.0 / OAuth 2.0 implementation.
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Oct 12 2018 Andrey Cherepanov <cas@altlinux.org> 0.11.0-alt1
+- New version.
+
 * Tue Sep 25 2018 Andrey Cherepanov <cas@altlinux.org> 0.10.0-alt1
 - New version.
 
