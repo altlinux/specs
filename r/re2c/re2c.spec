@@ -1,5 +1,5 @@
 Name: re2c
-Version: 1.0.3
+Version: 1.1.1
 Release: alt1
 
 Summary: re2c - A tool for generating C-based recognizers from regular expressions
@@ -53,6 +53,9 @@ cd re2c
 %doc re2c/README re2c/examples
 
 %changelog
+* Sat Oct 13 2018 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
+- new version 1.1.1 (with rpmrb script)
+
 * Sun Dec 24 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
 - new version 1.0.3 (with rpmrb script)
 
