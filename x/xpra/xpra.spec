@@ -3,7 +3,7 @@
 # typelib(GtkGLExt)
 
 Name: xpra
-Version: 2.3.3
+Version: 2.3.4
 Release: alt1
 
 Summary: X Persistent Remote Applications
@@ -26,6 +26,8 @@ BuildRequires: libavformat-devel libavcodec-devel libswscale-devel libvpx-devel 
 BuildRequires: libogg-devel libopus-devel libflac-devel libspeex-devel libvorbis-devel libwavpack-devel liblame-devel libtwolame-devel libmad-devel
 
 BuildRequires: python-module-pygtkglext python-module-OpenGL python-module-OpenGL_accelerate python-module-Pillow python-module-websockify
+
+BuildRequires: xorg-server brotli
 
 # See https://bugzilla.altlinux.org/show_bug.cgi?id=28632
 BuildPreReq: python-module-Cython >= 0.20
@@ -126,6 +128,9 @@ rm -f %buildroot/usr/lib/sysusers.d/xpra.conf
 /etc/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Sat Oct 13 2018 Vitaly Lipatov <lav@altlinux.ru> 2.3.4-alt1
+- new version 2.3.4 (with rpmrb script)
+
 * Thu Aug 30 2018 Vitaly Lipatov <lav@altlinux.ru> 2.3.3-alt1
 - new version 2.3.3 (with rpmrb script)
 
