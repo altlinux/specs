@@ -2,7 +2,7 @@
 %define mono_version 4.7.3
 
 Name: wine-vanilla
-Version: 3.17
+Version: 3.18
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -16,7 +16,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # See http://git.etersoft.ru/people/lav/packages/?p=wine.git;a=shortlog;h=refs/heads/vanilla
 # Source tarball from git.etersoft.ru, branch vanilla (pulled from wine's git)
 Source: ftp://updates.etersoft.ru/pub/Etersoft/Wine-vanilla/%version/sources/tarball/%name-%version.tar
-Source1: etersoft/winetricks
 Source2: %name-%version-desktop.tar
 Source3: %name-%version-icons.tar
 
@@ -95,7 +94,6 @@ Requires: lib%name = %version-%release
 Conflicts: wine
 #Provides: wine = %version-%release
 
-Provides: winetricks
 Requires: cabextract
 
 #=========================================================================
@@ -129,6 +127,7 @@ Requires: lib%name-gl = %version-%release
 
 Requires: wine-mono >= %mono_version
 Requires: wine-gecko = %gecko_version
+Requires: winetricks
 
 %description full
 Wine meta package. Use it for install all wine subpackages.
@@ -240,7 +239,6 @@ export CC=clang
 
 %install
 %makeinstall_std
-install -m755 %SOURCE1 %buildroot%_bindir/winetricks
 # unpack desktop files
 cd %buildroot%_desktopdir/
 tar xvf %SOURCE2
@@ -283,7 +281,6 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %_bindir/regedit
 %_bindir/msiexec
 
-%_bindir/winetricks
 %_bindir/wineconsole
 %_bindir/wineserver
 
@@ -423,6 +420,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sat Oct 13 2018 Vitaly Lipatov <lav@altlinux.ru> 3.18-alt1
+- new version 3.18
+- use external winetricks
+
 * Sun Sep 30 2018 Vitaly Lipatov <lav@altlinux.ru> 3.17-alt1
 - new version 3.17
 
