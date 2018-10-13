@@ -1,7 +1,7 @@
-%define libcontrolppver 0.13
+%define libcontrolppver 0.14
 
 Name: control++
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: System configuration tool
@@ -43,6 +43,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 cp control++/bin/Release/%name %buildroot%_bindir
 # Configuration
 cp -r samples/* %buildroot%_sysconfdir/%name
+# Dirs for generated files
+mkdir -p %buildroot%_localstatedir/%name/ulimits
+mkdir %buildroot%_localstatedir/%name/permissions
 # Documentation
 cp COPYING %buildroot%_defaultdocdir/%name/
 cp usage.txt %buildroot%_defaultdocdir/%name/
@@ -51,9 +54,18 @@ cp readme.txt %buildroot%_defaultdocdir/%name/
 %files
 %_bindir/%name
 %_sysconfdir/%name
-%_defaultdocdir/%name/
+%_localstatedir/%name
+%_defaultdocdir/%name
 
 %changelog
+* Mon Oct 15 2018 Alexey Appolonov <alexey@altlinux.org> 0.11.0-alt1
+- Pass setting/checking mode for non existent files;
+- It's OK to not have 'reset' file if current mode is not stated;
+- Terminating if main or internal conf are not accessible;
+- Generated files are stored in /var/lib/control++;
+- New functionality of the libcontrol++ TPrinter;
+- Adjusted dialogs.
+
 * Mon Oct 1 2018 Alexey Appolonov <alexey@altlinux.org> 0.10.0-alt1
 - Units can have many config files;
 - Determining available modes by the units themselves;
