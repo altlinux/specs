@@ -1,5 +1,5 @@
 Name: metastore
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Store and restore metadata from a filesystem
@@ -39,6 +39,9 @@ repository.
 %_docdir/%name/
 
 %changelog
+* Sat Oct 13 2018 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
+- new version 1.1.2 (with rpmrb script)
+
 * Mon Dec 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
 - new version 1.1.1 (with rpmrb script)
 
