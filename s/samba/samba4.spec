@@ -50,7 +50,7 @@
 %endif
 
 Name: samba
-Version: 4.8.6
+Version: 4.9.1
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -115,6 +115,9 @@ BuildRequires: libreadline-devel
 BuildRequires: libldap-devel
 BuildRequires: libpopt-devel
 BuildRequires: zlib-devel
+BuildRequires: libarchive-devel
+BuildRequires: libjansson-devel
+BuildRequires: libgpgme-devel
 BuildRequires: glibc-devel glibc-kernheaders
 # BuildRequires: libbsd-devel
 # https://bugzilla.samba.org/show_bug.cgi?id=9863
@@ -148,7 +151,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-BuildRequires: libldb-devel >= 1.3.6
+BuildRequires: libldb-devel >= 1.4.2
 BuildRequires: python-module-pyldb-devel
     %if_with python3
 BuildRequires: python3-module-pyldb-devel
@@ -376,27 +379,23 @@ Requires: %name-libs = %EVR
 %add_python3_req_skip dsdb
 %add_python3_req_skip param
 %add_python3_req_skip passdb
-%add_python3_req_skip samba.dbchecker
-%add_python3_req_skip samba.drs_utils
 %add_python3_req_skip samba.dsdb
-%add_python3_req_skip samba.kcc
-%add_python3_req_skip samba.kcc.kcc_utils
-%add_python3_req_skip samba.kcc.graph_utils
-%add_python3_req_skip samba.messaging
-%add_python3_req_skip samba.ms_schema
-%add_python3_req_skip samba.netcmd
-%add_python3_req_skip samba.netbios
-%add_python3_req_skip samba.netcmd.common
-%add_python3_req_skip samba.netcmd.fsmo
-%add_python3_req_skip samba.xattr_native
 
 # Python3 not fully migrated yet
 %add_python3_req_skip ConfigParser
 %add_python3_req_skip StringIO
 
 %description -n python3-module-%name
-The %name-python3 package contains the Python3 libraries needed by programs
+The python3-module-%name package contains the Python3 libraries needed by programs
 that use SMB, RPC and other Samba provided protocols in Python3 programs.
+
+%package -n python3-module-%name-devel
+Summary: Samba Python3 development libraries
+Group: Development/Other
+Requires: python3-module-%name = %version-%release
+
+%description -n python3-module-%name-devel
+The python3-module-%name-devel package contains the Python3 libraries development files.
 %endif
 
 %package devel
@@ -748,7 +747,6 @@ subst 's,Type=notify,Type=forking,' %buildroot%_unitdir/*.service
 %if_with clustering_support
 install -m755 %SOURCE12 %buildroot%_initrddir/ctdb
 install -m 0644 ctdb/config/ctdb.service %buildroot%_unitdir
-install -m 0644 ctdb/config/ctdbd.conf %buildroot%_sysconfdir/sysconfig/ctdb
 echo "d /var/run/ctdb 755 root root" >> %buildroot%_tmpfilesdir/ctdb.conf
 touch %buildroot%_sysconfdir/ctdb/nodes
 %endif
@@ -786,54 +784,6 @@ ln -s %_bindir/smbspool %buildroot%{cups_serverbin}/backend/smb
 rm -rf %buildroot%python_sitelibdir/samba/{tests,external/subunit,external/testtool}
 %if_with python3
 rm -rf %buildroot%python3_sitelibdir/samba/{tests,external/subunit,external/testtool}
-# remove python files with bad syntax because samba hasn't full Python3 support
-filenames=$(echo "
-dbchecker.py
-drs_utils.py
-join.py
-kcc/graph_utils.py
-kcc/__init__.py
-kcc/kcc_utils.py
-kcc/ldif_import_export.py
-ms_display_specifiers.py
-ms_schema.py
-netcmd/common.py
-netcmd/delegation.py
-netcmd/dns.py
-netcmd/domain.py
-netcmd/drs.py
-netcmd/fsmo.py
-netcmd/gpo.py
-netcmd/group.py
-netcmd/__init__.py
-netcmd/ldapcmp.py
-netcmd/ntacl.py
-netcmd/rodc.py
-netcmd/sites.py
-netcmd/testparm.py
-netcmd/user.py
-ntacls.py
-provision/backend.py
-provision/__init__.py
-provision/sambadns.py
-remove_dc.py
-sites.py
-subnets.py
-upgradehelpers.py
-upgrade.py
-web_server/__init__.py
-")
-
-for file in $filenames; do
-    filename="%buildroot%python3_sitelibdir/samba/$file"
-    if python3 -c "with open('$filename') as f: compile(f.read(), '$file', 'exec')"; then
-        echo "python3 compilation of $file succeeded unexpectedly"
-        exit 1
-    else
-        echo "python3 compilation of $file failed, removing"
-        rm "$filename"
-    fi
-done
 %endif
 
 # remove cmocka library
@@ -901,7 +851,7 @@ TDB_NO_FSYNC=1 %make_build test
 %doc examples/printer-accounting examples/printing
 %doc %_defaultdocdir/%name/README.downgrade
 %_bindir/smbstatus
-%_bindir/eventlogadm
+%_sbindir/eventlogadm
 %_sbindir/nmbd
 %_sbindir/smbd
 %_libdir/samba/auth
@@ -936,9 +886,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif # ! glusterfs
 
 %if_without dc
-%_sbindir/samba_gpoupdate
+%_sbindir/samba-gpupdate
 %if_with doc
-%_man8dir/samba_gpoupdate.8*
+%_man8dir/samba-gpupdate.8*
 %endif #doc
 
 %files client
@@ -1202,7 +1152,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_sbindir/samba
 %_sbindir/samba_kcc
 %_sbindir/samba_dnsupdate
-%_sbindir/samba_gpoupdate
+%_sbindir/samba-gpupdate
 %_sbindir/samba_spnupdate
 %_sbindir/samba_upgradedns
 %_sbindir/upgradeprovision
@@ -1217,14 +1167,14 @@ TDB_NO_FSYNC=1 %make_build test
 %if_with doc
 %_man8dir/samba.8*
 %_man8dir/samba-tool.8*
-%_man8dir/samba_gpoupdate.8*
+%_man8dir/samba-gpupdate.8*
 %endif #doc
 %else
 %doc %_defaultdocdir/%name/README.dc
 %if_with doc
 %exclude %_man8dir/samba.8*
 %exclude %_man8dir/samba-tool.8*
-%exclude %_man8dir/samba_gpoupdate.8*
+%exclude %_man8dir/samba-gpupdate.8*
 %endif #doc
 %exclude %_libdir/samba/ldb/ildap.so
 %exclude %_libdir/samba/ldb/ldbsamba_extensions.so
@@ -1340,7 +1290,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libauth-unix-token-samba4.so
 %_libdir/samba/libcluster-samba4.so
 %_libdir/samba/libdcerpc-samba4.so
-%_libdir/samba/libdsdb-garbage-collect-tombstones-samba4.so
 %_libdir/samba/libnon-posix-acls-samba4.so
 %_libdir/samba/libposix-eadb-samba4.so
 %_libdir/samba/libsamba-net-samba4.so
@@ -1348,6 +1297,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libshares-samba4.so
 %_libdir/samba/libsmbpasswdparser-samba4.so
 %_libdir/samba/libxattr-tdb-samba4.so
+%_libdir/samba/libctdb-event-client-samba4.so
 
 %if_with dc
 %_libdir/samba/libdb-glue-samba4.so
@@ -1361,6 +1311,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libkrb5-samba4.so.*
 %_libdir/samba/libroken-samba4.so.*
 %_libdir/samba/libwind-samba4.so.*
+%_libdir/samba/libscavenge-dns-records-samba4.so
 %endif
 
 %if_with libsmbclient
@@ -1410,6 +1361,12 @@ TDB_NO_FSYNC=1 %make_build test
 %if_with python3
 %files -n python3-module-%name
 %python3_sitelibdir/samba/
+%_libdir/samba/libsamba*.cpython-*.so
+%_libdir/libsamba-*.cpython-*.so.*
+
+%files -n python3-module-%name-devel
+%_pkgconfigdir/samba*.cpython-*.pc
+%_libdir/libsamba-*.cpython-*.so
 %endif
 
 %if_with doc
@@ -1497,13 +1454,11 @@ TDB_NO_FSYNC=1 %make_build test
 %if_with clustering_support
 %files -n ctdb
 #doc ctdb/README
-%config(noreplace) %_sysconfdir/sysconfig/ctdb
 %dir %_sysconfdir/ctdb
 %config(noreplace) %_sysconfdir/ctdb/nodes
 %config(noreplace) %_sysconfdir/ctdb/notify.sh
 %config(noreplace) %_sysconfdir/ctdb/debug-hung-script.sh
 %config(noreplace) %_sysconfdir/ctdb/ctdb-crash-cleanup.sh
-%config(noreplace) %_sysconfdir/ctdb/gcore_trace.sh
 %config(noreplace) %_sysconfdir/ctdb/functions
 %config(noreplace) %_sysconfdir/ctdb/debug_locks.sh
 %_sysconfdir/ctdb/statd-callout
@@ -1515,9 +1470,12 @@ TDB_NO_FSYNC=1 %make_build test
 %_sysconfdir/ctdb/nfs-checks.d
 %_sysconfdir/ctdb/nfs-linux-kernel-callout
 %_sysconfdir/sudoers.d/ctdb
-%_sysconfdir/ctdb/events.d
-%dir %_sysconfdir/ctdb/notify.d
-%_sysconfdir/ctdb/notify.d/README
+%dir %_sysconfdir/ctdb/events
+%dir %_sysconfdir/ctdb/events/notification
+%dir %_sysconfdir/ctdb/events/legacy
+%_sysconfdir/ctdb/events/notification/README
+%dir %_datadir/ctdb/events/legacy
+%_datadir/ctdb/events/legacy/*.script
 %_sbindir/ctdbd
 %_sbindir/ctdbd_wrapper
 %_bindir/ctdb
@@ -1525,8 +1483,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_bindir/ltdbtool
 %_bindir/onnode
 %_bindir/ping_pong
-%_libexecdir/ctdb/ctdb_event
-%_libexecdir/ctdb/ctdb_eventd
+%_libexecdir/ctdb/ctdb-config
+%_libexecdir/ctdb/ctdb-event
+%_libexecdir/ctdb/ctdb-eventd
+%_libexecdir/ctdb/ctdb-path
 %_libexecdir/ctdb/ctdb_killtcp
 %_libexecdir/ctdb/ctdb_lock_helper
 %_libexecdir/ctdb/ctdb_lvs
@@ -1544,7 +1504,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_man1dir/ping_pong.1*
 %_man1dir/ctdb_diagnostics.1*
 %_man1dir/ctdbd_wrapper.1*
-%_man5dir/ctdbd.conf.5*
+%_man5dir/ctdb.conf.5*
+%_man5dir/ctdb-script.options.5*
+%_man5dir/ctdb.sysconfig.5*
 %_man7dir/ctdb.7*
 %_man7dir/ctdb-tunables.7*
 %_man7dir/ctdb-statistics.7*
@@ -1555,14 +1517,19 @@ TDB_NO_FSYNC=1 %make_build test
 %_bindir/ctdb_run_tests
 %_bindir/ctdb_run_cluster_tests
 %_datadir/ctdb/tests
-%doc ctdb/tests/README
 %endif
 
 %changelog
+* Wed Oct 17 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.9.1-alt1
+- Rebuild latest release of Samba 4.9 without ubt macros
+
 * Thu Oct 11 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.8.6-alt1
 - Update to latest autumn release
 - Disable ubt macros due binary package identity changes
 - Remove depcrecated libntdb options from spec
+
+* Mon Sep 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.9.1-alt1%ubt
+- Update to latest release of Samba 4.9
 
 * Fri Aug 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.8.5-alt1%ubt
 - Update to latest summer release
