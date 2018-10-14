@@ -2,7 +2,7 @@
 
 Name: fonts-ttf-%fname
 Version: 7.2
-Release: alt3
+Release: alt3.qa1
 
 Summary: GOST TrueType fonts
 Summary (ru_RU.KOI8-R): ˚“…∆‘Ÿ GOST TrueType
@@ -44,16 +44,13 @@ cp %SOURCE2 README.koi8-r.txt
 %install
 %ttf_fonts_install %fname
 
-%post
-%post_fonts
-
-%postun
-%postun_fonts
-		
 %files -f %fname.files
 %doc README.koi8-r.txt
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 7.2-alt3.qa1
+- NMU: applied repocop patch
+
 * Wed Sep 05 2007 Vitaly Lipatov <lav@altlinux.ru> 7.2-alt3
 - rebuild with new rpm-build-fonts 0.3
 - add require fontconfig 2.4.2
