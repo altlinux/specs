@@ -4,7 +4,7 @@
 %define modulename patch
 Name: python-module-patch
 Version: 1.16
-Release: alt1
+Release: alt1.qa1
 
 Summary: Library to parse and apply unified diffs
 
@@ -19,7 +19,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/techtonik/python-patch/archive/%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -52,7 +52,7 @@ cp -fR . ../python3
 %install
 install -D -m755 patch.py %buildroot%python_sitelibdir/patch.py
 install -D -m755 patch.py %buildroot%python3_sitelibdir/patch.py
-%__subst "s|^#!/usr/bin/env python$|#!/usr/bin/python3|g" %buildroot%python3_sitelibdir/patch.py
+sed -i "s|^#!/usr/bin/env python$|#!/usr/bin/python3|g" %buildroot%python3_sitelibdir/patch.py
 
 %files
 %doc README.md doc/
@@ -66,6 +66,9 @@ install -D -m755 patch.py %buildroot%python3_sitelibdir/patch.py
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1.qa1
+- NMU: applied repocop patch
+
 * Fri Dec 01 2017 Vitaly Lipatov <lav@altlinux.ru> 1.16-alt1
 - initial build for ALT Sisyphus
 
