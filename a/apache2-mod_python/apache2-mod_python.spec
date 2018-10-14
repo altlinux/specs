@@ -13,7 +13,7 @@
 %define python_bindir %apache2_htdocsdir/%module_name
 Name: apache2-mod_python%__python_package_version
 Version: 3.5.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Python module for Apache2
 Group: System/Servers
@@ -28,7 +28,7 @@ Source3: python.start
 Patch0: nogit.patch
 
 BuildPreReq: rpm-build-apache2 >= %a2_version
-BuildRequires: flex python-dev python-modules-encodings
+BuildRequires: flex python-devel python-modules-encodings
 BuildRequires: apache2-devel >= %a2_version
 BuildRequires: rpm-build-python >= 0.21-alt1
 BuildRequires: python-base >= 2.4.4
@@ -93,7 +93,7 @@ done
 ln -s %_docdir/%modname-%version %buildroot%apache2_htdocsaddondir/%modname
 
 ### Creating mptest.py
-%__cat <<EOF >mptest.py
+cat <<EOF >mptest.py
 from mod_python import apache
 
 def handler(req):
@@ -160,6 +160,9 @@ fi
 %_docdir/%modname-%version
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.5.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Wed Apr 06 2016 Sergey Alembekov <rt@altlinux.ru> 3.5.0-alt1
 - new version
 - rebuild with apache 2.4
