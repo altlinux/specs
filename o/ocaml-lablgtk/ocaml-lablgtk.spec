@@ -2,7 +2,7 @@
 
 Name: ocaml-lablgtk
 Version: 2.18.6
-Release: alt2
+Release: alt2.qa1
 
 Summary: Objective Caml interface to gtk+
 
@@ -42,6 +42,7 @@ gtk+.
 Group: Development/ML
 Summary: Documentation for LablGTK
 Requires: %name = %version-%release
+BuildArch: noarch
 
 %description doc
 Documentation for %name.
@@ -135,6 +136,9 @@ find examples -name .cvsignore -exec rm {} \;
 %doc examples doc/html
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.18.6-alt2.qa1
+- NMU: applied repocop patch
+
 * Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 2.18.6-alt2
 - rebuilt with ocaml-4.07
 
