@@ -6,7 +6,7 @@
 Name: python-module-%mname
 Epoch: 1
 Version: 40.4.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -19,7 +19,7 @@ Obsoletes: python-module-distribute <= 0.6.35-alt1
 
 Requires: python-module-pkg_resources = %EVR
 # setuptools has commands for doing binary builds; for them to work always:
-Requires: python-dev
+Requires: python-devel
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -51,7 +51,7 @@ BuildRequires: python3-module-contextlib2
 BuildRequires: python3-module-pytest-fixture-config
 BuildRequires: python3-module-pytest-flake8
 # For the tests of the setuptools commands to do binary builds:
-BuildPreReq: python-dev
+BuildPreReq: python-devel
 BuildPreReq: python3-dev
 %endif
 
@@ -208,6 +208,9 @@ popd
 %python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:40.4.3-alt1.qa1
+- NMU: applied repocop patch
+
 * Sun Oct 07 2018 Stanislav Levin <slev@altlinux.org> 1:40.4.3-alt1
 - 39.2.0 -> 40.4.3.
 
