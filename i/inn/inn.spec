@@ -2,7 +2,7 @@
 
 Name: inn
 Version: 2.6.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: The InterNetNews (INN) system, an Usenet news server
 License: GPL
@@ -42,7 +42,7 @@ Requires: webserver-common
 BuildRequires: ctags flex gnupg  su tcl time uucp wget gawk ncompress perl-podlators
 BuildRequires: libkrb5-devel libpam-devel libssl-devel libsasl2-devel libdb4-devel libe2fs-devel
 BuildRequires: perl-devel perl-libnet perl-Math-BigInt perl-Encode perl-MIME-tools perl-GD-Text
-BuildRequires: python-base python-dev python-modules-compiler python-modules-encodings
+BuildRequires: python-base python-devel python-modules-compiler python-modules-encodings
 
 %description
 INN (InterNetNews) is a complete system for serving Usenet news and/or
@@ -450,6 +450,9 @@ fi
 %_bindir/inews
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.6.2-alt1.qa1
+- NMU: applied repocop patch
+
 * Tue Sep 25 2018 Sergey Y. Afonin <asy@altlinux.ru> 2.6.2-alt1
 - 2.6.2 (Closes: #30478)
 - updated URL (Closes: #30478)
