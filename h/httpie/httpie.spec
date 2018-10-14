@@ -5,7 +5,7 @@
 
 Name: httpie
 Version: 0.9.9
-Release: alt1
+Release: alt1.qa1
 Summary: A Curl-like tool for humans
 
 Group: Networking/WWW
@@ -13,7 +13,7 @@ License: BSD
 Url: http://httpie.org
 Source0: %name-%version.tar
 Patch0: %name-%version-system-urllib3.patch
-BuildRequires: python-dev python-module-Pygments python-module-requests help2man python-module-setuptools rpm-build-python python-modules-json
+BuildRequires: python-devel python-module-Pygments python-module-requests help2man python-module-setuptools rpm-build-python python-modules-json
 BuildArch: noarch
 
 Requires: python-module-requests >= 2.11.0
@@ -106,6 +106,9 @@ help2man --no-discard-stderr %buildroot/%_bindir/http.python3 > %buildroot/%_man
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.9-alt1.qa1
+- NMU: applied repocop patch
+
 * Fri Sep 21 2018 Terechkov Evgenii <evg@altlinux.org> 0.9.9-alt1
 - 0.9.9
 
