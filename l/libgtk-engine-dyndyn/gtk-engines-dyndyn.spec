@@ -3,7 +3,7 @@
 
 Name: %engine_prefix-%_name
 Version: 0.1
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: DynDyn GTK2 engine
 Summary(ru_RU.UTF-8):Модуль прорисовки DynDny для GTK2
@@ -31,7 +31,7 @@ A cairo GTK+2 themes that features Dynamic widgets, meaning each widget will be 
 %patch -p2
 
 %build
-#%__autoreconf
+#%autoreconf
 %configure --enable-animation
 %make
 
@@ -45,6 +45,9 @@ A cairo GTK+2 themes that features Dynamic widgets, meaning each widget will be 
 %exclude %engines_dir/*.la
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1.1.qa1
+- NMU: applied repocop patch
+
 * Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.1
 - Fixed build
 
