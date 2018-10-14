@@ -4,7 +4,7 @@
 Name: libdbi
 Epoch: 1
 Version: 0.9.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Database Independent Abstraction Layer for C
 License: LGPL
@@ -29,7 +29,7 @@ connections by using this framework.
 %package -n %develname
 Summary: Library and header files for the %name library
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n %develname
 libdbi implements a database-independent abstraction layer in C, similar to the
@@ -42,7 +42,7 @@ This package contains the header files.
 %package -n %develname-static
 Summary: Statis library for the %name library
 Group: Development/C
-Requires: %develname = %version-%release
+Requires: %develname = %EVR
 
 %description -n %develname-static
 libdbi implements a database-independent abstraction layer in C, similar to the
@@ -86,6 +86,9 @@ sed -i 's,-O20,-O2,g' configure*
 %_libdir/*.a
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.9.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.9.0-alt1
 - Updated to upstream release version 0.9.0.
 
