@@ -6,7 +6,7 @@
 
 Name: radvd
 Version: 2.17
-Release: alt1
+Release: alt1.qa1
 
 Summary: A Router Advertisement daemon
 # The code includes the advertising clause, so it's GPL-incompatible
@@ -60,7 +60,7 @@ mkdir -p %buildroot/var/run/radvd
 install -m 644 redhat/radvd.conf.empty %buildroot%_sysconfdir/radvd.conf
 install -m 755 %SOURCE1 %buildroot%_initdir/radvd
 install -m 644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/radvd
-install -Dm0644 %SOURCE3 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+install -Dm0644 %SOURCE3 %buildroot%_tmpfilesdir/%name.conf
 
 %post
 %post_service %name
@@ -77,7 +77,7 @@ install -Dm0644 %SOURCE3 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 %doc COPYRIGHT README CHANGES INTRO.html TODO
 %config(noreplace) %_sysconfdir/%name.conf
 %config(noreplace) %_sysconfdir/sysconfig/%name
-%config %_sysconfdir/tmpfiles.d/%name.conf
+%config %_tmpfilesdir/%name.conf
 %config %systemd_unitdir/%name.service
 %_initdir/%name
 %dir %attr(0771,root,%_pseudouser_group) /var/run/radvd/
@@ -87,6 +87,9 @@ install -Dm0644 %SOURCE3 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 %_sbindir/radvdump
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.17-alt1.qa1
+- NMU: applied repocop patch
+
 * Fri Jul 14 2017 Mikhail Efremov <sem@altlinux.org> 2.17-alt1
 - Updated to 2.17.
 
