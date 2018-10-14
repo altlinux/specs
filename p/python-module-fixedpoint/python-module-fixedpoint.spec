@@ -2,7 +2,7 @@
 Summary: A fixed point arithmatic class for python
 Name: python-module-fixedpoint
 Version: 0.1.2
-Release: alt2.1.1
+Release: alt2.1.1.qa1
 License: Distributable
 Group: Development/Python
 Url: http://fixedpoint.sourceforge.net/
@@ -11,7 +11,7 @@ Packager: Boris Savelev <boris@altlinux.org>
 Source: http://download.sourceforge.net/sourceforge/%oname/%oname.%version.tar.gz
 
 # Automatically added by buildreq on Sun Jan 25 2009
-BuildRequires: python-dev
+BuildRequires: python-devel
 
 %description
 FixedPoint is a python module to provide a fixed point arithmatic
@@ -35,6 +35,9 @@ install -m644 %oname.* %buildroot%python_sitelibdir/
 %python_sitelibdir/%oname.*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt2.1.1.qa1
+- NMU: applied repocop patch
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.2-alt2.1.1
 - Rebuild with Python-2.7
 
