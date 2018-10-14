@@ -1,7 +1,7 @@
 Name: gforth
 %define Name GNU Forth
 Version: 0.7.3
-Release: alt3
+Release: alt3.qa1
 License: %gpl3plus
 Group: Development/Other
 Summary: GNU implementation of the ANS Forth language
@@ -354,6 +354,10 @@ cd %buildroot%_datadir/%name/%version
 %_miconsdir/*
 %_desktopdir/*
 %_includedir/gforth/%version
+# The package does not own its own docdir subdirectory.
+# The line below is added by repocop to fix this bug in a straightforward way. 
+# Another way is to rewrite the spec to use relative doc paths.
+%dir %_docdir/gforth-%version 
 
 %files info
 %_infodir/[^d]*
@@ -380,6 +384,9 @@ cd %buildroot%_datadir/%name/%version
 %_emacslispdir/*.el
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.3-alt3.qa1
+- NMU: applied repocop patch
+
 * Tue Aug 14 2018 Fr. Br. George <george@altlinux.ru> 0.7.3-alt3
 - Fix info (closes: #34310)
 
