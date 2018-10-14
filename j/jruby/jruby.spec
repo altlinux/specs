@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jruby
 Version:        1.7.22
-Release:        alt1_6jpp8.qa1
+Release:        alt1_6jpp8.qa2
 Summary:        Pure Java implementation of the Ruby interpreter
 # (CPL or GPLv2+ or LGPLv2+) - JRuby itself
 # BSD - some files under lib/ruby/shared
@@ -105,7 +105,7 @@ Standard Libraries.
 Group: Development/Java
 Summary:        JRuby development environment
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires: rpm-macros-%{name} = %{version}-%{release}
+Requires: rpm-macros-%{name} = %{EVR}
 
 %description    devel
 Macros for building JRuby-specific libraries.
@@ -275,6 +275,9 @@ EOF
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.22-alt1_6jpp8.qa2
+- NMU: applied repocop patch
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.7.22-alt1_6jpp8.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
