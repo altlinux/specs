@@ -6,7 +6,7 @@
 Name: python-module-%module_name
 Epoch: 1
 Version: 0.999999999
-Release: alt4
+Release: alt4.qa1
 
 Summary: Library for working with HTML5 documents
 
@@ -21,7 +21,7 @@ Source: %module_name-%version.tar
 %{?_with_doc:BuildRequires(pre): rpm-macros-sphinx}
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
-BuildRequires: python-dev
+BuildRequires: python-devel
 BuildRequires: python-module-setuptools >= 18.5
 BuildRequires: python2.7(webencodings)
 BuildRequires: python2.7(pytest) python2.7(six) python2.7(mock)
@@ -175,6 +175,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.999999999-alt4.qa1
+- NMU: applied repocop patch
+
 * Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.999999999-alt4
 - Updated build dependencies.
 
