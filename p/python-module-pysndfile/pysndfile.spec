@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt2
+Release: alt2.qa1
 Summary: Cython wrapper class for reading/writing soundfiles using libsndfile
 License: LGPLv3
 Group: Development/Python
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/pysndfile/
 Source: %oname-%version.tar
 
 BuildRequires: gcc-c++ libsndfile-devel
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-Cython libnumpy-devel python-module-numpy-testing
 BuildRequires: python-module-html5lib python-module-notebook
 %if_with python3
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2.qa1
+- NMU: applied repocop patch
+
 * Wed May 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt2
 - Rebuilt without clang.
 
