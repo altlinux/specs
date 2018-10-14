@@ -15,7 +15,7 @@ Summary(pt): Um editor de esquemas eléctricos
 Summary(ru): Редактор электрических схем
 
 Version:     0.6
-Release:     alt2
+Release:     alt2.qa1
 Epoch:	     1
 
 Group:       Engineering
@@ -39,7 +39,7 @@ BuildRequires:    libqt5-network
 BuildRequires:    libqt5-widgets
 BuildRequires:    libqt5-printsupport
 
-Requires:         qelectrotech-symbols = %version-%release
+Requires:         qelectrotech-symbols = %EVR
 Requires:         qt5-translations
 
 %description
@@ -101,7 +101,7 @@ Summary(ru): Коллекция элементов для QElectroTech
 Group:       Engineering
 License:     CC-BY
 BuildArch:   noarch
-Requires:    qelectrotech = %version-%release
+Requires:    qelectrotech = %EVR
 
 
 %description symbols
@@ -184,6 +184,9 @@ rm -f %buildroot%_datadir/%name/lang/qt_*.qm
 %_datadir/%name/titleblocks
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.6-alt2.qa1
+- NMU: applied repocop patch
+
 * Wed Oct 03 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.6-alt2
 - Fix build with Qt 5.11.
 
