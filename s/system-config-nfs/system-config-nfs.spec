@@ -1,7 +1,7 @@
 Summary: NFS server configuration tool
 Name: system-config-nfs
 Version: 1.3.51
-Release: alt2.1
+Release: alt2.1.qa1
 Url: http://fedorahosted.org/%name
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -10,7 +10,7 @@ BuildArch: noarch
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 Source: %name-%version.tar
-BuildRequires: desktop-file-utils intltool python-dev
+BuildRequires: desktop-file-utils intltool python-devel
 
 Requires: nfs-utils consolehelper
 
@@ -72,6 +72,9 @@ EOF
 %config(noreplace) %_sysconfdir/pam.d/system-config-nfs
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.51-alt2.1.qa1
+- NMU: applied repocop patch
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.3.51-alt2.1
 - Rebuild with Python-2.7
 
