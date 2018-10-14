@@ -3,7 +3,7 @@
 
 Name: fonts-ttf-%fname
 Version: 1.1.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: modified version of Inconsolata with added the Cyrillic alphabet
 License:  OFL
@@ -36,15 +36,12 @@ Greek.
 %install
 %ttf_fonts_install %fname
 
-%post
-%post_fonts
-
-%postun
-%postun_fonts
-
 %files -f %fname.files
 %doc README
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Sat Apr 6 2013 Vladimir Didenko <cow@altlinux.ru> 1.1.0-alt1
 - first build for Sisiphus - git20130314
