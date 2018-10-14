@@ -4,7 +4,7 @@
 %define oname constantly
 Name: python-module-%oname
 Version: 15.1.0
-Release: alt5
+Release: alt5.qa1
 
 Summary: Symbolic constants in Python
 
@@ -16,7 +16,7 @@ BuildArch: noarch
 # https://github.com/twisted/constantly.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(json)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -92,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 15.1.0-alt5.qa1
+- NMU: applied repocop patch
+
 * Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 15.1.0-alt5
 - Updated build dependencies.
 
