@@ -1,6 +1,6 @@
 Name: asymptote
 Version: 2.44
-Release: alt1
+Release: alt1.qa1
 
 Summary: Descriptive vector graphics language
 
@@ -37,6 +37,7 @@ that LaTeX does for scientific text.
 %package doc
 Summary: Documentation and examples for %name
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 Documentation and examples for %name.
@@ -47,7 +48,7 @@ Documentation and examples for %name.
 #patch1 -p2
 #patch2 -p2
 # some incompatibilities?
-%__subst "s|@printindex cp||g" doc/%name.texi
+sed -i "s|@printindex cp||g" doc/%name.texi
 
 # sure we do not using internal libgc
 rm -fv *.tar.gz
@@ -79,6 +80,9 @@ rm -fv *.tar.gz
 %_infodir/%name/*.info*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.44-alt1.qa1
+- NMU: applied repocop patch
+
 * Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 2.44-alt1
 - new version 2.44 (with rpmrb script)
 
