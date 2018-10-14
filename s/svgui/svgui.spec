@@ -2,7 +2,7 @@
 
 Name: svgui
 Version: 2.1
-Release: alt2.hg20140912.1
+Release: alt2.hg20140912.1.qa1
 Summary: SV GUI Library
 License: GPLv2
 Group: Sound
@@ -45,6 +45,7 @@ This package contains development files of lib%name.
 %package -n lib%name-devel-docs
 Summary: Documentation for SV GUI Library
 Group: Development/Documentation
+BuildArch: noarch
 #BuildArch: noarch
 
 %description -n lib%name-devel-docs
@@ -96,6 +97,9 @@ doxygen
 %doc doc/html/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.1-alt2.hg20140912.1.qa1
+- NMU: applied repocop patch
+
 * Thu Jun 11 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1-alt2.hg20140912.1
 - Rebuilt for gcc5 C++11 ABI.
 
