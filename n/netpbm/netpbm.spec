@@ -2,7 +2,7 @@
 
 Name: netpbm
 Version: 10.35.97
-Release: alt1
+Release: alt1.qa1
 
 Summary: Tools for manipulating graphics files in netpbm supported formats
 License: BSD-like
@@ -74,6 +74,7 @@ BuildRequires: flex libjasper-devel libjbig-devel >= 2.0 libjpeg-devel libpng12-
 %package doc
 Summary: Tools for manipulating graphics files in netpbm supported formats
 Group: Documentation
+BuildArch: noarch
 
 %package -n lib%name
 Summary: A library for handling different graphics file formats
@@ -312,6 +313,9 @@ cp -a userguide %buildroot%pkgdocdir/html
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 10.35.97-alt1.qa1
+- NMU: applied repocop patch
+
 * Mon Nov 16 2015 Fr. Br. George <george@altlinux.ru> 10.35.97-alt1
 - Autobuild version bump to 10.35.97
 
