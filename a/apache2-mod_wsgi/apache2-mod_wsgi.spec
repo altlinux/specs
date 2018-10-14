@@ -4,7 +4,7 @@
 
 Name: apache2-mod_wsgi
 Version: 4.6.4
-Release: alt2
+Release: alt2.qa1
 
 Summary: Python WSGI module for Apache2
 Group: System/Servers
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 Patch0: 0001-Add-basic-tests.patch
 
 BuildRequires(pre): apache2-devel
-BuildRequires: python-dev
+BuildRequires: python-devel
 BuildRequires: python3-dev
 
 %if_with check
@@ -94,6 +94,9 @@ popd
 %config(noreplace) %apache2_mods_available/wsgi-py3.load
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.6.4-alt2.qa1
+- NMU: applied repocop patch
+
 * Fri Jun 01 2018 Stanislav Levin <slev@altlinux.org> 4.6.4-alt2
 - Build with python3
 - Add basic tests
