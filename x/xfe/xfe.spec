@@ -1,6 +1,6 @@
 Name: xfe
 Version: 1.42
-Release: alt1
+Release: alt1.qa1
 
 Summary: MS-Explorer or Commander like file manager for X
 License: GPLv2+
@@ -49,6 +49,15 @@ desktop-file-install --dir %buildroot%_desktopdir \
         --remove-category=Utility \
         --add-category=Settings \
         %buildroot%_desktopdir/xfp.desktop
+desktop-file-install --dir %buildroot%_desktopdir \
+	--remove-category=Utility \
+	--add-category=Graphics \
+	--add-category=RasterGraphics \
+	--add-category=2DGraphics \
+	--remove-mime-type=text/plain \
+	--add-mime-type=inage/jpg \
+	--add-mime-type=inage/png \
+	%buildroot%_desktopdir/xfi.desktop
 
 %files -f %name.lang
 %doc AUTHORS COPYING README TODO BUGS
@@ -60,6 +69,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.42-alt1.qa1
+- NMU: applied repocop patch
+
 * Tue Oct 10 2017 Mike Radyuk <torabora@altlinux.org> 1.42-alt1
 - New version (closes: #25570, #27616)
 
