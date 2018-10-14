@@ -1,4 +1,4 @@
-Serial: 51104
+Epoch: 51104
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 Summary:		Minisip library providing various C++ utility classes
 Name:			libmutil
 Version:		0.8.0
-Release:		alt4_0.7.20100319svn3760.1
+Release:		alt4_0.7.20100319svn3760.1.qa1
 License:		LGPLv2+
 URL:			http://www.minisip.org/
 Group:			System/Libraries
@@ -75,6 +75,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 51104:0.8.0-alt4_0.7.20100319svn3760.1.qa1
+- NMU: applied repocop patch
+
 * Wed Sep 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 51104:0.8.0-alt4_0.7.20100319svn3760.1
 - NMU: fixed build with new automake.
 
