@@ -1,6 +1,6 @@
 Name:		SNNS-Manual
 Version:	4.2
-Release:	alt2
+Release:	alt2.qa1
 Summary:	Printable documentation for Stuttgart Neural Network Simulator
 Group:		Sciences/Computer science
 License:	LGPL
@@ -11,6 +11,7 @@ Packager:	Fr. Br. George <george@altlinux.ru>
 
 # Automatically added by buildreq on Mon Mar 01 2010
 BuildRequires: fonts-type1-cm-super-pfb ghostscript-classic texlive-pictures
+BuildArch: noarch
 
 %description
 Printable documentation for Stuttgart Neural Network Simulator
@@ -37,6 +38,9 @@ mkdir -p %buildroot
 %doc UserManual.pdf UserManual.ps UserManual.dvi README
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.2-alt2.qa1
+- NMU: applied repocop patch
+
 * Mon Mar 01 2010 Fr. Br. George <george@altlinux.ru> 4.2-alt2
 - Use more accurate dependencies
 - Enable PDF version
