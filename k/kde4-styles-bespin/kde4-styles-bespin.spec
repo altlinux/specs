@@ -5,7 +5,7 @@
 Name: kde4-styles-bespin
 Summary: Bespin is a native style for QT/ KDE4
 Version: 0.1.0.%svn_rev
-Release: alt1
+Release: alt1.qa1
 Url:     http://cloudcity.sourceforge.net/
 Group:   Graphical desktop/KDE
 License: LGPLv2
@@ -114,6 +114,7 @@ This package provide a Bespin widgets theme
 Summary: Bespin icons theme
 Group: Graphical desktop/KDE
 Requires: %name-common
+BuildArch: noarch
 %description -n icon-theme-bespin
 This package provide a Bespin icons theme
 
@@ -222,6 +223,9 @@ popd
 %_iconsdir/Bespin/
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.0.1658-alt1.qa1
+- NMU: applied repocop patch
+
 * Mon Apr 08 2013 Andrey Cherepanov <cas@altlinux.org> 0.1.0.1658-alt1
 - New SVN snapshot
 
