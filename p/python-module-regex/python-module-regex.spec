@@ -4,7 +4,7 @@
 %define modulename regex
 Name: python-module-regex
 Version: 2018.02.21
-Release: alt1
+Release: alt1.qa1
 
 Summary: Alternative regular expression module, to replace re
 
@@ -18,7 +18,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://pypi.io/packages/source/r/%modulename/%modulename-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -80,6 +80,9 @@ rm -rf %buildroot/%python3_sitelibdir/test_*
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2018.02.21-alt1.qa1
+- NMU: applied repocop patch
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 2018.02.21-alt1
 - new version 2018.02.21 (with rpmrb script)
 
