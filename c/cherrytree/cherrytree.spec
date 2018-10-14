@@ -1,6 +1,6 @@
 Name: cherrytree
 Version: 0.38.5
-Release: alt1
+Release: alt1.qa1
 
 Summary: Hierarchical note taking application
 Summary(ru_RU.UTF-8):  Записная книжка иерархической структуры для заметок
@@ -16,7 +16,7 @@ Patch: categories.patch
 
 BuildArch: noarch
 
-BuildRequires: python-dev
+BuildRequires: python-devel
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
 
@@ -73,6 +73,9 @@ rm -rf %buildroot%python_sitelibdir_noarch/
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.38.5-alt1.qa1
+- NMU: applied repocop patch
+
 * Wed Sep 12 2018 Konstantin Artyushkin <akv@altlinux.org> 0.38.5-alt1
 - new version
 
