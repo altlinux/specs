@@ -7,7 +7,7 @@
 %define modulename m2r
 Name: python-module-m2r
 Version: 0.11
-Release: alt1
+Release: alt1.qa1
 
 Summary: Markdown to reStructuredText converter
 
@@ -21,7 +21,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/miyakogi/%{github_name}/archive/%{commit}/%{github_name}-%{commit}.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-docutils
 BuildRequires: python-module-mistune
 BuildRequires: python-module-Pygments
@@ -87,6 +87,9 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1.qa1
+- NMU: applied repocop patch
+
 * Tue Nov 07 2017 Vitaly Lipatov <lav@altlinux.ru> 0.11-alt1
 - new version 0.11 (with rpmrb script)
 
