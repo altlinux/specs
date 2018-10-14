@@ -1,6 +1,6 @@
 Name: mytetra
 Version: 1.42.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: Simple cross-platform manager for data collecting
 Summary(ru_RU.UTF-8): несложный кроссплатформенный менеджер накопления информации
@@ -47,6 +47,9 @@ qmake-qt5 %name.pro
 %install
 %makeinstall_std INSTALL_ROOT=%buildroot BINARY_INSTALL_PATH=%_bindir install
 rm -f %buildroot/usr/share/icons/hicolor/scalable/apps/mytetra.svg
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=TextTools \
+	%buildroot%_desktopdir/mytetra.desktop
 
 %files
 %doc readme.txt
@@ -55,6 +58,9 @@ rm -f %buildroot/usr/share/icons/hicolor/scalable/apps/mytetra.svg
 %_liconsdir/%name.png
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.42.2-alt1.qa1
+- NMU: applied repocop patch
+
 * Mon Jan 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.42.2-alt1
 - Build new version (Closes: #34426).
 - Transfer to qt5.
