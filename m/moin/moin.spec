@@ -1,7 +1,7 @@
 Summary: MoinMoin is a Python clone of WikiWiki
 Name: moin
 Version: 1.9.9
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: Networking/Other
 Url: http://moinmo.in/
@@ -10,7 +10,7 @@ Source1: moin-instance-setup.in
 Packager: Fr. Br. George <george@altlinux.ru>
 BuildArch: noarch
 
-BuildRequires: python-dev
+BuildRequires: python-devel
 
 %define htdocs %_datadir/%name/htdocs
 
@@ -87,6 +87,9 @@ cp -a MoinMoin/web/static/htdocs %buildroot%htdocs
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.9.9-alt1.qa1
+- NMU: applied repocop patch
+
 * Mon Mar 13 2017 Fr. Br. George <george@altlinux.ru> 1.9.9-alt1
 - Autobuild version bump to 1.9.9
 
