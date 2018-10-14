@@ -1,7 +1,7 @@
 Name: amavisd-new
 Version: 2.6.6
-Release: alt3
-Serial: 1
+Release: alt3.qa1
+Epoch: 1
 
 Summary: A Mail Virus Scanner
 License: GPL
@@ -204,7 +204,7 @@ All subpackages Amavisd-new.
 mkdir -p \
 	%buildroot%_initdir \
 	%buildroot%_sysconfdir/amavis \
-	%buildroot%_sysconfdir/tmpfiles.d \
+	%buildroot%_tmpfilesdir \
 	%buildroot%_sbindir \
 	%buildroot%_bindir \
 	%buildroot%_spooldir/amavis \
@@ -241,7 +241,7 @@ install -m 0644 %SOURCE7 README.ALT.UTF
 install -m 755 %SOURCE10 %buildroot%_controldir/amavisd-av
 install -m 755 %SOURCE11 %buildroot%_controldir/amavisd-spam
 
-install -m 644 %SOURCE12 %buildroot%_sysconfdir/tmpfiles.d/amavisd.conf
+install -m 644 %SOURCE12 %buildroot%_tmpfilesdir/amavisd.conf
 
 %post
 %post_service amavisd
@@ -254,7 +254,7 @@ install -m 644 %SOURCE12 %buildroot%_sysconfdir/tmpfiles.d/amavisd.conf
 %doc LDAP.schema TODO
 %doc README.ALT.UTF README.ALT.KOI8-R
 %config %_initdir/amavisd
-%config %_sysconfdir/tmpfiles.d/amavisd.conf
+%config %_tmpfilesdir/amavisd.conf
 # %attr(640,root,mail) %config(noreplace) %_sysconfdir/amavis/amavisd.conf
 %_controldir/amavisd-*
 %attr(750,root,mail) %dir %_sysconfdir/amavis/conf.d
@@ -292,6 +292,9 @@ install -m 644 %SOURCE12 %buildroot%_sysconfdir/tmpfiles.d/amavisd.conf
 %files complete
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.6.6-alt3.qa1
+- NMU: applied repocop patch
+
 * Sun Sep 22 2013 Vladimir Lettiev <crux@altlinux.ru> 1:2.6.6-alt3
 - fixed amavisd-new with Perl 5.18
 - enable auto requires
