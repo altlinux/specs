@@ -6,7 +6,7 @@
 
 Name: sofia-sip
 Version: 1.12.11
-Release: alt2.1
+Release: alt2.1.qa1
 
 Summary: Sofia SIP User-Agent library 
 License: LGPL v2.1+
@@ -48,6 +48,7 @@ Requires: libsofia-sip-devel = %version-%release
 %package docs
 Summary: Sofia-SIP Development Manual Package
 Group: Documentation
+BuildArch: noarch
 
 %package utils
 Summary: Sofia-SIP Command Line Utilities
@@ -132,6 +133,9 @@ cp -pr libsofia-sip-ua/docs/html manual
 %_man1dir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.12.11-alt2.1.qa1
+- NMU: applied repocop patch
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.12.11-alt2.1
 - NMU: Rebuild with new openssl 1.1.0.
 
