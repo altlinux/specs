@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.8
-Release: alt1%ubt
+Release: alt1.qa1%ubt
 Summary: A library for stubbing in Python
 License: BSD
 Group: Development/Python
@@ -15,7 +15,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: python-dev python-module-pytest
+BuildRequires: python-devel python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-pytest
@@ -76,5 +76,8 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1.qa1%ubt
+- NMU: applied repocop patch
+
 * Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.8-alt1%ubt
 - Initial build for ALT.
