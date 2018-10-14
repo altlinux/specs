@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 1.0.7
-Release: alt3
+Release: alt3.qa1
 
 Summary: django-pagination allows for easy Digg-style pagination without modifying your views
 
@@ -16,7 +16,7 @@ Source: %module_name-%version.tar.gz
 
 BuildArch: noarch
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
@@ -77,6 +77,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt3.qa1
+- NMU: applied repocop patch
+
 * Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.7-alt3
 - NMU: rebuilt to regenerate dependencies.
 
