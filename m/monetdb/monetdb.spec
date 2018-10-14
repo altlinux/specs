@@ -1,6 +1,6 @@
 Name: monetdb
 Version: 11.27.11
-Release: alt1.2
+Release: alt1.2.qa1
 
 Summary: MonetDB is an open source column-oriented database management system
 License: MonetDB Public License v1.1
@@ -68,6 +68,9 @@ mkdir -p %buildroot/%_sysconfdir/logrotate.d/
 cp %SOURCE2 %buildroot/%_sysconfdir/logrotate.d/%name
 cp %buildroot/%_bindir/sqlsample.* .
 cp %buildroot/%_bindir/malsample.* .
+# sysconf/udev policy - /etc is for user
+mkdir -p %buildroot%_tmpfilesdir/
+mv %buildroot%_sysconfdir/tmpfiles.d/* %buildroot%_tmpfilesdir/
 
 %pre server
 %_sbindir/groupadd -r -f _monetdb
@@ -101,7 +104,7 @@ cp %buildroot/%_bindir/malsample.* .
 %dir %attr(0770,root,_monetdb) %_logdir/monetdb
 %_initdir/%name
 %_sysconfdir/logrotate.d/%name
-%_sysconfdir/tmpfiles.d/*
+%_tmpfilesdir/*
 %_localstatedir/monetdb5
 
 %files client
@@ -114,6 +117,9 @@ cp %buildroot/%_bindir/malsample.* .
 %doc sql/dump-restore.*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 11.27.11-alt1.2.qa1
+- NMU: applied repocop patch
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 11.27.11-alt1.2
 - NMU: Rebuild with new openssl 1.1.0.
 
