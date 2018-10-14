@@ -1,6 +1,6 @@
 Name:    guake
 Version: 3.4.0
-Release: alt1
+Release: alt1.qa1
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
 
@@ -52,6 +52,11 @@ install -Dm0644 data/autostart-guake.desktop %buildroot%_sysconfdir/xdg/autostar
 rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 
 %find_lang %name
+desktop-file-install --dir %buildroot%_desktopdir \
+	--remove-category=Utility \
+	--add-category=System \
+	--add-category=GTK \
+	%buildroot%_desktopdir/guake.desktop
 
 %files -f %name.lang
 %doc COPYING NEWS.rst README.rst
@@ -65,6 +70,9 @@ rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_datadir/glib-2.0/schemas/org.guake.gschema.xml
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Tue Oct 02 2018 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1
 - New version.
 
