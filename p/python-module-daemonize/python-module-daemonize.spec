@@ -4,7 +4,7 @@
 %define modulename daemonize
 Name: python-module-daemonize
 Version: 2.4.7
-Release: alt1
+Release: alt1.qa1
 
 Summary: Library for writing system daemons in Python
 
@@ -18,7 +18,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/thesharp/daemonize/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 
 BuildArch: noarch
 
@@ -76,6 +76,9 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.4.7-alt1.qa1
+- NMU: applied repocop patch
+
 * Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 2.4.7-alt1
 - initial build for ALT Sisyphus
 
