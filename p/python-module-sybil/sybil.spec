@@ -6,7 +6,7 @@
 
 Name:    python-module-%oname
 Version: 1.0.9
-Release: alt1
+Release: alt1.qa1
 
 Summary:  Automated testing for the examples in your documentation.
 License: MIT
@@ -15,7 +15,7 @@ URL:     https://github.com/cjw296/sybil
 
 BuildArch: noarch
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(nose.core)
 BuildRequires: python2.7(pytest)
 BuildRequires: python-module-sphinx-devel
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 1.0.9-alt1
 - 1.0.7 -> 1.0.9.
 
