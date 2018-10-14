@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 0.36.0
-Release: alt2
+Release: alt2.qa1
 Summary: Fast and direct raster I/O for use with Numpy and SciPy
 License: BSD
 Group: Development/Python
@@ -21,7 +21,7 @@ Patch1: %oname-%version-alt-setup.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: libgdal-devel libproj-nad libproj-devel gcc-c++
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-Cython libnumpy-devel ipython
 BuildRequires: python-module-affine python-module-cligj
 BuildRequires: python2.7(enum34) python-module-coveralls
@@ -176,6 +176,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.36.0-alt2.qa1
+- NMU: applied repocop patch
+
 * Wed May 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.36.0-alt2
 - Updated build and runtime dependencies.
 
