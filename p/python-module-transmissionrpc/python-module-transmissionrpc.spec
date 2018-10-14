@@ -2,7 +2,7 @@
 
 Name: python-module-%modulename
 Version: 0.10
-Release: alt1
+Release: alt1.qa1
 
 Summary: Python module that implements the Transmission bittorent client RPC protocol
 
@@ -18,7 +18,7 @@ BuildArch: noarch
 
 %setup_python_module %modulename
 
-BuildRequires: python-dev python-module-distribute python-module-six
+BuildRequires: python-devel python-module-distribute python-module-six
 
 %description
 This is transmissionrpc. This module helps using Python to connect to a Transmission JSON-RPC service.
@@ -38,5 +38,8 @@ transmissionrpc is compatible with Transmission 1.31 and later.
 %python_sitelibdir/%modulename-%version-*.egg-info
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1.qa1
+- NMU: applied repocop patch
+
 * Tue Oct 08 2013 Vitaly Lipatov <lav@altlinux.ru> 0.10-alt1
 - initial build for ALT Linux Sisyphus
