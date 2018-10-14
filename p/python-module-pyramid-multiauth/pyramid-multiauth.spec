@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        0.9.0
-Release:        alt1
+Release:        alt1.qa1
 Summary:        Stacked authentication policies for pyramid
 Group:          Development/Python
 License:        MPL-2.0
@@ -14,7 +14,7 @@ BuildArch:      noarch
 # https://github.com/mozilla-services/pyramid_multiauth.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools python2.7(pyramid)
+BuildRequires: python-devel python-module-setuptools python2.7(pyramid)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools python3(pyramid)
@@ -107,5 +107,8 @@ python setup.py test
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.0-alt1
 - Initial build for ALT.
