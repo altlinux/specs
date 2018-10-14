@@ -1,7 +1,7 @@
 Name: libnetfilter_log
 Version: 1.0.1
-Release: alt1
-Serial: 1
+Release: alt1.qa1
+Epoch: 1
 
 Summary: libnfnetlink receive to-be-logged packets from the kernel nfnetlink_log subsystem
 Url: http://netfilter.org/projects/libnetfilter_log/
@@ -53,6 +53,9 @@ KERNEL_DIR=%_includedir/linux-default/ ./autogen.sh distrib
 %_libdir/pkgconfig/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1.qa1
+- NMU: applied repocop patch
+
 * Wed Aug 14 2013 Mikhail Efremov <sem@altlinux.org> 1:1.0.1-alt1
 - autogen.sh: Use mktemp instead of tempfile.
 - Updated to 1.0.1.
