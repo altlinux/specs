@@ -6,7 +6,7 @@
 
 Name:           python-module-%oname
 Version:        2.3.0
-Release:        alt1
+Release:        alt1.qa1
 Summary:        Construct ZODB storage instances from URIs.
 Group:          Development/Python
 License:        BSD
@@ -16,7 +16,7 @@ BuildArch:      noarch
 # https://github.com/Pylons/zodburi.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools python2.7(ZODB) python2.7(ZConfig) python2.7(ZEO)
+BuildRequires: python-devel python-module-setuptools python2.7(ZODB) python2.7(ZConfig) python2.7(ZEO)
 BuildRequires: python2.7(nose) python2.7(coverage) python2.7(mock)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -119,6 +119,9 @@ python setup.py test
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Jun 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt1
 - Updated to upstream version 2.3.0.
 
