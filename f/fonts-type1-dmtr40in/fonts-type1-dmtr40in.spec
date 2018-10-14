@@ -2,7 +2,7 @@
 
 Name: fonts-type1-dmtr40in
 Version: 1.0
-Release: alt4
+Release: alt4.qa1
 
 Summary: Free sans serif font from Dmitry Sorokin
 License: GPL
@@ -37,16 +37,13 @@ from Dmitry Sorokin
 %install
 %type1_fonts_install %fname
 
-%post
-%post_fonts
-
-%postun
-%postun_fonts
-
 %files -f %fname.files
 %doc COPYING
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4.qa1
+- NMU: applied repocop patch
+
 * Mon Jul 20 2009 Michael Shigorin <mike@altlinux.org> 1.0-alt4
 - added Conflicts: cyrillic-Type1-fonts (closes: #15040)
 - fixed glyph attribution in (copied) package description
