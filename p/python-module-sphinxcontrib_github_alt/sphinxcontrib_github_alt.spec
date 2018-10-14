@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        1.0
-Release:        alt2
+Release:        alt2.qa1
 Summary:        Github roles for Sphinx docs
 Group:          Development/Python
 License:        BSD
@@ -15,7 +15,7 @@ BuildArch:      noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
@@ -62,6 +62,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2.qa1
+- NMU: applied repocop patch
+
 * Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt2
 - (NMU) rebuild with python3.6
 
