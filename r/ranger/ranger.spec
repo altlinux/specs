@@ -1,6 +1,6 @@
 Name: ranger
 Version: 1.9.1
-Release: alt1
+Release: alt1.qa1
 
 Summary(ru_RU.UTF-8): Консольный файл-менеджер
 Summary: Console file manager
@@ -12,7 +12,7 @@ Source0: %name-%version.tar.gz
 
 %setup_python_module %name
 
-BuildRequires: python-dev
+BuildRequires: python-devel
 BuildArch: noarch
 Requires: %packagename = %version-%release
 
@@ -54,6 +54,9 @@ sed -i 's@#!/usr/bin/python -O@#!/usr/bin/python@' ranger.py
 %python_sitelibdir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Mar 22 2018 Fr. Br. George <george@altlinux.ru> 1.9.1-alt1
 - Autobuild version bump to 1.9.1
 
