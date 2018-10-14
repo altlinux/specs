@@ -1,11 +1,11 @@
 Name: gutenprint
 Version: 5.2.14
-Release: alt1
+Release: alt1.qa1
 Epoch: 1
 Summary: Gutenprint Printer Drivers
 Group: Publishing
 License: GPLv2+
-Requires: lib%name = %version-%release, ghostscript
+Requires: lib%name = %EVR, ghostscript
 Url: http://gimp-print.sourceforge.net/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -169,6 +169,9 @@ fi
 %_datadir/cups/model/Global
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.2.14-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Jun 07 2018 Andrey Cherepanov <cas@altlinux.org> 1:5.2.14-alt1
 - New version (ALT #34674).
 - Rename gutenprint-CUPS to gutenprint-cups.
