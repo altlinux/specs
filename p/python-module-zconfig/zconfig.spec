@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.2.0
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: Python configuration module from Zope
 License: ZPL
@@ -20,7 +20,7 @@ Source: %name-%version.tar
 Patch1: %oname-%version-upstream-schema2html.patch
 
 %setup_python_module %oname
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-zope.testrunner python2.7(manuel) python2.7(manuel.testing) python2.7(docutils)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -167,6 +167,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt1.1.qa1
+- NMU: applied repocop patch
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.2.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
