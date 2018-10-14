@@ -8,7 +8,7 @@ Summary: DRI Configuration GUI
 Summary(ru_RU.KOI8-R): Графическая утилита для настройки DRI
 Name: %name
 Version: %version
-Release: %release
+Release: alt2.qa1
 Source0: %name-%version.tar.gz
 Source1: %name-0.9.0-ru.po
 Patch0:  driconf-0.9.1-fix_i_j.patch
@@ -40,12 +40,12 @@ DRI-соместимых графических карт, позволяя вам подбирать оптимальные значения
 
 %prep
 %setup -q
-%__install -m644 %SOURCE1 ru.po
-%__subst 's|\/usr\/local|\%_prefix|' setup.cfg driconf
+install -m644 %SOURCE1 ru.po
+sed -i 's|\/usr\/local|\%_prefix|' setup.cfg driconf
 %patch -p2
 
 %build
-%__make mo
+make mo
 CFLAGS="%optflags" %__python setup.py build
 
 %install
@@ -72,6 +72,9 @@ EOF
 #_libdir/%name/*.pyo
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2.qa1
+- NMU: applied repocop patch
+
 * Fri Jun 08 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.1-alt2
 - Fix program start (Closes: #31685).
 
