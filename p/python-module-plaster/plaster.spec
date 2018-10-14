@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 BuildArch: noarch
 License: MIT
 Group: Development/Python
@@ -15,7 +15,7 @@ URL:     https://github.com/Pylons/%{oname}
 # https://github.com/Pylons/plaster.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools python2.7(pytest)
+BuildRequires: python-devel python-module-setuptools python2.7(pytest)
 BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt1
 - Initial build for ALT.
 
