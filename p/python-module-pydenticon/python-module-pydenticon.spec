@@ -4,7 +4,7 @@
 %define modulename pydenticon
 Name: python-module-pydenticon
 Version: 0.3.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Library for generating identicons
 
@@ -18,7 +18,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/azaghal/pydenticon/archive/%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 
 BuildArch: noarch
 
@@ -80,6 +80,9 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1.qa1
+- NMU: applied repocop patch
+
 * Sun Oct 08 2017 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt1
 - new version 0.3.1 (with rpmrb script)
 
