@@ -4,14 +4,14 @@
 
 Name: libkeybinder
 Version: 0.3.0
-Release: alt5.git20120617
+Release: alt5.git20120617.qa1
 
 Summary: keybinder is a library for registering global keyboard shortcuts
 License: GPLv2
 Group: System/Libraries
 Url: http://kaizer.se/wiki/keybinder/
 
-BuildRequires: libgtk+2-devel xorg-server-common python-dev liblua5.1-devel
+BuildRequires: libgtk+2-devel xorg-server-common python-devel liblua5.1-devel
 BuildRequires: python-module-pygtk-devel libXext-devel
 BuildRequires: gobject-introspection-devel
 BuildPreReq: gtk-doc
@@ -121,6 +121,9 @@ Lua5 binding to %name
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt5.git20120617.qa1
+- NMU: applied repocop patch
+
 * Fri Jul 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.0-alt5.git20120617
 - Updated build dependencies
 
