@@ -2,7 +2,7 @@
 
 Name: tbb
 Version: 2018
-Release: alt1.u1.1
+Release: alt1.u1.1.qa1
 Summary: Threading Building Blocks
 License: Apache 2.0
 Group: Development/Tools
@@ -16,7 +16,7 @@ Patch1: %name-%{version}.u1-alt-build.patch
 Requires: lib%name = %EVR
 
 BuildRequires: gcc-c++
-BuildRequires: python-dev
+BuildRequires: python-devel
 BuildRequires: swig
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -80,6 +80,7 @@ Blocks.
 Summary: Examples for Threading Building Blocks
 Group: Development/Documentation
 Requires: lib%name = %version-%release
+BuildArch: noarch
 
 %description examples
 Threading Building Blocks offers a rich and complete approach to
@@ -211,6 +212,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2018-alt1.u1.1.qa1
+- NMU: applied repocop patch
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2018-alt1.u1.1
 - (NMU) Rebuilt with python-3.6.4.
 
