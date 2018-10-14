@@ -4,7 +4,7 @@
 %define modulename hyperlink
 Name: python-module-hyperlink
 Version: 17.3.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: A featureful, correct URL for Python
 
@@ -18,7 +18,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://pypi.io/packages/source/h/%modulename/%modulename-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 
 BuildArch: noarch
 
@@ -84,6 +84,9 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 17.3.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Sun Oct 08 2017 Vitaly Lipatov <lav@altlinux.ru> 17.3.0-alt1
 - new version 17.3.0 (with rpmrb script)
 
