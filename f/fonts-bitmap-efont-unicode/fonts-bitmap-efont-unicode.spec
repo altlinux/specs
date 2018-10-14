@@ -8,7 +8,7 @@
 
 Name: fonts-bitmap-efont-unicode
 Version: 0.4.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: Unicode fonts collection by /efont/
 License: distributable
@@ -49,16 +49,13 @@ mkfontdir
 %install
 %bitmap_fonts_install %origname
 
-%post
-%post_fonts
-
-%postun
-%postun_fonts
-
 %files -f %origname.files
 %doc README* COPYRIGHT ChangeLog
 
 %changelog -n efont-unicode
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt2.qa1
+- NMU: applied repocop patch
+
 * Wed Mar 12 2008 Michael Shigorin <mike@altlinux.org> 0.4.2-alt2
 - renamed and refurbished to conform to fonts policy
   (this is the current upstream version)
