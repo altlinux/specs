@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2.0.3
-Release: alt1%ubt
+Release: alt1.qa1%ubt
 Summary: IO of git-style object databases
 License: BSD
 BuildArch: noarch
@@ -20,7 +20,7 @@ Patch1: %oname-alt-build.patch
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: git-core
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(smmap)
 BuildRequires: python2.7(nose)
 BuildRequires: python2.7(coverage)
@@ -176,6 +176,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1.qa1%ubt
+- NMU: applied repocop patch
+
 * Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.3-alt1%ubt
 - Updated to upstream version 2.0.3.
 
