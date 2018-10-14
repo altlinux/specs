@@ -1,7 +1,7 @@
 %define rel 1470
 Name:		tucan
 Version:	0.3.9
-Release:	alt1.1.1
+Release:	alt1.1.1.qa1
 Summary:	Download and upload manager for file storage hosters
 Group:		Networking/File transfer
 License:	GPL
@@ -10,7 +10,7 @@ URL:		http://blog.tucaneando.com
 BuildArch:	noarch
 Packager:	Fr. Br. George <george@altlinux.ru>
 
-BuildRequires:	python-dev
+BuildRequires:	python-devel
 
 Requires:	tesseract tesseract-eng
 
@@ -63,6 +63,9 @@ install -D media/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_bindir/%name
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.9-alt1.1.1.qa1
+- NMU: applied repocop patch
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.9-alt1.1.1
 - Rebuild with Python-2.7
 
