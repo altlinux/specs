@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1
+Release: alt1.qa1
 Summary: Backport of Python 3's test.support package
 Group: Development/Python
 License: Python
@@ -12,7 +12,7 @@ URL: https://pypi.python.org/pypi/backports.test.support
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(pytest)
 BuildRequires: python2.7(future) python2.7(backports.os)
 BuildRequires: python2.7(mock)
@@ -56,6 +56,9 @@ PYTHONPATH=$(pwd)/src py.test
 %python_sitelibdir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Mar 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt1
 - Updated to upstream version 0.1.1.
 
