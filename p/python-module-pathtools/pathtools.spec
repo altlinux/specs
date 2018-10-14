@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1
+Release: alt1.qa1
 Summary: Path utilities for Python
 License: MIT
 Group: Development/Python
@@ -17,7 +17,7 @@ Source: %oname-%version.tar
 Patch1: %oname-%version-alt-docs.patch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: flask-sphinx-themes python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -79,6 +79,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt1.qa1
+- NMU: applied repocop patch
+
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.2-alt1
 - Updated to upstream version 0.1.2.
 
