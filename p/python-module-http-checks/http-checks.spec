@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: Test a couple of hundred urls in seconds
 License: Free
 Group: Development/Python
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/http-checks/
 # https://github.com/Hipo/http-checks.git
 Source: %oname-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-yaml python-module-requests
 BuildRequires: python-module-gevent python-module-BeautifulSoup4
 BuildRequires: python2.7(json) python2.7(jsonpath_rw)
@@ -105,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1.1.qa1
+- NMU: applied repocop patch
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
