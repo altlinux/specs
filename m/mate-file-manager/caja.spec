@@ -3,7 +3,7 @@
 
 Name: mate-file-manager
 Version: 1.20.2
-Release: alt1
+Release: alt1.qa1
 Epoch: 1
 Summary: File manager for MATE
 License: GPLv2+ and LGPLv2+
@@ -11,7 +11,7 @@ Group: Graphical desktop/MATE
 Url: http://mate-desktop.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Requires: mate-file-manager-extensions = %version-%release mate-file-manager-schemas = %version-%release
+Requires: mate-file-manager-extensions = %EVR mate-file-manager-schemas = %EVR
 
 Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
@@ -99,6 +99,9 @@ mkdir -p %buildroot%_libdir/caja/extensions-2.0
 %_datadir/gtk-doc/html/libcaja-extension
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.20.2-alt1.qa1
+- NMU: applied repocop patch
+
 * Mon Apr 09 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
 - 1.20.2
 
