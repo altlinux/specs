@@ -8,7 +8,7 @@
 
 Name: plasma5-%rname
 Version: 5.12.7
-Release: alt1
+Release: alt1.qa1
 Epoch: 1
 %K5init altplace
 
@@ -60,28 +60,28 @@ developing applications that use %name.
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 %description -n polkit-kde-ksysguard
 Common polkit files for %name
 
 %package -n %libksgrd
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 %description -n %libksgrd
 KF5 library
 
 %package -n %libksignalplotter
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 %description -n %libksignalplotter
 KF5 library
 
 %package -n %libprocesscore
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 Requires: polkit-kde-ksysguard
 %description -n %libprocesscore
 KF5 library
@@ -89,14 +89,14 @@ KF5 library
 %package -n %liblsofui
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 %description -n %liblsofui
 KF5 library
 
 %package -n %libprocessui
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 %description -n %libprocessui
 KF5 library
 
@@ -152,6 +152,9 @@ KF5 library
 %_K5lib/liblsofui.so.*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.12.7-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.7-alt1
 - new version
 
