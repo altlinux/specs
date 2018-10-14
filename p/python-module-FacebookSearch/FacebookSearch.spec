@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.0.3
-Release: alt2.git20131203
+Release: alt2.git20131203.qa1
 Summary: A Python library to easily iterate public information found by the Facebook Graph API
 License: MIT
 Group: Development/Python
@@ -16,7 +16,7 @@ Url: https://pypi.python.org/pypi/FacebookSearch/
 # https://github.com/ckoepp/FacebookSearch.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
@@ -72,6 +72,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.3-alt2.git20131203.qa1
+- NMU: applied repocop patch
+
 * Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.3-alt2.git20131203
 - NMU: rebuilt to regenerate dependencies.
 
