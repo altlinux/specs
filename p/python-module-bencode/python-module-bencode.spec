@@ -2,7 +2,7 @@
 
 Name: python-module-bencode
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: The BitTorrent bencode module as light-weight, standalone package.
 
@@ -18,7 +18,7 @@ BuildArch: noarch
 
 %setup_python_module %modulename
 
-BuildRequires: python-dev python-module-distribute
+BuildRequires: python-devel python-module-distribute
 
 %description
 This package simply re-packages the existing bencoding and bdecoding
@@ -40,5 +40,8 @@ BitTorrent software as a dependency.
 %python_sitelibdir/%modulename-%version-*.egg-info
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Mon Oct 07 2013 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - initial build for ALT Linux Sisyphus
