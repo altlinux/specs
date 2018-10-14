@@ -1,7 +1,7 @@
 
 Name: ndisc6
 Version: 1.0.4
-Release: alt1.git4c794b5512d2
+Release: alt1.git4c794b5512d2.qa1
 
 Summary: IPv6 diagnostic tools
 License: %gpl2plus
@@ -56,7 +56,7 @@ CFLAGS="%optflags -fno-strict-aliasing" \
 %find_lang %name
 touch %buildroot/%_runtimedir/rdnssd/resolv.conf
 install -Dm0755 %SOURCE1 %buildroot%_initdir/rdnssd
-install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/tmpfiles.d/rdnssd.conf
+install -Dm0644 %SOURCE2 %buildroot%_tmpfilesdir/rdnssd.conf
 install -Dm0644 %SOURCE3 %buildroot%systemd_unitdir/rdnssd.service
 
 %pre -n rdnssd
@@ -80,7 +80,7 @@ useradd -r -g rdnssd -d %_runtimedir/rdnssd -s /dev/null -N rdnssd >/dev/null 2>
 
 %files -n rdnssd
 %_initdir/rdnssd
-%_sysconfdir/tmpfiles.d/rdnssd.conf
+%_tmpfilesdir/rdnssd.conf
 %systemd_unitdir/rdnssd.service
 %_sysconfdir/rdnssd
 %_sbindir/rdnssd
@@ -89,6 +89,9 @@ useradd -r -g rdnssd -d %_runtimedir/rdnssd -s /dev/null -N rdnssd >/dev/null 2>
 %ghost %_runtimedir/rdnssd/resolv.conf
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1.git4c794b5512d2.qa1
+- NMU: applied repocop patch
+
 * Wed Oct 03 2018 Mikhail Efremov <sem@altlinux.org> 1.0.4-alt1.git4c794b5512d2
 - Minor spec cleanup.
 - Use _unpackaged_files_terminate_build.
