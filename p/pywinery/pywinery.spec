@@ -1,6 +1,6 @@
 Name: pywinery
 Version: 0.3.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: PyWinery is a graphical, easy and simple wine-prefix manager
 License: GPLv3
@@ -10,7 +10,7 @@ Url: https://github.com/ergoithz/pywinery.git
 Source: %name-%version.tar
 Packager: Konstantin Artyushkin <akv@altlinux.org>
 
-BuildRequires: rpm-build-python python-dev python-module-pygobject3-devel
+BuildRequires: rpm-build-python python-devel python-module-pygobject3-devel
 BuildArch:noarch
 
 %description
@@ -39,6 +39,9 @@ popd
 %_datadir/%name/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1.qa1
+- NMU: applied repocop patch
+
 * Tue Sep 13 2016 Konstantin Artyushkin <akv@altlinux.org> 0.3.2-alt1
 - new version
 
