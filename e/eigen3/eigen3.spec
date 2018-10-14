@@ -1,7 +1,7 @@
 %define oname eigen
 Name: %{oname}3
 Version: 3.3.5
-Release: alt1
+Release: alt1.qa1
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
 Group: Development/C++
@@ -39,6 +39,7 @@ numerical solvers, and related algorithms.
 %package docs
 Summary: Documentation for Eigen3
 Group: Development/Documentation
+BuildArch: noarch
 #BuildArch: noarch
 
 %description docs
@@ -112,6 +113,9 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %doc BUILD/doc/html/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.3.5-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Aug 23 2018 Andrey Cherepanov <cas@altlinux.org> 3.3.5-alt1
 - New version.
 
