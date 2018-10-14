@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2017.1
-Release: alt1
+Release: alt1.qa1
 Summary: C/C++ source generation from an AST
 License: MIT
 Group: Development/Python
@@ -16,7 +16,7 @@ Url: http://pypi.python.org/pypi/cgen/
 # https://github.com/inducer/cgen.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2017.1-alt1.qa1
+- NMU: applied repocop patch
+
 * Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2017.1-alt1
 - Updated to upstream version 2017.1.
 
