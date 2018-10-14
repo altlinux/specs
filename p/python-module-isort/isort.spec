@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        4.2.15
-Release:        alt1%ubt
+Release:        alt1.qa1%ubt
 Summary:        Python utility / library to sort Python imports
 Group:          Development/Python
 License:        MIT
@@ -15,7 +15,7 @@ BuildArch:      noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pytest python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -92,5 +92,8 @@ python setup.py test
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.2.15-alt1.qa1%ubt
+- NMU: applied repocop patch
+
 * Wed Nov 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.15-alt1%ubt
 - Initial build for ALT.
