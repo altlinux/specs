@@ -2,7 +2,7 @@
 
 Name: uniset2-testsuite
 Version: 2.6
-Release: alt10
+Release: alt10.qa1
 Summary: UniSet test suite
 Group: Development/Python
 License: LGPL
@@ -10,7 +10,7 @@ Url: http://github.com/Etersoft/uniset2-testsuite
 Source: %name-%version.tar
 # Automatically added by buildreq on Wed Jan 18 2017
 # optimized out: pkg-config python-base python-modules python3 python3-base
-BuildRequires: doxygen python-devel python-dev
+BuildRequires: doxygen python-devel python-devel
 BuildRequires: python-module-uniset2 >= 2.6-alt10
 
 Requires: python-module-uniset2 >= 2.6-alt10
@@ -67,6 +67,9 @@ SNMP Plugin for uniset2-testsuite
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.6-alt10.qa1
+- NMU: applied repocop patch
+
 * Fri May 25 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt10
 - remove (DEPRECATED) gui package
 
