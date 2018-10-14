@@ -2,7 +2,7 @@ Name:       sensorfw
 Summary:    Sensor Framework
 Version:    0.7.2
 Group:      System/Kernel and hardware
-Release:    alt3
+Release:    alt3.qa1
 License:    LGPLv2+
 URL:        http://gitorious.org/sensorfw
 Source0:    %{name}-%{version}.tar
@@ -88,6 +88,7 @@ Contains test cases for CI environment, for ensuring that sensord provides conte
 Summary:    API documentation for libsensord
 Group:      Development/Documentation
 Requires:   %{name} = %{version}-%{release}
+BuildArch: noarch
 
 %description doc
 Doxygen-generated API documentation for sensord.
@@ -258,6 +259,9 @@ install -D -m644 %{SOURCE9} %buildroot%_sysconfdir/sysconfig/sensord
 # << files configs
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt3.qa1
+- NMU: applied repocop patch
+
 * Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.2-alt3
 - Fixed build with gcc-6.
 
