@@ -5,7 +5,7 @@
 
 Name: kuzya
 Version: 2.1.12_rc20170720
-Release: alt1
+Release: alt1.qa1
 
 Summary: Integrated Development Environment for students
 License: GPL
@@ -59,6 +59,10 @@ popd
 
 %install
 %makeinstall_std INSTALL_ROOT=%buildroot
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=IDE \
+	--add-category=ComputerScience \
+	%buildroot%_desktopdir/kuzya.desktop
 
 %files
 %_bindir/*
@@ -69,6 +73,9 @@ popd
 %_desktopdir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.12_rc20170720-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Jan 25 2018 Andrew Savchenko <bircoph@altlinux.org> 2.1.12_rc20170720-alt1
 - Update to latest git with qt5 support (mandatory for e2k).
 - Simplify spec, use upstream tracking branch.
