@@ -5,7 +5,7 @@
 
 Name: condstopstart-common
 Version: 0.3
-Release: %branch_release alt2
+Release: %branch_release alt2.qa1
 
 Summary: Common dirs for condstopstart-*
 License: %gpl2plus
@@ -30,17 +30,20 @@ BuildPreReq: rpm-build-licenses
 install -d %buildroot%condstopstart_subsysdir/
 install -d %buildroot%condstopstart_subsysrundir/
 
-install -pD -m 644 %SOURCE10 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+install -pD -m 644 %SOURCE10 %buildroot%_tmpfilesdir/%name.conf
 sed -i "
 	s|@RUNDIR@|%condstopstart_subsysrundir|g
-" %buildroot%_sysconfdir/tmpfiles.d/*
+" %buildroot%_tmpfilesdir/*
 
 %files
-%config %_sysconfdir/tmpfiles.d/*
+%config %_tmpfilesdir/*
 %attr(755,root,root) %dir %condstopstart_subsysdir/
 %attr(755,root,root) %dir %condstopstart_subsysrundir/
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2.qa1
+- NMU: applied repocop patch
+
 * Wed Aug 22 2012 Aleksey Avdeev <solo@altlinux.ru> 0.3-alt2
 - Rename %%_sysconfdir/tmpfiles.d/%%name to
   %%_sysconfdir/tmpfiles.d/%%name.conf and fix permissions
