@@ -8,7 +8,7 @@
 
 Name:		%firefox_name-%rname
 Version:	%version
-Release:	%release
+Release:	alt1.qa1
 
 Summary:	advanced proxy management tool
 Summary(ru_RU.UTF-8):	расширенная утилита управления настройками прокси-серверов
@@ -52,6 +52,12 @@ FoxyProxy предоставляет поддержку одновременно
 mkdir -p --  %buildroot/%ciddir
 cp -r -- * %buildroot/%ciddir
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %postun
 if [ "$1" = 0 ]; then
   [ ! -d "%ciddir" ] || rm -rf "%ciddir"
@@ -62,6 +68,9 @@ fi
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 6.1.9-alt1.qa1
+- NMU: applied repocop patch
+
 * Sat Dec 16 2017 Nikolay A. Fetisov <naf@altlinux.org> 6.1.9-alt1
 - New version
 
