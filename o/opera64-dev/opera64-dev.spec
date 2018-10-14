@@ -3,12 +3,11 @@
 
 Name:		opera64-dev
 Version:	%softver.%buildver
-Release:	alt1
+Release:	alt1.qa1
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Summary:	A fast and secure web browser and Internet suite
 Group:		Networking/WWW
 License:	Distributable
-Vendor:		Opera Software ASA
 Url:		http://www.opera.com/
 Source0:	opera-%softver.%buildver.x86_64.linux.tar.bz2
 
@@ -52,6 +51,9 @@ chmod 4755 %_libdir/x86_64-linux-gnu/opera-developer/opera_sandbox
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 57.0.3082.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Wed Sep 19 2018 Motsyo Gennadi <drool@altlinux.ru> 57.0.3082.0-alt1
 - packaged 57.0.3082.0 snapshot
 
