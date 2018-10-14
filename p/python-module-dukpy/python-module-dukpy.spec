@@ -4,7 +4,7 @@
 %define modulename dukpy
 Name: python-module-dukpy
 Version: 0.1.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: Simple JavaScript interpreter for Python
 
@@ -18,7 +18,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://pypi.io/packages/source/d/%modulename/%modulename-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -85,6 +85,9 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt2.qa1
+- NMU: applied repocop patch
+
 * Tue Jun 19 2018 Alexandr Antonov <aas@altlinux.org> 0.1.0-alt2
 - Rebuild for aarch64
 
