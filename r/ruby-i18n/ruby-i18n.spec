@@ -2,7 +2,7 @@
 %def_disable tests
 
 Name: ruby-%pkgname
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: I18n and localization solution for Ruby
@@ -57,6 +57,9 @@ Documentation files for %name
 %ruby_ri_sitedir/I18n*
 
 %changelog
+* Sun Oct 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
+- New version.
+
 * Fri Aug 31 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - New version.
 
