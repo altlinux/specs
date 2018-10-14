@@ -13,7 +13,7 @@
 
 Name: python-module-%oname
 Version: %majver.3
-Release: alt2.2
+Release: alt2.2.qa1
 Epoch: 1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
@@ -32,8 +32,8 @@ Source1: %oname.pc
 Source2: site.cfg
 Source3: sphinx-theme.tar
 
-Requires: %name-testing = %version-%release
-Requires: lib%oname = %version-%release
+Requires: %name-testing = %EVR
+Requires: lib%oname = %EVR
 Conflicts: libsyfi-devel < 0.6.1-alt3.hg20090822
 Conflicts: lib%oname-devel < %version-%release
 Obsoletes: libsyfi-devel < 0.6.1-alt3.hg20090822
@@ -77,8 +77,8 @@ basic linear algebra and random number generation.
 %package -n python3-module-%oname
 Summary: NumPy: array processing for numbers, strings, records, and objects (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname-testing = %version-%release
-Requires: lib%oname-py3 = %version-%release
+Requires: python3-module-%oname-testing = %EVR
+Requires: lib%oname-py3 = %EVR
 %py3_provides %oname.addons
 Provides: python3-module-numpy-addons = %EVR
 %add_python3_req_skip Scons setuptools distutils nose number code_generators
@@ -99,7 +99,7 @@ basic linear algebra and random number generation.
 %package -n python3-module-%oname-testing
 Summary: Testing part of NumPy (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
 %add_python3_req_skip setuptools
 
 %description -n python3-module-%oname-testing
@@ -115,7 +115,7 @@ This package contains testing part of NumPy.
 %package -n python3-module-%oname-tests
 Summary: Tests for NumPy (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
 %add_python3_req_skip core scipy
 
 %description -n python3-module-%oname-tests
@@ -151,8 +151,8 @@ This package contains shared libraries of NumPy.
 %package -n lib%oname-py3-devel
 Summary: Development files of NumPy (Python 3)
 Group: Development/Python3
-Requires: lib%oname-py3 = %version-%release
-Requires: python3-module-%oname = %version-%release
+Requires: lib%oname-py3 = %EVR
+Requires: python3-module-%oname = %EVR
 Requires: python3-devel
 # numpydoc
 %add_python3_req_skip numscons
@@ -185,7 +185,7 @@ This package contains pickles for NumPy.
 %package testing
 Summary: Testing part of NumPy
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Conflicts: %name < %version-%release
 %add_python_req_skip setuptools
 
@@ -202,7 +202,7 @@ This package contains testing part of NumPy.
 %package tests
 Summary: Tests for NumPy
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Conflicts: %name < %version-%release
 %add_python_req_skip core
 
@@ -239,10 +239,10 @@ This package contains shared libraries of NumPy.
 %package -n lib%oname-devel
 Summary: Development files of NumPy
 Group: Development/Python
-Requires: lib%oname = %version-%release
-Requires: %name = %version-%release
+Requires: lib%oname = %EVR
+Requires: %name = %EVR
 Requires: python-module-numpydoc
-Requires: %name-addons = %version-%release
+Requires: %name-addons = %EVR
 Requires: python-devel
 %py_requires SCons
 # numpydoc
@@ -262,7 +262,7 @@ This package contains development files of NumPy.
 %package doc
 Summary: Documentation modules of NumPy
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Conflicts: %name < %version-%release
 %add_python_req_skip Numeric
 
@@ -944,6 +944,9 @@ fi
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.13.3-alt2.2.qa1
+- NMU: applied repocop patch
+
 * Fri Jun 29 2018 Anton Midyukov <antohami@altlinux.org> 1:1.13.3-alt2.2
 - Skip requires from python3-module numpy (Closes:35103) to:
   - python3(setuptools.command.develop)
