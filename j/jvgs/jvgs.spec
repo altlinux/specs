@@ -1,6 +1,6 @@
 Name:		jvgs
 Version:	0.5
-Release:	alt2.1
+Release:	alt2.1.qa1
 Summary:	Minimalistic platform game with xkc-like graphics
 Group:		Games/Arcade
 License:	GPL
@@ -34,6 +34,7 @@ Group:		Games/Arcade
 License:	CC-NC-SA
 Summary:	Sountrack for %name game, derived from "The Ghosts" album by Nine Inch Nails
 Group:		Sound
+BuildArch: noarch
 
 %description music
 %summary
@@ -94,6 +95,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_gamesdatadir/%name/resources/music/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.5-alt2.1.qa1
+- NMU: applied repocop patch
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.5-alt2.1
 - NMU: rebuild with new lua 5.1
 
