@@ -4,7 +4,7 @@
 
 Name:           python-module-django-%pypi_name
 Version:        8.2.3
-Release:        alt2
+Release:        alt2.qa1
 Summary:        Bootstrap support for Django projects
 Group:          Development/Python
 
@@ -60,6 +60,12 @@ pushd ../python3
 popd
 %endif
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %files
 %doc README.rst
 %python_sitelibdir/*
@@ -71,6 +77,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 8.2.3-alt2.qa1
+- NMU: applied repocop patch
+
 * Thu Jun 01 2017 Lenar Shakirov <snejok@altlinux.ru> 8.2.3-alt2
 - Pack correct sources
 
