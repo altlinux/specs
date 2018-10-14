@@ -7,7 +7,7 @@
 
 Name: plotutils
 Version: 2.6
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: GNU Plotutils -- plotting utilities
 
@@ -131,12 +131,6 @@ cd fonts/pcf
 gzip -9nf *.pcf || :
 %bitmap_fonts_install %fname
 
-%post -n libplot
-%post_fonts
-
-%postun -n libplot
-%postun_fonts
-
 %files
 %doc AUTHORS COMPAT KNOWN_BUGS NEWS ONEWS PROBLEMS README THANKS TODO
 %_bindir/*
@@ -175,6 +169,9 @@ gzip -9nf *.pcf || :
 %_includedir/xmi.h
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1.1.qa1
+- NMU: applied repocop patch
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1.1
 - NMU: added BR: texinfo
 
