@@ -1,6 +1,6 @@
 Name: python-module-pyrax
 Version: 1.9.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: Python language bindings for OpenStack Clouds
 
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-mock
-BuildRequires: python-dev
+BuildRequires: python-devel
 
 %description
 A library for working with most OpenStack-based cloud deployments, though it
@@ -40,6 +40,9 @@ standard Swift deployment.
 %python_sitelibdir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt2.qa1
+- NMU: applied repocop patch
+
 * Thu Jun 16 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.9.0-alt2
 - Actually do build me. (%%python_build had been forgotten.)
 
