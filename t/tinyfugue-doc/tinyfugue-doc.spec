@@ -1,6 +1,6 @@
 Name: tinyfugue-doc
 Version: 5.0beta8
-Release: alt1
+Release: alt1.qa1
 Summary: Console MUD client documentation
 License: GPLv2
 Group: Games/Other
@@ -48,7 +48,14 @@ install -pm644 index.html %buildroot%docdir/
 %files
 %dir %docdir
 %docdir/*
+# The package does not own its own docdir subdirectory.
+# The line below is added by repocop to fix this bug in a straightforward way. 
+# Another way is to rewrite the spec to use relative doc paths.
+%dir %_docdir/tinyfugue-doc-%version 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.0beta8-alt1.qa1
+- NMU: applied repocop patch
+
 * Sat Dec 26 2015 Andrey Bergman <vkni@altlinux.org> 5.0beta8-alt1
 - Initial release for Sisyphus.
