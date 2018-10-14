@@ -4,7 +4,7 @@
 %define modulename hpack
 Name: python-module-hpack
 Version: 3.0.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Pure-Python HPACK header compression
 
@@ -18,7 +18,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://pypi.io/packages/source/h/%modulename/%modulename-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 
 BuildArch: noarch
 
@@ -80,5 +80,8 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Jun 15 2017 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1
 - initial build for ALT Sisyphus
