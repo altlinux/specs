@@ -1,6 +1,6 @@
 Name: plastex
 Version: 0.9.2
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: Plastex is a Python-based LaTeX document processing framework
 Summary(ru_RU.UTF-8): Plastex - средство для обработки документов LaTex, написанное на Python
@@ -14,7 +14,7 @@ Packager: Anton Chernyshov <ach@altlinux.org>
 Source0: %name-%version.tgz
 Source1: %name.pdf
 
-BuildPreReq: python-dev
+BuildPreReq: python-devel
 
 Requires: dvipng
 Requires: ghostscript
@@ -40,13 +40,13 @@ Plastex - средство для обработки документов LaTex,
 
 %install
 %__python setup.py install --root=%buildroot
-%__mkdir_p %buildroot/%_defaultdocdir/%name-%version/licenses
-%__cp licenses/* %buildroot/%_defaultdocdir/%name-%version/licenses/
-%__cp INSTALL  %buildroot/%_defaultdocdir/%name-%version/
-%__cp LICENSE  %buildroot/%_defaultdocdir/%name-%version/
-%__cp README   %buildroot/%_defaultdocdir/%name-%version/
-%__cp TODO     %buildroot/%_defaultdocdir/%name-%version/
-%__cp %{SOURCE1} %buildroot/%_defaultdocdir/%name-%version/
+mkdir -p %buildroot/%_defaultdocdir/%name-%version/licenses
+cp licenses/* %buildroot/%_defaultdocdir/%name-%version/licenses/
+cp INSTALL  %buildroot/%_defaultdocdir/%name-%version/
+cp LICENSE  %buildroot/%_defaultdocdir/%name-%version/
+cp README   %buildroot/%_defaultdocdir/%name-%version/
+cp TODO     %buildroot/%_defaultdocdir/%name-%version/
+cp %{SOURCE1} %buildroot/%_defaultdocdir/%name-%version/
 %find_lang %name
 
 %files -f %name.lang
@@ -55,6 +55,9 @@ Plastex - средство для обработки документов LaTex,
 %doc %_defaultdocdir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt1.1.qa1
+- NMU: applied repocop patch
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.2-alt1.1
 - Rebuild with Python-2.7
 
