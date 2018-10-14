@@ -1,8 +1,7 @@
 Name: mp3unicode
 Version: 1.2.1
-Release: alt2
+Release: alt2.qa1
 License: GPLv2
-Vendor: http://www.kde-apps.org/content/show.php?content=41784
 Summary: Convert MP3 tags into unicode
 Group: Sound
 Url: http://mp3unicode.sourceforge.net/index.html
@@ -34,6 +33,9 @@ between different encodings.
 %_man1dir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt2.qa1
+- NMU: applied repocop patch
+
 * Sat Jul 11 2015 Fr. Br. George <george@altlinux.ru> 1.2.1-alt2
 - Rebuild with new dependencies
 
