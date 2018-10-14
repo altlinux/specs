@@ -1,6 +1,6 @@
 Name: jreen
 Version: 1.2.1
-Release: alt1
+Release: alt1.qa1
 Epoch: 7
 
 Summary: Free and Opensource Jabber library, written in C++ using cross-platform framework Qt.
@@ -64,7 +64,7 @@ Jreen - Открытая и свободная Jabber-библиотека, на
 Summary: Free and Opensource Jabber library, written in C++ using cross-platform framework Qt.
 Summary(ru_RU.UTF-8): Открытая и свободная Jabber-библиотека, написанная на C++ с использованием кросс-платформенного фреймворка Qt.
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Jreen - Free and Opensource Jabber library, written in C++ using cross-platform framework Qt. Licensed under the GNU/GPL version 2.
@@ -107,7 +107,7 @@ Jreen - Открытая и свободная Jabber-библиотека, на
 Summary: Free and Opensource Jabber library, written in C++ using cross-platform framework Qt.
 Summary(ru_RU.UTF-8): Открытая и свободная Jabber-библиотека, написанная на C++ с использованием кросс-платформенного фреймворка Qt.
 Group: Development/C++
-Requires: lib%name-qt5 = %version-%release
+Requires: lib%name-qt5 = %EVR
 
 %description -n lib%name-qt5-devel
 Jreen - Free and Opensource Jabber library, written in C++ using cross-platform framework Qt. Licensed under the GNU/GPL version 2.
@@ -193,6 +193,9 @@ popd
 %_includedir/%name-qt5/%name/experimental/*.h
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 7:1.2.1-alt1.qa1
+- NMU: applied repocop patch
+
 * Mon Jul 11 2016 Nazarov Denis <nenderus@altlinux.org> 7:1.2.1-alt1
 - Version 1.2.1
 
