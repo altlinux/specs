@@ -2,7 +2,7 @@
 
 Name: mate-utils
 Version: 1.20.0
-Release: alt1
+Release: alt1.qa1
 Epoch: 1
 Summary: MATE utility programs
 License: GPLv3+
@@ -10,11 +10,11 @@ Group: Graphical desktop/MATE
 Url: http://mate-desktop.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Requires: mate-dictionary = %version-%release
-Requires: mate-screenshot = %version-%release
-Requires: mate-search-tool = %version-%release
-Requires: mate-system-log = %version-%release
-Requires: mate-disk-usage-analyzer = %version-%release
+Requires: mate-dictionary = %EVR
+Requires: mate-screenshot = %EVR
+Requires: mate-search-tool = %EVR
+Requires: mate-system-log = %EVR
+Requires: mate-disk-usage-analyzer = %EVR
 Obsoletes: mate-utils-libs
 
 Source: %name-%version.tar
@@ -39,7 +39,7 @@ BuildArch: noarch
 Group: Development/C
 Summary: Development files for mate-utils
 Obsoletes: mate-dictionary-devel
-Requires:  mate-dictionary = %version-%release
+Requires:  mate-dictionary = %EVR
 
 %description devel
 The mate-utils-devel package contains header files and other resources
@@ -48,7 +48,7 @@ needed to develop programs using the libraries contained in mate-utils
 %package -n mate-system-log
 Group: Graphical desktop/MATE
 Summary: A log file viewer for the MATE desktop
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 
 %description -n mate-system-log
 An application that lets you view various system log files
@@ -56,7 +56,7 @@ An application that lets you view various system log files
 %package -n mate-screenshot
 Group: Graphical desktop/MATE
 Summary: A utility to take a screen-shot of the desktop
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 
 %description -n mate-screenshot
 An application that let you take a screen-shot of your desktop
@@ -64,7 +64,7 @@ An application that let you take a screen-shot of your desktop
 %package -n mate-dictionary
 Group: Graphical desktop/MATE
 Summary: A dictionary for MATE Desktop
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 
 %description -n mate-dictionary
 The mate-dictionary package contains a dictionary application for MATE Desktop
@@ -72,7 +72,7 @@ The mate-dictionary package contains a dictionary application for MATE Desktop
 %package -n mate-search-tool
 Group: Graphical desktop/MATE
 Summary: A file searching tool for MATE Desktop
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 
 %description -n mate-search-tool
 An application to search for files on your computer
@@ -80,7 +80,7 @@ An application to search for files on your computer
 %package -n mate-disk-usage-analyzer
 Group: Graphical desktop/MATE
 Summary: A disk usage analyzing tool for MATE Desktop
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 
 %description -n mate-disk-usage-analyzer
 An application to help analyze disk usage
@@ -172,6 +172,9 @@ An application to help analyze disk usage
 %_man1dir/mate-disk-usage-analyzer.1*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.20.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Wed Mar 21 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.0-alt1
 - initial build from git.mate-desktop.org
 
