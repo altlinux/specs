@@ -3,7 +3,7 @@
 %define modulename ly
 Name: python-module-ly
 Version: 0.9.5
-Release: alt3
+Release: alt3.qa1
 
 Summary: Tool and library for manipulating LilyPond files
 
@@ -17,7 +17,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
 
-BuildRequires: python-dev
+BuildRequires: python-devel
 
 BuildArch: noarch
 
@@ -105,6 +105,9 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt3.qa1
+- NMU: applied repocop patch
+
 * Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.5-alt3
 - real build with python3
 
