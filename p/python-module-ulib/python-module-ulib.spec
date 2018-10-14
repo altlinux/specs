@@ -2,7 +2,7 @@
 
 Name: python-module-%modulename
 Version: 0.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: ulib: Useful python library
 
@@ -19,7 +19,7 @@ BuildArch: noarch
 
 %setup_python_module %modulename
 
-BuildRequires: python-dev python-module-distribute
+BuildRequires: python-devel python-module-distribute
 
 %description
 Useful python library.
@@ -38,6 +38,9 @@ Useful python library.
 %python_sitelibdir/%modulename-%version-*.egg-info
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1.qa1
+- NMU: applied repocop patch
+
 * Sat Oct 19 2013 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
 - initial build for ALT Linux Sisyphus
 
