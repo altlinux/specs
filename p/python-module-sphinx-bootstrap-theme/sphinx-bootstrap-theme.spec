@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt2
+Release: alt2.qa1
 Summary: Sphinx Bootstrap Theme
 License: MIT
 Group: Development/Python
@@ -15,7 +15,7 @@ BuildArch: noarch
 # https://github.com/ryan-roemer/sphinx-bootstrap-theme.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
@@ -78,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt2.qa1
+- NMU: applied repocop patch
+
 * Thu Nov 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt2
 - Updated runtime dependencies for python-3.
 
