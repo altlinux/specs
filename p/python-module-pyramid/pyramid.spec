@@ -5,7 +5,7 @@
 
 Name:           python-module-%oname
 Version:        1.9.1
-Release:        alt2
+Release:        alt2.qa1
 Summary:        The Pyramid web application framework, a Pylons project
 Group:          Development/Python
 License:        BSD
@@ -15,7 +15,7 @@ BuildArch:      noarch
 # https://github.com/Pylons/pyramid.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools python2.7(chameleon) python2.7(mako) python2.7(repoze.lru)
+BuildRequires: python-devel python-module-setuptools python2.7(chameleon) python2.7(mako) python2.7(repoze.lru)
 BuildRequires: python2.7(venusian) python2.7(webtest) python2.7(zope.deprecation)
 BuildRequires: python2.7(docutils) python2.7(hupper) python2.7(paste.deploy)
 BuildRequires: python2.7(plaster) python2.7(plaster_pastedeploy) python2.7(sphinx)
@@ -168,6 +168,9 @@ python setup.py test
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt2.qa1
+- NMU: applied repocop patch
+
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.1-alt2
 - Rebuilt without bootstrap.
 
