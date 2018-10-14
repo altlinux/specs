@@ -1,6 +1,6 @@
 Name: 	 c-icap
 Version: 0.5.2
-Release: alt3
+Release: alt3.qa1
 Epoch:	 1
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -26,7 +26,7 @@ Implementation of an Internet Content Adaptation Protocol (ICAP) server.
 %package devel
 Summary: ICAP development files
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Headers and libraries for an Internet Content Adaptation Protocol (ICAP)
@@ -36,7 +36,7 @@ server implementation.
 %package clamav
 Summary: ICAP ClamAV module
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description clamav
 ICAP module for scanning content with ClamAV.
@@ -76,7 +76,7 @@ rm -f %buildroot%_libdir/c_icap/*.la
 %cfg_set LoadMagicFile %_sysconfdir/%name.magic ' ' ' '
 
 # Install /var/run rules
-install -Dm 0644 %SOURCE3 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+install -Dm 0644 %SOURCE3 %buildroot%_tmpfilesdir/%name.conf
 
 %pre
 /usr/sbin/groupadd -r -f _c_icap ||:
@@ -105,7 +105,7 @@ install -Dm 0644 %SOURCE3 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 %ghost %_logdir/%name/*.log
 %attr (750,_c_icap,root) %_var/run/%name/
 %attr (750,_c_icap,root) %_cachedir/%name/
-%_sysconfdir/tmpfiles.d/%name.conf
+%_tmpfilesdir/%name.conf
 %_man8dir/c-icap*.8*
 
 %files devel
@@ -113,6 +113,9 @@ install -Dm 0644 %SOURCE3 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 %_libdir/libicapapi.so
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.5.2-alt3.qa1
+- NMU: applied repocop patch
+
 * Thu Feb 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.5.2-alt3
 - Fixed localstatedir location.
 
