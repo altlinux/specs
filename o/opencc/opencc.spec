@@ -1,6 +1,6 @@
 Name:       opencc
 Version:    1.0.5
-Release:    alt1
+Release:    alt1.qa1
 Summary:    Libraries for Simplified-Traditional Chinese Conversion
 
 License:    ASL 2.0
@@ -26,6 +26,7 @@ Traditional Chinese and Simplified Chinese.
 Summary:    Documentation for OpenCC
 Group:      Text tools
 Requires:   %{name} = %{version}-%{release}
+BuildArch: noarch
 
 %description doc
 Doxygen generated documentation for OpenCC.
@@ -86,6 +87,9 @@ make test -C BUILD
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Mar 08 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.5-alt1
 - New version.
 
