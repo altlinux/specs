@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        1.4
-Release:        alt1
+Release:        alt1.qa1
 Summary:        Backport of functools.lru_cache from Python 3.3 as published at ActiveState.
 Group:          Development/Python
 License:        Apache-2.0
@@ -13,7 +13,7 @@ URL:            https://pypi.python.org/pypi/backports.functools_lru_cache
 # https://github.com/jaraco/backports.functools_lru_cache.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(pytest)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -99,5 +99,8 @@ py.test
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1.qa1
+- NMU: applied repocop patch
+
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4-alt1
 - Initial build for ALT.
