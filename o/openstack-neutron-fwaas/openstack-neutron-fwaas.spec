@@ -2,7 +2,7 @@
 
 Name: openstack-%oname
 Version: 10.0.1
-Release: alt2
+Release: alt2.qa1
 Epoch: 1
 Summary: OpenStack Networking FWaaS
 
@@ -35,7 +35,7 @@ BuildRequires: python-module-pyroute2 >= 0.4.12
 BuildRequires: python-module-neutron >= 9.0.0
 
 Requires: openstack-neutron >= 1:10.0.0-alt1
-Requires: python-module-%oname = %version-%release
+Requires: python-module-%oname = %EVR
 
 %description
 This package contains the code for the Neutron Firewall as a Service
@@ -95,6 +95,9 @@ install -p -D -m 644 etc/fwaas_driver.ini.sample %buildroot%_sysconfdir/neutron/
 %exclude %python_sitelibdir/*/tests/contrib
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:10.0.1-alt2.qa1
+- NMU: applied repocop patch
+
 * Fri Jun 22 2018 Grigory Ustinov <grenka@altlinux.org> 1:10.0.1-alt2
 - Fixed FTBFS (remove python-module-setuptools-tests from BR).
 
