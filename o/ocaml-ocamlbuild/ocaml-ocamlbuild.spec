@@ -1,7 +1,7 @@
 %define pkgname ocamlbuild
 Name: ocaml-%pkgname
 Version: 0.12.0
-Release: alt3%ubt
+Release: alt3.qa1%ubt
 Epoch: 1
 
 Summary: The Objective Caml project compilation tool
@@ -23,7 +23,7 @@ of OCaml projects.
 
 %package devel
 Summary: Development files for %name
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Group: Development/ML
 
 %description devel
@@ -66,6 +66,9 @@ rm %buildroot%_libdir/ocaml/%pkgname/META
 %_libdir/ocaml/ocamlbuild/*.mli
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.12.0-alt3.qa1%ubt
+- NMU: applied repocop patch
+
 * Mon Aug 13 2018 Anton Farygin <rider@altlinux.ru> 1:0.12.0-alt3%ubt
 - rebuilt for ocaml 4.07.0
 
