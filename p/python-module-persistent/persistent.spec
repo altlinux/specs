@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.2.4.2
-Release: alt1.1.1
+Release: alt1.1.1.qa1
 
 %setup_python_module %oname
 
@@ -19,7 +19,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-repoze.sphinx.autointerface
-BuildRequires: python-dev python-module-coverage python-module-nose python-module-setuptools python-module-zope
+BuildRequires: python-devel python-module-coverage python-module-nose python-module-setuptools python-module-zope
 BuildRequires: python-module-tox
 BuildRequires: python-module-virtualenv
 %if_with python3
@@ -151,6 +151,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.2.4.2-alt1.1.1.qa1
+- NMU: applied repocop patch
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.4.2-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
