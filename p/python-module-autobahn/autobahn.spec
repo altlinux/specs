@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 18.5.2
-Release: alt1
+Release: alt1.qa1
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
 Group: Development/Python
@@ -63,6 +63,7 @@ This package contains pickles for Autobahn.
 %package docs
 Summary: Documentation and examples for Autobahn
 Group: Development/Documentation
+BuildArch: noarch
 
 %description docs
 Autobahn WebSockets for Python provides an implementation of the
@@ -174,6 +175,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 18.5.2-alt1.qa1
+- NMU: applied repocop patch
+
 * Sun Aug 26 2018 Anton Midyukov <antohami@altlinux.org> 18.5.2-alt1
 - new version 18.5.2
 - disable check
