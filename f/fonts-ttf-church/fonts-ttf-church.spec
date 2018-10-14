@@ -2,7 +2,7 @@
 
 Name: fonts-ttf-%fname
 Version: 20100220
-Release: alt1
+Release: alt1.qa1
 
 Summary: Church Slavonic TrueType fonts
 Summary (ru_RU.UTF-8): Церковно-славянские шрифты TrueType
@@ -63,16 +63,13 @@ from Irmologion project:
 %install
 %ttf_fonts_install %fname
 
-%post
-%post_fonts
-
-%postun
-%postun_fonts
-
 %files -f %fname.files
 %doc AUTHORS README ReadMe.txt LICENSE
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 20100220-alt1.qa1
+- NMU: applied repocop patch
+
 * Fri Jun 25 2010 Vitaly Lipatov <lav@altlinux.ru> 20100220-alt1
 - recode texts to UTF-8, build from git
 - add Bukvica, Akathistos fonts
