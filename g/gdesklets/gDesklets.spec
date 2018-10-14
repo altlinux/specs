@@ -3,7 +3,7 @@
 
 Name:    gdesklets
 Version: 0.36.3
-Release: alt4
+Release: alt4.qa1
 
 Summary: gDesklets - an advanced architecture for desktop applets
 License: GPL
@@ -49,7 +49,7 @@ BuildPreReq: python-module-pygnome
 BuildRequires: GConf2 ORBit2-devel fontconfig-devel freetype2-devel gcc-c++ glib2-devel gnome-vfs2-devel libGConf2-devel 
 BuildRequires: libart_lgpl-devel libatk-devel libbonobo2-devel libbonoboui-devel libcairo-devel libglitz-devel libgnome-devel 
 BuildRequires: libgnome-keyring-devel libgnomecanvas-devel libgnomeui-devel libgtk+2-devel libgtop2-devel libpango-devel libpng-devel libpopt-devel 
-BuildRequires: librsvg-devel libxml2-devel menu-devel perl-XML-Parser pkg-config python-base python-dev python-module-pygnome-devel 
+BuildRequires: librsvg-devel libxml2-devel  perl-XML-Parser pkg-config python-base python-devel python-module-pygnome-devel 
 BuildRequires: python-module-pygtk-devel python-module-pyorbit-devel python-modules-compiler python-modules-encodings 
 BuildRequires: zlib-devel 
 BuildRequires: intltool >= 0.35.0 
@@ -123,6 +123,9 @@ fi
 #%_pkgconfigdir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.36.3-alt4.qa1
+- NMU: applied repocop patch
+
 * Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.36.3-alt4
 - NMU: updated build dependencies.
 
