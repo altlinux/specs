@@ -1,6 +1,6 @@
 Name: libtomcrypt
 Version: 1.18.2
-Release: alt1
+Release: alt1.qa1
 Summary: A comprehensive, portable cryptographic toolkit
 Group: System/Libraries
 License: WTFPL
@@ -45,6 +45,7 @@ developing applications that use %name.
 Summary: Documentation files for %name
 Group: Documentation
 Requires: %name = %version-%release
+BuildArch: noarch
 
 %description doc
 The %name-doc package contains documentation for use with %name.
@@ -97,6 +98,9 @@ find %buildroot -name 'libtomcrypt_prof*' -exec rm -f {} ';'
 %doc LICENSE doc/crypt.pdf
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.18.2-alt1.qa1
+- NMU: applied repocop patch
+
 * Mon Jul 16 2018 Grigory Ustinov <grenka@altlinux.org> 1.18.2-alt1
 - Build new version.
 
