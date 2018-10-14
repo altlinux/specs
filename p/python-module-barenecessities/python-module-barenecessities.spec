@@ -1,6 +1,6 @@
 Name:           python-module-barenecessities
 Version:        0.2.8
-Release:        alt1
+Release:        alt1.qa1
 
 Summary:        Provides the bn module containing a dictionary allowing attribute access to values
 
@@ -11,7 +11,7 @@ Group:          Development/Python
 # Source-url:   https://pypi.python.org/packages/ab/7d/6e82e68c7e3be857006b219746d61bd8b72f463d871de1a83c07c6bacf57/BareNecessities-%{version}.tar.gz
 Source:         %name-%version.tar
 
-BuildRequires:  python-dev python-module-setuptools
+BuildRequires:  python-devel python-module-setuptools
 
 BuildArch: noarch
 
@@ -32,5 +32,8 @@ values - I use it so much I've made into a package.
 %python_sitelibdir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.8-alt1.qa1
+- NMU: applied repocop patch
+
 * Sun Oct 02 2016 Vitaly Lipatov <lav@altlinux.ru> 0.2.8-alt1
 - initial build for ALT Linux Sisyphus with rpmgs script
