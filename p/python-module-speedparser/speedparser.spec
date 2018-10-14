@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt2.git20140816
+Release: alt2.git20140816.qa1
 
 Summary: feedparser but faster and worse
 Group: Development/Python
@@ -19,7 +19,7 @@ BuildArch: noarch
 %py_requires lxml chardet
 
 BuildRequires(pre): rpm-build-python
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-html5lib python-module-notebook
 BuildRequires: python-module-ipdb
 BuildRequires: python-module-pytest
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2.git20140816.qa1
+- NMU: applied repocop patch
+
 * Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt2.git20140816
 - NMU: rebuilt to regenerate dependencies.
 
