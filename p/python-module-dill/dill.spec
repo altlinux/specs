@@ -3,7 +3,7 @@
 
 Name:           python-module-%oname
 Version:        0.2.7.1
-Release:        alt1
+Release:        alt1.qa1
 Summary:        Serialize all of Python
 Group:          Development/Python
 License:        BSD
@@ -13,7 +13,7 @@ BuildArch:      noarch
 # https://github.com/uqfoundation/dill.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
@@ -79,6 +79,9 @@ popd
 %python3_sitelibdir/%oname-%version-py?.?.egg-info
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.7.1-alt1.qa1
+- NMU: applied repocop patch
+
 * Fri Oct 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.7.1-alt1
 - Initial build for ALT.
 
