@@ -4,7 +4,7 @@
 %define modulename unpaddedbase64
 Name: python-module-unpaddedbase64
 Version: 1.1.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Encode and decode Base64 without "=" padding
 
@@ -18,7 +18,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/matrix-org/python-unpaddedbase64/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 
 BuildArch: noarch
 
@@ -82,6 +82,9 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
 - initial build for ALT Sisyphus
 
