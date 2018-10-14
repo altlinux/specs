@@ -1,6 +1,6 @@
 Name:    kmymoney
 Version: 5.0.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -81,7 +81,7 @@ BuildRequires: libspeex-devel
 BuildRequires: libxml++2-devel 
 BuildRequires: libxml2-devel
 BuildRequires: libsqlcipher-devel
-BuildRequires: python-dev
+BuildRequires: python-devel
 BuildRequires: python-module-weboob
 
 Requires: %name-i18n
@@ -358,6 +358,9 @@ Internationalization and documentation for KMyMoney
 %exclude %_K5doc/en
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt2.qa1
+- NMU: applied repocop patch
+
 * Sat Sep 29 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.1-alt2
 - Fix build with Qt 5.11.
 - Package appdata file.
