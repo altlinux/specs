@@ -1,8 +1,8 @@
 %define  pkgname mail
  
 Name: 	 ruby-%pkgname
-Version: 2.7.0
-Release: alt1.1
+Version: 2.7.1
+Release: alt1
  
 Summary: A really Ruby Mail handler
 License: MIT/Ruby
@@ -61,6 +61,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Sun Oct 14 2018 Andrey Cherepanov <cas@altlinux.org> 2.7.1-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.7.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 
