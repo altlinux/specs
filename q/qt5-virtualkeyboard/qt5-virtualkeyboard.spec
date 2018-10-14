@@ -3,7 +3,7 @@
 
 Name: qt5-virtualkeyboard
 Version: 5.11.2
-Release: alt1%ubt
+Release: alt1.qa1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtQuick virtual keyboard component
@@ -56,6 +56,7 @@ Requires: %name-devel
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
 Requires: %name-common = %EVR
+BuildArch: noarch
 %description doc
 This package contains documentation for Qt5 %qt_module
 
@@ -95,6 +96,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.11.2-alt1.qa1%ubt
+- NMU: applied repocop patch
+
 * Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
 - new version
 
