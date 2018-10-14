@@ -1,6 +1,6 @@
 Name:           python-module-conversionkit
 Version:        0.3.4
-Release:        alt1
+Release:        alt1.qa1
 
 Summary:        A general purpose conversion library
 
@@ -11,7 +11,7 @@ Group:          Development/Python
 # Source-url:   https://pypi.python.org/packages/d7/fb/eb3b0824f42bf032900f9e7e32072429f1bf0b51f1caf3471a87784c8171/ConversionKit-%{version}.tar.gz
 Source:         %name-%version.tar
 
-BuildRequires:  python-dev python-module-setuptools
+BuildRequires:  python-devel python-module-setuptools
 
 BuildArch:      noarch
 
@@ -34,6 +34,9 @@ flag errors. See the introducion in the manual for full details.
 %python_sitelibdir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.4-alt1.qa1
+- NMU: applied repocop patch
+
 * Sun Oct 02 2016 Vitaly Lipatov <lav@altlinux.ru> 0.3.4-alt1
 - initial build for ALT Linux Susyphus with rpmgs script
 
