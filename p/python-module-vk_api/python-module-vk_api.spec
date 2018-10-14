@@ -2,7 +2,7 @@
 
 Name: python-module-vk_api
 Version: 9.3.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: Module for writing scripts for vk.com (vkontakte)
 License: Apache 2.0
@@ -14,7 +14,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires: python-dev
+BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 
 %py_requires requests enum34 urllib3
@@ -63,6 +63,9 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 9.3.1-alt2.qa1
+- NMU: applied repocop patch
+
 * Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 9.3.1-alt2
 - Rebuilt to regenerate dependencies.
 
