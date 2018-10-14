@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 16.8
-Release: alt1%ubt
+Release: alt1.qa1%ubt
 Summary: Core utilities for Python packages
 License: ASLv2.0 or BSD
 Group: Development/Python
@@ -15,7 +15,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: python-dev python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib
+BuildRequires: python-devel python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib
 BuildRequires: python-module-invoke python-module-objects.inv python-module-tox
 BuildPreReq: python-module-sphinx-devel
 BuildRequires: python-module-pytest python2.7(pretend) python2.7(pyparsing) python2.7(six)
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 16.8-alt1.qa1%ubt
+- NMU: applied repocop patch
+
 * Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 16.8-alt1%ubt
 - Updated to upstream version 16.8.
 
