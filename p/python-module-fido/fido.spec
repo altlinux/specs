@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.2.2
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: Intelligent asynchronous HTTP client
 License: ASLv2.0
 Group: Development/Python
@@ -14,7 +14,7 @@ BuildArch: noarch
 # https://github.com/Yelp/fido.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-twisted-core python-module-crochet
 BuildRequires: python-module-service-identity python-module-OpenSSL
 BuildRequires: python-module-coverage python-module-flake8
@@ -110,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.2.2-alt1.1.qa1
+- NMU: applied repocop patch
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
