@@ -2,7 +2,7 @@
 
 Name:    puppet3
 Version: 3.8.7
-Release: alt3.2
+Release: alt3.2.qa1
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
@@ -140,9 +140,9 @@ install -Dp -m0644 ext/vim/syntax/puppet.vim $vimdir/syntax/puppet.vim
 #sed -i 's/@@COMMAND@@/master/g' %buildroot%_bindir/start-puppet-agent
 
 # Setup tmpfiles.d config
-mkdir -p %buildroot%_sysconfdir/tmpfiles.d
+mkdir -p %buildroot%_tmpfilesdir
 echo "D /var/run/puppet 0755 _puppet puppet -" > \
-    %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+    %buildroot%_tmpfilesdir/%name.conf
 
 # Create puppet modules directory for puppet module tool
 mkdir -p %buildroot%_sysconfdir/puppet/modules
@@ -182,7 +182,7 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %_initdir/puppet
 %_unitdir/puppet.service
 %_unitdir/puppetagent.service
-%config(noreplace) %_sysconfdir/tmpfiles.d/%name.conf
+%config(noreplace) %_tmpfilesdir/%name.conf
 %dir %_sysconfdir/puppet
 %config(noreplace) %_sysconfdir/puppet/puppet.conf
 %config(noreplace) %_sysconfdir/puppet/auth.conf
@@ -209,6 +209,9 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.8.7-alt3.2.qa1
+- NMU: applied repocop patch
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.8.7-alt3.2
 - Rebuild with new Ruby autorequirements.
 
