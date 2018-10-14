@@ -12,7 +12,7 @@
 
 Name: libxerces-c
 Version: 3.2.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: Xerces-C++ validating XML parser
 
@@ -103,6 +103,15 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %install
 %makeinstall_std
 
+# There is a file in the package with a name starting with <tt>._</tt>, 
+# the file name pattern used by Mac OS X to store resource forks in non-native 
+# file systems. Such files are generally useless in packages and were usually 
+# accidentally included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
+# for ones installed as %%doc
+find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
+
+
 #rm -f %buildroot%_libdir/%name.a
 
 %files
@@ -120,6 +129,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_bindir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.2-alt1.qa1
+- NMU: applied repocop patch
+
 * Sat Oct 13 2018 Vitaly Lipatov <lav@altlinux.ru> 3.2.2-alt1
 - new version 3.2.2 (with rpmrb script)
 
