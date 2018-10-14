@@ -1,6 +1,6 @@
 Name:           python-module-mpylayer
 Version:        0.2a1
-Release:        alt1
+Release:        alt1.qa1
 
 Summary:        Pythonic mplayer controller library
 
@@ -11,7 +11,7 @@ Group:          Development/Python
 # Source-url:   https://pypi.python.org/packages/ae/f4/eed807fef73e7d0f58cdacefbbda6eff71644938904f0fd0debf79e809af/mpylayer-%{version}.tar.gz
 Source:         %name-%version.tar
 
-BuildRequires:  python-dev python-module-setuptools
+BuildRequires:  python-devel python-module-setuptools
 
 BuildArch:      noarch
 
@@ -31,6 +31,9 @@ mpylayer is a python package to easily control mplayer in python, using a python
 %python_sitelibdir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.2a1-alt1.qa1
+- NMU: applied repocop patch
+
 * Sun Oct 02 2016 Vitaly Lipatov <lav@altlinux.ru> 0.2a1-alt1
 - initial build for ALT Linux with rpmgs script
 
