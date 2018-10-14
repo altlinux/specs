@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.11
-Release: alt1%ubt
+Release: alt1.qa1%ubt
 Summary: A goodie-bag of unix shell and environment tools for py.test
 License: MIT
 Group: Development/Python
@@ -14,7 +14,7 @@ BuildArch: noarch
 Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: python-dev python-module-pytest python2.7(mock) python2.7(execnet) python2.7(contextlib2) python2.7(path)
+BuildRequires: python-devel python-module-pytest python2.7(mock) python2.7(execnet) python2.7(contextlib2) python2.7(path)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-pytest python3(mock) python3(execnet) python3(contextlib2) python3(path)
@@ -81,5 +81,8 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.11-alt1.qa1%ubt
+- NMU: applied repocop patch
+
 * Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.11-alt1%ubt
 - Initial build for ALT.
