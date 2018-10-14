@@ -1,6 +1,7 @@
+BuildRequires: desktop-file-utils
 Name: treeline
 Version: 2.9.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Treeline stores almost any kind of information
 
@@ -34,6 +35,10 @@ python3 install.py -b %buildroot -p %prefix -x
 rm %buildroot%_datadir/%name/setup.py 
 
 install -D -m 0644 treeline.desktop %buildroot%_desktopdir/%name.desktop
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=Office \
+	--add-category=Database \
+	%buildroot%_desktopdir/treeline.desktop
 
 %files
 %_bindir/*
@@ -45,6 +50,9 @@ install -D -m 0644 treeline.desktop %buildroot%_desktopdir/%name.desktop
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.9.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 2.9.0-alt1
 - Autobuild version bump to 2.9.0
 
