@@ -3,7 +3,7 @@
 
 Name: %upname%altver
 Version: 0.0.5
-Release: alt4
+Release: alt4.qa1
 Summary: DTS Coherent Acoustics decoder
 License: GPL
 
@@ -43,7 +43,7 @@ Header files for libdca library.
 %setup -q -n %upname-%version
 
 %build
-%__autoreconf
+%autoreconf
 %configure \
 	--disable-static
 
@@ -67,6 +67,9 @@ Header files for libdca library.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.5-alt4.qa1
+- NMU: applied repocop patch
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt4
 - Rebuilt for debuginfo
 
