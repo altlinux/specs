@@ -8,7 +8,7 @@
 
 Name: plymouth
 Version: 0.8.8
-Release: alt6.git.37d2e4
+Release: alt6.git.37d2e4.qa1
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Requires(post): plymouth-scripts
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 BuildRequires: libdrm-devel
 BuildRequires: systemd-devel
@@ -43,7 +43,7 @@ Summary: Plymouth default theme
 Group: System/Base
 Provides: %name-system-plugin = %version-%release
 Requires: plymouth(system-theme)
-Requires: %name = %version-%release
+Requires: %name = %EVR
 BuildArch: noarch
 
 %description system-theme
@@ -60,7 +60,7 @@ used by Plymouth.
 %package -n lib%name-graphics
 Summary: Plymouth graphics libraries
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 BuildRequires: libpng-devel
 
 %description -n lib%name-graphics
@@ -70,9 +70,9 @@ used by graphical Plymouth splashes.
 %package devel
 Summary: Libraries and headers for writing Plymouth splash plugins
 Group: System/Libraries
-Requires: %name = %version-%release
-Requires: lib%name-graphics = %version-%release
-Requires: lib%name = %version-%release
+Requires: %name = %EVR
+Requires: lib%name-graphics = %EVR
+Requires: lib%name = %EVR
 
 %description devel
 This package contains the libply and libplybootsplash libraries
@@ -81,7 +81,7 @@ and headers needed to develop 3rd party splash plugins for Plymouth.
 %package utils
 Summary: Plymouth related utilities
 Group: System/Base
-Requires: %name = %version-%release
+Requires: %name = %EVR
 BuildRequires: libgtk+2-devel
 
 %description utils
@@ -92,7 +92,7 @@ including a boot log viewing application.
 Summary: Plymouth related scripts
 Group: System/Base
 # Requires: make-initrd > 0.3.9-alt1
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description scripts
 This package contains scripts that help integrate Plymouth with
@@ -103,7 +103,7 @@ Summary: Plymouth GDM integration
 Group: System/Base
 Requires: gdm >= 2.22.0
 Requires: plymouth-utils
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gdm-hooks
 This package contains support files for integrating Plymouth with GDM
@@ -113,7 +113,7 @@ event start-up services fail.
 %package plugin-label
 Summary: Plymouth label plugin
 Group: System/Base
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 BuildRequires: libpango-devel >= 1.21.0
 BuildRequires: libcairo-devel
 
@@ -125,8 +125,8 @@ graphical boot splashes using pango and cairo.
 %package plugin-fade-throbber
 Summary: Plymouth "Fade-Throbber" plugin
 Group: System/Base
-Requires: lib%name = %version-%release
-Requires: lib%name-graphics = %version-%release
+Requires: lib%name = %EVR
+Requires: lib%name-graphics = %EVR
 
 %description plugin-fade-throbber
 This package contains the "Fade-In" boot splash plugin for
@@ -136,7 +136,7 @@ while other images pulsate around during system boot up.
 %package theme-fade-in
 Summary: Plymouth "Fade-In" theme
 Group: System/Base
-Requires: %name-plugin-fade-throbber = %version-%release
+Requires: %name-plugin-fade-throbber = %EVR
 Requires(post): %name-scripts = %version-%release
 Provides: plymouth(system-theme) = %version-%release
 BuildArch: noarch
@@ -149,9 +149,9 @@ while stars twinkle around the logo during system boot up.
 %package plugin-throbgress
 Summary: Plymouth "Throbgress" plugin
 Group: System/Base
-Requires: lib%name = %version-%release
-Requires: lib%name-graphics = %version-%release
-Requires: plymouth-plugin-label = %version-%release
+Requires: lib%name = %EVR
+Requires: lib%name-graphics = %EVR
+Requires: plymouth-plugin-label = %EVR
 
 %description plugin-throbgress
 This package contains the "throbgress" boot splash plugin for
@@ -162,7 +162,7 @@ the screen.
 %package theme-spinfinity
 Summary: Plymouth "Spinfinity" theme
 Group: System/Base
-Requires: %name-plugin-throbgress = %version-%release
+Requires: %name-plugin-throbgress = %EVR
 Requires(post): %name-scripts = %version-%release
 BuildArch: noarch
 
@@ -174,9 +174,9 @@ spins in the shape of an infinity sign.
 %package plugin-space-flares
 Summary: Plymouth "space-flares" plugin
 Group: System/Base
-Requires: lib%name = %version-%release
-Requires: lib%name-graphics = %version-%release
-Requires: plymouth-plugin-label = %version-%release
+Requires: lib%name = %EVR
+Requires: lib%name-graphics = %EVR
+Requires: plymouth-plugin-label = %EVR
 
 %description plugin-space-flares
 This package contains the "space-flares" boot splash plugin for
@@ -185,7 +185,7 @@ Plymouth. It features a corner image with animated flares.
 %package theme-solar
 Summary: Plymouth "Solar" theme
 Group: System/Base
-Requires: %name-plugin-space-flares = %version-%release
+Requires: %name-plugin-space-flares = %EVR
 Requires(post): %name-scripts = %version-%release
 Requires: plymouth-system-theme
 BuildArch: noarch
@@ -197,9 +197,9 @@ Plymouth. It features a blue flamed sun with animated solar flares.
 %package plugin-two-step
 Summary: Plymouth "two-step" plugin
 Group: System/Base
-Requires: lib%name = %version-%release
-Requires: lib%name-graphics = %version-%release
-Requires: plymouth-plugin-label = %version-%release
+Requires: lib%name = %EVR
+Requires: lib%name-graphics = %EVR
+Requires: plymouth-plugin-label = %EVR
 
 %description plugin-two-step
 This package contains the "two-step" boot splash plugin for
@@ -210,7 +210,7 @@ short, fast one-shot animation.
 %package theme-charge
 Summary: Plymouth "Charge" plugin
 Group: System/Base
-Requires: %name-plugin-two-step = %version-%release
+Requires: %name-plugin-two-step = %EVR
 Requires(post): %name-scripts = %version-%release
 BuildArch: noarch
 
@@ -222,7 +222,7 @@ and finally burst into full form.
 %package theme-glow
 Summary: Plymouth "Glow" plugin
 Group: System/Base
-Requires: %name-plugin-two-step = %version-%release
+Requires: %name-plugin-two-step = %EVR
 Requires(post): %name-scripts = %version-%release
 BuildArch: noarch
 
@@ -232,8 +232,8 @@ This package contains the "Glow" boot splash theme for Plymouth.
 %package plugin-script
 Summary: Plymouth "script" plugin
 Group: System/Base
-Requires: lib%name = %version-%release
-Requires: lib%name-graphics = %version-%release
+Requires: lib%name = %EVR
+Requires: lib%name-graphics = %EVR
 
 %description plugin-script
 This package contains the "script" boot splash plugin for
@@ -244,7 +244,7 @@ boot splash themes.
 %package theme-script
 Summary: Plymouth "Script" plugin
 Group: System/Base
-Requires: %name-plugin-script = %version-%release
+Requires: %name-plugin-script = %EVR
 Requires(post): %name-scripts = %version-%release
 BuildArch: noarch
 
@@ -256,7 +256,7 @@ plugin.
 %package theme-spinner
 Summary: Plymouth "Spinner" theme
 Group: System/Base
-Requires: %name-plugin-two-step = %version-%release
+Requires: %name-plugin-two-step = %EVR
 Requires(post): %name-scripts = %version-%release
 BuildArch: noarch
 
@@ -269,7 +269,7 @@ Plymouth. It features a small spinner on a dark background.
 %patch -p1
 
 # Change the default theme
-# %__subst 's/fade-in/charge/g' src/plymouthd.defaults
+# sed -i 's/fade-in/charge/g' src/plymouthd.defaults
 
 %build
 export SYSTEMD_ASK_PASSWORD_AGENT="/sbin/systemd-tty-ask-password-agent"
@@ -491,6 +491,9 @@ fi \
 %files system-theme
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.8.8-alt6.git.37d2e4.qa1
+- NMU: applied repocop patch
+
 * Tue Apr 26 2016 Michael Shigorin <mike@altlinux.org> 1:0.8.8-alt6.git.37d2e4
 - rollback to 0.8: 0.9 isn't included even in fedora (closes: #31379)
 
