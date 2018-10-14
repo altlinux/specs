@@ -4,7 +4,7 @@
 %define modulename pynacl
 Name: python-module-pynacl
 Version: 1.1.2
-Release: alt1.1.1
+Release: alt1.1.1.qa1
 
 Summary: Python binding to the Networking and Cryptography (NaCl) library
 
@@ -18,7 +18,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/pyca/pynacl/archive/%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 
 BuildRequires:  libsodium-devel
 BuildRequires: python-module-cffi
@@ -87,6 +87,9 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1.1.1.qa1
+- NMU: applied repocop patch
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.2-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
