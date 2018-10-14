@@ -3,7 +3,7 @@
 
 Name: openct
 Version: 0.6.20
-Release: alt4
+Release: alt4.qa1
 
 Group: System/Servers
 Summary: OpenCT Library for Smart Card Readers
@@ -129,8 +129,8 @@ install -p etc/openct.udev %buildroot/lib/udev/rules.d/60-openct.rules
 #mkdir -p %buildroot%_usr/libexec/hal
 #install -p -m755 etc/openct.hald %buildroot%_usr/libexec/hal/hald-addon-openct
 
-mkdir -p %buildroot%_sysconfdir/tmpfiles.d/
-cat >> %buildroot%_sysconfdir/tmpfiles.d/%{name}.conf <<@@@
+mkdir -p %buildroot%_tmpfilesdir/
+cat >> %buildroot%_tmpfilesdir/%{name}.conf <<@@@
 d /var/run/openct 0755 root root -
 @@@
 
@@ -155,7 +155,7 @@ d /var/run/openct 0755 root root -
 %_initdir/%name
 # copy documentation from %_builddir
 %dir %_var/run/openct
-%_sysconfdir/tmpfiles.d/%{name}.conf
+%_tmpfilesdir/%{name}.conf
 /lib/udev/openct_pcmcia
 /lib/udev/openct_serial
 /lib/udev/openct_usb
@@ -183,6 +183,9 @@ d /var/run/openct 0755 root root -
 %ifddir/openct-ifd.bundle
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.20-alt4.qa1
+- NMU: applied repocop patch
+
 * Fri Apr 04 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.20-alt4
 - Add tmpfiles.d config.
 
