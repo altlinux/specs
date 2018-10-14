@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.15.0
-Release: alt1%ubt
+Release: alt1.qa1%ubt
 Summary: Simplejson is a simple, fast, extensible JSON encoder/decoder for Python
 License: MIT/X Consortium
 Group: Development/Python
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 Patch: %oname-3.5.3-alt-python3.patch
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: python-dev python-module-setuptools python-module-sphinx
+BuildRequires: python-devel python-module-setuptools python-module-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
@@ -104,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.15.0-alt1.qa1%ubt
+- NMU: applied repocop patch
+
 * Thu Jun 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.15.0-alt1%ubt
 - Updated to upstream version 3.15.0.
 
