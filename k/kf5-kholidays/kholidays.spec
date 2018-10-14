@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.50.0
-Release: alt1%ubt
+Release: alt1.qa1%ubt
 Epoch: 1
 %K5init altplace
 
@@ -44,7 +44,7 @@ developing applications that use %name.
 %package -n libkf5holidays
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 %description -n libkf5holidays
 KF5 library
 
@@ -78,6 +78,9 @@ mkdir -p %buildroot/%_K5data/libkholidays/
 %_K5qml/org/kde/kholidays/
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.50.0-alt1.qa1%ubt
+- NMU: applied repocop patch
+
 * Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.50.0-alt1%ubt
 - new version
 
