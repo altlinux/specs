@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.6.0
-Release: alt1%ubt
+Release: alt1.qa1%ubt
 Summary: Basic functions for handling mime-types in python
 License: MIT
 Group: Development/Python
@@ -17,7 +17,7 @@ Url: https://pypi.org/project/python-mimeparse
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(json)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -113,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1.qa1%ubt
+- NMU: applied repocop patch
+
 * Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.0-alt1%ubt
 - Updated to upstream version 1.6.0.
 
