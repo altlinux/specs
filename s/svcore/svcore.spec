@@ -2,7 +2,7 @@
 
 Name: svcore
 Version: 2.1
-Release: alt3.hg20140910.1
+Release: alt3.hg20140910.1.qa1
 Summary: Core application library from the Sonic Visualiser project
 License: GPLv2
 Group: Sound
@@ -56,6 +56,7 @@ This package contains development files of lib%name.
 %package -n lib%name-devel-docs
 Summary: Documentation for core application library from the Sonic Visualiser project
 Group: Development/Documentation
+BuildArch: noarch
 #BuildArch: noarch
 
 %description -n lib%name-devel-docs
@@ -108,6 +109,9 @@ doxygen
 %doc doc/html/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.1-alt3.hg20140910.1.qa1
+- NMU: applied repocop patch
+
 * Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1-alt3.hg20140910.1
 - Rebuilt for gcc5 C++11 ABI.
 
