@@ -4,7 +4,7 @@
 %define libsover 0
 Name: maliit-framework
 Version: 0.94.2
-Release: alt4.2
+Release: alt4.2.qa1
 %define libmaliit libmaliit%libver-%libsover
 %define libmaliit_glib libmaliit-glib%libver-%libsover
 %define xinputconfdir %_sysconfdir/X11/xinit/xinput.d
@@ -83,6 +83,7 @@ GObject introspection data for the Maliit Framework Input Method library
 Summary: Maliit Framework Documentation
 Group: Development/Other
 Requires: %name = %version-%release
+BuildArch: noarch
 %description doc
 Documentation for the Maliit Input Method Framework
 
@@ -275,6 +276,9 @@ install -m 0644 README LICENSE.LGPL NEWS %buildroot/%_defaultdocdir/maliit-frame
 %_libdir/gtk-3.0/3.0.0/immodules/libim-maliit.so*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.94.2-alt4.2.qa1
+- NMU: applied repocop patch
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.94.2-alt4.2
 - (NMU) rebuild with python3.6
 
