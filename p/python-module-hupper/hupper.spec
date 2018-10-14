@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        1.0
-Release:        alt1
+Release:        alt1.qa1
 Summary:        Integrated process monitor for developing servers
 Group:          Development/Python
 License:        MIT
@@ -14,7 +14,7 @@ URL:            https://pypi.python.org/pypi/%{oname}
 # https://github.com/Pylons/hupper.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python2.7(pytest) python2.7(pytest_cov) python2.7(watchdog) python2.7(mock)
+BuildRequires: python-devel python2.7(pytest) python2.7(pytest_cov) python2.7(watchdog) python2.7(mock)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3(pytest) python3(pytest_cov) python3(watchdog) python3(mock)
@@ -83,6 +83,9 @@ popd
 %_bindir/*.py3
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt1
 - Initial build for ALT.
 
