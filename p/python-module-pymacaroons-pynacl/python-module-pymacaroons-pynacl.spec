@@ -4,7 +4,7 @@
 %define modulename pymacaroons-pynacl
 Name: python-module-pymacaroons-pynacl
 Version: 0.9.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: Library providing non-opaque cookies for authorization
 
@@ -18,7 +18,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/matrix-org/pymacaroons/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 
 BuildArch: noarch
 
@@ -90,6 +90,9 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1.qa1
+- NMU: applied repocop patch
+
 * Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
 - initial build for ALT Sisyphus
 
