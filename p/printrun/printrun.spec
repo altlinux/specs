@@ -3,7 +3,7 @@
 
 Name:           printrun
 Version:        1.6.0
-Release:        alt1
+Release:        alt1.qa1
 Epoch:		1
 Summary:        RepRap printer interface and tools
 
@@ -23,9 +23,9 @@ BuildRequires:  python-module-Polygon
 BuildRequires:  python-module-serial
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
-Requires:       pronterface = %{version}-%{release}
-Requires:       pronsole = %{version}-%{release}
-Requires:       plater = %{version}-%{release}
+Requires:       pronterface = %{EVR}
+Requires:       pronsole = %{EVR}
+Requires:       plater = %{EVR}
 
 %description
 Printrun is a set of G-code sending applications for RepRap.
@@ -47,7 +47,7 @@ Summary:        CLI interface for RepRap
 Group:          Engineering
 Requires:       python-module-serial
 Requires:       skeinforge
-Requires:       %{name}-common = %{version}-%{release}
+Requires:       %{name}-common = %{EVR}
 BuildArch:      noarch
 
 %description -n pronsole
@@ -60,7 +60,7 @@ It is a part of Printrun.
 Summary:        Web interface for RepRap
 Group:          Engineering
 Requires:       python-module-tornado
-Requires:       pronsole = %{version}-%{release}
+Requires:       pronsole = %{EVR}
 BuildArch:      noarch
 
 %description -n prontserve
@@ -76,7 +76,7 @@ Requires:       wxPython
 Requires:       python-module-cairosvg
 Requires:       python-module-pyglet
 Requires:       simarrange
-Requires:       pronsole = %{version}-%{release}
+Requires:       pronsole = %{EVR}
 BuildArch:      noarch
 
 %description -n pronterface
@@ -88,7 +88,7 @@ It is a part of Printrun.
 Summary:        RepRap STL plater
 Group:          Engineering
 Requires:       wxPython
-Requires:       %{name}-common = %{version}-%{release}
+Requires:       %{name}-common = %{EVR}
 Requires:       python-module-pyglet
 Requires:       simarrange
 BuildArch:      noarch
@@ -182,6 +182,9 @@ mv %buildroot%_datadir/{metainfo,appdata}
 %_datadir/appdata/plater.appdata.xml
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.6.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Mar 08 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.6.0-alt1
 - New version.
 
