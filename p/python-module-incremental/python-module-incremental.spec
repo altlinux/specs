@@ -5,7 +5,7 @@
 %define modulename incremental
 Name: python-module-incremental
 Version: 17.5.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: Incremental is a small library that versions your Python project
 
@@ -19,7 +19,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/twisted/incremental/archive/incremental-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 
 BuildArch: noarch
 
@@ -87,6 +87,9 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 17.5.0-alt2.qa1
+- NMU: applied repocop patch
+
 * Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 17.5.0-alt2
 - (NMU) Rebuilt without bootstrap.
 
