@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        0.1.3
-Release:        alt2
+Release:        alt2.qa1
 Summary:        String encodings invented and maintained by yelp.
 Group:          Development/Python
 License:        Unlicense
@@ -14,7 +14,7 @@ BuildArch:      noarch
 # https://github.com/Yelp/yelp_encodings.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(pytest)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt2.qa1
+- NMU: applied repocop patch
+
 * Thu Mar 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.3-alt2
 - Updated build dependencies.
 
