@@ -1,7 +1,7 @@
 Summary:    Alternative C/C++ preprocessor
 Name:       mcpp
 Version:    2.7.2
-Release:    alt2.3
+Release:    alt2.3.qa1
 License:    BSD
 Group:      Development/C
 Packager:   Evgeny Sinelnikov <sin@altlinux.ru>
@@ -82,6 +82,7 @@ Development static package for libmcpp.
 %package doc
 Summary:    Alternative C/C++ preprocessor (manual for library build)
 Group:      Documentation
+BuildArch: noarch
 
 %description doc
 This package provides an html manual for mcpp.
@@ -91,6 +92,9 @@ This package provides an html manual for mcpp.
 %lang(ja) %doc doc-jp/mcpp-manual-jp.html
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.2-alt2.3.qa1
+- NMU: applied repocop patch
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.2-alt2.3
 - Removed bad RPATH
 
