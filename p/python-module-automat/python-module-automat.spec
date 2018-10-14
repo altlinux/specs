@@ -3,7 +3,7 @@
 %define modulename Automat
 Name: python-module-automat
 Version: 0.6.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Self-service finite-state machines for the programmer on the go
 
@@ -17,7 +17,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://pypi.io/packages/source/A/%modulename/%modulename-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools python-module-docutils
+BuildRequires: python-devel python-module-setuptools python-module-docutils
 BuildRequires: python-module-mistune python-module-m2r python-module-setuptools_scm
 
 BuildArch: noarch
@@ -85,6 +85,9 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Jun 15 2017 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
 - initial build for ALT Sisyphus
 
