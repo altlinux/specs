@@ -1,6 +1,6 @@
 Name:    mustache
-Version: 1.0.5
-Release: alt1.1
+Version: 1.1.0
+Release: alt1
 
 Summary: Logic-less Ruby templates
 License: MIT
@@ -62,6 +62,9 @@ rm -f %buildroot%_mandir/*.*
 %ruby_ri_sitedir/*
 
 %changelog
+* Sun Oct 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.5-alt1.1
 - Rebuild with new Ruby autorequirements.
 
