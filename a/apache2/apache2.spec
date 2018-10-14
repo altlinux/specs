@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.35
-Release: alt1%ubt
+Release: alt1.qa1%ubt
 Epoch: 1
 
 License: %asl
@@ -1026,7 +1026,7 @@ install -pD %SOURCE62 %buildroot%condstopstart_webdir/%apache2_dname-condstart
 install -pD %SOURCE63 %buildroot%condstopstart_webdir/%apache2_dname-condstart-rpm
 
 # Install config for tempfiles
-install -pD -m 644 %SOURCE15 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+install -pD -m 644 %SOURCE15 %buildroot%_tmpfilesdir/%name.conf
 
 # Install scripts for SSL cert
 install -pD -m 644 %SOURCE70 %buildroot%apache2_sslcertshfunctions
@@ -1256,7 +1256,7 @@ exit 0
 %doc %docdir/CHANGES
 %doc %docdir/LICENSE
 
-%config %_sysconfdir/tmpfiles.d/*
+%config %_tmpfilesdir/*
 
 %attr(2770,root,%apache2_group) %dir %apache2_proxycachedir/
 %attr(750,root,%apache2_group) %dir %apache2_spooldir/
@@ -1513,6 +1513,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.4.35-alt1.qa1%ubt
+- NMU: applied repocop patch
+
 * Tue Sep 25 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.35-alt1%ubt
 - 2.4.35
 
