@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        0.7.0
-Release:        alt1
+Release:        alt1.qa1
 Summary:        WSGI for Cross Origin Resource Sharing (CORS)
 Group:          Development/Python
 License:        Apache-2.0
@@ -14,7 +14,7 @@ BuildArch:      noarch
 # https://github.com/may-day/wsgicors.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools python2.7(backports.functools_lru_cache)
+BuildRequires: python-devel python-module-setuptools python2.7(backports.functools_lru_cache)
 BuildRequires: python2.7(nose) python2.7(webob) python-module-nose-testconfig
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -85,5 +85,8 @@ python setup.py test
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.0-alt1
 - Initial build for ALT.
