@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    6.0.0
-Release:    alt1%ubt
+Release:    alt1.qa1%ubt
 
 Summary:    Server automation framework and application
 License:    Apache-2.0
@@ -87,8 +87,8 @@ install -m 0755 puppetserver.init %buildroot%_sysconfdir/init.d/%name
 mkdir -p %buildroot%_sysconfdir/sysconfig
 cat %name.service > %buildroot%_sysconfdir/sysconfig/%name
 
-mkdir -p %buildroot%_sysconfdir/tmpfiles.d
-cat > %buildroot%_sysconfdir/tmpfiles.d/%name.conf <<EOF
+mkdir -p %buildroot%_tmpfilesdir
+cat > %buildroot%_tmpfilesdir/%name.conf <<EOF
     d /var/run/puppetserver 0755 puppet puppet -
 EOF
 
@@ -135,13 +135,16 @@ chmod 700 /var/lib/puppetserver/jars
 %_var/run/%name
 %_bindir/%name
 %_sysconfdir/logrotate.d/%name
-%_sysconfdir/tmpfiles.d/%name.conf
+%_tmpfilesdir/%name.conf
 %_sysconfdir/sysconfig/%name
 %_sysconfdir/init.d/%name
 %_sysconfdir/default/%name
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt1.qa1%ubt
+- NMU: applied repocop patch
+
 * Fri Sep 21 2018 Andrey Bychkov <mrdrew@altlinux.org> 6.0.0-alt1%ubt
 - updated version to 6.0.0 from src
 
