@@ -3,7 +3,7 @@
 
 Name: python-module-%pkgname
 Version: 1.4.0
-Release: alt2
+Release: alt2.qa1
 Summary: Extended implementation of JSONPath for Python
 Group: Development/Python
 
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: python-dev
+BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-ply
 BuildRequires: python-module-decorator
@@ -106,6 +106,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2.qa1
+- NMU: applied repocop patch
+
 * Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.0-alt2
 - Updated dependencies.
 
