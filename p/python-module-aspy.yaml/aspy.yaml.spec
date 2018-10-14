@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 1.1.1
-Release: alt1
+Release: alt1.qa1
 Summary: Some extensions to pyyaml
 License: MIT
 Group: Development/Python
@@ -16,7 +16,7 @@ Url: https://pypi.python.org/pypi/aspy.yaml/
 # https://github.com/asottile/aspy.yaml.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-yaml python-module-coverage
 BuildRequires: python-module-flake8 pylint
 BuildRequires: python-module-pytest
@@ -139,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1.qa1
+- NMU: applied repocop patch
+
 * Wed May 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt1
 - Updated to upstream version 1.1.1.
 
