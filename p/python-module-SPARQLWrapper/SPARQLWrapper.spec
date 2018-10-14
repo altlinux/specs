@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.8.0
-Release: alt2.1
+Release: alt2.1.qa1
 Summary: SPARQL Endpoint interface to Python
 License: W3C SOFTWARE NOTICE AND LICENSE
 Group: Development/Python
@@ -14,7 +14,7 @@ Url: https://pypi.python.org/pypi/SPARQLWrapper/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-rdflib python-module-rdflib_jsonld
 BuildRequires: python-module-nose python-module-html5lib
 BuildRequires: python-module-six
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2.1.qa1
+- NMU: applied repocop patch
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.8.0-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
