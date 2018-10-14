@@ -4,7 +4,7 @@
 
 Name: 	 nss-ldapd
 Version: 0.9.10
-Release: alt1
+Release: alt1.qa1
 
 Summary: An nsswitch module which uses directory servers
 License: LGPLv2+
@@ -72,7 +72,7 @@ mkdir -p %buildroot{%_sysconfdir,%_libdir,/%_lib}
 mv %buildroot%_libdir/* %buildroot/%_lib/
 install -pD -m755 %SOURCE1 %buildroot%_initdir/nslcd
 install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/nslcd
-install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/tmpfiles.d/nslcd.conf
+install -pD -m644 %SOURCE3 %buildroot%_tmpfilesdir/nslcd.conf
 %if_enabled systemd
 install -pD -m644 %SOURCE4 %buildroot/lib/systemd/system/nslcd.service
 %endif
@@ -169,12 +169,15 @@ exit 0
 %attr(600,_nslcd,_nslcd) %config(noreplace) %verify(not md5 size mtime) %_sysconfdir/nslcd.conf
 %attr(711,_nslcd,root) %dir /var/run/nslcd
 %attr(666,_nslcd,_nslcd) %ghost /var/run/nslcd/socket
-%attr(644,root,root) %config(noreplace) %_sysconfdir/tmpfiles.d/nslcd.conf
+%attr(644,root,root) %config(noreplace) %_tmpfilesdir/nslcd.conf
 %if_enabled systemd
 %config(noreplace) /lib/systemd/system/*
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.10-alt1.qa1
+- NMU: applied repocop patch
+
 * Fri Sep 14 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.10-alt1
 - New version.
 
