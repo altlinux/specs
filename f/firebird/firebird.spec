@@ -8,7 +8,7 @@
 
 Name: firebird
 Version: %major.%minor
-Release: alt1
+Release: alt1.qa1
 Summary: Firebird SQL Database, fork of InterBase
 Group: Databases
 License: IPL
@@ -106,6 +106,7 @@ multi-threaded client library.
 Summary: Documentation for Firebird SQL server
 Group: Databases
 Requires: %name-server = %EVR
+BuildArch: noarch
 
 %description doc
 Documentation for Firebird SQL server.
@@ -354,6 +355,9 @@ fi
 %_datadir/%name/examples/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.4.33054.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Wed Oct 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.4.33054.0-alt1
 - Updated to upstream version 3.0.4.33054-0.
 
