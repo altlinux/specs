@@ -1,6 +1,6 @@
 Name: trustme
 Version: 0.7
-Release: alt5
+Release: alt5.qa1
 
 Summary: Encrypted notepad
 License: %gpl2only
@@ -40,6 +40,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Utility \
 	--add-category=TextEditor \
 	%buildroot%_desktopdir/trustme.desktop
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=System \
+	--add-category=Security \
+	%buildroot%_desktopdir/trustme.desktop
 
 %files
 %_bindir/%name
@@ -48,6 +52,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/hicolor/scalable/apps/%name.png
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt5.qa1
+- NMU: applied repocop patch
+
 * Fri Sep 21 2018 Grigory Ustinov <grenka@altlinux.org> 0.7-alt5
 - Changed categories of desktop file (Closes: #25688).
 
