@@ -2,7 +2,7 @@
 
 Name: python-module-%modname
 Version: 0.7.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: Library contains Python bindings for the reference Brotli
 License: MIT
@@ -12,7 +12,7 @@ Url: https://github.com/python-hyper/brotlipy/
 Source: %modname-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-setuptools python-dev
+BuildRequires: python-module-setuptools python-devel
 BuildRequires: gcc-c++ python-module-sphinx
 BuildRequires: python-module-cffi 
 
@@ -91,6 +91,9 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2.qa1
+- NMU: applied repocop patch
+
 * Mon Apr 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.0-alt2
 - (NMU) Rebuilt with python-3.6.4.
 
