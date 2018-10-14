@@ -1,6 +1,6 @@
 Name:    system-config-printer
 Version: 1.5.11
-Release: alt5
+Release: alt5.qa1
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -77,7 +77,7 @@ sed -i 's/mod.*ins.*_aft.*//' newprinter.py
 %install
 %makeinstall_std udevrulesdir=/lib/udev/rules.d \
 		 udevhelperdir=/lib/udev
-install -Dm0644 tmpfiles.conf %buildroot/etc/tmpfiles.d/system-config-printer.conf
+install -Dm0644 tmpfiles.conf %buildroot%_tmpfilesdir/system-config-printer.conf
 mv %buildroot%_datadir/{metainfo,appdata}
 %find_lang system-config-printer
 
@@ -92,7 +92,7 @@ exit 0
 /etc/dbus-1/system.d/*.conf
 
 %files udev
-%_sysconfdir/tmpfiles.d/*
+%_tmpfilesdir/*
 /lib/udev/rules.d/*.rules
 /lib/udev/udev-*-printer
 
@@ -111,6 +111,9 @@ exit 0
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.11-alt5.qa1
+- NMU: applied repocop patch
+
 * Mon Jul 02 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.5.11-alt5
 - fix logo in 'About' (Closes #33002)
 
