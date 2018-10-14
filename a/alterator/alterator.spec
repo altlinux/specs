@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -101,7 +101,7 @@ mkdir -p %buildroot%_runtimedir/alteratord
 mkdir -p %buildroot%_cachedir/%name
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_sysconfdir/%name
-mkdir -p %buildroot%_sysconfdir/tmpfiles.d
+mkdir -p %buildroot%_tmpfilesdir
 mkdir -p %buildroot%_rpmmacrosdir
 
 install -Dpm640 alterator-chkpwd.pamd %buildroot%_sysconfdir/pam.d/alterator-chkpwd
@@ -114,7 +114,7 @@ cat >%buildroot%_rpmmacrosdir/%name<<EOF
 %%_alterator_backend3dir %%_alterator_libdir/backend3
 EOF
 
-cat >%buildroot%_sysconfdir/tmpfiles.d/%name.conf<<EOF
+cat >%buildroot%_tmpfilesdir/%name.conf<<EOF
 d /var/run/alteratord 0710 root _alteratord -
 EOF
 
@@ -144,7 +144,7 @@ EOF
 %config(noreplace) %_sysconfdir/%name/menu
 %attr(700,root,root) %dir %_cachedir/%name
 %attr(700,root,root) %dir %_localstatedir/%name
-%_sysconfdir/tmpfiles.d/%name.conf
+%_tmpfilesdir/%name.conf
 
 %_datadir/guile/site/%guile_version/alterator
 %guile_ccachedir/alterator
@@ -167,6 +167,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.3-alt1.qa1
+- NMU: applied repocop patch
+
 * Wed Aug 29 2018 Paul Wolneykien <manowar@altlinux.org> 5.3-alt1
 - Allow semicolon-separated values for the *-list types.
 
