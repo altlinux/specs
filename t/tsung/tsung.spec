@@ -1,6 +1,6 @@
 Name: tsung
 Version: 1.7.0
-Release: alt2%ubt
+Release: alt2.qa1%ubt
 Summary: A distributed multi-protocol load testing tool
 URL: http://%name.erlang-projects.org/
 License: %gpl2plus
@@ -59,9 +59,16 @@ install -m 0644 CHANGELOG* CONTRIBUTORS README.md TODO  %buildroot%_docdir/%name
 %_man1dir/*
 %_libexecdir/%name
 %_datadir/%name
+# The package does not own its own docdir subdirectory.
+# The line below is added by repocop to fix this bug in a straightforward way. 
+# Another way is to rewrite the spec to use relative doc paths.
+%dir %_docdir/tsung-%version 
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt2.qa1%ubt
+- NMU: applied repocop patch
+
 * Fri Jun 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.0-alt2%ubt
 - Rebuilt with %%ubt macro support.
 
