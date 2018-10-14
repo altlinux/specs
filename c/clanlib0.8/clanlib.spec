@@ -1,6 +1,6 @@
 Name: clanlib0.8
 Version: 0.8.1
-Release: alt6
+Release: alt6.qa1
 
 Summary: The ClanLib Game SDK
 License: LGPL
@@ -144,6 +144,7 @@ Group: System/Libraries
 Requires: %name = %version-%release
 Provides: lib%name-docs = %version
 Obsoletes: lib%name-docs
+BuildArch: noarch
 
 %description docs
 The ClanLib Game SDK is a crossplatform game library designed to ease the
@@ -176,8 +177,8 @@ autoreconf -fisv
 	MAN_PREFIX=%buildroot%_mandir \
 	HTML_PREFIX=%buildroot%_docdir/clanlib-%version
 
-%__install -pD -m644 README CREDITS CODING_STYLE ascii-logo %buildroot%_docdir/clanlib-%version
-%__install -pD -m755 %SOURCE1 %buildroot%_bindir/launch_x11_clanapp
+install -pD -m644 README CREDITS CODING_STYLE ascii-logo %buildroot%_docdir/clanlib-%version
+install -pD -m755 %SOURCE1 %buildroot%_bindir/launch_x11_clanapp
 
 
 %files
@@ -231,6 +232,9 @@ autoreconf -fisv
 %_libdir/libclanGUIStyleSilver-*.so.*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt6.qa1
+- NMU: applied repocop patch
+
 * Wed Jan 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt6
 - Fixed build with new perl.
 
