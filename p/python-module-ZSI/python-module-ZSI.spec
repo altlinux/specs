@@ -1,7 +1,7 @@
 %define rname ZSI
 Name: python-module-ZSI
 Version: 2.0
-Release: alt2.1.1.1
+Release: alt2.1.1.1.qa1
 
 BuildArch: noarch
 
@@ -13,7 +13,7 @@ Url: http://pywebsvcs.sourceforge.net
 Packager: Alexey Morsov <swi@altlinux.ru>
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools python-dev >= 2.4
+BuildRequires: python-module-setuptools python-devel >= 2.4
 Requires:python >= 2.4 python-module-PyXML
 
 %description
@@ -40,6 +40,9 @@ easier to write web services in Python.
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.0-alt2.1.1.1.qa1
+- NMU: applied repocop patch
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0-alt2.1.1.1
 - Rebuild with Python-2.7
 
