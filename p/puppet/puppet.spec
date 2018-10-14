@@ -2,7 +2,7 @@
 
 Name:    puppet
 Version: 6.0.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
@@ -103,9 +103,9 @@ mkdir -p %buildroot%_sysconfdir/puppet/ssl/{public_keys,certificate_requests,cer
 mkdir -p %buildroot%_sysconfdir/puppet/{code,modules,environments/production/manifests}
 
 # Setup tmpfiles.d config
-mkdir -p %buildroot%_sysconfdir/tmpfiles.d
+mkdir -p %buildroot%_tmpfilesdir
 echo "D /run/%name 0755 _%name %name -" > \
-    %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+    %buildroot%_tmpfilesdir/%name.conf
 
 # Create puppet modules directory for puppet module tool
 mkdir -p %buildroot%_sysconfdir/%name/modules
@@ -150,7 +150,7 @@ rm -rf %buildroot%_sysconfdir/{*.conf,hiera.yaml}
 %_initdir/puppet
 %_unitdir/puppet.service
 %_unitdir/puppetagent.service
-%config(noreplace) %_sysconfdir/tmpfiles.d/%name.conf
+%config(noreplace) %_tmpfilesdir/%name.conf
 %dir %_sysconfdir/puppet
 %attr(0771,_puppet,puppet) %dir %_sysconfdir/puppet/ssl
 %attr(0755,_puppet,puppet) %dir %_sysconfdir/puppet/ssl/public_keys
@@ -186,6 +186,9 @@ rm -rf %buildroot%_sysconfdir/{*.conf,hiera.yaml}
 %rubygem_specdir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.2-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Oct 04 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.2-alt1
 - New version.
 
