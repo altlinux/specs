@@ -1,6 +1,6 @@
 Name: gamin
 Version: 0.1.10
-Release: alt5.2.qa1
+Release: alt5.2.qa2
 
 %def_disable static
 %def_disable debug
@@ -24,7 +24,7 @@ Patch10: gamin-0.1.10-suse-return.patch
 Patch11: gamin-0.1.10-suse-fam_abi_compatibility_FamErrlist.patch
 Patch12: gamin-0.1.10-suse-fix_python_main.patch
 
-BuildPreReq: rpm-build-python python-dev
+BuildPreReq: rpm-build-python python-devel
 %{?_enable_server:BuildRequires: glib2-devel}
 BuildRequires: common-licenses
 
@@ -112,16 +112,16 @@ a subset of the FAM (File Alteration Monitor) system.
 %install
 %makeinstall
 
-%__install -d -m755 %buildroot%pkgdocdir
-%__install -p -m644 AUTHORS ChangeLog Copyright NEWS README TODO \
+install -d -m755 %buildroot%pkgdocdir
+install -p -m644 AUTHORS ChangeLog Copyright NEWS README TODO \
     %buildroot%pkgdocdir/
-%__bzip2 -9 %buildroot%pkgdocdir/ChangeLog
-%__ln_s %_licensedir/LGPL-2 %buildroot%pkgdocdir/COPYING
-%__install -p -m644 doc/*.{html,gif,txt} \
+bzip2 -9 %buildroot%pkgdocdir/ChangeLog
+ln -s %_licensedir/LGPL-2 %buildroot%pkgdocdir/COPYING
+install -p -m644 doc/*.{html,gif,txt} \
     %buildroot%pkgdocdir/
 
 # remove non-packaged files
-%__rm -f %buildroot/%python_sitelibdir/*.la
+rm -f %buildroot/%python_sitelibdir/*.la
 
 %if_enabled server
 %files
@@ -151,6 +151,9 @@ a subset of the FAM (File Alteration Monitor) system.
 %python_sitelibdir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.10-alt5.2.qa2
+- NMU: applied repocop patch
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.10-alt5.2.qa1
 - NMU: rebuilt for updated dependencies.
 
