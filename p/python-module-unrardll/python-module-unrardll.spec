@@ -4,7 +4,7 @@
 %define modulename unrardll
 Name: python-module-unrardll
 Version: 0.1.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: Python wrapper for the UnRAR DLL
 
@@ -18,7 +18,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/kovidgoyal/unrardll/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -45,7 +45,7 @@ Python wrapper for the UNRAR DLL.
 
 %prep
 %setup
-%__subst "s|unrar/dll.hpp|libunrar/dll.hpp|" src/unrardll/wrapper.cpp
+sed -i "s|unrar/dll.hpp|libunrar/dll.hpp|" src/unrardll/wrapper.cpp
 
 %if_with python3
 cp -fR . ../python3
@@ -92,6 +92,9 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt1.qa1
+- NMU: applied repocop patch
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.1.3-alt1
 - initial build for ALT Sisyphus
 
