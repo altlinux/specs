@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 5.3.0
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: Zope Object Database: object database and persistence
 License: ZPL
 Group: Development/Python
@@ -16,7 +16,7 @@ Url: https://pypi.python.org/pypi/ZODB
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(persistent) python2.7(BTrees) python2.7(ZConfig) python2.7(transaction)
 BuildRequires: python2.7(six) python2.7(zc.lockfile) python2.7(zope.interface) python2.7(zodbpickle)
 BuildRequires: python-module-manuel-tests python2.7(zope.testing) python2.7(zope.testrunner)
@@ -176,6 +176,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.3.0-alt1.1.qa1
+- NMU: applied repocop patch
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 5.3.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
