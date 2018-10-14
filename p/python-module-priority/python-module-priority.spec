@@ -4,7 +4,7 @@
 %define modulename priority
 Name: python-module-priority
 Version: 1.3.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: A pure-Python implementation of the HTTP/2 priority tree
 
@@ -18,7 +18,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://pypi.io/packages/source/p/%modulename/%modulename-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 
 BuildArch: noarch
 
@@ -106,6 +106,9 @@ popd
 
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Jun 15 2017 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
 - initial build for ALT Sisyphus
 
