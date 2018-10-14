@@ -18,7 +18,7 @@
 
 Name: calligraplan
 Version: 3.1.0
-Release: alt4
+Release: alt4.qa1
 Epoch: 0
 %K5init
 
@@ -28,7 +28,7 @@ License: GPLv2+ / LGPLv2+
 Url: https://www.calligra.org/plan/
 Provides: koffice-kplato = %koffice_ver
 Obsoletes: koffice-kplato < %koffice_ver
-Requires: %oname-common = %version-%release
+Requires: %oname-common = %EVR
 Requires: kf5-kreport
 
 Source: http://download.kde.org/stable/calligra/%version/calligraplan-%version.tar
@@ -58,7 +58,7 @@ Summary: A project planner
 License: GPLv2+ / LGPLv2+
 Provides: koffice-kplato = %koffice_ver
 Obsoletes: koffice-kplato < %koffice_ver
-Requires: %oname-common = %version-%release
+Requires: %oname-common = %EVR
 Requires: kf5-kreport
 %description -n %oname
 Plan is a project management application. It is intended for managing
@@ -262,6 +262,9 @@ rm -frv %buildroot/%_datadir/locale/x-test/
 %_K5lib/libplanworkfactory.so.*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt4.qa1
+- NMU: applied repocop patch
+
 * Tue Sep 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0:3.1.0-alt4
 - Fixed build with new Qt.
 
