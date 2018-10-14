@@ -3,7 +3,7 @@ License: BSD
 Group: Development/Tools
 Summary: OPARI2 is a source-to-source instrumentation tool for OpenMP and hybrid codes
 Version: 2.0.2
-Release: alt1
+Release: alt1.qa1
 Url: http://www.vi-hps.org/projects/score-p/
 
 Source: %name-%version.tar
@@ -29,6 +29,7 @@ This package contains development files of OPARI2.
 %package docs
 Summary: Documentation for OPARI2
 Group: Documentation
+BuildArch: noarch
 
 %description docs
 OPARI2 is a source-to-source instrumentation tool for OpenMP and hybrid
@@ -64,6 +65,9 @@ ln -s %_libexecdir/pomp2-parse-init-regions.awk %buildroot%_bindir/
 %_docdir/%name
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Sep 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt1
 - Updated to upstream version 2.0.2.
 
