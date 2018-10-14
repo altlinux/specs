@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.3.5
-Release: alt3
+Release: alt3.qa1
 Summary: pyScss, a Scss compiler for Python
 License: MIT
 Group: Development/Python
@@ -18,7 +18,7 @@ Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: libpcre-devel
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-Pillow python2.7(enum34) python-module-pathlib python-module-pytest-cov
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
 %if_with python3
@@ -146,6 +146,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.5-alt3.qa1
+- NMU: applied repocop patch
+
 * Fri Aug 31 2018 Stanislav Levin <slev@altlinux.org> 1.3.5-alt3
 - Fix build
 
