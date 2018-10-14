@@ -1,7 +1,7 @@
 Name: libhtp
 Epoch: 1
 Version: 0.5.25
-Release: alt1
+Release: alt1.qa1
 Summary: LibHTP is a security-aware parser for the HTTP protocol and the related bits and pieces
 License: BSD License
 Group: Security/Networking
@@ -33,7 +33,7 @@ follows:
 
 %package devel
 Summary: Development headers and libraries for %name
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Group: Security/Networking
 
 %description devel
@@ -59,5 +59,8 @@ Development headers and libraries for %name.
 %_libdir/pkgconfig/htp.pc
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.5.25-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Jul 21 2017 Starostin Nikita <stark@altlinux.org> 1:0.5.25-alt1
 - initial build
