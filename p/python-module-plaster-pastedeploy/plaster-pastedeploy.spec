@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.1
-Release: alt1
+Release: alt1.qa1
 BuildArch: noarch
 Group: Development/Python
 
@@ -15,7 +15,7 @@ URL:     https://github.com/Pylons/plaster_pastedeploy
 # https://github.com/Pylons/plaster_pastedeploy.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python2.7(paste.deploy) python2.7(plaster) python2.7(pytest)
+BuildRequires: python-devel python2.7(paste.deploy) python2.7(plaster) python2.7(pytest)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3(paste.deploy) python3(plaster) python3(pytest)
@@ -83,6 +83,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1.qa1
+- NMU: applied repocop patch
+
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.1-alt1
 - Initial build for ALT.
 
