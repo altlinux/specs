@@ -1,6 +1,6 @@
 Name: libtommath
 Version: 1.0.1.0.97.gitg0bc7551
-Release: alt2
+Release: alt2.qa1
 
 Summary: A portable number theoretic multiple-precision integer library
 License: WTFPL
@@ -40,6 +40,7 @@ developing applications that use %name.
 Summary: Documentation files for %name
 Group: Documentation
 Requires: %name = %EVR
+BuildArch: noarch
 
 %description doc
 The %name-doc package contains PDF documentation for
@@ -87,6 +88,9 @@ find %buildroot -name '*.h' -exec chmod 644 {} ';'
 %doc doc/bn.pdf doc/poster.pdf doc/tommath.pdf
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.1.0.97.gitg0bc7551-alt2.qa1
+- NMU: applied repocop patch
+
 * Tue Apr 03 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.1.0.97.gitg0bc7551-alt2
 - Fix BuildRequires.
 
