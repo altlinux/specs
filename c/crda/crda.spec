@@ -6,7 +6,7 @@
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
 Version: 4.14
-Release: alt3.%_db_date
+Release: alt3.%_db_date.qa1
 License: copyleft-next 0.3.0
 Group: Networking/Other
 
@@ -28,7 +28,7 @@ Patch3: %_db-fw-dependency.patch
 Patch4: %_db-pubcert-conf.patch
 
 BuildRequires: libgcrypt-devel openssl chrpath
-BuildRequires: python-dev python-module-future python-module-attrs python-module-m2crypto
+BuildRequires: python-devel python-module-future python-module-attrs python-module-m2crypto
 
 BuildRequires: kernel-headers >= 2.6.27
 BuildRequires: libnl-devel >= 1.1
@@ -127,6 +127,9 @@ ln -s regulatory.bin.5 %buildroot%_man5dir/regulatory.db.5
 %_includedir/reglib
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.14-alt3.2018.05.31.qa1
+- NMU: applied repocop patch
+
 * Sat Jun 30 2018 L.A. Kostis <lakostis@altlinux.ru> 4.14-alt3.2018.05.31
 - fix sbin dir.
 
