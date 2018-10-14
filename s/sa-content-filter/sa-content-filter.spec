@@ -6,7 +6,7 @@
 
 Name: sa-content-filter
 Version: 0.1
-Release: alt3
+Release: alt3.qa1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -32,7 +32,7 @@ install -Dpm755 %SOURCE1 %buildroot%_bindir/content-filter
 subst 's,@SOCKET@,%spamd_sock,' %buildroot%_bindir/content-filter
 install -Dpm755 %SOURCE2 %buildroot%spamd_dir/user_prefs
 install -Dpm755 %SOURCE3 %buildroot%_sysconfdir/%name/system
-install -Dpm644 %SOURCE4 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+install -Dpm644 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 mkdir -p  %buildroot%_var/run/spamd/
 
 %pre
@@ -51,13 +51,16 @@ fi
 
 %files
 %_sysconfdir/%name
-%_sysconfdir/tmpfiles.d/%name.conf
+%_tmpfilesdir/%name.conf
 %_bindir/*
 %attr(755,%spamd_user,%spamd_group) %dir %spamd_dir
 %attr(644,%spamd_user,%spamd_group) %spamd_dir/user_prefs
 %attr(710,%spamd_user,%spamd_group) %dir %_var/run/spamd/
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3.qa1
+- NMU: applied repocop patch
+
 * Wed Jul 16 2014 Mikhail Efremov <sem@altlinux.org> 0.1-alt3
 - Add /etc/tmpfiles.d/ config.
 - Drop all changes in the spamd config if package is removed.
