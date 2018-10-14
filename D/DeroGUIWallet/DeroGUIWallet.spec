@@ -1,6 +1,6 @@
 Name:		DeroGUIWallet
 Version:	0.0.1
-Release:	alt1
+Release:	alt1.qa1
 Summary:	GUI Wallet for Dero
 Url:		https://github.com/drigler/DeroGUIWallet/
 Group:		Office
@@ -11,7 +11,7 @@ Source2:	%name
 
 BuildArch:	noarch
 
-BuildRequires:	python-dev rpm-build-gir /usr/bin/convert
+BuildRequires:	python-devel rpm-build-gir /usr/bin/convert
 
 Requires:	dero python-module-psutil python-module-requests python-module-PySide
 
@@ -35,7 +35,7 @@ install -Dp -m 0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 install -Dp -m 0755 %SOURCE2 %buildroot%_bindir/%name
 
 # Icons
-%__mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
+mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 convert -resize 48x48 Resources/icons/dero_icon.png %buildroot%_liconsdir/%name.png
 convert -resize 32x32 Resources/icons/dero_icon.png %buildroot%_niconsdir/%name.png
 convert -resize 16x16 Resources/icons/dero_icon.png %buildroot%_miconsdir/%name.png
@@ -50,5 +50,8 @@ convert -resize 16x16 Resources/icons/dero_icon.png %buildroot%_miconsdir/%name.
 %_liconsdir/*.png
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt1.qa1
+- NMU: applied repocop patch
+
 * Tue Feb 06 2018 Motsyo Gennadi <drool@altlinux.ru> 0.0.1-alt1
 - initial build for ALT Linux
