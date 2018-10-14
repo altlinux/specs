@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.5.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Zope interfaces package
 License: ZPLv2.1
@@ -21,7 +21,7 @@ BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-repoze.sphinx.autointerface
 BuildRequires: python-module-setuptools
 BuildRequires: python3-module-setuptools
-BuildRequires: python-dev
+BuildRequires: python-devel
 BuildRequires: python3-dev
 
 %if_with check
@@ -151,6 +151,9 @@ popd
 %python3_sitelibdir/zope/interface/common/tests
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.5.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Sat Jun 09 2018 Stanislav Levin <slev@altlinux.org> 4.5.0-alt1
 - 4.3.3 -> 4.5.0
 
