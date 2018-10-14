@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 Summary: Backport of new features in Python's weakref module
 Group: Development/Python
 License: Python
@@ -12,7 +12,7 @@ URL: https://pypi.python.org/pypi/backports.weakref
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-respect-pythonpath.patch
 
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(pytest)
 BuildRequires: python2.7(future) python2.7(backports.test.support)
 
@@ -53,5 +53,8 @@ PYTHONPATH=$(pwd)/src py.test
 %python_sitelibdir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1.qa1
+- NMU: applied repocop patch
+
 * Mon Dec 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt1
 - Initial build for ALT.
