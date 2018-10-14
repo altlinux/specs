@@ -1,6 +1,6 @@
 Name:		fonts-otf-euler
 Version:	000.002
-Release:	alt4
+Release:	alt4.qa1
 License:	OFL
 Group:		System/Fonts/True type
 Summary:	OpenType MATH-enabled font
@@ -30,16 +30,13 @@ review before the first official beta.
 %install
 %otf_fonts_install euler
 
-%post
-%post_fonts
-
-%postun
-%postun_fonts
-
 %files -f euler.files
 %doc README tests utils *.txt
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 000.002-alt4.qa1
+- NMU: applied repocop patch
+
 * Sat Nov 06 2010 Fr. Br. George <george@altlinux.ru> 000.002-alt4
 - Merged with Wed Oct 20 upstream
 - Rebuilt according to ALT font policy
