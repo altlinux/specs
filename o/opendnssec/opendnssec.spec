@@ -7,7 +7,7 @@
 
 Name: opendnssec
 Version: 1.4.14
-Release: alt2
+Release: alt2.qa1
 
 Summary: DNSSEC key and zone management software
 License: %bsd
@@ -28,7 +28,7 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: xml-utils xsltproc
 BuildRequires: libxml2-devel libsqlite3-devel libldns-devel
-BuildRequires: python-dev
+BuildRequires: python-devel
 BuildRequires: doxygen sqlite3
 
 Requires: softhsm
@@ -141,6 +141,9 @@ ods-ksmutil update all >/dev/null 1>&2 ||:
 %exclude %_sysconfdir/opendnssec/*.sample
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.14-alt2.qa1
+- NMU: applied repocop patch
+
 * Wed Sep 05 2018 Stanislav Levin <slev@altlinux.org> 1.4.14-alt2
 - Enable tests.
 - Fix requirements to sqlite3 in post script.
