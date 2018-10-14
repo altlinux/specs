@@ -1,6 +1,6 @@
 Name: 		log4c
 Version: 	1.2.1
-Release: 	alt1.1
+Release: 	alt1.1.qa1
 
 Summary: 	Log for C
 License:	LGPL
@@ -22,6 +22,7 @@ Requires: %name = %version
 Summary: documentation for %name
 Group: Development/C
 Requires: %name = %version
+BuildArch: noarch
 
 %description devel
 The %name-devel package contains the static libraries and header files
@@ -57,6 +58,9 @@ The %name-doc package contains the %name documentation
 %doc  doc/html
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1.1.qa1
+- NMU: applied repocop patch
+
 * Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.1
 - Rebuilt for set-versions
 
