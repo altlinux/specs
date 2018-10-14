@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt2.hg20140304
+Release: alt2.hg20140304.qa1
 Summary: pytest plugin with mechanisms for caching across test runs
 License: MIT
 Group: Development/Python
@@ -17,7 +17,7 @@ Url: https://pypi.python.org/pypi/pytest-cache/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pytest
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
 %if_with python3
@@ -115,6 +115,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2.hg20140304.qa1
+- NMU: applied repocop patch
+
 * Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt2.hg20140304
 - NMU: rebuilt to regenerate dependencies.
 
