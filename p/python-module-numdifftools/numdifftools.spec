@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20150828.1.1.1
+Release: alt1.git20150828.1.1.1.qa1
 %define oname numdifftools
 
 %def_with python3
@@ -94,6 +94,7 @@ This package contains test suite for Numdifftools.
 %package doc
 Summary: Documentation for Numdifftools
 Group: Development/Documentation
+BuildArch: noarch
 
 %description doc
 Numdifftools is a suite of tools to solve automatic numerical
@@ -195,6 +196,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.12-alt1.git20150828.1.1.1.qa1
+- NMU: applied repocop patch
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.12-alt1.git20150828.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
