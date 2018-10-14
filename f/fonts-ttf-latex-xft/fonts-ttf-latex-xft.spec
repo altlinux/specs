@@ -2,7 +2,7 @@
 
 Name: fonts-ttf-%fname
 Version: 0.1
-Release: alt4
+Release: alt4.qa1
 
 Summary: xft-compatible versions of some LaTeX fonts
 
@@ -36,16 +36,13 @@ Xft for displaying fonts (most recent systems).
 %install
 %ttf_fonts_install %fname
 
-%post
-%post_fonts
-
-%postun
-%postun_fonts
-
 %files -f %fname.files
 %doc README
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt4.qa1
+- NMU: applied repocop patch
+
 * Wed Sep 05 2007 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt4
 - rebuild with new rpm-build-fonts 0.3
 - add require fontconfig 2.4.2
