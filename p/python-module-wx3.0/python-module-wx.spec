@@ -8,7 +8,7 @@
 
 Name: python-module-%oname
 Version: %major.2.0
-Release: alt1.1.qa2
+Release: alt1.1.qa3
 Epoch: 1
 
 # Enable/disable GLcanvas
@@ -107,7 +107,7 @@ This module is built for python %_python3_version
 Summary: Files needed to build wrappers for wxPythonGTK (Python 3)
 Group: Development/Python3
 BuildArch: noarch
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
 %add_python3_req_skip _xrc
 
 %description -n python3-module-%oname-devel
@@ -117,7 +117,7 @@ interoperate with wxPythonGTK.
 %package -n python3-module-%oname-tests
 Summary: Tests for python-module-wx using (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
 This package contains demo programs files for wxPythonGTK
@@ -127,7 +127,7 @@ This package contains demo programs files for wxPythonGTK
 Summary: Files needed to build wrappers for wxPythonGTK
 Group: Development/Python
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Obsoletes: wxPythonGTK-devel
 %add_python_req_skip _xrc
 
@@ -139,7 +139,7 @@ interoperate with wxPythonGTK.
 Summary: Demo programs for python-module-wx using
 Group: Development/Python
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description demo
 This package contains demo programs files for wxPythonGTK
@@ -166,7 +166,7 @@ This package contains pickles for wxPythonGTK
 %package tests
 Summary: Tests for python-module-wx using
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package contains demo programs files for wxPythonGTK
@@ -333,8 +333,6 @@ rm -f \
 	%buildroot%python_sitelibdir/*/wx/tools/Editra/tests/syntax/perl.pl
 
 
-%postun
-# remove old entries
 %triggerpostun -- wxPythonGTK <= 2.4.2.4-alt4.1
 rm -rf %python_sitelibdir/{wx,wxPython} || :
 
@@ -386,6 +384,9 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.0.2.0-alt1.1.qa3
+- NMU: applied repocop patch
+
 * Fri Jun 15 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.0.2.0-alt1.1.qa2
 - Fixed previous change.
 
