@@ -2,7 +2,7 @@
 
 Name: egroupware-epl
 Version: 14.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: Multi-user, web-based groupware suite
 Summary(ru_RU.UTF-8): Многопользовательский, web-ориентированный пакет для коллективной работы
@@ -30,12 +30,19 @@ EGroupware - многопользовательский, web-ориентиро�
 mkdir -p %buildroot%_datadir/%setupdir
 cp -aRf egroupware/* %buildroot%_datadir/%setupdir
 
-%post
+# It is the file in the package named Thumbs.db or Thumbs.db.gz, 
+# which is normally a Windows image thumbnail database. 
+# Such databases are generally useless in packages and were usually 
+# accidentally included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
 
 %files
 %_datadir/%setupdir
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 14.2-alt1.qa1
+- NMU: applied repocop patch
+
 * Sun Feb 23 2015 Pavel Isopenko <pauli@altlinux.org> 14.2-alt1
 - initial build for Sisyphus
 - based on version 14.2.20150218
