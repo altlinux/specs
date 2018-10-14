@@ -1,6 +1,6 @@
 Name: googlecl
 Version: 0.9.13
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: GoogleCL brings Google services to the command line
 
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: python-dev
+BuildRequires: python-devel
 
 %description
 GoogleCL brings Google services to the command line.
@@ -47,6 +47,9 @@ install -p man/google.1 %buildroot/%_man1dir/
 %_man1dir/*
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.13-alt1.1.qa1
+- NMU: applied repocop patch
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.13-alt1.1
 - Rebuild with Python-2.7
 
