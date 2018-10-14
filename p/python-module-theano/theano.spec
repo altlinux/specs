@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt4
+Release: alt4.qa1
 Summary: Optimizing compiler for evaluating mathematical expressions on CPUs and GPUs
 License: BSD
 Group: Development/Python
@@ -28,7 +28,7 @@ BuildRequires: python-tools-2to3
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
 BuildRequires: python-module-docutils python-module-html5lib python-module-matplotlib rpm-build-python3 time
-BuildRequires: python-dev
+BuildRequires: python-devel
 
 %description
 Theano is a Python library that allows you to define, optimize, and
@@ -202,6 +202,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt4.qa1
+- NMU: applied repocop patch
+
 * Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6.0-alt4
 - rebuild with python3.6
 
