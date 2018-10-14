@@ -40,7 +40,7 @@
 Name: lib%bname%sover
 Epoch: 1
 Version: 3.4.3
-Release: alt1
+Release: alt1.qa1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -99,7 +99,7 @@ improving Python bindings to %Name.
 %package -n lib%bname-devel
 Group: Development/C++
 Summary: Development files for %name
-Requires: %name = %version-%release
+Requires: %name = %EVR
 # generated cmake targets mention tbb, require it here explicitly
 Requires: tbb-devel
 Provides: lib%{bname}2.2-devel = %version-%release
@@ -142,7 +142,7 @@ This package contains API Reference for develop with %name.
 %package tests
 Group: Video
 Summary: %Name tests
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -204,6 +204,7 @@ Group: Video
 Summary: %Name samples
 Conflicts: lib%bname-examples
 Conflicts: lib%{bname}2-examples
+BuildArch: noarch
 
 %description examples
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -295,6 +296,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %_datadir/%Name/lbpcascades
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.4.3-alt1.qa1
+- NMU: applied repocop patch
+
 * Mon Sep 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.3-alt1
 - Updated to upstream version 3.4.3.
 - Rebuilt with gtk+-3.
