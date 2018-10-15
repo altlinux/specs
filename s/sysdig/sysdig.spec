@@ -1,5 +1,5 @@
 Name: sysdig
-Version: 0.21.0
+Version: 0.23.1
 Release: alt1
 
 Summary: A system exploration and troubleshooting tool
@@ -11,11 +11,14 @@ Url: https://github.com/draios/sysdig
 # Source-url: https://github.com/draios/sysdig/archive/%version.tar.gz
 Source: %name-%version.tar
 
+ExclusiveArch: x86_64 %ix86
+
 # manually removed: python3 ruby ruby-stdlibs 
 # Automatically added by buildreq on Sat Jul 18 2015
 # optimized out: cmake cmake-modules libstdc++-devel libtinfo-devel python3-base zlib-devel
-BuildRequires: ccmake gcc-c++ jsoncpp-devel libdb4-devel libluajit-devel libncurses-devel zlib-devel liblua5.1-devel
-BuildRequires: libjq-devel libb64-devel libssl-devel libcurl-devel
+BuildRequires: cmake gcc-c++ jsoncpp-devel libdb4-devel libluajit-devel libncurses-devel zlib-devel
+BuildRequires: libjq-devel libb64-devel libssl-devel libcurl-devel libelf-devel
+BuildRequires: liblua5.1-devel
 
 %description
 An open source system-level exploration and troubleshooting tool.
@@ -58,6 +61,9 @@ rm -rf %buildroot/usr/etc/
 %_datadir/%name/
 
 %changelog
+* Thu Sep 13 2018 Vitaly Lipatov <lav@altlinux.ru> 0.23.1-alt1
+- new version 0.23.1 (with rpmrb script)
+
 * Sat Apr 21 2018 Vitaly Lipatov <lav@altlinux.ru> 0.21.0-alt1
 - new version 0.21.0 (with rpmrb script)
 
