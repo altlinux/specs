@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name geoclue
 %define __name org.freedesktop.GeoClue2
@@ -10,7 +10,7 @@
 %def_disable gtk_doc
 
 Name: %{_name}2
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -21,7 +21,7 @@ Url: http://geoclue.freedesktop.org/
 %if_disabled snapshot
 Source: http://www.freedesktop.org/software/%_name/releases/%ver_major/%_name-%version.tar.xz
 %else
-#VCS: git://anongit.freedesktop.org/geoclue
+#VCS: https://gitlab.freedesktop.org/geoclue/geoclue.git
 Source: %_name-%version.tar
 %endif
 
@@ -186,6 +186,9 @@ mkdir -p %buildroot%_localstatedir/%_name
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Mon Oct 15 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.13-alt1
+- 2.4.13
+
 * Fri Aug 17 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.12-alt1
 - 2.4.12
 
