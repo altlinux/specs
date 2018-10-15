@@ -1,7 +1,3 @@
-%define if_branch_le() %if "%(rpmvercmp '%ubt_id' '%1')" <= "0"
-%define if_branch_eq() %if "%(rpmvercmp '%ubt_id' '%1')" == "0"
-%define if_branch_ge() %if "%(rpmvercmp '%ubt_id' '%1')" >= "0"
-
 %set_verify_elf_method unresolved=relaxed
 %add_findprov_skiplist /%_lib/*
 %add_debuginfo_skiplist /%_lib
@@ -14,7 +10,6 @@
 %def_without talloc
 %def_without tevent
 %def_without tdb
-%def_without ntdb
 %def_without ldb
 %def_with    winbind
 
@@ -59,8 +54,8 @@
 %endif
 
 Name:    samba-DC
-Version: 4.8.5
-Release: alt2%ubt
+Version: 4.8.6
+Release: alt1
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -101,8 +96,6 @@ Requires: %name-winbind-clients = %version-%release
 %if_with libwbclient
 Requires: libwbclient-DC = %version-%release
 %endif
-
-BuildRequires(pre):rpm-build-ubt
 
 BuildRequires: /proc
 BuildRequires: libe2fs-devel
@@ -170,13 +163,8 @@ BuildRequires: python-module-pyldb-devel
 BuildRequires: python3-module-pyldb-devel
     %endif
 %endif
-%{?_without_ntdb:BuildRequires: libntdb-devel >= 0.9  python-module-ntdb}
 %{?_with_testsuite:BuildRequires: ldb-tools}
-%if_branch_le M70P
-%{?_with_systemd:BuildRequires: systemd-devel}
-%else
 %{?_with_systemd:BuildRequires: libsystemd-devel}
-%endif
 %{?_enable_avahi:BuildRequires: libavahi-devel}
 %{?_enable_glusterfs:BuildRequires: glusterfs3-devel >= 3.4.0.16}
 %{?_with_libcephfs:BuildRequires: ceph-devel}
@@ -569,17 +557,12 @@ libsamba_util private headers.
 %define _tdb_lib ,!tdb,!pytdb
 %endif
 
-%define _ntdb_lib ,ntdb,pyntdb
-%if_without ntdb
-%define _ntdb_lib ,!ntdb,!pyntdb
-%endif
-
 %define _ldb_lib ,ldb,pyldb,pyldb-util
 %if_without ldb
 %define _ldb_lib ,!ldb,!pyldb,!pyldb-util
 %endif
 
-%define _samba4_libraries heimdal,!zlib,!popt%{_talloc_lib}%{_tevent_lib}%{_tdb_lib}%{_ntdb_lib}%{_ldb_lib}
+%define _samba4_libraries heimdal,!zlib,!popt%{_talloc_lib}%{_tevent_lib}%{_tdb_lib}%{_ldb_lib}
 
 %define _samba4_idmap_modules idmap_ad,idmap_rid,idmap_adex,idmap_hash,idmap_tdb2
 %define _samba4_pdb_modules pdb_tdbsam,pdb_ldap,pdb_ads,pdb_smbpasswd,pdb_wbc_sam,pdb_samba4
@@ -1037,19 +1020,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_man8dir/cifsdd.8*
 %endif
 
-%if_with ntdb
-%_bindir/ntdbbackup
-%_bindir/ntdbdump
-%_bindir/ntdbrestore
-%_bindir/ntdbtool
-%if_with doc
-%_man3dir/ntdb.3*
-%_man8dir/ntdbbackup.8*
-%_man8dir/ntdbdump.8*
-%_man8dir/ntdbrestore.8*
-%_man8dir/ntdbtool.8*
-%endif #doc
-%endif #ntdb
 %if_with tdb
 %_bindir/tdbbackup
 %_bindir/tdbdump
@@ -1569,6 +1539,11 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Oct 11 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.8.6-alt1
+- Update to latest autumn release
+- Disable ubt macros due binary package identity changes
+- Remove depcrecated libntdb options from spec
+
 * Fri Sep 14 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.8.5-alt2%ubt
 - Fixed the patch which allows joining to Windows based domain controllers
 
