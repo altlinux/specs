@@ -2,7 +2,7 @@
 
 Name: ice-ssb
 Version: 5.3.4
-Release: alt3
+Release: alt4
 
 Summary: Application to easily add and remove Chromium site specific browsers.
 License: GPL
@@ -12,7 +12,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Patch0: fix-paths.patch
-Patch1: fix-chromium-name.patch
+Patch1: fix-browsers-names.patch
 
 Requires: python3-module-pygobject3
 Requires: python3-module-BeautifulSoup4
@@ -63,6 +63,9 @@ cp -fR %name/locale %buildroot%_datadir/%name
 
 
 %changelog
+* Mon Oct 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.4-alt4
+- fix firefox name
+
 * Sun Sep 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.4-alt3
 - Fixed requires
 
