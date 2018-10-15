@@ -5,8 +5,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.6.3
-Release: alt1%ubt
+Version: 2.6.4
+Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -30,12 +30,12 @@ BuildRequires: liblz4-devel
 BuildRequires: libxml2-devel
 BuildRequires: libspandsp6-devel
 BuildRequires: libsnappy-devel
-BuildRequires: libgtk+3-devel
 BuildRequires: libcares-devel
 BuildRequires: libsmi-devel
 BuildRequires: libGeoIP-devel
+BuildRequires: libglib2-devel
 BuildRequires: qt5-base-devel qt5-tools qt5-multimedia-devel
-BuildRequires(pre):rpm-build-ubt rpm-build-xdg
+BuildRequires(pre):rpm-build-xdg
 
 %package base
 Summary: Wireshark base package
@@ -44,15 +44,6 @@ Obsoletes: ethereal-libs < 0.10.10
 Obsoletes: ethereal-base
 Conflicts: libwiretap < %version-%release
 Conflicts: libwiretap > %version-%release
-
-%package gtk+
-Summary: GTK+ GUI for Wireshark package
-Group: Monitoring
-Requires: %name-base = %version-%release
-Provides: %name = %version-%release
-Requires: url_handler
-Obsoletes: ethereal
-Obsoletes: ethereal-gtk+
 
 %package qt5
 Summary: QT5 GUI for Wireshark package
@@ -106,9 +97,6 @@ library, contains command-line utilities, plugins and documentation
 for wireshark. A graphical user interface is packaged separately to
 GTK+/QT5 packages.
 
-%description gtk+
-This package contains GTK+ GUI ie. the wireshark -- application.
-
 %description qt5
 This package contains QT5 GUI ie. the wireshark -- application.
 
@@ -154,7 +142,7 @@ chmod ugo+rx configure
    --enable-shared \
    --disable-warnings-as-errors \
    --with-qt=5 \
-   --with-gtk=yes \
+   --with-gtk=no \
    --enable-wireshark \
    --enable-tshark \
    --enable-editcap \
@@ -204,10 +192,6 @@ mv -v %buildroot%_bindir/%name %buildroot%_bindir/%name-qt5
 
 # Make alternatives:
 mkdir -p %buildroot%_altdir
-cat <<'_EOF'_ > %buildroot%_altdir/%name-gtk
-%_bindir/%name	%_bindir/%name-gtk	10
-_EOF_
-
 cat <<'_EOF'_ > %buildroot%_altdir/%name-qt5
 %_bindir/%name	%_bindir/%name-qt5	20
 _EOF_
@@ -263,12 +247,6 @@ _EOF_
 %_liconsdir/wireshark.png
 %_xdgmimedir/packages/%name.xml
 
-%files gtk+
-%_altdir/%name-gtk
-%_bindir/wireshark-gtk
-%_datadir/applications/%name-gtk.desktop
-%_datadir/appdata/%name.appdata.xml
-
 %files qt5
 %_altdir/%name-qt5
 %_bindir/wireshark-qt5
@@ -289,28 +267,32 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
-* Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 2.6.3-alt1%ubt
+* Sat Oct 13 2018 Anton Farygin <rider@altlinux.ru> 2.6.4-alt1
+- 2.6.4 (fixes: CVE-2018-18227, CVE-2018-18225, CVE-2018-18225,  CVE-2018-12086)
+- disabled build gtk+ UI
+
+* Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 2.6.3-alt1
 - 2.6.3 (fixes: CVE-2018-16056, CVE-2018-16057, CVE-2018-16058)
 
-* Sat Jul 21 2018 Anton Farygin <rider@altlinux.ru> 2.6.2-alt1%ubt
+* Sat Jul 21 2018 Anton Farygin <rider@altlinux.ru> 2.6.2-alt1
 - 2.6.2  (fixes: CVE-2018-14370, CVE-2018-14367, CVE-2018-14369, CVE-2018-14368, CVE-2018-14341, CVE-2018-14339, CVE-2018-14343, CVE-2018-14340, CVE-2018-14344, CVE-2018-14342)
 
-* Wed Jul 18 2018 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt2%ubt
+* Wed Jul 18 2018 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt2
 - Fix FTBFS (Add missing rpm-build-xdg).
 
-* Thu May 24 2018 Anton Farygin <rider@altlinux.ru> 2.6.1-alt1%ubt
+* Thu May 24 2018 Anton Farygin <rider@altlinux.ru> 2.6.1-alt1
 - 2.6.1 (fixes: CVE-2018-11359, CVE-2018-11361, CVE-2018-11358, CVE-2018-11360, CVE-2018-11356, CVE-2018-11357, CVE-2018-11355, CVE-2018-11354, CVE-2018-11362)
 
-* Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 2.6.0-alt2%ubt
+* Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 2.6.0-alt2
 - patch for wireshark #14638 l16mono.so issue is applied
 
-* Wed May 02 2018 Anton Farygin <rider@altlinux.ru> 2.6.0-alt1%ubt
+* Wed May 02 2018 Anton Farygin <rider@altlinux.ru> 2.6.0-alt1
 - 2.6.0
 
-* Tue Apr 03 2018 Anton Farygin <rider@altlinux.ru> 2.5.1-alt1%ubt
+* Tue Apr 03 2018 Anton Farygin <rider@altlinux.ru> 2.5.1-alt1
 - 2.5.1
 
-* Mon Feb 26 2018 Anton Farygin <rider@altlinux.ru> 2.4.5-alt1%ubt
+* Mon Feb 26 2018 Anton Farygin <rider@altlinux.ru> 2.4.5-alt1
 - 2.4.5
 - fixes:
      * wnpa-sec-2018-05 The IEEE 802.11 dissector could crash. CVE-2018-7335
@@ -328,21 +310,21 @@ _EOF_
      * wnpa-sec-2018-13 The SIGCOMP dissector could crash. CVE-2018-7418
      * wnpa-sec-2018-14 The NBAP disssector could crash. CVE-2018-7419
 
-* Wed Jan 17 2018 Anton Farygin <rider@altlinux.ru> 2.4.4-alt1%ubt
+* Wed Jan 17 2018 Anton Farygin <rider@altlinux.ru> 2.4.4-alt1
 - 2.4.4
 - fixes:
     * wnpa-sec-2018-01  Multiple dissectors could crash. CVE-2018-5336
     * wnpa-sec-2018-03  The IxVeriWave file parser could crash.  CVE-2018-5334
     * wnpa-sec-2018-04  The WCP dissector could crash. CVE-2018-5335
 
-* Sat Dec 09 2017 Anton Farygin <rider@altlinux.ru> 2.4.3-alt1%ubt
+* Sat Dec 09 2017 Anton Farygin <rider@altlinux.ru> 2.4.3-alt1
 - 2.4.3
 - fixes:
      * wnpa-sec-2017-49 CIP Safety dissector crash CVE-2017-17085
      * wnpa-sec-2017-48 NetBIOS dissector crash CVE-2017-17083
      * wnpa-sec-2017-47 IWARP_MPA dissector crash CVE-2017-17084
 
-* Sun Oct 15 2017 Anton Farygin <rider@altlinux.ru> 2.4.2-alt1%ubt
+* Sun Oct 15 2017 Anton Farygin <rider@altlinux.ru> 2.4.2-alt1
 - 2.4.2
 - fixes:
      * wnpa-sec-2017-42 BT ATT dissector crash CVE-2017-15192
@@ -351,17 +333,17 @@ _EOF_
      * wnpa-sec-2017-45 RTSP dissector crash CVE-2017-15190
      * wnpa-sec-2017-46 DOCSIS infinite loop CVE-2017-15189
 
-* Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 2.4.1-alt1%ubt
+* Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 2.4.1-alt1
 - 2.4.1 with following fixes:
      * wnpa-sec-2017-38 MSDP dissector infinite loop CVE-2017-13767
      * wnpa-sec-2017-39 Profinet I/O buffer overrun CVE-2017-13766
      * wnpa-sec-2017-40 Modbus dissector crash CVE-2017-13764
      * wnpa-sec-2017-41 IrCOMM dissector buffer overrun CVE-2017-13765
 
-* Sun Jul 30 2017 Anton Farygin <rider@altlinux.ru> 2.4.0-alt1%ubt
+* Sun Jul 30 2017 Anton Farygin <rider@altlinux.ru> 2.4.0-alt1
 - 2.4.0
 
-* Fri Jul 21 2017 Anton Farygin <rider@altlinux.ru> 2.2.8-alt1%ubt
+* Fri Jul 21 2017 Anton Farygin <rider@altlinux.ru> 2.2.8-alt1
 - new version:
      * wnpa-sec-2017-13 WBMXL dissector infinite loop CVE-2017-7702, CVE-2017-11410
      * wnpa-sec-2017-28 openSAFETY dissector memory exhaustion CVE-2017-9350, CVE-2017-11411
@@ -369,7 +351,7 @@ _EOF_
      * wnpa-sec-2017-35 MQ dissector crash CVE-2017-11407
      * wnpa-sec-2017-36 DOCSIS infinite loop CVE-2017-11406
 
-* Sun Jun 04 2017 Anton Farygin <rider@altlinux.ru> 2.2.7-alt1%ubt
+* Sun Jun 04 2017 Anton Farygin <rider@altlinux.ru> 2.2.7-alt1
 - new version with these security fixes:
      * wnpa-sec-2017-22 Bazaar dissector infinite loop CVE-2017-9352
      * wnpa-sec-2017-23 DOF dissector read overflow CVE-2017-9348
@@ -387,7 +369,7 @@ _EOF_
      * wnpa-sec-2017-32 RGMP dissector crash CVE-2017-9354
      * wnpa-sec-2017-33 IPv6 dissector crash CVE-2017-9353
 
-* Fri Apr 14 2017 Anton Farygin <rider@altlinux.ru> 2.2.6-alt1%ubt
+* Fri Apr 14 2017 Anton Farygin <rider@altlinux.ru> 2.2.6-alt1
 - new version with these security fixes:
      * wnpa-sec-2017-12 IMAP dissector crash CVE-2017-7703
      * wnpa-sec-2017-13 WBMXL dissector infinite loop CVE-2017-7702
@@ -396,19 +378,19 @@ _EOF_
      * wnpa-sec-2017-16 BGP dissector infinite loop CVE-2017-7701
      * wnpa-sec-2017-17 DOF dissector infinite loop CVE-2017-7704
 
-* Fri Mar 10 2017 Anton Farygin <rider@altlinux.ru> 2.2.5-alt2%ubt
+* Fri Mar 10 2017 Anton Farygin <rider@altlinux.ru> 2.2.5-alt2
 - fixed liblua devel requires
 
-* Tue Mar 07 2017 Anton Farygin <rider@altlinux.ru> 2.2.5-alt1%ubt
+* Tue Mar 07 2017 Anton Farygin <rider@altlinux.ru> 2.2.5-alt1
 - new version
 
-* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt2%ubt
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt2
 - NMU: new lua 5.1 BR:
 
-* Fri Feb 03 2017 Anton Farygin <rider@altlinux.ru> 2.2.4-alt1%ubt
+* Fri Feb 03 2017 Anton Farygin <rider@altlinux.ru> 2.2.4-alt1
 - new version
 
-* Wed Dec 21 2016 Anton Farygin <rider@altlinux.ru> 2.2.3-alt1%ubt
+* Wed Dec 21 2016 Anton Farygin <rider@altlinux.ru> 2.2.3-alt1
 - new version
 
 * Mon Nov 21 2016 Anton Farygin <rider@altlinux.ru> 2.2.2-alt1
