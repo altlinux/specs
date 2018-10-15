@@ -1,39 +1,21 @@
-# -*- rpm-spec -*-
-# $Id: motion,v 1.18 2005/04/25 05:07:36 grigory Exp $
-
-#define svnversion svn20090216
-
-#define branch_point alt1.%%svnversion
-%define branch_point alt1
-#define revision 1
-
-
 Name: motion
-Version: 4.0.1
-
-Release: %branch_point.2
-
-
+Version: 4.1.1
+Release: alt1
 Summary: %name - Detect motion using a video4linux device
 License: GPL
 Group: Video
 Url: http://www.lavrsen.dk/twiki/bin/view/Motion/WebHome
-
-#Source0: %%name-%%version-%%svnversion.tar.bz2
-Source0: %name-%%version.tar
-Patch:	motion-makefile-3.4.1.patch
-
-#Patch: %name-ffmpeg-0.7.1.patch
-#Patch1: %name-3.2.12-alt-v4l.patch
-Packager: Hihin Ruslan <ruslandh@altlinux.ru>
+Source0: %name-%version.tar
+Patch0:	motion-4.1.1-docdir.patch
+Patch1: motion-4.1.1-ffmpeg4.patch
+Patch2: motion-4.1.1-configure-binpath.patch
 
 BuildPreReq: libavformat-devel libjpeg-devel postgresql-devel zlib-devel
 BuildPreReq: libmjpegtools-devel libsqlite3-devel 
 BuildPreReq: libpostproc-devel libswscale-devel libavdevice-devel
 BuildPreReq: libavfilter-devel libv4l-devel
 
-# Automatically added by buildreq on Sat Dec 11 2010
-BuildRequires: libavformat-devel libjpeg-devel libmysqlclient-devel postgresql-devel zlib-devel
+BuildRequires: libavformat-devel libjpeg-devel libmysqlclient-devel postgresql-devel zlib-devel libwebp-devel
 
 %description
 With motion you can use a video4linux device as a motion detector.
@@ -41,9 +23,9 @@ It will make snapshots if motion is detected.
 
 %prep
 %setup -q -n %name-%version
-%patch -p1
-
-#%%patch1 -p2
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %__subst 's|<postgresql[/]libpq-fe.h>|<pgsql/libpq-fe.h>|' %name.h
 %__subst 's|\(if [\\(]cnt->conf\.mysql_db && sqltype[\)]\)|//\1|' event.c
@@ -58,7 +40,7 @@ rm -f version.sh
 %build
 %autoreconf
 %configure --sysconfdir=%_sysconfdir/%name \
-	--docdir=%_defaultdocdir \
+	--docdir=%_defaultdocdir --with-webp \
 	--without-optimizecpu
 
 %make
@@ -68,8 +50,8 @@ rm -f version.sh
 %makeinstall 
 
 install -d -m 755 %buildroot%_sysconfdir/%name
-#install -m 644 %buildroot%_sysconfdir/%name/%name-dist.conf %buildroot%_sysconfdir/%name/%name.conf
 rename -- -dist.conf .conf %buildroot%_sysconfdir/%name/*.conf
+install -pDm0644 %name.service %buildroot/%_unitdir/%name.service
 
 
 %files
@@ -77,10 +59,17 @@ rename -- -dist.conf .conf %buildroot%_sysconfdir/%name/*.conf
 %doc %_defaultdocdir/%name-%version/*
 %config %attr(0644,root,root) %_sysconfdir/%name/%name.conf
 %_sysconfdir/%name/camera?.conf
+%_unitdir/*.service
 %_bindir/%name
 %_man1dir/*
 
 %changelog
+* Mon Oct 15 2018 Anton Farygin <rider@altlinux.ru> 4.1.1-alt1
+- 4.1.1
+- cleanup specfile
+- added systemd unit
+- enabled webp support
+
 * Mon Jun 05 2017 Hihin Ruslan <ruslandh@altlinux.ru> 4.0.1-alt1.2
 - Rebuild with new ffnpeg
 
