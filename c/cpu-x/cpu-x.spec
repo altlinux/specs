@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: cpu-x
-Version: 3.2.2
+Version: 3.2.3
 Release: alt1
 Summary: CPU-X is a Free software that gathers information on CPU, motherboard and more
 License: GPLv3+
@@ -9,6 +12,8 @@ Source: %name-%version.tar
 Buildrequires(pre): rpm-macros-cmake cmake
 Buildrequires: gcc-c++ pkgconfig(gtk+-3.0) pkgconfig(libarchive) pkgconfig(libcurl) pkgconfig(libpci) pkgconfig(libprocps) pkgconfig(libstatgrab) pkgconfig(ncurses) pkgconfig(libcpuid)
 Requires: icon-theme-hicolor
+
+ExclusiveArch: %ix86 x86_64
 
 %description
 CPU-X is a Free software that gathers information on CPU, motherboard and more.
@@ -37,8 +42,12 @@ sed 's|Exec=/usr/bin/cpu-x_polkit|Exec=xdg-su -c /usr/bin/cpu-x|' -i %buildroot%
 %_iconsdir/hicolor/*/*/*
 %_desktopdir/*
 %_datadir/polkit-1/actions/org.pkexec.cpu-x.policy
+%_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Oct 15 2018 Anton Midyukov <antohami@altlinux.org> 3.2.3-alt1
+- new version 3.2.3
+
 * Sun May 13 2018 Anton Midyukov <antohami@altlinux.org> 3.2.2-alt1
 - new version 3.2.2
 
