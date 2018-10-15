@@ -1,6 +1,6 @@
 Name: libisoburn
-Version: 1.3.4
-Release: alt3
+Version: 1.5.0
+Release: alt1
 
 Summary: ISO9660 filesystem creation library
 License: GPLv2
@@ -8,7 +8,6 @@ Group: System/Libraries
 
 Url: http://libburnia-project.org
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 BuildRequires: zlib-devel libacl-devel libattr-devel libreadline-devel
 BuildRequires: libburn-devel >= %version, libisofs-devel >= %version
@@ -82,7 +81,6 @@ or extract ISO9660 images common for CD-ROM/DVD media.
 
 %prep
 %setup
-%patch -p1
 touch NEWS
 
 %build
@@ -124,6 +122,9 @@ fi
 %_bindir/xorriso-tcltk
 
 %changelog
+* Mon Oct 15 2018 Anton Farygin <rider@altlinux.ru> 1.5.0-alt1
+- 1.5.0
+
 * Thu Dec 10 2015 Michael Shigorin <mike@altlinux.org> 1.3.4-alt3
 - x11 subpackage made noarch
 
