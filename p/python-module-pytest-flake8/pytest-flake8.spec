@@ -1,83 +1,101 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest-flake8
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 0.9.1
-Release: alt1.1
-Summary: pytest plugin to check FLAKE8 requirements
+Version: 1.0.2
+Release: alt1
+Summary: pytest plugin for efficiently checking PEP8 compliance
 License: BSD
 Group: Development/Python
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/pytest-isort
+Url: https://pypi.org/project/pytest-flake8
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python2.7(pytest) python2.7(flake8)
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3(pytest) python3(flake8)
+
+%if_with check
+BuildRequires: pytest
+BuildRequires: python-module-tox
+BuildRequires: python-module-flake8
+BuildRequires: pytest3
+BuildRequires: python3-module-flake8
+BuildRequires: python3-module-tox
 %endif
 
 %description
-pytest plugin to check FLAKE8 requirements
+pytest plugin for efficiently checking PEP8 compliance
 
-%if_with python3
 %package -n python3-module-%oname
-Summary: pytest plugin to check FLAKE8 requirements
+Summary: pytest plugin for efficiently checking PEP8 compliance
 Group: Development/Python3
 
 %description -n python3-module-%oname
-pytest plugin to check FLAKE8 requirements
-%endif
+pytest plugin for efficiently checking PEP8 compliance
 
 %prep
 %setup
 
-%if_with python3
+# due to tox issue https://github.com/tox-dev/tox/issues/1020
+sed -i '/basepython=python/d' tox.ini
+rm -rf ../python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
-PYTHONPATH=%buildroot%python_sitelibdir py.test -vv
-%if_with python3
+export PIP_INDEX_URL=http://host.invalid./
+export PYTHONPATH=%buildroot%python_sitelibdir
+# copy nessecary exec deps
+TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox \
+--sitepackages -e py%{python_version_nodots python} --notest
+
+cp -f %_bindir/pytest .tox/py%{python_version_nodots python}/bin/
+
+TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox \
+--sitepackages -e py%{python_version_nodots python} -v -- -v
+
 pushd ../python3
-PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv
+export PYTHONPATH=%buildroot%python3_sitelibdir
+# copy nessecary exec deps
+TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox.py3 \
+--sitepackages -e py%{python_version_nodots python3} --notest
+cp -f %_bindir/pytest3 .tox/py%{python_version_nodots python3}/bin/pytest
+
+TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox.py3 \
+--sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
-%endif
 
 %files
-%doc LICENSE CHANGELOG *.rst
-%python_sitelibdir/*
+%doc LICENSE CHANGELOG README.rst
+%python_sitelibdir/pytest_flake8-*.egg-info/
+%python_sitelibdir/pytest_flake8.py*
+%python_sitelibdir/__pycache__/
 
-%if_with python3
 %files -n python3-module-%oname
-%doc LICENSE CHANGELOG *.rst
-%python3_sitelibdir/*
-%endif
+%doc LICENSE CHANGELOG README.rst
+%python3_sitelibdir/pytest_flake8-*.egg-info/
+%python3_sitelibdir/pytest_flake8.py
+%python3_sitelibdir/__pycache__/
 
 %changelog
+* Mon Oct 15 2018 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1
+- 0.9.1 -> 1.0.2.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

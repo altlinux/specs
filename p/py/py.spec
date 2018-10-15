@@ -3,7 +3,7 @@
 %def_with check
 
 Name: py
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: Testing and distributed programming library
@@ -130,6 +130,9 @@ popd
 %python3_sitelibdir/py-*.egg-info/
 
 %changelog
+* Mon Oct 15 2018 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
+- 1.6.0 -> 1.7.0.
+
 * Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
 - 1.5.3 -> 1.6.0.
 

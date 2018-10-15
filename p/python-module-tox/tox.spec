@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.2.1
+Version: 3.5.2
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
@@ -31,6 +31,8 @@ BuildRequires: python-module-pytest-timeout
 BuildRequires: python-module-pytest-xdist
 BuildRequires: python-module-virtualenv
 BuildRequires: python-module-six
+BuildRequires: python-module-toml
+BuildRequires: python-module-filelock
 BuildRequires: pytest3
 BuildRequires: python3-module-pip
 BuildRequires: python3-module-pytest
@@ -40,6 +42,8 @@ BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-pytest-xdist
 BuildRequires: python3-module-virtualenv
 BuildRequires: python3-module-six
+BuildRequires: python3-module-toml
+BuildRequires: python3-module-filelock
 %endif
 
 BuildArch: noarch
@@ -138,6 +142,9 @@ popd
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Thu Oct 04 2018 Stanislav Levin <slev@altlinux.org> 3.5.2-alt1
+- 3.2.1 -> 3.5.2.
+
 * Mon Aug 20 2018 Stanislav Levin <slev@altlinux.org> 3.2.1-alt1
 - 3.0.0 -> 3.2.1.
 
