@@ -1,6 +1,6 @@
 Name: libshell
 Version: 0.4.4
-Release: alt1
+Release: alt2
 
 Summary: A library of shell functions
 License: GPL
@@ -64,6 +64,9 @@ sed -i -e 's,^#!/bin/ash,#!/bin/sh,' \
 %_man1dir/*
 
 %changelog
+* Fri Oct 12 2018 Nikita Ermakov <arei@altlinux.org> 0.4.4-alt2
+- Fixed color_message_test1, color_text_test1, and getopt_test001 tests.
+
 * Tue Apr 03 2018 Alexey Gladkov <legion@altlinux.ru> 0.4.4-alt1
 - New version (0.4.4).
 - Make git_config_handler, git_config_parser public.
