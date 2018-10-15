@@ -1,11 +1,12 @@
 Name: rpm-build-kernel-perms
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: RPM helper to fix permissions for kernel and modules
 License: GPL
 Group: Development/Other
 
+Requires: mount
 BuildArch: noarch
 
 %description
@@ -30,5 +31,8 @@ chmod a+rx /boot
 chmod a+rwx /lib/modules/*/
 
 %changelog
+* Mon Oct 15 2018 Vitaly Chikunov <vt@altlinux.org> 1.1-alt1
+- Requires mount
+
 * Tue Jun 05 2018 Vitaly Chikunov <vt@altlinux.ru> 1.0-alt1
 - First version.
