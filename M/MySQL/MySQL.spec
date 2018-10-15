@@ -8,7 +8,7 @@
 
 Name: MySQL
 Version: 5.7.23
-Release: alt2%ubt
+Release: alt3
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -65,10 +65,9 @@ Patch170: boost-1.59.0-log.patch
 Patch180: boost-1.59-python-make_setter.patch
 Patch181: boost-1.59-test-fenv.patch
 
-BuildRequires(pre): rpm-build-ubt
 # Automatically added by buildreq on Wed Mar 16 2011 (-bi)
 BuildRequires: chrooted gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam0-devel libevent-devel
-BuildRequires: libaio-devel libjemalloc-devel libwrap-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
+BuildRequires: libaio-devel libjemalloc-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
 BuildRequires: liblz4-devel zlib-devel
 BuildRequires: cmake control
 BuildRequires: libsystemd-devel
@@ -665,37 +664,41 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
-* Thu Sep 13 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.23-alt2%ubt
+* Mon Oct 15 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.23-alt3
+- remove ubt
+- fix build by removing libwrap dependency
+
+* Thu Sep 13 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.23-alt2
 - fix mysqld init script charset initialization sequence (closes: #35298)
 - move tmpfiles to /run/mysqld (rider@)
 
-* Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 5.7.23-alt1%ubt
+* Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 5.7.23-alt1
 - 5.7.23
 - removed old and unused trigger with execution of the mysql_upgrade
 
-* Mon Jul 09 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.22-alt1%ubt
+* Mon Jul 09 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.22-alt1
 - 5.7.22
 - new version (some bug fixes)
 
-* Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.7.21-alt8%ubt
+* Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.7.21-alt8
 - NMU: updated provides (Closes: #35004).
 
-* Wed May 30 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt7%ubt
+* Wed May 30 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt7
 - fix chrooted mysqld operation under SysVinit
 
-* Wed May 29 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt6%ubt
+* Wed May 29 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt6
 - modify chroot control facility (combine server and client setup)
 - fix unowned dir /etc/my.cnf.server (closes: #32229) 
 
-* Wed May 24 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt5%ubt
+* Wed May 24 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt5
 - fix installation with preinstalled maria-db (conflict mariadb-server-control)
 - add database upgrade warning message to post install scripts
 - fixed typo in initscript (thanks to rider@)
 
-* Wed May 10 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt4%ubt
+* Wed May 10 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt4
 - enable backport to p8 (merge commit history)
 
-* Wed May 09 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt3%ubt
+* Wed May 09 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt3
 - rebuild with ubt
 
 * Fri Mar 23 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.21-alt2
