@@ -28,7 +28,7 @@
 
 Name: freeipa
 Version: 4.7.1
-Release: alt1
+Release: alt2
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -923,6 +923,9 @@ fi
 %_man1dir/ipa-test-task.1*
 
 %changelog
+* Mon Oct 15 2018 Stanislav Levin <slev@altlinux.org> 4.7.1-alt2
+- Fixed client upgrade from 4.6 to 4.7.
+
 * Tue Oct 09 2018 Stanislav Levin <slev@altlinux.org> 4.7.1-alt1
 - 4.7.0 -> 4.7.1.
 
