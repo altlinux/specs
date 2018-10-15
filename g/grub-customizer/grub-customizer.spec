@@ -1,6 +1,6 @@
 Name:           grub-customizer
-Version:        5.0.8
-Release:        alt1.1
+Version:        5.1.0
+Release:        alt1
 Summary:        Grub Customizer is a graphical interface to configure the grub2/burg settings
 
 License:        GPLv3
@@ -65,12 +65,14 @@ install -m 0644 grub.cfg %buildroot%_sysconfdir/%name/grub.cfg
 %_bindir/%name
 %_libdir/grubcfg-proxy
 %_desktopdir/%name.desktop
-%_iconsdir/hicolor/*/apps/%name.png
+%_iconsdir/hicolor/*/apps/%name.svg
 %_man1dir/%name.1*
 %_datadir/polkit-1/actions/net.launchpad.danielrichter2007.pkexec.grub-customizer.policy
 
-
 %changelog
+* Mon Oct 15 2018 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt1
+- New version.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 5.0.8-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
