@@ -1,6 +1,8 @@
+%define shortver 74
+
 Name:    grass
-Version: 7.4.0
-Release: alt2
+Version: 7.4.1
+Release: alt1
 
 %def_with mysql
 %def_with postgres
@@ -23,7 +25,6 @@ Patch1: %name-use-simplejson.patch
 Patch2: %name-soname.patch
 Patch3: %name-alt-adapt-for-python3.patch
 
-%define shortver 74
 #define grassdir grass%shortver
 %define grassdir grass-%version
 %define grassdatadir /var/lib/grass%shortver/data
@@ -41,7 +42,7 @@ BuildRequires: python-devel
 %endif
 BuildRequires: libfftw-devel libjpeg-devel libpng-devel libtiff-devel zlib-devel
 BuildRequires: libncurses-devel libtinfo-devel
-BuildRequires: postgresql-devel libMySQL-devel libsqlite3-devel
+BuildRequires: postgresql-devel libmariadb-devel libsqlite3-devel
 BuildRequires: libqt4-core libXmu-devel swig libfreetype-devel readline-devel libGLU-devel
 BuildRequires: proj-devel libgdal-devel libproj-nad proj
 BuildRequires: tcl-devel tk-devel
@@ -63,6 +64,7 @@ BuildRequires: lesstif-devel
 BuildRequires: libGLw-devel
 BuildRequires: libunixODBC-devel
 BuildRequires: libwxGTK-devel
+BuildRequires: libmariadbd-devel
 BuildRequires: python-module-simplejson
 BuildRequires: xorg-glproto-devel
 BuildRequires: desktop-file-utils
@@ -104,6 +106,7 @@ This package contains development headers for GRASS.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+subst 's/\t/        /g' scripts/v.db.dropcolumn/v.db.dropcolumn.py
 
 %build
 %configure \
@@ -329,6 +332,10 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Tue Oct 16 2018 Andrey Cherepanov <cas@altlinux.org> 7.4.1-alt1
+- New version.
+- Use mariadb instead of MySQL.
+
 * Wed Sep 26 2018 Grigory Ustinov <grenka@altlinux.org> 7.4.0-alt2
 - Fixed FTBFS.
 
