@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -13,6 +13,7 @@ Packager: Alexey Appolonov <alexey@altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
+BuildRequires: libacl-devel
 
 %define libcontrol++_desc \
 libcontrol++ provides common classes and functions,\
@@ -62,6 +63,20 @@ cp libcontrol++/src/*.h %buildroot%_includedir/libcontrol++
 %_includedir/libcontrol++/
 
 %changelog
+* Sat Oct 13 2018 Alexey Appolonov <alexey@altlinux.org> 0.14.0-alt1
+- Writting error messages by the ref instead of outputting;
+- More secure way of TFilePerm data access and modification;
+- New classes TFileACL and TGroupOfFilesACL;
+- Ability to check permission/ACL completeness;
+- Set of ACL-related functions;
+- Function that forms TFilePerm object for a file;
+- Functions to get user id/name and group id/name;
+- Modified TPrinter class;
+- Modified conf-related classes;
+- New common functions - CompareFilenames, Subvector and RemoveEmptyElements;
+- Text-processing functions are grouped into the 'text' section;
+- Sets-related functions are grouped into the 'sets' section.
+
 * Sun Sep 30 2018 Alexey Appolonov <alexey@altlinux.org> 0.13.0-alt1
 - New section for printing functionality;
 - API changes (CutExtension, FormatFilePath and GetHomeDir functions);
