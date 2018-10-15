@@ -1,7 +1,7 @@
 
 Name: libvirglrenderer
-Version: 0.6.0
-Release: alt1%ubt
+Version: 0.7.0
+Release: alt1
 
 Summary: Virgl Rendering library
 Group: System/Libraries
@@ -10,7 +10,6 @@ License: MIT
 #VCS: git:git://people.freedesktop.org/~airlied/virglrenderer
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: pkgconfig(libdrm) >= 2.4.50
 BuildRequires: pkgconfig(gbm)
 BuildRequires: pkgconfig(epoxy)
@@ -64,6 +63,9 @@ driver to test virgl rendering without GL.
 %_bindir/virgl_test_server
 
 %changelog
+* Mon Oct 15 2018 Alexey Shabalin <shaba@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Fri Apr 28 2017 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt1%ubt
 - 0.6.0
 
