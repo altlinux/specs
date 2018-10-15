@@ -1,6 +1,7 @@
+%define ubt %{__ubt_branch_prefix}%{__ubt_branch_id}%{__ubt_branch_suffix}
 Name: freeswitch
-Version: 1.6.20
-Release: alt3%ubt
+Version: 1.8.2
+Release: alt1
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -234,7 +235,7 @@ This package provides simple web-based UI.
 %patch0 -p1
 
 %build
-./bootstrap.sh
+LIBTOOL_M4=/usr/share/libtool/aclocal/libtool.m4 ./bootstrap.sh
 cat %SOURCE4 >modules.conf
 # special hack for building libvpx by nasm
 export ASFLAGS='-Ox'
@@ -271,8 +272,6 @@ mkdir -p %buildroot%_sysconfdir/freetdm/autoload_configs
 PERL_ARCHLIB=%perl_vendorarch %make_install sysconfdir=%_sysconfdir/freeswitch DESTDIR=%buildroot install
 %make_install sysconfdir=%_sysconfdir/freeswitch DESTDIR=%buildroot config-vanilla
 (cd conf && find dialplan directory -type f | cpio -pmd %buildroot%_sysconfdir/%name)
-install -pm0644 src/mod/endpoints/mod_gsmopen/configs/gsmopen.conf.xml \
-	%buildroot%_sysconfdir/%name/autoload_configs/
 pushd libs/freetdm
 %make_install sysconfdir=%_sysconfdir/freeswitch DESTDIR=%buildroot install
 popd
@@ -415,7 +414,6 @@ fi
 %_libdir/%name/mod_fsv.so
 %_libdir/%name/mod_g723_1.so
 %_libdir/%name/mod_g729.so
-%_libdir/%name/mod_gsmopen.so
 %_libdir/%name/mod_h26x.so
 %_libdir/%name/mod_hash.so
 %_libdir/%name/mod_httapi.so
@@ -447,7 +445,6 @@ fi
 %_libdir/%name/mod_silk.so
 %_libdir/%name/mod_siren.so
 %_libdir/%name/mod_skinny.so
-%_libdir/%name/mod_skypopen.so
 %_libdir/%name/mod_sms.so
 %_libdir/%name/mod_snapshot.so
 %_libdir/%name/mod_sndfile.so
@@ -605,6 +602,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Fri Sep 28 2018 Anton Farygin <rider@altlinux.ru> 1:1.8.2-alt1
+- 1.8.2
+
 * Thu Aug 09 2018 Anton Farygin <rider@altlinux.ru> 1:1.6.20-alt3%ubt
 - rebuilt with libcodec2-0.8
 
