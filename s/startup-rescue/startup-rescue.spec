@@ -1,6 +1,6 @@
 Name: startup-rescue
-Version: 0.29
-Release: alt2
+Version: 0.30
+Release: alt1
 
 Summary: The system startup scripts for rescue disk
 License: GPL
@@ -61,6 +61,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Mon Oct 15 2018 Michael Shigorin <mike@altlinux.org> 0.30-alt1
+- support overlayfs too
+
 * Mon Jul 16 2018 Anton Midyukov <antohami@altlinux.org> 0.29-alt2
 - package not noarch
 
