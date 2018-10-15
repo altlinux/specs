@@ -1,6 +1,6 @@
 Name: guestfs-data
-Version: 0.2
-Release: alt6
+Version: 0.4
+Release: alt1
 
 Summary: Virtual machine needed for libguestfs
 License: GPLv2+
@@ -25,6 +25,10 @@ chmod 644 %buildroot%_libdir/guestfs/*
 %_libdir/guestfs/*
 
 %changelog
+* Mon Oct 15 2018 Alexey Shabalin <shaba@altlinux.org> 0.4-alt1
+- rebuild with libguestfs-1.36.15-alt1
+- build with new make-initrd v2
+
 * Thu May 26 2016 Alexey Shabalin <shaba@altlinux.ru> 0.2-alt6
 - rebuld with libguestfs-1.32.4
 
