@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.12.3
-Release: alt1
+Release: alt2
 Summary: pytest plugin to check source code with pylint
 License: MIT
 Group: Development/Python
@@ -48,6 +48,9 @@ pylintrc file.
 %prep
 %setup
 
+# ignore pytest warnings as they are not expected on stdout and mess the results
+sed -i '/^\[pytest\][[:space:]]*/{$!N;/\naddopts[[:space:]]*=/{s/$/ -p no:warnings/}}' \
+tox.ini
 rm -rf ../python3
 cp -fR . ../python3
 
@@ -96,6 +99,9 @@ popd
 %python3_sitelibdir/__pycache__/
 
 %changelog
+* Mon Oct 15 2018 Stanislav Levin <slev@altlinux.org> 0.12.3-alt2
+- Fixed tests with new pytest-3.8.
+
 * Mon Sep 03 2018 Stanislav Levin <slev@altlinux.org> 0.12.3-alt1
 - 0.7.1 -> 0.12.3.
 
