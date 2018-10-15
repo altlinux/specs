@@ -6,6 +6,7 @@
 %def_with lua
 %def_with gamin
 %def_with pgsql
+%def_with tests
 
 %define lighttpd_user lighttpd
 %define lighttpd_group lighttpd
@@ -14,8 +15,8 @@
 %define docdir %_docdir/%name-%version-doc
 
 Name: lighttpd
-Version: 1.4.50
-Release: alt2
+Version: 1.4.51
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -33,7 +34,8 @@ Requires(pre): shadow-utils shadow-groups webserver-common
 Provides: webserver
 
 BuildRequires(pre): rpm-macros-webserver-common
-# Automatically added by buildreq on Wed Sep 02 2009
+# Automatically added by buildreq on Mon Oct 15 2018
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libcrypt-devel libgamin-fam libpq-devel libsasl2-3 perl pkg-config python-base sh3
 BuildRequires: bzlib-devel libfcgi-devel libpcre-devel zlib-devel
 
 %{?_with_mysql:BuildPreReq: libmysqlclient-devel}
@@ -44,6 +46,7 @@ BuildRequires: bzlib-devel libfcgi-devel libpcre-devel zlib-devel
 %{?_with_lua:BuildPreReq: lua-devel}
 %{?_with_gamin:BuildPreReq: libgamin-devel}
 %{?_with_pgsql:BuildPreReq: postgresql-devel}
+%{?_with_tests:BuildPreReq: perl-devel perl-Digest-SHA}
 
 %description
 %name is intented to be a frontend for ad-servers which have to deliver
@@ -188,6 +191,11 @@ rm -rf %buildroot%docdir
 mkdir -p %buildroot%docdir/outdated
 cp -a doc/outdated/*.txt %buildroot%docdir/outdated/
 
+%if_with tests
+%check
+%make -C tests leak-check
+%endif #tests
+
 %pre
 %_sbindir/groupadd -r -f %lighttpd_group ||:
 %_sbindir/useradd -r -g %lighttpd_group -d /dev/null -s /dev/null -n %lighttpd_user \
@@ -296,6 +304,10 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Mon Oct 15 2018 Alexei Takaseev <taf@altlinux.org> 1.4.51-alt1
+- 1.4.51
+- Enable internal tests
+
 * Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 1.4.50-alt2
 - Rebuild with OpenSSL 1.1.x
 
