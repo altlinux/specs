@@ -3,8 +3,8 @@
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 Name: kdenlive
-Version: 18.08.1
-Release: alt1%ubt
+Version: 18.08.2
+Release: alt1
 %K5init no_altplace man
 
 Summary: KDE Non Linear Video Editor
@@ -88,6 +88,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 %_man1dir/kdenlive*
 
 %changelog
+* Mon Oct 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.08.2-alt1
+- new version
+
 * Tue Sep 11 2018 Sergey V Turchin <zerg@altlinux.org> 18.08.1-alt1%ubt
 - new version
 
