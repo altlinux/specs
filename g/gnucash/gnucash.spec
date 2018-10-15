@@ -4,8 +4,8 @@
 %def_enable python
 
 Name: 	 gnucash
-Version: 3.2
-Release: alt2
+Version: 3.3
+Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
 Summary(ru_RU.UTF8): Программа учёта финансов GnuCash
@@ -135,6 +135,7 @@ tar xf %SOURCE1
        -DCMAKE_SKIP_RPATH=OFF \
        -DCMAKE_SKIP_INSTALL_RPATH=OFF \
        -DCMAKE_INSTALL_RPATH:DIR=%_libdir/%name \
+       -DGENERATE_SWIG_WRAPPERS=ON \
        -DGMOCK_ROOT=`pwd`/gtest/googlemock \
        -DGTEST_ROOT=`pwd`/gtest/googletest
 %cmake_build VERBOSE=1
@@ -191,6 +192,9 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Mon Oct 01 2018 Andrey Cherepanov <cas@altlinux.org> 3.3-alt1
+- New version.
+
 * Mon Jul 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2-alt2
 - NMU: rebuilt with boost-1.67.0
 
