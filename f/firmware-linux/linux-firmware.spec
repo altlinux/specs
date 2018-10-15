@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180927
+Version: 20181008
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,13 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Mon Oct 15 2018 Cronbuild Service <cronbuild@altlinux.org> 20181008-alt1
+- upstream changes (GIT c6b6265):
+  + rtw88: Add firmware file for driver rtw88 (thx Larry Finger)
+  + iwlwifi: add -41.ucode firmwares for 9000 series (thx Emmanuel Grumbach)
+  + iwlwifi: update firmwares for 9000 series (thx Emmanuel Grumbach)
+  + iwlwifi: update firmwares for 7000, 8000 and 9000 series (thx Luca Coelho)
+
 * Sun Oct 07 2018 Cronbuild Service <cronbuild@altlinux.org> 20180927-alt1
 - upstream changes (GIT 68a4930):
   + nfp: update Agilio SmartNIC flower firmware to rev AOTC-2.9.A.37 (thx Louis Peens)
