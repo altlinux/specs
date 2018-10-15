@@ -1,6 +1,6 @@
 Name:           x2goclient
-Version:        4.1.1.1
-Release:        alt9
+Version:        4.1.2.1
+Release:        alt1
 Summary:        X2Go Client application (Qt)
 
 Group:          Communications
@@ -56,51 +56,6 @@ X2Go Client is a graphical client (Qt) for the X2Go system.
 You can use it to connect to running sessions and start new sessions.
 
 
-%package -n x2goplugin
-Summary:        X2Go Client (Qt) as browser plugin
-Group:          Communications
-Requires:       browser-plugins-npapi
-Requires:       nx-libs
-# For GSSAPI authenticated connections
-Requires:       openssh-clients
-# For local folder sharing and printing
-Requires:       openssh-server
-
-%description -n x2goplugin
-X2Go is a server-based computing environment with
-- session resuming
-- low bandwidth support
-- session brokerage support
-- client-side mass storage mounting support
-- client-side printing support
-- audio support
-- authentication by smartcard and USB stick
-
-X2Go Client is a graphical client (Qt) for the X2Go system.
-You can use it to connect to running sessions and start new sessions.
-
-This package provides X2Go Client as QtBrowser-based Mozilla plugin.
-
-
-%package -n x2goplugin-provider
-Summary:        Provide X2Go Plugin via Apache webserver
-Group:          Communications
-Requires:       httpd
-
-%description -n x2goplugin-provider
-X2Go is a server-based computing environment with
-- session resuming
-- low bandwidth support
-- session brokerage support
-- client-side mass storage mounting support
-- client-side printing support
-- audio support
-- authentication by smartcard and USB stick
-
-This package provides an example configuration for providing
-the X2Go Plugin via an Apache webserver.
-
-
 %prep
 %setup -q
 %patch0 -p1
@@ -117,7 +72,7 @@ sed -i -e '/^MOZPLUGDIR=/s/lib/%{_lib}/' Makefile
 # Use system qtbrowserplugin
 sed -i -e '/CFGPLUGIN/aTEMPLATE=lib' x2goclient.pro
 sed -i -e '/^LIBS /s/$/ -ldl/' x2goclient.pro
-for f in Makefile config_linux_plugin.sh config_linux_static_plugin.sh config_linux.sh ; do
+for f in Makefile config_linux.sh ; do
     sed -i 's|-qt4|-qt5|g' $f
     sed -i 's|X2GO_CLIENT_TARGET=plugin|X2GO_CLIENT_TARGET=""|g' $f
 done
@@ -129,7 +84,7 @@ export PATH=%{_qt5_bindir}:$PATH
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot PREFIX=%_prefix install_client install_man install_pluginprovider
+%make_install DESTDIR=%buildroot PREFIX=%_prefix install_client install_man
 desktop-file-validate %buildroot%_desktopdir/%name.desktop
 
 mkdir -p %buildroot%_sysconfdir/httpd/conf.d
@@ -143,20 +98,10 @@ ln -s ../../x2go/x2goplugin-apache.conf %buildroot%_sysconfdir/httpd/conf.d/x2go
 %_datadir/%name/
 %_man1dir/%name.1*
 
-#%files -n x2goplugin
-#%doc AUTHORS COPYING LICENSE 
-#%_libdir/mozilla/plugins/libx2goplugin.so
-
-%files -n x2goplugin-provider
-%doc AUTHORS COPYING LICENSE 
-%_sysconfdir/httpd/conf.d/x2goplugin-provider.conf
-%dir %_sysconfdir/x2go
-%dir %_sysconfdir/x2go/plugin-provider
-%config(noreplace) %_sysconfdir/x2go/plugin-provider/x2goplugin.html
-%config(noreplace) %_sysconfdir/x2go/x2goplugin-apache.conf
-%_datadir/x2go/
-
 %changelog
+* Mon Oct 15 2018 Oleg Solovyov <mcpain@altlinux.org> 4.1.2.1-alt1
+- New version
+
 * Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 4.1.1.1-alt9
 - fix to build with Qt-5.11
 - fix to build with libssh-0.8
