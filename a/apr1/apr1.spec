@@ -1,24 +1,18 @@
-# hey Emacs, its -*- mode: rpm-spec; coding: cyrillic-cp1251; -*-
-
-# %%branch_switch set %%branch_release use
-#%%define branch_switch Mxx
-
 %define aprver 1
 %define aprdir %_builddir/%name-%version
 %add_findreq_skiplist %_datadir/apr-1/build/config.guess
 
 Name: apr%aprver
-Version: 1.5.2
-Release: %branch_release alt1
+Version: 1.6.5
+Release: alt1
 
 Summary: Apache Portable Runtime
 Group: System/Libraries
 License: %asl
 Url: http://apr.apache.org/
-Packager: Boris Savelev <boris@altlinux.org>
 
 #Source: http://archive.apache.org/dist/apr/apr-%version.tar.gz
-Source: %name-%version.tar
+Source: apr-%version.tar
 
 BuildRequires(pre): rpm-macros-branch
 BuildPreReq: rpm-build-licenses
@@ -76,7 +70,7 @@ This package contains APR static library.
 %endif
 
 %prep
-%setup
+%setup -n apr-%version
 
 %build
 LIBTOOL_M4=%_datadir/libtool/aclocal/libtool.m4 ./buildconf
@@ -104,7 +98,7 @@ find %buildroot%_datadir -type f -print0 |
 	xargs -r0 sed -i "s,%aprdir\(/build\)\?,%_datadir/apr-%aprver/build," --
 
 %check
-%make_build check
+make check
 
 %files -n lib%name
 %doc CHANGES LICENSE NOTICE
@@ -126,6 +120,9 @@ find %buildroot%_datadir -type f -print0 |
 %endif
 
 %changelog
+* Mon Oct 15 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.5-alt1
+- New version.
+
 * Wed Mar 09 2016 Sergey Alembekov <rt@altlinux.ru> 1.5.2-alt1
 - New version 1.5.2
 
