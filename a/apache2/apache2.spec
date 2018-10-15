@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.35
-Release: alt1.qa1%ubt
+Release: alt2
 Epoch: 1
 
 License: %asl
@@ -92,7 +92,6 @@ Requires: webserver-icons
 Requires: %name-mod_cache_disk >= %EVR
 
 BuildPreReq: webserver-common
-BuildRequires(pre): rpm-build-ubt
 
 # Automatically added by buildreq on Fri Mar 31 2006
 BuildRequires: zlib-devel
@@ -1513,22 +1512,26 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
-* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.4.35-alt1.qa1%ubt
+* Mon Oct 15 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.35-alt2
+- removed ubt tag
+- changed rundir location to /run in tmpfiles
+
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.4.35-alt1.qa1
 - NMU: applied repocop patch
 
-* Tue Sep 25 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.35-alt1%ubt
+* Tue Sep 25 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.35-alt1
 - 2.4.35
 
 * Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.34-alt2
 - rebuilt with openssl-1.1 (Sisyphus)
 
-* Tue Jul 31 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.34-alt1%ubt
+* Tue Jul 31 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.34-alt1
 - 2.4.34
 - fixes:
 	* CVE-2018-1333 DoS for HTTP/2 connections by crafted requests
 	* CVE-2018-8011 mod_md, DoS via Coredumps on specially crafted requests
 
-* Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.33-alt1%ubt
+* Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.33-alt1
 - 2.4.33
 - fixes:
 	* CVE-2018-1303 low: Possible out of bound read in mod_cache_socache
@@ -1539,14 +1542,14 @@ exit 0
 	* CVE-2017-15710 low: Out of bound write in mod_authnz_ldap when using too small Accept-Language values
 	* CVE-2018-1283 medium: Tampering of mod_session data for CGI applications
 
-* Thu Feb 15 2018 Stanislav Levin <slev@altlinux.org> 1:2.4.29-alt2%ubt
+* Thu Feb 15 2018 Stanislav Levin <slev@altlinux.org> 1:2.4.29-alt2
 - Change the default access control directives according to apache 2.4 standard.
   Mixing old and new directives leads to unexpected results.
 
-* Fri Oct 27 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.29-alt1%ubt
+* Fri Oct 27 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.29-alt1
 - new version 2.4.29
 
-* Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.28-alt1%ubt
+* Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.28-alt1
 - new version 2.4.28
 - disabled NameVirtualHost directive in ports_all.conf (closes: #32269)
 - increased timeout for restarting httpd on SysVinit sytems (closes: #31062)
@@ -1554,16 +1557,16 @@ exit 0
 - fixes:
 	* CVE-2017-9798 Corrupted or freed memory access
 
-* Fri Jul 14 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.27-alt1%ubt
+* Fri Jul 14 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.27-alt1
 - 2.4.27
 - removed use of rpm-eval.sh from spec
 - removed use of some apache2_*dir macroses from spec
 - dropped apache branch suffix from utils and created compatability symlinks
 
-* Sat Jun 24 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.26-alt1%ubt
+* Sat Jun 24 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.26-alt1
 - 2.4.26
 
-* Mon May 29 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.25-alt2%ubt
+* Mon May 29 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.25-alt2
 - added ubt tag
 - deep cleaning of the specfile (remove oldest trigger* macros, commented code, 
 	garbage defined macros and etc..)
