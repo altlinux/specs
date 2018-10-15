@@ -1,5 +1,5 @@
 %global import_path github.com/grafana/grafana
-%global commit a5fe24fcce3026f113f722cc22bedc749be91bfc
+%global commit c613a317a18b36ce1dafc24eeeb7b887c092a8a5
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -10,8 +10,8 @@
 
 
 Name:		grafana
-Version:	5.1.4
-Release:	alt2%ubt
+Version:	5.3.0
+Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
@@ -67,6 +67,7 @@ for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
+export npm_config_devdir="$PWD/node_modules/.node-gyp"
 
 %golang_prepare
 
@@ -79,6 +80,7 @@ export BRANCH=altlinux
 %golang_build pkg/cmd/*
 #go install -ldflags "-X main.version=$VERSION -X main.commit=$COMMIT -X main.branch=$BRANCH" ./...
 
+npm rebuild
 npm run build
 
 %install
@@ -153,6 +155,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Mon Oct 15 2018 Alexey Shabalin <shaba@altlinux.org> 5.3.0-alt1
+- 5.3.0
+
 * Thu Jun 21 2018 Alexey Shabalin <shaba@altlinux.ru> 5.1.4-alt2%ubt
 - update init script and systemd unit
 - fix package files and config
