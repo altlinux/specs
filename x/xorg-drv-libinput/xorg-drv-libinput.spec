@@ -4,7 +4,7 @@
 %define _xconfdir %_sysconfdir/X11/xorg.conf.d
 
 Name: xorg-drv-libinput
-Version: 0.28.0
+Version: 0.28.1
 Release: alt1
 
 Summary: Xorg libinput input driver
@@ -25,7 +25,7 @@ Requires(pre): XORG_ABI_XINPUT = %get_xorg_abi_xinput
 Requires: libinput >= %libinput_ver
 Requires: xkeyboard-config
 
-BuildRequires: xorg-sdk >= 1.14
+BuildRequires(pre): xorg-sdk >= 1.14
 BuildRequires: libinput-devel >= %libinput_ver xorg-proto-devel
 
 %description
@@ -49,6 +49,7 @@ Xorg libinput input driver development files.
 %patch
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure --disable-static \
 	--with-xorg-module-dir=%_x11modulesdir \
@@ -71,6 +72,9 @@ Xorg libinput input driver development files.
 %_includedir/xorg/libinput-properties.h
 
 %changelog
+* Mon Oct 15 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.1-alt1
+- 0.28.1
+
 * Wed Jul 11 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.0-alt1
 - 0.28.0
 
