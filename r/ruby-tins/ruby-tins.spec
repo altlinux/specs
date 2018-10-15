@@ -1,7 +1,7 @@
 %define  pkgname tins
 
 Name:    ruby-%pkgname
-Version: 1.16.3
+Version: 1.17.0
 Release: alt1
 
 Summary: This Is Not Spruz
@@ -54,5 +54,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Oct 15 2018 Andrey Cherepanov <cas@altlinux.org> 1.17.0-alt1
+- New version.
+
 * Wed Sep 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.16.3-alt1
 - Initial build for Sisyphus
