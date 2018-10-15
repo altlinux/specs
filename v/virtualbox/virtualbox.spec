@@ -1,9 +1,3 @@
-%define if_branch_lt() %if "%(rpmvercmp '%ubt_id' '%1')" < "0"
-%define if_branch_le() %if "%(rpmvercmp '%ubt_id' '%1')" <= "0"
-%define if_branch_eq() %if "%(rpmvercmp '%ubt_id' '%1')" == "0"
-%define if_branch_ge() %if "%(rpmvercmp '%ubt_id' '%1')" >= "0"
-%define if_branch_gt() %if "%(rpmvercmp '%ubt_id' '%1')" > "0"
-
 %define oldmodname kernel-source-virtualbox
 %define oldmodnamenetflt kernel-source-virtualbox-netfilter
 %define oldmodnamenetadp kernel-source-virtualbox-netadaptor
@@ -55,22 +49,18 @@
 
 %define vboxdatadir %_datadir/virtualbox
 %define vboxadddir %vboxdir/additions
-%define ld_so_conf %_sysconfdir/ld.so.conf.d/%name-%_arch.conf
+%define ld_so_confdir %_sysconfdir/ld.so.conf.d
+%define ld_so_conf %ld_so_confdir/%name-%_arch.conf
+%define xdrv_pre_d /usr/libexec/X11/drvpre.d
 
 %filter_from_provides '/^lib[E]\\?GL\\.so\\./d'
 
 %set_verify_elf_method textrel=relaxed
 %add_findprov_lib_path %vboxdir
 
-%if_branch_le M80P
-%define gcc_version 5
-%else
-%define gcc_version 7
-%endif
-
 Name: virtualbox
-Version: 5.2.16
-Release: alt2%ubt.1
+Version: 5.2.18
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -104,7 +94,7 @@ Source99:	%vboxdbg.in
 
 Patch:		%name-%version-alt.patch
 
-BuildPreReq: dev86 iasl gcc%gcc_version-c++ libstdc++%gcc_version-devel-static
+BuildPreReq: dev86 iasl gcc-c++ libstdc++-devel-static
 BuildPreReq: libIDL-devel libSDL-devel libpng-devel
 BuildPreReq: libXcursor-devel libXext-devel
 BuildPreReq: xsltproc
@@ -175,24 +165,16 @@ software solution on the market.
 %package guest-additions
 Summary: Full package of additions for VirtualBox OSE guest systems
 Group: Emulators
-Requires: xorg-drv-vboxvideo
+Requires: xorg-drv-vboxvideo x11presetdrv
 Requires: %name-guest-utils
+Provides: %name-guest-additions-gl = %version-%release
+Obsoletes: %name-guest-additions-gl < %version-%release
 
 %description guest-additions
 This packages contains full package of additions for VirtualBox OSE
 guest systems. It consists basic utils, which allows to share files and
 sync time with host system, and intergrates with xorg-server for mouse
 and video driver with OpenGL support, copy/paste between guest and host.
-
-%package guest-additions-gl
-Summary: OpenGL support of guest additions for VirtualBox OSE guest systems
-Group: Emulators
-Requires: %name-guest-additions
-
-%description guest-additions-gl
-This packages contains OpenGL support of guest additions for VirtualBox OSE
-guest systems. It also consists ldconfig settings to enable Virtualbox OpenGL
-libraries by default.
 
 %package guest-utils
 Summary: Additions for VirtualBox OSE guest systems
@@ -332,7 +314,6 @@ This package contains VirtualBox SDK for XPCOM.
 cp %SOURCE15 %SOURCE16 src/VBox/Frontends/VirtualBox/images
 
 %build
-export GCC_VERSION=%gcc_version
 ./configure --ose \
     --with-makeself="/usr/bin/makeself.sh" \
     --disable-kmods \
@@ -574,13 +555,22 @@ cd additions >/dev/null
 # OpenGL/EGL part
   mv {VBoxOGLcrutil,VBoxOGL*spu}.so %buildroot%_libdir/
   install -d %buildroot%vboxadddir
-  ld_so_conf=%ld_so_conf
-  install -d %buildroot${ld_so_conf%%/*}
-  echo %vboxadddir > %buildroot%ld_so_conf
   install -m644 VBoxOGL*.so %buildroot%vboxadddir
   install -m644 VBoxEGL.so %buildroot%vboxadddir
   ln -s VBoxOGL.so %buildroot%vboxadddir/libGL.so.1
   ln -s VBoxEGL.so %buildroot%vboxadddir/libEGL.so.1
+
+  install -d %buildroot%xdrv_pre_d
+  cat >%buildroot%xdrv_pre_d/virtualbox <<EOF
+#!/bin/bash
+
+if test -f /proc/bus/pci/devices && grep -q 80eebeef /proc/bus/pci/devices; then
+	mkdir -p %ld_so_confdir
+	echo %vboxadddir > %ld_so_conf
+else
+	rm -f %ld_so_conf
+fi
+EOF
 
 # create links
   ln -s $(relative %_bindir/VBoxService %_sbindir/) %buildroot%_sbindir/vboxadd-service
@@ -759,14 +749,12 @@ mountpoint -q /dev || {
 
 %files guest-additions
 %_sysconfdir/X11/xinit.d/98vboxadd-xclient
+%attr(0755,root,root) %xdrv_pre_d/virtualbox
 %_bindir/VBoxClient
-
-%files guest-additions-gl
 %_libdir/VBoxOGLcrutil.so
 %_libdir/VBoxOGL*spu.so
 %dir %vboxadddir
 %vboxadddir/*
-%config %ld_so_conf
 %endif
 
 %if_with webservice
@@ -814,6 +802,13 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Mon Oct 15 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.18-alt1
+- Build latest release of 5.2 release
+- Add vboxfs patch from Debian fixed failure with new kernel 4.18
+- Disable ubt macros due binary package identity changes
+- Obsoletes virtualbox-guest-additions-gl subpackage (closes #35059)
+- Add x11presetdrv script for dynamic create ld.so.conf settings for GL libraries
+
 * Thu Sep 06 2018 Grigory Ustinov <grenka@altlinux.org> 5.2.16-alt2%ubt.1
 - NMU: rebuild with new openssl.
 
