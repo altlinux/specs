@@ -1,6 +1,6 @@
 Name: xkeyboard-config
 Summary: XML-based XKB configuration registry
-Version: 2.19
+Version: 2.25
 Release: alt1
 Epoch: 1
 License: X11/MIT
@@ -65,6 +65,9 @@ rm -f %buildroot%_datadir/X11/xkb/compiled
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Sun Oct 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.25-alt1
+- 2.25
+
 * Fri Dec 09 2016 Valery Inozemtsev <shrek@altlinux.ru> 1:2.19-alt1
 - 2.19
 
