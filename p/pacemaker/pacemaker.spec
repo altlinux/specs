@@ -1,8 +1,6 @@
-%define _localstatedir %_var
-
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
-Version: 1.1.18
+Version: 2.0.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
@@ -22,7 +20,7 @@ BuildRequires: glib2-devel libxml2-devel libxslt-devel libuuid-devel systemd-dev
 BuildRequires: python-devel gcc-c++ bzlib-devel libpam-devel
 BuildRequires: libqb-devel > 0.11.0 libgnutls-devel libltdl-devel libgio-devel
 BuildRequires: libncurses-devel libssl-devel libselinux-devel docbook-style-xsl
-BuildRequires: bison flex help2man xsltproc
+BuildRequires: help2man xsltproc
 BuildRequires: libesmtp-devel libsensors3-devel libnet-snmp-devel libopenipmi-devel libservicelog-devel
 BuildRequires: libcorosync-devel
 BuildRequires: publican inkscape asciidoc
@@ -52,6 +50,8 @@ License: GPLv2+ and LGPLv2+
 Summary: Command line tools for controlling Pacemaker clusters
 Group: System/Servers
 Requires: perl-DateTime-Format-DateParse
+Requires: procps-ng
+Requires: psmisc
 
 %description cli
 Pacemaker is an advanced, scalable High-Availability cluster resource
@@ -112,6 +112,9 @@ License: GPLv2+ and LGPLv2+
 Summary: Test framework for cluster-related technologies like Pacemaker
 Group: System/Servers
 Requires: resource-agents
+Requires: procps-ng
+Requires: psmisc
+BuildArch: noarch
 
 %description cts
 Test framework for cluster-related technologies like Pacemaker
@@ -153,40 +156,31 @@ manager for Linux-HA (Heartbeat) and/or Corosync.
 
 subst 's|/usr/bin/help2man|/usr/bin/help2man --no-discard-stderr|g' tools/Makefile
 
-%make_build
+%make_build V=0
 
 %install
 %makeinstall_std
 
 mkdir -p %buildroot%_var/lib/pacemaker/cores
-install -D -m 644 mcp/pacemaker.sysconfig %buildroot%_sysconfdir/sysconfig/pacemaker
+install -D -m 644 daemons/pacemakerd/pacemaker.sysconfig %buildroot%_sysconfdir/sysconfig/pacemaker
 install -D -m 755 pacemaker.init %buildroot%_initdir/pacemaker
 
 # Copy configuration for pacemaker_remote and use it in init script
-install -D -m 644 mcp/pacemaker.sysconfig %buildroot%_sysconfdir/sysconfig/pacemaker_remote
+install -D -m 644 daemons/pacemakerd/pacemaker.sysconfig %buildroot%_sysconfdir/sysconfig/pacemaker_remote
 subst 's|/etc/sysconfig/pacemaker|/etc/sysconfig/pacemaker_remote|' %buildroot%_initdir/pacemaker_remote
 install -D -m 755 pacemaker_remote.init %buildroot%_initdir/pacemaker_remote
-
-# Scripts that should be executable
-chmod a+x %buildroot%_datadir/pacemaker/tests/cts/CTSlab.py
 
 # These are not actually scripts
 find %buildroot -name '*.xml' -type f -print0 | xargs -0 chmod a-x
 find %buildroot -name '*.xsl' -type f -print0 | xargs -0 chmod a-x
 find %buildroot -name '*.rng' -type f -print0 | xargs -0 chmod a-x
-find %buildroot -name '*.dtd' -type f -print0 | xargs -0 chmod a-x
 
-# Dont package static libs
+# Don't package static libs
 find %buildroot -name '*.a' -type f -print0 | xargs -0 rm -f
 find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 
-# Do not package these either
-rm -rf %buildroot%_libdir/service_crm.so %buildroot%_datadir/pacemaker/tests/cts
-#rm -f %buildroot%_sbindir/fence_legacy
-#rm -f %buildroot%_mandir/man8/fence_legacy.*
-#find %buildroot -name 'o2cb*' -type f -print0 | xargs -0 rm -f
-# Don't ship fence_pcmk where it has no use
-#rm -f %buildroot%_sbindir/fence_pcmk
+# Do not package this either
+rm -rf %buildroot%_datadir/pacemaker/tests/cts
 
 GCOV_BASE=%buildroot/%_var/lib/pacemaker/gcov
 mkdir -p $GCOV_BASE
@@ -216,7 +210,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %files
 %doc COPYING ChangeLog README.markdown
 %doc %_datadir/pacemaker/alerts
-%exclude %_libexecdir/pacemaker/lrmd_test
+%exclude %_libexecdir/pacemaker/cts-log-watcher
+%exclude %_libexecdir/pacemaker/cts-support
+%exclude %_sbindir/pacemaker-remoted
 %exclude %_sbindir/pacemaker_remoted
 %config(noreplace) %_sysconfdir/sysconfig/pacemaker
 %_sbindir/pacemakerd
@@ -226,11 +222,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_libexecdir/pacemaker/*
 %_sbindir/crm_attribute
 %_sbindir/crm_master
-%_sbindir/crm_node
 %_sbindir/crm_verify
 %_sbindir/attrd_updater
 %_sbindir/fence_legacy
-%_sbindir/fence_pcmk
 %_sbindir/crm_resource
 %_sbindir/stonith_admin
 %_sbindir/notifyServicelogEvent
@@ -238,16 +232,13 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_man7dir/*.7*
 %_man8dir/attrd_updater.*
 %_man8dir/crm_attribute.*
-%_man8dir/crm_node.*
 %_man8dir/crm_master.*
-%_man8dir/fence_pcmk.*
 %_man8dir/pacemakerd.*
 %_man8dir/stonith_admin.*
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker/cib
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker/pengine
 /usr/lib/ocf/resource.d/pacemaker/controld
 /usr/lib/ocf/resource.d/pacemaker/remote
-/usr/lib/ocf/resource.d/.isolation
 
 %files cli
 %_sbindir/cibadmin
@@ -256,6 +247,7 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_sbindir/crm_failcount
 %_sbindir/crm_mon
 %_unitdir/crm_mon.service
+%_sbindir/crm_node
 %_sbindir/crm_standby
 %_sbindir/crmadmin
 %_sbindir/iso8601
@@ -266,11 +258,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_man8dir/*.8*
 %exclude %_man8dir/attrd_updater.*
 %exclude %_man8dir/crm_attribute.*
-%exclude %_man8dir/crm_node.*
 %exclude %_man8dir/crm_master.*
-%exclude %_man8dir/fence_pcmk.*
 %exclude %_man8dir/pacemakerd.*
-%exclude %_man8dir/pacemaker_remoted.*
+%exclude %_man8dir/pacemaker-remoted.*
 %exclude %_man8dir/stonith_admin.*
 
 %_datadir/pacemaker
@@ -287,6 +277,8 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker/cores
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker/blackbox
+%dir %attr (770, %uname, %gname) %_var/log/pacemaker
+%dir %attr (770, %uname, %gname) %_var/log/pacemaker/bundles
 
 %files -n lib%name
 %_libdir/libcib.so.*
@@ -304,23 +296,28 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %config(noreplace) %_sysconfdir/sysconfig/pacemaker_remote
 %_initdir/pacemaker_remote
 %_unitdir/pacemaker_remote.service
+%_sbindir/pacemaker-remoted
 %_sbindir/pacemaker_remoted
-%_man8dir/pacemaker_remoted.*
+%_man8dir/pacemaker-remoted.*
 
 %files doc
 %doc %_docdir/%name
 
 %files cts
-%python_sitelibdir/cts
-%_libexecdir/pacemaker/lrmd_test
+%python_sitelibdir_noarch/cts
+%_datadir/pacemaker/tests
+%_libexecdir/pacemaker/cts-log-watcher
+%_libexecdir/pacemaker/cts-support
 
 %files -n lib%name-devel
-%_datadir/pacemaker/tests
 %_includedir/pacemaker
 %_libdir/*.so
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Oct 04 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
+- New version.
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.18-alt1
 - New version.
 
