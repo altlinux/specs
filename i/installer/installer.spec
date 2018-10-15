@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.43
+Version: 1.8.44
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Oct 15 2018 Leonid Krivoshein <klark@altlinux.org> 1.8.44-alt1
+- Fix poweroff functionality (closes #35479)
+
 * Fri Oct 05 2018 Michael Shigorin <mike@altlinux.org> 1.8.43-alt1
 - Try harder to sync/umount rootfs before rebooting
 - Ensure /proc is mounted before checking for "poweroff" keyword
