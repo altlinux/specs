@@ -1,3 +1,7 @@
+%define Nif_ver_gt() %if "%(rpmvercmp '%1' '%2')" > "0"
+%define Nif_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
+%define Nif_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
+%define Nif_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define tbname         NVIDIA-Linux-x86
 %ifarch x86_64
@@ -20,16 +24,21 @@
 %define nv_version 390
 %define nv_release 87
 %define nv_minor %nil
-%define pkg_rel alt185%ubt
-%def_enable kernelsource
+%define pkg_rel alt186%ubt
+%define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
+%if "%nv_minor" == "%nil"
+%define nv_version_full %{nv_version}.%{nv_release}
+%endif
+%Nif_ver_gteq %ubt_id M90
+%def_enable glvnd
+%else
 %def_disable glvnd
+%endif
+%def_enable kernelsource
 %def_enable package_egl_wayland
 %def_disable package_wfb
 
-%define tbver %{nv_version}.%{nv_release}.%{nv_minor}
-%if "%nv_minor" == "%nil"
-%define tbver %{nv_version}.%{nv_release}
-%endif
+%define tbver %nv_version_full
 %define module_version	%nv_version%nv_release%nv_minor
 %define module_release	%pkg_rel
 
@@ -71,13 +80,8 @@
 %add_findreq_skiplist %x11_lib_old/*
 %add_findreq_skiplist %_bindir/nvidia-bug-report*.sh
 
-%if "%nv_minor" == "%nil"
-Name: nvidia_glx_src_%nv_version.%nv_release
-Version: %nv_version.%nv_release
-%else
-Name: nvidia_glx_src_%nv_version.%nv_release.%nv_minor
-Version: %nv_version.%nv_release.%nv_minor
-%endif
+Name: nvidia_glx_src_%nv_version_full
+Version: %nv_version_full
 Release: %pkg_rel
 
 Source0: null
@@ -341,6 +345,9 @@ fi
 %endif
 
 %changelog
+* Mon Oct 15 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt186%ubt
+- package glvnd version of libs
+
 * Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt185%ubt
 - new version
 
