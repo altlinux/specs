@@ -1,6 +1,3 @@
-# %%branch_switch set %%branch_release use
-#%%define branch_switch Mxx
-
 %def_disable static
 
 # for libdb selected
@@ -70,27 +67,16 @@
 %define apudir %name-%version
 
 Name: aprutil%aprver
-Version: 1.5.4
-Release: %{branch_release alt1}%{?release_libdb}
+Version: 1.6.1
+Release: alt1
 
 Summary: Apache Portable Runtime Utility shared library
 Group: System/Libraries
 License: %asl
 Url: http://apr.apache.org/
-Packager: Boris Savelev <boris@altlinux.org>
 
 #Source url: http://archive.apache.org/dist/apr/apr-util-%version.tar.gz
-Source: %name-%version.tar
-# ALT patchs and:
-# * FreeSWITCH patchs:
-#   + commits de417e99f0c41421f701f86ee5e4e507868be81f
-#     and 512201c21a406a91f17be5163fc087df5a511455 of
-#     git://git.freeswitch.org/freeswitch.git
-# * Debian patchs:
-#   + apu_config_dont_list_indep_libs.patch
-#   + avoid_ldap_by_defaut.patch
-#   + avoid_db_by-default.patch
-Patch1: %name-%version-alt-all-0.1.patch
+Source: apr-util-%version.tar
 
 BuildRequires(pre): rpm-macros-branch
 BuildPreReq: rpm-build-licenses
@@ -103,8 +89,6 @@ BuildPreReq: %libdb_devel_build
 BuildPreReq: %libdb_devel_build-static
 %endif
 
-# Automatically added by buildreq on Wed Sep 03 2008
-#BuildRequires: libapr1-devel libdb4-devel libexpat-devel zlib-devel
 BuildRequires: libapr1-devel libexpat-devel zlib-devel libuuid-devel
 
 %package -n lib%name
@@ -210,16 +194,6 @@ Requires: lib%name = %version-%release
 This package provides the LDAP driver for the apr-util DBD
 (database abstraction) interface.
 
-%package -n lib%name-freetds
-Group: System/Libraries
-Summary: APR utility library FreeTDS DBD driver
-BuildRequires: libfreetds-devel
-Requires: lib%name = %version-%release
-
-%description -n lib%name-freetds
-This package provides the FreeTDS driver for the apr-util DBD
-(database abstraction) interface.
-
 %package -n lib%name-odbc
 Group: System/Libraries
 Summary: APR utility library ODBC DBD driver
@@ -231,7 +205,7 @@ This package provides the ODBC driver for the apr-util DBD
 (database abstraction) interface.
 
 %prep
-%setup
+%setup -n apr-util-%version
 
 # GCC >= 4.6 too smart and warns about unused variable even with 'tmp=0;' line.
 # With -Werror this produce a compilation error and makes this test
@@ -260,6 +234,8 @@ find %buildroot%_bindir -type f -print0 |
 find %buildroot%_datadir -type f -print0 |
 	xargs -r0 grep -FZl "%_builddir/%apudir" -- |
 	xargs -r0 sed -i "s,%_builddir/%apudir\(/build\)\?,%_datadir/apr-%aprver/build," --
+
+rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 
 %check
 %make check
@@ -296,13 +272,14 @@ find %buildroot%_datadir -type f -print0 |
 %files -n lib%name-ldap
 %_libdir/apr-util-%aprver/apr_ldap*.so
 
-%files -n lib%name-freetds
-%_libdir/apr-util-%aprver/apr_dbd_freetds*.so
-
 %files -n lib%name-odbc
 %_libdir/apr-util-%aprver/apr_dbd_odbc*.so
 
 %changelog
+* Mon Oct 15 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.1-alt1
+- New version.
+- Drop upsupported lib%name-freetds.
+
 * Wed Apr 27 2016 Sergey Alembekov <rt@altlinux.ru> 1.5.4-alt1
 - New version 1.5.4
 
