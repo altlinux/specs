@@ -2,8 +2,8 @@
 %def_disable static
 
 Name: libcacard
-Version: 2.6.0
-Release: alt1%ubt
+Version: 2.6.1
+Release: alt1
 Summary: Common Access Card (CAC) Emulation
 Group: System/Libraries
 License: LGPLv2.1+
@@ -12,7 +12,6 @@ Url: http://www.spice-space.org/download
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: autoconf-archive
 BuildRequires: pkgconfig(glib-2.0) >= 2.22 pkgconfig(gthread-2.0)
 BuildRequires: pkgconfig(nss) >= 3.12.8
@@ -55,11 +54,14 @@ echo "%version" > .tarball-version
 %_libdir/libcacard.so
 
 %changelog
-* Sat Aug 18 2018 Alexey Shabalin <shaba@altlinux.org> 2.6.0-alt1%ubt
+* Tue Oct 16 2018 Alexey Shabalin <shaba@altlinux.org> 2.6.1-alt1
+- new version 2.6.1
+
+* Sat Aug 18 2018 Alexey Shabalin <shaba@altlinux.org> 2.6.0-alt1
 - 2.6.0
 - remove vscclient, drop libcacard-tools
 
-* Wed Dec 13 2017 Alexey Shabalin <shaba@altlinux.ru> 2.5.3-alt1%ubt
+* Wed Dec 13 2017 Alexey Shabalin <shaba@altlinux.ru> 2.5.3-alt1
 - 2.5.3
 
 * Wed Sep 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.5.2-alt2
