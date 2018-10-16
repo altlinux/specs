@@ -2,8 +2,8 @@
 %define nx_version 3.5.2.31
 
 Name:    x2goserver
-Version: 4.1.0.0
-Release: alt2
+Version: 4.1.0.2
+Release: alt1
 Summary: X2Go Server
 
 Group:   System/Servers
@@ -298,7 +298,7 @@ exit 0
 %config(noreplace) %_sysconfdir/x2go/x2go_logout.d/
 %config(noreplace) %_sysconfdir/x2go/x2goserver.conf
 %config(noreplace) %_sysconfdir/x2go/x2gosql/sql
-%config(noreplace) %_sysconfdir/tmpfiles.d/x2goserver.conf
+%config(noreplace) %_libexecdir/tmpfiles.d/x2goserver.conf
 %_bindir/x2go*
 %exclude %_bindir/x2gofm
 %exclude %_bindir/x2goprint
@@ -382,12 +382,12 @@ exit 0
 %config(noreplace) %_sysconfdir/x2go/x2goagent.keyboard
 %config(noreplace) %_sysconfdir/x2go/x2goagent.options
 %config(noreplace) %_sysconfdir/x2go/keystrokes.cfg
-%config(noreplace) %_sysconfdir/x2go/rgb
+#%%config(noreplace) %%_sysconfdir/x2go/rgb
 %_bindir/x2goagent
-#%%_libdir/nx/bin/x2goagent
+%_libdir/nx/bin/x2goagent
 #%%_datadir/x2go/versions/VERSION.x2goserver-x2goagent
-%_datadir/x2go/rgb
-%_pixmapsdir/x2go.xpm
+#%%_datadir/x2go/rgb
+%_pixmapsdir/x2goagent.xpm
 %_datadir/x2go/x2gofeature.d/x2goserver-x2goagent.features
 %_man1dir/x2goagent.1*
 
@@ -407,6 +407,9 @@ exit 0
 %_datadir/x2go/versions/VERSION.x2goserver-xsession
 
 %changelog
+* Mon Oct 15 2018 Oleg Solovyov <mcpain@altlinux.org> 4.1.0.2-alt1
+- New version
+
 * Mon Apr 16 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.0.0-alt2
 - Correct run KDE5 session (thanks zerg@ for the patch).
 
