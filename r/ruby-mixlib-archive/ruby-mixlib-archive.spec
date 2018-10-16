@@ -1,7 +1,7 @@
 %define  pkgname mixlib-archive
 
 Name:    ruby-%pkgname
-Version: 0.4.17
+Version: 0.4.18
 Release: alt1
 
 Summary: A very simple gem to create and extract archives.
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Oct 16 2018 Andrey Cherepanov <cas@altlinux.org> 0.4.18-alt1
+- New version.
+
 * Mon Oct 15 2018 Andrey Cherepanov <cas@altlinux.org> 0.4.17-alt1
 - New version.
 
