@@ -1,12 +1,14 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%def_with nghttp2
+
 # Wireshark has huge number of plugins that are not linked against most of the external libraries
 # as they are loaded into wireshark/tshark processes which guarantee that linkage
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
 Version: 2.6.4
-Release: alt1
+Release: alt1.1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -25,7 +27,9 @@ BuildRequires: libkrb5-devel libpcap-devel libpcre-devel libportaudio2-devel lib
 BuildRequires: liblua5-devel < 5.3
 BuildRequires: libssh-devel
 BuildRequires: libnl-devel
+%if_with nghttp2
 BuildRequires: libnghttp2-devel
+%endif
 BuildRequires: liblz4-devel
 BuildRequires: libxml2-devel
 BuildRequires: libspandsp6-devel
@@ -134,6 +138,12 @@ applications.
 export ac_cv_path_HTML_VIEWER=url_handler.sh
 # Workaround for Lua 5.1 detection
 export ac_cv_lib_lualib_luaL_openlib=no
+
+# Some plugins use C++ and need lcxa. It can't be loaded
+# dynamically, so all binaries should be linked with it.
+%ifarch %e2k
+cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
+%endif
 
 chmod ugo+rx configure
 %configure \
@@ -267,6 +277,10 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Tue Oct 16 2018 Michael Shigorin <mike@altlinux.org> 2.6.4-alt1.1
+- introduce nghttp2 knob (on by default)
+- E2K: link against -lcxa explicitly with lcc below 1.23
+
 * Sat Oct 13 2018 Anton Farygin <rider@altlinux.ru> 2.6.4-alt1
 - 2.6.4 (fixes: CVE-2018-18227, CVE-2018-18225, CVE-2018-18225,  CVE-2018-12086)
 - disabled build gtk+ UI
