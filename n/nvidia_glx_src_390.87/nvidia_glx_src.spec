@@ -3,6 +3,9 @@
 %define Nif_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 %define Nif_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %define tbname         NVIDIA-Linux-x86
 %ifarch x86_64
 %define tbname         NVIDIA-Linux-x86_64
@@ -24,7 +27,7 @@
 %define nv_version 390
 %define nv_release 87
 %define nv_minor %nil
-%define pkg_rel alt186%ubt
+%define pkg_rel alt187
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -345,6 +348,9 @@ fi
 %endif
 
 %changelog
+* Tue Oct 16 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt187
+- fix to build
+
 * Mon Oct 15 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt186%ubt
 - package glvnd version of libs
 
