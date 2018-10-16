@@ -1,12 +1,13 @@
 Name: klatexformula
 Version: 4.0.0
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: Publishing
 Summary: Generating images from LaTeX equations
-Source: %name-%version.tar.gz
-Patch: klatexformula-3.2.9-setlocale.patch
 Url: http://klatexformula.sourceforge.net/
+
+Source: %name-%version.tar.gz
+Patch1: klatexformula-4.0.0-alt-qt-5.11.patch
 
 BuildRequires(pre): rpm-build-xdg
 
@@ -30,6 +31,7 @@ TODO: make shared version of %name-devel.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %cmake	\
@@ -60,6 +62,9 @@ done
 %_libdir/lib*.so
 
 %changelog
+* Tue Oct 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0-alt2
+- NMU: fixed build with qt-5.11.
+
 * Thu Aug 09 2018 Fr. Br. George <george@altlinux.ru> 4.0.0-alt1
 - Autobuild version bump to 4.0.0
 - Switch to qt5
