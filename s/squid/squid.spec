@@ -8,7 +8,7 @@
 %def_with gnutls
 
 Name: squid
-Version: 4.2
+Version: 4.3
 Release: alt1
 %define langpack_ver 20170901 
 Summary: The Squid proxy caching server
@@ -294,6 +294,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Tue Oct 16 2018 Alexey Shabalin <shaba@altlinux.org> 4.3-alt1
+- Updated to 4.3
+
 * Thu Aug 30 2018 Alexey Shabalin <shaba@altlinux.org> 4.2-alt1
 - 4.2
 
