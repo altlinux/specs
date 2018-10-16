@@ -1,8 +1,8 @@
 %define  pkgname xpath
 
 Name:    ruby-%pkgname
-Version: 3.1.0
-Release: alt1.1
+Version: 3.2.0
+Release: alt1
 
 Summary: Ruby library for generating XPath expressions
 License: MIT
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Oct 16 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.0-alt1
+- New version.
+
 * Fri Jul 27 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 
