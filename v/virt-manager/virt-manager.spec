@@ -1,14 +1,9 @@
 
 %define _libexecdir /usr/libexec
-%define qemu_user  _libvirt
-%define preferred_distros "altlinux,fedora,rhel"
-%define kvm_packages ""
-%define libvirt_packages "libvirt-daemon-qemu,libvirt-daemon-config-network"
-%define askpass_package "openssh-askpass"
 
 Name: virt-manager
-Version: 1.6.0
-Release: alt1.git2549e6%ubt
+Version: 2.0.0
+Release: alt1
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -21,9 +16,9 @@ AutoReqProv: nopython
 Source: %name-%version.tar
 # Patch: %name-%version-%release.patch
 
-Requires: virt-manager-common = %version-%release
+Requires: virt-manager-common = %EVR
 Requires: libvirt-client
-Requires: virt-install = %version-%release
+Requires: virt-install = %EVR
 Requires: python3-module-pygobject3 >= 3.14
 Requires: python3-module-libxml2
 Requires: vte3
@@ -47,7 +42,7 @@ Requires: typelib(SpiceClientGLib)
 Requires: typelib(Vte) = 2.91
 Requires: typelib(Libosinfo) = 1.0
 
-BuildRequires(pre): rpm-build-ubt rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: libgio
 BuildRequires: intltool
@@ -70,7 +65,6 @@ Uses libvirt as the backend management API.
 %package common
 Summary: Common files used by the different Virtual Machine Manager interfaces
 Group: Emulators
-Conflicts: %name < %version-%release
 AutoReqProv: nopython
 
 %description common
@@ -82,7 +76,7 @@ Summary: Utilities for installing virtual machines
 Group: Emulators
 AutoReqProv: nopython
 
-Requires: virt-manager-common = %version-%release
+Requires: virt-manager-common = %EVR
 
 Provides: virt-install
 Provides: virt-clone
@@ -99,12 +93,7 @@ machine).
 #%%patch -p1
 
 %build
-python3 setup.py configure \
-	--qemu-user=%qemu_user \
-	--libvirt-package-names=%libvirt_packages \
-	--kvm-package-names=%kvm_packages \
-	--preferred-distros=%preferred_distros \
-	--askpass-package-names=%askpass_package
+python3 setup.py configure 
 
 #%%python_build
 
@@ -158,6 +147,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Tue Oct 16 2018 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt1
+- new version 2.0.0
+
 * Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 1.6.0-alt1.git2549e6%ubt
 - upstream master snapshot
 
