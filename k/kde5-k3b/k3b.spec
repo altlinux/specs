@@ -1,3 +1,5 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
 
 %def_disable permhelper
 %_K5if_ver_gteq %ubt_id M90
@@ -26,7 +28,7 @@
 %define rname k3b
 Name: kde5-%rname
 Version: 18.04.3
-Release: alt1%ubt
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Group: Archiving/Cd burning
@@ -182,6 +184,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Tue Oct 16 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2
+- fix build
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 
