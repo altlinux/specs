@@ -1,6 +1,7 @@
+%def_with perl
 Name: libossp-uuid
 Version: 1.5.1
-Release: alt1.2
+Release: alt2
 Summary: Universally Unique Identifier library
 License: MIT
 Group: System/Libraries
@@ -11,9 +12,12 @@ Source: uuid-%version.tar.bz2
 Patch: ossp-uuid.patch
 
 # Automatically added by buildreq on Thu Mar 04 2010 (-bb)
-BuildRequires: gcc-c++ gcc-fortran glibc-devel-static postgresql-devel termutils
+BuildRequires: gcc-c++ gcc-fortran glibc-devel-static postgresql-devel termutils chrpath
 
 BuildRequires: %_bindir/libtool
+%if_with perl
+BuildRequires: perl-devel
+%endif
 
 %description
 OSSP uuid is a ISO-C:1999 application programming interface (API)
@@ -52,6 +56,16 @@ Requires: %name-devel = %version-%release
 %description dce-devel
 DCE development headers and libraries for OSSP uuid.
 
+%if_with perl
+%package -n perl-OSSP-uuid
+Summary: perl bindings for Universally Unique Identifier library
+Group: Development/C
+Requires: %name = %EVR
+
+%description -n perl-OSSP-uuid
+perl bindings for OSSP uuid.
+%endif
+
 %prep
 %setup -q -n uuid-%version
 %patch0 -p1
@@ -64,7 +78,7 @@ export CXX_NAME=libossp-uuid++.la
 export PHP_NAME=$RPM_SOURCE_DIR/php/modules/ossp-uuid.so
 %configure \
     --disable-static \
-    --without-perl \
+    %{subst_with perl} \
     --without-php \
     --with-dce \
     --without-cxx \
@@ -80,9 +94,13 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 rm -f %buildroot%_libdir/*.la %buildroot%_libdir/*.a
 chmod 755 %buildroot%_libdir/*.so.*.*.*
 
+%if_with perl
+mkdir -p %buildroot%perl_vendor_archlib
+mv %buildroot%_libdir/perl/*/* %buildroot%perl_vendor_archlib/
+chrpath -d %buildroot%perl_vendor_archlib/auto/OSSP/uuid/uuid.so ||:
+%endif
 
 %check
-
 
 %files
 %doc AUTHORS ChangeLog HISTORY NEWS PORTING README SEEALSO THANKS TODO USERS
@@ -104,7 +122,16 @@ chmod 755 %buildroot%_libdir/*.so.*.*.*
 %_includedir/uuid_dce.h
 %_libdir/libossp-uuid_dce.so
 
+%if_with perl
+%files -n perl-OSSP-uuid
+%perl_vendor_archlib/OSSP
+%perl_vendor_archlib/auto/OSSP
+%endif
+
 %changelog
+* Tue Oct 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2
+- NMU: built with perl
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt1.2
 - Removed bad RPATH
 
