@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.7.3
+Version: 3.8.2
 Release: alt1
 
 Summary: py.test, a simple and popular testing tool for Python
@@ -116,7 +116,8 @@ additional executable.
 %prep
 %setup
 # adjust timeouts for aarch64 tests
-sed -i '/child\.expect(.*)/s/)[[:space:]]*$/, timeout=60)/g' \
+sed -i '/child\.expect(.*)/s/)[[:space:]]*$/, timeout=60)/g;
+/child\.expect_exact([[:space:]]*$/{$!N;s/\n\([[:space:]]*\)\(.*\)/\n\1\2,\n\1timeout=60,/g}' \
 testing/{test_pdb.py,test_terminal.py,test_unittest.py}
 
 rm -rf ../python3
@@ -188,6 +189,9 @@ popd
 %_bindir/pytest3
 
 %changelog
+* Thu Oct 04 2018 Stanislav Levin <slev@altlinux.org> 3.8.2-alt1
+- 3.7.3 -> 3.8.2.
+
 * Wed Aug 29 2018 Stanislav Levin <slev@altlinux.org> 3.7.3-alt1
 - 3.7.2 -> 3.7.3.
 
