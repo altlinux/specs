@@ -1,5 +1,5 @@
 Name: yandex-tank
-Version: 1.10.1
+Version: 1.10.3
 Release: alt1
 
 Summary: a performance measurement tool
@@ -13,8 +13,6 @@ Patch: %name-%version-%release.patch
 BuildArch: noarch
 BuildRequires: python-module-setuptools python-module-flake8 python-module-pytest-runner
 Provides: python%__python_version(yandextank)
-
-%add_python_req_skip yasmapi
 
 Requires: python-module-matplotlib python-module-subprocess32
 Requires: python-module-pandas >= 0.20.2
@@ -52,6 +50,9 @@ Recommends: phantom/phantom-ssl
 %doc README.md AUTHORS docs
 
 %changelog
+* Tue Oct 16 2018 Terechkov Evgenii <evg@altlinux.org> 1.10.3-alt1
+- 1.10.3
+
 * Fri Jul 13 2018 Terechkov Evgenii <evg@altlinux.org> 1.10.1-alt1
 - 1.10.1
 
