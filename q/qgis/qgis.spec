@@ -1,10 +1,10 @@
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
-%define grass_version 7.4.0
+%define grass_version 7.4.1
 
 Name:    qgis
 Version: 2.18.16
-Release: alt2
+Release: alt3
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPLv3+ with exceptions
@@ -330,6 +330,9 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 %_libexecdir/%name
 
 %changelog
+* Mon Oct 15 2018 Andrey Cherepanov <cas@altlinux.org> 2.18.16-alt3
+- Rebuild with grass 7.4.1.
+
 * Mon Mar 19 2018 Andrey Cherepanov <cas@altlinux.org> 2.18.16-alt2
 - Rebuild with new version of spatialite and grass.
 
