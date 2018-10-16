@@ -2,7 +2,7 @@
 
 Name: 	 qcad
 Version: 3.21.3.2
-Release: alt1
+Release: alt2
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
 
@@ -17,6 +17,7 @@ Source0: qcad-%version.tar
 Source1: qcad.desktop
 Source2: qcad
 Patch:   %name-%version-%release.patch
+Patch1:  qcad-qt5-unbundle_libraries.patch
 
 BuildRequires: gcc-c++ qt5-base-devel python
 BuildRequires: desktop-file-utils
@@ -34,6 +35,8 @@ BuildRequires: qt5-webengine-devel
 BuildRequires: qt5-webkit-devel
 BuildRequires: qt5-xmlpatterns-devel
 BuildRequires: zlib-devel
+BuildRequires: libquazip-qt5-devel
+BuildRequires: spatialindex-devel
 
 Requires: qt5-translations qt5-imageformats
 
@@ -52,6 +55,7 @@ QCad это профессиональная CAD система. С QCad вы м
 %prep
 %setup -q
 %patch -p1
+%patch1 -p0
 %if_with debug
 echo 'DEFINES -= QT_NO_DEBUG_OUTPUT' >> shared.pri
 %endif
@@ -121,6 +125,10 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Tue Oct 16 2018 Andrey Cherepanov <cas@altlinux.org> 3.21.3.2-alt2
+- Build with system libquazip-qt5 (ALT #35510). (thanks antohami@)
+- Remove duplicate categories in desktop file. (thanks antohami@)
+
 * Fri Oct 05 2018 Andrey Cherepanov <cas@altlinux.org> 3.21.3.2-alt1
 - New version.
 
