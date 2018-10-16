@@ -1,26 +1,46 @@
 Name: kiki
 Version: 1.0.2
-Release: alt1.qa5
+Release: alt2
 
 Group: Games/Puzzles
 Summary: 3D logical game
 Summary(ru_RU.UTF-8): Логическая 3D игра
 License: Public Domain
 Url: http://kiki.sf.net
-Icon: kiki.32.png
-Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: %name-%version.tar
 Source1: %name.16.png
 Source2: %name.32.png
 Source3: %name.48.png
 Source4: %name-manual.tar.bz2
-Patch01: %name-%version-alt.patch
+Patch0: kiki-1.0.2-debian-from-upstream-cvs.patch
+Patch1: kiki-1.0.2-debian-directories.patch
+Patch2: kiki-1.0.2-debian-Makefile.patch
+Patch3: kiki-1.0.2-debian-missing-includes.patch
+Patch4: kiki-1.0.2-debian-portability-64bit.patch
+Patch5: kiki-1.0.2-debian-gcc-const-correctness.patch
+Patch6: kiki-1.0.2-debian-gcc-annoying-warnings.patch
+Patch7: kiki-1.0.2-debian-gcc-miscompilation-479086.patch
+Patch8: kiki-1.0.2-debian-dont-use-getwd.patch
+Patch9: kiki-1.0.2-debian-SWIG.patch
+Patch10: kiki-1.0.2-debian-SWIG-KikiText.patch
+Patch11: kiki-1.0.2-debian-kikiaction-delete-hack.patch
+Patch12: kiki-1.0.2-debian-kikievent-empty-check.patch
+Patch13: kiki-1.0.2-debian-dont-leak-python-results.patch
+Patch14: kiki-1.0.2-debian-dont-leak-menu-objects.patch
+Patch15: kiki-1.0.2-debian-look-up-down.patch
+Patch16: kiki-1.0.2-debian-turn-and-exit-level.patch
+Patch17: kiki-1.0.2-debian-sdl-set-video-mode.patch
+Patch18: kiki-1.0.2-debian-fix-french-translation.patch
+Patch19: kiki-1.0.2-debian-fix-dutch-translation.patch
+Patch20: kiki-1.0.2-debian-ogg-sound.patch
+Patch21: kiki-1.0.2-debian-level-selection-with-no-levels-solved.patch
+Patch22: kiki-1.0.2-debian-freebsd.patch
+Patch23: kiki-1.0.2-debian-virtual-destructors.patch
+Patch24: kiki-1.0.2-alt-Makefile-python.patch
 
-# due to .desktop
-Requires: /usr/bin/sound_wrapper
-
-# Automatically added by buildreq on Mon Nov 17 2008
-BuildRequires: gcc-c++ libGL-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libfreeglut-devel python-devel vorbis-tools
+BuildRequires: gcc-c++ libGL-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libGLUT-devel python-devel vorbis-tools swig
+# libfreeglut broken
+Requires: libGLUT
 
 %description
     once upon a time,
@@ -74,7 +94,32 @@ the next level.
 
 %prep
 %setup -q
-%patch01 -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p2
+
 sed -i -e 's,^PYTHON_VERSION=.*$,PYTHON_VERSION=%__python_version,g' linux/Makefile
 
 %build
@@ -138,6 +183,9 @@ tar -jxvf %SOURCE4
 %doc Readme.txt Thanks.txt manual
 
 %changelog
+* Tue Oct 16 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt2
+- resync patches from Debian
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.0.2-alt1.qa5
 - Rebuilt for gcc5 C++11 ABI.
 
