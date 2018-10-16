@@ -1,6 +1,6 @@
 Name: xiphos
 Version: 4.1.0
-Release: alt2
+Release: alt3
 Summary: Bible Study Software
 Url: http://xiphos.org/
 Group: Text tools
@@ -16,7 +16,7 @@ BuildRequires: libsword-devel >= 1.8.0
 
 # Automatically added by buildreq on Fri Sep 15 2017
 # optimized out: at-spi2-atk biblesync docbook-dtds fontconfig glib2-devel gnome-doc-utils-xslt libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libdbus-devel libdbus-glib libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgst-plugins1.0 libgtk+3-devel libharfbuzz-icu libicu-devel libjavascriptcoregtk3-devel libpango-devel libsoup-devel libstdc++-devel libuuid-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server libxml2-devel perl perl-Encode pkg-config python-base python-module-libxml2 python-modules python-modules-compiler python-modules-ctypes python-modules-encodings python-modules-logging xml-common xorg-xproto-devel xsltproc
-BuildRequires: biblesync-devel gcc-c++ gnome-doc-utils intltool libGConf-devel libdbus-glib-devel libgsf-devel libsword-devel libwebkitgtk3-devel time
+BuildRequires: biblesync-devel gcc-c++ gnome-doc-utils intltool libGConf-devel libdbus-glib-devel libgsf-devel libsword-devel libwebkitgtk3-devel python-modules-logging time
 
 %description
 Xiphos (formerly known as GnomeSword) is a Bible study application for GNOME,
@@ -53,6 +53,9 @@ mv %buildroot%_docdir/xiphos/ doc-install
 %_datadir/%name
 
 %changelog
+* Tue Oct 16 2018 Ildar Mulyukov <ildar@altlinux.ru> 4.1.0-alt3
+- rebuild with newer libicu
+
 * Sun Jun 10 2018 Ildar Mulyukov <ildar@altlinux.ru> 4.1.0-alt2
 - add dep on `sword` for in-sword localizaton
 
