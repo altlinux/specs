@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: cjdns
-Version: 20.1
-Release: alt1%ubt
+Version: 20.2
+Release: alt1
 
 Summary: Encrypted networking for regular people
 License: GPLv3+
@@ -12,9 +14,8 @@ Source: %name-%version.tar
 #https://github.com/cjdelisle/cjdns.git
 Patch1: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
 # don't use libuv-devel since it uses bundled patched libuv to build static library
-BuildRequires: nodejs python-modules gyp node-gyp /proc
+BuildRequires: nodejs python-devel gyp node-gyp /proc
 
 %description
 Cjdns implements an encrypted IPv6 network using public key cryptography
@@ -27,7 +28,8 @@ The service is off by default.
 %package tools
 Summary: Nodejs tools for cjdns
 Group: Networking/Other
-Requires: nodejs, %name = %EVR
+Requires: nodejs
+Requires: %name = %EVR
 BuildArch: noarch
 
 %description tools
@@ -40,7 +42,8 @@ sessionStats       show current crypto sessions
 %package python
 Summary: Python tools for cjdns
 Group: Networking/Other
-Requires: python, %name = %EVR
+Requires: python
+Requires: %name = %EVR
 BuildArch: noarch
 
 %description python
@@ -49,7 +52,8 @@ Python tools for cjdns.
 %package graph
 Summary: Python tools for cjdns
 Group: Networking/Other
-Requires: %name-python = %EVR, python-module-networkx
+Requires: %name-python = %EVR
+Requires: python-module-networkx
 BuildArch: noarch
 
 %description graph
@@ -100,8 +104,8 @@ install -pm 755 contrib/systemd/cjdns-online.sh \
         %buildroot%_bindir/cjdns-online
 
 # man pages
-mkdir -p %buildroot%_mandir/man5
-install -pm 644 doc/man/cjdroute.conf.5 %buildroot%_mandir/man5
+mkdir -p %buildroot%_man5dir
+install -pm 644 doc/man/cjdroute.conf.5 %buildroot%_man5dir
 
 # install python tools that pull in networkx for graphing
 cp -pr contrib/python %buildroot%_exec_prefix/libexec/cjdns
@@ -160,7 +164,7 @@ done
 %_bindir/publictoip6
 %_bindir/makekeys
 %_bindir/cjdns-online
-%_mandir/man5/*
+%_man5dir/*
 
 %files tools
 %doc contrib/doc/traceroute.md
@@ -219,13 +223,16 @@ done
 %_bindir/graphStats
 
 %changelog
-* Wed Feb 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 20.1-alt1%ubt
+* Tue Oct 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 20.2-alt1
+- Updated to upstream version 20.2.
+
+* Wed Feb 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 20.1-alt1
 - Updated to upstream version 20.1.
 
-* Wed Sep 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20-alt2%ubt
+* Wed Sep 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20-alt2
 - Updated build dependencies.
 
-* Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20-alt1%ubt
+* Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20-alt1
 - Updated to upstream version 20.
 - Built with support of %%ubt macro.
 
