@@ -5,7 +5,7 @@
 
 Name:         ThePEG
 Version:      1.5.0
-Release:      alt3.2
+Release:      alt3.3
 
 Summary:      Toolkit for High Energy Physics Event Generation.
 License:      GPL
@@ -114,6 +114,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Oct 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt3.3
+- rebuild with new gsl
+
 * Fri Nov 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt3.2
 - Fixed build with gcc 4.7
 
