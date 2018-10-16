@@ -4,8 +4,8 @@
 %def_without python3
 
 Name: geos
-Version: 3.6.2
-Release: alt2
+Version: 3.7.0
+Release: alt1
 
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
@@ -215,6 +215,9 @@ make check || exit 0
 %doc doc/doxygen_docs/html/*
 
 %changelog
+* Tue Oct 16 2018 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
+- New version.
+
 * Sun Oct 08 2017 Michael Shigorin <mike@altlinux.org> 3.6.2-alt2
 - E2K:
   + strip Unicode BOM
