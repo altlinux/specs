@@ -1,5 +1,5 @@
-%define nm_version 1.1.0
-%define nm_applet_version 1.1.0
+%define nm_version 1.2.0
+%define nm_applet_version 1.2.0
 %define nm_applet_name NetworkManager-applet-gtk
 %define ppp_version %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 
@@ -8,8 +8,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-sstp
-Version: 1.2.2
-Release: alt3
+Version: 1.2.6
+Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for SSTP
@@ -17,7 +17,6 @@ Summary:  NetworkManager VPN plugin for SSTP
 Url: https://github.com/enaess/network-manager-sstp/
 
 Source: %name-%version.tar
-#Patch:  gtk-table-to-gtk-grid.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -71,6 +70,7 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %if_without libnm_glib
     --without-libnm-glib \
 %endif
+    --with-dist-version=%version-%release \
     --enable-more-warnings=error
 
 %make_build
@@ -83,6 +83,7 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %doc AUTHORS ChangeLog COPYING
 %config %_sysconfdir/dbus-1/system.d/nm-sstp-service.conf
 %_libexecdir/NetworkManager/nm-sstp-service
+%_libdir/NetworkManager/libnm-vpn-plugin-sstp.so
 %_libdir/pppd/%ppp_version/*.so
 %if_with libnm_glib
 %config %_sysconfdir/NetworkManager/VPN/nm-sstp-service.name
@@ -90,15 +91,20 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %config %_libexecdir/NetworkManager/VPN/nm-sstp-service.name
 
 %files gtk -f %name.lang
-%_libdir/NetworkManager/lib*.so*
+%if_with libnm_glib
+%_libdir/NetworkManager/libnm-sstp-properties.so
+%endif
 %_libexecdir/NetworkManager/nm-sstp-auth-dialog
-%_datadir/gnome-vpn-properties/*
+%_libdir/NetworkManager/libnm-vpn-plugin-sstp-editor.so
 %_datadir/appdata/*.xml
 
-%exclude %_libdir/NetworkManager/lib*.la
+%exclude %_libdir/NetworkManager/*.la
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Oct 16 2018 Alexey Shabalin <shaba@altlinux.org> 1.2.6-alt1
+- 1.2.6
+
 * Wed Aug 01 2018 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt3
 - Disable libnm-glib-* support.
 - Fix build without libnm-glib-*.
