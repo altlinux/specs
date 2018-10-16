@@ -1,5 +1,5 @@
 Name: usbutils
-Version: 009
+Version: 010
 Release: alt1
 
 Summary: Linux USB utilities
@@ -29,16 +29,18 @@ the USB bus.
 
 %install
 %makeinstall
-rm -f %buildroot%_datadir/pkgconfig/usbutils.pc
 rm -f %buildroot%_bindir/lsusb.py
 
 %files
 %_bindir/*
 %_man1dir/*
 %_man8dir/*
-%doc AUTHORS NEWS
+%doc NEWS README.md
 
 %changelog
+* Tue Oct 16 2018 Alexey Shabalin <shaba@altlinux.org> 010-alt1
+- new version 010
+
 * Tue Jan 09 2018 Alexey Shabalin <shaba@altlinux.ru> 009-alt1
 - 009
 
