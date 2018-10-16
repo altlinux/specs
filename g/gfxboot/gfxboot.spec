@@ -1,6 +1,6 @@
 Name:         gfxboot
-Version:      4.5.12
-Release:      alt1.1
+Version:      4.5.47
+Release:      alt1
 
 Group:        Development/Other
 Summary:      Graphical boot logo for lilo, grub and syslinux.
@@ -10,6 +10,7 @@ Url:	      http://en.opensuse.org/SDB:Gfxboot
 Source:       %name-%version.tar
 Patch0:	      gfxboot-4.1.16-alt1.patch
 
+ExclusiveArch: %ix86 x86_64
 # Automatically added by buildreq on Thu Jul 31 2008 (-bi)
 BuildRequires: libfreetype-devel nasm xmlto 
 
@@ -38,6 +39,9 @@ Here you find the graphical boot logo. Suitable for both lilo, grub and syslinux
 %_datadir/gfxboot/
 
 %changelog
+* Tue Oct 16 2018 Sergey V Turchin <zerg@altlinux.org> 4.5.47-alt1
+- new version
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 4.5.12-alt1.1
 - NMU: added URL
 
