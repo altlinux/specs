@@ -1,8 +1,8 @@
 %define  pkgname curses
  
 Name: 	 ruby-%pkgname
-Version: 1.2.4
-Release: alt1.3
+Version: 1.2.5
+Release: alt1
  
 Summary: Ruby binding for curses, ncurses, and PDCurses
 License: MIT/Ruby
@@ -18,8 +18,6 @@ BuildRequires: ruby-tool-setup
 BuildRequires: libruby-devel
 BuildRequires: libncursesw-devel
  
-%filter_from_requires /^ruby(#.*\/curses.so)/d
-
 %description
 A Ruby binding for curses, ncurses, and PDCurses. curses is an extension
 library for text UI applications.  Formerly part of the Ruby standard
@@ -44,10 +42,13 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
  
 %files
 %doc README*
-%ruby_sitearchdir/*
 %ruby_sitelibdir/*
+%rubygem_specdir/*
  
 %changelog
+* Tue Oct 16 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.5-alt1
+- New version.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.4-alt1.3
 - Rebuild with Ruby 2.5.1
 
