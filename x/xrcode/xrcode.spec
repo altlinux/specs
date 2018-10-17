@@ -1,13 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: xrcode
 Version: 1.0
-Release: alt3.qa1
+Release: alt4
 
 Url: ftp://oskin.macomnet.ru/pub/linux/misc
 License: GPL
 Group: Text tools
 
 # xcode.c and rcode.tar.gz; patched here
-Source: %name.tar.bz2
+Source: %name-%version.tar
 Patch: xcode-gcc41.patch
 
 Summary: Xcode and recode for recoding files between cyrillic codepages
@@ -49,11 +51,12 @@ xcode - конвертор с автовизначенням кодування тексту ╕ наступним
 	Останн╕ зм╕ни: 18 травня 1997 р. 
 
 %prep
-%setup -q -cn xrcode
+%setup
 %patch
 
 %build
-make
+%add_optflags -fgnu89-inline
+%make CFLAGS="%optflags"
 
 %install
 install -pD -m755 xcode %buildroot%_bindir/xcode
@@ -65,6 +68,9 @@ install -m755 recode %buildroot%_bindir/rcode
 # TODO: In function `main': the use of `tmpnam' is dangerous, better use `mkstemp'
 
 %changelog
+* Wed Oct 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt4
+- NMU: fixed build with new toolchain.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
