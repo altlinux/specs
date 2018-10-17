@@ -1,5 +1,5 @@
 Name: repocop-unittest-vendor-tag
-Version: 0.6
+Version: 0.7
 Release: alt1
 
 Summary: vendor-tag intergration tests for repocop test platform
@@ -37,6 +37,9 @@ install -p -m 644 %SOURCE1 %buildroot%_datadir/repocop/fixscripts/
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Wed Oct 17 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1
+- added exception for opera
+
 * Thu Jul 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1
 - new R::S::E syntax
 
