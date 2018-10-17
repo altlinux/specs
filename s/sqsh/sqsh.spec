@@ -1,22 +1,23 @@
-%define name sqsh
-%define release alt1
-%define version 2.5.16.1
+%define _unpackaged_files_terminate_build 1
 
-Name: 		%name
-Version: 	%version
-Release: alt1
+Name: 		sqsh
+Version: 	2.5.16.1
+Release: alt2
 
 Summary: 	SQL Shell. It is intended as a replacement for the Sybase 'isql'.
 License: 	GPL
 Group: 		Databases
 Url: 		http://sourceforge.net/projects/sqsh/
 
-Source0: 	%name-%version.tar.bz2
+Source: 	%name-%version.tar
+
+Patch1: %name-%version-alt-freetds.patch
 
 # Automatically added by buildreq on Sat May 22 2004
 BuildRequires: libncurses-devel libreadline-devel
 BuildRequires: libfreetds-devel >= 0.64
-BuildPreReq: libX11-devel imake libXt-devel libXaw-devel libXext-devel
+BuildRequires: libX11-devel imake libXt-devel libXaw-devel libXext-devel
+
 Requires: libfreetds >= 0.64
 
 %description
@@ -36,8 +37,8 @@ support (eg. MS-SQL or Sybase). This package is build with FreeTDS
 library (http://www.freetds.org).
 
 %prep
-
 %setup
+%patch1 -p2
 
 %build
 export SYBASE=/usr
@@ -54,13 +55,16 @@ export SYBASE_LIBDIR=%_libdir
 %make DESTDIR=%buildroot install.man
 
 %files
-%config(noreplace) %_sysconfdir/sqshrc
-%_bindir/sqsh
-%_mandir/man1/sqsh.1*
 %doc COPYING ChangeLog INSTALL README
 %doc doc/FAQ doc/README* doc/sample.* doc/*.sqshrc doc/sqsh.html
+%config(noreplace) %_sysconfdir/sqshrc
+%_bindir/sqsh
+%_man1dir/sqsh.1*
 
 %changelog
+* Wed Oct 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.16.1-alt2
+- Fixed build with new freetds.
+
 * Fri Oct 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.16.1-alt1
 - Version 2.5.16.1
 
