@@ -2,8 +2,8 @@
 %def_without python
 
 Name: libalsa
-Version: 1.1.6
-Release: alt2
+Version: 1.1.7
+Release: alt1
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -178,6 +178,9 @@ done
 %_bindir/aserver
 
 %changelog
+* Wed Oct 17 2018 Michael Shigorin <mike@altlinux.org> 1:1.1.7-alt1
+- 1.1.7
+
 * Sun Sep 09 2018 Michael Shigorin <mike@altlinux.org> 1:1.1.6-alt2
 - E2K: explicitly link with -lcxa
 
