@@ -1,11 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 Name: dosfstools
 Version: 4.1
-Release: alt1%ubt
+Release: alt2
 
 Summary: Utilities to create and check MS-DOS FAT filesystems
 License: GPL
 Group: File tools
-BuildRequires(pre):rpm-build-ubt
 Url: http://daniel-baumann.ch/software/dosfstools/
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -31,7 +31,7 @@ code.
 %patch -p1
 
 %build
-autoreconf -fisv
+%autoreconf
 %configure --prefix=/ --sbindir=/sbin
 %make_build \
 	CFLAGS="%optflags\
@@ -41,6 +41,7 @@ autoreconf -fisv
 
 %install
 %makeinstall PREFIX=%buildroot MANDIR=%buildroot%_mandir sbindir=%buildroot/sbin
+rm -rf %buildroot%_docdir/dosfstools
 
 %files
 /sbin/*
@@ -48,7 +49,12 @@ autoreconf -fisv
 %doc doc/*
 
 %changelog
-* Tue Feb 07 2017 Anton Farygin <rider@altlinux.ru> 4.1-alt1%ubt
+* Wed Oct 17 2018 Anton Farygin <rider@altlinux.ru> 4.1-alt2
+- removed obsoleted ubt macros from specfile
+- enabled check for unpackaged files
+- enabled %%autoreconf
+
+* Tue Feb 07 2017 Anton Farygin <rider@altlinux.ru> 4.1-alt1
 - new version
 
 * Thu Jun 09 2016 Anton Farygin <rider@altlinux.ru> 4.0-alt1
