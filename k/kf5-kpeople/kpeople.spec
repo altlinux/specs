@@ -1,8 +1,8 @@
 %define rname kpeople
 
 Name: kf5-%rname
-Version: 5.50.0
-Release: alt1%ubt
+Version: 5.51.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -74,6 +74,7 @@ KF5 library
 
 %files common -f %name.lang
 %doc COPYING* README.md
+%config(noreplace) %_K5xdgconf/*.*categories
 %_K5data/kpeople/
 %_K5srvtyp/*.desktop
 
@@ -93,6 +94,9 @@ KF5 library
 %_K5lib/libKF5PeopleWidgets.so.*
 
 %changelog
+* Wed Oct 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.51.0-alt1
+- new version
+
 * Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1%ubt
 - new version
 

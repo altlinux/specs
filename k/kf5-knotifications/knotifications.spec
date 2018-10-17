@@ -1,8 +1,8 @@
 %define rname knotifications
 
 Name: kf5-%rname
-Version: 5.50.0
-Release: alt1%ubt
+Version: 5.51.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -21,7 +21,7 @@ BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel
 BuildRequires: libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel
 BuildRequires: libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel
-BuildRequires: qt5-x11extras-devel
+BuildRequires: qt5-x11extras-devel qt5-speech-devel
 BuildRequires: qt5-phonon-devel qt5-tools-devel
 BuildRequires: libdbusmenu-qt5-devel
 BuildRequires: libcanberra-devel
@@ -62,8 +62,7 @@ KF5 library
 %setup -n %rname-%version
 
 %build
-#K5build
-%K5cmake
+%K5build
 
 %install
 %K5install
@@ -86,6 +85,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Wed Oct 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.51.0-alt1
+- new version
+
 * Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1%ubt
 - new version
 

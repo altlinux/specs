@@ -1,8 +1,8 @@
 %define rname ktexteditor
 
 Name: kf5-%rname
-Version: 5.50.0
-Release: alt1%ubt
+Version: 5.51.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -71,6 +71,7 @@ mkdir %buildroot/%_datadir/katepart5/syntax/
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
+%config(noreplace) %_K5xdgconf/*.*categories
 #%config %_K5xdgconf/kate*
 %_datadir/katepart5/
 
@@ -95,6 +96,9 @@ mkdir %buildroot/%_datadir/katepart5/syntax/
 #%_K5xmlgui/katepart/
 
 %changelog
+* Wed Oct 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.51.0-alt1
+- new version
+
 * Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1%ubt
 - new version
 

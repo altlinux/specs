@@ -6,8 +6,8 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.50.0
-Release: alt1%ubt
+Version: 5.51.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -25,7 +25,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires(pre): python3-module-sip-devel python-module-sip-devel python-module-PyQt5-devel
 BuildRequires: python-module-kcoreaddons-devel
 %endif
-BuildRequires: extra-cmake-modules gcc-c++ kf5-kcoreaddons-devel libpolkitqt5-qt5-devel qt5-tools-devel
+BuildRequires: extra-cmake-modules gcc-c++ kf5-kcoreaddons-devel polkitqt5-devel qt5-tools-devel
 
 %description
 KAuth provides a convenient, system-integrated way to offload actions that need
@@ -93,6 +93,10 @@ Sip files for python3-module-%rname
 %prep
 %setup -n %rname-%version
 
+%if_disabled python
+sed -i 's|PythonModuleGeneration|PythonModuleGeneration_DISABLED|' src/CMakeLists.txt
+%endif
+
 %build
 %K5build \
     -DKAUTH_BACKEND_NAME=PolkitQt5-1 \
@@ -136,6 +140,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Wed Oct 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.51.0-alt1
+- new version
+
 * Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1%ubt
 - new version
 
