@@ -1,16 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: libGLUT
-Version: 8.0.1
-Release: alt2
 Epoch: 5
+Version: 8.0.1
+Release: alt3
 License: MIT
 Summary: Mesa OpenGL Utility Toolkit library
 Group: System/Libraries
-Url: http://www.mesa3d.org
+Url: https://www.mesa3d.org/
 
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
-
-Provides: libglut = %epoch:%version-%release
-Conflicts: freeglut libfreeglut
+Provides: libglut = %EVR
 
 Source: %name-%version.tar
 
@@ -22,9 +21,8 @@ Mesa OpenGL Utility Toolkit library
 %package devel
 Summary: Mesa OpenGL Utility Toolkit development package
 Group: Development/C
-Requires: libGLUT = %epoch:%version-%release
-Provides: libglut-devel = %epoch:%version-%release
-Conflicts: freeglut-devel libfreeglut-devel
+Requires: libGLUT = %EVR
+Provides: libglut-devel = %EVR
 
 %description devel
 Mesa OpenGL Utility Toolkit development package
@@ -55,6 +53,9 @@ install -m644 include/GL/glutf90.h %buildroot%_includedir/GL
 
 
 %changelog
+* Wed Oct 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5:8.0.1-alt3
+- Removed conflicts to freeglut.
+
 * Tue Feb 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5:8.0.1-alt2
 - Added GL/glutf90.h (ALT #26955)
 
