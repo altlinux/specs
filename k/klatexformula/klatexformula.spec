@@ -1,6 +1,6 @@
 Name: klatexformula
 Version: 4.0.0
-Release: alt2
+Release: alt3
 License: GPLv2
 Group: Publishing
 Summary: Generating images from LaTeX equations
@@ -44,7 +44,7 @@ TODO: make shared version of %name-devel.
 %cmakeinstall_std
 for N in %buildroot/%_datadir/pixmaps/kla*.png; do
   SZ="${N##*-}"; SZ="${SZ%%.*}"
-  install -D $N %buildroot%_iconsdir/hicolor/$SZ/apps/%name.png
+  install -D $N %buildroot%_iconsdir/hicolor/${SZ}x${SZ}/apps/%name.png
 done
 
 %files
@@ -62,6 +62,9 @@ done
 %_libdir/lib*.so
 
 %changelog
+* Wed Oct 17 2018 Fr. Br. George <george@altlinux.ru> 4.0.0-alt3
+- Fix icon paths
+
 * Tue Oct 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0-alt2
 - NMU: fixed build with qt-5.11.
 
