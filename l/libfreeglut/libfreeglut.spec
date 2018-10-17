@@ -1,15 +1,24 @@
+%def_enable snapshot
 %define _name freeglut
+%def_disable replace_glut
+%def_disable check
 
 Name: lib%_name
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: A freely licensed alternative to the GLUT library
 License: MIT
 Group: System/Libraries
-
 Url: http://%_name.sourceforge.net/
+
+%if_disabled snapshot
 Source: http://download.sourceforge.net/%_name/%_name-%version.tar.gz
+%else
+# VCS: https://github.com/dcnieho/FreeGLUT.git
+Source: %_name-%version.tar
+%endif
+Patch: freeglut-3.0.0-alt-fix_cmake_dir.patch
 
 Provides: libglut = %version %_name = %version
 Obsoletes: libglut < %version %_name < %version
@@ -47,23 +56,43 @@ license.
 
 %prep
 %setup -n %_name-%version
+%patch -b .cmake
 
 %build
-%cmake -DFREEGLUT_BUILD_STATIC_LIBS:BOOL=OFF
+%add_optflags -D_FILE_OFFSET_BITS=64
+%cmake -DFREEGLUT_BUILD_STATIC_LIBS:BOOL=OFF \
+       %{?_disable_replace_glut:-DFREEGLUT_REPLACE_GLUT=FALSE}
 %cmake_build
 
 %install
 %cmakeinstall_std
 
+%check
+%make -C BUILD test
+
 %files
+%if_enabled replace_glut
 %_libdir/libglut.so.*
+%else
+%_libdir/lib%_name.so.*
+%endif
 
 %files devel
 %_includedir/GL/*.h
+%if_enabled replace_glut
 %_libdir/libglut.so
+%_pkgconfigdir/glut.pc
+%else
+%_libdir/lib%_name.so
 %_pkgconfigdir/%_name.pc
+%endif
+%_libdir/cmake/FreeGLUT/
 
 %changelog
+* Wed Oct 17 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt2
+- updated to git snapshot
+- introduced "replace_glut" knob (disabled by default) (ALT #35518)
+
 * Thu Apr 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
 - 3.0.0
 

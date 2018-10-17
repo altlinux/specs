@@ -1,6 +1,6 @@
 Name: asymptote
 Version: 2.44
-Release: alt1.qa1
+Release: alt2
 
 Summary: Descriptive vector graphics language
 
@@ -19,7 +19,7 @@ Patch2: asymptote-2.28-alt-gsl1.16.patch
 
 # manually removed: libsubversion-auth-gnome-keyring libsubversion-auth-kwallet subversion tetex-core
 # Automatically added by buildreq on Sat Feb 20 2010
-BuildRequires: flex gcc-c++ libGL-devel libfftw3-devel libfreeglut-devel libgsl-devel libncurses-devel libreadline-devel zlib-devel
+BuildRequires: flex gcc-c++ libGL-devel libfftw3-devel libGLUT-devel libgsl-devel libncurses-devel libreadline-devel zlib-devel
 
 BuildRequires: libgc-devel >= 7.4.2
 
@@ -80,6 +80,9 @@ rm -fv *.tar.gz
 %_infodir/%name/*.info*
 
 %changelog
+* Wed Oct 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.44-alt2
+- NMU: rebuilt with libGLUT.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.44-alt1.qa1
 - NMU: applied repocop patch
 

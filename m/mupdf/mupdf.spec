@@ -1,6 +1,6 @@
 Name: mupdf
 Version: 1.13.0
-Release: alt1
+Release: alt2
 Summary: A lightweight PDF viewer and toolkit
 Group: Office
 License: GPLv3
@@ -9,6 +9,7 @@ Source0: http://mupdf.com/download/%name-%version-source.tar.gz
 Source1: %name.desktop
 Source2: debian.tar
 Patch0: %name-upstream.patch
+Patch1: %name-alt-freeglut.patch
 
 # Automatically added by buildreq on Thu Aug 22 2013
 # optimized out: libX11-devel pkg-config xorg-xextproto-devel xorg-xproto-devel
@@ -42,6 +43,7 @@ applications that use mupdf and static libraries
 %prep
 %setup -n %name-%version-source -a2
 #patch0 -p1
+%patch1 -p2
 
 # TODO rebuild with new openjpeg
 #BuildRequires: openjpeg-devel
@@ -72,6 +74,9 @@ install -D mupdf.pc %buildroot%_pkgconfigdir/mupdf.pc
 %_libdir/lib*.a
 
 %changelog
+* Wed Oct 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.13.0-alt2
+- NMU: rebuilt with libfreeglut.
+
 * Tue Oct 02 2018 Fr. Br. George <george@altlinux.ru> 1.13.0-alt1
 - Autobuild version bump to 1.13.0
 
