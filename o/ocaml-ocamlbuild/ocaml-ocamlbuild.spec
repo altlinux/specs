@@ -1,7 +1,7 @@
 %define pkgname ocamlbuild
 Name: ocaml-%pkgname
-Version: 0.12.0
-Release: alt3.qa1%ubt
+Version: 0.13.1
+Release: alt1
 Epoch: 1
 
 Summary: The Objective Caml project compilation tool
@@ -11,8 +11,7 @@ Url: https://github.com/ocaml/ocamlbuild
 
 Source: %name-%version.tar
 
-BuildRequires: ocaml >= 4.06
-BuildRequires(pre):rpm-build-ubt
+BuildRequires: ocaml >= 4.07
 
 %description
 Objective Caml is a high-level, strongly-typed, functional and
@@ -66,29 +65,32 @@ rm %buildroot%_libdir/ocaml/%pkgname/META
 %_libdir/ocaml/ocamlbuild/*.mli
 
 %changelog
-* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.12.0-alt3.qa1%ubt
+* Wed Oct 17 2018 Anton Farygin <rider@altlinux.ru> 1:0.13.1-alt1
+- 0.13.1
+
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.12.0-alt3.qa1
 - NMU: applied repocop patch
 
-* Mon Aug 13 2018 Anton Farygin <rider@altlinux.ru> 1:0.12.0-alt3%ubt
+* Mon Aug 13 2018 Anton Farygin <rider@altlinux.ru> 1:0.12.0-alt3
 - rebuilt for ocaml 4.07.0
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1:0.12.0-alt2%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1:0.12.0-alt2
 - rebuilt for ocaml 4.06.1
 
-* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 1:0.12.0-alt1%ubt
+* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 1:0.12.0-alt1
 - new version
 
-* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1:0.11.0-alt3%ubt
+* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1:0.11.0-alt3
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1:0.11.0-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1:0.11.0-alt2
 - rebuild with ocaml 4.04.1
 
-* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 1:0.11.0-alt1%ubt
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 1:0.11.0-alt1
 - updated to 0.11.0
 - split to runtime and devel packages
 
-* Thu Feb 16 2017 Anton Farygin <rider@altlinux.ru> 1:0.10.1-alt1%ubt
+* Thu Feb 16 2017 Anton Farygin <rider@altlinux.ru> 1:0.10.1-alt1
 - updated to 0.10.1
 
 * Sun Jun 19 2016 Andrey Bergman <vkni@altlinux.org> 4.03.0_0.9.2-alt1
