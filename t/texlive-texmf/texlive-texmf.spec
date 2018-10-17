@@ -1,13 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ perl(Config/IniFiles.pm) perl(Data/Dumper/Concise.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(Digest/SHA.pm) perl(Digest/SHA1.pm) perl(Encode.pm) perl(ExtUtils/MakeMaker.pm) perl(Fatal.pm) perl(File/Copy/Recursive.pm) perl(File/HomeDir.pm) perl(File/Which.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(HTTP/Status.pm) perl(IO/String.pm) perl(IPC/System/Simple.pm) perl(LWP.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(Locale/Maketext/Simple.pm) perl(Math/Trig.pm) perl(Pod/Man.pm) perl(Pod/Text.pm) perl(Pod/Usage.pm) perl(Spreadsheet/ParseExcel.pm) perl(Term/ANSIColor.pm) perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Adjuster.pm) perl(Tk/BrowseEntry.pm) perl(Tk/Dialog.pm) perl(Tk/DialogBox.pm) perl(Tk/DirTree.pm) perl(Tk/Font.pm) perl(Tk/HList.pm)
-BuildRequires: perl(Tk/ItemStyle.pm) perl(Tk/NoteBook.pm) perl(Tk/PNG.pm) perl(Tk/Pane.pm) perl(Tk/ProgressBar.pm) perl(Tk/ROText.pm) perl(Tk/widgets.pm) perl(URI/Escape.pm) perl(Unicode/GCString.pm) perl(WWW/Mechanize.pm) perl(XML/Parser.pm) perl(XML/XPath.pm) perl(XML/XPath/XMLParser.pm) perl(YAML/Tiny.pm) perl(autodie.pm) perl(encoding.pm) perl-devel texinfo
+BuildRequires: gcc-c++ perl(Config/IniFiles.pm) perl(Data/Dumper/Concise.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(Digest/SHA.pm) perl(Digest/SHA1.pm) perl(Encode.pm) perl(ExtUtils/MakeMaker.pm) perl(Fatal.pm) perl(File/Copy/Recursive.pm) perl(File/HomeDir.pm) perl(File/Slurp.pm) perl(File/Which.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(HTTP/Request/Common.pm) perl(HTTP/Status.pm) perl(IO/String.pm) perl(IPC/System/Simple.pm) perl(JSON.pm) perl(LWP.pm) perl(LWP/Protocol/https.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(Locale/Maketext/Simple.pm) perl(Log/Dispatch/File.pm) perl(Log/Log4perl.pm) perl(Log/Log4perl/Appender/Screen.pm) perl(Math/Trig.pm) perl(Pod/Man.pm) perl(Pod/Text.pm) perl(Pod/Usage.pm) perl(Spreadsheet/ParseExcel.pm) perl(Term/ANSIColor.pm) perl(Term/ReadKey.pm)
+BuildRequires: perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Adjuster.pm) perl(Tk/BrowseEntry.pm) perl(Tk/Dialog.pm) perl(Tk/DialogBox.pm) perl(Tk/DirTree.pm) perl(Tk/Font.pm) perl(Tk/HList.pm) perl(Tk/ItemStyle.pm) perl(Tk/NoteBook.pm) perl(Tk/PNG.pm) perl(Tk/Pane.pm) perl(Tk/ProgressBar.pm) perl(Tk/ROText.pm) perl(Tk/widgets.pm) perl(URI/Escape.pm) perl(Unicode/GCString.pm) perl(WWW/Mechanize.pm) perl(XML/Parser.pm) perl(XML/XPath.pm) perl(XML/XPath/XMLParser.pm) perl(YAML/Tiny.pm) perl(autodie.pm) perl(encoding.pm) perl-devel texinfo
 # END SourceDeps(oneline)
 
 %filter_from_requires /^.bin.sh5$/d
 %filter_from_requires /^.bin.bsh$/d
 %filter_from_requires /^.bin.ksh$/d
 %filter_from_requires /^.usr.sbin.lsattr$/d
+# optional in pdfannotextractor
+%filter_from_requires /^.usr.bin.java$/d
 
 %filter_from_requires /^perl(make-rules.pl)/d
 %filter_from_requires /^perl(installer.ctan-mirrors.pl)/d
@@ -47,7 +49,7 @@ BuildRequires: perl(Tk/ItemStyle.pm) perl(Tk/NoteBook.pm) perl(Tk/PNG.pm) perl(T
 %define _localstatedir %{_var}
 # Compress with gzip instead of xz (faster):
 
-%global __requires_exclude ^perl\\((PDF::Reuse.*|Pedigree.*|Text::Unidecode|Tie::Watch|SelfLoader|TeXLive.*|Tk::path_tre|only|pdfTeX|script::MakeSPList)\\)|/usr/local/bin/fontforge
+%global __requires_exclude ^perl\\((PDF::Reuse.*|Pedigree.*|Text::Unidecode|Tie::Watch|SelfLoader|TeXLive.*|Tk::path_tre|only|pdfTeX|script::MakeSPList)\\)|/usr/local/bin/fontforge|/bin/wish|bin/texlua
 %global __requires_exclude_from %{?__requires_exclude_from:%__requires_exclude_from|}^%{_docdir}|^/usr/share/texmf-dist/doc
 %global __provides_exclude_from %{?__provides_exclude_from:%__provides_exclude_from|}^%{_docdir}|^/usr/share/texmf-dist/doc
 
@@ -72,18 +74,19 @@ BuildRequires: perl(Tk/ItemStyle.pm) perl(Tk/NoteBook.pm) perl(Tk/PNG.pm) perl(T
 %define texmfvardir		%{_localstatedir}/lib/texmf
 %define texmfconfdir		%{_sysconfdir}/texmf
 
+
 %define	__jar_repack %{nil}
 %define	_enable_debug_packages %{nil}
 %define	__debug_package %{nil}
 %define __debug_install_post %{nil}
 
-%define relYear 2017
+%define relYear 2018
 %global tl_version %relYear
-%global mga_tl_timestamp 20170524
+%global mga_tl_timestamp 20180414
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt8_2
+Release:	alt1_5
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -92,7 +95,7 @@ Source0:	ftp://tug.org/historic/systems/texlive/%{relYear}/texlive-%{mga_tl_time
 Source1:	ftp://tug.org/historic/systems/texlive/%{relYear}/texlive-%{mga_tl_timestamp}-texmf.tar.xz.sha512
 Source2:	XDvi-color
 Source3:	http://www.tug.org/texlive/LICENSE.TL
-Source4:	ftp://tug.org/historic/systems/texlive/%{relYear}/install-tl-unx.tar.gz
+Source4:	ftp://tug.org/historic/systems/texlive/%{relYear}/install-tl-unx.tar.gz#/install-tl-unx-%{relYear}.tgz
 Source5:	http://mirror.hmc.edu/ctan/systems/texlive/tlnet/tlpkg/texlive.tlpdb
 Source6:	updmap-collection-basic.cfg
 Source7:	updmap-dist.cfg
@@ -120,7 +123,7 @@ BuildArch:	noarch
 Requires:	perl-Algorithm-Diff
 Requires:	xdg-utils
 Requires:	texlive >= %{tl_version}
-Requires:	texlive-collection-basic = %{version}-%{release}
+Requires:	texlive-collection-basic = %{version}
 Requires:	texlive-dist = %{version}-%{release}
 
 %if !%{with_system_tex4ht}
@@ -137,8 +140,7 @@ Source44: import.info
 Patch33: texlive-texmf-2017-alt-texmf-first.patch
 BuildRequires: rpm-build-tex >= 0.4
 AutoReq: yes,notex
-Source8000: texlive-20170524-texmf-dist-scripts-perl-526.patch
-Source8001: texlive-texmf-dist-scripts-system-PDF-Reuse.patch
+Source8000: texlive-20180414-texmf-dist-scripts-perl-526.patch
 Source8003: texlive-fix-info-dir-sections.patch
 
 #add_cleanup_skiplist for safety if cleanup is enabled
@@ -157,9 +159,10 @@ Source8003: texlive-fix-info-dir-sections.patch
 # TODO: bash syntax errors - fixme using bash --rpm-requires
 %add_findreq_skiplist %{texmfdistdir}/scripts/pdfxup/pdfxup
 %add_findreq_skiplist %{texmfdistdir}/scripts/pgfplots/pgf2pdf.sh
+%add_findreq_skiplist %{texmfdistdir}/doc/*
+%add_findreq_skiplist %{texmfdistdir}/dvips/pl/config.pl
 BuildRequires: python-modules-encodings
 BuildRequires: perl(BibTeX/Parser.pm)
-BuildRequires: perl(PDF/Reuse.pm)
 
 
 #-----------------------------------------------------------------------
@@ -175,8 +178,8 @@ including support for many languages around the world.
 %package	-n texlive-collection-basic
 Summary:	TeX Live extra fonts
 Group:		Publishing
-Requires:	texlive = %{version}
-Requires(post):	texlive = %{version}
+Requires:	texlive >= %{tl_version}
+Requires(post):	texlive >= %{tl_version}
 Provides: ht = %{tl_version}
 Provides: pdfjam = %{tl_version}
 Provides: tex4ht = %{tl_version}
@@ -210,6 +213,7 @@ Obsoletes: texmf-latex-obsolete <= 0.1-alt1
 Obsoletes: texmf-latex-tipa <= 1.3-alt4
 Obsoletes: texmf-latex-xcolor <= 2.06-alt3
 Obsoletes: texmf-pgf <= 2.10-alt0.1
+Obsoletes: ctanify <= 1.1-alt1.1
 AutoReq: yes,notex
 #Requires: texlive = %{tl_version}
 Provides: texlive-collection-fontsrecommended = %{tl_version}
@@ -219,7 +223,6 @@ Provides: texlive-collection-genericrecommended = %{tl_version}
 Provides: tex(tex)
 Provides: tex(latex-base)
 Provides: tex(latex)
-Requires: perl(PDF/Reuse.pm)
 Provides: texlive-metapost = %{tl_version}
 Conflicts: texlive-metapost < 2009
 Obsoletes: texlive-metapost < 2009
@@ -723,7 +726,7 @@ should be sufficient for most users of TeX or TeX-related programs.
 Summary:	TeX Live extra fonts
 Group:		Publishing
 Requires:	texlive-texmf = %{version}-%{release}
-Requires(post):	texlive-collection-basic = %{version}-%{release}
+Requires(post):	texlive-collection-basic = %{version}
 #Requires(postun):	texlive-collection-basic
 Requires(post):	texlive >= %{tl_version}
 Requires(postun):	texlive >= %{tl_version}
@@ -1783,10 +1786,6 @@ TeX-related libraries) that are missing from the texlive-basic package.
 # kixfont
 %exclude %{texmfdistdir}/fonts/source/public/kixfont
 %exclude %{texmfdistdir}/fonts/tfm/public/kixfont
-# knuthotherfonts
-%exclude %{texmfdistdir}/fonts/source/public/knuthotherfonts/committee
-%exclude %{texmfdistdir}/fonts/source/public/knuthotherfonts/halftone
-%exclude %{texmfdistdir}/fonts/source/public/knuthotherfonts/mfbook
 # kpfonts
 %exclude %{texmfdistdir}/fonts/afm/public/kpfonts
 %exclude %{texmfdistdir}/fonts/enc/dvips/kpfonts
@@ -2150,6 +2149,18 @@ production system. It provides a comprehensive TeX system. It includes
 all the major TeX-related programs, macro packages, and fonts that are
 free software, including support for many languages around the world.
 
+%files		-n texlive-doc
+#texmfdistdir/doc/*
+%exclude %{texmfdistdir}/doc/tetex
+%if %{enable_asymptote}
+%exclude %{texmfdistdir}/doc/asymptote
+%endif
+%if %{enable_xindy}
+%exclude %{texmfdistdir}/doc/xindy
+%endif
+%{texmfdistdir}/doc
+
+#-----------------------------------------------------------------------
 %package	-n texlive-fontsextra
 Summary:	TeX Live extra fonts
 Group:		Publishing
@@ -2609,10 +2620,6 @@ free software, including support for many languages around the world.
 # kixfont
 %{texmfdistdir}/fonts/source/public/kixfont
 %{texmfdistdir}/fonts/tfm/public/kixfont
-# knuthotherfonts
-%{texmfdistdir}/fonts/source/public/knuthotherfonts/committee
-%{texmfdistdir}/fonts/source/public/knuthotherfonts/halftone
-%{texmfdistdir}/fonts/source/public/knuthotherfonts/mfbook
 # kpfonts
 %{texmfdistdir}/fonts/afm/public/kpfonts
 %{texmfdistdir}/fonts/enc/dvips/kpfonts
@@ -2763,7 +2770,7 @@ free software, including support for many languages around the world.
 %{texmfdistdir}/fonts/source/public/semaphor
 %{texmfdistdir}/fonts/tfm/public/semaphor
 %{texmfdistdir}/fonts/type1/public/semaphor
-#%{texmfdistdir}/tex/context/third/semaphor
+#texmfdistdir/tex/context/third/semaphor
 %{texmfdistdir}/tex/latex/semaphor
 %{texmfdistdir}/tex/plain/semaphor
 # skull
@@ -3099,12 +3106,9 @@ rm -rf %{buildroot}%{texmfdistdir}/tlpkg/installer/xz/*
 # can't be moved to %%post - see tar xf's in %%install
 pushd %buildroot%{texmfdistdir}
 patch -p0 < %SOURCE8000
-patch -p0 < %SOURCE8001
 popd
 # info
 patch -p0 %buildroot%{_infodir}/texdraw.info < %SOURCE8003
-# remove bundled perl-PDF-Reuse
-rm -rf %buildroot%{texmfdistdir}/scripts/xetex/perl/lib
 # merged from texlive-common = 0.1
 mkdir -p %buildroot%_rpmlibdir
 cat > %buildroot%_rpmlibdir/texlive-collection-basic-files.req.list <<EOF
@@ -3119,6 +3123,9 @@ EOF
 
 
 %changelog
+* Wed Oct 17 2018 Igor Vlasenko <viy@altlinux.ru> 2018-alt1_5
+- new version
+
 * Tue Apr 10 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt8_2
 - added latexmk symlink (closes: #34785)
 

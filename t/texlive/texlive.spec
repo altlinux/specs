@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ gobject-introspection-devel imake libXt-devel libpotrace-devel perl(BibTeX/Parser.pm) perl(BibTeX/Parser/Author.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(Digest/SHA1.pm) perl(Encode.pm) perl(ExtUtils/MakeMaker.pm) perl(Fatal.pm) perl(File/Copy/Recursive.pm) perl(File/Which.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(IPC/System/Simple.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(LaTeX/ToUnicode.pm) perl(Locale/Maketext/Simple.pm) perl(Math/Trig.pm) perl(Output.pm) perl(Pod/Man.pm) perl(Pod/Usage.pm) perl(Spreadsheet/ParseExcel.pm) perl(Statistics/Descriptive.pm) perl(Statistics/Distributions.pm) perl(Term/ANSIColor.pm) perl(Test.pm) perl(Tk.pm) perl(Tk/Dialog.pm) perl(Tk/NoteBook.pm) perl(URI/Escape.pm) perl(WWW/Mechanize.pm) perl(autodie.pm) perl-devel
-BuildRequires: texinfo xorg-cf-files zlib-devel
+BuildRequires: gcc-c++ gobject-introspection-devel imake libXt-devel perl(BibTeX/Parser.pm) perl(BibTeX/Parser/Author.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(Digest/SHA1.pm) perl(Encode.pm) perl(ExtUtils/MakeMaker.pm) perl(Fatal.pm) perl(File/Copy/Recursive.pm) perl(File/Which.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(HTTP/Request/Common.pm) perl(IPC/System/Simple.pm) perl(JSON.pm) perl(LWP/Protocol/https.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(LaTeX/ToUnicode.pm) perl(Locale/Maketext/Simple.pm) perl(Math/Trig.pm) perl(Output.pm) perl(Pod/Man.pm) perl(Pod/Text.pm) perl(Pod/Usage.pm) perl(Spreadsheet/ParseExcel.pm) perl(Statistics/Descriptive.pm) perl(Statistics/Distributions.pm) perl(Term/ANSIColor.pm) perl(Term/ReadKey.pm) perl(Test.pm) perl(Tk.pm) perl(Tk/Dialog.pm)
+BuildRequires: perl(Tk/NoteBook.pm) perl(URI/Escape.pm) perl(WWW/Mechanize.pm) perl(autodie.pm) perl-devel texinfo xorg-cf-files zlib-devel
 # END SourceDeps(oneline)
 %def_without backport_p8
 %if_with backport_p8
@@ -57,14 +57,15 @@ BuildRequires: chrpath
 %define texmfprojectdir		%{_datadir}/texmf-project
 %define texmfvardir		%{_localstatedir}/lib/texmf
 %define texmfconfdir		%{_sysconfdir}/texmf
-%define relYear	2017
+%define relYear	2018
 %global tl_version %relYear
-%global mga_tl_timestamp 20170524
+%global mga_tl_timestamp 20180414
+
 
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt2_4
+Release:	alt1_4
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -99,7 +100,7 @@ Requires:	libteckit-utils
 Requires:	tex4ht
 %else
 %endif
-Requires:	texlive-collection-basic = %{version}
+Requires:	texlive-collection-basic 
 
 # Fix upgrade for luatex (mga#12303)
 
@@ -152,11 +153,11 @@ BuildRequires:	pkgconfig(cairo)
 BuildRequires:	libpaper-devel
 
 #-----------------------------------------------------------------------
-#Patch0: texlive-20130530-mandriva-underlink.patch
 Patch1: texlive-20160523-mageia-format.patch
 Patch2: texlive-20160523-mageia-asymptote.patch
 Patch4: texlive-20160523-texmf-mageia-kpfix.patch
-Patch6: texlive-bz979176.patch
+Patch5:	includePatch.patch
+Patch6: CVE-2018-17407.patch
 Patch107: 0001-try-to-adapt-to-poppler-0.58.patch
 Source44: import.info
 Provides: dvipng = %{tl_version}
@@ -188,7 +189,10 @@ Conflicts: texlive-omega < 2009
 Conflicts: texlive-xetex < 2009
 Patch33: texlive-2017-alt-texmf-first.patch
 Provides: texlive-collection-binextra = %{tl_version}
-Patch34: texlive-2017-luatex-segfault.patch
+
+#mga22386, fix from https://bugs.gentoo.org/621252
+#Patch200: texlive-luatex-gcc7align.patch
+
 #-----------------------------------------------------------------------
 %description
 TeX Live is an easy way to get up and running with the TeX document
@@ -239,7 +243,6 @@ This package includes the kpathsea development files.
 %{_includedir}/kpathsea
 %{_libdir}/libkpathsea.so
 %{_libdir}/pkgconfig/kpathsea.pc
-%{_includedir}/kpathsea/*.h
 
 #-----------------------------------------------------------------------
 %define	kpathsea_static_devel	libkpathsea-devel-static
@@ -272,8 +275,11 @@ TeXlua library
 %files		-n %{texlua}
 %{_libdir}/libtexlua52.so.%{texlua_major}
 %{_libdir}/libtexlua52.so.%{texlua_major}.*
+%{_libdir}/libtexlua53.so.%{texlua_major}
+%{_libdir}/libtexlua53.so.%{texlua_major}.*
 %{_libdir}/libtexluajit.so.%{texluajit_major}
 %{_libdir}/libtexluajit.so.%{texluajit_major}.*
+
 
 #-----------------------------------------------------------------------
 %define	texlua_devel		libtexlua-devel
@@ -289,9 +295,12 @@ This package includes the TeXlua development files.
 
 %files		-n %{texlua_devel}
 %{_includedir}/texlua52
+%{_includedir}/texlua53
 %{_includedir}/texluajit
 %{_libdir}/libtexlua52.so
 %{_libdir}/pkgconfig/texlua52.pc
+%{_libdir}/libtexlua53.so
+%{_libdir}/pkgconfig/texlua53.pc
 %{_libdir}/libtexluajit.so
 %{_libdir}/pkgconfig/texluajit.pc
 
@@ -309,6 +318,7 @@ This package includes the static TeXlua library.
 
 %files		-n %{texlua_static_devel}
 %{_libdir}/libtexlua52.a
+%{_libdir}/libtexlua53.a
 %{_libdir}/libtexluajit.a
 
 #-----------------------------------------------------------------------
@@ -419,16 +429,18 @@ This package includes the static ptexenc library.
 %prep
 %setup -q -n %{name}-%{mga_tl_timestamp}-source
 
-#%patch0 -p1
 %patch1 -p1
 %if %{enable_asymptote}
 %patch2 -p1
 %endif
 %patch4 -p1
-%patch6 -p1
+%patch5 -p1
+%patch6 -p0
 %if_without backport_p8
 %patch107 -p2
 %endif
+
+#%patch200 -p1 -b .gcc7align
 
 # setup default builtin values, added to paths.h from texmf.cnf
 perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
@@ -442,10 +454,10 @@ perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
 	 -e 's%%^(OSFONTDIR\s+= ).*%%$1%{_datadir}/fonts%%;'		  \
 	texk/kpathsea/texmf.cnf
 %patch33 -p0
-%patch34 -p0
 
 #-----------------------------------------------------------------------
 %build
+%add_optflags -fpermissive
 export CXXFLAGS="%{optflags} -std=c++11"
 
 [ -d Work ] || mkdir Work
@@ -453,6 +465,7 @@ pushd Work
 ln -sf ../configure .
 
 %configure							\
+        LDFLAGS="-Wl,--no-as-needed -ldl"                       \
 	--with-banner-add="/Mageia"				\
 	--disable-native-texlive-build				\
 	--enable-missing					\
@@ -645,6 +658,8 @@ rm -fr %{buildroot}%{_libdir}
 rm -fr %{buildroot}%{_includedir}
 %endif
 
+rm -f %{buildroot}%{_datadir}/applications/xdvi.desktop
+
 # touching all ghosts; hack for rpm 4.0.4
 for rpm404_ghost in %{texmfconfdir}/web2c/updmap.cfg
 do
@@ -663,6 +678,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Tue Oct 16 2018 Igor Vlasenko <viy@altlinux.ru> 2018-alt1_4
+- new version; fixes CVE-2018-17407
+
 * Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt2_4
 - luatex bugfix thanks to lakostis@ (closes: #35024)
 
