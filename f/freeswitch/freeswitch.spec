@@ -1,7 +1,6 @@
-%define ubt %{__ubt_branch_prefix}%{__ubt_branch_id}%{__ubt_branch_suffix}
 Name: freeswitch
 Version: 1.8.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -602,52 +601,55 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Tue Oct 16 2018 Anton Farygin <rider@altlinux.ru> 1:1.8.2-alt2
+- added fix for build with libav-11
+
 * Fri Sep 28 2018 Anton Farygin <rider@altlinux.ru> 1:1.8.2-alt1
 - 1.8.2
 
-* Thu Aug 09 2018 Anton Farygin <rider@altlinux.ru> 1:1.6.20-alt3%ubt
+* Thu Aug 09 2018 Anton Farygin <rider@altlinux.ru> 1:1.6.20-alt3
 - rebuilt with libcodec2-0.8
 
-* Tue Jun 19 2018 Anton Farygin <rider@altlinux.ru> 1:1.6.20-alt2%ubt
+* Tue Jun 19 2018 Anton Farygin <rider@altlinux.ru> 1:1.6.20-alt2
 - disabled sagoma support
 - rebuilt for ffmpeg-4.0
 
-* Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 1:1.6.20-alt1%ubt
+* Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 1:1.6.20-alt1
 - 1.6.20
 
-* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.6.19-alt3%ubt.1
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.6.19-alt3.1
 - rebuild with new perl 5.26.1
 
-* Sun Oct 29 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.19-alt3%ubt
+* Sun Oct 29 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.19-alt3
 - rebuilt for new postgresql 10
 
-* Tue Oct 03 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.19-alt2%ubt
+* Tue Oct 03 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.19-alt2
 - rebuilt for new libcodev2 0.7
 
 * Wed Jul 19 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.19-alt1.S1
 - 1.6.19
 
-* Wed Jun 28 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.18-alt1%ubt
+* Wed Jun 28 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.18-alt1
 - 1.6.18
 - build without erlang
 - disabled javascript support
 
-* Sat Jun 17 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.17-alt3%ubt
+* Sat Jun 17 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.17-alt3
 - build mod_av.so as freeswitch-av subpackage
 
-* Thu Jun 15 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.17-alt2%ubt
+* Thu Jun 15 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.17-alt2
 - enable mod_rtc build and cleanup modules.conf
 
-* Tue Apr 25 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.17-alt1%ubt
+* Tue Apr 25 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.17-alt1
 - new version
 
-* Wed Feb 15 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.15-alt1%ubt
+* Wed Feb 15 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.15-alt1
 - new version
 
-* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.6.14-alt1%ubt.1
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.6.14-alt1.1
 - rebuild with new perl 5.24.1
 
-* Thu Jan 19 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.14-alt1%ubt
+* Thu Jan 19 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.14-alt1
 - new version
 
 * Wed Nov 30 2016 Anton Farygin <rider@altlinux.ru> 1:1.6.13-alt1
