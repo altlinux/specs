@@ -1,8 +1,9 @@
 
 Name: krb5
 Version: 1.16.1
-Release: alt2%ubt
+Release: alt3
 
+%define _unpackaged_files_terminate_build 1
 %define _docdir %_defaultdocdir/%name-%version
 
 Summary: The Kerberos network authentication system
@@ -60,8 +61,6 @@ BuildRequires: libverto-libev python-modules gcc-c++
 # dejagnu tests disabled
 # BuildRequires: dejagnu tcl-devel
 
-BuildRequires(pre): rpm-build-ubt
-
 %description
 Kerberos V5 is a trusted-third-party network authentication system,
 which can improve your network's security by eliminating the insecure
@@ -113,6 +112,12 @@ Requires: lib%name = %version-%release
 Provides: %name-workstation = %version-%release
 Obsoletes: %name-workstation < %version-%release
 
+%package ksu
+Summary: Kerberized super-user
+Group: System/Base
+PreReq: control
+Requires: lib%name = %version-%release
+Conflicts: %name-kinit < %version-%release
 
 %package doc
 Group: Books/Computer books
@@ -149,6 +154,13 @@ Kerberos is a network authentication system.
 This package contains the basic Kerberos programs.
 If your network uses Kerberos, this package should be installed
 on every workstation.
+
+%description ksu
+Kerberos is a network authentication system.
+This package contains ksu program, which is a Kerberized version
+of the su program that has two missions: to securely change the
+real and effective user ID to that of the target user, and to
+create a new security context.
 
 %description doc
 Kerberos is a network authentication system.
@@ -319,6 +331,7 @@ cp -R build-html/ %buildroot/%_docdir/
 cp -p src/plugins/kdb/ldap/libkdb_ldap/kerberos.{ldif,schema} %buildroot%_docdir/
 
 # cleanups
+rm -rf %buildroot%_libdir/krb5/plugins/preauth/test.so
 rm -rf %buildroot%_datadir/gnats
 rm -rf %buildroot%_mandir/cat*
 touch %buildroot%_sysconfdir/krb5.keytab
@@ -337,6 +350,13 @@ touch %buildroot%_sysconfdir/krb5.keytab
 
 %pre -n lib%name
 /usr/sbin/groupadd -r -f _keytab
+
+%pre ksu
+%pre_control ksu
+
+%post ksu
+%post_control -s wheelonly ksu
+
 
 %triggerpostun -n lib%name -- lib%name < 1.14.4-alt2
 if [ -f %_sysconfdir/krb5.keytab ]; then
@@ -446,17 +466,14 @@ fi
 %_bindir/kinit
 %_bindir/klist
 %_bindir/kpasswd
-%_bindir/ksu
 %_bindir/kvno
 %_bindir/kswitch
-%config(noreplace) %_sysconfdir/pam.d/ksu
 
 %_man1dir/kdestroy.1*
 # %%_man1dir/kerberos.1*
 %_man1dir/kinit.1*
 %_man1dir/klist.1*
 %_man1dir/kpasswd.1*
-%_man1dir/ksu.1*
 %_man1dir/kvno.1*
 %_man1dir/kswitch.1*
 %_man5dir/.k5login.5*
@@ -464,38 +481,50 @@ fi
 %_man5dir/.k5identity.5*
 %_man5dir/k5identity.5*
 
+%files ksu
+%config(noreplace) %_sysconfdir/pam.d/ksu
+%_controldir/ksu
+%_bindir/ksu
+%_man1dir/ksu.1*
+
+
 %files doc
 %doc %_docdir
 
 # {{{ changelog
 
 %changelog
+* Wed Oct 17 2018 Ivan A. Melnikov <iv@altlinux.org> 1.16.1-alt3
+- move ksu to a separate subpackage
+- add control facility to manage ksu binary permissions (closes #33479)
+- get rid of UBT
+
 * Wed Aug 29 2018 Alexey Shabalin <shaba@altlinux.org> 1.16.1-alt2.S1
 - rebuild with openssl-1.1
 
-* Mon Aug 27 2018 Ivan A. Melnikov <iv@altlinux.org> 1.16.1-alt1%ubt
+* Mon Aug 27 2018 Ivan A. Melnikov <iv@altlinux.org> 1.16.1-alt1.S1
 - 1.16.1 (CVE-2018-5729, CVE-2018-5730)
 
-* Mon Jan 22 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16-alt1%ubt
+* Mon Jan 22 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16-alt1.S1
 - Update to latest stable release 1.16
 
-* Fri Nov 03 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.2-alt2%ubt
+* Fri Nov 03 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.2-alt2.S1
 - Fix build-pdf on Sisyphus
 - Add noport, nss_wrapper and socket_wrapper for tests running
 
-* Wed Nov 01 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.2-alt1%ubt
+* Wed Nov 01 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.2-alt1.S1
 - Update to latest stable release 1.15.2 with kdcpreauth from 1.16.x
 
-* Sun Aug 20 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.1-alt1%ubt
+* Sun Aug 20 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.1-alt1.S1
 - Update to latest stable release 1.15.1 with kdcpreauth from 1.16.x
 
-* Fri Mar 24 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.5-alt1%ubt
+* Fri Mar 24 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.5-alt1.S1
 - Update to first spring release 1.14.5
 
-* Tue Feb 28 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.4-alt2%ubt
+* Tue Feb 28 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.4-alt2.S1
 - Add _keytab group for default keytab /etc/krb5.keytab
 
-* Wed Feb 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.4-alt1%ubt
+* Wed Feb 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.4-alt1.S1
 - 1.14.4
 - fixed CVE-2016-3120
 
