@@ -13,14 +13,13 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.1.0
-Release: alt1%ubt
+Version: 1.1.3
+Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://github.com/hughsie/fwupd
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
-BuildRequires(pre):rpm-build-ubt
 ExclusiveArch: %ix86 x86_64 aarch64
 
 BuildRequires: docbook-utils
@@ -54,6 +53,10 @@ BuildRequires: meson
 BuildRequires: vala-tools
 BuildRequires: help2man
 
+%if_enabled dell
+BuildRequires: libsmbios-devel
+%endif
+
 %if_enabled uefi
 BuildRequires: python3 python3-module-pycairo python3-module-pygobject3 python3-module-Pillow
 BuildRequires: libpango-devel
@@ -64,10 +67,6 @@ BuildRequires: fonts-ttf-dejavu
 BuildRequires: gnu-efi libefivar-devel
 Provides: fwupdate
 Obsoletes: fwupdate
-%endif
-
-%if_enabled dell
-BuildRequires: libsmbios-devel
 %endif
 
 Requires: fwupd-labels = %EVR
@@ -110,6 +109,7 @@ Data files for installed tests.
 %meson \
     -Dgtkdoc=true \
     -Dman=false \
+    -Dlvfs=true \
 %if_enabled tests
     -Dtests=true \
 %else
@@ -124,9 +124,11 @@ Data files for installed tests.
 %if_enabled uefi
     -Dplugin_uefi=true \
     -Dplugin_redfish=true \
+    -Dplugin_nvme=true \
 %else
     -Dplugin_uefi=false \
     -Dplugin_redfish=false \
+    -Dplugin_nvme=false \
 %endif
 %if_enabled dell
     -Dplugin_dell=true \
@@ -202,9 +204,14 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_dell.so
 %_libdir/fwupd-plugins-3/libfu_plugin_dell_esrt.so
 %endif
+%_libdir/fwupd-plugins-3/libfu_plugin_dell_dock.so
 %_libdir/fwupd-plugins-3/libfu_plugin_dfu.so
 %_libdir/fwupd-plugins-3/libfu_plugin_ebitdo.so
+%_libdir/fwupd-plugins-3/libfu_plugin_flashrom.so
 %_libdir/fwupd-plugins-3/libfu_plugin_nitrokey.so
+%_libdir/fwupd-plugins-3/libfu_plugin_rts54hid.so
+%_libdir/fwupd-plugins-3/libfu_plugin_rts54hub.so
+%_libdir/fwupd-plugins-3/libfu_plugin_superio.so
 %_libdir/fwupd-plugins-3/libfu_plugin_steelseries.so
 %if_enabled dell
 %_libdir/fwupd-plugins-3/libfu_plugin_synapticsmst.so
@@ -216,9 +223,11 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_thunderbolt_power.so
 %_libdir/fwupd-plugins-3/libfu_plugin_udev.so
 %if_enabled uefi
+%_libdir/fwupd-plugins-3/libfu_plugin_nvme.so
 %_libdir/fwupd-plugins-3/libfu_plugin_uefi.so
 %_libdir/fwupd-plugins-3/libfu_plugin_redfish.so
 %config(noreplace)%_sysconfdir/fwupd/uefi.conf
+%config(noreplace)%_sysconfdir/fwupd/redfish.conf
 %endif
 %_libdir/fwupd-plugins-3/libfu_plugin_unifying.so
 %_libdir/fwupd-plugins-3/libfu_plugin_upower.so
@@ -247,10 +256,16 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
-* Tue Jul 31 2018 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1%ubt
+* Wed Oct 17 2018 Anton Farygin <rider@altlinux.ru> 1.1.3-alt1
+- 1.1.3
+
+* Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 1.1.1-alt1
+- 1.1.1
+
+* Tue Jul 31 2018 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
 - 1.1.0
 
-* Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 1.0.7-alt1%ubt
+* Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 1.0.7-alt1
 - 1.0.7
 
 * Thu Mar 22 2018 Anton Farygin <rider@altlinux.ru> 1.0.6-alt1
