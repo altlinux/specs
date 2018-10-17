@@ -12,8 +12,8 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.100.1
-Release: alt1.1
+Version: 0.100.2
+Release: alt1
 %define abiversion 7
 
 Summary: Clam Antivirus scanner
@@ -334,6 +334,9 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Wed Oct 17 2018 Sergey Y. Afonin <asy@altlinux.ru> 0.100.2-alt1
+- 0.100.2 (CVE-2018-15378, CVE-2018-14680, CVE-2018-14681, CVE-2018-14682)
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.100.1-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
