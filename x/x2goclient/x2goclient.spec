@@ -1,6 +1,6 @@
 Name:           x2goclient
 Version:        4.1.2.1
-Release:        alt1
+Release:        alt1.1
 Summary:        X2Go Client application (Qt)
 
 Group:          Communications
@@ -19,11 +19,11 @@ Patch4:		x2goclient-encoding.patch
 Patch5:		x2goclient-alt-no-pam.patch
 Patch6:		alt-qt5.11.patch
 
+BuildRequires(pre): libssh-devel
 BuildRequires(pre): rpm-build-apache2
 BuildRequires:  gcc-c++
 BuildRequires:  libcups-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  libssh-devel
 BuildRequires:  libXpm-devel
 BuildRequires:  man
 BuildRequires:  libldap-devel
@@ -76,8 +76,12 @@ for f in Makefile config_linux.sh ; do
     sed -i 's|-qt4|-qt5|g' $f
     sed -i 's|X2GO_CLIENT_TARGET=plugin|X2GO_CLIENT_TARGET=""|g' $f
 done
+
+%define libsshver %(rpm -q --qf '%%{VERSION}' libssh 0.8)
+%if "%(rpmvercmp %libsshver 0.8 )" >= "0"
 # libssh-0.8
 sed -i -e '/^LIBS /s/-lssh_threads//' x2goclient.pro
+%endif
 
 %build
 export PATH=%{_qt5_bindir}:$PATH
@@ -99,6 +103,9 @@ ln -s ../../x2go/x2goplugin-apache.conf %buildroot%_sysconfdir/httpd/conf.d/x2go
 %_man1dir/%name.1*
 
 %changelog
+* Tue Oct 16 2018 Oleg Solovyov <mcpain@altlinux.org> 4.1.2.1-alt1.1
+- Check for libssh >= 0.8
+
 * Mon Oct 15 2018 Oleg Solovyov <mcpain@altlinux.org> 4.1.2.1-alt1
 - New version
 
