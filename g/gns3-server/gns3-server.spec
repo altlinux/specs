@@ -1,9 +1,12 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %add_verify_elf_skiplist %python3_sitelibdir/gns3server/compute/docker/resources/bin/busybox
 %add_findreq_skiplist %python3_sitelibdir/gns3server/compute/docker/*
-%def_with requirements
+%def_without requirements
 
 Name: gns3-server
-Version: 2.1.5
+Version: 2.1.11
 Release: alt1
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
@@ -21,7 +24,7 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 Requires: cpulimit
 Requires: dynamips >= 0.2.11
-%if_with requirements
+#if_with requirements
 Requires: python3-module-yarl >= 0.11
 Requires: python3-module-aiohttp-cors >= 0.5.3
 Requires: python3-module-aiohttp-cors < 0.6.0
@@ -33,7 +36,7 @@ Requires: python3-module-raven >= 5.23.0
 Requires: python3-module-psutil >= 3.0.0
 Requires: python3-module-zipstream >= 1.1.4
 Requires: python3-module-typing >= 3.5.3
-%endif
+#endif
 #Requires: qemu
 #Requires: wireshark
 Requires: iouyap
@@ -65,6 +68,9 @@ echo '' > requirements.txt
 %exclude %python3_sitelibdir/tests/controller
 
 %changelog
+* Wed Oct 17 2018 Anton Midyukov <antohami@altlinux.org> 2.1.11-alt1
+- new version 2.1.11
+
 * Sun May 13 2018 Anton Midyukov <antohami@altlinux.org> 2.1.5-alt1
 - new version 2.1.5
 

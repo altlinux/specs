@@ -1,6 +1,6 @@
 Name: vpcs
 Version: 0.8
-Release: alt1.20171012%ubt
+Release: alt2.20171012
 
 Summary: Virtual PC Simulator
 License: BSD
@@ -11,8 +11,6 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: %name-0.8-no-static.patch
-
-BuildRequires(pre): rpm-build-ubt
 
 %description
 The VPCS can simulate up to 9 PCs. You can ping/traceroute them, or ping/traceroute
@@ -55,6 +53,10 @@ cp man/vpcs.1.xz %buildroot/%_man1dir/
 %_man1dir/*.1.*
 
 %changelog
+* Tue Oct 16 2018 Anton Midyukov <antohami@altlinux.org> 0.8-alt2.20171012
+- first build for aarch64
+- drop ubt
+
 * Sun Jun 03 2018 Anton Midyukov <antohami@altlinux.org> 0.8-alt1.20171012%ubt
 - New snapshot
 - Fix FTBFS

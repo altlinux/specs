@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: gns3-gui
-Version: 2.1.5
+Version: 2.1.11
 Release: alt1
 
 Summary: GNS3 Graphical User Interface
@@ -75,6 +78,9 @@ install -Dp -m0644 %SOURCE5 %buildroot%_desktopdir/gns3.desktop
 %files -n gns3
 
 %changelog
+* Tue Oct 16 2018 Anton Midyukov <antohami@altlinux.org> 2.1.11-alt1
+- new version 2.1.11
+
 * Sun May 13 2018 Anton Midyukov <antohami@altlinux.org> 2.1.5-alt1
 - new version 2.1.5
 
