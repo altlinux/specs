@@ -7,8 +7,8 @@ Summary(hu.UTF-8):	FET egy nyílt forrású órarend-készítő program
 Summary(pl.UTF-8):	Narzędzie do automatycznego układania planów dla szkół i uczelni
 Summary(ru_RU.UTF-8):	Программа для составления расписаний учебного заведения
 Name: fet
-Version: 5.35.2
-Release: alt1.qa1
+Version: 5.37.2
+Release: alt1
 License: GPL v2
 Group: Office
 Source0: http://www.lalescu.ro/liviu/fet/download/%name-%version.tar.bz2
@@ -134,6 +134,9 @@ done
 %_datadir/%name/examples
 
 %changelog
+* Wed Oct 17 2018 Fr. Br. George <george@altlinux.ru> 5.37.2-alt1
+- Autobuild version bump to 5.37.2
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.35.2-alt1.qa1
 - NMU: applied repocop patch
 
