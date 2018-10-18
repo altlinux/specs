@@ -1,6 +1,6 @@
 Name: gnu-efi
-Version: 3.0.8
-Release: alt2%ubt
+Version: 3.0.9
+Release: alt1
 Epoch: 1
 Summary: Building EFI applications using the GNU toolchain
 # Intel and HP's BSD-like license, except setjmp code coming from GRUB
@@ -10,8 +10,8 @@ Group: Development/Other
 Url: http://gnu-efi.sourceforge.net/
 # git https://git.code.sf.net/p/gnu-efi/code
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 ExclusiveArch: %ix86 x86_64 aarch64
-BuildRequires(pre): rpm-build-ubt
 Conflicts: gnu-efi-3.0r gnu-efi-3.0u gnu-efi-3.0.5
 %define efidir altlinux
 
@@ -21,6 +21,7 @@ for IA-64 and x86 platforms using the GNU toolchain.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %make
@@ -50,11 +51,14 @@ setarch linux32 -B make PREFIX=%prefix LIBDIR=%_prefix/lib INSTALLROOT=%buildroo
 %_includedir/efi
 
 %changelog
-* Tue Aug 07 2018 Anton Farygin <rider@altlinux.ru> 1:3.0.8-alt2%ubt
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1:3.0.9-alt1
+- up to 3.0.9 with fixes from git
+
+* Tue Aug 07 2018 Anton Farygin <rider@altlinux.ru> 1:3.0.8-alt2
 - rebuilt for aarch64
 
-* Tue Apr 24 2018 Anton Farygin <rider@altlinux.ru> 1:3.0.8-alt1%ubt
-- added %%ubt
+* Tue Apr 24 2018 Anton Farygin <rider@altlinux.ru> 1:3.0.8-alt1
+- added ubt
 
 * Wed Mar 28 2018 Anton Farygin <rider@altlinux.ru> 1:3.0.8-alt1
 - 3.0.8
