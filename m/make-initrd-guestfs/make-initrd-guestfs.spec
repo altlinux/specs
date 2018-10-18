@@ -1,5 +1,5 @@
 Name: make-initrd-guestfs
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Build appliance for libguestfs by make-initrd
@@ -8,7 +8,7 @@ Group: System/Base
 
 Source0: %name-%version.tar
 
-Requires: make-initrd
+Requires: make-initrd >= 2.0.0
 Requires: make-initrd-mdadm make-initrd-devmapper make-initrd-lvm make-initrd-luks
 
 Requires: /usr/sbin/guestfsd
@@ -50,6 +50,9 @@ cp -a guestfs.mk.example %buildroot%_sysconfdir/initrd.mk.d
 %_sysconfdir/initrd.mk.d/guestfs.mk.example
 
 %changelog
+* Mon Oct 15 2018 Alexey Shabalin <shaba@altlinux.org> 0.4-alt1
+- Migrate guestfs feature to new make-initrd v2
+
 * Tue Feb 17 2015 Alexey Shabalin <shaba@altlinux.ru> 0.3-alt1
 - thx to legion@:
   + Remove 015-fstab
