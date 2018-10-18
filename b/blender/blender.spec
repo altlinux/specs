@@ -2,7 +2,7 @@
 
 Name: blender
 Version: 2.79b
-Release: alt3
+Release: alt4
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPLv2
@@ -105,6 +105,9 @@ sed -i 's,-fuse-ld=gold,,' build_files/cmake/platform/platform_unix.cmake
 BUILD_DATE="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%Y-%%m-%%d')"
 BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
 
+# needed due to non-standard location of pcre.h header
+%add_optflags $(pkg-config --cflags libpcre)
+
 mkdir cmake-make
 cd cmake-make
 export CFLAGS="%optflags -fPIC -funsigned-char -fno-strict-aliasing"
@@ -161,6 +164,9 @@ install -d release/plugins/include
 %_defaultdocdir/%name/
 
 %changelog
+* Fri Oct 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.79b-alt4
+- Fixed build.
+
 * Mon Jun 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.79b-alt3
 - Rebuilt with ffmpeg-4.0.
 - Moved i18n files back into main package.
