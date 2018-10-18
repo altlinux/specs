@@ -16,7 +16,7 @@
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
 Version: 1.38.6
-Release: alt1
+Release: alt2
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -646,6 +646,9 @@ rm -f %buildroot%_bindir/virt-p2v-make-kiwi
 %endif
 
 %changelog
+* Sat Oct 20 2018 Anton Farygin <rider@altlinux.ru> 1.38.6-alt2
+- rebuilt with ocaml-4.07.1
+
 * Thu Oct 18 2018 Alexey Shabalin <shaba@altlinux.org> 1.38.6-alt1
 - 1.38.6
 

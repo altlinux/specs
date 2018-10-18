@@ -6,7 +6,7 @@
 
 Name: ocaml-%pkgname
 Version: 0.8.2
-Release: alt1
+Release: alt2
 Summary: OCaml Curl library (ocurl)
 License: MIT
 Group: Development/ML
@@ -15,7 +15,6 @@ Url: http://ocurl.forge.ocamlcore.org/
 Source0: %name-%version.tar
 
 BuildRequires: ocaml ocaml-findlib libcurl-devel
-BuildRequires(pre):rpm-build-ubt
 
 %description
 The Ocaml Curl Library (Ocurl) is an interface library for the
@@ -66,17 +65,20 @@ make -C examples clean
 %pkgsitelib/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 0.8.2-alt2
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 0.8.2-alt1
 - 0.8.2
 
-* Thu May 17 2018 Anton Farygin <rider@altlinux.ru> 0.8.1-alt1%ubt
+* Thu May 17 2018 Anton Farygin <rider@altlinux.ru> 0.8.1-alt1
 - 0.8.1
 
-* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 0.7.9-alt3%ubt
+* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 0.7.9-alt3
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 0.7.9-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 0.7.9-alt2
 - rebuild with ocaml 4.04.1
 
-* Sun Apr 16 2017 Anton Farygin <rider@altlinux.ru> 0.7.9-alt1%ubt
+* Sun Apr 16 2017 Anton Farygin <rider@altlinux.ru> 0.7.9-alt1
 - first build for ALT

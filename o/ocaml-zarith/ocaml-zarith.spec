@@ -7,7 +7,7 @@
 
 Name: ocaml-%pkgname
 Version: 1.7
-Release: alt2
+Release: alt3
 Summary: OCaml interface to GMP
 Group: Development/ML
 # The license has a static linking exception
@@ -19,7 +19,6 @@ BuildRequires: libgmp-devel
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamldoc
-BuildRequires(pre): rpm-build-ubt
 
 %description
 This library implements arithmetic and logical operations over
@@ -93,17 +92,20 @@ make install INSTALLDIR=%buildroot%_libdir/ocaml
 %ocamlsitelib/%pkgname/*.h
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.7-alt3
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.7-alt2
 - rebuilt with ocaml 4.07
 
-* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.7-alt1%ubt
+* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.7-alt1
 - new version
 
-* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1.5-alt1%ubt
+* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1.5-alt1
 - new version
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.4.1-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.4.1-alt2
 - rebuild with ocaml 4.04.1
 
-* Tue Apr 11 2017 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1%ubt
+* Tue Apr 11 2017 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1
 - fist build for ALT, based on RH spec

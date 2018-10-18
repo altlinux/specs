@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-cppo
-Version: 1.6.4
-Release: alt2
+Version: 1.6.5
+Release: alt1
 Summary: Equivalent of the C preprocessor for OCaml programs
 License: BSD
 Group: Development/ML
@@ -9,7 +9,6 @@ Url: http://mjambon.com/cppo.html
 # https://github.com/mjambon/cppo
 Source0: %name-%version.tar
 BuildRequires: ocaml ocaml-findlib jbuilder opam ocaml-ocamlbuild
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Cppo is an equivalent of the C preprocessor targeted at the OCaml
@@ -39,21 +38,24 @@ jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_bindir/cppo
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.6.5-alt1
+- 1.6.5
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.6.4-alt2
 - rebuilt with ocaml 4.07
 
-* Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 1.6.4-alt1%ubt
+* Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 1.6.4-alt1
 - 1.6.4
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.5.0-alt2%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.5.0-alt2
 - rebuild with ocaml 4.04.2
 
-* Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 1.5.0-alt1%ubt
+* Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 1.5.0-alt1
 - new version
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.4.1-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.4.1-alt2
 - rebuild with ocaml 4.04.1
 
-* Sat Apr 08 2017 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1%ubt
+* Sat Apr 08 2017 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1
 - first build for ALT
 

@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define oname   topkg
 Name: ocaml-topkg
-Version: 0.9.1
-Release: alt2
+Version: 1.0.0
+Release: alt1
 Summary: The transitory OCaml software packager
 License: ISC
 Group: Development/ML
@@ -12,7 +12,6 @@ BuildRequires: opam
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-ocamlbuild
-BuildRequires(pre):rpm-build-ubt
 
 %description
 Topkg is a packager for distributing OCaml software. It provides
@@ -68,9 +67,12 @@ rm -rf %buildroot%prefix/doc/%oname
 %_libdir/ocaml/topkg/*.cmti
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.0.0-alt1
+- 1.0.0
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 0.9.1-alt2
 - rebuilt for ocaml 4.07
 
-* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 0.9.1-alt1%ubt
+* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 0.9.1-alt1
 - first build for Sisyphus, based on Mageia spec
 

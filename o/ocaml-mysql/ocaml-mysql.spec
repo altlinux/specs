@@ -2,7 +2,7 @@
 
 Name: ocaml-mysql
 Version: 1.2.2
-Release: alt2
+Release: alt3
 
 Summary: MySQL bindings for OCaml
 License: LGPL
@@ -13,7 +13,6 @@ URL: http://ygrek.org.ua/p/ocaml-mysql/
 Source: ocaml-mysql-%version.tar
 
 Requires: %name-runtime = %version-%release
-BuildRequires(pre):rpm-build-ubt
 
 BuildRequires: ocaml-camlp4 ocaml-findlib libMySQL-devel zlib-devel chrpath
 
@@ -61,19 +60,22 @@ mv %buildroot%_libdir/ocaml/site-lib/mysql/dllmysql_stubs.so %buildroot%_libdir/
 %_libdir/ocaml/stublibs/dll*.so
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.2.2-alt3
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.2.2-alt2
 - rebuilt with ocaml 4.07
 
-* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.2.2-alt1%ubt
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.2.2-alt1
 - 1.2.2
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.2.1-alt3%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.2.1-alt3
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.2.1-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.2.1-alt2
 - rebuild with ocaml 4.04.1
 
-* Mon Apr 10 2017 Anton Farygin <rider@altlinux.ru> 1.2.1-alt1%ubt
+* Mon Apr 10 2017 Anton Farygin <rider@altlinux.ru> 1.2.1-alt1
 - new version from new upstream git
 - build with ocaml-4.04
 

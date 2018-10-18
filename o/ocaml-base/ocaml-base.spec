@@ -2,7 +2,7 @@
 %define oname base
 Name: ocaml-%oname
 Version: 0.11.1
-Release: alt1
+Release: alt2
 Summary: Full standard library replacement for OCaml
 License: Apache 2.0
 Group: Development/ML
@@ -13,7 +13,6 @@ BuildRequires: ocaml-findlib
 BuildRequires: jbuilder
 BuildRequires: opam
 BuildRequires: ocaml-sexplib0-devel  >= 0.11
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Base is a complete and portable alternative to the OCaml standard
@@ -83,9 +82,12 @@ jbuilder runtest
 %_libdir/ocaml/%oname/internalhash.h
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 0.11.1-alt2
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 0.11.1-alt1
 - 0.11.1
 
-* Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 0.11.0-alt1%ubt
+* Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 0.11.0-alt1
 - first build for Sisyphus, based on specfile from Mageia 
 

@@ -1,6 +1,6 @@
 Name: ocaml-camlidl
 Version: 1.05
-Release: alt4
+Release: alt5
 Summary: Stub code generator and COM binding for Objective Caml
 License: QPL and LGPLv2 with exceptions
 Group: Development/ML
@@ -15,7 +15,6 @@ Patch1: camlidl-1.05-use-ocamlopt-for-compiler.patch
 
 BuildRequires: ocaml
 BuildRequires: ocaml-ocamldoc
-BuildRequires(pre): rpm-build-ubt
 
 %description
 CamlIDL is a stub code generator and COM binding for Objective Caml.
@@ -83,14 +82,17 @@ make OCAMLLIB=%buildroot%_libdir/ocaml \
 %_libdir/ocaml/caml/*.h
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.05-alt5
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.05-alt4
 - rebuilt with ocaml 4.07
 
-* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.05-alt3%ubt
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.05-alt3
 - rebuilt for ocaml 4.06.1
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.05-alt2%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.05-alt2
 - rebuild with ocaml 4.04.2
 
-* Mon Feb 13 2017 Anton Farygin <rider@altlinux.ru> 1.05-alt1%ubt
+* Mon Feb 13 2017 Anton Farygin <rider@altlinux.ru> 1.05-alt1
 - first build for ALT

@@ -1,7 +1,7 @@
 %define _name findlib
 Name: ocaml-%_name
 Version: 1.8.0
-Release: alt2
+Release: alt3
 
 Summary: A module packaging tool for OCaml
 License: Distributable
@@ -12,8 +12,6 @@ Source: %_name-%version.tar
 Patch1: findlib-1.6.2-alt-native.patch
 Patch2: findlib-1.1.2pl1-alt-wizard.patch
 Patch3: findlib-1.6.2-alt-install-doc.patch
-
-BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: rpm-build-ocaml >= 1.2 ocaml-camlp4-devel ocaml-labltk >= 8.06.2 libtinfo-devel ocaml-ocamldoc
 BuildRequires: ocaml-ocamlbuild libX11-devel tcl-devel tk-devel libncurses-devel
@@ -125,31 +123,34 @@ rm -f %buildroot%_libdir/ocaml/findlib/*.cmxs
 
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt3
+- rebuilt with ocaml-4.07.1
+
 * Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt2
 - rebuilt with ocaml-4.07
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1
 - 1.8.0
 
-* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 1.7.3-alt3%ubt
+* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 1.7.3-alt3
 - rebuilt for ocaml-4.06.0
 
-* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1.7.3-alt2%ubt
+* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1.7.3-alt2
 - rebuild with ocaml-4.04.2
 
-* Sun Jun 18 2017 Anton Farygin <rider@altlinux.ru> 1.7.3-alt1%ubt
+* Sun Jun 18 2017 Anton Farygin <rider@altlinux.ru> 1.7.3-alt1
 - new version
 
-* Fri May 05 2017 Anton Farygin <rider@altlinux.ru> 1.7.1-alt4%ubt
+* Fri May 05 2017 Anton Farygin <rider@altlinux.ru> 1.7.1-alt4
 - fixed "native" patch for more universal linking way with tcl libs 
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.7.1-alt3%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.7.1-alt3
 - rebuild with ocaml 4.04.1
 
-* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 1.7.1-alt2%ubt
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 1.7.1-alt2
 - split to devel and runtime packages
 
-* Sun Apr 09 2017 Anton Farygin <rider@altlinux.ru> 1.7.1-alt1%ubt
+* Sun Apr 09 2017 Anton Farygin <rider@altlinux.ru> 1.7.1-alt1
 - renamed back to ocaml-findlib
 - added %%ubt tag
 - 1.7.1

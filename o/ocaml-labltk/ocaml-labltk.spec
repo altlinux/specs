@@ -2,7 +2,7 @@
 
 Name: ocaml-%pkgname
 Version: 8.06.5
-Release: alt1%ubt
+Release: alt2
 
 Summary: Tcl/Tk interface for OCaml
 Group: Development/ML
@@ -18,7 +18,6 @@ Requires: ocaml
 Requires: %name-runtime = %version-%release
 BuildRequires: ocaml
 BuildRequires: tcl-devel, tk-devel
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Objective Caml is a high-level, strongly-typed, functional and
@@ -89,19 +88,22 @@ make install \
 %_bindir/ocamlbrowser
 
 %changelog
-* Mon Aug 13 2018 Anton Farygin <rider@altlinux.ru> 8.06.5-alt1%ubt
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 8.06.5-alt2
+- rebuilt for ocaml 4.07.1
+
+* Mon Aug 13 2018 Anton Farygin <rider@altlinux.ru> 8.06.5-alt1
 - 8.06.5
 
-* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 8.06.4-alt1%ubt
+* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 8.06.4-alt1
 - rebuilt for ocaml 4.06.0
 
-* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 8.06.2-alt3%ubt
+* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 8.06.2-alt3
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 8.06.2-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 8.06.2-alt2
 - rebuild with ocaml 4.04.1
 
-* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 8.06.2-alt1%ubt
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 8.06.2-alt1
 - rebuild with new rpm-build-ocaml
 - added ubt
 

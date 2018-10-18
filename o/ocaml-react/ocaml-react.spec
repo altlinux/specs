@@ -3,7 +3,7 @@
 
 Name: ocaml-react
 Version: 1.2.1
-Release: alt1
+Release: alt2
 Summary: Development files for %name
 License: BSD
 Group: Development/ML
@@ -15,7 +15,6 @@ Requires: rpm-build-ocaml >= 1.1.1
 
 BuildPreReq: rpm-build-ocaml >= 1.1.1
 BuildRequires: ocaml ocaml-ocamlbuild ocaml-findlib opam ocaml-topkg
-BuildRequires(pre): rpm-build-ubt
 
 %description
 React is an OCaml module for functional reactive programming (FRP).
@@ -71,19 +70,22 @@ done
 %_libdir/ocaml/react/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.2.1-alt2
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.2.1-alt1
 - 1.2.1
 
-* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.2.0-alt4%ubt
+* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.2.0-alt4
 - rebuilt for ocaml 4.06.1
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt3%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt3
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2
 - rebuild with ocaml 4.04.1
 
-* Tue Apr 11 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1%ubt
+* Tue Apr 11 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
 - new version
 
 * Tue Dec 27 2011 Alexey Shabalin <shaba@altlinux.ru> 0.9.2-alt1

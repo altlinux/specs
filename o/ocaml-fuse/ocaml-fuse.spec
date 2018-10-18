@@ -2,7 +2,7 @@
 %define ocamlstublib %_libdir/ocaml/stublibs/
 Name: ocaml-fuse
 Version: 2.7.1
-Release: alt6
+Release: alt7
 Summary: Ocaml FUSE binding
 Group: Development/ML
 License: GPL-2.0
@@ -10,7 +10,6 @@ Url: https://forge.ocamlcore.org/projects/gdfuse/
 Source: %name-%version.tar
 BuildRequires: libfuse-devel
 BuildRequires: ocaml ocaml-camlidl ocaml-camlidl-devel ocaml-findlib ocaml-ocamldoc
-BuildRequires(pre):rpm-build-ubt
 
 %description
 This is a binding to fuse for the ocaml programming language, enabling
@@ -63,20 +62,23 @@ make OCAMLLIB=%buildroot/%_libdir/ocaml\
 %_libdir/ocaml/Fuse/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 2.7.1-alt7
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 2.7.1-alt6
 - rebuilt with ocaml 4.07
 
-* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 2.7.1-alt5%ubt
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 2.7.1-alt5
 - rebuilt for ocaml 4.06.1
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 2.7.1-alt4%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 2.7.1-alt4
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 2.7.1-alt3%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 2.7.1-alt3
 - rebuild with ocaml 4.04.1
 
-* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 2.7.1-alt2%ubt
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 2.7.1-alt2
 - split to devel and runtime
 
-* Mon Feb 13 2017 Anton Farygin <rider@altlinux.ru> 2.7.1-alt1%ubt
+* Mon Feb 13 2017 Anton Farygin <rider@altlinux.ru> 2.7.1-alt1
 - first build for ALT, version 2.7.1.cvs4

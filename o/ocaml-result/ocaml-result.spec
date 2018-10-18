@@ -1,7 +1,7 @@
 %define module result
 Name: ocaml-%module
 Version: 1.3
-Release: alt2
+Release: alt3
 Summary: Compat result type
 
 License: BSD
@@ -11,7 +11,6 @@ Group: Development/ML
 
 BuildRequires: ocaml 
 BuildRequires: ocaml-findlib jbuilder opam
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Projects that want to use the new result type defined in
@@ -52,12 +51,15 @@ jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%module/*.ml
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.3-alt3
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.3-alt2
 - rebuilt for ocaml 4.07
 
-* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.3-alt1%ubt
+* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.3-alt1
 - 1.3
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.2-alt1%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.2-alt1
 - first build for ALT, based on RH spec
 

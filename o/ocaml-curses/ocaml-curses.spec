@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-curses
 Version: 1.0.3
-Release: alt6
+Release: alt7
 Summary: OCaml bindings for ncurses
 
 Group: System/Libraries
@@ -14,7 +14,6 @@ BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: libncurses-devel libtinfo-devel
 BuildRequires: gawk
-BuildRequires(pre): rpm-build-ubt
 
 # Doesn't include a configure script, so we have to make one.
 BuildRequires: autoconf, automake, libtool
@@ -65,16 +64,19 @@ ocamlfind install curses META *.cmi *.cmx *.cma *.cmxa *.a *.so *.mli
 %_libdir/ocaml/curses/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.0.3-alt7
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.0.3-alt6
 - rebuilt with ocaml 4.07
 
-* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.0.3-alt5%ubt
+* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.0.3-alt5
 - rebuilt for ocaml 4.06.1
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.0.3-alt4%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.0.3-alt4
 - rebuild with ocaml 4.04.2
 
-* Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 1.0.3-alt3%ubt
+* Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 1.0.3-alt3
 - moved out from site-lib dir
 - added ubt tag
 

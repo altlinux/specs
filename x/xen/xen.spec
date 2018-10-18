@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.10.1
-Release: alt5%ubt
+Release: alt6
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -88,7 +88,7 @@ Requires: chkconfig
 %def_disable stubdom
 %endif
 
-BuildRequires(pre): rpm-build-ubt rpm-macros-uefi
+BuildRequires(pre): rpm-macros-uefi
 
 BuildRequires: glibc-devel zlib-devel libncurses-devel libaio-devel
 BuildRequires: python-devel ghostscript %_bindir/texi2html transfig
@@ -790,19 +790,22 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
-* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 4.10.1-alt5%ubt
+* Fri Oct 19 2018 Anton Farygin <rider@altlinux.ru> 4.10.1-alt6
+- rebuilt with ocaml-4.07.1
+
+* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 4.10.1-alt5
 - disable vde support
 
-* Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 4.10.1-alt4%ubt
+* Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 4.10.1-alt4
 - rebuilt with ocaml 4.07
 
-* Thu Aug 09 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.1-alt3%ubt
+* Thu Aug 09 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.1-alt3
 - upstream updates upto 87c83af333
 
-* Thu Jun 07 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.1-alt2%ubt
+* Thu Jun 07 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.1-alt2
 - fix: xen-licenses package should be noarch
 
-* Thu May 24 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.1-alt1%ubt
+* Thu May 24 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.1-alt1
 - 4.10.1 release
 - upstream updates upto 7b35e7807, including:
   + x86/HVM: guard against emulator driving ioreq state in weird ways
@@ -814,10 +817,10 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
     x86/traps: Fix %%dr6 handing in #DB handler
     (thx Andrew Cooper) (part of XSA-260 / CVE-2018-8897)
 
-* Tue May 22 2018 Anton Farygin <rider@altlinux.ru> 4.10.0-alt6%ubt
+* Tue May 22 2018 Anton Farygin <rider@altlinux.ru> 4.10.0-alt6
 - rebuild for 4.06.1
 
-* Fri Mar 09 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt5%ubt
+* Fri Mar 09 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt5
 - upstream updates:
   + xen/arm: Flush TLBs before turning on the MMU to avoid stale
     entries (thx Julien Grall).
@@ -885,7 +888,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
   + xen/arm: Introduce enable callback to enable a capabilities on
     each online CPU (thx Julien Grall).
 
-* Tue Jan 23 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt4%ubt
+* Tue Jan 23 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt4
 - upstream updates (Xen hypervisor):
   + x86: allow Meltdown band-aid to be disabled (thx Jan Beulich).
   + x86: Meltdown band-aid against malicious 64-bit PV guests (thx Jan Beulich).
@@ -968,7 +971,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
   + hw/usb/bus: Remove bad object_unparent() from
     usb_try_create_simple() (thx Thomas Huth).
 
-* Thu Jan 11 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt3%ubt
+* Thu Jan 11 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt3
 - upstream updates:
   + x86/msr: Free msr_vcpu_policy during vcpu destruction (thx Andrew Cooper).
   + x86/vmx: Don't use hvm_inject_hw_exception() in
@@ -985,14 +988,14 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
   + update Xen version to 4.10.1-pre (thx Jan Beulich).
   + migration, xen: Fix block image lock issue on live migration (thx Anthony PERARD).
 
-* Tue Jan 02 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt2%ubt
+* Tue Jan 02 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt2
 - fix gear rules: previous (4.10.0-alt2.S1) build was actually 4.8.2-alt2.S1
 - 4.10.0 release
 
-* Sat Dec 30 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt1%ubt
+* Sat Dec 30 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt1
 - 4.10.0 release
 
-* Sat Dec 09 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.2-alt2%ubt
+* Sat Dec 09 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.2-alt2
 - upstream updates:
   + p2m: Check return value of p2m_set_entry() when decreasing reservation (thx George Dunlap) (XSA-247).
   + p2m: Always check to see if removing a p2m entry actually worked (thx George Dunlap). (XSA-247)
@@ -1010,7 +1013,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
   + ui/gtk: Fix deprecation of vte_terminal_copy_clipboard (thx Anthony PERARD).
   + xen/pt: allow QEMU to request MSI unmasking at bind time (thx Roger Pau Monne).
 
-* Sun Oct 29 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.2-alt1%ubt
+* Sun Oct 29 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.2-alt1
 - 4.8.2 release
 - upstream updates:
   + x86emul: handle address wrapping (thx Jan Beulich).
@@ -1062,10 +1065,10 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
   + grant_table: fix GNTTABOP_cache_flush handling (thx Andrew Cooper).
   + xen/mm: make sure node is less than MAX_NUMNODES (thx George Dunlap).
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 4.8.1-alt10%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 4.8.1-alt10
 - rebuild with ocaml 4.04.2
 
-* Fri Jun 23 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt9%ubt
+* Fri Jun 23 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt9
 - Upstream updates:
  + xen/test/Makefile: Fix clean target, broken by pattern rule (thx Ian Jackson).
  + x86: avoid leaking PKRU and BND* between vCPU-s (thx Jan Beulich). XSA-220
@@ -1107,16 +1110,16 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
  + hvm: fix hypervisor crash in hvm_save_one() (thx Jan Beulich).
  + x86/32on64: properly honor add-to-physmap-batch's size (thx Jan Beulich).
 
-* Wed Jun 07 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt8%ubt
+* Wed Jun 07 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt8
 - fix ubt-macro usage in changelog
 
-* Wed Jun 07 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt7%ubt
+* Wed Jun 07 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt7
 - Upstream updates:
  + ibxc: fix segfault on uninitialized xch->fmem
  + tools/libxc: Tolerate specific zero-content records in migration v2 streams
  + tools: ocaml: In configure, check for ocamlopt
 
-* Mon May 08 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt6%ubt
+* Mon May 08 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt6
 - Upstream updates:
  + kexec: clear kexec_image slot when unloading kexec image
  + memory: exit early from memory_exchange() upon write-back error
@@ -1124,7 +1127,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
  + x86/mce: make 'severity_cpu' private to its users
  + x86/mce: always re-initialize 'severity_cpu' in mcheck_cmn_handler()
 
-* Sat May 06 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt5%ubt
+* Sat May 06 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt5
 - added ubt tag
 
 * Fri May 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt4

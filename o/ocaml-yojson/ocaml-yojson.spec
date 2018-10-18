@@ -3,7 +3,7 @@
 Name: ocaml-yojson
 %define libname %(sed -e 's/^ocaml-//' <<< %name)
 Version: 1.4.1
-Release: alt2
+Release: alt3
 Summary: An optimized parsing and printing library for the JSON format
 Group: Development/ML
 License: BSD
@@ -17,7 +17,6 @@ BuildRequires: ocaml-biniou-devel
 BuildRequires: ocaml-cppo
 BuildRequires: ocaml-easy-format-devel
 BuildRequires: opam jbuilder
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Yojson is an optimized parsing and printing library for the JSON
@@ -63,17 +62,20 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.4.1-alt3
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.4.1-alt2
 - rebuilt with ocaml 4.07
 
-* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1%ubt
+* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1
 - 1.4.1
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt3%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt3
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt2
 - rebuild with ocaml 4.04.1
 
-* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt1%ubt
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt1
 - first build for ALT, based on RH spec

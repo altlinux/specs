@@ -2,7 +2,7 @@
 
 Name:           ocaml-gsl
 Version:        1.19.3
-Release:        alt5
+Release:        alt6
 Summary:        Interface to GSL (GNU scientific library) for OCaml
 Summary(ru_RU.UTF-8): Интерфейс библиотеки GSL для OCaml
 License:        GPLv2
@@ -17,7 +17,6 @@ Patch0: ocaml4-gsl-1.18.4-alt-compilation_fix.patch
 
 # Automatically added by buildreq on Wed Jun 24 2015
 BuildRequires: libgsl-devel ocaml-camlp4 ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc
-BuildRequires(pre): rpm-build-ubt
 
 %package devel
 Summary: Development files for programs which will use the OcamlGSL library
@@ -86,19 +85,22 @@ mkdir -p %buildroot/%docdir
 %ocamlsitelib/gsl/META
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.19.3-alt6
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.19.3-alt5
 - rebuilt with ocaml-4.07
 
-* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.19.3-alt4%ubt
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.19.3-alt4
 - rebuilt for ocaml-4.06.1
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.19.3-alt3%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.19.3-alt3
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.19.3-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.19.3-alt2
 - rebuild with ocaml 4.04.1
 
-* Tue Mar 28 2017 Anton Farygin <rider@altlinux.ru> 1.19.3-alt1%ubt
+* Tue Mar 28 2017 Anton Farygin <rider@altlinux.ru> 1.19.3-alt1
 - renamed back to ocaml-gsl
 
 * Mon Jun 20 2016 Andrey Bergman <vkni@altlinux.org> 1.19.1-alt2

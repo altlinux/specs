@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-expat
 Version: 1.1.0
-Release: alt3
+Release: alt4
 Summary: OCaml wrapper for the Expat XML parsing library
 License: MIT
 Group: Development/ML
@@ -9,7 +9,6 @@ Group: Development/ML
 Url: http://www.xs4all.nl/~mmzeeman/ocaml/
 Source0: %name-%version.tar
 
-BuildRequires(pre):rpm-build-ubt
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib-devel, libexpat-devel, chrpath
 BuildRequires: util-linux-ng, gawk
@@ -63,12 +62,15 @@ chrpath --delete $RPM_BUILD_ROOT%_libdir/ocaml/stublibs/*.so
 %_libdir/ocaml/expat/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.1.0-alt4
+- rebuilt with ocaml-4.07.1
+
 * Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 1.1.0-alt3
 - rebuilt with ocaml 4.07
 
-* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 1.1.0-alt2%ubt
+* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 1.1.0-alt2
 - rebuilt for ocaml-4.06.1
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
 - first build for ALT, based on RH spec
 

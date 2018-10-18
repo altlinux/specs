@@ -2,7 +2,7 @@
 
 Name: ocaml-csv
 Version: 2.1
-Release: alt1
+Release: alt2
 Summary: OCaml library for reading and writing CSV files
 License: LGPLv2+
 Group: Development/ML
@@ -18,7 +18,6 @@ BuildRequires: ocaml-extlib-devel
 BuildRequires: ocaml-lwt-devel
 BuildRequires: ocaml-findlib
 BuildRequires: opam dune
-BuildRequires(pre):rpm-build-ubt
 
 %description
 This OCaml library can read and write CSV files, including all
@@ -75,19 +74,22 @@ jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/csv-lwt/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 2.1-alt2
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 2.1-alt1
 - 2.1
 
-* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 2.0-alt1%ubt
+* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 2.0-alt1
 - 2.0
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt3%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt3
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt2
 - rebuild with ocaml 4.04.1
 
-* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt1%ubt
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt1
 - rebuild with ocaml-extlib-devel
 - added ubt
 

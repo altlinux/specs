@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-gettext
 Version: 0.3.8
-Release: alt2
+Release: alt3
 Summary: OCaml library for i18n
 Group: Development/ML
 
@@ -24,7 +24,6 @@ BuildRequires: xsltproc
 BuildRequires: libxml2
 BuildRequires: chrpath
 BuildRequires: autoconf
-BuildRequires(pre):rpm-build-ubt
 
 %description
 Ocaml-gettext provides support for internationalization of Ocaml
@@ -116,22 +115,25 @@ chrpath --delete $OCAMLFIND_DESTDIR/stublibs/dll*.so
 %_bindir/ocaml-xgettext
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 0.3.8-alt3
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 0.3.8-alt2
 - rebuilt with ocaml 4.07
 
-* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 0.3.8-alt1%ubt
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 0.3.8-alt1
 - 0.3.8
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt4%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt4
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt3%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt3
 - rebuild with ocaml 4.04.1
 
-* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt2%ubt
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt2
 - fixed build in new environment
 
-* Tue Apr 18 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt1%ubt
+* Tue Apr 18 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt1
 - rebuild with new rpm-build-ocaml
 - moved outsite from site-lib dir
 

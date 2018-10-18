@@ -2,7 +2,7 @@
 %define module sqlite3
 Name: ocaml-%module
 Version: 4.4.0
-Release: alt2
+Release: alt3
 
 Summary: OCaml library for accessing SQLite3 databases
 License: GPL
@@ -16,7 +16,6 @@ Obsoletes:	ocaml4-%module
 
 
 BuildPreReq: rpm-build-ocaml >= 1.1.1-alt2
-BuildRequires(pre): rpm-build-ubt
 %description
 SQLite 3 database library wrapper for OCaml.
 
@@ -46,19 +45,22 @@ jbuilder install --destdir=%buildroot --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/stublibs/*.so
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 4.4.0-alt3
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 4.4.0-alt2
 - rebuilt with ocaml-4.07
 
-* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 4.4.0-alt1%ubt
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 4.4.0-alt1
 - 4.4.0
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 4.1.3-alt1%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 4.1.3-alt1
 - new version
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 4.1.2-alt3%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 4.1.2-alt3
 - rebuild with ocaml 4.04.1
 
-* Wed Mar 29 2017 Anton Farygin <rider@altlinux.ru> 4.1.2-alt2%ubt
+* Wed Mar 29 2017 Anton Farygin <rider@altlinux.ru> 4.1.2-alt2
 - updated to new version
 
 * Wed Jan 11 2012 Alexey Shabalin <shaba@altlinux.ru> 1.6.1-alt1

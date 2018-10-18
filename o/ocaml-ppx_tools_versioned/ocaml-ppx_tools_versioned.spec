@@ -3,7 +3,7 @@
 %define oname ppx_tools_versioned
 Name: ocaml-%oname
 Version: 5.2.1
-Release: alt1
+Release: alt2
 Summary: Tools for authors of ppx rewriters and other syntactic tools
 License: MIT
 Group: Development/ML
@@ -11,7 +11,6 @@ Url: https://opam.ocaml.org/packages/ppx_tools_versioned/
 # https://github.com/let-def/ppx_tools_versioned
 Source0: %name-%version.tar
 BuildRequires: ocaml-findlib ocaml-migrate-parsetree-devel ocaml-result-devel jbuilder opam
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Tools for authors of syntactic tools (such as ppx rewriters).
@@ -64,9 +63,12 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %ona
 %_libdir/ocaml/%oname/*.ml
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 5.2.1-alt2
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 5.2.1-alt1
 - 5.2.1
 
-* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 5.1-alt1%ubt
+* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 5.1-alt1
 - first build for ALT, based on specfile from Mageia
 

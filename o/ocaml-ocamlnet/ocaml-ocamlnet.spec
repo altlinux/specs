@@ -2,7 +2,7 @@
 
 Name: ocaml-ocamlnet
 Version: 4.1.6
-Release: alt2
+Release: alt3
 Summary: Network protocols for OCaml
 License: BSD
 Group: Development/ML
@@ -11,7 +11,6 @@ Url: http://projects.camlcity.org/projects/ocamlnet.html
 # https://gitlab.camlcity.org/gerd/lib-ocamlnet3.git
 Source0:%name-%version.tar
 
-BuildRequires(pre):rpm-build-ubt
 BuildPreReq: /dev/shm
 BuildRequires: ocaml >= 4.04
 BuildRequires: ocaml-ocamldoc
@@ -193,17 +192,20 @@ echo -e '-b /usr/bin/netplex-admin\n-b /usr/bin/ocamlrpcgen' \
 %_libdir/ocaml/nethttpd/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 4.1.6-alt3
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 4.1.6-alt2
 - rebuilt with ocaml 4.07
 
-* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 4.1.6-alt1%ubt
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 4.1.6-alt1
 - 4.1.6
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 4.1.2-alt3%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 4.1.2-alt3
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 4.1.2-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 4.1.2-alt2
 - rebuild with ocaml 4.04.1
 
-* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 4.1.2-alt1%ubt
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 4.1.2-alt1
 - first build for ALT, based on RH spec

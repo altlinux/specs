@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-re
 Version: 1.8.0
-Release: alt1
+Release: alt2
 Summary: A regular expression library for OCaml
 
 License: LGPLv2 with exceptions
@@ -13,7 +13,6 @@ BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamldoc
 BuildRequires: dune
-BuildRequires(pre): rpm-build-ubt
 
 %description
 A pure OCaml regular expression library. Supports Perl-style regular
@@ -59,12 +58,15 @@ jbuilder install --destdir %buildroot
 %_libdir/ocaml/re/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt2
+- rebuilt with ocaml-4.07.1
+
 * Sat Aug 11 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1
 - 1.8.0
 
-* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.7.1-alt2%ubt
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.7.1-alt2
 - rebuilt for ocaml 4.06.1
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.7.1-alt1%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.7.1-alt1
 - first build for ALT, based on RH spec
 
