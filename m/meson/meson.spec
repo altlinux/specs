@@ -6,8 +6,8 @@
 %def_disable check
 
 Name: meson
-Version: 0.47.2
-Release: alt2
+Version: 0.48.1
+Release: alt1
 
 Summary: High productivity build system
 Group: Development/Python3
@@ -78,24 +78,19 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 %files
 %_bindir/%name
-%_bindir/%{name}conf
-%_bindir/%{name}introspect
-%_bindir/%{name}test
-%_bindir/wraptool
 %python3_sitelibdir/%libname/
 %python3_sitelibdir/%name-%version-*.egg-info/
 %{?_without_polkit:%exclude %_datadir/polkit-1/actions/com.mesonbuild.install.policy}
 %_man1dir/%name.1.*
-%_man1dir/%{name}conf.1.*
-%_man1dir/%{name}introspect.1.*
-%_man1dir/%{name}test.1.*
-%_man1dir/wraptool.1.*
 %_rpmmacrosdir/%name
 %_rpmmacrosdir/%name.env
 %doc COPYING README.*
 
 
 %changelog
+* Thu Oct 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.48.1-alt1
+- 0.48.1
+
 * Sat Oct 06 2018 Yuri N. Sedunov <aris@altlinux.org> 0.47.2-alt2
 - optional libpolkit-devel BR, disabled by default
 
