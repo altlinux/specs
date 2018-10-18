@@ -7,7 +7,7 @@
 
 Name: opendnssec
 Version: 1.4.14
-Release: alt2.qa1
+Release: alt3
 
 Summary: DNSSEC key and zone management software
 License: %bsd
@@ -134,13 +134,15 @@ ods-ksmutil update all >/dev/null 1>&2 ||:
 %ghost %config(noreplace)%_localstatedir/opendnssec/kasp.db
 %ghost %config(noreplace)%_localstatedir/opendnssec/kasp.db.backup
 %ghost %_localstatedir/opendnssec/kasp.db.our_lock
-%ghost %_localstatedir/softhsm/tokens/
 %_datadir/opendnssec/
 %dir %attr(0755,%_pseudouser_user,%_pseudouser_group) %_runtimedir/opendnssec/
 
 %exclude %_sysconfdir/opendnssec/*.sample
 
 %changelog
+* Thu Oct 18 2018 Stanislav Levin <slev@altlinux.org> 1.4.14-alt3
+- Fixed filesystem intersections.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.14-alt2.qa1
 - NMU: applied repocop patch
 
