@@ -13,7 +13,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt7.1
+Release: alt8
 
 Summary: Matlab(TM) style python plotting package
 
@@ -26,10 +26,13 @@ Packager: Python Development Team <python@packages.altlinux.org>
 Source: %oname-%version.tar
 Source1: setup.cfg
 
+Patch1: %oname-alt-deps-detection.patch
+Patch2: %oname-alt-version.patch
+
 %setup_python_module pylab
 
 BuildRequires(pre): rpm-build-gir
-BuildRequires: gcc-c++ git-core libnumpy-devel time tk-devel libgtk+3-gir-devel libpng-devel libfreetype-devel
+BuildRequires: gcc-c++ libnumpy-devel time tk-devel libgtk+3-gir-devel libpng-devel libfreetype-devel
 BuildRequires: python-module-pycairo python-module-pygobject3 python-modules-tkinter python-module-cycler python-module-pyparsing python-module-pytz python-module-dateutil
 %{?!_without_check:BuildRequires: python-module-numpy-testing}
 %{?_with_qt4:BuildRequires: python-module-PyQt4}
@@ -161,7 +164,7 @@ Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
 Requires: typelib(Gtk) = 2.0
 Requires: python3-module-%oname-cairo = %version-%release
-%add_python3_req_skip gtk_git pango_git
+%add_python3_req_skip gtk pango
 
 %description -n python3-module-%oname-gtk
 gtk backend for %oname.
@@ -384,6 +387,9 @@ Tests for mpl_toolkits.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+sed -i -e "s|@VERSION@|%version|g" setup.py setupext.py
 subst "s,/usr/lib/,%_libdir/,g" setupext.py
 
 sed -i "s|@TOP@|$PWD|" doc/conf.py \
@@ -393,13 +399,6 @@ sed -i "s|@TOP@|$PWD|" doc/conf.py \
 %endif
 
 install -p -m644 %SOURCE1 .
-
-git config --global user.email "<python@packages.altlinux.org>"
-git config --global user.name "Python Development Team"
-git init-db
-git add . -A
-git commit -a -m "REL: v%version"
-git tag -m "v%version" v%version
 
 %if_with python3
 rm -rf ../python3
@@ -798,6 +797,10 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Thu Oct 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt8
+- fixed build with new freetype.
+- rebuilt with pygtk instead of pygtk_git.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt7.1
 - (NMU) Rebuilt with python-3.6.4.
 
