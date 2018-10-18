@@ -4,7 +4,7 @@
 
 Name: Mesa
 Version: 18.2.2
-Release: alt0.dummy
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -17,13 +17,12 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 BuildPreReq: /proc
-#BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel python-modules libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel
 BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel libXvMC-devel xorg-proto-devel libxshmfence-devel
-BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libglvnd0-dummy-devel libwayland-client-devel libwayland-server-devel
+BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python-module-libxml2 python-module-mako python-module-argparse wayland-protocols
-BuildRequires: llvm-devel llvm-devel-static clang-devel clang-devel-static libclc-devel lld
+BuildRequires: llvm-devel llvm-devel-static clang-devel clang-devel-static libclc-devel lld libglvnd-devel >= 0.2.0
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -38,7 +37,7 @@ Mesa is an OpenGL compatible 3D graphics library
 %package -n libGL-devel
 Summary: Development files for Mesa Library
 Group: Development/C
-Requires: libglvnd0-devel libGLX-mesa = %epoch:%version-%release
+Requires: libglvnd-devel >= 0.2.0 libGLX-mesa = %epoch:%version-%release
 
 %description -n libGL-devel
 libGL-devel contains the libraries and header files needed to
@@ -54,7 +53,7 @@ Mesa EGL library
 %package -n libEGL-devel
 Summary: Mesa libEGL development package
 Group: Development/C
-Requires: libglvnd0-devel
+Requires: libglvnd-devel >= 0.2.0
 
 %description -n libEGL-devel
 Mesa libEGL development package
@@ -62,7 +61,7 @@ Mesa libEGL development package
 %package -n libGLES-devel
 Summary: Mesa libGLES development package
 Group: Development/C
-Requires: libglvnd0-devel
+Requires: libglvnd-devel >= 0.2.0
 
 %description -n libGLES-devel
 Mesa libGLES development package
@@ -233,6 +232,18 @@ d=%buildroot%_libdir/vdpau
                 [ -f "$t" ] || mv "$f" "$t"
                 ln -v -snf "${t##*/}" "$f"
         done
+rm -f %buildroot%_libdir/libXvMCgallium.so.*
+d=%buildroot%_libdir
+	for f in $d/libXvMC*.so.1.0.0; do
+                [ ! -L "$f" ] || continue
+                n="${f##*/}"
+                s="$(objdump -p "$f" | awk '/SONAME/ {print $2}')"
+                [ -n "$s" ]
+                [ "$n" != "$s" ] || continue
+                t="$d/$s"
+                [ -f "$t" ] || mv "$f" "$t"
+                ln -v -snf "${t##*/}" "$f"
+        done
 %endif
 
 %files -n libGLX-mesa
@@ -310,6 +321,7 @@ d=%buildroot%_libdir/vdpau
 %_libdir/gallium-pipe/pipe_swrast.so
 %endif
 %ifarch %ix86 x86_64 aarch64
+%_libdir/libXvMCgallium.so.*
 %_libdir/dri/gallium_drv_video.so
 %_libdir/vdpau/libvdpau_gallium.so.1
 %endif
@@ -343,7 +355,6 @@ d=%buildroot%_libdir/vdpau
 %_libdir/vdpau/libvdpau_r*.so*
 %_libdir/dri/r*_drv_video.so
 %_libdir/libXvMCr*.so.*
-%_libdir/libXvMCgallium.so.*
 %ifarch x86_64
 %_libdir/gallium-pipe/pipe_r*.so
 %_libdir/libvulkan_radeon.so
@@ -363,6 +374,9 @@ d=%buildroot%_libdir/vdpau
 %endif
 
 %changelog
+* Thu Oct 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.2.2-alt1
+- updated build dependencies
+
 * Mon Oct 08 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.2.2-alt0.dummy
 - 18.2.2
 - enable libglvnd
