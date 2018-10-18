@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 8.2
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,10 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Wed Oct 17 2018 Elena Mishina <lepata@altlinux.org> 8.2-alt2
+- fix typo
+- update documentation
+
 * Fri Mar 16 2018 Elena Mishina <lepata@altlinux.org> 8.2-alt1
 - initial 8.2 version
 - update documentation
