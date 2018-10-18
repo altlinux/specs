@@ -15,8 +15,8 @@
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.36.9
-Release: alt2
+Version: 1.36.15
+Release: alt1
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -411,6 +411,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 #install -m 0644 %%SOURCE2 %buildroot%systemd_unitdir
 #install -m 0644 %%SOURCE3 %buildroot%_sysconfdir/udev/rules.d
 
+# delete unneeded
+rm -f %buildroot%_bindir/virt-p2v-make-kiwi
+
 %find_lang %name
 
 %files -f %name.lang
@@ -447,6 +450,7 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_includedir/guestfs-gobject
 %_includedir/guestfs-gobject.h
 %_pkgconfigdir/libguestfs-gobject-1.0.pc
+%_man3dir/guestfs-gobject.3.*
 
 %files gir
 %_typelibdir/*.typelib
@@ -555,6 +559,7 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %files -n virt-p2v-maker
 %_bindir/virt-p2v-make-disk
 %_bindir/virt-p2v-make-kickstart
+#_bindir/virt-p2v-make-kiwi
 %_man1dir/virt-p2v*
 %_libdir/virt-p2v
 %_datadir/virt-p2v
@@ -645,6 +650,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %endif
 
 %changelog
+* Tue Oct 09 2018 Alexey Shabalin <shaba@altlinux.org> 1.36.15-alt1
+- 1.36.15
+
 * Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 1.36.9-alt2
 - rebuilt with ocaml 4.07
 
