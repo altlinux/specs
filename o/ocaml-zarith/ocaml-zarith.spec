@@ -6,8 +6,8 @@
 %define ocamlstublib %_libdir/ocaml/stublibs/
 
 Name: ocaml-%pkgname
-Version: 1.7
-Release: alt3
+Version: 1.8
+Release: alt1
 Summary: OCaml interface to GMP
 Group: Development/ML
 # The license has a static linking exception
@@ -92,6 +92,9 @@ make install INSTALLDIR=%buildroot%_libdir/ocaml
 %ocamlsitelib/%pkgname/*.h
 
 %changelog
+* Sun Jun 09 2019 Anton Farygin <rider@altlinux.ru> 1.8-alt1
+- 1.8
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.7-alt3
 - rebuilt with ocaml-4.07.1
 
