@@ -1,6 +1,6 @@
 Name: cvs
 Version: 1.11.23
-Release: alt6
+Release: alt7
 
 Summary: A version control system
 License: GPLv2+
@@ -192,6 +192,8 @@ bzip2 -9 ChangeLog FAQ NEWS TODO
 
 %check
 export TMPDIR=/tmp
+# remove -O from MAKEFLAGS
+export MAKEFLAGS=-w
 %make_build check
 
 %install
@@ -250,6 +252,9 @@ install -pm644 \
 %_datadir/cvs
 
 %changelog
+* Thu Oct 18 2018 Dmitry V. Levin <ldv@altlinux.org> 1.11.23-alt7
+- Fixed %%check.
+
 * Mon Jan 18 2016 Michael Shigorin <mike@altlinux.org> 1.11.23-alt6
 - Applied patch for upstream bug #39166:
   doc/cvs.texinfo is missing @sp argument.
