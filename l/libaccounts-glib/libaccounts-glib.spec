@@ -1,8 +1,9 @@
+%add_optflags %optflags_shared
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/xmllint /usr/bin/xsltproc docbook-dtds pkgconfig(pygobject-3.0) python-devel
 # END SourceDeps(oneline)
-Group: System/Libraries
-%add_optflags %optflags_shared
+%filter_from_requires /dbus-test-runner/d
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -15,7 +16,7 @@ Group: System/Libraries
 
 Name:		libaccounts-glib
 Version:	1.23
-Release:	alt1_4
+Release:	alt1_6
 Summary:	Accounts framework for Linux and POSIX based platforms
 License:	LGPLv2
 URL:        https://gitlab.com/accounts-sso/libaccounts-glib
@@ -28,7 +29,7 @@ BuildRequires:	libsqlite3-devel
 BuildRequires:	libcheck-devel
 BuildRequires:	gobject-introspection-devel
 # no needed for final release tarball
-BuildRequires:	libtool-common
+BuildRequires:	libtool
 BuildRequires:	gtk-doc gtk-doc-mkpdf
 Source44: import.info
 
@@ -85,7 +86,7 @@ make check || cat tests/test-suite.log ||:
 
 
 %files
-%doc COPYING
+%doc --no-dereference COPYING
 %doc AUTHORS ChangeLog README NEWS
 %{_bindir}/ag-backup
 %{_bindir}/ag-tool
@@ -124,6 +125,9 @@ make check || cat tests/test-suite.log ||:
 
 
 %changelog
+* Thu Oct 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1_6
+- dropped req: dbus-test-runner
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1_4
 - update to new release by fcimport
 
