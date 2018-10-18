@@ -6,7 +6,7 @@
 
 Name: pfstools
 Version: 2.1.0
-Release: alt2
+Release: alt3
 
 Summary: High Dynamic Range (HDR) Images and Video manipulation tools
 License: GPLv2+
@@ -15,7 +15,7 @@ Group: Graphics
 Url: http://pfstools.sourceforge.net/
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ libImageMagick-devel libfftw3-devel libfreeglut-devel libgeos-devel
+BuildRequires: gcc-c++ libImageMagick-devel libfftw3-devel libGLUT-devel libgeos-devel
 BuildRequires: libjpeg-devel liblapack-devel libncurses-devel libnetpbm-devel
 BuildRequires: libreadline-devel openexr-devel cmake libgsl-devel libexif-devel
 BuildRequires: libgomp-devel libtbb-devel zlib-devel
@@ -223,6 +223,9 @@ channels or luminance channels in pfs stream using Octave.
 %endif
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 2.1.0-alt3
+- rebuilt with libGLUT
+
 * Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 2.1.0-alt2
 - rebuilt for ImageMagick
 
