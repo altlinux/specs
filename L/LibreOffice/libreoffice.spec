@@ -1,4 +1,4 @@
-# 6.1.2.1
+# 6.1.3.1
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -19,7 +19,7 @@
 
 Name: LibreOffice
 %define hversion 6.1
-%define urelease 2.1
+%define urelease 3.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -447,16 +447,16 @@ for l in %with_lang; do
 done
 
 # Create gnome plugin list
-find %buildroot%lodir -o -name "*_gtk*" | sed 's@^%buildroot@@' > files.gtk2
+find %buildroot%lodir -name "*_gtk[^3]*"  | sed 's@^%buildroot@@' > files.gtk2
 
 # Create gtk3 plugin list
-find %buildroot%lodir -name -o -name "*_gtk3*" | sed 's@^%buildroot@@' > files.gtk3
+find %buildroot%lodir -name "*_gtk3*" | sed 's@^%buildroot@@' > files.gtk3
 
 # Create kde plugin list
-find %buildroot%lodir -name "*kde4*" | sed 's@^%buildroot@@' > files.kde4
+find %buildroot%lodir -name "*kde4*"  | sed 's@^%buildroot@@' > files.kde4
 
 # Create qt5 plugin list
-find %buildroot%lodir -name "*qt5*" | sed 's@^%buildroot@@' > files.qt5
+find %buildroot%lodir -name "*qt5*"   | sed 's@^%buildroot@@' > files.qt5
 
 # Generate base filelist by removing files from  separated packages
 { cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk2 files.gtk3 files.kde4 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
@@ -564,6 +564,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Oct 17 2018 Fr. Br. George <george@altlinux.ru> 6.1.3.1-alt1
+- Update to 6.1.3.1
+
 * Tue Sep 25 2018 Fr. Br. George <george@altlinux.ru> 6.1.2.1-alt1
 - Update to 6.1.2.1
 
