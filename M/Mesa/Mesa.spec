@@ -3,8 +3,8 @@
 %def_enable xa
 
 Name: Mesa
-Version: 18.1.3
-Release: alt1%ubt
+Version: 18.2.2
+Release: alt0.dummy
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -17,65 +17,52 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 BuildPreReq: /proc
-BuildRequires(pre): rpm-build-ubt
+#BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
-BuildRequires: libdrm-devel libexpat-devel python-modules libselinux-devel libxcb-devel libSM-devel libtinfo-devel
-BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libffi-devel libelf-devel
-BuildRequires: libva-devel libvdpau-devel libXvMC-devel xorg-proto-devel libxshmfence-devel libnettle-devel
-BuildRequires: libelf-devel python-module-mako python-module-argparse zlib-devel
-BuildRequires: libwayland-client-devel libwayland-server-devel wayland-protocols
-%ifarch %ix86 x86_64
-BuildRequires: libllvm-devel-static
-%endif
+BuildRequires: libdrm-devel libexpat-devel python-modules libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel
+BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel libXvMC-devel xorg-proto-devel libxshmfence-devel
+BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libglvnd0-dummy-devel libwayland-client-devel libwayland-server-devel
+BuildRequires: libwayland-egl-devel python-module-libxml2 python-module-mako python-module-argparse wayland-protocols
+BuildRequires: llvm-devel llvm-devel-static clang-devel clang-devel-static libclc-devel lld
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
 
-%package -n libGL
+%package -n libGLX-mesa
 Summary: OpenGL 1.3 compatible 3D graphics library for X Window server
 Group: System/Libraries
-Requires(post): coreutils
 
-%description -n libGL
+%description -n libGLX-mesa
 Mesa is an OpenGL compatible 3D graphics library
 
 %package -n libGL-devel
 Summary: Development files for Mesa Library
 Group: Development/C
-Requires: libGL = %epoch:%version-%release
+Requires: libglvnd0-devel libGLX-mesa = %epoch:%version-%release
 
 %description -n libGL-devel
 libGL-devel contains the libraries and header files needed to
 develop programs which make use of Mesa
 
-%package -n libEGL
+%package -n libEGL-mesa
 Summary: Mesa EGL library
 Group: System/Libraries
-Requires: libGL = %epoch:%version-%release
 
-%description -n libEGL
+%description -n libEGL-mesa
 Mesa EGL library
 
 %package -n libEGL-devel
 Summary: Mesa libEGL development package
 Group: Development/C
-Requires: libEGL = %epoch:%version-%release
+Requires: libglvnd0-devel
 
 %description -n libEGL-devel
 Mesa libEGL development package
 
-%package -n libGLES
-Summary: Mesa OpenGL ES library
-Group: System/Libraries
-
-%description -n libGLES
-Mesa OpenGL ES library
-
 %package -n libGLES-devel
 Summary: Mesa libGLES development package
 Group: Development/C
-Requires: libGLES = %epoch:%version-%release
-Requires: libEGL-devel = %epoch:%version-%release
+Requires: libglvnd0-devel
 
 %description -n libGLES-devel
 Mesa libGLES development package
@@ -90,7 +77,6 @@ GBM buffer management library
 %package -n libgbm-devel
 Summary: GBM buffer management development package
 Group: Development/C
-Requires: libgbm = %epoch:%version-%release
 
 %description -n libgbm-devel
 GBM buffer management development package
@@ -98,7 +84,6 @@ GBM buffer management development package
 %package -n libxatracker
 Summary: Mesa XA state tracker
 Group: System/Libraries
-Requires: libxatracker = %epoch:%version-%release
 
 %description -n libxatracker
 Xorg Gallium3D acceleration library
@@ -110,10 +95,20 @@ Group: Development/C
 %description -n libxatracker-devel
 Xorg Gallium3D acceleration development package
 
+%package -n libMesaOpenCL
+Summary: Mesa OpenCL runtime library
+Group: System/Libraries
+Requires: ocl-icd libclc
+
+%description -n libMesaOpenCL
+This package contains the mesa implementation of the OpenCL (Open Compute
+Language) library, which is intended for use with an ICD loader. OpenCL
+provides a standardized interface for computational analysis on graphical
+processing units.
+
 %package -n xorg-dri-swrast
 Summary: Mesa software rendering libraries
 Group: System/X11
-Requires: libGL = %epoch:%version-%release
 Provides: xorg-dri-virgl
 Obsoletes: xorg-dri-virgl < %epoch:%version-%release
 
@@ -123,7 +118,6 @@ Mesa software rendering libraries
 %package -n xorg-dri-intel
 Summary: Intel DRI driver
 Group: System/X11
-Requires: libGL = %epoch:%version-%release
 
 %description -n xorg-dri-intel
 DRI driver for Intel i8xx, i9xx
@@ -131,7 +125,6 @@ DRI driver for Intel i8xx, i9xx
 %package -n xorg-dri-radeon
 Summary: ATI RADEON DRI driver
 Group: System/X11
-Requires: libGL = %epoch:%version-%release
 %ifarch %ix86 x86_64
 Requires: libvdpau
 %endif
@@ -142,7 +135,6 @@ DRI driver for ATI R100, R200, R300, R400, R500
 %package -n xorg-dri-nouveau
 Summary: nVidia DRI driver
 Group: System/X11
-Requires: libGL = %epoch:%version-%release
 %ifarch %ix86 x86_64
 Requires: libvdpau
 %endif
@@ -153,32 +145,9 @@ DRI driver for nVidia
 %package -n xorg-dri-armsoc
 Summary: SoC DRI drivers
 Group: System/X11
-Requires: libGL = %epoch:%version-%release
 
 %description -n xorg-dri-armsoc
 DRI drivers for various SoCs
-
-%package -n glxinfo
-Summary: display info about a GLX extension and OpenGL renderer
-Group: System/X11
-Requires: libGL = %epoch:%version-%release
-
-%description -n glxinfo
-glxinfo lists information about the GLX extension, OpenGL capable visu-
-als, and the OpenGL renderer on an X server. The GLX and renderer  info
-includes  the  version  and extension attributes. The visual info lists
-the GLX visual attributes available  for  each  OpenGL  capable  visual
-(e.g.  whether  the  visual is double buffered, the component sizes, Z-
-buffering depth, etc)
-
-%package -n glxgears
-Summary: GLX version of the infamous "gears" GL demo
-Group: System/X11
-Requires: libGL = %epoch:%version-%release
-
-%description -n glxgears
-glxgears  is a GLX demo that draws three rotating gears, and prints out
-framerate information to stdout
 
 %set_verify_elf_method unresolved=relaxed
 
@@ -186,7 +155,13 @@ framerate information to stdout
 %setup -q
 %patch -p1
 
+mkdir -p $(pwd)/bin
+%ifarch x86_64
+ln -s %_bindir/ld.lld $(pwd)/bin/ld
+%endif
+
 %build
+export PATH=$(pwd)/bin:$PATH
 %autoreconf
 %configure \
 %ifarch %ix86 x86_64
@@ -201,33 +176,37 @@ framerate information to stdout
 	--with-dri-drivers=r200,radeon,nouveau \
 	--with-gallium-drivers=swrast,r300,r600,nouveau,virgl,vc4,imx,etnaviv,freedreno \
 %endif
-	--disable-llvm-shared-libs \
 	--enable-vdpau \
 	--enable-xvmc \
 	--enable-dri3 \
 %ifarch x86_64
+	--disable-llvm-shared-libs \
+	--enable-opencl \
+	--enable-opencl-icd \
 	--with-vulkan-drivers=intel,radeon \
 %endif
-	--enable-texture-float \
 	--enable-shared-glapi \
 	%{subst_enable egl} \
 	%{subst_enable gles2} \
 	--disable-gles1 \
-	--enable-texture-float \
 	--enable-glx-tls \
 	--enable-selinux \
+	--enable-libglvnd \
 	--with-platforms=x11,wayland,drm \
 	--with-dri-driverdir=%_libdir/X11/modules/dri \
 	%{subst_enable xa}
 #
 
-%make_build
+%make_build V=1
 
 %install
+export PATH=$(pwd)/bin:$PATH
 %make DESTDIR=%buildroot install
 
+rm -f %buildroot%_libdir/gallium-pipe/*.la
+
 m=%buildroot%_libdir/X11/modules/dri
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 aarch64
 	m="$m %buildroot%_libdir/dri"
 %endif
 for d in $m; do
@@ -242,7 +221,7 @@ for d in $m; do
 		ln -v -snf "${t##*/}" "$f"
 	done
 done
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 aarch64
 d=%buildroot%_libdir/vdpau
 	for f in $d/*.so.1.0.0; do
                 [ ! -L "$f" ] || continue
@@ -256,58 +235,10 @@ d=%buildroot%_libdir/vdpau
         done
 %endif
 
-mkdir -p %buildroot%_sysconfdir/X11/%_lib
-# moved libGL
-mv %buildroot%_libdir/libGL.so.1.2.0 %buildroot%_libdir/X11/libGL.so.1.2
-ln -sf ../../..%_libdir/X11/libGL.so.1.2 %buildroot%_sysconfdir/X11/%_lib/libGL.so.1
-ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %buildroot%_libdir/
-ln -sf X11/libGL.so.1.2 %buildroot%_libdir/libGL.so
-# moved libEGL
-%if_enabled egl
-mv %buildroot%_libdir/libEGL.so.1.0.0 %buildroot%_libdir/X11/libEGL.so.1.0.0
-ln -sf ../../..%_libdir/X11/libEGL.so.1.0.0 %buildroot%_sysconfdir/X11/%_lib/libEGL.so.1
-ln -sf ../..%_sysconfdir/X11/%_lib/libEGL.so.1 %buildroot%_libdir/
-ln -sf X11/libEGL.so.1.0.0 %buildroot%_libdir/libEGL.so
-%endif
-# moved libGLESv2
-%if_enabled gles2
-mv %buildroot%_libdir/libGLESv2.so.2.0.0 %buildroot%_libdir/X11/libGLESv2.so.2.0.0
-ln -sf ../../..%_libdir/X11/libGLESv2.so.2.0.0 %buildroot%_sysconfdir/X11/%_lib/libGLESv2.so.2
-ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %buildroot%_libdir/
-ln -sf X11/libGLESv2.so.2.0.0 %buildroot%_libdir/libGLESv2.so
-%endif
-#
-/sbin/ldconfig -Nn %buildroot%_libdir/X11/
-
-%post -n libGL
-[ -r %_sysconfdir/X11/%_lib/libGL.so.1 ] || \
-	ln -sf ../../..%_libdir/X11/libGL.so.1.2 %_sysconfdir/X11/%_lib/libGL.so.1
-ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %_libdir/
-
-%if_enabled egl
-%post -n libEGL
-[ -r %_sysconfdir/X11/%_lib/libEGL.so.1 ] || \
-	ln -sf ../../..%_libdir/X11/libEGL.so.1.0.0 %_sysconfdir/X11/%_lib/libEGL.so.1
-ln -sf ../..%_sysconfdir/X11/%_lib/libEGL.so.1 %_libdir/
-%endif
-
-%if_enabled gles2
-%post -n libGLES
-[ -r %_sysconfdir/X11/%_lib/libGLESv2.so.2 ] || \
-	ln -sf ../../..%_libdir/X11/libGLESv2.so.2.0.0 %_sysconfdir/X11/%_lib/libGLESv2.so.2
-ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
-%endif
-
-%files -n libGL
+%files -n libGLX-mesa
 %doc docs/relnotes/%version.html
-%dir %_sysconfdir/X11/%_lib
-%ghost %_sysconfdir/X11/%_lib/libGL.so.1
-%_libdir/libGL.so.*
+%_libdir/libGLX_mesa.so.*
 %_libdir/libglapi.so.*
-%dir %_libdir/X11
-%_libdir/X11/libGL.so.*
-%dir %_libdir/X11/modules
-%dir %_libdir/X11/modules/dri
 
 %files -n libGL-devel
 %dir %_includedir/GL
@@ -318,36 +249,27 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_includedir/GL/glx.h
 %_includedir/GL/glx_mangle.h
 %_includedir/GL/glxext.h
-%_libdir/libGL.so
+%_libdir/libGLX_mesa.so
 %_libdir/libglapi.so
 %_pkgconfigdir/gl.pc
 %_pkgconfigdir/dri.pc
 
 %if_enabled egl
-%files -n libEGL
-%dir %_sysconfdir/X11/%_lib
-%ghost %_sysconfdir/X11/%_lib/libEGL.so.1
-%_libdir/libEGL.so.*
-%_libdir/X11/libEGL.so.*
+%files -n libEGL-mesa
+%_libdir/libEGL_mesa.so.*
+%_datadir/glvnd/egl_vendor.d/50_mesa.json
 
 %files -n libEGL-devel
 %_includedir/EGL
 %_includedir/KHR
-%_libdir/libEGL.so
+%_libdir/libEGL_mesa.so
 %_pkgconfigdir/egl.pc
 %endif
 
 %if_enabled gles2
-%files -n libGLES
-%dir %_sysconfdir/X11/%_lib
-%ghost %_sysconfdir/X11/%_lib/libGLESv2.so.2
-%_libdir/libGLESv2.so.*
-%_libdir/X11/libGLESv2.so.*
-
 %files -n libGLES-devel
 %_includedir/GLES2
 %_includedir/GLES3
-%_libdir/libGLESv2.so
 %_pkgconfigdir/glesv2.pc
 %endif
 
@@ -369,13 +291,25 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_pkgconfigdir/xatracker.pc
 %endif
 
+%ifarch x86_64
+%files -n libMesaOpenCL
+%dir %_sysconfdir/OpenCL
+%dir %_sysconfdir/OpenCL/vendors
+%_sysconfdir/OpenCL/vendors/mesa.icd
+%_libdir/libMesaOpenCL.so.*
+%endif
+
 %files -n xorg-dri-swrast
 %_libdir/X11/modules/dri/*swrast*_dri.so
 %_libdir/X11/modules/dri/gallium_dri.so
 %ifarch %ix86 x86_64 aarch64
 %_libdir/X11/modules/dri/mesa_dri_drivers.so
 %_libdir/X11/modules/dri/virtio_gpu_dri.so
-%ifarch %ix86 x86_64
+%ifarch x86_64
+%dir %_libdir/gallium-pipe
+%_libdir/gallium-pipe/pipe_swrast.so
+%endif
+%ifarch %ix86 x86_64 aarch64
 %_libdir/dri/gallium_drv_video.so
 %_libdir/vdpau/libvdpau_gallium.so.1
 %endif
@@ -399,6 +333,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_libdir/dri/nouveau_drv_video.so
 %_libdir/vdpau/libvdpau_nouveau.so*
 %_libdir/libXvMCnouveau.so.*
+%ifarch x86_64
+%_libdir/gallium-pipe/pipe_nouveau.so
+%endif
 
 %files -n xorg-dri-radeon
 %_libdir/X11/modules/dri/radeon*_dri.so
@@ -408,6 +345,7 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_libdir/libXvMCr*.so.*
 %_libdir/libXvMCgallium.so.*
 %ifarch x86_64
+%_libdir/gallium-pipe/pipe_r*.so
 %_libdir/libvulkan_radeon.so
 %dir %_datadir/vulkan
 %dir %_datadir/vulkan/icd.d
@@ -424,23 +362,21 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_libdir/X11/modules/dri/vc4_dri.so
 %endif
 
-%files -n glxinfo
-%_bindir/glxinfo
-
-%files -n glxgears
-%_bindir/glxgears
-
 %changelog
-* Mon Jul 02 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.1.3-alt1%ubt
+* Mon Oct 08 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.2.2-alt0.dummy
+- 18.2.2
+- enable libglvnd
+
+* Mon Jul 02 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.1.3-alt1.S1
 - 18.1.3
 
-* Thu Jun 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.1.1-alt1%ubt
+* Thu Jun 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.1.1-alt1.S1
 - 18.1.1
 
-* Thu May 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.1.0-alt1%ubt
+* Thu May 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:18.1.0-alt1.S1
 - 18.1.0
 
-* Wed May 16 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:17.3.9-alt1%ubt
+* Wed May 16 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:17.3.9-alt1.S1
 - 17.3.9
 
 * Thu Apr 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:17.3.8-alt1

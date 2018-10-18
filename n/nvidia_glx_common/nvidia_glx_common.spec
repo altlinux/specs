@@ -1,3 +1,10 @@
+%define Nif_ver_gt() %if "%(rpmvercmp '%1' '%2')" > "0"
+%define Nif_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
+%define Nif_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
+%define Nif_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
+
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
 
 %define tbname         NVIDIA-Linux-x86
 %ifarch x86_64
@@ -13,8 +20,8 @@
 %define nv_version 390
 %define nv_release 87
 %define nv_minor %nil
-%define pkg_rel alt194%ubt
-%define set_gl_nvidia_ver 0.20.4
+%define pkg_rel alt195
+%define set_gl_nvidia_ver 0.21.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -90,8 +97,9 @@ Provides: %virtual_pkg_name = %version-%release
 Obsoletes: %virtual_pkg_name < %version-%release
 #
 Conflicts: xorg-x11-mesagl <= 6.8.2-alt7
-Requires(post): x11presetdrv
+PreReq: libGL
 Requires: apt-scripts-nvidia
+Requires(post): x11presetdrv
 # old
 Conflicts: nvidia_glx_100.14.19-100.14.19 <= alt40
 Conflicts: nvidia_glx_169.07-169.07 <= alt40
@@ -119,6 +127,13 @@ cd %tbname-%tbver%dirsuffix
 tar xvf %SOURCE0
 pushd set_gl_nvidia*
 cp settings.h.in settings.h
+
+%Nif_ver_gteq %ubt_id M90
+subst "s|@GLVND_SCHEME@|1|" settings.h
+%else
+subst "s|@GLVND_SCHEME@|0|" settings.h
+%endif
+
 subst "s|@DEFAULT_VERSION@|%version|" settings.h
 subst "s|@X_ETCLIB_SYML_DIR@|%x_etclib_sym_dir|" settings.h
 subst "s|@NV_ETCLIB_SYML_DIR@|%nv_etclib_sym_dir|" settings.h
@@ -145,9 +160,10 @@ popd
 
 
 %build
+%add_optflags -pedantic
 #make OPTFLAGS="%optflags -Wl,--hash-style=sysv" -C set_gl_nvidia*
 make OPTFLAGS="%optflags" LDFLAGS="-L%_libdir" -C set_gl_nvidia*
->nvidianull.c
+echo "void ___some_unused_function_to_fill_sources___() {}" >nvidianull.c
 gcc %optflags -c nvidianull.c -o nvidianull.o
 #ld --hash-style=sysv --shared nvidianull.o -o libnvidianull.so
 ld --shared nvidianull.o -o libnvidianull.so
@@ -221,6 +237,11 @@ fi
 mkdir -p %buildroot/%_bindir
 ln -s /bin/true %buildroot/%_bindir/nvidia-bug-report.sh
 
+# install configs
+mkdir -p %buildroot/%_sysconfdir/X11/xorg.conf.d/
+echo >%buildroot/%_sysconfdir/X11/xorg.conf.d/09-nvidia.conf
+mkdir -p %buildroot/%_sysconfdir/ld.so.conf.d/
+echo >%buildroot/%_sysconfdir/ld.so.conf.d/nvidia.conf
 
 %post -n %{bin_pkg_name}_common
 if [ -z "$DURING_INSTALL" ]; then
@@ -237,6 +258,8 @@ fi
 %dir %module_local_dir
 %dir %_datadir/nvidia/
 %ghost %_bindir/nvidia-bug-report.sh
+%ghost %_sysconfdir/X11/xorg.conf.d/09-nvidia.conf
+%ghost %_sysconfdir/ld.so.conf.d/nvidia.conf
 %xdrv_pre_d/nvidia
 %xdrv_d/nvidia
 #%xdrv_d_old/nvidia
@@ -273,6 +296,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Thu Oct 18 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt195
+- add support of new glvnd packaging scheme
+
 * Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt194%ubt
 - new version
 

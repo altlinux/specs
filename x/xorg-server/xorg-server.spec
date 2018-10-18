@@ -21,8 +21,8 @@
 %endif
 
 Name: xorg-server
-Version: 1.20.0
-Release: alt2.1
+Version: 1.20.1
+Release: alt1
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -39,7 +39,7 @@ Provides: xorg-x11-server = %epoch:%version-%release xorg-extensions-glx = %epoc
 Provides: xorg-glamor = %epoch:%version-%release
 Obsoletes: xorg-glamor < %epoch:%version-%release
 %endif
-PreReq: xorg-server-control >= 1.3-alt1 %name-common = %epoch:%version-%release libGL >= %mesaversion xorg-dri-swrast >= %mesaversion
+PreReq: xorg-server-control >= 1.3-alt1 %name-common = %epoch:%version-%release xorg-dri-swrast >= %mesaversion
 Requires: xset iceauth xdpyinfo glxinfo xdriinfo xorg-drv-fbdev xorg-drv-evdev
 %ifarch %ix86 x86_64
 Requires: xorg-drv-vesa
@@ -203,8 +203,6 @@ drivers, input drivers, or other X modules should install this package.
 	--disable-config-hal \
 	--disable-linux-apm \
 	--disable-linux-acpi \
-	--enable-drv-switch \
-	--with-drv-switch-path=%_libexecdir/X11/drv.d \
 	--enable-record \
 	%{subst_enable xwayland} \
 	%{subst_enable glamor} \
@@ -212,7 +210,6 @@ drivers, input drivers, or other X modules should install this package.
 	%{subst_enable xnest} \
 	%{subst_enable xephyr} \
 	%{subst_enable kdrive} \
-	--disable-xfbdev \
 	%{subst_enable ipv6} \
 	--enable-docs \
 	--disable-static
@@ -226,14 +223,8 @@ find %buildroot%_modulesdir -name \*.la -delete
 mkdir -p %buildroot%_modulesdir/{drivers,input}
 mkdir -p %buildroot%_datadir/X11
 mkdir -p %buildroot%_sysconfdir/X11/{app-defaults,xorg.conf.d}
-mkdir -p %buildroot%_sysconfdir/X11/%_lib
 
 touch %buildroot%_sysconfdir/X11/xorg.conf
-
-# move GLX
-mv %buildroot%_modulesdir/extensions/libglx.so %buildroot%_libdir/X11/libglx.so
-ln -sf ../../..%_libdir/X11/libglx.so %buildroot%_sysconfdir/X11/%_lib/libglx.so
-ln -sf ../../../../..%_sysconfdir/X11/%_lib/libglx.so %buildroot%_modulesdir/extensions/libglx.so
 
 install -pD -m644 xserver.pamd %buildroot%_sysconfdir/pam.d/xserver
 mkdir -p %buildroot%_sysconfdir/security/console.apps
@@ -246,29 +237,19 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_sbindir/groupadd -r -f xgrp
 %pre_control xorg-server
 
-%post
-%post_control xorg-server
-[ -r %_sysconfdir/X11/%_lib/libglx.so ] || \
-	ln -sf ../../..%_libdir/X11/libglx.so %_sysconfdir/X11/%_lib/libglx.so
-
 %files
 %config(noreplace) %_sysconfdir/pam.d/xserver
 %config(missingok noreplace) %_sysconfdir/security/console.apps/xserver
-%dir %_sysconfdir/X11/%_lib
-%ghost %_sysconfdir/X11/%_lib/libglx.so
 %ghost %_sysconfdir/X11/xorg.conf
 %_bindir/X
 %attr(0700,root,root) %_bindir/Xorg
 %_bindir/gtf
 %_bindir/cvt
-%_libdir/X11/lib*
 %dir %_modulesdir/drivers
 %dir %_modulesdir/input
 %dir %_modulesdir/extensions
 %_modulesdir/extensions/libglx.so
 %_modulesdir/*.so
-%dir %_libexecdir/X11
-%_libexecdir/X11/drv.d
 %_man1dir/Xorg.1*
 %_man1dir/gtf.1*
 %_man1dir/cvt.1*
@@ -324,6 +305,10 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Wed Oct 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.1-alt1
+- 1.20.1
+- removed OpenGL libs switcher
+
 * Wed Sep 05 2018 Grigory Ustinov <grenka@altlinux.org> 2:1.20.0-alt2.1
 - NMU: rebuilt with current openssl.
 
