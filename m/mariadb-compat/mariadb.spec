@@ -37,7 +37,7 @@
 
 Name: mariadb-compat
 Version: 10.1.36
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -104,7 +104,7 @@ Requires: %name-server = %EVR
 Requires: %name-client = %EVR
 
 BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
-BuildRequires: libaio-devel libwrap-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
+BuildRequires: libaio-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
 BuildRequires: liblz4-devel zlib-devel bzlib-devel liblzma-devel liblzo2-devel libsnappy-devel
 BuildRequires: chrooted control
 BuildRequires: libxml2-devel
@@ -366,7 +366,6 @@ export LDFLAGS
 	-DMYSQL_DATADIR="%ROOT" \
 	-DMYSQL_USER=mysql \
 	-DWITH_READLINE=ON \
-	-DWITH_LIBWRAP=ON \
 	%{?_with_jemalloc:-DWITH_JEMALLOC=system} \
 	%{?_without_jemalloc:-DWITH_JEMALLOC=no} \
 	-DWITH_SSL=system \
@@ -815,6 +814,9 @@ fi
 %endif
 
 %changelog
+* Thu Oct 18 2018 Alexey Shabalin <shaba@altlinux.org> 10.1.36-alt2
+- build without libwrap
+
 * Tue Sep 25 2018 Alexey Shabalin <shaba@altlinux.org> 10.1.36-alt1
 - 10.1.36
 
