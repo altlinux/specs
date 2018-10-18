@@ -3,7 +3,7 @@
 
 Name: virt-manager
 Version: 2.0.0
-Release: alt1
+Release: alt2
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -48,12 +48,8 @@ BuildRequires: libgio
 BuildRequires: intltool
 BuildRequires: /usr/bin/pod2man
 
-%add_python3_req_skip guestfs
-%add_python3_req_skip virtconv
-%add_python3_req_skip virtinst
-%add_python3_req_skip virtinst.cli
-%add_python3_req_skip virtcli
-%add_python3_req_skip virtxml
+%add_python3_lib_path %_datadir/%name
+%allow_python3_import_path %_datadir/%name
 
 %description
 Virtual Machine Manager provides a graphical tool for administering
@@ -147,6 +143,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Thu Oct 18 2018 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt2
+- allow python3 provides non-standart path
+
 * Tue Oct 16 2018 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt1
 - new version 2.0.0
 
