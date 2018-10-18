@@ -8,7 +8,7 @@
 
 Name: lua-%modname
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Parsing Expression Grammars for Lua
 Group: Development/Other
@@ -17,7 +17,7 @@ Url: http://www.inf.puc-rio.br/~roberto/%modname/
 
 Source: %url/%modname-%version.tar.gz
 
-BuildRequires: lua-devel >= %luaver
+BuildRequires: liblua5.3-devel >= %luaver
 Requires: lua >= %luaver
 Source44: import.info
 
@@ -48,6 +48,9 @@ LD_LIBRARY_PATH=$PWD %make test
 %doc %attr(0644,root,root) test.lua
 
 %changelog
+* Thu Oct 18 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.0.1-alt2
+- fixed ftbfs: changed BR lua-devel to liblua5.3-devel
+
 * Thu Jun 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1 (ALT #35032)
 
