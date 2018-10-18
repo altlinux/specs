@@ -1,6 +1,6 @@
 Name: mupdf
 Version: 1.13.0
-Release: alt2
+Release: alt3
 Summary: A lightweight PDF viewer and toolkit
 Group: Office
 License: GPLv3
@@ -9,7 +9,6 @@ Source0: http://mupdf.com/download/%name-%version-source.tar.gz
 Source1: %name.desktop
 Source2: debian.tar
 Patch0: %name-upstream.patch
-Patch1: %name-alt-freeglut.patch
 
 # Automatically added by buildreq on Thu Aug 22 2013
 # optimized out: libX11-devel pkg-config xorg-xextproto-devel xorg-xproto-devel
@@ -43,7 +42,6 @@ applications that use mupdf and static libraries
 %prep
 %setup -n %name-%version-source -a2
 #patch0 -p1
-%patch1 -p2
 
 # TODO rebuild with new openjpeg
 #BuildRequires: openjpeg-devel
@@ -74,6 +72,9 @@ install -D mupdf.pc %buildroot%_pkgconfigdir/mupdf.pc
 %_libdir/lib*.a
 
 %changelog
+* Thu Oct 18 2018 Fr. Br. George <george@altlinux.ru> 1.13.0-alt3
+- Rebuilt with libfreeglut
+
 * Wed Oct 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.13.0-alt2
 - NMU: rebuilt with libfreeglut.
 
@@ -132,10 +133,10 @@ install -D mupdf.pc %buildroot%_pkgconfigdir/mupdf.pc
 * Sun Mar 27 2011 Pavel Zhukov <landgraf@fedoraproject.org> - 0.8.15-1
 - New upstream release
 
-* Tue Feb 9 2011 Pavel Zhukov <landgraf@fedoraproject.org> - 0.7-7
+* Wed Feb 09 2011 Pavel Zhukov <landgraf@fedoraproject.org> - 0.7-7
 - Fix dependency for F13
 
-* Sun Feb 7 2011 Pavel Zhukov <landgraf@fedoraproject.org> - 0.7-6
+* Mon Feb 07 2011 Pavel Zhukov <landgraf@fedoraproject.org> - 0.7-6
 - roll back to static libraries  patch for shared libs has been rejected
 - Fix spec errors
 

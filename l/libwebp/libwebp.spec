@@ -6,7 +6,7 @@
 
 Name: libwebp
 Version: 1.0.0
-Release: alt2
+Release: alt2.1
 
 Summary: Library and tools for the WebP graphics format
 License: BSD
@@ -17,7 +17,7 @@ Source: https://storage.googleapis.com/downloads.webmproject.org/releases/webp/%
 Patch: %name-0.4.1-alt-lfs.patch
 
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel libgif-devel
-BuildRequires: libGLUT-devel
+BuildRequires: libfreeglut-devel
 
 %description
 WebP is an image format that does lossy compression of digital
@@ -122,6 +122,9 @@ images more efficiently.
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Thu Oct 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt2.1
+- rebuilt with improved libfreeglut-devel
+
 * Wed Oct 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt2
 - rebuild against libglut.so.3 from libGLUT package
 
