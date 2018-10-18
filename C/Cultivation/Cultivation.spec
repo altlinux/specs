@@ -1,6 +1,6 @@
 Name: Cultivation
 Version: 8
-Release: alt3.1
+Release: alt4
 Summary: Cultivation is a game about the interactions within a gardening community
 License: GPL
 Group: Games/Arcade
@@ -11,7 +11,7 @@ Patch0: Cultivation-8-alt-Makefile.patch
 
 # Automatically added by buildreq on Tue Apr 05 2011
 # optimized out: libGL-devel libGLU-devel libX11-devel libstdc++-devel
-BuildRequires: gcc-c++ libfreeglut-devel
+BuildRequires: gcc-c++ libGLUT-devel
 
 BuildRequires: desktop-file-utils
 
@@ -122,6 +122,9 @@ desktop-file-install --dir=%buildroot%_datadir/applications %name.desktop --vend
 %_datadir/pixmaps/*.png
 
 %changelog
+* Thu Oct 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 8-alt4
+- NMU: rebuilt with libGLUT.
+
 * Tue Nov 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8-alt3.1
 - Fixed build
 
