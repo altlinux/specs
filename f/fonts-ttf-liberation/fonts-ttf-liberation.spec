@@ -1,11 +1,11 @@
-%define priority 60 
+%define priority 60
 %define fontname liberation
 %define fontconf %{priority}-%{fontname}
 %define oldname liberation-fonts
 
 Name: fonts-ttf-%fontname
 Version: 2.00.3
-Release: alt1
+Release: alt2
 
 Summary: Fonts to replace commonly used Microsoft Windows Fonts
 
@@ -29,6 +29,9 @@ Provides: fonts-ttf-core
 Provides: fonts-ttf-liberation-mono = %version
 Provides: fonts-ttf-liberation-sans = %version
 Provides: fonts-ttf-liberation-serif = %version
+
+# To satisfy requirements of official Google Chrome RPM package
+Provides: liberation-fonts
 
 BuildRequires: rpm-build-fonts rpm-macros-fontpackages
 BuildRequires: python3-module-fonttools fontforge fontpackages-devel
@@ -74,6 +77,9 @@ done
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-*.conf
 
 %changelog
+* Thu Oct 18 2018 Vladimir Didenko <cow@altlinux.ru> 2.00.3-alt2
+- add provides to satisfy requirements of official Google Chrome RPM
+
 * Thu Sep 13 2018 Vitaly Lipatov <lav@altlinux.ru> 2.00.3-alt1
 - new version 2.00.3 (with rpmrb script)
 - build from source sfd with fontforge
