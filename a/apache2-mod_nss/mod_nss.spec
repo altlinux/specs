@@ -8,7 +8,7 @@
 
 Name: apache2-%modname
 Version: 1.0.17
-Release: alt2
+Release: alt3
 
 Summary: Apache 2.0 module for implementing crypto using the Mozilla NSS crypto libraries
 License: ASL 2.0
@@ -130,6 +130,9 @@ fi
 %ghost %config(noreplace) %apache_nssdb_dir/install.log
 
 %changelog
+* Thu Oct 18 2018 Stanislav Levin <slev@altlinux.org> 1.0.17-alt3
+- Skipped PROTOCOL_SSLv3 test.
+
 * Thu Aug 30 2018 Stanislav Levin <slev@altlinux.org> 1.0.17-alt2
 - Fix build with new openssl1.1
 
