@@ -3,7 +3,7 @@
 %define module Gear-Rules
 
 Name: perl-%module
-Version: 0.195
+Version: 0.196
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -12,7 +12,8 @@ Summary: %module - Perl extension for quering Gear rules files
 Group: Development/Perl
 License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
-Url: http://search.cpan.org/dist/%module
+#Url: http://search.cpan.org/dist/%module
+Url: http://git.altlinux.org/people/viy/packages/perl-%module
 
 BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm)
 Requires: gear perl(Pod/Text.pm)
@@ -43,6 +44,9 @@ BuildRequires: perl-RPM-Source-Editor
 %endif
 
 %changelog
+* Thu Oct 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.196-alt1
+- subtree merge support
+
 * Sun Sep 23 2018 Igor Vlasenko <viy@altlinux.ru> 0.195-alt1
 - new version
 
