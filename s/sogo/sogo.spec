@@ -5,8 +5,8 @@ Summary:      SOGo is a very fast and scalable modern collaboration suite (group
 Name:         sogo
 # Use the same version as in the "nightly" packages at
 # http://v2.sogo.nu/downloads/backend_v3_nightly.html:
-Version:      4.0.1
-Release:      alt1.1
+Version:      4.0.3
+Release:      alt1
 
 License:      GPL
 URL:          https://sogo.nu/
@@ -424,6 +424,12 @@ fi
 %preun_service sogo
 
 %changelog
+* Thu Oct 18 2018 Andrey Cherepanov <cas@altlinux.org> 4.0.3-alt1
+- New version.
+
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 4.0.2-alt1
+- New version.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
