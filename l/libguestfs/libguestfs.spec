@@ -15,7 +15,7 @@
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.36.15
+Version: 1.38.6
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
@@ -47,7 +47,8 @@ BuildRequires: libyajl-devel >= 2.0.4
 BuildRequires: libsystemd-journal-devel >= 196
 BuildRequires: liblzma-devel
 BuildRequires: libdbus-devel
-BuildRequires(pre): rpm-build-ubt
+BuildRequires: libtirpc-devel
+#BuildRequires: libtsk-devel
 # BuildRequires: supermin >= 5.1.0
 %if_enabled fuse
 BuildRequires: libfuse-devel
@@ -55,6 +56,7 @@ BuildRequires: libfuse-devel
 %if_enabled ocaml
 BuildPreReq: rpm-build-ocaml
 BuildRequires: ocaml ocaml-findlib ocaml-ocamldoc ocaml-ocamlbuild
+BuildRequires: ocaml-hivex-devel
 #BuildRequires: ocaml-gettext
 %endif
 %if_enabled python
@@ -344,16 +346,8 @@ bash-completion for guestfish tool.
 %setup -a1
 %patch1 -p1
 
-# git and rsync aren't needed for build.
-sed -i '/^\(git\|rsync\)[[:space:]]/d' bootstrap
-rmdir .gnulib
-ln -s gnulib-%name-%version .gnulib
-
 %build
-echo "GTK_DOC_CHECK([1.14])" >> configure.ac
-gtkdocize --copy
-mkdir -p daemon/m4
-./bootstrap
+./bootstrap --gnulib-srcdir=gnulib-%name-%version 
 
 %configure \
 	vmchannel_test=no \
@@ -487,6 +481,8 @@ rm -f %buildroot%_bindir/virt-p2v-make-kiwi
 %_man1dir/virt-alignment-scan.1*
 %_bindir/virt-builder
 %_man1dir/virt-builder.1*
+%_bindir/virt-builder-repository
+%_man1dir/virt-builder-repository.1*
 %_bindir/virt-cat
 %_man1dir/virt-cat.1*
 %_bindir/virt-copy-in
@@ -551,7 +547,7 @@ rm -f %buildroot%_bindir/virt-p2v-make-kiwi
 %_man1dir/virt-dib.1*
 
 %files -n virt-v2v
-%doc COPYING README v2v/TODO
+%doc COPYING README
 %_bindir/virt-v2v*
 %_man1dir/virt-v2v*
 #%_datadir/virt-tools
@@ -650,6 +646,9 @@ rm -f %buildroot%_bindir/virt-p2v-make-kiwi
 %endif
 
 %changelog
+* Thu Oct 18 2018 Alexey Shabalin <shaba@altlinux.org> 1.38.6-alt1
+- 1.38.6
+
 * Tue Oct 09 2018 Alexey Shabalin <shaba@altlinux.org> 1.36.15-alt1
 - 1.36.15
 
