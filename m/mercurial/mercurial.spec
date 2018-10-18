@@ -1,5 +1,5 @@
 
-Version: 3.8.4
+Version: 4.7.2
 Release: alt1
 Name: mercurial
 %setup_python_module %name
@@ -104,14 +104,14 @@ install contrib/hg-ssh %buildroot%_bindir/
 mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 
 %files
-%doc CONTRIBUTORS README contrib doc/*html
+%doc CONTRIBUTORS README.rst contrib doc/*html
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/hgrc.d
 %_bindir/hg
 %_bindir/hg-ssh
-%dir %python_sitelibdir/mercurial
+%python_sitelibdir/mercurial
+%python_sitelibdir/hgdemandimport
 %python_sitelibdir/%name-*py%_python_version.egg-info
-%python_sitelibdir/mercurial/*
 %_man1dir/hg.*
 %_man5dir/hgrc.*
 %_man5dir/hgignore.*
@@ -123,10 +123,13 @@ mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 
 %files -n %name-hgext
 %_bindir/hgk
-%dir %python_sitelibdir/hgext
-%python_sitelibdir/hgext/*
+%python_sitelibdir/hgext
+%python_sitelibdir/hgext3rd
 
 %changelog
+* Thu Oct 18 2018 Alexey Shabalin <shaba@altlinux.org> 4.7.2-alt1
+- 4.7.2
+
 * Thu Jul 07 2016 Alexey Shabalin <shaba@altlinux.ru> 3.8.4-alt1
 - 3.8.4
 
