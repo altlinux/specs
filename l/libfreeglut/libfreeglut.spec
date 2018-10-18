@@ -1,11 +1,16 @@
 %def_enable snapshot
 %define _name freeglut
-%def_disable replace_glut
+%define sover 3
+%def_enable replace_glut
+%def_disable wayland
 %def_disable check
+
+%define glut_version 5:8.0.1
+%define glut_release alt3
 
 Name: lib%_name
 Version: 3.0.0
-Release: alt2
+Release: alt2.1
 
 Summary: A freely licensed alternative to the GLUT library
 License: MIT
@@ -23,9 +28,14 @@ Patch: freeglut-3.0.0-alt-fix_cmake_dir.patch
 Provides: libglut = %version %_name = %version
 Obsoletes: libglut < %version %_name < %version
 
+Obsoletes: libGLUT <= %glut_version-%glut_release
+Provides: libGLUT = %glut_version-alt4
+Conflicts: libmesaglut
+
 BuildRequires: ccmake ctest gcc-c++ libGLU-devel libXcomposite-devel libXcursor-devel libXdamage-devel
 BuildRequires: libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel
 BuildRequires: libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel
+%{?_enable_wayland:BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel libEGL-devel libxkbcommon-devel}
 
 %description
 %_name is a completely open source alternative to the OpenGL Utility Toolkit
@@ -44,7 +54,9 @@ Group: Development/C
 Requires: %name = %version-%release
 # due to freeglut_std.h
 Requires: libGL-devel libGLU-devel
-
+Obsoletes: libGLUT-devel <= %glut_version-%glut_release
+Provides: libGLUT-devel = %glut_version-alt4
+Conflicts: libmesaglut-devel
 Provides: libglut-devel = %version %_name-devel = %version
 Obsoletes: libglut-devel < %version %_name-devel < %version
 
@@ -61,11 +73,20 @@ license.
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 %cmake -DFREEGLUT_BUILD_STATIC_LIBS:BOOL=OFF \
-       %{?_disable_replace_glut:-DFREEGLUT_REPLACE_GLUT=FALSE}
+       %{?_enable_replace_glut:-DFREEGLUT_REPLACE_GLUT:BOOL=ON} \
+       %{?_disable_replace_glut:-DFREEGLUT_REPLACE_GLUT:BOOL=OFF}
 %cmake_build
 
 %install
 %cmakeinstall_std
+# always install glut.h and freeglut.pc
+install -m644 include/GL/glut.h %buildroot%_includedir/GL
+ln -s glut.pc %buildroot%_pkgconfigdir/%_name.pc
+%if_disabled replace_glut
+# compatibility symlinks
+ln -s %_name.pc %buildroot%_pkgconfigdir/glut.pc
+ln -s lib%_name.so %buildroot%_libdir/libglut.so
+%endif
 
 %check
 %make -C BUILD test
@@ -81,14 +102,22 @@ license.
 %_includedir/GL/*.h
 %if_enabled replace_glut
 %_libdir/libglut.so
+%_pkgconfigdir/%_name.pc
 %_pkgconfigdir/glut.pc
 %else
 %_libdir/lib%_name.so
+%_libdir/libglut.so
 %_pkgconfigdir/%_name.pc
+%_pkgconfigdir/glut.pc
 %endif
 %_libdir/cmake/FreeGLUT/
 
 %changelog
+* Thu Oct 18 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt2.1
+- rebuilt with -DFREEGLUT_REPLACE_GLUT=ON
+- added symlinks for compatibility with original GLUT if
+  FREEGLUT_REPLACE_GLUT is OFF
+
 * Wed Oct 17 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt2
 - updated to git snapshot
 - introduced "replace_glut" knob (disabled by default) (ALT #35518)
