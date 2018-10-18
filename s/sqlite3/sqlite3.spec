@@ -1,6 +1,6 @@
 Name: sqlite3
 Version: 3.25.2
-Release: alt1
+Release: alt2
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
 Group: Development/Databases
@@ -119,7 +119,14 @@ embedded controllers.
 %build
 export TCLLIBDIR=%_tcllibdir
 export TCLDATADIR=%_tcldatadir/%name
-export CFLAGS="%optflags -DSQLITE_CORE=1 -DSQLITE_SECURE_DELETE=1 -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_UNLOCK_NOTIFY=1 -fno-strict-aliasing "
+export CFLAGS="%optflags \
+	-DSQLITE_CORE=1 \
+	-DSQLITE_ENABLE_COLUMN_METADATA=1 \
+	-DSQLITE_ENABLE_DBSTAT_VTAB=1 \
+	-DSQLITE_ENABLE_FTS3=1 \
+	-DSQLITE_ENABLE_UNLOCK_NOTIFY=1 \
+	-DSQLITE_SECURE_DELETE=1 \
+	-fno-strict-aliasing "
 autoreconf -i
 %configure \
 	--enable-threadsafe \
@@ -182,6 +189,9 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Tue Oct 16 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.25.2-alt2
+- Enable DBSTAT_VTAB
+
 * Thu Sep 27 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.25.2-alt1
 - 2.25.2
 
