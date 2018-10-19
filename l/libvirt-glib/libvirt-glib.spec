@@ -1,7 +1,7 @@
 
 Name: libvirt-glib
-Version: 1.1.0
-Release: alt0.git.d70587
+Version: 2.0.0
+Release: alt1
 Summary: libvirt glib integration for events
 Group: System/Libraries
 License: LGPLv2+
@@ -152,6 +152,9 @@ intltoolize --force
 
 %find_lang %name
 
+%check
+%make_build check
+
 %files -f %name.lang
 %doc README COPYING NEWS
 %_libdir/libvirt-glib-*.so.*
@@ -206,6 +209,9 @@ intltoolize --force
 %_vapidir/libvirt-gobject-*
 
 %changelog
+* Fri Oct 19 2018 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt1
+- new version 2.0.0
+
 * Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 1.1.0-alt0.git.d70587
 - build upstream master snapshot
 
