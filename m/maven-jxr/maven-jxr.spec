@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-jxr
 Version:        2.5
-Release:        alt1_7jpp8
+Release:        alt1_7jpp8.qa1
 Epoch:          0
 Summary:        Source cross referencing tool
 # BSD: maven-jxr/src/main/java/org/apache/maven/jxr/JavaCodeTransform.java
@@ -57,7 +57,7 @@ API documentation for %{name}.
 %package -n maven-plugin-jxr
 Group: Development/Java
 Summary:        Maven plugin for JXR
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{EVR}
 
 %description -n maven-plugin-jxr
 Maven plugin for JXR.
@@ -99,6 +99,9 @@ cp %{SOURCE1} .
 %files -n maven-plugin-jxr -f .mfiles-maven-plugin-jxr
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_7jpp8.qa1
+- NMU: applied repocop patch
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_7jpp8
 - java fc28+ update
 
