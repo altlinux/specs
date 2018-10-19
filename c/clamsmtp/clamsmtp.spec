@@ -1,6 +1,6 @@
 Name: clamsmtp
 Version: 1.10
-Release: alt2.qa1
+Release: alt3
 
 Summary: SMTP virus-scanning proxy
 License: BSD
@@ -12,7 +12,8 @@ Source1: %{name}d.init
 Source2: %{name}d.conf
 Source3: %name-README.ALT-ru_RU.UTF-8
 
-Patch2: clamsmtp-1.9-alt-strncat-buffer-overflow.patch
+Patch0: clamsmtp-1.9-alt-strncat-buffer-overflow.patch
+Patch1: clamsmtp-1.10-alt-smtppass.patch
 
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
@@ -27,7 +28,8 @@ intercepted and scanned before forwarding.
 %prep
 %setup -q
 
-%patch2 -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %configure
@@ -57,6 +59,9 @@ install -m644 %SOURCE3 %_builddir/%name-%version/README.ALT-ru_RU.UTF-8
 %attr(3775,root,mail) %dir %_var/run/%name
 
 %changelog
+* Fri Oct 19 2018 Leontiy Volodin <lvol@altlinux.org> 1.10-alt3
+- add clamsmtp-1.10-alt-smtppass.patch (thanks gentoo for this patch)
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.10-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
