@@ -2,7 +2,7 @@
 %define oname configurator
 Name: ocaml-%oname
 Version: 0.11.0
-Release: alt2
+Release: alt3
 Summary: Helper library for gathering system configuration
 Group: Development/ML
 License: ASL 2.0
@@ -14,7 +14,6 @@ BuildRequires: ocaml-findlib
 BuildRequires: opam
 BuildRequires: ocaml-base >= 0.11
 BuildRequires: ocaml-stdio >= 0.11
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Helper library for gathering system configuration
@@ -70,9 +69,12 @@ jbuilder runtest
 %_libdir/ocaml/%oname/*.ml*
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 0.11.0-alt3
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 0.11.0-alt2
 - rebuilt with ocaml 4.07
 
-* Thu May 17 2018 Anton Farygin <rider@altlinux.ru> 0.11.0-alt1%ubt
+* Thu May 17 2018 Anton Farygin <rider@altlinux.ru> 0.11.0-alt1
 - first build for ALT, based on Mageia spec
 

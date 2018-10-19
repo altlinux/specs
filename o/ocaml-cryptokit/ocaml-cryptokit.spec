@@ -8,14 +8,13 @@
 
 Name: ocaml-%pkgname
 Version: 1.13
-Release: alt2
+Release: alt3
 Group: Development/ML
 Summary: OCaml library of cryptographic and hash functions
 License: LGPLv2 with exceptions
 Url: http://forge.ocamlcore.org/projects/cryptokit/
 Source0: %name-%version.tar
 BuildRequires: ocaml ocaml-ocamldoc ocaml-ocamlbuild ocaml-zarith-devel ocaml-findlib zlib-devel chrpath
-BuildRequires(pre): rpm-build-ubt
 Provides: ocaml-cryptokit-runtime = %version-%release
 Obsoletes: ocaml-cryptokit-runtime
 
@@ -78,19 +77,22 @@ make install
 %pkgsitelib/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.13-alt3
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.13-alt2
 - rebuilt with ocaml 4.07
 
-* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.13-alt1%ubt
+* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.13-alt1
 - 1.13
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.11-alt3%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.11-alt3
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.11-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.11-alt2
 - rebuild with ocaml 4.04.1
 
-* Tue Feb 14 2017 Anton Farygin <rider@altlinux.ru> 1.11-alt1%ubt
+* Tue Feb 14 2017 Anton Farygin <rider@altlinux.ru> 1.11-alt1
 - updated to new version
 
 * Wed Jan 11 2012 Alexey Shabalin <shaba@altlinux.ru> 1.5-alt1

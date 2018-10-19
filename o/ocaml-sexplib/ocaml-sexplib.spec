@@ -2,7 +2,7 @@
 %define oname sexplib
 Name: ocaml-%oname
 Version: 0.10.0
-Release: alt2
+Release: alt3
 Summary: OCaml library for converting OCaml values to S-expressions
 License: Apache 2.0
 Group: Development/ML
@@ -12,7 +12,6 @@ BuildRequires: jbuilder
 BuildRequires: ocaml
 BuildRequires: ocaml-num
 BuildRequires: opam
-BuildRequires(pre):rpm-build-ubt
 
 %description
 This library contains functionality for parsing and pretty-printing
@@ -82,9 +81,12 @@ rm -rf %buildroot/usr/doc
 %_libdir/ocaml/sexplib/*/*.ml-gen
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 0.10.0-alt3
+- rebuilt with ocaml-4.07.1
+
 * Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 0.10.0-alt2
 - rebuilt with ocaml 4.07
 
-* Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 0.10.0-alt1%ubt
+* Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 0.10.0-alt1
 - first build for ALT, based on specfile from Mageia
 

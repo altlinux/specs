@@ -6,7 +6,7 @@
 
 Name: hivex
 Version: 1.3.15
-Release: alt2
+Release: alt3
 Summary: Read and write Windows Registry binary hive files
 
 Group: Development/Other
@@ -26,7 +26,6 @@ BuildRequires: perl-libintl
 %{?_enable_python:BuildRequires: python-devel}
 BuildRequires: libreadline-devel
 BuildRequires: libxml2-devel
-BuildRequires(pre):rpm-build-ubt
 
 %description
 Hive files are the undocumented binary blobs that Windows uses to
@@ -231,16 +230,19 @@ rm -f %buildroot%python_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Fri Oct 19 2018 Anton Farygin <rider@altlinux.ru> 1.3.15-alt3
+- rebuilt with ocaml-4.07.1
+
 * Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 1.3.15-alt2
 - rebuilt with ocaml 4.07
 
-* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 1.3.15-alt1%ubt
+* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 1.3.15-alt1
 - 1.3.15
 
-* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.14-alt1%ubt.1
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.14-alt1.1
 - rebuild with new perl 5.26.1
 
-* Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 1.3.14-alt1%ubt
+* Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 1.3.14-alt1
 - new version
 
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.3.13-alt4

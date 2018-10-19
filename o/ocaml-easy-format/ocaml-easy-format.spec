@@ -3,7 +3,7 @@
 
 Name: ocaml-easy-format
 Version: 1.3.1
-Release: alt2
+Release: alt3
 Summary: High-level and functional interface to the Format module
 License: BSD
 Group: Development/ML
@@ -15,7 +15,6 @@ BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamldoc
 BuildRequires: jbuilder
 BuildRequires: opam
-BuildRequires(pre): rpm-build-ubt
 
 %description
 This module offers a high-level and functional interface to the Format
@@ -69,20 +68,23 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.3.1-alt3
+- rebuilt for ocaml-4.07.1
+
 * Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 1.3.1-alt2
 - rebuilt for ocaml-4.07
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.3.1-alt1%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.3.1-alt1
 - 1.3.1
 
-* Thu Dec 21 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2%ubt
+* Thu Dec 21 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2
 - rebuilt for ocaml 4.06
 
-* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1%ubt
+* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
 - new version
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.0.2-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.0.2-alt2
 - rebuild with ocaml 4.04.1
 
-* Thu Apr 20 2017 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1%ubt
+* Thu Apr 20 2017 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1
 - first build for ALT, based on RH spec

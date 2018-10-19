@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-num
 Version: 1.1
-Release: alt2
+Release: alt3
 Summary: Legacy Num library for arbitrary-precision integer and rational arithmetic
 Group: Development/ML
 License: LGPLv2+ with exceptions
@@ -13,7 +13,6 @@ Source0: %name-%version.tar
 Patch1: 0001-install-Use-DESTDIR.patch
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib-devel
-BuildRequires(pre): rpm-build-ubt
 
 %description
 This library implements arbitrary-precision arithmetic on big integers
@@ -77,9 +76,12 @@ find $OCAMLFIND_DESTDIR -name '*.cmti' -delete
 %_libdir/ocaml/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.1-alt3
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.1-alt2
 - rebuilt with ocaml 4.07
 
-* Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 1.1-alt1%ubt
+* Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 1.1-alt1
 - first build for ALT, based on Mageia spec
 

@@ -6,7 +6,7 @@ License: BSD
 Group: Development/ML
 Summary: Development files for %name-runtime
 Version: 0.8
-Release: alt6
+Release: alt7
 Url: https://github.com/vbmithr/ocaml-text
 Source: %name-%version.tar
 Patch0: ocaml-text-alt-fix-rpath.patch
@@ -14,7 +14,6 @@ Requires: %name-runtime = %version-%release
 
 BuildRequires: ocaml ocaml-ocamldoc ocaml-ocamlbuild ocaml-findlib ocaml-camlp4-devel
 BuildRequires: ocaml-pcre libncurses-devel
-BuildRequires(pre): rpm-build-ubt
 
 %description
 OCaml-Text is a library for dealing with ``text'', i.e. sequence of
@@ -77,22 +76,25 @@ mkdir -p %buildroot%_libdir/ocaml/stublibs
 %_libdir/ocaml/text/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 0.8-alt7
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 0.8-alt6
 - rebuilt with ocaml 4.07
 
-* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 0.8-alt5%ubt
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 0.8-alt5
 - rebuilt for ocaml 4.06.1
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 0.8-alt4%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 0.8-alt4
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 0.8-alt3%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 0.8-alt3
 - rebuild with ocaml 4.04.1
 
-* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 0.8-alt2%ubt
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 0.8-alt2
 - rebuild in new environment
 
-* Wed Apr 12 2017 Anton Farygin <rider@altlinux.ru> 0.8-alt1%ubt
+* Wed Apr 12 2017 Anton Farygin <rider@altlinux.ru> 0.8-alt1
 - updated to 0.8
 
 * Tue Apr 11 2017 Anton Farygin <rider@altlinux.ru> 0.6-alt1

@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-uutf
 Version: 1.0.1
-Release: alt2
+Release: alt3
 Summary: Non-blocking streaming codec for UTF-8, UTF-16, UTF-16LE and UTF-16BE
 License: BSD3
 Group: Development/ML
@@ -12,7 +12,6 @@ BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-cmdliner-devel
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-topkg opam
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Uutf is an non-blocking streaming Unicode codec for OCaml to decode and
@@ -62,12 +61,15 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/uutf/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.0.1-alt3
+- rebuilt with ocaml-4.07.1
+
 * Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 1.0.1-alt2
 - rebuilt with ocaml-4.07
 
-* Mon May 21 2018 Anton Farygin <rider@altlinux.ru> 1.0.1-alt1%ubt
+* Mon May 21 2018 Anton Farygin <rider@altlinux.ru> 1.0.1-alt1
 - 1.0.1
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 0.9.4-alt1%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 0.9.4-alt1
 - first build for ALT, based on specfile from Mageia
 

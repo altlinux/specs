@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-extlib
 Version: 1.7.5
-Release: alt1
+Release: alt2
 
 Summary: extended standard library for OCaml
 License: LGPL v2, with exceptions
@@ -13,7 +13,6 @@ Patch0: %name-%version-alt.patch
 
 Requires: ocaml-runtime
 BuildRequires: rpm-build-ocaml ocaml-ocamldoc ocaml-findlib ocaml-cppo ocaml-camlp4-devel
-BuildRequires(pre): rpm-build-ubt
 
 %description
 ExtLib is a project aiming at providing a complete - yet small - standard
@@ -70,25 +69,28 @@ mkdir -p mkdir -p %buildroot%_libdir/ocaml
 %_libdir/ocaml/extlib/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.7.5-alt2
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.7.5-alt1
 - 1.7.5
 
-* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.7.4-alt1%ubt
+* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.7.4-alt1
 - 1.7.4
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.7.2-alt5%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.7.2-alt5
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.7.2-alt4%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.7.2-alt4
 - rebuild with ocaml 4.04.1
 
-* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 1.7.2-alt3%ubt
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 1.7.2-alt3
 - split to devel and runtime packages
 
-* Sat Apr 15 2017 Anton Farygin <rider@altlinux.ru> 1.7.2-alt2%ubt
+* Sat Apr 15 2017 Anton Farygin <rider@altlinux.ru> 1.7.2-alt2
 - do not use site-lib
 
-* Sat Apr 08 2017 Anton Farygin <rider@altlinux.ru> 1.7.2-alt1%ubt
+* Sat Apr 08 2017 Anton Farygin <rider@altlinux.ru> 1.7.2-alt1
 - new version
 
 * Thu Dec 22 2011 Alexey Shabalin <shaba@altlinux.ru> 1.5.2-alt1

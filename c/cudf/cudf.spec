@@ -3,14 +3,13 @@
 Summary: CUDF (Common Upgradeability Description Format) tools and libraries
 Name: cudf
 Version: 0.9
-Release: alt4
+Release: alt5
 # https://scm.gforge.inria.fr/anonscm/git/cudf/cudf.git
 Source: %name-%version.tar
 Url: http://www.mancoosi.org/cudf/
 License: LGPL
 Group: Development/ML
 BuildRequires: ocaml ocaml-findlib ocaml-extlib-devel perl-podlators ocaml-ocamlbuild libncurses-devel glib2-devel ocaml-ounit
-BuildRequires(pre):rpm-build-ubt
 
 %description
 CUDF (for Common Upgradeability Description Format) is a format for describing
@@ -96,14 +95,17 @@ make test
 %_libdir/ocaml/cudf
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 0.9-alt5
+- rebuilt with ocaml-4.07.1
+
 * Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 0.9-alt4
 - rebuilt with ocaml 4.07
 
-* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 0.9-alt3%ubt
+* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 0.9-alt3
 - rebuilt for ocaml 4.06.1
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 0.9-alt2%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 0.9-alt2
 - rebuild with ocaml 4.04.2
 
-* Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 0.9-alt1%ubt
+* Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 0.9-alt1
 - first build for ALT

@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-gapi
 Version: 0.3.7
-Release: alt1
+Release: alt2
 Summary: A simple OCaml client for Google Services
 License: MIT
 Group: Development/ML
@@ -19,7 +19,6 @@ BuildRequires: ocaml-xmlm-devel >= 1.2.0
 BuildRequires: ocaml-ounit-devel >= 2.0.0
 BuildRequires: ocaml-curl-devel
 BuildRequires: zlib-devel
-BuildRequires(pre): rpm-build-ubt
 
 %description
 **gapi-ocaml** is a simple, unofficial, OCaml client for Google Services. The
@@ -87,17 +86,20 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml gapi
 %_libdir/ocaml/gapi-ocaml/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 0.3.7-alt2
+- rebuilt with ocaml-4.07.1
+
 * Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 0.3.7-alt1
 - 0.3.7
 
-* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 0.3.6-alt1%ubt
+* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 0.3.6-alt1
 - 0.3.6
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 0.3.4-alt1%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 0.3.4-alt1
 - new version
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 0.3.3-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 0.3.3-alt2
 - rebuild with ocaml 4.04.1
 
-* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 0.3.3-alt1%ubt
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 0.3.3-alt1
 - first build for ALT

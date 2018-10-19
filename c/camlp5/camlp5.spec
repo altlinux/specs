@@ -1,6 +1,6 @@
 Name: camlp5
-Version: 7.06
-Release: alt1%ubt
+Version: 7.07
+Release: alt1
 
 Summary: preprocessor-pretty-printer of OCaml
 License: BSD-style
@@ -11,8 +11,7 @@ Source: %name-%version.tar
 Source2: META.src
 Patch1: camlp5-5.08-alt-dynlink.patch
 
-BuildRequires: ocaml >= 4.06.0
-BuildRequires(pre): rpm-build-ubt
+BuildRequires: ocaml >= 4.07.0
 
 %description
 Camlp5 is a preprocessor-pretty-printer of OCaml.
@@ -46,22 +45,25 @@ install -pD -m644 META %buildroot%_libdir/ocaml/site-lib/%name/META
 %_man1dir/*5*.1*
 
 %changelog
-* Mon Aug 13 2018 Anton Farygin <rider@altlinux.ru> 7.06-alt1%ubt
+* Wed Oct 17 2018 Anton Farygin <rider@altlinux.ru> 7.07-alt1
+- 7.07
+
+* Mon Aug 13 2018 Anton Farygin <rider@altlinux.ru> 7.06-alt1
 - 7.06
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 7.05-alt1%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 7.05-alt1
 - 7.05
 
-* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 7.03-alt1%ubt
+* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 7.03-alt1
 - 7.03
 
-* Tue Jul 04 2017 Anton Farygin <rider@altlinux.ru> 7.00-alt1%ubt
+* Tue Jul 04 2017 Anton Farygin <rider@altlinux.ru> 7.00-alt1
 - 7.00
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 6.17-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 6.17-alt2
 - rebuild with ocaml 4.04.1
 
-* Tue Mar 28 2017 Anton Farygin <rider@altlinux.ru> 6.17-alt1%ubt
+* Tue Mar 28 2017 Anton Farygin <rider@altlinux.ru> 6.17-alt1
 - new version
 
 * Fri Dec 23 2011 Alexey Shabalin <shaba@altlinux.ru> 6.02.3-alt1

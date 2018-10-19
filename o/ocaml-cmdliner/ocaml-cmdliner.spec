@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-cmdliner
 Version: 1.0.2
-Release: alt3
+Release: alt4
 Summary: Declarative definition of command line interfaces for OCaml
 
 # In order for this to work as a "global" macro it has to come after the
@@ -17,7 +17,6 @@ BuildRequires: ocaml
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-result-devel
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Cmdliner allows the declarative definition of command line
@@ -90,12 +89,15 @@ chmod -x %buildroot%_libdir/ocaml/%libname/opam
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt4
+- rebuilt with ocaml-4.07.1
+
 * Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt3
 - rebuilt with ocaml 4.07
 
-* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt2%ubt
+* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt2
 - rebuilt for ocaml 4.06.1
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1
 - first build for ALT, based on RH spec
 

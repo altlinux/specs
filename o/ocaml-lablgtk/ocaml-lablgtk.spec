@@ -2,7 +2,7 @@
 
 Name: ocaml-lablgtk
 Version: 2.18.6
-Release: alt2.qa1
+Release: alt3
 
 Summary: Objective Caml interface to gtk+
 
@@ -13,7 +13,6 @@ Url: http://lablgtk.forge.ocamlcore.org/
 # https://forge.ocamlcore.org/anonscm/git/lablgtk/lablgtk.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libncurses-devel
 BuildRequires: libgtk+2-devel
 BuildRequires: libgtkspell-devel
@@ -136,24 +135,27 @@ find examples -name .cvsignore -exec rm {} \;
 %doc examples doc/html
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 2.18.6-alt3
+- rebuilt with ocaml-4.07.1
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.18.6-alt2.qa1
 - NMU: applied repocop patch
 
 * Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 2.18.6-alt2
 - rebuilt with ocaml-4.07
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 2.18.6-alt1%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 2.18.6-alt1
 - 2.18.6
 - rebuilt for ocaml 4.06.1
 
-* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 2.18.5-alt4%ubt
+* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 2.18.5-alt4
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 2.18.5-alt3%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 2.18.5-alt3
 - rebuild with ocaml 4.04.1
 
-* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 2.18.5-alt2%ubt
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 2.18.5-alt2
 - rebuilt in new environment
 
-* Sun Apr 16 2017 Anton Farygin <rider@altlinux.ru> 2.18.5-alt1%ubt
+* Sun Apr 16 2017 Anton Farygin <rider@altlinux.ru> 2.18.5-alt1
 - first build for ALT, based on RH spec

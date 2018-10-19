@@ -1,6 +1,6 @@
 Name: ocaml-camlp4
 Version: 4.07.1
-Release: alt1%ubt
+Release: alt2
 
 Summary: Preprocessor for OCaml
 License: QPL & LGPL
@@ -8,7 +8,6 @@ Group: Development/ML
 Url: https://github.com/ocaml/camlp4
 Source0: %name-%version.tar
 BuildRequires: rpm-build-ocaml >= 1.2
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: ocaml >= 4.06 ocaml-ocamlbuild
 Provides: ocaml4-campl4
 Obsoletes: ocaml4-campl4
@@ -81,24 +80,27 @@ make install BINDIR=%buildroot%_bindir LIBDIR=%buildroot%_libdir/ocaml MANDIR=%b
 %_libdir/ocaml/camlp4/Camlp4Top/*.o
 
 %changelog
-* Mon Aug 13 2018 Anton Farygin <rider@altlinux.ru> 4.07.1-alt1%ubt
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 4.07.1-alt2
+- rebuilt for ocaml 4.07.1
+
+* Mon Aug 13 2018 Anton Farygin <rider@altlinux.ru> 4.07.1-alt1
 - up to 4.07+1
 
-* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 4.06.1-alt1%ubt
+* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 4.06.1-alt1
 - up to 4.06+1
 
-* Thu Jul 06 2017 Anton Farygin <rider@altlinux.ru> 4.04.2-alt1%ubt
+* Thu Jul 06 2017 Anton Farygin <rider@altlinux.ru> 4.04.2-alt1
 - up to 30fc8cd  from 4.04 branch
 - rebuild with ocaml-4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 4.04.1-alt3%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 4.04.1-alt3
 - rebuild with ocaml 4.04.1
 
-* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 4.04.1-alt2%ubt
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 4.04.1-alt2
 - split to devel and runtime packages
 - specfile cleanup
 
-* Thu Feb 16 2017 Anton Farygin <rider@altlinux.ru> 4.04.1-alt1%ubt
+* Thu Feb 16 2017 Anton Farygin <rider@altlinux.ru> 4.04.1-alt1
 - new version
 
 * Sun Jun 19 2016 Andrey Bergman <vkni@altlinux.org> 4.03.1-alt1

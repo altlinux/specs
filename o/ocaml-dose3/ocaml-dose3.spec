@@ -3,7 +3,7 @@
 
 Name: ocaml-dose3
 Version: 5.0.1
-Release: alt3.5.2git2c1b8df
+Release: alt4.5.2git2c1b8df
 Summary: Framework for managing distribution packages and dependencies
 Group: Development/ML
 
@@ -18,7 +18,6 @@ Source0: %name-%version.tar
 # One remaining safe-string fix.
 Patch0: ocaml-dose3-safe-string.patch
 
-BuildRequires(Pre): rpm-build-ubt
 
 BuildRequires: ocaml
 BuildRequires: ocaml-ocamlbuild
@@ -138,15 +137,18 @@ ln -s %_bindir/distcheck %buildroot%_bindir/eclipsecheck
 %_mandir/man8/*.8*
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 5.0.1-alt4.5.2git2c1b8df
+- rebuilt with ocaml-4.07.1
+
 * Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 5.0.1-alt3.5.2git2c1b8df
 - up to 2c1b8df from git
 
-* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 5.0.1-alt2.5.2git09392e2%ubt
+* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 5.0.1-alt2.5.2git09392e2
 - rebuilt for ocaml-4.06.1
 
-* Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 5.0.1-alt1.5.2git09392e2%ubt
+* Wed May 16 2018 Anton Farygin <rider@altlinux.ru> 5.0.1-alt1.5.2git09392e2
 - cleanup  buildrequires
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 5.0.1-alt0.5.2git09392e2%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 5.0.1-alt0.5.2git09392e2
 - first build for ALT, based on RH spec
 

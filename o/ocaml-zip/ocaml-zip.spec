@@ -1,7 +1,7 @@
 %define pkgname zip
 Name: ocaml-%pkgname
 Version: 1.07
-Release: alt6
+Release: alt7
 Summary: OCaml library for reading and writing zip, jar and gzip files
 
 Group: Development/ML
@@ -14,7 +14,6 @@ Obsoletes: ocaml4-zip
 Source: %name-%version.tar
 
 BuildRequires: ocaml zlib-devel ocaml-findlib
-BuildRequires(pre): rpm-build-ubt
 
 %description
 This Objective Caml library provides easy access to compressed files
@@ -72,25 +71,28 @@ ocamlfind install %pkgname *.cma *.cmxa *.a *.cmx *.cmi *.mli dll*.so META
 %_libdir/ocaml/%pkgname/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.07-alt7
+- rebuilt with ocaml-4.07.1
+
 * Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 1.07-alt6
 - rebuilt with ocaml-4.07
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.07-alt5%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.07-alt5
 - rebuilt for ocaml 4.06.1
 
-* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1.07-alt4%ubt
+* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1.07-alt4
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.07-alt3%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.07-alt3
 - rebuild with ocaml 4.04.1
 
-* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 1.07-alt2%ubt
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 1.07-alt2
 - rebuild with new rpm-build-ocaml
 - moved outsite from site-lib dir
 - split to runtime and devel packages
 - fixed double requires in META
 
-* Tue Mar 28 2017 Anton Farygin <rider@altlinux.ru> 1.07-alt1%ubt
+* Tue Mar 28 2017 Anton Farygin <rider@altlinux.ru> 1.07-alt1
 - new version
 
 * Wed Jun 22 2016 Andrey Bergman <vkni@altlinux.org> 1.06-alt1

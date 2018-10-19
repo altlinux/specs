@@ -2,7 +2,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-lwt
 Version: 4.1.0
-Release: alt1
+Release: alt2
 Summary: OCaml lightweight thread library
 
 Group: Development/ML
@@ -15,7 +15,6 @@ Patch0: %name-%version-alt.patch
 BuildRequires: ocaml-findlib ocaml-ocamldoc termutils ocaml-ssl ocaml-camlp4-devel ocaml-react glib2-devel libev-devel chrpath
 BuildRequires: jbuilder opam ocaml-cppo
 BuildRequires: ocaml-migrate-parsetree ocaml-ppx_tools_versioned-devel ocaml-result-devel
-BuildRequires(pre): rpm-build-ubt
 Requires: rpm-build-ocaml >= 1.1
 BuildPreReq: rpm-build-ocaml >= 1.1
 
@@ -72,6 +71,9 @@ jbuilder install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/lwt/unix/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 4.1.0-alt2
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 4.1.0-alt1
 - 4.1.0
 

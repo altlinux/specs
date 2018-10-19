@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-jsonm
 Version: 1.0.1
-Release: alt2
+Release: alt3
 Summary: Non-blocking streaming codec to decode and encode JSON
 License: BSD3
 Group: Development/ML
@@ -13,7 +13,6 @@ BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-ocamlbuild opam ocaml-topkg
 BuildRequires: ocaml-uutf 
 Requires: ocaml-uutf
-BuildRequires(pre):rpm-build-ubt
 
 %description
 Jsonm is a non-blocking streaming codec to decode and encode the JSON data
@@ -62,12 +61,15 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/jsonm/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.0.1-alt3
+- rebuilt with ocaml-4.07.1
+
 * Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 1.0.1-alt2
 - rebuilt with ocaml-4.07
 
-* Mon May 21 2018 Anton Farygin <rider@altlinux.ru> 1.0.1-alt1%ubt
+* Mon May 21 2018 Anton Farygin <rider@altlinux.ru> 1.0.1-alt1
 - 1.0.1
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 0.9.1-alt1%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 0.9.1-alt1
 - first build for ALT, based on Mageia spec
 

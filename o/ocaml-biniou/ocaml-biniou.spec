@@ -2,7 +2,7 @@
 
 Name: ocaml-biniou
 Version: 1.2.0
-Release: alt2
+Release: alt3
 Summary: Safe and fast binary data format
 Group: Development/ML
 License: BSD
@@ -73,6 +73,9 @@ mv %buildroot%_bindir/{,ocaml-}bdump
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.2.0-alt3
+- rebuilt for ocaml-4.07.1
+
 * Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2
 - rebuilt for ocaml-4.07
 

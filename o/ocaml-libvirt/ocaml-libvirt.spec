@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-libvirt
 Version: 0.6.1.4
-Release: alt6
+Release: alt7
 Summary: OCaml binding for libvirt
 Group: System/Libraries
 
@@ -32,7 +32,6 @@ Patch8: 0001-Use-safe-string-and-fix-the-library.patch
 BuildRequires: ocaml >= 3.10.0
 BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-findlib
-BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: libvirt-devel >= 0.2.1
 BuildRequires: perl-devel
@@ -91,19 +90,22 @@ make install-opt
 %_libdir/ocaml/libvirt/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt7
+- rebuilt with ocaml-4.07.1
+
 * Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt6
 - rebuilt with ocaml 4.07
 
-* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt5%ubt
+* Sun May 20 2018 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt5
 - rebuilt for ocaml 4.06.1
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt4%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt4
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt3%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt3
 - rebuild with ocaml 4.04.1
 
-* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt2%ubt
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt2
 - rebuild with new rpm-build-ocaml
 - moved outsite from site-lib dir
 

@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-xml-light
 Version: 2.4
-Release: alt5
+Release: alt6
 Summary: Minimal XML parser and printer for OCaml
 
 Group: Development/ML
@@ -10,7 +10,6 @@ Url: https://opam.ocaml.org/packages/xml-light/
 Source0: %name-%version.tar
 
 BuildRequires: ocaml-ocamldoc ocaml-findlib
-BuildRequires(pre):rpm-build-ubt
 
 %description
 Xml-Light is a minimal XML parser & printer for OCaml. It provides
@@ -58,19 +57,22 @@ ocamlfind install xml-light META *.mli *.cmi *.cma *.a *.cmxa *.cmx
 %_libdir/ocaml/xml-light/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 2.4-alt6
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 2.4-alt5
 - rebuilt with ocaml 4.07
 
-* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 2.4-alt4%ubt
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 2.4-alt4
 - rebuilt for ocaml 4.06.1
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 2.4-alt3%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 2.4-alt3
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 2.4-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 2.4-alt2
 - rebuild with ocaml 4.04.1
 
-* Wed Apr 12 2017 Anton Farygin <rider@altlinux.ru> 2.4-alt1%ubt
+* Wed Apr 12 2017 Anton Farygin <rider@altlinux.ru> 2.4-alt1
 - new version
 - build for ocaml-4.04
 

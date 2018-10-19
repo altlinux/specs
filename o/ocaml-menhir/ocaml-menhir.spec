@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-menhir
 Version: 20181005
-Release: alt1
+Release: alt2
 Summary: LR(1) parser generator for the OCaml programming language.
 
 Group: Development/ML
@@ -9,7 +9,7 @@ License: QPL
 Url: http://gallium.inria.fr/~fpottier/menhir/
 Source: menhir-%version.tar
 
-BuildRequires(pre): ocaml rpm-build-ubt
+BuildRequires(pre): ocaml
 Provides: ocaml4-menhir
 Obsoletes: ocaml4-menhir
 
@@ -62,28 +62,31 @@ rm -rf %buildroot%_datadir/doc/%name-%version/src/
 %_libdir/ocaml/menhirSdk/*
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 20181005-alt2
+- rebuilt for ocaml-4.07.1
+
 * Tue Oct 09 2018 Anton Farygin <rider@altlinux.ru> 20181005-alt1
 - 20181005
 
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 20180530-alt2
 - rebuilt with ocaml-4.07
 
-* Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 20180530-alt1%ubt
+* Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 20180530-alt1
 - 20180530 (closes: #34902)
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 20171222-alt1%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 20171222-alt1
 - 20171222
 
-* Tue Dec 19 2017 Anton Farygin <rider@altlinux.ru> 20170607-alt2%ubt
+* Tue Dec 19 2017 Anton Farygin <rider@altlinux.ru> 20170607-alt2
 - rebuilt for ocaml 4.06
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 20170607-alt1%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 20170607-alt1
 - updated to 20170607
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 20170101-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 20170101-alt2
 - rebuild with ocaml 4.04.1
 
-* Thu Mar 30 2017 Anton Farygin <rider@altlinux.ru> 20170101-alt1%ubt
+* Thu Mar 30 2017 Anton Farygin <rider@altlinux.ru> 20170101-alt1
 - renamed to ocaml-menhir
 - new version
 

@@ -3,7 +3,7 @@
 
 Name: ocaml-pcre
 Version: 7.3.4
-Release: alt2
+Release: alt3
 
 Summary: Perl compatibility regular expressions (PCRE) for OCaml
 License: LGPL
@@ -18,7 +18,6 @@ Provides: ocaml-pcre-runtime = %version-%release
 Obsoletes: ocaml-pcre-runtime < %version-%release
 
 BuildRequires: libpcre-devel ocaml ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc jbuilder opam ocaml-base ocaml-configurator ocaml-stdio
-BuildRequires(pre): rpm-build-ubt
 
 %description
 This OCaml-library interfaces the PCRE (Perl-compatibility regular
@@ -63,22 +62,25 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/pcre/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 7.3.4-alt3
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 7.3.4-alt2
 - rebuilt with ocaml 4.07
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 7.3.4-alt1%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 7.3.4-alt1
 - 7.3.4
 
-* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 7.2.3-alt4%ubt
+* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 7.2.3-alt4
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 7.2.3-alt3%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 7.2.3-alt3
 - rebuild with ocaml 4.04.1
 
-* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 7.2.3-alt2%ubt
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 7.2.3-alt2
 - split to devel and main package
 
-* Tue Apr 11 2017 Anton Farygin <rider@altlinux.ru> 7.2.3-alt1%ubt
+* Tue Apr 11 2017 Anton Farygin <rider@altlinux.ru> 7.2.3-alt1
 - new version
 
 * Thu Dec 22 2011 Alexey Shabalin <shaba@altlinux.ru> 6.2.4-alt1

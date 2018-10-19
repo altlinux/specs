@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-type-conv
 Version: 113.00.02
-Release: alt4
+Release: alt5
 Summary: OCaml base library for type conversion
 License: LGPLv2+ with exceptions and BSD
 Group: Development/ML
@@ -13,7 +13,6 @@ BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-camlp4-devel
-BuildRequires(pre): rpm-build-ubt
 
 %description
 The type-conv mini library factors out functionality needed by
@@ -49,15 +48,18 @@ ocaml setup.ml -install
 %ocamldir/type_conv
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 113.00.02-alt5
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 113.00.02-alt4
 - rebuilt for ocaml 4.07
 
-* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 113.00.02-alt3%ubt
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 113.00.02-alt3
 - rebuilt for ocaml 4.06.1
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 113.00.02-alt2%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 113.00.02-alt2
 - rebuild with ocaml 4.04.2
 
-* Wed May 17 2017 Anton Farygin <rider@altlinux.ru> 113.00.02-alt1%ubt
+* Wed May 17 2017 Anton Farygin <rider@altlinux.ru> 113.00.02-alt1
 - first build for ALT
 

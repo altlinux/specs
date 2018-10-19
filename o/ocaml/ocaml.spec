@@ -9,8 +9,8 @@
 %remove_optflags -fomit-frame-pointer
 
 Name: ocaml
-Version: 4.07.0
-Release: alt1%ubt
+Version: 4.07.1
+Release: alt1
 
 Summary: The Objective Caml compiler and programming environment
 License: QPL & LGPL
@@ -28,7 +28,6 @@ Patch2: ocaml-4.06-alt-mk-reqprov.patch
 
 Requires: rpm-build-ocaml >= 1.1
 BuildRequires(pre): rpm-build-ocaml >= 1.1.1
-BuildRequires(pre): rpm-build-ubt
 
 Conflicts: ocaml4
 Obsoletes: ocaml4
@@ -218,23 +217,26 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_libdir/ocaml/ocamldoc/
 
 %changelog
-* Mon Aug 13 2018 Anton Farygin <rider@altlinux.ru> 4.07.0-alt1%ubt
+* Wed Oct 17 2018 Anton Farygin <rider@altlinux.ru> 4.07.1-alt1
+- 4.07.1
+
+* Mon Aug 13 2018 Anton Farygin <rider@altlinux.ru> 4.07.0-alt1
 - 4.07.0
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 4.06.1-alt1%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 4.06.1-alt1
 - 4.06.1
 
-* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 4.06.0-alt1%ubt
+* Mon Dec 18 2017 Anton Farygin <rider@altlinux.ru> 4.06.0-alt1
 - new version
 
-* Tue Jul 04 2017 Anton Farygin <rider@altlinux.ru> 4.04.2-alt1%ubt
+* Tue Jul 04 2017 Anton Farygin <rider@altlinux.ru> 4.04.2-alt1
 - new version with security fixes:
    + CVE-2017-9772 Local privilege escalation issue with ocaml binaries
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 4.04.1-alt1%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 4.04.1-alt1
 - new version
 
-* Sat Apr 15 2017 Anton Farygin <rider@altlinux.ru> 4.04.0-alt1%ubt
+* Sat Apr 15 2017 Anton Farygin <rider@altlinux.ru> 4.04.0-alt1
 - build from upstream git
 - added %%ubt tag
 - renamed back to ocaml

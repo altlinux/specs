@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-functory
 Version: 0.6
-Release: alt1
+Release: alt2
 Summary: Distributed computing library for OCAML
 License: LGPL2.1
 Group: Development/ML
@@ -55,6 +55,9 @@ make ocamlfind-install
 %_libdir/ocaml/functory/*.mli
 
 %changelog
+* Fri Oct 19 2018 Anton Farygin <rider@altlinux.ru> 0.6-alt2
+- rebuilt with ocaml-4.07.1
+
 * Tue Oct 09 2018 Anton Farygin <rider@altlinux.ru> 0.6-alt1
 - first build for ALT
 

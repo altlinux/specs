@@ -3,7 +3,7 @@ Name: ocaml-xmlm
 %global libname %(sed -e 's/^ocaml-//' <<< %name)
 Group: Development/ML
 Version: 1.3.0
-Release: alt2
+Release: alt3
 Summary: A streaming XML codec
 License: BSD
 Url: http://erratique.ch/software/xmlm
@@ -14,7 +14,6 @@ BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-topkg
 BuildRequires: opam
-BuildRequires(pre):rpm-build-ubt
 
 %description
 Xmlm is an OCaml streaming codec to decode and encode the XML data
@@ -59,17 +58,20 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.3.0-alt3
+- rebuilt with ocaml-4.07.1
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.3.0-alt2
 - rebuilt with ocaml 4.07
 
-* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.3.0-alt1%ubt
+* Sat May 19 2018 Anton Farygin <rider@altlinux.ru> 1.3.0-alt1
 - 1.3.0
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt3%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt3
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2
 - rebuild with ocaml 4.04.1
 
-* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1%ubt
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
 - first build for ALT, based on RH spec

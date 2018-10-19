@@ -1,21 +1,19 @@
 Name: ocaml-lablgl
 Version: 1.05
-Release: alt6
+Release: alt7
 Summary: OpenGL library for OCaml
 License: BSD-style
 Group: Development/ML
 Url: https://forge.ocamlcore.org/projects/lablgl/
 # git https://forge.ocamlcore.org/anonscm/git/lablgl/lablgl.git
 Source: %name-%version.tar
-#Patch1: lablgl-1.03-alt-togl.patch
 
 Provides: %name-runtime = %version-%release
 Obsoletes: %name-runtime < %version-%release
 Provides: lablGL = %version-%release
-BuildRequires(pre):rpm-build-ubt
 Obsoletes: lablGL
 
-BuildRequires: ocaml-camlp4-devel ocaml-labltk libXext-devel libXmu-devel libfreeglut-devel tcl-togl-devel
+BuildRequires: ocaml-camlp4-devel ocaml-labltk libXext-devel libXmu-devel libGLUT-devel tcl-togl-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires(pre): rpm-build-tcl
 
@@ -37,8 +35,6 @@ developing applications that use %name.
 
 %prep
 %setup
-#rm -r Togl/src/Togl/
-#%%patch1 -p1
 cat > Makefile.config <<EOF
 CAMLC = ocamlc.opt
 CAMLOPT = ocamlopt.opt
@@ -112,22 +108,26 @@ install -p -m644 META %buildroot%_libdir/ocaml/lablGL/META
 %exclude %_libdir/ocaml/lablGL/togl.ml
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.05-alt7
+- rebuilt with ocaml-4.07.1
+- force libfreeglut
+
 * Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 1.05-alt6
 - rebuilt with ocaml-4.07
 
-* Tue Jun 05 2018 Nikolai Kostrigin <nickel@altlinux.org> 1.05-alt5%ubt
+* Tue Jun 05 2018 Nikolai Kostrigin <nickel@altlinux.org> 1.05-alt5
 - rebuild with bundled tcl-togl 1.7 (cancel ALT Linux patch temporarily)
 
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.05-alt4%ubt
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.05-alt4
 - rebuilt for ocaml 4.06.1
 
-* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1.05-alt3%ubt
+* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1.05-alt3
 - rebuild with ocaml 4.04.2
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.05-alt2%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.05-alt2
 - rebuild with ocaml 4.04.1
 
-* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 1.05-alt1%ubt
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 1.05-alt1
 - new version
 - split to devel and main packages
 

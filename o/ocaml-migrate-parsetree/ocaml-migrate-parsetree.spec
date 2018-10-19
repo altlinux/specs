@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-migrate-parsetree
-Version: 1.0.11
+Version: 1.1.0
 Release: alt1
 Summary: Convert OCaml parsetrees between different major versions
 Group: Development/ML
@@ -14,7 +14,6 @@ BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-findlib
 BuildRequires: opam
-BuildRequires(pre): rpm-build-ubt
 
 %description
 This library converts between parsetrees of different OCaml versions.
@@ -74,9 +73,12 @@ find %buildroot -name '*.cmxs' -exec chmod 0755 {} \;
 %_libdir/ocaml/*/driver-main/*.ml
 
 %changelog
+* Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
+- 1.1.0
+
 * Wed Sep 05 2018 Anton Farygin <rider@altlinux.ru> 1.0.11-alt1
 - 1.0.11
 
-* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.0.10-alt1%ubt
+* Fri May 18 2018 Anton Farygin <rider@altlinux.ru> 1.0.10-alt1
 - first build for ALT, based on specfile from RH
 
