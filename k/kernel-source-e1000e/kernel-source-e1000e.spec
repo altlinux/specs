@@ -1,5 +1,5 @@
 %define module_name e1000e
-%define module_version 1.6.3
+%define module_version 3.4.2.1
 %define module_release alt1
 
 %define module_source %module_name.tar
@@ -8,8 +8,8 @@
 Name: kernel-source-%module_name
 Version: %module_version
 Release: %module_release
-Summary: Linux %module_name modules sources
-License: GPL
+Summary: Linux %module_name modules sources for e1000 Intel(R) Ethernet adapter
+License: GPLv2
 Group: Development/Kernel
 URL: https://sourceforge.net/projects/e1000
 BuildArch: noarch
@@ -20,7 +20,9 @@ Source0: %module_source
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 %description
-%module_name modules sources for e1000e Linux kernel driver
+This %module_name contains the Linux kernel drivers for e1000 Intel(R) Ethernet
+adapter. To learn more about Intel Ethernet visit
+http://communities.intel.com/community/tech/wired
 
 %prep
 %setup -c -q
@@ -39,6 +41,9 @@ cd ..
 %_usrsrc/*
 
 %changelog
+* Fri Oct 19 2018 Pavel Skrylev <majioa@altlinux.org> 3.4.2.1-alt1
+- Bump to 3.4.2.1.
+
 * Wed Nov 16 2011 Anton Protopopov <aspsk@altlinux.org> 1.6.3-alt1
 - New version
 
