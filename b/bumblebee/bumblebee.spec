@@ -1,9 +1,17 @@
+%define if_ver_gt() %if "%(rpmvercmp '%1' '%2')" > "0"
+%define if_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
+%define if_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
+%define if_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
+
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %define bumblebeed_group xgrp
 %define pm_metod bbswitch
 
 Name: bumblebee
 Version: 3.2.1
-Release: alt9%ubt
+Release: alt10
 
 Summary: Bumblebee - support for NVidia Optimus laptops on Linux
 Group: System/Kernel and hardware
@@ -25,7 +33,10 @@ Patch5: hexadicimal_bug573.patch
 Patch6: nvidia_modeset-detection_bug699_03.patch
 Patch7: alt-disable-xdrvswitch.patch
 
-Requires: nvidia_glx_common VirtualGL
+Requires: VirtualGL
+%ifarch %ix86 x86_64
+Requires: nvidia_glx_common
+%endif
 # see ALT #29213
 # Requires: bbswitch
 
@@ -52,7 +63,9 @@ kernel-modules-bbswitch package for your running kernel.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%if_ver_lt %ubt_id M90
 %patch7 -p1
+%endif
 
 cp %SOURCE1 scripts/sysvinit/
 
@@ -105,6 +118,9 @@ groupadd -r -f %bumblebeed_group
 %exclude %_docdir/bumblebee
 
 %changelog
+* Fri Oct 19 2018 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt10
+- remove -noxdrvswitch for new xorg-server
+
 * Wed Apr 04 2018 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt9%ubt
 - fix requires
 
