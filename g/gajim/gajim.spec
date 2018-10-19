@@ -1,6 +1,7 @@
+%global appid org.gajim.Gajim
 Name: gajim
-Version: 0.16.9
-Release: alt3
+Version: 1.0.3
+Release: alt1
 
 Summary: a Jabber client written in PyGTK
 License: GPLv3
@@ -12,18 +13,17 @@ AutoReqProv: yes, noshell
 
 Source: %url/downloads/%name-%version.tar.bz2
 
-#Requires: libgtk+2-gir-devel
-Requires: python2.7(pyasn)
-#Requires: python2.7(gst1.0)
+##Requires: libgtk+2-gir-devel
+#Requires: python2.7(pyasn)
+##Requires: python2.7(gst1.0)
 
-BuildRequires: rpm-build-gir
+BuildRequires: rpm-build-gir libgtk+3-devel python3-devel python3-module-setuptools
 BuildRequires: intltool libgtk+2-devel python-module-pygtk-devel python-modules-encodings xorg-cf-files
 BuildRequires: libfarstream0.2-devel gst-plugins-bad1.0-devel libnice-devel libgupnp-igd-devel python-module-pyasn
 
 BuildArch: noarch
 
 %add_python_req_skip farstream gst
-
 
 %description
 Gajim is a Jabber client written in PyGTK. The goal of Gajim's developers
@@ -34,28 +34,45 @@ it nicely.
 %prep
 %setup -n %name-%version
 
+#build
+#configure --enable-remote
+
+#install
+#makeinstall_std
+
 %build
-%configure --enable-remote
+%python3_build
 
 %install
-%makeinstall_std
+%python3_install
+
 %find_lang %name
 
-
 %files -f %name.lang
-%doc AUTHORS ChangeLog README THANKS
+#doc AUTHORS ChangeLog README THANKS
 %_bindir/%name
 %_bindir/%name-remote
 %_bindir/%name-history-manager
 %_man1dir/*
-%_datadir/%name
-%_desktopdir/%name.desktop
-%_desktopdir/%name-remote.desktop
-%_iconsdir/hicolor/scalable/apps/%name.svg
-%_iconsdir/hicolor/64x64/apps/%name.png
-%_iconsdir/hicolor/128x128/apps/%name.png
+#_datadir/%name
+%_datadir/applications/%appid.desktop
+%_datadir/metainfo/%appid.appdata.xml
+%_datadir/icons/hicolor/*x*/apps/%appid.png
+%_datadir/icons/hicolor/scalable/apps/%appid.svg
+%_datadir/icons/hicolor/symbolic/apps/%appid-symbolic.svg
+%python3_sitelibdir/%name
+%python3_sitelibdir/%name-%{version}*.egg-info
+
+#_desktopdir/%name.desktop
+#_desktopdir/%name-remote.desktop
+#_iconsdir/hicolor/scalable/apps/%name.svg
+#_iconsdir/hicolor/64x64/apps/%name.png
+#_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Fri Oct 19 2018 Ilya Mashkin <oddity@altlinux.ru> 1.0.3-alt1
+- 1.0.3
+
 * Thu Oct 04 2018 Ilya Mashkin <oddity@altlinux.ru> 0.16.9-alt3
 - rebuild
 
