@@ -1,7 +1,7 @@
 Summary: Kill and destroy as many targets as possible within 3 minutes
 Name: barrage
 Version: 1.0.4
-Release: alt1
+Release: alt2
 License: GPL
 Group: Games/Arcade
 
@@ -29,6 +29,7 @@ not that easy to get high scores.
 %patch2
 
 %build
+%autoreconf
 ./configure --prefix=%prefix --bindir=%_gamesbindir
 %make_build
 
@@ -48,6 +49,9 @@ convert -resize 48x48 %SOURCE1 %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Fri Oct 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.4-alt2
+- NMU: fixed build.
+
 * Fri Sep 28 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 1.0.4-alt1
 - Update to 1.0.4
 - Import fedora patches:
