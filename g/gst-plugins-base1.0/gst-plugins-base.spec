@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _name gst-plugins
 %define ver_major 1.14
 %define api_ver 1.0
@@ -5,18 +6,22 @@
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
 
-%def_disable gtk_doc
+%{?_enable_snapshot:%def_enable gtk_doc}
 
 Name: %_name-base%api_ver
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: An essential set of GStreamer plugins
 Group: System/Libraries
 License: LGPL
 Url: http://gstreamer.freedesktop.org/
 
+%if_disabled snapshot
 Source: http://gstreamer.freedesktop.org/src/%_name-base/%_name-base-%version.tar.xz
+%else
+Source: %_name-base-%version.tar
+%endif
 
 Provides: %_name-base = %version-%release
 
@@ -179,6 +184,9 @@ GObject introspection devel data for the GStreamer library
 
 
 %changelog
+* Fri Oct 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt2
+- updated to 1.14.4-6-g01a3a5b79 (fixed BGO ##796860, 797272)
+
 * Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
 - 1.14.4
 
