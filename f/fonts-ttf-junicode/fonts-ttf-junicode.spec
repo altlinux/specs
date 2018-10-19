@@ -2,7 +2,7 @@
 
 Name: fonts-ttf-%fname
 Version: 0.6.15
-Release: alt2
+Release: alt2.qa1
 
 Summary: TrueType Unicode font for medievalists
 
@@ -29,16 +29,13 @@ extensive enough selection of Unicode characters to be widely useful.
 %install
 %ttf_fonts_install %fname
 
-%post
-%post_fonts
-
-%postun
-%postun_fonts
-
 %files -f %fname.files
 %doc Junicode.pdf License.pdf aelfric_job.pdf
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.15-alt2.qa1
+- NMU: applied repocop patch
+
 * Wed Sep 05 2007 Vitaly Lipatov <lav@altlinux.ru> 0.6.15-alt2
 - rebuild with new rpm-build-fonts 0.3
 - add require fontconfig 2.4.2
