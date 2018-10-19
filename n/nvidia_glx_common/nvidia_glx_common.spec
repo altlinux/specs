@@ -20,8 +20,8 @@
 %define nv_version 390
 %define nv_release 87
 %define nv_minor %nil
-%define pkg_rel alt195
-%define set_gl_nvidia_ver 0.21.0
+%define pkg_rel alt196
+%define set_gl_nvidia_ver 0.21.1
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -296,6 +296,10 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Fri Oct 19 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt196
+- add 32bit libs to ld.so.conf for old drivers
+- clean nvidia configs if non-nvidia
+
 * Thu Oct 18 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt195
 - add support of new glvnd packaging scheme
 
