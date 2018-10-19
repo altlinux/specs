@@ -3,7 +3,7 @@
 
 Name: %engine_prefix-%_name
 Version: 0.9.1
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: Candido GTK2 engine
 Summary(ru_RU.UTF-8):Модуль прорисовки Candido для GTK2
@@ -31,7 +31,7 @@ This is Candido GTK+ engine based on Doug Whiteley's rezlooks GTK+ engine.
 %patch -p2
 
 %build
-%__autoreconf
+%autoreconf
 %configure --enable-animation
 %make
 
@@ -44,6 +44,9 @@ This is Candido GTK+ engine based on Doug Whiteley's rezlooks GTK+ engine.
 %exclude %engines_dir/*.la
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1.1.qa1
+- NMU: applied repocop patch
+
 * Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt1.1
 - Fixed build
 
