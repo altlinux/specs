@@ -1,8 +1,8 @@
 %define  pkgname get_process_mem
 
 Name:    ruby-get-process-mem
-Version: 0.2.2
-Release: alt1.1
+Version: 0.2.3
+Release: alt1
 
 Summary: Get memory usage of a process in Ruby
 License: MIT
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Oct 19 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.3-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt1.1
 - Rebuild with new Ruby autorequirements.
 
