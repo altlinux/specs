@@ -2,7 +2,7 @@
 
 Name: fonts-otf-%fname
 Version: 0.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: OpenType fonts of Tempora LGC Unicode font
 
@@ -37,16 +37,13 @@ unzip -o %SOURCE0
 %install
 %otf_fonts_install %fname
 
-%post
-%post_fonts
-
-%postun
-%postun_fonts
-
 %files -f %fname.files
 %doc COPYING README
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2.qa1
+- NMU: applied repocop patch
+
 * Wed Sep 05 2007 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt2
 - rebuild with new rpm-build-fonts 0.3
 - add require fontconfig 2.4.2
