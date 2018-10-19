@@ -1,25 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define libwbc_alternatives_version 0.14.0
 %def_with kcm
+%def_without secrets
+%def_disable local_provider
 %def_with python3
 %def_with check
+
 %define if_branch_le() %if "%(rpmvercmp '%ubt_id' '%1')" <= "0"
 %define if_branch_eq() %if "%(rpmvercmp '%ubt_id' '%1')" == "0"
 %define if_branch_ge() %if "%(rpmvercmp '%ubt_id' '%1')" >= "0"
 
-%if_branch_eq N.M80P
-%define nfsidmapdir /%_lib/libnfsidmap
-%else
+%define nfsidmapdir %_libdir/libnfsidmap
 %if_branch_le M80P
 %define nfsidmapdir /%_lib/libnfsidmap
-%else
-%define nfsidmapdir %_libdir/libnfsidmap
+%def_enable local_provider
 %endif
+%if_branch_eq N.M80P
+%define nfsidmapdir /%_lib/libnfsidmap
+%def_enable local_provider
 %endif
 
 Name: sssd
-Version: 1.16.3
-Release: alt1%ubt
+Version: 2.0.0
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -120,10 +123,11 @@ BuildRequires: libnfsidmap-devel >= 1:2.2.1-alt1
 %endif
 BuildRequires: libaugeas-devel
 BuildRequires: nscd
-BuildRequires: libjansson-devel
-BuildRequires: libhttp-parser-devel
 %if_with kcm
-BuildRequires: libuuid-devel libcurl-devel
+BuildRequires: libuuid-devel libjansson-devel
+%endif
+%if_with secrets
+BuildRequires: libhttp-parser-devel libcurl-devel libjansson-devel
 %endif
 
 %if_with check
@@ -529,24 +533,18 @@ Provides python3 module for calculating the murmur hash version 3
     --with-krb5-rcache-dir=%_localstatedir/cache/krb5rcache \
     --enable-nsslibdir=/%_lib \
     --enable-pammoddir=/%_lib/security \
-%if_branch_le M80P
     --enable-nfsidmaplibdir=%nfsidmapdir \
-%endif
-%if_branch_eq N.M80P
-    --enable-nfsidmaplibdir=%nfsidmapdir \
-%endif
-%if_branch_ge M80P
-    --enable-nfsidmaplibdir=%nfsidmapdir \
-%endif
     --with-syslog=journald \
     --with-test-dir=/dev/shm \
     --enable-krb5-locator-plugin \
     --enable-pac-responder \
     --enable-sss-default-nss-plugin \
     --with-sssd-user=%sssd_user \
+    %{?_enable_local_provider:--enable-local-provider} \
     --disable-rpath \
     --disable-static \
     %{subst_with kcm} \
+    %{subst_with secrets} \
 %if_without python3
     --without-python3-bindings \
 %endif
@@ -641,8 +639,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_sbindir/%name
 %_initdir/%name
 %_unitdir/%name.service
-%_unitdir/sssd-secrets.socket
-%_unitdir/sssd-secrets.service
 %_unitdir/sssd-nss.service
 %_unitdir/sssd-nss.socket
 %_unitdir/sssd-pam-priv.socket
@@ -657,7 +653,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_libexecdir/%name/sssd_nss
 %_libexecdir/%name/sssd_pam
 %_libexecdir/%name/sssd_autofs
-%_libexecdir/%name/sssd_secrets
 %_libexecdir/%name/sssd_ssh
 %_libexecdir/%name/sssd_sudo
 %_libexecdir/%name/p11_child
@@ -676,6 +671,15 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_libdir/%name/libsss_ldap_common.so
 %_libdir/%name/libsss_util.so
 %_libdir/%name/libsss_semanage.so
+%_libdir/%name/libsss_sbus.so
+%_libdir/%name/libsss_sbus_sync.so
+%_libdir/%name/libsss_iface.so
+%_libdir/%name/libsss_iface_sync.so
+%_libdir/%name/libifp_iface.so
+%_libdir/%name/libifp_iface_sync.so
+%if_with kcm
+%_libdir/%name/libsss_secrets.so
+%endif
 
 # 3rd party application libraries
 %dir %_libdir/%name/modules
@@ -721,7 +725,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_man5dir/sssd-simple.5*
 %_man5dir/sssd-sudo.5*
 %_man5dir/sssd-session-recording.5*
-%_man5dir/sssd-secrets.5*
 %_man5dir/sss_rpcidmapd.5*
 %_man8dir/sssd.8*
 %_man8dir/sss_cache.8*
@@ -862,6 +865,12 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_unitdir/sssd-kcm.socket
 %_unitdir/sssd-kcm.service
 %_man8dir/sssd-kcm*
+%if_with secrets
+%_libexecdir/%name/sssd_secrets
+%_unitdir/sssd-secrets.socket
+%_unitdir/sssd-secrets.service
+%_man5dir/sssd-secrets.5*
+%endif
 %endif
 
 %files -n libsss_simpleifp
@@ -920,6 +929,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %endif
 
 %changelog
+* Fri Oct 19 2018 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Tue Aug 14 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.16.3-alt1%ubt
 - New upstream version 1.16.3
   + Dropped patch `nss: skip incomplete groups instead of bailing out',
