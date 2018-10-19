@@ -14,7 +14,7 @@
 %define nv_version 340
 %define nv_release 107
 %define nv_minor %nil
-%define pkg_rel alt157%ubt
+%define pkg_rel alt158
 %def_enable egl
 %def_enable kernelsource
 %def_disable package_wfb
@@ -306,6 +306,9 @@ fi
 %endif
 
 %changelog
+* Fri Oct 19 2018 Sergey V Turchin <zerg@altlinux.org> 340.107-alt158
+- rebuild
+
 * Thu Jun 07 2018 Sergey V Turchin <zerg@altlinux.org> 340.107-alt157%ubt
 - new version
 
