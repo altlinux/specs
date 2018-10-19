@@ -5,8 +5,8 @@
 %endif
 
 Name: extra-cmake-modules
-Version: 5.50.0
-Release: alt1%ubt
+Version: 5.51.0
+Release: alt1
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -61,6 +61,9 @@ sed -i -r 's, (-fno-operator-names|-Wvla),,' kde-modules/KDECompilerSettings.cma
 %doc %_man7dir/*
 
 %changelog
+* Wed Oct 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.51.0-alt1
+- new version
+
 * Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1%ubt
 - new version
 

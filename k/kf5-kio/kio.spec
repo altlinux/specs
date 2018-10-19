@@ -1,8 +1,8 @@
 %define rname kio
 
 Name: kf5-%rname
-Version: 5.50.0
-Release: alt1%ubt
+Version: 5.51.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -29,7 +29,7 @@ BuildRequires: kf5-kdbusaddons-devel kf5-kdoctools kf5-kdoctools-devel-static kf
 BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kservice-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
-BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-attica-devel
+BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-attica-devel kf5-kcrash-devel
 
 %description
 This framework implements almost all the file management functions you
@@ -151,6 +151,9 @@ cat %SOURCE10 >po/ru/kio5.po
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Wed Oct 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.51.0-alt1
+- new version
+
 * Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1%ubt
 - new version
 

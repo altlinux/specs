@@ -1,8 +1,8 @@
 %define rname kdoctools
 
 Name: kf5-%rname
-Version: 5.50.0
-Release: alt1%ubt
+Version: 5.51.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -20,7 +20,8 @@ Patch2: alt-doc-dirs-fallback-kde4.patch
 # optimized out: cmake cmake-modules docbook-dtds elfutils libcloog-isl4 libgpg-error libqt5-core libstdc++-devel libxml2-devel pkg-config python-base xml-common xml-utils
 #BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-ki18n-devel libxslt-devel python-module-google qt5-base-devel ruby ruby-stdlibs xsltproc
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-ki18n-devel libxslt-devel qt5-base-devel xsltproc
+BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-ki18n-devel libxslt-devel qt5-base-devel xsltproc
+BuildRequires: docbook-style-xsl xml-utils
 BuildRequires: perl-URI
 
 %description
@@ -92,6 +93,9 @@ KF5 library
 %_K5lib/libKF5DocTools.so.*
 
 %changelog
+* Wed Oct 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.51.0-alt1
+- new version
+
 * Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1%ubt
 - new version
 
