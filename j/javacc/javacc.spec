@@ -43,7 +43,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javacc
 Version:        7.0.2
-Release:        alt1_4jpp8
+Release:        alt1_4jpp8.qa1
 Epoch:          0
 Summary:        A parser/scanner generator for java
 License:        BSD
@@ -76,7 +76,7 @@ Manual for %{name}.
 %package demo
 Group: Development/Java
 Summary:        Examples for %{name}
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{EVR}
 
 %description demo
 Examples for %{name}.
@@ -136,6 +136,9 @@ ln -s %{_bindir}/javacc %{buildroot}%{_bindir}/javacc.sh
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0:7.0.2-alt1_4jpp8.qa1
+- NMU: applied repocop patch
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0:7.0.2-alt1_4jpp8
 - java update
 
