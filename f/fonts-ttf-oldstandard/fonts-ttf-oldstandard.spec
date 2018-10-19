@@ -2,7 +2,7 @@
 
 Name: fonts-ttf-%fname
 Version: 2.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: TrueType version of Old Standard fonts
 
@@ -32,16 +32,13 @@ Designed by Alexey Krukov.
 %install
 %ttf_fonts_install %fname
 
-%post
-%post_fonts
-
-%postun
-%postun_fonts
-
 %files -f %fname.files
 %doc OFL*.txt
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1.qa1
+- NMU: applied repocop patch
+
 * Thu Jun 02 2011 Michael Shigorin <mike@altlinux.org> 2.2-alt1
 - NMU: 2.2 (30.04.2011)
 - use original zip file as a source archive
