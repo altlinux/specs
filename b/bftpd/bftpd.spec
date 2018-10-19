@@ -1,6 +1,6 @@
 Name:      bftpd
 Version:   2.1
-Release:   alt0.1.qa1
+Release:   alt0.1.qa2
 Summary:   A small, fast and easy-to-configure FTP server.
 License:   GPL
 Group:     System/Servers
@@ -17,7 +17,7 @@ are supported.
 %prep
 %setup -n %name
 %patch1
-%__autoreconf
+%autoreconf
 
 %build
 %configure
@@ -35,6 +35,9 @@ mkdir -p %buildroot/%_var/run/bftpd
 %_var/run/bftpd
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.1-alt0.1.qa2
+- NMU: applied repocop patch
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1-alt0.1.qa1
 - NMU: rebuilt for debuginfo.
 
