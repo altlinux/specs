@@ -1,6 +1,6 @@
 Name: kiki
 Version: 1.0.2
-Release: alt2
+Release: alt3
 
 Group: Games/Puzzles
 Summary: 3D logical game
@@ -36,11 +36,10 @@ Patch20: kiki-1.0.2-debian-ogg-sound.patch
 Patch21: kiki-1.0.2-debian-level-selection-with-no-levels-solved.patch
 Patch22: kiki-1.0.2-debian-freebsd.patch
 Patch23: kiki-1.0.2-debian-virtual-destructors.patch
-Patch24: kiki-1.0.2-alt-Makefile-python.patch
+Patch24: kiki-1.0.2-alt-Makefile.patch
 
-BuildRequires: gcc-c++ libGL-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libGLUT-devel python-devel vorbis-tools swig
-# libfreeglut broken
-Requires: libGLUT
+BuildRequires: gcc-c++ libGL-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libfreeglut2.8-devel python-devel vorbis-tools swig
+Requires: /usr/bin/sound_wrapper
 
 %description
     once upon a time,
@@ -148,7 +147,7 @@ cat > %buildroot/%_gamesbindir/%name <<EOF
 export KIKI_HOME=%_gamesdatadir/%name
 %_gamesbindir/kiki.bin
 EOF
-chmod a=rx %buildroot/%_gamesbindir/%name
+chmod 0755 %buildroot/%_gamesbindir/%name
 
 mkdir -p %buildroot%_desktopdir
 cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
@@ -157,9 +156,8 @@ Version=1.0
 Type=Application
 Name=Kiki
 Comment=3D logical game
-Comment[ru]=�~[оги�~Gеская 3D игра
+Comment[ru]=Логическая 3D игра
 Icon=%{name}
-#Exec=%_gamesbindir/%name
 Exec=sound_wrapper %_gamesbindir/%name
 Terminal=false
 Categories=Game;LogicGame;
@@ -183,6 +181,9 @@ tar -jxvf %SOURCE4
 %doc Readme.txt Thanks.txt manual
 
 %changelog
+* Fri Oct 19 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt3
+- build with libfreeglut2.8
+
 * Tue Oct 16 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt2
 - resync patches from Debian
 
