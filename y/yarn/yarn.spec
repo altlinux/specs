@@ -1,14 +1,14 @@
 
 Name: yarn
-Version: 1.6.0
-Release: alt1%ubt
+Version: 1.10.1
+Release: alt1
 Summary: Fast, reliable, and secure dependency management
 Group: Development/Tools
 License: BSD
 Url: https://yarnpkg.com
 Source: https://github.com/yarnpkg/yarn/releases/download/v%version/yarn-v%version.tar.gz
 
-BuildRequires(pre): rpm-macros-nodejs rpm-build-ubt
+BuildRequires(pre): rpm-macros-nodejs
 
 BuildArch: noarch
 
@@ -32,6 +32,10 @@ ln -s %nodejs_sitelib/%name/bin/%name.js %buildroot%_bindir/yarnpkg
 %nodejs_sitelib/%name
 
 %changelog
+* Fri Oct 19 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.10.1-alt1
+- update to 1.10.1
+- remove ubt macros due binary package identity changes
+
 * Fri May 11 2018 Alexey Shabalin <shaba@altlinux.ru> 1.6.0-alt1.S1
 - 1.6.0
 
