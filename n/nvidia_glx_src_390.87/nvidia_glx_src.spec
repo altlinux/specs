@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 87
 %define nv_minor %nil
-%define pkg_rel alt187
+%define pkg_rel alt188
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -348,6 +348,9 @@ fi
 %endif
 
 %changelog
+* Fri Oct 19 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt188
+- rebuild
+
 * Tue Oct 16 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt187
 - fix to build
 
