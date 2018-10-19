@@ -2,7 +2,7 @@
 
 Name: fonts-type1-%fname
 Version: 20050115
-Release: alt5
+Release: alt5.qa1
 
 Summary: Church Slavonic Type1 fonts
 Summary (ru_RU.KOI8-R): Церковно-славянские шрифты Type1
@@ -37,16 +37,13 @@ from Irmologion project.
 %install
 %type1_fonts_install %fname
 
-%post
-%post_fonts
-
-%postun
-%postun_fonts
-
 %files -f %fname.files
 %doc AUTHORS ChangeLog README* LICENSE
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 20050115-alt5.qa1
+- NMU: applied repocop patch
+
 * Wed Sep 05 2007 Vitaly Lipatov <lav@altlinux.ru> 20050115-alt5
 - rebuild with new rpm-build-fonts 0.3
 - add require fontconfig 2.4.2
