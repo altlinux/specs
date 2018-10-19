@@ -2,7 +2,7 @@
 
 Name: gkrellm-%shortname
 Version: 0.2
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: GKrellm plugin monitoring Linux BlueZ adapters
 License: GPL
@@ -20,7 +20,7 @@ graph of the rx/tx bytes for each adapter.
 
 %prep
 %setup
-%__autoreconf
+%autoreconf
 
 %build
 %configure --disable-static
@@ -34,6 +34,9 @@ graph of the rx/tx bytes for each adapter.
 %doc AUTHORS README THEMING TODO
 
 %changelog
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2.qa2
+- NMU: applied repocop patch
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
