@@ -19,7 +19,7 @@ Group: System/Libraries
 
 Name:           libopenCOLLADA
 Version:        0
-Release:        alt6.git%{shortcommit}
+Release:        alt7.git%{shortcommit}
 License:        MIT
 Summary:        Collada 3D import and export libraries
 Url:            https://collada.org/mediawiki/index.php/OpenCOLLADA
@@ -71,6 +71,7 @@ Summary:        Include files for openCOLLADA development
 Group:          Development/C
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Provides: openCOLLADA-devel = %{version}-%{release}
+Requires: libpcre-devel
 
 %description devel
 This package provides the include files necessary to build and
@@ -158,6 +159,9 @@ cp -a Externals/MathMLSolver/include/* %{buildroot}%{_includedir}/MathMLSolver/
 
 
 %changelog
+* Thu Oct 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0-alt7.gitcaad49c
+- NMU: updated devel dependencies.
+
 * Tue Sep 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0-alt6.gitcaad49c
 - NMU: fixed build with new pcre.
 
