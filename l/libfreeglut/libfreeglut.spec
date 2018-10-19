@@ -10,7 +10,7 @@
 
 Name: lib%_name
 Version: 3.0.0
-Release: alt2.1
+Release: alt3
 
 Summary: A freely licensed alternative to the GLUT library
 License: MIT
@@ -24,6 +24,8 @@ Source: http://download.sourceforge.net/%_name/%_name-%version.tar.gz
 Source: %_name-%version.tar
 %endif
 Patch: freeglut-3.0.0-alt-fix_cmake_dir.patch
+Patch1: libfreeglut-alt-fix-visibility-hidden.patch
+Patch2: libfreeglut-alt-enable-visibility-hidden.patch
 
 Provides: libglut = %version %_name = %version
 Obsoletes: libglut < %version %_name < %version
@@ -69,6 +71,8 @@ license.
 %prep
 %setup -n %_name-%version
 %patch -b .cmake
+%patch1 -p3
+%patch2 -p3
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -113,6 +117,10 @@ ln -s lib%_name.so %buildroot%_libdir/libglut.so
 %_libdir/cmake/FreeGLUT/
 
 %changelog
+* Fri Oct 19 2018 Dmitry V. Levin <ldv@altlinux.org> 3.0.0-alt3
+- Restricted the list of global symbols exported by the library
+  to those that are part of the API.
+
 * Thu Oct 18 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt2.1
 - rebuilt with -DFREEGLUT_REPLACE_GLUT=ON
 - added symlinks for compatibility with original GLUT if
