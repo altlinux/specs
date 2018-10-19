@@ -1,25 +1,24 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-%def_without devel
+%def_with devel
 
 %define prog_name            postgresql
-%define postgresql_major     9
-%define postgresql_minor     4
-%define postgresql_subminor  19
-%define postgresql_altrel    5
+%define postgresql_major     11
+%define postgresql_minor     0
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
-%define libpq_minor          7
+%define libpq_minor          11
 
 # Look at: src/interfaces/ecpg/ecpglib/Makefile
 %define libecpg_major        6
-%define libecpg_minor        6
+%define libecpg_minor        11
 
 %define libpq_name    libpq%libpq_major.%libpq_minor
 %define libecpg_name  libecpg%libecpg_major.%libecpg_minor
 
-Name: %prog_name%postgresql_major.%postgresql_minor
-Version: %postgresql_major.%postgresql_minor.%postgresql_subminor
+Name: %prog_name%postgresql_major
+Version: %postgresql_major.%postgresql_minor
 Release: alt%postgresql_altrel
 
 Summary: PostgreSQL client programs and libraries
@@ -30,33 +29,29 @@ URL: http://www.postgresql.org/
 Packager: PostgreSQL Maintainers Team <pgsql@packages.altlinux.org>
 
 %define PGSQL pgsql
-%define ROOT %_localstatedir/%PGSQL-root
 %define docdir %_docdir/%prog_name-%version
 
 Source0: %name-%version.tar
 
-Patch1: 0001-9.4-Fix-searching-for-autoconf.patch
 Patch2: 0002-Fix-search-for-setproctitle.patch
 Patch3: 0003-Use-terminfo-not-termcap.patch
 Patch4: 0004-Fix-includedirs.patch
 Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
 Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
-Patch9: 0008-ALT-SeLinux-user-name.patch
 
 Provides: %prog_name = %version-%release
 Conflicts: %prog_name < %version-%release
 Conflicts: %prog_name > %version-%release
 Conflicts: %{prog_name}9.3
+Conflicts: %{prog_name}9.4
 Conflicts: %{prog_name}9.5
 Conflicts: %{prog_name}9.6
 Conflicts: %{prog_name}10
-Conflicts: %{prog_name}11
+# 1C
+Conflicts: %{prog_name}10-1C
 
 BuildRequires: OpenSP chrooted docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel libkrb5-devel
-%if_without devel
-BuildRequires: postgresql-devel
-%endif
 
 %description
 PostgreSQL is an advanced Object-Relational database management system
@@ -165,6 +160,8 @@ Development static library to %libecpg_name
 Summary: Extra documentation for PostgreSQL
 Group: Databases
 BuildArch: noarch
+# 1C
+Conflicts: %prog_name-1C-docs
 
 %description docs
 The postgresql-docs package includes the SGML source for the documentation
@@ -176,6 +173,8 @@ project, or if you want to generate printed documentation.
 Summary: Contributed source and binaries distributed with PostgreSQL
 Group: Databases
 Requires: %name = %version-%release
+# 1C
+Conflicts: %prog_name-1C-contrib
 
 %description contrib
 The postgresql-contrib package includes the contrib tree distributed with
@@ -191,6 +190,8 @@ Requires: glibc-locales
 Provides: %prog_name-server = %version-%release
 Conflicts: %prog_name-server < %version-%release
 Conflicts: %prog_name-server > %version-%release
+# 1C
+Conflicts: %prog_name-1C-server
 
 %description server
 The postgresql-server package includes the programs needed to create
@@ -231,6 +232,8 @@ Summary: The PL/Tcl procedural language for PostgreSQL
 Group: Databases
 Requires: %name = %version-%release tcl >= 8.4.0-alt1
 Provides: postgresql-tcl
+# 1C
+Conflicts: %prog_name-1C-tcl
 
 %description tcl
 PostgreSQL is an advanced Object-Relational database management
@@ -241,6 +244,9 @@ for the backend.
 Summary: The PL/Perl procedural language for PostgreSQL
 Group: Databases
 Requires: %name = %version-%release
+Provides: postgresql-perl = %version-%release
+# 1C
+Conflicts: %prog_name-1C-perl
 
 %description perl
 PostgreSQL is an advanced Object-Relational database management
@@ -251,6 +257,8 @@ language for the backend.
 Summary: Development module for Python code to access a PostgreSQL DB
 Group: Databases
 Requires: %name = %version-%release
+# 1C
+Conflicts: %prog_name-1C-python
 
 %description python
 PostgreSQL is an advanced Object-Relational database management
@@ -261,13 +269,11 @@ database.
 %prep
 %setup
 
-%patch1 -p1
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
 %patch6 -p2
 %patch8 -p1
-#%%patch9 -p1
 
 %build
 %autoreconf
@@ -316,18 +322,12 @@ ln -s /usr/include/pgsql %buildroot%_libdir/%PGSQL/pgxs/src/include
 pushd altlinux
 
 # The initscripts....
-install -p -m755 -D %prog_name.init.in %buildroot%_initdir/%prog_name
-#install -p -m750 -D %prog_name.chroot.lib.in %buildroot%_sysconfdir/chroot.d/%prog_name.lib
-#install -p -m750 -D %prog_name.chroot.conf.in %buildroot%_sysconfdir/chroot.d/%prog_name.conf
-#install -p -m750 -D %prog_name.chroot.all %buildroot%_sysconfdir/chroot.d/%prog_name.all
-#install -p -m750 -D %prog_name.chroot.bin.in %buildroot%_sysconfdir/chroot.d/%prog_name.bin
+install -p -m 755 -D %prog_name.init.in %buildroot%_initdir/%prog_name
+install -p -m 644 -D %prog_name.service %buildroot%_unitdir/%prog_name.service
 
 # README.ALT
 install -p -m 644 -D README.ALT-ru_RU.UTF-8 %buildroot%docdir/README.ALT-ru_RU.UTF-8
 install -p -m 644 -D README.rpm-dist %buildroot%docdir/README.rpm-dist
-
-install -p -m 644 -D postgresql.service %buildroot%_unitdir/postgresql.service
-
 
 popd
 ##### end ALT-stuff
@@ -340,38 +340,20 @@ install -m 755 postgresql-check-db-dir %buildroot%_bindir/postgresql-check-db-di
 
 # Fix initscript versions
 
-sed -i 's,@VERSION@,%postgresql_major.%postgresql_minor,' %buildroot%_initdir/%prog_name
+sed -i 's,@VERSION@,%postgresql_major,' %buildroot%_initdir/%prog_name
 sed -i 's,@FULLVERSION@,%version,' %buildroot%_initdir/%prog_name
 
-#pushd %buildroot%_sysconfdir/chroot.d
-#for f in %prog_name.*; do
-# if [ -f "$f" ]; then
-#   subst -p 's|@LIB@|%_lib|g' $f
-# fi
-#done
-#popd
-
 # PGDATA needs removal of group and world permissions due to pg_pwd hole.
-install -d -m700 %buildroot%_localstatedir/%PGSQL/data
+install -d -m 700 %buildroot%_localstatedir/%PGSQL/data
 
 # backups of data go here...
-install -d -m700 %buildroot%_localstatedir/%PGSQL/backups
+install -d -m 700 %buildroot%_localstatedir/%PGSQL/backups
 
 # Fix a dangling symlink
 mkdir -p %buildroot%_includedir/%PGSQL/port
 cp src/include/port/linux.h %buildroot%_includedir/%PGSQL/port/
 ln -s port/linux.h %buildroot%_includedir/%PGSQL/os.h
 ln -s %_includedir/%PGSQL %buildroot%_includedir/postgresql
-
-# Chrooted environment
-mkdir -p %buildroot%ROOT/{bin,dev,%_lib,tmp,%_sysconfdir/%PGSQL,%_localstatedir,%_libdir/%PGSQL,%_libdir/locale}
-
-#mksock %buildroot%ROOT/dev/log
-#mkdir -p -m700 %buildroot%_sysconfdir/syslog.d
-#ln -s %ROOT/dev/log %buildroot%_sysconfdir/syslog.d/%prog_name
-
-mv %buildroot%_localstatedir/%PGSQL %buildroot%ROOT/%_localstatedir/%PGSQL
-install -dm700 %buildroot%_localstatedir/%PGSQL
 
 pushd contrib
 %make_build install DESTDIR=%buildroot pkglibdir=%_libdir/%PGSQL docdir=%docdir
@@ -381,28 +363,55 @@ cp -a COPYRIGHT README README.git \
     doc/{KNOWN_BUGS,MISSING_FEATURES,TODO,bug.template} \
     src/tutorial %buildroot%docdir/
 
-%find_lang libpq%libpq_major-%postgresql_major.%postgresql_minor
-%find_lang pg_dump-%postgresql_major.%postgresql_minor
-%find_lang postgres-%postgresql_major.%postgresql_minor
-%find_lang psql-%postgresql_major.%postgresql_minor
-%find_lang pg_resetxlog-%postgresql_major.%postgresql_minor
-%find_lang pg_controldata-%postgresql_major.%postgresql_minor
-%find_lang pgscripts-%postgresql_major.%postgresql_minor
-%find_lang initdb-%postgresql_major.%postgresql_minor
-%find_lang pg_config-%postgresql_major.%postgresql_minor
-%find_lang pg_ctl-%postgresql_major.%postgresql_minor
-%find_lang ecpg-%postgresql_major.%postgresql_minor
-%find_lang ecpglib%libecpg_major-%postgresql_major.%postgresql_minor
-%find_lang plperl-%postgresql_major.%postgresql_minor
-%find_lang plpgsql-%postgresql_major.%postgresql_minor
-%find_lang plpython-%postgresql_major.%postgresql_minor
-%find_lang pltcl-%postgresql_major.%postgresql_minor
-%find_lang pg_basebackup-%postgresql_major.%postgresql_minor
+%find_lang ecpglib%libecpg_major-%postgresql_major
+%find_lang ecpg-%postgresql_major
+%find_lang initdb-%postgresql_major
+%find_lang libpq%libpq_major-%postgresql_major
+%find_lang pg_archivecleanup-%postgresql_major
+%find_lang pg_basebackup-%postgresql_major
+%find_lang pg_config-%postgresql_major
+%find_lang pg_controldata-%postgresql_major
+%find_lang pg_ctl-%postgresql_major
+%find_lang pg_dump-%postgresql_major
+%find_lang pg_resetwal-%postgresql_major
+%find_lang pg_rewind-%postgresql_major
+%find_lang pg_test_fsync-%postgresql_major
+%find_lang pg_test_timing-%postgresql_major
+%find_lang pg_upgrade-%postgresql_major
+%find_lang pg_verify_checksums-%postgresql_major
+%find_lang pg_waldump-%postgresql_major
+%find_lang pgscripts-%postgresql_major
+%find_lang plperl-%postgresql_major
+%find_lang plpgsql-%postgresql_major
+%find_lang plpython-%postgresql_major
+%find_lang pltcl-%postgresql_major
+%find_lang postgres-%postgresql_major
+%find_lang psql-%postgresql_major
 
-cat psql-%postgresql_major.%postgresql_minor.lang pg_dump-%postgresql_major.%postgresql_minor.lang pgscripts-%postgresql_major.%postgresql_minor.lang pg_basebackup-%postgresql_major.%postgresql_minor.lang > main.lang
-cat postgres-%postgresql_major.%postgresql_minor.lang pg_resetxlog-%postgresql_major.%postgresql_minor.lang pg_controldata-%postgresql_major.%postgresql_minor.lang initdb-%postgresql_major.%postgresql_minor.lang pg_ctl-%postgresql_major.%postgresql_minor.lang plpgsql-%postgresql_major.%postgresql_minor.lang > server.lang
-cat pg_config-%postgresql_major.%postgresql_minor.lang> devel.lang
-cat ecpg-%postgresql_major.%postgresql_minor.lang ecpglib%libecpg_major-%postgresql_major.%postgresql_minor.lang > ecpg.lang
+cat psql-%postgresql_major.lang \
+    pg_dump-%postgresql_major.lang \
+    pgscripts-%postgresql_major.lang \
+    pg_basebackup-%postgresql_major.lang \
+    pg_test_fsync-%postgresql_major.lang \
+    pg_test_timing-%postgresql_major.lang \
+    pg_verify_checksums-%postgresql_major.lang > main.lang
+
+cat postgres-%postgresql_major.lang \
+    pg_controldata-%postgresql_major.lang \
+    initdb-%postgresql_major.lang \
+    pg_ctl-%postgresql_major.lang \
+    plpgsql-%postgresql_major.lang \
+    pg_rewind-%postgresql_major.lang \
+    pg_upgrade-%postgresql_major.lang \
+    pg_resetwal-%postgresql_major.lang \
+    pg_waldump-%postgresql_major.lang > server.lang
+
+cat pg_config-%postgresql_major.lang > devel.lang
+
+cat ecpg-%postgresql_major.lang \
+    ecpglib%libecpg_major-%postgresql_major.lang > ecpg.lang
+
+cat pg_archivecleanup-%postgresql_major.lang > contrib.lang
 
 # buildreq substitution rules.
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
@@ -444,19 +453,6 @@ echo PGLIB=%_datadir/%PGSQL >> ~postgres/.bash_profile
 echo PGDATA=%_localstatedir/%PGSQL/data >> ~postgres/.bash_profile
 echo export PGLIB PGDATA >> ~postgres/.bash_profile
 chown postgres:postgres ~postgres/.bash_profile
-
-SYSLOGD_SCRIPT=/etc/init.d/syslogd
-SYSLOGD_CONFIG=/etc/sysconfig/syslogd
-#if grep -qs '^SYSLOGD_OPTIONS=.*-a %ROOT/dev/log' "$SYSLOGD_CONFIG"; then
-#    subst 's|^\(SYSLOGD_OPTIONS=.*\) \?-a %ROOT/dev/log|\1|' "$SYSLOGD_CONFIG"
-#    if [ -x "$SYSLOGD_SCRIPT" ]; then
-#        "$SYSLOGD_SCRIPT" condreload ||:
-#    fi
-#fi
-
-#if [ $1 -eq 2 ]; then
-#	%_sysconfdir/chroot.d/%prog_name.all force
-#fi
 
 %post_service %prog_name
 
@@ -503,10 +499,8 @@ fi
 %files -f main.lang
 %_bindir/clusterdb
 %_bindir/createdb
-%_bindir/createlang
 %_bindir/createuser
 %_bindir/dropdb
-%_bindir/droplang
 %_bindir/dropuser
 %_bindir/pg_dump
 %_bindir/pg_dumpall
@@ -517,14 +511,13 @@ fi
 %_bindir/pg_basebackup
 %_bindir/pg_test_fsync
 %_bindir/pg_test_timing
+%_bindir/pg_verify_checksums
 %_bindir/pg_isready
 %_bindir/pg_recvlogical
 %_man1dir/clusterdb.1*
 %_man1dir/createdb.1*
-%_man1dir/createlang.1*
 %_man1dir/createuser.1*
 %_man1dir/dropdb.1*
-%_man1dir/droplang.1*
 %_man1dir/dropuser.1*
 %_man1dir/pg_dump.1*
 %_man1dir/pg_restore.1*
@@ -537,6 +530,7 @@ fi
 %_man1dir/pg_basebackup.1*
 %_man1dir/pg_isready.1*
 %_man1dir/pg_recvlogical.1*
+%_man1dir/pg_verify_checksums.1*
 %_man7dir/*
 %dir %docdir
 %docdir/KNOWN_BUGS
@@ -556,29 +550,28 @@ fi
 %docdir/tutorial/*
 %docdir/extension
 
-%files contrib
+%files -f contrib.lang contrib
 %_bindir/oid2name
 %_bindir/pg_standby
 %_bindir/pgbench
 %_bindir/vacuumlo
 %_bindir/pg_archivecleanup
-%_bindir/pg_xlogdump
 
 %_man1dir/oid2name.1*
 %_man1dir/pg_archivecleanup.1*
 %_man1dir/pg_standby.1*
 %_man1dir/pgbench.1*
 %_man1dir/vacuumlo.1*
-%_man1dir/pg_xlogdump.1*
 
 %dir %_libdir/pgsql
 %_libdir/pgsql/_int.so
 %_libdir/pgsql/adminpack.so
+%_libdir/pgsql/amcheck.so
 %_libdir/pgsql/auto_explain.so
 %_libdir/pgsql/autoinc.so
+%_libdir/pgsql/bloom.so
 %_libdir/pgsql/btree_gin.so
 %_libdir/pgsql/btree_gist.so
-%_libdir/pgsql/chkpass.so
 %_libdir/pgsql/citext.so
 %_libdir/pgsql/cube.so
 %_libdir/pgsql/dblink.so
@@ -587,10 +580,15 @@ fi
 %_libdir/pgsql/earthdistance.so
 %_libdir/pgsql/fuzzystrmatch.so
 %_libdir/pgsql/hstore.so
+%_libdir/pgsql/hstore_plperl.so
+%_libdir/pgsql/hstore_plpython2.so
 %_libdir/pgsql/insert_username.so
 %_libdir/pgsql/isn.so
+%_libdir/pgsql/jsonb_plperl.so
+%_libdir/pgsql/jsonb_plpython2.so
 %_libdir/pgsql/lo.so
 %_libdir/pgsql/ltree.so
+%_libdir/pgsql/ltree_plpython2.so
 %_libdir/pgsql/moddatetime.so
 %_libdir/pgsql/uuid-ossp.so
 %_libdir/pgsql/pageinspect.so
@@ -598,7 +596,9 @@ fi
 %_libdir/pgsql/pg_freespacemap.so
 %_libdir/pgsql/pg_stat_statements.so
 %_libdir/pgsql/pg_trgm.so
+%_libdir/pgsql/pg_visibility.so
 %_libdir/pgsql/pgcrypto.so
+%_libdir/pgsql/pgoutput.so
 %_libdir/pgsql/pgrowlocks.so
 %_libdir/pgsql/pgstattuple.so
 %_libdir/pgsql/pgxml.so
@@ -607,23 +607,20 @@ fi
 %_libdir/pgsql/sslinfo.so
 %_libdir/pgsql/tablefunc.so
 %_libdir/pgsql/tcn.so
-%_libdir/pgsql/test_parser.so
 %_libdir/pgsql/timetravel.so
-%_libdir/pgsql/tsearch2.so
 %_libdir/pgsql/passwordcheck.so
 %_libdir/pgsql/unaccent.so
 %_libdir/pgsql/auth_delay.so
-%_libdir/pgsql/dummy_seclabel.so
 %_libdir/pgsql/file_fdw.so
 %_libdir/pgsql/sepgsql.so
 %_libdir/pgsql/postgres_fdw.so
-%_libdir/pgsql/worker_spi.so
 %_libdir/pgsql/pg_prewarm.so
 %_libdir/pgsql/test_decoding.so
-%_libdir/pgsql/test_shm_mq.so
+%_libdir/pgsql/tsm_system_rows.so
+%_libdir/pgsql/tsm_system_time.so
 
 %if_with devel
-%files -f libpq%libpq_major-%postgresql_major.%postgresql_minor.lang -n %libpq_name
+%files -f libpq%libpq_major-%postgresql_major.lang -n %libpq_name
 %_libdir/libpq.so.%libpq_major
 %_libdir/libpq.so.%libpq_major.*
 
@@ -636,33 +633,37 @@ fi
 
 %files -f server.lang server
 %config %_initdir/%prog_name
-#%config %_sysconfdir/chroot.d/%prog_name.*
 %_bindir/initdb
 %_bindir/postgresql-check-db-dir
 %_bindir/pg_controldata
 %_bindir/pg_ctl
-%_bindir/pg_receivexlog
-%_bindir/pg_resetxlog
 %_bindir/postgres
 %_bindir/postmaster
 %_bindir/pg_upgrade
+%_bindir/pg_rewind
+%_bindir/pg_receivewal
+%_bindir/pg_resetwal
+%_bindir/pg_waldump
 
 %_man1dir/initdb.1*
 %_man1dir/pg_controldata.1*
-%_man1dir/pg_receivexlog.1*
-%_man1dir/pg_resetxlog.1*
 %_man1dir/pg_ctl.1*
 %_man1dir/pg_upgrade.1*
 %_man1dir/postgres.1*
 %_man1dir/postmaster.1*
+%_man1dir/pg_rewind.1*
+%_man1dir/pg_receivewal.1*
+%_man1dir/pg_resetwal.1*
+%_man1dir/pg_waldump.1*
+
 %dir %_libdir/%PGSQL
 %_libdir/%PGSQL/plpgsql.so
 %_libdir/%PGSQL/dict_snowball.so
 %_libdir/%PGSQL/*_and_*.so
 %_libdir/%PGSQL/euc2004_sjis2004.so
 %_libdir/%PGSQL/libpqwalreceiver.so
-%_libdir/pgsql/pg_upgrade_support.so
 %dir %_datadir/%PGSQL
+%_datadir/%PGSQL/errcodes.txt
 %dir %_datadir/%PGSQL/timezone
 %_datadir/%PGSQL/timezone/*
 %dir %_datadir/%PGSQL/timezonesets
@@ -678,34 +679,16 @@ fi
 %_datadir/%PGSQL/sql_features.txt
 %_datadir/%PGSQL/system_views.sql
 %_datadir/%PGSQL/snowball_create.sql
-%_datadir/%PGSQL/unknown.pltcl
 %_datadir/%PGSQL/extension
 %_localstatedir/%PGSQL
-#_sysconfdir/syslog.d/%prog_name
 %docdir/README.ALT-ru_RU.UTF-8
 %docdir/README.rpm-dist
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL
+%attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/backups
+%attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/data
 %_datadir/%PGSQL/contrib
 %_datadir/%PGSQL/contrib/sepgsql.sql
 %_unitdir/*
-
-%attr(751,root,root)  %dir %ROOT
-%attr(751,root,root)  %dir %ROOT/bin
-%attr(751,root,root)  %dir %ROOT/etc
-%attr(751,root,root)  %dir %ROOT/etc/%PGSQL
-%attr(751,root,root)  %dir %ROOT/dev
-%attr(751,root,root)  %dir %ROOT/%_lib
-%attr(1777,root,root) %dir %ROOT/tmp
-%attr(751,root,root)  %dir %ROOT/usr
-%attr(751,root,root)  %dir %ROOT/var
-%attr(751,root,root)  %dir %ROOT%_libdir
-%attr(751,root,root)  %dir %ROOT%_libdir/%PGSQL
-%attr(751,root,root)  %dir %ROOT%_libdir/locale
-%attr(751,root,root)  %dir %ROOT%_localstatedir
-%attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL
-%attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL/backups
-%attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL/data
-#attr(666,root,root) %ghost %ROOT/dev/log
 
 %if_with devel
 %files -f devel.lang devel
@@ -721,6 +704,7 @@ fi
 
 %files devel-static
 %_libdir/libpgcommon.a
+%_libdir/libpgfeutils.a
 
 %files -n %libpq_name-devel
 %_libdir/libpq*.so
@@ -748,103 +732,126 @@ fi
 %_sysconfdir/buildreqs/packages/substitute.d/%libecpg_name-devel-static
 %endif
 
-%files -f pltcl-%postgresql_major.%postgresql_minor.lang tcl
+%files -f pltcl-%postgresql_major.lang tcl
 %dir %_libdir/%PGSQL
-%_bindir/pltcl_delmod
-%_bindir/pltcl_listmod
-%_bindir/pltcl_loadmod
 %_libdir/%PGSQL/pltcl.so
 
-%files -f plperl-%postgresql_major.%postgresql_minor.lang perl
+%files -f plperl-%postgresql_major.lang perl
 %dir %_libdir/%PGSQL
 %_libdir/%PGSQL/plperl.so
 
-%files -f plpython-%postgresql_major.%postgresql_minor.lang python
+%files -f plpython-%postgresql_major.lang python
 %dir %docdir
 %dir %_libdir/%PGSQL
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
-* Fri Oct 19 2018 Alexei Takaseev <taf@altlinux.org> 9.4.19-alt5
+* Fri Oct 19 2018 Alexei Takaseev <taf@altlinux.org> 11.0-alt2
 - Disable package libs for --without devel. This will provide
   one set of libraries for all versions of the PG.
 
-* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 9.4.19-alt3
-- NMU: removed Provides: postgresql-perl from old postgresses
+* Thu Oct 18 2018 Alexei Takaseev <taf@altlinux.org> 11.0-alt1
+- 11.0
 
-* Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 9.4.19-alt2
+* Thu Sep 27 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt7
+- Drop online_analyze and plantuner contribs - performance
+  degradation
+
+* Mon Sep 10 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt6
+- Another fix conflicts with libpq5.10-1C
+
+* Fri Sep 07 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt5
+- Add Obsolete to libpq-1C
+
+* Wed Sep 05 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt4
+- Add online_analyze and plantuner contribs
+
+* Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt3
 - Add BR: libkrb5-devel
 - Rebuild with OpenSSL 1.1.x
 
-* Sat Aug 11 2018 Alexei Takaseev <taf@altlinux.org> 9.4.19-alt1
-- 9.4.19
-- Fix CVE-2018-10915
+* Tue Aug 14 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt2
+- Change conflict 1C 9.6 -> 1C 10
 
-* Wed May 09 2018 Alexei Takaseev <taf@altlinux.org> 9.4.18-alt1
-- 9.4.18
+* Sat Aug 11 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt1
+- 10.5
+- Fix CVE-2018-10915, CVE-2018-10925
+
+* Wed May 09 2018 Alexei Takaseev <taf@altlinux.org> 10.4-alt1
+- 10.4
 - Fix CVE-2018-1115
 
-* Fri Mar 02 2018 Alexei Takaseev <taf@altlinux.org> 9.4.17-alt1
-- 9.4.17
+* Fri Mar 02 2018 Alexei Takaseev <taf@altlinux.org> 10.3-alt1
+- 10.3
 - Fix CVE-2018-1058
 
-* Wed Feb 07 2018 Alexei Takaseev <taf@altlinux.org> 9.4.16-alt1
-- 9.4.16
+* Wed Feb 07 2018 Alexei Takaseev <taf@altlinux.org> 10.2-alt1
+- 10.2
 
-* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 9.4.15-alt1.1
+* Fri Feb 02 2018 Alexei Takaseev <taf@altlinux.org> 10.1-alt2
+- Rename pg_rewind's copy_file_range() to avoid conflict with new linux syscall
+
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 10.1-alt1.1
 - rebuild with new perl 5.26.1
 
-* Thu Nov 09 2017 Alexei Takaseev <taf@altlinux.org> 9.4.15-alt1
-- 9.4.15
+* Thu Nov 09 2017 Alexei Takaseev <taf@altlinux.org> 10.1-alt1
+- 10.1
 - Remove conflicts to PG 9.1, 9.2
+- Cleanup spec
+- Remove chroot dead code
 
-* Thu Oct 05 2017 Alexei Takaseev <taf@altlinux.org> 9.4.14-alt2
-- Add conflict to PG 10
+* Thu Oct 05 2017 Alexei Takaseev <taf@altlinux.org> 10.0-alt1
+- 10.0
+- Enable -devel
 
-* Wed Aug 30 2017 Alexei Takaseev <taf@altlinux.org> 9.4.14-alt1
-- 9.4.14
+* Wed Sep 20 2017 Alexei Takaseev <taf@altlinux.org> 10.0-alt0.rc1
+- 10.0 rc1
 
-* Wed Aug 09 2017 Alexei Takaseev <taf@altlinux.org> 9.4.13-alt1
-- 9.4.13
+* Wed Aug 30 2017 Alexei Takaseev <taf@altlinux.org> 10.0-alt0.b4
+- 10.0 beta4
+
+* Wed Aug 30 2017 Alexei Takaseev <taf@altlinux.org> 9.6.5-alt1
+- 9.6.5
+
+* Wed Aug 09 2017 Alexei Takaseev <taf@altlinux.org> 9.6.4-alt1
+- 9.6.4
 - fix CVE-2017-7547
 
-* Thu May 11 2017 Alexei Takaseev <taf@altlinux.org> 9.4.12-alt2
-- Delete conflict with postgresql for 1C
+* Thu May 11 2017 Alexei Takaseev <taf@altlinux.org> 9.6.3-alt2
+- Add conflict with postgresql for 1C
 
-* Wed May 10 2017 Alexei Takaseev <taf@altlinux.org> 9.4.12-alt1
-- 9.4.12
+* Wed May 10 2017 Alexei Takaseev <taf@altlinux.org> 9.6.3-alt1
+- 9.6.3
 
-* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 9.4.11-alt1.qa1
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 9.6.2-alt1.qa1
 - NMU: rebuild against Tcl/Tk 8.6
 
-* Sun Feb 12 2017 Alexei Takaseev <taf@altlinux.org> 9.4.11-alt1
-- 9.4.11
+* Sun Feb 12 2017 Alexei Takaseev <taf@altlinux.org> 9.6.2-alt1
+- 9.6.2
 
-* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 9.4.10-alt1.1
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 9.6.1-alt1.1
 - rebuild with new perl 5.24.1
 
-* Thu Oct 27 2016 Alexei Takaseev <taf@altlinux.org> 9.4.10-alt1
-- 9.4.10
+* Thu Oct 27 2016 Alexei Takaseev <taf@altlinux.org> 9.6.1-alt1
+- 9.6.1
 
-* Thu Sep 29 2016 Alexei Takaseev <taf@altlinux.org> 9.4.9-alt2
-- Add conflicts to 9.6
+* Thu Sep 29 2016 Alexei Takaseev <taf@altlinux.org> 9.6.0-alt1
+- 9.6.0
 
-* Wed Aug 10 2016 Alexei Takaseev <taf@altlinux.org> 9.4.9-alt1
-- 9.4.9
+* Wed Aug 10 2016 Alexei Takaseev <taf@altlinux.org> 9.5.4-alt1
+- 9.5.4
 
-* Fri May 13 2016 Alexei Takaseev <taf@altlinux.org> 9.4.8-alt1
-- 9.4.8
+* Fri May 13 2016 Alexei Takaseev <taf@altlinux.org> 9.5.3-alt1
+- 9.5.3
 
-* Thu Mar 31 2016 Alexei Takaseev <taf@altlinux.org> 9.4.7-alt1
-- 9.4.7
+* Thu Mar 31 2016 Alexei Takaseev <taf@altlinux.org> 9.5.2-alt1
+- 9.5.2
 
-* Wed Feb 10 2016 Alexei Takaseev <taf@altlinux.org> 9.4.6-alt1
-- 9.4.6
-- Drop patch 0001-flex-2.6.0.patch (Fix upstream)
+* Wed Feb 10 2016 Alexei Takaseev <taf@altlinux.org> 9.5.1-alt1
+- 9.5.1
 
-* Thu Jan 14 2016 Alexei Takaseev <taf@altlinux.org> 9.4.5-alt3
-- Disable -devel
-- Add conflict with postgresql for 1C (ALT:#31531)
+* Thu Jan 14 2016 Alexei Takaseev <taf@altlinux.org> 9.5.0-alt1
+- 9.5.0
 
 * Mon Jan 11 2016 Alexei Takaseev <taf@altlinux.org> 9.4.5-alt2
 - Fix loss man pages

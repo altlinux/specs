@@ -8,7 +8,7 @@
 %define prog_name            postgresql
 %define postgresql_major     10
 %define postgresql_minor     5
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -18,16 +18,12 @@
 %define libecpg_major        6
 %define libecpg_minor        10
 
+%define libpq_name    libpq%libpq_major.%libpq_minor-1C
+%define libecpg_name  libecpg%libecpg_major.%libecpg_minor-1C
+
 Name: %prog_name%postgresql_major-1C
 Version: %postgresql_major.%postgresql_minor
 Release: alt%postgresql_altrel
-
-%define PGSQL pgsql
-%define ROOT %_localstatedir/%PGSQL-root
-%define docdir %_docdir/%prog_name-%version
-
-%define libpq_name    libpq%libpq_major.%libpq_minor-1C
-%define libecpg_name  libecpg%libecpg_major.%libecpg_minor-1C
 
 Summary: PostgreSQL client programs and libraries (edition for 1C 8.3.3 and later)
 License: PostgreSQL
@@ -35,6 +31,10 @@ Group: Databases
 URL: http://www.postgresql.org/
 
 Packager: Alexei Takaseev <taf@altlinux.org>
+
+%define PGSQL pgsql
+%define ROOT %_localstatedir/%PGSQL-root
+%define docdir %_docdir/%prog_name-%version
 
 Source0: %name-%version.tar
 Source1: README.ALT-ru_RU.UTF-8
@@ -58,8 +58,6 @@ Patch104: 00004-postgresql-1c-10.patch
 Patch105: 00005-coalesce_cost.patch
 Patch106: 00006-pg_receivewal.patch
 
-Requires: libpq%libpq_major >= %version-%release
-
 Provides: %prog_name = %version-%release
 Conflicts: %prog_name < %version-%release
 Conflicts: %prog_name > %version-%release
@@ -68,11 +66,15 @@ Conflicts: %{prog_name}9.4
 Conflicts: %{prog_name}9.5
 Conflicts: %{prog_name}9.6
 Conflicts: %{prog_name}10
+Conflicts: %{prog_name}11
 
 # Automatically added by buildreq on Thu Jul 31 2014
 # optimized out: docbook-dtds gnu-config libcom_err-devel libgpg-error libkrb5-devel libossp-uuid libxml2-devel openjade python-base python-modules setproctitle sgml-common tcl xml-common
 BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libicu-devel libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libselinux-devel libssl-devel libxslt-devel perl-devel python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libkrb5-devel
+%if_without devel
+BuildRequires: postgresql-devel
+%endif
 
 %description
 PostgreSQL is an advanced Object-Relational database management system
@@ -92,6 +94,7 @@ If you want to manipulate a PostgreSQL database on a remote PostgreSQL
 server, you need this package. You also need to install this package
 if you're installing the postgresql-server package.
 
+%if_with devel
 %package -n %libpq_name
 Summary: The shared libraries required for any PostgreSQL clients (edition for 1C 8.3.3 and later)
 Group: Databases
@@ -99,14 +102,12 @@ Provides: libpq = %version-%release
 Provides: libpq%libpq_major = %version-%release
 Conflicts: libpq%libpq_major < %version-%release
 Conflicts: libpq%libpq_major > %version-%release
-Obsoletes: libpq5.3 < 8.3.4-alt2
 
 %description -n %libpq_name
 C and C++ libraries to enable user programs to communicate with the
 PostgreSQL database backend. The backend can be on another machine and
 accessed through TCP/IP.
 
-%if_with devel
 %package -n %libpq_name-devel
 Summary: Development shared library for %libpq_name (edition for 1C 8.3.3 and later)
 Group: Development/Databases
@@ -134,7 +135,6 @@ Conflicts: libpq%libpq_major-devel-static > %version-%release
 
 %description -n %libpq_name-devel-static
 Development static library for %libpq_name
-%endif
 
 %package -n %libecpg_name
 Summary: Shared library %libecpg_name for PostgreSQL (edition for 1C 8.3.3 and later)
@@ -149,7 +149,6 @@ Conflicts: libecpg%libecpg_major > %version-%release
 %libecpg_name is used by programs built with ecpg (Embedded PostgreSQL for C)
 Use postgresql-dev to develop such programs.
 
-%if_with devel
 %package -n %libecpg_name-devel
 Summary: Development shared library to %libecpg_name (edition for 1C 8.3.3 and later)
 Group: Development/Databases
@@ -447,17 +446,6 @@ then
    cp -fp postmaster postgres %_libdir/%PGSQL/backup
 fi
 
-%pre -n %libpq_name
-exec &>/dev/null
-if [ $1 -gt 1 -a -d %_libdir/%PGSQL ]
-then
-    if [ ! -d %_libdir/%PGSQL/backup ]; then
-        mkdir -p %_libdir/%PGSQL/backup
-    fi
-    cd %_libdir > /dev/null
-    cp -fp libpq.* %_libdir/%PGSQL/backup
-fi
-
 %post server
 echo PGLIB=%_datadir/%PGSQL >> ~postgres/.bash_profile
 echo PGDATA=%_localstatedir/%PGSQL/data >> ~postgres/.bash_profile
@@ -472,29 +460,39 @@ SYSLOGD_CONFIG=/etc/sysconfig/syslogd
 %preun server
 %preun_service %prog_name
 
-%triggerpostun -- %{prog_name}8.4-server
-if [ "$2" -eq 0 ]; then
-	%post_service %prog_name
-fi
-
-%triggerpostun -- %{prog_name}9.0-server
-if [ "$2" -eq 0 ]; then
-	%post_service %prog_name
-fi
-
-%triggerpostun -- %{prog_name}9.1-server
-if [ "$2" -eq 0 ]; then
-	%post_service %prog_name
-fi
-
-%triggerpostun -- %{prog_name}9.2-server
+# $2, holds the number of instances of the target package that will remain
+# after the operation if $2 is 0, the target package will be removed
+%triggerpostun -- %{prog_name}9.3-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
 
-# $2, holds the number of instances of the target package that will remain
-# after the operation if $2 is 0, the target package will be removed
-%triggerpostun -- %{prog_name}9.3-server
+%triggerpostun -- %{prog_name}9.4-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}9.5-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}9.6-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}10-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}10-1C-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}11-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
@@ -621,6 +619,7 @@ fi
 %_libdir/pgsql/online_analyze.so
 %_libdir/pgsql/plantuner.so
 
+%if_with devel
 %files -f libpq%libpq_major-%postgresql_major.lang -n %libpq_name
 %_libdir/libpq.so.%libpq_major
 %_libdir/libpq.so.%libpq_major.*
@@ -630,6 +629,7 @@ fi
 %_libdir/libecpg.so.%libecpg_major.*
 %_libdir/libecpg_compat.so.*
 %_libdir/libpgtypes.so.*
+%endif
 
 %files -f server.lang server
 %config %_initdir/%prog_name
@@ -763,6 +763,10 @@ fi
 %_libdir/%PGSQL/ltree_plpython2.so
 
 %changelog
+* Fri Oct 19 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt3
+- Disable package libs for --without devel. This will provide
+  one set of libraries for all versions of the PG.
+
 * Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt2
 - Add BR: libkrb5-devel
 - Rebuild with OpenSSL 1.1.x
