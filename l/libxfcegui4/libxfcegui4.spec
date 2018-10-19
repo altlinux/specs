@@ -1,15 +1,15 @@
 Name: libxfcegui4
 Version: 4.10.0
-Release: alt5
+Release: alt6
 
 Summary: Various Gtk+2 widgets for Xfce
 Summary (ru_RU.UTF-8): Набор виджетов GTK 2 для Xfce
 License: %lgpl2plus
 Group: Graphical desktop/XFce
-Url: http://www.xfce.org/
+Url: https://www.xfce.org/
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-# Upstream: git://git.xfce.org/xfce/libxfcegui4
+# Upstream: https://git.xfce.org/archive/libxfcegui4
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -18,6 +18,8 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4util-devel libxfconf-devel
 BuildRequires: gtk-doc intltool libSM-devel libglade-devel libgtk+2-devel libstartup-notification-devel xorg-cf-files
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Various Gtk+2 widgets for Xfce.
@@ -46,7 +48,7 @@ Header files for the %name library.
 	--disable-gtk-doc \
 	--enable-startup-notification \
 	--disable-gladeui \
-	--enable-debug=no
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -67,6 +69,13 @@ Header files for the %name library.
 %_libdir/*.so
 
 %changelog
+* Fri Oct 19 2018 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt6
+- Enable debug (minimum level).
+- Update url.
+- Use _unpackaged_files_terminate_build.
+- Updated for modern autotools.
+- Use xfce_textdomain().
+
 * Thu Mar 12 2015 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt5
 - Disable development documentation build.
 - Disable libgladeui support.
