@@ -1,7 +1,7 @@
 
 Name: qt4-webkit
 Version: 2.3.4
-Release: alt5%ubt
+Release: alt6
 Epoch: 1
 
 Group: System/Libraries
@@ -33,7 +33,7 @@ BuildRequires: flex gcc-c++ gperf
 BuildRequires: pkgconfig(gstreamer-1.0) pkgconfig(gstreamer-app-1.0)
 BuildRequires: libjpeg-devel libwebp-devel libpng-devel
 BuildRequires: libpcre-devel libicu-devel libsqlite3-devel libxslt-devel zlib-devel
-BuildRequires: perl-Term-ANSIColor rpm-build-ruby python-modules-json
+BuildRequires: perl-Term-ANSIColor rpm-build-ruby python-modules-json python-modules-xml
 BuildRequires: libqt4-devel phonon-devel
 #BuildRequires: qt4-mobility-devel
 
@@ -122,6 +122,9 @@ done
 %_pkgconfigdir/QtWebKit.pc
 
 %changelog
+* Fri Oct 19 2018 Sergey V Turchin <zerg@altlinux.org> 1:2.3.4-alt6
+- fix build requires
+
 * Tue Oct 02 2018 Sergey V Turchin <zerg@altlinux.org> 1:2.3.4-alt5%ubt
 - build without qtmobility
 - remove -g compile flag for all archs
