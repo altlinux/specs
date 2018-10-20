@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.9.0
-Release: alt1%ubt
+Version: 1.10.0
+Release: alt1
 
 Summary: Thin-wrapper around the mock package for easier use with py.test
 License: MIT
@@ -15,21 +15,15 @@ Url: https://pypi.python.org/pypi/pytest-mock
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools
 BuildRequires: python-module-setuptools_scm
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
 
 %if_with check
 BuildRequires: python-module-mock
 BuildRequires: python-module-tox
-BuildRequires: python-module-virtualenv
 BuildRequires: python-module-coverage
 BuildRequires: python3-module-tox
-BuildRequires: python3-module-virtualenv
 BuildRequires: python3-module-coverage
 %endif
 
@@ -84,39 +78,50 @@ pushd ../python3
 popd
 
 %check
-%define python_version_nodots() %(%1 -Esc "import sys; sys.stdout.write('{0.major}{0.minor}'.format(sys.version_info))")
-
 export PIP_INDEX_URL=http://host.invalid./
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 export PYTHONPATH=$(pwd)
 
 # copy nessecary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e py%{python_version_nodots python} --notest
+TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e \
+py%{python_version_nodots python} --notest
 cp -f %_bindir/coverage .tox/py%{python_version_nodots python}/bin/
 
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e py%{python_version_nodots python} -v
+TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e \
+py%{python_version_nodots python} -v
 
 pushd ../python3
 export PYTHONPATH=$(pwd)
 
 # copy nessecary exec deps
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e \
+py%{python_version_nodots python3} --notest
 cp -f %_bindir/coverage3 .tox/py%{python_version_nodots python3}/bin/coverage
 
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e \
+py%{python_version_nodots python3} -v
 popd
 
 %files
 %doc LICENSE *.rst
-%python_sitelibdir/*
+%python_sitelibdir/_pytest_mock_version.py*
+%python_sitelibdir/pytest_mock.py*
+%python_sitelibdir/pytest_mock-*.egg-info/
 
 %files -n python3-module-%oname
 %doc LICENSE *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/_pytest_mock_version.py
+%python3_sitelibdir/pytest_mock.py
+%python3_sitelibdir/pytest_mock-*.egg-info/
+%python3_sitelibdir/__pycache__/_pytest_mock_version.*
+%python3_sitelibdir/__pycache__/pytest_mock.*
 
 %changelog
-* Thu Apr 12 2018 Stanislav Levin <slev@altlinux.org> 1.9.0-alt1%ubt
+* Sun Oct 21 2018 Stanislav Levin <slev@altlinux.org> 1.10.0-alt1
+- 1.9.0 -> 1.10.0.
+
+* Thu Apr 12 2018 Stanislav Levin <slev@altlinux.org> 1.9.0-alt1
 - 1.6.2 -> 1.9.0
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.6.2-alt1.1
