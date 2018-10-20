@@ -21,7 +21,7 @@
 %endif
 
 Name: xorg-server
-Version: 1.20.1
+Version: 1.20.2
 Release: alt1
 Epoch: 2
 License: MIT/X11
@@ -52,9 +52,8 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: doxygen flex libGL-devel libXau-devel libXaw-devel libXdmcp-devel libXext-devel libXfixes-devel libXfont-devel libXmu-devel
 BuildRequires: libXi-devel libXpm-devel libXrender-devel libXres-devel libXtst-devel libXv-devel libdmx-devel libudev-devel libSM-devel
-BuildRequires: libpciaccess-devel libpixman-devel libssl-devel libxkbfile-devel xorg-proto-devel
-BuildRequires: xorg-font-utils xorg-xtrans-devel xorg-util-macros libselinux-devel libaudit-devel xmlto xorg-sgml-doctools
-BuildRequires: libxshmfence-devel libdrm-devel libXfont2-devel
+BuildRequires: libpciaccess-devel libpixman-devel libssl-devel libxkbfile-devel xorg-proto-devel xorg-font-utils xorg-xtrans-devel
+BuildRequires: xorg-util-macros libselinux-devel libaudit-devel xmlto xorg-sgml-doctools libxshmfence-devel libdrm-devel libXfont2-devel
 %if_enabled glamor
 BuildRequires: libEGL-devel libgbm-devel libepoxy-devel
 %endif
@@ -305,6 +304,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Tue Oct 16 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.2-alt1
+- 1.20.2
+
 * Wed Oct 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.1-alt1
 - 1.20.1
 - removed OpenGL libs switcher
