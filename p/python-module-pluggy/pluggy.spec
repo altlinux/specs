@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.7.1
+Version: 0.8.0
 Release: alt1
 
 Summary: Plugin and hook calling mechanisms for python
@@ -42,6 +42,11 @@ specific details.
 
 %prep
 %setup
+
+# there is a file with name CHANGELOG.rst, not CHANGELOG
+# a wrong reference leads to broken install via pip
+sed -i '/^include CHANGELOG$/{s/$/.rst/}' MANIFEST.in
+rm -rf ../python3
 cp -a . ../python3
 
 %build
@@ -69,16 +74,19 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_INDEX_URL=http://host.invalid./
 
 # copy nessecary exec deps
-tox --sitepackages -e py%{python_version_nodots python} --notest
-cp -f %_bindir/py.test .tox/py%{python_version_nodots python}/bin/
+export PYTHONPATH="$(pwd)"
+TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e \
+py%{python_version_nodots python} --notest
+cp -T %_bindir/py.test .tox/py%{python_version_nodots python}/bin/pytest
 
-export PYTHONPATH=build/lib
 TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e \
 py%{python_version_nodots python} -v -- -v
 
 pushd ../python3
-tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
-cp -f %_bindir/py.test3 .tox/py%{python_version_nodots python3}/bin/py.test
+export PYTHONPATH="$(pwd)"
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e \
+py%{python_version_nodots python3} --notest
+cp -T %_bindir/py.test3 .tox/py%{python_version_nodots python3}/bin/pytest
 
 TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e \
 py%{python_version_nodots python3} -v -- -v
@@ -95,6 +103,9 @@ popd
 %python3_sitelibdir/pluggy-*.egg-info/
 
 %changelog
+* Sat Oct 20 2018 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
+- 0.7.1 -> 0.8.0.
+
 * Mon Aug 20 2018 Stanislav Levin <slev@altlinux.org> 0.7.1-alt1
 - 0.6.0 -> 0.7.1.
 

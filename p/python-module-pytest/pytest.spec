@@ -4,10 +4,10 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.8.2
+Version: 3.9.1
 Release: alt1
 
-Summary: py.test, a simple and popular testing tool for Python
+Summary: Python test framework
 License: MIT
 Group: Development/Python
 # Source-git: https://github.com/pytest-dev/pytest.git
@@ -52,66 +52,39 @@ BuildRequires: python3-module-requests
 
 BuildArch: noarch
 
-%global long_desc is a command line tool to collect, run and report about\
-automated tests. It runs well on Linux, Windows and OSX and on Python\
-2.4 through to 3.1 versions. It is used in many projects, ranging from\
-running 10 thousands of tests to a few inlined tests on a command line\
-script. As of version 1.2 you can also generate a\
-no-dependency py.test-equivalent standalone script that you can\
-distribute along with your application.
-
 %description
-py.test %long_desc
-
-Install pytest package if you need the extra /usr/bin/pytest executable
-in addition to the usual /usr/bin/py.test.
+The pytest framework makes it easy to write small tests, yet
+scales to support complex functional testing for applications and libraries.
 
 %package -n pytest
-Summary: Additional executable for py.test
+Summary: Additional executable for pytest
 Group: Development/Python
 Requires: python-module-%oname = %EVR
 # It simply has executables with the same filename:
 Conflicts: python-module-logilab-common < 1.0.2-alt2.hg20150708
 
 %description -n pytest
-py.test is a simple and popular testing tool for Python.
-It is packaged as python-module-%oname by ALT.
-
-This package contains the extra /usr/bin/pytest executable
-in addition to /usr/bin/py.test, which has always been packaged
-before.
-
-This separate package has been made to track the dependencies on this
-additional executable.
+The pytest framework makes it easy to write small tests, yet
+scales to support complex functional testing for applications and libraries.
 
 %package -n python3-module-%oname
-Summary: py.test3, the simple and popular testing tool for Python 3
+Summary: Python3 test framework
 Group: Development/Python3
 
 %description -n python3-module-%oname
-py.test3 %long_desc
-
-Install pytest3 package if you need the extra /usr/bin/pytest3 executable
-in addition to the usual /usr/bin/py.test3
-(which used to be /usr/bin/py.test-3.M).
+The pytest framework makes it easy to write small tests, yet
+scales to support complex functional testing for applications and libraries.
 
 %package -n pytest3
-Summary: Additional executable for py.test3
+Summary: Additional executable for pytest
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
 # It simply has executables with the same filename:
 Conflicts: python3-module-logilab-common < 1.0.2-alt2.hg20150708
 
 %description -n pytest3
-py.test3 is a simple and popular testing tool, the Python3 variant.
-It is packaged as python3-module-%oname by ALT.
-
-This package contains the extra /usr/bin/pytest3 executable
-in addition to /usr/bin/py.test3, which has always been packaged
-before (as /usr/bin/py.test-3.N).
-
-This separate package has been made to track the dependencies on this
-additional executable.
+The pytest framework makes it easy to write small tests, yet
+scales to support complex functional testing for applications and libraries.
 
 %prep
 %setup
@@ -189,6 +162,9 @@ popd
 %_bindir/pytest3
 
 %changelog
+* Sun Oct 21 2018 Stanislav Levin <slev@altlinux.org> 3.9.1-alt1
+- 3.8.2 -> 3.9.1.
+
 * Thu Oct 04 2018 Stanislav Levin <slev@altlinux.org> 3.8.2-alt1
 - 3.7.3 -> 3.8.2.
 
