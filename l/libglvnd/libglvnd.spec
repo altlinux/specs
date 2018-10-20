@@ -1,18 +1,16 @@
-%define rname libglvnd
-
-Name: libglvnd0
+Name: libglvnd
 Version: 1.1.0
-Release: alt1
-Epoch: 5
+Release: alt2
+Epoch: 7
 Group: System/Libraries
 Summary: The GL Vendor-Neutral Dispatch library
 Url: https://github.com/NVIDIA/libglvnd
 License: MIT
 
-Provides: libGLdispatch = %version-%release
-Obsoletes: libGLdispatch < %version-%release
+Provides: libGLdispatch = %epoch:%version-%release libglvnd0 = %epoch:%version-%release
+Obsoletes: libGLdispatch < %epoch:%version-%release libglvnd0 < %epoch:%version-%release
 
-Source: %rname-%version.tar
+Source: %name-%version.tar
 
 BuildRequires: libXext-devel python-modules-compiler python-modules-xml xorg-glproto-devel
 
@@ -23,20 +21,20 @@ arbitrating OpenGL API calls between multiple vendors on a per-screen basis
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Provides: %rname-devel = %epoch:%version-%release
-Obsoletes: %rname-devel < %epoch:%version-%release
+Provides: libglvnd0-devel = %epoch:%version-%release
+Obsoletes: libglvnd0-devel < %epoch:%version-%release
 
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name
 
-%package opengl
+%package -n libOpenGL
 Summary: OpenGL support for libglvnd
 Group: System/Libraries
-Provides: libOpenGL = %epoch:%version-%release
-Obsoletes: libOpenGL < %epoch:%version-%release
+Provides: libglvnd0-opengl = %epoch:%version-%release
+Obsoletes: libglvnd0-opengl < %epoch:%version-%release
 
-%description opengl
+%description -n libOpenGL
 libOpenGL is the common dispatch interface for the workstation OpenGL API
 
 %package -n libGLES
@@ -54,14 +52,14 @@ Requires: libEGL-mesa
 %description -n libEGL
 libEGL are the common dispatch interface for the EGL API
 
-%package glx
+%package -n libGLX
 Summary: GLX support for libglvnd
 Group: System/Libraries
 Requires: libGLX-mesa
-Provides: libGLX = %epoch:%version-%release
-Obsoletes: libGLX < %epoch:%version-%release
+Provides: libglvnd0-glx = %epoch:%version-%release
+Obsoletes: libglvnd0-glx < %epoch:%version-%release
 
-%description glx
+%description -n libGLX
 libGLX are the common dispatch interface for the GLX API
 
 %package -n libGL
@@ -74,7 +72,7 @@ libGL are the common dispatch interface for the GLX API
 %set_verify_elf_method textrel=relaxed
 
 %prep
-%setup -q -n %rname-%version
+%setup -q
 
 %build
 %autoreconf
@@ -95,13 +93,13 @@ rm -f %buildroot%_libdir/libGLESv1*
 %dir %_datadir/glvnd
 %_libdir/libGLdispatch.so.*
 
-%files opengl
+%files -n libOpenGL
 %_libdir/libOpenGL.so.*
 
 %files -n libGLES
 %_libdir/libGLESv2.so.*
 
-%files glx
+%files -n libGLX
 %_libdir/libGLX.so.*
 
 %files -n libGL
@@ -119,8 +117,8 @@ rm -f %buildroot%_libdir/libGLESv1*
 %files devel
 %_includedir/glvnd
 %_libdir/lib*.so
-%_pkgconfigdir/%rname.pc
+%_pkgconfigdir/%name.pc
 
 %changelog
-* Wed Aug 29 2018 Valery Inozemtsev <shrek@altlinux.ru> 5:1.1.0-alt1
+* Thu Oct 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 7:1.1.0-alt2
 - 1.1.0
