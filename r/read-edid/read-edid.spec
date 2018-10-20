@@ -1,6 +1,6 @@
 Name: read-edid
 Version: 3.0.2
-Release: alt1
+Release: alt2
 Group: System/Configuration/Other
 License: GPL
 
@@ -37,6 +37,9 @@ summary.
 %_bindir/*
 
 %changelog
+* Sat Oct 20 2018 Vladislav Zavjalov <slazav@altlinux.org> 3.0.2-alt2
+- fix segmentation fault in VBE mode (closes #35525)
+
 * Thu Oct 11 2018 Vladislav Zavjalov <slazav@altlinux.org> 3.0.2-alt1
 - v.3.0.2
 - parse-edid: show product ID (patch by M.Fishkov)
