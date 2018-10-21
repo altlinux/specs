@@ -1,4 +1,4 @@
-%define rust_ver 1.29.1
+%define rust_ver 1.29.2
 %define cargo_ver 1.29.0
 
 Name: rust
@@ -307,6 +307,9 @@ rm -rf %rustdir
 %_libdir/rustlib/%r_arch-unknown-linux-gnu%abisuff/analysis
 
 %changelog
+* Sun Oct 21 2018 Vladimir Lettiev <crux@altlinux.org> 1:1.29.2-alt1
+- 1.29.2
+
 * Thu Sep 27 2018 Vladimir Lettiev <crux@altlinux.org> 1:1.29.1-alt1
 - 1.29.1
 - security fix: https://blog.rust-lang.org/2018/09/21/Security-advisory-for-std.html
