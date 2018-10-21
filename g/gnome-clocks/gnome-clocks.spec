@@ -2,7 +2,7 @@
 %define ver_major 3.30
 
 Name: gnome-clocks
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Clock application designed for GNOME 3
@@ -54,6 +54,9 @@ Clock application designed for GNOME 3
 %doc README NEWS
 
 %changelog
+* Sun Oct 21 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
+- 3.30.1
+
 * Sat Sep 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 
