@@ -12,8 +12,8 @@
 %def_enable	systemd
 
 Name: syslog-ng
-Version: 3.13.2
-Release: alt2
+Version: 3.18.1
+Release: alt1
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -26,11 +26,11 @@ Conflicts: klogd < 1.4.1-alt7
 Provides: libeventlog = %EVR
 Obsoletes: libeventlog < %EVR
 
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
 # VCS git
 #https://github.com/balabit/syslog-ng.git
 
-Patch1: %name-%version.patch
+Patch1: %name-%version-%release.patch
 
 BuildRequires: rpm-build-licenses
 
@@ -52,6 +52,16 @@ BuildRequires: xsltproc docbook-style-xsl python-devel
 %{?_enable_mongodb:BuildRequires: libmongoc-devel}
 %{?_enable_curl:BuildRequires: libcurl-devel}
 %{?_enable_systemd:BuildRequires: libsystemd-devel}
+
+## Test suite (from Fedora Core)
+#BuildRequires: python-devel
+#BuildRequires: python-module-unittest2
+#BuildRequires: python-module-nose
+#BuildRequires: python-module-ply
+#BuildRequires: python-module-pytest-pep8
+#BuildRequires: python-module-six
+#BuildRequires: pylint
+#BuildRequires: libdbi-drivers-dbd-sqlite
 
 %description
 syslog-ng, as the name shows, is a syslogd replacement, but with new
@@ -152,14 +162,6 @@ Obsoletes: libeventlog-devel < %EVR
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package devel-test
-Summary: Test helper package for %name modules
-Group: Development/C
-Requires: %name = %version-%release
-
-%description devel-test
-The %name-devel-test package contains library for testing modules
-
 %prep
 %setup -q
 %patch1 -p1
@@ -204,6 +206,8 @@ skip_submodules=1 ./autogen.sh
  --enable-spoof-source \
  --with-embedded-crypto \
  --enable-manpages \
+ --disable-java \
+ --disable-java-modules \
  %{subst_enable geoip} \
  %{subst_enable smtp} \
  %{subst_enable json} \
@@ -211,8 +215,9 @@ skip_submodules=1 ./autogen.sh
  %{subst_enable systemd} \
 %if_enabled mongodb
  %{subst_enable mongodb} \
- --with-mongoc=system
+ --with-mongoc=system \
 %endif
+ #
 
 ##
 # disabled while auto* from autogen.sh is used
@@ -320,9 +325,18 @@ fi
 %_libdir/%name/libxml.so
 # added in 3.13
 %_libdir/%name/libappmodel.so
- 
+# added in 3.18
+%_libdir/%name/libexamples.so
+%_libdir/%name/libhook-commands.so
+%dir %_libdir/%name/loggen
+%_libdir/%name/loggen/libloggen_socket_plugin.so
+%_libdir/%name/loggen/libloggen_ssl_plugin.so
+
 %_libdir/lib%name-*.so.*
 %_libdir/libevtlog-*.so.*
+%_libdir/libloggen_helper-*.so.*
+%_libdir/libloggen_plugin-*.so.*
+%_libdir/libsecret-storage.so.*
 
 %dir %_datadir/%name
 %dir %_datadir/%name/include
@@ -387,28 +401,27 @@ fi
 
 %files devel
 %dir %_includedir/%name
-#_includedir/%name/*.h
 %_includedir/%name/*
 
 %dir %_datadir/%name/tools
 %_datadir/%name/tools/*
 
+%_libdir/libevtlog.so
+%_libdir/libloggen_helper.so
+%_libdir/libloggen_plugin.so
+%_libdir/libsecret-storage.so
+
 %_libdir/lib%name.so
 %_pkgconfigdir/%name.pc
-
-%_libdir/libevtlog.so
 
 %_pkgconfigdir/%name-native-connector.pc
 %_libdir/libsyslog-ng-native-connector.a
 
-%_pkgconfigdir/%name-add-contextual-data.pc
-
-%files devel-test
-%dir %_libdir/%name/libtest
-%_libdir/%name/libtest/libsyslog-ng-test.a
-%_pkgconfigdir/%name-test.pc
-
 %changelog
+* Mon Oct 22 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.18.1-alt1
+- 3.18.1 (ALT #35411)
+- removed subpackage devel-test
+
 * Wed Oct 10 2018 Grigory Ustinov <grenka@altlinux.org> 3.13.2-alt2
 - Rebuild without libwrap.
 
