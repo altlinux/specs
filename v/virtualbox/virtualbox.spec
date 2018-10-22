@@ -59,7 +59,7 @@
 %add_findprov_lib_path %vboxdir
 
 Name: virtualbox
-Version: 5.2.18
+Version: 5.2.20
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -802,6 +802,9 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Fri Oct 19 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.20-alt1
+- Build first autumn release
+
 * Mon Oct 15 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.18-alt1
 - Build latest release of 5.2 release
 - Add vboxfs patch from Debian fixed failure with new kernel 4.18
