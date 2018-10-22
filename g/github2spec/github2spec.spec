@@ -1,6 +1,6 @@
 Name:     github2spec
 # NOTE update version in github2spec
-Version:  1.4.5
+Version:  1.4.6
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from github using genspec
@@ -13,7 +13,7 @@ BuildArch: noarch
 
 BuildPrereq: rpm-build-ruby
 
-Requires: genspec >= 1.3.0
+Requires: genspec >= 1.3.1
 
 Source:   %name-%version.tar
 
@@ -34,6 +34,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Oct 22 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.6-alt1
+- Rewrite forwarding options to genspec
+
 * Mon Sep 17 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.5-alt1
 - Add tag option to build from specified tag instead of last
 - If not specified url option try to read it from first positional argument
