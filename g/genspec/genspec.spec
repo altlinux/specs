@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.3.1
+Version:  1.3.2
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -32,6 +32,12 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Thu Oct 22 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.2-alt1
+- Fix unwanted linebreak in changelog
+- Add --verbose key and change call functions from global to instace variables
+- Add --[no-]check option to control failures of external programs
+- Remove duplication in package name if upstream name contains type
+
 * Mon Oct 15 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1
 - Fix java-maven template.
 
