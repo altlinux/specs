@@ -1,6 +1,6 @@
 Name: opam
-Version: 2.0.0
-Release: alt1%ubt.rc
+Version: 2.0.1
+Release: alt1
 Summary: A source-based package manager for OCaml
 License: LGPLv3
 Group: Development/ML
@@ -11,8 +11,12 @@ BuildRequires: ocaml
 BuildRequires: ocaml-camlp4-devel
 BuildRequires: ocaml-opam-file-format-devel
 BuildRequires: hevea
+BuildRequires: ocaml-cppo_ocamlbuild-devel
 BuildRequires: ocaml-cppo
+BuildRequires: ocaml-mccs-devel
+BuildRequires: ocaml-odoc
 BuildRequires: ocaml-findlib
+BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-cudf-devel
 BuildRequires: ocaml-ocamlgraph-devel
 BuildRequires: ocaml-cmdliner-devel
@@ -21,8 +25,7 @@ BuildRequires: ocaml-dose3-devel
 BuildRequires: ocaml-extlib-devel
 BuildRequires: ocaml-jsonm-devel
 BuildRequires: ocaml-result-devel
-BuildRequires: curl jbuilder
-BuildRequires(pre): rpm-build-ubt
+BuildRequires: curl dune ocaml-omd gcc-c++
 
 %description
 OPAM stands for OCaml PAckage Manager.
@@ -66,19 +69,18 @@ The %name-doc package contains documentation for using %name.
 
 make all
 make man
-pushd doc/dev-manual/
-  make html
-  make clean
-popd
 
 %install
-%makeinstall_std
+%makeinstall_std LIBINSTALL_DIR=%buildroot%_libdir/ocaml
+
+rm -rf %buildroot%prefix/doc
 
 %files
 %doc README.md LICENSE CHANGES
 %doc AUTHORS CONTRIBUTING.md
 %_bindir/%name
 %_bindir/%name-installer
+%_libdir/ocaml/opam-installer
 %_mandir/man1/%name.1*
 %_mandir/man1/%name-*.1*
 
@@ -88,12 +90,15 @@ popd
 %doc shell/
 
 %changelog
-* Wed May 23 2018 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1%ubt.rc
+* Mon Oct 22 2018 Anton Farygin <rider@altlinux.ru> 2.0.1-alt1
+- 2.0.1
+
+* Wed May 23 2018 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1.rc
 - 2.0.0-rc
 
-* Thu May 17 2018 Anton Farygin <rider@altlinux.ru> 1.3.1-alt2%ubt
+* Thu May 17 2018 Anton Farygin <rider@altlinux.ru> 1.3.1-alt2
 - fixed stubs libraries location
 
-* Thu Dec 21 2017 Anton Farygin <rider@altlinux.ru> 1.3.1-alt1%ubt
+* Thu Dec 21 2017 Anton Farygin <rider@altlinux.ru> 1.3.1-alt1
 - first build for ALT
 
