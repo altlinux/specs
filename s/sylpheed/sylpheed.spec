@@ -1,6 +1,6 @@
 Name: sylpheed
 Version: 3.7.0
-Release: alt0.2
+Release: alt0.3
 
 Summary: a GTK+ based, lightweight, and fast e-mail client
 License: GPLv2+
@@ -34,13 +34,13 @@ Patch21: %name-3.1.0-alt-desktop.patch
 Patch22: %name-3.1.0-alt-icons.patch
 Patch23: %name-3.1.2-alt-glib2-2.32.0.patch
 Patch24: %name-3.6.0-alt-certdir.patch
-
+Patch25: %name-3.7.0-tofu.patch
 
 # old patches - not applied, should be obsolete now
 Patch1000: %name-0.9.3cvs9-alt-wm_race.patch
 
 Requires: mailcap
-Requires: libgpgme >= 1.0.0
+Requires: libgpgme >= 1.7.0
 
 %{?_enable_ldap:BuildPreReq: libldap-devel}
 %{?_enable_jpilot:BuildPreReq: libpilot-link-devel}
@@ -108,7 +108,7 @@ This package contains development files.
 %patch22 -p2
 #patch23 -p2
 %patch24 -p2
-
+%patch25 -p1
 
 cp -a %SOURCE5 README.actions
 bzip2 -9fk ChangeLog
@@ -158,6 +158,10 @@ autoconf
 %_includedir/sylpheed/
 
 %changelog
+
+* Mon Oct 22 2018 Ilya Mashkin <oddity@altlinux.ru> 3.7.0-alt0.3
+- add GPG TOFU support.  Thanks to Andrew Savchenko (Closes: #35271)
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt0.2
 - NMU: Rebuild with new openssl 1.1.0.
 
