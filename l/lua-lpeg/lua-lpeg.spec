@@ -1,6 +1,6 @@
 %define modname lpeg
 
-%{!?luaver: %global luaver %(lua -e "print(string.sub(_VERSION, 5))")}
+%define luaver 5.3
 %define lualibdir %_libdir/lua/%luaver
 %define luapkgdir %_datadir/lua/%luaver
 
@@ -8,7 +8,7 @@
 
 Name: lua-%modname
 Version: 1.0.1
-Release: alt2
+Release: alt3
 
 Summary: Parsing Expression Grammars for Lua
 Group: Development/Other
@@ -17,8 +17,8 @@ Url: http://www.inf.puc-rio.br/~roberto/%modname/
 
 Source: %url/%modname-%version.tar.gz
 
-BuildRequires: liblua5.3-devel >= %luaver
-Requires: lua >= %luaver
+BuildRequires: liblua5.3-devel
+Requires: lua5.3
 Source44: import.info
 
 %description
@@ -48,6 +48,9 @@ LD_LIBRARY_PATH=$PWD %make test
 %doc %attr(0644,root,root) test.lua
 
 %changelog
+* Mon Oct 22 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.0.1-alt3
+- really fixed ftbfs
+
 * Thu Oct 18 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.0.1-alt2
 - fixed ftbfs: changed BR lua-devel to liblua5.3-devel
 
