@@ -32,7 +32,7 @@
 
 Name:   	claws-mail
 Version:	3.17.1
-Release: 	alt1
+Release: 	alt2
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -50,7 +50,7 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq:	autoconf-common gettext-tools
 
-BuildRequires: flex libSM-devel libcompface-devel libdbus-glib-devel libenchant2-devel libetpan-devel libgnutls-devel libgpgme-devel libldap-devel libpilot-link-devel libstartup-notification-devel libgcrypt-devel zlib-devel
+BuildRequires: flex libSM-devel libcompface-devel libdbus-glib-devel libenchant2-devel libetpan-devel libgnutls-devel libgpgme-devel libldap-devel libstartup-notification-devel libgcrypt-devel zlib-devel
 BuildRequires: libnettle-devel
 %if_enabled gtk3
 BuildRequires: libgtk+3-devel
@@ -606,6 +606,7 @@ export LDFLAGS=-pie
 		--with-manualdir=%_datadir/%name \
 		--with-config-dir=.%name \
 		--disable-manual \
+		--disable-jpilot \
 		%{subst_enable appdata} \
 		%{subst_enable gtk3} \
 		%{subst_enable svg} \
@@ -881,6 +882,9 @@ install -p -m644 %name.png %buildroot%_pixmapsdir/
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Mon Oct 22 2018 Mikhail Efremov <sem@altlinux.org> 3.17.1-alt2
+- Disable PDA support.
+
 * Mon Aug 27 2018 Mikhail Efremov <sem@altlinux.org> 3.17.1-alt1
 - Updated to 3.17.1.
 
