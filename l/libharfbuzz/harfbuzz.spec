@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name harfbuzz
 %define ver_major 2.0
@@ -7,7 +7,7 @@
 %def_disable introspection
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -153,6 +153,9 @@ export CXXFLAGS="${CXXFLAGS} -Dnullptr=0"
 
 
 %changelog
+* Mon Oct 22 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
 * Sat Oct 20 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - updated to 2.0.1-3-gf70f9941
 
