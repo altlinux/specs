@@ -1,7 +1,7 @@
 %define oname eigen
 Name: %{oname}3
 Version: 3.3.5
-Release: alt1.qa1
+Release: alt2
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
 Group: Development/C++
@@ -17,6 +17,7 @@ Patch0:         01_install_FindEigen3.patch
 Patch1:         eigen_pkgconfig.patch
 # Fix the include paths in the new Eigen3Config.cmake file
 Patch2:         eigen3-3.3.1-fixcmake.patch
+Patch3:         eugen3-fix-prototype.patch
 
 BuildPreReq: gcc-c++ cmake doxygen libqt4-devel libsuitesparse-devel
 BuildPreReq: libsuperlu-devel libmpfr-devel libgmp-devel
@@ -63,6 +64,7 @@ This package contains examples for Eigen.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p0 -b .fixcmake
+%patch3 -p1
 
 %build
 mkdir -p BUILD
@@ -113,6 +115,9 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %doc BUILD/doc/html/*
 
 %changelog
+* Mon Oct 22 2018 Andrey Cherepanov <cas@altlinux.org> 3.3.5-alt2
+- Fix prototype (see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=908336) (ALT #35537).
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.3.5-alt1.qa1
 - NMU: applied repocop patch
 
