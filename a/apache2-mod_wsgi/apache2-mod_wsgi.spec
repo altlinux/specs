@@ -3,8 +3,8 @@
 %def_with check
 
 Name: apache2-mod_wsgi
-Version: 4.6.4
-Release: alt2.qa1
+Version: 4.6.5
+Release: alt1
 
 Summary: Python WSGI module for Apache2
 Group: System/Servers
@@ -94,6 +94,9 @@ popd
 %config(noreplace) %apache2_mods_available/wsgi-py3.load
 
 %changelog
+* Mon Oct 22 2018 Stanislav Levin <slev@altlinux.org> 4.6.5-alt1
+- 4.6.4 -> 4.6.5.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.6.4-alt2.qa1
 - NMU: applied repocop patch
 
