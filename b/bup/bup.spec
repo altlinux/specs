@@ -1,5 +1,5 @@
 Name:     bup
-Version:  0.29.1
+Version:  0.29.2
 Release:  alt1
 
 Summary:  Very efficient backup system based on the git packfile format
@@ -13,6 +13,8 @@ Group:    Archiving/Backup
 URL:      https://bup.github.io/
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
+
+ExclusiveArch: %ix86 x86_64
 
 Source:   %name-%version.tar
 # VCS:    https://github.com/bup/bup
@@ -116,6 +118,10 @@ install -Dm0644 %SOURCE1 %buildroot%_unitdir/bup-web.service
 %_man1dir/bup-web.1*
 
 %changelog
+* Mon Oct 22 2018 Andrey Cherepanov <cas@altlinux.org> 0.29.2-alt1
+- New version.
+- Do not build for aarch64 because pandoc is missing.
+
 * Sat Apr 01 2017 Andrey Cherepanov <cas@altlinux.org> 0.29.1-alt1
 - New version
 
