@@ -5,17 +5,24 @@
 %def_without fetch
 %def_without lto
 
+# enable gtk3/kde5 UI
+%def_enable kde5
+
 %ifarch mipsel
 %def_without java
 %def_disable kde4
 %def_disable qt5
 %else
 %def_with java
+%if_enabled kde5
+%def_disable kde4
+%def_disable qt5
+%else
 %def_enable kde4
 %def_disable qt5
 %endif
+%endif
 %def_disable mergelibs
-
 
 Name: LibreOffice
 %define hversion 6.1
@@ -25,7 +32,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -78,7 +85,7 @@ Patch403: alt-002-tmpdir.patch
 
 # Automatically added by buildreq on Mon Nov 10 2014
 # optimized out: ant-testutil apache-commons-codec apache-commons-logging boost-devel boost-devel-headers boost-interprocess-devel boost-intrusive-devel cppunit flute fontconfig fontconfig-devel fonts-type1-xorg glib2-devel gstreamer1.0-devel icu-utils java java-devel jpackage-utils junit4 kde4libs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcloog-isl4 libclucene-contribs-lib libclucene-core libclucene-shared libcurl-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgpg-error libgraphite2-devel libgst-plugins1.0 libharfbuzz-icu libicu-devel libnspr-devel libpango-devel libpng-devel libpoppler-devel libpq-devel libqt4-core libqt4-devel libqt4-gui libqt4-network librasqal-devel librevenge-devel libsasl2-3 libssl-devel libstdc++-devel libunixODBC-devel libwayland-client libwayland-server libxml2-devel pentaho-libxml perl-Compress-Raw-Zlib pkg-config poppler-data python-base python-devel python-modules python3 python3-base raptor2-devel sac tzdata tzdata-java xerces-j2 xml-common xml-commons-jaxp-1.4-apis xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz zlib-devel
-BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel liborcus-devel libpoppler-cpp-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel pentaho-reporting-flow-engine perl-Archive-Zip postgresql-devel unzip xorg-cf-files zip
+BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel liborcus-devel libpoppler-cpp-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel pentaho-reporting-flow-engine perl-Archive-Zip postgresql-devel unzip xorg-cf-files zip rpm-build-gir
 
 # Requirements that were previously brought in by kde4libs-devel
 BuildRequires: libunixODBC-devel
@@ -118,6 +125,12 @@ BuildRequires: libnumbertext-devel
 
 # 6.1.1
 BuildRequires: python3-module-setuptools
+
+# 6.1.3.1 gtk3/kde5 UI
+%if_enabled kde5
+BuildRequires: qt5-base-devel qt5-x11extras-devel
+BuildRequires: kde4libs-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kwindowsystem-devel
+%endif
 
 
 %if_without python
@@ -184,6 +197,18 @@ Requires: %name-common = %EVR
 Obsoletes: LibreOffice4-kde4
 %description kde4
 KDE4 extensions for %name
+%endif
+
+%if_enabled kde5
+%package kde5
+Summary: KDE5 Extensions for %name
+Group:  Office
+Requires: %uname = %EVR
+Requires: %name-common = %EVR
+Obsoletes: LibreOffice4-kde4 < %EVR
+Provides: LibreOffice4-kde4 = %EVR
+%description kde5
+KDE5 extensions for %name
 %endif
 
 %package -n libreofficekit
@@ -370,6 +395,10 @@ export CXXFLAGS="$CFLAGS"
 	%{subst_enable qt5} \
 	--enable-gtk \
 	--enable-gtk3 \
+%if_enabled kde5
+	--enable-gtk3-kde5 \
+	--disable-kde5 \
+%endif
 	--disable-gstreamer-0-10 \
   \
   	--enable-avahi \
@@ -450,7 +479,7 @@ done
 find %buildroot%lodir -name "*_gtk[^3]*"  | sed 's@^%buildroot@@' > files.gtk2
 
 # Create gtk3 plugin list
-find %buildroot%lodir -name "*_gtk3*" | sed 's@^%buildroot@@' > files.gtk3
+find %buildroot%lodir -name "*_gtk3*" ! -name "*_kde5*" | sed 's@^%buildroot@@' > files.gtk3
 
 # Create kde plugin list
 find %buildroot%lodir -name "*kde4*"  | sed 's@^%buildroot@@' > files.kde4
@@ -458,8 +487,11 @@ find %buildroot%lodir -name "*kde4*"  | sed 's@^%buildroot@@' > files.kde4
 # Create qt5 plugin list
 find %buildroot%lodir -name "*qt5*"   | sed 's@^%buildroot@@' > files.qt5
 
+# Create kde5 plugin list
+find %buildroot%lodir -name "*_kde5*" | sed 's@^%buildroot@@' > files.kde5
+
 # Generate base filelist by removing files from  separated packages
-{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk2 files.gtk3 files.kde4 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
+{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk2 files.gtk3 files.kde4 files.kde5 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
 
 unset RPM_PYTHON
 
@@ -536,6 +568,10 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %files qt5 -f files.qt5
 %endif
 
+%if_enabled kde5
+%files kde5 -f files.kde5
+%endif
+
 %files extensions
 %lodir/share/extensions/*
 %exclude %lodir/share/extensions/package.txt
@@ -564,6 +600,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Oct 22 2018 Ivan Razzhivin <underwit@altlinux.org> 6.1.3.1-alt2
+- build with gtk3/kde5 UI
+
 * Wed Oct 17 2018 Fr. Br. George <george@altlinux.ru> 6.1.3.1-alt1
 - Update to 6.1.3.1
 
