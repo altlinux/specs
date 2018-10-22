@@ -3,7 +3,7 @@
 
 Name: oddjob
 Version: 0.34.4
-Release: alt1
+Release: alt2
 Summary: A D-Bus service which runs odd jobs on behalf of client applications
 
 Group: System/Servers
@@ -88,6 +88,11 @@ install -m644 sample/oddjobd-sample.conf	%buildroot/%_sysconfdir/%{name}d.conf.d
 install -m644 sample/oddjob-sample.conf		%buildroot/%_sysconfdir/dbus-1/system.d/
 install -m755 sample/oddjob-sample.sh		%buildroot/%_libexecdir/%name/
 
+mkdir -p %buildroot/%_lib/security
+mv %buildroot%_libdir/security/pam_oddjob_mkhomedir.so \
+%buildroot/%_lib/security/
+rm %buildroot%_libdir/security/pam_oddjob_mkhomedir.la
+
 %check
 %make check
 
@@ -112,14 +117,13 @@ install -m755 sample/oddjob-sample.sh		%buildroot/%_libexecdir/%name/
 %files mkhomedir
 %doc src/mkhomedirfor src/mkmyhomedir
 %_libexecdir/%name/mkhomedir
-%_libdir/security/pam_oddjob_mkhomedir.so
+/%_lib/security/pam_oddjob_mkhomedir.so
 %_mandir/*/pam_oddjob_mkhomedir.*
 %_mandir/*/oddjob-mkhomedir.*
 %_mandir/*/oddjobd-mkhomedir.*
 %config(noreplace) %_sysconfdir/dbus-*/system.d/oddjob-mkhomedir.conf
 %config(noreplace) %_sysconfdir/oddjobd.conf.d/oddjobd-mkhomedir.conf
 
-%exclude %_libdir/security/pam_oddjob_mkhomedir.la
 
 %files sample
 %_libexecdir/%name/oddjob-sample.sh
@@ -133,6 +137,9 @@ install -m755 sample/oddjob-sample.sh		%buildroot/%_libexecdir/%name/
 %preun_service oddjobd
 
 %changelog
+* Mon Oct 22 2018 Stanislav Levin <slev@altlinux.org> 0.34.4-alt2
+- Fixed the location of PAM module.
+
 * Wed Oct 10 2018 Stanislav Levin <slev@altlinux.org> 0.34.4-alt1
 - 0.34.3 -> 0.34.4.
 
