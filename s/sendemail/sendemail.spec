@@ -1,13 +1,20 @@
 Name: sendemail
 Version: 1.56
-Release: alt1
+Release: alt2
 
 Summary: Send email from a console near you!
 License: GPLv2+
 Group: Networking/Mail
 
+Packager: Ilfat Aminov <aminov@altlinux.org>
+
 URL: https://github.com/mogaal/sendemail
 Source: %name-%version.tar
+
+BuildRequires: perl-IO-Socket-INET6
+
+Patch0: 00_fix_ssl_version.patch
+Patch1: 01_add_ipv6_support.patch
 
 BuildArch: noarch
 
@@ -24,6 +31,9 @@ making it very easy to learn and use.
 %prep
 %setup
 
+%patch0 -p1
+%patch1 -p1
+
 %build
 
 %install
@@ -35,6 +45,17 @@ cp -v sendEmail sendEmail.pl %buildroot/%_bindir/
 %_bindir/sendEmail*
 
 %changelog
+* Mon Oct 22 2018 Ilfat Aminov <aminov@altlinux.org> 1.56-alt2
+- Backport to Sisyphus
+
+* Mon Oct 22 2018 Ilfat Aminov <aminov@altlinux.org> 1.56-alt0.M70C.3
+- Add ipv6 support
+
+* Mon Oct 15 2018 Ilfat Aminov <aminov@altlinux.org> 1.56-alt0.M70C.2
+- Add patch to fix fails when tls is enabled
+
+* Fri Apr 13 2018 Lenar Shakirov <snejok@altlinux.ru> 1.56-alt0.M70C.1
+- Backport to C7.1
+
 * Thu Jun 23 2016 Lenar Shakirov <snejok@altlinux.ru> 1.56-alt1
 - First build for Sisyphus
-
