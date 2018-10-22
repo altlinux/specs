@@ -1,6 +1,6 @@
 Name: efibootmgr
-Version: 16
-Release: alt1%ubt
+Version: 17
+Release: alt1
 
 Summary: EFI Boot Manager
 Group: System/Kernel and hardware
@@ -10,6 +10,7 @@ URL: https://github.com/rhboot/efibootmgr
 ExclusiveArch: %ix86 x86_64 aarch64
 #git https://github.com/rhboot/efibootmgr
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: libpci-devel zlib-devel libefivar-devel libpopt-devel
 BuildRequires(pre): rpm-build-ubt
 
@@ -21,6 +22,7 @@ http://developer.intel.com/technology/efi/efi.htm and http://uefi.org/.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %make_build EXTRA_CFLAGS="%optflags" EFIDIR='altlinux'
@@ -34,10 +36,13 @@ http://developer.intel.com/technology/efi/efi.htm and http://uefi.org/.
 %_man8dir/*.*
 
 %changelog
-* Fri Apr 27 2018 Anton Farygin <rider@altlinux.ru> 16-alt1%ubt
+* Mon Oct 22 2018 Anton Farygin <rider@altlinux.ru> 17-alt1
+- 16->17
+
+* Fri Apr 27 2018 Anton Farygin <rider@altlinux.ru> 16-alt1
 - 15 -> 16
 
-* Tue Jun 20 2017 Anton Farygin <rider@altlinux.ru> 15-alt1%ubt
+* Tue Jun 20 2017 Anton Farygin <rider@altlinux.ru> 15-alt1
 - new version from new upstream
 
 * Wed Mar 01 2017 Michael Shigorin <mike@altlinux.org> 0.6.0-alt2
