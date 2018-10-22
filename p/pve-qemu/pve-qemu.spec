@@ -53,8 +53,9 @@
 %define _localstatedir /var
 
 Name: pve-%rname
-Version: 3.0.0
-Release: alt2
+Version: 2.12.1
+Release: alt1
+Epoch: 1
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
 Group: Emulators
@@ -72,41 +73,54 @@ Source100: Logo.bmp
 
 Patch0: qemu-alt.patch
 
-Patch10: 0001-PVE-Config-block-file-change-locking-default-to-off.patch
-Patch11: 0002-PVE-Config-Adjust-network-script-path-to-etc-kvm.patch
-Patch12: 0003-PVE-Config-use-kvm-by-default.patch
-Patch13: 0004-PVE-Config-set-the-CPU-model-to-kvm64-32-instead-of-.patch
-Patch14: 0005-PVE-Config-ui-spice-default-to-pve-certificates.patch
-Patch15: 0006-PVE-Config-smm_available-false.patch
-Patch16: 0007-PVE-Config-glusterfs-no-default-logfile-if-daemonize.patch
-Patch17: 0008-PVE-Config-rbd-block-rbd-disable-rbd_cache_writethro.patch
-Patch18: 0009-PVE-Up-qmp-add-get_link_status.patch
-Patch19: 0010-PVE-Up-glusterfs-allow-partial-reads.patch
-Patch20: 0011-PVE-Up-qemu-img-return-success-on-info-without-snaps.patch
-Patch21: 0012-PVE-Up-qemu-img-dd-add-osize-and-read-from-to-stdin-.patch
-Patch22: 0013-PVE-Up-qemu-img-dd-add-isize-parameter.patch
-Patch23: 0014-PVE-Up-qemu-img-dd-add-n-skip_create.patch
-Patch24: 0015-PVE-virtio-balloon-improve-query-balloon.patch
-Patch25: 0016-PVE-qapi-modify-query-machines.patch
-Patch26: 0017-PVE-qapi-modify-spice-query.patch
-Patch27: 0018-PVE-internal-snapshot-async.patch
-Patch28: 0019-PVE-convert-savevm-async-to-threads.patch
-Patch29: 0020-PVE-block-snapshot-qmp_snapshot_drive-add-aiocontext.patch
-Patch30: 0021-PVE-block-snapshot-qmp_delete_drive_snapshot-add-aio.patch
-Patch31: 0022-PVE-block-add-the-zeroinit-block-driver-filter.patch
-Patch32: 0023-PVE-backup-modify-job-api.patch
-Patch33: 0024-PVE-backup-introduce-vma-archive-format.patch
-Patch34: 0025-PVE-Deprecated-adding-old-vma-files.patch
-Patch35: 0026-PVE-vma-add-throttling-options-to-drive-mapping-fifo.patch
-Patch36: 0027-PVE-vma-add-cache-option-to-device-map.patch
-Patch37: 0028-PVE-vma-remove-forced-NO_FLUSH-option.patch
-Patch38: 0029-PVE-Add-dummy-id-command-line-parameter.patch
-Patch39: 0030-PVE-Config-Revert-target-i386-disable-LINT0-after-re.patch
-Patch40: 0001-seccomp-use-SIGSYS-signal-instead-of-killing-the-thr.patch
-Patch41: 0002-seccomp-prefer-SCMP_ACT_KILL_PROCESS-if-available.patch
-Patch42: 0003-configure-require-libseccomp-2.2.0.patch
-Patch43: 0004-seccomp-set-the-seccomp-filter-to-all-threads.patch
-Patch44: 0005-monitor-create-iothread-after-daemonizing.patch
+Patch10: 0001-PVE-Add-dummy-id-command-line-parameter.patch
+Patch11: 0002-block-file-change-locking-default-to-off.patch
+Patch12: 0003-Adjust-network-script-path-to-etc-kvm.patch
+Patch13: 0004-qemu-img-return-success-on-info-without-snapshots.patch
+Patch14: 0005-use-kvm-by-default.patch
+Patch15: 0006-virtio-balloon-fix-query.patch
+Patch16: 0007-set-the-CPU-model-to-kvm64-32-instead-of-qemu64-32.patch
+Patch17: 0008-qapi-modify-query-machines.patch
+Patch18: 0009-qapi-modify-spice-query.patch
+Patch19: 0010-ui-spice-default-to-pve-certs-unless-otherwise-speci.patch
+Patch20: 0011-internal-snapshot-async.patch
+Patch21: 0012-convert-savevm-async-to-threads.patch
+Patch22: 0013-qmp-add-get_link_status.patch
+Patch23: 0014-smm_available-false.patch
+Patch24: 0015-PVE-Config-rbd-block-rbd-disable-rbd_cache_writethro.patch
+Patch25: 0016-block-snapshot-qmp_snapshot_drive-add-aiocontext.patch
+Patch26: 0017-block-snapshot-qmp_delete_drive_snapshot-add-aiocont.patch
+Patch27: 0018-glusterfs-no-default-logfile-if-daemonized.patch
+Patch28: 0019-glusterfs-allow-partial-reads.patch
+Patch29: 0020-qemu-img-dd-add-osize-and-read-from-to-stdin-stdout.patch
+Patch30: 0021-backup-modify-job-api.patch
+Patch31: 0022-backup-introduce-vma-archive-format.patch
+Patch32: 0023-adding-old-vma-files.patch
+Patch33: 0024-vma-add-throttling-options-to-drive-mapping-fifo-pro.patch
+Patch34: 0025-qemu-img-dd-add-isize-parameter.patch
+Patch35: 0026-qemu-img-dd-add-n-skip_create.patch
+Patch36: 0027-vma-add-cache-option-to-device-map.patch
+Patch37: 0028-vma-remove-forced-NO_FLUSH-option.patch
+Patch38: 0029-Revert-target-i386-disable-LINT0-after-reset.patch
+Patch39: 0030-For-internal-snapshot-async.patch
+Patch40: 0031-savevm-async-fixups-for-AIO-WAIT.patch
+Patch41: 0032-PVE-block-add-the-zeroinit-block-driver-filter.patch
+Patch42: 0033-PVE-fixups-for-2.12.1.patch
+Patch43: 0034-PVE-pre-3.0-uuidinfo-common-include.patch
+Patch44: 0035-vma.c-fixup.patch
+Patch45: 0036-More-2.12-fixups.patch
+Patch46: 0037-And-more-2.12-fixups.patch
+Patch47: 0038-Fix-vma-backup.patch
+Patch48: 0001-seccomp-use-SIGSYS-signal-instead-of-killing-the-thr.patch
+Patch49: 0002-seccomp-prefer-SCMP_ACT_KILL_PROCESS-if-available.patch
+Patch50: 0003-configure-require-libseccomp-2.2.0.patch
+Patch51: 0004-seccomp-set-the-seccomp-filter-to-all-threads.patch
+Patch52: 0005-clean-up-callback-when-del-virtqueue.patch
+Patch53: 0006-ne2000-fix-possible-out-of-bound-access-in-ne2000_re.patch
+Patch54: 0007-rtl8139-fix-possible-out-of-bound-access.patch
+Patch55: 0008-pcnet-fix-possible-buffer-overflow.patch
+Patch56: 0009-net-ignore-packet-size-greater-than-INT_MAX.patch
+Patch57: 0010-e1000-indicate-dropped-packets-in-HW-counters.patch
 
 ExclusiveArch: x86_64
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
@@ -116,7 +130,7 @@ BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d seavgabios seabios libfdt-devel >= 1.4.0
 BuildRequires: libpixman-devel >= 0.21.8
 BuildRequires: iasl
-%{?_enable_sdl:BuildRequires: libSDL2-devel libX11-devel}
+%{?_enable_sdl:BuildRequires: libSDL-devel libX11-devel}
 %{?_enable_curses:BuildRequires: libncurses-devel}
 %{?_enable_bluez:BuildRequires: libbluez-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
@@ -318,6 +332,19 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch42 -p1
 %patch43 -p1
 %patch44 -p1
+%patch45 -p1
+%patch46 -p1
+%patch47 -p1
+%patch48 -p1
+%patch49 -p1
+%patch50 -p1
+%patch51 -p1
+%patch52 -p1
+%patch53 -p1
+%patch54 -p1
+%patch55 -p1
+%patch56 -p1
+%patch57 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -325,7 +352,7 @@ cp -f %SOURCE2 qemu-kvm.control.in
 export CFLAGS="%optflags"
 # non-GNU configure
 ./configure \
-	--target-list=x86_64-softmmu \
+	--target-list=x86_64-softmmu,aarch64-softmmu \
 	--prefix=%_prefix \
 	--sysconfdir=%_sysconfdir \
 	--libdir=%_libdir \
@@ -334,7 +361,7 @@ export CFLAGS="%optflags"
 	--localstatedir=%_localstatedir \
 	--extra-cflags="%optflags" \
 	%{subst_enable werror} \
-	%{?_enable_sdl:--enable-sdl --with-sdlabi=2.0} \
+	%{?_enable_sdl:--enable-sdl --with-sdlabi=1.2} \
 	%{?_disable_curses:--disable-curses} \
 	%{subst_enable bluez} \
 	%{subst_enable vnc} \
@@ -355,7 +382,6 @@ export CFLAGS="%optflags"
 	--disable-xen \
 	--disable-brlapi \
 	--enable-curl \
-	--disable-fdt \
 	--enable-kvm \
 	%{subst_enable virglrenderer} \
 	%{subst_enable tpm} \
@@ -495,6 +521,9 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Mon Oct 22 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.12.1-alt1
+- 2.12.1-1
+
 * Fri Sep 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 3.0.0-alt2
 - fixed efi roms path
 
