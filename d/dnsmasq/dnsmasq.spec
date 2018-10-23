@@ -1,7 +1,7 @@
 %def_with libidn2
 
 Name: dnsmasq
-Version: 2.79
+Version: 2.80
 
 Release: alt1
 Summary: A lightweight caching nameserver
@@ -111,6 +111,9 @@ if egrep -q '^[^#]*ALL *=' %sysconfig_file; then
     fi
 fi
 fi
+# Create dnsmasq user
+groupadd -r -f _dnsmasq ||:
+useradd -r -g _dnsmasq -d /dev/null -s /dev/null -n _dnsmasq >/dev/null 2>&1 ||:
 
 %post
 %post_service %name
@@ -136,6 +139,11 @@ fi
 %_man1dir/dhcp_*
 
 %changelog
+* Tue Oct 23 2018 Mikhail Efremov <sem@altlinux.org> 2.80-alt1
+- init: Don't use netstat (closes: #34783).
+- Use its own user to run dnsmasq service.
+- Updated to 2.80.
+
 * Wed Apr 18 2018 Mikhail Efremov <sem@altlinux.org> 2.79-alt1
 - Updated to 2.79.
 
