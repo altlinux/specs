@@ -3,7 +3,7 @@
 
 Name: ocaml-react
 Version: 1.2.1
-Release: alt2
+Release: alt3
 Summary: Development files for %name
 License: BSD
 Group: Development/ML
@@ -48,28 +48,27 @@ and provides time stamp events, delayed events and delayed signals.
 %setup 
 
 %build
+sed -i 's,%%%%VERSION_NUM%%%%,%version,g' pkg/META
 ocaml pkg/pkg.ml build
 
 %install
-mkdir -p %buildroot%_libdir/ocaml/react
-for f in \
-  pkg/META \
-  src/*.{a,cma,cmi,cmx,mli,cmxa,cmxs}
-do
-  cp -p _build/$f %buildroot%_libdir/ocaml/react/
-done
+opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 
 %files runtime
 %_libdir/ocaml/react
-%exclude %{_libdir}/ocaml/react/*.cmx
-%exclude %{_libdir}/ocaml/react/*.mli
+%exclude %_libdir/ocaml/react/*.cmx
+%exclude %_libdir/ocaml/react/*.mli
 
 %files
 %_libdir/ocaml/react/*.cmx
 %_libdir/ocaml/react/*.mli
 
 %changelog
+* Tue Oct 23 2018 Anton Farygin <rider@altlinux.ru> 1.2.1-alt3
+- fixed the version repesentation for ocaml findlib
+- installation method changed to opam-installer
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.2.1-alt2
 - rebuilt with ocaml-4.07.1
 
