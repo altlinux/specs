@@ -1,6 +1,6 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 2.6.6
+Version: 2.7.0
 Release: alt1
 
 Group: System/Libraries
@@ -22,6 +22,7 @@ Requires: ca-certificates >= 2015.10.29
 
 # Skip findreq on all modules:
 %add_findreq_skiplist %python_sitelibdir/%name/modules/*
+%add_findreq_skiplist %python_sitelibdir/%name/plugins/*
 %add_findreq_skiplist %python_sitelibdir/%name/module_utils/ansible_tower.py
 
 %description
@@ -53,9 +54,12 @@ cp -v docs/man/man1/*.1 %buildroot/%_man1dir/
 %_man1dir/%{name}*
 %python_sitelibdir/%{name}*
 %doc examples/playbooks examples/scripts examples/hosts
-%doc README.rst CONTRIBUTING.md CHANGELOG.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
+%doc README.rst changelogs/CHANGELOG-v*.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Tue Oct 23 2018 Terechkov Evgenii <evg@altlinux.org> 2.7.0-alt1
+- 2.7.0 (ALT#35540)
+
 * Mon Oct 22 2018 Terechkov Evgenii <evg@altlinux.org> 2.6.6-alt1
 - 2.6.6
 
