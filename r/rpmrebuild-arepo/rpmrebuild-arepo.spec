@@ -1,5 +1,5 @@
 Name: rpmrebuild-arepo
-Version: 3.1.5
+Version: 3.1.6
 Release: alt1
 
 Summary: biarch repackager for Sisyphus packages
@@ -44,6 +44,10 @@ install -m755 arepo.sh %buildroot%_libexecdir/rpmrebuild/plugins/
 %_bindir/arepo_pre.py
 
 %changelog
+* Tue Oct 23 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.1.6-alt1
+- arepo.sh: generate more strict requires for arepo package if possible (ALT#35538);
+- arepo.sh: generate arepo requires against AREPO_NATIVE (thnx ldv@).
+
 * Fri Mar 21 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.5-alt1
 - rpmrebuild-arepo.conf: added /usr/lib/gdk-pixbuf-[[:digit:].]+/ to
   lib_files.
