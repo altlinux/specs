@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-cmdliner
 Version: 1.0.2
-Release: alt4
+Release: alt5
 Summary: Declarative definition of command line interfaces for OCaml
 
 # In order for this to work as a "global" macro it has to come after the
@@ -53,6 +53,7 @@ sed 's/ocamlbuild/ocamlbuild -lflag -g/g' -i Makefile
 
 # Use install -p.
 sed 's/INSTALL=install/INSTALL=install -p/g' -i Makefile
+sed -i 's/%%%%VERSION%%%%/%version/g' pkg/META
 
 %build
 make build-byte
@@ -89,6 +90,9 @@ chmod -x %buildroot%_libdir/ocaml/%libname/opam
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Tue Oct 23 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt5
+- fixed the version repesentation for ocaml findlib
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt4
 - rebuilt with ocaml-4.07.1
 
