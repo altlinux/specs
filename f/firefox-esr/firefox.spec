@@ -15,7 +15,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        60.2.2
+Version:        60.3.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -333,6 +333,18 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Tue Oct 23 2018 Andrey Cherepanov <cas@altlinux.org> 60.3.0-alt1
+- New ESR version (60.3.0).
+- Fixed:
+  + CVE-2018-12391 HTTP Live Stream audio data is accessible cross-origin
+  + CVE-2018-12392 Crash with nested event loops
+  + CVE-2018-12393 Integer overflow during Unicode conversion while loading JavaScript
+  + CVE-2018-12395 WebExtension bypass of domain restrictions through header rewriting
+  + CVE-2018-12396 WebExtension content scripts can execute in disallowed contexts
+  + CVE-2018-12397 WebExtension can request access to local files without the warning prompt
+  + CVE-2018-12389 Memory safety bugs fixed in Firefox ESR 60.3
+  + CVE-2018-12390 Memory safety bugs fixed in Firefox 63 and Firefox ESR 60.3
+
 * Tue Oct 02 2018 Andrey Cherepanov <cas@altlinux.org> 60.2.2-alt1
 - New ESR version (60.2.2)
 - Fixed:
