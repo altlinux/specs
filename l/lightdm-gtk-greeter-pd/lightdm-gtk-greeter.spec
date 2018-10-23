@@ -5,8 +5,8 @@
 
 Name: lightdm-gtk-greeter-pd
 Epoch: 1
-Version: 2.0.1.5
-Release: alt3
+Version: 2.0.1.6
+Release: alt1
 Summary: LightDM GTK+ Greeter (prompt-driven)
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -76,6 +76,11 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Tue Oct 23 2018 Paul Wolneykien <manowar@altlinux.org> 1:2.0.1.6-alt1
+- Workaround: Use the theme's default foreground color for the
+  prompt instead of the special question color because the latter is
+  defined in only a few themes.
+
 * Wed Aug 22 2018 Paul Wolneykien <manowar@altlinux.org> 1:2.0.1.5-alt3
 - Fixed rebuilding: Ignore the "format-nonliteral" warning/error.
 
