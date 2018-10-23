@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_without bootstrap
 
 %define pre %nil
 
 Name: dotnet-coreclr
-Version: 2.0.5
-Release: alt2
+Version: 2.1.5
+Release: alt1
 
 Summary: .NET Core runtime, called CoreCLR, and the base library, called mscorlib
 
@@ -16,6 +18,7 @@ Group: Development/Other
 Source: %name-%version.tar
 Patch1: 0001-Add-support-for-building-under-glibc-2.26-13785.patch
 Patch2: 0001-fix-build-with-clang6.0.patch
+Patch3: dotnet-coreclr-alt-not-supported.patch
 #Source1: init-tools.sh
 
 ExclusiveArch: x86_64
@@ -28,16 +31,18 @@ ExclusiveArch: x86_64
 # verify-elf: ERROR: ./usr/lib64/dotnet/shared/Microsoft.NETCore.App/1.1.1/Linux.x64.Release/libcoreclr.so: TEXTREL entry found: 0x0000000000000000
 #set_verify_elf_method relaxed
 
-BuildRequires: clang6.0 llvm6.0
+BuildRequires: /proc
+
+BuildRequires: clang llvm
 
 BuildRequires: cmake libstdc++-devel libunwind-devel liblttng-ust-devel liblwp-devel
 #BuildRequires: lldb-devel
-BuildRequires: libicu-devel libuuid-devel zlib-devel libcurl-devel libkrb5-devel openssl-devel
+BuildRequires: libicu-devel libuuid-devel zlib-devel libcurl-devel libkrb5-devel libssl-devel
 BuildRequires: python-modules-xml
 
 # it is not linked directly (the same like in libicu-devel)
 # there are icu detection in a version range
-Requires: libicu60
+Requires: libicu
 
 %if_with bootstrap
 BuildRequires: dotnet-bootstrap
@@ -47,7 +52,7 @@ BuildRequires: dotnet
 %define bootstrapdir %_dotnetdir
 %endif
 
-BuildRequires: rpm-macros-dotnet >= %version
+BuildRequires(pre): rpm-macros-dotnet >= %version
 
 Requires: dotnet-common >= %version
 
@@ -63,25 +68,23 @@ cross platform applications that work on Linux, Mac and Windows.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+#patch1 -p1
+#patch2 -p1
+%patch3 -p2
 
 # make strange error if uncomment due isMSBuildOnNETCoreSupported initialized
 find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_libdir/dotnet/fake-os-release|g"
 
 # TODO: CMake Error: CMake can not determine linker language for target: System.Globalization.Native
-%__subst "s|__isMSBuildOnNETCoreSupported=0|__isMSBuildOnNETCoreSupported=1|" build.sh
-
-# temp. disable lldb using
-%__subst "s|add_subdirectory(src/ToolBox/SOS/lldbplugin)||" CMakeLists.txt
+#__subst "s|__isMSBuildOnNETCoreSupported=0|__isMSBuildOnNETCoreSupported=1|" build.sh
 
 %build
-DOTNET_TOOL_DIR=%bootstrapdir sh -x ./build.sh x64 release verbose skipnuget ignorewarnings
+DOTNET_TOOL_DIR=%bootstrapdir sh -x ./build.sh x64 release verbose skipnuget ignorewarnings skiprestoreoptdata cmakeargs -DENABLE_LLDBPLUGIN=0
 
 %install
 mkdir -p %buildroot%_dotnet_shared/
 # TODO: some publish use?
-cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,libSystem.Globalization.Native.a,lib*.so,corerun,coreconsole,createdump,sosdocsunix.txt} %buildroot%_dotnet_shared/
+cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,lib*.so,corerun,coreconsole,createdump,sosdocsunix.txt} %buildroot%_dotnet_shared/
 
 # superpmi mcs
 # https://github.com/dotnet/coreclr/tree/master/src/ToolBox/superpmi
@@ -94,7 +97,6 @@ cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,libSystem.Gl
 %files
 %doc CODE_OWNERS.TXT LICENSE.TXT PATENTS.TXT THIRD-PARTY-NOTICES.TXT README.md CONTRIBUTING.md
 %_dotnet_shared/System.Globalization.Native.so
-%_dotnet_shared/libSystem.Globalization.Native.a
 %_dotnet_shared/lib*.so
 %_dotnet_shared/corerun
 %_dotnet_shared/createdump
@@ -102,6 +104,15 @@ cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,libSystem.Gl
 %_dotnet_shared/sosdocsunix.txt
 
 %changelog
+* Fri Oct 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.5-alt1
+- NMU: new version (2.1.5) (based on changes by lav@)
+
+* Sat Sep 15 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.4-alt1
+- new version (2.1.4) with rpmgs script
+
+* Mon Sep 03 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.3-alt1
+- .NET Core 2.1.3 LTS
+
 * Sun May 20 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt2
 - rebuild with llvm 6.0
 - set libicu60 require
