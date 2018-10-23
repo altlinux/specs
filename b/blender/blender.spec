@@ -2,7 +2,7 @@
 
 Name: blender
 Version: 2.79b
-Release: alt4
+Release: alt5
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPLv2
@@ -30,11 +30,28 @@ Patch23: blender-2.77-alt-usertempdir.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# Automatically added by buildreq on Mon Oct 31 2016
+# optimized out: boost-devel boost-devel-headers cmake-modules fontconfig libGL-devel libGLU-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libavcodec-devel libavutil-devel libfreetype-devel libstdc++-devel pkg-config python-base python-modules python3 python3-base xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: boost-filesystem-devel boost-locale-devel
+BuildRequires: cmake gcc-c++
+BuildRequires: fontconfig-devel libGLEW-devel libXi-devel
+BuildRequires: libavdevice-devel libavformat-devel
+BuildRequires: libfftw3-devel libjack-devel libopenal-devel libsndfile-devel
+BuildRequires: libjpeg-devel libopenjpeg-devel libpng-devel libtiff-devel libpcre-devel libswscale-devel libxml2-devel
+BuildRequires: liblzo2-devel
+BuildRequires: libopenCOLLADA-devel >= 0-alt3
+BuildRequires: python3-devel >= 3.5
+BuildRequires: libopenimageio-devel
+BuildRequires: libopencolorio-devel
+BuildRequires: openexr-devel
+BuildRequires: libpugixml-devel
+
 %add_python3_path %_datadir/%name/scripts
 %add_python3_req_skip BPyWindow
 %add_python3_req_skip _bpy
 %add_python3_req_skip _bpy_path
 %add_python3_req_skip _freestyle
+%add_python3_req_skip _cycles
 %add_python3_req_skip bge
 %add_python3_req_skip bgl
 %add_python3_req_skip blend
@@ -54,14 +71,7 @@ BuildRequires(pre): rpm-build-python3
 %py3_provides bpy.app.handlers
 %py3_provides bpy.app
 
-
 Requires: libopenCOLLADA >= 0-alt3
-# Automatically added by buildreq on Mon Oct 31 2016
-# optimized out: boost-devel boost-devel-headers cmake-modules fontconfig libGL-devel libGLU-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libavcodec-devel libavutil-devel libfreetype-devel libstdc++-devel pkg-config python-base python-modules python3 python3-base xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: boost-filesystem-devel boost-locale-devel cmake fontconfig-devel gcc-c++ libGLEW-devel libXi-devel libavdevice-devel libavformat-devel libfftw3-devel libjack-devel libjpeg-devel libopenCOLLADA-devel libopenal-devel libopenjpeg-devel libpcre-devel libpng-devel libsndfile-devel libswscale-devel libtiff-devel libxml2-devel python3-dev
-
-BuildPreReq: libopenCOLLADA-devel >= 0-alt3
-BuildPreReq: python3-devel >= 3.5
 
 Obsoletes: %name-i18n
 
@@ -106,12 +116,16 @@ BUILD_DATE="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%Y-%%m-%%d')"
 BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
 
 # needed due to non-standard location of pcre.h header
-%add_optflags $(pkg-config --cflags libpcre)
+%add_optflags "$(pkg-config --cflags libpcre)"
+
+%add_optflags -fPIC -funsigned-char -fno-strict-aliasing
+
+export CFLAGS="%optflags"
+export CXXFLAGS="%optflags"
 
 mkdir cmake-make
-cd cmake-make
-export CFLAGS="%optflags -fPIC -funsigned-char -fno-strict-aliasing"
-export CXXFLAGS="$CFLAGS"
+pushd cmake-make
+
 cmake .. \
   -DCMAKE_INSTALL_PREFIX=%{_prefix} \
 %ifnarch %{ix86} x86_64
@@ -135,24 +149,28 @@ cmake .. \
  -DWITH_OPENMP=OFF \
  -DWITH_OPENCOLLADA=ON \
  -DWITH_FONTCONFIG=ON \
- -DWITH_CYCLES=OFF \
- -DWITH_OPENIMAGEIO=OFF \
+ -DWITH_CYCLES=ON \
+ -DWITH_OPENCOLORIO=ON \
+ -DWITH_OPENIMAGEIO=ON \
+ -DWITH_SYSTEM_GLEW=ON \
+ -DWITH_SYSTEM_LZO=ON \
+ -DWITH_SYSTEM_OPENJPEG=ON \
+ -DWITH_IMAGE_OPENEXR=ON \
  -DPYTHON_VERSION="%_python3_version" \
  -DBUILDINFO_OVERRIDE_DATE="$BUILD_DATE" \
  -DBUILDINFO_OVERRIDE_TIME="$BUILD_TIME" \
  #
 
-cd ..
+popd
 
 %make_build -C cmake-make
-
-install -d release/plugins/include
 
 %install
 %makeinstall_std -C cmake-make
 
-/bin/install -pD -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
-/bin/install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%name-win.desktop
+install -pD -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
+install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%name-win.desktop
+
 %find_lang blender
 
 %files -f %name.lang
@@ -164,6 +182,10 @@ install -d release/plugins/include
 %_defaultdocdir/%name/
 
 %changelog
+* Mon Oct 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.79b-alt5
+- Enabled Cycles render engine (Closes: #29162)
+- Cleaned up spec.
+
 * Fri Oct 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.79b-alt4
 - Fixed build.
 
