@@ -11,8 +11,8 @@
 %def_enable regex
 
 Name: keepalived
-Version: 2.0.7
-Release: alt1%ubt
+Version: 2.0.8
+Release: alt2
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
 License: GPL
@@ -106,38 +106,41 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
-* Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 2.0.7-alt1%ubt
+* Tue Oct 23 2018 Anton Farygin <rider@altlinux.ru> 2.0.8-alt2
+- 2.0.8
+
+* Mon Sep 03 2018 Anton Farygin <rider@altlinux.ru> 2.0.7-alt1
 - 2.0.7
 - enabled HTTP_GET regex support (by Alexey Shabalin)
 
-* Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 1.4.5-alt1%ubt
+* Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 1.4.5-alt1
 - 1.4.5
 
-* Thu May 03 2018 Anton Farygin <rider@altlinux.ru> 1.4.3-alt1%ubt
+* Thu May 03 2018 Anton Farygin <rider@altlinux.ru> 1.4.3-alt1
 - 1.4.3
 
-* Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 1.4.2-alt1%ubt
+* Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 1.4.2-alt1
 - new version
 
-* Tue Jan 23 2018 Anton Farygin <rider@altlinux.ru> 1.4.0-alt1%ubt
+* Tue Jan 23 2018 Anton Farygin <rider@altlinux.ru> 1.4.0-alt1
 - new version
 
-* Tue Nov 07 2017 Anton Farygin <rider@altlinux.ru> 1.3.9-alt2%ubt
+* Tue Nov 07 2017 Anton Farygin <rider@altlinux.ru> 1.3.9-alt2
 - added more correct git_commit.h initialization
 
-* Tue Oct 31 2017 Anton Farygin <rider@altlinux.ru> 1.3.9-alt1%ubt
+* Tue Oct 31 2017 Anton Farygin <rider@altlinux.ru> 1.3.9-alt1
 - new version
 
-* Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 1.3.6-alt1%ubt
+* Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 1.3.6-alt1
 - new version
 
-* Fri Mar 24 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt2%ubt
+* Fri Mar 24 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt2
 - fix pid file path
 
-* Wed Mar 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt1%ubt
+* Wed Mar 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt1
 - 1.3.5
 
-* Wed Jan 11 2017 Anton Farygin <rider@altlinux.ru> 1.3.2-alt1%ubt
+* Wed Jan 11 2017 Anton Farygin <rider@altlinux.ru> 1.3.2-alt1
 - new version
 
 * Mon Nov 07 2016 Anton Farygin <rider@altlinux.ru> 1.2.24-alt3
