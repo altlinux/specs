@@ -6,10 +6,11 @@
 %def_with parallelism
 %def_without fetch
 %def_without lto
+%def_with kde
 
 Name: LibreOffice-still
 %define hversion 6.0
-%define urelease 7.1
+%define urelease 7.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -65,12 +66,17 @@ Patch7: FC-0001-disable-libe-book-support.patch
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 Patch402: libreoffice-4-alt-drop-gnome-open.patch
 Patch403: alt-002-tmpdir.patch
+Patch404: fix-unexpected-abort.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
 %add_findreq_skiplist %lodir/sdk/examples/python/toolpanel/toolpanel.py 
 
-BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake kde4libs-devel libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel liborcus-devel libpoppler-cpp-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel pentaho-reporting-flow-engine perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
+BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel liborcus-devel libpoppler-cpp-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel pentaho-reporting-flow-engine perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
+%if_with kde
+BuildRequires: kde4libs-devel
+%endif
+BuildRequires: python2.7(distutils) libunixODBC-devel libXrandr-devel libssl-devel
 
 # 4.4
 BuildRequires: libavahi-devel libpagemaker-devel boost-signals-devel
@@ -139,6 +145,7 @@ Conflicts: LibreOffice-gtk3
 %description gtk3
 GTK3 extensions for %name
 
+%if_with kde
 %package kde4
 Summary: KDE4 Extensions for %name
 Group:  Office
@@ -148,6 +155,7 @@ Obsoletes: LibreOffice4-kde4
 Conflicts: LibreOffice-kde4
 %description kde4
 KDE4 extensions for %name
+%endif
 
 %package -n libreofficekit-still
 Summary: A library providing access to LibreOffice functionality
@@ -254,6 +262,7 @@ echo Direct build
 %patch401 -p0
 ##patch402 -p1
 %patch403 -p1
+%patch404 -p1
 
 tar xf %SOURCE401
 
@@ -327,7 +336,9 @@ export CXX=%_target_platform-g++
 	--enable-release-build \
 	--with-help \
   \
+%if_with kde
 	--enable-kde4 \
+%endif
 	--enable-gtk3 \
 	--disable-gstreamer-0-10 \
   \
@@ -487,7 +498,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 
 %files gtk3 -f files.gtk3
 
+%if_with kde
 %files kde4 -f files.kde4
+%endif
 
 %files extensions
 %lodir/share/extensions/*
@@ -517,6 +530,10 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Tue Oct 23 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.7.2-alt1
+- New version 6.0.7.2 (Still).
+- Unexpected abort fixed (bug #35444) by mrdrew@.
+
 * Mon Oct 08 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.7.1-alt1
 - New version 6.0.7.1 (Still).
 
