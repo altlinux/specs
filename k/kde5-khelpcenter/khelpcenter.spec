@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 18.04.3
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -16,7 +16,9 @@ Obsoletes: kf5-khelpcenter < %EVR kf5-khelpcenter-common < %EVR
 Requires: kf5-kdoctools
 
 Source: %rname-%version.tar
-#Patch1: alt-fallback-kde4.patch
+Patch1: khelpcenter-alt-fix-contents-expanding-collapsing.patch
+Patch2: khelpcenter-alt-remove-duplicate-submenus.patch
+Patch3: khelpcenter-alt-fix-opening-url-s-to-help-files.patch
 
 # Automatically added by buildreq on Mon Apr 25 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
@@ -35,6 +37,9 @@ KDE help center.
 
 %prep
 %setup -n %rname-%version
+%patch1 -p2
+%patch2 -p2
+%patch3 -p2
 
 %build
 %K5build \
@@ -61,6 +66,9 @@ KDE help center.
 %_K5xmlgui/*
 
 %changelog
+* Tue Oct 23 2018 Pavel Moseev <mars@altlinux.org> 18.04.3-alt3%ubt
+- Fix some issues in context menu (tree view). Add patches.
+
 * Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2%ubt
 - don't look for kde4 docs
 
