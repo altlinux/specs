@@ -8,7 +8,7 @@
 
 Name: nemo
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -186,6 +186,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Tue Oct 23 2018 Vladimir Didenko <cow@altlinux.org> 3.8.6-alt2
+- make desktop icons visible by default (closes: #35541)
+
 * Fri Sep 14 2018 Vladimir Didenko <cow@altlinux.org> 3.8.6-alt1
 - 3.8.6
 
