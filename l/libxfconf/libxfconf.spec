@@ -3,7 +3,7 @@
 %def_with perl
 
 Name: lib%_name
-Version: 4.13.5
+Version: 4.13.6
 Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
@@ -81,6 +81,7 @@ interact with xfconf using perl.
 	--disable-static \
 	--enable-maintainer-mode \
 	--with-perl-options=INSTALLDIRS="vendor" \
+	--enable-gsettings-backend \
 	--enable-gtk-doc \
 	--enable-debug=minimum
 %make_build
@@ -95,6 +96,9 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml
 %doc AUTHORS NEWS
 %_sysconfdir/xdg/xfce4/xfconf
 %_libdir/*.so.*
+%_libdir/gio/modules/*.so
+
+%exclude %_libdir/gio/modules/*.la
 
 %files devel
 %doc %_datadir/gtk-doc/html/%_name
@@ -114,6 +118,9 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml
 %endif
 
 %changelog
+* Mon Oct 22 2018 Mikhail Efremov <sem@altlinux.org> 4.13.6-alt1
+- Updated to 4.13.6.
+
 * Tue Aug 07 2018 Mikhail Efremov <sem@altlinux.org> 4.13.5-alt1
 - xfconf-utils: Fix summary.
 - Update url.
