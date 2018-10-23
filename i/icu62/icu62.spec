@@ -1,12 +1,12 @@
-%define real_ver_major 63
+%define real_ver_major 62
 %define real_ver_minor 1
 %define real_ver %{real_ver_major}.%{real_ver_minor}
 
 %def_without doc
 
-Name: icu
+Name: icu%real_ver_major
 Version: %(echo %real_ver_major | sed -e 's|\(.\)|\1.|').%real_ver_minor
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: International Components for Unicode
@@ -14,7 +14,6 @@ Group: System/Libraries
 License: X License
 Url: http://www.icu-project.org/
 
-#VCS: https://github.com/unicode-org/icu.git
 Source: http://download.icu-project.org/files/icu4c/%real_ver/icu4c-%{real_ver_major}_%{real_ver_minor}-src.tgz
 
 BuildRequires: gcc-c++ libstdc++-devel
@@ -26,18 +25,6 @@ BuildRequires: gcc-c++ libstdc++-devel
 ICU is a C++ and C library that provides robust and full-featured Unicode
 support
 
-%package utils
-Summary: International Components for Unicode (utilities)
-Group: Text tools
-Requires: %libicu = %epoch:%version-%release
-Provides: icu = %version
-Obsoletes: icu < %version
-
-%description utils
-ICU is a C++ and C library that provides robust and full-featured Unicode
-support. This package contains the utilites for compiling and developing
-programs with ICU
-
 %package -n %libicu
 Summary: International Components for Unicode (libraries)
 Group: System/Libraries
@@ -48,26 +35,6 @@ Obsoletes: libicu < %epoch:%version-%release
 ICU is a C++ and C library that provides robust and full-featured Unicode
 support. This package contains the runtime libraries for ICU
 
-%package -n libicu-devel
-Summary: International Components for Unicode (development files)
-Group: Development/C++
-Requires: %libicu = %epoch:%version-%release
-Requires: icu-utils = %epoch:%version-%release
-
-%description -n libicu-devel
-ICU is a C++ and C library that provides robust and full-featured Unicode
-support. This package contains the development files for ICU
-
-%package samples
-Summary: Sample programs for ICU
-Group: Development/Other
-Requires: libicu-devel = %epoch:%version-%release
-BuildArch: noarch
-
-%description samples
-ICU is a C++ and C library that provides robust and full-featured Unicode
-support. This package contains sample code for ICU
-
 %prep
 %setup -c
 %setup -DT -n %name-%version/icu
@@ -77,49 +44,38 @@ cd source
 %autoreconf
 %configure \
 	--disable-samples \
-	--disable-static \
-	--with-data-packaging=library
+	--disable-static
 %make_build
 
 %install
 cd source
 %makeinstall_std
-cp -a samples %buildroot%_datadir/icu
-
-%files utils
-%_bindir/*
-%exclude %_bindir/icu-config
-%_sbindir/*
-%exclude %_man1dir/icu-config.1*
-%_man1dir/*
-%_man8dir/*
 
 %files -n %libicu
 %_libdir/*.so.*
 
-%files -n libicu-devel
-%_includedir/*
-%_bindir/icu-config
-%_libdir/*.so
-%_libdir/icu
-%_pkgconfigdir/*.pc
-%dir %_datadir/icu
-%_datadir/icu/%real_ver
-%_man1dir/icu-config.1*
-%doc *.html *.css
-
-%files samples
-%_datadir/icu/samples
+%exclude %_bindir/*
+%exclude %_sbindir/*
+%exclude %_libdir/*.so
+%exclude %_libdir/icu/
+%exclude %_includedir/*
+%exclude %_pkgconfigdir/*.pc
+%exclude %_datadir/icu/%real_ver/
+%exclude %_man1dir/*
+%exclude %_man8dir/*
 
 %changelog
-* Sat Oct 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.3.1-alt1
-- 6.3.1
+* Sat Oct 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.2.1-alt2
+- icu62 compat library
 
-* Sat Jun 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.2.1-alt1
-- 6.2.1
+* Sat Jun 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.0.2-alt2
+- icu60 compat library
 
 * Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.0.2-alt1
 - 6.0.2
+
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1:5.6.1-alt2
+- icu56 compat library
 
 * Thu Jan 12 2017 Michael Shigorin <mike@altlinux.org> 1:5.6.1-alt1.1.1
 - BOOTSTRAP: drop unused BR: doxygen
