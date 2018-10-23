@@ -4,7 +4,7 @@
 
 Name: monodevelop
 Version: 7.6.9.22
-Release: alt1
+Release: alt2
 
 Summary: MonoDevelop is a project to port SharpDevelop to Gtk#
 License: LGPLv2.1
@@ -47,6 +47,9 @@ Source27: xwt-%version.tar
 Patch1: %name-fix-rpm-autoreq.patch
 Patch2: %name-disable-nuget-and-git.patch
 Patch3: %name-update-rpm-autoreq.patch
+
+# https://github.com/mono/monodevelop/issues/6221
+Patch4: %name-alt-fix-export-solution-issue.patch
 
 # monodis fails to process following files
 %add_findprov_skiplist %_libexecdir/%name/AddIns/MonoDevelop.Refactoring/System.Text.Encoding.CodePages.dll
@@ -120,6 +123,7 @@ pushd external/xwt                            ; tar xf %SOURCE27 --strip-compone
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 
 cp %SOURCE2 ./
 
@@ -254,6 +258,9 @@ rm -f %buildroot%_libexecdir/%name/bin/libe_sqlite3.so
 %_man1dir/*
 
 %changelog
+* Tue Oct 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 7.6.9.22-alt2
+- Fixed work of solution format conversion.
+
 * Tue Oct 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 7.6.9.22-alt1
 - Updated to upstream version 7.6.9.22.
 
