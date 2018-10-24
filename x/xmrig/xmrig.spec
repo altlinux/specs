@@ -1,6 +1,6 @@
 Name:		xmrig
-Version:	2.8.0
-Release:	alt3
+Version:	2.8.3
+Release:	alt1
 Summary:	Monero (XMR) CPU miner
 Url:		https://github.com/xmrig/xmrig
 Group:		Office
@@ -34,6 +34,9 @@ install -Dp -m 0755 ./%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Wed Oct 24 2018 Motsyo Gennadi <drool@altlinux.ru> 2.8.3-alt1
+- 2.8.3
+
 * Sat Sep 22 2018 Motsyo Gennadi <drool@altlinux.ru> 2.8.0-alt3
 - upstream link fixing
 
