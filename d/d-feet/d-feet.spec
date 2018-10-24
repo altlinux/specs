@@ -1,7 +1,9 @@
 %define ver_major 0.3
+%define xdg_name org.gnome.dfeet
+%def_disable check
 
 Name: d-feet
-Version: %ver_major.13
+Version: %ver_major.14
 Release: alt1
 
 Summary: A powerful D-Bus Debugger
@@ -15,9 +17,11 @@ BuildArch: noarch
 
 Requires: dbus-tools-gui
 
-BuildRequires: python-module-pygobject3-devel python-module-setuptools
-BuildRequires: python-tools-pep8 intltool yelp-tools libgtk+3-devel libgtk+3-gir-devel >= 3.9.4
+BuildRequires(pre): rpm-build-gir rpm-build-python3
+BuildRequires: python3-module-pygobject3-devel python3-module-setuptools
+BuildRequires: intltool yelp-tools libgtk+3-devel libgtk+3-gir-devel >= 3.9.4
 BuildRequires: dbus-tools-gui
+%{?_enable_check:BuildRequires: python3-tools-pep8 python3-module-pycodestyle}
 
 %description
 D-Feet is an easy to use D-Bus debugger.
@@ -31,7 +35,7 @@ objects.
 
 %build
 %autoreconf
-%configure
+%configure PYTHON=%__python3
 %make_build
 
 %install
@@ -40,21 +44,24 @@ objects.
 %find_lang --with-gnome --output=%name.lang %name dfeet
 
 %check
-#%%make check
+%make check
 
 %files -f %name.lang
 %_bindir/%name
-%python_sitelibdir_noarch/dfeet
+%python3_sitelibdir_noarch/dfeet
 %_datadir/%name/
-%_datadir/applications/%name.desktop
-%_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
+%_datadir/applications/%xdg_name.desktop
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/*/apps/*.svg
-%_iconsdir/HighContrast/scalable/apps/%name.svg
-%_datadir/appdata/%name.appdata.xml
+%_iconsdir/HighContrast/scalable/apps/%xdg_name.svg
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc AUTHORS README NEWS
 
 %changelog
+* Wed Oct 24 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.14-alt1
+- 0.3.14 with Python3
+
 * Fri Nov 24 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.13-alt1
 - 0.3.13
 
