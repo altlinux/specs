@@ -1,7 +1,7 @@
 %define  pkgname google-auth-library-ruby
 
 Name:    ruby-google-auth
-Version: 0.6.6
+Version: 0.7.0
 Release: alt1
 
 Summary: Google Auth Library for Ruby
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Oct 24 2018 Pavel Skrylev <majioa@altlinux.org> 0.7.0-alt1
+- bump to 0.7.0
+
 * Tue Sep 04 2018 Pavel Skrylev <majioa@altlinux.org> 0.6.6-alt1
 - bump to 0.6.6
 
