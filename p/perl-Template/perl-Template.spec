@@ -1,17 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Template-Toolkit
 Name: perl-Template
-Version: 2.27
-Release: alt2.1
+Version: 2.28
+Release: alt1
 
 Summary: Perl Template Toolkit
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://www.template-toolkit.org
-Source0: http://www.cpan.org/authors/id/A/AB/ABW/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AT/ATOOMIC/%{dist}-%{version}.tar.gz
 Patch: Template-Toolkit-2.22-alt-no-apache.patch
-Patch1: Template-Toolkit-2.27-perl5.26.patch
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-AppConfig perl-CGI perl-Date-Calc perl-HTML-Parser perl-Image-Info perl-Math-Complex perl-Pod-POM perl-devel perl-podlators perl-unicore
@@ -27,7 +26,6 @@ LaTeX, and so on.
 %prep
 %setup -q -n %{dist}-%{version}
 %patch -p1
-%patch1 -p1
 
 %build
 %perl_vendor_build TT_XS_ENABLE=y TT_XS_DEFAULT=y TT_ACCEPT=y \
@@ -65,6 +63,9 @@ LaTeX, and so on.
 	%_man1dir/ttree.*
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 2.28-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.27-alt2.1
 - rebuild with new perl 5.26.1
 
