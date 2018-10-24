@@ -1,7 +1,7 @@
 %define  pkgname apipie-rails
 
 Name:    ruby-%pkgname
-Version: 0.5.12
+Version: 0.5.13
 Release: alt1
 
 Summary: Ruby on Rails API documentation tool
@@ -63,6 +63,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Oct 24 2018 Pavel Skrylev <majioa@altlinux.org> 0.5.13-alt1
+- Bump to 0.5.13
+
 * Wed Oct 17 2018 Andrey Cherepanov <cas@altlinux.org> 0.5.12-alt1
 - New version.
 
