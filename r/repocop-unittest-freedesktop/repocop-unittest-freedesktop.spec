@@ -1,5 +1,5 @@
 Name: repocop-unittest-freedesktop
-Version: 0.20
+Version: 0.21
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -49,6 +49,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- cleaned up fixed desktop files
+
 * Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - support for kf5 (closes: #31941)
 
