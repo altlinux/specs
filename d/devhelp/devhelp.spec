@@ -3,7 +3,7 @@
 %define xdg_name org.gnome.Devhelp
 
 Name: devhelp
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Developer's help program
@@ -20,7 +20,6 @@ Requires: lib%name = %version-%release
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
 BuildRequires: gtk-doc yelp-tools libappstream-glib-devel
-
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.19.3
 BuildRequires: pkgconfig(webkit2gtk-4.0) >= 2.19.2
 BuildRequires: pkgconfig(gio-2.0) >= 2.40
@@ -140,6 +139,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Wed Oct 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
+- 3.30.1
+
 * Mon Jul 16 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 
