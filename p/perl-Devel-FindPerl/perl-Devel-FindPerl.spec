@@ -2,26 +2,25 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Capture/Tiny.pm) perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/Config.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(IPC/Open2.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define module_version 0.014
 %define module_name Devel-FindPerl
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.014
+Version: 0.015
 Release: alt1
 Summary: Find the path to your perl
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/L/LE/LEONT/Devel-FindPerl-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/L/LE/LEONT/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.015-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1
 - automated CPAN update
 
