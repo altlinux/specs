@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Math-BigInt-GMP
 Name: perl-%dist
-Version: 1.6005
+Version: 1.6006
 Release: alt1
 
 Summary: Use the GMP library for Math::BigInt routines
@@ -37,6 +37,9 @@ all.
 %perl_vendor_autolib/Math
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 1.6006-alt1
+- automated CPAN update
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.6005-alt1
 - automated CPAN update
 
