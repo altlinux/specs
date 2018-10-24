@@ -2,12 +2,12 @@
 
 Name: vim-plugin-%plugname
 Version: 4.5
-Release: alt1
+Release: alt1.1
 
 Summary: Source code browser for Vim
 Group: Editors
 License: Distributable
-Url: %vim_script_url 273
+Url: https://www.vim.org/scripts/script.php?script_id=273
 BuildArch: noarch
 
 Source: %name-%version.tar.bz2
@@ -52,6 +52,9 @@ cp -a {doc,plugin} %buildroot%vim_runtime_dir
 %vim_plugin_dir/*
 
 %changelog
+* Wed Oct 24 2018 Grigory Ustinov <grenka@altlinux.org> 4.5-alt1.1
+- Replace %%vim_script_url macro on real url.
+
 * Fri Feb 22 2008 Andrey Rahmatullin <wrar@altlinux.ru> 4.5-alt1
 - 4.5
 

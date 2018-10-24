@@ -3,12 +3,12 @@
 
 Name: vim-plugin-%plugname
 Version: %plugver
-Release: alt1
+Release: alt1.1
 
 Summary: Project plugin 
 Group: Editors
 License: Distributable
-Url: %vim_script_url 69
+Url: https://www.vim.org/scripts/script.php?script_id=69
 BuildArch: noarch
 
 Source: %{plugname}-%{plugver}.tar.gz
@@ -47,6 +47,9 @@ have your list of files on the left of the Vim Window.
 %vim_plugin_dir/*
 
 %changelog
+* Wed Oct 24 2018 Grigory Ustinov <grenka@altlinux.org> 1.3-alt1.1
+- Replace %%vim_script_url macro on real url.
+
 * Wed Jul 06 2005 Kirill A. Shutemov <kas@altlinux.ru> 1.3-alt1
 - inital build
 

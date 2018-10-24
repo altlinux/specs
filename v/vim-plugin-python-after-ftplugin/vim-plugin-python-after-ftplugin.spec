@@ -4,12 +4,12 @@
 
 Name: vim-plugin-%plugname-%plugtype
 Version: %plugver
-Release: alt1
+Release: alt1.1
 
 Summary: VIm plugin for easier editing of python scripts
 Group: Editors
 License: Distributable
-Url: %vim_script_url 30
+Url: https://www.vim.org/scripts/script.php?script_id=30
 BuildArch: noarch
 
 Source: python_fn.vim
@@ -50,6 +50,9 @@ install -m644 python_fn.vim %buildroot%vim_after_ftplugin_dir
 %vim_after_ftplugin_dir/python_fn.vim
 
 %changelog
+* Wed Oct 24 2018 Grigory Ustinov <grenka@altlinux.org> 1.13-alt1.1
+- Replace %%vim_script_url macro on real url.
+
 * Wed Oct 08 2008 Andrey Rahmatullin <wrar@altlinux.ru> 1.13-alt1
 - 1.13
 

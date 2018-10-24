@@ -1,12 +1,12 @@
 Name: vim-plugin-alternate
 Version: 2.18
-Release: alt1
+Release: alt1.1
 
 Summary: Plugin for quick switching between source and header files
 Summary(ru_RU.CP1251): Плагин для быстрого переключения между исходными и заголовочными файлами
 Group: Editors
 License: Distributable
-Url: %vim_script_url 31
+Url: https://www.vim.org/scripts/script.php?script_id=31
 BuildArch: noarch
 
 Source0: a.vim
@@ -55,6 +55,9 @@ install -m644 alternate.txt %buildroot%vim_doc_dir
 %vim_doc_dir/alternate.txt
 
 %changelog
+* Wed Oct 24 2018 Grigory Ustinov <grenka@altlinux.org> 2.18-alt1.1
+- Replace %%vim_script_url macro on real url.
+
 * Tue Jul 31 2007 Andrey Rahmatullin <wrar@altlinux.ru> 2.18-alt1
 - 2.18
 
