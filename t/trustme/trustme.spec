@@ -1,6 +1,6 @@
 Name: trustme
 Version: 0.7
-Release: alt5.qa1
+Release: alt5.qa2
 
 Summary: Encrypted notepad
 License: %gpl2only
@@ -40,10 +40,6 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Utility \
 	--add-category=TextEditor \
 	%buildroot%_desktopdir/trustme.desktop
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=System \
-	--add-category=Security \
-	%buildroot%_desktopdir/trustme.desktop
 
 %files
 %_bindir/%name
@@ -52,6 +48,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/hicolor/scalable/apps/%name.png
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt5.qa2
+- NMU: reverted repocop patch
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt5.qa1
 - NMU: applied repocop patch
 
