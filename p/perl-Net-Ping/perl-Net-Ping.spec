@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-Ping
 Name: perl-%dist
-Version: 2.70
+Version: 2.71
 Release: alt1
 
 Summary: Check a remote host for reachability
@@ -39,6 +39,9 @@ grep -FZl '1..0 # Skip: network dependent test' t/*.t |xargs -r0 rm -v
 %perl_vendor_privlib/Net
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 2.71-alt1
+- automated CPAN update
+
 * Wed Aug 08 2018 Igor Vlasenko <viy@altlinux.ru> 2.70-alt1
 - automated CPAN update
 
