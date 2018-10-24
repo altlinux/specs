@@ -4,7 +4,7 @@
 %def_with python3
 
 Name:		python-module-%pypi_name
-Version:	4.3.0
+Version:	5.1.0
 Release:	alt1
 Summary:	Python Build Reasonableness
 Group:		Development/Python
@@ -143,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 24 2018 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
+- Build new version.
+
 * Mon Oct 08 2018 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt1
 - Build new version.
 
