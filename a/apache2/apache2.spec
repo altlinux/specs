@@ -12,8 +12,8 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.35
-Release: alt2
+Version: 2.4.37
+Release: alt1
 Epoch: 1
 
 License: %asl
@@ -70,6 +70,7 @@ Source71: apache2-cert-sh.sh
 Patch1: apache2-2.4.28-alt-all-0.3.patch
 Patch2: apache2-2.4.25-alt-apachectl.patch
 Patch3: apache2-2.4.27-alt-httpd.conf.patch
+Patch4: apache2-2.4.35-tlv1.2-default.patch
 
 BuildRequires(pre): rpm-macros-apache2 >= 3.12
 BuildRequires(pre): libssl-devel
@@ -674,6 +675,7 @@ Set DocumentRoot in %apache2_serverdatadir (for https) to support the old config
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1 -b .orig
+%patch4 -p2
 
 # generate ALTLinux Apache layout
 echo "
@@ -1512,9 +1514,17 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Wed Oct 24 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.37-alt1
+- 2.4.37
+- removed TimeoutStartSec in httpd.service (closes: #27925)
+- save to log remoteip instead of remote hostname for fix of work with
+  mod_remoteip module (closes: #34974)
+
+
 * Mon Oct 15 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.35-alt2
 - removed ubt tag
 - changed rundir location to /run in tmpfiles
+- disabled TLSv1 and TLSv1.1 protocols by default (closes: #34717)
 
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.4.35-alt1.qa1
 - NMU: applied repocop patch
