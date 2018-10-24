@@ -1,6 +1,6 @@
 Name:    appstream
-Version: 0.12.2
-Release: alt2.qa1
+Version: 0.12.3
+Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
 # lib LGPLv2+, tools GPLv2+
@@ -130,6 +130,9 @@ mv %{buildroot}%{_datadir}/metainfo/*.xml \
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Oct 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.12.3-alt1
+- New version.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt2.qa1
 - NMU: applied repocop patch
 
