@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(base.pm) perl-podlators
@@ -6,14 +7,14 @@ BuildRequires: perl(base.pm) perl-podlators
 %define upstream_version 0.04
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_7
+Version:    0.05
+Release:    alt1
 
 Summary:    A L<Term::VT102> that grows automatically to
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Term/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/F/FB/FBARRIOS/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Term/VT102.pm)
@@ -31,7 +32,7 @@ than to a real terminal, making it useful for output displays in scrolling
 media.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -52,6 +53,9 @@ media.
 
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- automated CPAN update
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_7
 - update by mgaimport
 
