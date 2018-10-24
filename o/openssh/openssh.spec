@@ -1,6 +1,6 @@
 Name: openssh
-Version: 7.2p2
-Release: alt3
+Version: 7.9p1
+Release: alt1
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: BSD-style
@@ -348,6 +348,9 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Wed Oct 24 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.9p1-alt1
+- Updated to 7.9p1.
+
 * Fri Aug 24 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.2p2-alt3
 - Backported upstream fixex for CVE-2018-15473 (username enumeration).
 
