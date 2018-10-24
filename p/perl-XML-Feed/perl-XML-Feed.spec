@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-Feed
 Name: perl-%dist
-Version: 0.54
+Version: 0.55
 Release: alt1
 
 Summary: XML Syndication Feed Support
@@ -37,6 +37,9 @@ It also implements feed auto-discovery for finding feeds, given a URI.
 %perl_vendor_privlib/XML
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1
+- automated CPAN update
+
 * Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1
 - automated CPAN update
 
