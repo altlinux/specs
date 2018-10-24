@@ -1,20 +1,25 @@
+%def_disable snapshot
+
 %def_enable pulse
 %define ver_major 2
 %define api_ver 2.0
 %def_disable qt5
 
 Name: guvcview
-Version: %ver_major.0.5
-Release: alt4
+Version: %ver_major.0.6
+Release: alt1
 
 Summary: A GTK UVC video viewer
 License: GPLv3+
 Group: Video
 Url: http://%name.sourceforge.net/
 
+%if_disabled snapshot
 Source: http://download.sourceforge.net/%name/%name-src-%version.tar.gz
-#https://git.archlinux.org/svntogit/community.git/plain/trunk/ffmpeg4.patch?h=packages/guvcview
-Patch: guvcview-2.0.5-arch-ffmpeg4.patch
+%else
+# VCS: git://git.code.sf.net/p/guvcview/git-master
+Source: %name-%version.tar
+%endif
 
 Requires: lib%name = %version-%release
 
@@ -59,7 +64,6 @@ This package contains files necessary to develop applications that use
 
 %prep
 %setup -n %name-src-%version
-%patch -p1
 
 %build
 export LIBS="$LIBS -lm"
@@ -109,6 +113,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/%name
 
 %changelog
+* Tue Oct 23 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.6-alt1
+- 2.0.6
+
 * Mon Jun 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt4
 - rebuilt with ffmpeg-4.0
 

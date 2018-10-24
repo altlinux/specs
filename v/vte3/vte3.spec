@@ -5,7 +5,7 @@
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 %def_disable static
@@ -196,6 +196,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Mon Oct 22 2018 Yuri N. Sedunov <aris@altlinux.org> 0.54.2-alt1
+- 0.54.2
+
 * Tue Sep 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.54.1-alt1
 - 0.54.1
 
