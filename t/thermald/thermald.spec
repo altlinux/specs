@@ -3,25 +3,29 @@
 
 %define _localstatedir /var
 
+%def_without monitor
+
 Name: thermald
-Version: 1.7.2
+Version: 1.8
 Release: alt1
 
 Summary: Thermal daemon for IA
 
 License: GPLv2+
-Group: Development/Other
+Group: System/Kernel and hardware
 Url: https://github.com/01org/thermal_daemon
 # Source-url: https://github.com/01org/thermal_daemon/archive/v%version.tar.gz
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Source1: thermald.init
+Source2: %name-monitor.svg
 
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: x86_64
 
 BuildRequires: gcc-c++ pkgconfig(glib) pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) libgomp-devel pkgconfig(libxml-2.0)
+BuildRequires: systemd-devel
 Requires: dbus
 
 %description
@@ -38,38 +42,142 @@ thermald представляет собой службу, которая упр
 существующую инфраструктуру ядра Linux, и его возможности могут быть легко
 расширены.
 
+%if_with monitor
+%package monitor
+Summary: Application for monitoring %name
+License: GPLv3+
+Group: Monitoring
+BuildRequires: qt5-base-devel
+Requires: %name
+
+%description monitor
+This package contains an Application to monitor %name for system
+developers who want to enable application developers and their
+customers with the responsive and flexible thermal management,
+supporting optimal performance in desktop, clam-shell, mobile and
+embedded devices.
+%endif
+
 %prep
 %setup
-sed 's/@sbindir@/\/usr\/sbin/g' data/thermald.service.in > data/thermald.service
 
 %build
 %autoreconf
-%configure
+%configure \
+    --disable-option-checking \
+    --disable-silent-rules
 %make_build
+
+%if_with monitor
+# Build the monitor-app.
+pushd tools/thermal_monitor
+mkdir -p %_target_platform
+pushd %_target_platform
+%qmake_qt5 ..
+%make_build
+popd
+popd
+%endif
 
 %install
 %makeinstall_std
-install -pD -m644 data/%name.service %buildroot%_unitdir/%name.service
-install -pD -m644 data/org.freedesktop.%name.service.in %buildroot%_datadir/dbus-1/system-services/org.freedesktop.%name.service
+install -pD -m644 data/%name.service \
+    %buildroot%_unitdir/%name.service
 install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
+
+# Install management-script
+install -Dpm 0755 tools/thermald_set_pref.sh \
+    %buildroot%_bindir/%name-set-pref
+
+# DBus config belongs into %%_datadir
+mkdir -p %buildroot%_datadir/dbus-1
+mv -f %buildroot%_sysconfdir/dbus-1/* %buildroot%_datadir/dbus-1/
+
+# Install tmpfiles.d
+mkdir -p alt_addons
+cat << EOF > alt_addons/%name.conf
+d /run/%name 0755 root root -
+EOF
+
+install -Dpm 0644 alt_addons/%name.conf \
+    %buildroot%_tmpfilesdir/%name.conf
+
+# Install config
+install -Dpm 0644 data/thermal-conf.xml \
+    %buildroot%_sysconfdir/%name/thermal-conf.xml
+
+%if_with monitor
+# Create desktop-file for the monitor-app
+cat << EOF > alt_addons/%name-monitor.desktop
+[Desktop Entry]
+Name=%name Monitor
+Comment=Application for monitoring %name
+Icon=%name-monitor
+Categories=System;Settings;
+Exec=%_bindir/ThermalMonitor
+Type=Application
+StartupNotify=true
+Terminal=false
+EOF
+
+# Install the monitor-app
+install -Dpm 0755 tools/thermal_monitor/%_target_platform/ThermalMonitor \
+    %buildroot%_bindir/ThermalMonitor
+install -Dpm 0644 alt_addons/%name-monitor.desktop \
+    %buildroot%_desktopdir/%name-monitor.desktop
+install -Dpm 0644 %SOURCE2 \
+    %buildroot%_iconsdir/hicolor/scalable/apps/%name-monitor.svg
+
+# Create ReadMe.txt for the monitor-app
+cat << EOF > alt_addons/ReadMe
+Running the thermald-monitor-app
+--------------------------------
+
+To communicate with thermald via dbus, the user has to be member
+of the "power" group. So make sure to add your user id to this
+group before using the thermald-monitor-app.
+EOF
+
+%endif
+
+%pre
+%_bindir/getent group power >/dev/null || %_sbindir/groupadd -r power
+exit 0
 
 %post
 %post_service thermald
 
 %preun
 %preun_service thermald
+
 %files
+%dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/thermal-conf.xml
+%config(noreplace) %_sysconfdir/%name/thermal-cpu-cdev-order.xml
+%doc README.txt thermal_daemon_usage.txt COPYING
+%_tmpfilesdir/%name.conf
 %_sbindir/%name
+%_bindir/%name-set-pref
 %_datadir/dbus-1/system-services/org.freedesktop.%name.service
+%_datadir/dbus-1/system.d/org.freedesktop.%name.conf
 %_unitdir/%name.service
 %_initdir/%name
-%dir %_sysconfdir/%name
-%_sysconfdir/%name/*
-%_sysconfdir/dbus-1/system.d/*
 %_man5dir/*
 %_man8dir/*
 
+%if_with monitor
+%files monitor
+%doc alt_addons/ReadMe tools/thermal_monitor/qcustomplot/GPL.txt
+%_bindir/ThermalMonitor
+%_desktopdir/%name-monitor.desktop
+%_iconsdir/hicolor/scalable/apps/%name-monitor.svg
+%endif
+
 %changelog
+* Sun Oct 21 2018 Anton Midyukov <antohami@altlinux.org> 1.8-alt1
+- new version 1.8
+- exclusive arch x86_64
+
 * Sun Jul 08 2018 Anton Midyukov <antohami@altlinux.org> 1.7.2-alt1
 - new version 1.7.2
 - exclusive arch ix86 and x86_64
