@@ -2,10 +2,10 @@
 %define perl_bootstrap 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Capture/Tiny.pm) perl(File/Path.pm) perl(FindBin.pm) perl(IO/All.pm) perl(Mo.pm) perl(Safe.pm) perl(Test/Builder.pm) perl(Test/Pod.pm) perl(Text/Diff.pm) perl(Time/HiRes.pm) perl-devel perl-podlators perl(XXX.pm)
+BuildRequires: perl(Capture/Tiny.pm) perl(File/Path.pm) perl(FindBin.pm) perl(IO/All.pm) perl(Mo.pm) perl(Safe.pm) perl(Test/Builder.pm) perl(Test/Pod.pm) perl(Text/Diff.pm) perl(Time/HiRes.pm) perl-devel perl-podlators perl(XXX.pm) perl(JSON/PP.pm)
 # END SourceDeps(oneline)
 Name:           perl-Pegex
-Version:        0.64
+Version:        0.67
 Release:        alt1
 Summary:        Pegex Parser Generator
 License:        GPL+ or Artistic
@@ -55,8 +55,8 @@ modern programming languages.
 %prep
 %setup -q -n Pegex-%{version}
 # Remove bundled modules
-rm -r ./inc
-sed -i -e '/^inc\//d' MANIFEST
+#rm -r ./inc
+#sed -i -e '/^inc\//d' MANIFEST
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -81,6 +81,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.67-alt1
+- automated CPAN update
+
 * Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1
 - automated CPAN update
 
