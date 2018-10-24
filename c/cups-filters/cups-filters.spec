@@ -1,11 +1,11 @@
-%def_with php
+%def_without php
 %define php5_extension cups
 %define _cups_serverbin %_libexecdir/cups
 %global _localstatedir %_var
 
 Name: cups-filters
 Version: 1.21.3
-Release: alt1
+Release: alt2
 
 Summary: OpenPrinting CUPS filters and backends
 # For a breakdown of the licensing, see COPYING file
@@ -227,6 +227,9 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Wed Oct 24 2018 Anton Farygin <rider@altlinux.ru> 1.21.3-alt2
+- disabled build of the php extension, due to end of life for php-5 at december 2018
+
 * Sat Oct 06 2018 Anton Farygin <rider@altlinux.ru> 1.21.3-alt1
 - new version 1.21.3
 
