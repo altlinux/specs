@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist File-Slurp
 Name: perl-%dist
-Version: 9999.19
+Version: 9999.23
 Release: alt1
 
 Summary: Efficient Reading/Writing of Complete Files
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/U/UR/URI/File-Slurp-9999.19.tar.gz
+Source0: http://www.cpan.org/authors/id/C/CA/CAPOEIRAB/%{dist}-%{version}.tar.gz
 Patch: perl-File-Slurp-9999.15-alt-deps.patch
 
 BuildArch: noarch
@@ -22,7 +23,7 @@ simple call.  It also has a subroutine for reading the list of filenames
 in a directory.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p1
 
 %build
@@ -32,11 +33,14 @@ in a directory.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README.md
 %dir %perl_vendor_privlib/File
 %perl_vendor_privlib/File/Slurp.pm
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 9999.23-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 9999.19-alt1
 - automated CPAN update
 
