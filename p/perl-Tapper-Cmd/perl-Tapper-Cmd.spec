@@ -17,7 +17,7 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    5.0.9
+Version:    5.0.10
 Release:    alt1
 
 Summary:    Tapper - Backend functions for CLI and Web
@@ -86,6 +86,9 @@ Tapper backend functions for the command line and the Web.
 
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.10-alt1
+- automated CPAN update
+
 * Thu Sep 20 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.9-alt1
 - automated CPAN update
 
