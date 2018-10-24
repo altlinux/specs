@@ -3,12 +3,12 @@
 
 Name: vim-plugin-%plugname
 Version: %plugver
-Release: alt1
+Release: alt1.1
 
 Summary: Vim plugin for easy (un)commenting code lines
 Group: Editors
 License: BSD
-Url: %vim_script_url 23
+Url: https://www.vim.org/scripts/script.php?script_id=23
 BuildArch: noarch
 
 Source: %plugname-%plugver.tar.gz
@@ -53,6 +53,9 @@ cp -a {plugin,ftplugin,doc} %buildroot%vim_runtime_dir
 %vim_plugin_dir/*
 
 %changelog
+* Wed Oct 24 2018 Grigory Ustinov <grenka@altlinux.org> 2.3-alt1.1
+- Replace %%vim_script_url macro on real url.
+
 * Sat Mar 29 2008 Andrey Rahmatullin <wrar@altlinux.ru> 2.3-alt1
 - 2.3
 

@@ -1,12 +1,12 @@
 Name: vim-plugin-html-ftplugin
 Version: 0.28.2
-Release: alt1
+Release: alt1.1
 
 Summary: Vim plugin for easy HTML editing
 Summary(ru_RU.CP1251): Плагин для простого редактирования файлов HTML
 Group: Editors
 License: GPL
-Url: %vim_script_url 453
+Url: https://www.vim.org/scripts/script.php?script_id=453
 BuildArch: noarch
 
 Source: %name-%version.tar.bz2
@@ -60,6 +60,9 @@ cp -a {bitmaps,doc,plugin,ftplugin} %buildroot%vim_runtime_dir
 %vim_ftplugin_dir/*
 
 %changelog
+* Wed Oct 24 2018 Grigory Ustinov <grenka@altlinux.org> 0.28.2-alt1.1
+- Replace %%vim_script_url macro on real url.
+
 * Tue Jul 31 2007 Andrey Rahmatullin <wrar@altlinux.ru> 0.28.2-alt1
 - 0.28.2
 

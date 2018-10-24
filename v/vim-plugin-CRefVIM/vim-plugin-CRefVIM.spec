@@ -3,13 +3,13 @@
 
 Name: vim-plugin-%plugname
 Version: %plugver
-Release: alt1
+Release: alt1.1
 
 Summary: C language reference manual designed for Vim
 Summary(ru_RU.CP1251): Справочник по языку C для просмотра в Vim
 Group: Development/C
 License: GPL & FDL
-Url: %vim_script_url 614
+Url: https://www.vim.org/scripts/script.php?script_id=614
 BuildArch: noarch
 
 Source: crefvim.zip
@@ -49,6 +49,9 @@ cursor) and \cw (opens prompt for keyword to search for).
 %vim_after_syntax_dir/*
 
 %changelog
+* Wed Oct 24 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.4-alt1.1
+- Replace %%vim_script_url macro on real url.
+
 * Mon Nov 29 2004 Andrey Rahmatullin <wrar@altlinux.ru> 1.0.4-alt1
 - 1.0.4
 

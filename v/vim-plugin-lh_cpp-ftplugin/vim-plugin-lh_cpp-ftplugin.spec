@@ -4,14 +4,14 @@
 
 Name: vim-plugin-%plugname-%plugtype
 Version: %plugver
-Release: alt1.1
+Release: alt2.1
 
 Summary: Collection of plugins for editing C/C++ files
 Summary(ru_RU.CP1251): Коллекция плагинов для редактирования исходников на C/C++
 
 Group: Editors
 License: Distributable
-Url: %vim_script_url 336
+Url: https://www.vim.org/scripts/script.php?script_id=336
 BuildArch: noarch
 
 Source: lh-cpp.tar.gz
@@ -72,6 +72,9 @@ in your .vimrc file. To enable C/C++ folding (very slow) define
 %vim_syntax_dir/*
 
 %changelog
+* Wed Oct 24 2018 Grigory Ustinov <grenka@altlinux.org> 20040316-alt2.1
+- Replace %%vim_script_url macro on real url.
+
 * Thu Sep 02 2004 Andrey Rahmatullin <wrar@altlinux.ru> 20040316-alt1.1
 - add Packager:
 - add Russian summary and description

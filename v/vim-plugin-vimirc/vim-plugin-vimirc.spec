@@ -2,14 +2,14 @@
 
 Name: vim-plugin-%plugname
 Version: 0.9.28
-Release: alt1
+Release: alt1.1
 
 Summary: IRC client plugin for VIm
 Summary(ru_RU.CP1251): IRC-клиент для VIm
 
 Group: Networking/IRC
 License: Same as for Vim
-Url: %vim_script_url 931
+Url: https://www.vim.org/scripts/script.php?script_id=931
 BuildArch: noarch
 
 Source: %plugname.vim
@@ -49,6 +49,9 @@ instructions.
 %vim_plugin_dir/%plugname.vim
 
 %changelog
+* Wed Oct 24 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.28-alt1.1
+- Replace %%vim_script_url macro on real url.
+
 * Sat May 28 2005 Andrey Rahmatullin <wrar@altlinux.ru> 0.9.28-alt1
 - 0.9.28
 

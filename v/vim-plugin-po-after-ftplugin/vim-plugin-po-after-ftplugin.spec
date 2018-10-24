@@ -4,12 +4,12 @@
 
 Name: vim-plugin-%plugname-%plugtype
 Version: %plugver
-Release: alt1
+Release: alt1.1
 
 Summary: FtPlugin for easier editing of po files
 Group: Editors
 License: Distributable
-Url: %vim_script_url 695
+Url: https://www.vim.org/scripts/script.php?script_id=695
 BuildArch: noarch
 
 Source: %plugname.vim
@@ -50,6 +50,9 @@ in your .vimrc file.
 %vim_after_ftplugin_dir/%plugname.vim
 
 %changelog
+* Wed Oct 24 2018 Grigory Ustinov <grenka@altlinux.org> 1.20-alt1.1
+- Replace %%vim_script_url macro on real url.
+
 * Sat May 28 2005 Andrey Rahmatullin <wrar@altlinux.ru> 1.20-alt1
 - 1.2
 - fix Url:

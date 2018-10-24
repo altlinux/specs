@@ -3,13 +3,13 @@
 
 Name: vim-plugin-%plugname
 Version: %plugver
-Release: alt3
+Release: alt3.1
 
 Summary: Large collection of Vim color schemes
 Summary(ru_RU.CP1251): Большая коллекция цветовых схем Vim
 Group: Editors
 License: Distributable
-Url: %vim_script_url 625
+Url: https://www.vim.org/scripts/script.php?script_id=625
 BuildArch: noarch
 
 Source: %plugname.zip
@@ -65,6 +65,9 @@ cp -a * %buildroot%vim_runtime_dir
 %vim_doc_dir/*.txt
 
 %changelog
+* Wed Oct 24 2018 Grigory Ustinov <grenka@altlinux.org> 5.0-alt3.1
+- Replace %%vim_script_url macro on real url.
+
 * Fri Oct 03 2008 Andrey Rahmatullin <wrar@altlinux.ru> 5.0-alt3
 - rebuild with case preserving %%setup
 

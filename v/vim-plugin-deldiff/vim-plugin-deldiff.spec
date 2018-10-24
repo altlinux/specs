@@ -1,11 +1,11 @@
 Name: vim-plugin-deldiff
 Version: 0.1
-Release: alt1
+Release: alt1.1
 
 Summary: VIm plugin for deleting unified diff blocks
 Group: Editors
 License: Distributable
-Url: %vim_script_url 444
+Url: https://www.vim.org/scripts/script.php?script_id=444
 BuildArch: noarch
 
 Source0: deldiff.vim
@@ -36,5 +36,8 @@ install -m644 deldiff.vim %buildroot%vim_plugin_dir
 %vim_plugin_dir/deldiff.vim
 
 %changelog
+* Wed Oct 24 2018 Grigory Ustinov <grenka@altlinux.org> 0.1-alt1.1
+- Replace %%vim_script_url macro on real url.
+
 * Thu Feb 22 2007 Andrey Rahmatullin <wrar@altlinux.ru> 0.1-alt1
 - initial build

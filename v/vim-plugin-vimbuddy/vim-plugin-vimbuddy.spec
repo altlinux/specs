@@ -2,14 +2,14 @@
 
 Name: vim-plugin-%plugname
 Version: 0.9.2
-Release: alt1
+Release: alt1.1
 
 Summary: An absolutely unuseful Vim plugin
 Summary(ru_RU.CP1251): Абсолютно бесполезный плагин для Vim
 
 Group: Editors
 License: Distributable
-Url: %vim_script_url 8
+Url: https://www.vim.org/scripts/script.php?script_id=8
 BuildArch: noarch
 
 Source: %plugname.vim
@@ -40,6 +40,9 @@ install -m644 %plugname.vim %buildroot%vim_plugin_dir
 %vim_plugin_dir/%plugname.vim
 
 %changelog
+* Wed Oct 24 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.2-alt1.1
+- Replace %%vim_script_url macro on real url.
+
 * Fri Aug 10 2007 Andrey Rahmatullin <wrar@altlinux.ru> 0.9.2-alt1
 - 0.9.2
 
