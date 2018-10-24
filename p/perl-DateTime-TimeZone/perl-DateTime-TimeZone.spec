@@ -2,7 +2,7 @@
 %define dist DateTime-TimeZone
 %def_without bootstrap
 Name: perl-%dist
-Version: 2.19
+Version: 2.20
 Release: alt1
 
 Summary: Time zone object base class and factory
@@ -68,7 +68,7 @@ sed -i- '/Pod::Man/d' Makefile.PL
 sed -i- 's/eval "use DateTime/eval "die/' t/check_datetime_version.pl
 %endif
 
-if [ %version != 2.19 ]; then
+if [ %version != 2.20 ]; then
     echo update manual requires due to findreq_skiplist!
     exit 1
 fi
@@ -80,10 +80,13 @@ fi
 %perl_vendor_install
 
 %files
-%doc Changes README.md CONTRIBUTING.md
+%doc Changes README.md CONTRIBUTING.md CODE_OF_CONDUCT.md
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 2.20-alt1
+- automated CPAN update
+
 * Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 2.19-alt1
 - automated CPAN update
 
