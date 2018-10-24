@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 Summary: Library implementing the Brotli compression algorithm
@@ -129,6 +129,9 @@ rm -f %buildroot%_libdir/*.a
 %doc README.md LICENSE CONTRIBUTING.md
 
 %changelog
+* Wed Oct 24 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1
+- 1.0.7
+
 * Thu Sep 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
 - 1.0.6
 
