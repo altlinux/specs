@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Clone
 Name: perl-%dist
-Version: 0.39
-Release: alt1.1
+Version: 0.40
+Release: alt1
 
 Summary: Recursively copy Perl datatypes
 License: GPL or Artistic
@@ -29,11 +29,14 @@ including tied variables and objects.
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc Changes
 %perl_vendor_archlib/Clone*
 %perl_vendor_autolib/Clone*
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1.1
 - rebuild with new perl 5.26.1
 
