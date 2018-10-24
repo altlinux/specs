@@ -1,9 +1,9 @@
-BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
+BuildRequires: perl-podlators
 %define module Text-Trac
 
 Name: perl-%module
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -13,7 +13,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/Text-Trac-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MANWAR/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,7 +33,7 @@ scripts for %name
 
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -42,6 +42,7 @@ scripts for %name
 %perl_vendor_install
 
 %files
+%doc Changes README.md
 %perl_vendor_privlib/Text/
 
 %files scripts
@@ -50,6 +51,9 @@ scripts for %name
 
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - automated CPAN update
 
