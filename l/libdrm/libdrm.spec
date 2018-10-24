@@ -1,6 +1,6 @@
 Name: libdrm
-Version: 2.4.92
-Release: alt1%ubt
+Version: 2.4.96
+Release: alt1
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
 License: GPL
@@ -11,7 +11,6 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: docbook-style-xsl libudev-devel libpciaccess-devel xorg-util-macros xsltproc
 
 %description
@@ -38,6 +37,11 @@ develop programs which make use of %name
 %autoreconf
 %configure \
 	--enable-udev \
+%ifarch armh aarch64
+	--enable-etnaviv-experimental-api \
+	-enable-exynos-experimental-api \
+	--enable-omap-experimental-api \
+%endif
 	--disable-static
 %make_build
 
@@ -49,19 +53,20 @@ develop programs which make use of %name
 %_datadir/%name
 
 %files devel
-%_includedir/%name
-%_includedir/libkms
-%_includedir/*.h
+%_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_man3dir/*.3*
 %_man7dir/*.7*
 
 %changelog
-* Thu May 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.92-alt1%ubt
+* Wed Oct 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.96-alt1
+- 2.4.96
+
+* Thu May 24 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.92-alt1.S1
 - 2.4.92
 
-* Mon Jan 22 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.89-alt1%ubt
+* Mon Jan 22 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.89-alt1.S1
 - added ubt tag
 
 * Tue Jan 16 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.89-alt1
