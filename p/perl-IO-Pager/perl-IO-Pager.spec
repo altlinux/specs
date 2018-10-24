@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-IO-Pager
-Version: 0.39
+Version: 0.40
 Release: alt1
 
 Summary: Select a pager, optionally pipe it output if destination is a TTY
@@ -43,7 +43,7 @@ Subclasses are only required to support filehandle output methods and close,
 namely
 
 %prep
-%setup -q -n %{module}-%{version}
+%setup -q -n %{module}-0.4
 
 %build
 %perl_vendor_build
@@ -56,6 +56,9 @@ namely
 %perl_vendor_privlib/IO/
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
 - automated CPAN update
 
