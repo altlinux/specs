@@ -16,9 +16,11 @@
 %def_enable spellcheck
 %def_disable webkit2
 
+%define smp %__nprocs
+
 Name: libwebkitgtk3
 Version: 2.4.11
-Release: alt5
+Release: alt6
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -257,7 +259,9 @@ mkdir -p DerivedSources/webkitdom
 mkdir -p DerivedSources/Platform
 mkdir -p Programs/resources
 
-%make_build
+n=%smp
+[  "$n"  -lt  16  ]  ||  n=16
+%make -j $n
 
 %install
 %makeinstall_std
@@ -341,6 +345,9 @@ chrpath --delete %buildroot%_libexecdir/%_name/MiniBrowser
 
 
 %changelog
+* Mon Oct 22 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt6
+- rebuilt against libicu*.so.63
+
 * Wed Jul 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt5
 - rebuilt against libicu*.so.62
 
