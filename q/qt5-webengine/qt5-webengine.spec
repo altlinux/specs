@@ -29,7 +29,7 @@
 
 Name: qt5-webengine
 Version: 5.11.2
-Release: alt1%ubt
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -339,6 +339,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Wed Oct 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt2
+- rebuild with new icu
+
 * Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
 - new version
 

@@ -32,7 +32,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.11.2
-Release: alt2%ubt
+Release: alt3
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -397,10 +397,9 @@ sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE_FULL\s*=.*$|QMAKE_CFLAGS_OPTIMIZE_FULL = $QM
 #sed -i -e "s|^\(QMAKE_LFLAGS_RELEASE.*\)|\1 $RPM_LD_FLAGS|" \
 #  mkspecs/common/g++-unix.conf
 
-# move some bundled libs to ensure they're not accidentally used
+# remove some bundled libs to ensure they're not accidentally used
 pushd src/3rdparty
-mkdir UNUSED
-mv freetype libjpeg libpng pcre2 sqlite zlib xcb xkbcommon UNUSED/
+rm -rf freetype libjpeg libpng pcre2 sqlite zlib xcb xkbcommon
 popd
 
 %build
@@ -794,6 +793,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Wed Oct 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt3
+- rebuild with new icu
+
 * Wed Oct 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.11.2-alt2%ubt
 - NMU: fixed debuginfo generation.
 
