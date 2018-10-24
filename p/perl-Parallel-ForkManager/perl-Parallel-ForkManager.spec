@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Parallel-ForkManager
 Name: perl-%dist
-Version: 1.20
+Version: 2.02
 Release: alt1
 
 Summary: A simple parallel processing fork manager
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/Y/YA/YANICK/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Apr 23 2011
-BuildRequires: perl-devel perl(Test/Warn.pm)
+BuildRequires: perl-devel perl(Test/Warn.pm) perl(Moo/Role.pm)
 
 %description
 This module is intended for use in operations that can be done in parallel
@@ -34,8 +34,13 @@ use is a downloader which will be retrieving hundreds/thousands of files.
 %doc Changes CODE_OF_CONDUCT.md CONTRIBUTORS README.mkdn examples
 %dir %perl_vendor_privlib/Parallel
 %perl_vendor_privlib/Parallel/ForkManager.pm
+%dir %perl_vendor_privlib/Parallel/ForkManager
+%perl_vendor_privlib/Parallel/ForkManager/Child.pm
 
 %changelog
+* Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1
+- automated CPAN update
+
 * Fri Jul 20 2018 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
 - automated CPAN update
 
