@@ -9,7 +9,7 @@
 
 Name: python-module-%{_name}3
 Version: %ver_major.1
-Release: alt1.1
+Release: alt2
 
 Summary: Python bindings for GObject
 Group: Development/Python
@@ -39,14 +39,14 @@ Requires: typelib(GdkX11) = %gtk_api_ver
 %define gi_ver 1.46.0
 %define pycairo_ver 1.11.1
 
-BuildRequires(pre): meson rpm-build-gir
+BuildRequires(pre): meson rpm-build-gir rpm-build-python rpm-build-python3
 BuildRequires: gnome-common gtk-doc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel libffi-devel
 BuildRequires: python-devel python-modules-encodings
 BuildRequires: python-module-pycairo-devel >= %pycairo_ver libcairo-gobject-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver
 # python3
-BuildRequires: rpm-build-python3 python3-devel python3-module-pycairo-devel
+BuildRequires: python3-devel python3-module-pycairo-devel
 # for tests
 BuildRequires: python3-module-pytest python-module-pytest dbus-tools-gui libgtk+3-gir-devel xvfb-run
 BuildRequires: glibc-i18ndata
@@ -207,6 +207,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt2
+- rebuilt with pycairo-1.17.1
+
 * Wed Sep 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1.1
 - packaged *egg-info
 

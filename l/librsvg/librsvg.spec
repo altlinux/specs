@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 Epoch: 1
 
@@ -27,11 +27,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 %define glib_ver 2.52.0
 %define gtk3_ver 3.10.0
 %define libxml2_ver 2.7.0
-%define cairo_ver 1.15.4
+%define cairo_ver 1.15.12
 %define croco_ver 0.6.7
 %define vala_ver 0.18
 %define freetype_ver 2.9
-%define rust_ver 1.26
+%define rust_ver 1.27
 
 PreReq: libcroco >= %croco_ver
 
@@ -188,6 +188,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Thu Oct 25 2018 Yuri N. Sedunov <aris@altlinux.org> 1:2.44.8-alt1
+- 2.44.8
+
 * Tue Oct 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1:2.44.7-alt1
 - 2.44.7
 
