@@ -1,5 +1,5 @@
 Name: nextcloud
-Version: 13.0.6
+Version: 13.0.7
 Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
@@ -37,7 +37,7 @@ calendars, bookmarks and files across all your devices.
 %package apache2
 Summary: Apache 2.x web-server default configuration for %name
 Group: Networking/WWW
-Requires: %name >= 12.0.0 apache2-mod_php5 apache2-mod_ssl
+Requires: %name >= 12.0.0 apache2-mod_php7 apache2-mod_ssl
 
 %description apache2
 Apache 2.x web-server default configuration for %name.
@@ -121,6 +121,10 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Thu Oct 25 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 13.0.7-alt1
+- version 13.0.7 (Oct 11 2018)
+- update requires for apache2 (php5 -> php7)
+
 * Mon Sep 03 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 13.0.6-alt1
 - version 13.0.6 (Aug 30 2018)
 - update requires for SQL DBs
