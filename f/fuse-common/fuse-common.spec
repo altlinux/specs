@@ -1,6 +1,6 @@
 Name: fuse-common
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 BuildArch: noarch
 
@@ -32,10 +32,6 @@ install -pD fuserumount        %buildroot%_bindir/fuserumount
 %pre
 %_sbindir/groupadd -r -f fuse
 %_sbindir/groupadd -r -f cuse
-%pre_control fusermount
-
-%post
-%post_control -s fuseonly fusermount
 
 %files
 %_sysconfdir/control.d/facilities/fusermount
@@ -43,5 +39,8 @@ install -pD fuserumount        %buildroot%_bindir/fuserumount
 %attr(0755,root,root) %_bindir/fuserumount
 
 %changelog
+* Thu Oct 25 2018 Denis Smirnov <mithraen@altlinux.ru> 1.0.0-alt2
+- remove unneeded %%post (ALT #33754)
+
 * Tue Jul 25 2017 Denis Smirnov <mithraen@altlinux.ru> 1.0.0-alt1
 - moved from fuse package
