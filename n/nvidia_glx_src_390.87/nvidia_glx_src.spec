@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 87
 %define nv_minor %nil
-%define pkg_rel alt188
+%define pkg_rel alt189
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -102,7 +102,7 @@ BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 BuildRequires: libXext-devel libEGL-devel
 BuildRequires: libwayland-client-devel libwayland-server-devel
-#BuildRequires: libGLdispatch libGLX
+BuildRequires: libGLdispatch libGLX
 ExclusiveArch: %ix86 x86_64
 #ExcludeArch: ppc64 x86_64 ppc s390 s390x ia64
 
@@ -120,7 +120,7 @@ Sources for %{bin_pkg_name}_%{version} package
 %package -n %{bin_pkg_name}_%{version}
 PreReq: %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
-Requires: libGLdispatch libGLX
+#Requires: libGLdispatch libGLX
 Requires: %libnvidia_egl_wayland >= 0
 #
 Group: %myGroup
@@ -348,6 +348,10 @@ fi
 %endif
 
 %changelog
+* Thu Oct 25 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt189
+- clean requires
+- update build requires
+
 * Fri Oct 19 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt188
 - rebuild
 
