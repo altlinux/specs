@@ -1,6 +1,6 @@
 Name: linphone
 Version: 3.12.0
-Release: alt3
+Release: alt4
 License: GPLv2+
 Url: http://www.linphone.org/
 
@@ -17,7 +17,7 @@ BuildRequires: doxygen gcc-c++ intltool libbelle-sip-devel libgtk+2-devel
 BuildRequires: libmediastreamer-devel libnotify-devel libreadline-devel
 BuildRequires: libspeex-devel libsqlite3-devel libudev-devel libxml2-devel
 BuildRequires: python3-base sgmltools-lite libSDL-devel libncurses-devel
-BuildRequires: libzrtp-devel libsrtp-devel
+BuildRequires: libzrtp-devel libsrtp-devel libldap-devel libsasl2-devel
 
 Requires: %name-gui = %version-%release
 Requires: %name-cli = %version-%release
@@ -92,6 +92,7 @@ This package contains development files for %name.
  --enable-notify \
  --enable-dtls \
  --enable-zrtp \
+ --enable-ldap \
  --disable-static
 
 %make_build
@@ -149,6 +150,9 @@ This package contains development files for %name.
 
 
 %changelog
+* Thu Oct 25 2018 Anton Farygin <rider@altlinux.ru> 3.12.0-alt4
+- enabled ldap support
+
 * Wed Apr 25 2018 Alexei Takaseev <taf@altlinux.org> 3.12.0-alt3
 - Build with zrtp support
 
