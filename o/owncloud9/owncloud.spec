@@ -2,7 +2,7 @@
 
 Name: owncloud%major
 Version: 9.1.8
-Release: alt2
+Release: alt3
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -18,10 +18,9 @@ BuildArch: noarch
 Requires(pre): webserver-common
 
 #https://doc.owncloud.org/server/9.1/admin_manual/installation/source_installation.html
-Requires: php5 >= 5.4 php5-libs php5-dom php5-gd2 php5-mbstring php5-xmlreader php5-zip php5-curl php5-fileinfo
-Requires: memcached php5-memcache php5-memcached 
+Requires: php7-libs php7-dom php7-gd2 php7-mbstring php7-xmlreader php7-zip php7-curl php7-fileinfo
 #For SQL DBs:
-Requires: php5-pdo-driver
+Requires: php7-pdo-driver
 
 Source0: %name-%version.tar
 
@@ -37,7 +36,7 @@ calendars, bookmarks and files across all your devices.
 %package apache2
 Summary: Apache 2.x web-server default configuration for %name
 Group: Networking/WWW
-Requires: %name >= 9.1.0 apache2-mod_php5 apache2-mod_ssl
+Requires: %name >= 9.1.0 apache2-mod_php7 apache2-mod_ssl
 
 %description apache2
 Apache 2.x web-server default configuration for %name.
@@ -46,7 +45,6 @@ Apache 2.x web-server default configuration for %name.
 Summary: nginx web-server default configuration for %name
 Group: Networking/WWW
 Requires: %name >= 9.1.0 nginx
-#Requires: php5-cgi php5-fpm-fcgi php5-apcu
 
 %description nginx
 nginx web-server default configuration for %name.
@@ -123,6 +121,9 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf 
 
 %changelog
+* Thu Oct 25 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.8-alt3
+- php5 -> php7
+
 * Mon Sep 03 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.8-alt2
 - fixed unowned files
 
