@@ -1,7 +1,7 @@
 %def_enable selinux
 
 Name: bubblewrap
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: Unprivileged sandboxing tool
@@ -54,6 +54,9 @@ _EOF_
 %_datadir/bash-completion/completions/bwrap
 
 %changelog
+* Thu Oct 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- updated to v0.3.1-4-g8fc5a96
+
 * Wed Jul 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - updated to v0.3.0-1-gb3906bb
 - enabled selinux support
