@@ -1,6 +1,6 @@
 Name: thunar
 Version: 1.8.2
-Release: alt1
+Release: alt2
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
@@ -102,7 +102,7 @@ make check
 %_datadir/metainfo/org.xfce.thunar.appdata.xml
 %_datadir/Thunar
 %_datadir/xfce4/panel/plugins/*.desktop
-/lib/systemd/user/thunar.service
+%_usr/lib/systemd/user/thunar.service
 %_libdir/xfce4/panel/plugins/*.so
 %exclude %_libdir/xfce4/panel/plugins/*.la
 %dir %_libdir/thunarx-*/
@@ -122,6 +122,9 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Thu Oct 25 2018 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt2
+- Fix systemd userdir location.
+
 * Mon Oct 01 2018 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt1
 - Updated to 1.8.2.
 
