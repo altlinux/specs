@@ -1,5 +1,5 @@
 Name: xfce4-sensors-plugin
-Version: 1.3.0
+Version: 1.3.90
 Release: alt1
 
 Summary: Sensors plugin for Xfce Desktop
@@ -13,9 +13,16 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
+%ifarch %ix86
+%def_enable xnvctrl
+%else
+%def_disable xnvctrl
+%endif
+
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: hddtemp intltool libsensors3-devel libnotify-devel
+%{?_enable_xnvctrl:BuildRequires: nvidia-settings-devel}
 
 Requires: xfce4-panel >= 4.8 hddtemp lm_sensors3
 
@@ -37,6 +44,7 @@ Requires: xfce4-panel >= 4.8 hddtemp lm_sensors3
     --enable-libsensors=yes \
     --enable-procacpi \
     --enable-sysfsacpi \
+    %{subst_enable xnvctrl} \
     --enable-notification \
     --enable-debug=minimum
 %make_build
@@ -61,6 +69,10 @@ Requires: xfce4-panel >= 4.8 hddtemp lm_sensors3
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Oct 25 2018 Mikhail Efremov <sem@altlinux.org> 1.3.90-alt1
+- Enabled xnvctrl support on x86.
+- Updated to 1.3.90.
+
 * Wed Aug 22 2018 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt1
 - Update url.
 - Enable debug (minimum level).
