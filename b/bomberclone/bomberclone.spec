@@ -1,19 +1,20 @@
 Name: bomberclone
 Version: 0.11.9
-Release: alt1
+Release: alt2
 
 Summary: BomberClone is a Puzzle game clone of bomberman
 License: GPL
 Url: http://bomberclone.sourceforge.net/homepage/
 Group: Games/Arcade
 
-Packager: Igor Zubkov <icesik@altlinux.org>
+Packager: Grigory Ustinov <grenka@altlinux.org>
 
 Source0: %name-%version.tar.gz
 Source2: %name.xpm
 
 Patch0: bomberclone-0.11.7-alt-path.patch
 Patch1: bomberclone-0.11.9-alt-DSO.patch
+Patch2: bomberclone-0.11.9-buffer-overflow-fix.patch
 
 Requires: %name-data = %version
 
@@ -56,6 +57,7 @@ This is package contains data files for BomberClone.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p0
 
 %build
 %configure \
@@ -96,6 +98,9 @@ EOF
 %_gamesdatadir/%name
 
 %changelog
+* Thu Oct 25 2018 Grigory Ustinov <grenka@altlinux.org> 0.11.9-alt2
+- Fix buffer overflow in network game (Closes: #16738).
+
 * Fri Oct 05 2012 Igor Zubkov <icesik@altlinux.org> 0.11.9-alt1
 - 0.11.8 -> 0.11.9
 
