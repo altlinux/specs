@@ -12,7 +12,7 @@
 
 Name: dotnet-corefx
 Version: 2.1.5
-Release: alt1
+Release: alt2
 
 Summary: .NET Core foundational libraries, called CoreFX
 
@@ -77,6 +77,12 @@ cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Nat
 # FIXME: possible hack
 cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/Microsoft.NETCore.App.deps.json %buildroot%_dotnet_shared/
 
+# FIXME: needed due to new Microsoft.NETCore.App.deps.json
+cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.IO.Compression.Native.a                %buildroot%_dotnet_shared/
+cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Net.Http.Native.a                      %buildroot%_dotnet_shared/
+cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Net.Security.Native.a                  %buildroot%_dotnet_shared/
+cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Security.Cryptography.Native.OpenSsl.a %buildroot%_dotnet_shared/
+
 # already in coreclr
 rm -fv %buildroot%_dotnet_shared/System.Globalization.Native.so
 %endif
@@ -85,10 +91,13 @@ rm -fv %buildroot%_dotnet_shared/System.Globalization.Native.so
 %files
 %_dotnet_shared/Microsoft.NETCore.App.deps.json
 %_dotnet_shared/System*.so
-%_dotnet_shared/System.Native.a
+%_dotnet_shared/System*.a
 %_dotnet_shared/*.dll
 
 %changelog
+* Thu Oct 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.5-alt2
+- NMU: packaged additional required libraries.
+
 * Fri Oct 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.5-alt1
 - NMU: new version (2.1.5)
 
