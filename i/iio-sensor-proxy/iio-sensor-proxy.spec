@@ -1,4 +1,4 @@
-%define ver_major 2.4
+%define ver_major 2.5
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -57,6 +57,7 @@ Developer documentation for %name.
 [ ! -d m4 ] && mkdir m4
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
@@ -82,6 +83,9 @@ Developer documentation for %name.
 
 
 %changelog
+* Thu Oct 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.5-alt1
+- updated to 2.5-6-gbb35319
+
 * Mon Nov 06 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt1
 - 2.4
 
