@@ -1,6 +1,6 @@
 Name: libidn
-Version: 1.33
-Release: alt3
+Version: 1.35
+Release: alt1
 
 Summary: Internationalized Domain Name support library
 Group: System/Libraries
@@ -92,7 +92,8 @@ This package contains javadoc for %{name}-java.
 %prep
 %setup
 # These gnulib tests fail.
-sed -i 's/test-\(lock\|thread_create\)\$(EXEEXT) //' lib/gltests/Makefile.in
+sed -i 's/test-\(rwlock1\|thread_create\)\$(EXEEXT) //' lib/gltests/Makefile.in
+sed -i 's/test-\(rwlock1\|thread_create\)\$(EXEEXT) //' gltests/Makefile.in
 
 %if_enabled java
 # Cleanup
@@ -104,14 +105,21 @@ find . -name '*.class' -print -delete
 %endif
 
 %build
+#%%autoreconf
 %configure \
 	%{subst_enable java} \
 	--disable-rpath \
 	--disable-static \
 	--disable-silent-rules \
 	#
-# get rid of RPATH
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
+
+# remove RPATH hardcoding
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+
+# without RPATH this needs to be set for idn executed by help2man
+export LD_LIBRARY_PATH=$(pwd)/lib/.libs
+
 %make_build
 
 %install
@@ -156,7 +164,7 @@ rm -rf $RPM_BUILD_ROOT%{_javadir}/libidn*.jar
 
 %check
 export LD_LIBRARY_PATH=%buildroot/%_lib:%buildroot%_libdir
-%make_build -k check VERBOSE=1
+%make_build check VERBOSE=1
 
 %files -f %name.lang
 /%_lib/*.so.*
@@ -192,6 +200,9 @@ export LD_LIBRARY_PATH=%buildroot/%_lib:%buildroot%_libdir
 %endif #java
 
 %changelog
+* Thu Oct 25 2018 Grigory Ustinov <grenka@altlinux.org> 1.35-alt1
+- Build new version.
+
 * Tue Jan 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.33-alt3
 - Fixed tests.
 
