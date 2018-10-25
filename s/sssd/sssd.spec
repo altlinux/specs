@@ -22,7 +22,7 @@
 
 Name: sssd
 Version: 2.0.0
-Release: alt1
+Release: alt2.gitf0603645f
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -49,6 +49,7 @@ Patch: %name-%version-alt.patch
 %define pubconfpath %sssdstatedir/pubconf
 %define gpocachepath %sssdstatedir/gpo_cache
 %global secdbpath %sssdstatedir/secrets
+%define deskprofilepath %sssdstatedir/deskprofile
 
 %define sssd_user _sssd
 
@@ -694,6 +695,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %dir %_localstatedir/cache/krb5rcache
 %attr(700,%sssd_user,%sssd_user) %dir %dbpath
 %attr(755,%sssd_user,%sssd_user) %dir %mcpath
+%attr(751,%sssd_user,%sssd_user) %dir %deskprofilepath
 %attr(700,root,root) %dir %secdbpath
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/passwd
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/group
@@ -929,26 +931,30 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %endif
 
 %changelog
+* Thu Oct 25 2018 Stanislav Levin <slev@altlinux.org> 2.0.0-alt2.gitf0603645f
+- Applied an upstream snapshot due to a huge amount of issues in 2.0.0.
+- Fixed start under a non-privileged user (Closes: #35545).
+
 * Fri Oct 19 2018 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt1
 - 2.0.0
 
-* Tue Aug 14 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.16.3-alt1%ubt
+* Tue Aug 14 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.16.3-alt1
 - New upstream version 1.16.3
   + Dropped patch `nss: skip incomplete groups instead of bailing out',
     included by upstream
   + Refreshed become_user patch (unit test passes now)
 
-* Thu Jul 19 2018 Stanislav Levin <slev@altlinux.org> 1.16.2-alt2%ubt
+* Thu Jul 19 2018 Stanislav Levin <slev@altlinux.org> 1.16.2-alt2
 - build with Python3 bindings
 
-* Wed Jul 04 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.16.2-alt1%ubt
+* Wed Jul 04 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.16.2-alt1
 - New upstream release 1.16.2
 
-* Fri Jun 08 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt7%ubt
+* Fri Jun 08 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt7
 - Rebuild with latest version on libldb-1.3.3
 - Disable strict requirement to version of libldb
 
-* Fri May 25 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.16.1-alt6%ubt
+* Fri May 25 2018 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.16.1-alt6
 - Applied patches fixing AD and generic issues from Fedora 1.16.2 pre-release
   (https://src.fedoraproject.org/rpms/sssd/tree/5f75f7e4f25f4844)
   + 0001-IPA-Handle-empty-nisDomainName.patch
@@ -994,89 +1000,89 @@ chown root:root %_sysconfdir/sssd/sssd.conf
   + 0061-NSS-nss_clear_netgroup_hash_table-do-not-free-data.patch
   + 0062-SYSDB-Properly-handle-name-gid-override-when-using-d.patch
 
-* Fri Apr 20 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt5%ubt
+* Fri Apr 20 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt5
 - Set ownership of sssd.ldb even if local provider is not used
 
-* Fri Apr 06 2018 Evgeny Sinelikov <sin@altlinux.org> 1.16.1-alt4%ubt
+* Fri Apr 06 2018 Evgeny Sinelikov <sin@altlinux.org> 1.16.1-alt4
 - Build for e2k without selinux-policy-targeted
 
-* Tue Mar 27 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.16.1-alt3%ubt
+* Tue Mar 27 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.16.1-alt3
 - libnfsidmap soname bump
 
-* Sat Mar 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt2%ubt
+* Sat Mar 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt2
 - Revert libwbclient-sssd interface to version 0.14 for samba-4.7
 
-* Mon Mar 12 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt1%ubt
+* Mon Mar 12 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt1
 - Update to latest stable release
 - Revert libwbclient-sssd interface to version 0.13 for samba-4.6
 
-* Fri Mar 02 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.15.3-alt7%ubt
+* Fri Mar 02 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.15.3-alt7
 - Rebuild with fixes from p8
 
-* Tue Feb 27 2018 Alexey Shabalin <shaba@altlinux.ru> 1.15.3-alt6%ubt
+* Tue Feb 27 2018 Alexey Shabalin <shaba@altlinux.ru> 1.15.3-alt6
 - Rebuild with http-parser-2.8.0
 - backport fix for building the PAC plugin with krb5 1.16
 
-* Fri Dec 22 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.3-alt5%ubt.3
+* Fri Dec 22 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.3-alt5
 - Fix logrotate insecure parent directory permissions (closes: 34335)
 - Fix trouble with incomplete group object found during initgroups
 
-* Thu Nov 23 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.3-alt5%ubt.2
+* Thu Nov 23 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.3-alt5
 - Backport sssd to legacy stable branches
 - Fix trouble with ubt macros id on branch c8
 
-* Tue Nov 21 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.3-alt5%ubt.1
+* Tue Nov 21 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.3-alt5
 - Backport sssd to stable branches
 
-* Tue Nov 21 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.3-alt5%ubt
+* Tue Nov 21 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.3-alt5
 - Don't restart sssd services until reboot or manual restart (ALT #34054)
 
-* Fri Nov 03 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.15.3-alt4%ubt
+* Fri Nov 03 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.15.3-alt4
 - relocate nfs-idmap plugin back under %%_libdir
 
-* Thu Sep 21 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.3-alt3%ubt
+* Thu Sep 21 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.3-alt3
 - Avoid build another trouble with ubt macros id on branch c8
 
-* Wed Sep 20 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.3-alt2%ubt
+* Wed Sep 20 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.3-alt2
 - Avoid build trouble with ubt macros id on branch c8
 
-* Thu Aug 17 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.3-alt1%ubt
+* Thu Aug 17 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.3-alt1
 - Update to latest release with:
  + SSSD Kerberos credentials manager (sssd-kcm)
  + SSSD Certficate Mapping Library (libsss_certmap)
 
-* Sat Jul 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.2-alt7%ubt
+* Sat Jul 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.2-alt7
 - Rebuild new version with latest fixes for p7 and c7
 
-* Sat Jun 17 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.2-alt6%ubt
+* Sat Jun 17 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.2-alt6
 - Fix PAM config with pam_localuser.so
 
-* Fri Jun 16 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.2-alt5%ubt
+* Fri Jun 16 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.2-alt5
 - Update PAM config with pam_localuser.so
 
-* Fri Jun 09 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.2-alt4%ubt
+* Fri Jun 09 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.2-alt4
 - Add PAM auth config with pam_localuser.so
 
-* Fri Apr 28 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.2-alt3%ubt
+* Fri Apr 28 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.2-alt3
 - Fix PAM config with pam_localuser.so for separate configuration for local and global users
 
-* Fri Apr 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.2-alt2%ubt
+* Fri Apr 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.2-alt2
 - Rebuild with http-parser-2.7.1
 
-* Thu Mar 23 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.2-alt1%ubt
+* Thu Mar 23 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.2-alt1
 - Updated to last spring release
 
-* Wed Mar 08 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt6%ubt
+* Wed Mar 08 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt6
 - Rebuild with libldb-1.1.29
 
-* Tue Feb 28 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt5%ubt
+* Tue Feb 28 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt5
 - Add _sssd user to _keytab group
 - Set right group privileges: use initgroups() instead of setgroups()
 
-* Thu Jan 12 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt4%ubt
+* Thu Jan 12 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt4
 - Set selinux provider none only if selinux disabled
 
-* Sat Dec 31 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt3%ubt
+* Sat Dec 31 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt3
 - Set default selinux provider to none
 
 * Mon Dec 05 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt2
