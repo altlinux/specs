@@ -1,4 +1,4 @@
-%define git_hash .gitcd3aacefdd0b
+%define git_hash .git2c6fafad7abe
 #define git_hash %nil
 
 %define dbus_version 1.2.12-alt2
@@ -58,8 +58,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.14.1
-Release: alt2%git_hash
+Version: 1.14.5
+Release: alt1%git_hash
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -462,7 +462,8 @@ GObject introspection devel data for the NetworkManager.
 	--disable-ifcfg-suse \
 	--disable-ifupdown \
 	--disable-ifnet \
-	--with-config-plugins-default='etcnet-alt,ibft' \
+	--disable-ibft \
+	--with-config-plugins-default='etcnet-alt' \
 	--with-modem-manager-1 \
 	%{subst_enable teamdctl} \
 	%{subst_enable ovs} \
@@ -770,6 +771,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Oct 26 2018 Mikhail Efremov <sem@altlinux.org> 1.14.5-alt1.git2c6fafad7abe
+- Explicitly disable ibft plugin.
+- Upstream git snapshot (nm-1-14 branch).
+
 * Mon Oct 08 2018 Mikhail Efremov <sem@altlinux.org> 1.14.1-alt2.gitcd3aacefdd0b
 - etcnet-alt: Fix setting of autoconnect property (closes: #35489).
 
