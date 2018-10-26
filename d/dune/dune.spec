@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: dune
-Version: 1.1.1
-Release: alt2
+Version: 1.4.0
+Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
 License: ASL 2.0
@@ -32,6 +32,7 @@ productive.
 %setup -n %name-%version-%release
 
 %build
+./configure --libdir=%_libdir/ocaml
 %make_build release VERSION=%version-%release
 
 %install
@@ -60,6 +61,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --ma
 %_man5dir/dune-config.5*
 
 %changelog
+* Fri Oct 26 2018 Anton Farygin <rider@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.1.1-alt2
 - rebuilt for ocaml-4.07.1
 
