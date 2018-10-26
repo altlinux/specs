@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-re
 Version: 1.8.0
-Release: alt2
+Release: alt3
 Summary: A regular expression library for OCaml
 
 License: LGPLv2 with exceptions
@@ -50,14 +50,23 @@ jbuilder install --destdir %buildroot
 %exclude %_libdir/ocaml/re/*.cmxa
 %exclude %_libdir/ocaml/re/*.cmx
 %exclude %_libdir/ocaml/re/*.mli
+%exclude %_libdir/ocaml/re/*/*.a
+%exclude %_libdir/ocaml/re/*/*.cmxa
+%exclude %_libdir/ocaml/re/*/*.cmx
 
 %files devel
 %_libdir/ocaml/re/*.a
 %_libdir/ocaml/re/*.cmx
 %_libdir/ocaml/re/*.cmxa
 %_libdir/ocaml/re/*.mli
+%_libdir/ocaml/re/*/*.a
+%_libdir/ocaml/re/*/*.cmx
+%_libdir/ocaml/re/*/*.cmxa
 
 %changelog
+* Fri Oct 26 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt3
+- all development stuff were moved to the devel package
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt2
 - rebuilt with ocaml-4.07.1
 
