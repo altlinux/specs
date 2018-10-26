@@ -26,7 +26,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt10%ubt
+Release: alt11
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -130,7 +130,8 @@ BuildRequires: bzlib-devel gcc-c++ libXft-devel libGLES-devel
 BuildRequires: libxcb-devel libxcbutil-image-devel libxcb-render-util-devel libxcbutil-keysyms-devel
 BuildRequires: libbluez-devel libkrb5-devel libpam-devel libaudit-devel
 BuildRequires: libqimageblitz-devel libraw1394-devel libsensors3-devel libgps-devel
-BuildRequires: libstrigi-devel libusb-compat-devel xml-utils
+BuildRequires: libstrigi-devel xml-utils
+#BuildRequires: libusb-compat-devel
 BuildRequires: libalternatives-devel libudev-devel
 BuildRequires: polkit-qt-1-devel libpolkit-devel libdbusmenu-qt-devel
 #BuildRequires: soprano soprano-backend-redland libsoprano-devel
@@ -973,6 +974,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Oct 26 2018 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt11
+- build without libusb-compat
+
 * Fri Apr 20 2018 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt10%ubt
 - fix to build with new gcc
 
