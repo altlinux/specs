@@ -5,7 +5,7 @@
 Name: switchboard
 %define xdg_name org.pantheon.%name
 %define rdn_name io.elementary.%name
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Modular Desktop Settings Hub for elementary OS
@@ -23,7 +23,8 @@ Source: %name-%version.tar
 Provides: %rdn_name = %version-%release
 Requires: lib%name = %version-%release
 
-BuildRequires: cmake gcc-c++ intltool libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: gcc-c++ libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= 3.10
 BuildRequires: libgranite-devel libclutter-gtk3-devel
 BuildRequires: libgranite-vala vala-tools
@@ -50,22 +51,17 @@ This package contains files that are needed to develop Switchboard plugins.
 
 %prep
 %setup
-# fix pc-file
-subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 
 %build
-%cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
-	-DUSE_UNITY:BOOL=OFF \
-	-DGSETTINGS_COMPILE=OFF
-%cmake_build V=1
+%meson -Dlibunity=false
+%meson_build
 
 %install
-%cmakeinstall_std
+%meson_install
+%find_lang %rdn_name
 
-%find_lang %name
-
-%files -f %name.lang
-%_bindir/%name
+%files -f %rdn_name.lang
+%_bindir/%rdn_name
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/metainfo/%rdn_name.appdata.xml
@@ -81,6 +77,9 @@ subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Fri Oct 26 2018 Yuri N. Sedunov <aris@altlinux.org> 2.3.4-alt1
+- 2.3.4
+
 * Tue Jul 31 2018 Yuri N. Sedunov <aris@altlinux.org> 2.3.2-alt1
 - 2.3.2
 
