@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 18.04.3
-Release: alt2%ubt
+Release: alt3
 %K5init
 
 Group: File tools
@@ -53,6 +53,9 @@ Graphical GPG frontend.
 %_K5icon/*/*/status/*key*.*
 
 %changelog
+* Fri Oct 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt3
+- update russian translation
+
 * Fri Jul 27 2018 Pavel Akopov <pak@altlinux.org> 18.04.3-alt2%ubt
 - Fix translated labels text cropping in kgpgfirstassistant.
 
