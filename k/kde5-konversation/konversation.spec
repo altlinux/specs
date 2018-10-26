@@ -2,7 +2,7 @@
 %define rname konversation
 Name: kde5-%rname
 Version: 1.7.5
-Release: alt1%ubt
+Release: alt2
 %define beta %nil
 %K5init altplace
 
@@ -63,6 +63,9 @@ and much more.
 
 
 %changelog
+* Fri Oct 26 2018 Sergey V Turchin <zerg@altlinux.org> 1.7.5-alt2
+- update russian translation
+
 * Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 1.7.5-alt1%ubt
 - new version
 
