@@ -1,6 +1,6 @@
 Name: bootloader-utils
 Version: 0.5.2
-Release: alt2
+Release: alt3
 
 Summary: Bootloader utilities
 License: GPL
@@ -88,6 +88,9 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Fri Oct 26 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.2-alt3
+- installkernel: fixed u-boot config handling, again
+
 * Thu Jul 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.2-alt2
 - installkernel: fixed u-boot config handling
 
