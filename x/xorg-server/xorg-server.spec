@@ -21,7 +21,7 @@
 %endif
 
 Name: xorg-server
-Version: 1.20.2
+Version: 1.20.3
 Release: alt1
 Epoch: 2
 License: MIT/X11
@@ -236,6 +236,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_sbindir/groupadd -r -f xgrp
 %pre_control xorg-server
 
+%post
+%post_control xorg-server
+
 %files
 %config(noreplace) %_sysconfdir/pam.d/xserver
 %config(missingok noreplace) %_sysconfdir/security/console.apps/xserver
@@ -304,6 +307,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Fri Oct 26 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.3-alt1
+- 1.20.3
+
 * Tue Oct 16 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.2-alt1
 - 1.20.2
 
