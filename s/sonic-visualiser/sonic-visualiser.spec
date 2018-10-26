@@ -1,23 +1,27 @@
 Name: sonic-visualiser
-Version: 2.4
-Release: alt2.hg20140912.1
+Version: 3.1.1
+Release: alt1
+
 Summary: Application for viewing and analysing the contents of music audio files
+
 License: GPLv2+
 Group: Sound
 Url: http://sonicvisualiser.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# hg clone https://code.soundsoftware.ac.uk/hg/sonic-visualiser
-Source: %name-%version.tar
+Packager: Grigory Ustinov <grenka@altlinux.org>
 
-BuildPreReq: gcc-c++ qt5-base-devel libsvcore-devel libsvgui-devel
-BuildPreReq: libsvapp-devel libvamp-devel librubberband-devel
-BuildPreReq: libsndfile-devel libsamplerate-devel libfftw3-devel
-BuildPreReq: bzlib-devel liblrdf-devel libmad-devel libfishsound-devel
-BuildPreReq: liboggz-devel liblo-devel libalsa-devel libjack-devel
-BuildPreReq: libX11-devel libid3tag-devel libsord-devel libserd-devel
-BuildPreReq: dataquay-minefeld-devel libportaudio2-devel
-BuildPreReq: doxygen graphviz
+Source0: %name-%version.tar
+Source1: %name.xml
+
+Patch0: sonic-visualiser-system-dataquay.patch
+Patch1: sonic-visualiser-3.1.1-test_fix.patch
+
+BuildRequires: bzlib-devel capnproto-devel dataquay-minefeld-devel
+BuildRequires: libfftw3-devel libfishsound-devel libid3tag-devel
+BuildRequires: libjack-devel liblo-devel liblrdf-devel libmad-devel
+BuildRequires: liboggz-devel libportaudio2-devel libpulseaudio-devel
+BuildRequires: librubberband-devel libsamplerate-devel libsndfile-devel
+BuildRequires: libsord-devel qt5-svg-devel
 
 %description
 Sonic Visualiser is an application for viewing and analysing the
@@ -33,37 +37,53 @@ file.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p2
 
 %build
-export PATH=$PATH:%_qt5_bindir
 %autoreconf
-%configure \
-	--enable-debug
-qmake sv.pro
-%make_build V=1
+%configure --enable-debug
+%make_build
 
 %install
-install -d %buildroot%_bindir
-install -d %buildroot%_desktopdir
-install -d %buildroot%_pixmapsdir
-install -d %buildroot%_qt5_translationdir
+export INSTALL_ROOT=%buildroot
+%makeinstall_std
 
-install -m755 %name %buildroot%_bindir/
-install -p -m755 *.desktop %buildroot%_desktopdir/
-install -p -m644 icons/* %buildroot%_pixmapsdir/
-install -p -m644 i18n/* %buildroot%_qt5_translationdir/
+# plugin dir
+install -dm 755 %buildroot%_libdir/vamp
 
-%find_lang --with-qt %name
+# icons
+for size in 16 22 24 32 48 64 128 ; do
+install -Dm 644 icons/sv-${size}x${size}.png %buildroot/%_datadir/icons/hicolor/${size}x${size}/apps/%name.png
+done
 
-#doxygen
+install -Dm 644 icons/sv-icon.svg %buildroot/%_datadir/icons/hicolor/scalable/apps/%name.svg
+ln -s sonic-visualiser.svg %buildroot/%_datadir/icons/hicolor/scalable/apps/sv-icon.svg
 
-%files -f %name.lang
-%doc CHANGELOG CITATION README*
-%_bindir/*
-%_desktopdir/*
-%_pixmapsdir/*
+# mime types
+install -Dm 644 %SOURCE1 %buildroot%_datadir/mime/packages/%name.xml
+
+install -Dm 644 x-sonicvisualiser.desktop %buildroot/%_datadir/mimelnk/application/x-sonicvisualiser.desktop
+install -Dm 644 x-sonicvisualiser-layer.desktop %buildroot/%_datadir/mimelnk/application/x-sonicvisualiser-layer.desktop
+
+%files
+%doc CHANGELOG README.md COPYING
+%_bindir/%name
+%_bindir/piper-vamp-simple-server
+%_bindir/vamp-plugin-load-checker
+%dir %_libdir/vamp
+%_datadir/icons/hicolor/*/apps/%name.*
+%_datadir/icons/hicolor/scalable/apps/sv-icon.svg
+%_datadir/applications/%name.desktop
+%_datadir/mime/packages/%name.xml
+%dir %_datadir/mimelnk
+%dir %_datadir/mimelnk/application
+%_datadir/mimelnk/application/x-sonicvisualiser*
 
 %changelog
+* Fri Oct 26 2018 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
+- Build new version.
+
 * Thu Jun 11 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4-alt2.hg20140912.1
 - Rebuilt for gcc5 C++11 ABI.
 
