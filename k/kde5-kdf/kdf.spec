@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 18.04.3
-Release: alt1%ubt
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -82,6 +82,9 @@ KF5 library
 %_K5lib/libkdfprivate.so.*
 
 %changelog
+* Fri Oct 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2
+- update menu entry russian translation
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 
