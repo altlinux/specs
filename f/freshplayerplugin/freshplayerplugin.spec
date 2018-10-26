@@ -2,7 +2,7 @@
 
 Name: freshplayerplugin
 Version: 0.3.9
-Release: alt3%ubt
+Release: alt4
 Summary: PPAPI-host NPAPI-plugin adapter
 License: MIT
 Group: System/Libraries
@@ -55,6 +55,9 @@ make -C BUILD check
 %config(noreplace) %_sysconfdir/freshwrapper.conf
 
 %changelog
+* Fri Oct 26 2018 Sergey V Turchin <zerg@altlinux.org> 0.3.9-alt4
+- rebuild with new icu
+
 * Thu Sep 06 2018 Sergey V Turchin <zerg@altlinux.org> 0.3.9-alt3%ubt
 - rebuild with new libevent
 
