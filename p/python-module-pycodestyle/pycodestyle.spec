@@ -5,7 +5,7 @@
 %define oname pycodestyle
 
 Name: python-module-%oname
-Version: 2.3.1
+Version: 2.4.0
 Release: alt1
 Summary: Python style guide checker
 Group: Development/Python
@@ -81,5 +81,8 @@ popd
 %endif
 
 %changelog
+* Fri Oct 26 2018 Mikhail Gordeev <obirvalger@altlinux.org> 2.4.0-alt1
+- new version 2.4.0
+
 * Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.1-alt1
 - Initial build for ALT.
