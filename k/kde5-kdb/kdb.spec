@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 3.1.0
-Release: alt2%ubt
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -119,6 +119,9 @@ sed -i 's|[[:space:]]KF5CoreAddons||' %buildroot/%_pkgconfigdir/KDb3.pc
 %_K5lib/libKDb3.so.*
 
 %changelog
+* Fri Oct 26 2018 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt3
+- rebuild with new icu
+
 * Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt2%ubt
 - fix build requires
 
