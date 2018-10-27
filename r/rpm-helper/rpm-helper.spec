@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:       rpm-helper
 Version:    0.24.17
-Release:    alt2_4
+Release:    alt2_5
 Summary:    Mageia helper scripts for rpm scriptlets
 License:    GPL
 Group:      System/Base
@@ -14,6 +14,10 @@ Patch0:     %{name}-altlinux-adaptation.patch
 Patch1:     rpm-helper.macros.in.alt-remove-unsupported.patch
 
 Requires:   rpm-macros-%name = %EVR
+
+# for autoimports clients
+Provides: /usr/share/rpm-helper/add-service
+Provides: /usr/share/rpm-helper/del-service
 
 %description
 Helper scripts for rpm installation.
@@ -57,6 +61,9 @@ rm -rf %buildroot%{_localstatedir}/lib/%{name}/systemd-migration
 %{_rpmmacrosdir}/%{name}
 
 %changelog
+* Sat Oct 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.24.17-alt2_5
+- added provides for autoimports
+
 * Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.24.17-alt2_4
 - updated internal Requires.
 
