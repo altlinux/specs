@@ -1,12 +1,15 @@
+%def_enable snapshot
+
 %define _name gmime
 %define ver_major 3.2
 %define api_ver 3.0
 
+%def_enable crypto
 %def_disable static
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Glorious MIME Utility Library
@@ -14,9 +17,12 @@ License: LGPLv2+
 Group: System/Libraries
 Url: https://github.com/jstedfast/gmime
 
-# VCS: git://git.gnome.org/gmime
-# https://github.com/jstedfast/gmime.git
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+# VCS: https://github.com/jstedfast/gmime.git
+Source: %_name-%version.tar
+%endif
 
 %define glib_ver 2.32.0
 %define gi_ver 1.30.0
@@ -24,10 +30,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 BuildRequires: /proc
 BuildPreReq: rpm-build-gnome
 BuildRequires: gcc-c++ libgio-devel >= %glib_ver
-BuildRequires: libgpgme-devel libidn-devel zlib-devel
+BuildRequires: libidn2-devel zlib-devel
 BuildRequires: gtk-doc docbook-utils
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libvala-devel vala vala-tools
+%{?_enable_crypto:BuildRequires: libgpgme-devel}
 
 %description
 
@@ -86,8 +93,9 @@ statically linked GMime-based software.
 %setup -n %_name-%version
 
 %build
-%autoreconf
+NOCONFIGURE=1 ./autogen.sh
 %configure  %{subst_enable static} \
+	    %{subst_enable crypto} \
 	    --enable-introspection \
 	    --enable-vala \
 	    --enable-largefile \
@@ -126,6 +134,9 @@ statically linked GMime-based software.
 %endif
 
 %changelog
+* Sat Oct 27 2018 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
+- updated to 3.2.1-3-g87405143
+
 * Thu Dec 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
 - 3.2.0
 
