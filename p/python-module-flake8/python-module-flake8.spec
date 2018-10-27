@@ -1,33 +1,46 @@
-%def_disable check
+%define _unpackaged_files_terminate_build 1
+%define oname flake8
 
-%global oname flake8
+%def_with check
 
 Name: python-module-%oname
-Version: 3.5.0
-Release: alt2.1
+Version: 3.6.0
+Release: alt1
 
 Summary: Code checking using pep8 and pyflakes
 Group: Development/Python
 License: MIT
-URL: http://pypi.python.org/pypi/flake8
+Url: http://pypi.python.org/pypi/flake8
 # https://gitlab.com/pycqa/flake8.git
 BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires: python-module-mccabe python-module-mock python-module-nose
-BuildRequires: python-module-pytest python-module-pytest-runner
-BuildRequires: python2.7(pycodestyle) python2.7(pyflakes) python2.7(enum)
-BuildRequires: python2.7(configparser) python2.7(mock)
-
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-html5lib python3-module-mccabe python3-module-nose
-BuildPreReq: python3-module-unittest2 python3-pyflakes python3-module-pbr
-BuildPreReq: python3-module-pytest python3-module-pytest-runner
-BuildPreReq: python3(pycodestyle) python3(pyflakes) python3(enum) python3(mock)
+BuildRequires: python-module-pytest-runner
+BuildRequires: python3-module-pytest-runner
 
-%py_requires multiprocessing setuptools mccabe pycodestyle pyflakes
+%if_with check
+BuildRequires: python-module-pytest
+BuildRequires: python-module-tox
+BuildRequires: python-module-coverage
+BuildRequires: python-module-pyflakes
+BuildRequires: python-module-mock
+BuildRequires: python-module-mccabe
+BuildRequires: python-module-configparser
+BuildRequires: python-module-pycodestyle
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-pyflakes
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-mccabe
+BuildRequires: python3-module-pycodestyle
+%endif
 
+%py_requires mccabe
+%py_requires pyflakes
+%py_requires pycodestyle
 
 %description
 Flake8 is a wrapper around these tools:
@@ -50,7 +63,9 @@ warning. - a Mercurial hook.
 %package -n python3-module-%oname
 Summary: Code checking using pep8 and pyflakes
 Group: Development/Python3
-%py3_requires setuptools mccabe pycodestyle pyflakes
+%py3_requires mccabe
+%py3_requires pycodestyle
+%py3_requires pyflakes
 
 %description -n python3-module-%oname
 Flake8 is a wrapper around these tools:
@@ -77,7 +92,7 @@ This is version of the package running with Python 3.
 
 rm -rf ../python3
 cp -a . ../python3
-find ../python3 -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
+find ../python3 -name '*.py' | xargs sed -i '1s|^#!python|#!%__python3|'
 
 %build
 %python_build
@@ -87,39 +102,52 @@ pushd ../python3
 popd
 
 %install
-unset PYTHONPATH
-
-# Must do the python3 install first because the scripts in /usr/bin are
-# overwritten with every setup.py install (and we want the python2 version
-# to be the default for now).
 pushd ../python3
 %python3_install
-mv %buildroot%_bindir/flake8 %buildroot%_bindir/python3-flake8
+mv %buildroot%_bindir/{flake8,python3-flake8}
 popd
 
 %python_install
 
-%if_with check
 %check
-PYTHONPATH=%buildroot%python_sitelibdir py.test -vv
+export PIP_INDEX_URL=http://host.invalid./
+
+export PYTHONPATH="$(pwd)"/src
+# copy nessecary exec deps
+TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox \
+--sitepackages -e py%{python_version_nodots python} --notest
+cp -f %_bindir/coverage .tox/py%{python_version_nodots python}/bin/
+
+TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox \
+--sitepackages -e py%{python_version_nodots python} -v -- -v
 
 pushd ../python3
-PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv
+export PYTHONPATH="$(pwd)"/src
+# copy nessecary exec deps
+TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox.py3 \
+--sitepackages -e py%{python_version_nodots python3} --notest
+cp -f %_bindir/coverage3 .tox/py%{python_version_nodots python3}/bin/coverage
+
+TOX_TESTENV_PASSENV='PYTHONPATH' %_bindir/tox.py3 \
+--sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
-%endif
 
 %files
-%doc README.rst CONTRIBUTORS.txt
-%_bindir/%oname
-%python_sitelibdir/%{oname}*
+%doc README.rst LICENSE
+%_bindir/flake8
+%python_sitelibdir/flake8/
+%python_sitelibdir/flake8-*.egg-info/
 
 %files -n python3-module-%oname
-%doc README.rst CONTRIBUTORS.txt
-%_bindir/python3-%oname
-%python3_sitelibdir/%{oname}*
-
+%doc README.rst LICENSE
+%_bindir/python3-flake8
+%python3_sitelibdir/flake8/
+%python3_sitelibdir/flake8-*.egg-info/
 
 %changelog
+* Sat Oct 27 2018 Stanislav Levin <slev@altlinux.org> 3.6.0-alt1
+- 3.5.0 -> 3.6.0.
+
 * Fri May 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.5.0-alt2.1
 - rebuild with python3.6
 
