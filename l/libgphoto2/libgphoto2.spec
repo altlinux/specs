@@ -6,7 +6,7 @@
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.19
+Version: 2.5.20
 Release: alt1
 
 Group: System/Libraries
@@ -14,7 +14,7 @@ Summary: Library to access to digital cameras
 Summary (ru_RU.UTF-8): Библиотека функций для работы с цифровыми фотокамерами
 Url: http://www.gphoto.org/
 License: LGPLv2+
-Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
+Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
 # Automatically added by buildreq on Mon Oct 11 2010
 BuildRequires: doxygen flex gcc-c++ libexif-devel libgd2-devel libjpeg-devel liblockdev-devel libltdl7-devel libusb-compat-devel libusb-devel libxml2-devel
@@ -245,6 +245,9 @@ export utilsdir=%_libexecdir/%name
 %endif
 
 %changelog
+* Sun Oct 28 2018 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.20-alt1
+- 2.5.20
+
 * Wed Jul 25 2018 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.19-alt1
 - 2.5.19
 
