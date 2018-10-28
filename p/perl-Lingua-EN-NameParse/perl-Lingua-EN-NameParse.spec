@@ -2,7 +2,7 @@
 %define module Lingua-EN-NameParse
 
 Name: perl-%module
-Version: 1.37
+Version: 1.38
 Release: alt1
 
 Summary: Routines for manipulating a person's name
@@ -38,6 +38,9 @@ and attempts to parse it.
 %perl_vendor_privlib/Lingua
 
 %changelog
+* Sun Oct 28 2018 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1
+- automated CPAN update
+
 * Tue Aug 21 2018 Igor Vlasenko <viy@altlinux.ru> 1.37-alt1
 - automated CPAN update
 
