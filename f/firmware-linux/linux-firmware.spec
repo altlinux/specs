@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20181008
+Version: 20181024
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,36 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sun Oct 28 2018 Cronbuild Service <cronbuild@altlinux.org> 20181024-alt1
+- upstream changes (GIT 1cb4e51):
+  + amdgpu: add raven dmcu firmware (thx Alex Deucher)
+  + amdgpu: update raven firmware to 18.40 (thx Alex Deucher)
+  + amdgpu: update fiji firmware to 18.40 (thx Alex Deucher)
+  + amdgpu: update tonga firmware to 18.40 (thx Alex Deucher)
+  + amdgpu: update carrizo firmware to 18.40 (thx Alex Deucher)
+  + amdgpu: update polaris10 firmware to 18.40 (thx Alex Deucher)
+  + amdgpu: update vega10 firmware to 18.40 (thx Alex Deucher)
+  + add firmware for mt7650e (thx Stanislaw Gruszka)
+  + liquidio: fix GPL compliance issue (thx Manlunas, Felix)
+  + Update firmware file for Intel Bluetooth,8265 (thx Amit K Bag)
+  + Update firmware patch for Intel Bluetooth 8260 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth,9260 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth,9560 (thx Amit K Bag)
+  + add firmware for mt7610e (thx Lorenzo Bianconi)
+  + ath10k: QCA9984 hw1.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA9984 hw1.0: update firmware-5.bin to
+    10.4-3.6.0.1-00003 (thx Kalle Valo)
+  + ath10k: QCA988X hw2.0: update firmware-5.bin to 10.2.4-1.0-00041 (thx Kalle Valo)
+  + ath10k: QCA9888 hw2.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA9888 hw2.0: update firmware-5.bin to 10.4-3.6-00140 (thx Kalle Valo)
+  + ath10k: QCA9887 hw1.0: update firmware-5.bin to 10.2.4-1.0-00041 (thx Kalle Valo)
+  + ath10k: QCA9377 hw1.0: add firmware-6.bin to
+    WLAN.TF.2.1-00021-QCARMSWP-1 (thx Kalle Valo)
+  + ath10k: QCA6174 hw3.0: update firmware-6.bin to
+    RM.4.4.1.c2-00057-QCARMSWP-1 (thx Kalle Valo)
+  + ath10k: QCA4019 hw1.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA4019 hw1.0: update firmware-5.bin to 10.4-3.6-00140 (thx Kalle Valo)
+
 * Mon Oct 15 2018 Cronbuild Service <cronbuild@altlinux.org> 20181008-alt1
 - upstream changes (GIT c6b6265):
   + rtw88: Add firmware file for driver rtw88 (thx Larry Finger)
