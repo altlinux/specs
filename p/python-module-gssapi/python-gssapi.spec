@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Summary: Python Bindings for GSSAPI (RFC 2743/2744 and extensions)
 License: ISC
@@ -117,6 +117,9 @@ popd
 %exclude %python3_sitelibdir/%mname/tests/
 
 %changelog
+* Sun Oct 28 2018 Stanislav Levin <slev@altlinux.org> 1.5.1-alt2
+- Fixed errors found by a new pycodestyle 2.4.
+
 * Mon Jul 23 2018 Stanislav Levin <slev@altlinux.org> 1.5.1-alt1
 - 1.5.0 -> 1.5.1
 
