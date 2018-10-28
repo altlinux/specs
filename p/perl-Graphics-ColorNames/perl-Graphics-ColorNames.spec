@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/EOL.pm) perl(Test/Pod.pm) perl-podlators
+BuildRequires: perl(Test/EOL.pm) perl(Test/Pod.pm) perl-podlators perl(Test/Most.pm)
 # END SourceDeps(oneline)
 #BuildRequires: perl(Test/Fixme.pm) perl(Test/NoTabs.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Graphics-ColorNames
-Version:        3.2.1
-Release:        alt1_1
+Version:        3.3.3
+Release:        alt1
 Summary:        Defines RGB values for common color names
 License:        Artistic 2.0
 URL:            https://metacpan.org/release/Graphics-ColorNames
-Source0:        https://cpan.metacpan.org/authors/id/R/RR/RRWO/Graphics-ColorNames-v%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/R/RR/RRWO/Graphics-ColorNames-v%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  coreutils
@@ -67,11 +68,14 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 make test
 
 %files
-%doc --no-dereference LICENSE
+%doc LICENSE
 %doc Changes README.md
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Oct 28 2018 Igor Vlasenko <viy@altlinux.ru> 3.3.3-alt1
+- automated CPAN update
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_1
 - new version
 
