@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/xsltproc perl(JSON/PP.pm) pkgconfig(gio-unix-2.0)
 
 Name:           libldm
 Version:        0.2.3
-Release:        alt1_6
+Release:        alt1_7
 Summary:        A tool to manage Windows dynamic disks
 Group:		System/Libraries
 License:        LGPLv3+ and GPLv3+
@@ -20,6 +20,7 @@ Patch0:         cast_be64toh.patch
 Patch1:         libldm-gtype.patch
 Patch2:         libldm-security.patch
 Patch3:         fix-build-with-gcc7.patch
+Patch4:         0001-Replace-g_type_class_add_private-with-G_ADD_PRIVATE.patch
 
 BuildRequires:  glib2-devel >= 2.26.0
 BuildRequires:  pkgconfig(json-glib-1.0) >= 0.14.0
@@ -66,6 +67,7 @@ developing applications that use %{name}.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 # fix build on aarch64
@@ -99,6 +101,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Sun Oct 28 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt1_7
+- fixed build
+
 * Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt1_6
 - update by mgaimport
 
