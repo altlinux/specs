@@ -2,8 +2,8 @@
 #
 
 Name: gvpe
-Version: 3.0
-Release: alt4
+Version: 3.1
+Release: alt1
 
 Summary: virtual ethernet SSL VPN
 
@@ -23,7 +23,6 @@ Source6: %name.service
 
 Patch0:  %name-2.22-alt-using_ip.patch
 Patch1:  %name-3.0-alt-getopt.patch
-Patch2:  %name-3.0-alt-openssl.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -50,8 +49,6 @@ ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
 # Removing built-in getopt
 %patch1
 rm -f -- lib/getopt*
-
-%patch2
 
 %build
 %autoreconf
@@ -112,6 +109,9 @@ install -D -m 0644 -- %SOURCE6 %buildroot%_unitdir/%name.service
 %_unitdir/%{name}*.service
 
 %changelog
+* Sun Oct 28 2018 Nikolay A. Fetisov <naf@altlinux.org> 3.1-alt1
+- New version
+
 * Sat Sep 22 2018 Nikolay A. Fetisov <naf@altlinux.org> 3.0-alt4
 - Fix URL in spec file (Closes: 35384)
 
