@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.9.1
+Version: 3.9.3
 Release: alt1
 
 Summary: Python test framework
@@ -162,6 +162,9 @@ popd
 %_bindir/pytest3
 
 %changelog
+* Sun Oct 28 2018 Stanislav Levin <slev@altlinux.org> 3.9.3-alt1
+- 3.9.1 -> 3.9.3.
+
 * Sun Oct 21 2018 Stanislav Levin <slev@altlinux.org> 3.9.1-alt1
 - 3.8.2 -> 3.9.1.
 
