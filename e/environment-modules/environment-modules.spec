@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: imake libXt-devel xorg-cf-files
+BuildRequires(pre): rpm-macros-alternatives
 # END SourceDeps(oneline)
 %define fedora 25
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -7,7 +8,7 @@ BuildRequires: imake libXt-devel xorg-cf-files
 
 Name:           environment-modules
 Version:        3.2.10
-Release:        alt1_23.qa1
+Release:        alt2_23
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -170,6 +171,9 @@ EOF
 
 
 %changelog
+* Sun Oct 28 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt2_23
+- fixed build
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_23.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
