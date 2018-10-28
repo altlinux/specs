@@ -1,14 +1,17 @@
 Name:		karbowanecwallet
-Version:	1.2.3
+Version:	1.3.1
 Release:	alt1
 Summary:	Karbowanec KRB wallet
-Url:		http://karbowanec.com
+Url:		https://karbo.io/
 Group:		Office
 License:	MIT
+ExclusiveArch:	%ix86 x86_64
 Source0:	%name.tar.xz
 Source1:	cryptonote.tar.xz
 Source2:	libqrencode.tar.xz
 Source3:	karbowanec.png
+
+Patch0:		%name-1.2.6-alt_lang_dir.patch
 
 BuildRequires: boost-asio-devel boost-devel-headers boost-devel-static cmake qt5-base-devel
 BuildRequires: /usr/bin/convert
@@ -22,6 +25,7 @@ BuildRequires: /usr/bin/convert
 %setup -n %name
 tar -xf %SOURCE1
 tar -xf %SOURCE2
+%patch0 -p1
 
 %build
 subst 's|Categories=Office;Finance;|Categories=Qt;Office;Finance;|g' ./src/%name.desktop
@@ -47,11 +51,22 @@ convert -resize 16x16 %SOURCE3 %buildroot%_miconsdir/karbowanec.png
 %_bindir/*
 %_desktopdir/%name.desktop
 %_docdir/%name
+%_datadir/%name
 %_miconsdir/karbowanec.png
 %_niconsdir/karbowanec.png
 %_liconsdir/karbowanec.png
 
 %changelog
+* Sun Oct 28 2018 Motsyo Gennadi <drool@altlinux.ru> 1.3.1-alt1
+- 1.3.1
+- disable aarch64
+
+* Sun Aug 26 2018 Motsyo Gennadi <drool@altlinux.ru> 1.2.7-alt1
+- 1.2.7
+
+* Mon Aug 13 2018 Motsyo Gennadi <drool@altlinux.ru> 1.2.6-alt1
+- 1.2.6
+
 * Thu Apr 05 2018 Motsyo Gennadi <drool@altlinux.ru> 1.2.3-alt1
 - 1.2.3
 
