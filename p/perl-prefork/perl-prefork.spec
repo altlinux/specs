@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-prefork
-Version: 1.04
+Version: 1.05
 Release: alt1
 
 Summary: Pragma to ensure modules are fully loaded before forking
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/~adamk/prefork-%version/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/A/AD/ADAMK/prefork-1.04.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module}-%{version}.tar.gz
 #Source: http://www.cpan.org/modules/by-module/%m_distro/%m_distro-%version.tar.bz2
 
 # Automatically added by buildreq on Sun Jul 22 2007
@@ -36,7 +36,7 @@ BuildRequires: perl-Module-Install perl-Test-Pod
 Optimized module loading for forking or non-forking processes.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -46,10 +46,13 @@ Optimized module loading for forking or non-forking processes.
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
-%doc Changes README
+%doc Changes README CONTRIBUTING
 %perl_vendor_privlib/prefork.pm
 
 %changelog
+* Sun Oct 28 2018 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
+- automated CPAN update
+
 * Fri Jul 16 2010 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
 - automated CPAN update
 
