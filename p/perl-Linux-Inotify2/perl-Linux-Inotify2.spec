@@ -1,14 +1,14 @@
 %define dist Linux-Inotify2
 Name: perl-%dist
-Version: 1.22
-Release: alt4.1.1.1.1
+Version: 2.1
+Release: alt1
 
 Summary: Scalable directory/file change notification
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-common-sense perl-devel
@@ -18,7 +18,7 @@ This module implements an interface to the Linux 2.6.13 and later
 Inotify file/directory change notification system.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 # wrong cancel return value?
 sed -i- 's/watch->cancel,/watch->cancel || 1,/' t/01_inotify.t
@@ -35,6 +35,9 @@ sed -i- 's/watch->cancel,/watch->cancel || 1,/' t/01_inotify.t
 %perl_vendor_autolib/Linux
 
 %changelog
+* Sun Oct 28 2018 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.22-alt4.1.1.1.1
 - rebuild with new perl 5.26.1
 
