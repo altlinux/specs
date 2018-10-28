@@ -1,5 +1,5 @@
 Name: gpa
-Version: 0.9.10
+Version: 0.10.0
 Release: alt1
 
 Summary: The GNU Privacy Assistant
@@ -57,6 +57,9 @@ install -pD -m644 %_sourcedir/gpa32.png %buildroot%_niconsdir/gpa.png
 %_man1dir/*
 
 %changelog
+* Sun Oct 28 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.10.0-alt1
+- New version
+
 * Mon May 08 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.9.10-alt1
 - New version
 - Fix work with libgpgme without GPGSM support
