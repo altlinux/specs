@@ -1,8 +1,6 @@
-%define		_giconsdir %_iconsdir/hicolor/128x128/apps
-
 Name:		sibcoin
-Version:	0.16.1.2
-Release:	alt2.qa1
+Version:	0.16.2.0
+Release:	alt1
 Summary:	Siberian Chervonets Wallet
 Url:		http://sibcoin.org/en/
 Group:		Office
@@ -12,9 +10,6 @@ Source0:	%name.tar.xz
 
 Source1:	%name.png
 Source2:	%name.desktop
-
-Patch1: sibcoin-0.16.1.2-upstream-boost-compat.patch
-
 
 BuildRequires: boost-devel-static boost-interprocess-devel libdb4.8_cxx-devel protobuf-compiler
 BuildRequires: libevent-devel libprotobuf-devel libqrencode-devel libssl-devel libzeromq-devel
@@ -31,9 +26,9 @@ updating and receiving an acknowledgment from the other participants.
 
 %prep
 %setup -n %name
-%patch1 -p1
 
 %build
+%add_optflags -std=c++11
 NOCONFIGURE=1 ./autogen.sh
 autoreconf -fisv
 %configure --libdir=%_libdir/%name --with-gui=qt5
@@ -44,23 +39,25 @@ make DESTDIR=%buildroot install
 install -Dp -m 0644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
 
 # Icons
-%__mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir,%_giconsdir}
+%__mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 convert -resize 48x48 %SOURCE1 %buildroot%_liconsdir/%name.png
 convert -resize 32x32 %SOURCE1 %buildroot%_niconsdir/%name.png
 convert -resize 16x16 %SOURCE1 %buildroot%_miconsdir/%name.png
-convert -resize 128x128 %SOURCE1 %buildroot%_giconsdir/%name.png
 
 %files
 %doc CONTRIBUTING.md COPYING README.md
+%dir %_libdir/%name
 %_bindir/*
 %_libdir/%name/libbitcoinconsensus.so*
 %_desktopdir/%name.desktop
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
-%_giconsdir/%name.png
 
 %changelog
+* Sun Oct 28 2018 Motsyo Gennadi <drool@altlinux.ru> 0.16.2.0-alt1
+- 0.16.2.0
+
 * Thu Sep 27 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.16.1.2-alt2.qa1
 - Added ExclusiveArch: %ix86 x86_64.
 
