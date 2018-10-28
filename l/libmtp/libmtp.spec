@@ -2,9 +2,9 @@
 %define sover 9
 
 Name: libmtp
-Version: 1.1.15
+Version: 1.1.16
 Release: alt1
-Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
+Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
 Summary: a library for accessing Media Transfer Protocol devices
 
@@ -13,7 +13,6 @@ Group: System/Libraries
 Url: http://libmtp.sourceforge.net/
 
 Source: %name-%version.tar
-Patch1: %name-%version-%release.patch
 
 # Automatically added by buildreq on Sat Apr 18 2009
 BuildRequires: libusb-devel
@@ -61,7 +60,6 @@ This package contains example programs for communicating with MTP devices.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 touch config.rpath
@@ -111,6 +109,10 @@ rm -rf %buildroot%_docdir/%name-%version/html
 %_bindir/*
 
 %changelog
+* Sun Oct 28 2018 Dmitriy Khanzhin <jinn@altlinux.org> 1.1.16-alt1
+- 1.1.16
+- removed unneeded patch
+
 * Sat Mar 31 2018 Dmitriy Khanzhin <jinn@altlinux.org> 1.1.15-alt1
 - 1.1.15
 
