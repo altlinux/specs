@@ -1,7 +1,7 @@
-%define libcontrolppver 0.14
+%define libcontrolppver 0.15
 
 Name: control++
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: System configuration tool
@@ -58,6 +58,16 @@ cp readme.txt %buildroot%_defaultdocdir/%name/
 %_defaultdocdir/%name
 
 %changelog
+* Sun Oct 28 2018 Alexey Appolonov <alexey@altlinux.org> 0.12.0-alt1
+- Ability to exclude paths from mode setting;
+- Ability to check uniqueness of the given permission modes;
+- Handling the controversy between internal and external configs;
+- Not printing current submodes if main mode isn't set;
+- Using Yes/No dialog function of the libcontrol++;
+- Not restoring the state if current mode is unknown;
+- Ability to state 'base dir' for the 'list' permission;
+- Optimized 'whitelist' permission mode setting.
+
 * Mon Oct 15 2018 Alexey Appolonov <alexey@altlinux.org> 0.11.0-alt1
 - Pass setting/checking mode for non existent files;
 - It's OK to not have 'reset' file if current mode is not stated;
