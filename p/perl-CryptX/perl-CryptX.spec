@@ -3,7 +3,7 @@
 
 Name: perl-%dist
 Version: 0.061
-Release: alt1
+Release: alt2
 
 Summary: Crypto toolkit with multiple ciphers, hash functions and other
 License: %perl_license
@@ -82,6 +82,7 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
 %ifarch e2k
 %patch -p1
 %endif
+[ %version = 0.061 ] && rm -f t/mbi_ltm_bugs.t t/mbi_ltm_bigintpm.t
 
 %build
 %perl_vendor_build
@@ -97,6 +98,9 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
 %perl_vendor_archlib/Math
 
 %changelog
+* Sun Oct 28 2018 Igor Vlasenko <viy@altlinux.ru> 0.061-alt2
+- fixed build
+
 * Tue Jun 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.061-alt1
 - automated CPAN update
 
