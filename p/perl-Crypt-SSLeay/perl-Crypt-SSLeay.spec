@@ -1,20 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Crypt-SSLeay
 Name: perl-%dist
-Version: 0.72
-Release: alt2.1
+Version: 0.73_06
+Release: alt1
 
 Summary: OpenSSL glue that provides LWP https support
 License: GPL
 Group: Development/Perl
 
-URL: %CPAN %dist
+#URL: %CPAN %dist
+URL: https://github.com/nanis/Crypt-SSLeay
 Source: http://www.cpan.org/authors/id/N/NA/NANIS/Crypt-SSLeay-%{version}.tar.gz
-# Adapt to OpenSSL 1.1.0, bug #1383756, CPAN RT#118343
-Patch0:         Crypt-SSLeay-0.72-Do-not-use-SSLv2_client_method-with-OpenSSL-1.1.0.patch
-Patch1:         Crypt-SSLeay-0.72-Fix-building-on-Perl-without-dot-in-INC.patch
 
-BuildRequires: libssl-devel perl-Test-Pod zlib-devel perl-Try-Tiny perl(ExtUtils/CBuilder.pm) perl(Path/Class.pm)
+
+BuildRequires: libssl-devel perl-Test-Pod zlib-devel perl-Try-Tiny perl(ExtUtils/CBuilder.pm) perl(Path/Class.pm) perl(Bytes/Random/Secure.pm)
 
 %description
 This perl module provides support for the https protocol under LWP, so
@@ -23,8 +22,6 @@ see perldoc LWP for more information on POST requests.
 
 %prep
 %setup -q -n %dist-%version
-%patch0 -p1
-%patch1 -p1
 
 %ifdef __buildreqs
 mv t/02-live.t t/02-live.t.orig
@@ -43,6 +40,12 @@ mv t/02-live.t t/02-live.t.orig
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Sun Oct 28 2018 Igor Vlasenko <viy@altlinux.ru> 0.73_06-alt1
+- new version
+
+* Sun Oct 28 2018 Igor Vlasenko <viy@altlinux.ru> 0.72-alt3
+- fixed build
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.72-alt2.1
 - rebuild with new perl 5.26.1
 
