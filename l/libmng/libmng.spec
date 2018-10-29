@@ -2,7 +2,7 @@
 
 Name: libmng
 Version: 2.0.3
-Release: alt1%ubt
+Release: alt2
 
 Summary: A library for handling MNG files
 License: Distributable (see LICENSE)
@@ -17,8 +17,6 @@ Patch3: libmng-2.0.3-debian-linux-makefile.patch
 
 # Automatically added by buildreq on Tue Sep 23 2008
 BuildRequires: gcc-c++ libSDL-devel libXext-devel libXt-devel libjpeg-devel liblcms2-devel openmotif-devel xorg-printproto-devel xorg-xextproto-devel zlib-devel
-
-BuildRequires(pre):rpm-build-ubt
 
 %package devel
 Summary: Include files for development with %name
@@ -107,7 +105,10 @@ popd
 %_bindir/*
 
 %changelog
-* Thu May 11 2017 Anton Farygin <rider@altlinux.ru> 2.0.3-alt1%ubt
+* Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 2.0.3-alt2
+- removed ubt macros
+
+* Thu May 11 2017 Anton Farygin <rider@altlinux.ru> 2.0.3-alt1
 - new version
 
 * Thu Oct 20 2016 Anton Farygin <rider@altlinux.ru> 1.0.10-alt3
