@@ -7,6 +7,7 @@
 %def_enable vulkan
 %def_enable wayland
 %def_enable zbar
+%def_enable rtmp
 
 %define _name gst-plugins
 %define api_ver 1.0
@@ -19,7 +20,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -45,7 +46,7 @@ BuildRequires: python-module-PyXML python-modules-email python-modules-encodings
 %{?_enable_timidity:BuildRequires: libtimidity-devel timidity-instruments}
 %{?_enable_libkate:BuildRequires: libkate-devel libtiger-devel}
 %{?_enable_libdc1394:BuildRequires: libdc1394-devel}
-BuildRequires: libvpx-devel librtmp-devel liborc-devel orc libofa-devel libmusicbrainz-devel libass-devel
+BuildRequires: libvpx-devel liborc-devel orc libofa-devel libmusicbrainz-devel libass-devel
 %{?_enable_wayland:BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols}
 %{?_enable_zbar:BuildRequires: libzbar-devel}
 BuildRequires: libEGL-devel libwebp-devel libopenjpeg2.0-devel libbluez-devel
@@ -61,6 +62,7 @@ BuildRequires: libbs2b-devel
 %{?_enable_opencv:BuildRequires: libopencv-devel}
 %{?_enable_ladspa:BuildRequires: ladspa_sdk liblrdf-devel libfluidsynth-devel}
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
+%{?_enable_rtmp:BuildRequires: librtmp-devel}
 # webrtc-audio-processing for webrtcdsp
 BuildRequires: libwebrtc-devel >= 0.3
 # since 1.13.x
@@ -146,6 +148,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Mon Oct 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt2
+- rebuilt with librtmp-2.4-alt2
+
 * Fri Oct 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
 - 1.14.4
 

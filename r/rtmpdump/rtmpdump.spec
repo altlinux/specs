@@ -1,6 +1,6 @@
 Name:		rtmpdump
 Version:	2.4
-Release:	alt1.1
+Release:	alt2
 
 Summary:	An utility toolkit for RTMP streams
 License:	GPLv2
@@ -11,7 +11,7 @@ Source:		%name-%version-%release.tar
 
 Requires: librtmp = %version-%release
 
-BuildRequires: libssl-devel zlib-devel
+BuildRequires: libgcrypt-devel libgnutls-devel libgmp-devel libnettle-devel zlib-devel
 
 %package -n librtmp
 Summary: RTMPDump Real-Time Messaging Protocol API - shared library
@@ -76,6 +76,9 @@ This package contains RTMPDump library development headers.
 %_man3dir/*
 
 %changelog
+* Mon Oct 29 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4-alt2
+- updated to latest git and rebuilt with gnutls
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1.1
 - NMU: added URL
 
