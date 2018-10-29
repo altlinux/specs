@@ -1,5 +1,5 @@
 Name: libSM
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 Summary: X Session Management Library
 License: MIT/X11
@@ -52,6 +52,9 @@ develop programs which make use of %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Oct 29 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.2.3-alt1
+- 1.2.3
+
 * Thu Jan 30 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.2.2-alt1
 - 1.2.2
 
