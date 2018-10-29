@@ -1,6 +1,6 @@
 Name: xfce4-sensors-plugin
 Version: 1.3.90
-Release: alt1
+Release: alt2
 
 Summary: Sensors plugin for Xfce Desktop
 License: %gpl2plus
@@ -13,7 +13,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-%ifarch %ix86
+%ifarch %ix86 x86_64
 %def_enable xnvctrl
 %else
 %def_disable xnvctrl
@@ -69,6 +69,9 @@ Requires: xfce4-panel >= 4.8 hddtemp lm_sensors3
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Oct 29 2018 Mikhail Efremov <sem@altlinux.org> 1.3.90-alt2
+- Enable xnvctrl on x86_64 too.
+
 * Thu Oct 25 2018 Mikhail Efremov <sem@altlinux.org> 1.3.90-alt1
 - Enabled xnvctrl support on x86.
 - Updated to 1.3.90.
