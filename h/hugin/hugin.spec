@@ -5,7 +5,7 @@
 
 Name: hugin
 Version: 2018.0.0
-Release: alt2
+Release: alt3
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
 Group: Graphics
@@ -76,6 +76,9 @@ done
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Oct 29 2018 Pavel Moseev <mars@altlinux.org> 2018.0.0-alt3
+- Updated translations
+
 * Mon Jul 02 2018 Yuri N. Sedunov <aris@altlinux.org> 2018.0.0-alt2
 - fixed buildreqs
 
