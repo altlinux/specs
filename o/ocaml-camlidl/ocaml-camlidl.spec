@@ -1,6 +1,6 @@
 Name: ocaml-camlidl
-Version: 1.05
-Release: alt5
+Version: 1.06
+Release: alt1
 Summary: Stub code generator and COM binding for Objective Caml
 License: QPL and LGPLv2 with exceptions
 Group: Development/ML
@@ -57,11 +57,11 @@ make all
 
 %install
 mkdir -p %buildroot%_libdir/ocaml/caml
-mkdir -p %buildroot%_libdir/ocaml/site-lib
+mkdir -p %buildroot%_libdir/ocaml/camlidl
 mkdir -p %buildroot%_libdir/ocaml/stublibs
 mkdir -p %buildroot%_bindir
 
-sed 's/@VERSION@/%version/' < %SOURCE1 > %buildroot%_libdir/ocaml/site-lib/META.camlidl
+sed 's/@VERSION@/%version/' < %SOURCE1 > %buildroot%_libdir/ocaml/camlidl/META
 
 make OCAMLLIB=%buildroot%_libdir/ocaml \
      BINDIR=%buildroot%_bindir \
@@ -70,18 +70,21 @@ make OCAMLLIB=%buildroot%_libdir/ocaml \
 %files
 %doc LICENSE
 %_libdir/ocaml/*.*
-%_libdir/ocaml/site-lib/META.camlidl
 %exclude %_libdir/ocaml/*.a
 %exclude %_libdir/ocaml/*.cmxa
 %_bindir/camlidl
 
 %files devel
 %doc LICENSE README Changes tests
+%_libdir/ocaml/camlidl
 %_libdir/ocaml/*.a
 %_libdir/ocaml/*.cmxa
 %_libdir/ocaml/caml/*.h
 
 %changelog
+* Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 1.06-alt1
+- 1.06
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.05-alt5
 - rebuilt with ocaml-4.07.1
 
