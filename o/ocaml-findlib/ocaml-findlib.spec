@@ -1,7 +1,7 @@
 %define _name findlib
 Name: ocaml-%_name
 Version: 1.8.0
-Release: alt3
+Release: alt4
 
 Summary: A module packaging tool for OCaml
 License: Distributable
@@ -14,7 +14,7 @@ Patch2: findlib-1.1.2pl1-alt-wizard.patch
 Patch3: findlib-1.6.2-alt-install-doc.patch
 
 BuildRequires: rpm-build-ocaml >= 1.2 ocaml-camlp4-devel ocaml-labltk >= 8.06.2 libtinfo-devel ocaml-ocamldoc
-BuildRequires: ocaml-ocamlbuild libX11-devel tcl-devel tk-devel libncurses-devel
+BuildRequires: ocaml-ocamlbuild libX11-devel tcl-devel tk-devel libncurses-devel ocaml-graphics
 
 %package -n ocaml-ocamlfind-mini
 Summary: Minimal findlib script to be distributed with user libraries
@@ -66,7 +66,7 @@ developing applications that use %name.
 %patch2 -p2
 
 sed -i -e 's,@LIBDIR@,%_libdir,g' src/findlib-toolbox/make_wizard.ml
-sed -i -e '/path/s,@SITELIB@,\0:%_libdir/ocaml/site-lib,' findlib.conf.in
+sed -i -e '/path/s,@SITELIB@,\0:%_libdir/ocaml,' findlib.conf.in
 
 %build
 ./configure \
@@ -123,6 +123,10 @@ rm -f %buildroot%_libdir/ocaml/findlib/*.cmxs
 
 
 %changelog
+* Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt4
+- add ocaml-graphis to build requires
+- default site-lib directory changed to %_libdir/ocaml
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt3
 - rebuilt with ocaml-4.07.1
 
