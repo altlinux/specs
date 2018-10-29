@@ -1,5 +1,5 @@
 Name: alt-gpgkeys
-Version: 0.7.150
+Version: 0.7.151
 Release: alt1
 
 Summary: ALT GnuPG keys
@@ -61,6 +61,11 @@ install -pm755 alt-gpgkey-check alt-gpgkey-strip \
 %_bindir/*
 
 %changelog
+* Mon Oct 29 2018 Dmitry V. Levin <ldv@altlinux.org> 0.7.151-alt1
+- Added keys:
+  + mikhailnov@ (55E84CE1; see #35315);
+  + lvol@ (CFCCAE0D; see #35230).
+
 * Thu Aug 16 2018 Dmitry V. Levin <ldv@altlinux.org> 0.7.150-alt1
 - Added keys:
   + majioa@ (00F19E2D; see #35086);
