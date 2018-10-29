@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-re
 Version: 1.8.0
-Release: alt3
+Release: alt4
 Summary: A regular expression library for OCaml
 
 License: LGPLv2 with exceptions
@@ -39,9 +39,7 @@ developing applications that use %name.
 make 
 
 %install
-export OCAMLFIND_DESTDIR=$RPM_BUILD_ROOT%_libdir/ocaml
-mkdir -p $OCAMLFIND_DESTDIR
-jbuilder install --destdir %buildroot
+dune install --destdir %buildroot --libdir=%buildroot%_libdir/ocaml
 
 %files
 %doc CHANGES.md README.md
@@ -64,6 +62,9 @@ jbuilder install --destdir %buildroot
 %_libdir/ocaml/re/*/*.cmxa
 
 %changelog
+* Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt4
+- fixed install section with dune-1.4.0
+
 * Fri Oct 26 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt3
 - all development stuff were moved to the devel package
 
