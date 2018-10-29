@@ -3,7 +3,7 @@
 
 Name: ocaml-dose3
 Version: 5.0.1
-Release: alt4.5.2git2c1b8df
+Release: alt5.5.2git2c1b8df
 Summary: Framework for managing distribution packages and dependencies
 Group: Development/ML
 
@@ -137,6 +137,9 @@ ln -s %_bindir/distcheck %buildroot%_bindir/eclipsecheck
 %_mandir/man8/*.8*
 
 %changelog
+* Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 5.0.1-alt5.5.2git2c1b8df
+- rebuild with ocaml-re
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 5.0.1-alt4.5.2git2c1b8df
 - rebuilt with ocaml-4.07.1
 
