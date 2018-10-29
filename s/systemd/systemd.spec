@@ -56,7 +56,7 @@
 Name: systemd
 Epoch: 1
 Version: 239
-Release: alt2
+Release: alt3
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1832,6 +1832,12 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Mon Oct 29 2018 Alexey Shabalin <shaba@altlinux.org> 1:239-alt3
+- merge with v239-stable
+- Fixes for the following security vulnerabilities:
+  + CVE-2018-15688 dhcp6: make sure we have enough space for the DHCP6 option header
+  + CVE-2018-15687 chown-recursive: rework the recursive logic to use O_PATH
+
 * Mon Sep 17 2018 Alexey Shabalin <shaba@altlinux.org> 1:239-alt2
 - merge with v239-stable
 - build with libmicrohttpd-0.9.59
