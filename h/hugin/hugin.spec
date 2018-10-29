@@ -5,7 +5,7 @@
 
 Name: hugin
 Version: 2018.0.0
-Release: alt3
+Release: alt4
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
 Group: Graphics
@@ -13,6 +13,7 @@ License: GPLv2+
 Url: http://hugin.sourceforge.net/
 
 Source: %name-%version.tar
+Patch1: Add-translations-in-desktop-files.patch
 
 BuildPreReq: libpano13-devel boost-devel >= 1.34 libwxGTK3.0-devel >= 3.0.0
 BuildPreReq: boost-thread-devel >= 1.34 gcc-c++ gcc-fortran
@@ -37,6 +38,7 @@ panorama, stitch any series of overlapping pictures and much more.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 # reenable RPTHs because libraries in private subdirectory
@@ -76,6 +78,9 @@ done
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Oct 29 2018 Pavel Moseev <mars@altlinux.org> 2018.0.0-alt4
+- Updated translations in the form of individual patches
+
 * Mon Oct 29 2018 Pavel Moseev <mars@altlinux.org> 2018.0.0-alt3
 - Updated translations
 
