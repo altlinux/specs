@@ -2,7 +2,7 @@
 %define oname stdio
 Name: ocaml-%oname
 Version: 0.11.0
-Release: alt3
+Release: alt4
 Summary: Standard IO library for OCaml
 License: Apache 2.0
 Group: Development/ML
@@ -10,7 +10,7 @@ Url: https://github.com/janestreet/%oname
 Source0: %name-%version.tar
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
-BuildRequires: jbuilder
+BuildRequires: dune
 BuildRequires: opam
 BuildRequires: ocaml-base  >= 0.11
 
@@ -33,7 +33,7 @@ developing applications that use %name.
 %setup
 
 %build
-jbuilder build --verbose -p %oname
+dune build --verbose -p %oname
 
 %install
 opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %oname.install
@@ -58,10 +58,13 @@ jbuilder runtest
 %_libdir/ocaml/%oname/*.cmti
 %_libdir/ocaml/%oname/*.cmx
 %_libdir/ocaml/%oname/*.ml
-%_libdir/ocaml/%oname/*.ml-gen
 %_libdir/ocaml/%oname/*.mli
+%_libdir/ocaml/%oname/*.dune
 
 %changelog
+* Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 0.11.0-alt4
+- fixed install with dune 1.4.0
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 0.11.0-alt3
 - rebuilt with ocaml-4.07.1
 
