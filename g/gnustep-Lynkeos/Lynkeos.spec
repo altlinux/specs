@@ -2,12 +2,13 @@
 
 Name: gnustep-Lynkeos
 Version: 1.2
-Release: alt5.2
+Release: alt5.3
 Summary: Tool to process planetary astronomical images for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
 Url: http://packages.debian.org/jessie/lynkeos.app
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+ExclusiveArch: %ix86 x86_64
 
 Source: %name-%version.tar
 Source1: %name.menu
@@ -70,6 +71,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %doc Docs/html/*
 
 %changelog
+* Mon Oct 29 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2-alt5.3
+- rebuilt with ffmpeg-4.x
+
 * Mon Jun 12 2017 Michael Shigorin <mike@altlinux.org> 1.2-alt5.2
 - fixed FTBFS against ffmpeg by updating debian patches
 
