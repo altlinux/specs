@@ -1,6 +1,6 @@
 Name: mldonkey
 Version: 3.1.6
-Release: alt1
+Release: alt2
 Group: Networking/File transfer
 Summary: The eDonkey client for Linux/Unix/Windows
 URL: https://github.com/ygrek/mldonkey
@@ -10,8 +10,9 @@ Source: %name-%version.tar
 Source1: %name.service
 Source2: %name.logrotate
 Source3: %name.tmpfiles.conf
+Patch0: mldonkey-3.1.6-ocaml-4.06.0.patch
 
-BuildRequires: bzlib-devel ocaml-camlp4-devel ocaml-lablgtk-devel  fontconfig libfreetype-devel glib2-devel libatk-devel libgd2-devel libjpeg-devel libncurses-devel libpango-devel libpng12-devel librsvg-devel libXpm-devel ocaml-runtime pkgconfig wget zlib-devel
+BuildRequires: bzlib-devel ocaml-camlp4-devel ocaml-lablgtk-devel  fontconfig libfreetype-devel glib2-devel libatk-devel libgd2-devel libjpeg-devel libncurses-devel libpango-devel libpng-devel libtiff-devel libwebp-devel librsvg-devel libXpm-devel ocaml-runtime pkgconfig wget zlib-devel ocaml-num-devel
 BuildRequires: libgtk+2-devel desktop-file-utils
 # for mldonkey-submit
 BuildRequires(pre): perl-libwww-perl
@@ -49,6 +50,7 @@ way.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 cd config
@@ -62,7 +64,6 @@ cd ../
 	     --enable-gui=newgui2 \
 	     --disable-rpath \
 	     --enable-checks \
-	     --enable-ocamlver=%(rpm -q --qf '%%{version}' ocaml) \
 #
 %make_build
 %make_build utils
@@ -151,6 +152,9 @@ getent passwd _%name >/dev/null || \
 %_liconsdir/%name.png
 
 %changelog
+* Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 3.1.6-alt2
+- fixed build with ocaml >= 4.06
+
 * Sun Oct 29 2017 Anton Farygin <rider@altlinux.ru> 3.1.6-alt1
 - 3.1.6
 
