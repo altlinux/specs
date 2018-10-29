@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1
 
 Summary: SSH2 protocol for python
@@ -17,8 +17,6 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools
-BuildRequires: python3-module-setuptools
 
 %if_with check
 BuildRequires: python-module-pytest
@@ -26,11 +24,13 @@ BuildRequires: python-module-cryptography
 BuildRequires: python-module-pyasn1
 BuildRequires: python-module-bcrypt
 BuildRequires: python-module-pynacl
+BuildRequires: python-module-mock
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-cryptography
 BuildRequires: python3-module-pyasn1
 BuildRequires: python3-module-bcrypt
 BuildRequires: python3-module-pynacl
+BuildRequires: python3-module-mock
 %endif
 
 BuildArch: noarch
@@ -91,6 +91,9 @@ popd
 %python3_sitelibdir/paramiko-*.egg-info/
 
 %changelog
+* Mon Oct 29 2018 Stanislav Levin <slev@altlinux.org> 2.4.2-alt1
+- 2.4.1 -> 2.4.2.
+
 * Mon Jul 23 2018 Stanislav Levin <slev@altlinux.org> 2.4.1-alt1
 - 2.4.0 -> 2.4.1
 
