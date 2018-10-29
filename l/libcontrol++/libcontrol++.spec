@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -33,6 +33,8 @@ perform other administrative operations.
 Summary: libcontrol++ headers
 Group: Development/Other
 Requires: libcontrol++
+Requires: libacl-devel
+BuildArch: noarch
 
 %description -n libcontrol++-devel
 Development package for libcontrol++.
@@ -63,6 +65,25 @@ cp libcontrol++/src/*.h %buildroot%_includedir/libcontrol++
 %_includedir/libcontrol++/
 
 %changelog
+* Sat Oct 27 2018 Alexey Appolonov <alexey@altlinux.org> 0.15.0-alt1
+- Functions for searching through file paths;
+- Ability to get user/group/other part of the file mode;
+- Yes/No dialog;
+- Function for comparison of the permission modes;
+- Functions for verification of the file's owner/group;
+- New section of the project for basic operations with file permissions;
+- Ability to restart the print line;
+- Class for the variable that can be assigned only once;
+- Class for the set of params of a running program;
+- Modified FormatFilePath and DirEnding func;
+- Function for joining file paths;
+- Function for rebasing file paths;
+- Ability to set "base directory" for the permission mode;
+- Way of determining the neutral mode;
+- Ability to use pointer to a struct of params instead of the strings
+  for the permission mode;
+- Ability to limit the memory step when using PushBack function.
+
 * Sat Oct 13 2018 Alexey Appolonov <alexey@altlinux.org> 0.14.0-alt1
 - Writting error messages by the ref instead of outputting;
 - More secure way of TFilePerm data access and modification;
