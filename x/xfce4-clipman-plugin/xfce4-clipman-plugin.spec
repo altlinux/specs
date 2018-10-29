@@ -1,6 +1,6 @@
 Name: xfce4-clipman-plugin
-Version: 1.2.6
-Release: alt3
+Version: 1.4.3
+Release: alt1
 
 Summary: Clipboard history plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Менеджер буфера обмена для Xfce
@@ -15,9 +15,10 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libexo-devel libxfce4ui-devel libxfconf-devel libxfce4util-devel
-BuildRequires: intltool libSM-devel libglade-devel xorg-cf-files libunique-devel libXtst-devel libqrencode-devel
-BuildRequires: rpm-build-xdg
+BuildPreReq: libxfce4panel-gtk3-devel libexo-devel libxfce4ui-gtk3-devel libxfconf-devel libxfce4util-devel
+BuildRequires: xorg-proto-devel libXtst-devel
+BuildRequires: libqrencode-devel
+BuildRequires: intltool rpm-build-xdg
 
 Requires: xfce4-panel
 
@@ -49,7 +50,6 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 %configure \
 	--enable-maintainer-mode \
 	--disable-static \
-	--enable-unique \
 	--enable-qrencode \
 	--enable-debug=minimum
 %make_build
@@ -64,9 +64,7 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 %_bindir/*
 %_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
-%_iconsdir/hicolor/22x22/apps/*
-%_iconsdir/hicolor/24x24/apps/*
-%_iconsdir/hicolor/scalable/apps/*
+%_iconsdir/hicolor/*/apps/*
 %_miconsdir/*
 %_niconsdir/*
 %_desktopdir/*
@@ -77,6 +75,9 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Oct 29 2018 Mikhail Efremov <sem@altlinux.org> 1.4.3-alt1
+- Updated to 1.4.3.
+
 * Fri Aug 17 2018 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt3
 - Fix BR.
 - Update url.
