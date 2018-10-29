@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 %define pkg     epson-inkjet-printer-escpr
-%define ver     1.6.29
+%define ver     1.6.32
 %define rel     1
 
 # used in RPM macro set for the LSB Driver Development Kit
@@ -37,6 +37,7 @@ Version: %{ver}
 Release: alt1
 License: GPL
 URL: http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
+# Open URL and search "ET-2750"
 Group: System/Configuration/Hardware
 Summary: Epson Inkjet Printer Driver (ESC/P-R) for Linux
 
@@ -84,6 +85,14 @@ gzip -n9 %buildroot%_datadir/cups/model/%name/*.ppd
 %_datadir/cups/model/%name
 
 %changelog
+* Mon Oct 29 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.32-alt1
+- New version.
+  * Supported new models:
+    + L5190 Series
+    + L7180 Series
+    + PX-S170T Series
+    + PX-S170UT Series
+
 * Fri Sep 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.29-alt1
 - New version.
   * Supported new models:
