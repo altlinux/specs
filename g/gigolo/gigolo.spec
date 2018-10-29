@@ -1,10 +1,10 @@
 Name:           gigolo
-Version:        0.4.2
+Version:        0.4.90
 Release:        alt1
 Summary:        frontend to manage connections to remote filesystems using GIO/GVfs
 Group:          File tools
 License:        %gpl2only
-URL:            http://www.uvena.de/gigolo/
+URL:            https://www.uvena.de/gigolo/
 Packager: Xfce Team <xfce@packages.altlinux.org>
 Source:     %name-%version.tar
 Patch:		%name-%version-%release.patch
@@ -12,7 +12,8 @@ Patch:		%name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libgtk+2-devel
+BuildRequires: libgtk+3-devel libgio-devel libX11-devel
+BuildRequires: exo-csource
 
 %define _unpackaged_files_terminate_build 1
 
@@ -27,7 +28,9 @@ filesystem and manage bookmarks of such.
 
 %build
 %xfce4reconf
-%configure
+%configure \
+	--enable-maintainer-mode \
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -42,6 +45,11 @@ filesystem and manage bookmarks of such.
 %_man1dir/%name.*
 
 %changelog
+* Mon Oct 29 2018 Mikhail Efremov <sem@altlinux.org> 0.4.90-alt1
+- Explicitly enable debug (minimum level).
+- Updated url.
+- Updated to 0.4.90.
+
 * Tue Nov 01 2016 Mikhail Efremov <sem@altlinux.org> 0.4.2-alt1
 - Fix icon.
 - Spec updated.
