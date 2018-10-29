@@ -1,7 +1,7 @@
 Summary: Simple FastCGI wrapper for CGI scripts
 Name: fcgiwrap
 Version: 1.1.0
-Release: alt3%ubt
+Release: alt4
 License: BSD-style
 Group: System/Servers
 URL: http://nginx.localdomain.pl/wiki/FcgiWrap
@@ -44,7 +44,10 @@ autoreconf -fisv
 %_man8dir/*
 
 %changelog
-* Sat Aug 05 2017 Anton Farygin <rider@altlinux.ru> 1.1.0-alt3%ubt
+* Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 1.1.0-alt4
+- fixed build with recent gcc
+
+* Sat Aug 05 2017 Anton Farygin <rider@altlinux.ru> 1.1.0-alt3
 - add systemd support
 
 * Fri Apr 18 2014 Anton Farygin <rider@altlinux.ru> 1.1.0-alt2
