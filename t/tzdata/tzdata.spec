@@ -1,6 +1,6 @@
 Name: tzdata
-Version: 2018e
-Release: alt1
+Version: 2018g
+Release: alt2
 
 Summary: Timezone data
 # tzdata itself is Public Domain, but tzupdate is GPLv2+,
@@ -39,10 +39,10 @@ This package contains timezone data source for use by tz compilers.
 xz -9k NEWS
 
 %build
-make CFLAGS='%optflags'
+make CFLAGS='%optflags' VERSION=%version
 
 %install
-%make_install install_default DESTDIR=%buildroot TZDATA_TEXT=
+%make_install install_default DESTDIR=%buildroot TZDATA_TEXT= VERSION=%version
 mv %buildroot%_datadir/zoneinfo{-leaps,/right}
 rm %buildroot%_datadir/zoneinfo-posix
 mkdir %buildroot%_datadir/zoneinfo/posix
@@ -50,10 +50,11 @@ cp -al %buildroot%_datadir/zoneinfo/[A-Z]* %buildroot%_datadir/zoneinfo/posix/
 
 install -pDm755 tzupdate %buildroot%_sbindir/tzupdate
 
-mkdir -p %buildroot%_usrsrc
-tar -xf %SOURCE0 -C %buildroot%_usrsrc
-mv %buildroot%_usrsrc/%srcname %buildroot%srcdir
-echo "%name%version" >> %buildroot%srcdir/VERSION
+rearguard=tzdata%version-rearguard.tar.gz
+make $rearguard VERSION=%version
+mkdir -p %buildroot%srcdir
+tar -xf $rearguard -C %buildroot%srcdir
+echo '%name%version' > %buildroot%srcdir/VERSION
 
 # Hardlink identical files together.
 %define __spec_install_custom_post hardlink -vc %buildroot
@@ -72,6 +73,15 @@ make -k check_tables
 %srcdir/
 
 %changelog
+* Mon Oct 29 2018 Dmitry V. Levin <ldv@altlinux.org> 2018g-alt2
+- tzdata-source: changed format to rearguard.
+
+* Sat Oct 27 2018 Dmitry V. Levin <ldv@altlinux.org> 2018g-alt1
+- 2018f -> 2018g.
+
+* Thu Oct 18 2018 Dmitry V. Levin <ldv@altlinux.org> 2018f-alt1
+- 2018e -> 2018f.
+
 * Wed May 02 2018 Dmitry V. Levin <ldv@altlinux.org> 2018e-alt1
 - 2018d -> 2018e.
 
