@@ -1,6 +1,6 @@
 Name: google-drive-ocamlfuse
-Version: 0.6.25
-Release: alt1%ubt
+Version: 0.7.0
+Release: alt1
 License: BSD-2-Clause
 Summary: FUSE filesystem for Google Drive
 Url: http://gdfuse.forge.ocamlcore.org
@@ -14,7 +14,7 @@ BuildRequires: ocaml-gapi-devel
 BuildRequires: ocaml-sqlite3 
 BuildRequires: ocaml-cryptokit-devel
 BuildRequires: ocaml-extlib-devel
-BuildRequires: ocaml-camlidl-devel
+BuildRequires: ocaml-camlidl-devel >= 1.06-alt1
 BuildRequires: ocaml-yojson-devel
 BuildRequires: ocaml-biniou-devel
 BuildRequires: ocaml-easy-format-devel
@@ -45,25 +45,27 @@ Further documentation is available here:
 %setup
 
 %build
-jbuilder build @install
+dune build @install
 
 %install
-mkdir -p %buildroot%_bindir %buildroot%_libdir/ocaml
-jbuilder install --destdir=%buildroot%_prefix --libdir=%buildroot%_libdir/ocaml
+dune install --destdir=%buildroot%_prefix --libdir=%buildroot%_libdir/ocaml
 
 %files
 %doc README.md doc/ LICENSE
 %_bindir/%name
 
 %changelog
-* Thu May 24 2018 Anton Farygin <rider@altlinux.ru> 0.6.25-alt1%ubt
+* Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 0.7.0-alt1
+- 0.7.0
+
+* Thu May 24 2018 Anton Farygin <rider@altlinux.ru> 0.6.25-alt1
 - 0.6.25
 
-* Fri Jul 21 2017 Anton Farygin <rider@altlinux.ru> 0.6.20-alt1%ubt
+* Fri Jul 21 2017 Anton Farygin <rider@altlinux.ru> 0.6.20-alt1
 - new version
 
-* Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 0.6.19-alt1%ubt
+* Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 0.6.19-alt1
 - new version
 
-* Mon Apr 24 2017 Anton Farygin <rider@altlinux.ru> 0.6.16-alt1%ubt
+* Mon Apr 24 2017 Anton Farygin <rider@altlinux.ru> 0.6.16-alt1
 - first build for ALT
