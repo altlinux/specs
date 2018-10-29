@@ -2,7 +2,7 @@
 %define oname base
 Name: ocaml-%oname
 Version: 0.11.1
-Release: alt2
+Release: alt3
 Summary: Full standard library replacement for OCaml
 License: Apache 2.0
 Group: Development/ML
@@ -68,12 +68,13 @@ jbuilder runtest
 
 %files devel
 %_libdir/ocaml/%oname/opam
+%_libdir/ocaml/%oname/*.dune
 %_libdir/ocaml/%oname/*.cmt
 %_libdir/ocaml/%oname/*.cmti
 %_libdir/ocaml/%oname/*.cmx
 %_libdir/ocaml/%oname/*.ml
-%_libdir/ocaml/%oname/*.ml-gen
 %_libdir/ocaml/%oname/*.mli
+%_libdir/ocaml/%oname/*/*.dune
 %_libdir/ocaml/%oname/*/*.cmt
 %_libdir/ocaml/%oname/*/*.cmti
 %_libdir/ocaml/%oname/*/*.cmx
@@ -82,6 +83,9 @@ jbuilder runtest
 %_libdir/ocaml/%oname/internalhash.h
 
 %changelog
+* Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 0.11.1-alt3
+- fixed build with dune 1.4
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 0.11.1-alt2
 - rebuilt with ocaml-4.07.1
 
