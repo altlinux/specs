@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.5.2
+Version: 3.5.3
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
@@ -142,6 +142,9 @@ popd
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Mon Oct 29 2018 Stanislav Levin <slev@altlinux.org> 3.5.3-alt1
+- 3.5.2 -> 3.5.3.
+
 * Thu Oct 04 2018 Stanislav Levin <slev@altlinux.org> 3.5.2-alt1
 - 3.2.1 -> 3.5.2.
 
