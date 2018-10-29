@@ -1,6 +1,6 @@
 Name:           xfce4-notifyd
-Version:        0.4.2
-Release:        alt2
+Version:        0.4.3
+Release:        alt1
 Summary:        Simple notification daemon for Xfce
 Summary(ru_RU.UTF-8): Менеджер уведомлений для Xfce
 
@@ -97,6 +97,9 @@ Notification plugin for the Xfce panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Oct 29 2018 Mikhail Efremov <sem@altlinux.org> 0.4.3-alt1
+- Updated to 0.4.3.
+
 * Thu Oct 25 2018 Mikhail Efremov <sem@altlinux.org> 0.4.2-alt2
 - Fix systemd userdir location (closes: #35520).
 
