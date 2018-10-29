@@ -1,40 +1,37 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest-cov
 
-%def_with python3
-%def_disable check
+%def_with check
 
 Name: python-module-%oname
-Version: 2.4.0
+Version: 2.6.0
 Release: alt1
-Summary: py.test plugin for coverage reporting with support for centralised and distributed testing
+
+Summary: pytest plugin for coverage reporting with support for centralised and distributed testing
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/pytest-cov/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+# Source-git: https://github.com/pytest-dev/pytest-cov.git
+Url: https://pypi.org/project/pytest-cov/
 
-# https://github.com/schlamar/pytest-cov.git
-Source0: https://pypi.python.org/packages/00/c0/2bfd1fcdb9d407b8ac8185b1cb5ff458105c6b207a9a7f0e13032de9828f/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-coverage python-module-cov-core
-#BuildPreReq: python-module-virtualenv python-module-pytest-xdist
-#BuildPreReq: python-module-process-tests
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-coverage python3-module-cov-core
-#BuildPreReq: python3-module-virtualenv python3-module-pytest-xdist
-#BuildPreReq: python3-module-process-tests
+
+%if_with check
+BuildRequires: python-module-coverage
+BuildRequires: python-module-fields
+BuildRequires: python-module-process-tests
+BuildRequires: python-module-pytest-xdist
+BuildRequires: python-module-virtualenv
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-fields
+BuildRequires: python3-module-process-tests
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-virtualenv
 %endif
 
-%py_provides pytest_cov
-%py_requires pytest cov_core
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-cffi python-module-chardet python-module-cryptography python-module-enum34 python-module-ndg-httpsclient python-module-ntlm python-module-pyasn1 python-module-pytest python-module-rlcompleter2 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-chardet python3-module-pytest python3-module-setuptools python3-module-yieldfrom.http.client python3-module-yieldfrom.requests python3-module-yieldfrom.urllib3
-BuildRequires: python-module-coverage python-module-pytest-xdist python-module-virtualenv python3-module-coverage python3-module-pytest-xdist python3-module-virtualenv rpm-build-python3
+BuildArch: noarch
 
 %description
 This plugin produces coverage reports. It supports centralised testing
@@ -45,10 +42,8 @@ All features offered by the coverage package should be available, either
 through pytest-cov or through coverage's config file.
 
 %package -n python3-module-%oname
-Summary: py.test plugin for coverage reporting with support for centralised and distributed testing
+Summary: pytest plugin for coverage reporting with support for centralised and distributed testing
 Group: Development/Python3
-%py3_provides pytest_cov
-%py3_requires pytest cov_core
 
 %description -n python3-module-%oname
 This plugin produces coverage reports. It supports centralised testing
@@ -59,54 +54,57 @@ All features offered by the coverage package should be available, either
 through pytest-cov or through coverage's config file.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
+%patch -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
+rm -rf ../python3
+cp -a . ../python3
 
 %build
-%python_build_debug
+%python_build
 
-%if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
-export PYTHONPATH=%buildroot%python_sitelibdir
-py.test -vv
-python setup.py test
-%if_with python3
+# to read a custom pth-file one should add a such path to site-dir
+# this only needs for tests at RPM build time
+echo "import site;site.addsitedir(\"$(pwd)/src\")" > tests/sitecustomize.py
+export PYTHONPATH="$(pwd)"/tests
+%_bindir/py.test -vv
+
 pushd ../python3
-export PYTHONPATH=%buildroot%python3_sitelibdir
-python3 setup.py test
-py.test-%_python3_version -vv
+# to read a custom pth-file one should add a such path to site-dir
+# this only needs for tests at RPM build time
+echo "import site;site.addsitedir(\"$(pwd)/src\")" > tests/sitecustomize.py
+export PYTHONPATH="$(pwd)"/tests
+%_bindir/py.test3 -vv
 popd
-%endif
-exit 1
 
 %files
-%doc *.rst
-%python_sitelibdir/*
+%doc README.rst CHANGELOG.rst
+%python_sitelibdir/pytest-cov.pth
+%python_sitelibdir/pytest_cov/
+%python_sitelibdir/pytest_cov-*.egg-info/
 
-%if_with python3
 %files -n python3-module-%oname
-%doc *.rst
-%python3_sitelibdir/*
-%endif
+%doc README.rst CHANGELOG.rst
+%python3_sitelibdir/pytest-cov.pth
+%python3_sitelibdir/pytest_cov/
+%python3_sitelibdir/pytest_cov-*.egg-info/
 
 %changelog
+* Mon Oct 29 2018 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1
+- 2.4.0 -> 2.6.0.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1
 - automated PyPI update
 
