@@ -11,8 +11,8 @@
 %def_without rocksdb_lite
 
 Name: rocksdb
-Version: 5.13.3
-Release: alt1%ubt
+Version: 5.14.3
+Release: alt1
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: Databases
 License: BSD
@@ -20,7 +20,6 @@ Url: https://github.com/facebook/rocksdb.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++
 BuildRequires: libgtest-devel  cmake
 %{?_with_jemalloc:BuildRequires: libjemalloc-devel}
@@ -87,7 +86,7 @@ rm build_tools/gnu_parallel
     %{?_with_bzip2:-DWITH_BZ2:BOOL=ON} \
     %{?_with_zstd:-DWITH_ZSTD:BOOL=ON} \
     %{?_with_rocksdb_lite:-DROCKSDB_LITE:BOOL=ON} \
-    -DPORTABLE:BOOL=OFF
+    -DPORTABLE:BOOL=ON
 
 #export EXTRA_CFLAGS="-fPIC"
 #export EXTRA_CXXFLAGS="-fPIC"
@@ -112,6 +111,10 @@ rm build_tools/gnu_parallel
 %_libdir/*.a
 
 %changelog
+* Fri Oct 26 2018 Alexey Shabalin <shaba@altlinux.org> 5.14.3-alt1
+- 5.14.3
+- build with PORTABLE=ON
+
 * Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 5.13.3-alt1%ubt
 - 5.13.3
 

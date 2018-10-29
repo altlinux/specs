@@ -16,7 +16,6 @@
 %def_without system_lua
 %def_with system_rocksdb
 %def_with mgr_dashboard
-%def_with blustore
 
 #TODO: %%ifarch mips mipsel ppc %arm %ix86
 %def_without spdk
@@ -29,8 +28,8 @@
 %endif
 
 Name: ceph
-Version: 12.2.8
-Release: alt1%ubt
+Version: 12.2.9
+Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -60,7 +59,7 @@ Source26: xxHash.tar
 Source27: zstd.tar
 
 Patch: %name-%version.patch
-BuildRequires(pre): rpm-build-python rpm-build-ubt
+BuildRequires(pre): rpm-build-python
 # in cmake-3.10.2-alt add support find boost-1.66
 BuildRequires: cmake >= 3.10.2-alt1
 BuildRequires: rpm-macros-cmake
@@ -585,7 +584,6 @@ cmake .. \
 %if_with system_rocksdb
     -DWITH_SYSTEM_ROCKSDB=ON \
 %endif
-    -DWITH_EMBEDDED=OFF \
     -DWITH_SYSTEMD=ON \
     -DWITH_LZ4=ON \
 %if_with python3
@@ -620,11 +618,6 @@ cmake .. \
     -DWITH_BOOST_CONTEXT=ON \
 %else
     -DWITH_BOOST_CONTEXT=OFF \
-%endif
-%if_with blustore
-    -DWITH_BLUESTORE=ON \
-%else
-    -DWITH_BLUESTORE=OFF \
 %endif
 %if_with dpdk
     -DWITH_DPDK=ON \
@@ -1285,6 +1278,9 @@ fi
 %endif
 
 %changelog
+* Fri Oct 26 2018 Alexey Shabalin <shaba@altlinux.org> 12.2.9-alt1
+- 12.2.9
+
 * Sat Sep 08 2018 Alexey Shabalin <shaba@altlinux.org> 12.2.8-alt1%ubt
 - 12.2.8
 - fixed uninstall ceph-common (%%preun_service rbdmap)
