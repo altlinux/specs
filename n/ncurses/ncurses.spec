@@ -1,6 +1,6 @@
 Name: ncurses
 Version: 6.1.20180407
-Release: alt1
+Release: alt2
 
 %define rootdatadir /lib
 
@@ -681,6 +681,9 @@ done
 %endif # with_utf8
 
 %changelog
+* Fri Oct 29 2018 Andrew Savchenko <bircoph@altlinux.org> 6.1.20180407-alt2
+- Move {screen,st,Eterm}-256color*, st to the base terms set.
+
 * Mon Apr 16 2018 Fr. Br. George <george@altlinux.ru> 6.1.20180407-alt1
 - Major version update
 
