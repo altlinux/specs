@@ -1,13 +1,13 @@
-%define  pkgname chef-vault
+%define  pkgname regexp_parser
 
 Name:    ruby-%pkgname
-Version: 3.4.3
+Version: 1.2.0
 Release: alt1
 
-Summary: Securely manage passwords, certs, and other secrets in Chef
-License: Apache-2.0
+Summary: A regular expression parser library for Ruby
+License: MIT
 Group:   Development/Ruby
-Url:     https://github.com/chef/chef-vault
+Url:     https://github.com/ammar/regexp_parser.git
 
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
@@ -41,13 +41,15 @@ Documentation files for %{name}.
 %rdoc lib/
 # Remove unnecessary files
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+mv %buildroot%_bindir/console %buildroot%_bindir/regexp-parser-console
+mv %buildroot%_bindir/test %buildroot%_bindir/regexp-parser-test
 
 %check
-%ruby_test_unit -Ilib:test test
+#%ruby_test_unit -Ilib:test test
 
 %files
 %doc README*
-%_bindir/%pkgname
+%_bindir/*
 %ruby_sitelibdir/*
 %rubygem_specdir/*
 
@@ -55,17 +57,5 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
-* Mon Oct 29 2018 Pavel Skrylev <majioa@altlinux.org> 3.4.3-alt1
-- Bump to 3.4.3.
-
-* Wed Sep 26 2018 Andrey Cherepanov <cas@altlinux.org> 3.4.2-alt1
-- New version.
-
-* Thu Sep 20 2018 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1
-- New version.
-
-* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.3.0-alt1.1
-- Rebuild with new Ruby autorequirements.
-
-* Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 3.3.0-alt1
+* Tue Oct 30 2018 Pavel Skrylev <majioa@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus
