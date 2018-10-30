@@ -1,6 +1,6 @@
 Name: autofs
-Version: 5.1.4
-Release: alt2
+Version: 5.1.5
+Release: alt1
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPL
@@ -9,14 +9,10 @@ Url: ftp://ftp.kernel.org/pub/linux/daemons/autofs/v4/
 
 Source: %name-%version.tar
 
-Requires(post): %post_service
-Requires(preun): %preun_service
-
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: bison flex
 BuildRequires: libkrb5-devel libldap-devel libsasl2-devel
 BuildRequires: libssl-devel libxml2-devel libtirpc-devel >= 1.0.1-alt1
-BuildRequires: libsss_autofs
+BuildRequires: libsss_autofs libsystemd-devel
 
 %package ldap
 Summary: A tool for automatically mounting and unmounting filesystems
@@ -73,10 +69,10 @@ export ac_cv_path_MOUNT_NFS=/sbin/mount.nfs
 
 %install
 %make_install install INSTALLROOT=%buildroot
-rm -fv %buildroot%_sysconfdir/auto.{misc,net}
 (cd altlinux && find . -type f |cpio -pumd %buildroot)
-chmod 0644 samples/auto.*
+install -pm0644 samples/autofs_ldap_auth.conf %buildroot%_sysconfdir/
 
+chmod 0644 samples/auto.*
 %define docdir %_defaultdocdir/%name-%version
 mkdir -p %buildroot%docdir
 rm -fv samples/rc.autofs* samples/autofs.conf.default* samples/autofs.init* \
@@ -138,6 +134,9 @@ fi
 %_libdir/%name/lookup_sss.so
 
 %changelog
+* Tue Oct 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.5-alt1
+- 5.1.5 released
+
 * Wed Sep 19 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.4-alt2
 - sssd lookup module packaged
 
