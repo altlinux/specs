@@ -7,7 +7,7 @@
 %global devname	lib%{oname}-devel
 
 %global gdate	20171221
-%global rel	1
+%define rel	2
 
 Name:		libsecp256k1
 Summary:	Optimized C library for EC operations on curve secp256k1
@@ -81,6 +81,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_0.0.git20171221.2
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_0.0.git20171221.1
 - new version
 
