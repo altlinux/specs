@@ -8,7 +8,7 @@
 
 Name:    token-manager
 Version: 0.12
-Release: alt4.git%rev
+Release: alt5.git%rev
 Summary: Certificate manager for CryptoPro CSP
 
 License: MIT
@@ -17,6 +17,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Group:   Security/Networking
 Source:  %name.tar
 Source1: cpconfig-pam.alt
+Source2: token-manager
 
 BuildPreReq: libpam-devel
 BuildRequires: python-module-PyQt4
@@ -39,6 +40,7 @@ install -Dm 0644 %name.py %buildroot%_bindir/%name.py
 install -Dm 0644 %name.png %buildroot%_pixmapsdir/%name.png
 install -Dm 0644 %name.desktop %buildroot%_desktopdir/%name.desktop
 install -Dm 0644 %SOURCE1 %buildroot%_sysconfdir/pam.d/cpconfig-%cpro_arch
+install -Dm 0755 %SOURCE2 %buildroot%_bindir/%name
 install -Dm 0644 cpconfig-%cpro_arch %buildroot%_sysconfdir/security/console.apps/cpconfig-%cpro_arch
 
 %files
@@ -49,6 +51,9 @@ install -Dm 0644 cpconfig-%cpro_arch %buildroot%_sysconfdir/security/console.app
 %config(noreplace) %_sysconfdir/security/console.apps/cpconfig-%cpro_arch
 
 %changelog
+* Tue Oct 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.12-alt5.git51687e2
+- Add token-manager executable (ALT #33815).
+
 * Sun May 06 2018 Andrey Cherepanov <cas@altlinux.org> 0.12-alt4.git51687e2
 - New version.
 
