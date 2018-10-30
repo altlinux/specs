@@ -22,7 +22,7 @@
 %define smp %__nprocs
 
 Name: libwebkitgtk4
-Version: 2.22.2
+Version: 2.22.3
 Release: alt1
 
 Summary: Web browser engine
@@ -57,7 +57,7 @@ BuildRequires: libpango-devel >= 1.21.0 libcairo-devel >= 1.10 libcairo-gobject-
 BuildRequires: fontconfig-devel >= 2.4 libfreetype-devel libharfbuzz-devel libwoff2-devel
 BuildRequires: libgio-devel >= 2.25.0
 BuildRequires: python-modules-json
-BuildRequires: ruby ruby-stdlibs
+BuildRequires: ruby ruby-stdlibs libruby-devel
 BuildRequires: libGL-devel libXcomposite-devel libXdamage-devel
 BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel libsoup-gir-devel
 BuildRequires: geoclue2-devel libgeoclue2-devel
@@ -311,6 +311,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Tue Oct 30 2018 Yuri N. Sedunov <aris@altlinux.org> 2.22.3-alt1
+- 2.22.3
+
 * Sat Sep 22 2018 Yuri N. Sedunov <aris@altlinux.org> 2.22.2-alt1
 - 2.22.2
 
