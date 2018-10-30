@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Epoch: 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
@@ -9,18 +8,19 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Modern-Perl
 Version:        1.20181021
-Release:        alt1
+Release:        alt1_1
 Summary:        Enable all of the features of Modern Perl with one command
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Modern-Perl
-Source0:        http://www.cpan.org/authors/id/C/CH/CHROMATIC/Modern-Perl-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/C/CH/CHROMATIC/Modern-Perl-%{version}.tar.gz
 BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
+BuildRequires:  findutils
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl-devel >= 5.10.0
 BuildRequires:  perl(autodie.pm)
-BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:  perl(feature.pm)
 BuildRequires:  perl(IO/File.pm)
@@ -43,17 +43,26 @@ and modules.  Wouldn't it be nice to use them all with a single command?
 %setup -q -n Modern-Perl-%{version}
 
 %build
-%perl_vendor_build
+perl Makefile.PL INSTALLDIRS=vendor
+%make_build
 
 %install
-%perl_vendor_install
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
+
+%check
+make test
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/Modern/
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.20181021-alt1_1
+- update to new release by fcimport
+
 * Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.20181021-alt1
 - automated CPAN update
 
