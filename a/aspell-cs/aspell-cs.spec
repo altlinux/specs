@@ -10,7 +10,7 @@ Summary: Czech dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 20040614
-Release: alt2_17
+Release: alt2_18
 License: GPLv2
 Group: Text tools
 URL: http://aspell.net/
@@ -40,6 +40,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 20040614-alt2_18
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 20040614-alt2_17
 - update to new release by fcimport
 
