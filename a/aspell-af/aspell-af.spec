@@ -6,7 +6,7 @@ Summary: Afrikaans dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 0.50
-Release: alt2_24
+Release: alt2_25
 License: LGPLv2
 Group: Text tools
 URL: http://aspell.net/
@@ -36,6 +36,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_25
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_24
 - update to new release by fcimport
 
