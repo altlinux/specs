@@ -20,8 +20,8 @@
 %define nv_version 390
 %define nv_release 87
 %define nv_minor %nil
-%define pkg_rel alt196
-%define set_gl_nvidia_ver 0.21.1
+%define pkg_rel alt197
+%define set_gl_nvidia_ver 0.22.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -296,6 +296,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Tue Oct 30 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt197
+- using new kernel/xorg facility to load nvidia driver when possible
+
 * Fri Oct 19 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt196
 - add 32bit libs to ld.so.conf for old drivers
 - clean nvidia configs if non-nvidia
