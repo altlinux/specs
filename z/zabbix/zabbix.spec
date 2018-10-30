@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		85308
+%define svnrev		86073
 
 %def_with pgsql
 %def_enable java
@@ -15,8 +15,8 @@
 %endif
 
 Name: zabbix
-Version: 4.0.0
-Release: alt1%ubt
+Version: 4.0.1
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -34,7 +34,7 @@ Patch0: %name-%version-alt.patch
 
 %{?_enable_java:BuildPreReq: java-devel-default}
 BuildPreReq: libelf-devel
-BuildRequires(pre): rpm-build-webserver-common rpm-build-ubt rpm-macros-apache2
+BuildRequires(pre): rpm-build-webserver-common rpm-macros-apache2
 
 # Automatically added by buildreq on Thu Nov 02 2017 (-bi)
 # optimized out: elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libnet-snmp30 libp11-kit libpq-devel libsasl2-3 libssl-devel net-snmp-config perl pkg-config python-base python3 rpm-build-python3 xz
@@ -158,6 +158,12 @@ Group: Monitoring
 Requires: php5-gd2 php5-mysqli php5-pgsql php5-sockets php5-mbstring php5-dom
 BuildArch: noarch
 
+%package phpfrontend-php7
+Summary: zabbix web frontend, edition for php7
+Group: Monitoring
+Requires: php7-gd2 php7-mysqli php7-pgsql php7-sockets php7-mbstring php7-dom
+BuildArch: noarch
+
 %package phpfrontend-apache2
 Summary: %name-phpfrontend's apache2 config files
 Group: Monitoring
@@ -170,6 +176,14 @@ Group: Monitoring
 Requires: %name-phpfrontend-apache2
 Requires: apache2-httpd-prefork-like
 Requires: apache2-mod_php5
+BuildArch: noarch
+
+%package phpfrontend-apache2-mod_php7
+Summary: Requirements for the use of apache2-mod_php7
+Group: Monitoring
+Requires: %name-phpfrontend-apache2
+Requires: apache2-httpd-prefork-like
+Requires: apache2-mod_php7
 BuildArch: noarch
 
 %package doc
@@ -277,11 +291,18 @@ zabbix's apache2 config files
 Contains requirements for the use of apache2-mod_php5
 in to zabbix phpfrontend
 
+%description phpfrontend-apache2-mod_php7
+Contains requirements for the use of apache2-mod_php7
+in to zabbix phpfrontend
+
 %description phpfrontend-engine
 a php frontend for zabbix - core
 
 %description phpfrontend-php5
 zabbix web frontend, edition for php5
+
+%description phpfrontend-php7
+zabbix web frontend, edition for php7
 
 %description doc
 %name network monitor (README, ChangeLog)
@@ -625,10 +646,15 @@ fi
 
 %files phpfrontend-php5
 
+%files phpfrontend-php7
+
 %files phpfrontend-apache2
 %config(noreplace) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %files phpfrontend-apache2-mod_php5
+
+%files phpfrontend-apache2-mod_php7
+
 %files doc
 %doc AUTHORS NEWS README INSTALL ChangeLog.bz2
 
@@ -639,50 +665,54 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Oct 30 2018 Alexei Takaseev <taf@altlinux.org> 1:4.0.1-alt1
+- 4.0.1
+- Add support PHP7
+
 * Wed Oct 03 2018 Alexei Takaseev <taf@altlinux.org> 1:4.0.0-alt1
 - 4.0.0
 
-* Fri Sep 21 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.14-alt2%ubt
+* Fri Sep 21 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.14-alt2
 - Add re-check apache2 config while
   install/de-install zabbix-phpfrontend-apache2
 
-* Tue Sep 18 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.14-alt1%ubt
+* Tue Sep 18 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.14-alt1
 - 3.4.14
 
-* Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.13-alt2%ubt
+* Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.13-alt2
 - Rebuild with OpenSSL 1.1.x
 
-* Tue Aug 28 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.13-alt1%ubt
+* Tue Aug 28 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.13-alt1
 - 3.4.13
 
-* Thu Aug 02 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.12-alt1%ubt
+* Thu Aug 02 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.12-alt1
 - 3.4.12
 
-* Tue Jun 26 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.11-alt1%ubt
+* Tue Jun 26 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.11-alt1
 - 3.4.11
 
-* Tue Jun 05 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.10-alt1%ubt
+* Tue Jun 05 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.10-alt1
 - 3.4.10
 
-* Thu May 10 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.9-alt1%ubt
+* Thu May 10 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.9-alt1
 - 3.4.9
 
-* Tue Apr 03 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.8-alt1%ubt
+* Tue Apr 03 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.8-alt1
 - 3.4.8
 
-* Mon Feb 19 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.7-alt2%ubt
+* Mon Feb 19 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.7-alt2
 - 3.4.7 r77720
 
-* Wed Feb 07 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.7-alt1%ubt
+* Wed Feb 07 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.7-alt1
 - 3.4.7
 
-* Fri Jan 19 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.6-alt1%ubt
+* Fri Jan 19 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.6-alt1
 - 3.4.6
 
-* Wed Dec 27 2017 Alexei Takaseev <taf@altlinux.org> 1:3.4.5-alt1%ubt
+* Wed Dec 27 2017 Alexei Takaseev <taf@altlinux.org> 1:3.4.5-alt1
 - 3.4.5
 
-* Fri Dec 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.4-alt2%ubt
+* Fri Dec 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.4-alt2
 - Added support for libssh2, unixODBC.
 - Built proxy with PostgreSQL support.
 
