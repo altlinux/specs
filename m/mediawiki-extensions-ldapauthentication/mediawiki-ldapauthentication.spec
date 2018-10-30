@@ -7,19 +7,19 @@
 
 %define mediawiki_extensions %{_datadir}/mediawiki/extensions
 %define oname LdapAuthentication
-%define mwikiver 1.27
-%define gitsnap 12d743d
+%define mwikiver 1.31
+%define gitsnap b19888c
 
 Name:		mediawiki-extensions-ldapauthentication
 Summary:	Mediawiki extension to do ldap authentication
 Version:	2.1.0
-Release:	alt1_6
+Release:	alt1_8
 URL:		http://www.mediawiki.org/wiki/Extension:LDAP_Authentication
-Source0:	https://extdist.wmflabs.org/dist/extensions/LdapAuthentication-REL1_27-%{gitsnap}.tar.gz
+Source0:	https://extdist.wmflabs.org/dist/extensions/LdapAuthentication-REL1_31-%{gitsnap}.tar.gz
 
 License:	GPLv2+
 Requires:	mediawiki-common >= %{mwikiver}
-Requires:	php5-ldap
+Requires:	php7-ldap
 Group:		System/Servers
 BuildArch:	noarch
 Source44: import.info
@@ -66,6 +66,9 @@ install schema/* %{buildroot}%{mediawiki_extensions}/%{oname}/schema
 
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_8
+- update by mgaimport
+
 * Tue Mar 27 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_6
 - new version
 
