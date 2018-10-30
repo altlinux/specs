@@ -3,21 +3,39 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+#
+# git clone https://github.com/emeryberger/Heap-Layers.git
+# cd Heap-Layers
+# DATE=$(git log -1 --format="%cd" --date=short | sed "s|-||g")
+# git archive --format=tar --prefix=Heap-Layers-${DATE}/ master | xz > ../Heap-Layers-${DATE}.tar.xz
+#
+
+%define hdate 20180514
+
+#
+# git clone https://github.com/emeryberger/Hoard.git
+# cd Hoard
+# DATE=$(git log -1 --format="%cd" --date=short | sed "s|-||g")
+# git archive --format=tar --prefix=Hoard-${DATE}/ master | xz > ../Hoard-${DATE}.tar.xz
+#
+%define gdate 20180524
+%define rel 4
+
 %define major 0
 %define libname libhoard%{major}
 %define develname libhoard-devel
 
 Summary:	The Hoard Memory Allocator
 Name:		libhoard
-Version:	3.9.0
-Release:	alt1_7
+Version:	3.12
+Release:	alt1_1.git20180524.4
 Group:		System/Libraries
 License:	GPL
 URL:		http://www.hoard.org/
-Source0:	http://www.cs.umass.edu/~emery/hoard/hoard-%{version}/libhoard-3.9.tar.gz
-Patch0:		libhoard-3.9-glibc-2.14+fix.diff
-Patch1:		libhoard-3.9-soname.diff
-Patch2:		libhoard-cflags.patch
+#Source0:	https://github.com/emeryberger/Hoard/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:	Hoard-%{gdate}.tar.xz
+Source1:	Heap-Layers-%{hdate}.tar.xz
+Patch1:		libhoard-3.12-mga-build.patch
 Source44: import.info
 
 %description
@@ -48,24 +66,21 @@ Provides:	hoard-devel = %{version}
 This package contains development files for libhoard.
 
 %prep
-%setup -q -n emeryberger-Hoard-d065953
+%setup -q -n Hoard-%{gdate} -a1
+%patch1 -p1
 
-find -type f | xargs chmod 644
-
-%patch0 -p0
-%patch1 -p0
-%patch2 -p1 -b .cflags
-cp -pf src/Makefile{,.orig}
-perl -pi -e 's/-O/-fPIC -O/g;s/-static//g;s/-pipe//g' src/Makefile
-# on non-i586 we assume that the default arch is sufficient
-%ifnarch i586
-perl -pi -e 's/-march=pentiumpro //g;s/ -malign-double//g' src/Makefile
-%endif
+pushd src
+ln -s ../Heap-Layers-* Heap-Layers
+popd
 
 %build
-pushd src
-
-make generic-gcc
+%add_optflags %optflags_shared
+export MGAFLAGS="%{optflags}"
+%ifarch armv7hl x86_64 aarch64
+export MGAFLAGS="$MGAFLAGS -fPIC"
+%endif
+export LDFLAGS=""
+%make_build -C src generic-gcc CXX=g++
 
 %install
 install -d %{buildroot}%{_libdir}
@@ -73,7 +88,7 @@ install -m0755 src/libhoard.so.%{major} %{buildroot}%{_libdir}
 ln -s libhoard.so.%{major} %{buildroot}%{_libdir}/libhoard.so
 
 %files -n %{libname}
-%doc doc NEWS README THANKS
+%doc doc NEWS README.md THANKS
 %{_libdir}/libhoard.so.%{major}*
 
 %files -n %{develname}
@@ -82,6 +97,9 @@ ln -s libhoard.so.%{major} %{buildroot}%{_libdir}/libhoard.so
 
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 3.12-alt1_1.git20180524.4
+- update by mgaimport
+
 * Mon Apr 02 2018 Igor Vlasenko <viy@altlinux.ru> 3.9.0-alt1_7
 - new version
 
