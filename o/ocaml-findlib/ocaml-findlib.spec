@@ -1,7 +1,7 @@
 %define _name findlib
 Name: ocaml-%_name
 Version: 1.8.0
-Release: alt4
+Release: alt5
 
 Summary: A module packaging tool for OCaml
 License: Distributable
@@ -91,6 +91,16 @@ install -m755 src/findlib-toolbox/make_wizard.opt %buildroot%_bindir/findlib-mak
 rm -f %buildroot%_libdir/ocaml/findlib/findlib.cmxs
 rm -f %buildroot%_libdir/ocaml/findlib/*.cmxs
 
+# install dummy META library for uchar
+mkdir -p %buildroot%_libdir/ocaml/uchar
+
+cat >> %buildroot%_libdir/ocaml/uchar/META<<'EOF'
+name="bytes"
+version="[distributed with OCaml 4.02 or above]"
+description="dummy backward-compatibility package for mutable strings"
+requires=""
+EOF
+
 %files -n ocaml-ocamlfind-mini
 %doc mini/README
 %_bindir/ocamlfind-mini
@@ -123,6 +133,9 @@ rm -f %buildroot%_libdir/ocaml/findlib/*.cmxs
 
 
 %changelog
+* Tue Oct 30 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt5
+- add dummy META file for uchar library, distributed with ocaml >= 4.02
+
 * Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 1.8.0-alt4
 - add ocaml-graphis to build requires
 - default site-lib directory changed to %_libdir/ocaml
