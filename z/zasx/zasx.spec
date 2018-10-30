@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
@@ -5,17 +6,20 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 %define _localstatedir %{_var}
 Name:           zasx
 Version:        1.30
-Release:        alt2_24
+Release:        alt2_27
 Summary:        Asteroid like game with powerups
-Group:          Games/Other
 License:        GPLv2+ and Freely redistributable without restriction
-URL:            http://www.bob.allegronetwork.com/zasx/index.html
-Source0:        http://www.bob.allegronetwork.com/zasx/zasx130s.zip
+URL:            https://www.allegro.cc/depot/Zasx/
+# Original link (down): http://www.bob.allegronetwork.com/zasx/zasx130s.zip
+Source0:        zasx130s.zip
 Source1:        zasx.desktop
+Source2:        zasx.appdata.xml
 Patch0:         zasx-1.30-fixes.patch
 Patch1:         zasx-1.30-datadir.patch
 Patch2:         zasx-1.30-format-security.patch
-BuildRequires:  dumb-devel ImageMagick-tools desktop-file-utils
+Patch3:         zasx-1.30-locale-fix.patch
+BuildRequires:  gcc
+BuildRequires:  dumb-devel ImageMagick-tools desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -27,9 +31,10 @@ mode, joystick, music and sound.
 
 %prep
 %setup -q -n Zasx
-%patch0 -p1 -z .fix
-%patch1 -p1 -z .datadir
+%patch0 -p1
+%patch1 -p1
 %patch2 -p1
+%patch3 -p1
 sed -i 's/\r//' copying.txt readme.txt docs/index.html docs/%{name}.css
 mv docs html
 
@@ -39,8 +44,8 @@ sed -i -e 's,$(CC) $(LDFLAGS) -o $@ $^,$(CC) -o $@ $^ $(LDFLAGS),' Makefile
 
 %build
 %make_build PREFIX=%{_prefix} \
-  CFLAGS="$RPM_OPT_FLAGS -fsigned-char -Wno-deprecated-declarations"
-convert -transparent black %{name}.ico %{name}.png
+  CFLAGS="$RPM_OPT_FLAGS -fsigned-char -DALLEGRO_FIX_ALIASES -Wno-deprecated-declarations"
+convert -transparent black -resize 64x64 %{name}.ico %{name}.png
 
 
 %install
@@ -51,19 +56,29 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 desktop-file-install             \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE1}
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
 install -p -m 644 %{name}.png \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
+  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata
+appstream-util validate-relax --nonet \
+  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
+
 
 %files
-%doc copying.txt readme.txt html
+%doc readme.txt html
+%doc --no-dereference copying.txt
 %{_bindir}/%{name}
 %{_datadir}/%{name}
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
+%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
 
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 1.30-alt2_27
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.30-alt2_24
 - update to new release by fcimport
 
