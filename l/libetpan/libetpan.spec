@@ -1,6 +1,6 @@
 Name: libetpan
 Version: 1.9.1
-Release: alt2
+Release: alt3
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access
 License: %bsdstyle
@@ -11,6 +11,8 @@ Url: https://www.etpan.org/libetpan.html
 # git://github.com/dinhviethoa/libetpan.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+# From https://github.com/dinhviethoa/libetpan/pull/310
+Patch1: add-TLS-server-name-indication-support.patch
 
 %def_with gnutls
 %def_without openssl
@@ -49,6 +51,7 @@ program which use lib%name.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 ln -s README.md README
 
 %build
@@ -75,6 +78,10 @@ ln -s README.md README
 %_libdir/%name.so
 
 %changelog
+* Tue Oct 30 2018 Mikhail Efremov <sem@altlinux.org> 1.9.1-alt3
+- Enable TLS-1.3 again.
+- Add TLS server name indication support.
+
 * Tue Oct 09 2018 Mikhail Efremov <sem@altlinux.org> 1.9.1-alt2
 - Disable TLS-1.3 for now.
 
