@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -8,10 +7,10 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:       perl-Time-Warp 
 Version:    0.54
-Release:    alt1
+Release:    alt1_1
 License:    GPL+ or Artistic 
 Summary:    Control over the flow of time
-Source0:     http://www.cpan.org/authors/id/M/MA/MANWAR/Time-Warp-%{version}.tar.gz
+Source:     https://cpan.metacpan.org/authors/id/M/MA/MANWAR/Time-Warp-%{version}.tar.gz
 Url:        https://metacpan.org/release/Time-Warp
 BuildRequires:  findutils
 BuildRequires:  gcc
@@ -56,6 +55,9 @@ make test
 %{perl_vendor_archlib}/*
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1
 - automated CPAN update
 
