@@ -8,7 +8,7 @@ Group: Other
 %global snapshot 0
 
 Name:           libpinyin
-Version:        2.2.0
+Version:        2.2.1
 Release:        alt1_1
 Summary:        Library to deal with pinyin
 
@@ -109,12 +109,15 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_bindir}/gen_binary_files
 %{_bindir}/import_interpolation
 %{_bindir}/gen_unigram
-%{_mandir}/man1/*.1.*
+%{_mandir}/man1/*.1*
 
 %files -n libzhuyin
 %{_libdir}/libzhuyin*.so.*
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_1
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_1
 - update to new release by fcimport
 
