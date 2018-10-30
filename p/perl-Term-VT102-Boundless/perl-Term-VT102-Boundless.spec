@@ -1,26 +1,29 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    Term-VT102-Boundless
-%define upstream_version 0.04
+%define upstream_version 0.05
+
+%{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    0.05
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    A L<Term::VT102> that grows automatically to
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/F/FB/FBARRIOS/%{upstream_name}-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Term/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Term/VT102.pm)
 BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(Test/use/ok.pm)
-BuildArch: noarch
+BuildArch:  noarch
 Source44: import.info
 
 %description
@@ -32,10 +35,10 @@ than to a real terminal, making it useful for output displays in scrolling
 media.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 
 %make
 
@@ -46,13 +49,13 @@ media.
 %makeinstall_std
 
 %files
-%doc Changes META.yml
+%doc Changes META.json META.yml 
 %perl_vendor_privlib/*
 
-
-
-
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_1
+- update by mgaimport
+
 * Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - automated CPAN update
 
