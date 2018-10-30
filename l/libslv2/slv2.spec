@@ -13,7 +13,7 @@ BuildRequires: swig waf
 Name:			libslv2
 Summary:		LV2 host library
 Version:		0.6.6
-Release:		alt4_24
+Release:		alt4_26
 License:		GPLv2+
 Group:			System/Libraries
 Source0:		http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
@@ -22,6 +22,7 @@ Patch0:			%{oldname}-no-date-on-docs.patch
 URL:			http://drobilla.net/software/slv2/
 
 BuildRequires:		doxygen
+BuildRequires:		gcc
 BuildRequires:		lv2-devel
 BuildRequires:		python
 BuildRequires:		libredland-devel
@@ -70,9 +71,13 @@ sed -i 's|@REDLAND.*@||' slv2.pc.in
 # Fix CFLAGS issue in slv2->redland->rasqal dependency chain
 echo "Requires.private: redland" >> slv2.pc.in
 
+# Fix Python shebangs
+sed -i 's|/usr/bin/.*python$|/usr/bin/python2|' autowaf.py swig/python/*.py wscript */wscript waf
+
 %build
 export CFLAGS="%{optflags}"
 export CXXFLAGS="%{optflags}"
+export LINKFLAGS="$RPM_LD_FLAGS"
 ./waf configure --prefix=%{_prefix} \
 	--libdir=%{_libdir} \
 	--htmldir=%{_docdir}/%{oldname} \
@@ -87,11 +92,12 @@ DESTDIR=%{buildroot} ./waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}.so*
 install -pm 644 AUTHORS ChangeLog COPYING README %{buildroot}%{_docdir}/%{oldname}
 
+
 %files
+ %{_docdir}/%{oldname}/COPYING
 %dir %{_docdir}/%{oldname}
 %{_docdir}/%{oldname}/AUTHORS
 %{_docdir}/%{oldname}/ChangeLog
-%{_docdir}/%{oldname}/COPYING
 %{_docdir}/%{oldname}/README
 %{_bindir}/lv2*
 %{_libdir}/lib%{oldname}.so.*
@@ -109,6 +115,9 @@ install -pm 644 AUTHORS ChangeLog COPYING README %{buildroot}%{_docdir}/%{oldnam
 %{_mandir}/man3/%{oldname}*
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_26
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_24
 - update to new release by fcimport
 
