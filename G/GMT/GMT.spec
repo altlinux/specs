@@ -29,7 +29,7 @@ BuildRequires: gcc-c++
 
 Name:           GMT
 Version:        5.4.4
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
@@ -169,6 +169,10 @@ for file in mgg/gmtfile_paths dbase/grdraster.info \
 done
 popd
 
+# Configure coastline data location
+mkdir -p $RPM_BUILD_ROOT%{gmthome}/coast
+echo %{_datadir}/gshhg-gmt-nc4 > $RPM_BUILD_ROOT%{gmthome}/coast/coastline.conf
+
 # Don't ship .bat files
 find $RPM_BUILD_ROOT -name \*.bat -delete
 # kill rpath
@@ -213,6 +217,9 @@ done
 
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 5.4.4-alt1_3
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 5.4.4-alt1_2
 - update to new release by fcimport
 
