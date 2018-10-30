@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl-podlators
@@ -12,19 +11,19 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name    Tapper-Cmd
-%define upstream_version 5.0.8
+%define upstream_version 5.0.10
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    5.0.10
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Tapper - Backend functions for CLI and Web
 License:    GPL+ or Artistic
 Group:      Development/Perl
-Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/%{upstream_name}-%{version}.tar.gz
+Url:        http://metacpan.org/release/%{upstream_name}
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Cwd.pm)
 BuildRequires: perl(DBI.pm)
@@ -66,26 +65,29 @@ Source44: import.info
 Tapper backend functions for the command line and the Web.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%__perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 
-%make
+%make_build
 
 %check
 # Cancelling for now due to test failures.
-%make test
+%__make test
 
 %install
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.json META.yml README
+%doc Changes LICENSE META.json META.yml  README
 %{perl_vendor_privlib}/*
 
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.10-alt1_1
+- update by mgaimport
+
 * Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.10-alt1
 - automated CPAN update
 
