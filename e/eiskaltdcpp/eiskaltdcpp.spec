@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
 Version: 2.2.10
-Release: alt2
+Release: alt3
 
 Summary: EiskaltDC++ - Direct Connect client
 
@@ -10,9 +10,10 @@ Url: http://code.google.com/p/eiskaltdc/
 
 Source: %name-%version.tar
 Patch: openssl-1.1.x.patch
+Patch1: eiskaltdcpp-2.2.10-use_libidn2.patch
 
 BuildRequires: boost-interprocess-devel bzlib-devel cmake gcc-c++ libaspell-devel libgtk+2-devel
-BuildRequires: libidn-devel liblua5.1-devel libnotify-devel libpcrecpp-devel qt5-phonon-devel
+BuildRequires: libidn2-devel liblua5.1-devel libnotify-devel libpcrecpp-devel qt5-phonon-devel
 BuildRequires: qt5-tools-devel qt5-multimedia-devel qt5-script-devel
 BuildRequires: libssl-devel perl-JSON-RPC perl-Term-ShellUI
 
@@ -88,6 +89,7 @@ command line interface for XML-RPC Daemon
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %add_optflags -fno-strict-aliasing $(pkg-config libpcre --cflags)
@@ -170,6 +172,9 @@ command line interface for XML-RPC Daemon
 %_datadir/%name/cli
 
 %changelog
+* Tue Oct 30 2018 Grigory Ustinov <grenka@altlinux.org> 2.2.10-alt3
+- Build with libidn2.
+
 * Wed Sep 26 2018 Grigory Ustinov <grenka@altlinux.org> 2.2.10-alt2
 - Fix build with openssl1.1.
 
