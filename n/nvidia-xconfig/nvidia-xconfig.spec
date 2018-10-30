@@ -1,6 +1,6 @@
 Name: nvidia-xconfig
-Version: 390.25
-Release: alt1%ubt
+Version: 410.73
+Release: alt1
 
 Group: System/Configuration/Hardware
 Summary: Command line tool for setup X11 for the NVIDIA driver
@@ -33,6 +33,9 @@ make install PREFIX=%buildroot/%prefix bindir=%buildroot/%_bindir mandir=%buildr
 
 
 %changelog
+* Tue Oct 30 2018 Sergey V Turchin <zerg@altlinux.org> 410.73-alt1
+- new version
+
 * Thu Feb 15 2018 Sergey V Turchin <zerg@altlinux.org> 390.25-alt1%ubt
 - new version
 
