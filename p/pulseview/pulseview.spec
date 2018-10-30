@@ -1,6 +1,6 @@
 Name: pulseview
-Version: 0.4.0
-Release: alt1.1
+Version: 0.4.1
+Release: alt1
 
 Summary: sigrok -- signal analysis software suite
 License: GPLv3
@@ -13,7 +13,7 @@ Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: glib2-devel libglibmm-devel
-BuildRequires: libsigrokcxx-devel >= 0.5.0 libsigrokdecode-devel >= 0.5.0
+BuildRequires: libsigrokcxx-devel >= 0.5.1 libsigrokdecode-devel >= 0.5.2
 BuildRequires: boost-devel boost-filesystem-devel boost-multiprecision-devel
 BuildRequires: qt5-base-devel qt5-svg-devel
 
@@ -39,9 +39,13 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix
 %_bindir/pulseview
 %_desktopdir/org.sigrok.PulseView.desktop
 %_iconsdir/*/*/apps/pulseview.*
+%_datadir/metainfo/*.appdata.xml
 %_man1dir/pulseview.1*
 
 %changelog
+* Tue Oct 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.1-alt1
+- 0.4.1 released
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.0-alt1.1
 - NMU: rebuilt with boost-1.67.0
 

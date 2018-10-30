@@ -1,5 +1,5 @@
 Name: sigrok-cli
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: sigrok -- signal analysis software suite
@@ -36,8 +36,13 @@ Visit http://sigrok.org/wiki/Sigrok-cli for more.
 
 %files
 %_bindir/sigrok-cli
+%_desktopdir/*.desktop
+%_iconsdir/hicolor/*/*/*
 %_man1dir/sigrok-cli.1*
 
 %changelog
+* Tue Oct 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.1-alt1
+- 0.7.1 released
+
 * Mon Jun 19 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.0-alt1
 - initial
