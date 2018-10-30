@@ -1,6 +1,6 @@
 Name: shim
 Version: 15
-Release: alt1%ubt
+Release: alt2
 
 Summary: First-stage UEFI bootloader
 License: BSD
@@ -11,7 +11,6 @@ Url: https://github.com/rhboot/shim
 Source: %name-%version.tar
 Source1: altlinux-ca.cer
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-uefi
 BuildRequires: pesign >= 0.106
 BuildRequires: gnu-efi >= 3.0.8
@@ -83,7 +82,11 @@ popd
 %_datadir/shim/%version/ia32/*
 
 %changelog
-* Thu Jul 05 2018 Nikolai Kostrigin <nickel@altlinux.org> 15-alt1%ubt
+* Tue Oct 30 2018 Nikolai Kostrigin <nickel@altlinux.org> 15-alt2
+- rebuild against gnu-efi 3.0.9
+- remove ubt
+
+* Thu Jul 05 2018 Nikolai Kostrigin <nickel@altlinux.org> 15-alt1
 - new version
   + unbundle mokutil package
   + remove patches (upstream application)
