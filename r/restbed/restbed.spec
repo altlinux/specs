@@ -9,12 +9,12 @@ BuildRequires: gcc-c++
 # This package is part of the KDE Stack.
 #
 
-%define rel 4
+%define rel 6
 
 Summary:        asynchronous REST C++11 library
 Name:           restbed
 Version: 4.0
-Release:        alt1_%rel.1
+Release:        alt1_%rel
 License:        GPLv2+
 Group:          System/Base
 URL:            http://www.corvusoft.co.uk
@@ -84,6 +84,9 @@ sed -e 's,MGALIB,%{_libdir},g' -i CMakeLists.txt
 
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_6
+- update by mgaimport
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.0-alt1_4.1
 - NMU: Rebuild with new openssl 1.1.0.
 
