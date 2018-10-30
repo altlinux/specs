@@ -3,7 +3,7 @@
 
 Name: lua%major_version
 Version: %major_version.4
-Release: alt2
+Release: alt3
 
 Summary: Powerful light-weight programming language
 License: MIT
@@ -166,6 +166,14 @@ if ! [ -e %buildroot/%_includedir/luaconf-i386.h ]; then
 fi
 %endif
 
+%ifarch %e2k
+if ! [ -e %buildroot/%_includedir/luaconf-e2k.h ]; then
+  pushd %buildroot/%_includedir/
+  ln -s luaconf-%_arch.h  luaconf-e2k.h
+  popd
+fi
+%endif
+
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 echo lua-devel >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/lib%name-devel
 echo lua-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/lib%name-devel-static
@@ -196,6 +204,10 @@ echo lua-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/li
 %config %_sysconfdir/buildreqs/packages/substitute.d/lib%name-devel-static
 
 %changelog
+* Tue Oct 30 2018 Michael Shigorin <mike@altlinux.org> 5.3.4-alt3
+- fix e2kv4 support (imz@'s suggestion didn't work,
+  go kludge it alike to x86 then)
+
 * Tue Sep 12 2017 Michael Shigorin <mike@altlinux.org> 5.3.4-alt2
 - e2k support
 - spec cleanup
