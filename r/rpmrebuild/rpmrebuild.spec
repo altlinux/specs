@@ -1,6 +1,6 @@
 Name: rpmrebuild
 Version: 2.11
-Release: alt3
+Release: alt4
 License: GPLv2+
 Group: Development/Other
 Summary: A tool to build rpm file from rpm database
@@ -62,6 +62,9 @@ Rpmrebuild plugin for automatically un-prelinking package content.
 %prefix/lib/%name/plugins/un_prelink*
 
 %changelog
+* Tue Oct 30 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.11-alt4
+- Reintroduced disttag (rediffed rpmrebuild-2.11-alt-toonewtags.patch).
+
 * Tue Nov 21 2017 Dmitry V. Levin <ldv@altlinux.org> 2.11-alt3
 - Removed unused SendBugReport to get rid of /bin/mail dependence
   (suggested by Ivan Zakharyaschev).
