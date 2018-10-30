@@ -1,5 +1,5 @@
-%define rust_ver 1.29.2
-%define cargo_ver 1.29.0
+%define rust_ver 1.30.0
+%define cargo_ver 1.30.0
 
 Name: rust
 Epoch: 1
@@ -34,7 +34,7 @@ BuildRequires: rust rust-cargo
 
 %else
 
-%define r_ver 1.28.0
+%define r_ver 1.29.0
 Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
 Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
 Source4: https://static.rust-lang.org/dist/rust-%r_ver-aarch64-unknown-linux-gnu.tar.gz
@@ -307,6 +307,9 @@ rm -rf %rustdir
 %_libdir/rustlib/%r_arch-unknown-linux-gnu%abisuff/analysis
 
 %changelog
+* Mon Oct 29 2018 Vladimir Lettiev <crux@altlinux.org> 1:1.30.0-alt1
+- 1.30.0
+
 * Sun Oct 21 2018 Vladimir Lettiev <crux@altlinux.org> 1:1.29.2-alt1
 - 1.29.2
 
