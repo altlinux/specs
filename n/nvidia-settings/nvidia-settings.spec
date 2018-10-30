@@ -1,6 +1,6 @@
 Name: nvidia-settings
-Version: 390.48
-Release: alt1%ubt
+Version: 410.73
+Release: alt2
 
 Group: System/Configuration/Hardware
 Summary: Tool for configuring the NVIDIA driver
@@ -45,7 +45,8 @@ the configuration file.
 %package devel
 Group: Development/Other
 Summary: Development files for %name
-Conflicts: libXNVCtrl-devel
+Provides: libXNVCtrl-devel = %version-%release
+Obsoletes: libXNVCtrl-devel < %version-%release
 %description devel
 Development files for %name
 
@@ -112,6 +113,12 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Tue Oct 30 2018 Sergey V Turchin <zerg@altlinux.org> 410.73-alt2
+- obsolete libXNVCtrl-devel
+
+* Tue Oct 30 2018 Sergey V Turchin <zerg@altlinux.org> 410.73-alt1
+- new version
+
 * Mon Apr 02 2018 Sergey V Turchin <zerg@altlinux.org> 390.48-alt1%ubt
 - new version
 
