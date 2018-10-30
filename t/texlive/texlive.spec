@@ -65,7 +65,7 @@ BuildRequires: chrpath
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt1_4
+Release:	alt2_4
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -678,6 +678,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 2018-alt2_4
+- rebuild with new icu
+
 * Tue Oct 16 2018 Igor Vlasenko <viy@altlinux.ru> 2018-alt1_4
 - new version; fixes CVE-2018-17407
 
