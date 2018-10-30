@@ -1,6 +1,6 @@
 Name: unison
-Version: 2.48.4
-Release: alt2%ubt
+Version: 2.51.2
+Release: alt1
 
 Summary: File-synchronization tool
 
@@ -13,7 +13,6 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires: ocaml >= 4.04
 BuildRequires: texlive-collection-latexrecommended texlive-collection-basic ghostscript-utils
-BuildRequires(pre):rpm-build-ubt
 
 %description
 Unison is a file-synchronization tool. It allows two replicas of a
@@ -39,10 +38,13 @@ cp -f src/unison $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
-* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.48.4-alt2%ubt
+* Tue Oct 30 2018 Anton Farygin <rider@altlinux.ru> 2.51.2-alt1
+- 2.51.2
+
+* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.48.4-alt2
 - NMU: rebuild with TeXLive instead of TeTeX
 
-* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 2.48.4-alt1%ubt
+* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 2.48.4-alt1
 - new version
 
 * Tue Jun 25 2013 Anton Farygin <rider@altlinux.ru> 2.45.28-alt1
