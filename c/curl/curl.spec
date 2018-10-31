@@ -1,6 +1,6 @@
 Name: curl
-Version: 7.61.1
-Release: alt2
+Version: 7.62.0
+Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -144,9 +144,15 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Oct 31 2018 Anton Farygin <rider@altlinux.ru> 7.62.0-alt1
+- 7.62.0 
+- fixes:
+  * CVE-2018-16839 - buffer overrun in the SASL authentication code. 
+  * CVE-2018-16840 - use-after-free in handle close
+  * CVE-2018-16842 - warning message out-of-buffer read
+
 * Thu Oct 11 2018 Anton Farygin <rider@altlinux.ru> 7.61.1-alt2
 - enabled HTTP/2 support
-
 * Sun Sep 09 2018 Anton Farygin <rider@altlinux.ru> 7.61.1-alt1
 - 7.61.1 (fixes: CVE-2018-14618)
 
