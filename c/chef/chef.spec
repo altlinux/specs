@@ -1,7 +1,7 @@
 
 Name:    chef
-Version: 14.6.11
-Release: alt2
+Version: 14.6.47
+Release: alt1
 
 Summary: Clients for the chef systems integration framework
 Group:   Networking/Other
@@ -125,6 +125,9 @@ getent group _chef  >/dev/null || groupadd -r _chef
 getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbin/nologin -c "Opscode Chef Daemon" _chef
 
 %changelog
+* Tue Oct 30 2018 Pavel Skrylev <majioa@altlinux.org> 14.6.47-alt1
+- Bump to 14.6.47.
+
 * Thu Oct 04 2018 Pavel Skrylev <majioa@altlinux.org> 14.6.11-alt2
 - Fix to files storing procedure.
 

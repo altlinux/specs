@@ -1,8 +1,8 @@
 %define  pkgname ancestry
 
 Name:    ruby-%pkgname
-Version: 3.0.2
-Release: alt2
+Version: 3.0.3
+Release: alt1
 
 Summary: Organise ActiveRecord model into a tree structure
 License: MIT
@@ -61,6 +61,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Oct 29 2018 Pavel Skrylev <majioa@altlinux.org> 3.0.3-alt1
+- Bimp to 3.0.3
+
 * Fri Sep 21 2018 Pavel Skrylev <majioa@altlinux.org> 3.0.2-alt2
 - Gemify the package.
 
