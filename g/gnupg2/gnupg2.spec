@@ -4,7 +4,7 @@
 
 Name: gnupg2
 Version: 2.2.10
-Release: alt2
+Release: alt3
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -157,6 +157,11 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Wed Oct 31 2018 Paul Wolneykien <manowar@altlinux.org> 2.2.10-alt3
+- Fixed "Unsupported algorithm" with smart-card RSA key pkdecrypt
+  operation regression.
+- Fixed missing newline in dirmngr verbose output.
+
 * Wed Oct 03 2018 Paul Wolneykien <manowar@altlinux.org> 2.2.10-alt2
 - GOST Sign and verification work with GOST (2001) via
   gnupg-pkcs11-scd (S/MIME).
