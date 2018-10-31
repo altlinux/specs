@@ -1,7 +1,7 @@
 %define module Source-Shared-FindLocalMirror
 
 Name: perl-%module
-Version: 0.005
+Version: 0.006
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -35,6 +35,9 @@ for Source-Shared framework
 %perl_vendor_privlib/S*
 
 %changelog
+* Wed Oct 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1
+- added /var/ftp/pub/distribution
+
 * Fri Oct 26 2018 Igor Vlasenko <viy@altlinux.ru> 0.005-alt1
 - new version
 
