@@ -1,10 +1,10 @@
 Name: libfreeglut2.8
 Version: 2.8.1
-Release: alt2
+Release: alt3
 
 Summary: A 2.8 version of the freely licensed alternative to the GLUT library
 License: MIT
-Group: System/Libraries
+Group: System/Legacy libraries
 
 Url: http://freeglut.sourceforge.net/
 Source: freeglut-%version.tar
@@ -12,10 +12,7 @@ Source: freeglut-%version.tar
 # fc
 # #1017551: Don't check whether a menu is active while manipulating it
 Patch0: freeglut-2.8.1-fc-nocheck.patch
-
-# debian
-Patch1: freeglut-2.8-fixed-buffer-debian.patch
-
+Patch1: libfreeglut-alt-fix-visibility-hidden.patch
 
 BuildRequires: imake libGLU-devel libICE-devel libXi-devel libXrandr-devel libXxf86vm-devel xorg-cf-files
 
@@ -48,8 +45,10 @@ license.
 %prep
 %setup -n freeglut-%version
 %patch -p1
+%patch1 -p2
 
 %build
+%add_optflags -fvisibility=hidden
 sed -i -s 's,LIBRARY=glut,LIBRARY=glut-2.8,' configure.ac
 %autoreconf
 %configure --disable-static
@@ -66,6 +65,11 @@ sed -i -s 's,LIBRARY=glut,LIBRARY=glut-2.8,' configure.ac
 %_libdir/*.so
 
 %changelog
+* Wed Oct 31 2018 Dmitry V. Levin <ldv@altlinux.org> 2.8.1-alt3
+- Backported the following change from libfreeglut-3.0.0-alt3 package:
+  Restricted the list of global symbols exported by the library
+  to those that are part of the API.
+
 * Fri Oct 19 2018 Anton Farygin <rider@altlinux.ru> 2.8.1-alt2
 - renamed to libfreeglut2.8 for compatibility with oldest projects
 
