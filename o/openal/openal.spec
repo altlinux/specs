@@ -1,15 +1,16 @@
+%def_with pulse
+%def_with qt4
 %define oname openal-soft
 
 Name: openal
 Version: 1.17.2
-Release: alt1
+Release: alt2
 
 Summary: Open Audio Library
-
 License: LGPLv2
 Group: Sound
-URL: http://kcat.strangesoft.net/openal.html
 
+Url: http://kcat.strangesoft.net/openal.html
 # Source-url: http://kcat.strangesoft.net/openal-releases/openal-soft-%{version}.tar.bz2
 Source: %oname-%version.tar
 Patch0: openal-soft-1.17-alt-config.patch
@@ -18,9 +19,10 @@ Patch1: openal-soft-arm_neon-only-for-32bit.patch
 # Automatically added by buildreq on Sun Dec 11 2016
 # optimized out: cmake cmake-modules fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-webkit-devel libstdc++-devel pkg-config python-base python-modules python3 python3-base
 BuildRequires: gcc-c++ cmake
-BuildRequires: qt4-devel
-BuildRequires: libalsa-devel libpulseaudio-devel libjack-devel libportaudio2-devel
-BuildRequires: libfluidsynth-devel
+BuildRequires: libalsa-devel
+%{?_with_qt4:BuildRequires: qt4-devel}
+%{?_with_pulse:BuildRequires: libpulseaudio-devel}
+%{?!_with_bootstrap:BuildRequires: libjack-devel libportaudio2-devel libfluidsynth-devel}
 BuildRequires: libSDL2-devel libSDL2_mixer-devel
 
 %description
@@ -66,11 +68,20 @@ for configuring OpenAL features.
 %setup -n %oname-%version
 %patch0 -p2
 %patch1 -p1
+%ifarch %e2k
+sed -i 's,-Winline,,' CMakeLists.txt
+%endif
 
 %build
 %cmake_insource \
 	-DALSOFT_REQUIRE_OSS=OFF \
 	-DALSOFT_CONFIG=ON
+
+%ifarch %e2k
+# TODO: reintroduce if possible
+sed -i '/^#define HAVE_SSE/d' config.h
+%endif
+
 %make_build
 
 %install
@@ -95,10 +106,22 @@ install -m0644 alsoftrc.sample %buildroot%_sysconfdir/%name/alsoft.conf
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
+%if_with qt4
 %files qt
 %_bindir/alsoft-config
+%endif
 
 %changelog
+* Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 1.17.2-alt2
+- qt knob renamed to qt4 (still on by default)
+- replaced e2k arch name with %%e2k macro (grenka@)
+- minor spec cleanup
+- NB: 1.19.1 available
+
+* Wed Apr 05 2017 Michael Shigorin <mike@altlinux.org> 1.17.2-alt1.1
+- BOOTSTRAP: introduce pulse, qt knobs (on by default)
+- E2K: avoid lcc-unsupported option
+
 * Sun Dec 11 2016 Vitaly Lipatov <lav@altlinux.ru> 1.17.2-alt1
 - new version (1.17.2) with rpmgs script
 - change upstream, update package with Fedora spec
