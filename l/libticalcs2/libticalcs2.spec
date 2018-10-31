@@ -9,7 +9,7 @@ BuildRequires: /usr/bin/clang
 
 Name:           libticalcs2
 Version:        1.1.9
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Texas Instruments calculator communication library
 
 Group:          System/Libraries
@@ -18,9 +18,9 @@ URL:            https://sourceforge.net/projects/tilp/
 Source0:        https://download.sourceforge.net/tilp/%{name}-%{version}.tar.bz2
 
 BuildRequires:  glib2-devel
-BuildRequires:  libticonv-devel
-BuildRequires:  libticables2-devel
-BuildRequires:  libtifiles2-devel
+BuildRequires:  pkgconfig(ticonv)
+BuildRequires:  pkgconfig(ticables2)
+BuildRequires:  pkgconfig(tifiles2)
 BuildRequires:  gettext-tools libasprintf-devel
 Source44: import.info
 
@@ -104,6 +104,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.9-alt1_2
+- update by mgaimport
+
 * Tue Apr 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.9-alt1_1
 - new version
 
