@@ -10,7 +10,7 @@
 
 
 Name: rdma-core
-Version: 18.1
+Version: 20.1
 Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
@@ -305,6 +305,7 @@ install -D -m0644 ibacm_opts.cfg %buildroot%_sysconfdir/rdma/
 %_includedir/infiniband/*
 %_includedir/rdma/*
 %_libdir/lib*.so
+%_pkgconfigdir/*.pc
 %_man3dir/ibv_*
 %_man3dir/rdma*
 %_man3dir/umad*
@@ -415,6 +416,9 @@ install -D -m0644 ibacm_opts.cfg %buildroot%_sysconfdir/rdma/
 %docdir/ibsrpdm.md
 
 %changelog
+* Tue Oct 30 2018 Alexey Shabalin <shaba@altlinux.org> 20.1-alt1
+- 20.1
+
 * Wed Jun 27 2018 Alexey Shabalin <shaba@altlinux.ru> 18.1-alt1
 - 18.1
 

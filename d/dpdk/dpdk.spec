@@ -6,8 +6,10 @@
 %def_with tools
 # Add option to build the PDF documentation separately (--with pdfdoc)
 %def_without pdfdoc
-
 %def_without doc
+
+# build with Mellanox nic support
+%def_with mlnx
 
 %define sdkdir  %_libdir/%name
 %define docdir  %_docdir/%name
@@ -16,8 +18,8 @@
 
 
 Name: dpdk
-Version: 18.02.1
-Release: alt1%ubt
+Version: 18.08
+Release: alt1
 Url: http://dpdk.org
 Packager: Lenar Shakirov <snejok@altlinux.ru>
 
@@ -26,6 +28,7 @@ Source: %name-%version.tar
 Patch0: dpdk-16.11-move-to-libdir.patch
 Patch1: dpdk-18.02-aarch64-link-fix.patch
 Patch3: dpdk-alt-pci.ids.patch
+Patch4: dpdk-18.05-fix-redefinition.patch
 
 Summary: Set of libraries and drivers for fast packet processing
 Group: System/Libraries
@@ -71,9 +74,11 @@ ExclusiveArch: x86_64 %{ix86} aarch64 ppc64le
 
 %define target %machine_arch-%machine_tmpl-linuxapp-gcc
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: glibc-kernheaders libpcap-devel doxygen python-module-sphinx zlib-devel
 BuildRequires: libnuma-devel
+%if_with mlnx
+BuildRequires: rdma-core-devel libmnl-devel
+%endif
 %if_with pdfdoc
 BuildRequires: texlive-dejavu inkscape texlive-latex-bin-bin
 BuildRequires: texlive-kpathsea-bin texlive-metafont-bin texlive-cm
@@ -139,6 +144,7 @@ as L2 and L3 forwarding.
 %patch0 -p2
 %patch1 -p2
 %patch3 -p2
+%patch4 -p2
 
 %build
 # set up a method for modifying the resulting .config file
@@ -156,13 +162,7 @@ unset RTE_SDK RTE_INCLUDE RTE_TARGET
 # Avoid appending second -Wall to everything, it breaks upstream warning
 # disablers in makefiles. Strip expclit -march= from optflags since they
 # will only guarantee build failures, DPDK is picky with that.
-export EXTRA_CFLAGS="$(echo %optflags | sed -e 's:-Wall::g' -e 's:-march=[[:alnum:]]* ::g') -Wformat -fPIC"
-
-# DPDK defaults to using builder-specific compiler flags.  However,
-# the config has been changed by specifying CONFIG_RTE_MACHINE=default
-# in order to build for a more generic host.  NOTE: It is possible that
-# the compiler flags used still won't work for all Fedora-supported
-# machines, but runtime checks in DPDK will catch those situations.
+export EXTRA_CFLAGS="$(echo %optflags | sed -e 's:-Wall::g' -e 's:-march=[[:alnum:]]* ::g') -Wformat -fPIC -I/etc/sysconfig/kernel/include"
 
 make V=1 O=%target T=%target %{?_smp_mflags} config
 
@@ -189,8 +189,19 @@ setconf CONFIG_RTE_APP_EVENTDEV n
 
 setconf CONFIG_RTE_LIBRTE_NFP_PMD y
 
+%ifarch aarch64
+setconf CONFIG_RTE_LIBRTE_DPAA_BUS n
+setconf CONFIG_RTE_LIBRTE_DPAA_MEMPOOL n
+setconf CONFIG_RTE_LIBRTE_DPAA_PMD n
+%endif
+
 %if_with shared
 setconf CONFIG_RTE_BUILD_SHARED_LIB y
+%endif
+
+%if_with mlnx
+setconf CONFIG_RTE_LIBRTE_MLX4_PMD y
+setconf CONFIG_RTE_LIBRTE_MLX5_PMD y
 %endif
 
 make V=1 O=%target %{?_smp_mflags}
@@ -301,6 +312,10 @@ EOF
 %endif
 
 %changelog
+* Tue Oct 30 2018 Alexey Shabalin <shaba@altlinux.org> 18.08-alt1
+- 18.08
+- build with Mellanox nic support
+
 * Fri Jun 01 2018 Anton Farygin <rider@altlinux.ru> 18.02.1-alt1%ubt
 - 18.02.1
 
