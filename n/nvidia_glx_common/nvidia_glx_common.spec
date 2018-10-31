@@ -20,8 +20,8 @@
 %define nv_version 390
 %define nv_release 87
 %define nv_minor %nil
-%define pkg_rel alt197
-%define set_gl_nvidia_ver 0.22.0
+%define pkg_rel alt198
+%define set_gl_nvidia_ver 0.22.1
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -209,7 +209,12 @@ install -m 0755 %SOURCE3 %buildroot/%_bindir/
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libGLESv2_nvidia.so.2
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libGLESv1_CM_nvidia.so.1
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libGLX_nvidia.so.0
-%__ln_s ../../..%x11driver_dir %buildroot/%nv_etclib_sym_dir/current
+%__ln_s `relative %x11driver_dir %_sysconfdir/libnvidiacurrent` %buildroot/%_sysconfdir/libnvidiacurrent
+%__ln_s `relative %_sysconfdir/libnvidiacurrent %nv_etclib_sym_dir/current` %buildroot/%nv_etclib_sym_dir/current
+%if "%_lib" == "lib64"
+%__ln_s `relative %x11driver_dir %_sysconfdir/libnvidia32current` %buildroot/%_sysconfdir/libnvidia32current
+%__ln_s `relative %_sysconfdir/libnvidia32current %nv_lib32_sym_dir/current` %buildroot/%nv_lib32_sym_dir/current
+%endif
 
 %__ln_s ../../..%nv_etclib_sym_dir/libvdpau_nvidia.so %buildroot/%x11_lib_dir/vdpau/libvdpau_nvidia.so
 %__ln_s libvdpau_nvidia.so %buildroot/%x11_lib_dir/vdpau/libvdpau_nvidia.so.1
@@ -277,10 +282,13 @@ fi
 %nv_etclib_sym_dir/libGLESv2_nvidia.so.?
 %nv_etclib_sym_dir/libGLESv1_CM_nvidia.so.?
 %nv_etclib_sym_dir/libGLX_nvidia.so.?
-%nv_etclib_sym_dir/current
 #%nv_etclib_sym_dir/nvidia.xinf
+%nv_etclib_sym_dir/current
+%_sysconfdir/libnvidiacurrent
 %if "%_lib" == "lib64"
 %dir %nv_lib32_sym_dir/
+%nv_lib32_sym_dir/current
+%_sysconfdir/libnvidia32current
 %endif
 #
 %x11_lib_dir/vdpau/libvdpau_nvidia.so
@@ -296,6 +304,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Wed Oct 31 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt198
+- package symlinks
+
 * Tue Oct 30 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt197
 - using new kernel/xorg facility to load nvidia driver when possible
 
