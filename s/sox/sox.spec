@@ -5,7 +5,7 @@
 Name: sox
 Summary: A general purpose sound file conversion tool
 Version: 14.4.2
-Release: alt1.1
+Release: alt2
 License: LGPL
 Group: Sound
 BuildRequires: glibc-devel-static libalsa-devel libao-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libopusfile-devel libpng-devel libsndfile-devel libvorbis-devel libwavpack-devel
@@ -273,7 +273,8 @@ or manipulate some sounds.
 %setup
 %patch -p2
 sed -i 's,\-I/lib/modules/`uname -r`/build/include,,' configure*
-%ifarch e2k
+%ifarch %e2k
+# still unsupported as of lcc 1.21.24
 sed -i 's,-Wtraditional-conversion,,' configure*
 %endif
 
@@ -390,6 +391,9 @@ chmod 755 %buildroot%_bindir/%{name}play
 %files play
 
 %changelog
+* Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 14.4.2-alt2
+- E2K: avoid lcc-unsupported option properly
+
 * Wed Mar 15 2017 Michael Shigorin <mike@altlinux.org> 14.4.2-alt1.1
 - BOOTSTRAP: introduce pulse knob (on by default)
 
