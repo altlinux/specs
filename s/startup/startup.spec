@@ -1,6 +1,6 @@
 Name: startup
-Version: 0.9.9.5
-Release: alt1.2
+Version: 0.9.9.6
+Release: alt1
 
 Summary: The system startup scripts
 License: GPLv2+
@@ -76,6 +76,9 @@ mkdir -p %buildroot%_sysconfdir/sysconfig/harddisk
 
 mkdir -p %buildroot%_sysconfdir/firsttime.d
 mkdir -p %buildroot%_localstatedir/rsbac
+
+mkdir -p %buildroot%_localstatedir/random
+touch %buildroot%_localstatedir/random/random-seed
 
 %post
 if [ $1 -eq 1 ]; then
@@ -162,8 +165,16 @@ done
 %ghost %config(missingok) /etc/firsttime.flag
 %dir %_sysconfdir/firsttime.d
 %dir %_localstatedir/rsbac
+%dir %_localstatedir/random
+%ghost %config(noreplace,missingok) %verify(not md5 mtime size) %attr(600,root,root) %_localstatedir/random/random-seed
 
 %changelog
+* Wed Oct 31 2018 Alexey Shabalin <shaba@altlinux.org> 0.9.9.6-alt1
+- random: move random_seed from /var/run to /var/lib/random,
+  because /var/run might be on tmpfs
+- scripts/cleanup: run systemd-tmpfiles --create
+  before touch /var/run/utmp and /var/run/utmpx
+
 * Fri Apr 18 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.9.5-alt1.2
 - inittab: don't run getty on tty1 only when runlevel 5 (closes: #29960)
 
