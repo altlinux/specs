@@ -5,7 +5,7 @@
 
 Name: geos
 Version: 3.7.0
-Release: alt1
+Release: alt2
 
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
@@ -145,7 +145,7 @@ LIB_SUFFIX=64
 # E2K: tests/unit/tut/tut.hpp: excessive recursion at instantiation [...]
 %cmake_insource \
 	-DGEOS_BUILD_STATIC:BOOL=OFF \
-%ifarch e2k
+%ifarch %e2k
 	-DGEOS_ENABLE_TESTS:BOOL=OFF \
 %endif
 	#
@@ -215,6 +215,9 @@ make check || exit 0
 %doc doc/doxygen_docs/html/*
 
 %changelog
+* Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 3.7.0-alt2
+- Replace e2k arch name with %e2k macro (grenka@)
+
 * Tue Oct 16 2018 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
 - New version.
 
