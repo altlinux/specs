@@ -1,6 +1,6 @@
 Name:		etcnet
-Version:	0.9.15
-Release:	alt3
+Version:	0.9.16
+Release:	alt1
 #Url:		http://etcnet.org/
 Url:		https://www.altlinux.org/Etcnet
 
@@ -39,7 +39,7 @@ Group:		System/Configuration/Networking
 Requires:	%name = %version-%release, wireless-tools
 Requires:	dhcpcd >= 1.3.22pl4-alt3, iptables, iptables-ipv6, ebtables, ipset >= 4.1-alt2
 Requires:	ethtool >= 0:3-alt4, ifplugd >= 0.28-alt2
-Requires:	hotplug, ncpfs, ppp, vlan-utils, openvpn, wireguard-tools
+Requires:	hotplug, ncpfs, ppp, openvpn, wireguard-tools
 Requires:	pptp-client, wpa_supplicant, avahi-autoipd, rp-pppoe-base >= 3.6-alt2
 
 %description full
@@ -141,6 +141,12 @@ fi
 %files full
 
 %changelog
+* Thu Oct 25 2018 Alexey Shabalin <shaba@altlinux.org> 0.9.16-alt1
+- add support read list commands for birdge
+- fixed create dummy and teql iface
+- use ip utility for vlan interface types
+- add support for vxlan iface types
+
 * Tue Jul 10 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.15-alt3
 - add example for wireguard iface
 - add example for vti iface
