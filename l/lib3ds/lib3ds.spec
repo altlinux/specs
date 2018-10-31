@@ -1,16 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
+BuildRequires: chrpath
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           lib3ds
 Version:        1.3.0
-Release:        alt2_25.1
+Release:        alt2_28
 
 Summary:        3D Studio file format library
 
-Group:          System/Libraries
 License:        LGPLv2+
 URL:            http://lib3ds.sourceforge.net
 Source:         http://downloads.sourceforge.net/lib3ds/lib3ds-%{version}.zip
@@ -22,6 +23,8 @@ Patch1:         lib3ds-1.3.0-lib3ds-mesh.c.diff
 Patch2:         lib3ds-1.2.0-pkgconfig.diff
 
 Patch3:         lib3ds-1.3.0-config.patch
+
+BuildRequires:  gcc
 Source44: import.info
 
 %description
@@ -45,14 +48,14 @@ Some tools to process 3ds files.
 
 %files          tools
 %doc AUTHORS ChangeLog README
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/3dsdump
 %{_mandir}/man1/3dsdump.1*
 
 %package        devel
 Summary:        %summary
 Group:          Development/Other
-Requires:	pkg-config
+Requires:	pkgconfig
 Requires:	lib3ds = %{version}-%{release}
 
 %description    devel
@@ -68,7 +71,6 @@ Development files for lib3ds
 
 
 %build
-%autoreconf
 %configure  --disable-static
 
 %make_build
@@ -88,11 +90,15 @@ install lib3ds.pc -m 0644 ${RPM_BUILD_ROOT}%{_libdir}/pkgconfig
 
 ## Remove libtool archive
 rm -rf $RPM_BUILD_ROOT%{_libdir}/*.la
+# kill rpath
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
+	chrpath -d $i ||:
+done
 
 
 %files
 %doc AUTHORS ChangeLog README
-%doc COPYING
+%doc --no-dereference COPYING
 %{_libdir}/*.so.*
 
 %files devel
@@ -104,6 +110,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/aclocal/*
 
 %changelog
+* Wed Oct 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_28
+- converted for ALT Linux by srpmconvert tools
+
 * Sun Jun 24 2018 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt2_25.1
 - Fix build for aarch64
 
