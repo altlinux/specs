@@ -1,6 +1,6 @@
 Name: fontconfig
-Version: 2.12.6
-Release: alt1%ubt
+Version: 2.13.1
+Release: alt1
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -22,7 +22,7 @@ Patch14: alt-disable-postscript-aliases.patch
 Provides: lib%name = %version
 Obsoletes: lib%name < %version
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: docbook-utils elinks gperf libexpat-devel libfreetype-devel
+BuildRequires: docbook-utils elinks gperf libexpat-devel libfreetype-devel libuuid-devel
 BuildRequires: python2.7(urllib2) python2.7(lxml) python2.7(six) python2.7(distutils)
 
 %description
@@ -142,6 +142,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Wed Oct 31 2018 Sergey V Turchin <zerg@altlinux.org> 2.13.1-alt1
+- new version
+
 * Thu Sep 21 2017 Sergey V Turchin <zerg@altlinux.org> 2.12.6-alt1%ubt
 - new version
 
