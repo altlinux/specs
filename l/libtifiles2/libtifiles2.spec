@@ -6,7 +6,7 @@
 
 Name:           libtifiles2
 Version:        1.1.7
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Texas Instruments calculator files library
 
 Group:          System/Libraries
@@ -15,9 +15,9 @@ URL:            https://sourceforge.net/projects/tilp/
 Source0:        https://download.sourceforge.net/tilp/%{name}-%{version}.tar.bz2
 
 BuildRequires:  glib2-devel
-BuildRequires:  zlib-devel
-BuildRequires:  libticonv-devel
-BuildRequires:  libarchive-devel
+BuildRequires:  pkgconfig(zlib)
+BuildRequires:  pkgconfig(ticonv)
+BuildRequires:  pkgconfig(libarchive)
 BuildRequires:  gettext-tools libasprintf-devel
 Source44: import.info
 
@@ -106,6 +106,9 @@ rm -rf %{buildroot}%{_docdir}
 
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.7-alt1_3
+- update by mgaimport
+
 * Mon Apr 02 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.7-alt1_1
 - new version
 
