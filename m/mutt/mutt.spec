@@ -6,7 +6,7 @@ Name: %oname%branch
 
 # hg log -r . --template '{latesttag}-{latesttagdistance}-{node|short}\n'
 Version: 1.10.1
-Release: alt1
+Release: alt2
 Epoch: 3
 
 %def_disable debug
@@ -45,7 +45,8 @@ Source9: mutt-apply.sh
 Patch: %name-%version-%release.patch
 
 BuildRequires: patchutils docbook-style-xsl xsltproc elinks
-BuildRequires: libgpgme-devel libncursesw-devel libkrb5-devel libssl-devel libsasl2-devel libidn-devel libdb4-devel
+BuildRequires: libgpgme-devel libncursesw-devel libkrb5-devel libssl-devel
+BuildRequires: libsasl2-devel libidn2-devel libdb4-devel
 
 Requires: urlview
 Requires: mailcap
@@ -182,7 +183,7 @@ build 'Nano' \
 	--without-gss \
 	--with-ssl \
 	--without-sasl \
-	--with-idn \
+	--with-idn2 \
 	--without-bdb \
 	--without-gdbm \
 	--without-tokyocabinet \
@@ -199,7 +200,7 @@ build 'default' \
 	--without-gss \
 	--with-ssl \
 	--without-sasl \
-	--with-idn \
+	--with-idn2 \
 	--without-bdb \
 	--without-gdbm \
 	--without-tokyocabinet \
@@ -216,7 +217,7 @@ build 'Mini' \
 	--without-gss \
 	--with-ssl \
 	--without-sasl \
-	--with-idn \
+	--with-idn2 \
 	--with-bdb \
 	--without-gdbm \
 	--without-tokyocabinet \
@@ -233,7 +234,7 @@ build 'Maxi' \
 	--with-gss \
 	--with-ssl \
 	--with-sasl \
-	--with-idn \
+	--with-idn2 \
 	--with-bdb \
 	--without-gdbm \
 	--without-tokyocabinet \
@@ -320,6 +321,9 @@ find %buildroot%_sysconfdir -type f -print0 |
 %_bindir/mutt-Maxi
 
 %changelog
+* Wed Oct 31 2018 Grigory Ustinov <grenka@altlinux.org> 3:1.10.1-alt2
+- NMU: Rebuild with libidn2.
+
 * Wed Aug 29 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:1.10.1-alt1
 - Updated to mutt-1-10-1-rel (fixes CVE-2018-14349, CVE-2018-14350,
   CVE-2018-14351, CVE-2018-14352, CVE-2018-14353, CVE-2018-14354,
