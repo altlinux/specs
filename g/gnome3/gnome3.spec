@@ -1,8 +1,8 @@
-%define ver_major 3.28
+%define ver_major 3.30
 
 Name: gnome3
 Version: %ver_major.2
-Release: alt3
+Release: alt1
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -16,19 +16,19 @@ BuildPreReq: rpm-build-licenses
 # do not follow GNOME version numbers.
 ## Core components
 %define session_ver %ver_major
-%define keyring_ver %ver_major
+%define keyring_ver 3.28.2
 
 ## Applications
-%define seahorse_ver 3.20
+%define seahorse_ver 3.30
 %define utils_ver 3.20
-%define games_ver %ver_major
+%define games_ver 3.28.0
 %define weather_ver 3.26
 %define pm_ver 3.26
 %define yelp_ver %ver_major
 %define dconf_editor_ver %ver_major
 %define contacts_ver %ver_major
 %define roller_ver %ver_major
-%define eog_ver %ver_major
+%define eog_ver 3.28.4
 %define network_manager_ver 1.8
 %define terminal_ver %ver_major
 %define epiphany_ver %ver_major
@@ -45,15 +45,16 @@ BuildPreReq: rpm-build-licenses
 %define emp_ver 3.12.11
 %define brasero_ver 3.12.2
 %define accerciser_ver 3.22
-%define recorder_ver 3.27.90
+%define recorder_ver 3.28.0
+%define todo_ver 3.28.1
 ## Engines, themes
 %define engines_ver %ver_major
 %define icon_theme_ver %ver_major
-%define themes_ver 3.22
+%define themes_ver 3.28
 %define gtk_theme_prefix gtk3-theme
 %define gnome_theme_prefix gnome-theme
 ## a11y
-%define orca_ver 3.26
+%define orca_ver %ver_major
 
 %description
 A set of virtual packages for GNOME Desktop version 3 installation.
@@ -93,7 +94,7 @@ Requires: gnome-logs >= %ver_major
 Requires: gucharmap >= %ver_major
 Requires: gnome-calculator >= %ver_major
 Requires: gnome-calendar >= %ver_major
-Requires: gnome-todo >= %ver_major
+Requires: gnome-todo >= %todo_ver
 Requires: gnome-characters >= %ver_major
 
 # Applications
@@ -204,7 +205,7 @@ Requires: gnome-games-full >= %games_ver
 ## Default photo viewer
 Requires: gnome-photos >= %ver_major
 ## Default image viewer
-Requires: eog >= %ver_major
+Requires: eog >= %eog_ver
 Requires: eog-plugins
 ## Default CD/DVD burning interface
 Requires: brasero >= %brasero_ver
@@ -246,6 +247,7 @@ Requires: gnome-user-share
 Requires: rygel
 Requires: rygel-tracker
 Requires: gnome-usage
+Requires: gnome-software >= %ver_major
 
 # flatpak
 Requires: xdg-desktop-portal-gtk
@@ -430,6 +432,9 @@ some other useful GNOME and GTK applications.
 %files regular
 
 %changelog
+* Thu Nov 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
+- added gnome-software
+
 * Tue Jun 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.2-alt3
 - default: added xdg-desktop-portal-gtk (flatpak + xdg-desktop-portal)
 
