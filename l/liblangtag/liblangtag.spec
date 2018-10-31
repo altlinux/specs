@@ -1,12 +1,13 @@
 Name: liblangtag
 Version: 0.6.2
-Release: alt2
-Summary: An interface library to access tags for identifying languages
+Release: alt3
 
-Group: System/Libraries
+Summary: An interface library to access tags for identifying languages
 License: (LGPLv3+ or MPLv2.0) and UCD
+Group: System/Libraries
+
 Url: http://tagoh.bitbucket.org/liblangtag/
-Source0: https://bitbucket.org/tagoh/%name/downloads/%name-%version.tar.bz2
+Source: https://bitbucket.org/tagoh/%name/downloads/%name-%version.tar.bz2
 
 # Automatically added by buildreq on Sun Jul 28 2013
 # optimized out: gnu-config pkg-config
@@ -46,7 +47,7 @@ developing applications that use %name.
 %setup
 
 %build
-%ifarch e2k
+%ifarch %e2k
 # TODO: report the problem upstream
 sed -i 's,-Werror=pointer-arith,,g' configure* aclocal.m4
 %endif
@@ -78,6 +79,10 @@ LD_LIBRARY_PATH=`pwd`/liblangtag/.libs make check
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 0.6.2-alt3
+- Replace e2k arch name with %%e2k macro (grenka@)
+- Minor spec cleanup
+
 * Fri Aug 25 2017 Michael Shigorin <mike@altlinux.org> 0.6.2-alt2
 - E2K: skip -Werror=pointer-arith (FTBFS)
 
