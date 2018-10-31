@@ -1,6 +1,6 @@
 Name: libogg
 Version: 1.3.2
-Release: alt1
+Release: alt2
 
 Summary: Ogg Bitstream Library
 Summary(ru_RU.UTF-8): Библиотека потокового формата Ogg
@@ -48,10 +48,12 @@ statically linked libogg-based software.
 
 %prep
 %setup
+sed -i 's,-O20,,g' configure*
 
 %build
+%autoreconf
 %configure %{subst_enable static}
-%make_build
+%make_build OGG_CFLAGS="%optflags"
 
 %install
 %makeinstall_std
@@ -77,6 +79,15 @@ install -pm644 AUTHORS CHANGES COPYING %buildroot%docdir/
 %endif
 
 %changelog
+* Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 1.3.2-alt2
+- piggyback our CFLAGS instead as these don't get respected by libogg
+  (thx ldv@ yet again)
+
+* Fri Jan 27 2017 Michael Shigorin <mike@altlinux.org> 1.3.2-alt1.1
+- E2K: "-O20" is a bit too much!
+  + see also https://github.com/kripken/emscripten/issues/264
+- autoreconf
+
 * Sat Nov 15 2014 Dmitry V. Levin <ldv@altlinux.org> 1.3.2-alt1
 - Updated to 1.3.2.
 
