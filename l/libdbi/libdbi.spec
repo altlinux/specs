@@ -4,7 +4,7 @@
 Name: libdbi
 Epoch: 1
 Version: 0.9.0
-Release: alt1.qa1
+Release: alt2
 
 Summary: Database Independent Abstraction Layer for C
 License: LGPL
@@ -57,9 +57,7 @@ This package contains the static library.
 %if_enabled docs
 touch doc/libdbi-versioning.sgml
 %endif
-%ifarch e2k
-sed -i 's,-O20,-O2,g' configure*
-%endif
+sed -i 's,-O20,%optflags_optimization,g' configure*
 
 %build
 %autoreconf
@@ -86,6 +84,9 @@ sed -i 's,-O20,-O2,g' configure*
 %_libdir/*.a
 
 %changelog
+* Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 1:0.9.0-alt2
+- just set proper optimization level
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.9.0-alt1.qa1
 - NMU: applied repocop patch
 
