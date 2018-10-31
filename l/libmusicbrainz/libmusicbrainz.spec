@@ -1,6 +1,6 @@
 Name: libmusicbrainz
 Version: 2.1.5
-Release: alt7
+Release: alt8
 
 Summary: A software library for accesing MusicBrainz servers
 License: LGPL
@@ -29,14 +29,11 @@ applications which will use lib%name.
 
 %prep
 %setup
-
 %patch0 -p1
 %patch1 -p1
 
 %build
-%ifnarch e2k
 %add_optflags -Wno-error=narrowing
-%endif
 %autoreconf
 %configure --disable-static
 %make_build
@@ -54,6 +51,9 @@ applications which will use lib%name.
 %_pkgconfigdir/*
 
 %changelog
+* Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 2.1.5-alt8
+- E2K: generic build as of lcc 1.21.24
+
 * Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 2.1.5-alt7
 - E2K: avoid lcc-unsupported option
 - minor spec cleanup
