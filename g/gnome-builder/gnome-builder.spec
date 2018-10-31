@@ -8,13 +8,14 @@
 %def_with sysprof
 %def_with flatpak
 %def_with docs
+%def_with help
 %def_with autotools
 %def_with jedi
 # can't be enabled now
 %def_without autotools_templates
 
 Name: gnome-builder
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -38,13 +39,13 @@ Source: %name-%version.tar
 %define gjs_ver 1.42
 %define xml_ver 2.9.0
 %define vala_ver 0.37
-%define sysprof_ver 3.30.1
+%define sysprof_ver 3.30.2
 %define vte_ver 0.46
 %define gtkmm_ver 3.20
 %define gspell_ver 1.8.0
 %define peas_ver 1.21.0
 %define json_glib_ver 1.2.0
-%define dazzle_ver 3.30.1
+%define dazzle_ver 3.30.2
 %define template_glib_ver 3.30.0
 
 # use python3
@@ -79,7 +80,7 @@ BuildRequires: libvala-devel >= %vala_ver vala-tools
 BuildRequires: libgspell-devel >= %gspell_ver libenchant2-devel
 BuildRequires: libdazzle-devel >= %dazzle_ver libtemplate-glib-devel >= %template_glib_ver libjsonrpc-glib-devel
 BuildRequires: libdazzle-gir-devel libtemplate-glib-gir-devel  libjsonrpc-glib-gir-devel
-BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme
+%{?_with_help:BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme}
 %{?_with_flatpak:BuildRequires: libflatpak-devel libostree-devel}
 %{?_with_sysprof:BuildRequires: sysprof-devel >= %sysprof_ver}
 %{?_with_idemm:BuildRequires: libgtkmm3-devel >= %gtkmm_ver}
@@ -105,6 +106,7 @@ This package provides noarch data needed for Gnome Builder to work.
 %meson \
 	%{?_with_sysprof:-Dwith_sysprof=true} \
 	%{?_with_docs:-Dwith_docs=true} \
+	%{?_with_help:-Dwith_help=true} \
 	%{?_without_flatpak:-Dwith_flatpak=false} \
 	%{?_with_autotools:-Dwith_autotools=true} \
 	%{?_with_autotools_templates:-Dwith_autotools_templates=true}
@@ -207,16 +209,21 @@ This package provides noarch data needed for Gnome Builder to work.
 %_datadir/glib-2.0/schemas/org.gnome.builder.terminal.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.workbench.gschema.xml
 %_datadir/gtksourceview-4/styles/*.xml
+%_datadir/gtksourceview-3.0/styles/*.xml
 %_datadir/%name/
 %_iconsdir/hicolor/*/*/*.*
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %if_with docs
 %_datadir/gtk-doc/html/libide/
+%{?_with_help:%_datadir/doc/%name/}
 #%_defaultdocdir/%name/
 %endif
 
 %changelog
+* Wed Oct 31 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
+- 3.30.2
+
 * Tue Sep 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 
