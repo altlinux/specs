@@ -11,7 +11,7 @@
 %def_enable docs
 
 Name: nautilus
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -187,6 +187,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Wed Oct 31 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.3-alt1
+- 3.30.3
+
 * Fri Oct 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 
