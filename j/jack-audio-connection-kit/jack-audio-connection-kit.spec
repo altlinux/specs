@@ -1,23 +1,28 @@
-Summary: The Jack Audio Connection Kit
+%def_enable firewire
+
 Name: jack-audio-connection-kit
 Version: 1.9.12
-Release: alt1.qa1
+Release: alt2
 Epoch: 1
+
+Summary: The Jack Audio Connection Kit
 License: GPLv2 and GPLv2+ and LGPLv2+
 Group: Sound
-URL: http://www.jackaudio.org
+
+Url: http://www.jackaudio.org
+Source0: https://github.com/jackaudio/jack2/releases/download/v%version/jack2-%version.tar.gz
+Source2: %name-script.pa
+Source3: %name-limits.conf
+Patch: jack-realtime-compat.patch
 
 Provides: jackd = %epoch:%version-%release
 Obsoletes: jackd < %epoch:%version
 
-Source0: https://github.com/jackaudio/jack2/releases/download/v%version/jack2-%version.tar.gz
-Source2: %name-script.pa
-Source3: %name-limits.conf
-Patch0: jack-realtime-compat.patch
-
-BuildRequires: doxygen gcc-c++ libalsa-devel libcelt-devel libdbus-devel libexpat-devel libffado-devel libfreebob-devel
+BuildRequires: doxygen gcc-c++ libalsa-devel libcelt-devel libdbus-devel libexpat-devel libffado-devel
 BuildRequires: libncurses-devel libreadline-devel libsamplerate-devel libsndfile-devel python-modules-compiler
 BuildRequires: python-modules-email python-modules-encodings python-modules-logging
+# FIXME: freebob seems obsoleted by ffado
+%{?_enable_firewire:BuildRequires: libfreebob-devel}
 
 %description
 JACK is a low-latency audio server, written primarily for the Linux
@@ -60,17 +65,29 @@ Obsoletes: jackit-utils < %epoch:%version
 Utilities that control and interact with the JACK server-jackd
 
 %prep
-%setup -q -n jack2-%version
-%patch0 -p1
+%setup -n jack2-%version
+%patch -p1
 
 %build
-./waf configure --prefix=%_prefix --libdir=/%_libdir --doxygen --firewire --freebob --alsa --dbus --classic
+# Some plugins use C++ and need lcxa. It can't be loaded
+# dynamically, so all binaries should be linked with it.
+%ifarch %e2k
+cc --version | grep -q '^lcc:1.21' && export LINKFLAGS+=" -lcxa"
+%endif
+./waf configure \
+	--prefix=%_prefix \
+	--libdir=/%_libdir \
+	--doxygen \
+	--alsa \
+	--dbus \
+	--classic \
+	%{?_enable_firewire:--firewire --freebob}
 ./waf build -j${NPROCS:-%__nprocs}
 
 %install
 ./waf --destdir=%buildroot install
-install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/pulse/%name.pa
-install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/security/limits.d/99-%name.conf
+install -pDm644 %SOURCE2 %buildroot%_sysconfdir/pulse/%name.pa
+install -pDm644 %SOURCE3 %buildroot%_sysconfdir/security/limits.d/99-%name.conf
 
 mkdir -p %buildroot%_datadir/doc/%name
 mv %buildroot%_datadir/jack-audio-connection-kit/reference/html/* %buildroot%_datadir/doc/%name/
@@ -131,6 +148,11 @@ export RPM_FILES_TO_LD_PRELOAD_jack=%_libdir/jack/*.so
 %_man1dir/jackrec.1*
 
 %changelog
+* Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 1:1.9.12-alt2
+- E2K: link against -lcxa explicitly (if lcc < 1.23)
+- introduced firewire knob (on by default)
+- minor spec cleanup
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.9.12-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
