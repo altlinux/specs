@@ -1,16 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
-Summary: Free firewire audio driver library
 Name: libffado
 Version: 2.4.1
-Release: alt1
+Release: alt2
+
+Summary: Free firewire audio driver library
 License: GPLv2+
 Group: Sound
+
 Url: http://www.ffado.org/
-
 Source: %name-%version.tar
-
-Patch1: libffado-2.0-alt.patch
+Patch: libffado-2.0-alt.patch
 
 %setup_python_module ffado
 
@@ -50,9 +50,10 @@ Python bindings for %name, %summary
 
 %prep
 %setup
-%patch1 -p2
+%patch -p2
+cp -at admin/ -- /usr/share/gnu-config/config.guess
 
-# XXX this uses non-existed module and is not used itself!
+# XXX this uses non-existing module and is not used itself!
 rm support/mixer-qt4/ffado/mixer/nodevice.py
 
 # We don't want to install all tests
@@ -105,6 +106,10 @@ rm -f %buildroot%_datadir/metainfo/ffado-mixer.appdata.xml
 %python_sitelibdir_noarch/%modulename
 
 %changelog
+* Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 2.4.1-alt2
+- E2K: fix FTBFS through recent config.guess
+- Minor spec cleanup
+
 * Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.1-alt1
 - Updated to upstream version 2.4.1.
 
