@@ -2,13 +2,13 @@
 
 Name: directfb
 Version: 1.1.0
-Release: alt5
+Release: alt6
 
 Summary: %realname - drivers and binaries
 License: LGPL
 Group: System/Libraries
-Url: http://www.directfb.org
 
+Url: http://www.directfb.org
 Source: %realname-%version.tar.gz
 
 Patch0:	%realname-am.patch
@@ -65,7 +65,7 @@ Requires: %name = %version-%release
 Static libraries for devel %realname applications
 
 %prep
-%setup -q -n %realname-%version
+%setup -n %realname-%version
 %patch0 -p1 -b .fix0
 %patch1 -p1 -b .fix1
 %patch2 -p1 -b .fix2
@@ -76,18 +76,22 @@ Static libraries for devel %realname applications
 %patch7 -p2
 
 %build
+export DRIVERS=all
+%ifarch %e2k
+export DRIVERS=radeon
+%endif
 %autoreconf
 %configure \
 	--enable-fbdev \
 	--enable-shared \
 	--enable-static \
 	--with-pic \
-	--with-gfxdrivers=all \
+	--with-gfxdrivers=$DRIVERS \
 	#
 %make_build
 
 %install
-%make install DESTDIR=%buildroot
+%makeinstall_std
 
 find %buildroot -name \*.la -delete
 {
@@ -125,6 +129,10 @@ find \
 %files -n lib%name-devel-static -f %name-static.files
 
 %changelog
+* Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 1.1.0-alt6
+- E2K: reduce gfxdriver set to just radeon (matrox, ati128 FTBFS)
+- minor spec cleanup
+
 * Mon Apr 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.0-alt5
 - fixed build on aarch64
 
