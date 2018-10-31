@@ -9,7 +9,7 @@
 %define priority 30
 Name: lib%oname-%sover-seq
 Version: 1.8.13
-Release: alt1.qa2
+Release: alt1.qa4
 
 Summary: Hierarchical Data Format 5 library
 
@@ -36,7 +36,8 @@ Provides: lib%{oname}_hl.so.%sover
 Requires(post,preun): alternatives
 
 # Automatically added by buildreq on Sat Sep 15 2007
-BuildRequires: gcc-c++ libssl-devel zlib-devel gcc-fortran
+BuildRequires: gcc-c++ libssl-devel zlib-devel
+%{?_enable_fortran:BuildRequires: gcc-fortran}
 
 %description
 HDF5 is a completely new Hierarchical Data Format product consisting
@@ -49,7 +50,8 @@ requirements of modern systems and applications.
 Summary: HDF5 library development package
 Group: Development/C
 Requires(post,preun): alternatives
-Requires: libgfortran-devel libstdc++-devel zlib-devel
+Requires: libstdc++-devel zlib-devel
+%{?_enable_fortran:Requires: libgfortran-devel}
 Requires: lib%oname = %version-%release
 Conflicts: lib%oname-mpi-devel < 1.8.3-alt5
 
@@ -89,7 +91,15 @@ requirements of modern systems and applications.
 This package contains examples for HDF5.
 
 %prep
-%setup -q -n %oname-%version
+%setup -n %oname-%version
+%ifarch %e2k
+# unsupported by lcc as of 1.21.21
+sed -i -e 's,-Wlogical-op,,' \
+	-e 's,-Wvla,,' \
+	-e 's,-Wsync-nand,,' \
+	-e 's,-Wdouble-promotion,,' \
+	CMakeLists.txt config/gnu-flags
+%endif
 
 %build
 sed -i -e 's/(SOVER)/%sover/' src/H5detect.c
@@ -106,8 +116,8 @@ sed -i -e 's/(SOVER)/%sover/' src/H5detect.c
 	--with-pthread \
 	--with-ssl \
 	--with-zlib \
-	--enable-fortran \
-	FC=f95
+	%{subst_enable fortran} \
+	%{?_enable_fortran:FC=f95}
 
 subst "s|^LT=.*|LT=../libtool|g" c++/src/Makefile c++/test/Makefile
 cp src/lib%oname.settings src/lib%oname-%sover.settings
@@ -164,7 +174,11 @@ includedir=%hdfdir/include
 Name: %oname
 Description: Hierarchical Data Format 5 library
 Version: %version
+%if_enabled fortran
 Libs: -lhdf5hl_fortran -lhdf5_hl_cpp -lhdf5_hl -lhdf5_fortran -lhdf5_cpp -lhdf5 -lgfortran -lstdc++ -lz
+%else
+Libs: -lhdf5_hl_cpp -lhdf5_hl -lhdf5_cpp -lhdf5 -lstdc++ -lz
+%endif
 Cflags: -I%hdfdir/include
 EOF
 
@@ -194,6 +208,13 @@ echo "%_pkgconfigdir/%oname.pc %_pkgconfigdir/%oname-seq.pc %priority" >> \
 %_docdir/hdf5_examples
 
 %changelog
+* Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 1.8.13-alt1.qa4
+- Replace e2k arch name with %%e2k macro (grenka@)
+
+* Mon Oct 09 2017 Michael Shigorin <mike@altlinux.org> 1.8.13-alt1.qa3
+- E2K: avoid lcc-unsupported options
+- introduce fortran knob (on by default)
+
 * Thu May 11 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.13-alt1.qa2
 - Fix library names in pkgconfig file
 
