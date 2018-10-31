@@ -1,17 +1,23 @@
+%def_disable snapshot
 %define _name graphite2
 %def_disable docs
 %def_enable check
 
 Name: lib%_name
 Version: 1.3.12
-Release: alt1
+Release: alt2.1
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
 Group: System/Libraries
 License: LGPLv2.1+ or MPL
 Url: http://sourceforge.net/projects/silgraphite/
 
+%if_disabled snapshot
 Source: http://downloads.sourceforge.net/silgraphite/%_name-%version.tgz
+%else
+# VCS: https://github.com/silnrsi/graphite.git
+Source: %_name-%version.tar
+%endif
 
 Obsoletes: %_name
 Provides: %_name = %version-%release
@@ -43,15 +49,16 @@ Includes and definitions for developing with Graphite2.
 %prep
 %setup -n %_name-%version
 %patch1 -p1 -b .cmake
-%ifarch %e2k
-# unsupported as of lcc 1.21.20
-sed -i 's,-Wdouble-promotion,,' src/CMakeLists.txt
-%add_optflags -lcxa
-%endif
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
+%ifarch %e2k
+# Some plugins use C++ and need lcxa. It can't be loaded
+# dynamically, so all binaries should be linked with it.
+cc --version | grep -q '^lcc:1.21' && export LIBS='-lcxa'
+%endif
 %cmake -DGRAPHITE2_COMPARE_RENDERER=OFF \
+	-DCMAKE_SHARED_LINKER_FLAGS=$LIBS \
 	-DPYTHON_EXECUTABLE:FILEPATH=%_bindir/python3
 %cmake_build
 
@@ -81,6 +88,12 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Wed Oct 31 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.12-alt2.1
+- e2k fixes, see previous release
+
+* Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 1.3.12-alt2
+- E2K: adjust for lcc >= 1.21.24 (and prepare for 1.23)
+
 * Thu Aug 16 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.12-alt1
 - 1.3.12
 
