@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Glorious MIME Utility Library
@@ -33,7 +33,7 @@ BuildRequires: gcc-c++ libgio-devel >= %glib_ver
 BuildRequires: libidn2-devel zlib-devel
 BuildRequires: gtk-doc docbook-utils
 BuildRequires: gobject-introspection-devel >= %gi_ver
-BuildRequires: libvala-devel vala vala-tools
+BuildRequires: vala-tools
 %{?_enable_crypto:BuildRequires: libgpgme-devel}
 
 %description
@@ -93,7 +93,7 @@ statically linked GMime-based software.
 %setup -n %_name-%version
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+%{?_enable_snapshot:NOCONFIGURE=1 ./autogen.sh}
 %configure  %{subst_enable static} \
 	    %{subst_enable crypto} \
 	    --enable-introspection \
@@ -134,6 +134,9 @@ NOCONFIGURE=1 ./autogen.sh
 %endif
 
 %changelog
+* Wed Oct 31 2018 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
+- 3.2.2
+
 * Sat Oct 27 2018 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
 - updated to 3.2.1-3-g87405143
 
