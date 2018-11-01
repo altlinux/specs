@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.8.2
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -281,6 +281,8 @@ install -pm0755 -D %SOURCE1 %buildroot%_initdir/freeswitch
 install -pm0644 -D %SOURCE2 %buildroot%_tmpfilesdir/freeswitch.conf
 install -pm0644 -D %SOURCE3 %buildroot%_sysconfdir/sysconfig/freeswitch
 install -pm0640 -D %SOURCE5 %buildroot%_sysconfdir/fs_cli.conf
+
+install -pm0644 src/include/switch_version.h %buildroot/%_includedir/freeswitch/switch_version.h
 
 mkdir -p \
     %buildroot%_datadir/%name/sounds \
@@ -601,6 +603,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Thu Nov 01 2018 Anton Farygin <rider@altlinux.ru> 1:1.8.2-alt3
+- added switch_version.h to devel package (closes: #25924)
+
 * Tue Oct 16 2018 Anton Farygin <rider@altlinux.ru> 1:1.8.2-alt2
 - added fix for build with libav-11
 
