@@ -28,7 +28,7 @@
 
 Name: freeipa
 Version: 4.7.1
-Release: alt2
+Release: alt3
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -548,7 +548,6 @@ printf '%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so\t/dev/null\t90\n' 
 %make check VERBOSE=yes LIBDIR=%_libdir
 
 %post server
-%post_service ipa
 %post_service certmonger
 %post_service dbus
 %post_service oddjobd
@@ -923,6 +922,9 @@ fi
 %_man1dir/ipa-test-task.1*
 
 %changelog
+* Wed Oct 24 2018 Stanislav Levin <slev@altlinux.org> 4.7.1-alt3
+- Added support for separated IPA plugins.
+
 * Mon Oct 15 2018 Stanislav Levin <slev@altlinux.org> 4.7.1-alt2
 - Fixed client upgrade from 4.6 to 4.7.
 
