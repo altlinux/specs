@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%modulename
-Version: 16.0.0
-Release: alt1%ubt
+Version: 16.1.0
+Release: alt1
 
 Summary: Virtual Python Environment builder
 License: MIT
@@ -14,25 +14,33 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/virtualenv
 
 Source: %name-%version.tar.gz
+
 Patch1: python3-system-sys.path.patch
 Patch2: allow_internal_symlinks.patch
 Patch3: python3-installation-within-the-bare-virtualenv.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools
-BuildRequires: python3-module-setuptools
 
 %if_with check
+BuildRequires: python-modules-json
 BuildRequires: python-module-mock
+BuildRequires: python-module-tox
+BuildRequires: python-module-coverage
 BuildRequires: python-module-nose
 BuildRequires: python-module-pytest
+BuildRequires: python-module-pytest-timeout
 BuildRequires: python3-module-mock
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-coverage
 BuildRequires: python3-module-nose
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-timeout
 %endif
 
 BuildArch: noarch
+# json is not direct dep, but it is required to
+# use bundled 'pip' whl package, otherwise installation fails
+Requires: python-modules-json
 
 %description
 Tool to create isolated Python environments.
@@ -76,8 +84,11 @@ in newly created environment by invoking /your/dir/bin/python
 %patch1 -p2
 %patch2 -p1
 %patch3 -p2
+
 # to reflect virtualenv_embedded/ updates on virtualenv.py
-python bin/rebuild-script.py
+# if any file was changed under this directory then it's
+# hash is updated in virtualenv.py and returns 1 otherwise 0
+python bin/rebuild-script.py ||:
 
 rm -rf ../python3
 cp -a . ../python3
@@ -92,39 +103,58 @@ popd
 %install
 pushd ../python3
 %python3_install
-mv %buildroot%_bindir/virtualenv %buildroot%_bindir/virtualenv3
+mv %buildroot%_bindir/{virtualenv,virtualenv3}
 popd
 
 %python_install
 
 %check
 export PIP_INDEX_URL=http://host.invalid./
-py.test -v
+# copy nessecary exec deps
+export PYTHONPATH="$(pwd)"/src
+export TOX_TESTENV_PASSENV='PYTHONPATH'
+
+tox --sitepackages -e py%{python_version_nodots python} --notest
+cp %_bindir/coverage .tox/py%{python_version_nodots python}/bin/
+
+tox --sitepackages -e py%{python_version_nodots python} -v -- -v
 
 pushd ../python3
-py.test3 -v
+export PYTHONPATH="$(pwd)"/src
+tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
+cp %_bindir/coverage3 .tox/py%{python_version_nodots python3}/bin/coverage
+
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
 
 %files
 %doc docs/* *.txt *.rst
 %_bindir/virtualenv
 %exclude %_bindir/virtualenv3
-%python_sitelibdir/*
+%python_sitelibdir/virtualenv.py*
+%python_sitelibdir/virtualenv-*.egg-info/
+%python_sitelibdir/virtualenv_support/
 
 %files -n python3-module-%modulename
 %doc docs/* *.txt *.rst
 %_bindir/virtualenv3
-%python3_sitelibdir/*
+%python3_sitelibdir/virtualenv.py
+%python3_sitelibdir/virtualenv-*.egg-info/
+%python3_sitelibdir/virtualenv_support/
+%python3_sitelibdir/__pycache__/virtualenv.*
 
 %changelog
-* Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 16.0.0-alt1%ubt
+* Thu Nov 01 2018 Stanislav Levin <slev@altlinux.org> 16.1.0-alt1
+- 16.0.0 -> 16.1.0.
+
+* Thu May 31 2018 Stanislav Levin <slev@altlinux.org> 16.0.0-alt1
 - 15.1.0 -> 16.0.0
 
-* Thu Mar 29 2018 Stanislav Levin <slev@altlinux.org> 15.1.0-alt3%ubt
+* Thu Mar 29 2018 Stanislav Levin <slev@altlinux.org> 15.1.0-alt3
 - Fix system sys.path down to virtualenv
 - Cleanup patches
 
-* Sun Mar 25 2018 Stanislav Levin <slev@altlinux.org> 15.1.0-alt2%ubt
+* Sun Mar 25 2018 Stanislav Levin <slev@altlinux.org> 15.1.0-alt2
 - Fix installation within the bare virtualenv under python3
 - Cleanup spec
 
