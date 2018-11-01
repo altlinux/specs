@@ -1,6 +1,6 @@
 Name:    libcpp-hocon
 Version: 0.2.1
-Release: alt1
+Release: alt2
 Summary: A C++ port of the Typesafe Config library
  
 Group:   System/Libraries
@@ -54,6 +54,9 @@ Development libraries for cpp-hocon.
 %_includedir/hocon
 
 %changelog
+* Thu Nov 01 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.1-alt2
+- Rebuild with libleatherman 1.5.3.
+
 * Fri Oct 12 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.1-alt1
 - New version.
 
