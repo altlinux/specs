@@ -1,7 +1,7 @@
 %define confdir ext/redhat
 
 Name:    puppet
-Version: 6.0.3
+Version: 6.0.4
 Release: alt1
 
 Summary: A network tool for managing many disparate systems
@@ -186,6 +186,9 @@ rm -rf %buildroot%_sysconfdir/{*.conf,hiera.yaml}
 %rubygem_specdir/*
 
 %changelog
+* Thu Nov 01 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.4-alt1
+- New version.
+
 * Mon Oct 29 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.3-alt1
 - New version.
 
