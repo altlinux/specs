@@ -1,6 +1,6 @@
 Name: mpv
-Version: 0.28.2
-Release: alt2
+Version: 0.29.1
+Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 Summary(ru_RU.UTF8): MPV - это медиапроигрыватель с открытыми исходниками, основанный на проектах MPlayer и mplayer2.
@@ -18,7 +18,7 @@ BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-
 
 BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel libdvdnav-devel libbluray-devel libavfilter-devel libsmbclient-devel libswresample-devel libwayland-client-devel libwayland-cursor-devel libxkbcommon-devel libEGL-devel libwayland-egl-devel libdrm-devel libv4l-devel libarchive-devel liblcms2-devel
 
-%ifnarch e2k
+%ifnarch %e2k
 BuildRequires: liblua5.3-devel libluajit-devel
 %endif
 
@@ -62,13 +62,13 @@ This package contains %name shared library
 
 ls
 chmod ugo+rx waf
-./waf configure --bindir=%_bindir --mandir=%_mandir --datadir=%_datadir --libdir=%_libdir --incdir=%_includedir --prefix= \
+./waf configure --bindir=%_bindir --mandir=%_mandir --datadir=%_datadir --libdir=%_libdir --includedir=%_includedir --prefix= \
 --enable-pulse \
 --enable-xv \
 --enable-vaapi \
 --enable-alsa \
 --enable-gl-x11 \
-%ifnarch e2k
+%ifnarch %e2k
 --enable-lua \
 %endif
 --enable-zsh-comp \
@@ -107,6 +107,12 @@ chmod ugo+rx waf
 %_libdir/libmpv.so.*
 
 %changelog
+* Thu Nov  1 2018 Terechkov Evgenii <evg@altlinux.org> 0.29.1-alt1
+- 0.29.1
+
+* Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 0.28.2-alt3
+- Replace e2k arch name with %%e2k macro (grenka@)
+
 * Sun Sep  9 2018 Terechkov Evgenii <evg@altlinux.org> 0.28.2-alt2
 - Build with TV/V4L support (ALT#35370)
 
