@@ -1,5 +1,5 @@
 Name: tvheadend
-Version: 4.2.6
+Version: 4.2.7
 Release: alt1
 
 Summary: Tvheadend TV streaming server
@@ -71,6 +71,9 @@ f=%_sysconfdir/tvheadend/superuser
 %dir %attr(0770,root,_hts) %_localstatedir/tvheadend
 
 %changelog
+* Thu Nov 01 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2.7-alt1
+- 4.2.7 released
+
 * Wed Sep 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2.6-alt1
 - 4.2.6 released
 
