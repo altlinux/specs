@@ -6,7 +6,7 @@
 %def_without selinux
 
 Name: 389-ds-base
-Version: 1.3.8.10
+Version: 1.3.9.0
 Release: alt1
 
 Summary: 389 Directory Server (base)
@@ -287,6 +287,9 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun_service %pkgname
 %preun_service %pkgname-snmp
 %changelog
+* Thu Nov 01 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.9.0-alt1
+- New version.
+
 * Thu Oct 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.8.10-alt1
 - New version.
 - Security fixes:
