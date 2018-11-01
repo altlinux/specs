@@ -1,7 +1,7 @@
 %define pg_ver 10
 
 Name: postgis
-Version: 2.4.4
+Version: 2.5.0
 Release: alt1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL
@@ -12,6 +12,7 @@ Url: http://postgis.refractions.net
 
 Source: %name-%version.tar
 Source1: create_template_postgis
+Source2: postgis.watch
 Patch1: %name-alt-fix-build-with-postgresql10.patch
 
 BuildRequires: ImageMagick-tools
@@ -112,6 +113,10 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_includedir/liblwgeom_topo.h
 
 %changelog
+* Tue Oct 23 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
+- New version.
+- Add watch file to src.rpm.
+
 * Mon Apr 16 2018 Andrey Cherepanov <cas@altlinux.org> 2.4.4-alt1
 - New version.
 
