@@ -1,15 +1,15 @@
 Name: flite
-Version: 2.0.0
+Version: 2.1
 Release: alt1
 
 Summary: flite - a small, fast speech synthesis engine
-License: Custom, see COPYING
+License: BSD-like
 Group: Sound
 Url: http://cmuflite.org
 
 Source0: %name-%version-%release.tar
 
-BuildRequires: ed libalsa-devel texi2html
+BuildRequires: ed libalsa-devel makeinfo texi2html
 
 %description
 Flite - a small, fast speech synthesis engine. It is the latest addition to
@@ -45,7 +45,7 @@ sed -e 's,@libdir@,%_libdir,' -e 's,@version@,%version,' \
 	< flite.pc.in > %buildroot%_pkgconfigdir/flite.pc
 
 %files
-%doc ACKNOWLEDGEMENTS README COPYING doc/html
+%doc ACKNOWLEDGEMENTS README.md COPYING doc/html
 %_bindir/*
 %_libdir/*.so.*
 
@@ -55,6 +55,9 @@ sed -e 's,@libdir@,%_libdir,' -e 's,@version@,%version,' \
 %_pkgconfigdir/flite.pc
 
 %changelog
+* Thu Nov 01 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1-alt1
+- 2.1 released
+
 * Fri Feb 19 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.0-alt1
 - 2.0.0 released
 
