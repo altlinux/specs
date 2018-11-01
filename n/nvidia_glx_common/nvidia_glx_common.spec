@@ -20,8 +20,8 @@
 %define nv_version 390
 %define nv_release 87
 %define nv_minor %nil
-%define pkg_rel alt198
-%define set_gl_nvidia_ver 0.22.1
+%define pkg_rel alt199
+%define set_gl_nvidia_ver 0.22.2
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -128,34 +128,39 @@ tar xvf %SOURCE0
 pushd set_gl_nvidia*
 cp settings.h.in settings.h
 
+%define glvnd_scheme 0
 %Nif_ver_gteq %ubt_id M90
-subst "s|@GLVND_SCHEME@|1|" settings.h
+%define glvnd_scheme 0
 %else
-subst "s|@GLVND_SCHEME@|0|" settings.h
+%define glvnd_scheme -1
 %endif
+#Nif_ver_gteq %ubt_id M100
+#define glvnd_scheme 1
+#endif
+sed -i "s|@GLVND_SCHEME@|%glvnd_scheme|" settings.h
 
-subst "s|@DEFAULT_VERSION@|%version|" settings.h
-subst "s|@X_ETCLIB_SYML_DIR@|%x_etclib_sym_dir|" settings.h
-subst "s|@NV_ETCLIB_SYML_DIR@|%nv_etclib_sym_dir|" settings.h
-subst "s|@TLS_LIB_DIR@|%tls_lib_dir|" settings.h
+sed -i "s|@DEFAULT_VERSION@|%version|" settings.h
+sed -i "s|@X_ETCLIB_SYML_DIR@|%x_etclib_sym_dir|" settings.h
+sed -i "s|@NV_ETCLIB_SYML_DIR@|%nv_etclib_sym_dir|" settings.h
+sed -i "s|@TLS_LIB_DIR@|%tls_lib_dir|" settings.h
 
-subst "s|@XLIB_DIR@|%x11_lib_dir|" settings.h
-subst "s|@XLIB_DIR_OLD@|%x11_lib_old|" settings.h
+sed -i "s|@XLIB_DIR@|%x11_lib_dir|" settings.h
+sed -i "s|@XLIB_DIR_OLD@|%x11_lib_old|" settings.h
 
-subst "s|@XMOD_DIR@|%x11_mod_dir|" settings.h
-subst "s|@XMOD_DIR_OLD@|%x11_mod_old|" settings.h
+sed -i "s|@XMOD_DIR@|%x11_mod_dir|" settings.h
+sed -i "s|@XMOD_DIR_OLD@|%x11_mod_old|" settings.h
 
-subst "s|@XDRV_DIR@|%x11_drv_dir|" settings.h
-subst "s|@XDRV_DIR_OLD@|%x11_drv_old|" settings.h
+sed -i "s|@XDRV_DIR@|%x11_drv_dir|" settings.h
+sed -i "s|@XDRV_DIR_OLD@|%x11_drv_old|" settings.h
 
-subst "s|@XEXT_DIR@|%x11_ext_dir|" settings.h
-subst "s|@XEXT_DIR_OLD@|%x11_ext_old|" settings.h
+sed -i "s|@XEXT_DIR@|%x11_ext_dir|" settings.h
+sed -i "s|@XEXT_DIR_OLD@|%x11_ext_old|" settings.h
 
-subst "s|@X_DRV_DIR@|%x11driver_dir|" settings.h
-subst "s|@NV_DRV_DIR_PREFIX@|%nv_lib_dir_prefix|" settings.h
-subst "s|@NV_DRV_DIR_PREFIX_OLD@|%nv_lib_dir_prefix_old|" settings.h
+sed -i "s|@X_DRV_DIR@|%x11driver_dir|" settings.h
+sed -i "s|@NV_DRV_DIR_PREFIX@|%nv_lib_dir_prefix|" settings.h
+sed -i "s|@NV_DRV_DIR_PREFIX_OLD@|%nv_lib_dir_prefix_old|" settings.h
 
-subst "s|@XINF_DIR@|%xinf_dir|" settings.h
+sed -i "s|@XINF_DIR@|%xinf_dir|" settings.h
 popd
 
 
@@ -304,6 +309,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Thu Nov 01 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt199
+- don't detect new glvnd packaging scheme on old branches
+
 * Wed Oct 31 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt198
 - package symlinks
 
