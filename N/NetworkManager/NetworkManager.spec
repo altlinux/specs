@@ -1,4 +1,4 @@
-%define git_hash .git2c6fafad7abe
+%define git_hash .gitba83251bba87
 #define git_hash %nil
 
 %define dbus_version 1.2.12-alt2
@@ -771,6 +771,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Nov 01 2018 Mikhail Efremov <sem@altlinux.org> 1.14.5-alt1.gitba83251bba87
+- Upstream git snapshot (nm-1-14 branch) (fixes: CVE-2018-15688).
+
 * Fri Oct 26 2018 Mikhail Efremov <sem@altlinux.org> 1.14.5-alt1.git2c6fafad7abe
 - Explicitly disable ibft plugin.
 - Upstream git snapshot (nm-1-14 branch).
