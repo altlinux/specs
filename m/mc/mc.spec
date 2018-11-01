@@ -3,7 +3,7 @@
 
 Name: mc
 Version: 4.8.21
-Release: alt2
+Release: alt3
 
 # '-gitYYYYMMDD' or ''
 %define ver_date '-git20180819'
@@ -142,6 +142,7 @@ Version=1.0
 Type=Application
 Name=Midnight Commander
 Comment=Visual shell and file manager
+Comment[ru]=Визуальная оболочка и диспетчер файлов 
 Icon=%name
 Exec=%name
 Terminal=true
@@ -204,6 +205,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Thu Nov 01 2018 Pavel Moseev <mars@altlinux.org> 4.8.21-alt3
+- Updated hint translation
+
 * Mon Aug 20 2018 Sergey Y. Afonin <asy@altlinux.ru> 4.8.21-alt2
 - updated to 20180819 git snapshot (ALT #35188)
 - rebuilt with S-Lang 2.3.2 (ALT #34343)
