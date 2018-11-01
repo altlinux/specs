@@ -1,5 +1,5 @@
 Name: kexec-tools
-Version: 2.0.17
+Version: 2.0.18
 Release: alt1
 
 Summary: Load one kernel from another
@@ -31,7 +31,6 @@ This package contains statically linked kexec binary only.
 
 %prep
 %setup
-echo '#define VERSION "%version-%release"' > version.h
 
 %build
 %autoreconf
@@ -44,11 +43,9 @@ install -pm0644 -D kexec/kexec.8 %buildroot%_man8dir/kexec.8
 
 %files
 %doc AUTHORS COPYING TODO News
-/sbin/kdump
 /sbin/kexec
 /sbin/vmcore-dmesg
 %_man8dir/kexec.8*
-%_man8dir/kdump.8*
 %_man8dir/vmcore-dmesg.8*
 
 %if 0
@@ -57,6 +54,9 @@ install -pm0644 -D kexec/kexec.8 %buildroot%_man8dir/kexec.8
 %endif
 
 %changelog
+* Thu Nov 01 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.18-alt1
+- 2.0.18 released
+
 * Thu Apr 19 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.17-alt1
 - 2.0.17 released
 
