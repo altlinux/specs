@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-menhir
-Version: 20181005
-Release: alt2
+Version: 20181026
+Release: alt1
 Summary: LR(1) parser generator for the OCaml programming language.
 
 Group: Development/ML
@@ -10,11 +10,9 @@ Url: http://gallium.inria.fr/~fpottier/menhir/
 Source: menhir-%version.tar
 
 BuildRequires(pre): ocaml
-Provides: ocaml4-menhir
+Provides: ocaml4-menhir = %EVR
 Obsoletes: ocaml4-menhir
 
-# Automatically added by buildreq on Mon Jun 27 2016
-# optimized out: ocaml4 ocaml4-runtime python-base python-modules python3
 BuildRequires: ocaml-camlp4 ocaml-findlib ocaml-ocamlbuild python-module-google python3-base
 
 %description
@@ -50,8 +48,6 @@ rm -rf %buildroot%_datadir/doc/%name-%version/src/
 %doc INSTALLATION.md
 %doc README.md
 %doc LICENSE
-%doc Makefile
-%doc manual.pdf
 %_bindir/*
 %_man1dir/*
 %dir %_datadir/menhir
@@ -62,6 +58,9 @@ rm -rf %buildroot%_datadir/doc/%name-%version/src/
 %_libdir/ocaml/menhirSdk/*
 
 %changelog
+* Thu Nov 01 2018 Anton Farygin <rider@altlinux.ru> 20181026-alt1
+- 20181026
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 20181005-alt2
 - rebuilt for ocaml-4.07.1
 
