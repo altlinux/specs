@@ -1,6 +1,8 @@
+%def_with nghttp2
+
 Name: curl
 Version: 7.62.0
-Release: alt1
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -14,7 +16,9 @@ Patch0: curl-%version-alt.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires: glibc-devel-static groff-base libidn-devel libssh2-devel libssl-devel libkrb5-devel zlib-devel python-modules python-modules-logging python-modules-xml libpsl-devel libnghttp2-devel
+BuildRequires: glibc-devel-static groff-base libidn-devel libssh2-devel libssl-devel libkrb5-devel zlib-devel python-modules python-modules-logging python-modules-xml libpsl-devel
+
+%{?_with_nghttp2:BuildRequires: libnghttp2-devel}
 
 %package -n lib%name
 Summary: The shared library for file transfer
@@ -144,6 +148,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Thu Nov 01 2018 Michael Shigorin <mike@altlinux.org> 7.62.0-alt2
+- added nghttp2 knob (on by default)
+
 * Wed Oct 31 2018 Anton Farygin <rider@altlinux.ru> 7.62.0-alt1
 - 7.62.0 
 - fixes:
