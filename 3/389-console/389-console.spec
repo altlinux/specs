@@ -1,9 +1,9 @@
 %define major_version 1.1
-%define minor_version 18
+%define minor_version 19
 
 Name: 389-console
-Version: 1.1.18
-Release: alt2
+Version: 1.1.19
+Release: alt1
 Summary: Fedora Management Console
 
 Group: Networking/Other
@@ -61,6 +61,9 @@ popd
 %_man8dir/*
 
 %changelog
+* Thu Nov 01 2018 Stanislav Levin <slev@altlinux.org> 1.1.19-alt1
+- 1.1.18 -> 1.1.19.
+
 * Fri Aug 31 2018 Stanislav Levin <slev@altlinux.org> 1.1.18-alt2
 - Fix build.
 
