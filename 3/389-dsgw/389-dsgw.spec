@@ -4,7 +4,7 @@ Summary:  389 Directory Server Gateway (dsgw)
 
 Name:     389-dsgw
 Version:  1.1.11
-Release:  alt2
+Release:  alt3
 License:  GPLv2
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 Url:      http://port389.org
@@ -47,6 +47,7 @@ export adminutil_lib=-L%_libdir/
            --with-ldapsdk-inc=/usr/include/mozldap \
 	   --with-ldapsdk-lib=%_libdir \
 	   --with-instconfigdir=/etc/%pkgname/ \
+           --with-fhs \
 	   --with-adminserver
 
 %make_build
@@ -63,6 +64,9 @@ export adminutil_lib=-L%_libdir/
 %_sbindir/setup-ds-dsgw
 
 %changelog
+* Thu Nov 01 2018 Ivan A. Melnikov <iv@altlinux.org> 1.1.11-alt3
+- Fix build with recent mozldap
+
 * Fri Feb 26 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.11-alt2
 - Rebuild with new icu
 
