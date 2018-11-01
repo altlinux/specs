@@ -11,8 +11,8 @@ sethook method and changing its implementation.  All users of the \
 function, including those that imported it, will see the change.
 
 Name: %fname
-Version: 4.0.4
-Release: alt2
+Version: 4.2.0
+Release: alt1
 
 %if ""==""
 Summary: Hookable object support
@@ -111,6 +111,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Oct 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
+- Build new version.
+
 * Thu May 10 2018 Grigory Ustinov <grenka@altlinux.org> 4.0.4-alt2
 - Tranfer package to subst-packaging system.
 
