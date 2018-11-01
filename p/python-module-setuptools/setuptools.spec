@@ -5,8 +5,8 @@
 
 Name: python-module-%mname
 Epoch: 1
-Version: 40.4.3
-Release: alt1.qa1
+Version: 40.5.0
+Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -208,6 +208,9 @@ popd
 %python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
+* Thu Nov 01 2018 Stanislav Levin <slev@altlinux.org> 1:40.5.0-alt1
+- 40.4.3 -> 40.5.0.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:40.4.3-alt1.qa1
 - NMU: applied repocop patch
 
