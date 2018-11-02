@@ -4,7 +4,7 @@
 %define _pkgdocdir %_docdir/%name-%version
 
 Name: ngspice
-Version: 28
+Version: 29
 Release: alt1
 Summary: A mixed level/signal circuit simulator
 
@@ -189,6 +189,9 @@ cp -a \
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Nov 02 2018 Anton Midyukov <antohami@altlinux.org> 29-alt1
+- new version 29
+
 * Fri Jul 13 2018 Anton Midyukov <antohami@altlinux.org> 28-alt1
 - new version 28
 
