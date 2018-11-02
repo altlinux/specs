@@ -1,7 +1,7 @@
 
 Name:		packageinstall
-Version:	1.1.1
-Release:	alt2
+Version:	1.1.2
+Release:	alt1
 Summary:	GUI frontend for install packages using apt-get
 
 License:	GPL
@@ -10,31 +10,33 @@ URL:		http://www.altlinux.org/PackageInstall
 
 Packager:   	Andrey Cherepanov <cas@altlinux.org>
 
+Requires: apt consolehelper
+
 Source0:	%name-%version.tar.gz
 
-BuildRequires: gcc-c++ libqt4-devel
-Requires: apt consolehelper
-BuildPreReq: libpam-devel
+BuildRequires(pre): libpam-devel
+BuildRequires: gcc-c++
+BuildRequires: qt5-base-devel qt5-tools
 
 %description
 This application is GUI frontend for install package(s) using apt-get.
 
 %prep
 %setup -q
+%qmake_qt5 PREFIX=%_prefix %name.pro
 
 %build
-lrelease-qt4 %name.pro
-DESTDIR=%buildroot PREFIX=/usr qmake-qt4 %name.pro
-
 %make_build
+lrelease-qt5 %name.pro
 
 %install
-%makeinstall
+%installqt5
 mkdir -p %buildroot%_sbindir/
 mv %buildroot%_bindir/%name %buildroot%_sbindir
 ln -s %_libexecdir/consolehelper/helper %buildroot%_bindir/%name
 install -pD -m640 %name.pamd %buildroot%_sysconfdir/pam.d/%name
 install -pD -m640 %name.security %buildroot%_sysconfdir/security/console.apps/%name
+for f in *.qm; do install -m 0644 $f %buildroot/%_datadir/apps/%name/ ||: ; done
 
 %files
 %doc AUTHORS README
@@ -46,6 +48,9 @@ install -pD -m640 %name.security %buildroot%_sysconfdir/security/console.apps/%n
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Fri Nov 02 2018 Sergey V Turchin <zerg at altlinux dot org> 1.1.2-alt1
+- port to Qt5
+
 * Tue Oct 02 2018 Oleg Solovyov <mcpain@altlinux.org> 1.1.1-alt2
 - spec cleanup
 
