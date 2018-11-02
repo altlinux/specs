@@ -1,8 +1,8 @@
 BuildRequires: desktop-file-utils
 
 Name:		rpminstall
-Version:	1.1.3
-Release:	alt2
+Version:	1.1.4
+Release:	alt1
 Summary:	Graphical application for install RPM packages using apt-get
 
 License:	GPL
@@ -13,7 +13,7 @@ Packager:   	Andrey Cherepanov <cas@altlinux.org>
 
 Source0:	%name-%version.tar.gz
 
-BuildRequires: gcc-c++ libqt4-devel
+BuildRequires: gcc-c++ qt5-base-devel qt5-tools
 Requires: packageinstall
 
 %description
@@ -21,21 +21,22 @@ Graphical application for install RPM packages using apt-get.
 
 %prep
 %setup -q
+export PREFIX=%_prefix
+%qmake_qt5 %name.pro
 
 %build
-lrelease-qt4 %name.pro
-DESTDIR=%buildroot PREFIX=/usr qmake-qt4 %name.pro
-
 %make_build
+lrelease-qt5 %name.pro
 
 %install
-%makeinstall
+%installqt5
 install -Dm644 apturl.js %buildroot%_libdir/firefox/defaults/preferences/apturl.js
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Utility \
 	--add-category=Settings \
 	--add-category=PackageManager \
 	%buildroot%_desktopdir/rpminstall.desktop
+for f in *.qm; do install -m 0644 $f %buildroot/%_datadir/apps/%name/ ||: ; done
 
 %files
 %doc AUTHORS README
@@ -48,6 +49,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_libdir/firefox/defaults/preferences/apturl.js
 
 %changelog
+* Fri Nov 02 2018 Sergey V Turchin <zerg at altlinux dot org> 1.1.4-alt1
+- port to Qt5
+
 * Tue Oct 02 2018 Oleg Solovyov <mcpain@altlinux.org> 1.1.3-alt2
 - spec cleanup
 
