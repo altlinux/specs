@@ -1,8 +1,8 @@
 %define  pkgname curb
 
 Name: 	 ruby-%pkgname
-Version: 0.9.4
-Release: alt1.6
+Version: 0.9.6
+Release: alt1
 
 Summary: Ruby bindings for libcurl
 License: MIT/ruby
@@ -12,6 +12,7 @@ Url:     https://github.com/taf2/curb
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:  %pkgname-%version.tar
+Patch1:   libssl1.1-fix.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
@@ -19,7 +20,12 @@ BuildRequires: libruby-devel
 BuildRequires: libcurl-devel
 
 %description
-%summary
+Curb (probably CUrl-RuBy or something) provides Ruby-language bindings for
+the libcurl(3), a fully-featured client-side URL transfer library. cURL and
+libcurl live at http://curl.haxx.se/ .
+
+Curb is a work-in-progress, and currently only supports libcurl's 'easy' and
+'multi' modes.
 
 %package doc
 Summary: Documentation files for %name
@@ -32,6 +38,7 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
+%patch1 -p 1
 %update_setup_rb
 
 %build
@@ -56,6 +63,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Nov 02 2018 Pavel Skrylev <majioa@altlinux.org> 0.9.6-alt1
+- Bump to 0.9.6.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt1.6
 - Rebuild with new Ruby autorequirements.
 
