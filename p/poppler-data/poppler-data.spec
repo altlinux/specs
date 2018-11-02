@@ -1,7 +1,7 @@
 
 Name: poppler-data
-Version: 0.4.8
-Release: alt1%ubt
+Version: 0.4.9
+Release: alt1
 
 Group: Publishing
 Summary: Common data for poppler
@@ -44,6 +44,9 @@ rm -rf poppler-data.pc
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Fri Nov 02 2018 Sergey V Turchin <zerg@altlinux.org> 0.4.9-alt1
+- new version
+
 * Mon Apr 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.4.8-alt1%ubt
 - new version
 
