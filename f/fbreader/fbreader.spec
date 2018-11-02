@@ -1,26 +1,28 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: fbreader
 Version: 0.99.5
-Release: alt5%ubt
+Release: alt6
 Summary: E-Book Reader
 Summary (ru_RU.UTF-8): Программа для чтения электронных книг (E-Book, Ebook)
 License: GPL
 Group: Text tools
 URL: https://fbreader.org
-Source: FBReader-%version.tar.gz
+
+Source: FBReader-%version.tar
 Source1: watch
 Source2: %{name}16.png
 Source3: %{name}32.png
 Source4: %{name}48.png
 Source5: x-fb2.desktop
+
 Patch1: %name-%version-alt-gcc6.patch
 Patch2: %name-%version-alt-debuginfo.patch
 Patch3: %name-%version-alt-crash.patch
 Patch4: %name-%version-alt-fix-menu-about.patch
+Patch5: %name-%version-alt-qt5.patch
 
-BuildRequires(pre): rpm-build-ubt
-# Automatically added by buildreq on Wed Nov 11 2015
-# optimized out: fontconfig libqt4-core libqt4-gui libqt4-network libstdc++-devel pkg-config
-BuildRequires: bzlib-devel gcc-c++ libexpat-devel libfribidi-devel libqt4-devel libsqlite3-devel libunibreak-devel zlib-devel
+BuildRequires: bzlib-devel gcc-c++ libexpat-devel libfribidi-devel qt5-base-devel libsqlite3-devel libunibreak-devel zlib-devel
 
 %description
 E-Book Reader. Supports several e-book formats: fb2 (fictionbook), html, plucker, palmdoc, zTxt, plain text.
@@ -34,15 +36,18 @@ E-Book Reader. Supports several e-book formats: fb2 (fictionbook), html, plucker
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 
 %build
-# explicitly setting CC variable is required for building on p8, c8 and older branches.
-%make ZLSHARED=no TARGET_ARCH=desktop UI_TYPE=qt4 TARGET_STATUS=debug CC='g++ -std=c++11'
+# explicitly setting -std=c++11 is required for building on p8, c8 and older branches.
+# fPIC is required for Qt5
+%add_optflags -std=c++11 -fPIC
+%make_build ZLSHARED=no TARGET_ARCH=desktop UI_TYPE=qt4 TARGET_STATUS=debug CC=g++ CFLAGS="%optflags"
 
 %install
 #%__subst "s,mozilla,firefox," fbreader/data/default/external.desktop.xml
 #%__subst "s,FBReader.png,fbreader.png," fbreader/desktop/desktop
-%make ZLSHARED=no LIBDIR=%_libdir DESTDIR=%buildroot INSTALLDIR=/usr TARGET_ARCH=desktop UI_TYPE=qt4 TARGET_STATUS=debug CC='g++ -std=c++11' MOC=%_qt4dir/bin/moc install
+%make ZLSHARED=no TARGET_ARCH=desktop UI_TYPE=qt4 TARGET_STATUS=debug CC=g++ CFLAGS="%optflags" LIBDIR=%_libdir DESTDIR=%buildroot INSTALLDIR=/usr install
 ln -s FBReader %buildroot%_bindir/fbreader
 %__install -pD -m644 %SOURCE2 %buildroot%_miconsdir/%name.png
 %__install -pD -m644 %SOURCE3 %buildroot%_niconsdir/%name.png
@@ -55,8 +60,6 @@ ln -s FBReader %buildroot%_bindir/fbreader
 %_datadir/FBReader
 %_datadir/pixmaps/*
 %_datadir/zlibrary
-#%_libdir/*.so.*
-#%_libdir/zlibrary
 %_datadir/applications/FBReader.desktop
 %_datadir/mimelnk/application/x-fb2.desktop
 %_miconsdir/%name.png
@@ -64,10 +67,13 @@ ln -s FBReader %buildroot%_bindir/fbreader
 %_liconsdir/%name.png
 
 %changelog
-* Fri Oct 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99.5-alt5%ubt
+* Fri Nov 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99.5-alt6
+- Rebuilt with Qt5.
+
+* Fri Oct 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99.5-alt5
 - Fixed build for older branches.
 
-* Thu Oct 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99.5-alt4%ubt
+* Thu Oct 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99.5-alt4
 - Fixed 'about program' menu action (closes: #33971).
 
 * Mon Aug 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99.5-alt3
