@@ -1,32 +1,31 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest-timeout
 
-%def_with python3
-%def_disable check
+%def_with check
 
 Name: python-module-%oname
-Version: 1.2.0
+Version: 1.3.2
 Release: alt1
-Summary: py.test plugin to abort hanging tests
+Summary: pytest plugin which will terminate tests after a certain timeout
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/pytest-timeout
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+# Source: https://bitbucket.org/pytest-dev/pytest-timeout
+Url: https://pypi.org/project/pytest-timeout/
 
-Source0: https://pypi.python.org/packages/cc/b7/b2a61365ea6b6d2e8881360ae7ed8dad0327ad2df89f2f0be4a02304deb2/%{oname}-%{version}.tar.gz
+Source: %name-%version.tar.gz
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+
+%if_with check
+BuildRequires: /dev/pts
+BuildRequires: python-module-tox
+BuildRequires: python-module-pytest
+BuildRequires: python-module-pexpect
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pexpect
 %endif
-
-%py_provides pytest_timeout
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
-BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3
 
 %description
 This is a plugin which will terminate tests after a certain timeout.
@@ -42,11 +41,9 @@ terminating the entire process. As this is a hard termination
 the plugin will ensure you will have the debugging output on stderr
 nevertheless, which is the most important part at this stage.
 
-%if_with python3
 %package -n python3-module-%oname
-Summary: py.test plugin to abort hanging tests
+Summary: pytest plugin which will terminate tests after a certain timeout
 Group: Development/Python3
-%py3_provides pytest_timeout
 
 %description -n python3-module-%oname
 This is a plugin which will terminate tests after a certain timeout.
@@ -61,56 +58,56 @@ terminating the entire process. As this is a hard termination
 (os._exit()) it will result in no teardown, JUnit XML output etc. But
 the plugin will ensure you will have the debugging output on stderr
 nevertheless, which is the most important part at this stage.
-%endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+rm -rf ../python3
+cp -a . ../python3
 
 %build
-%python_build_debug
+%python_build
 
-%if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
-python setup.py test -v
-export PYTHONPATH=%buildroot%python_sitelibdir
-py.test -vv
-%if_with python3
+export PIP_INDEX_URL=http://host.invalid./
+export PYTHONPATH="$(pwd)"
+export TOX_TESTENV_PASSENV='PYTHONPATH'
+# copy nessecary exec deps
+tox --sitepackages -e py%{python_version_nodots python} --notest
+ln -s %_bindir/py.test .tox/py%{python_version_nodots python}/bin/
+
+tox --sitepackages -e py%{python_version_nodots python} -v -- -v
+
 pushd ../python3
-python3 setup.py test -v
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-%_python3_version -vv
+tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
+ln -s %_bindir/py.test3 .tox/py%{python_version_nodots python3}/bin/py.test
+
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
-%endif
 
 %files
 %doc README failure_demo.py
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc README failure_demo.py
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Fri Nov 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.2-alt1
+- 1.2.0 -> 1.3.2.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1
 - automated PyPI update
 
