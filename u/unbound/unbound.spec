@@ -1,6 +1,6 @@
 Name: unbound
 Version: 1.8.1
-Release: alt1
+Release: alt2
 License: BSD
 Url: http://unbound.net/
 Source: %name-%version.tar
@@ -195,6 +195,11 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Fri Nov 02 2018 Andrey Savchenko <bircoph@altlinux.org> 1.8.1-alt2
+- Set proper anchor file permissions in the cron job, otherwise
+  unbound will on run-time fail because it can't update theanchor
+  after a cron job run.
+
 * Tue Oct 09 2018 Alexei Takaseev <taf@altlinux.org> 1.8.1-alt1
 - 1.8.1
 
