@@ -20,8 +20,8 @@
 %define nv_version 390
 %define nv_release 87
 %define nv_minor %nil
-%define pkg_rel alt199
-%define set_gl_nvidia_ver 0.22.2
+%define pkg_rel alt200
+%define set_gl_nvidia_ver 0.22.3
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -309,6 +309,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Fri Nov 02 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt200
+- using MatchDriver xorg feature only with glvnd packaging scheme
+
 * Thu Nov 01 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt199
 - don't detect new glvnd packaging scheme on old branches
 
