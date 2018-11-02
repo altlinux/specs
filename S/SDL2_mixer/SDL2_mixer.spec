@@ -1,8 +1,8 @@
 %def_with bootstrap
 
 Name: SDL2_mixer
-Version: 2.0.2
-Release: alt2%ubt
+Version: 2.0.4
+Release: alt1%ubt
 
 Summary: Simple DirectMedia Layer - Sample Mixer Library
 License: zlib
@@ -70,6 +70,9 @@ libraries.
 %_libdir/lib%name.so
 
 %changelog
+* Fri Nov 02 2018 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt1%ubt
+- Version 2.0.4
+
 * Sun Nov 19 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.2-alt2%ubt
 - Fix build
 

@@ -4,8 +4,8 @@
 %def_with pulse
 
 Name: SDL2
-Version: 2.0.8
-Release: alt2%ubt
+Version: 2.0.9
+Release: alt1%ubt
 
 Summary: Simple DirectMedia Layer
 License: zlib
@@ -92,6 +92,9 @@ to develop SDL applications.
 %_aclocaldir/sdl2.m4
 
 %changelog
+* Fri Nov 02 2018 Nazarov Denis <nenderus@altlinux.org> 2.0.9-alt1%ubt
+- Version 2.0.9
+
 * Sat Mar 17 2018 Nazarov Denis <nenderus@altlinux.org> 2.0.8-alt2%ubt
 - Add wayland support (ALT #34657)
 
