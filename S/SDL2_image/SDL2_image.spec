@@ -1,5 +1,5 @@
 Name: SDL2_image
-Version: 2.0.3
+Version: 2.0.4
 Release: alt1%ubt
 
 Summary: Simple DirectMedia Layer - Image library
@@ -68,6 +68,9 @@ to develop SDL applications.
 %_libdir/lib%name.so
 
 %changelog
+* Fri Nov 02 2018 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt1%ubt
+- Version 2.0.4
+
 * Sun Mar 11 2018 Nazarov Denis <nenderus@altlinux.org> 2.0.3-alt1%ubt
 - Version 2.0.3
 
