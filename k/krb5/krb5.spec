@@ -1,7 +1,7 @@
 
 Name: krb5
-Version: 1.16.1
-Release: alt3
+Version: 1.16.2
+Release: alt1
 
 %define _unpackaged_files_terminate_build 1
 %define _docdir %_defaultdocdir/%name-%version
@@ -393,6 +393,7 @@ fi
 %_libdir/%name/plugins/tls/k5tls.so
 
 %_man5dir/krb5.conf.5*
+%_man7dir/kerberos.7*
 
 %files -n lib%name-ldap
 %_libdir/libkdb_ldap.so.*
@@ -494,6 +495,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Fri Nov 02 2018 Ivan A. Melnikov <iv@altlinux.org> 1.16.2-alt1
+- 1.16.2
+
 * Wed Oct 17 2018 Ivan A. Melnikov <iv@altlinux.org> 1.16.1-alt3
 - move ksu to a separate subpackage
 - add control facility to manage ksu binary permissions (closes #33479)
