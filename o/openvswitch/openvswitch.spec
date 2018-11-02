@@ -6,8 +6,8 @@
 %def_with python3
 
 Name: openvswitch
-Version: 2.10.0
-Release: alt1%ubt
+Version: 2.10.1
+Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
 License: ASL 2.0 and LGPLv2+ and SISSL
@@ -24,12 +24,12 @@ Source7: destroy-ovsbr
 Source8: destroy-ovsbond
 Source9: destroy-ovsport
 Source10: setup-ovsbr
-Source11: %name.service
 Source12: %name.tmpfiles
 
 Patch1: openvswitch-2.0_alt_fix_function.patch
 Patch2: openvswitch-2.5.0-fix-link.patch
 Patch3: openvswitch-2.9.2-alt-systemd-unit.patch
+Patch4: openvswitch-2.10-netdev-dpdkv18.08.patch
 
 Obsoletes: %name-controller <= %name-%version
 Obsoletes: %name-ovsdbmonitor <= %name-%version
@@ -37,7 +37,6 @@ Obsoletes: %name-ovsdbmonitor <= %name-%version
 # util-linux-2.32-alt2
 Requires: pam0(runuser)
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: graphviz libssl-devel openssl groff
 BuildRequires: libcap-ng-devel
 BuildRequires: glibc-kernheaders
@@ -49,7 +48,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-six
 %endif
 
-%{?_with_dpdk:BuildRequires: dpdk-devel >= 6.11.1 libpcap-devel libnuma-devel}
+%{?_with_dpdk:BuildRequires: dpdk-devel >= 18.08 libpcap-devel libnuma-devel}
 
 %define ksrcdir %_usrsrc/kernel/sources
 
@@ -207,6 +206,7 @@ Bash completion for %name.
 %patch1 -p0
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %if_with ksrc
 # it's not datapath/linux due to shared configure script; thx led@
@@ -491,6 +491,9 @@ rm -f %buildroot%_bindir/ovs-benchmark \
 %endif
 
 %changelog
+* Tue Oct 30 2018 Alexey Shabalin <shaba@altlinux.org> 2.10.1-alt1
+- 2.10.1
+
 * Thu Sep 13 2018 Anton Farygin <rider@altlinux.ru> 2.10.0-alt1%ubt
 - 2.10.0
 

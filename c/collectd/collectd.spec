@@ -28,8 +28,8 @@
 %def_disable static
 
 Name: collectd
-Version: 5.8.0
-Release: alt4
+Version: 5.8.1
+Release: alt1
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -47,7 +47,7 @@ BuildRequires: libstatgrab-devel
 BuildRequires(pre):rpm-build-ubt
 
 %if_enabled perl
-BuildRequires: perl-devel perl-threads perl-Regexp-Common perl-Pod-Parser
+BuildRequires: perl-devel perl-threads perl-Regexp-Common perl-Pod-Parser perl-RRD
 
 # http://mailman.verplant.org/pipermail/collectd/2008-April/001766.html
 %set_perl_req_method relaxed
@@ -810,6 +810,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Wed Oct 31 2018 Alexey Shabalin <shaba@altlinux.org> 5.8.1-alt1
+- New version 5.8.1
+
 * Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 5.8.0-alt4
 - rebuilt with new dpdk
 
