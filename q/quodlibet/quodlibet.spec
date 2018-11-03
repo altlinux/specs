@@ -3,7 +3,7 @@
 %define rdn_name io.github.quodlibet.QuodLibet
 
 Name: quodlibet
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 
 Summary: audio library tagger, manager, and player for GTK+
@@ -37,7 +37,8 @@ Requires: gst-plugins-ugly%gst_api_ver
 # abnormally detected python3 dep. See quodlibet/util/http.py
 %add_python3_req_skip gi.repository.GObject
 
-BuildRequires: rpm-build-gir intltool desktop-file-utils
+BuildRequires(pre): rpm-build-gir
+BuildRequires: desktop-file-utils
 BuildRequires: rpm-build-python3 python3-devel python3-module-mutagen
 
 %description
@@ -92,6 +93,9 @@ subst "s|\('share', '\)appdata'|\1metainfo'|" gdist/appdata.py
 %python3_sitelibdir_noarch/%name-%version-py*
 
 %changelog
+* Sun Nov 04 2018 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Mon Jun 04 2018 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
 - 4.1.0
 
