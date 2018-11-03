@@ -1,5 +1,5 @@
 Name: debmirror
-Version: 2.29
+Version: 2.30
 Release: alt1
 
 Summary: Debian partial mirror script, with ftp and package pool support
@@ -58,6 +58,9 @@ install -D -m 0644 examples/debmirror.conf %buildroot%_sysconfdir/debmirror.conf
 %_man1dir/*
 
 %changelog
+* Sat Nov 03 2018 Vitaly Lipatov <lav@altlinux.ru> 1:2.30-alt1
+- new version 2.30 (with rpmrb script)
+
 * Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1:2.29-alt1
 - new version 2.29 (with rpmrb script)
 
