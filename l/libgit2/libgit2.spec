@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: libgit2
-Version: 0.26.7
+Version: 0.26.8
 Release: alt1
 
 Summary: linkable library for Git
@@ -13,7 +13,7 @@ Url: http://libgit2.github.com
 
 Source: %name-%version.tar.gz
 
-BuildPreReq: rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake python-modules zlib-devel libssl-devel libssh2-devel libcurl-devel
 
 %description
@@ -65,6 +65,9 @@ sed -i 's/@CMAKE_INSTALL_PREFIX@\///' %name.pc.in
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Nov 04 2018 Yuri N. Sedunov <aris@altlinux.org> 0.26.8-alt1
+- 0.26.8
+
 * Fri Oct 12 2018 Yuri N. Sedunov <aris@altlinux.org> 0.26.7-alt1
 - 0.26.7 (fixed CVE-2018-17456)
 
