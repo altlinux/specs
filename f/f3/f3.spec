@@ -1,12 +1,11 @@
 Name:		f3
-Version:	6.0
-Release:	alt1
+Version:	7.1
+Release:	alt2
 Summary:	Fight Flash Fraud / Fight Fake Flash
 License:	GPLv3
 Group:		System/Configuration/Hardware
 Url:		http://oss.digirati.com.br/f3/
-Source:		https://github.com/AltraMayor/f3/archive/v6.0.tar.gz#/f3-6.0.tar.gz
-Patch:		man-www-ref.patch
+Source:		https://github.com/AltraMayor/f3/archive/v7.1.tar.gz#/f3-7.1.tar.gz
 
 # Automatically added by buildreq on Sun Mar 06 2016 (-bi)
 # optimized out: elfutils python-base
@@ -26,37 +25,32 @@ the actual storage capacity of fake drives as safely as possible.
 
 %prep
 %setup
-%patch -p1
 
 %build
 subst 's|-std=c99 -Wall -Wextra -pedantic -MMD -ggdb|%optflags|g' ./Makefile
-%make_build all experimental
-
-mkdir examples
-mv log-f3wr f3write.h2w examples
-chmod a-x examples/*
+subst 's|/usr/local|%prefix|g' ./Makefile
+%make_build extra
 
 %install
-mkdir -p %buildroot%prefix/bin
-install f3read f3write %buildroot%prefix/bin
+mkdir -p examples
+make DESTDIR=%buildroot install
+install -m 0755 f3write.h2w log-f3wr ./examples
 
 mkdir -p %buildroot%prefix/sbin
-install f3probe f3brew f3fix %buildroot%prefix/sbin
-
-mkdir -p %buildroot%_man1dir/
-install -m 0644 f3read.1 %buildroot%_man1dir/
-ln -sf f3read.1 %buildroot%_man1dir/f3write.1
+install -m 0755 f3probe f3brew f3fix %buildroot%prefix/sbin
 
 %files
-%doc changelog README.md LICENSE examples
-%_bindir/f3read
-%_bindir/f3write
-%_sbindir/f3probe
-%_sbindir/f3brew
-%_sbindir/f3fix
-%_man1dir/f3read.1.*
-%_man1dir/f3write.1.*
+%doc changelog README.* LICENSE examples
+%_bindir/*
+%_sbindir/*
+%_man1dir/*
 
 %changelog
+* Sun Nov 04 2018 Motsyo Gennadi <drool@altlinux.ru> 7.1-alt2
+- build with extras
+
+* Sun Nov 04 2018 Motsyo Gennadi <drool@altlinux.ru> 7.1-alt1
+- 7.1 (#35573)
+
 * Sun Mar 06 2016 Motsyo Gennadi <drool@altlinux.ru> 6.0-alt1
 - initial build for ALT Linux
