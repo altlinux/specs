@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: platon
-Version: 20180911
+Version: 20181101
 Release: alt1
 
 Summary: PLATON is a versatile SHELX compatible multipurpose crystallographic tool
@@ -12,7 +12,8 @@ Url: http://www.platonsoft.nl/platon/
 Source: http://www.platonsoft.nl/spek/xraysoft/unix/%name.tar.gz
 Source1: %name.sh
 Source2: http://www.platonsoft.nl/spek/xraysoft/update_history_platon.html
-Source3: PERMISSION.txt
+Source3: http://www.platonsoft.nl/spek/xraysoft/old_update_history_platon.html
+Source4: PERMISSION.txt
 
 # Automatically added by buildreq on Fri Nov 28 2008
 BuildRequires: gcc-fortran libX11-devel
@@ -96,6 +97,7 @@ mv TEST test
 cp -a %SOURCE1 .
 cp -a %SOURCE2 .
 cp -a %SOURCE3 .
+cp -a %SOURCE4 .
 
 %build
 g77 %optflags -o platon platon.f xdrvr.c -lX11
@@ -141,7 +143,7 @@ install -pm644 doc/pl000314_files/* %buildroot%_defaultdocdir/%name/pl000314_fil
 # nothing to pack
 
 %files common
-%doc README README.ADDSYM README.LEPAGE update_history_platon.html PERMISSION.txt
+%doc README README.ADDSYM README.LEPAGE update_history_platon.html old_update_history_platon.html PERMISSION.txt
 %_bindir/*
 %_datadir/%name
 
@@ -152,6 +154,9 @@ install -pm644 doc/pl000314_files/* %buildroot%_defaultdocdir/%name/pl000314_fil
 %_defaultdocdir/%name
 
 %changelog
+* Sun Nov 04 2018 Denis G. Samsonenko <ogion@altlinux.org> 20181101-alt1
+- nuw version
+
 * Sat Sep 15 2018 Denis G. Samsonenko <ogion@altlinux.org> 20180911-alt1
 - new version
 
