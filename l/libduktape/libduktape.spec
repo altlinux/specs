@@ -1,6 +1,6 @@
 %define oname duktape
 Name: libduktape
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 
 Summary: Embeddable Javascript engine library
@@ -13,7 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: http://duktape.org/%oname-%version.tar.xz
 Source: %name-%version.tar
-Patch: duktape-2.1.0-makefile.patch
+Patch: duktape-2.3.0-makefile.patch
 
 %description
 Duktape is an embeddable Javascript engine, with a focus on portability
@@ -29,10 +29,6 @@ Requires: %name = %EVR
 %description devel
 Libraries and header files for developing programs based on %name.
 
-%files devel
-%_includedir/duk_config.h
-%_includedir/duktape.h
-%_libdir/libduktape.so
 
 #----------------------------------------------------------------------------
 
@@ -50,11 +46,12 @@ This package contains a commandline duk interpreter.
 
 %prep
 %setup
-%patch -p1
+%patch -p2
 
 %build
 %make -f Makefile.sharedlibrary
-%make -f Makefile.cmdline
+%make -f Makefile.sharedlibrary duk
+#make -f Makefile.cmdline
 
 %install
 %makeinstall_std \
@@ -68,11 +65,19 @@ install -m 755 duk %buildroot%_bindir/duk
 %files
 %_libdir/libduktape.so.*
 
+%files devel
+%_includedir/duk_config.h
+%_includedir/duktape.h
+%_libdir/libduktape.so
+
 %files -n %oname
 %doc AUTHORS.rst LICENSE.txt README.rst
 %_bindir/duk
 
 %changelog
+* Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
+- new version 2.3.0 (with rpmrb script)
+
 * Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.1-alt1
 - new version 2.2.1 (with rpmrb script)
 
