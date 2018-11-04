@@ -2,14 +2,19 @@
 
 Name: p7zip
 Version: 16.02
-Release: alt2
+Release: alt3
 
 Summary: 7zip unofficial port - a file-archiver with highest compression ratio
 License: Freely distributable
 Group: Archiving/Compression
 
 Url: http://p7zip.sourceforge.net/
-Source: %{name}_%{version}_src_all.tar.bz2
+Source: %{name}_%{version}_src_all.tar
+# debian patches
+Patch1: 12-CVE-2016-9296.patch
+Patch2: 13-CVE-2017-17969.patch
+Patch3: 06-CVE-2018-5996.patch
+Patch4: CVE-2018-10115.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
 # optimized out: libstdc++-devel
@@ -45,6 +50,10 @@ The devel package contains the p7zip include files.
 
 %prep
 %setup -n p7zip_%version
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 # Make p7zip looks for plugins in fixed directory. Upstream behavior was to
@@ -65,13 +74,10 @@ subst 's@getenv("P7ZIP_HOME_DIR")@"%_libdir/p7zip/"@g' {} \;
 # We don't want this, see comments to inline patch above to get idea of our way.
 mv -f %buildroot%_libdir/p7zip/{7z,7za} %buildroot%_bindir/
 
-# fixed in 9.20.1
-#cp -a bin/Codecs %buildroot%_libdir/p7zip/
-
 # Install C/*.h files
 mkdir -p %buildroot%includedir
 find C -maxdepth 1 -mindepth 1 -name '*.h' -a -not \( -name Threads.h -o -name LzFindMt.h -o -name MtCoder.h \) -print0 | \
-xargs -0 install -p -m644 -t %buildroot%includedir/
+xargs -0 install -pm644 -t %buildroot%includedir/
 
 %files
 %doc README ChangeLog DOC
@@ -91,6 +97,12 @@ xargs -0 install -p -m644 -t %buildroot%includedir/
 %includedir
 
 %changelog
+* Sun Nov 04 2018 Michael Shigorin <mike@altlinux.org> 16.02-alt3
+- applied debian security patches
+  (Fixes: CVE-2016-9296, CVE-2017-17969, CVE-2018-5996, CVE-2018-10115)
+- avoid tarball compression
+- minor spec cleanup
+
 * Tue Jan 03 2017 Aleksey Avdeev <solo@altlinux.org> 16.02-alt2
 - Add devel subpackage
 
