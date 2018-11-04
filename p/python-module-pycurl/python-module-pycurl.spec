@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 7.43.0.1
-Release: alt2
+Version: 7.43.0.2
+Release: alt1
 
 Summary: Python bindings to libcurl
 
@@ -81,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 7.43.0.2-alt1
+- new version 7.43.0.2 (with rpmrb script)
+
 * Thu Sep 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 7.43.0.1-alt2
 - NMU: rebuilt with openssl 1.1.
 
