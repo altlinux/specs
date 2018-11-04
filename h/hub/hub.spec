@@ -3,7 +3,7 @@
 # TODO: build with external sources
 
 Name: hub
-Version: 2.5.1
+Version: 2.6.0
 Release: alt1
 
 Summary: A command-line wrapper for git with github shortcuts
@@ -23,6 +23,11 @@ ExclusiveArch: %go_arches
 BuildRequires: golang >= 1.7
 # for man and help
 BuildRequires: ronn
+
+# FIXME
+#groff -Wall -mtty-char -mandoc -Tutf8 -rLL=87n share/man/man1/hub.1.ronn | col -b >share/man/man1/hub.1.txt
+#col: Invalid or incomplete multibyte or wide character
+Conflicts: groff-base
 
 BuildRequires: git-core
 
@@ -66,7 +71,7 @@ ln -snf $(pwd) Godeps/src/github.com/github/hub
 
 %build
 export GOPATH=$(pwd):$(pwd)/Godeps:%go_path
-%gobuild -o bin/%name -ldflags '-X github.com/github/hub/version.Version=2.2.9'
+%gobuild -o bin/%name -ldflags '-X github.com/github/hub/version.Version=%version'
 
 # use system ronn, skip build from Internet
 ln -s %_bindir/ronn bin/ronn
@@ -113,6 +118,9 @@ find . -maxdepth 2 -name '*.go' '!' -name '*_test.go' | \
 %_datadir/zsh/site-functions/_hub
 
 %changelog
+* Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.6.0-alt1
+- new version 2.6.0 (with rpmrb script)
+
 * Sat Oct 13 2018 Vitaly Lipatov <lav@altlinux.ru> 2.5.1-alt1
 - new version 2.5.1 (with rpmrb script)
 
