@@ -2,13 +2,15 @@
 
 Name: python-module-blist
 Version: 1.3.6
-Release: alt1.1.1.1
+Release: alt2
 Summary: A list-like type with better asymptotic performance and similar performance on small lists
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/blist/
 %setup_python_module blist
 Source: blist-%version.tar.gz
+
+Patch: 0001-Fix-compatibility-for-Python-3.7.patch
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -42,6 +44,7 @@ sorteddict, and btuple types.
 
 %prep
 %setup -n %modulename-%version
+%patch -p1
 sed -i '/ez_setup/d' setup.py
 
 %build
@@ -67,6 +70,9 @@ python setup.py test
 python3 setup.py test
 
 %changelog
+* Tue Apr 02 2019 Grigory Ustinov <grenka@altlinux.org> 1.3.6-alt2
+- Rebuild with python3.7.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.6-alt1.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 

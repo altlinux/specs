@@ -5,8 +5,8 @@
 %def_enable check
 
 Name: py%oname
-Version: 3.4.2
-Release: alt2
+Version: 3.5.1
+Release: alt1
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -348,6 +348,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Tue Apr 09 2019 Grigory Ustinov <grenka@altlinux.org> 1:3.5.1-alt1
+- Build new version for python3.7.
+
 * Fri Mar 22 2019 Anton Farygin <rider@altlinux.ru> 1:3.4.2-alt2
 - removed w3c-markup-validator-libs build dependency
 

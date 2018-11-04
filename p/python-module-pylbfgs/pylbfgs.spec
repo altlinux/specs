@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.0.3
-Release: alt1.1.1
+Version: 0.2.0.12
+Release: alt1
 Summary: LBFGS and OWL-QN optimization algorithms
 License: MIT
 Group: Development/Python
@@ -105,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 04 2019 Grigory Ustinov <grenka@altlinux.org> 0.2.0.12-alt1
+- Build new version with python3.7.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0.3-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 

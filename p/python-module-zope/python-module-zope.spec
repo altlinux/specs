@@ -1,6 +1,6 @@
 Summary: The ``zope`` package is a pure namespace package
 Version: 3.3.0
-Release: alt8.4
+Release: alt8.5
 License: ZPL
 Group: Development/Python
 Packager: Python Development Team <python@packages.altlinux.org>
@@ -77,6 +77,9 @@ install -m644 %buildroot/%python_sitelibdir/%modulename/__init__.py \
 %endif
 
 %changelog
+* Fri Apr 05 2019 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt8.5
+- Rebuild for python3.7.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.0-alt8.4
 - (.spec) simplified the use of macros (It is better for girar-nmu, too).
 

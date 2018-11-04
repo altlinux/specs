@@ -2,8 +2,7 @@
 %define oname pythonmagick
 Name: python-module-%oname
 Version: 0.9.64
-Release: alt1.20170528%ubt.2
-
+Release: alt2.20170528
 Summary: Object-oriented Python interface to ImageMagick
 
 License: Apache License 2.0
@@ -14,7 +13,6 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ pkgconfig(Magick++) pkgconfig(MagickCore)
 BuildRequires: libgomp-devel
 BuildRequires: python-devel boost-python-devel
@@ -78,13 +76,16 @@ popd
 %endif
 
 %changelog
-* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.64-alt1.20170528%ubt.2
+* Mon Apr 08 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.64-alt2.20170528
+- Rebuild for python3.7.
+
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.64-alt1.20170528.S1.2
 - NMU: rebuilt with boost-1.67.0
 
-* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.64-alt1.20170528%ubt.1
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.64-alt1.20170528.S1.1
 - (NMU) Rebuilt with python-3.6.4.
 
-* Thu Jan 25 2018 Anton Midyukov <antohami@altlinux.org> 0.9.64-alt1.20170528%ubt
+* Thu Jan 25 2018 Anton Midyukov <antohami@altlinux.org> 0.9.64-alt1.20170528.S1
 - Fix FTBFS.
 
 * Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 0.9.64-alt1.20170528.2

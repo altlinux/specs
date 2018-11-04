@@ -2,11 +2,11 @@
 %define oname BTrees
 
 %def_with check
-%def_without bootstrap
+%def_with bootstrap
 
 Name: python-module-%oname
 Version: 4.4.1
-Release: alt2%ubt
+Release: alt3
 
 Summary: Scalable persistent object containers
 License: ZPLv2.1
@@ -16,7 +16,6 @@ Url: https://pypi.python.org/pypi/BTrees
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
@@ -150,13 +149,16 @@ popd
 %python3_sitelibdir/*/tests
 
 %changelog
-* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1-alt2%ubt
+* Mon Apr 08 2019 Grigory Ustinov <grenka@altlinux.org> 4.4.1-alt3
+- Bootstrap for python3.7.
+
+* Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1-alt2.S1
 - (NMU) Rebuilt without bootstrap.
 
-* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1-alt1%ubt.1
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1-alt1.S1.1
 - (NMU) Rebuilt with python-3.6.4.
 
-* Fri Feb 09 2018 Stanislav Levin <slev@altlinux.org> 4.4.1-alt1%ubt
+* Fri Feb 09 2018 Stanislav Levin <slev@altlinux.org> 4.4.1-alt1.S1
 - v4.4.0 -> v4.4.1
 
 * Sun Jan 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.4.0-alt1

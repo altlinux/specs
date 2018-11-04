@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.9.4
-Release: alt3.git20141229.1.1.1
+Version: 1.9.6
+Release: alt1
 Summary: Pyrex generated python interface to PROJ.4 library
 License: MIT
 Group: Development/Python
@@ -28,6 +28,7 @@ BuildRequires(pre): rpm-build-python3
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: elfutils python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
 BuildRequires: python-devel python-tools-2to3 python3-devel rpm-build-python3 time
+BuildRequires: python-module-Cython python3-module-Cython
 
 %description
 Pyrex generated python interface to PROJ.4 library
@@ -157,6 +158,9 @@ popd
 %endif
 
 %changelog
+* Fri Apr 12 2019 Grigory Ustinov <grenka@altlinux.org> 1.9.6-alt1
+- Build new version for python3.7.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.4-alt3.git20141229.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 

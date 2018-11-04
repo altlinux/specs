@@ -8,12 +8,12 @@
 # but mostly through ALT Sisyphus rpm-build-python3's macros
 # (to make the picture more clear and less error-prone).
 
-%global pybasever 3.6
+%global pybasever 3.7
 
 %global with_rewheel 0
 
 # pybasever without the dot:
-%global pyshortver 36
+%global pyshortver 37
 
 %global pyabi m
 
@@ -38,6 +38,12 @@
 %global tool_dir %__python3_tooldir
 %global pylibdir_noarch %__python3_libdir_noarch
 
+%ifarch i586
+%global pyarch i386
+%else
+%global pyarch %_arch
+%endif
+
 # All bytecode files are now in a __pycache__ subdirectory, with a name
 # reflecting the version of the bytecode (to permit sharing of python libraries
 # between different runtimes)
@@ -59,7 +65,7 @@
 %global py_SOVERSION 1.0
 
 # some arches don't have valgrind so we need to disable its support on them
-%ifnarch s390
+%ifnarch s390 riscv64
 %global with_valgrind 1
 %else
 %global with_valgrind 0
@@ -76,7 +82,7 @@
 
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
-Version: %{pybasever}.8
+Version: %{pybasever}.3
 Release: alt1
 License: Python
 Group: Development/Python3
@@ -91,7 +97,11 @@ BuildPreReq: liblzma-devel
 # For Bluetooth support
 # see https://bugzilla.redhat.com/show_bug.cgi?id=879720
 BuildPreReq: libbluez-devel
-BuildRequires: bzip2-devel db4-devel libexpat-devel gcc-c++ libgmp-devel libffi-devel libGL-devel libX11-devel libncursesw-devel libssl-devel libreadline-devel libsqlite3-devel tcl-devel tk-devel zlib-devel
+BuildRequires: bzip2-devel db4-devel libexpat-devel gcc-c++ libgmp-devel
+BuildRequires: libffi-devel libGL-devel libX11-devel libncursesw-devel
+BuildRequires: libssl-devel libreadline-devel libsqlite3-devel tcl-devel
+BuildRequires: tk-devel zlib-devel libuuid-devel libnsl2-devel
+BuildRequires: desktop-file-utils
 
 %if %with_gdbm
 BuildRequires: gdbm-devel
@@ -118,6 +128,9 @@ BuildRequires: python3-module-pip
 
 Source: %name-%version.tar
 
+# Desktop menu entry for idle3
+Source10: idle3.desktop
+
 #RH Patches
 
 # Fixup distutils/unixccompiler.py to remove standard library path from rpath:
@@ -127,11 +140,6 @@ Patch1:         Python-3.1.1-rpath.patch
 # The lib64 patch
 # on top of ALT's python3-site-packages.patch (Patch1005)
 Patch102: python3-site-packages-lib64.patch
-
-# 00104 #
-# Only used when "%_lib" == "lib64"
-# Another lib64 fix, for distutils/tests/test_install.py; not upstream:
-Patch104: 00104-lib64-fix-for-test_install.patch
 
 # 00111 #
 # Patch the Makefile.pre.in so that the generated Makefile doesn't try to build
@@ -174,19 +182,6 @@ Patch160: 00160-disable-test_fs_holes-in-rpm-build.patch
 # Not yet sent upstream
 Patch163: 00163-disable-parts-of-test_socket-in-rpm-build.patch
 
-
-# 00170 #                                                                                           
-# In debug builds, try to print repr() when a C-level assert fails in the                           
-# garbage collector (typically indicating a reference-counting error                                
-# somewhere else e.g in an extension module)                                                        
-# Backported to 2.7 from a patch I sent upstream for py3k                                           
-#   http://bugs.python.org/issue9263  (rhbz#614680)                                                 
-# hiding the proposed new macros/functions within gcmodule.c to avoid exposing                      
-# them within the extension API.                                                                    
-# (rhbz#850013
-Patch170: 00170-gc-assertions.patch
-
-
 # 00178 #
 # Don't duplicate various FLAGS in sysconfig values
 # http://bugs.python.org/issue17679
@@ -213,35 +208,9 @@ Patch205: 00205-make-libpl-respect-lib64.patch
 # Fedora Change: https://fedoraproject.org/wiki/Changes/Making_sudo_pip_safe
 Patch251: 00251-change-user-install-location.patch
 
-# 00262 #
-# Backport of PEP 538: Coercing the legacy C locale to a UTF-8 based locale
-# https://www.python.org/dev/peps/pep-0538/
-# Fedora Change: https://fedoraproject.org/wiki/Changes/python3_c.utf-8_locale
-# Original proposal: https://bugzilla.redhat.com/show_bug.cgi?id=1404918
-Patch262: 00262-pep538_coerce_legacy_c_locale.patch
-
 # 00274 #
 # Upstream uses Debian-style architecture naming. Change to match Fedora.
 Patch274: 00274-fix-arch-names.patch
-
-# 00292 #
-# Restore the public PyExc_RecursionErrorInst symbol that was removed
-# from the 3.6.4 release upstream.
-# Reported upstream: https://bugs.python.org/issue30697
-Patch292: 00292-restore-PyExc_RecursionErrorInst-symbol.patch
-
-# 00294 #
-# Define TLS cipher suite on build time depending
-# on the OpenSSL default cipher suite selection.
-# Fixed upstream on CPython's 3.7 branch:
-# https://bugs.python.org/issue31429
-# See also: https://bugzilla.redhat.com/show_bug.cgi?id=1489816
-Patch294: 00294-define-TLS-cipher-suite-on-build-time.patch
-
-# 00317 #
-# Security fix for CVE-2019-5010: Fix segfault in ssl's cert parser
-# Fixed upstream https://bugs.python.org/issue35746
-Patch317: 00317-CVE-2019-5010.patch
 
 # (New patches go here ^^^)
 #
@@ -284,8 +253,6 @@ Patch1005: python3-site-packages.patch
 # are consistent with this.
 # (TODO: Perhaps, we should consider substituting the value of the macros into the patch,
 # so that we have a single point of control and a guarantee of consistency.)
-
-Patch1006: python-3.5.1-glibc-2.25-getentropy.patch
 
 # With python-3.6 and later it's either needed to enable some crypto ciphers needed for SSLv2 when this socket type requested
 # or SSLv2 has to be removed completely, because it wouldn't work without this change anyway.
@@ -340,6 +307,7 @@ Obsoletes: %name-libs < %EVR
 # It's an OS-independent alias (which other modules might want to import)
 # leading to an OS-specific path module.
 %py3_provides os.path
+%py3_provides typing.io
 
 # Things which have become internal in 3.5
 # (we do not use %%py3_provides here, because the autoreqs generated
@@ -393,6 +361,7 @@ Group: Development/Python3
 Requires: %name = %EVR
 Requires: %name-modules-tkinter = %EVR
 Requires: %name-modules-curses = %EVR
+Requires: %name-modules-nis = %EVR
 
 %description tools
 This package contains several tools included with Python 3
@@ -431,6 +400,16 @@ de-facto standard for portable advanced terminal handling.
 This extension module is designed to match the API of ncurses, an
 open-source curses library hosted on Linux and the BSD variants of UNIX.
 
+%package modules-nis
+Summary: NIS module from Python3
+Group: Development/Python3
+
+%description modules-nis
+This package contains the "nis" module from Python3.
+
+It used to be in %name-modules, but since NIS is deprecated in glibc,
+this separate package was made because of extra library dependencies.
+
 %package test
 Summary: The test modules from the main python 3 package
 Group: Development/Python3
@@ -458,12 +437,9 @@ python 3 code that uses more than just unittest and/or test_support.py.
 rm -r Modules/expat || exit 1
 
 #   Remove embedded copy of libffi:
-for SUBDIR in darwin libffi libffi_msvc libffi_osx ; do
+for SUBDIR in darwin libffi_msvc libffi_osx ; do
   rm -r Modules/_ctypes/$SUBDIR || exit 1 ;
 done
-
-#   Remove embedded copy of zlib:
-rm -r Modules/zlib || exit 1
 
 # Don't build upstream Python's implementation of these crypto algorithms;
 # instead rely on _hashlib and OpenSSL.
@@ -485,12 +461,12 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 # Apply patches:
 #
 %patch1 -p1
-%patch1005 -p1
+%patch1005 -p2
 
 %if "%_lib" != "lib"
-< %PATCH102 sed -e 's:lib64:%_lib:g' | patch -p1
-< %PATCH104 sed -e 's:lib64:%_lib:g' | patch -p1
+< %PATCH102 sed -e 's:lib64:%_lib:g' | patch -p2
 %endif
+
 %patch111 -p1
 %patch132 -p1
 %patch155 -p1
@@ -504,12 +480,8 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 
 %patch205 -p1
 %patch251 -p1
-%patch262 -p1
 
 %patch274 -p1
-%patch292 -p1
-%patch294 -p1
-%patch317 -p1
 
 # ALT Linux patches
 %if_enabled test_posix_fadvise
@@ -518,21 +490,10 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 %patch1003 -p2
 %patch1004 -p1
 
-%patch1006 -p2
 %patch1007 -p2
 
 %patch1008 -p1
 %patch1009 -p2
-
-# Currently (2010-01-15), http://docs.python.org/library is for 2.6, and there
-# are many differences between 2.6 and the Python 3 library.
-#
-# Fix up the URLs within pydoc to point at the documentation for this
-# MAJOR.MINOR version:
-#
-sed --in-place \
-    --expression="s|http://docs.python.org/library|http://docs.python.org/%pybasever/library|g" \
-    Lib/pydoc.py || exit 1
 
 rm -fr ../build-shared
 mkdir ../build-shared
@@ -550,15 +511,16 @@ build() {
 %configure \
   --enable-ipv6 \
   --enable-shared \
+  --with-computed-gotos=%with_computed_gotos \
+  --with-dbmliborder=gdbm:ndbm:bdb \
+  --with-system-expat \
   --with-system-ffi \
   --enable-loadable-sqlite-extensions \
+  --with-lto \
   --with-ssl-default-suites=openssl \
 %if 0%{?with_valgrind}
   --with-valgrind \
 %endif
-  --with-system-expat \
-  --with-dbmliborder=gdbm:ndbm:bdb \
-  --with-computed-gotos=%with_computed_gotos \
   --without-ensurepip \
   $*
 
@@ -613,11 +575,13 @@ install -d -m 0755 %buildroot%python3_sitelibdir_noarch/__pycache__
 mv -t %buildroot%python3_sitelibdir/ %buildroot%pylibdir/site-packages/README.txt
 rmdir %buildroot%pylibdir/site-packages
 
-# Make python3-devel multilib-ready (bug #192747, #139911)
+# For the list of architectures which has multilib support in ALT
+# we make python3-devel multilib-ready (bug #192747, #139911)
+%ifarch x86_64 %ix86
 %global _pyconfig32_h pyconfig-32.h
 %global _pyconfig64_h pyconfig-64.h
 
-%ifarch aarch64 e2k ppc64 x86_64
+%ifarch x86_64
 %global _pyconfig_h %_pyconfig64_h
 %else
 %global _pyconfig_h %_pyconfig32_h
@@ -646,6 +610,13 @@ EOF
 sed -i -e "s/'pyconfig.h'/'%_pyconfig_h'/" \
   %buildroot%pylibdir/distutils/sysconfig.py \
   %buildroot%pylibdir/sysconfig.py
+%else
+%global _pyconfig_h pyconfig.h
+%endif
+
+# Install pathfix.py to bindir
+# See https://github.com/fedora-python/python-rpm-porting/issues/24
+cp -p Tools/scripts/pathfix.py %{buildroot}%{_bindir}/
 
 ## Switch all shebangs to refer to the specific Python version.
 #LD_LIBRARY_PATH=./build/optimized ./build/optimized/python \
@@ -661,23 +632,12 @@ find %buildroot -name \*.py \
   -perm /u+x,g+x,o+x ! -exec grep -m 1 -q '^#!' {} \; \
   -exec chmod a-x {} \; \) \)
 
-# .xpm and .xbm files should not be executable:
-find %buildroot \
-  \( -name \*.xbm -o -name \*.xpm -o -name \*.xpm.1 \) \
-  -exec chmod a-x {} \;
-
-# Remove executable flag from files that shouldn't have it:
-chmod a-x \
-  %buildroot%pylibdir/distutils/tests/Setup.sample \
-  %buildroot%tool_dir/README
-
 # Get rid of DOS batch files:
 find %buildroot -name \*.bat -exec rm {} \;
 
 # Get rid of backup files:
 find %buildroot/ -name "*~" -exec rm {} \;
 find . -name "*~" -exec rm {} \;
-rm %buildroot%pylibdir/LICENSE.txt
 
 # Get rid of crappy code:
 rm %buildroot%tool_dir/scripts/abitype.py
@@ -717,7 +677,6 @@ rm %buildroot%pylibdir/test/{,__pycache__/}test_msilib*.py*
 %add_findreq_skiplist %pylibdir/distutils/*msvc*compiler*.py*
 %add_findprov_skiplist %pylibdir/distutils/*msvc*compiler*.py*
 rm %buildroot%pylibdir/distutils/command/{,__pycache__/}bdist_msi*.py*
-rm %buildroot%pylibdir/distutils/command/*.exe
 rm %buildroot%tool_dir/scripts/win_add2path.py
 
 # Get rid of crap
@@ -743,12 +702,6 @@ find %buildroot/ -name \*.py -exec sed -i 's/\r//' {} \;
 find %buildroot \
     -perm 555 -exec chmod 755 {} \;
 
-# Ensure that the curses module was linked against libncursesw.so, rather than
-# libncurses.so (bug 539917)
-ldd %buildroot/%dynload_dir/_curses*.so \
-    | grep curses \
-    | grep libncurses.so && { echo "_curses.so linked against libncurses.so" ; exit 1; }
-
 export LD_LIBRARY_PATH=%buildroot%_libdir
 find %buildroot -type f -a -name "*.py" -a -not -wholename "*/test/*" -a -not -wholename "*/tests/*" -a -not -wholename "*/scripts/*" -print0 | xargs -0 %buildroot%_bindir/%name -c 'import py_compile, sys; [py_compile.compile(f, dfile=f.partition("%buildroot")[2]) for f in sys.argv[1:]]'
 find %buildroot -type f -a -name "*.py" -a -not -wholename "*/test/*" -a -not -wholename "*/tests/*" -a -not -wholename "*/scripts/*" -print0 | xargs -0 %buildroot%_bindir/%name -O -c 'import py_compile, sys; [py_compile.compile(f, dfile=f.partition("%buildroot")[2]) for f in sys.argv[1:]]'
@@ -758,10 +711,10 @@ sed -i 's,/usr/local/bin/python,/usr/bin/python3,' %buildroot%_libdir/python%pyb
 # Replace the shell implementation with the more correct .py one
 # (BTW, the .py one used to be packaged in python3-3.3):
 ln -sfv \
-   "$(relative \
-	%pylibdir/config-%pybasever%pyabi/python-config.py \
-   	%_bindir/python%pybasever%pyabi-config)" \
-   %buildroot%_bindir/python%pybasever%pyabi-config
+    "$(relative \
+    %pylibdir/config-%pybasever%pyabi-%pyarch-linux-gnu/python-config.py \
+    %_bindir/python%pybasever%pyabi-config)" \
+    %buildroot%_bindir/python%pybasever%pyabi-config
 
 %global python_ignored_files site-packages(/.+\.(pth|egg-info(|/PKG-INFO|/entry_points\.txt|/namespace_packages\.txt)))?$
 mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
@@ -790,24 +743,61 @@ cat <<\EOF >%buildroot%_rpmlibdir/%python3_sitebasename-site-packages-files.req.
 %endif
 EOF
 
+# Remove extra LICENSE file
+rm -f %buildroot/%pylibdir/LICENSE.txt
+
+# add idle3 to menu
+install -D -m 0644 Lib/idlelib/Icons/idle_16.png %buildroot%_datadir/icons/hicolor/16x16/apps/idle3.png
+install -D -m 0644 Lib/idlelib/Icons/idle_32.png %buildroot%_datadir/icons/hicolor/32x32/apps/idle3.png
+install -D -m 0644 Lib/idlelib/Icons/idle_48.png %buildroot%_datadir/icons/hicolor/48x48/apps/idle3.png
+desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE10
+
+# We want to have clean bindir
+rm -rf %buildroot%_bindir/__pycache__
+
 %check
 # ALT#32008:
 if head -1 %buildroot%_bindir/python3-config | fgrep -q python; then
-configdir="$(WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python %buildroot%_bindir/python3-config --configdir)"
+configdir="$(
+    WITHIN_PYTHON_RPM_BUILD= \
+    LD_LIBRARY_PATH=$(pwd) \
+    $(pwd)/python %buildroot%_bindir/python3-config --configdir)"
 else
 configdir="$(%buildroot%_bindir/python3-config --configdir)"
 fi
 [ -d %buildroot"$configdir" ]
 
+# Ensure that the curses module was linked against libncursesw.so, rather than
+# libncurses.so
+# See https://bugzilla.redhat.com/show_bug.cgi?id=539917
+ldd %{buildroot}/%{dynload_dir}/_curses*.so \
+    | grep curses \
+    | grep libncurses.so && (echo "_curses.so linked against libncurses.so" ; exit 1)
+
+# See about locale: https://www.python.org/dev/peps/pep-0538/
+export LANG=C
+
+# Show some info, helpful for debugging test failures
+LD_LIBRARY_PATH="$(pwd)" $(pwd)/python -m test.pythoninfo
+
 # -l (--findleaks) is not compatible with -j
 # test_faulthandler.test_register_chain currently fails on ppc64le and
 #   aarch64, see upstream bug http://bugs.python.org/issue21131
-WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbose %_smp_mflags \
+WITHIN_PYTHON_RPM_BUILD= \
+LD_LIBRARY_PATH="$(pwd)" \
+$(pwd)/python -m test.regrtest \
+    --verbose  %_smp_mflags \
     -x test_distutils \
     -x test_gdb \
     -x test_bdist_rpm \
+    -x test_cmd_line_script \
+    -x test_runpy \
+    -x test_multiprocessing_main_handling \
+%ifarch aarch64
+    -x test_socket \
+%endif
 %ifarch %{arm}
-    -x test_faulthandler \
+    -x test_faulthandler
 %endif
 
 %files
@@ -849,6 +839,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dynload_dir/_codecs_jp.cpython-%pyshortver%pyabi.so
 %dynload_dir/_codecs_kr.cpython-%pyshortver%pyabi.so
 %dynload_dir/_codecs_tw.cpython-%pyshortver%pyabi.so
+%dynload_dir/_contextvars.cpython-%pyshortver%pyabi.so
 %dynload_dir/_crypt.cpython-%pyshortver%pyabi.so
 %dynload_dir/_csv.cpython-%pyshortver%pyabi.so
 %dynload_dir/_ctypes.cpython-%pyshortver%pyabi.so
@@ -870,6 +861,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dynload_dir/_opcode.cpython-%pyshortver%pyabi.so
 %dynload_dir/_pickle.cpython-%pyshortver%pyabi.so
 %dynload_dir/_posixsubprocess.cpython-%pyshortver%pyabi.so
+%dynload_dir/_queue.cpython-%pyshortver%pyabi.so
 %dynload_dir/_random.cpython-%pyshortver%pyabi.so
 %dynload_dir/_sha1.cpython-%pyshortver%pyabi.so
 %dynload_dir/_sha256.cpython-%pyshortver%pyabi.so
@@ -879,6 +871,8 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dynload_dir/_ssl.cpython-%pyshortver%pyabi.so
 %dynload_dir/_struct.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testmultiphase.cpython-%pyshortver%pyabi.so
+%dynload_dir/_uuid.cpython-%pyshortver%pyabi.so
+%dynload_dir/_xxtestfuzz.cpython-%pyshortver%pyabi.so
 %dynload_dir/array.cpython-%pyshortver%pyabi.so
 %dynload_dir/audioop.cpython-%pyshortver%pyabi.so
 %dynload_dir/binascii.cpython-%pyshortver%pyabi.so
@@ -909,11 +903,9 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/asyncio/*.py
 %exclude %pylibdir/asyncio/windows_events.py
 %exclude %pylibdir/asyncio/windows_utils.py
-%exclude %pylibdir/asyncio/test_utils.py
 %pylibdir/asyncio/__pycache__/*%bytecode_suffixes
 %exclude %pylibdir/asyncio/__pycache__/windows_events%bytecode_suffixes
 %exclude %pylibdir/asyncio/__pycache__/windows_utils%bytecode_suffixes
-%exclude %pylibdir/asyncio/__pycache__/test_utils%bytecode_suffixes
 
 %dir %pylibdir/collections/
 %dir %pylibdir/collections/__pycache__/
@@ -961,7 +953,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dir %pylibdir/ensurepip/__pycache__/
 %pylibdir/ensurepip/*.py
 %pylibdir/ensurepip/__pycache__/*%bytecode_suffixes
-%exclude %pylibdir/ensurepip/_bundled
+%pylibdir/ensurepip/_bundled
 
 %if 0%{?with_rewheel}
 %dir %pylibdir/ensurepip/rewheel/
@@ -1014,8 +1006,8 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 # "Makefile" and the config-32/64.h file are needed by
 # distutils/sysconfig.py:_init_posix(), so we include them in the core
 # package, along with their parent directories (bug 531901):
-%dir %pylibdir/config-%pybasever%pyabi/
-%pylibdir/config-%pybasever%pyabi/Makefile
+%dir %pylibdir/config-%pybasever%pyabi-%pyarch-linux-gnu/
+%pylibdir/config-%pybasever%pyabi-%pyarch-linux-gnu/Makefile
 %dir %include_dir/
 %include_dir/%_pyconfig_h
 
@@ -1023,9 +1015,10 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %_libdir/libpython%pybasever%pyabi.so.*
 
 %files dev
-%pylibdir/config-%pybasever%pyabi/*
-%exclude %pylibdir/config-%pybasever%pyabi/Makefile
+%pylibdir/config-%pybasever%pyabi-%pyarch-linux-gnu/*
+%exclude %pylibdir/config-%pybasever%pyabi-%pyarch-linux-gnu/Makefile
 %include_dir/*.h
+%include_dir/internal/*.h
 %exclude %include_dir/%_pyconfig_h
 %doc Misc/README.valgrind Misc/valgrind-python.supp Misc/gdbinit
 %_bindir/python3-config
@@ -1041,6 +1034,12 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %_bindir/python3-2to3
 %_bindir/2to3-%pybasever
 %_bindir/idle*
+%_bindir/pathfix.py
+%_desktopdir/idle3.desktop
+%_miconsdir/idle3.png
+%_niconsdir/idle3.png
+%_liconsdir/idle3.png
+
 %tool_dir
 %exclude %tool_dir/scripts/run_tests.py
 %doc %pylibdir/Doc
@@ -1071,6 +1070,9 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dynload_dir/_curses.cpython-%pyshortver%pyabi.so
 %dynload_dir/_curses_panel.cpython-%pyshortver%pyabi.so
 
+%files modules-nis
+%dynload_dir/nis.cpython-%pyshortver%pyabi.so
+
 %files test
 %pylibdir/ctypes/test
 %pylibdir/distutils/tests
@@ -1085,10 +1087,15 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/tkinter/test
 %pylibdir/unittest/test
 %tool_dir/scripts/run_tests.py
-%pylibdir/asyncio/test_utils.py
-%pylibdir/asyncio/__pycache__/test_utils%bytecode_suffixes
 
 %changelog
+* Tue Apr 02 2019 Grigory Ustinov <grenka@altlinux.org> 3.7.3-alt1
+- Updated to upstream version 3.7.3 (Closes: #36297).
+- Added list of architectures which has multilib support in ALT (thx to arei@).
+- Added pathfix.py to python3-tools (thx to viy@).
+- Bring back venv support (thx to obirvalger@ and imz@) (Closes: #32211).
+- Add idle desktop file (Closes: #27542.)
+
 * Tue Jan 29 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.8-alt1
 - Updated to upstream version 3.6.8
 - Removed dependency on rpm-build-python3 from python3 package (Closes: #35992)
@@ -1103,7 +1110,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 * Fri Jun 01 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.6.4-alt3.1
 - fix regular expression in patch1008
 
-* Fri May 30 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.6.4-alt3
+* Wed May 30 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.6.4-alt3
 - Added cleaning os-release parameters (patch1008)
 
 * Tue May 08 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.6.4-alt2

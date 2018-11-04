@@ -1,6 +1,6 @@
 Name: logtop
 Version: 0.6.1
-Release: alt1.git20140901.1.1
+Release: alt1.git20140901.2
 Summary: Display real time statistics of whatever you want
 License: BSD
 Group: Text tools
@@ -62,7 +62,7 @@ This package contains Python module of %name.
 %make_build all
 
 %install
-%ifarch x86_64
+%ifarch x86_64 aarch64
 LIB_SUFFIX=64
 %endif
 %makeinstall_std LIB_SUFFIX=$LIB_SUFFIX
@@ -85,6 +85,9 @@ sed -i '/^ogtop_swigregister/d' %buildroot%python3_sitelibdir/%name.py
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 02 2019 Grigory Ustinov <grenka@altlinux.org> 0.6.1-alt1.git20140901.2
+- Rebuild with python3.7.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.1-alt1.git20140901.1.1
 - (NMU) Rebuilt with python-3.6.4.
 

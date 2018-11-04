@@ -3,7 +3,7 @@
 %define mname nss
 Name: python-module-%mname
 Version: 1.0.1
-Release: alt2%ubt.1
+Release: alt3
 Summary: Python binding for NSS (Network Security Services) and NSPR (Netscape Portable Runtime)
 License: MPLv2.0 or GPLv2+ or LGPLv2+
 Group: Development/Python
@@ -97,13 +97,16 @@ popd
 %python3_sitelibdir/*
 
 %changelog
-* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt2%ubt.1
+* Fri Apr 05 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt3
+- Rebuild for python3.7.
+
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt2.S1.1
 - (NMU) Rebuilt with python-3.6.4.
 
-* Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt2%ubt
+* Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt2.S1
 - Updated build dependencies.
 
-* Thu Dec 28 2017 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1%ubt
+* Thu Dec 28 2017 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1.S1
 - 1.0.0 -> 1.0.1
 
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1

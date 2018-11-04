@@ -1,10 +1,10 @@
 %define oname lcms
 
-%def_with python3
+%def_without python3
 
 Name: python-module-lcms
 Version: 1.19
-Release: alt1.1.1.1
+Release: alt2
 
 Summary: Python binding for little cms color engine
 
@@ -110,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Fri Apr 12 2019 Grigory Ustinov <grenka@altlinux.org> 1.19-alt2
+- Rebuild without python3 support.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.19-alt1.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
