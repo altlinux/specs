@@ -1,6 +1,9 @@
+%def_disable test
+%def_with doc
+
 %define oname uriparser
 Name: liburiparser
-Version: 0.8.6
+Version: 0.9.0
 Release: alt1
 
 Summary: A strictly RFC 3986 compliant URI parsing library
@@ -16,6 +19,15 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++ libcpptest-devel doxygen graphviz
 
+%if_with doc
+# uses qhelpgenerator-qt5 for doc
+BuildRequires: qt5-tools
+%endif
+
+%if_enabled test
+BuildRequires: libgtest-devel >= 1.9.1
+%endif
+
 %description
 uriparser is a strictly RFC 3986 compliant URI parsing library.
 uriparser is cross-platform, fast, supports Unicode.
@@ -30,10 +42,12 @@ Header files for uriparser.
 
 %prep
 %setup
+%__subst "s|qhelpgenerator|qhelpgenerator-qt5|g" configure*
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static \
+           %{subst_enable test}
 %make_build
 
 %install
@@ -52,6 +66,9 @@ touch doc/html/FIXME.map
 %_pkgconfigdir/*
 
 %changelog
+* Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
+- new version 0.9.0 (with rpmrb script)
+
 * Mon Aug 20 2018 Vitaly Lipatov <lav@altlinux.ru> 0.8.6-alt1
 - new version 0.8.6 (with rpmrb script)
 
