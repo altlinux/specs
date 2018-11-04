@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 5.4.3
+Version: 5.4.7
 Release: alt1
 
 Summary: A process utilities module for Python
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 5.4.7-alt1
+- new version 5.4.7 (with rpmrb script)
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 5.4.3-alt1
 - new version 5.4.3 (with rpmrb script)
 
