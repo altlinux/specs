@@ -3,8 +3,8 @@
 
 %define modulename regex
 Name: python-module-regex
-Version: 2018.02.21
-Release: alt1.qa1
+Version: 2018.07.11
+Release: alt1
 
 Summary: Alternative regular expression module, to replace re
 
@@ -80,6 +80,9 @@ rm -rf %buildroot/%python3_sitelibdir/test_*
 
 
 %changelog
+* Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2018.07.11-alt1
+- new version 2018.07.11 (with rpmrb script)
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2018.02.21-alt1.qa1
 - NMU: applied repocop patch
 
