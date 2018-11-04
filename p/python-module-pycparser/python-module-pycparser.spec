@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-pycparser
-Version: 2.18
+Version: 2.19
 Release: alt1
 
 Summary: C parser in Python
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.19-alt1
+- new version 2.19 (with rpmrb script)
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 2.18-alt1
 - new version 2.18 (with rpmrb script)
 
