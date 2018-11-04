@@ -70,7 +70,7 @@
 %global use_system_ntirpc %{on_off_switch system_ntirpc}
 
 Name: nfs-ganesha
-Version: 2.7.0
+Version: 2.7.1
 Release: alt1
 
 Summary: NFS-Ganesha is a NFS Server running in user space
@@ -417,6 +417,9 @@ install -m 644 config_samples/gpfs.ganesha.exports.conf	%buildroot%_sysconfdir/g
 %makeinstall_std
 install -m 644 ChangeLog	%buildroot%_docdir/ganesha
 
+# ganesha-rados-grace tool for interacting with the database used by the rados_cluster recovery backend.
+rm -f %buildroot%_bindir/ganesha-rados-grace
+
 %files
 %doc src/LICENSE.txt
 %_bindir/ganesha.nfsd
@@ -545,6 +548,9 @@ install -m 644 ChangeLog	%buildroot%_docdir/ganesha
 %endif
 
 %changelog
+* Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.7.1-alt1
+- new version 2.7.1 (with rpmrb script)
+
 * Sat Sep 29 2018 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt1
 - new version 2.7.0 (with rpmrb script)
 
