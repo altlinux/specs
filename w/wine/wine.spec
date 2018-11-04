@@ -1,10 +1,10 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.3
-%define major 3.13
+%define major 3.18
 
 Name: wine
-Version: %major.3
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -23,7 +23,6 @@ Source: %name-%version.tar
 # Source1-url: https://github.com/wine-staging/wine-staging/archive/v%major.tar.gz
 Source1: %name-staging-%version.tar
 
-Source2: winetricks
 Source3: %name-%version-desktop.tar
 Source4: %name-%version-icons.tar
 
@@ -112,7 +111,6 @@ Requires: lib%name = %version-%release
 
 Conflicts: wine-vanilla wine-etersoft
 
-Provides: winetricks
 Requires: cabextract
 
 # Provides/Obsoletes Fedora packages
@@ -158,6 +156,7 @@ Requires: lib%name-gl = %version-%release
 
 Requires: wine-mono >= %mono_version
 Requires: wine-gecko = %gecko_version
+Requires: winetricks
 
 Conflicts: wine-vanilla-full
 
@@ -288,7 +287,6 @@ export CC=clang
 
 %install
 %makeinstall_std
-install -m755 %SOURCE2 %buildroot%_bindir/winetricks
 # unpack desktop files
 cd %buildroot%_desktopdir/
 tar xvf %SOURCE3
@@ -332,7 +330,6 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %_bindir/regedit
 %_bindir/msiexec
 
-%_bindir/winetricks
 %_bindir/wineconsole
 %_bindir/wineserver
 
@@ -474,6 +471,13 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.18.1-alt1
+- new version 3.18.1 (with rpmrb script)
+
+* Sat Oct 13 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.17.1-alt1
+- new version 3.17.1 (with rpmrb script)
+- use external winetricks
+
 * Wed Aug 15 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.13.3-alt1
 - ntdll: Don't allow blocking on a critical section during (eterbug #12662)
 
