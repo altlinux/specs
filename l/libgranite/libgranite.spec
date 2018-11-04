@@ -2,7 +2,7 @@
 %def_disable docs
 
 %define _name granite
-%define ver_major 5.1
+%define ver_major 5.2
 %define api_ver 1.0
 %define sover 5
 
@@ -125,6 +125,9 @@ GObject introspection devel data for the granite library.
 %_datadir/vala/vapi/%_name.vapi
 
 %changelog
+* Sun Nov 04 2018 Yuri N. Sedunov <aris@altlinux.org> 5.2.0-alt1
+- 5.2.0
+
 * Thu Aug 30 2018 Yuri N. Sedunov <aris@altlinux.org> 5.1.0-alt1
 - 5.1.0
 
