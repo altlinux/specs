@@ -2,7 +2,7 @@
 
 Name: p7zip
 Version: 16.02
-Release: alt3
+Release: alt4
 
 Summary: 7zip unofficial port - a file-archiver with highest compression ratio
 License: Freely distributable
@@ -56,6 +56,13 @@ The devel package contains the p7zip include files.
 %patch4 -p1
 
 %build
+%ifarch %e2k
+# _LITTLE_ENDIAN gets defined but not checked for
+%add_optflags -D__LITTLE_ENDIAN__
+# -ffast is faster but its -floop-apb-conditional-loads is potentially dangerous
+%add_optflags -fcache-opt
+%endif
+
 # Make p7zip looks for plugins in fixed directory. Upstream behavior was to
 # look in current directory by default (when environment variable P7ZIP_HOME_DIR
 # is not set)
@@ -97,6 +104,9 @@ xargs -0 install -pm644 -t %buildroot%includedir/
 %includedir
 
 %changelog
+* Sun Nov 04 2018 Michael Shigorin <mike@altlinux.org> 16.02-alt4
+- E2K: fix FTBFS; tune optflags a bit
+
 * Sun Nov 04 2018 Michael Shigorin <mike@altlinux.org> 16.02-alt3
 - applied debian security patches
   (Fixes: CVE-2016-9296, CVE-2017-17969, CVE-2018-5996, CVE-2018-10115)
