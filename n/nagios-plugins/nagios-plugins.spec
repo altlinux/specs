@@ -7,8 +7,8 @@
 %define nagios_grp nagios
 
 Name: nagios-plugins
-Version: 1.4.15
-Release: alt2
+Version: 2.2.1
+Release: alt1
 
 Summary: Host/service/network monitoring plug-ins for Nagios(R)
 Summary(ru_RU.UTF-8): Модули мониторинга (plug-ins) хостов/сервисов/сети для Nagios(R)
@@ -19,7 +19,8 @@ URL: http://nagiosplug.sourceforge.net
 
 Packager: Dmitry Lebkov <dlebkov@altlinux.ru>
 
-Source0: http://prdownloads.sf.net/nagiosplug/nagiosplug/%version/%name-%version.tar
+# Source0-url: https://nagios-plugins.org/download/nagios-plugins-%version.tar.gz
+Source0: %name-%version.tar
 Source1: notify_via_jabber
 Source2: nagios-plugins-README.ALT.UTF-8
 
@@ -183,23 +184,23 @@ are not installed on all systems.
 
 %prep
 %setup -n %name-%version
-%patch0 -p1 -b .p0
+#patch0 -p1 -b .p0
 %patch1 -p2 -b .p1
 #patch2 -p1 -b .p2
 %patch3 -p1 -b .p3
-%patch4 -p1 -b .p4
-%patch5 -p2 -b .p5
+#patch4 -p1 -b .p4
+#patch5 -p2 -b .p5
 
-%patch101 -p1 -b .p101
+#patch101 -p1 -b .p101
 %patch102 -p1 -b .p102
-%patch103 -p1 -b .p103
-%patch105 -p1 -b .p105
-%patch106 -p1 -b .p106
+#patch103 -p1 -b .p103
+#patch105 -p1 -b .p105
+#patch106 -p1 -b .p106
 
 # fix ps checking
 %__subst "s|\[UCOMAND\]+|COMMAND|g" configure*
 # https://bbs.archlinux.org/viewtopic.php?id=145693
-sed -i -e '/gets is a security/d' gl/stdio.in.h
+#sed -i -e '/gets is a security/d' gl/stdio.in.h
 
 %build
 %autoreconf
@@ -227,10 +228,10 @@ export ac_cv_path_PATH_TO_FPING=%_sbindir/fping
 %make_build
 
 %install
-chmod 0644 command.cfg
-%makeinstall_std AM_INSTALL_PROGRAM_FLAGS=
+#chmod 0644 command.cfg
+%makeinstall_std AM_INSTALL_PROGRAM_FLAGS= MKDIR_P='mkdir -p'
 
-# install Nagios commands deinitions 
+# install Nagios commands deinitions
 mkdir -p %buildroot/%plugins_cmddir
 install -m 644 %SOURCE10 %buildroot/%plugins_cmddir/
 install -m 644 %SOURCE11 %buildroot/%plugins_cmddir/
@@ -246,21 +247,21 @@ install -m 644 %SOURCE20 %buildroot/%plugins_cmddir/
 
 
 # install contrib add-ons
-mkdir -p %buildroot%_docdir/%name-extra-%version/contrib
-for i in `ls contrib/tarballs/*.gz`; do
- install -m 644 $i %buildroot%_docdir/%name-extra-%version/contrib
-done
+#mkdir -p %buildroot%_docdir/%name-extra-%version/contrib
+#for i in `ls contrib/tarballs/*.gz`; do
+# install -m 644 $i %buildroot%_docdir/%name-extra-%version/contrib
+#done
 
-pushd contrib
- tar -cvzf %buildroot%_docdir/%name-extra-%version/contrib/contrib-misc.tar.gz \
-  `find ./ -maxdepth 1 -type f -print0 | xargs -r0`
-popd
+#pushd contrib
+# tar -cvzf %buildroot%_docdir/%name-extra-%version/contrib/contrib-misc.tar.gz \
+#  `find ./ -maxdepth 1 -type f -print0 | xargs -r0`
+#popd
 
-install -m 644 contrib/README.TXT %buildroot%_docdir/%name-extra-%version/contrib
-install -m 644 %SOURCE1 %buildroot%_docdir/%name-extra-%version/contrib
+#install -m 644 contrib/README.TXT %buildroot%_docdir/%name-extra-%version/contrib
+#install -m 644 %SOURCE1 %buildroot%_docdir/%name-extra-%version/contrib
 
 mkdir -p %buildroot%_docdir/%name-%version
-install -pm644 ACKNOWLEDGEMENTS AUTHORS BUGS FAQ LEGAL NEWS README REQUIREMENTS SUPPORT THANKS command.cfg \
+install -pm644 ACKNOWLEDGEMENTS AUTHORS FAQ LEGAL NEWS README REQUIREMENTS SUPPORT THANKS \
 	%buildroot%_docdir/%name-%version/
 install -pm644 %SOURCE2 %buildroot%_docdir/%name-%version/README.ALT.UTF-8
 
@@ -279,6 +280,7 @@ install -pm644 %SOURCE2 %buildroot%_docdir/%name-%version/README.ALT.UTF-8
 %nagios_plugdir/check_ping
 %nagios_plugdir/check_nagios
 %nagios_plugdir/check_load
+%nagios_plugdir/check_uptime
 %nagios_plugdir/check_procs
 %dir %_docdir/%name-%version
 %_docdir/%name-%version/*
@@ -373,10 +375,13 @@ install -pm644 %SOURCE2 %buildroot%_docdir/%name-%version/README.ALT.UTF-8
 %nagios_plugdir/check_game
 %nagios_plugdir/check_oracle
 %nagios_plugdir/check_sensors
-%dir %_docdir/%name-extra-%version
-%_docdir/%name-extra-%version/*
+#dir %_docdir/%name-extra-%version
+#_docdir/%name-extra-%version/*
 
 %changelog
+* Mon Nov 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.1-alt1
+- new version 2.2.1 (with rpmrb script)
+
 * Mon Oct 14 2013 Vitaly Lipatov <lav@altlinux.ru> 1.4.15-alt2
 - add autoreconf, more clean build
 - (add missed rpcbind, mailq and some like that)
