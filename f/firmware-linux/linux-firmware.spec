@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20181024
+Version: 20181026
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,11 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Mon Nov 05 2018 Cronbuild Service <cronbuild@altlinux.org> 20181026-alt1
+- upstream changes (GIT 1baa348):
+  + qed: Add 8.37.7.0 firmware image (thx Mody, Rasesh)
+  + add MC firmware for NXP DPAA2 SoCs (thx Cristian Sovaiala)
+
 * Sun Oct 28 2018 Cronbuild Service <cronbuild@altlinux.org> 20181024-alt1
 - upstream changes (GIT 1cb4e51):
   + amdgpu: add raven dmcu firmware (thx Alex Deucher)
