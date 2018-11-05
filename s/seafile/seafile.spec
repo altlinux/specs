@@ -1,6 +1,6 @@
 Name: seafile
 Version: 6.2.5
-Release: alt1
+Release: alt2
 
 Summary: Full-fledged cloud storage platform
 
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 
 Source1: README.ALT.utf8.txt
 Source2: nginx.conf.example
+
+Patch: seafile-curl-7.62.patch
 
 #Requires: python-module-mako
 #Requires: python-module-webpy
@@ -79,6 +81,7 @@ developing applications that use lib%name.
 
 %prep
 %setup
+%patch -p1
 cp %SOURCE1 .
 # remove buildroot from .pc file
 %__subst 's/(DESTDIR)//' lib/libseafile.pc.in
@@ -108,6 +111,9 @@ cp %SOURCE1 .
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Mon Nov 05 2018 Vitaly Lipatov <lav@altlinux.ru> 6.2.5-alt2
+- fix build with curl 7.62
+
 * Tue Sep 11 2018 Vitaly Lipatov <lav@altlinux.ru> 6.2.5-alt1
 - new version 6.2.5 (with rpmrb script)
 
