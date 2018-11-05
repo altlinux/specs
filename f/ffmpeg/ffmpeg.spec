@@ -89,8 +89,8 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	4.0.2
-Release:	alt4
+Version:	4.0.3
+Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -739,6 +739,9 @@ xz Changelog
 %endif
 
 %changelog
+* Mon Nov 05 2018 Anton Farygin <rider@altlinux.ru> 2:4.0.3-alt1
+- 4.0.3 (fixes: CVE-2018-15822)
+
 * Sat Sep 01 2018 Anton Farygin <rider@altlinux.ru> 2:4.0.2-alt4
 - disabled build with librtmp (this library is not supported by anyone)
 
