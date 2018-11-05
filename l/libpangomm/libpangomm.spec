@@ -1,9 +1,9 @@
 %define rname pangomm
-%define major 2.40
+%define major 2.42
 %define api_ver 1.4
 
 Name: lib%rname
-Version: %major.1
+Version: %major.0
 Release: alt1
 
 Summary: This library provides a C++ interface to pango
@@ -73,6 +73,12 @@ BuildArch: noarch
 %_docdir/%rname-%api_ver
 
 %changelog
+* Mon Nov 05 2018 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1
+- 2.42.0
+
+* Mon Nov 05 2018 Yuri N. Sedunov <aris@altlinux.org> 2.40.2-alt1
+- 2.40.2
+
 * Sun Sep 04 2016 Yuri N. Sedunov <aris@altlinux.org> 2.40.1-alt1
 - 2.40.1
 

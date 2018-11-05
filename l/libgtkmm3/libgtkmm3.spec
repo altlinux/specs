@@ -1,11 +1,12 @@
 %define api_version 3.0
 %define rname gtkmm
 %define ver_major 3.22
-%def_disable atkmm
+%def_enable atkmm
 %def_disable demos
+%def_enable check
 
 Name: libgtkmm3
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A C++ interface for GTK3 (a GUI library for X)
@@ -23,12 +24,11 @@ Provides: %rname = %version
 %define atkmm_ver 2.24.2
 %define cairo_ver 1.12.0
 
-BuildRequires: gcc-c++ mm-common doxygen  xsltproc libgtk+3-devel >= %gtk_ver
+BuildRequires: gcc-c++ mm-common doxygen xsltproc libgtk+3-devel >= %gtk_ver
 BuildRequires: libglibmm-devel >= %glib_ver libpangomm-devel >= %pangomm_ver
-BuildRequires: libatkmm-devel >= %atkmm_ver libcairomm-devel >= %cairo_ver
-BuildRequires: libepoxy-devel
-# for check
-BuildRequires: xvfb-run
+BuildRequires: libcairomm-devel >= %cairo_ver libepoxy-devel
+%{?_enable_atkmm:BuildRequires: libatkmm-devel >= %atkmm_ver}
+%{?_enable_check:BuildRequires: xvfb-run}
 
 %description
 Gtkmm provides a C++ interface to the GTK+ GUI library. gtkmm2 wraps GTK+ 2.
@@ -71,11 +71,11 @@ The %name-demos package contains source code of demo programs for %name.
 %autoreconf
 %configure \
 	--disable-static \
-	%{?_enable_atkmm:--enable-api-atkmm}
+	%{?_disable_atkmm:--disable-api-atkmm}
 %make_build
 
 %install
-%make DESTDIR=%buildroot gtkmm_docdir=%_docdir/%rname-%api_version install
+%makeinstall_std  gtkmm_docdir=%_docdir/%rname-%api_version
 
 %check
 xvfb-run %make check
@@ -85,7 +85,6 @@ xvfb-run %make check
 %_libdir/*.so.*
 
 %files devel
-%{?_enable_atkmm:%_includedir/atkmm*}
 %_includedir/gdkmm-%api_version
 %_includedir/%rname-%api_version
 %_libdir/*.so
@@ -103,6 +102,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Wed Nov 07 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
+- 3.22.3
+
 * Wed Sep 13 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 
