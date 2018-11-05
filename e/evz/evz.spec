@@ -1,6 +1,6 @@
 Name: evz
 Version: 0.1.2
-Release: alt1
+Release: alt2
 
 Summary: OpenVZ control tool
 
@@ -13,7 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-git: https://github.com/Etersoft/evz.git
 Source: ftp://updates.etersoft.ru/pub/Korinf/sources/tarball/%name-%version.tar
 
-BuildArchitectures: noarch
+ExclusiveArch: x86_64
 
 %description
 EVZ is implemented as wrapper around vzctl with accent to group operations on containers.
@@ -40,6 +40,9 @@ install -D -m 0644 bash_completion/evz %buildroot%_sysconfdir/bash_completion.d/
 %_sysconfdir/bash_completion.d/evz
 
 %changelog
+* Mon Nov 05 2018 Alexey Shabalin <shaba@altlinux.org> 0.1.2-alt2
+- build for x86_64 only
+
 * Wed Feb 14 2018 Vitaly Lipatov <lav@altlinux.ru> 0.1.2-alt1
 - evz: add restart support
 - evz: add set support

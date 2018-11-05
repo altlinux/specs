@@ -1,13 +1,14 @@
 Summary: Create Ganeti ALT-based VMs
 Name: ganeti-instance-altbootstrap
 Version: 0.9
-Release: alt4
+Release: alt5
 License: GPLv2
 Group: System/Configuration/Other
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 Source: ganeti-instance-altbootstrap-%version.tar.gz
-BuildArch: noarch
+ExclusiveArch: x86_64
+
 Requires: multipath-tools /usr/bin/mkve-cache
 
 %description
@@ -42,6 +43,9 @@ mkdir -p %buildroot/%_cachedir/%name
 %_cachedir/%name
 
 %changelog
+* Wed Nov 07 2018 Alexey Shabalin <shaba@altlinux.org> 0.9-alt5
+- build for x86_64 only
+
 * Thu Oct 07 2010 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9-alt4
 - update to pv_ops xen (hvc0 instead of xvc0 console)
 

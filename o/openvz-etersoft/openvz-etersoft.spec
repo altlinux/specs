@@ -1,6 +1,6 @@
 Name: openvz-etersoft
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Summary: Etersoft's collection of OpenVZ additional utilities
 
@@ -11,7 +11,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
 
-BuildArch: noarch
+ExclusiveArch: x86_64
 
 %description
 Etersoft's collection of OpenVZ additional utilities.
@@ -59,6 +59,9 @@ install -m755 vzfailcnt/vzfailcnt.conf %buildroot/etc/
 %_sbindir/e
 
 %changelog
+* Mon Nov 05 2018 Alexey Shabalin <shaba@altlinux.org> 0.2-alt2
+- build for x86_64 only
+
 * Sat Nov 21 2015 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
 - add vzfailcnt
 - add READMEs

@@ -1,14 +1,14 @@
 Name: vzdump
 Version: 1.0
-Release: alt2.1
+Release: alt3
 
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Summary: OpenVZ backup scripts
 Source: %name-%version.tar.gz
 License: GPL
 Group: Archiving/Backup
+ExclusiveArch: x86_64
 
-BuildArch: noarch
 BuildPreReq: perl
 Requires: vzctl rsync xdelta
 BuildRequires: perl-podlators
@@ -31,6 +31,9 @@ make DESTDIR=$RPM_BUILD_ROOT install
 %doc ChangeLog copyright
 
 %changelog
+* Mon Nov 05 2018 Alexey Shabalin <shaba@altlinux.org> 1.0-alt3
+- build for x86_64 only
+
 * Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
@@ -43,8 +46,3 @@ make DESTDIR=$RPM_BUILD_ROOT install
 * Mon Jun 18 2007 Slava Dubrovskiy <dubrsl@altlinux.org> 0.4-alt1
 - Update for Sisyphus
 
-* Tue Mar 22 2007 Dietmar Maurer <dietmar@proxmox.com> 0.3-1
-- added Vendor and Packager tags
-
-* Tue Mar 20 2007 Kir Kolyshkin <kir@openvz.org> 0.3-1
-- created spec file

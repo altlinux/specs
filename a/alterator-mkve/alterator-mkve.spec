@@ -2,14 +2,14 @@
 
 Name: alterator-mkve
 Version: 0.26
-Release: alt1
+Release: alt2
 Packager: Anton Protopopov <aspsk@altlinux.org>
-BuildArch: noarch
 Source0: %name-%version.tar
 Source1: config
-Summary: Alterator module for creating/destroing virtual environments
+Summary: Alterator module for creating/destroying virtual environments
 License: GPL
 Group: System/Configuration/Other
+ExclusiveArch: x86_64
 
 Requires: gettext
 Requires: alterator >= 3.3-alt8
@@ -22,7 +22,7 @@ BuildPreReq: alterator-fbi >= 0.15-alt2
 BuildRequires: alterator >= 3.3-alt8
 
 %description
-Alterator module for creating/destroing virtual environments
+Alterator module for creating/destroying virtual environments
 
 %prep
 %setup -q
@@ -31,14 +31,14 @@ Alterator module for creating/destroing virtual environments
 
 %install
 %makeinstall
-%__mkdir_p %buildroot%_mkve_confdir
+mkdir -p %buildroot%_mkve_confdir
 install %SOURCE1 %buildroot%_mkve_confdir
 %find_lang %name
 
 %post
 if [ -f "/etc/libvirt/qemu/networks/default.xml" ]; then
-    %__rm -f /etc/libvirt/qemu/networks/default.xml
-    %__rm -f /etc/libvirt/qemu/networks/autostart/default.xml
+    rm -f /etc/libvirt/qemu/networks/default.xml
+    rm -f /etc/libvirt/qemu/networks/autostart/default.xml
     service libvirtd restart
 fi
 
@@ -51,9 +51,12 @@ fi
 %_mkve_confdir
 
 %changelog
+* Mon Nov 05 2018 Alexey Shabalin <shaba@altlinux.org> 0.26-alt2
+- build for x86_64 only
+
 * Mon Oct 12 2009 Anton Protopopov <aspsk@altlinux.org> 0.26-alt1
 - "There can be only none" (in five parts)
-- Ask user when destroing a machine
+- Ask user when destroying a machine
 - (m.)adopt -> (fem.)adopt
 - Bugfixes (ALT #21882)
 

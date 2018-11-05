@@ -2,13 +2,13 @@
 
 Name: alterator-beancounters
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: OpenVZ beancounter observer module
 Group: System/Configuration/Other
 License: GPL
 
-BuildArch: noarch
+ExclusiveArch: x86_64
 
 Source: %name-%version.tar
 
@@ -36,5 +36,8 @@ OpenVZ beancounter observer module
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Nov 05 2018 Alexey Shabalin <shaba@altlinux.org> 0.1-alt2
+- build for x86_64 only
+
 * Wed Sep 09 2009 Alexey I. Froloff <raorn@altlinux.org> 0.1-alt1
 - Initial build

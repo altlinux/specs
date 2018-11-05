@@ -1,9 +1,8 @@
 %define _libexecdir /usr/libexec
 
 Name: vzstats
-Version: 0.5.3
+Version: 0.5.5
 Release: alt1
-BuildArch: noarch
 Summary: OpenVZ stats collection daemon
 
 Group: System/Base
@@ -12,6 +11,7 @@ Url: http://stats.openvz.org
 Source: %name-%version.tar
 Source1: vzstats.filetrigger
 Patch0: %name-%version-alt.patch
+ExclusiveArch: x86_64
 
 Requires: curl
 
@@ -24,7 +24,7 @@ in order to improve the project.
 %patch0 -p1
 
 %build
-%make %{?_smp_mflags}
+%make_build
 
 %install
 %makeinstall_std install-cronjob
@@ -49,6 +49,10 @@ install -Dp -m755 %SOURCE1 %buildroot%_rpmlibdir/vzstats.filetrigger
 %doc README COPYING
 
 %changelog
+* Sun Nov 04 2018 Alexey Shabalin <shaba@altlinux.org> 0.5.5-alt1
+- 0.5.5
+- build for x86_64 only
+
 * Tue Jul  1 2014 Evgenii Terechkov <evg@altlinux.org> 0.5.3-alt1
 - 0.5.3
 
