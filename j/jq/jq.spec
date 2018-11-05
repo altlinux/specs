@@ -3,8 +3,8 @@
 
 Name: jq
 %define lname lib%name
-Version: 1.5
-Release: alt3%ubt
+Version: 1.6
+Release: alt1
 Summary: Command-line JSON processor
 Group: Development/Other
 Source: %name-%version.tar
@@ -15,7 +15,6 @@ Requires: %lname = %EVR
 
 BuildRequires: flex  liboniguruma-devel
 BuildRequires: %{?!_disable_check:/proc valgrind ruby-tools}
-BuildRequires(pre):rpm-build-ubt
 
 %description
 %name is a command-line JSON processor.
@@ -88,13 +87,16 @@ cat ./test-suite.log
 %endif
 
 %changelog
-* Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 1.5-alt3%ubt
+* Mon Nov 05 2018 Anton Farygin <rider@altlinux.ru> 1.6-alt1
+- 1.6
+
+* Thu May 31 2018 Anton Farygin <rider@altlinux.ru> 1.5-alt3
 - security update (fixes: CVE-2016-4074)
 
-* Thu Apr 05 2018 Anton Farygin <rider@altlinux.ru> 1.5-alt2%ubt
+* Thu Apr 05 2018 Anton Farygin <rider@altlinux.ru> 1.5-alt2
 - rebuilt for new liboniguruma
 
-* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 1.5-alt1%ubt
+* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 1.5-alt1
 - new version with security fixes (CVE-2015-8863)
 
 * Sun Jun 15 2014 Led <led@altlinux.ru> 1.4-alt1
