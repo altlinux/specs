@@ -4,14 +4,11 @@
 #============================================================================
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.14.0
-Release: alt3
+Version: 1.14.1
+Release: alt1
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel libkrb5-devel
-%if_with debug
-BuildRequires: google-perftools-devel
-%endif
 BuildRequires: libGeoIP-devel
 BuildRequires: libgd2-devel
 BuildRequires: libpam-devel
@@ -48,9 +45,6 @@ Source100: %name.watch
 Patch1: nginx-0.8-syslog.patch
 Patch2: nginx-1.14.0-glibc-2.3.2-upstream.patch
 Packager: Denis Smirnov <mithraen@altlinux.ru>
-BuildRequires(pre): rpm-build-ubt
-%if_with debug
-%endif
 Requires(pre): shadow-utils
 Requires(post): sed
 Provides: webserver
@@ -214,7 +208,7 @@ CFLAGS="%optflags $CPU" ./configure \
 	--add-dynamic-module=nginx-rtmp-module \
 %endif
 %if_with debug
-	--with-google_perftools_module \
+	--with-debug \
 %endif
 %if_with syslog
 	--with-syslog \
@@ -361,10 +355,13 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Tue Nov 06 2018 Anton Farygin <rider@altlinux.ru> 1.14.1-alt1
+- 1.14.1 (fixes: CVE-2018-16845, CVE-2018-16843, CVE-2018-16844)
+
 * Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 1.14.0-alt3
 - rebuilt with openssl-1.1
 
-* Fri Jul 20 2018 Anton Farygin <rider@altlinux.ru> 1.14.0-alt2%ubt
+* Fri Jul 20 2018 Anton Farygin <rider@altlinux.ru> 1.14.0-alt2
 - fixed build with glibc-2.3.2
 - spenego module moved to tarball
 - updated auth_pam module
@@ -373,27 +370,27 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 - Updated to 1.14.0
 - Updated nginx-rtmp-module
 
-* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt2%ubt.1
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt2.1
 - rebuild with new perl 5.26.1
 
-* Wed Jul 19 2017 Elvira Khabirova <lineprinter@altlinux.org> 1.12.1-alt2%ubt
+* Wed Jul 19 2017 Elvira Khabirova <lineprinter@altlinux.org> 1.12.1-alt2
 - Added ngx_http_auth_pam_module.
 - Fixed dependencies of module packages.
 
-* Tue Jul 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.12.1-alt1%ubt
+* Tue Jul 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.12.1-alt1
 - Updated to 1.12.1 (Fixes CVE-2017-7529).
 
-* Thu May 11 2017 Evgeny Bolshedvorsky <jenya@altlinux.org> 1.12-alt3%ubt
+* Thu May 11 2017 Evgeny Bolshedvorsky <jenya@altlinux.org> 1.12-alt3
 - added spnego dynamic module
 
-* Sun Apr 16 2017 Denis Smirnov <mithraen@altlinux.ru> 1.12-alt2%ubt
+* Sun Apr 16 2017 Denis Smirnov <mithraen@altlinux.ru> 1.12-alt2
 - update rtmp module
 
-* Sat Apr 15 2017 Denis Smirnov <mithraen@altlinux.ru> 1.12-alt1%ubt
+* Sat Apr 15 2017 Denis Smirnov <mithraen@altlinux.ru> 1.12-alt1
 - 1.12
 
-* Mon Apr 03 2017 Denis Smirnov <mithraen@altlinux.ru> 1.10.3-alt2%ubt
-- add %%ubt
+* Mon Apr 03 2017 Denis Smirnov <mithraen@altlinux.ru> 1.10.3-alt2
+- add %
 
 * Tue Mar 28 2017 Denis Smirnov <mithraen@altlinux.ru> 1.10.3-alt1
 - 1.10.3
