@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: upower
-Version: 0.99.8
+Version: 0.99.9
 Release: alt1
 
 Summary: Power Management Service
@@ -92,7 +92,9 @@ rm -f acinclude.m4
 %find_lang %name
 
 %check
-%{?_enable_check:PYTHON=%__python3 %make check}
+%ifnarch %ix86
+PYTHON=%__python3 %make check
+%endif
 
 %files -f %name.lang
 %doc AUTHORS NEWS README
@@ -124,6 +126,9 @@ rm -f acinclude.m4
 %_girdir/*.gir
 
 %changelog
+* Tue Nov 06 2018 Yuri N. Sedunov <aris@altlinux.org> 0.99.9-alt1
+- 0.99.9
+
 * Tue Jul 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.99.8-alt1
 - 0.99.8
 - enabled %%check
