@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.19.8.1
-Release: alt5
+Release: alt6
 
 %define libintl libintl3
 
@@ -40,6 +40,8 @@ BuildPreReq: gcc-c++ makeinfo xz %{?_with_java:jdkgcj /proc} %{?_with_emacs:emac
 # Needed for the --color option of the various programs.
 # Otherwise, embedded versions are used, which is forbidden by policy.
 BuildRequires: glib2-devel libcroco-devel libncurses-devel libunistring-devel libxml2-devel
+# Needed for the test suite.
+%{?!_without_check:%{?!_disable_check:BuildRequires: python-modules}}
 
 %package -n %libintl
 Summary: The dynamic %libintl library for the gettext package
@@ -252,7 +254,7 @@ mkdir -p %buildroot%_docdir
 %find_lang %name-tools
 
 %check
-%make_build -k check
+%make_build -k check VERBOSE=1
 
 %if_with included_gettext
 %files -n %libintl
@@ -336,6 +338,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Tue Oct 30 2018 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt6
+- Updated %%check build dependencies.
+
 * Thu May 03 2018 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt5
 - spec: added emacs knob (enabled by default; by mike@).
 
