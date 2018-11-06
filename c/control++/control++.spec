@@ -1,7 +1,7 @@
 %define libcontrolppver 0.15
 
 Name: control++
-Version: 0.12.0
+Version: 0.12.1
 Release: alt1
 
 Summary: System configuration tool
@@ -58,6 +58,14 @@ cp readme.txt %buildroot%_defaultdocdir/%name/
 %_defaultdocdir/%name
 
 %changelog
+* Tue Nov 06 2018 Alexey Appolonov <alexey@altlinux.org> 0.12.1-alt1
+- Only regular files, symlinks and directories are processed
+  for the 'dir'/'dir_r' permission mode setting;
+- Mode saving is aborted if mode name cannot be found among names
+  of the available modes;
+- Fixed UniquifyPermsOrACLs function;
+- Extended manual.
+
 * Sun Oct 28 2018 Alexey Appolonov <alexey@altlinux.org> 0.12.0-alt1
 - Ability to exclude paths from mode setting;
 - Ability to check uniqueness of the given permission modes;
