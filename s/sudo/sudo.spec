@@ -1,6 +1,6 @@
 Name: sudo
-Version: 1.8.21p2
-Release: alt1%ubt
+Version: 1.8.25p1
+Release: alt1
 Epoch: 1
 
 Summary: Allows command execution as another user
@@ -16,8 +16,6 @@ Patch: sudo-%version-alt.patch
 PreReq: control
 Requires: vitmp
 Provides: %_sysconfdir/sudoers.d
-
-BuildRequires(pre):rpm-build-ubt
 
 # Automatically added by buildreq on Wed Apr 09 2003
 BuildRequires: flex libpam-devel perl-podlators
@@ -75,9 +73,7 @@ configure_options='
 --with-sudoers-mode=0400
 --with-editor=/bin/vitmp
 --with-sendmail=/usr/sbin/sendmail
-%if %ubt_id >= "M70P"
 --with-sssd
-%endif
 --docdir=%_datadir/doc/%name-%version
 --with-plugindir=%_libdir/sudo
 --libexecdir=%_libdir
@@ -94,6 +90,7 @@ chmod u+rwx %buildroot%prefix/*bin/*
 install -pD -m755 sudo.control %buildroot/etc/control.d/facilities/sudo
 install -pD -m755 sudoers.control %buildroot/etc/control.d/facilities/sudoers
 install -pD -m755 sudoreplay.control %buildroot/etc/control.d/facilities/sudoreplay
+install -pD -m755 sudowheel.control %buildroot/etc/control.d/facilities/sudowheel
 bzip2 -9 %buildroot%_datadir/doc/%name-%version/ChangeLog
 
 %find_lang sudo
@@ -111,6 +108,9 @@ mv %buildroot%_sysconfdir/sudoers.dist %buildroot%_datadir/doc/%name-%version/
 if [ -f "%_controldir/sudoreplay" ]; then
     %pre_control sudoreplay
 fi
+if [ -f "%_controldir/sudowheel" ]; then
+    %pre_control sudowheel
+fi
 
 %post
 %post_control -s wheelonly sudo
@@ -119,6 +119,10 @@ if [ $1 -gt 1 -a ! -f "/var/run/control/sudoreplay" ]; then
     echo wheelonly > "/var/run/control/sudoreplay"
 fi
 %post_control -s wheelonly sudoreplay
+if [ $1 -gt 1 -a ! -f "/var/run/control/sudowheel" ]; then
+    echo enabled > "/var/run/control/sudowheel"
+fi
+%post_control -s enabled sudoreplay
 
 %triggerpostun -- %name < 1:1.8.0
 cp -a %_sysconfdir/sudoers %_sysconfdir/sudoers.rpmsave
@@ -162,6 +166,7 @@ fi
 %attr(700,root,root) %_bindir/sudoreplay
 %attr(755,root,root) %_sbindir/visudo
 %attr(700,root,root) %_sysconfdir/sudoers.d
+%_bindir/cvtsudoers
 %_mandir/man?/*
 %exclude %_man8dir/sudo_plugin.8*
 %_datadir/doc/%name-%version/
@@ -172,6 +177,17 @@ fi
 %_man8dir/sudo_plugin.8*
 
 %changelog
+* Tue Nov 06 2018 Evgeny Sinelnikov <sin@altlinux.org> 1:1.8.25p1-alt1
+- Update to latest release
+- Disable ubt macros due binary package identity change
+- Replace libsudo_util.so to libexecdir
+- Add new cvtsudoers utility
+
+* Fri Apr 27 2018 Evgeny Sinelnikov <sin@altlinux.org> 1:1.8.22-alt1%ubt
+- Update to latest winter release
+- Add sudowheel control with rule "ALL=(ALL) ALL" for wheel users enabled
+  by default (closes: 18344)
+
 * Thu Nov 23 2017 Evgeny Sinelnikov <sin@altlinux.org> 1:1.8.21p2-alt1%ubt
 - Update to latest autumn release
 
