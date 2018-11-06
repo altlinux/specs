@@ -1,6 +1,5 @@
 %def_disable nacl
 %def_enable  clang
-%def_enable  gtk3
 %def_disable shared_libraries
 %def_enable  widevine
 %def_enable  ffmpeg
@@ -29,7 +28,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        69.0.3497.100
+Version:        70.0.3538.67
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -76,6 +75,7 @@ Patch021: 0021-FEDORA-Fix-memcpy.patch
 Patch022: 0022-ARCHLINUX-chromium-widevine-r2.patch
 Patch023: 0023-ALT-openh264-always-pic-on-x86.patch
 Patch024: 0024-ALT-allow-to-override-clang-through-env-variables.patch
+Patch025: 0025-ALT-Define-utf8_t.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -116,9 +116,7 @@ BuildRequires:  pkgconfig(gconf-2.0)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gnome-keyring-1)
 BuildRequires:  pkgconfig(gtk+-2.0)
-%if_enabled gtk3
 BuildRequires:  pkgconfig(gtk+-3.0)
-%endif
 %if_enabled ffmpeg
 BuildRequires:  pkgconfig(opus)
 BuildRequires:  pkgconfig(libavresample)
@@ -233,6 +231,7 @@ tar -xf %SOURCE1
 %patch022 -p1
 %patch023 -p1
 %patch024 -p1
+%patch025 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -248,6 +247,11 @@ touch third_party/blink/tools/blinkpy/__init__.py
 sed -i \
 	-e '/"-Wno-ignored-pragma-optimize"/d' \
 	build/config/compiler/BUILD.gn
+
+sed -i \
+	-e 's/^\([%#]define CONFIG_PIC\) 0/\1 1/' \
+	third_party/libaom/source/config/linux/ia32/config/aom_config.asm \
+	third_party/libaom/source/config/linux/ia32/config/aom_config.h
 
 mkdir -p third_party/node/linux/node-linux-x64/bin
 ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/
@@ -280,6 +284,7 @@ gn_arg is_official_build=true
 gn_arg is_desktop_linux=true
 gn_arg use_custom_libcxx=false
 gn_arg use_sysroot=false
+gn_arg use_pic=true
 gn_arg use_gio=true
 gn_arg use_glib=true
 gn_arg use_libpci=true
@@ -312,7 +317,6 @@ gn_arg enable_nacl=%{is_enabled nacl}
 gn_arg is_component_ffmpeg=%{is_enabled shared_libraries}
 gn_arg is_component_build=%{is_enabled shared_libraries}
 gn_arg enable_widevine=%{is_enabled widevine}
-gn_arg use_gtk3=%{is_enabled gtk3}
 gn_arg use_ozone=%{is_enabled wayland}
 gn_arg enable_wayland_server=%{is_enabled wayland}
 
@@ -338,10 +342,12 @@ gn_arg google_default_client_secret=\"%default_client_secret\"
 %endif
 
 unbundle=
-unbundle="$unbundle freetype"
-unbundle="$unbundle fontconfig"
+unbundle_lib() { unbundle="$unbundle $*"; }
+
+unbundle_lib fontconfig
+unbundle_lib freetype
 %if_enabled ffmpeg
-unbundle="$unbundle ffmpeg opus"
+unbundle_lib ffmpeg opus
 %endif
 
 [ -z "$unbundle" ] ||
@@ -481,6 +487,28 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Mon Oct 22 2018 Alexey Gladkov <legion@altlinux.ru> 70.0.3538.67-alt1
+- New version (70.0.3538.67).
+- Security fixes:
+  - CVE-2018-17462: Sandbox escape in AppCache.
+  - CVE-2018-17463: Remote code execution in V8.
+  - CVE to be assigned: Heap buffer overflow in Little CMS in PDFium.
+  - CVE-2018-17464: URL spoof in Omnibox.
+  - CVE-2018-17465: Use after free in V8.
+  - CVE-2018-17466: Memory corruption in Angle.
+  - CVE-2018-17467: URL spoof in Omnibox.
+  - CVE-2018-17468: Cross-origin URL disclosure in Blink.
+  - CVE-2018-17469: Heap buffer overflow in PDFium.
+  - CVE-2018-17470: Memory corruption in GPU Internals.
+  - CVE-2018-17471: Security UI occlusion in full screen mode.
+  - CVE-2018-17472: iframe sandbox escape on iOS.
+  - CVE-2018-17473: URL spoof in Omnibox.
+  - CVE-2018-17474: Use after free in Blink.
+  - CVE-2018-17475: URL spoof in Omnibox.
+  - CVE-2018-17476: Security UI occlusion in full screen mode.
+  - CVE-2018-5179: Lack of limits on update() in ServiceWorker.
+  - CVE-2018-17477: UI spoof in Extensions.
+
 * Thu Oct 11 2018 Alexey Gladkov <legion@altlinux.ru> 69.0.3497.100-alt1
 - New version (69.0.3497.100).
 - Add symlink /usr/bin/chromium -> chromium-browser.
