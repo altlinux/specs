@@ -1,6 +1,6 @@
 Name: libglvnd
 Version: 1.1.0
-Release: alt2
+Release: alt3
 Epoch: 7
 Group: System/Libraries
 Summary: The GL Vendor-Neutral Dispatch library
@@ -120,5 +120,8 @@ rm -f %buildroot%_libdir/libGLESv1*
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Nov 01 2018 Valery Inozemtsev <shrek@altlinux.ru> 7:1.1.0-alt3
+- git snapshot master.012fe39
+
 * Thu Oct 18 2018 Valery Inozemtsev <shrek@altlinux.ru> 7:1.1.0-alt2
 - 1.1.0
