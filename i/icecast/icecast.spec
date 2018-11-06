@@ -1,7 +1,8 @@
 # Spec file for Icecast streaming server
+%define _unpackaged_files_terminate_build 1
 
 Name: icecast
-Version: 2.4.3
+Version: 2.4.4
 Release: alt1
 
 Summary: Streaming Media Server
@@ -19,6 +20,7 @@ Source5: %name.chroot.conf
 Source6: %name.chroot.all
 
 Source7: xspf.xsl
+
 Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-licenses
@@ -90,6 +92,9 @@ install -p -m 0750 -D -- %SOURCE6 %buildroot%_sysconfdir/chroot.d/%name.all
 %_localstatedir/%name
 
 %changelog
+* Tue Nov 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.4-alt1
+- Updated to upstream version 2.4.4 (Fixes: CVE-2018-18820).
+
 * Mon Jan 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.3-alt1
 - Updated to upstream version 2.4.3 (Fixes: CVE-2011-4612).
 - Fixed localstatedir.
