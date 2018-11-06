@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: libldb
-Version: 1.3.6
-Release: alt1%ubt
+Version: 1.4.2
+Release: alt2
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -13,14 +13,17 @@ Url: http://ldb.samba.org/
 Source: http://samba.org/ftp/ldb/ldb-%{version}.tar.gz
 Patch: ldb-samba-modules.patch
 Patch1: ldb-alt-fix-python-ldflags.patch
+Patch2: ldb-lmdb-disable-tests.patch
 
 BuildRequires: python-devel python-module-tdb python-module-talloc-devel python-module-tevent
 BuildRequires: libpopt-devel libldap-devel libcmocka-devel xsltproc docbook-style-xsl docbook-dtds
 BuildRequires: libtdb-devel >= 1.3.16
 BuildRequires: libtalloc-devel >= 2.1.14
 BuildRequires: libtevent-devel >= 0.9.37
+%ifnarch %ix86
+BuildRequires: liblmdb-devel >= 0.9.16
+%endif
 
-BuildRequires(pre):rpm-build-ubt
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -32,6 +35,9 @@ BuildRequires: python3-module-tevent
 Requires: libtdb >= 1.3.16
 Requires: libtalloc >= 2.1.14
 Requires: libtevent >= 0.9.37
+%ifnarch %ix86
+Requires: liblmdb >= 0.9.16
+%endif
 
 %description
 An extensible library that implements and LDAP like API to access remote LDAP
@@ -94,6 +100,10 @@ Development files for the Python3 bindings for the LDB library
 %patch -p2
 %patch1 -p1
 
+%ifarch %ix86
+%patch2 -p2
+%endif
+
 %build
 %undefine _configure_gettext
 %configure	\
@@ -105,6 +115,9 @@ Development files for the Python3 bindings for the LDB library
 		--with-samba-modulesdir=%_libdir/samba-dc \
 %if_with python3
                 --extra-python=python3 \
+%endif
+%ifarch %ix86
+                --without-ldb-lmdb \
 %endif
 		--with-privatelibdir=%_libdir/ldb
 %make
@@ -124,6 +137,11 @@ make test
 %dir %_libdir/ldb/modules
 %dir %_libdir/ldb/modules/ldb
 
+%_libdir/ldb/libldb-key-value.so
+%ifnarch %ix86
+%_libdir/ldb/libldb-mdb-int.so
+%endif
+
 %_libdir/ldb/modules/ldb/asq.so
 %_libdir/ldb/modules/ldb/ldap.so
 %_libdir/ldb/modules/ldb/paged_results.so
@@ -133,6 +151,10 @@ make test
 %_libdir/ldb/modules/ldb/server_sort.so
 %_libdir/ldb/modules/ldb/skel.so
 %_libdir/ldb/modules/ldb/tdb.so
+%_libdir/ldb/modules/ldb/ldb.so
+%ifnarch %ix86
+%_libdir/ldb/modules/ldb/mdb.so
+%endif
 
 %files devel
 %_includedir/ldb.h
@@ -183,6 +205,13 @@ make test
 %endif
 
 %changelog
+* Thu Oct 25 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.4.2-alt2
+- Build for x86 without lmdb support
+- Disable ubt macros due binary package identity changes
+
+* Thu Sep 13 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.4.2-alt1%ubt
+- Update to the 1.4.2 release for samba-4.9.0
+
 * Fri Aug 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.3.6-alt1%ubt
 - Update to the 1.3.6 release for samba-4.8.5
 
