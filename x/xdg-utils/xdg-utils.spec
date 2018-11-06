@@ -1,6 +1,6 @@
 Name: xdg-utils
 Version: 1.1.3
-Release: alt4
+Release: alt5
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -24,6 +24,7 @@ Patch11: xdg-open-added_open_lxqt.patch
 Patch12: xdg-open-fix-open-url-in-lxde.patch
 Patch13: xdg-desktop-menu-dummy.patch
 Patch14: xdg-email-detect-thunderbird-kde5.patch
+Patch15: xdg-email-detect-thunderbird-mate.patch
 
 BuildArch: noarch
 
@@ -78,6 +79,7 @@ popd
 %patch12 -p2
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
 
 %build
 %autoreconf
@@ -102,6 +104,9 @@ popd
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Tue Nov 06 2018 Sergey V Turchin <zerg@altlinux.org> 1.1.3-alt5
+- fix detect thunderbird for MATE
+
 * Tue Nov 06 2018 Sergey V Turchin <zerg@altlinux.org> 1.1.3-alt4
 - fix detect thunderbird for KDE
 
