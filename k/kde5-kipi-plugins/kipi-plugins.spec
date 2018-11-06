@@ -1,6 +1,7 @@
 %def_disable plug_expoblending
 %def_disable plug_panorama
 %def_disable plug_imgur
+%def_disable plug_jalbum
 
 %define libsover 5
 %define libkf5kipiplugins libkf5kipiplugins%libsover
@@ -8,7 +9,7 @@
 %define rname kipi-plugins
 Name: kde5-%rname
 Version: 5.9.0
-Release: alt1%ubt
+Release: alt2
 %K5init
 
 Group: Graphics
@@ -109,6 +110,10 @@ done
     sed -i 's|add_subdirectory(imgur)||' CMakeLists.txt
     rm -rf imgur
 %endif
+%if_disabled plug_jalbum
+    sed -i 's|add_subdirectory(jalbum)||' CMakeLists.txt
+    rm -rf jalbum
+%endif
 
 # build docs and translations
 cat >> CMakeLists.txt <<__EOF__
@@ -187,6 +192,9 @@ done
 %_K5lib/libKF5kipiplugins.so.%libsover.*
 
 %changelog
+* Tue Nov 06 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt2
+- remove jalbum plugin
+
 * Fri Mar 30 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1%ubt
 - new version
 
