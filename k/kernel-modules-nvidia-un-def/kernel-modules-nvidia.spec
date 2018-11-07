@@ -7,8 +7,12 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
+%define package_version	410.73
+%define module_version	%package_version
+%ifarch %ix86
 %define module_version	390.87
-%define module_release	alt1
+%endif
+%define module_release	alt2
 %define flavour		un-def
 %define karch %ix86 x86_64
 
@@ -48,7 +52,16 @@
 %define legacy5 %nil
 %endif
 %define legacy5_src %(echo %legacy5 | tr -d .)
-%define mod_ver_list %version %legacy1 %legacy2 %legacy3 %legacy4 %legacy5
+%nvIF_ver_lt %xorg_ver 1.21
+%define legacy6 390.87
+%else
+%define legacy6 %nil
+%endif
+%define legacy6_src %(echo %legacy6 | tr -d .)
+%ifarch %ix86
+%define legacy6 %nil
+%endif
+%define mod_ver_list %module_version %legacy1 %legacy2 %legacy3 %legacy4 %legacy5 %legacy6
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/nVidia
 %define module_local_dir /lib/modules/nvidia
@@ -61,7 +74,7 @@
 
 Summary:	nVidia video card drivers
 Name:		kernel-modules-%module_name-%flavour
-Version:	%module_version
+Version:	%package_version
 Release:	%module_release.%kcode.%kbuildrelease
 License:	Proprietary
 Group:		System/Kernel and hardware
@@ -91,6 +104,9 @@ BuildRequires: kernel-source-%module_name-%legacy4_src
 %if "%legacy5" != "%nil"
 BuildRequires: kernel-source-%module_name-%legacy5_src
 %endif
+%if "%legacy6" != "%nil"
+BuildRequires: kernel-source-%module_name-%legacy6_src
+%endif
 
 Provides:  	kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: 	kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -100,7 +116,7 @@ Conflicts: modutils < 2.4.27-alt4
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 Requires: kernel-modules-drm-%flavour = %kepoch%kversion-%krelease
-Requires:       nvidia_glx_%version
+Requires:       nvidia_glx_%module_version
 %if "%legacy1" != "%nil"
 Requires:       nvidia_glx_%legacy1
 %endif
@@ -115,6 +131,9 @@ Requires:       nvidia_glx_%legacy4
 %endif
 %if "%legacy5" != "%nil"
 Requires:       nvidia_glx_%legacy5
+%endif
+%if "%legacy6" != "%nil"
+Requires:       nvidia_glx_%legacy6
 %endif
 
 %description
@@ -190,25 +209,25 @@ do
     popd
 done
 # workaround agains absent uvm module
-if ! [ -e %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-%version ] ; then
+if ! [ -e %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-%module_version ] ; then
     LAST_UVM_MOD_PATH=`ls -1d %buildroot/%module_local_dir/uvm-* 2>/dev/null | sort -r | head -n1`
     if [ -n "$LAST_UVM_MOD_PATH" ] ; then
 	LAST_UVM_MOD_FILE=`basename $LAST_UVM_MOD_PATH`
-	ln -s `relative %module_local_dir/$LAST_UVM_MOD_FILE %module_local_dir/uvm-%kversion-%flavour-%krelease-%version` %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-%version
+	ln -s `relative %module_local_dir/$LAST_UVM_MOD_FILE %module_local_dir/uvm-%kversion-%flavour-%krelease-%module_version` %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-%module_version
     else
-	ln -s `relative %module_local_dir/%kversion-%flavour-%krelease-%version %module_local_dir/uvm-%kversion-%flavour-%krelease-%version` %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-%version
+	ln -s `relative %module_local_dir/%kversion-%flavour-%krelease-%module_version %module_local_dir/uvm-%kversion-%flavour-%krelease-%module_version` %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-%module_version
     fi
 fi
 
-echo -n "%version" >%buildroot/%nvidia_workdir/%kversion-%flavour-%krelease
+echo -n "%module_version" >%buildroot/%nvidia_workdir/%kversion-%flavour-%krelease
 ln -s `relative %nvidia_workdir/%kversion-%flavour-%krelease %module_version_dir/%module_name` %buildroot/%module_version_dir/%module_name
 ln -s nvidia %buildroot/%module_version_dir/%modesetmodule_name
 ln -s nvidia %buildroot/%module_version_dir/%drmmodule_name
 ln -s nvidia %buildroot/%module_version_dir/%uvmmodule_name
-ln -s `relative %module_local_dir/%kversion-%flavour-%krelease-%version         %module_dir/%module_name%module_ext`    %buildroot/%module_dir/%module_name%module_ext
-ln -s `relative %module_local_dir/modeset-%kversion-%flavour-%krelease-%version %module_dir/%modesetmodule_name%module_ext` %buildroot/%module_dir/%modesetmodule_name%module_ext
-ln -s `relative %module_local_dir/drm-%kversion-%flavour-%krelease-%version %module_dir/%drmmodule_name%module_ext` %buildroot/%module_dir/%drmmodule_name%module_ext
-ln -s `relative %module_local_dir/uvm-%kversion-%flavour-%krelease-%version     %module_dir/%uvmmodule_name%module_ext` %buildroot/%module_dir/%uvmmodule_name%module_ext
+ln -s `relative %module_local_dir/%kversion-%flavour-%krelease-%module_version         %module_dir/%module_name%module_ext`    %buildroot/%module_dir/%module_name%module_ext
+ln -s `relative %module_local_dir/modeset-%kversion-%flavour-%krelease-%module_version %module_dir/%modesetmodule_name%module_ext` %buildroot/%module_dir/%modesetmodule_name%module_ext
+ln -s `relative %module_local_dir/drm-%kversion-%flavour-%krelease-%module_version %module_dir/%drmmodule_name%module_ext` %buildroot/%module_dir/%drmmodule_name%module_ext
+ln -s `relative %module_local_dir/uvm-%kversion-%flavour-%krelease-%module_version     %module_dir/%uvmmodule_name%module_ext` %buildroot/%module_dir/%uvmmodule_name%module_ext
 
 
 %post
@@ -252,6 +271,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Nov 09 2018 Sergey V Turchin <zerg at altlinux dot org> 410.73-alt2
+- new release (410.73 for x86_64)
 
 * Mon Sep 10 2018 Sergey V Turchin <zerg at altlinux dot org> 390.87-alt1
 - new release (390.87)

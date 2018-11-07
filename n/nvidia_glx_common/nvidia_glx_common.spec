@@ -17,10 +17,10 @@
 
 # version-release
 
-%define nv_version 390
-%define nv_release 87
+%define nv_version 410
+%define nv_release 73
 %define nv_minor %nil
-%define pkg_rel alt200
+%define pkg_rel alt201
 %define set_gl_nvidia_ver 0.22.3
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -297,7 +297,7 @@ fi
 %endif
 #
 %x11_lib_dir/vdpau/libvdpau_nvidia.so
-%x11_lib_dir/vdpau/libvdpau_nvidia.so.1
+%x11_lib_dir/vdpau/libvdpau_nvidia.so.?
 %x11_lib_dir/libnvidia-cfg.so.?
 %x11_lib_dir/libEGL_nvidia.so.?
 %x11_lib_dir/libGLESv2_nvidia.so.?
@@ -309,6 +309,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Wed Nov 07 2018 Sergey V Turchin <zerg@altlinux.org> 410.73-alt201
+- new version
+
 * Fri Nov 02 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt200
 - using MatchDriver xorg feature only with glvnd packaging scheme
 
