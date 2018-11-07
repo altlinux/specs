@@ -10,9 +10,15 @@
 %def_disable isbc
 %endif
 
+%ifarch %ix86 x86_64
+%def_enable jacarta
+%else
+%def_disable jacarta
+%endif
+
 Name: pkcs11-profiles
-Version: 0.1.6
-Release: alt2
+Version: 0.1.7
+Release: alt1
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -56,6 +62,17 @@ Requires: isbc-pkcs11
 
 %description isbc
 ESMART PAM PKCS11 module configuration
+
+%package jacarta
+Summary: JaCarta PAM PKCS11 module configuration
+License: GPLv3+
+Group: System/Configuration/Other
+Requires: %name-common = %version-%release
+Requires: pam_pkcs11 >= 0.6.9-alt9
+Requires: libjcpkcs11
+
+%description jacarta
+JaCarta PAM PKCS11 module configuration
 
 %package p11-kit-proxy
 Summary: PKCS#11 Kit Proxy module configuration
@@ -138,6 +155,12 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/profiles/isbc
 %endif
 
+%if_enabled jacarta
+%files jacarta
+%config(noreplace) %confdir/modules.avail/jacarta
+%config(noreplace) %confdir/profiles/jacarta
+%endif
+
 %files zastava
 %config(noreplace) %confdir/param-set.d/zastava
 %config(noreplace) %confdir/zastava_*
@@ -146,6 +169,9 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/message.profiles/zastava
 
 %changelog
+* Wed Nov 07 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.7-alt1
+- Added JaCarta module.
+
 * Fri Aug 31 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.6-alt2
 - Enable "rutokenecp" for %ix86 x86_64 armh mips64el. Enable "isbc"
   for %ix86 x86_64 armh aarch64 e2k.
