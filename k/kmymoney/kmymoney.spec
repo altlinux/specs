@@ -1,6 +1,6 @@
 Name:    kmymoney
-Version: 5.0.1
-Release: alt2.qa1
+Version: 5.0.2
+Release: alt1
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -12,7 +12,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0: %name-%version.tar
 Source2: %name.watch
-Patch1:  %name-fix-build-with-qt5.11.patch
 
 AutoReq: yes, noperl
 
@@ -250,7 +249,6 @@ Internationalization and documentation for KMyMoney
 
 %prep
 %setup -q -n %name-%version
-%patch1 -p1
 
 %build
 # Need to build in one thread, see https://bugs.kde.org/show_bug.cgi?id=364387 for details
@@ -268,14 +266,20 @@ Internationalization and documentation for KMyMoney
 %files
 %doc AUTHORS COPYING README* TODO
 %_K5bin/%name
-%_K5lib/libkmm_widgets.so.*
-%_K5lib/libkmm_mymoney.so.*
 %_K5lib/libkmm_icons.so.*
+%_K5lib/libkmm_menus.so.*
+%_K5lib/libkmm_models.so.*
+%_K5lib/libkmm_mymoney.so.*
 %_K5lib/libkmm_plugin.so.*
+%_K5lib/libkmm_settings.so.*
+%_K5lib/libkmm_widgets.so.*
 %_desktopdir/kf5/*%name.desktop
 %doc %_K5doc/en/*
 %_K5cfg/*.kcfg
 %_K5srvtyp/*.desktop
+%_K5srv/kcm_forecastview.desktop
+%_K5srv/kcm_reportsview.desktop
+%_K5srv/kcm_xmlstorage.desktop
 %_datadir/%name/*
 %exclude %_datadir/%name/templates/*
 %_datadir/mime/packages/*
@@ -283,6 +287,16 @@ Internationalization and documentation for KMyMoney
 %_K5icon/hicolor/*/mimetypes/application-x-kmymoney.png
 %_datadir/kconf_update/%name.upd
 %_datadir/appdata/org.*.appdata.xml
+%_K5xmlgui/sqlstorage/sqlstorage.rc
+%_qt5_plugindir/kmymoney/budgetview.so
+%_qt5_plugindir/kmymoney/forecastview.so
+%_qt5_plugindir/kmymoney/kcm_forecastview.so
+%_qt5_plugindir/kmymoney/kcm_reportsview.so
+%_qt5_plugindir/kmymoney/kcm_xmlstorage.so
+%_qt5_plugindir/kmymoney/onlinejoboutboxview.so
+%_qt5_plugindir/kmymoney/reportsview.so
+%_qt5_plugindir/kmymoney/sqlstorage.so
+%_qt5_plugindir/kmymoney/xmlstorage.so
 
 %files devel
 %dir %_includedir/%name
@@ -334,14 +348,9 @@ Internationalization and documentation for KMyMoney
 
 %files gncimport
 %_qt5_plugindir/kmymoney/gncimporter.so
-%_K5xmlgui/gncimporter
 
 %files payeeidentifier
-%_qt5_plugindir/kmymoney/payeeidentifier*.so
 %_libdir/libkmm_payeeidentifier.so.*
-%_libdir/libpayeeidentifier_*.so.*
-%_K5srv/kmymoney-ibanbic-*.desktop
-%_K5srv/kmymoney-nationalaccount-*.desktop
 
 %files onlinetasks
 %_qt5_plugindir/kmymoney/konlinetasks_sepa.so
@@ -358,6 +367,9 @@ Internationalization and documentation for KMyMoney
 %exclude %_K5doc/en
 
 %changelog
+* Tue Nov 06 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.2-alt1
+- New version.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt2.qa1
 - NMU: applied repocop patch
 
