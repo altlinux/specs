@@ -1,11 +1,11 @@
 %define inversion 2
 %define pyversion 3.8
-%define reldate 20181105
+%define reldate 20181106
 
 Name: python-sphinx-objects.inv
 Version: %inversion.%pyversion.%reldate
 Release: alt1
-Serial: 1
+Epoch: 1
 Summary: Sphinx inventory version %inversion
 License: BSD
 Group: Development/Python
@@ -26,6 +26,9 @@ install -pDm644 %SOURCE0 %buildroot%_datadir/python-sphinx/objects.inv
 %_datadir/python-sphinx/
 
 %changelog
+* Wed Nov 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.3.8.20181106-alt1
+- replaced Serial with Epoch in spec
+
 * Mon Nov 05 2018 Cronbuild Service <cronbuild@altlinux.org> 1:2.3.8.20181105-alt1
 - repocop cronbuild 20181105. At your service.
 
