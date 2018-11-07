@@ -26,7 +26,7 @@
 
 Name: xterm
 Version: 333
-Release: alt1
+Release: alt2
 
 Summary: A standard terminal emulator for the X Window System
 Summary(ru_RU.UTF8): Стандартный эмулятор терминала для X Window System
@@ -50,6 +50,7 @@ Patch0010: 0010-xterm-alt-back_old_behavior_for_modifyFunctionKeys.patch
 Patch0011: 0011-xterm-alt-appdef.patch
 Patch0012: 0012-xterm-alt-enable_utf8title.patch
 Patch0013: 0013-xterm-alt-man_suffix.patch
+Patch0014: 0014-xterm-alt-translate-update-desktop.patch
 
 Provides: xvt, %_bindir/xvt
 PreReq: libutempter >= 1.0.7, alternatives >= 0.3.5-alt1
@@ -94,6 +95,7 @@ install -pm755 %_sourcedir/uxterm .
 %patch0011 -p2
 %patch0012 -p2
 %patch0013 -p2
+%patch0014 -p2
 
 sed -i 's|^Exec=xterm|& -name XTerm|' %name.desktop
 sed -i 's|_48x48||' *.desktop
@@ -155,6 +157,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Thu Nov 01 2018 Pavel Moseev <mars@altlinux.org> 333-alt2
+- Updated translations in desktop file
+
 * Wed May 23 2018 Fr. Br. George <george@altlinux.ru> 333-alt1
 - Autobuild version bump to 333
 - Cleanup buildreq
