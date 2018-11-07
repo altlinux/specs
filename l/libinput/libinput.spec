@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _libexecdir %_prefix/libexec
 %def_enable libwacom
 %def_enable debug_gui
@@ -5,7 +7,7 @@
 %def_enable tests
 
 Name: libinput
-Version: 1.12.2
+Version: 1.12.3
 Release: alt1
 
 Summary: Input devices library
@@ -13,7 +15,12 @@ Group: System/Libraries
 License: MIT
 Url: http://www.freedesktop.org/wiki/Software/libinput/
 
+%if_disabled snapshot
 Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
+%else
+#VCS: git://anongit.freedesktop.org/wayland/libinput
+Source: %name-%version.tar
+%endif
 
 %add_python3_path %_libexecdir/%name
 
@@ -28,7 +35,7 @@ BuildRequires: libcheck-devel libunwind-devel
 %{?_enable_libwacom:BuildRequires: libwacom-devel}
 %{?_enable_debug_gui:BuildRequires: libgtk+3-devel}
 %{?_enable_documentation:BuildRequires: doxygen graphviz}
-%{?_enable_tests:BuildRequires: valgrind python3-module-pyparsing}
+%{?_enable_tests:BuildRequires: gdb valgrind python3-module-pyparsing}
 
 %description
 libinput is a library that handles input devices for display servers and
@@ -126,6 +133,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Wed Nov 07 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt1
+- updated to 1.12.3-6-g4e469291
+
 * Wed Oct 24 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
 - 1.12.2
 
