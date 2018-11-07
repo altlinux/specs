@@ -1,21 +1,22 @@
-Name: hedgewars
-Version: 0.9.24.1
-Release: alt1
+Name:       hedgewars
+Version:    0.9.25
+Release:    alt1
 
-Summary: Game with heavily armed fighting hedgehogs
+Summary:    Game with heavily armed fighting hedgehogs
+Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых воющих ёжиков
 
-License: GPLv2
-Group: Games/Strategy
-URL: http://www.hedgewars.org/
+License:    GPLv2
+Group:      Games/Strategy
+URL:        http://www.hedgewars.org/
 
-Packager: Grigory Ustinov <grenka@altlinux.org>
+Packager:   Grigory Ustinov <grenka@altlinux.org>
 
-Source: %name-%version.tar
+Source:     %name-%version.tar
 
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: x86_64
 
-Requires: %name-data = %EVR
-Requires:  fonts-ttf-wqy-zenhei fonts-ttf-dejavu
+Requires:   %name-data = %EVR
+Requires:   fonts-ttf-wqy-zenhei fonts-ttf-dejavu
 
 BuildRequires: cmake fpc-units-gtk2 fpc-units-misc fpc-units-net
 BuildRequires: libSDL2_image-devel libSDL2_mixer-devel libSDL2_net-devel libSDL2_ttf-devel
@@ -34,8 +35,8 @@ such as the "Rope" or "Parachute", to move to otherwise inaccessible areas.
 Each turn is time-limited to ensure that players do not hold up the game
 with excessive thinking or moving.
 A large variety of tools and weapons are available for players during the
-game: Grenade, Cluster Bomb, Bazooka, UFO, Shotgun, Desert Eagle, Fire Punch,
-Baseball Bat, Dynamite, Mine, Rope, Pneumatic pick, Parachute. Most weapons,
+game: Grenade, Cluster Bomb, Bazooka, UFO, Shotgun, Desert Eagle, Minigun,
+Baseball Bat, Dynamite, Mine, Rope, Pneumatic pick, Parachute, etc. Most weapons,
 when used, cause explosions that deform the terrain, removing circular chunks.
 
 The landscape is an island floating on a body of water, or a restricted cave
@@ -46,19 +47,43 @@ typically from contact with explosions, to zero (the damage dealt to the
 attacked hedgehog or hedgehogs after a player's or CPU turn is shown only
 when all movement on the battlefield has ceased).
 
+%description -l ru_RU.UTF-8
+Каждый игрок управляет командой из нескольких ёжиков. По ходу игры игроки делают
+ходы одним из своих ёжиков. Они могут использовать всевозможные доступные
+приспособления и оружие, чтобы атаковать и убивать ёжиков противника и таким
+образом получить победу в игре. Ёжики могут передвигаться по локации множеством
+способов, обычно с помощью ходьбы или прыжков, однако могут и использовать
+различные приспособления, такие как верёвка или парашют, чтобы попасть в
+труднодостижимые зоны.
+
+Каждый ход ограничен по времени, чтобы гарантировать, что игроки не будут
+задерживать игру излишними раздумьями или долгими передвижениями.
+Во время игры игрокам доступен огромный ассортимент оружия и приспособлений:
+гранаты, разрывные бомбы, базука, летающая тарелка, дробовик, пистолет,
+пулемёт, бейсбольная бита, динамит, мина, верёвка, отбойный молоток, парашют,
+всего не перечислить. Множество оружия при использовании вызывают взрывы,
+которые разрушают локацию, выдирая из неё целые куски.
+
+Локация представляет собой остров в воде или пещеру с водой внизу. Ёжик умрёт,
+либо если зайдёт в воду или упадёт в неё с острова, либо если его здоровье
+снизится до нуля от взрывов.
+
 %package data
 Summary: Resources for %name game
-Group: Games/Strategy
+Summary(ru_RU.UTF-8): Файлы ресурсов для игры %name
+Group:   Games/Strategy
 BuildArch: noarch
 
 %description data
 This package contains all the data files for %name.
+%description data -l ru_RU.UTF-8
+Этот пакет содержит все файлы данных для игры %name.
 
 %prep
 %setup
 
 # Make sure that we don't use bundled libraries
-rm -r misc/liblua misc/libphysfs
+rm -r misc/liblua
 
 %build
 %cmake_insource -DNOSERVER=1 -DPHYSFS_SYSTEM=1 \
@@ -100,6 +125,10 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Wed Dec 12 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.25-alt1
+- Built new version (only for 64bit arch), because in this version
+  upstream made hard dependency on ghc modules for 32bit arch.
+
 * Tue Nov 06 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.24.1-alt1
 - Finally, built new version (Closes: #34082).
 - Removed all previous patches.
