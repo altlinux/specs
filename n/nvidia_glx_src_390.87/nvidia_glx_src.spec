@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 87
 %define nv_minor %nil
-%define pkg_rel alt189
+%define pkg_rel alt190
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -96,7 +96,7 @@ Source100: nvidia_create_xinf
 
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
-Patch3: buildfix_kernel_4.16.patch
+Patch3: buildfix_kernel_4.19.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
@@ -164,7 +164,7 @@ cd %tbname-%tbver%dirsuffix
 pushd kernel
 #%patch1 -p1
 %patch2 -p1
-#%patch3 -p1
+%patch3 -p1
 rm -rf precompiled
 popd
 
@@ -348,6 +348,9 @@ fi
 %endif
 
 %changelog
+* Wed Nov 07 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt190
+- add fix against kernel 4.19
+
 * Thu Oct 25 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt189
 - clean requires
 - update build requires
