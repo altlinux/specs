@@ -1,6 +1,6 @@
 Name: sylpheed
 Version: 3.7.0
-Release: alt0.3
+Release: alt0.4
 
 Summary: a GTK+ based, lightweight, and fast e-mail client
 License: GPLv2+
@@ -9,7 +9,7 @@ URL: http://sylpheed.sraoss.jp/en/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 %def_enable ldap
-%def_enable jpilot
+%def_disable jpilot
 %def_enable gtkspell
 
 Source: %name-%version.tar.bz2
@@ -158,6 +158,8 @@ autoconf
 %_includedir/sylpheed/
 
 %changelog
+* Wed Nov 07 2018 Alexey Shabalin <shaba@altlinux.org> 3.7.0-alt0.4
+- Disable PDA support.
 
 * Mon Oct 22 2018 Ilya Mashkin <oddity@altlinux.ru> 3.7.0-alt0.3
 - add GPG TOFU support.  Thanks to Andrew Savchenko (Closes: #35271)
