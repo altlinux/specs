@@ -1,6 +1,6 @@
 Name: xsane
 Version: 0.999
-Release: alt4
+Release: alt5
 
 Summary: XSane is a graphical frontend for scanners. It uses the library SANE
 Summary(ru_RU.UTF-8): Xsane -- это графическая программа для сканирования, использующая библиотеку SANE
@@ -18,6 +18,7 @@ Patch: %name-0.99-debian.patch
 Patch1: %name-0.996-ubuntu.patch
 Patch2: %name-0.998-alt-libpng15.patch
 Patch3: xsane-0.999-lcms2.patch
+Patch4: xsane-0.999-alt-fix-broken-icon.patch
 
 BuildPreReq: libjpeg-devel libusb-devel libpng-devel
 
@@ -82,6 +83,7 @@ Documentation for XSANE
 #%patch1 -p1
 %patch2 -p2
 %patch3 -p1
+%patch4 -p2
 #cp -f %%SOURCE3 po/ru.po
 
 # Set browser by default
@@ -124,6 +126,9 @@ install -p -m644 -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_libdir/gimp/2.0/plug-ins/%name
 
 %changelog
+* Wed Nov 07 2018 Ivan Razzhivin <underwit@altlinux.org> 0.999-alt5
+- fix broken icon
+
 * Sat Feb 24 2018 Vitaly Lipatov <lav@altlinux.ru> 0.999-alt4
 - drop webclient require (ALT bug 34574)
 
