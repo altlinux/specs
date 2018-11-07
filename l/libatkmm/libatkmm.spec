@@ -3,7 +3,7 @@
 %define major 2.24
 
 Name: libatkmm
-Version: %major.2
+Version: %major.3
 Release: alt1
 
 Summary: A C++ interface for ATK library
@@ -15,7 +15,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%major/%rname-%version.tar.
 
 Provides: %rname = %version
 
-BuildRequires: gcc-c++ mm-common libatk-devel >= 1.16 libglibmm-devel >= 2.46.2
+BuildRequires: gcc-c++ mm-common libatk-devel >= 1.18 libglibmm-devel >= 2.46.2
 
 %description
 ATK, the Accessibility Tookit, is used to obtain accessibily information
@@ -73,6 +73,9 @@ mm-common-prepare -f
 %_docdir/%rname-%api_version
 
 %changelog
+* Sun Nov 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.24.3-alt1
+- 2.24.3
+
 * Sun Nov 29 2015 Yuri N. Sedunov <aris@altlinux.org> 2.24.2-alt1
 - 2.24.2
 

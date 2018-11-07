@@ -1,8 +1,8 @@
 %def_disable snapshot
 
 %define rname glibmm
-%define major 2.56
-%define ver_base 2.56
+%define major 2.58
+%define ver_base 2.58
 %define api_ver 2.4
 
 Name: libglibmm
@@ -97,6 +97,9 @@ mm-common-prepare --force --copy
 %_datadir/devhelp/books/%rname-%api_ver
 
 %changelog
+* Wed Oct 31 2018 Yuri N. Sedunov <aris@altlinux.org> 2.58.0-alt1
+- 2.58.0
+
 * Sat Mar 31 2018 Yuri N. Sedunov <aris@altlinux.org> 2.56.0-alt1
 - 2.56.0
 
