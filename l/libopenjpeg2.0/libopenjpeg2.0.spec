@@ -7,7 +7,7 @@
 
 Name: lib%_name%api_ver
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: JPEG 2000 codec library (API version 2.0)
 License: BSD
@@ -21,6 +21,9 @@ Source: %_name-%version-%rev.tar
 #Source: https://github.com/uclouvain/%_name/archive/%_name-%version.tar.gz
 Source: http://www.openjpeg.org/%_name-%version.tar.gz
 %endif
+Patch: openjpeg-2.3.0-alt-install.patch
+# ca16fe55014
+Patch10: openjpeg-2.3.0-up-CVE-2018-5785.patch
 
 BuildRequires: cmake gcc-c++ libtiff-devel liblcms2-devel libpng-devel zlib-devel
 BuildRequires: doxygen
@@ -47,9 +50,13 @@ OpenJPEG is an open-source JPEG 2000 codec written in C.
 
 %prep
 %setup -n %_name-%version
+%patch -b .install
+%patch10 -p1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DBUILD_STATIC_LIBS:BOOL=OFF \
+	-DBUILD_SHARED_LIBS:BOOL=ON \
 	-DOPENJPEG_INSTALL_LIB_DIR=%_lib \
 	-DBUILD_THIRDPARTY:BOOL=OFF \
 	-DBUILD_DOC:BOOL=ON
@@ -65,6 +72,8 @@ done
 mv %buildroot%_man1dir/opj_compress.1 %buildroot%_man1dir/opj2_compress.1
 mv %buildroot%_man1dir/opj_decompress.1 %buildroot%_man1dir/opj2_decompress.1
 mv %buildroot%_man1dir/opj_dump.1 %buildroot%_man1dir/opj2_dump.1
+# and fix cmake-files
+subst 's|opj_\([compess,decompess,dump]\)|opj2_\1|g' %buildroot%_libdir/%_name-%ver_major/*.cmake
 
 %files
 %_libdir/%libname.so.*
@@ -87,6 +96,11 @@ mv %buildroot%_man1dir/opj_dump.1 %buildroot%_man1dir/opj2_dump.1
 %exclude %_datadir/doc/html/
 
 %changelog
+* Wed Nov 07 2018 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt2
+- use -DBUILD_STATIC_LIBS=OFF (ALT #35586)
+- fixed .cmake-files (ALT#35585)
+- applied upstream fix for CVE-2018-5785
+
 * Sat Oct 07 2017 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
