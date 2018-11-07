@@ -1,8 +1,9 @@
 %def_disable bootstrap
+%def_disable builtin
 
 Name: libpsl
 Version: 0.20.2
-Release: alt1
+Release: alt2
 
 Summary: C library for the Public Suffix List
 License: %mit
@@ -17,7 +18,7 @@ BuildRequires(pre): rpm-build-licenses
 %if_disabled bootstrap
 BuildRequires: glib2-devel libgio-devel
 BuildRequires: python
-BuildRequires: libicu-devel
+%{?_enable_builtin:BuildRequires: libicu-devel}
 BuildRequires: libidn2-devel
 BuildRequires: libunistring-devel
 BuildRequires: gtk-doc xsltproc
@@ -104,7 +105,11 @@ from a plain text Public Suffix List.
 	--disable-asan \
 	--enable-man \
 	--enable-gtk-doc \
+%if_enabled builtin
 	--enable-builtin=libicu \
+%else
+	--disable-builtin \
+%endif
 	--enable-runtime=libidn2 \
 	--with-psl-distfile=%_datadir/publicsuffix/public_suffix_list.dafsa \
 	--with-psl-file=%_datadir/publicsuffix/effective_tld_names.dat \
@@ -149,6 +154,9 @@ make check
 %_man1dir/psl-make-dafsa.1*
 
 %changelog
+* Wed Nov 07 2018 Mikhail Efremov <sem@altlinux.org> 0.20.2-alt2
+- Disable builtin PSL.
+
 * Fri Apr 27 2018 Mikhail Efremov <sem@altlinux.org> 0.20.2-alt1
 - 0.20.1 -> 0.20.2.
 
