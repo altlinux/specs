@@ -1,6 +1,6 @@
 Name: quick-usb-formatter
 Version: 0.6
-Release: alt7
+Release: alt8
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -63,6 +63,9 @@ install -m 0644 %SOURCE10 translations/
 
 
 %changelog
+* Wed Nov 07 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6-alt8
+- translation in crypto formatting added
+
 * Wed Nov 07 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6-alt7
 - formatting crypto-luks usb devices added
 
