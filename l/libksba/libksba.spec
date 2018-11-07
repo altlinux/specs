@@ -2,7 +2,7 @@
 
 Name: libksba
 Version: 1.3.6
-Release: alt5
+Release: alt6
 
 Group: System/Libraries
 Summary: X.509 library
@@ -84,6 +84,9 @@ Static libraries for the %name-devel package
 %endif
 
 %changelog
+* Wed Nov 07 2018 Paul Wolneykien <manowar@altlinux.org> 1.3.6-alt6
+- Fixed/restored parsing of bit strings.
+
 * Wed Oct 03 2018 Paul Wolneykien <manowar@altlinux.org> 1.3.6-alt5
 - Include GOST patches into the main package version.
 - Set the GOST CMS signature value.
