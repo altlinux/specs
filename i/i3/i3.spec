@@ -1,6 +1,6 @@
 Name: i3
 Version: 4.16
-Release: alt1
+Release: alt2
 
 Summary: I3 window manager
 License: BSD-like
@@ -60,7 +60,7 @@ that can interact with i3 window manager via it's IPC.
 %build
 %configure
 
-%make_build -C *-alt-linux-gnu
+%make_build -C *-alt-linux-gnu*
 
 # Сжимаем страницы руководств
 cd man
@@ -72,7 +72,7 @@ cd ..
 
 mkdir -p %buildroot%_bindir
 
-%make install -C *-alt-linux-gnu DESTDIR=%buildroot 
+%make install -C *-alt-linux-gnu* DESTDIR=%buildroot
 
 #%%ifarch x86_64
 #install -d %buildroot%_libdir
@@ -129,6 +129,9 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 %_includedir/*
 
 %changelog
+* Wed Nov 07 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.16-alt2
+- fixed packaging on armh
+
 * Mon Nov 05 2018 Andrey Bergman <vkni@altlinux.org> 4.16-alt1
 - Version update
 
