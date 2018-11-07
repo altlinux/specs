@@ -28,7 +28,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        70.0.3538.67
+Version:        70.0.3538.77
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -249,7 +249,7 @@ sed -i \
 	build/config/compiler/BUILD.gn
 
 sed -i \
-	-e 's/^\([%#]define CONFIG_PIC\) 0/\1 1/' \
+	-e 's/^\([%%#]define CONFIG_PIC\) 0/\1 1/' \
 	third_party/libaom/source/config/linux/ia32/config/aom_config.asm \
 	third_party/libaom/source/config/linux/ia32/config/aom_config.h
 
@@ -284,7 +284,6 @@ gn_arg is_official_build=true
 gn_arg is_desktop_linux=true
 gn_arg use_custom_libcxx=false
 gn_arg use_sysroot=false
-gn_arg use_pic=true
 gn_arg use_gio=true
 gn_arg use_glib=true
 gn_arg use_libpci=true
@@ -330,7 +329,8 @@ if [ "$bits" = 64 ]; then
 else
     gn_arg use_thin_lto=false
 fi
-#gn_arg is_cfi=true
+gn_arg is_cfi=false
+gn_arg use_cfi_icall=false
 %else
 gn_arg is_clang=false
 %endif
@@ -487,6 +487,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Wed Nov 07 2018 Alexey Gladkov <legion@altlinux.ru> 70.0.3538.77-alt1
+- New version (70.0.3538.77).
+
 * Mon Oct 22 2018 Alexey Gladkov <legion@altlinux.ru> 70.0.3538.67-alt1
 - New version (70.0.3538.67).
 - Security fixes:
