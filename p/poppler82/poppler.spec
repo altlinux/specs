@@ -4,7 +4,7 @@
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable static
-%def_enable compat
+%def_disable compat
 
 %if_disabled compat
 %def_enable cpp
@@ -27,14 +27,14 @@
 %endif
 
 %define rname poppler
-%define somajor 78
+%define somajor 82
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_glib 8
 %define major 0
-%define minor 67
+%define minor 71
 %define bugfix 0
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
@@ -79,7 +79,8 @@ BuildRequires: libqt4-devel
 BuildRequires: glib2-devel
 %endif
 BuildRequires: gcc-c++ glibc-devel libcurl-devel libgtk+2-devel zlib-devel libnss-devel
-BuildRequires: libgtk+2-gir-devel libjpeg-devel liblcms2-devel libopenjpeg2.0-devel libtiff-devel libpng-devel
+BuildRequires: libgtk+2-gir-devel libjpeg-devel liblcms2-devel libtiff-devel libpng-devel
+BuildRequires: libopenjpeg2.0-devel openjpeg-tools2.0
 BuildRequires: libxml2-devel gtk-doc libcairo-gobject-devel
 BuildRequires: libXt-devel poppler-data
 
@@ -396,8 +397,11 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
-* Wed Nov 07 2018 Sergey V Turchin <zerg@altlinux.org>  0.67.0-alt2
-- build only compat library
+* Wed Nov 07 2018 Sergey V Turchin <zerg@altlinux.org>  0.71.0-alt2
+- new version
+
+* Wed Nov 07 2018 Sergey V Turchin <zerg@altlinux.org>  0.71.0-alt1
+- new version
 
 * Mon Jul 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.67.0-alt1%ubt
 - new version
