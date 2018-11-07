@@ -1,52 +1,50 @@
 Name: hedgewars
-Version: 0.9.22
-Release: alt4
+Version: 0.9.24.1
+Release: alt1
 
 Summary: Game with heavily armed fighting hedgehogs
+
 License: GPLv2
 Group: Games/Strategy
 URL: http://www.hedgewars.org/
 
-Packager: Denis G. Samsonenko <ogion@altlinux.org>
+Packager: Grigory Ustinov <grenka@altlinux.org>
 
-Source0: %name-src-%version.tar.bz2
-Patch0: %name-no-bytestring.patch
-Patch1: %name-ffmpeg3.patch
-# updates from recent upstream version
-Patch2: %name-ffmpeg4.patch
+Source: %name-%version.tar
 
 ExclusiveArch: %ix86 x86_64
 
-Requires: %name-data = %version
+Requires: %name-data = %EVR
+Requires:  fonts-ttf-wqy-zenhei fonts-ttf-dejavu
 
-# Automatically added by buildreq on Fri Jul 19 2013
-# optimized out: cmake-modules fontconfig fpc-compiler fpc-units-base fpc-units-db fpc-units-fcl fpc-units-gfx fpc-units-misc fpc-units-net fpc-units-rtl ghc7.6.1 ghc7.6.1-common ghc7.6.1-mtl ghc7.6.1-network ghc7.6.1-parsec ghc7.6.1-primitive ghc7.6.1-text ghc7.6.1-transformers libSDL-devel libXi-devel libavcodec-devel libavutil-devel libffi-devel libgmp-devel libopencore-amrnb0 libopencore-amrwb0 libpng-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libstdc++-devel pkg-config zlib-devel
-BuildRequires: cmake fpc-units-fv fpc-units-gtk2 fpc-units-math fpc-units-multimedia gcc-c++ ghc7.6.1-dataenc ghc7.6.1-hslogger ghc7.6.1-random ghc7.6.1-utf8-string ghc7.6.1-vector libGLUT-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libavformat-devel liblua5.1-devel phonon-devel chrpath
-BuildRequires: chrpath ghc7.6.1-sha ghc7.6.1-entropy ghc7.6.1-zlib
+BuildRequires: cmake fpc-units-gtk2 fpc-units-misc fpc-units-net
+BuildRequires: libSDL2_image-devel libSDL2_mixer-devel libSDL2_net-devel libSDL2_ttf-devel
+BuildRequires: libavformat-devel libffi-devel libfreeglut-devel libgmp-devel
+BuildRequires: liblua5.1-compat-devel libphysfs-devel phonon-devel qt5-tools-devel
+BuildRequires: desktop-file-utils chrpath
 
 %description
-Each player controls a team of several hedgehogs. During the course of the 
-game, players take turns with one of their hedgehogs. They then use whatever 
-tools and weapons are available to attack and kill the opponents' hedgehogs, 
-thereby winning the game. Hedgehogs may move around the terrain in a variety 
-of ways, normally by walking and jumping but also by using particular tools 
-such as the "Rope" or "Parachute", to move to otherwise inaccessible areas. 
+Each player controls a team of several hedgehogs. During the course of the
+game, players take turns with one of their hedgehogs. They then use whatever
+tools and weapons are available to attack and kill the opponents' hedgehogs,
+thereby winning the game. Hedgehogs may move around the terrain in a variety
+of ways, normally by walking and jumping but also by using particular tools
+such as the "Rope" or "Parachute", to move to otherwise inaccessible areas.
 
-Each turn is time-limited to ensure that players do not hold up the game 
+Each turn is time-limited to ensure that players do not hold up the game
 with excessive thinking or moving.
-A large variety of tools and weapons are available for players during the 
-game: Grenade, Cluster Bomb, Bazooka, UFO, Shotgun, Desert Eagle, Fire Punch, 
-Baseball Bat, Dynamite, Mine, Rope, Pneumatic pick, Parachute. Most weapons, 
-when used, cause explosions that deform the terrain, removing circular chunks. 
+A large variety of tools and weapons are available for players during the
+game: Grenade, Cluster Bomb, Bazooka, UFO, Shotgun, Desert Eagle, Fire Punch,
+Baseball Bat, Dynamite, Mine, Rope, Pneumatic pick, Parachute. Most weapons,
+when used, cause explosions that deform the terrain, removing circular chunks.
 
-The landscape is an island floating on a body of water, or a restricted cave 
-with water at the bottom. A hedgehog dies when it enters the water (either 
-by falling off the island, or through a hole in the bottom of it), it is 
-thrown off either side of the arena or when its health is reduced, 
-typically from contact with explosions, to zero (the damage dealt to the 
-attacked hedgehog or hedgehogs after a player's or CPU turn is shown only 
+The landscape is an island floating on a body of water, or a restricted cave
+with water at the bottom. A hedgehog dies when it enters the water (either
+by falling off the island, or through a hole in the bottom of it), it is
+thrown off either side of the arena or when its health is reduced,
+typically from contact with explosions, to zero (the damage dealt to the
+attacked hedgehog or hedgehogs after a player's or CPU turn is shown only
 when all movement on the battlefield has ceased).
-
 
 %package data
 Summary: Resources for %name game
@@ -56,49 +54,35 @@ BuildArch: noarch
 %description data
 This package contains all the data files for %name.
 
-
 %prep
-%setup -q -n %name-src-%version
-%patch0 -p1
-%patch1 -p1
-%patch2 -p2
+%setup
+
+# Make sure that we don't use bundled libraries
+rm -r misc/liblua misc/libphysfs
 
 %build
-%cmake_insource -DWITH_SERVER=1 -DPHYSFS_SYSTEM=0 -DDATA_INSTALL_DIR=%_datadir/%name -Dtarget_library_install_dir="%_libdir"
+%cmake_insource -DNOSERVER=1 -DPHYSFS_SYSTEM=1 \
+-DDATA_INSTALL_DIR=%_datadir/%name -Dtarget_library_install_dir="%_libdir" \
+-DFONTS_DIRS="/usr/share/fonts/ttf/wqy-zenhei;/usr/share/fonts/ttf/dejavu"
 %make_build VERBOSE=true
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
+
+# below is the desktop file and icon stuff.
+mkdir -p %{buildroot}%{_datadir}/applications
+desktop-file-install                            \
+  --dir %{buildroot}%{_datadir}/applications \
+  %{buildroot}%{_datadir}/hedgewars/Data/misc/hedgewars.desktop
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/32x32/apps
+install -p -m 644 misc/hedgewars_ico.png \
+  %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/hedgewars.png
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/512x512/apps
+install -p -m 644 misc/hedgewars.png \
+  %{buildroot}%{_datadir}/icons/hicolor/512x512/apps/%{name}.png
 
 # fix verify-elf's RPATH error
 chrpath --delete %buildroot%_bindir/hwengine
-
-# replace font copies with symlinks to system versions
-rm -f %buildroot%_datadir/%name/Data/Fonts/DejaVuSans-Bold.ttf
-rm -f %buildroot%_datadir/%name/Data/Fonts/wqy-zenhei.ttc
-ln -s ../../../fonts/ttf/dejavu/DejaVuSans-Bold.ttf %buildroot%_datadir/%name/Data/Fonts/DejaVuSans-Bold.ttf
-ln -s ../../../fonts/ttf/wqy-zenhei/wqy-zenhei.ttc  %buildroot%_datadir/%name/Data/Fonts/wqy-zenhei.ttc
-
-# install desktop file and icons
-mkdir -p %buildroot%_datadir/applications/
-
-cat <<EOF >%buildroot%_datadir/applications/%name.desktop
-[Desktop Entry]
-Name=%name
-Comment=Strategy action game
-Exec=%name
-Terminal=false
-Type=Application
-Icon=%name
-StartupNotify=true
-Categories=Game;ActionGame;StrategyGame;
-EOF
-
-install -p -D -m 644 misc/%{name}_ico.png %buildroot%_datadir/icons/hicolor/32x32/apps/%name.png
-install -p -D -m 644 misc/%name.png %buildroot%_datadir/icons/hicolor/512x512/apps/%name.png
-
-# install man file
-install -p -D -m 644 man/%name.6 %buildroot%_mandir/man6/%name.6
 
 %files
 %doc README ChangeLog.txt CREDITS
@@ -106,17 +90,23 @@ install -p -D -m 644 man/%name.6 %buildroot%_mandir/man6/%name.6
 %_libdir/*.so.*
 %_libdir/libavwrapper.so
 %_libdir/libphyslayer.so
-%_mandir/man6/*
 %_datadir/applications/%name.desktop
 %_datadir/icons/hicolor/32x32/apps/%name.png
 %_datadir/icons/hicolor/512x512/apps/%name.png
 %_datadir/appdata/%name.appdata.xml
+%_pixmapsdir/%name.xpm
 
 %files data
 %_datadir/%name
 
-
 %changelog
+* Tue Nov 06 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.24.1-alt1
+- Finally, built new version (Closes: #34082).
+- Removed all previous patches.
+- Transfered on qt5.
+- Built without server support, because there are no needed ghc modules.
+- Massive cleanup spec.
+
 * Mon Jun 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.22-alt4
 - Rebuilt with ffmpeg-4.
 
@@ -191,7 +181,7 @@ install -p -D -m 644 man/%name.6 %buildroot%_mandir/man6/%name.6
 * Mon Nov 03 2008 Ilya Mashkin <oddity@altlinux.ru> 0.9.7-alt1
 - 0.9.7
 
-* Tue Oct 06 2008 Ilya Mashkin <oddity@altlinux.ru> 0.9.6-alt1
+* Mon Oct 06 2008 Ilya Mashkin <oddity@altlinux.ru> 0.9.6-alt1
 - 0.9.6
 
 * Sun Jun 22 2008 Igor Zubkov <icesik@altlinux.org> 0.9.4-alt1
