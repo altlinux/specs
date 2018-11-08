@@ -1,6 +1,6 @@
 Name: udev-alsa
 Version: 0.3
-Release: alt2
+Release: alt3
 Summary: The system sound initialization
 License: GPL
 Group: System/Base
@@ -13,6 +13,7 @@ Provides: sound-scripts = 20091231:3.0-alt1
 
 Source: %name-%version.tar
 Patch: udev-alsa-0.3-alt-udev-187.patch
+Patch1: fix-path-to-consolekit.patch
 
 BuildRequires: libalsa-devel libudev-devel
 
@@ -22,6 +23,7 @@ The %name package contains the udev rules used to setup sound devices
 %prep
 %setup -q
 %patch -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -48,11 +50,14 @@ done
 %files
 /lib/udev/alsa-control
 /lib/udev/rules.d/*.rules
-%_prefix/libexec/ConsoleKit/run-seat.d/alsa-control.ck
+%_libdir/ConsoleKit/run-seat.d/alsa-control.ck
 %dir %_localstatedir/alsa
 %ghost %_localstatedir/alsa/controlC*
 
 %changelog
+* Thu Nov 08 2018 Anton Midyukov <antohami@altlinux.org> 0.3-alt3
+- Fix PATH to consolekit
+
 * Wed Mar 01 2017 Anton Midyukov <antohami@altlinux.org> 0.3-alt2
 - remove requires ConsoleKit (no needed)
 
