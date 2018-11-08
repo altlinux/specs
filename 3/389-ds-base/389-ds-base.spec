@@ -7,7 +7,7 @@
 
 Name: 389-ds-base
 Version: 1.3.9.0
-Release: alt1
+Release: alt2
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -266,10 +266,6 @@ subst 's,%_bindir/systemctl,/bin/systemctl,' %buildroot%_sbindir/*-dirsrv
 %python3_sitelibdir_noarch/dirsrvtests/
 %python3_sitelibdir_noarch/dirsrvtests-*.egg-info
 
-%triggerpostun -- 389-ds < 1.2.10.0-alt1
-echo "Upgrading 389-ds < 1.2.10.0, manual Offline upgrade is required!
-Turn 389-ds off and make 'setup-ds -u' then"
-
 %pre
 %define _dirsrv_user dirsrv
 %define _dirsrv_group dirsrv
@@ -280,13 +276,72 @@ Turn 389-ds off and make 'setup-ds -u' then"
 		  > /dev/null 2>&1 ||:
 
 %post
-%post_service %pkgname
+# Upgrade
+if [ $1 -gt 1 ]; then
+    echo "Checking for upgrade"
+    if ! ( sd_booted && /bin/systemctl --version >/dev/null 2>&1 ); then
+        echo "Likely, you are not using systemd. Please, stop all the dirsrv instances."
+        echo "Then run an upgrade by %_sbindir/setup-ds.pl -u -s General.UpdateMode=offline"
+        exit 0
+    fi
+
+    /bin/systemctl daemon-reload >/dev/null 2>&1 ||:
+    instances=""
+    num_inst=0
+    echo "Looking for Instances in %_sysconfdir/%pkgname"
+    for dir in %_sysconfdir/%pkgname/slapd-* ; do
+        if [ ! -d "$dir" ] ; then continue ; fi
+        case "$dir" in *.removed) continue ;; esac
+        inst="%pkgname@$(echo $(basename $dir) | sed -e 's/slapd-//')"
+        echo "Found Instance $inst"
+        if /bin/systemctl -q is-active "$inst"; then
+            echo "Instance $inst is running, stopping it"
+            if ! /bin/systemctl stop "$inst"; then
+                echo "Cannot stop Instance. Please check it and run an upgrade by %_sbindir/setup-ds.pl -u -s General.UpdateMode=offline"
+                exit 0
+            fi
+            instances="$instances $inst"
+        else
+            echo "Instance $inst is not running"
+        fi
+        let "num_inst++"
+    done
+    if [ "$num_inst" -eq 0 ]; then
+        echo "There are no Instances to upgrade"
+        exit 0
+    fi
+    echo "Upgrading Instances"
+    if ! %_sbindir/setup-ds.pl -u -d -l %_logdir/%pkgname/upgrade.log -s \
+    General.UpdateMode=offline >/dev/null 2>&1; then
+        echo "Upgrade has not been completed successfully. Please check log file %_logdir/%pkgname/upgrade.log and run an upgrade by %_sbindir/setup-ds.pl -u -s General.UpdateMode=offline"
+        exit 0
+    fi
+
+    for inst in $instances; do
+        echo "Restarting Instance $inst"
+        /bin/systemctl start "$inst" ||:
+    done
+
+    echo "Upgrade has been completed successfully"
+fi
 %post_service %pkgname-snmp
 
 %preun
-%preun_service %pkgname
+# Removal
+if [ $1 -eq 0 ]; then
+    # disabling all templated units
+    /bin/systemctl -q disable %pkgname@
+    # remove templated units
+    rm -rf %_sysconfdir/systemd/system/%groupname.wants/* >/dev/null 2>&1 ||:
+    # stopping by mask
+    /bin/systemctl stop %pkgname@*.service
+fi
 %preun_service %pkgname-snmp
+
 %changelog
+* Thu Nov 08 2018 Stanislav Levin <slev@altlinux.org> 1.3.9.0-alt2
+- Added enforced upgrade.
+
 * Thu Nov 01 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.9.0-alt1
 - New version.
 
