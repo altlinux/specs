@@ -4,8 +4,8 @@
 %define libliquidshell liquidshell%liquidshell_sover
 
 Name: kde5-liquidshell
-Version: 0.1.0
-Release: alt3%ubt
+Version: 1.4
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -17,7 +17,6 @@ Requires: plasma5-workspace
 Requires: polkit-kde-plasma-desktop
 
 Source: %rname-%version.tar
-Patch1: alt-disable-packagekit.patch
 Patch2: alt-def-quicklaunch.patch
 Patch3: alt-def-date-format.patch
 Patch4: alt-panel-minimum-rows.patch
@@ -76,7 +75,6 @@ Requires: %name-common = %version-%release
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -103,6 +101,9 @@ Requires: %name-common = %version-%release
 %_K5notif/*liquidshell*
 
 %changelog
+* Thu Nov 08 2018 Sergey V Turchin <zerg@altlinux.org> 1.4-alt1
+- new version
+
 * Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt3%ubt
 - update from master branch
 
