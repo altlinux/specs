@@ -1,8 +1,8 @@
-%define gcc_branch 7
+%define gcc_branch 8
 
 Name: gcc%gcc_branch
-Version: 7.3.1
-Release: alt7
+Version: 8.2.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -16,7 +16,7 @@ Url: http://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20180712
+%define snapshot 20180905
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -47,7 +47,6 @@ Url: http://gcc.gnu.org/
 %define go_arches		%ix86 x86_64
 %define libasan_arches		%ix86 x86_64 %arm aarch64
 %define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x
-%define libcilkrts_arches	%ix86 x86_64
 %define libitm_arches		%ix86 x86_64 %arm aarch64 s390x
 %define liblsan_arches		x86_64 aarch64
 %define libmpx_arches		%ix86 x86_64
@@ -98,7 +97,7 @@ Url: http://gcc.gnu.org/
 # this gcc is expected to be installable at stage 2.
 # BTW, compat and precompat are mutually exclusive.
 %def_disable precompat
-%def_enable compat
+%def_disable compat
 %def_enable multilib
 %def_with fortran
 %ifnarch ppc ppc64
@@ -137,12 +136,9 @@ Patch105: gcc-libtool-no-rpath.patch
 # Patch106: gcc-isl-dl.patch
 Patch107: gcc-libstdc++-docs.patch
 Patch108: gcc-no-add-needed.patch
-Patch109: gcc-aarch64-async-unw-tables.patch
-Patch110: gcc-foffload-default.patch
-Patch111: gcc-Wno-format-security.patch
-# Patch112: gcc-aarch64-sanitizer-fix.patch
-Patch113: gcc-rh1512529-aarch64.patch
-Patch114: gcc-pr84128.patch
+Patch109: gcc-foffload-default.patch
+Patch110: gcc-Wno-format-security.patch
+Patch111: gcc-rh1512529-aarch64.patch
 
 # Debian patches.
 Patch201: gcc-textdomain.diff
@@ -156,11 +152,7 @@ Patch221: ada-gcc-name.diff
 # this patch is broken; needs update
 #Patch222: ada-symbolic-tracebacks.diff
 Patch224: testsuite-glibc-warnings.diff
-# Not neeed (fixed in rh branch)
-# Patch225: pr82880.diff
 Patch230: gcc-as-needed-push-pop.diff
-Patch231: alt-gcc-as-needed.diff
-Patch232: alt-mips-gcc-multiarch.diff
 
 # ALT patches.
 Patch700: alt-_GCC_AUTOCONF_VERSION.patch
@@ -183,6 +175,8 @@ Patch724: alt-change-default-rtld-paths.patch
 Patch726: alt-fix-libmpxwrappers-link.patch
 Patch727: alt-testsuite-Wtrampolines.patch
 Patch728: alt-libstdc++-libvtv-rpath-disable.patch
+Patch729: deb-alt-gcc-as-needed.diff
+Patch730: deb-alt-mips-gcc-multiarch.diff
 
 Obsoletes: egcs gcc3.0 gcc3.1
 Conflicts: glibc-devel < 2.2.6
@@ -194,7 +188,7 @@ Requires: libgcc1 %REQ %EVR
 Requires: libatomic1 %REQ %EVR
 %endif
 %ifarch %libasan_arches
-Requires: libasan4 %REQ %EVR
+Requires: libasan5 %REQ %EVR
 %endif
 %ifarch %libitm_arches
 Requires: libitm1 %REQ %EVR
@@ -290,19 +284,19 @@ This package contains GNU Atomic static library.
 ####################################################################
 # Address Sanitizer library
 
-%package -n libasan4
+%package -n libasan5
 Summary: The Address Sanitizer runtime library
 Group: System/Libraries
 Requires: libgcc1 %REQ %EVR
 
-%description -n libasan4
+%description -n libasan5
 This package contains the Address Sanitizer runtime library
 which is used for -fsanitize=address instrumented programs.
 
 %package -n libasan%gcc_branch-devel-static
 Summary: The Address Sanitizer static library
 Group: Development/C
-Requires: libasan4 %REQ %EVR
+Requires: libasan5 %REQ %EVR
 
 %description -n libasan%gcc_branch-devel-static
 This package contains Address Sanitizer static library.
@@ -448,33 +442,6 @@ This package contains static libraries for building Fortran programs
 using REAL*16 and programs using __float128 math.
 
 ####################################################################
-# Cilk+ runtime library
-
-%package -n libcilkrts5
-Summary: The Cilk+ runtime library
-Group: System/Libraries
-
-%description -n libcilkrts5
-This package contains the Cilk+ runtime library.
-
-%package -n libcilkrts%gcc_branch-devel
-Summary: The Cilk+ static runtime library
-Group: Development/Other
-Requires: libcilkrts5 %REQ %EVR
-
-%description -n libcilkrts%gcc_branch-devel
-This package contains headers for building programs with Cilk+ static
-runtime library.
-
-%package -n libcilkrts%gcc_branch-devel-static
-Summary: The Cilk+ static runtime library
-Group: Development/Other
-Requires: libcilkrts%gcc_branch-devel = %EVR
-
-%description -n libcilkrts%gcc_branch-devel-static
-This package contains the Cilk+ static runtime library.
-
-####################################################################
 # Leak Sanitizer library
 
 %package -n liblsan0
@@ -497,19 +464,19 @@ This package contains Leak Sanitizer static runtime library.
 ####################################################################
 # Undefined Behavior Sanitizer library
 
-%package -n libubsan0
+%package -n libubsan1
 Summary: The Undefined Behavior Sanitizer runtime library
 Group: System/Libraries
 Requires: libgcc1 %REQ %EVR
 
-%description -n libubsan0
+%description -n libubsan1
 This package contains the Undefined Behavior Sanitizer library
 which is used for -fsanitize=undefined instrumented programs.
 
 %package -n libubsan%gcc_branch-devel-static
 Summary: The Undefined Behavior Sanitizer static library
 Group: Development/C
-Requires: libubsan0 %REQ %EVR
+Requires: libubsan1 %REQ %EVR
 
 %description -n libubsan%gcc_branch-devel-static
 This package contains Undefined Behavior Sanitizer static runtime library.
@@ -723,7 +690,7 @@ This package provides Objective-C++ support for the GCC.
 ####################################################################
 # GNU Fortran Library
 
-%package -n libgfortran4
+%package -n libgfortran5
 Summary: GNU Fortran runtime library
 Group: System/Libraries
 Requires: libgcc1 %REQ %EVR
@@ -738,7 +705,7 @@ Obsoletes: libgfortran4.3 < %version
 Obsoletes: libgfortran4.4 < %version
 Obsoletes: libgfortran4.5 < %version
 
-%description -n libgfortran4
+%description -n libgfortran5
 This package contains GNU Fortran shared library which is needed to run
 GNU Fortran dynamically linked programs.
 
@@ -746,7 +713,7 @@ GNU Fortran dynamically linked programs.
 Summary: Header files and library for GNU Fortran development
 Group: Development/Other
 PreReq: gcc-fortran-common >= 1.4.7
-Requires: libgfortran4 %REQ %EVR
+Requires: libgfortran5 %REQ %EVR
 %ifarch %libquadmath_arches
 Requires: libquadmath%gcc_branch-devel = %EVR
 %endif
@@ -797,6 +764,8 @@ Group: Development/Other
 # This is not a noarch subpackage because of libquadmath_arches.
 #BuildArch: noarch
 Requires: %name-doc = %EVR
+Conflicts: gcc7-fortran-doc
+Obsoletes: gcc7-fortran-doc
 
 %description fortran-doc
 This package contains documentation for the GNU Fortran Compiler
@@ -845,7 +814,7 @@ package includes the static libraries needed for Ada 95 development.
 %package gnat
 Summary: The GNU Ada Compiler
 Group: Development/Other
-Obsoletes: gcc6-gnat gcc5-gnat gcc4.9-gnat gcc4.8-gnat gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
+Obsoletes: gcc7-gnat gcc6-gnat gcc5-gnat gcc4.9-gnat gcc4.8-gnat gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
 PreReq: gcc-gnat-common
 Requires: %name = %EVR
 Requires: libgnat%gcc_branch-devel = %EVR
@@ -868,6 +837,8 @@ Group: Development/Other
 # This is not a noarch subpackage because of gnat_arches.
 #BuildArch: noarch
 Requires: %name-doc = %EVR
+Conflicts: gcc7-gnat-doc
+Obsoletes: gcc7-gnat-doc
 
 %description gnat-doc
 This package contains documentation for the GNU Ada Compiler
@@ -876,12 +847,12 @@ version %version.
 ####################################################################
 # Go Libraries
 
-%package -n libgo11
+%package -n libgo13
 Summary: Go runtime libraries
 Group: System/Libraries
 Requires: libgcc1 %REQ %EVR
 
-%description -n libgo11
+%description -n libgo13
 This package contains the shared libraries required to run programs
 compiled with the GNU Go compiler if they are compiled to use
 shared libraries.
@@ -890,7 +861,7 @@ shared libraries.
 Summary: Header files and libraries for Go development
 Group: Development/Other
 PreReq: gcc-common >= 1.4.7
-Requires: libgo11 %REQ %EVR
+Requires: libgo13 %REQ %EVR
 
 %description -n libgo%gcc_branch-devel
 This package includes the include files and libraries needed for
@@ -932,6 +903,8 @@ Group: Development/Other
 # This is not a noarch subpackage because of go_arches.
 #BuildArch: noarch
 Requires: %name-doc = %EVR
+Conflicts: gcc7-go-doc
+Obsoletes: gcc7-go-doc
 
 %description go-doc
 This package contains documentation for the GNU compiler version %version
@@ -981,7 +954,8 @@ Conflicts: gcc4.8-doc
 Conflicts: gcc4.9-doc
 Conflicts: gcc5-doc
 Conflicts: gcc6-doc
-Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc gcc4.7-doc gcc4.8-doc gcc4.9-doc gcc5-doc gcc6-doc
+Conflicts: gcc7-doc
+Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc gcc4.7-doc gcc4.8-doc gcc4.9-doc gcc5-doc gcc6-doc gcc7-doc
 
 %description doc
 This package contains documentation for the GNU Compiler Collection
@@ -1002,8 +976,6 @@ version %version.
 %patch109 -p0
 %patch110 -p0
 %patch111 -p0
-%patch113 -p0
-%patch114 -p0
 
 # Debian patches.
 %patch201 -p2
@@ -1016,11 +988,7 @@ version %version.
 %patch221 -p2
 #%%patch222 -p2
 %patch224 -p2
-# Not neeed (fixed in rh branch)
-#%%patch225 -p2
 %patch230 -p2
-%patch231 -p2
-%patch232 -p2
 
 # ALT patches.
 %patch700 -p1
@@ -1043,6 +1011,8 @@ version %version.
 %patch726 -p1
 %patch727 -p1
 %patch728 -p1
+%patch729 -p2
+%patch730 -p2
 
 echo '%distribution %version-%release' > gcc/DEV-PHASE
 
@@ -1120,10 +1090,6 @@ pushd %buildtarget
 
 %if_with ada
 rm -rf ada_hacks
-%if "%version-%release" == "6.3.1-alt2"
-mkdir -p ada_hacks
-ln -s %_bindir/%_target_platform-gcc%psuffix ada_hacks/%_target_platform-gcc%psuffix%psuffix
-%endif
 for n in gnat %ada_binaries; do
 	if [ -f "%_bindir/$n" ]; then
 		continue
@@ -1291,7 +1257,8 @@ if [ -d ada_check_hacks ]; then
 	export PATH="$PWD/ada_check_hacks${PATH:+:"$PATH"}"
 fi
 %endif
-GCC_TOLERATE_ALWAYS_OVERFLOW=1 make -k check ||:
+export LD_LIBRARY_PATH=$PWD/gcc/ada/rts
+%make_build -k check ||:
 ../contrib/test_summary ||:
 
 %install
@@ -1395,9 +1362,6 @@ mv %buildroot%_libdir/libitm.spec %buildroot%gcc_target_libdir/
 %endif
 mv %buildroot%_libdir/libgomp.spec %buildroot%gcc_target_libdir/
 mv %buildroot%_libdir/libgfortran.spec %buildroot%gcc_target_libdir/
-%ifarch %libcilkrts_arches
-mv %buildroot%_libdir/libcilkrts.spec %buildroot%gcc_target_libdir/
-%endif
 %ifarch %libmpx_arches
 mv %buildroot%_libdir/libmpx.spec %buildroot%gcc_target_libdir/
 %endif
@@ -1453,9 +1417,6 @@ for n in \
 %endif
 %ifarch %libitm_arches
     libitm-devel-static \
-%endif
-%ifarch %libcilkrts_arches
-    libcilkrts-devel libcilkrts-devel-static \
 %endif
 %ifarch %liblsan_arches
     liblsan-devel-static \
@@ -1587,6 +1548,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %gcc_target_libdir/include/vecintrin.h
 %endif
 %ifarch %ix86 x86_64
+%gcc_target_libdir/include/cet.h
 %gcc_target_libdir/include/*intrin*.h
 %gcc_target_libdir/include/cpuid.h
 %gcc_target_libdir/include/cross-stdarg.h
@@ -1619,11 +1581,13 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %gcc_target_libdir/libitm.spec
 %endif
 %ifarch %libtsan_arches
+%gcc_target_libdir/include/sanitizer/tsan_interface.h
 %gcc_target_libdir/libtsan.so
 %gcc_target_libdir/libtsan_preinit.o
 %endif
 %ifarch %liblsan_arches
 %gcc_target_libdir/liblsan.so
+%gcc_target_libdir/liblsan_preinit.o
 %endif
 %ifarch %libubsan_arches
 %gcc_target_libdir/libubsan.so
@@ -1675,14 +1639,12 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files -n libatomic1
 %_libdir/libatomic.so.1*
 %endif
-%endif #compat
 
 %ifarch %libasan_arches
-%files -n libasan4
-%_libdir/libasan.so.4*
+%files -n libasan5
+%_libdir/libasan.so.5*
 %endif
 
-%if_disabled compat
 %ifarch %libtsan_arches
 %files -n libtsan0
 %_libdir/libtsan.so.0*
@@ -1700,26 +1662,17 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files -n liblsan0
 %_libdir/liblsan.so.0*
 %endif
-%endif #compat
 
 %ifarch %libubsan_arches
-%files -n libubsan0
-%_libdir/libubsan.so.0*
+%files -n libubsan1
+%_libdir/libubsan.so.1*
 %endif
 
-%if_disabled compat
 %ifarch %libquadmath_arches
 %files -n libquadmath0
 %_libdir/libquadmath.so.0*
 %endif
-%endif #compat
 
-%ifarch %libcilkrts_arches
-%files -n libcilkrts5
-%_libdir/libcilkrts.so.5*
-%endif
-
-%if_disabled compat
 %ifarch %libvtv_arches
 %files -n libvtv0
 %_libdir/libvtv.so.0*
@@ -1794,21 +1747,6 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %config %_sysconfdir/buildreqs/packages/substitute.d/libquadmath%gcc_branch-devel-static
 %dir %gcc_target_libdir/
 %gcc_target_libdir/libquadmath.a
-%endif
-
-%ifarch %libcilkrts_arches
-%files -n libcilkrts%gcc_branch-devel
-%config %_sysconfdir/buildreqs/packages/substitute.d/libcilkrts%gcc_branch-devel
-%dir %gcc_target_libdir/
-%dir %gcc_target_libdir/include/
-%gcc_target_libdir/include/cilk/
-%gcc_target_libdir/libcilkrts.so
-%gcc_target_libdir/libcilkrts.spec
-
-%files -n libcilkrts%gcc_branch-devel-static
-%config %_sysconfdir/buildreqs/packages/substitute.d/libcilkrts%gcc_branch-devel-static
-%dir %gcc_target_libdir/
-%gcc_target_libdir/libcilkrts.a
 %endif
 
 %ifarch %liblsan_arches
@@ -1925,8 +1863,10 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_objc
 
 %if_with fortran
-%files -n libgfortran4
-%_libdir/libgfortran.so.4*
+%if_disabled compat
+%files -n libgfortran5
+%_libdir/libgfortran.so.5*
+%endif # compat
 
 %files -n libgfortran%gcc_branch-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/libgfortran%gcc_branch-devel
@@ -2001,12 +1941,15 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %dir %gcc_target_libexecdir/
 %gcc_target_libexecdir/go1
 %gcc_target_libexecdir/cgo
+%gcc_target_libexecdir/buildid
+%gcc_target_libexecdir/test2json
+%gcc_target_libexecdir/vet
 
 %files go-doc
 %_infodir/gccgo.info*
 
-%files -n libgo11
-%_libdir/libgo.so.11*
+%files -n libgo13
+%_libdir/libgo.so.13*
 
 %files -n libgo%gcc_branch-devel
 %dir %gcc_doc_dir/
@@ -2071,11 +2014,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
-* Wed Oct 31 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.3.1-alt7
-- Built in gcc8 compatibility mode.
-
-* Tue Oct 30 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.3.1-alt6
-- Rebuilt in precompat mode to prepare for gcc8 build.
+* Wed Nov 07 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.2.1-alt1
+- Updated to redhat/gcc-8-branch r264110.
+- Synced with Fedora gcc 8.2.1-4 and Debian gcc-8 8.2.0-7.
 
 * Fri Jul 13 2018 Dmitry V. Levin <ldv@altlinux.org> 7.3.1-alt5
 - Updated to redhat/gcc-7-branch r262599 (closes: #35089).
