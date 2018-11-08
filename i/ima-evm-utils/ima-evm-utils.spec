@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ima-evm-utils
-Version: 1.1
+Version: 1.1.0.0.5.g8c8f29e
 Release: alt1
 
 Summary: IMA/EVM support utilities
@@ -11,6 +11,12 @@ Url: http://linux-ima.sourceforge.net/
 
 # Repacked http://sourceforge.net/projects/linux-ima/files/ima-evm-utils/%name-%version.tar.gz
 Source: %name-%version.tar
+
+Patch01: 0001-autotools-Try-to-find-correct-manpage-stylesheet-pat.patch
+Patch02: 0002-evmctl-use-correct-include-for-xattr.h.patch
+Patch03: 0003-Remove-hardcoding-of-SHA1-in-EVM-signatures.patch
+Patch04: 0004-Add-security.apparmor-to-the-set-of-extended-attribu.patch
+Patch05: 0005-ima-evm-utils-check-the-return-code-from-tpm_pcr_rea.patch
 
 # Automatically added by buildreq on Tue Feb 14 2017
 # optimized out: docbook-dtds libgpg-error perl pkg-config python-base python-modules xml-common
@@ -58,14 +64,20 @@ ima-evm-utils is used to prepare the file system for these extended attributes.
 
 %prep
 %setup
+%patch01 -p1
+%patch02 -p1
+%patch03 -p1
+%patch04 -p1
+%patch05 -p1
 
-sed 's|^MANPAGE_DOCBOOK_XSL *=.*|MANPAGE_DOCBOOK_XSL = %_datadir/xml/docbook/xsl-stylesheets/manpages/docbook.xsl|' \
-	-i Makefile.am
+sed 's|MANPAGE_DOCBOOK_XSL="/.*|MANPAGE_DOCBOOK_XSL="%_datadir/xml/docbook/xsl-stylesheets/manpages/docbook.xsl"|' \
+	-i m4/manpage-docbook-xsl.m4
 
 %build
 %autoreconf
 %configure \
 	--disable-static \
+	--with-xml-catalog=/usr/share/xml/docbook/catalog \
 	#
 %make_build
 
@@ -85,6 +97,9 @@ sed 's|^MANPAGE_DOCBOOK_XSL *=.*|MANPAGE_DOCBOOK_XSL = %_datadir/xml/docbook/xsl
 %_libdir/libimaevm.so
 
 %changelog
+* Thu Nov 08 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.0.0.5.g8c8f29e-alt1
+- Updated to v1.1-5-g8c8f29e.
+
 * Tue Sep 04 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1-alt1
 - Updated to 1.1.
 
