@@ -1,6 +1,6 @@
 Name: sudo
 Version: 1.8.25p1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Allows command execution as another user
@@ -98,7 +98,7 @@ bzip2 -9 %buildroot%_datadir/doc/%name-%version/ChangeLog
 
 cat sudo.lang sudoers.lang > sudo_all.lang
 rm sudo.lang sudoers.lang
-rm -f %buildroot%_libdir/sudo/*.la
+rm -f %buildroot%_libdir/sudo/*.la %buildroot%_libdir/*.so
 
 mv %buildroot%_sysconfdir/sudoers.dist %buildroot%_datadir/doc/%name-%version/
 
@@ -115,14 +115,14 @@ fi
 %post
 %post_control -s wheelonly sudo
 %post_control -s strict sudoers
-if [ $1 -gt 1 -a ! -f "/var/run/control/sudoreplay" ]; then
+if [ ! -f "/var/run/control/sudoreplay" ]; then
     echo wheelonly > "/var/run/control/sudoreplay"
 fi
 %post_control -s wheelonly sudoreplay
 if [ $1 -gt 1 -a ! -f "/var/run/control/sudowheel" ]; then
-    echo enabled > "/var/run/control/sudowheel"
+    echo disabled > "/var/run/control/sudowheel"
 fi
-%post_control -s enabled sudoreplay
+%post_control -s disabled sudoreplay
 
 %triggerpostun -- %name < 1:1.8.0
 cp -a %_sysconfdir/sudoers %_sysconfdir/sudoers.rpmsave
@@ -161,6 +161,7 @@ fi
 %attr(600,root,root) %config(noreplace) %_sysconfdir/pam.d/sudo
 %_bindir/sudoedit
 %dir %_libdir/sudo
+%_libdir/*.so.*
 %_libdir/sudo/*.so*
 %attr(700,root,root) %_bindir/sudo
 %attr(700,root,root) %_bindir/sudoreplay
@@ -177,6 +178,11 @@ fi
 %_man8dir/sudo_plugin.8*
 
 %changelog
+* Thu Nov 08 2018 Evgeny Sinelnikov <sin@altlinux.org> 1:1.8.25p1-alt2
+- Reapply replace libsudo_util.so to libexecdir (avoid rpath in binaries)
+- Set sudowheel control with rule "ALL=(ALL) ALL" for wheel users disabled
+  by default (closes: 18344)
+
 * Tue Nov 06 2018 Evgeny Sinelnikov <sin@altlinux.org> 1:1.8.25p1-alt1
 - Update to latest release
 - Disable ubt macros due binary package identity change
