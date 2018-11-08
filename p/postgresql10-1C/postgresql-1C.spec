@@ -7,8 +7,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     10
-%define postgresql_minor     5
-%define postgresql_altrel    3
+%define postgresql_minor     6
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -763,6 +763,10 @@ fi
 %_libdir/%PGSQL/ltree_plpython2.so
 
 %changelog
+* Thu Nov 08 2018 Alexei Takaseev <taf@altlinux.org> 10.6-alt1
+- 10.6
+- Fix CVE-2018-16850
+
 * Fri Oct 19 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt3
 - Disable package libs for --without devel. This will provide
   one set of libraries for all versions of the PG.

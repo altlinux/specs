@@ -4,8 +4,8 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     5
-%define postgresql_subminor  14
-%define postgresql_altrel    4
+%define postgresql_subminor  15
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -780,6 +780,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Nov 08 2018 Alexei Takaseev <taf@altlinux.org> 9.5.15-alt1
+- 9.5.15
+
 * Fri Oct 19 2018 Alexei Takaseev <taf@altlinux.org> 9.5.14-alt4
 - Disable package libs for --without devel. This will provide
   one set of libraries for all versions of the PG.
