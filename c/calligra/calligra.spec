@@ -8,7 +8,7 @@
 
 Name: calligra
 Version: 3.1.0
-Release: alt4%ubt
+Release: alt5
 Epoch: 0
 %K5init no_altplace
 %define libname lib%name
@@ -35,6 +35,12 @@ Source: http://download.kde.org/stable/calligra/%version/calligra-%version.tar
 # Upstream patches
 Patch1: 0001-Fix-build-with-Qt-5.11-missing-headers.patch
 Patch2: 0001-Missing-include-for-QFrame.patch
+Patch10: 0010-poppler071.patch
+Patch11: 0011-poppler071.patch
+Patch12: 0012-poppler071.patch
+Patch13: 0013-poppler071.patch
+Patch14: 0014-poppler071.patch
+Patch15: 0015-poppler071.patch
 # ALT
 Patch103: alt-disable-products.patch
 
@@ -184,6 +190,12 @@ Requires: %name-common = %EVR
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
 %patch103 -p1
 
 %build
@@ -413,6 +425,9 @@ done
 %exclude %_K5lib/libkookularGenerator_odt.so*
 
 %changelog
+* Thu Nov 08 2018 Sergey V Turchin <zerg@altlinux.org> 0:3.1.0-alt5
+- fix build with poppler-0.71
+
 * Tue Sep 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0:3.1.0-alt4%ubt
 - Fixed build with new Qt.
 
