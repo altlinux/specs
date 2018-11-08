@@ -1,5 +1,5 @@
 Name: Kvantum
-Version: 0.10.8
+Version: 0.10.9
 Release: alt1
 Summary: SVG-based theme engine for Qt5, KDE and LXQt
 
@@ -8,7 +8,7 @@ Group: Graphical desktop/Other
 Url: https://github.com/tsujan/Kvantum
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-# Source-url: https://github.com/tsujan/%name/archive/V%version.tar.gz?/%name-%version.tar.gz
+# Source-git: https://github.com/tsujan/Kvantum.git
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++ cmake libX11-devel libXext-devel libqt4-devel qt5-base-devel qt5-tools-devel qt5-svg-devel qt5-x11extras-devel kf5-kwindowsystem-devel desktop-file-utils icon-theme-hicolor
@@ -80,6 +80,10 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %dir %_datadir/kvantummanager/translations
 
 %changelog
+* Thu Nov 08 2018 Leontiy Volodin <lvol@altlinux.org> 0.10.9-alt1
+- New release 0.10.9
+- Changed spec for update from git
+
 * Wed Nov 07 2018 Leontiy Volodin <lvol@altlinux.org> 0.10.8-alt1
 - Initial release for Sisyphus
 
