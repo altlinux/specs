@@ -4,8 +4,8 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     6
-%define postgresql_subminor  10
-%define postgresql_altrel    5
+%define postgresql_subminor  11
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -782,6 +782,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Nov 08 2018 Alexei Takaseev <taf@altlinux.org> 9.6.11-alt1
+- 9.6.11
+
 * Fri Oct 19 2018 Alexei Takaseev <taf@altlinux.org> 9.6.10-alt5
 - Disable package libs for --without devel. This will provide
   one set of libraries for all versions of the PG.
@@ -797,7 +800,7 @@ fi
 - Remove conflict with postgresql for 1C
 
 * Sat Aug 11 2018 Alexei Takaseev <taf@altlinux.org> 9.6.10-alt1
-- 9.6.9
+- 9.6.10
 - Fix CVE-2018-10915, CVE-2018-10925
 
 * Wed May 09 2018 Alexei Takaseev <taf@altlinux.org> 9.6.9-alt1
