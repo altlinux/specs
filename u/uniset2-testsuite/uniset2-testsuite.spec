@@ -2,7 +2,7 @@
 
 Name: uniset2-testsuite
 Version: 2.6
-Release: alt10.qa1
+Release: alt11
 Summary: UniSet test suite
 Group: Development/Python
 License: LGPL
@@ -53,6 +53,7 @@ SNMP Plugin for uniset2-testsuite
 %make_install install DESTDIR=%buildroot
 
 %files
+%dir %_datadir/%name
 %_datadir/%name/*.*
 %_bindir/%name-xmlplayer
 %_bindir/%name-conv
@@ -67,6 +68,9 @@ SNMP Plugin for uniset2-testsuite
 %endif
 
 %changelog
+* Fri Nov 09 2018 Pavel Vainerman <pv@altlinux.ru> 2.6-alt11
+- fix error in check_tag function
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.6-alt10.qa1
 - NMU: applied repocop patch
 
