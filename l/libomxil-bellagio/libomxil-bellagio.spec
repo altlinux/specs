@@ -1,15 +1,12 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libomxil-bellagio-devel
-# END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libomxil-bellagio
 Version:        0.9.3
-Release:        alt1_15
+Release:        alt1_20
 Summary:        OpenMAX Integration Layer
 
-Group:          System/Libraries
 License:        LGPLv2+
 URL:            http://omxil.sourceforge.net
 Source0:        http://downloads.sourceforge.net/omxil/%{name}-%{version}.tar.gz
@@ -22,8 +19,11 @@ Patch3:         http://git.buildroot.net/buildroot/plain/package/multimedia/bell
 Patch4:         http://git.buildroot.net/buildroot/plain/package/multimedia/bellagio/bellagio-0.9.3-parallel-build.patch
 Patch5:         http://git.buildroot.net/buildroot/plain/package/multimedia/bellagio/bellagio-0.9.3-segfault-on-removeFromWaitResource.patch
 Patch6:         omxil_version.patch
+Patch7:         libomxil-bellagio-0.9.3-memcpy.patch
+Patch8:         libomxil-bellagio-0.9.3-valgrind_register.patch
 BuildRequires:  doxygen
-BuildRequires:  libtool-common
+BuildRequires:  libtool
+BuildRequires:  gcc-c++
 Source44: import.info
 
 
@@ -38,8 +38,8 @@ component, OMX mp3,aac,ogg decoder component and OMX volume control component.
 
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description    devel
@@ -47,8 +47,8 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %package        test
+Group: Development/Other
 Summary:        Test cases for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description    test
@@ -64,7 +64,10 @@ The %{name}-test package contains binaries for testing %{name}.
 %patch4 -p1 -b .pb
 %patch5 -p1 -b .sf
 %patch6 -p0 -b .orig
+%patch7 -p1 -b .memcpy
+%patch8 -p0 -b .register
 autoreconf -vif
+
 
 %build
 %configure --disable-static
@@ -83,7 +86,7 @@ make check LDFLAGS="-L$PWD/src/.libs" \
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+%makeinstall_std
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
@@ -97,15 +100,19 @@ done
 rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 
 
+
+
+
 %files
-%doc AUTHORS ChangeLog COPYING NEWS README TODO
+%doc AUTHORS ChangeLog NEWS README TODO
+%doc --no-dereference COPYING
 %{_bindir}/omxregister-bellagio
 %{_libdir}/*.so.*
 %dir %{_libdir}/bellagio
 %{_libdir}/bellagio/*.so*
 %dir %{_libdir}/omxloaders
 %{_libdir}/omxloaders/*.so*
-%{_mandir}/man1/omxregister-bellagio.1.*
+%{_mandir}/man1/omxregister-bellagio.1*
 
 %files devel
 %{_includedir}/*
@@ -120,6 +127,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_20
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_15
 - update to new release by fcimport
 
