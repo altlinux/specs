@@ -1,8 +1,8 @@
 %define rdn_name io.elementary.screenshot-tool
 
 Name: screenshot-tool
-Version: 0.1.5
-Release: alt1%ubt
+Version: 1.6.0
+Release: alt1
 
 Summary: Screenshot tool designed for elementary OS
 Group: Graphical desktop/GNOME
@@ -55,6 +55,9 @@ BuildRequires: desktop-file-utils
 %_iconsdir/hicolor/*/apps/accessories-screenshot.svg
 
 %changelog
+* Fri Nov 09 2018 Anton Midyukov <antohami@altlinux.org> 1.6.0-alt1
+- new version 1.6.0
+
 * Mon Jun 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt1.S1
 - 0.1.5
 
