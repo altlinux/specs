@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.17.0
-Release: alt2%ubt
+Release: alt3
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -46,6 +46,8 @@ Patch109: alt-expired-password-handling.patch
 Patch110: alt-sddm-etc.locale.conf.patch
 Patch111: alt-sddm-ignore-locales.patch
 Patch112: alt-sddm-etc.sysconfig.i18n.patch
+Patch113: alt-sddm-greeter-swbackend.patch
+#
 Patch200: alt-fix-unable-handle-request.patch
 Patch201: alt-new-breeze-theme-compat.patch
 Patch202: alt-dbus-sessionchange.patch
@@ -87,6 +89,7 @@ ability to create smooth, animated user interfaces.
 %patch110 -p1
 %patch111 -p1
 %patch112 -p1
+%patch113 -p1
 
 %patch200 -p1
 %patch201 -p1
@@ -159,6 +162,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Fri Nov 09 2018 Sergey V Turchin <zerg@altlinux.org> 0.17.0-alt3
+- set software QML renderer by default (thanks sbolshakov@alt)
+
 * Fri Mar 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.17.0-alt2%ubt
 - prevent race with systemd-logind service
 
