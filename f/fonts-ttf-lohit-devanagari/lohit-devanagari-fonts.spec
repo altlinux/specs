@@ -8,7 +8,7 @@
 
 Name:           fonts-ttf-lohit-devanagari
 Version:        2.95.4
-Release:        alt1_2
+Release:        alt1_5
 Summary:        Free Devanagari Script Font
 Group:          System/Fonts/True type
 License:        OFL
@@ -20,6 +20,7 @@ BuildRequires:  fontpackages-devel
 BuildRequires:  ttfautohint
 BuildRequires: python3-devel
 Source44: import.info
+ExcludeArch: aarch64
 
 %description
 This package provides a free Devanagari Script TrueType/OpenType font.
@@ -92,6 +93,7 @@ fi
 %files
 %{_fontconfig_templatedir}/*-%{fontname}.conf
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc ChangeLog COPYRIGHT OFL.txt AUTHORS README test-devanagari.txt
@@ -99,6 +101,9 @@ fi
 
 
 %changelog
+* Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 2.95.4-alt1_5
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.95.4-alt1_2
 - update to new release by fcimport
 
