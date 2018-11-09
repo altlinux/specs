@@ -1,6 +1,6 @@
 Name: librdkafka
 Version: 0.11.6
-Release: alt0.2
+Release: alt0.3
 
 Summary: the Apache Kafka C/C++ client library
 
@@ -64,11 +64,16 @@ rm -f %buildroot%_datadir/licenses/librdkafka/LICENSES.txt
 %_libdir/*.so
 
 %files devel
+%dir %_includedir/%name
 %_includedir/%name/*.h
+%dir %_libdir/cmake/RdKafka
 %_libdir/cmake/RdKafka/*.cmake
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Nov 09 2018 Pavel Vainerman <pv@altlinux.ru> 0.11.6-alt0.3
+- minor fixes in spec
+
 * Fri Nov 09 2018 Pavel Vainerman <pv@altlinux.ru> 0.11.6-alt0.2
 - added pc-file
 
