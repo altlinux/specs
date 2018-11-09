@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -5,13 +6,13 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Meta-Builder
-Version:        0.003
-Release:        alt2_14
+Version:        0.004
+Release:        alt1
 Summary:        Tools for creating Meta objects to track custom metrics
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            https://metacpan.org/release/Meta-Builder
-Source0:        https://cpan.metacpan.org/authors/id/E/EX/EXODIST/Meta-Builder-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/E/EX/EXODIST/Meta-Builder-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
@@ -42,10 +43,13 @@ perl Build.PL installdirs=vendor
 ./Build test
 
 %files
-%doc README
+%doc README Changes
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Nov 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1
+- automated CPAN update
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.003-alt2_14
 - update to new release by fcimport
 
