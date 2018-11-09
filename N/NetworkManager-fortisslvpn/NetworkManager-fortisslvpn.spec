@@ -2,13 +2,13 @@
 %define nm_applet_version 1.2.0
 %define nm_applet_name NetworkManager-applet-gtk
 
-%def_with libnm_glib
+%def_without libnm_glib
 
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-fortisslvpn
 Version: 1.2.8
-Release: alt1
+Release: alt1.1
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Fortinet compatible SSLVPN support for NetworkManager
@@ -20,10 +20,10 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: intltool
-BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnma-devel >= %nm_applet_version
 %if_with libnm_glib
+BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: libnm-gtk-devel >= %nm_applet_version
 %endif
@@ -98,6 +98,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Fri Nov 09 2018 Mikhail Efremov <sem@altlinux.org> 1.2.8-alt1.1
+- NMU: Disable libnm-glib-* support.
+- NMU: Fix build without libnm-glib-*.
+
 * Thu Mar 22 2018 L.A. Kostis <lakostis@altlinux.ru> 1.2.8-alt1
 - 1.2.8.
 - remove configuration hack.
