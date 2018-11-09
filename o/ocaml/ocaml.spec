@@ -10,7 +10,7 @@
 
 Name: ocaml
 Version: 4.07.1
-Release: alt1
+Release: alt2
 
 Summary: The Objective Caml compiler and programming environment
 License: QPL & LGPL
@@ -189,7 +189,7 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %files runtime
 %_bindir/ocamlrun
 %dir %_libdir/ocaml
-%config %_libdir/ocaml/ld.conf
+%_libdir/ocaml/ld.conf
 %dir %_libdir/ocaml/stublibs
 %_libdir/ocaml/stublibs/dllbigarray.so
 %_libdir/ocaml/stublibs/dllcamlstr.so
@@ -217,6 +217,9 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Fri Nov 09 2018 Anton Farygin <rider@altlinux.ru> 4.07.1-alt2
+- disabled mark as config file for ocaml/ld.conf
+
 * Wed Oct 17 2018 Anton Farygin <rider@altlinux.ru> 4.07.1-alt1
 - 4.07.1
 
