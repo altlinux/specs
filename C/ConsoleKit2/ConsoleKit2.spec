@@ -6,7 +6,7 @@
 %define oname ConsoleKit
 Name: ConsoleKit2
 Version: 1.2.1
-Release: alt2
+Release: alt3
 Summary: System daemon for tracking users, sessions and seats
 License: GPL
 Group: System/Libraries
@@ -22,7 +22,19 @@ PreReq: dbus polkit >= 0.93
 Source: %name-%version.tar
 Patch: %name-1.1.0-alt.patch
 
-BuildRequires: gcc-c++ libpolkit1-devel libX11-devel libdbus-glib-devel libpam-devel xmlto zlib-devel
+BuildRequires: gcc-c++
+BuildRequires: libpam-devel
+BuildRequires: libdbus-glib-devel
+BuildRequires: libpolkit1-devel
+BuildRequires: libudev-devel
+BuildRequires: libacl-devel
+BuildRequires: xmlto 
+BuildRequires: zlib-devel
+BuildRequires: libX11-devel
+BuildRequires: libselinux-devel
+BuildRequires: libdrm-devel
+BuildRequires: libevdev-devel
+BuildRequires: libcgmanager
 
 %description
 ConsoleKit is a system daemon for tracking what users are logged
@@ -90,8 +102,13 @@ touch gtk-doc.make
     --with-pid-file=/run/lock/console-kit-daemon.pid \
     --enable-pam-module \
     --with-pam-module-dir=/%_lib/security \
-    --with-systemdsystemunitdir=%systemdsystemunitdir \
-    --enable-docbook-docs
+    --enable-docbook-docs \
+    --enable-polkit \
+    --enable-libudev \
+    --enable-libselinux \
+    --enable-udev-acl \
+    --enable-libdrm \
+    %nil
 %make_build
 
 %install
@@ -106,17 +123,17 @@ done
 rm -fr %buildroot/%_datadir/locale/es_419
 rm -fr %buildroot/%_lib/security/*.la
 
-%find_lang %name
+# DBus config belongs into %%_datadir
+mkdir -p %buildroot%_datadir/dbus-1
+mv -f %buildroot%_sysconfdir/dbus-1/* %buildroot%_datadir/dbus-1/
 
-%triggerun -n %name -- %name < 0.2.6-alt1
-/sbin/chkconfig --del consolekit ||:
+%find_lang %name
 
 %files -f %name.lang
 %_docdir/%name
-%_sysconfdir/dbus-1/system.d/*
+%_datadir/dbus-1/system.d/*
 %_sysconfdir/X11/xinit/xinitrc.d/*
 %_sysconfdir/%oname
-%systemdsystemunitdir/*
 %_logrotatedir/consolekit
 %_sbindir/*
 %_bindir/*
@@ -125,6 +142,9 @@ rm -fr %buildroot/%_lib/security/*.la
 %_datadir/polkit-1/actions/*.policy
 %dir %_logdir/%oname
 %ghost %_logdir/%oname/history*
+%_udevrulesdir/*.rules
+/lib/udev/udev-acl
+%_libexecdir/udev-acl
 
 %files x11
 %_libexecdir/ck-get-*
@@ -147,6 +167,12 @@ rm -fr %buildroot/%_lib/security/*.la
 %_man1dir/*.1*
 
 %changelog
+* Sun Oct 21 2018 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt3
+- disable systemd support
+- enable udev support
+- enable selinux support
+- enable drm support
+
 * Mon Oct 08 2018 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt2
 - fix unpackages directory
 
