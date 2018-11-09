@@ -1,13 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Math-Prime-Util
 %add_findreq_skiplist %perl_vendor_archlib/Math/Prime/Util.pm
+# optional Math::MPFR dep on arch
+#BuildRequires: perl(Math/MPFR.pm)
+%ifnarch %arm
+#Requires: perl(Math/MPFR.pm)
+%else
+%add_findreq_skiplist %perl_vendor_archlib/Math/Prime/Util/ZetaBigFloat.pm
+%endif
+
 # BEGIN SourceDeps(oneline):
-BuildRequires: libsowing-devel perl(Benchmark.pm) perl(Bytes/Random/Secure.pm) perl(Carp.pm) perl(Config.pm) perl(Crypt/Primes.pm) perl(Crypt/Random.pm) perl(Data/BitStream/XS.pm) perl(Data/Dump.pm) perl(Devel/Size.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(FindBin.pm) perl(Iterator/Simple.pm) perl(List/Util.pm) perl(Math/BigFloat.pm) perl(Math/BigInt.pm) perl(Math/Factor/XS.pm) perl(Math/MPFR.pm) perl(Math/Pari.pm) perl(Math/PariInit.pm) perl(Math/Primality.pm) perl(Math/Prime/XS.pm) perl(Term/ANSIColor.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(Text/Diff.pm) perl(Tie/Array.pm) perl(Time/HiRes.pm) perl(XSLoader.pm) perl(autodie.pm) perl(base.pm) perl(bigint.pm) perl(bignum.pm) perl(constant.pm) perl(threads.pm) perl(threads/shared.pm)
+BuildRequires: libsowing-devel perl(Benchmark.pm) perl(Bytes/Random/Secure.pm) perl(Carp.pm) perl(Config.pm) perl(Crypt/Primes.pm) perl(Crypt/Random.pm) perl(Data/BitStream/XS.pm) perl(Data/Dump.pm) perl(Devel/Size.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(FindBin.pm) perl(Iterator/Simple.pm) perl(List/Util.pm) perl(Math/BigFloat.pm) perl(Math/BigInt.pm) perl(Math/Factor/XS.pm) perl(Math/Pari.pm) perl(Math/PariInit.pm) perl(Math/Primality.pm) perl(Math/Prime/XS.pm) perl(Term/ANSIColor.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(Text/Diff.pm) perl(Tie/Array.pm) perl(Time/HiRes.pm) perl(XSLoader.pm) perl(autodie.pm) perl(base.pm) perl(bigint.pm) perl(bignum.pm) perl(constant.pm) perl(threads.pm) perl(threads/shared.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.71
+Version: 0.72
 Release: alt1
 Summary: Utilities related to prime numbers, including fast sieves and factoring
 Group: Development/Perl
@@ -42,23 +50,6 @@ still sharing a prime cache.  It is not itself multi-threaded.  See the
 Limitations section if you are using Win32 and threads in
 your program.
 
-Two scripts are also included and installed by default:
-
-=over 4
-
-=item *
-
-primes.pl displays primes between start and end values or expressions,
-with many options for filtering (e.g. twin, safe, circular, good, lucky,
-etc.).  Use `--help' to see all the options.
-
-=item *
-
-factor.pl operates similar to the GNU `factor' program.  It supports
-bigint and expression inputs.
-
-=back
-
 %package scripts
 Summary: %module_name scripts
 Group: Development/Perl
@@ -91,6 +82,9 @@ rm -f t/11-clusters.t
 %_bindir/*
 
 %changelog
+* Fri Nov 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.72-alt1
+- automated CPAN update
+
 * Sun Sep 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.71-alt1
 - automated CPAN update
 
