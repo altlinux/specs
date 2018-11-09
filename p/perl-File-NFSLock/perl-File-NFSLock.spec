@@ -15,7 +15,7 @@
 %define _disable_test 1
 
 Name: perl-File-NFSLock
-Version: 1.27
+Version: 1.29
 Release: alt1
 
 Summary: File-NFSLock - perl module to do NFS (or not) locking
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/B/BB/BBB/File-NFSLock-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BB/BBB/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Jun 06 2005
 BuildRequires: perl-devel
@@ -44,7 +44,7 @@ stat index).  File::NFSLock was written to be light, generic,
 and fast.
 
 %prep
-%setup -q -n %module-%version
+%setup -q -n %{module}-%{version}
 chmod -R u+w %_builddir/%module-%version
 
 %build
@@ -54,10 +54,13 @@ chmod -R u+w %_builddir/%module-%version
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README examples
 %perl_vendor_privlib/File/
 
 %changelog
+* Fri Nov 09 2018 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
+- automated CPAN update
+
 * Thu Nov 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
 - automated CPAN update
 
