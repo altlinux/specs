@@ -1,6 +1,6 @@
 Name:     puppetdb
-Version:  5.2.4
-Release:  alt1%ubt.1
+Version:  6.0.1
+Release:  alt1
 
 Summary:  Centralized Puppet Storage
 License:  Apache-2.0
@@ -15,9 +15,10 @@ BuildArch:      noarch
 
 BuildPreReq: /proc rpm-build-java rpm-build-ruby rpm-build-ubt
 
-# Requires: puppet
+Requires: puppet
 Requires: postgresql
 Requires: clojure
+Requires: ruby-msgpack
 
 %def_enable initd
 
@@ -78,6 +79,7 @@ install -m 0755 cli/anonymize %buildroot%_javadir/%name/cli/apps/anonymize
 install -m 0755 cli/ssl-setup %buildroot%_javadir/%name/cli/apps/ssl-setup
 install -m 0755 cli/config-migration %buildroot%_javadir/%name/cli/apps/config-migration
 install -m 0755 cli/foreground %buildroot%_javadir/%name/cli/apps/foreground
+install -m 0755 cli/upgrade %buildroot%_javadir/%name/cli/apps/upgrade
 
 install -Dm 0644 puppet/reports/puppetdb.rb %buildroot%ruby_sitelibdir/puppet/reports/puppetdb.rb
 install -Dm 0644 puppet/indirector/resource/puppetdb.rb %buildroot%ruby_sitelibdir/puppet/indirector/resource/puppetdb.rb
@@ -137,6 +139,9 @@ useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin)
 %ruby_sitelibdir/*
 
 %changelog
+* Fri Nov 09 2018 Andrey Bychkov <mrdrew@altlinux.org> 6.0.1-alt1
+- Update version to 6.0.1
+
 * Mon Sep 03 2018 Andrey Cherepanov <cas@altlinux.org> 5.2.4-alt1.S1.1
 - Rebuild for new Ruby autorequirements.
 
