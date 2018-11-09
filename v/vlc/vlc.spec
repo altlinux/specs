@@ -2,7 +2,7 @@
 
 Name: vlc
 Version: 3.0.4
-Release: alt1
+Release: alt2
 
 Summary: VLC media player
 License: GPLv2
@@ -40,7 +40,8 @@ BuildRequires: libtiger-devel libudev-devel libprojectM-devel libsqlite3-devel
 BuildRequires: libgtk+3-devel libXpm-devel libXt-devel libminizip-devel
 BuildRequires: libchromaprint-devel libvncserver-devel libwayland-egl-devel wayland-protocols
 BuildRequires: qt5-x11extras-devel libsecret-devel libgtk+2-devel libsoxr-devel libmpg123-devel libsidplay qt5-svg-devel
-BuildRequires: libnfs-devel libdca-devel libarchive-devel 
+BuildRequires: libnfs-devel libdca-devel libarchive-devel libprotobuf-lite-devel protobuf-compiler 
+BuildRequires: libaom-devel libsamplerate-devel libsidplay2-devel
 %{?_enable_freerdp:BuildRequires: libfreerdp-devel}
 BuildRequires: fortune-mod >= 1.0-ipl33mdk
 
@@ -52,22 +53,22 @@ BuildRequires: fortune-mod >= 1.0-ipl33mdk
 %define vlcrequires() %(for p in %{*}; do printf 'Requires: vlc-plugin-%%s = %%s\\n' $p %version-%release; done)
 %define vlcobsolete() %(for p in %{*}; do printf 'Provides: vlc-plugin-%%s = %%s\\nObsoletes: vlc-plugin-%%s\\n' $p %version-%release $p;done)
 
-Requires: vlc-mini = %version-%release
-Requires: vlc-interface-qt = %version-%release
+Requires: vlc-mini = %EVR
+Requires: vlc-interface-qt = %EVR
 %vlcrequires %baseplugins
 
-Provides: %name-common = %version-%release
-Obsoletes: %name-common < %version-%release
-Provides: %name-normal = %version-%release
-Obsoletes: %name-normal < %version-%release
-Provides: %name-kde4 = %version-%release
+Provides: %name-common = %EVR
+Obsoletes: %name-common < %EVR
+Provides: %name-normal = %EVR
+Obsoletes: %name-normal < %EVR
+Provides: %name-kde4 = %EVR
 Obsoletes: %name-kde4
 Obsoletes: %name-mad
 
 %package mini
 Summary: Minimalist version of VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 %vlcobsolete %mergedplugins
 
 %package maxi
@@ -84,309 +85,308 @@ BuildArch: noarch
 %package interface-lirc
 Summary: Lirc inteface plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
-Provides: vlc-plugin-lirc = %version-%release
+Requires: lib%name = %EVR
+Provides: vlc-plugin-lirc = %EVR
 Obsoletes: vlc-plugin-lirc
 
 %package interface-ncurses
 Summary: ncurses plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
-Provides: %name-plugin-ncurses = %version-%release
+Requires: lib%name = %EVR
+Provides: %name-plugin-ncurses = %EVR
 
 %package interface-skins2
 Summary: Skins2 plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
-Requires: vlc-interface-qt4 = %version-%release
+Requires: lib%name = %EVR
+Requires: vlc-interface-qt = %EVR
 
 %package interface-qt
 Summary: QT interface plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
-Provides: %name-plugin-qt4 = %version-%release
-Obsoletes: %name-interface-qt4 < %version-%release
-Provides: %name-interface-qt4 = %version-%release
+Requires: lib%name = %EVR
+Provides: %name-plugin-qt4 = %EVR
+Obsoletes: %name-interface-qt4 < %EVR
+Provides: %name-interface-qt4 = %EVR
 Obsoletes: vlc-interface-wxwidgets
 
 %package -n lib%name
 Summary: VLC media player library
 Group: System/Libraries
 License: LGPL
-Conflicts: %name-mini < %version-%release
+Conflicts: %name-mini < %EVR
 
 %package -n lib%name-devel
 Summary: Development files for VLC media player
 Group: Development/C
 License: LGPL
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-aa
 Summary: ASCII art video output plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-ass
 Summary: ASS codec (subtitles) plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-audiocd
 Summary: AudioCD access plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-bluray
 Summary: Bluray access plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: libaacs
 
 %package plugin-caca
 Summary: Colored ASCII art video output plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-chromaprint
 Summary: Audio fingerprinting plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-dbus
 Summary: DBUS plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-dv
 Summary: DC1394/DV (firewire) plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-dvdnav
 Summary: DVDNav input plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-dvdread
 Summary: DVDRead input (DVD without a menu) plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-ffmpeg
 Summary: FFMPeg plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-flac
 Summary: FLAC codec plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-framebuffer
 Summary: Framebuffer output plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-fluidsynth
 Summary: Fluidsynth codec plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-freetype
 Summary: FreeType OSD plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
-Requires: fonts-ttf-core
+Requires: lib%name = %EVR
 
 %package plugin-globalhotkeys
 Summary: Global Hotkeys control plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-gnutls
 Summary: GNU TLS plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-goom
 Summary: GOOM plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-h264
 Summary: h264 output plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-h265
 Summary: h265 output plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-jack
 Summary: Jack audio output plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-live555
 Summary: LiveMedia (RTSP) demuxing support for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-linsys
 Summary: Linear Systems access module for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-matroska
 Summary: Matroska Video demuxer plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-modplug
 Summary: modplug demuxer plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-mpeg2
 Summary: MPEG1/2 codec plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-mtp
 Summary: MTP Service Discovery plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-musepack
 Summary: Musepack demuxer plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-notify
 Summary: Notify SDP plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-ogg
 Summary: OGG/Vorbis/Kate codec plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-opus
 Summary: OPUS codec plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-png
 Summary: PNG plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-podcast
 Summary: Podcast SDP plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-projectm
 Summary: ProjectM visualisation plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: /usr/share/fonts/ttf/dejavu/DejaVuSans.ttf
 Requires: /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf
 
 %package plugin-pulseaudio
 Summary: PulseAudio output plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %if_enabled freerdp
 %package plugin-rdp
 Summary: RDP and VNC access plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 %endif
 
 %package plugin-realrtsp
 Summary: REAL RTSP access plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-schroedinger
 Summary: Dirac codec (via libschroedinger) plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-shout
 Summary: SHOUT access output plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-smb
 Summary: SMB access plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-snapshot
 Summary: Snapshot video output plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-speex
 Summary: speex codec support plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-svg
 Summary: SVG plugin plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-taglib
 Summary: Taglib meta engine plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-theora
 Summary: Theora codec plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-twolame
 Summary: TwoLAME encoding plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-upnp
 Summary: Intel UPNP Service Discovery plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-v4l
 Summary: Video4Linux input plugin for VLC media player
 Group: Video
-Provides: vlc-plugin-v4l2 = %version-%release
-Requires: lib%name = %version-%release
+Provides: vlc-plugin-v4l2 = %EVR
+Requires: lib%name = %EVR
 
 %package plugin-videocd
 Summary: VideoCD input plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-vpx
 Summary: VP8 output plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-xcb
 Summary: X11 output / Service Discovery plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package plugin-xml
 Summary: XML plugin for VLC media player
 Group: Video
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package -n vim-plugin-vlc-syntax
 Summary: VIm syntax for VLC media player
@@ -706,10 +706,12 @@ export BUILDCC=gcc
 	--disable-oss \
 	--disable-quicktime \
 	--disable-sdl \
-	--with-kde-solid=%_datadir/kde4/apps/solid/actions \
+	--with-kde-solid=%_datadir/kf5/solid/actions \
 	--without-contrib \
-	--with-default-font=/usr/share/fonts/ttf/dejavu/DejaVuSerif-Bold.ttf \
-	--with-default-monospace-font=/usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf \
+        --with-default-font=/usr/share/fonts/ttf/dejavu/DejaVuSerif-Bold.ttf \
+        --with-default-monospace-font=/usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf \
+	--with-default-font-family="Sans Serif" \
+	--with-default-monospace-font-family="Monospace" \
 	#
 
 %make_build
@@ -811,6 +813,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/audio_filter/libaudio_format_plugin.so
 %vlc_plugindir/audio_filter/libequalizer_plugin.so
 %vlc_plugindir/audio_filter/libnormvol_plugin.so
+%vlc_plugindir/audio_filter/libsamplerate_plugin.so
 %vlc_plugindir/audio_filter/libsimple_channel_mixer_plugin.so
 %vlc_plugindir/audio_filter/libparam_eq_plugin.so
 %vlc_plugindir/audio_filter/libmad_plugin.so
@@ -841,6 +844,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/codec/liba52_plugin.so
 %vlc_plugindir/codec/libadpcm_plugin.so
 %vlc_plugindir/codec/libaes3_plugin.so
+%vlc_plugindir/codec/libaom_plugin.so
 %vlc_plugindir/codec/libaraw_plugin.so
 %vlc_plugindir/codec/libcc_plugin.so
 %vlc_plugindir/codec/libcdg_plugin.so
@@ -891,6 +895,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/demux/libavi_plugin.so
 %vlc_plugindir/demux/libcaf_plugin.so
 %vlc_plugindir/demux/libdemux_cdg_plugin.so
+%vlc_plugindir/demux/libdemux_chromecast_plugin.so
 %vlc_plugindir/demux/libdemux_stl_plugin.so
 %vlc_plugindir/demux/libdemuxdump_plugin.so
 %vlc_plugindir/demux/libdiracsys_plugin.so
@@ -913,6 +918,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/demux/librawvid_plugin.so
 %vlc_plugindir/demux/libreal_plugin.so
 %vlc_plugindir/demux/libsmf_plugin.so
+%vlc_plugindir/demux/libsid_plugin.so
 %vlc_plugindir/demux/libsubtitle_plugin.so
 %vlc_plugindir/demux/libts_plugin.so
 %vlc_plugindir/demux/libtta_plugin.so
@@ -1001,6 +1007,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/stream_extractor/libarchive_plugin.so
 
 %dir %vlc_plugindir/stream_out
+%vlc_plugindir/stream_out/libstream_out_chromecast_plugin.so
 %vlc_plugindir/stream_out/libstream_out_display_plugin.so
 %vlc_plugindir/stream_out/libstream_out_dummy_plugin.so
 %vlc_plugindir/stream_out/libstream_out_duplicate_plugin.so
@@ -1362,14 +1369,20 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %_gamesdatadir/fortune/vlc*
 
 %files
-%_datadir/kde4/apps/solid/actions/vlc-openbd.desktop
-%_datadir/kde4/apps/solid/actions/vlc-opencda.desktop
-%_datadir/kde4/apps/solid/actions/vlc-opendvd.desktop
-%_datadir/kde4/apps/solid/actions/vlc-openvcd.desktop
+%_datadir/kf5/solid/actions/vlc-openbd.desktop
+%_datadir/kf5/solid/actions/vlc-opencda.desktop
+%_datadir/kf5/solid/actions/vlc-opendvd.desktop
+%_datadir/kf5/solid/actions/vlc-openvcd.desktop
 
 %files maxi
 
 %changelog
+* Thu Nov 08 2018 Anton Farygin <rider@altlinux.ru> 3.0.4-alt2
+- built with libaom-devel libsamplerate-devel libsidplay2-devel
+- changed solid actions path to kf5 defaults
+- added chromecast plugin
+- removed font-dejavu requires in freetype plugin (closes: #23213)
+
 * Sun Sep 09 2018 Anton Farygin <rider@altlinux.ru> 3.0.4-alt1
 - 3.0.4
 
