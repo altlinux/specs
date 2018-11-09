@@ -15,7 +15,7 @@
 %def_enable mmkubernetes
 
 Name: rsyslog
-Version: 8.38.0
+Version: 8.39.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -478,7 +478,6 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/lmnetstrms.so
 %mod_dir/lmnsd_ptcp.so
 %mod_dir/lmregexp.so
-%mod_dir/lmstrmsrv.so
 %mod_dir/lmtcpclt.so
 %mod_dir/lmzlibw.so
 %mod_dir/lmtcpsrv.so
@@ -600,6 +599,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Fri Nov 09 2018 Alexey Shabalin <shaba@altlinux.org> 8.39.0-alt1
+- 8.39.0
+
 * Mon Oct 01 2018 Alexey Shabalin <shaba@altlinux.org> 8.38.0-alt1
 - new version 8.38.0
 
