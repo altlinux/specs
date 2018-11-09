@@ -1,18 +1,19 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: perl(Authen/SASL.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(HTTP/Date.pm) perl(HTTP/Status.pm) perl(IO/Uncompress/AnyUncompress.pm) perl(LWP/Protocol/https.pm) perl(Net/SMTPS.pm) perl(Pod/Usage.pm) perl(SOAP/Lite.pm) perl(String/ShellQuote.pm) perl(Term/ANSIColor.pm) perl(Term/Size.pm) perl(Try/Tiny.pm) perl(YAML/Syck.pm)
+BuildRequires: perl(Authen/SASL.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(File/Which.pm) perl(HTTP/Date.pm) perl(HTTP/Headers.pm) perl(HTTP/Status.pm) perl(IO/Uncompress/AnyUncompress.pm) perl(LWP/Protocol/https.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(Net/SMTPS.pm) perl(Pod/Usage.pm) perl(SOAP/Lite.pm) perl(String/ShellQuote.pm) perl(Term/ANSIColor.pm) perl(Term/Size.pm) perl(Try/Tiny.pm) perl(YAML/Syck.pm)
 # END SourceDeps(oneline)
 # we do not have them
 %filter_from_requires /^python3.apt/d
 %filter_from_requires /^python3.debian.changelog/d
 %filter_from_requires /^python3.debian.deb822/d
+%filter_from_requires /^python3.debian./d
 
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           devscripts
-Version:        2.18.3
-Release:        alt1_4
+Version:        2.18.7
+Release:        alt1_1
 Summary:        Scripts for Debian Package maintainers
 
 License:        GPLv2+
@@ -186,6 +187,9 @@ touch %buildroot%_sysconfdir/cvsdeb.conf
 %{_mandir}/man1/checkbashisms.1*
 
 %changelog
+* Fri Nov 09 2018 Igor Vlasenko <viy@altlinux.ru> 2.18.7-alt1_1
+- new version
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.18.3-alt1_4
 - update to new release by fcimport
 
