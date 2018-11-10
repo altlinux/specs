@@ -1,6 +1,6 @@
 Name: purple-whatsapp
 Version: 0.9.0
-Release: alt1
+Release: alt1.1
 
 Summary: WhatsApp protocol implementation for libpurple (Pidgin)
 License: GPLv2+
@@ -26,7 +26,7 @@ separately). Only one client can connect at a time (including your phone).
 %setup -n whatsapp-purple-%version
 
 %build
-%make_build
+make -j1
 
 %install
 %makeinstall_std
@@ -37,6 +37,10 @@ separately). Only one client can connect at a time (including your phone).
 %_pixmapsdir/pidgin/protocols/*/whatsapp.png
 
 %changelog
+* Sat Nov 10 2018 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1.1
+- rebuilt with libprotbuf 3.5.2
+- single-tread built
+
 * Mon Apr 25 2016 Mikhail Kolchin <mvk@altlinux.org> 0.9.0-alt1
 - new version
 - package renamed to purple-whatsapp
