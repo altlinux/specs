@@ -1,6 +1,6 @@
 Name: refind
 Version: 0.11.3
-Release: alt2
+Release: alt3
 
 Summary: EFI boot manager software
 License: GPLv3
@@ -64,13 +64,6 @@ popd
 %install
 mkdir -p %buildroot{%refind_lib{,/drivers_%_efi_arch,/drivers_ia32},%refind_data}
 
-%ifarch x86_64
-# don't feed macros with complicated expressions, esp. in the loop
-for i in refind/refind*.efi drivers_x86_64/*_x64.efi ../ia32_build/refind/refind*.efi ../ia32_build/drivers_ia32/*_ia32.efi; do
-	%pesign -s -i $i
-done
-%endif
-
 install -pm644 refind/refind*.efi %buildroot%refind_lib/
 cp -a drivers_%_efi_arch/*.efi %buildroot%refind_lib/drivers_%_efi_arch/
 install -pm644 ../ia32_build/refind/refind*.efi %buildroot%refind_lib/
@@ -83,24 +76,29 @@ install -pDm644 %SOURCE3 %buildroot%refind_data/icons/altlinux/rescue.png
 install -pDm644 %SOURCE4 %buildroot%refind_data/icons/os_altlinux.png
 
 %files
-%doc docs/*
+%doc docs/Styles docs/refind
 %doc NEWS.txt COPYING.txt LICENSE.txt README.txt CREDITS.txt
 %refind_lib
 %refind_data
 
 %changelog
+* Sun Nov 11 2018 Anton Farygin <rider@altlinux.ru> 0.11.3-alt3
+- removed ubt macros in changelog
+- removed man packages for unpackages tools from docdir (closes: #34439)
+- removed pesign calls from specfile (this is not needed for ALT pesign scheme)
+
 * Wed Oct 03 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.11.3-alt2
 - add patch splitting config files for x64 and ia32 EFI binaries
 - remove %%ubt
 
-* Tue Aug 07 2018 Anton Farygin <rider@altlinux.ru> 0.11.3-alt1%ubt
+* Tue Aug 07 2018 Anton Farygin <rider@altlinux.ru> 0.11.3-alt1
 - 0.11.3
 
-* Wed Jun 20 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.11.2-alt2%ubt
+* Wed Jun 20 2018 Nikolai Kostrigin <nickel@altlinux.org> 0.11.2-alt2
 - include both ia32 and x64 EFI binaries into single x86_64 package
 
-* Tue Apr 24 2018 Anton Farygin <rider@altlinux.ru> 0.11.2-alt1%ubt
-- added %%ubt
+* Tue Apr 24 2018 Anton Farygin <rider@altlinux.ru> 0.11.2-alt1
+- added %
 
 * Sun Nov 26 2017 Anton Farygin <rider@altlinux.ru> 0.11.2-alt1
 - 0.11.2
