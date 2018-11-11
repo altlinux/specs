@@ -1,7 +1,7 @@
 %define libcontrolppver 0.15
 
 Name: control++
-Version: 0.12.1
+Version: 0.12.2
 Release: alt1
 
 Summary: System configuration tool
@@ -58,6 +58,12 @@ cp readme.txt %buildroot%_defaultdocdir/%name/
 %_defaultdocdir/%name
 
 %changelog
+* Sun Nov 11 2018 Alexey Appolonov <alexey@altlinux.org> 0.12.2-alt1
+- The mode of the top level dir will not be left unchanged during mode setting 
+  for the 'dir' section;
+- Another fix of the UniquifyPermsOrACLs function;
+- Detection of non-unique permission modes is enabled by default.
+
 * Tue Nov 06 2018 Alexey Appolonov <alexey@altlinux.org> 0.12.1-alt1
 - Only regular files, symlinks and directories are processed
   for the 'dir'/'dir_r' permission mode setting;

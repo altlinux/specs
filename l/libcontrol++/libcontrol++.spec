@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.15.1
+Version: 0.15.2
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -65,6 +65,10 @@ cp libcontrol++/src/*.h %buildroot%_includedir/libcontrol++
 %_includedir/libcontrol++/
 
 %changelog
+* Sun Nov 11 2018 Alexey Appolonov <alexey@altlinux.org> 0.15.2-alt1
+- Fix of the checks made during access to the TRunMode flags;
+- Enhanced constructor of the TFilePerm and TFileACL.
+
 * Tue Nov 06 2018 Alexey Appolonov <alexey@altlinux.org> 0.15.1-alt1
 - Fixed JoinFilePaths function;
 - Duplicate definition of the member variable is removed
