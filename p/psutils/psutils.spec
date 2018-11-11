@@ -1,6 +1,6 @@
 Name: psutils
 Version: 1.23
-Release: alt1
+Release: alt2
 Epoch: 2
 
 Summary: PostScript utilities
@@ -9,7 +9,7 @@ Group: Publishing
 BuildRequires: gnulib
 Requires: /usr/bin/paperconf
 
-# https://github.com/rrthomas/psutils
+Url: https://github.com/rrthomas/psutils
 Source0: %name-%version.tar
 Patch0: psutils-1.23-paperconf.patch
 
@@ -37,6 +37,9 @@ into signatures for booklet printing, and page merging for n-up printing.
 %_man1dir/*
 
 %changelog
+* Sun Nov 11 2018 Anton Farygin <rider@altlinux.ru> 2:1.23-alt2
+- fixed URL
+
 * Fri Oct 05 2018 Anton Farygin <rider@altlinux.ru> 2:1.23-alt1
 - up to 1.23
 
