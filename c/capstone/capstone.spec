@@ -1,6 +1,6 @@
 Summary: A disassembly framework
 Name: capstone
-Version: 3.0.4
+Version: 3.0.5
 Release: alt1
 License: BSD
 Group: Development/Tools
@@ -25,7 +25,6 @@ This package contains libraries and headers for developing.
 Summary: Python bindings for %name
 Requires: %name = %version-%release
 Group: Development/Python
-BuildArch: noarch
 %description -n python-module-%name
 An ultimate disassembly framework for binary analysis and reversing.
 This package contains python bindings for %name.
@@ -34,7 +33,6 @@ This package contains python bindings for %name.
 Summary: Python 3 bindings for %name
 Requires: %name = %version-%release
 Group: Development/Python3
-BuildArch: noarch
 %description -n python3-module-%name
 An ultimate disassembly framework for binary analysis and reversing.
 This package contains python 3 bindings for %name.
@@ -76,8 +74,8 @@ rm -f %buildroot/%_libdir/libcapstone.a
 
 # python bindings
 pushd bindings/python
-%python_install
-%python3_install
+%python_install --install-lib %python_sitelibdir
+%python3_install --install-lib %python3_sitelibdir
 popd
 
 # java bindings
@@ -96,16 +94,20 @@ LD_LIBRARY_PATH="%buildroot%_libdir" make check
 %_libdir/pkgconfig/*
 
 %files -n python-module-%name
-%python_sitelibdir_noarch/*egg-info
-%python_sitelibdir_noarch/%name
+%python_sitelibdir/*egg-info
+%python_sitelibdir/%name
 
 %files -n python3-module-%name
-%python3_sitelibdir_noarch/*egg-info
-%python3_sitelibdir_noarch/%name
+%python3_sitelibdir/*egg-info
+%python3_sitelibdir/%name
 
 %files java
 %_javadir/
 
 %changelog
+* Mon Nov 12 2018 Nikita Ermakov <arei@altlinux.org> 3.0.5-alt1
+- Updated to 3.0.5.
+- Python bindings are architecture dependent now.
+
 * Fri Jun 29 2018 Nikita Ermakov <arei@altlinux.org> 3.0.4-alt1
 - Initial build for ALT Linux Sisyphus.
