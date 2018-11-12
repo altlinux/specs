@@ -3,7 +3,7 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.2.11
+Version: 7.2.12
 Release: alt1
 
 %define php7_name      %name
@@ -38,12 +38,15 @@ Patch34: php-5.1.0b1-cxx.patch
 Patch38: php-no-static-program.patch
 Patch39: php-set-session-save-path.patch
 Patch40: php7-7.1.10-alt-lsattr.patch
-Patch41: php5-alt-checklibs.patch
+Patch41: php-7.2.12-acinclude.patch
 Patch61: php5-5.5.9-phar-phppath.patch
 Patch62: php-mysqlnd-socket.patch
 Patch63: php-7.1-alt-zend-signal-visibility.patch
-Patch64: php-7.1-alt-phar-manfile-suffix.patch
+Patch64: php-7.2-alt-phar-manfile-suffix.patch
 Patch65: php7-7.1.0-phpize.patch
+
+Patch70: php7-debian-Add-support-for-use-of-the-system-timezone-database.patch
+Patch71: php7-debian-Use-system-timezone.patch
 
 PreReq:  php7-libs = %version-%release
 Provides: php-engine = %version-%release
@@ -107,6 +110,7 @@ read the file SELF-CONTAINED-EXTENSIONS.
 Group: Development/C
 Summary: Package with common data for various PHP7 packages
 Requires: php-base >= 2.5
+Requires: tzdata
 
 Provides: php7-bcmath = %php7_version-%php7_release
 Provides: php7-ctype = %php7_version-%php7_release
@@ -160,12 +164,14 @@ in use by other PHP7-related packages.
 %patch38 -p2
 %patch39 -p2
 %patch40 -p1
-%patch41 -p2
+%patch41 -p1
 %patch61 -p1
 %patch62 -p1
 %patch63 -p1
 %patch64 -p1
 %patch65 -p1
+%patch70 -p1
+%patch71 -p1
 
 
 mv README.SELF-CONTAINED-EXTENSIONS SELF-CONTAINED-EXTENSIONS
@@ -410,6 +416,10 @@ subst 's,sbin/lsattr,bin/lsattr,' %buildroot/%php7_libdir/build/config.guess
 %doc tests run-tests.php 
 
 %changelog
+* Mon Nov 12 2018 Anton Farygin <rider@altlinux.ru> 7.2.12-alt1
+- 7.2.12
+- added patches from debian for using the default system timezone (closes: #34771)
+
 * Thu Oct 11 2018 Anton Farygin <rider@altlinux.ru> 7.2.11-alt1
 - 7.2.11
 

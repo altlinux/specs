@@ -113,6 +113,15 @@ do
 done
 
 install -pD -m755 %SOURCE3 %buildroot%_initdir/php7-fpm
+mkdir -p %buildroot%_rpmlibdir
+cat > %buildroot%_rpmlibdir/%name.filetrigger << EOF
+#!/bin/sh
+LC_ALL=C sed 's|^%php7_sysconfdir/%php7_sapi/control.d||' |
+        egrep -qs '^%php7_sysconfdir/%php7_sapi|^%php7_extdir' || exit 0
+%php7_sapi_postin
+/sbin/service condrestart php7-fpm ||:
+EOF
+
 
 # Make alternatives support.
 install -d %buildroot/%_altdir
@@ -140,14 +149,9 @@ install -pD -m755 %SOURCE6 %buildroot/usr/libexec/service/legacy-actions/php7-fp
 /usr/sbin/groupadd -r -f _webserver 2>/dev/null ||:
 /usr/sbin/useradd -r -g _php_fpm -d / -s /dev/null -n -c "PHP FastCGI Process Manager" _php_fpm >/dev/null 2>&1 ||:
 
-%post
-%php7_sapi_postin
-%post_service php7-fpm
-
 %preun
 %php7_sapi_preun
 %preun_service php7-fpm
-
 
 %files
 %doc CREDITS
@@ -169,6 +173,7 @@ install -pD -m755 %SOURCE6 %buildroot/usr/libexec/service/legacy-actions/php7-fp
 %config(noreplace) %_sysconfdir/tmpfiles.d/php7-fpm.conf
 %php7_servicedir/%php7_sapi
 %config %_unitdir/php7-fpm.service
+%_rpmlibdir/%name.filetrigger
 %_man8dir/*
 /usr/libexec/service/legacy-actions/php7-fpm
 

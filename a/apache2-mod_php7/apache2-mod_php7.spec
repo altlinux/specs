@@ -105,6 +105,7 @@ cat > %buildroot/%_rpmlibdir/%name.filetrigger << EOF
 LC_ALL=C sed 's|^%php7_sysconfdir/%php7_sapi/control.d||' |
 	egrep -qs '^%php7_sysconfdir/%php7_sapi|^%php7_extdir' || exit 0
 %apache2_sbindir/a2chkconfig >/dev/null
+%php7_sapi_postin
 %post_apache2conf
 EOF
 chmod 755 %buildroot/%_rpmlibdir/%name.filetrigger
@@ -127,9 +128,6 @@ do
   subst 's,@PHP_UPLOADDIR@,%apache2_spooldir/uploads,g' "$f"
   subst 's,@PHP_SESSIONDIR@,%apache2_spooldir/sessions,g' "$f"
 done
-
-%post
-%php7_sapi_postin
 
 %preun
 %php7_sapi_preun
