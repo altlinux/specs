@@ -11,8 +11,8 @@
 %def_enable regex
 
 Name: keepalived
-Version: 2.0.8
-Release: alt2
+Version: 2.0.9
+Release: alt1
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
 License: GPL
@@ -22,7 +22,6 @@ Source0: %url/%name-%version.tar
 Source1: %name.init
 
 Patch2: 0002-update-systemd-unit-file.patch
-BuildRequires(pre):rpm-build-ubt
 
 # Automatically added by buildreq on Thu Aug 09 2007 (-ba)
 BuildRequires: libpopt-devel libssl-devel
@@ -106,6 +105,9 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Mon Nov 12 2018 Anton Farygin <rider@altlinux.ru> 2.0.9-alt1
+- 2.0.9
+
 * Tue Oct 23 2018 Anton Farygin <rider@altlinux.ru> 2.0.8-alt2
 - 2.0.8
 
