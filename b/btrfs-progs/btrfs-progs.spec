@@ -1,6 +1,6 @@
 Name: btrfs-progs
-Version: 4.17.1
-Release: alt1%ubt
+Version: 4.19
+Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -10,7 +10,6 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires: libacl-devel libe2fs-devel libuuid-devel zlib-devel libblkid-devel libattr-devel liblzo2-devel asciidoc xmlto libzstd-devel
-BuildRequires(pre): rpm-build-ubt
 
 %description
 Btrfs (B-tree FS or usually pronounced "Butter FS") is a copy-on-write
@@ -76,68 +75,71 @@ ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so
 %_includedir/*
 
 %changelog
-* Sat Aug 11 2018 Anton Farygin <rider@altlinux.ru> 4.17.1-alt1%ubt
+* Mon Nov 12 2018 Anton Farygin <rider@altlinux.ru> 4.19-alt1
+- 4.19
+
+* Sat Aug 11 2018 Anton Farygin <rider@altlinux.ru> 4.17.1-alt1
 - 4.17.1
 
-* Tue Jun 26 2018 Anton Farygin <rider@altlinux.ru> 4.17-alt1%ubt
+* Tue Jun 26 2018 Anton Farygin <rider@altlinux.ru> 4.17-alt1
 - 4.17
 
-* Tue May 22 2018 Anton Farygin <rider@altlinux.ru> 4.16.1-alt1%ubt
+* Tue May 22 2018 Anton Farygin <rider@altlinux.ru> 4.16.1-alt1
 - 4.16.1
 
-* Wed Apr 11 2018 Anton Farygin <rider@altlinux.ru> 4.16-alt2%ubt
+* Wed Apr 11 2018 Anton Farygin <rider@altlinux.ru> 4.16-alt2
 - Fix up headers location (closes: #34792)
 
-* Tue Apr 10 2018 Anton Farygin <rider@altlinux.ru> 4.16-alt1%ubt
+* Tue Apr 10 2018 Anton Farygin <rider@altlinux.ru> 4.16-alt1
 - 4.16
 - new feature - python bindings was temporary disabled (for sisyphus migration to python 3.6)
  
-* Thu Feb 22 2018 Anton Farygin <rider@altlinux.ru> 4.15.1-alt1%ubt
+* Thu Feb 22 2018 Anton Farygin <rider@altlinux.ru> 4.15.1-alt1
 - new version
 
-* Wed Jan 10 2018 Anton Farygin <rider@altlinux.ru> 4.14.1-alt1%ubt
+* Wed Jan 10 2018 Anton Farygin <rider@altlinux.ru> 4.14.1-alt1
 - new version
 
-* Sun Dec 10 2017 Anton Farygin <rider@altlinux.ru> 4.14-alt1%ubt
+* Sun Dec 10 2017 Anton Farygin <rider@altlinux.ru> 4.14-alt1
 - new version
 
-* Mon Oct 23 2017 Anton Farygin <rider@altlinux.ru> 4.13.3-alt1%ubt
+* Mon Oct 23 2017 Anton Farygin <rider@altlinux.ru> 4.13.3-alt1
 - new version
 
-* Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 4.13.2-alt1%ubt
+* Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 4.13.2-alt1
 - new version
 
-* Mon Oct 02 2017 Anton Farygin <rider@altlinux.ru> 4.13.1-alt1%ubt
+* Mon Oct 02 2017 Anton Farygin <rider@altlinux.ru> 4.13.1-alt1
 - new version
 
-* Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 4.13-alt1%ubt
+* Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 4.13-alt1
 - new version
 
-* Fri Aug 04 2017 Anton Farygin <rider@altlinux.ru> 4.12-alt1%ubt
+* Fri Aug 04 2017 Anton Farygin <rider@altlinux.ru> 4.12-alt1
 - new version
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 4.11.1-alt1%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 4.11.1-alt1
 - new version
 
-* Wed May 24 2017 Anton Farygin <rider@altlinux.ru> 4.11-alt1%ubt
+* Wed May 24 2017 Anton Farygin <rider@altlinux.ru> 4.11-alt1
 - new version
 
-* Tue May 09 2017 Anton Farygin <rider@altlinux.ru> 4.10.2-alt1%ubt
+* Tue May 09 2017 Anton Farygin <rider@altlinux.ru> 4.10.2-alt1
 - new version
 
-* Mon Mar 27 2017 Anton Farygin <rider@altlinux.ru> 4.10.1-alt1%ubt
+* Mon Mar 27 2017 Anton Farygin <rider@altlinux.ru> 4.10.1-alt1
 - new version
 
-* Mon Mar 13 2017 Anton Farygin <rider@altlinux.ru> 4.10-alt1%ubt
+* Mon Mar 13 2017 Anton Farygin <rider@altlinux.ru> 4.10-alt1
 - new version
 
-* Sat Feb 04 2017 Anton Farygin <rider@altlinux.ru> 4.9.1-alt1%ubt
+* Sat Feb 04 2017 Anton Farygin <rider@altlinux.ru> 4.9.1-alt1
 - new version
 
-* Mon Dec 26 2016 Anton Farygin <rider@altlinux.ru> 4.9-alt1%ubt
+* Mon Dec 26 2016 Anton Farygin <rider@altlinux.ru> 4.9-alt1
 - new version
 
-* Wed Dec 14 2016 Anton Farygin <rider@altlinux.ru> 4.8.5-alt1%ubt
+* Wed Dec 14 2016 Anton Farygin <rider@altlinux.ru> 4.8.5-alt1
 - new version
 
 * Tue Nov 29 2016 Anton Farygin <rider@altlinux.ru> 4.8.4-alt1
