@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	4.18
-%define kernel_sublevel .17
+%define kernel_base_version	4.19
+%define kernel_sublevel .1
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -411,7 +411,7 @@ install -d %buildroot%kbuild_dir/drivers/net/wireless
 install -d %buildroot%kbuild_dir/net/mac80211
 install -d %buildroot%kbuild_dir/kernel
 install -d %buildroot%kbuild_dir/lib
-cp -a drivers/scsi/{scsi,scsi_typedefs}.h \
+cp -a drivers/scsi/scsi.h \
 	%buildroot%kbuild_dir/drivers/scsi/
 cp -a drivers/md/dm*.h \
 	%buildroot%kbuild_dir/drivers/md/
@@ -614,8 +614,14 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Fri Nov 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.1-alt1
+- v4.19.1
+
 * Mon Nov 05 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.17-alt1
 - v4.18.17
+
+* Mon Oct 29 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.0-alt1
+- v4.19
 
 * Sat Oct 20 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.16-alt1
 - v4.18.16
