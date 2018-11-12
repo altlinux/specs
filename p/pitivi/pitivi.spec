@@ -1,16 +1,16 @@
 %def_disable snapshot
 
-%define ver_major 0.99
+%define ver_major 0.999
 %define api_ver 1.0
 %define gst_api_ver 1.0
 # gst-transcoder version
-%define gst_ver 1.12.1
+%define gst_ver 1.14.1
 %define gtk_ver 3.20
 %define gi_ver 1.32
 
 Name: pitivi
 Version: %ver_major
-Release: alt1.1
+Release: alt1
 
 Summary: PiTiVi allows users to easily edit audio/video projects
 License: LGPLv2.1+
@@ -105,14 +105,15 @@ This package provides development documentation for GStreamer Transcoder.
 %_datadir/gstreamer-%gst_api_ver/encoding-profiles/
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/*.appdata.xml
+%_datadir/mime/packages/*-mime.xml
 
 %files -n gst-transcoder
 %_bindir/gst-transcoder-%api_ver
 %_libdir/libgsttranscoder-%api_ver.so.0
 %_typelibdir/GstTranscoder-%api_ver.typelib
 %_libdir/gstreamer-%gst_api_ver/libgsttranscode.so
-%doc AUTHORS NEWS RELEASE
+%doc AUTHORS NEWS
 
 %files -n gst-transcoder-devel
 %_libdir/libgsttranscoder-%api_ver.so
@@ -124,6 +125,11 @@ This package provides development documentation for GStreamer Transcoder.
 %_datadir/gtk-doc/html/gstreamer-transcoder/
 
 %changelog
+* Mon Nov 12 2018 Leontiy Volodin <lvol@altlinux.org> 0.999-alt1
+- new version 0.999 (with rpmrb script)
+- fixed x86_64 build
+- updated spec
+
 * Fri Mar 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
