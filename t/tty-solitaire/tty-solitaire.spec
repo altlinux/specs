@@ -1,13 +1,13 @@
 %def_enable Werror
 
 Name:     tty-solitaire
-Version:  1.1.0
+Version:  1.1.1
 Release:  alt1
 
 Summary:  Play solitaire in your terminal!
 
 License:  MIT
-Group:    Other
+Group:    Games/Cards
 Url:      https://github.com/mpereira/tty-solitaire
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
@@ -30,9 +30,12 @@ Buildrequires: libncursesw-devel
 
 %files
 %_bindir/*
-%doc README.md
+%doc LICENSE README CHANGELOG TODO.md
 
 %changelog
+* Mon Nov 12 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt1
+- Build new version.
+
 * Mon Aug 13 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
 - Build new version.
 
