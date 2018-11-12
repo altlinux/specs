@@ -1,6 +1,6 @@
 Name: packpack
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: Simple tool to build RPM and Debian packages from git repository
 
@@ -13,8 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/packpack/packpack/archive/%version.tar.gz
 Source: %name-%version.tar
 
-# due error (#100): non-identical noarch packages
-Requires: /usr/bin/docker docker
+BuildRequires: docker-ce
 
 BuildArch: noarch
 
@@ -28,6 +27,7 @@ from git repository using Docker:
 
 %prep
 %setup
+%__subst "s|echi|echo|" packpack
 
 %build
 
@@ -41,5 +41,8 @@ from git repository using Docker:
 #_man1dir/%name.*
 
 %changelog
+* Mon Nov 12 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt2
+- fix docker requires
+
 * Mon Jan 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - initial build for ALT Linux Sisyphus
