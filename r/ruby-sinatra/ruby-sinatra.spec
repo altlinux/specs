@@ -2,8 +2,8 @@
 %define  sdir    %ruby_sitelibdir/%pkgname
 
 Name: 	 ruby-%pkgname
-Version: 1.4.8
-Release: alt1.2
+Version: 2.0.4
+Release: alt1
 Epoch:   1
 
 Summary: Classy web-development dressed in a DSL
@@ -15,8 +15,6 @@ Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
 Source:  %pkgname-%version.tar
-Source1: rack-protection.tar
-Source2: sinatra-contrib.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
@@ -73,8 +71,6 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-tar xf %SOURCE1
-tar xf %SOURCE2
 for dir in . rack-protection sinatra-contrib; do
 	pushd "$dir"
 	%update_setup_rb
@@ -119,11 +115,14 @@ rm -f %buildroot%ruby_ri_sitedir/{Rack/cdesc-Rack.ri,Rack/Builder/cdesc-Builder.
 #exclude %sdir/respond_with*
 #exclude %sdir/custom_logger*
 #exclude %sdir/required_params*
+%rubygem_specdir/%pkgname-%{version}*
 
 %files -n ruby-rack-protection
 %doc rack-protection/*.md
 %ruby_sitelibdir/rack-protection.rb
 %ruby_sitelibdir/rack/protection*
+%rubygem_specdir/rack-protection*
+
 
 %files contrib
 %doc sinatra-contrib/*.md
@@ -139,11 +138,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Rack/cdesc-Rack.ri,Rack/Builder/cdesc-Builder.
 #sdir/respond_with*
 #sdir/custom_logger*
 #sdir/required_params*
+%rubygem_specdir/sinatra-contrib*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Nov 12 2018 Alexey Shabalin <shaba@altlinux.org> 1:2.0.4-alt1
+- 2.0.4
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.4.8-alt1.2
 - Rebuild with new Ruby autorequirements.
 
