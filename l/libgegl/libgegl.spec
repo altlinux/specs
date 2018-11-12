@@ -2,8 +2,8 @@
 %define api_ver 0.4
 
 Name: lib%rname
-Version: %api_ver.8
-Release: alt2
+Version: %api_ver.12
+Release: alt1
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
 Group: System/Libraries
@@ -16,6 +16,7 @@ BuildRequires: asciidoc enscript gcc-c++ graphviz gtk-doc libSDL-devel libavform
 BuildRequires: libgexiv2-devel libgomp-devel libgtk+3-devel libjasper-devel libjpeg-devel libjson-glib-devel
 BuildRequires: libpoly2tri-c-devel libraw-devel librsvg-devel libspiro-devel libsuitesparse-devel libswscale-devel
 BuildRequires: libtiff-devel libv4l-devel libwebp-devel openexr-devel ruby vala-tools gobject-introspection-devel w3m
+BuildRequires: python-modules-distutils
 
 %description
 GEGL (Generic Graphics Library) is a graph based image processing framework.
@@ -71,8 +72,8 @@ GObject introspection devel data for the GEGL library.
 
 %files -f %rname-%api_ver.lang
 %_bindir/%rname
-#_bindir/%rname-imgcmp
-#_bindir/gcut
+%_bindir/%rname-imgcmp
+%_bindir/gcut
 %_libdir/%name-%api_ver.so.*
 %_libdir/%name-sc-%api_ver.so
 %_libdir/%name-npd-%api_ver.so
@@ -95,6 +96,9 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Mon Nov 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.12-alt1
+- 0.4.12
+
 * Fri Sep 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.4.8-alt2
 - rebuild with libraw 0.19
 

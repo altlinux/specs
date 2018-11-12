@@ -1,5 +1,5 @@
 Name: libXfixes
-Version: 5.0.1
+Version: 5.0.3
 Release: alt1
 Summary: X Fixes Library
 License: MIT/X11
@@ -10,7 +10,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: libX11-devel xorg-fixesproto-devel xorg-xextproto-devel xorg-util-macros
+BuildRequires: libX11-devel xorg-proto-devel xorg-util-macros
 
 %description
 X Fixes Library
@@ -18,7 +18,6 @@ X Fixes Library
 %package devel
 Summary: X Fixes Library and Header Files
 Group: Development/C
-Requires: %name = %version-%release
 
 %description devel
 %name-devel contains the libraries and header files needed to
@@ -47,6 +46,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Mon Nov 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.3-alt1
+- 5.0.3
+
 * Wed May 29 2013 Valery Inozemtsev <shrek@altlinux.ru> 5.0.1-alt1
 - 5.0.1
 
