@@ -1,5 +1,5 @@
 Name:		apache2-mod_http2
-Version:	1.11.3
+Version:	1.11.4
 Release:	alt1
 Summary:	module implementing HTTP/2 for Apache 2
 Group:		System/Servers
@@ -12,6 +12,7 @@ BuildRequires(pre): apache2-devel > 2.4.27-alt1
 BuildRequires:	pkgconfig, libnghttp2-devel >= 1.7.0, libssl-devel >= 1.0.2, libaprutil1-devel, libcurl-devel
 Provides: mod_h2 = %EVR
 Provides: mod_http2 = %EVR
+Provides: apache2-mod_h2 = %EVR
 
 %description
 The mod_h2 Apache httpd module implements the HTTP2 protocol (h2+h2c) on
@@ -42,6 +43,9 @@ echo "LoadModule proxy_http2_module modules/mod_proxy_http2.so" > %buildroot%apa
 %apache2_moduledir/mod_proxy_http2.so
 
 %changelog
+* Mon Nov 12 2018 Anton Farygin <rider@altlinux.ru> 1.11.4-alt1
+- 1.11.4
+
 * Thu Oct 11 2018 Anton Farygin <rider@altlinux.ru> 1.11.3-alt1
 - 1.11.3
 
