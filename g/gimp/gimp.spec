@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gimp
-Version: %ver_major.6
+Version: %ver_major.8
 Release: alt1
 
 Summary: The GNU Image Manipulation Program
@@ -26,7 +26,7 @@ BuildRequires: bzlib-devel gcc-c++ gtk-doc gvfs intltool libXcursor-devel libXmu
 BuildRequires: libgegl-devel libgexiv2-devel libgs-devel libgudev-devel liblcms2-devel liblzma-devel libmng-devel libmypaint-devel
 BuildRequires: libopenjpeg2.0-devel libpoppler-glib-devel librsvg-devel libtiff-devel libwebkitgtk2-devel libwebp-devel libwmf-devel
 BuildRequires: openexr-devel python-module-pycairo-devel python-module-pygtk-devel xdg-utils pkgconfig(mypaint-brushes-1.0)
-BuildRequires: libpng-devel iso-codes-devel libheif-devel
+BuildRequires: libpng-devel iso-codes-devel libheif-devel libXfixes-devel
 
 %description
 The GIMP (GNU Image Manipulation Program) is a powerful image
@@ -64,8 +64,6 @@ Development libraries and header files for writing GIMP plugins and extensions.
 %prep
 %setup -q
 %patch -p1
-
-sed -i 's|gegl-0.3|gegl-0.4|' gimp.pc.in
 
 %build
 gtkdocize
@@ -114,6 +112,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Mon Nov 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.10.8-alt1
+- 2.10.8
+
 * Fri Aug 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.10.6-alt1
 - 2.10.6
 
