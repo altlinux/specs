@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.17.0
-Release: alt3
+Release: alt4
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -39,7 +39,7 @@ Patch102: alt-wmsession.patch
 Patch103: alt-systemctl-path.patch
 Patch104: alt-fix-desktop-session-name.patch
 Patch105: alt-branding-background.patch
-Patch106: alt-flicker-free-plymouth.patch
+Patch106: alt-systemd-unit.patch
 Patch107: alt-def-breeze.patch
 Patch108: alt-show-avatars.patch
 Patch109: alt-expired-password-handling.patch
@@ -89,7 +89,7 @@ ability to create smooth, animated user interfaces.
 %patch110 -p1
 %patch111 -p1
 %patch112 -p1
-%patch113 -p1
+#%patch113 -p1
 
 %patch200 -p1
 %patch201 -p1
@@ -162,6 +162,10 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Mon Nov 12 2018 Sergey V Turchin <zerg@altlinux.org> 0.17.0-alt4
+- update tmpfiles config
+- don't set software QML renderer by default
+
 * Fri Nov 09 2018 Sergey V Turchin <zerg@altlinux.org> 0.17.0-alt3
 - set software QML renderer by default (thanks sbolshakov@alt)
 
