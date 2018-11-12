@@ -5,7 +5,7 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.14.1
-Release: alt1
+Release: alt2
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel libkrb5-devel
@@ -271,10 +271,9 @@ install -pD -m755 %SOURCE12 %buildroot/usr/lib/rpm/nginx.filetrigger
 
 %post
 sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:space:]]*$/\1 64;/' /etc/nginx/nginx.conf ||:
-%post_service %name
 
 %files
-/usr/lib/rpm/nginx.filetrigger
+%_rpmlibdir/nginx.filetrigger
 %_initdir/*
 %_sbindir/*
 %dir %nginx_etc
@@ -355,6 +354,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Mon Nov 12 2018 Anton Farygin <rider@altlinux.ru> 1.14.1-alt2
+- restart service only from filetrigger
+
 * Tue Nov 06 2018 Anton Farygin <rider@altlinux.ru> 1.14.1-alt1
 - 1.14.1 (fixes: CVE-2018-16845, CVE-2018-16843, CVE-2018-16844)
 
