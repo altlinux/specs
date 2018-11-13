@@ -6,7 +6,7 @@
 %define major 0.97
 Name: dia
 Version: %major.4
-Release: alt0.3
+Release: alt0.4
 
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
@@ -23,9 +23,11 @@ Obsoletes: %name-gnome %name-python
 # Do not use: http://ftp.gnome.org/pub/gnome/sources/dia/%major/%name-%version.tar
 # Source-git: https://git.gnome.org/browse/dia/
 Source: %name-%version.tar
+Source2: ru.po
 
 #Patch: %name-%version-%release.patch
 Patch: alt-dia-fix-help.patch
+Patch2: alt-dia-improve-translation.patch
 
 BuildRequires: dblatex docbook-style-xsl docbook-utils gcc-c++ intltool libart_lgpl-devel libgtk+2-devel libxslt-devel
 BuildRequires: python-devel python-module-PyXML python-module-pygtk python-modules-email python-modules-encodings xsltproc
@@ -59,6 +61,9 @@ PostScript(TM), SVG, CGM или PNG.
 %setup
 #patch -p1
 %patch -p1
+%patch2 -p1
+
+cp -f %SOURCE2 po/ru.po
 
 install -m644 data/icons/48x48/apps/%name.png app/pixmaps/%name-app.png
 
@@ -102,6 +107,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_mandir/fr/man1/*
 
 %changelog
+* Tue Nov 13 2018 Ivan Razzhivin <underwit@altlinux.org> 0.97.4-alt0.4
+- improve translation
+
 * Fri Sep 14 2018 Ivan Razzhivin <underwit@altlinux.org> 0.97.4-alt0.3
 - fix help
 
