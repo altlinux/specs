@@ -1,5 +1,5 @@
 Name: notmuch
-Version: 0.27
+Version: 0.28
 Release: alt1
 
 Summary: new email reading system called notmuch
@@ -108,6 +108,9 @@ install -m0755 emacs/notmuch-emacs-mua %buildroot%_bindir/notmuch-emacs-mua
 %_libdir/lib%name.so
 
 %changelog
+* Tue Nov 13 2018 Terechkov Evgenii <evg@altlinux.org> 0.28-alt1
+- 0.28
+
 * Fri Sep 14 2018 Terechkov Evgenii <evg@altlinux.org> 0.27-alt1
 - 0.27
 
