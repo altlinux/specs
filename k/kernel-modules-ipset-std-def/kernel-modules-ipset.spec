@@ -1,15 +1,13 @@
 %define module_name	ipset
-%define module_version	6.38
-%define module_release	alt3
+%define module_version	7.0
+%define module_release	alt1
 
 %define flavour		std-def
-%define karch x86_64 i586
+%define karch %ix86 x86_64
 BuildRequires(pre): kernel-headers-modules-std-def
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
-
-Patch: ipset-kernel4.17.patch
 
 Summary: ipset kernel modules
 Name: kernel-modules-%module_name-%flavour
@@ -43,7 +41,6 @@ ipset kernel modules.
 rm -rf kernel-source-%module_name-%module_version
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
-%patch
 
 %build
 autoreconf -fisv
@@ -63,6 +60,9 @@ install -p -m644 kernel/net/netfilter/*.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Nov 14 2018 Anton Farygin <rider@altlinux.ru> 7.0-alt1
+- 6.29 -> 7.0
 
 * Tue Jul 26 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 6.29-alt2
 - build with 4.7 kernel fixed
