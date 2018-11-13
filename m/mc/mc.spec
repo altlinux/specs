@@ -1,9 +1,10 @@
 %def_without smb
 %def_with    gpm
+%define fullname MidnightCommander
 
 Name: mc
 Version: 4.8.21
-Release: alt3
+Release: alt4
 
 # '-gitYYYYMMDD' or ''
 %define ver_date '-git20180819'
@@ -143,7 +144,7 @@ Type=Application
 Name=Midnight Commander
 Comment=Visual shell and file manager
 Comment[ru]=Визуальная оболочка и диспетчер файлов 
-Icon=%name
+Icon=%fullname
 Exec=%name
 Terminal=true
 Categories=ConsoleOnly;System;FileTools;FileManager;
@@ -159,7 +160,7 @@ GenericName=Text Editor
 GenericName[ru]=Текстовый редактор
 Comment=Internal file editor of GNU Midnight Commander
 Comment[ru]=Встроенный текстовый редактор GNU Midnight Commander
-Icon=mc
+Icon=%fullname
 Exec=mcedit
 Terminal=true
 Categories=ConsoleOnly;Utility;TextEditor;
@@ -167,8 +168,8 @@ __EOF__
 install -pD -m644 mcedit.desktop %buildroot%_desktopdir/mcedit.desktop
 
 # icons
-install -pD -m644 %SOURCE4 %buildroot%_miconsdir/%name.png
-install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
+install -pD -m644 %SOURCE4 %buildroot%_miconsdir/%fullname.png
+install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 
 %find_lang --with-man %name
 
@@ -195,8 +196,8 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %_datadir/mc/
 %_desktopdir/%name.desktop
 %_desktopdir/mcedit.desktop
-%_niconsdir/%name.png
-%_miconsdir/%name.png
+%_niconsdir/%fullname.png
+%_miconsdir/%fullname.png
 
 %doc AUTHORS doc/FAQ doc/HACKING doc/MAINTAINERS doc/NEWS doc/README
 %doc doc/README.QNX doc/TODO doc/filehighlight.txt contrib/README.xterm
@@ -205,6 +206,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Tue Nov 13 2018 Ivan Razzhivin <underwit@altlinux.org> 4.8.21-alt4
+- change the name of the icons to avoid conflicts (ALT bug 34346)
+
 * Thu Nov 01 2018 Pavel Moseev <mars@altlinux.org> 4.8.21-alt3
 - Updated hint translation
 
