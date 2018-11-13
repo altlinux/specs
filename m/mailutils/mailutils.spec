@@ -12,7 +12,7 @@
 
 Name: mailutils
 
-%define baseversion 3.4.91
+%define baseversion 3.5
 
 %if %snapshot
 %define snapshotdate 20170306
@@ -21,7 +21,7 @@ Release: alt0.%snapshotdate.1
 %define srcdir %name-%snapshotdate
 %else
 Version: %baseversion
-Release: alt2
+Release: alt1
 %define srcdir %name-%version
 %endif
 
@@ -293,6 +293,8 @@ cp -f po/Makefile.in.in~ po/Makefile.in.in
     %{!?_enable_python: --disable-python} \
     #
 
+./config.status | sed -n '/[*]\+/,/[*]\+/p' > README-config.status
+
 # SMP-incompatible build.
 %make V=1
 
@@ -398,9 +400,8 @@ done
 %_libdir/mailutils/editheader.*a
 
 %files doc
-%doc AUTHORS COPYING* NEWS README README-alpha THANKS TODO ChangeLog.gz
-# info documentation absent in 2.9.91
-%exclude %_infodir/*
+%doc AUTHORS THANKS COPYING* NEWS README* TODO ChangeLog.gz
+%_infodir/*
 
 %files pop3d
 %_sbindir/pop3d
@@ -457,6 +458,11 @@ done
 %endif
 
 %changelog
+* Tue Nov 13 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.5-alt1
+- New version
+- Included info files to doc package (was excluded since 2.99.91-alt1)
+- Packaged report of config.status
+
 * Fri Aug 31 2018 Sergey Y. Afonin <asy@altlinux.ru> 3.4.91-alt2
 - disabled tcpwrappers support
 
