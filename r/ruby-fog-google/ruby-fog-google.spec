@@ -1,7 +1,7 @@
 %define  pkgname fog-google
 
 Name:    ruby-%pkgname
-Version: 0.0.9
+Version: 1.8.1
 Release: alt1
 Epoch:   1
 
@@ -56,6 +56,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Nov 13 2018 Pavel Skrylev <majioa@altlinux.org> 1:1.8.1-alt1
+- Bump to 1.8.1.
+
 * Tue Sep 04 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.0.9-alt1
 - Use old version for fog.
 
