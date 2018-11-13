@@ -5,8 +5,8 @@
 %define firefox_datadir %_datadir/firefox
 
 %define gst_version 1.0
-%define nspr_version 4.17
-%define nss_version 3.38.0
+%define nspr_version 4.20
+%define nss_version 3.40.0
 %define rust_version 1.24.1
 %define cargo_version 0.25.0
 
@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        62.0.3
+Version:        63.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -25,6 +25,7 @@ Packager:       Alexey Gladkov <legion@altlinux.ru>
 Source0:        firefox-source.tar
 Source1:        rpm-build.tar
 Source2:        searchplugins.tar
+Source3:        cbindgen-vendor.tar
 Source4:        firefox-mozconfig
 Source5:        distribution.ini
 Source6:        firefox.desktop
@@ -32,7 +33,6 @@ Source7:        firefox.c
 Source8:        firefox-prefs.js
 
 Patch6:         firefox-alt-disable-werror.patch
-Patch7:         firefox-alt-fix-expandlibs.patch
 Patch14:        firefox-fix-install.patch
 Patch16:        firefox-cross-desktop.patch
 Patch17:        firefox-mediasource-crash.patch
@@ -83,6 +83,7 @@ BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
 #BuildRequires: libicu-devel
 BuildRequires: libdbus-devel libdbus-glib-devel
+BuildRequires: node
 
 # Python requires
 BuildRequires: /dev/shm
@@ -146,9 +147,6 @@ cd mozilla
 tar -xf %SOURCE1
 tar -xf %SOURCE2
 
-#patch6  -p1
-%patch7  -p2
-#patch14 -p1
 %patch16 -p2
 %patch17 -p2
 %patch18 -p2
@@ -158,6 +156,34 @@ tar -xf %SOURCE2
 %patch201 -p1
 
 cp -f %SOURCE4 .mozconfig
+
+cat >> .mozconfig <<'EOF'
+ac_add_options --prefix="%_prefix"
+ac_add_options --libdir="%_libdir"
+ac_add_options --enable-linker=lld
+%ifnarch %{ix86} x86_64
+ac_add_options --disable-webrtc
+%else
+ac_add_options --disable-elf-hack
+%endif
+EOF
+
+mkdir -p -- my_rust_vendor
+tar --strip-components=1 -C my_rust_vendor --overwrite -xf %SOURCE3
+
+mkdir -p -- .cargo
+cat > .cargo/config <<EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "$PWD/my_rust_vendor"
+EOF
+
+env CARGO_HOME="$PWD/.cargo" cargo install cbindgen
+
+rm -f -- .cargo/config
+
 
 %build
 cd mozilla
@@ -199,19 +225,8 @@ export SHELL=/bin/sh
 export RUST_BACKTRACE=1
 export RUSTFLAGS="-Cdebuginfo=0"
 export BUILD_VERBOSE_LOG=1
-
-cat >> .mozconfig <<'EOF'
-ac_add_options --prefix="%_prefix"
-ac_add_options --libdir="%_libdir"
-ac_add_options --enable-linker=lld
-%ifnarch %{ix86} x86_64
-ac_add_options --disable-webrtc
-%else
-ac_add_options --disable-elf-hack
-%endif
-EOF
-
 export MOZ_MAKE_FLAGS="-j6"
+export PATH="$PWD/.cargo/bin:$PATH"
 
 %__autoconf old-configure.in > old-configure
 pushd js/src
@@ -336,8 +351,27 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Tue Nov 13 2018 Alexey Gladkov <legion@altlinux.ru> 63.0.1-alt1
+- New release (63.0.1).
+- Fixed:
+  + CVE-2018-12391: HTTP Live Stream audio data is accessible cross-origin
+  + CVE-2018-12392: Crash with nested event loops
+  + CVE-2018-12393: Integer overflow during Unicode conversion while loading JavaScript
+  + CVE-2018-12395: WebExtension bypass of domain restrictions through header rewriting
+  + CVE-2018-12396: WebExtension content scripts can execute in disallowed contexts
+  + CVE-2018-12397: Missing warning prompt when WebExtension requests local file access
+  + CVE-2018-12398: CSP bypass through stylesheet injection in resource URIs
+  + CVE-2018-12399: Spoofing of protocol registration notification bar
+  + CVE-2018-12400: Favicons are cached in private browsing mode on Firefox for Android
+  + CVE-2018-12401: DOS attack through special resource URI parsing
+  + CVE-2018-12402: SameSite cookies leak when pages are explicitly saved
+  + CVE-2018-12403: Mixed content warning is not displayed when HTTPS page loads a favicon over HTTP
+  + CVE-2018-12388: Memory safety bugs fixed in Firefox 63
+  + CVE-2018-12390: Memory safety bugs fixed in Firefox 63 and Firefox ESR 60.3
+
 * Thu Oct 04 2018 Alexey Gladkov <legion@altlinux.ru> 62.0.3-alt1
 - New release (62.0.3).
+- Fixed:
   + CVE-2018-12386: Type confusion in JavaScript
   + CVE-2018-12387: A vulnerability where the JavaScript JIT compiler
   + CVE-2018-12385: Crash in TransportSecurityInfo due to cached data
