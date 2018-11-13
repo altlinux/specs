@@ -13,7 +13,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.1.3
+Version: 1.2.0
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -52,6 +52,7 @@ BuildRequires: gnutls-utils
 BuildRequires: meson
 BuildRequires: vala-tools
 BuildRequires: help2man
+BuildRequires: libxmlb-devel
 
 %if_enabled dell
 BuildRequires: libsmbios-devel
@@ -240,6 +241,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_includedir/fwupd-1
 %_libdir/libfwupd*.so
 %_libdir/pkgconfig/fwupd.pc
+%_datadir/vala/vapi/fwupd.*
 
 %files labels
 %if_enabled uefi
@@ -256,6 +258,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Mon Nov 12 2018 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
+- 1.2.0
+
 * Wed Oct 17 2018 Anton Farygin <rider@altlinux.ru> 1.1.3-alt1
 - 1.1.3
 
