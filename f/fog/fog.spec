@@ -1,6 +1,6 @@
 Name:    fog
-Version: 2.0.0
-Release: alt1.1
+Version: 2.1.0
+Release: alt1
 
 Summary: The Ruby cloud services library
 License: MIT
@@ -61,6 +61,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Nov 13 2018 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
+- Bump to 2.1.0.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 
