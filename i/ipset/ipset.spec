@@ -1,10 +1,10 @@
 %define prefix /
 %define exec_prefix /
 %define _prefix /
-%define soname 11
+%define soname 13
 Name: ipset
-Version: 6.38
-Release: alt1%ubt
+Version: 7.0
+Release: alt1
 
 Summary: Tools for managing sets of IP or ports with iptables
 License: GPLv2
@@ -14,7 +14,6 @@ Url: http://ipset.netfilter.org/
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 BuildRequires: libmnl-devel
-BuildRequires(pre): rpm-build-ubt
 
 %description
 IP sets are a framework inside the Linux kernel, which can be administered by 
@@ -71,10 +70,12 @@ autoreconf -fisv
 %install
 %makeinstall prefix=%buildroot/ exec_prefix=%buildroot/ sbindir=%buildroot/sbin libdir=%buildroot/%_lib pkgconfigdir=%buildroot/%_pkgconfigdir
 mkdir -p $RPM_BUILD_ROOT/%_libdir
+
 pushd $RPM_BUILD_ROOT/%_libdir
 LIBNAME=`basename \`ls $RPM_BUILD_ROOT/%{_lib}/libipset.so.%{soname}.*.*\``
 ln -s ../../%{_lib}/$LIBNAME libipset.so
 popd
+
 
 tar xvf %SOURCE0
 mv %name-%version kernel-source-%name-%version
@@ -94,18 +95,22 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %_includedir/lib%name/*.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_man3dir/*
 
 %files -n kernel-source-ipset
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
-* Tue May 22 2018 Anton Farygin <rider@altlinux.ru> 6.38-alt1%ubt
+* Tue Nov 13 2018 Anton Farygin <rider@altlinux.ru> 7.0-alt1
+- 7.0
+
+* Tue May 22 2018 Anton Farygin <rider@altlinux.ru> 6.38-alt1
 - 6.38
 
-* Tue Jan 23 2018 Anton Farygin <rider@altlinux.ru> 6.35-alt1%ubt
+* Tue Jan 23 2018 Anton Farygin <rider@altlinux.ru> 6.35-alt1
 - new version
 
-* Mon Mar 13 2017 Anton Farygin <rider@altlinux.ru> 6.32-alt1%ubt
+* Mon Mar 13 2017 Anton Farygin <rider@altlinux.ru> 6.32-alt1
 - new version
 
 * Mon Mar 13 2017 Anton Farygin <rider@altlinux.ru> 6.32-alt1
