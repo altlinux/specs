@@ -1,5 +1,5 @@
 Name:		xmr-stak
-Version:	2.5.1
+Version:	2.5.2
 Release:	alt1
 Summary:	XMR-Stak - Cryptonight Mining Software
 Url:		https://github.com/fireice-uk/xmr-stak
@@ -42,6 +42,9 @@ install -Dp -m 0755 ./bin/%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Wed Nov 14 2018 Motsyo Gennadi <drool@altlinux.ru> 2.5.2-alt1
+- 2.5.2
+
 * Wed Oct 24 2018 Motsyo Gennadi <drool@altlinux.ru> 2.5.1-alt1
 - 2.5.1
 
