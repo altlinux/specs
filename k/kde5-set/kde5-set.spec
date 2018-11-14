@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 18.04.3
-Release: alt1%ubt
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -84,7 +84,7 @@ Requires: kde5-pim kde5-pim-addons kde5-kcron kde5-kruler kde5-ffmpegthumbs
 Requires: kde5-krfb
 Requires: kde5-kdf kde5-kfloppy
 Requires: kid3-ui-kde5
-Requires: ring-client-kde5
+#Requires: ring-client-kde5
 Requires: kde5-kipi-plugins-core
 %description -n kde5-big
 %summary
@@ -190,6 +190,9 @@ Requires: kde5-kaddressbook kde5-grantlee-editor
 %files -n kde5-pim
 
 %changelog
+* Wed Nov 14 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2
+- clean requires
+
 * Tue Sep 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - clean pim requires
 
