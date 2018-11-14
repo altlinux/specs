@@ -1,7 +1,7 @@
 %define rname kwayland
 
 Name: kf5-%rname
-Version: 5.51.0
+Version: 5.52.0
 Release: alt1
 %K5init altplace
 
@@ -90,6 +90,9 @@ KF5 library
 %_K5lib/libKF5WaylandServer.so.*
 
 %changelog
+* Mon Nov 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.52.0-alt1
+- new version
+
 * Wed Oct 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.51.0-alt1
 - new version
 

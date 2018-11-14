@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.51.0
+Version: 5.52.0
 Release: alt1
 %K5init altplace
 
@@ -94,6 +94,10 @@ Sip files for python3-module-%rname
 %setup -n %rname-%version
 %patch1 -p1
 
+%if_disabled python
+sed -i 's|PythonModuleGeneration|PythonModuleGeneration_DISABLED|' src/CMakeLists.txt
+%endif
+
 %build
 %K5build
 
@@ -134,6 +138,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Mon Nov 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.52.0-alt1
+- new version
+
 * Wed Oct 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.51.0-alt1
 - new version
 
