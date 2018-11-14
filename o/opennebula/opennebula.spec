@@ -21,7 +21,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.6.2
-Release: alt1
+Release: alt2
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
@@ -187,7 +187,7 @@ Provides: ruby(econe/EC2QueryClient)
 
 Requires: %name-common = %EVR
 Requires: %name-ruby = %EVR
-Requires: ruby-rack-handler-webrick
+Requires: ruby-rack-handler-webrick ruby-sinatra ruby-tilt ruby-rack-protection ruby-nokogiri
 
 %description sunstone
 Browser based UI for administrating a OpenNebula cloud. Also includes
@@ -220,6 +220,7 @@ BuildArch: noarch
 
 Requires: %name-common = %EVR
 Requires: %name-ruby = %EVR
+Requires: ruby-treetop ruby-parse-cron
 
 %description flow
 Manage OpenNebula Services
@@ -705,6 +706,9 @@ fi
 ################################################################################
 
 %changelog
+* Wed Nov 14 2018 Alexey Shabalin <shaba@altlinux.org> 5.6.2-alt2
+- update Requires
+
 * Fri Nov 09 2018 Alexey Shabalin <shaba@altlinux.org> 5.6.2-alt1
 - 5.6.2
 
