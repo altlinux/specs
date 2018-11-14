@@ -1,6 +1,6 @@
 Name: vdr
 Version: 2.2.0
-Release: alt3
+Release: alt4
 
 Summary: Digital satellite receiver box with advanced features
 License: GPL
@@ -264,7 +264,6 @@ cp -p PLUGINS/src/femon/README %buildroot%docdir/femon
 
 mkdir -p %buildroot%docdir/iptv
 cp -p PLUGINS/src/iptv/README %buildroot%docdir/iptv
-cp -a PLUGINS/src/iptv/iptv %buildroot%confdir/plugins
 
 mkdir -p %buildroot%docdir/live %buildroot%confdir/plugins/live
 cp -p PLUGINS/src/live/README %buildroot%docdir/live
@@ -473,8 +472,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 
 %files plugin-iptv -f iptv.lang
 %docdir/iptv
-%dir %attr(0770,root,_vdr) %confdir/plugins/iptv
-%config(noreplace) %attr(0600,_vdr,_vdr) %confdir/plugins/iptv/*
 %plugindir/libvdr-iptv.so.%version
 %resdir/plugins/iptv
 
@@ -576,6 +573,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Tue Nov 13 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt4
+- iptv: made external utilities optional
+
 * Mon Sep 24 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt3
 - replaced softhddevice plugin with vaapidevice
 - xineliboputput plugin resurrected
