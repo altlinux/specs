@@ -4,7 +4,7 @@
 
 Name:           mintmenu
 Version:        5.9.0
-Release:        alt3
+Release:        alt4
 Epoch:          1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
@@ -43,6 +43,7 @@ Patch44: 	mintmenu-alt-applet-text-l10n.patch
 Patch45: 	mintmenu-alt-set-default-PATH.patch
 Patch46: 	mintmenu-alt-use-themed-app-list.patch
 Patch47: 	mintmenu-alt-delete-recent-for-current-page.patch
+Patch48:    mintmenu-fix-exec-field.patch
 
 Requires: dconf mate-search-tool
 # not detected by rpm-build-python
@@ -95,6 +96,7 @@ added to your gnome-panel or launched in its own window.
 %patch45 -p1
 %patch46 -p1
 %patch47 -p1
+%patch48 -p0
 
 # Replace path to %%_datadir
 subst 's,/usr/lib/linuxmint,%_datadir/linuxmint,g' `find usr -type f`
@@ -153,6 +155,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-baseal
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Wed Nov 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:5.9.0-alt4
+- Error of exec field fixed
+
 * Fri Nov 02 2018 Ivan Razzhivin <underwit@altlinux.org> 1:5.9.0-alt3
 - delete recent for current page only
 
