@@ -1,27 +1,26 @@
-%define svn git20170409
+# #%define svn git20170409
 
 Name: handbrake
-Version: 1.0.7
-Release: alt1
+Version: 1.1.2
+Release: alt2
 Summary: Multithreaded Video Transcoder
 Packager: Motsyo Gennadi <drool@altlinux.ru>
 Source: http://prdownloads.sourceforge.net/handbrake/HandBrake-%version.tar.bz2
 # #Source0: %name-%svn.tar.bz2
 
-Source101: http://downloads.webmproject.org/releases/webm/libvpx-1.5.0.tar.bz2
+ExclusiveArch:	%ix86 x86_64
+
+Source101: https://download.handbrake.fr/contrib/libvpx-1.7.0.tar.gz
 Source102: http://download.handbrake.fr/handbrake/contrib/yasm-1.3.0.tar.gz
-Source103: https://download.handbrake.fr/handbrake/contrib/libav-12.tar.gz
-Source104: http://download.handbrake.fr/handbrake/contrib/libdvdread-5.0.0-6-gcb1ae87.tar.gz
-Source105: http://download.videolan.org/pub/videolan/libdvdnav/5.0.1/libdvdnav-5.0.1.tar.bz2
-Source106: https://download.videolan.org/pub/videolan/x265/x265_2.1.tar.gz
-Source107: https://cmake.org/files/v3.3/cmake-3.3.2.tar.gz
-Source108: http://download.videolan.org/pub/videolan/libbluray/0.9.3/libbluray-0.9.3.tar.bz2
+Source103: https://download.handbrake.fr/handbrake/contrib/libav-12.3.tar.gz
+Source104: https://download.handbrake.fr/handbrake/contrib/libdvdread-6.0.0.tar.bz2
+Source105: https://download.handbrake.fr/handbrake/contrib/libdvdnav-6.0.0.tar.bz2
+Source106: https://download.handbrake.fr/contrib/x265_2.6.tar.gz
+Source107: https://download.handbrake.fr/handbrake/contrib/cmake-3.9.6.tar.gz
+Source108: https://download.handbrake.fr/handbrake/contrib/libbluray-1.0.2.tar.bz2
+Source109: https://download.handbrake.fr/handbrake/contrib/fdk-aac-0.1.5.tar.gz
 
-Source151: handbrake-ffmpeg_fix_missing_return_in_nonvoid_function.patch
-Source152: handbrake-svn5042-fix_libbluray_implicit_declaration_of_function_strdup.patch
-
-Patch200: handbrake-svn5891-fdk_aac-autoreconf.patch
-Patch250: handbrake-git20161018-category.patch
+Source200: x265-x32.patch
 
 Url: http://handbrake.fr/
 Group: Video
@@ -57,27 +56,29 @@ This package contains a GTK+ graphical user interface for Handbrake.
 %prep
 %setup -n HandBrake-%version
 # #%setup -n %name-svn
-%patch200 -p1
-%patch250 -p1
 
 # Copy 3rd party dependencies into expected locations:
 %__mkdir download
 for f in \
 %{S:101} %{S:102} %{S:103} %{S:104} %{S:105} %{S:106} \
-%{S:107} %{S:108} \
+%{S:107} %{S:108} %{S:109} \
 ; do
      %__ln_s "$f" download/
 done
-mv ./download/x265_2.1.tar.gz ./download/x265_2.1-1.tar.gz
 
 %build
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
 
-# #%__cp "%{S:151}" contrib/ffmpeg/A99-fix-missing-return-in-nonvoid-function.patch
-# #%__cp "%{S:152}" contrib/libbluray/A99-fix_libbluray_implicit_declaration_of_function_strdup.patch
+%__cp "%{S:200}" contrib/x265/A99-x265-x32.patch
+%__cp "%{S:200}" contrib/x265_8bit/A99-x265-x32.patch
+%__cp "%{S:200}" contrib/x265_10bit/A99-x265-x32.patch
+%__cp "%{S:200}" contrib/x265_12bit/A99-x265-x32.patch
 
-./configure --prefix="%buildroot%prefix" --force --disable-gtk-update-checks
+./configure	--prefix="%buildroot%prefix" \
+		--force \
+		--disable-gtk-update-checks \
+		--enable-fdk-aac
 pushd build
 %__make build
 popd build
@@ -100,10 +101,17 @@ popd #build
 %files gtk -f ghb.lang
 %_bindir/HandBrakeGUI
 %_bindir/ghb
-%_desktopdir/ghb.desktop
-%_datadir/icons/*/*/apps/hb-icon.svg
+%_desktopdir/*.desktop
+%_datadir/icons/*/*/apps/*.svg
+%_datadir/metainfo/*.xml
 
 %changelog
+* Wed Nov 14 2018 Motsyo Gennadi <drool@altlinux.ru> 1.1.2-alt2
+- build with x265 v2.8
+
+* Wed Nov 14 2018 Motsyo Gennadi <drool@altlinux.ru> 1.1.2-alt1
+- 1.1.2
+
 * Mon Apr 17 2017 Motsyo Gennadi <drool@altlinux.ru> 1.0.7-alt1
 - 1.0.7
 
