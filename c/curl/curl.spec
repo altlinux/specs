@@ -2,7 +2,7 @@
 
 Name: curl
 Version: 7.62.0
-Release: alt2
+Release: alt3
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -16,7 +16,7 @@ Patch0: curl-%version-alt.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires: glibc-devel-static groff-base libidn-devel libssh2-devel libssl-devel libkrb5-devel zlib-devel python-modules python-modules-logging python-modules-xml libpsl-devel
+BuildRequires: glibc-devel-static groff-base libidn2-devel libssh2-devel libssl-devel libkrb5-devel zlib-devel python-modules python-modules-logging python-modules-xml libpsl-devel libldap-devel libbrotli-devel
 
 %{?_with_nghttp2:BuildRequires: libnghttp2-devel}
 
@@ -110,7 +110,8 @@ applications that utilize lib%name.
 	--with-libidn \
 	--enable-ipv6 \
 	--disable-rpat \
-	--disable-ldap \
+	--enable-ldap \
+	--enable-sspi \
 	--enable-threaded-resolver \
 	--with-ssl --enable-openssl-auto-load-config \
 	--with-gssapi \
@@ -148,6 +149,11 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Nov 14 2018 Anton Farygin <rider@altlinux.ru> 7.62.0-alt3
+- enabled idn support (closes: #34103)
+- enabled ldap support
+- enabled brotli support
+
 * Thu Nov 01 2018 Michael Shigorin <mike@altlinux.org> 7.62.0-alt2
 - added nghttp2 knob (on by default)
 
