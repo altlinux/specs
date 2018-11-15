@@ -2,7 +2,7 @@
 
 Name: octave
 Version: 4.4.1
-Release: alt1.1
+Release: alt2
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -44,6 +44,7 @@ Patch0: octave-include-pcre.patch
 Patch1: octave-alt-desktop-l10n.patch
 Patch2: octave-alt-fix-build.patch
 Patch3: octave-alt-fix-doc-build.patch
+Patch4: assume-blas-integer-size.patch
 
 Provides:  qtoctave = %EVR
 Obsoletes: qtoctave < %EVR
@@ -98,6 +99,7 @@ This package contains extra documentation for GNU Octave.
 %setup
 %patch0 -p2
 %patch1 -p2
+%patch4 -p1
 
 %build
 %add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
@@ -182,6 +184,9 @@ mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Thu Nov 15 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.4.1-alt2
+- rebuilt with recent GraphickMagick
+
 * Tue Sep 18 2018 Andrey Cherepanov <cas@altlinux.org> 4.4.1-alt1.1
 - Rebuild with libarpack-ng 3.6.3.
 

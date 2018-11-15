@@ -3,14 +3,13 @@
 
 Name: labcurves
 Version: 20100709
-Release: alt4.1.1
+Release: alt5
 
 Summary: L*a*b curves for GIMP
 License: %gpl3only
 Group: Graphics
 
 Url: http://www.mm-log.com/lab-curves-gimp
-Packager: Yuriy Al. Shirokov <yushi@altlinux.org>
 
 #Original source in 7z format: http://sourceforge.net/projects/mmfilters/files/LabCurves/2010-07-09/LabCurves-src-20100709.7z
 Source: %origname.tar
@@ -60,6 +59,9 @@ install -D -m755 mm\ extern\ LabCurves.py %buildroot/%gimpplugindir/plug-ins/mm_
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Thu Nov 15 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 20100709-alt5
+- rebuilt with recent GraphicsMagick
+
 * Wed Jun 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 20100709-alt4.1.1
 - Rebuilt for gcc5 C++11 ABI.
 
