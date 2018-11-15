@@ -30,7 +30,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		mozilla-plugin-java-1.8.0-openjdk
 Version:	1.7.1
-Release:	alt2_6jpp8
+Release:	alt3_6jpp8
 Summary:	Additional Java components for OpenJDK - Java browser plug-in and Web Start implementation
 # will become arched again with rust on board
 BuildArch:  noarch
@@ -39,6 +39,7 @@ Group:      Networking/WWW
 License:    LGPLv2+ and GPLv2 with exceptions
 URL:        http://icedtea.classpath.org/wiki/IcedTea-Web
 Source0:    http://icedtea.classpath.org/download/source/%{oldname}-%{version}.tar.gz
+Source1:    Messages_ru.properties
 Patch0:     1473-1480.patch
 
 BuildRequires:  javapackages-tools
@@ -156,6 +157,7 @@ This package contains ziped sources of the IcedTea-Web project.
 %prep
 %setup -n %{oldname}-%{version} -q
 %patch0 -p1
+cp -f %SOURCE1 netx/net/sourceforge/jnlp/resources/Messages_ru.properties
 
 %build
 autoreconf -vfi
@@ -347,6 +349,9 @@ appstream-util validate $RPM_BUILD_ROOT/%{_datadir}/appdata/*.xml || :
 
 
 %changelog
+* Thu Nov 15 2018 Ivan Razzhivin <underwit@altlinux.org> 1.7.1-alt3_6jpp8
+- add russian translation
+
 * Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt2_6jpp8
 - fixed alternatives
 
