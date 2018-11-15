@@ -1,7 +1,7 @@
 %define target TARGET=opt
 
 Name: hevea
-Version: 2.31
+Version: 2.32
 Release: alt1
 Packager: %packager
 
@@ -52,6 +52,9 @@ rm -f config.sh
 %doc README CHANGES LICENSE pub.txt
 
 %changelog
+* Wed Nov 14 2018 Andrey Bergman <vkni@altlinux.org> 2.32-alt1
+- Update to version 2.32.
+
 * Fri Oct 13 2017 Andrey Bergman <vkni@altlinux.org> 2.31-alt1
 - Update to version 2.31.
 
