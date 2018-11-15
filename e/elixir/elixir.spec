@@ -1,5 +1,5 @@
 Name: elixir
-Version: 1.5.2
+Version: 1.7.4
 Release: alt1
 Summary: A modern approach to programming for the Erlang VM
 
@@ -12,10 +12,11 @@ Packager: Denis Medvedev <nbr@altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
-BuildRequires(pre): erlang-otp-full erlang-otp-devel
+BuildRequires(pre): erlang-otp-full erlang-otp-devel erlang-devel
 BuildRequires(pre): erlang-common_test-debug erlang-common_test-common
-BuildRequires(pre): erlang-otp-native  erlang-common_test-native erlang-common_test
+BuildRequires(pre): erlang-otp-native  erlang-common_test-native erlang-common_test rebar
 BuildRequires: git
+Requires: /usr/bin/erl
 
 %description
 Elixir is a programming language built on top of the Erlang VM.
@@ -54,6 +55,9 @@ ln -s %_datadir/%name/%version/bin/{elixir,elixirc,iex,mix} %buildroot/%_bindir/
 %_datadir/%name
 
 %changelog
+* Thu Nov 15 2018 Pavel Skrylev <majioa@altlinux.org> 1.7.4-alt1
+- Bump to 1.7.4
+
 * Wed Nov 01 2017 Denis Medvedev <nbr@altlinux.org> 1.5.2-alt1
 - new version.
 
