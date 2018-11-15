@@ -2,13 +2,11 @@
 
 Name: handbrake
 Version: 1.1.2
-Release: alt2
+Release: alt3
 Summary: Multithreaded Video Transcoder
 Packager: Motsyo Gennadi <drool@altlinux.ru>
 Source: http://prdownloads.sourceforge.net/handbrake/HandBrake-%version.tar.bz2
 # #Source0: %name-%svn.tar.bz2
-
-ExclusiveArch:	%ix86 x86_64
 
 Source101: https://download.handbrake.fr/contrib/libvpx-1.7.0.tar.gz
 Source102: http://download.handbrake.fr/handbrake/contrib/yasm-1.3.0.tar.gz
@@ -106,6 +104,9 @@ popd #build
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Nov 15 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.2-alt3
+- drop exclusivearch, nothing special was about it
+
 * Wed Nov 14 2018 Motsyo Gennadi <drool@altlinux.ru> 1.1.2-alt2
 - build with x265 v2.8
 
