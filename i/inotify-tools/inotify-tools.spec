@@ -1,5 +1,5 @@
 Name: inotify-tools
-Version: 3.14
+Version: 3.20.1
 Release: alt1
 
 Summary: Command line utilities for inotify
@@ -7,7 +7,7 @@ Group: System/Kernel and hardware
 License: GPL
 Url: https://github.com/rvoicilas/inotify-tools/wiki/
 
-Source0: %name-%version.tar.gz
+Source: %name-%version.tar
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -75,6 +75,9 @@ rm -rf %buildroot%_datadir/doc/
 %_includedir/inotifytools/*.h
 
 %changelog
+* Thu Nov 15 2018 Pavel Skrylev <majioa@altlinux.org> 3.20.1-alt1
+- Bump to 3.20.1.
+
 * Sun Apr 15 2012 Igor Zubkov <icesik@altlinux.org> 3.14-alt1
 - 3.13 -> 3.14
 
