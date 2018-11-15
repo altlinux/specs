@@ -50,8 +50,8 @@
 %define Name GraphicsMagick
 Name: %Name
 %define lname lib%name
-Version: 1.3.20
-Release: alt2.1.1.2
+Version: 1.3.30
+Release: alt1
 Summary: An X application for displaying and manipulating images
 Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
 License: %mit
@@ -512,6 +512,9 @@ __MENU__
 %endif
 
 %changelog
+* Thu Nov 15 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.30-alt1
+- 1.3.30 released
+
 * Mon Jun 25 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.20-alt2.1.1.2
 - NMU: autorebuild with libjpasper.so.4
 
