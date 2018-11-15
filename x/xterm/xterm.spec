@@ -25,8 +25,8 @@
   --enable-toolbar
 
 Name: xterm
-Version: 333
-Release: alt2
+Version: 337
+Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
 Summary(ru_RU.UTF8): Стандартный эмулятор терминала для X Window System
@@ -157,6 +157,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Thu Nov 15 2018 Fr. Br. George <george@altlinux.ru> 337-alt1
+- Autobuild version bump to 337
+
 * Thu Nov 01 2018 Pavel Moseev <mars@altlinux.org> 333-alt2
 - Updated translations in desktop file
 
