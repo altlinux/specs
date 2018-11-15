@@ -1,5 +1,5 @@
 Name: zsh
-Version: 5.5.1
+Version: 5.6.2
 Release: alt1
 Epoch: 1
 
@@ -83,7 +83,7 @@ mv %buildroot%_bindir/zsh %buildroot/bin/zsh
 ln -s "$(relative /bin/zsh %_bindir/zsh)" %buildroot%_bindir/zsh
 
 # Configuration files.
-mkdir -p %buildroot%_sysconfdir
+mkdir -p %buildroot%_sysconfdir/zshrc.d
 for f in zshenv zprofile zshrc zlerc zlogout; do
 	install -p -m644 zcfg/$f %buildroot%_sysconfdir/$f
 done
@@ -111,6 +111,10 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Thu Nov 15 2018 Fr. Br. George <george@altlinux.ru> 1:5.6.2-alt1
+- Autobuild version bump to 5.6.2
+- Provide /etc/zshrc.d
+
 * Tue Aug 14 2018 Fr. Br. George <george@altlinux.ru> 1:5.5.1-alt1
 - Autobuild version bump to 5.5.1 (closes: #34248)
 
