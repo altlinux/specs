@@ -1,8 +1,8 @@
 %define  pkgname pry
 
 Name: 	 ruby-%pkgname
-Version: 0.11.3
-Release: alt1.1
+Version: 0.12.2
+Release: alt1
 
 Summary: An IRB alternative and runtime developer console
 License: MIT
@@ -13,8 +13,6 @@ Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
 Source:  %pkgname-%version.tar
-
-%filter_from_requires /^ruby(win32console)$/d
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
@@ -49,6 +47,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %_bindir/%pkgname
 
 %changelog
+* Thu Nov 15 2018 Pavel Skrylev <majioa@altlinux.org> 0.12.2-alt1
+- Bump to 0.12.2.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 0.11.3-alt1.1
 - Rebuild with new Ruby autorequirements.
 
