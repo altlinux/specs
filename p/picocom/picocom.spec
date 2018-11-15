@@ -1,6 +1,6 @@
 Name: picocom
 Version: 3.1
-Release: alt2
+Release: alt3
 
 Summary: Picocom is a minimal dumb-terminal emulation program
 Summary(ru_RU.UTF-8): Пикоком есть крошечная терминалка
@@ -58,14 +58,17 @@ any Unix system with the termios(3) library.
 
 %install
 install -pDm755 %name %buildroot%_bindir/%name
-install -pDm644 %name.1 %buildroot%_man8dir/%name.1
+install -pDm644 %name.1 %buildroot%_man1dir/%name.1
 
 %files
 %_bindir/%name
-%_man8dir/%{name}.*
+%_man1dir/%{name}.*
 %doc CHANGES* CONTRIBUTORS LICENSE.txt README.md TODO %name.1.html pc*
 
 %changelog
+* Thu Nov 15 2018 Pavel Skrylev <majioa@altlinux.org> 3.1-alt3
+- Fixed man page.
+
 * Mon Aug 22 2018 Pavel Skrylev <majioa@altlinux.org> 3.1-alt2
 - Updated spec
 
