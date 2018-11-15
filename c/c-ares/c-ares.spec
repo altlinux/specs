@@ -1,6 +1,6 @@
 Name: c-ares
-Version: 1.14.0
-Release: alt1%ubt
+Version: 1.15.0
+Release: alt1
 
 Summary: A library that performs asynchronous DNS operations
 License: MIT
@@ -11,7 +11,6 @@ Source: %url/download/c-ares-%version.tar
 
 # need for test/configure
 BuildRequires: gcc-c++
-BuildRequires(pre):rpm-build-ubt
 
 %description -n c-ares
 c-ares is a C library that performs DNS requests and name resolves
@@ -68,10 +67,13 @@ install -pm755 .libs/{acountry,adig,ahost} %buildroot%_bindir/
 %_man3dir/*
 
 %changelog
-* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.14.0-alt1%ubt
+* Thu Nov 15 2018 Anton Farygin <rider@altlinux.ru> 1.15.0-alt1
+- 1.15.0
+
+* Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.14.0-alt1
 - 1.14.0 
 
-* Tue Aug 08 2017 Anton Farygin <rider@altlinux.ru> 1.13.0-alt1%ubt
+* Tue Aug 08 2017 Anton Farygin <rider@altlinux.ru> 1.13.0-alt1
 - 1.13.0 with these security fixes:
         * CVE-2016-5180 - Heap-based buffer overflow in the ares_create_query function.
         * CVE-2017-1000381 - NAPTR parser out of bounds access.
