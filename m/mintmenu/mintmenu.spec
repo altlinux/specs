@@ -4,7 +4,7 @@
 
 Name:           mintmenu
 Version:        5.9.0
-Release:        alt4
+Release:        alt5
 Epoch:          1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
@@ -44,6 +44,7 @@ Patch45: 	mintmenu-alt-set-default-PATH.patch
 Patch46: 	mintmenu-alt-use-themed-app-list.patch
 Patch47: 	mintmenu-alt-delete-recent-for-current-page.patch
 Patch48:    mintmenu-fix-exec-field.patch
+Patch49:    mintmenu-fix-uninstall-package.patch
 
 Requires: dconf mate-search-tool
 # not detected by rpm-build-python
@@ -52,6 +53,7 @@ Requires: python-module-configobj
 Requires: menu-icons-default
 Requires: mint-translations
 Requires: mate-menu-editor
+Requires: python-module-pygobject
 
 Requires: apt
 
@@ -97,6 +99,7 @@ added to your gnome-panel or launched in its own window.
 %patch46 -p1
 %patch47 -p1
 %patch48 -p0
+%patch49 -p0
 
 # Replace path to %%_datadir
 subst 's,/usr/lib/linuxmint,%_datadir/linuxmint,g' `find usr -type f`
@@ -155,6 +158,10 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-baseal
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Thu Nov 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:5.9.0-alt5
+- Running applications fixed
+- Uninstall packages fixed
+
 * Wed Nov 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:5.9.0-alt4
 - Error of exec field fixed
 
