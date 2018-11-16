@@ -1,8 +1,8 @@
 %define osg_version %(pkg-config --modversion openscenegraph)
 
 Name: osgEarth
-Version: 2.9
-Release: alt3.gitbc65245
+Version: 2.10
+Release: alt1
 
 Summary: Dynamic map generation toolkit for OpenSceneGraph
 License: LGPL
@@ -120,6 +120,9 @@ popd
 %_datadir/osgEarth
 
 %changelog
+* Fri Nov 16 2018 Andrey Cherepanov <cas@altlinux.org> 2.10-alt1
+- New version.
+
 * Mon Oct 15 2018 Andrey Cherepanov <cas@altlinux.org> 2.9-alt3.gitbc65245
 - NMU: Use upstream fix for geos 3.7.0.
 
