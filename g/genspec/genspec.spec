@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.3.2
+Version:  1.3.3
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -24,15 +24,22 @@ Script for generation RPM spec file from template.
 
 %install
 install -Dm755 %name %buildroot%_bindir/%name
+install -Dm644 %name.1 %buildroot%_man1dir/%name.1
 mkdir -p %buildroot%_datadir/spectemplates
 cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 
 %files
 %_bindir/%name
 %_datadir/spectemplates
+%_man1dir/*
 
 %changelog
-* Thu Oct 22 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.2-alt1
+* Fri Nov 16 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.3-alt1
+- Fix removing of duplication in package name if upstream name contains type.
+- Add man page.
+- Fix bogus date in changelog.
+
+* Mon Oct 22 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.2-alt1
 - Fix unwanted linebreak in changelog
 - Add --verbose key and change call functions from global to instace variables
 - Add --[no-]check option to control failures of external programs
