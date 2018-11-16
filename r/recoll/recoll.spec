@@ -6,8 +6,8 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.24.1
-Release: alt2
+Version: 1.24.3
+Release: alt1
 
 Summary: A personal full text search package
 License: %gpl2plus
@@ -22,10 +22,6 @@ Source4: recoll_uk.qm
 # 1.24.1+ru
 Source5: recoll-searchgui.desktop
 Source100: recoll.watch
-
-# fix FTBFS against Qt 5.11
-# https://opensourceprojects.eu/p/recoll1/tickets/52/
-Patch: recoll-1.24.1-qt5.11-build.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -93,7 +89,6 @@ This package contains Python bindings for Recoll.
 
 %prep
 %setup -n %name-%version%pre
-%patch -p2
 
 sed -i 's/openoffice/loffice/' sampleconf/mimeview
 sed -i '/^Categories=/s/=/=Qt;/' desktop/*.desktop
@@ -155,6 +150,10 @@ rm -f %buildroot%_datadir/%name/filters/xdg-open
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Nov 16 2018 Michael Shigorin <mike@altlinux.org> 1.24.3-alt1
+- new version (watch file uupdate)
+- dropped upstream patch
+
 * Fri Sep 21 2018 Michael Shigorin <mike@altlinux.org> 1.24.1-alt2
 - merged underwit@'s work:
   + updated Russian translations
