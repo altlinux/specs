@@ -1,13 +1,13 @@
 %define _libexecdir /usr/libexec
 
 Name: shorewall6-lite
-Version: 5.2.1
-Release: alt0.Beta2
+Version: 5.2.1.1
+Release: alt1
 Summary: Shoreline Firewall 6 Lite is an iptables-based firewall for Linux systems.
 License: GPLv2
 Group: Security/Networking
 Url: http://www.shorewall.net/
-Source: %name-%version-Beta2.tar.bz2
+Source: %name-%version.tar.bz2
 Source3: %name-control
 
 BuildArch: noarch
@@ -25,7 +25,7 @@ Shorewall Lite is a companion product to Shorewall that allows network
 administrators to centralize the configuration of Shorewall-based firewalls.
 
 %prep
-%setup -n %name-%version-Beta2
+%setup -n %name-%version
 
 %build
 %install
@@ -64,6 +64,9 @@ install -D -m 0755 %SOURCE3 %buildroot%_controldir/%name
 %_man8dir/*
 
 %changelog
+* Fri Nov 16 2018 Alexey Shabalin <shaba@altlinux.org> 5.2.1.1-alt1
+- 5.2.1.1
+
 * Wed Jul 18 2018 Alexey Shabalin <shaba@altlinux.org> 5.2.1-alt0.Beta2
 - 5.2.1-Beta2
 
