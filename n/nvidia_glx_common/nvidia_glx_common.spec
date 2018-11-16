@@ -20,8 +20,8 @@
 %define nv_version 410
 %define nv_release 73
 %define nv_minor %nil
-%define pkg_rel alt203
-%define set_gl_nvidia_ver 0.22.4
+%define pkg_rel alt204
+%define set_gl_nvidia_ver 0.22.5
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -309,6 +309,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Fri Nov 16 2018 Sergey V Turchin <zerg@altlinux.org> 410.73-alt204
+- using X11 libglx.so with new nvidia driver on old systems
+
 * Fri Nov 16 2018 Sergey V Turchin <zerg@altlinux.org> 410.73-alt203
 - use AllowEmptyInitialConfiguration only on new systems
 
