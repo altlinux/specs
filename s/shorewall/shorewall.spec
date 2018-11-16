@@ -1,13 +1,13 @@
 %define _libexecdir /usr/libexec
 
 Name: shorewall
-Version: 5.2.1
-Release: alt0.Beta2
+Version: 5.2.1.1
+Release: alt1
 Summary: Shoreline Firewall is an iptables-based firewall for Linux systems.
 License: GPLv2
 Group: Security/Networking
 Url: http://www.shorewall.net/
-Source: %name-%version-Beta2.tar.bz2
+Source: %name-%version.tar.bz2
 Source3: shorewall-control
 Source4: shorewall-README.ALT.RU.UTF8
 
@@ -29,7 +29,7 @@ The Shoreline Firewall, more commonly known as "Shorewall", is a Netfilter
 a multi-function gateway/ router/server or on a standalone GNU/Linux system.
 
 %prep
-%setup -n %name-%version-Beta2
+%setup -n %name-%version
 
 %build
 %install
@@ -70,6 +70,9 @@ touch %buildroot%_sysconfdir/%name/isusable
 %_man8dir/*
 
 %changelog
+* Fri Nov 16 2018 Alexey Shabalin <shaba@altlinux.org> 5.2.1.1-alt1
+- 5.2.1.1
+
 * Sat Jul 14 2018 Alexey Shabalin <shaba@altlinux.ru> 5.2.1-alt0.Beta2
 - 5.2.1-Beta2
 
