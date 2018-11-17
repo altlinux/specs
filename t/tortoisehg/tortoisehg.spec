@@ -1,5 +1,5 @@
 Name: tortoisehg
-Version: 4.7.2
+Version: 4.8
 Release: alt1
 
 Summary: Mercurial GUI command line tool thg
@@ -86,5 +86,8 @@ desktop-file-install --dir=%buildroot%_datadir/applications contrib/thg.desktop
 %_datadir/nautilus-python/extensions/nautilus-thg.py*
 
 %changelog
+* Sat Nov 17 2018 Grigory Ustinov <grenka@altlinux.org> 4.8-alt1
+- Build new version.
+
 * Thu Nov 08 2018 Grigory Ustinov <grenka@altlinux.org> 4.7.2-alt1
 - Initial build for Sisyphus.
