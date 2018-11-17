@@ -1,19 +1,32 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
+%define commit0 ad9bc4600ce769a8b3ad10910803cd555811b70c
+
 %define upstreamver 2.6_1-opensource
 %define upname qtsingleapplication
 
 Name: lib%upname
 Version: 2.6.1
-Release: alt2
-Url: http://qt.nokia.com/products/appdev/add-on-products/catalog/4/Utilities/qtsingleapplication/
+Release: alt3
+Url: http://doc.qt.digia.com/solutions/4/qtsingleapplication/qtsingleapplication.html
 Group: System/Libraries
 License: LGPLv2.1 GPLv3
 Summary: The QtSingleApplication component provides support for applications that can be only started once per user
-Source0: http://get.qt.nokia.com/qt/solutions/lgpl/qtsingleapplication-%upstreamver.tar.gz
-Source1: %upname.prf
-Patch0: %upname.diff
-Patch1: %upname-getuid.diff
+# Source-url: https://github.com/qtproject/qt-solutions/archive/%commit0.tar.gz#/%name-%commit0.tar.gz
+Source: %upname-%version.tar
+# Proposed upstream in https://codereview.qt-project.org/#/c/92417/
+Source1: qtsingleapplication.prf
+# Proposed upstream in https://codereview.qt-project.org/#/c/92416/
+Source2: qtsinglecoreapplication.prf
+# Proposed upstream in https://codereview.qt-project.org/#/c/92416/
+Patch2: qtsingleapplication-build-qtsinglecoreapplication.patch
+# Features for unbundling in Qupzilla, https://github.com/QupZilla/qupzilla/issues/1503
+Patch3: qtsingleapplication-qupzilla.patch
 
-BuildRequires: gcc-c++ libqt4-devel
+BuildRequires: gcc-c++
+BuildRequires: libqt4-devel
+BuildRequires: qt5-base-devel
 
 %description
 For some applications it is useful or even critical that they are started
@@ -23,18 +36,23 @@ actions, e.g. loading a file, in that instance.
 
 The QtSingleApplication class provides an interface to detect a running
 instance, and to send command strings to that instance.
-For console (non-GUI) applications, the QtSingleCoreApplication variant is provided, which avoids dependency on QtGui.
-
-Authors:
---------
-    Nokia
+For console (non-GUI) applications, the QtSingleCoreApplication variant
+is provided, which avoids dependency on QtGui.
 
 %package devel
 Group: Development/C++
 Summary: The QtSingleApplication component provides support for applications that can be only started once per user
-Requires: %name = %version
+Requires: %name
 
 %description devel
+This package contains libraries and header files for developing applications
+that use QtSingleApplication with Qt4.
+
+%package qt5
+Group: Development/C++
+Summary: The QtSingleApplication component provides support for applications that can be only started once per user
+
+%description qt5
 For some applications it is useful or even critical that they are started
 only once by any user. Future attempts to start the application should
 activate any already running instance, and possibly perform requested
@@ -42,49 +60,91 @@ actions, e.g. loading a file, in that instance.
 
 The QtSingleApplication class provides an interface to detect a running
 instance, and to send command strings to that instance.
-For console (non-GUI) applications, the QtSingleCoreApplication variant is provided, which avoids dependency on QtGui.
+For console (non-GUI) applications, the QtSingleCoreApplication variant
+is provided, which avoids dependency on QtGui.
 
-Authors:
---------
-    Nokia
+This is a special build against Qt5.
+
+%package qt5-devel
+Group: Development/C++
+Summary: The QtSingleApplication component provides support for applications that can be only started once per user
+Requires: %name-qt5
+
+%description qt5-devel
+This package contains libraries and header files for developing applications
+that use QtSingleApplication with Qt5.
 
 %prep
-%setup -n %upname-%upstreamver
-%patch0 -p1
-%patch1 -p1
+%setup -n %upname-%version/%upname
+%patch2 -p0
+%patch3 -p1
 
+# use versioned soname
+sed -i "s,head,%(echo '%version' |sed -r 's,(.*)\..*,\1,'),g" common.pri
+
+mkdir qt5
+cp -p %SOURCE1 %SOURCE2 qt5
+sed -i -r 's,-lQt,\05,' qt5/qtsingleapplication.prf
+sed -i -r 's,-lQt,\05,' qt5/qtsinglecoreapplication.prf
+
+# additional header needed for Qt5.5
+sed -i -r 's,.include,\0 <QtCore/QDataStream>\n\0,' src/qtlocalpeer.h
 
 %build
 echo yes | ./configure -library
 qmake-qt4
 %make_build
 
+pushd qt5
+%qmake_qt5 ..
+%make_build
+popd
+
 %install
 # libraries
-mkdir -p $RPM_BUILD_ROOT%_libdir
-cp -a lib/* $RPM_BUILD_ROOT%_libdir
+mkdir -p %buildroot%_libdir
+cp -a lib/* %buildroot%_libdir
 # headers
-mkdir -p $RPM_BUILD_ROOT%_includedir/QtSolutions
+mkdir -p %buildroot%_includedir/QtSolutions
 cp -a \
     src/qtsingleapplication.h \
     src/QtSingleApplication \
     src/qtsinglecoreapplication.h \
     src/QtSingleCoreApplication \
-    $RPM_BUILD_ROOT%_includedir/QtSolutions
+    %buildroot%_includedir/QtSolutions
+mkdir -p %buildroot%_qt5_headerdir
+
+# symlink is not possible due to split into individual subpackages
+cp -ap %buildroot%_includedir/QtSolutions %buildroot%_qt5_headerdir
+
 # features
-mkdir -p $RPM_BUILD_ROOT%_datadir/qt4/mkspecs/features
-cp -a %SOURCE1 $RPM_BUILD_ROOT%_datadir/qt4/mkspecs/features
+mkdir -p %buildroot%_datadir/qt4/mkspecs/features %buildroot%_qt5_archdatadir/mkspecs/features
+install -p -m644 %SOURCE1 %SOURCE2 %buildroot%_datadir/qt4/mkspecs/features
+install -p -m644 qt5/*.prf %buildroot%_qt5_archdatadir/mkspecs/features
 
 %files
-%_libdir/lib*.so.*
+%_libdir/libQtSolutions*.so.*
 
 %files devel
-%doc doc examples INSTALL.TXT LGPL_EXCEPTION.txt LICENSE.* README.TXT
-%_libdir/lib*.so
-%_includedir/QtSolutions
-%_datadir/qt4/mkspecs/features/%upname.prf
+%doc doc/html README.TXT
+%_libdir/libQtSolutions*.so
+%_includedir/QtSolutions/
+%_datadir/qt4/mkspecs/features/*.prf
+
+%files qt5
+%_libdir/libQt5*.so.*
+
+%files qt5-devel
+%doc doc/html README.TXT
+%_libdir/libQt5*.so
+%_qt5_headerdir/QtSolutions/
+%_qt5_archdatadir/mkspecs/features/*.prf
 
 %changelog
+* Sat Nov 17 2018 Anton Midyukov <antohami@altlinux.org> 2.6.1-alt3
+- new snapshot
+- initial build libqtsingleapplication-qt5
+
 * Tue May 14 2013 Motsyo Gennadi <drool@altlinux.ru> 2.6.1-alt2
 - fix build for Sisyphus
 
