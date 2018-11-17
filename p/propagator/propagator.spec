@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20180822
+Version: 20181117
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -39,6 +39,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Sat Nov 17 2018 Leonid Krivoshein <klark@altlinux.org> 20181117-alt1
+- probing.c: added support for SD-cards when boot in LiveCD-mode
+
 * Wed Aug 22 2018 Evgeny Sinelnikov <sin@altlinux.org> 20180822-alt1
 - add support cifs install method
 - replace HTTP request version from 1.0 to 1.1
