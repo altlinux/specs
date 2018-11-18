@@ -1,7 +1,7 @@
-%define libcontrolppver 0.15
+%define libcontrolppver 0.16
 
 Name: control++
-Version: 0.12.2
+Version: 0.13.0
 Release: alt1
 
 Summary: System configuration tool
@@ -58,6 +58,12 @@ cp readme.txt %buildroot%_defaultdocdir/%name/
 %_defaultdocdir/%name
 
 %changelog
+* Sun Nov 18 2018 Alexey Appolonov <alexey@altlinux.org> 0.13.0-alt1
+- Rewritten permissions unit - there is no separation between handling the ACLs
+  or regular permission modes, sector types of the mode description determined
+  once and then can be accesed at ease, code became simpler to understand
+  and to modify.
+
 * Sun Nov 11 2018 Alexey Appolonov <alexey@altlinux.org> 0.12.2-alt1
 - The mode of the top level dir will not be left unchanged during mode setting 
   for the 'dir' section;
