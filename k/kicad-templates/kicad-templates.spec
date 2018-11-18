@@ -4,8 +4,8 @@
 Name: kicad-templates
 Summary: Templates projects for kicad (creation of electronic schematic diagrams)
 Summary(ru_RU.UTF-8): Примеры проектов для kicad (разработка печатных плат)
-Version: 5.0.0
-Release: alt1.rc3
+Version: 5.0.1
+Release: alt1
 Source: %name-%version.tar
 License: GPLv2+
 Group: Engineering
@@ -44,5 +44,8 @@ Kicad-library содержит примеры проектов для kicad.
 %_datadir/kicad/template/
 
 %changelog
+* Sun Nov 18 2018 Anton Midyukov <antohami@altlinux.org> 5.0.1-alt1
+- new version 5.0.1
+
 * Wed Jul 18 2018 Anton Midyukov <antohami@altlinux.org> 5.0.0-alt1.rc3
 - Initial build for ALT Sisyphus

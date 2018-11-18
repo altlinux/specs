@@ -6,15 +6,15 @@
 Name: kicad
 Summary: An open source software for the creation of electronic schematic diagrams
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
-Version: %majver.0
-Release: alt1.1.qa1
+Version: 5.0.1
+Release: alt1
 Epoch: 1
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Patch: fix_python_sitepackages_path.patch
-Patch1: %name-%version-nostrip.patch
-Patch2: %name-%version-freerouting.patch
+Patch1: %name-5.0.0-nostrip.patch
+Patch2: %name-5.0.0-freerouting.patch
 License: GPLv2+
 Group: Engineering
 Url: https://code.launchpad.net/kicad
@@ -160,6 +160,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/mime/packages/*
 
 %changelog
+* Fri Nov 23 2018 Anton Midyukov <antohami@altlinux.org> 1:5.0.1-alt1
+- new version 5.0.1
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.0.0-alt1.1.qa1
 - NMU: applied repocop patch
 

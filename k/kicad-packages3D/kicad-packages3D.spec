@@ -4,8 +4,8 @@
 Name: kicad-packages3D
 Summary: 3D models for kicad (creation of electronic schematic diagrams)
 Summary(ru_RU.UTF-8): 3D модели для kicad (разработка печатных плат)
-Version: 5.0.0
-Release: alt1.rc3
+Version: 5.0.1
+Release: alt1
 Source: %name-%version.tar.gz
 License: GPLv2+
 Group: Engineering
@@ -90,26 +90,7 @@ Kicad-library содержит в себе 3D-модели для kicad.
 %_datadir/kicad/modules/packages3d/Capacitor_SMD.3dshapes
 %_datadir/kicad/modules/packages3d/Capacitor_Tantalum_SMD.3dshapes
 %_datadir/kicad/modules/packages3d/Capacitor_THT.3dshapes
-%_datadir/kicad/modules/packages3d/Connector.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_Coaxial.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_FFC-FPC.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_IDC.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_JST.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_Molex.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_Phoenix_GMSTB.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_Phoenix_MC.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_Phoenix_MC_HighVoltage.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_Phoenix_MSTB.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_Pin.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_PinHeader_1.00mm.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_PinHeader_1.27mm.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_PinHeader_2.00mm.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_PinHeader_2.54mm.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_PinSocket_1.00mm.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_PinSocket_1.27mm.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_PinSocket_2.00mm.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_PinSocket_2.54mm.3dshapes
-%_datadir/kicad/modules/packages3d/Connector_USB.3dshapes
+%_datadir/kicad/modules/packages3d/Connector*.3dshapes
 
 %files part2
 %dir %_datadir/kicad
@@ -147,8 +128,12 @@ Kicad-library содержит в себе 3D-модели для kicad.
 %_datadir/kicad/modules/packages3d/Sensor_Current.3dshapes
 %_datadir/kicad/modules/packages3d/Sensors.3dshapes
 %_datadir/kicad/modules/packages3d/TestPoint.3dshapes
+%_datadir/kicad/modules/packages3d/Transformer_SMD.3dshapes
 %_datadir/kicad/modules/packages3d/Valve.3dshapes
 
 %changelog
+* Thu Nov 22 2018 Anton Midyukov <antohami@altlinux.org> 5.0.1-alt1
+- New version 5.0.1
+
 * Wed Jul 18 2018 Anton Midyukov <antohami@altlinux.org> 5.0.0-alt1.rc3
 - Initial build for ALT Sisyphus
