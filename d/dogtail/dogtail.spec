@@ -1,5 +1,5 @@
 Name: dogtail
-Version: 0.9.10
+Version: 0.9.11
 Release: alt1
 
 Summary: GUI test tool and automation framework
@@ -54,6 +54,9 @@ find examples -type f -exec chmod 0644 \{\} \;
 %_iconsdir/hicolor/scalable/*
 
 %changelog
+* Sun Nov 18 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.11-alt1
+- new version 0.9.11 (with rpmrb script)
+
 * Wed Aug 15 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.10-alt1
 - new version 0.9.10 (with rpmrb script)
 
