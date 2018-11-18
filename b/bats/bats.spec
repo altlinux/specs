@@ -1,20 +1,22 @@
 Name: bats
-Version: 1.0
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: Testing framework for Bash
 Summary(ru_RU.UTF-8): Набор тестов на Bash
 
 License: Free to copy, develop, use and (re)distribute.
 Group: Development/Other
-Url: https://github.com/sstephenson/bats
+Url: https://github.com/bats-core/bats-core
 
-Packager: Anton Agapov (Etersoft) <anton@altlinux.org>
-
+# Source-git: https://github.com/bats-core/bats-core.git
 Source: %name-%version.tar
 
 BuildArch: noarch
 Requires: bash
+
+# due syntax error
+AutoReq:yes,noshell
 
 %description
 Bats is a testing framework for Bash.
@@ -29,17 +31,18 @@ Bats - вспомогательный фреймворк для Bash'а.
 
 %install
 ./install.sh %buildroot%prefix
-rm -f %buildroot%_bindir/bats
-ln -s ../share/bats/bats %buildroot%_bindir/bats
 
 %files
-%doc LICENSE man/*
+%doc LICENSE.md AUTHORS man/*
 %_man1dir/*
 %_man7dir/*
 %_bindir/bats
-%_datadir/bats/
+%_datadir/bats-core/
 
 %changelog
+* Sun Nov 18 2018 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
+- new version
+
 * Fri Mar 11 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt2
 - cleanup spec
 
