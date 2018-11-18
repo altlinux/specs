@@ -3,8 +3,8 @@
 
 %define dest_dir %_libdir/OpenBoard
 Name: OpenBoard
-Version: 1.3.6
-Release: alt3.1%ubt
+Version: 1.4.1
+Release: alt1
 Summary: Interactive whiteboard for schools and universities
 License: GPL-3.0+
 Group: Education
@@ -18,7 +18,6 @@ Patch0: %name-no_Third-Party.patch
 Patch1: %name-XPDFRenderer_with_poppler.patch
 # PATCH-FEATURE-UPSTREAM OpenBoard-1.3.6-add-openssl-1.1-compat.patch -- Add compatibility with OpenSSL 1.1 API
 Patch2: OpenBoard-1.3.6-add-openssl-1.1-compat.patch
-Patch4: single_application.patch
 
 Buildrequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libgomp-devel
@@ -26,8 +25,15 @@ BuildRequires: desktop-file-utils
 BuildRequires: libpaper-devel
 BuildRequires: libssl-devel
 BuildRequires: libquazip-qt5-devel
+BuildRequires: libqtsingleapplication-qt5-devel
 BuildRequires: t1lib-devel
+BuildRequires: libavcodec-devel libavformat-devel libswscale-devel libswresample-devel
+BuildRequires: libalsa-devel libvpx-devel libvorbis-devel libtheora-devel libogg-devel
+BuildRequires: libopus-devel liblame-devel libass-devel
+BuildRequires: liblzma-devel bzlib-devel
 BuildRequires: pkgconfig(Qt5Core)
+BuildRequires: pkgconfig(Qt5Gui)
+BuildRequires: pkgconfig(Qt5Help)
 BuildRequires: pkgconfig(Qt5Multimedia)
 BuildRequires: pkgconfig(Qt5MultimediaWidgets)
 BuildRequires: pkgconfig(Qt5Network)
@@ -42,8 +48,11 @@ BuildRequires: pkgconfig(Qt5XmlPatterns)
 BuildRequires: pkgconfig(libpulse-mainloop-glib)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(hunspell)
+BuildRequires: pkgconfig(freetype2)
+BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(poppler)
 BuildRequires: pkgconfig(poppler-cpp)
+BuildRequires: pkgconfig(sdl)
 
 %description
 Interactive whiteboard for schools and universities.
@@ -53,10 +62,19 @@ Interactive whiteboard for schools and universities.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch4 -p1
+
+# remove unwanted and nonfree libraries
+sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
+sed -i -e 's|-lx264 ||' src/podcast/podcast.pri
 
 %build
-%qmake_qt5 INCLUDEPATH+=%_includedir/quazip5 INCLUDEPATH+=%_includedir/poppler %name.pro
+%_qt5_bindir/lrelease -removeidentical %name.pro
+
+%qmake_qt5 \
+    INCLUDEPATH+=%_includedir/quazip5 \
+    INCLUDEPATH+=%_includedir/poppler \
+    INCLUDEPATH+=%_includedir/qt5/QtSolutions \
+    %name.pro
 %make_build
 
 %install
@@ -77,8 +95,7 @@ StartupNotify=true
 Terminal=false
 Type=Application
 MimeType=application/x-%name;
-Categories=Qt;KDE;Education;Engineering;
-X-SuSE-translate=false
+Categories=Education;Engineering;
 EOF
 
 install -D -m 0755 build/linux/release/product/%name %buildroot%dest_dir/%name
@@ -131,6 +148,9 @@ cp -R resources/customizations %buildroot%dest_dir/
 %_bindir/%name
 
 %changelog
+* Sat Nov 17 2018 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt1
+- new version 1.4.1
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.6-alt3.1%ubt
 - NMU: Rebuild with new openssl 1.1.0.
 

@@ -1,14 +1,16 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define oname quazip
 Name: libquazip
-Version: 0.7.3
+Version: 0.7.6
 Release: alt1
 Summary: Qt/C++ wrapper for the minizip library
 License: GPLv2+ or LGPLv2+
 Group: System/Libraries
-Url: http://quazip.sourceforge.net/
+Url: https://github.com/stachenov/quazip
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
-Patch0: quazip-0.7.2-fix_static.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
@@ -30,8 +32,8 @@ from and writing to ZIP archives.
 %package devel
 Summary: Development files for %oname
 Group: Development/C
-Requires: %name%{?_isa} = %version-%release
-Requires: libqt4-devel%{?_isa}
+Requires: %name
+Requires: libqt4-devel
 
 %description devel
 The %name-devel package contains libraries, header files and documentation
@@ -55,7 +57,7 @@ from and writing to ZIP archives.
 %package qt5-devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name-qt5%{?_isa} = %version-%release
+Requires: %name-qt5
 Requires: qt5-base-devel%{?_isa}
 
 %description qt5-devel
@@ -64,7 +66,6 @@ for developing applications that use %name.
 
 %prep
 %setup
-%patch0 -p1 -b .orig
 
 %build
 mkdir build-qt4
@@ -88,8 +89,11 @@ done
 %make_install install/fast DESTDIR=%buildroot -C build-qt5
 %make_install install/fast DESTDIR=%buildroot -C build-qt4
 
+#remove static library
+rm -f %buildroot%_libdir/*.a
+
 %files
-%doc COPYING NEWS.txt README.txt
+%doc COPYING NEWS.txt README.md
 %_libdir/libquazip.so.1*
 
 %files devel
@@ -99,7 +103,7 @@ done
 %_datadir/cmake/Modules/FindQuaZip.cmake
 
 %files qt5
-%doc COPYING NEWS.txt README.txt
+%doc COPYING NEWS.txt README.md
 %_libdir/libquazip5.so.1*
 
 %files qt5-devel
@@ -109,6 +113,9 @@ done
 %_datadir/cmake/Modules/FindQuaZip5.cmake
 
 %changelog
+* Sat Nov 17 2018 Anton Midyukov <antohami@altlinux.org> 0.7.6-alt1
+- Version 0.7.6
+
 * Fri Nov 10 2017 Anton Midyukov <antohami@altlinux.org> 0.7.3-alt1
 - Version 0.7.3
 
