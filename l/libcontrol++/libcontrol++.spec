@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.15.2
+Version: 0.16.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -65,6 +65,12 @@ cp libcontrol++/src/*.h %buildroot%_includedir/libcontrol++
 %_includedir/libcontrol++/
 
 %changelog
+* Sun Nov 18 2018 Alexey Appolonov <alexey@altlinux.org> 0.16.0-alt1
+- TFileMode as common interface for TFilePerm and TFileACL classes;
+- TGroupOfFilesMode for handling params of a group of files;
+- TSectorType for determining and storing sector types of a mode description;
+- Ability to check if file is a dir.
+
 * Sun Nov 11 2018 Alexey Appolonov <alexey@altlinux.org> 0.15.2-alt1
 - Fix of the checks made during access to the TRunMode flags;
 - Enhanced constructor of the TFilePerm and TFileACL.
