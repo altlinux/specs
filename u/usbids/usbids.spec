@@ -1,5 +1,5 @@
 Name: usbids
-Version: 20181028
+Version: 20181118
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -28,6 +28,9 @@ install -pD -m644 %SOURCE0 %buildroot%_datadir/misc/usb.ids
 %_datadir/misc/usb.ids
 
 %changelog
+* Sun Nov 18 2018 Cronbuild Service <cronbuild@altlinux.org> 20181118-alt1
+- repocop cronbuild 20181118. At your service.
+
 * Sun Oct 28 2018 Cronbuild Service <cronbuild@altlinux.org> 20181028-alt1
 - repocop cronbuild 20181028. At your service.
 
