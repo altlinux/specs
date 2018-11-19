@@ -26,11 +26,11 @@ Name: parted
 Version: 3.2
 %define prerel %nil
 %define git_version %{version}.46-e4ae
-Release: alt4
+Release: alt5
 
 Summary: Flexible partitioning tool
-Summary(uk_UA.CP1251): Универсальний інструмент для роботи з разділами диску
-Summary(ru_RU.CP1251): Универсальный инструмент для работы с разделами диска
+Summary(uk_UA.UTF-8): Универсальний інструмент для роботи з разділами диску
+Summary(ru_RU.UTF-8): Универсальный инструмент для работы с разделами диска
 License: GPL3+
 Group: System/Configuration/Hardware
 URL: http://www.gnu.org/software/%name
@@ -65,13 +65,13 @@ move and copy hard disk partitions. This is useful for creating space
 for new operating systems, reorganising disk usage, and copying data to
 new hard disks.
 
-%description -l uk_UA.CP1251
+%description -l uk_UA.UTF-8
 GNU %Name - програма для створення, знищення, зміни розміру,
 переміщення та копіювання розділів диску. Це може бути корисним при
 створенні місця для нових операційних систем, реорганізації
 використання диску та копіювання даних на новий жорсткий диск.
 
-%description -l ru_RU.CP1251
+%description -l ru_RU.UTF-8
 GNU %Name - программа для создания, уничтожения, изменения размера,
 перемещения и копирования разделов диска. Это может быть полезно при
 создании места для новых операционных систем, реорганизации
@@ -87,11 +87,11 @@ Group: System/Libraries
 This package includes the shared library needed to run
 %lname-based software.
 
-%description -n %lname -l uk_UA.CP1251
+%description -n %lname -l uk_UA.UTF-8
 Цей пакет включає в себе роздільні бібліотеки, необхідні для запуску
 програм, що використовують %lname.
 
-%description -n %lname -l ru_RU.CP1251
+%description -n %lname -l ru_RU.UTF-8
 Этот пакет включает в себя разделяемые библиотеки, необходимые для
 запуска программ, которые используют %lname.
 %endif
@@ -106,10 +106,10 @@ Obsoletes: %name-devel
 %description -n %lname-devel
 This package includes the header files.
 
-%description -n %lname-devel -l uk_UA.CP1251
+%description -n %lname-devel -l uk_UA.UTF-8
 Цей пакет включає в себе файли заголовків.
 
-%description -n %lname-devel -l ru_RU.CP1251
+%description -n %lname-devel -l ru_RU.UTF-8
 Этот пакет включает в себя файлы заголовков.
 
 %if_enabled static
@@ -124,11 +124,11 @@ Obsoletes: %name-devel-static
 This package includes the libraries needed to statically link software
 with %lname.
 
-%description -n %lname-devel-static -l uk_UA.CP1251
+%description -n %lname-devel-static -l uk_UA.UTF-8
 Цей пакет включає в себе бібліотеки, необхідні для статичного
 лінкування з %lname.
 
-%description -n %lname-devel-static -l ru_RU.CP1251
+%description -n %lname-devel-static -l ru_RU.UTF-8
 Этот пакет включает в себя библиотеки, необходимые для статической
 линковки с %lname.
 %endif
@@ -235,6 +235,9 @@ __MENU__
 
 
 %changelog
+* Mon Nov 19 2018 Anton Farygin <rider@altlinux.ru> 3.2-alt5
+- fixed charset in package summary and description (closes: #33045)
+
 * Mon Jul 03 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.2-alt4
 - (.spec) BuildPreReq: autoconf >= 2.63 automake >= 1.11.6
   (due to configure.ac).
