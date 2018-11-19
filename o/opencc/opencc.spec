@@ -1,6 +1,6 @@
 Name:       opencc
 Version:    1.0.5
-Release:    alt1.qa1
+Release:    alt1.qa2
 Summary:    Libraries for Simplified-Traditional Chinese Conversion
 
 License:    ASL 2.0
@@ -63,10 +63,10 @@ export LD_LIBRARY_PATH=%_builddir/%name-%version/BUILD/src
 %cmakeinstall_std
 rm -f %buildroot%_libdir/*.a
 
+%find_lang %name
+
 %check
 make test -C BUILD
-
-%find_lang %name
 
 %files -f %{name}.lang
 %doc AUTHORS LICENSE README.md
@@ -87,6 +87,9 @@ make test -C BUILD
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Nov 19 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.5-alt1.qa2
+- spec: moved %%find_lang to %%install section.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1.qa1
 - NMU: applied repocop patch
 
