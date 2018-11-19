@@ -1,6 +1,7 @@
+%add_python3_path /usr/share/lirc/python-pkg/
 Name: lirc
-Version: 0.9.4d
-Release: alt1%ubt
+Version: 0.10.1
+Release: alt1
 
 Summary: The Linux Infrared Remote Control package
 License: GPL
@@ -12,14 +13,16 @@ Source1: lircd
 Source2: lircd.sysconfig
 Source3: lircd.service
 Source4: liblircclient0.pc
+Source5: confs_by_driver.yaml
 
-Patch1: lirc-0.9.2a-linking.patch
-Patch2: lirc-0.9.4-alt-build.patch
+Patch1: lirc-0.10.1-disable-getconfig.patch
 
 Obsoletes: %name-remotes
 
-BuildRequires: libX11-devel libalsa-devel libftdi1-devel python3 rpm-build-python3 xsltproc gcc-c++
-BuildRequires(pre): rpm-build-ubt
+BuildRequires: libX11-devel libalsa-devel python3-dev xsltproc gcc-c++
+BuildRequires: python3-module-setuptools libsystemd-devel libportaudio2-devel
+BuildRequires: python3-module-yaml
+BuildRequires(pre): rpm-build-python3
 
 Requires: liblirc = %version-%release
 
@@ -45,8 +48,9 @@ Development library for LIRC
 %package config
 Summary: LIRC Configuration Tools and Data
 Requires: lirc = %version-%release
-BuildArch: noarch
 Group: System/Base
+Requires: python3-module-pygobject3-pygtkcompat
+Requires: python3-module-yaml
 
 %description config
 The LIRC config package contains tools and data  to ease the
@@ -54,34 +58,33 @@ LIRC configuration process.
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p1
-
-#for f in NEWS ChangeLog AUTHORS contrib/lircrc ; do
-#    iconv -f iso-8859-1 -t utf-8 $f > $f.utf8 ; mv $f.utf8 $f
-#done
+%patch1 -p1
 
 %build
 %add_optflags -I%_includedir/libftdi
+cp %SOURCE5 configs/
 %autoreconf
 %configure  --disable-static --localstatedir=%_var \
 	    --with-x --with-syslog --with-driver=userspace \
+	    --enable-uinput --enable-devinput \
 	    --with-port=0x3f8 --with-irq=4
 make
 
 %install
-%makeinstall varrundir=%buildroot/%_runtimedir docdir=%buildroot%_defaultdocdir/%name-%version
+%makeinstall_std varrundir=%buildroot/%_runtimedir docdir=%_defaultdocdir/%name-%version
 install -pm755 -D %SOURCE1 %buildroot%_initdir/lircd
 install -pm644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/lircd
-install -pm644 -D %SOURCE3 %buildroot%systemd_unitdir/lircd.service
 install -pm644 -D %SOURCE4 %buildroot%_datadir/pkgconfig/liblircclient0.pc
 mkdir -p %buildroot/%_runtimedir/lirc %buildroot%_tmpfilesdir
-echo 'd /var/run/lirc 0755 root root' > %buildroot%_tmpfilesdir/lirc.conf
+echo 'd /run/lirc 0755 root root' > %buildroot%_tmpfilesdir/lirc.conf
 # relocate to docdir to avoid python deps
 rm -f %buildroot%_bindir/pronto2lirc
 rm -rf %buildroot%_datadir/lirc/contrib
 mv %buildroot/%_libdir/pkgconfig/* %buildroot%_datadir/pkgconfig/
 sed -i -e '/^plugindir/s|%buildroot||' %buildroot%_sysconfdir/lirc/lirc_options.conf
+ln -sf `readlink %buildroot%_bindir/lirc-setup|sed 's,3.6,3,'` %buildroot%_bindir/lirc-setup
+mkdir -p %buildroot%python3_sitelibdir/lirc
+cp %buildroot%_datadir/lirc/python-pkg/config.py %buildroot%python3_sitelibdir/lirc
 
 
 
@@ -103,12 +106,14 @@ fi
 
 %preun
 %preun_service lircd
+
 %files
 %doc NEWS doc/irxevent.keys doc/html configs contrib
 %config(noreplace) %_sysconfdir/sysconfig/lircd
 %config(noreplace) %_sysconfdir/lirc/*
 %dir %_sysconfdir/lirc
-%systemd_unitdir/lircd.service
+%systemd_unitdir/*.service
+%systemd_unitdir/*.socket
 %_initdir/*
 %_bindir/*
 %exclude %_bindir/irdb-get
@@ -116,6 +121,7 @@ fi
 %exclude %_bindir/lirc-setup
 %attr(2711,root,%name) %_sbindir/lircd
 %_sbindir/lircmd
+%_sbindir/lircd-uinput
 %_sbindir/lirc-lsplugins
 %_man1dir/*.1*
 %exclude %_mandir/man1/irdb-get*
@@ -146,11 +152,24 @@ fi
 %_mandir/man1/irdb-get*
 %_mandir/man1/lirc-config-tool*
 %_mandir/man1/lirc-setup*
-%_datadir/lirc/configs/*
-%python3_sitelibdir_noarch/lirc
+%_datadir/lirc/configs
+%_datadir/lirc/lirc.hwdb
+%_datadir/lirc/python-pkg
+%python3_sitelibdir/lirc
+%python3_sitelibdir/lirc-setup
 
 %changelog
-* Thu May 11 2017 Anton Farygin <rider@altlinux.ru> 0.9.4d-alt1%ubt
+* Mon Nov 19 2018 Anton Farygin <rider@altlinux.ru> 0.10.1-alt1
+- 0.10.1
+- enabled systemd support
+- enabled portaudio
+- enabled uinput and devinput
+- disabled libusb and libftdi (closes: #32774)
+
+* Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 0.10.0-alt1
+- new version
+
+* Thu May 11 2017 Anton Farygin <rider@altlinux.ru> 0.9.4d-alt1
 - new version
 
 * Thu Apr 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9.3a-alt1.3
