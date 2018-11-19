@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 7.3.1
-Release: alt5
+Release: alt6
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -86,6 +86,18 @@ Url: http://gcc.gnu.org/
 
 # Build parameters.
 %def_enable bootstrap
+# When we want to change a newer gcc, we have to:
+# 0. build gcc N in precompat mode;
+# 1. build gcc N+1 with gcc N;
+# 2. build gcc N in compat mode.
+# Unfortunately, if we skip stage 0 at stage 2. installation of gсс N
+# is broken because it has strict requirements on libgcc1 package,
+# but hasher installs libgcc1 from gcc N+1 early.
+# precompat knob disables interpackage dependencies optimization
+# and changes interpackage dependencies to non-strict (>=);
+# this gcc is expected to be installable at stage 2.
+# BTW, compat and precompat are mutually exclusive.
+%def_enable precompat
 %def_disable compat
 %def_enable multilib
 %def_with fortran
@@ -101,6 +113,12 @@ Url: http://gcc.gnu.org/
 %endif
 %def_enable source
 %def_with jit
+%else
+%define REQ >=
+%endif
+
+%if_disabled precompat
+%define REQ =
 %else
 %define REQ >=
 %endif
@@ -1504,6 +1522,9 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 mkdir -p %buildroot%gcc_sourcedir
 cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif
+%if_enabled precompat
+%define _deps_optimization 0
+%endif
 
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
@@ -1657,12 +1678,14 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files -n libatomic1
 %_libdir/libatomic.so.1*
 %endif
+%endif #compat
 
 %ifarch %libasan_arches
 %files -n libasan4
 %_libdir/libasan.so.4*
 %endif
 
+%if_disabled compat
 %ifarch %libtsan_arches
 %files -n libtsan0
 %_libdir/libtsan.so.0*
@@ -1680,12 +1703,14 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files -n liblsan0
 %_libdir/liblsan.so.0*
 %endif
+%endif #compat
 
 %ifarch %libubsan_arches
 %files -n libubsan0
 %_libdir/libubsan.so.0*
 %endif
 
+%if_disabled compat
 %ifarch %libquadmath_arches
 %files -n libquadmath0
 %_libdir/libquadmath.so.0*
@@ -1901,10 +1926,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_objc
 
 %if_with fortran
-%if_disabled compat
 %files -n libgfortran4
 %_libdir/libgfortran.so.4*
-%endif # compat
 
 %files -n libgfortran%gcc_branch-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/libgfortran%gcc_branch-devel
@@ -2049,6 +2072,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Tue Oct 30 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.3.1-alt6
+- Rebuilt in precompat mode to prepare for gcc8 build.
+
 * Fri Jul 13 2018 Dmitry V. Levin <ldv@altlinux.org> 7.3.1-alt5
 - Updated to redhat/gcc-7-branch r262599 (closes: #35089).
 - Synced with Fedora gcc 7.3.1-6.
