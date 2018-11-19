@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-menhir
-Version: 20181026
+Version: 20181113
 Release: alt1
 Summary: LR(1) parser generator for the OCaml programming language.
 
@@ -58,6 +58,9 @@ rm -rf %buildroot%_datadir/doc/%name-%version/src/
 %_libdir/ocaml/menhirSdk/*
 
 %changelog
+* Mon Nov 19 2018 Anton Farygin <rider@altlinux.ru> 20181113-alt1
+- 20181113
+
 * Thu Nov 01 2018 Anton Farygin <rider@altlinux.ru> 20181026-alt1
 - 20181026
 
