@@ -1,8 +1,8 @@
 %def_with debug
 
 Name: 	 qcad
-Version: 3.21.3.2
-Release: alt2
+Version: 3.21.3.7
+Release: alt1
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
 
@@ -125,6 +125,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Nov 19 2018 Andrey Cherepanov <cas@altlinux.org> 3.21.3.7-alt1
+- New version.
+
 * Tue Oct 16 2018 Andrey Cherepanov <cas@altlinux.org> 3.21.3.2-alt2
 - Build with system libquazip-qt5 (ALT #35510). (thanks antohami@)
 - Remove duplicate categories in desktop file. (thanks antohami@)
