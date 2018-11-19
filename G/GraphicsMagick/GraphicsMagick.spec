@@ -51,7 +51,7 @@
 Name: %Name
 %define lname lib%name
 Version: 1.3.30
-Release: alt1
+Release: alt2
 Summary: An X application for displaying and manipulating images
 Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
 License: %mit
@@ -64,7 +64,7 @@ Requires: %name-common = %version-%release
 
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Fri Jan 19 2007
-BuildRequires: chrpath dcraw enscript libgegl ghostscript-classic gnuplot graphviz groff-base imake libltdl-devel mpeg2vidcodec netpbm transfig wget wmf-utils xorg-cf-files xterm zip p7zip
+BuildRequires: chrpath dcraw enscript libgegl ghostscript-classic gnuplot graphviz groff-base imake libfreetype-devel libltdl-devel mpeg2vidcodec netpbm transfig wget wmf-utils xorg-cf-files xterm zip p7zip
 %{?_with_bzlib:BuildRequires: bzlib-devel}
 %{?_with_perl:BuildRequires: perl-devel}
 %{?_with_x:BuildRequires: libSM-devel libXext-devel}
@@ -512,6 +512,9 @@ __MENU__
 %endif
 
 %changelog
+* Mon Nov 19 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.30-alt2
+- built with freetype library (closes: 22348)
+
 * Thu Nov 15 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.30-alt1
 - 1.3.30 released
 
