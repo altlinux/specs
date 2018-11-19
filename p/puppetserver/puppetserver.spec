@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:       puppetserver
-Version:    6.0.0
-Release:    alt1.qa1%ubt
+Version:    6.0.2
+Release:    alt1
 
 Summary:    Server automation framework and application
 License:    Apache-2.0
@@ -142,6 +142,9 @@ chmod 700 /var/lib/puppetserver/jars
 
 
 %changelog
+* Mon Nov 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 6.0.2-alt1
+- version updated to 6.0.2
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt1.qa1%ubt
 - NMU: applied repocop patch
 
