@@ -4,7 +4,7 @@
 
 Name:           mintmenu
 Version:        5.9.0
-Release:        alt5
+Release:        alt6
 Epoch:          1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
@@ -44,7 +44,7 @@ Patch45: 	mintmenu-alt-set-default-PATH.patch
 Patch46: 	mintmenu-alt-use-themed-app-list.patch
 Patch47: 	mintmenu-alt-delete-recent-for-current-page.patch
 Patch48:    mintmenu-fix-exec-field.patch
-Patch49:    mintmenu-fix-uninstall-package.patch
+Patch49:    mintmenu-remove-uninstall-packages.patch
 
 Requires: dconf mate-search-tool
 # not detected by rpm-build-python
@@ -99,7 +99,7 @@ added to your gnome-panel or launched in its own window.
 %patch46 -p1
 %patch47 -p1
 %patch48 -p0
-%patch49 -p0
+%patch49 -p1
 
 # Replace path to %%_datadir
 subst 's,/usr/lib/linuxmint,%_datadir/linuxmint,g' `find usr -type f`
@@ -158,6 +158,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-baseal
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Mon Nov 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:5.9.0-alt6
+- uninstall packages removed
+
 * Thu Nov 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:5.9.0-alt5
 - Running applications fixed
 - Uninstall packages fixed
