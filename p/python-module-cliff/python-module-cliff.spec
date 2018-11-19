@@ -4,13 +4,14 @@
 
 Name: python-module-%oname
 Version: 2.4.0
-Release: alt1.1
+Release: alt2
 Summary: Command Line Interface Formulation Framework
 
 Group: Development/Python
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Patch: python-module-cliff-2.4.0-alt-tests.patch
 
 BuildArch: noarch
 
@@ -93,6 +94,7 @@ Documentation for the Command Line Interface Formulation Framework.
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
@@ -132,12 +134,12 @@ popd
 
 %check
 PYTHONPATH=. nosetests
-#%if_with python3
-#pushd ../python3
-#sed -i 's/nosetests/nosetests3/' cliff/tests/test_help.py
-#PYTHONPATH=. nosetests3
-#popd
-#%endif
+%if_with python3
+pushd ../python3
+sed -i 's/nosetests/nosetests3/' cliff/tests/test_help.py
+PYTHONPATH=. nosetests3
+popd
+%endif
 
 %files
 %doc AUTHORS ChangeLog *.rst
@@ -161,6 +163,10 @@ PYTHONPATH=. nosetests
 %doc html
 
 %changelog
+* Mon Nov 19 2018 Leontiy Volodin <lvol@altlinux.org> 2.4.0-alt2
+- fixed build
+- added patch for tests
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.4.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
