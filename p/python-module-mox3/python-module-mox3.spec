@@ -4,12 +4,13 @@
 
 Name: python-module-%pypi_name
 Version: 0.20.0
-Release: alt1.1
+Release: alt2
 Summary: Mock object framework for Python
 License: Apache-2.0
 Group: Development/Python
 Url: http://docs.openstack.org/developer/%pypi_name
 Source: https://tarballs.openstack.org/%pypi_name/%pypi_name-%version.tar.gz
+Patch: python-module-mox3-0.20.0-alt-tests.patch
 
 BuildArch:      noarch
 
@@ -97,6 +98,7 @@ This package contains tests for %pypi_name.
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -165,6 +167,10 @@ popd
 %endif
 
 %changelog
+* Mon Nov 19 2018 Leontiy Volodin <lvol@altlinux.org> 0.20.0-alt2
+- Fixed build
+- Added patch for tests
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.20.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
