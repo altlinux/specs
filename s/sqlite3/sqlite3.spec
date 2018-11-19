@@ -1,6 +1,6 @@
 Name: sqlite3
 Version: 3.26.0
-Release: alt1
+Release: alt2
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
 Group: Development/Databases
@@ -21,6 +21,8 @@ Patch4: sqlite3-fedora-percentile-test.patch
 # Patch from Fedora: Disable test date-2.2c on i586
 # The test always failing and seems no one cares.
 Patch5: sqlite3-fedora-datetest-2.2c.patch
+
+Patch6: sqlite3-alt-build-dependencies.patch
 
 Patch10: sqlite-3.7.7.1-fedora-stupid-openfiles-test.patch
 
@@ -114,6 +116,8 @@ embedded controllers.
 %patch5 -p1
 %endif
 
+%patch6 -p1
+
 %patch10 -p1
 
 %build
@@ -126,6 +130,7 @@ export CFLAGS="%optflags \
 	-DSQLITE_ENABLE_FTS3=1 \
 	-DSQLITE_ENABLE_UNLOCK_NOTIFY=1 \
 	-DSQLITE_SECURE_DELETE=1 \
+	-DSQLITE_ENABLE_JSON1=1 \
 	-fno-strict-aliasing "
 %ifarch %e2k
 # FIXME: lcc-1.23 lacks some gcc5 builtins
@@ -193,6 +198,9 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Fri Feb 01 2019 Alexandr Antonov <aas@altlinux.org> 3.26.0-alt2
+- Enable JSON1
+
 * Sat Jan 12 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

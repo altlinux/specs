@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.5.1527308405.8b586d5
-Release: alt1.2
+Release: alt2
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -44,8 +44,10 @@ BuildRequires: perl(Test/Output.pm)
 BuildRequires: perl(Test/Pod.pm)
 BuildRequires: perl(Test/Warnings.pm)
 BuildRequires: perl(Try/Tiny.pm)
+BuildRequires: perl(Mojo/IOLoop/ReadWriteProcess.pm)
+BuildRequires: perl(Test/Exception.pm)
 #BuildConflicts: pve-qemu-aux pve-qemu-img
-#BuildRequires: /usr/bin/qemu-system-i386
+BuildRequires: /usr/bin/qemu-system-i386
 #BuildRequires: /usr/bin/qemu-img
 BuildRequires: qemu-img qemu-aux
 BuildRequires: perl(Mojo/File.pm)
@@ -83,6 +85,8 @@ This package contains Open vSwitch support for os-autoinst.
 %prep
 %setup
 %patch0 -p1
+sed  -i 's/ my $thisversion = qx{git rev-parse HEAD};/ my $thisversion = "%version";/' isotovideo
+sed  -i 's/ chomp(my $git_hash = qx{git rev-parse HEAD});/ chomp(my $git_hash = "%version");/' OpenQA/Isotovideo/Utils.pm
 rm -f t/99-full-stack.t
 sed -i -e 's, 99-full-stack.t,,g' t/Makefile.am
 sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|' Makefile.am
@@ -118,6 +122,9 @@ sed -i -e '/tidy --check/d' Makefile
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Tue Feb 5 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1527308405.8b586d5-alt2
+- update to current version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.1527308405.8b586d5-alt1.2
 - rebuild with new perl 5.28.1
 
