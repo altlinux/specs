@@ -1,8 +1,8 @@
 %define binutils_sourcedir /usr/src/binutils-source
 
 Name: binutils
-Version: 2.30.0
-Release: alt2
+Version: 2.31.1
+Release: alt1
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -18,7 +18,7 @@ Source3: g++.sh
 Source4: ld.sh
 Source5: output-format.sed
 
-Patch: binutils-2_30-branch.patch
+Patch: binutils-2_31-branch.patch
 
 Patch0001: 0001-Add-lto-and-none-lto-input-support-for-ld-r.patch
 Patch0002: 0002-Add-test-for-nm-on-mixed-LTO-non-LTO-object.patch
@@ -225,7 +225,7 @@ install -pm644 %_sourcedir/bfd.h %buildroot%_includedir/bfd/
 # Add more include files.
 install -pm644 include/libiberty.h %buildroot%_includedir/
 install -pm644 bfd/{elf-bfd,lib*}.h %buildroot%_includedir/bfd/
-cp -a include/{coff,elf,nlm} %buildroot%_includedir/bfd/
+cp -a include/{coff,elf} %buildroot%_includedir/bfd/
 rm %buildroot%_includedir/bfd/{*in.h,*/ChangeLog*}
 
 # Install NEWS.
@@ -277,6 +277,9 @@ XFAIL_TESTS="$XFAIL_TESTS icf_safe_so_test.sh"
 %binutils_sourcedir
 
 %changelog
+* Thu Nov 08 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.31.1-alt1
+- Updated to 2.31.1 20181107.
+
 * Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 1:2.30.0-alt2
 - Dropped ld.bfd/ld.gold alternatives in favour of ld wrapper setup:
   use LD_FLAVOUR=bfd/gold to control the flavour of ld.

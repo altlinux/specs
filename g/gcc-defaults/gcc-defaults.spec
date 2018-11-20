@@ -1,13 +1,12 @@
 %set_compress_method none
 
-%define gcc_branch 7
+%define gcc_branch 8
 %define psuffix -%gcc_branch
 
 %define gnat_arches		%ix86 x86_64
 %define go_arches		%ix86 x86_64
 %define libasan_arches		%ix86 x86_64 %arm aarch64
 %define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x
-%define libcilkrts_arches	%ix86 x86_64
 %define libitm_arches		%ix86 x86_64 %arm aarch64 s390x
 %define liblsan_arches		x86_64 aarch64
 %define libmpx_arches		%ix86 x86_64
@@ -18,7 +17,7 @@
 
 Name: gcc-defaults
 Version: %gcc_branch
-Release: alt6
+Release: alt1
 License: None
 Group: Development/Other
 
@@ -178,10 +177,6 @@ This is metapackage for %{1}-%{2}. \
 %ifarch %libatomic_arches
 %do_package libatomic devel-static 1 #
 %endif
-%ifarch %libcilkrts_arches
-%do_package libcilkrts devel 1 #
-%do_package libcilkrts devel-static 1 #
-%endif
 %ifarch %gnat_arches
 %do_package libgnat devel 1 #
 %do_package libgnat devel-static 1 #
@@ -301,6 +296,10 @@ ln_bin gnat gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls \
 %endif
 
 %changelog
+* Mon Oct 29 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 8-alt1
+- Changed default gcc version to 8.
+- Dropped libcilkrts-* subpackages.
+
 * Wed Jun 06 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 7-alt6
 - Fixed installation (with rpm --excludedocs option) of subpackages containing
   symlinks on gcc manpages (ALT#34996).
