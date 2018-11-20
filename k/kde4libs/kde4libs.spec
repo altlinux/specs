@@ -18,7 +18,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt2%ubt
+Release: alt3
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -363,6 +363,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Tue Nov 20 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.38-alt3
+- load dolphin translations to file dialogs
+
 * Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.38-alt2%ubt
 - build with openssl-1.1
 
