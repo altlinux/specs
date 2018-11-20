@@ -1,5 +1,5 @@
 Name: spl
-Version: 0.7.11
+Version: 0.7.12
 Release: alt1
 Summary: Solaris Porting Layer (SPL)
 License: CDDL
@@ -60,6 +60,9 @@ install -pD -m0644 %name-%version.tar.xz %kernel_srcdir/%name-%version.tar.xz
 %_usrsrc/kernel
 
 %changelog
+* Tue Nov 20 2018 Anton Farygin <rider@altlinux.ru> 0.7.12-alt1
+- 0.7.12 
+
 * Thu Oct 04 2018 Anton Farygin <rider@altlinux.ru> 0.7.11-alt1
 - 0.7.11
 

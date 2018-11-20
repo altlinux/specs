@@ -2,14 +2,14 @@
 %global _localstatedir %_var
 
 Name: zfs
-Version: 0.7.11
+Version: 0.7.12
 Release: alt1
 Summary: ZFS on Linux
 License: CDDL
 Group: System/Kernel and hardware
 URL: http://zfsonlinux.org/
 Conflicts: fuse-zfs
-Requires: spl-utils
+Requires: spl-utils = %version
 
 Source0: %name-%version.tar
 Patch1: zfs-0.7.9-import-by-disk-id.patch
@@ -185,6 +185,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Tue Nov 20 2018 Anton Farygin <rider@altlinux.ru> 0.7.12-alt1
+- 0.7.12
+
 * Thu Oct 04 2018 Anton Farygin <rider@altlinux.ru> 0.7.11-alt1
 - 0.7.11
 
