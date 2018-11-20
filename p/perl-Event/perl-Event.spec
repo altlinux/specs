@@ -2,15 +2,15 @@
 %define dist Event
 
 Name: perl-%dist
-Version: 1.26
-Release: alt1.1.1
+Version: 1.27
+Release: alt1
 
 Summary: Event loop processing
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETJ/Event-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETJ/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -22,7 +22,7 @@ delay the handling of events so that they may be dispatched in priority
 order when it is safe for callbacks to execute.
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,11 +31,14 @@ order when it is safe for callbacks to execute.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README README.EV Tutorial.pdf Tutorial.pdf-errata.txt
 %perl_vendor_archlib/Event*
 %perl_vendor_autolib/Event
 
 %changelog
+* Tue Nov 20 2018 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1.1.1
 - rebuild with new perl 5.26.1
 
