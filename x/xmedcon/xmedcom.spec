@@ -1,5 +1,5 @@
 Name: xmedcon
-Version: 0.13.0
+Version: 0.15.0
 Release: alt1
 
 Summary: A medical image conversion utility and library
@@ -8,9 +8,7 @@ Group: Graphics
 
 Url: http://xmedcon.sourceforge.net
 
-Packager: Andrey Yurkovsky <anyr@altlinux.org>
-
-Source0: %name-%version.tar.bz2
+Source0: %name-%version.tar
 Source1: %name.desktop
 Source2: %name.png
 
@@ -59,6 +57,7 @@ install -pD -m644 %SOURCE2 %buildroot%_liconsdir/%name.png
 %_man1dir/*
 %_liconsdir/%name.png
 %_datadir/applications/%name.desktop
+%_datadir/appdata/%name.appdata.xml
 
 %files devel
 %doc README COPYING COPYING.LIB
@@ -70,6 +69,12 @@ install -pD -m644 %SOURCE2 %buildroot%_liconsdir/%name.png
 %_datadir/aclocal/*
 
 %changelog
+* Tue Nov 20 2018 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
+* Wed Nov 01 2017 Anton Farygin <rider@altlinux.ru> 0.14.1-alt1
+- new version
+
 * Wed Mar 18 2015 Andrey Cherepanov <cas@altlinux.org> 0.13.0-alt1
 - New version
 - Small spec cleanup
