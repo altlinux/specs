@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Capture/Tiny.pm) perl(File/Path.pm) perl(FindBin.pm) perl(IO/All.pm) perl(Mo.pm) perl(Safe.pm) perl(Test/Builder.pm) perl(Test/Pod.pm) perl(Text/Diff.pm) perl(Time/HiRes.pm) perl-devel perl-podlators perl(XXX.pm) perl(JSON/PP.pm)
 # END SourceDeps(oneline)
 Name:           perl-Pegex
-Version:        0.67
+Version:        0.70
 Release:        alt1
 Summary:        Pegex Parser Generator
 License:        GPL+ or Artistic
@@ -81,6 +81,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Nov 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.70-alt1
+- automated CPAN update
+
 * Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.67-alt1
 - automated CPAN update
 
