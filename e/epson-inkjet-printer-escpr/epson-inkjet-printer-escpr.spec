@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 %define pkg     epson-inkjet-printer-escpr
-%define ver     1.6.32
+%define ver     1.6.33
 %define rel     1
 
 # used in RPM macro set for the LSB Driver Development Kit
@@ -85,6 +85,12 @@ gzip -n9 %buildroot%_datadir/cups/model/%name/*.ppd
 %_datadir/cups/model/%name
 
 %changelog
+* Tue Nov 20 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.33-alt1
+- New version.
+  - Supported new models:
+    + ET-4700 Series
+    + L1110 Series
+
 * Mon Oct 29 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.32-alt1
 - New version.
   * Supported new models:
