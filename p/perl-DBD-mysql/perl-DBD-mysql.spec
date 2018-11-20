@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBD-mysql
 Name: perl-%dist
-Version: 4.048
+Version: 4.049
 Release: alt1
 
 Summary: MySQL driver for DBI interface in Perl
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/M/MI/MICHIELB/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DV/DVEEDEN/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: libmysqlclient-devel perl-DBI-devel perl-Encode perl-devel perl(Devel/CheckLib.pm)
@@ -44,6 +44,9 @@ rm %buildroot%perl_vendor_archlib/Bundle/DBD/mysql.pm
 %perl_vendor_autolib/DBD
 
 %changelog
+* Tue Nov 20 2018 Igor Vlasenko <viy@altlinux.ru> 4.049-alt1
+- automated CPAN update
+
 * Thu Sep 20 2018 Igor Vlasenko <viy@altlinux.ru> 4.048-alt1
 - automated CPAN update
 
