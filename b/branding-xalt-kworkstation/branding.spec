@@ -1,3 +1,9 @@
+%ifarch %ix86 x86_64
+%def_enable gfxboot
+%else
+%def_disable gfxboot
+%endif
+
 %define Theme Workstation K
 %define smalltheme kworkstation
 %define codename Centaurea Ruthenica
@@ -6,13 +12,12 @@
 %define fakebrand xalt
 
 %define major 8
-%define minor 2
+%define minor 3
 %define bugfix 0
 %define altversion %major.%minor
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt3%ubt
-BuildArch: noarch
+Release: alt2
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -20,11 +25,9 @@ BuildArch: noarch
 %define design_graphics_abi_minor 0
 %define design_graphics_abi_bugfix 0
 
-BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-google-droid-sans
+BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
 BuildRequires: design-bootloader-source >= 5.0-alt2
-%ifnarch %arm
-BuildRequires: cpio gfxboot >= 4
-%endif
+BuildRequires: cpio %{?_enable_gfxboot:gfxboot >= 4}
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libalternatives-devel
@@ -143,16 +146,6 @@ PreReq: %name-graphics
 %description kde4-settings
 KDE4 settings for %ProductName
 
-%package kde3-settings
-BuildArch: noarch
-Summary: KDE3 settings for %ProductName
-License: Distributable
-Group: Graphical desktop/KDE
-PreReq: %name-graphics
-Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-kde3-settings ";done )
-%description kde3-settings
-KDE3 settings for %ProductName
-
 %package fvwm-settings
 BuildArch: noarch
 Summary: FVWM2 settings for %ProductName
@@ -212,7 +205,7 @@ ALT index.html welcome page.
 %prep
 %setup -n %name
 
-%ifnarch %arm
+%if_enabled gfxboot
 %define x86 boot
 %else
 %define x86 %nil
@@ -305,17 +298,6 @@ for n in gnome-mplayer mplayer gmplayer ; do
     echo -e "[Desktop Entry]\nHidden=true" > %buildroot/%_sysconfdir/skel/.local/share/applications/$n.desktop
 done
 
-#kde3-settings
-pushd kde3-settings
-mkdir -p %buildroot%_sysconfdir/skel/.kde
-cp -a kde/* %buildroot%_sysconfdir/skel/.kde/
-mkdir -p %buildroot%_sysconfdir/skel/.kde/share
-mkdir -p %buildroot%_sysconfdir/skel/.kde/share/config
-mkdir -p %buildroot%_sysconfdir/skel/.kde/share/apps
-cp -a config/* %buildroot%_sysconfdir/skel/.kde/share/config/
-cp -a apps/* %buildroot%_sysconfdir/skel/.kde/share/apps/
-popd
-
 #fwvm-settings
 mkdir -p %buildroot/etc/skel
 install -m 644 fvwm-settings/.fvwm2rc %buildroot/etc/skel/
@@ -373,7 +355,7 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 %post indexhtml
 %_sbindir/indexhtml-update
 
-%ifnarch %arm
+%if_enabled gfxboot
 %files bootloader
 %_datadir/gfxboot/%theme
 /boot/splash/%theme
@@ -428,11 +410,6 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_sysconfdir/kde4/xdg/menus/applications-merged/*.menu
 %_sysconfdir/skel/.kde4
 
-%ifnarch %arm
-%files kde3-settings
-%_sysconfdir/skel/.kde
-%endif
-
 %files fvwm-settings
 %_sysconfdir/skel/.fvwm2rc
 
@@ -458,6 +435,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Nov 20 2018 Sergey V Turchin <zerg at altlinux dot org> 8.3.0-alt2
+- don't package kde3-settings
+
+* Mon Sep 17 2018 Sergey V Turchin <zerg at altlinux dot org> 8.3.0-alt1%ubt
+- new version
+
 * Fri Dec 01 2017 Sergey V Turchin <zerg at altlinux dot org> 8.2.0-alt3%ubt
 - update indexhtml
 
