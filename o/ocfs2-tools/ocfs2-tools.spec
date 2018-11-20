@@ -1,7 +1,7 @@
 Summary: Tools for managing the Oracle Cluster Filesystem 2
 Name: ocfs2-tools
 Version: 1.8.5
-Release: alt1.0378c47
+Release: alt3.0378c47
 License: GPL
 Group: System/Kernel and hardware
 # https://github.com/markfasheh/ocfs2-tools
@@ -9,6 +9,7 @@ Source: %name-%version.tar
 Source1: cluster.conf
 
 Patch0: ocfs2-tools-initscript.patch
+Patch1: ocfs2-tools-service.patch
 
 Url: http://oss.oracle.com/projects/ocfs2-tools/
 BuildRequires: e2fsprogs-devel, glib2-devel, python-module-pygtk , python-devel, readline-devel, ncurses-devel, libe2fs-devel, libuuid-devel, libaio-devel
@@ -38,6 +39,7 @@ develop ocfs2 filesystem-specific programs.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -48,6 +50,8 @@ make
 mkdir -p %buildroot%_sysconfdir/sysconfig %buildroot%_initdir
 install -m755 vendor/common/o2cb.init %buildroot%_initdir/o2cb
 install -m755 vendor/common/ocfs2.init %buildroot%_initdir/ocfs2
+install -pDm644 vendor/common/o2cb.service %buildroot%_unitdir/o2cb.service
+install -pDm644 vendor/common/ocfs2.service %buildroot%_unitdir/ocfs2.service
 install -m644 vendor/common/o2cb.sysconfig %buildroot%_sysconfdir/sysconfig/o2cb
 mkdir -p %buildroot/var/run/o2cb
 
@@ -71,6 +75,7 @@ make DESTDIR="%buildroot" install
 %doc documentation/users_guide.txt
 /sbin/*
 %_initdir/*
+%_unitdir/*.service
 %config(noreplace) %_sysconfdir/sysconfig/o2cb
 %config(noreplace) %_sysconfdir/ocfs2/cluster.conf
 %_sbindir/o2hbmonitor
@@ -113,6 +118,12 @@ make DESTDIR="%buildroot" install
 %_includedir/ocfs2-kernel/*.h
 
 %changelog
+* Tue Nov 20 2018 Anton Farygin <rider@altlinux.ru> 1.8.5-alt3.0378c47
+- added the systemd service (closes: #28070)
+
+* Tue Nov 14 2017 Anton Farygin <rider@altlinux.ru> 1.8.5-alt2.0378c47
+- fixed initscript
+
 * Mon Oct 30 2017 Anton Farygin <rider@altlinux.ru> 1.8.5-alt1.0378c47
 - 1.8.5
 
