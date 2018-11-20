@@ -7,14 +7,14 @@ Epoch: 2
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.7
-Release: alt2.1
+Version: 1.71
+Release: alt1
 Summary: Concise Binary Object Representation (CBOR, RFC7049)
 Group: Development/Perl
 License: GPL-3
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/M/ML/MLEHMANN/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{module_name}-%{version}.tar.gz
 
 %description
 This module converts Perl data structures to the Concise Binary Object
@@ -64,6 +64,9 @@ vice versa.
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Nov 20 2018 Igor Vlasenko <viy@altlinux.ru> 2:1.71-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2:1.7-alt2.1
 - rebuild with new perl 5.26.1
 
