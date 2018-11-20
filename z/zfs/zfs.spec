@@ -3,7 +3,7 @@
 
 Name: zfs
 Version: 0.7.12
-Release: alt1
+Release: alt2
 Summary: ZFS on Linux
 License: CDDL
 Group: System/Kernel and hardware
@@ -64,10 +64,6 @@ This package contains ZFS modules sources for Linux kernel.
 %patch1 -p1
 sed -i 's|datarootdir|libdir|' lib/libzfs/Makefile.am
 
-tar -C .. \
-	--exclude .gitignore \
-	-cJf %name-%version.tar.xz \
-	.
 %build
 %autoreconf
 %configure \
@@ -85,9 +81,9 @@ tar -C .. \
 %make_build
 
 %install
-install -pD -m0644 %name-%version.tar.xz %kernel_srcdir/%name-%version.tar.xz
 %make DESTDIR=%buildroot pkgdatadir=%_datadir/doc/%name-utils-%version/examples modulesloaddir=%_sysconfdir/modules-load.d install
-
+install -pDm0644 %SOURCE0 %kernel_srcdir/%name-%version.tar
+gzip %kernel_srcdir/%name-%version.tar
 mkdir -p %buildroot/%_lib
 for f in %buildroot%_libdir/lib*.so; do
 	t=$(readlink "$f")
@@ -185,6 +181,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Tue Nov 20 2018 Anton Farygin <rider@altlinux.ru> 0.7.12-alt2
+- changed the source code praparation scheme for kernel-modules-zfs
+
 * Tue Nov 20 2018 Anton Farygin <rider@altlinux.ru> 0.7.12-alt1
 - 0.7.12
 
