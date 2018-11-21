@@ -6,7 +6,7 @@
 
 Name: freerdp
 Version: 2.0.0
-Release: alt1.git20180801.S1.1
+Release: alt1.git20181120
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -293,6 +293,11 @@ ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Wed Nov 21 2018 Pavel Nakonechnyi <zorg@altlinux.org> 2.0.0-alt1.git20181120
+- Fifth release candidate for 2.0.0:
+- multiple CVE fixes
+- various bugfixes and improvements
+
 * Thu Aug 30 2018 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1.git20180801.S1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
