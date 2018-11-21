@@ -1,4 +1,4 @@
-%define kernel_base_version 4.15
+%define kernel_base_version 4.19
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/traceevent_%kernel_base_version/plugins/*
 %add_findreq_skiplist %_datadir/perf_%kernel_base_version-core/tests/*.py
@@ -9,7 +9,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt2
+Release: alt1
 
 Summary: Performance analysis tools for Linux
 License: GPLv2
@@ -103,7 +103,6 @@ Group: Emulators
 Requires: hypervkvpd = %version-%release
 Requires: hypervvssd = %version-%release
 Requires: hypervfcopyd = %version-%release
-BuildArch: noarch
 
 %description -n hyperv-daemons
 Suite of daemons that are needed when Linux guest
@@ -409,6 +408,9 @@ fi
 %endif
 
 %changelog
+* Wed Nov 21 2018 Alexey Shabalin <shaba@altlinux.org> 4.19-alt1
+- Update for kernel-4.19
+
 * Mon Feb 19 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.15-alt2
 - fixed spec for non-x86 arches
 
