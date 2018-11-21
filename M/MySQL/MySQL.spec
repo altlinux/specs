@@ -7,8 +7,8 @@
 %define ROOT %_localstatedir/mysql
 
 Name: MySQL
-Version: 5.7.23
-Release: alt3
+Version: 5.7.24
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -664,6 +664,10 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Wed Nov 21 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.24-alt1
+- new version
+- fix build with gcc8
+
 * Mon Oct 15 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.23-alt3
 - remove ubt
 - fix build by removing libwrap dependency
