@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 18.04.3
-Release: alt1%ubt
+Release: alt2
 %K5init
 
 Summary: %rname is a small utility to magnify a part of the screen
@@ -14,7 +14,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt rpm-build-licenses
 BuildRequires: extra-cmake-modules
 BuildRequires: kf5-kdoctools-devel kf5-ki18n-devel
 BuildRequires: kf5-kio-devel kf5-kauth-devel
-BuildRequires: libqaccessibilityclient-qt5-devel
+#BuildRequires: libqaccessibilityclient-qt5-devel
 
 %description
 %summary. %rname is very useful for people with visual disabilities and for
@@ -40,6 +40,9 @@ those working in the fields of image analysis, web development etc.
 %_K5data/%rname/
 
 %changelog
+* Wed Nov 21 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2
+- build without qaccessibilityclient
+
 * Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
 - new version
 
