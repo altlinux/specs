@@ -1,28 +1,31 @@
-Epoch: 1
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
+%define _unpackaged_files_terminate_build 1
+
+%define oname jgrapht
+
 Name:    jgrapht
-Version: 0.8.1
-Release: alt1_16jpp8
+Epoch:   1
+Version: 1.0.1
+Release: alt1
 Summary: A free Java graph library that provides mathematical graph objs and algorithms
 License: LGPLv2+
+Group:   Development/Java
 URL:     http://jgrapht.sourceforge.net/
-Source0: http://downloads.sourceforge.net/project/jgrapht/JGraphT/Version%%200.8.1/jgrapht-%{version}.tar.gz
-Patch0:  remove_uneccessary_hardcoded_classpath.patch
-Patch1:  jgrapht-0.8.1-disable-doclint.patch
-
-BuildRequires: java-devel >= 1.6
-BuildRequires: javapackages-local
-BuildRequires: ant
 
 BuildArch: noarch
-Source44: import.info
+
+# http://downloads.sourceforge.net/project/jgrapht/JGraphT/Version%%200.8.1/jgrapht-%{version}.tar.gz
+Source: %oname-%version.tar
+
+Patch1: %oname-%version-alt-build-core.patch
+
+BuildRequires: rpm-build-java
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+BuildRequires: java-devel >= 1.6
+BuildRequires: javapackages-local
+BuildRequires: maven-local
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 
 %description
 JGraphT is a free Java graph library that provides mathematical graph-theory 
@@ -30,42 +33,38 @@ objects and algorithms.
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadocs for %{name}
+Summary:        Javadocs for %{oname}
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %{oname}.
 
 %prep
-%setup -q
-%patch0
-%patch1 -p0
+%setup -n %oname-%version
+%patch1 -p2
 
-# remove uneccessary dirs/files
-# removing touchgraph/jgraph support as we don't currently have deps packaged
-rm -rf src/org/jgrapht/demo/ src/org/jgrapht/experimental/touchgraph src/org/jgrapht/ext/JGraphModelAdapter.java
-
-# remove builting jars/classes
-find ./ -name '*.jar' -exec rm -f '{}' \; 
-find ./ -name '*.class' -exec rm -f '{}' \; 
+%pom_remove_plugin :maven-shade-plugin jgrapht-demo/pom.xml
+%pom_remove_plugin :maven-shade-plugin jgrapht-ext/pom.xml
+%pom_remove_plugin :maven-shade-plugin jgrapht-touchgraph/pom.xml
 
 %build
-ant jar
-ant javadoc
+%mvn_build --skip-tests
 
 %install
-%mvn_artifact thirdparty:%{name}-jdk1.6:%{version} %{name}-jdk1.6.jar
-%mvn_file thirdparty:%{name}-jdk1.6 %{name}
-%mvn_install -J javadoc
+%mvn_install
 
 %files -f .mfiles
-%doc README.html
-%doc --no-dereference license-LGPL.txt
+%doc CONTRIBUTING.md CONTRIBUTORS.md HISTORY.md README.md
+%doc license-EPL.txt license-LGPL.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference license-LGPL.txt
+%doc CONTRIBUTING.md CONTRIBUTORS.md HISTORY.md README.md
+%doc license-EPL.txt license-LGPL.txt
 
 %changelog
+* Fri Nov 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.0.1-alt1
+- Updated to version 1.0.1.
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.8.1-alt1_16jpp8
 - java update
 
