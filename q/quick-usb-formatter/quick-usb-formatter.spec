@@ -1,6 +1,6 @@
 Name: quick-usb-formatter
 Version: 0.6
-Release: alt9
+Release: alt10
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -66,6 +66,9 @@ install -m 0644 %SOURCE10 translations/
 
 
 %changelog
+* Wed Nov 21 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6-alt10
+- new function for creation crypto luks devices added
+
 * Fri Nov 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6-alt9
 - creation crypto luks devices added
 
