@@ -1,15 +1,14 @@
 Name: nasm
-Version: 2.13.03
+Version: 2.14
 Release: alt1
 
 Summary: The Netwide Assembler, a portable x86 assembler with Intel-like syntax
 License: BSD 2-clause
 Group: Development/Other
-URL: http://www.nasm.us/
+Url: http://www.nasm.us/
 
-# http://nasm.sourceforge.net/
+#VCS: https://repo.or.cz/nasm.git
 Source: http://www.nasm.us/pub/nasm/releasebuilds/%version/nasm-%version.tar.bz2
-#Source: http://dl.sourceforge.net/nasm/nasm-%version.tar.bz2
 
 BuildRequires: ghostscript-utils groff-base xmlto asciidoc-a2x
 BuildRequires: texinfo
@@ -42,19 +41,15 @@ include linker, library manager, loader, and information dump.
 
 %prep
 %setup
-#subst '/mv -f \*.info \*.info-\* info/d' doc/Makefile.in
 
 %build
 %configure
 %make_build everything
 
 %install
-make INSTALLROOT="%buildroot" INSTALL="install -pD" install install_rdf
+%makeinstall_std install_rdf
 
 cd doc
-# no more nasm.info since 2.13
-#install -d %buildroot%_infodir
-#install nasm.info %buildroot%_infodir/
 gzip -9f *.txt *.ps || true
 cd html
 ln -sf nasmdoc0.html index.html
@@ -65,7 +60,6 @@ ln -sf nasmdoc0.html index.html
 %_bindir/ndisasm
 %_man1dir/nasm.1*
 %_man1dir/ndisasm.1*
-#%_infodir/nasm.info*
 
 %files doc
 %doc doc/nasmdoc.pdf doc/nasmdoc.txt.gz doc/html
@@ -85,6 +79,9 @@ ln -sf nasmdoc0.html index.html
 %_man1dir/rdx*
 
 %changelog
+* Wed Nov 21 2018 Yuri N. Sedunov <aris@altlinux.org> 2.14-alt1
+- 2.14
+
 * Thu Feb 08 2018 Yuri N. Sedunov <aris@altlinux.org> 2.13.03-alt1
 - 2.13.03
 
