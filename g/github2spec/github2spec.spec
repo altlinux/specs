@@ -1,12 +1,12 @@
 Name:     github2spec
 # NOTE update version in github2spec
-Version:  1.4.6
+Version:  1.4.7
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from github using genspec
 License:  GPLv3+
 Group:    System/Configuration/Packaging
-URL: 	  http://altlinux.org/genspec
+URL:      http://altlinux.org/genspec
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 BuildArch: noarch
@@ -34,6 +34,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Nov 16 2018 Grigory Ustinov <grenka@altlinux.org> 1.4.7-alt1
+- Add option to generate only spec and rules.
+
 * Mon Oct 22 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.6-alt1
 - Rewrite forwarding options to genspec
 
