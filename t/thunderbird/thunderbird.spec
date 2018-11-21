@@ -1,15 +1,17 @@
 %def_with	enigmail
+%def_without	google_calendar
+%def_enable     mach_build
 %define 	r_name thunderbird
 %ifndef build_parallel_jobs
-%define build_parallel_jobs 7
+%define build_parallel_jobs 32
 %endif
 
-%define enigmail_version  2.0.7
+%define enigmail_version  2.0.8
 %define gdata_version     2.6
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	52.9.1
+Version:	60.3.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -23,19 +25,38 @@ Source2:	rpm-build.tar
 Source3:	thunderbird.desktop
 Source4:	thunderbird-mozconfig
 Source5:	thunderbird-default-prefs.js
+Source6:	lightning-ru.tar
 
 Patch6:		01_locale.patch
 Patch8:		thunderbird-timezones.patch
 Patch9:		thunderbird-install-paths.patch
 Patch11:	thunderbird-alt-allow-send-in-windows-1251.patch
 
+Patch20:        build-big-endian.patch
+Patch21:        mozilla-1353817.patch
+Patch22:        build-jit-atomic-always-lucky.patch
+Patch23:        build-aarch64-skia.patch
+Patch24:        rhbz-1354671.patch
+Patch25:        Bug-1238661---fix-mozillaSignalTrampoline-to-work-.patch
+Patch26:        bug1375074-save-restore-x28.patch
+
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
+BuildRequires: clang6.0
+BuildRequires: clang6.0-devel
+BuildRequires: llvm6.0-devel
+BuildRequires: lld-devel
+BuildRequires: libstdc++-devel
+BuildRequires: rust
+BuildRequires: rust-cargo
+BuildRequires: /proc
 BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel libXcomposite-devel libXdamage-devel
-BuildRequires: libcurl-devel libgtk+2-devel libhunspell-devel libjpeg-devel
+BuildRequires: libXcursor-devel libXi-devel
+BuildRequires: libcurl-devel libgtk+3-devel libhunspell-devel libjpeg-devel
+BuildRequires: libgtk+2-devel libsqlite3-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
 BuildRequires: bzlib-devel zlib-devel
 BuildRequires: mozldap-devel
@@ -127,6 +148,7 @@ which allows users to access the authentication and encryption features
 provided by the popular GnuPG software.
 %endif
 
+%if_with google_calendar
 %package google-calendar
 %define google_calendar_ciddir %mozilla_noarch_extdir/%tbird_cid/\{a62ef8ec-5fdc-40c2-873c-223b8a6925cc\}
 Summary: Provider for Google Calendar
@@ -142,6 +164,7 @@ Obsoletes: %name-esr-google-calendar < %version-%release
 
 %description google-calendar
 Allows bidirectional access to Google Calendar
+%endif
 
 %package devel
 Summary:	Thunderbird development kit.
@@ -178,10 +201,21 @@ tar -xf %SOURCE1
 
 tar -xf %SOURCE2
 
-%patch6 -p1
+#patch6 -p1
 #patch8 -p2
-%patch9 -p2
+#patch9 -p2
 %patch11 -p2
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%ifarch aarch64
+%patch24 -p1
+%endif
+%ifarch %arm
+%patch25 -p1
+%endif
+%patch26 -p1
 
 #echo %version > mail/config/version.txt
 
@@ -189,7 +223,7 @@ cp -f %SOURCE4 .mozconfig
 
 echo 'ac_add_options --enable-calendar' >> .mozconfig
 
-sed -i -e '\,hyphenation/,d' mail/installer/removed-files.in
+sed -i -e '\,hyphenation/,d' comm/mail/installer/removed-files.in
 
 %build
 %add_optflags %optflags_shared
@@ -231,34 +265,42 @@ export MOZILLA_OBJDIR="$PWD"
 
 %__autoconf
 
-MOZ_SMP_FLAGS=-j1
-[ "%__nprocs" -ge 2 ] && MOZ_SMP_FLAGS=-j2
-[ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
+mkdir objdir
 
-mkdir objdir mozilla/objdir
+# Do not use desktop notify during build process
+export MOZ_NOSPAM=1
 
 export NPROCS=%build_parallel_jobs
+# Decrease NPROCS prevents oomkill terror on x86_64
+%ifarch x86_64
+export NPROCS=16
+%endif
+
+./mach configure
+%if_enabled mach_build
+./mach build -j $NPROCS
+./mach buildsymbols
+%else
 make -f client.mk \
-	-j$NPROCS \
 	STRIP="/bin/true" \
-	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
-	mozappdir=%buildroot/%tbird_prefix \
+	mozappdir=%buildroot%tbird_prefix \
+        OBJDIR=objdir \
+        TOPSRCDIR=$srcdir \
+        MOZ_PARALLEL_BUILD=$NPROCS
+	MACH=1 \
 	build
+%endif
 
 %if_with enigmail
 dir="$PWD/objdir"
-
-cd enigmail
+pushd enigmail
 	./configure
 	make \
 		STRIP="/bin/true" \
 		MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
-	mkdir -p -- \
-		$dir/mozilla/dist
-	mv -f -- \
-		build/dist \
-		$dir/mozilla/dist/enigmail
-cd -
+	mkdir -p $dir/mozilla/dist
+	unzip build/enigmail*.xpi -d $dir/mozilla/dist/enigmail
+popd
 %endif
 
 %install
@@ -275,15 +317,6 @@ mkdir -p \
 	includedir=%buildroot/%tbird_includedir \
 	mozappdir=%buildroot/%tbird_prefix \
 	#
-
-#(set +x
-#	for l in libldap60.so libldif60.so libprldap60.so; do
-#		[ -f .%xulr_prefix/$l ] ||
-#			continue
-#		mv -f -- .%tbird_prefix/$l .%_libdir/$l
-#		ln -vs -- "$(relative %_libdir/$l %tbird_prefix/$l)" .%tbird_prefix/$l
-#	done
-#)
 
 (set +x
 	for f in %buildroot/%tbird_develdir/*; do
@@ -319,15 +352,6 @@ rm -rf -- \
 	%buildroot/%tbird_prefix/README.txt \
 	#
 
-#ver=%version
-minver='24.0'
-maxver='%xulr_version'
-maxver="${maxver%%.*}.*"
-sed -i \
-	-e "s,^\\(MaxVersion\\)=.*,\\1=$maxver,g" \
-	-e "s,^\\(MinVersion\\)=.*,\\1=$minver,g" \
-	%buildroot/%tbird_prefix/application.ini
-
 # desktop file
 install -D -m 644 %SOURCE3 %buildroot/%_datadir/applications/thunderbird.desktop
 
@@ -335,11 +359,13 @@ install -D -m 644 %SOURCE3 %buildroot/%_datadir/applications/thunderbird.desktop
 install -D -m 644 %SOURCE5 %buildroot/%tbird_prefix/defaults/pref/all-altlinux.js
 
 # icons
-for s in 16 22 24 32 48 256; do
+for s in 16 22 24 32 48 64 128 256; do
 	install -D -m 644 \
-		other-licenses/branding/thunderbird/mailicon$s.png \
+		comm/mail/branding/thunderbird/default$s.png \
 		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/thunderbird.png
 done
+install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
+               %buildroot%_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 # main startup script
 cat>%buildroot/%_bindir/thunderbird<<-EOF
@@ -362,35 +388,46 @@ sed -i \
 	%buildroot/%_sysconfdir/rpm/macros.d/%r_name
 
 %if_with enigmail
-mv -f -- \
+cp -a \
 	$PWD/objdir/mozilla/dist/enigmail \
 	%buildroot/%enigmail_ciddir
 %endif
 
+%if_with google_calendar
 mkdir -p %buildroot/%google_calendar_ciddir
 unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 	$PWD/objdir/dist/xpi-stage/gdata-provider*.xpi
+%endif
 
 # Add real RPATH
 (set +x
 	rpath="/$(printf %%s '%tbird_prefix' |tr '[:print:]' '_')"
 
 	find \
-		%buildroot/%tbird_prefix \
-		%buildroot/%tbird_develdir \
-		%buildroot/%mozilla_arch_extdir/%tbird_cid \
+		%buildroot%tbird_prefix \
+		%buildroot%mozilla_arch_extdir/%tbird_cid \
 	-type f |
 	while read f; do
 		t="$(readlink -ev "$f")"
 
 		file "$t" | fgrep -qs ELF || continue
 
-		if chrpath -l "$t" | fgrep -qs "RPATH=$rpath"; then
+		if chrpath -l "$t" | egrep -qs "R(UN)?PATH=$rpath"; then
 			chrpath -r "%tbird_prefix" "$t"
 		fi
 	done
 )
 
+# Replace packed Lightning extension by unpackaged one to able apply localization by separate packages
+%define lightning_dir %buildroot%_libdir/%name/distribution/extensions/\{e2fda1a4-762b-4020-b5ad-a41df1933103\}
+rm -f %lightning_dir.xpi
+cp -aL objdir/dist/bin/distribution/extensions/\{e2fda1a4-762b-4020-b5ad-a41df1933103\} \
+       %lightning_dir
+
+# Add ru localization in manifest
+locale_ru="$(grep en-US %lightning_dir/chrome.manifest | sed 's/en-US/ru/g')"
+echo -e "$locale_ru" >> %lightning_dir/chrome.manifest
+tar xvf %SOURCE6 -C "%lightning_dir" chrome/calendar-ru chrome/lightning-ru
 
 %files
 %doc AUTHORS
@@ -400,35 +437,74 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %mozilla_noarch_extdir/%tbird_cid
 %defattr(0644,root,root,0755)
 %_datadir/applications/%r_name.desktop
-%_iconsdir/hicolor/16x16/apps/thunderbird.png
-%_iconsdir/hicolor/22x22/apps/thunderbird.png
-%_iconsdir/hicolor/24x24/apps/thunderbird.png
-%_iconsdir/hicolor/32x32/apps/thunderbird.png
-%_iconsdir/hicolor/48x48/apps/thunderbird.png
-%_iconsdir/hicolor/256x256/apps/thunderbird.png
+%_iconsdir/hicolor/*/apps/thunderbird.png
+%_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %if_with enigmail
 %exclude %enigmail_ciddir
 %endif
+%if_with google_calendar
 %exclude %google_calendar_ciddir
+%endif
 
 %if_with enigmail
 %files enigmail
 %enigmail_ciddir
 %endif
 
+%if_with google_calendar
 %files google-calendar
 %google_calendar_ciddir
+%endif
 
-%files devel
-%tbird_idldir
-%tbird_includedir
-%tbird_develdir
+#%%files devel
+#%%tbird_idldir
+#%%tbird_includedir
+#%%tbird_develdir
 
 %files -n rpm-build-%name
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Fri Nov 02 2018 Andrey Cherepanov <cas@altlinux.org> 60.3.0-alt1
+- New version (60.3.0).
+- Fixes:
+  + CVE-2018-12391 HTTP Live Stream audio data is accessible cross-origin
+  + CVE-2018-12392 Crash with nested event loops
+  + CVE-2018-12393 Integer overflow during Unicode conversion while loading JavaScript
+  + CVE-2018-12389 Memory safety bugs fixed in Firefox ESR 60.3 and Thunderbird 60.3
+  + CVE-2018-12390 Memory safety bugs fixed in Firefox 63, Firefox ESR 60.3, and Thunderbird 60.3
+
+* Mon Oct 15 2018 Andrey Cherepanov <cas@altlinux.org> 60.2.1-alt1
+- New version (60.2.1).
+- Fixes:
+  + CVE-2018-12377 Use-after-free in refresh driver timers
+  + CVE-2018-12378 Use-after-free in IndexedDB
+  + CVE-2018-12379 Out-of-bounds write with malicious MAR file
+  + CVE-2017-16541 Proxy bypass using automount and autofs
+  + CVE-2018-12376 Memory safety bugs fixed in Firefox 62 and Firefox ESR 60.2
+  + CVE-2018-12385 Crash in TransportSecurityInfo due to cached data
+  + CVE-2018-12383 Setting a master password post-Firefox 58 does not delete unencrypted previously stored passwords
+
+* Mon Aug 13 2018 Andrey Cherepanov <cas@altlinux.org> 60.0-alt1
+- New version (60.0).
+- Enigmail 2.0.8.
+- Fixes:
+  + CVE-2018-12359 Buffer overflow using computed size of canvas element
+  + CVE-2018-12360 Use-after-free when using focus()
+  + CVE-2018-12361 Integer overflow in SwizzleData
+  + CVE-2018-12362 Integer overflow in SSSE3 scaler
+  + CVE-2018-5156 Media recorder segmentation fault when track type is changed during capture
+  + CVE-2018-12363 Use-after-free when appending DOM nodes
+  + CVE-2018-12364 CSRF attacks through 307 redirects and NPAPI plugins
+  + CVE-2018-12365 Compromised IPC child process can list local filenames
+  + CVE-2018-12371 Integer overflow in Skia library during edge builder allocation
+  + CVE-2018-12366 Invalid data handling during QCMS transformations
+  + CVE-2018-12367 Timing attack mitigation of PerformanceNavigationTiming
+  + CVE-2018-12368 No warning when opening executable SettingContent-ms files
+  + CVE-2018-5187 Memory safety bugs fixed in Firefox 61, Firefox ESR 60.1, and Thunderbird 60
+  + CVE-2018-5188 Memory safety bugs fixed in Firefox 61, Firefox ESR 60.1, Firefox ESR 52.9, and Thunderbird 60
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 52.9.1-alt1
 - New version (52.9.1).
 - Complete fix of the EFAIL vulnerability.
