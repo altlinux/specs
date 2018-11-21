@@ -1,5 +1,5 @@
 Name: lcov
-Version: 1.13
+Version: 1.13.0.16.e675
 Release: alt1
 
 Summary: LTP GCOV extension code coverage tool
@@ -45,6 +45,9 @@ make test
 %config(noreplace) %_sysconfdir/lcovrc
 
 %changelog
+* Tue Nov 13 2018 Dmitry V. Levin <ldv@altlinux.org> 1.13.0.16.e675-alt1
+- v1.13-11-gb6a1136 -> v1.13-16-ge675.
+
 * Thu Jul 20 2017 Dmitry V. Levin <ldv@altlinux.org> 1.13-alt1
 - v1.12-1-g79e9f28 -> v1.13-11-gb6a1136.
 
