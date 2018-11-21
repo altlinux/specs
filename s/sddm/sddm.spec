@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.17.0
-Release: alt5
+Release: alt6
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -47,6 +47,7 @@ Patch110: alt-sddm-etc.locale.conf.patch
 Patch111: alt-sddm-ignore-locales.patch
 Patch112: alt-sddm-etc.sysconfig.i18n.patch
 Patch113: alt-sddm-greeter-swbackend.patch
+Patch114: alt-detect-keyboard.patch
 #
 Patch200: alt-fix-unable-handle-request.patch
 Patch201: alt-new-breeze-theme-compat.patch
@@ -59,7 +60,7 @@ Patch204: alt-sddm-visual-fixes.patch
 #BuildRequires: cmake gcc-c++ glibc-devel-static libpam-devel libsystemd-devel nss-ldapd python-module-Reportlab python-module-cssselect python-module-docutils python-module-ecdsa python-module-ed25519 python-module-html5lib python-module-nss python-module-polib python-module-protobuf python-module-pycparser python-module-pycrypto python-module-pygobject3 python-module-pygraphviz python-module-xlwt qt5-declarative-devel qt5-tools-devel ruby ruby-stdlibs time xsetroot
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: cmake extra-cmake-modules glibc-devel
-BuildRequires: libpam-devel libsystemd-devel
+BuildRequires: libpam-devel libsystemd-devel libudev-devel
 BuildRequires: libxcb-devel libXau-devel libXdmcp-devel
 BuildRequires: qt5-declarative-devel qt5-tools-devel
 BuildRequires: python-module-docutils
@@ -90,6 +91,7 @@ ability to create smooth, animated user interfaces.
 %patch111 -p1
 %patch112 -p1
 %patch113 -p1
+%patch114 -p1
 
 %patch200 -p1
 %patch201 -p1
@@ -162,6 +164,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Tue Nov 20 2018 Sergey V Turchin <zerg@altlinux.org> 0.17.0-alt6
+- enable virtual keyboard if no hardware detected (ALT#35617)
+
 * Mon Nov 12 2018 Sergey V Turchin <zerg@altlinux.org> 0.17.0-alt5
 - add SoftwareRenderer configuration option (thanks sbolshakov@alt)
 
