@@ -1,9 +1,9 @@
-%define ver_major 3.8
+%define ver_major 4.0
 %define _libexecdir %_prefix/libexec
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 License: GPLv2+
@@ -121,6 +121,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Oct 31 2018 Vladimir Didenko <cow@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Fri May 4 2018 Vladimir Didenko <cow@altlinux.org> 3.8.1-alt1
 - 3.8.1-2-g995980f
 

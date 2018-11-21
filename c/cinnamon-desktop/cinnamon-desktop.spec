@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.8
+%define ver_major 4.0
 %define api_ver 3.0
 %def_disable static
 %def_enable gtk_doc
@@ -59,11 +59,20 @@ BuildArch: noarch
 %description -n %name-schemas
 A collection of GSettings schemas for Cinnamon
 
+%package -n %name-data
+Summary: Data files for Cinnamon desktop libraries
+Group: Graphical desktop/GNOME
+License: %lgpl2plus
+
+%description -n %name-data
+Data files for Cinnamon desktop libraries
+
 %package -n lib%name
 Summary: Cinnamon desktop core libraries
 Group: Graphical desktop/GNOME
 License: %lgpl2plus
 Requires: %name-schemas
+Requires: %name-data
 
 %description -n lib%name
 Cinnamon desktop libraries.
@@ -124,6 +133,9 @@ GObject introspection devel data for the %name library
 %_bindir/%name-migrate-mediakeys
 %_datadir/glib-2.0/schemas/org.cinnamon.*.xml
 
+%files -n %name-data
+%_datadir/lib%name/*
+
 %files -n lib%name -f %name.lang
 %_libdir/*.so.*
 %doc AUTHORS README
@@ -148,6 +160,12 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Tue Nov 20 2018 Vladimir Didenko <cow@altlinux.org> 4.0.1-alt1
+- 4.0.1
+
+* Wed Oct 31 2018 Vladimir Didenko <cow@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Mon May 7 2018 Vladimir Didenko <cow@altlinux.org> 3.8.1-alt1
 - 3.8.1
 

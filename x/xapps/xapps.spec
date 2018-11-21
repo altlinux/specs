@@ -1,5 +1,7 @@
+%define translations_name xapp
+
 Name: xapps
-Version: 1.2.2
+Version: 1.4.2
 Release: alt1
 
 Summary: Libraries and common resources for XApps
@@ -112,11 +114,14 @@ Python3 Xapp overrides Library
 %install
 %meson_install
 
+%find_lang %translations_name
+
 %files -n %name-schemas
 %_datadir/glib-2.0/schemas/org.x.apps.*.xml
 
 %files -n %name-icons
 %_datadir/icons/hicolor/scalable/actions/*
+%_datadir/icons/hicolor/scalable/categories/*
 
 %files -n %name-utils
 %_bindir/xfce4-set-wallpaper
@@ -125,7 +130,7 @@ Python3 Xapp overrides Library
 %exclude %_bindir/upload-system-info
 
 
-%files -n lib%name
+%files -n lib%name -f %translations_name.lang
 %_libdir/*.so.*
 
 %files -n lib%name-devel
@@ -150,6 +155,12 @@ Python3 Xapp overrides Library
 %python3_sitelibdir/gi/overrides/__pycache__/*
 
 %changelog
+* Tue Nov 20 2018 Vladimir Didenko <cow@altlinux.org> 1.4.2-alt1
+- 1.4.2
+
+* Wed Oct 31 2018 Vladimir Didenko <cow@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Fri Sep 14 2018 Vladimir Didenko <cow@altlinux.org> 1.2.2-alt1
 - 1.2.2
 

@@ -4,7 +4,7 @@
 %def_enable python
 
 Name: xed
-Version: 1.8.3
+Version: 2.0.0
 Release: alt1
 
 Summary: xed is a small and lightweight text editor.
@@ -32,7 +32,6 @@ Provides: typelib(Xed)
 
 BuildPreReq: rpm-build-gnome >= 0.6
 
-# From configure.ac
 BuildPreReq: intltool >= 0.50.1
 BuildRequires: yelp-tools xmllint itstool
 BuildPreReq: gtk-doc >= 1.0
@@ -42,6 +41,7 @@ BuildPreReq: iso-codes-devel >= 0.35
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
+BuildRequires: meson
 BuildRequires: libattr-devel gnome-common libxml2-devel libsoup-devel gsettings-desktop-schemas-devel
 BuildRequires: libSM-devel
 BuildRequires: libpeas-devel
@@ -78,17 +78,11 @@ Libraries needed to develop plugins for xed.
 %setup
 
 %build
-%autoreconf
-%configure \
-    --disable-schemas-compile \
-    --disable-static \
-    --disable-updater \
-    --enable-gvfs-metadata \
-    --with-gtk=3.0
-%make V=1
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 # additional mime types
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -133,7 +127,6 @@ rm -f %buildroot%_libdir/%name/*.la
 %dir %pkglibdir
 %dir %pluginsdir
 %pluginsdir/*
-%exclude %_libexecdir/%name/xed-bugreport.sh
 %_libdir/%name
 
 %files data -f %name.lang
@@ -141,7 +134,7 @@ rm -f %buildroot%_libdir/%name/*.la
 %_desktopdir/%name.desktop
 %_mandir/man?/*
 %config %_datadir/glib-2.0/schemas/*
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %_datadir/dbus-1/services/org.x.editor.*service
 %doc README AUTHORS NEWS
 
@@ -150,6 +143,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*
 
 %changelog
+* Wed Nov 21 2018 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1
+- New version
+
 * Mon Jul 23 2018 Vladimir Didenko <cow@altlinux.org> 1.8.3-alt1
 - New version
 

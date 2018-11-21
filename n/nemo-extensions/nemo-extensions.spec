@@ -1,8 +1,8 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 3.8.0
-Release: alt1
+Version: 4.0.1
+Release: alt1.1
 Summary: Extensions for Nemo
 
 License: %gpl2plus and %lgpl2only
@@ -11,13 +11,15 @@ Packager: Vladimir Didenko <cow at altlinux.org>
 Group: Graphical desktop/GNOME
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+
+AutoReqProv: nopython
+%define __python %nil
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 BuildRequires: libnemo-devel
-BuildRequires: python-devel python-module-distribute
+BuildRequires: python3-dev
 BuildRequires: desktop-file-utils
-BuildRequires: python-module-pygobject3-devel
+BuildRequires: python3-module-pygobject3-devel
 BuildRequires: gnome-common
 BuildRequires: intltool
 BuildRequires: gtk-doc
@@ -39,6 +41,7 @@ BuildRequires: libcogl-gir-devel
 BuildRequires: libxreader-gir-devel
 BuildRequires: libcinnamon-desktop-devel
 BuildRequires: libxreader-gir-devel
+BuildRequires: meson
 
 %description
 Extensions for Nemo
@@ -157,7 +160,6 @@ Context menu comparison extension for Nemo file manager.
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 pushd nemo-fileroller
@@ -167,9 +169,8 @@ pushd nemo-fileroller
 popd
 
 pushd nemo-python
-%autoreconf
-%configure
-%make
+%meson
+%meson_build
 popd
 
 pushd nemo-share
@@ -203,7 +204,7 @@ pushd nemo-fileroller
 popd
 
 pushd nemo-python
-%makeinstall_std
+%meson_install
 popd
 
 pushd nemo-share
@@ -250,7 +251,6 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %doc nemo-python/COPYING
 %_libdir/nemo/extensions-%api_ver/libnemo-python.so
 %dir %_datadir/nemo-python/extensions
-%doc %_docdir/nemo-python
 
 %files -n nemo-python-devel
 %_pkgconfigdir/nemo-python.pc
@@ -297,6 +297,12 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_bindir/nemo-compare-preferences
 
 %changelog
+* Tue Nov 20 2018 Vladimir Didenko <cow@altlinux.org> 4.0.1-alt1.1
+- Fix build
+
+* Tue Nov 20 2018 Vladimir Didenko <cow@altlinux.org> 4.0.1-alt1
+- 4.0.1
+
 * Thu May 3 2018 Vladimir Didenko <cow@altlinux.org> 3.8.0-alt1
 - 3.8.0
 
