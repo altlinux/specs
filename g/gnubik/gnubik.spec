@@ -1,46 +1,35 @@
 Name: gnubik
-Version: 2.4.1
-Release: alt1.1
+Version: 2.4.3
+Release: alt1
 
-Summary: gnubik -  an interactive, graphic Magic cube program
-Summary(ru_RU.UTF-8): gnubik - трёхмерный кубик-рубик
-Group: Games/Puzzles
+Summary: An interactive, graphic Magic cube program
 License: GPL
-
+Group: Games/Puzzles
 Url: http://www.gnu.org/software/gnubik/
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: %name.desktop
-Patch0: gnubik_2.2-7.diff
 
-Packager: Ilya Mashkin <oddity@altlinux.ru>
-
-# Automatically added by buildreq on Wed Dec 03 2008
-BuildRequires: guile18-devel imake libfreeglut-devel libgtkglext-devel xorg-cf-files
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+BuildRequires: pkgconfig(gl) pkgconfig(glu) pkgconfig(gtk+-2.0) pkgconfig(gdk-pixbuf-2.0)
+BuildRequires: pkgconfig(gdkglext-1.0) pkgconfig(glut)
+BuildRequires: guile-devel >= 2.0 texinfo
 
 %description
 gnubik - an interactive, graphic Magic cube program.
 
 %prep
 %setup
-#patch0 -p1
+sed -i s,guile-2\.0,guile-2.2, configure.ac
 
 %build
-export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
-%add_optflags "-Wl,--no-as-needed"
+%autoreconf
 %configure
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot install
-
-install -D -m 644 %SOURCE1 %buildroot%_desktopdir/gnubik.desktop
-
-mkdir -p %buildroot%_man6dir/
-
-install -pD -m644 doc/%name.6 %buildroot%_man6dir
+install -pm644 -D %SOURCE1 %buildroot%_desktopdir/gnubik.desktop
+install -pm644 -D doc/%name.6 %buildroot%_man6dir/%name.6
 
 %find_lang %name
 
@@ -49,12 +38,14 @@ install -pD -m644 doc/%name.6 %buildroot%_man6dir
 %_bindir/gnubik
 %_desktopdir/gnubik.desktop
 %_iconsdir/hicolor/*/apps/*
-%dir %_datadir/gnubik/
-%_datadir/gnubik/
+%_datadir/gnubik
 %_infodir/gnubik.*
 %_man6dir/gnubik.*
 
 %changelog
+* Wed Nov 21 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4.3-alt1
+- 2.4.3 released
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1.1
 - NMU: added BR: texinfo
 
