@@ -1,5 +1,5 @@
 Name: rpm-build-haskell
-Version: 1.1
+Version: 1.2
 Release: alt1
 BuildArch: noarch
 
@@ -37,6 +37,9 @@ install -D -m0755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelis
 %_libexecdir/%name
 
 %changelog
+* Wed Nov 21 2018 Grigory Ustinov <grenka@altlinux.org> 1.2-alt1
+- add %%ghc_arches macro.
+
 * Thu Dec 14 2017 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt1
 - correct/cleanup macro uses (they were introduced in 1-alt26
   and they generate warnings)
