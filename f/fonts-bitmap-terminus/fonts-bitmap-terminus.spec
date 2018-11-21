@@ -6,8 +6,8 @@
 %define cfontsdir /lib/kbd/consolefonts
 
 Name: fonts-bitmap-%cname
-Version: 4.40
-Release: alt2
+Version: 4.46
+Release: alt1
 Summary: Terminus Font - a clean fixed width font
 Summary(ru_RU.UTF-8): Шрифт Terminus - растровый моноширинный шрифт
 License: OFL
@@ -23,14 +23,14 @@ Source2: ibm-866.uni
 
 Patch0: %cname-4.40-alt-12pt_ve_fix.patch
 Patch1: %cname-4.40-alt-be2.patch
-Patch2: %cname-4.40-alt-cp866.patch
+Patch2: %cname-4.46-alt-cp866.patch
 
 Provides: terminus-font = %version-%release
 
 Obsoletes: %cname-fonts-bitmap < %version
 Provides: %cname-fonts-bitmap = %version-%release
 
-BuildPreReq: fontconfig xorg-font-utils
+BuildPreReq: fontconfig python3 xorg-font-utils
 
 %description
 Terminus Font is designed for long (8 and more hours per day) work with
@@ -130,6 +130,11 @@ fi
 %cfontsdir/*.psf.gz
 
 %changelog
+* Wed Nov 21 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.46-alt1
+- 4.46
+- rediffed cp866 patch
+- added new BR: python3
+
 * Tue Apr 18 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.40-alt2
 - applied missing ij1 patch.
 
