@@ -1,6 +1,6 @@
 Name: libvidstab
 Version: 1.1.0
-Release: alt1%ubt
+Release: alt2
 
 Summary: Video stabilization library
 License: GPL
@@ -9,7 +9,6 @@ Url: http://public.hronopik.de/vid.stab/
 
 Source: %name-%version.tar.gz
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake gcc-c++ libgomp-devel
 
 %description
@@ -19,6 +18,7 @@ Vidstab is a video stabilization library which can be plugged-in with Ffmpeg and
 Summary: Development files for Vidstab framework
 License: GPL
 Group: Development/C
+Requires: libgomp-devel
 %description devel
 Development files for Vidstab framework.
 
@@ -45,6 +45,9 @@ popd
 %_pkgconfigdir/vidstab.pc
 
 %changelog
+* Wed Nov 21 2018 Oleg Solovyov <mcpain@altlinux.org> 1.1.0-alt2
+- rebuilt with libgomp8
+
 * Thu Apr 05 2018 Oleg Solovyov <mcpain@altlinux.org> 1.1.0-alt1%ubt
 - initial build for ALT
 
