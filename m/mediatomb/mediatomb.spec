@@ -1,6 +1,6 @@
 Name: mediatomb
 Version: 0.12.1
-Release: alt17
+Release: alt18
 
 Summary: UPnP AV Mediaserver for Linux
 Group: System/Servers
@@ -70,6 +70,9 @@ install -pD -m0644 %SOURCE3 %buildroot%systemd_unitdir/mediatomb.service
 %attr(3770,root,_mediatomb) %dir %_localstatedir/%name
 
 %changelog
+* Wed Nov 21 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.1-alt18
+- fix FTBFS with gcc8
+
 * Thu Jun 14 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.1-alt17
 - rebuilt with recent ffmpeg
 
