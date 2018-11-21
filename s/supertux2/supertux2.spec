@@ -1,28 +1,27 @@
 Name: supertux2
-Version: 0.5.1
-Release: alt3.1
+Version: 0.6.0
+Release: alt1.alpha3
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
 License: GPLv3
 Group: Games/Arcade
-Url: http://supertux.lethargik.org/
+Url: https://www.supertux.org/
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
+# Source-url: https://github.com/SuperTux/supertux/releases/download/v%version/SuperTux-v%version-Source.tar.gz
 Source: SuperTux-v%version-Source.tar.gz
 
 Source1: supertux-16x16.png
 Source2: supertux-32x32.png
 Source3: supertux-48x48.png
 
-Patch: supertux-alt-desktop-file.patch
-
 Requires: %name-data = %version-%release
 
 # Automatically added by buildreq on Mon Oct 01 2012 (-bi)
 # WTF? vorbis-tools? really?
 BuildPreReq: cmake rpm-macros-cmake
-BuildRequires: boost-devel boost-filesystem-devel gcc-c++ libSDL2_image-devel libSM-devel libXau-devel libXdmcp-devel libXft-devel libcurl-devel libglew-devel libopenal-devel libphysfs-devel libvorbis-devel
+BuildRequires: boost-program_options-devel boost-filesystem-devel boost-locale-devel gcc-c++ libSDL2_image-devel libSM-devel libXau-devel libXdmcp-devel libXft-devel libcurl-devel libglew-devel libopenal-devel libphysfs-devel libvorbis-devel zlib-devel libpng-devel libfreetype-devel libraqm-devel
 
 %description
 SuperTux is a jump'n run like game, with strong inspiration from the
@@ -50,8 +49,7 @@ on the way.
 This is package contains data files for supertux2.
 
 %prep
-%setup -qn SuperTux-v%version-Source
-%patch
+%setup -n SuperTux-v%version-Source
 
 %build
 %cmake_insource \
@@ -77,19 +75,28 @@ rm -rf %buildroot/%_docdir/supertux2/
 %files -f %name.lang
 %_bindir/supertux2
 %_desktopdir/supertux2.desktop
-%doc docs/* LICENSE.txt NEWS.md README.md
+%doc LICENSE.txt NEWS.md README.md
 
 %files data
 %_datadir/supertux2
-%_datadir/appdata/*
+%_datadir/metainfo/*
 %_miconsdir/*.png
 %_niconsdir/*.png
 %_liconsdir/*.png
+%_iconsdir/hicolor/scalable/apps/*
 %exclude %_pixmapsdir/supertux.*
 %_man6dir/*
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Wed Nov 21 2018 Leontiy Volodin <lvol@altlinux.org> 0.6.0-alt1.alpha3
+- 0.6.0 pre-release (alpha3)
+- fixed build
+- changed url
+- new list build deps because change upstream build process
+- remove patch (the same in mainstream now)
+- changed %%files
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.1-alt3.1
 - NMU: rebuilt with boost-1.67.0
 
@@ -166,7 +173,7 @@ rm -rf %buildroot/%_docdir/supertux2/
 - move data files to noarch subpackage
 - buildreq
 
-* Tue Oct 06 2008 Ilya Mashkin <oddity@altlinux.ru> 0.3.1d-alt1.1
+* Mon Oct 06 2008 Ilya Mashkin <oddity@altlinux.ru> 0.3.1d-alt1.1
 - rebuild
 
 * Mon Mar 10 2008 Igor Zubkov <icesik@altlinux.org> 0.3.1d-alt1
