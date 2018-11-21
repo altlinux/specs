@@ -5,7 +5,7 @@
 %define pre %nil
 Name: inkscape
 Version: %major.3
-Release: alt3
+Release: alt4
 
 Summary: A Vector Drawing Application
 
@@ -21,7 +21,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 Patch: %name-dia.patch
-Patch1: inkscape-poppler-0.65.patch
+Patch1: inkscape-poppler-support.patch
+Patch2: inkscape-0.92.3-alt-dependencies.patch
 
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
@@ -73,6 +74,7 @@ inkview is standalone viewer for Inkscape files (SVG)
 %setup -n %name-%version%pre
 %patch
 %patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -117,6 +119,9 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Wed Nov 21 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.92.3-alt4
+- Fixed build with poppler >= 0.71.
+
 * Tue Sep 04 2018 Vitaly Lipatov <lav@altlinux.ru> 0.92.3-alt3
 - fix build with poppler 0.65
 
