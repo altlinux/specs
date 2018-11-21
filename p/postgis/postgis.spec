@@ -1,7 +1,7 @@
 %define pg_ver 10
 
 Name: postgis
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL
@@ -113,6 +113,9 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_includedir/liblwgeom_topo.h
 
 %changelog
+* Wed Nov 21 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt1
+- New version.
+
 * Tue Oct 23 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
 - New version.
 - Add watch file to src.rpm.
