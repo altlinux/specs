@@ -1,7 +1,7 @@
 %def_enable tsget
 
 Name: openssl1.1
-Version: 1.1.0i
+Version: 1.1.0j
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -38,7 +38,6 @@ Patch123: openssl-rh-manfix.patch
 Patch132: openssl-rh-version-add-engines.patch
 Patch133: openssl-rh-apps-dgst.patch
 Patch135: openssl-rh-chil-fixes.patch
-Patch136: openssl-rh-secure-getenv.patch
 # Patch137: openssl-rh-ec-curves.patch (breaks tests; we have no reason to disable this curves, right?)
 Patch138: openssl-rh-no-weak-verify.patch
 Patch139: openssl-rh-cc-reqs.patch
@@ -234,7 +233,6 @@ on the command line.
 %patch132 -p1
 %patch133 -p1
 %patch135 -p1
-%patch136 -p1
 # %%patch137 -p1 (breaks tests; we have no reason to disable this curves, right?)
 %patch138 -p1
 %patch139 -p1
@@ -465,8 +463,11 @@ LD_LIBRARY_PATH=%buildroot/%_lib OPENSSL_ENABLE_MD5_VERIFY= \
 %endif
 
 %changelog
+* Tue Nov 20 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.0j-alt1
+- Updated to v1.1.0j.
+
 * Tue Aug 28 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.0i-alt1
-- Updated to 1.1.0i.
+- Updated to v1.1.0i.
 
 * Tue Mar 27 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2o-alt1
 - Updated to v1.0.2o (fixes CVE-2018-0739).
