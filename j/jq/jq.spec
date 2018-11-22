@@ -4,7 +4,7 @@
 Name: jq
 %define lname lib%name
 Version: 1.6
-Release: alt1
+Release: alt2
 Summary: Command-line JSON processor
 Group: Development/Other
 Source: %name-%version.tar
@@ -14,7 +14,7 @@ License: BSD-style
 Requires: %lname = %EVR
 
 BuildRequires: flex  liboniguruma-devel
-BuildRequires: %{?!_disable_check:/proc valgrind ruby-tools}
+%{?!_disable_check:BuildRequires: /proc valgrind ruby-tools}
 
 %description
 %name is a command-line JSON processor.
@@ -87,6 +87,9 @@ cat ./test-suite.log
 %endif
 
 %changelog
+* Thu Nov 22 2018 Anton Farygin <rider@altlinux.ru> 1.6-alt2
+- fixed build with --disable check 
+
 * Mon Nov 05 2018 Anton Farygin <rider@altlinux.ru> 1.6-alt1
 - 1.6
 
