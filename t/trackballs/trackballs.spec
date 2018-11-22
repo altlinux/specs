@@ -1,28 +1,18 @@
 Name: trackballs
-Version: 1.1.4
-Release: alt1.qa1
+Version: 1.3.1
+Release: alt1
 
 Summary: Steer a marble ball through a labyrinth
 License: GPLv2+
 Group: Games/Arcade
-Url: http://trackballs.sourceforge.net/
+Url: https://trackballs.github.io/
 
-# http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 Source: %name-%version.tar
-
-Patch1: trackballs-1.1.4-alt-install-data.patch
-Patch2: trackballs-1.1.4-alt-desktop.patch
-Patch3: trackballs-1.1.4-alt-bound.patch
-Patch4: trackballs-1.1.4-alt-SHARE_DIR.patch
-Patch5: trackballs-1.1.4-deb-doc.patch
-Patch6: trackballs-1.1.4-rh-black-vertices-fix.patch
-Patch7: trackballs-1.1.4-rh555877.patch
 
 Requires: %name-game = %version-%release
 Requires: %name-music >= 2:1.4
 
-# Automatically added by buildreq on Sun Jun 06 2010
-BuildRequires: gcc-c++ guile-devel libGL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel zlib-devel
+BuildRequires: cmake gcc-c++ guile-devel libGL-devel libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel zlib-devel
 
 %description
 Trackballs is a game in which you steer a marble ball through tracks
@@ -55,26 +45,14 @@ level editor and high quality soundeffects and background music.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-sed -i '/kenny/d' configure.ac
 
 %build
-mkdir -p m4
-%add_optflags -Wno-unused
-%autoreconf
-%configure --with-highscores='~'
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
-ln -sf ../../fonts/ttf/dejavu/DejaVuSans.ttf \
-	%buildroot%_datadir/%name/fonts/menuFont.ttf
+%cmake_install DESTDIR=%buildroot install
+
 %find_lang %name
 
 %files
@@ -87,9 +65,12 @@ ln -sf ../../fonts/ttf/dejavu/DejaVuSans.ttf \
 %_man6dir/*
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
-%doc AUTHORS ChangeLog FAQ README TODO
+%doc AUTHORS.md FAQ.md NEWS.md README.md TODO.md
 
 %changelog
+* Thu Nov 22 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.1-alt1
+- 1.3.1 released
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
