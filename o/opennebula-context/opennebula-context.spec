@@ -2,7 +2,7 @@
 Name: opennebula-context
 Summary: OpenNebula Contextualization Package
 Version: 5.6.0
-Release: alt1
+Release: alt2
 License: Apache
 Group: System/Servers
 Url: http://opennebula.org
@@ -89,7 +89,7 @@ install -p -D -m 644 src/usr/lib/systemd/system/one-context-reconfigure-delayed.
 			%buildroot%_unitdir/one-context-reconfigure-delayed.service
 install -p -D -m 644 src/usr/lib/systemd/system/one-context-reconfigure.service##systemd.one \
 			%buildroot%_unitdir/one-context-reconfigure.service
-install -p -D -m 644 src/usr/lib/systemd/system/one-context.service##arch.one \
+install -p -D -m 644 src/usr/lib/systemd/system/one-context.service##alt.one \
 			%buildroot%_unitdir/one-context.service
 
 
@@ -113,6 +113,9 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 %_unitdir/*
 
 %changelog
+* Thu Nov 22 2018 Alexey Shabalin <shaba@altlinux.org> 5.6.0-alt2
+- update one-context.service
+
 * Mon Oct 01 2018 Alexey Shabalin <shaba@altlinux.org> 5.6.0-alt1
 - 5.6.0
 
