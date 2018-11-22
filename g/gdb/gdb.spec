@@ -2,9 +2,16 @@
 %def_disable check
 %def_with python
 
+# Currently gdbserver does not support RISC-V
+%ifarch riscv64
+%def_disable gdbserver
+%else
+%def_enable gdbserver
+%endif
+
 Name: gdb
 Version: 8.2.50.20180917
-Release: alt1
+Release: alt2
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -834,11 +841,13 @@ popd
 %_datadir/gdb/python
 %endif
 %exclude %_bindir/gdb-light
+%if_enabled gdbserver
 %exclude %_bindir/gdbserver
 
 %files -n gdbserver
 %_bindir/gdbserver
 %_libdir/libinproctrace.so
+%endif
 
 %files light
 %_bindir/gdb-light
@@ -855,6 +864,9 @@ popd
 %_libdir/lib*.a
 
 %changelog
+* Wed Nov 21 2018 Nikita Ermakov <arei@altlinux.org> 8.2.50.20180917-alt2
+- Disabled gdbserver for RISC-V (riscv64) architecture (not supported yet).
+
 * Mon Oct 08 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.2.50.20180917-alt1
 - Updated to 8.2.50.20180917, synced with Fedora 8.2.50.20181006-4.
 
