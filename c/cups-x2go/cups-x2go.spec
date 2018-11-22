@@ -1,6 +1,6 @@
 Name:		cups-x2go
-Version:	3.0.1.3
-Release:	alt3
+Version:	3.0.1.4
+Release:	alt1
 
 Summary:	CUPS backend for printing from X2Go
 License:	GPLv2+
@@ -56,6 +56,9 @@ cp -p VERSION.cups-x2go %buildroot%_datadir/x2go/versions/
 %doc README.txt
 
 %changelog
+* Thu Nov 22 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.1.4-alt1
+- New version.
+
 * Fri Apr 06 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.1.3-alt3
 - Build from upstream git.
 
