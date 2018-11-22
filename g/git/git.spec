@@ -1,5 +1,5 @@
 Name: git
-Version: 2.17.2
+Version: 2.19.2
 Release: alt1
 
 Summary: Git core and tools
@@ -18,7 +18,6 @@ Source: %name-%version-%release.tar
 %def_with tk
 %def_with gui
 %def_with doc
-%def_with emacs
 %def_with gitweb
 %def_without python
 %def_with svn
@@ -45,7 +44,6 @@ BuildRequires: hardlink, libssl-devel, perl-devel, perl-podlators, perl(Error.pm
 %{!?_without_email:BuildRequires: perl(Error.pm) perl(Mail/Address.pm) perl(Net/SMTP/SSL.pm) perl(Term/ReadLine.pm)}
 %{!?_without_svn:BuildRequires: perl(Encode.pm) perl(Memoize.pm) perl(SVN/Core.pm) perl(Term/ReadKey.pm) perl(YAML/Any.pm) subversion subversion-server-common}
 %{!?_without_doc:BuildRequires: asciidoc > 0:6.0.3, xmlto}
-%{?!_without_emacs:BuildRequires: emacs-devel emacs-nox}
 %{?!_without_gitweb:BuildRequires: perl(charnames.pm) perl(CGI.pm) perl(Encode.pm)}
 %{?!_without_check:%{?!_disable_check:BuildRequires: cvsps gnupg perl(HTTP/Date.pm) perl(Term/ANSIColor.pm) perl(DBD/SQLite.pm) perl(Encode/JP.pm) unzip}}
 
@@ -246,18 +244,6 @@ and full access to internals.
 This package contains diff-highlight utility, which is a part of Git
 contributed software.
 
-%package -n emacs-%name
-Summary: Emacs modes for Git
-Group: Development/Other
-BuildArch: noarch
-
-%description -n emacs-%name
-Git is a fast, scalable, distributed revision control system with an
-unusually rich command set that provides both high-level operations
-and full access to internals.
-
-This package contains Emacs modes for Git.
-
 %package full
 Summary: Git core and tools
 Group: Development/Other
@@ -270,7 +256,6 @@ Requires: %name-core = %EVR, perl-Git = %EVR, %name-server = %EVR
 %{!?_without_tk:Requires: gitk = %EVR}
 %{!?_without_gui:Requires: %name-gui = %EVR}
 %{!?_without_doc:Requires: %name-doc = %EVR}
-%{!?_without_emacs:Requires: emacs-%name = %EVR}
 %{!?_without_gitweb:Requires: gitweb = %EVR}
 
 %description full
@@ -303,7 +288,6 @@ EOF
 touch git-gui/credits
 %make_build -C Documentation doc.dep
 %make_build all %{!?_without_doc:man html}
-%{!?_without_emacs:%make_build -C contrib/emacs EMACS="%__emacs --eval \"(provide 'message)\""}
 %make_build -C contrib/diff-highlight
 
 %check
@@ -343,19 +327,6 @@ mv %buildroot%gitexecdir/git-daemon %buildroot%_sbindir/
 install -pD -m640 git.xinetd \
 	%buildroot%_sysconfdir/xinetd.d/git
 
-%if_with emacs
-%makeinstall_std -C contrib/emacs emacsdir=%_emacslispdir
-install -pm644 contrib/emacs/*.el %buildroot%_emacslispdir/
-mkdir -p %buildroot%_emacs_sitestart_dir
-cat >%buildroot%_emacs_sitestart_dir/git.el <<__EOF
-; site-start script for Emacs, initializes git and vc-git
-; Evgenii Terechkov, Octember 2006
-
-(require 'git)
-(add-to-list 'vc-handled-backends 'GIT)
-__EOF
-%endif #emacs
-
 # Fix manpages.
 find %buildroot%_mandir -type f -print0 |
 	xargs -r0 grep -lZ '^.\+\.sp$' -- |
@@ -370,6 +341,7 @@ install -Dm755 contrib/diff-highlight/diff-highlight %buildroot%_bindir
 cp -a contrib %buildroot%_datadir/git-core/
 rm -r %buildroot%_datadir/git-core/contrib/completion
 rm -r %buildroot%_datadir/git-core/contrib/emacs
+rm -r %buildroot%_datadir/git-core/contrib/examples
 rm -r %buildroot%_datadir/git-core/contrib/diff-highlight
 
 # Remove unpackaged files.
@@ -521,13 +493,10 @@ popd
 %_bindir/diff-highlight
 %doc contrib/diff-highlight/README
 
-%if_with emacs
-%files -n emacs-%name
-%_emacs_sitestart_dir/*
-%_emacslispdir/*
-%endif #emacs
-
 %changelog
+* Wed Nov 21 2018 Dmitry V. Levin <ldv@altlinux.org> 2.19.2-alt1
+- 2.17.2 -> 2.19.2.
+
 * Thu Sep 27 2018 Dmitry V. Levin <ldv@altlinux.org> 2.17.2-alt1
 - 2.17.1 -> 2.17.2 (fixes: CVE-2018-17456).
 
