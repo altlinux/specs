@@ -5,8 +5,8 @@
 %define soversion 7
 
 Name: libwebp
-Version: 1.0.0
-Release: alt2.1
+Version: 1.0.1
+Release: alt1
 
 Summary: Library and tools for the WebP graphics format
 License: BSD
@@ -117,11 +117,15 @@ images more efficiently.
 %_man1dir/gif2webp.1.*
 %_man1dir/webpinfo.1.*
 %_man1dir/webpmux.1.*
+%_man1dir/img2webp.1.*
 %endif
 %{?_enable_libwebpdemux:%_bindir/vwebp}
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Thu Nov 22 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Thu Oct 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt2.1
 - rebuilt with improved libfreeglut-devel
 
