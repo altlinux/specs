@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
-Release: alt7.git.qa1
-Version: 1.0.1
+Release: alt1.git36a1881
+Version: 1.5.0
 
 Name: goldendict
 
@@ -9,16 +9,13 @@ License: GPLv3
 Group: Education
 URL: http://www.goldendict.org
 
-Source0: %name-%version.tar.bz2
-Patch0: %name-post-%version.patch.bz2
-Patch1: %name-%version-alt-changes-%release.patch
-BuildRequires(pre): libqt4-devel libXtst-devel bzlib-devel
+Source0: %name-%version.tar
+Patch0: goldendict-ru-desktop.patch
+BuildRequires(pre): libXtst-devel bzlib-devel
 
-# Automatically added by buildreq on Fri Apr 03 2009
-BuildRequires: gcc-c++ libX11-devel libqt4-devel >= 4.5.0 libvorbis-devel libzip-devel libhunspell-devel
-BuildRequires: phonon-devel
-BuildRequires: xorg-recordproto-devel
-Requires: libqt4-core
+BuildRequires: gcc-c++ libX11-devel libvorbis-devel libzip-devel libhunspell-devel
+BuildRequires: qt5-phonon-devel qt5-base-devel qt5-script-devel qt5-tools qt5-x11extras-devel qt5-multimedia-devel libao-devel libavformat-devel
+BuildRequires: libavutil-devel qt5-tools-devel qt5-svg-devel qt5-webkit-devel eb-devel liblzo2-devel libtiff-devel
 
 %description
 GoldenDict is feature-rich dictionary lookup program. Features:
@@ -53,20 +50,13 @@ GoldenDict is feature-rich dictionary lookup program. Features:
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
-# Our phonon headers are located in a KDE4-specific directory
-PREFIX=%_prefix /usr/bin/qmake-qt4 QMAKE_LRELEASE=%_qt4dir/bin/lrelease 'INCLUDEPATH+=%_includedir/kde4/KDE'
+PREFIX=%_prefix /usr/bin/qmake-qt5 DISABLE_INTERNAL_PLAYER=1 CONFIG+=no_epwing_support
 %make
 
 %install
-# we need to re-create Makefile, because qmake doesn't generate custom
-# targets' install rules if these targets files are missing when qmake
-# runs. So translations files (being generated during make) aren't
-# installed by default. The problem is described in
-# http://ananasplanet.ning.com/profiles/blogs/o-strannom-povedenii-qmake-pri
-PREFIX=%_prefix /usr/bin/qmake-qt4 QMAKE_LRELEASE=%_qt4dir/bin/lrelease 'INCLUDEPATH+=%_includedir/kde4/KDE'
+PREFIX=%_prefix /usr/bin/qmake-qt5
 %make_install INSTALL_ROOT=%buildroot install
 
 # our find-lang.sh doesn't recognize .qm translation files
@@ -83,8 +73,12 @@ rm -rf %buildroot%_datadir/app-install
 %_pixmapsdir/*
 %dir %_datadir/%name
 %dir %_datadir/%name/locale
+%_datadir/%name/help
 
 %changelog
+* Thu Nov 22 2018 Anton Farygin <rider@altlinux.ru> 1.5.0-alt1.git36a1881
+- 1.5.0-rc2 with fixes from git (closes: #32750, #30973, #29268, #27218, #20887)
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.0.1-alt7.git.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
