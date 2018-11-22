@@ -1,7 +1,7 @@
 Name: ipmitool
 Summary: ipmitool - Utility for IPMI control
 Version: 1.8.18
-Release: alt2
+Release: alt3
 License: BSD
 URL: http://ipmitool.sourceforge.net/
 Group: System/Kernel and hardware
@@ -52,6 +52,9 @@ install -pD -m755 contrib/bmclanconf %buildroot%_sbindir/
 %_datadir/%name
 
 %changelog
+* Thu Nov 22 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.18-alt3
+- revisit openssl-1.1 support
+
 * Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 1.8.18-alt2
 - fixed build with openssl-1.1
 
