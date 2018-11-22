@@ -1,14 +1,16 @@
 Name: crtools
-Version: 3.9
+Version: 3.10
 #define pre 
 %define ver %version%{?pre:%pre}
-Release: alt2
+Release: alt1
 Summary: Utility to checkpoint/restore tasks
 License: GPLv2
 Group: System/Configuration/Other
 URL: http://criu.org
 Source: %name-%ver.tar
 #Patch: %name-%version-%release.patch
+Patch0001: 0001-ppc64aarch64-Export-__page_shiftsize-in-libcompel.patch
+
 Provides: criu = %version-%release
 ExclusiveArch: x86_64 aarch64 armh
 
@@ -60,7 +62,7 @@ Python library library of checkpoint/restore.
 %prep
 %setup -q -n %name-%ver
 #patch -p1
-
+%patch0001 -p1
 
 %build
 export CFLAGS="%optflags"
@@ -106,6 +108,10 @@ PREFIX=%prefix LIBDIR=%_libdir LIBEXECDIR=%_libexecdir SYSTEMDUNITDIR=%_unitdir
 
 
 %changelog
+* Sat Nov 03 2018 Alexey Shabalin <shaba@altlinux.org> 3.10-alt1
+- updated to 3.10
+- add patch for build on aarch64
+
 * Mon Jun 25 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.9-alt2
 - built for aarch64 too
 
