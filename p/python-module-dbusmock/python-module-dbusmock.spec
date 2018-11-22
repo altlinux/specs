@@ -3,17 +3,17 @@
 %def_enable check
 
 Name: python-module-dbusmock
-Version: 0.18
+Version: 0.18.1
 Release: alt1
 
 Summary: mock D-Bus objects for tests
 License: LGPLv3
 Group: Development/Python
-Url: https://pypi.python.org/pypi/%_name
-# https://github.com/martinpitt/python-dbusmock
+Url: https://github.com/martinpitt/python-dbusmock
+# https://pypi.python.org/pypi/%_name
 
-Source: https://pypi.io/packages/source/p/%_name/%_name-%version.tar.gz
-#Source: https://launchpad.net/%_name/trunk/%version/+download/%_name-%version.tar.gz
+Source: %url/releases/download/%version/%_name-%version.tar.gz
+#Source: https://pypi.io/packages/source/p/%_name/%_name-%version.tar.gz
 
 BuildArch: noarch
 
@@ -88,6 +88,9 @@ popd
 
 
 %changelog
+* Thu Nov 22 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18.1-alt1
+- 0.18.1
+
 * Mon Jul 02 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18-alt1
 - 0.18
 
