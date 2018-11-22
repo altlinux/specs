@@ -2,12 +2,12 @@
 
 %set_compress_method skip
 
-%define emacs_version 26.1
+%define emacs_version 26.1.90
 %define erc_version %emacs_version
 
 %define gnus_version 5.13
 %define shortname emacs
-%define tramp_version 2.3.3.26.1
+%define tramp_version 2.3.5.26.2
 %define speedbar_version 1.0
 %define nxml_version 0.2.20041004
 %define cedet_version 2.0
@@ -20,7 +20,7 @@
 %def_enable motif
 
 Name: emacs26
-Version: 26.1
+Version: 26.1.90
 Release: alt1
 
 Group: Editors
@@ -34,9 +34,6 @@ Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
 Source0: %shortname-%emacs_version.tar
 
 Source7: README.KOI8-U
-
-# appdata file from FC emacs 1:25.3-3
-Source9: emacs.appdata.xml
 
 # from Serhij Hlodin
 Source16: CHANGES.ukr
@@ -190,11 +187,6 @@ Obsoletes: emacs22-common
 Obsoletes: emacs23-common
 Obsoletes: emacs24-common
 Obsoletes: emacs25-common
-Provides: emacs21-common = %emacs_version-%release
-Provides: emacs22-common = %emacs_version-%release
-Provides: emacs23-common = %emacs_version-%release
-Provides: emacs24-common = %emacs_version-%release
-Provides: emacs25-common = %emacs_version-%release
 # Common is useless without an Emacs binary:
 Requires: %name = %emacs_version-%release
 # speedbar now separate package
@@ -250,11 +242,6 @@ Obsoletes: emacs22-el
 Obsoletes: emacs23-el
 Obsoletes: emacs24-el
 Obsoletes: emacs25-el
-Provides: emacs21-el = %emacs_version-%release
-Provides: emacs22-el = %emacs_version-%release
-Provides: emacs23-el = %emacs_version-%release
-Provides: emacs24-el = %emacs_version-%release
-Provides: emacs25-el = %emacs_version-%release
 
 %description el
 Emacs-el contains the Emacs Lisp sources for many of the programs
@@ -280,11 +267,6 @@ Obsoletes: emacs22-leim
 Obsoletes: emacs23-leim
 Obsoletes: emacs24-leim
 Obsoletes: emacs25-leim
-Provides: emacs21-leim = %emacs_version-%release
-Provides: emacs22-leim = %emacs_version-%release
-Provides: emacs23-leim = %emacs_version-%release
-Provides: emacs24-leim = %emacs_version-%release
-Provides: emacs25-leim = %emacs_version-%release
 
 %description leim
 The Lisp code for input methods for various international scripts for GNU Emacs.
@@ -304,11 +286,6 @@ Obsoletes: emacs22-leim-el
 Obsoletes: emacs23-leim-el
 Obsoletes: emacs24-leim-el
 Obsoletes: emacs25-leim-el
-Provides: emacs21-leim-el = %emacs_version-%release
-Provides: emacs22-leim-el = %emacs_version-%release
-Provides: emacs23-leim-el = %emacs_version-%release
-Provides: emacs24-leim-el = %emacs_version-%release
-Provides: emacs25-leim-el = %emacs_version-%release
 
 %description leim-el
 Emacs-leim-el contains the Emacs Lisp sources for the Emacs Lisp code
@@ -336,11 +313,7 @@ Obsoletes: emacs22-nox
 Obsoletes: emacs23-nox
 Obsoletes: emacs24-nox
 Obsoletes: emacs25-nox
-Provides: emacs21-nox = %emacs_version-%release
-Provides: emacs22-nox = %emacs_version-%release
-Provides: emacs23-nox = %emacs_version-%release
-Provides: emacs24-nox = %emacs_version-%release
-Provides: emacs25-nox = %emacs_version-%release
+
 # 0.2.0 for new alternatives format
 PreReq: alternatives >= 0.2.0
 Provides: /usr/bin/emacs
@@ -371,10 +344,6 @@ Obsoletes: emacs22-X11
 Obsoletes: emacs23-X11
 Obsoletes: emacs24-X11
 Obsoletes: emacs25-X11
-Provides: emacs22-X11 = %emacs_version-%release
-Provides: emacs23-X11 = %emacs_version-%release
-Provides: emacs24-X11 = %emacs_version-%release
-Provides: emacs25-X11 = %emacs_version-%release
 
 %description X11
 This package includes things you need to run the Emacs editor in X Window
@@ -402,11 +371,7 @@ Obsoletes: emacs22-X11-athena
 Obsoletes: emacs23-X11-athena
 Obsoletes: emacs24-X11-athena
 Obsoletes: emacs25-X11-athena
-Provides: emacs21-X11 = %emacs_version-%release
-Provides: emacs22-X11-athena = %emacs_version-%release
-Provides: emacs23-X11-athena = %emacs_version-%release
-Provides: emacs24-X11-athena = %emacs_version-%release
-Provides: emacs25-X11-athena = %emacs_version-%release
+
 # 0.2.0 for new alternatives format
 PreReq: alternatives >= 0.2.0
 Provides: /usr/bin/emacs
@@ -446,10 +411,6 @@ Obsoletes: emacs22-X11-motif
 Obsoletes: emacs23-X11-motif
 Obsoletes: emacs24-X11-motif
 Obsoletes: emacs25-X11-motif
-Provides: emacs22-X11-motif = %emacs_version-%release
-Provides: emacs23-X11-motif = %emacs_version-%release
-Provides: emacs24-X11-motif = %emacs_version-%release
-Provides: emacs25-X11-motif = %emacs_version-%release
 
 %description X11-motif
 Emacs-X11-motif includes the GNU Emacs text editor program for use with the X
@@ -486,10 +447,6 @@ Obsoletes: emacs22-X11-gtk
 Obsoletes: emacs23-X11-gtk
 Obsoletes: emacs24-X11-gtk
 Obsoletes: emacs25-X11-gtk
-Provides: emacs22-X11-gtk = %emacs_version-%release
-Provides: emacs23-X11-gtk = %emacs_version-%release
-Provides: emacs24-X11-gtk = %emacs_version-%release
-Provides: emacs25-X11-gtk = %emacs_version-%release
 
 %description X11-gtk
 Emacs-X11-gtk includes the GNU Emacs text editor program for use with the X
@@ -523,7 +480,6 @@ PreReq: alternatives >= 0.2.0
 Provides: /usr/bin/emacs
 # emacs26 obsoletes emacs21, emacs22, emacs23, emacs24 and emacs25
 Obsoletes: emacs25-X11-gtk3
-Provides: emacs25-X11-gtk3 = %emacs_version-%release
 
 %description X11-gtk3
 Emacs-X11-gtk3 includes the GNU Emacs text editor program for use with the X
@@ -550,10 +506,6 @@ Obsoletes: emacs22-info
 Obsoletes: emacs23-info
 Obsoletes: emacs24-info
 Obsoletes: emacs25-info
-Provides: emacs22-info = %emacs_version-%release
-Provides: emacs23-info = %emacs_version-%release
-Provides: emacs24-info = %emacs_version-%release
-Provides: emacs25-info = %emacs_version-%release
 Requires: %name-common = %emacs_version-%release
 
 %description info
@@ -576,10 +528,6 @@ Obsoletes: emacs22-elisp-manual
 Obsoletes: emacs23-elisp-manual
 Obsoletes: emacs24-elisp-manual
 Obsoletes: emacs25-elisp-manual
-Provides: emacs22-elisp-manual = %emacs_version-%release
-Provides: emacs23-elisp-manual = %emacs_version-%release
-Provides: emacs24-elisp-manual = %emacs_version-%release
-Provides: emacs25-elisp-manual = %emacs_version-%release
 
 %description elisp-manual
 This package contain full description of Emacs Lisp language
@@ -602,10 +550,6 @@ Obsoletes: emacs22-gnus
 Obsoletes: emacs23-gnus
 Obsoletes: emacs24-gnus
 Obsoletes: emacs25-gnus
-Provides: emacs22-gnus = %gnus_version-%release
-Provides: emacs23-gnus = %gnus_version-%release
-Provides: emacs24-gnus = %gnus_version-%release
-Provides: emacs25-gnus = %gnus_version-%release
 
 %description gnus
 Gnus is a program for Emacs which enable read news and mail from Emacs.
@@ -629,10 +573,6 @@ Obsoletes: emacs22-gnus-el
 Obsoletes: emacs23-gnus-el
 Obsoletes: emacs24-gnus-el
 Obsoletes: emacs25-gnus-el
-Provides: emacs22-gnus-el = %gnus_version-%release
-Provides: emacs23-gnus-el = %gnus_version-%release
-Provides: emacs24-gnus-el = %gnus_version-%release
-Provides: emacs25-gnus-el = %gnus_version-%release
 
 %description gnus-el
 %name-gnus-el contains the Emacs Lisp sources for the bytecode
@@ -659,10 +599,6 @@ Obsoletes: emacs22-speedbar
 Obsoletes: emacs23-speedbar
 Obsoletes: emacs24-speedbar
 Obsoletes: emacs25-speedbar
-Provides: emacs22-speedbar = %speedbar_version-%release
-Provides: emacs23-speedbar = %speedbar_version-%release
-Provides: emacs24-speedbar = %speedbar_version-%release
-Provides: emacs25-speedbar = %speedbar_version-%release
 
 %description speedbar
 Speedbar - Everything browser for Emacs.
@@ -683,10 +619,6 @@ Obsoletes: emacs22-erc
 Obsoletes: emacs23-erc
 Obsoletes: emacs24-erc
 Obsoletes: emacs25-erc
-Provides: emacs22-erc = %erc_version-%release
-Provides: emacs23-erc = %erc_version-%release
-Provides: emacs24-erc = %erc_version-%release
-Provides: emacs25-erc = %erc_version-%release
 
 %description erc
 ERC is an IRC client for Emacs.
@@ -704,10 +636,6 @@ Obsoletes: emacs22-erc-el
 Obsoletes: emacs23-erc-el
 Obsoletes: emacs24-erc-el
 Obsoletes: emacs25-erc-el
-Provides: emacs22-erc-el = %emacs_version-%release
-Provides: emacs23-erc-el = %emacs_version-%release
-Provides: emacs24-erc-el = %emacs_version-%release
-Provides: emacs25-erc-el = %emacs_version-%release
 
 %description erc-el
 %name-erc-el contains the Emacs Lisp sources for the bytecode
@@ -731,10 +659,6 @@ Obsoletes: emacs22-tramp
 Obsoletes: emacs23-tramp
 Obsoletes: emacs24-tramp
 Obsoletes: emacs25-tramp
-Provides: emacs22-tramp = %tramp_version-%release
-Provides: emacs23-tramp = %tramp_version-%release
-Provides: emacs24-tramp = %tramp_version-%release
-Provides: emacs25-tramp = %tramp_version-%release
 
 %description tramp
 TRAMP stands for `Transparent Remote (file) Access, Multiple
@@ -758,10 +682,6 @@ Obsoletes: emacs22-tramp-el
 Obsoletes: emacs23-tramp-el
 Obsoletes: emacs24-tramp-el
 Obsoletes: emacs25-tramp-el
-Provides: emacs22-tramp-el = %emacs_version-%release
-Provides: emacs23-tramp-el = %emacs_version-%release
-Provides: emacs24-tramp-el = %emacs_version-%release
-Provides: emacs25-tramp-el = %emacs_version-%release
 
 %description tramp-el
 %name-tramp-el contains the Emacs Lisp sources for the bytecode
@@ -784,10 +704,6 @@ Obsoletes: emacs22-nxml-mode
 Obsoletes: emacs23-nxml-mode
 Obsoletes: emacs24-nxml-mode
 Obsoletes: emacs25-nxml-mode
-Provides: emacs22-nxml-mode = %emacs_version-%release
-Provides: emacs23-nxml-mode = %emacs_version-%release
-Provides: emacs24-nxml-mode = %emacs_version-%release
-Provides: emacs25-nxml-mode = %emacs_version-%release
 
 %description nxml-mode
 This is a new major mode for GNU Emacs for editing XML documents. It
@@ -807,10 +723,6 @@ Obsoletes: emacs22-nxml-mode-el
 Obsoletes: emacs23-nxml-mode-el
 Obsoletes: emacs24-nxml-mode-el
 Obsoletes: emacs25-nxml-mode-el
-Provides: emacs22-nxml-mode-el = %emacs_version-%release
-Provides: emacs23-nxml-mode-el = %emacs_version-%release
-Provides: emacs24-nxml-mode-el = %emacs_version-%release
-Provides: emacs25-nxml-mode-el = %emacs_version-%release
 
 %description nxml-mode-el
 %name-nxml-mode-el contains the Emacs Lisp sources for the bytecode
@@ -833,10 +745,6 @@ Obsoletes: emacs22-cedet
 Obsoletes: emacs23-cedet
 Obsoletes: emacs24-cedet
 Obsoletes: emacs25-cedet
-Provides: emacs22-cedet = %emacs_version-%release
-Provides: emacs23-cedet = %emacs_version-%release
-Provides: emacs24-cedet = %emacs_version-%release
-Provides: emacs25-cedet = %emacs_version-%release
 
 %description cedet
 CEDET - Collection of Emacs Development Enviromnent Tools
@@ -862,10 +770,6 @@ Obsoletes: emacs22-cedet-el
 Obsoletes: emacs23-cedet-el
 Obsoletes: emacs24-cedet-el
 Obsoletes: emacs25-cedet-el
-Provides: emacs22-cedet-el = %emacs_version-%release
-Provides: emacs23-cedet-el = %emacs_version-%release
-Provides: emacs24-cedet-el = %emacs_version-%release
-Provides: emacs25-cedet-el = %emacs_version-%release
 
 %description cedet-el
 %name-cedet-el contains the Emacs Lisp sources for the bytecode
@@ -1227,7 +1131,7 @@ rm -f {main,leim}{,-el}.ls info.ls
 # INFO
 common_infos=( $(ls "$RPM_BUILD_ROOT"%_infodir/*.info.gz \
 | sed -e "s:^$RPM_BUILD_ROOT%_infodir/::" \
-| sed -e 's:\.info$::' | sort -u \
+| sort -u \
 | egrep -v %gnus_infos_pattern \
 | egrep -v %speedbar_infos_pattern \
 | egrep -v %cedet_infos_pattern \
@@ -1307,7 +1211,7 @@ install -p -m 0644 emacs.pc %buildroot%_datadir/pkgconfig/
 
 # Install app data
 mkdir -p %buildroot%_datadir/appdata
-cp -a %SOURCE9 %buildroot%_datadir/appdata/%{name}.appdata.xml
+install -p -m 0644 etc/emacs.appdata.xml %buildroot%_datadir/appdata/emacs.appdata.xml
 
 #
 %files common -f main.ls
@@ -1411,7 +1315,6 @@ cp -a %SOURCE9 %buildroot%_datadir/appdata/%{name}.appdata.xml
 %_sysconfdir/buildreqs/packages/substitute.d/%name-common
 
 %_datadir/pkgconfig/emacs.pc
-%_datadir/appdata/*
 
 #
 %files el
@@ -1613,6 +1516,12 @@ cp -a %SOURCE9 %buildroot%_datadir/appdata/%{name}.appdata.xml
 
 
 %changelog
+* Thu Nov 22 2018 Terechkov Evgenii <evg@altlinux.org> 26.1.90-alt1
+- Drop Source9 and use native appdata file
+
+* Wed Nov 21 2018 Terechkov Evgenii <evg@altlinux.org> 26.1.90-alt1
+- 26.1.90
+
 * Mon Jun 11 2018 Terechkov Evgenii <evg@altlinux.org> 26.1-alt1
 - 26.1
 
