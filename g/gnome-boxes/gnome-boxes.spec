@@ -9,7 +9,7 @@
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
@@ -24,7 +24,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-# From configure.ac
 %define govirt_ver 0.3.4
 %define glib_ver 2.38.0
 %define gtk_ver 3.19.8
@@ -131,6 +130,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Thu Nov 22 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.3-alt1
+- 3.30.3
+
 * Wed Oct 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
 - 3.30.2
 
