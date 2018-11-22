@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: grilo
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Content discovery framework
@@ -14,6 +14,9 @@ Url: https://wiki.gnome.org/Projects/Grilo
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+%define __python %nil
+
+BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
 BuildRequires: gnome-common intltool >= 0.40.0
 BuildRequires: libgio-devel >= 2.44
 BuildRequires: libxml2-devel
@@ -91,33 +94,31 @@ Tools for the %name library
 %setup
 
 %build
-%autoreconf
-%configure \
-	--disable-static	\
-	--enable-vala		\
-	--enable-gtk-doc	\
-	--enable-introspection	\
-	--enable-grl-net	\
-	--enable-grl-pls	\
-	--disable-tests
+%meson \
+	-Denable-vala=true \
+	-Denable-gtk-doc=true \
+	-Denable-introspection=true \
+	-Denable-grl-net=true \
+	-Denable-grl-pls=true \
+	-Denable-test-ui=true
 
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 mkdir -p %buildroot%_libdir/grilo-%ver_major %buildroot%_datadir/grilo-%ver_major/plugins
 
 %find_lang %name
 
 # Remove files that will not be packaged
-rm -f %buildroot%_bindir/grilo-simple-playlist
+#rm -f %buildroot%_bindir/grilo-simple-playlist
 
 %check
 # grilo-plugins should be installed for check
-%make check
+%meson_test
 
 %files tools
-%doc AUTHORS COPYING NEWS README TODO
+%doc AUTHORS COPYING NEWS README* TODO
 %_bindir/grl-inspect-%api_ver
 %_bindir/grl-launch-%api_ver
 %_bindir/grilo-test-ui-%api_ver
@@ -150,6 +151,9 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %endif
 
 %changelog
+* Mon Nov 19 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.7-alt1
+- 0.3.7
+
 * Fri Jul 27 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
 - 0.3.6
 
