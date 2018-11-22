@@ -2,7 +2,7 @@
 %define oname soundtouch
 
 Name: libsoundtouch
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: SoundTouch audio processing library
@@ -61,6 +61,9 @@ rm -rf %buildroot/%_prefix/doc
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Thu Nov 22 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
+- 2.1.1 (fixed CVE-2018-17097)
+
 * Sun Sep 23 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - 2.1.0
 
