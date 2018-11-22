@@ -1,8 +1,8 @@
 Name: mongo
-Version: 4.0.3
+Version: 4.0.4
 Release: alt1
 Summary: mongo client shell and tools
-License: AGPL 3.0
+License: SSPL 1.0
 Url: http://www.mongodb.org
 Group: Development/Databases
 # From https://docs.mongodb.com/manual/installation
@@ -144,7 +144,7 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 
 
 %files
-%doc README GNU-AGPL-3.0.txt APACHE-2.0.txt
+%doc README LICENSE-Community.txt
 
 %_bindir/mongo
 %exclude %_bindir/install_compass
@@ -162,7 +162,7 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %exclude %_man1dir/mongotop.1*
 
 %files server-mongod
-%doc GNU-AGPL-3.0.txt APACHE-2.0.txt
+%doc README LICENSE-Community.txt
 %config(noreplace) %_sysconfdir/%name/mongod.conf
 %config(noreplace) %_sysconfdir/sysconfig/mongod
 %config(noreplace) %_logrotatedir/mongod
@@ -176,7 +176,7 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %files server-mongos
-%doc GNU-AGPL-3.0.txt APACHE-2.0.txt
+%doc README LICENSE-Community.txt
 %config(noreplace) %_sysconfdir/%name/mongos.conf
 %config(noreplace) %_sysconfdir/sysconfig/mongos
 %config(noreplace) %_logrotatedir/mongos
@@ -189,6 +189,9 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Thu Nov 22 2018 Vladimir Didenko <cow@altlinux.org> 4.0.4-alt1
+- 4.0.4
+
 * Thu Oct 11 2018 Vladimir Didenko <cow@altlinux.org> 4.0.3-alt1
 - 4.0.3
 
