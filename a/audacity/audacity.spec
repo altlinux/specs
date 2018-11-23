@@ -1,6 +1,6 @@
 Name: audacity
 Version: 2.1.1
-Release: alt3
+Release: alt4
 
 Summary: Cross-platform audio editor
 License: GPL
@@ -67,6 +67,7 @@ rm -f src/.depend
 rm -f src/.gchdepend
 # ffmpeg: http://forum.audacityteam.org/viewtopic.php?f=19&t=71586
 %configure \
+	--with-help \
 	--disable-dynamic-loading \
 	--with-expat=system \
 	--without-ffmpeg \
@@ -81,7 +82,10 @@ rm -f src/.gchdepend
 	--with-libvamp=system \
 	--with-libvorbis=system \
 	--with-soundtouch=system \
-	#
+%ifnarch %ix86 x86_64 %e2k
+	--disable-sse \
+%endif
+#
 	#--enable-unicode=yes \
 	#--with-portmixer=no
 	#--with-portaudio=system \
@@ -95,8 +99,8 @@ rm -f src/.gchdepend
 install -pDm644 %SOURCE2 %buildroot%_liconsdir/%name.xpm
 install -pDm644 %SOURCE3 %buildroot%_niconsdir/%name.xpm
 install -pDm644 %SOURCE4 %buildroot%_miconsdir/%name.xpm
-mkdir %buildroot%_datadir/%name/help
-tar -xf %SOURCE6 -C %buildroot%_datadir/%name/help/
+
+tar -xf %SOURCE6 -C %buildroot%_datadir/%name
 rm -rf %buildroot%_defaultdocdir/%name
 %find_lang %name
 
@@ -124,6 +128,10 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/%name/help
 
 %changelog
+* Fri Nov 23 2018 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt4
+- Fixed packaging documentation (Closes: #34427).
+- disable SSE for non-x86 and e2k arches.
+
 * Sun Mar 18 2018 Andrew Savchenkon <bircoph@altlinux.org> 2.1.1-alt3
 - Fix SSE issue on E2K properly, revert SSE removal for non-x86.
 
