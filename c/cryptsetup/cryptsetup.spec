@@ -6,7 +6,7 @@
 
 Name: cryptsetup
 Version: 2.0.2
-Release: alt1
+Release: alt2
 
 Summary: utility to setup a encrypted disks with LUKS support
 Summary(ru_RU.UTF-8): утилита управления зашифрованными дисковыми разделами с поддержкой LUKS
@@ -214,6 +214,9 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %exclude %python_sitelibdir/*.la
 
 %changelog
+* Fri Nov 23 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.0.2-alt2
+- broke tag re-signed
+
 * Thu Mar 29 2018 Alexey Shabalin <shaba@altlinux.ru> 2.0.2-alt1
 - 2.0.2
 
