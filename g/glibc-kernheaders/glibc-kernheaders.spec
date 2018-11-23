@@ -1,9 +1,9 @@
-%define kernel_base_version 4.18
+%define kernel_base_version 4.19
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
 License: GPLv2
@@ -32,15 +32,17 @@ Patch16: 0016-x86-uapi-fix-asm-signal.h-userspace-compilation-erro.patch
 Patch17: 0017-uapi-fix-linux-kexec.h-userspace-compilation-errors.patch
 Patch18: 0018-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
 Patch19: 0019-uapi-fix-linux-fsmap.h-userspace-compilation-error.patch
-Patch20: 0020-uapi-fix-linux-netfilter-nf_osf.h-userspace-compilat.patch
-Patch21: 0021-uapi-fix-linux-usb-audio.h-userspace-compilation-err.patch
-Patch22: 0022-uapi-fix-sound-skl-tplg-interface.h-userspace-compil.patch
+Patch20: 0020-uapi-fix-linux-usb-audio.h-userspace-compilation-err.patch
+Patch21: 0021-uapi-fix-linux-kfd_ioctl.h-userspace-compilation-err.patch
 
 BuildRequires: rpm-build-kernel
 BuildRequires: %kernel_source = 1.0.0
 
-%define base_arch %_target_cpu
-%ifarch %ix86 x86_32 x86_64
+%if 0%{!?mips:1}
+%define mips mips mipsn32 mips64 mipsel mipsn32el mips64el
+%endif
+
+%ifarch %ix86 x86_32 x86_64 x32
 %define base_arch x86
 %endif
 %ifarch %arm
@@ -49,13 +51,25 @@ BuildRequires: %kernel_source = 1.0.0
 %ifarch aarch64
 %define base_arch arm64
 %endif
-%ifarch ppc ppc64
+%ifarch ppc ppc64 ppc64le
 %define base_arch powerpc
 %endif
+%ifarch riscv riscv64
+%define base_arch riscv
+%endif
+%ifarch s390 s390x
+%define base_arch s390
+%endif
+%ifarch %mips
+%define base_arch mips
+%endif
+%if 0%{!?base_arch}
+%{error:%_target_cpu is not supported}
+%endif
 
-Requires: %name-%base_arch = %version-%release
-Provides: kernel-headers = %version-%release
-Provides: linux-libc-headers = %version-%release
+Requires: %name-%base_arch = %EVR
+Provides: kernel-headers = %EVR
+Provides: linux-libc-headers = %EVR
 Obsoletes: linux-libc-headers < %version
 
 %description
@@ -69,6 +83,7 @@ Summary: Generic Linux kernel C header files
 Group: Development/Kernel
 BuildArch: noarch
 Conflicts: %name < %version
+AutoReq: nocpp
 
 %description generic
 This package contains generic C header files that specify the interface
@@ -76,17 +91,60 @@ between the Linux kernel and userspace libraries and programs.
 The header files define structures and constants that are needed for
 building most standard programs and are also needed to build glibc.
 
-%package %base_arch
-Summary: %base_arch-specific Linux kernel C header files
+%global kernel_arches %nil
+
+%global do_package() \
+%if 0%{2} \
+%package %{1} \
+Summary: %{1}-specific Linux kernel C header files \
+Group: Development/Kernel \
+BuildArch: noarch \
+Requires: %name-generic = %EVR \
+AutoReq: nocpp \
+%description %{1} \
+This package contains %{1}-specific C header files that specify \
+the interface between the Linux kernel and userspace libraries and programs. \
+The header files define structures and constants that are needed for \
+building most standard programs and are also needed to build glibc. \
+%endif
+
+# In the kernel tree:
+# ls arch/*/include/uapi/asm/Kbuild | sed -n 's|^arch/\([^/ ]\+\)/.*|\1|p' | sort | xargs echo %%define kernel_arches
+%define kernel_arches alpha arc arm arm64 c6x h8300 hexagon ia64 m68k microblaze mips nds32 nios2 openrisc parisc powerpc riscv s390 sh sparc unicore32 x86 xtensa
+
+# ls arch/*/include/uapi/asm/Kbuild | sed -n 's|^arch/\([^/ ]\+\)/.*|%%do_package \1 1|p' | sort
+%do_package alpha 1
+%do_package arc 1
+%do_package arm 1
+%do_package arm64 1
+%do_package c6x 1
+%do_package h8300 1
+%do_package hexagon 1
+%do_package ia64 1
+%do_package m68k 1
+%do_package microblaze 1
+%do_package mips 1
+%do_package nds32 1
+%do_package nios2 1
+%do_package openrisc 1
+%do_package parisc 1
+%do_package powerpc 1
+%do_package riscv 1
+%do_package s390 1
+%do_package sh 1
+%do_package sparc 1
+%do_package unicore32 1
+%do_package x86 1
+%do_package xtensa 1
+
+%package all
+Summary: All Linux kernel C header files
 Group: Development/Kernel
 BuildArch: noarch
-Requires: %name-generic = %version-%release
+Requires: %(for a in %kernel_arches; do printf '%%s = %%s ' %name-$a %EVR; done)
 
-%description %base_arch
-This package contains %base_arch-specific C header files that specify
-the interface between the Linux kernel and userspace libraries and programs.
-The header files define structures and constants that are needed for
-building most standard programs and are also needed to build glibc.
+%description all
+This package pulls in all other %name-* packages.
 
 %prep
 %setup -cT
@@ -115,24 +173,84 @@ cd %kernel_source
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
-%patch22 -p1
 
-sed -i 's/^headers_install:.*/&\n\t@echo SRCARCH=$(SRCARCH)/' Makefile
+# No exceptions, please!
+sed -i 's/^no-export-headers/#&/' include/uapi/linux/Kbuild
+
+%build
+mkdir -p headers
+base_done=
+for hdr_arch in %kernel_arches; do
+	mkdir -p headers/"$hdr_arch"
+	[ "$hdr_arch" != %base_arch ] || base_done=1
+	make -C %kernel_source headers_install \
+		ARCH="$hdr_arch" INSTALL_HDR_PATH="$PWD"/headers/"$hdr_arch" \
+		&& rc= || rc=$?
+	[ -z "$rc" ] || exit $rc
+	find headers/"$hdr_arch"/include -name "*.install*" -delete
+	mv headers/"$hdr_arch"/include/asm{,-"$hdr_arch"}
+	(cd headers/"$hdr_arch"/include && find -type f -exec sha1sum {} +) |
+		LC_COLLATE=C sort > "$hdr_arch".list
+	if [ -s generic.list ]; then
+		comm -12 generic.list "$hdr_arch".list > generic.list+
+		mv generic.list+ generic.list
+	else
+		cp "$hdr_arch".list generic.list
+	fi
+done
+
+for hdr_arch in %kernel_arches; do
+	comm -23 "$hdr_arch".list generic.list > "$hdr_arch"-specific.list
+done
+
+sort -u *-specific.list |
+	sed 's/.* //' |
+	sort |
+	uniq -d > dups.list
+if [ -s dups.list ]; then
+	cat >&2 dups.list
+	exit 1
+fi
+
+[ -n "$base_done" ] || {
+	echo >&2 "headers for %base_arch has not been generated"
+	exit 1
+}
+
+ln -s generic.list generic-specific.list
 
 %install
 %define hdr_dir %_includedir/linux-default
-make -C %kernel_source headers_install \
-	INSTALL_HDR_PATH=%buildroot%hdr_dir > out && rc= || rc=$?
-cat out
-[ -z "$rc" ] || exit $rc
-SRCARCH="$(sed '/^SRCARCH=/!d;s///;q' out)"
-[ %base_arch = "$SRCARCH" ] || {
-	echo >&2 "%%base_arch=%base_arch != \$SRCARCH=$SRCARCH"
-	exit 1
+
+gen_files()
+{
+	a="$1"; shift
+
+	while read h file; do
+		for dir in headers/*/include; do
+			[ -f "$dir/$file" ] || continue
+			install -pD -m644 "$dir/$file" \
+				"%buildroot%hdr_dir/include/$file"
+			echo "%hdr_dir/include${file#.}"
+			break
+		done
+	done < "$a"-specific.list > package-"$a".files
+
+	sed -n 's|^\(/.\+/\)[^/]\+$|%dir \1|p' < package-"$a".files |
+		sort -u > dir-"$a".files
+
+	cat >> package-"$a".files <<-@@@
+	%%dir %hdr_dir/
+	%%dir %hdr_dir/include/
+	@@@
+	cat dir-"$a".files >> package-"$a".files
 }
-mv %buildroot%hdr_dir/include/asm{,-$SRCARCH}
-ln -s asm-$SRCARCH %buildroot%hdr_dir/include/asm
-find %buildroot%_includedir -name "*.install*" -delete
+
+for hdr_arch in generic %kernel_arches; do
+	gen_files "$hdr_arch"
+done
+
+ln -s asm-%base_arch %buildroot%hdr_dir/include/asm
 
 %check
 set +x
@@ -151,15 +269,39 @@ cd - > /dev/null
 
 %define _unpackaged_files_terminate_build 1
 
-%files generic
-%hdr_dir/
-%exclude %hdr_dir/include/asm
-%exclude %hdr_dir/include/asm-%base_arch/
+%global do_files() \
+%if 0%{2} \
+%files %{1} -f package-%{1}.files \
+%endif
 
-%files %base_arch
-%dir %hdr_dir/
-%dir %hdr_dir/include/
-%hdr_dir/include/asm-%base_arch/
+# ls arch/*/include/uapi/asm/Kbuild | sed -n 's|^arch/\([^/ ]\+\)/.*|%%do_files \1 1|p' | sort
+%do_files alpha 1
+%do_files arc 1
+%do_files arm 1
+%do_files arm64 1
+%do_files c6x 1
+%do_files h8300 1
+%do_files hexagon 1
+%do_files ia64 1
+%do_files m68k 1
+%do_files microblaze 1
+%do_files mips 1
+%do_files nds32 1
+%do_files nios2 1
+%do_files openrisc 1
+%do_files parisc 1
+%do_files powerpc 1
+%do_files riscv 1
+%do_files s390 1
+%do_files sh 1
+%do_files sparc 1
+%do_files unicore32 1
+%do_files x86 1
+%do_files xtensa 1
+
+%files generic -f package-generic.files
+
+%files all
 
 %files
 %dir %hdr_dir/
@@ -167,6 +309,13 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Fri Nov 23 2018 Dmitry V. Levin <ldv@altlinux.org> 4.19-alt2
+- Added subpackages with header files for all architectures
+  supported by the kernel (by glebfm@ and me).
+
+* Mon Oct 22 2018 Dmitry V. Levin <ldv@altlinux.org> 4.19-alt1
+- v4.18 -> v4.19.
+
 * Mon Aug 13 2018 Dmitry V. Levin <ldv@altlinux.org> 4.18-alt1
 - v4.17 -> v4.18.
 
