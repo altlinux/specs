@@ -1,5 +1,5 @@
-%define lvm2version 2.02.181
-%define dmversion 1.02.150
+%define lvm2version 2.02.182
+%define dmversion 1.02.152
 
 %define _sbindir /sbin
 %define _runtimedir /run
@@ -608,6 +608,10 @@ __EOF__
 %endif
 
 %changelog
+* Fri Nov 23 2018 Alexey Shabalin <shaba@altlinux.org> 2.02.182-alt1
+- 2.02.182
+- fixed blkdeactivate script for bash3
+
 * Mon Aug 13 2018 Alexey Shabalin <shaba@altlinux.org> 2.02.181-alt1
 - 2.02.181
 
