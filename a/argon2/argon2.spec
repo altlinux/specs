@@ -2,7 +2,7 @@
 
 Name: argon2
 Version: 20171227
-Release: alt1
+Release: alt2
 Group: System/Base
 Summary: The password-hashing tools
 
@@ -104,5 +104,8 @@ install -Dpm 644 lib%name.pc %buildroot%_pkgconfigdir/lib%name.pc
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Nov 23 2018 Andrey Bychkov <mrdrew@altlinux.org> 20171227-alt2
+- broke tag re-signed
+
 * Fri Jan 26 2018 Alexey Shabalin <shaba@altlinux.ru> 20171227-alt1
 - initial package (based on fedora spec)
