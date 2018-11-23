@@ -1,6 +1,6 @@
 Name: conky
 Version: 1.9.0
-Release: alt1.1
+Release: alt2
 
 %def_enable lua
 %def_enable ncurses
@@ -28,6 +28,7 @@ Url: http://conky.sourceforge.net/
 
 Source: %name-%version.tar.bz2
 Source1: conky-dotfiles.tar.bz2
+Patch1: conky-1.9.0-fix-apcupsd-support.patch
 
 # Automatically added by buildreq on Tue Jul 07 2009
 BuildRequires: glib2-devel libXdamage-devel libXext-devel libXft-devel xsltproc zlib-devel
@@ -100,6 +101,7 @@ mpd, и т.д.) в окне графической системы X11.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %autoreconf
@@ -145,6 +147,9 @@ install -p -m644 %SOURCE1 ./
 %config %_sysconfdir/%name/%{name}_no_x11.conf
 
 %changelog
+* Wed Nov 14 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.9.0-alt2
+- fixed apcupsd support (ALT#32298)
+
 * Wed May 16 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.9.0-alt1.1
 - e2k: rebuilt with explicit lua5.1 BR
 
