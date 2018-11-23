@@ -11,11 +11,11 @@
 %global build_dir ./_build
 %global build_dir_cli %build_dir/src/%import_path_cli
 %global build_dir_engine %build_dir/src/%import_path_engine
-%global commit      1caf76ce6baa889133ece59fab3c36aaf143d4ef
+%global commit      4d60db472b2bde6931072ca6467f2667c2590dff
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-ce
-Version:    18.06.1
+Version:    18.09.0
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -169,6 +169,9 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Thu Nov 22 2018 Vladimir Didenko <cow@altlinux.org> 18.09.0-alt1
+- New version
+
 * Thu Aug 30 2018 Vladimir Didenko <cow@altlinux.org> 18.06.1-alt1
 - New version
 
