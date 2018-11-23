@@ -13,7 +13,7 @@
 %def_disable jack
 
 Name: pipewire
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Media Sharing Server
@@ -96,7 +96,7 @@ This package contains command line utilities for the PipeWire media server.
 %meson \
 	%{?_enable_docs:-Ddocs=true} \
 	%{?_enable_man:-Dman=true} \
-	%{?_enable_gstreamer:-Dgstreamer=true}
+	%{?_enable_gstreamer:-Dgstreamer=enabled}
 	%{?_disable_systemd:-Dsystemd=false}
 %meson_build
 
@@ -148,6 +148,9 @@ This package contains command line utilities for the PipeWire media server.
 %_man1dir/%name-cli.1*
 
 %changelog
+* Fri Nov 23 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
+- 0.2.4
+
 * Fri Sep 21 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
 - updated to 0.2.3-7-g58efa8c2
 
