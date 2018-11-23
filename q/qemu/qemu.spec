@@ -104,7 +104,7 @@
 
 Name: qemu
 Version: 3.0.0
-Release: alt2
+Release: alt3
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -1591,6 +1591,9 @@ fi
 %_man1dir/qemu-system-nios2.1*
 
 %changelog
+* Tue Nov 20 2018 Lenar Shakirov <snejok@altlinux.ru> 3.0.0-alt3
+- qemu-kvm.sh fixed on i?86 systems
+
 * Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt2
 - disable vde support
 
