@@ -5,7 +5,7 @@
 %define xdg_name org.gnome.Gtranslator
 
 Name: gtranslator
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A GNOME po file editor with many bells and whistles.
@@ -86,6 +86,9 @@ This package contains documentation needed to develop %name plugins.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Nov 23 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
+- 3.30.1
+
 * Sat Nov 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 
