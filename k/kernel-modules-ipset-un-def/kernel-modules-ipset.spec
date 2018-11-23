@@ -1,9 +1,9 @@
 %define module_name	ipset
 %define module_version	7.0
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		un-def
-%define karch %ix86 x86_64
+%define karch x86_64 i586
 BuildRequires(pre): kernel-headers-modules-un-def
 %setup_kernel_module %flavour
 
