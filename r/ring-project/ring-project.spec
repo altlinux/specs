@@ -26,7 +26,7 @@
 
 Name: ring-project
 Version: 20180826
-Release: alt1%ubt
+Release: alt2
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -85,6 +85,7 @@ the shell.
 %package -n ring-client-gnome
 Summary: Ring client written in GTK+
 Group: Networking/Instant messaging
+Requires: ring-daemon
 %description -n ring-client-gnome
 Ring-client-gnome is a Ring client written in GTK+. It uses libRingClient to
 communicate with the Ring daemon and for all of the underlying models and their
@@ -276,6 +277,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 #%_libdir/libring.a
 
 %changelog
+* Fri Nov 23 2018 Sergey V Turchin <zerg@altlinux.org> 20180826-alt2
+- fix requires (ALT#33594)
+
 * Thu Aug 30 2018 Sergey V Turchin <zerg@altlinux.org> 20180826-alt1%ubt
 - new version
 
