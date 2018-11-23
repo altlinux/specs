@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.16
-Release:	alt1
+Release:	alt2
 #Url:		http://etcnet.org/
 Url:		https://www.altlinux.org/Etcnet
 
@@ -141,6 +141,9 @@ fi
 %files full
 
 %changelog
+* Fri Nov 23 2018 Alexey Shabalin <shaba@altlinux.org> 0.9.16-alt2
+- release up
+
 * Thu Oct 25 2018 Alexey Shabalin <shaba@altlinux.org> 0.9.16-alt1
 - add support read list commands for birdge
 - fixed create dummy and teql iface
