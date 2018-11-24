@@ -8,8 +8,8 @@
 %def_disable check
 
 Name: python-module-%{_name}3
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Python bindings for GObject
 Group: Development/Python
@@ -207,6 +207,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 22 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
+- 3.30.2
+
 * Thu Oct 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt2
 - rebuilt with pycairo-1.17.1
 

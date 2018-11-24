@@ -2,10 +2,10 @@
 
 %define modname cairo
 %define oname py%modname
-%define ver_major 1.17
+%define ver_major 1.18
 
 Name: python-module-%oname
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Pycairo is a set of Python bindings for the cairo vector graphics library
@@ -22,7 +22,11 @@ BuildRequires(pre): rpm-build-python rpm-build-python3
 BuildRequires: libcairo-devel >= 1.13.1
 BuildRequires: python-devel python3-devel
 %{?!_with_bootstrap:BuildRequires: python-module-Pygments}
-%{?_with_doc:BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme texlive-latex-base}
+%if_with doc
+BuildRequires: python-module-sphinx-devel python-module-sphinx_rtd_theme
+BuildRequires: python3-module-sphinx-devel python3-module-sphinx_rtd_theme
+BuildRequires: texlive-latex-base
+%endif
 
 %description
 The Pycairo bindings are designed to match the cairo C API as closely as
@@ -101,6 +105,8 @@ subst 's|\"lib\"|"%_lib"|' {,py3build/}setup.py
 %{?_with_doc:%prepare_sphinx docs}
 
 %build
+# incomplete support
+%define opts --pkgconfigdir=%_pkgconfigdir
 %python_build
 %{?_with_doc:%make -C docs}
 
@@ -180,6 +186,9 @@ rm -fR %python_sitelibdir/%oname/pickle
 %endif
 
 %changelog
+* Sat Nov 24 2018 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Thu Oct 25 2018 Yuri N. Sedunov <aris@altlinux.org> 1.17.1-alt1
 - 1.17.1
 
