@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define ver_major 2.1
 %define api_ver 2.0
 
@@ -16,7 +17,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -24,7 +25,11 @@ License: GPLv2+
 Group: Office
 Url: http://wiki.gnome.org/Projects/Tracker
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 Obsoletes: lib%name-client
 Obsoletes: %name-search-tool < 1.99.0
@@ -172,7 +177,7 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 rm -rf %buildroot%_datadir/tracker-tests
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog COPYING NEWS README
+%doc AUTHORS COPYING NEWS README
 %doc src/libtracker-common/COPYING.LIB
 %config(noreplace) %_sysconfdir/xdg/autostart/*
 %_datadir/glib-2.0/schemas/*
@@ -231,6 +236,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 
 
 %changelog
+* Mon Nov 19 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt1
+- updated to 2.1.6-5-g92a5a24c4
+
 * Wed Sep 26 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.5-alt1
 - 2.1.5
 

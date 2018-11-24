@@ -4,15 +4,16 @@
 %def_disable snapshot
 
 %define ver_major 3.30
+%define api_ver 3
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
 %def_enable remote_desktop
+# https://github.com/NVIDIA/egl-wayland required
 %def_disable egl_device
-%define api_ver 3
 
 Name: mutter
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Epoch: 1
 
@@ -189,6 +190,9 @@ DATADIRNAME=share %configure \
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Mon Nov 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1:3.30.2-alt1
+- 3.30.2
+
 * Tue Oct 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1:3.30.1-alt1
 - 3.30.1
 

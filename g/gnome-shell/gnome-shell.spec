@@ -6,11 +6,11 @@
 %define ver_major 3.30
 %define gst_api_ver 1.0
 # broken with meson-0.47.x
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_disable check
 
 Name: gnome-shell
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -111,43 +111,38 @@ BuildRequires(pre): meson rpm-build-gir rpm-build-python3 rpm-build-xdg
 BuildRequires: gcc-c++ gnome-common intltool gtk-doc sassc
 BuildRequires: python3-devel
 BuildRequires: libX11-devel libXfixes-devel
-BuildRequires: libclutter-devel >= %clutter_ver libclutter-gir-devel
-BuildRequires: libdbus-glib-devel
+BuildRequires: libmutter-devel >= %mutter_ver libmutter-gir-devel
 BuildRequires: libgjs-devel >= %gjs_ver
 BuildRequires: libgio-devel >= %gio_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver libgtk+3-gir-devel
 BuildRequires: at-spi2-atk-devel >= %atspi_ver
+BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libxml2-devel
 BuildRequires: libgnome-menus-devel >= %menus_ver libgnome-menus-gir-devel
 BuildRequires: libGConf-devel
 BuildRequires: libgnome-desktop3-devel >= %desktop_ver
-BuildRequires: libgnome-keyring-devel
 BuildRequires: gcr-libs-devel >= %gcr_ver
 BuildRequires: libstartup-notification-devel >= %sn_ver
-BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: libcroco-devel
-BuildRequires: libcanberra-devel
+BuildRequires: libcanberra-devel libcanberra-gtk3-devel
 BuildRequires: libalsa-devel libpulseaudio-devel
 BuildRequires: libgnome-bluetooth-devel >= %bluetooth_ver libgnome-bluetooth-gir-devel gnome-bluetooth
 BuildRequires: evolution-data-server-devel >= %eds_ver libicu-devel
 # for screencast recorder functionality
 BuildRequires: gstreamer%gst_api_ver-devel >= %gstreamer_ver gst-plugins%gst_api_ver-devel
 BuildRequires: libXfixes-devel
-BuildRequires: libgtk+3-devel >= %gtk_ver libgtk+3-gir-devel
-# used in unused BigThemeImage
-BuildRequires: libmutter-devel >= %mutter_ver libmutter-gir-devel
 BuildRequires: mutter >= %mutter_ver
 BuildRequires: libpolkit-devel >= %polkit_ver
 BuildRequires: libtelepathy-glib-devel >= %telepathy_ver libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel
 BuildRequires: libtelepathy-logger-devel >= %telepathy_logger_ver
 BuildRequires: libfolks-devel >= %folks_ver libfolks-gir-devel
 BuildRequires: libnm-gtk-devel >= %nm_ver libnm-devel libnm-gir-devel
-BuildRequires: libcanberra-gtk3-devel
 BuildRequires: libgudev-devel libgudev-gir-devel
 BuildRequires: gsettings-desktop-schemas-devel >= 3.21.3
 BuildRequires: libsoup-gir-devel ca-certificates
 BuildRequires: gnome-control-center-devel
-BuildRequires: libsystemd-journal-devel
+BuildRequires: libsystemd-devel
 BuildRequires: libibus-devel >= %ibus_ver
 BuildRequires: gcr-libs-gir-devel libpolkit-gir-devel
 # for browser plugin
@@ -191,6 +186,7 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %meson \
 	%{?_enable_gtk_doc:-Dgtk_doc=true}
 %{?_enable_snapshot:%meson_build %name-pot %name-update-po}
+#%meson_build %name-pot %name-update-po
 %meson_build
 
 %install
@@ -250,6 +246,9 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %endif
 
 %changelog
+* Mon Nov 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.2-alt1
+- 3.30.2
+
 * Tue Oct 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 
