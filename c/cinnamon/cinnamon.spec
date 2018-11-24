@@ -1,8 +1,8 @@
 Name: cinnamon
-Version: 3.8.9
-Release: alt2
+Version: 4.0.2
+Release: alt1.1
 
-Summary: Window management and application launching for GNOME
+Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
 Group: Graphical desktop/GNOME
 
@@ -19,13 +19,12 @@ Patch: %name-%version-%release.patch
 AutoReqProv: nopython
 %define __python %nil
 
-%define clutter_ver 1.7.5
 %define gtk_ver 3.0.0
 %define gi_ver 0.10.1
-%define muffin_ver 1.7.3
+%define muffin_ver 4.0.0
 %define eds_ver 2.91.6
 %define json_glib_ver 0.13.2
-%define cjs_ver 0.0.1
+%define cjs_ver 4.0.0
 %define tp_glib_ver 0.15.5
 %define tp_logger_ver 0.2.4
 %define polkit_ver 0.100
@@ -61,18 +60,16 @@ Requires: xapps-utils
 Requires: libxapps-gir
 
 BuildPreReq: rpm-build-gir >= 0.7.1-alt6
-BuildPreReq: libclutter-devel >= %clutter_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libcjs-devel >= %cjs_ver
 BuildPreReq: libjson-glib-devel >= %json_glib_ver
 BuildPreReq: evolution-data-server-devel >= %eds_ver
 BuildRequires: gcc-c++
-BuildRequires: libcinnamon-desktop-devel libgnome-keyring-devel libcinnamon-menus-devel libstartup-notification-devel
+BuildRequires: libcinnamon-desktop-devel libgnome-keyring-devel libcinnamon-menus-devel libstartup-notification-devel libcinnamon-desktop-gir-devel
 BuildRequires: libpolkit-devel libupower-devel libgudev-devel libsoup-devel libnm-devel libnm-gir-devel
 BuildRequires: libcanberra-gtk3-devel libcroco-devel GConf libGConf-devel
 BuildRequires: gobject-introspection >= %gi_ver libupower-gir-devel libgudev-gir-devel libsoup-gir-devel libfolks-gir-devel
 BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel libcinnamon-menus-gir-devel NetworkManager-glib-gir-devel
-BuildRequires: libclutter-gir-devel
 
 # for barriers
 BuildRequires: libXfixes-devel >= 5.0
@@ -80,6 +77,7 @@ BuildRequires: libXfixes-devel >= 5.0
 BuildRequires: librsvg-devel
 BuildRequires: libmuffin-devel >= %muffin_ver
 BuildRequires: libmuffin-gir-devel >= %muffin_ver
+BuildRequires: libdrm-devel libgbm-devel
 BuildRequires: libpulseaudio-devel
 
 BuildRequires: desktop-file-utils
@@ -87,10 +85,6 @@ BuildRequires: gtk-doc gnome-common intltool
 BuildRequires: at-spi2-atk-devel
 BuildRequires: rpm-build-xdg
 
-# There is already registered upstream issue https://github.com/linuxmint/muffin/issues/199
-# But untill it will be fixed by Cinnamon devs we handle it manually.
-# Note: to handle dependency we require libmuffin-gir explicitly
-%filter_from_requires /typelib(Meta)/d
 
 %description
 Cinnamon is a Linux desktop which provides advanced innovative features
@@ -171,15 +165,28 @@ install -D -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions/
 install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 
 # Clean-up requires
+
 # Python 2 is not needed anymore
 %filter_from_requires /python-modules/d
 %filter_from_requires /python2.7[(]gi[)]/d
 %filter_from_requires /python2.7[(]xml[)]/d
 
+# Remove dependencies to internal modules provided by cinnamon itself
 %filter_from_requires /python3[(]gi.repository.Gtk[)]/d
 %filter_from_requires /typelib[(]CDesktopEnums.MediaKeyType[)]/d
 %filter_from_requires /typelib[(]MediaKeyType[)]/d
 %filter_from_requires /python3[(]JsonSettingsWidgets[)]/d
+
+# There is already registered upstream issue https://github.com/linuxmint/muffin/issues/199
+# But untill it will be fixed by Cinnamon devs we handle it manually.
+# Note: to handle dependency we require libmuffin-gir explicitly
+%filter_from_requires /typelib(Meta)/d
+
+# Remove from explicit dependencies muffin private libraries. By default
+# RPM doesn't generate this provides for muffin but generates requires
+# for them in cinnamon debuginfo packages.
+%filter_from_requires /libmuffin-clutter/d
+%filter_from_requires /libmuffin-cogl/d
 
 %files
 %exclude %_bindir/%{name}-launcher
@@ -216,6 +223,12 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Thu Nov 22 2018 Vladimir Didenko <cow@altlinux.org> 4.0.2-alt1.1
+- fix requires
+
+* Wed Nov 21 2018 Vladimir Didenko <cow@altlinux.org> 4.0.2-alt1
+- 4.0.2
+
 * Thu Nov 8 2018 Vladimir Didenko <cow@altlinux.org> 3.8.9-alt2
 - use libnm instead of libnm-glib
 

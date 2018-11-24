@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: muffin
-Version: 3.8.3
-Release: alt1
+Version: 4.0.2
+Release: alt1.1
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -12,22 +12,58 @@ Url: https://github.com/linuxmint/muffin
 # To generate tarball
 # wget https://github.com/linuxmint/muffin/tarball/1.0.2 -O muffin-1.0.2.tar.gz
 Source: %name-%version.tar
+Source1: pkg.m4
+Patch: %name-%version-%release.patch
+
+# since 4.0 muffin forks Cogl and Clutter libraries into own private libraries
+%filter_from_provides /typelib[(]Cally[)]/d
+%filter_from_provides /typelib[(]Clutter[)]/d
+%filter_from_provides /typelib[(]ClutterX11[)]/d
+%filter_from_provides /typelib[(]Cogl[)]/d
+%filter_from_provides /typelib[(]CoglPango[)]/d
+%filter_from_requires /typelib[(]Cally[)]/d
+%filter_from_requires /typelib[(]Clutter[)]/d
+%filter_from_requires /typelib[(]ClutterX11[)]/d
+%filter_from_requires /typelib[(]Cogl[)]/d
+%filter_from_requires /typelib[(]CoglPango[)]/d
+
+%filter_from_provides /gir[(]Cally[)]/d
+%filter_from_provides /gir[(]Clutter[)]/d
+%filter_from_provides /gir[(]ClutterX11[)]/d
+%filter_from_provides /gir[(]Cogl[)]/d
+%filter_from_provides /gir[(]CoglPango[)]/d
+%filter_from_requires /gir[(]Cally[)]/d
+%filter_from_requires /gir[(]Clutter[)]/d
+%filter_from_requires /gir[(]ClutterX11[)]/d
+%filter_from_requires /gir[(]Cogl[)]/d
+%filter_from_requires /gir[(]CoglPango[)]/d
+
+# There is already registered upstream issue https://github.com/linuxmint/muffin/issues/199
+# But untill it will be fixed by Cinnamon devs we handle it manually.
+%filter_from_provides /typelib(Meta)/d
+%filter_from_provides /gir(Meta)/d
 
 Requires: lib%name = %version-%release
 Requires(post,preun): GConf
 Requires: zenity
 
 BuildPreReq: rpm-build-gir >= 0.7.1-alt6
-BuildPreReq: libclutter-devel >= 1.7.5
 BuildPreReq: libgtk+3-devel >= 3.3.3
 BuildRequires: GConf libGConf-devel libcanberra-gtk3-devel libstartup-notification-devel
 BuildRequires: libXrandr-devel libXcursor-devel libXcomposite-devel
 BuildRequires: libXinerama-devel libXext-devel libSM-devel
 BuildRequires: gtk-doc gnome-common intltool gnome-doc-utils
 BuildRequires: zenity
-BuildRequires: gobject-introspection-devel libclutter-gir-devel libgtk+3-gir-devel
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libcinnamon-desktop-devel libcinnamon-desktop-gir-devel
-BuildRequires: libcogl-gir-devel
+BuildRequires: libxkbcommon-x11-devel libxkbfile-devel xkeyboard-config-devel
+BuildRequires: libXi-devel libXdamage-devel
+BuildRequires: libjson-glib-devel libjson-glib-gir-devel
+BuildRequires: libgbm-devel
+BuildRequires: libwayland-server-devel libwayland-egl-devel
+BuildRequires: libdrm-devel
+BuildRequires: libxcb-devel libXtst-devel
+BuildRequires: libgudev-devel libinput-devel
 
 %description
 Muffin is a window and compositing manager that displays and manages
@@ -54,10 +90,6 @@ Summary: Shared libraries for %name
 Group: System/Libraries
 # manual dependencies
 Requires: typelib(Gtk) = 3.0
-# Note: typelib(Cogl) and typelib(Clutter) now are also provided by
-# libmutter-gir package when we need libcogl-gir and libclutter-gir packages.
-# So we can't rely on automatic requires here.
-Requires: libcogl-gir libclutter-gir
 
 %description -n lib%name
 Shared libraries for Muffin and its plugins.
@@ -68,10 +100,6 @@ Group: Development/C
 Requires: lib%name = %version-%release
 # manual dependencies
 Requires: gir(Gtk) = 3.0
-# Note: gir(Cogl) and gir(Clutter) now are also provided by
-# libmutter-gir-devel package when we need libcogl-gir-devel and
-# libclutter-gir-devel packages. So we can't rely on automatic requires here.
-Requires: libcogl-gir-devel libclutter-gir-devel
 
 %description -n lib%name-devel
 Header files and libraries for developing Muffin plugins.
@@ -105,6 +133,9 @@ GObject introspection devel data for the Muffin library
 
 %prep
 %setup -n %name-%version
+%patch0 -p1
+[ ! -d m4 ] && mkdir m4
+cp %SOURCE1 m4/
 
 %build
 %autoreconf
@@ -138,6 +169,9 @@ GObject introspection devel data for the Muffin library
 %files -n lib%name
 %_libdir/lib*.so.*
 %dir %_libdir/%name
+%exclude %_libdir/%name/*.la
+%_libdir/%name/*.so
+
 %dir %_libdir/%name/plugins
 %_libdir/%name/plugins/default.so
 
@@ -153,16 +187,18 @@ GObject introspection devel data for the Muffin library
 
 %files -n lib%name-gir
 %_libdir/%name/*.typelib
-# There is already registered upstream issue https://github.com/linuxmint/muffin/issues/199
-# But untill it will be fixed by Cinnamon devs we handle it manually.
-%filter_from_provides /typelib(Meta)/d
-
 
 %files -n lib%name-gir-devel
 %_libdir/%name/*.gir
 
 
 %changelog
+* Fri Nov 23 2018 Vladimir Didenko <cow@altlinux.org> 4.0.2-alt1.1
+- fix requires and provides
+
+* Wed Nov 21 2018 Vladimir Didenko <cow@altlinux.org> 4.0.2-alt1
+- 4.0.2
+
 * Fri Sep 14 2018 Vladimir Didenko <cow@altlinux.org> 3.8.3-alt1
 - 3.8.3
 

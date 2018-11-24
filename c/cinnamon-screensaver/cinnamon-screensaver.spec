@@ -1,9 +1,9 @@
-%define ver_major 3.8
+%define ver_major 4.0
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Cinnamon Screensaver
 License: GPLv2+
@@ -119,6 +119,9 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %_datadir/gir-1.0/*
 
 %changelog
+* Tue Nov 20 2018 Vladimir Didenko <cow@altlinux.org> 4.0.1-alt1
+- 4.0.1
+
 * Fri Jun 15 2018 Vladimir Didenko <cow@altlinux.org> 3.8.2-alt2
 - add translation package to dependency
 

@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.1
+Version: 1.4.0
 Release: alt1
 
 Summary: Python Xapp Library
@@ -72,5 +72,8 @@ popd
 %endif
 
 %changelog
+* Thu Nov 1 2018 Vladimir Didenko <cow@altlinux.org> 1.4.0-alt1
+- New version
+
 * Thu Jun 29 2017 Vladimir Didenko <cow@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus
