@@ -1,8 +1,8 @@
 %def_disable snapshot
-%define ver_major 1.2
+%define ver_major 1.3
 
 Name: terminology
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: EFL terminal emulator
@@ -57,11 +57,14 @@ EOF
 %_desktopdir/*
 %_datadir/%name/
 %_altdir/%name
-%_iconsdir/%name.png
+%_iconsdir/hicolor/*/*/%name.png
 %_man1dir/%name.1*
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Sat Nov 24 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Tue May 15 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
