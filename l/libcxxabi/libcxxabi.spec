@@ -1,7 +1,7 @@
 %def_with bootstrap
 
 Name: libcxxabi
-Version: 6.0.1
+Version: 7.0.0
 Release: alt1
 
 Summary: Low level support for a standard C++ library
@@ -95,6 +95,9 @@ cp -a include/* %buildroot%_includedir
 %_libdir/libc++abi.a
 
 %changelog
+* Sat Nov 24 2018 Vitaly Lipatov <lav@altlinux.ru> 7.0.0-alt1
+- new version 7.0.0 (with rpmrb script)
+
 * Sat Jul 07 2018 Vitaly Lipatov <lav@altlinux.ru> 6.0.1-alt1
 - new version 6.0.1 (with rpmrb script)
 
