@@ -1,5 +1,5 @@
 Name: liblttng-ust
-Version: 2.10.1
+Version: 2.10.2
 Release: alt1
 
 Summary: Linux Trace Toolkit Userspace Tracer library
@@ -10,10 +10,6 @@ Url: http://lttng.org/lttng2.0
 
 # Source-url: http://lttng.org/files/lttng-ust/lttng-ust-%version.tar.bz2
 Source: %name-%version.tar
-
-# https://github.com/lttng/lttng-ust/pull/48
-Patch1: 0001-A-fix-for-distributions-that-use-LIBC_DL-remove-ldl-.patch
-Patch2: 0002-The-fix-add-missed-liblttng-ust-dependency-to-libltt.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libuserspace-rcu-devel
@@ -48,8 +44,6 @@ This package includes documentation and examples for developing programs using L
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
 
 %build
 # to fix rpath
@@ -90,6 +84,9 @@ rm -rf %buildroot/tmp/lttng-ust-divert
 %_man3dir/tracepoint_enabled.3.*
 
 %changelog
+* Sat Nov 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2.10.2-alt1
+- new version 2.10.2 (with rpmrb script)
+
 * Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 2.10.1-alt1
 - new version 2.10.1 (with rpmrb script)
 
