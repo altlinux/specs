@@ -3,7 +3,7 @@
 %def_with bootstrap
 
 Name: libcxx
-Version: 6.0.1
+Version: 7.0.0
 Release: alt1
 
 Summary: C++ standard library targeting C++11
@@ -100,6 +100,9 @@ export LDFLAGS="-Wl,--build-id -stdlib=libc++"
 %_libdir/libc++*.a
 
 %changelog
+* Sat Nov 24 2018 Vitaly Lipatov <lav@altlinux.ru> 7.0.0-alt1
+- new version 7.0.0 (with rpmrb script)
+
 * Sat Jul 07 2018 Vitaly Lipatov <lav@altlinux.ru> 6.0.1-alt1
 - new version 6.0.1 (with rpmrb script)
 
