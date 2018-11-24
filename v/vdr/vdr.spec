@@ -1,6 +1,6 @@
 Name: vdr
 Version: 2.2.0
-Release: alt5
+Release: alt6
 
 Summary: Digital satellite receiver box with advanced features
 License: GPL
@@ -573,6 +573,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Sat Nov 24 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt6
+- fix build with kernel headers >= 4.19
+
 * Thu Nov 15 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt5
 - rebuilt with recent GraphicsMagick
 
