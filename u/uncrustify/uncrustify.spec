@@ -1,5 +1,5 @@
 Name: uncrustify
-Version: 0.67
+Version: 0.68.1
 Release: alt1
 
 Summary: Uncrustify is a source code beautifier
@@ -16,6 +16,8 @@ Source: %name-%version.tar
 Patch: uncrustify-0.59-alt-glibc-2.16.patch
 
 BuildPreReq: rpm-macros-cmake cmake
+
+BuildRequires: python-module-argparse
 
 # Automatically added by buildreq on Tue Jul 18 2006
 BuildRequires: gcc-c++
@@ -44,6 +46,9 @@ configurable, and is easy to modify.
 %_man1dir/*
 
 %changelog
+* Sat Nov 24 2018 Vitaly Lipatov <lav@altlinux.ru> 0.68.1-alt1
+- new version 0.68.1 (with rpmrb script)
+
 * Fri May 18 2018 Vitaly Lipatov <lav@altlinux.ru> 0.67-alt1
 - new version 0.67 (with rpmrb script)
 
