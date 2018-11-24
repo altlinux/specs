@@ -2,7 +2,7 @@
 %def_with plugins
 
 Name: certbot
-Version: 0.27.1
+Version: 0.28.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -136,7 +136,7 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 
 %files
 %doc LICENSE.txt
-%doc README.rst CHANGES.rst CONTRIBUTING.md
+%doc README.rst CHANGELOG.md CONTRIBUTING.md
 %_bindir/%name
 #%doc %attr(0644,root,root) %_man1dir/%{name}*
 %dir %_sysconfdir/%name/
@@ -167,6 +167,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Sat Nov 24 2018 Vitaly Lipatov <lav@altlinux.ru> 0.28.0-alt1
+- new version 0.28.0 (with rpmrb script)
+
 * Sat Oct 06 2018 Vitaly Lipatov <lav@altlinux.ru> 0.27.1-alt1
 - new version 0.27.1 (with rpmrb script)
 
