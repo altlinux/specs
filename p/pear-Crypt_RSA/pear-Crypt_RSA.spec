@@ -1,8 +1,8 @@
 %define pear_name Crypt_RSA
 
 Name: pear-Crypt_RSA
-Version: 1.0.0
-Release: alt3
+Version: 1.2.1
+Release: alt1
 
 Summary: Provides RSA-like key generation, encryption/decryption, signing and signature checking
 
@@ -12,7 +12,7 @@ Url: http://pear.php.net/package/Crypt_RSA
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pear.php.net/get/Crypt_RSA-%version.tar.bz2
+Source: http://pear.php.net/get/Crypt_RSA-%version.tar
 
 BuildArchitectures: noarch
 
@@ -52,6 +52,9 @@ PHP4 and PHP5
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sat Nov 24 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
+- new version 1.2.1 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
