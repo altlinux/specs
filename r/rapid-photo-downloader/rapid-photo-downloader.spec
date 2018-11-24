@@ -1,5 +1,5 @@
 Name: rapid-photo-downloader
-Version: 0.9.12
+Version: 0.9.13
 Release: alt1
 
 %define xdg_name net.damonlynch.%name
@@ -28,7 +28,7 @@ Requires: python3-module-pymediainfo >= 2.2.0
 Requires: python3-module-rawkit >= 0.6.0
 Requires: python3-module-pyprind
 Requires: python3-module-colorlog
-Requires: exiv2 perl-Image-ExifTool
+Requires: gphoto2 exiv2 perl-Image-ExifTool
 Requires: gst-plugins-good1.0 gst-libav
 
 %add_typelib_req_skiplist typelib(Unity)
@@ -65,6 +65,9 @@ subst "s|'share\/solid\/actions'|'share/apps/solid/actions'|" setup.py
 
 
 %changelog
+* Sat Nov 24 2018 Yuri N. Sedunov <aris@altlinux.org> 0.9.13-alt1
+- 0.9.13
+
 * Tue Oct 09 2018 Yuri N. Sedunov <aris@altlinux.org> 0.9.12-alt1
 - 0.9.12
 

@@ -1,7 +1,7 @@
 %define modname pymediainfo
 
 Name: python-module-%modname
-Version: 2.3.0
+Version: 3.0
 Release: alt1
 
 Summary: A Python wrapper for the mediainfo library
@@ -60,6 +60,9 @@ popd
 %python3_sitelibdir_noarch/*.egg-info
 
 %changelog
+* Sat Nov 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
+- 3.0
+
 * Wed May 16 2018 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
