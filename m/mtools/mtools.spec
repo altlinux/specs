@@ -1,7 +1,7 @@
 %def_without floppyd
 
 Name: mtools
-Version: 4.0.19
+Version: 4.0.21
 Release: alt1
 
 Summary: Programs for accessing FAT formatted media without mounting it
@@ -19,11 +19,6 @@ Patch2: mtools-3.9.6-atari.patch
 Patch3: mtools-3.9.7-texinfo.patch
 Patch4: mtools-3.9.10-alt-no-x.patch
 Patch5: mtools-4.0.10-alt-buffer.patch
-
-# gentoo patches
-Patch10: mtools-4.0.18-attr.patch
-Patch11: mtools-4.0.18-locking.patch
-Patch12: mtools-4.0.18-memset.patch
 
 Requires: glibc-gconv-modules
 
@@ -88,9 +83,6 @@ Floppyd является сервером, предоставляющим дос
 #patch4 -p1
 %endif
 #patch5 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
 
 find -type f -print0 |
 	xargs -r0 grep -FZl -- /usr/local/etc |
@@ -136,6 +128,13 @@ find %buildroot -name floppyd\* -print0 | xargs -r0 rm -fv --
 # - review, rediff and send upstream patch1, patch2
 
 %changelog
+* Sat Nov 24 2018 Michael Shigorin <mike@altlinux.org> 4.0.21-alt1
+- new version (watch file uupdate)
+- dropped gentoo patches (merged upstream)
+
+* Mon Nov 12 2018 Michael Shigorin <mike@altlinux.org> 4.0.20-alt1
+- new version (watch file uupdate)
+
 * Fri Oct 05 2018 Michael Shigorin <mike@altlinux.org> 4.0.19-alt1
 - new version (watch file uupdate)
 
