@@ -1,6 +1,6 @@
 Name:    shc
-Version: 3.9.6
-Release: alt2
+Version: 4.0.1
+Release: alt1
 Summary: Shell Script Compiler
 
 Group:   System/Libraries
@@ -36,6 +36,9 @@ The generated source code is then compiled and linked to produce a stripped bina
 %_man1dir/*
 
 %changelog
+* Sun Nov 25 2018 Pavel Vainerman <pv@altlinux.ru> 4.0.1-alt1
+- new version (4.0.1) with rpmgs script
+
 * Fri Apr 13 2018 Pavel Vainerman <pv@altlinux.ru> 3.9.6-alt2
 - added compatibility.patch 
 
