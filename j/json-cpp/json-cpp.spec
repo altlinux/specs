@@ -1,5 +1,5 @@
 Name: json-cpp
-Version: 2.1.1
+Version: 3.4.0
 Release: alt1
 
 Summary: JSON for Modern C++ (c++11) ("single header file")
@@ -11,7 +11,7 @@ Url: https://github.com/nlohmann/json
 Packager: Pavel Vainerman <pv@altlinux.ru>
 BuildArch: noarch
 
-# Source: https://github.com/nlohmann/json/raw/master/src/json.hpp
+# Source: https://github.com/nlohmann/json/releases/download/v%{version}/json.hpp
 Source: %name-%version.tar
 
 #BuildRequires:
@@ -36,6 +36,9 @@ mv -f json.hpp %buildroot%_includedir
 %_includedir/*.hpp
 
 %changelog
+* Mon Nov 26 2018 Pavel Vainerman <pv@altlinux.ru> 3.4.0-alt1
+- new version
+
 * Sun Mar 19 2017 Pavel Vainerman <pv@altlinux.ru> 2.1.1-alt1
 - new version
 
