@@ -2,7 +2,7 @@
 
 %define oname	cryptopp
 Name: libcryptopp
-Version: 6.1.0
+Version: 7.0.0
 Release: alt1
 
 # convert 5.6.2 -> 562 format
@@ -130,6 +130,9 @@ EOF
 %_datadir/cryptopp/
 
 %changelog
+* Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 7.0.0-alt1
+- new version 7.0.0 (with rpmrb script)
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 6.1.0-alt1
 - new version 6.1.0 (with rpmrb script)
 

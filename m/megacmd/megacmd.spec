@@ -1,5 +1,5 @@
 Name: megacmd
-Version: 0.9.9
+Version: 1.0.0
 Release: alt1
 
 Summary: Command Line Interactive and Scriptable Application to access MEGA
@@ -16,7 +16,9 @@ Source: %version.tar.gz
 Patch1: 0001-build-with-external-libmegasdk.patch
 
 # optimized out: glibc-kernheaders-x86 libcares-devel libcom_err-devel libcryptopp-devel libcurl-devel libfreeimage-devel libkrb5-devel libpcre-devel libsodium-devel libsqlite3-devel libssl-devel libstdc++-devel perl python-base python-module-google python-modules python3 python3-base sssd-client
-BuildRequires: gcc-c++ libmegasdk-devel libpcrecpp-devel libreadline-devel libuv-devel
+BuildRequires: gcc-c++ libpcrecpp-devel libreadline-devel libuv-devel
+
+BuildRequires: libmegasdk-devel >= 3.4.3
 
 %description
 MEGAcmd provides non UI access to MEGA services.
@@ -60,6 +62,10 @@ cp -a %_datadir/libmegasdk/m4/ sdk/
 %doc README.md LICENSE
 
 %changelog
+* Sun Nov 25 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- new version (1.0.0) with rpmgs script
+- rebuild with libcryptopp.so.7
+
 * Wed Aug 15 2018 Fr. Br. George <george@altlinux.ru> 0.9.9-alt1
 - Autobuild version bump to 0.9.9
 

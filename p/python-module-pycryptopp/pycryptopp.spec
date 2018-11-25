@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.7.1
-Release: alt1
+Release: alt2
 
 Summary: Python wrappers for a few algorithms from the Crypto++ library
 License: GPLv2+ or other (see copyright)
@@ -73,6 +73,9 @@ python setup.py test
 %python_sitelibdir/*/bench
 
 %changelog
+* Sun Nov 25 2018 Vitaly Lipatov <lav@altlinux.ru> 0.7.1-alt2
+- rebuild with libcryptopp.so.7
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.7.1-alt1
 - build new version
 - rebuild with libcryptopp-6.1.0
