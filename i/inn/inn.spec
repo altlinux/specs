@@ -2,7 +2,7 @@
 
 Name: inn
 Version: 2.6.2
-Release: alt1.qa1
+Release: alt2
 
 Summary: The InterNetNews (INN) system, an Usenet news server
 License: GPL
@@ -19,6 +19,7 @@ Source5: %name-cron-rnews
 Source6: %name-etc-nnrp.access
 Source7: %name-cron-nntpsend
 Source8: innd.init
+Source9: innwatch.init
 # ftp://ftp.exit109.com/users/jeremy/cleanfeed-latest.tar.bz2
 #Source9: cleanfeed-latest.tar
 # ftp://ftp.isc.org/pub/pgpcontrol/pgpverify-1.2.1
@@ -31,6 +32,7 @@ Patch3: 0001-inn-lib-date.c-remove-erroneous-include.patch
 Patch4: big-alt-patch.patch
 Patch5: inn-redhat_build.patch
 Patch6: inn-2.5.2-pconf.patch
+Patch7: inn-2.6.2-linelimit-1098.patch
 
 Requires: lib%name = %version-%release
 
@@ -106,6 +108,7 @@ news servers.
 #patch4 -p2
 %patch5 -p1
 %patch6 -p1
+%patch7 -p2
 
 %build
 
@@ -188,7 +191,9 @@ install -m440 $RPM_SOURCE_DIR/inn-etc-nnrp.access \
 
 mkdir -p %buildroot%_initdir
 sed "s|@@execprefix@@|%_libexecdir/%name|" < %SOURCE8 > %buildroot%_initdir/innd
+sed "s|@@execprefix@@|%_libexecdir/%name|" < %SOURCE9 > %buildroot%_initdir/innwatch
 chmod 755 %buildroot%_initdir/innd
+chmod 755 %buildroot%_initdir/innwatch
 
 # symlinks in %_bindir
 mkdir -p %buildroot%_bindir
@@ -212,15 +217,20 @@ mkdir -p %buildroot%_spooldir/news/innfeed
 mkdir -p %buildroot%_logdir/inn
 mkdir -p %buildroot%_var/run/news/tmp
 
+#mkdir -p %buildroot%perl_vendor_privlib
+mv %buildroot%_libexecdir/%name/innreport_inn.pm %buildroot%perl_vendor_privlib
+
 %post
 #if [ `%__cat %_sysconfdir/news/inn.conf | %__grep '^server:' | wc -l` -lt 1 ]; then
 #  echo "server: `hostname -f`" >> %_sysconfdir/news/inn.conf
 #fi
 
 %post_service innd
+%post_service innwatch
 
 %preun
 %preun_service innd
+%preun_service innwatch
 if [ -f %_localstatedir/news/history.dir ]; then
 	rm -f %_localstatedir/news/history.*
 fi
@@ -256,6 +266,7 @@ fi
 %_var/www/webapps/%name/innreport.css
 
 %perl_vendor_privlib/INN
+%perl_vendor_privlib/innreport_inn.pm
 
 %attr(-,news,root) %config(noreplace) %_localstatedir/news/*
 %attr(-,root,news) %dir %_sysconfdir/news
@@ -427,7 +438,6 @@ fi
 %_libexecdir/%name/rnews.libexec/encode
 %_libexecdir/%name/rnews.libexec/gunbatch
 
-%_libexecdir/%name/innreport_inn.pm
 %_libexecdir/%name/innshellvars
 %_libexecdir/%name/innshellvars.pl
 %_libexecdir/%name/innshellvars.tcl
@@ -450,6 +460,11 @@ fi
 %_bindir/inews
 
 %changelog
+* Sun Nov 25 2018 Sergey Y. Afonin <asy@altlinux.ru> 2.6.2-alt2
+- moved innreport_inn.pm to %%perl_vendor_privlib
+- added innwatch init script
+- increased the header's line limit to 1098 octets
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.6.2-alt1.qa1
 - NMU: applied repocop patch
 
