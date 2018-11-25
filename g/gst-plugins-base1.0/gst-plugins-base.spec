@@ -10,7 +10,7 @@
 
 Name: %_name-base%api_ver
 Version: %ver_major.4
-Release: alt2
+Release: alt3
 
 Summary: An essential set of GStreamer plugins
 Group: System/Libraries
@@ -55,6 +55,9 @@ included.
 Summary: GStreamer plugin libraries
 Group: System/Libraries
 Provides: lib%_name = %version-%release
+# GstGL moved from bad to base in 1.13
+# https://bugzilla.altlinux.org/show_bug.cgi?id=35636
+Conflicts: gst-plugins-bad%api_ver < 1.13
 
 %description -n lib%_name%api_ver
 Helper libraries for GStreamer plugins, containing base classes useful for elements
@@ -184,6 +187,9 @@ GObject introspection devel data for the GStreamer library
 
 
 %changelog
+* Sun Nov 25 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt3
+- libgst-plugins1.0: added conflict to gst-plugins-bad1.0 < 1.13 (ALT #35636)
+
 * Fri Oct 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt2
 - updated to 1.14.4-6-g01a3a5b79 (fixed BGO ##796860, 797272)
 
