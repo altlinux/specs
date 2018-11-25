@@ -1,4 +1,4 @@
-%define ver_major 1.4
+%define ver_major 1.5
 %def_enable video
 %define xdg_name org.gnome.frogr
 
@@ -47,12 +47,15 @@ a flickr account from the desktop.
 %_iconsdir/hicolor/*x*/apps/%xdg_name.png
 %_iconsdir/hicolor/scalable/apps/%xdg_name.svg
 %_iconsdir/hicolor/scalable/apps/%xdg_name-symbolic.svg
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %_man1dir/%name.1.*
 %doc AUTHORS NEWS README
 
 
 %changelog
+* Sun Nov 25 2018 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
+- 1.5
+
 * Thu Dec 28 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
 - 1.4
 
