@@ -1,8 +1,8 @@
 %define oname opennx
 
 Name: rxclient
-Version: 0.19
-Release: alt20
+Version: 1.0.0
+Release: alt1
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -12,6 +12,7 @@ Url: https://wiki.etersoft.ru/RX
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-url: https://gitlab.eterfund.ru/rx-etersoft/rxclient/-/archive/%version-%release/rxclient-%version-%release.tar.bz2
 Source: %oname-%version.tar
 Source1: rxclient.conf
 
@@ -78,19 +79,18 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %_man1dir/pconnect.*
 %_datadir/%name
 %_desktopdir/*.desktop
-%_iconsdir/hicolor/16x16/apps/*.png
-%_iconsdir/hicolor/32x32/apps/*.png
-%_iconsdir/hicolor/48x48/apps/*.png
-%_iconsdir/hicolor/64x64/apps/*.png
-%_iconsdir/hicolor/128x128/apps/*.png
-%_iconsdir/hicolor/256x256/apps/*.png
-%_iconsdir/hicolor/512x512/apps/*.png
+%_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_iconsdir/hicolor/*/mimetypes/rx-desktop.*
 %dir %_sysconfdir/%name
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Sun Nov 25 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- change versioning scheme
+- implement readonly mode for rxclient (eterbug 12856)
+- disabled default settings for timeout (ssh)
+
 * Sun Sep 16 2018 Pavel Vainerman <pv@altlinux.ru> 0.19-alt20
 - new release
 
