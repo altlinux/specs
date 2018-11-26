@@ -1,11 +1,11 @@
 Name: rp-pppoe
-Version: 3.12
+Version: 3.13
 Release: alt1
 
 License: %gpl2plus
-Url: http://www.roaringpenguin.com/pppoe/
+Url: https://dianne.skoll.ca/projects/rp-pppoe/
 Summary: PPP Over Ethernet (xDSL support)
-Summary(ru_RU.CP1251): PPP через Ethernet (поддержка xDSL)
+Summary(ru_RU.UTF-8): PPP С‡РµСЂРµР· Ethernet (РїРѕРґРґРµСЂР¶РєР° xDSL)
 Group: Networking/Other
 
 Source: %name-%version.tar
@@ -26,13 +26,15 @@ Provides: rp-pppoe
 # Automatically added by buildreq on Wed Oct 12 2005
 BuildRequires: libpcap-devel
 
+%define _unpackaged_files_terminate_build 1
+
 %description
 PPPoE (Point-to-Point Protocol over Ethernet) is a protocol used by
 many ADSL Internet Service Providers.
 
-%description -l ru_RU.CP1251
-PPPoE (Point-to-Point Protocol через Ethernet) это протокол, используемый
-многими Поставщиками Услуг Интернет по ADSL.
+%description -l ru_RU.UTF-8
+PPPoE (Point-to-Point Protocol С‡РµСЂРµР· Ethernet) СЌС‚Рѕ РїСЂРѕС‚РѕРєРѕР», РёСЃРїРѕР»СЊР·СѓРµРјС‹Р№
+РјРЅРѕРіРёРјРё РџРѕСЃС‚Р°РІС‰РёРєР°РјРё РЈСЃР»СѓРі РРЅС‚РµСЂРЅРµС‚ РїРѕ ADSL.
 
 %package base
 Summary: PPP Over Ethernet (xDSL support)
@@ -48,7 +50,7 @@ This package contains basic utilites.
 %package client
 BuildArch: noarch
 Summary: PPP Over Ethernet (xDSL support)
-Summary(ru_RU.CP1251): PPP через Ethernet (поддержка xDSL)
+Summary(ru_RU.UTF-8): PPP С‡РµСЂРµР· Ethernet (РїРѕРґРґРµСЂР¶РєР° xDSL)
 Group: Networking/Other
 Requires: ppp >= 2.3.7
 Requires: openresolv
@@ -65,15 +67,15 @@ The client is a user-mode program and does not require any kernel
 modifications. It is fully compliant with RFC 2516, the official PPPoE
 specification.
 
-%description client -l ru_RU.CP1251
-PPPoE (Point-to-Point Protocol через Ethernet) это протокол, используемый
-многими Поставщиками Услуг Интернет по ADSL. Roaring Penguin
-предоставляет свободного клиента для Linux-систем для установки соединения
-с поставщиками услуг PPPoE.
+%description client -l ru_RU.UTF-8
+PPPoE (Point-to-Point Protocol С‡РµСЂРµР· Ethernet) СЌС‚Рѕ РїСЂРѕС‚РѕРєРѕР», РёСЃРїРѕР»СЊР·СѓРµРјС‹Р№
+РјРЅРѕРіРёРјРё РџРѕСЃС‚Р°РІС‰РёРєР°РјРё РЈСЃР»СѓРі РРЅС‚РµСЂРЅРµС‚ РїРѕ ADSL. Roaring Penguin
+РїСЂРµРґРѕСЃС‚Р°РІР»СЏРµС‚ СЃРІРѕР±РѕРґРЅРѕРіРѕ РєР»РёРµРЅС‚Р° РґР»СЏ Linux-СЃРёСЃС‚РµРј РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё СЃРѕРµРґРёРЅРµРЅРёСЏ
+СЃ РїРѕСЃС‚Р°РІС‰РёРєР°РјРё СѓСЃР»СѓРі PPPoE.
 
 %package server
 Summary: PPP Over Ethernet (xDSL support)
-Summary(ru_RU.CP1251): PPP через Ethernet (поддержка xDSL)
+Summary(ru_RU.UTF-8): PPP С‡РµСЂРµР· Ethernet (РїРѕРґРґРµСЂР¶РєР° xDSL)
 Group: Networking/Other
 Requires: ppp >= 2.3.7
 Conflicts: %name-base < %version-%release
@@ -83,12 +85,12 @@ Conflicts: %name-base > %version-%release
 pppoe-server is a user-space server for PPPoE (Point-to-Point Protocol over Ethernet)
 for Linux and other UNIX systems.
 
-%description server -l ru_RU.CP1251
-pppoe-server это PPPoE-сервер (Point-to-Point Protocol over Ethernet) для Linux и других UNIX-систем.
+%description server -l ru_RU.UTF-8
+pppoe-server СЌС‚Рѕ PPPoE-СЃРµСЂРІРµСЂ (Point-to-Point Protocol over Ethernet) РґР»СЏ Linux Рё РґСЂСѓРіРёС… UNIX-СЃРёСЃС‚РµРј.
 
 %package gui
 Summary: Tk interface for PPP Over Ethernet Client (xDSL support)
-Summary(ru_RU.CP1251): Tk интерфейс к Клиенту PPP через Ethernet (поддержка xDSL)
+Summary(ru_RU.UTF-8): Tk РёРЅС‚РµСЂС„РµР№СЃ Рє РљР»РёРµРЅС‚Сѓ PPP С‡РµСЂРµР· Ethernet (РїРѕРґРґРµСЂР¶РєР° xDSL)
 Group: Networking/Other
 Requires: %name-client = %version-%release tk
 
@@ -96,9 +98,9 @@ Requires: %name-client = %version-%release tk
 This is a graphical wrapper around the rp-pppoe PPPoE client. PPPoE is
 a protocol used by many DSL Internet Service Providers.
 
-%description gui -l ru_RU.CP1251
-Графическая оболочка для клиента PPPoE. PPPoE это протокол, используемый многими
-Поставщиками Услуг Интернет по ADSL.
+%description gui -l ru_RU.UTF-8
+Р“СЂР°С„РёС‡РµСЃРєР°СЏ РѕР±РѕР»РѕС‡РєР° РґР»СЏ РєР»РёРµРЅС‚Р° PPPoE. PPPoE СЌС‚Рѕ РїСЂРѕС‚РѕРєРѕР», РёСЃРїРѕР»СЊР·СѓРµРјС‹Р№ РјРЅРѕРіРёРјРё
+РџРѕСЃС‚Р°РІС‰РёРєР°РјРё РЈСЃР»СѓРі РРЅС‚РµСЂРЅРµС‚ РїРѕ ADSL.
 
 %prep
 %setup -q -a7
@@ -177,6 +179,9 @@ EOF
 %_docdir/tkpppoe/tkpppoe.html
 %_man1dir/*
 
+%exclude %_sysconfdir/ppp/plugins/README
+%exclude %_defaultdocdir/rp-pppoe-%version/
+
 %pre gui
 %pre_control pppoe-wrapper
 
@@ -184,6 +189,12 @@ EOF
 %post_control pppoe-wrapper
 
 %changelog
+* Mon Nov 26 2018 Mikhail Efremov <sem@altlinux.org> 3.13-alt1
+- Use _unpackaged_files_terminate_build.
+- Update url.
+- Change Russian descriptions encoding.
+- Updated to 3.13.
+
 * Tue Nov 17 2015 Mikhail Efremov <sem@altlinux.org> 3.12-alt1
 - Updated to 3.12.
 
