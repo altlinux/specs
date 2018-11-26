@@ -26,7 +26,7 @@
 
 Name: ring-project
 Version: 20180826
-Release: alt2
+Release: alt3
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -40,6 +40,7 @@ PreReq(post,preun): alternatives >= 0.2
 Source: %name-%version.tar
 Patch1: alt-fix-linking.patch
 Patch2: alt-pcre-include.patch
+Patch3: alt-armh.patch
 
 BuildRequires(pre): rpm-build-ubt
 %IF_ver_gteq %ubt_id M90
@@ -140,6 +141,7 @@ developing applications that use %name.
 %setup -qn %name-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %add_optflags %optflags_shared
@@ -277,6 +279,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 #%_libdir/libring.a
 
 %changelog
+* Mon Nov 26 2018 Sergey V Turchin <zerg@altlinux.org> 20180826-alt3
+- fix to build on armh (thanks sbolshakov@alt)
+
 * Fri Nov 23 2018 Sergey V Turchin <zerg@altlinux.org> 20180826-alt2
 - fix requires (ALT#33594)
 
