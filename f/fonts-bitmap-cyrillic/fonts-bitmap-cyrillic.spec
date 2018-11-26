@@ -2,7 +2,7 @@
 
 Name: fonts-bitmap-cyrillic
 Version: 2.3.1
-Release: alt7
+Release: alt8
 License: distributable
 Source: xrus-2.3.1-src.tgz
 
@@ -57,6 +57,9 @@ mkfontdir %_fontsdir/cyrillic/75dpi
 %_fontsdir/cyrillic
 
 %changelog
+* Mon Nov 26 2018 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt8
+- Fix non-standart font alias (Closes: #19162).
+
 * Thu Nov 22 2007 Valery Inozemtsev <shrek@altlinux.ru> 2.3.1-alt7
 - added "PreReq: mkfontdir" (close #13509)
 
