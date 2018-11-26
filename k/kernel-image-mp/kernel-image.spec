@@ -1,5 +1,5 @@
-%define kernel_base_version	4.18
-%define kernel_sublevel        .16
+%define kernel_base_version	4.19
+%define kernel_sublevel        .4
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -16,7 +16,7 @@ Release: alt1
 
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	7
+%define kgcc_version	8
 
 ## Don't edit below this line ##################################
 
@@ -260,6 +260,12 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Fri Nov 23 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.19.4-alt1
+- 4.19.4
+
+* Thu Oct 25 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.19.0-alt1
+- 4.19
+
 * Mon Oct 22 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.18.16-alt1
 - 4.18.16
 
