@@ -1,8 +1,8 @@
 %define oname wt
 
 Name: libwt
-Version: 4.0.2
-Release: alt2.1
+Version: 4.0.4
+Release: alt1
 Summary: Wt (pronounced as witty) is a C++ library for developing web applications.
 License: GPL
 Group: Development/C++
@@ -11,15 +11,12 @@ Url: https://www.webtoolkit.eu
 # Source-url: https://github.com/emweb/wt/archive/%version.tar.gz
 Source: %oname-%version.tar
 
-Patch1: libwt-4.0.2-upstream-boost-1.patch
-Patch2: libwt-4.0.2-upstream-boost-2.patch
-
 BuildPreReq: gcc-c++ cmake libsqlite3-devel zlib-devel libpcre-devel
-BuildPreReq: libssl-devel libmysqlclient-devel
+BuildPreReq: libssl-devel libmariadb-devel
 
-# Automatically added by buildreq on Thu Jan 05 2017
-# optimized out: boost-devel boost-devel-headers cmake-modules fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libcom_err-devel libfreetype-devel libkrb5-devel libpng-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libssl-devel libstdc++-devel pkg-config python-base python-modules python3 python3-base zlib-devel
-BuildRequires: boost-asio-devel boost-filesystem-devel boost-program_options-devel boost-signals-devel doxygen graphviz libharu-devel libmysqlclient-devel libpango-devel libpq-devel libqt4-sql-mysql libqt4-webkit-devel phonon-devel python3-dev
+# Automatically added by buildreq on Mon Nov 26 2018
+# optimized out: boost-devel boost-devel-headers cmake-modules fontconfig fontconfig-devel glib2-devel glibc-devel-static libGL-devel libX11-devel libcom_err-devel libfreetype-devel libkrb5-devel libpng-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libssl-devel libstdc++-devel libunixODBC-devel libunixODBC-devel-compat pkg-config python-base python-modules python3 python3-base zlib-devel
+BuildRequires: boost-asio-devel boost-filesystem-devel boost-interprocess-devel boost-program_options-devel doxygen graphviz libharu-devel libpango-devel libqt4-devel libqt4-webkit-devel phonon-devel python3-dev
 
 %description
 Wt (pronounced as witty) is a C++ library for developing web applications.
@@ -142,9 +139,6 @@ you can focus on actual functionality with a rich set of feature-complete widget
 
 %prep
 %setup -q -n %oname-%version
-%patch1 -p1
-%patch2 -p1
-#%__subst "s| lib| %_lib|g" src/CMakeLists.txt
 
 %build
 %add_optflags -I%_includedir/pcre -fno-strict-aliasing
@@ -207,6 +201,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir
 #files docs
 
 %changelog
+* Mon Nov 26 2018 Pavel Vainerman <pv@altlinux.ru> 4.0.4-alt1
+- new version (4.0.4) with rpmgs script
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt2.1
 - NMU: Rebuild with new openssl 1.1.0.
 
