@@ -1,5 +1,6 @@
 %def_with qt4
 %def_with bundled_libs
+%def_with glvnd
 %define oname freecad
 %define ldir %_libdir/%oname
 %ifndef build_parallel_jobs
@@ -8,9 +9,12 @@
 
 %define vtkver 8.1
 
+# Last number in version is computed by command:
+# git rev-list --count remotes/upstream/releases/FreeCAD-0-17
+
 Name:    freecad
-Version: 0.17
-Release: alt6
+Version: 0.17.13543
+Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
@@ -30,8 +34,10 @@ Patch1: %name-remove-3rdParty.patch
 Patch2: %name-build-with-external-smesh.patch
 %endif
 
-# branch releases/FreeCAD-0-17 of 20180521
+# branch releases/FreeCAD-0-17
 Patch3: upstream.patch
+
+Patch4: 0001-fix-gcc8-build-failure.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -70,7 +76,7 @@ BuildRequires: zlib-devel
 BuildRequires: libopencv2-devel libxerces-c-devel gcc-c++ boost-filesystem-devel
 BuildRequires: java-devel-default boost-program_options-devel
 BuildRequires: boost-signals-devel libXxf86misc-devel
-BuildRequires: OCE-devel libgts-devel libGL-devel libGLU-devel
+BuildRequires: OCE-devel libgts-devel
 BuildRequires: libode-devel phonon-devel libann-devel
 BuildRequires: doxygen graphviz
 BuildRequires: eigen3
@@ -85,6 +91,11 @@ BuildRequires: python-module-matplotlib
 BuildRequires: libkdtree++-devel
 %if_without bundled_libs
 BuildRequires: libsmesh-devel libnetgen-devel
+%endif
+%if_with glvnd
+BuildRequires: libglvnd-devel
+%else
+Requires: libGL-devel libGLU-devel
 %endif
 #BuildRequires: texlive-extra-utils
 
@@ -135,6 +146,7 @@ rm -rf src/3rdParty
 %endif
 
 %patch3 -p1
+%patch4 -p1
 
 %build
 export PATH=$PATH:%qtbindir
@@ -150,6 +162,9 @@ export PATH=$PATH:%qtbindir
 	-DSMESH_DIR=%_libdir \
 	-DSMESH_INCLUDE_DIR=%_includedir/smesh \
 	-DSMESH_VERSION_MAJOR=7 \
+%endif
+%if_with glvnd
+        -DOpenGL_GL_PREFERENCE=GLVND \
 %endif
 	-DFREECAD_USE_EXTERNAL_PIVY=ON 
 
@@ -222,6 +237,12 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/doc
 
 %changelog
+* Thu Nov 22 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.17.13543-alt1
+- Version 0.17 with changes from releases/FreeCAD-0-17.
+
+* Tue Nov 06 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.17-alt7
+- Build with libglvnd-devel.
+
 * Wed Sep 26 2018 Anton Midyukov <antohami@altlinux.org> 1:0.17-alt6
 - Fix segfault (Closes: 35002)
 
