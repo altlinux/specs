@@ -1,6 +1,6 @@
 Name: stress
 Version: 1.0.4
-Release: alt1.qa1.1
+Release: alt2
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -41,6 +41,9 @@ system is under heavy load.
 %_infodir/stress*
 
 %changelog
+* Mon Nov 26 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.4-alt2
+- Fixed documentation about hdd-noclean option.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1.qa1.1
 - NMU: added BR: texinfo
 
