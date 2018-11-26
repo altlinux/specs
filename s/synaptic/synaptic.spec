@@ -9,7 +9,7 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt16.1
+Release: alt17
 
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
@@ -34,6 +34,7 @@ Patch6: synaptic-0.58-cdrom-to-media.patch
 Patch7: synaptic-0.58-alt-fix-null-history.patch
 Patch8: synaptic-0.58-alt-fix-makepair.patch
 Patch9: synaptic-0.58-fix-generate-script-action.patch
+Patch10: synaptic-0.58-alt-reset-scroll-position.patch
 
 BuildPreReq: libapt-devel >= 0.5.15lorg2-alt42
 %if_enabled autotools
@@ -78,6 +79,7 @@ Synaptic - это графическая оболочка для APT (Advanced P
 %patch7 -p2
 %patch8 -p1
 %patch9 -p2
+%patch10 -p2
 
 %if_with ru_po
 # installing own translation
@@ -132,6 +134,9 @@ install -p -m644 %SOURCE4 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Mon Nov 26 2018 Ivan Razzhivin <underwit@altlinux.org> 0.58-alt17
+- Add a patch for reset scroll position to zero point (Closes: #12691).
+
 * Thu Feb 01 2018 Grigory Ustinov <grenka@altlinux.org> 0.58-alt16.1
 - NMU: Add patch fixing action, that generates download script (Closes: #30608).
 
