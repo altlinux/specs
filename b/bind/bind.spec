@@ -1,6 +1,6 @@
 Name: bind
-Version: 9.11.5.P4
-%define src_version 9.11.5-P4
+Version: 9.11.6
+%define src_version 9.11.6
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -61,14 +61,13 @@ Patch0010: 0010-Link-libirs-with-libdns-libisc-and-libisccfg.patch
 %def_enable ipv6
 %def_with openssl
 %def_with libjson
+%def_without python
 
 Provides: bind-chroot(%_chrootdir)
 Obsoletes: bind-chroot, bind-debug, bind-slave, caching-nameserver
 # Because of /etc/syslog.d/ feature.
 Conflicts: syslogd < 1.4.1-alt11
-PreReq: bind-control >= 1.2
-PreReq: chrooted syslogd-daemon
-PreReq: libbind = %EVR
+Requires(pre): bind-control >= 1.2
 
 # due to %_chrootdir/dev/log
 BuildPreReq: coreutils
@@ -119,7 +118,6 @@ Prefix: %prefix
 %package -n lwresd
 Summary: Lightweight resolver daemon
 Group: System/Servers
-PreReq: /var/resolv, chkconfig, shadow-utils
 Requires: libbind = %EVR
 
 %description
@@ -201,7 +199,7 @@ s,@DOCDIR@,%docdir,g;
 s,@SBINDIR@,%_sbindir,g;
 ' --
 
-sed -i '/# Large File/iAC_SYS_LARGEFILE/' configure.in
+sed -i '/# Large File/iAC_SYS_LARGEFILE/' configure.ac
 
 %build
 %autoreconf
@@ -215,6 +213,7 @@ sed -i '/# Large File/iAC_SYS_LARGEFILE/' configure.in
 	--disable-seccomp \
 	 %{subst_with openssl} \
 	 %{subst_with libjson} \
+	 %{subst_with python} \
 	 %{subst_enable ipv6} \
 	 %{subst_enable static} \
 	--includedir=%{_includedir}/bind9 \
@@ -437,6 +436,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Fri Mar 01 2019 Stanislav Levin <slev@altlinux.org> 9.11.6-alt1
+- 9.11.5.P4 -> 9.11.6.
+
 * Fri Feb 22 2019 Stanislav Levin <slev@altlinux.org> 9.11.5.P4-alt1
 - 9.11.5 -> 9.11.5.P4 (fixes: CVE-2018-5744, CVE-2018-5745, CVE-2019-6465).
 
