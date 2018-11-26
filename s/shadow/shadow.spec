@@ -1,6 +1,6 @@
 Name: shadow
 Version: 4.5
-Release: alt3
+Release: alt4
 Serial: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -403,6 +403,9 @@ fi
 %exclude %_man8dir/nologin.8.*
 
 %changelog
+* Mon Nov 26 2018 Mikhail Efremov <sem@altlinux.org> 1:4.5-alt4
+- chfn: Silence format-truncation warning
+
 * Thu Jun 28 2018 Mikhail Efremov <sem@altlinux.org> 1:4.5-alt3
 - Fix default hashing method.
 - Request automatic entropy for salt.
