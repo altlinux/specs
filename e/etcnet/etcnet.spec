@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.16
-Release:	alt2
+Release:	alt3
 #Url:		http://etcnet.org/
 Url:		https://www.altlinux.org/Etcnet
 
@@ -141,6 +141,9 @@ fi
 %files full
 
 %changelog
+* Mon Nov 26 2018 Alexey Shabalin <shaba@altlinux.org> 0.9.16-alt3
+- allow add bridge without parent interfaces and without IFUP_PARENTS=no
+
 * Fri Nov 23 2018 Alexey Shabalin <shaba@altlinux.org> 0.9.16-alt2
 - release up
 
