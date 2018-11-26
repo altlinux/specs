@@ -10,7 +10,7 @@
 %define sover 4.4
 Name: %oname%sover
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt6
 
 Group: System/Libraries
 Summary: Game programming library
@@ -21,6 +21,8 @@ Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 Source0: http://sunsite.auc.dk/allegro/%name-%version.tar
 Patch0: allegro-4.0.1-allegro.h.patch
 Patch1: allegro-4.1.8-allegro.h.patch
+Patch2: allegro-4.4.2-allegrogl.patch
+Patch3: allegro-4.4.2-allegro.h.patch
 
 Obsoletes: %name
 Conflicts: lib%oname-svgalib < %version-%release
@@ -61,6 +63,7 @@ This package contains files needed to build programs using Allegro.
 
 %prep
 %setup
+%patch2 -p1
 
 %build
 mkdir Build
@@ -111,7 +114,8 @@ gzip CHANGES
 %_datadir/allegro
 
 %files -n lib%oname-devel
-%doc docs/txt/*
+%dir %_datadir/doc/%oname-%major.%minor.%bugfix
+%doc %_datadir/doc/%oname-%major.%minor.%bugfix/*
 %_bindir/*
 %_includedir/*
 %_libdir/*.so
@@ -119,6 +123,9 @@ gzip CHANGES
 %_pkgconfigdir/*
 
 %changelog
+* Mon Nov 26 2018 Leontiy Volodin <lvol@altlinux.org> 4.4.2-alt6
+- Fixed build
+
 * Mon Apr 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.4.2-alt5
 - drop svgalib plugin
 
