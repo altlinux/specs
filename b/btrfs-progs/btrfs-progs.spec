@@ -1,6 +1,6 @@
 Name: btrfs-progs
 Version: 4.19
-Release: alt1
+Release: alt2
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -9,7 +9,7 @@ Url: http://btrfs.wiki.kernel.org/
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-BuildRequires: libacl-devel libe2fs-devel libuuid-devel zlib-devel libblkid-devel libattr-devel liblzo2-devel asciidoc xmlto libzstd-devel
+BuildRequires: libacl-devel libe2fs-devel libuuid-devel zlib-devel libblkid-devel libattr-devel liblzo2-devel asciidoc xmlto libzstd-devel libudev-devel
 
 %description
 Btrfs (B-tree FS or usually pronounced "Butter FS") is a copy-on-write
@@ -57,13 +57,17 @@ automake --add-missing ||:
 %make_build
 
 %install
-%makeinstall bindir=%buildroot/sbin libdir=%buildroot/%_lib incdir=%buildroot/%_includedir/
-mkdir -p %buildroot%_libdir
+%makeinstall_std bindir=/sbin libdir=/%_lib incdir=/%_includedir/
+mkdir -p %buildroot%_libdir %buildroot%_bindir
 LIBNAME=`basename \`ls $RPM_BUILD_ROOT/%{_lib}/libbtrfs.so.*.*\``
 ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so 
+ln -s ../../sbin/btrfs %buildroot%_bindir/btrfs
 
 %files
 /sbin/*
+%_bindir/btrfs
+%_bindir/*
+%_udevrulesdir/*.rules
 %_man8dir/*
 %_man5dir/*
 
@@ -75,6 +79,10 @@ ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so
 %_includedir/*
 
 %changelog
+* Mon Nov 26 2018 Anton Farygin <rider@altlinux.ru> 4.19-alt2
+- added symlink %_bindir/btrfs to /sbin/btrfs (closes: #35641)
+- added udev rules for frendly names in /dev/mapper (closes: #35646)
+
 * Mon Nov 12 2018 Anton Farygin <rider@altlinux.ru> 4.19-alt1
 - 4.19
 
