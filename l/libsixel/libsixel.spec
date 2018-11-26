@@ -1,6 +1,6 @@
 Name: libsixel
 Version: 1.8.2
-Release: alt1
+Release: alt2
 
 Summary: A SIXEL encoder/decoder implementation
 License: MIT
@@ -70,12 +70,15 @@ Group: Development/C
 %_libdir/%name.so.*
 %files devel
 %_libdir/%name.so
-%_libdir/%name.a
+%exclude %_libdir/%name.a
 %_pkgconfigdir/%name.pc
 %_includedir/sixel.h
 %_bindir/%name-config
 
 %changelog
+* Mon Nov 26 2018 Denis Smirnov <mithraen@altlinux.ru> 1.8.2-alt2
+- remove static library
+
 * Fri Nov 23 2018 Denis Smirnov <mithraen@altlinux.ru> 1.8.2-alt1
 - first build for Sisyphus
 
