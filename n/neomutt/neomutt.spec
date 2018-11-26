@@ -1,6 +1,6 @@
 Name: neomutt
 Version: 20180716
-Release: alt1
+Release: alt2
 
 %define docdir %_docdir/%name-%version
 %undefine _configure_gettext
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 
 BuildRequires: docbook-style-xsl xsltproc tcl elinks
 BuildRequires: liblua5-devel libnotmuch-devel libdb4.8-devel
-BuildRequires: libgpgme-devel libncursesw-devel libssl-devel libsasl2-devel libidn-devel
+BuildRequires: libgpgme-devel libncursesw-devel libssl-devel libsasl2-devel libidn2-devel
 
 Requires: mailcap
 
@@ -39,7 +39,8 @@ mode.
 		--lua \
 		--bdb \
 		--ssl \
-		--sasl
+		--sasl \
+		--disable-idn --idn2
 
 %make_build
 
@@ -54,6 +55,9 @@ mode.
 %docdir
 
 %changelog
+* Mon Nov 26 2018 Vitaly Chikunov <vt@altlinux.ru> 20180716-alt2
+- Switch from libidn to libidn2
+
 * Wed Aug 29 2018 Vitaly Chikunov <vt@altlinux.org> 20180716-alt1
 - NeoMutt release 20180716
 
