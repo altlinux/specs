@@ -4,7 +4,7 @@
 
 Name: libtalloc
 Version: 2.1.14
-Release: alt1%ubt
+Release: alt2
 Epoch: 1
 
 Summary: The talloc library
@@ -18,7 +18,6 @@ Patch: talloc-alt-fix-python-ldflags.patch
 
 BuildRequires: docbook-dtds docbook-style-xsl libacl-devel libcap-devel python-devel xsltproc
 
-BuildRequires(pre):rpm-build-ubt
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -130,6 +129,9 @@ make test
 %endif
 
 %changelog
+* Tue Nov 27 2018 Evgeny Sinelnikov <sin@altlinux.org> 1:2.1.14-alt2
+- Disable ubt macros due binary package identity changes
+
 * Sun Jul 22 2018 Stanislav Levin <slev@altlinux.org> 1:2.1.14-alt1%ubt
 - 2.1.12 -> 2.1.14
 - Build package for Python3

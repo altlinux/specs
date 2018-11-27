@@ -5,7 +5,7 @@
 
 Name: libtdb
 Version: 1.3.16
-Release: alt1%ubt
+Release: alt2
 
 Summary: A trivial database system
 License: GPL
@@ -21,8 +21,6 @@ BuildRequires: rpm-build-python python-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 %endif
-
-BuildRequires(pre):rpm-build-ubt
 
 %description
 This is a simple database API. It was inspired by the realisation that
@@ -143,6 +141,9 @@ make test
 %endif
 
 %changelog
+* Tue Nov 27 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.3.16-alt2
+- Disable ubt macros due binary package identity changes
+
 * Sat Jul 21 2018 Stanislav Levin <slev@altlinux.org> 1.3.16-alt1%ubt
 - 1.3.15 -> 1.3.16
 - Build package for Python3

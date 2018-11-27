@@ -36,7 +36,7 @@
 %def_with ldb_modules
 %endif
 
-%def_with mitkrb5
+%def_without mitkrb5
 %def_with systemd
 %def_enable avahi
 
@@ -54,7 +54,7 @@
 %endif
 
 Name:    samba-DC
-Version: 4.9.1
+Version: 4.9.3
 Release: alt1
 
 Group:   System/Servers
@@ -159,7 +159,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-BuildRequires: libldb-devel >= 1.4.2
+BuildRequires: libldb-devel >= 1.4.3
 BuildRequires: python-module-pyldb-devel
     %if_with python3
 BuildRequires: python3-module-pyldb-devel
@@ -237,6 +237,7 @@ link against the SMB, RPC and other protocols provided by the Samba suite.
 Summary: Tools for Samba servers and clients
 Group: System/Servers
 Requires: %name-libs = %version-%release
+Conflicts: %rname-common-tools
 
 %description common-tools
 The %rname-common-tools package contains tools for Samba servers and
@@ -624,6 +625,10 @@ libsamba_util private headers.
 %endif
 %if_without dc
 	--without-ad-dc \
+%else
+%if_with mitkrb5
+	--with-experimental-mit-ad-dc \
+%endif
 %endif
 %if_with systemd
 	--with-systemd \
@@ -774,9 +779,11 @@ ln -s %_bindir/smbspool %buildroot%{cups_serverbin}/backend/smb
 %_fixperms %buildroot%perl_vendor_privlib
 
 # remove tests form python modules
-rm -rf %buildroot%python_sitelibdir/samba/{tests,external/subunit,external/testtool}
+rm -rf %buildroot%python_sitelibdir/samba/{tests,subunit,external/subunit,external/testtool}
+rm -f %buildroot%python_sitelibdir/samba/third_party/iso8601/test_*.py
 %if_with python3
-rm -rf %buildroot%python3_sitelibdir/samba/{tests,external/subunit,external/testtool}
+rm -rf %buildroot%python3_sitelibdir/samba/{tests,subunit,external/subunit,external/testtool}
+rm -f %buildroot%python3_sitelibdir/samba/third_party/iso8601/test_*.py
 %endif
 
 # remove cmocka library
@@ -1038,6 +1045,8 @@ TDB_NO_FSYNC=1 %make_build test
 
 # common libraries
 %_samba_mod_libdir/libpopt-samba3-samba4.so
+%_samba_mod_libdir/libcmdline-contexts-samba4.so
+%_samba_mod_libdir/libpopt-samba3-cmdline-samba4.so
 %_samba_mod_libdir/pdb
 
 %files devel
@@ -1500,6 +1509,18 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed Nov 28 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.9.3-alt1
+- Update to autumn security release
+- Revert Samba DC to build with internal Heimdal Kerberos implementation
+- Clean test module of third_party/iso8601 and subunit modules
+- Security fixes:
+  + CVE-2018-14629 Unprivileged adding of CNAME record causing loop in AD Internal DNS server
+  + CVE-2018-16841 Double-free in Samba AD DC KDC with PKINIT
+  + CVE-2018-16851 NULL pointer de-reference in Samba AD DC LDAP server
+  + CVE-2018-16852 NULL pointer de-reference in Samba AD DC DNS servers
+  + CVE-2018-16853 Samba AD DC S4U2Self crash in experimental MIT Kerberos configuration (unsupported)
+  + CVE-2018-16857 Bad password count in AD DC not always effective
+
 * Sat Oct 13 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.9.1-alt1
 - Rebuild latest release of Samba 4.9 without ubt macros
 

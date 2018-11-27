@@ -4,7 +4,7 @@
 
 Name: libtevent
 Version: 0.9.37
-Release: alt1%ubt
+Release: alt2
 Summary: The tevent library
 License: LGPLv3+
 Group: System/Libraries
@@ -17,7 +17,6 @@ BuildRequires: libtalloc-devel >= 2.1.14
 BuildRequires: python-module-talloc-devel >= 2.1.14
 BuildRequires: python-devel zlib-devel
 
-BuildRequires(pre):rpm-build-ubt
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -103,6 +102,9 @@ make test
 %endif
 
 %changelog
+* Tue Nov 27 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.9.37-alt2
+- Disable ubt macros due binary package identity changes
+
 * Sun Jul 22 2018 Stanislav Levin <slev@altlinux.org> 0.9.37-alt1%ubt
 - 0.9.36 -> 0.9.37
 - Build package for Python3
