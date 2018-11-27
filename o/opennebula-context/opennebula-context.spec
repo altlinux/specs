@@ -2,7 +2,7 @@
 Name: opennebula-context
 Summary: OpenNebula Contextualization Package
 Version: 5.6.0
-Release: alt3
+Release: alt4
 License: Apache
 Group: System/Servers
 Url: http://opennebula.org
@@ -113,6 +113,9 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 %_unitdir/*
 
 %changelog
+* Tue Nov 27 2018 Alexey Shabalin <shaba@altlinux.org> 5.6.0-alt4
+- fixed generate network config for systemd-networkd
+
 * Tue Nov 27 2018 Alexey Shabalin <shaba@altlinux.org> 5.6.0-alt3
 - update systemd units
 
