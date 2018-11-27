@@ -2,7 +2,7 @@
 
 Name: glibc
 Version: 2.27
-Release: alt6
+Release: alt7
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -751,6 +751,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Tue Nov 27 2018 Dmitry V. Levin <ldv@altlinux.org> 6:2.27-alt7
+- Updated to glibc-2.27-89-g9f433fc791 from 2.27 branch
+  (fixes CVE-2018-19591).
+
 * Mon Jun 25 2018 Dmitry V. Levin <ldv@altlinux.org> 6:2.27-alt6
 - The password hashing library, libcrypt, is now provided
   by a separate package.
@@ -775,7 +779,7 @@ fi
 - Moved legacy libnsl to a separate subpackage.
 
 * Tue Jan 30 2018 Dmitry V. Levin <ldv@altlinux.org> 6:2.26.9000.0.1248.407552c-alt1
-- Updated to glibc-2.26.9000-1248-g407552c.
+- Updated to glibc-2.26.9000-1248-g407552c (closes: #26977).
 - Switched IDNA implementation to libidn2 (by Florian Weimer;
   fixes: CVE-2016-6261, CVE-2016-6263, CVE-2017-14062).
 
