@@ -12,8 +12,8 @@
 
 Name: ossec-hids
 
-Version: 2.9.3
-Release: alt1%ubt
+Version: 3.1.0
+Release: alt1
 
 Summary: OSSEC is a full platform to monitor and control your systems
 License: GPLv2
@@ -28,8 +28,8 @@ Source3: %name.service
 Source4: %name.logrotate
 
 Patch1: ossec-hids-2.9.3-alt-fhs-compliance.patch
+Patch2: ossec-hids-2.9.3-alt-email-conf.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-perl
 
 # Automatically added by buildreq on Tue May 08 2018
@@ -117,12 +117,12 @@ OSSEC is a full platform to monitor and control your systems. It mixes together 
 %setup
 
 %patch1 -p1	
+%patch2 -p1
 
 # fix for FHS
 sed -i 's|/var/ossec|%ossec_default_dir|' src/LOCATION
 sed -i 's|/var/ossec|%ossec_default_dir|' src/headers/defs.h
 sed -i 's|/var/ossec|%ossec_default_dir|' src/Makefile
-sed -i 's|/var/ossec|%ossec_default_dir|' src/init/ossec-hids-authd-rh.init
 sed -i 's|/var/ossec|%ossec_default_dir|' doc/nmap.txt
 sed -i 's|/var/ossec|%ossec_default_dir|' contrib/ossec-testing/runtests.py
 sed -i 's|/var/ossec|%ossec_default_dir|' contrib/add_localfile.sh
@@ -595,6 +595,11 @@ fi
 %_datadir/ossec/contrib/postgresql.schema
 
 %changelog
-* Fri May 04 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.9.3-alt1%ubt
+* Tue Nov 27 2018 Nikolai Kostrigin <nickel@altlinux.org> 3.1.0-alt1
+- new version
+- add missing email setup patch
+- remove ubt
+
+* Fri May 04 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.9.3-alt1
 - initial release
 
