@@ -1,6 +1,6 @@
 %define base thunar-volman
 Name: %base-plugin
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: Thunar volume manager plugin
@@ -69,6 +69,9 @@ gnome-volume-manager - менеджер управления томами для
 %_desktopdir/*.desktop
 
 %changelog
+* Tue Nov 27 2018 Mikhail Efremov <sem@altlinux.org> 0.9.1-alt1
+- Updated to 0.9.1.
+
 * Thu Aug 09 2018 Mikhail Efremov <sem@altlinux.org> 0.9.0-alt1
 - Enable debug (minimum level).
 - Update url.
