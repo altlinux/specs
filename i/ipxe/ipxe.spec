@@ -11,12 +11,12 @@
 #    vmxnet3: 0x15ad 0x07b0
 
 %define qemuroms 10222000 10ec8029 8086100e 10ec8139 1af41000 80861209 808610d3 15ad07b0
-%define date 20180420
-%define hash 960d1e36
+%define date 20180825
+%define hash 133f4c47
 
 Name: ipxe
 Version: %date
-Release: alt1.git%{hash}%ubt
+Release: alt1.git%{hash}
 Epoch: 1
 
 Summary: PXE boot firmware
@@ -32,7 +32,6 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 Requires: ipxe-bootimgs
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: mkisofs mtools syslinux binutils-devel edk2-tools
 BuildRequires: binutils-x86_64-linux-gnu gcc-x86_64-linux-gnu
 BuildRequires: liblzma-devel
@@ -211,6 +210,9 @@ pxe_link 15ad07b0 vmxnet3
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Tue Nov 27 2018 Alexey Shabalin <shaba@altlinux.org> 1:20180825-alt1.git133f4c47
+- update to latest upstream snapshot
+
 * Fri Apr 27 2018 Alexey Shabalin <shaba@altlinux.ru> 1:20180420-alt1.git960d1e36%ubt
 - update to latest upstream snapshot
 
