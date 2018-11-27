@@ -6,7 +6,7 @@
 
 Name: dovecot
 Version: 2.3.2.1
-Release: alt1.1
+Release: alt2
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
 Group: System/Servers
@@ -69,6 +69,8 @@ Libraries and headers for Dovecot
 
 sed -i 's@/usr/local@/usr@g' src/plugins/fts/decode2text.sh
 sed -i 's@/usr/local@/usr@g' doc/example-config/conf.d/90-quota.conf
+
+gzip -9 ChangeLog
 
 %build
 %add_optflags -D_DEFAULT_SOURCE=1
@@ -145,6 +147,7 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 # TODO postun old mailboxes access?
 
 %files
+%doc AUTHORS ChangeLog* COPYING NEWS README
 %_bindir/doveconf
 %_bindir/doveadm
 %_bindir/dsync
@@ -191,6 +194,9 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Tue Nov 27 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.2.1-alt2
+- Packaged AUTHORS, ChangeLog, COPYING, NEWS and README.
+
 * Tue Sep 11 2018 Grigory Ustinov <grenka@altlinux.org> 2.3.2.1-alt1.1
  - Rebuilt with openssl 1.1.
  - Added BR: libkrb5-devel.
