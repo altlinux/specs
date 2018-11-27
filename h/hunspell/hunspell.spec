@@ -1,15 +1,14 @@
 Name: hunspell
 Summary: Hunspell is a spell checker and morphological analyzer
-Version: 1.6.2
+Version: 1.7.0
 Release: alt1
 License: LGPL
 Group: Text tools
 URL: http://hunspell.sourceforge.net/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
-
-Patch1: hunspell-1.6.2-alt-soname.patch
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ libncursesw-devel libreadline-devel
 
@@ -44,7 +43,7 @@ hunspell.
 
 %prep
 %setup -q
-%patch1 -p1
+%patch -p1
 
 %build
 %autoreconf
@@ -62,9 +61,10 @@ mkdir -p %buildroot%_datadir/myspell
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS AUTHORS.myspell license.hunspell license.myspell NEWS THANKS
+%doc AUTHORS license.hunspell license.myspell NEWS THANKS
 %_bindir/%name
 %_man1dir/%name.1*
+%_man5dir/%name.5*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -89,6 +89,9 @@ mkdir -p %buildroot%_datadir/myspell
 %_bindir/wordlist2hunspell
 
 %changelog
+* Tue Nov 27 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.7.0-alt1
+- 1.7.0
+
 * Tue Sep 11 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.6.2-alt1
 - 1.6.2 (closes: #35377)
 
