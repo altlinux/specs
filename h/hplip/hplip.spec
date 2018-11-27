@@ -7,8 +7,8 @@
 %def_without python3
 %def_disable foomatic_rip
 %def_disable qt3
-%def_enable qt4
-%def_disable qt5
+%def_disable qt4
+%def_enable qt5
 %def_enable policykit
 # udev >= 145
 # note: flag dropped upstream
@@ -29,18 +29,18 @@
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
 Epoch: 1
-Version: 3.18.6
-Release: alt2
+Version: 3.18.10
+Release: alt1
 %if_without ernie
-License: GPLv2+/MIT/BSD
+License: GPLv2+ and MIT and BSD
 %else
-License: GPLv2+/MIT/BSD/hardware specific
+License: GPLv2+ and MIT and BSD and IJG and Public Domain and GPLv2+ with exceptions and ISC
 %endif
 Group: Publishing
 #URL: http://hplip.sourceforge.net -- old
 #URL: http://hplipopensource.com/ -- old
 URL: https://developers.hp.com/hp-linux-imaging-and-printing
-Packager: Igor Vlasenko <viy@altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 %define hpijsname hpijs
 
@@ -145,9 +145,7 @@ Patch9: hplip-3.18.6-alt-auth.patch
 
 Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.patch
 # it is patch 10 rediffed
-Patch11: hpijs-1.4.1-rss-alt-for-2.7.7.patch
 Patch12: hplip-3.16.11-alt-fax-setup.patch
-Patch13: hplip-3.18.6-alt-add-translation.patch
 
 # fedora patches
 Patch101: hplip-pstotiff-is-rubbish.patch
@@ -186,11 +184,44 @@ Patch130: hplip-typo.patch
 Patch131: hplip-use-binary-str.patch
 # m278-m281 doesn't work correctly again
 Patch132: hplip-colorlaserjet-mfp-m278-m281.patch
+Patch133: hplip-error-print.patch
+Patch134: hplip-hpfax-importerror-print.patch
+Patch135: hplip-wifisetup.patch
 # end fedora patches
 
 # ubuntu patches
 Patch201: hp-plugin-download-fix.patch
 # end ubuntu patches
+
+# debian patches
+Patch301: cope-with-ErnieFilter-absence.patch
+Patch302: 01_rss.patch
+Patch303: 14_charsign_fixes.patch
+Patch304: hp_photosmart_pro_b9100_support.patch
+Patch305: pjl-duplex-binding.patch
+Patch306: simple-scan-as-default.patch
+Patch307: try_libhpmud.so.0.patch
+Patch308: add-lidil-two-cartridge-modes.patch
+Patch310: hp-systray-make-menu-title-visible-in-sni-qt-indicator.patch
+Patch311: hp-systray-make-menu-appear-in-sni-qt-indicator-with-kde.patch
+Patch312: hpaio-option-duplex.diff
+Patch313: musb-c-do-not-crash-on-usb-failure.patch
+Patch314: pcardext-python3-workaround-upstream.patch
+Patch315: hpscan-deskjet-3520-aio-allow-non-jpeg-scanning.patch
+Patch317: order-page-sizes-consistently.patch
+Patch318: install-check-plugin.diff
+Patch319: HP-LaserJet_4000-PostScript-PPD.patch
+Patch320: ui-patch-upstream-like.patch
+Patch321: 0021-Add-include-cups-ppd.h-in-various-places-as-CUPS-2.2.patch
+Patch322: 0022-Fix-list-wrapping-in-scan.py-to-fix-generated-manpag.patch
+Patch323: 0023-Fix-handling-of-unicode-filenames-in-sixext.py.patch
+Patch324: 0024-Make-dat2drv-and-locateppd-build-dependent-of-class-.patch
+Patch325: 0025-Remove-all-ImageProcessor-functionality-which-is-clo.patch
+Patch326: 0026-Call-QMessageBox-constructors-of-PyQT5-with-the-corr.patch
+Patch327: 0027-Fixed-incomplete-removal-of-hp-toolbox-features-whic.patch
+Patch328: 0028-hp-check-Fix-core.distro-vs.-core.distro_name-mixups.patch
+Patch329: 0029-Make-base.g.xint-more-generous-in-what-it-can-take.patch
+# end debian patches
 
 %description
 This is the HP driver package to supply Linux support for most
@@ -449,6 +480,12 @@ SANE driver for scanners in HP's multi-function devices (from HPLIP)
 
 %prep
 %setup -q
+# Remove proprietary binary blobs
+rm -f prnt/hpcups/libImageProcessor-*.so
+
+# For some patch we need to gunzip ppds
+find . -name *.ppd.gz -exec gunzip '{}' ';'
+
 %patch1 -p2
 # let keep it as is.
 #patch2 -p2
@@ -463,7 +500,6 @@ SANE driver for scanners in HP's multi-function devices (from HPLIP)
 #patch7 -p2
 %endif
 %patch9 -p2
-
 
 # The pstotiff filter is rubbish so replace it (launchpad #528394).
 %patch101 -p1 -b .pstotiff-is-rubbish
@@ -509,9 +545,6 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 
 # Avoid busy loop in hpcups when backend has exited (bug #525944).
 %patch111 -p1 -b .hpcups-sigpipe
-
-# CUPS filters should use TMPDIR when available (bug #865603).
-%patch112 -p1 -b .logdir
 
 # Fixed Device ID parsing code in hpijs's dj9xxvip.c (bug #510926).
 %patch113 -p1 -b .bad-low-ink-warning
@@ -567,6 +600,10 @@ rm prnt/hpcups/ErnieFilter.{cpp,h} prnt/hpijs/ernieplatform.h
 %patch131 -p1 -b .use-binary-str
 %patch132 -p1 -b .colorlaserjet-mfp-m278-m281
 
+%patch133 -p1 -b .error-print-fix
+%patch134 -p1 -b .hpfax-import-error-print
+%patch135 -p1 -b .wifisetup-bad-call-fix
+
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
     -e 's,\(UIConstraints.* \*Duplex\),//\1,' \
@@ -575,16 +612,47 @@ sed -i.duplex-constraints \
 
 %patch201 -p1 -b .download-plugin
 
+# debian patches
+%patch301 -p1
+%patch302 -p1
+%patch303 -p1
+%patch304 -p1
+%patch305 -p1
+%patch306 -p1
+%patch307 -p1
+%patch308 -p1
+%patch310 -p1
+%patch311 -p1
+%patch312 -p1
+%patch313 -p1
+%patch314 -p1
+%patch315 -p1
+%patch317 -p1
+%patch318 -p1
+%patch319 -p1
+%patch320 -p1
+%patch321 -p1
+%patch322 -p1
+%patch323 -p1
+%patch324 -p1
+%patch325 -p1
+%patch326 -p1
+%patch327 -p1
+%patch328 -p1
+%patch329 -p1
+
+# Conflicted patches
+# CUPS filters should use TMPDIR when available (bug #865603).
+%patch112 -p1 -b .logdir
+
 tar -xf %SOURCE6
 
 #pushd prnt/hpijs
 #%patch10 -p1
 #popd
-# it is patch 10 rediffed
-%patch11 -p1
 %patch12 -p1
-%patch13 -p1
 
+egrep -lZr '#!/usr/bin/python$' . | xargs -r0 sed -i 's,#!/usr/bin/python$,#!/usr/bin/python%{pysuffix},'
 fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python,#!/usr/bin/python%{pysuffix},'
 
 # ELF binary, if found
@@ -688,7 +756,6 @@ EOF
 %make
 
 %install
-
 install -d $RPM_BUILD_ROOT/%_datadir/cups/model/
 %if_disabled PPDs
 # in alt, ppds are stored with cups (not good?)
@@ -696,11 +763,10 @@ install -d $RPM_BUILD_ROOT/%_datadir/cups/model/
 install -m644 fax/ppd/HP-Fax-hplip.ppd $RPM_BUILD_ROOT/%_datadir/cups/model/
 %endif
 
-%make DESTDIR=$RPM_BUILD_ROOT install \
+%make DESTDIR=%buildroot install \
 %if_with python3
 	 PYTHON=%{__python3}
 %endif
-
 
 %if_enabled python_code
 
@@ -729,10 +795,6 @@ cat > %{buildroot}%{_tmpfilesdir}/hplip.conf <<EOF
 
 d /run/hplip 0775 root lp -
 EOF
-
-
-### add to doc install
-cp COPYING $RPM_BUILD_ROOT%_docdir/%name-%version/
 
 # # Comment out all "setSizePolicy" calls, this function is incompatible with
 # # PyQT/SIP <3.16
@@ -763,7 +825,6 @@ rm -f $RPM_BUILD_ROOT%_sysconfdir/sane.d/dll.conf
 rm -f $RPM_BUILD_ROOT%_datadir/%name/%name
 rm -f $RPM_BUILD_ROOT%_datadir/%name/hplip_readme.html
 rm -f $RPM_BUILD_ROOT%_datadir/%name/hplip_overview.png
-rm -f $RPM_BUILD_ROOT%_datadir/%name/COPYING
 
 # fedora
 rm -f %{buildroot}%{_datadir}/hplip/hplip-install
@@ -864,8 +925,8 @@ fi
 %endif #sane_backend
 
 %files
+%doc %_defaultdocdir/%name-%version
 %if_enabled python_code
-%doc %_docdir/%name-%version
 %dir %{_sysconfdir}/hp
 %config %{_sysconfdir}/hp/hplip.conf
 #deprecated
@@ -882,6 +943,7 @@ fi
 %_prefix/lib/cups/backend/hpfax
 # python
 %{_bindir}/hp-align
+%{_bindir}/hp-check-plugin
 %{_bindir}/hp-clean
 %{_bindir}/hp-colorcal
 %{_bindir}/hp-config_usb_printer
@@ -937,6 +999,10 @@ fi
 %{_datadir}/hplip/pkservice.py*
 %{_datadir}/polkit-1/actions/com.hp.hplip.policy
 %{_unitdir}/hplip-printer@.service
+%endif
+%if_with python3
+%{_datadir}/hplip/__pycache__/check-plugin.*
+%dir %{_datadir}/hplip/__pycache__
 %endif
 # global dbus service
 %{_datadir}/dbus-1/system-services/com.hp.hplip.service
@@ -999,6 +1065,7 @@ fi
 #%{_bindir}/hp-toolbox.wrapper
 %{_bindir}/hp-toolbox
 %{_bindir}/hp-wificonfig
+%{_bindir}/hp-uiscan
 # Files
 %{_datadir}/hplip/check.py*
 %{_datadir}/hplip/devicesettings.py*
@@ -1010,6 +1077,7 @@ fi
 %{_datadir}/hplip/systray.py*
 %{_datadir}/hplip/printsettings.py*
 %{_datadir}/hplip/wificonfig.py*
+%{_datadir}/hplip/uiscan.py*
 # garbage
 %{_bindir}/hp-doctor
 %{_bindir}/hp-logcapture
@@ -1036,6 +1104,7 @@ fi
 %{_datadir}/appdata/hplip.appdata.xml
 # HPLIP menu files
 %_datadir/applications/%name.desktop
+%_datadir/applications/hp-uiscan.desktop
 #_niconsdir/hplip.png
 #_liconsdir/hplip.png
 #_miconsdir/hplip.png
@@ -1083,7 +1152,6 @@ fi
 %{_tmpfilesdir}/hplip.conf
 
 %files hpijs
-#doc prnt/hpijs/COPYING
 %doc %_docdir/%hpijsname-%version
 %_bindir/%hpijsname
 %{_man1dir}/%hpijsname.1*
@@ -1111,6 +1179,13 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Mon Nov 12 2018 Andrey Cherepanov <cas@altlinux.org> 1:3.18.10-alt1
+- New version.
+
+* Fri Nov 02 2018 Andrey Cherepanov <cas@altlinux.org> 1:3.18.9-alt1
+- New version (ALT #35531).
+- Build with Qt5 (ALT #35571).
+
 * Fri Jul 27 2018 Pavel Akopov <pak@altlinux.ru> 1:3.18.6-alt2
 - added translation patch
 
