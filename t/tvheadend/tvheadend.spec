@@ -1,6 +1,6 @@
 Name: tvheadend
 Version: 4.2.7
-Release: alt1
+Release: alt2
 
 Summary: Tvheadend TV streaming server
 License: GPLv3
@@ -36,7 +36,7 @@ make
 %make_install prefix=%_prefix DESTDIR=%buildroot install
 install -pm0755 -D tvheadend.init %buildroot%_initdir/tvheadend
 install -pm0644 -D tvheadend.sysconfig %buildroot%_sysconfdir/sysconfig/tvheadend
-install -pm0644 -D rpm/tvheadend.service %buildroot%_unitdir/tvheadend.service
+install -pm0644 -D tvheadend.service %buildroot%_unitdir/tvheadend.service
 
 mkdir -p %buildroot%_sysconfdir/tvheadend %buildroot%_localstatedir/tvheadend
 touch %buildroot%_sysconfdir/tvheadend/superuser
@@ -71,6 +71,9 @@ f=%_sysconfdir/tvheadend/superuser
 %dir %attr(0770,root,_hts) %_localstatedir/tvheadend
 
 %changelog
+* Tue Nov 27 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2.7-alt2
+- fix systemd unit file
+
 * Thu Nov 01 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2.7-alt1
 - 4.2.7 released
 
