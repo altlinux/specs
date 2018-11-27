@@ -3,13 +3,14 @@
 
 Name: v86d
 Version: 0.1.10
-Release: alt8
+Release: alt9
 Summary: A x86 Emulation Daemon
 License: GPLv2
 Group: System/Kernel and hardware
 URL: http://dev.gentoo.org/~spock/projects/uvesafb/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+ExclusiveArch: i586 x86_64
 
 BuildRequires: kernel-headers >= 2.6.25
 %{?_with_klibc:BuildRequires: klibc-devel >= 1.5-alt1.2}
@@ -87,6 +88,10 @@ install -pD -m 0755 {,%buildroot/sbin/}%name
 
 
 %changelog
+* Thu Nov 29 2018 Nikita Ermakov <arei@altlinux.org> 0.1.10-alt9
+- Added ExclusiveArch to point that this package only works with i586 and x86_64.
+- Rebuild with klibc-2.0.4-alt1.
+
 * Thu Apr 24 2014 Led <led@altlinux.ru> 0.1.10-alt8
 - rebuild with klibc-2.0.3-alt3
 
