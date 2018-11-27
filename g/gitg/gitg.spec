@@ -1,10 +1,12 @@
-%def_disable snapshot
+%def_enable snapshot
 %define ver_major 3.30
 %define api_ver 1.0
 %def_enable python
+%def_enable glade
+%def_enable docs
 
 Name: gitg
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: git repository viewer targeting gtk+/GNOME
@@ -33,12 +35,12 @@ AutoReqProv: nopython
 %define glib_ver 2.38
 %define gtk_ver 3.20
 %define gtksourceview_ver 3.10
-%define git2_ver 0.26.0
+%define git2_ver 0.27.7
 %define webkit_ver 2.6.0
 %define gtkspell_ver 3.0.3
 %define peas_ver 1.5.0
 
-BuildRequires(pre): rpm-build-gir
+BuildRequires(pre): meson rpm-build-gir
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgit2-glib-devel >= %git2_ver
@@ -53,6 +55,7 @@ BuildRequires: libgit2-glib-gir-devel libwebkit2gtk-gir-devel libgee0.8-gir-deve
 BuildRequires: libgtkspell3-gir-devel
 BuildRequires: vala-tools
 BuildRequires: gsettings-desktop-schemas-devel
+%{?_enable_docs:BuildRequires: valadoc}
 %{?_enable_python:BuildRequires(pre): rpm-build-python3}
 %{?_enable_python:BuildRequires: python3-devel python3-module-pygobject3-devel}
 
@@ -110,22 +113,24 @@ library.
 
 %prep
 %setup
+subst 's/purelib/platlib/' libgitg-ext/meson.build
 
 %build
-%autoreconf
-%configure --disable-static \
-	%{subst_enable python}
-%make
+%meson %{?_disable_python:-Dpython=false} \
+	%{?_disable_glade:-Dglade_catalog=false} \
+	%{?_enable_docs:-Ddocs=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=RevisionControl \
 	%buildroot%_desktopdir/gitg.desktop
 
 %check
-%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -136,11 +141,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/%{name}*
 %_iconsdir/hicolor/*x*/apps/*
 %_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %{?_enable_python:%python3_sitelibdir/gi/overrides/*}
-%doc AUTHORS NEWS README
-
-%exclude %gitg_pluginsdir/*.la
+%doc AUTHORS NEWS README*
 
 %files -n lib%name
 %_libdir/lib%name-%api_ver.so.*
@@ -153,6 +156,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_libdir/lib%name-ext-%api_ver.so
 %_pkgconfigdir/lib%name-%api_ver.pc
 %_pkgconfigdir/lib%name-ext-%api_ver.pc
+%{?_enable_glade:%_datadir/glade/catalogs/gitg-glade.xml}
 %_vapidir/lib%name-%api_ver.vapi
 %_vapidir/lib%name-ext-1.0.vapi
 
@@ -165,6 +169,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Mon Nov 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
+- updated to v3.30.1-39-g685b4d39
+
 * Wed Oct 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.0-alt1
 - 3.30.0
 

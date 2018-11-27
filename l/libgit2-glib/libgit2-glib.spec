@@ -1,4 +1,5 @@
-%define ver_major 0.26
+%def_disable snapshot
+%define ver_major 0.27
 %define api_ver 1.0
 
 %def_enable gtk_doc
@@ -9,7 +10,7 @@
 %def_enable check
 
 Name: libgit2-glib
-Version: %ver_major.4
+Version: %ver_major.7
 Release: alt1
 
 Summary: Git library for GLib
@@ -17,10 +18,13 @@ Group: System/Libraries
 License: LGPLv2+
 Url: https://live.gnome.org/Libgit2-glib
 
-#Source: %name-%version.tar
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
-%define libgit2_ver 0.26.0
+%define libgit2_ver 0.27.7
 %define glib_ver 2.44
 
 BuildRequires(pre): meson
@@ -127,6 +131,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Nov 04 2018 Yuri N. Sedunov <aris@altlinux.org> 0.27.7-alt1
+- 0.27.7
+
 * Fri Mar 02 2018 Yuri N. Sedunov <aris@altlinux.org> 0.26.4-alt1
 - 0.26.4
 
