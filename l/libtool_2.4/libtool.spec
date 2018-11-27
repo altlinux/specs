@@ -5,7 +5,7 @@
 
 Name: libtool_%ltversion
 Version: 2.4.2
-Release: alt6
+Release: alt7
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
 License: GPLv2+
@@ -176,6 +176,14 @@ done
 %ltdocdir/*demo*
 
 %changelog
+* Tue Nov 27 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.2-alt7
+- Changed libtool.m4 to use:
+  + lib64 suffix for 64-bit RISC-V architecture;
+  + libn32 suffix for 32-bit MIPS64;
+  + lib64 suffix for 64-bit MIPS;
+  + libx32 suffix for 32-bit x86_64;
+  + elf64lppc linker emulation for 64-bit little endian PowerPC.
+
 * Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 2.4.2-alt6
 - %%check: removed -frecord-gcc-switches from $RPM_OPT_FLAGS
   because it confuses demo-hardcode.test.
