@@ -1,5 +1,5 @@
 Name: squidmill
-Version: 2.5
+Version: 2.6
 Release: alt1
 
 Source: %name-%version.tar
@@ -10,7 +10,7 @@ Summary: Squid proxy server access log collector with rounding support
 License: GPLv3+
 Group: System/Configuration/Other
 
-BuildRequires: gambit
+BuildRequires: gambit-devel
 BuildRequires: gambit-sqlite3-devel >= 1.2-alt7
 BuildRequires: gambit-signal-devel >= 1.1-alt1
 BuildRequires: gambit-dsock-devel >= 1.1-alt1
@@ -49,6 +49,10 @@ mkdir -p %buildroot%_var/run/squidmill
 %attr(0755, squid, squid) %dir %_var/run/squidmill
 
 %changelog
+* Tue Nov 27 2018 Paul Wolneykien <manowar@altlinux.org> 2.6-alt1
+- Rebuild with a new version of Gambit.
+- Adapt to the new version of Gambit library: gambc -> gambit.
+
 * Mon Apr 03 2017 Paul Wolneykien <manowar@altlinux.org> 2.5-alt1
 - Rebuild with a new version of Gambit.
 - New -a reporting option: output all access_log entries.

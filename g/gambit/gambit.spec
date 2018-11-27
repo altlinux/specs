@@ -1,6 +1,6 @@
 Name: gambit
-Version: 4.7.7
-Release: alt1.1.1
+Version: 4.9.1
+Release: alt3
 
 Summary: Gambit-C Scheme programming system
 License: Apache-2.0
@@ -10,21 +10,19 @@ Conflicts: ghostscript-minimal < 8.64-alt5
 
 Packager: Paul Wolneykien <manowar@altlinux.org>
 
-%def_without bootstrap
-
 Source: %name-%version.tar
-%if_with bootstrap
-Patch0: %name-%version-bootstrap.patch
-%define bootstrap_version 4.7.6
-BuildRequires: gambit >= %bootstrap_version
+
+%ifarch %e2k
+%def_without emacs
+%else
+%def_with emacs
 %endif
 
-# Automatically added by buildreq on Wed Oct 08 2008
-BuildRequires: emacs-leim emacs-nox libX11-locales libncurses-devel texi2html texi2dvi /usr/bin/pdf2ps /usr/bin/gs perl(Encode.pm) perl(Unicode/Normalize.pm) texlive-collection-latexrecommended
-
+%if_with emacs
+BuildRequires: emacs-nox
+%endif
+BuildRequires: makeinfo
 BuildPreReq: alternatives
-# explicitly added texinfo for info files
-BuildRequires: texinfo
 
 %description
 Gambit-C includes a Scheme interpreter and a Scheme compiler which can be used
@@ -35,6 +33,7 @@ The Gambit-C system conforms to the R4RS and IEEE Scheme standards.  The full
 numeric tower is implemented, including: infinite precision integers (bignums),
 rationals, inexact reals (floating point numbers), and complex numbers.
 
+%if_with emacs
 %package -n emacs-gambit
 Summary: Emacs mode for Gambit-C
 Group: Editors
@@ -43,6 +42,7 @@ BuildArch: noarch
 
 %description -n emacs-gambit
 Emacs mode for running Gambit-C
+%endif
 
 %package docs
 Summary: Gambit-C manuals ang examples
@@ -62,72 +62,91 @@ BuildArch: noarch
 %description info
 Gambit-C manual in info format
 
+%package devel
+Summary: Development files for Gambit-C Scheme
+Group: Development/Other
+Requires: gambit = %version-%release
+
+%description devel
+Development files for Gambit-C Scheme
+
+%package devel-java
+Summary: Development files for Gambit Scheme (Java backend)
+Group: Development/Other
+Requires: gambit = %version-%release
+
+%description devel-java
+Development files for Gambit Scheme (Java backend)
+
+%package devel-php
+Summary: Development files for Gambit Scheme (PHP backend)
+Group: Development/Other
+Requires: gambit = %version-%release
+Requires: /usr/bin/php
+
+%description devel-php
+Development files for Gambit Scheme (PHP backend)
+
+%package devel-python
+Summary: Development files for Gambit Scheme (Python backend)
+Group: Development/Other
+Requires: gambit = %version-%release
+Requires: /usr/bin/python
+
+%description devel-python
+Development files for Gambit Scheme (Python backend)
+
+%package devel-js
+Summary: Development files for Gambit Scheme (JavaScript backend)
+Group: Development/Other
+Requires: gambit = %version-%release
+Requires: /usr/bin/node
+
+%description devel-js
+Development files for Gambit Scheme (JavaScript backend)
+
+%package devel-ruby
+Summary: Development files for Gambit Scheme (Ruby backend)
+Group: Development/Other
+Requires: gambit = %version-%release
+Requires: /usr/bin/ruby
+
+%description devel-ruby
+Development files for Gambit Scheme (Ruby backend)
+
 # See GAMBCDIR_LIB (doesn't work, TODO)
 #define _libdir %_prefix/%_lib/gambit
 %define pkgdocdir %_docdir/%name-%version
 
 %prep
-%setup -q -c %name
-# Redirect REPL to stdout to avoid hangs in Hasher
-find %name-%version -name 'makefile.in' -exec sed -i -e 's/gs[ci]\(-boot\)\? -:/&d-,/g' '{}' \;
-%if_with bootstrap
-# Prepare the bootstrap tree
-cp -Rp %name-%version %name-%version-bootstrap-2
-cp -Rp %name-%version %name-%version-bootstrap-1
-pushd %name-%version-bootstrap-1
-%patch0 -p1
-popd
-%endif
-cd %name-%version
+%setup
 
 %build
-%if_with bootstrap
-pushd %name-%version-bootstrap-1
-cp /usr/bin/gsc gsc-boot
-if [ "%bootstrap_version" = "$(./gsc-boot -v | sed -n 's/^v\([0-9]\+\.[0-9]\+\.[0-9]\+\).*$/\1/p')" ]; then \
-	autoconf configure.ac > configure && chmod 755 configure; \
-	%configure --enable-single-host; \
-	%make bootclean; \
-	%make_build bootstrap; \
-fi
-cp gsc-boot ../%name-%version-bootstrap-2/
-popd
+%ifarch %e2k
+%add_optflags -D___LITTLE_ENDIAN
 %endif
-
-%if_with bootstrap
-pushd %name-%version-bootstrap-2
-if [ "%version" != "$(./gsc-boot -v | sed -n 's/^v\([0-9]\+\.[0-9]\+\.[0-9]\+\).*$/\1/p')" ]; then \
-	autoconf configure.ac > configure && chmod 755 configure; \
-	%configure --enable-single-host; \
-	%make bootclean; \
-	%make_build bootstrap; \
-fi
-cp gsc-boot ../%name-%version/
-popd
-%endif
-
-cd %name-%version
-autoconf configure.ac > configure && chmod 755 configure
-# TODO: try --enable-poll
-%configure --enable-single-host \
-           --enable-shared \
-           --disable-absolute-shared-libs
-%if_without bootstrap
-%make bootstrap
-%endif
-%make bootclean
+%configure --enable-single-host --enable-shared \
+	   --disable-absolute-shared-libs \
+	   --docdir=%pkgdocdir
 %make_build
+
+%if_with emacs
 emacs -q -no-site-file -batch -eval "(byte-compile-file \"misc/gambit.el\")"
+%endif
 
 %install
-cd %name-%version
 %makeinstall_std
-rm -rf $RPM_BUILD_ROOT%_prefix/doc
 for f in $RPM_BUILD_ROOT%_bindir/scheme-*; do
     mv $f $f-%name
 done
-rm examples/*/makefile*
+
+cp -R examples/* %buildroot%pkgdocdir/
+rm -f %buildroot%pkgdocdir/makefile*
+rm -f %buildroot%pkgdocdir/*/makefile*
+
+%if_with emacs
 install -m644 misc/*.el* %buildroot%_emacslispdir/
+%endif
 
 install -d $RPM_BUILD_ROOT%_altdir
 cat > $RPM_BUILD_ROOT%_altdir/%name <<EOF
@@ -137,29 +156,23 @@ cat > $RPM_BUILD_ROOT%_altdir/%name <<EOF
 %_bindir/scheme-ieee-1178-1990	%_bindir/scheme-ieee-1178-1990-gambit	10
 EOF
 
-# docs
-mkdir -p %buildroot%pkgdocdir
-cp -R doc/gambit-c.pdf doc/gambit-c.txt doc/gambit-c.html examples/* %buildroot%pkgdocdir/
-
 %check
-cd %name-%version
-%make -C tests check
+%make check
 
 %files
 %_altdir/*
 %_bindir/*-%name
-%_bindir/gambc*
 %_bindir/gsc*
 %_bindir/gsi*
 %_bindir/six*
 %_includedir/*.h
 %_libdir/*.so*
-%_libdir/*.scm
-%_libdir/_*.c
 %_man1dir/*.1.*
 
+%if_with emacs
 %files -n emacs-gambit
 %_emacslispdir/*
+%endif
 
 %files docs
 %pkgdocdir/
@@ -167,7 +180,39 @@ cd %name-%version
 %files info
 %_infodir/*.info*
 
+%files devel
+%_bindir/gambcomp-C
+%_libdir/*.scm
+%_libdir/_*.c
+
+%files devel-java
+%_bindir/gambcomp-java
+
+%files devel-js
+%_bindir/gambcomp-js
+
+%files devel-php
+%_bindir/gambcomp-php
+
+%files devel-python
+%_bindir/gambcomp-python
+
+%files devel-ruby
+%_bindir/gambcomp-ruby
+
 %changelog
+* Tue Nov 27 2018 Paul Wolneykien <manowar@altlinux.org> 4.9.1-alt3
+- Extract backend sub-packages.
+
+* Tue Nov 27 2018 Paul Wolneykien <manowar@altlinux.org> 4.9.1-alt2
+- Conditional build on E2K.
+
+* Thu Nov 22 2018 Paul Wolneykien <manowar@altlinux.org> 4.9.1-alt1
+- New version 4.9.1.
+
+* Thu Nov 22 2018 Paul Wolneykien <manowar@altlinux.org> 4.7.3-alt2
+- New version 4.7.3 from the tarball.
+
 * Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 4.7.7-alt1.1.1
 - NMU: rebuild with TeXLive instead of TeTeX
 

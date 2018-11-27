@@ -1,13 +1,13 @@
 Name: gambit-signal
-Version: 1.1
-Release: alt5
+Version: 1.2
+Release: alt1
 Summary: UNIX signal handling library for Gambit-C Scheme programming system
 License: GPLv3+
 Group: Development/Scheme
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
-BuildPreReq: gambit glibc-devel
+BuildRequires: gambit-devel glibc-devel
 
 Source: %name-%version.tar
 
@@ -38,12 +38,17 @@ This package contains the library link file
 %make check
 
 %files
-%{_libdir}/gambit/libgambc-signal.so
+%{_libdir}/gambit/*.so
 
 %files devel
-%{_includedir}/gambit/libgambc-signal.c
+%{_includedir}/gambit/*.c
 
 %changelog
+* Tue Nov 27 2018 Paul Wolneykien <manowar@altlinux.org> 1.2-alt1
+- Rebuild with a new version of Gambit
+- Adapt to the new library name: gambc -> gambit.
+- Fix: Use code 3 (user interrupt) with ##interrupt-vector-set!.
+
 * Mon Apr 03 2017 Paul Wolneykien <manowar@altlinux.org> 1.1-alt5
 - Rebuild with a new version of Gambit
 
