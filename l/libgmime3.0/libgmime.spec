@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gmime
 %define ver_major 3.2
@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Glorious MIME Utility Library
@@ -134,6 +134,9 @@ statically linked GMime-based software.
 %endif
 
 %changelog
+* Tue Nov 27 2018 Yuri N. Sedunov <aris@altlinux.org> 3.2.3-alt1
+- 3.2.3
+
 * Wed Oct 31 2018 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
 - 3.2.2
 
