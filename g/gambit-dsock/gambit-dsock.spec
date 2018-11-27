@@ -1,13 +1,13 @@
 Name: gambit-dsock
-Version: 1.1
-Release: alt6
+Version: 1.2
+Release: alt1
 Summary: UNIX domain sockets for Gambit-C Scheme programming system
 License: GPLv3+
 Group: Development/Scheme
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
-BuildPreReq: gambit glibc-devel
+BuildRequires: gambit-devel glibc-devel
 
 Source: %name-%version.tar
 
@@ -38,12 +38,16 @@ This package contains the library link file
 %make check
 
 %files
-%{_libdir}/gambit/libgambc-dsock.so
+%{_libdir}/gambit/*.so
 
 %files devel
-%{_includedir}/gambit/libgambc-dsock.c
+%{_includedir}/gambit/*.c
 
 %changelog
+* Tue Nov 27 2018 Paul Wolneykien <manowar@altlinux.org> 1.2-alt1
+- Rebuild with a new version of Gambit
+- Adapt to the new version of Gambit library: gambc -> gambit.
+
 * Mon Apr 03 2017 Paul Wolneykien <manowar@altlinux.org> 1.1-alt6
 - Rebuild with a new version of Gambit
 
