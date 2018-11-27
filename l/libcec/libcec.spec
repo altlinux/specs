@@ -1,5 +1,5 @@
 Name: libcec
-Version: 4.0.2
+Version: 4.0.3
 Release: alt1
 
 Summary: CEC Adaptor communication shared library
@@ -55,6 +55,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix
 %_bindir/cecc-client*
 
 %changelog
+* Tue Nov 27 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.3-alt1
+- 4.0.3 released
+
 * Mon Feb 06 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.2-alt1
 - 4.0.2
 
