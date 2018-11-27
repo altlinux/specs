@@ -1,6 +1,6 @@
 Name: refind
-Version: 0.11.3
-Release: alt3
+Version: 0.11.4
+Release: alt1
 
 Summary: EFI boot manager software
 License: GPLv3
@@ -82,6 +82,9 @@ install -pDm644 %SOURCE4 %buildroot%refind_data/icons/os_altlinux.png
 %refind_data
 
 %changelog
+* Tue Nov 27 2018 Anton Farygin <rider@altlinux.ru> 0.11.4-alt1
+- 0.11.4
+
 * Sun Nov 11 2018 Anton Farygin <rider@altlinux.ru> 0.11.3-alt3
 - removed ubt macros in changelog
 - removed man packages for unpackages tools from docdir (closes: #34439)
