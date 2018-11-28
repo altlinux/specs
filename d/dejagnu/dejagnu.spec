@@ -1,12 +1,12 @@
 Name: dejagnu
-Version: 1.5.3.0.24.db24
+Version: 1.6.2
 Release: alt1
 Epoch: 1
 
 Summary: A front end for testing other programs
 License: GPLv3+
 Group: Development/Other
-Url: http://www.gnu.org/software/%name/
+Url: https://www.gnu.org/software/%name/
 BuildArch: noarch
 
 # git://git.altlinux.org/gears/d/dejagnu.git
@@ -33,8 +33,6 @@ into software development).
 
 %install
 %makeinstall_std
-find %buildroot%_datadir/%name -type f -name \*.exp -print0 |
-	xargs -r0 chmod 644 --
 %add_findreq_skiplist %_datadir/%name/libexec/config.guess
 
 %check
@@ -50,6 +48,9 @@ find %buildroot%_datadir/%name -type f -name \*.exp -print0 |
 %doc NEWS README AUTHORS ChangeLog
 
 %changelog
+* Wed Nov 28 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.6.2-alt1
+- dejagnu-1.5.3-release~2-24-gdb24ef8 -> dejagnu-1.6.2-release.
+
 * Sat Dec 19 2015 Dmitry V. Levin <ldv@altlinux.org> 1:1.5.3.0.24.db24-alt1
 - Updated to dejagnu-1.5.3-release~2-24-gdb24ef8.
 
