@@ -1,6 +1,6 @@
 Name: speech-dispatcher
 Version: 0.8.8
-Release: alt1
+Release: alt2
 
 Summary: A speech output processing service
 License: %gpl2plus
@@ -47,29 +47,13 @@ Summary: Development files to use libspeechd to connect to speech-dispatcher
 Developers can use this library to connect to speech-dispatcher daemon
 and produce speech output.
 
-%package output-libao
+%package utils
 Group: Sound
-Summary: libao output module for speech-dispatcher
+Summary: Various utilities for speech-dispatcher
 Requires: %name = %version-%release
 
-%description output-libao
-libao output module for speech-dispatcher
-
-%package output-pulse
-Group: Sound
-Summary: PulseAudio output module for speech-dispatcher
-Requires: %name = %version-%release
-
-%description output-pulse
-PulseAudio output module for speech-dispatcher.
-
-%package output-oss
-Group: Sound
-Summary: OSS output module for speech-dispatcher
-Requires: %name = %version-%release
-
-%description output-oss
-OSS output module for speech-dispatcher
+%description utils
+Various utilities for speech-dispatcher
 
 %package module-flite
 Group: Sound
@@ -99,6 +83,7 @@ Pico support for speech-dispatcher
 Summary: Python client for Speech Dispatcher
 Group: Development/Python
 BuildArch: noarch
+Requires: %name = %version-%release
 
 %description -n python3-module-speechd
 This python module allows programmsaccess speech-dispatcher service.
@@ -129,11 +114,11 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 %files -f %name.lang
 %doc ANNOUNCE AUTHORS BUGS doc FAQ NEWS README
 %doc README.packagers README.style README.translators TODO
-%_bindir/*
+%_bindir/speech-dispatcher
 %config %_sysconfdir/%name
 %_unitdir/%{name}d.service
 %dir %_libdir/%name
-%_libdir/%name/spd_alsa.so
+%_libdir/%name/spd*.so
 %exclude %_libdir/%name/spd_alsa.*a
 %dir %_libdir/%name-modules
 %_libdir/%name-modules/sd_dummy
@@ -153,17 +138,10 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 %_libdir/libspeechd.so
 %_pkgconfigdir/*
 
-%files output-libao
-%_libdir/%name/spd_libao.so
-%exclude %_libdir/%name/spd_libao.*a
-
-%files output-pulse
-%_libdir/%name/spd_pulse.so
-%exclude %_libdir/%name/spd_pulse.*a
-
-%files output-oss
-%_libdir/%name/spd_oss.so
-%exclude %_libdir/%name/spd_oss.*a
+%files utils
+%_bindir/spd-conf
+%_bindir/spd-say
+%_bindir/spdsend
 
 %files module-flite
 %_libdir/%name-modules/sd_flite
@@ -178,6 +156,9 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Nov 28 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.8.8-alt2
+- requires fixed
+
 * Sun Jan 07 2018 Yuri N. Sedunov <aris@altlinux.org> 0.8.8-alt1
 - 0.8.8
 - removed obsolete pkgconfig.patch (ALT #34372)

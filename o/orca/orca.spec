@@ -2,7 +2,7 @@
 
 Name: orca
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению
@@ -39,6 +39,8 @@ BuildRequires: yelp-tools
 BuildRequires: python3-module-speechd
 BuildRequires: python3-module-brlapi
 BuildRequires: gstreamer1.0-devel
+
+Requires: python3-module-speechd
 
 %description
 A flexible, scriptable, extensible screen reader for the GNOME platform
@@ -88,6 +90,9 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Wed Nov 28 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.30.1-alt2
+- requires fixed (closes: #35221)
+
 * Fri Oct 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.1-alt1
 - 3.30.1
 
