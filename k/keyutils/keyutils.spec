@@ -1,5 +1,5 @@
 %define vermajor 1
-%define verminor 5.10
+%define verminor 6
 %define version %vermajor.%verminor
 
 Name: keyutils
@@ -76,8 +76,12 @@ ln -snf ../../%_lib/lib%name.so.1 %buildroot%_libdir/lib%name.so
 %_libdir/lib%name.so
 %_includedir/*
 %_man3dir/*
+%_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 1.6-alt1
+- 1.6 released
+
 * Mon Mar 20 2017 Alexey Shabalin <shaba@altlinux.ru> 1.5.10-alt1
 - 1.5.10
 
