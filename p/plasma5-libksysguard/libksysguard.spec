@@ -8,7 +8,7 @@
 
 Name: plasma5-%rname
 Version: 5.12.7
-Release: alt1.qa1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -18,6 +18,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch: alt-killbtn.patch
 
 # Automatically added by buildreq on Wed Feb 25 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libgst-plugins1.0 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sensors libqt5-sql libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel python-base qt5-base-devel ruby ruby-stdlibs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -103,6 +104,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch -p2
 
 %build
 %K5build \
@@ -152,6 +154,9 @@ KF5 library
 %_K5lib/liblsofui.so.*
 
 %changelog
+* Wed Nov 28 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.7-alt2
+- added killBtn column
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.12.7-alt1.qa1
 - NMU: applied repocop patch
 
