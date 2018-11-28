@@ -9,6 +9,7 @@
 %def_enable cluster
 %def_enable selinux
 %def_enable lvmetad
+%def_disable use_lvmetad
 %def_disable udev_systemd_background_jobs
 %def_enable lvmpolld
 %def_disable lvmlockd
@@ -43,7 +44,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt1
+Release: alt2
 License: GPL
 
 Group: System/Base
@@ -322,6 +323,7 @@ mv libdm/ioctl/libdevmapper.a .
 %if_enabled lvmetad
 	%{subst_enable lvmetad} \
 	%{?_disable_udev_systemd_background_jobs:--disable-udev-systemd-background-jobs} \
+    %{?_disable_use_lvmetad:--disable-use-lvmetad} \
 %endif
 	%{subst_enable lvmpolld} \
 	%{subst_enable dmfilemapd} \
@@ -608,6 +610,10 @@ __EOF__
 %endif
 
 %changelog
+* Mon Nov 26 2018 Alexey Shabalin <shaba@altlinux.org> 2.02.182-alt2
+- shutdown lvmetad automatically after one hour of inactivity
+- disable use lvmetad by default
+
 * Fri Nov 23 2018 Alexey Shabalin <shaba@altlinux.org> 2.02.182-alt1
 - 2.02.182
 - fixed blkdeactivate script for bash3
