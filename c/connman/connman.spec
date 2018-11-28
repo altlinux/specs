@@ -2,8 +2,8 @@
 %define _localstatedir %_var
 
 Name: connman
-Version: 1.35
-Release: alt3%ubt
+Version: 1.36
+Release: alt1
 
 Summary: ConnMan is a daemon for managing internet connections.
 License: %gpl2only
@@ -20,10 +20,8 @@ Source5: connman-openresolv.service
 Patch0: add-options-file.patch
 Patch1: connman-add-libs.patch
 Patch2: connman-main-conf.patch
-Patch3: connman.tmpfiles.patch
-Patch4: connman-upstream-headers.patch
 
-BuildRequires(pre): rpm-build-ubt rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses
 BuildRequires: gcc-c++ glib2-devel iptables iptables-devel libdbus-devel wpa_supplicant
 BuildRequires: gtk-doc libgnutls-devel libreadline-devel
 BuildRequires: openconnect openvpn vpnc xl2tpd
@@ -67,8 +65,6 @@ This package contains include files required for development %name-based softwar
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
-%patch3 -p1
-%patch4 -p1
 
 %build
 %autoreconf
@@ -86,15 +82,12 @@ This package contains include files required for development %name-based softwar
 	--enable-vpnc \
 	--enable-l2tp \
 	--enable-pptp \
+    --with-dns-backend=internal \
 #
 %make_build runstatedir=/run
 
 %install
 %makeinstall_std
-
-#%makeinstall_std \
-#	dbusconfdir=%buildroot%_sysconfdir/dbus-1/system.d \
-#	systemdunitdir=%buildroot%_unitdir
 
 mkdir -p -- \
 	%buildroot%_initdir \
@@ -131,7 +124,7 @@ ln -s ../connman-openresolv.path %buildroot%_unitdir/multi-user.target.wants
 %config(noreplace) %_sysconfdir/connman/main.conf
 %config(noreplace) %_sysconfdir/sysconfig/connman
 
-%_sysconfdir/dbus-1/system.d/*.conf
+%_datadir/dbus-1/system.d/*.conf
 %_datadir/dbus-1/system-services/*.service
 
 %_initdir/*
@@ -163,6 +156,9 @@ ln -s ../connman-openresolv.path %buildroot%_unitdir/multi-user.target.wants
 %_includedir/*
 
 %changelog
+* Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 1.36-alt1
+- 1.36
+
 * Fri Feb 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.35-alt3%ubt
 - Fixed build with new kernel headers.
 
