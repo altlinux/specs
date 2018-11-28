@@ -23,15 +23,15 @@
 %endif
 
 %global majorversion    10.3
-%global minorversion    0
-%global toolsbuild      8931395
+%global minorversion    5
+%global toolsbuild      10430147
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt1%ubt
+Release: alt1
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -291,6 +291,9 @@ fi
 %endif
 
 %changelog
+* Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 10.3.5-alt1
+- 10.3.5
+
 * Mon Sep 10 2018 Alexey Shabalin <shaba@altlinux.org> 10.3.0-alt1%ubt
 - 10.3.0
 
