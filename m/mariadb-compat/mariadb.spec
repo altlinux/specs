@@ -36,8 +36,8 @@
 %def_without jemalloc
 
 Name: mariadb-compat
-Version: 10.1.36
-Release: alt2
+Version: 10.1.37
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -814,6 +814,9 @@ fi
 %endif
 
 %changelog
+* Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 10.1.37-alt1
+- 10.1.37
+
 * Thu Oct 18 2018 Alexey Shabalin <shaba@altlinux.org> 10.1.36-alt2
 - build without libwrap
 
