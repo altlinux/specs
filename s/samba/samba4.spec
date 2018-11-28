@@ -51,7 +51,7 @@
 
 Name: samba
 Version: 4.9.1
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -1520,6 +1520,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Wed Nov 28 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.9.1-alt2
+- libsmbclient-devel: fix compatibility issues with the timespec struct
+
 * Wed Oct 17 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.9.1-alt1
 - Rebuild latest release of Samba 4.9 without ubt macros
 
