@@ -2,7 +2,7 @@
 
 Name: compiz
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
@@ -28,6 +28,7 @@ BuildRequires: libXcursor-devel libXdamage-devel libXi-devel libXinerama-devel l
 BuildRequires: libglibmm-devel libjpeg-devel libmetacity3.0-devel libnotify-devel libprotobuf-devel librsvg-devel
 BuildRequires: libstartup-notification-devel libwnck3-devel libxslt-devel protobuf-compiler python-module-Pyrex xsltproc
 BuildRequires: pkgconfig(mate-window-settings-2.0) pkgconfig(gnome-desktop-2.0) python-devel
+BuildRequires: libpcre-devel libXdmcp-devel libdrm-devel libfribidi-devel libpixman-devel libpng-devel
 
 %description
 Compiz is an OpenGL compositing manager that use GLX_EXT_texture_from_pixmap
@@ -59,6 +60,7 @@ cmake .. \
 	-DCOMPIZ_BUILD_TESTING=OFF \
 	-DUSE_KDE4=OFF
 popd
+find -name flags.make | while read l; do sed -i 's|\ -Werror\ | |g' $l; done
 %make_build -C %_target_platform
 
 %install
@@ -108,6 +110,9 @@ rm -fr %buildroot%_datadir/cmake*
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Wed Nov 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.9.13.1-alt3
+- updated build dependencies
+
 * Tue Oct 02 2018 Valery Inozemtsev <shrek@altlinux.ru> 0.9.13.1-alt2
 - updated build dependencies
 
