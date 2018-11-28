@@ -1,16 +1,16 @@
 Name: openslp
-Version: 1.2.1
-Release: alt4.qa1
+Version: 2.0.0
+Release: alt1
 
 Summary: OpenSLP implementation of Service Location Protocol V2
 License: BSD-style
 Group: Networking/Other
-URL: http://sourceforge.net/projects/openslp/
-# http://download.sourceforge.net/%name/%name-%version.tar.gz
-Source0: %name-%version.tar
+URL: https://sourceforge.net/projects/openslp/
+# Source-url: https://download.sourceforge.net/%name/%name-%version.tar.gz
+Source: %name-%version.tar
 Source1: %name.init
-Patch1: openslp-1.2.1-alt-memcpy-fix.patch
-Patch2: openslp-1.2.1-rh-nullauth.patch
+#Patch1: openslp-1.2.1-alt-memcpy-fix.patch
+#Patch2: openslp-1.2.1-rh-nullauth.patch
 
 BuildRequires: flex gcc-c++ libssl-devel
 
@@ -71,9 +71,9 @@ application.  This package contains openslp project development headers.
 
 %prep
 %setup -q -n %name-%version
-%patch1 -p1
-%patch2 -p1
-sed -i '/OPTFLAGS/ s/-O3/$RPM_OPT_FLAGS/' configure.in
+#%%patch1 -p1
+#%%patch2 -p1
+#sed -i '/OPTFLAGS/ s/-O3/$RPM_OPT_FLAGS/' configure.in
 
 %build
 %autoreconf
@@ -87,8 +87,7 @@ sed -i '/OPTFLAGS/ s/-O3/$RPM_OPT_FLAGS/' configure.in
 %make_build
 
 %install
-%define docdir %_docdir/%name-%version
-%makeinstall_std DOC_DIR=%docdir
+%makeinstall_std
 
 install -pDm755 %SOURCE1 %buildroot%_initdir/slpd
 ln -s ../../%_initdir/slpd %buildroot%_sbindir/rcslpd
@@ -114,7 +113,7 @@ mkdir -p %buildroot%_sysconfdir/slp.reg.d
 %_sbindir/*
 
 %files doc
-%docdir/
+%doc doc/doc/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -124,6 +123,11 @@ mkdir -p %buildroot%_sysconfdir/slp.reg.d
 %_includedir/*
 
 %changelog
+* Wed Nov 28 2018 Leontiy Volodin <lvol@altlinux.org> 2.0.0-alt1
+- New version (2.0.0) with rpmgs script
+- Disabled patches because don't applyed for this version
+- Adapted spec for new version
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.1-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
