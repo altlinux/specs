@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.10
-Release: alt1
+Release: alt4
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -99,17 +99,15 @@ sed -i -e '
 	--with-confdir=%_sysconfdir/security/%name \
     --with-pwquality \
 	#
-%make_build
+%make_build docdir=%_datadir/doc/%name-%version
 cd doc
 ./generate-api.sh
 
 %install
-%makeinstall_std
+%makeinstall_std docdir=%_datadir/doc/%name-%version
+
 
 mkdir -p %buildroot%_sysconfdir/security/%name/{cacerts,crls}
-for f in pam_pkcs11.conf card_eventmgr.conf pkcs11_eventmgr.conf; do
-  install -pm644 "etc/$f.example" -T "%buildroot%_sysconfdir/security/%name/$f"
-done
 
 # Cleanup .la files
 rm %buildroot/%_lib/*/*.la
@@ -127,11 +125,13 @@ rm %buildroot/%_lib/*/*.la
 %doc doc/mappers_api.html
 %doc doc/README.autologin
 %doc doc/README.mappers
+%doc etc/pam.d_login.example
 %dir %_sysconfdir/security/%name
 %dir %_sysconfdir/security/%name/cacerts
 %dir %_sysconfdir/security/%name/crls
 %config(noreplace) %_sysconfdir/security/%name/pam_pkcs11.conf
 %config(noreplace) %_sysconfdir/security/%name/pkcs11_eventmgr.conf
+%config(noreplace) %_sysconfdir/security/%name/*_mapping
 %_bindir/*
 %exclude %_bindir/card_eventmgr
 %dir /%_lib/%name
@@ -145,13 +145,6 @@ rm %buildroot/%_lib/*/*.la
 %_man1dir/pklogin_finder.1*
 %_man1dir/pkcs11_make_hash_link.1*
 %_man8dir/pam_pkcs11.8*
-%dir %_datadir/%name
-%_datadir/%name/pam_pkcs11.conf.example
-%_datadir/%name/pam.d_login.example
-%_datadir/%name/subject_mapping.example
-%_datadir/%name/mail_mapping.example
-%_datadir/%name/digest_mapping.example
-%_datadir/%name/pkcs11_eventmgr.conf.example
 %config(noreplace) %_sysconfdir/pam.d/*
 %_unitdir/*
 
@@ -160,7 +153,6 @@ rm %buildroot/%_lib/*/*.la
 %config(noreplace) %_sysconfdir/security/%name/card_eventmgr.conf
 %_bindir/card_eventmgr
 %_mandir/man1/card_eventmgr.1*
-%_datadir/%name/card_eventmgr.conf.example
 
 %files ldap
 %doc doc/README.ldap_mapper
@@ -170,6 +162,23 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ll_isbc.so
 
 %changelog
+* Wed Nov 28 2018 Paul Wolneykien <manowar@altlinux.org> 0.6.10-alt4
+- Fix: Put the examples into the package docdir.
+- Install the default mapping configs.
+
+* Tue Nov 20 2018 Paul Wolneykien <manowar@altlinux.org> 0.6.10-alt3
+- Improve: Add option "use_waitevent" utilizing C_WaitForSlotEvent().
+- Introduce the "pin_len_min" and "pin_len_max" configuration
+  options that control the allowed PIN-code length.
+
+* Mon Nov 19 2018 Paul Wolneykien <manowar@altlinux.org> 0.6.10-alt2
+- Fix: Don\'t force PIN change from the screensaver session.
+- State the token label and serial in the syslog messages.
+- Round the "PIN changed" event timestamp and the system time prior
+  to compare them.
+- Fix/improve: Take a journal record with the minimal index when
+  looking for the last event of particular type.
+
 * Thu Sep 13 2018 Paul Wolneykien <manowar@altlinux.org> 0.6.10-alt1
 - New version 0.6.10.
 - Cleanup passwords with `cleanse()` in the new code too.
