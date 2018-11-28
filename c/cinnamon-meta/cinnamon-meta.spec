@@ -1,8 +1,8 @@
-%define ver_major 3.4
+%define ver_major 4.0
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -65,6 +65,9 @@ Requires: libgtk2-engine-adwaita
 Requires: gnome-backgrounds
 # default font
 Requires: fonts-otf-abattis-cantarell
+
+# Cinnamon uses yelp to show help
+Requires: yelp
 
 %description -n cinnamon-default
 This package provides the various bits and pieces
@@ -134,6 +137,10 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Wed Nov 28 2018 Vladimir Didenko <cow@altlinux.org> 4.0.0-alt1
+- add yelp to cinnamon-default (closes: #35658)
+- bump version
+
 * Mon Mar 26 2018 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt2
 - add nemo-fileroller to cinnamon-regular (closes: #34711)
 
