@@ -32,7 +32,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt3
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -78,6 +78,7 @@ Patch6: FC-0001-disable-libe-book-support.patch
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 ##Patch402: libreoffice-4-alt-drop-gnome-open.patch
 Patch403: alt-002-tmpdir.patch
+Patch404: alt-003-poppler-compat.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -310,6 +311,7 @@ echo Direct build
 %patch401 -p0
 ##patch402 -p1
 %patch403 -p1
+%patch404 -p1
 
 # Hack in proper LibreOffice PATH in libreofficekit
 sed -i 's@/libreoffice/@/LibreOffice/@g' libreofficekit/Library_libreofficekitgtk.mk
@@ -600,6 +602,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Nov 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.3.1-alt3
+- NMU: fixed build with new poppler.
+
 * Mon Oct 22 2018 Ivan Razzhivin <underwit@altlinux.org> 6.1.3.1-alt2
 - build with gtk3/kde5 UI
 
