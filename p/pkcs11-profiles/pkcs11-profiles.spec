@@ -17,7 +17,7 @@
 %endif
 
 Name: pkcs11-profiles
-Version: 0.1.7
+Version: 0.1.9
 Release: alt1
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
@@ -169,6 +169,14 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/message.profiles/zastava
 
 %changelog
+* Wed Nov 28 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.9-alt1
+- Fix: Preset the default mapping files in the mapping profiles.
+
+* Tue Nov 20 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.8-alt1
+- Translate "prompt_pin_too_short_err" and "prompt_pin_too_long_err"
+  for "Zastava".
+- Restrict PIN code length for "Zastava": min is 4, max is 8 chars.
+	  
 * Wed Nov 07 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.7-alt1
 - Added JaCarta module.
 
