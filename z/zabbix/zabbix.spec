@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		86073
+%define svnrev		87228
 
 %def_with pgsql
 %def_enable java
@@ -15,7 +15,7 @@
 %endif
 
 Name: zabbix
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -665,6 +665,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Nov 28 2018 Alexei Takaseev <taf@altlinux.org> 1:4.0.2-alt1
+- 4.0.2
+
 * Tue Oct 30 2018 Alexei Takaseev <taf@altlinux.org> 1:4.0.1-alt1
 - 4.0.1
 - Add support PHP7
