@@ -7,46 +7,26 @@
 
 Name: lilypond
 Version: %ver_major.%ver_minor
-Release: alt0.3
+Release: alt1
 
 Group: Publishing
 Summary: A program for printing sheet music
-License: GPL v.3
+License: GPLv3
 Url: http://www.lilypond.org
-Packager: Michael Pozhidaev <msp@altlinux.ru>
 
 Source: %name-%version.tar.gz
 Source1: russian-lirycs-test.ly
 
 Requires: ghostscript
 
-BuildRequires: texi2html >= 1.82 
-BuildRequires: dblatex convert zip rsync zlib-devel fontforge
-BuildRequires: perl-Math-Complex perl-podlators
-BuildRequires: emacs-devel emacs
-BuildRequires: makeinfo texi2dvi
-
-# Automatically added by buildreq on Tue Mar 17 2009
-BuildRequires: flex fontforge fonts-type1-urw gcc-c++ guile18-devel libpango-devel python-devel python-modules-compiler python-modules-encodings t1utils texlive-metapost
-
-#%package tex
-#Summary: TeX extensions for %name
-#Group: Publishing
-#BuildArch: noarch 
-#Requires: %name = %version-%release
-
-#%package doc
-#Summary: LilyPond documentation, examples and Mutopia files
-#Group: Publishing
-#BuildArch: noarch
-#Requires: %name = %version-%release
+BuildRequires: gcc-c++ emacs emacs-devel flex fontconfig-devel fontforge guile-devel
+BuildRequires: help2man libfreetype-devel libpango-devel makeinfo python-devel texlive
 
 %package -n emacs-mode-%name
 Summary: Major mode for editing GNU LilyPond music scores 
 Group: Editors
 BuildArch: noarch
-#msp:removed tetex-xdvi to avoid explicit dependence to tetex and make possible texlive using
-Requires: %name = %version-%release emacs TiMidity++ gv 
+Requires: %name = %version-%release
 
 %package -n emacs-mode-%name-el
 Summary: The Emacs Lisp sources for bytecode included in emacs-mode-%name
@@ -60,15 +40,6 @@ a high level description file as input. Lilypond is part of the GNU
 project. This package contains the utilities for converting the music
 source (.ly) files into printable output.
 
-#%description tex
-#TeX extensions for %name
-
-#%description doc
-#The documentation of LilyPond, both in HTML and PostScript, along with
-#example input files and the files from the Mutopia project. At present a
-#part of this documentation may be broken. See http://lilypond.org for
-#full.
-
 %description -n emacs-mode-%name
 emacs-mode-%name provides syntax coloring, inserting tags,
 PS-compilation, PS-viewing and MIDI-play.
@@ -81,40 +52,19 @@ You need to install emacs-mode-%name-el only if you intend to modify any of the
 emacs-mode-%name code or see some Lisp examples.
 
 %prep
-%setup -q
+%setup
 subst 's|package_infodir = $(infodir)/$(package)|package_infodir = $(infodir)|' config.make.in
 
 %build
-export GUILE=guile18
 %configure \
 	--with-ncsb-dir=/usr/share/fonts/type1/urw \
-	--enable-documentation 
-#	--enable-relocation \
-# TODO: where is it?
-#	--enable-gui
+	--disable-documentation
 
 %make_build
-#%make_build webdir=%_docdir/%name-%version web
 
 %install
 %makeinstall_std
-#%make_install web-install out=www
-
-# Move TeX dependent files into system TeX tree locations
-# 30092007: hack for tfm:
-#%__mkdir_p %buildroot%_lily_dir/fonts/tfm
-#%__mv mf/out/*.tfm %buildroot%_lily_dir/fonts/tfm/
-#for i in otf source svg tfm type1; do
-#    %__mkdir_p %buildroot%_texmf/fonts/$i
-#    ln -s %_lily_dir/fonts/$i %buildroot%_texmf/fonts/$i/%name
-#done
-#%__mkdir_p %buildroot%_texmf/tex/%name
-#%__mv %buildroot%_lily_dir/tex/* %buildroot%_texmf/tex/%name/
-
-# Create documentation tree in %_docdir
-#%__mkdir_p %buildroot%_docdir/%name-%version/Printable
-#%__ln_s ../Documentation/user/out-www/lilypond.ps.gz %buildroot%_docdir/%name-%version/Printable/Manual.ps.gz
-#%__ln_s ../Documentation/user/out-www/music-glossary.ps.gz %buildroot%_docdir/%name-%version/Printable/Glossary.ps.gz
+help2man %buildroot%_bindir/lilypond > %buildroot%_man1dir/lilypond.1
 
 # install russian-lirycs-test.ly
 %__install -m644 %SOURCE1 .
@@ -141,10 +91,6 @@ done
 %doc AUTHORS.txt COPYING DEDICATION HACKING INSTALL.txt LICENSE LICENSE.DOCUMENTATION LICENSE.OFL NEWS.txt README.txt ROADMAP
 %doc russian-lirycs-test.ly
 
-#%files tex
-#%_texmf/fonts/*/%name
-#%_texmf/tex/%name
-
 %files -n emacs-mode-%name
 %config(noreplace) %_emacs_sitestart_dir/%name-init.el
 %_emacslispdir/%{name}*.elc
@@ -152,14 +98,10 @@ done
 %files -n emacs-mode-%name-el
 %_emacslispdir/%{name}*.el
 
-#%files doc
-#%%_docdir/%name-%version/*.html
-#%%_docdir/%name-%version/input
-#%%_docdir/%name-%version/Documentation
-#%%_docdir/%name-%version/Printable
-#%_datadir/omf/*
-
 %changelog
+* Wed Nov 28 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.18.2-alt1
+- rebuilt with guile22
+
 * Mon Aug 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.18.2-alt0.3
 - Updated build dependencies
 
