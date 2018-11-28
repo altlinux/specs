@@ -1,8 +1,8 @@
 %define debug_level 1
 
 Name: seabios
-Version: 1.11.2
-Release: alt1%ubt
+Version: 1.12.0
+Release: alt1
 Summary: Open-source legacy BIOS implementation
 
 Group: Emulators
@@ -31,7 +31,6 @@ Source19: config.vga.virtio
 Source20: config.vga.bochs-display
 Source21: config.vga.ramfb
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: python3
 BuildRequires: acpica
 BuildRequires: binutils-x86_64-linux-gnu gcc-x86_64-linux-gnu
@@ -115,6 +114,9 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Fri Aug 24 2018 Alexey Shabalin <shaba@altlinux.org> 1.11.2-alt1%ubt
 - 1.11.2
 - fixed VGA VID and DID for vmware and virtio
