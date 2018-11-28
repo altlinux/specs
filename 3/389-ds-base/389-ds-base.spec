@@ -7,7 +7,7 @@
 
 Name: 389-ds-base
 Version: 1.3.9.0
-Release: alt2
+Release: alt3
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -110,6 +110,8 @@ configuring the 389 Directory Server.
 Summary: The lib389 Continuous Integration Tests
 Group: Development/Python3
 BuildArch: noarch
+# Tests have a huge amount useless Provides
+%set_findprov_skiplist %python3_sitelibdir_noarch/dirsrvtests/*
 
 %description -n  python3-module-389-ds-tests
 The python3-module-389-ds CI tests that can be run against the Directory Server.
@@ -339,6 +341,10 @@ fi
 %preun_service %pkgname-snmp
 
 %changelog
+* Wed Nov 28 2018 Stanislav Levin <slev@altlinux.org> 1.3.9.0-alt3
+- Fixed initialization of plugin's hashtable.
+- Dropped useless Provides of python 389-ds-tests.
+
 * Thu Nov 08 2018 Stanislav Levin <slev@altlinux.org> 1.3.9.0-alt2
 - Added enforced upgrade.
 
