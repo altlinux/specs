@@ -44,7 +44,7 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.3.10
+Version: 10.3.11
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -524,6 +524,10 @@ ln -sf {../bin,%buildroot%_sbindir}/mysql_install_db
 mkdir -p %buildroot%_pkgconfigdir
 mv %buildroot%_datadir/pkgconfig/mariadb.pc %buildroot%_pkgconfigdir/
 
+%if "%_lib" == "lib64"
+mv %buildroot%_prefix/lib/pkgconfig/libmariadb.pc %buildroot%_pkgconfigdir/
+%endif
+
 # Fix libmysqlclient_r symlinks
 (
         cd %buildroot%_libdir
@@ -839,6 +843,7 @@ fi
 %_man1dir/mysql_config.1*
 %_aclocaldir/mysql.m4
 %_pkgconfigdir/mariadb.pc
+%_pkgconfigdir/libmariadb.pc
 # mysqlservices library is static, because it doesn't contain any code
 # itself, and is meant to be statically linked to all plugins.
 %_libdir/libmysqlservices.a
@@ -856,6 +861,22 @@ fi
 %endif
 
 %changelog
+* Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 10.3.11-alt1
+- 10.3.11
+- Fixes for the following security vulnerabilities:
+  + CVE-2018-3282
+  + CVE-2016-9843
+  + CVE-2018-3174
+  + CVE-2018-3143
+  + CVE-2018-3156
+  + CVE-2018-3251
+  + CVE-2018-3185
+  + CVE-2018-3277
+  + CVE-2018-3162
+  + CVE-2018-3173
+  + CVE-2018-3200
+  + CVE-2018-3284
+
 * Tue Oct 16 2018 Alexey Shabalin <shaba@altlinux.org> 10.3.10-alt1
 - 10.3.10
 
