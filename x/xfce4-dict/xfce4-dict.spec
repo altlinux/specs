@@ -1,6 +1,6 @@
 Name: xfce4-dict
-Version: 0.8.1
-Release: alt2
+Version: 0.8.2
+Release: alt1
 
 Summary: Xfce4 Dictionary - A client program to query different dictionaries
 License: %gpl2plus
@@ -61,6 +61,9 @@ panel plugin for the Xfce panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Nov 28 2018 Mikhail Efremov <sem@altlinux.org> 0.8.2-alt1
+- Updated to 0.8.2.
+
 * Tue Oct 09 2018 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt2
 - Fix parallel build.
 
