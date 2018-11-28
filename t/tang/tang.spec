@@ -1,6 +1,6 @@
 Name:    tang
 Version: 7
-Release: alt1
+Release: alt2
 Summary: Tang binding daemon
 
 License: GPLv3
@@ -16,19 +16,7 @@ BuildRequires: libhttp-parser-devel
 BuildRequires: systemd systemd-devel
 
 %description
-Jose is a C-language implementation of the Javascript Object Signing and
-Encryption standards. Specifically, Jose aims towards implementing the
-following standards:
-
-RFC 7515 - JSON Web Signature (JWS)
-RFC 7516 - JSON Web Encryption (JWE)
-RFC 7517 - JSON Web Key (JWK)
-RFC 7518 - JSON Web Algorithms (JWA)
-RFC 7519 - JSON Web Token (JWT)
-RFC 7520 - Examples of ... JOSE
-RFC 7638 - JSON Web Key (JWK) Thumbprint
-
-Jose is extensively tested against the RFC test vectors.
+Tang binding daemon
 
 %prep
 %setup
@@ -47,6 +35,9 @@ Jose is extensively tested against the RFC test vectors.
 %_unitdir/tangd*
 
 %changelog
+* Wed Nov 28 2018 Oleg Solovyov <mcpain@altlinux.org> 7-alt2
+- fix description
+
 * Mon Oct 01 2018 Oleg Solovyov <mcpain@altlinux.org> 7-alt1
 - initial build
 
