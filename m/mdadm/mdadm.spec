@@ -3,8 +3,8 @@
 %define nowarn -Wno-implicit-fallthrough -Wno-format-truncation -Wno-format-overflow
 
 Name: mdadm
-Version: 4.0
-Release: alt2
+Version: 4.1
+Release: alt1
 
 Summary: A tool for managing Soft RAID under Linux
 License: GPLv2+
@@ -83,8 +83,10 @@ install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
 %_sysconfdir/cron.d/mdadm
 %_initdir/mdadm
 %_datadir/mdadm/
+/lib/udev/rules.d/01-md-raid-creating.rules
 /lib/udev/rules.d/63-md-raid-arrays.rules
 /lib/udev/rules.d/64-md-raid-assembly.rules
+/lib/udev/rules.d/69-md-clustered-confirm-device.rules
 %_unitdir/*
 /lib/systemd/system-shutdown/mdadm.shutdown
 
@@ -99,6 +101,9 @@ install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
 %doc TODO ChangeLog.* mdadm.conf-example ANNOUNCE-%version alt/README*
 
 %changelog
+* Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 4.1-alt1
+- 4.1
+
 * Fri Mar 30 2018 Gremlin from Kremlin <gremlin@altlinux.ru> 4.0-alt2
 - move the primary 'mdadm' tool to separate subpackage with minimized
   dependencies
