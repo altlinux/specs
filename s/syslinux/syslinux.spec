@@ -1,6 +1,6 @@
 Name: syslinux
 Version: 4.04
-Release: alt13
+Release: alt14
 Serial: 2
 
 Summary: Simple kernel loader which boots from a FAT filesystem
@@ -32,6 +32,12 @@ Patch12: syslinux-4.04-geometry.diff
 Patch13: syslinux-4.04-nostrip.diff
 Patch14: syslinux-4.04-timeout.diff
 Patch15: syslinux-4.04-cache_fix.diff
+Patch16: syslinux-4.04-mtime.diff
+Patch17: syslinux-4.04-miniacc.diff
+Patch18: syslinux-4.04-align.diff
+Patch19: syslinux-4.04-reproducible.patch
+# Debian
+Patch100: strip-gnu-property.patch
 
 #BuildPrereq: nasm perl-base
 # Automatically added by buildreq on Tue Oct 28 2008 (-bi)
@@ -96,6 +102,11 @@ architectures.
 %patch13 -p0
 %patch14 -p1
 %patch15 -p1
+#patch16 -p1
+%patch17 -p0
+%patch18 -p0
+%patch19 -p1
+%patch100 -p1
 install -m 0644 %SOURCE2 .
 sed -i 's,GCC_VERSION,_&,g' gpxe/src/arch/i386/Makefile
 
@@ -104,7 +115,7 @@ export CFLAGS="%optflags -fno-stack-protector"
 export CC="gcc"
 export HOST_CC="$CC"
 %make_build spotless
-%make_build
+%make
 
 
 %install
@@ -149,6 +160,10 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir
 /boot/extlinux
 
 %changelog
+* Wed Nov 28 2018 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt14
+- sync patches with SuSE
+- fix to build with new binutils
+
 * Fri Aug 24 2018 Paul Wolneykien <manowar@altlinux.org> 2:4.04-alt13
 - Build exclusively for x86 providing the result to all platforms
   in the form of noarch package syslinux-data.
