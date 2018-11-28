@@ -6,7 +6,7 @@
 
 Name: mate-document-viewer
 Version: 1.20.2
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Document viewer
 License: GPLv2+ and LGPLv2+ and MIT
@@ -21,7 +21,7 @@ Patch: %rname-%version-%release.patch
 
 BuildRequires: mate-common
 BuildRequires: gcc-c++ gtk-doc intltool itstool libdjvu-devel libgail3-devel libkpathsea-devel
-BuildRequires: libpoppler-glib-devel libsecret-devel libspectre-devel libtiff-devel
+BuildRequires: libpoppler-glib-devel libsecret-devel libspectre-devel libtiff-devel libSM-devel
 BuildRequires: libxml2-devel mate-file-manager-devel yelp-tools
 
 %if_enabled xps
@@ -197,6 +197,9 @@ find %buildroot%_libdir -name \*.la -delete
 # -default subpackage to pull in backend deps
 
 %changelog
+* Wed Nov 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt2
+- updated build dependencies
+
 * Fri Jun 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
 - 1.20.2
 
