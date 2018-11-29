@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.10.6
+Version: 3.0.1
 Release: alt1
 Group: Development/Python
 License: MIT License
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 29 2018 Vladimir Didenko <cow@altlinux.org> 3.0.1-alt1
+- new version
+
 * Wed Mar 14 2018 Vladimir Didenko <cow@altlinux.org> 2.10.6-alt1
 - new version
 
