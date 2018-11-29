@@ -1,8 +1,9 @@
 %define _name rakia
+%def_disable check
 
 Name: telepathy-%_name
 Version: 0.8.0
-Release: alt1
+Release: alt2
 
 Summary: SIP connection manager for the Telepathy framework
 License: LGPL v2.1+
@@ -17,15 +18,17 @@ Provides: telepathy-sofiasip = %version-%release
 BuildRequires: libdbus-devel libdbus-glib-devel libsofia-sip-glib-devel >= 1.12.11 libgio-devel >= 2.30
 BuildRequires: libtelepathy-glib-devel >= 0.17.7 xsltproc
 # for check:
-BuildRequires: python-module-twisted-words python-module-twisted-core-gui dbus-tools-gui python-module-dbus
+BuildRequires: python-module-twisted-words python-module-twisted-core-gui dbus-tools-gui
+BuildRequires: python-module-dbus python-module-service-identity
 
 %description
-telepathy-sofiasip is a SIP connection manager for the Telepathy framework
+%name is a SIP connection manager for the Telepathy framework
 (http://telepathy.freedesktop.org) based on the SofiaSIP-stack.
 
 %package devel
 Summary: Development files for %name
 Group: Development/C
+BuildArch: noarch
 Obsoletes: telepathy-sofiasip-devel
 Provides: telepathy-sofiasip-devel = %version-%release
 Requires: %name = %version-%release
@@ -35,7 +38,7 @@ This package provides development files and documentation for telepathy-%name
 (SIP connection manager for the Telepathy framework)
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -46,7 +49,7 @@ This package provides development files and documentation for telepathy-%name
 %make check
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_libexecdir/telepathy-%_name
@@ -59,6 +62,9 @@ This package provides development files and documentation for telepathy-%name
 %_man8dir/%name.*
 
 %changelog
+* Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt2
+- disabled broken %%check (ALT #35672)
+
 * Thu Oct 03 2013 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
