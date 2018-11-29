@@ -1,6 +1,6 @@
 Name: metalterator
-Version: 1.2
-Release: alt3
+Version: 1.3
+Release: alt1
 
 Source:%name-%version.tar.gz
 
@@ -11,7 +11,6 @@ License: GPL
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: alterator >= 4.8-alt1
-Conflicts: alterator >= 5.0
 
 # Automatically added by buildreq on Wed Apr 08 2009
 BuildRequires: rpm-macros-alterator rpm-macros-fillup
@@ -55,6 +54,9 @@ install -p -m0755 -D sbin/metalterator-cmdline %buildroot%_sbindir/metalterator-
 %_sbindir/metalterator-cmdline
 
 %changelog
+* Thu Nov 29 2018 Paul Wolneykien <manowar@altlinux.org> 1.3-alt1
+- Fix: Untie from a particular guile version.
+
 * Mon Oct 19 2009  Paul Wolneykien <manowar@altlinux.ru> 1.2-alt3
 - Fix object extstence predicate procedure.
 - Fix new object creation on simple write operation.
