@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	4.14
-%define kernel_sublevel .80
+%define kernel_sublevel .84
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -616,6 +616,18 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Tue Nov 27 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.84-alt1
+- v4.14.84
+
+* Fri Nov 23 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.83-alt1
+- v4.14.83
+
+* Thu Nov 22 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.82-alt1
+- v4.14.82  (Fixes: CVE-2018-10940, CVE-2018-16658)
+
+* Wed Nov 14 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.81-alt1
+- v4.14.81
+
 * Sat Nov 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.80-alt1
 - v4.14.80
 
