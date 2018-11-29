@@ -8,7 +8,7 @@
 # the generic RPC driver, and test driver and no libvirtd
 # Default to a full server + client build
 
-%ifarch %ix86 x86_64 ia64 armh aarch64
+%ifarch %ix86 x86_64 ia64 armh aarch64 ppc64le
 %def_enable server_drivers
 %else
 %def_disable server_drivers
@@ -63,7 +63,7 @@
 %def_with storage_iscsi
 %def_with storage_iscsi_direct
 %def_with storage_disk
-%ifarch x86_64 aarch64
+%ifarch x86_64 aarch64 ppc64le
 %def_with storage_rbd
 %else
 %def_without storage_rbd
@@ -73,7 +73,7 @@
 %def_with storage_zfs
 %def_without storage_sheepdog
 %def_without storage_vstorage
-%ifarch %ix86 x86_64 aarch64
+%ifarch %ix86 x86_64 ppc64le
 %def_with numactl
 %else
 %def_without numactl
@@ -98,7 +98,7 @@
 %if_with  qemu
 %def_with qemu_tcg
 
-%ifarch %ix86 x86_64 armh aarch64
+%ifarch %ix86 x86_64 armh aarch64 ppc64le
 %def_with qemu_kvm
 %endif
 %endif
@@ -130,7 +130,7 @@
 %def_without bash_completion 
 
 Name: libvirt
-Version: 4.8.0
+Version: 4.9.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -488,6 +488,7 @@ Group: System/Libraries
 Requires: %name-daemon-driver-network = %EVR
 Requires: %name-daemon-driver-storage-fs = %EVR
 Requires: /usr/bin/qemu-img
+Requires: qemu-kvm-core
 # For image compression
 Requires: gzip
 Requires: bzip2
@@ -1309,6 +1310,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Thu Nov 29 2018 Alexey Shabalin <shaba@altlinux.org> 4.9.0-alt1
+- 4.9.0
+- add requires qemu-kvm-core to libvirt-daemon-driver-qemu (ALT#33801)
+
 * Tue Oct 09 2018 Alexey Shabalin <shaba@altlinux.org> 4.8.0-alt1
 - 4.8.0
 
