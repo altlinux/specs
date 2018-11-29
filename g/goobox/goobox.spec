@@ -6,7 +6,7 @@
 
 Name: goobox
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: CD player and ripper for GNOME
 License: LGPLv2+
@@ -59,6 +59,9 @@ subst 's|1\.0\.0beta1|1.0.0|' configure*
 
 
 %changelog
+* Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt2
+- rebuilt against libcoverart.so.1
+
 * Sun Sep 30 2018 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
 - 3.4.3
 
