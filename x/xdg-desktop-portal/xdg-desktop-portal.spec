@@ -3,7 +3,7 @@
 %def_disable docs
 
 Name: xdg-desktop-portal
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
@@ -14,7 +14,7 @@ Url: https://github.com/flatpak/%name
 Source: %url/releases/download/%version/%name-%version.tar.xz
 
 Requires: dbus
-Requires: flatpak >= 1.0.2
+Requires: flatpak >= 1.0.3
 Requires: /usr/bin/fusermount
 
 BuildRequires: pkgconfig(flatpak)
@@ -75,6 +75,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 
 
 %changelog
+* Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Thu Sep 13 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 

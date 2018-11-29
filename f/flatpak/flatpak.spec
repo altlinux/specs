@@ -10,7 +10,7 @@
 %def_enable docs
 
 Name: flatpak
-Version: 1.0.2
+Version: 1.0.6
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -24,7 +24,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/flatpak/flatpak/releases/download/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 
-%define ostree_ver 2017.15
+%define ostree_ver 2018.7
 %define bwrap_ver 0.2.1
 %define libarchive_ver 2.8.0
 
@@ -147,6 +147,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
+- 1.0.6
+
 * Sun Sep 16 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
