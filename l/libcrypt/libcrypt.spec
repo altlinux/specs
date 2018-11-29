@@ -1,6 +1,6 @@
 Name: libcrypt
-Version: 4.0.1
-Release: alt2
+Version: 4.4.0
+Release: alt1
 
 Summary: Modern password hashing library
 License: LGPLv2.1+
@@ -42,7 +42,7 @@ applications that use libcrypt.
 %configure \
 	--disable-static \
 	--enable-obsolete-api=alt \
-	--enable-weak-hashes=glibc \
+	--enable-hashes=alt,glibc,strong \
 	#
 %make_build
 
@@ -53,19 +53,11 @@ install -Dpm0644 -t %buildroot%docdir AUTHORS LICENSING README NEWS
 
 # Relocate shared library from %_libdir/ to /%_lib/.
 mkdir -p %buildroot/%_lib
-for f in %buildroot%_libdir/*.so; do
+for f in %buildroot%_libdir/libcrypt.so; do
 	t=$(readlink -v "$f")
 	ln -rsnf %buildroot/%_lib/"$t" "$f"
 done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
-
-# Install additional manpage symlinks.
-for n in crypt crypt_r crypt_ra; do
-	ln -s crypt_rn.3 %buildroot%_man3dir/$n.3
-done
-for n in crypt_gensalt_rn crypt_gensalt_ra; do
-	ln -s crypt_gensalt.3 %buildroot%_man3dir/$n.3
-done
 
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
@@ -79,12 +71,15 @@ done
 %_man5dir/*.5*
 
 %files devel
-%_libdir/libcrypt.so
-%_includedir/crypt.h
-%_pkgconfigdir/libcrypt.pc
+%_libdir/lib*crypt.so
+%_includedir/*crypt.h
+%_pkgconfigdir/lib*crypt.pc
 %_man3dir/*.3*
 
 %changelog
+* Thu Nov 29 2018 Vitaly Chikunov <vt@altlinux.org> 4.4.0-alt1
+- Merge upstream tag 'v4.4.0'.
+
 * Wed Jul 04 2018 Dmitry V. Levin <ldv@altlinux.org> 4.0.1-alt2
 - Added yescrypt and gost-yescrypt support (by vt@).
 
