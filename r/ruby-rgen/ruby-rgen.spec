@@ -1,12 +1,15 @@
+%define  pkgname rgen
 
-Name:    ruby-rgen
-Version: 0.7.0
-Release: alt1.1
+Name:    ruby-%pkgname
+Version: 0.8.4
+Release: alt1
 
 Summary: Ruby Modelling and Generator Framework
 Group:   Development/Ruby
 License: MIT/Ruby
 URL:     https://github.com/mthiede/rgen.git
+
+Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -53,9 +56,7 @@ BuildArch: noarch
 Documentation for %{name}.
 
 %prep
-%setup -n rgen-%version
-# Remove modile with unmet
-rm -f lib/mmgen/mmgen.rb
+%setup -n %pkgname-%version
 %update_setup_rb
 
 %build
@@ -74,11 +75,15 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %files
 %doc README* TODO
 %ruby_sitelibdir/*
+%rubygem_specdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Nov 29 2018 Pavel Skrylev <majioa@altlinux.org> 0.8.4-alt1
+- Bump gemified to 0.8.4.
+
 * Sat Sep 09 2017 Andrey Cherepanov <cas@altlinux.org> 0.7.0-alt1.1
 - Rebuild with Ruby 2.4.1
 

@@ -1,7 +1,7 @@
 %define  pkgname curb
 
 Name: 	 ruby-%pkgname
-Version: 0.9.6
+Version: 0.9.7
 Release: alt1
 
 Summary: Ruby bindings for libcurl
@@ -12,7 +12,6 @@ Url:     https://github.com/taf2/curb
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:  %pkgname-%version.tar
-Patch1:   libssl1.1-fix.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
@@ -38,16 +37,16 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-%patch1 -p 1
 %update_setup_rb
 
 %build
-%ruby_config
+%ruby_config -- --use-system-libraries
 %ruby_build
 
 %install
 %ruby_install
 %rdoc lib/
+find %buildroot
 # Remove unnecessary files
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
@@ -63,6 +62,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Nov 07 2018 Pavel Skrylev <majioa@altlinux.org> 0.9.7-alt1
+- Bump to 0.9.7
+
 * Fri Nov 02 2018 Pavel Skrylev <majioa@altlinux.org> 0.9.6-alt1
 - Bump to 0.9.6.
 
