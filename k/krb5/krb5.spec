@@ -1,7 +1,7 @@
 
 Name: krb5
 Version: 1.16.2
-Release: alt1
+Release: alt2
 
 %define _unpackaged_files_terminate_build 1
 %define _docdir %_defaultdocdir/%name-%version
@@ -38,6 +38,7 @@ Patch134: krb5-1.11-fedora-kpasswdtest.patch
 # alt patches:
 Patch200: krb5-1.16-alt-default_keytab_group.patch
 Patch201: alt-Fix-test-with-fallback-realm-ccache-selection.patch
+Patch202: krb5-1.16.2-Don-t-include-all-MEMORY-ccaches-in-collection.patch
 
 
 BuildRequires: /dev/pts /proc
@@ -190,6 +191,7 @@ MIT Kerberos.
 
 %patch200 -p2 -b .default_keytab_group
 %patch201 -p1
+%patch202 -p1
 
 # Generate an FDS-compatible LDIF file.
 inldif=src/plugins/kdb/ldap/libkdb_ldap/kerberos.ldif
@@ -495,6 +497,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Thu Nov 29 2018 Stanislav Levin <slev@altlinux.org> 1.16.2-alt2
+- Fixed yield of cache from MEMORY ccache (closes #35597, #35667).
+
 * Fri Nov 02 2018 Ivan A. Melnikov <iv@altlinux.org> 1.16.2-alt1
 - 1.16.2
 
