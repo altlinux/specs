@@ -4,7 +4,7 @@
 
 Name: gtk-doc
 Version: 1.29
-Release: alt1
+Release: alt2
 
 Summary: API documentation generation tool for GTK+ and GNOME
 Group: Development/Other
@@ -38,13 +38,12 @@ Provides: python3(gtkdoc)
 
 %add_python3_path %_datadir/%name/python/gtkdoc
 
-BuildRequires: rpm-build-python3 rpm-build-licenses
+BuildRequires(pre): rpm-build-python3 rpm-build-licenses
 BuildRequires: python3-devel >= %python_ver
 BuildRequires: docbook-dtds xml-common xml-utils
-BuildRequires: common-licenses
 BuildRequires: docbook-dtds >= 1.0-alt7
 BuildRequires: docbook-style-xsl bc
-%{?_with_mkpdf:BuildRequires: rpm-build-gnome yelp-tools highlight dblatex >= %dblatex_ver}
+%{?_with_mkpdf:BuildRequires: yelp-tools highlight dblatex >= %dblatex_ver}
 # for SGML
 BuildRequires: docbook-style-dsssl
 BuildRequires: openjade >= 1.3.1
@@ -139,7 +138,6 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/TODO
 %pkgdocdir/*.txt
 %pkgdocdir/examples
-#%pkgdocdir/gtkdoc.dot
 
 %if_with mkpdf
 %files mkpdf
@@ -151,6 +149,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.29-alt2
+- fixed BR (ALT #35673)
+
 * Tue Aug 28 2018 Yuri N. Sedunov <aris@altlinux.org> 1.29-alt1
 - 1.29
 
