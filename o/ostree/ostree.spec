@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: ostree
-Version: 2018.8
+Version: 2018.9
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -105,6 +105,7 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_tmpfilesdir/ostree-tmpfiles.conf
 %_datadir/bash-completion/completions/ostree
 %_unitdir/ostree-finalize-staged.service
+%_unitdir/ostree-finalize-staged.path
 %_typelibdir/*.typelib
 %_man1dir/*
 %_man5dir/ostree*
@@ -122,6 +123,9 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_datadir/gtk-doc/html/ostree/
 
 %changelog
+* Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 2018.9-alt1
+- updated to v2018.9-10-g05e8c7ef
+
 * Fri Sep 14 2018 Yuri N. Sedunov <aris@altlinux.org> 2018.8-alt1
 - updated to v2018.8-7-ge4e6d85e
 
