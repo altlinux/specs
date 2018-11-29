@@ -24,7 +24,7 @@
 %define qsa_major 1
 %define qsa_minor 1
 %define qsa_bugfix 5
-%define rlz alt11
+%define rlz alt12
 Name: %rname%major
 Version: %major.%minor.%bugfix
 Release: %rlz
@@ -126,6 +126,7 @@ Patch107: qt-x11-free-3.3.6-alt-maccyrillic.patch
 Patch108: qt-3.3.8d-alt-arm-no-packed-pointers.patch
 Patch109: qt-x11-free-3.3.8d-Lib64.patch
 Patch110: qt-3.3.8d-full-hiden-item-QIconView.patch
+Patch111: qt-3.3.8d-alt-fix-build-pgsql.patch
 
 # Sergey A. Sukiyazov <sukiyazov@mail.ru>
 Patch9000: 9000-qt-x11-free-3.3.3-menubar.patch
@@ -491,6 +492,7 @@ Install this package if you want to create RPM packages that use %name.
 %patch108 -p1
 %patch109 -p1
 %patch110 -p1
+%patch111 -p1
 
 # Corwin
 %patch9000 -p1
@@ -1283,6 +1285,9 @@ install -m 644 %SOURCE103 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Nov 29 2018 Ivan A. Melnikov <iv@altlinux.org> 3.3.8d-alt12
+- (NMU) Fix build with recent postgresql-devel
+
 * Wed May 30 2018 Sergey V Turchin <zerg@altlinux.org> 3.3.8d-alt11
 - update requires
 
