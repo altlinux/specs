@@ -4,7 +4,7 @@
 
 Name: loudmouth
 Version: 1.5.3
-Release: alt1
+Release: alt2
 
 Summary: Jabber library for C
 Group: System/Libraries
@@ -15,7 +15,7 @@ Url: https://mcabber.com
 Source: %url/files/loudmouth/%name-%version.tar.bz2
 
 BuildRequires: libgio-devel >= 2.26 gtk-doc libcheck-devel
-BuildRequires: libgnutls-devel >= 1.2.0 libidn-devel libkrb5-devel libasyncns-devel
+BuildRequires: libgnutls-devel >= 1.2.0 libkrb5-devel libasyncns-devel
 
 %description
 Loudmouth is a lightweight and easy-to-use C library for programming
@@ -104,6 +104,9 @@ and yet extensible to let you do anything the Jabber protocol allows.
 %endif # enabled static
 
 %changelog
+* Thu Nov 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.5.3-alt2
+- Rebuild without libidn support.
+
 * Mon Oct 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.5.3-alt1
 - 1.5.3
 - dropped unneeded alt-certs_location.patch
