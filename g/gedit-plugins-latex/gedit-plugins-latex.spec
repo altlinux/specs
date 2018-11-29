@@ -4,7 +4,7 @@
 
 Name: gedit-plugins-latex
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: LATEX plugin for GEdit
 License: GPLv3
@@ -25,7 +25,7 @@ AutoReqProv: nopython
 
 Requires: gedit >= %gedit_ver
 
-BuildPreReq: rpm-build-gnome >= 0.6 rpm-build-python3
+BuildRequires(pre): rpm-build-gnome >= 0.6 rpm-build-python3
 
 BuildPreReq: intltool >= 0.35.0
 BuildPreReq: glib2-devel >= %glib_ver
@@ -61,6 +61,9 @@ ease the edition of latex documents.
 %config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.latex.gschema.xml
 
 %changelog
+* Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1.1
+- fixed BR
+
 * Mon May 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
