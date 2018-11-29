@@ -3,7 +3,7 @@
 # TODO: gtk3 knob too?
 
 %define oname matplotlib
-%define major 2.0
+%define major 2.2
 
 %def_disable docs
 %def_with python3
@@ -12,8 +12,8 @@
 %def_with wx
 
 Name: python-module-%oname
-Version: %major.0
-Release: alt8
+Version: %major.3
+Release: alt1
 
 Summary: Matlab(TM) style python plotting package
 
@@ -31,6 +31,7 @@ Patch2: %oname-alt-version.patch
 
 %setup_python_module pylab
 
+BuildRequires(pre): rpm-build-xdg
 BuildRequires(pre): rpm-build-gir
 BuildRequires: gcc-c++ libnumpy-devel time tk-devel libgtk+3-gir-devel libpng-devel libfreetype-devel
 BuildRequires: python-module-pycairo python-module-pygobject3 python-modules-tkinter python-module-cycler python-module-pyparsing python-module-pytz python-module-dateutil
@@ -487,9 +488,7 @@ popd
 %endif #docs
 
 install -d %buildroot%_docdir/%name/pdf
-cp -fR examples LICENSE %buildroot%_docdir/%name/
-install -p -m644 README.rst CHANGELOG INSTALL \
-	%buildroot%_docdir/%name
+cp -fR examples %buildroot%_docdir/%name/
 
 %if_enabled docs
 cp -fR doc/build/html %buildroot%_docdir/%name/
@@ -533,10 +532,7 @@ done
 
 %files
 %doc %dir %_docdir/%name
-%doc %_docdir/%name/LICENSE
-%doc %_docdir/%name/README.rst
-%doc %_docdir/%name/CHANGELOG
-%doc %_docdir/%name/INSTALL
+%doc README.rst
 %python_sitelibdir/*.py*
 %python_sitelibdir/*.egg-info
 %dir %python_sitelibdir/matplotlib/
@@ -546,8 +542,8 @@ done
 #python_sitelibdir/matplotlib/numerix/
 %python_sitelibdir/mpl_toolkits/
 %python_sitelibdir/matplotlib/projections/
-%python_sitelibdir/matplotlib/delaunay/
 %python_sitelibdir/matplotlib/mpl-data/
+%python_sitelibdir/matplotlib/cbook/
 #%python_sitelibdir/matplotlib/config/
 #python_sitelibdir/enthought/
 #python_sitelibdir/matplotlib/backends/Matplotlib.nib/
@@ -572,7 +568,6 @@ done
 %python_sitelibdir/matplotlib/style
 #python_sitelibdir/matplotlib/externals
 %exclude %python_sitelibdir/mpl_toolkits
-%exclude %python_sitelibdir/*/*/test*
 
 %files cairo
 %python_sitelibdir/matplotlib/backends/backend_cairo*
@@ -648,7 +643,6 @@ rm -fR %_docdir/%name/pdf
 %files tests
 %python_sitelibdir/%oname/testing
 #python_sitelibdir/%oname/tests
-%python_sitelibdir/%oname/*/test*
 
 %files sphinxext
 %python_sitelibdir/%oname/sphinxext
@@ -658,14 +652,13 @@ rm -fR %_docdir/%name/pdf
 %python_sitelibdir/mpl_toolkits
 %exclude %python_sitelibdir/mpl_toolkits/tests
 #needed fix NameError: name 'gtk_git' is not defined
-%exclude %python_sitelibdir/mpl_toolkits/gtktools*
 
 %files -n python-module-mpl_toolkits-tests
 %python_sitelibdir/mpl_toolkits/tests
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE README.rst CHANGELOG INSTALL
+%doc README.rst
 %python3_sitelibdir/*.py*
 #exclude %python3_sitelibdir/six.py*
 %python3_sitelibdir/__pycache__/*
@@ -679,8 +672,8 @@ rm -fR %_docdir/%name/pdf
 #python_sitelibdir/matplotlib/numerix/
 %python3_sitelibdir/mpl_toolkits/
 %python3_sitelibdir/matplotlib/projections/
-%python3_sitelibdir/matplotlib/delaunay/
 %python3_sitelibdir/matplotlib/mpl-data/
+%python3_sitelibdir/matplotlib/cbook/
 #%python3_sitelibdir/matplotlib/config/
 #%python3_sitelibdir/enthought/
 #python3_sitelibdir/matplotlib/backends/Matplotlib.nib/
@@ -716,8 +709,6 @@ rm -fR %_docdir/%name/pdf
 %python3_sitelibdir/matplotlib/style
 #python3_sitelibdir/matplotlib/externals
 %exclude %python3_sitelibdir/mpl_toolkits
-%exclude %python3_sitelibdir/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/test*
 
 %files -n python3-module-%oname-cairo
 %python3_sitelibdir/matplotlib/backends/backend_cairo*
@@ -778,8 +769,6 @@ rm -fR %_docdir/%name/pdf
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/testing
 #python3_sitelibdir/%oname/tests
-%python3_sitelibdir/%oname/*/test*
-%python3_sitelibdir/%oname/*/*/test*
 
 %files -n python3-module-%oname-sphinxext
 %python3_sitelibdir/%oname/sphinxext
@@ -789,14 +778,15 @@ rm -fR %_docdir/%name/pdf
 %files -n python3-module-mpl_toolkits
 %python3_sitelibdir/mpl_toolkits
 %exclude %python3_sitelibdir/mpl_toolkits/tests
-%exclude %python3_sitelibdir/mpl_toolkits/gtktools*
-%exclude %python3_sitelibdir/mpl_toolkits/__pycache__/gtktools*
 
 %files -n python3-module-mpl_toolkits-tests
 %python3_sitelibdir/mpl_toolkits/tests
 %endif
 
 %changelog
+* Mon Nov 26 2018 Andrey Cherepanov <cas@altlinux.org> 2.2.3-alt1
+- New version.
+
 * Thu Oct 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt8
 - fixed build with new freetype.
 - rebuilt with pygtk instead of pygtk_git.
