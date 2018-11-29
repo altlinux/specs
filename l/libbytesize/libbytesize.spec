@@ -1,8 +1,10 @@
 %define _name bytesize
+# pocketlint required
+%def_disable check
 
 Name: lib%_name
 Version: 1.4
-Release: alt1
+Release: alt2
 
 Summary: A library for working with sizes in bytes
 Group: System/Libraries
@@ -61,12 +63,10 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 
 %install
 %makeinstall_std
+%find_lang %name
 
 %check
-# pocketlint required
-#%%make check
-
-%find_lang %name
+%make check
 
 %files -f %name.lang
 %_libdir/%name.so.*
@@ -87,6 +87,9 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 
 
 %changelog
+* Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt2
+- moved %%find_lang to proper section
+
 * Sat Aug 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
 - 1.4
 
