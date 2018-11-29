@@ -1,7 +1,7 @@
 Summary: Translations for kicad
 Name: kicad-i18n
-Version: 5.0.0
-Release: alt1.rc3
+Version: 5.0.1
+Release: alt1
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
@@ -28,6 +28,9 @@ Translations for kicad
 %files -f kicad.lang
 
 %changelog
+* Sun Nov 18 2018 Anton Midyukov <antohami@altlinux.org> 5.0.1-alt1
+- new version 5.0.1
+
 * Thu Jul 19 2018 Anton Midyukov <antohami@altlinux.org> 5.0.0-alt1.rc3
 - release candidate 5.0.0-rc3
 

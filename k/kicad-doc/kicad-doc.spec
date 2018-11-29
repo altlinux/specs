@@ -3,9 +3,9 @@
 
 Summary: Documentation and tutorials for kicad
 Name: kicad-doc
-Version: 5.0.0
+Version: 5.0.1
 Epoch: 1
-Release: alt1.rc3
+Release: alt1
 Group: Documentation
 License: GPLv3
 Url: https://github.com/KiCad/kicad-doc
@@ -200,6 +200,9 @@ Chinese translation.
 %_datadir/doc/kicad/help/zh
 
 %changelog
+* Sun Nov 18 2018 Anton Midyukov <antohami@altlinux.org> 1:5.0.1-alt1
+- new version 5.0.1
+
 * Tue Jul 17 2018 Anton Midyukov <antohami@altlinux.org> 1:5.0.0-alt1.rc3
 - Release candidate 5.0.0-rc3
 
