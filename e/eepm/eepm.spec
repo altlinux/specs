@@ -1,5 +1,5 @@
 Name: eepm
-Version: 2.5.3
+Version: 2.5.4
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -71,7 +71,7 @@ rm -f %buildroot%_datadir/%name/tools_eget
 %endif
 
 %files
-%doc README TODO LICENSE
+%doc README.md TODO LICENSE
 %dir %_sysconfdir/eepm/
 %dir %_sysconfdir/eepm/repack.d/
 %config(noreplace) %_sysconfdir/eepm/eepm.conf
@@ -88,6 +88,12 @@ rm -f %buildroot%_datadir/%name/tools_eget
 %_sysconfdir/bash_completion.d/cerv
 
 %changelog
+* Thu Nov 29 2018 Vitaly Lipatov <lav@altlinux.ru> 2.5.4-alt1
+- add Amzn (Amazon Linux AMI) support
+- rename README to README.md
+- fix openSUSE Leap support
+- epm-release_upgrade: force install make-initrd if exists when upgrade to Sisyphus
+
 * Sat Oct 06 2018 Vitaly Lipatov <lav@altlinux.ru> 2.5.3-alt1
 - distr_info -b: add 64 bit for aarch64
 - epm-print: fix release output, add version-release support
