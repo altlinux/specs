@@ -1,6 +1,6 @@
 Name: whois
-Version: 5.2.11
-Release: alt1
+Version: 5.4.0
+Release: alt2
 
 Summary: Intelligent WHOIS client
 License: GPLv2+
@@ -10,7 +10,7 @@ Url: http://www.linux.it/~md/software
 # git://git.altlinux.org/gears/w/whois.git
 Source: %name-%version-%release.tar
 
-BuildRequires: libidn-devel perl-autodie
+BuildRequires: libcrypt-devel libidn2-devel perl-autodie
 
 %description
 This package provides a commandline client for the WHOIS (RFC 3912)
@@ -20,28 +20,47 @@ details for domains and IP address assignments.
 This version of the WHOIS client tries to guess the right server to ask
 for the specified object.
 
+%package -n mkpasswd
+Summary: A front end to the password hashing function crypt(3)
+Group: Text tools
+
+%description -n mkpasswd
+mkpasswd hashes the given password with the crypt(3) function
+using the given salt.
+
 %prep
 %setup -n %name-%version-%release
 gzip -9k debian/changelog
 
 %build
-%make_build whois pos \
+%make_build \
 	CFLAGS='%optflags' CONFIG_FILE=/etc/whois.conf \
-	HAVE_LIBIDN=1 HAVE_ICONV=1
+	HAVE_ICONV=1
 
 %install
-%make_install install-whois install-pos BASEDIR=%buildroot prefix=%prefix
+%make_install install BASEDIR=%buildroot
 install -Dpm644 whois.conf %buildroot/etc/whois.conf
 
 %find_lang %name
 
 %files -f %name.lang
 %doc README debian/changelog.gz debian/copyright
-%_bindir/*
-%_mandir/man?/*
+%_bindir/whois
+%_mandir/man?/whois.*
 %config(noreplace) /etc/whois.conf
 
+%files -n mkpasswd
+%_bindir/mkpasswd
+%_mandir/man?/mkpasswd.*
+
 %changelog
+* Thu Nov 29 2018 Dmitry V. Levin <ldv@altlinux.org> 5.4.0-alt2
+- Packaged mkpasswd in a separate subpackage.
+- Built with libidn2 instead of libidn.
+
+* Fri Oct 26 2018 Dmitry V. Levin <ldv@altlinux.org> 5.4.0-alt1
+- v5.2.11 -> v5.4.0.
+
 * Sun Jan 17 2016 Dmitry V. Levin <ldv@altlinux.org> 5.2.11-alt1
 - v5.2.10-2-g9a1578a -> v5.2.11.
 
