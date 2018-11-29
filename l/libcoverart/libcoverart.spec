@@ -1,16 +1,23 @@
+%def_enable snapshot
+
 Name: libcoverart
 Version: 1.0.0
-Release: alt2
+Release: alt3
 
 Summary: Cover Art Archive Client Library
 Group: System/Libraries
 License: LGPLv2+
-
 Url: http://musicbrainz.org/doc/%name
-#VCS: git://github.com/metabrainz/libcoverart.git
-Source: http://ftp.musicbrainz.org/pub/musicbrainz/%name/%name-%version.tar
 
-BuildRequires: gcc-c++ cmake libjansson-devel libneon-devel
+%if_disabled snapshot
+Source: http://ftp.musicbrainz.org/pub/musicbrainz/%name/%name-%version.tar.gz
+%else
+#VCS: git://github.com/metabrainz/libcoverart.git
+Source: %name-%version.tar
+%endif
+
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++ libjansson-devel libneon-devel libxml2-devel
 
 %description
 The Cover Art Archive is a joint project between the Internet Archive
@@ -31,9 +38,7 @@ developing applications that use %name.
 %prep
 %setup
 
-
 %build
-%add_optflags -Wno-error=implicit-fallthrough
 %cmake_insource -DCMAKE_BUILD_TYPE=Release
 %make_build
 
@@ -47,9 +52,13 @@ developing applications that use %name.
 %files devel
 %_includedir/coverart/
 %_libdir/*.so
-%_libdir/pkgconfig/*.pc
+%_pkgconfigdir/*.pc
 
 %changelog
+* Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt3
+- updated to 1.0.0-37-g86c3d8c
+- fixed BR
+
 * Tue May 22 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt2
 - rebuilt with -Wno-error=implicit-fallthrough
 
