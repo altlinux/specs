@@ -2,7 +2,7 @@
 
 Name: binutils
 Version: 2.31.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -23,24 +23,22 @@ Patch: binutils-2_31-branch.patch
 Patch0001: 0001-Add-lto-and-none-lto-input-support-for-ld-r.patch
 Patch0002: 0002-Add-test-for-nm-on-mixed-LTO-non-LTO-object.patch
 Patch0003: 0003-Don-t-check-the-plugin-target-twice.patch
-Patch0004: 0004-ld-testsuite-pr18808b.c-pass-Wno-return-type.patch
-Patch0005: 0005-bfd-export-demangle.h-and-hashtab.h.patch
-Patch0006: 0006-ld-add-no-warn-shared-textrel-option.patch
-Patch0007: 0007-ld-enable-optimization-and-warn-shared-textrel-by-de.patch
-Patch0008: 0008-ld-enable-z-relro-by-default.patch
-Patch0009: 0009-gold-enable-z-relro-by-default.patch
-Patch0010: 0010-ld-testsuite-restore-upstream-default-options.patch
-Patch0011: 0011-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
-Patch0012: 0012-bfd-elflink.c-bfd_elf_final_link-check-all-objects-f.patch
-Patch0013: 0013-pr22269-1.c-disable-Wreturn-type-warning.patch
+Patch0004: 0004-Handle-ELF-compressed-header-alignment-correctly-by-.patch
+Patch0005: 0005-Initialize-uncompressed_align_pow_p-to-0.patch
+Patch0006: 0006-ld-testsuite-pr18808b.c-pass-Wno-return-type.patch
+Patch0007: 0007-bfd-export-demangle.h-and-hashtab.h.patch
+Patch0008: 0008-ld-add-no-warn-shared-textrel-option.patch
+Patch0009: 0009-ld-enable-optimization-and-warn-shared-textrel-by-de.patch
+Patch0010: 0010-ld-enable-z-relro-by-default.patch
+Patch0011: 0011-gold-enable-z-relro-by-default.patch
+Patch0012: 0012-ld-testsuite-restore-upstream-default-options.patch
+Patch0013: 0013-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
+Patch0014: 0014-bfd-elflink.c-bfd_elf_final_link-check-all-objects-f.patch
+Patch0015: 0015-pr22269-1.c-disable-Wreturn-type-warning.patch
 
-# List of architectures worthy of running the test suite by default.
+# List of architectures worthy to care about test results.
 %define check_arches x86_64 %ix86
-%ifarch %check_arches
 %def_with check
-%else
-%def_without check
-%endif
 
 Conflicts: libbfd
 # due to c++filt
@@ -104,6 +102,8 @@ chmod +x gold/testsuite/plugin_pr22868.sh
 %patch0011 -p1
 %patch0012 -p1
 %patch0013 -p1
+%patch0014 -p1
+%patch0015 -p1
 
 # Replay libtool commits
 # a042d335197ac7afb824ab54c3aab91f3e79a2d0
@@ -143,7 +143,9 @@ ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --
 	--enable-gold=yes --enable-ld=default \
 	--with-stage1-ldflags=' ' \
 	--with-boot-ldflags=' ' \
+%ifnarch mipsel mips64el
 	--enable-default-hash-style=gnu \
+%endif
 	$ADDITIONAL_TARGETS
 
 for t in configure-host maybe-all-{libiberty,bfd,opcodes} all; do
@@ -253,8 +255,18 @@ XFAIL_TESTS=
 # See https://sourceware.org/bugzilla/show_bug.cgi?id=21128
 XFAIL_TESTS="$XFAIL_TESTS icf_safe_so_test.sh"
 %endif
+%ifarch x86_64
+# See https://sourceware.org/bugzilla/show_bug.cgi?id=23919
+XFAIL_TESTS="$XFAIL_TESTS debug_msg.sh"
+%endif
+
 %make_build -k check CC="%_sourcedir/gcc.sh" CXX="%_sourcedir/g++.sh" \
-	XFAIL_TESTS="$XFAIL_TESTS" RUNTESTFLAGS="$RUNTESTFLAGS"
+	XFAIL_TESTS="$XFAIL_TESTS" RUNTESTFLAGS="$RUNTESTFLAGS" \
+%ifnarch %check_arches
+    || : \
+%endif
+    #
+
 
 %files devel
 %_libdir/*.a
@@ -277,6 +289,14 @@ XFAIL_TESTS="$XFAIL_TESTS icf_safe_so_test.sh"
 %binutils_sourcedir
 
 %changelog
+* Thu Nov 29 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.31.1-alt2
+- Fixed ELF compressed data alignment (sw#23919; patch by Mark Wielaard).
+- Disabled gold debug_msg.sh test for x86_64.
+- Applied mips-related spec changes from Ivan A. Melnikov (iv@; ALT#35638):
+  + Do not force gnu-style hash on mips* architectures (it is
+    not currently supported);
+  + Run testsuite on non-worthy architectures, but ignore results.
+
 * Thu Nov 08 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.31.1-alt1
 - Updated to 2.31.1 20181107.
 
