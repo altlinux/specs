@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.28
@@ -9,7 +9,7 @@
 
 Name: gnome-todo
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Todo manager for GNOME
 Group: Graphical desktop/GNOME
@@ -29,10 +29,12 @@ Source: %name-%version.tar
 AutoReqProv: nopython
 %define __python %nil
 %add_python3_path %_libdir/%name/plugins
-BuildPreReq: rpm-build-python3 python3-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
 Requires: libpeas-python3-loader
 
-BuildRequires: meson yelp-tools libappstream-glib-devel gtk-doc
+BuildRequires(pre): meson rpm-build-gir
+BuildRequires: yelp-tools libappstream-glib-devel gtk-doc
 BuildRequires: libgtk+3-devel >= %gtk_ver evolution-data-server-devel >= %eds_ver
 BuildRequires: libgnome-online-accounts-devel libical-devel libpeas-devel
 BuildRequires: librest-devel libjson-glib-devel libwebkit2gtk-devel
@@ -111,6 +113,10 @@ GObject introspection devel data for the GNOME Todo.
 %_girdir/Gtd-%api_ver.gir
 
 %changelog
+* Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt2
+- updated to 3.28.1-11-g2082517
+- fixed BR
+
 * Tue Apr 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 
