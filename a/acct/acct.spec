@@ -1,5 +1,5 @@
 Name: acct
-Version: 6.6.1
+Version: 6.6.4
 Release: alt1
 
 Summary: Utilities for monitoring process activities.
@@ -19,9 +19,14 @@ Source5: dump-acct.8
 Patch1: acct-owl-doc.patch
 Patch2: acct-alt-program_name.patch
 Patch3: acct-rh-doc.patch
+patch4: acct-rh-ub.patch
+Patch5: acct-deb-alt-doc.patch
+Patch6: acct-deb-alt-cross-build-support.patch
 
 Provides: psacct = %version-%release
 Obsoletes: psacct < %version-%release
+
+BuildRequires: makeinfo
 
 %description
 The acct package contains several utilities for monitoring process
@@ -37,8 +42,12 @@ rm *.info
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %build
+%autoreconf
 %configure --enable-linux-multiformat
 %make_build
 
@@ -86,6 +95,9 @@ install -pm700 %_sourcedir/mklog.sh \
 %doc AUTHORS README NEWS ChangeLog TODO
 
 %changelog
+* Thu Nov 29 2018 Dmitry V. Levin <ldv@altlinux.org> 6.6.4-alt1
+- 6.6.1 -> 6.6.4.
+
 * Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 6.6.1-alt1
 - Updated to 6.6.1.
 - Added systemd support (closes: #28012).
