@@ -40,7 +40,7 @@ Name: openmpi
 #pkgname
 
 Version: 2.0.1
-Release: alt6
+Release: alt7
 
 %define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -83,7 +83,6 @@ BuildPreReq: rdma-core-devel
 BuildPreReq: valgrind-devel libiberty-devel
 %ifnarch %arm
 BuildRequires: libnuma-devel
-BuildRequires: libtorque-devel
 %endif
 
 %package devel
@@ -150,11 +149,7 @@ function buildIt() {
 			--prefix=%mpi_prefix \
 			--with-ft=cr \
 			--with-verbs \
-%ifarch %arm
 			--without-tm \
-%else
-			--with-tm \
-%endif
 			--sysconfdir=%mpi_sysconfdir \
 			--bindir=%mpi_prefix/bin \
 			--libdir=%mpi_prefix/lib \
@@ -336,6 +331,9 @@ EOF
 %endif
 
 %changelog
+* Thu Nov 29 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.1-alt7
+- Rebuilt without torque support.
+
 * Thu Jul 05 2018 Ivan A. Melnikov <iv@altlinux.org> 2.0.1-alt6
 - (NMU) avoid requirement from openmpi to openmpi-devel
   (closes: #33185)
