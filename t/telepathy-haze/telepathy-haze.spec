@@ -1,9 +1,10 @@
 %def_enable snapshot
 %define _libexecdir %_prefix/libexec
+%def_enable check
 
 Name: telepathy-haze
 Version: 0.8.0.1
-Release: alt0.5
+Release: alt0.6
 
 Summary: a connection manager built around libpurple
 License: GPLv2+
@@ -40,8 +41,8 @@ work acceptably, and others will probably work too.
 %patch1 -b .gcc6
 
 %build
-# for gcc7
-%add_optflags -Wno-error=implicit-fallthrough
+# for gcc7 & gcc8
+%add_optflags -Wno-error=implicit-fallthrough -Wno-error=cast-function-type
 %autoreconf
 %configure
 %make_build
@@ -59,6 +60,9 @@ work acceptably, and others will probably work too.
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.ConnectionManager.haze.service
 
 %changelog
+* Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.6
+- fixed build (ALT #35671)
+
 * Fri Feb 23 2018 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.5
 - rebuilt with gcc7
 
