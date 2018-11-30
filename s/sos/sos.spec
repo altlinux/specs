@@ -5,7 +5,7 @@
 Summary: A set of tools to gather troubleshooting information from a system
 Name: sos
 Version: 3.5
-Release: alt6%ubt
+Release: alt7
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Source: %name-%version.tar
@@ -18,7 +18,7 @@ BuildPreReq: python-devel python-module-sphinx-devel
 Requires: libxml2-python
 Provides: sysreport = 1.3.15-8
 
-BuildRequires(pre): rpm-build-ubt
+#BuildRequires(pre): rpm-build-ubt
 
 Patch: %name-%version-alt.patch
 Source1: sos.conf
@@ -53,27 +53,31 @@ rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
 %doc %_defaultdocdir/sos/html
 
 %changelog
-* Thu Jul 05 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt6%ubt
+* Fri Nov 30 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt7
+- Wrong command "automount -m" changed to "df -a -t autofs"
+- and "mount -t autofs" (closes: #35577)
+
+* Thu Jul 05 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt6
 - Do not create special nodes in archive
 - Do not change path in symlinks to special nodes to relative
 
-* Fri Jun 08 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt5%ubt
+* Fri Jun 08 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt5
 - Change group of result files to wheel and add reading permissions
 
-* Wed Jun 06 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt4%ubt
+* Wed Jun 06 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt4
 - Add pam plugin to samba-ad profile
 
-* Fri May 25 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt3%ubt
+* Fri May 25 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt3
 - Add additional functionality to samba-ad profile
 
-* Tue May 22 2018 Evgeny Sinelnikov <sin@altlinux.org> 3.5-alt2%ubt
+* Tue May 22 2018 Evgeny Sinelnikov <sin@altlinux.org> 3.5-alt2
 - Add samba-ad profile
 - Fix build scheme from sources
 
-* Fri Apr 13 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt1%ubt
+* Fri Apr 13 2018 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt1
 - Update to latest release
 
-* Fri Apr 14 2017 Evgeny Sinelnikov <sin@altlinux.ru> 3.4-alt1%ubt
+* Fri Apr 14 2017 Evgeny Sinelnikov <sin@altlinux.ru> 3.4-alt1
 - Update to latest release with unified build tag (aka ubt macros)
 
 * Tue Dec 06 2016 Evgeny Sinelnikov <sin@altlinux.ru> 3.3-alt1
