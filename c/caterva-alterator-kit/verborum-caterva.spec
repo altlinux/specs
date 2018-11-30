@@ -1,6 +1,6 @@
 Name: caterva-alterator-kit
 Version: 2.0
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar.gz
 
@@ -25,7 +25,6 @@ Group: System/Base
 BuildArch: noarch
 
 Requires: alterator >= 4.8-alt1
-Conflicts: alterator >= 5.0
 
 %description sh
 Verborum Caterva is a simple engine for arbitrary file structure
@@ -42,6 +41,9 @@ install -p -m0755 -D caterva-alterator.sh %buildroot%_bindir/caterva-alterator.s
 %_bindir/caterva-alterator.sh
 
 %changelog
+* Fri Nov 30 2018 Paul Wolneykien <manowar@altlinux.org> 2.0-alt2
+- Fix: Remove the alterator v5.0 conflict.
+
 * Fri May 29 2009 Paul Wolneykien <manowar@altlinux.ru> 2.0-alt1
 - Do not use obsolete value table framework.
 
