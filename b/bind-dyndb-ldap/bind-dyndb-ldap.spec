@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define bind_version 9.11.4.P2
+%define bind_version 9.11.5
 
 Name: bind-dyndb-ldap
 Version: 11.1
-Release: alt4
+Release: alt5
 
 Summary: LDAP back-end plug-in for BIND
 License: %gpl2plus
@@ -46,6 +46,10 @@ mkdir -p %buildroot%_localstatedir/bind/zone/dyndb-ldap/
 # of new installed version of bind and old not removed yet version of
 # dyndb ldap
 systemctl is-enabled --quiet bind && systemctl restart bind 2>&1 ||:
+# actually, FreeIPA installer disables all depended services to
+# explicitly control them via ipa.service/ipactl. Therefore in this
+# case named is always in disabled state.
+systemctl is-enabled --quiet ipa && systemctl restart bind 2>&1 ||:
 
 %files
 %_defaultdocdir/%name
@@ -55,6 +59,10 @@ systemctl is-enabled --quiet bind && systemctl restart bind 2>&1 ||:
 %exclude %_libdir/bind/*.la
 
 %changelog
+* Mon Nov 26 2018 Stanislav Levin <slev@altlinux.org> 11.1-alt5
+- Built with new bind 9.11.5.
+- Fixed bind-dyndb-ldap upgrade.
+
 * Thu Sep 20 2018 Stanislav Levin <slev@altlinux.org> 11.1-alt4
 - Built with new bind 9.11.4.P2.
 
