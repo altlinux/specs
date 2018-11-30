@@ -2,7 +2,7 @@
 
 Name: blender
 Version: 2.79b
-Release: alt5
+Release: alt6
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPLv2
@@ -27,6 +27,8 @@ Patch17: blender-2.79-arch-ffmpeg40.patch
 Patch21: blender-2.66-alt-pcre.patch
 Patch22: blender-2.77-alt-enable-localization.patch
 Patch23: blender-2.77-alt-usertempdir.patch
+Patch24: blender-2.79-upstream-gcc8.patch
+Patch25: blender-2.79-alt-gcc8.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -106,6 +108,8 @@ scripting, rendering, compositing, post-production and game creation
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
+%patch24 -p1
+%patch25 -p2
 
 %ifnarch %ix86 x86_64
 sed -i 's,-fuse-ld=gold,,' build_files/cmake/platform/platform_unix.cmake
@@ -182,6 +186,9 @@ install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%name-win.desktop
 %_defaultdocdir/%name/
 
 %changelog
+* Fri Nov 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.79b-alt6
+- Fixed build with gcc-8 (Closes: #35699)
+
 * Mon Oct 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.79b-alt5
 - Enabled Cycles render engine (Closes: #29162)
 - Cleaned up spec.
