@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    6.0.2
-Release:    alt1
+Release:    alt2
 
 Summary:    Server automation framework and application
 License:    Apache-2.0
@@ -13,6 +13,7 @@ Url:        https://github.com/puppetlabs/puppetserver
 BuildArch:  noarch
 
 Source: %name-%version.tar
+Patch0: fix-ruby-path.patch
 
 BuildPreReq: /proc
 BuildPreReq: rpm-build-java
@@ -33,6 +34,8 @@ control over the Ruby runtime.
 
 %prep
 %setup
+
+%patch -p0
 
 %install
 install -d -m 0755 %buildroot%_datadir/%name
@@ -71,6 +74,7 @@ install -m 0755 puppetserver/cli/irb %buildroot%_datadir/%name/cli/apps/irb
 install -m 0755 puppetserver/cli/foreground %buildroot%_datadir/%name/cli/apps/foreground
 install -m 0755 puppetserver/cli/ruby %buildroot%_datadir/%name/cli/apps/ruby
 install -m 0755 puppetserver/cli/start %buildroot%_datadir/%name/cli/apps/start
+install -m 0755 puppetserver/cli/ca %buildroot%_datadir/%name/cli/apps/ca
 
 install -m 0755 puppetserver/cli_defaults/cli-defaults.sh %buildroot%_datadir/%name/cli/
 
@@ -142,6 +146,9 @@ chmod 700 /var/lib/puppetserver/jars
 
 
 %changelog
+* Fri Nov 30 2018 Andrey Bychkov <mrdrew@altlinux.org> 6.0.2-alt2
+- puppetserver ca added
+
 * Mon Nov 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 6.0.2-alt1
 - version updated to 6.0.2
 
