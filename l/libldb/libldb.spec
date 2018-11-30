@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: libldb
-Version: 1.4.2
-Release: alt2
+Version: 1.4.3
+Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -205,6 +205,9 @@ make test
 %endif
 
 %changelog
+* Thu Nov 08 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.4.3-alt1
+- Update to the 1.4.3 release for samba-4.9.2
+
 * Thu Oct 25 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.4.2-alt2
 - Build for x86 without lmdb support
 - Disable ubt macros due binary package identity changes

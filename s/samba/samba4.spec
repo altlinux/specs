@@ -50,8 +50,8 @@
 %endif
 
 Name: samba
-Version: 4.9.1
-Release: alt2
+Version: 4.9.3
+Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -151,7 +151,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-BuildRequires: libldb-devel >= 1.4.2
+BuildRequires: libldb-devel >= 1.4.3
 BuildRequires: python-module-pyldb-devel
     %if_with python3
 BuildRequires: python3-module-pyldb-devel
@@ -781,9 +781,11 @@ ln -s %_bindir/smbspool %buildroot%{cups_serverbin}/backend/smb
 %_fixperms %buildroot%perl_vendor_privlib
 
 # remove tests form python modules
-rm -rf %buildroot%python_sitelibdir/samba/{tests,external/subunit,external/testtool}
+rm -rf %buildroot%python_sitelibdir/samba/{tests,subunit,external/subunit,external/testtool}
+rm -f %buildroot%python_sitelibdir/samba/third_party/iso8601/test_*.py
 %if_with python3
-rm -rf %buildroot%python3_sitelibdir/samba/{tests,external/subunit,external/testtool}
+rm -rf %buildroot%python3_sitelibdir/samba/{tests,subunit,external/subunit,external/testtool}
+rm -f %buildroot%python3_sitelibdir/samba/third_party/iso8601/test_*.py
 %endif
 
 # remove cmocka library
@@ -1117,6 +1119,8 @@ TDB_NO_FSYNC=1 %make_build test
 
 %files common-libs
 %_libdir/samba/libpopt-samba3-samba4.so
+%_libdir/samba/libcmdline-contexts-samba4.so
+%_libdir/samba/libpopt-samba3-cmdline-samba4.so
 
 %_libdir/samba/pdb
 
@@ -1520,6 +1524,10 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Fri Nov 30 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.9.3-alt1
+- Update to autumn security release
+- Clean test module of third_party/iso8601 and subunit modules
+
 * Wed Nov 28 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.9.1-alt2
 - libsmbclient-devel: fix compatibility issues with the timespec struct
 
