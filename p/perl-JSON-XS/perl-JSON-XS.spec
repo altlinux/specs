@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %define dist JSON-XS
 Name: perl-%dist
-Version: 4.0
+Version: 3.04
 Release: alt1
-Epoch: 1
+Epoch: 2
 
 Summary: JSON serialising/deserialising, done correctly and fast
 License: GPL or Artistic
@@ -36,6 +36,9 @@ primary goal is to be *correct* and its secondary goal is to be
 %perl_vendor_autolib/JSON
 
 %changelog
+* Fri Nov 30 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:3.04-alt1
+- 4.0 -> 3.04 (4.0 pre-release, do not use other than for testing)
+
 * Tue Nov 20 2018 Igor Vlasenko <viy@altlinux.ru> 1:4.0-alt1
 - automated CPAN update
 
