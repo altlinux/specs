@@ -2,7 +2,7 @@
 
 Name: xbindkeys
 Version: 1.8.6
-Release: alt1
+Release: alt2
 
 Summary: Binds keys or mouse buttons to shell commands under X
 License: GPLv2+
@@ -39,6 +39,9 @@ a simple configuration file, and is independant of the window manager.
 %doc AUTHORS BUGS ChangeLog README TODO xbindkeys_show*
 
 %changelog
+* Fri Nov 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.6-alt2
+- rebuilt with guile22 (closes: 35682)
+
 * Thu Feb 19 2015 Fr. Br. George <george@altlinux.ru> 1.8.6-alt1
 - Autobuild version bump to 1.8.6
 
