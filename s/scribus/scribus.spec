@@ -1,6 +1,6 @@
 Name: scribus
-Version: 1.5.4
-Release: alt3
+Version: 1.5.5
+Release: alt1
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -11,7 +11,9 @@ Url: http://www.scribus.net/
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
-Source: http://downloads.sourceforge.net/%name/%name-%version.tar
+# Source-url: https://github.com/scribusproject/scribus/archive/master.zip
+Source: %name-%version.tar
+#Source: http://downloads.sourceforge.net/%name/%name-%version.tar
 
 Patch0: scribus-1.3.5.1-plugindir-alt.patch
 Patch2: scribus-1.5.4-poppler-0.64.0.patch
@@ -103,9 +105,9 @@ BuildArch: noarch
 %summary
 
 %prep
-%setup -q -n %name-%version
-%patch2 -p1
-%patch3 -p1
+%setup
+#patch2 -p1
+#patch3 -p1
 
 %build
 %cmake \
@@ -167,6 +169,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Fri Nov 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.5-alt1
+- build 1.5.5.svn (head) (ALT bug 35677)
+
 * Thu Aug 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.4-alt3
 - rebuild with podofo 0.9.6
 - fix build with poppler 0.64.0
