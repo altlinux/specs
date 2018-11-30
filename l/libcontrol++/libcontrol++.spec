@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -65,6 +65,17 @@ cp libcontrol++/src/*.h %buildroot%_includedir/libcontrol++
 %_includedir/libcontrol++/
 
 %changelog
+* Fri Nov 30 2018 Alexey Appolonov <alexey@altlinux.org> 0.17.0-alt1
+- Ability to check controversy between the permission modes;
+- Ability to get all names of variables of the ini-file section;
+- New interface of the GetUserId and GetGroupId functions;
+- Fixed determination of the 'blacklist' section of the permissions
+  description file;
+- List section of the permissions description file is any kind of list
+  not just 'list';
+- Sections 'blacklist' & 'whitelist' of the permissions description file
+  are considered recursive type.
+
 * Sun Nov 18 2018 Alexey Appolonov <alexey@altlinux.org> 0.16.0-alt1
 - TFileMode as common interface for TFilePerm and TFileACL classes;
 - TGroupOfFilesMode for handling params of a group of files;
