@@ -3,7 +3,7 @@
 
 Name: babel
 Version: 2.0.0
-Release: alt2
+Release: alt2.qa1
 Summary: Language tool for high-performance scientific computing community
  
 License: LGPL v2.1
@@ -24,7 +24,7 @@ Conflicts: openbabel
 
 BuildRequires(pre): rpm-build-compat rpm-build-python
 BuildRequires: gcc-fortran gcc-c++ %mpiimpl-devel libltdl7-devel
-BuildRequires: libxml2-devel w3c-libwww-devel libparsifal-devel
+BuildRequires: libxml2-devel libparsifal-devel
 BuildRequires: jpackage-compat java-devel-default jpackage-utils gnu-getopt
 BuildRequires: python-devel libnumpy-devel /proc chrpath
 
@@ -364,8 +364,11 @@ done
 %_docdir/%name
 
 %changelog
+* Fri Nov 30 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.0-alt2.qa1
+- Removed redundant BR: w3c-libwww-devel.
+
 * Mon Feb 29 2016 Denis Medvedev <nbr@altlinux.org> 2.0.0-alt2
-- Documentation recompiled without doclint. 
+- Documentation recompiled without doclint.
 
 * Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1.1
 - NMU: clean-up of java deps
