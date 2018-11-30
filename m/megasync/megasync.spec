@@ -1,6 +1,6 @@
 Name: megasync
 Version: 3.6.6.0
-Release: alt2
+Release: alt3
 
 Summary: Easy automated syncing between your computers and your MEGA Cloud Drive
 
@@ -70,6 +70,9 @@ cp -a icons/hicolor/ %buildroot%_iconsdir/
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Nov 25 2018 Vitaly Lipatov <lav@altlinux.ru> 3.6.6.0-alt3
+- rebuild with libcryptopp.so.7
+
 * Wed Aug 15 2018 Fr. Br. George <george@altlinux.ru> 3.6.6.0-alt2
 - Rebuild with new sdk
 

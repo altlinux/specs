@@ -1,6 +1,6 @@
 Name: libmegasdk
-Version: 3.4.0
-Release: alt1.1
+Version: 3.4.3
+Release: alt1
 
 Summary: MEGA SDK - Client Access Engine Coverity Scan Build Status
 
@@ -129,6 +129,9 @@ cp include/mega/{mega_glob.h,mega_http_parser.h} %buildroot/%_includedir/mega/
 %_bindir/megasimplesync
 
 %changelog
+* Sun Nov 25 2018 Vitaly Lipatov <lav@altlinux.ru> 3.4.3-alt1
+- new version 3.4.3 (with rpmrb script)
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 

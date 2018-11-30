@@ -1,6 +1,6 @@
 Name: megafuse
 Version: 1.0.0
-Release: alt3.2
+Release: alt3.3
 
 # commit 50bc488cb54826b452b54a960efc25181519b3ba
 
@@ -59,6 +59,9 @@ cp %SOURCE3 %buildroot/etc/
 
 
 %changelog
+* Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt3.3
+- NMU: autorebuild with libcryptopp.so.7
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt3.2
 - NMU: autorebuild with libcryptopp-6.1.0
 

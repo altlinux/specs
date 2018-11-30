@@ -2,7 +2,7 @@
 %define		_rc	rc8
 Name:		aMule
 Version:	2.3.2
-Release:	alt3
+Release:	alt3.1
 
 Summary:	aMule - eMule client.
 License:	GPL
@@ -82,6 +82,9 @@ for multiplatform support.
 %dir %_docdir/amule
 
 %changelog
+* Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt3.1
+- NMU: autorebuild with libcryptopp.so.7
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt3
 - NMU: autorebuild with libcryptopp-6.1.0
 - add binutils-devel BR
