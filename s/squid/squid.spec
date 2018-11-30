@@ -9,7 +9,7 @@
 
 Name: squid
 Version: 4.4
-Release: alt1
+Release: alt2
 %define langpack_ver 20170901 
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -43,20 +43,16 @@ Obsoletes: %name-conf-default
 
 BuildConflicts: bind-devel
 BuildPreReq: rpm-build >= 4.0.4-alt10
-BuildRequires: doxygen  graphviz fonts-ttf-freefont linuxdoc-tools
-#BuildRequires: fonts-otf-drehatlas-widelands fonts-ttf-msimonson-anonymouspro
-BuildRequires: gcc-c++ libcap-devel libdb4-devel libldap-devel libltdl-devel
-BuildRequires: libpam-devel libsasl2-devel libssl-devel perl-Pod-Parser
-BuildRequires: w3c-libwww-devel cppunit-devel
-BuildRequires: samba-client samba-winbind-clients
-BuildRequires: libkrb5-devel
-BuildRequires: libnetfilter_conntrack-devel
+
+# Automatically added by buildreq on Fri Nov 30 2018 (-bb)
+# optimized out: ca-trust cppunit ed elfutils glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libcom_err-devel libcrypt-devel libnfnetlink-devel libp11-kit libsasl2-3 libstdc++-devel perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-parent perl-podlators pkg-config python-base sh3 xz
+# BuildRequires: cppunit-devel doxygen gcc-c++ libcap-devel libdb4-devel libecap-devel libexpat-devel libgnutls-devel libkrb5-devel libldap-devel libltdl7-devel libnetfilter_conntrack-devel libnettle-devel libpam-devel libsasl2-devel libssl-devel libxml2-devel linuxdoc-tools perl-Crypt-OpenSSL-X509 perl-DBI perl-Digest-SHA perl-Pod-Usage perl-URI samba-client samba-winbind-clients
+
+BuildRequires: cppunit-devel doxygen gcc-c++ libcap-devel libdb4-devel libkrb5-devel libldap-devel libltdl7-devel libnetfilter_conntrack-devel libpam-devel libsasl2-devel libssl-devel linuxdoc-tools perl-Crypt-OpenSSL-X509 perl-DBI perl-Digest-SHA perl-Pod-Usage perl-URI samba-client samba-winbind-clients
 %{?_enable_ecap:BuildRequires: libecap-devel >= 1.0}
 %{?_enable_esi:BuildRequires: libxml2-devel libexpat-devel}
 %{?_with_nettle:BuildRequires: libnettle-devel}
 %{?_with_gnutls:BuildRequires: libgnutls-devel >= 3.1.5}
-BuildRequires: perl-libnet perl-DBI
-BuildRequires: perl(Authen/Smb.pm) perl(Crypt/OpenSSL/X509.pm) perl(Digest/SHA.pm) perl(URI/URL.pm)
 
 %description
 Squid is a high-performance proxy caching server for Web clients,
@@ -294,6 +290,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Fri Nov 30 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.4-alt2
+- Cleaned up BuildRequires.
+
 * Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 4.4-alt1
 - Updated to 4.4
 
