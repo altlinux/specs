@@ -2,7 +2,7 @@
 # $Id: emacs-misc-modes.spec,v 1.8 2006/02/04 17:54:06 eugene Exp $
 
 Version: 0.2
-Release: alt10.1.1
+Release: alt10.2
 Name: emacs-misc-modes
 License: GPL
 Group: Editors
@@ -17,7 +17,7 @@ Source: %name.tar.gz
 BuildArch: noarch
 
 BuildPreReq: emacs-devel >= 0.0.1-alt2
-BuildPreReq: emacs24-X11-athena
+BuildPreReq: emacs26-X11-athena
 
 # Automatically added by buildreq on Tue Dec 24 2002
 BuildRequires: emacs-bbdb emacs-cedet emacs-elib emacs-gnus
@@ -45,6 +45,9 @@ install -m 644 *.info* %buildroot%_infodir/
 %_infodir/*
 
 %changelog
+* Sat Dec  1 2018 Terechkov Evgenii <evg@altlinux.org> 0.2-alt10.2
+- Rebuild with emacs26-X11-athena
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.2-alt10.1.1
 - NMU: added BR: texinfo
 
