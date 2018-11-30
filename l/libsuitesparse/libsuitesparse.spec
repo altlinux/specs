@@ -1,6 +1,6 @@
 Name: libsuitesparse
 Version: 5.1.2
-Release: alt1
+Release: alt2
 
 Summary: Shared libraries for sparse matrix calculations
 License: LGPL, GPL
@@ -18,7 +18,7 @@ BuildRequires: libmetis-devel gcc-c++ libtbb-devel
 
 # Automatically added by buildreq on Sun Sep 14 2008
 BuildRequires: gcc-fortran liblapack-devel texlive-latex-base
-BuildRequires: libgomp7-devel
+BuildRequires: libgomp-devel
 BuildRequires: cmake
 
 %package devel
@@ -146,6 +146,9 @@ mv %buildroot%_docdir/%name-%version/*.pdf %buildroot%_docdir/%name-%version/pdf
 %_libdir/%name/demos
 
 %changelog
+* Fri Nov 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt2
+- Fixed build with new gcc.
+
 * Wed Feb 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt1
 - Updated to stable upstream version 5.1.2.
 
