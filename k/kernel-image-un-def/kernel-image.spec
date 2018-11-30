@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	4.19
 %define kernel_sublevel .5
@@ -20,10 +20,10 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define nprocs 8 
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	7
+%define kgcc_version	%__gcc_version_base
 
 # Enable/disable SGML docs formatting
-%if "%sub_flavour" == "def"
+%if "%sub_flavour" == "def" && %kgcc_version > 5
 %def_enable docs
 %else
 %def_disable docs
@@ -49,9 +49,6 @@ Url: http://www.kernel.org/
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Patch0: %name-%version-%release.patch
-
-Patch1: nonpreemptive-kernel.patch
-Patch2: pae-kernel.patch
 
 %if "%sub_flavour" == "pae"
 ExclusiveArch: i586
@@ -111,10 +108,11 @@ Most hardware drivers for this kernel are built as modules.  Some of
 these drivers are built separately from the kernel; they are available
 in separate packages (kernel-modules-*-%flavour).
 
-The "un" variant of kernel packages is a low latency desktop oriented
-2.6.x kernel which should support wide range of hardware,
-but it is not 'official' ALT Linux kernel and you can use it for you
-own risk.
+There are some kernel variants in ALT systems:
+* std-def: standard longterm kernel
+* std-pae: legacy i686 kernel with 64G memory support
+* std-debug: kernel with some DEBUG options enabled
+* un-def: more modern then std-def and with forced preemption enabled
 
 %package -n kernel-image-domU-%flavour
 Summary: Uncompressed linux kernel for XEN domU boot 
@@ -341,13 +339,6 @@ tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
 %patch0 -p1
 
-%if "%base_flavour" == "std"
-%patch1 -p1
-%endif
-
-%if "%sub_flavour" == "pae"
-%patch2 -p1
-%endif
 
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
@@ -370,7 +361,24 @@ echo "Building Kernel $KernelVer"
 
 %make_build mrproper
 
-cp -vf config-%_target_cpu .config
+
+#configuration construction
+
+CONFIGS=config-%_target_cpu
+
+%if "%base_flavour" == "std"
+CONFIGS="$CONFIGS config-std"
+%endif
+
+%if "%sub_flavour" == "pae"
+CONFIGS="$CONFIGS config-pae"
+%endif
+
+%if "%sub_flavour" == "debug"
+CONFIGS="$CONFIGS config-debug"
+%endif
+
+scripts/kconfig/merge_config.sh -m $CONFIGS
 
 %make_build oldconfig
 #%make_build include/linux/version.h
@@ -614,6 +622,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Fri Nov 30 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.5-alt2
+- build iin old branches fixed
+
 * Tue Nov 27 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.19.5-alt1
 - v4.19.5
 
@@ -649,6 +660,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 
 * Mon Oct 01 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.11-alt1
 - v4.18.11  (Fixes: CVE-2018-14633)
+
+* Wed Sep 26 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.10-alt0.M80C.1
+- v4.18.10
 
 * Wed Sep 26 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.18.10-alt1
 - v4.18.10
@@ -775,6 +789,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 
 * Wed Jan 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.13-alt1
 - v4.14.13
+
+* Tue Jan 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.9.75-alt0.M80C.1
+- v4.9.75
 
 * Tue Jan 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.12-alt1
 - v4.14.12
