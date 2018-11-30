@@ -1,7 +1,7 @@
-%define libcontrolppver 0.16
+%define libcontrolppver 0.17
 
 Name: control++
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: System configuration tool
@@ -58,6 +58,13 @@ cp readme.txt %buildroot%_defaultdocdir/%name/
 %_defaultdocdir/%name
 
 %changelog
+* Fri Nov 30 2018 Alexey Appolonov <alexey@altlinux.org> 0.14.0-alt1
+- Ability to recursively process listed files ('list_r', 'whitelist' and
+  'blacklist' sections) by the permissions unit;
+- Ability to alter the order of execution of the units;
+- Much more efficient version of UniquifyModes function;
+- Memory leakages as well as some segmentation fault errors are eliminated.
+
 * Sun Nov 18 2018 Alexey Appolonov <alexey@altlinux.org> 0.13.0-alt1
 - Rewritten permissions unit - there is no separation between handling the ACLs
   or regular permission modes, sector types of the mode description determined
