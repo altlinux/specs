@@ -1,8 +1,8 @@
 %define oname freenx-server
 %define hooksroot rx-etersoft
 Name: rx-etersoft
-Version: 1.4.0
-Release: alt5
+Version: 1.4.1
+Release: alt1
 
 Summary: Freenx application/thin-client server
 Group: Networking/Remote access
@@ -33,6 +33,7 @@ Requires: sessreg
 Requires: openssl openssh-server openssh-clients
 Requires: netcat expect sudo xauth
 Requires: zenity
+Requires: iconv
 
 Requires: cups cifs-utils
 
@@ -87,6 +88,7 @@ mkdir -p %buildroot%_datadir/misc/
 
 
 install -m755 rxsetup %buildroot%_bindir/
+install -m755 rxreport %buildroot%_bindir/
 install -Dp -m755 %SOURCE1 %buildroot%_initdir/%name
 install -Dp -m755 data/fixkeyboard %buildroot%_sysconfdir/%name/fixkeyboard
 install -Dp -m755 data/Xsession %buildroot%_sysconfdir/%name/Xsession
@@ -178,6 +180,7 @@ fi
 %_bindir/nxsetup
 %_bindir/nxviewer_helper
 %_bindir/rxsetup
+%_bindir/rxreport
 %dir %_libdir/%name/
 %attr(755,root,root) %_libdir/%name/libnxredir.so.0
 %attr(755,root,root) %_libdir/%name/libcupsredir.so.0
@@ -187,6 +190,59 @@ fi
 %attr(2750,root,nx) %_var/lib/%name/db/
 
 %changelog
+* Fri Nov 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
+- (rxreport): added .xsession-errors files
+- added 'sess_id' variable processing in getparam_sessionid
+- added CUPS_DEFAULT_SYSTEM_GROUP ("sys root") and user main group for SystemGroup for cupsd. (eterbug #13290)
+- (config): added timeout for cupsd start
+- added timestamp for logs (eterbug #13312)
+
+* Mon Sep 24 2018 Etersoft Builder <builder@etersoft.ru> 1.4.0-alt18
+- fixed type=smb printer processing for CUPS_DEFAULT_DRIVER
+- (CI): monitor fixes in service name
+
+* Sun Sep 23 2018 Etersoft Builder <builder@etersoft.ru> 1.4.0-alt17
+- (CI): send message to telegram only for tagged commits
+
+* Sat Sep 22 2018 Etersoft Builder <builder@etersoft.ru> 1.4.0-alt16
+- (nxnode): added waiting for cupsd to start eterbug #12972
+- (nxnode): refactoring: added 'wait_event' function
+
+* Thu Sep 13 2018 Etersoft Builder <builder@etersoft.ru> 1.4.0-alt15
+- rxreport minor fixes
+
+* Mon Sep 03 2018 Etersoft Builder <builder@etersoft.ru> 1.4.0-alt14
+- (rxsetup): added command logon/logoff
+
+* Sat Sep 01 2018 Etersoft Builder <builder@etersoft.ru> 1.4.0-alt13
+- added rxreport to package
+
+* Sat Sep 01 2018 Etersoft Builder <builder@etersoft.ru> 1.4.0-alt12
+- (CI): added event bot message
+- (rxreport): Fixed bug in prefix for session directory ('S-' --> 'F-')
+
+* Fri Aug 31 2018 Etersoft Builder <builder@etersoft.ru> 1.4.0-alt11
+- added rxreport script
+
+* Tue Aug 14 2018 Etersoft Builder <builder@etersoft.ru> 1.4.0-alt10
+- (CI): disable test build for i586.32 and p7
+- set the default driver for all user printers (eterbug #13062)
+
+* Fri Aug 10 2018 Etersoft Builder <builder@etersoft.ru> 1.4.0-alt9
+- (CI): use 'rx-daas-templates' project
+
+* Thu Aug 02 2018 Etersoft Builder <builder@etersoft.ru> 1.4.0-alt8
+- fix terminate error (eterbug #12933)
+- (CI): added real remove old builds
+- (gitlab-ci): added tests with docker
+
+* Thu Jun 28 2018 Etersoft Builder <builder@etersoft.ru> 1.4.0-alt7
+- (CI): minor fixes in pipeline
+
+* Wed Jun 27 2018 Etersoft Builder <builder@etersoft.ru> 1.4.0-alt6
+- fix "add printer" bug (eterbug #12972)
+- (CI): added test build stage
+
 * Fri Jun 22 2018 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt5
 - fix session cleanup error (eterbug #12933)
 
