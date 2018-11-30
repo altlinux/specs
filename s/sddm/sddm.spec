@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.17.0
-Release: alt7
+Release: alt8
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -164,6 +164,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Fri Nov 30 2018 Sergey V Turchin <zerg@altlinux.org> 0.17.0-alt8
+- fix crash with previous changes
+
 * Wed Nov 28 2018 Sergey V Turchin <zerg@altlinux.org> 0.17.0-alt7
 - fix hardware keyboard detection
 
