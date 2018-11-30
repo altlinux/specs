@@ -1,11 +1,11 @@
 Name: pngcrush
-Version: 1.7.35
+Version: 1.8.13
 Release: alt1
 
-Summary: Utility to compress PNG files
-License: BSD-style
+Summary: Optimizer for PNG (Portable Network Graphics) files
+License: zlib
 Group: Graphics
-Url: http://pmt.sourceforge.net/pngcrush/
+Url: https://pmt.sourceforge.net/pngcrush/
 
 # http://download.sourceforge.net/pmt/%name-%version.tar.xz
 Source: %name-%version.tar
@@ -13,28 +13,32 @@ Source: %name-%version.tar
 BuildPreReq: libpng-devel
 
 %description
-Pngcrush is an optimizer for PNG (Portable Network Graphics) files.
-Its main purpose is to reduce the size of the PNG IDAT data stream by
-trying various compression levels and PNG filter methods.  It also can
-be used to remove unwanted ancillary chunks, or to add certain chunks
-including gAMA, tRNS, and textual chunks.
+Pngcrush is a commandline optimizer for PNG (Portable Network Graphics)
+files.  Its main purpose is to reduce the size of the PNG IDAT data
+stream by trying various compression levels and PNG filter methods.
+It also can be used to remove unwanted ancillary chunks, or to add
+certain chunks including gAMA, tRNS, and textual chunks.
 
 %prep
 %setup
-find -name \*.h -type f -not \( -name cexcept.h -or -name pngcrush.h \) -delete
 
 %build
 %__cc %optflags pngcrush.c -o pngcrush \
-	$(pkg-config --cflags --libs libpng) -lz
+	$(pkg-config --cflags --libs libpng)
+sed '1,/^<pre>$/d;/<\/pre>/,$d' < ChangeLog.html > ChangeLog
+zstd ChangeLog
 
 %install
 install -Dpm755 pngcrush %buildroot%_bindir/pngcrush
 
 %files
 %_bindir/*
-%doc ChangeLog.*
+%doc ChangeLog.zst LICENSE
 
 %changelog
+* Fri Nov 30 2018 Dmitry V. Levin <ldv@altlinux.org> 1.8.13-alt1
+- 1.7.35 -> 1.8.13.
+
 * Mon Sep 17 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.35-alt1
 - Updated to 1.7.35.
 
