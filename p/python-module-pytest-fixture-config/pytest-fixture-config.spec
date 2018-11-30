@@ -1,10 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pytest-fixture-config
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 1.2.11
-Release: alt1%ubt
+Version: 1.3.0
+Release: alt1
 Summary: Fixture configuration utils for py.test
 License: MIT
 Group: Development/Python
@@ -13,12 +12,9 @@ BuildArch: noarch
 
 Source: %oname-%version.tar
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-dev python-module-pytest python2.7(six)
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-pytest python3(six)
-%endif
 
 %description
 Simple configuration objects for Py.test fixtures.
@@ -40,46 +36,43 @@ Allows you to skip tests when their required config variables aren't set.
 sed -i -e 's:setuptools-git:setuptools:g' \
 	common_setup.py
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %python_install
 
 %check
 PYTHONPATH=$(pwd) py.test -v
-%if_with python3
 pushd ../python3
 PYTHONPATH=$(pwd) py.test3 -v
 popd
-%endif
 
 %files
 %doc CHANGES.md README.md
-%python_sitelibdir/*
+%python_sitelibdir/pytest_fixture_config-*.egg-info/
+%python_sitelibdir/pytest_fixture_config.py*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc CHANGES.md README.md
-%python3_sitelibdir/*
-%endif
+%python3_sitelibdir/__pycache__/pytest_fixture_config.*.py*
+%python3_sitelibdir/pytest_fixture_config-*.egg-info/
+%python3_sitelibdir/pytest_fixture_config.py
 
 %changelog
-* Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.11-alt1%ubt
+* Fri Nov 30 2018 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
+- 1.2.11 -> 1.3.0.
+- Fixed build.
+
+* Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.11-alt1
 - Initial build for ALT.
