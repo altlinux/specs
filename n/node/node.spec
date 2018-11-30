@@ -4,7 +4,7 @@
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 8.12
+%define major 10.14
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -13,7 +13,7 @@
 # TODO: really we have no configure option to build with shared libv8
 # V8 presently breaks ABI at least every x.y release while never bumping SONAME,
 # so we need to be more explicit until spot fixes that
-%global v8_abi 6.2
+%global v8_abi 6.8
 %def_without systemv8
 
 # supports only openssl >= 1.0.2
@@ -21,13 +21,13 @@
 %define openssl_version 1.0.2n
 %def_with systemssl
 
-%global libuv_abi 1.19.2
+%global libuv_abi 1.23.2
 %def_with systemuv
 
 %global libicu_abi 6.0
 %def_with systemicu
 # TODO: node has to use icu:: for ICU names
-%add_optflags -DU_USING_ICU_NAMESPACE=1
+#add_optflags -DU_USING_ICU_NAMESPACE=1
 
 %def_with systemnghttp2
 
@@ -36,7 +36,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -173,7 +173,10 @@ rm -rf deps/nghttp2/
 # TODO:
 # rm -rf deps/zlib deps/openssl deps/cares deps/http-parser deps/gtest
 %if_without npm
+#true
+# don't use: keep internal npm (used for doc build)
 rm -rf deps/npm/
+ln -s %_libexecdir/node_modules/npm deps/npm
 %endif
 
 # use rpm's cflags
@@ -206,7 +209,8 @@ rm -rf deps/npm/
 %endif
 
 %make_build BUILDTYPE=Release
-%make doc
+# skip internal doc build (uses external modules)
+#make doc
 #%make jslint
 
 %check
@@ -264,7 +268,8 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %_sysconfdir/profile.d/*
 
 %files doc
-%doc README.md out/doc/api
+%doc README.md
+#out/doc/api
 
 %files devel
 %dir %_includedir/node/
@@ -295,6 +300,16 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Fri Nov 30 2018 Vitaly Lipatov <lav@altlinux.ru> 10.14.1-alt1
+- new version 10.14.1 (with rpmrb script)
+- disable internal doc
+- 2018-11-27, Version 10.14.0 'Dubnium' (LTS), @rvagg
+- CVE-2018-12121, CVE-2018-12122, CVE-2018-12123
+
+* Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 10.13.0-alt1
+- new version 10.13.0 (with rpmrb script)
+- 2018-10-30, Version 10.13.0 'Dubnium' (LTS), @MylesBorins
+
 * Sat Oct 06 2018 Vitaly Lipatov <lav@altlinux.ru> 8.12.0-alt1
 - new version 8.12.0 (with rpmrb script)
 - 2018-09-11, Version 8.12.0 'Carbon' (LTS)
