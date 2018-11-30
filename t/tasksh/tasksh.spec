@@ -1,17 +1,17 @@
 Name: tasksh
 Version: 1.0.0
-Release: alt2
+Release: alt3
 
-Summary: Shell for taswarrior
+Summary: Shell for taskwarrior
 License: MIT
 Group: Office
-Url: https://git.tasktools.org/projects/EX/repos/tasksh/browse
+Url: https://taskwarrior.org
 
 Packager: Konstantin Artyushkin <akv@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: cmake rpm-macros-cmake gcc5-c++
+BuildPreReq: cmake rpm-macros-cmake gcc-c++
 
 %description
 %summary
@@ -33,6 +33,11 @@ BuildPreReq: cmake rpm-macros-cmake gcc5-c++
 %_man1dir/tasksh.1.xz
 
 %changelog
+* Fri Nov 30 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt3
+- Fixed build.
+- Fixed summary.
+- Fixed URL.
+
 * Sun Dec 20 2015 Konstantin Artyushkin <akv@altlinux.org> 1.0.0-alt2
 - initial build for ALT Linux Sisyphus
 
