@@ -17,7 +17,7 @@
 
 Name: plasma5-workspace
 Version: 5.12.7
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init altplace
 
@@ -32,6 +32,8 @@ Requires: qt5-dbus qt5-tools qt5-quickcontrols qt5-virtualkeyboard dbus-tools-gu
 Requires: kf5-kinit kf5-kconfig kf5-kded kf5-kglobalaccel kf5-kdeclarative
 Requires: kf5-kwallet kf5-solid kf5-kimageformats kf5-kdbusaddons kf5-kio kf5-kio-extras
 Requires: plasma5-polkit-kde-agent plasma5-kwin plasma5-kactivitymanagerd
+Requires: sddm-theme-breeze = %EVR
+Requires: %name-qml = %EVR
 
 Source: %rname-%version.tar
 Patch100: alt-startkde.patch
@@ -108,6 +110,22 @@ Obsoletes: kf5-plasma-workspace-devel < %EVR
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
+
+%package -n %name-qml
+Group: Graphical desktop/KDE
+Summary: Base qml-components for plasma workspace
+%description -n %name-qml
+Base qml-components for plasma workspace
+
+%package -n sddm-theme-breeze
+Group: Graphical desktop/KDE
+Summary: SDDM breeze theme
+Requires: libkf5plasmaquick
+Requires: %name-common = %EVR
+Requires: %name-qml = %EVR
+Buildarch: noarch
+%description -n sddm-theme-breeze
+SDDM breeze theme
 
 %package -n %libkworkspace5
 Group: System/Libraries
@@ -251,7 +269,7 @@ done
 %dir %_K5plug/phonon_platform/
 %dir %_K5qml/org/kde/plasma/private/
 %dir %_K5qml/org/kde/plasma/wallpapers/
-%dir %_K5qml/org/kde/plasma/workspace/
+#%dir %_K5qml/org/kde/plasma/workspace/
 #%dir %_K5qml/org/kde/private/
 %_bindir/*
 %_K5bin/*
@@ -267,7 +285,7 @@ done
 %_K5plug/plasmacalendarplugins/
 %_K5qml/org/kde/plasma/private/*
 %_K5qml/org/kde/plasma/wallpapers/*
-%_K5qml/org/kde/plasma/workspace/*
+#%_K5qml/org/kde/plasma/workspace/*
 #%_K5qml/org/kde/private/*
 %_K5qml/org/kde/taskmanager/
 %_K5qml/org/kde/holidayeventshelperplugin/
@@ -290,7 +308,13 @@ done
 %_datadir/dbus-1/services/*.service
 %_datadir/xsessions/plasma.desktop
 #%_datadir/wayland-sessions/plasmawayland.desktop
-%_datadir/sddm/themes/*/
+
+%files -n %name-qml
+%dir %_K5qml/org/kde/plasma/workspace/
+%_K5qml/org/kde/plasma/workspace/*/
+
+%files -n sddm-theme-breeze
+%_datadir/sddm/themes/breeze/
 
 %files devel
 #%_K5inc/KDE/
@@ -327,6 +351,9 @@ done
 
 
 %changelog
+* Tue Nov 27 2018 Anton Midyukov <antohami@altlinux.org> 1:5.12.7-alt3
+- new subpackage: sddm-theme-breeze, plasma5-workspace-qml
+
 * Thu Oct 11 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.7-alt2
 - bookmarksrunner: fix showing firefox bookmarks
 
