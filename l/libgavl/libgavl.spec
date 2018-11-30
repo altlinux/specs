@@ -8,13 +8,14 @@
 %define bname gavl
 Name: lib%bname
 Version: 1.4.0
-Release: alt3
+Release: alt4
 Summary: Library for handling uncompressed audio- and video data
-License: %gpl2plus
+License: GPL2+
 Group: System/Libraries
 URL: http://gmerlin.sourceforge.net/
 Source: %bname-%version.tar.gz
 Patch: %bname-1.1.2-config.patch
+Patch1: %bname-1.4.0-debian-Makefile.patch
 Packager: Led <led@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
@@ -90,7 +91,7 @@ This package contains API Reference for develop with %name.
 %prep
 %setup -n %bname-%version
 %patch -p1
-
+%patch1 -p1
 
 %build
 %ifarch %arm aarch64 %e2k
@@ -147,6 +148,9 @@ install -m 0644 AUTHORS README TODO %buildroot%_docdir/%name-%version/
 
 
 %changelog
+* Fri Nov 30 2018 Leontiy Volodin <lvol@altlinux.org> 1.4.0-alt4
+- Added patch for Makefile (thanks debian for this patch)
+
 * Thu Apr 12 2018 Michael Shigorin <mike@altlinux.org> 1.4.0-alt3
 - updated for all of %%e2k
 
