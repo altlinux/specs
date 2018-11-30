@@ -15,7 +15,7 @@
 %define docdir %_docdir/%name-%version-doc
 
 Name: lighttpd
-Version: 1.4.51
+Version: 1.4.52
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -304,6 +304,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Fri Nov 30 2018 Alexei Takaseev <taf@altlinux.org> 1.4.52-alt1
+- 1.4.52
+
 * Mon Oct 15 2018 Alexei Takaseev <taf@altlinux.org> 1.4.51-alt1
 - 1.4.51
 - Enable internal tests
