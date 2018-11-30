@@ -11,7 +11,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	60.3.1
+Version:	60.3.2
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -466,6 +466,9 @@ tar xvf %SOURCE6 -C "%lightning_dir" chrome/calendar-ru chrome/lightning-ru
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Fri Nov 30 2018 Andrey Cherepanov <cas@altlinux.org> 60.3.2-alt1
+- New version (60.3.2).
+
 * Thu Nov 22 2018 Andrey Cherepanov <cas@altlinux.org> 60.3.1-alt1
 - New version (60.3.1).
 
