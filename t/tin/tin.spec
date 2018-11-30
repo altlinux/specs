@@ -1,6 +1,6 @@
 Name: tin
 Version: 2.4.2
-Release: alt1
+Release: alt2
 
 Summary: A basic Internet news reader
 License: BSD
@@ -17,7 +17,7 @@ Patch2: tin-2.0.1-charset.patch
 # Automatically added by buildreq on Wed Dec 28 2011
 # Manually removed from buildreq'ed string:
 # - specific MTA package (such as postfix): replace it by requirement of /usr/sbin/sendmail
-BuildRequires: gnupg libgsasl-devel libidn-devel libncursesw-devel libpcre-devel libuu-devel
+BuildRequires: gnupg libgsasl-devel libncursesw-devel libpcre-devel libuu-devel
 BuildRequires: /usr/sbin/sendmail
 
 %description
@@ -70,6 +70,9 @@ install -pD -m644 %_sourcedir/tin.attributes %buildroot%_sysconfdir/tin/attribut
 %exclude %_man5dir/mmdf.*
 
 %changelog
+* Fri Nov 30 2018 Michael Shigorin <mike@altlinux.org> 2.4.2-alt2
+- build without libidn (to be dropped from sisyphus)
+
 * Mon Dec 25 2017 Michael Shigorin <mike@altlinux.org> 2.4.2-alt1
 - new version (watch file uupdate)
 
