@@ -1,6 +1,6 @@
 Name: curlftpfs
 Version: 0.9.2
-Release: alt2
+Release: alt3
 
 Summary: FTP filesystem, based on Curl and FUSE
 License: GPL
@@ -30,12 +30,18 @@ because it features:
 
 %install
 %makeinstall
+mkdir %buildroot/sbin
+ln -s /usr/bin/curlftpfs  %buildroot/sbin/mount.curlftpfs
 
 %files
+/sbin/mount.curlftpfs
 %_bindir/curlftpfs
 %_man1dir/curlftpfs.1.*
 
 %changelog
+* Mon Nov 19 2018 Pavel Skrylev <majioa@altlinux.org> 0.9.2-alt3
+- Added symlink from sbin to usr/bin to allow mounting from fstab.
+
 * Fri Nov 09 2012 Pavel Shilovsky <piastry@altlinux.org> 0.9.2-alt2
 - Fix missed 0.9.2 sources
 
