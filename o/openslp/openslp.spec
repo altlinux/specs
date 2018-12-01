@@ -1,18 +1,26 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: openslp
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: OpenSLP implementation of Service Location Protocol V2
 License: BSD-style
 Group: Networking/Other
-URL: https://sourceforge.net/projects/openslp/
+Url: https://sourceforge.net/projects/openslp/
 # Source-url: https://download.sourceforge.net/%name/%name-%version.tar.gz
 Source: %name-%version.tar
 Source1: %name.init
 #Patch1: openslp-1.2.1-alt-memcpy-fix.patch
 #Patch2: openslp-1.2.1-rh-nullauth.patch
+Patch3: openslp-2.0.0-CVE-2016-7567.patch
+Patch4: openslp-2.0.0-CVE-2012-4428.patch
+Patch5: openslp-2.0.0-cleanup_libslp_namespace.patch
+Patch6: openslp-2.0.0-CVE-2016-4912.patch
+Patch7: openslp-2.0.0-CVE-2017-17833.patch
+Patch8: openslp-2.0.0-openssl_1.1.0.patch
 
-BuildRequires: flex gcc-c++ libssl-devel
+BuildRequires: flex gcc-c++ libssl-devel zlib-devel
 
 %description
 Service Location Protocol is an IETF standards track protocol that
@@ -70,17 +78,21 @@ Service Location Protocol suitable for commercial and non-commercial
 application.  This package contains openslp project development headers.
 
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
 #%%patch1 -p1
 #%%patch2 -p1
+%patch3 -p2
+%patch4 -p2
+%patch5 -p2
+%patch6 -p2
+%patch7 -p1
+%patch8 -p2
 #sed -i '/OPTFLAGS/ s/-O3/$RPM_OPT_FLAGS/' configure.in
 
 %build
 %autoreconf
 %configure \
-	    --sharedstatedir=%_datadir \
 	    --localstatedir=/var \
-	    --enable-slpv1 \
 	    --enable-async-api \
 	    --enable-slpv2-security \
 	    --disable-static
@@ -95,6 +107,9 @@ ln -s ../../%_initdir/slpd %buildroot%_sbindir/rcopenslp
 
 mkdir -p %buildroot%_sysconfdir/slp.reg.d
 
+%check
+%make check
+
 %post daemon
 %post_service slpd
 
@@ -102,7 +117,7 @@ mkdir -p %buildroot%_sysconfdir/slp.reg.d
 %preun_service slpd
 
 %files
-%_bindir/*
+%_bindir/slptool
 %config(noreplace) %_sysconfdir/slp.conf
 %config(noreplace) %_sysconfdir/slp.spi
 
@@ -110,19 +125,29 @@ mkdir -p %buildroot%_sysconfdir/slp.reg.d
 %attr(755,root,root) %config(noreplace) %_initdir/slpd
 %config(noreplace) %_sysconfdir/slp.reg
 %dir %_sysconfdir/slp.reg.d/
-%_sbindir/*
+%_sbindir/rcopenslp
+%_sbindir/rcslpd
+%_sbindir/slpd
 
 %files doc
 %doc doc/doc/*
 
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/libslp.so.1
+%_libdir/libslp.so.1.0.0
 
 %files -n lib%name-devel
-%_libdir/*.so
-%_includedir/*
+%_libdir/libslp.so
+%_includedir/slp.h
 
 %changelog
+* Sat Dec 01 2018 Stanislav Levin <slev@altlinux.org> 2.0.0-alt2
+- Fixed libslp namespace (closes: #35692).
+- Enabled SLPv2 Security.
+- Enabled testing.
+- Applied security fixes (fixes: CVE-2012-4428, CVE-2016-4912, CVE-2016-7567,
+  CVE-2017-17833).
+
 * Wed Nov 28 2018 Leontiy Volodin <lvol@altlinux.org> 2.0.0-alt1
 - New version (2.0.0) with rpmgs script
 - Disabled patches because don't applyed for this version
