@@ -1,5 +1,5 @@
 Name: attr
-Version: 2.4.48
+Version: 2.4.48.0.7.14ad
 Release: alt1
 
 Summary: Utilities for managing filesystem extended attributes
@@ -107,6 +107,9 @@ fi
 %endif
 
 %changelog
+* Sun Dec 02 2018 Dmitry V. Levin <ldv@altlinux.org> 2.4.48.0.7.14ad-alt1
+- v2.4.48 -> v2.4.48-7-g14adc89.
+
 * Mon Nov 27 2017 Dmitry V. Levin <ldv@altlinux.org> 2.4.48-alt1
 - v2.4.47-44-g315af30 -> v2.4.48.
 - getfattr: fixed large-file support.
