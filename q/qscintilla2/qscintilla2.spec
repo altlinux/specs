@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %def_with python
 %def_without python-qt3
 %def_without qt3
@@ -9,19 +10,19 @@ Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 %define oname qscintilla2
 %define suff 13
 Name: %oname
-Version: 2.10.1
-Release: alt5.S1.1.1
+Version: 2.10.8
+Release: alt1
 License: GPL
 Group: Development/KDE and QT
 
-Source: qscintilla-gpl-%version.tar.gz
-Patch1: %name-%version-alt-build.patch
+Source: qscintilla-gpl-%version.tar
+Patch1: %name-2.10.1-alt-build.patch
 
 Url: http://www.riverbankcomputing.co.uk/software/qscintilla/
 
 %define libname lib%{oname}-%{suff}
 
-BuildRequires(pre): rpm-build-ubt python-module-sip-devel
+BuildRequires(pre): python-module-sip-devel
 %define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
 BuildRequires: gcc-c++
 %if_with qt3
@@ -67,7 +68,7 @@ multiple fonts.
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class.
 Group: Development/KDE and QT
 Conflicts: libqscintilla
-Provides: lib%oname-qt3 = %version-%release
+Provides: lib%oname-qt3 = %EVR
 Obsoletes: lib%oname-qt3
 Obsoletes: lib%oname-5-qt3
 Obsoletes: lib%oname-qt3-compat
@@ -89,7 +90,7 @@ multiple fonts.
 %package -n %libname-qt4
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class.
 Group: Development/KDE and QT
-Provides: lib%oname-qt4 = %version-%release
+Provides: lib%oname-qt4 = %EVR
 Obsoletes: lib%oname-qt4
 Obsoletes: lib%oname-5-qt4
 Obsoletes: lib%oname-qt4-compat
@@ -114,7 +115,7 @@ multiple fonts.
 %package -n %libname-qt5
 Summary: QScintilla is a port to Qt5 of Neil Hodgson's Scintilla C++ editor class.
 Group: Development/KDE and QT
-Provides: lib%oname-qt5 = %version-%release
+Provides: lib%oname-qt5 = %EVR
 Conflicts: lib%oname-11-qt5
 Obsoletes: lib%oname-11-qt5
 Conflicts: lib%oname-12-qt5
@@ -134,7 +135,7 @@ multiple fonts.
 
 %if_with qt3
 %package -n lib%oname-qt3-devel
-Requires: %libname-qt3 = %version-%release
+Requires: %libname-qt3 = %EVR
 Requires: libqt3-devel
 Summary: Header files for %oname
 Group: Development/KDE and QT
@@ -145,7 +146,7 @@ Header files for %oname
 
 %if_with qt4
 %package -n lib%oname-qt4-devel
-Requires: %libname-qt4 = %version-%release
+Requires: %libname-qt4 = %EVR
 Requires: libqt4-devel
 Summary: Header files for %oname
 Group: Development/KDE and QT
@@ -155,7 +156,7 @@ Header files for %oname
 %endif
 
 %package -n lib%oname-qt5-devel
-Requires: %libname-qt5 = %version-%release
+Requires: %libname-qt5 = %EVR
 Requires: qt5-base-devel
 Summary: Header files for %oname-qt5
 Group: Development/KDE and QT
@@ -165,7 +166,7 @@ Header files for %oname-qt5
 
 %if_with qt3
 %package -n lib%oname-qt3-designer
-Requires: %libname-qt3 = %version-%release
+Requires: %libname-qt3 = %EVR
 Summary: QScintilla designer plugin
 Group: Development/KDE and QT
 
@@ -175,7 +176,7 @@ QScintillla designer plugin.
 
 %if_with qt4
 %package -n lib%oname-qt4-designer
-Requires: %libname-qt4 = %version-%release
+Requires: %libname-qt4 = %EVR
 Summary: QScintilla designer plugin
 Group: Development/KDE and QT
 
@@ -186,10 +187,10 @@ QScintillla designer plugin.
 %if_with python
 %if_with qt4
 %package -n python-module-%oname-qt4
-Requires: %libname-qt4 = %version-%release
+Requires: %libname-qt4 = %EVR
 Summary: Python bindings for %oname
 Group: Development/KDE and QT
-Provides: lib%oname-qt4-python = %version-%release
+Provides: lib%oname-qt4-python = %EVR
 Obsoletes: lib%oname-qt4-python
 Requires: python-module-sip = %sipver2
 %py_provides PyQt4.Qsci
@@ -198,11 +199,11 @@ Requires: python-module-sip = %sipver2
 Python bindings for %oname
 
 %package -n python-module-%oname-qt4-devel
-Requires: python-module-%oname-qt4 = %version-%release
+Requires: python-module-%oname-qt4 = %EVR
 Summary: Python bindings for %oname
 Group: Development/KDE and QT
 BuildArch: noarch
-Provides: lib%oname-qt4-python-devel = %version-%release
+Provides: lib%oname-qt4-python-devel = %EVR
 Obsoletes: lib%oname-qt4-python-devel
 
 %description -n python-module-%oname-qt4-devel
@@ -210,10 +211,10 @@ Devel files for Python bindings for %oname
 %endif
 
 %package -n python-module-%oname-qt5
-Requires: %libname-qt5 = %version-%release
+Requires: %libname-qt5 = %EVR
 Summary: Python bindings for %oname-qt5
 Group: Development/KDE and QT
-Provides: lib%oname-qt5-python = %version-%release
+Provides: lib%oname-qt5-python = %EVR
 Requires: python-module-sip = %sipver2
 %py_provides PyQt5.Qsci
 
@@ -221,11 +222,11 @@ Requires: python-module-sip = %sipver2
 Python bindings for %oname-qt5
 
 %package -n python-module-%oname-qt5-devel
-Requires: python-module-%oname-qt5 = %version-%release
+Requires: python-module-%oname-qt5 = %EVR
 Summary: Python bindings for %oname-qt5
 Group: Development/KDE and QT
 BuildArch: noarch
-Provides: lib%oname-qt5-python-devel = %version-%release
+Provides: lib%oname-qt5-python-devel = %EVR
 
 %description -n python-module-%oname-qt5-devel
 Devel files for Python bindings for %oname
@@ -233,7 +234,7 @@ Devel files for Python bindings for %oname
 %if_with python3
 %if_with qt4
 %package -n python3-module-%oname-qt4
-Requires: %libname-qt4 = %version-%release
+Requires: %libname-qt4 = %EVR
 Summary: Python 3 bindings for %oname
 Group: Development/KDE and QT
 Requires: python3-module-sip = %sipver3
@@ -243,7 +244,7 @@ Requires: python3-module-sip = %sipver3
 Python bindings for %oname
 
 %package -n python3-module-%oname-qt4-devel
-Requires: python3-module-%oname-qt4 = %version-%release
+Requires: python3-module-%oname-qt4 = %EVR
 Summary: Python 3 bindings for %oname
 Group: Development/KDE and QT
 BuildArch: noarch
@@ -254,7 +255,7 @@ Devel files for Python bindings for %oname
 
 %if_with python3qt5
 %package -n python3-module-%oname-qt5
-Requires: %libname-qt5 = %version-%release
+Requires: %libname-qt5 = %EVR
 Summary: Python 3 bindings for %oname (Qt5)
 Group: Development/KDE and QT
 Requires: python3-module-sip = %sipver3
@@ -264,7 +265,7 @@ Requires: python3-module-sip = %sipver3
 Python bindings for %oname
 
 %package -n python3-module-%oname-qt5-devel
-Requires: python3-module-%oname-qt5 = %version-%release
+Requires: python3-module-%oname-qt5 = %EVR
 Summary: Python 3 bindings for %oname (Qt5)
 Group: Development/KDE and QT
 BuildArch: noarch
@@ -276,21 +277,21 @@ Devel files for Python bindings for %oname
 
 %if_with python-qt3
 %package -n python-module-%oname-qt3
-Requires: %libname-qt3 = %version-%release
+Requires: %libname-qt3 = %EVR
 Summary: Python bindings for %oname
 Group: Development/KDE and QT
-Provides: lib%oname-qt3-python = %version-%release
+Provides: lib%oname-qt3-python = %EVR
 Obsoletes: lib%oname-qt3-python
 
 %description -n python-module-%oname-qt3
 Python bindings for %oname
 
 %package -n python-module-%oname-qt3-devel
-Requires: python-module-%oname-qt3 = %version-%release
+Requires: python-module-%oname-qt3 = %EVR
 Summary: Python bindings for %oname
 Group: Development/KDE and QT
 BuildArch: noarch
-Provides: lib%oname-qt3-python-devel = %version-%release
+Provides: lib%oname-qt3-python-devel = %EVR
 Obsoletes: lib%oname-qt3-python-devel
 
 %description -n python-module-%oname-qt3-devel
@@ -602,6 +603,9 @@ cp ChangeLog NEWS README %buildroot%_docdir/%libname-%version
 chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so 
 %endif
 
+rm -rf %buildroot/%python_sitelibdir/QScintilla-%version.dist-info
+rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
+
 %if_with qt3
 %files -n %libname-qt3
 %_qt3dir/lib/*.so.*
@@ -708,6 +712,9 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_docdir/%libname-%version
 
 %changelog
+* Sat Dec 01 2018 Alexander Makeenkov <amakeenk@altlinux.org> 2.10.8-alt1
+- Updated to upstream version 2.10.8.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.1-alt5.S1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
