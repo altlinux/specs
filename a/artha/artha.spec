@@ -1,13 +1,14 @@
 Name: artha
-Version: 1.0.2
-Release: alt2
+Version: 1.0.3
+Release: alt1
 
 Summary: Handy off-line thesaurus based on WordNet database
 License: GPLv2+
 Group: Text tools
 Url: http://%name.sourceforge.net/
-# http://download.sourceforge.net/%name/%name-%version.tar.bz2
+# https://download.sourceforge.net/%name/%name-%version.tar.bz2
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Requires: wordnet-dict
 BuildRequires: libgtk+2-devel libwordnet-devel
@@ -28,10 +29,13 @@ pressed.
 
 %prep
 %setup
+%patch -p1
+
 # suppress dbus dependencies
 sed -i 's/ -ldbus-1 -ldbus-glib-1 / /' src/Makefile.*
 
 %build
+%autoreconf
 # suppress dbus dependencies
 export libdbus_CFLAGS=' ' libdbus_LIBS=' '
 %configure
@@ -51,6 +55,9 @@ sed -i /DBUS_AVAILABLE/d config.h
 %doc AUTHORS NEWS
 
 %changelog
+* Sun Dec 02 2018 Dmitry V. Levin <ldv@altlinux.org> 1.0.3-alt1
+- 1.0.2 -> 1.0.3.
+
 * Fri Jun 03 2011 Dmitry V. Levin <ldv@altlinux.org> 1.0.2-alt2
 - Updated desktop categories.
 
