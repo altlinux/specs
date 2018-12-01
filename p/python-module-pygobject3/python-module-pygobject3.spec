@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: python-module-%{_name}3
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Python bindings for GObject
@@ -207,6 +207,9 @@ popd
 %endif
 
 %changelog
+* Sat Dec 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.4-alt1
+- 3.30.4
+
 * Tue Nov 27 2018 Yuri N. Sedunov <aris@altlinux.org> 3.30.3-alt1
 - 3.30.3
 
