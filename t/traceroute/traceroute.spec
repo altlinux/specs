@@ -1,5 +1,5 @@
 Name: traceroute
-Version: 2.0.21
+Version: 2.1.0
 Release: alt1
 Epoch: 1
 
@@ -8,7 +8,7 @@ License: GPLv2+
 Group: Monitoring
 Url: http://traceroute.sourceforge.net/
 
-# http://downloads.sourceforge.net/traceroute/traceroute-%version.tar.gz
+# https://downloads.sourceforge.net/traceroute/traceroute-%version.tar.gz
 Source: traceroute-%version.tar
 # git://git.altlinux.org/gears/t/traceroute.git
 Patch: traceroute-%version-%release.patch
@@ -40,6 +40,9 @@ ln -s traceroute.1 %buildroot%_man1dir/traceroute6.1
 %_man1dir/*
 
 %changelog
+* Sun Dec 02 2018 Dmitry V. Levin <ldv@altlinux.org> 1:2.1.0-alt1
+- 2.0.21 -> 2.1.0.
+
 * Thu Nov 13 2014 Dmitry V. Levin <ldv@altlinux.org> 1:2.0.21-alt1
 - Updated to 2.0.21.
 
