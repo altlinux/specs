@@ -2,7 +2,7 @@
 
 Name: binutils
 Version: 2.31.1
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -20,22 +20,22 @@ Source5: output-format.sed
 
 Patch: binutils-2_31-branch.patch
 
-Patch0001: 0001-Add-lto-and-none-lto-input-support-for-ld-r.patch
-Patch0002: 0002-Add-test-for-nm-on-mixed-LTO-non-LTO-object.patch
-Patch0003: 0003-Don-t-check-the-plugin-target-twice.patch
-Patch0004: 0004-Handle-ELF-compressed-header-alignment-correctly-by-.patch
-Patch0005: 0005-Initialize-uncompressed_align_pow_p-to-0.patch
-Patch0006: 0006-gold-Get-alignment-of-uncompressed-section-from-ch_a.patch
-Patch0007: 0007-ld-testsuite-pr18808b.c-pass-Wno-return-type.patch
-Patch0008: 0008-bfd-export-demangle.h-and-hashtab.h.patch
-Patch0009: 0009-ld-add-no-warn-shared-textrel-option.patch
-Patch0010: 0010-ld-enable-optimization-and-warn-shared-textrel-by-de.patch
-Patch0011: 0011-ld-enable-z-relro-by-default.patch
-Patch0012: 0012-gold-enable-z-relro-by-default.patch
-Patch0013: 0013-ld-testsuite-restore-upstream-default-options.patch
-Patch0014: 0014-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
-Patch0015: 0015-bfd-elflink.c-bfd_elf_final_link-check-all-objects-f.patch
-Patch0016: 0016-pr22269-1.c-disable-Wreturn-type-warning.patch
+Patch1: 0001-Add-lto-and-none-lto-input-support-for-ld-r.patch
+Patch2: 0002-Add-test-for-nm-on-mixed-LTO-non-LTO-object.patch
+Patch3: 0003-Don-t-check-the-plugin-target-twice.patch
+Patch4: 0004-Handle-ELF-compressed-header-alignment-correctly-by-.patch
+Patch5: 0005-Initialize-uncompressed_align_pow_p-to-0.patch
+Patch6: 0006-gold-Get-alignment-of-uncompressed-section-from-ch_a.patch
+Patch7: 0007-ld-testsuite-ld-ifunc-pr18808b.c-pass-Wno-return-typ.patch
+Patch8: 0008-ld-testsuite-ld-elf-pr22269-1.c-pass-Wno-return-type.patch
+Patch9: 0009-bfd-export-demangle.h-and-hashtab.h.patch
+Patch10: 0010-ld-add-no-warn-shared-textrel-option.patch
+Patch11: 0011-ld-enable-optimization-and-warn-shared-textrel-by-de.patch
+Patch12: 0012-ld-enable-z-relro-by-default.patch
+Patch13: 0013-gold-enable-z-relro-by-default.patch
+Patch14: 0014-ld-testsuite-restore-upstream-default-options.patch
+Patch15: 0015-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
+Patch16: 0016-bfd-elflink.c-bfd_elf_final_link-check-all-objects-f.patch
 
 # List of architectures worthy to care about test results.
 %define check_arches x86_64 %ix86
@@ -47,7 +47,6 @@ Conflicts: gcc-common < 0:1.2.1-alt4
 
 BuildRequires: flex makeinfo perl-Pod-Parser zlib-devel
 BuildRequires: gcc-c++ libstdc++-devel-static
-BuildRequires: makeinfo
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu, gcc-c++, glibc-devel-static, zlib-devel-static, bc, /proc, /dev/pts}}
 
 %package devel
@@ -90,22 +89,22 @@ This package contains source code of GNU Binutils.
 %patch -p1
 chmod +x gold/testsuite/plugin_pr22868.sh
 
-%patch0001 -p1
-%patch0002 -p1
-%patch0003 -p1
-%patch0004 -p1
-%patch0005 -p1
-%patch0006 -p1
-%patch0007 -p1
-%patch0008 -p1
-%patch0009 -p1
-%patch0010 -p1
-%patch0011 -p1
-%patch0012 -p1
-%patch0013 -p1
-%patch0014 -p1
-%patch0015 -p1
-%patch0016 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
 
 # Replay libtool commits
 # a042d335197ac7afb824ab54c3aab91f3e79a2d0
@@ -137,6 +136,7 @@ ADDITIONAL_TARGETS="--enable-targets=i386-alt-linux"
 ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --enable-64-bit-bfd"
 %endif
 %configure \
+	--with-system-zlib \
 	--enable-shared \
 	--with-pic \
 	--disable-werror \
@@ -287,10 +287,15 @@ XFAIL_TESTS="$XFAIL_TESTS icf_safe_so_test.sh"
 %binutils_sourcedir
 
 %changelog
+* Sun Dec 02 2018 Dmitry V. Levin <ldv@altlinux.org> 1:2.31.1-alt4
+- Updated to 2.31.1 20181202.
+- gold: applied upstream fix for ELF compressed data alignment (sw#23919).
+- Built with system zlib.
+
 * Fri Nov 30 2018 Dmitry V. Levin <ldv@altlinux.org> 1:2.31.1-alt3
 - Updated to 2.31.1 20181130.
 - gold: applied a fix for ELF compressed data alignment
-  (sw#23919; patch by H.J. Lu.
+  (sw#23919; patch by H.J. Lu).
 
 * Thu Nov 29 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.31.1-alt2
 - Fixed ELF compressed data alignment (sw#23919; patch by Mark Wielaard).
