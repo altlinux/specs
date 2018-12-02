@@ -1,9 +1,9 @@
 Name: diffstat
-Version: 1.59
+Version: 1.62
 Release: alt1
 
 Summary: An utility which provides statistics based on the output of diff
-License: BSD-style
+License: MIT
 Group: Development/Other
 Url: http://invisible-island.net/diffstat/
 # ftp://invisible-island.net/diffstat/diffstat-%version.tgz
@@ -36,6 +36,9 @@ to provide a summary of the changes in large, complex patch files.
 %doc CHANGES COPYING README
 
 %changelog
+* Sun Dec 02 2018 Dmitry V. Levin <ldv@altlinux.org> 1.62-alt1
+- 1.59 -> 1.62.
+
 * Sat Nov 15 2014 Dmitry V. Levin <ldv@altlinux.org> 1.59-alt1
 - Updated to 1.59.
 
