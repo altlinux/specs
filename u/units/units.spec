@@ -1,16 +1,14 @@
 Name: units
-Version: 2.12
-Release: alt1.1
+Version: 2.18
+Release: alt1
 
 Summary: A utility for converting amounts from one unit to another
 License: GPLv3+
 Group: Office
-Url: http://www.gnu.org/software/units/units.html
-# ftp://ftp.gnu.org/pub/gnu/%name/%name-%version.tar.gz
+Url: https://www.gnu.org/software/units/units.html
+# https://ftp.gnu.org/pub/gnu/%name/%name-%version.tar.gz
 Source: %name-%version.tar
-BuildRequires: libreadline-devel
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+BuildRequires: libreadline-devel makeinfo
 
 %description
 Units converts an amount from one unit to another, or tells you what
@@ -22,6 +20,8 @@ well as conversions such as Fahrenheit to Celsius.
 %setup
 # remove generated files
 rm parse.tab.c *.info*
+# do not try to update currency.units from network during build
+sed -i '/^install-support:/ s/ currency-units-update//' Makefile.in
 
 %build
 %configure
@@ -31,19 +31,28 @@ rm parse.tab.c *.info*
 %makeinstall_std
 ln -s units.1 %buildroot%_man1dir/units_cur.1
 
+s=/usr/share/units/currency.units
+t="$(readlink "%buildroot$s")"
+case "$t" in
+	/*) ln -fnrs "%buildroot$t" "%buildroot$s" ;;
+esac
+
 %check
 %make_build -k check
+
+%define _unpackaged_files_terminate_build 1
 
 %files
 %_bindir/*
 %_datadir/%name/
+/var/lib/%name/
 %_infodir/*.info*
 %_man1dir/*
 %doc NEWS README
 
 %changelog
-* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.12-alt1.1
-- NMU: added BR: texinfo
+* Sun Dec 02 2018 Dmitry V. Levin <ldv@altlinux.org> 2.18-alt1
+- 2.12 -> 2.18.
 
 * Thu Oct 15 2015 Dmitry V. Levin <ldv@altlinux.org> 2.12-alt1
 - 2.11 -> 2.12.
