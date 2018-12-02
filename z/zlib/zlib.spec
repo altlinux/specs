@@ -1,5 +1,5 @@
 Name: zlib
-Version: 1.2.8
+Version: 1.2.11
 Release: alt1
 
 Summary: The zlib compression and decompression library
@@ -99,6 +99,7 @@ popd
 %install
 %makeinstall_std LDCONFIG=:
 %makeinstall_std -C contrib/minizip
+rm %buildroot%_includedir/minizip/crypt.h
 
 # Relocate shared library from %_libdir/ to /%_lib/
 mkdir %buildroot/%_lib
@@ -144,6 +145,10 @@ make test
 %_pkgconfigdir/minizip.pc
 
 %changelog
+* Sun Dec 02 2018 Dmitry V. Levin <ldv@altlinux.org> 1.2.11-alt1
+- v1.2.8 -> v1.2.11.
+- libminizip-devel: removed %_includedir/minizip/crypt.h (closes: #35061).
+
 * Thu Jun 13 2013 Dmitry V. Levin <ldv@altlinux.org> 1.2.8-alt1
 - Updated to v1.2.8.
 
