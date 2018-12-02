@@ -1,6 +1,6 @@
 Name: acl
-Version: 2.2.52.0.52.33f0
-Release: alt2
+Version: 2.2.53
+Release: alt1
 
 Summary: ACL manipulation utilities
 License: GPLv2+
@@ -101,6 +101,9 @@ mv %buildroot%_bindir/chacl %buildroot/bin/
 %endif
 
 %changelog
+* Sun Dec 02 2018 Dmitry V. Levin <ldv@altlinux.org> 2.2.53-alt1
+- v2.2.52-52-g33f01b5 -> v2.2.53.
+
 * Tue Nov 28 2017 Dmitry V. Levin <ldv@altlinux.org> 2.2.52.0.52.33f0-alt2
 - Fixed large-file support (closes: #34145).
 
