@@ -1,6 +1,6 @@
 Name: gwibber
-Version: 3.1.90
-Release: alt2
+Version: 3.6.0
+Release: alt1
 Summary: Microblogging client for Gnome desktop
 License: GPLv2
 Group: Networking/Instant messaging
@@ -25,7 +25,7 @@ environment. It can transmit status message updates to Twitter, Jaiku,
 Facebook, and Pidgin.
 
 %prep
-%setup -q
+%setup
 
 %build
 %python_build
@@ -40,6 +40,7 @@ install -m644 build/share/applications/* %buildroot/%_desktopdir/
 %doc README
 %_bindir/*
 %python_sitelibdir/%name/
+%python_sitelibdir/*.egg-info
 %_datadir/%name/*
 %_datadir/indicators/messages/applications/*
 %_datadir/dbus-1/services/*
@@ -47,6 +48,9 @@ install -m644 build/share/applications/* %buildroot/%_desktopdir/
 %_desktopdir/*
 
 %changelog
+* Mon Dec 03 2018 Grigory Ustinov <grenka@altlinux.org> 3.6.0-alt1
+- Build new version (Closes: #26181).
+
 * Fri Nov 07 2014 Andrey Cherepanov <cas@altlinux.org> 3.1.90-alt2
 - Remove nonexisting Python module from requirements
 
