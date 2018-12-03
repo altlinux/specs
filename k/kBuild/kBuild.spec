@@ -6,7 +6,7 @@ ExclusiveArch: %ix86 x86_64
 
 Name:           kBuild
 Version:        %short_version.r%svn_revision
-Release:        alt3%ubt
+Release:        alt4
 License:        %gpl3plus
 Group:          Development/Other
 Summary:        A cross-platform build environment framework for complex tasks
@@ -17,7 +17,7 @@ Source:         %name-%version.tar.bz2
 Patch2:         kBuild-0.1.3-escape.patch
 Patch3:         kBuild-alt-compat.patch
 
-BuildRequires(pre): rpm-build-licenses rpm-build-ubt
+BuildRequires(pre): rpm-build-licenses
 BuildRequires:  cvs flex libacl-devel
 BuildRequires: perl-podlators
 
@@ -87,6 +87,9 @@ chmod a-x %buildroot%_datadir/%name/*/*kmk
 %_datadir/%name
 
 %changelog
+* Mon Dec 03 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3178-alt4
+- Disable ubt macros due binary package identity changes
+
 * Wed Jul 11 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3178-alt3%ubt
 - Exclusive build for x86 architectures only
 
