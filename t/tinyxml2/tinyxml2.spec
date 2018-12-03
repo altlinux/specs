@@ -1,6 +1,6 @@
-%define soname 6
+%define soname 7
 Name: tinyxml2
-Version: 6.2.0
+Version: 7.0.1
 Release: alt1
 Summary: Simple, small, efficient, C++ XML parser
 License: zlib
@@ -82,6 +82,9 @@ doxygen dox
 %doc docs/*
 
 %changelog
+* Mon Dec 03 2018 Anton Farygin <rider@altlinux.ru> 7.0.1-alt1
+- 7.0.1
+
 * Fri May 04 2018 Anton Farygin <rider@altlinux.ru> 6.2.0-alt1
 - 6.2.0
 - package with shared library renamed for policy
