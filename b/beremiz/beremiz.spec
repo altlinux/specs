@@ -3,7 +3,7 @@
 %def_with docs
 Name: beremiz
 Version: 1.2
-Release: alt2.20180816
+Release: alt3.20181012
 
 Summary: Integrated development environment for machine automation
 Summary(ru_RU.UTF-8): Интегрированная среда разработки для ПЛК
@@ -78,7 +78,7 @@ Beremiz опирается на открытые стандарты, котор�
 %package -n python-module-%name
 Summary: Integrated development environment for machine automation
 Group: Development/Python
-Requires: python-module-wx3.0-gtk2
+#Requires: python-module-wx3.0-gtk2
 Requires: wxGlade
 Requires: python-module-twisted-core-test
 %py_requires cwiid umsgpack twisted.internet.wxsupport service_identity
@@ -102,7 +102,10 @@ Tests for python-module-%name
 %patch1 -p2
 %patch2 -p2
 
-#fix PATH to python
+# check_source.sh required python3
+rm -f tests/tools/check_source.sh
+
+# fix PATH to python
 sed 's|/usr/bin/env python|%_bindir/python|g' -i *.py
 
 find . -type f -print0 | xargs -0 dos2unix
@@ -253,6 +256,9 @@ desktop-file-install --dir=%buildroot%_desktopdir PLCOpenEditor.desktop
 %python_sitelibdir/%name/tests
 
 %changelog
+* Mon Dec 03 2018 Anton Midyukov <antohami@altlinux.org> 1.2-alt3.20181012
+- New snapshot
+
 * Fri Sep 07 2018 Anton Midyukov <antohami@altlinux.org> 1.2-alt2.20180816
 - New snapshot
 - Added support protocols: modbus and BACnet
