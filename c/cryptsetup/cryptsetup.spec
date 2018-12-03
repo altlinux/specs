@@ -5,8 +5,8 @@
 %define _root_sbindir /sbin
 
 Name: cryptsetup
-Version: 2.0.2
-Release: alt2
+Version: 2.0.6
+Release: alt1
 
 Summary: utility to setup a encrypted disks with LUKS support
 Summary(ru_RU.UTF-8): утилита управления зашифрованными дисковыми разделами с поддержкой LUKS
@@ -32,6 +32,7 @@ BuildRequires: libpasswdqc-devel
 BuildRequires: libjson-c-devel >= 0.12.1-alt2
 BuildRequires: libargon2-devel
 BuildRequires: libsystemd-devel
+BuildRequires: libblkid-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 
 # Need support for fixed gcrypt PBKDF2 and fixed Whirlpool hash.
@@ -214,6 +215,9 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %exclude %python_sitelibdir/*.la
 
 %changelog
+* Mon Dec 03 2018 Alexey Shabalin <shaba@altlinux.org> 2.0.6-alt1
+- 2.0.6
+
 * Fri Nov 23 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.0.2-alt2
 - broke tag re-signed
 
