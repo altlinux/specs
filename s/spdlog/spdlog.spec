@@ -1,6 +1,6 @@
 Name: spdlog
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: Super fast C++ logging library
 
@@ -45,11 +45,14 @@ applications that use %name.
 %files -n lib%name-devel
 %doc README.md example/
 %doc LICENSE
-%_includedir/spdlog/
-%_libdir/cmake/spdlog/*.cmake
+%_includedir/spdlog
+%_libdir/cmake/spdlog
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 03 2018 Paul Wolneykien <manowar@altlinux.org> 1.2.1-alt2
+- Fixed %_libdir/cmake/spdlog directory ownership.
+
 * Sun Nov 18 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
 - new version 1.2.1 (with rpmrb script)
 
