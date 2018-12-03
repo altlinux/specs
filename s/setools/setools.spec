@@ -4,7 +4,7 @@
 
 Name: setools
 Version: 4.1.1
-Release: alt1
+Release: alt2
 License: %gpl2plus
 URL: http://oss.tresys.com/projects/setools
 Source: %name-%version.tar
@@ -160,6 +160,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.1-alt2
+- Rebuilt with new swig and gcc (Closes: #35695)
+
 * Tue Feb 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.1-alt1
 - Updated to upstream version 4.1.1.
 

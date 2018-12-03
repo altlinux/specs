@@ -2,24 +2,29 @@
 Name: swig
 Epoch: 1
 Version: 3.0.12
-Release: alt4%ubt.1
+Release: alt5
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
 License: Open Source
 Group: Development/C
 Url: http://www.swig.org/
 
-Source: http://download.sourceforge.net/swig/%name-%version.tar.gz
+# http://download.sourceforge.net/swig/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch0: fix_import_package.patch
 Patch1: swig308-Do-not-use-isystem.patch
 Patch2: disable_gdb_interface.patch
 Patch3: fix-ocaml-int64-type.patch
 Patch4: fix-ocaml-tests.patch
 Patch5: fix-chicken-tests.patch
+# Based on https://github.com/swig/swig/commit/7c034ead322faa79ad7b94fe72250ce8a4fd5848
+Patch6: upstream-issue-1259-preparation.patch
+# Based on https://github.com/swig/swig/commit/7f9883011029674553a2a4b623d459f02b512458
+Patch7: upstream-issue-1259.patch
 
 %def_disable testsuite
 
-BuildRequires(pre): rpm-build-python3 rpm-build-ubt
+BuildRequires(pre): rpm-build-python3
 BuildPreReq: python-devel yodl chicken
 BuildPreReq: R-devel libpcre-devel boost-devel
 BuildPreReq: python3-devel python-tools-2to3 zlib-devel
@@ -149,6 +154,8 @@ This package contains SWIG runtime tcl library.
 %patch4 -p2
 %patch5 -p2
 %endif
+%patch6 -p2
+%patch7 -p2
 
 %build
 ./autogen.sh
@@ -241,11 +248,14 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
-* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1:3.0.12-alt4%ubt.1
+* Mon Dec 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.0.12-alt5
+- NMU: fixed code generated for python >= 2.3 and gcc-8.
+
+* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1:3.0.12-alt4.1
 - (NMU) Rebuild with new Ruby autorequirements.
 - Build with racket only on %ix86 and x86_64.
 
-* Tue Sep 26 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:3.0.12-alt4%ubt
+* Tue Sep 26 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:3.0.12-alt4
 - Fix import package (https://github.com/swig/swig/issues/769)
 
 * Thu Jul 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.0.12-alt3
