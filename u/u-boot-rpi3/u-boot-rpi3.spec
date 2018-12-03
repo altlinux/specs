@@ -1,5 +1,5 @@
 Name: u-boot-rpi3
-Version: 2018.07
+Version: 2018.11
 Release: alt1
 
 Summary: Das U-Boot
@@ -41,6 +41,9 @@ install -pm0644 -D u-boot.bin %buildroot%_datadir/u-boot/%rpi/%img
 %_datadir/u-boot/*
 
 %changelog
+* Mon Dec 03 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2018.11-alt1
+- 2018.11 released
+
 * Tue Sep 04 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2018.07-alt1
 - 2018.07 released
 
