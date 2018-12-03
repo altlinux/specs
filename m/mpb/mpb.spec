@@ -1,6 +1,6 @@
 Name: mpb
 Version: 1.5
-Release: alt2
+Release: alt3
 Summary: MIT Photonic Bands
 License: GPLv2+
 Group: Sciences/Physics
@@ -12,7 +12,8 @@ Source: %name-%version.tar
 BuildPreReq: /proc
 # Automatically added by buildreq on Sun Dec 10 2017
 # optimized out: glibc-kernheaders-generic guile18 guile18-devel indent libgfortran-devel libgmp-devel libhdf5-8-seq libltdl7-devel libopenblas-devel libquadmath-devel perl python-base zlib-devel
-BuildRequires: gcc-fortran libctl-devel libfftw3-devel libhdf5-devel liblapack-devel libnlopt-devel
+BuildRequires: gcc-fortran libctl-devel libfftw3-devel libhdf5-devel
+BuildRequires: liblapack-devel libnlopt-devel guile-devel
 
 Requires: lib%name = %EVR
 
@@ -114,6 +115,9 @@ export CPPFLAGS="%optflags"
 %_libdir/*.so
 
 %changelog
+* Mon Dec 03 2018 Grigory Ustinov <grenka@altlinux.org> 1.5-alt3
+- Rebuilt with guile22.
+
 * Sun Dec 10 2017 Dmitry V. Levin <ldv@altlinux.org> 1.5-alt2
 - Rebuilt with fftw3.
 
