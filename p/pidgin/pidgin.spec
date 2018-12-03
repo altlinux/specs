@@ -17,7 +17,8 @@
 %def_enable dot
 %def_enable doxygen
 %def_enable relnot
-%def_enable idn
+# disable idn, because it's deprecated, waiting for idn2 support
+%def_disable idn
 %def_enable farstream
 %def_enable gstreamer
 %def_enable screensaver
@@ -33,7 +34,7 @@
 
 Name: pidgin
 Version: 2.13.0
-Release: alt1
+Release: alt2
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPL
@@ -456,6 +457,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.13.0-alt2
+- Rebuild without libidn support, because it's deprecated.
+
 * Thu Mar 29 2018 Alexey Shabalin <shaba@altlinux.ru> 2.13.0-alt1
 - 2.13.0
 
