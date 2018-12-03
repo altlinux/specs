@@ -7,8 +7,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.6.4
-Release: alt1.1
+Version: 2.6.5
+Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -46,21 +46,21 @@ Summary: Wireshark base package
 Group: Monitoring
 Obsoletes: ethereal-libs < 0.10.10
 Obsoletes: ethereal-base
-Conflicts: libwiretap < %version-%release
-Conflicts: libwiretap > %version-%release
+Conflicts: libwiretap < %EVR
+Conflicts: libwiretap > %EVR
 
 %package qt5
 Summary: QT5 GUI for Wireshark package
 Group: Monitoring
-Requires: %name-base = %version-%release
-Provides: %name = %version-%release
+Requires: %name-base = %EVR
+Provides: %name = %EVR
 Requires: url_handler
 Obsoletes: ethereal
 
 %package -n tshark
 Summary: Console GUI for Wireshark package
 Group: Monitoring
-Requires: %name-base = %version-%release
+Requires: %name-base = %EVR
 Obsoletes: tethereal
 
 %package doc
@@ -79,8 +79,13 @@ Group: System/Libraries
 %package -n libwiretap-devel
 Summary: Development environment for Wiretap library
 Group: Development/C
-Requires: libwiretap = %version-%release
+Requires: libwiretap = %EVR
 Obsoletes: %name-devel
+
+%package devel
+Summary: Development environment for wireshark extensions 
+Group: Development/C
+Requires: wireshark-base = %EVR
 
 %description
 Wireshark (formerly Ethereal) is a network protocol analyzer, or
@@ -126,6 +131,10 @@ libpcap, the current standard Unix library for packet capturing.
 
 This package contains development files needed to develop wiretap-based
 applications.
+
+%description devel
+This package contains development files needed to develop wireshark
+extensions.
 
 %prep
 %setup
@@ -256,6 +265,7 @@ _EOF_
 %_niconsdir/wireshark.png
 %_liconsdir/wireshark.png
 %_xdgmimedir/packages/%name.xml
+%_datadir/appdata/wireshark.appdata.xml
 
 %files qt5
 %_altdir/%name-qt5
@@ -276,7 +286,27 @@ _EOF_
 %_includedir/wiretap
 %_libdir/libwiretap.so
 
+%files devel
+%_includedir/wireshark
+%_libdir/libwireshark.so
+%_libdir/libwscodecs.so
+%_libdir/libwsutil.so
+%_pkgconfigdir/wireshark.pc
+
+
 %changelog
+* Mon Dec 03 2018 Anton Farygin <rider@altlinux.ru> 2.6.5-alt1
+- 2.6.5
+- added devel package (closes: #29869)
+- fixes:
+     * The Wireshark dissection engine could crash. CVE-2018-19625
+     * The DCOM dissector could crash. CVE-2018-19626
+     * The LBMPDM dissector could crash. CVE-2018-19623
+     * The MMSE dissector could go into an infinite loop. CVE-2018-19622
+     * The IxVeriWave file parser could crash. CVE-2018-19627
+     * The PVFS dissector could crash. CVE-2018-19624
+     * The ZigBee ZCL dissector could crash. CVE-2018-19628
+
 * Tue Oct 16 2018 Michael Shigorin <mike@altlinux.org> 2.6.4-alt1.1
 - introduce nghttp2 knob (on by default)
 - E2K: link against -lcxa explicitly with lcc below 1.23
