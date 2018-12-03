@@ -2,39 +2,25 @@
 
 Name:    puppet
 Version: 6.0.4
-Release: alt1
+Release: alt2
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
 License: ASL 2.0
-URL:     https://puppetlabs.com/
+URL:     https://github.com/puppetlabs/puppet
 
 BuildArch: noarch
 
 Source:  %name-%version.tar
-Patch:   %name-%version-%release.patch
+Patch:   %name-%version.patch
 Source1: client.init
 Source3: puppet.service
 Source5: puppet-nm-dispatcher
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-em-http-request
-BuildRequires: ruby-eventmachine
+BuildRequires: ruby-tool-setup
 BuildRequires: ruby-facter
-BuildRequires: ruby-hashie
-BuildRequires: ruby-heredoc_unindent
 BuildRequires: ruby-hiera
-BuildRequires: ruby-pathspec
-BuildRequires: ruby-plist
-BuildRequires: ruby-rgen
-BuildRequires: ruby-safe_yaml
-
-Requires: shadow-change
-Conflicts: ruby-semantic
-
-%filter_from_requires /CFPropertyList/d
-Requires: ruby-gem(pathspec)
-Requires: ruby-gem(deep_merge)
 
 %description
 Puppet lets you centrally manage every important aspect of your
@@ -186,6 +172,9 @@ rm -rf %buildroot%_sysconfdir/{*.conf,hiera.yaml}
 %rubygem_specdir/*
 
 %changelog
+* Mon Dec 03 2018 Pavel Skrylev <majioa@altlinux.org> 6.0.4-alt2
+- Repack to avoid unnecessary deps.
+
 * Thu Nov 01 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.4-alt1
 - New version.
 
