@@ -1,7 +1,7 @@
 %define libcontrolppver 0.17
 
 Name: control++
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 
 Summary: System configuration tool
@@ -54,10 +54,18 @@ cp readme.txt %buildroot%_defaultdocdir/%name/
 %files
 %_bindir/%name
 %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/%name.conf
 %_localstatedir/%name
 %_defaultdocdir/%name
 
 %changelog
+* Mon Dec 03 2018 Alexey Appolonov <alexey@altlinux.org> 0.15.0-alt1
+- Mode reset is marked by cleared internal configuration file;
+- 'mode for dirs' is applicable for all directories, not nested only;
+- Attempt to set neutral mode is not qualified as error;
+- Fix of the segmentation violation;
+- New samples.
+
 * Fri Nov 30 2018 Alexey Appolonov <alexey@altlinux.org> 0.14.0-alt1
 - Ability to recursively process listed files ('list_r', 'whitelist' and
   'blacklist' sections) by the permissions unit;
