@@ -1,9 +1,6 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: %_bindir/git %_bindir/svnversion glib2-devel libICE-devel libSM-devel libglpk36-devel libgnutls-devel libidn-devel libltdl7-devel libmicrohttpd-devel libmariadb-devel libpq-devel libunistring-devel pkgconfig(libgtop-2.0) python-devel
-# END SourceDeps(oneline)
 Name: gnunet
-Version: 0.10.1
-Release: alt4
+Version: 0.11.0pre666
+Release: alt1
 
 Summary: Peer-to-peer framework
 
@@ -17,10 +14,13 @@ Source: http://ftpmirror.gnu.org/gnunet/%name-%version.tar
 Source1: gnunetd.init.altlinux
 Source2: gnunetd.service
 
-# manually removed: libqt3-devel libqt4-devel  xorg-cf-files
-# Automatically added by buildreq on Mon Feb 01 2010
-BuildRequires: gcc-c++ glibc-devel-static imake libmariadb-devel libcurl-devel libextractor-devel libgcrypt-devel libglade-devel libncursesw-devel libsqlite3-devel zlib-devel
+Patch1: gnunet-libidn2.patch
+
+BuildRequires: gcc-c++ libmysqlclient-devel libgnurl-devel libextractor-devel libgcrypt-devel libglade-devel libncursesw-devel libsqlite3-devel zlib-devel
+#BuildRequires: %_bindir/git %_bindir/svnversion libICE-devel libSM-devel 
+BuildRequires: glib2-devel libglpk36-devel libgnutls-devel libltdl7-devel libmicrohttpd-devel libpq-devel libunistring-devel pkgconfig(libgtop-2.0) python-devel
 BuildRequires: libpulseaudio-devel libopus-devel libogg-devel
+BuildRequires: libidn2-devel libjansson-devel
 
 %description
 GNUnet is a peer-to-peer framework with focus on providing security. All
@@ -55,13 +55,15 @@ applications which will use %name.
 
 %prep
 %setup
+%patch1 -p1
+
 # broken --disable-testing
 %__subst "s|ats-tests||" src/Makefile.*
 
 %build
 %autoreconf
 # disable testing due recursive linking bug
-%configure --disable-rpath --disable-testing
+%configure --disable-rpath --disable-testing --disable-documentation
 %make_build V=1 || %make V=1
 
 %install
@@ -81,27 +83,35 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_bindir/gnunet-arm
 %_bindir/gnunet-ats
 %_bindir/gnunet-auto-share
+%_bindir/gnunet-cadet
 %_bindir/gnunet-config
 %_bindir/gnunet-core
 %_bindir/gnunet-directory
+%_bindir/gnunet-dht-get
+%_bindir/gnunet-dht-monitor
+%_bindir/gnunet-dht-put
 %_bindir/gnunet-download
 %_bindir/gnunet-download-manager.scm
 #%_bindir/gnunet-ecc
 %_bindir/gnunet-fs
 %_bindir/gnunet-gns
-%_bindir/gnunet-gns-import.sh
+#_bindir/gnunet-gns-import.sh
 %_bindir/gnunet-gns-proxy-setup-ca
-%_bindir/gnunet-mesh
+#_bindir/gnunet-mesh
 %_bindir/gnunet-namestore
+%_bindir/gnunet-nat
+%_bindir/gnunet-nat-auto
 %_bindir/gnunet-nat-server
 %_bindir/gnunet-peerinfo
+%_bindir/gnunet-peerstore
 #%_bindir/gnunet-pseudonym
 %_bindir/gnunet-publish
 %_bindir/gnunet-resolver
 #%_bindir/gnunet-rsa
 %_bindir/gnunet-search
+%_bindir/gnunet-scalarproduct
 %_bindir/gnunet-statistics
-%_bindir/gnunet-template
+#_bindir/gnunet-template
 #%_bindir/gnunet-testing
 #%_bindir/gnunet-testing-run-service
 %_bindir/gnunet-transport
@@ -118,12 +128,13 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_bindir/gnunet-nse
 %_bindir/gnunet-qr
 %_bindir/gnunet-revocation
-%_bindir/gnunet-set-ibf-profiler
-%_bindir/gnunet-set-profiler
+%_bindir/gnunet-zoneimport
+#_bindir/gnunet-set-ibf-profiler
+#_bindir/gnunet-set-profiler
 
-%_libexecdir/gnunet/libexec/gnunet-helper-audio-playback
-%_libexecdir/gnunet/libexec/gnunet-helper-audio-record
-%_libexecdir/gnunet/libexec/gnunet-service-conversation
+#_libexecdir/gnunet/libexec/gnunet-helper-audio-playback
+#_libexecdir/gnunet/libexec/gnunet-helper-audio-record
+#_libexecdir/gnunet/libexec/gnunet-service-conversation
 
 %_datadir/gnunet/
 %_initdir/gnunetd
@@ -134,6 +145,9 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_libdir/libgnunetarm.so.*
 %_libdir/libgnunetats.so.*
 %_libdir/libgnunetblock.so.*
+%_libdir/libgnunetblockgroup.so.*
+%_libdir/libgnunetcadet.so.*
+%_libdir/libgnunetconsensus.so.*
 %_libdir/libgnunetcore.so.*
 %_libdir/libgnunetdatacache.so.*
 %_libdir/libgnunetdatastore.so.*
@@ -147,15 +161,26 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 #%_libdir/libgnunetgns_common.so.*
 %_libdir/libgnunethello.so.*
 #%_libdir/libgnunetlockmanager.so.*
-%_libdir/libgnunetmesh.so.*
+#_libdir/libgnunetmesh.so.*
+%_libdir/libgnunetmy.so.*
 %_libdir/libgnunetmysql.so.*
 %_libdir/libgnunetnamestore.so.*
-%_libdir/libgnunetnat.so.*
+%_libdir/libgnunetnatauto.so.*
+%_libdir/libgnunetnatnew.so.*
 %_libdir/libgnunetnse.so.*
 %_libdir/libgnunetpeerinfo.so.*
+%_libdir/libgnunetpeerstore.so.*
+%_libdir/libgnunetrest.so.*
 %_libdir/libgnunetregex.so.*
 %_libdir/libgnunetregexblock.so.*
 %_libdir/libgnunetstatistics.so.*
+%_libdir/libgnunetscalarproduct.so.*
+%_libdir/libgnunetsecretsharing.so.*
+%_libdir/libgnunetsq.so.*
+%_libdir/libgnunetcurl.so.*
+%_libdir/libgnunetjson.so.*
+%_libdir/libgnunetjsonapi.so.*
+%_libdir/libgnunetjsonapiutils.so.*
 #%_libdir/libgnunetstream.so.*
 #%_libdir/libgnunettestbed.so.*
 #%_libdir/libgnunettesting.so.*
@@ -180,6 +205,7 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_pkgconfigdir/gnunetarm.pc
 %_pkgconfigdir/gnunetats.pc
 %_pkgconfigdir/gnunetblock.pc
+%_pkgconfigdir/gnunetcadet.pc
 %_pkgconfigdir/gnunetcore.pc
 %_pkgconfigdir/gnunetdatacache.pc
 %_pkgconfigdir/gnunetdatastore.pc
@@ -192,14 +218,15 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_pkgconfigdir/gnunetgns.pc
 %_pkgconfigdir/gnunethello.pc
 #%_pkgconfigdir/gnunetlockmanager.pc
-%_pkgconfigdir/gnunetmesh.pc
+#_pkgconfigdir/gnunetmesh.pc
 %_pkgconfigdir/gnunetmysql.pc
 %_pkgconfigdir/gnunetnamestore.pc
 %_pkgconfigdir/gnunetnat.pc
 %_pkgconfigdir/gnunetnse.pc
 %_pkgconfigdir/gnunetpeerinfo.pc
-%_pkgconfigdir/gnunetpostgres.pc
+#_pkgconfigdir/gnunetpostgres.pc
 %_pkgconfigdir/gnunetregex.pc
+%_pkgconfigdir/gnunetrps.pc
 %_pkgconfigdir/gnunetstatistics.pc
 #%_pkgconfigdir/gnunetstream.pc
 %_pkgconfigdir/gnunettestbed.pc
@@ -224,6 +251,10 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_libdir/pkgconfig/gnunetspeaker.pc
 
 %changelog
+* Mon Nov 26 2018 Vitaly Lipatov <lav@altlinux.ru> 0.11.0pre666-alt1
+- new version 0.11.0pre666 (with rpmrb script)
+- build with libidn2
+
 * Mon Sep 17 2018 Alexey Shabalin <shaba@altlinux.org> 0.10.1-alt4
 - rebuild with libmicrohttpd-0.9.59
 
