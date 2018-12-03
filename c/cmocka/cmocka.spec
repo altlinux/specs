@@ -2,7 +2,7 @@
 
 Name: cmocka
 Version: 1.1.1
-Release: alt1%ubt
+Release: alt2
 
 License: ASL 2.0
 Group: Development/Tools
@@ -10,8 +10,6 @@ Summary: Lightweight library to simplify and generalize unit tests for C
 Url: http://cmocka.org
 
 Source: %name-%version.tar
-
-BuildRequires(pre):rpm-build-ubt
 
 BuildRequires: cmake ctest
 BuildRequires: doxygen
@@ -120,6 +118,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Dec 03 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.1.1-alt2
+- Disable ubt macros due binary package identity changes
+
 * Mon Apr 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.1.1-alt1%ubt
 - 1.1.1
 - Build package with unified build tag aka ubt macros
