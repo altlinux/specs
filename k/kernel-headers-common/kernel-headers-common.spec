@@ -1,11 +1,11 @@
 Name: kernel-headers-common
-Version: 1.2.6
+Version: 1.2.7
 Release: alt1
 
 Summary: Common header files for the Linux kernel
 License: GPL
 Group: Development/Kernel
-ExclusiveArch: %ix86 x86_64 %arm aarch64 %e2k
+ExclusiveArch: %ix86 x86_64 %arm aarch64 %e2k %mips riscv64 ppc ppcle ppc64 ppc64le
 
 Source0: adjust_kernel_headers
 Source1: adjust_kernel_headers.8
@@ -25,6 +25,18 @@ Source4: kheaders.filetrigger
 %endif
 %ifarch aarch64
 %define base_arch arm64
+%endif
+%ifarch %mips
+%define base_arch mips
+%endif
+%ifarch s390x
+%define base_arch s390
+%endif
+%ifarch riscv64
+%define base_arch riscv
+%endif
+%ifarch ppc ppcle ppc64 ppc64le
+%define base_arch powerpc
 %endif
 
 %define _unpackaged_files_terminate_build 1
@@ -119,6 +131,9 @@ done
 %ghost /var/run/kernel/*
 
 %changelog
+* Mon Dec 03 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.7-alt1
+- Added support of mips*, s390x, riscv64, and power* architectures.
+
 * Sat Jan 16 2016 Michael Shigorin <mike@altlinux.org> 1.2.6-alt1
 - Added e2k architecture support.
 
