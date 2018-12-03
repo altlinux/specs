@@ -3,8 +3,8 @@
 %def_enable sasl
 
 Name: memcached
-Version: 1.5.10
-Release: alt1%ubt
+Version: 1.5.12
+Release: alt1
 
 Summary: memcached - memory caching daemon
 License: BSD
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 %define pkg_user memcached
 %define pkg_group memcached
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libevent-devel perl-devel perl-AnyEvent perl-YAML perl-Term-ReadKey
 %{?_enable_seccomp:BuildRequires: libseccomp-devel}
 %{?_enable_sasl:BuildRequires: libsasl2-devel}
@@ -105,6 +104,9 @@ fi
 %_man1dir/%name-tool.*
 
 %changelog
+* Thu Nov 29 2018 Alexey Shabalin <shaba@altlinux.org> 1.5.12-alt1
+- 1.5.12
+
 * Fri Aug 24 2018 Alexey Shabalin <shaba@altlinux.org> 1.5.10-alt1%ubt
 - 1.5.10
 
