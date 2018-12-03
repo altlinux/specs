@@ -1,5 +1,5 @@
 Name: libunistring2
-Version: 0.9.8
+Version: 0.9.10
 Release: alt1
 
 Summary: GNU Unicode string library
@@ -7,7 +7,7 @@ License: GPLV2+ or LGPLv3+
 Group: System/Libraries
 Url: http://www.gnu.org/software/libunistring/
 %define srcname libunistring-%version
-# ftp://ftp.gnu.org/gnu/libunistring/%srcname.tar.xz
+# https://ftp.gnu.org/gnu/libunistring/%srcname.tar.xz
 Source: %srcname.tar
 %def_disable static
 Provides: libunistring = %version-%release
@@ -30,11 +30,16 @@ This package contains development files for programs building with libunistring.
 %prep
 %setup -n %srcname
 
-%build
 # Disable printf_safe for a while,
 # required to enforce build using system vfprintf().
 subst --preserve 's/gl_printf_safe=yes/gl_printf_safe=/' \
 	gnulib-m4/gnulib-comp.m4 configure
+
+# Taken from gnulib.
+grep -lZ '^test_.*@LIBMULTITHREAD@' tests/Makefile.* |
+        xargs -r0 sed -i '/^test_.*@LIBMULTITHREAD@/ s/@LIBMULTITHREAD@/-Wl,--push-state,--no-as-needed,-lpthread,--pop-state/' --
+
+%build
 %configure %{subst_enable static}
 %make_build
 
@@ -48,6 +53,9 @@ for f in %buildroot%_libdir/*.so; do
         ln -fnrs %buildroot/%_lib/"$t" "$f"
 done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
+
+%check
+%make_build -k check VERBOSE=1
 
 %files
 /%_lib/*.so.*
@@ -63,6 +71,10 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %endif
 
 %changelog
+* Mon Dec 03 2018 Dmitry V. Levin <ldv@altlinux.org> 0.9.10-alt1
+- 0.9.8 -> 0.9.10.
+- Added %%check.
+
 * Wed Jan 31 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.8-alt1
 - 0.9.7 -> 0.9.8
 - Move library %_libdir -> /%_lib (for libidn2)
