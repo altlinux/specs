@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3.0
-Release: alt1.1.1
+Version: 1.5.1
+Release: alt1
 
 Summary: A decorator for caching properties in classes.
 
@@ -77,6 +77,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 4 2018 Vladimir Didenko <cow@altlinux.ru> 1.5.1-alt1
+- 1.5.1
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.0-alt1.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).
