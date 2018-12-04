@@ -1,6 +1,6 @@
 Name: neko
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: The Neko Programming Language
 
@@ -14,9 +14,11 @@ Source: %name-%version.tar
 
 Patch1: neko-apr-util.patch
 
+BuildRequires: /proc
+
 BuildRequires: rpm-macros-cmake cmake git-core
 
-BuildRequires: apache2-devel libgc-devel libgtk+2-devel libmysqlclient-devel libpcre-devel libsqlite3-devel libmbedtls-devel libaprutil1-devel libapr1-devel
+BuildRequires: apache2-devel libgc-devel libgtk+2-devel libssl-devel libmysqlclient-devel libpcre-devel libsqlite3-devel libmbedtls-devel libaprutil1-devel libapr1-devel
 
 Requires: lib%name = %version-%release
 
@@ -81,6 +83,10 @@ mv %buildroot%_libdir/cmake/Neko %buildroot/usr/share/cmake/Modules/
 
 
 %changelog
+* Tue Dec 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt2
+- add libssl-devel buildreq
+- add /proc buildreq (ALT bug 35723)
+
 * Mon Jun 18 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
 - new version 2.2.0 (with rpmrb script)
 - build from tarball
