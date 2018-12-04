@@ -28,7 +28,7 @@
 
 Name: freeipa
 Version: 4.7.1
-Release: alt3
+Release: alt4
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -138,7 +138,7 @@ Requires: %name-client = %EVR
 Requires: acl
 Requires: gssproxy
 Requires: sssd-dbus >= %sssd_version
-Requires: selinux-policy
+Requires: selinux-policy-alt
 Requires: pki-ca >= %pki_version
 Requires: pki-kra >= %pki_version
 Requires: certmonger
@@ -922,6 +922,9 @@ fi
 %_man1dir/ipa-test-task.1*
 
 %changelog
+* Tue Dec 04 2018 Stanislav Levin <slev@altlinux.org> 4.7.1-alt4
+- Drop Requires on selinux-policy (closes: #35686).
+
 * Wed Oct 24 2018 Stanislav Levin <slev@altlinux.org> 4.7.1-alt3
 - Added support for separated IPA plugins.
 
