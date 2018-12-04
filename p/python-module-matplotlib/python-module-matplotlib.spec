@@ -1,7 +1,6 @@
 # TODO: fix dest on x86_64
 # TODO: Move mpl-data to share?
 # TODO: gtk3 knob too?
-
 %define oname matplotlib
 %define major 2.2
 
@@ -13,7 +12,7 @@
 
 Name: python-module-%oname
 Version: %major.3
-Release: alt1
+Release: alt2
 
 Summary: Matlab(TM) style python plotting package
 
@@ -48,6 +47,7 @@ BuildRequires: python-module-html5lib
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3 python3-devel 
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-numpy-testing python3-module-pycairo python3-module-pygobject3 python3-modules-tkinter python3-module-cycler python3-module-pyparsing python3-module-pytz python3-module-dateutil
 %{?_with_qt4:BuildRequires: python3-module-PyQt4}
 %{?_with_qt5:BuildRequires: python3-module-PyQt5}
@@ -58,7 +58,7 @@ BuildRequires: python3-module-numpy-testing python3-module-pycairo python3-modul
 %add_python_req_skip _winreg builtins
 #py_provides backend_agg
 %py_requires functools32
-%py_requires numpy pytz six subprocess32
+%py_requires numpy pytz six subprocess32 backports.functools_lru_cache
 
 %description
 matplotlib is a pure python 2D plotting library with a Matlab(TM)
@@ -83,7 +83,6 @@ Requires: python3-module-mpl_toolkits = %EVR
 #py3_provides matplotlib.externals.six.moves
 #py3_provides matplotlib.externals.six.moves.urllib.parse
 #py3_provides matplotlib.externals.six.moves.urllib.request
-%py3_requires pytz
 
 %description -n python3-module-%oname
 matplotlib is a pure python 2D plotting library with a Matlab(TM)
@@ -216,7 +215,6 @@ mpl_toolkits extension for %oname.
 Summary: Tests for mpl_toolkits
 Group: Development/Python3
 Requires: python3-module-mpl_toolkits = %version-%release
-Requires: python3-module-%oname-tests = %version-%release
 
 %description -n python3-module-mpl_toolkits-tests
 Tests for mpl_toolkits.
@@ -381,7 +379,6 @@ mpl_toolkits extension for %oname.
 Summary: Tests for mpl_toolkits
 Group: Development/Python
 Requires: python-module-mpl_toolkits
-Requires: %name-tests = %version-%release
 
 %description -n python-module-mpl_toolkits-tests
 Tests for mpl_toolkits.
@@ -402,16 +399,19 @@ sed -i "s|@TOP@|$PWD|" doc/conf.py \
 install -p -m644 %SOURCE1 .
 
 %if_with python3
-rm -rf ../python3
-cp -a . ../python3
-pushd ../python3
+rm -rf ../python3-module-matplotlib-%version
+cp -a . ../python3-module-matplotlib-%version
+pushd ../python3-module-matplotlib-%version
+echo -e "[versioneer]\nparentdir_prefix=python3-module-matplotlib-" >> setup.cfg
+popd
 %endif
+echo -e "[versioneer]\nparentdir_prefix=python-module-matplotlib-" >> setup.cfg
 
 %build
 #export XDG_RUNTIME_DIR=%_xdgdatadir
 %add_optflags -fno-strict-aliasing -fpermissive
 %if_with python3
-pushd ../python3
+pushd ../python3-module-matplotlib-%version
 #sed -i 's|^\(gtkagg\).*|\1 = False|' setup.cfg
 #sed -i 's|^\(gtk3agg\).*|\1 = False|' setup.cfg
 #sed -i 's|^\(tkagg\).*|\1 = False|' setup.cfg
@@ -430,7 +430,7 @@ sed -i 's|^\(wxagg\).*|\1 = False|' setup.cfg
 %install
 #export XDG_RUNTIME_DIR=%_xdgdatadir
 %if_with python3
-pushd ../python3
+pushd ../python3-module-matplotlib-%version
 %python3_install
 
 cp -fR lib/mpl_toolkits %buildroot%python3_sitelibdir/
@@ -520,8 +520,8 @@ sed -i 's|^\(backend\).*|\1 : GTK3Cairo|' \
 #done
 #popd
 
-#find %buildroot%python3_sitelibdir/ -type f -exec sed -i 's|%_bindir/python|%_bindir/python3|' -- '{}' +
-#find %buildroot%python3_sitelibdir/ -type f -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
+#find %buildroot%python3_sitelibdir/ -type f -exec sed -i 's|%_bindir/python|%_bind../python3-module-matplotlib-%version|' -- '{}' +
+#find %buildroot%python3_sitelibdir/ -type f -exec sed -i 's|%_bindir/env python|%_bind../python3-module-matplotlib-%version|' -- '{}' +
 
 %pre
 rm -f %python_sitelibdir/%oname/mpl-data/fonts/ttf/Vera*.ttf
@@ -568,6 +568,7 @@ done
 %python_sitelibdir/matplotlib/style
 #python_sitelibdir/matplotlib/externals
 %exclude %python_sitelibdir/mpl_toolkits
+%python_sitelibdir/%oname/testing
 
 %files cairo
 %python_sitelibdir/matplotlib/backends/backend_cairo*
@@ -640,10 +641,6 @@ rm -fR %_docdir/%name/pdf
 %python_sitelibdir/%oname/pickle
 %endif
 
-%files tests
-%python_sitelibdir/%oname/testing
-#python_sitelibdir/%oname/tests
-
 %files sphinxext
 %python_sitelibdir/%oname/sphinxext
 #exclude %python_sitelibdir/%oname/sphinxext/test*
@@ -709,6 +706,7 @@ rm -fR %_docdir/%name/pdf
 %python3_sitelibdir/matplotlib/style
 #python3_sitelibdir/matplotlib/externals
 %exclude %python3_sitelibdir/mpl_toolkits
+%python3_sitelibdir/%oname/testing
 
 %files -n python3-module-%oname-cairo
 %python3_sitelibdir/matplotlib/backends/backend_cairo*
@@ -766,10 +764,6 @@ rm -fR %_docdir/%name/pdf
 %python3_sitelibdir/matplotlib/backends/__pycache__/qt*_compat.*
 %python3_sitelibdir/matplotlib/backends/qt_editor
 
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/%oname/testing
-#python3_sitelibdir/%oname/tests
-
 %files -n python3-module-%oname-sphinxext
 %python3_sitelibdir/%oname/sphinxext
 #exclude %python3_sitelibdir/%oname/sphinxext/test*
@@ -784,6 +778,11 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Tue Dec 04 2018 Andrey Cherepanov <cas@altlinux.org> 2.2.3-alt2
+- Package testing module in main package (ALT #35714).
+- Drop tests subpackages.
+- Requires backports.functools_lru_cache module.
+
 * Mon Nov 26 2018 Andrey Cherepanov <cas@altlinux.org> 2.2.3-alt1
 - New version.
 
