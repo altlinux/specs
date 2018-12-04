@@ -1,6 +1,6 @@
 Name: linphone
 Version: 3.12.0
-Release: alt4
+Release: alt5
 License: GPLv2+
 Url: http://www.linphone.org/
 
@@ -83,9 +83,12 @@ This package contains development files for %name.
 %prep
 %setup
 #%%patch0 -p1
-./autogen.sh
 
 %build
+
+%add_optflags %optflags_shared %optflags_strict %optflags_notraceback -Wno-error=cast-function-type -Wno-error=sizeof-pointer-memaccess -Wno-error=format-truncation
+
+./autogen.sh
 %configure --enable-external-ortp \
  --enable-external-mediastreamer \
  --enable-ipv6 \
@@ -150,6 +153,9 @@ This package contains development files for %name.
 
 
 %changelog
+* Tue Dec 04 2018 Alexei Takaseev <taf@altlinux.org> 3.12.0-alt5
+- Fix build with gcc-8
+
 * Thu Oct 25 2018 Anton Farygin <rider@altlinux.ru> 3.12.0-alt4
 - enabled ldap support
 
