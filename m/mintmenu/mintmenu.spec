@@ -3,8 +3,8 @@
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
 
 Name:           mintmenu
-Version:        5.9.0
-Release:        alt6
+Version:        5.9.1
+Release:        alt1
 Epoch:          1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
@@ -158,6 +158,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-baseal
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Tue Dec 04 2018 Andrey Cherepanov <cas@altlinux.org> 1:5.9.1-alt1
+- New version.
+
 * Mon Nov 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 1:5.9.0-alt6
 - uninstall packages removed
 
