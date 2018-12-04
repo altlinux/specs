@@ -1,5 +1,5 @@
 Name:           nss_wrapper
-Version:        1.1.3
+Version:        1.1.5
 Release:        alt1
 License:        BSD
 Group:          Development/Other
@@ -65,7 +65,7 @@ pushd obj
 popd
 
 %files
-%doc AUTHORS README ChangeLog COPYING
+%doc AUTHORS README ChangeLog LICENSE
 %_bindir/nss_wrapper.pl
 %_libdir/libnss_wrapper.so*
 %dir %_libdir/cmake/nss_wrapper
@@ -75,5 +75,8 @@ popd
 %_mandir/man1/nss_wrapper.1*
 
 %changelog
+* Tue Dec 04 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.1.5-alt1
+- Update to latest release with compatibility fixes
+
 * Mon Aug 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.3-alt1
 - Initial build for ALT.
