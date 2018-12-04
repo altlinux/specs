@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.30
+Version: 0.31
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -23,6 +23,9 @@ Requires: dmidecode ddcprobe
 %endif
 Requires: altquire
 Requires: agetty
+
+# /sbin/rescue-launcher is optional too
+%filter_from_requires /rescue\-launcher/d
 
 Conflicts: startup-school-rescue startup-nanolive
 
@@ -61,6 +64,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Tue Dec 04 2018 Leonid Krivoshein <klark@altlinux.org> 0.31-alt1
+- optional feature added: autorun on the first terminal
+
 * Mon Oct 15 2018 Michael Shigorin <mike@altlinux.org> 0.30-alt1
 - support overlayfs too
 
