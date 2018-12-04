@@ -1,8 +1,8 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 4.0.1
-Release: alt1.1
+Version: 4.0.2
+Release: alt1
 Summary: Extensions for Nemo
 
 License: %gpl2plus and %lgpl2only
@@ -297,6 +297,9 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_bindir/nemo-compare-preferences
 
 %changelog
+* Tue Dec 4 2018 Vladimir Didenko <cow@altlinux.org> 4.0.2-alt1
+- 4.0.2
+
 * Tue Nov 20 2018 Vladimir Didenko <cow@altlinux.org> 4.0.1-alt1.1
 - Fix build
 

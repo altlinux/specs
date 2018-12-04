@@ -4,7 +4,7 @@
 %def_enable python
 
 Name: xed
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: xed is a small and lightweight text editor.
@@ -143,6 +143,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*
 
 %changelog
+* Wed Dec 5 2018 Vladimir Didenko <cow@altlinux.org> 2.0.1-alt1
+- New version
+
 * Wed Nov 21 2018 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1
 - New version
 

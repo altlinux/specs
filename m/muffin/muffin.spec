@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: muffin
-Version: 4.0.2
-Release: alt1.1
+Version: 4.0.3
+Release: alt1
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -155,6 +155,7 @@ cp %SOURCE1 m4/
 %_man1dir/muffin-message.1*
 %_bindir/muffin
 %_bindir/muffin-message
+%_libexecdir/muffin-restart-helper
 %_desktopdir/*.desktop
 %_datadir/muffin
 %_datadir/glib-2.0/schemas/org.cinnamon.muffin.gschema.xml
@@ -193,6 +194,9 @@ cp %SOURCE1 m4/
 
 
 %changelog
+* Tue Dec 4 2018 Vladimir Didenko <cow@altlinux.org> 4.0.3-alt1
+- 4.0.3-3-gc3ffb54
+
 * Fri Nov 23 2018 Vladimir Didenko <cow@altlinux.org> 4.0.2-alt1.1
 - fix requires and provides
 
