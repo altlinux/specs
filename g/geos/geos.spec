@@ -4,8 +4,8 @@
 %def_without python3
 
 Name: geos
-Version: 3.7.0
-Release: alt2
+Version: 3.7.1
+Release: alt1
 
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
@@ -215,6 +215,9 @@ make check || exit 0
 %doc doc/doxygen_docs/html/*
 
 %changelog
+* Tue Dec 04 2018 Andrey Cherepanov <cas@altlinux.org> 3.7.1-alt1
+- New version.
+
 * Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 3.7.0-alt2
 - Replace e2k arch name with %e2k macro (grenka@)
 
