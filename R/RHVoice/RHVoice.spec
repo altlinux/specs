@@ -1,5 +1,5 @@
 Name: RHVoice
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: RHVoice is a Russian speech synthesizer written by Olga Yakovleva
@@ -104,6 +104,9 @@ scons install DESTDIR=%buildroot prefix=%_prefix libdir=%_libdir sysconfdir=%_sy
 %_includedir/RHVoice_common.h
 
 %changelog
+* Tue Dec 04 2018 Vitaly Lipatov <lav@altlinux.ru> 0.7.1-alt1
+- new version 0.7.1 (with rpmrb script)
+
 * Wed Jun 20 2018 Vitaly Lipatov <lav@altlinux.ru> 0.7.0-alt1
 - new version 0.7.0 (with rpmrb script)
 
