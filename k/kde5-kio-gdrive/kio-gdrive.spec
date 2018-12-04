@@ -6,14 +6,14 @@
 %define libktcore libktcore%sover
 
 Name: kde5-%rname
-Version: 1.2.3
-Release: alt1%ubt
+Version: 1.2.5
+Release: alt1
 %K5init
 
 Group:     Networking/File transfer
 Summary:   KIO-client for Google Drive
 License:   GPLv2 / GPLv3
-URL:       https://quickgit.kde.org/?p=kio-gdrive.git
+URL:       https://cgit.kde.org/kio-gdrive.git/
 
 Source: %rname-%version.tar
 Source10: kio5_gdrive_ru.po
@@ -60,6 +60,9 @@ cat %SOURCE10 >po/ru/kio5_gdrive.po
 %endif
 
 %changelog
+* Tue Dec 04 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.5-alt1
+- new version
+
 * Tue May 08 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.3-alt1%ubt
 - new version
 
