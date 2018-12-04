@@ -1,7 +1,7 @@
 %define pypi_name pelican
 
 Name: python-module-%pypi_name
-Version: 3.7.1
+Version: 4.0.1
 Release: alt1
 Summary: A tool to generate a static blog from reStructuredText or Markdown input files
 Group: Development/Python
@@ -55,7 +55,6 @@ rm -rf %pypi_name.egg-info
 sed -i '1d' pelican/tools/pelican_import.py
 sed -i '1d' pelican/tools/pelican_quickstart.py
 sed -i '1d' pelican/tools/pelican_themes.py
-sed -i '1d' pelican/tools/templates/pelicanconf.py.in
 
 # substitute feedgenerator with it's original django
 sed -i 's|feedgenerator|django.utils.feedgenerator|' pelican/writers.py
@@ -92,6 +91,12 @@ LC_ALL=en_US.UTF-8 python -m unittest discover ||:
 %files -n pelican
 
 %changelog
+* Tue Dec 04 2018 Andrey Cherepanov <cas@altlinux.org> 4.0.1-alt1
+- New version.
+
+* Fri Nov 16 2018 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
+- New version.
+
 * Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 3.7.1-alt1
 - new version 3.7.1
 
