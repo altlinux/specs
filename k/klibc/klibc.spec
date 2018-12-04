@@ -1,6 +1,6 @@
 Name: klibc
 Version: 2.0.4
-Release: alt1
+Release: alt2
 Summary: A minimal libc subset for use with initramfs
 License: BSD/GPL
 Group: System/Libraries
@@ -13,6 +13,9 @@ Patch: %name-%version-%release.patch
 
 # due to %%base_arch
 BuildPreReq: rpm-build-kernel
+%ifarch riscv64
+%global base_arch riscv64
+%endif
 
 %define klibcdir  %_libdir/%name
 %define libdocdir %_docdir/%name-%version-%release
@@ -150,6 +153,9 @@ strip -g %buildroot%klibcdir/lib/libc.so
 %doc %bindocdir
 
 %changelog
+* Tue Dec 4 2018 Nikita Ermakov <arei@altlinux.org> 2.0.4-alt2
+- Added RISC-V (rv64) support.
+
 * Tue Nov 27 2018 Nikita Ermakov <arei@altlinux.org> 2.0.4-alt1
 - Updated to 2.0.4.
 - Removed klibc-utils-initramfs.
