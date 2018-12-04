@@ -3,12 +3,13 @@
 
 %define fsname f2fs
 Name: %fsname-tools
-Version: 1.11.0
+Version: 1.12.0
 Release: alt1
 Summary: Tools for Flash-Friendly File System (F2FS)
 License: GPLv2
 Group: System/Kernel and hardware
-URL: http://sourceforge.net/projects/%name
+URL: http://sourceforge.net/projects/f2fs-tools
+# https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Provides: %fsname-utils = %version-%release
@@ -16,7 +17,9 @@ Provides: mkfs.%fsname = %version-%release
 Provides: fsck.%fsname = %version-%release
 Provides: dump.%fsname = %version-%release
 
-BuildRequires: libuuid-devel libselinux-devel
+BuildRequires: libuuid-devel
+BuildRequires: libselinux-devel
+BuildRequires: libblkid-devel
 
 %description
 NAND flash memory-based storage devices, such as SSD, and SD cards,
@@ -93,6 +96,9 @@ install -m 644 mkfs/f2fs_format_utils.h %buildroot%_includedir
 
 
 %changelog
+* Tue Dec 04 2018 Grigory Ustinov <grenka@altlinux.org> 1.12.0-alt1
+- Build new version.
+
 * Fri Sep 14 2018 Grigory Ustinov <grenka@altlinux.org> 1.11.0-alt1
 - Build new version (Closes: #34021).
 
