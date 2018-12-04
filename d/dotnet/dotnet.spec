@@ -4,8 +4,8 @@
 %define pre %nil
 
 Name: dotnet
-Version: 2.1.5
-Release: alt1
+Version: 2.1.6
+Release: alt2
 
 Summary: Installer packages for the .NET Core runtime and libraries
 
@@ -22,12 +22,13 @@ BuildRequires: clang llvm
 
 BuildRequires: cmake libstdc++-devel
 
-BuildRequires: dotnet-common >= %version
-BuildRequires: rpm-macros-dotnet >= %version
+BuildRequires(pre): rpm-macros-dotnet = %version
 
-Requires: dotnet-common >= %version
-Requires: dotnet-coreclr >= %version
-Requires: dotnet-corefx >= %version
+BuildRequires: dotnet-common = %version
+
+Requires: dotnet-common = %version
+Requires: dotnet-coreclr = %version
+Requires: dotnet-corefx = %version
 #Requires: dotnet-sdk >= %version
 
 %if_with bootstrap
@@ -84,12 +85,17 @@ ln -sr %buildroot%_dotnetdir/dotnet %buildroot%_bindir/dotnet
 %_bindir/dotnet
 %_dotnetdir/dotnet
 
+%dir %_dotnet_hostfxr/
 %_dotnet_hostfxr/libhostfxr.so
-
 %_dotnet_shared/libhostpolicy.so
-#_dotnet_shared/libhostfxr.so
 
 %changelog
+* Wed Dec 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt2
+- move versioned dirs to the appropriate packages
+
+* Wed Dec 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt1
+- new version 2.1.6 (with rpmrb script)
+
 * Fri Oct 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.5-alt1
 - NMU: new version 2.1.5.
 

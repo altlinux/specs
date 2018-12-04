@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define sdkversion 2.1.403
-%define coreversion 2.1.5
+%define sdkversion 2.1.500
+%define coreversion 2.1.6
 
 Name: dotnet-bootstrap
-Version: 2.1.5
+Version: 2.1.6
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -18,7 +18,7 @@ Group: Development/Other
 #%define downloadversion 2.1.403
 # from https://www.microsoft.com/net/download/dotnet-core/2.1
 # SHA512 
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/e85de743-f80b-481b-b10e-d2e37f05a7ce/0bf3ff93417e19ad8d6b2d3ded84d664/dotnet-sdk-2.1.403-linux-x64.tar.gz
+# Source-url: https://download.visualstudio.microsoft.com/download/pr/e5eef3df-d2e3-429b-8204-f58372eb6263/20c825ddcc6062e93ff0c60e8354d3af/dotnet-sdk-%sdkversion-linux-x64.tar.gz
 Source: %name-%version.tar
 
 ExclusiveArch: x86_64
@@ -84,6 +84,10 @@ rm -f %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/libsosplugin.so
 %_libdir/%name/dotnet
 
 %changelog
+* Tue Dec 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt1
+- new version 2.1.6 (with rpmrb script)
+- includes .NET Core 2.1.6, ASP.NET Core 2.1.6 and .NET Core SDK 2.1.500
+
 * Fri Oct 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.5-alt1
 - NMU: new version (2.1.5) (based on changes by lav@)
 - includes .NET Core 2.1.5, ASP.NET Core 2.1.5 and .NET Core SDK 2.1.403

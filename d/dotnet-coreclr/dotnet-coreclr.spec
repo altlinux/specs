@@ -5,8 +5,8 @@
 %define pre %nil
 
 Name: dotnet-coreclr
-Version: 2.1.5
-Release: alt1
+Version: 2.1.6
+Release: alt2
 
 Summary: .NET Core runtime, called CoreCLR, and the base library, called mscorlib
 
@@ -31,6 +31,8 @@ ExclusiveArch: x86_64
 # verify-elf: ERROR: ./usr/lib64/dotnet/shared/Microsoft.NETCore.App/1.1.1/Linux.x64.Release/libcoreclr.so: TEXTREL entry found: 0x0000000000000000
 #set_verify_elf_method relaxed
 
+BuildRequires(pre): rpm-macros-dotnet = %version
+
 BuildRequires: /proc
 
 BuildRequires: clang llvm
@@ -45,16 +47,14 @@ BuildRequires: python-modules-xml
 Requires: libicu
 
 %if_with bootstrap
-BuildRequires: dotnet-bootstrap
+BuildRequires: dotnet-bootstrap = %version
 %define bootstrapdir %_libdir/dotnet-bootstrap
 %else
 BuildRequires: dotnet
 %define bootstrapdir %_dotnetdir
 %endif
 
-BuildRequires(pre): rpm-macros-dotnet >= %version
-
-Requires: dotnet-common >= %version
+Requires: dotnet-common = %version
 
 %description
 This package contains the .NET Core runtime, called CoreCLR,
@@ -81,10 +81,18 @@ find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_libdir/dotnet/fake-
 %build
 DOTNET_TOOL_DIR=%bootstrapdir sh -x ./build.sh x64 release verbose skipnuget ignorewarnings skiprestoreoptdata cmakeargs -DENABLE_LLDBPLUGIN=0
 
+# FIXME: possible hack
+cat <<EOF >.version
+%version-%release
+%_dotnet_corerelease
+EOF
+
 %install
 mkdir -p %buildroot%_dotnet_shared/
 # TODO: some publish use?
 cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,lib*.so,corerun,coreconsole,createdump,sosdocsunix.txt} %buildroot%_dotnet_shared/
+
+install -D -m644 .version %buildroot%_dotnet_shared/.version
 
 # superpmi mcs
 # https://github.com/dotnet/coreclr/tree/master/src/ToolBox/superpmi
@@ -96,6 +104,8 @@ cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,lib*.so,core
 
 %files
 %doc CODE_OWNERS.TXT LICENSE.TXT PATENTS.TXT THIRD-PARTY-NOTICES.TXT README.md CONTRIBUTING.md
+%dir %_dotnet_shared/
+%_dotnet_shared/.version
 %_dotnet_shared/System.Globalization.Native.so
 %_dotnet_shared/lib*.so
 %_dotnet_shared/corerun
@@ -104,6 +114,12 @@ cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,lib*.so,core
 %_dotnet_shared/sosdocsunix.txt
 
 %changelog
+* Wed Dec 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt2
+- move versioned dirs to the appropriate packages
+
+* Tue Dec 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt1
+- new version 2.1.6 (with rpmrb script)
+
 * Fri Oct 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.5-alt1
 - NMU: new version (2.1.5) (based on changes by lav@)
 
