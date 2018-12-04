@@ -60,7 +60,7 @@
 
 Name: virtualbox
 Version: 5.2.22
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -802,6 +802,9 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Tue Dec 04 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.22-alt2
+- Merge with branch c8 for common build with branch p8
+
 * Fri Nov 30 2018 Evgeny Sinelnikov <sin@altlinux.org> 5.2.22-alt1
 - Build second autumn release
 
