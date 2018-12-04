@@ -1,11 +1,14 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: nuxwdog
-Version: 1.0.3
-Release: alt4.1
+Version: 1.0.5
+Release: alt1
 
 Summary: Watchdog server to start and stop processes, and prompt for passwords
 License: %lgpl2plus, %perl_license
 Group: Networking/Other
-Url: https://fedorahosted.org/nuxwdog/
+Url: https://www.dogtagpki.org/wiki/Nuxwdog
+# Source-git: https://github.com/dogtagpki/nuxwdog.git
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -41,8 +44,8 @@ This package supplies the nuxwdog shared library.
 Summary: Development files for the Nuxwdog Watchdog
 License: %lgpl2plus
 Group: Development/C++
-Requires: lib%name = %version-%release
-Provides: %name-devel = %version-%release
+Requires: lib%name = %EVR
+Provides: %name-devel = %EVR
 
 %description -n lib%name-devel
 This package contains the header files needed to build clients
@@ -53,8 +56,8 @@ the nuxwdog watchdog server.
 Summary: Nuxwdog Watchdog client JNI Package
 License: %lgpl2plus
 Group: Development/Java
-Requires: lib%name = %version-%release
-Provides: %name-client-java = %version-%release
+Requires: lib%name = %EVR
+Provides: %name-client-java = %EVR
 Provides: /usr/lib/java/nuxwdog.jar
 
 %description -n lib%name-java
@@ -66,9 +69,8 @@ server.
 Summary: Nuxwdog Watchdog client perl bindings
 License: %perl_license
 Group: Development/Perl
-Requires: lib%name = %version-%release
-Provides: %name-client-perl = %version-%release
-
+Requires: lib%name = %EVR
+Provides: %name-client-perl = %EVR
 
 %description -n lib%name-perl
 This package contains a perl interface to nuxwdog.
@@ -76,6 +78,15 @@ This package contains a perl interface to nuxwdog.
 %prep
 %setup
 %patch -p1
+# ALT uses alternatives-list intead of alternatives
+grep -q 'javac_exe=`/usr/sbin/alternatives --display javac | grep link | cut -c27-`' \
+m4/nuxwdog.m4 || exit 1
+sed -i 's/javac_exe=`\/usr\/sbin\/alternatives --display javac | grep link | cut -c27-`/javac_exe=`alternatives-list \/usr\/bin\/javac | cut -d\x22 \x22 -f4`/g' m4/nuxwdog.m4
+
+# nspr paths
+grep -qr '#include[[:space:]]\+<nspr4' || exit 1
+grep -rl '#include[[:space:]]\+<nspr4' | \
+xargs sed -i 's/#include[[:space:]]\+<nspr4\//#include <nspr\//g'
 
 %build
 %autoreconf
@@ -99,9 +110,9 @@ make licensedir=%nuxwdog_docdir
 # java stuff #
 mkdir -p %buildroot/%_libdir/nuxwdog-jni
 mv %buildroot%_libdir/libnuxwdog-jni.so %buildroot/%_libdir/nuxwdog-jni
-mv %buildroot%{_prefix}/jars/nuxwdog.jar %buildroot/%_libdir/nuxwdog-jni/nuxwdog-%{version}.jar
+mv %buildroot%prefix/jars/nuxwdog.jar %buildroot/%_libdir/nuxwdog-jni/nuxwdog-%version.jar
 mkdir -p %buildroot%_jnidir/
-ln -s `relative %_libdir/nuxwdog-jni/nuxwdog-%{version}.jar %_jnidir/nuxwdog.jar` \
+ln -s `relative %_libdir/nuxwdog-jni/nuxwdog-%version.jar %_jnidir/nuxwdog.jar` \
    %buildroot%_jnidir/nuxwdog.jar
 rmdir %buildroot/usr/jars
 # end java #
@@ -130,6 +141,9 @@ chrpath -d %buildroot%_libdir/perl5/auto/Nuxwdogclient/Nuxwdogclient.so
 #_man3dir/Nuxwdogclient.3pm*
 
 %changelog
+* Tue Dec 04 2018 Stanislav Levin <slev@altlinux.org> 1.0.5-alt1
+- 1.0.3 -> 1.0.5.
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt4.1
 - rebuild with new perl 5.26.1
 
