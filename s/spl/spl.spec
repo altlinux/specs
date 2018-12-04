@@ -1,6 +1,6 @@
 Name: spl
 Version: 0.7.12
-Release: alt1
+Release: alt2
 Summary: Solaris Porting Layer (SPL)
 License: CDDL
 Group: System/Kernel and hardware
@@ -32,11 +32,6 @@ This package contains SPL modules sources for Linux kernel.
 %prep
 %setup -q
 
-tar -C .. \
-	--exclude .gitignore \
-	-cJf %name-%version.tar.xz \
-	.
-
 %build
 %autoreconf
 %configure \
@@ -45,7 +40,8 @@ tar -C .. \
 %make_build
 
 %install
-install -pD -m0644 %name-%version.tar.xz %kernel_srcdir/%name-%version.tar.xz
+install -pD -m0644 %SOURCE0 %kernel_srcdir/%name-%version.tar
+xz %kernel_srcdir/%name-%version.tar
 %make DESTDIR=%buildroot install
 
 
@@ -60,6 +56,10 @@ install -pD -m0644 %name-%version.tar.xz %kernel_srcdir/%name-%version.tar.xz
 %_usrsrc/kernel
 
 %changelog
+* Tue Dec 04 2018 Anton Farygin <rider@altlinux.ru> 0.7.12-alt2
+- did the installaton of the original source tarbool for
+  kernel-source-spl package (closes: #35719)
+
 * Tue Nov 20 2018 Anton Farygin <rider@altlinux.ru> 0.7.12-alt1
 - 0.7.12 
 
