@@ -4,8 +4,8 @@
 #============================================================================
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.14.1
-Release: alt2
+Version: 1.14.2
+Release: alt1
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel libkrb5-devel
@@ -43,7 +43,6 @@ Source13: ngx_http_auth_pam_module.tar
 Source14: spnego-http-auth-nginx-module.tar
 Source100: %name.watch
 Patch1: nginx-0.8-syslog.patch
-Patch2: nginx-1.14.0-glibc-2.3.2-upstream.patch
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Requires(pre): shadow-utils
 Requires(post): sed
@@ -121,7 +120,6 @@ Fast HTTP server, extremely useful as an Apache frontend
 %if_with syslog
 %patch1 -p2
 %endif
-%patch2 -p1
 sed -i 's/INSTALLSITEMAN3DIR=.*/INSTALLDIRS=vendor/' auto/lib/perl/make
 cp -f %SOURCE11 conf/mime.types
 
@@ -354,6 +352,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Wed Dec 05 2018 Anton Farygin <rider@altlinux.ru> 1.14.2-alt1
+- 1.14.2
+
 * Mon Nov 12 2018 Anton Farygin <rider@altlinux.ru> 1.14.1-alt2
 - restart service only from filetrigger
 
