@@ -22,7 +22,7 @@
 %define rname kopete
 Name: kde4-kopete
 Version: 17.08.3
-Release: alt2%ubt
+Release: alt3
 
 Group: Networking/Instant messaging
 Summary: Instant Messaging client
@@ -48,7 +48,8 @@ BuildRequires(pre): rpm-build-ubt
 BuildRequires: boost-devel gcc-c++ qjson-devel
 BuildRequires: kde4base-runtime-devel kde4pim-devel
 BuildRequires: kde4pimlibs-devel libgpgme-devel
-BuildRequires: libexpat-devel libidn-devel libjasper-devel libjpeg-devel
+BuildRequires: libexpat-devel libjasper-devel libjpeg-devel
+#BuildRequires: libidn-devel
 BuildRequires: libgadu-devel libgnutls-devel libtasn1-devel jsoncpp-devel
 BuildRequires: libmeanwhile-devel libotr5-devel libalsa-devel
 %if_enabled mediastreamer
@@ -270,13 +271,7 @@ based on %name.
 %_K4srv/emailwindow.desktop
 %_K4srv/kconfiguredialog/kopete_*
 %_K4srv/kopete_*
-%_K4srv/callto.protocol
-%_K4srv/skype.protocol
-%_K4srv/tel.protocol
-%_K4srv/xmpp.protocol
-%if_enabled kopete_irc
-%_K4srv/irc.protocol
-%endif
+%_K4srv/*.protocol
 %_K4srvtyp/kopete*
 %_K4snd/Kopete_Event.ogg
 %_K4snd/Kopete_Received.ogg
@@ -325,6 +320,9 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Dec 05 2018 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt3
+- disable XMPP module (https://lists.altlinux.org/pipermail/devel/2018-November/205998.html)
+
 * Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt2%ubt
 - build without libmsn
 
