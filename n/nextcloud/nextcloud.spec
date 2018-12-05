@@ -1,5 +1,5 @@
 Name: nextcloud
-Version: 13.0.7
+Version: 13.0.8
 Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
@@ -121,6 +121,9 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Wed Dec 05 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 13.0.8-alt1
+- version 13.0.8 (Nov 22 2018)
+
 * Thu Oct 25 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 13.0.7-alt1
 - version 13.0.7 (Oct 11 2018)
 - update requires for apache2 (php5 -> php7)
