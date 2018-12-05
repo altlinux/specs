@@ -20,8 +20,8 @@
 %define nv_version 410
 %define nv_release 73
 %define nv_minor %nil
-%define pkg_rel alt205
-%define set_gl_nvidia_ver 0.22.6
+%define pkg_rel alt206
+%define set_gl_nvidia_ver 1.0.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -309,6 +309,10 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Wed Dec 05 2018 Sergey V Turchin <zerg@altlinux.org> 410.73-alt206
+- always rewrite xorg.conf.d/09-nvidia.conf
+- don't save broken kernel module symlinks
+
 * Mon Nov 26 2018 Sergey V Turchin <zerg@altlinux.org> 410.73-alt205
 - don't mix kernel modules (ALT#35650)
 
