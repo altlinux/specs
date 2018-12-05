@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 18.04.3
-Release: alt3
+Release: alt4
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -72,6 +72,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Wed Dec 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt4
+- update russian translation
+
 * Tue Nov 06 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt3
 - build without purpose
 
