@@ -8,7 +8,7 @@
 %define systemdsessionunitdir %_prefix/lib/systemd/user
 
 Name: dbus
-Version: 1.12.10
+Version: 1.12.12
 Release: alt1
 
 Summary: D-BUS is a simple IPC framework based on messages.
@@ -228,6 +228,10 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Wed Dec 05 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.12.12-alt1
+- 1.12.12
+- syslog is not required in initscript (closes: #35689)
+
 * Wed Sep 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.12.10-alt1
 - 1.12.10
 
