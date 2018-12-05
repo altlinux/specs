@@ -2,7 +2,7 @@
 
 Name: liboping
 Version: 1.6.2
-Release: alt1
+Release: alt2
 
 Summary: Liboping library
 License: GPL v2
@@ -11,6 +11,9 @@ Group: System/Libraries
 Url: http://verplant.org/liboping/
 Source0: %url/files/%name-%version.tar.bz2
 Source1: oping.control
+
+Patch: liboping-no-werror.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Wed May 13 2009
@@ -67,6 +70,7 @@ Statyczna biblioteka liboping.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -111,6 +115,9 @@ done
 # - scrap gear repo, redo with git://git.verplant.org/liboping.git
 
 %changelog
+* Wed Dec 05 2018 Grigory Ustinov <grenka@altlinux.org> 1.6.2-alt2
+- Fixed FTBFS (Disabled Werror).
+
 * Sat Apr 21 2012 Michael Shigorin <mike@altlinux.org> 1.6.2-alt1
 - 1.6.2
 
