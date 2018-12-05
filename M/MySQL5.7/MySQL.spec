@@ -1,18 +1,16 @@
 %def_without debug
 %def_with libs
 %def_with devel
-#do not build mysql_router until MySQL-Shell arrival
-%def_without mysql_router
+%def_without server
+%def_without client
 %def_disable static
 %define mysqld_user mysql
-%define mysqlrouter_user mysqlrouter
 %define _libexecdir %_sbindir
 %define ROOT %_localstatedir/mysql
-%define ROUTER_ROOT %_localstatedir/mysqlrouter
 
-Name: MySQL
-Version: 8.0.13
-Release: alt1
+Name: MySQL5.7
+Version: 5.7.24
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -47,39 +45,36 @@ Source26: server.cnf
 Source27: mysql-clients.cnf
 Source28: chroot.cnf
 Source29: no-chroot.cnf
-Source30: mysqlrouter.conf 
 
 Patch0: mysql-%version.patch
 
 # ALTLinux
-Patch1: mysql-8.0.12-alt-chroot.patch
+Patch1: mysql-5.7.21-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
-Patch4: mysql-8.0.12-alt-client.patch
-Patch5: mysql-8.0.12-alt-load_defaults.patch
+Patch4: mysql-5.7.21-alt-client.patch
+Patch5: mysql-5.7.21-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
-Patch7: mysql-8.0.12-alt-mysql_config-libs.patch
+Patch7: mysql-5.7.21-alt-mysql_config-libs.patch
 Patch8: mysql-5.5.43-alt-aarch64-lib64.patch
 Patch9: mysql-5.7.21-alt-disable-run-libmysql_api_test.patch
 
 # Patches taken from boost 1.59
 Patch115: boost-1.58.0-pool.patch
 Patch125: boost-1.57.0-mpl-print.patch
+Patch136: boost-1.57.0-spirit-unused_typedef.patch
+Patch145: boost-1.54.0-locale-unused_typedef.patch
+Patch170: boost-1.59.0-log.patch
+Patch180: boost-1.59-python-make_setter.patch
+Patch181: boost-1.59-test-fenv.patch
 
-# Automatically added by buildreq on Tue Nov 20 2018 (-bi)
-# optimized out: cmake cmake-modules control elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libsasl2-3 libstdc++-devel libtinfo-devel perl pkg-config python-base sh3 xz
-BuildRequires: ccmake
-BuildRequires: chrooted
-BuildRequires: gcc-c++
-BuildRequires: libaio-devel
-BuildRequires: libedit-devel
-BuildRequires: libevent-devel
-BuildRequires: liblz4-devel
-BuildRequires: libncurses-devel
-BuildRequires: libssl-devel
-BuildRequires: zlib-devel
+# Automatically added by buildreq on Wed Mar 16 2011 (-bi)
+BuildRequires: chrooted gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam0-devel libevent-devel
+BuildRequires: libaio-devel libjemalloc-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
+BuildRequires: liblz4-devel zlib-devel
+BuildRequires: cmake control
 BuildRequires: libsystemd-devel
 
-%define soname 21
+%define soname 20
 
 %package -n libmysqlclient%soname
 Summary: Shared libraries for MySQL
@@ -112,6 +107,7 @@ Provides: libMySQL-devel-static = %version
 Obsoletes: libMySQL-devel-static < %version
 Conflicts: libmariadb-devel-static
 
+%if_with client
 %package client
 Summary: MySQL Client
 Summary(ru_RU.UTF-8): Клиент MySQL
@@ -119,7 +115,9 @@ License: GPL
 Group: Databases
 Provides: mysql-client = %version
 Obsoletes: mysql-client < %version
+%endif
 
+%if_with server
 %package server
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -139,16 +137,8 @@ License: GPL
 Group: Databases
 Requires: MySQL-server = %version-%release, perl-DBD-mysql
 BuildArch: noarch
-
-%if_with mysql_router
-%package router
-Summary: MySQL Router
-Summary(ru_RU.UTF-8): MySQL Router
-License: GPL
-Group: Databases
-Provides: mysql-router = %version
-Obsoletes: mysql-router < %version
 %endif
+
 
 %define see_base For a description of MySQL see the base MySQL RPM or %url
 %define see_base_ru Подробное описание смотрите в пакете MySQL или на %url
@@ -191,6 +181,7 @@ MySQL ведется на основе программного кода, кот
 Данная версия MySQL собрана с поддержкой транзакций и расширенной поддержкой
 различных текстовых кодировок. См. документацию для более подробной информации.
 
+%if_with server
 %description server
 MySQL is a true multi-user, multi-threaded SQL (Structured Query
 Language) database server. MySQL is a client/server implementation
@@ -237,6 +228,7 @@ MySQL ведется на основе программного кода, кот
 
 Данная версия MySQL собрана с поддержкой транзакций и расширенной поддержкой
 различных текстовых кодировок. См. документацию для более подробной информации.
+%endif
 
 %description -n libmysqlclient%soname
 This package contains the shared libraries (*.so*) which certain
@@ -273,6 +265,7 @@ necessary to develop MySQL client applications.
 
 %see_base_ru
 
+%if_with client
 %description client
 This package contains the standard MySQL clients.
 
@@ -280,34 +273,6 @@ This package contains the standard MySQL clients.
 
 %description client -l ru_RU.UTF-8
 Этот пакет содержит стандартные клиентские программы для SQL-сервера MySQL
-
-%see_base_ru
-
-%if_with mysql_router
-%description router 
-This package contains MySQL Router utility.
-
- MySQL Router is a building block for high availability (HA) solutions. It
-simplifies application development by intelligently routing connections to
-MySQL servers for increased performance and reliability.
-
- MySQL Router 8 fully supports MySQL 5.7 and MySQL 8, and it replaces the
-MySQL Router 2.x series. If you currently use Router 2.0 or 2.1 then we
-recommend upgrading your installation to MySQL Router 8.
-
-%see_base
-
-%description router -l ru_RU.UTF-8
-Этот пакет содержит утилиту MySQL Router.
-
- MySQL Router является составной частью для построения отказоустойчивых решений
-высокой доступности. Он упрощает разработку приложений осуществляя
-перенаправление подключений к MySQL серверам для обеспечения большего
-быстродействия и надежности.
-
- MySQL Router 8 полностью поддерживает MySQL 5.7 и MySQL 8, заменяя собой
-линейку MySQL Router 2.x. Если Вы в настоящий момент используете Router 2.0 или
-2.1, то рекомендуется переход на MySQL Router 8.
 
 %see_base_ru
 %endif
@@ -324,18 +289,19 @@ recommend upgrading your installation to MySQL Router 8.
 %patch9 -p1
 
 # Patch Boost
-pushd boost/boost_1_67_0
+pushd boost/boost_1_59_0
 %patch115 -p0
 %patch125 -p1
+%patch136 -p1
+%patch145 -p1
+%patch170 -p2
+%patch180 -p2
+%patch181 -p2
 popd
 
 # with patch4
 # Prepare commands list for completion in mysql client.
 sed -n 's/^\([[:space:]]*{[[:space:]]*SYM.*(\)\("[&<=>|!A-Z][^"]*"\).*/{\2,0, 0, 0, ""},/p' <sql/lex.h >client/mysql_symbols.inc
-
-%if_without mysql_router
-sed -i 's/ADD_SUBDIRECTORY(router)/# ADD_SUBDIRECTORY(router)/' CMakeLists.txt
-%endif
 
 %build
 
@@ -384,35 +350,34 @@ sed -i 's/ADD_SUBDIRECTORY(router)/# ADD_SUBDIRECTORY(router)/' CMakeLists.txt
 	-DWITH_SYSTEMD=ON \
 	-DCMAKE_C_FLAGS="%optflags" \
 	-DCMAKE_CXX_FLAGS="%optflags" \
-	-DWITH_BOOST=../boost/boost_1_67_0 \
+	-DWITH_BOOST=../boost/boost_1_59_0 \
 	-DCOMPILATION_COMMENT="(%distribution)" \
-%if_with debug
-	-DWITH_DEBUG=1 \
-%endif
 	-DMYSQL_SERVER_SUFFIX="-%release"
 
 %cmake_build
 
 %install
 mkdir -p %buildroot{%_bindir,%_sbindir,%_includedir,%_mandir,%_datadir,/var/log/mysql}
+%if_with server
 mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%_libdir/mysql/plugin/,dev,log,tmp,/var/{nis,yp/binding},db/mysql,usr/share/mysql/charsets}
 touch %buildroot%ROOT{%_sysconfdir/{hosts,services,{host,nsswitch,resolv}.conf},/dev/urandom,/var/nis/NIS_COLD_START}
-%if_with mysql_router
-mkdir -p %buildroot%ROUTER_ROOT/{log,data/{,keyring},run}
 %endif
 
 %cmakeinstall_std
 
 
 # Install various helper scripts.
+%if_with server
 install -pD -m755 %SOURCE1 %buildroot%_initdir/mysqld
 install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/mysql
 install -pD -m755 %SOURCE3 %buildroot%_sbindir/safe_mysqld
 install -pD -m755 %SOURCE4 %buildroot%_sbindir/mysqld_wrapper
+%endif
 install -pD -m750 %SOURCE6 %buildroot%_sysconfdir/chroot.d/mysql.lib
 %if "%_libdir" == "/usr/lib64"
 sed -i s,usr/lib,usr/lib64,g %buildroot%_sysconfdir/chroot.d/mysql.lib
 %endif
+%if_with server
 install -pD -m750 %SOURCE7 %buildroot%_sysconfdir/chroot.d/mysql.conf
 install -pD -m750 %SOURCE8 %buildroot%_sysconfdir/chroot.d/mysql.all
 install -pD -m750 %SOURCE9 %buildroot%_sbindir/mysql_migrate
@@ -422,9 +387,6 @@ install -pD -m755 %SOURCE17 %buildroot%_controldir/mysqld-chroot
 
 # Backwards compatibility symlinks (ALT #14863)
 ln -snf ../sbin/safe_mysqld %buildroot%_bindir/mysqld_safe
-
-%if_with debug
-ln -snf ../sbin/mysqld-debug %buildroot%_sbindir/mysqld
 %endif
 
 # delete deprecated
@@ -441,9 +403,6 @@ install -pD -m644 %SOURCE29 %buildroot%_sysconfdir/my.cnf.server/no-chroot.cnf
 install -pD -m644 %SOURCE20 %buildroot%_tmpfilesdir/mysql.conf
 install -pD -m644 %SOURCE21 %buildroot%_unitdir/mysqld.service
 install -pD -m644 %SOURCE22 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/user.conf
-%if_with mysql_router
-install -pD -m644 %SOURCE30 %buildroot%_sysconfdir/mysqlrouter/mysqlrouter.conf
-%endif
 
 # Fix libmysqlclient_r symlinks
 (
@@ -458,6 +417,7 @@ install -pD -m644 %SOURCE30 %buildroot%_sysconfdir/mysqlrouter/mysqlrouter.conf
 )
 
 # Populate chroot with data to some extent.
+%if_with server
 install -pD -m644 %buildroot%_datadir/mysql/charsets/* \
 		     %buildroot%ROOT%_datadir/mysql/charsets
 
@@ -467,11 +427,13 @@ install -pD -m644 %buildroot%_datadir/mysql/charsets/* \
 		install -pD -m644 $i  %buildroot%ROOT%_datadir/mysql/$i
 	done
 )
+%endif
 
 
 mkdir -p %buildroot%_docdir/MySQL-%version
 install -p -m644 README %SOURCE14 %buildroot%_docdir/MySQL-%version
 
+%if_with server
 rm -f %buildroot%_bindir/safe_mysqld
 rm -f %buildroot%_datadir/mysql/mysql{-*.spec,-log-rotate,.server}
 
@@ -480,6 +442,7 @@ touch %buildroot%_logdir/mysql/info
 
 install -p -m 0750 -d %buildroot%_localstatedir/mysql-files
 install -p -m 0700 -d %buildroot%_localstatedir/mysql-keyring
+%endif
 
 # not needed in rpm package
 rm -rf %buildroot%_datadir/mysql-test
@@ -489,37 +452,85 @@ rm -f %buildroot%_bindir/mysql_embedded
 rm -f %buildroot%_libdir/mysql/*.a
 rm -f %buildroot%_datadir/mysql/magic
 rm -f %buildroot%_datadir/mysql/mysqld_multi.server
-rm -f %buildroot%_bindir/mysqld_pre_systemd
-rm -f %buildroot%_libdir/libmysqlservices.a
 
 # broken manpages referencing missing paths
 rm -f %buildroot%_man1dir/mysql{_client_,}test_embedded.1
 rm -fr %buildroot/usr/share/info
 
+#remove unused
+rm -f %buildroot%_unitdir/mysqld@.service
+rm -f %buildroot%_bindir/mysql_client_test_embedded
+rm -f %buildroot%_bindir/mysql_config_editor
+rm -f %buildroot%_bindir/mysqld_pre_systemd
+rm -f %buildroot%_bindir/mysqltest_embedded
+rm -f %buildroot%_bindir/mysqlxtest
+
+%if_without client
+rm -f %buildroot%_sysconfdir/my.cnf.d/client.cnf
+rm -f %buildroot%_sysconfdir/my.cnf.d/mysql-clients.cnf
+rm -f %buildroot%_bindir/innochecksum
+rm -f %buildroot%_bindir/my_print_defaults
+rm -f %buildroot%_bindir/mysql
+rm -f %buildroot%_bindir/mysql_client_test
+rm -f %buildroot%_bindir/mysqladmin
+rm -f %buildroot%_bindir/mysqlbinlog
+rm -f %buildroot%_bindir/mysqlcheck
+rm -f %buildroot%_bindir/mysqldump
+rm -f %buildroot%_bindir/mysqlimport
+rm -f %buildroot%_bindir/mysqlpump
+rm -f %buildroot%_bindir/mysqlshow
+rm -f %buildroot%_bindir/mysqltest
+rm -f %buildroot%_bindir/mysqlslap
+rm -f %buildroot%_bindir/perror
+rm -f %buildroot%_bindir/replace
+rm -f %buildroot%_bindir/resolve*
+rm -f %buildroot%_bindir/lz4_decompress
+rm -f %buildroot%_bindir/zlib_decompress
+rm -f %buildroot%_mandir/man?/*
+%endif
+
+%if_disabled static
+rm -f %buildroot%_libdir/libmysqlclient.a
+rm -f %buildroot%_libdir/libmysqld.a
+rm -f %buildroot%_libdir/libmysqlservices.a
+%endif
+
+%if_without server
+rm -f %buildroot%_bindir/mysqldumpslow
+rm -f %buildroot%_initdir/*
+rm -f %buildroot%_sysconfdir/sysconfig/*
+rm -f %buildroot%_sysconfdir/logrotate.d/*
+rm -f %buildroot%_sysconfdir/control.d/facilities/*
+rm -f %buildroot%_sysconfdir/chroot.d/*
+rm -f %buildroot%_sysconfdir/my.cnf
+rm -f %buildroot%_sysconfdir/my.cnf.d/server.cnf
+rm -rf %buildroot%_sysconfdir/my.cnf.server
+rm -f %buildroot%_sysconfdir/my.cnf.server/*.cnf
+rm -f %buildroot%_tmpfilesdir/mysql.conf
+rm -f %buildroot%_unitdir/mysqld.service
+rm -f %buildroot%_sysconfdir/systemd/system/mysqld.service.d/user.conf
+rm -f %buildroot%_bindir/*isam*
+rm -f %buildroot%_bindir/mysql_secure_installation
+rm -f %buildroot%_bindir/mysql_ssl_rsa_setup
+rm -f %buildroot%_bindir/mysql_tzinfo_to_sql
+rm -f %buildroot%_bindir/mysql_upgrade
+rm -f %buildroot%_bindir/mysqld_safe
+rm -f %buildroot%_bindir/mysql_plugin
+rm -f %buildroot%_sbindir/*
+rm -rf %buildroot%_libdir/mysql/plugin
+rm -rf %buildroot%_datadir/mysql
+rm -rf %buildroot/var/log/mysql
+rm -f %buildroot/var/log/mysql/*
+rm -rf %buildroot%_localstatedir/mysql-files
+rm -rf %buildroot%_localstatedir/mysql-keyring
+rm -rf %buildroot%_docdir/MySQL-%version
+rm -f %buildroot%_docdir/MySQL-%version/README*
+%endif
+
+%if_with server
 %define get_datadir \
 DATADIR=`/usr/bin/my_print_defaults mysqld |sed -ne 's/^--datadir=\\(.*\\)/\\1/pg' |tail -1` \
 [ -n "$DATADIR" ] || { echo "Failed to read configuration"; exit 1; }
-
-%if_with mysql_router 
-%pre router
-/usr/sbin/groupadd -r -f %mysqlrouter_user
-/usr/sbin/useradd -r -g %mysqlrouter_user -d %ROUTER_ROOT -s /dev/null -c "MySQL router" -n %mysqlrouter_user >/dev/null 2>&1 ||:
-if [ -e /etc/mysqlrouter/mysqlrouter.conf -a ! -e /etc/mysqlrouter/mysqlrouter.conf.rename ]; then
-        mv -v /etc/mysqlrouter/mysqlrouter.conf /etc/mysqlrouter/mysqlrouter.conf.rename &&
-        chown 0:0 /etc/mysqlrouter/mysqlrouter.conf.rename &&
-        chmod 600 /etc/mysqlrouter/mysqlrouter.conf.rename ||
-        { echo "Error moving mysqlrouter.conf" >&2; exit 1; }
-fi
-
-%post router
-if [ -f /etc/mysqlrouter/mysqlrouter.conf.rename -a ! -L /etc/mysqlrouter/mysqlrouter.conf.rename -a ! -e /etc/mysqlrouter/mysqlrouter.conf ]; then
-        mv -fv /etc/mysqlrouter/mysqlrouter.conf /etc/mysqlrouter/mysqlrouter.conf.rpmnew &&
-        mv -v /etc/mysqlrouter/mysqlrouter.conf.rename /etc/mysqlrouter/mysqlrouter.conf &&
-        chown 0:0 /etc/mysqlrouter/mysqlrouter.conf &&
-        chmod 600 /etc/mysqlrouter/mysqlrouter.conf ||
-        { echo "Error moving mysqlrouter/mysqlrouter.conf" >&2; mv -v /etc/mysqlrouter/mysqlrouter.conf.rename /etc/mysqlrouter/mysqlrouter.conf; }
-fi
-%endif
 
 %postun server
 if [ $1 = 0 ]; then
@@ -544,10 +555,9 @@ fi
 %pre_control mysqld-chroot
 
 echo "####################################################################"
-echo "#   You may need database format conversion for correct operation. #"
-echo "#  Please backup your MySQL database before you start conversion.  #"
-echo "#  Consider using:   /usr/bin/mysql_upgrade     according to       #"
-echo "#  https://dev.mysql.com/doc/refman/8.0/en/upgrading.html          #"
+echo "#   You may need database format conversion for correct operation: #"
+echo "#  Please consider using: /usr/bin/mysql_upgrade according to      #"
+echo "#  https://dev.mysql.com/doc/refman/5.7/en/upgrading.html          #"
 echo "####################################################################"
 
 %post server
@@ -639,16 +649,17 @@ if [ -f /var/lib/mysql/my.cnf -a -f "%ROOT$DATADIR/ibdata1" ]; then
 		echo "  and ensure that the *builtin* innodb is in use again"
 	fi
 fi
+%endif
 
 %if_with libs
 %files -n libmysqlclient%soname
-%_libdir/libmysqlclient*.so.*
+%_libdir/*.so.*
 %endif
 
 %if_with devel
 %files -n libmysqlclient%soname-devel
 %_bindir/mysql_config
-%_libdir/libmysqlclient*.so
+%_libdir/*.so
 %_includedir/*
 %_aclocaldir/mysql.m4
 %_pkgconfigdir/*.pc
@@ -656,11 +667,12 @@ fi
 
 %if_enabled static
 %files -n libmysqlclient%soname-devel-static
-%_libdir/libmysqlclient*.a
+%_libdir/*.a
 %_libdir/mysql
 %_pkgconfigdir/*.pc
 %endif
 
+%if_with client
 %files client
 %dir %_sysconfdir/my.cnf.d
 %config(noreplace) %_sysconfdir/my.cnf.d/client.cnf
@@ -678,29 +690,15 @@ fi
 %_bindir/mysqlshow
 %_bindir/mysqltest
 %_bindir/mysqlslap
-%_bindir/mysql_config_editor
-%_bindir/ibd2sdi
 %_bindir/perror
+%_bindir/replace
 %_bindir/resolve*
+%_bindir/lz4_decompress
 %_bindir/zlib_decompress
 %_mandir/man?/*
-
-%if_with mysql_router
-%files router
-%config(noreplace) %_sysconfdir/mysqlrouter/mysqlrouter.conf
-%dir %_libdir/mysqlrouter
-%_libdir/mysqlrouter/*
-%_libdir/libmysqlrouter.so*
-%_libdir/libmysqlharness.so*
-%_bindir/mysqlrouter
-%_bindir/mysqlrouter_plugin_info
-%attr(3771,root,mysqlrouter) %dir %ROUTER_ROOT
-%attr(3770,root,mysqlrouter) %dir %ROUTER_ROOT/data
-%attr(750,mysqlrouter,mysqlrouter) %ROUTER_ROOT/data/keyring
-%attr(3770,root,mysqlrouter) %dir %ROUTER_ROOT/run
-%attr(3770,root,mysqlrouter) %dir %ROUTER_ROOT/log
 %endif
 
+%if_with server
 %files server-perl
 %_bindir/mysqldumpslow
 
@@ -724,6 +722,7 @@ fi
 %_bindir/mysql_tzinfo_to_sql
 %_bindir/mysql_upgrade
 %_bindir/mysqld_safe
+%_bindir/mysql_plugin
 %_sbindir/*
 %_libdir/mysql/plugin
 %_datadir/mysql
@@ -757,11 +756,15 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/log
 %attr(660,mysql,mysql) %ghost %verify(not md5 mtime size) %ROOT/log/*
 %attr(3770,root,mysql) %dir %ROOT/tmp
+%endif
 
 %changelog
-* Thu Nov 15 2018 Nikolai Kostrigin <nickel@altlinux.org> 8.0.13-alt1
+* Wed Nov 21 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.24-alt2
+- rename to MySQL5.7 and adjust as a provider of libmysqlclient20 only
+
+* Wed Nov 21 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.24-alt1
 - new version
-- update patches: chroot, client, load_defaults, mysql_config-libs
+- fix build with gcc8
 
 * Mon Oct 15 2018 Nikolai Kostrigin <nickel@altlinux.org> 5.7.23-alt3
 - remove ubt
