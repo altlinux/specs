@@ -31,7 +31,7 @@
 
 Name: kde5-kopete
 Version: 18.04.3
-Release: alt2%ubt
+Release: alt3
 %K5init
 
 Group: Networking/Instant messaging
@@ -56,7 +56,8 @@ BuildRequires: gcc-c++ cmake extra-cmake-modules
 BuildRequires: boost-devel glib2-devel zlib-devel
 BuildRequires: libqca-qt5-devel qt5-phonon-devel
 BuildRequires: libgpgme-devel
-BuildRequires: libexpat-devel libidn-devel libjasper-devel libjpeg-devel
+BuildRequires: libexpat-devel libjasper-devel libjpeg-devel
+#BuildRequires: libidn-devel
 BuildRequires: libgadu-devel libgnutls-devel libtasn1-devel jsoncpp-devel
 BuildRequires: libmeanwhile-devel libalsa-devel
 BuildRequires: libotr-devel
@@ -322,6 +323,9 @@ done
 %_K5dbus_iface/*
 
 %changelog
+* Wed Dec 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt3
+- disable XMPP module (https://lists.altlinux.org/pipermail/devel/2018-November/205998.html)
+
 * Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2%ubt
 - fix build requires
 
