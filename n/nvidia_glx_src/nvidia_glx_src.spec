@@ -1,10 +1,6 @@
 
-%define tbname         NVIDIA-Linux-x86
-%define dirsuffix %nil
-%ifarch x86_64
 %define tbname         NVIDIA-Linux-x86_64
-%define dirsuffix -no-compat32
-%endif
+%define dirsuffix %nil
 
 %define nvidia_ml_sover 1
 %define nvidia_ptxjitcompiler_sover 1
@@ -14,13 +10,18 @@
 %define nvidia_egl_wayland_libver 1.0.2
 %define libnvidia_egl_wayland libnvidia-egl-wayland%nvidia_egl_wayland_sover
 
+%ifarch %ix86
+%define subd ./32
+%else
+%define subd ./
+%endif
+
 Name: nvidia_glx_src
-Version: 390.87
-Release: alt1%ubt
+Version: 410.73
+Release: alt1
 
 Source0: null
-Source201: ftp://download.nvidia.com/XFree86/Linux-x86/%version/NVIDIA-Linux-x86-%version.run
-Source202: ftp://download.nvidia.com/XFree86/Linux-x86_64/%version/NVIDIA-Linux-x86_64-%version-no-compat32.run
+Source201: ftp://download.nvidia.com/XFree86/Linux-x86/%version/NVIDIA-Linux-x86_64-%version.run
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
@@ -28,8 +29,6 @@ BuildRequires: libXext-devel libEGL-devel
 BuildRequires: libwayland-client-devel libwayland-server-devel
 #BuildRequires: libGLdispatch libGLX
 ExclusiveArch: %ix86 x86_64
-#ExcludeArch: ppc64 x86_64 ppc s390 s390x ia64
-
 
 
 Group: System/Kernel and hardware
@@ -75,11 +74,12 @@ Provides: libnvidia-compiler = %version-%release
 %description -n libnvidia-compiler
 nvidia library
 
-%package -n libnvidia-cuda
+%package -n libcuda
 Group: System/Libraries
 Summary: nvidia library
-Provides: libnvidia-cuda = %version-%release
-%description -n libnvidia-cuda
+Provides: libnvidia-cuda = %EVR
+Obsoletes: libnvidia-cuda < %EVR
+%description -n libcuda
 nvidia CUDA library
 
 %package -n libnvidia-opencl
@@ -101,11 +101,7 @@ nvidia library
 %setup -T -c -n %tbname-%version%dirsuffix
 rm -rf %_builddir/%tbname-%version%dirsuffix
 cd %_builddir
-%ifarch x86_64
-sh %SOURCE202 -x
-%else
 sh %SOURCE201 -x
-%endif
 cd %tbname-%version%dirsuffix
 
 pushd kernel
@@ -120,12 +116,12 @@ popd
 
 # install libraries
 mkdir -p %buildroot/%_libdir/
-install -m 0644 libnvidia-fatbinaryloader.so.%version %buildroot/%_libdir/
-install -m 0644 libnvidia-opencl.so.%version %buildroot/%_libdir/
-install -m 0644 libcuda.so.%version %buildroot/%_libdir/
-install -m 0644 libnvidia-compiler.so.%version %buildroot/%_libdir/
-install -m 0644 libnvidia-ptxjitcompiler.so.%version %buildroot/%_libdir/
-install -m 0644 libnvidia-ml.so.%version %buildroot/%_libdir/
+install -m 0644 %subd/libcuda.so.%version %buildroot/%_libdir/
+install -m 0644 %subd/libnvidia-fatbinaryloader.so.%version %buildroot/%_libdir/
+install -m 0644 %subd/libnvidia-opencl.so.%version %buildroot/%_libdir/
+install -m 0644 %subd/libnvidia-compiler.so.%version %buildroot/%_libdir/
+install -m 0644 %subd/libnvidia-ptxjitcompiler.so.%version %buildroot/%_libdir/
+install -m 0644 %subd/libnvidia-ml.so.%version %buildroot/%_libdir/
 mkdir -p %buildroot/%_sysconfdir/OpenCL/vendors/
 install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 
@@ -145,7 +141,7 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %files -n libnvidia-fatbinaryloader
 %_libdir/libnvidia-fatbinaryloader.so.%version
 
-%files -n libnvidia-cuda
+%files -n libcuda
 %_libdir/libcuda.so.%{nvidia_cuda_sover}
 %_libdir/libcuda.so.%version
 
@@ -155,6 +151,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %_sysconfdir/OpenCL/vendors/nvidia.icd
 
 %changelog
+* Wed Dec 05 2018 Sergey V Turchin <zerg@altlinux.org> 410.73-alt1
+- new version
+
 * Thu Sep 20 2018 Sergey V Turchin <zerg@altlinux.org> 390.87-alt1%ubt
 - new version
 
