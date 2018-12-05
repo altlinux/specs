@@ -1,8 +1,8 @@
 %define  pkgname tilt
 
 Name: 	 ruby-%pkgname
-Version: 2.0.8
-Release: alt1.1
+Version: 2.0.9
+Release: alt1
 
 Summary: Generic interface to multiple Ruby template engines
 License: MIT
@@ -76,6 +76,9 @@ rm -f %buildroot%_mandir/index.txt
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Dec 05 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.9-alt1
+- New version.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.8-alt1.1
 - Rebuild with new Ruby autorequirements.
 - Disable tests.
