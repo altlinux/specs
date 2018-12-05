@@ -1,5 +1,5 @@
 Name: u-boot-meson
-Version: 2018.07
+Version: 2018.11
 Release: alt1
 
 Summary: Das U-Boot
@@ -16,7 +16,7 @@ BuildRequires: bc dtc >= 1.4 flex
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
 other processors, which can be installed in a boot ROM and used to
 initialize and test the hardware or to download and run application code.
-This package supports Raspberry 3 board.
+This package supports Odroid C2 board.
 
 %prep
 %setup
@@ -33,6 +33,9 @@ cp -p board/amlogic/odroid-c2/README README.odroid-c2
 %_datadir/u-boot/*
 
 %changelog
+* Wed Dec 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2018.11-alt1
+- 2018.11 released
+
 * Wed Sep 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2018.07-alt1
 - 2018.07 released
 
