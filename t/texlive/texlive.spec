@@ -65,7 +65,7 @@ BuildRequires: chrpath
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt2_4
+Release:	alt2_7
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -122,7 +122,7 @@ BuildRequires:	libgc-devel
 BuildRequires:	libsigsegv-devel
 BuildRequires:	ghostscript-utils
 BuildRequires:	libgsl-devel
-BuildRequires:	libGL-devel
+BuildRequires:	libGL-devel libglvnd-devel
 %endif
 BuildRequires:	pkgconfig(gdlib)
 %if %{with_system_poppler}
@@ -159,6 +159,10 @@ Patch4: texlive-20160523-texmf-mageia-kpfix.patch
 Patch5:	includePatch.patch
 Patch6: CVE-2018-17407.patch
 Patch107: 0001-try-to-adapt-to-poppler-0.58.patch
+Patch108: poppler-compat-fixes-up-to-0.70.patch
+Patch109: luatex-poppler-0.70-const-fixes.patch
+Patch110: texlive-poppler-0.71.patch
+Patch111: luatex-poppler-0.71.patch
 Source44: import.info
 Provides: dvipng = %{tl_version}
 Provides: lcdf-typetools = %{tl_version}
@@ -439,8 +443,15 @@ This package includes the static ptexenc library.
 %if_without backport_p8
 %patch107 -p2
 %endif
+%patch108 -p1
+%patch109 -p1
+%patch110 -p0
+%patch111 -p1
 
 #%patch200 -p1 -b .gcc7align
+
+cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.71.0,}.cc
+cp -pv texk/web2c/pdftexdir/pdftosrc{-poppler0.71.0,}.cc
 
 # setup default builtin values, added to paths.h from texmf.cnf
 perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
@@ -678,6 +689,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Wed Dec 05 2018 Igor Vlasenko <viy@altlinux.ru> 2018-alt2_7
+- built with new poppler (closes: #35711)
+
 * Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 2018-alt2_4
 - rebuild with new icu
 
