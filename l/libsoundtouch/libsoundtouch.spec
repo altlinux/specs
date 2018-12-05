@@ -1,8 +1,9 @@
 %def_enable snapshot
 %define oname soundtouch
+%def_enable check
 
 Name: libsoundtouch
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: SoundTouch audio processing library
@@ -49,6 +50,9 @@ Libraries/include files for development with %name.
 %makeinstall_std
 rm -rf %buildroot/%_prefix/doc
 
+%check
+%make check
+
 %files
 %_bindir/soundstretch
 %_libdir/libSoundTouch.so.*
@@ -61,6 +65,9 @@ rm -rf %buildroot/%_prefix/doc
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Wed Dec 05 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
+- updated to 2.1.2-2-g2b2585b
+
 * Thu Nov 22 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
 - 2.1.1 (fixed CVE-2018-17097)
 
