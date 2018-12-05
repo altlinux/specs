@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 # FIXME:
-%define _dotnet_sdkrelease 2.1.403
+%define _dotnet_sdkrelease 2.1.500
+# TODO: change package version to sdk version?
 
 # TODO: build from sources
 Name: dotnet-sdk
-Version: 2.1.5
+Version: 2.1.6
 Release: alt1
 
 Summary: SDK for the .NET Core runtime and libraries
@@ -19,11 +20,11 @@ ExclusiveArch: x86_64
 
 BuildRequires: rpm-build-intro
 
-BuildRequires(pre): rpm-macros-dotnet >= %version
+BuildRequires(pre): rpm-macros-dotnet = %version
 
 BuildRequires: dotnet-bootstrap-sdk = %_dotnet_sdkrelease
 
-Requires: dotnet-common >= %version
+Requires: dotnet-common = %version
 
 AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoProv: no
@@ -56,6 +57,9 @@ ln -sr %buildroot%_cachedir/dotnet/NuGetFallbackFolder %buildroot%_libdir/dotnet
 %attr(2775,root,dotnet) %dir %_cachedir/dotnet/NuGetFallbackFolder/
 
 %changelog
+* Wed Dec 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt1
+- .NET Core SDK 2.1.500 Release
+
 * Fri Oct 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.5-alt1
 - NMU: .NET Core SDK 2.1.5 Release
 

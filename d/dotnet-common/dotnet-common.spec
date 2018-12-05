@@ -1,9 +1,9 @@
-%define corerelease 2.1.5
-%define sdkrelease 2.1.403
+%define corerelease 2.1.6
+%define sdkrelease 2.1.500
 
 Name: dotnet-common
-Version: 2.1.5
-Release: alt1
+Version: 2.1.6
+Release: alt2
 
 Summary: Common dir and files for the .NET Core runtime and libraries
 
@@ -49,24 +49,18 @@ cat <<EOF >macros
 %%_dotnet_sdk %%_dotnetdir/sdk/%%_dotnet_sdkrelease/
 EOF
 
-# FIXME: possible hack
-cat <<EOF >.version
-0
-%corerelease
-EOF
-
 
 %install
 mkdir -p %buildroot%_libdir/dotnet/
+mkdir -p %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/
+mkdir -p %buildroot%_libdir/dotnet/host/fxr/
+
 install -m644 fake-os-release %buildroot%_libdir/dotnet/fake-os-release
 install -m644 fake-os-release-fedora %buildroot%_libdir/dotnet/fake-os-release-fedora
 
-mkdir -p %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
-mkdir -p %buildroot%_libdir/dotnet/host/fxr/%corerelease/
 
 install -D -m644 macros %buildroot%_rpmmacrosdir/dotnet
 
-install -D -m644 .version %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/.version
 
 %files
 %dir %_libdir/dotnet/
@@ -75,17 +69,20 @@ install -D -m644 .version %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App
 
 %dir %_libdir/dotnet/host/
 %dir %_libdir/dotnet/host/fxr/
-%dir %_libdir/dotnet/host/fxr/%corerelease/
 
 %dir %_libdir/dotnet/shared/
 %dir %_libdir/dotnet/shared/Microsoft.NETCore.App/
-%dir %_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
-%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/.version
 
 %files -n rpm-macros-dotnet
 %_rpmmacrosdir/dotnet
 
 %changelog
+* Wed Dec 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt2
+- move versioned dirs to the appropriate packages
+
+* Tue Dec 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt1
+- .NET Core 2.1.6 release
+
 * Fri Oct 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.5-alt1
 - NMU: .NET Core 2.1.5 release (based on changes by lav@).
 

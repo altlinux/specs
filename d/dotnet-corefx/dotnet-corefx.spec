@@ -2,16 +2,17 @@
 
 # TODO
 # warning: Macro %_dotnet_corerelease not found
+# lav 05.12.2018: changed to %version
 # error: line 26: Dependency tokens must not contain '%<=>' symbols: BuildRequires: dotnet-bootstrap-runtime = %_dotnet_corerelease
 # hsh-rebuild: pkg.tar: failed to fetch build dependencies.
-%define _dotnet_corerelease 2.1.5
+#define _dotnet_corerelease 2.1.5
 
 # FIXME: build from sources
 %def_with bootstrap
 %define pre %nil
 
 Name: dotnet-corefx
-Version: 2.1.5
+Version: 2.1.6
 Release: alt2
 
 Summary: .NET Core foundational libraries, called CoreFX
@@ -28,10 +29,10 @@ ExclusiveArch: x86_64
 AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoProv: no
 
-BuildRequires(pre): rpm-macros-dotnet >= %version
+BuildRequires(pre): rpm-macros-dotnet = %version
 
 %if_with bootstrap
-BuildRequires: dotnet-bootstrap-runtime = %_dotnet_corerelease
+BuildRequires: dotnet-bootstrap-runtime = %version
 %define bootstrapdir %_libdir/dotnet-bootstrap
 # currently binary version supports only OpenSSL-1.0 library
 Requires: libssl10
@@ -41,7 +42,7 @@ BuildRequires: dotnet
 %endif
 
 
-Requires: dotnet-common >= %version
+Requires: dotnet-common = %version
 
 BuildRequires: libcurl-devel
 
@@ -71,11 +72,12 @@ mkdir -p %buildroot%_dotnet_shared/
 cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System*.so %buildroot%_dotnet_shared/
 # managed
 cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/*.dll %buildroot%_dotnet_shared/
-# read during dotnet --version
-cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Native.a %buildroot%_dotnet_shared/
 
 # FIXME: possible hack
 cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/Microsoft.NETCore.App.deps.json %buildroot%_dotnet_shared/
+
+# read during dotnet --version
+cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Native.a %buildroot%_dotnet_shared/
 
 # FIXME: needed due to new Microsoft.NETCore.App.deps.json
 cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.IO.Compression.Native.a                %buildroot%_dotnet_shared/
@@ -91,10 +93,20 @@ rm -fv %buildroot%_dotnet_shared/System.Globalization.Native.so
 %files
 %_dotnet_shared/Microsoft.NETCore.App.deps.json
 %_dotnet_shared/System*.so
-%_dotnet_shared/System*.a
+%_dotnet_shared/System.Native.a
+%_dotnet_shared/System.IO.Compression.Native.a
+%_dotnet_shared/System.Net.Http.Native.a
+%_dotnet_shared/System.Net.Security.Native.a
+%_dotnet_shared/System.Security.Cryptography.Native.OpenSsl.a
 %_dotnet_shared/*.dll
 
 %changelog
+* Wed Dec 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt2
+- move versioned dirs to the appropriate packages
+
+* Wed Dec 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt1
+- new version 2.1.6 (with rpmrb script)
+
 * Thu Oct 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.5-alt2
 - NMU: packaged additional required libraries.
 
