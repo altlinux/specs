@@ -2,7 +2,7 @@
 %define rname pluma
 
 Name: mate-text-editor
-Version: 1.20.2
+Version: 1.20.3
 Release: alt1
 Epoch: 1
 Summary: Text editor for the MATE desktop
@@ -18,7 +18,7 @@ Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
 
 BuildRequires: mate-common gtk-doc intltool itstool iso-codes-devel libSM-devel libenchant-devel libgtksourceview3-devel
-BuildRequires: libgtksourceview3-gir-devel libpeas-devel libxml2-devel yelp-tools
+BuildRequires: libgtksourceview3-gir-devel libpeas-devel libxml2-devel yelp-tools python-modules-distutils
 
 %description
 pluma is a small, but powerful text editor designed specifically for
@@ -79,6 +79,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/Pluma-1.0.gir
 
 %changelog
+* Wed Dec 05 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.3-alt1
+- 1.20.3
+
 * Fri Jun 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.2-alt1
 - 1.20.2
 
