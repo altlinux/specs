@@ -1,5 +1,5 @@
 Name: connector
-Version: 1.7.2
+Version: 1.8.2
 Release: alt1
 
 Summary: Remote desktop chooser
@@ -14,6 +14,7 @@ BuildArch: noarch
 Requires: python3 python3-module-pygobject3 libgtk+3 libgtk+3-gir
 Requires: remmina remmina-plugins tigervnc xfreerdp
 Requires: control xdg-utils
+Requires: python3-module-keyring >= 12.0.0 python3-module-secretstorage
 
 %define basedir %_datadir/%name
 
@@ -52,6 +53,19 @@ install -pDm644 emblem %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Tue Dec 04 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.8.2-alt1
+- Added on/off for logging
+- Fixed tray update after save first connection
+- Added ability to save default settings
+- FreeRDP changes:
+ + Added checkboxes for GDI rendering, auto-reconnect and cert-ignore
+ + Added checking USB PATH while redirecting
+ + Updated translation for 'span screen'
+ + Added ability to save password in the keyring (ALT #35608)
+- Added button reset of the program's parameters
+- Remmina: fixed SSH/SFTP connection on new version
+- FS: added choise of the protocol from drop-down list
+
 * Fri Aug 03 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.7.2-alt1
 - Added on/off for version checking
 - Minor changes in the GUI
