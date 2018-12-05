@@ -1,6 +1,6 @@
 Name: libiscsi
 Version: 1.18.0
-Release: alt2
+Release: alt3
 
 Summary: iSCSI client library
 License: LGPLv2.1+
@@ -43,7 +43,7 @@ The libiscsi-devel package includes the header files for libiscsi.
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static --disable-werror
 %make_build
 
 %install
@@ -64,6 +64,9 @@ The libiscsi-devel package includes the header files for libiscsi.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Dec 05 2018 Grigory Ustinov <grenka@altlinux.org> 1.18.0-alt3
+- Fixed FTBFS (Disabled Werror).
+
 * Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 1.18.0-alt2
 - fixed build
 - rebuild with rdma-core-devel
