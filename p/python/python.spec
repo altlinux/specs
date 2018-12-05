@@ -3,8 +3,8 @@
 %define real_name               python
 Name: %real_name
 
-Version: 2.7.14
-Release: alt7.1
+Version: 2.7.15
+Release: alt1
 
 %define package_name		%real_name
 %define weight			1001
@@ -726,10 +726,10 @@ install -p -m644 %SOURCE12 -t Lib/distutils/command
 %patch25 -p1
 
 %patch31 -p2
-%patch32 -p2
+#patch32 -p2
 
-%patch33 -p1
-%patch34 -p1
+##patch33 -p1
+##patch34 -p1
 
 # XXX temporary Issue20445 fix
 sed -i 's/val1 == nice(2)/val1 == nice(2)+2/' configure.ac
@@ -746,7 +746,7 @@ xz -9k Misc/{HISTORY,NEWS,cheatsheet}
 %build
 rm -rf ../build-static
 mkdir -p ../build-static
-export OPT="$RPM_OPT_FLAGS"
+export OPT="$RPM_OPT_FLAGS -fwrapv"
 libtoolize --copy --force
 autoconf
 ##cp -rl * ../build-static/
@@ -792,7 +792,7 @@ build all --enable-shared
 # -l (to find memory leaks) is not compatible with -j...
 # Therefore, we reset TESTOPTS (which includes -l by default)
 # instead of adding EXTRATESTOPTS.
-make test TESTOPTS=%_smp_mflags
+LC_ALL=C.UTF-8 make test TESTOPTS=%_smp_mflags
 
 %install
 rln()
@@ -1177,6 +1177,10 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Tue Dec 04 2018 Fr. Br. George <george@altlinux.ru> 2.7.15-alt1
+- Version up (now builds with gcc8);
+- fix check section LOCALE.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.7.14-alt7.1
 - NMU: Rebuild with new openssl 1.1.0.
 
@@ -1196,7 +1200,7 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.14-alt4
 - Fixed heap-use-after-free bug (Fixes: CVE-2018-1000030).
 
-* Fri May 30 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.7.14-alt3.1
+* Wed May 30 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.7.14-alt3.1
 - added cleaning os-release parameters (patch25)
 
 * Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.14-alt3
@@ -1779,7 +1783,7 @@ test_linuxaudiodev test_nis test_sunaudiodev test_winreg test_winsound)
 
 - added a BuildRequires.
 
-* Sat Dec 4 1999 Florent Villard <warly@mandrakesoft.com>
+* Sat Dec 04 1999 Florent Villard <warly@mandrakesoft.com>
 - add idle, pynche and modulator in the package
 
 * Tue Oct 19 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
