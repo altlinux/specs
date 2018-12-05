@@ -4,7 +4,7 @@
 
 Name: keyutils
 Version: %version
-Release: alt1
+Release: alt2
 
 Summary: Linux Key Management Utilities
 License: GPL/LGPL
@@ -79,6 +79,9 @@ ln -snf ../../%_lib/lib%name.so.1 %buildroot%_libdir/lib%name.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Dec 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6-alt2
+- workaround bad naming in exported include (closes: 35720)
+
 * Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 1.6-alt1
 - 1.6 released
 
