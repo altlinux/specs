@@ -2,13 +2,13 @@
 # vim: set ft=spec:
 # vim600: set fdm=marker:
 
-#define patchlevel %nil
-%define patchlevel -P1
+%define patchlevel %nil
+#define patchlevel -P1
 
 %define _unpackaged_files_terminate_build 1
 
 Name: dhcp
-Version: 4.3.6.P1
+Version: 4.4.1
 Release: alt1
 Epoch: 1
 
@@ -55,28 +55,35 @@ Patch0007: 0007-Apply-dhcp-3.0.3-rh-assemble_udp_ip_header.patch.patch
 Patch0008: 0008-Apply-dhcp-3.0.3-rh-failover-ports.patch.patch
 Patch0009: 0009-Apply-manpage-correction-from-RH-184484.patch
 Patch0010: 0010-Update-and-apply-dhcp-3.0.3-owl-alt-drop_priv.patch.patch
-Patch0011: 0011-Build-with-libisc-export-devel-RH-dhcp-4.2.2-remove-.patch
-Patch0012: 0012-dhclient-Add-several-command-line-options-which-etcn.patch
-Patch0013: 0013-Don-t-build-libdst.patch
-Patch0014: 0014-dhclient-Check-if-dhclient-already-running.patch
-Patch0015: 0015-dhclient-Request-more-options-by-default.patch
-Patch0016: 0016-Prevent-file-descriptors-leak.patch
-Patch0017: 0017-Drop-garbage-char.patch
-Patch0018: 0018-Fix-segfault-in-case-of-NULL-timeout.patch
-Patch0019: 0019-Ensure-64-bit-platforms-parse-lease-file-dates-times.patch
-Patch0020: 0020-Support-Classless-Static-Route-Option-for-DHCPv4-RFC.patch
-Patch0021: 0021-dhclient-Don-t-confirm-expired-lease.patch
-Patch0022: 0022-Build-dhcp-s-libraries-as-shared-libs-instead-of-sta.patch
-Patch0023: 0023-Don-t-send-log-messages-to-the-stderr-with-f-option.patch
-Patch0024: 0024-Document-ALT-specific-in-the-dhclient-script-manpage.patch
-Patch0025: 0025-Ignore-checksums-on-the-loopback-interface.patch
-Patch0026: 0026-dhcpd-and-dhcrelay-Override-default-user-jail-dir-an.patch
-Patch0027: 0027-examples-dhcpd-dhcpv6.conf-Drop-dhcpv6-lease-file-na.patch
-Patch0028: 0028-fix-segfault-on-x86-64-on-8-network.patch
-Patch0029: 0029-Fix-Makefiles-for-dhcpctl-relay-and-omapip.patch
-Patch0030: 0030-Apply-dhcp-4.3.5-bound.diff.patch
-Patch0031: 0031-dhclient-Add-onetime-and-nounicast-options.patch
-Patch0032: 0032-dhclient-rename-timeout-option-to-timeout.patch
+Patch0011: 0011-dhclient-Add-several-command-line-options-which-etcn.patch
+Patch0012: 0012-dhclient-Check-if-dhclient-already-running.patch
+Patch0013: 0013-dhclient-Request-more-options-by-default.patch
+Patch0014: 0014-Prevent-file-descriptors-leak.patch
+Patch0015: 0015-Drop-garbage-char.patch
+Patch0016: 0016-Fix-segfault-in-case-of-NULL-timeout.patch
+Patch0017: 0017-Ensure-64-bit-platforms-parse-lease-file-dates-times.patch
+Patch0018: 0018-Support-Classless-Static-Route-Option-for-DHCPv4-RFC.patch
+Patch0019: 0019-Don-t-send-log-messages-to-the-stderr-with-f-option.patch
+Patch0020: 0020-Document-ALT-specific-in-the-dhclient-script-manpage.patch
+Patch0021: 0021-Ignore-checksums-on-the-loopback-interface.patch
+Patch0022: 0022-dhcpd-and-dhcrelay-Override-default-user-jail-dir-an.patch
+Patch0023: 0023-examples-dhcpd-dhcpv6.conf-Drop-dhcpv6-lease-file-na.patch
+Patch0024: 0024-fix-segfault-on-x86-64-on-8-network.patch
+Patch0025: 0025-Apply-dhcp-4.3.5-bound.diff.patch
+Patch0026: 0026-dhclient-Add-onetime-and-nounicast-options.patch
+Patch0027: 0027-dhclient-rename-timeout-option-to-timeout.patch
+Patch0028: 0028-Build-with-extern-bind-libraries.patch
+Patch0029: 0029-explicitly-include-bind-headers-that-are-required.patch
+Patch0030: 0030-Fix-possible-bufer-overflow.patch
+Patch0031: 0031-Silence-format-truncation-warning.patch
+Patch0032: 0032-Fix-printf-format.patch
+Patch0033: 0033-Fix-linking.patch
+Patch0034: 0034-Build-libdhcp-as-static-library.patch
+Patch0035: 0035-dhclient-Fix-divide-by-zero-error.patch
+Patch0036: 0036-dhclient-Don-t-hang-before-returning.patch
+Patch0037: 0037-dhcrelay-fix-relaying-of-return-packets.patch
+Patch0038: 0038-dhcpctl.3-avoid-undefined-manpage-macro.patch
+Patch0039: 0039-fix-spelling-mistakes.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -223,6 +230,13 @@ server
 %patch0030 -p2
 %patch0031 -p2
 %patch0032 -p2
+%patch0033 -p2
+%patch0034 -p2
+%patch0035 -p2
+%patch0036 -p2
+%patch0037 -p2
+%patch0038 -p2
+%patch0039 -p2
 
 install -pm644 %_sourcedir/update_dhcp.pl .
 find -type f -print0 |
@@ -245,8 +259,11 @@ find server -type f -not -name Makefile\* -print0 |
 %add_optflags -Werror
 %endif
 
+cp configure.ac+lt configure.ac
 %autoreconf
-%configure --with-libbind=%{_includedir}/bind9 --with-libbind-libs=%{_libdir}
+%configure \
+	--with-libbind=%{_includedir}/bind9 \
+	--with-libbind-libs=%{_libdir}
 ## ./configure --copts "%optflags"
 %make_build DEBUG=
 ## CC=%__cc DEBUG=
@@ -546,6 +563,11 @@ fi
 # }}}
 
 %changelog
+* Fri Dec 07 2018 Mikhail Efremov <sem@altlinux.org> 1:4.4.1-alt1
+- Added patches from Debian.
+- Updated patches.
+- Updated to 4.4.1.
+
 * Wed Feb 28 2018 Mikhail Efremov <sem@altlinux.org> 1:4.3.6.P1-alt1
 - Updated patches.
 - Updated to 4.3.6-P1 (fixes: CVE-2017-3144,CVE-2018-5732,CVE-2018-5733).
