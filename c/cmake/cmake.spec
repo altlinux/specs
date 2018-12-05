@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 %def_without check
 Name: cmake
-Version: 3.11.2
-Release: alt2
+Version: 3.13.1
+Release: alt1
 
 Summary: Cross-platform, open-source make system
 
@@ -12,7 +12,7 @@ Url: http://cmake.org/
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
-# https://gitlab.kitware.com/cmake/cmake.git
+# Source-git: https://gitlab.kitware.com/cmake/cmake.git
 Source: %name-%version.tar
 Source1: %name.macros
 Source2: CMakeCache.txt
@@ -262,6 +262,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Wed Dec 05 2018 Vitaly Lipatov <lav@altlinux.ru> 3.13.1-alt1
+- Updated to upstream version 3.13.1 (ALT bug 35702)
+
 * Thu Jul 19 2018 Grigory Ustinov <grenka@altlinux.org> 3.11.2-alt2
 - Fixed FTBS (Add missing rpm-build-xdg).
 
