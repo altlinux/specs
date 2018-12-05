@@ -2,7 +2,7 @@
 
 Name: lshw
 Version: 2.18
-Release: alt1
+Release: alt2
 %define real_version B.0%version
 
 Summary: Hardware Lister
@@ -67,6 +67,7 @@ This package provides graphical (GTK+) front-end to lshw.
 #subst 's/\(DEFINES=\)/\1-D_FILE_OFFSET_BITS=64 /' src/core/Makefile src/gui/Makefile src/Makefile
 %add_optflags -D_FILE_OFFSET_BITS=64
 export SQLITE=1
+export NPROCS=1
 %make_build all gui
 
 %install
@@ -108,6 +109,9 @@ ln -s %_bindir/consolehelper %buildroot%_bindir/lshw-gui
 %_desktopdir/*
 
 %changelog
+* Wed Dec 05 2018 Andrey Cherepanov <cas@altlinux.org> 2.18-alt2
+- Fix race condition in build.
+
 * Wed Jun 08 2016 Yuri N. Sedunov <aris@altlinux.org> 2.18-alt1
 - 2.18 (B.02.18-6-gcb3c299)
 
