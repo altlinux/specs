@@ -29,7 +29,7 @@
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
 Epoch: 1
-Version: 3.18.10
+Version: 3.18.12
 Release: alt1
 %if_without ernie
 License: GPLv2+ and MIT and BSD
@@ -1179,6 +1179,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Dec 05 2018 Andrey Cherepanov <cas@altlinux.org> 1:3.18.12-alt1
+- New version.
+
 * Mon Nov 12 2018 Andrey Cherepanov <cas@altlinux.org> 1:3.18.10-alt1
 - New version.
 
