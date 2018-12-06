@@ -4,7 +4,7 @@
 
 Name: audiofile
 Version: 0.3.6
-Release: alt2.1
+Release: alt3
 
 Summary: Library to handle various audio file formats
 License: LGPL
@@ -85,9 +85,6 @@ Static libraries you can use to develop
 %patch -p1
 [ ! -d m4 ] && mkdir m4 && cp %SOURCE1 m4/
 %patch1 -b .m4
-%ifarch e2k
-sed -i 's,-Wno-multichar,,' */*/Makefile.am
-%endif
 
 %build
 %autoreconf
@@ -96,7 +93,7 @@ sed -i 's,-Wno-multichar,,' */*/Makefile.am
 	%{?!_with_doc:--disable-docs} \
 	%{subst_enable static}
 # SMP-incompatible build (man pages)
-%make
+%make_build || %make
 
 %install
 %makeinstall_std
@@ -129,6 +126,10 @@ sed -i 's,-Wno-multichar,,' */*/Makefile.am
 %endif
 
 %changelog
+* Thu Dec 06 2018 Michael Shigorin <mike@altlinux.org> 0.3.6-alt3
+- E2K: no difference anymore
+- A shot at SMP build
+
 * Wed Mar 15 2017 Michael Shigorin <mike@altlinux.org> 0.3.6-alt2.1
 - BOOTSTRAP: introduce doc knob (on by default)
 - E2K: avoid lcc-unsupported option
