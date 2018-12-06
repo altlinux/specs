@@ -1,16 +1,16 @@
 Name: libspectrum
-Version: 1.1.1
-Release: alt1.qa1
+Version: 1.4.1
+Release: alt1
 
 Summary: ZX Spectrum emulation shared library
 
 Packager: ZX Spectrum Development Team <spectrum@packages.altlinux.org>
 
-License: GPL
+License: GPLv2
 Group: Emulators
-Url: http://fuse-emulator.sourceforge.net/libspectrum.php
+Url: https://sourceforge.net/projects/fuse-emulator/
 
-Source: http://prdownloads.sf.net/fuse-emulator/%name-%version.tar
+Source: %name-%version.tar
 
 # manually removed: gcc-g77 hostinfo 
 # Automatically added by buildreq on Sun Feb 06 2005
@@ -39,6 +39,7 @@ This package contains header files for %name.
 %setup
 
 %build
+%autoreconf
 %configure --disable-static
 %make_build
 
@@ -51,9 +52,14 @@ This package contains header files for %name.
 
 %files devel
 %_libdir/%name.so
+%_libdir/pkgconfig/%name.pc
 %_includedir/%name.h
 
 %changelog
+* Thu Dec 06 2018 Pavel Skrylev <majioa@altlinux.org> 1.4.1-alt1
+- Removed sources from gear.
+- Bump to 1.4.1.
+
 * Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt1.qa1
 - NMU: rebuilt with libgcrypt.so.11 -> libgcrypt.so.20.
 

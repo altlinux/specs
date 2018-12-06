@@ -1,30 +1,23 @@
 %define oname fuse
 Name: spectrum-fuse
-Version: 1.1.1
-Release: alt2
+Version: 1.5.7
+Release: alt1
 
 Summary: The Free Unix Spectrum Emulator
 
-License: GPL
+License: GPLv2
 Group: Emulators
 Url: http://fuse-emulator.sourceforge.net/
 
 Packager: ZX Spectrum Development Team <spectrum@packages.altlinux.org>
 
-Source: http://prdownloads.sf.net/fuse-emulator/%oname-%version.tar
-Source1: %name.png
-Source2: %name.desktop
+Source: %name-%version.tar
 Source3: README.z88sdk
 
-Patch: %name-gcc4.patch
-Patch4: fuse-emulator-zlib.patch
-
-Obsoletes: %oname = 0:0.6.1-alt1
-Provides: %oname = 0:0.6.1-alt1.dummy
 Provides: fuse-emulator = %version
 
 # Automatically added by buildreq on Sun Jul 29 2007
-BuildRequires: flex gcc-c++ glibc-devel imake lib765-devel libdsk-devel libgcrypt-devel libgtk+2-devel libICE-devel libjsw-devel libspectrum-devel libxml2-devel xorg-cf-files
+BuildRequires: flex gcc-c++ glibc-devel libgcrypt-devel libjsw-devel libspectrum-devel libxml2-devel xorg-cf-files
 
 # Optional:
 # libgcrypt: the ability to digitally sign RZX files (note that Fuse requires version 1.1.42 or later).
@@ -35,7 +28,7 @@ BuildRequires: flex gcc-c++ glibc-devel imake lib765-devel libdsk-devel libgcryp
 # libbzip2: support for certain compressed files.
 # libaudiofile: support for loading from .wav files.
 
-BuildRequires: libspectrum-devel >= 1.1.1
+BuildRequires: libspectrum-devel >= 1.4.1 libpng-devel libalsa-devel libgtk+3-devel
 
 %description
 Fuse is a Sinclair ZX Spectrum emulator. It supports several models
@@ -43,20 +36,27 @@ Fuse is a Sinclair ZX Spectrum emulator. It supports several models
 and sound.
 
 %prep
-%setup -q -n %oname-%version
-#patch
-%patch4 -p1
+%setup -q -n %name-%version
+sed -e "s/=fuse/=spectrum-fuse/" -e "s/=Fuse/=Spectrum Fuse/" -e "/Version/a Encoding=UTF-8" -i data/fuse.desktop.in
+find -name "Makefile.am" -exec sed -e "s/fuse_/spectrum_fuse_/" -e "s/= fuse/= spectrum-fuse/" -i {} \;
+sed -e "s/\[fuse]/[spectrum-fuse]/g" -i configure.ac
+sed -e "s/\(^\|\" \|B \"\?\|IR \|TH \)fuse/\1spectrum\\\\-fuse/" -i man/fuse.1
 
 %build
-%configure --disable-ui-joystick --enable-joystick --with-gtk
-#make clean
+%autoreconf
+%configure --disable-ui-joystick --enable-joystick --with-gtk --enable-desktop-integration
 %make_build
 
 %install
+export DESTDIR=%buildroot
 %makeinstall
-mv %buildroot%_bindir/%oname %buildroot%_bindir/%name
-install -D -m 0644 %SOURCE1 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
-install -D -m 0644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
+install -D -m 0644 %buildroot/%buildroot/%_man1dir/fuse.1 %buildroot/%_man1dir/spectrum-fuse.1
+rm %buildroot/%buildroot/%_man1dir/fuse.1
+mv %buildroot/%_desktopdir/%oname.desktop  %buildroot%_desktopdir/%name.desktop
+mv %buildroot/usr/share/mime/packages/fuse.xml %buildroot/usr/share/mime/packages/spectrum-fuse.xml
+find %buildroot%buildroot -type f | while read f; do nf=$(sed "s|%buildroot||" <<< "$f"); echo "== $nf"; install -D -m 644 "$f" "$nf"; rm -f "$f"; done
+find %buildroot -name 'fuse.png' -type f | while read f; do nf=$(sed "s|fuse.png|spectrum-fuse.png|" <<< "$f"); echo "== $nf"; install -D -m 644 "$f" "$nf"; rm -f "$f"; done
+
 install -pm0644 %{SOURCE3} .
 
 %files
@@ -65,11 +65,17 @@ install -pm0644 %{SOURCE3} .
 %_bindir/%name
 %_man1dir/*
 %_desktopdir/*
-%_datadir/%oname/
-%_iconsdir/hicolor/64x64/apps/%name.png
-
+%_datadir/%name
+%_datadir/mime/*
+%_iconsdir/hicolor/*/apps/spectrum-fuse.png
+%_iconsdir/hicolor/*/mimetypes/application-x-spectrum.png
 
 %changelog
+* Wed Dec 12 2018 Pavel Skrylev <majioa@altlinux.org> 1.5.7-alt1
+- Removed sources from gear.
+- Cleaned up the spec.
+- Bump to 1.5.7.
+
 * Wed Sep 11 2013 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt2
 - update buildreqs
 
