@@ -3,7 +3,7 @@
 
 Name: zfs
 Version: 0.7.12
-Release: alt2
+Release: alt3
 Summary: ZFS on Linux
 License: CDDL
 Group: System/Kernel and hardware
@@ -13,6 +13,7 @@ Requires: spl-utils = %version
 
 Source0: %name-%version.tar
 Patch1: zfs-0.7.9-import-by-disk-id.patch
+Patch2: zfs-0.7.12-alt-fix-replication-overflow.patch
 
 BuildRequires: libattr-devel libblkid-devel libuuid-devel zlib-devel rpm-build-kernel
 
@@ -62,6 +63,7 @@ This package contains ZFS modules sources for Linux kernel.
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p2
 sed -i 's|datarootdir|libdir|' lib/libzfs/Makefile.am
 
 %build
@@ -181,6 +183,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Thu Dec 06 2018 Anton Farygin <rider@altlinux.ru> 0.7.12-alt3
+- fixed buffer overflow during zfs replication (thanks shrek@) (closes: #35730)
+
 * Tue Nov 20 2018 Anton Farygin <rider@altlinux.ru> 0.7.12-alt2
 - changed the source code praparation scheme for kernel-modules-zfs
 
