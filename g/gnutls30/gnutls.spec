@@ -3,7 +3,7 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.6.4
+Version: 3.6.5
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -24,7 +24,8 @@ Patch4: tests-Use-IPv4-only-in-s_server.patch
 
 # Automatically added by buildreq on Thu Dec 08 2011
 BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel makeinfo zlib-devel
-BuildRequires: libnettle-devel autogen libopts-devel libidn2-devel libunistring-devel
+BuildRequires: autogen libopts-devel libidn2-devel libunistring-devel
+BuildRequires: libnettle-devel >= 3.4.1-alt1
 %if_enabled guile
 # Unfortunately we have different version
 # on e2k and don't have guile-devel.
@@ -311,6 +312,9 @@ export LD_PRELOAD=libcxa.so.2
 %endif
 
 %changelog
+* Thu Dec 06 2018 Mikhail Efremov <sem@altlinux.org> 3.6.5-alt1
+- Updated to 3.6.5 (fixes: CVE-2018-16868).
+
 * Wed Sep 26 2018 Mikhail Efremov <sem@altlinux.org> 3.6.4-alt1
 - tests: Use IPv4 only in s_server.
 - Drop test-hash-large.patch.
