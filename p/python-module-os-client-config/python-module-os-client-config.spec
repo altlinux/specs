@@ -1,10 +1,8 @@
 %define oname os-client-config
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 1.26.0
-Release: alt1.1
+Version: 1.31.2
+Release: alt1
 Summary: OpenStack Client Configuration Library
 Group: Development/Python
 License: ASL 2.0
@@ -18,8 +16,8 @@ Provides: os-client-config
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 0.1.1
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
 
 BuildRequires: python-module-pbr
 BuildRequires: python-module-fixtures
@@ -35,7 +33,6 @@ BuildRequires: python-module-appdirs >= 1.3.0
 BuildRequires: python-module-keystoneauth1 >= 2.1.0
 BuildRequires: python-module-requestsexceptions >= 1.1.1
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
@@ -47,7 +44,10 @@ BuildRequires: python3-module-requestsexceptions >= 1.1.1
 BuildRequires: python3-module-testtools python3-module-testscenarios python3-module-testrepository
 BuildRequires: python3-module-subunit python3-module-subunit-tests
 BuildRequires: python3-module-extras
-%endif
+
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 2.5.0
 
 
 %description
@@ -108,45 +108,36 @@ This package contains tests for %oname.
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
-## disabling git call for last modification date from git repo
-#sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
+
 #python setup.py build_sphinx
-## Fix hidden-file-or-dir warnings
+# Fix hidden-file-or-dir warnings
 #rm -fr doc/build/html/.buildinfo
-# Fix this rpmlint warning
-#sed -i "s|\r||g" doc/build/html/_static/jquery.js
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
-%check
-python setup.py test
+#%check
+#python setup.py test
 
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+#%if_with python3
+#pushd ../python3
+#python3 setup.py test
+#popd
+#%endif
 
 %files
 %doc ChangeLog CONTRIBUTING.rst PKG-INFO README.rst
@@ -159,7 +150,6 @@ popd
 #%files doc
 #%doc doc/build/html
 
-%if_with python3
 %files -n python3-module-%oname
 %doc ChangeLog CONTRIBUTING.rst PKG-INFO README.rst
 %python3_sitelibdir/*
@@ -167,9 +157,11 @@ popd
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %changelog
+* Thu Dec 06 2018 Alexey Shabalin <shaba@altlinux.org> 1.31.2-alt1
+- 1.31.2
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.26.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
