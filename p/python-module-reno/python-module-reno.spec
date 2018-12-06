@@ -3,14 +3,14 @@
 %def_without doc
 
 Name: python-module-%pypi_name
-Version: 1.8.0
+Version: 2.11.2
 Release: alt1
 Summary: Release Notes manager
 Group: Development/Python
 
 License: ASL 2.0
 Url: http://www.openstack.org/
-Source: %name-%version.tar
+Source: %pypi_name-%version.tar.gz
 BuildArch: noarch
 
 Requires: git-core
@@ -19,9 +19,10 @@ BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.4
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-openstackdocstheme
 BuildRequires: python-module-babel >= 1.3
-BuildRequires: python-module-yaml >= 3.1.0
+BuildRequires: python-module-yaml >= 3.10.0
+BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-oslotest
 BuildRequires: python-module-nose
 BuildRequires: git-core
@@ -32,7 +33,7 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.4
 BuildRequires: python3-module-babel >= 1.3
-BuildRequires: python3-module-yaml >= 3.1.0
+BuildRequires: python3-module-yaml >= 3.10.0
 BuildRequires: python3-module-oslotest
 BuildRequires: python3-module-nose
 %endif
@@ -67,8 +68,25 @@ Group: Development/Documentation
 %description doc
 Documentation for reno
 
+%package tests
+Summary: Tests for %pypi_name
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %pypi_name.
+
+%package -n python3-module-%pypi_name-tests
+Summary: Tests for %pypi_name
+Group: Development/Python3
+Requires: python3-module-%pypi_name = %EVR
+
+%description -n python3-module-%pypi_name-tests
+This package contains tests for %pypi_name.
+
 %prep
-%setup
+%setup -n %pypi_name-%version
+
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
 
@@ -106,25 +124,25 @@ popd
 %endif
 %python_install
 
-
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
-
-
 %files
 %doc README.rst
 %_bindir/%pypi_name
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
 
 %if_with python3
 %files -n python3-module-%pypi_name
 %doc README.rst
 %_bindir/%pypi_name.py3
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%pypi_name-tests
+%python3_sitelibdir/*/tests
 %endif
+
+%files tests
+%python_sitelibdir/*/tests
 
 %if_with doc
 %files doc
@@ -132,6 +150,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Thu Dec 06 2018 Alexey Shabalin <shaba@altlinux.org> 2.11.2-alt1
+- 2.11.2
+
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 1.8.0-alt1
 - 1.8.0
 
