@@ -3,7 +3,7 @@
 
 Name: polkit
 Version: 0.115
-Release: alt3
+Release: alt4
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -19,7 +19,7 @@ Patch: %name-%version-%release.patch
 Patch1: %name-0.109-alt-helper_path.patch
 
 BuildRequires: gcc-c++ gobject-introspection-devel gtk-doc intltool libexpat-devel libpam-devel
-BuildRequires: libmozjs52-devel libsystemd-devel
+BuildRequires: libmozjs60-devel libsystemd-devel
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui}
 
 %description
@@ -104,7 +104,7 @@ touch ChangeLog
 %dir %_sysconfdir/%name-1
 %attr(0700,polkitd,root) %dir %_sysconfdir/%name-1/rules.d
 %_sysconfdir/%name-1/rules.d/50-default.rules
-%_sysconfdir/dbus-1/system.d/org.freedesktop.PolicyKit1.conf
+%_datadir/dbus-1/system.d/org.freedesktop.PolicyKit1.conf
 %_sysconfdir/pam.d/polkit-1
 %_bindir/pk[act]*
 %attr(4511,root,root) %_bindir/pkexec
@@ -142,6 +142,13 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Thu Dec 06 2018 Alexey Shabalin <shaba@altlinux.org> 0.115-alt4
+- updated to 0.115-23fd211e
+- Port the JS authority to mozjs-60
+- Move D-Bus policy file to /usr/share/dbus-1/system.d/
+- Drop deprecated use of g_type_class_add_private()
+- Allow negative uids/gids in PolkitUnixUser and Group objects (fixed CVE-2018-19788)
+
 * Tue Sep 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.115-alt3
 - updated to 0.115-11-g6e1f826
 
