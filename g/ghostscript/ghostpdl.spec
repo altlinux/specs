@@ -1,6 +1,6 @@
 Name: ghostscript
-Version: 9.25
-Release: alt2
+Version: 9.26
+Release: alt1
 
 %define ijsver	0.35
 %global origver %version
@@ -305,6 +305,9 @@ cp -a examples %buildroot%_docdir/%name-%version
 %_includedir/ijs
 
 %changelog
+* Wed Dec 05 2018 Fr. Br. George <george@altlinux.ru> 9.26-alt1
+- Autobuild version bump to 9.26
+
 * Thu Sep 20 2018 Fr. Br. George <george@altlinux.ru> 9.25-alt2
 - More font renaming resurrected
 
