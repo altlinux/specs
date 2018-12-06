@@ -1,6 +1,6 @@
 Name:     checker
 Version:  0.7
-Release:  alt1
+Release:  alt2
 
 Summary:  checker for unsafe settings
 License:  GPLv2
@@ -33,6 +33,9 @@ install -Dm 0600 checker/checker.service %buildroot/lib/systemd/system/
 
 
 %changelog
+* Thu Dec 06 2018 Denis Medvedev <nbr@altlinux.org> 0.7-alt2
+- shell script cleaned, permissions fixed
+
 * Mon Jun 25 2018 Denis Medvedev <nbr@altlinux.org> 0.7-alt1
 - fix bug with missing / in find
 
