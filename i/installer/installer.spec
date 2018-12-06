@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.44
+Version: 1.8.45
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Dec 06 2018 Anton Farygin <rider@altlinux.ru> 1.8.45-alt1
+- btrfs utils cleanup moved from installer to mkimage profile
+
 * Mon Oct 15 2018 Leonid Krivoshein <klark@altlinux.org> 1.8.44-alt1
 - Fix poweroff functionality (closes #35479)
 
