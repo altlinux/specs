@@ -1,6 +1,6 @@
 Name: volumes-profile-kdesktop
-Version: 0.7.4
-Release: alt1%ubt
+Version: 0.8.0
+Release: alt1
 
 Summary: Volumes description for Desktop KDE distribution
 License: GPL
@@ -30,6 +30,9 @@ install -pm755 10-*.sh %buildroot%hook1dir/
 #%hook2dir/*
 
 %changelog
+* Thu Dec 06 2018 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt1
+- use LVM by default
+
 * Fri Oct 27 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.4-alt1%ubt
 - fix to decrease default swap size
 
