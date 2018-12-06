@@ -1,10 +1,8 @@
 %define oname oslo.context
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 2.12.2
-Release: alt1.1
+Version: 2.21.0
+Release: alt1
 Summary: OpenStack oslo.context library
 Group: Development/Python
 License: ASL 2.0
@@ -17,23 +15,24 @@ Provides: python-module-oslo-context = %EVR
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-sphinx >= 1.1.2
-BuildRequires: python-module-oslosphinx >= 2.5.0
-BuildRequires: python-module-fixtures
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-fixtures >= 3.0.0
 BuildRequires: python-module-debtcollector >= 1.2.0
-BuildRequires: python-module-positional >= 1.1.1
-BuildRequires: python-module-reno >= 1.8.0
 
-%if_with python3
+BuildRequires: python-module-sphinx >= 1.6.2
+BuildRequires: python-module-openstackdocstheme >= 1.18.1
+BuildRequires: python-module-reno >= 2.5.0
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-fixtures
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
-BuildRequires: python3-module-positional >= 1.1.1
-%endif
+
+BuildRequires: python3-module-sphinx >= 1.6.2
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 2.5.0
 
 %description
 The Oslo context library has helpers to maintain useful information
@@ -80,18 +79,15 @@ Documentation for the Oslo context handling library.
 # Remove bundled egg-info
 rm -rf %oname.egg-info
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 # generate html docs
 sphinx-build doc/source html
@@ -100,11 +96,10 @@ rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python_install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
 %doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
@@ -114,19 +109,20 @@ popd
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %files doc
 %doc html
 
 %changelog
+* Thu Dec 06 2018 Alexey Shabalin <shaba@altlinux.org> 2.21.0-alt1
+- 2.21.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.12.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
