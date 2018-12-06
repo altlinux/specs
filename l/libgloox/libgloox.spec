@@ -2,7 +2,7 @@
 
 Name: libgloox
 Version: 1.0.20
-Release: alt1.1
+Release: alt2
 
 Summary: A full-featured Jabber/XMPP client library
 License: GPLv3
@@ -12,7 +12,7 @@ URL: http://camaya.net/gloox
 Source: http://camaya.net/download/gloox-%version.tar.bz2
 
 # Automatically added by buildreq on Sun Nov 05 2017
-BuildRequires: gcc-c++ libidn-devel libssl-devel zlib-devel
+BuildRequires: gcc-c++ libssl-devel zlib-devel
 
 %package -n libgloox%sover
 Summary: A full-featured Jabber/XMPP client library
@@ -65,6 +65,9 @@ export PTHREAD_LIBS="-lpthread"
 %_libdir/libgloox.so
 
 %changelog
+* Thu Dec 06 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.20-alt2
+- NMU: Rebuild without libidn.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.20-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
